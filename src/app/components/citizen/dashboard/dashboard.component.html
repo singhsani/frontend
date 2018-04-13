@@ -1,0 +1,69 @@
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div style="margin: 14px 0px;">
+                <button (click)="createRecord()">Create Records</button>
+            </div>
+            
+            <div class="example-container mat-elevation-z8">
+                <div class="example-loading-shade" *ngIf="isLoadingResults || isRateLimitReached">
+                    <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+                    <div class="example-rate-limit-reached" *ngIf="isRateLimitReached">
+                        Something went wrong!
+                    </div>
+                </div>
+
+                <mat-table #table [dataSource]="dataSource" class="example-table" matSort matSortActive="created" matSortDisableClear matSortDirection="asc">
+
+                    <ng-container matColumnDef="id">
+                        <mat-header-cell *matHeaderCellDef>#</mat-header-cell>
+                        <mat-cell *matCellDef="let row">{{ row.id }}</mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="applicantName">
+                        <mat-header-cell *matHeaderCellDef>Applicant Name</mat-header-cell>
+                        <mat-cell *matCellDef="let row">{{ row.applicantName }}</mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="fileNumber">
+                        <mat-header-cell *matHeaderCellDef>File Number</mat-header-cell>
+                        <mat-cell *matCellDef="let row">{{ row.fileNumber }}</mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="fileStatus">
+                        <mat-header-cell *matHeaderCellDef>File Status</mat-header-cell>
+                        <mat-cell *matCellDef="let row">{{ row.fileStatus}}</mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="serviceType">
+                        <mat-header-cell *matHeaderCellDef>Service Type</mat-header-cell>
+                        <mat-cell *matCellDef="let row">{{ row.serviceType }}</mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="action">
+                        <mat-header-cell *matHeaderCellDef>Action</mat-header-cell>
+                        <mat-cell *matCellDef="let row">
+                            <button mat-icon-button [disabled]="row.canEdit" color="primary" (click)="redirectToEdit(row.id)">
+                                <mat-icon>edit</mat-icon>
+                            </button>
+                            <button mat-icon-button [disabled]="row.canDelete" color="warn" (click)="deleteRecord(row.id)">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                            <button mat-icon-button [disabled]="row.canSubmit" [style.color]="'#4CAF50'">
+                                <mat-icon>send</mat-icon>
+                            </button>
+                        </mat-cell>
+                    </ng-container>
+
+                    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                </mat-table>
+
+                <mat-paginator [length]="resultsLength" [pageSize]="pageSize">
+                </mat-paginator>
+            </div>
+        </div>
+    </div>
+</div>
+

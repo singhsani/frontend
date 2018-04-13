@@ -1,0 +1,29 @@
+
+<div class="example-container">
+    <mat-toolbar color="primary" class="example-toolbar">
+        <mat-toolbar-row>
+            <button mat-icon-button (click)="snav && snav.toggle()">
+                <mat-icon>menu</mat-icon>
+            </button>
+            <span class="example-spacer"></span>
+            <button mat-icon-button position="end" (click)="changeLang('en')">Eng</button>
+            <button mat-icon-button position="end" (click)="changeLang('gj')">Guj</button>
+            <button mat-icon-button position="end" (click)="onLogout()">
+                <mat-icon>settings_power</mat-icon>
+            </button>
+        </mat-toolbar-row>
+    </mat-toolbar>
+
+    <mat-sidenav-container class="example-sidenav-container" style="height: 100%;">
+        <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" opened="true" style="width:200px;background-color: aliceblue;">
+            <mat-nav-list>
+                <a mat-list-item routerLink="/citizen/dashboard/" routerLinkActive="active-route-link">dashboard</a>
+                <a mat-list-item >Resource</a>
+                <a mat-list-item >Transction</a>
+            </mat-nav-list>
+        </mat-sidenav>
+        <mat-sidenav-content>
+            <router-outlet></router-outlet>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
+</div>
