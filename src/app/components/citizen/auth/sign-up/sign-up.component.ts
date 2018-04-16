@@ -51,7 +51,7 @@ export class SignUpComponent implements OnInit {
 				 * Redirect to verify User Component.
 				*/
 				alert("We have sent a authentication link on your email");
-				this._router.navigate(['../user-verify'],
+				this._router.navigate(['citizen/auth/user-verify'],
 					{ queryParams: { uniqueId: res.data.uniqueId, code: res.data.cellOtp } });
 			});
 	}

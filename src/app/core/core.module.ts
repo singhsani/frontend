@@ -11,6 +11,7 @@ import { PaginationService } from './services/citizen/data-services/pagination.s
 import { FormsActionsService } from './services/citizen/data-services/forms-actions.service';
 /* import all citizen related services end */
 
+
 @NgModule({
 	imports: [
 		CommonModule

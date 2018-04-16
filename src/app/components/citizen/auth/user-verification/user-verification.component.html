@@ -8,7 +8,7 @@
 			<form name="user-verify-form" [formGroup]="verifyForm" (ngSubmit)="verifyUser(verifyForm.value)" autocomplete="off" ngNativeValidate>
 
 				<mat-form-field class="example-full-width" style="width:100%">
-					<input matInput type="text" placeholder="Enter OTP" formControlName="code" required>
+					<input matInput type="text" [readonly]="verifyForm.get('code').value != ''" placeholder="Enter OTP" formControlName="code" required>
 				</mat-form-field>
 
 				<button type="submit" mat-raised-button color="primary" [disabled]="verifyForm.invalid" style="width:100%">

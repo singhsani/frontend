@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators, Form } from '@angular/forms';
 import { SessionStorageService, SessionStorage } from 'angular-web-storage';
 
@@ -20,7 +20,7 @@ export class ForgotPasswordComponent implements OnInit {
 	 * @param fb - Declare formbuilder property.
 	 * @param router - Declare Routing Property.
 	 */
-	constructor(private fb: FormBuilder,
+	constructor(private fb: FormBuilder, private _route: ActivatedRoute,
 				private _router: Router, private _appService: AppService
 	) { }
 
@@ -44,7 +44,7 @@ export class ForgotPasswordComponent implements OnInit {
 				/**
 				 * Redirect to reset password
 				 */
-				this._router.navigate(['../reset-password'], { queryParams: { uniqueId: res.data.uniqueId, code: res.data.cellOtp } });
+				this._router.navigate(['citizen/auth/reset-password'], { queryParams: { uniqueId: res.data.uniqueId, code: res.data.cellOtp } });
 			});
 	}
 

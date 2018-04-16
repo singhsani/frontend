@@ -54,49 +54,35 @@ import { MatTableModule } from '@angular/material/table';
 
 import { MatSortModule } from '@angular/material/sort';
 
+const COMPONENTS = [
+	CommonModule,
+	MatButtonModule,
+	MatToolbarModule,
+	MatSidenavModule,
+	MatListModule,
+	MatIconModule,
+	MatChipsModule,
+	MatCardModule,
+	MatInputModule,
+	MatTabsModule,
+	MatCheckboxModule,
+	MatGridListModule,
+	MatSnackBarModule,
+	MatSelectModule,
+	MatProgressSpinnerModule,
+	MatPaginatorModule,
+	MatTableModule,
+	MatSortModule,
+	MatRadioModule,
+	MatDialogModule
+];
+
 @NgModule({
 	imports: [
-		CommonModule,
-		MatButtonModule,
-		MatToolbarModule,
-		MatSidenavModule,
-		MatListModule,
-		MatIconModule,
-		MatChipsModule,
-		MatCardModule,
-		MatInputModule,
-		MatTabsModule,
-		MatCheckboxModule,
-		MatGridListModule,
-		MatSnackBarModule,
-		MatSelectModule,
-		MatProgressSpinnerModule,
-		MatPaginatorModule,
-		MatTableModule,
-		MatSortModule,
-		MatRadioModule,
-		MatDialogModule
+		...COMPONENTS
 	],
 	exports: [
-		MatButtonModule,
-		MatToolbarModule,
-		MatSidenavModule,
-		MatListModule,
-		MatIconModule,
-		MatChipsModule,
-		MatCardModule,
-		MatInputModule,
-		MatTabsModule,
-		MatCheckboxModule,
-		MatGridListModule,
-		MatSnackBarModule,
-		MatSelectModule,
-		MatProgressSpinnerModule,
-		MatPaginatorModule,
-		MatTableModule,
-		MatSortModule,
-		MatRadioModule,
-		MatDialogModule
+		...COMPONENTS
 	],
 })
 

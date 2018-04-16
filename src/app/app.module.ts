@@ -39,6 +39,8 @@ import { LoginLayoutComponent } from './layouts/login-layout/login-layout.compon
 	imports: [
 		AuthModule,
 		CitizenModule,
+		SharedModule,
+		CoreModule,
 		BrowserModule,
 		BrowserAnimationsModule,
 		HttpModule,
@@ -47,8 +49,6 @@ import { LoginLayoutComponent } from './layouts/login-layout/login-layout.compon
 		AppRoutingModule,
 		FormsModule,
 		ReactiveFormsModule,
-		SharedModule,
-		CoreModule,
 		AngularWebStorageModule
 	],
 	exports: [ ],

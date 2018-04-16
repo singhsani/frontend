@@ -29,7 +29,7 @@ export class UserVerificationComponent implements OnInit {
 	 * Initialize page content.
 	 */
 	ngOnInit() {
-		
+
 
 		this.verifyForm = this.fb.group({
 			uniqueId: '',
@@ -43,10 +43,10 @@ export class UserVerificationComponent implements OnInit {
 
 			// if code value is exist then disabled field otherwise allow user to enter manually
 			if (params['code'] != null && params['code'] != "" && params['code'] != undefined && params['code'] != 'undefined' && params['code'] != 'null') {
+
 				this.verifyForm.get('code').setValue(params['code']);
-				this.verifyForm.get('code').disable();
 			} else {
-				this.verifyForm.get('code').setValue("");
+				this.verifyForm.get('code').setValue('');
 			}
 
 		});

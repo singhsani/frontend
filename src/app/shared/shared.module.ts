@@ -13,11 +13,14 @@ import { TokenInterceptor } from './services/http-intercepter';
 import { LoadingIndicatorComponent } from './components/loading-indicator/loading-indicator.component';
 import { AlertComponent } from './components/alert/alert.component';
 
+const COMPONENTS = [
+	LoadingIndicatorComponent,
+	AlertComponent
+]
 
 @NgModule({
 	declarations: [
-		LoadingIndicatorComponent,
-		AlertComponent
+		...COMPONENTS
 	],
 	imports: [
 		HttpModule,
@@ -27,8 +30,7 @@ import { AlertComponent } from './components/alert/alert.component';
 	],
 	exports: [
 		MaterialModule,
-		LoadingIndicatorComponent,
-		AlertComponent
+		...COMPONENTS
 	],
 	providers: [
 		HttpService,
