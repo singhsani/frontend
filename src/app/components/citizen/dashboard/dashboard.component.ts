@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
 
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
@@ -21,7 +20,7 @@ import { FormsActionsService } from '../../../core/services/citizen/data-service
 })
 export class DashboardComponent implements OnInit {
 
-	displayedColumns = [
+	displayedColumns: any = [
 		'id',
 		'applicantName',
 		'fileNumber',
@@ -32,19 +31,26 @@ export class DashboardComponent implements OnInit {
 
 	dataSource = new MatTableDataSource();
 
-	resultsLength = 0;
-	pageSize = 20;
-	isLoadingResults = true;
-	isRateLimitReached = false;
+	resultsLength: number = 0;
+	pageSize: number = 20;
+	isLoadingResults: boolean = true;
+	isRateLimitReached: boolean = false;
 
-	appType = 'myApps';
+	appType: string = 'myApps';
 
 	@ViewChild(MatPaginator) paginator: MatPaginator;
 	@ViewChild(MatSort) sort: MatSort;
 
+	/**
+	 * Constructor to declare defualt propeties of class
+	 * @param formService - Declare form service property
+	 * @param paginationService - Declare pagination service property
+	 * @param _router - Declare router property
+	 */
 	constructor(
-		private http: HttpClient, private formService: FormsActionsService,
-		private paginationService: PaginationService, private _router: Router
+		private formService: FormsActionsService,
+		private paginationService: PaginationService,
+		private _router: Router
 	) { }
 
 	ngOnInit() {
@@ -92,7 +98,6 @@ export class DashboardComponent implements OnInit {
 	 * @param id - citizen id 
 	 */
 	redirectToEdit(id) {
-
 		this._router.navigate(['/citizen/birthcert', id]);
 	}
 

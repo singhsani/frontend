@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { MediaMatcher } from '@angular/cdk/layout';
 
 import { AuthService } from './../../core/services/citizen/app-services/auth.service';
+import { SessionStorageService, SessionStorage } from 'angular-web-storage';
 
 @Component({
 	selector: 'app-home-layout',
@@ -19,7 +20,9 @@ export class HomeLayoutComponent implements OnInit {
 
 	constructor(
 		private changeDetectorRef: ChangeDetectorRef,
-		private media: MediaMatcher, private authService: AuthService
+		private media: MediaMatcher,
+		private authService: AuthService,
+		private _session: SessionStorageService,
 	) {
 
 		this.mobileQuery = media.matchMedia('(max-width: 600px)');
@@ -38,5 +41,9 @@ export class HomeLayoutComponent implements OnInit {
 
 	ngOnDestroy(): void {
 		this.mobileQuery.removeListener(this._mobileQueryListener);
+	}
+
+	selectLanguage(language: string) {
+		this._session.set('currentLanguage', language);
 	}
 }

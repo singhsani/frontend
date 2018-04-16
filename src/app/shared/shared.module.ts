@@ -4,6 +4,7 @@ import { HttpModule } from '@angular/http';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { MaterialModule } from './modules/material/material.module';// Import material module
+import { TranslateModule } from './modules/translate/translate.module';
 
 /* Import http related servies start */
 import { HttpService } from './services/http.service';
@@ -26,11 +27,13 @@ const COMPONENTS = [
 		HttpModule,
 		CommonModule,
 		MaterialModule,
-		HttpClientModule
+		HttpClientModule,
+		TranslateModule
 	],
 	exports: [
 		MaterialModule,
-		...COMPONENTS
+		...COMPONENTS,
+		TranslateModule
 	],
 	providers: [
 		HttpService,

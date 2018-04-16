@@ -5,9 +5,8 @@
             <button mat-icon-button (click)="snav && snav.toggle()">
                 <mat-icon>menu</mat-icon>
             </button>
-            <span class="example-spacer"></span>
-            <button mat-icon-button position="end" (click)="changeLang('en')">Eng</button>
-            <button mat-icon-button position="end" (click)="changeLang('gj')">Guj</button>
+            <span class="example-spacer"></span><button mat-icon-button position="end" (click)="selectLanguage('en')">EN</button>
+            <button mat-icon-button position="end" (click)="selectLanguage('gu')">ગુજ</button>
             <button mat-icon-button position="end" (click)="onLogout()">
                 <mat-icon>settings_power</mat-icon>
             </button>
@@ -20,6 +19,8 @@
                 <a mat-list-item routerLink="/citizen/dashboard/" routerLinkActive="active-route-link">dashboard</a>
                 <a mat-list-item >Resource</a>
                 <a mat-list-item >Transction</a>
+                <h1>{{ 'TITLE' | translate }}</h1>
+                <h2>{{ 'SUBTITLE' | translate }}</h2>
             </mat-nav-list>
         </mat-sidenav>
         <mat-sidenav-content>
