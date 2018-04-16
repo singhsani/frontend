@@ -5,7 +5,9 @@
             <div style="margin: 14px 0px;">
                 <button (click)="createRecord()">Create Records</button>
             </div>
-            
+            <h1>{{ 'add' | translate:'ceicedforms' }}</h1>
+            <h2>{{ 'address_proof' | translate:'ceicedforms' }}</h2>
+            <h2>{{ 'pincode' | translate:'ceicedforms' }}</h2>
             <div class="example-container mat-elevation-z8">
                 <div class="example-loading-shade" *ngIf="isLoadingResults || isRateLimitReached">
                     <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
