@@ -6,7 +6,7 @@ import { HttpService } from '../../../../shared/services/http.service';
 
 @Injectable()
 export class PaginationService {
-	
+
 	requestURL: string;
 	headers: any;
 	apiType: string;
@@ -23,15 +23,33 @@ export class PaginationService {
 		private _session: SessionStorageService
 	) {
 	}
-	
-	getAllData():Observable<manageData>{
-		
+
+	/**
+	 * This method is used to get all form data with pagination using API
+	 */
+	getAllData(): Observable<manageData> {
+
 		this.headers = {
 			"Authorization": "Bearer " + this._session.get("access_token").token,
 			"Content-Type": "application/json"
 		}
 
 		this.requestURL = `api/user/${this.apiType}?page=${this.pageIndex}&limit=${this.pageSize}`;
+
+		return this._http.get(this.requestURL, this.headers);
+	}
+
+	/**
+	 * This method is used to get all citizen resource data with pagination using API
+	 */
+	getAllResourceData(): Observable<manageData> {
+
+		this.headers = {
+			"Authorization": "Bearer " + this._session.get("access_token").token,
+			"Content-Type": "application/json"
+		}
+
+		this.requestURL = `api/${this.apiType}/myResources/?page=${this.pageIndex}&limit=${this.pageSize}`;
 
 		return this._http.get(this.requestURL, this.headers);
 	}

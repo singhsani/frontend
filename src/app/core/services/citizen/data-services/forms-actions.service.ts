@@ -27,6 +27,16 @@ export class FormsActionsService {
 	}
 
 	/**
+	 * This method is use to create new citizen resource
+	 */
+	createResourceData(resourceData) {
+
+		this.requestURL = `api/${this.apiType}/create`;
+
+		return this._http.post(this.requestURL, resourceData, this.getHeadersWithAuthToken());
+	}
+
+	/**
 	 * This method is used to get citizen app data
 	 * @param appId - citizen app id
 	 */

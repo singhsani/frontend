@@ -11,6 +11,7 @@ import { CitizenRoutingModule } from './citizen-routing.module';
 /* Import citizen components start */
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { BirthCertiAppComponent } from './birth-certi-app/birth-certi-app.component';
+import { MyResourceComponent } from './my-resource/my-resource.component';
 /* Import citizen components end */
 
 @NgModule({
@@ -24,7 +25,8 @@ import { BirthCertiAppComponent } from './birth-certi-app/birth-certi-app.compon
 	],
 	declarations: [
 		DashboardComponent,
-		BirthCertiAppComponent
+		BirthCertiAppComponent,
+		MyResourceComponent,
 	]
 })
 export class CitizenModule { }
