@@ -12,6 +12,7 @@ import { CitizenRoutingModule } from './citizen-routing.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { BirthCertiAppComponent } from './birth-certi-app/birth-certi-app.component';
 import { MyResourceComponent } from './my-resource/my-resource.component';
+import { TransactionsComponent, TransactionDataDialog } from './transactions/transactions.component';
 /* Import citizen components end */
 
 @NgModule({
@@ -23,10 +24,15 @@ import { MyResourceComponent } from './my-resource/my-resource.component';
 		FormsModule,
 		ReactiveFormsModule
 	],
+	entryComponents: [
+		TransactionDataDialog
+	],
 	declarations: [
 		DashboardComponent,
 		BirthCertiAppComponent,
 		MyResourceComponent,
+		TransactionsComponent,
+		TransactionDataDialog
 	]
 })
 export class CitizenModule { }

@@ -17,7 +17,7 @@ import { FormsActionsService } from '../../../core/services/citizen/data-service
 @Component({
 	selector: 'app-my-resource',
 	templateUrl: './my-resource.component.html',
-	styleUrls: ['./my-resource.component.scss']
+	styleUrls: ['./my-resource.component.scss', '../dashboard/dashboard.component.scss']
 })
 export class MyResourceComponent implements OnInit {
 
