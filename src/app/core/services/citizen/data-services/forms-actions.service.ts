@@ -37,6 +37,23 @@ export class FormsActionsService {
 	}
 
 	/**
+	 * This method is used to creat payments for payable services
+	 * @param paymentData -pass payment data here.
+	 */
+	createPayment(paymentData){
+
+		return this._http.post('api/servicePayment/pay', paymentData, this.getHeadersWithAuthToken());
+
+	}
+
+	/**
+	 * This method is used to get all payable service list.
+	 */
+	getPayableServiceList(){
+		return this._http.get('public/guest/payableServices', '');
+	}
+
+	/**
 	 * This method is used to get citizen app data
 	 * @param appId - citizen app id
 	 */

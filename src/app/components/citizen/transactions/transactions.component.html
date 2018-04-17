@@ -1,0 +1,157 @@
+<mat-card class="paymentsCard">
+
+  <mat-card-title>
+    User Payments
+  </mat-card-title>
+
+  <mat-card-content>
+
+    <form [formGroup]="paymentsForm" (ngSubmit)="makePayment(paymentsForm.value)" autocomplete="off" ngNativeValidate>
+
+      <mat-icon>assignment</mat-icon>
+      <mat-form-field>
+        <input matInput placeholder="Chalan Number" minlength="10" maxlength="10" name="chalanNumber" formControlName="chalanNumber">
+        <mat-error *ngIf="paymentsForm.get('chalanNumber').errors?.pattern ">
+          Chalan Number Not Valid.
+        </mat-error>
+        <mat-error *ngIf="paymentsForm.get('chalanNumber').errors?.minlength ||  paymentsForm.get('chalanNumber').errors?.maxlength">
+          Chalan Number length should be 10.
+        </mat-error>
+        <mat-error *ngIf="paymentsForm.get('chalanNumber').errors?.required && paymentsForm.get('chalanNumber').touched">
+          Chalan Number not be empty.
+        </mat-error>
+      </mat-form-field>
+
+
+      <div style="display:inline;">
+        <mat-icon>account_balance</mat-icon>
+        <mat-form-field>
+          <input matInput placeholder="Amount(Rs.)" name="amount" formControlName="amount">
+          <mat-error *ngIf="paymentsForm.get('amount').errors?.pattern ">
+            Amount should countain digits only.
+          </mat-error>
+          <mat-error *ngIf="paymentsForm.get('amount').errors?.required && paymentsForm.get('amount').touched">
+            Amount should not be empty.
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <span formGroupName="payableServices">
+        <mat-icon>room_service</mat-icon>
+        <mat-form-field>
+          <mat-select placeholder="Select Payable Service" name="code" formControlName="code">
+            <mat-option *ngFor="let payservice of PayableServices" [value]="payservice.code">
+              {{payservice.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div *ngIf="paymentsForm.get('payableServices').errors?.required && paymentsForm.get('payableServices').touched">
+          Payable Service should be selected.
+        </div>
+      </span>
+
+      
+
+      <button [disabled]="paymentsForm.invalid" mat-raised-button class="paymentButton" color="primary" type="submit">
+        Make Payment
+      </button>
+    </form>
+
+  </mat-card-content>
+
+</mat-card>
+
+<mat-card class="paymentsCard">
+
+  <mat-table #table [dataSource]="dataSource">
+
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef>Payment ID</mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+    </ng-container>
+
+
+    <ng-container matColumnDef="chalanNumber">
+      <mat-header-cell *matHeaderCellDef>Chalan Number</mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.chalanNumber}} </mat-cell>
+    </ng-container>
+
+
+    <ng-container matColumnDef="amount">
+      <mat-header-cell *matHeaderCellDef>Amount</mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.amount}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="paymentDate">
+      <mat-header-cell *matHeaderCellDef>Payment Date</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.paymentDate}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="payableServices">
+      <mat-header-cell *matHeaderCellDef>Payable Service</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.payableServices}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="paymentStatus">
+      <mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.paymentStatus}} </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="openDailog(row)"></mat-row>
+
+  </mat-table>
+
+  <mat-paginator [length]="resultsLength" [pageSize]="pageSize">
+  </mat-paginator>
+
+</mat-card>
+
+
+<!-- <mat-icon>credit_card</mat-icon>
+			<mat-form-field class="payments-full-width">
+				<input matInput placeholder="Card Number" name="cardNo" maxlength="16" formControlName="cardNo">
+			</mat-form-field>
+			<div *ngIf="paymentsForm.get('cardNo').errors?.pattern">
+				Card_Number should countain 16 digits only.
+			</div>
+			<div *ngIf="paymentsForm.get('cardNo').errors?.required && paymentsForm.get('cardNo').touched">
+				Card Number should not empty.
+			</div> -->
+
+<!-- <mat-icon>account_balance_wallet</mat-icon>
+			<mat-form-field class="payments-full-width">
+				<input matInput placeholder="CVV" name="cvv" maxlength="3" formControlName="cvv">
+			</mat-form-field>
+			<div *ngIf="paymentsForm.get('cvv').errors?.pattern">
+				CVV should countain 3 digits only.
+			</div>
+			<div *ngIf="paymentsForm.get('cvv').errors?.required && paymentsForm.get('cvv').touched">
+				CVV Should not empty.
+			</div> -->
+
+<!-- <mat-icon>account_circle</mat-icon>
+			<mat-form-field class="payments-full-width">
+				<input matInput placeholder="Card Holder Name" name="nameOnCard" formControlName="nameOnCard">
+			</mat-form-field>
+			<div *ngIf="paymentsForm.get('nameOnCard').errors?.pattern">
+				Card Holder Name Should Contain characters.
+			</div>
+
+			<div *ngIf="paymentsForm.get('nameOnCard').errors?.required && paymentsForm.get('nameOnCard').touched">
+				 Card Holder Name should not empty.
+			</div> -->
+
+<!-- <mat-icon>date_range</mat-icon>
+			<mat-form-field class="payments-full-width">
+				<input matInput placeholder="MM/YY" name="date" formControlName="date">
+			</mat-form-field>
+			<div *ngIf="paymentsForm.get('date').errors?.pattern">
+				Date should be in given formet.
+			</div>
+
+			<div *ngIf="paymentsForm.get('date').errors?.required && paymentsForm.get('date').touched">
+				Date should not be empty.
+			</div> -->
+
+

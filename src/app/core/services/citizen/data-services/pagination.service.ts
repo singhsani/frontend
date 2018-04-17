@@ -54,6 +54,19 @@ export class PaginationService {
 		return this._http.get(this.requestURL, this.headers);
 	}
 
+	getAllPaymentsData(): Observable<manageData> {
+
+		this.headers = {
+			"Authorization": "Bearer " + this._session.get("access_token").token,
+			"Content-Type": "application/json"
+		}
+
+		this.requestURL = `api/user/myPayments?page=${this.pageIndex}&limit=${this.pageSize}`;
+
+		return this._http.get(this.requestURL, this.headers);
+
+	}
+
 }
 
 export class manageData {
