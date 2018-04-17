@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { Configuration } from "./constants/app.constants";// common constant
 
 /* import all citizen related services start */
 import { AuthService } from './services/citizen/app-services/auth.service';
@@ -19,7 +18,6 @@ import { FormsActionsService } from './services/citizen/data-services/forms-acti
 	declarations: [
 	],
 	providers: [
-		Configuration,
 		AuthService,
 		AuthGuard,
 		AppService,

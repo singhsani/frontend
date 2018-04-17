@@ -7,7 +7,6 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 
-import { Configuration } from "../../../constants/app.constants";// common constant
 import { HttpService } from '../../../../shared/services/http.service';
 
 @Injectable()
@@ -21,13 +20,11 @@ export class AppService {
 	 * Constructor to declare defualt propeties of class.
 	 * @param _router - Declare Router property.
 	 * @param session - Declare Session Storage Module property.
-	 * @param _conf - Declare Constant property.
 	 * @param _http - Declare Http Service property.
 	 */
 	constructor(
 		private _router: Router,
 		public session: SessionStorageService,
-		private _conf: Configuration,
 		private _http: HttpService, private _session: SessionStorageService
 	) { }
 

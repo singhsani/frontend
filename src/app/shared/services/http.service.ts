@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Headers, Response, RequestOptions } from '@angular/http';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-
+import { environment } from './../../../environments/environment';
 /**
  * Import required angular Observable functions.
  */
@@ -11,8 +11,6 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 
 import * as _ from 'lodash';
-
-import { Configuration } from "../../core/constants/app.constants";
 
 /**
  * This class is use for perform all common http requests.
@@ -43,18 +41,10 @@ export class HttpService {
 	/**
 	 * Constructor to declare defualt propeties of class.
 	 * @param _http - Declare common Http service property.
-	 * @param _conf - Declare configuration variable property.
 	 */
 	constructor(
-		public _httpClient: HttpClient,
-		private _conf: Configuration
+		public _httpClient: HttpClient
 	) {
-
-		this.actionUrl = _conf.ServerWithApiUrl;
-
-		/**
-		 * Example - To set Predefined Common Header for All Requests.
-		 */
 	}
 
 	/**
@@ -68,7 +58,7 @@ export class HttpService {
 
 		const options = { headers: new HttpHeaders(combineHeaders) };
 
-		return this._httpClient.get(this.actionUrl + requestURI, options);
+		return this._httpClient.get(this.getFullUrl(requestURI), options);
 
 	}
 
@@ -84,7 +74,7 @@ export class HttpService {
 
 		const options = { headers: new HttpHeaders(combineHeaders) };
 
-		return this._httpClient.post(this.actionUrl + requestURI, data, options);
+		return this._httpClient.post(this.getFullUrl(requestURI), data, options);
 	}
 
 	/**
@@ -98,6 +88,15 @@ export class HttpService {
 
 		const options = { headers: new HttpHeaders(combineHeaders) };
 
-		return this._httpClient.delete(this.actionUrl + requestURI, options);
+		return this._httpClient.delete(this.getFullUrl(requestURI), options);
+	}
+
+	/**
+ 	* Build API url.
+ 	* @param url
+ 	* @returns {string}
+ 	*/
+	private getFullUrl(url: string): string {
+		return environment.envAPIServer + url;
 	}
 }
