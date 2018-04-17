@@ -46,4 +46,13 @@ export class HomeLayoutComponent implements OnInit {
 	selectLanguage(language: string) {
 		this._session.set('currentLanguage', language);
 	}
+
+	/**
+	 * This method is use to toggle side nav on mobile view
+	 */
+	toggleSideNav(){
+		if(this.mobileQuery.matches){
+			this.snav.opened = false;
+		}
+	}
 }
