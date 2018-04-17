@@ -29,6 +29,16 @@ import { HomeLayoutComponent } from './layouts/home-layout/home-layout.component
 import { LoginLayoutComponent } from './layouts/login-layout/login-layout.component';
 /* import all component end */
 
+// adding rx operators
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/filter';
+import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/finally';
+import 'rxjs/add/observable/of';
+import 'rxjs/add/observable/throw';
+
 
 @NgModule({
 	declarations: [

@@ -1,94 +1,115 @@
 import { Injectable } from '@angular/core';
-import { Headers, Response, RequestOptions } from '@angular/http';
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+
+import {
+	HttpClient,
+	HttpErrorResponse,
+	HttpEvent,
+	HttpHandler,
+	HttpInterceptor,
+	HttpRequest,
+	HttpHeaders
+} from '@angular/common/http';
+
 import { environment } from './../../../environments/environment';
 /**
  * Import required angular Observable functions.
  */
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/observable/throw';
 
-import * as _ from 'lodash';
+
+import { Subject } from 'rxjs/Subject';
 
 /**
  * This class is use for perform all common http requests.
  */
 @Injectable()
 export class HttpService {
-
-	/**
-	 * The URL set in this Variable with API Server address.
-	 */
-	private actionUrl: string;
-
-	/**
-	 * The Headers - Which is/are sent with request.
-	 */
-	private headers: Headers;
-
-	/**
-	 * The Options - Other options sent with request.
-	 */
-	private options: RequestOptions;
-
-	/**
-	 * The commonHeaders - Declare common headers for all http requests.
-	 */
-	private commonHeaders: any;
-
-	/**
-	 * Constructor to declare defualt propeties of class.
-	 * @param _http - Declare common Http service property.
-	 */
+	public loading = new Subject<boolean>();
+	
 	constructor(
-		public _httpClient: HttpClient
+		private httpClient: HttpClient
 	) {
 	}
 
 	/**
+  	* Request options.
+ 	* @param headerOptions
+  	* @returns {RequestOptionsArgs}
+  	*/
+	private requestOptions(headerOptions?: any): any {
+		let options = {};
+		if (headerOptions == null) {
+			options = {
+				headers: new HttpHeaders({
+					'Content-Type': 'application/json'
+				})
+			}
+		}else{
+			options = {
+				headers: new HttpHeaders(headerOptions)
+			}
+		}
+		return options;
+	}
+
+	/**
 	 * This method is use for send GET http Request to API.
-	 * @param requestURI - Additional request URL.
-	 * @param headers  - Header(s) which will pass with particular request.
+	 * @param url - Additional request URL.
+	 * @param body - params.
+	 * @param options  - Header(s) which will pass with particular request.
 	 */
-	get(requestURI: string, headers: any): Observable<any> {
+	get(url: string, body: any, options?: any): Observable<any> {
 
-		let combineHeaders = _.merge(this.commonHeaders, headers);
-
-		const options = { headers: new HttpHeaders(combineHeaders) };
-
-		return this._httpClient.get(this.getFullUrl(requestURI), options);
-
+		this.requestInterceptor();
+		return this.httpClient.post(this.getFullUrl(url), body, this.requestOptions(options))
+		.catch(this.onCatch.bind(this))
+		.do((res: Response) => {
+			this.onSubscribeSuccess(res);
+		}, (error: any) => {
+			this.onSubscribeError(error);
+		})
+		.finally(() => {
+			this.onFinally();
+		});
 	}
 
 	/**
 	 * This method is use for send POST http Request to API.
-	 * @param requestURI - Additional request URL.
-	 * @param data - POST method parameters
-	 * @param headers - Header(s) which will pass with particular request.
+	 * @param url - Additional request URL.
+	 * @param body - POST method parameters
+	 * @param options - Header(s) which will pass with particular request.
 	 */
-	post(requestURI: string, data: any, headers: any): Observable<any> {
-
-		let combineHeaders = _.merge(this.commonHeaders, headers);
-
-		const options = { headers: new HttpHeaders(combineHeaders) };
-
-		return this._httpClient.post(this.getFullUrl(requestURI), data, options);
+	post(url: string, body : any, options ? : any): Observable<any> {
+		this.requestInterceptor();
+		return this.httpClient.post(this.getFullUrl(url), body, this.requestOptions(options) )
+		.catch(this.onCatch.bind(this))
+		.do((res: Response) => {
+			this.onSubscribeSuccess(res);
+		}, (error: any) => {
+			this.onSubscribeError(error);
+		})
+		.finally(() => {
+			this.onFinally();
+		});
 	}
 
 	/**
 	 * This method is use for send POST http Request to API.
-	 * @param requestURI - Additional request URL.
-	 * @param headers - Header(s) which will pass with particular request.
+	 * @param url - Additional request URL.
+	 * @param options - Header(s) which will pass with particular request.
 	 */
-	delete(requestURI: string, headers: any): Observable<any> {
-
-		let combineHeaders = _.merge(this.commonHeaders, headers);
-
-		const options = { headers: new HttpHeaders(combineHeaders) };
-
-		return this._httpClient.delete(this.getFullUrl(requestURI), options);
+	delete(url: string, options: any): Observable<any> {
+		this.requestInterceptor();
+		return this.httpClient.post(this.getFullUrl(url),  this.requestOptions(options))
+		.catch(this.onCatch.bind(this))
+		.do((res: Response) => {
+			this.onSubscribeSuccess(res);
+		}, (error: any) => {
+			this.onSubscribeError(error);
+		})
+		.finally(() => {
+			this.onFinally();
+		});
 	}
 
 	/**
@@ -98,5 +119,52 @@ export class HttpService {
  	*/
 	private getFullUrl(url: string): string {
 		return environment.envAPIServer + url;
+	}
+
+	/**
+   * Request interceptor.
+   */
+	private requestInterceptor(): void {
+		this.loading.next(true);
+	}
+
+	/**
+	 * Response interceptor.
+	 */
+	private responseInterceptor(): void {
+		this.loading.next(false);
+	}
+
+	/**
+   * Error handler.
+   * @param error
+   * @param caught
+   * @returns {ErrorObservable}
+   */
+	private onCatch(error: any, caught: Observable<any>): Observable<any> {
+		return Observable.of(error);
+	}
+
+	/**
+	 * onSubscribeSuccess
+	 * @param res
+	 */
+	private onSubscribeSuccess(res: Response): void {
+		this.loading.next(false);
+	}
+
+	/**
+	 * onSubscribeError
+	 * @param error
+	 */
+	private onSubscribeError(error: any): void {
+		this.loading.next(false);
+	}
+
+	/**
+	 * onFinally
+	 */
+	private onFinally(): void {
+		this.responseInterceptor();
 	}
 }
