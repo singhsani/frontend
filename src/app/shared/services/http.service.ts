@@ -58,10 +58,10 @@ export class HttpService {
 	 * @param body - params.
 	 * @param options  - Header(s) which will pass with particular request.
 	 */
-	get(url: string, body: any, options?: any): Observable<any> {
+	get(url: string, options?: any): Observable<any> {
 
 		this.requestInterceptor();
-		return this.httpClient.post(this.getFullUrl(url), body, this.requestOptions(options))
+		return this.httpClient.get(this.getFullUrl(url),  this.requestOptions(options))
 		.catch(this.onCatch.bind(this))
 		.do((res: Response) => {
 			this.onSubscribeSuccess(res);
@@ -94,13 +94,34 @@ export class HttpService {
 	}
 
 	/**
+   * Performs a request with `put` http method.
+   * @param url
+   * @param body
+   * @param options
+   * @returns {Observable<>}
+   */
+	put(url: string, body: any, options?: any): Observable<any> {
+		this.requestInterceptor();
+		return this.httpClient.put(this.getFullUrl(url), body, this.requestOptions(options))
+			.catch(this.onCatch.bind(this))
+			.do((res: Response) => {
+				this.onSubscribeSuccess(res);
+			}, (error: any) => {
+				this.onSubscribeError(error);
+			})
+			.finally(() => {
+				this.onFinally();
+			});
+	}
+
+	/**
 	 * This method is use for send POST http Request to API.
 	 * @param url - Additional request URL.
 	 * @param options - Header(s) which will pass with particular request.
 	 */
 	delete(url: string, options: any): Observable<any> {
 		this.requestInterceptor();
-		return this.httpClient.post(this.getFullUrl(url),  this.requestOptions(options))
+		return this.httpClient.delete(this.getFullUrl(url),  this.requestOptions(options))
 		.catch(this.onCatch.bind(this))
 		.do((res: Response) => {
 			this.onSubscribeSuccess(res);
