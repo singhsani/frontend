@@ -18,22 +18,22 @@ export class AppService {
 
 	/**
 	 * Constructor to declare defualt propeties of class.
-	 * @param _router - Declare Router property.
+	 * @param router - Declare Router property.
 	 * @param session - Declare Session Storage Module property.
-	 * @param _http - Declare Http Service property.
+	 * @param http - Declare Http Service property.
 	 */
-	constructor(
-		private _router: Router,
-		public session: SessionStorageService,
-		private _http: HttpService, private _session: SessionStorageService
-	) { }
+	constructor(private router: Router,
+				private session: SessionStorageService,
+				private http: HttpService) {
+
+	}
 
 	/**
 	 * This method will get User Authentication Token and Save to the Session Storage.
 	 * @param loginData - User Information Data
 	 */
 	obtainAccessToken(loginData) {
-		
+
 		let params = new URLSearchParams();
 		params.append('username', loginData.username);
 		params.append('password', loginData.password);
@@ -45,7 +45,7 @@ export class AppService {
 			'Authorization': 'Basic dmlzaGFsOnNlY3JldA=='
 		};
 
-		return this._http.post('authorize', params.toString(), headers);
+		return this.http.post('authorize', params.toString(), headers);
 	}
 
 	/**
@@ -58,7 +58,7 @@ export class AppService {
 			'Content-type': 'application/json'
 		};
 
-		return this._http.post('public/user/citizen/register', registerData, headers);
+		return this.http.post('public/user/citizen/register', registerData, headers);
 	}
 
 	/**
@@ -77,9 +77,9 @@ export class AppService {
 	 * This method is use for perform user logout service.
 	 */
 	logout() {
-		
+
 		this.session.remove('access_token');
-		this._router.navigate(['/citizen/auth/login']);
+		this.router.navigate(['/citizen/auth/login']);
 	}
 
 
@@ -93,7 +93,7 @@ export class AppService {
 			'Content-type': 'application/json'
 		};
 
-		return this._http.post('public/user/forgetPassword', forgotPwdData, headers);
+		return this.http.post('public/user/forgetPassword', forgotPwdData, headers);
 	}
 
 	/**
@@ -106,7 +106,7 @@ export class AppService {
 			'Content-type': 'application/json'
 		};
 
-		return this._http.post('public/user/resetPassword', resetPasswordData, headers);
+		return this.http.post('public/user/resetPassword', resetPasswordData, headers);
 	}
 
 	/**
@@ -118,7 +118,7 @@ export class AppService {
 			'Content-type': 'application/json'
 		};
 
-		return this._http.post('public/user/verifyAccount/', verifyUserData ,headers);
+		return this.http.post('public/user/verifyAccount/', verifyUserData, headers);
 
 	}
 }

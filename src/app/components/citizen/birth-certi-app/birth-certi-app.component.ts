@@ -14,8 +14,8 @@ export class BirthCertiAppComponent implements OnInit {
 	appId: number;
 	birthCertForm: FormGroup;
 
-	constructor(private _router: Router, private _route: ActivatedRoute, private formService: FormsActionsService,
-		private fb: FormBuilder) {
+	constructor(private router: Router, private route: ActivatedRoute,
+		private formService: FormsActionsService, private fb: FormBuilder) {
 
 		this.birthCertForm = fb.group({
 			age: [null],
@@ -27,7 +27,7 @@ export class BirthCertiAppComponent implements OnInit {
 
 	ngOnInit() {
 
-		this._route.paramMap.subscribe(param => {
+		this.route.paramMap.subscribe(param => {
 			this.appId = Number(param.get('id'));
 		});
 
@@ -57,7 +57,7 @@ export class BirthCertiAppComponent implements OnInit {
 		value.id = this.appId;
 		this.formService.saveFormData(value).subscribe(res => {
 
-			this._router.navigate(['/citizen/dashboard']);
+			this.router.navigate(['/citizen/dashboard']);
 		})
 	}
 

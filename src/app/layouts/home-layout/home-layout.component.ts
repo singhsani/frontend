@@ -18,12 +18,10 @@ export class HomeLayoutComponent implements OnInit {
 	@ViewChild('snav') snav;
 	mobileQuery: MediaQueryList;
 
-	constructor(
-		private changeDetectorRef: ChangeDetectorRef,
-		private media: MediaMatcher,
-		private authService: AuthService,
-		private _session: SessionStorageService,
-	) {
+	constructor(private changeDetectorRef: ChangeDetectorRef,
+				private media: MediaMatcher,
+				private authService: AuthService,
+				private session: SessionStorageService) {
 
 		this.mobileQuery = media.matchMedia('(max-width: 600px)');
 		this._mobileQueryListener = () => changeDetectorRef.detectChanges();
@@ -44,7 +42,7 @@ export class HomeLayoutComponent implements OnInit {
 	}
 
 	selectLanguage(language: string) {
-		this._session.set('currentLanguage', language);
+		this.session.set('currentLanguage', language);
 	}
 
 	/**

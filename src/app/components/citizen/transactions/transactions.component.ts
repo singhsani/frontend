@@ -18,146 +18,142 @@ import { FormsActionsService } from '../../../core/services/citizen/data-service
 import swal from 'sweetalert2'
 
 @Component({
-  selector: 'app-transactions',
-  templateUrl: './transactions.component.html',
-  styleUrls: ['./transactions.component.scss']
+	selector: 'app-transactions',
+	templateUrl: './transactions.component.html',
+	styleUrls: ['./transactions.component.scss']
 })
 export class TransactionsComponent implements OnInit {
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+	@ViewChild(MatPaginator) paginator: MatPaginator;
 
-  paymentsForm: FormGroup;
-  PayableServices: Object[];
-  displayedColumns: string[] = ['id', 'chalanNumber', 'amount', 'paymentDate', 'payableServices', 'paymentStatus'];
-  myControl: FormControl = new FormControl();
-  resultsLength: number = 0;
-  pageSize: number = 10;
-  isLoadingResults: boolean = true;
-  isRateLimitReached: boolean = false;
-  dataSource = new MatTableDataSource();
-  filteredOptions: Observable<any[]>;
+	paymentsForm: FormGroup;
+	PayableServices: Object[];
+	displayedColumns: string[] = ['id', 'chalanNumber', 'amount', 'paymentDate', 'payableServices', 'paymentStatus'];
+	myControl: FormControl = new FormControl();
+	resultsLength: number = 0;
+	pageSize: number = 10;
+	isLoadingResults: boolean = true;
+	isRateLimitReached: boolean = false;
+	dataSource = new MatTableDataSource();
+	filteredOptions: Observable<any[]>;
 
-  constructor(
-    public dialog: MatDialog,
-    private formService: FormsActionsService,
-    private paginationService: PaginationService,
-    private _router: Router,
-    private fb: FormBuilder
-  ) {
-    this.getPayableServicesList();
-  }
+	constructor(private dialog: MatDialog,
+				private formService: FormsActionsService,
+				private paginationService: PaginationService,
+				private router: Router, private fb: FormBuilder) {
 
-  ngOnInit() {
-    this.paymentsForm = this.fb.group({
-      chalanNumber: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern('([0-9]|[A-Z]|[a-z])+')]],
-      amount: ['', [Validators.required, Validators.pattern('[0-9]+')]],
-      payableServices: this.fb.group({
-        code: ['', Validators.required]
-      })
-    });
+		this.getPayableServicesList();
+	}
 
-    this.getAllPaymentsList();
-  }
+	ngOnInit() {
+		this.paymentsForm = this.fb.group({
+			chalanNumber: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern('([0-9]|[A-Z]|[a-z])+')]],
+			amount: ['', [Validators.required, Validators.pattern('[0-9]+')]],
+			payableServices: this.fb.group({
+				code: ['', Validators.required]
+			})
+		});
 
-  /*this.filteredOptions = this.myControl.valueChanges
-     .pipe(
-       startWith(''),
-       map(tamount => this.filter(tamount))
-     );*/
+		this.getAllPaymentsList();
+	}
 
-  /*filter(tamount: string) {
-    console.log(tamount);
+	/*this.filteredOptions = this.myControl.valueChanges
+	   .pipe(
+		 startWith(''),
+		 map(tamount => this.filter(tamount))
+	   );*/
 
-    return this.transArray.filter(option =>
-      option.tamount.toLowerCase().indexOf(tamount.toLowerCase()) === 0);
-  }*/
+	/*filter(tamount: string) {
+	  console.log(tamount);
+  
+	  return this.transArray.filter(option =>
+		option.tamount.toLowerCase().indexOf(tamount.toLowerCase()) === 0);
+	}*/
 
 
-  /**
-   * Method is used to open transaction dailog details
-   * @param transaction - pass transaction object.
-   */
-  openDailog(transaction): void {
-    console.log(transaction);
-    let dialogRef = this.dialog.open(TransactionDataDialog, {
-      width: '400px',
-      data: {
-        tData: transaction
-      }
-    });
-
-  }
-
-  /**
-   * Get All Payments List For Citizen.
-   */
-  getAllPaymentsList() {
-    merge(this.paginator.page)
-      .pipe(
-        startWith({}),
-        switchMap(() => {
-          this.isLoadingResults = true;
-          this.paginationService.pageIndex = (this.paginator.pageIndex + 1);
-          this.paginationService.pageSize = this.pageSize;
-          return this.paginationService!.getAllPaymentsData();
-        }),
-        map(data => {
-          // Flip flag to show that loading has finished.
-          console.log(data);
-          this.isLoadingResults = false;
-          this.isRateLimitReached = false;
-          if (data.success && data.totalRecords >= 0) {
-            this.resultsLength = data.totalRecords;
-            return data.data;
-          } else {
-            this.resultsLength = 0;
-          }
-        }),
-        catchError(() => {
-          this.isLoadingResults = false;
-          this.isRateLimitReached = true;
-          return observableOf([]);
-        })
-      ).subscribe(data => {
-        console.log(data);
-        this.dataSource.data = data
-      });
-  }
-
-  /**
-	 * 
-	 * @param payData - json data as payment data.
+	/**
+	 * Method is used to open transaction dailog details
+	 * @param transaction - pass transaction object.
 	 */
-  makePayment(payData) {
-    this.formService.createPayment(payData).subscribe(respData => {
-      swal({
-        type: 'success',
-        title: 'Your payment is successfull',
-        html: '<p> Id : ' + respData.id + '</p><br>' +
-          '<p> Amount : ' + respData.amount + '</p><br>' +
-          '<p> Chalan Number : ' + respData.chalanNumber + '</p><br>' +
-          '<p> Payment Date : ' + respData.paymentDate + '</p><br>' +
-          '<p> Service : ' + respData.payableServices + '</p><br>' +
-          '<p> Status : ' + respData.paymentStatus + '</p><br>',
-        showConfirmButton: true,
-        customClass: 'animated tada'
-      });
+	openDailog(transaction): void {
 
-      this.paymentsForm.markAsPristine();
-      this.paymentsForm.markAsUntouched();
-      this.paymentsForm.reset();
-    });
+		let dialogRef = this.dialog.open(TransactionDataDialog, {
+			width: '400px',
+			data: {
+				tData: transaction
+			}
+		});
 
-  }
+	}
 
-  /**
-   * Method is used to get all payable services list from api.
-   */
-  getPayableServicesList() {
-    this.formService.getPayableServiceList().subscribe(respData => {
-      this.PayableServices = respData.list;
-    })
-  }
+	/**
+	 * Get All Payments List For Citizen.
+	 */
+	getAllPaymentsList() {
+		merge(this.paginator.page)
+			.pipe(
+				startWith({}),
+				switchMap(() => {
+					this.isLoadingResults = true;
+					this.paginationService.pageIndex = (this.paginator.pageIndex + 1);
+					this.paginationService.pageSize = this.pageSize;
+					return this.paginationService!.getAllPaymentsData();
+				}),
+				map(data => {
+					// Flip flag to show that loading has finished.
+					this.isLoadingResults = false;
+					this.isRateLimitReached = false;
+					if (data.success && data.totalRecords >= 0) {
+						this.resultsLength = data.totalRecords;
+						return data.data;
+					} else {
+						this.resultsLength = 0;
+					}
+				}),
+				catchError(() => {
+					this.isLoadingResults = false;
+					this.isRateLimitReached = true;
+					return observableOf([]);
+				})
+			).subscribe(data => {
+				this.dataSource.data = data
+			});
+	}
+
+	/**
+	   * 
+	   * @param payData - json data as payment data.
+	   */
+	makePayment(payData) {
+		this.formService.createPayment(payData).subscribe(respData => {
+			swal({
+				type: 'success',
+				title: 'Your payment is successfull',
+				html: '<p> Id : ' + respData.id + '</p><br>' +
+					'<p> Amount : ' + respData.amount + '</p><br>' +
+					'<p> Chalan Number : ' + respData.chalanNumber + '</p><br>' +
+					'<p> Payment Date : ' + respData.paymentDate + '</p><br>' +
+					'<p> Service : ' + respData.payableServices + '</p><br>' +
+					'<p> Status : ' + respData.paymentStatus + '</p><br>',
+				showConfirmButton: true,
+				customClass: 'animated tada'
+			});
+
+			this.paymentsForm.markAsPristine();
+			this.paymentsForm.markAsUntouched();
+			this.paymentsForm.reset();
+		});
+
+	}
+
+	/**
+	 * Method is used to get all payable services list from api.
+	 */
+	getPayableServicesList() {
+		this.formService.getPayableServiceList().subscribe(respData => {
+			this.PayableServices = respData.list;
+		})
+	}
 }
 
 
@@ -165,7 +161,7 @@ export class TransactionsComponent implements OnInit {
  * TransactionDataDialog Component to dispaly dailog as details of payments.
  */
 @Component({
-  template: `
+	template: `
   <ol>
   <li>
     Id: {{tData.id}}
@@ -187,14 +183,14 @@ export class TransactionsComponent implements OnInit {
 })
 
 export class TransactionDataDialog {
-  private tData: Object;
-  constructor(
-    public dialogRef: MatDialogRef<TransactionDataDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: any) {
-    this.tData = this.data.tData;
-  }
+	private tData: Object;
+	constructor(
+		public dialogRef: MatDialogRef<TransactionDataDialog>,
+		@Inject(MAT_DIALOG_DATA) public data: any) {
+		this.tData = this.data.tData;
+	}
 
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
+	onNoClick(): void {
+		this.dialogRef.close();
+	}
 }

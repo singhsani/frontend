@@ -16,13 +16,14 @@ export class ForgotPasswordComponent implements OnInit {
 
 	/**
 	 * 
-	 * @param _appService - Declare App Service property.
+	 * @param appService - Declare App Service property.
 	 * @param fb - Declare formbuilder property.
 	 * @param router - Declare Routing Property.
 	 */
-	constructor(private fb: FormBuilder, private _route: ActivatedRoute,
-				private _router: Router, private _appService: AppService
-	) { }
+	constructor( private fb: FormBuilder, private route: ActivatedRoute,
+		private router: Router, private appService: AppService) {
+
+	}
 
 
 	ngOnInit() {
@@ -39,12 +40,12 @@ export class ForgotPasswordComponent implements OnInit {
 	*/
 	onForgotPassword(formVals: FormGroup) {
 
-		this._appService.forgotPassword(formVals).subscribe(
+		this.appService.forgotPassword(formVals).subscribe(
 			res => {
 				/**
 				 * Redirect to reset password
 				 */
-				this._router.navigate(['citizen/auth/reset-password'], { queryParams: { uniqueId: res.data.uniqueId, code: res.data.cellOtp } });
+				this.router.navigate(['citizen/auth/reset-password'], { queryParams: { uniqueId: res.data.uniqueId, code: res.data.cellOtp } });
 			});
 	}
 
