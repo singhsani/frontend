@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
-import { FormGroup, FormBuilder, Validators, Form } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
@@ -45,14 +44,13 @@ export class MyResourceComponent implements OnInit {
 	 * Constructor to declare defualt propeties of class
 	 * @param formService - Declare form service property
 	 * @param paginationService - Declare pagination service property
-	 * @param _router - Declare router property
-   * @param fb - Declare formBuilder property
+	 * @param router - Declare router property
+     * @param fb - Declare formBuilder property
 	 */
-	constructor(
-		private formService: FormsActionsService,
-		private paginationService: PaginationService,
-		private _router: Router, private fb: FormBuilder
-	) { }
+	constructor(private formService: FormsActionsService,
+		private paginationService: PaginationService, private fb: FormBuilder) {
+
+	}
 
 	ngOnInit() {
 

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormGroup, FormBuilder, Validators, Form } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { AppService } from '../../../../core/services/citizen/app-services/app.service';
 
@@ -15,15 +15,15 @@ export class UserVerificationComponent implements OnInit {
 
 	/**
 	 * Constructor to declare defualt propeties of class.
-	 * @param _appService - Declare App Service property.
-	 * @param _route - Declare App ActivatedRoute property.
-	 * @param _router - Declare Routing Property.
+	 * @param appService - Declare App Service property.
+	 * @param route - Declare App ActivatedRoute property.
+	 * @param router - Declare Routing Property.
 	*/
-	constructor(
-		private _appService: AppService,
-		private _route: ActivatedRoute,
-		private _router: Router, private fb: FormBuilder
-	) { }
+	constructor(private appService: AppService,
+		private route: ActivatedRoute,
+		private router: Router, private fb: FormBuilder) {
+
+	}
 
 	/**
 	 * Initialize page content.
@@ -37,7 +37,7 @@ export class UserVerificationComponent implements OnInit {
 		});
 
 		//  get the values from queryparams
-		this._route.queryParams.subscribe(params => {
+		this.route.queryParams.subscribe(params => {
 
 			this.verifyForm.get('uniqueId').setValue(params['uniqueId']);
 
@@ -60,14 +60,14 @@ export class UserVerificationComponent implements OnInit {
 		if ((!this.verifyForm.get('uniqueId').value) || (!this.verifyForm.get('code').value)) {
 			this.showAlert("Link is not valid try again")
 		} else {
-			this._appService.verifyUser(formVals).subscribe(
+			this.appService.verifyUser(formVals).subscribe(
 				res => {
 
 					this.showAlert("Successfully Authenticated");
 					/**
 					 * Redirect to Reset Password Content
 					 */
-					this._router.navigate(['/login']);
+					this.router.navigate(['/login']);
 				});
 		}
 	}

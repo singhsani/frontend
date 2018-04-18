@@ -11,10 +11,13 @@ export class FormsActionsService {
 
 	/**
 	 * Constructor to declare defualt propeties of class.
-	 * @param _session - Declare Session Storage Module property.
-	 * @param _http - Declare Http Service property.
+	 * @param session - Declare Session Storage Module property.
+	 * @param http - Declare Http Service property.
 	 */
-	constructor(private _http: HttpService, private _session: SessionStorageService) { }
+	constructor(private http: HttpService, 
+				private session: SessionStorageService) { 
+
+	}
 
 	/**
 	 * This method is use to create new citizen app
@@ -23,7 +26,7 @@ export class FormsActionsService {
 
 		this.requestURL = `api/form/${this.apiType}/create`;
 
-		return this._http.get(this.requestURL, this.getHeadersWithAuthToken());
+		return this.http.get(this.requestURL, this.getHeadersWithAuthToken());
 	}
 
 	/**
@@ -33,24 +36,24 @@ export class FormsActionsService {
 
 		this.requestURL = `api/${this.apiType}/create`;
 
-		return this._http.post(this.requestURL, resourceData, this.getHeadersWithAuthToken());
+		return this.http.post(this.requestURL, resourceData, this.getHeadersWithAuthToken());
 	}
 
 	/**
 	 * This method is used to creat payments for payable services
 	 * @param paymentData -pass payment data here.
 	 */
-	createPayment(paymentData){
+	createPayment(paymentData) {
 
-		return this._http.post('api/servicePayment/pay', paymentData, this.getHeadersWithAuthToken());
+		return this.http.post('api/servicePayment/pay', paymentData, this.getHeadersWithAuthToken());
 
 	}
 
 	/**
 	 * This method is used to get all payable service list.
 	 */
-	getPayableServiceList(){
-		return this._http.get('public/guest/payableServices', '');
+	getPayableServiceList() {
+		return this.http.get('public/guest/payableServices', '');
 	}
 
 	/**
@@ -61,7 +64,7 @@ export class FormsActionsService {
 
 		this.requestURL = `api/form/${this.apiType}/get/${appId}`;
 
-		return this._http.get(this.requestURL, this.getHeadersWithAuthToken());
+		return this.http.get(this.requestURL, this.getHeadersWithAuthToken());
 	}
 
 	/**
@@ -71,7 +74,7 @@ export class FormsActionsService {
 	saveFormData(formData) {
 		this.requestURL = `api/form/${this.apiType}/save`;
 
-		return this._http.post(this.requestURL, formData, this.getHeadersWithAuthToken());
+		return this.http.post(this.requestURL, formData, this.getHeadersWithAuthToken());
 	}
 
 	/**
@@ -82,7 +85,7 @@ export class FormsActionsService {
 	submitFormData(appId) {
 		this.requestURL = `api/form/${this.apiType}/submit/${appId}`;
 
-		return this._http.post(this.requestURL, {}, this.getHeadersWithAuthToken());
+		return this.http.post(this.requestURL, {}, this.getHeadersWithAuthToken());
 	}
 
 	/**
@@ -93,7 +96,7 @@ export class FormsActionsService {
 
 		this.requestURL = `api/form/${this.apiType}/delete/${appId}`;
 
-		return this._http.delete(this.requestURL, this.getHeadersWithAuthToken());
+		return this.http.delete(this.requestURL, this.getHeadersWithAuthToken());
 	}
 
 	/**
@@ -102,7 +105,7 @@ export class FormsActionsService {
 	getHeadersWithAuthToken() {
 		let headers =
 			{
-				"Authorization": "Bearer " + this._session.get("access_token").token,
+				"Authorization": "Bearer " + this.session.get("access_token").token,
 				"Content-Type": "application/json"
 			};
 		return headers;

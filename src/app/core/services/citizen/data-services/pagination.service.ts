@@ -15,13 +15,11 @@ export class PaginationService {
 
 	/**
 	 * Constructor to declare defualt propeties of class.
-	 * @param _session - Declare Session Storage Module property.
-	 * @param _http - Declare Http Service property.
+	 * @param session - Declare Session Storage Module property.
+	 * @param http - Declare Http Service property.
 	 */
-	constructor(
-		private _http: HttpService,
-		private _session: SessionStorageService
-	) {
+	constructor(private http: HttpService,
+				private session: SessionStorageService ) {
 	}
 
 	/**
@@ -30,13 +28,13 @@ export class PaginationService {
 	getAllData(): Observable<manageData> {
 
 		this.headers = {
-			"Authorization": "Bearer " + this._session.get("access_token").token,
+			"Authorization": "Bearer " + this.session.get("access_token").token,
 			"Content-Type": "application/json"
 		}
 
 		this.requestURL = `api/user/${this.apiType}?page=${this.pageIndex}&limit=${this.pageSize}`;
 
-		return this._http.get(this.requestURL, this.headers);
+		return this.http.get(this.requestURL, this.headers);
 	}
 
 	/**
@@ -45,25 +43,25 @@ export class PaginationService {
 	getAllResourceData(): Observable<manageData> {
 
 		this.headers = {
-			"Authorization": "Bearer " + this._session.get("access_token").token,
+			"Authorization": "Bearer " + this.session.get("access_token").token,
 			"Content-Type": "application/json"
 		}
 
 		this.requestURL = `api/${this.apiType}/myResources/?page=${this.pageIndex}&limit=${this.pageSize}`;
 
-		return this._http.get(this.requestURL, this.headers);
+		return this.http.get(this.requestURL, this.headers);
 	}
 
 	getAllPaymentsData(): Observable<manageData> {
 
 		this.headers = {
-			"Authorization": "Bearer " + this._session.get("access_token").token,
+			"Authorization": "Bearer " + this.session.get("access_token").token,
 			"Content-Type": "application/json"
 		}
 
 		this.requestURL = `api/user/myPayments?page=${this.pageIndex}&limit=${this.pageSize}`;
 
-		return this._http.get(this.requestURL, this.headers);
+		return this.http.get(this.requestURL, this.headers);
 
 	}
 

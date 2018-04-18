@@ -15,15 +15,15 @@ export class SignUpComponent implements OnInit {
 
 	/**
 	 * Constructor to declare defualt propeties of class
-	 * @param _appService - Declare App Service property.
-	 * @param _router - Declare routing property.
+	 * @param appService - Declare App Service property.
+	 * @param router - Declare routing property.
 	 * @param fb - Declare formbuilder property.
 	*/
-	constructor(
-		private _router: Router,
+	constructor(private router: Router,
 		private fb: FormBuilder,
-		private _appService: AppService
-	) { }
+		private appService: AppService) {
+
+	}
 
 	ngOnInit() {
 		this.regForm = this.fb.group({
@@ -44,14 +44,14 @@ export class SignUpComponent implements OnInit {
 	 */
 	onSignUp(formVals: FormGroup) {
 
-		this._appService.registerUser(formVals).subscribe(
+		this.appService.registerUser(formVals).subscribe(
 			res => {
 
 				/**
 				 * Redirect to verify User Component.
 				*/
 				alert("We have sent a authentication link on your email");
-				this._router.navigate(['citizen/auth/user-verify'],
+				this.router.navigate(['citizen/auth/user-verify'],
 					{ queryParams: { uniqueId: res.data.uniqueId, code: res.data.cellOtp } });
 			});
 	}

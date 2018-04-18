@@ -11,24 +11,24 @@ import { AppService } from './app.service';
  */
 @Injectable()
 export class AuthService {
-	
+
 	/**
 	 * Constructor to declare defualt propeties of class.
 	 * @param router - Declare router object.
 	 * @param httpService - Declare common HTTP service Object.
 	 * @param appService - Declare common App service object.
 	 */
-	constructor(
-		private router: Router,
+	constructor(private router: Router,
 		public httpService: HttpService,
-		private appService: AppService
-	) { }
-	
+		private appService: AppService) {
+
+	}
+
 	/**
 	 * This method will return True or False based on User Login or Not.
 	 */
 	isLoggedIn() {
-		if (this.appService.checkCredentials()){
+		if (this.appService.checkCredentials()) {
 			return true;
 		} else {
 			return false;
@@ -38,7 +38,7 @@ export class AuthService {
 	/**
 	 * This method is use for call user logout service.
 	 */
-	logout(){
+	logout() {
 		this.appService.logout();
 	}
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormGroup, FormBuilder, Validators, Form } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SessionStorageService, SessionStorage } from 'angular-web-storage';
 
 import { AppService } from '../../../../core/services/citizen/app-services/app.service';
@@ -18,16 +18,14 @@ export class ResetPasswordComponent implements OnInit {
 
 	/**
 	 * Constructor to declare defualt propeties of class.
-	 * @param _appService - Declare App Service property.
-	 * @param _route - Declare App ActivatedRoute property.
+	 * @param appService - Declare App Service property.
+	 * @param route - Declare App ActivatedRoute property.
 	 * @param router - Declare Routing Property.
 	 * @param session - Declare Session Storage Module property.
 	*/
-	constructor(
-		private _appService: AppService, private fb: FormBuilder,
-		private _route: ActivatedRoute,
-		private _router: Router, public session: SessionStorageService
-	) {
+	constructor(private appService: AppService, private fb: FormBuilder,
+		private route: ActivatedRoute,
+		private router: Router, private session: SessionStorageService) {
 
 	}
 
@@ -44,7 +42,7 @@ export class ResetPasswordComponent implements OnInit {
 		});
 
 		//  get the values from queryparams
-		this._route.queryParams.subscribe(params => {
+		this.route.queryParams.subscribe(params => {
 
 			this.resetPassForm.get('uniqueId').setValue(params['uniqueId'] === null ? (this.session.get('user_info') && this.session.get('user_info').uniqueId) : params['uniqueId']);
 
@@ -69,10 +67,10 @@ export class ResetPasswordComponent implements OnInit {
 			this.showWarning = true;
 		} else {
 
-			this._appService.resetPassword(formVals).subscribe(
+			this.appService.resetPassword(formVals).subscribe(
 				res => {
 
-					this._router.navigate(['../login']);
+					this.router.navigate(['../login']);
 				});
 		}
 	}

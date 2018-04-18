@@ -20,32 +20,32 @@ import { AppService } from '../../../../core/services/citizen/app-services/app.s
 export class LoginComponent implements OnInit {
 
 	loginForm: FormGroup;
-	
+
 	/**
 	 * Constructor to declare defualt propeties of class
-	 * @param _appService - Declare App Service property.
-	 * @param _session - Declare session property
-	 * @param _router - Declare routing property.
+	 * @param appService - Declare App Service property.
+	 * @param session - Declare session property
+	 * @param router - Declare routing property.
 	 * @param fb - Declare formbuilder property.
 	 */
-	constructor(
-		private _appService: AppService,
-		private _session: SessionStorageService,
-		private _router: Router, private fb: FormBuilder
-	) { }
+	constructor(private appService: AppService,
+		private session: SessionStorageService,
+		private router: Router, private fb: FormBuilder) {
+
+	}
 
 
 	/**
 	 * This method is use for perform initialize time actions.
 	 */
 	ngOnInit() {
-		let accessToken = this._session.get("access_token");
+		let accessToken = this.session.get("access_token");
 
         /**
 		 * If Access Token is valid then redirect to Home Component.
 		 */
 		if (accessToken) {
-			this._router.navigate(['../../citizen']);
+			this.router.navigate(['../../citizen']);
 		}
 
 		this.loginForm = this.fb.group({
@@ -60,7 +60,7 @@ export class LoginComponent implements OnInit {
 	 */
 	onLoginSubmit(formVals: FormGroup) {
 
-		this._appService.obtainAccessToken(formVals).subscribe(
+		this.appService.obtainAccessToken(formVals).subscribe(
 			res => {
 				/**
 				 * Save Access Token.
@@ -74,8 +74,8 @@ export class LoginComponent implements OnInit {
 	 * @param token - User Authenticated Token.
 	 */
 	saveToken(token) {
-		this._session.set('access_token', { 'token': token.access_token, now: +new Date }, token.expires_in, 's');
-		this._router.navigate(['../../citizen']);
+		this.session.set('access_token', { 'token': token.access_token, now: +new Date }, token.expires_in, 's');
+		this.router.navigate(['../../citizen']);
 	}
 
 }

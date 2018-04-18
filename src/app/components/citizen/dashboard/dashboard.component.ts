@@ -45,12 +45,12 @@ export class DashboardComponent implements OnInit {
 	 * Constructor to declare defualt propeties of class
 	 * @param formService - Declare form service property
 	 * @param paginationService - Declare pagination service property
-	 * @param _router - Declare router property
+	 * @param router - Declare router property
 	 */
 	constructor(
 		private formService: FormsActionsService,
 		private paginationService: PaginationService,
-		private _router: Router
+		private router: Router
 	) { }
 
 	ngOnInit() {
@@ -98,7 +98,7 @@ export class DashboardComponent implements OnInit {
 	 * @param id - citizen id 
 	 */
 	redirectToEdit(id) {
-		this._router.navigate(['/citizen/birthcert', id]);
+		this.router.navigate(['/citizen/birthcert', id]);
 	}
 
 	/**
