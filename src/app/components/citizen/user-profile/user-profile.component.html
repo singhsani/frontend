@@ -1,0 +1,32 @@
+<div class="example-container col-md-7 col-md-offset-1">
+	<div class="header">
+		<div class="heading">Profile</div>
+	</div>
+	<mat-card>
+		<mat-card-content>
+			<form [formGroup]="userProfileForm" (ngSubmit)="onSubmitProfile(userProfileForm.value)" autocomplete="off" ngNativeValidate>
+
+				<mat-form-field class="example-full-width" style="width:100%">
+					<input matInput type="text" placeholder="Firstname" formControlName="firstName" required>
+				</mat-form-field>
+
+				<mat-form-field class="example-full-width" style="width:100%">
+					<input matInput type="text" placeholder="Lastname" formControlName="lastName" required>
+				</mat-form-field>
+
+				<mat-form-field class="example-full-width" style="width:100%">
+					<input matInput type="email" placeholder="Email" formControlName="email" required readonly>
+				</mat-form-field>
+
+				<mat-form-field class="example-full-width" style="width:100%">
+					<input matInput type="number" placeholder="Cell Number" formControlName="cellNo" required readonly>
+				</mat-form-field>
+
+				<button type="submit" mat-raised-button color="primary" [disabled]="userProfileForm.invalid" style="width:100%">
+					Submit Profile
+				</button>
+
+			</form>
+		</mat-card-content>
+	</mat-card>
+</div>

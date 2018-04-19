@@ -11,12 +11,9 @@ import {
 } from '@angular/common/http';
 
 import { environment } from './../../../environments/environment';
-/**
- * Import required angular Observable functions.
- */
+import { SessionStorageService } from 'angular-web-storage';
+
 import { Observable } from 'rxjs/Observable';
-
-
 import { Subject } from 'rxjs/Subject';
 
 /**
@@ -24,11 +21,9 @@ import { Subject } from 'rxjs/Subject';
  */
 @Injectable()
 export class HttpService {
-	public loading = new Subject<boolean>();
-	
-	constructor(
-		private httpClient: HttpClient
-	) {
+
+	constructor(private httpClient: HttpClient,
+		private session: SessionStorageService) {
 	}
 
 	/**
@@ -38,13 +33,20 @@ export class HttpService {
   	*/
 	private requestOptions(headerOptions?: any): any {
 		let options = {};
+
 		if (headerOptions == null) {
-			options = {
-				headers: new HttpHeaders({
-					'Content-Type': 'application/json'
-				})
+
+			// if token is present then set the headers with auth token
+			if (this.session.get("access_token")) {
+				options = {
+					headers: new HttpHeaders({
+						"Authorization": "Bearer " + this.session.get("access_token").token,
+						"Content-Type": "application/json"
+					})
+				}
 			}
-		}else{
+
+		} else {
 			options = {
 				headers: new HttpHeaders(headerOptions)
 			}
@@ -60,17 +62,7 @@ export class HttpService {
 	 */
 	get(url: string, options?: any): Observable<any> {
 
-		this.requestInterceptor();
-		return this.httpClient.get(this.getFullUrl(url),  this.requestOptions(options))
-		.catch(this.onCatch.bind(this))
-		.do((res: Response) => {
-			this.onSubscribeSuccess(res);
-		}, (error: any) => {
-			this.onSubscribeError(error);
-		})
-		.finally(() => {
-			this.onFinally();
-		});
+		return this.httpClient.get(this.getFullUrl(url), this.requestOptions(options))
 	}
 
 	/**
@@ -79,18 +71,9 @@ export class HttpService {
 	 * @param body - POST method parameters
 	 * @param options - Header(s) which will pass with particular request.
 	 */
-	post(url: string, body : any, options ? : any): Observable<any> {
-		this.requestInterceptor();
-		return this.httpClient.post(this.getFullUrl(url), body, this.requestOptions(options) )
-		.catch(this.onCatch.bind(this))
-		.do((res: Response) => {
-			this.onSubscribeSuccess(res);
-		}, (error: any) => {
-			this.onSubscribeError(error);
-		})
-		.finally(() => {
-			this.onFinally();
-		});
+	post(url: string, body: any, options?: any): Observable<any> {
+
+		return this.httpClient.post(this.getFullUrl(url), body, this.requestOptions(options))
 	}
 
 	/**
@@ -101,17 +84,9 @@ export class HttpService {
    * @returns {Observable<>}
    */
 	put(url: string, body: any, options?: any): Observable<any> {
-		this.requestInterceptor();
+
 		return this.httpClient.put(this.getFullUrl(url), body, this.requestOptions(options))
-			.catch(this.onCatch.bind(this))
-			.do((res: Response) => {
-				this.onSubscribeSuccess(res);
-			}, (error: any) => {
-				this.onSubscribeError(error);
-			})
-			.finally(() => {
-				this.onFinally();
-			});
+
 	}
 
 	/**
@@ -119,18 +94,10 @@ export class HttpService {
 	 * @param url - Additional request URL.
 	 * @param options - Header(s) which will pass with particular request.
 	 */
-	delete(url: string, options: any): Observable<any> {
-		this.requestInterceptor();
-		return this.httpClient.delete(this.getFullUrl(url),  this.requestOptions(options))
-		.catch(this.onCatch.bind(this))
-		.do((res: Response) => {
-			this.onSubscribeSuccess(res);
-		}, (error: any) => {
-			this.onSubscribeError(error);
-		})
-		.finally(() => {
-			this.onFinally();
-		});
+	delete(url: string, options?: any): Observable<any> {
+
+		return this.httpClient.delete(this.getFullUrl(url), this.requestOptions(options))
+
 	}
 
 	/**
@@ -142,50 +109,4 @@ export class HttpService {
 		return environment.envAPIServer + url;
 	}
 
-	/**
-   * Request interceptor.
-   */
-	private requestInterceptor(): void {
-		this.loading.next(true);
-	}
-
-	/**
-	 * Response interceptor.
-	 */
-	private responseInterceptor(): void {
-		this.loading.next(false);
-	}
-
-	/**
-   * Error handler.
-   * @param error
-   * @param caught
-   * @returns {ErrorObservable}
-   */
-	private onCatch(error: any, caught: Observable<any>): Observable<any> {
-		return Observable.of(error);
-	}
-
-	/**
-	 * onSubscribeSuccess
-	 * @param res
-	 */
-	private onSubscribeSuccess(res: Response): void {
-		this.loading.next(false);
-	}
-
-	/**
-	 * onSubscribeError
-	 * @param error
-	 */
-	private onSubscribeError(error: any): void {
-		this.loading.next(false);
-	}
-
-	/**
-	 * onFinally
-	 */
-	private onFinally(): void {
-		this.responseInterceptor();
-	}
 }

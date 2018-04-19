@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from '../../../../shared/services/http.service';
-import { Observable } from 'rxjs/Rx';
-import { SessionStorageService, SessionStorage } from 'angular-web-storage';
 
 @Injectable()
 export class FormsActionsService {
@@ -11,11 +9,9 @@ export class FormsActionsService {
 
 	/**
 	 * Constructor to declare defualt propeties of class.
-	 * @param session - Declare Session Storage Module property.
 	 * @param http - Declare Http Service property.
 	 */
-	constructor(private http: HttpService, 
-				private session: SessionStorageService) { 
+	constructor(private http: HttpService) {
 
 	}
 
@@ -26,7 +22,7 @@ export class FormsActionsService {
 
 		this.requestURL = `api/form/${this.apiType}/create`;
 
-		return this.http.get(this.requestURL, this.getHeadersWithAuthToken());
+		return this.http.get(this.requestURL);
 	}
 
 	/**
@@ -36,7 +32,7 @@ export class FormsActionsService {
 
 		this.requestURL = `api/${this.apiType}/create`;
 
-		return this.http.post(this.requestURL, resourceData, this.getHeadersWithAuthToken());
+		return this.http.post(this.requestURL, resourceData);
 	}
 
 	/**
@@ -45,7 +41,7 @@ export class FormsActionsService {
 	 */
 	createPayment(paymentData) {
 
-		return this.http.post('api/servicePayment/pay', paymentData, this.getHeadersWithAuthToken());
+		return this.http.post('api/servicePayment/pay', paymentData);
 
 	}
 
@@ -53,6 +49,7 @@ export class FormsActionsService {
 	 * This method is used to get all payable service list.
 	 */
 	getPayableServiceList() {
+		
 		return this.http.get('public/guest/payableServices', '');
 	}
 
@@ -64,7 +61,7 @@ export class FormsActionsService {
 
 		this.requestURL = `api/form/${this.apiType}/get/${appId}`;
 
-		return this.http.get(this.requestURL, this.getHeadersWithAuthToken());
+		return this.http.get(this.requestURL);
 	}
 
 	/**
@@ -72,9 +69,10 @@ export class FormsActionsService {
 	 * @param formData - citizen app form data
 	 */
 	saveFormData(formData) {
+
 		this.requestURL = `api/form/${this.apiType}/save`;
 
-		return this.http.post(this.requestURL, formData, this.getHeadersWithAuthToken());
+		return this.http.post(this.requestURL, formData);
 	}
 
 	/**
@@ -83,9 +81,10 @@ export class FormsActionsService {
 	 * @param appId - citizen app id
 	 */
 	submitFormData(appId) {
+
 		this.requestURL = `api/form/${this.apiType}/submit/${appId}`;
 
-		return this.http.post(this.requestURL, {}, this.getHeadersWithAuthToken());
+		return this.http.post(this.requestURL, {});
 	}
 
 	/**
@@ -96,19 +95,15 @@ export class FormsActionsService {
 
 		this.requestURL = `api/form/${this.apiType}/delete/${appId}`;
 
-		return this.http.delete(this.requestURL, this.getHeadersWithAuthToken());
+		return this.http.delete(this.requestURL);
 	}
 
 	/**
-	 * This method is use to return common headers
+	 * This method is used to get user profile data
 	 */
-	getHeadersWithAuthToken() {
-		let headers =
-			{
-				"Authorization": "Bearer " + this.session.get("access_token").token,
-				"Content-Type": "application/json"
-			};
-		return headers;
+	getUserProfile() {
+
+		return this.http.get('api/user/profile');
 	}
 
 

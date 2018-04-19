@@ -13,6 +13,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { BirthCertiAppComponent } from './birth-certi-app/birth-certi-app.component';
 import { MyResourceComponent } from './my-resource/my-resource.component';
 import { TransactionsComponent, TransactionDataDialog } from './transactions/transactions.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 /* Import citizen components end */
 
 @NgModule({
@@ -32,7 +33,8 @@ import { TransactionsComponent, TransactionDataDialog } from './transactions/tra
 		BirthCertiAppComponent,
 		MyResourceComponent,
 		TransactionsComponent,
-		TransactionDataDialog
+		TransactionDataDialog,
+		UserProfileComponent
 	]
 })
 export class CitizenModule { }

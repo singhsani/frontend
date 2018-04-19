@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Http, Headers, Response, RequestOptions } from '@angular/http';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { HttpService } from '../../../../shared/services/http.service';
 import { AppService } from './app.service';

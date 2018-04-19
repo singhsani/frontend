@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { MediaMatcher } from '@angular/cdk/layout';
 
 import { AuthService } from './../../core/services/citizen/app-services/auth.service';
-import { SessionStorageService, SessionStorage } from 'angular-web-storage';
+import { SessionStorageService } from 'angular-web-storage';
 
 @Component({
 	selector: 'app-home-layout',

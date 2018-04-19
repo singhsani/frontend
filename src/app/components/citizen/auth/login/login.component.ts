@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { FormGroup, FormBuilder, Validators, Form } from '@angular/forms';
-import { SessionStorageService, SessionStorage } from 'angular-web-storage';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { SessionStorageService } from 'angular-web-storage';
 
 import * as _ from 'lodash';
 
@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
 	constructor(private appService: AppService,
 		private session: SessionStorageService,
 		private router: Router, private fb: FormBuilder) {
-
+		
 	}
 
 
@@ -52,6 +52,7 @@ export class LoginComponent implements OnInit {
 			username: '',
 			password: ''
 		});
+	
 	}
 
 	/**

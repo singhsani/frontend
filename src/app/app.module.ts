@@ -20,14 +20,8 @@ import { CitizenModule } from './components/citizen/citizen.module';
 import { HospitalModule } from './components/hospital/hospital.module';
 import { SharedModule } from './shared/shared.module'; // shared design module
 import { CoreModule } from './core/core.module';
+import { ToastrModule } from 'ngx-toastr';
 /* Import child modules end */
-
-/* import all component start */
-
-import { AppComponent } from './app.component'; // main app component
-import { HomeLayoutComponent } from './layouts/home-layout/home-layout.component';
-import { LoginLayoutComponent } from './layouts/login-layout/login-layout.component';
-/* import all component end */
 
 // adding rx operators
 import 'rxjs/add/operator/map';
@@ -38,6 +32,12 @@ import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/finally';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/throw';
+
+/* import all component start */
+import { AppComponent } from './app.component'; // main app component
+import { HomeLayoutComponent } from './layouts/home-layout/home-layout.component';
+import { LoginLayoutComponent } from './layouts/login-layout/login-layout.component';
+/* import all component end */
 
 
 @NgModule({
@@ -59,7 +59,14 @@ import 'rxjs/add/observable/throw';
 		AppRoutingModule,
 		FormsModule,
 		ReactiveFormsModule,
-		AngularWebStorageModule
+		AngularWebStorageModule,
+		ToastrModule.forRoot({
+			timeOut: 5000,
+			positionClass: 'toast-top-right',
+			preventDuplicates: true,
+			progressBar: true,
+			closeButton: true
+		})
 	],
 	exports: [ ],
 	providers: [ ],

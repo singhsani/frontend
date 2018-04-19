@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormGroup, FormControl, FormBuilder, Validator } from '@angular/forms';
+import { FormGroup, FormBuilder, Validator } from '@angular/forms';
 
 import { AppService } from '../../../../core/services/citizen/app-services/app.service';
 

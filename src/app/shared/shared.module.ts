@@ -9,20 +9,12 @@ import { TranslateModule } from './modules/translate/translate.module';
 /* Import http related servies start */
 import { HttpService } from './services/http.service';
 import { TokenInterceptor } from './services/http-intercepter';
+import { CommonService } from './services/common.service';
 /* Import http related servies end */
 
-import { LoadingIndicatorComponent } from './components/loading-indicator/loading-indicator.component';
-import { AlertComponent } from './components/alert/alert.component';
-
-const COMPONENTS = [
-	LoadingIndicatorComponent,
-	AlertComponent
-]
 
 @NgModule({
-	declarations: [
-		...COMPONENTS
-	],
+	declarations: [ ],
 	imports: [
 		HttpModule,
 		CommonModule,
@@ -32,10 +24,10 @@ const COMPONENTS = [
 	],
 	exports: [
 		MaterialModule,
-		...COMPONENTS,
 		TranslateModule
 	],
 	providers: [
+		CommonService,
 		HttpService,
 		{
 			provide: HTTP_INTERCEPTORS,
