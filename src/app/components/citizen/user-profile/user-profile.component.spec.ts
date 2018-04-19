@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { LoadingIndicatorComponent } from './loading-indicator.component';
+import { UserProfileComponent } from './user-profile.component';
 
-describe('LoadingIndicatorComponent', () => {
-	let component: LoadingIndicatorComponent;
-	let fixture: ComponentFixture<LoadingIndicatorComponent>;
+describe('UserProfileComponent', () => {
+	let component: UserProfileComponent;
+	let fixture: ComponentFixture<UserProfileComponent>;
 
 	beforeEach(async(() => {
 		TestBed.configureTestingModule({
-			declarations: [LoadingIndicatorComponent]
+			declarations: [UserProfileComponent]
 		})
 			.compileComponents();
 	}));
 
 	beforeEach(() => {
-		fixture = TestBed.createComponent(LoadingIndicatorComponent);
+		fixture = TestBed.createComponent(UserProfileComponent);
 		component = fixture.componentInstance;
 		fixture.detectChanges();
 	});

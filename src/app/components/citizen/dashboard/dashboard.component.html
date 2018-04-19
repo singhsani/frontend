@@ -3,11 +3,13 @@
     <div class="row">
         <div class="col-md-12">
             <div style="margin: 14px 0px;">
-                <button (click)="createRecord()">Create Records</button>
+                <button mat-raised-button color="primary" (click)="createRecord()">
+                    <mat-icon>input</mat-icon> Create New Records
+                </button>
             </div>
-            <h1>{{ 'add' | translate:'ceicedforms' }}</h1>
+            <!-- <h1>{{ 'add' | translate:'ceicedforms' }}</h1>
             <h2>{{ 'address_proof' | translate:'ceicedforms' }}</h2>
-            <h2>{{ 'pincode' | translate:'ceicedforms' }}</h2>
+            <h2>{{ 'pincode' | translate:'ceicedforms' }}</h2> -->
             <div class="example-container mat-elevation-z8">
                 <div class="example-loading-shade" *ngIf="isLoadingResults || isRateLimitReached">
                     <mat-spinner *ngIf="isLoadingResults"></mat-spinner>

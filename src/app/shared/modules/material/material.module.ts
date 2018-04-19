@@ -1,30 +1,31 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { 
-	MatButtonModule,
-	MatToolbarModule,
-	MatCardModule,
-	MatInputModule,
-	MatSelectModule,
-	MatRadioModule,
-	MatDialogModule,
-	MatSidenavModule,
-	MatListModule,
-	MatIconModule,
-	MatChipsModule,
-	MatTabsModule,
-	MatCheckboxModule,
-	MatGridListModule,
-	MatSnackBarModule,
-	MatProgressSpinnerModule,
-	MatPaginatorModule,
-	MatTableModule,
-	MatSortModule
-} from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatCardModule } from '@angular/material/card';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatListModule } from '@angular/material/list';
+import { MatIconModule } from '@angular/material/icon';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+
 
 const COMPONENTS = [
-	CommonModule,
 	MatButtonModule,
 	MatToolbarModule,
 	MatSidenavModule,
@@ -43,11 +44,16 @@ const COMPONENTS = [
 	MatTableModule,
 	MatSortModule,
 	MatRadioModule,
-	MatDialogModule
+	MatDialogModule,
+	MatDatepickerModule,
+	MatNativeDateModule,
+	MatMenuModule
+	
 ];
 
 @NgModule({
 	imports: [
+		CommonModule,
 		...COMPONENTS
 	],
 	exports: [

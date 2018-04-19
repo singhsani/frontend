@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+
 import { Observable } from 'rxjs/Observable';
 import { merge } from 'rxjs/observable/merge';
 import { of as observableOf } from 'rxjs/observable/of';
@@ -12,6 +13,8 @@ import { switchMap } from 'rxjs/operators/switchMap';
 
 import { PaginationService } from '../../../core/services/citizen/data-services/pagination.service';
 import { FormsActionsService } from '../../../core/services/citizen/data-services/forms-actions.service';
+
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
 	selector: 'app-my-resource',
@@ -37,6 +40,8 @@ export class MyResourceComponent implements OnInit {
 
 	appType: string = 'citizenResources';
 
+	countDownDate = new Date();
+
 	@ViewChild(MatPaginator) paginator: MatPaginator;
 	@ViewChild(MatSort) sort: MatSort;
 
@@ -48,7 +53,8 @@ export class MyResourceComponent implements OnInit {
      * @param fb - Declare formBuilder property
 	 */
 	constructor(private formService: FormsActionsService,
-		private paginationService: PaginationService, private fb: FormBuilder) {
+		private paginationService: PaginationService, private fb: FormBuilder,
+		private toastr: ToastrService) {
 
 	}
 
@@ -101,12 +107,16 @@ export class MyResourceComponent implements OnInit {
 	/**
 	 * This method is use to create new record for citizen resource
 	 */
-	onResourceSubmit(formVals: FormGroup) {
+	onResourceSubmit(formVals) {
+
 		this.formService.apiType = this.appType;
 		this.formService.createResourceData(formVals).subscribe(res => {
+			this.toastr.success(`Resource ${formVals.resourceName} successfully added`);
 			this.getAllResourceData();
 			this.resourceForm.reset();
 		});
+
 	}
+
 
 }

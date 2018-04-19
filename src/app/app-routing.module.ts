@@ -15,18 +15,16 @@ import { HomeLayoutComponent } from './layouts/home-layout/home-layout.component
 /* Import all the layout component end */
 
 const routes: Routes = [
+
 	{ path: '', redirectTo: 'citizen', pathMatch: 'full' },
 	{
-		path: '',
-		component: HomeLayoutComponent,
-		canActivate: [AuthGuard],
+		path: '', component: HomeLayoutComponent, canActivate: [AuthGuard],
 		children: [
 			{ path: 'citizen', loadChildren: () => CitizenModule }
 		]
 	},
 	{
-		path: 'citizen',
-		component: LoginLayoutComponent,
+		path: 'citizen', component: LoginLayoutComponent,
 		children: [
 			{ path: 'auth', loadChildren: () => AuthModule }
 		]
@@ -34,7 +32,7 @@ const routes: Routes = [
 		
 	{ path: 'hospital', loadChildren: () => HospitalModule },
 
-	{ path: '**', redirectTo: '' }
+	{ path: '**', redirectTo: ''},
 ];
 
 @NgModule({

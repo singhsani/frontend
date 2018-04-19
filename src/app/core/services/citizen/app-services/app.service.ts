@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Http, Response, Headers, RequestOptions } from '@angular/http';
-import { SessionStorageService, SessionStorage } from 'angular-web-storage';
+import { SessionStorageService } from 'angular-web-storage';
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
@@ -54,11 +53,7 @@ export class AppService {
 	 */
 	registerUser(registerData) {
 
-		let headers = {
-			'Content-type': 'application/json'
-		};
-
-		return this.http.post('public/user/citizen/register', registerData, headers);
+		return this.http.post('public/user/citizen/register', registerData, this.getCommonHeaders());
 	}
 
 	/**
@@ -89,11 +84,7 @@ export class AppService {
 	 */
 	forgotPassword(forgotPwdData) {
 
-		let headers = {
-			'Content-type': 'application/json'
-		};
-
-		return this.http.post('public/user/forgetPassword', forgotPwdData, headers);
+		return this.http.post('public/user/forgetPassword', forgotPwdData, this.getCommonHeaders());
 	}
 
 	/**
@@ -102,11 +93,7 @@ export class AppService {
 	 */
 	resetPassword(resetPasswordData) {
 
-		let headers = {
-			'Content-type': 'application/json'
-		};
-
-		return this.http.post('public/user/resetPassword', resetPasswordData, headers);
+		return this.http.post('public/user/resetPassword', resetPasswordData, this.getCommonHeaders());
 	}
 
 	/**
@@ -114,11 +101,17 @@ export class AppService {
 	 */
 	verifyUser(verifyUserData) {
 
+		return this.http.post('public/user/verifyAccount/', verifyUserData, this.getCommonHeaders());
+	}
+
+	/**
+	 * This method use to return headers to all api
+	 */
+	getCommonHeaders() {
+
 		let headers = {
 			'Content-type': 'application/json'
 		};
-
-		return this.http.post('public/user/verifyAccount/', verifyUserData, headers);
-
+		return headers;
 	}
 }

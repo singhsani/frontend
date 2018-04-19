@@ -14,6 +14,7 @@ import { switchMap } from 'rxjs/operators/switchMap';
 
 import { PaginationService } from '../../../core/services/citizen/data-services/pagination.service';
 import { FormsActionsService } from '../../../core/services/citizen/data-services/forms-actions.service';
+import { CommonService } from './../../../shared/services/common.service';
 
 import swal from 'sweetalert2'
 
@@ -38,9 +39,10 @@ export class TransactionsComponent implements OnInit {
 	filteredOptions: Observable<any[]>;
 
 	constructor(private dialog: MatDialog,
-				private formService: FormsActionsService,
-				private paginationService: PaginationService,
-				private router: Router, private fb: FormBuilder) {
+		private formService: FormsActionsService,
+		private paginationService: PaginationService,
+		private router: Router, private fb: FormBuilder,
+		private commonService: CommonService) {
 
 		this.getPayableServicesList();
 	}
@@ -126,18 +128,18 @@ export class TransactionsComponent implements OnInit {
 	   */
 	makePayment(payData) {
 		this.formService.createPayment(payData).subscribe(respData => {
-			swal({
-				type: 'success',
-				title: 'Your payment is successfull',
-				html: '<p> Id : ' + respData.id + '</p><br>' +
-					'<p> Amount : ' + respData.amount + '</p><br>' +
-					'<p> Chalan Number : ' + respData.chalanNumber + '</p><br>' +
-					'<p> Payment Date : ' + respData.paymentDate + '</p><br>' +
-					'<p> Service : ' + respData.payableServices + '</p><br>' +
-					'<p> Status : ' + respData.paymentStatus + '</p><br>',
-				showConfirmButton: true,
-				customClass: 'animated tada'
-			});
+
+			this.commonService.openAlert('Payment Successful','','success',
+				'<p> Id : ' + respData.id + '</p><br>' +
+				'<p> Amount : ' + respData.amount + '</p><br>' +
+				'<p> Chalan Number : ' + respData.chalanNumber + '</p><br>' +
+				'<p> Payment Date : ' + respData.paymentDate + '</p><br>' +
+				'<p> Service : ' + respData.payableServices + '</p><br>' +
+				'<p> Status : ' + respData.paymentStatus + '</p><br>',
+				cb => {
+					this.getAllPaymentsList();
+				}
+			)
 
 			this.paymentsForm.markAsPristine();
 			this.paymentsForm.markAsUntouched();

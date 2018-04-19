@@ -50,8 +50,6 @@
 				</div>
 			</span>
 
-
-
 			<button [disabled]="paymentsForm.invalid" mat-raised-button class="paymentButton" color="primary" type="submit">
 				Make Payment
 			</button>
@@ -89,7 +87,7 @@
 
 		<ng-container matColumnDef="payableServices">
 			<mat-header-cell *matHeaderCellDef>Payable Service</mat-header-cell>
-			<mat-cell *matCellDef="let element">{{element.payableServices}}</mat-cell>
+			<mat-cell *matCellDef="let element">{{element.payableServices.name}}</mat-cell>
 		</ng-container>
 
 		<ng-container matColumnDef="paymentStatus">
