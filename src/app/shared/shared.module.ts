@@ -10,6 +10,7 @@ import { TranslateModule } from './modules/translate/translate.module';
 import { HttpService } from './services/http.service';
 import { TokenInterceptor } from './services/http-intercepter';
 import { CommonService } from './services/common.service';
+import { ValidationService } from './services/validation.service';
 /* Import http related servies end */
 
 
@@ -27,6 +28,7 @@ import { CommonService } from './services/common.service';
 		TranslateModule
 	],
 	providers: [
+		ValidationService,
 		CommonService,
 		HttpService,
 		{

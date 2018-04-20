@@ -23,7 +23,8 @@ import { MatNativeDateModule } from '@angular/material';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatStepperModule } from '@angular/material/stepper';
 
 const COMPONENTS = [
 	MatButtonModule,
@@ -47,8 +48,9 @@ const COMPONENTS = [
 	MatDialogModule,
 	MatDatepickerModule,
 	MatNativeDateModule,
-	MatMenuModule
-	
+	MatMenuModule,
+	MatProgressBarModule,
+	MatStepperModule
 ];
 
 @NgModule({
