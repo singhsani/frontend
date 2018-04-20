@@ -14,6 +14,7 @@ import { BirthCertiAppComponent } from './birth-certi-app/birth-certi-app.compon
 import { MyResourceComponent } from './my-resource/my-resource.component';
 import { TransactionsComponent, TransactionDataDialog } from './transactions/transactions.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { MarriageCertiComponent } from './marriage-certi/marriage-certi.component';
 /* Import citizen components end */
 
 @NgModule({
@@ -34,7 +35,8 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 		MyResourceComponent,
 		TransactionsComponent,
 		TransactionDataDialog,
-		UserProfileComponent
+		UserProfileComponent,
+		MarriageCertiComponent
 	]
 })
 export class CitizenModule { }

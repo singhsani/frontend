@@ -7,6 +7,8 @@ import { BirthCertiAppComponent } from './birth-certi-app/birth-certi-app.compon
 import { MyResourceComponent } from './my-resource/my-resource.component';
 import { TransactionsComponent } from './transactions/transactions.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { MarriageCertiComponent } from './marriage-certi/marriage-certi.component';
+
 /* Import citizen components other than auth end */
 
 const routes: Routes = [
@@ -15,7 +17,8 @@ const routes: Routes = [
 	{ path: 'birthcert/:id', component: BirthCertiAppComponent },
 	{ path: 'my-resource', component: MyResourceComponent },
 	{ path: 'my-transactions', component: TransactionsComponent },
-	{ path: 'my-profile', component: UserProfileComponent }
+	{ path: 'my-profile', component: UserProfileComponent },
+	{ path: 'marriagecert', component: MarriageCertiComponent }
 ];
 
 @NgModule({
