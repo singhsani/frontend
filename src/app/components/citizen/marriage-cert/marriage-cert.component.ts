@@ -19,9 +19,9 @@ import * as _ from 'lodash';
 import * as moment from 'moment';
 
 @Component({
-    selector: 'app-marriage-certi',
-    templateUrl: './marriage-certi.component.html',
-    styleUrls: ['./marriage-certi.component.scss']
+    selector: 'app-marriage-cert',
+    templateUrl: './marriage-cert.component.html',
+    styleUrls: ['./marriage-cert.component.scss']
 })
 export class MarriageCertiComponent implements OnInit {
     @ViewChild(MatHorizontalStepper) stepper: MatHorizontalStepper;
@@ -45,7 +45,7 @@ export class MarriageCertiComponent implements OnInit {
     bufferValue = 75;
 
     // submit for when user click submit button
-    clicksubmit:boolean = false;
+    clicksubmit: boolean = false;
 
     // marriage date 
     marriageDate = this.validationError.marriagedateValidator();

@@ -14,7 +14,7 @@ import { BirthCertiAppComponent } from './birth-certi-app/birth-certi-app.compon
 import { MyResourceComponent } from './my-resource/my-resource.component';
 import { TransactionsComponent, TransactionDataDialog } from './transactions/transactions.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
-import { MarriageCertiComponent } from './marriage-certi/marriage-certi.component';
+import { MarriageCertiComponent } from './marriage-cert/marriage-cert.component';
 /* Import citizen components end */
 
 @NgModule({

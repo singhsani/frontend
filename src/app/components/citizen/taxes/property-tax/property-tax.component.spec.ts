@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MarriageCertiComponent } from './marriage-certi.component';
+import { PropertyTaxComponent } from './property-tax.component';
 
-describe('MarriageCertiComponent', () => {
-  let component: MarriageCertiComponent;
-  let fixture: ComponentFixture<MarriageCertiComponent>;
+describe('PropertyTaxComponent', () => {
+  let component: PropertyTaxComponent;
+  let fixture: ComponentFixture<PropertyTaxComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MarriageCertiComponent ]
+      declarations: [ PropertyTaxComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MarriageCertiComponent);
+    fixture = TestBed.createComponent(PropertyTaxComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
