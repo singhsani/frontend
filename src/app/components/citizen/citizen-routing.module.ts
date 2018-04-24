@@ -14,17 +14,19 @@ import { MyResourceComponent } from './my-resource/my-resource.component';
 import { TransactionsComponent } from './transactions/transactions.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { MarriageCertiComponent } from './marriage-cert/marriage-cert.component';
+import { MyApplicationsComponent } from './my-applications/my-applications.component';
 
 /* Import citizen components other than auth end */
 
 const routes: Routes = [
 	{ path: '', redirectTo: 'dashboard', pathMatch: 'full' },
 	{ path: 'dashboard', component: DashboardComponent },
-	{ path: 'birthcert/:id', component: BirthCertiAppComponent },
+	{ path: 'my-applications', component: MyApplicationsComponent },
+	{ path: 'birthReg/:id', component: BirthCertiAppComponent },
 	{ path: 'my-resource', component: MyResourceComponent },
 	{ path: 'my-transactions', component: TransactionsComponent },
 	{ path: 'my-profile', component: UserProfileComponent },
-	{ path: 'marriagecert', component: MarriageCertiComponent },
+	{ path: 'marriageReg/:id', component: MarriageCertiComponent },
 
 	{ path: 'tax', loadChildren: () => TaxesModule},
 	{ path: 'booking', loadChildren: () => BookingsModule},

@@ -1,11 +1,11 @@
 .example-container {
-	display: flex;
+  display: flex;
   flex-direction: column;
   position: absolute;
   top: 0;
   bottom: 0;
   left: 0;
-  right: 0;  
+  right: 0;
 }
 
 .example-is-mobile .example-toolbar {
@@ -30,11 +30,12 @@ h1.example-app-name {
   flex: 1 1 auto;
 }
 
-.active-route-link, .mat-list-item-focus{
-  background-color:#3f51b5 !important;
+.active-route-link,
+.mat-list-item-focus {
+  background-color: #673ab7 !important;
   color: #fff !important;
 }
 
-.active-route-link:hover{
-    color: #000;
+.active-route-link:hover {
+  color: #000;
 }

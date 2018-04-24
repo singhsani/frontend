@@ -11,6 +11,7 @@ import { HttpService } from './services/http.service';
 import { TokenInterceptor } from './services/http-intercepter';
 import { CommonService } from './services/common.service';
 import { ValidationService } from './services/validation.service';
+import { UploadFileService } from './upload-file.service';
 /* Import http related servies end */
 
 
@@ -30,6 +31,7 @@ import { ValidationService } from './services/validation.service';
 	providers: [
 		ValidationService,
 		CommonService,
+		UploadFileService,
 		HttpService,
 		{
 			provide: HTTP_INTERCEPTORS,

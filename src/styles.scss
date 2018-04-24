@@ -6,5 +6,9 @@
     font-family:   Arial, sans-serif;
 }
 .mat-step-label-selected{
-    color: #ff4081 !important;
+    color: #673ab7 !important;
+}
+
+button:focus {
+    outline: none !important;
 }

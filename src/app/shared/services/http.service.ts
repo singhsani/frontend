@@ -101,6 +101,22 @@ export class HttpService {
 	}
 
 	/**
+	 * This method is use for send POST http Request to API for upload file.
+	 * @param url - Additional request URL.
+	 * @param body - POST method parameters
+	 * @param options - Header(s) which will pass with particular request.
+	 */
+	uploadFilePost(url: string, body: any, options?: any): Observable<any> {
+
+		const req = new HttpRequest('POST', this.getFullUrl(url), body, {
+			reportProgress: true,
+			headers: new HttpHeaders().set("Authorization", "Bearer " + this.session.get("access_token").token)
+		});
+
+		return this.httpClient.request(req);
+	}
+
+	/**
  	* Build API url.
  	* @param url
  	* @returns {string}
