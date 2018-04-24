@@ -47,24 +47,28 @@ export class TokenInterceptor implements HttpInterceptor {
 			if (err instanceof HttpErrorResponse) {
 
 				if (err.status === 401) {
-
-					this.commonService.openAlert('Warning!', err.message, 'warning', '', cb => {
+					this.commonService.openAlert('Warning!', err.error.message, 'warning', '', cb => {
 						this.router.navigate(['/citizen/auth/login']);
 					});
 
 				} else if (err.status === 500) {
 
-					this.commonService.openAlert('Error!', err.message, 'error');
+					this.commonService.openAlert('Error!', err.error.message, 'error');
 
 				} else if (err.status === 400) {
 
-					this.commonService.openAlert('Warning!', err.message, 'warning');
+					//this.commonService.openAlert('Warning!', err.error.message, 'warning');
+
+				} else if (err.status === 404) {
+
+					this.commonService.openAlert('Warning!', err.error.message, 'warning');
 
 				} else if (err.status === 0) {
 
-					this.commonService.openAlert('Error!', err.message, 'error', '', cb => {
+					this.commonService.openAlert('Error!', err.error.message, 'error', '', cb => {
 						this.router.navigate(['/citizen/auth/login']);
 					});
+					
 				}
 			}
 		});

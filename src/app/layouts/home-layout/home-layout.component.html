@@ -22,13 +22,11 @@
     <mat-sidenav-container class="example-sidenav-container" style="height: 100%;">
         <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [(opened)]="!mobileQuery.matches" style="width:200px;background-color: aliceblue;">
             <mat-nav-list (click)="toggleSideNav()">
-                <a mat-list-item routerLink="/citizen/dashboard/" routerLinkActive="active-route-link">dashboard</a>
+                <a mat-list-item routerLink="/citizen/dashboard/" routerLinkActive="active-route-link">Dashboard</a>
+                <a mat-list-item routerLink="/citizen/my-applications/" routerLinkActive="active-route-link">My Applications</a>
                 <a mat-list-item routerLink="/citizen/my-profile" routerLinkActive="active-route-link">My Profile</a>
                 <a mat-list-item routerLink="/citizen/my-resource" routerLinkActive="active-route-link">Resource</a>
                 <a mat-list-item routerLink="/citizen/my-transactions" routerLinkActive="active-route-link">Transction</a>
-                <a mat-list-item routerLink="/citizen/marriagecert" routerLinkActive="active-route-link">Marriage Cert</a>
-                <a mat-list-item routerLink="/citizen/tax/property" routerLinkActive="active-route-link">Property Tax</a>
-                <a mat-list-item routerLink="/citizen/booking/town-hall" routerLinkActive="active-route-link">Booking</a>
             </mat-nav-list>
         </mat-sidenav>
         <mat-sidenav-content>

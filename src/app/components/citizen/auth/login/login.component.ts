@@ -7,6 +7,7 @@ import { SessionStorageService } from 'angular-web-storage';
 import * as _ from 'lodash';
 
 import { AppService } from '../../../../core/services/citizen/app-services/app.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
 	selector: 'app-login',
@@ -30,9 +31,10 @@ export class LoginComponent implements OnInit {
 	 */
 	constructor(private appService: AppService,
 		private session: SessionStorageService,
-		private router: Router, private fb: FormBuilder) {
-		
-	}
+		private router: Router,
+		private fb: FormBuilder,
+		private toster: ToastrService
+	) {}
 
 
 	/**
@@ -63,11 +65,12 @@ export class LoginComponent implements OnInit {
 
 		this.appService.obtainAccessToken(formVals).subscribe(
 			res => {
-				/**
-				 * Save Access Token.
-				 */
 				this.saveToken(res);
-			});
+			},
+			err => {
+				this.toster.error(err.error.error_description);
+			}
+		);
 	}
 
 	/**

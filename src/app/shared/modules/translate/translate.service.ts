@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { SessionStorageService, SessionStorage } from 'angular-web-storage';
 import { HttpService } from '../../services/http.service';
+import * as _ from 'lodash';
 
 /**
  * This Class is use for perform common language translation for application.
@@ -55,15 +56,11 @@ export class TranslateService {
 	translate(key: string, type?: string) {
 		
 		this.setCurrentLanguage();
-		
-		try {
-			if (this.data[type][key][this.currentLanguage]) {
-				return this.data[type][key][this.currentLanguage];
-			} else {
-				return `${key}`;
-			}
-		} catch (error) {
-			return `${key}`;
+
+		if(_.has(this.data, type)){
+			return _.get(this.data, `${type}.${key}.${this.currentLanguage}`, key);
+		} else {
+			return key;
 		}
 	}
 

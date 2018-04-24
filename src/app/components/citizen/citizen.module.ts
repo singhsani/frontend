@@ -15,6 +15,7 @@ import { MyResourceComponent } from './my-resource/my-resource.component';
 import { TransactionsComponent, TransactionDataDialog } from './transactions/transactions.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { MarriageCertiComponent } from './marriage-cert/marriage-cert.component';
+import { MyApplicationsComponent } from './my-applications/my-applications.component';
 /* Import citizen components end */
 
 @NgModule({
@@ -36,7 +37,8 @@ import { MarriageCertiComponent } from './marriage-cert/marriage-cert.component'
 		TransactionsComponent,
 		TransactionDataDialog,
 		UserProfileComponent,
-		MarriageCertiComponent
+		MarriageCertiComponent,
+		MyApplicationsComponent
 	]
 })
 export class CitizenModule { }

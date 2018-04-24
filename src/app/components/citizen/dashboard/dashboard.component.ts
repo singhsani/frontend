@@ -1,17 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-
-import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
-import { Observable } from 'rxjs/Observable';
-import { merge } from 'rxjs/observable/merge';
-import { of as observableOf } from 'rxjs/observable/of';
-import { catchError } from 'rxjs/operators/catchError';
-import { map } from 'rxjs/operators/map';
-import { startWith } from 'rxjs/operators/startWith';
-import { switchMap } from 'rxjs/operators/switchMap';
-
-import { PaginationService } from '../../../core/services/citizen/data-services/pagination.service';
+import { UploadFileService } from '../../../shared/upload-file.service';
+import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { FormsActionsService } from '../../../core/services/citizen/data-services/forms-actions.service';
+
 
 @Component({
 	selector: 'app-dashboard',
@@ -20,26 +12,14 @@ import { FormsActionsService } from '../../../core/services/citizen/data-service
 })
 export class DashboardComponent implements OnInit {
 
-	displayedColumns: any = [
-		'id',
-		'applicantName',
-		'fileNumber',
-		'fileStatus',
-		'serviceType',
-		'action'
-	];
+	/**
+	 * file upload related declaration
+	 */
 
-	dataSource = new MatTableDataSource();
-
-	resultsLength: number = 0;
-	pageSize: number = 20;
-	isLoadingResults: boolean = true;
-	isRateLimitReached: boolean = false;
-
-	appType: string = 'myApps';
-
-	@ViewChild(MatPaginator) paginator: MatPaginator;
-	@ViewChild(MatSort) sort: MatSort;
+	selectedFiles: FileList
+	currentFileUpload: File
+	progress: { percentage: number } = { percentage: 0 }
+	fileData: any;
 
 	/**
 	 * Constructor to declare defualt propeties of class
@@ -48,79 +28,60 @@ export class DashboardComponent implements OnInit {
 	 * @param router - Declare router property
 	 */
 	constructor(
+		private router: Router,
 		private formService: FormsActionsService,
-		private paginationService: PaginationService,
-		private router: Router
-	) { }
+		private uploadFileService: UploadFileService
+	) {}
 
 	ngOnInit() {
-
-		// If the user changes the sort order, reset back to the first page.
-		this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
-
-		this.getAllData();
 
 	}
 
 	/**
-	 * This method use to get all the citizen data with pagination
+	 * This method is use to create new record for citizen
 	 */
-	getAllData() {
-		merge(this.sort.sortChange, this.paginator.page)
-			.pipe(
-				startWith({}),
-				switchMap(() => {
-					this.isLoadingResults = true;
-					this.paginationService.apiType = this.appType;
-					this.paginationService.pageIndex = (this.paginator.pageIndex + 1);
-					this.paginationService.pageSize = this.pageSize;
-					return this.paginationService!.getAllData();
-				}),
-				map(data => {
-					this.isLoadingResults = false;
-					this.isRateLimitReached = false;
-					this.resultsLength = data.totalRecords;
-					return data.data;
-				}),
-				catchError(() => {
-					this.isLoadingResults = false;
-					this.isRateLimitReached = true;
-					return observableOf([]);
-				})
-			).subscribe(data => {
-				this.dataSource.data = data;
-			}
-			);
+	createRecord(apiType: string) {
+		this.formService.apiType = apiType;
+		this.formService.createFormData().subscribe(res => {
+			this.redirectToEdit('citizen/'+apiType, res.serviceFormId);
+		});
 	}
 
 	/**
 	 * This method is used to redirect on citizen form
 	 * @param id - citizen id 
 	 */
-	redirectToEdit(id) {
-		this.router.navigate(['/citizen/birthcert', id]);
+	redirectToEdit(forwardLink:string, id:number) {
+		this.router.navigate([forwardLink, id]);
 	}
 
-	/**
-	 * This method is use to create new record for citizen
-	 */
-	createRecord() {
-		this.formService.apiType = 'birthCert';
-		this.formService.createFormData().subscribe(res => {
-			this.getAllData();
-		});
+	selectFile(event) {
+		this.selectedFiles = event.target.files;
 	}
 
-	/**
-	 * This method use to delete citizen record
-	 * @param id citizen id
-	 */
-	deleteRecord(id) {
+	upload() {
 
-		this.formService.apiType = 'birthCert';
-		this.formService.deleteFormData(id).subscribe(res => {
-			this.getAllData();
+		let formData = new FormData();
+
+		formData.append('fieldIdentifier', '1');
+		formData.append('labelName', 'test');
+		formData.append('formPart', '2');
+		formData.append('variableName', 'test');
+		formData.append('serviceFormId', '2');
+		
+		this.progress.percentage = 0;
+		
+		this.currentFileUpload = this.selectedFiles.item(0);
+		
+		formData.append('file', this.currentFileUpload);
+		
+		this.uploadFileService.processFileToServer(formData, setProgressBar => {
+			this.progress.percentage = setProgressBar;
+		}, successResponse => {
+			console.log(successResponse);
 		});
+
+		this.selectedFiles = undefined;
 	}
 
 }
