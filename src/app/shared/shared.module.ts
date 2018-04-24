@@ -14,9 +14,16 @@ import { ValidationService } from './services/validation.service';
 import { UploadFileService } from './upload-file.service';
 /* Import http related servies end */
 
+/* import directives start*/
+import { OnlyNumberDirective } from './directives/only-number.directive';
+/* import directives end*/
+
+/* import pipes start*/
+import { InrPipe } from './pipes/inr.pipe';
+/* import pipes end*/
 
 @NgModule({
-	declarations: [ ],
+	declarations: [ OnlyNumberDirective, InrPipe],
 	imports: [
 		HttpModule,
 		CommonModule,
@@ -26,7 +33,9 @@ import { UploadFileService } from './upload-file.service';
 	],
 	exports: [
 		MaterialModule,
-		TranslateModule
+		TranslateModule,
+		OnlyNumberDirective,
+		InrPipe
 	],
 	providers: [
 		ValidationService,
