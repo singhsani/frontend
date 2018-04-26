@@ -99,6 +99,16 @@ export class FormsActionsService {
 	}
 
 	/**
+	 * This method is use to get lookup data respective to api type
+	 */
+	getDataFromLookups(){
+
+		this.requestURL = `api/form/${this.apiType}/lookups`;
+
+		return this.http.get(this.requestURL);
+	}
+
+	/**
 	 * This method is used to get user profile data
 	 */
 	getUserProfile() {

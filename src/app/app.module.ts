@@ -56,7 +56,6 @@ import { LoginLayoutComponent } from './layouts/login-layout/login-layout.compon
 		HttpModule,
 		HttpClientModule,
 		LayoutModule,
-		AppRoutingModule,
 		FormsModule,
 		ReactiveFormsModule,
 		AngularWebStorageModule,
@@ -66,7 +65,9 @@ import { LoginLayoutComponent } from './layouts/login-layout/login-layout.compon
 			preventDuplicates: true,
 			progressBar: true,
 			closeButton: true
-		})
+		}),
+		AppRoutingModule,
+		
 	],
 	exports: [ ],
 	providers: [ ],

@@ -1,0 +1,40 @@
+.divider {
+    height: 30px;
+    width: 100%;
+    background: #088484;
+    margin: 20px 0px;
+    border-radius: 5px;
+
+    p {
+        color: #fff;
+        padding-top: 4px;
+        font-weight: bolder;
+    }
+
+    .ownerClass {
+        margin-top: -44px;
+        padding: 3px !important;
+        background: #0cb721;
+        cursor: pointer;
+    }
+
+}
+
+.unitDivider{
+    background: #e80dd4de !important;
+    border-radius: 5px;
+}
+
+.saveDraft {
+    margin: -37px 15px 7px;
+}
+
+.actionRow{
+    display: inline-table;
+    margin: 10px;
+    width: 185px;
+    border: none;
+}
+.mar-right{
+    margin-right: 5px;
+}

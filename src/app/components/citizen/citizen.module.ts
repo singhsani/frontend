@@ -16,16 +16,19 @@ import { TransactionsComponent, TransactionDataDialog } from './transactions/tra
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { MarriageCertiComponent } from './marriage-cert/marriage-cert.component';
 import { MyApplicationsComponent } from './my-applications/my-applications.component';
+import { NoBirthRecordComponent } from './no-birth-record/no-birth-record.component';
+import { NoDeathRecordComponent } from './no-death-record/no-death-record.component';
+import { CremationCertificateComponent } from './cremation-certificate/cremation-certificate.component';
 /* Import citizen components end */
 
 @NgModule({
 	imports: [
 		CommonModule,
-		CitizenRoutingModule,
 		SharedModule,
 		CoreModule,
 		FormsModule,
-		ReactiveFormsModule
+		ReactiveFormsModule,
+		CitizenRoutingModule
 	],
 	entryComponents: [
 		TransactionDataDialog
@@ -38,7 +41,10 @@ import { MyApplicationsComponent } from './my-applications/my-applications.compo
 		TransactionDataDialog,
 		UserProfileComponent,
 		MarriageCertiComponent,
-		MyApplicationsComponent
+		MyApplicationsComponent,
+		NoBirthRecordComponent,
+		NoDeathRecordComponent,
+		CremationCertificateComponent
 	]
 })
 export class CitizenModule { }
