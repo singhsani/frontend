@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PropertyTaxComponent } from './property-tax.component';
+import { NoDeathRecordComponent } from './no-death-record.component';
 
-describe('PropertyTaxComponent', () => {
-	let component: PropertyTaxComponent;
-	let fixture: ComponentFixture<PropertyTaxComponent>;
+describe('NoDeathRecordComponent', () => {
+	let component: NoDeathRecordComponent;
+	let fixture: ComponentFixture<NoDeathRecordComponent>;
 
 	beforeEach(async(() => {
 		TestBed.configureTestingModule({
-			declarations: [PropertyTaxComponent]
+			declarations: [NoDeathRecordComponent]
 		})
 			.compileComponents();
 	}));
 
 	beforeEach(() => {
-		fixture = TestBed.createComponent(PropertyTaxComponent);
+		fixture = TestBed.createComponent(NoDeathRecordComponent);
 		component = fixture.componentInstance;
 		fixture.detectChanges();
 	});

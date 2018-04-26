@@ -7,6 +7,9 @@ import { AuthGuard } from './core/guard/auth.guard';// citizen guard
 import { AuthModule } from './components/citizen/auth/auth.module';
 import { CitizenModule } from './components/citizen/citizen.module';
 import { HospitalModule } from './components/hospital/hospital.module';
+import { TaxesModule } from './components/citizen/taxes/taxes.module';
+import { LicencesModule } from './components/citizen/licences/licences.module';
+import { BookingsModule } from './components/citizen/bookings/bookings.module';
 /* Import child modules end */
 
 /* Import all the layout component start */
@@ -18,9 +21,12 @@ const routes: Routes = [
 
 	{ path: '', redirectTo: 'citizen', pathMatch: 'full' },
 	{
-		path: '', component: HomeLayoutComponent, canActivate: [AuthGuard],
-		children: [
-			{ path: 'citizen', loadChildren: () => CitizenModule }
+		path: 'citizen', component: HomeLayoutComponent, canActivate: [AuthGuard],
+		children: [ 
+			{ path: '', loadChildren: () => CitizenModule },
+			{ path: 'tax', loadChildren: () => TaxesModule },
+			{ path: 'booking', loadChildren: () => BookingsModule },
+			{ path: 'licence', loadChildren: () => LicencesModule },
 		]
 	},
 	{

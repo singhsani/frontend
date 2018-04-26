@@ -5,7 +5,6 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class InrPipe implements PipeTransform {
   transform(value: any, currency: string, symbol: boolean = false): any {
-    debugger;
     if (!isNaN(value)) {
       var result = value.toString().split('.');
 

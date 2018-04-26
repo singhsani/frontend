@@ -4,7 +4,6 @@ import { UploadFileService } from '../../../shared/upload-file.service';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { FormsActionsService } from '../../../core/services/citizen/data-services/forms-actions.service';
 
-
 @Component({
 	selector: 'app-dashboard',
 	templateUrl: './dashboard.component.html',
