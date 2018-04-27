@@ -67,7 +67,7 @@ export class UserVerificationComponent implements OnInit {
 					/**
 					 * Redirect to Reset Password Content
 					 */
-					this.router.navigate(['/login']);
+					this.router.navigate(['/citizen/auth/login']);
 				});
 		}
 	}

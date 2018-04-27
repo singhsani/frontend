@@ -20,10 +20,23 @@ import { OnlyNumberDirective } from './directives/only-number.directive';
 
 /* import pipes start*/
 import { InrPipe } from './pipes/inr.pipe';
+import { ActionBarComponent } from './components/action-bar/action-bar.component';
+import { ControlMessagesComponent } from './components/control-messages/control-messages.component';
+import { FileUploadComponent } from './components/file-upload/file-upload.component';
 /* import pipes end*/
 
+const COMPONENTS = [
+	OnlyNumberDirective, 
+	InrPipe, 
+	ActionBarComponent, 
+	ControlMessagesComponent, 
+	FileUploadComponent
+]
+
 @NgModule({
-	declarations: [ OnlyNumberDirective, InrPipe],
+	declarations: [ 
+		...COMPONENTS
+	],
 	imports: [
 		HttpModule,
 		CommonModule,
@@ -34,8 +47,7 @@ import { InrPipe } from './pipes/inr.pipe';
 	exports: [
 		MaterialModule,
 		TranslateModule,
-		OnlyNumberDirective,
-		InrPipe
+		...COMPONENTS
 	],
 	providers: [
 		ValidationService,

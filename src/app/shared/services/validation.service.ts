@@ -5,21 +5,35 @@ import * as moment from 'moment';
 @Injectable()
 export class ValidationService {
 
-    // error list
-    required: string = 'Required';
-    // namelengtherror: string = 'Name must be at least 2 characters long.';
-    namecharerror: string = 'Not include numeric character.'
-    invalidCreditCard: string = 'Is invalid credit card number';
-    invalidEmail: string = 'Email is required and must be a valid email pattern';
-    invalidPassword: string = 'Invalid password. Password must be at least 6 characters long, and contain a number.';
-    invalidemarrigedate: string = 'Required and Should not be future date!';
-    invalidgroombirthdate: string = 'Age must be greater than 21 year';
-    invalidbridebirthdate: string = 'Age must be greater than 18 year';
-    invalidAadharno: string = 'Aadhar Number must be 12';
+    /**
+     * This method is use for return validation messages
+     * @param validatorName - get form controls name eg. firstName, etc..
+     * @param validatorValue - get validators type eg. required, maxlength, etc..
+     */
+    static getValidatorErrorMessage(validatorName: string, validatorValue?: any) {
+        let config = {
+            // error list
+            required: 'Required',
+            namelengtherror: 'Name must be at least 2 characters long.',
+            namecharerror: 'Not include numeric character.',
+            invalidCreditCard: 'Is invalid credit card number',
+            invalidEmail: 'Invalid email address',
+            invalidPassword: 'Invalid password. Password must be at least 6 characters long, and contain a number.',
+            invalidemarrigedate: 'Required and Should not be future date!',
+            invalidgroombirthdate: 'Age must be greater than 21 year',
+            invalidbridebirthdate: 'Age must be greater than 18 year',
+            invalidAadharno: 'Aadhar Number must be 12',
+            minlength: `Minimum length ${validatorValue.requiredLength} characters`,
+            maxlength: `Cannot exceed ${validatorValue.requiredLength} characters`,
+        }
+
+        return config[validatorName];
+    }
+
 
     static nameValidator(control: AbstractControl) {
         // RFC 2822 compliant regex
-        if (control.value.match(/^[a-zA-Z ]{2,30}$/)) {
+        if (control.value && control.value.match(/^[a-zA-Z ]{2,30}$/)) {
             return '';
         } else {
             return { 'invalidName': true };
@@ -28,10 +42,29 @@ export class ValidationService {
 
     static emailValidator(control: AbstractControl) {
         // RFC 2822 compliant regex
-        if (control.value.match(/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/)) {
+        if (control.value && control.value.match(/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/)) {
             return null;
         } else {
             return { 'invalidEmail': true };
+        }
+    }
+
+    static passwordValidator(control: AbstractControl) {
+        // {6,100}           - Assert password is between 6 and 100 characters
+        // (?=.*[0-9])       - Assert a string has at least one number
+        if (control.value && control.value.match(/^(?=.*[0-9])[a-zA-Z0-9!@#$%^&*]{6,100}$/)) {
+            return null;
+        } else {
+            return { 'invalidPassword': true };
+        }
+    }
+
+    static creditCardValidator(control: AbstractControl) {
+        // Visa, MasterCard, American Express, Diners Club, Discover, JCB
+        if (control.value && control.value.match(/^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})$/)) {
+            return null;
+        } else {
+            return { 'invalidCreditCard': true };
         }
     }
 
@@ -63,26 +96,6 @@ export class ValidationService {
         let minAge: number = 18;
         var bridebirth = new Date(this.year - minAge, this.month, this.day);
         return bridebirth;
-    }
-
-
-    static passwordValidator(control: AbstractControl) {
-        // {6,100}           - Assert password is between 6 and 100 characters
-        // (?=.*[0-9])       - Assert a string has at least one number
-        if (control.value.match(/^(?=.*[0-9])[a-zA-Z0-9!@#$%^&*]{6,100}$/)) {
-            return null;
-        } else {
-            return { 'invalidPassword': true };
-        }
-    }
-
-    static creditCardValidator(control: AbstractControl) {
-        // Visa, MasterCard, American Express, Diners Club, Discover, JCB
-        if (control.value.match(/^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})$/)) {
-            return null;
-        } else {
-            return { 'invalidCreditCard': true };
-        }
     }
 
 

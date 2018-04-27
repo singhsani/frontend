@@ -1,0 +1,6 @@
+<div class="pt-4">
+	<button *ngIf="step != 'step1'" mat-raised-button type="button" color="disabled" matStepperPrevious>{{'back' | translate:'ceicedforms'}}</button>
+	<button mat-raised-button type="button" color="primary" (click)="saveAsDraft()" matStepperNext>{{'save_and_next' | translate:'ceicedforms'}}</button>
+	<button *ngIf="step == 'final'" type="button" (click)="onSubmit()" mat-raised-button color="primary">{{'submit' | translate:'ceicedforms'}}</button>
+	<button *ngIf="step == 'final'" mat-raised-button color="primary" (click)="proceedToPayment()">{{'proceed_for_payment' | translate:'ceicedforms'}}</button>
+</div>
