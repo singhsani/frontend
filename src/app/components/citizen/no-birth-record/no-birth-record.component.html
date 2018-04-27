@@ -3,98 +3,65 @@
 		<h5 class="example-h2 pt-4">No Record Found For Birth</h5>
 
 		<!--Start  form  -->
-		<form [formGroup]="noRecordBirthForm" (ngSubmit)="onSubmit()">
+		<form [formGroup]="noRecordBirthForm">
 			<mat-horizontal-stepper [linear]="false">
 
 				<!-- first step start-->
 				<mat-step [stepControl]="noRecordDetail" [label]="stepLable1">
 
-					<mat-progress-bar class="example-margin" [color]="color" [mode]="mode" value="25" ></mat-progress-bar>
+					<mat-progress-bar class="example-margin" [color]="color" [mode]="mode" value="25"></mat-progress-bar>
 
 					<div>
 						<mat-form-field class="example-full-width">
-							<input matInput type="text" formControlName="applicationNo" placeholder="{{'application_no' | translate:'ceicedforms'}}"
-							 required>
-							<mat-error *ngIf="noRecordBirthForm.controls['applicationNo'].touched && noRecordBirthForm.get('applicationNo').hasError('required')">
-								<strong>Required</strong>!
-							</mat-error>
+							<input matInput type="text" formControlName="childName" placeholder="{{'child_name' | translate:'ceicedforms'}}" required>
 						</mat-form-field>
-
-						<mat-form-field class="example-full-width">
-							<input matInput type="text" formControlName="registrationNo" placeholder="{{'registration_no' | translate:'ceicedforms'}}"
-							 required>
-							<mat-error *ngIf="noRecordBirthForm.controls['registrationNo'].touched && noRecordBirthForm.get('registrationNo').hasError('required')">
-								<strong>Required</strong>!
-							</mat-error>
-						</mat-form-field>
-
-						<mat-form-field class="example-full-width">
-							<input matInput type="text" formControlName="childName" placeholder="{{'child_name' | translate:'ceicedforms'}}"
-							 required>
-							<mat-error *ngIf="noRecordBirthForm.controls['childName'].touched && noRecordBirthForm.get('childName').hasError('required')">
-								<strong>Required</strong>!
-							</mat-error>
-						</mat-form-field>
+						<control-messages [control]="noRecordBirthForm.controls.childName"></control-messages>
 
 						<div formGroupName="gender" class="dis-inline">
 							<mat-radio-group formControlName="code">
 								<mat-radio-button [value]="gender.code" *ngFor="let gender of genderArray">{{gender.name}}</mat-radio-button>
 							</mat-radio-group>
+							<control-messages [control]="noRecordBirthForm.controls.gender.controls.code"></control-messages>
 						</div>
 					</div>
 
 					<div>
 						<mat-form-field class="example-full-width">
-							<input matInput [matDatepicker]="picker" [max]="maxDate" formControlName="birthDate" (dateChange)="onDateChange($event.value)" placeholder="{{'date_of_birth' | translate:'ceicedforms'}}">
+							<input matInput [matDatepicker]="picker" [max]="maxDate" formControlName="birthDate" (dateChange)="onDateChange($event.value)"
+							 placeholder="{{'date_of_birth' | translate:'ceicedforms'}}">
 							<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
 							<mat-datepicker #picker></mat-datepicker>
 						</mat-form-field>
+						<control-messages [control]="noRecordBirthForm.controls.birthDate"></control-messages>
 
 						<div formGroupName="birthPlace" class="dis-inline">
 							<mat-radio-group formControlName="code">
 								<mat-radio-button [value]="place.code" *ngFor="let place of placeArray">{{place.name}}</mat-radio-button>
 							</mat-radio-group>
 						</div>
+						<control-messages [control]="noRecordBirthForm.controls.birthPlace.controls.code"></control-messages>
 
 						<mat-form-field class="example-full-width">
 							<input matInput type="text" formControlName="fatherName" placeholder="{{'father_name' | translate:'ceicedforms'}}">
 						</mat-form-field>
+						<control-messages [control]="noRecordBirthForm.controls.fatherName"></control-messages>
 
 						<mat-form-field class="example-full-width">
 							<input matInput type="text" formControlName="motherName" placeholder="{{'mother_name' | translate:'ceicedforms'}}">
 						</mat-form-field>
+						<control-messages [control]="noRecordBirthForm.controls.motherName"></control-messages>
 					</div>
 
-					<div class="row pt-2">
-						<div class="col-12">
+					<file-upload [uploadModel]="setDataValue(1)"></file-upload>
 
-							<div *ngIf="currentFileUpload" class="progress">
-								<div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" attr.aria-valuenow="{{progress.percentage}}"
-								 aria-valuemin="0" aria-valuemax="100" [ngStyle]="{width:progress.percentage+'%'}">
-									{{progress.percentage}}%
-								</div>
-							</div>
-
-							<label class="btn btn-default">
-								<input type="file" (change)="selectFile($event)">
-							</label>
-
-							<button mat-raised-button color="primary" [disabled]="!selectedFiles" (click)="upload(1)">
-								<mat-icon>upload</mat-icon> Upload
-							</button>
-						</div>
-					</div>
-
-					<div class="pt-4">
-						<button mat-raised-button type="button" color="primary" matStepperNext (click)="progressvalue = 66">{{'next' | translate:'ceicedforms'}}</button>
-					</div>
+					<app-action-bar [form]="noRecordBirthForm" [step]="'step1'" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
 
 				</mat-step>
 				<!-- end first step -->
 
 				<!-- second step start-->
 				<mat-step [stepControl]="birthAddressDetail" [label]="stepLable2">
-					<mat-progress-bar class="example-margin" [color]="color" [mode]="mode" value="50" ></mat-progress-bar>
+					<mat-progress-bar class="example-margin" [color]="color" [mode]="mode" value="50"></mat-progress-bar>
 
 					<div formGroupName="birthPlaceAddress">
 						<mat-form-field class="example-full-width">
@@ -102,30 +69,9 @@
 						</mat-form-field>
 					</div>
 
-					<div class="row pt-2">
-						<div class="col-12">
+					<file-upload [uploadModel]="setDataValue(2)"></file-upload>
 
-							<div *ngIf="currentFileUpload" class="progress">
-								<div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" attr.aria-valuenow="{{progress.percentage}}"
-								 aria-valuemin="0" aria-valuemax="100" [ngStyle]="{width:progress.percentage+'%'}">
-									{{progress.percentage}}%
-								</div>
-							</div>
-
-							<label class="btn btn-default">
-								<input type="file" (change)="selectFile($event)">
-							</label>
-
-							<button mat-raised-button color="primary" [disabled]="!selectedFiles" (click)="upload(2)">
-								<mat-icon>upload</mat-icon> Upload
-							</button>
-						</div>
-					</div>
-
-					<div class="pt-4">
-						<button mat-raised-button type="button" color="disabled" matStepperPrevious>{{'back' | translate:'ceicedforms'}}</button>
-						<button mat-raised-button type="button" color="primary" matStepperNext (click)="progressvalue = 100">{{'next' | translate:'ceicedforms'}}</button>
-					</div>
+					<app-action-bar [form]="noRecordBirthForm" [step]="'step2'" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
 
 				</mat-step>
 				<!-- second step end-->
@@ -136,76 +82,37 @@
 
 					<mat-form-field class="example-full-width">
 						<input matInput type="text" formControlName="applicantName" placeholder="{{'full_name' | translate:'ceicedforms'}}">
-						<mat-error *ngIf="noRecordBirthForm.get('applicantName').touched && noRecordBirthForm.get('applicantName').hasError('required')">
-							<strong>Required</strong>!
-						</mat-error>
 					</mat-form-field>
+					<control-messages [control]="noRecordBirthForm.controls.applicantName"></control-messages>
 
 					<div formGroupName="applicantRelation">
 						<mat-form-field>
 							<mat-select placeholder="{{'relation_with_applicant' | translate:'ceicedforms'}}" name="relation" formControlName="code">
 								<mat-option *ngFor="let relation of relationshipArray" [value]="relation.code">{{relation.name}}</mat-option>
 							</mat-select>
-							<mat-error *ngIf="noRecordBirthForm.get('applicantRelation').get('code').touched && noRecordBirthForm.get('applicantRelation').get('code').hasError('required')">
-								<strong>Required</strong>!
-							</mat-error>
 						</mat-form-field>
+						<control-messages [control]="noRecordBirthForm.controls.applicantRelation.controls.code"></control-messages>
 					</div>
 
 					<mat-form-field class="example-full-width">
 						<input matInput type="text" OnlyNumber formControlName="applicantContactNo" placeholder="{{'mobile_no' | translate:'ceicedforms'}}">
-						<mat-error *ngIf="noRecordBirthForm.get('applicantContactNo').touched && noRecordBirthForm.get('applicantContactNo').hasError('required')">
-							<strong>Required</strong>!
-						</mat-error>
 					</mat-form-field>
+					<control-messages [control]="noRecordBirthForm.controls.applicantContactNo"></control-messages>
 
 					<mat-form-field class="example-full-width">
 						<input matInput type="email" formControlName="applicantEmail" placeholder="{{'email' | translate:'ceicedforms'}}">
 					</mat-form-field>
+					<control-messages [control]="noRecordBirthForm.controls.applicantEmail"></control-messages>
 
-					<!-- <div>
-						<mat-radio-group formControlName="reasonForNoRecord">
-							<mat-radio-button value="male">Event not registered at all by the applicant</mat-radio-button>
-							<mat-radio-button value="female">Page(s) of the concerned register damaged or destroyed</mat-radio-button>
-							<mat-radio-button value="female">Register cannot be found or destroyed</mat-radio-button>
-						</mat-radio-group>
-					</div> -->
 
-					<div class="row pt-2">
-						<div class="col-12">
+					<file-upload [uploadModel]="setDataValue(3)"></file-upload>
 
-							<div *ngIf="currentFileUpload" class="progress">
-								<div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" attr.aria-valuenow="{{progress.percentage}}"
-								 aria-valuemin="0" aria-valuemax="100" [ngStyle]="{width:progress.percentage+'%'}">
-									{{progress.percentage}}%
-								</div>
-							</div>
-
-							<label class="btn btn-default">
-								<input type="file" (change)="selectFile($event)">
-							</label>
-
-							<button mat-raised-button color="primary" [disabled]="!selectedFiles" (click)="upload(3)">
-								<mat-icon>upload</mat-icon> Upload
-							</button>
-						</div>
-					</div>
-
-					<div class="pt-4">
-						<button mat-raised-button type="button" color="disabled" matStepperPrevious>{{'back' | translate:'ceicedforms'}}</button>
-						<button type="submit" mat-raised-button color="primary">{{'submit' | translate:'ceicedforms'}}</button>
-						<button mat-raised-button color="primary" (click)="proceedToPayment()">{{'proceed_for_payment' | translate:'ceicedforms'}}</button>
-					</div>
+					<app-action-bar [form]="noRecordBirthForm" [step]="'final'" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
 
 				</mat-step>
 				<!-- third step end-->
-
 			</mat-horizontal-stepper>
 		</form>
-
-		<div class="button-row pb-4 float-right saveDraft">
-			<button mat-raised-button color="accent" (click)="saveAsDraft(noRecordBirthForm.value)">{{'save_as_draft' | translate:'ceicedforms'}}</button>
-		</div>
 
 	</div>
 </div>

@@ -4,7 +4,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { MatHorizontalStepper, MatStep, MatStepLabel } from '@angular/material';
 
 import { ValidationService } from '../../../shared/services/validation.service';
-import { UploadFileService } from './../../../shared/upload-file.service';
 import { FormsActionsService } from '../../../core/services/citizen/data-services/forms-actions.service';
 
 import { ToastrService } from 'ngx-toastr';
@@ -23,27 +22,21 @@ export class NoBirthRecordComponent implements OnInit {
 
 	noRecordBirthForm: FormGroup;
 
-	selectedFiles: FileList
-	currentFileUpload: File
-	progress: { percentage: number } = { percentage: 0 }
-	fileData: any;
 	appId: number;
 	maxDate: Date = new Date();
 	relationshipArray: any = [];
 	genderArray: any = [];
 	placeArray: any = [];
 
+	uploadModel: any = {};
+
 	// Step Titles
 	stepLable1: string = "No Record Certificate Detail";
 	stepLable2: string = "Birth Place Address Detail";
 	stepLable3: string = "Applicant Detail";
 
-	// for progress bar
-	color = 'primary';
-	mode = 'determinate';
-
 	constructor(private fb: FormBuilder, private validationService: ValidationService,
-		private uploadFileService: UploadFileService, private router: Router, private route: ActivatedRoute,
+		private router: Router, private route: ActivatedRoute,
 		private formService: FormsActionsService, private toastr: ToastrService) {
 
 		this.formService.apiType = 'NRCBirth';
@@ -68,24 +61,20 @@ export class NoBirthRecordComponent implements OnInit {
 			applicationNo: [null, Validators.required],
 			registrationNo: [null, Validators.required],
 			childName: [null, Validators.required],
-
 			gender: this.fb.group({
 				code: [null, Validators.required],
 			}),
-
 			birthDate: [null, Validators.required],
-
 			birthPlace: this.fb.group({
 				code: [null, Validators.required],
 			}),
-
 			fatherName: [null, Validators.required],
 			motherName: [null, Validators.required],
 			// step 1 form controls ends 
 
 			// step 2 form controls starts 
 			birthPlaceAddress: this.fb.group({
-				addressType: "NRC_BIRTH_PLACE_ADDRESS",
+				addressType: null,
 				houseNo: null,
 				tenamentNo: null,
 				buildingName: null,
@@ -98,23 +87,22 @@ export class NoBirthRecordComponent implements OnInit {
 				addressLine3: null,
 				village: null
 			}),
-
 			// step 2 form controls ends 
 
 			// step 3 form controls starts 
 			applicantName: [null, Validators.required],
-
 			applicantRelation: this.fb.group({
 				code: [null, Validators.required]
 			}),
 
-			applicantContactNo: [null, Validators.required],
-			applicantEmail: [null, Validators.required],
+			applicantContactNo: [null, [Validators.required, Validators.maxLength(10)]],
+			applicantEmail: [null, [Validators.required, ValidationService.emailValidator]],
 			attachments: [],
 			reasonDetail: null,
 			// step 3 form controls ends 
 
-			// extra's importnat controls 
+			// extra's important controls 
+			apiType: 'NRCBirth',
 			id: 0,
 			uniqueId: null,
 			version: 0,
@@ -127,85 +115,83 @@ export class NoBirthRecordComponent implements OnInit {
 	}
 
 	/**
-	 * This method use for get the citizen data
+	 * This method use for get the no record for birth data
 	 */
 	getNoRecordBirthData() {
 		this.formService.getFormData(this.appId).subscribe(res => {
-
-			if (res.birthPlace == null) {
-				res.birthPlace = {};
-			}
-			if (res.gender == null) {
-				res.gender = {};
-			}
-			if (res.birthPlaceAddress == null) {
-				res.birthPlaceAddress = {};
-			}
-			if (res.applicantRelation == null) {
-				res.applicantRelation = {};
-			}
 			this.noRecordBirthForm.patchValue(res);
 		});
 	}
 
+	/**
+	 * This method is use for set user selected date 
+	 * @param date - get seected date
+	 */
 	onDateChange(date) {
 		this.noRecordBirthForm.get('birthDate').setValue(moment(date).format("YYYY-DD-MM"));
 	}
 
-	saveAsDraft(value) {
-		this.formService.saveFormData(value).subscribe(res => {
-			this.toastr.success('NCR information successfully saved');
+	/**
+	 * This method use to show java validations errors 
+	 */
+	handleErrorsOnSubmit(flag) {
+
+		//this.clicksubmit = true;
+
+		let step1 = 8;
+		let step2 = 9;
+		let step3 = 13;
+
+		let count = 1;
+
+		_.forEach(this.noRecordBirthForm.controls, (key) => {
+
+			if (!key.valid) {
+				if (count <= step1) {
+					this.stepLable1 = "No Record Certificate Detail is not completed";
+					this.stepper.selectedIndex = 0;
+					return false;
+				} else if (count <= step2) {
+					this.stepLable2 = "Birth Place is not completed";
+					this.stepper.selectedIndex = 1;
+					return false;
+				} else if (count <= step3) {
+					this.stepLable3 = "Applicant detail is not completed";
+					this.stepper.selectedIndex = 2;
+					return false;
+				}
+			}
+			count++;
 		});
+
 	}
 
-	onSubmit() {
-		this.formService.submitFormData(this.appId).subscribe(res => {
-			console.log(res);
-		});
-	}
-
-	getLookupData(){
-		this.formService.getDataFromLookups().subscribe(res =>{
-
+	/**
+	 * This method is use for get lookup data
+	 */
+	getLookupData() {
+		this.formService.getDataFromLookups().subscribe(res => {
 			this.genderArray = res.GENDER;
 			this.placeArray = res.PLACE;
 			this.relationshipArray = res.RELATIONSHIP;
 		});
 	}
 
-	proceedToPayment() {
+	/**
+	 * This method use to return file upload model
+	 * @param indentifier - get different indentifier for different file 
+	 */
+	setDataValue(indentifier: number){
 
+		this.uploadModel = {
+			fieldIdentifier: indentifier,
+			labelName: 'NRCBirth',
+			formPart: '3',
+			variableName: 'test',
+			serviceFormId: this.appId,
+		}
+
+		return this.uploadModel;
 	}
-
-	selectFile(event) {
-		this.selectedFiles = event.target.files;
-	}
-
-	upload(indentifier) {
-
-		let formData = new FormData();
-
-		formData.append('fieldIdentifier', indentifier.toString());
-		formData.append('labelName', 'NRCBirth');
-		formData.append('formPart', '3');
-		formData.append('variableName', 'test');
-		formData.append('serviceFormId', this.appId.toString());
-
-		this.progress.percentage = 0;
-
-		this.currentFileUpload = this.selectedFiles.item(0);
-
-		formData.append('file', this.currentFileUpload);
-
-		this.uploadFileService.processFileToServer(formData, setProgressBar => {
-			this.progress.percentage = setProgressBar;
-		}, successResponse => {
-			console.log(successResponse);
-			this.currentFileUpload = undefined;
-		});
-
-		this.selectedFiles = undefined;
-	}
-
 
 }
