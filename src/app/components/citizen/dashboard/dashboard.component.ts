@@ -39,19 +39,12 @@ export class DashboardComponent implements OnInit {
 	/**
 	 * This method is use to create new record for citizen
 	 */
-	createRecord(apiType: string) {
+	createRecord(apiType: string, routeType:string) {
 		this.formService.apiType = apiType;
 		this.formService.createFormData().subscribe(res => {
-			this.redirectToEdit('citizen/'+apiType, res.serviceFormId);
+			let redirectUrl = 'citizen/'+routeType + apiType;
+			this.router.navigate([redirectUrl, res.serviceFormId]);
 		});
-	}
-
-	/**
-	 * This method is used to redirect on citizen form
-	 * @param id - citizen id 
-	 */
-	redirectToEdit(forwardLink:string, id:number) {
-		this.router.navigate([forwardLink, id]);
 	}
 
 	selectFile(event) {

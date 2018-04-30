@@ -91,9 +91,9 @@ export class MyApplicationsComponent implements OnInit {
 	 * This method is used to redirect on citizen form
 	 * @param id - citizen id 
 	 */
-	redirectToEdit(apiType:string, id:number) {
+	redirectToEdit(apiType:string, routeType: string, id:number) {
 
-		let redirectUrl = '/citizen/'+apiType;
+		let redirectUrl = 'citizen/'+routeType+apiType;
 
 		this.router.navigate([redirectUrl, id]);
 	}
