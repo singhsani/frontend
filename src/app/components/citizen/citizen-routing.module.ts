@@ -16,19 +16,22 @@ import { NoDeathRecordComponent } from './no-death-record/no-death-record.compon
 
 /* Import citizen components other than auth end */
 
+import { ROUTEMAIN } from '../../config/routes-conf';
+import * as _ from 'lodash';
+
 const routes: Routes = [
-	{ path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-	{ path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
-	{ path: 'my-applications', component: MyApplicationsComponent, canActivate: [AuthGuard] },
-	{ path: 'birthReg/:id', component: BirthCertiAppComponent, canActivate: [AuthGuard] },
-	{ path: 'deathReg/:id', component: BirthCertiAppComponent, canActivate: [AuthGuard] },
-	{ path: 'marriageReg/:id', component: MarriageCertiComponent, canActivate: [AuthGuard] },
-	{ path: 'NRCBirth/:id', component: NoBirthRecordComponent, canActivate: [AuthGuard] },
-	{ path: 'NRCDeath/:id', component: NoDeathRecordComponent, canActivate: [AuthGuard] },
-	{ path: 'cremationReg/:id', component: NoDeathRecordComponent, canActivate: [AuthGuard] },
-	{ path: 'my-resource', component: MyResourceComponent, canActivate: [AuthGuard] },
-	{ path: 'my-transactions', component: TransactionsComponent, canActivate: [AuthGuard] },
-	{ path: 'my-profile', component: UserProfileComponent, canActivate: [AuthGuard] },
+	{ path: '', redirectTo: _.get(ROUTEMAIN, 'CITIZENDASHBOARD.main'), pathMatch: 'full' },
+	{ path: _.get(ROUTEMAIN, 'CITIZENDASHBOARD.main'), component: DashboardComponent, canActivate: [AuthGuard] },
+	{ path: _.get(ROUTEMAIN, 'CITIZENMYAPPS.main'), component: MyApplicationsComponent, canActivate: [AuthGuard] },
+	{ path: _.get(ROUTEMAIN, 'BR.main')+'/:id', component: BirthCertiAppComponent, canActivate: [AuthGuard] },
+	{ path: _.get(ROUTEMAIN, 'DR.main')+'/:id', component: BirthCertiAppComponent, canActivate: [AuthGuard] },
+	{ path: _.get(ROUTEMAIN, 'MR.main')+'/:id', component: MarriageCertiComponent, canActivate: [AuthGuard] },
+	{ path: _.get(ROUTEMAIN, 'NRC-BIRTH.main')+'/:id', component: NoBirthRecordComponent, canActivate: [AuthGuard] },
+	{ path: _.get(ROUTEMAIN, 'NRC-DEATH.main')+'/:id', component: NoDeathRecordComponent, canActivate: [AuthGuard] },
+	{ path: _.get(ROUTEMAIN, 'CR.main')+'/:id', component: NoDeathRecordComponent, canActivate: [AuthGuard] },
+	{ path: _.get(ROUTEMAIN, 'CITIZENMYRESOURCE.main'), component: MyResourceComponent, canActivate: [AuthGuard] },
+	{ path: _.get(ROUTEMAIN, 'CITIZENMYTRANSACTIONS.main'), component: TransactionsComponent, canActivate: [AuthGuard] },
+	{ path: _.get(ROUTEMAIN, 'CITIZENMYPROFILE.main'), component: UserProfileComponent, canActivate: [AuthGuard] },
 
 ];
 

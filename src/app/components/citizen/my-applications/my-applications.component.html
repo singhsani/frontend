@@ -39,7 +39,7 @@
 					<ng-container matColumnDef="action">
 						<mat-header-cell *matHeaderCellDef>Action</mat-header-cell>
 						<mat-cell *matCellDef="let row">
-							<button mat-icon-button [disabled]="row.canEdit" color="primary" (click)="redirectToEdit(row.serviceDetail.api, row.serviceDetail.type, row.id)">
+							<button mat-icon-button [disabled]="row.canEdit" color="primary" (click)="redirectToEdit(row.serviceDetail.api, row.serviceDetail.code, row.id)">
 								<mat-icon>edit</mat-icon>
 							</button>
 							<button mat-icon-button [disabled]="row.canDelete" color="warn" (click)="deleteRecord(row.serviceDetail.api, row.id)">
