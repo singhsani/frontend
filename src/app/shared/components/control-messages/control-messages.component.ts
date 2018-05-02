@@ -5,7 +5,7 @@ import { ValidationService } from '../../services/validation.service';
 @Component({
 	selector: 'control-messages',
 	template: `<mat-error *ngIf="errorMessage !== null">{{errorMessage}}</mat-error>`,
-	styles: [`.mat-error { margin-top: -20px !important;font-size: 15px !important;}`]
+	styles: [`.mat-error { position: absolute; bottom: -15px; left: 0;font-size: 12px;}`]
 })
 export class ControlMessagesComponent {
 
