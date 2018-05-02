@@ -13,6 +13,8 @@ import { switchMap } from 'rxjs/operators/switchMap';
 import { PaginationService } from '../../../core/services/citizen/data-services/pagination.service';
 import { FormsActionsService } from '../../../core/services/citizen/data-services/forms-actions.service';
 import { CommonService } from '../../../shared/services/common.service';
+import { ROUTESLIST } from '../../../config/routes-conf';
+import * as _ from 'lodash';
 
 @Component({
 	selector: 'app-my-applications',
@@ -91,11 +93,11 @@ export class MyApplicationsComponent implements OnInit {
 	 * This method is used to redirect on citizen form
 	 * @param id - citizen id 
 	 */
-	redirectToEdit(apiType:string, routeType: string, id:number) {
+	redirectToEdit(apiType:string, apiCode: string, id:number) {
 
-		let redirectUrl = 'citizen/'+routeType+apiType;
-
+		let redirectUrl = _.get(ROUTESLIST, `${apiCode}.full`);
 		this.router.navigate([redirectUrl, id]);
+
 	}
 
 	/**
@@ -106,10 +108,15 @@ export class MyApplicationsComponent implements OnInit {
 
 		this.commonService.deleteAlert('Are you sure?', "You won't be able to revert this!", 'warning', '', performDelete => {
 			this.formService.apiType = apiType;
-			this.formService.deleteFormData(id).subscribe(res => {
-				this.commonService.successAlert('Deleted!', '', 'success');
-				this.getAllData();
-			});
+			this.formService.deleteFormData(id).subscribe(
+				res => {
+					this.commonService.successAlert('Deleted!', '', 'success');
+					this.getAllData();
+				},
+				err => {
+					this.commonService.successAlert('Error!', err.error[0].message, 'error');
+				}
+			);
 		});
 
 	}
