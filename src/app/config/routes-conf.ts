@@ -1,4 +1,6 @@
-export const ROUTEMAIN = {
+import * as _ from 'lodash';
+
+const ROUTEMAIN = {
     'MR': {
         'main': 'marriageReg'
     },
@@ -52,7 +54,7 @@ export const ROUTEMAIN = {
     }
 }
 
-export const ROUTEPREFIX = {
+const ROUTEPREFIX = {
     'CITIZENMODULE': 'citizen',
     'LICENCEMODULE': 'licence',
     'TAXMODULE': 'tax',
@@ -61,7 +63,7 @@ export const ROUTEPREFIX = {
     'CITIZENAUTHMODULE': 'auth'
 }
 
-export const ROUTESLIST = {
+const ROUTESLIST = {
     'MR': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEMAIN.MR.main
     },
@@ -112,5 +114,21 @@ export const ROUTESLIST = {
     },
     'CITIZENMYRESOURCE': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEMAIN.CITIZENMYRESOURCE.main
+    }
+}
+
+
+export class ManageRoutes {
+
+    static getFullRoute(routeType:string){
+        return _.get(ROUTESLIST, `${routeType}.full`);
+    }
+
+    static getMainRoute(routeType:string){
+        return _.get(ROUTEMAIN, `${routeType}.main`);
+    }
+
+    static getPrefixRoute(routeType:string){
+        return _.get(ROUTEPREFIX, `${routeType}`);
     }
 }

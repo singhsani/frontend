@@ -17,29 +17,28 @@ import { LoginLayoutComponent } from './layouts/login-layout/login-layout.compon
 import { HomeLayoutComponent } from './layouts/home-layout/home-layout.component';
 /* Import all the layout component end */
 
-import { ROUTEPREFIX } from './config/routes-conf';
-import * as _ from 'lodash';
+import { ManageRoutes } from './config/routes-conf';
 
 const routes: Routes = [
 
-	{ path: '', redirectTo: _.get(ROUTEPREFIX, 'CITIZENMODULE'), pathMatch: 'full' },
+	{ path: '', redirectTo: ManageRoutes.getPrefixRoute('CITIZENMODULE'), pathMatch: 'full' },
 	{
-		path: _.get(ROUTEPREFIX, 'CITIZENMODULE'), component: HomeLayoutComponent, canActivate: [AuthGuard],
+		path: ManageRoutes.getPrefixRoute('CITIZENMODULE'), component: HomeLayoutComponent, canActivate: [AuthGuard],
 		children: [ 
 			{ path: '', loadChildren: () => CitizenModule },
-			{ path: _.get(ROUTEPREFIX, 'TAXMODULE'), loadChildren: () => TaxesModule },
-			{ path: _.get(ROUTEPREFIX, 'BOOKINGMODULE'), loadChildren: () => BookingsModule },
-			{ path: _.get(ROUTEPREFIX, 'LICENCEMODULE'), loadChildren: () => LicencesModule },
+			{ path: ManageRoutes.getPrefixRoute('TAXMODULE'), loadChildren: () => TaxesModule },
+			{ path: ManageRoutes.getPrefixRoute('BOOKINGMODULE'), loadChildren: () => BookingsModule },
+			{ path: ManageRoutes.getPrefixRoute('LICENCEMODULE'), loadChildren: () => LicencesModule },
 		]
 	},
 	{
-		path: _.get(ROUTEPREFIX, 'CITIZENMODULE'), component: LoginLayoutComponent,
+		path: ManageRoutes.getPrefixRoute('CITIZENMODULE'), component: LoginLayoutComponent,
 		children: [
-			{ path: _.get(ROUTEPREFIX, 'CITIZENAUTHMODULE'), loadChildren: () => AuthModule }
+			{ path: ManageRoutes.getPrefixRoute('CITIZENAUTHMODULE'), loadChildren: () => AuthModule }
 		]
 	},
 		
-	{ path: _.get(ROUTEPREFIX, 'HOSPITALMODULE'), loadChildren: () => HospitalModule },
+	{ path: ManageRoutes.getPrefixRoute('HOSPITALMODULE'), loadChildren: () => HospitalModule },
 
 	{ path: '**', redirectTo: ''},
 ];
