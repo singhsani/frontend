@@ -6,7 +6,6 @@ import { MatHorizontalStepper, MatStep, MatStepLabel } from '@angular/material';
 import { ValidationService } from '../../../shared/services/validation.service';
 import { FormsActionsService } from '../../../core/services/citizen/data-services/forms-actions.service';
 
-import { ToastrService } from 'ngx-toastr';
 import * as _ from 'lodash';
 import * as moment from 'moment';
 
@@ -20,7 +19,10 @@ export class NoBirthRecordComponent implements OnInit {
 	@ViewChild(MatHorizontalStepper) stepper: MatHorizontalStepper;
 	@ViewChild(MatStepLabel) steplable: MatStepLabel;
 
+	@ViewChild('address') addrComponent: any;
+
 	noRecordBirthForm: FormGroup;
+	translateKey: string = 'NRCBirthScreen';
 
 	appId: number;
 	maxDate: Date = new Date();
@@ -37,7 +39,7 @@ export class NoBirthRecordComponent implements OnInit {
 
 	constructor(private fb: FormBuilder, private validationService: ValidationService,
 		private router: Router, private route: ActivatedRoute,
-		private formService: FormsActionsService, private toastr: ToastrService) {
+		private formService: FormsActionsService) {
 
 		this.formService.apiType = 'NRCBirth';
 	}
@@ -73,20 +75,7 @@ export class NoBirthRecordComponent implements OnInit {
 			// step 1 form controls ends 
 
 			// step 2 form controls starts 
-			birthPlaceAddress: this.fb.group({
-				addressType: null,
-				houseNo: null,
-				tenamentNo: null,
-				buildingName: null,
-				state: null,
-				district: null,
-				talukaName: null,
-				pincode: null,
-				addressLine1: null,
-				addressLine2: null,
-				addressLine3: null,
-				village: null
-			}),
+			birthPlaceAddress: this.fb.group(this.addrComponent.addressControls()),
 			// step 2 form controls ends 
 
 			// step 3 form controls starts 
@@ -120,12 +109,13 @@ export class NoBirthRecordComponent implements OnInit {
 	getNoRecordBirthData() {
 		this.formService.getFormData(this.appId).subscribe(res => {
 			this.noRecordBirthForm.patchValue(res);
+
 		});
 	}
 
 	/**
 	 * This method is use for set user selected date 
-	 * @param date - get seected date
+	 * @param date - get selected date
 	 */
 	onDateChange(date) {
 		this.noRecordBirthForm.get('birthDate').setValue(moment(date).format("YYYY-DD-MM"));
@@ -135,8 +125,6 @@ export class NoBirthRecordComponent implements OnInit {
 	 * This method use to show java validations errors 
 	 */
 	handleErrorsOnSubmit(flag) {
-
-		//this.clicksubmit = true;
 
 		let step1 = 8;
 		let step2 = 9;

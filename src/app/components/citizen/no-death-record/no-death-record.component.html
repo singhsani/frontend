@@ -1,3 +1,105 @@
-<p>
-	no-death-record works!
-</p>
+<div class="row">
+	<div class="col-md-12">
+		<h5 class="example-h2 pt-4">No Record Found For Death</h5>
+
+		<!--Start  form  -->
+		<form [formGroup]="noRecordDeathForm">
+			<mat-horizontal-stepper [linear]="false">
+
+				<!-- first step start-->
+				<mat-step [stepControl]="noRecordDetail" [label]="stepLable1">
+					<div class="row">
+						<mat-form-field class="col-md-6">
+							<input matInput type="text" formControlName="deceasedName" placeholder="{{'deceased_name' | translate:'translateKey'}}" required>
+							<control-messages [control]="noRecordDeathForm.controls.deceasedName"></control-messages>
+						</mat-form-field>
+
+						<div formGroupName="gender" class="col-md-6">
+							<mat-radio-group formControlName="code">
+								<mat-radio-button [value]="gender.code" *ngFor="let gender of genderArray">{{gender.name +'/'+ gender.gujName}}</mat-radio-button>
+								<control-messages [control]="noRecordDeathForm.controls.gender.controls.code"></control-messages>
+							</mat-radio-group>
+						</div>
+
+						<mat-form-field class="col-md-6">
+							<input matInput [matDatepicker]="picker" [max]="maxDate" formControlName="deathDate" (dateChange)="onDateChange($event.value)"
+							 placeholder="{{'date_of_death' | translate:'translateKey'}}">
+							<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+							<mat-datepicker #picker></mat-datepicker>
+							<control-messages [control]="noRecordDeathForm.controls.deathDate"></control-messages>
+
+						</mat-form-field>
+
+						<div formGroupName="deathPlace" class="col-md-6">
+							<mat-radio-group formControlName="code">
+								<mat-radio-button [value]="place.code" *ngFor="let place of placeArray">{{place.name}}</mat-radio-button>
+							</mat-radio-group>
+							<control-messages [control]="noRecordDeathForm.controls.deathPlace.controls.code"></control-messages>
+
+						</div>
+
+						<mat-form-field class="col-md-6">
+							<input matInput type="text" formControlName="fatherOrHusbandName" placeholder="{{'father_or_husband_name' | translate:'translateKey'}}">
+							<control-messages [control]="noRecordDeathForm.controls.fatherOrHusbandName"></control-messages>
+						</mat-form-field>
+
+						<mat-form-field class="col-md-6">
+							<input matInput type="text" OnlyNumber formControlName="age" placeholder="{{'age' | translate:'translateKey'}}">
+							<control-messages [control]="noRecordDeathForm.controls.age"></control-messages>
+						</mat-form-field>
+					</div>
+
+					<file-upload [uploadModel]="setDataValue(1)"></file-upload>
+
+					<app-action-bar [form]="noRecordDeathForm" [step]="'step1'" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
+
+				</mat-step>
+				<!-- end first step -->
+
+				<!-- second step start-->
+				<mat-step [stepControl]="deathAddressDetail" [label]="stepLable2">
+					<div class="row">
+						<app-address class="col-md-6" #address [addressFormGroup]="noRecordDeathForm.controls.deathPlaceAddress"></app-address>
+					</div>
+					<file-upload [uploadModel]="setDataValue(2)"></file-upload>
+
+					<app-action-bar [form]="noRecordDeathForm" [step]="'step2'" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
+
+				</mat-step>
+				<!-- second step end-->
+
+				<!-- third step start-->
+				<mat-step [stepControl]="applicantDetail" [label]="stepLable3">
+					<div class="row">
+						<mat-form-field class="col-md-6">
+							<input matInput type="text" formControlName="applicantName" placeholder="{{'full_name' | translate:'translateKey'}}">
+							<control-messages [control]="noRecordDeathForm.controls.applicantName"></control-messages>
+						</mat-form-field>
+
+						<mat-form-field formGroupName="applicantRelation" class="col-md-6">
+							<mat-select placeholder="{{'relation_with_applicant' | translate:'translateKey'}}" name="relation" formControlName="code">
+								<mat-option *ngFor="let relation of relationshipArray" [value]="relation.code">{{relation.name}}</mat-option>
+							</mat-select>
+							<control-messages [control]="noRecordDeathForm.controls.applicantRelation.controls.code"></control-messages>
+						</mat-form-field>
+
+						<mat-form-field class="col-md-6">
+							<input matInput type="text" OnlyNumber formControlName="applicantContactNo" placeholder="{{'mobile_no' | translate:'translateKey'}}">
+							<control-messages [control]="noRecordDeathForm.controls.applicantContactNo"></control-messages>
+						</mat-form-field>
+
+						<mat-form-field class="col-md-6">
+							<input matInput type="email" formControlName="applicantEmail" placeholder="{{'email' | translate:'translateKey'}}">
+							<control-messages [control]="noRecordDeathForm.controls.applicantEmail"></control-messages>
+						</mat-form-field>
+					</div>
+
+					<file-upload [uploadModel]="setDataValue(3)"></file-upload>
+
+					<app-action-bar [form]="noRecordDeathForm" [step]="'final'" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
+				</mat-step>
+				<!-- third step end-->
+			</mat-horizontal-stepper>
+		</form>
+	</div>
+</div>

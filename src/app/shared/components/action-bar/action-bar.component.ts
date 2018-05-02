@@ -1,9 +1,8 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 import { FormsActionsService } from './../../../core/services/citizen/data-services/forms-actions.service';
 import { ToastrService } from 'ngx-toastr';
-
 
 @Component({
 	selector: 'app-action-bar',
@@ -12,25 +11,24 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class ActionBarComponent implements OnInit {
 
+
 	@Input()
 	form: FormGroup;
 
 	@Input()
 	step: string;
-
+	
 	@Output() handleErrors = new EventEmitter<any>();
 
 	apiType: string = '';
-	serviceFormId: number = 0;
 
 	constructor(private formService: FormsActionsService, private toastr: ToastrService) {
 	}
 
 	ngOnInit() {
-		// set the apiType and formId on initialize so can we do not need to write repeadtly
+		// set the apiType on initialize so can we do not need to write repeadtly
 		this.apiType = this.form.get('apiType').value;
 		this.formService.apiType = this.apiType;
-		this.serviceFormId = this.form.get('serviceFormId').value;
 	}
 
 	/**
@@ -41,7 +39,6 @@ export class ActionBarComponent implements OnInit {
 		this.formService.saveFormData(this.form.value).subscribe(res => {
 			this.toastr.success(`${this.apiType} information successfully saved`);
 		});
-
 	}
 
 	/**
@@ -50,11 +47,11 @@ export class ActionBarComponent implements OnInit {
 	onSubmit() {
 
 		if (this.form.valid) {
-			this.formService.submitFormData(this.serviceFormId).subscribe(res => {
+			this.formService.submitFormData(this.form.get('serviceFormId').value).subscribe(res => {
 				this.toastr.success(`${this.apiType} information successfully submit`);
 			},
 				err => {
-					
+
 				}
 			);
 
@@ -69,6 +66,13 @@ export class ActionBarComponent implements OnInit {
 	 */
 	proceedToPayment() {
 
+	}
+
+	/**
+	 * This method is use for clear the form
+	 */
+	resetForm(){
+		this.form.reset();
 	}
 
 }

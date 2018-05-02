@@ -1,5 +1,5 @@
-<div class="row pt-2">
-	<div class="col-12">
+<div class="row">
+	<div class="col-md-12">
 		<mat-progress-bar *ngIf="currentFileUpload" mode="determinate" value="{{progress.percentage}}"></mat-progress-bar>
 
 		<div *ngIf="currentFileUpload" class="progress">
@@ -16,7 +16,7 @@
 		</label>
 
 		<button mat-raised-button color="primary" [disabled]="!selectedFiles" (click)="upload()">
-				<mat-icon>file_upload</mat-icon> Upload
+			<mat-icon>file_upload</mat-icon> Upload
 		</button>
 
 	</div>

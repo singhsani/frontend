@@ -8,48 +8,44 @@
 
 				<!-- first step start-->
 				<mat-step [stepControl]="noRecordDetail" [label]="stepLable1">
+					<div class="row">
 
-					<mat-progress-bar class="example-margin" [color]="color" [mode]="mode" value="25"></mat-progress-bar>
-
-					<div>
-						<mat-form-field class="example-full-width">
-							<input matInput type="text" formControlName="childName" placeholder="{{'child_name' | translate:'ceicedforms'}}" required>
+						<mat-form-field class="col-md-6">
+							<input matInput type="text" formControlName="childName" placeholder="{{'child_name' | translate:'translateKey'}}" required>
+							<control-messages [control]="noRecordBirthForm.controls.childName"></control-messages>
 						</mat-form-field>
-						<control-messages [control]="noRecordBirthForm.controls.childName"></control-messages>
 
-						<div formGroupName="gender" class="dis-inline">
+						<div formGroupName="gender" class="col-md-6">
 							<mat-radio-group formControlName="code">
-								<mat-radio-button [value]="gender.code" *ngFor="let gender of genderArray">{{gender.name}}</mat-radio-button>
+								<mat-radio-button [value]="gender.code" *ngFor="let gender of genderArray">{{gender.name +'/'+gender.gujName}}</mat-radio-button>
+								<control-messages [control]="noRecordBirthForm.controls.gender.controls.code"></control-messages>
 							</mat-radio-group>
-							<control-messages [control]="noRecordBirthForm.controls.gender.controls.code"></control-messages>
 						</div>
-					</div>
 
-					<div>
-						<mat-form-field class="example-full-width">
+						<mat-form-field class="col-md-6">
 							<input matInput [matDatepicker]="picker" [max]="maxDate" formControlName="birthDate" (dateChange)="onDateChange($event.value)"
-							 placeholder="{{'date_of_birth' | translate:'ceicedforms'}}">
+							 placeholder="{{'date_of_birth' | translate:'translateKey'}}">
 							<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
 							<mat-datepicker #picker></mat-datepicker>
+							<control-messages [control]="noRecordBirthForm.controls.birthDate"></control-messages>
 						</mat-form-field>
-						<control-messages [control]="noRecordBirthForm.controls.birthDate"></control-messages>
 
-						<div formGroupName="birthPlace" class="dis-inline">
+						<div formGroupName="birthPlace" class="col-md-6">
 							<mat-radio-group formControlName="code">
 								<mat-radio-button [value]="place.code" *ngFor="let place of placeArray">{{place.name}}</mat-radio-button>
 							</mat-radio-group>
+							<control-messages [control]="noRecordBirthForm.controls.birthPlace.controls.code"></control-messages>
 						</div>
-						<control-messages [control]="noRecordBirthForm.controls.birthPlace.controls.code"></control-messages>
 
-						<mat-form-field class="example-full-width">
-							<input matInput type="text" formControlName="fatherName" placeholder="{{'father_name' | translate:'ceicedforms'}}">
+						<mat-form-field class="col-md-6">
+							<input matInput type="text" formControlName="fatherName" placeholder="{{'father_name' | translate:'translateKey'}}">
+							<control-messages [control]="noRecordBirthForm.controls.fatherName"></control-messages>
 						</mat-form-field>
-						<control-messages [control]="noRecordBirthForm.controls.fatherName"></control-messages>
 
-						<mat-form-field class="example-full-width">
-							<input matInput type="text" formControlName="motherName" placeholder="{{'mother_name' | translate:'ceicedforms'}}">
+						<mat-form-field class="col-md-6">
+							<input matInput type="text" formControlName="motherName" placeholder="{{'mother_name' | translate:'translateKey'}}">
+							<control-messages [control]="noRecordBirthForm.controls.motherName"></control-messages>
 						</mat-form-field>
-						<control-messages [control]="noRecordBirthForm.controls.motherName"></control-messages>
 					</div>
 
 					<file-upload [uploadModel]="setDataValue(1)"></file-upload>
@@ -61,12 +57,9 @@
 
 				<!-- second step start-->
 				<mat-step [stepControl]="birthAddressDetail" [label]="stepLable2">
-					<mat-progress-bar class="example-margin" [color]="color" [mode]="mode" value="50"></mat-progress-bar>
 
-					<div formGroupName="birthPlaceAddress">
-						<mat-form-field class="example-full-width">
-							<textarea matInput type="text" formControlName="addressLine1" placeholder="{{'birth_place_address' | translate:'ceicedforms'}}"></textarea>
-						</mat-form-field>
+					<div class="row">
+						<app-address class="col-md-6" #address [addressFormGroup]="noRecordBirthForm.controls.birthPlaceAddress"></app-address>
 					</div>
 
 					<file-upload [uploadModel]="setDataValue(2)"></file-upload>
@@ -78,32 +71,30 @@
 
 				<!-- third step start-->
 				<mat-step [stepControl]="applicantDetail" [label]="stepLable3">
-					<mat-progress-bar class="example-margin" [color]="color" [mode]="mode" value="100"></mat-progress-bar>
+					<div class="row">
+						<mat-form-field class="col-md-6">
+							<input matInput type="text" formControlName="applicantName" placeholder="{{'full_name' | translate:'translateKey'}}">
+							<control-messages [control]="noRecordBirthForm.controls.applicantName"></control-messages>
+						</mat-form-field>
 
-					<mat-form-field class="example-full-width">
-						<input matInput type="text" formControlName="applicantName" placeholder="{{'full_name' | translate:'ceicedforms'}}">
-					</mat-form-field>
-					<control-messages [control]="noRecordBirthForm.controls.applicantName"></control-messages>
-
-					<div formGroupName="applicantRelation">
-						<mat-form-field>
-							<mat-select placeholder="{{'relation_with_applicant' | translate:'ceicedforms'}}" name="relation" formControlName="code">
+						<mat-form-field formGroupName="applicantRelation" class="col-md-6">
+							<mat-select placeholder="{{'relation_with_applicant' | translate:'translateKey'}}" name="relation" formControlName="code">
 								<mat-option *ngFor="let relation of relationshipArray" [value]="relation.code">{{relation.name}}</mat-option>
 							</mat-select>
+							<control-messages [control]="noRecordBirthForm.controls.applicantRelation.controls.code"></control-messages>
 						</mat-form-field>
-						<control-messages [control]="noRecordBirthForm.controls.applicantRelation.controls.code"></control-messages>
+
+						<mat-form-field class="col-md-6">
+							<input matInput type="text" OnlyNumber formControlName="applicantContactNo" placeholder="{{'mobile_no' | translate:'translateKey'}}">
+							<control-messages [control]="noRecordBirthForm.controls.applicantContactNo"></control-messages>
+						</mat-form-field>
+
+						<mat-form-field class="col-md-6">
+							<input matInput type="email" formControlName="applicantEmail" placeholder="{{'email' | translate:'translateKey'}}">
+							<control-messages [control]="noRecordBirthForm.controls.applicantEmail"></control-messages>
+						</mat-form-field>
+
 					</div>
-
-					<mat-form-field class="example-full-width">
-						<input matInput type="text" OnlyNumber formControlName="applicantContactNo" placeholder="{{'mobile_no' | translate:'ceicedforms'}}">
-					</mat-form-field>
-					<control-messages [control]="noRecordBirthForm.controls.applicantContactNo"></control-messages>
-
-					<mat-form-field class="example-full-width">
-						<input matInput type="email" formControlName="applicantEmail" placeholder="{{'email' | translate:'ceicedforms'}}">
-					</mat-form-field>
-					<control-messages [control]="noRecordBirthForm.controls.applicantEmail"></control-messages>
-
 
 					<file-upload [uploadModel]="setDataValue(3)"></file-upload>
 

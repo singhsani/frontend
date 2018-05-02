@@ -13,7 +13,7 @@ import { MarriageCertiComponent } from './marriage-cert/marriage-cert.component'
 import { MyApplicationsComponent } from './my-applications/my-applications.component';
 import { NoBirthRecordComponent } from './no-birth-record/no-birth-record.component';
 import { NoDeathRecordComponent } from './no-death-record/no-death-record.component';
-
+import { CremationCertificateComponent } from './cremation-certificate/cremation-certificate.component';
 /* Import citizen components other than auth end */
 
 import { ManageRoutes } from '../../config/routes-conf';
@@ -27,7 +27,7 @@ const routes: Routes = [
 	{ path: ManageRoutes.getMainRoute('MR') + '/:id', component: MarriageCertiComponent, canActivate: [AuthGuard] },
 	{ path: ManageRoutes.getMainRoute('NRC-BIRTH') + '/:id', component: NoBirthRecordComponent, canActivate: [AuthGuard] },
 	{ path: ManageRoutes.getMainRoute('NRC-DEATH') + '/:id', component: NoDeathRecordComponent, canActivate: [AuthGuard] },
-	{ path: ManageRoutes.getMainRoute('CR') + '/:id', component: NoDeathRecordComponent, canActivate: [AuthGuard] },
+	{ path: ManageRoutes.getMainRoute('CR') + '/:id', component: CremationCertificateComponent, canActivate: [AuthGuard] },
 	{ path: ManageRoutes.getMainRoute('CITIZENMYRESOURCE'), component: MyResourceComponent, canActivate: [AuthGuard] },
 	{ path: ManageRoutes.getMainRoute('CITIZENMYTRANSACTIONS'), component: TransactionsComponent, canActivate: [AuthGuard] },
 	{ path: ManageRoutes.getMainRoute('CITIZENMYPROFILE'), component: UserProfileComponent, canActivate: [AuthGuard] },

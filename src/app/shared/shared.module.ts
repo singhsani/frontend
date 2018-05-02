@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
@@ -23,6 +24,7 @@ import { InrPipe } from './pipes/inr.pipe';
 import { ActionBarComponent } from './components/action-bar/action-bar.component';
 import { ControlMessagesComponent } from './components/control-messages/control-messages.component';
 import { FileUploadComponent } from './components/file-upload/file-upload.component';
+import { AddressComponent } from './components/address/address.component';
 /* import pipes end*/
 
 const COMPONENTS = [
@@ -30,7 +32,8 @@ const COMPONENTS = [
 	InrPipe, 
 	ActionBarComponent, 
 	ControlMessagesComponent, 
-	FileUploadComponent
+	FileUploadComponent,
+	AddressComponent
 ]
 
 @NgModule({
@@ -42,7 +45,9 @@ const COMPONENTS = [
 		CommonModule,
 		MaterialModule,
 		HttpClientModule,
-		TranslateModule
+		TranslateModule,
+		FormsModule,
+		ReactiveFormsModule
 	],
 	exports: [
 		MaterialModule,

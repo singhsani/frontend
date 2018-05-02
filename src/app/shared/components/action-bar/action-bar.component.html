@@ -1,6 +1,13 @@
-<div class="pt-4">
-	<button *ngIf="step != 'step1'" mat-raised-button type="button" color="disabled" matStepperPrevious>{{'back' | translate:'ceicedforms'}}</button>
-	<button mat-raised-button type="button" color="primary" (click)="saveAsDraft()" matStepperNext>{{'save_and_next' | translate:'ceicedforms'}}</button>
-	<button *ngIf="step == 'final'" type="button" (click)="onSubmit()" mat-raised-button color="primary">{{'submit' | translate:'ceicedforms'}}</button>
-	<button *ngIf="step == 'final'" mat-raised-button color="primary" (click)="proceedToPayment()">{{'proceed_for_payment' | translate:'ceicedforms'}}</button>
+<div class="col-sm-12 col-md-12">
+
+	<button *ngIf="step != 'step1'" mat-raised-button style="background: #bba5a5;" matStepperPrevious>{{'back' | translate:'ceicedforms'}}</button>
+
+	<button mat-raised-button color="primary" (click)="saveAsDraft()" matStepperNext>{{step == 'final'? 'save' : 'save_and_next' | translate:'ceicedforms'}}</button>
+
+	<ng-container *ngIf="step == 'final'">
+		<button mat-raised-button color="warn" (click)="resetForm()">{{'reset' | translate:'ceicedforms'}}</button>
+		<button mat-raised-button color="accent" (click)="onSubmit()">{{'submit' | translate:'ceicedforms'}}</button>
+		<button mat-raised-button color="primary" (click)="proceedToPayment()">{{'proceed_for_payment' | translate:'ceicedforms'}}</button>
+	</ng-container>
+
 </div>
