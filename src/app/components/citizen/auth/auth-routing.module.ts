@@ -9,16 +9,15 @@ import { SignUpComponent } from './sign-up/sign-up.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 /* Import auth components end */
 
-import { ROUTESLIST } from '../../../config/routes-conf';
-import * as _ from 'lodash';
+import { ManageRoutes } from '../../../config/routes-conf';
 
 const routes: Routes = [
-	{ path: '', redirectTo: _.get(ROUTESLIST, 'CITIZENAUTHLOGIN.full'), pathMatch: 'full' },
-	{ path: _.get(ROUTESLIST, 'CITIZENAUTHLOGIN.full'), component: LoginComponent },
-	{ path: _.get(ROUTESLIST, 'CITIZENAUTHSIGNUP.full'), component: SignUpComponent },
-	{ path: _.get(ROUTESLIST, 'CITIZENAUTHVERIFY.full'), component: UserVerificationComponent },
-	{ path: _.get(ROUTESLIST, 'CITIZENAUTHFORGOTPASS.full'), component: ForgotPasswordComponent },
-	{ path: _.get(ROUTESLIST, 'CITIZENAUTHRESETPASS.full'), component: ResetPasswordComponent },
+	{ path: '', redirectTo:ManageRoutes.getFullRoute('CITIZENAUTHLOGIN'), pathMatch: 'full' },
+	{ path:ManageRoutes.getFullRoute('CITIZENAUTHLOGIN'), component: LoginComponent },
+	{ path:ManageRoutes.getFullRoute('CITIZENAUTHSIGNUP'), component: SignUpComponent },
+	{ path:ManageRoutes.getFullRoute('CITIZENAUTHVERIFY'), component: UserVerificationComponent },
+	{ path:ManageRoutes.getFullRoute('CITIZENAUTHFORGOTPASS'), component: ForgotPasswordComponent },
+	{ path:ManageRoutes.getFullRoute('CITIZENAUTHRESETPASS'), component: ResetPasswordComponent },
 ];
 
 @NgModule({

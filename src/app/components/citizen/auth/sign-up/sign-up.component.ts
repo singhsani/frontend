@@ -33,7 +33,7 @@ export class SignUpComponent implements OnInit {
 			cellNo: '',
 			password: '',
 			confirmPassword: '',
-			userType: "CZ",
+			userType: "CITIZEN",
 			registerBy: null
 		});
 	}

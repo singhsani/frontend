@@ -38,7 +38,7 @@ export class AppService {
 		params.append('username', loginData.username);
 		params.append('password', loginData.password);
 		params.append('grant_type', 'password');
-		params.append('userType', 'CZ');
+		params.append('userType', 'CITIZEN');
 
 		let headers = {
 			'Content-type': 'application/x-www-form-urlencoded',

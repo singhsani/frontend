@@ -13,8 +13,7 @@ import { switchMap } from 'rxjs/operators/switchMap';
 import { PaginationService } from '../../../core/services/citizen/data-services/pagination.service';
 import { FormsActionsService } from '../../../core/services/citizen/data-services/forms-actions.service';
 import { CommonService } from '../../../shared/services/common.service';
-import { ROUTESLIST } from '../../../config/routes-conf';
-import * as _ from 'lodash';
+import { ManageRoutes } from '../../../config/routes-conf';
 
 @Component({
 	selector: 'app-my-applications',
@@ -95,7 +94,7 @@ export class MyApplicationsComponent implements OnInit {
 	 */
 	redirectToEdit(apiType:string, apiCode: string, id:number) {
 
-		let redirectUrl = _.get(ROUTESLIST, `${apiCode}.full`);
+		let redirectUrl = ManageRoutes.getFullRoute(apiCode);
 		this.router.navigate([redirectUrl, id]);
 
 	}

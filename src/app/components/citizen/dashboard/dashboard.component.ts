@@ -2,8 +2,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { FormsActionsService } from '../../../core/services/citizen/data-services/forms-actions.service';
-import { ROUTESLIST } from '../../../config/routes-conf';
-import * as _ from 'lodash';
+
+import { ManageRoutes } from '../../../config/routes-conf';
 
 @Component({
 	selector: 'app-dashboard',
@@ -20,7 +20,7 @@ export class DashboardComponent implements OnInit {
 	 */
 	constructor(
 		private router: Router,
-		private formService: FormsActionsService
+		private formService: FormsActionsService,
 	) {}
 
 	ngOnInit() {
@@ -33,7 +33,7 @@ export class DashboardComponent implements OnInit {
 	createRecord(apiType: string, apiCode: string) {
 		this.formService.apiType = apiType;
 		this.formService.createFormData().subscribe(res => {
-			let redirectUrl = _.get(ROUTESLIST, `${apiCode}.full`);
+			let redirectUrl = ManageRoutes.getFullRoute(apiCode);
 			this.router.navigate([redirectUrl, res.serviceFormId]);
 		});
 	}
