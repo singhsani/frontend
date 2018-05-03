@@ -2,553 +2,519 @@
 	<div class="col-md-12">
 		<h5 class="example-h2 pt-4">Marriage Registration</h5>
 		<!--Start  form  -->
-		<form [formGroup]="marriageFormGroup" (ngSubmit)="onSubmit()">
+		<form [formGroup]="marriageFormGroup">
 			<mat-horizontal-stepper [linear]="false">
 
-				<!-- First step  -->
-				<!-- remove -->
-				<!-- End first step -->
-
-				<!-- Second step -->
-				<mat-step [stepControl]="bridegroomDetail" [label]="stepLable2">
+				<!-- First step -->
+				<mat-step [stepControl]="bridegroomDetail" [label]="stepLable1">
 
 					<mat-form-field>
-						<input matInput [max]="marriageDate" [matDatepicker]="picker1" formControlName="marriagedate" placeholder="Date of Marriage"
-						 required>
+						<input matInput [max]="disablefutureDate" [matDatepicker]="picker1" formControlName="marriageDate" (dateChange)="dateFormate($event.value,'marriageDate')"
+						 placeholder="{{ 'date_of_marriage' | translate:'marriageCertScreen' }}" required>
 						<mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
 						<mat-datepicker #picker1></mat-datepicker>
-						<mat-error *ngIf="marriageFormGroup.get('marriagedate').errors?.required">
-							{{validationError.invalidemarrigedate}}
-						</mat-error>
-					</mat-form-field>
-
-					<mat-form-field class="example-full-width">
-						<input matInput type="text" formControlName="marriageplace" placeholder="Place of Marriage" required>
-						<mat-error *ngIf="marriageFormGroup.controls['marriageplace'].touched && marriageFormGroup.get('marriageplace').hasError('required')">
-							<strong>Required</strong>!
-						</mat-error>
-					</mat-form-field>
-					<hr>
-					<mat-form-field class="example-full-width">
-						<input matInput type="text" formControlName="groomfirstname" placeholder="Enter First Name" required>
-						<mat-error *ngIf="marriageFormGroup.controls['groomfirstname'].touched && marriageFormGroup.get('groomfirstname').hasError('required')">
-							<strong>Required</strong>!
-						</mat-error>
-						<mat-error *ngIf="!marriageFormGroup.controls.groomfirstname.errors?.required && marriageFormGroup.controls.groomfirstname.errors?.invalidName">{{validationError.namecharerror}}</mat-error>
-					</mat-form-field>
-
-
-					<mat-form-field class="example-full-width">
-						<input matInput type="text" formControlName="groommiddlename" placeholder="Enter Middle Name" required>
-						<mat-error *ngIf="marriageFormGroup.controls['groommiddlename'].touched && marriageFormGroup.get('groommiddlename').hasError('required')">
-							<strong>Required</strong>!
-						</mat-error>
-						<mat-error *ngIf="!marriageFormGroup.controls.groommiddlename.errors?.required && marriageFormGroup.controls.groommiddlename.errors?.invalidName">{{validationError.namecharerror}}</mat-error>
-					</mat-form-field>
-
-					<mat-form-field class="example-full-width">
-						<input matInput type="text" formControlName="groomlastname" placeholder="Enter Last Name" required>
-						<mat-error *ngIf="marriageFormGroup.controls['groomlastname'].touched && marriageFormGroup.get('groomlastname').hasError('required')">
-							<strong>Required</strong>!
-						</mat-error>
-						<mat-error *ngIf="!marriageFormGroup.controls.groomlastname.errors?.required && marriageFormGroup.controls.groomlastname.errors?.invalidName">{{validationError.namecharerror}}</mat-error>
+						<control-messages [control]="marriageFormGroup.controls.marriageDate"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field>
-						<input matInput [matDatepicker]="picker2" [max]="groombirth" formControlName="groombirthdate" [(ngModel)]="groomBirthdate"
-						 (ngModelChange)="CalculateAge()" placeholder="Date of Birth" required>
-						<mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-						<mat-datepicker #picker2></mat-datepicker>
-						<mat-error *ngIf="marriageFormGroup.controls['groombirthdate'].touched && marriageFormGroup.get('groombirthdate').hasError('required')">
-							<strong>Required</strong>! and {{validationError.invalidgroombirthdate}}
-						</mat-error>
-						<span *ngIf="marriageFormGroup.controls['groombirthdate'].touched">Age: {{groomage}}year {{groommonth}}month {{groomdays}}days</span>
+						<input matInput formControlName="marriageRegistrationDate" placeholder="{{ 'marriage_registration_date' | translate:'marriageCertScreen' }}"
+						 readonly>
 					</mat-form-field>
 
-					<div>
+					<mat-form-field class="example-full-width">
+						<input matInput type="text" formControlName="marriagePlace" placeholder="{{ 'place_of_marriage' | translate:'marriageCertScreen' }}"
+						 required>
+						<control-messages id="input0" [control]="marriageFormGroup.controls.marriagePlace"></control-messages>
+					</mat-form-field>
+
+					<hr>
+					<mat-form-field class="example-full-width">
+						<input matInput type="text" formControlName="groomFirstName" placeholder="{{ 'enter_first_name' | translate:'marriageCertScreen' }}">
+						<control-messages [control]="marriageFormGroup.controls.groomFirstName"></control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="example-full-width">
+						<input matInput type="text" formControlName="groomMiddleName" placeholder="{{ 'enter_middlename_name' | translate:'marriageCertScreen' }}">
+						<control-messages [control]="marriageFormGroup.controls.groomMiddleName"></control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="example-full-width">
+						<input matInput type="text" formControlName="groomLastName" placeholder="{{ 'enter_last_name' | translate:'marriageCertScreen' }}">
+						<control-messages [control]="marriageFormGroup.controls.groomLastName"></control-messages>
+					</mat-form-field>
+
+					<mat-form-field>
+						<input matInput [matDatepicker]="picker2" formControlName="groomBirthDate" (dateChange)="dateFormate($event.value,'groomBirthDate');CalculateAge()"
+						 [(ngModel)]="groomBirthDate" placeholder="{{ 'date_of_birth' | translate:'marriageCertScreen' }}" required>
+						<mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+						<mat-datepicker #picker2></mat-datepicker>
+						<control-messages [control]="marriageFormGroup.controls.groomBirthDate"></control-messages>
+					</mat-form-field>
+
+					<mat-form-field>
+						<input matInput formControlName="groomAge" [value]="groomage" placeholder="{{'year' | translate:'marriageCertScreen' }}"
+						 class="example-right-align" readonly>
+						<control-messages [control]="marriageFormGroup.controls.groomAge"></control-messages>
+					</mat-form-field>
+
+					<mat-form-field>
+						<input matInput [value]="groomdays" placeholder="{{'days' | translate:'marriageCertScreen' }}" class="example-right-align"
+						 readonly>
+					</mat-form-field>
+
+					<div formGroupName="groomReligion">
 						<mat-form-field>
-							<mat-select placeholder="Religion by Birth" name="groomreligion" formControlName="groomreligion">
-								<mat-option *ngFor="let religion of religionArray" [value]="religion">{{religion.name}}</mat-option>
+							<mat-select placeholder="{{ 'religion_by_birth' | translate:'marriageCertScreen' }}" formControlName="code" [(ngModel)]="groomreligionArray">
+								<mat-option *ngFor="let religion of religionArray" [value]="religion.code">{{religion.name}}</mat-option>
 							</mat-select>
 						</mat-form-field>
 
-						<mat-form-field>
-							<mat-select placeholder="Religion by Adoption" formControlName="groomadoptionreligion">
+						<!-- <mat-form-field>
+							<mat-select placeholder="{{'religion_by_adoption' | translate:'marriageCertScreen' }}" name="groomadoptionreligion" formControlName="groomadoptionreligion">
 								<mat-option *ngFor="let religion of religionArray" [value]="religion">{{religion.name}}</mat-option>
 							</mat-select>
-						</mat-form-field>
+						</mat-form-field> -->
 					</div>
-					<div>
-						<mat-form-field>
-							<textarea matInput formControlName="groomaddress" placeholder="Enter Address" matTextareaAutosize matAutosizeMinRows="1"
-							 matAutosizeMaxRows="5" required></textarea>
-							<mat-error *ngIf="marriageFormGroup.controls['groomaddress'].touched && marriageFormGroup.get('groomaddress').hasError('required')">
-								<strong>Required</strong>!
-							</mat-error>
-						</mat-form-field>
-
-						<mat-form-field>
-							<input matInput placeholder="Pin code" type="number" formControlName="groompincode" class="pl-5 example-right-align">
-						</mat-form-field>
-
-						<mat-form-field>
-							<input matInput placeholder="Aadhar Number" type="number" formControlName="groomaadharno" class="example-right-align" minlength="5">
-							<mat-error *ngIf="marriageFormGroup.controls.groomaadharno.errors?.minlength ">
-								{{validationError.invalidAadharno}}
-							</mat-error>
-						</mat-form-field>
+					<div class="row pl-3">Address:
+						<app-address class="col-md-6" #address [addressFormGroup]="marriageFormGroup.controls.groomAddress"></app-address>
 					</div>
 
-					<div class="example-selected-value">Marital Status*</div>
-					<mat-radio-group class="example-radio-group" formControlName="groommaritalstatus" required>
+					<mat-form-field>
+						<input matInput formControlName="groomAadharNumber" placeholder="{{'aadhar_number' | translate:'marriageCertScreen' }}" class="example-right-align">
+						<control-messages [control]="marriageFormGroup.controls.groomAadharNumber"></control-messages>
+					</mat-form-field>
+
+					<div class="example-selected-value">{{'marital_status' | translate:'marriageCertScreen' }}*</div>
+					<mat-radio-group class="example-radio-group" formControlName="marriageTimeGroomStatus" required>
 						<mat-radio-button class="example-radio-button" *ngFor="let status of maritalstatusArray" [value]="status.name">
 							{{status.name}}
 						</mat-radio-button>
-						<mat-error *ngIf="clicksubmit && marriageFormGroup.get('groommaritalstatus').hasError('required')">
-							<strong>Required</strong>!
-						</mat-error>
+						<control-messages [control]="marriageFormGroup.controls.marriageTimeGroomStatus"></control-messages>
 					</mat-radio-group>
 
+					<mat-form-field>
+						<input matInput formControlName="aliveWives" placeholder="{{'alive_Wives' | translate:'marriageCertScreen' }}" type="number"
+						 class="pl-1 example-right-align">
+					</mat-form-field>
 
 					<div class="pt-4">
-						<button mat-raised-button type="button" color="disabled" matStepperPrevious>Back</button>
-						<button mat-raised-button type="button" color="primary" matStepperNext>Next</button>
+						<app-action-bar [form]="marriageFormGroup" [step]="'step1'" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
 					</div>
 
 				</mat-step>
-				<!-- End second step -->
+				<!-- End First step -->
 
-				<!-- Third step -->
-				<mat-step [stepControl]="brideDetail" label="{{stepLable3}}" id="step3">
+				<!-- Second step -->
+				<mat-step [stepControl]="brideDetail" [label]="stepLable2">
 
 					<mat-form-field class="example-full-width">
-						<input matInput type="text" formControlName="bridefirstname" placeholder="Enter First Name" required>
-						<mat-error *ngIf="marriageFormGroup.controls['bridefirstname'].touched && marriageFormGroup.get('bridefirstname').hasError('required')">
+						<input matInput type="text" id="input1" formControlName="brideFirstName" placeholder="{{'enter_first_name' | translate:'marriageCertScreen' }}"
+						 required>
+						<mat-error *ngIf="marriageFormGroup.controls['brideFirstName'].touched && marriageFormGroup.get('brideFirstName').hasError('required')">
 							<strong>Required</strong>!
 						</mat-error>
-						<mat-error *ngIf="!marriageFormGroup.controls.bridefirstname.errors?.required && marriageFormGroup.controls.bridefirstname.errors?.invalidName">{{validationError.namecharerror}}</mat-error>
+						<mat-error *ngIf="!marriageFormGroup.controls.brideFirstName.errors?.required && marriageFormGroup.controls.brideFirstName.errors?.invalidName">{{validationError.namecharerror}}</mat-error>
 					</mat-form-field>
 
 
 					<mat-form-field class="example-full-width">
-						<input matInput type="text" formControlName="bridemiddlename" placeholder="Enter Middle Name" required>
-						<mat-error *ngIf="marriageFormGroup.controls['bridemiddlename'].touched && marriageFormGroup.get('bridemiddlename').hasError('required')">
+						<input matInput type="text" formControlName="brideMiddleName" placeholder="{{'enter_middlename_name' | translate:'marriageCertScreen' }}"
+						 required>
+						<mat-error *ngIf="marriageFormGroup.controls['brideMiddleName'].touched && marriageFormGroup.get('brideMiddleName').hasError('required')">
 							<strong>Required</strong>!
 						</mat-error>
-						<mat-error *ngIf="!marriageFormGroup.controls.bridemiddlename.errors?.required && marriageFormGroup.controls.bridemiddlename.errors?.invalidName">{{validationError.namecharerror}}</mat-error>
+						<mat-error *ngIf="!marriageFormGroup.controls.brideMiddleName.errors?.required && marriageFormGroup.controls.brideMiddleName.errors?.invalidName">{{validationError.namecharerror}}</mat-error>
 					</mat-form-field>
 
 					<mat-form-field class="example-full-width">
-						<input matInput type="text" formControlName="bridelastname" placeholder="Enter Last Name" required>
-						<mat-error *ngIf="marriageFormGroup.controls['bridelastname'].touched && marriageFormGroup.get('bridelastname').hasError('required')">
+						<input matInput type="text" formControlName="brideLastName" placeholder="{{'enter_last_name' | translate:'marriageCertScreen' }}"
+						 required>
+						<mat-error *ngIf="marriageFormGroup.controls['brideLastName'].touched && marriageFormGroup.get('brideLastName').hasError('required')">
 							<strong>Required</strong>!
 						</mat-error>
-						<mat-error *ngIf="!marriageFormGroup.controls.bridelastname.errors?.required && marriageFormGroup.controls.bridelastname.errors?.invalidName">{{validationError.namecharerror}}</mat-error>
+						<mat-error *ngIf="!marriageFormGroup.controls.brideLastName.errors?.required && marriageFormGroup.controls.brideLastName.errors?.invalidName">{{validationError.namecharerror}}</mat-error>
 					</mat-form-field>
 
 					<mat-form-field>
-						<input matInput [matDatepicker]="picker3" [max]="bridebirth" formControlName="bridebirthdate" [(ngModel)]="brideBirthdate"
-						 (ngModelChange)="CalculateAge()" placeholder="Date of Birth" required>
+						<input matInput [matDatepicker]="picker3" formControlName="brideBirthDate" (dateChange)="dateFormate($event.value,'brideBirthDate');CalculateAge()"
+						 [(ngModel)]="brideBirthdate" placeholder="{{'date_of_birth' | translate:'marriageCertScreen' }}" required>
 						<mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
 						<mat-datepicker #picker3></mat-datepicker>
-						<mat-error *ngIf="marriageFormGroup.controls['bridebirthdate'].touched && marriageFormGroup.get('bridebirthdate').hasError('required')">
-							<strong>Required</strong>! and {{validationError.invalidbridebirthdate}}
-						</mat-error>
-						<span *ngIf="marriageFormGroup.controls['bridebirthdate'].touched">Age:{{brideage}}year {{bridemonth}}month and {{bridedyas}}days</span>
+						<control-messages [control]="marriageFormGroup.controls.brideBirthDate"></control-messages>
 					</mat-form-field>
 
-					<div>
+					<mat-form-field>
+						<input matInput [value]="brideage" formControlName="brideAge" placeholder="{{'year' | translate:'marriageCertScreen' }}"
+						 class="example-right-align" readonly>
+						<control-messages [control]="marriageFormGroup.controls.brideAge"></control-messages>
+					</mat-form-field>
+
+					<mat-form-field>
+						<input matInput [value]="bridedyas" placeholder="{{'days' | translate:'marriageCertScreen' }}" class="example-right-align"
+						 readonly>
+					</mat-form-field>
+
+					<div formGroupName="brideReligion">
 						<mat-form-field>
-							<mat-select placeholder="Religion by Birth" name="bridereligion" formControlName="bridereligion">
-								<mat-option *ngFor="let religion of religionArray" [value]="religion">{{religion.name}}</mat-option>
+							<mat-select placeholder="{{'religion_by_birth' | translate:'marriageCertScreen' }}" formControlName="code" [(ngModel)]="bridereligionArray">
+								<mat-option *ngFor="let religion of religionArray" [value]="religion.code">{{religion.name}}</mat-option>
 							</mat-select>
 						</mat-form-field>
 
-						<mat-form-field>
-							<mat-select placeholder="Religion by Adoption" name="brideadoptionreligion" formControlName="brideadoptionreligion">
+						<!-- <mat-form-field>
+							<mat-select placeholder="{{'religion_by_adoption' | translate:'marriageCertScreen' }}" name="brideadoptionreligion" formControlName="brideadoptionreligion">
 								<mat-option *ngFor="let religion of religionArray" [value]="religion">{{religion.name}}</mat-option>
 							</mat-select>
-						</mat-form-field>
+						</mat-form-field> -->
 					</div>
+
+					<div class="row pl-3">Address:
+						<app-address class="col-md-6" #address [addressFormGroup]="marriageFormGroup.controls.brideAddress"></app-address>
+					</div>
+
 					<div>
 						<mat-form-field>
-							<textarea matInput name="brideaddress" formControlName="brideaddress" placeholder="Enter Address" matTextareaAutosize matAutosizeMinRows="1"
-							 matAutosizeMaxRows="5" required></textarea>
-							<mat-error *ngIf="marriageFormGroup.controls['brideaddress'].touched && marriageFormGroup.get('brideaddress').hasError('required')">
-								<strong>Required</strong>!
-							</mat-error>
-						</mat-form-field>
-
-						<mat-form-field>
-							<input matInput placeholder="Pin code" type="number" name="bridepincode" formControlName="bridepincode" class="example-right-align">
-						</mat-form-field>
-
-						<mat-form-field>
-							<input matInput placeholder="Aadhar Number" type="number" name="brideaadharno" formControlName="brideaadharno" class="example-right-align">
+							<input matInput formControlName="brideAadharNumber" placeholder="{{'aadhar_number' | translate:'marriageCertScreen' }}" class="example-right-align">
+							<control-messages [control]="marriageFormGroup.controls.brideAadharNumber"></control-messages>
 						</mat-form-field>
 					</div>
 
-					<div class="example-selected-value">Marital Status*</div>
-					<mat-radio-group class="example-radio-group" formControlName="bridemaritalstatus" required>
+					<div class="example-selected-value">{{'marital_status' | translate:'marriageCertScreen' }}*</div>
+					<mat-radio-group class="example-radio-group" formControlName="marriageTimeBrideStatus" required>
 						<mat-radio-button class="example-radio-button" *ngFor="let status of maritalstatusArray" [value]="status.name">
 							{{status.name}}
 						</mat-radio-button>
-						<mat-error *ngIf="clicksubmit && marriageFormGroup.get('bridemaritalstatus').hasError('required')">
-							<strong>Required</strong>!
-						</mat-error>
 					</mat-radio-group>
+					<control-messages [control]="marriageFormGroup.controls.marriageTimeBrideStatus"></control-messages>
+
+
+					<div class="pt-4">Address:
+						<app-action-bar [form]="marriageFormGroup" [step]="'step2'" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
+					</div>
+
+				</mat-step>
+				<!-- End Second step -->
+
+				<!-- Third step -->
+				<mat-step [stepControl]="groomguirdianDetail" [label]="stepLable3">
+
+					<mat-form-field class="example-full-width">
+						<input matInput type="text" formControlName="groomParentsFirstName" placeholder="{{'enter_first_name' | translate:'marriageCertScreen' }}"
+						 required>
+						<control-messages [control]="marriageFormGroup.controls.groomParentsFirstName"></control-messages>
+					</mat-form-field>
+
+
+					<mat-form-field class="example-full-width">
+						<input matInput type="text" formControlName="groomParentsMiddleName" placeholder="{{'enter_middlename_name' | translate:'marriageCertScreen' }}"
+						 required>
+						<control-messages [control]="marriageFormGroup.controls.groomParentsMiddleName"></control-messages>
+					</mat-form-field>
+
+
+					<mat-form-field class="example-full-width">
+						<input matInput type="text" formControlName="groomParentsLastName" placeholder="{{'enter_last_name' | translate:'marriageCertScreen' }}"
+						 required>
+						<control-messages [control]="marriageFormGroup.controls.groomParentsLastName"></control-messages>
+					</mat-form-field>
+
+
+					<mat-form-field>
+						<input matInput [matDatepicker]="picker4" formControlName="groomParentsBirthDate" (dateChange)="dateFormate($event.value,'groomParentsBirthDate')"
+						 placeholder="{{'date_of_birth' | translate:'marriageCertScreen' }}" required>
+						<mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
+						<mat-datepicker #picker4></mat-datepicker>
+						<control-messages [control]="marriageFormGroup.controls.groomParentsBirthDate"></control-messages>
+					</mat-form-field>
+
+
+					<div class="row pl-3">Address:
+						<app-address class="col-md-6" #address [addressFormGroup]="marriageFormGroup.controls.groomParentsAddress"></app-address>
+					</div>
+
+					<div class="row pl-3">Enter Residence Address :
+						<app-address class="col-md-6" #address [addressFormGroup]="marriageFormGroup.controls.groomParentsAddressResidence"></app-address>
+					</div>
+
+					<mat-form-field>
+						<input matInput formControlName="groomParentsAadharNumber" placeholder="{{'aadhar_number' | translate:'marriageCertScreen' }}"
+						 class="example-right-align">
+						<control-messages [control]="marriageFormGroup.controls.groomParentsAadharNumber"></control-messages>
+					</mat-form-field>
 
 
 					<div class="pt-4">
-						<button mat-raised-button type="button" color="disabled" matStepperPrevious>Back</button>
-						<button mat-raised-button type="button" color="primary" matStepperNext>Next</button>
+						<app-action-bar [form]="marriageFormGroup" [step]="'step3'" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
 					</div>
 
 				</mat-step>
 				<!-- End Third step -->
 
 				<!-- Forth step -->
-				<mat-step [stepControl]="groomguirdianDetail" label="{{stepLable4}}" id="step4">
+				<mat-step [stepControl]="brideguirdianDetail" [label]="stepLable4">
 
 					<mat-form-field class="example-full-width">
-						<input matInput type="text" formControlName="groomguirdianfirstname" placeholder="Enter First Name" required>
-						<mat-error *ngIf="marriageFormGroup.controls['groomguirdianfirstname'].touched && marriageFormGroup.get('groomguirdianfirstname').hasError('required')">
-							<strong>Required</strong>!
-						</mat-error>
-						<mat-error *ngIf="!marriageFormGroup.controls.groomguirdianfirstname.errors?.required && marriageFormGroup.controls.groomguirdianfirstname.errors?.invalidName">{{validationError.namecharerror}}</mat-error>
+						<input matInput type="text" formControlName="brideParentsFirstName" placeholder="{{'enter_first_name' | translate:'marriageCertScreen' }}"
+						 required>
+						<control-messages [control]="marriageFormGroup.controls.brideParentsFirstName"></control-messages>
 					</mat-form-field>
 
 
 					<mat-form-field class="example-full-width">
-						<input matInput type="text" formControlName="groomguirdianmiddlename" placeholder="Enter Middle Name" required>
-						<mat-error *ngIf="marriageFormGroup.controls['groomguirdianmiddlename'].touched && marriageFormGroup.get('groomguirdianmiddlename').hasError('required')">
-							<strong>Required</strong>!
-						</mat-error>
-						<mat-error *ngIf="!marriageFormGroup.controls.groomguirdianmiddlename.errors?.required && marriageFormGroup.controls.groomguirdianmiddlename.errors?.invalidName">{{validationError.namecharerror}}</mat-error>
+						<input matInput type="text" formControlName="brideParentsMiddleName" placeholder="{{'enter_middlename_name' | translate:'marriageCertScreen' }}"
+						 required>
+						<control-messages [control]="marriageFormGroup.controls.brideParentsMiddleName"></control-messages>
 					</mat-form-field>
 
+
 					<mat-form-field class="example-full-width">
-						<input matInput type="text" formControlName="groomguirdianlastname" placeholder="Enter Last Name" required>
-						<mat-error *ngIf="marriageFormGroup.controls['groomguirdianlastname'].touched && marriageFormGroup.get('groomguirdianlastname').hasError('required')">
-							<strong>Required</strong>!
-						</mat-error>
-						<mat-error *ngIf="!marriageFormGroup.controls.groomguirdianlastname.errors?.required && marriageFormGroup.controls.groomguirdianlastname.errors?.invalidName">{{validationError.namecharerror}}</mat-error>
+						<input matInput type="text" formControlName="brideParentsLastName" placeholder="{{'enter_last_name' | translate:'marriageCertScreen' }}"
+						 required>
+						<control-messages [control]="marriageFormGroup.controls.brideParentsLastName"></control-messages>
 					</mat-form-field>
+
 
 					<mat-form-field>
-						<input matInput [matDatepicker]="picker4" formControlName="groomguirdianbirthdate" placeholder="Date of Birth" required>
-						<mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
-						<mat-datepicker #picker4></mat-datepicker>
-						<mat-error *ngIf="marriageFormGroup.controls['groomguirdianbirthdate'].touched && marriageFormGroup.get('groomguirdianbirthdate').hasError('required')">
-							<strong>Required</strong>!
-						</mat-error>
+						<input matInput [matDatepicker]="picker5" formControlName="brideParentsBirthDate" (dateChange)="dateFormate($event.value,'brideParentsBirthDate')"
+						 placeholder="{{'date_of_birth' | translate:'marriageCertScreen' }}" required>
+						<mat-datepicker-toggle matSuffix [for]="picker5"></mat-datepicker-toggle>
+						<mat-datepicker #picker5></mat-datepicker>
+						<control-messages [control]="marriageFormGroup.controls.brideParentsBirthDate"></control-messages>
 					</mat-form-field>
 
-					<div>
-						<mat-form-field>
-							<textarea matInput formControlName="groomguirdianaddress" placeholder="Enter Address" matTextareaAutosize matAutosizeMinRows="1"
-							 matAutosizeMaxRows="5" required></textarea>
-							<mat-error *ngIf="marriageFormGroup.controls['groomguirdianaddress'].touched && marriageFormGroup.get('groomguirdianaddress').hasError('required')">
-								<strong>Required</strong>!
-							</mat-error>
-						</mat-form-field>
 
-						<mat-form-field>
-							<textarea matInput formControlName="groomguirdianresidenceaddress" placeholder="Usual place of residence" matTextareaAutosize
-							 matAutosizeMinRows="1" matAutosizeMaxRows="5"></textarea>
-						</mat-form-field>
+					<div class="row pl-3">Address :
+						<app-address class="col-md-6" #address [addressFormGroup]="marriageFormGroup.controls.brideParentsAddress"></app-address>
+					</div>
 
-						<mat-form-field>
-							<input matInput placeholder="Pin code" type="number" name="groomguirdianpincode" formControlName="groomguirdianpincode" class="example-right-align">
-						</mat-form-field>
+					<div class="row pl-3">Enter Residence Address :
+						<app-address class="col-md-6" #address [addressFormGroup]="marriageFormGroup.controls.brideParentsAddressResidence"></app-address>
 					</div>
 
 					<mat-form-field>
-						<input matInput placeholder="Aadhar Number" type="number" name="groomguirdianaadharno" formControlName="groomguirdianaadharno"
+						<input matInput formControlName="brideParentsAadharNumber" placeholder="{{'aadhar_number' | translate:'marriageCertScreen' }}"
 						 class="example-right-align">
+						<control-messages [control]="marriageFormGroup.controls.brideParentsAadharNumber"></control-messages>
 					</mat-form-field>
 
+
 					<div class="pt-4">
-						<button mat-raised-button type="button" color="disabled" matStepperPrevious>Back</button>
-						<button mat-raised-button type="button" color="primary" matStepperNext>Next</button>
+						<app-action-bar [form]="marriageFormGroup" [step]="'step4'" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
 					</div>
 
 				</mat-step>
 				<!-- End Forth step -->
 
 				<!-- Fifth step -->
-				<mat-step [stepControl]="brideguirdianDetail" label="{{stepLable5}}" id="step5">
+				<mat-step [stepControl]="priestDetail" [label]="stepLable5">
 
 					<mat-form-field class="example-full-width">
-						<input matInput type="text" formControlName="brideguirdianfirstname" placeholder="Enter First Name" required>
-						<mat-error *ngIf="marriageFormGroup.controls['brideguirdianfirstname'].touched && marriageFormGroup.get('brideguirdianfirstname').hasError('required')">
-							<strong>Required</strong>!
-						</mat-error>
-						<mat-error *ngIf="!marriageFormGroup.controls.brideguirdianfirstname.errors?.required && marriageFormGroup.controls.brideguirdianfirstname.errors?.invalidName">{{validationError.namecharerror}}</mat-error>
+						<input matInput type="text" formControlName="priestFirstName" placeholder="{{'enter_first_name' | translate:'marriageCertScreen' }}"
+						 required>
+						<control-messages [control]="marriageFormGroup.controls.priestFirstName"></control-messages>
 					</mat-form-field>
 
 
 					<mat-form-field class="example-full-width">
-						<input matInput type="text" formControlName="brideguirdianmiddlename" placeholder="Enter Middle Name" required>
-						<mat-error *ngIf="marriageFormGroup.controls['brideguirdianmiddlename'].touched && marriageFormGroup.get('brideguirdianmiddlename').hasError('required')">
-							<strong>Required</strong>!
-						</mat-error>
-						<mat-error *ngIf="!marriageFormGroup.controls.brideguirdianmiddlename.errors?.required && marriageFormGroup.controls.brideguirdianmiddlename.errors?.invalidName">{{validationError.namecharerror}}</mat-error>
+						<input matInput type="text" formControlName="priestMiddleName" placeholder="{{'enter_middlename_name' | translate:'marriageCertScreen' }}"
+						 required>
+						<control-messages [control]="marriageFormGroup.controls.priestMiddleName"></control-messages>
 					</mat-form-field>
 
+
 					<mat-form-field class="example-full-width">
-						<input matInput type="text" formControlName="brideguirdianlastname" placeholder="Enter Last Name" required>
-						<mat-error *ngIf="marriageFormGroup.controls['brideguirdianlastname'].touched && marriageFormGroup.get('brideguirdianlastname').hasError('required')">
-							<strong>Required</strong>!
-						</mat-error>
-						<mat-error *ngIf="!marriageFormGroup.controls.brideguirdianlastname.errors?.required && marriageFormGroup.controls.brideguirdianlastname.errors?.invalidName">{{validationError.namecharerror}}</mat-error>
+						<input matInput type="text" formControlName="priestLastName" placeholder="{{'enter_last_name' | translate:'marriageCertScreen' }}"
+						 required>
+						<control-messages [control]="marriageFormGroup.controls.priestLastName"></control-messages>
 					</mat-form-field>
+
 
 					<mat-form-field>
-						<input matInput [matDatepicker]="picker5" formControlName="brideguirdianbirthdate" placeholder="Date of Birth" required>
-						<mat-datepicker-toggle matSuffix [for]="picker5"></mat-datepicker-toggle>
-						<mat-datepicker #picker5></mat-datepicker>
-						<mat-error *ngIf="marriageFormGroup.controls['brideguirdianbirthdate'].touched && marriageFormGroup.get('brideguirdianbirthdate').hasError('required')">
-							<strong>Required</strong>!
-						</mat-error>
-					</mat-form-field>
-
-					<div>
-						<mat-form-field>
-							<textarea matInput formControlName="brideguirdianaddress" placeholder="Enter Address" matTextareaAutosize matAutosizeMinRows="1"
-							 matAutosizeMaxRows="5" required></textarea>
-							<mat-error *ngIf="marriageFormGroup.controls['brideguirdianaddress'].touched && marriageFormGroup.get('brideguirdianaddress').hasError('required')">
-								<strong>Required</strong>!
-							</mat-error>
-						</mat-form-field>
-
-						<mat-form-field>
-							<textarea matInput formControlName="brideguirdianresidenceaddress" placeholder="Usual place of residence" matTextareaAutosize
-							 matAutosizeMinRows="1" matAutosizeMaxRows="5"></textarea>
-						</mat-form-field>
-
-						<mat-form-field>
-							<input matInput placeholder="Pin code" type="number" name="brideguirdianpincode" formControlName="brideguirdianpincode" class="example-right-align">
-						</mat-form-field>
-					</div>
-
-					<mat-form-field>
-						<input matInput placeholder="Aadhar Number" type="number" name="brideguirdianaadharno" formControlName="brideguirdianaadharno"
-						 class="example-right-align">
-					</mat-form-field>
-
-					<div class="pt-4">
-						<button mat-raised-button type="button" color="disabled" matStepperPrevious>Back</button>
-						<button mat-raised-button type="button" color="primary" matStepperNext>Next</button>
-					</div>
-
-				</mat-step>
-				<!-- End fifth step -->
-
-				<!-- Sixth step -->
-				<mat-step [stepControl]="priestDetail" label="{{stepLable6}}" id="step6">
-
-					<mat-form-field class="example-full-width">
-						<input matInput type="text" formControlName="priestfirstname" placeholder="Enter First Name" required>
-						<mat-error *ngIf="marriageFormGroup.controls['priestfirstname'].touched && marriageFormGroup.get('priestfirstname').hasError('required')">
-							<strong>Required</strong>!
-						</mat-error>
-						<mat-error *ngIf="!marriageFormGroup.controls.priestfirstname.errors?.required && marriageFormGroup.controls.priestfirstname.errors?.invalidName">{{validationError.namecharerror}}</mat-error>
-					</mat-form-field>
-
-
-					<mat-form-field class="example-full-width">
-						<input matInput type="text" formControlName="priestmiddlename" placeholder="Enter Middle Name" required>
-						<mat-error *ngIf="marriageFormGroup.controls['priestmiddlename'].touched && marriageFormGroup.get('priestmiddlename').hasError('required')">
-							<strong>Required</strong>!
-						</mat-error>
-						<mat-error *ngIf="!marriageFormGroup.controls.priestmiddlename.errors?.required && marriageFormGroup.controls.priestmiddlename.errors?.invalidName">{{validationError.namecharerror}}</mat-error>
-					</mat-form-field>
-
-					<mat-form-field class="example-full-width">
-						<input matInput type="text" formControlName="priestlastname" placeholder="Enter Last Name" required>
-						<mat-error *ngIf="marriageFormGroup.controls['priestlastname'].touched && marriageFormGroup.get('priestlastname').hasError('required')">
-							<strong>Required</strong>!
-						</mat-error>
-						<mat-error *ngIf="!marriageFormGroup.controls.priestlastname.errors?.required && marriageFormGroup.controls.priestlastname.errors?.invalidName">{{validationError.namecharerror}}</mat-error>
-					</mat-form-field>
-
-					<mat-form-field>
-						<input matInput [matDatepicker]="picker6" formControlName="priestbirthdate" placeholder="Date of Birth" required>
+						<input matInput [matDatepicker]="picker6" formControlName="priestBirthDate" (dateChange)="dateFormate($event.value,'priestBirthDate')"
+						 placeholder="{{'date_of_birth' | translate:'marriageCertScreen' }}" required>
 						<mat-datepicker-toggle matSuffix [for]="picker6"></mat-datepicker-toggle>
 						<mat-datepicker #picker6></mat-datepicker>
-						<mat-error *ngIf="marriageFormGroup.controls['priestbirthdate'].touched && marriageFormGroup.get('priestbirthdate').hasError('required')">
-							<strong>Required</strong>!
-						</mat-error>
+						<control-messages [control]="marriageFormGroup.controls.priestBirthDate"></control-messages>
 					</mat-form-field>
 
-					<div>
-						<mat-form-field>
-							<textarea matInput formControlName="priestaddress" placeholder="Enter Address" matTextareaAutosize matAutosizeMinRows="1"
-							 matAutosizeMaxRows="5" required></textarea>
-							<mat-error *ngIf="marriageFormGroup.controls['priestaddress'].touched && marriageFormGroup.get('priestaddress').hasError('required')">
-								<strong>Required</strong>!
-							</mat-error>
-						</mat-form-field>
 
-						<mat-form-field>
-							<textarea matInput formControlName="priestresidenceaddress" placeholder="Usual place of residence" matTextareaAutosize matAutosizeMinRows="1"
-							 matAutosizeMaxRows="5"></textarea>
-						</mat-form-field>
+					<div class="row pl-3">Address :
+						<app-address class="col-md-6" #address [addressFormGroup]="marriageFormGroup.controls.priestAddress"></app-address>
+					</div>
 
-						<mat-form-field>
-							<input matInput placeholder="Pin code" type="number" name="priestpincode" formControlName="priestpincode" class="example-right-align">
-						</mat-form-field>
+					<div class="row pl-3">Enter Residence Address :
+						<app-address class="col-md-6" #address [addressFormGroup]="marriageFormGroup.controls.priestAddressResidence"></app-address>
 					</div>
 
 					<mat-form-field>
-						<input matInput placeholder="Aadhar Number" type="number" name="priestaadharno" formControlName="priestaadharno" class="example-right-align">
+						<input matInput placeholder="Aadhar Number" formControlName="priestAddressAadharNumber" class="example-right-align">
+						<control-messages [control]="marriageFormGroup.controls.priestAddressAadharNumber"></control-messages>
 					</mat-form-field>
 
+
 					<div class="pt-4">
-						<button mat-raised-button type="button" color="disabled" matStepperPrevious>Back</button>
-						<button mat-raised-button type="button" color="primary" matStepperNext>Next</button>
+						<app-action-bar [form]="marriageFormGroup" [step]="'step5'" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
 					</div>
 
 				</mat-step>
-				<!-- End sixth step -->
+				<!-- End Fifth step -->
 
-				<!-- Seventh step -->
-				<mat-step [stepControl]="firstwitnessDetail" label="{{stepLable7}}" id="step7">
+				<!-- Sixth step -->
+				<mat-step [stepControl]="firstwitnessDetail" [label]="stepLable6">
 
 					<mat-form-field class="example-full-width">
-						<input matInput type="text" formControlName="firstwitnessfirstname" placeholder="Enter First Name" required>
-						<mat-error *ngIf="marriageFormGroup.controls['firstwitnessfirstname'].touched && marriageFormGroup.get('firstwitnessfirstname').hasError('required')">
-							<strong>Required</strong>!
-						</mat-error>
-						<mat-error *ngIf="!marriageFormGroup.controls.firstwitnessfirstname.errors?.required && marriageFormGroup.controls.firstwitnessfirstname.errors?.invalidName">{{validationError.namecharerror}}</mat-error>
+						<input matInput type="text" formControlName="firstWitnessFirstName" placeholder="{{'enter_first_name' | translate:'marriageCertScreen' }}"
+						 required>
+						<control-messages [control]="marriageFormGroup.controls.firstWitnessFirstName"></control-messages>
 					</mat-form-field>
 
 
 					<mat-form-field class="example-full-width">
-						<input matInput type="text" formControlName="firstwitnessmiddlename" placeholder="Enter Middle Name" required>
-						<mat-error *ngIf="marriageFormGroup.controls['firstwitnessmiddlename'].touched && marriageFormGroup.get('firstwitnessmiddlename').hasError('required')">
-							<strong>Required</strong>!
-						</mat-error>
-						<mat-error *ngIf="!marriageFormGroup.controls.firstwitnessmiddlename.errors?.required && marriageFormGroup.controls.firstwitnessmiddlename.errors?.invalidName">{{validationError.namecharerror}}</mat-error>
+						<input matInput type="text" formControlName="firstWitnessMiddleName" placeholder="{{'enter_middlename_name' | translate:'marriageCertScreen' }}"
+						 required>
+						<control-messages [control]="marriageFormGroup.controls.firstWitnessMiddleName"></control-messages>
 					</mat-form-field>
 
+
 					<mat-form-field class="example-full-width">
-						<input matInput type="text" formControlName="firstwitnesslastname" placeholder="Enter Last Name" required>
-						<mat-error *ngIf="marriageFormGroup.controls['firstwitnesslastname'].touched && marriageFormGroup.get('firstwitnesslastname').hasError('required')">
-							<strong>Required</strong>!
-						</mat-error>
-						<mat-error *ngIf="!marriageFormGroup.controls.firstwitnesslastname.errors?.required && marriageFormGroup.controls.firstwitnesslastname.errors?.invalidName">{{validationError.namecharerror}}</mat-error>
+						<input matInput type="text" formControlName="firstWitnessLastName" placeholder="{{'enter_last_name' | translate:'marriageCertScreen' }}"
+						 required>
+						<control-messages [control]="marriageFormGroup.controls.firstWitnessLastName"></control-messages>
 					</mat-form-field>
+
 
 					<mat-form-field>
-						<input matInput [matDatepicker]="picker7" formControlName="firstwitnessbirthdate" placeholder="Date of Birth" required>
+						<input matInput [matDatepicker]="picker7" formControlName="firstWitnessBirthDate" (dateChange)="dateFormate($event.value,'firstWitnessBirthDate')"
+						 placeholder="{{'date_of_birth' | translate:'marriageCertScreen' }}" required>
 						<mat-datepicker-toggle matSuffix [for]="picker7"></mat-datepicker-toggle>
 						<mat-datepicker #picker7></mat-datepicker>
-						<mat-error *ngIf="marriageFormGroup.controls['firstwitnessbirthdate'].touched && marriageFormGroup.get('firstwitnessbirthdate').hasError('required')">
-							<strong>Required</strong>!
-						</mat-error>
+						<control-messages [control]="marriageFormGroup.controls.firstWitnessBirthDate"></control-messages>
 					</mat-form-field>
 
-					<div>
-						<mat-form-field>
-							<textarea matInput formControlName="firstwitnessaddress" placeholder="Enter Address" matTextareaAutosize matAutosizeMinRows="1"
-							 matAutosizeMaxRows="5" required></textarea>
-							<mat-error *ngIf="marriageFormGroup.controls['firstwitnessaddress'].touched && marriageFormGroup.get('firstwitnessaddress').hasError('required')">
-								<strong>Required</strong>!
-							</mat-error>
-						</mat-form-field>
 
-						<mat-form-field>
-							<textarea matInput formControlName="firstwitnessresidenceaddress" placeholder="Usual place of residence" matTextareaAutosize
-							 matAutosizeMinRows="1" matAutosizeMaxRows="5"></textarea>
-						</mat-form-field>
-
-						<mat-form-field>
-							<input matInput placeholder="Pin code" type="number" name="firstwitnesspincode" formControlName="firstwitnesspincode" class="example-right-align">
-						</mat-form-field>
+					<div class="row pl-3">Address :
+						<app-address class="col-md-6" #address [addressFormGroup]="marriageFormGroup.controls.firstWitnessAddress"></app-address>
 					</div>
 
 					<mat-form-field>
-						<input matInput placeholder="Aadhar Number" type="number" name="firstwitnessaadharno" formControlName="firstwitnessaadharno"
-						 class="example-right-align">
+						<input matInput placeholder="Aadhar Number" formControlName="firstWitnessAadharNumber" class="example-right-align">
+						<control-messages [control]="marriageFormGroup.controls.firstWitnessAadharNumber"></control-messages>
 					</mat-form-field>
 
+
 					<div class="pt-4">
-						<button mat-raised-button type="button" color="disabled" matStepperPrevious>Back</button>
-						<button mat-raised-button type="button" color="primary" matStepperNext>Next</button>
+						<app-action-bar [form]="marriageFormGroup" [step]="'step6'" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
 					</div>
 
 				</mat-step>
 				<!-- End sixth step -->
 
 
-				<!-- eighth step -->
-				<mat-step [stepControl]="secondwitnessDetail" label="{{stepLable8}}" id="step8">
+				<!-- Seventh step -->
+				<mat-step [stepControl]="secondwitnessDetail" [label]="stepLable7">
 
 					<mat-form-field class="example-full-width">
-						<input matInput type="text" formControlName="secondwitnesssecondname" placeholder="Enter second Name" required>
-						<mat-error *ngIf="marriageFormGroup.controls['secondwitnesssecondname'].touched && marriageFormGroup.get('secondwitnesssecondname').hasError('required')">
-							<strong>Required</strong>!
-						</mat-error>
-						<mat-error *ngIf="!marriageFormGroup.controls.secondwitnesssecondname.errors?.required && marriageFormGroup.controls.secondwitnesssecondname.errors?.invalidName">{{validationError.namecharerror}}</mat-error>
-					</mat-form-field>
-
-
-					<mat-form-field class="example-full-width">
-						<input matInput type="text" formControlName="secondwitnessmiddlename" placeholder="Enter Middle Name" required>
-						<mat-error *ngIf="marriageFormGroup.controls['secondwitnessmiddlename'].touched && marriageFormGroup.get('secondwitnessmiddlename').hasError('required')">
-							<strong>Required</strong>!
-						</mat-error>
-						<mat-error *ngIf="!marriageFormGroup.controls.secondwitnessmiddlename.errors?.required && marriageFormGroup.controls.secondwitnessmiddlename.errors?.invalidName">{{validationError.namecharerror}}</mat-error>
+						<input matInput type="text" formControlName="secondWitnessFirstName" placeholder="{{'enter_first_name' | translate:'marriageCertScreen' }}"
+						 required>
+						<control-messages [control]="marriageFormGroup.controls.secondWitnessFirstName"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="example-full-width">
-						<input matInput type="text" formControlName="secondwitnesslastname" placeholder="Enter Last Name" required>
-						<mat-error *ngIf="marriageFormGroup.controls['secondwitnesslastname'].touched && marriageFormGroup.get('secondwitnesslastname').hasError('required')">
-							<strong>Required</strong>!
-						</mat-error>
-						<mat-error *ngIf="!marriageFormGroup.controls.secondwitnesslastname.errors?.required && marriageFormGroup.controls.secondwitnesslastname.errors?.invalidName">{{validationError.namecharerror}}</mat-error>
+						<input matInput type="text" formControlName="secondWitnessMiddleName" placeholder="{{'enter_middlename_name' | translate:'marriageCertScreen' }}"
+						 required>
+						<control-messages [control]="marriageFormGroup.controls.secondWitnessMiddleName"></control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="example-full-width">
+						<input matInput type="text" formControlName="secondWitnessLastName" placeholder="{{'enter_last_name' | translate:'marriageCertScreen' }}"
+						 required>
+						<control-messages [control]="marriageFormGroup.controls.secondWitnessLastName"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field>
-						<input matInput [matDatepicker]="picker8" formControlName="secondwitnessbirthdate" placeholder="Date of Birth" required>
+						<input matInput [matDatepicker]="picker8" formControlName="secondWitnessBirthDate" (dateChange)="dateFormate($event.value,'secondWitnessBirthDate')"
+						 placeholder="{{'date_of_birth' | translate:'marriageCertScreen' }}" required>
 						<mat-datepicker-toggle matSuffix [for]="picker8"></mat-datepicker-toggle>
 						<mat-datepicker #picker8></mat-datepicker>
-						<mat-error *ngIf="marriageFormGroup.controls['secondwitnessbirthdate'].touched && marriageFormGroup.get('secondwitnessbirthdate').hasError('required')">
-							<strong>Required</strong>!
-						</mat-error>
+						<control-messages [control]="marriageFormGroup.controls.secondWitnessBirthDate"></control-messages>
 					</mat-form-field>
 
-					<div>
-						<mat-form-field>
-							<textarea matInput formControlName="secondwitnessaddress" placeholder="Enter Address" matTextareaAutosize matAutosizeMinRows="1"
-							 matAutosizeMaxRows="5" required></textarea>
-							<mat-error *ngIf="marriageFormGroup.controls['secondwitnessaddress'].touched && marriageFormGroup.get('secondwitnessaddress').hasError('required')">
-								<strong>Required</strong>!
-							</mat-error>
-						</mat-form-field>
 
-						<mat-form-field>
-							<textarea matInput formControlName="secondwitnessresidenceaddress" placeholder="Usual place of residence" matTextareaAutosize
-							 matAutosizeMinRows="1" matAutosizeMaxRows="5"></textarea>
-						</mat-form-field>
-
-						<mat-form-field>
-							<input matInput placeholder="Pin code" type="number" name="secondwitnesspincode" formControlName="secondwitnesspincode" class="example-right-align">
-						</mat-form-field>
+					<div class="row pl-3">Address :
+						<app-address class="col-md-6" #address [addressFormGroup]="marriageFormGroup.controls.secondWitnessAddress"></app-address>
 					</div>
 
 					<mat-form-field>
-						<input matInput placeholder="Aadhar Number" type="number" name="secondwitnessaadharno" formControlName="secondwitnessaadharno"
+						<input matInput formControlName="secondWitnessAadharNumber" placeholder="{{'aadhar_number' | translate:'marriageCertScreen' }}"
 						 class="example-right-align">
+						 <control-messages [control]="marriageFormGroup.controls.secondWitnessAadharNumber"></control-messages>
 					</mat-form-field>
+					
 
 					<div class="pt-4">
-						<button mat-raised-button type="button" color="disabled" matStepperPrevious>Back</button>
-						<button mat-raised-button type="button" color="primary" matStepperNext>Next</button>
+						<app-action-bar [form]="marriageFormGroup" [step]="'step7'" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
 					</div>
 
+				</mat-step>
+				<!-- End Seventh step -->
+
+				<!-- Start eighth step -->
+				<mat-step [stepControl]="upload" [label]="stepLable8">
+
+					<div class="row pl-3">
+						<div class="col-12">
+							<mat-progress-bar *ngIf="currentFileUpload" mode="determinate" value="{{progress.percentage}}"></mat-progress-bar>
+
+							<div *ngIf="currentFileUpload" class="progress">
+								<div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" attr.aria-valuenow="{{progress.percentage}}"
+								 aria-valuemin="0" aria-valuemax="100" [ngStyle]="{width:progress.percentage+'%'}">
+									{{progress.percentage}}%
+								</div>
+							</div>
+						</div>
+						<div class="col-4">
+							<div>
+								<file-upload [uploadModel]="setDataValue(1)"></file-upload>
+							</div>
+						</div>
+
+						<div class="col-4">
+							<file-upload [uploadModel]="setDataValue(2)"></file-upload>
+						</div>
+
+						<div class="col-4">
+							<file-upload [uploadModel]="setDataValue(3)"></file-upload>
+						</div>
+					</div>
+					<hr/>
+					<div>
+						<span>Upload Documents</span>
+						<section class="example-section">
+							<mat-checkbox [disabled]="false">
+								Resident proof of Groom and Bride(Driving License/Aadhar card/passport/Ration card/Election card)
+							</mat-checkbox>
+						</section>
+						<file-upload fileType="file" [uploadModel]="setDataValue(4)"></file-upload>
+						<hr/>
+						<section class="example-section">
+							<mat-checkbox [disabled]="false">
+								Any KYC (Know your Customer )Document of Bride;
+							</mat-checkbox>
+						</section>
+						<file-upload fileType="file" [uploadModel]="setDataValue(5)"></file-upload>
+						<hr/>
+						<section class="example-section">
+							<mat-checkbox [disabled]="false">
+								Resident proof of Priest (Driving License/Aadhar card/passport/Ration card/Election card) </mat-checkbox>
+						</section>
+						<file-upload fileType="file" [uploadModel]="setDataValue(6)"></file-upload>
+						<hr/>
+						<section class="example-section">
+							<mat-checkbox [disabled]="false">
+								Resident proof of Two local Witnesses (Driving License/Aadhar card/passport/Ration card/Election card) </mat-checkbox>
+						</section>
+						<file-upload fileType="file" [uploadModel]="setDataValue(7)"></file-upload>
+					</div>
 				</mat-step>
 				<!-- End eighth step -->
 
@@ -557,9 +523,7 @@
 					<ng-template matStepLabel>Done</ng-template>
 					You are now done.
 					<div>
-						<button mat-raised-button color="disabled" matStepperPrevious>Back</button>
-						<button mat-raised-button color="warn" type="reset" (click)="stepper.reset()">Reset</button>
-						<button type="submit" mat-raised-button color="primary">Submit</button>
+						<app-action-bar [form]="marriageFormGroup" [step]="'final'" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
 					</div>
 				</mat-step>
 				<!-- End last step -->
@@ -568,13 +532,6 @@
 		</form>
 		<!-- End  form -->
 
-		<div class="button-row pb-4">
-			<button mat-raised-button color="accent" (click)="saveDraft(marriageFormGroup.value)">Save as Draft</button>
-		</div>
-		<section class="example-section">
-			<mat-progress-bar class="example-margin" [color]="color" [mode]="mode" [value]="progressvalue" [bufferValue]="bufferValue">
-			</mat-progress-bar>
-		</section>
-
+		<!-- {{marriageFormGroup.value | json}} -->
 	</div>
 </div>

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AbstractControl } from '@angular/forms';
+import { AbstractControl, FormControl } from '@angular/forms';
 import * as moment from 'moment';
 
 @Injectable()
@@ -20,9 +20,9 @@ export class ValidationService {
             invalidEmail: 'Invalid email address',
             invalidPassword: 'Invalid password. Password must be at least 6 characters long, and contain a number.',
             invalidemarrigedate: 'Required and Should not be future date!',
-            invalidgroombirthdate: 'Age must be greater than 21 year',
-            invalidbridebirthdate: 'Age must be greater than 18 year',
+            invalideDate: 'select Date',
             invalidAadharno: 'Aadhar Number must be 12',
+            invalidNumberEntry: 'Enter only Number',
             minlength: `Minimum length ${validatorValue.requiredLength} characters`,
             maxlength: `Cannot exceed ${validatorValue.requiredLength} characters`,
         }
@@ -30,22 +30,62 @@ export class ValidationService {
         return config[validatorName];
     }
 
+    static showValidatorErrorMessage(validatorName: string, validatorValue: any) {
+        let config = {
+            invalidgroomage: 'Age must be greater than 21 year',
+            invalidbridebirthdate: 'Age must be greater than 18 year',
+        }
+        return config[validatorName];
+    }
 
-    static nameValidator(control: AbstractControl) {
-        // RFC 2822 compliant regex
-        if (control.value && control.value.match(/^[a-zA-Z ]{2,30}$/)) {
-            return '';
+    // Name validation 
+    static nameValidator(control: FormControl) {
+        if (control.value) {
+            const matches = control.value.match(/^[a-zA-Z]*$/);
+            return matches ? null : { 'invalidName': true };
         } else {
-            return { 'invalidName': true };
+            return null;
         }
     }
 
-    static emailValidator(control: AbstractControl) {
-        // RFC 2822 compliant regex
-        if (control.value && control.value.match(/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/)) {
-            return null;
+    // Email validation
+    static emailValidator(control: FormControl) {
+        if (control.value) {
+            const matches = control.value.match(/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/);
+            return matches ? null : { 'invalidEmail': true };
         } else {
-            return { 'invalidEmail': true };
+            return null;
+        }
+    }
+
+    // only number
+    static numberValidator(control: FormControl) {
+
+        if (control.value) {
+            const matches = control.value.match(/[0 - 9]/);
+            return matches ? null : { 'invalidNumber': true };
+        } else {
+            return null;
+        }
+    }
+
+    // groom age
+    static groomAgeValidator(control: FormControl) {
+        if (control.value) {
+            const matches = (control.value) >= 21;
+            return matches ? null : { 'invalidgroomage': true };
+        } else {
+            return null;
+        }
+    }
+
+    // bride age
+    static brideAgeValidator(control: FormControl) {
+        if (control.value) {
+            const matches = (control.value) >= 18;
+            return matches ? null : { 'invalidbridebirthdate': true };
+        } else {
+            return null;
         }
     }
 
@@ -67,36 +107,5 @@ export class ValidationService {
             return { 'invalidCreditCard': true };
         }
     }
-
-    marriagedateValidator() {
-        // marriage date validation : disable future date
-        let currentDate: Date = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
-        let day = currentDate.getDate() - 1;
-        let month = currentDate.getMonth();
-        let year = currentDate.getFullYear();
-        var marriageDate = new Date(year, month, day);
-        return marriageDate;
-    }
-
-    // current date
-    currentDate = moment(new Date());
-    day = this.currentDate.days();
-    month = this.currentDate.month();
-    year = this.currentDate.year();
-
-    groombirthdateValidator() {
-        //groom birth date validation: must be 21 up
-        let minAge: number = 21;
-        var groombirth = new Date(this.year - minAge, this.month, this.day);
-        return groombirth;
-    }
-
-    bridebirthdateValidator() {
-        //bride birth date validation: must be 18 up
-        let minAge: number = 18;
-        var bridebirth = new Date(this.year - minAge, this.month, this.day);
-        return bridebirth;
-    }
-
 
 }

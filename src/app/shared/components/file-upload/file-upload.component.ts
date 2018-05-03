@@ -12,6 +12,7 @@ export class FileUploadComponent implements OnInit {
 	@ViewChild('fileInput')
 	fileInput: any;
 
+
 	selectedFiles: FileList
 	currentFileUpload: File
 	progress: { percentage: number } = { percentage: 0 }
@@ -20,8 +21,14 @@ export class FileUploadComponent implements OnInit {
 	color = 'primary';
 	mode = 'determinate';
 
+	//file and image  upload
+	priviewImage = '#';
+
 	@Input()
 	uploadModel: any;
+
+	fileType: string;
+	imagetype: boolean = false;
 
 	constructor(private uploadFileService: UploadFileService) { }
 
@@ -33,6 +40,16 @@ export class FileUploadComponent implements OnInit {
 	 */
 	selectFile(event) {
 		this.selectedFiles = event.target.files;
+		this.fileType = this.selectedFiles[0].type;
+
+		if (this.fileType === 'image/png' || this.fileType === 'image/jpg' || this.fileType === 'image/jpeg' || this.fileType === 'image/gif') {
+			let reader = new FileReader();
+			reader.onload = (e: any) => {
+				this.priviewImage = e.target.result;
+			}
+			this.imagetype = true;
+			reader.readAsDataURL(event.target.files[0]);
+		}
 	}
 
 	/**
@@ -61,7 +78,9 @@ export class FileUploadComponent implements OnInit {
 		this.uploadFileService.processFileToServer(formData, setProgressBar => {
 			this.progress.percentage = setProgressBar;
 		}, successResponse => {
-			console.log(successResponse);
+			console.log(JSON.stringify(successResponse));
+			console.log(successResponse.data.mimeType);
+			// successResponse.mimeType
 			this.currentFileUpload = undefined;
 			this.selectedFiles = undefined;
 			this.fileInput.nativeElement.value = "";

@@ -29,7 +29,7 @@ export class ForgotPasswordComponent implements OnInit {
 		this.forgotPassForm = this.fb.group({
 			email: '',
 			cellNo: '',
-			userType: 'CZ'
+			userType: 'CITIZEN'
 		});
 	}
 
