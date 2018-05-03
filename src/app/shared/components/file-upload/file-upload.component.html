@@ -12,6 +12,9 @@
 		</div>
 
 		<label class="btn btn-default">
+			<label *ngIf="imagetype">
+				<img [src]="priviewImage" alt="image" class="imageSize" />
+			</label>
 			<input #fileInput type="file" (change)="selectFile($event)">
 		</label>
 
