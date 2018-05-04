@@ -13,6 +13,10 @@ button:focus {
     outline: none !important;
 }
 
+.full-width {
+  width: 100%;
+}
+
 /* Start - CSS for IE Message to not-supported browser for application */
 #ie-toolbar {
     position: fixed;

@@ -37,4 +37,16 @@ export class UploadFileService {
 			}
 		});
 	}
+
+	getFileFromServer(serviceFormId,fileId,type){
+		let getFileUrl = 'api/attachment/'+serviceFormId+'/getFile/'+fileId;
+		
+		return this.httpService.getUploadedFile(getFileUrl,type);
+	}
+
+	deleteFile(serviceFormId, fileId){
+		let getFileUrl = 'api/attachment/' + serviceFormId + '/getFile/' + fileId+"/delete";
+		return this.httpService.deleteUploadedFile(getFileUrl)
+
+	}
 }
