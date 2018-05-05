@@ -25,6 +25,11 @@ export class ValidationService {
             invalidNumberEntry: 'Enter only Number',
             minlength: `Minimum length ${validatorValue.requiredLength} characters`,
             maxlength: `Cannot exceed ${validatorValue.requiredLength} characters`,
+            invalidName: `Pattern Is Not Valid`,
+            invalidPinCode: `Pin Code Not Valid`,
+            invalidAadhar: `Aadhar Number is not valid`,
+            invalidNumber: `Mobile Number Not Valid`,
+            invalidpregnanceTime: 'Pregnancy duration incorrect',
         }
 
         return config[validatorName];
@@ -105,6 +110,42 @@ export class ValidationService {
             return null;
         } else {
             return { 'invalidCreditCard': true };
+        }
+    }
+
+    static aadharValidation(control: AbstractControl) {
+        // RFC 2822 compliant regex
+        if (control.value && control.value.match(/^[0-9]{12,12}$/)) {
+            return '';
+        } else {
+            return { 'invalidAadhar': true };
+        }
+    }
+
+    static mobileNumberValidation(control: AbstractControl) {
+        // RFC 2822 compliant regex
+        if (control.value && control.value.match(/^[0-9]{10,10}$/)) {
+            return '';
+        } else {
+            return { 'invalidNumber': true };
+        }
+    }
+
+    static pregnancyDurationValidation(control: AbstractControl) {
+        // RFC 2822 compliant regex
+        if (Number(control.value) >= 25 && Number(control.value) <= 50) {
+            return '';
+        } else {
+            return { 'invalidpregnanceTime': true };
+        }
+    }
+
+    static pinCodeValidation(control: AbstractControl) {
+        // RFC 2822 compliant regex
+        if (control.value && control.value.match(/^[0-9]{6,6}$/)) {
+            return '';
+        } else {
+            return { 'invalidPinCode': true };
         }
     }
 

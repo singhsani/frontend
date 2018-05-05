@@ -6,11 +6,13 @@ import { AuthGuard } from './../../core/guard/auth.guard';
 /* Import citizen components other than auth start */
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { BirthCertiAppComponent } from './birth-certi-app/birth-certi-app.component';
+import { DeathCertificateComponent } from './death-certificate/death-certificate.component';
 import { MyResourceComponent } from './my-resource/my-resource.component';
 import { TransactionsComponent } from './transactions/transactions.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { MarriageCertiComponent } from './marriage-cert/marriage-cert.component';
 import { MyApplicationsComponent } from './my-applications/my-applications.component';
+import { PaymentGatewayComponent } from '../../shared/components/payment-gateway/payment-gateway.component';
 import { NoBirthRecordComponent } from './no-birth-record/no-birth-record.component';
 import { NoDeathRecordComponent } from './no-death-record/no-death-record.component';
 import { CremationCertificateComponent } from './cremation-certificate/cremation-certificate.component';
@@ -23,7 +25,7 @@ const routes: Routes = [
 	{ path: ManageRoutes.getMainRoute('CITIZENDASHBOARD'), component: DashboardComponent, canActivate: [AuthGuard] },
 	{ path: ManageRoutes.getMainRoute('CITIZENMYAPPS'), component: MyApplicationsComponent, canActivate: [AuthGuard] },
 	{ path: ManageRoutes.getMainRoute('BR') + '/:id', component: BirthCertiAppComponent, canActivate: [AuthGuard] },
-	{ path: ManageRoutes.getMainRoute('DR') + '/:id', component: BirthCertiAppComponent, canActivate: [AuthGuard] },
+	{ path: ManageRoutes.getMainRoute('DR') + '/:id', component: DeathCertificateComponent, canActivate: [AuthGuard] },
 	{ path: ManageRoutes.getMainRoute('MR') + '/:id', component: MarriageCertiComponent, canActivate: [AuthGuard] },
 	{ path: ManageRoutes.getMainRoute('NRC-BIRTH') + '/:id', component: NoBirthRecordComponent, canActivate: [AuthGuard] },
 	{ path: ManageRoutes.getMainRoute('NRC-DEATH') + '/:id', component: NoDeathRecordComponent, canActivate: [AuthGuard] },
@@ -31,7 +33,7 @@ const routes: Routes = [
 	{ path: ManageRoutes.getMainRoute('CITIZENMYRESOURCE'), component: MyResourceComponent, canActivate: [AuthGuard] },
 	{ path: ManageRoutes.getMainRoute('CITIZENMYTRANSACTIONS'), component: TransactionsComponent, canActivate: [AuthGuard] },
 	{ path: ManageRoutes.getMainRoute('CITIZENMYPROFILE'), component: UserProfileComponent, canActivate: [AuthGuard] },
-
+	{ path: ManageRoutes.getMainRoute('CITIZENPAYMENTGATEWAY'), component: PaymentGatewayComponent, canActivate: [AuthGuard] },
 ];
 
 @NgModule({

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from '../../../../shared/services/http.service';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class FormsActionsService {
@@ -57,11 +58,11 @@ export class FormsActionsService {
 	 * This method is used to get citizen app data
 	 * @param appId - citizen app id
 	 */
-	getFormData(appId) {
+	getFormData(appId):Observable<any> {
 
 		this.requestURL = `api/form/${this.apiType}/get/${appId}`;
 
-		return this.http.get(this.requestURL);
+		return this.http.get(this.requestURL).map((res: Response) => res);
 	}
 
 	/**

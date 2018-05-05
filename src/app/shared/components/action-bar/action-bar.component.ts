@@ -1,5 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import * as _ from 'lodash';
+import { Router,ActivatedRoute } from '@angular/router';
 
 import { FormsActionsService } from './../../../core/services/citizen/data-services/forms-actions.service';
 import { ToastrService } from 'ngx-toastr';
@@ -17,12 +19,16 @@ export class ActionBarComponent implements OnInit {
 
 	@Input()
 	step: string;
-	
+
 	@Output() handleErrors = new EventEmitter<any>();
+	@Output() stepReset = new EventEmitter<any>();
 
 	apiType: string = '';
 
-	constructor(private formService: FormsActionsService, private toastr: ToastrService) {
+	constructor(
+		private formService: FormsActionsService,
+		private route: Router,
+		private toastr: ToastrService) {
 	}
 
 	ngOnInit() {
@@ -45,7 +51,7 @@ export class ActionBarComponent implements OnInit {
 	 * This method is use for submit form using API
 	 */
 	onSubmit() {
-
+		var count = 1;
 		if (this.form.valid) {
 			this.formService.submitFormData(this.form.get('serviceFormId').value).subscribe(res => {
 				this.toastr.success(`${this.apiType} information successfully submit`);
@@ -54,25 +60,33 @@ export class ActionBarComponent implements OnInit {
 
 				}
 			);
-
 		} else {
-			this.handleErrors.emit(this.form.valid);
+			console.log(this.form.controls);
+			let count = 1;
+			for (const key in this.form.controls) {
+				if (this.form.get(key).invalid) {
+					console.log(count);
+					this.handleErrors.emit(count)
+					break;
+				}
+				count++
+			}
 		}
-
 	}
 
 	/**
 	 * this method is use for proceed to payment
 	 */
 	proceedToPayment() {
-
+		this.route.navigate(['citizen/payment-gateway']);
 	}
 
 	/**
 	 * This method is use for clear the form
 	 */
-	resetForm(){
+	resetForm() {
 		this.form.reset();
+		this.stepReset.emit();
 	}
 
 }

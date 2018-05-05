@@ -25,6 +25,7 @@ import { ActionBarComponent } from './components/action-bar/action-bar.component
 import { ControlMessagesComponent } from './components/control-messages/control-messages.component';
 import { FileUploadComponent } from './components/file-upload/file-upload.component';
 import { AddressComponent } from './components/address/address.component';
+import { PaymentGatewayComponent } from './components/payment-gateway/payment-gateway.component';
 /* import pipes end*/
 
 const COMPONENTS = [
@@ -38,7 +39,7 @@ const COMPONENTS = [
 
 @NgModule({
 	declarations: [ 
-		...COMPONENTS
+		...COMPONENTS, PaymentGatewayComponent
 	],
 	imports: [
 		HttpModule,

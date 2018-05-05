@@ -116,6 +116,19 @@ export class HttpService {
 		return this.httpClient.request(req);
 	}
 
+	getUploadedFile(url:string,type:string){
+		let headers = new HttpHeaders().append("Authorization", "Bearer " + this.session.get("access_token").token)
+		return this.httpClient.get(this.getFullUrl(url), {responseType: 'arraybuffer',headers:headers});
+	}
+
+	deleteUploadedFile(url:string){
+		const req = new HttpRequest('DELETE', this.getFullUrl(url), {
+			reportProgress: true,
+			headers: new HttpHeaders().set("Authorization", "Bearer " + this.session.get("access_token").token)
+		});
+		return this.httpClient.request(req);
+	}
+
 	/**
  	* Build API url.
  	* @param url

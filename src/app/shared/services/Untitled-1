@@ -1,4 +1,47 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+
+invalidName: `Pattern Is Not Valid`,
+            invalidPinCode: `Pin Code Not Valid`,
+            invalidAadhar:`Aadhar Number is not valid`,
+            invalidNumber:`Mobile Number Not Valid`,
+            invalidpregnanceTime: 'Pregnancy duration incorrect',
+
+             static aadharValidation(control: AbstractControl) {
+        // RFC 2822 compliant regex
+        if (control.value && control.value.match(/^[0-9]{12,12}$/)) {
+            return '';
+        } else {
+            return { 'invalidAadhar': true };
+        }
+    }
+
+    static mobileNumberValidation(control: AbstractControl) {
+        // RFC 2822 compliant regex
+        if (control.value && control.value.match(/^[0-9]{10,10}$/)) {
+            return '';
+        } else {
+            return { 'invalidNumber': true };
+        }
+    }
+
+    static pregnancyDurationValidation(control: AbstractControl) {
+        // RFC 2822 compliant regex
+        if (Number(control.value) >= 25 && Number(control.value) <= 50) {
+            return '';
+        } else {
+            return { 'invalidpregnanceTime': true };
+        }
+    }
+
+    static pinCodeValidation(control: AbstractControl) {
+        // RFC 2822 compliant regex
+        if (control.value && control.value.match(/^[0-9]{6,6}$/)) {
+            return '';
+        } else {
+            return { 'invalidPinCode': true };
+        }
+    }
+
+    import { Component, OnInit, Input, ViewChild } from '@angular/core';
 
 import { UploadFileService } from './../../upload-file.service';
 
@@ -32,18 +75,11 @@ export class FileUploadComponent implements OnInit {
 	color = 'primary';
 	mode = 'determinate';
 
-	//file and image  upload
-	priviewImage = '#';
-
 	@Input()
 	uploadModel: any;
 
 	@Input()
 	attachments: any[];
-
-	fileType: string;
-	imagetype: boolean = false;
-
 
 	/**
 	 * 
@@ -66,21 +102,38 @@ export class FileUploadComponent implements OnInit {
 	}
 
 	/**
+	 * Method is used to disable or enable button.
+	 */
+	disableOrEnableButton() {
+		if (this.attachments.length == 0) {
+			this.canDelete = true;
+			this.canUpload = false;
+			this.canView = true;
+			return;
+		} else {
+			for (let i = 0; i < this.attachments.length; i++) {
+				if ((this.attachments[i].fieldIdentifier === this.uploadModel.fieldIdentifier.toString()) && (this.attachments[i].labelName === this.uploadModel.labelName)) {
+					this.canDelete = false;
+					this.canUpload = true;
+					this.canView = false;
+					this.id = this.attachments[i].id;
+					this.type = this.attachments[i].mimeType;
+					return;
+				}
+			}
+			this.canDelete = true;
+			this.canUpload = false;
+			this.canView = true;
+			return;
+		}
+	}
+
+	/**
 	 * This method is use for select the file 
 	 * @param event - get selected file event
 	 */
 	selectFile(event) {
 		this.selectedFiles = event.target.files;
-		this.fileType = this.selectedFiles[0].type;
-
-		if (this.fileType === 'image/png' || this.fileType === 'image/jpg' || this.fileType === 'image/jpeg' || this.fileType === 'image/gif') {
-			let reader = new FileReader();
-			reader.onload = (e: any) => {
-				this.priviewImage = e.target.result;
-			}
-			this.imagetype = true;
-			reader.readAsDataURL(event.target.files[0]);
-		}
 	}
 
 	/**
@@ -119,33 +172,6 @@ export class FileUploadComponent implements OnInit {
 	}
 
 	/**
-	 * Method is used to disable or enable button.
-	 */
-	disableOrEnableButton() {
-		if (this.attachments.length == 0) {
-			this.canDelete = true;
-			this.canUpload = false;
-			this.canView = true;
-			return;
-		} else {
-			for (let i = 0; i < this.attachments.length; i++) {
-				if ((this.attachments[i].fieldIdentifier === this.uploadModel.fieldIdentifier.toString()) && (this.attachments[i].labelName === this.uploadModel.labelName)) {
-					this.canDelete = false;
-					this.canUpload = true;
-					this.canView = false;
-					this.id = this.attachments[i].id;
-					this.type = this.attachments[i].mimeType;
-					return;
-				}
-			}
-			this.canDelete = true;
-			this.canUpload = false;
-			this.canView = true;
-			return;
-		}
-	}
-
-	/**
 	 * Method is used to view or download the file
 	 */
 	view() {
@@ -177,8 +203,37 @@ export class FileUploadComponent implements OnInit {
 			this.canDelete = true;
 			this.canView = true;
 			this.canUpload = false;
-			this.imagetype= false;
 		})
 	}
 
-}
+
+    <div class="row">
+	<div class="col-md-12">
+		<mat-progress-bar *ngIf="currentFileUpload" mode="determinate" value="{{progress.percentage}}"></mat-progress-bar>
+
+		<div *ngIf="currentFileUpload" class="progress">
+
+			<div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" attr.aria-valuenow="{{progress.percentage}}"
+			 aria-valuemin="0" aria-valuemax="100" [ngStyle]="{width:progress.percentage+'%'}">
+				{{progress.percentage}}%
+			</div>
+
+		</div>
+
+		<div *ngIf="showButton">
+			<label class="btn btn-default">
+				<input #fileInput type="file" (change)="selectFile($event)">
+			</label>
+
+			<button mat-raised-button color="primary" [disabled]="canUpload" (click)="upload()">
+				<mat-icon>file_upload</mat-icon> Upload
+			</button>
+
+			<button [disabled]="canView" mat-raised-button type="button" color="accent" (click)="view()">
+				View </button>
+
+			<button [disabled]="canDelete" mat-raised-button type="button" color="warn" (click)="deleteFile()">
+				Delete </button>
+		</div>
+	</div>
+</div>

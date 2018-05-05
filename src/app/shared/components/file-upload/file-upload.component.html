@@ -8,19 +8,27 @@
 			 aria-valuemin="0" aria-valuemax="100" [ngStyle]="{width:progress.percentage+'%'}">
 				{{progress.percentage}}%
 			</div>
-
 		</div>
 
-		<label class="btn btn-default">
-			<label *ngIf="imagetype">
-				<img [src]="priviewImage" alt="image" class="imageSize" />
+		<div *ngIf="showButton">
+			<label class="btn btn-default">
+				<label *ngIf="imagetype">
+					<img [src]="priviewImage" alt="image" class="imageSize" />
+				</label>
+				<input #fileInput type="file" (change)="selectFile($event)">
 			</label>
-			<input #fileInput type="file" (change)="selectFile($event)">
-		</label>
 
-		<button mat-raised-button color="primary" [disabled]="!selectedFiles" (click)="upload()">
-			<mat-icon>file_upload</mat-icon> Upload
-		</button>
+			<button mat-raised-button color="primary" [disabled]="canUpload" (click)="upload()">
+				<mat-icon>file_upload</mat-icon> Upload
+			</button>
 
+			<button [disabled]="canView" mat-raised-button type="button" color="accent" (click)="view()">
+				View
+			</button>
+
+			<button [disabled]="canDelete" mat-raised-button type="button" color="warn" (click)="deleteFile()">
+				Delete
+			</button>
+		</div>
 	</div>
 </div>

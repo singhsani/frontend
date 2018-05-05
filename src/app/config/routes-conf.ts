@@ -51,6 +51,9 @@ const ROUTEMAIN = {
     },
     'CITIZENMYRESOURCE': {
         'main': 'my-resource'
+    },
+    'CITIZENPAYMENTGATEWAY': {
+        'main': 'payment-gateway'
     }
 }
 
@@ -114,6 +117,9 @@ const ROUTESLIST = {
     },
     'CITIZENMYRESOURCE': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEMAIN.CITIZENMYRESOURCE.main
+    },
+    'CITIZENPAYMENTGATEWAY': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEMAIN.CITIZENPAYMENTGATEWAY.main
     }
 }
 

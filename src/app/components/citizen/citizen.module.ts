@@ -19,6 +19,7 @@ import { MyApplicationsComponent } from './my-applications/my-applications.compo
 import { NoBirthRecordComponent } from './no-birth-record/no-birth-record.component';
 import { NoDeathRecordComponent } from './no-death-record/no-death-record.component';
 import { CremationCertificateComponent } from './cremation-certificate/cremation-certificate.component';
+import { DeathCertificateComponent } from './death-certificate/death-certificate.component'
 /* Import citizen components end */
 
 @NgModule({
@@ -44,7 +45,8 @@ import { CremationCertificateComponent } from './cremation-certificate/cremation
 		MyApplicationsComponent,
 		NoBirthRecordComponent,
 		NoDeathRecordComponent,
-		CremationCertificateComponent
+		CremationCertificateComponent,
+		DeathCertificateComponent
 	]
 })
 export class CitizenModule { }
