@@ -1,11 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { TownHallComponent } from './town-hall_c/town-hall.component';
+import { TownHallListComponent } from './town-hall-list/town-hall-list.component';
+import { TownHallBookComponent } from './town-hall-book/town-hall-book.component';
 
 const routes: Routes = [
-	{ path: '', redirectTo: 'town-hall', pathMatch: 'full' },
-	{ path: 'town-hall', component: TownHallComponent },
+	{ path: '', redirectTo: 'list', pathMatch: 'full' },
+	{ path: 'list', component: TownHallListComponent },
+	{ path: 'book', component: TownHallBookComponent },
 ];
 
 @NgModule({
