@@ -1,0 +1,77 @@
+<div class="main-content" style="margin-top: 10px;">
+  <div class="container-fluid">
+    <form [formGroup]="searchTownHallForm" (ngSubmit)="searchBooking()" autocomplete="off" ngNativeValidate>
+      <div class="row">
+        <div class="col-md-5">
+          <mat-form-field>
+            <mat-select placeholder="Select Hall" formControlName="code">
+              <mat-option *ngFor="let townHall of townHalls" [value]="townHall.code">
+                {{ townHall.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-md-5">
+          <mat-form-field>
+            <input matInput [matDatepicker]="townHallBookingPicker" formControlName="date" placeholder="Choose a date">
+            <mat-datepicker-toggle matSuffix [for]="townHallBookingPicker"></mat-datepicker-toggle>
+            <mat-datepicker #townHallBookingPicker></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div class="col-md-2">
+          <button mat-raised-button color="primary" type="submit">Search</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+
+<div class="main-content" style="margin: 10px;">
+  <div class="example-container mat-elevation-z8" *ngIf="availableStots.length">
+    <mat-table #table [dataSource]="availableStots">
+
+      <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef> # </mat-header-cell>
+        <mat-cell *matCellDef="let element;let indx=index;"> {{indx+1}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="bookingDate">
+        <mat-header-cell *matHeaderCellDef> Date </mat-header-cell>
+        <mat-cell *matCellDef="let element;"> {{searchTownHallForm.get('date').value | date:"dd/MM/yyyy" }} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="start">
+        <mat-header-cell *matHeaderCellDef> Start Time</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.start | date:"h:mm:ss a"}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="end">
+        <mat-header-cell *matHeaderCellDef> End Time</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.end | date:"h:mm:ss a" }} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="slotStatus">
+        <mat-header-cell *matHeaderCellDef>Available</mat-header-cell>
+        <mat-cell *matCellDef="let element;let indx=index;">
+          <button mat-raised-button color="primary" [disabled]="element.slotStatus !='AVAILABLE'" (click)="bookSlots(element.uniqueId,indx)">
+            {{element.slotStatus}}
+          </button>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+  </div>
+  <div *ngIf="availableStots.length==0" class="alert" style="text-align: center;margin: 20px;">
+    <strong>No record found!</strong>
+    <div>Please select other townhall.</div>
+  </div>
+</div>
+
+
+<!-- test if api not working -->
+
+<button mat-raised-button color="primary"  (click)="bookSlots()">Book</button>

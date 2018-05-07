@@ -8,7 +8,8 @@ import { CoreModule } from '../../../../core/core.module';
 import { TownHallRoutingModule } from './town-hall-routing.module';
 /* Import all shared, core and routing module end */
 
-import { TownHallComponent } from './town-hall_c/town-hall.component';
+import { TownHallListComponent } from './town-hall-list/town-hall-list.component';
+import { TownHallBookComponent } from './town-hall-book/town-hall-book.component';
 
 @NgModule({
 	imports: [
@@ -20,7 +21,8 @@ import { TownHallComponent } from './town-hall_c/town-hall.component';
 		TownHallRoutingModule
 	],
 	declarations: [
-		TownHallComponent
+		TownHallListComponent,
+		TownHallBookComponent
 	]
 })
 export class TownHallModule { }
