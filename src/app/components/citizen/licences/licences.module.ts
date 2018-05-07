@@ -5,8 +5,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { LicencesRoutingModule } from './licences-routing.module';
 import { CoreModule } from '../../../core/core.module';
 import { SharedModule } from '../../../shared/shared.module';
-import { MuttonFishLicenceComponent } from './mutton-fish-licence/mutton-fish-licence.component';
-import { ShopEstablishLicenceComponent } from './shop-establish-licence/shop-establish-licence.component';
+
 
 @NgModule({
   imports: [
@@ -17,6 +16,6 @@ import { ShopEstablishLicenceComponent } from './shop-establish-licence/shop-est
     CoreModule,
     LicencesRoutingModule
   ],
-  declarations: [ShopEstablishLicenceComponent, MuttonFishLicenceComponent]
+  declarations: []
 })
 export class LicencesModule { }

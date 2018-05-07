@@ -1,60 +1,60 @@
-<div [formGroup]="addressFormGroup">
+<div [formGroup]="addressFormGroup" >
 
-	<mat-form-field>
+	<mat-form-field class="col-md-4">
 		<input matInput type="text" formControlName="houseNo" placeholder="{{'enter_houseNo' | translate:'marriageCertScreen' }}"
 		 class="pl-1 example-right-align" required>
 		<control-messages [control]="addressFormGroup.controls.houseNo"></control-messages>
 	</mat-form-field>
 
-	<mat-form-field>
+	<mat-form-field class="col-md-3">
 		<input matInput type="text" formControlName="tenamentNo" placeholder="{{'enter_tenamentNo' | translate:'marriageCertScreen' }}"
 		 class="pl-1 example-right-align">
 	</mat-form-field>
 
-	<mat-form-field>
+	<mat-form-field class="col-md-4">
 		<input matInput type="text" formControlName="buildingName" placeholder="{{'enter_buildingName' | translate:'marriageCertScreen' }}"
 		 class="pl-1 example-right-align">
 	</mat-form-field>
 
-	<mat-form-field>
+	<mat-form-field class="col-md-4">
 		<input matInput type="text" formControlName="state" placeholder="{{'enter_state' | translate:'marriageCertScreen' }}" class="pl-1 example-right-align"
 		 required>
 		<control-messages [control]="addressFormGroup.controls.state"></control-messages>
 	</mat-form-field>
 
-	<mat-form-field>
+	<mat-form-field class="col-md-3">
 		<input matInput type="text" formControlName="district" placeholder="{{'enter_district' | translate:'marriageCertScreen' }}"
 		 class="pl-1 example-right-align" required>
 		<control-messages [control]="addressFormGroup.controls.district"></control-messages>
 	</mat-form-field>
 
-	<mat-form-field>
+	<mat-form-field class="col-md-4">
 		<input matInput type="text" formControlName="talukaName" placeholder="{{'enter_talukaName' | translate:'marriageCertScreen' }}"
 		 class="pl-1 example-right-align" required>
 		<control-messages [control]="addressFormGroup.controls.talukaName"></control-messages>
 	</mat-form-field>
 
-	<mat-form-field>
+	<mat-form-field class="col-md-4">
 		<input matInput type="number" formControlName="pincode" placeholder="{{'enter_pincode' | translate:'marriageCertScreen' }}"
 		 class="pl-1 example-right-align" maxlength="6">
 	</mat-form-field>
 
-	<mat-form-field>
+	<mat-form-field class="col-md-3">
 		<input matInput type="text" formControlName="addressLine1" placeholder="{{'enter_addressLine1' | translate:'marriageCertScreen' }}"
 		 class="pl-1 example-right-align">
 	</mat-form-field>
 
-	<mat-form-field>
+	<mat-form-field class="col-md-4">
 		<input matInput type="text" formControlName="addressLine2" placeholder="{{'enter_addressLine2' | translate:'marriageCertScreen' }}"
 		 class="pl-1 example-right-align">
 	</mat-form-field>
 
-	<mat-form-field>
+	<mat-form-field class="col-md-5">
 		<input matInput type="text" formControlName="addressLine3" placeholder="{{'enter_addressLine3' | translate:'marriageCertScreen' }}"
 		 class="pl-1 example-right-align">
 	</mat-form-field>
 
-	<mat-form-field>
+	<mat-form-field class="col-md-5">
 		<input matInput type="text" formControlName="village" placeholder="{{'enter_village' | translate:'marriageCertScreen' }}"
 		 class="pl-1 example-right-align">
 	</mat-form-field>

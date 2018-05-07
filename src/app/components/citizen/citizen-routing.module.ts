@@ -2,38 +2,56 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { AuthGuard } from './../../core/guard/auth.guard';
+import { ManageRoutes } from '../../config/routes-conf';
+
+/* import all modules start */
+import { AuthModule } from './auth/auth.module';
+import { LicencesModule } from './licences/licences.module';
+import { BookingsModule } from './bookings/bookings.module';
+import { CertificatesModule } from './certificates/certificates.module';
+import { FireFacilitiesModule } from './fire-facilities/fire-facilities.module';
+import { GrievanceModule } from './grievance/grievance.module';
+/* import all modules end */
 
 /* Import citizen components other than auth start */
+import { LoginLayoutComponent } from './../../layouts/login-layout/login-layout.component';
+import { HomeLayoutComponent } from './../../layouts/home-layout/home-layout.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { BirthCertiAppComponent } from './birth-certi-app/birth-certi-app.component';
-import { DeathCertificateComponent } from './death-certificate/death-certificate.component';
 import { MyResourceComponent } from './my-resource/my-resource.component';
 import { TransactionsComponent } from './transactions/transactions.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
-import { MarriageCertiComponent } from './marriage-cert/marriage-cert.component';
 import { MyApplicationsComponent } from './my-applications/my-applications.component';
 import { PaymentGatewayComponent } from '../../shared/components/payment-gateway/payment-gateway.component';
-import { NoBirthRecordComponent } from './no-birth-record/no-birth-record.component';
-import { NoDeathRecordComponent } from './no-death-record/no-death-record.component';
-import { CremationCertificateComponent } from './cremation-certificate/cremation-certificate.component';
 /* Import citizen components other than auth end */
 
-import { ManageRoutes } from '../../config/routes-conf';
 
 const routes: Routes = [
-	{ path: '', redirectTo: ManageRoutes.getMainRoute('CITIZENDASHBOARD'), pathMatch: 'full' },
-	{ path: ManageRoutes.getMainRoute('CITIZENDASHBOARD'), component: DashboardComponent, canActivate: [AuthGuard] },
-	{ path: ManageRoutes.getMainRoute('CITIZENMYAPPS'), component: MyApplicationsComponent, canActivate: [AuthGuard] },
-	{ path: ManageRoutes.getMainRoute('BR') + '/:id', component: BirthCertiAppComponent, canActivate: [AuthGuard] },
-	{ path: ManageRoutes.getMainRoute('DR') + '/:id', component: DeathCertificateComponent, canActivate: [AuthGuard] },
-	{ path: ManageRoutes.getMainRoute('MR') + '/:id', component: MarriageCertiComponent, canActivate: [AuthGuard] },
-	{ path: ManageRoutes.getMainRoute('NRC-BIRTH') + '/:id', component: NoBirthRecordComponent, canActivate: [AuthGuard] },
-	{ path: ManageRoutes.getMainRoute('NRC-DEATH') + '/:id', component: NoDeathRecordComponent, canActivate: [AuthGuard] },
-	{ path: ManageRoutes.getMainRoute('CR') + '/:id', component: CremationCertificateComponent, canActivate: [AuthGuard] },
-	{ path: ManageRoutes.getMainRoute('CITIZENMYRESOURCE'), component: MyResourceComponent, canActivate: [AuthGuard] },
-	{ path: ManageRoutes.getMainRoute('CITIZENMYTRANSACTIONS'), component: TransactionsComponent, canActivate: [AuthGuard] },
-	{ path: ManageRoutes.getMainRoute('CITIZENMYPROFILE'), component: UserProfileComponent, canActivate: [AuthGuard] },
-	{ path: ManageRoutes.getMainRoute('CITIZENPAYMENTGATEWAY'), component: PaymentGatewayComponent, canActivate: [AuthGuard] },
+
+	{
+		path: ManageRoutes.getPrefixRoute('CITIZENMODULE'), component: HomeLayoutComponent, canActivate: [AuthGuard],
+		children: [ 
+			{ path: '', redirectTo: ManageRoutes.getMainRoute('CITIZENDASHBOARD'), pathMatch: 'full' },
+			{ path: ManageRoutes.getMainRoute('CITIZENDASHBOARD'), component: DashboardComponent, canActivate: [AuthGuard] },
+			{ path: ManageRoutes.getMainRoute('CITIZENMYAPPS'), component: MyApplicationsComponent, canActivate: [AuthGuard] },
+			{ path: ManageRoutes.getMainRoute('CITIZENMYRESOURCE'), component: MyResourceComponent, canActivate: [AuthGuard] },
+			{ path: ManageRoutes.getMainRoute('CITIZENMYTRANSACTIONS'), component: TransactionsComponent, canActivate: [AuthGuard] },
+			{ path: ManageRoutes.getMainRoute('CITIZENMYPROFILE'), component: UserProfileComponent, canActivate: [AuthGuard] },
+			{ path: ManageRoutes.getMainRoute('CITIZENPAYMENTGATEWAY'), component: PaymentGatewayComponent, canActivate: [AuthGuard] },
+
+			{ path: 'certificates', loadChildren: () => CertificatesModule, canLoad: [AuthGuard] },
+			{ path: ManageRoutes.getPrefixRoute('BOOKINGMODULE'), loadChildren: () => BookingsModule, canLoad: [AuthGuard] },
+			{ path: ManageRoutes.getPrefixRoute('LICENCEMODULE'), loadChildren: () => LicencesModule, canLoad: [AuthGuard] }, 
+			{ path: 'fire-facilities', loadChildren: () => FireFacilitiesModule, canLoad: [AuthGuard] }, 
+			{ path: 'grievance', loadChildren: () => GrievanceModule, canLoad: [AuthGuard] }
+
+		]
+	},
+
+	{
+		path: ManageRoutes.getPrefixRoute('CITIZENAUTHMODULE'), component: LoginLayoutComponent,
+		loadChildren: () => AuthModule
+	},
+
 ];
 
 @NgModule({

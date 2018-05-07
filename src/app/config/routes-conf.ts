@@ -60,7 +60,6 @@ const ROUTEMAIN = {
 const ROUTEPREFIX = {
     'CITIZENMODULE': 'citizen',
     'LICENCEMODULE': 'licence',
-    'TAXMODULE': 'tax',
     'BOOKINGMODULE': 'booking',
     'HOSPITALMODULE': 'hospital',
     'CITIZENAUTHMODULE': 'auth'
@@ -80,7 +79,7 @@ const ROUTESLIST = {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEMAIN["NRC-BIRTH"].main
     },
     'NRC-DEATH': {
-        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEMAIN["NRC-BIRTH"].main
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEMAIN["NRC-DEATH"].main
     },
     'CR': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEMAIN.CR.main
