@@ -6,21 +6,25 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../shared/shared.module';
 import { CoreModule } from '../../core/core.module';
 import { CitizenRoutingModule } from './citizen-routing.module';
+import { AuthModule } from './auth/auth.module';
+import { LicencesModule } from './licences/licences.module';
+import { BookingsModule } from './bookings/bookings.module';
+import { CertificatesModule } from './certificates/certificates.module';
+import { FireFacilitiesModule } from './fire-facilities/fire-facilities.module';
+import { GrievanceModule } from './grievance/grievance.module';
 /* Import all shared, core and routing module end */
+
+import { HomeLayoutComponent } from '../../layouts/home-layout/home-layout.component';
+import { LoginLayoutComponent } from '../../layouts/login-layout/login-layout.component';
 
 /* Import citizen components start */
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { BirthCertiAppComponent } from './birth-certi-app/birth-certi-app.component';
 import { MyResourceComponent } from './my-resource/my-resource.component';
 import { TransactionsComponent, TransactionDataDialog } from './transactions/transactions.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
-import { MarriageCertiComponent } from './marriage-cert/marriage-cert.component';
 import { MyApplicationsComponent } from './my-applications/my-applications.component';
-import { NoBirthRecordComponent } from './no-birth-record/no-birth-record.component';
-import { NoDeathRecordComponent } from './no-death-record/no-death-record.component';
-import { CremationCertificateComponent } from './cremation-certificate/cremation-certificate.component';
-import { DeathCertificateComponent } from './death-certificate/death-certificate.component'
 /* Import citizen components end */
+
 
 @NgModule({
 	imports: [
@@ -29,24 +33,27 @@ import { DeathCertificateComponent } from './death-certificate/death-certificate
 		CoreModule,
 		FormsModule,
 		ReactiveFormsModule,
-		CitizenRoutingModule
+		AuthModule,
+		LicencesModule,
+		BookingsModule,
+		CertificatesModule,
+		FireFacilitiesModule,
+		GrievanceModule,
+		CitizenRoutingModule,
 	],
 	entryComponents: [
 		TransactionDataDialog
 	],
 	declarations: [
+		HomeLayoutComponent,
+		LoginLayoutComponent,
 		DashboardComponent,
-		BirthCertiAppComponent,
 		MyResourceComponent,
 		TransactionsComponent,
 		TransactionDataDialog,
 		UserProfileComponent,
-		MarriageCertiComponent,
 		MyApplicationsComponent,
-		NoBirthRecordComponent,
-		NoDeathRecordComponent,
-		CremationCertificateComponent,
-		DeathCertificateComponent
+		
 	]
 })
 export class CitizenModule { }

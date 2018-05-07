@@ -1,21 +1,26 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-import { BookingsRoutingModule } from './bookings-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MyDatePickerModule } from 'mydatepicker';
+
+/* Import all shared, core and routing module start */
 import { SharedModule } from '../../../shared/shared.module';
 import { CoreModule } from '../../../core/core.module';
+import { CertificatesRoutingModule } from './certificates-routing.module';
+/* Import all shared, core and routing module end */
+
+/* Import certificate components start */
+
+/* Import certificate components end */
+
 @NgModule({
   imports: [
     CommonModule,
     SharedModule,
-    BookingsRoutingModule,
-    FormsModule, 
+    CoreModule,
+    FormsModule,
     ReactiveFormsModule,
-    MyDatePickerModule,
-    CoreModule
+    CertificatesRoutingModule
   ],
   declarations: []
 })
-export class BookingsModule { }
+export class CertificatesModule { }

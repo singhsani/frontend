@@ -79,7 +79,7 @@ export class LoginComponent implements OnInit {
 	 */
 	saveToken(token) {
 		this.session.set('access_token', { 'token': token.access_token, now: +new Date }, token.expires_in, 's');
-		this.router.navigate(['../../citizen']);
+		this.router.navigate(['../../citizen/dashboard']);
 	}
 
 }

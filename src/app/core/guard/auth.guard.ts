@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router, CanLoad } from '@angular/router';
 
 /**
  * Import required angular Observable functions.
@@ -17,7 +17,7 @@ import { AuthService } from '../services/citizen/app-services/auth.service';// a
  * AuthGuard Class to handle Authentication of application.
  */
 @Injectable()
-export class AuthGuard implements CanActivate {
+export class AuthGuard implements CanActivate, CanLoad {
 
 	/**
 	 * Constructor to declare defualt propeties of class.
@@ -34,14 +34,21 @@ export class AuthGuard implements CanActivate {
 	 * If User is authenticate this method will return true otherwise, it will return false.
 	 * @param route - common route parameter
 	 */
-	canActivate(
-		route: ActivatedRouteSnapshot
-	): boolean {
+	canActivate( route: ActivatedRouteSnapshot ): boolean {
 
 		/**
 		 * Check user is authenticated or not from Authenticate Service
 		 */
-		if(this.authService.isLoggedIn()){
+		return this.isValidate();
+	}
+
+	canLoad() :boolean {
+		return this.isValidate();
+		
+	}
+
+	isValidate(){
+		if (this.authService.isLoggedIn()) {
 			return true;
 		} else {
 			this.router.navigate(['/citizen/auth/login']);
