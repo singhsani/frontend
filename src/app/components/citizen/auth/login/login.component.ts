@@ -8,6 +8,7 @@ import * as _ from 'lodash';
 
 import { AppService } from '../../../../core/services/citizen/app-services/app.service';
 import { ToastrService } from 'ngx-toastr';
+import { ManageRoutes } from '../../../../config/routes-conf';
 
 @Component({
 	selector: 'app-login',
@@ -21,6 +22,7 @@ import { ToastrService } from 'ngx-toastr';
 export class LoginComponent implements OnInit {
 
 	loginForm: FormGroup;
+	manageRoutes: any = ManageRoutes;
 
 	/**
 	 * Constructor to declare defualt propeties of class
@@ -47,7 +49,7 @@ export class LoginComponent implements OnInit {
 		 * If Access Token is valid then redirect to Home Component.
 		 */
 		if (accessToken) {
-			this.router.navigate(['../../citizen']);
+			this.router.navigate([ManageRoutes.getFullRoute('CITIZENDASHBOARD')]);
 		}
 
 		this.loginForm = this.fb.group({
@@ -79,7 +81,7 @@ export class LoginComponent implements OnInit {
 	 */
 	saveToken(token) {
 		this.session.set('access_token', { 'token': token.access_token, now: +new Date }, token.expires_in, 's');
-		this.router.navigate(['../../citizen/dashboard']);
+		this.router.navigate([ManageRoutes.getFullRoute('CITIZENDASHBOARD')]);
 	}
 
 }

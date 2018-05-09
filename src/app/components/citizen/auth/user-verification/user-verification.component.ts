@@ -3,6 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { AppService } from '../../../../core/services/citizen/app-services/app.service';
+import { ManageRoutes } from '../../../../config/routes-conf';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
 	selector: 'app-userverification',
@@ -19,9 +21,13 @@ export class UserVerificationComponent implements OnInit {
 	 * @param route - Declare App ActivatedRoute property.
 	 * @param router - Declare Routing Property.
 	*/
-	constructor(private appService: AppService,
+	constructor(
+		private appService: AppService,
 		private route: ActivatedRoute,
-		private router: Router, private fb: FormBuilder) {
+		private router: Router,
+		private fb: FormBuilder,
+		private toster: ToastrService
+	) {
 
 	}
 
@@ -58,26 +64,13 @@ export class UserVerificationComponent implements OnInit {
 	verifyUser(formVals: FormGroup) {
 
 		if ((!this.verifyForm.get('uniqueId').value) || (!this.verifyForm.get('code').value)) {
-			this.showAlert("Link is not valid try again")
+			this.toster.warning("Link is not valid try again");
 		} else {
 			this.appService.verifyUser(formVals).subscribe(
 				res => {
-
-					this.showAlert("Successfully Authenticated");
-					/**
-					 * Redirect to Reset Password Content
-					 */
-					this.router.navigate(['/citizen/auth/login']);
+					this.toster.success("Successfully Authenticated");
+					this.router.navigate([ManageRoutes.getFullRoute('CITIZENAUTHLOGIN')]);
 				});
 		}
 	}
-
-	/**
-	 * Method is used to show alert for different situation.
-	 * @param message - message is to be passed to alert.
-	 */
-	showAlert(message: string) {
-		alert(message);
-	}
-
 }

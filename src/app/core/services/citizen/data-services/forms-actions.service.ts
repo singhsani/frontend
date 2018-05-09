@@ -117,5 +117,12 @@ export class FormsActionsService {
 		return this.http.get('api/user/profile');
 	}
 
+	/**
+	 * This method is use for get user services
+	 */
+	getUserServices(){
+		return this.http.get('public/guest/citizenServices');
+	}
+
 
 }

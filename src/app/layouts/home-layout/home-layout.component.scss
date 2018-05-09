@@ -1,41 +1,69 @@
+.mat-drawer-container {
+    background: none;
+}
+
 .example-container {
-  display: flex;
-  flex-direction: column;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
 }
 
 .example-is-mobile .example-toolbar {
-  position: fixed;
-  z-index: 2;
+    position: fixed;
+    z-index: 2;
 }
 
 h1.example-app-name {
-  margin-left: 8px;
+    margin-left: 8px;
 }
 
 .example-sidenav-container {
-  flex: 1;
-  background-color: #fff;
+    flex: 1;
 }
 
 .example-is-mobile .example-sidenav-container {
-  flex: 1 0 auto;
+    flex: 1 0 auto;
 }
 
 .example-spacer {
-  flex: 1 1 auto;
+    flex: 1 1 auto;
 }
 
 .active-route-link,
 .mat-list-item-focus {
-  background-color: #673ab7 !important;
-  color: #fff !important;
+    background-color: #673ab7 !important;
+    color: #fff !important;
+    border-radius: 3px;
+    box-shadow: 0 12px 20px -10px rgba(156, 39, 176, 0.28), 0 4px 20px 0px rgba(0, 0, 0, 0.12), 0 7px 8px -5px rgba(156, 39, 176, 0.2);
 }
 
 .active-route-link:hover {
-  color: #000;
+    color: #000;
+}
+
+.mat-toolbar-multiple-rows {
+    min-height: 50px;
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14);
+}
+
+.mat-toolbar-row {
+    height: 50px;
+}
+
+.mat-sidenav {
+    width: 200px;
+    background-color: #fff;
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14);
+    padding: 0 10px;
+}
+
+.mat-list-item,
+.mat-nav-list {}
+
+.mat-nav-list .mat-list-item:hover {
+    background: rgba(0, 0, 0, .1);
 }

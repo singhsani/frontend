@@ -6,6 +6,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../../../shared/shared.module';
 import { CoreModule } from '../../../../core/core.module';
 import { AnimalPondRoutingModule } from './animal-pond-routing.module';
+import { AnimalPondNewComponent } from './animal-pond-new/animal-pond-new.component';
+import { AnimalPondRenewComponent } from './animal-pond-renew/animal-pond-renew.component';
 /* Import all shared, core and routing module end */
 
 @NgModule({
@@ -17,6 +19,6 @@ import { AnimalPondRoutingModule } from './animal-pond-routing.module';
 		ReactiveFormsModule,
 		AnimalPondRoutingModule
 	],
-	declarations: []
+	declarations: [AnimalPondNewComponent, AnimalPondRenewComponent]
 })
 export class AnimalPondModule { }

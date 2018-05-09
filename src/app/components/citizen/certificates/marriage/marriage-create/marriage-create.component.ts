@@ -9,6 +9,7 @@ import { UploadFileService } from '../../../../../shared/upload-file.service';
 
 import * as _ from 'lodash';
 import * as moment from 'moment';
+import { ManageRoutes } from '../../../../../config/routes-conf';
 
 @Component({
     selector: 'app-marriage-create',
@@ -72,29 +73,30 @@ export class MarriageCreateComponent implements OnInit {
         private router: Router,
     ) {
         this.formService.apiType = "marriageReg";
+
+        this.navigateSub = this.route.params.subscribe(params => {
+            this.formId = +params['id']; // (+) converts string 'id' to a number
+        });
+
+        if (!this.formId) {
+            this.router.navigate([ManageRoutes.getFullRoute('CITIZENDASHBOARD')]);
+        } else {
+
+            //Form Controls
+            this.marriageFormControls();
+
+            //Get form data 
+            this.getFormData(this.formId);
+
+            //Get lookup array
+            this.getLookupsData();
+        }
     }
 
     /**
     * This method is use for perform initialize time actions.
     */
     ngOnInit() {
-        //Get id
-        this.navigateSub = this.route.params.subscribe(params => {
-            this.formId = +params['id']; // (+) converts string 'id' to a number
-        });
-
-        if(!this.formId){
-            this.router.navigate(['citizen/dashboard']);
-        }
-
-        //Form Controls
-        this.marriageFormControls();
-
-        //Get form data 
-        this.getFormData(this.formId);
-
-        //Get lookup array
-        this.getLookupsData();
     }
 
     /**

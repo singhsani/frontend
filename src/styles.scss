@@ -1,19 +1,394 @@
-.header{
-	padding: 40px 0 0;
-    border-radius: 4px 4px 0 0;
-    text-align: center;
-    font-size: 20px;
-    font-family:   Arial, sans-serif;
+// .header{
+// 	padding: 40px 0 0;
+//     border-radius: 4px 4px 0 0;
+//     text-align: center;
+//     font-size: 20px;
+//     font-family:   Arial, sans-serif;
+// }
+// .mat-step-label-selected{ color: #673ab7 !important;}
+// ----------- JK ------------
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+    border: 0;
+    box-shadow: 0 none inset;
+    transition: background-color 5000s ease-in-out 0s;
 }
-.mat-step-label-selected{
-    color: #673ab7 !important;
+
+label.btn {
+    display: inline-block;
+    position: relative;
+    color: #533e00;
+}
+
+label.btn input {
+    visibility: hidden;
+    width: 100px;
+}
+
+label.btn:before {
+    content: 'Choose File';
+    display: block;
+    border-radius: 3px;
+    padding: 7px 0px;
+    outline: none;
+    white-space: nowrap;
+    cursor: pointer;
+    text-align: center;
+    font-size: 15px;
+    position: absolute;
+    left: 0;
+    right: 0;
+}
+
+label.btn:hover:before {
+    box-shadow: 0 14px 26px -12px rgba(156, 39, 176, .42), 0 4px 23px 0 rgba(0, 0, 0, .12), 0 8px 10px -5px rgba(156, 39, 176, .2)
+}
+
+// label.btn:active:before { background: #febf01; }
+label.btn:before {
+    content: 'Browse File';
+    background: #673ab7;
+    color: #FFF;
+    box-shadow: 0 2px 2px 0 rgba(156, 39, 176, .14), 0 3px 1px -2px rgba(156, 39, 176, .2), 0 1px 5px 0 rgba(156, 39, 176, .12)
 }
 
 button:focus {
     outline: none !important;
 }
 
+html,
+body {
+    background: #eee;
+    color: #3c4858;
+    padding: 0;
+    font-size: 0.95rem;
+    font-weight: 400 !important;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+}
+
+h1 {
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+
+h2 {
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+}
+
+.heading {
+    position: relative;
+}
+
+.heading::after {
+    content: '';
+    background: #673ab7;
+    position: absolute;
+    left: -24px;
+    top: 0;
+    width: 5px;
+    height: 100%;
+}
+
+// Login
+.mainBg {
+    background: url(./assets/images/login-main-bg.jpg) no-repeat center bottom;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+}
+
+.login-bg-plain {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.login-bg-plain h1 {
+    margin-bottom: 35px;
+}
+
+.login-bg-plain .mat-card {
+    background: #fff url(./assets/images/login-bg.jpg) no-repeat right 0;
+}
+
+.login-bg-plain .mat-form-field {
+    width: 100%;
+}
+
+.loginLogo {
+    background: #e5e9f0;
+    color: #2a304d;
+    text-align: center;
+    padding: 10px 0;
+    font-size: 20px;
+    margin-bottom: 1.5em;
+}
+
+.forPass {
+    display: inline-block;
+    margin-bottom: 1em;
+    float: right;
+}
+
+.login-btn {
+    width: 100%;
+}
+
+.login-footer {
+    text-align: center;
+    margin-top: 1em;
+}
+
+.login-footer span {
+    display: block;
+    margin-top: 0.5em;
+}
+
+.vMid {
+    display: flex;
+    height: 100%;
+    align-items: center;
+}
+
+// Sign up
+.signUp .mat-form-field,
+.signUp button {
+    width: 100%;
+}
+
+// forgot-password
+.forgotPass .mat-form-field {
+    width: 100%;
+}
+
+.forgotPass button {
+    width: 100%;
+    margin-top: 15px;
+}
+
+// User-veri
+.userVerifi .mat-form-field {
+    width: 100%;
+}
+
+.userVerifi button {
+    width: 100%;
+    margin-top: 15px;
+}
+
+// Layouts - Dashboard
+.logo {
+    padding: 0 10px 0 0 !important;
+    margin-left: 20px !important;
+}
+
+.logo img {
+    padding-right: 5px;
+}
+
+.cardH1.mat-card {
+    padding: 15px 24px;
+    margin: 20px 0;
+}
+
+.cardH1.mat-card h1 {
+    font-size: 15px;
+    text-transform: uppercase;
+    position: relative;
+}
+
+.cardH1.mat-card h1::after {
+    content: '';
+    background: var(--purple);
+    position: absolute;
+    left: -24px;
+    top: 0;
+    width: 5px;
+    height: 100%;
+}
+
+.formClass {
+    padding: 0 !important;
+    margin-bottom: 20px;
+}
+
+.formClass [class^="col-"],
+.formClass [class*=" col-"] {
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+.formClass .mat-form-field {
+    width: 100% !important;
+}
+
+.alignBottom {
+    display: flex;
+}
+
+.alignBottom .mat-form-field {
+    align-self: flex-end;
+}
+
+.liteGrayBtn {
+    background: #607d8b;
+    color: #fff;
+}
+
+.liteGrayBtn span {
+    color: #fff;
+}
+
+// Custom CSS
+.mat-card:not([class*=mat-elevation-z]),
+.mat-elevation-z8 {
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14) !important;
+}
+
+.mat-radio-group {
+    display: flex !important;
+    flex-direction: row !important;
+}
+
+.mat-radio-button {
+    margin: 5px 0px 5px 15px;
+}
+
+.mat-radio-container,
+.mat-radio-outer-circle,
+.mat-radio-inner-circle,
+.mat-checkbox-inner-container {
+    width: 16px !important;
+    height: 16px !important;
+}
+
+.mat-radio-label-content {
+    padding-left: 5px !important;
+}
+
+.mat-checkbox {
+    margin-left: 15px;
+}
+
+.mat-horizontal-stepper-header-container {
+    background-color: #fafafa;
+    border-bottom: 1px solid #ebebeb;
+    margin-bottom: 15px;
+}
+
+.mat-horizontal-stepper-header {
+    height: 60px !important;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.mat-step-label-active.mat-step-label-selected::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color: #673ab7;
+}
+
+// Custom Button
+.mat-raised-button {
+    color: #fff !important;
+    font-weight: 400 !important;
+    margin-bottom: 8px !important;
+    background-color: #919191;
+    border-color: #7a7a7a;
+    border-radius: 3px !important;
+    box-shadow: 0 2px 2px 0 hsla(0, 0%, 60%, .14), 0 3px 1px -2px hsla(0, 0%, 60%, .2), 0 1px 5px 0 hsla(0, 0%, 60%, .12) !important;
+}
+
+.mat-raised-button:hover {
+    box-shadow: 0 14px 26px -12px hsla(0, 0%, 60%, .42), 0 4px 23px 0 rgba(0, 0, 0, .12), 0 8px 10px -5px hsla(0, 0%, 60%, .2) !important;
+}
+
+.mat-raised-button.mat-primary {
+    box-shadow: 0 2px 2px 0 rgba(156, 39, 176, .14), 0 3px 1px -2px rgba(156, 39, 176, .2), 0 1px 5px 0 rgba(156, 39, 176, .12) !important;
+}
+
+.mat-raised-button.mat-primary:hover {
+    box-shadow: 0 14px 26px -12px rgba(156, 39, 176, .42), 0 4px 23px 0 rgba(0, 0, 0, .12), 0 8px 10px -5px rgba(156, 39, 176, .2) !important;
+}
+
+.mat-raised-button.mat-accent {
+    background-color: #ff9800;
+    box-shadow: 0 2px 2px 0 rgba(255, 152, 0, .14), 0 3px 1px -2px rgba(255, 152, 0, .2), 0 1px 5px 0 rgba(255, 152, 0, .12) !important;
+}
+
+.mat-raised-button.mat-accent:hover {
+    box-shadow: 0 14px 26px -12px rgba(255, 152, 0, .42), 0 4px 23px 0 rgba(0, 0, 0, .12), 0 8px 10px -5px rgba(255, 152, 0, .2) !important
+}
+
+.mat-raised-button.mat-warn {
+    background-color: #f44336;
+    box-shadow: 0 2px 2px 0 rgba(244, 67, 54, .14), 0 3px 1px -2px rgba(244, 67, 54, .2), 0 1px 5px 0 rgba(244, 67, 54, .12) !important;
+}
+
+.mat-raised-button.mat-warn:hover {
+    box-shadow: 0 14px 26px -12px rgba(244, 67, 54, .42), 0 4px 23px 0 rgba(0, 0, 0, .12), 0 8px 10px -5px rgba(244, 67, 54, .2) !important
+}
+
+.mat-raised-button.mat-info {
+    background-color: #00bcd4;
+    box-shadow: 0 2px 2px 0 rgba(0, 188, 212, .14), 0 3px 1px -2px rgba(0, 188, 212, .2), 0 1px 5px 0 rgba(0, 188, 212, .12) !important;
+}
+
+.mat-raised-button.mat-info:hover {
+    box-shadow: 0 14px 26px -12px rgba(0, 188, 212, .42), 0 4px 23px 0 rgba(0, 0, 0, .12), 0 8px 10px -5px rgba(0, 188, 212, .2) !important
+}
+
+.mat-raised-button.mat-success {
+    background-color: #4caf50;
+    box-shadow: 0 2px 2px 0 rgba(76, 175, 80, .14), 0 3px 1px -2px rgba(76, 175, 80, .2), 0 1px 5px 0 rgba(76, 175, 80, .12) !important;
+}
+
+.mat-raised-button.mat-success:hover {
+    box-shadow: 0 14px 26px -12px rgba(76, 175, 80, .42), 0 4px 23px 0 rgba(0, 0, 0, .12), 0 8px 10px -5px rgba(76, 175, 80, .2) !important
+}
+
+.mat-fab.mat-accent[disabled],
+.mat-fab.mat-primary[disabled],
+.mat-fab.mat-warn[disabled],
+.mat-fab[disabled][disabled],
+.mat-mini-fab.mat-accent[disabled],
+.mat-mini-fab.mat-primary[disabled],
+.mat-mini-fab.mat-warn[disabled],
+.mat-mini-fab[disabled][disabled],
+.mat-raised-button.mat-accent[disabled],
+.mat-raised-button.mat-primary[disabled],
+.mat-raised-button.mat-warn[disabled],
+.mat-raised-button.mat-info[disabled],
+.mat-raised-button.mat-success[disabled],
+.mat-raised-button[disabled][disabled] {
+    box-shadow: initial !important;
+    color: #999 !important;
+}
+
+@media (max-width: 767px) {
+    .login-bg-plain .mat-card {
+        background: #fff;
+    }
+}
+
 /* Start - CSS for IE Message to not-supported browser for application */
+
 #ie-toolbar {
     position: fixed;
     top: 0;

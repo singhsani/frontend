@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SessionStorageService } from 'angular-web-storage';
 
 import { AppService } from '../../../../core/services/citizen/app-services/app.service';
+import { ManageRoutes } from '../../../../config/routes-conf';
 
 @Component({
 	selector: 'app-forgot-password',
@@ -13,6 +14,7 @@ import { AppService } from '../../../../core/services/citizen/app-services/app.s
 export class ForgotPasswordComponent implements OnInit {
 
 	forgotPassForm: FormGroup;
+	manageRoutes: any = ManageRoutes;
 
 	/**
 	 * 
@@ -44,7 +46,7 @@ export class ForgotPasswordComponent implements OnInit {
 				/**
 				 * Redirect to reset password
 				 */
-				this.router.navigate(['citizen/auth/reset-password'], { queryParams: { uniqueId: res.data.uniqueId, code: res.data.cellOtp } });
+				this.router.navigate([ManageRoutes.getFullRoute('CITIZENAUTHRESETPASS')], { queryParams: { uniqueId: res.data.uniqueId, code: res.data.cellOtp } });
 			});
 	}
 

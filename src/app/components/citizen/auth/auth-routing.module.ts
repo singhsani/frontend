@@ -10,6 +10,7 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 /* Import auth components end */
 
 import { ManageRoutes } from '../../../config/routes-conf';
+import { LoginThroughAdminComponent } from './login-through-admin/login-through-admin.component';
 
 const routes: Routes = [
 	{ path: '', redirectTo:ManageRoutes.getFullRoute('CITIZENAUTHLOGIN'), pathMatch: 'full' },
@@ -18,6 +19,7 @@ const routes: Routes = [
 	{ path:ManageRoutes.getFullRoute('CITIZENAUTHVERIFY'), component: UserVerificationComponent },
 	{ path:ManageRoutes.getFullRoute('CITIZENAUTHFORGOTPASS'), component: ForgotPasswordComponent },
 	{ path:ManageRoutes.getFullRoute('CITIZENAUTHRESETPASS'), component: ResetPasswordComponent },
+	{ path: ManageRoutes.getFullRoute('CITIZENAUTHLOGINTHROUGHADMIN') + '/:authToken/:apiCode', component: LoginThroughAdminComponent },
 ];
 
 @NgModule({

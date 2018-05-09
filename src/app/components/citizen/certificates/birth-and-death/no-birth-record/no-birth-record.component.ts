@@ -39,10 +39,13 @@ export class NoBirthRecordComponent implements OnInit {
 	stepLable2: string = "Birth Place Address Detail";
 	stepLable3: string = "Applicant Detail";
 
-	constructor(private fb: FormBuilder, private validationService: ValidationService,
-		private router: Router, private route: ActivatedRoute,
-		private formService: FormsActionsService) {
-
+	constructor(
+		private fb: FormBuilder, 
+		private validationService: ValidationService,
+		private router: Router,
+		private route: ActivatedRoute,
+		private formService: FormsActionsService
+	) {
 		this.formService.apiType = 'NRCBirth';
 	}
 

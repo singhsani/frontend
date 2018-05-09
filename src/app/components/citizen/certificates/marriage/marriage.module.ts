@@ -10,6 +10,7 @@ import { MarriageRoutingModule } from './marriage-routing.module';
 
 /* Import marriage certificate components start */
 import { MarriageCreateComponent } from './marriage-create/marriage-create.component';
+import { MarriageDuplicateComponent } from './marriage-duplicate/marriage-duplicate.component';
 /* Import marriage certificate components end */
 
 @NgModule({
@@ -23,6 +24,7 @@ import { MarriageCreateComponent } from './marriage-create/marriage-create.compo
   ],
   declarations: [
     MarriageCreateComponent,
+    MarriageDuplicateComponent,
   ]
 })
 export class MarriageModule { }

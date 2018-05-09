@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validator } from '@angular/forms';
 
 import { AppService } from '../../../../core/services/citizen/app-services/app.service';
+import { ManageRoutes } from '../../../../config/routes-conf';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
 	selector: 'app-sign-up',
@@ -12,6 +14,7 @@ import { AppService } from '../../../../core/services/citizen/app-services/app.s
 export class SignUpComponent implements OnInit {
 
 	regForm: FormGroup;
+	manageRoutes: any = ManageRoutes;
 
 	/**
 	 * Constructor to declare defualt propeties of class
@@ -19,9 +22,12 @@ export class SignUpComponent implements OnInit {
 	 * @param router - Declare routing property.
 	 * @param fb - Declare formbuilder property.
 	*/
-	constructor(private router: Router,
+	constructor(
+		private router: Router,
 		private fb: FormBuilder,
-		private appService: AppService) {
+		private appService: AppService,
+		private toster: ToastrService
+	) {
 
 	}
 
@@ -46,12 +52,8 @@ export class SignUpComponent implements OnInit {
 
 		this.appService.registerUser(formVals).subscribe(
 			res => {
-
-				/**
-				 * Redirect to verify User Component.
-				*/
-				alert("We have sent a authentication link on your email");
-				this.router.navigate(['citizen/auth/user-verify'],
+				this.toster.success("We have sent a authentication link on your email");
+				this.router.navigate([ManageRoutes.getFullRoute('CITIZENAUTHVERIFY')],
 					{ queryParams: { uniqueId: res.data.uniqueId, code: res.data.cellOtp } });
 			});
 	}

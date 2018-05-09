@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SessionStorageService } from 'angular-web-storage';
 
 import { AppService } from '../../../../core/services/citizen/app-services/app.service';
+import { ManageRoutes } from '../../../../config/routes-conf';
 
 @Component({
 	selector: 'app-reset-password',
@@ -70,7 +71,7 @@ export class ResetPasswordComponent implements OnInit {
 			this.appService.resetPassword(formVals).subscribe(
 				res => {
 
-					this.router.navigate(['../login']);
+					this.router.navigate([ManageRoutes.getFullRoute('CITIZENAUTHLOGIN')]);
 				});
 		}
 	}
