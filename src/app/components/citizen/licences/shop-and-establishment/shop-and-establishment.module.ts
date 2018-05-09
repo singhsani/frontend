@@ -6,9 +6,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../../../shared/shared.module';
 import { CoreModule } from '../../../../core/core.module';
 import { ShopAndEstablishmentRoutingModule } from './shop-and-establishment-routing.module';
+import { ShopLicNewComponent } from './shop-lic-new/shop-lic-new.component';
+import { ShopLicDuplicateComponent } from './shop-lic-duplicate/shop-lic-duplicate.component';
+import { ShopLicModificationComponent } from './shop-lic-modification/shop-lic-modification.component';
+import { ShopLicRenewalComponent } from './shop-lic-renewal/shop-lic-renewal.component';
+import { ShopLicCancellationComponent } from './shop-lic-cancellation/shop-lic-cancellation.component';
 /* Import all shared, core and routing module end */
-
-import { ShopEstablishLicenceComponent } from './shop-establish/shop-establish.component';
 
 @NgModule({
   imports: [
@@ -20,7 +23,10 @@ import { ShopEstablishLicenceComponent } from './shop-establish/shop-establish.c
     ShopAndEstablishmentRoutingModule
   ],
   declarations: [
-    ShopEstablishLicenceComponent,
-  ]
+  ShopLicNewComponent,
+  ShopLicDuplicateComponent,
+  ShopLicModificationComponent,
+  ShopLicRenewalComponent,
+  ShopLicCancellationComponent]
 })
 export class ShopAndEstablishmentModule { }

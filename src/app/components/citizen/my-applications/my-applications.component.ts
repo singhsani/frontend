@@ -58,7 +58,7 @@ export class MyApplicationsComponent implements OnInit {
 	}
 
 	/**
-	 * This method use to get all the citizen data with pagination
+	 * This method use to get all the citizen data with pagination.
 	 */
 	getAllData() {
 		merge(this.sort.sortChange, this.paginator.page)
@@ -89,24 +89,22 @@ export class MyApplicationsComponent implements OnInit {
 	}
 
 	/**
-	 * This method is used to redirect on citizen form
+	 * This method is used to redirect on citizen form.
 	 * @param id - citizen id 
 	 */
-	redirectToEdit(apiType:string, apiCode: string, id:number) {
-
+	redirectToEdit(apiCode: string, id: number) {
 		let redirectUrl = ManageRoutes.getFullRoute(apiCode);
 		this.router.navigate([redirectUrl, id]);
-
 	}
 
 	/**
-	 * This method use to delete citizen record
+	 * This method use to delete citizen record.
 	 * @param id citizen id
 	 */
-	deleteRecord(apiType:string,id:number) {
+	deleteRecord(apiCode: string, id: number) {
 
 		this.commonService.deleteAlert('Are you sure?', "You won't be able to revert this!", 'warning', '', performDelete => {
-			this.formService.apiType = apiType;
+			this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);
 			this.formService.deleteFormData(id).subscribe(
 				res => {
 					this.commonService.successAlert('Deleted!', '', 'success');
@@ -118,6 +116,19 @@ export class MyApplicationsComponent implements OnInit {
 			);
 		});
 
+	}
+
+	/**
+	 * This method is use to get respective class name based on application status.
+	 * @param filestatus - Application Status
+	 */
+	getFileStatusClass(filestatus: string) {
+		switch (filestatus) {
+			case 'DRAFT':
+				return 'accent';
+			default:
+				return 'primary'
+		}
 	}
 
 }

@@ -1,39 +1,39 @@
-<div class="login-bg-plain" style="margin-top: 40px;">
-    <div class="form-basic">
-        <div class="login-header">
-            <div class="login-logo">ERP</div>
+<div class="mainBg">
+
+    <div class="login-bg-plain col-md-6 offset-md-3">
+        <div class="form-basic">
+            <mat-card>
+                <div class="row">
+                    <div class="col-md-6 col-sm-12">
+                        <h1 class="heading">Login</h1>
+                        <form [formGroup]="loginForm" (ngSubmit)="onLoginSubmit(loginForm.value)" autocomplete="off" ngNativeValidate>
+                            <div class="example-container">
+                                <mat-form-field>
+                                    <input matInput type="text" placeholder="Email / Mobile" formControlName="username" required>
+                                </mat-form-field>
+                            </div>
+                            <div class="example-container">
+                                <mat-form-field>
+                                    <input matInput type="password" placeholder="Password" formControlName="password" required>
+                                </mat-form-field>
+
+                            </div>
+
+                            <a routerLink="/{{manageRoutes.getFullRoute('CITIZENAUTHFORGOTPASS')}}" class="forPass">Forgot Password</a>
+
+                            <button mat-raised-button type="submit" class="login-btn mat-primary">Login</button>
+                        </form>
+
+                        <div class="login-footer">
+                            OR
+                            <span>Don't have an account?
+                                <a routerLink="/{{manageRoutes.getFullRoute('CITIZENAUTHSIGNUP')}}">Sign up here</a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </mat-card>
         </div>
-        <mat-card>
-            <form [formGroup]="loginForm" (ngSubmit)="onLoginSubmit(loginForm.value)" autocomplete="off" ngNativeValidate>
-                <div class="example-container">
-                    <mat-form-field>
-                        <input matInput type="text" placeholder="Email / Mobile" formControlName="username" required>
-                    </mat-form-field>
-                </div>
-                <div class="example-container">
-                    <mat-form-field>
-                        <input matInput type="password" placeholder="Password" formControlName="password" required>
-                    </mat-form-field>
-
-                </div>
-
-                <div>
-                    <span>
-                        <a routerLink="../forgot-password" class="float-right">Forgot Password</a>
-                    </span>
-                </div>
-                <button mat-raised-button type="submit" class="login-btn">Login</button>
-            </form>
-            <div class="separator">
-                <div class="separator-line"></div>
-                <span>OR</span>
-                <div class="separator-line"></div>
-            </div>
-            <div class="login-footer">
-                <span>Don't have an account?
-                    <a routerLink="../signup">Sign up here</a>
-                </span>
-            </div>
-        </mat-card>
     </div>
+
 </div>

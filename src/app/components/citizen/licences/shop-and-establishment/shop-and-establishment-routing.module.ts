@@ -3,12 +3,11 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { AuthGuard } from './../../../../core/guard/auth.guard';
 import { ManageRoutes } from '../../../../config/routes-conf';
-
-import { ShopEstablishLicenceComponent } from './shop-establish/shop-establish.component';
+import { ShopLicNewComponent } from './shop-lic-new/shop-lic-new.component';
 
 const routes: Routes = [
 	{ path: '', redirectTo: ManageRoutes.getMainRoute('SHOP-LIC'), pathMatch: 'full' },
-	{ path: ManageRoutes.getMainRoute('SHOP-LIC') + '/:id', component: ShopEstablishLicenceComponent, canActivate: [AuthGuard] },
+	{ path: ManageRoutes.getMainRoute('SHOP-LIC') + '/:id', component: ShopLicNewComponent, canActivate: [AuthGuard] },
 ];
 
 @NgModule({

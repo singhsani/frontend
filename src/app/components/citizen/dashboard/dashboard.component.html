@@ -1,123 +1,15 @@
 <div class="container">
-    <div class="row pt-4">
-        <div class="col-4 text-center">
+    <div class="row pt-4" *ngFor="let module of userServicesList">
+        <div class="col-md-4 pt-4 text-center" *ngFor="let service of module.services; let i=index">
             <mat-card>
                 <mat-icon>account_circle</mat-icon>
-                <mat-card-title>Marriage Certificate</mat-card-title>
+                <mat-card-title>{{service.name}}</mat-card-title>
                 <mat-card-actions>
-                    <button mat-raised-button color="primary" (click)="createRecord('marriageReg', 'MR')">
-						<mat-icon>input</mat-icon> New Application
-					</button>
-                </mat-card-actions>
-            </mat-card>
-        </div>
-        <div class="col-4 text-center">
-            <mat-card>
-                <mat-icon>account_circle</mat-icon>
-                <mat-card-title>Birth Certificate</mat-card-title>
-                <mat-card-actions>
-                    <button mat-raised-button color="primary" (click)="createRecord('birthReg', 'BR')">
-                        <mat-icon>input</mat-icon> New Application
-                    </button>
-                </mat-card-actions>
-            </mat-card>
-        </div>
-        <div class="col-4 text-center">
-            <mat-card>
-                <mat-icon>account_circle</mat-icon>
-                <mat-card-title>Death Certificate</mat-card-title>
-                <mat-card-actions>
-                    <button mat-raised-button color="primary" (click)="createRecord('deathReg', 'DR')">
+                    <button mat-raised-button color="primary" (click)="createRecord(service.code)">
                         <mat-icon>input</mat-icon> New Application
                     </button>
                 </mat-card-actions>
             </mat-card>
         </div>
     </div>
-    <div class="row pt-4">
-        <div class="col-4 text-center">
-            <mat-card>
-                <mat-icon>account_circle</mat-icon>
-                <mat-card-title>NRC Birth Certificate</mat-card-title>
-                <mat-card-actions>
-                    <button mat-raised-button color="primary" (click)="createRecord('NRCBirth', 'NRC-BIRTH')">
-                        <mat-icon>input</mat-icon> New Application
-                    </button>
-                </mat-card-actions>
-            </mat-card>
-        </div>
-        
-        <div class="col-4 text-center">
-            <mat-card>
-                <mat-icon>account_circle</mat-icon>
-                <mat-card-title>NRC Death Certificate</mat-card-title>
-                <mat-card-actions>
-                    <button mat-raised-button color="primary" (click)="createRecord('NRCDeath', 'NRC-DEATH')">
-                        <mat-icon>input</mat-icon> New Application
-                    </button>
-                </mat-card-actions>
-            </mat-card>
-        </div>
-        
-        <div class="col-4 text-center">
-            <mat-card>
-                <mat-icon>account_circle</mat-icon>
-                <mat-card-title>Cremation Certificate</mat-card-title>
-                <mat-card-actions>
-                    <button mat-raised-button color="primary" (click)="createRecord('cremationReg', 'CR')">
-                        <mat-icon>input</mat-icon> New Application
-                    </button>
-                </mat-card-actions>
-            </mat-card>
-        </div>
-    </div>
-        
-    <div class="row pt-4">
-        <div class="col-4 text-center">
-            <mat-card>
-                <mat-icon>account_circle</mat-icon>
-                <mat-card-title>Shop Established Certificate</mat-card-title>
-                <mat-card-actions>
-                    <button mat-raised-button color="primary" (click)="createRecord('shopLicense', 'SHOP-LIC')">
-                        <mat-icon>input</mat-icon> New Application
-                    </button>
-                </mat-card-actions>
-            </mat-card>
-        </div>
-
-        <div class="col-4 text-center">
-            <mat-card>
-                <mat-icon>account_circle</mat-icon>
-                <mat-card-title>Town Hall</mat-card-title>
-                <mat-card-actions>
-                    <button mat-raised-button color="primary" routerLink="/citizen/booking/town-hall/list">
-                        <mat-icon>input</mat-icon> Apply
-                    </button>
-                </mat-card-actions>
-            </mat-card>
-        </div>
-    </div>
-
-    
-    
-    <!-- <div class="row pt-2">
-        <div class="col-12">
-            
-            <mat-progress-bar *ngIf="currentFileUpload" mode="determinate" value="{{progress.percentage}}"></mat-progress-bar>
-            
-            <div *ngIf="currentFileUpload" class="progress">
-                <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" attr.aria-valuenow="{{progress.percentage}}" aria-valuemin="0" aria-valuemax="100" [ngStyle]="{width:progress.percentage+'%'}">
-                    {{progress.percentage}}%
-                </div>
-            </div>
-            
-            <label class="btn btn-default">
-                <input type="file" (change)="selectFile($event)">
-			</label>
-            
-			<button mat-raised-button color="primary" [disabled]="!selectedFiles" (click)="upload()">
-                <mat-icon>upload</mat-icon> Upload
-			</button>
-        </div>
-    </div> -->
 </div>

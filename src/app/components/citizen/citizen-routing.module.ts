@@ -29,7 +29,7 @@ const routes: Routes = [
 
 	{
 		path: ManageRoutes.getPrefixRoute('CITIZENMODULE'), component: HomeLayoutComponent, canActivate: [AuthGuard],
-		children: [ 
+		children: [
 			{ path: '', redirectTo: ManageRoutes.getMainRoute('CITIZENDASHBOARD'), pathMatch: 'full' },
 			{ path: ManageRoutes.getMainRoute('CITIZENDASHBOARD'), component: DashboardComponent, canActivate: [AuthGuard] },
 			{ path: ManageRoutes.getMainRoute('CITIZENMYAPPS'), component: MyApplicationsComponent, canActivate: [AuthGuard] },
@@ -38,11 +38,11 @@ const routes: Routes = [
 			{ path: ManageRoutes.getMainRoute('CITIZENMYPROFILE'), component: UserProfileComponent, canActivate: [AuthGuard] },
 			{ path: ManageRoutes.getMainRoute('CITIZENPAYMENTGATEWAY'), component: PaymentGatewayComponent, canActivate: [AuthGuard] },
 
-			{ path: 'certificates', loadChildren: () => CertificatesModule, canLoad: [AuthGuard] },
+			{ path: ManageRoutes.getPrefixRoute('CERTIFICATESMODULE'), loadChildren: () => CertificatesModule, canLoad: [AuthGuard] },
 			{ path: ManageRoutes.getPrefixRoute('BOOKINGMODULE'), loadChildren: () => BookingsModule, canLoad: [AuthGuard] },
-			{ path: ManageRoutes.getPrefixRoute('LICENCEMODULE'), loadChildren: () => LicencesModule, canLoad: [AuthGuard] }, 
-			{ path: 'fire-facilities', loadChildren: () => FireFacilitiesModule, canLoad: [AuthGuard] }, 
-			{ path: 'grievance', loadChildren: () => GrievanceModule, canLoad: [AuthGuard] }
+			{ path: ManageRoutes.getPrefixRoute('LICENCEMODULE'), loadChildren: () => LicencesModule, canLoad: [AuthGuard] },
+			{ path: ManageRoutes.getPrefixRoute('FIREFACILITIESMODULE'), loadChildren: () => FireFacilitiesModule, canLoad: [AuthGuard] },
+			{ path: ManageRoutes.getPrefixRoute('GRIEVANCEMODULE'), loadChildren: () => GrievanceModule, canLoad: [AuthGuard] }
 
 		]
 	},

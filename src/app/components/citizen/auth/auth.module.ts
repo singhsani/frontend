@@ -14,6 +14,7 @@ import { LoginComponent } from './login/login.component';
 import { UserVerificationComponent } from './user-verification/user-verification.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { LoginThroughAdminComponent } from './login-through-admin/login-through-admin.component';
 /* Import citizen auth components end */
 
 @NgModule({
@@ -30,7 +31,8 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 		ResetPasswordComponent,
 		UserVerificationComponent,
 		SignUpComponent,
-		ForgotPasswordComponent
+		ForgotPasswordComponent,
+		LoginThroughAdminComponent
 	]
 })
 export class AuthModule { }

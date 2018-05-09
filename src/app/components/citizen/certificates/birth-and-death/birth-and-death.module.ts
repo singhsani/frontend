@@ -9,11 +9,14 @@ import { BirthAndDeathRoutingModule } from './birth-and-death-routing.module';
 /* Import all shared, core and routing module end */
 
 /* Import birth and death certificate components start */
-import { BirthCertiAppComponent } from './birth-certificate/birth-certificate.component';
+import { BirthRegistrationComponent } from './birth-registration/birth-registration.component';
 import { DeathCertificateComponent } from './death-certificate/death-certificate.component';
 import { NoBirthRecordComponent } from './no-birth-record/no-birth-record.component';
 import { NoDeathRecordComponent } from './no-death-record/no-death-record.component';
 import { CremationCertificateComponent } from './cremation-certificate/cremation-certificate.component';
+import { StillBirthComponent } from './still-birth/still-birth.component';
+import { BirthDuplicateComponent } from './birth-duplicate/birth-duplicate.component';
+import { DeathDuplicateComponent } from './death-duplicate/death-duplicate.component';
 /* Import birth and death certificate components start */
 
 @NgModule({
@@ -26,11 +29,14 @@ import { CremationCertificateComponent } from './cremation-certificate/cremation
     BirthAndDeathRoutingModule
   ],
   declarations: [
-    BirthCertiAppComponent,
+    BirthRegistrationComponent,
     NoBirthRecordComponent,
     NoDeathRecordComponent,
     CremationCertificateComponent,
     DeathCertificateComponent,
+    StillBirthComponent,
+    BirthDuplicateComponent,
+    DeathDuplicateComponent,
   ]
 })
 export class BirthAndDeathModule { }

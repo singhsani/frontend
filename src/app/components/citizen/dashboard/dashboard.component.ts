@@ -12,6 +12,8 @@ import { ManageRoutes } from '../../../config/routes-conf';
 })
 export class DashboardComponent implements OnInit {
 
+	userServicesList: any;
+	manageRoutes: any = ManageRoutes;
 	/**
 	 * Constructor to declare defualt propeties of class
 	 * @param formService - Declare form service property
@@ -21,7 +23,9 @@ export class DashboardComponent implements OnInit {
 	constructor(
 		private router: Router,
 		private formService: FormsActionsService,
-	) {}
+	) {
+		this.getAllServices();
+	}
 
 	ngOnInit() {
 
@@ -30,12 +34,24 @@ export class DashboardComponent implements OnInit {
 	/**
 	 * This method is use to create new record for citizen
 	 */
-	createRecord(apiType: string, apiCode: string) {
-		this.formService.apiType = apiType;
+	createRecord(apiCode: string) {
+		this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);
 		this.formService.createFormData().subscribe(res => {
 			let redirectUrl = ManageRoutes.getFullRoute(apiCode);
 			this.router.navigate([redirectUrl, res.serviceFormId]);
 		});
+	}
+
+	getAllServices(){
+		this.formService.getUserServices().subscribe(
+			res => {
+				console.log(res);
+				this.userServicesList = res.modules;
+			},
+			err => {
+				console.log(err);
+			}
+		);
 	}
 
 }

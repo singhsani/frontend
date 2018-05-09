@@ -1,9 +1,12 @@
 <div class="example-container">
+
     <mat-toolbar color="primary" class="example-toolbar">
         <mat-toolbar-row>
             <button mat-icon-button (click)="snav && snav.toggle()">
                 <mat-icon>menu</mat-icon>
             </button>
+            <button mat-button class="logo">
+                <img src="../../../assets/images/vmc-logo.png" alt="Vadodara Municipal Corporation"> Vadodara Municipal Corporation</button>
             <span class="example-spacer"></span>
             <button mat-icon-button position="end" (click)="selectLanguage('en')">EN</button>
             <button mat-icon-button position="end" (click)="selectLanguage('gu')">ગુજ</button>
@@ -20,7 +23,7 @@
     </mat-toolbar>
 
     <mat-sidenav-container class="example-sidenav-container" style="height: 100%;">
-        <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [(opened)]="!mobileQuery.matches" style="width:200px;background-color: aliceblue;">
+        <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [(opened)]="!mobileQuery.matches">
             <mat-nav-list (click)="toggleSideNav()">
                 <a mat-list-item routerLink="/citizen/dashboard/" routerLinkActive="active-route-link">Dashboard</a>
                 <a mat-list-item routerLink="/citizen/my-applications/" routerLinkActive="active-route-link">My Applications</a>

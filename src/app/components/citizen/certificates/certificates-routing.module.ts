@@ -8,13 +8,13 @@ import { BirthAndDeathModule } from './birth-and-death/birth-and-death.module';
 import { MarriageModule } from './marriage/marriage.module';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'birth-death', pathMatch: 'full' },
-  { path: 'birth-death', loadChildren: () => BirthAndDeathModule , canLoad: [AuthGuard]},
-  { path: 'marriage', loadChildren: () => MarriageModule, canLoad: [AuthGuard]},
+	{ path: '', redirectTo: ManageRoutes.getPrefixRoute('BIRTHANDDEATHMODULE'), pathMatch: 'full' },
+	{ path: ManageRoutes.getPrefixRoute('BIRTHANDDEATHMODULE'), loadChildren: () => BirthAndDeathModule, canLoad: [AuthGuard] },
+	{ path: ManageRoutes.getPrefixRoute('MARRIAGEMODULE'), loadChildren: () => MarriageModule, canLoad: [AuthGuard] },
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+	imports: [RouterModule.forChild(routes)],
+	exports: [RouterModule]
 })
 export class CertificatesRoutingModule { }
