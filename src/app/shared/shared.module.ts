@@ -27,6 +27,7 @@ import { FileUploadComponent } from './components/file-upload/file-upload.compon
 import { AddressComponent } from './components/address/address.component';
 import { PaymentGatewayComponent } from './components/payment-gateway/payment-gateway.component';
 import { BasicDetailsComponent } from './components/basic-details/basic-details.component';
+import { TitleBarComponent } from './components/title-bar/title-bar.component';
 /* import pipes end*/
 
 const COMPONENTS = [
@@ -37,7 +38,8 @@ const COMPONENTS = [
 	FileUploadComponent,
 	AddressComponent,
 	BasicDetailsComponent,
-	PaymentGatewayComponent
+	PaymentGatewayComponent,
+	TitleBarComponent
 ]
 
 @NgModule({

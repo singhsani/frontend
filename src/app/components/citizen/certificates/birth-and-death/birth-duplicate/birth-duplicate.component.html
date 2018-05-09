@@ -1,17 +1,16 @@
 <div class="container">
-	<div class="row pt-4">
+	<app-title-bar [title]="'screen_title' | translate:'BirthDuplicateScreen'"></app-title-bar>
+	<mat-card class="mt-4 formClass">
 		<form [formGroup]="birthDuplicateForm">
 			<mat-horizontal-stepper [linear]="false">
 			
 				<!-- first step start-->
 				<mat-step [label]="stepLable1">
-					<div class="row">
-					</div>
 					<app-basic-details [basicFormGroup]="birthDuplicateForm"></app-basic-details>
 					<app-action-bar [form]="birthDuplicateForm" [step]="'final'" (stepReset)="stepReset()" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
 				</mat-step>
 
 			</mat-horizontal-stepper>
 		</form>
-	</div>
+	</mat-card>
 </div>
