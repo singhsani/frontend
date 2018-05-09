@@ -16,18 +16,18 @@ import { NavratriNocComponent } from './navratri-noc/navratri-noc.component';
 
 const routes: Routes = [
 	{ path: '', component: AarogyaParvanoNocComponent },
-	{ path: ManageRoutes.getMainRoute('FS-AARO') + '/:id', component: AarogyaParvanoNocComponent },
-	{ path: ManageRoutes.getMainRoute('FS-PROVI') + '/:id', component: ProvisionalNocComponent },
-	{ path: ManageRoutes.getMainRoute('FS-FINAL') + '/:id', component: FinalFireNocComponent },
-	{ path: ManageRoutes.getMainRoute('FS-REN') + '/:id', component: FireRenewalNocComponent },
-	{ path: ManageRoutes.getMainRoute('FS-WATER') + '/:id', component: WaterTankerAppComponent },
-	{ path: ManageRoutes.getMainRoute('FS-AMBU') + '/:id', component: AmbulanceAppComponent },
-	{ path: ManageRoutes.getMainRoute('FS-BODY') + '/:id', component: BodyWanAppComponent },
-	{ path: ManageRoutes.getMainRoute('FS-STRUCT') + '/:id', component: TempStructureNocComponent },
-	{ path: ManageRoutes.getMainRoute('FS-FIREWORK') + '/:id', component: TempFireworksNocComponent },
-	{ path: ManageRoutes.getMainRoute('FS-GAS') + '/:id', component: GasConnectionNocComponent },
-	{ path: ManageRoutes.getMainRoute('FS-ELE') + '/:id', component: EleConnectionNocComponent },
-	{ path: ManageRoutes.getMainRoute('FS-NAV') + '/:id', component: NavratriNocComponent },
+	{ path: ManageRoutes.getMainRoute('FS-AARO') + '/:id/:apiCode', component: AarogyaParvanoNocComponent },
+	{ path: ManageRoutes.getMainRoute('FS-PROVI') + '/:id/:apiCode', component: ProvisionalNocComponent },
+	{ path: ManageRoutes.getMainRoute('FS-FINAL') + '/:id/:apiCode', component: FinalFireNocComponent },
+	{ path: ManageRoutes.getMainRoute('FS-REN') + '/:id/:apiCode', component: FireRenewalNocComponent },
+	{ path: ManageRoutes.getMainRoute('FS-WATER') + '/:id/:apiCode', component: WaterTankerAppComponent },
+	{ path: ManageRoutes.getMainRoute('FS-AMBU') + '/:id/:apiCode', component: AmbulanceAppComponent },
+	{ path: ManageRoutes.getMainRoute('FS-BODY') + '/:id/:apiCode', component: BodyWanAppComponent },
+	{ path: ManageRoutes.getMainRoute('FS-STRUCT') + '/:id/:apiCode', component: TempStructureNocComponent },
+	{ path: ManageRoutes.getMainRoute('FS-FIREWORK') + '/:id/:apiCode', component: TempFireworksNocComponent },
+	{ path: ManageRoutes.getMainRoute('FS-GAS') + '/:id/:apiCode', component: GasConnectionNocComponent },
+	{ path: ManageRoutes.getMainRoute('FS-ELE') + '/:id/:apiCode', component: EleConnectionNocComponent },
+	{ path: ManageRoutes.getMainRoute('FS-NAV') + '/:id/:apiCode', component: NavratriNocComponent },
 ];
 
 @NgModule({

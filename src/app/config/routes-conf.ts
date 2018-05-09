@@ -1,10 +1,6 @@
 import * as _ from 'lodash';
 
 const ROUTEMAIN = {
-    'MR': {
-        'main': 'marriageReg',
-        'type': 'marriageReg',
-    },
     'BR': {
         'main': 'birthReg',
         'type': 'birthReg'
@@ -36,6 +32,22 @@ const ROUTEMAIN = {
     'SB': {
         'main': 'stillBirthReg',
         'type': 'stillBirthReg'
+    },
+    'BCR': {
+        'main': 'birthCorrectionReg',
+        'type': 'birthCorrectionReg'
+    },
+    'DCR': {
+        'main': 'deathCorrectionReg',
+        'type': 'deathCorrectionReg'
+    },
+    'MR': {
+        'main': 'marriageReg',
+        'type': 'marriageReg',
+    },
+    'DUP-MR': {
+        'main': 'duplicateMarriageReg',
+        'type': 'duplicateMarriageReg',
     },
     'FS-AARO': {
         'main': 'FSAarogyaParvanoNoc',
@@ -89,6 +101,22 @@ const ROUTEMAIN = {
         'main': 'shopLicense',
         'type': 'shopLicense'
     },
+    'SHOP-CAN': {
+        'main': 'shopLicenseCancellation',
+        'type': 'shopLicenseCancellation'
+    },
+    'SHOP-DUP': {
+        'main': 'duplicateShopLicense',
+        'type': 'duplicateShopLicense'
+    },
+    'SHOP-REN': {
+        'main': 'shopRenwalLic',
+        'type': 'shopRenwalLic'
+    },
+    'SHOP-TRAF': {
+        'main': '',
+        'type': ''
+    },
     'MFL': {
         'main': 'MFLicense',
         'type': 'MFLicense'
@@ -116,6 +144,42 @@ const ROUTEMAIN = {
     'POND-REN': {
         'main': 'pondRenewal',
         'type': 'pondRenewal'
+    },
+    'PRO-ASS': {
+        'main': 'propertyAssessment',
+        'type': 'propertyAssessment'
+    },
+    'PRO-EXT': {
+        'main': 'extractOfProperty',
+        'type': 'extractOfProperty'
+    },
+    'PRO-TRAN': {
+        'main': 'transferOfProperty',
+        'type': 'transferOfProperty'
+    },
+    'PRO-DUP': {
+        'main': 'duplicateBill',
+        'type': 'duplicateBill'
+    },
+    'PRO-NDU': {
+        'main': 'noDueCertificate',
+        'type': 'noDueCertificate'
+    },
+    'PRO-REASS': {
+        'main': 'propertyReassessment',
+        'type': 'propertyReassessment'
+    },
+    'PRO-SPLI': {
+        'main': 'splittingOfProperty',
+        'type': 'splittingOfProperty'
+    },
+    'PRO-VAC': {
+        'main': 'vacantPremisesCertificate',
+        'type': 'vacantPremisesCertificate'
+    },
+    'PRO-ASSCER': {
+        'main': 'assessmentCertificate',
+        'type': 'assessmentCertificate'
     },
     'CITIZENAUTHLOGIN': {
         'main': 'login',
@@ -216,17 +280,23 @@ const ROUTEPREFIX = {
     /** start - citizen innner-licences modules routes configuretion */
     'ANIMALPONDMODULE': 'animal-pond',
     'MUTTONFISHMODULE': 'mutton-fish',
-    'SHOPANDESTAMODULE': 'mutton-fish',
+    'SHOPANDESTAMODULE': 'shop-esta',
     /** end - citizen innner-licences modules routes configuretion */
+
+    /** start - citizen tax module */
+    'TAXMODULE': 'tax',
+    
+    /** start - citizen inner-tax module */
+    'PROPERTYMODULE': 'property',
+    /** end - citizen inner-tax module */
+
+    /** end - citizen tax module */
 
     /** end - citizen module routes configuretion */
     'HOSPITALMODULE': 'hospital'
 }
 
 const ROUTESLIST = {
-    'MR': {
-        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.CERTIFICATESMODULE + '/' + ROUTEPREFIX.MARRIAGEMODULE + '/' + ROUTEMAIN.MR.main
-    },
     'BR': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.CERTIFICATESMODULE + '/' + ROUTEPREFIX.BIRTHANDDEATHMODULE + '/' + ROUTEMAIN.BR.main
     },
@@ -240,16 +310,28 @@ const ROUTESLIST = {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.CERTIFICATESMODULE + '/' + ROUTEPREFIX.BIRTHANDDEATHMODULE + '/' + ROUTEMAIN.DR.main
     },
     'NRC-BIRTH': {
-        'full': ROUTEPREFIX.CITIZENMODULE+ '/' + ROUTEPREFIX.CERTIFICATESMODULE + '/' + ROUTEPREFIX.BIRTHANDDEATHMODULE  + '/' + ROUTEMAIN["NRC-BIRTH"].main
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.CERTIFICATESMODULE + '/' + ROUTEPREFIX.BIRTHANDDEATHMODULE + '/' + ROUTEMAIN["NRC-BIRTH"].main
     },
     'NRC-DEATH': {
-        'full': ROUTEPREFIX.CITIZENMODULE+ '/' + ROUTEPREFIX.CERTIFICATESMODULE + '/' + ROUTEPREFIX.BIRTHANDDEATHMODULE  + '/' + ROUTEMAIN["NRC-DEATH"].main
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.CERTIFICATESMODULE + '/' + ROUTEPREFIX.BIRTHANDDEATHMODULE + '/' + ROUTEMAIN["NRC-DEATH"].main
     },
     'CR': {
-        'full': ROUTEPREFIX.CITIZENMODULE+ '/' + ROUTEPREFIX.CERTIFICATESMODULE + '/' + ROUTEPREFIX.BIRTHANDDEATHMODULE  + '/' + ROUTEMAIN.CR.main
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.CERTIFICATESMODULE + '/' + ROUTEPREFIX.BIRTHANDDEATHMODULE + '/' + ROUTEMAIN.CR.main
     },
     'SB': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.CERTIFICATESMODULE + '/' + ROUTEPREFIX.BIRTHANDDEATHMODULE + '/' + ROUTEMAIN.SB.main
+    },
+    'BCR': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.CERTIFICATESMODULE + '/' + ROUTEPREFIX.BIRTHANDDEATHMODULE + '/' + ROUTEMAIN.BCR.main
+    },
+    'MR': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.CERTIFICATESMODULE + '/' + ROUTEPREFIX.MARRIAGEMODULE + '/' + ROUTEMAIN.MR.main
+    },
+    'DUP-MR': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.CERTIFICATESMODULE + '/' + ROUTEPREFIX.MARRIAGEMODULE + '/' + ROUTEMAIN["DUP-MR"].main
+    },
+    'DCR': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.CERTIFICATESMODULE + '/' + ROUTEPREFIX.BIRTHANDDEATHMODULE + '/' + ROUTEMAIN.DCR.main
     },
     'FS-AARO': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.FIREFACILITIESMODULE + '/' + ROUTEMAIN["FS-AARO"].main
@@ -290,26 +372,65 @@ const ROUTESLIST = {
     'SHOP-LIC': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.LICENCEMODULE + '/' + ROUTEPREFIX.SHOPANDESTAMODULE + '/' + ROUTEMAIN["SHOP-LIC"].main
     },
+    'SHOP-CAN': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.LICENCEMODULE + '/' + ROUTEPREFIX.SHOPANDESTAMODULE + '/' + ROUTEMAIN["SHOP-CAN"].main
+    },
+    'SHOP-DUP': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.LICENCEMODULE + '/' + ROUTEPREFIX.SHOPANDESTAMODULE + '/' + ROUTEMAIN["SHOP-DUP"].main
+    },
+    'SHOP-REN': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.LICENCEMODULE + '/' + ROUTEPREFIX.SHOPANDESTAMODULE + '/' + ROUTEMAIN["SHOP-REN"].main
+    },
+    'SHOP-TRAF': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.LICENCEMODULE + '/' + ROUTEPREFIX.SHOPANDESTAMODULE + '/' + ROUTEMAIN["SHOP-TRAF"].main
+    },
     'MFL': {
-        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.LICENCEMODULE + '/'+ ROUTEPREFIX.MUTTONFISHMODULE + '/' + ROUTEMAIN["MFL"].main
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.LICENCEMODULE + '/' + ROUTEPREFIX.MUTTONFISHMODULE + '/' + ROUTEMAIN["MFL"].main
     },
     'MFR': {
-        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.LICENCEMODULE + '/'+ ROUTEPREFIX.MUTTONFISHMODULE + '/' + ROUTEMAIN["MFR"].main
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.LICENCEMODULE + '/' + ROUTEPREFIX.MUTTONFISHMODULE + '/' + ROUTEMAIN["MFR"].main
     },
     'MFC': {
-        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.LICENCEMODULE + '/'+ ROUTEPREFIX.MUTTONFISHMODULE + '/' + ROUTEMAIN["MFC"].main
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.LICENCEMODULE + '/' + ROUTEPREFIX.MUTTONFISHMODULE + '/' + ROUTEMAIN["MFC"].main
     },
     'MFT': {
-        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.LICENCEMODULE + '/'+ ROUTEPREFIX.MUTTONFISHMODULE + '/' + ROUTEMAIN["MFT"].main
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.LICENCEMODULE + '/' + ROUTEPREFIX.MUTTONFISHMODULE + '/' + ROUTEMAIN["MFT"].main
     },
     'MFD': {
-        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.LICENCEMODULE + '/'+ ROUTEPREFIX.MUTTONFISHMODULE + '/' + ROUTEMAIN["MFD"].main
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.LICENCEMODULE + '/' + ROUTEPREFIX.MUTTONFISHMODULE + '/' + ROUTEMAIN["MFD"].main
     },
     'POND-LIC': {
-        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.LICENCEMODULE + '/'+ ROUTEPREFIX.ANIMALPONDMODULE + '/' + ROUTEMAIN["POND-LIC"].main
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.LICENCEMODULE + '/' + ROUTEPREFIX.ANIMALPONDMODULE + '/' + ROUTEMAIN["POND-LIC"].main
     },
     'POND-REN': {
-        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.LICENCEMODULE + '/'+ ROUTEPREFIX.ANIMALPONDMODULE + '/' + ROUTEMAIN["POND-REN"].main
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.LICENCEMODULE + '/' + ROUTEPREFIX.ANIMALPONDMODULE + '/' + ROUTEMAIN["POND-REN"].main
+    },
+    'PRO-ASS': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TAXMODULE + '/' + ROUTEPREFIX.PROPERTYMODULE + '/' + ROUTEMAIN["PRO-ASS"].main
+    },
+    'PRO-EXT': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TAXMODULE + '/' + ROUTEPREFIX.PROPERTYMODULE + '/' + ROUTEMAIN["PRO-EXT"].main
+    },
+    'PRO-TRAN': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TAXMODULE + '/' + ROUTEPREFIX.PROPERTYMODULE + '/' + ROUTEMAIN["PRO-TRAN"].main
+    },
+    'PRO-DUP': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TAXMODULE + '/' + ROUTEPREFIX.PROPERTYMODULE + '/' + ROUTEMAIN["PRO-DUP"].main
+    },
+    'PRO-NDU': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TAXMODULE + '/' + ROUTEPREFIX.PROPERTYMODULE + '/' + ROUTEMAIN["PRO-NDU"].main
+    },
+    'PRO-REASS': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TAXMODULE + '/' + ROUTEPREFIX.PROPERTYMODULE + '/' + ROUTEMAIN["PRO-REASS"].main
+    },
+    'PRO-SPLI': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TAXMODULE + '/' + ROUTEPREFIX.PROPERTYMODULE + '/' + ROUTEMAIN["PRO-SPLI"].main
+    },
+    'PRO-VAC': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TAXMODULE + '/' + ROUTEPREFIX.PROPERTYMODULE + '/' + ROUTEMAIN["PRO-VAC"].main
+    },
+    'PRO-ASSCER': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TAXMODULE + '/' + ROUTEPREFIX.PROPERTYMODULE + '/' + ROUTEMAIN["PRO-ASSCER"].main
     },
     'CITIZENAUTHLOGIN': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.CITIZENAUTHMODULE + '/' + ROUTEMAIN.CITIZENAUTHLOGIN.main
@@ -348,10 +469,10 @@ const ROUTESLIST = {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEMAIN.CITIZENPAYMENTGATEWAY.main
     },
     'TOWNHALLLIST': {
-        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.BOOKINGMODULE + '/' + ROUTEPREFIX.TOWNHALLMODULE +  '/' + ROUTEMAIN.TOWNHALLLIST.main
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.BOOKINGMODULE + '/' + ROUTEPREFIX.TOWNHALLMODULE + '/' + ROUTEMAIN.TOWNHALLLIST.main
     },
     'TOWNHALLBOOK': {
-        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.BOOKINGMODULE + '/' + ROUTEPREFIX.TOWNHALLMODULE +  '/' + ROUTEMAIN.TOWNHALLBOOK.main
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.BOOKINGMODULE + '/' + ROUTEPREFIX.TOWNHALLMODULE + '/' + ROUTEMAIN.TOWNHALLBOOK.main
     }
 }
 
