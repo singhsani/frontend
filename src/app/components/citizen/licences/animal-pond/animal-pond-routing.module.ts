@@ -6,8 +6,8 @@ import { AnimalPondRenewComponent } from './animal-pond-renew/animal-pond-renew.
 
 const routes: Routes = [
 	{ path: '', component: AnimalPondNewComponent },
-	{ path: ManageRoutes.getMainRoute('POND-LIC') + '/:id', component: AnimalPondNewComponent },
-	{ path: ManageRoutes.getMainRoute('POND-REN') + '/:id', component: AnimalPondRenewComponent },
+	{ path: ManageRoutes.getMainRoute('POND-LIC') + '/:id/:apiCode', component: AnimalPondNewComponent },
+	{ path: ManageRoutes.getMainRoute('POND-REN') + '/:id/:apiCode', component: AnimalPondRenewComponent },
 ];
 
 @NgModule({

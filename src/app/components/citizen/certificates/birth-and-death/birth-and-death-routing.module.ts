@@ -17,14 +17,16 @@ import { DeathDuplicateComponent } from './death-duplicate/death-duplicate.compo
 
 const routes: Routes = [
 	{ path: '', component: BirthRegistrationComponent },
-	{ path: ManageRoutes.getMainRoute('BR') + '/:id', component: BirthRegistrationComponent },
-	{ path: ManageRoutes.getMainRoute('DR') + '/:id', component: DeathCertificateComponent },
-	{ path: ManageRoutes.getMainRoute('NRC-BIRTH') + '/:id', component: NoBirthRecordComponent },
-	{ path: ManageRoutes.getMainRoute('NRC-DEATH') + '/:id', component: NoDeathRecordComponent },
-	{ path: ManageRoutes.getMainRoute('CR') + '/:id', component: CremationCertificateComponent },
-	{ path: ManageRoutes.getMainRoute('SB') + '/:id', component: StillBirthComponent },
-	{ path: ManageRoutes.getMainRoute('DUP-BR') + '/:id', component: BirthDuplicateComponent },
-	{ path: ManageRoutes.getMainRoute('DUP-DR') + '/:id', component: DeathDuplicateComponent },
+	{ path: ManageRoutes.getMainRoute('BR') + '/:id/:apiCode', component: BirthRegistrationComponent },
+	{ path: ManageRoutes.getMainRoute('DR') + '/:id/:apiCode', component: DeathCertificateComponent },
+	{ path: ManageRoutes.getMainRoute('NRC-BIRTH') + '/:id/:apiCode', component: NoBirthRecordComponent },
+	{ path: ManageRoutes.getMainRoute('NRC-DEATH') + '/:id/:apiCode', component: NoDeathRecordComponent },
+	{ path: ManageRoutes.getMainRoute('CR') + '/:id/:apiCode', component: CremationCertificateComponent },
+	{ path: ManageRoutes.getMainRoute('SB') + '/:id/:apiCode', component: StillBirthComponent },
+	{ path: ManageRoutes.getMainRoute('DUP-BR') + '/:id/:apiCode', component: BirthDuplicateComponent },
+	{ path: ManageRoutes.getMainRoute('DUP-DR') + '/:id/:apiCode', component: DeathDuplicateComponent },
+	{ path: ManageRoutes.getMainRoute('BCR') + '/:id/:apiCode', component: DeathDuplicateComponent },
+	{ path: ManageRoutes.getMainRoute('DCR') + '/:id/:apiCode', component: DeathDuplicateComponent },
 ];
 
 @NgModule({

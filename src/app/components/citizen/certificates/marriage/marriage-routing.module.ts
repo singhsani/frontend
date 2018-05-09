@@ -9,12 +9,13 @@ import { MarriageCreateComponent } from './marriage-create/marriage-create.compo
 /* Import marriage certificate components end */
 
 const routes: Routes = [
-  { path: '', component: MarriageCreateComponent },
-  { path: ManageRoutes.getMainRoute('MR') + '/:id', component: MarriageCreateComponent, canActivate: [AuthGuard] },
+	{ path: '', component: MarriageCreateComponent },
+	{ path: ManageRoutes.getMainRoute('MR') + '/:id/:apiCode', component: MarriageCreateComponent, canActivate: [AuthGuard] },
+	{ path: ManageRoutes.getMainRoute('DUP-MR') + '/:id/:apiCode', component: MarriageCreateComponent, canActivate: [AuthGuard] },
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+	imports: [RouterModule.forChild(routes)],
+	exports: [RouterModule]
 })
 export class MarriageRoutingModule { }

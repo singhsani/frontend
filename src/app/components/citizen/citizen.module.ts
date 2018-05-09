@@ -23,6 +23,7 @@ import { MyResourceComponent } from './my-resource/my-resource.component';
 import { TransactionsComponent, TransactionDataDialog } from './transactions/transactions.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { MyApplicationsComponent } from './my-applications/my-applications.component';
+import { TaxModule } from './tax/tax.module';
 /* Import citizen components end */
 
 
@@ -39,7 +40,8 @@ import { MyApplicationsComponent } from './my-applications/my-applications.compo
 		CertificatesModule,
 		FireFacilitiesModule,
 		GrievanceModule,
-		CitizenRoutingModule,
+		TaxModule,
+		CitizenRoutingModule
 	],
 	entryComponents: [
 		TransactionDataDialog
