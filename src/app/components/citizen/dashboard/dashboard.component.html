@@ -1,6 +1,9 @@
 <div class="container">
     <div class="row pt-4" *ngFor="let module of userServicesList">
-        <div class="col-md-4 pt-4 text-center" *ngFor="let service of module.services; let i=index">
+        <div class="col-md-12">
+            <app-title-bar [title]="'screen_title' | translate:'DashboardScreen'"></app-title-bar>
+        </div>
+        <div class="col-md-4 pb-4 text-center" *ngFor="let service of module.services;">
             <mat-card>
                 <mat-icon>account_circle</mat-icon>
                 <mat-card-title>{{service.name}}</mat-card-title>

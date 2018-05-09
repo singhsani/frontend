@@ -1,6 +1,7 @@
 <div class="container">
 	<div class="row pt-4">
 		<div class="col-12">
+			<app-title-bar [title]="'screen_title' | translate:'MyApplicationScreen'"></app-title-bar>
 			<div class="example-container mat-elevation-z8">
 				<div class="example-loading-shade" *ngIf="isLoadingResults || isRateLimitReached">
 					<mat-spinner *ngIf="isLoadingResults"></mat-spinner>
@@ -50,7 +51,7 @@
 								<mat-icon>delete</mat-icon>
 							</button>
 							<button mat-icon-button [disabled]="row.canSubmit" [style.color]="'#4CAF50'">
-								<mat-icon>send</mat-icon>
+								<mat-icon>done_all</mat-icon>
 							</button>
 						</mat-cell>
 					</ng-container>
