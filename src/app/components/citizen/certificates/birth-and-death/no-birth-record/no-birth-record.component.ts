@@ -32,6 +32,7 @@ export class NoBirthRecordComponent implements OnInit {
 	relationshipArray: any = [];
 	genderArray: any = [];
 	placeArray: any = [];
+	showButtons: boolean = false;
 
 	attachments: any = [];
 
@@ -124,8 +125,10 @@ export class NoBirthRecordComponent implements OnInit {
 	 */
 	getNoRecordBirthData() {
 		this.formService.getFormData(this.appId).subscribe(res => {
-			this.attachments = res.attachments;
 			this.noRecordBirthForm.patchValue(res);
+			
+			this.attachments = res.attachments;
+			this.showButtons = true;
 		});
 	}
 

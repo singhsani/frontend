@@ -28,6 +28,7 @@ import { AddressComponent } from './components/address/address.component';
 import { PaymentGatewayComponent } from './components/payment-gateway/payment-gateway.component';
 import { BasicDetailsComponent } from './components/basic-details/basic-details.component';
 import { TitleBarComponent } from './components/title-bar/title-bar.component';
+import { LoadingIndicatorComponent } from './components/loading-indicator/loading-indicator.component';
 /* import pipes end*/
 
 const COMPONENTS = [
@@ -39,7 +40,8 @@ const COMPONENTS = [
 	AddressComponent,
 	BasicDetailsComponent,
 	PaymentGatewayComponent,
-	TitleBarComponent
+	TitleBarComponent,
+	LoadingIndicatorComponent
 ]
 
 @NgModule({

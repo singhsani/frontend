@@ -30,7 +30,7 @@
 						<div formGroupName="gender" class="col-md-4">
 							<mat-label>{{'gender' | translate:'translateKey'}}</mat-label>
 							<mat-radio-group class="example-radio-group" formControlName="code">
-								<mat-radio-button [value]="gender.code" *ngFor="let gender of genderArray">{{gender.name +'/'+ gender.gujName}}</mat-radio-button>
+								<mat-radio-button [value]="gender.code" *ngFor="let gender of genderArray">{{gender.name}}</mat-radio-button>
 								<br/>
 								<control-messages [control]="noRecordDeathForm.controls.gender.controls.code"></control-messages>
 							</mat-radio-group>
@@ -50,7 +50,7 @@
 						</mat-form-field>
 					</div>
 
-					<div class="col-md-12">
+					<div *ngIf="showButtons">
 						<span class="text-primary">Upload Mandatory Documents For Deceased ID Proof's </span>
 						<file-upload [uploadModel]="setDataValue(1)" [attachments]="attachments"></file-upload>
 					</div>
@@ -62,11 +62,10 @@
 
 				<!-- second step start-->
 				<mat-step [stepControl]="deathAddressDetail" [label]="stepLable2">
-					<div class="row">
-						<app-address #address [addressFormGroup]="noRecordDeathForm.controls.deathPlaceAddress"></app-address>
-					</div>
 
-					<div class="col-md-12">
+					<app-address #address [addressFormGroup]="noRecordDeathForm.controls.deathPlaceAddress"></app-address>
+
+					<div *ngIf="showButtons">
 						<span class="text-primary">Upload Mandatory Documents</span>
 						<file-upload [uploadModel]="setDataValue(2)" [attachments]="attachments"></file-upload>
 					</div>
@@ -78,6 +77,8 @@
 
 				<!-- third step start-->
 				<mat-step [stepControl]="applicantDetail" [label]="stepLable3">
+					<app-basic-details [basicFormGroup]="noRecordDeathForm"></app-basic-details>
+
 					<div class="row">
 						<mat-form-field class="col-md-6">
 							<input matInput type="text" formControlName="applicantName" placeholder="{{'full_name' | translate:'translateKey'}}">
@@ -91,8 +92,6 @@
 							<control-messages [control]="noRecordDeathForm.controls.applicantRelation.controls.code"></control-messages>
 						</mat-form-field>
 
-						<app-basic-details [basicFormGroup]="noRecordDeathForm"></app-basic-details>
-
 						<mat-form-field class="col-md-6">
 							<input matInput type="text" OnlyNumber formControlName="applicantContactNo" placeholder="{{'mobile_no' | translate:'translateKey'}}">
 							<control-messages [control]="noRecordDeathForm.controls.applicantContactNo"></control-messages>
@@ -104,12 +103,12 @@
 						</mat-form-field>
 					</div>
 
-					<div class="col-md-12">
+					<div *ngIf="showButtons">
 						<span class="text-primary">Upload Mandatory Documents For Applicant ID Proof's </span>
 						<file-upload [uploadModel]="setDataValue(3)" [attachments]="attachments"></file-upload>
 					</div>
 
-					<div class="col-md-12">
+					<div *ngIf="showButtons">
 						<span class="text-primary">Additional Documents </span>
 						<file-upload [uploadModel]="setDataValue(4)" [attachments]="attachments"></file-upload>
 					</div>

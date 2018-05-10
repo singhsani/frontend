@@ -35,7 +35,7 @@ export class LoginThroughAdminComponent implements OnInit {
 	 * This method will store Token to the Session Storage.
 	 */
 	saveToken() {
-		this.session.set('access_token', { 'token': this.accessToken, now: +new Date }, 999, 's');
+		this.session.set('access_token', { 'token': this.accessToken, now: +new Date }, 98508, 's');
 	}
 
 	/**
@@ -45,7 +45,7 @@ export class LoginThroughAdminComponent implements OnInit {
 		this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
 		this.formService.createFormData().subscribe(res => {
 			let redirectUrl = ManageRoutes.getFullRoute(this.apiCode);
-			this.router.navigate([redirectUrl, res.serviceFormId]);
+			this.router.navigate([redirectUrl, res.serviceFormId, this.apiCode]);
 		});
 	}
 
