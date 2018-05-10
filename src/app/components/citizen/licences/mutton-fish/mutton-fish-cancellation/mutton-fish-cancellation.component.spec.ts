@@ -3,23 +3,23 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MuttonFishCancellationComponent } from './mutton-fish-cancellation.component';
 
 describe('MuttonFishCancellationComponent', () => {
-  let component: MuttonFishCancellationComponent;
-  let fixture: ComponentFixture<MuttonFishCancellationComponent>;
+	let component: MuttonFishCancellationComponent;
+	let fixture: ComponentFixture<MuttonFishCancellationComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ MuttonFishCancellationComponent ]
-    })
-    .compileComponents();
-  }));
+	beforeEach(async(() => {
+		TestBed.configureTestingModule({
+			declarations: [MuttonFishCancellationComponent]
+		})
+			.compileComponents();
+	}));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(MuttonFishCancellationComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+	beforeEach(() => {
+		fixture = TestBed.createComponent(MuttonFishCancellationComponent);
+		component = fixture.componentInstance;
+		fixture.detectChanges();
+	});
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+	it('should create', () => {
+		expect(component).toBeTruthy();
+	});
 });

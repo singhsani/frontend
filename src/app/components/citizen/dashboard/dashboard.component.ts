@@ -38,14 +38,13 @@ export class DashboardComponent implements OnInit {
 		this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);
 		this.formService.createFormData().subscribe(res => {
 			let redirectUrl = ManageRoutes.getFullRoute(apiCode);
-			this.router.navigate([redirectUrl, res.serviceFormId]);
+			this.router.navigate([redirectUrl, res.serviceFormId, apiCode]);
 		});
 	}
 
 	getAllServices(){
 		this.formService.getUserServices().subscribe(
 			res => {
-				console.log(res);
 				this.userServicesList = res.modules;
 			},
 			err => {

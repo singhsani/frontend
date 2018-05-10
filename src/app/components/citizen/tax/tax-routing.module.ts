@@ -6,7 +6,7 @@ import { AuthGuard } from '../../../core/guard/auth.guard';
 
 const routes: Routes = [
 	{ path: '', redirectTo: ManageRoutes.getPrefixRoute('PROPERTYMODULE'), pathMatch: 'full' },
-	{ path: ManageRoutes.getPrefixRoute('PROPERTY'), loadChildren: () => PropertyModule, canLoad: [AuthGuard] },
+	{ path: ManageRoutes.getPrefixRoute('PROPERTYMODULE'), loadChildren: () => PropertyModule, canLoad: [AuthGuard] },
 ];
 
 @NgModule({

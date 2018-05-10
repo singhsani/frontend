@@ -1,113 +1,111 @@
-<div class="row">
-	<div class="col-md-12">
-		<h5 class="example-h2 pt-4">Marriage Registration</h5>
+<div class="container">
+	<app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
+	<mat-card class="mt-4 formClass">
+
 		<!--Start  form  -->
 		<form [formGroup]="marriageFormGroup">
 			<mat-horizontal-stepper [linear]="false">
 
 				<!-- First step -->
 				<mat-step [stepControl]="bridegroomDetail" [label]="stepLable1">
+					<div class="row">
+						<mat-form-field class="col-md-4">
+							<input matInput [max]="disablefutureDate" [matDatepicker]="picker1" formControlName="marriageDate" (dateChange)="dateFormate($event.value,'marriageDate')"
+							 placeholder="{{ 'date_of_marriage' | translate:'marriageCertScreen' }}" required>
+							<mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+							<mat-datepicker #picker1></mat-datepicker>
+							<control-messages [control]="marriageFormGroup.controls.marriageDate"></control-messages>
+						</mat-form-field>
 
-					<mat-form-field>
-						<input matInput [max]="disablefutureDate" [matDatepicker]="picker1" formControlName="marriageDate" (dateChange)="dateFormate($event.value,'marriageDate')"
-						 placeholder="{{ 'date_of_marriage' | translate:'marriageCertScreen' }}" required>
-						<mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-						<mat-datepicker #picker1></mat-datepicker>
-						<control-messages [control]="marriageFormGroup.controls.marriageDate"></control-messages>
-					</mat-form-field>
+						<mat-form-field class="col-md-4">
+							<input matInput formControlName="marriageRegistrationDate" placeholder="{{ 'marriage_registration_date' | translate:'marriageCertScreen' }}"
+							 readonly>
+						</mat-form-field>
 
-					<mat-form-field>
-						<input matInput formControlName="marriageRegistrationDate" placeholder="{{ 'marriage_registration_date' | translate:'marriageCertScreen' }}"
-						 readonly>
-					</mat-form-field>
+						<mat-form-field class="col-md-4">
+							<input matInput type="text" formControlName="marriagePlace" placeholder="{{ 'place_of_marriage' | translate:'marriageCertScreen' }}"
+							 required>
+							<control-messages id="input0" [control]="marriageFormGroup.controls.marriagePlace"></control-messages>
+						</mat-form-field>
 
-					<mat-form-field class="example-full-width">
-						<input matInput type="text" formControlName="marriagePlace" placeholder="{{ 'place_of_marriage' | translate:'marriageCertScreen' }}"
-						 required>
-						<control-messages id="input0" [control]="marriageFormGroup.controls.marriagePlace"></control-messages>
-					</mat-form-field>
+						<mat-form-field class="col-md-4">
+							<input matInput type="text" formControlName="groomFirstName" placeholder="{{ 'enter_first_name' | translate:'marriageCertScreen' }}">
+							<control-messages [control]="marriageFormGroup.controls.groomFirstName"></control-messages>
+						</mat-form-field>
 
-					<hr>
-					<mat-form-field class="example-full-width">
-						<input matInput type="text" formControlName="groomFirstName" placeholder="{{ 'enter_first_name' | translate:'marriageCertScreen' }}">
-						<control-messages [control]="marriageFormGroup.controls.groomFirstName"></control-messages>
-					</mat-form-field>
+						<mat-form-field class="col-md-4">
+							<input matInput type="text" formControlName="groomMiddleName" placeholder="{{ 'enter_middlename_name' | translate:'marriageCertScreen' }}">
+							<control-messages [control]="marriageFormGroup.controls.groomMiddleName"></control-messages>
+						</mat-form-field>
 
-					<mat-form-field class="example-full-width">
-						<input matInput type="text" formControlName="groomMiddleName" placeholder="{{ 'enter_middlename_name' | translate:'marriageCertScreen' }}">
-						<control-messages [control]="marriageFormGroup.controls.groomMiddleName"></control-messages>
-					</mat-form-field>
+						<mat-form-field class="col-md-4">
+							<input matInput type="text" formControlName="groomLastName" placeholder="{{ 'enter_last_name' | translate:'marriageCertScreen' }}">
+							<control-messages [control]="marriageFormGroup.controls.groomLastName"></control-messages>
+						</mat-form-field>
 
-					<mat-form-field class="example-full-width">
-						<input matInput type="text" formControlName="groomLastName" placeholder="{{ 'enter_last_name' | translate:'marriageCertScreen' }}">
-						<control-messages [control]="marriageFormGroup.controls.groomLastName"></control-messages>
-					</mat-form-field>
+						<mat-form-field class="col-md-4">
+							<input matInput [matDatepicker]="picker2" formControlName="groomBirthDate" (dateChange)="dateFormate($event.value,'groomBirthDate');CalculateAge()"
+							 [(ngModel)]="groomBirthDate" placeholder="{{ 'date_of_birth' | translate:'marriageCertScreen' }}" required>
+							<mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+							<mat-datepicker #picker2></mat-datepicker>
+							<control-messages [control]="marriageFormGroup.controls.groomBirthDate"></control-messages>
+						</mat-form-field>
 
-					<mat-form-field>
-						<input matInput [matDatepicker]="picker2" formControlName="groomBirthDate" (dateChange)="dateFormate($event.value,'groomBirthDate');CalculateAge()"
-						 [(ngModel)]="groomBirthDate" placeholder="{{ 'date_of_birth' | translate:'marriageCertScreen' }}" required>
-						<mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-						<mat-datepicker #picker2></mat-datepicker>
-						<control-messages [control]="marriageFormGroup.controls.groomBirthDate"></control-messages>
-					</mat-form-field>
+						<mat-form-field class="col-md-4">
+							<input matInput formControlName="groomAge" [value]="groomage" placeholder="{{'year' | translate:'marriageCertScreen' }}"
+							 class="example-right-align" readonly>
+							<control-messages [control]="marriageFormGroup.controls.groomAge"></control-messages>
+						</mat-form-field>
 
-					<mat-form-field>
-						<input matInput formControlName="groomAge" [value]="groomage" placeholder="{{'year' | translate:'marriageCertScreen' }}"
-						 class="example-right-align" readonly>
-						<control-messages [control]="marriageFormGroup.controls.groomAge"></control-messages>
-					</mat-form-field>
+						<mat-form-field class="col-md-4">
+							<input matInput [value]="groomdays" placeholder="{{'days' | translate:'marriageCertScreen' }}" class="example-right-align"
+							 readonly>
+						</mat-form-field>
 
-					<mat-form-field>
-						<input matInput [value]="groomdays" placeholder="{{'days' | translate:'marriageCertScreen' }}" class="example-right-align"
-						 readonly>
-					</mat-form-field>
-
-					<div formGroupName="groomReligion">
-						<mat-form-field>
+						<mat-form-field formGroupName="groomReligion" class="col-md-4">
 							<mat-select placeholder="{{ 'religion_by_birth' | translate:'marriageCertScreen' }}" formControlName="code" [(ngModel)]="groomreligionArray">
 								<mat-option *ngFor="let religion of religionArray" [value]="religion.code">{{religion.name}}</mat-option>
 							</mat-select>
 						</mat-form-field>
 
-						<!-- <mat-form-field>
+						<!-- <mat-form-field class="col-md-4">
 							<mat-select placeholder="{{'religion_by_adoption' | translate:'marriageCertScreen' }}" name="groomadoptionreligion" formControlName="groomadoptionreligion">
 								<mat-option *ngFor="let religion of religionArray" [value]="religion">{{religion.name}}</mat-option>
 							</mat-select>
 						</mat-form-field> -->
+						<div class="pl-3">Address:
+							<app-address #address [addressFormGroup]="marriageFormGroup.controls.groomAddress"></app-address>
+						</div>
+
+						<mat-form-field class="col-md-4">
+							<input matInput formControlName="groomAadharNumber" placeholder="{{'aadhar_number' | translate:'marriageCertScreen' }}" class="example-right-align">
+							<control-messages [control]="marriageFormGroup.controls.groomAadharNumber"></control-messages>
+						</mat-form-field>
+
+						<div class="example-selected-value">{{'marital_status' | translate:'marriageCertScreen' }}*</div>
+						<mat-radio-group class="example-radio-group" formControlName="marriageTimeGroomStatus" required>
+							<mat-radio-button class="example-radio-button" *ngFor="let status of maritalstatusArray" [value]="status.name">
+								{{status.name}}
+							</mat-radio-button>
+							<control-messages [control]="marriageFormGroup.controls.marriageTimeGroomStatus"></control-messages>
+						</mat-radio-group>
+
+						<mat-form-field class="col-md-4">
+							<input matInput formControlName="aliveWives" placeholder="{{'alive_Wives' | translate:'marriageCertScreen' }}" type="number"
+							 class="pl-1 example-right-align">
+						</mat-form-field>
+
+						<div class="pt-4">
+							<app-action-bar [form]="marriageFormGroup" [step]="'step1'" (stepReset)="stepReset()" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
+						</div>
 					</div>
-					<div class="row pl-3">Address:
-						<app-address class="col-md-6" #address [addressFormGroup]="marriageFormGroup.controls.groomAddress"></app-address>
-					</div>
-
-					<mat-form-field>
-						<input matInput formControlName="groomAadharNumber" placeholder="{{'aadhar_number' | translate:'marriageCertScreen' }}" class="example-right-align">
-						<control-messages [control]="marriageFormGroup.controls.groomAadharNumber"></control-messages>
-					</mat-form-field>
-
-					<div class="example-selected-value">{{'marital_status' | translate:'marriageCertScreen' }}*</div>
-					<mat-radio-group class="example-radio-group" formControlName="marriageTimeGroomStatus" required>
-						<mat-radio-button class="example-radio-button" *ngFor="let status of maritalstatusArray" [value]="status.name">
-							{{status.name}}
-						</mat-radio-button>
-						<control-messages [control]="marriageFormGroup.controls.marriageTimeGroomStatus"></control-messages>
-					</mat-radio-group>
-
-					<mat-form-field>
-						<input matInput formControlName="aliveWives" placeholder="{{'alive_Wives' | translate:'marriageCertScreen' }}" type="number"
-						 class="pl-1 example-right-align">
-					</mat-form-field>
-
-					<div class="pt-4">
-						<app-action-bar [form]="marriageFormGroup" [step]="'step1'" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
-					</div>
-
 				</mat-step>
 				<!-- End First step -->
 
 				<!-- Second step -->
 				<mat-step [stepControl]="brideDetail" [label]="stepLable2">
 
-					<mat-form-field class="example-full-width">
+					<mat-form-field class="col-md-4">
 						<input matInput type="text" id="input1" formControlName="brideFirstName" placeholder="{{'enter_first_name' | translate:'marriageCertScreen' }}"
 						 required>
 						<mat-error *ngIf="marriageFormGroup.controls['brideFirstName'].touched && marriageFormGroup.get('brideFirstName').hasError('required')">
@@ -117,7 +115,7 @@
 					</mat-form-field>
 
 
-					<mat-form-field class="example-full-width">
+					<mat-form-field class="col-md-4">
 						<input matInput type="text" formControlName="brideMiddleName" placeholder="{{'enter_middlename_name' | translate:'marriageCertScreen' }}"
 						 required>
 						<mat-error *ngIf="marriageFormGroup.controls['brideMiddleName'].touched && marriageFormGroup.get('brideMiddleName').hasError('required')">
@@ -126,7 +124,7 @@
 						<mat-error *ngIf="!marriageFormGroup.controls.brideMiddleName.errors?.required && marriageFormGroup.controls.brideMiddleName.errors?.invalidName">{{validationError.namecharerror}}</mat-error>
 					</mat-form-field>
 
-					<mat-form-field class="example-full-width">
+					<mat-form-field class="col-md-4">
 						<input matInput type="text" formControlName="brideLastName" placeholder="{{'enter_last_name' | translate:'marriageCertScreen' }}"
 						 required>
 						<mat-error *ngIf="marriageFormGroup.controls['brideLastName'].touched && marriageFormGroup.get('brideLastName').hasError('required')">
@@ -135,7 +133,7 @@
 						<mat-error *ngIf="!marriageFormGroup.controls.brideLastName.errors?.required && marriageFormGroup.controls.brideLastName.errors?.invalidName">{{validationError.namecharerror}}</mat-error>
 					</mat-form-field>
 
-					<mat-form-field>
+					<mat-form-field class="col-md-4">
 						<input matInput [matDatepicker]="picker3" formControlName="brideBirthDate" (dateChange)="dateFormate($event.value,'brideBirthDate');CalculateAge()"
 						 [(ngModel)]="brideBirthdate" placeholder="{{'date_of_birth' | translate:'marriageCertScreen' }}" required>
 						<mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
@@ -143,25 +141,25 @@
 						<control-messages [control]="marriageFormGroup.controls.brideBirthDate"></control-messages>
 					</mat-form-field>
 
-					<mat-form-field>
+					<mat-form-field class="col-md-4">
 						<input matInput [value]="brideage" formControlName="brideAge" placeholder="{{'year' | translate:'marriageCertScreen' }}"
 						 class="example-right-align" readonly>
 						<control-messages [control]="marriageFormGroup.controls.brideAge"></control-messages>
 					</mat-form-field>
 
-					<mat-form-field>
+					<mat-form-field class="col-md-4">
 						<input matInput [value]="bridedyas" placeholder="{{'days' | translate:'marriageCertScreen' }}" class="example-right-align"
 						 readonly>
 					</mat-form-field>
 
 					<div formGroupName="brideReligion">
-						<mat-form-field>
+						<mat-form-field class="col-md-4">
 							<mat-select placeholder="{{'religion_by_birth' | translate:'marriageCertScreen' }}" formControlName="code" [(ngModel)]="bridereligionArray">
 								<mat-option *ngFor="let religion of religionArray" [value]="religion.code">{{religion.name}}</mat-option>
 							</mat-select>
 						</mat-form-field>
 
-						<!-- <mat-form-field>
+						<!-- <mat-form-field class="col-md-4">
 							<mat-select placeholder="{{'religion_by_adoption' | translate:'marriageCertScreen' }}" name="brideadoptionreligion" formControlName="brideadoptionreligion">
 								<mat-option *ngFor="let religion of religionArray" [value]="religion">{{religion.name}}</mat-option>
 							</mat-select>
@@ -173,7 +171,7 @@
 					</div>
 
 					<div>
-						<mat-form-field>
+						<mat-form-field class="col-md-4">
 							<input matInput formControlName="brideAadharNumber" placeholder="{{'aadhar_number' | translate:'marriageCertScreen' }}" class="example-right-align">
 							<control-messages [control]="marriageFormGroup.controls.brideAadharNumber"></control-messages>
 						</mat-form-field>
@@ -189,7 +187,7 @@
 
 
 					<div class="pt-4">Address:
-						<app-action-bar [form]="marriageFormGroup" [step]="'step2'" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
+						<app-action-bar [form]="marriageFormGroup" [step]="'step2'" (stepReset)="stepReset()" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
 					</div>
 
 				</mat-step>
@@ -198,28 +196,28 @@
 				<!-- Third step -->
 				<mat-step [stepControl]="groomguirdianDetail" [label]="stepLable3">
 
-					<mat-form-field class="example-full-width">
+					<mat-form-field class="col-md-4">
 						<input matInput type="text" formControlName="groomParentsFirstName" placeholder="{{'enter_first_name' | translate:'marriageCertScreen' }}"
 						 required>
 						<control-messages [control]="marriageFormGroup.controls.groomParentsFirstName"></control-messages>
 					</mat-form-field>
 
 
-					<mat-form-field class="example-full-width">
+					<mat-form-field class="col-md-4">
 						<input matInput type="text" formControlName="groomParentsMiddleName" placeholder="{{'enter_middlename_name' | translate:'marriageCertScreen' }}"
 						 required>
 						<control-messages [control]="marriageFormGroup.controls.groomParentsMiddleName"></control-messages>
 					</mat-form-field>
 
 
-					<mat-form-field class="example-full-width">
+					<mat-form-field class="col-md-4">
 						<input matInput type="text" formControlName="groomParentsLastName" placeholder="{{'enter_last_name' | translate:'marriageCertScreen' }}"
 						 required>
 						<control-messages [control]="marriageFormGroup.controls.groomParentsLastName"></control-messages>
 					</mat-form-field>
 
 
-					<mat-form-field>
+					<mat-form-field class="col-md-4">
 						<input matInput [matDatepicker]="picker4" formControlName="groomParentsBirthDate" (dateChange)="dateFormate($event.value,'groomParentsBirthDate')"
 						 placeholder="{{'date_of_birth' | translate:'marriageCertScreen' }}" required>
 						<mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
@@ -236,7 +234,7 @@
 						<app-address class="col-md-6" #address [addressFormGroup]="marriageFormGroup.controls.groomParentsAddressResidence"></app-address>
 					</div>
 
-					<mat-form-field>
+					<mat-form-field class="col-md-4">
 						<input matInput formControlName="groomParentsAadharNumber" placeholder="{{'aadhar_number' | translate:'marriageCertScreen' }}"
 						 class="example-right-align">
 						<control-messages [control]="marriageFormGroup.controls.groomParentsAadharNumber"></control-messages>
@@ -244,7 +242,7 @@
 
 
 					<div class="pt-4">
-						<app-action-bar [form]="marriageFormGroup" [step]="'step3'" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
+						<app-action-bar [form]="marriageFormGroup" [step]="'step3'" (stepReset)="stepReset()" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
 					</div>
 
 				</mat-step>
@@ -253,28 +251,28 @@
 				<!-- Forth step -->
 				<mat-step [stepControl]="brideguirdianDetail" [label]="stepLable4">
 
-					<mat-form-field class="example-full-width">
+					<mat-form-field class="col-md-4">
 						<input matInput type="text" formControlName="brideParentsFirstName" placeholder="{{'enter_first_name' | translate:'marriageCertScreen' }}"
 						 required>
 						<control-messages [control]="marriageFormGroup.controls.brideParentsFirstName"></control-messages>
 					</mat-form-field>
 
 
-					<mat-form-field class="example-full-width">
+					<mat-form-field class="col-md-4">
 						<input matInput type="text" formControlName="brideParentsMiddleName" placeholder="{{'enter_middlename_name' | translate:'marriageCertScreen' }}"
 						 required>
 						<control-messages [control]="marriageFormGroup.controls.brideParentsMiddleName"></control-messages>
 					</mat-form-field>
 
 
-					<mat-form-field class="example-full-width">
+					<mat-form-field class="col-md-4">
 						<input matInput type="text" formControlName="brideParentsLastName" placeholder="{{'enter_last_name' | translate:'marriageCertScreen' }}"
 						 required>
 						<control-messages [control]="marriageFormGroup.controls.brideParentsLastName"></control-messages>
 					</mat-form-field>
 
 
-					<mat-form-field>
+					<mat-form-field class="col-md-4">
 						<input matInput [matDatepicker]="picker5" formControlName="brideParentsBirthDate" (dateChange)="dateFormate($event.value,'brideParentsBirthDate')"
 						 placeholder="{{'date_of_birth' | translate:'marriageCertScreen' }}" required>
 						<mat-datepicker-toggle matSuffix [for]="picker5"></mat-datepicker-toggle>
@@ -291,7 +289,7 @@
 						<app-address class="col-md-6" #address [addressFormGroup]="marriageFormGroup.controls.brideParentsAddressResidence"></app-address>
 					</div>
 
-					<mat-form-field>
+					<mat-form-field class="col-md-4">
 						<input matInput formControlName="brideParentsAadharNumber" placeholder="{{'aadhar_number' | translate:'marriageCertScreen' }}"
 						 class="example-right-align">
 						<control-messages [control]="marriageFormGroup.controls.brideParentsAadharNumber"></control-messages>
@@ -299,7 +297,7 @@
 
 
 					<div class="pt-4">
-						<app-action-bar [form]="marriageFormGroup" [step]="'step4'" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
+						<app-action-bar [form]="marriageFormGroup" [step]="'step4'" (stepReset)="stepReset()" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
 					</div>
 
 				</mat-step>
@@ -308,28 +306,28 @@
 				<!-- Fifth step -->
 				<mat-step [stepControl]="priestDetail" [label]="stepLable5">
 
-					<mat-form-field class="example-full-width">
+					<mat-form-field class="col-md-4">
 						<input matInput type="text" formControlName="priestFirstName" placeholder="{{'enter_first_name' | translate:'marriageCertScreen' }}"
 						 required>
 						<control-messages [control]="marriageFormGroup.controls.priestFirstName"></control-messages>
 					</mat-form-field>
 
 
-					<mat-form-field class="example-full-width">
+					<mat-form-field class="col-md-4">
 						<input matInput type="text" formControlName="priestMiddleName" placeholder="{{'enter_middlename_name' | translate:'marriageCertScreen' }}"
 						 required>
 						<control-messages [control]="marriageFormGroup.controls.priestMiddleName"></control-messages>
 					</mat-form-field>
 
 
-					<mat-form-field class="example-full-width">
+					<mat-form-field class="col-md-4">
 						<input matInput type="text" formControlName="priestLastName" placeholder="{{'enter_last_name' | translate:'marriageCertScreen' }}"
 						 required>
 						<control-messages [control]="marriageFormGroup.controls.priestLastName"></control-messages>
 					</mat-form-field>
 
 
-					<mat-form-field>
+					<mat-form-field class="col-md-4">
 						<input matInput [matDatepicker]="picker6" formControlName="priestBirthDate" (dateChange)="dateFormate($event.value,'priestBirthDate')"
 						 placeholder="{{'date_of_birth' | translate:'marriageCertScreen' }}" required>
 						<mat-datepicker-toggle matSuffix [for]="picker6"></mat-datepicker-toggle>
@@ -346,14 +344,14 @@
 						<app-address class="col-md-6" #address [addressFormGroup]="marriageFormGroup.controls.priestAddressResidence"></app-address>
 					</div>
 
-					<mat-form-field>
+					<mat-form-field class="col-md-4">
 						<input matInput placeholder="Aadhar Number" formControlName="priestAddressAadharNumber" class="example-right-align">
 						<control-messages [control]="marriageFormGroup.controls.priestAddressAadharNumber"></control-messages>
 					</mat-form-field>
 
 
 					<div class="pt-4">
-						<app-action-bar [form]="marriageFormGroup" [step]="'step5'" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
+						<app-action-bar [form]="marriageFormGroup" [step]="'step5'" (stepReset)="stepReset()" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
 					</div>
 
 				</mat-step>
@@ -362,28 +360,28 @@
 				<!-- Sixth step -->
 				<mat-step [stepControl]="firstwitnessDetail" [label]="stepLable6">
 
-					<mat-form-field class="example-full-width">
+					<mat-form-field class="col-md-4">
 						<input matInput type="text" formControlName="firstWitnessFirstName" placeholder="{{'enter_first_name' | translate:'marriageCertScreen' }}"
 						 required>
 						<control-messages [control]="marriageFormGroup.controls.firstWitnessFirstName"></control-messages>
 					</mat-form-field>
 
 
-					<mat-form-field class="example-full-width">
+					<mat-form-field class="col-md-4">
 						<input matInput type="text" formControlName="firstWitnessMiddleName" placeholder="{{'enter_middlename_name' | translate:'marriageCertScreen' }}"
 						 required>
 						<control-messages [control]="marriageFormGroup.controls.firstWitnessMiddleName"></control-messages>
 					</mat-form-field>
 
 
-					<mat-form-field class="example-full-width">
+					<mat-form-field class="col-md-4">
 						<input matInput type="text" formControlName="firstWitnessLastName" placeholder="{{'enter_last_name' | translate:'marriageCertScreen' }}"
 						 required>
 						<control-messages [control]="marriageFormGroup.controls.firstWitnessLastName"></control-messages>
 					</mat-form-field>
 
 
-					<mat-form-field>
+					<mat-form-field class="col-md-4">
 						<input matInput [matDatepicker]="picker7" formControlName="firstWitnessBirthDate" (dateChange)="dateFormate($event.value,'firstWitnessBirthDate')"
 						 placeholder="{{'date_of_birth' | translate:'marriageCertScreen' }}" required>
 						<mat-datepicker-toggle matSuffix [for]="picker7"></mat-datepicker-toggle>
@@ -396,14 +394,14 @@
 						<app-address class="col-md-6" #address [addressFormGroup]="marriageFormGroup.controls.firstWitnessAddress"></app-address>
 					</div>
 
-					<mat-form-field>
+					<mat-form-field class="col-md-4">
 						<input matInput placeholder="Aadhar Number" formControlName="firstWitnessAadharNumber" class="example-right-align">
 						<control-messages [control]="marriageFormGroup.controls.firstWitnessAadharNumber"></control-messages>
 					</mat-form-field>
 
 
 					<div class="pt-4">
-						<app-action-bar [form]="marriageFormGroup" [step]="'step6'" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
+						<app-action-bar [form]="marriageFormGroup" [step]="'step6'" (stepReset)="stepReset()" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
 					</div>
 
 				</mat-step>
@@ -413,25 +411,9 @@
 				<!-- Seventh step -->
 				<mat-step [stepControl]="secondwitnessDetail" [label]="stepLable7">
 
-					<mat-form-field class="example-full-width">
-						<input matInput type="text" formControlName="secondWitnessFirstName" placeholder="{{'enter_first_name' | translate:'marriageCertScreen' }}"
-						 required>
-						<control-messages [control]="marriageFormGroup.controls.secondWitnessFirstName"></control-messages>
-					</mat-form-field>
+					<app-basic-details [basicFormGroup]="marriageFormGroup"></app-basic-details>
 
-					<mat-form-field class="example-full-width">
-						<input matInput type="text" formControlName="secondWitnessMiddleName" placeholder="{{'enter_middlename_name' | translate:'marriageCertScreen' }}"
-						 required>
-						<control-messages [control]="marriageFormGroup.controls.secondWitnessMiddleName"></control-messages>
-					</mat-form-field>
-
-					<mat-form-field class="example-full-width">
-						<input matInput type="text" formControlName="secondWitnessLastName" placeholder="{{'enter_last_name' | translate:'marriageCertScreen' }}"
-						 required>
-						<control-messages [control]="marriageFormGroup.controls.secondWitnessLastName"></control-messages>
-					</mat-form-field>
-
-					<mat-form-field>
+					<mat-form-field class="col-md-4">
 						<input matInput [matDatepicker]="picker8" formControlName="secondWitnessBirthDate" (dateChange)="dateFormate($event.value,'secondWitnessBirthDate')"
 						 placeholder="{{'date_of_birth' | translate:'marriageCertScreen' }}" required>
 						<mat-datepicker-toggle matSuffix [for]="picker8"></mat-datepicker-toggle>
@@ -444,15 +426,8 @@
 						<app-address class="col-md-6" #address [addressFormGroup]="marriageFormGroup.controls.secondWitnessAddress"></app-address>
 					</div>
 
-					<mat-form-field>
-						<input matInput formControlName="secondWitnessAadharNumber" placeholder="{{'aadhar_number' | translate:'marriageCertScreen' }}"
-						 class="example-right-align">
-						 <control-messages [control]="marriageFormGroup.controls.secondWitnessAadharNumber"></control-messages>
-					</mat-form-field>
-					
-
 					<div class="pt-4">
-						<app-action-bar [form]="marriageFormGroup" [step]="'step7'" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
+						<app-action-bar [form]="marriageFormGroup" [step]="'step7'" (stepReset)="stepReset()" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
 					</div>
 
 				</mat-step>
@@ -474,16 +449,16 @@
 						</div>
 						<div class="col-4">
 							<div>
-								<file-upload [uploadModel]="setDataValue(1)"></file-upload>
+								<file-upload [uploadModel]="setDataValue(1)" [attachments]="attachments"></file-upload>
 							</div>
 						</div>
 
 						<div class="col-4">
-							<file-upload [uploadModel]="setDataValue(2)"></file-upload>
+							<file-upload [uploadModel]="setDataValue(2)" [attachments]="attachments"></file-upload>
 						</div>
 
 						<div class="col-4">
-							<file-upload [uploadModel]="setDataValue(3)"></file-upload>
+							<file-upload [uploadModel]="setDataValue(3)" [attachments]="attachments"></file-upload>
 						</div>
 					</div>
 					<hr/>
@@ -494,26 +469,26 @@
 								Resident proof of Groom and Bride(Driving License/Aadhar card/passport/Ration card/Election card)
 							</mat-checkbox>
 						</section>
-						<file-upload fileType="file" [uploadModel]="setDataValue(4)"></file-upload>
+						<file-upload fileType="file" [uploadModel]="setDataValue(4)" [attachments]="attachments"></file-upload>
 						<hr/>
 						<section class="example-section">
 							<mat-checkbox [disabled]="false">
 								Any KYC (Know your Customer )Document of Bride;
 							</mat-checkbox>
 						</section>
-						<file-upload fileType="file" [uploadModel]="setDataValue(5)"></file-upload>
+						<file-upload fileType="file" [uploadModel]="setDataValue(5)" [attachments]="attachments"></file-upload>
 						<hr/>
 						<section class="example-section">
 							<mat-checkbox [disabled]="false">
 								Resident proof of Priest (Driving License/Aadhar card/passport/Ration card/Election card) </mat-checkbox>
 						</section>
-						<file-upload fileType="file" [uploadModel]="setDataValue(6)"></file-upload>
+						<file-upload fileType="file" [uploadModel]="setDataValue(6)" [attachments]="attachments"></file-upload>
 						<hr/>
 						<section class="example-section">
 							<mat-checkbox [disabled]="false">
 								Resident proof of Two local Witnesses (Driving License/Aadhar card/passport/Ration card/Election card) </mat-checkbox>
 						</section>
-						<file-upload fileType="file" [uploadModel]="setDataValue(7)"></file-upload>
+						<file-upload fileType="file" [uploadModel]="setDataValue(7)" [attachments]="attachments"></file-upload>
 					</div>
 				</mat-step>
 				<!-- End eighth step -->
@@ -523,15 +498,12 @@
 					<ng-template matStepLabel>Done</ng-template>
 					You are now done.
 					<div>
-						<app-action-bar [form]="marriageFormGroup" [step]="'final'" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
+						<app-action-bar [form]="marriageFormGroup" [step]="'final'" (stepReset)="stepReset()" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
 					</div>
 				</mat-step>
 				<!-- End last step -->
 
 			</mat-horizontal-stepper>
 		</form>
-		<!-- End  form -->
-
-		<!-- {{marriageFormGroup.value | json}} -->
-	</div>
+	</mat-card>
 </div>

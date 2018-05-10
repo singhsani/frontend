@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators, FormControl, FormArray } from '@ang
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatHorizontalStepper, MatStep, MatStepLabel } from '@angular/material';
 
+import { ManageRoutes } from './../../../../../config/routes-conf';
 import { ValidationService } from '../../../../../shared/services/validation.service';
 import { FormsActionsService } from '../../../../../core/services/citizen/data-services/forms-actions.service';
 
@@ -25,6 +26,8 @@ export class NoBirthRecordComponent implements OnInit {
 	translateKey: string = 'NRCBirthScreen';
 
 	appId: number;
+	apiCode: string;
+
 	maxDate: Date = new Date();
 	relationshipArray: any = [];
 	genderArray: any = [];
@@ -45,28 +48,52 @@ export class NoBirthRecordComponent implements OnInit {
 		private router: Router,
 		private route: ActivatedRoute,
 		private formService: FormsActionsService
-	) {
-		this.formService.apiType = 'NRCBirth';
-	}
+	) { }
 
 	ngOnInit() {
 
 		this.route.paramMap.subscribe(param => {
 			this.appId = Number(param.get('id'));
+			this.apiCode = param.get('apiCode');
+			this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
 		});
 
+		this.nrcBirthCertFormControls();
 		this.getNoRecordBirthData();
 		this.getLookupData();
-		this.nrcBirthCertFormControls();
 	}
 
 	nrcBirthCertFormControls() {
 
 		this.noRecordBirthForm = this.fb.group({
 
-			// step 1 form controls starts 
-			applicationNo: [null, Validators.required],
-			registrationNo: [null, Validators.required],
+			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
+			id: null,
+			uniqueId: null,
+			version: 0,
+			serviceFormId: null,
+			createdDate: null,
+			updatedDate: null,
+			serviceType: null,
+			fileStatus: null,
+			serviceName: null,
+			fileNumber: null,
+			pid: null,
+			outwardNo: null,
+			agree: false,
+			paymentStatus: null,
+			canEdit: true,
+			canDelete: true,
+			canSubmit: true,
+			regNumber: null,
+
+			firstName: null,
+			lastName: null,
+			middleName: null,
+			contactNo: null,
+			email: null,
+			aadhaarNo: null,
+
 			childName: [null, Validators.required],
 			gender: this.fb.group({
 				code: [null, Validators.required],
@@ -75,44 +102,20 @@ export class NoBirthRecordComponent implements OnInit {
 			birthPlace: this.fb.group({
 				code: [null, Validators.required],
 			}),
+			birthPlaceDetail: null,
 			fatherName: [null, Validators.required],
 			motherName: [null, Validators.required],
-			// step 1 form controls ends 
-
-			// step 2 form controls starts 
+			reasonDetail: null,
 			birthPlaceAddress: this.fb.group(this.addrComponent.addressControls()),
-			// step 2 form controls ends 
-
-			// step 3 form controls starts 
 			applicantName: [null, Validators.required],
 			applicantRelation: this.fb.group({
 				code: [null, Validators.required]
 			}),
-
+			applicantRelationDetail: null,
 			applicantContactNo: [null, [Validators.required, Validators.maxLength(10)]],
 			applicantEmail: [null, [Validators.required, ValidationService.emailValidator]],
-			attachments: [],
-			reasonDetail: null,
-			// step 3 form controls ends 
-
-			// extra's important controls
-			apiType: 'NRCBirth',
-			serviceFormId: null,
-			id: null,
-			uniqueId: null,
-			version: null,
-			serviceType: null,
-			fileStatus: null,
-			serviceName: null,
-			fileNumber: null,
-			pid: null,
-			outwardNo: null,
-			agree: null,
-			paymentStatus: null,
-			canEdit: null,
-			canDelete: null,
-			canSubmit: null,
-			regNumber: null
+			attachments: []
+			
 		});
 	}
 
@@ -121,8 +124,8 @@ export class NoBirthRecordComponent implements OnInit {
 	 */
 	getNoRecordBirthData() {
 		this.formService.getFormData(this.appId).subscribe(res => {
-			this.noRecordBirthForm.patchValue(res);
 			this.attachments = res.attachments;
+			this.noRecordBirthForm.patchValue(res);
 		});
 	}
 
@@ -193,6 +196,10 @@ export class NoBirthRecordComponent implements OnInit {
 		}
 
 		return this.uploadModel;
+	}
+
+	stepReset() {
+		this.stepper.reset();
 	}
 
 }

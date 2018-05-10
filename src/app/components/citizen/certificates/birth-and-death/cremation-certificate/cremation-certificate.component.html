@@ -1,8 +1,6 @@
-<div class="row">
-	<div class="col-md-12">
-		<h5 class="example-h2 pt-4">Cremation Certificate</h5>
-
-		<!--Start  form  -->
+<div class="container">
+	<app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
+	<mat-card class="mt-4 formClass">
 		<form [formGroup]="cremationForm">
 			<mat-horizontal-stepper [linear]="false">
 
@@ -11,22 +9,7 @@
 
 					<div class="row">
 
-						<mat-form-field class="col-md-4">
-							<input matInput type="text" formControlName="applicantFirstName" placeholder="{{'first_name' | translate:'translateKey'}}"
-							 required>
-							<control-messages [control]="cremationForm.controls.applicantFirstName"></control-messages>
-						</mat-form-field>
-
-						<mat-form-field class="col-md-4">
-							<input matInput type="text" formControlName="applicantMiddleName" placeholder="{{'middle_name' | translate:'translateKey'}}">
-							<control-messages [control]="cremationForm.controls.applicantMiddleName"></control-messages>
-						</mat-form-field>
-
-						<mat-form-field class="col-md-4">
-							<input matInput type="text" formControlName="applicantLastName" placeholder="{{'last_name' | translate:'translateKey'}}"
-							 required>
-							<control-messages [control]="cremationForm.controls.applicantLastName"></control-messages>
-						</mat-form-field>
+						<app-basic-details [basicFormGroup]="cremationForm"></app-basic-details>
 
 						<div formGroupName="applicantRelation" class="col-md-6">
 							<mat-label>{{'relation' | translate:'translateKey'}}</mat-label>
@@ -46,7 +29,7 @@
 						<app-address #address [addressFormGroup]="cremationForm.controls.applicantAddress"></app-address>
 					</div>
 
-					<app-action-bar [form]="cremationForm" [step]="'step1'"></app-action-bar>
+					<app-action-bar [form]="cremationForm" [step]="'step1'" (stepReset)="stepReset()"></app-action-bar>
 
 				</mat-step>
 
@@ -87,25 +70,16 @@
 
 						<app-address #address [addressFormGroup]="cremationForm.controls.cremationAddress"></app-address>
 
-						<mat-form-field class="col-md-6">
-							<input matInput type="text" OnlyNumber formControlName="applicantContactNo" placeholder="{{'mobile_no' | translate:'translateKey'}}"
-							 required>
-							<control-messages [control]="cremationForm.controls.applicantContactNo"></control-messages>
-						</mat-form-field>
+						<app-basic-details [basicFormGroup]="cremationForm"></app-basic-details>
 
-						<mat-form-field class="col-md-6">
-							<input matInput type="text" formControlName="applicantEmail" placeholder="{{'email' | translate:'translateKey'}}" required>
-							<control-messages [control]="cremationForm.controls.applicantEmail"></control-messages>
-						</mat-form-field>
 					</div>
 
-					<app-action-bar [form]="cremationForm" [step]="'final'" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
+					<app-action-bar [form]="cremationForm" [step]="'final'" (stepReset)="stepReset()" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
 
 				</mat-step>
 				<!-- second step end-->
 
 			</mat-horizontal-stepper>
 		</form>
-
-	</div>
+	</mat-card>
 </div>

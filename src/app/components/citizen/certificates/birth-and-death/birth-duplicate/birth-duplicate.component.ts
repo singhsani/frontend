@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators, FormControl, FormArray } from '@ang
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatHorizontalStepper, MatStep, MatStepLabel } from '@angular/material';
 
+import { ManageRoutes } from './../../../../../config/routes-conf';
 import { ValidationService } from '../../../../../shared/services/validation.service';
 import { FormsActionsService } from '../../../../../core/services/citizen/data-services/forms-actions.service';
 import * as _ from 'lodash';
@@ -21,6 +22,7 @@ export class BirthDuplicateComponent implements OnInit {
 	translateKey: string = 'BirthDuplicateScreen';
 
 	appId: number;
+	apiCode: string;
 
 	// Step Titles
 	stepLable1: string = "Applicant Basic Details";
@@ -31,14 +33,14 @@ export class BirthDuplicateComponent implements OnInit {
 		private router: Router,
 		private route: ActivatedRoute,
 		private formService: FormsActionsService
-	) {
-		this.formService.apiType = 'duplicateBirthReg';
-	}
+	) { }
 
 	ngOnInit() {
 
 		this.route.paramMap.subscribe(param => {
 			this.appId = Number(param.get('id'));
+			this.apiCode = param.get('apiCode');
+			this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
 		});
 
 		this.getBirthDuplicateData();
@@ -108,7 +110,7 @@ export class BirthDuplicateComponent implements OnInit {
 			duplicateCopies: {},
 			duplicateCopyMode: {},
 			totalCopies: [null, Validators.required],
-			apiType: 'duplicateBirthReg'
+			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode)
 		});
 	}
 

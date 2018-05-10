@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators, FormControl, FormArray } from '@ang
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatHorizontalStepper, MatStep, MatStepLabel } from '@angular/material';
 
+import { ManageRoutes } from './../../../../../config/routes-conf';
 import { ValidationService } from '../../../../../shared/services/validation.service';
 import { FormsActionsService } from '../../../../../core/services/citizen/data-services/forms-actions.service';
 import * as _ from 'lodash';
@@ -21,6 +22,7 @@ export class DeathDuplicateComponent implements OnInit {
 	translateKey: string = 'DeathDuplicateScreen';
 
 	appId: number;
+	apiCode: string;
 
 	// Step Titles
 	stepLable1: string = "Applicant Basic Details";
@@ -31,14 +33,14 @@ export class DeathDuplicateComponent implements OnInit {
 		private router: Router,
 		private route: ActivatedRoute,
 		private formService: FormsActionsService
-	) {
-		this.formService.apiType = 'duplicateDeathReg';
-	}
+	) { }
 
 	ngOnInit() {
 
 		this.route.paramMap.subscribe(param => {
 			this.appId = Number(param.get('id'));
+			this.apiCode = param.get('apiCode');
+			this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
 		});
 
 		this.getDeathDuplicateData();
@@ -104,7 +106,7 @@ export class DeathDuplicateComponent implements OnInit {
 			deathRegYear: [null, Validators.required],
 			deathDate: [null, Validators.required],
 			deathRegDate: [null, Validators.required],
-			apiType: 'duplicateDeathReg'
+			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode)
 		});
 	}
 

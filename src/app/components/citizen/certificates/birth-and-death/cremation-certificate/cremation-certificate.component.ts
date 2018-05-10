@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators, FormControl, FormArray } from '@ang
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatHorizontalStepper, MatStep, MatStepLabel } from '@angular/material';
 
+import { ManageRoutes } from './../../../../../config/routes-conf';
 import { ValidationService } from '../../../../../shared/services/validation.service';
 import { FormsActionsService } from '../../../../../core/services/citizen/data-services/forms-actions.service';
 
@@ -25,6 +26,8 @@ export class CremationCertificateComponent implements OnInit {
 	translateKey: string = 'CremationScreen';
 
 	appId: number;
+	apiCode: string; 
+
 	maxDate: Date = new Date();
 	relationshipArray: any = [];
 	genderArray: any = [];
@@ -37,17 +40,20 @@ export class CremationCertificateComponent implements OnInit {
 	stepLable1: string = "Cremation Certificate Detail";
 	stepLable2: string = "Applicant Detail";
 
-	constructor(private fb: FormBuilder, private validationService: ValidationService,
-		private router: Router, private route: ActivatedRoute,
-		private formService: FormsActionsService) {
-
-		this.formService.apiType = 'cremationReg';
-	}
+	constructor(
+		private fb: FormBuilder, 
+		private validationService: ValidationService,
+		private router: Router, 
+		private route: ActivatedRoute,
+		private formService: FormsActionsService
+	) { }
 
 	ngOnInit() {
 
 		this.route.paramMap.subscribe(param => {
 			this.appId = Number(param.get('id'));
+			this.apiCode = param.get('apiCode');
+			this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
 		});
 
 		this.getCremationData();
@@ -61,54 +67,55 @@ export class CremationCertificateComponent implements OnInit {
 
 		this.cremationForm = this.fb.group({
 
-			// step 1 form controls starts 
-			applicantFirstName: [null, Validators.required],
-			applicantMiddleName: null,
-			applicantLastName: [null, Validators.required],
-			applicantRelation: this.fb.group({
-				code: [null, Validators.required]
-			}),
-			applicantRelationDetail: [null, Validators.required],
-			applicantProof: this.fb.group({
-				code: [null, Validators.required]
-			}),
-			applicantAddress: this.fb.group(this.addrComponent.addressControls()),
-			// step 1 form controls ends 
-
-			// step 2 form controls starts 
-			cremationAddress: this.fb.group(this.addrComponent.addressControls()),
-			deathDate: [null, Validators.required],
-			gender: this.fb.group({
-				code: [null, Validators.required]
-			}),
-
-			deceasedName: [null, Validators.required],
-			deathPlace: this.fb.group({
-				code: [null, Validators.required]
-			}),
-			deathPlaceDetail: [null, Validators.required],
-			applicantContactNo: [null, [Validators.required, Validators.maxLength(10)]],
-			applicantEmail: [null, [Validators.required, ValidationService.emailValidator]],
-			// step 2 form controls ends 
-
-			// etxtra's important controls
-			apiType: 'cremationReg',
-			serviceFormId: null,
+			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
 			id: null,
 			uniqueId: null,
-			version: null,
+			version: 0,
+			serviceFormId: null,
+			createdDate: null,
+			updatedDate: null,
 			serviceType: null,
 			fileStatus: null,
 			serviceName: null,
 			fileNumber: null,
 			pid: null,
 			outwardNo: null,
-			agree: null,
+			agree: false,
 			paymentStatus: null,
-			canEdit: null,
-			canDelete: null,
-			canSubmit: null,
-			regNumber: null
+			canEdit: true,
+			canDelete: true,
+			canSubmit: true,
+
+			firstName: null,
+			lastName: null,
+			middleName: null,
+			contactNo: null,
+			email: null,
+			aadhaarNo: null,
+			
+			applicantRelation: this.fb.group({
+				code: [null, Validators.required]
+			}),
+			applicantRelationDetail: null,
+			applicantProof: this.fb.group({
+				code: [null, Validators.required]
+			}),
+			applicantAddress: this.fb.group(this.addrComponent.addressControls()),
+			cremationAddress: this.fb.group(this.addrComponent.addressControls()),
+			deathDate: [null, Validators.required],
+			gender: this.fb.group({
+				code: [null, Validators.required]
+			}),
+			deceasedName: [null, Validators.required],
+			regNumber: null,
+			deathPlace: this.fb.group({
+				code: [null, Validators.required]
+			}),
+			deathPlaceDetail: [null, Validators.required],
+			issueDate: null,
+			authorityName: null,
+			attachments: [],
+			
 		});
 
 	}
@@ -185,5 +192,9 @@ export class CremationCertificateComponent implements OnInit {
 		}
 
 		return this.uploadModel;
+	}
+
+	stepReset() {
+		this.stepper.reset();
 	}
 }

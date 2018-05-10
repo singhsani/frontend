@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators, FormControl, FormArray } from '@ang
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatHorizontalStepper, MatStep, MatStepLabel } from '@angular/material';
 
+import { ManageRoutes } from './../../../../../config/routes-conf';
 import { ValidationService } from '../../../../../shared/services/validation.service';
 import { FormsActionsService } from '../../../../../core/services/citizen/data-services/forms-actions.service';
 
@@ -25,6 +26,8 @@ export class NoDeathRecordComponent implements OnInit {
 	translateKey: string = 'NRCDeathScreen';
 
 	appId: number;
+	apiCode: string;
+
 	maxDate: Date = new Date();
 	relationshipArray: any = [];
 	genderArray: any = [];
@@ -50,6 +53,8 @@ export class NoDeathRecordComponent implements OnInit {
 
 		this.route.paramMap.subscribe(param => {
 			this.appId = Number(param.get('id'));
+			this.apiCode = param.get('apiCode');
+			this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
 		});
 
 		this.getNoRecordDeathData();
@@ -61,9 +66,33 @@ export class NoDeathRecordComponent implements OnInit {
 
 		this.noRecordDeathForm = this.fb.group({
 
-			// step 1 form controls starts 
-			applicationNo: [null, Validators.required],
-			registrationNo: [null, Validators.required],
+			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
+			id: null,
+			uniqueId: null,
+			version: 0,
+			serviceFormId: null,
+			createdDate: null,
+			updatedDate: null,
+			serviceType: null,
+			fileStatus: null,
+			serviceName: null,
+			fileNumber: null,
+			pid: null,
+			outwardNo: null,
+			agree: false,
+			paymentStatus: null,
+			canEdit: true,
+			canDelete: true,
+			canSubmit: true,
+			regNumber: null,
+
+			firstName: null,
+			lastName: null,
+			middleName: null,
+			contactNo: null,
+			email: null,
+			aadhaarNo: null,
+
 			deceasedName: [null, Validators.required],
 			gender: this.fb.group({
 				code: [null, Validators.required],
@@ -72,44 +101,19 @@ export class NoDeathRecordComponent implements OnInit {
 			deathPlace: this.fb.group({
 				code: [null, Validators.required],
 			}),
+			deathPlaceDetail: null,
 			fatherOrHusbandName: [null, Validators.required],
 			age: [null, Validators.required],
-			// step 1 form controls ends 
-
-			// step 2 form controls starts 
 			deathPlaceAddress: this.fb.group(this.addrComponent.addressControls()),
-			// step 2 form controls ends 
-
-			// step 3 form controls starts 
 			applicantName: [null, Validators.required],
 			applicantRelation: this.fb.group({
 				code: [null, Validators.required]
 			}),
-
+			applicantRelationDetail: null,
 			applicantContactNo: [null, Validators.maxLength(10)],
 			applicantEmail: [null, [Validators.required, ValidationService.emailValidator]],
-			attachments: [],
 			reasonDetail: null,
-			// step 3 form controls ends 
-
-			// extra's important controls 
-			apiType: 'NRCDeath',
-			serviceFormId: null,
-			id: null,
-			uniqueId: null,
-			version: null,
-			serviceType: null,
-			fileStatus: null,
-			serviceName: null,
-			fileNumber: null,
-			pid: null,
-			outwardNo: null,
-			agree: null,
-			paymentStatus: null,
-			canEdit: null,
-			canDelete: null,
-			canSubmit: null,
-			regNumber: null
+			attachments: []
 
 		});
 	}

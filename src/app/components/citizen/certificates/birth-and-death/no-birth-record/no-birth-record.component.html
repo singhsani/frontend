@@ -1,7 +1,6 @@
-<div class="row">
-	<div class="col-md-12">
-		<h5 class="example-h2 pt-4">No Record Found For Birth</h5>
-
+<div class="container">
+	<app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
+	<mat-card class="mt-4 formClass">
 		<!--Start  form  -->
 		<form [formGroup]="noRecordBirthForm">
 			<mat-horizontal-stepper [linear]="false">
@@ -56,7 +55,7 @@
 						<file-upload [uploadModel]="setDataValue(1)" [attachments]="attachments"></file-upload>
 					</div>
 
-					<app-action-bar [form]="noRecordBirthForm" [step]="'step1'"></app-action-bar>
+					<app-action-bar [form]="noRecordBirthForm" [step]="'step1'" (stepReset)="stepReset()"></app-action-bar>
 
 				</mat-step>
 				<!-- end first step -->
@@ -73,7 +72,7 @@
 						<file-upload [uploadModel]="setDataValue(2)" [attachments]="attachments"></file-upload>
 					</div>
 
-					<app-action-bar [form]="noRecordBirthForm" [step]="'step2'"></app-action-bar>
+					<app-action-bar [form]="noRecordBirthForm" [step]="'step2'" (stepReset)="stepReset()"></app-action-bar>
 
 				</mat-step>
 				<!-- second step end-->
@@ -93,6 +92,8 @@
 							<control-messages [control]="noRecordBirthForm.controls.applicantRelation.controls.code"></control-messages>
 						</mat-form-field>
 
+						<app-basic-details [basicFormGroup]="noRecordBirthForm"></app-basic-details>
+						
 						<mat-form-field class="col-md-6">
 							<input matInput type="text" OnlyNumber formControlName="applicantContactNo" placeholder="{{'mobile_no' | translate:'translateKey'}}">
 							<control-messages [control]="noRecordBirthForm.controls.applicantContactNo"></control-messages>
@@ -110,12 +111,11 @@
 						<file-upload [uploadModel]="setDataValue(3)" [attachments]="attachments"></file-upload>
 					</div>
 
-					<app-action-bar [form]="noRecordBirthForm" [step]="'final'" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
+					<app-action-bar [form]="noRecordBirthForm" [step]="'final'" (stepReset)="stepReset()" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
 
 				</mat-step>
 				<!-- third step end-->
 			</mat-horizontal-stepper>
 		</form>
-
-	</div>
+	</mat-card>
 </div>

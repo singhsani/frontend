@@ -94,7 +94,7 @@ export class MyApplicationsComponent implements OnInit {
 	 */
 	redirectToEdit(apiCode: string, id: number) {
 		let redirectUrl = ManageRoutes.getFullRoute(apiCode);
-		this.router.navigate([redirectUrl, id]);
+		this.router.navigate([redirectUrl, id, apiCode]);
 	}
 
 	/**

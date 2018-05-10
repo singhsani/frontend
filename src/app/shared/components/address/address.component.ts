@@ -21,6 +21,9 @@ export class AddressComponent implements OnInit {
 	 */
 	addressControls() {
 		let addrObj = {
+			id: null,
+			uniqueId: null,
+			version: null,
 			addressType: [],
 			houseNo: ['', [Validators.required, Validators.maxLength(5)]],
 			tenamentNo: ['', [Validators.maxLength(60)]],
@@ -32,7 +35,7 @@ export class AddressComponent implements OnInit {
 			addressLine1: ['', [Validators.maxLength(60)]],
 			addressLine2: ['', [Validators.maxLength(60)]],
 			addressLine3: ['', [Validators.maxLength(60)]],
-			village: ['', [Validators.maxLength(60)]]
+			village: ['', [Validators.maxLength(60)]],
 		}
 
 		return addrObj;
