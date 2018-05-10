@@ -12,10 +12,10 @@
 
 		<div *ngIf="showButton">
 			<label class="btn btn-default">
-				<label *ngIf="imagetype">
-					<img [src]="priviewImage" alt="image" class="imageSize" />
-				</label>
 				<input #fileInput type="file" (change)="selectFile($event)">
+			</label>
+			<label *ngIf="imagetype">
+				<img [src]="priviewImage" alt="image" class="imageSize" />
 			</label>
 
 			<button mat-raised-button color="primary" [disabled]="canUpload" (click)="upload()">

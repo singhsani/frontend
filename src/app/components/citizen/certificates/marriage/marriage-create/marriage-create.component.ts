@@ -1,15 +1,15 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router,ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { MatHorizontalStepper, MatStep, MatStepLabel } from '@angular/material';
+import { Router, ActivatedRoute } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatHorizontalStepper, MatStepLabel } from '@angular/material';
 
-import { ManageRoutes } from '../../../../../config/routes-conf';
 import { ValidationService } from '../../../../../shared/services/validation.service';
 import { FormsActionsService } from '../../../../../core/services/citizen/data-services/forms-actions.service';
 import { UploadFileService } from '../../../../../shared/upload-file.service';
 
 import * as _ from 'lodash';
 import * as moment from 'moment';
+import { ManageRoutes } from '../../../../../config/routes-conf';
 
 @Component({
     selector: 'app-marriage-create',
@@ -20,8 +20,9 @@ export class MarriageCreateComponent implements OnInit {
 
     @ViewChild(MatHorizontalStepper) stepper: MatHorizontalStepper;
     @ViewChild(MatStepLabel) steplable: MatStepLabel;
-
     @ViewChild('address') addrComponent: any;
+
+    translateKey: string = 'marriageScreen';
 
     marriageFormGroup: FormGroup;
 
@@ -42,7 +43,6 @@ export class MarriageCreateComponent implements OnInit {
     // Lookups array list
     religionArray: any = [];
     maritalstatusArray: any = [];
-    attachments: any = [];
 
     // Marriage date 
     disablefutureDate = new Date(moment().format('YYYY-MM-DD'));
@@ -59,6 +59,8 @@ export class MarriageCreateComponent implements OnInit {
 
     //File and image upload
     uploadModel: any = {};
+    private attachments: any[] = [];
+    private showButtons: boolean = false;
 
     /**
      * @param fb - Declare FormBuilder property.
@@ -67,19 +69,20 @@ export class MarriageCreateComponent implements OnInit {
      * @param uploadFileService - Declare upload file service property.
      */
     constructor(
-        private uploadFileService: UploadFileService, 
-        private route: ActivatedRoute, 
-        private fb: FormBuilder, 
-        private validationError: ValidationService, 
+        private uploadFileService: UploadFileService,
+        private route: ActivatedRoute,
+        public fb: FormBuilder,
+        public validationError: ValidationService,
         private formService: FormsActionsService,
         private router: Router,
     ) { }
 
+    myModel: boolean = true;
+    checkboxArray;
     /**
     * This method is use for perform initialize time actions.
     */
     ngOnInit() {
-
         this.route.paramMap.subscribe(param => {
             this.formId = Number(param.get('id'));
             this.apiCode = param.get('apiCode');
@@ -88,19 +91,16 @@ export class MarriageCreateComponent implements OnInit {
 
         if (!this.formId) {
             this.router.navigate([ManageRoutes.getFullRoute('CITIZENDASHBOARD')]);
-        } else {
-
-            //Form Controls
+        }
+        else {
+            //Form Controls 
             this.marriageFormControls();
-
-            //Get form data 
+            //Get form data
             this.getFormData(this.formId);
-
-            //Get lookup array
+            //Get lookup array 
             this.getLookupsData();
         }
     }
-
     /**
     * This method is listed form controls.
     */
@@ -112,10 +112,22 @@ export class MarriageCreateComponent implements OnInit {
             id: 0,
             uniqueId: null,
             version: 0,
+            serviceDetail: this.fb.group({
+                code: null,
+                name: null,
+                gujName: null,
+                feesOnScrutiny: null
+            }),
+            serviceFormId: [this.formId],
             createdDate: null,
             updatedDate: null,
             serviceType: null,
             fileStatus: null,
+            deptFileStatus: null,
+            serviceName: null,
+            fileNumber: null,
+            pid: null,
+            outwardNo: null,
 
             firstName: null,
             lastName: null,
@@ -124,75 +136,85 @@ export class MarriageCreateComponent implements OnInit {
             email: null,
             aadhaarNo: null,
 
-            // first step applicant details
-            serviceFormId: [this.formId],
-            applicantAadharNumber: [],
-            applicantEmail: [],
+            agree: null,
+            paymentStatus: null,
+            canEdit: true,
+            canDelete: null,
+            canSubmit: null,
+            serviceCode: "HEL-MR",
+            applicantAadharNumber: [''],
+            applicantEmail: [''],
 
             // first step**
-            marriageDate: [, [Validators.required]],
-            marriageRegistrationDate: [],
+            marriageDate: ['', Validators.required],
+            marriageRegistrationDate: [''],
             marriagePlace: ['', [Validators.required, Validators.maxLength(50)]],
             groomFirstName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
             groomMiddleName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
             groomLastName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
-            groomBirthDate: [, [Validators.required]],
-            groomAge: [, [ValidationService.groomAgeValidator]],
+            groomBirthDate: ['', Validators.required],
+            groomAge: ['', ValidationService.groomAgeValidator],
             groomReligion: this.fb.group({
                 code: [''],
+                // na name: [''],
+                // gujName: ['']
             }),
             // groomadoptionreligion: [''],
-            groomAadharNumber: [, [Validators.maxLength(12)]],
-            marriageTimeGroomStatus: [, [Validators.required]],
-            aliveWives: [],
+            groomAadharNumber: ['', [Validators.required, Validators.maxLength(12)]],
+            marriageTimeGroomStatus: this.fb.group({
+                code: ['', Validators.required]
+            }),
+            aliveWives: [''],
 
             // second step**
             brideFirstName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
             brideMiddleName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
             brideLastName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
-            brideBirthDate: [, [Validators.required]],
-            brideAge: [, [ValidationService.brideAgeValidator]],
+            brideBirthDate: ['', Validators.required],
+            brideAge: ['', ValidationService.brideAgeValidator],
             brideReligion: this.fb.group({
                 code: [''],
             }),
             // brideadoptionreligion: [''],
-            brideAadharNumber: [, [Validators.maxLength(12)]],
-            marriageTimeBrideStatus: [, [Validators.required]],
+            brideAadharNumber: ['', [Validators.required, Validators.maxLength(12)]],
+            marriageTimeBrideStatus: this.fb.group({
+                code: ['', Validators.required]
+            }),
 
             //third step**
             groomParentsFirstName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
             groomParentsMiddleName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
             groomParentsLastName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
-            groomParentsBirthDate: [, [Validators.required]],
-            groomParentsAadharNumber: [, [Validators.maxLength(12)]],
+            groomParentsBirthDate: ['', Validators.required],
+            groomParentsAadharNumber: ['', Validators.maxLength(12)],
 
             //forth step
             brideParentsFirstName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
             brideParentsMiddleName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
             brideParentsLastName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
-            brideParentsBirthDate: [, [Validators.required]],
-            brideParentsAadharNumber: [, [Validators.maxLength(12)]],
+            brideParentsBirthDate: ['', Validators.required],
+            brideParentsAadharNumber: ['', Validators.maxLength(12)],
 
             //fifth step
             priestFirstName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
             priestMiddleName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
             priestLastName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
-            priestBirthDate: [, [Validators.required]],
-            priestAddressAadharNumber: [, [Validators.maxLength(12)]],
+            priestBirthDate: ['', Validators.required],
+            priestAddressAadharNumber: ['', Validators.maxLength(12)],
 
             //sixth step
             firstWitnessFirstName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
             firstWitnessMiddleName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
             firstWitnessLastName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
-            firstWitnessBirthDate: [, [Validators.required]],
-            firstWitnessAadharNumber: [, [Validators.maxLength(12)]],
+            firstWitnessBirthDate: ['', Validators.required],
+            firstWitnessAadharNumber: ['', Validators.maxLength(12)],
 
             //seventh step
             secondWitnessFirstName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
             secondWitnessMiddleName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
             secondWitnessLastName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
-            secondWitnessBirthDate: [, [Validators.required]],
-            secondWitnessAadharNumber: [, [Validators.maxLength(12)]],
+            secondWitnessBirthDate: ['', Validators.required],
+            secondWitnessAadharNumber: ['', Validators.maxLength(12)],
 
             //first step control
             groomAddress: this.fb.group(this.addrComponent.addressControls()),
@@ -225,9 +247,9 @@ export class MarriageCreateComponent implements OnInit {
     getFormData(id) {
         this.formService.getFormData(id).subscribe(
             res => {
-               
-                this.marriageFormGroup.patchValue(res);
                 this.attachments = res.attachments;
+                this.marriageFormGroup.patchValue(res);
+                this.showButtons = true;
             },
             err => {
                 console.log("get fail" + err);
@@ -278,16 +300,19 @@ export class MarriageCreateComponent implements OnInit {
     }
 
 	/**
-	 * This method use to return file upload model
-	 * @param indentifier - get different indentifier for different file 
+	 * Method is used to set data value to upload method.
+	 * @param indentifier - file identifier
+	 * @param labelName - file label name.
+	 * @param formPart - file form part
+	 * @param variableName - file variable name.
 	 */
-    setDataValue(indentifier: number) {
+    setDataValue(indentifier: number, labelName: string, formPart: string, variableName: string) {
 
         this.uploadModel = {
             fieldIdentifier: indentifier,
-            labelName: 'marriageReg',
-            formPart: '3',
-            variableName: 'test',
+            labelName: labelName,
+            formPart: formPart,
+            variableName: variableName,
             serviceFormId: this.formId,
         }
         return this.uploadModel;
@@ -298,13 +323,13 @@ export class MarriageCreateComponent implements OnInit {
      */
     handleErrorsOnSubmit(flag) {
 
-        let step1 = 14;
-        let step2 = 23;
-        let step3 = 31;
-        let step4 = 39;
-        let step5 = 47;
-        let step6 = 55;
-        let step7 = 63;
+        let step1 = 24;
+        let step2 = 41;
+        let step3 = 58;
+        let step4 = 75;
+        let step5 = 92;
+        let step6 = 109;
+        let step7 = 126;
         //Check form validation.
         if (this.marriageFormGroup.valid) {
             console.log("submitted");
@@ -312,55 +337,43 @@ export class MarriageCreateComponent implements OnInit {
         }
         else {
             //Check validation for step by step
-            let count = 1;
+            let count = flag;
 
-            _.forEach(this.marriageFormGroup.controls, (key) => {
+            if (count <= step1) {
+                this.stepLable1 = "Bride groom Detail is not completed";
+                this.stepper.selectedIndex = 0;
+                return false;
+            } else if (count <= step2) {
+                this.stepLable2 = "Bride Detail is not completed";
+                this.stepper.selectedIndex = 1;
+                return false;
+            } else if (count <= step3) {
+                this.stepLable3 = "Guirdian of bried groom detail is not completed";
+                this.stepper.selectedIndex = 2;
+                return false;
+            } else if (count <= step4) {
+                this.stepLable4 = "Guirdian of bried detail is not completed";
+                this.stepper.selectedIndex = 3;
+                return false;
+            } else if (count <= step5) {
+                this.stepLable5 = "Priest detail is not completed";
+                this.stepper.selectedIndex = 4;
+                return false;
+            } else if (count <= step6) {
+                this.stepLable6 = "First witness detail is not completed";
+                this.stepper.selectedIndex = 5;
+                return false;
+            } else if (count <= step7) {
+                this.stepLable7 = "Second witness detail is not completed";
+                this.stepper.selectedIndex = 6;
+                return false;
+            }
+            else {
+                console.log("else condition");
+            }
 
-                if (!key.valid) {
-
-                    if (count <= step1) {
-                        this.stepLable2 = "Bride groom Detail is not completed";
-                        this.stepper.selectedIndex = 0;
-                        return false;
-                    } else if (count <= step2) {
-                        this.stepLable3 = "Bride Detail is not completed";
-                        this.stepper.selectedIndex = 1;
-                        return false;
-                    } else if (count <= step3) {
-                        this.stepLable4 = "Guirdian of bried groom detail is not completed";
-                        this.stepper.selectedIndex = 2;
-                        return false;
-                    } else if (count <= step4) {
-                        this.stepLable5 = "Guirdian of bried detail is not completed";
-                        this.stepper.selectedIndex = 3;
-                        return false;
-                    } else if (count <= step5) {
-                        this.stepLable6 = "Priest detail is not completed";
-                        this.stepper.selectedIndex = 4;
-                        return false;
-                    } else if (count <= step6) {
-                        this.stepLable7 = "First witness detail is not completed";
-                        this.stepper.selectedIndex = 5;
-                        return false;
-                    } else if (count <= step7) {
-                        this.stepLable8 = "Second witness detail is not completed";
-                        this.stepper.selectedIndex = 6;
-                        return false;
-                    }
-                    else {
-                        console.log("else condition");
-                    }
-                }
-                count++;
-
-            });
 
         }
     }
-
-    stepReset() {
-        this.stepper.reset();
-    }
-
 
 }
