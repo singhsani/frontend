@@ -2,8 +2,10 @@ import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
 	selector: 'app-title-bar',
-	templateUrl: './title-bar.component.html',
-	styleUrls: ['./title-bar.component.scss']
+	template: `<mat-card class="cardH1">
+					<h1>{{title}}</h1>
+				</mat-card>`,
+	styles: [` `]
 })
 export class TitleBarComponent implements OnInit {
 

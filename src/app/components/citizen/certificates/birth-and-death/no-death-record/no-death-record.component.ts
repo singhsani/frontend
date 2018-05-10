@@ -32,9 +32,8 @@ export class NoDeathRecordComponent implements OnInit {
 	relationshipArray: any = [];
 	genderArray: any = [];
 	placeArray: any = [];
-
 	attachments: any = [];
-
+	showButtons: boolean = false;
 	uploadModel: any = {};
 
 	// Step Titles
@@ -125,6 +124,7 @@ export class NoDeathRecordComponent implements OnInit {
 		this.formService.getFormData(this.appId).subscribe(res => {
 			this.noRecordDeathForm.patchValue(res);
 			this.attachments = res.attachments;
+			this.showButtons = true;
 		});
 	}
 

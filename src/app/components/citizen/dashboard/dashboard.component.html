@@ -1,12 +1,12 @@
 <div class="container">
     <div class="row pt-4" *ngFor="let module of userServicesList">
         <div class="col-md-12">
-            <app-title-bar [title]="'screen_title' | translate:'DashboardScreen'"></app-title-bar>
+            <app-title-bar [title]="module.name +' / '+ module.gujName"></app-title-bar>
         </div>
         <div class="col-md-4 pb-4 text-center" *ngFor="let service of module.services;">
             <mat-card>
                 <mat-icon>account_circle</mat-icon>
-                <mat-card-title>{{service.name}}</mat-card-title>
+                <mat-card-title>{{service.name +' / '+ service.gujName}}</mat-card-title>
                 <mat-card-actions>
                     <button mat-raised-button color="primary" (click)="createRecord(service.code)">
                         <mat-icon>input</mat-icon> New Application
