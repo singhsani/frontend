@@ -3,13 +3,13 @@ import { Router,ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { MatHorizontalStepper, MatStep, MatStepLabel } from '@angular/material';
 
+import { ManageRoutes } from '../../../../../config/routes-conf';
 import { ValidationService } from '../../../../../shared/services/validation.service';
 import { FormsActionsService } from '../../../../../core/services/citizen/data-services/forms-actions.service';
 import { UploadFileService } from '../../../../../shared/upload-file.service';
 
 import * as _ from 'lodash';
 import * as moment from 'moment';
-import { ManageRoutes } from '../../../../../config/routes-conf';
 
 @Component({
     selector: 'app-marriage-create',
@@ -20,13 +20,14 @@ export class MarriageCreateComponent implements OnInit {
 
     @ViewChild(MatHorizontalStepper) stepper: MatHorizontalStepper;
     @ViewChild(MatStepLabel) steplable: MatStepLabel;
+
     @ViewChild('address') addrComponent: any;
 
     marriageFormGroup: FormGroup;
 
     // Selected id for form edit
     formId: number;
-    private navigateSub: any;
+    apiCode: string;
 
     // Steps Titles
     stepLable1: string = "Bride Groom Detail";
@@ -41,6 +42,7 @@ export class MarriageCreateComponent implements OnInit {
     // Lookups array list
     religionArray: any = [];
     maritalstatusArray: any = [];
+    attachments: any = [];
 
     // Marriage date 
     disablefutureDate = new Date(moment().format('YYYY-MM-DD'));
@@ -71,11 +73,17 @@ export class MarriageCreateComponent implements OnInit {
         private validationError: ValidationService, 
         private formService: FormsActionsService,
         private router: Router,
-    ) {
-        this.formService.apiType = "marriageReg";
+    ) { }
 
-        this.navigateSub = this.route.params.subscribe(params => {
-            this.formId = +params['id']; // (+) converts string 'id' to a number
+    /**
+    * This method is use for perform initialize time actions.
+    */
+    ngOnInit() {
+
+        this.route.paramMap.subscribe(param => {
+            this.formId = Number(param.get('id'));
+            this.apiCode = param.get('apiCode');
+            this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
         });
 
         if (!this.formId) {
@@ -94,19 +102,13 @@ export class MarriageCreateComponent implements OnInit {
     }
 
     /**
-    * This method is use for perform initialize time actions.
-    */
-    ngOnInit() {
-    }
-
-    /**
     * This method is listed form controls.
     */
     marriageFormControls() {
 
         this.marriageFormGroup = this.fb.group({
             // extra's important controls 
-            apiType: 'marriageReg',
+            apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
             id: 0,
             uniqueId: null,
             version: 0,
@@ -114,6 +116,13 @@ export class MarriageCreateComponent implements OnInit {
             updatedDate: null,
             serviceType: null,
             fileStatus: null,
+
+            firstName: null,
+            lastName: null,
+            middleName: null,
+            contactNo: null,
+            email: null,
+            aadhaarNo: null,
 
             // first step applicant details
             serviceFormId: [this.formId],
@@ -131,8 +140,6 @@ export class MarriageCreateComponent implements OnInit {
             groomAge: [, [ValidationService.groomAgeValidator]],
             groomReligion: this.fb.group({
                 code: [''],
-                // name: [''],
-                // gujName: ['']
             }),
             // groomadoptionreligion: [''],
             groomAadharNumber: [, [Validators.maxLength(12)]],
@@ -218,16 +225,9 @@ export class MarriageCreateComponent implements OnInit {
     getFormData(id) {
         this.formService.getFormData(id).subscribe(
             res => {
-                // patch form value
-                // if (res.groomReligion === null && res.brideReligion === null) {
-                //     res.groomReligion = {};
-                //     res.brideReligion = {}
-                // this.marriageFormGroup.patchValue(res);
-                // }
-                // else {
-                //     console.log("object is not found");
-                // }
+               
                 this.marriageFormGroup.patchValue(res);
+                this.attachments = res.attachments;
             },
             err => {
                 console.log("get fail" + err);
@@ -356,6 +356,10 @@ export class MarriageCreateComponent implements OnInit {
             });
 
         }
+    }
+
+    stepReset() {
+        this.stepper.reset();
     }
 
 

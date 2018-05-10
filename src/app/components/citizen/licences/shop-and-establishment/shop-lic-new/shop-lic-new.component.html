@@ -1,3 +1,16 @@
-<p>
-  shop-lic-new works!
-</p>
+<div class="container">
+	<app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
+	<mat-card class="mt-4 formClass">
+		<form [formGroup]="shopLicNewForm">
+			<mat-horizontal-stepper [linear]="false">
+
+				<!-- first step start-->
+				<mat-step [label]="stepLable1">
+					<app-basic-details [basicFormGroup]="shopLicNewForm"></app-basic-details>
+					<app-action-bar [form]="shopLicNewForm" [step]="'final'" (stepReset)="stepReset()" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
+				</mat-step>
+
+			</mat-horizontal-stepper>
+		</form>
+	</mat-card>
+</div>

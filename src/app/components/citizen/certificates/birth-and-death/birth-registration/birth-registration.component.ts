@@ -2,13 +2,15 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatStepper } from '@angular/material/stepper'
-import * as moment from 'moment';
-import * as _ from 'lodash';
+
 import { CommonService } from '../../.././../../shared/services/common.service'
 import { UploadFileService } from '../../../../../shared/upload-file.service';
 import { ValidationService } from '../../../../../shared/services/validation.service';
 import { FormsActionsService } from '../../../../../core/services/citizen/data-services/forms-actions.service';
 import { ManageRoutes } from '../../../../../config/routes-conf';
+
+import * as moment from 'moment';
+import * as _ from 'lodash';
 
 @Component({
 	selector: 'app-birth-registration-app',
@@ -28,6 +30,8 @@ export class BirthRegistrationComponent implements OnInit {
 	 * form related helping data.
 	 */
 	appId: number;
+	apiCode: string;
+
 	public birthCertificateForm: FormGroup;
 	private minBirthDate: any;
 	private maxBirthDate = new Date();
@@ -174,10 +178,17 @@ export class BirthRegistrationComponent implements OnInit {
 		private commonService: CommonService,
 		private validationService: ValidationService,
 		private fb: FormBuilder
-	) {
-		this.formService.apiType = 'birthReg';
+	) { }
+
+	/**
+	 * Method Is Initialized First
+	 */
+	ngOnInit() {
+	
 		this.route.paramMap.subscribe(param => {
 			this.appId = Number(param.get('id'));
+			this.apiCode = param.get('apiCode');
+			this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
 		});
 
 		if (!this.appId) {
@@ -187,13 +198,6 @@ export class BirthRegistrationComponent implements OnInit {
 			this.getBirthCertData();
 			this.getLookUpsData();
 		}
-
-	}
-
-	/**
-	 * Method Is Initialized First
-	 */
-	ngOnInit() {
 	}
 
 	/**
@@ -351,7 +355,7 @@ export class BirthRegistrationComponent implements OnInit {
 			canEdit: true,
 			canDelete: true,
 			canSubmit: true,
-			apiType: "birthReg"
+			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode)
 		});
 	}
 

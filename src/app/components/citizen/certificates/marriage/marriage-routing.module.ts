@@ -6,12 +6,13 @@ import { ManageRoutes } from '../../../../config/routes-conf';
 
 /* Import marriage certificate components start */
 import { MarriageCreateComponent } from './marriage-create/marriage-create.component';
+import { MarriageDuplicateComponent } from './marriage-duplicate/marriage-duplicate.component';
 /* Import marriage certificate components end */
 
 const routes: Routes = [
 	{ path: '', component: MarriageCreateComponent },
-	{ path: ManageRoutes.getMainRoute('MR') + '/:id/:apiCode', component: MarriageCreateComponent, canActivate: [AuthGuard] },
-	{ path: ManageRoutes.getMainRoute('DUP-MR') + '/:id/:apiCode', component: MarriageCreateComponent, canActivate: [AuthGuard] },
+	{ path: ManageRoutes.getMainRoute('HEL-MR') + '/:id/:apiCode', component: MarriageCreateComponent },
+	{ path: ManageRoutes.getMainRoute('HEL-DUPMR') + '/:id/:apiCode', component: MarriageDuplicateComponent },
 ];
 
 @NgModule({

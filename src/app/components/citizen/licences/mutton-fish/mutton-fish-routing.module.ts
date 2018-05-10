@@ -9,11 +9,11 @@ import { MuttonFishDuplicateComponent } from './mutton-fish-duplicate/mutton-fis
 
 const routes: Routes = [
 	{ path: '', component: MuttonFishNewComponent },
-	{ path: ManageRoutes.getMainRoute('MFL') + '/:id/:apiCode', component: MuttonFishNewComponent },
-	{ path: ManageRoutes.getMainRoute('MFR') + '/:id/:apiCode', component: MuttonFishRenewalComponent },
-	{ path: ManageRoutes.getMainRoute('MFC') + '/:id/:apiCode', component: MuttonFishCancellationComponent },
-	{ path: ManageRoutes.getMainRoute('MFT') + '/:id/:apiCode', component: MuttonFishTransferComponent },
-	{ path: ManageRoutes.getMainRoute('MFD') + '/:id/:apiCode', component: MuttonFishDuplicateComponent },
+	{ path: ManageRoutes.getMainRoute('MF-LIC') + '/:id/:apiCode', component: MuttonFishNewComponent },
+	{ path: ManageRoutes.getMainRoute('MF-REN') + '/:id/:apiCode', component: MuttonFishRenewalComponent },
+	{ path: ManageRoutes.getMainRoute('MF-CAN') + '/:id/:apiCode', component: MuttonFishCancellationComponent },
+	{ path: ManageRoutes.getMainRoute('MF-TRA') + '/:id/:apiCode', component: MuttonFishTransferComponent },
+	{ path: ManageRoutes.getMainRoute('MF-DUP') + '/:id/:apiCode', component: MuttonFishDuplicateComponent },
 ];
 
 @NgModule({

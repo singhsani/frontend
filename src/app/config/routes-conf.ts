@@ -1,51 +1,51 @@
 import * as _ from 'lodash';
 
 const ROUTEMAIN = {
-    'BR': {
+    'HEL-BR': {
         'main': 'birthReg',
         'type': 'birthReg'
     },
-    'DUP-BR': {
+    'HEL-DUPBR': {
         'main': 'duplicateBirthReg',
         'type': 'duplicateBirthReg'
     },
-    'DUP-DR': {
+    'HEL-DUPDR': {
         'main': 'duplicateDeathReg',
         'type': 'duplicateDeathReg'
     },
-    'DR': {
+    'HEL-DR': {
         'main': 'deathReg',
         'type': 'deathReg'
     },
-    'NRC-BIRTH': {
+    'HEL-NRCBR': {
         'main': 'NRCBirth',
         'type': 'NRCBirth'
     },
-    'NRC-DEATH': {
+    'HEL-NRCDR': {
         'main': 'NRCDeath',
         'type': 'NRCDeath'
     },
-    'CR': {
+    'HEL-CR': {
         'main': 'cremationReg',
         'type': 'cremationReg'
     },
-    'SB': {
+    'HEL-SB': {
         'main': 'stillBirthReg',
         'type': 'stillBirthReg'
     },
-    'BCR': {
+    'HEL-BCR': {
         'main': 'birthCorrectionReg',
         'type': 'birthCorrectionReg'
     },
-    'DCR': {
+    'HEL-DCR': {
         'main': 'deathCorrectionReg',
         'type': 'deathCorrectionReg'
     },
-    'MR': {
+    'HEL-MR': {
         'main': 'marriageReg',
         'type': 'marriageReg',
     },
-    'DUP-MR': {
+    'HEL-DUPMR': {
         'main': 'duplicateMarriageReg',
         'type': 'duplicateMarriageReg',
     },
@@ -117,23 +117,23 @@ const ROUTEMAIN = {
         'main': '',
         'type': ''
     },
-    'MFL': {
+    'MF-LIC': {
         'main': 'MFLicense',
         'type': 'MFLicense'
     },
-    'MFR': {
+    'MF-REN': {
         'main': 'MFRenewal',
         'type': 'MFRenewal'
     },
-    'MFC': {
+    'MF-CAN': {
         'main': 'MFCancellation',
         'type': 'MFCancellation'
     },
-    'MFT': {
+    'MF-TRA': {
         'main': 'MFTransfer',
         'type': 'MFTransfer'
     },
-    'MFD': {
+    'MF-DUP': {
         'main': 'MFDuplicate',
         'type': 'MFDuplicate'
     },
@@ -285,7 +285,7 @@ const ROUTEPREFIX = {
 
     /** start - citizen tax module */
     'TAXMODULE': 'tax',
-    
+
     /** start - citizen inner-tax module */
     'PROPERTYMODULE': 'property',
     /** end - citizen inner-tax module */
@@ -297,41 +297,41 @@ const ROUTEPREFIX = {
 }
 
 const ROUTESLIST = {
-    'BR': {
-        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.CERTIFICATESMODULE + '/' + ROUTEPREFIX.BIRTHANDDEATHMODULE + '/' + ROUTEMAIN.BR.main
+    'HEL-BR': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.CERTIFICATESMODULE + '/' + ROUTEPREFIX.BIRTHANDDEATHMODULE + '/' + ROUTEMAIN["HEL-BR"].main
     },
-    'DUP-BR': {
-        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.CERTIFICATESMODULE + '/' + ROUTEPREFIX.BIRTHANDDEATHMODULE + '/' + ROUTEMAIN["DUP-BR"].main
+    'HEL-DUPBR': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.CERTIFICATESMODULE + '/' + ROUTEPREFIX.BIRTHANDDEATHMODULE + '/' + ROUTEMAIN["HEL-DUPBR"].main
     },
-    'DUP-DR': {
-        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.CERTIFICATESMODULE + '/' + ROUTEPREFIX.BIRTHANDDEATHMODULE + '/' + ROUTEMAIN["DUP-DR"].main
+    'HEL-DUPDR': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.CERTIFICATESMODULE + '/' + ROUTEPREFIX.BIRTHANDDEATHMODULE + '/' + ROUTEMAIN["HEL-DUPDR"].main
     },
-    'DR': {
-        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.CERTIFICATESMODULE + '/' + ROUTEPREFIX.BIRTHANDDEATHMODULE + '/' + ROUTEMAIN.DR.main
+    'HEL-DR': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.CERTIFICATESMODULE + '/' + ROUTEPREFIX.BIRTHANDDEATHMODULE + '/' + ROUTEMAIN["HEL-DR"].main
     },
-    'NRC-BIRTH': {
-        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.CERTIFICATESMODULE + '/' + ROUTEPREFIX.BIRTHANDDEATHMODULE + '/' + ROUTEMAIN["NRC-BIRTH"].main
+    'HEL-NRCBR': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.CERTIFICATESMODULE + '/' + ROUTEPREFIX.BIRTHANDDEATHMODULE + '/' + ROUTEMAIN["HEL-NRCBR"].main
     },
-    'NRC-DEATH': {
-        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.CERTIFICATESMODULE + '/' + ROUTEPREFIX.BIRTHANDDEATHMODULE + '/' + ROUTEMAIN["NRC-DEATH"].main
+    'HEL-NRCDR': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.CERTIFICATESMODULE + '/' + ROUTEPREFIX.BIRTHANDDEATHMODULE + '/' + ROUTEMAIN["HEL-NRCDR"].main
     },
-    'CR': {
-        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.CERTIFICATESMODULE + '/' + ROUTEPREFIX.BIRTHANDDEATHMODULE + '/' + ROUTEMAIN.CR.main
+    'HEL-CR': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.CERTIFICATESMODULE + '/' + ROUTEPREFIX.BIRTHANDDEATHMODULE + '/' + ROUTEMAIN["HEL-CR"].main
     },
-    'SB': {
-        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.CERTIFICATESMODULE + '/' + ROUTEPREFIX.BIRTHANDDEATHMODULE + '/' + ROUTEMAIN.SB.main
+    'HEL-SB': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.CERTIFICATESMODULE + '/' + ROUTEPREFIX.BIRTHANDDEATHMODULE + '/' + ROUTEMAIN["HEL-SB"].main
     },
-    'BCR': {
-        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.CERTIFICATESMODULE + '/' + ROUTEPREFIX.BIRTHANDDEATHMODULE + '/' + ROUTEMAIN.BCR.main
+    'HEL-BCR': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.CERTIFICATESMODULE + '/' + ROUTEPREFIX.BIRTHANDDEATHMODULE + '/' + ROUTEMAIN["HEL-BCR"].main
     },
-    'MR': {
-        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.CERTIFICATESMODULE + '/' + ROUTEPREFIX.MARRIAGEMODULE + '/' + ROUTEMAIN.MR.main
+    'HEL-DCR': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.CERTIFICATESMODULE + '/' + ROUTEPREFIX.BIRTHANDDEATHMODULE + '/' + ROUTEMAIN["HEL-DCR"].main
     },
-    'DUP-MR': {
-        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.CERTIFICATESMODULE + '/' + ROUTEPREFIX.MARRIAGEMODULE + '/' + ROUTEMAIN["DUP-MR"].main
+    'HEL-MR': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.CERTIFICATESMODULE + '/' + ROUTEPREFIX.MARRIAGEMODULE + '/' + ROUTEMAIN["HEL-MR"].main
     },
-    'DCR': {
-        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.CERTIFICATESMODULE + '/' + ROUTEPREFIX.BIRTHANDDEATHMODULE + '/' + ROUTEMAIN.DCR.main
+    'HEL-DUPMR': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.CERTIFICATESMODULE + '/' + ROUTEPREFIX.MARRIAGEMODULE + '/' + ROUTEMAIN["HEL-DUPMR"].main
     },
     'FS-AARO': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.FIREFACILITIESMODULE + '/' + ROUTEMAIN["FS-AARO"].main
@@ -384,20 +384,20 @@ const ROUTESLIST = {
     'SHOP-TRAF': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.LICENCEMODULE + '/' + ROUTEPREFIX.SHOPANDESTAMODULE + '/' + ROUTEMAIN["SHOP-TRAF"].main
     },
-    'MFL': {
-        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.LICENCEMODULE + '/' + ROUTEPREFIX.MUTTONFISHMODULE + '/' + ROUTEMAIN["MFL"].main
+    'MF-LIC': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.LICENCEMODULE + '/' + ROUTEPREFIX.MUTTONFISHMODULE + '/' + ROUTEMAIN["MF-LIC"].main
     },
-    'MFR': {
-        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.LICENCEMODULE + '/' + ROUTEPREFIX.MUTTONFISHMODULE + '/' + ROUTEMAIN["MFR"].main
+    'MF-REN': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.LICENCEMODULE + '/' + ROUTEPREFIX.MUTTONFISHMODULE + '/' + ROUTEMAIN["MF-REN"].main
     },
-    'MFC': {
-        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.LICENCEMODULE + '/' + ROUTEPREFIX.MUTTONFISHMODULE + '/' + ROUTEMAIN["MFC"].main
+    'MF-CAN': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.LICENCEMODULE + '/' + ROUTEPREFIX.MUTTONFISHMODULE + '/' + ROUTEMAIN["MF-CAN"].main
     },
-    'MFT': {
-        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.LICENCEMODULE + '/' + ROUTEPREFIX.MUTTONFISHMODULE + '/' + ROUTEMAIN["MFT"].main
+    'MF-TRA': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.LICENCEMODULE + '/' + ROUTEPREFIX.MUTTONFISHMODULE + '/' + ROUTEMAIN["MF-TRA"].main
     },
-    'MFD': {
-        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.LICENCEMODULE + '/' + ROUTEPREFIX.MUTTONFISHMODULE + '/' + ROUTEMAIN["MFD"].main
+    'MF-DUP': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.LICENCEMODULE + '/' + ROUTEPREFIX.MUTTONFISHMODULE + '/' + ROUTEMAIN["MF-DUP"].main
     },
     'POND-LIC': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.LICENCEMODULE + '/' + ROUTEPREFIX.ANIMALPONDMODULE + '/' + ROUTEMAIN["POND-LIC"].main

@@ -177,7 +177,7 @@ export class FileUploadComponent implements OnInit {
 			this.canDelete = true;
 			this.canView = true;
 			this.canUpload = false;
-			this.imagetype= false;
+			this.imagetype = false;
 		})
 	}
 

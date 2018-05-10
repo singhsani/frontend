@@ -10,6 +10,8 @@ export class BasicDetailsComponent implements OnInit {
 
 	@Input() basicFormGroup: FormGroup;
 
+	translateKey: string = 'basicDetailsScreen';
+
 	constructor(private fb: FormBuilder) {
 	}
 

@@ -10,13 +10,15 @@ import { BirthAndDeathRoutingModule } from './birth-and-death-routing.module';
 
 /* Import birth and death certificate components start */
 import { BirthRegistrationComponent } from './birth-registration/birth-registration.component';
-import { DeathCertificateComponent } from './death-certificate/death-certificate.component';
+import { DeathRegistrationComponent } from './death-registration/death-registration.component';
 import { NoBirthRecordComponent } from './no-birth-record/no-birth-record.component';
 import { NoDeathRecordComponent } from './no-death-record/no-death-record.component';
 import { CremationCertificateComponent } from './cremation-certificate/cremation-certificate.component';
 import { StillBirthComponent } from './still-birth/still-birth.component';
 import { BirthDuplicateComponent } from './birth-duplicate/birth-duplicate.component';
 import { DeathDuplicateComponent } from './death-duplicate/death-duplicate.component';
+import { BirthCorrectionComponent } from './birth-correction/birth-correction.component';
+import { DeathCorrectionComponent } from './death-correction/death-correction.component';
 /* Import birth and death certificate components start */
 
 @NgModule({
@@ -33,10 +35,12 @@ import { DeathDuplicateComponent } from './death-duplicate/death-duplicate.compo
     NoBirthRecordComponent,
     NoDeathRecordComponent,
     CremationCertificateComponent,
-    DeathCertificateComponent,
+    DeathRegistrationComponent,
     StillBirthComponent,
     BirthDuplicateComponent,
     DeathDuplicateComponent,
+    BirthCorrectionComponent,
+    DeathCorrectionComponent,
   ]
 })
 export class BirthAndDeathModule { }

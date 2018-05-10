@@ -1,6 +1,6 @@
-<div class="row">
-	<div class="col-md-12">
-		<h5 class="example-h2 pt-4">No Record Found For Death</h5>
+<div class="container">
+	<app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
+	<mat-card class="mt-4 formClass">
 
 		<!--Start  form  -->
 		<form [formGroup]="noRecordDeathForm">
@@ -55,7 +55,7 @@
 						<file-upload [uploadModel]="setDataValue(1)" [attachments]="attachments"></file-upload>
 					</div>
 
-					<app-action-bar [form]="noRecordDeathForm" [step]="'step1'"></app-action-bar>
+					<app-action-bar [form]="noRecordDeathForm" [step]="'step1'" (stepReset)="stepReset()"></app-action-bar>
 
 				</mat-step>
 				<!-- end first step -->
@@ -71,7 +71,7 @@
 						<file-upload [uploadModel]="setDataValue(2)" [attachments]="attachments"></file-upload>
 					</div>
 
-					<app-action-bar [form]="noRecordDeathForm" [step]="'step2'"></app-action-bar>
+					<app-action-bar [form]="noRecordDeathForm" [step]="'step2'" (stepReset)="stepReset()"></app-action-bar>
 
 				</mat-step>
 				<!-- second step end-->
@@ -90,6 +90,8 @@
 							</mat-select>
 							<control-messages [control]="noRecordDeathForm.controls.applicantRelation.controls.code"></control-messages>
 						</mat-form-field>
+
+						<app-basic-details [basicFormGroup]="noRecordDeathForm"></app-basic-details>
 
 						<mat-form-field class="col-md-6">
 							<input matInput type="text" OnlyNumber formControlName="applicantContactNo" placeholder="{{'mobile_no' | translate:'translateKey'}}">
@@ -112,11 +114,10 @@
 						<file-upload [uploadModel]="setDataValue(4)" [attachments]="attachments"></file-upload>
 					</div>
 
-
-					<app-action-bar [form]="noRecordDeathForm" [step]="'final'" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
+					<app-action-bar [form]="noRecordDeathForm" [step]="'final'" (stepReset)="stepReset()" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
 				</mat-step>
 				<!-- third step end-->
 			</mat-horizontal-stepper>
 		</form>
-	</div>
+	</mat-card>
 </div>
