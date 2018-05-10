@@ -4,6 +4,7 @@ import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
 import { LayoutModule } from '@angular/cdk/layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 
 /* import all modules start */
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // angular animation module
@@ -62,7 +63,7 @@ import { AppComponent } from './app.component'; // main app component
 		
 	],
 	exports: [ ],
-	providers: [ ],
+	providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
 	bootstrap: [AppComponent]
 })
 export class AppModule { }
