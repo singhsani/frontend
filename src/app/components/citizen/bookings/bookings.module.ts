@@ -6,6 +6,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MyDatePickerModule } from 'mydatepicker';
 import { SharedModule } from '../../../shared/shared.module';
 import { CoreModule } from '../../../core/core.module';
+import { BookingDashboardComponent } from './booking-dashboard/booking-dashboard.component';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -16,6 +18,6 @@ import { CoreModule } from '../../../core/core.module';
     MyDatePickerModule,
     CoreModule
   ],
-  declarations: []
+  declarations: [BookingDashboardComponent]
 })
 export class BookingsModule { }
