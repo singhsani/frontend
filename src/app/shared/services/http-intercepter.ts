@@ -58,7 +58,8 @@ export class TokenInterceptor implements HttpInterceptor {
 						this.commonService.openAlert('Error!', err.error.message, 'error');
 						break;
 					case 400:
-						this.commonService.openAlertFormSaveValidation('Warning!', err.error, 'warning');
+						this.commonService.openAlert('Error!', err.error.message, 'error');
+						//this.commonService.openAlertFormSaveValidation('Warning!', err.error, 'warning');
 						break;
 					case 0:
 						this.commonService.openAlert('Error!', err.error.message, 'error', '', cb => {
