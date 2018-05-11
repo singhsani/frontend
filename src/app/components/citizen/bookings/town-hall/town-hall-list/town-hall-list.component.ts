@@ -31,7 +31,7 @@ export class TownHallListComponent implements OnInit {
 
 		this.searchTownHallForm = this.fb.group({
 			code: 'TOWNHALL-2',
-			date: moment().format("YYYY-MM-DD")
+			date: moment().add(1,'day').format("YYYY-MM-DD")
 		});
 
 		this.httpService.get('api/booking/townhall/list').subscribe(res => {
@@ -49,7 +49,7 @@ export class TownHallListComponent implements OnInit {
 
 	searchBooking() {
 		let date = moment(this.searchTownHallForm.value.date).format("YYYY-MM-DD")
-		let apiURL = 'api/booking/townhall/getslot?resource=' + this.searchTownHallForm.value.code + '&date=' + date;
+		let apiURL = 'api/booking/townhall/slots?resource=' + this.searchTownHallForm.value.code + '&date=' + date;
 		this.httpService.get(apiURL).subscribe(res => {
 			this.availableStots = res.data;
 		}, err => {
@@ -58,13 +58,15 @@ export class TownHallListComponent implements OnInit {
 
 	}
 
-	bookSlots(/* uniqueId: string, index: number */) {
-		this.router.navigate([ManageRoutes.getFullRoute('TOWNHALLBOOK')]);
-		/* this.httpService.post("api/booking/townhall/book/" + uniqueId,"").subscribe(res => {
+	bookSlots(uniqueId: string, index: number) {
+		//this.router.navigate([ManageRoutes.getFullRoute('TOWNHALLBOOK')]);
+		this.httpService.post("api/booking/townhall/slot/book", {
+			uuid: uniqueId
+		}).subscribe(res => {
 			this.searchBooking()
 		}, err => {
 			this.toster.error(err.error.error_description);
-		}); */
+		});
 	}
 
 }
