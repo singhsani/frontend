@@ -1,6 +1,5 @@
 <div class="container">
-	<div class="row pt-4">
-		<div class="col-12">
+
 			<app-title-bar [title]="'screen_title' | translate:'MyApplicationScreen'"></app-title-bar>
 			<div class="example-container mat-elevation-z8">
 				<div class="example-loading-shade" *ngIf="isLoadingResults || isRateLimitReached">
@@ -63,6 +62,5 @@
 				<mat-paginator [length]="resultsLength" [pageSize]="pageSize">
 				</mat-paginator>
 			</div>
-		</div>
-	</div>
+
 </div>

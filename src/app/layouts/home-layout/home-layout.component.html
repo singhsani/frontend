@@ -22,7 +22,7 @@
         </mat-toolbar-row>
     </mat-toolbar>
 
-    <mat-sidenav-container class="example-sidenav-container" style="height: 100%;">
+    <mat-sidenav-container class="example-sidenav-container">
         <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [(opened)]="!mobileQuery.matches">
             <mat-nav-list (click)="toggleSideNav()">
                 <a mat-list-item routerLink="/citizen/dashboard/" routerLinkActive="active-route-link">Dashboard</a>
