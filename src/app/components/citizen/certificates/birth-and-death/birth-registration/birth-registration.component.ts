@@ -339,30 +339,8 @@ export class BirthRegistrationComponent implements OnInit {
 			attachments: [],
 			emailID: null,
 			delayedPeriod: null,
-			id: null,
-			uniqueId: null,
-			version: 0,
-			serviceFormId: this.appId,
-			createdDate: null,
-			updatedDate: null,
-			serviceType: null,
-			fileStatus: null,
-			serviceName: null,
-			fileNumber: null,
-			pid: null,
-			outwardNo: null,
-			agree: false,
-			paymentStatus: null,
-			canEdit: true,
-			canDelete: true,
-			canSubmit: true,
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
-			serviceDetail: this.fb.group({
-				code: null,
-				feesOnScrutiny: null,
-				gujName: null,
-				name: null
-			})
+			
 		});
 	}
 

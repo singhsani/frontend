@@ -1,16 +1,16 @@
 <div class="container">
-  <app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
-  <mat-card class="mt-4 formClass">
-    <form [formGroup]="propertyNoDueForm">
-      <mat-horizontal-stepper [linear]="false">
+	<app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
+	<mat-card class="mt-4 formClass">
+		<form [formGroup]="propertyNoDueForm">
+			<mat-horizontal-stepper [linear]="false">
 
-        <!-- first step start-->
-        <mat-step [label]="stepLable1">
-          <app-basic-details [basicFormGroup]="propertyNoDueForm"></app-basic-details>
-          <app-action-bar [form]="propertyNoDueForm" [step]="'final'" (stepReset)="stepReset()" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
-        </mat-step>
+				<!-- first step start-->
+				<mat-step [label]="stepLable1">
+					<app-basic-details [basicFormGroup]="propertyNoDueForm"></app-basic-details>
+					<app-action-bar [form]="propertyNoDueForm" [step]="'final'" (stepReset)="stepReset()" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
+				</mat-step>
 
-      </mat-horizontal-stepper>
-    </form>
-  </mat-card>
+			</mat-horizontal-stepper>
+		</form>
+	</mat-card>
 </div>

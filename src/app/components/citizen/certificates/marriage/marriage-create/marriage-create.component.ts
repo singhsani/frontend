@@ -109,38 +109,6 @@ export class MarriageCreateComponent implements OnInit {
         this.marriageFormGroup = this.fb.group({
             // extra's important controls 
             apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
-            id: 0,
-            uniqueId: null,
-            version: 0,
-            serviceDetail: this.fb.group({
-                code: null,
-                name: null,
-                gujName: null,
-                feesOnScrutiny: null
-            }),
-            serviceFormId: [this.formId],
-            createdDate: null,
-            updatedDate: null,
-            serviceType: null,
-            fileStatus: null,
-            deptFileStatus: null,
-            serviceName: null,
-            fileNumber: null,
-            pid: null,
-            outwardNo: null,
-
-            firstName: null,
-            lastName: null,
-            middleName: null,
-            contactNo: null,
-            email: null,
-            aadhaarNo: null,
-
-            agree: null,
-            paymentStatus: null,
-            canEdit: true,
-            canDelete: null,
-            canSubmit: null,
             serviceCode: "HEL-MR",
             applicantAadharNumber: [''],
             applicantEmail: [''],
