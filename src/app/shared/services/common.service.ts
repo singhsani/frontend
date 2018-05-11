@@ -1,6 +1,7 @@
 import { Subject } from 'rxjs/Subject';
 import { Injectable } from '@angular/core';
 import swal from 'sweetalert2';
+import * as _ from 'lodash';
 
 @Injectable()
 export class CommonService {
@@ -16,6 +17,34 @@ export class CommonService {
 			type: type,
 			html: html,
 			confirmButtonText: 'Ok'
+		}
+
+		swal(options as any).then((result) => {
+			if (result.value && cb) {
+				cb();
+			}
+		})
+
+	}
+
+	openAlertFormSaveValidation(title: string, message: any, type: string, html?: any, cb?: any) {
+		
+		var html1 = '<div class="row small setHeight">';
+
+		_.forEach(message, (value, key) => {
+			html1 += '<div class="col-md-12 alert alert-danger" role="alert" *ngFor="let errorType of message">';
+			html1 += value.property + " - " + value.message + " / " + value.gujMessage;
+			html1 += '</div>';
+		});
+
+		html1 += '</div>';
+
+		let options = {
+			title: title,
+			text: message,
+			//type: type,
+			html: html1,
+			confirmButtonText: 'Ok',
 		}
 
 		swal(options as any).then((result) => {
@@ -42,6 +71,26 @@ export class CommonService {
 		swal(options as any).then((result) => {
 			if (result.value && performDelete) {
 				performDelete();
+			}
+		})
+	}
+
+	submitAlert(title: string, message: string, type: string, html?: any, performSubmit?: any){
+		
+		let options = {
+			title: title,
+			text: message,
+			type: type,
+			html: html,
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Yes, submit it!'
+		}
+
+		swal(options as any).then((result) => {
+			if (result.value && performSubmit) {
+				performSubmit();
 			}
 		})
 	}

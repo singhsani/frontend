@@ -12,6 +12,7 @@ import {
 
 import { Observable } from 'rxjs/Observable';
 import { CommonService } from './common.service';
+import { ManageRoutes } from '../../config/routes-conf';
 
 
 @Injectable()
@@ -46,29 +47,29 @@ export class TokenInterceptor implements HttpInterceptor {
              */
 			if (err instanceof HttpErrorResponse) {
 
-				if (err.status === 401) {
-					this.commonService.openAlert('Warning!', err.error.message, 'warning', '', cb => {
-						this.router.navigate(['/citizen/auth/login']);
-					});
-
-				} else if (err.status === 500) {
-
-					this.commonService.openAlert('Error!', err.error.message, 'error');
-
-				} else if (err.status === 400) {
-
-					//this.commonService.openAlert('Warning!', err.error.message, 'warning');
-
-				} else if (err.status === 404) {
-
-					this.commonService.openAlert('Warning!', err.error.message, 'warning');
-
-				} else if (err.status === 0) {
-
-					this.commonService.openAlert('Error!', err.error.message, 'error', '', cb => {
-						this.router.navigate(['/citizen/auth/login']);
-					});
-					
+				switch (err.status) {
+					case 401:
+						this.commonService.openAlert('Warning!', err.error.message, 'warning', '', cb => {
+							this.router.navigate([ManageRoutes.getFullRoute('CITIZENAUTHLOGIN')]);
+						});
+						break;
+					case 500:
+					case 404:
+						this.commonService.openAlert('Error!', err.error.message, 'error');
+						break;
+					case 400:
+						this.commonService.openAlertFormSaveValidation('Warning!', err.error, 'warning');
+						break;
+					case 0:
+						this.commonService.openAlert('Error!', err.error.message, 'error', '', cb => {
+							this.router.navigate([ManageRoutes.getFullRoute('CITIZENAUTHLOGIN')]);
+						});
+						break;
+					case 601:// form save as draft error handling
+						this.commonService.openAlertFormSaveValidation('Warning!', err.error, 'warning');
+						break;
+					default:
+						break;
 				}
 			}
 		});

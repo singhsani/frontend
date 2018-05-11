@@ -119,6 +119,27 @@ export class MyApplicationsComponent implements OnInit {
 	}
 
 	/**
+	 * This method use to delete citizen record.
+	 * @param id citizen api name
+	 * @param id citizen id
+	 */
+	submitRecord(apiCode: string, apiName: string, id: number) {
+
+		this.commonService.submitAlert('Are you sure?', "You won't be able to revert this!", 'warning', '', performDelete => {
+			this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);
+			this.formService.submitFormData(id).subscribe(
+				res => {
+					this.commonService.successAlert('Submited!', '', 'success');
+				},
+				err => {
+					//this.commonService.successAlert('Error!', err.error[0].message, 'error');
+				}
+			);
+		});
+
+	}
+
+	/**
 	 * This method is use to get respective class name based on application status.
 	 * @param filestatus - Application Status
 	 */
