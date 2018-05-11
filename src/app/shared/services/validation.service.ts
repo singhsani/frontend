@@ -63,20 +63,9 @@ export class ValidationService {
         }
     }
 
-    // only number
-    static numberValidator(control: FormControl) {
-
-        if (control.value) {
-            const matches = control.value.match(/[0 - 9]/);
-            return matches ? null : { 'invalidNumber': true };
-        } else {
-            return null;
-        }
-    }
-
-    // groom age
+    // Groom age
     static groomAgeValidator(control: FormControl) {
-        if (control.value) {
+        if (control.value != null) {
             const matches = (control.value) >= 21;
             return matches ? null : { 'invalidgroomage': true };
         } else {
@@ -84,32 +73,13 @@ export class ValidationService {
         }
     }
 
-    // bride age
+    // Bride age
     static brideAgeValidator(control: FormControl) {
-        if (control.value) {
+        if (control.value != null) {
             const matches = (control.value) >= 18;
             return matches ? null : { 'invalidbridebirthdate': true };
         } else {
             return null;
-        }
-    }
-
-    static passwordValidator(control: AbstractControl) {
-        // {6,100}           - Assert password is between 6 and 100 characters
-        // (?=.*[0-9])       - Assert a string has at least one number
-        if (control.value && control.value.match(/^(?=.*[0-9])[a-zA-Z0-9!@#$%^&*]{6,100}$/)) {
-            return null;
-        } else {
-            return { 'invalidPassword': true };
-        }
-    }
-
-    static creditCardValidator(control: AbstractControl) {
-        // Visa, MasterCard, American Express, Diners Club, Discover, JCB
-        if (control.value && control.value.match(/^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})$/)) {
-            return null;
-        } else {
-            return { 'invalidCreditCard': true };
         }
     }
 

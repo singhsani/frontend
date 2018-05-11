@@ -13,6 +13,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class ActionBarComponent implements OnInit {
 
+	translatekey: string = 'ActionBarScreen';
 
 	@Input()
 	form: FormGroup;
