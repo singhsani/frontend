@@ -93,6 +93,15 @@
 				<mat-cell *matCellDef="let element"> {{element.paymentStatus}} </mat-cell>
 			</ng-container>
 
+			<ng-container matColumnDef="detailsButton">
+				<mat-header-cell *matHeaderCellDef></mat-header-cell>
+				<mat-cell *matCellDef="let element">
+					<button matTooltip="View Details" matTooltipPosition='right' (click)="openDailog(element)" mat-icon-button color="primary">
+						<mat-icon>lock_open</mat-icon>
+					</button>
+				</mat-cell>
+			</ng-container>
+	
 			<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
 			<mat-row *matRowDef="let row; columns: displayedColumns;" (click)="openDailog(row)"></mat-row>
 

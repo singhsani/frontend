@@ -31,7 +31,7 @@ export class TransactionsComponent implements OnInit {
 
 	paymentsForm: FormGroup;
 	PayableServices: Object[];
-	displayedColumns: string[] = ['id', 'chalanNumber', 'amount', 'paymentDate', 'payableServices', 'paymentStatus'];
+	displayedColumns: string[] = ['id', 'chalanNumber', 'amount', 'paymentDate', 'payableServices', 'paymentStatus','detailsButton'];
 	myControl: FormControl = new FormControl();
 	resultsLength: number = 0;
 	pageSize: number = 10;

@@ -17,6 +17,7 @@ import * as moment from 'moment';
 	styleUrls: ['./death-registration.component.scss']
 })
 export class DeathRegistrationComponent implements OnInit {
+
 	@ViewChild('stepper') stepper: MatStepper;
 
 	/**
@@ -25,6 +26,9 @@ export class DeathRegistrationComponent implements OnInit {
 	private attachments: any[];
 	private showButtons: boolean = false;
 	uploadModel: any = {};
+	private response;
+	private createForm: boolean = false;
+	translateKey = "deathRegScreen";
 
 	//form related data.
 	private appId: number;
@@ -71,8 +75,42 @@ export class DeathRegistrationComponent implements OnInit {
 		private commonService: CommonService,
 		private formService: FormsActionsService
 	) {
+	}
+	/**
+	 * get form lookups data form api.
+	 */
+	getLookUpsData() {
+		this.formService.getDataFromLookups().subscribe(respData => {
+			this.deathPlaces = respData.PLACE;
+			this.DeceasedEducations = respData.EDUCATION;
+			this.DeceasedOccupation = respData.OCCUPATIONS;
+			this.Gender = respData.GENDER;
+			this.MedicalTreatmentOptions = respData.MEDICAL_TREATMENT;
+			this.RelationShip = respData.RELATIONSHIP;
+			this.Religion = respData.RELIGION;
+			this.ISYESNO = respData.YES_NO;
+		});
+	}
 
+	/**
+	 * Method is used to get all data after form created or saved.
+	 */
+	getDeathCertData() {
+		this.formService.getFormData(this.appId).subscribe((res) => {
+			this.response = res;
+			console.log(res.unknownCategory);
+			if (res.unknownCategory.code == undefined) {
+				this.decider("NO");
+			} else if (res.unknownCategory == {}) {
+				this.decider("NO");
+			} else {
+				this.decider(res.unknownCategory.code);
+			}
 
+			this.attachments = res.attachments;
+			this.showButtons = true;
+			this.createForm = true;
+		});
 	}
 
 	/**
@@ -85,16 +123,31 @@ export class DeathRegistrationComponent implements OnInit {
 			this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
 		});
 
-		this.createDeathCertificateForm();
+		//this.deathCertificateForm = this.createDeathCertificateForm();
 		this.getDeathCertData();
 		this.getLookUpsData();
 	}
 
 	/**
-	 * Method is used to create death certificate form.
+	 * Method is used to decide the deceased is known or unknown.
+	 * @param event - Yes or No.
 	 */
-	createDeathCertificateForm(): void {
-		this.deathCertificateForm = this.fb.group({
+	decider(event) {
+		console.log(event);
+		if (event === "YES") {
+			this.deathCertificateForm = this.createDeathCertificateFormUnknown();
+		} else if (event === "NO") {
+			this.deathCertificateForm = this.createDeathCertificateForm();
+		}
+		this.deathCertificateForm.patchValue(this.response);
+		this.deathCertificateForm.get('unknownCategory').get('code').setValue(event);
+	}
+
+	/**
+	 * Method is used to create death certificate form for known deceased.
+	 */
+	createDeathCertificateForm(): FormGroup {
+		return this.fb.group({
 
 			//step1
 			firstName: ['', [ValidationService.nameValidator, Validators.required]],
@@ -232,34 +285,159 @@ export class DeathRegistrationComponent implements OnInit {
 				name: null
 			}),
 			unknownDescription: null,
+			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
+			serviceDetail: this.fb.group({
+				code: null,
+				feesOnScrutiny: null,
+				gujName: null,
+				name: null
+			})
+		});
+	}
+
+	/**
+	 * Method is used to create death certificate form for unknown deceased.
+	 */
+	createDeathCertificateFormUnknown(): FormGroup {
+		return this.fb.group({
+			//step1
+			firstName: ['', [ValidationService.nameValidator]],
+			middleName: ['', [ValidationService.nameValidator]],
+			lastName: ['', [ValidationService.nameValidator,]],
+			gender: this.fb.group({
+				code: ['', []],
+			}),
+			deathDate: ['',],
+			birthDate: ['',],
+			fatherOrHusbandName: [null, [ValidationService.nameValidator]],
+			motherName: ['', [ValidationService.nameValidator,]],
+			religion: this.fb.group({
+				code: ['',]
+			}),
+			education: this.fb.group({
+				code: ['',]
+			}),
+			occupation: this.fb.group({
+				code: ['',]
+			}),
+			delayedPeriod: ['',],
+			femaleDeathReason: this.fb.group({
+				code: ['',]
+			}),
+
+			//step 2
+			deathPlace: this.fb.group({
+				code: ['',],
+				name: null
+			}),
+			medicalTreatment: this.fb.group({
+				code: null
+			}),
+			medicalReason: this.fb.group({
+				code: ['', []]
+			}),
+			deathReason: ['', [, Validators.maxLength(100)]],
+			smokingSince: null,
+			tobaccoSince: null,
+			sopariPanmasalaSince: null,
+			alcoholSince: null,
+
+			//step 3
+			//Present Address
+			presentAddress: this.fb.group({
+				id: 3,
+				uniqueId: null,
+				version: null,
+				addressType: "DR_PRESENT_ADDRESS",
+				houseNo: null,
+				tenamentNo: null,
+				buildingName: null,
+				state: ['Gujarat', []],
+				district: ['Vadodara', []],
+				talukaName: null,
+				pincode: [null, [, Validators.pattern('[0-9]+'), Validators.maxLength(6), Validators.minLength(6)]],
+				addressLine1: null,
+				addressLine2: null,
+				addressLine3: null,
+				village: null
+			}),
+
+			//Permanent Address
+			permanentAddress: this.fb.group({
+				id: 2,
+				uniqueId: null,
+				version: null,
+				addressType: "DR_PERMANENT_ADDRESS",
+				houseNo: null,
+				tenamentNo: null,
+				buildingName: null,
+				state: ['Gujarat', []],
+				district: ['Vadodara', []],
+				talukaName: null,
+				pincode: ['', [, Validators.pattern('[0-9]+'), Validators.maxLength(6), Validators.minLength(6)]],
+				addressLine1: null,
+				addressLine2: null,
+				addressLine3: null,
+				village: null
+			}),
+
+			//step 4
+			//Applicant Data
+			applicantAddress: this.fb.group({
+				id: 1,
+				uniqueId: null,
+				version: null,
+				addressType: "DR_APPLICANT_ADDRESS",
+				houseNo: '',
+				tenamentNo: '',
+				buildingName: '',
+				state: ['Gujarat',],
+				district: ['Vadodara',],
+				talukaName: null,
+				pincode: ['', [, Validators.pattern('[0-9]+'), Validators.maxLength(6), Validators.minLength(6)]],
+				addressLine1: null,
+				addressLine2: null,
+				addressLine3: null,
+				village: null
+			}),
+
+			applicantRelation: this.fb.group({
+				code: [null,]
+			}),
+
+			relationOther: [''],
+			aadhaarNo: ['', [ValidationService.aadharValidation]],
+			appHospitalName: ['',],
+			mobileNumber: ['', [, ValidationService.mobileNumberValidation]],
+			email: ['', [ValidationService.emailValidator]],
+
+			//Attachments Data step 5
+			attachments: [],
+			id: null,
+			uniqueId: null,
+			version: null,
+			serviceFormId: 1,
+			serviceType: null,
+			fileStatus: null,
+			serviceName: null,
+			fileNumber: null,
+			pid: null,
+			outwardNo: null,
+			agree: false,
+			paymentStatus: null,
+			canEdit: true,
+			canDelete: true,
+			canSubmit: true,
+			createdDate: null,
+			updatedDate: null,
+			unknownCategory: this.fb.group({
+				id: null,
+				code: null,
+				name: null
+			}),
+			unknownDescription: null,
+
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode)
-		});
-	}
-
-	/**
-	 * get form lookups data form api.
-	 */
-	getLookUpsData() {
-		this.formService.getDataFromLookups().subscribe(respData => {
-			this.deathPlaces = respData.PLACE;
-			this.DeceasedEducations = respData.EDUCATION;
-			this.DeceasedOccupation = respData.OCCUPATIONS;
-			this.Gender = respData.GENDER;
-			this.MedicalTreatmentOptions = respData.MEDICAL_TREATMENT;
-			this.RelationShip = respData.RELATIONSHIP;
-			this.Religion = respData.RELIGION;
-			this.ISYESNO = respData.YES_NO;
-		});
-	}
-
-	/**
-	 * Method is used to get all data after form created or saved.
-	 */
-	async getDeathCertData() {
-		this.formService.getFormData(this.appId).subscribe((res) => {
-			this.deathCertificateForm.patchValue(res);
-			this.attachments = res.attachments;
-			this.showButtons = true;
 		});
 	}
 

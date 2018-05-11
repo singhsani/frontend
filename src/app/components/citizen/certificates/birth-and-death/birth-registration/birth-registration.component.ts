@@ -31,6 +31,7 @@ export class BirthRegistrationComponent implements OnInit {
 	 */
 	appId: number;
 	apiCode: string;
+	private translateKey = "birthRegScreen";
 
 	public birthCertificateForm: FormGroup;
 	private minBirthDate: any;
@@ -355,7 +356,13 @@ export class BirthRegistrationComponent implements OnInit {
 			canEdit: true,
 			canDelete: true,
 			canSubmit: true,
-			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode)
+			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
+			serviceDetail: this.fb.group({
+				code: null,
+				feesOnScrutiny: null,
+				gujName: null,
+				name: null
+			})
 		});
 	}
 
