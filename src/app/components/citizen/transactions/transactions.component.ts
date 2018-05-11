@@ -25,6 +25,8 @@ import swal from 'sweetalert2'
 })
 export class TransactionsComponent implements OnInit {
 
+	translateKey: string = "addTransctionScreen";
+
 	@ViewChild(MatPaginator) paginator: MatPaginator;
 
 	paymentsForm: FormGroup;

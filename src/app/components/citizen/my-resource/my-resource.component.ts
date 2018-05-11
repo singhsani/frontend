@@ -23,6 +23,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class MyResourceComponent implements OnInit {
 
+	translateKey: string = "addResourceScreen";
 	displayedColumns: any = [
 		'id',
 		'resourceName',
