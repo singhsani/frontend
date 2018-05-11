@@ -1,9 +1,5 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router, CanLoad } from '@angular/router';
-
-/**
- * Import required angular Observable functions.
- */
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/take';
@@ -12,6 +8,7 @@ import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
 
 import { AuthService } from '../services/citizen/app-services/auth.service';// auth service
+import { ManageRoutes } from '../../config/routes-conf';
 
 /**
  * AuthGuard Class to handle Authentication of application.
@@ -51,7 +48,7 @@ export class AuthGuard implements CanActivate, CanLoad {
 		if (this.authService.isLoggedIn()) {
 			return true;
 		} else {
-			this.router.navigate(['/citizen/auth/login']);
+			this.router.navigate([ManageRoutes.getFullRoute('CITIZENAUTHLOGIN')]);
 			return false;
 		}
 	}

@@ -4,6 +4,7 @@ import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { FormsActionsService } from '../../../core/services/citizen/data-services/forms-actions.service';
 
 import { ManageRoutes } from '../../../config/routes-conf';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
 	selector: 'app-dashboard',
@@ -23,6 +24,7 @@ export class DashboardComponent implements OnInit {
 	constructor(
 		private router: Router,
 		private formService: FormsActionsService,
+		private toastr: ToastrService
 	) {
 		this.getAllServices();
 	}
@@ -35,11 +37,16 @@ export class DashboardComponent implements OnInit {
 	 * This method is use to create new record for citizen
 	 */
 	createRecord(apiCode: string) {
-		this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);
-		this.formService.createFormData().subscribe(res => {
-			let redirectUrl = ManageRoutes.getFullRoute(apiCode);
-			this.router.navigate([redirectUrl, res.serviceFormId, apiCode]);
-		});
+		if (ManageRoutes.getApiTypeFromApiCode(apiCode)){
+			this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);
+			this.formService.createFormData().subscribe(res => {
+				let redirectUrl = ManageRoutes.getFullRoute(apiCode);
+				this.router.navigate([redirectUrl, res.serviceFormId, apiCode]);
+			});
+		} else {
+			// todo 
+			this.toastr.error("Invalid API Code");
+		}
 	}
 
 	getAllServices(){
