@@ -10,11 +10,11 @@ export class AddressComponent implements OnInit {
 
 	@Input() addressFormGroup: FormGroup;
 
+	translateKey: string = 'addressScreen';
+
 	constructor() { }
 
-	ngOnInit() {
-
-	}
+	ngOnInit() { }
 
 	/**
 	 * Method use to initialise form controls for address form group

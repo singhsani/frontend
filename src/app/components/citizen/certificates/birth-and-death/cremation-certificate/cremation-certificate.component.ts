@@ -23,7 +23,7 @@ export class CremationCertificateComponent implements OnInit {
 	@ViewChild('address') addrComponent: any;
 
 	cremationForm: FormGroup;
-	translateKey: string = 'CremationScreen';
+	translateKey: string = 'cremationScreen';
 
 	appId: number;
 	apiCode: string; 
@@ -37,8 +37,8 @@ export class CremationCertificateComponent implements OnInit {
 	uploadModel: any = {};
 
 	// Step Titles
-	stepLable1: string = "Cremation Certificate Detail";
-	stepLable2: string = "Applicant Detail";
+	stepLable1: string = "cremation_certificate_detail";
+	stepLable2: string = "applicant_detail";
 
 	constructor(
 		private fb: FormBuilder, 
@@ -68,31 +68,6 @@ export class CremationCertificateComponent implements OnInit {
 		this.cremationForm = this.fb.group({
 
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
-			id: null,
-			uniqueId: null,
-			version: 0,
-			serviceFormId: null,
-			createdDate: null,
-			updatedDate: null,
-			serviceType: null,
-			fileStatus: null,
-			serviceName: null,
-			fileNumber: null,
-			pid: null,
-			outwardNo: null,
-			agree: false,
-			paymentStatus: null,
-			canEdit: true,
-			canDelete: true,
-			canSubmit: true,
-
-			firstName: null,
-			lastName: null,
-			middleName: null,
-			contactNo: null,
-			email: null,
-			aadhaarNo: null,
-			
 			applicantRelation: this.fb.group({
 				code: [null, Validators.required]
 			}),
@@ -126,7 +101,6 @@ export class CremationCertificateComponent implements OnInit {
 	getCremationData() {
 		this.formService.getFormData(this.appId).subscribe(res => {
 			this.cremationForm.patchValue(res);
-
 		});
 	}
 
@@ -143,19 +117,19 @@ export class CremationCertificateComponent implements OnInit {
 	 */
 	handleErrorsOnSubmit(flag) {
 
-		let step1 = 7;
-		let step2 = 14;
+		let step1 = 23;
+		let step2 = 25;
 
 		let count = 1;
 
 		_.forEach(this.cremationForm.controls, (key) => {
 			if (!key.valid) {
 				if (count <= step1) {
-					this.stepLable1 = "Cremation Certificate Detail is not completed";
+					this.stepLable1 = this.stepLable1 +" is not completed";
 					this.stepper.selectedIndex = 0;
 					return false;
 				} else if (count <= step2) {
-					this.stepLable2 = "Applicant Details is not completed";
+					this.stepLable2 = this.stepLable2 +" is not completed";
 					this.stepper.selectedIndex = 1;
 					return false;
 				}

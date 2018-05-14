@@ -9,110 +9,87 @@ import { FormsActionsService } from '../../../../../core/services/citizen/data-s
 import * as _ from 'lodash';
 
 @Component({
-  selector: 'app-mutton-fish-transfer',
-  templateUrl: './mutton-fish-transfer.component.html',
-  styleUrls: ['./mutton-fish-transfer.component.scss']
+	selector: 'app-mutton-fish-transfer',
+	templateUrl: './mutton-fish-transfer.component.html',
+	styleUrls: ['./mutton-fish-transfer.component.scss']
 })
 export class MuttonFishTransferComponent implements OnInit {
 
 
-  @ViewChild(MatHorizontalStepper) stepper: MatHorizontalStepper;
-  @ViewChild(MatStepLabel) steplable: MatStepLabel;
+	@ViewChild(MatHorizontalStepper) stepper: MatHorizontalStepper;
+	@ViewChild(MatStepLabel) steplable: MatStepLabel;
 
-  muttonFishTransferForm: FormGroup;
-  translateKey: string = 'muttonFishTransferScreen';
+	muttonFishTransferForm: FormGroup;
+	translateKey: string = 'muttonFishTransferScreen';
 
-  appId: number;
-  apiCode: string;
+	appId: number;
+	apiCode: string;
 
-  // Step Titles
-  stepLable1: string = "Applicant Basic Details";
+	// Step Titles
+	stepLable1: string = "Applicant Basic Details";
 
-  constructor(
-    private fb: FormBuilder,
-    private validationService: ValidationService,
-    private router: Router,
-    private route: ActivatedRoute,
-    private formService: FormsActionsService
-  ) { }
+	constructor(
+		private fb: FormBuilder,
+		private validationService: ValidationService,
+		private router: Router,
+		private route: ActivatedRoute,
+		private formService: FormsActionsService
+	) { }
 
-  ngOnInit() {
+	ngOnInit() {
 
-    this.route.paramMap.subscribe(param => {
-      this.appId = Number(param.get('id'));
-      this.apiCode = param.get('apiCode');
-      this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
-    });
+		this.route.paramMap.subscribe(param => {
+			this.appId = Number(param.get('id'));
+			this.apiCode = param.get('apiCode');
+			this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
+		});
 
-    this.getMuttonFishTransferData();
-    this.getLookupData();
-    this.muttonFishTransferFormControls();
-  }
+		this.getMuttonFishTransferData();
+		this.getLookupData();
+		this.muttonFishTransferFormControls();
+	}
 
-  getMuttonFishTransferData() {
-    this.formService.getFormData(this.appId).subscribe(res => {
-      this.muttonFishTransferForm.patchValue(res);
-    });
-  }
+	getMuttonFishTransferData() {
+		this.formService.getFormData(this.appId).subscribe(res => {
+			this.muttonFishTransferForm.patchValue(res);
+		});
+	}
 
 	/**
 	 * Method is used to handle error/validation on submit
 	 * @param count - count of invalid control.
 	 */
-  handleErrorsOnSubmit(count) {
-    let step1 = 6;
+	handleErrorsOnSubmit(count) {
+		let step1 = 6;
 
-    if (count <= step1) {
-      this.stepper.selectedIndex = 0;
-      return false;
-    }
+		if (count <= step1) {
+			this.stepper.selectedIndex = 0;
+			return false;
+		}
 
-  }
+	}
 
 	/**
 	 * This method is use for get lookup data
 	 */
-  getLookupData() {
-    this.formService.getDataFromLookups().subscribe(res => {
+	getLookupData() {
+		this.formService.getDataFromLookups().subscribe(res => {
 
-    });
-  }
+		});
+	}
 
-  muttonFishTransferFormControls() {
-    this.muttonFishTransferForm = this.fb.group({
-      id: null,
-      uniqueId: null,
-      version: null,
-      serviceFormId: null,
-      createdDate: null,
-      updatedDate: null,
-      serviceType: null,
-      fileStatus: null,
-      serviceName: [null, Validators.required],
-      fileNumber: [null, Validators.required],
-      pid: [null, Validators.required],
-      outwardNo: null,
-      firstName: null,
-      lastName: null,
-      middleName: null,
-      contactNo: null,
-      email: null,
-      aadhaarNo: null,
-      agree: null,
-      paymentStatus: null,
-      canEdit: null,
-      canDelete: null,
-      canSubmit: null,
-      apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode)
-    });
-  }
+	muttonFishTransferFormControls() {
+		this.muttonFishTransferForm = this.fb.group({
+			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode)
+		});
+	}
 
 	/**
 	 * Method is used to reset form its a output event from action bar.
 	 */
-  stepReset() {
-    this.stepper.reset();
-  }
+	stepReset() {
+		this.stepper.reset();
+	}
 
 
 }

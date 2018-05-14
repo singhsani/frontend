@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators, FormControl, FormArray } from '@ang
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatHorizontalStepper, MatStep, MatStepLabel } from '@angular/material';
 
+import { ManageRoutes } from './../../../../config/routes-conf';
 import { ValidationService } from '../../../../shared/services/validation.service';
 import { FormsActionsService } from '../../../../core/services/citizen/data-services/forms-actions.service';
 
@@ -20,6 +21,7 @@ export class AmbulanceAppComponent implements OnInit {
 	translateKey: string = 'AmbulanceAppScreen';
 
 	appId: number;
+	apiCode: string;
 
 	// Step Titles
 	stepLable1: string = "Applicant Basic Details";
@@ -30,14 +32,14 @@ export class AmbulanceAppComponent implements OnInit {
 		private router: Router,
 		private route: ActivatedRoute,
 		private formService: FormsActionsService
-	) {
-		this.formService.apiType = 'FSAmbulance';
-	}
+	) { }
 
 	ngOnInit() {
 
 		this.route.paramMap.subscribe(param => {
 			this.appId = Number(param.get('id'));
+			this.apiCode = param.get('apiCode');
+			this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
 		});
 
 		this.getambulanceAppFormData();
@@ -76,30 +78,7 @@ export class AmbulanceAppComponent implements OnInit {
 
 	ambulanceAppFormControls() {
 		this.ambulanceAppForm = this.fb.group({
-			id: null,
-			uniqueId: null,
-			version: null,
-			serviceFormId: null,
-			createdDate: null,
-			updatedDate: null,
-			serviceType: null,
-			fileStatus: null,
-			serviceName: [null, Validators.required],
-			fileNumber: [null, Validators.required],
-			pid: [null, Validators.required],
-			outwardNo: [null, Validators.required],
-			firstName: [null, Validators.required],
-			lastName: [null, Validators.required],
-			middleName: [null, Validators.required],
-			contactNo: [null, Validators.required],
-			email: [null, Validators.required],
-			aadhaarNo: [null, Validators.required],
-			agree: null,
-			paymentStatus: [null, Validators.required],
-			canEdit: null,
-			canDelete: null,
-			canSubmit: null,
-			apiType: 'FSAmbulance'
+			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode)
 		});
 	}
 

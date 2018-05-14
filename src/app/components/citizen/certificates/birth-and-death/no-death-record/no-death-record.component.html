@@ -7,28 +7,28 @@
 			<mat-horizontal-stepper [linear]="false">
 
 				<!-- first step start-->
-				<mat-step [stepControl]="noRecordDetail" [label]="stepLable1">
+				<mat-step [label]="stepLable1 | translate: translateKey">
 					<div class="row">
 						<mat-form-field class="col-md-4">
-							<input matInput type="text" formControlName="deceasedName" placeholder="{{'deceased_name' | translate:'translateKey'}}" required>
+							<input matInput type="text" formControlName="deceasedName" placeholder="{{'deceased_name' | translate: translateKey}}" required>
 							<control-messages [control]="noRecordDeathForm.controls.deceasedName"></control-messages>
 						</mat-form-field>
 
 						<mat-form-field class="col-md-4">
 							<input matInput [matDatepicker]="picker" [max]="maxDate" formControlName="deathDate" (dateChange)="onDateChange($event.value)"
-							 placeholder="{{'date_of_death' | translate:'translateKey'}}">
+							 placeholder="{{'date_of_death' | translate: translateKey}}">
 							<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
 							<mat-datepicker #picker></mat-datepicker>
 							<control-messages [control]="noRecordDeathForm.controls.deathDate"></control-messages>
 						</mat-form-field>
 
 						<mat-form-field class="col-md-4">
-							<input matInput type="text" formControlName="fatherOrHusbandName" placeholder="{{'father_or_husband_name' | translate:'translateKey'}}">
+							<input matInput type="text" formControlName="fatherOrHusbandName" placeholder="{{'father_or_husband_name' | translate: translateKey}}">
 							<control-messages [control]="noRecordDeathForm.controls.fatherOrHusbandName"></control-messages>
 						</mat-form-field>
 
 						<div formGroupName="gender" class="col-md-4">
-							<mat-label>{{'gender' | translate:'translateKey'}}</mat-label>
+							<mat-label>{{'gender' | translate: translateKey}}</mat-label>
 							<mat-radio-group class="example-radio-group" formControlName="code">
 								<mat-radio-button [value]="gender.code" *ngFor="let gender of genderArray">{{gender.name}}</mat-radio-button>
 								<br/>
@@ -37,7 +37,7 @@
 						</div>
 
 						<div formGroupName="deathPlace" class="col-md-4">
-							<mat-label>{{'death_place' | translate:'translateKey'}}</mat-label>
+							<mat-label>{{'death_place' | translate: translateKey}}</mat-label>
 							<mat-radio-group class="example-radio-group" formControlName="code">
 								<mat-radio-button [value]="place.code" *ngFor="let place of placeArray">{{place.name}}</mat-radio-button>
 							</mat-radio-group>
@@ -45,7 +45,7 @@
 						</div>
 
 						<mat-form-field class="col-md-4">
-							<input matInput type="text" OnlyNumber formControlName="age" placeholder="{{'age' | translate:'translateKey'}}">
+							<input matInput type="text" OnlyNumber formControlName="age" placeholder="{{'age' | translate: translateKey}}">
 							<control-messages [control]="noRecordDeathForm.controls.age"></control-messages>
 						</mat-form-field>
 					</div>
@@ -61,9 +61,11 @@
 				<!-- end first step -->
 
 				<!-- second step start-->
-				<mat-step [stepControl]="deathAddressDetail" [label]="stepLable2">
+				<mat-step [label]="stepLable2 | translate: translateKey">
 
-					<app-address #address [addressFormGroup]="noRecordDeathForm.controls.deathPlaceAddress"></app-address>
+					<div>Basic Details:
+						<app-address #address [addressFormGroup]="noRecordDeathForm.controls.deathPlaceAddress"></app-address>
+					</div>
 
 					<div *ngIf="showButtons">
 						<span class="text-primary">Upload Mandatory Documents</span>
@@ -76,29 +78,32 @@
 				<!-- second step end-->
 
 				<!-- third step start-->
-				<mat-step [stepControl]="applicantDetail" [label]="stepLable3">
-					<app-basic-details [basicFormGroup]="noRecordDeathForm"></app-basic-details>
+				<mat-step [label]="stepLable3 | translate: translateKey">
+
+					<div>Basic Details:
+						<app-basic-details [basicFormGroup]="noRecordDeathForm"></app-basic-details>
+					</div>
 
 					<div class="row">
 						<mat-form-field class="col-md-6">
-							<input matInput type="text" formControlName="applicantName" placeholder="{{'full_name' | translate:'translateKey'}}">
+							<input matInput type="text" formControlName="applicantName" placeholder="{{'full_name' | translate: translateKey}}">
 							<control-messages [control]="noRecordDeathForm.controls.applicantName"></control-messages>
 						</mat-form-field>
 
 						<mat-form-field formGroupName="applicantRelation" class="col-md-6">
-							<mat-select placeholder="{{'relation_with_applicant' | translate:'translateKey'}}" name="relation" formControlName="code">
+							<mat-select placeholder="{{'relation_with_applicant' | translate: translateKey}}" name="relation" formControlName="code">
 								<mat-option *ngFor="let relation of relationshipArray" [value]="relation.code">{{relation.name}}</mat-option>
 							</mat-select>
 							<control-messages [control]="noRecordDeathForm.controls.applicantRelation.controls.code"></control-messages>
 						</mat-form-field>
 
 						<mat-form-field class="col-md-6">
-							<input matInput type="text" OnlyNumber formControlName="applicantContactNo" placeholder="{{'mobile_no' | translate:'translateKey'}}">
+							<input matInput type="text" OnlyNumber formControlName="applicantContactNo" placeholder="{{'mobile_no' | translate: translateKey}}">
 							<control-messages [control]="noRecordDeathForm.controls.applicantContactNo"></control-messages>
 						</mat-form-field>
 
 						<mat-form-field class="col-md-6">
-							<input matInput type="email" formControlName="applicantEmail" placeholder="{{'email' | translate:'translateKey'}}">
+							<input matInput type="email" formControlName="applicantEmail" placeholder="{{'email' | translate: translateKey}}">
 							<control-messages [control]="noRecordDeathForm.controls.applicantEmail"></control-messages>
 						</mat-form-field>
 					</div>

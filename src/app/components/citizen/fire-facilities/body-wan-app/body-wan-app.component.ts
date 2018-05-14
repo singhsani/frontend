@@ -79,29 +79,6 @@ export class BodyWanAppComponent implements OnInit {
 
 	bodyWanApplicationFormControls() {
 		this.bodyWanApplicationForm = this.fb.group({
-			id: null,
-			uniqueId: null,
-			version: null,
-			serviceFormId: null,
-			createdDate: null,
-			updatedDate: null,
-			serviceType: null,
-			fileStatus: null,
-			serviceName: [null, Validators.required],
-			fileNumber: [null, Validators.required],
-			pid: [null, Validators.required],
-			outwardNo: null,
-			firstName: null,
-			lastName: null,
-			middleName: null,
-			contactNo: null,
-			email: null,
-			aadhaarNo: null,
-			agree: null,
-			paymentStatus: null,
-			canEdit: null,
-			canDelete: null,
-			canSubmit: null,
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode)
 		});
 	}

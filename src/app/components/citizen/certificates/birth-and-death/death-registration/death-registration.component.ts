@@ -262,23 +262,6 @@ export class DeathRegistrationComponent implements OnInit {
 
 			//Attachments Data step 5
 			attachments: [],
-			id: null,
-			uniqueId: null,
-			version: null,
-			serviceFormId: 1,
-			serviceType: null,
-			fileStatus: null,
-			serviceName: null,
-			fileNumber: null,
-			pid: null,
-			outwardNo: null,
-			agree: false,
-			paymentStatus: null,
-			canEdit: true,
-			canDelete: true,
-			canSubmit: true,
-			createdDate: null,
-			updatedDate: null,
 			unknownCategory: this.fb.group({
 				id: null,
 				code: null,
@@ -286,12 +269,6 @@ export class DeathRegistrationComponent implements OnInit {
 			}),
 			unknownDescription: null,
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
-			serviceDetail: this.fb.group({
-				code: null,
-				feesOnScrutiny: null,
-				gujName: null,
-				name: null
-			})
 		});
 	}
 

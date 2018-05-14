@@ -23,7 +23,7 @@ export class NoBirthRecordComponent implements OnInit {
 	@ViewChild('address') addrComponent: any;
 
 	noRecordBirthForm: FormGroup;
-	translateKey: string = 'NRCBirthScreen';
+	translateKey: string = 'nrcBirthScreen';
 
 	appId: number;
 	apiCode: string;
@@ -39,9 +39,9 @@ export class NoBirthRecordComponent implements OnInit {
 	uploadModel: any = {};
 
 	// Step Titles
-	stepLable1: string = "No Record Certificate Detail";
-	stepLable2: string = "Birth Place Address Detail";
-	stepLable3: string = "Applicant Detail";
+	stepLable1: string = "no_record_certificate_detail";
+	stepLable2: string = "birth_blace_address_detail";
+	stepLable3: string = "applicant_detail";
 
 	constructor(
 		private fb: FormBuilder, 
@@ -69,32 +69,7 @@ export class NoBirthRecordComponent implements OnInit {
 		this.noRecordBirthForm = this.fb.group({
 
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
-			id: null,
-			uniqueId: null,
-			version: 0,
-			serviceFormId: null,
-			createdDate: null,
-			updatedDate: null,
-			serviceType: null,
-			fileStatus: null,
-			serviceName: null,
-			fileNumber: null,
-			pid: null,
-			outwardNo: null,
-			agree: false,
-			paymentStatus: null,
-			canEdit: true,
-			canDelete: true,
-			canSubmit: true,
 			regNumber: null,
-
-			firstName: null,
-			lastName: null,
-			middleName: null,
-			contactNo: null,
-			email: null,
-			aadhaarNo: null,
-
 			childName: [null, Validators.required],
 			gender: this.fb.group({
 				code: [null, Validators.required],
@@ -145,9 +120,9 @@ export class NoBirthRecordComponent implements OnInit {
 	 */
 	handleErrorsOnSubmit(flag) {
 
-		let step1 = 8;
-		let step2 = 9;
-		let step3 = 13;
+		let step1 = 6;
+		let step2 = 15;
+		let step3 = 25;
 
 		let count = 1;
 
@@ -155,15 +130,15 @@ export class NoBirthRecordComponent implements OnInit {
 
 			if (!key.valid) {
 				if (count <= step1) {
-					this.stepLable1 = "No Record Certificate Detail is not completed";
+					this.stepLable1 = this.stepLable1 + " is not completed";
 					this.stepper.selectedIndex = 0;
 					return false;
 				} else if (count <= step2) {
-					this.stepLable2 = "Birth Place is not completed";
+					this.stepLable2 = this.stepLable1 +" is not completed";
 					this.stepper.selectedIndex = 1;
 					return false;
 				} else if (count <= step3) {
-					this.stepLable3 = "Applicant detail is not completed";
+					this.stepLable3 = this.stepLable1 +" is not completed";
 					this.stepper.selectedIndex = 2;
 					return false;
 				}
