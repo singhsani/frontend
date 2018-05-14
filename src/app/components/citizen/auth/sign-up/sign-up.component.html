@@ -4,27 +4,33 @@
 				<div class="headingBox">Register<span>Sign up by entering the information below</span></div>
 			<form [formGroup]="regForm" (ngSubmit)="onSignUp(regForm.value)" autocomplete="off" ngNativeValidate>
 
-				<mat-form-field class="example-full-width">
+				<mat-form-field class="example-full-width iconMat">
+						<mat-icon matPrefix>face</mat-icon>
 					<input matInput type="text" placeholder="Firstname" formControlName="firstName" required>
 				</mat-form-field>
 
-				<mat-form-field class="example-full-width">
+				<mat-form-field class="example-full-width iconMat">
+						<mat-icon matPrefix>face</mat-icon>
 					<input matInput type="text" placeholder="Lastname" formControlName="lastName" required>
 				</mat-form-field>
 
-				<mat-form-field class="example-full-width">
+				<mat-form-field class="example-full-width iconMat">
+					<mat-icon matPrefix>mail_outline</mat-icon>
 					<input matInput type="email" placeholder="Email" formControlName="email" required>
 				</mat-form-field>
 
-				<mat-form-field class="example-full-width">
+				<mat-form-field class="example-full-width iconMat">
+					<mat-icon matPrefix>phone_android</mat-icon>
 					<input matInput type="number" placeholder="Cell Number" formControlName="cellNo" required>
 				</mat-form-field>
 
-				<mat-form-field class="example-full-width">
+				<mat-form-field class="example-full-width iconMat">
+					<mat-icon matPrefix>lock_outline</mat-icon>
 					<input matInput type="password" placeholder="Password" formControlName="password" required>
 				</mat-form-field>
 
-				<mat-form-field class="example-full-width">
+				<mat-form-field class="example-full-width iconMat">
+					<mat-icon matPrefix>lock_outline</mat-icon>
 					<input matInput type="password" placeholder="Password" formControlName="confirmPassword" required>
 				</mat-form-field>
 
@@ -35,7 +41,7 @@
 				</div>
 				<div class="text-center pt-2">
 					Allready have an account ?
-					<a routerLink="/{{manageRoutes.getFullRoute('CITIZENAUTHLOGIN')}}">Login</a> here.
+					<a routerLink="/{{manageRoutes.getFullRoute('CITIZENAUTHLOGIN')}}"><strong>Login</strong></a> here.
 				</div>
 			</form>
 

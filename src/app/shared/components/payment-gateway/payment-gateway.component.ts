@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PaymentGatewayComponent implements OnInit {
 
+	translateKey: string = "addPaymentGatewayScreen";
+
 	private PaymentModes: any[] = [
 		{
 			name: "Debit/Credit card (Payment Gateway)",
