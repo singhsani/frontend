@@ -41,6 +41,7 @@ export class ActionBarComponent implements OnInit {
 		
 		this.formService.saveFormData(this.form.value).subscribe(
 			res => {
+				console.log(res);
 				this.toastr.success(`${this.form.value.serviceDetail.name} information successfully saved`);
 			},
 			err => {

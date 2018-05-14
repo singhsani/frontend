@@ -98,7 +98,7 @@ export class DeathRegistrationComponent implements OnInit {
 	getDeathCertData() {
 		this.formService.getFormData(this.appId).subscribe((res) => {
 			this.response = res;
-			console.log(res.unknownCategory);
+			console.log(res);
 			if (res.unknownCategory.code == undefined) {
 				this.decider("NO");
 			} else if (res.unknownCategory == {}) {
@@ -133,7 +133,6 @@ export class DeathRegistrationComponent implements OnInit {
 	 * @param event - Yes or No.
 	 */
 	decider(event) {
-		console.log(event);
 		if (event === "YES") {
 			this.deathCertificateForm = this.createDeathCertificateFormUnknown();
 		} else if (event === "NO") {
@@ -210,6 +209,11 @@ export class DeathRegistrationComponent implements OnInit {
 				addressLine3: null,
 				village: null
 			}),
+			isPermanentPresentAddressSame: this.fb.group({
+				id: null,
+				code: null,
+				name: null
+			}),
 
 			//Permanent Address
 			permanentAddress: this.fb.group({
@@ -257,7 +261,7 @@ export class DeathRegistrationComponent implements OnInit {
 			relationOther: [''],
 			aadhaarNo: ['', [ValidationService.aadharValidation]],
 			appHospitalName: ['', Validators.required],
-			mobileNumber: ['', [Validators.required, ValidationService.mobileNumberValidation]],
+			//mobileNumber: ['', [Validators.required, ValidationService.mobileNumberValidation]],
 			email: ['', [ValidationService.emailValidator]],
 
 			//Attachments Data step 5
@@ -269,6 +273,12 @@ export class DeathRegistrationComponent implements OnInit {
 			}),
 			unknownDescription: null,
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
+			serviceDetail: this.fb.group({
+				code: null,
+				feesOnScrutiny: null,
+				gujName: null,
+				name: null
+			})
 		});
 	}
 
@@ -337,6 +347,11 @@ export class DeathRegistrationComponent implements OnInit {
 				addressLine2: null,
 				addressLine3: null,
 				village: null
+			}),
+			isPermanentPresentAddressSame: this.fb.group({
+				id: null,
+				code: null,
+				name: null
 			}),
 
 			//Permanent Address
@@ -474,6 +489,7 @@ export class DeathRegistrationComponent implements OnInit {
 	 */
 	check(event) {
 		if (event.checked) {
+			this.deathCertificateForm.value.isPermanentPresentAddressSame.code = "YES";
 			this.deathCertificateForm.get('permanentAddress').get('houseNo').setValue(this.deathCertificateForm.get('presentAddress').get('houseNo').value);
 			this.deathCertificateForm.get('permanentAddress').get('tenamentNo').setValue(this.deathCertificateForm.get('presentAddress').get('tenamentNo').value);
 			this.deathCertificateForm.get('permanentAddress').get('buildingName').setValue(this.deathCertificateForm.get('presentAddress').get('buildingName').value);
@@ -486,6 +502,7 @@ export class DeathRegistrationComponent implements OnInit {
 			this.deathCertificateForm.get('permanentAddress').get('addressLine3').setValue(this.deathCertificateForm.get('presentAddress').get('addressLine3').value);
 			this.deathCertificateForm.get('permanentAddress').get('village').setValue(this.deathCertificateForm.get('presentAddress').get('village').value);
 		} else if (!event.checked) {
+			this.deathCertificateForm.value.isPermanentPresentAddressSame.code = "YES";
 			this.deathCertificateForm.get('permanentAddress').get('houseNo').reset();
 			this.deathCertificateForm.get('permanentAddress').get('tenamentNo').reset();
 			this.deathCertificateForm.get('permanentAddress').get('buildingName').reset();
