@@ -39,6 +39,7 @@ export class StillBirthComponent implements OnInit {
   private maxBirthDate = new Date();
   private showButtons: boolean = false;
   private submit: boolean = false;
+  apiCode: string;
 
   /**
    * Still Birth Data LookUps.
@@ -179,8 +180,6 @@ export class StillBirthComponent implements OnInit {
     private commonService: CommonService,
     private validationService: ValidationService,
     private fb: FormBuilder) {
-    this.formService.apiType = 'stillBirthReg';
-    this.createStillBirthForm();
   }
 
   /**
@@ -189,8 +188,10 @@ export class StillBirthComponent implements OnInit {
   ngOnInit() {
     this.route.paramMap.subscribe(param => {
       this.appId = Number(param.get('id'));
+      this.apiCode = param.get('apiCode');
+      this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
     });
-
+    this.createStillBirthForm();
     this.getStillBirthFormData();
     this.getLookUpData();
   }
@@ -233,9 +234,9 @@ export class StillBirthComponent implements OnInit {
       }),
 
       //step 2
-      fatherFirstName: null,
+      fatherFirstName: [null, [ValidationService.nameValidator,Validators.required]],
       fatherMiddleName: null,
-      fatherLastName: null,
+      fatherLastName: [null, [ValidationService.nameValidator,Validators.required]],
       fatherEducation: this.fb.group({
         id: null,
         code: [null, [Validators.required]],
@@ -249,9 +250,9 @@ export class StillBirthComponent implements OnInit {
       fatherAadharNumber: [null, [ValidationService.aadharValidation]],
 
       //step 3
-      motherFirstName: null,
+      motherFirstName: [null, [ValidationService.nameValidator, Validators.required]],
       motherMiddleName: null,
-      motherLastName: null,
+      motherLastName: [null, [ValidationService.nameValidator, Validators.required]],
       motherEducation: this.fb.group({
         id: null,
         code: [null, Validators.required],
@@ -263,8 +264,8 @@ export class StillBirthComponent implements OnInit {
         name: null
       }),
       motherAadharNumber: [null, [ValidationService.aadharValidation]],
-      motherPrevRegNumber: [null],
-      petaKendraNumber: null,
+      motherPrevRegNumber: ['', [Validators.pattern('[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]')]],
+      petaKendraNumber: ['', [Validators.pattern('[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]')]],
       motherMarriageAge: null,
       motherDeliveryAge: null,
       deliveryTreatment: this.fb.group({
@@ -277,7 +278,7 @@ export class StillBirthComponent implements OnInit {
         code: [null, Validators.required],
         name: null
       }),
-      pregnancyDuration: null,
+      pregnancyDuration: ['', [Validators.required, ValidationService.pregnancyDurationValidation]],
       prematureInfantReason: null,
 
       //step 4
@@ -331,7 +332,7 @@ export class StillBirthComponent implements OnInit {
         code: null,
         name: null
       }),
-      applicantHospitalName: null,
+      applicantHospitalName: [null, [ValidationService.nameValidator]],
       applicantAddress: this.fb.group({
         id: null,
         uniqueId: null,
@@ -372,7 +373,13 @@ export class StillBirthComponent implements OnInit {
       canEdit: true,
       canDelete: true,
       canSubmit: true,
-      apiType: "stillBirthReg",
+      apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
+      serviceDetail: this.fb.group({
+        code: null,
+        feesOnScrutiny: null,
+        gujName: null,
+        name: null
+      })
     })
   }
 
@@ -406,7 +413,6 @@ export class StillBirthComponent implements OnInit {
       this.Religion = respData.RELIGION;
       this.ISYESNO = respData.YES_NO;
     })
-
   }
 
   /**
@@ -447,7 +453,6 @@ export class StillBirthComponent implements OnInit {
       this.stepper.selectedIndex = 4;
       return false;
     }
-
   }
 
   /** 

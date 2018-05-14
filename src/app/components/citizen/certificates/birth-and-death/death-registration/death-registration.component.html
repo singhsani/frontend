@@ -258,7 +258,9 @@
 						</div>
 					</div>
 					
-					<mat-checkbox (change)="check($event)" >{{'is_present_address_same_as_permanent' | translate:translateKey}}</mat-checkbox>
+					<span formGroupName="isPermanentPresentAddressSame">
+						<mat-checkbox (change)="check($event)" [checked]="checked" formControlName="code">{{'is_permanent_address_same_as_present_address' | translate:translateKey}}</mat-checkbox>
+					</span>
 	
 					<div class="container">
 						<h2>
@@ -345,10 +347,10 @@
 							<control-messages [control]="deathCertificateForm.controls.applicantRelation"></control-messages>
 						</mat-form-field>
 	
-						<mat-form-field class="col-md-4">
+						<!-- <mat-form-field class="col-md-4">
 							<input matInput placeholder="{{'applicant_mobile' | translate:translateKey}}" type="tel" maxlength="10" minlength="10" formControlName="mobileNumber">
 							<control-messages [control]="deathCertificateForm.controls.mobileNumber"></control-messages>
-						</mat-form-field>
+						</mat-form-field> -->
 	
 						<mat-form-field class="col-md-4">
 							<input matInput placeholder="{{'applicant_email' | translate:translateKey}}" type="text" formControlName="email">

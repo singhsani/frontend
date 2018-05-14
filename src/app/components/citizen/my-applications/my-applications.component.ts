@@ -146,7 +146,7 @@ export class MyApplicationsComponent implements OnInit {
 	getFileStatusClass(filestatus: string) {
 		switch (filestatus) {
 			case 'DRAFT':
-				return 'accent';
+				return 'primary';
 			default:
 				return 'primary'
 		}
