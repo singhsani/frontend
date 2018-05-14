@@ -97,6 +97,7 @@ export class DeathRegistrationComponent implements OnInit {
 	 */
 	getDeathCertData() {
 		this.formService.getFormData(this.appId).subscribe((res) => {
+			console.log(res);
 			this.response = res;
 			if (res.unknownCategory.code == undefined) {
 				this.decider("NO");
@@ -137,6 +138,7 @@ export class DeathRegistrationComponent implements OnInit {
 		} else if (event === "NO") {
 			this.deathCertificateForm = this.createDeathCertificateForm();
 		}
+		console.log(this.response);
 		this.deathCertificateForm.patchValue(this.response);
 		this.deathCertificateForm.get('unknownCategory').get('code').setValue(event);
 	}
@@ -264,7 +266,7 @@ export class DeathRegistrationComponent implements OnInit {
 			email: ['', [ValidationService.emailValidator]],
 
 			//Attachments Data step 5
-			attachments: [],
+			
 			unknownCategory: this.fb.group({
 				id: null,
 				code: null,
@@ -277,7 +279,25 @@ export class DeathRegistrationComponent implements OnInit {
 				feesOnScrutiny: null,
 				gujName: null,
 				name: null
-			})
+			}),
+			attachments: [],
+			id: null,
+			uniqueId: null,
+			version: null,
+			serviceFormId: null,
+			createdDate: null,
+			updatedDate: null,
+			serviceType: null,
+			fileStatus: null,
+			serviceName: null,
+			fileNumber: null,
+			pid: null,
+			outwardNo: null,
+			agree: false,
+			paymentStatus: null,
+			canEdit: true,
+			canDelete: true,
+			canSubmit: null,
 		});
 	}
 
@@ -403,11 +423,19 @@ export class DeathRegistrationComponent implements OnInit {
 			email: ['', [ValidationService.emailValidator]],
 
 			//Attachments Data step 5
+			
+			unknownCategory: this.fb.group({
+				id: null,
+				code: null,
+				name: null
+			}),
+			unknownDescription: null,
+			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
 			attachments: [],
 			id: null,
 			uniqueId: null,
 			version: null,
-			serviceFormId: 1,
+			serviceFormId: null,
 			serviceType: null,
 			fileStatus: null,
 			serviceName: null,
@@ -421,20 +449,13 @@ export class DeathRegistrationComponent implements OnInit {
 			canSubmit: true,
 			createdDate: null,
 			updatedDate: null,
-			unknownCategory: this.fb.group({
-				id: null,
-				code: null,
-				name: null
-			}),
-			unknownDescription: null,
-
-			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
 			serviceDetail: this.fb.group({
 				code: null,
 				feesOnScrutiny: null,
 				gujName: null,
 				name: null
-			})
+			}),
+			
 		});
 	}
 

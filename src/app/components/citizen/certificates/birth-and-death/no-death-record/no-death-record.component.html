@@ -37,7 +37,7 @@
 						</div>
 
 						<div formGroupName="deathPlace" class="col-md-4">
-							<mat-label>{{'death_place' | translate: translateKey}}</mat-label>
+							<mat-label>{{'place_of_death' | translate: translateKey}}</mat-label>
 							<mat-radio-group class="example-radio-group" formControlName="code">
 								<mat-radio-button [value]="place.code" *ngFor="let place of placeArray">{{place.name}}</mat-radio-button>
 							</mat-radio-group>
@@ -98,7 +98,7 @@
 						</mat-form-field>
 
 						<mat-form-field class="col-md-6">
-							<input matInput type="text" OnlyNumber formControlName="applicantContactNo" placeholder="{{'mobile_no' | translate: translateKey}}">
+							<input matInput type="text" OnlyNumber formControlName="applicantContactNo" minlength="10" maxlength="10" placeholder="{{'mobile_no' | translate: translateKey}}">
 							<control-messages [control]="noRecordDeathForm.controls.applicantContactNo"></control-messages>
 						</mat-form-field>
 

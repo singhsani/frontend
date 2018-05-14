@@ -106,7 +106,7 @@ export class NoDeathRecordComponent implements OnInit {
 	 * @param date - get selected date
 	 */
 	onDateChange(date) {
-		this.noRecordDeathForm.get('deathDate').setValue(moment(date).format("YYYY-DD-MM"));
+		this.noRecordDeathForm.get('deathDate').setValue(moment(date).format("YYYY-MM-DD"));
 	}
 
 	/**
