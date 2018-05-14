@@ -1,20 +1,18 @@
 <div class="mainBg">
-        <mat-card class="verticalAlign borderRadius10">                 
+        <mat-card class="verticalAlign borderRadius10">            
                         <div class="headingBox">Welcome !<span>Login by entering the information below</span></div>
                         <form [formGroup]="loginForm" (ngSubmit)="onLoginSubmit(loginForm.value)" autocomplete="off" ngNativeValidate>
-                            <div class="example-container">
-                                <mat-form-field>
-                                    <!-- <mat-icon matPrefix>face</mat-icon> -->
+                           
+                                <mat-form-field class="iconMat">
+                                     <mat-icon matPrefix>face</mat-icon>
                                     <input matInput type="text" placeholder="Email / Mobile" formControlName="username" required>
                                 </mat-form-field>
-                            </div>
-                            <div class="example-container">
-                                <mat-form-field>
-                                    <!-- <mat-icon matPrefix>lock</mat-icon> -->
+                          
+                                <mat-form-field class="iconMat">
+                                    <mat-icon matPrefix>lock_outline</mat-icon>
                                     <input matInput type="password" placeholder="Password" formControlName="password" required>
                                 </mat-form-field>
-
-                            </div>
+                            
 
                             <div class="text-right"><a routerLink="/{{manageRoutes.getFullRoute('CITIZENAUTHFORGOTPASS')}}" class="forPass">Forgot Password</a></div>
 
@@ -25,12 +23,11 @@
                                 <div class="text-center pt-2">
                                     <p>OR</p>
                                     Don't have an account?
-                                    <a routerLink="/{{manageRoutes.getFullRoute('CITIZENAUTHSIGNUP')}}">Sign up</a> here
+                                    <a routerLink="/{{manageRoutes.getFullRoute('CITIZENAUTHSIGNUP')}}"><strong>Sign up</strong></a> here
                                 </div>
 
                         </form>
 
-                        
             </mat-card>
     
 
