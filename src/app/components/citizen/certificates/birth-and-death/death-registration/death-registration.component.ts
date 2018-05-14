@@ -98,7 +98,6 @@ export class DeathRegistrationComponent implements OnInit {
 	getDeathCertData() {
 		this.formService.getFormData(this.appId).subscribe((res) => {
 			this.response = res;
-			console.log(res);
 			if (res.unknownCategory.code == undefined) {
 				this.decider("NO");
 			} else if (res.unknownCategory == {}) {
@@ -429,7 +428,13 @@ export class DeathRegistrationComponent implements OnInit {
 			}),
 			unknownDescription: null,
 
-			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode)
+			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
+			serviceDetail: this.fb.group({
+				code: null,
+				feesOnScrutiny: null,
+				gujName: null,
+				name: null
+			})
 		});
 	}
 
