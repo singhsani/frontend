@@ -100,6 +100,7 @@ export class NoBirthRecordComponent implements OnInit {
 	 */
 	getNoRecordBirthData() {
 		this.formService.getFormData(this.appId).subscribe(res => {
+			console.log(res);
 			this.noRecordBirthForm.patchValue(res);
 			
 			this.attachments = res.attachments;
@@ -112,7 +113,7 @@ export class NoBirthRecordComponent implements OnInit {
 	 * @param date - get selected date
 	 */
 	onDateChange(date) {
-		this.noRecordBirthForm.get('birthDate').setValue(moment(date).format("YYYY-DD-MM"));
+		this.noRecordBirthForm.get('birthDate').setValue(moment(date).format("YYYY-MM-DD"));
 	}
 
 	/**
@@ -134,11 +135,11 @@ export class NoBirthRecordComponent implements OnInit {
 					this.stepper.selectedIndex = 0;
 					return false;
 				} else if (count <= step2) {
-					this.stepLable2 = this.stepLable1 +" is not completed";
+					this.stepLable2 = this.stepLable2 +" is not completed";
 					this.stepper.selectedIndex = 1;
 					return false;
 				} else if (count <= step3) {
-					this.stepLable3 = this.stepLable1 +" is not completed";
+					this.stepLable3 = this.stepLable3 +" is not completed";
 					this.stepper.selectedIndex = 2;
 					return false;
 				}

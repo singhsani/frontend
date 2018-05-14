@@ -109,7 +109,7 @@ export class CremationCertificateComponent implements OnInit {
 	 * @param date - get selected date
 	 */
 	onDateChange(date) {
-		this.cremationForm.get('deathDate').setValue(moment(date).format("YYYY-DD-MM"));
+		this.cremationForm.get('deathDate').setValue(moment(date).format("YYYY-MM-DD"));
 	}
 
 	/**
