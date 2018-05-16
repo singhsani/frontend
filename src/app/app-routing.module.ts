@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { AuthGuard } from './core/guard/auth.guard';// citizen guard
-
 /* Import child modules start */
 import { CitizenModule } from './components/citizen/citizen.module';
 import { HospitalModule } from './components/hospital/hospital.module';

@@ -1,5 +1,5 @@
 import { Component, AfterViewInit } from '@angular/core';
-import { Router, NavigationStart, NavigationCancel, NavigationEnd } from '@angular/router';
+import { Router, NavigationStart, RouteConfigLoadStart, NavigationCancel, NavigationEnd } from '@angular/router';
 
 import { CommonService } from './shared/services/common.service';
 

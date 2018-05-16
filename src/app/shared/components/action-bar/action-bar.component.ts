@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, OnChanges, SimpleChanges, SimpleChange } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import * as _ from 'lodash';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -12,13 +12,18 @@ import { ToastrService } from 'ngx-toastr';
 	templateUrl: './action-bar.component.html',
 	styleUrls: ['./action-bar.component.scss']
 })
-export class ActionBarComponent implements OnInit {
+export class ActionBarComponent implements OnChanges, OnInit {
 
 	translateKey: string = 'actionBarScreen';
 
 	@Input() form: FormGroup;
 	@Input() step: string;
 	commonForm: FormGroup;
+
+	isSaveBtnDisabled: boolean = false;
+	isSubmitBtnDisabled: boolean = false;
+
+	isBtnsDisabled: boolean = false;
 
 	@Output() handleErrors = new EventEmitter<any>();
 	@Output() stepReset = new EventEmitter<any>();
@@ -31,19 +36,40 @@ export class ActionBarComponent implements OnInit {
 
 	ngOnInit() {
 		this.formService.apiType = this.form.get('apiType').value;
+
 		this.commonFormControls();
+
+	}
+
+	ngOnChanges(changes: SimpleChanges) {
+
+		setTimeout(()=>{
+			const form: SimpleChange = changes.form;
+			
+			console.log(changes.form.currentValue.value.canEdit);
+			if (changes.form.currentValue.value.canEdit !== null && !changes.form.currentValue.value.canEdit) {
+				this.form.disable();
+				this.isBtnsDisabled = true;
+			}
+		},300);
+	
+
 	}
 
 	/**
 	 * This method is used for save form as draft using API
 	 */
 	saveAsDraft() {
-		
+
+		this.isSaveBtnDisabled = true;
+
 		this.formService.saveFormData(this.form.value).subscribe(
 			res => {
+				this.isSaveBtnDisabled = false;
 				this.toastr.success(`${this.form.value.serviceDetail.name} information successfully saved`);
 			},
 			err => {
+				this.isSaveBtnDisabled = false;
 				let count = 1;
 				for (const key in this.form.controls) {
 					if (key + '.' == err.error[0].property) {
@@ -60,17 +86,21 @@ export class ActionBarComponent implements OnInit {
 	 * This method is use for submit form using API
 	 */
 	onSubmit() {
-		
+
+		this.isSubmitBtnDisabled = true;
+
 		var count = 1;
 		if (this.form.valid) {
 			this.formService.submitFormData(this.form.get('serviceFormId').value).subscribe(res => {
 				this.toastr.success(`${this.form.value.serviceDetail.name} information successfully submit`);
+				this.isSubmitBtnDisabled = false;
 			},
 				err => {
-
+					this.isSubmitBtnDisabled = false;
 				}
 			);
 		} else {
+			this.isSubmitBtnDisabled = false;
 			let count = 1;
 			for (const key in this.form.controls) {
 				if (this.form.get(key).invalid) {
@@ -136,7 +166,7 @@ export class ActionBarComponent implements OnInit {
 				this.form.addControl(key, new FormControl());
 		});
 
-		this.form.addControl('firstName', new FormControl('',[Validators.required, ValidationService.nameValidator]));
+		this.form.addControl('firstName', new FormControl('', [Validators.required, ValidationService.nameValidator]));
 		this.form.addControl('middleName', new FormControl('', [Validators.required, ValidationService.nameValidator]));
 		this.form.addControl('lastName', new FormControl('', [Validators.required, ValidationService.nameValidator]));
 		this.form.addControl('contactNo', new FormControl('', [Validators.required, Validators.maxLength(10)]));

@@ -1,3 +1,4 @@
+
 import { ManageRoutes } from './../../../../config/routes-conf';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
@@ -15,7 +16,7 @@ import { HttpService } from '../../../../shared/services/http.service';
 /**
  * Declare App Service Class
  */
-export class AppService {
+export class HosAppService {
 
 	/**
 	 * Constructor to declare defualt propeties of class.
@@ -36,10 +37,9 @@ export class AppService {
 	obtainAccessToken(loginData) {
 
 		let params = new URLSearchParams();
-		params.append('username', loginData.username);
+		params.append('username', loginData.username + ':HOSPITAL');
 		params.append('password', loginData.password);
 		params.append('grant_type', 'password');
-		params.append('userType', 'CITIZEN');
 
 		let headers = {
 			'Content-type': 'application/x-www-form-urlencoded',
@@ -55,13 +55,13 @@ export class AppService {
 	 */
 	registerUser(registerData) {
 
-		return this.http.post('public/user/citizen/register', registerData, this.getCommonHeaders());
+		return this.http.post('public/user/hospital/register', registerData, this.getCommonHeaders());
 	}
 
-    /**
-	 * This method is used to perform user forget password operation.
-	 * @param forgotPwdData - consist userType and userId.
-	 */
+	/**
+   * This method is used to perform user forget password operation.
+   * @param forgotPwdData - consist userType and userId.
+   */
 	forgotPassword(forgotPwdData) {
 
 		return this.http.post('public/user/forgetPassword', forgotPwdData, this.getCommonHeaders());
@@ -84,12 +84,11 @@ export class AppService {
 		return this.http.post('public/user/verifyAccount/', verifyUserData, this.getCommonHeaders());
 	}
 
-
 	/**
  * This method will return True or False based on User Login or Not.
  */
 	isLoggedIn() {
-		if (this.session.get('access_token')) {
+		if (this.session.get('hos_access_token')) {
 			return true;
 		} else {
 			return false;
@@ -100,8 +99,8 @@ export class AppService {
 	 * This method is use for call user logout service.
 	 */
 	logout() {
-		this.session.remove('access_token');
-		this.router.navigate([ManageRoutes.getFullRoute('CITIZENAUTHLOGIN')]);
+		this.session.remove('hos_access_token');
+		this.router.navigate(['hospital/auth/login']);
 	}
 
 	/**

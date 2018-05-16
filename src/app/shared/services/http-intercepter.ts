@@ -63,7 +63,7 @@ export class TokenInterceptor implements HttpInterceptor {
 						break;
 					case 0:
 						this.commonService.openAlert('Error!', err.error.message, 'error', '', cb => {
-							this.router.navigate([ManageRoutes.getFullRoute('CITIZENAUTHLOGIN')]);
+							this.router.navigate([ManageRoutes.getFullRoute('CITIZENDASHBOARD')]);
 						});
 						break;
 					case 601:// form save as draft error handling

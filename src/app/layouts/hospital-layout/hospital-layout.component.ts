@@ -1,27 +1,23 @@
 import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { MediaMatcher } from '@angular/cdk/layout';
 
-import { AppService } from './../../core/services/citizen/app-services/app.service';
+import { HosAppService } from './../../core/services/hospital/app-services/hos-app.service';
 import { SessionStorageService } from 'angular-web-storage';
 
 @Component({
-	selector: 'app-home-layout',
-	templateUrl: './home-layout.component.html',
-	styleUrls: ['./home-layout.component.scss']
+	selector: 'app-hospital-layout',
+	templateUrl: './hospital-layout.component.html',
+	styleUrls: ['./hospital-layout.component.scss']
 })
-
-/**
- * Declare HomeLayoutComponent for handle Dashboard Layout functionalities.
- */
-export class HomeLayoutComponent implements OnInit {
+export class HospitalLayoutComponent implements OnInit {
 
 	@ViewChild('snav') snav;
 	mobileQuery: MediaQueryList;
 
 	constructor(private changeDetectorRef: ChangeDetectorRef,
-				private media: MediaMatcher,
-				private appService: AppService,
-				private session: SessionStorageService) {
+		private media: MediaMatcher,
+		private appService: HosAppService,
+		private session: SessionStorageService) {
 
 		this.mobileQuery = media.matchMedia('(max-width: 600px)');
 		this._mobileQueryListener = () => changeDetectorRef.detectChanges();
@@ -48,9 +44,10 @@ export class HomeLayoutComponent implements OnInit {
 	/**
 	 * This method is use to toggle side nav on mobile view
 	 */
-	toggleSideNav(){
-		if(this.mobileQuery.matches){
+	toggleSideNav() {
+		if (this.mobileQuery.matches) {
 			this.snav.opened = false;
 		}
 	}
+
 }

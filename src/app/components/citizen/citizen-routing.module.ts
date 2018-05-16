@@ -14,7 +14,6 @@ import { GrievanceModule } from './grievance/grievance.module';
 /* import all modules end */
 
 /* Import citizen components other than auth start */
-import { LoginLayoutComponent } from './../../layouts/login-layout/login-layout.component';
 import { HomeLayoutComponent } from './../../layouts/home-layout/home-layout.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { MyResourceComponent } from './my-resource/my-resource.component';
@@ -24,7 +23,6 @@ import { MyApplicationsComponent } from './my-applications/my-applications.compo
 import { PaymentGatewayComponent } from '../../shared/components/payment-gateway/payment-gateway.component';
 import { TaxModule } from './tax/tax.module';
 /* Import citizen components other than auth end */
-
 
 const routes: Routes = [
 
@@ -50,9 +48,8 @@ const routes: Routes = [
 	},
 
 	{
-		path: ManageRoutes.getPrefixRoute('CITIZENAUTHMODULE'), component: LoginLayoutComponent,
-		loadChildren: () => AuthModule
-	},
+		path: ManageRoutes.getPrefixRoute('CITIZENAUTHMODULE'),loadChildren: () => AuthModule
+	}
 
 ];
 

@@ -1,25 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SessionStorageService } from 'angular-web-storage';
 
 import * as _ from 'lodash';
 
-import { AppService } from '../../../../core/services/citizen/app-services/app.service';
+import { HosAppService } from './../../../../core/services/hospital/app-services/hos-app.service';
 import { ToastrService } from 'ngx-toastr';
 import { ManageRoutes } from '../../../../config/routes-conf';
 
 @Component({
-	selector: 'app-login',
-	templateUrl: './login.component.html',
-	styleUrls: ['./login.component.scss']
+	selector: 'app-hospital-login',
+	templateUrl: './hospital-login.component.html',
+	styleUrls: ['./hospital-login.component.scss']
 })
-
-/**
- * Declare LoginComponent class to handle login related functionalities.
- */
-export class LoginComponent implements OnInit {
+export class HospitalLoginComponent implements OnInit {
 
 	loginForm: FormGroup;
 	manageRoutes: any = ManageRoutes;
@@ -31,7 +26,7 @@ export class LoginComponent implements OnInit {
 	 * @param router - Declare routing property.
 	 * @param fb - Declare formbuilder property.
 	 */
-	constructor(private appService: AppService,
+	constructor(private appService: HosAppService,
 		private session: SessionStorageService,
 		private router: Router,
 		private fb: FormBuilder,
@@ -43,13 +38,14 @@ export class LoginComponent implements OnInit {
 	 * This method is use for perform initialize time actions.
 	 */
 	ngOnInit() {
-		let accessToken = this.session.get("access_token");
+
+		let accessToken = this.session.get("hos_access_token");
 
         /**
 		 * If Access Token is valid then redirect to Home Component.
 		 */
 		if (accessToken) {
-			this.router.navigate([ManageRoutes.getFullRoute('CITIZENDASHBOARD')]);
+			this.router.navigate(['/hospital/dashboard']);
 		}
 
 		this.loginForm = this.fb.group({
@@ -80,8 +76,8 @@ export class LoginComponent implements OnInit {
 	 * @param token - User Authenticated Token.
 	 */
 	saveToken(token) {
-		this.session.set('access_token', { 'token': token.access_token, now: +new Date, 'userType': token.userType }, token.expires_in, 's');
-		this.router.navigate([ManageRoutes.getFullRoute('CITIZENDASHBOARD')]);
+		this.session.set('hos_access_token', { 'token': token.access_token, now: +new Date, 'userType': token.userType }, token.expires_in, 's');
+		this.router.navigate(['/hospital/dashboard']);
 	}
 
 }
