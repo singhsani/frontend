@@ -29,6 +29,7 @@ export class StillBirthComponent implements OnInit {
 	 */
   uploadModel: any = {};
   private attachments: any[] = [];
+  prevMode: boolean = false;
 
 	/**
 	 * form related helping data.
@@ -204,11 +205,11 @@ export class StillBirthComponent implements OnInit {
 
       //step 1 controls
       birthDate: [null, [Validators.required]],
-      birthTime: [null, [Validators.required, Validators.pattern('[0-2][0-4]:[0-5][0-9]:[0-5][0-9]')]],
+      birthTime: [null, [Validators.required, Validators.pattern('[0-2][0-9]:[0-5][0-9]:[0-5][0-9]')]],
       childName: [null, [ValidationService.nameValidator]],
       birthPlace: this.fb.group({
         id: null,
-        code: null,
+        code: [null, [Validators.required]],
         name: null
       }),
       weightKg: this.fb.group({
@@ -216,10 +217,10 @@ export class StillBirthComponent implements OnInit {
         code: [null, Validators.required],
         name: null
       }),
-      weightGram: [null, [Validators.pattern('[0-9][0-9][0-9]')]],
+      weightGram: [null, [Validators.pattern('[0-9]+')]],
       gender: this.fb.group({
         id: null,
-        code: null,
+        code: [null, [Validators.required]],
         name: null
       }),
       isOrphan: this.fb.group({
@@ -266,11 +267,11 @@ export class StillBirthComponent implements OnInit {
       motherAadharNumber: [null, [ValidationService.aadharValidation]],
       motherPrevRegNumber: ['', [Validators.pattern('[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]')]],
       petaKendraNumber: ['', [Validators.pattern('[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]')]],
-      motherMarriageAge: null,
-      motherDeliveryAge: null,
+      motherMarriageAge: [null, [Validators.required]],
+      motherDeliveryAge: [null, [Validators.required]],
       deliveryTreatment: this.fb.group({
         id: null,
-        code: null,
+        code: [null,[Validators.required]],
         name: null
       }),
       deliveryType: this.fb.group({
@@ -278,8 +279,8 @@ export class StillBirthComponent implements OnInit {
         code: [null, Validators.required],
         name: null
       }),
-      pregnancyDuration: ['', [Validators.required, ValidationService.pregnancyDurationValidation]],
-      prematureInfantReason: null,
+      pregnancyDuration: ['', [Validators.required]],
+      prematureInfantReason: ['', [Validators.required]],
 
       //step 4
       parentDeliveryAddress: this.fb.group({
@@ -332,6 +333,8 @@ export class StillBirthComponent implements OnInit {
         code: null,
         name: null
       }),
+
+      //applicant details
       applicantHospitalName: [null, [ValidationService.nameValidator]],
       applicantAddress: this.fb.group({
         id: null,
@@ -350,36 +353,7 @@ export class StillBirthComponent implements OnInit {
         addressLine3: null,
         village: null
       }),
-      id: null,
-      uniqueId: null,
-      version: null,
-      serviceFormId: null,
-      createdDate: null,
-      updatedDate: null,
-      serviceType: null,
-      fileStatus: null,
-      serviceName: null,
-      fileNumber: null,
-      pid: null,
-      outwardNo: null,
-      firstName: "Dr. Aashish",
-      lastName: "Jha",
-      middleName: "Kumar",
-      contactNo: "7877568911",
-      email: "aashish.dr@gmail.com",
-      aadhaarNo: "726372632736",
-      agree: true,
-      paymentStatus: null,
-      canEdit: true,
-      canDelete: true,
-      canSubmit: true,
       apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
-      serviceDetail: this.fb.group({
-        code: null,
-        feesOnScrutiny: null,
-        gujName: null,
-        name: null
-      })
     })
   }
 
@@ -392,6 +366,11 @@ export class StillBirthComponent implements OnInit {
       this.attachments = res.attachments;
       this.stillBirthCertificateForm.patchValue(res);
       this.showButtons = true;
+      
+      if (res.fileStatus == "SUBMITTED") {
+        this.prevMode = true;
+        this.stillBirthCertificateForm.disable();
+      }
     });
   }
 
@@ -400,7 +379,6 @@ export class StillBirthComponent implements OnInit {
    */
   getLookUpData() {
     this.formService.getDataFromLookups().subscribe(respData => {
-      console.log(respData);
       this.ChildWeights = respData.CHILD_WEIGHT;
       this.DeliveryTreatmentOptions = respData.DELIVERY_TREATMENT;
       this.TypeOfDelivery = respData.DELIVERY_TYPE;

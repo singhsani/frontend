@@ -2,7 +2,7 @@
     <app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
     <mat-card class="mt-4 formClass">
     
-        <form class="birth-certificate-form" [formGroup]="birthCertificateForm" autocomplete="off" ngNativeValidate>
+        <form  class="birth-certificate-form" [formGroup]="birthCertificateForm" autocomplete="off" ngNativeValidate>
     
             <mat-horizontal-stepper [linear]="isLinear" #stepper="matHorizontalStepper">
                 <mat-step>
@@ -31,7 +31,7 @@
     
     
                         <mat-form-field class="col-md-4">
-                            <input matInput placeholder="{{'child_name' | translate:translateKey}}" name="childName" formControlName="childName">
+                            <input matInput maxlength="20" placeholder="{{'child_name' | translate:translateKey}}" name="childName" formControlName="childName">
                             <control-messages [control]="birthCertificateForm.controls.childName"></control-messages>
                             <mat-error *ngIf="birthCertificateForm.get('childName').errors?.required && birthCertificateForm.get('childName').touched">
                                 Child Name Should not empty.
@@ -64,7 +64,7 @@
                         </mat-form-field>
     
                         <mat-form-field class="col-md-4">
-                            <input matInput placeholder="{{'child_weight_gms' | translate:translateKey}}" formControlName="weightGram">
+                            <input matInput maxlength="3" placeholder="{{'child_weight_gms' | translate:translateKey}}" formControlName="weightGram">
                             <mat-error *ngIf="birthCertificateForm.get('weightGram').errors?.pattern">
                                 Child Weight In (Gms) is incorrect.
                             </mat-error>
@@ -92,7 +92,7 @@
     
                         <div class="col-md-4" formGroupName="isTwins">
                             <mat-label>{{'isTwins' | translate:translateKey}}</mat-label>
-                            <mat-radio-group class="example-radio-group" formControlName="code">
+                            <mat-radio-group  class="example-radio-group" formControlName="code">
                                 <mat-radio-button class="example-radio-button" *ngFor="let twins of ISYESNO" [value]="twins.code">
                                     {{twins.name}}
                                 </mat-radio-button>
@@ -110,18 +110,18 @@
                     <div class="row">
     
                         <mat-form-field class="col-md-4">
-                            <input matInput placeholder="{{'first_name' | translate:translateKey}}" formControlName="fatherFirstName">
+                            <input matInput maxlength="20" placeholder="{{'first_name' | translate:translateKey}}" formControlName="fatherFirstName">
                             <control-messages [control]="birthCertificateForm.controls.fatherFirstName"></control-messages>
                         </mat-form-field>
     
                         <mat-form-field class="col-md-4">
-                            <input matInput placeholder="{{'middle_name' | translate:translateKey}}" formControlName="fatherMiddleName">
+                            <input matInput maxlength="20" placeholder="{{'middle_name' | translate:translateKey}}" formControlName="fatherMiddleName">
                             <control-messages [control]="birthCertificateForm.controls.fatherMiddleName"></control-messages>
                         </mat-form-field>
     
     
                         <mat-form-field class="col-md-4">
-                            <input matInput placeholder="{{'last_name' | translate:translateKey}}" formControlName="fatherLastName">
+                            <input matInput maxlength="20" placeholder="{{'last_name' | translate:translateKey}}" formControlName="fatherLastName">
                             <control-messages [control]="birthCertificateForm.controls.fatherLastName"></control-messages>
                         </mat-form-field>
     
@@ -158,17 +158,17 @@
     
                     <div class="row">
                         <mat-form-field class="col-md-4">
-                            <input matInput placeholder="{{'first_name' | translate:translateKey}}" formControlName="motherFirstName">
+                            <input matInput maxlength="20" placeholder="{{'first_name' | translate:translateKey}}" formControlName="motherFirstName">
                             <control-messages [control]="birthCertificateForm.controls.motherFirstName"></control-messages>
                         </mat-form-field>
     
                         <mat-form-field class="col-md-4">
-                            <input matInput placeholder="{{'middle_name' | translate:translateKey}}" formControlName="motherMiddleName">
+                            <input matInput maxlength="20" placeholder="{{'middle_name' | translate:translateKey}}" formControlName="motherMiddleName">
                             <control-messages [control]="birthCertificateForm.controls.motherMiddleName"></control-messages>
                         </mat-form-field>
     
                         <mat-form-field class="col-md-4">
-                            <input matInput placeholder="{{'last_name' | translate:translateKey}}" formControlName="motherLastName">
+                            <input matInput maxlength="20" placeholder="{{'last_name' | translate:translateKey}}" formControlName="motherLastName">
                             <control-messages [control]="birthCertificateForm.controls.motherLastName"></control-messages>
                         </mat-form-field>
     
@@ -245,7 +245,8 @@
                         </mat-form-field>
     
                         <mat-form-field class="col-md-4">
-                            <input matInput maxlength="1" placeholder="{{'total_child_alive' | translate:translateKey}}" formControlName="totalAliveChild">
+                            <input matInput type="number" maxlength="2" placeholder="{{'total_child_alive' | translate:translateKey}}" formControlName="totalAliveChild">
+                            <control-messages [control]="birthCertificateForm.controls.totalAliveChild"></control-messages>
                         </mat-form-field>
                     </div>
     
@@ -257,6 +258,7 @@
     
                     <ng-template matStepLabel>{{'family_details' | translate:translateKey}}</ng-template>
                     <div>
+                        <app-basic-details [basicFormGroup]="birthCertificateForm"></app-basic-details>
                         <h2>
                             {{'present_address_during_delivery' | translate:translateKey}}
                         </h2>
@@ -420,13 +422,13 @@
                     <div *ngIf="showButtons">
                         <mat-checkbox labelPosition="after">Resident Proof(Driving License/Aadhar Card/Passport/Ration Card/Election Card)</mat-checkbox>
                         <br>
-                        <file-upload [uploadModel]="setDataValue(1,'residentProof','1.1','residentProof')" [attachments]="attachments"></file-upload>
+                        <file-upload [prevMode]="prevMode" [uploadModel]="setDataValue(1,'residentProof','1.1','residentProof')" [attachments]="attachments"></file-upload>
                     </div>
     
                     <div *ngIf="showButtons">
                         <mat-checkbox labelPosition="after">Doctor's Certificate</mat-checkbox>
                         <br>
-                        <file-upload [uploadModel]="setDataValue(3,'doctorsCertificate','1.1','doctorsCertificate')" [attachments]="attachments"></file-upload>
+                        <file-upload [prevMode]="prevMode" [uploadModel]="setDataValue(3,'doctorsCertificate','1.1','doctorsCertificate')" [attachments]="attachments"></file-upload>
                     </div>
     
                     <div>

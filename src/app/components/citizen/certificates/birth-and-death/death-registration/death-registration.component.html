@@ -9,7 +9,7 @@
 					<ng-template matStepLabel>{{'deceased_details' | translate:translateKey}}</ng-template>
 	
 					<div class="row col-md-12" formGroupName="unknownCategory">
-						<mat-label>{{'is_unknown' | translate:translateKey}}</mat-label>
+						<mat-label>{{'is_deceased_unknown' | translate:translateKey}}</mat-label>
 						<mat-radio-group formControlName="code" (change)="decider($event.value)">
 							<mat-radio-button *ngFor="let yesno of ISYESNO" [value]="yesno.code">
 								{{yesno.name}}
@@ -24,8 +24,6 @@
 							<control-messages [control]="deathCertificateForm.controls.firstName"></control-messages>
 						</mat-form-field>
 	
-	
-	
 						<mat-form-field class="col-md-4">
 							<input matInput placeholder="{{'middle_name' | translate:translateKey}}" name="middleName" formControlName="middleName">
 							<control-messages [control]="deathCertificateForm.controls.middleName"></control-messages>
@@ -38,7 +36,7 @@
 						</mat-form-field>
 	
 						<mat-form-field class="col-md-4">
-							<input matInput [max]="maxDeathDate" [matDatepicker]="pickerBirth" (dateChange)="delayCalculator($event)" placeholder="{{'death_date' | translate:translateKey}}"
+							<input matInput [max]="maxDeathDate" [matDatepicker]="pickerBirth" (dateChange)="delayCalculator($event)" placeholder="{{'date_of_death' | translate:translateKey}}"
 							 formControlName="deathDate">
 							<mat-datepicker-toggle matSuffix [for]="pickerBirth"></mat-datepicker-toggle>
 							<mat-datepicker #pickerBirth></mat-datepicker>
@@ -49,7 +47,7 @@
 						</mat-form-field>
 	
 						<mat-form-field class="col-md-4">
-							<input matInput [max]="maxBirthDate" [matDatepicker]="pickerDeath" (dateChange)="birthFormetChanger($event)" placeholder="{{'birth_date' | translate:translateKey}}"
+							<input matInput [max]="maxBirthDate" [matDatepicker]="pickerDeath" (dateChange)="birthFormetChanger($event)" placeholder="{{'date_of_birth' | translate:translateKey}}"
 							 formControlName="birthDate">
 							<mat-datepicker-toggle matSuffix [for]="pickerDeath"></mat-datepicker-toggle>
 							<mat-datepicker #pickerDeath></mat-datepicker>
@@ -133,7 +131,7 @@
 					<ng-template matStepLabel>{{'death_details' | translate:translateKey}}</ng-template>
 					<div class="row">
 						<mat-form-field class="col-md-4" formGroupName="deathPlace">
-							<mat-select placeholder="{{'death_place' | translate:translateKey}}" formControlName="code">
+							<mat-select placeholder="{{'place_of_death' | translate:translateKey}}" formControlName="code">
 								<mat-option *ngFor="let deathplace of deathPlaces" [value]="deathplace.code">
 									{{deathplace.name}}
 								</mat-option>
@@ -331,37 +329,8 @@
 	
 				<mat-step>
 					<ng-template matStepLabel>{{'applicant_details' | translate:translateKey}}</ng-template>
+					<app-basic-details [basicFormGroup]="deathCertificateForm"></app-basic-details>
 					<div class="row">
-						<mat-form-field class="col-md-4">
-							<input matInput type="text" placeholder="{{'applicant_name' | translate:translateKey}}" formControlName="appHospitalName">
-							<control-messages [control]="deathCertificateForm.controls.appHospitalName"></control-messages>
-						</mat-form-field>
-	
-	
-						<mat-form-field formGroupName="applicantRelation" class="col-md-4">
-							<mat-select placeholder="{{'applicant_relation' | translate:translateKey}}" formControlName="code">
-								<mat-option *ngFor="let rel of RelationShip" [value]="rel.code">
-									{{rel.name}}
-								</mat-option>
-							</mat-select>
-							<control-messages [control]="deathCertificateForm.controls.applicantRelation"></control-messages>
-						</mat-form-field>
-	
-						<!-- <mat-form-field class="col-md-4">
-							<input matInput placeholder="{{'applicant_mobile' | translate:translateKey}}" type="tel" maxlength="10" minlength="10" formControlName="mobileNumber">
-							<control-messages [control]="deathCertificateForm.controls.mobileNumber"></control-messages>
-						</mat-form-field> -->
-	
-						<mat-form-field class="col-md-4">
-							<input matInput placeholder="{{'applicant_email' | translate:translateKey}}" type="text" formControlName="email">
-							<control-messages [control]="deathCertificateForm.controls.email"></control-messages>
-						</mat-form-field>
-	
-						<mat-form-field class="col-md-4">
-							<input matInput placeholder="{{'applicant_aadhar' | translate:translateKey}}" type="text" maxlength="12" formControlName="aadhaarNo">
-							<control-messages [control]="deathCertificateForm.controls.aadhaarNo"></control-messages>
-						</mat-form-field>
-	
 						<div class="container">
 							<mat-label>{{'applicant_or_hospital_address' | translate:translateKey}}</mat-label>
 							<div class="row" formGroupName="applicantAddress">
@@ -430,27 +399,27 @@
 				<mat-step>
 					<ng-template matStepLabel>{{'upload_documents' | translate:translateKey}}</ng-template>
 					<div class="alert alert-warning">
-						Note : Please Submit Hard Copy Of All checklisted documents at Madhyawarti school office.
+						 {{'note' | translate:translateKey}} : {{'submit_hardcopy_at_madhyawarti_school' | translate:translateKey}}
 					</div>
 	
 					<div class="alert alert-warning">
-						Note : Documents upload on PDF only size maximum 1 MB per attachement.
+						 {{'note' | translate:translateKey}} : {{'maximum_size_1_MB' | translate:translateKey}}
 					</div>
 	
 					<div *ngIf="showButtons">
-						<mat-checkbox labelPosition="after">Cremation Report</mat-checkbox>
+						<mat-checkbox labelPosition="after">{{'cremation_report' | translate:translateKey}}</mat-checkbox>
 						<br>
 						<file-upload [uploadModel]="setDataValue(1,'cremationReport','1.1','cremationReport')" [attachments]="attachments"></file-upload>
 					</div>
 	
 					<div *ngIf="showButtons">
-						<mat-checkbox labelPosition="after">Form 4A-Death-other then hospital-provided by doctor.</mat-checkbox>
+						<mat-checkbox labelPosition="after">{{'form4A_death_provided_by_doctor' | translate:translateKey}}</mat-checkbox>
 						<br>
 						<file-upload [uploadModel]="setDataValue(2,'form4A','1.1','form4A')" [attachments]="attachments"></file-upload>
 					</div>
 	
 					<div *ngIf="showButtons">
-						<mat-checkbox labelPosition="after">Deceased ID Proof</mat-checkbox>
+						<mat-checkbox labelPosition="after">{{'deceased_id_proof' | translate:translateKey}}</mat-checkbox>
 						<br>
 						<file-upload [uploadModel]="setDataValue(3,'deceasedIdProof','1.1','deceasedIdProof')" [attachments]="attachments"></file-upload>
 					</div>

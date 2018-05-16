@@ -30,7 +30,7 @@
           </mat-form-field>
 
           <mat-form-field class="col-md-4">
-            <input matInput placeholder="{{'child_name' | translate:translateKey}}" name="childName" formControlName="childName">
+            <input matInput maxlength="20" placeholder="{{'child_name' | translate:translateKey}}" name="childName" formControlName="childName">
             <control-messages [control]="stillBirthCertificateForm.controls.childName"></control-messages>
             <mat-error *ngIf="stillBirthCertificateForm.get('childName').errors?.required && stillBirthCertificateForm.get('childName').touched">
               Child Name Should not empty.
@@ -63,7 +63,7 @@
           </mat-form-field>
 
           <mat-form-field class="col-md-4">
-            <input matInput placeholder="{{'child_weight_gms' | translate:translateKey}}" formControlName="weightGram">
+            <input matInput maxlength="3" placeholder="{{'child_weight_gms' | translate:translateKey}}" formControlName="weightGram">
             <mat-error *ngIf="stillBirthCertificateForm.get('weightGram').errors?.pattern">
               Child Weight In (Gms) is incorrect.
             </mat-error>
@@ -108,18 +108,18 @@
         <div class="row">
 
           <mat-form-field class="col-md-4">
-            <input matInput placeholder="{{'first_name' | translate:translateKey}}" formControlName="fatherFirstName">
+            <input matInput maxlength="20" placeholder="{{'first_name' | translate:translateKey}}" formControlName="fatherFirstName">
             <control-messages [control]="stillBirthCertificateForm.controls.fatherFirstName"></control-messages>
           </mat-form-field>
 
           <mat-form-field class="col-md-4">
-            <input matInput placeholder="{{'middle_name' | translate:translateKey}}" formControlName="fatherMiddleName">
+            <input matInput maxlength="20" placeholder="{{'middle_name' | translate:translateKey}}" formControlName="fatherMiddleName">
             <control-messages [control]="stillBirthCertificateForm.controls.fatherMiddleName"></control-messages>
           </mat-form-field>
 
 
           <mat-form-field class="col-md-4">
-            <input matInput placeholder="{{'last_name' | translate:translateKey}}" formControlName="fatherLastName">
+            <input matInput maxlength="20" placeholder="{{'last_name' | translate:translateKey}}" formControlName="fatherLastName">
             <control-messages [control]="stillBirthCertificateForm.controls.fatherLastName"></control-messages>
           </mat-form-field>
 
@@ -157,17 +157,17 @@
 
         <div class="row">
           <mat-form-field class="col-md-4">
-            <input matInput placeholder="{{'first_name' | translate:translateKey}}" formControlName="motherFirstName">
+            <input matInput maxlength="20" placeholder="{{'first_name' | translate:translateKey}}" formControlName="motherFirstName">
             <control-messages [control]="stillBirthCertificateForm.controls.motherFirstName"></control-messages>
           </mat-form-field>
 
           <mat-form-field class="col-md-4">
-            <input matInput placeholder="{{'middle_name' | translate:translateKey}}" formControlName="motherMiddleName">
+            <input matInput maxlength="20" placeholder="{{'middle_name' | translate:translateKey}}" formControlName="motherMiddleName">
             <control-messages [control]="stillBirthCertificateForm.controls.motherMiddleName"></control-messages>
           </mat-form-field>
 
           <mat-form-field class="col-md-4">
-            <input matInput placeholder="{{'last_name' | translate:translateKey}}" formControlName="motherLastName">
+            <input matInput maxlength="20" placeholder="{{'last_name' | translate:translateKey}}" formControlName="motherLastName">
             <control-messages [control]="stillBirthCertificateForm.controls.motherLastName"></control-messages>
           </mat-form-field>
 
@@ -244,7 +244,7 @@
           </mat-form-field>
 
           <mat-form-field class="col-md-4">
-            <input matInput maxlength="2" placeholder="{{'premature_infant_reason' | translate:translateKey}}" formControlName="prematureInfantReason">
+            <textarea matInput maxlength="60" placeholder="{{'premature_infant_reason' | translate:translateKey}}" formControlName="prematureInfantReason"></textarea>
             <control-messages [control]="stillBirthCertificateForm.controls.prematureInfantReason"></control-messages>
           </mat-form-field>
         </div>
@@ -256,6 +256,7 @@
       <mat-step>
 
         <ng-template matStepLabel>{{'family_details' | translate:translateKey}}</ng-template>
+        <app-basic-details [basicFormGroup]="stillBirthCertificateForm"></app-basic-details>
         <div>
           <h2>
             {{'present_address_during_delivery' | translate:translateKey}}
@@ -409,27 +410,27 @@
         <ng-template matStepLabel>{{'upload_documents' | translate:translateKey}}</ng-template>
 
         <div class="alert alert-warning">
-          Note : Please Submit Hard Copy Of All checklisted documents at Madhyawarti school office.
+           {{'note' | translate:translateKey}} : {{'submit_hard_copy_at_madhyawarti_school' | translate:translateKey}}
         </div>
 
         <div class="alert alert-warning">
-          Note : Documents upload on PDF only size maximum 1 MB per attachement.
+           {{'note' | translate:translateKey}} : {{'file_size_less_than_5_mb' | translate:translateKey}}
         </div>
 
         <div *ngIf="showButtons">
-          <mat-checkbox labelPosition="after">Resident Proof(Driving License/Aadhar Card/Passport/Ration Card/Election Card)</mat-checkbox>
+          <mat-checkbox labelPosition="after"> {{'resident_proof' | translate:translateKey}}</mat-checkbox>
           <br>
-          <file-upload [uploadModel]="setDataValue(1,'residentProof','1.1','residentProof')" [attachments]="attachments"></file-upload>
+          <file-upload [prevMode]="prevMode" [uploadModel]="setDataValue(1,'residentProof','1.1','residentProof')" [attachments]="attachments"></file-upload>
         </div>
 
         <div *ngIf="showButtons">
-          <mat-checkbox labelPosition="after">Doctor's Certificate</mat-checkbox>
+          <mat-checkbox labelPosition="after"> {{'doctors_certificate' | translate:translateKey}}</mat-checkbox>
           <br>
-          <file-upload [uploadModel]="setDataValue(3,'doctorsCertificate','1.1','doctorsCertificate')" [attachments]="attachments"></file-upload>
+          <file-upload [prevMode]="prevMode" [uploadModel]="setDataValue(3,'doctorsCertificate','1.1','doctorsCertificate')" [attachments]="attachments"></file-upload>
         </div>
 
         <div>
-          <mat-checkbox labelPosition="after">Doctor's Id Proof</mat-checkbox>
+          <mat-checkbox labelPosition="after"> {{'doctors_id_proof' | translate:translateKey}}</mat-checkbox>
           <br>
         </div>
 

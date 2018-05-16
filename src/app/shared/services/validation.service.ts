@@ -20,7 +20,7 @@ export class ValidationService {
             invalidEmail: 'Invalid email address',
             invalidPassword: 'Invalid password. Password must be at least 6 characters long, and contain a number.',
             invalidemarrigedate: 'Required and Should not be future date!',
-            invalideDate: 'select Date',
+            invalideDate: 'Date Invalid',
             invalidAadharno: 'Aadhar Number must be 12',
             invalidNumberEntry: 'Enter only Number',
             minlength: `Minimum length ${validatorValue.requiredLength} characters`,
@@ -30,6 +30,7 @@ export class ValidationService {
             invalidAadhar: `Aadhar Number is not valid`,
             invalidNumber: `Mobile Number Not Valid`,
             invalidpregnanceTime: 'Pregnancy duration incorrect',
+            invalidbirthRegNumber:'Invalid Birth Registration Date.'
         }
 
         return config[validatorName];
@@ -116,6 +117,15 @@ export class ValidationService {
             return '';
         } else {
             return { 'invalidPinCode': true };
+        }
+    }
+
+    static birthRegNumber(control: AbstractControl) {
+        // RFC 2822 compliant regex
+        if (control.value && control.value.match(/^[0-9A-Z]{20,20}$/)) {
+            return '';
+        } else {
+            return { 'invalidbirthRegNumber': true };
         }
     }
 
