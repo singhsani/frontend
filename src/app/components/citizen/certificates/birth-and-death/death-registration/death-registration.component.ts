@@ -97,7 +97,6 @@ export class DeathRegistrationComponent implements OnInit {
 	 */
 	getDeathCertData() {
 		this.formService.getFormData(this.appId).subscribe((res) => {
-			console.log(res);
 			this.response = res;
 			if (res.unknownCategory.code == undefined) {
 				this.decider("NO");
@@ -138,7 +137,6 @@ export class DeathRegistrationComponent implements OnInit {
 		} else if (event === "NO") {
 			this.deathCertificateForm = this.createDeathCertificateForm();
 		}
-		console.log(this.response);
 		this.deathCertificateForm.patchValue(this.response);
 		this.deathCertificateForm.get('unknownCategory').get('code').setValue(event);
 	}

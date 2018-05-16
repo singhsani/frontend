@@ -2,7 +2,7 @@ import { Component, OnInit, Input, ViewChild } from '@angular/core';
 
 import { UploadFileService } from './../../upload-file.service';
 
-import { CommonService } from '../../services/common.service'
+import { CommonService } from '../../services/common.service';
 
 @Component({
 	selector: 'file-upload',
@@ -37,6 +37,9 @@ export class FileUploadComponent implements OnInit {
 
 	@Input()
 	uploadModel: any;
+
+	@Input()
+	prevMode: boolean;
 
 	@Input()
 	attachments: any[];

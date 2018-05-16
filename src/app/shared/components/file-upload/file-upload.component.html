@@ -18,15 +18,15 @@
 				<img [src]="priviewImage" alt="image" class="imageSize" />
 			</label>
 
-			<button mat-raised-button color="primary" [disabled]="canUpload" (click)="upload()">
+			<button  mat-raised-button color="primary" [disabled]="canUpload || prevMode" (click)="upload()">
 				<mat-icon>file_upload</mat-icon> Upload
 			</button>
 
-			<button [disabled]="canView" mat-raised-button type="button" color="accent" (click)="view()">
+			<button [disabled]="canView || prevMode" mat-raised-button type="button" color="accent" (click)="view()">
 				View
 			</button>
 
-			<button [disabled]="canDelete" mat-raised-button type="button" color="warn" (click)="deleteFile()">
+			<button [disabled]="canDelete || prevMode" mat-raised-button type="button" color="warn" (click)="deleteFile()">
 				Delete
 			</button>
 		</div>

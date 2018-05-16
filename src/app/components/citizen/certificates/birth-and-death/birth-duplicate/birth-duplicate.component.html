@@ -1,12 +1,65 @@
 <div class="container">
-	<app-title-bar [title]="'screen_title' | translate:'BirthDuplicateScreen'"></app-title-bar>
+	<app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
 	<mat-card class="mt-4 formClass">
 		<form [formGroup]="birthDuplicateForm">
 			<mat-horizontal-stepper [linear]="false">
-			
+
 				<!-- first step start-->
 				<mat-step [label]="stepLable1">
 					<app-basic-details [basicFormGroup]="birthDuplicateForm"></app-basic-details>
+					<div class="row">
+
+						<mat-form-field class="col-md-4">
+							<input matInput maxlength="20" minlength="20" placeholder="{{'birth_reg_number' | translate:translateKey}}" formControlName="birthRegNumber">
+							<control-messages [control]="birthDuplicateForm.controls.birthRegNumber"></control-messages>
+						</mat-form-field>
+
+						<mat-form-field class="col-md-4">
+							<mat-select placeholder="{{'birth_reg_year' | translate:translateKey}}" formControlName="birthRegYear">
+								<mat-option *ngFor="let birthyear of BirthRegYears" [value]="birthyear.code">
+									{{birthyear.name}}
+								</mat-option>
+							</mat-select>
+							<control-messages [control]="birthDuplicateForm.controls.birthRegYear"></control-messages>
+						</mat-form-field>
+
+
+						<mat-form-field formGroupName="duplicateCopyMode" class="col-md-4">
+							<mat-select placeholder="{{'duplicate_copy_mode' | translate:translateKey}}" formControlName="code">
+								<mat-option *ngFor="let duplicatemode of DuplicateCopyMode" [value]="duplicatemode.code">
+									{{duplicatemode.name}}
+								</mat-option>
+							</mat-select>
+							<control-messages [control]="birthDuplicateForm.controls.duplicateCopyMode.controls.code"></control-messages>
+						</mat-form-field>
+
+						<mat-form-field class="col-md-4">
+							<input matInput [max]="maxBirthDate" [matDatepicker]="picker" placeholder="{{'birth_date' | translate:translateKey}}" formControlName="birthDate"
+							 (dateChange)="birthDateCalculator($event)">
+							<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+							<mat-datepicker #picker></mat-datepicker>
+							<control-messages [control]="birthDuplicateForm.controls.birthDate"></control-messages>
+						</mat-form-field>
+
+						<mat-form-field class="col-md-4">
+							<input matInput [max]="maxBirthDate" [min]="minBirthDate" [matDatepicker]="regpicker" placeholder="{{'birth_reg_date' | translate:translateKey}}"
+							 formControlName="birthRegDate" (dateChange)="birthRegCalculator($event)">
+							<mat-datepicker-toggle matSuffix [for]="regpicker"></mat-datepicker-toggle>
+							<mat-datepicker #regpicker></mat-datepicker>
+							<control-messages [control]="birthDuplicateForm.controls.birthRegDate"></control-messages>
+						</mat-form-field>
+
+						<mat-form-field class="col-md-4">
+							<input matInput placeholder="{{'child_name' | translate:translateKey}}" name="childName" formControlName="childName">
+							<control-messages [control]="birthDuplicateForm.controls.childName"></control-messages>
+						</mat-form-field>
+
+						<mat-form-field class="col-md-4">
+							<input matInput type="number" placeholder="{{'total_copies' | translate:translateKey}}"  formControlName="totalCopies">
+							<control-messages [control]="birthDuplicateForm.controls.totalCopies"></control-messages>
+						</mat-form-field>
+
+					</div>
 					<app-action-bar [form]="birthDuplicateForm" [step]="'final'" (stepReset)="stepReset()" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
 				</mat-step>
 

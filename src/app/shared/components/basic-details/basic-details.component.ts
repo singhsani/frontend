@@ -16,6 +16,7 @@ export class BasicDetailsComponent implements OnInit {
 	}
 
 	ngOnInit() {
+		
 	}
 
 }
