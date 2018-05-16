@@ -29,11 +29,13 @@ import { PaymentGatewayComponent } from './components/payment-gateway/payment-ga
 import { BasicDetailsComponent } from './components/basic-details/basic-details.component';
 import { TitleBarComponent } from './components/title-bar/title-bar.component';
 import { LoadingIndicatorComponent } from './components/loading-indicator/loading-indicator.component';
+import { HighlightPipe } from './pipes/highlight.pipe';
 /* import pipes end*/
 
 const COMPONENTS = [
 	OnlyNumberDirective, 
 	InrPipe, 
+	HighlightPipe,
 	ActionBarComponent, 
 	ControlMessagesComponent, 
 	FileUploadComponent,

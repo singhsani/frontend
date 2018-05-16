@@ -31,16 +31,19 @@ import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/throw';
 
 /* import all component start */
-import { AppComponent } from './app.component'; // main app component
+import { AppComponent } from './app.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 /* import all component end */
 
 
 @NgModule({
 	declarations: [
 		AppComponent,
+		PageNotFoundComponent
 	],
 	imports: [
 		//AuthModule,
+		HospitalModule,
 		CitizenModule,
 		SharedModule,
 		CoreModule,

@@ -11,15 +11,23 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 
 import { ManageRoutes } from '../../../config/routes-conf';
 import { LoginThroughAdminComponent } from './login-through-admin/login-through-admin.component';
+import { LoginLayoutComponent } from './../../../layouts/login-layout/login-layout.component';
 
 const routes: Routes = [
-	{ path: '', redirectTo:ManageRoutes.getFullRoute('CITIZENAUTHLOGIN'), pathMatch: 'full' },
-	{ path:ManageRoutes.getFullRoute('CITIZENAUTHLOGIN'), component: LoginComponent },
-	{ path:ManageRoutes.getFullRoute('CITIZENAUTHSIGNUP'), component: SignUpComponent },
-	{ path:ManageRoutes.getFullRoute('CITIZENAUTHVERIFY'), component: UserVerificationComponent },
-	{ path:ManageRoutes.getFullRoute('CITIZENAUTHFORGOTPASS'), component: ForgotPasswordComponent },
-	{ path:ManageRoutes.getFullRoute('CITIZENAUTHRESETPASS'), component: ResetPasswordComponent },
-	{ path: ManageRoutes.getFullRoute('CITIZENAUTHLOGINTHROUGHADMIN') + '/:authToken/:apiCode', component: LoginThroughAdminComponent },
+
+	{
+		path: ManageRoutes.getPrefixRoute('CITIZENAUTHMODULE'), component: LoginLayoutComponent,
+		children: [
+			{ path: '', redirectTo: ManageRoutes.getMainRoute('CITIZENAUTHLOGIN'), pathMatch: 'full' },
+			{ path: ManageRoutes.getMainRoute('CITIZENAUTHLOGIN'), component: LoginComponent },
+			{ path: ManageRoutes.getMainRoute('CITIZENAUTHSIGNUP'), component: SignUpComponent },
+			{ path: ManageRoutes.getMainRoute('CITIZENAUTHVERIFY'), component: UserVerificationComponent },
+			{ path: ManageRoutes.getMainRoute('CITIZENAUTHFORGOTPASS'), component: ForgotPasswordComponent },
+			{ path: ManageRoutes.getMainRoute('CITIZENAUTHRESETPASS'), component: ResetPasswordComponent },
+			{ path: ManageRoutes.getMainRoute('CITIZENAUTHLOGINTHROUGHADMIN') + '/:authToken/:apiCode', component: LoginThroughAdminComponent },
+		]
+	},
+	
 ];
 
 @NgModule({

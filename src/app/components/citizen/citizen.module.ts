@@ -14,10 +14,8 @@ import { FireFacilitiesModule } from './fire-facilities/fire-facilities.module';
 import { GrievanceModule } from './grievance/grievance.module';
 /* Import all shared, core and routing module end */
 
-import { HomeLayoutComponent } from '../../layouts/home-layout/home-layout.component';
-import { LoginLayoutComponent } from '../../layouts/login-layout/login-layout.component';
-
 /* Import citizen components start */
+import { HomeLayoutComponent } from '../../layouts/home-layout/home-layout.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { MyResourceComponent } from './my-resource/my-resource.component';
 import { TransactionsComponent, TransactionDataDialog } from './transactions/transactions.component';
@@ -48,7 +46,6 @@ import { TaxModule } from './tax/tax.module';
 	],
 	declarations: [
 		HomeLayoutComponent,
-		LoginLayoutComponent,
 		DashboardComponent,
 		MyResourceComponent,
 		TransactionsComponent,
