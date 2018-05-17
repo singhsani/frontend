@@ -46,6 +46,13 @@ export class HttpService {
 				}
 			}
 
+		} else if(headerOptions == 'printReceipt'){
+			options = {
+				headers: new HttpHeaders({
+					"Authorization": "Bearer " + this.session.get("access_token").token,
+					"Content-Type": "application/json"
+				}), responseType: 'text'
+			}
 		} else {
 			options = {
 				headers: new HttpHeaders(headerOptions)

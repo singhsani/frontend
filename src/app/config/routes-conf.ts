@@ -229,12 +229,44 @@ const ROUTEMAIN = {
         'main': 'payment-gateway',
         'type': ''
     },
+    'TOWNHALL': {
+        'main': 'town-hall',
+        'type': 'townhall'
+    },
     'TOWNHALLLIST': {
         'main': 'list',
         'type': ''
     },
     'TOWNHALLBOOK': {
         'main': 'book',
+        'type': ''
+    },
+    'STADIUM': {
+        'main': 'stadium',
+        'type': 'stadium'
+    },
+    'STADIUMLIST': {
+        'main': 'stadium-list',
+        'type': ''
+    },
+    'THEATER': {
+        'main': 'theater',
+        'type': 'amphiTheater'
+    },
+    'THEATERLIST': {
+        'main': 'theater-list',
+        'type': ''
+    },
+    'GUESTHOUSE': {
+        'main': 'guest-house',
+        'type': 'guesthouse'
+    },
+    'GUESTHOUSELIST': {
+        'main': 'guest-house-list',
+        'type': ''
+    },
+    'CANCELBOOKING': {
+        'main': 'cancel-booking',
         'type': ''
     }
 }
@@ -473,6 +505,18 @@ const ROUTESLIST = {
     },
     'TOWNHALLBOOK': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.BOOKINGMODULE + '/' + ROUTEPREFIX.TOWNHALLMODULE + '/' + ROUTEMAIN.TOWNHALLBOOK.main
+    },
+    'STADIUMLIST': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.BOOKINGMODULE + '/' + ROUTEPREFIX.STADIUMMODULE + '/' + ROUTEMAIN.STADIUMLIST.main
+    },
+    'THEATERLIST': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.BOOKINGMODULE + '/' + ROUTEPREFIX.THEATERMODULE + '/' + ROUTEMAIN.THEATERLIST.main
+    },
+    'GUESTHOUSELIST': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.BOOKINGMODULE + '/' + ROUTEPREFIX.GUESTHOUSEMODULE + '/' + ROUTEMAIN.GUESTHOUSELIST.main
+    },
+    'CANCELBOOKING': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.BOOKINGMODULE + '/' + ROUTEMAIN.CANCELBOOKING.main
     }
 }
 

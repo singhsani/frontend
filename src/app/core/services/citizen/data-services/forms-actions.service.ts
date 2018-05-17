@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from '../../../../shared/services/http.service';
 import { Observable } from 'rxjs/Observable';
+import { SessionStorageService } from 'angular-web-storage';
 
 @Injectable()
 export class FormsActionsService {
@@ -12,7 +13,7 @@ export class FormsActionsService {
 	 * Constructor to declare defualt propeties of class.
 	 * @param http - Declare Http Service property.
 	 */
-	constructor(private http: HttpService) {
+	constructor(private http: HttpService, private session: SessionStorageService) {
 
 	}
 
@@ -78,7 +79,6 @@ export class FormsActionsService {
 
 	/**
 	 * This method is use to submit citizen form data to department
-	 * @param formData - citizen form data 
 	 * @param appId - citizen app id
 	 */
 	submitFormData(appId) {
@@ -86,6 +86,17 @@ export class FormsActionsService {
 		this.requestURL = `api/form/${this.apiType}/submit/${appId}`;
 
 		return this.http.post(this.requestURL, {});
+	}
+
+	/**
+	 * This method is use to generate print receipt
+	 * @param appId - citizen app id
+	 */
+	printReceipt(appId) {
+
+		this.requestURL = `api/form/${this.apiType}/printReceipt/${appId}`;
+
+		return this.http.get(this.requestURL, 'printReceipt');
 	}
 
 	/**

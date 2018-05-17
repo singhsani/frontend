@@ -6,6 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../../../shared/shared.module';
 import { CoreModule } from '../../../../core/core.module';
 import { TheaterRoutingModule } from './theater-routing.module';
+import { TheaterListComponent } from './theater-list/theater-list.component';
 /* Import all shared, core and routing module end */
 
 @NgModule({
@@ -17,6 +18,6 @@ import { TheaterRoutingModule } from './theater-routing.module';
 		ReactiveFormsModule,
 		TheaterRoutingModule
 	],
-	declarations: []
+	declarations: [TheaterListComponent]
 })
 export class TheaterModule { }

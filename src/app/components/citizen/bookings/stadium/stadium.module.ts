@@ -6,6 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../../../shared/shared.module';
 import { CoreModule } from '../../../../core/core.module';
 import { StadiumRoutingModule } from './stadium-routing.module';
+import { StadiumListComponent } from './stadium-list/stadium-list.component';
 /* Import all shared, core and routing module end */
 
 @NgModule({
@@ -17,6 +18,6 @@ import { StadiumRoutingModule } from './stadium-routing.module';
 		ReactiveFormsModule,
 		StadiumRoutingModule
 	],
-	declarations: []
+	declarations: [StadiumListComponent]
 })
 export class StadiumModule { }

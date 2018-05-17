@@ -8,6 +8,7 @@ import { HospitalGuard } from './guard/hospital.guard';
 import { AppService } from './services/citizen/app-services/app.service';
 import { PaginationService } from './services/citizen/data-services/pagination.service';
 import { FormsActionsService } from './services/citizen/data-services/forms-actions.service';
+import { BookingService } from './services/citizen/data-services/booking.service';
 /* import all citizen related services end */
 
 
@@ -23,7 +24,8 @@ import { FormsActionsService } from './services/citizen/data-services/forms-acti
 		HospitalGuard,
 		AppService,
 		PaginationService,
-		FormsActionsService
+		FormsActionsService,
+		BookingService
 	]
 })
 

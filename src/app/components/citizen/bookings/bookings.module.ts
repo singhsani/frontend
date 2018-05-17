@@ -7,6 +7,7 @@ import { MyDatePickerModule } from 'mydatepicker';
 import { SharedModule } from '../../../shared/shared.module';
 import { CoreModule } from '../../../core/core.module';
 import { BookingDashboardComponent } from './booking-dashboard/booking-dashboard.component';
+import { CancelBookingComponent } from './cancel-booking/cancel-booking.component';
 
 @NgModule({
   imports: [
@@ -18,6 +19,6 @@ import { BookingDashboardComponent } from './booking-dashboard/booking-dashboard
     MyDatePickerModule,
     CoreModule
   ],
-  declarations: [BookingDashboardComponent]
+  declarations: [BookingDashboardComponent, CancelBookingComponent]
 })
 export class BookingsModule { }

@@ -7,17 +7,16 @@ import { ManageRoutes } from '../../../../../config/routes-conf';
 import { BookingService } from '../../../../../core/services/citizen/data-services/booking.service';
 
 @Component({
-	selector: 'app-town-hall-list',
-	templateUrl: './town-hall-list.component.html',
-	styleUrls: ['./town-hall-list.component.scss']
+	selector: 'app-theater-list',
+	templateUrl: './theater-list.component.html',
+	styleUrls: ['./theater-list.component.scss']
 })
-export class TownHallListComponent implements OnInit {
+export class TheaterListComponent implements OnInit {
 
-	searchTownHallForm: FormGroup;
-	townHalls: Array<any> = [];
+	searchTheaterForm: FormGroup;
+	theaters: Array<any> = [];
 	availableStots: Array<any> = [];
 	displayedColumns: Array<string> = ['id', 'start', 'end', 'slotStatus'];
-	translateKey: string = 'townHallListScreen';
 
 	constructor(
 		private fb: FormBuilder,
@@ -25,20 +24,20 @@ export class TownHallListComponent implements OnInit {
 		private toster: ToastrService,
 		private router: Router
 	) {
-		this.bookingService.resourceType = 'townhall';
+		this.bookingService.resourceType = 'amphiTheater';
 	}
 
 	ngOnInit() {
 
-		this.searchTownHallForm = this.fb.group({
-			code: 'TOWNHALL-1',
+		this.searchTheaterForm = this.fb.group({
+			code: '',
 			date: moment().add(1,'day').format("YYYY-MM-DD")
 		});
 
 		this.bookingService.getResourceList().subscribe(res => {
-			this.townHalls = res.data;
+			this.theaters = res.data;
 			if (res.data.length) {
-				this.searchTownHallForm.get('code').setValue(res.data[0].code);
+				this.searchTheaterForm.get('code').setValue(res.data[0].code);
 				this.searchBooking();
 			}
 		},
@@ -49,8 +48,8 @@ export class TownHallListComponent implements OnInit {
 	}
 
 	searchBooking() {
-		let resourceName = this.searchTownHallForm.value.code;
-		let date = moment(this.searchTownHallForm.value.date).format("YYYY-MM-DD");
+		let resourceName = this.searchTheaterForm.value.code;
+		let date = moment(this.searchTheaterForm.value.date).format("YYYY-MM-DD");
 		this.bookingService.getAllSlots(resourceName, date).subscribe(res => {
 			this.availableStots = res.data;
 		}, err => {
@@ -67,4 +66,5 @@ export class TownHallListComponent implements OnInit {
 			this.toster.error(err.message);
 		});
 	}
+
 }
