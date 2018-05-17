@@ -22,6 +22,7 @@ import { ManageRoutes } from '../../../../config/routes-conf';
 export class LoginComponent implements OnInit {
 
 	loginForm: FormGroup;
+	isValidFlag: boolean = false;
 	manageRoutes: any = ManageRoutes;
 
 	/**
@@ -53,8 +54,8 @@ export class LoginComponent implements OnInit {
 		}
 
 		this.loginForm = this.fb.group({
-			username: '',
-			password: ''
+			username: [null, Validators.required],
+			password: [null, Validators.required]
 		});
 
 	}
@@ -65,14 +66,21 @@ export class LoginComponent implements OnInit {
 	 */
 	onLoginSubmit(formVals: FormGroup) {
 
-		this.appService.obtainAccessToken(formVals).subscribe(
-			res => {
-				this.saveToken(res);
-			},
-			err => {
-				this.toster.error(err.error.error_description);
-			}
-		);
+		this.isValidFlag = false;
+
+		if(this.loginForm.valid){
+			this.appService.obtainAccessToken(formVals).subscribe(
+				res => {
+					this.saveToken(res);
+				},
+				err => {
+					this.toster.error(err.error.error_description);
+				}
+			);
+		}else{
+			this.isValidFlag = true;
+		}
+		
 	}
 
 	/**

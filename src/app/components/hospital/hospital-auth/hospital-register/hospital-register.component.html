@@ -5,45 +5,46 @@
 			<span>Sign up by entering the information below</span>
 		</div>
 		<form [formGroup]="regForm" (ngSubmit)="onSignUp(regForm.value)" autocomplete="off" ngNativeValidate>
-			<mat-form-field class="col-md-6 iconMat">
-				<mat-icon matPrefix>face</mat-icon>
-				<input matInput type="text" placeholder="HospitalName" formControlName="hospitalName" required>
-			</mat-form-field>
+			<div class="row">
+				<mat-form-field class="col-md-6 iconMat">
+					<mat-icon matPrefix>face</mat-icon>
+					<input matInput type="text" placeholder="HospitalName" formControlName="hospitalName" required>
+					<control-messages [control]="regForm.controls.hospitalName"></control-messages>
+				</mat-form-field>
 
-			<mat-form-field class="col-md-5">
-				<mat-select placeholder="Hospital Type" name="relation" formControlName="hospitalType">
-					<mat-option value="GOVERNMENT">GOVERNMENT</mat-option>
-					<mat-option value="PRIVATE">PRIVATE</mat-option>
-				</mat-select>
-			</mat-form-field>
-
-			<div class="row ml-4">
-				<mat-label class="col-md-4">Nursing Home</mat-label>
-				<mat-radio-group class="col-md-6 example-radio-group" formControlName="nursingHome">
-					<mat-radio-button value="true">YES</mat-radio-button>
-					<mat-radio-button value="false">NO</mat-radio-button>
-				</mat-radio-group>
+				<mat-form-field class="col-md-6 iconMat">
+					<mat-select placeholder="Hospital Type" name="relation" formControlName="hospitalType">
+						<mat-option value="GOVERNMENT">GOVERNMENT</mat-option>
+						<mat-option value="PRIVATE">PRIVATE</mat-option>
+					</mat-select>
+					<control-messages [control]="regForm.controls.hospitalType"></control-messages>
+				</mat-form-field>
 			</div>
+
 
 			<div class="row" formGroupName="userDetail">
 				<mat-form-field class="col-md-6 iconMat">
 					<mat-icon matPrefix>face</mat-icon>
 					<input matInput type="text" placeholder="Firstname" formControlName="firstName" required>
+					<control-messages [control]="regForm.controls.userDetail.controls.firstName"></control-messages>
 				</mat-form-field>
 
 				<mat-form-field class="col-md-6 iconMat">
 					<mat-icon matPrefix>face</mat-icon>
 					<input matInput type="text" placeholder="Lastname" formControlName="lastName" required>
+					<control-messages [control]="regForm.controls.userDetail.controls.lastName"></control-messages>
 				</mat-form-field>
 
 				<mat-form-field class="col-md-6 iconMat">
 					<mat-icon matPrefix>mail_outline</mat-icon>
 					<input matInput type="email" placeholder="Email" formControlName="email" required>
+					<control-messages [control]="regForm.controls.userDetail.controls.email"></control-messages>
 				</mat-form-field>
 
 				<mat-form-field class="col-md-6 iconMat">
 					<mat-icon matPrefix>phone_android</mat-icon>
-					<input matInput type="number" placeholder="Cell Number" formControlName="cellNo" required>
+					<input matInput type="tel" placeholder="Cell Number" formControlName="cellNo" minlength="10" maxlength="10" required>
+					<control-messages [control]="regForm.controls.userDetail.controls.cellNo"></control-messages>
 				</mat-form-field>
 
 				<mat-form-field class="col-md-6 iconMat">
@@ -53,8 +54,19 @@
 
 				<mat-form-field class="col-md-6 iconMat">
 					<mat-icon matPrefix>lock_outline</mat-icon>
-					<input matInput type="password" placeholder="Password" formControlName="confirmPassword" required>
+					<input matInput type="password" placeholder="Confirm Password" formControlName="confirmPassword" required>
 				</mat-form-field>
+				<div class="col-md-12 float-right">
+					<mat-error class="col-md-6 float-right" *ngIf="regForm.errors?.mismatchedPasswords">Password not match</mat-error>
+				</div>
+			</div>
+
+			<div class="row p-2">
+				<mat-label class="col-md-4">Nursing Home</mat-label>
+				<mat-radio-group class="col-md-6 example-radio-group" formControlName="nursingHome">
+					<mat-radio-button value="true">YES</mat-radio-button>
+					<mat-radio-button value="false">NO</mat-radio-button>
+				</mat-radio-group>
 			</div>
 
 			<div class="text-center">

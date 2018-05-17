@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SessionStorageService } from 'angular-web-storage';
 
+import { ValidationService } from './../../../../shared/services/validation.service';
 import { AppService } from '../../../../core/services/citizen/app-services/app.service';
 import { ManageRoutes } from '../../../../config/routes-conf';
 
@@ -29,8 +30,8 @@ export class ForgotPasswordComponent implements OnInit {
 
 	ngOnInit() {
 		this.forgotPassForm = this.fb.group({
-			email: '',
-			cellNo: '',
+			email: [null, [Validators.required, ValidationService.emailValidator]],
+			//cellNo: '',
 			userType: 'CITIZEN'
 		});
 	}

@@ -129,6 +129,14 @@ export class FormsActionsService {
 	}
 
 	/**
+	 * This method is used to update user profile data
+	 */
+	updateUserProfile(formData) {
+
+		return this.http.post('api/user/update', formData);
+	}
+
+	/**
 	 * This method is use for get user services
 	 */
 	getUserServices(){

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AbstractControl, FormControl } from '@angular/forms';
 import * as moment from 'moment';
+import * as _ from 'lodash';
 
 @Injectable()
 export class ValidationService {
@@ -10,10 +11,10 @@ export class ValidationService {
      * @param validatorName - get form controls name eg. firstName, etc..
      * @param validatorValue - get validators type eg. required, maxlength, etc..
      */
-    static getValidatorErrorMessage(validatorName: string, validatorValue?: any) {
+    static getValidatorErrorMessage(controlName ,validatorName: string, validatorValue?: any) {
         let config = {
             // error list
-            required: 'Required',
+            required: `${_.startCase(controlName)} is Required`,
             namelengtherror: 'Name must be at least 2 characters long.',
             namecharerror: 'Not include numeric character.',
             invalidCreditCard: 'Is invalid credit card number',
@@ -25,7 +26,7 @@ export class ValidationService {
             invalidNumberEntry: 'Enter only Number',
             minlength: `Minimum length ${validatorValue.requiredLength} characters`,
             maxlength: `Cannot exceed ${validatorValue.requiredLength} characters`,
-            invalidName: `Pattern Is Not Valid`,
+            invalidName: `${_.startCase(controlName)} Is Not Valid`,
             invalidPinCode: `Pin Code Not Valid`,
             invalidAadhar: `Aadhar Number is not valid`,
             invalidNumber: `Mobile Number Not Valid`,

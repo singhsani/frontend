@@ -1,6 +1,7 @@
+import { ValidationService } from './../../../../shared/services/validation.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormGroup, FormBuilder, Validator } from '@angular/forms';
+import { FormGroup, FormBuilder, Validator, Validators } from '@angular/forms';
 
 import { HosAppService } from './../../../../core/services/hospital/app-services/hos-app.service';
 import { ManageRoutes } from '../../../../config/routes-conf';
@@ -35,18 +36,41 @@ export class HospitalRegisterComponent implements OnInit {
 	ngOnInit() {
 
 		this.regForm = this.fb.group({
-			hospitalName: null,
-			hospitalType: null,
+			hospitalName: [null, Validators.required],
+			hospitalType: [null, Validators.required],
 			nursingHome: true,
 			userDetail: this.fb.group({
-				firstName: null,
-				lastName: null,
-				email: null,
+				firstName: [null, [Validators.required, ValidationService.nameValidator]],
+				lastName: [null, [Validators.required, ValidationService.nameValidator]],
+				email: [null, [Validators.required, ValidationService.emailValidator]],
 				cellNo: null,
-				password: null,
-				confirmPassword: null
+				password: [null, Validators.required],
+				confirmPassword: [null, Validators.required]
 			})
-		})
+		}, { validator: this.matchingPasswords('password', 'confirmPassword') });
+	}
+
+	/**
+	 * This method used to compare passwords
+	 * @param passwordKey - Password
+	 * @param confirmPasswordKey - Confirm Password
+	 */
+	matchingPasswords(passwordKey: string, confirmPasswordKey: string) {
+		return (group: FormGroup): { [key: string]: any } => {
+			let password = group.get('userDetail').get(passwordKey);
+			let confirmPassword = group.get('userDetail').get(confirmPasswordKey);
+
+			if (confirmPassword.value) {
+				if (password.value !== confirmPassword.value) {
+					this.regForm.get('userDetail').get('confirmPassword').setErrors({ mismatchedPasswords: true });
+					return {
+						mismatchedPasswords: true
+					};
+				} else {
+					this.regForm.get('userDetail').get('confirmPassword').setErrors(null);
+				}
+			}
+		}
 	}
 
 	/**
