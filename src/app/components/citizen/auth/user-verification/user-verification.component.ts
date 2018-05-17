@@ -39,7 +39,7 @@ export class UserVerificationComponent implements OnInit {
 
 		this.verifyForm = this.fb.group({
 			uniqueId: '',
-			code: ''
+			code: ['', Validators.required]
 		});
 
 		//  get the values from queryparams

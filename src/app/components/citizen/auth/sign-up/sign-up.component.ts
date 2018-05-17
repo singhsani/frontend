@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormGroup, FormBuilder, Validator } from '@angular/forms';
+import { FormGroup, FormBuilder, Validator, Validators, AbstractControl } from '@angular/forms';
 
+import { ValidationService } from './../../../../shared/services/validation.service';
 import { AppService } from '../../../../core/services/citizen/app-services/app.service';
 import { ManageRoutes } from '../../../../config/routes-conf';
 import { ToastrService } from 'ngx-toastr';
@@ -27,22 +28,45 @@ export class SignUpComponent implements OnInit {
 		private fb: FormBuilder,
 		private appService: AppService,
 		private toster: ToastrService
-	) {
-
-	}
+	) { }
 
 	ngOnInit() {
+
 		this.regForm = this.fb.group({
-			firstName: '',
-			lastName: '',
-			email: '',
-			cellNo: '',
-			password: '',
-			confirmPassword: '',
+			firstName: [null, [Validators.required, ValidationService.nameValidator]],
+			lastName: [null, [Validators.required, ValidationService.nameValidator]],
+			email: [null, [Validators.required, ValidationService.emailValidator]],
+			cellNo: [null, Validators.required],
+			password: [null, Validators.required],
+			confirmPassword: [null, Validators.required],
 			userType: "CITIZEN",
 			registerBy: null
-		});
+		}, { validator: this.matchingPasswords('password', 'confirmPassword') });
 	}
+
+	/**
+	 * This method used to compare passwords
+	 * @param passwordKey - Password
+	 * @param confirmPasswordKey - Confirm Password
+	 */
+	matchingPasswords(passwordKey: string, confirmPasswordKey: string) {
+		return (group: FormGroup): { [key: string]: any } => {
+			let password = group.controls[passwordKey];
+			let confirmPassword = group.controls[confirmPasswordKey];
+
+			if (confirmPassword.value) {
+				if (password.value !== confirmPassword.value) {
+					this.regForm.get('confirmPassword').setErrors({ mismatchedPasswords: true });
+					return {
+						mismatchedPasswords: true
+					};
+				}else{
+					this.regForm.get('confirmPassword').setErrors(null);
+				}
+			}
+		}
+	}
+
 
 	/**
 	 * This method is used to register a new user.

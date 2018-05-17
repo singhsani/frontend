@@ -3,16 +3,18 @@
 		<div class="headingBox">Welcome !
 			<span>Login by entering the information below</span>
 		</div>
-		<form [formGroup]="loginForm" (ngSubmit)="onLoginSubmit(loginForm.value)" autocomplete="off" ngNativeValidate>
+		<form [formGroup]="loginForm" (ngSubmit)="onLoginSubmit(loginForm.value)" autocomplete="off" ngNativeValidate novalidate>
 
 			<mat-form-field class="iconMat">
 				<mat-icon matPrefix>face</mat-icon>
 				<input matInput type="text" placeholder="Email / Mobile" formControlName="username" required>
+				<mat-error *ngIf="isValidFlag">Username is Reuired</mat-error>
 			</mat-form-field>
 
 			<mat-form-field class="iconMat">
 				<mat-icon matPrefix>lock_outline</mat-icon>
 				<input matInput type="password" placeholder="Password" formControlName="password" required>
+				<mat-error *ngIf="isValidFlag">Password is Reuired</mat-error>
 			</mat-form-field>
 
 			<div class="text-center">

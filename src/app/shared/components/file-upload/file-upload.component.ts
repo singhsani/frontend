@@ -35,14 +35,11 @@ export class FileUploadComponent implements OnInit {
 	//file and image  upload
 	priviewImage = '#';
 
-	@Input()
-	uploadModel: any;
+	@Input() uploadModel: any;
 
-	@Input()
-	prevMode: boolean;
+	@Input() prevMode: boolean;
 
-	@Input()
-	attachments: any[];
+	@Input() attachments: any[];
 
 	fileType: string;
 	imagetype: boolean = false;

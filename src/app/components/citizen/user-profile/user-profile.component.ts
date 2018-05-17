@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, FormBuilder, Validator } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, Validator, Validators } from '@angular/forms';
 
+import { ToastrService } from 'ngx-toastr';
+import { ValidationService } from './../../../shared/services/validation.service';
 import { FormsActionsService } from './../../../core/services/citizen/data-services/forms-actions.service';
 
 @Component({
@@ -20,16 +22,20 @@ export class UserProfileComponent implements OnInit {
 	 * @param formService - Declare form Service property.
 	 * @param fb - Declare formbuilder property.
 	*/
-	constructor(private fb: FormBuilder, private formService: FormsActionsService) { }
+	constructor(
+		private fb: FormBuilder,
+		private formService: FormsActionsService,
+		private toaster: ToastrService) 
+	{ }
 
 	ngOnInit() {
 
 		this.userProfileForm = this.fb.group({
 			uniqueId: '',
-			firstName: '',
-			lastName: '',
-			email: '',
-			cellNo: '',
+			firstName: [null, [Validators.required, ValidationService.nameValidator]],
+			lastName: [null, [Validators.required, ValidationService.nameValidator]],
+			email: [null, [Validators.required, ValidationService.emailValidator]],
+			cellNo: [null, Validators.required],
 			userType: '',
 			status: ''
 		});
@@ -51,8 +57,10 @@ export class UserProfileComponent implements OnInit {
 	 * This method used to update profile
 	 * @param formVals - user profile formGroup value
 	 */
-	onSubmitProfile(formVals: FormGroup){
-
+	onSubmitProfile(formVals: FormGroup) {
+		this.formService.updateUserProfile(formVals).subscribe(res => {
+			this.toaster.success('Your profile has been updated successfully');
+		});
 	}
 
 }

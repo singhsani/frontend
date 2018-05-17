@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild, OnChanges, SimpleChanges, SimpleChange } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, OnChanges, SimpleChanges } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import * as _ from 'lodash';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -44,15 +44,11 @@ export class ActionBarComponent implements OnChanges, OnInit {
 	ngOnChanges(changes: SimpleChanges) {
 
 		setTimeout(()=>{
-			const form: SimpleChange = changes.form;
-			
-			console.log(changes.form.currentValue.value.canEdit);
 			if (changes.form.currentValue.value.canEdit !== null && !changes.form.currentValue.value.canEdit) {
 				this.form.disable();
 				this.isBtnsDisabled = true;
 			}
 		},300);
-	
 
 	}
 
@@ -94,6 +90,8 @@ export class ActionBarComponent implements OnChanges, OnInit {
 			this.formService.submitFormData(this.form.get('serviceFormId').value).subscribe(res => {
 				this.toastr.success(`${this.form.value.serviceDetail.name} information successfully submit`);
 				this.isSubmitBtnDisabled = false;
+				this.isBtnsDisabled = true;
+				this.form.disable();
 			},
 				err => {
 					this.isSubmitBtnDisabled = false;

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { SessionStorageService } from 'angular-web-storage';
 
 import { AppService } from '../../../../core/services/citizen/app-services/app.service';
@@ -36,11 +36,11 @@ export class ResetPasswordComponent implements OnInit {
 	ngOnInit() {
 
 		this.resetPassForm = this.fb.group({
-			code: '',
-			password: '',
-			confirmPassword: '',
+			code: ['', Validators.required],
+			password: [null, Validators.required],
+			confirmPassword: [null, Validators.required],
 			uniqueId: ''
-		});
+		}, { validator: this.matchingPasswords('password', 'confirmPassword') });
 
 		//  get the values from queryparams
 		this.route.queryParams.subscribe(params => {
@@ -57,6 +57,30 @@ export class ResetPasswordComponent implements OnInit {
 		});
 
 	}
+
+	/**
+	 * This method used to compare passwords
+	 * @param passwordKey - Password
+	 * @param confirmPasswordKey - Confirm Password
+	 */
+	matchingPasswords(passwordKey: string, confirmPasswordKey: string) {
+		return (group: FormGroup): { [key: string]: any } => {
+			let password = group.controls[passwordKey];
+			let confirmPassword = group.controls[confirmPasswordKey];
+
+			if (confirmPassword.value) {
+				if (password.value !== confirmPassword.value) {
+					this.resetPassForm.get('confirmPassword').setErrors({ mismatchedPasswords: true });
+					return {
+						mismatchedPasswords: true
+					};
+				} else {
+					this.resetPassForm.get('confirmPassword').setErrors(null);
+				} 
+			}
+		}
+	}
+
 
 	/**
 	 * This method is used to reset user password

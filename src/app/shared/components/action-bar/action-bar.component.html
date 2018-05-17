@@ -2,6 +2,7 @@
 	<div class="col-sm-12 col-md-12">
 
 		<button *ngIf="step != 'step1'" mat-raised-button class="liteGrayBtn" matStepperPrevious>{{'back' | translate:translateKey}}</button>
+		<button *ngIf="isBtnsDisabled" mat-raised-button color="primary" matStepperNext>{{'next' | translate:translateKey}}</button>
 
 		<button mat-raised-button color="primary"  [disabled]="isSaveBtnDisabled || isBtnsDisabled" (click)="saveAsDraft()" matStepperNext>{{step == 'final'? 'save' : 'save_and_next' | translate:translateKey}}</button>
 
