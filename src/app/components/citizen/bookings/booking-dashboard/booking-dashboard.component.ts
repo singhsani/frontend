@@ -1,15 +1,18 @@
 import { Component, OnInit } from '@angular/core';
+import { ManageRoutes } from '../../../../config/routes-conf';
 
 @Component({
-  selector: 'app-booking-dashboard',
-  templateUrl: './booking-dashboard.component.html',
-  styleUrls: ['./booking-dashboard.component.scss']
+	selector: 'app-booking-dashboard',
+	templateUrl: './booking-dashboard.component.html',
+	styleUrls: ['./booking-dashboard.component.scss']
 })
 export class BookingDashboardComponent implements OnInit {
 
-  constructor() { }
+	manageRoutes:any = ManageRoutes;
 
-  ngOnInit() {
-  }
+	constructor() { }
+
+	ngOnInit() {
+	}
 
 }

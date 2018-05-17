@@ -36,7 +36,6 @@ export class MyApplicationsComponent implements OnInit {
 	resultsLength: number = 0;
 	pageSize: number = 20;
 	isLoadingResults: boolean = true;
-	isRateLimitReached: boolean = false;
 
 	appType: string = 'myApps';
 
@@ -73,23 +72,22 @@ export class MyApplicationsComponent implements OnInit {
 				}),
 				map(data => {
 					this.isLoadingResults = false;
-					this.isRateLimitReached = false;
 					this.resultsLength = data.totalRecords;
 					return data.data;
 				}),
 				catchError(() => {
 					this.isLoadingResults = false;
-					this.isRateLimitReached = true;
 					return observableOf([]);
 				})
 			).subscribe(data => {
 				this.dataSource.data = data;
 			}
-			);
+		);
 	}
 
 	/**
 	 * This method is used to redirect on citizen form.
+	 * @param id citizen api code
 	 * @param id - citizen id 
 	 */
 	redirectToEdit(apiCode: string, id: number) {
@@ -99,6 +97,7 @@ export class MyApplicationsComponent implements OnInit {
 
 	/**
 	 * This method use to delete citizen record.
+	 * @param id citizen api code
 	 * @param id citizen id
 	 */
 	deleteRecord(apiCode: string, id: number) {
@@ -120,6 +119,7 @@ export class MyApplicationsComponent implements OnInit {
 
 	/**
 	 * This method use to delete citizen record.
+	 * @param id citizen api code
 	 * @param id citizen api name
 	 * @param id citizen id
 	 */
@@ -136,6 +136,32 @@ export class MyApplicationsComponent implements OnInit {
 				}
 			);
 		});
+
+	}
+
+	/**
+	 * This method use to delete citizen record.
+	 * @param id citizen api code
+	 * @param id citizen api name
+	 * @param id citizen id
+	 */
+	printReceipt(apiCode: string, apiName: string, id: number) {
+
+		this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);
+		this.formService.printReceipt(id).subscribe(
+			res => {
+				let data = res;
+				let Pagelink = "about:blank";
+				var pwa = window.open(Pagelink, "_new");
+				pwa.document.open();
+
+				pwa.document.write(data);
+				pwa.print();
+			},
+			err => {
+				//this.commonService.successAlert('Error!', err.error[0].message, 'error');
+			}
+		);
 
 	}
 

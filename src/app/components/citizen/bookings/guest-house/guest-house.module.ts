@@ -6,6 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../../../shared/shared.module';
 import { CoreModule } from '../../../../core/core.module';
 import { GuestHouseRoutingModule } from './guest-house-routing.module';
+import { GuestHouseListComponent } from './guest-house-list/guest-house-list.component';
 /* Import all shared, core and routing module end */
 
 @NgModule({
@@ -17,6 +18,6 @@ import { GuestHouseRoutingModule } from './guest-house-routing.module';
 		ReactiveFormsModule,
 		GuestHouseRoutingModule
 	],
-	declarations: []
+	declarations: [GuestHouseListComponent]
 })
 export class GuestHouseModule { }
