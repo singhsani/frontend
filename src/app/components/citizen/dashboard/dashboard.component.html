@@ -15,7 +15,8 @@
             </mat-expansion-panel-header>
 
             <div class="row">
-                <div class="col-md-4 pt-4 pb-1 text-center bg-light" *ngFor="let service of module.services;">
+                <!-- <div class="col-md-4 pt-4 pb-1 text-center bg-light" *ngFor="let service of module.services;"> -->
+                <div class="col-12 col-sm-6 col-md-6 col-lg-4 pb-4 text-center dashboardList" *ngFor="let service of module.services;">
                     <mat-card>
                         <mat-icon>account_circle</mat-icon>
                         <mat-card-title innerHTML="{{ service.name +' / '+ service.gujName | highlight : search }}"></mat-card-title>

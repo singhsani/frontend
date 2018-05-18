@@ -1,6 +1,9 @@
 <div class="mainBg">
-	<mat-card class="verticalAlign borderRadius10">                   
-				<div class="headingBox">Register<span>Sign up by entering the information below</span></div>
+		<div class="verticalAlign">
+			<mat-card class="borderRadius10">
+				<div class="headingBox">Register
+					<span>Sign up by entering the information below</span>
+				</div>
 				<form name="user-verify-form" [formGroup]="verifyForm" (ngSubmit)="verifyUser(verifyForm.value)" autocomplete="off" ngNativeValidate>
 
 					<mat-form-field class="example-full-width">
@@ -13,5 +16,6 @@
 					</button>
 				</div>
 				</form>
-		</mat-card>
-</div>
+			</mat-card>
+		</div>
+	</div>

@@ -1,9 +1,9 @@
 <div class="mainBg">
-
-	<mat-card class="verticalAlign borderRadius10 signUp">
-		<div class="headingBox">Register
-			<span>Sign up by entering the information below</span>
-		</div>
+		<div class="verticalAlign signUp">
+			<mat-card class="borderRadius10">
+				<div class="headingBox">Register
+					<span>Sign up by entering the information below</span>
+				</div>
 		<form [formGroup]="regForm" (ngSubmit)="onSignUp(regForm.value)" autocomplete="off" novalidate>
 
 			<mat-form-field class="iconMat">
@@ -55,5 +55,5 @@
 		</form>
 
 	</mat-card>
-
+</div>
 </div>

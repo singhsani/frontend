@@ -1,8 +1,20 @@
 <div class="mainBg">
-    <mat-card class="verticalAlign borderRadius10">
-        <div class="headingBox">Welcome !
-            <span>Login by entering the information below</span>
-        </div>
+        <div class="verticalAlign">
+            <header class="header clearfix">
+                <button mat-button class="logo">
+                    <img src="../../../assets/images/vmc-logo.png" alt="Vadodara Municipal Corporation">
+                    <span class="logoName">VADODARA MUNICIPAL
+                        <br>CORPORATION</span>
+                </button>
+                <ul>
+                    <li>
+                        <a mat-button routerLink=".">Home</a>
+                    </li>
+                </ul>
+            </header>
+            <mat-card class="borderRadius10">
+                <div class="headingBox">Welcome !<span>Login by entering the information below</span>
+                </div>
         <form [formGroup]="loginForm" (ngSubmit)="onLoginSubmit(loginForm.value)" autocomplete="off" ngNativeValidate novalidate>
 
             <mat-form-field class="iconMat">
@@ -36,6 +48,6 @@
         </form>
 
     </mat-card>
-
-
+    <footer class="footer">&copy; 2018, made by Nascent Infotech</footer>
+</div>
 </div>
