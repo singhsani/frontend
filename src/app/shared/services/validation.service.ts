@@ -22,15 +22,15 @@ export class ValidationService {
             invalidPassword: 'Invalid password. Password must be at least 6 characters long, and contain a number.',
             invalidemarrigedate: 'Required and Should not be future date!',
             invalideDate: 'Date Invalid',
-            invalidAadharno: 'Aadhar Number must be 12',
+            invalidAadharno: 'Aadhar Number length should be 12',
             invalidNumberEntry: 'Enter only Number',
             minlength: `Minimum length ${validatorValue.requiredLength} characters`,
             maxlength: `Cannot exceed ${validatorValue.requiredLength} characters`,
             invalidName: `${_.startCase(controlName)} Is Not Valid`,
             invalidPinCode: `Pin Code Not Valid`,
-            invalidAadhar: `Aadhar Number is not valid`,
-            invalidNumber: `Mobile Number Not Valid`,
-            invalidpregnanceTime: 'Pregnancy duration incorrect',
+            invalidAadhar: `Invalid Aadhar Number`,
+            invalidNumber: `Invalid Mobile Number`,
+            invalidpregnanceTime: 'Pregnancy duration between 25 to 50',
             invalidbirthRegNumber:'Invalid Birth Registration Date.'
         }
 
@@ -87,19 +87,23 @@ export class ValidationService {
 
     static aadharValidation(control: AbstractControl) {
         // RFC 2822 compliant regex
-        if (control.value && control.value.match(/^[0-9]{12,12}$/)) {
-            return '';
+        if (control.value ) {
+            const matches = control.value.match(/^[0-9]{12,12}$/);
+            return matches ? null : { 'invalidAadhar': true };
         } else {
-            return { 'invalidAadhar': true };
+            return null;
         }
     }
 
+   
+
     static mobileNumberValidation(control: AbstractControl) {
         // RFC 2822 compliant regex
-        if (control.value && control.value.match(/^[0-9]{10,10}$/)) {
-            return '';
+        if (control.value) {
+            const matches = control.value.match(/^[0-9]{10,10}$/);
+            return matches ? null : { 'invalidNumber': true };
         } else {
-            return { 'invalidNumber': true };
+            return null;
         }
     }
 

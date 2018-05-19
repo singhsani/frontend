@@ -27,19 +27,19 @@ export class BirthDuplicateComponent implements OnInit {
 	BirthRegYears = [
 		{
 			id: "2008",
-			code: "2008",
+			code: 2008,
 			name: "2008"
 
 		},
 		{
 			id: "2009",
-			code: "2009",
+			code: 2009,
 			name: "2009"
 
 		},
 		{
 			id: "2010",
-			code: "2010",
+			code: 2010,
 			name: "2010"
 
 		},
@@ -51,42 +51,42 @@ export class BirthDuplicateComponent implements OnInit {
 		},
 		{
 			id: "2012",
-			code: "2012",
+			code: 2012,
 			name: "2012"
 
 		}, {
 			id: "2013",
-			code: "2013",
+			code: 2013,
 			name: "2013"
 
 		},
 		{
 			id: "2014",
-			code: "2014",
+			code: 2014,
 			name: "2014"
 
 		},
 		{
 			id: "2015",
-			code: "2015",
+			code: 2015,
 			name: "2015"
 
 		},
 		{
 			id: "2016",
-			code: "2016",
+			code: 2016,
 			name: "2016"
 
 		},
 		{
 			id: "2017",
-			code: "2017",
+			code: 2017,
 			name: "2017"
 
 		},
 		{
 			id: "2018",
-			code: "2018",
+			code: 2018,
 			name: "2018"
 
 		}
@@ -126,6 +126,7 @@ export class BirthDuplicateComponent implements OnInit {
 	 */
 	getBirthDuplicateData() {
 		this.formService.getFormData(this.appId).subscribe(res => {
+			console.log(res);
 			this.birthDuplicateForm.patchValue(res);
 		});
 	}
@@ -165,7 +166,7 @@ export class BirthDuplicateComponent implements OnInit {
 			birthRegDate: [null, Validators.required],
 			childName: [null, [Validators.required, ValidationService.nameValidator]],
 			duplicateCopies: this.fb.group({
-				code: [null,[Validators.required]],
+				code: [null, [Validators.required]],
 				id: null,
 				name: null,
 			}),

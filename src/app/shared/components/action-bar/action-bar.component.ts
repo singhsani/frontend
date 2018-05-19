@@ -61,6 +61,7 @@ export class ActionBarComponent implements OnChanges, OnInit {
 
 		this.formService.saveFormData(this.form.value).subscribe(
 			res => {
+				this.form.patchValue(res);
 				this.isSaveBtnDisabled = false;
 				this.toastr.success(`${this.form.value.serviceDetail.name} information successfully saved`);
 			},
