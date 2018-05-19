@@ -11,10 +11,10 @@ export class TranslatePipe implements PipeTransform {
 		private translateService: TranslateService
 	) { }
 
-	transform(value: string, args?: string): string {
+	transform(value: string, args?: string, lang?: string): string {
 
 		if(args){
-			return this.translateService.translate(value, args);
+			return this.translateService.translate(value, args, lang);
 		} else {
 
 		}

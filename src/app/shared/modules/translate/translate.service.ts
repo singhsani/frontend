@@ -53,9 +53,13 @@ export class TranslateService {
 	 * This method is use for convert all key in to the current selected language.
 	 * @param key - Particular key to identify language conversion - Type(STRING);
 	 */
-	translate(key: string, type?: string) {
+	translate(key: string, type?: string, lang?: string) {
 		
 		this.setCurrentLanguage();
+		
+		if(lang){
+			return _.get(this.data, `${type}.${key}.${lang}`, key);
+		}
 
 		if(_.has(this.data, type)){
 			return _.get(this.data, `${type}.${key}.${this.currentLanguage}`, key);

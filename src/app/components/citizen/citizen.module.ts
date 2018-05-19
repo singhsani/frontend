@@ -22,6 +22,7 @@ import { TransactionsComponent, TransactionDataDialog } from './transactions/tra
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { MyApplicationsComponent } from './my-applications/my-applications.component';
 import { TaxModule } from './tax/tax.module';
+import { GujPocComponent } from './guj-poc/guj-poc.component';
 /* Import citizen components end */
 
 
@@ -52,6 +53,7 @@ import { TaxModule } from './tax/tax.module';
 		TransactionDataDialog,
 		UserProfileComponent,
 		MyApplicationsComponent,
+		GujPocComponent,
 		
 	]
 })

@@ -1,0 +1,21 @@
+<div class="container pt-4">
+    <div class="row pt-1 pb-2">
+        <h4>Solution 1:</h4>
+        <div class="col-md-12">
+            <input name="testEng" (change)="converToGuj()" [(ngModel)]="testEng">
+            <input id="testGuj" name="testGuj" [(ngModel)]="testGuj" (change)="converToSelf()">
+        </div>
+    </div>
+    <!-- <div class="row pt-1 pb-2">
+		<h4>Solution 2:</h4>
+        <div class="col-md-12">
+            <input [matKeyboard]="'gu'" [(ngModel)]="testKeyBoard">
+		</div>
+	</div> -->
+    <!-- <div class="row pt-1 pb-2">
+        <h4>Solution 2:</h4>
+        <div class="col-md-12">
+            <input [(ngModel)]="testKeyBoard" id="bar" rows="4" (keydown)="transcrire()">
+        </div>
+    </div> -->
+</div>

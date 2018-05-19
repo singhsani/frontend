@@ -27,6 +27,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatKeyboardModule } from '@ngx-material-keyboard/core';
 
 const COMPONENTS = [
 	MatButtonModule,
@@ -54,7 +55,8 @@ const COMPONENTS = [
 	MatProgressBarModule,
 	MatStepperModule,
 	MatTooltipModule,
-	MatExpansionModule
+	MatExpansionModule,
+	MatKeyboardModule
 ];
 
 @NgModule({
