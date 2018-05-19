@@ -5,43 +5,48 @@
 					<span>Sign up by entering the information below</span>
 				</div>
 		<form [formGroup]="regForm" (ngSubmit)="onSignUp(regForm.value)" autocomplete="off" novalidate>
-
-			<mat-form-field class="iconMat">
+				<div class="row">
+			<mat-form-field class="iconMat col-md-6">
 				<mat-icon matPrefix>face</mat-icon>
 				<input matInput type="text" placeholder="Firstname" formControlName="firstName" required>
 				<control-messages [control]="regForm.controls.firstName"></control-messages>
 			</mat-form-field>
 
-			<mat-form-field class="iconMat">
+			<mat-form-field class="iconMat col-md-6">
 				<mat-icon matPrefix>face</mat-icon>
 				<input matInput type="text" placeholder="Lastname" formControlName="lastName" required>
 				<control-messages [control]="regForm.controls.lastName"></control-messages>
 			</mat-form-field>
 
-			<mat-form-field class="iconMat">
+			<mat-form-field class="iconMat col-md-6">
 				<mat-icon matPrefix>mail_outline</mat-icon>
 				<input matInput type="email" placeholder="Email" formControlName="email" required>
 				<control-messages [control]="regForm.controls.email"></control-messages>
 			</mat-form-field>
 
-			<mat-form-field class="iconMat">
+			<mat-form-field class="iconMat col-md-6">
 				<mat-icon matPrefix>phone_android</mat-icon>
 				<input matInput type="tel" OnlyNumber placeholder="Cell Number" formControlName="cellNo" minlength="10" maxlength="10" required>
 				<control-messages [control]="regForm.controls.cellNo"></control-messages>
 			</mat-form-field>
 
-			<mat-form-field class="iconMat">
+			<mat-form-field class="iconMat col-md-6">
 				<mat-icon matPrefix>lock_outline</mat-icon>
 				<input matInput type="password" placeholder="Password" formControlName="password" required>
 			</mat-form-field>
 
-			<mat-form-field class="iconMat">
+			<mat-form-field class="iconMat col-md-6">
 				<mat-icon matPrefix>lock_outline</mat-icon>
 				<input matInput type="password" placeholder="Confirm Password" formControlName="confirmPassword" required>
 			</mat-form-field>
-			<mat-error *ngIf="regForm.errors?.mismatchedPasswords">Password not match</mat-error>
 
-			<div class="text-center">
+			<div class="col-md-6 offset-md-6">
+					<mat-error *ngIf="regForm.errors?.mismatchedPasswords">Password not match</mat-error>
+			</div>
+			
+			</div>
+ 
+			<div class="text-center pt-1">
 				<button type="submit" mat-raised-button color="primary" [disabled]="regForm.invalid" class="width150">
 					Sign up
 				</button>

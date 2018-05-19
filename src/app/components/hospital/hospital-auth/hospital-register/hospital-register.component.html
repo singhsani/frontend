@@ -1,9 +1,9 @@
 <div class="mainBg">
-
-	<mat-card class="row hosVerticalAlign borderRadius10 signUp">
-		<div class="headingBox">Register
-			<span>Sign up by entering the information below</span>
-		</div>
+	<div class="verticalAlign signUp">
+		<mat-card class="borderRadius10">
+			<div class="headingBox">Register
+				<span>Sign up by entering the information below</span>
+			</div>
 		<form [formGroup]="regForm" (ngSubmit)="onSignUp(regForm.value)" autocomplete="off" ngNativeValidate>
 			<div class="row">
 				<mat-form-field class="col-md-6 iconMat">
@@ -56,20 +56,24 @@
 					<mat-icon matPrefix>lock_outline</mat-icon>
 					<input matInput type="password" placeholder="Confirm Password" formControlName="confirmPassword" required>
 				</mat-form-field>
-				<div class="col-md-12 float-right">
-					<mat-error class="col-md-6 float-right" *ngIf="regForm.errors?.mismatchedPasswords">Password not match</mat-error>
+				
+				<div class="col-md-6 offset-md-6">
+					<mat-error *ngIf="regForm.errors?.mismatchedPasswords">Password not match</mat-error>
+				</div>
+			
+			</div>
+
+			<div class="row">
+					<div class="col-md-12 nursingHome">
+							<mat-label>Nursing Home</mat-label>
+							<mat-radio-group class="example-radio-group" formControlName="nursingHome">
+								<mat-radio-button value="true">YES</mat-radio-button>
+								<mat-radio-button value="false">NO</mat-radio-button>
+							</mat-radio-group>
 				</div>
 			</div>
 
-			<div class="row p-2">
-				<mat-label class="col-md-4">Nursing Home</mat-label>
-				<mat-radio-group class="col-md-6 example-radio-group" formControlName="nursingHome">
-					<mat-radio-button value="true">YES</mat-radio-button>
-					<mat-radio-button value="false">NO</mat-radio-button>
-				</mat-radio-group>
-			</div>
-
-			<div class="text-center">
+			<div class="text-center mt-4">
 				<button type="submit" mat-raised-button color="primary" [disabled]="regForm.invalid" class="width150">
 					Sign up
 				</button>
@@ -83,5 +87,5 @@
 		</form>
 
 	</mat-card>
-
+</div>
 </div>

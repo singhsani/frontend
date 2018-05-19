@@ -11,6 +11,7 @@ import { HospitalModule } from './components/hospital/hospital.module';
 /* Import all the layout component end */
 
 import { ManageRoutes } from './config/routes-conf';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 const routes: Routes = [
 
@@ -20,7 +21,9 @@ const routes: Routes = [
 		
 	{ path: ManageRoutes.getPrefixRoute('HOSPITALMODULE'), loadChildren: () => HospitalModule },
 
-	{ path: '**', redirectTo: ManageRoutes.getPrefixRoute('CITIZENMODULE')},
+	{ path: '**', redirectTo: '404'},
+	{ path: '404', component: PageNotFoundComponent}
+	
 ];
 
 @NgModule({
