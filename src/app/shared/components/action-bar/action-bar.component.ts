@@ -1,8 +1,10 @@
+import { ManageRoutes } from './../../../config/routes-conf';
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild, OnChanges, SimpleChanges } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import * as _ from 'lodash';
 import { Router, ActivatedRoute } from '@angular/router';
 
+import { CommonService } from './../../services/common.service';
 import { ValidationService } from './../../services/validation.service';
 import { FormsActionsService } from './../../../core/services/citizen/data-services/forms-actions.service';
 import { ToastrService } from 'ngx-toastr';
@@ -31,7 +33,8 @@ export class ActionBarComponent implements OnChanges, OnInit {
 	constructor(
 		private formService: FormsActionsService,
 		private route: Router, private fb: FormBuilder,
-		private toastr: ToastrService) {
+		private toastr: ToastrService,
+		private commonService: CommonService) {
 	}
 
 	ngOnInit() {
@@ -43,12 +46,12 @@ export class ActionBarComponent implements OnChanges, OnInit {
 
 	ngOnChanges(changes: SimpleChanges) {
 
-		setTimeout(()=>{
+		setTimeout(() => {
 			if (changes.form.currentValue.value.canEdit !== null && !changes.form.currentValue.value.canEdit) {
 				this.form.disable();
 				this.isBtnsDisabled = true;
 			}
-		},300);
+		}, 300);
 
 	}
 
@@ -96,6 +99,14 @@ export class ActionBarComponent implements OnChanges, OnInit {
 			},
 				err => {
 					this.isSubmitBtnDisabled = false;
+
+					if (err.status === 402) {
+						this.commonService.paymentAlert('', '', '', cb => {
+							this.formService.makePayment(err.error.data.transactionId).subscribe(res => {
+								this.toastr.success('Your payment has been processed successfully');
+							});
+						});
+					}
 				}
 			);
 		} else {

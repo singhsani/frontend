@@ -2,12 +2,9 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
 	selector: 'app-login-layout',
-	template: '<router-outlet></router-outlet>'
+	templateUrl: './login-layout.component.html',
+	styleUrls: ['./login-layout.component.scss']
 })
-
-/**
- * Declare LoginLayoutComponent for handle Login Layout related functionalities.
- */
 export class LoginLayoutComponent implements OnInit {
 
 	constructor() { }

@@ -10,15 +10,23 @@ import {
 	HttpRequest
 } from '@angular/common/http';
 
+import { HosAppService } from './../../core/services/hospital/app-services/hos-app.service';
+import { AppService } from './../../core/services/citizen/app-services/app.service';
 import { Observable } from 'rxjs/Observable';
 import { CommonService } from './common.service';
+import { SessionStorageService } from 'angular-web-storage';
 import { ManageRoutes } from '../../config/routes-conf';
 
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
 
-	constructor(private commonService: CommonService, private router: Router) {
+	constructor(
+		private commonService: CommonService,
+		private router: Router,
+		private session: SessionStorageService,
+		private appService: AppService,
+		private hosAppService: HosAppService) {
 
 	}
 
@@ -46,26 +54,31 @@ export class TokenInterceptor implements HttpInterceptor {
              * or show a modal
              */
 			if (err instanceof HttpErrorResponse) {
-
 				switch (err.status) {
-					case 401:
-						this.commonService.openAlert('Warning!', err.error.message, 'warning', '', cb => {
-							this.router.navigate([ManageRoutes.getFullRoute('CITIZENAUTHLOGIN')]);
+					case 0:
+						this.commonService.openAlert('Error!', err.error.message, 'error', '', cb => {
+							if (this.commonService.getUserType() === 'HOSPITAL') {
+								this.hosAppService.logout();
+							} else {
+								this.appService.logout();
+							}
 						});
 						break;
-					case 500:
+					case 400:
+						break;
+					case 401:
+						this.commonService.openAlert('Warning!', err.error.message, 'warning', '', cb => {
+							if (this.commonService.getUserType() === 'HOSPITAL') {
+								this.hosAppService.logout();
+							} else {
+								this.appService.logout();
+							}
+						});
+						break;
 					case 404:
 						this.commonService.openAlert('Error!', err.error.message, 'error');
 						break;
-					case 400:
-						this.commonService.openAlert('Error!', err.error.message, 'error');
-						//this.commonService.openAlertFormSaveValidation('Warning!', err.error, 'warning');
-						break;
-					case 0:
-						this.commonService.openAlert('Error!', err.error.message, 'error', '', cb => {
-							this.router.navigate([ManageRoutes.getFullRoute('CITIZENDASHBOARD')]);
-						});
-						break;
+					case 500:
 					case 601:// form save as draft error handling
 						this.commonService.openAlertFormSaveValidation('Warning!', err.error, 'warning');
 						break;
