@@ -8,7 +8,7 @@
 
 		<ng-container *ngIf="step == 'final'">
 			<button mat-raised-button color="success" [disabled]="isSubmitBtnDisabled || isBtnsDisabled" (click)="onSubmit()">{{'submit' | translate:translateKey}}</button>
-			<button mat-raised-button color="info" (click)="proceedToPayment()">{{'proceed_for_payment' | translate:translateKey}}</button>
+			<!-- <button mat-raised-button color="info" (click)="proceedToPayment()">{{'proceed_for_payment' | translate:translateKey}}</button> -->
 			<button mat-raised-button color="warn" [disabled]="isBtnsDisabled" (click)="resetForm()">{{'reset' | translate:translateKey}}</button>
 		</ng-container>
 	</div>

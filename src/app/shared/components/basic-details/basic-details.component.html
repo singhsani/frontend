@@ -1,31 +1,31 @@
 <div class="row" [formGroup]="basicFormGroup">
     <mat-form-field class="col-md-4">
-        <input matInput placeholder="{{'first_name' | translate:translateKey}}" formControlName="firstName">
+        <input matInput appPreventSpace placeholder="{{'first_name' | translate:translateKey}}" formControlName="firstName">
         <control-messages [control]="basicFormGroup.controls.firstName"></control-messages>
     </mat-form-field>
 
     <mat-form-field class="col-md-4">
-        <input matInput placeholder="{{'middle_name' | translate:translateKey}}" formControlName="middleName">
+        <input matInput appPreventSpace placeholder="{{'middle_name' | translate:translateKey}}" formControlName="middleName">
         <control-messages [control]="basicFormGroup.controls.middleName"></control-messages>
     </mat-form-field>
 
     <mat-form-field class="col-md-4">
-        <input matInput placeholder="{{'last_name' | translate:translateKey}}" formControlName="lastName">
+        <input matInput appPreventSpace placeholder="{{'last_name' | translate:translateKey}}" formControlName="lastName">
         <control-messages [control]="basicFormGroup.controls.lastName"></control-messages>
     </mat-form-field>
 
     <mat-form-field class="col-md-4">
-        <input matInput maxlength="12" minlength="12" placeholder="{{'aadhar_number' | translate:translateKey}}" formControlName="aadhaarNo">
+        <input matInput OnlyNumber maxlength="12" minlength="12" placeholder="{{'aadhar_number' | translate:translateKey}}" formControlName="aadhaarNo">
         <control-messages [control]="basicFormGroup.controls.aadhaarNo"></control-messages>
     </mat-form-field>
 
     <mat-form-field class="col-md-4">
-        <input matInput placeholder="{{'applicant_mobile' | translate:translateKey}}" type="tel" maxlength="10" minlength="10" formControlName="contactNo">
+        <input matInput OnlyNumber placeholder="{{'applicant_mobile' | translate:translateKey}}" type="tel" maxlength="10" minlength="10" formControlName="contactNo">
         <control-messages [control]="basicFormGroup.controls.contactNo"></control-messages>
     </mat-form-field>
 
     <mat-form-field class="col-md-4">
-        <input matInput placeholder="{{'applicant_email' | translate:translateKey}}" type="email" formControlName="email">
+        <input matInput appPreventSpace placeholder="{{'applicant_email' | translate:translateKey}}" type="email" formControlName="email">
         <control-messages [control]="basicFormGroup.controls.email"></control-messages>
     </mat-form-field>
 </div>

@@ -20,6 +20,8 @@ import * as _ from 'lodash';
 export class BirthRegistrationComponent implements OnInit {
 	@ViewChild('stepper') stepper: MatStepper;
 
+	@ViewChild('address') addressComp: any;
+
 	/**
 	 * file upload related declaration
 	 */
@@ -170,6 +172,37 @@ export class BirthRegistrationComponent implements OnInit {
 	private ChildWeights: object[];
 	private ISYESNO: object[];
 	private checked: boolean;
+	private NOOFCHILD = [
+		{
+			code:"2",
+			name:"2",
+			id: null
+
+		},
+		{
+			code: "3",
+			name: "3",
+			id: null
+
+		},
+		{
+			code: "4",
+			name: "4",
+			id: null
+
+		},
+		{
+			code: "5",
+			name: "5",
+			id: null
+
+		},
+		{
+			code: "6",
+			name: "6",
+			id: null
+		}
+	];
 
 
 	constructor(
@@ -182,6 +215,13 @@ export class BirthRegistrationComponent implements OnInit {
 		private fb: FormBuilder
 	) { 
 
+		
+	}
+
+	/**
+	 * Method Is Initialized First
+	 */
+	ngOnInit() {
 		this.route.paramMap.subscribe(param => {
 			this.appId = Number(param.get('id'));
 			this.apiCode = param.get('apiCode');
@@ -192,17 +232,9 @@ export class BirthRegistrationComponent implements OnInit {
 			this.router.navigate([ManageRoutes.getFullRoute('CITIZENDASHBOARD')]);
 		} else {
 			this.createBirthCertForm();
-		}
-	}
-
-	/**
-	 * Method Is Initialized First
-	 */
-	ngOnInit() {
-	
-		
 			this.getBirthCertData();
 			this.getLookUpsData();
+		}
 	}
 
 	/**
@@ -212,7 +244,7 @@ export class BirthRegistrationComponent implements OnInit {
 		this.birthCertificateForm = this.fb.group({
 
 			birthDate: [null, Validators.required],
-			birthTime: [null, [Validators.required, Validators.pattern('[0-2][0-9]:[0-5][0-9]:[0-5][0-9]')]],
+			birthTime: [null, [Validators.required]],
 			childName: ['', [ValidationService.nameValidator]],
 			birthPlace: this.fb.group({
 				id: 1,
@@ -242,7 +274,7 @@ export class BirthRegistrationComponent implements OnInit {
 			}),
 			//step 2
 			fatherFirstName: ['', [Validators.required, ValidationService.nameValidator]],
-			fatherMiddleName: ['', [ValidationService.nameValidator]],
+			fatherMiddleName: ['', [Validators.required, ValidationService.nameValidator]],
 			fatherLastName: ['', [ValidationService.nameValidator, Validators.required]],
 
 			fatherEducation: this.fb.group({
@@ -260,7 +292,7 @@ export class BirthRegistrationComponent implements OnInit {
 
 			//step 3
 			motherFirstName: ['', [ValidationService.nameValidator, Validators.required]],
-			motherMiddleName: ['', [ValidationService.nameValidator]],
+			motherMiddleName: ['', [Validators.required, ValidationService.nameValidator]],
 			motherLastName: ['', [ValidationService.nameValidator, Validators.required]],
 
 			motherEducation: this.fb.group({
@@ -275,11 +307,11 @@ export class BirthRegistrationComponent implements OnInit {
 				name: null
 			}),
 			motherAadharNumber: [null, [ValidationService.aadharValidation]],
-			motherPrevRegNumber: ['', [Validators.pattern('[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]')]],
-			petaKendraNumber: ['', [Validators.pattern('[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]')]],
-			motherMarriageAge: [null,[Validators.required]],
-			motherDeliveryAge: [null, [Validators.required]],
-			totalAliveChild: [null, [Validators.required, Validators.pattern('[0-9]+')]],
+			motherPrevRegNumber: ['', [Validators.minLength(20),Validators.maxLength(20)]],
+			petaKendraNumber: ['', [Validators.minLength(10),Validators.maxLength(10)]],
+			motherMarriageAge: [null, [Validators.minLength(2), Validators.maxLength(2),Validators.required]],
+			motherDeliveryAge: [null, [Validators.required, Validators.minLength(2), Validators.maxLength(2)]],
+			totalAliveChild: [null, [Validators.required, Validators.maxLength(2)]],
 
 			deliveryTreatment: this.fb.group({
 				id: null,
@@ -304,68 +336,11 @@ export class BirthRegistrationComponent implements OnInit {
 				code: [null, Validators.required],
 				name: null
 			}),
-			parentDeliveryAddress: this.fb.group({
-				id: 1,
-				uniqueId: null,
-				version: null,
-				addressType: null,
-				houseNo: null,
-				tenamentNo: null,
-				buildingName: null,
-				state: ['Vadodara', Validators.required],
-				district: ['Gujarat', Validators.required],
-				talukaName: ['',[Validators.required]],
-				pincode: ['', [ValidationService.pinCodeValidation, Validators.required]],
-				addressLine1: null,
-				addressLine2: null,
-				addressLine3: null,
-				village: null
-			}),
-			parentPermanentAddress: this.fb.group({
-				id: 2,
-				uniqueId: null,
-				version: null,
-				addressType: null,
-				houseNo: null,
-				tenamentNo: null,
-				buildingName: null,
-				state: null,
-				district: null,
-				talukaName: null,
-				pincode: ['', [ValidationService.pinCodeValidation, Validators.required]],
-				addressLine1: null,
-				addressLine2: null,
-				addressLine3: null,
-				village: null
-			}),
+			parentDeliveryAddress: this.fb.group(this.addressComp.addressControls()),
+			parentPermanentAddress: this.fb.group(this.addressComp.addressControls()),
 			attachments: [null, [Validators.required]],
 			delayedPeriod: null,
-			
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
-			/*
-			id: null,
-			uniqueId: null,
-			version: 0,
-			serviceFormId: this.appId,
-			createdDate: null,
-			updatedDate: null,
-			serviceType: null,
-			fileStatus: null,
-			serviceName: null,
-			fileNumber: null,
-			pid: null,
-			outwardNo: null,
-			agree: false,
-			paymentStatus: null,
-			canEdit: true,
-			canDelete: true,
-			canSubmit: true,
-			serviceDetail: this.fb.group({
-				code: null,
-				feesOnScrutiny: null,
-				gujName: null,
-				name: null
-			})*/
 		});
 	}
 
@@ -374,7 +349,6 @@ export class BirthRegistrationComponent implements OnInit {
 	 */
 	getBirthCertData() {
 		this.formService.getFormData(this.appId).subscribe(res => {
-			console.log(res);
 			this.prevMode = !res.canEdit
 			if (res.isPermanentPresentAddressSame.code == "YES") {
 				this.checked = true;
@@ -384,11 +358,15 @@ export class BirthRegistrationComponent implements OnInit {
 			this.attachments = res.attachments;
 			this.birthCertificateForm.patchValue(res);
 			this.showButtons = true;
-			if (res.fileStatus == "SUBMITTED"){
-				this.prevMode = true;
-				this.birthCertificateForm.disable();
-			}
+			
 		});
+	}
+
+	timepick(){
+		if (String(this.birthCertificateForm.get('birthTime').value).length == 5){
+			this.birthCertificateForm.get('birthTime').
+				setValue(String(this.birthCertificateForm.get('birthTime').value).concat(":00"));
+		}
 	}
 
 	/**
@@ -502,6 +480,10 @@ export class BirthRegistrationComponent implements OnInit {
 	stepReset(){
 		this.stepper.reset();
 	}
+
+	// checkForm(){
+	// 	console.log(this.birthCertificateForm.get('motherEducation').get('code').value);
+	// }
 
 	/**
 	 * Method is used to set data value to upload method.

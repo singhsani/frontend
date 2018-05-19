@@ -205,7 +205,7 @@ export class StillBirthComponent implements OnInit {
 
       //step 1 controls
       birthDate: [null, [Validators.required]],
-      birthTime: [null, [Validators.required, Validators.pattern('[0-2][0-9]:[0-5][0-9]:[0-5][0-9]')]],
+      birthTime: [null, [Validators.required]],
       childName: [null, [ValidationService.nameValidator]],
       birthPlace: this.fb.group({
         id: null,
@@ -236,7 +236,7 @@ export class StillBirthComponent implements OnInit {
 
       //step 2
       fatherFirstName: [null, [ValidationService.nameValidator,Validators.required]],
-      fatherMiddleName: null,
+      fatherMiddleName: [null,[Validators.nullValidator]],
       fatherLastName: [null, [ValidationService.nameValidator,Validators.required]],
       fatherEducation: this.fb.group({
         id: null,
@@ -252,7 +252,7 @@ export class StillBirthComponent implements OnInit {
 
       //step 3
       motherFirstName: [null, [ValidationService.nameValidator, Validators.required]],
-      motherMiddleName: null,
+      motherMiddleName: [null, ValidationService.nameValidator],
       motherLastName: [null, [ValidationService.nameValidator, Validators.required]],
       motherEducation: this.fb.group({
         id: null,
@@ -265,10 +265,11 @@ export class StillBirthComponent implements OnInit {
         name: null
       }),
       motherAadharNumber: [null, [ValidationService.aadharValidation]],
-      motherPrevRegNumber: ['', [Validators.pattern('[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]')]],
-      petaKendraNumber: ['', [Validators.pattern('[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]')]],
-      motherMarriageAge: [null, [Validators.required]],
-      motherDeliveryAge: [null, [Validators.required]],
+      motherPrevRegNumber: ['', [Validators.minLength(10), Validators.maxLength(10)]],
+      petaKendraNumber: ['', [Validators.minLength(10), Validators.maxLength(10)]],
+      motherMarriageAge: [null, [Validators.minLength(2), Validators.maxLength(2), Validators.required]],
+      motherDeliveryAge: [null, [Validators.required, Validators.minLength(2), Validators.maxLength(2)]],
+
       deliveryTreatment: this.fb.group({
         id: null,
         code: [null,[Validators.required]],
@@ -401,6 +402,16 @@ export class StillBirthComponent implements OnInit {
     let now = moment(new Date());
     let diff = moment.duration(now.diff(event.value));
     this.stillBirthCertificateForm.get('birthDate').setValue(moment(event.value).format("YYYY-MM-DD"));
+  }
+
+  /**
+   * 
+   */
+  timepick() {
+    if (String(this.stillBirthCertificateForm.get('birthTime').value).length == 5) {
+      this.stillBirthCertificateForm.get('birthTime').
+        setValue(String(this.stillBirthCertificateForm.get('birthTime').value).concat(":00"));
+    }
   }
 
 	/**

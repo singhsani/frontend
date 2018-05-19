@@ -40,6 +40,23 @@ export class DeathRegistrationComponent implements OnInit {
 	private minBirthDate;
 	private maxBirthDate: any;
 	private maxDeathDate = new Date();
+	private GujMedicalTreatmentOptions = [
+		{
+			code: "ORGANIZATIONAL",
+			name:"સંસ્થાકીય",
+			id:null
+		},
+		{
+			code: "OTH_TN_ORG",
+			name: "સંસ્થાકીય સિવાયના અન્ય",
+			id: null
+		},
+		{
+			code: "NO_MED_HELP_ATT",
+			name: "કોઈ તબીબી મદદ પ્રાપ્ત",
+			id: null
+		}
+	]
 
 	//LookUps
 	private deathPlaces: object[];
@@ -81,6 +98,7 @@ export class DeathRegistrationComponent implements OnInit {
 	 */
 	getLookUpsData() {
 		this.formService.getDataFromLookups().subscribe(respData => {
+			console.log(respData);
 			this.deathPlaces = respData.PLACE;
 			this.DeceasedEducations = respData.EDUCATION;
 			this.DeceasedOccupation = respData.OCCUPATIONS;
@@ -97,6 +115,7 @@ export class DeathRegistrationComponent implements OnInit {
 	 */
 	getDeathCertData() {
 		this.formService.getFormData(this.appId).subscribe((res) => {
+			console.log(res);
 			this.response = res;
 			if (res.unknownCategory.code == undefined) {
 				this.decider("NO");
@@ -122,7 +141,7 @@ export class DeathRegistrationComponent implements OnInit {
 			this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
 		});
 
-		//this.deathCertificateForm = this.createDeathCertificateForm();
+		this.deathCertificateForm = this.createDeathCertificateForm();
 		this.getDeathCertData();
 		this.getLookUpsData();
 	}
@@ -156,7 +175,7 @@ export class DeathRegistrationComponent implements OnInit {
 			}),
 			deathDate: ['', Validators.required],
 			birthDate: ['', Validators.required],
-			fatherOrHusbandName: [null, [ValidationService.nameValidator]],
+			fatherOrHusbandName: ['', [ValidationService.nameValidator,Validators.required]],
 			motherName: ['', [ValidationService.nameValidator, Validators.required]],
 			religion: this.fb.group({
 				code: ['', Validators.required]
@@ -167,7 +186,7 @@ export class DeathRegistrationComponent implements OnInit {
 			occupation: this.fb.group({
 				code: ['', Validators.required]
 			}),
-			delayedPeriod: ['', Validators.required],
+			delayedPeriod: [''],
 			femaleDeathReason: this.fb.group({
 				code: ['', Validators.required]
 			}),
@@ -256,21 +275,20 @@ export class DeathRegistrationComponent implements OnInit {
 			applicantRelation: this.fb.group({
 				code: [null, Validators.required]
 			}),
-
 			relationOther: [''],
-			aadhaarNo: ['', [ValidationService.aadharValidation]],
+			aadhaarNo: ['', [Validators.required, Validators.minLength(12), Validators.maxLength(12), ValidationService.aadharValidation]],
 			appHospitalName: ['', Validators.required],
-			//mobileNumber: ['', [Validators.required, ValidationService.mobileNumberValidation]],
-			email: ['', [ValidationService.emailValidator]],
+			email: ['', [Validators.required,ValidationService.emailValidator]],
+			contactNo: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10)]],
 
 			//Attachments Data step 5
-			
 			unknownCategory: this.fb.group({
 				id: null,
-				code: null,
+				code: [null,[Validators.required]],
 				name: null
 			}),
 			unknownDescription: null,
+
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
 			serviceDetail: this.fb.group({
 				code: null,
@@ -278,7 +296,7 @@ export class DeathRegistrationComponent implements OnInit {
 				gujName: null,
 				name: null
 			}),
-			attachments: [],
+			attachments: [null,Validators.required],
 			id: null,
 			uniqueId: null,
 			version: null,
@@ -307,7 +325,7 @@ export class DeathRegistrationComponent implements OnInit {
 			//step1
 			firstName: ['', [ValidationService.nameValidator]],
 			middleName: ['', [ValidationService.nameValidator]],
-			lastName: ['', [ValidationService.nameValidator,]],
+			lastName: ['', [ValidationService.nameValidator]],
 			gender: this.fb.group({
 				code: ['', []],
 			}),
@@ -413,23 +431,23 @@ export class DeathRegistrationComponent implements OnInit {
 			applicantRelation: this.fb.group({
 				code: [null,]
 			}),
-
-			relationOther: [''],
-			aadhaarNo: ['', [ValidationService.aadharValidation]],
-			appHospitalName: ['',],
-			mobileNumber: ['', [, ValidationService.mobileNumberValidation]],
-			email: ['', [ValidationService.emailValidator]],
+			relationOther: null,
+			aadhaarNo: [null, [ValidationService.aadharValidation]],
+			appHospitalName: [ValidationService.nameValidator],
+			contactNo: [null, [ValidationService.mobileNumberValidation]],
+			email: [null, [ValidationService.emailValidator]],
 
 			//Attachments Data step 5
 			
 			unknownCategory: this.fb.group({
 				id: null,
-				code: null,
+				code: [null,[Validators.required]],
 				name: null
 			}),
 			unknownDescription: null,
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
 			attachments: [],
+			
 			id: null,
 			uniqueId: null,
 			version: null,

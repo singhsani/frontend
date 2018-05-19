@@ -30,10 +30,12 @@ import { BasicDetailsComponent } from './components/basic-details/basic-details.
 import { TitleBarComponent } from './components/title-bar/title-bar.component';
 import { LoadingIndicatorComponent } from './components/loading-indicator/loading-indicator.component';
 import { HighlightPipe } from './pipes/highlight.pipe';
+import { PreventSpaceDirective } from './directives/prevent-space.directive';
 /* import pipes end*/
 
 const COMPONENTS = [
-	OnlyNumberDirective, 
+	OnlyNumberDirective,
+	PreventSpaceDirective,
 	InrPipe, 
 	HighlightPipe,
 	ActionBarComponent, 

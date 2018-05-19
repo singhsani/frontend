@@ -90,31 +90,37 @@ export class FileUploadComponent implements OnInit {
 		if (!this.selectedFiles) {
 			this.commonService.openAlert("Warning", "Please Select File to Upload", "warning");
 		} else {
-			let formData = new FormData();
+			if(this.selectedFiles[0].size > 5000000){
+				this.commonService.openAlert("Warning", "File Size should be less than 5 MB", "warning");
+			} else {
+				let formData = new FormData();
 
-			formData.append('fieldIdentifier', this.uploadModel.fieldIdentifier.toString());
-			formData.append('labelName', this.uploadModel.labelName);
-			formData.append('formPart', this.uploadModel.formPart.toString());
-			formData.append('variableName', this.uploadModel.variableName);
-			formData.append('serviceFormId', this.uploadModel.serviceFormId.toString());
-			this.progress.percentage = 0;
-			this.currentFileUpload = this.selectedFiles.item(0);
+				formData.append('fieldIdentifier', this.uploadModel.fieldIdentifier.toString());
+				formData.append('labelName', this.uploadModel.labelName);
+				formData.append('formPart', this.uploadModel.formPart.toString());
+				formData.append('variableName', this.uploadModel.variableName);
+				formData.append('serviceFormId', this.uploadModel.serviceFormId.toString());
+				this.progress.percentage = 0;
+				this.currentFileUpload = this.selectedFiles.item(0);
 
-			formData.append('file', this.currentFileUpload);
+				formData.append('file', this.currentFileUpload);
 
-			this.uploadFileService.processFileToServer(formData, setProgressBar => {
-				this.progress.percentage = setProgressBar;
-			}, successResponse => {
-				this.commonService.successAlert("File Uploaded", this.uploadModel.labelName + " successfully uploaded", "success");
-				this.canDelete = false;
-				this.canView = false;
-				this.canUpload = true;
-				this.id = successResponse.data.id;
-				this.type = successResponse.data.mimeType;
-				this.currentFileUpload = undefined;
-				this.selectedFiles = undefined;
-				this.fileInput.nativeElement.value = "";
-			});
+				this.uploadFileService.processFileToServer(formData, setProgressBar => {
+					this.progress.percentage = setProgressBar;
+				}, successResponse => {
+					this.commonService.successAlert("File Uploaded", this.uploadModel.labelName + " successfully uploaded", "success");
+					this.canDelete = false;
+					this.canView = false;
+					this.canUpload = true;
+					this.id = successResponse.data.id;
+					this.type = successResponse.data.mimeType;
+					this.currentFileUpload = undefined;
+					this.selectedFiles = undefined;
+					this.fileInput.nativeElement.value = "";
+				});
+				
+			}
+			
 		}
 	}
 
