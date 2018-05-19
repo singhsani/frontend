@@ -3,12 +3,14 @@ import { Injectable } from '@angular/core';
 import swal from 'sweetalert2';
 import * as _ from 'lodash';
 
+import { SessionStorageService } from 'angular-web-storage';
+
 @Injectable()
 export class CommonService {
 
 	public loading = new Subject<{ loading: boolean }>();
 
-	constructor() { }
+	constructor(private session: SessionStorageService) { }
 
 	openAlert(title: string, message: string, type: string, html?: any, cb?: any) {
 		let options = {
@@ -28,7 +30,7 @@ export class CommonService {
 	}
 
 	openAlertFormSaveValidation(title: string, message: any, type: string, html?: any, cb?: any) {
-		
+
 		var html1 = '<div class="row small setHeight">';
 
 		_.forEach(message, (value, key) => {
@@ -55,8 +57,8 @@ export class CommonService {
 
 	}
 
-	deleteAlert(title: string, message: string, type: string, html?: any, performDelete?: any){
-		
+	deleteAlert(title: string, message: string, type: string, html?: any, performDelete?: any) {
+
 		let options = {
 			title: title,
 			text: message,
@@ -75,8 +77,8 @@ export class CommonService {
 		})
 	}
 
-	submitAlert(title: string, message: string, type: string, html?: any, performSubmit?: any){
-		
+	submitAlert(title: string, message: string, type: string, html?: any, performSubmit?: any) {
+
 		let options = {
 			title: title,
 			text: message,
@@ -85,7 +87,7 @@ export class CommonService {
 			showCancelButton: true,
 			confirmButtonColor: '#3085d6',
 			cancelButtonColor: '#d33',
-			confirmButtonText: 'Yes, submit it!'
+			confirmButtonText: 'Make a Payment!'
 		}
 
 		swal(options as any).then((result) => {
@@ -95,7 +97,7 @@ export class CommonService {
 		})
 	}
 
-	successAlert(title: string, message: string, type: string){
+	successAlert(title: string, message: string, type: string) {
 
 		let options = {
 			title: title,
@@ -105,5 +107,35 @@ export class CommonService {
 
 		swal(options as any);
 	}
+
+	paymentAlert(title: string, message: string, type: string, pay?: any) {
+
+		let options = {
+			title: title,
+			text: message,
+			type: type,
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Make a Payment'
+		}
+
+		swal(options as any).then((result) => {
+			if (result.value && pay) {
+				pay();
+			}
+		})
+	}
+
+	getUserType(): string {
+
+		if (this.session.get('access_token')) {
+			return this.session.get('access_token').userType;
+		} else if (this.session.get('hos_access_token')) {
+			return this.session.get('hos_access_token').userType;
+		}
+
+	}
+
 
 }

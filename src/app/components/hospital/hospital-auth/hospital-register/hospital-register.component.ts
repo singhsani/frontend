@@ -38,7 +38,7 @@ export class HospitalRegisterComponent implements OnInit {
 		this.regForm = this.fb.group({
 			hospitalName: [null, Validators.required],
 			hospitalType: [null, Validators.required],
-			nursingHome: true,
+			nursingHome: 'false',
 			userDetail: this.fb.group({
 				firstName: [null, [Validators.required, ValidationService.nameValidator]],
 				lastName: [null, [Validators.required, ValidationService.nameValidator]],
@@ -63,9 +63,7 @@ export class HospitalRegisterComponent implements OnInit {
 			if (confirmPassword.value) {
 				if (password.value !== confirmPassword.value) {
 					this.regForm.get('userDetail').get('confirmPassword').setErrors({ mismatchedPasswords: true });
-					return {
-						mismatchedPasswords: true
-					};
+					return { mismatchedPasswords: true };
 				} else {
 					this.regForm.get('userDetail').get('confirmPassword').setErrors(null);
 				}
@@ -79,7 +77,6 @@ export class HospitalRegisterComponent implements OnInit {
 	 */
 	onSignUp(formVals: FormGroup) {
 
-		console.log(formVals);
 		this.appService.registerUser(formVals).subscribe(
 			res => {
 				this.router.navigate(['hospital/auth/login']);

@@ -38,16 +38,6 @@ export class FormsActionsService {
 	}
 
 	/**
-	 * This method is used to creat payments for payable services
-	 * @param paymentData -pass payment data here.
-	 */
-	createPayment(paymentData) {
-
-		return this.http.post('api/servicePayment/pay', paymentData);
-
-	}
-
-	/**
 	 * This method is used to get all payable service list.
 	 */
 	getPayableServiceList() {
@@ -134,6 +124,26 @@ export class FormsActionsService {
 	updateUserProfile(formData) {
 
 		return this.http.post('api/user/update', formData);
+	}
+
+	/**
+	 * This method is used to creat payments for payable services
+	 * @param paymentData -pass payment data here.
+	 */
+	createPayment(paymentData) {
+
+		return this.http.post('api/servicePayment/pay', paymentData);
+
+	}
+
+	/**
+	 * This method is used to creat payments for payable services
+	 * @param paymentData -pass payment data here.
+	 */
+	makePayment(transactionId) {
+
+		return this.http.get(`api/form/${this.apiType}/pay/${transactionId}`);
+
 	}
 
 	/**

@@ -1,53 +1,54 @@
 <div class="mainBg">
-        <div class="verticalAlign">
-            <header class="header clearfix">
-                <button mat-button class="logo">
-                    <img src="../../../assets/images/vmc-logo.png" alt="Vadodara Municipal Corporation">
-                    <span class="logoName">VADODARA MUNICIPAL
-                        <br>CORPORATION</span>
-                </button>
-                <ul>
-                    <li>
-                        <a mat-button routerLink=".">Home</a>
-                    </li>
-                </ul>
-            </header>
-            <mat-card class="borderRadius10">
-                <div class="headingBox">Welcome !<span>Login by entering the information below</span>
+    <div class="verticalAlign">
+        <header class="header clearfix">
+            <button mat-button class="logo">
+                <img src="assets/images/vmc-logo.png" alt="Vadodara Municipal Corporation">
+                <span class="logoName">VADODARA MUNICIPAL
+                    <br>CORPORATION</span>
+            </button>
+            <ul>
+                <li>
+                    <a mat-button routerLink=".">Home</a>
+                </li>
+            </ul>
+        </header>
+        <mat-card class="borderRadius10">
+            <div class="headingBox">Welcome !
+                <span>Login by entering the information below</span>
+            </div>
+            <form [formGroup]="loginForm" (ngSubmit)="onLoginSubmit(loginForm.value)" autocomplete="off" ngNativeValidate novalidate>
+
+                <mat-form-field class="iconMat">
+                    <mat-icon matPrefix>face</mat-icon>
+                    <input matInput type="text" placeholder="Email / Mobile" formControlName="username" required>
+                    <mat-error *ngIf="isValidFlag">Username is Reuired</mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="iconMat">
+                    <mat-icon matPrefix>lock_outline</mat-icon>
+                    <input matInput type="password" placeholder="Password" formControlName="password" required>
+                    <mat-error *ngIf="isValidFlag">Password is Required</mat-error>
+                </mat-form-field>
+
+                <div class="text-right">
+                    <a routerLink="/{{manageRoutes.getFullRoute('CITIZENAUTHFORGOTPASS')}}" class="forPass">Forgot Password</a>
                 </div>
-        <form [formGroup]="loginForm" (ngSubmit)="onLoginSubmit(loginForm.value)" autocomplete="off" ngNativeValidate novalidate>
 
-            <mat-form-field class="iconMat">
-                <mat-icon matPrefix>face</mat-icon>
-                <input matInput type="text" placeholder="Email / Mobile" formControlName="username" required>
-                <mat-error *ngIf="isValidFlag">Username is Reuired</mat-error>
-            </mat-form-field>
+                <div class="text-center">
+                    <button mat-raised-button type="submit" class="mat-primary width150">Login</button>
+                </div>
 
-            <mat-form-field class="iconMat">
-                <mat-icon matPrefix>lock_outline</mat-icon>
-                <input matInput type="password" placeholder="Password" formControlName="password" required>
-                <mat-error *ngIf="isValidFlag">Password is Required</mat-error>
-            </mat-form-field>
+                <div class="text-center pt-2">
+                    <p>OR</p>
+                    Don't have an account?
+                    <a routerLink="/{{manageRoutes.getFullRoute('CITIZENAUTHSIGNUP')}}">
+                        <strong>Sign up</strong>
+                    </a> here
+                </div>
 
-            <div class="text-right">
-                <a routerLink="/{{manageRoutes.getFullRoute('CITIZENAUTHFORGOTPASS')}}" class="forPass">Forgot Password</a>
-            </div>
+            </form>
 
-            <div class="text-center">
-                <button mat-raised-button type="submit" class="mat-primary width150">Login</button>
-            </div>
-
-            <div class="text-center pt-2">
-                <p>OR</p>
-                Don't have an account?
-                <a routerLink="/{{manageRoutes.getFullRoute('CITIZENAUTHSIGNUP')}}">
-                    <strong>Sign up</strong>
-                </a> here
-            </div>
-
-        </form>
-
-    </mat-card>
-    <footer class="footer">&copy; 2018, made by Nascent Infotech</footer>
-</div>
+        </mat-card>
+        <footer class="footer">&copy; 2018, made by Nascent Infotech</footer>
+    </div>
 </div>
