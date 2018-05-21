@@ -30,6 +30,7 @@ import { TitleBarComponent } from './components/title-bar/title-bar.component';
 import { LoadingIndicatorComponent } from './components/loading-indicator/loading-indicator.component';
 import { HighlightPipe } from './pipes/highlight.pipe';
 import { PreventSpaceDirective } from './directives/prevent-space.directive';
+import { HosHttpService } from './services/hos-http.service';
 /* import pipes end*/
 
 const COMPONENTS = [
@@ -73,7 +74,8 @@ const COMPONENTS = [
 			provide: HTTP_INTERCEPTORS,
 			useClass: TokenInterceptor,
 			multi: true,
-		}
+		},
+		HosHttpService
 	]
 })
 export class SharedModule { }

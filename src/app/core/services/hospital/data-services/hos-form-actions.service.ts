@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpService } from '../../../../shared/services/http.service';
 import { Observable } from 'rxjs';
 import { SessionStorageService } from 'angular-web-storage';
+import { HosHttpService } from '../../../../shared/services/hos-http.service';
 
 @Injectable()
 export class HosFormActionsService {
@@ -13,7 +13,7 @@ export class HosFormActionsService {
 	 * Constructor to declare defualt propeties of class.
 	 * @param http - Declare Http Service property.
 	 */
-	constructor(private http: HttpService, private session: SessionStorageService) {
+	constructor(private http: HosHttpService, private session: SessionStorageService) {
 
 	}
 
