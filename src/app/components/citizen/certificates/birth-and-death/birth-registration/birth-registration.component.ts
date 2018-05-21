@@ -1,13 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { MatStepper } from '@angular/material/stepper'
-
+import { MatStepper } from '@angular/material/stepper';
 import { CommonService } from '../../.././../../shared/services/common.service'
 import { UploadFileService } from '../../../../../shared/upload-file.service';
 import { ValidationService } from '../../../../../shared/services/validation.service';
 import { FormsActionsService } from '../../../../../core/services/citizen/data-services/forms-actions.service';
 import { ManageRoutes } from '../../../../../config/routes-conf';
+import { AmazingTimePickerService } from 'amazing-time-picker';
 
 import * as moment from 'moment';
 import * as _ from 'lodash';
@@ -25,8 +25,10 @@ export class BirthRegistrationComponent implements OnInit {
 	/**
 	 * file upload related declaration
 	 */
+	private checked: boolean;
 	uploadModel: any = {};
 	private attachments:any[]=[];
+	private disableONSubmit: boolean = false;
 
 	/**
 	 * form related helping data.
@@ -171,7 +173,6 @@ export class BirthRegistrationComponent implements OnInit {
 	private Religion: object[];
 	private ChildWeights: object[];
 	private ISYESNO: object[];
-	private checked: boolean;
 	private NOOFCHILD = [
 		{
 			code:"2",
@@ -212,7 +213,8 @@ export class BirthRegistrationComponent implements OnInit {
 		private uploadFileService: UploadFileService,
 		private commonService: CommonService,
 		private validationService: ValidationService,
-		private fb: FormBuilder
+		private fb: FormBuilder,
+		private atp: AmazingTimePickerService
 	) { 
 
 		
@@ -235,6 +237,18 @@ export class BirthRegistrationComponent implements OnInit {
 			this.getBirthCertData();
 			this.getLookUpsData();
 		}
+	}
+	
+	openTimePicker(){
+		const amazingTimePicker = this.atp.open({
+			theme: 'material-blue',
+		});
+		amazingTimePicker.afterClose().subscribe(time => {
+			if(time.length == 5){
+				this.birthCertificateForm.get('birthTime').
+					setValue(time.concat(":00"));
+			}
+		});
 	}
 
 	/**
@@ -341,6 +355,8 @@ export class BirthRegistrationComponent implements OnInit {
 			attachments: [null, [Validators.required]],
 			delayedPeriod: null,
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
+
+			
 		});
 	}
 
@@ -352,7 +368,7 @@ export class BirthRegistrationComponent implements OnInit {
 			this.prevMode = !res.canEdit
 			if (res.isPermanentPresentAddressSame.code == "YES") {
 				this.checked = true;
-			} else {
+			} else  {
 				this.checked = false;
 			}
 			this.attachments = res.attachments;

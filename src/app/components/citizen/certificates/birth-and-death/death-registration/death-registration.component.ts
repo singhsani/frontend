@@ -25,14 +25,19 @@ export class DeathRegistrationComponent implements OnInit {
 	   */
 	private attachments: any[];
 	private showButtons: boolean = false;
-	uploadModel: any = {};
+	private uploadModel: any = {};
 	private response;
-	private createForm: boolean = false;
-	translateKey = "deathRegScreen";
+	private translateKey = "deathRegScreen";
+	private addressTranslateKey = "addressScreen";
+	private basicTranslateKey = "basicDetailsScreen";
+	private checked: boolean = false;
+	private showCheck: boolean = false;
+	createCompleteForm: boolean = false;
 
 	//form related data.
 	private appId: number;
 	apiCode: string;
+	readOnly: boolean = false;
 
 	private isLinear: boolean = false;
 	private deathCertificateForm: FormGroup;
@@ -43,8 +48,8 @@ export class DeathRegistrationComponent implements OnInit {
 	private GujMedicalTreatmentOptions = [
 		{
 			code: "ORGANIZATIONAL",
-			name:"સંસ્થાકીય",
-			id:null
+			name: "સંસ્થાકીય",
+			id: null
 		},
 		{
 			code: "OTH_TN_ORG",
@@ -110,6 +115,7 @@ export class DeathRegistrationComponent implements OnInit {
 		});
 	}
 
+
 	/**
 	 * Method is used to get all data after form created or saved.
 	 */
@@ -117,17 +123,27 @@ export class DeathRegistrationComponent implements OnInit {
 		this.formService.getFormData(this.appId).subscribe((res) => {
 			console.log(res);
 			this.response = res;
-			if (res.unknownCategory.code == undefined) {
+
+			//for checkbox
+			if (res.isPermanentPresentAddressSame.code == "YES") {
+				this.readOnly = true;
+				this.checked = true;
+			} else {
+				this.checked = false;
+			}
+
+			//for unknown condition
+			if (res.unknownCategory.code === undefined) {
 				this.decider("NO");
-			} else if (res.unknownCategory == {}) {
+			} else if (res.unknownCategory === {}) {
 				this.decider("NO");
 			} else {
 				this.decider(res.unknownCategory.code);
 			}
 
-			this.attachments = res.attachments;
+			this.attachments = this.response.attachments;
 			this.showButtons = true;
-			this.createForm = true;
+			this.createCompleteForm = true;
 		});
 	}
 
@@ -140,7 +156,6 @@ export class DeathRegistrationComponent implements OnInit {
 			this.apiCode = param.get('apiCode');
 			this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
 		});
-
 		this.deathCertificateForm = this.createDeathCertificateForm();
 		this.getDeathCertData();
 		this.getLookUpsData();
@@ -156,8 +171,10 @@ export class DeathRegistrationComponent implements OnInit {
 		} else if (event === "NO") {
 			this.deathCertificateForm = this.createDeathCertificateForm();
 		}
+		
 		this.deathCertificateForm.patchValue(this.response);
 		this.deathCertificateForm.get('unknownCategory').get('code').setValue(event);
+		
 	}
 
 	/**
@@ -175,7 +192,7 @@ export class DeathRegistrationComponent implements OnInit {
 			}),
 			deathDate: ['', Validators.required],
 			birthDate: ['', Validators.required],
-			fatherOrHusbandName: ['', [ValidationService.nameValidator,Validators.required]],
+			fatherOrHusbandName: ['', [ValidationService.nameValidator, Validators.required]],
 			motherName: ['', [ValidationService.nameValidator, Validators.required]],
 			religion: this.fb.group({
 				code: ['', Validators.required]
@@ -196,6 +213,7 @@ export class DeathRegistrationComponent implements OnInit {
 				code: ['', Validators.required],
 				name: null
 			}),
+			otherPlace: null,
 			medicalTreatment: this.fb.group({
 				code: null
 			}),
@@ -210,67 +228,17 @@ export class DeathRegistrationComponent implements OnInit {
 
 			//step 3
 			//Present Address
-			presentAddress: this.fb.group({
-				id: 3,
-				uniqueId: null,
-				version: null,
-				addressType: "DR_PRESENT_ADDRESS",
-				houseNo: null,
-				tenamentNo: null,
-				buildingName: null,
-				state: ['Gujarat', [Validators.required]],
-				district: ['Vadodara', [Validators.required]],
-				talukaName: null,
-				pincode: [null, [Validators.required, Validators.pattern('[0-9]+'), Validators.maxLength(6), Validators.minLength(6)]],
-				addressLine1: null,
-				addressLine2: null,
-				addressLine3: null,
-				village: null
-			}),
+			presentAddress: this.fb.group(this.addressControls()),
 			isPermanentPresentAddressSame: this.fb.group({
-				id: null,
-				code: null,
-				name: null
+				code: null
 			}),
 
 			//Permanent Address
-			permanentAddress: this.fb.group({
-				id: 2,
-				uniqueId: null,
-				version: null,
-				addressType: "DR_PERMANENT_ADDRESS",
-				houseNo: null,
-				tenamentNo: null,
-				buildingName: null,
-				state: ['Gujarat', [Validators.required]],
-				district: ['Vadodara', [Validators.required]],
-				talukaName: null,
-				pincode: ['', [Validators.required, Validators.pattern('[0-9]+'), Validators.maxLength(6), Validators.minLength(6)]],
-				addressLine1: null,
-				addressLine2: null,
-				addressLine3: null,
-				village: null
-			}),
+			permanentAddress: this.fb.group(this.addressControls()),
 
 			//step 4
 			//Applicant Data
-			applicantAddress: this.fb.group({
-				id: 1,
-				uniqueId: null,
-				version: null,
-				addressType: "DR_APPLICANT_ADDRESS",
-				houseNo: '',
-				tenamentNo: '',
-				buildingName: '',
-				state: ['Gujarat', Validators.required],
-				district: ['Vadodara', Validators.required],
-				talukaName: null,
-				pincode: ['', [Validators.required, Validators.pattern('[0-9]+'), Validators.maxLength(6), Validators.minLength(6)]],
-				addressLine1: null,
-				addressLine2: null,
-				addressLine3: null,
-				village: null
-			}),
+			applicantAddress: this.fb.group(this.addressControls()),
 
 			applicantRelation: this.fb.group({
 				code: [null, Validators.required]
@@ -278,25 +246,18 @@ export class DeathRegistrationComponent implements OnInit {
 			relationOther: [''],
 			aadhaarNo: ['', [Validators.required, Validators.minLength(12), Validators.maxLength(12), ValidationService.aadharValidation]],
 			appHospitalName: ['', Validators.required],
-			email: ['', [Validators.required,ValidationService.emailValidator]],
+			email: ['', [Validators.required, ValidationService.emailValidator]],
 			contactNo: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10)]],
 
 			//Attachments Data step 5
 			unknownCategory: this.fb.group({
-				id: null,
-				code: [null,[Validators.required]],
-				name: null
+				code: [null, [Validators.required]],
 			}),
 			unknownDescription: null,
 
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
-			serviceDetail: this.fb.group({
-				code: null,
-				feesOnScrutiny: null,
-				gujName: null,
-				name: null
-			}),
-			attachments: [null,Validators.required],
+			attachments: [null, Validators.required],
+
 			id: null,
 			uniqueId: null,
 			version: null,
@@ -309,11 +270,17 @@ export class DeathRegistrationComponent implements OnInit {
 			fileNumber: null,
 			pid: null,
 			outwardNo: null,
-			agree: false,
+			agree: null,
 			paymentStatus: null,
-			canEdit: true,
-			canDelete: true,
+			canEdit: null,
+			canDelete: null,
 			canSubmit: null,
+			serviceDetail: this.fb.group({
+				code: null,
+				feesOnScrutiny: null,
+				gujName: null,
+				name: null
+			}),
 		});
 	}
 
@@ -344,21 +311,21 @@ export class DeathRegistrationComponent implements OnInit {
 			}),
 			delayedPeriod: ['',],
 			femaleDeathReason: this.fb.group({
-				code: ['',]
+				code: null
 			}),
 
 			//step 2
 			deathPlace: this.fb.group({
-				code: ['',],
-				name: null
+				code: null
 			}),
+			otherPlace: null,
 			medicalTreatment: this.fb.group({
 				code: null
 			}),
 			medicalReason: this.fb.group({
-				code: ['', []]
+				code: null
 			}),
-			deathReason: ['', [, Validators.maxLength(100)]],
+			deathReason: ['', [Validators.maxLength(100)]],
 			smokingSince: null,
 			tobaccoSince: null,
 			sopariPanmasalaSince: null,
@@ -366,67 +333,17 @@ export class DeathRegistrationComponent implements OnInit {
 
 			//step 3
 			//Present Address
-			presentAddress: this.fb.group({
-				id: 3,
-				uniqueId: null,
-				version: null,
-				addressType: "DR_PRESENT_ADDRESS",
-				houseNo: null,
-				tenamentNo: null,
-				buildingName: null,
-				state: ['Gujarat', []],
-				district: ['Vadodara', []],
-				talukaName: null,
-				pincode: [null, [, Validators.pattern('[0-9]+'), Validators.maxLength(6), Validators.minLength(6)]],
-				addressLine1: null,
-				addressLine2: null,
-				addressLine3: null,
-				village: null
-			}),
+			presentAddress: this.fb.group(this.addressControls()),
 			isPermanentPresentAddressSame: this.fb.group({
-				id: null,
-				code: null,
-				name: null
+				code: null
 			}),
 
 			//Permanent Address
-			permanentAddress: this.fb.group({
-				id: 2,
-				uniqueId: null,
-				version: null,
-				addressType: "DR_PERMANENT_ADDRESS",
-				houseNo: null,
-				tenamentNo: null,
-				buildingName: null,
-				state: ['Gujarat', []],
-				district: ['Vadodara', []],
-				talukaName: null,
-				pincode: ['', [, Validators.pattern('[0-9]+'), Validators.maxLength(6), Validators.minLength(6)]],
-				addressLine1: null,
-				addressLine2: null,
-				addressLine3: null,
-				village: null
-			}),
+			permanentAddress: this.fb.group(this.addressControls()),
 
 			//step 4
 			//Applicant Data
-			applicantAddress: this.fb.group({
-				id: 1,
-				uniqueId: null,
-				version: null,
-				addressType: "DR_APPLICANT_ADDRESS",
-				houseNo: '',
-				tenamentNo: '',
-				buildingName: '',
-				state: ['Gujarat',],
-				district: ['Vadodara',],
-				talukaName: null,
-				pincode: ['', [, Validators.pattern('[0-9]+'), Validators.maxLength(6), Validators.minLength(6)]],
-				addressLine1: null,
-				addressLine2: null,
-				addressLine3: null,
-				village: null
-			}),
+			applicantAddress: this.fb.group(this.addressControls()),
 
 			applicantRelation: this.fb.group({
 				code: [null,]
@@ -438,16 +355,14 @@ export class DeathRegistrationComponent implements OnInit {
 			email: [null, [ValidationService.emailValidator]],
 
 			//Attachments Data step 5
-			
+
 			unknownCategory: this.fb.group({
-				id: null,
-				code: [null,[Validators.required]],
-				name: null
+				code: [null, [Validators.required]],
 			}),
 			unknownDescription: null,
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
 			attachments: [],
-			
+
 			id: null,
 			uniqueId: null,
 			version: null,
@@ -458,11 +373,11 @@ export class DeathRegistrationComponent implements OnInit {
 			fileNumber: null,
 			pid: null,
 			outwardNo: null,
-			agree: false,
+			agree: null,
 			paymentStatus: null,
-			canEdit: true,
-			canDelete: true,
-			canSubmit: true,
+			canEdit: null,
+			canDelete: null,
+			canSubmit: null,
 			createdDate: null,
 			updatedDate: null,
 			serviceDetail: this.fb.group({
@@ -471,8 +386,28 @@ export class DeathRegistrationComponent implements OnInit {
 				gujName: null,
 				name: null
 			}),
-			
+
 		});
+	}
+
+	addressControls()  {
+		return {
+			id: null,
+			uniqueId: null,
+			version: null,
+			addressType: [''],
+			houseNo: ['', [Validators.required, Validators.maxLength(5)]],
+			tenamentNo: ['', Validators.maxLength(60)],
+			buildingName: ['', Validators.maxLength(60)],
+			state: ['', [Validators.required, Validators.maxLength(60)]],
+			district: ['', [Validators.required, Validators.maxLength(60)]],
+			talukaName: ['', [Validators.required, Validators.maxLength(60)]],
+			pincode: ['', [Validators.maxLength(6), Validators.minLength(6)]],
+			addressLine1: ['', Validators.maxLength(60)],
+			addressLine2: ['', Validators.maxLength(60)],
+			addressLine3: ['', Validators.maxLength(60)],
+			village: ['', Validators.maxLength(60)]
+		};
 	}
 
 	/**
@@ -543,8 +478,8 @@ export class DeathRegistrationComponent implements OnInit {
 			this.deathCertificateForm.get('permanentAddress').get('addressLine2').setValue(this.deathCertificateForm.get('presentAddress').get('addressLine2').value);
 			this.deathCertificateForm.get('permanentAddress').get('addressLine3').setValue(this.deathCertificateForm.get('presentAddress').get('addressLine3').value);
 			this.deathCertificateForm.get('permanentAddress').get('village').setValue(this.deathCertificateForm.get('presentAddress').get('village').value);
-		} else if (!event.checked) {
-			this.deathCertificateForm.value.isPermanentPresentAddressSame.code = "YES";
+		} else  {
+			this.deathCertificateForm.value.isPermanentPresentAddressSame.code = "NO";
 			this.deathCertificateForm.get('permanentAddress').get('houseNo').reset();
 			this.deathCertificateForm.get('permanentAddress').get('tenamentNo').reset();
 			this.deathCertificateForm.get('permanentAddress').get('buildingName').reset();
