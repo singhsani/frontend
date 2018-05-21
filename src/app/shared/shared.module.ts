@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { MaterialModule } from './modules/material/material.module';// Import material module
@@ -53,7 +52,6 @@ const COMPONENTS = [
 		...COMPONENTS
 	],
 	imports: [
-		HttpModule,
 		CommonModule,
 		MaterialModule,
 		HttpClientModule,

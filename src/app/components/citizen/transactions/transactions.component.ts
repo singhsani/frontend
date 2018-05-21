@@ -4,13 +4,8 @@ import { MatTableDataSource, MatPaginator } from '@angular/material';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, FormControl, Validators, Form } from '@angular/forms';
 
-import { Observable } from 'rxjs/Observable';
-import { merge } from 'rxjs/observable/merge';
-import { of as observableOf } from 'rxjs/observable/of';
-import { catchError } from 'rxjs/operators/catchError';
-import { map } from 'rxjs/operators/map';
-import { startWith } from 'rxjs/operators/startWith';
-import { switchMap } from 'rxjs/operators/switchMap';
+import { Observable ,  merge ,  of as observableOf } from 'rxjs';
+import { catchError ,  map ,  startWith ,  switchMap } from 'rxjs/operators';
 
 import { PaginationService } from '../../../core/services/citizen/data-services/pagination.service';
 import { FormsActionsService } from '../../../core/services/citizen/data-services/forms-actions.service';

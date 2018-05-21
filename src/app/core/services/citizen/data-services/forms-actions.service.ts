@@ -53,7 +53,7 @@ export class FormsActionsService {
 
 		this.requestURL = `api/form/${this.apiType}/get/${appId}`;
 
-		return this.http.get(this.requestURL).map((res: Response) => res);
+		return this.http.get(this.requestURL);
 	}
 
 	/**

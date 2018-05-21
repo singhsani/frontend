@@ -16,6 +16,7 @@ import { Observable } from 'rxjs/Observable';
 import { CommonService } from './common.service';
 import { SessionStorageService } from 'angular-web-storage';
 import { ManageRoutes } from '../../config/routes-conf';
+import 'rxjs/add/operator/do';
 
 
 @Injectable()

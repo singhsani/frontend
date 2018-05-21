@@ -4,9 +4,9 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { SessionStorageService } from 'angular-web-storage';
 
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/map';
+import { Observable } from 'rxjs';
+
+
 import 'url-search-params-polyfill';
 
 import { HttpService } from '../../../../shared/services/http.service';
