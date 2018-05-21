@@ -3,7 +3,7 @@ import { HttpService } from './services/http.service';
 import { CommonService } from './services/common.service';
 import { IfObservable } from 'rxjs/observable/IfObservable';
 import { HttpEvent, HttpEventType } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { SessionStorageService } from 'angular-web-storage';
 
 @Injectable()

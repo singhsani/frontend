@@ -215,7 +215,7 @@
                         </mat-form-field>
     
                         <mat-form-field formGroupName="motherEducation" class="col-md-4">
-                            <mat-select placeholder="{{'education' | translate:translateKey}}"  (change)="checkForm()" formControlName="code">
+                            <mat-select placeholder="{{'education' | translate:translateKey}}"  (selectionChange)="checkForm()" formControlName="code">
                                 <mat-option *ngFor="let mothereducation of MotherEducations" [value]="mothereducation.code">
                                     {{mothereducation.name}}
                                 </mat-option>

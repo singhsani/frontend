@@ -1,0 +1,19 @@
+sudo -i
+cd 'path to your application folder'
+npm install -g @angular/cli
+npm install -g npm
+sudo npm install @angular/cli
+sudo ng update @angular/cli
+sudo ng update @angular/core
+sudo ng update @angular/material
+
+without root user
+sudo npm i -g rxjs-tslint
+sudo npm install rxjs-tslint
+cd node_modules/rxjs-tslint
+sudo node_modules/.bin/rxjs-5-to-6-migrate -p src/tsconfig.app.json
+
+remove angular-web-storage
+sudo npm install angular-web-storage --save
+
+sudo npm install rxjs-compat

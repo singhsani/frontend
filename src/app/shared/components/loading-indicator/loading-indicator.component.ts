@@ -1,6 +1,6 @@
 import { CommonService } from './../../services/common.service';
 import { Component, OnInit } from '@angular/core';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
 
 @Component({
 	selector: 'loading-indicator',

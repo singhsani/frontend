@@ -13,8 +13,7 @@ import {
 import { environment } from './../../../environments/environment';
 import { SessionStorageService } from 'angular-web-storage';
 
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
+import { Observable ,  Subject } from 'rxjs';
 
 /**
  * This class is use for perform all common http requests.

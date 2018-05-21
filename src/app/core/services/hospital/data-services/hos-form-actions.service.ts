@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from '../../../../shared/services/http.service';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { SessionStorageService } from 'angular-web-storage';
 
 @Injectable()
@@ -45,7 +45,7 @@ export class HosFormActionsService {
 
 		this.requestURL = `api/form/${this.apiType}/get/${appId}`;
 
-		return this.http.get(this.requestURL).map((res: Response) => res);
+		return this.http.get(this.requestURL);
 	}
 
 	/**

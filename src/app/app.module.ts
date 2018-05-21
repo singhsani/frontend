@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
 import { LayoutModule } from '@angular/cdk/layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -20,16 +19,6 @@ import { ToastrModule } from 'ngx-toastr';
 import { AppRoutingModule } from './app-routing.module'; // route module
 /* Import child modules end */
 
-// adding rx operators
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/filter';
-import 'rxjs/add/operator/switchMap';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/finally';
-import 'rxjs/add/observable/of';
-import 'rxjs/add/observable/throw';
-
 /* import all component start */
 import { AppComponent } from './app.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
@@ -42,14 +31,12 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 		PageNotFoundComponent
 	],
 	imports: [
-		//AuthModule,
 		HospitalModule,
 		CitizenModule,
 		SharedModule,
 		CoreModule,
 		BrowserModule,
 		BrowserAnimationsModule,
-		HttpModule,
 		HttpClientModule,
 		LayoutModule,
 		FormsModule,
