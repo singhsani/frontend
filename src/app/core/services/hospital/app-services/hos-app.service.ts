@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 
 import 'url-search-params-polyfill';
 
-import { HttpService } from '../../../../shared/services/http.service';
+import { HosHttpService } from '../../../../shared/services/hos-http.service';
 
 @Injectable()
 
@@ -26,7 +26,7 @@ export class HosAppService {
 	 */
 	constructor(private router: Router,
 		private session: SessionStorageService,
-		private http: HttpService) {
+		private http: HosHttpService) {
 
 	}
 
