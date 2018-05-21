@@ -1,4 +1,4 @@
-import { Directive, ElementRef, HostListener, Input } from '@angular/core';
+import { Directive, ElementRef, HostListener } from '@angular/core';
 
 @Directive({
 	selector: '[OnlyNumber]'
@@ -7,9 +7,16 @@ export class OnlyNumberDirective {
 
 	constructor(private el: ElementRef) { }
 
-	@HostListener('keydown', ['$event']) onKeyDown(event) {
+	@HostListener('keydown', ['$event']) onKeyDown(event: KeyboardEvent) {
 		let e = <KeyboardEvent>event;
-		if ([46, 8, 9, 27, 13, 110, 190].indexOf(e.keyCode) !== -1 ||
+		/* 
+			8 -  for backspace
+			9 -  for tab
+			13 - for enter
+			27 - for escape
+			46 - for delete
+		*/
+		if ([8, 9, 13, 27, 46].indexOf(e.keyCode) !== -1 ||
 			// Allow: Ctrl+A
 			(e.keyCode === 65 && (e.ctrlKey || e.metaKey)) ||
 			// Allow: Ctrl+C
@@ -27,5 +34,26 @@ export class OnlyNumberDirective {
 		if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
 			e.preventDefault();
 		}
+	}
+
+	@HostListener('keyup', ['$event']) onKeyup(event: KeyboardEvent) {
+		this.validateFields(event);
+	}
+
+	@HostListener('paste', ['$event']) blockPaste(event: KeyboardEvent) {
+		this.validateFields(event);
+	}
+
+	validateFields(event) {
+		setTimeout(() => {
+			let checkNumber = parseInt(this.el.nativeElement.value);
+			if (!isNaN(checkNumber)) {
+				this.el.nativeElement.value = checkNumber;
+				event.preventDefault();
+			}else{
+				this.el.nativeElement.value = "";
+				event.preventDefault();
+			}
+		}, 100)
 	}
 }
