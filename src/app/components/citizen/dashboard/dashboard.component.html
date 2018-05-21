@@ -1,4 +1,18 @@
+
 <div class="container pt-4">
+    
+        <mat-card class="servicesList">
+    <div class="row ">
+        <h2 class="h2">
+            <mat-icon>dashboard</mat-icon>
+            <span>Services</span>
+        </h2>
+        <div class="col"  *ngFor="let module of userServicesList">
+            <img src="assets/icons/i1.png" alt=""><br>
+            {{module.name +' / '+ module.gujName}}</div>
+    </div>
+    </mat-card>
+
 
     <div class="row pt-1 pb-2">
         <div class="col-md-12">
@@ -31,20 +45,4 @@
 
         </mat-expansion-panel>
     </mat-accordion>
-    <!-- <div *ngFor="let module of userServicesList">
-        <app-title-bar [title]="module.name +' / '+ module.gujName"></app-title-bar>
-        <div class="row">
-            <div class="col-md-4 pb-4 text-center" *ngFor="let service of module.services;">
-                <mat-card>
-                    <mat-icon>account_circle</mat-icon>
-                    <mat-card-title>{{service.name +' / '+ service.gujName}}</mat-card-title>
-                    <mat-card-actions>
-                        <button mat-raised-button color="primary" (click)="createRecord(service.code)">
-                        <mat-icon>input</mat-icon> New Application
-                    </button>
-                    </mat-card-actions>
-                </mat-card>
-            </div>
-        </div>
-    </div> -->
 </div>

@@ -31,6 +31,7 @@ import { LoadingIndicatorComponent } from './components/loading-indicator/loadin
 import { HighlightPipe } from './pipes/highlight.pipe';
 import { PreventSpaceDirective } from './directives/prevent-space.directive';
 import { ValidationFieldsDirective } from './directives/validation-fields.directive';
+import { HosHttpService } from './services/hos-http.service';
 /* import pipes end*/
 
 const COMPONENTS = [
@@ -75,7 +76,8 @@ const COMPONENTS = [
 			provide: HTTP_INTERCEPTORS,
 			useClass: TokenInterceptor,
 			multi: true,
-		}
+		},
+		HosHttpService
 	]
 })
 export class SharedModule { }
