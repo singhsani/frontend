@@ -5,6 +5,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { MaterialModule } from './modules/material/material.module';// Import material module
 import { TranslateModule } from './modules/translate/translate.module';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 /* Import http related servies start */
 import { HttpService } from './services/http.service';
@@ -28,7 +29,6 @@ import { PaymentGatewayComponent } from './components/payment-gateway/payment-ga
 import { BasicDetailsComponent } from './components/basic-details/basic-details.component';
 import { TitleBarComponent } from './components/title-bar/title-bar.component';
 import { LoadingIndicatorComponent } from './components/loading-indicator/loading-indicator.component';
-import { HighlightPipe } from './pipes/highlight.pipe';
 import { PreventSpaceDirective } from './directives/prevent-space.directive';
 import { ValidationFieldsDirective } from './directives/validation-fields.directive';
 import { HosHttpService } from './services/hos-http.service';
@@ -38,7 +38,6 @@ const COMPONENTS = [
 	OnlyNumberDirective,
 	PreventSpaceDirective,
 	InrPipe, 
-	HighlightPipe,
 	ActionBarComponent, 
 	ControlMessagesComponent, 
 	FileUploadComponent,
@@ -60,11 +59,13 @@ const COMPONENTS = [
 		HttpClientModule,
 		TranslateModule,
 		FormsModule,
+		NgSelectModule,
 		ReactiveFormsModule
 	],
 	exports: [
 		MaterialModule,
 		TranslateModule,
+		NgSelectModule,
 		...COMPONENTS
 	],
 	providers: [

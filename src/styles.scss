@@ -3,6 +3,8 @@
 @import "assets/scss/variables";
 @import "assets/scss/material-icons";
 
+@import "~@ng-select/ng-select/themes/material.theme.css";
+
 .splashScreen {display: table; text-align:center;}
 .splashScreen svg {display: table-cell; vertical-align: middle;}
 
