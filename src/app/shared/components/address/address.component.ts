@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input,OnChanges } from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -6,15 +6,22 @@ import { FormGroup, Validators } from '@angular/forms';
 	templateUrl: './address.component.html',
 	styleUrls: ['./address.component.scss']
 })
-export class AddressComponent implements OnInit {
+export class AddressComponent implements OnInit,OnChanges {
 
 	@Input() addressFormGroup: FormGroup;
+	@Input() readOnly: boolean;
 
 	translateKey: string = 'addressScreen';
 
 	constructor() { }
 
-	ngOnInit() { }
+	ngOnInit() { 
+		console.log(this.readOnly);
+	}
+
+	ngOnChanges(){
+		console.log(this.readOnly);
+	}
 
 	/**
 	 * Method use to initialise form controls for address form group
@@ -28,8 +35,8 @@ export class AddressComponent implements OnInit {
 			houseNo: ['', [Validators.required, Validators.maxLength(5)]],
 			tenamentNo: ['', Validators.maxLength(60)],
 			buildingName: ['', Validators.maxLength(60)],
-			state: ['', [Validators.required, Validators.maxLength(60)]],
-			district: ['', [Validators.required, Validators.maxLength(60)]],
+			state: ['Gujrat', [Validators.required, Validators.maxLength(60)]],
+			district: ['Vadodara', [Validators.required, Validators.maxLength(60)]],
 			talukaName: ['', [Validators.required, Validators.maxLength(60)]],
 			pincode: ['', [Validators.maxLength(6), Validators.minLength(6)]],
 			addressLine1: ['', Validators.maxLength(60)],

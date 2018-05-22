@@ -20,23 +20,23 @@
 					<div class="row">
 	
 						<mat-form-field class="col-md-4">
-							<input matInput type ="text" maxlength="20" placeholder="{{'first_name' | translate:translateKey}}" name="firstName" formControlName="firstName">
+							<input matInput appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" maxlength="20" placeholder="{{'first_name' | translate:translateKey}}" name="firstName" formControlName="firstName">
 							<control-messages [control]="deathCertificateForm.controls.firstName"></control-messages>
 						</mat-form-field>
 	
 						<mat-form-field class="col-md-4">
-							<input matInput type ="text" maxlength="20" placeholder="{{'middle_name' | translate:translateKey}}" name="middleName" formControlName="middleName">
+							<input matInput appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" maxlength="20" placeholder="{{'middle_name' | translate:translateKey}}" name="middleName" formControlName="middleName">
 							<control-messages [control]="deathCertificateForm.controls.middleName"></control-messages>
 						</mat-form-field>
 	
 	
 						<mat-form-field class="col-md-4">
-							<input matInput type ="text" maxlength="20" placeholder="{{'last_name' | translate:translateKey}}" name="lastName" formControlName="lastName">
+							<input matInput appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" maxlength="20" placeholder="{{'last_name' | translate:translateKey}}" name="lastName" formControlName="lastName">
 							<control-messages [control]="deathCertificateForm.controls.lastName"></control-messages>
 						</mat-form-field>
 
 						<mat-form-field class="col-md-4">
-							<input matInput type="text" maxlength="20" [value] = "deathCertificateForm.controls.firstName.value" placeholder="પ્રથમ નામ" name="firstName" formControlName="firstName">
+							<input matInput  maxlength="20" [value] = "deathCertificateForm.controls.firstName.value" placeholder="પ્રથમ નામ" name="firstName" formControlName="firstName">
 							<control-messages [control]="deathCertificateForm.controls.firstName"></control-messages>
 						</mat-form-field>
 						
@@ -50,32 +50,31 @@
 							<input matInput type="text" maxlength="20" [value] = "deathCertificateForm.controls.lastName.value" placeholder="છેલ્લું નામ" name="lastName" formControlName="lastName">
 							<control-messages [control]="deathCertificateForm.controls.lastName"></control-messages>
 						</mat-form-field>
-	
+
 						<mat-form-field class="col-md-4">
-							<input matInput readonly [max]="maxDeathDate" [matDatepicker]="pickerBirth" (dateChange)="delayCalculator($event)" placeholder="{{'date_of_death' | translate:translateKey}}"
-							 formControlName="deathDate">
-							<mat-datepicker-toggle matSuffix [for]="pickerBirth"></mat-datepicker-toggle>
-							<mat-datepicker #pickerBirth ></mat-datepicker>
-							<control-messages [control]="deathCertificateForm.controls.deathDate"></control-messages>
-							
-						</mat-form-field>
-	
-						<mat-form-field class="col-md-4">
-							<input matInput  readonly [max]="maxBirthDate" [matDatepicker]="pickerDeath" (dateChange)="birthFormetChanger($event)" placeholder="{{'date_of_birth' | translate:translateKey}}"
-							 formControlName="birthDate">
+							<input matInput readonly (click)="pickerDeath.open()" (focus)="pickerDeath.open()" [max]="maxBirthDate" [matDatepicker]="pickerDeath"
+							 (dateChange)="birthFormatChanger($event)" placeholder="{{'date_of_birth' | translate:translateKey}}" formControlName="birthDate">
 							<mat-datepicker-toggle matSuffix [for]="pickerDeath"></mat-datepicker-toggle>
 							<mat-datepicker #pickerDeath></mat-datepicker>
 							<control-messages [control]="deathCertificateForm.controls.birthDate"></control-messages>
 						</mat-form-field>
 	
+						<mat-form-field class="col-md-4">
+							<input matInput readonly (click)="pickerBirth.open()" (focus)="pickerBirth.open()" [max]="maxDeathDate" [min]="minDeathDate" [matDatepicker]="pickerBirth" 
+							(dateChange)="deathFormatChanger($event);delayCalculator($event)" placeholder="{{'date_of_death' | translate:translateKey}}"
+							 formControlName="deathDate">
+							<mat-datepicker-toggle matSuffix [for]="pickerBirth"></mat-datepicker-toggle>
+							<mat-datepicker #pickerBirth ></mat-datepicker>
+							<control-messages [control]="deathCertificateForm.controls.deathDate"></control-messages>
+						</mat-form-field>
 	
 						<mat-form-field class="col-md-4">
-							<input matInput type ="text" maxlength="20" placeholder="{{'mother_name' | translate:translateKey}}" name="motherName" formControlName="motherName">
+							<input matInput appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" maxlength="20" placeholder="{{'mother_name' | translate:translateKey}}" name="motherName" formControlName="motherName">
 							<control-messages [control]="deathCertificateForm.controls.motherName"></control-messages>
 						</mat-form-field>
 	
 						<mat-form-field class="col-md-4">
-							<input matInput type ="text" maxlength="20" placeholder="{{'husband_or_father_name' | translate:translateKey}}" formControlName="fatherOrHusbandName">
+							<input matInput appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" maxlength="20" placeholder="{{'husband_or_father_name' | translate:translateKey}}" formControlName="fatherOrHusbandName">
 							<control-messages [control]="deathCertificateForm.controls.fatherOrHusbandName"></control-messages>
 						</mat-form-field>
 	
@@ -237,7 +236,7 @@
 						<!-- <app-address #address [addressFormGroup]="deathCertificateForm.controls.presentAddress"></app-address> -->
 						<div class="row" formGroupName="presentAddress">
 						
-							<mat-form-field class="col-md-4">
+							<!-- <mat-form-field class="col-md-4">
 								<input matInput maxlength="60" type="text" placeholder="{{'address_line1' | translate:addressTranslateKey}}" formControlName="addressLine1">
 							</mat-form-field>
 						
@@ -247,15 +246,15 @@
 						
 							<mat-form-field class="col-md-4">
 								<input matInput maxlength="60" type="text" placeholder="{{'address_line3' | translate:addressTranslateKey}}" formControlName="addressLine3">
-							</mat-form-field>
+							</mat-form-field> -->
 						
 							<mat-form-field class="col-md-4">
-								<input matInput OnlyNumber maxlength="60" type="text" placeholder="{{'house_no' | translate:addressTranslateKey}}" formControlName="houseNo">
+								<input matInput  maxlength="60" type="text" placeholder="{{'house_no' | translate:addressTranslateKey}}" formControlName="houseNo">
 							</mat-form-field>
 						
-							<mat-form-field class="col-md-4">
+							<!-- <mat-form-field class="col-md-4">
 								<input matInput OnlyNumber maxlength="60" type="text" placeholder="{{'tenament_no' | translate:addressTranslateKey}}" formControlName="tenamentNo">
-							</mat-form-field>
+							</mat-form-field> -->
 						
 							<mat-form-field class="col-md-4">
 								<input matInput maxlength="60" type="text" placeholder="{{'building_name' | translate:addressTranslateKey}}" formControlName="buildingName">
@@ -288,7 +287,7 @@
 								<control-messages [control]="deathCertificateForm.controls.presentAddress.controls.pincode"></control-messages>
 							</mat-form-field>
 						
-							<mat-form-field class="col-md-8">
+							<mat-form-field class="col">
 								<input matInput maxlength="60" type="text" placeholder="{{'taluka_name' | translate:addressTranslateKey}}" formControlName="talukaName">
 								<control-messages [control]="deathCertificateForm.controls.presentAddress.controls.talukaName"></control-messages>
 							</mat-form-field>
@@ -296,10 +295,9 @@
 					</div>
 					
 
-					<span >
-						<mat-checkbox [disabled]="deathCertificateForm.controls.fileStatus.value =='SUBMITTED'? true: false" (change)="check($event)" [ngModelOptions]="{standalone: true}" [(ngModel)]="checked">{{'is_permanent_address_same_as_present_address' | translate:translateKey}}</mat-checkbox>
+					<span formGroupName="isPermanentPresentAddressSame">
+						<mat-checkbox (change)="check($event)" [checked]="deathCertificateForm.get('isPermanentPresentAddressSame').get('code').value == 'YES'? true : false">{{'is_permanent_address_same_as_present_address' | translate:translateKey}}</mat-checkbox>
 					</span>
-					
 	
 					<div class="container">
 						<h2>
@@ -308,7 +306,7 @@
 						<!-- <app-address #address [addressFormGroup]="deathCertificateForm.controls.permanentAddress"></app-address> -->
 						<div class="row" formGroupName="permanentAddress">
 						
-							<mat-form-field class="col-md-4">
+							<!-- <mat-form-field class="col-md-4">
 								<input matInput maxlength="60" type="text" placeholder="{{'address_line1' | translate:addressTranslateKey}}" formControlName="addressLine1" readonly="readOnly">
 							</mat-form-field>
 						
@@ -318,15 +316,15 @@
 						
 							<mat-form-field class="col-md-4">
 								<input matInput maxlength="60" type="text" placeholder="{{'address_line3' | translate:addressTranslateKey}}" formControlName="addressLine3">
-							</mat-form-field>
+							</mat-form-field> -->
 						
 							<mat-form-field class="col-md-4">
-								<input matInput maxlength="60" OnlyNumber type="text" placeholder="{{'house_no' | translate:addressTranslateKey}}" formControlName="houseNo">
+								<input matInput maxlength="60"  type="text" placeholder="{{'house_no' | translate:addressTranslateKey}}" formControlName="houseNo">
 							</mat-form-field>
 						
-							<mat-form-field class="col-md-4">
+							<!-- <mat-form-field class="col-md-4">
 								<input matInput maxlength="60" OnlyNumber type="text" placeholder="{{'tenament_no' | translate:addressTranslateKey}}" formControlName="tenamentNo">
-							</mat-form-field>
+							</mat-form-field> -->
 						
 							<mat-form-field class="col-md-4">
 								<input matInput maxlength="60" type="text" placeholder="{{'building_name' | translate:addressTranslateKey}}" formControlName="buildingName">
@@ -359,7 +357,7 @@
 								<control-messages [control]="deathCertificateForm.controls.permanentAddress.controls.pincode"></control-messages>
 							</mat-form-field>
 						
-							<mat-form-field class="col-md-8">
+							<mat-form-field class="col">
 								<input matInput maxlength="60" type="text" placeholder="{{'taluka_name' | translate:addressTranslateKey}}" formControlName="talukaName">
 								<control-messages [control]="deathCertificateForm.controls.permanentAddress.controls.talukaName"></control-messages>
 							</mat-form-field>
@@ -374,7 +372,7 @@
 					<div class="row">
 
 						<mat-form-field class="col-md-4">
-							<input matInput type="text" maxlength="20" placeholder="{{'applicant_hospital_name' | translate:translateKey}}" formControlName="appHospitalName">
+							<input matInput appValidationFields [validationFieldsType]="'onlyNameWithSpace'" maxlength="20" placeholder="{{'applicant_hospital_name' | translate:translateKey}}" formControlName="appHospitalName">
 							<control-messages [control]="deathCertificateForm.controls.appHospitalName"></control-messages>
 						</mat-form-field>
 
@@ -397,11 +395,11 @@
 						</mat-form-field>
 
 						<mat-form-field class="col-md-4">
-							<input matInput maxlength="12"  placeholder="{{'applicant_aadhar' | translate:translateKey}}" formControlName="aadhaarNo">
+							<input matInput maxlength="12" OnlyNumber minlength="12"  placeholder="{{'applicant_aadhar' | translate:translateKey}}" formControlName="aadhaarNo">
 							<control-messages [control]="deathCertificateForm.controls.aadhaarNo"></control-messages>
 						</mat-form-field>
 						
-						<mat-form-field class="col-md-8">
+						<mat-form-field class="col">
 							<input matInput placeholder="{{'contact_No' | translate:translateKey}}" OnlyNumber maxlength="10" formControlName="contactNo">
 							<control-messages [control]="deathCertificateForm.controls.contactNo"></control-messages>
 						</mat-form-field>
@@ -413,7 +411,7 @@
 						<div class="container">
 							<mat-label>{{'applicant_or_hospital_address' | translate:translateKey}}</mat-label>
 							<div class="row" formGroupName="applicantAddress">
-								<mat-form-field class="col-md-4">
+								<!-- <mat-form-field class="col-md-4">
 									<input matInput maxlength="60" type="text" placeholder="{{'address_line1' | translate:addressTranslateKey}}" formControlName="addressLine1">
 								</mat-form-field>
 	
@@ -423,15 +421,15 @@
 	
 								<mat-form-field class="col-md-4">
 									<input matInput maxlength="60" type="text" placeholder="{{'address_line3' | translate:addressTranslateKey}}" formControlName="addressLine3">
-								</mat-form-field>
+								</mat-form-field> -->
 	
 								<mat-form-field class="col-md-4">
-									<input matInput maxlength="60" OnlyNumber  type="text" placeholder="{{'house_no' | translate:addressTranslateKey}}" formControlName="houseNo">
+									<input matInput maxlength="60"  type="text" placeholder="{{'house_no' | translate:addressTranslateKey}}" formControlName="houseNo">
 								</mat-form-field>
 	
-								<mat-form-field class="col-md-4">
+								<!-- <mat-form-field class="col-md-4">
 									<input matInput maxlength="60" OnlyNumber  type="text" placeholder="{{'tenament_no' | translate:addressTranslateKey}}" formControlName="tenamentNo">
-								</mat-form-field>
+								</mat-form-field> -->
 	
 								<mat-form-field class="col-md-4">
 									<input matInput maxlength="60" type="text" placeholder="{{'building_name' | translate:addressTranslateKey}}" formControlName="buildingName">
@@ -464,7 +462,7 @@
 									<control-messages [control]="deathCertificateForm.controls.applicantAddress.controls.pincode"></control-messages>
 								</mat-form-field>
 	
-								<mat-form-field class="col-md-8">
+								<mat-form-field class="col">
 									<input matInput maxlength="60" type="text" placeholder="{{'taluka_name' | translate:addressTranslateKey}}" formControlName="talukaName">
 									<control-messages [control]="deathCertificateForm.controls.applicantAddress.controls.talukaName"></control-messages>
 								</mat-form-field>

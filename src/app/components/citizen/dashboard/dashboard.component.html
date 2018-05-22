@@ -1,7 +1,26 @@
 
 <div class="container pt-4">
     
-        <mat-card class="servicesList">
+    <mat-card class="themeBox">
+        <div class="row ">
+            <h2 class="h2">
+                <mat-icon>search</mat-icon>
+                <span>Search Application</span>
+            </h2>
+            <div class="col-md-4">
+                dfgfdg
+            </div>
+            <div class="col-md-6">
+                    dfgfdg
+            </div>
+            <div class="col">
+                    dfgfdg
+            </div>
+        </div>
+        </mat-card>
+
+
+        <mat-card class="themeBox servicesList">
     <div class="row ">
         <h2 class="h2">
             <mat-icon>dashboard</mat-icon>
@@ -12,13 +31,6 @@
             {{module.name +' / '+ module.gujName}}</div>
     </div>
     </mat-card>
-
-
-    <div class="row pt-1 pb-2">
-        <div class="col-md-12">
-            <input class="form-control col-md-4 float-right" placeholder="Enter Application Name" type="text" [(ngModel)]="search">
-        </div>
-    </div>
 
     <mat-accordion *ngFor="let module of userServicesList">
         <mat-expansion-panel>
@@ -33,7 +45,7 @@
                 <div class="col-12 col-sm-6 col-md-6 col-lg-4 pb-4 text-center dashboardList" *ngFor="let service of module.services;">
                     <mat-card>
                         <mat-icon>account_circle</mat-icon>
-                        <mat-card-title innerHTML="{{ service.name +' / '+ service.gujName | highlight : search }}"></mat-card-title>
+                        <mat-card-title innerHTML="{{ service.name +' / '+ service.gujName }}"></mat-card-title>
                         <mat-card-actions>
                             <button mat-raised-button color="primary" (click)="createRecord(service.code)">
                                 <mat-icon>input</mat-icon> New Application

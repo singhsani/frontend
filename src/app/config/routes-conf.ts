@@ -268,7 +268,13 @@ const ROUTEMAIN = {
     'CANCELBOOKING': {
         'main': 'cancel-booking',
         'type': ''
-    }
+    },
+
+    /* hospital routing configuration start*/
+    'HOSPITALDASHBOARD': {
+        'main': 'dashboard',
+        'type': 'dashboard'
+    },
 }
 
 const ROUTEPREFIX = {
@@ -517,6 +523,11 @@ const ROUTESLIST = {
     },
     'CANCELBOOKING': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.BOOKINGMODULE + '/' + ROUTEMAIN.CANCELBOOKING.main
+    },
+
+    /* hospital full routing configuration start*/
+    'HOSPITALDASHBOARD': {
+        'full': ROUTEPREFIX.HOSPITALMODULE + '/' + ROUTEMAIN.HOSPITALDASHBOARD.main
     }
 }
 

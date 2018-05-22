@@ -13,7 +13,6 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class DashboardComponent implements OnInit {
 
-	search: string = '';
 	userServicesList: any;
 	manageRoutes: any = ManageRoutes;
 	/**

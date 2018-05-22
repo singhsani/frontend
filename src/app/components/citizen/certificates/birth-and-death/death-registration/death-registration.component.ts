@@ -43,7 +43,8 @@ export class DeathRegistrationComponent implements OnInit {
 	private deathCertificateForm: FormGroup;
 	private submit: boolean = false;
 	private minBirthDate;
-	private maxBirthDate: any;
+	private minDeathDate ;
+	private maxBirthDate = new Date();
 	private maxDeathDate = new Date();
 	private GujMedicalTreatmentOptions = [
 		{
@@ -415,19 +416,26 @@ export class DeathRegistrationComponent implements OnInit {
 	 * @param event - pass date event.
 	 */
 	delayCalculator(event) {
-		this.maxBirthDate = event.value;
 		let now = moment(new Date());
 		let diff = moment.duration(now.diff(event.value));
-		this.deathCertificateForm.get('deathDate').setValue(moment(event.value).format("YYYY-MM-DD"));
 		let delay = diff.days() + diff.months() * 30 + diff.years() * 365;
 		this.deathCertificateForm.get('delayedPeriod').setValue(delay);
 	}
 
 	/**
-	 * Method to change birthdate into desired (YYYY-MM-DD) formet.
+	 * Method to change birthdate into desired (YYYY-MM-DD) format.
 	 * @param event - date picker event.
 	 */
-	birthFormetChanger(event) {
+	deathFormatChanger(event){
+		this.deathCertificateForm.get('deathDate').setValue(moment(event.value).format("YYYY-MM-DD"));
+	}
+
+	/**
+	 * Method to change birthdate into desired (YYYY-MM-DD) format.
+	 * @param event - date picker event.
+	 */
+	birthFormatChanger(event) {
+		this.minDeathDate = event.value;
 		this.deathCertificateForm.get('birthDate').setValue(moment(event.value).format("YYYY-MM-DD"));
 	}
 
@@ -465,33 +473,17 @@ export class DeathRegistrationComponent implements OnInit {
 	 * @param event - checkbox event.
 	 */
 	check(event) {
+		let parentPermanentAddressType = this.deathCertificateForm.get('permanentAddress').get('addressType').value;
 		if (event.checked) {
-			this.deathCertificateForm.value.isPermanentPresentAddressSame.code = "YES";
-			this.deathCertificateForm.get('permanentAddress').get('houseNo').setValue(this.deathCertificateForm.get('presentAddress').get('houseNo').value);
-			this.deathCertificateForm.get('permanentAddress').get('tenamentNo').setValue(this.deathCertificateForm.get('presentAddress').get('tenamentNo').value);
-			this.deathCertificateForm.get('permanentAddress').get('buildingName').setValue(this.deathCertificateForm.get('presentAddress').get('buildingName').value);
-			this.deathCertificateForm.get('permanentAddress').get('state').setValue(this.deathCertificateForm.get('presentAddress').get('state').value);
-			this.deathCertificateForm.get('permanentAddress').get('district').setValue(this.deathCertificateForm.get('presentAddress').get('district').value);
-			this.deathCertificateForm.get('permanentAddress').get('talukaName').setValue(this.deathCertificateForm.get('presentAddress').get('talukaName').value);
-			this.deathCertificateForm.get('permanentAddress').get('pincode').setValue(this.deathCertificateForm.get('presentAddress').get('pincode').value);
-			this.deathCertificateForm.get('permanentAddress').get('addressLine1').setValue(this.deathCertificateForm.get('presentAddress').get('addressLine1').value);
-			this.deathCertificateForm.get('permanentAddress').get('addressLine2').setValue(this.deathCertificateForm.get('presentAddress').get('addressLine2').value);
-			this.deathCertificateForm.get('permanentAddress').get('addressLine3').setValue(this.deathCertificateForm.get('presentAddress').get('addressLine3').value);
-			this.deathCertificateForm.get('permanentAddress').get('village').setValue(this.deathCertificateForm.get('presentAddress').get('village').value);
-		} else  {
-			this.deathCertificateForm.value.isPermanentPresentAddressSame.code = "NO";
-			this.deathCertificateForm.get('permanentAddress').get('houseNo').reset();
-			this.deathCertificateForm.get('permanentAddress').get('tenamentNo').reset();
-			this.deathCertificateForm.get('permanentAddress').get('buildingName').reset();
-			this.deathCertificateForm.get('permanentAddress').get('state').reset();
-			this.deathCertificateForm.get('permanentAddress').get('district').reset();
-			this.deathCertificateForm.get('permanentAddress').get('talukaName').reset();
-			this.deathCertificateForm.get('permanentAddress').get('pincode').reset();
-			this.deathCertificateForm.get('permanentAddress').get('addressLine1').reset();
-			this.deathCertificateForm.get('permanentAddress').get('addressLine2').reset();
-			this.deathCertificateForm.get('permanentAddress').get('addressLine3').reset();
-			this.deathCertificateForm.get('permanentAddress').get('village').reset();
+			this.readOnly = true;
+			this.deathCertificateForm.get('isPermanentPresentAddressSame').get('code').setValue("YES");
+			this.deathCertificateForm.get('permanentAddress').setValue(this.deathCertificateForm.get('presentAddress').value);
+		} else if (!event.checked) {
+			this.readOnly = false;
+			this.deathCertificateForm.get('isPermanentPresentAddressSame').get('code').setValue("NO");
+			this.deathCertificateForm.get('permanentAddress').reset();
 		}
+		this.deathCertificateForm.get('permanentAddress').get('addressType').setValue(parentPermanentAddressType);
 	}
 
 	/**

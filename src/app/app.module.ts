@@ -23,6 +23,7 @@ import { AppRoutingModule } from './app-routing.module'; // route module
 /* import all component start */
 import { AppComponent } from './app.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
 /* import all component end */
 
 
@@ -55,7 +56,8 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 		
 	],
 	exports: [ ],
-	providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
+	providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy },
+		        { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }],
 	bootstrap: [AppComponent]
 })
 export class AppModule { }

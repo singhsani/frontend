@@ -11,8 +11,7 @@ import { CommonService } from '../../services/common.service';
 })
 export class FileUploadComponent implements OnInit {
 
-	@ViewChild('fileInput')
-	fileInput: any;
+	@ViewChild('fileInput') fileInput: any;
 
 	/**
 	 * File Upload related variables
