@@ -1,5 +1,5 @@
 import { ManageRoutes } from './../../../config/routes-conf';
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import * as _ from 'lodash';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -14,7 +14,7 @@ import { ToastrService } from 'ngx-toastr';
 	templateUrl: './action-bar.component.html',
 	styleUrls: ['./action-bar.component.scss']
 })
-export class ActionBarComponent implements OnChanges, OnInit {
+export class ActionBarComponent implements OnInit {
 
 	translateKey: string = 'actionBarScreen';
 
@@ -39,19 +39,13 @@ export class ActionBarComponent implements OnChanges, OnInit {
 
 	ngOnInit() {
 		this.formService.apiType = this.form.get('apiType').value;
-
 		this.commonFormControls();
 
-	}
-
-	ngOnChanges(changes: SimpleChanges) {
-
 		setTimeout(() => {
-			if (changes.form.currentValue.value.canEdit !== null && !changes.form.currentValue.value.canEdit) {
+			if (this.form.value.hasOwnProperty('canEdit') && !this.form.value.canEdit && this.form.value.canEdit != null) {
 				this.form.disable();
-				this.isBtnsDisabled = true;
 			}
-		}, 300);
+		}, 600);
 
 	}
 
@@ -120,13 +114,6 @@ export class ActionBarComponent implements OnChanges, OnInit {
 				count++
 			}
 		}
-	}
-
-	/**
-	 * this method is use for proceed to payment
-	 */
-	proceedToPayment() {
-		this.route.navigate(['citizen/payment-gateway']);
 	}
 
 	/**

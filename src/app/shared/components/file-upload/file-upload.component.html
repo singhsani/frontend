@@ -11,8 +11,8 @@
 		</div>
 
 		<div *ngIf="showButton">
-			<label class="btn btn-default">
-				<input #fileInput type="file" (change)="selectFile($event)">
+			<label class="btn btn-default" [class.disabled]="prevMode"> 
+				<input #fileInput type="file" [class.disabled]="prevMode" [disabled]="prevMode" (change)="selectFile($event)">
 			</label>
 			<label *ngIf="imagetype">
 				<img [src]="priviewImage" alt="image" class="imageSize" />

@@ -13,7 +13,6 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class HospitalDashboardComponent implements OnInit {
 
-	search: string = '';
 	userServicesList: any;
 	manageRoutes: any = ManageRoutes;
 	/**

@@ -1,12 +1,12 @@
 <div class="notFound">
-    <button mat-button class="logo">
-        <img src="../../../assets/images/vmc-logo.png" alt="Vadodara Municipal Corporation">
-        <span class="logoName">VADODARA MUNICIPAL
-            <br>CORPORATION</span>
-    </button>
-  <div class="foundMsg">
-    <span>404</span>
-    Page not found
-  </div>
-  <a mat-raised-button color="primary" class="mt-4" routerLink="../citizen/dashboard">Go Home</a>
+	<button mat-button class="logo">
+		<img src="../../../assets/images/vmc-logo.png" alt="Vadodara Municipal Corporation">
+		<span class="logoName">VADODARA MUNICIPAL
+			<br>CORPORATION</span>
+	</button>
+	<div class="foundMsg">
+		<span>404</span>
+		Page not found
+	</div>
+	<a mat-raised-button color="primary" class="mt-4" (click)="redirectToHome()">Go Home</a>
 </div>
