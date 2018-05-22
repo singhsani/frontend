@@ -250,7 +250,6 @@ export class BirthRegistrationComponent implements OnInit {
 	 */
 	getBirthCertData() {
 		this.formService.getFormData(this.appId).subscribe(res => {
-			console.log(res);
 			this.prevMode = !res.canEdit
 			this.attachments = res.attachments;
 			this.birthCertificateForm.patchValue(res);
@@ -282,7 +281,6 @@ export class BirthRegistrationComponent implements OnInit {
 	 * @param count - count of invalid control.
 	 */
 	handleErrorsOnSubmit(count) {
-		console.log(count);
 		this.submit = true;
 		let step1 = 9;
 		let step2 = 15;
@@ -316,7 +314,6 @@ export class BirthRegistrationComponent implements OnInit {
 	 */
 	getLookUpsData() {
 		this.formService.getDataFromLookups().subscribe(respData => {
-			console.log(respData);
 			this.ChildWeights = respData.CHILD_WEIGHT;
 			this.DeliveryTreatmentOptions = respData.DELIVERY_TREATMENT;
 			this.TypeOfDelivery = respData.DELIVERY_TYPE;
@@ -364,9 +361,6 @@ export class BirthRegistrationComponent implements OnInit {
 		this.stepper.reset();
 	}
 
-	// checkForm(){
-	// 	console.log(this.birthCertificateForm.get('motherEducation').get('code').value);
-	// }
 
 	/**
 	 * Method is used to set data value to upload method.

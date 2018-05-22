@@ -55,7 +55,7 @@ export class DashboardComponent implements OnInit {
 				this.userServicesList = res.modules;
 			},
 			err => {
-				console.log(err);
+				
 			}
 		);
 	}

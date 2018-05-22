@@ -104,7 +104,6 @@ export class DeathRegistrationComponent implements OnInit {
 	 */
 	getLookUpsData() {
 		this.formService.getDataFromLookups().subscribe(respData => {
-			console.log(respData);
 			this.deathPlaces = respData.PLACE;
 			this.DeceasedEducations = respData.EDUCATION;
 			this.DeceasedOccupation = respData.OCCUPATIONS;
@@ -122,7 +121,6 @@ export class DeathRegistrationComponent implements OnInit {
 	 */
 	getDeathCertData() {
 		this.formService.getFormData(this.appId).subscribe((res) => {
-			console.log(res);
 			this.response = res;
 
 			//for checkbox

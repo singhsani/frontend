@@ -220,7 +220,6 @@ export class MarriageCreateComponent implements OnInit {
                 this.showButtons = true;
             },
             err => {
-                console.log("get fail" + err);
             }
         );
     }
@@ -240,7 +239,6 @@ export class MarriageCreateComponent implements OnInit {
 	 */
     dateFormate(date, controlType) {
         this.marriageFormGroup.get(controlType).setValue(moment(date).format("YYYY-MM-DD"));
-        console.log("get date " + this.marriageFormGroup.get(controlType).value);
     }
 
     /**
@@ -300,7 +298,6 @@ export class MarriageCreateComponent implements OnInit {
         let step7 = 126;
         //Check form validation.
         if (this.marriageFormGroup.valid) {
-            console.log("submitted");
             // this.marriageFormGroup.reset();
         }
         else {
@@ -337,7 +334,6 @@ export class MarriageCreateComponent implements OnInit {
                 return false;
             }
             else {
-                console.log("else condition");
             }
 
 

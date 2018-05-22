@@ -123,7 +123,6 @@ export class DeathDuplicateComponent implements OnInit {
 
 	getDeathDuplicateData() {
 		this.formService.getFormData(this.appId).subscribe(res => {
-			console.log(res);
 			this.deathDuplicateForm.patchValue(res);
 		});
 	}
@@ -147,7 +146,6 @@ export class DeathDuplicateComponent implements OnInit {
 	 */
 	getLookupData() {
 		this.formService.getDataFromLookups().subscribe(res => {
-			console.log(res);
 		});
 	}
 

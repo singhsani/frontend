@@ -363,7 +363,6 @@ export class StillBirthComponent implements OnInit {
    */
   getStillBirthFormData() {
     this.formService.getFormData(this.appId).subscribe(res => {
-      console.log(res);
       this.attachments = res.attachments;
       this.stillBirthCertificateForm.patchValue(res);
       this.showButtons = true;

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input,OnChanges } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -6,7 +6,7 @@ import { FormGroup, Validators } from '@angular/forms';
 	templateUrl: './address.component.html',
 	styleUrls: ['./address.component.scss']
 })
-export class AddressComponent implements OnInit,OnChanges {
+export class AddressComponent implements OnInit {
 
 	@Input() addressFormGroup: FormGroup;
 	@Input() readOnly: boolean;
@@ -16,11 +16,7 @@ export class AddressComponent implements OnInit,OnChanges {
 	constructor() { }
 
 	ngOnInit() { 
-		console.log(this.readOnly);
-	}
-
-	ngOnChanges(){
-		console.log(this.readOnly);
+		
 	}
 
 	/**

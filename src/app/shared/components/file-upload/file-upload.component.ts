@@ -159,7 +159,7 @@ export class FileUploadComponent implements OnInit {
 		this.uploadFileService.getFileFromServer(this.uploadModel.serviceFormId.toString(), this.id, this.type).subscribe(respData => {
 			this.downLoadFile(respData, this.type);
 		}, error => {
-			console.log(error);
+			
 		}
 		)
 	}
