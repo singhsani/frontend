@@ -7,7 +7,7 @@ import { ManageRoutes } from './../../../../../config/routes-conf';
 import { ValidationService } from '../../../../../shared/services/validation.service';
 import { FormsActionsService } from '../../../../../core/services/citizen/data-services/forms-actions.service';
 import * as _ from 'lodash';
-
+import * as moment from 'moment';
 
 @Component({
 	selector: 'app-marriage-duplicate',
@@ -20,14 +20,23 @@ export class MarriageDuplicateComponent implements OnInit {
 	@ViewChild(MatStepLabel) steplable: MatStepLabel;
 
 	marriageDuplicateForm: FormGroup;
-	translateKey: string = 'marriageDuplicateScreen';
+	translateKey: string = 'duplicateMarriageRegScreen';
 
 	appId: number;
 	apiCode: string;
 
+	// Marriage date 
+	disablefutureDate = new Date(moment().format('YYYY-MM-DD'));
+
 	// Step Titles
 	stepLable1: string = "Applicant Basic Details";
+	stepLable2: string = "Marriage Details";
 
+    /**
+     * @param fb - Declare FormBuilder property.
+     * @param validationError - Declare validation service property
+     * @param formService - Declare form service property 
+     */
 	constructor(
 		private fb: FormBuilder,
 		private validationService: ValidationService,
@@ -43,30 +52,20 @@ export class MarriageDuplicateComponent implements OnInit {
 			this.apiCode = param.get('apiCode');
 			this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
 		});
-
-		this.getMarriageDuplicateData();
-		this.getLookupData();
-		this.marriageDuplicateFormControls();
+		if (!this.appId) {
+			this.router.navigate([ManageRoutes.getFullRoute('CITIZENDASHBOARD')]);
+		}
+		else {
+			this.getMarriageDuplicateData();
+			this.getLookupData();
+			this.marriageDuplicateFormControls();
+		}
 	}
-	
+
 	getMarriageDuplicateData() {
 		this.formService.getFormData(this.appId).subscribe(res => {
 			this.marriageDuplicateForm.patchValue(res);
 		});
-	}
-
-	/**
-	 * Method is used to handle error/validation on submit
-	 * @param count - count of invalid control.
-	 */
-	handleErrorsOnSubmit(count) {
-		let step1 = 6;
-
-		if (count <= step1) {
-			this.stepper.selectedIndex = 0;
-			return false;
-		}
-
 	}
 
 	/**
@@ -78,16 +77,45 @@ export class MarriageDuplicateComponent implements OnInit {
 		});
 	}
 
+    /**
+	 * This method is change date formate
+	 */
+	dateFormate(date, controlType) {
+		this.marriageDuplicateForm.get(controlType).setValue(moment(date).format("YYYY-MM-DD"));
+	}
+
 	marriageDuplicateFormControls() {
 		this.marriageDuplicateForm = this.fb.group({
-			marriageRegNumber: null,
-			marriageDate: null,
-			marriageRegDate: null,
-			marriageRegYear: null,
-			groomName: null,
-			brideName: null,
-			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode)
+
+			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
+
+			deptFileStatus: null,
+			serviceCode: "HEL-DUPMR",
+
+			marriageRegNumber: ['', Validators.required],
+			marriageDate: ['', Validators.required],
+			marriageRegDate: ['', Validators.required],
+			marriageRegYear: ['', Validators.required],
+			groomName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
+			brideName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]]
 		});
+	}
+
+	/**
+	 * Method is used to handle error/validation on submit
+	 * @param count - count of invalid control.
+	 */
+	handleErrorsOnSubmit(count) {
+		let step1 = 6;
+		let step2 = 6;
+
+		if (count <= step1) {
+			this.stepper.selectedIndex = 0;
+			return false;
+		} else if (count <= step2) {
+			this.stepper.selectedIndex = 1;
+			return false;
+		}
 	}
 
 	/**

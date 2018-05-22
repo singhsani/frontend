@@ -275,6 +275,10 @@ const ROUTEMAIN = {
         'main': 'dashboard',
         'type': 'dashboard'
     },
+    'SLOTBOOKING': {
+        'main': 'slot-booking',
+        'type': ''
+    }
 }
 
 const ROUTEPREFIX = {
@@ -327,6 +331,9 @@ const ROUTEPREFIX = {
     /** start - citizen inner-tax module */
     'PROPERTYMODULE': 'property',
     /** end - citizen inner-tax module */
+
+    'APPOINTMENT': 'appointmant',
+    'SCHEDULEAPPOINTMENT': 'schedule-appointment',
 
     /** end - citizen tax module */
 
@@ -528,6 +535,9 @@ const ROUTESLIST = {
     /* hospital full routing configuration start*/
     'HOSPITALDASHBOARD': {
         'full': ROUTEPREFIX.HOSPITALMODULE + '/' + ROUTEMAIN.HOSPITALDASHBOARD.main
+    },
+    'SLOTBOOKING': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.APPOINTMENT + '/' + ROUTEPREFIX.SCHEDULEAPPOINTMENT + '/' + ROUTEMAIN["SLOTBOOKING"].main
     }
 }
 

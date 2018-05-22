@@ -163,12 +163,17 @@ export class ActionBarComponent implements OnInit {
 				this.form.addControl(key, new FormControl());
 		});
 
-		this.form.addControl('firstName', new FormControl('', [Validators.required, ValidationService.nameValidator]));
-		this.form.addControl('middleName', new FormControl('', [Validators.required, ValidationService.nameValidator]));
-		this.form.addControl('lastName', new FormControl('', [Validators.required, ValidationService.nameValidator]));
-		this.form.addControl('contactNo', new FormControl('', [Validators.required, Validators.maxLength(10)]));
-		this.form.addControl('email', new FormControl('', [Validators.required, ValidationService.emailValidator]));
-		this.form.addControl('aadhaarNo', new FormControl('', [Validators.required, Validators.maxLength(12)]));
+		//temp condition
+		if (this.form.get('apiType').value != 'marriageReg') {
+
+			this.form.addControl('firstName', new FormControl('', [Validators.required, ValidationService.nameValidator]));
+			this.form.addControl('middleName', new FormControl('', [Validators.required, ValidationService.nameValidator]));
+			this.form.addControl('lastName', new FormControl('', [Validators.required, ValidationService.nameValidator]));
+			this.form.addControl('contactNo', new FormControl('', [Validators.required, Validators.maxLength(10)]));
+			this.form.addControl('email', new FormControl('', [Validators.required, ValidationService.emailValidator]));
+			this.form.addControl('aadhaarNo', new FormControl('', [Validators.required, Validators.maxLength(12)]));
+		}
+
 		this.form.addControl('serviceDetail', new FormGroup({
 			code: new FormControl(),
 			name: new FormControl(),

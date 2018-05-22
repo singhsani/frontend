@@ -2,14 +2,61 @@
 	<app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
 	<mat-card class="mt-4 formClass">
 		<form [formGroup]="marriageDuplicateForm">
-			<mat-horizontal-stepper [linear]="false">
+			<mat-horizontal-stepper>
 
 				<!-- first step start-->
-				<mat-step [label]="stepLable1">
+				<mat-step [stepControl]="basicDetail" [label]="stepLable1">
 					<app-basic-details [basicFormGroup]="marriageDuplicateForm"></app-basic-details>
-					<app-action-bar [form]="marriageDuplicateForm" [step]="'final'" (stepReset)="stepReset()" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
+
+					<div class="col-12">
+						<app-action-bar [form]="marriageDuplicateForm" [step]="'step1'"></app-action-bar>
+					</div>
+
 				</mat-step>
 
+				<!-- second step start-->
+				<mat-step [stepControl]="groomandbrideDetail" [label]="stepLable2">
+					<div class="row">
+
+						<mat-form-field class="col-4">
+							<input matInput type="text" formControlName="marriageRegNumber" placeholder="{{ 'marriage_reg_number' | translate:translateKey }}"
+							 required>
+							<control-messages [control]="marriageDuplicateForm.controls.marriageRegNumber"></control-messages>
+						</mat-form-field>
+
+						<mat-form-field class="col-4">
+							<input matInput [max]="disablefutureDate" [matDatepicker]="picker1" formControlName="marriageDate" (dateChange)="dateFormate($event.value,'marriageDate')"
+							 placeholder="{{ 'date_of_marriage' | translate:translateKey }}" required>
+							<mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+							<mat-datepicker #picker1></mat-datepicker>
+							<control-messages [control]="marriageDuplicateForm.controls.marriageDate"></control-messages>
+						</mat-form-field>
+
+						<mat-form-field class="col-4">
+							<input matInput formControlName="marriageRegDate" placeholder="{{ 'marriage_reg_date' | translate:translateKey }}" readonly>
+						</mat-form-field>
+
+						<mat-form-field class="col-4">
+							<input matInput type="text" formControlName="marriageRegYear" placeholder="{{ 'marriage_reg_year' | translate:translateKey }}"
+							 required>
+							<control-messages [control]="marriageDuplicateForm.controls.marriageRegYear"></control-messages>
+						</mat-form-field>
+
+						<mat-form-field class="col-4">
+							<input matInput type="text" formControlName="groomName" placeholder="{{ 'groom_name' | translate:translateKey }}" required>
+							<control-messages [control]="marriageDuplicateForm.controls.groomName"></control-messages>
+						</mat-form-field>
+
+						<mat-form-field class="col-4">
+							<input matInput type="text" formControlName="brideName" placeholder="{{ 'bride_name' | translate:translateKey }}" required>
+							<control-messages [control]="marriageDuplicateForm.controls.brideName"></control-messages>
+						</mat-form-field>
+
+						<div class="col-12">
+							<app-action-bar [form]="marriageDuplicateForm" [step]="'final'" (stepReset)="stepReset()" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
+						</div>
+					</div>
+				</mat-step>
 			</mat-horizontal-stepper>
 		</form>
 	</mat-card>

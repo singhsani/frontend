@@ -1,0 +1,60 @@
+<div class="container">
+	<app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
+	<mat-card class="mb-4">
+		<form [formGroup]="appointmentForm">
+			<div class="row">
+				<mat-form-field class="col-4">
+					<mat-select placeholder="Select resources" formControlName="resources">
+						<mat-option>--</mat-option>
+						<mat-option *ngFor="let resources of resources" [value]="resources">
+							{{resources.name}}
+						</mat-option>
+					</mat-select>
+				</mat-form-field>
+			</div>
+			<div class="row">
+				<mat-form-field class="col-4">
+					<input matInput [min]="minDate" (dateChange)="dateFormate($event.value,'appointmentdate')" [matDatepicker]="appointmentPicker" formControlName="appointmentdate"
+					 placeholder="Choose a date">
+					<mat-datepicker-toggle matSuffix [for]="appointmentPicker"></mat-datepicker-toggle>
+					<mat-datepicker #appointmentPicker></mat-datepicker>
+				</mat-form-field>
+			</div>
+		</form>
+	</mat-card>
+</div>
+<!-- list of slot -->
+<div class="container">
+
+	<mat-table #table [dataSource]="slots">
+
+		<ng-container matColumnDef="start date">
+			<mat-header-cell *matHeaderCellDef>start date</mat-header-cell>
+			<mat-cell *matCellDef="let row">{{ row.start | date:'yyyy-MM-dd HH:mm a z' }}</mat-cell>
+		</ng-container>
+
+		<ng-container matColumnDef="end date">
+			<mat-header-cell *matHeaderCellDef>end date</mat-header-cell>
+			<mat-cell *matCellDef="let row">{{ row.end | date:'yyyy-MM-dd HH:mm a z'}}</mat-cell>
+		</ng-container>
+
+		<ng-container matColumnDef="slot Status">
+			<mat-header-cell *matHeaderCellDef>slot Status</mat-header-cell>
+			<mat-cell *matCellDef="let row">{{ row.slotStatus }}</mat-cell>
+		</ng-container>
+
+		<ng-container matColumnDef="action">
+			<mat-header-cell *matHeaderCellDef>Action</mat-header-cell>
+			<mat-cell *matCellDef="let row">
+				<button mat-icon-button color="primary"  *ngIf="row.slotStatus === 'AVAILABLE'" (click)="redirectToBook(row.uniqueId)">
+					<mat-icon title="touch_app">touch_app</mat-icon>
+				</button>
+			</mat-cell>
+		</ng-container>
+
+		<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+		<mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+	</mat-table>
+
+</div>
