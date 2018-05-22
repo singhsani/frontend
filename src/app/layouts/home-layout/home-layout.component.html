@@ -1,24 +1,28 @@
 <div class="example-container">
 
     <mat-toolbar color="primary" class="example-toolbar">
-        <mat-toolbar-row>
+        <mat-toolbar-row class="dasHeader">
+         <div class="float-left">
             <button mat-icon-button (click)="snav && snav.toggle()">
                 <mat-icon>menu</mat-icon>
             </button>
             <a mat-button routerLink="." class="logo">
                 <img src="assets/images/vmc-logo.png" alt="Vadodara Municipal Corporation"> Vadodara Municipal Corporation</a>
             <span class="example-spacer"></span>
-            <button mat-icon-button position="end" (click)="selectLanguage('en')">EN</button>
-            <button mat-icon-button position="end" (click)="selectLanguage('gu')">ગુજ</button>
-
-            <button mat-icon-button position="end" [matMenuTriggerFor]="menu" style="margin-right:10px;">
+         </div>
+            <!-- <button mat-icon-button position="end" (click)="selectLanguage('en')">EN</button>
+            <button mat-icon-button position="end" (click)="selectLanguage('gu')">ગુજ</button> -->
+            <div class="float-right">
+            <button mat-icon-button  [matMenuTriggerFor]="menu" class="userName">
                 <mat-icon>account_circle</mat-icon>
+                Jilpesh Kanzariya
                 <mat-icon>arrow_drop_down</mat-icon>
             </button>
             <mat-menu #menu="matMenu">
                 <button mat-menu-item routerLink="/citizen/my-profile">Profile</button>
                 <button mat-menu-item (click)="onLogout()">Logout</button>
             </mat-menu>
+        </div>
         </mat-toolbar-row>
     </mat-toolbar>
 

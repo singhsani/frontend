@@ -8,13 +8,22 @@
                 <span>Search Application</span>
             </h2>
             <div class="col-md-4">
-                dfgfdg
+                    <mat-form-field>
+                            <mat-select placeholder="Favorite food">
+                              <mat-option *ngFor="let food of foods" [value]="food.value">
+                                {{ food.viewValue }}
+                              </mat-option>
+                            </mat-select>
+                          </mat-form-field>
             </div>
             <div class="col-md-6">
-                    dfgfdg
+            <mat-form-field class="example-full-width iconMat">
+                    <mat-icon matPrefix>description</mat-icon>
+                    <input matInput placeholder="Enter Application Number" value="">
+                    </mat-form-field>
             </div>
             <div class="col">
-                    dfgfdg
+                    <button mat-raised-button color="primary" class="w-100">Search</button>
             </div>
         </div>
         </mat-card>

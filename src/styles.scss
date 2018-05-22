@@ -8,15 +8,26 @@
 .splashScreen {display: table; text-align:center;}
 .splashScreen svg {display: table-cell; vertical-align: middle;}
 
-input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:focus, input:-webkit-autofill, textarea:-webkit-autofill, textarea:-webkit-autofill:hover, textarea:-webkit-autofill:focus, select:-webkit-autofill, select:-webkit-autofill:hover, select:-webkit-autofill:focus {
-border: 0; box-shadow: inset 0 0 0px 9999px white;}
+// input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:focus, input:-webkit-autofill, textarea:-webkit-autofill, textarea:-webkit-autofill:hover, textarea:-webkit-autofill:focus, select:-webkit-autofill, select:-webkit-autofill:hover, select:-webkit-autofill:focus {
+// border: 0; box-shadow: inset 0 0 0px 9999px white;}
+// label.btn { display: inline-block; position: relative; color: #533e00; }
+// label.btn input { visibility: hidden; width: 100px; }
+// label.btn:before { content: 'Choose File'; display: block; border-radius: 3px; padding: 7px 0px; outline: none; white-space: nowrap; cursor: pointer; text-align: center; font-size: 15px; position: absolute; left: 0; right: 0; }
+// label.btn:hover:before {
+//     box-shadow: $buttonShadowHover;}
+// label.btn:before { content: 'Browse File'; background: $colorBlue; color: $colorWhite; 
+// box-shadow: $buttonShadow; }
+
+
+input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:focus, input:-webkit-autofill, textarea:-webkit-autofill, textarea:-webkit-autofill:hover, textarea:-webkit-autofill:focus, select:-webkit-autofill, select:-webkit-autofill:hover, select:-webkit-autofill:focus {border: 0; box-shadow: inset 0 0 0px 9999px white;}
 label.btn { display: inline-block; position: relative; color: #533e00; }
 label.btn input { visibility: hidden; width: 100px; }
+
 label.btn:before { content: 'Choose File'; display: block; border-radius: 3px; padding: 7px 0px; outline: none; white-space: nowrap; cursor: pointer; text-align: center; font-size: 15px; position: absolute; left: 0; right: 0; }
-label.btn:hover:before {
-    box-shadow: $buttonShadowHover;}
-label.btn:before { content: 'Browse File'; background: $colorBlue; color: $colorWhite; 
-box-shadow: $buttonShadow; }
+label.btn:hover:before {box-shadow: $buttonShadowHover;}
+label.btn:before { content: 'Browse File'; background: $colorBlue; color: $colorWhite; box-shadow: $buttonShadow; }
+label.btn.disabled {opacity: 1;}
+label.btn.disabled:before {background-color:#e0e0e0; box-shadow: initial !important; color: #999 !important;}
 
 button:focus { outline: none !important;}
 .clear {clear:both;}
@@ -24,7 +35,7 @@ a {color: $colorBlack;}
 a:hover {color: $colorBlue; text-decoration: underline;}
 .mat-raised-button:hover {text-decoration: none;}
 
-html, body { background: #eee; color: $colorBlack; padding: 0; font-size: 0.95rem; font-weight: 400 !important; margin: 0; width: 100%; height: 100% !important; }
+html, body { background: #eee; color: $colorBlack; padding: 0; font-size: 0.95rem; font-weight: 400 !important; margin: 0; width: 100%; height: 100% !important; font-family: sans-serif; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
 h1 { font-size: 30px; margin-bottom: 10px; }
 
 .heading { position: relative; }
@@ -39,10 +50,14 @@ h1 { font-size: 30px; margin-bottom: 10px; }
 // .verticalAlign > .mat-card {width: 100%; max-width:400px; margin:0 auto;}
 .verticalAlign form {padding:0 30px;}
 
-.iconMat {
+.iconMat, .iconMat2 {
 .mat-form-field-wrapper {/*margin-left: 30px;*/ left: 15px !important;}
-.mat-form-field-prefix {position: absolute; top: 15px; left: -30px;}
+.mat-form-field-prefix, &>.mat-icon {position: absolute; top: 15px; left: -30px;}
 }
+.iconMat2 {position: relative; left: 15px;
+    .mat-icon {font-size: 22px; top: 21px;}
+}
+
 .headingBox {
     background-color:$colorBlue; font-size: 24px; color: $colorWhite; text-align: center; border-radius:10px; padding: 25px 10px; margin: -65px 25px 30px !important; box-sizing: border-box;
     box-shadow: $colorShadow;
@@ -101,7 +116,7 @@ h1 { font-size: 30px; margin-bottom: 10px; }
 }
 
 
-.themeBox { /*background-color: $colorWhite;*/ position: relative; padding:50px 0 20px !important; margin:1.2rem 0 2.5rem;}
+.themeBox { /*background-color: $colorWhite;*/ position: relative; padding:50px 25px 20px !important; margin:1.2rem 0 2.5rem;}
 .h2 { font-size: 16px; margin-top: -1.2rem; margin-left: 1.5rem; position: absolute; top: 0; left: 0;
     .mat-icon {padding-top: 12px; font-size: 25px; background-color: $colorBlue; color: $colorWhite; width: 50px; height: 50px; display:block; float: left; position: absolute; top: 0; left: 0; border-radius: 5px; box-shadow: $colorShadow; text-align: center;}
     span {float: left; display: block; padding: 28px 0 0 60px; color: #000;}
@@ -172,13 +187,25 @@ mat-label {align-self: center;}
 ::-webkit-scrollbar-thumb {background: #7E57C2;}
 ::-webkit-scrollbar-thumb:hover {background: #5E35B1;}
 
+.ng-select {padding-bottom: 3px;}
+.ng-select .ng-select-container {min-height: 46px;}
+.ng-select .ng-has-value .ng-placeholder, .ng-select.ng-select-opened .ng-placeholder {
+    -webkit-transform: translateY(-1em) scale(0.75) perspective(100px) translateZ(0.001px);
+    transform: translateY(-1em) scale(0.75) perspective(100px) translateZ(0.001px);
+}
+.ng-select .ng-select-container .ng-value-container {padding: 0.7em 0 0;}
+// .ng-select .ng-input, .ng-select .ng-clear-wrapper {display: none;}
+
+
+
 // Custom Button
 .width150 {width: 150px;}
 .mat-raised-button {
     color: $colorWhite !important;
     font-weight: 400 !important;
     margin-bottom: 13px !important;
-    margin-left: 10px !important;
+    margin-left: 5px !important;
+    margin-right: 5px !important;
     background-color: #919191;
     border-color: #7a7a7a;
     border-radius: 5px !important;
