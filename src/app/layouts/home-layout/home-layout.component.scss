@@ -86,3 +86,6 @@ h1.example-app-name { margin-left: 8px; }
 .mat-sidenav { width: 200px; background-color: #fff; box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14); padding: 0 10px; }
 .mat-list-item, .mat-nav-list { margin-bottom: 10px; border-radius: 3px;}
 .mat-nav-list .mat-list-item:hover { background: rgba(0, 0, 0, .1); }
+
+.dasHeader {display: flex; justify-content: space-between;}
+.userName {width: auto;}

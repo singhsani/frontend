@@ -55,9 +55,15 @@ export class DashboardComponent implements OnInit {
 				this.userServicesList = res.modules;
 			},
 			err => {
-				
+				console.log(err);
 			}
 		);
 	}
+
+	foods = [
+		{value: '1', viewValue: 'Steak'},
+		{value: '2', viewValue: 'Pizza'},
+		{value: '3', viewValue: 'Tacos'}
+	  ];
 
 }
