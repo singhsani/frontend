@@ -25,10 +25,8 @@ export class UploadFileService {
 		this.httpService.uploadFilePost(this.uploadFileUrl, formData).subscribe(event => {
 			switch (event.type) {
 				case HttpEventType.Sent:
-					console.log('Request sent!');
 					break;
 				case HttpEventType.ResponseHeader:
-					console.log('Response header received!');
 					break;
 				case HttpEventType.UploadProgress:
 					return setProgress(Math.round(100 * event.loaded / event.total));

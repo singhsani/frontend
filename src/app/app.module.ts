@@ -16,6 +16,7 @@ import { CitizenModule } from './components/citizen/citizen.module';
 import { SharedModule } from './shared/shared.module'; // shared design module
 import { CoreModule } from './core/core.module';
 import { ToastrModule } from 'ngx-toastr';
+import { AmazingTimePickerModule } from 'amazing-time-picker';
 import { AppRoutingModule } from './app-routing.module'; // route module
 /* Import child modules end */
 
@@ -49,6 +50,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 			progressBar: true,
 			closeButton: true
 		}),
+		AmazingTimePickerModule,
 		AppRoutingModule,
 		
 	],

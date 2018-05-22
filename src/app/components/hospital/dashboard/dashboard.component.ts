@@ -55,7 +55,7 @@ export class HospitalDashboardComponent implements OnInit {
 				this.userServicesList = res.modules;
 			},
 			err => {
-				console.log(err);
+				
 			}
 		);
 	}

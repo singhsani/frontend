@@ -63,7 +63,6 @@ export class TransactionsComponent implements OnInit {
 	   );*/
 
 	/*filter(tamount: string) {
-	  console.log(tamount);
   
 	  return this.transArray.filter(option =>
 		option.tamount.toLowerCase().indexOf(tamount.toLowerCase()) === 0);

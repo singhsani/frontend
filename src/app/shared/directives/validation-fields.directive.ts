@@ -22,11 +22,12 @@ export class ValidationFieldsDirective {
 
 
     switch (this.validationFieldsType) {
+      
       case "onlyNameWithOutSpace":
         if ([8, 9, 13, 27, 46].indexOf(e.keyCode) !== -1) {
           return;
         }
-        if ((e.keyCode === 32 || e.shiftKey || (e.keyCode < 65 || e.keyCode > 96))) {
+        if ((e.keyCode === 32  || (e.keyCode < 65 || e.keyCode > 96))) {
           e.preventDefault();
         }
         break;
@@ -35,7 +36,7 @@ export class ValidationFieldsDirective {
         if ([8, 9, 13, 27, 46].indexOf(e.keyCode) !== -1) {
           return;
         }
-        if (e.keyCode != 32 && (e.shiftKey || (e.keyCode < 65 || e.keyCode > 96))) {
+        if (e.keyCode != 32 && ((e.keyCode < 65 || e.keyCode > 96))) {
           e.preventDefault();
         }
         break;

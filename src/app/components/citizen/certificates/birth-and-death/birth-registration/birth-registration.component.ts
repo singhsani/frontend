@@ -1,13 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { MatStepper } from '@angular/material/stepper'
-
+import { MatStepper } from '@angular/material/stepper';
 import { CommonService } from '../../.././../../shared/services/common.service'
 import { UploadFileService } from '../../../../../shared/upload-file.service';
 import { ValidationService } from '../../../../../shared/services/validation.service';
 import { FormsActionsService } from '../../../../../core/services/citizen/data-services/forms-actions.service';
 import { ManageRoutes } from '../../../../../config/routes-conf';
+import { AmazingTimePickerService } from 'amazing-time-picker';
 
 import * as moment from 'moment';
 import * as _ from 'lodash';
@@ -25,8 +25,10 @@ export class BirthRegistrationComponent implements OnInit {
 	/**
 	 * file upload related declaration
 	 */
+	private checked: boolean;
 	uploadModel: any = {};
 	private attachments:any[]=[];
+	private disableONSubmit: boolean = false;
 
 	/**
 	 * form related helping data.
@@ -35,6 +37,7 @@ export class BirthRegistrationComponent implements OnInit {
 	apiCode: string;
 	private translateKey = "birthRegScreen";
 	private prevMode: boolean = false
+	readOnly:boolean = false;
 
 	public birthCertificateForm: FormGroup;
 	private minBirthDate: any;
@@ -42,122 +45,6 @@ export class BirthRegistrationComponent implements OnInit {
 
 	private showButtons: boolean = false;
 	private submit: boolean = false;
-
-	//Address LookUps
-	private States: Object[] = [
-		{
-			id: 1,
-			name: 'Andhra Pradesh'
-		},
-		{
-			id: 2,
-			name: 'Assam'
-		},
-		{
-			id: 3,
-			name: 'Gujarat'
-		},
-		{
-			id: 4,
-			name: 'Chhattisgarh'
-		},
-		{
-			id: 5,
-			name: 'Kerala'
-		},
-		{
-			id: 6,
-			name: 'Rajasthan'
-		}
-		//'Andhra Pradesh', 'Arunachal Pradesh', 'Assam', 'Bihar', 'Chhattisgarh', 'Goa', 'Gujarat','Haryana',
-		//'Himachal Pradesh', 'Jammu and Kashmir', 'Jharkhand', 'Karnataka', 'Kerala', 'Madhya Pradesh', 'Maharashtra', 'Manipur','Meghalaya',
-		//'Mizoram', 'Nagaland', 'Odisha', 'Punjab', 'Rajasthan', 'Sikkim', 'Tamil Nadu', 'Telangana', 'Tripura', 'Uttar Pradesh', 'Uttarakhand','West Bengal'
-	];
-	private District: Object[] = [
-		{
-			id: 1,
-			name: 'Surat'
-		},
-		{
-			id: 2,
-			name: 'Vadodara'
-		},
-		{
-			id: 3,
-			name: 'Gandhinagar'
-		},
-		{
-			id: 4,
-			name: 'Ahmedabad'
-		},
-		{
-			id: 5,
-			name: 'Anand'
-		},
-		{
-			id: 6,
-			name: 'Jamnagar'
-		}
-	];
-	private City: Object[] = [
-		{
-			id: 1,
-			name: 'Surat'
-		},
-		{
-			id: 2,
-			name: 'Vadodara'
-		},
-		{
-			id: 3,
-			name: 'Gandhinagar'
-		},
-		{
-			id: 4,
-			name: 'Ahmedabad'
-		},
-		{
-			id: 5,
-			name: 'Anand'
-		},
-		{
-			id: 6,
-			name: 'Jamnagar'
-		}
-
-	];
-	private Country: Object[] = [
-		{
-			id: 1,
-			name: 'UK',
-			code: 'uk'
-		},
-		{
-			id: 2,
-			name: 'US',
-			code: 'us'
-		},
-		{
-			id: 3,
-			name: 'India',
-			code: 'in'
-		},
-		{
-			id: 4,
-			name: 'France',
-			code: 'fr'
-		},
-		{
-			id: 5,
-			name: 'Brazil',
-			code: 'br'
-		},
-		{
-			id: 6,
-			name: 'China',
-			code: 'ch'
-		}
-	];
 
 	//Birth Data LookUps
 	private BirthPlaces: object[];
@@ -171,7 +58,6 @@ export class BirthRegistrationComponent implements OnInit {
 	private Religion: object[];
 	private ChildWeights: object[];
 	private ISYESNO: object[];
-	private checked: boolean;
 	private NOOFCHILD = [
 		{
 			code:"2",
@@ -212,7 +98,8 @@ export class BirthRegistrationComponent implements OnInit {
 		private uploadFileService: UploadFileService,
 		private commonService: CommonService,
 		private validationService: ValidationService,
-		private fb: FormBuilder
+		private fb: FormBuilder,
+		private atp: AmazingTimePickerService
 	) { 
 
 		
@@ -235,6 +122,18 @@ export class BirthRegistrationComponent implements OnInit {
 			this.getBirthCertData();
 			this.getLookUpsData();
 		}
+	}
+	
+	openTimePicker(){
+		const amazingTimePicker = this.atp.open({
+			theme: 'material-blue',
+		});
+		amazingTimePicker.afterClose().subscribe(time => {
+			if(time.length == 5){
+				this.birthCertificateForm.get('birthTime').
+					setValue(time.concat(":00"));
+			}
+		});
 	}
 
 	/**
@@ -264,12 +163,12 @@ export class BirthRegistrationComponent implements OnInit {
 			}),
 			isOrphan: this.fb.group({
 				id: null,
-				code: [null, Validators.required],
+				code: ["NO", Validators.required],
 				name: null
 			}),
 			isTwins: this.fb.group({
 				id: null,
-				code: [null, Validators.required],
+				code: ["NO", Validators.required],
 				name: null
 			}),
 			//step 2
@@ -288,7 +187,7 @@ export class BirthRegistrationComponent implements OnInit {
 				code: [null, [Validators.required]],
 				name: null
 			}),
-			fatherAadharNumber: [null, [ValidationService.aadharValidation]],
+			fatherAadharNumber: [null, [Validators.minLength(12),Validators.maxLength(12), ValidationService.aadharValidation]],
 
 			//step 3
 			motherFirstName: ['', [ValidationService.nameValidator, Validators.required]],
@@ -306,7 +205,7 @@ export class BirthRegistrationComponent implements OnInit {
 				code: [null, Validators.required],
 				name: null
 			}),
-			motherAadharNumber: [null, [ValidationService.aadharValidation]],
+			motherAadharNumber: [null, [Validators.minLength(12), Validators.maxLength(12),ValidationService.aadharValidation]],
 			motherPrevRegNumber: ['', [Validators.minLength(20),Validators.maxLength(20)]],
 			petaKendraNumber: ['', [Validators.minLength(10),Validators.maxLength(10)]],
 			motherMarriageAge: [null, [Validators.minLength(2), Validators.maxLength(2),Validators.required]],
@@ -341,6 +240,8 @@ export class BirthRegistrationComponent implements OnInit {
 			attachments: [null, [Validators.required]],
 			delayedPeriod: null,
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
+
+			
 		});
 	}
 
@@ -350,11 +251,6 @@ export class BirthRegistrationComponent implements OnInit {
 	getBirthCertData() {
 		this.formService.getFormData(this.appId).subscribe(res => {
 			this.prevMode = !res.canEdit
-			if (res.isPermanentPresentAddressSame.code == "YES") {
-				this.checked = true;
-			} else {
-				this.checked = false;
-			}
 			this.attachments = res.attachments;
 			this.birthCertificateForm.patchValue(res);
 			this.showButtons = true;
@@ -407,6 +303,8 @@ export class BirthRegistrationComponent implements OnInit {
 		} else if (count <= step5) {
 			this.stepper.selectedIndex = 4;
 			return false;
+		} else if( count >=52 && count <= 58){
+			this.stepper.selectedIndex = 3;
 		}
 
 	}
@@ -443,35 +341,17 @@ export class BirthRegistrationComponent implements OnInit {
 	 * @param event - checkbox event.
 	 */
 	check(event) {
-
-		let parentPermanentAddressType = this.birthCertificateForm.get('parentPermanentAddress').get('addressType').value
+		let parentPermanentAddressType = this.birthCertificateForm.get('parentPermanentAddress').get('addressType').value;
 		if (event.checked) {
-			this.birthCertificateForm.value.isPermanentPresentAddressSame.code = "YES";
-			this.birthCertificateForm.get('parentPermanentAddress').get('houseNo').setValue(this.birthCertificateForm.get('parentDeliveryAddress').get('houseNo').value);
-			this.birthCertificateForm.get('parentPermanentAddress').get('tenamentNo').setValue(this.birthCertificateForm.get('parentDeliveryAddress').get('tenamentNo').value);
-			this.birthCertificateForm.get('parentPermanentAddress').get('buildingName').setValue(this.birthCertificateForm.get('parentDeliveryAddress').get('buildingName').value);
-			this.birthCertificateForm.get('parentPermanentAddress').get('state').setValue(this.birthCertificateForm.get('parentDeliveryAddress').get('state').value);
-			this.birthCertificateForm.get('parentPermanentAddress').get('district').setValue(this.birthCertificateForm.get('parentDeliveryAddress').get('district').value);
-			this.birthCertificateForm.get('parentPermanentAddress').get('talukaName').setValue(this.birthCertificateForm.get('parentDeliveryAddress').get('talukaName').value);
-			this.birthCertificateForm.get('parentPermanentAddress').get('pincode').setValue(this.birthCertificateForm.get('parentDeliveryAddress').get('pincode').value);
-			this.birthCertificateForm.get('parentPermanentAddress').get('addressLine1').setValue(this.birthCertificateForm.get('parentDeliveryAddress').get('addressLine1').value);
-			this.birthCertificateForm.get('parentPermanentAddress').get('addressLine2').setValue(this.birthCertificateForm.get('parentDeliveryAddress').get('addressLine2').value);
-			this.birthCertificateForm.get('parentPermanentAddress').get('addressLine3').setValue(this.birthCertificateForm.get('parentDeliveryAddress').get('addressLine3').value);
-			this.birthCertificateForm.get('parentPermanentAddress').get('village').setValue(this.birthCertificateForm.get('parentDeliveryAddress').get('village').value);
+			this.readOnly = true;
+			this.birthCertificateForm.get('isPermanentPresentAddressSame').get('code').setValue("YES");
+			this.birthCertificateForm.get('parentPermanentAddress').setValue(this.birthCertificateForm.get('parentDeliveryAddress').value);
 		} else if (!event.checked) {
-			this.birthCertificateForm.value.isPermanentPresentAddressSame.code = "NO";
-			this.birthCertificateForm.get('parentPermanentAddress').get('houseNo').reset();
-			this.birthCertificateForm.get('parentPermanentAddress').get('tenamentNo').reset();
-			this.birthCertificateForm.get('parentPermanentAddress').get('buildingName').reset();
-			this.birthCertificateForm.get('parentPermanentAddress').get('state').reset();
-			this.birthCertificateForm.get('parentPermanentAddress').get('district').reset();
-			this.birthCertificateForm.get('parentPermanentAddress').get('talukaName').reset();
-			this.birthCertificateForm.get('parentPermanentAddress').get('pincode').reset();
-			this.birthCertificateForm.get('parentPermanentAddress').get('addressLine1').reset();
-			this.birthCertificateForm.get('parentPermanentAddress').get('addressLine2').reset();
-			this.birthCertificateForm.get('parentPermanentAddress').get('addressLine3').reset();
-			this.birthCertificateForm.get('parentPermanentAddress').get('village').reset();
+			this.readOnly= false;
+			this.birthCertificateForm.get('isPermanentPresentAddressSame').get('code').setValue("NO");
+			this.birthCertificateForm.get('parentPermanentAddress').reset();
 		}
+		this.birthCertificateForm.get('parentPermanentAddress').get('addressType').setValue(parentPermanentAddressType);
 	}
 
 	/**
@@ -481,9 +361,6 @@ export class BirthRegistrationComponent implements OnInit {
 		this.stepper.reset();
 	}
 
-	// checkForm(){
-	// 	console.log(this.birthCertificateForm.get('motherEducation').get('code').value);
-	// }
 
 	/**
 	 * Method is used to set data value to upload method.

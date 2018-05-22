@@ -126,7 +126,6 @@ export class BirthDuplicateComponent implements OnInit {
 	 */
 	getBirthDuplicateData() {
 		this.formService.getFormData(this.appId).subscribe(res => {
-			console.log(res);
 			this.birthDuplicateForm.patchValue(res);
 		});
 	}
@@ -149,7 +148,6 @@ export class BirthDuplicateComponent implements OnInit {
 	 */
 	getLookupData() {
 		this.formService.getDataFromLookups().subscribe(res => {
-			console.log(res);
 			this.DuplicateCopyMode = res.DUPLICATE_COPY_MODE;
 			this.ISYESNO = res.YES_NO;
 		});

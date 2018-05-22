@@ -28,6 +28,7 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatExpansionModule } from '@angular/material/expansion';
 
+
 const COMPONENTS = [
 	MatButtonModule,
 	MatToolbarModule,
@@ -54,7 +55,8 @@ const COMPONENTS = [
 	MatProgressBarModule,
 	MatStepperModule,
 	MatTooltipModule,
-	MatExpansionModule
+	MatExpansionModule,
+	
 ];
 
 @NgModule({

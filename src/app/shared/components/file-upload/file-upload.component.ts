@@ -90,7 +90,9 @@ export class FileUploadComponent implements OnInit {
 			this.commonService.openAlert("Warning", "Please Select File to Upload", "warning");
 		} else {
 			if(this.selectedFiles[0].size > 5000000){
+
 				this.commonService.openAlert("Warning", "File Size should be less than 5 MB", "warning");
+				
 			} else {
 				let formData = new FormData();
 
@@ -157,7 +159,7 @@ export class FileUploadComponent implements OnInit {
 		this.uploadFileService.getFileFromServer(this.uploadModel.serviceFormId.toString(), this.id, this.type).subscribe(respData => {
 			this.downLoadFile(respData, this.type);
 		}, error => {
-			console.log(error);
+			
 		}
 		)
 	}

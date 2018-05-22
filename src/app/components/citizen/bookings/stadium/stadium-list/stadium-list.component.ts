@@ -51,7 +51,6 @@ export class StadiumListComponent implements OnInit {
 		let resourceName = this.searchStadiumForm.value.code;
 		let date = moment(this.searchStadiumForm.value.date).format("YYYY-MM-DD");
 		this.bookingService.getAllSlots(resourceName, date).subscribe(res => {
-			console.log(res.data);
 			this.availableStots = res.data;
 		}, err => {
 			this.toster.error(err.error.message);

@@ -100,9 +100,7 @@ export class NoBirthRecordComponent implements OnInit {
 	 */
 	getNoRecordBirthData() {
 		this.formService.getFormData(this.appId).subscribe(res => {
-			console.log(res);
 			this.noRecordBirthForm.patchValue(res);
-			
 			this.attachments = res.attachments;
 			this.showButtons = true;
 		});
