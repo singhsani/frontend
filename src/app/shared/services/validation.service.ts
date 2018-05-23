@@ -11,12 +11,12 @@ export class ValidationService {
      * @param validatorName - get form controls name eg. firstName, etc..
      * @param validatorValue - get validators type eg. required, maxlength, etc..
      */
-    static getValidatorErrorMessage(controlName ,validatorName: string, validatorValue?: any) {
+    static getValidatorErrorMessage(controlName, validatorName: string, validatorValue?: any) {
         let config = {
             // error list
             required: `${_.startCase(controlName)} is Required`,
             namelengtherror: 'Name must be at least 2 characters long.',
-            namecharerror: 'Not include numeric character.',
+            nameCharerror: 'Not include numeric character and special symbols.',
             invalidCreditCard: 'Is invalid credit card number',
             invalidEmail: 'Invalid email address',
             invalidPassword: 'Invalid password. Password must be at least 6 characters long, and contain a number.',
@@ -31,7 +31,7 @@ export class ValidationService {
             invalidAadhar: `Invalid Aadhar Number`,
             invalidNumber: `Invalid Mobile Number`,
             invalidpregnanceTime: 'Pregnancy duration between 25 to 50',
-            invalidbirthRegNumber:'Invalid Birth Registration Date.'
+            invalidbirthRegNumber: 'Invalid Birth Registration Date.'
         }
 
         return config[validatorName];
@@ -48,13 +48,21 @@ export class ValidationService {
     // Name validation 
     static nameValidator(control: FormControl) {
         if (control.value) {
-            const matches = control.value.match(/^[a-zA-Z]*$/);
+            const matches = control.value.match(/^[a-zA-Z^\S]*$/);
             return matches ? null : { 'invalidName': true };
         } else {
             return null;
         }
     }
-
+    // description validation(space allow) 
+    static descriptionValidator(control: FormControl) {
+        if (control.value) {
+            const matches = control.value.match(/^[a-zA-Z\-\s]*$/);
+            return matches ? null : { 'nameCharerror': true };
+        } else {
+            return null;
+        }
+    }
     // Email validation
     static emailValidator(control: FormControl) {
         if (control.value) {
@@ -87,7 +95,7 @@ export class ValidationService {
 
     static aadharValidation(control: AbstractControl) {
         // RFC 2822 compliant regex
-        if (control.value ) {
+        if (control.value) {
             const matches = control.value.match(/^[0-9]{12,12}$/);
             return matches ? null : { 'invalidAadhar': true };
         } else {
@@ -95,7 +103,7 @@ export class ValidationService {
         }
     }
 
-   
+
 
     static mobileNumberValidation(control: AbstractControl) {
         // RFC 2822 compliant regex

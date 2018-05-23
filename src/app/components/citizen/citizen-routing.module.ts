@@ -22,6 +22,7 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 import { MyApplicationsComponent } from './my-applications/my-applications.component';
 import { PaymentGatewayComponent } from '../../shared/components/payment-gateway/payment-gateway.component';
 import { TaxModule } from './tax/tax.module';
+import { AppointmentModule } from './appointment/appointment.module';
 import { GujPocComponent } from './guj-poc/guj-poc.component';
 /* Import citizen components other than auth end */
 
@@ -44,6 +45,7 @@ const routes: Routes = [
 			{ path: ManageRoutes.getPrefixRoute('FIREFACILITIESMODULE'), loadChildren: () => FireFacilitiesModule, canLoad: [AuthGuard] },
 			{ path: ManageRoutes.getPrefixRoute('GRIEVANCEMODULE'), loadChildren: () => GrievanceModule, canLoad: [AuthGuard] },
 			{ path: ManageRoutes.getPrefixRoute('TAXMODULE'), loadChildren: () => TaxModule, canLoad: [AuthGuard] },
+			{ path: ManageRoutes.getPrefixRoute('APPOINTMENT'), loadChildren: () => AppointmentModule, canLoad: [AuthGuard] },
 			{ path: 'gujPOC', component:GujPocComponent, canActivate: [AuthGuard] }
 		]
 	},

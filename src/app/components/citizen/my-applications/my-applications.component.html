@@ -30,6 +30,10 @@
                 <mat-cell *matCellDef="let row">
                     <mat-chip-list>
                         <mat-chip color="{{getFileStatusClass(row.fileStatus)}}" selected="true">{{ row.fileStatus}}</mat-chip>
+                        <button mat-button *ngIf="row.fileStatus === 'SUBMITTED' && row.serviceDetail.appointmentRequired != false" color="info"
+                            (click)="redirectAppointment(row.serviceDetail.code, row.serviceFormId)" selected="true">
+                            Appointment
+                        </button>
                     </mat-chip-list>
                 </mat-cell>
             </ng-container>

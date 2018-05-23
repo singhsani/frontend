@@ -113,6 +113,14 @@ export class MyApplicationsComponent implements OnInit {
 	}
 
 	/**
+	* This method is used to redirect on appointment form.
+	*/
+	redirectAppointment(apiCode: string, id: number) {
+		let redirectUrl = ManageRoutes.getFullRoute('SLOTBOOKING');
+		this.router.navigate([redirectUrl, id, apiCode]);
+	}
+
+	/**
 	 * This method use to delete citizen record.
 	 * @param id citizen api code
 	 * @param id citizen api name
@@ -125,6 +133,7 @@ export class MyApplicationsComponent implements OnInit {
 			this.formService.submitFormData(id).subscribe(
 				res => {
 					this.commonService.successAlert('Submited!', '', 'success');
+					this.getAllData();
 				},
 				err => {
 					//this.commonService.successAlert('Error!', err.error[0].message, 'error');
