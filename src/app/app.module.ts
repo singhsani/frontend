@@ -18,6 +18,7 @@ import { CoreModule } from './core/core.module';
 import { ToastrModule } from 'ngx-toastr';
 import { AppRoutingModule } from './app-routing.module'; // route module
 import { MAT_DATE_LOCALE } from '@angular/material';
+import { AmazingTimePickerModule } from 'amazing-time-picker'; 
 /* Import child modules end */
 
 /* import all component start */
@@ -59,7 +60,8 @@ import { NgProgressRouterModule } from '@ngx-progressbar/router';
 		AppRoutingModule,
 		NgProgressModule.forRoot(),
 		NgProgressHttpModule,
-		NgProgressRouterModule
+		NgProgressRouterModule,
+		AmazingTimePickerModule
 	],
 	exports: [ ],
 	providers: [

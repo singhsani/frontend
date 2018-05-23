@@ -6,10 +6,10 @@
 			<control-messages [control]="addressFormGroup.controls.houseNo"></control-messages>
 		</mat-form-field>
 
-		<mat-form-field class="col-md-4">
+		<!-- <mat-form-field class="col-md-4">
 			<input matInput OnlyNumber formControlName="tenamentNo" placeholder="{{'tenament_no' | translate:translateKey }}" [(readonly)]="readOnly">
 			<control-messages [control]="addressFormGroup.controls.tenamentNo"></control-messages>
-		</mat-form-field>
+		</mat-form-field> -->
 
 		<mat-form-field class="col-md-4">
 			<input matInput type="text" formControlName="buildingName" placeholder="{{'building_name' | translate:translateKey }}" [(readonly)]="readOnly">
@@ -54,7 +54,7 @@
 			<control-messages [control]="addressFormGroup.controls.addressLine3"></control-messages>
 		</mat-form-field> -->
 
-		<mat-form-field class="col-md-4">
+		<mat-form-field class="col">
 			<input matInput type="text" formControlName="village" placeholder="{{'village' | translate:translateKey }}" [(readonly)]="readOnly">
 			<control-messages [control]="addressFormGroup.controls.village"></control-messages>
 		</mat-form-field>

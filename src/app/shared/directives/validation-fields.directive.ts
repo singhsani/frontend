@@ -24,16 +24,47 @@ export class ValidationFieldsDirective {
     switch (this.validationFieldsType) {
       
       case "onlyNameWithOutSpace":
-        if ([8, 9, 13, 27, 46].indexOf(e.keyCode) !== -1) {
+        // if ([8, 9, 13, 27, 46].indexOf(e.keyCode) !== -1) {
+        //   return;
+        // }
+
+        if ([8, 9, 13, 27, 46].indexOf(e.keyCode) !== -1 ||
+          // Allow: Ctrl+A
+          (e.keyCode === 65 && (e.ctrlKey || e.metaKey)) ||
+          // Allow: Ctrl+C
+          (e.keyCode === 67 && (e.ctrlKey || e.metaKey)) ||
+          // Allow: Ctrl+V
+          (e.keyCode === 86 && (e.ctrlKey || e.metaKey)) ||
+          // Allow: Ctrl+X
+          (e.keyCode === 88 && (e.ctrlKey || e.metaKey)) ||
+          // Allow: home, end, left, right
+          (e.keyCode >= 35 && e.keyCode <= 39)) {
+          // let it happen, don't do anything
           return;
         }
+
         if ((e.keyCode === 32  || (e.keyCode < 65 || e.keyCode > 96))) {
           e.preventDefault();
         }
         break;
 
       case "onlyNameWithSpace":
-        if ([8, 9, 13, 27, 46].indexOf(e.keyCode) !== -1) {
+        // if ([8, 9, 13, 27, 46].indexOf(e.keyCode) !== -1) {
+        //   return;
+        // }
+
+        if ([8, 9, 13, 27, 46].indexOf(e.keyCode) !== -1 ||
+          // Allow: Ctrl+A
+          (e.keyCode === 65 && (e.ctrlKey || e.metaKey)) ||
+          // Allow: Ctrl+C
+          (e.keyCode === 67 && (e.ctrlKey || e.metaKey)) ||
+          // Allow: Ctrl+V
+          (e.keyCode === 86 && (e.ctrlKey || e.metaKey)) ||
+          // Allow: Ctrl+X
+          (e.keyCode === 88 && (e.ctrlKey || e.metaKey)) ||
+          // Allow: home, end, left, right
+          (e.keyCode >= 35 && e.keyCode <= 39)) {
+          // let it happen, don't do anything
           return;
         }
         if (e.keyCode != 32 && ((e.keyCode < 65 || e.keyCode > 96))) {

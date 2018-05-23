@@ -6,7 +6,10 @@
 	
 			<mat-horizontal-stepper #stepper="matHorizontalStepper">
 				<mat-step>
-					<ng-template matStepLabel>{{'deceased_details' | translate:translateKey}}</ng-template>
+					<ng-template matStepLabel>
+						<div [matTooltip]="'deceased_details' | translate:translateKey">
+						{{'deceased_details' | translate:translateKey}}</div>
+					</ng-template>
 	
 					<div class="row col-md-12" formGroupName="unknownCategory">
 						<mat-label>{{'is_deceased_unknown' | translate:translateKey}}</mat-label>
@@ -69,12 +72,12 @@
 						</mat-form-field>
 	
 						<mat-form-field class="col-md-4">
-							<input matInput appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" maxlength="20" placeholder="{{'mother_name' | translate:translateKey}}" name="motherName" formControlName="motherName">
+							<input matInput appValidationFields [validationFieldsType]="'onlyNameWithSpace'" maxlength="20" placeholder="{{'mother_name' | translate:translateKey}}" name="motherName" formControlName="motherName">
 							<control-messages [control]="deathCertificateForm.controls.motherName"></control-messages>
 						</mat-form-field>
 	
 						<mat-form-field class="col-md-4">
-							<input matInput appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" maxlength="20" placeholder="{{'husband_or_father_name' | translate:translateKey}}" formControlName="fatherOrHusbandName">
+							<input matInput appValidationFields [validationFieldsType]="'onlyNameWithSpace'" maxlength="20" placeholder="{{'husband_or_father_name' | translate:translateKey}}" formControlName="fatherOrHusbandName">
 							<control-messages [control]="deathCertificateForm.controls.fatherOrHusbandName"></control-messages>
 						</mat-form-field>
 	
@@ -154,7 +157,11 @@
 				</mat-step>
 	
 				<mat-step>
-					<ng-template matStepLabel>{{'death_details' | translate:translateKey}}</ng-template>
+					<ng-template matStepLabel>
+						<div [matTooltip]="'death_details' | translate:translateKey">
+							{{'death_details' | translate:translateKey}}</div>
+					</ng-template>
+					
 					<div class="row">
 
 						<mat-form-field class="col-md-4" formGroupName="deathPlace">
@@ -227,7 +234,12 @@
 				</mat-step>
 	
 				<mat-step>
-					<ng-template matStepLabel>{{'address_details' | translate:translateKey}}</ng-template>
+
+					<ng-template matStepLabel>
+						<div [matTooltip]="'address_details' | translate:translateKey">
+							{{'address_details' | translate:translateKey}}</div>
+					</ng-template>
+					
 					
 					<div class="container">
 						<h2>
@@ -296,7 +308,7 @@
 					
 
 					<span formGroupName="isPermanentPresentAddressSame">
-						<mat-checkbox (change)="check($event)" [checked]="deathCertificateForm.get('isPermanentPresentAddressSame').get('code').value == 'YES'? true : false">{{'is_permanent_address_same_as_present_address' | translate:translateKey}}</mat-checkbox>
+						<mat-checkbox [disabled]="!deathCertificateForm.get('canEdit').value" (change)="check($event)" form [checked]="deathCertificateForm.get('isPermanentPresentAddressSame').get('code').value == 'YES'? true : false">{{'is_permanent_address_same_as_present_address' | translate:translateKey}}</mat-checkbox>
 					</span>
 	
 					<div class="container">
@@ -368,7 +380,12 @@
 				</mat-step>
 	
 				<mat-step>
-					<ng-template matStepLabel>{{'applicant_details' | translate:translateKey}}</ng-template>
+
+					<ng-template matStepLabel>
+						<div [matTooltip]="'applicant_details' | translate:translateKey">
+							{{'applicant_details' | translate:translateKey}}</div>
+					</ng-template>
+				
 					<div class="row">
 
 						<mat-form-field class="col-md-4">
@@ -425,6 +442,7 @@
 	
 								<mat-form-field class="col-md-4">
 									<input matInput maxlength="60"  type="text" placeholder="{{'house_no' | translate:addressTranslateKey}}" formControlName="houseNo">
+									<control-messages [control]="deathCertificateForm.controls.applicantAddress.controls.houseNo"></control-messages>
 								</mat-form-field>
 	
 								<!-- <mat-form-field class="col-md-4">
@@ -474,7 +492,11 @@
 				</mat-step>
 	
 				<mat-step>
-					<ng-template matStepLabel>{{'upload_documents' | translate:translateKey}}</ng-template>
+					<ng-template matStepLabel>
+						<div [matTooltip]="'upload_documents' | translate:translateKey">
+							{{'upload_documents' | translate:translateKey}}</div>
+					</ng-template>
+				
 					<div class="alert alert-warning">
 						 {{'note' | translate:translateKey}} : {{'submit_hardcopy_at_madhyawarti_school' | translate:translateKey}}
 					</div>
@@ -486,19 +508,19 @@
 					<div *ngIf="showButtons">
 						<mat-checkbox labelPosition="after">{{'cremation_report' | translate:translateKey}}</mat-checkbox>
 						<br>
-						<file-upload [uploadModel]="setDataValue(1,'cremationReport','1.1','cremationReport')" [attachments]="attachments"></file-upload>
+						<file-upload [prevMode]="prevMode" [uploadModel]="setDataValue(1,'cremationReport','1.1','cremationReport')" [attachments]="attachments"></file-upload>
 					</div>
 	
 					<div *ngIf="showButtons">
 						<mat-checkbox labelPosition="after">{{'form4A_death_provided_by_doctor' | translate:translateKey}}</mat-checkbox>
 						<br>
-						<file-upload [uploadModel]="setDataValue(2,'form4A','1.1','form4A')" [attachments]="attachments"></file-upload>
+						<file-upload [prevMode]="prevMode" [uploadModel]="setDataValue(2,'form4A','1.1','form4A')" [attachments]="attachments"></file-upload>
 					</div>
 	
 					<div *ngIf="showButtons">
 						<mat-checkbox labelPosition="after">{{'deceased_id_proof' | translate:translateKey}}</mat-checkbox>
 						<br>
-						<file-upload [uploadModel]="setDataValue(3,'deceasedIdProof','1.1','deceasedIdProof')" [attachments]="attachments"></file-upload>
+						<file-upload [prevMode]="prevMode" [uploadModel]="setDataValue(3,'deceasedIdProof','1.1','deceasedIdProof')" [attachments]="attachments"></file-upload>
 					</div>
 	
 					<app-action-bar [form]="deathCertificateForm" [step]="'final'" (stepReset)="stepReset()" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>

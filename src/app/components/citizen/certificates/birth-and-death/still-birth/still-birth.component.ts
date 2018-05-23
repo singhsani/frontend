@@ -11,6 +11,7 @@ import { FormsActionsService } from '../../../../../core/services/citizen/data-s
 import { ManageRoutes } from '../../../../../config/routes-conf';
 import * as moment from 'moment';
 import * as _ from 'lodash';
+import { AmazingTimePickerService } from 'amazing-time-picker';
 
 @Component({
   selector: 'app-still-birth',
@@ -22,6 +23,7 @@ export class StillBirthComponent implements OnInit {
 
 
   @ViewChild('stepper') stepper: MatStepper;
+  @ViewChild('address') addressComp: any;
   translateKey: string = 'stillBirthScreen';
 
 	/**
@@ -180,7 +182,8 @@ export class StillBirthComponent implements OnInit {
     private uploadFileService: UploadFileService,
     private commonService: CommonService,
     private validationService: ValidationService,
-    private fb: FormBuilder) {
+    private fb: FormBuilder,
+    private atp: AmazingTimePickerService) {
   }
 
   /**
@@ -239,14 +242,10 @@ export class StillBirthComponent implements OnInit {
       fatherMiddleName: [null,[Validators.nullValidator]],
       fatherLastName: [null, [ValidationService.nameValidator,Validators.required]],
       fatherEducation: this.fb.group({
-        id: null,
         code: [null, [Validators.required]],
-        name: null
       }),
       fatherOccupations: this.fb.group({
-        id: null,
         code: [null, [Validators.required]],
-        name: null
       }),
       fatherAadharNumber: [null, [ValidationService.aadharValidation]],
 
@@ -255,14 +254,10 @@ export class StillBirthComponent implements OnInit {
       motherMiddleName: [null, ValidationService.nameValidator],
       motherLastName: [null, [ValidationService.nameValidator, Validators.required]],
       motherEducation: this.fb.group({
-        id: null,
-        code: [null, Validators.required],
-        name: null
+        code: [null, Validators.required]
       }),
       motherOccupations: this.fb.group({
-        id: null,
         code: [null, Validators.required],
-        name: null
       }),
       motherAadharNumber: [null, [ValidationService.aadharValidation]],
       motherPrevRegNumber: ['', [Validators.minLength(10), Validators.maxLength(10)]],
@@ -271,68 +266,26 @@ export class StillBirthComponent implements OnInit {
       motherDeliveryAge: [null, [Validators.required, Validators.minLength(2), Validators.maxLength(2)]],
 
       deliveryTreatment: this.fb.group({
-        id: null,
         code: [null,[Validators.required]],
-        name: null
       }),
       deliveryType: this.fb.group({
-        id: null,
         code: [null, Validators.required],
-        name: null
       }),
       pregnancyDuration: ['', [Validators.required]],
       prematureInfantReason: ['', [Validators.required]],
 
       //step 4
-      parentDeliveryAddress: this.fb.group({
-        id: null,
-        uniqueId: null,
-        version: 0,
-        addressType: null,
-        houseNo: null,
-        tenamentNo: null,
-        buildingName: null,
-        state: "GUJARAT",
-        district: "Vadodara",
-        talukaName: null,
-        pincode: null,
-        addressLine1: null,
-        addressLine2: null,
-        addressLine3: null,
-        village: null
-      }),
+      parentDeliveryAddress: this.fb.group(this.addressComp.addressControls()),
       isPermanentPresentAddressSame: this.fb.group({
-        id: null,
-        code: null,
-        name: null
+        code: null
       }),
-      parentPermanentAddress: this.fb.group({
-        id: null,
-        uniqueId: null,
-        version: 0,
-        addressType: null,
-        houseNo: null,
-        tenamentNo: null,
-        buildingName: null,
-        state: "GUJARAT",
-        district: "Ahmedabad",
-        talukaName: null,
-        pincode: null,
-        addressLine1: null,
-        addressLine2: null,
-        addressLine3: null,
-        village: null
-      }),
+      parentPermanentAddress: this.fb.group(this.addressComp.addressControls()),
       familyReligion: this.fb.group({
-        id: null,
-        code: null,
-        name: null
+        code: null
       }),
 
       relationWithApplicant: this.fb.group({
-        id: null,
-        code: null,
-        name: null
+        code: null
       }),
 
       //applicant details
@@ -374,6 +327,7 @@ export class StillBirthComponent implements OnInit {
     });
   }
 
+
   /**
    * Method is used to get LookUps related to still birth certificate form.
    */
@@ -412,6 +366,22 @@ export class StillBirthComponent implements OnInit {
         setValue(String(this.stillBirthCertificateForm.get('birthTime').value).concat(":00"));
     }
   }
+
+  /**
+   * 
+   */
+  openTimePicker() {
+    const amazingTimePicker = this.atp.open({
+      theme: 'material-blue',
+    });
+    amazingTimePicker.afterClose().subscribe(time => {
+      if (time.length == 5) {
+        this.stillBirthCertificateForm.get('birthTime').
+          setValue(time.concat(":00"));
+      }
+    });
+  }
+
 
 	/**
 	 * Method is used to handle error/validation on submit
