@@ -5,6 +5,7 @@ import { FormsActionsService } from '../../../core/services/citizen/data-service
 
 import { ManageRoutes } from '../../../config/routes-conf';
 import { ToastrService } from 'ngx-toastr';
+import * as _ from 'lodash';
 
 @Component({
 	selector: 'app-dashboard',
@@ -15,6 +16,8 @@ export class DashboardComponent implements OnInit {
 
 	userServicesList: any;
 	manageRoutes: any = ManageRoutes;
+	services: any = [];
+
 	/**
 	 * Constructor to declare defualt propeties of class
 	 * @param formService - Declare form service property
@@ -53,6 +56,11 @@ export class DashboardComponent implements OnInit {
 		this.formService.getUserServices().subscribe(
 			res => {
 				this.userServicesList = res.modules;
+				_.forEach(res.modules, (value, key) => {
+                    _.forEach(value.services, (value1, key1) => {
+                        this.services.push(value1);
+                    });
+                });
 			},
 			err => {
 				console.log(err);
@@ -60,10 +68,20 @@ export class DashboardComponent implements OnInit {
 		);
 	}
 
-	foods = [
-		{value: '1', viewValue: 'Steak'},
-		{value: '2', viewValue: 'Pizza'},
-		{value: '3', viewValue: 'Tacos'}
-	  ];
-
+	getIconImg(moduleCode: string){
+		switch (moduleCode) {
+			case 'SHOP-ESTAB':
+				return 'assets/icons/shop-estab.png';
+			case 'BIRTH-DEATH':
+				return 'assets/icons/birth-death.png';
+			case 'FIRE':
+				return 'assets/icons/fire.png';
+			case 'MUTTON-FISH-POND':
+				return 'assets/icons/mutton-fish-pond.png';
+			case 'PROPERTY-TAX':
+				return 'assets/icons/property-tax.png';
+			default:
+				break;
+		}
+	}
 }

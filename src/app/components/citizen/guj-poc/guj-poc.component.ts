@@ -10,7 +10,6 @@ export class GujPocComponent implements OnInit {
 
 	testGuj: string;
 	testEng: string;
-	testKeyBoard: string;
 
 	constructor() { }
 
@@ -25,10 +24,8 @@ export class GujPocComponent implements OnInit {
 	converToSelf() {
 		pramukhIME.resetSettings();
 		let test = pramukhIME.convert(this.testGuj);
-		console.log(test);
 		pramukhIME.addKeyboard(PramukhIndic, 'gujarati');
-		this.testGuj = pramukhIME.convert(test);;
-		console.log(this.testGuj)
+		this.testGuj = pramukhIME.convert(test);
 	}
 
 }

@@ -27,13 +27,12 @@
 
             <ng-container matColumnDef="fileStatus">
                 <mat-header-cell *matHeaderCellDef>File Status</mat-header-cell>
-                <mat-cell *matCellDef="let row">
+                <mat-cell *matCellDef="let row" class="text-center">
                     <mat-chip-list>
-                        <mat-chip color="{{getFileStatusClass(row.fileStatus)}}" selected="true">{{ row.fileStatus}}</mat-chip>
-                        <button mat-button *ngIf="row.fileStatus === 'SUBMITTED' && row.serviceDetail.appointmentRequired != false" color="info"
-                            (click)="redirectAppointment(row.serviceDetail.code, row.serviceFormId)" selected="true">
+                        <span class="{{getFileStatusClass(row.fileStatus)}}" selected="true">{{ row.fileStatus}}</span>
+                        <span class="badge badge-pill badge-warning text-label" *ngIf="(row.fileStatus === 'SUBMITTED' && row.serviceDetail.appointmentRequired == true)" (click)="redirectAppointment(row.serviceDetail.code, row.serviceFormId)" selected="true">
                             Appointment
-                        </button>
+                        </span>
                     </mat-chip-list>
                 </mat-cell>
             </ng-container>

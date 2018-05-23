@@ -16,8 +16,8 @@ import { CitizenModule } from './components/citizen/citizen.module';
 import { SharedModule } from './shared/shared.module'; // shared design module
 import { CoreModule } from './core/core.module';
 import { ToastrModule } from 'ngx-toastr';
-import { AmazingTimePickerModule } from 'amazing-time-picker';
 import { AppRoutingModule } from './app-routing.module'; // route module
+import { MAT_DATE_LOCALE } from '@angular/material';
 /* Import child modules end */
 
 /* import all component start */
@@ -25,6 +25,12 @@ import { AppComponent } from './app.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 /* import all component end */
 
+
+/** import progress bar modules - start */
+import { NgProgressModule } from '@ngx-progressbar/core';
+import { NgProgressHttpModule } from '@ngx-progressbar/http';
+import { NgProgressRouterModule } from '@ngx-progressbar/router';
+/** import progress bar modules - end */
 
 @NgModule({
 	declarations: [
@@ -50,12 +56,16 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 			progressBar: true,
 			closeButton: true
 		}),
-		AmazingTimePickerModule,
 		AppRoutingModule,
-		
+		NgProgressModule.forRoot(),
+		NgProgressHttpModule,
+		NgProgressRouterModule
 	],
 	exports: [ ],
-	providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
+	providers: [
+		{ provide: LocationStrategy, useClass: HashLocationStrategy },
+		{ provide: MAT_DATE_LOCALE, useValue: 'en-GB'}
+	],
 	bootstrap: [AppComponent]
 })
 export class AppModule { }
