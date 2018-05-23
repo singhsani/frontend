@@ -62,18 +62,20 @@
 
 					<div class="row">
 						<mat-form-field class="col-4">
-							<input matInput type="text" formControlName="groomFirstName" placeholder="{{ 'first_name' | translate:translateKey }}" required>
+							<input matInput type="text" formControlName="groomFirstName" appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'"
+							 placeholder="{{ 'first_name' | translate:translateKey }}" required>
 							<control-messages [control]="marriageFormGroup.controls.groomFirstName"></control-messages>
 						</mat-form-field>
 
 						<mat-form-field class="col-4">
-							<input matInput type="text" formControlName="groomMiddleName" placeholder="{{ 'middlename_name' | translate:translateKey }}"
-							 required>
+							<input matInput type="text" formControlName="groomMiddleName" appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'"
+							 placeholder="{{ 'middlename_name' | translate:translateKey }}" required>
 							<control-messages [control]="marriageFormGroup.controls.groomMiddleName"></control-messages>
 						</mat-form-field>
 
 						<mat-form-field class="col-4">
-							<input matInput type="text" formControlName="groomLastName" placeholder="{{ 'last_name' | translate:translateKey }}" required>
+							<input matInput type="text" formControlName="groomLastName" appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'"
+							 placeholder="{{ 'last_name' | translate:translateKey }}" required>
 							<control-messages [control]="marriageFormGroup.controls.groomLastName"></control-messages>
 						</mat-form-field>
 					</div>
@@ -218,18 +220,20 @@
 					</ng-template>
 					<div class="row">
 						<mat-form-field class="col-4">
-							<input matInput type="text" formControlName="brideFirstName" placeholder="{{'first_name' | translate:translateKey }}" required>
+							<input matInput type="text" formControlName="brideFirstName" appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'"
+							 placeholder="{{'first_name' | translate:translateKey }}" required>
 							<control-messages [control]="marriageFormGroup.controls.brideFirstName"></control-messages>
 						</mat-form-field>
 
 						<mat-form-field class="col-4">
-							<input matInput type="text" formControlName="brideMiddleName" placeholder="{{'middlename_name' | translate:translateKey }}"
-							 required>
+							<input matInput type="text" formControlName="brideMiddleName" appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'"
+							 placeholder="{{'middlename_name' | translate:translateKey }}" required>
 							<control-messages [control]="marriageFormGroup.controls.brideMiddleName"></control-messages>
 						</mat-form-field>
 
 						<mat-form-field class="col-4">
-							<input matInput type="text" formControlName="brideLastName" placeholder="{{'last_name' | translate:translateKey }}" required>
+							<input matInput type="text" formControlName="brideLastName" appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'"
+							 placeholder="{{'last_name' | translate:translateKey }}" required>
 							<control-messages [control]="marriageFormGroup.controls.brideLastName"></control-messages>
 						</mat-form-field>
 
@@ -293,20 +297,20 @@
 					</ng-template>
 					<div class="row">
 						<mat-form-field class="col-4">
-							<input matInput type="text" formControlName="groomParentsFirstName" placeholder="{{'first_name' | translate:translateKey }}"
-							 required>
+							<input matInput type="text" formControlName="groomParentsFirstName" appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'"
+							 placeholder="{{'first_name' | translate:translateKey }}" required>
 							<control-messages [control]="marriageFormGroup.controls.groomParentsFirstName"></control-messages>
 						</mat-form-field>
 
 						<mat-form-field class="col-4">
-							<input matInput type="text" formControlName="groomParentsMiddleName" placeholder="{{'middlename_name' | translate:translateKey }}"
-							 required>
+							<input matInput type="text" formControlName="groomParentsMiddleName" appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'"
+							 placeholder="{{'middlename_name' | translate:translateKey }}" required>
 							<control-messages [control]="marriageFormGroup.controls.groomParentsMiddleName"></control-messages>
 						</mat-form-field>
 
 						<mat-form-field class="col-4">
-							<input matInput type="text" formControlName="groomParentsLastName" placeholder="{{'last_name' | translate:translateKey }}"
-							 required>
+							<input matInput type="text" formControlName="groomParentsLastName" appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'"
+							 placeholder="{{'last_name' | translate:translateKey }}" required>
 							<control-messages [control]="marriageFormGroup.controls.groomParentsLastName"></control-messages>
 						</mat-form-field>
 
@@ -354,20 +358,20 @@
 					</ng-template>
 					<div class="row">
 						<mat-form-field class="col-4">
-							<input matInput type="text" formControlName="brideParentsFirstName" placeholder="{{'first_name' | translate:translateKey }}"
-							 required>
+							<input matInput type="text" formControlName="brideParentsFirstName" appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'"
+							 placeholder="{{'first_name' | translate:translateKey }}" required>
 							<control-messages [control]="marriageFormGroup.controls.brideParentsFirstName"></control-messages>
 						</mat-form-field>
 
 						<mat-form-field class="col-4">
-							<input matInput type="text" formControlName="brideParentsMiddleName" placeholder="{{'middlename_name' | translate:translateKey }}"
-							 required>
+							<input matInput type="text" formControlName="brideParentsMiddleName" appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'"
+							 placeholder="{{'middlename_name' | translate:translateKey }}" required>
 							<control-messages [control]="marriageFormGroup.controls.brideParentsMiddleName"></control-messages>
 						</mat-form-field>
 
 						<mat-form-field class="col-4">
-							<input matInput type="text" formControlName="brideParentsLastName" placeholder="{{'last_name' | translate:translateKey }}"
-							 required>
+							<input matInput type="text" formControlName="brideParentsLastName" appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'"
+							 placeholder="{{'last_name' | translate:translateKey }}" required>
 							<control-messages [control]="marriageFormGroup.controls.brideParentsLastName"></control-messages>
 						</mat-form-field>
 
@@ -416,18 +420,20 @@
 					</ng-template>
 					<div class="row">
 						<mat-form-field class="col-4">
-							<input matInput type="text" formControlName="priestFirstName" placeholder="{{'first_name' | translate:translateKey }}" required>
+							<input matInput type="text" formControlName="priestFirstName" appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'"
+							 placeholder="{{'first_name' | translate:translateKey }}" required>
 							<control-messages [control]="marriageFormGroup.controls.priestFirstName"></control-messages>
 						</mat-form-field>
 
 						<mat-form-field class="col-4">
-							<input matInput type="text" formControlName="priestMiddleName" placeholder="{{'middlename_name' | translate:translateKey }}"
-							 required>
+							<input matInput type="text" formControlName="priestMiddleName" appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'"
+							 placeholder="{{'middlename_name' | translate:translateKey }}" required>
 							<control-messages [control]="marriageFormGroup.controls.priestMiddleName"></control-messages>
 						</mat-form-field>
 
 						<mat-form-field class="col-4">
-							<input matInput type="text" formControlName="priestLastName" placeholder="{{'last_name' | translate:translateKey }}" required>
+							<input matInput type="text" formControlName="priestLastName" appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'"
+							 placeholder="{{'last_name' | translate:translateKey }}" required>
 							<control-messages [control]="marriageFormGroup.controls.priestLastName"></control-messages>
 						</mat-form-field>
 
@@ -475,20 +481,20 @@
 					</ng-template>
 					<div class="row">
 						<mat-form-field class="col-4">
-							<input matInput type="text" formControlName="firstWitnessFirstName" placeholder="{{'first_name' | translate:translateKey }}"
-							 required>
+							<input matInput type="text" formControlName="firstWitnessFirstName" appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'"
+							 placeholder="{{'first_name' | translate:translateKey }}" required>
 							<control-messages [control]="marriageFormGroup.controls.firstWitnessFirstName"></control-messages>
 						</mat-form-field>
 
 						<mat-form-field class="col-4">
-							<input matInput type="text" formControlName="firstWitnessMiddleName" placeholder="{{'middlename_name' | translate:translateKey }}"
-							 required>
+							<input matInput type="text" formControlName="firstWitnessMiddleName" appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'"
+							 placeholder="{{'middlename_name' | translate:translateKey }}" required>
 							<control-messages [control]="marriageFormGroup.controls.firstWitnessMiddleName"></control-messages>
 						</mat-form-field>
 
 						<mat-form-field class="col-4">
-							<input matInput type="text" formControlName="firstWitnessLastName" placeholder="{{'last_name' | translate:translateKey }}"
-							 required>
+							<input matInput type="text" formControlName="firstWitnessLastName" appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'"
+							 placeholder="{{'last_name' | translate:translateKey }}" required>
 							<control-messages [control]="marriageFormGroup.controls.firstWitnessLastName"></control-messages>
 						</mat-form-field>
 
@@ -528,20 +534,20 @@
 					</ng-template>
 					<div class="row">
 						<mat-form-field class="col-4">
-							<input matInput type="text" formControlName="secondWitnessFirstName" placeholder="{{'first_name' | translate:translateKey }}"
-							 required>
+							<input matInput type="text" formControlName="secondWitnessFirstName" appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'"
+							 placeholder="{{'first_name' | translate:translateKey }}" required>
 							<control-messages [control]="marriageFormGroup.controls.secondWitnessFirstName"></control-messages>
 						</mat-form-field>
 
 						<mat-form-field class="col-4">
-							<input matInput type="text" formControlName="secondWitnessMiddleName" placeholder="{{'middlename_name' | translate:translateKey }}"
-							 required>
+							<input matInput type="text" formControlName="secondWitnessMiddleName" appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'"
+							 placeholder="{{'middlename_name' | translate:translateKey }}" required>
 							<control-messages [control]="marriageFormGroup.controls.secondWitnessMiddleName"></control-messages>
 						</mat-form-field>
 
 						<mat-form-field class="col-4">
-							<input matInput type="text" formControlName="secondWitnessLastName" placeholder="{{'last_name' | translate:translateKey }}"
-							 required>
+							<input matInput type="text" formControlName="secondWitnessLastName" appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'"
+							 placeholder="{{'last_name' | translate:translateKey }}" required>
 							<control-messages [control]="marriageFormGroup.controls.secondWitnessLastName"></control-messages>
 						</mat-form-field>
 
