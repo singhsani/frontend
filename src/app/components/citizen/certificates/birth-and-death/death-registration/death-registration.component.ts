@@ -30,7 +30,7 @@ export class DeathRegistrationComponent implements OnInit {
 	private translateKey = "deathRegScreen";
 	private addressTranslateKey = "addressScreen";
 	private basicTranslateKey = "basicDetailsScreen";
-	private checked: boolean = false;
+
 	private showCheck: boolean = false;
 	createCompleteForm: boolean = false;
 
@@ -38,6 +38,7 @@ export class DeathRegistrationComponent implements OnInit {
 	private appId: number;
 	apiCode: string;
 	readOnly: boolean = false;
+	private prevMode: boolean = false;
 
 	private isLinear: boolean = false;
 	private deathCertificateForm: FormGroup;
@@ -122,14 +123,7 @@ export class DeathRegistrationComponent implements OnInit {
 	getDeathCertData() {
 		this.formService.getFormData(this.appId).subscribe((res) => {
 			this.response = res;
-
-			//for checkbox
-			if (res.isPermanentPresentAddressSame.code == "YES") {
-				this.readOnly = true;
-				this.checked = true;
-			} else {
-				this.checked = false;
-			}
+			this.prevMode = !res.canEdit;
 
 			//for unknown condition
 			if (res.unknownCategory.code === undefined) {
@@ -389,6 +383,9 @@ export class DeathRegistrationComponent implements OnInit {
 		});
 	}
 
+	/**
+	 * Address Controls.
+	 */
 	addressControls()  {
 		return {
 			id: null,

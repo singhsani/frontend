@@ -44,9 +44,10 @@ export class OnlyNumberDirective {
 		this.validateFields(event);
 	}
 
+	//Todo For limit Parse Int
 	validateFields(event) {
 		setTimeout(() => {
-			let checkNumber = parseInt(this.el.nativeElement.value);
+			let checkNumber = (this.el.nativeElement.value);
 			if (!isNaN(checkNumber)) {
 				this.el.nativeElement.value = checkNumber;
 				event.preventDefault();

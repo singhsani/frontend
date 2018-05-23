@@ -39,7 +39,7 @@
     
                         <mat-form-field formGroupName="birthPlace" class="col-md-4">
                             <mat-select placeholder="{{'birth_place' | translate:translateKey}}" formControlName="code">
-                                <mat-option matTooltip="{{birthplace.name}}" *ngFor="let birthplace of BirthPlaces" [value]="birthplace.code">
+                                <mat-option *ngFor="let birthplace of BirthPlaces" [value]="birthplace.code">
                                     {{birthplace.name}}
                                 </mat-option>
                             </mat-select>
@@ -279,7 +279,7 @@
                             <control-messages [control]="birthCertificateForm.controls.pregnancyDuration"></control-messages>
                         </mat-form-field>
     
-                        <mat-form-field class="col-md-4">
+                        <mat-form-field class="col">
                             <input matInput type="tel" maxlength="2" OnlyNumber placeholder="{{'total_child_alive' | translate:translateKey}}" formControlName="totalAliveChild">
                             <control-messages [control]="birthCertificateForm.controls.totalAliveChild"></control-messages>
                         </mat-form-field>
@@ -403,7 +403,7 @@
                         <!-- </div> -->
     
                         <span formGroupName="isPermanentPresentAddressSame">
-                            <mat-checkbox (change)="check($event)" [checked]="birthCertificateForm.get('isPermanentPresentAddressSame').get('code').value == 'YES'? true : false">{{'is_permanent_address_same_as_present_address' | translate:translateKey}}</mat-checkbox>
+                            <mat-checkbox [disabled]="!birthCertificateForm.get('canEdit').value"(change)="check($event)" [checked]="birthCertificateForm.get('isPermanentPresentAddressSame').get('code').value == 'YES'? true : false">{{'is_permanent_address_same_as_present_address' | translate:translateKey}}</mat-checkbox>
                         </span>
 
                         <h2 class="mt-4">
