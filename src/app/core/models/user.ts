@@ -1,4 +1,9 @@
 export class User {
-  id: string;
-  email: string;
+	cellNo: string;
+	email: string;
+	firstName: string;
+	lastName: string;
+	status: string;
+	uniqueId: string;
+	userType: string;
 }

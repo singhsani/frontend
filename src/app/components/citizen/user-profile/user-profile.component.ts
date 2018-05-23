@@ -4,11 +4,13 @@ import { FormGroup, FormControl, FormBuilder, Validator, Validators } from '@ang
 import { ToastrService } from 'ngx-toastr';
 import { ValidationService } from './../../../shared/services/validation.service';
 import { FormsActionsService } from './../../../core/services/citizen/data-services/forms-actions.service';
+import { HomeLayoutComponent } from '../../../layouts/home-layout/home-layout.component';
 
 @Component({
 	selector: 'app-user-profile',
 	templateUrl: './user-profile.component.html',
-	styleUrls: ['./user-profile.component.scss']
+	styleUrls: ['./user-profile.component.scss'],
+	providers: [HomeLayoutComponent]
 })
 export class UserProfileComponent implements OnInit {
 
@@ -25,7 +27,9 @@ export class UserProfileComponent implements OnInit {
 	constructor(
 		private fb: FormBuilder,
 		private formService: FormsActionsService,
-		private toaster: ToastrService) 
+		private toaster: ToastrService,
+		private homeLayoutComponent: HomeLayoutComponent,
+	) 
 	{ }
 
 	ngOnInit() {
@@ -60,6 +64,7 @@ export class UserProfileComponent implements OnInit {
 	onSubmitProfile(formVals: FormGroup) {
 		this.formService.updateUserProfile(formVals).subscribe(res => {
 			this.toaster.success('Your profile has been updated successfully');
+			this.homeLayoutComponent.getUserProfile();
 		});
 	}
 

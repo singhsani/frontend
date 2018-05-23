@@ -158,7 +158,9 @@ export class MyApplicationsComponent implements OnInit {
 				let Pagelink = "about:blank";
 				var pwa = window.open(Pagelink, "_new");
 				pwa.document.open();
-
+				if(!pwa || pwa.closed || typeof pwa.closed=='undefined') {
+					this.commonService.openAlert('Pop-up!', 'Please disable your Pop-up blocker and try again.','warning');
+				}
 				pwa.document.write(data);
 				pwa.print();
 			},
@@ -176,7 +178,9 @@ export class MyApplicationsComponent implements OnInit {
 	getFileStatusClass(filestatus: string) {
 		switch (filestatus) {
 			case 'DRAFT':
-				return 'primary';
+				return 'badge badge-primary text-label ml-2 small';
+			case 'SUBMITTED':
+				return 'badge badge-success text-label ml-2';
 			default:
 				return 'primary'
 		}

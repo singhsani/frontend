@@ -25,7 +25,7 @@ export class ActionBarComponent implements OnInit {
 	isSaveBtnDisabled: boolean = false;
 	isSubmitBtnDisabled: boolean = false;
 
-	isBtnsDisabled: boolean = false;
+	isBtnsDisabled: boolean = true;
 
 	@Output() handleErrors = new EventEmitter<any>();
 	@Output() stepReset = new EventEmitter<any>();
@@ -44,6 +44,7 @@ export class ActionBarComponent implements OnInit {
 		setTimeout(() => {
 			if (this.form.value.hasOwnProperty('canEdit') && !this.form.value.canEdit && this.form.value.canEdit != null) {
 				this.form.disable();
+				this.isBtnsDisabled = false;
 			}
 		}, 600);
 
@@ -88,7 +89,7 @@ export class ActionBarComponent implements OnInit {
 			this.formService.submitFormData(this.form.get('serviceFormId').value).subscribe(res => {
 				this.toastr.success(`${this.form.value.serviceDetail.name} information successfully submit`);
 				this.isSubmitBtnDisabled = false;
-				this.isBtnsDisabled = true;
+				this.isBtnsDisabled = false;
 				this.form.disable();
 			},
 				err => {
