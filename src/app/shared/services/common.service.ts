@@ -144,5 +144,13 @@ export class CommonService {
 
 	}
 
+	fromAdmin(): boolean {
+		if (this.session.get('fromAdmin')) {
+			if (this.session.get('fromAdmin') === 'fromAdmin')
+				return true;
+			else
+				return false;
+		}
+	}
 
 }

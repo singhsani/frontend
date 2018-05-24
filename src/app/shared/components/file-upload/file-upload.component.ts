@@ -42,7 +42,7 @@ export class FileUploadComponent implements OnInit {
 
 	fileType: string;
 	imagetype: boolean = false;
-
+	fromAdmin: boolean = false;	
 
 	/**
 	 * 
@@ -52,9 +52,7 @@ export class FileUploadComponent implements OnInit {
 	constructor(
 		private uploadFileService: UploadFileService,
 		private commonService: CommonService
-	) {
-
-	}
+	) { }
 
 	/**
 	 * Initialize first component loads.
@@ -62,6 +60,7 @@ export class FileUploadComponent implements OnInit {
 	ngOnInit() {
 		this.disableOrEnableButton();
 		this.showButton = true;
+		this.fromAdmin = this.commonService.fromAdmin();
 	}
 
 	/**

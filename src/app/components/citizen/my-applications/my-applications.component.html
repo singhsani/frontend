@@ -12,7 +12,7 @@
 
             <ng-container matColumnDef="id">
                 <mat-header-cell *matHeaderCellDef>#</mat-header-cell>
-                <mat-cell *matCellDef="let row; let i = index;">{{ i+1 }}</mat-cell>
+                <mat-cell *matCellDef="let row; let i = index;">{{ paginator.pageIndex==0?i+1:((paginator.pageIndex+1)*10)+(i+1) }}</mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="applicantName">

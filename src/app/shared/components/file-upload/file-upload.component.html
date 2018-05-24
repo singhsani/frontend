@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row" *ngIf="!fromAdmin">
 	<div class="col-md-12">
 		<mat-progress-bar *ngIf="currentFileUpload" mode="determinate" value="{{progress.percentage}}"></mat-progress-bar>
 

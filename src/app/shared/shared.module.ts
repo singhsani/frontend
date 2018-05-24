@@ -17,6 +17,10 @@ import { UploadFileService } from './upload-file.service';
 
 /* import directives start*/
 import { OnlyNumberDirective } from './directives/only-number.directive';
+import { PreventSpaceDirective } from './directives/prevent-space.directive';
+import { ValidationFieldsDirective } from './directives/validation-fields.directive';
+import { GujInputSourceDirective } from './directives/guj-input-source.directive';
+import { GujInputTargetDirective } from './directives/guj-input-target.directive';
 /* import directives end*/
 
 /* import pipes start*/
@@ -29,8 +33,6 @@ import { PaymentGatewayComponent } from './components/payment-gateway/payment-ga
 import { BasicDetailsComponent } from './components/basic-details/basic-details.component';
 import { TitleBarComponent } from './components/title-bar/title-bar.component';
 import { LoadingIndicatorComponent } from './components/loading-indicator/loading-indicator.component';
-import { PreventSpaceDirective } from './directives/prevent-space.directive';
-import { ValidationFieldsDirective } from './directives/validation-fields.directive';
 import { HosHttpService } from './services/hos-http.service';
 /* import pipes end*/
 
@@ -46,7 +48,9 @@ const COMPONENTS = [
 	PaymentGatewayComponent,
 	TitleBarComponent,
 	LoadingIndicatorComponent,
-	ValidationFieldsDirective
+	ValidationFieldsDirective,
+	GujInputSourceDirective,
+	GujInputTargetDirective
 ]
 
 @NgModule({

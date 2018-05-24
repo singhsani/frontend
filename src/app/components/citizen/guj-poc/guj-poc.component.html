@@ -1,9 +1,26 @@
 <div class="container pt-4">
-    <div class="row pt-1 pb-2">
-        <h4>Solution 1:</h4>
-        <div class="col-md-12">
-            <input name="testEng" (change)="converToGuj()" [(ngModel)]="testEng">
-            <input id="testGuj" name="testGuj" [(ngModel)]="testGuj" (change)="converToSelf()">
+    <div class="pt-1 pb-2" [formGroup]="formGroup">
+        <div class="row">
+            <div class="col-md-4">
+                First Source-Target Combo
+            </div>
+            <div class="col-md-4">
+                <input formControlName="sourceGuj"  appGujInputSource targetElement="targetGuj" [form]="formGroup">
+            </div>
+            <div class="col-md-4">
+                <input formControlName="targetGuj" appGujInputTarget>
+            </div>
+        </div>
+        <div class="row pt-4">
+            <div class="col-md-4">
+                Second Source-Target Combo
+            </div>
+            <div class="col-md-4">
+                <input formControlName="sourceGujA"  appGujInputSource targetElement="targetGujA" [form]="formGroup">
+            </div>
+            <div class="col-md-4">
+                <input formControlName="targetGujA" appGujInputTarget>
+            </div>
         </div>
     </div>
 </div>
