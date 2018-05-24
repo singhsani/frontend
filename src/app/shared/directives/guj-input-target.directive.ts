@@ -1,4 +1,5 @@
-import { Directive, ElementRef, HostListener } from '@angular/core';
+import { Directive, ElementRef, HostListener, Input } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 declare var pramukhIME;
 
 @Directive({
@@ -6,7 +7,9 @@ declare var pramukhIME;
 })
 export class GujInputTargetDirective {
 	inputElement: HTMLInputElement;
-
+	@Input('form') fg: FormGroup;
+	@Input('formControlName') fcn: string;
+	
 	constructor(
 		private elementRef: ElementRef
 	) {
@@ -19,7 +22,7 @@ export class GujInputTargetDirective {
 		let sourceGjValue = this.inputElement.value;
 		let enValue = pramukhIME.convert(sourceGjValue);
 		pramukhIME.addKeyboard(PramukhIndic, 'gujarati');
-		this.inputElement.value = pramukhIME.convert(enValue);
+		this.fg.get(this.fcn).setValue(pramukhIME.convert(enValue));
 	}
 
 }
