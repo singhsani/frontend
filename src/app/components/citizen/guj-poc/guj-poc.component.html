@@ -8,7 +8,7 @@
                 <input formControlName="sourceGuj"  appGujInputSource targetElement="targetGuj" [form]="formGroup">
             </div>
             <div class="col-md-4">
-                <input formControlName="targetGuj" appGujInputTarget>
+                <input formControlName="targetGuj" appGujInputTarget [form]="formGroup">
             </div>
         </div>
         <div class="row pt-4">
@@ -19,8 +19,13 @@
                 <input formControlName="sourceGujA"  appGujInputSource targetElement="targetGujA" [form]="formGroup">
             </div>
             <div class="col-md-4">
-                <input formControlName="targetGujA" appGujInputTarget>
+                <input formControlName="targetGujA" appGujInputTarget [form]="formGroup">
             </div>
+        </div>
+        <div class="row pt-4">
+            <pre>
+                {{formGroup.value | json}}
+            </pre>
         </div>
     </div>
 </div>
