@@ -3,10 +3,10 @@
 				<div class="headingBox">Register
 					<span>Sign up by entering the information below</span>
 				</div>
-				<form name="user-verify-form" [formGroup]="verifyForm" (ngSubmit)="verifyUser(verifyForm.value)" autocomplete="off" ngNativeValidate>
+				<form name="user-verify-form" [formGroup]="verifyForm" (ngSubmit)="verifyUser(verifyForm)" autocomplete="off" ngNativeValidate>
 
 					<mat-form-field class="example-full-width">
-						<input matInput type="text" [readonly]="verifyForm.get('code').value != ''" placeholder="Enter OTP" formControlName="code"
+						<input matInput type="text" placeholder="Enter OTP" formControlName="code"
 						 required>
 					</mat-form-field>
 					<div class="text-center">

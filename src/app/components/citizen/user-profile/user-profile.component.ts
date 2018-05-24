@@ -2,15 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validator, Validators } from '@angular/forms';
 
 import { ToastrService } from 'ngx-toastr';
+import { CommonService } from './../../../shared/services/common.service';
 import { ValidationService } from './../../../shared/services/validation.service';
 import { FormsActionsService } from './../../../core/services/citizen/data-services/forms-actions.service';
-import { HomeLayoutComponent } from '../../../layouts/home-layout/home-layout.component';
 
 @Component({
 	selector: 'app-user-profile',
 	templateUrl: './user-profile.component.html',
-	styleUrls: ['./user-profile.component.scss'],
-	providers: [HomeLayoutComponent]
+	styleUrls: ['./user-profile.component.scss']
 })
 export class UserProfileComponent implements OnInit {
 
@@ -28,7 +27,7 @@ export class UserProfileComponent implements OnInit {
 		private fb: FormBuilder,
 		private formService: FormsActionsService,
 		private toaster: ToastrService,
-		private homeLayoutComponent: HomeLayoutComponent,
+		private commonService: CommonService
 	) 
 	{ }
 
@@ -38,8 +37,8 @@ export class UserProfileComponent implements OnInit {
 			uniqueId: '',
 			firstName: [null, [Validators.required, ValidationService.nameValidator]],
 			lastName: [null, [Validators.required, ValidationService.nameValidator]],
-			email: [null, [Validators.required, ValidationService.emailValidator]],
-			cellNo: [null, Validators.required],
+			email: [{ value: null, disabled: true }],
+			cellNo: [{ value: null, disabled: true }],
 			userType: '',
 			status: ''
 		});
@@ -62,9 +61,9 @@ export class UserProfileComponent implements OnInit {
 	 * @param formVals - user profile formGroup value
 	 */
 	onSubmitProfile(formVals: FormGroup) {
-		this.formService.updateUserProfile(formVals).subscribe(res => {
+		this.formService.updateUserProfile(formVals.getRawValue()).subscribe(res => {
 			this.toaster.success('Your profile has been updated successfully');
-			this.homeLayoutComponent.getUserProfile();
+			this.commonService.profileSubject.next(res.data);
 		});
 	}
 

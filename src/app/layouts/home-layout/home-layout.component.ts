@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { MediaMatcher } from '@angular/cdk/layout';
 
 import { AppService } from './../../core/services/citizen/app-services/app.service';
+import { CommonService } from './../../shared/services/common.service';
 import { SessionStorageService } from 'angular-web-storage';
 import { FormsActionsService } from '../../core/services/citizen/data-services/forms-actions.service';
 
@@ -18,6 +19,7 @@ export class HomeLayoutComponent implements OnInit {
 
 	@ViewChild('snav') snav;
 	mobileQuery: MediaQueryList;
+	profileObj: any = {};
 
 	constructor(
 		private changeDetectorRef: ChangeDetectorRef,
@@ -25,17 +27,24 @@ export class HomeLayoutComponent implements OnInit {
 		private appService: AppService,
 		private session: SessionStorageService,
 		private formService: FormsActionsService,
+		private commonService: CommonService
 	) {
 
 		this.mobileQuery = media.matchMedia('(max-width: 600px)');
 		this._mobileQueryListener = () => changeDetectorRef.detectChanges();
 		this.mobileQuery.addListener(this._mobileQueryListener);
 	}
-	
+
 	private _mobileQueryListener: () => void;
-	
+
 	ngOnInit() {
+
 		this.getUserProfile();
+
+		// get the profile data when user gets update his profie
+		this.commonService.profileSubject.subscribe(res => {
+			this.profileObj = res;
+		})
 	}
 
 	onLogout() {
@@ -53,8 +62,8 @@ export class HomeLayoutComponent implements OnInit {
 	/**
 	 * This method is use to toggle side nav on mobile view
 	 */
-	toggleSideNav(){
-		if(this.mobileQuery.matches){
+	toggleSideNav() {
+		if (this.mobileQuery.matches) {
 			this.snav.opened = false;
 		}
 	}
@@ -64,7 +73,7 @@ export class HomeLayoutComponent implements OnInit {
 	 */
 	getUserProfile() {
 		this.formService.getUserProfile().subscribe(res => {
-			document.getElementById('userName').innerHTML = res.data.firstName + ' ' + res.data.lastName;
+			this.profileObj = res.data;
 		});
 	}
 }

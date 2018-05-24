@@ -8,7 +8,14 @@ import { SessionStorageService } from 'angular-web-storage';
 @Injectable()
 export class CommonService {
 
+	/**
+	 * This property use for toggle the loading on routing
+	 */
 	public loading = new Subject<{ loading: boolean }>();
+	/**
+	 * This property use for share the profile data
+	 */
+	profileSubject = new Subject<any>();
 
 	constructor(private session: SessionStorageService) { }
 

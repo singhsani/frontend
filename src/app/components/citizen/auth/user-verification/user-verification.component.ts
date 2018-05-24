@@ -51,8 +51,10 @@ export class UserVerificationComponent implements OnInit {
 			if (params['code'] != null && params['code'] != "" && params['code'] != undefined && params['code'] != 'undefined' && params['code'] != 'null') {
 
 				this.verifyForm.get('code').setValue(params['code']);
+				this.verifyForm.get('code').disable();
 			} else {
 				this.verifyForm.get('code').setValue('');
+				this.verifyForm.get('code').enable();
 			}
 
 		});
@@ -66,7 +68,7 @@ export class UserVerificationComponent implements OnInit {
 		if ((!this.verifyForm.get('uniqueId').value) || (!this.verifyForm.get('code').value)) {
 			this.toster.warning("Link is not valid try again");
 		} else {
-			this.appService.verifyUser(formVals).subscribe(
+			this.appService.verifyUser(formVals.getRawValue()).subscribe(
 				res => {
 					this.toster.success("Successfully Authenticated");
 					this.router.navigate([ManageRoutes.getFullRoute('CITIZENAUTHLOGIN')]);
