@@ -20,7 +20,8 @@ export class HomeLayoutComponent implements OnInit {
 	@ViewChild('snav') snav;
 	mobileQuery: MediaQueryList;
 	profileObj: any = {};
-
+	fromAdmin: boolean = false;
+	
 	constructor(
 		private changeDetectorRef: ChangeDetectorRef,
 		private media: MediaMatcher,
@@ -38,7 +39,8 @@ export class HomeLayoutComponent implements OnInit {
 	private _mobileQueryListener: () => void;
 
 	ngOnInit() {
-
+		
+		this.fromAdmin = this.commonService.fromAdmin();
 		this.getUserProfile();
 
 		// get the profile data when user gets update his profie

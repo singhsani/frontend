@@ -156,11 +156,11 @@ export class MyApplicationsComponent implements OnInit {
 			res => {
 				let data = res;
 				let Pagelink = "about:blank";
-				var pwa = window.open(Pagelink, "_new");
-				pwa.document.open();
+				let pwa = window.open(Pagelink, "_new");
 				if(!pwa || pwa.closed || typeof pwa.closed=='undefined') {
 					this.commonService.openAlert('Pop-up!', 'Please disable your Pop-up blocker and try again.','warning');
 				}
+				pwa.document.open();
 				pwa.document.write(data);
 				pwa.print();
 			},

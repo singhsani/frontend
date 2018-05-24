@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-declare var pramukhIME;
+import { FormGroup, FormBuilder } from '@angular/forms';
 
 @Component({
 	selector: 'app-guj-poc',
@@ -8,24 +8,18 @@ declare var pramukhIME;
 })
 export class GujPocComponent implements OnInit {
 
-	testGuj: string;
-	testEng: string;
+	formGroup: FormGroup;
 
-	constructor() { }
+	constructor(
+		private fb: FormBuilder
+	) { }
 
 	ngOnInit() {
+		this.formGroup = this.fb.group({
+			sourceGuj: '',
+			targetGuj: '',
+			sourceGujA: '',
+			targetGujA: ''
+		});
 	}
-
-	converToGuj() {
-		pramukhIME.addKeyboard(PramukhIndic, 'gujarati');
-		this.testGuj = pramukhIME.convert(this.testEng);
-	}
-
-	converToSelf() {
-		pramukhIME.resetSettings();
-		let test = pramukhIME.convert(this.testGuj);
-		pramukhIME.addKeyboard(PramukhIndic, 'gujarati');
-		this.testGuj = pramukhIME.convert(test);
-	}
-
 }
