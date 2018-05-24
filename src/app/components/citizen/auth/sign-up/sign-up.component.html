@@ -7,13 +7,13 @@
 				<div class="row">
 			<mat-form-field class="iconMat col-md-6">
 				<mat-icon matPrefix>face</mat-icon>
-				<input matInput type="text" placeholder="Firstname" formControlName="firstName" required>
+				<input matInput type="text" placeholder="Firstname" appValidationFields validationFieldsType="onlyNameWithOutSpace" formControlName="firstName" required>
 				<control-messages [control]="regForm.controls.firstName"></control-messages>
 			</mat-form-field>
 
 			<mat-form-field class="iconMat col-md-6">
 				<mat-icon matPrefix>face</mat-icon>
-				<input matInput type="text" placeholder="Lastname" formControlName="lastName" required>
+				<input matInput type="text" placeholder="Lastname" appValidationFields validationFieldsType="onlyNameWithOutSpace" formControlName="lastName" required>
 				<control-messages [control]="regForm.controls.lastName"></control-messages>
 			</mat-form-field>
 

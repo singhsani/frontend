@@ -15,7 +15,7 @@
             <div class="float-right">
             <button mat-icon-button  [matMenuTriggerFor]="menu" class="userName">
                 <mat-icon>account_circle</mat-icon>
-                    <span id="userName"></span>
+                    {{profileObj.firstName + ' ' + profileObj.lastName}}
                 <mat-icon>arrow_drop_down</mat-icon>
             </button>
             <mat-menu #menu="matMenu">

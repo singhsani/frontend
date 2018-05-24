@@ -2,17 +2,17 @@
 	<mat-card class="mt-4">
 		<h1 class="heading">Profile</h1>
 		<mat-card-content class="profilePage">
-			<form [formGroup]="userProfileForm" (ngSubmit)="onSubmitProfile(userProfileForm.value)" autocomplete="off" ngNativeValidate novalidate>
+			<form [formGroup]="userProfileForm" (ngSubmit)="onSubmitProfile(userProfileForm)" autocomplete="off" ngNativeValidate novalidate>
 
 				<mat-form-field class="iconMat" >
 						<mat-icon matPrefix>face</mat-icon>
-					<input matInput type="text" placeholder="Firstname" formControlName="firstName" required>
+					<input matInput type="text" appValidationFields validationFieldsType="onlyNameWithOutSpace" placeholder="Firstname" formControlName="firstName" required>
 					<control-messages [control]="userProfileForm.controls.firstName"></control-messages>
 				</mat-form-field>
 
 				<mat-form-field class="iconMat" >
 						<mat-icon matPrefix>face</mat-icon>
-					<input matInput type="text" placeholder="Lastname" formControlName="lastName" required>
+					<input matInput type="text" appValidationFields validationFieldsType="onlyNameWithOutSpace" placeholder="Lastname" formControlName="lastName" required>
 					<control-messages [control]="userProfileForm.controls.lastName"></control-messages>
 				</mat-form-field>
 

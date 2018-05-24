@@ -50,8 +50,10 @@ export class ResetPasswordComponent implements OnInit {
 			// if code value is exist then disabled field otherwise allow user to enter manually
 			if (params['code'] != null && params['code'] != "" && params['code'] != undefined && params['code'] != 'undefined' && params['code'] != 'null') {
 				this.resetPassForm.get('code').setValue(params['code']);
+				this.resetPassForm.get('code').disable();
 			} else {
 				this.resetPassForm.get('code').setValue("");
+				this.resetPassForm.get('code').enable();
 			}
 
 		});
@@ -92,7 +94,7 @@ export class ResetPasswordComponent implements OnInit {
 			this.showWarning = true;
 		} else {
 
-			this.appService.resetPassword(formVals).subscribe(
+			this.appService.resetPassword(formVals.getRawValue()).subscribe(
 				res => {
 
 					this.router.navigate([ManageRoutes.getFullRoute('CITIZENAUTHLOGIN')]);
