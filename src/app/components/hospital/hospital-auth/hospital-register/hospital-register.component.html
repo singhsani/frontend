@@ -14,8 +14,8 @@
 				<div class="iconMat2">
 					<mat-icon matPrefix>face</mat-icon>
 					<ng-select placeholder="Hospital Type" formControlName="hospitalType">
-						<ng-option [value]="GOVERNMENT">GOVERNMENT</ng-option>
-						<ng-option [value]="PRIVATE">PRIVATE</ng-option>
+						<ng-option value="GOVERNMENT">GOVERNMENT</ng-option>
+						<ng-option value="PRIVATE">PRIVATE</ng-option>
 					</ng-select>
 					<control-messages [control]="regForm.controls.hospitalType"></control-messages>
 				</div>

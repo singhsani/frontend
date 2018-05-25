@@ -18,21 +18,6 @@ const now = moment();
 })
 export class SlotBookingComponent implements OnInit {
 
-	/**
-	* @param formService - Declare form service property .
-	* @param commonService - Declare sweet alert.
-	*/
-	constructor(
-		// private formService: FormsActionsService,
-		private http: HttpService,
-		private route: ActivatedRoute,
-		private fb: FormBuilder,
-		private router: Router,
-		private commonService: CommonService,
-		// private formService: FormsActionsService
-
-	) { }
-
 	translateKey: '';
 	formId: any;
 	apiCode: any;
@@ -49,6 +34,24 @@ export class SlotBookingComponent implements OnInit {
 	//past date disable
 	minDate = now.toDate();
 
+	/**
+	* @param formService - Declare form service property .
+	* @param commonService - Declare sweet alert.
+	*/
+	constructor(
+		private http: HttpService,
+		private route: ActivatedRoute,
+		private fb: FormBuilder,
+		private router: Router,
+		private commonService: CommonService,
+		// private formService: FormsActionsService
+	) {
+		this.appointmentForm = fb.group({
+			resources: [''],
+			appointmentdate: moment().add(1, 'day').format("YYYY-MM-DD")
+		})
+	}
+
 	ngOnInit() {
 		this.route.paramMap.subscribe(param => {
 			this.formId = Number(param.get('id'));
@@ -62,11 +65,6 @@ export class SlotBookingComponent implements OnInit {
 		}
 		else {
 			this.getResources();
-
-			this.appointmentForm = this.fb.group({
-				resources: [''],
-				appointmentdate: moment().add(1, 'day').format("YYYY-MM-DD")
-			})
 
 			if (this.appointmentForm.get('appointmentdate').value != null) {
 				this.getSlot();
