@@ -150,7 +150,7 @@ export class FormsActionsService {
 	 * This method is use for get user services
 	 */
 	getUserServices(){
-		return this.http.get('public/guest/citizenServices');
+		return this.http.get('api/user/citizenServices');
 	}
 
 
