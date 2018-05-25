@@ -15,11 +15,11 @@ export class ValidationService {
         let config = {
             // error list
             required: `${_.startCase(controlName)} is Required`,
-            namelengtherror: 'Name must be at least 2 characters long.',
-            nameCharerror: 'Not include numeric character and special symbols.',
+            namelengtherror: 'Name must be at least 2 characters long',
+            nameCharerror: 'Not include numeric character and special symbols',
             invalidCreditCard: 'Is invalid credit card number',
             invalidEmail: 'Invalid email address',
-            invalidPassword: 'Invalid password. Password must be at least 6 characters long, and contain a number.',
+            invalidPassword: 'Invalid password. Password must be at least 6 characters long, and contain a number',
             invalidemarrigedate: 'Required and Should not be future date!',
             invalideDate: 'Date Invalid',
             invalidAadharno: 'Aadhar Number length should be 12',
@@ -31,7 +31,8 @@ export class ValidationService {
             invalidAadhar: `Invalid Aadhar Number`,
             invalidNumber: `Invalid Mobile Number`,
             invalidpregnanceTime: 'Pregnancy duration between 25 to 50',
-            invalidbirthRegNumber: 'Invalid Birth Registration Date.'
+            invalidbirthRegNumber: 'Invalid Birth Registration Date',
+            invalidBuildingName: 'Building name is not valid',
         }
 
         return config[validatorName];
@@ -54,6 +55,17 @@ export class ValidationService {
             return null;
         }
     }
+
+    // buildingName validation 
+    static buildingNameValidator(control: FormControl) {
+        if (control.value) {
+            const matches = control.value.match(/^[a-zA-Z0-9_/,\\-]*$/);
+            return matches ? null : { 'invalidBuildingName': true };
+        } else {
+            return null;
+        }
+    }
+
     // description validation(space allow) 
     static descriptionValidator(control: FormControl) {
         if (control.value) {
