@@ -27,7 +27,7 @@
             </mat-form-field>
 
             <mat-form-field class="col-md-4">
-              <input matInput maxlength="20" appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{'child_name' | translate:translateKey}}"
+              <input matInput maxlength="20" appValidationFields [validationFieldsType]="'onlyNameWithSpace'" placeholder="{{'child_name' | translate:translateKey}}"
                 name="childName" formControlName="childName">
               <control-messages [control]="stillBirthCertificateForm.controls.childName"></control-messages>
             </mat-form-field>
@@ -144,7 +144,7 @@
 
 
           </div>
-          <!-- <div class="row">
+        <!-- <div class="row">
           <mat-form-field class="col-md-4">
             <input matInput maxlength="20" placeholder="પ્રથમ નામ" formControlName="fatherFirstName">
             <control-messages [control]="stillBirthCertificateForm.controls.fatherFirstName"></control-messages>
@@ -276,17 +276,17 @@
             </mat-form-field>
 
             <mat-form-field class="col-md-4">
-              <input matInput maxlength="2" OnlyNumber placeholder="{{'pregnancy_duration' | translate:translateKey}}" formControlName="pregnancyDuration">
+              <input matInput maxlength="2" OnlyNumber placeholder="{{'pregnancy_duration' | translate:translateKey}}(In weeks)" formControlName="pregnancyDuration">
               <control-messages [control]="stillBirthCertificateForm.controls.pregnancyDuration"></control-messages>
             </mat-form-field>
 
             <mat-form-field class="col-md-4">
-              <textarea matInput maxlength="60" type="text" placeholder="{{'premature_infant_reason' | translate:translateKey}}" formControlName="prematureInfantReason"></textarea>
+              <textarea matInput maxlength="500" type="text" placeholder="{{'premature_infant_reason' | translate:translateKey}}" formControlName="prematureInfantReason"></textarea>
               <control-messages [control]="stillBirthCertificateForm.controls.prematureInfantReason"></control-messages>
             </mat-form-field>
           </div>
 
-          <!-- <div class="row">
+        <!-- <div class="row">
           <mat-form-field class="col-md-4">
             <input matInput maxlength="20" [value]="stillBirthCertificateForm.controls.motherFirstName.value" placeholder="પ્રથમ નામ" formControlName="motherFirstName">
             <control-messages [control]="stillBirthCertificateForm.controls.motherFirstName"></control-messages>
@@ -337,9 +337,9 @@
 
             <app-address #address [addressFormGroup]="stillBirthCertificateForm.controls.parentDeliveryAddress"></app-address>
 
-            <div formGroupName="isPermanentPresentAddressSame">
-              <mat-checkbox (change)="check($event)" [checked]="checked" formControlName="code">{{'is_permanent_address_same_as_present_address' | translate:translateKey}}</mat-checkbox>
-            </div>
+            <span formGroupName="isPermanentPresentAddressSame">
+              <mat-checkbox [disabled]="!stillBirthCertificateForm.get('canEdit').value" (change)="check($event);" [checked]="stillBirthCertificateForm.get('isPermanentPresentAddressSame').get('code').value == 'YES'? true : false">{{'is_permanent_address_same_as_present_address' | translate:translateKey}}</mat-checkbox>
+            </span>
 
             <h2>
               {{'permanent_address_during_delivery' | translate:translateKey}}
@@ -380,12 +380,12 @@
 
           <div *ngIf="showButtons">
             <mat-checkbox labelPosition="after"> {{'resident_proof' | translate:translateKey}}</mat-checkbox>
-            <file-upload [prevMode]="prevMode" [uploadModel]="setDataValue(1,'residentProof','1.1','residentProof')" [attachments]="attachments"></file-upload>
+            <file-upload [form]="stillBirthCertificateForm" [uploadModel]="setDataValue(1,'residentProof','1.1','residentProof')" [attachments]="attachments"></file-upload>
           </div>
 
           <div *ngIf="showButtons">
             <mat-checkbox labelPosition="after"> {{'doctors_certificate' | translate:translateKey}}</mat-checkbox>
-            <file-upload [prevMode]="prevMode" [uploadModel]="setDataValue(3,'doctorsCertificate','1.1','doctorsCertificate')" [attachments]="attachments"></file-upload>
+            <file-upload  [form]="stillBirthCertificateForm" [uploadModel]="setDataValue(3,'doctorsCertificate','1.1','doctorsCertificate')" [attachments]="attachments"></file-upload>
           </div>
 
           <div>

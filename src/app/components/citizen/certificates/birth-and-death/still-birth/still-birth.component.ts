@@ -24,6 +24,7 @@ export class StillBirthComponent implements OnInit {
 
   @ViewChild('stepper') stepper: MatStepper;
   @ViewChild('address') addressComp: any;
+  
   translateKey: string = 'stillBirthScreen';
 
 	/**
@@ -31,7 +32,6 @@ export class StillBirthComponent implements OnInit {
 	 */
   uploadModel: any = {};
   private attachments: any[] = [];
-  prevMode: boolean = false;
 
 	/**
 	 * form related helping data.
@@ -209,7 +209,7 @@ export class StillBirthComponent implements OnInit {
       //step 1 controls
       birthDate: [null, [Validators.required]],
       birthTime: [null, [Validators.required]],
-      childName: [null, [ValidationService.nameValidator]],
+      childName: [null, [ValidationService.fullNameValidator]],
       birthPlace: this.fb.group({
         id: null,
         code: [null, [Validators.required]],
@@ -271,8 +271,8 @@ export class StillBirthComponent implements OnInit {
       deliveryType: this.fb.group({
         code: [null, Validators.required],
       }),
-      pregnancyDuration: ['', [Validators.required]],
-      prematureInfantReason: ['', [Validators.required]],
+      pregnancyDuration: ['', [Validators.required, ValidationService.stillPregnancyDurationValidation]],
+      prematureInfantReason: ['', [Validators.required,Validators.maxLength(500)]],
 
       //step 4
       parentDeliveryAddress: this.fb.group(this.addressComp.addressControls()),
@@ -290,23 +290,7 @@ export class StillBirthComponent implements OnInit {
 
       //applicant details
       applicantHospitalName: [null, [ValidationService.nameValidator]],
-      applicantAddress: this.fb.group({
-        id: null,
-        uniqueId: null,
-        version: 0,
-        addressType: null,
-        houseNo: null,
-        tenamentNo: null,
-        buildingName: null,
-        state: "GUJARAT",
-        district: "Ahmedabad",
-        talukaName: null,
-        pincode: null,
-        addressLine1: null,
-        addressLine2: null,
-        addressLine3: null,
-        village: null
-      }),
+      applicantAddress: this.fb.group(this.addressComp.addressControls()),
       apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
     })
   }
@@ -316,14 +300,17 @@ export class StillBirthComponent implements OnInit {
    */
   getStillBirthFormData() {
     this.formService.getFormData(this.appId).subscribe(res => {
+
+      //common for all only change form name
+      if (this.stillBirthCertificateForm.get('isPermanentPresentAddressSame').get('code').value == 'YES') {
+        this.stillBirthCertificateForm.get('parentPermanentAddress').disable();
+      } else {
+        this.stillBirthCertificateForm.get('parentPermanentAddress').enable();
+      }
+
       this.attachments = res.attachments;
       this.stillBirthCertificateForm.patchValue(res);
       this.showButtons = true;
-      
-      if (res.fileStatus == "SUBMITTED") {
-        this.prevMode = true;
-        this.stillBirthCertificateForm.disable();
-      }
     });
   }
 
@@ -372,7 +359,8 @@ export class StillBirthComponent implements OnInit {
    */
   openTimePicker() {
     const amazingTimePicker = this.atp.open({
-      theme: 'material-blue',
+      theme: 'material-green',
+      changeToMinutes: true,
     });
     amazingTimePicker.afterClose().subscribe(time => {
       if (time.length == 5) {
@@ -421,41 +409,24 @@ export class StillBirthComponent implements OnInit {
     this.stillBirthCertificateForm.get('birthDate').setValue(moment(event.value).format("YYYY-MM-DD"));
   }
 
-	/**
-	 * Method is used to make permanent and delivery address similar if user check it.
-	 * @param event - checkbox event.
-	 */
+  /**
+     * Method is used to make permanent and delivery address similar if user check it.
+     * @param event - checkbox event.
+     */
   check(event) {
-
-    let parentPermanentAddressType = this.stillBirthCertificateForm.get('parentPermanentAddress').get('addressType').value
+    let parentPermanentAddressType = this.stillBirthCertificateForm.get('parentPermanentAddress').get('addressType').value;
     if (event.checked) {
-      this.stillBirthCertificateForm.value.isPermanentPresentAddressSame.code = "YES";
-      this.stillBirthCertificateForm.get('parentPermanentAddress').get('houseNo').setValue(this.stillBirthCertificateForm.get('parentDeliveryAddress').get('houseNo').value);
-      this.stillBirthCertificateForm.get('parentPermanentAddress').get('tenamentNo').setValue(this.stillBirthCertificateForm.get('parentDeliveryAddress').get('tenamentNo').value);
-      this.stillBirthCertificateForm.get('parentPermanentAddress').get('buildingName').setValue(this.stillBirthCertificateForm.get('parentDeliveryAddress').get('buildingName').value);
-      this.stillBirthCertificateForm.get('parentPermanentAddress').get('state').setValue(this.stillBirthCertificateForm.get('parentDeliveryAddress').get('state').value);
-      this.stillBirthCertificateForm.get('parentPermanentAddress').get('district').setValue(this.stillBirthCertificateForm.get('parentDeliveryAddress').get('district').value);
-      this.stillBirthCertificateForm.get('parentPermanentAddress').get('talukaName').setValue(this.stillBirthCertificateForm.get('parentDeliveryAddress').get('talukaName').value);
-      this.stillBirthCertificateForm.get('parentPermanentAddress').get('pincode').setValue(this.stillBirthCertificateForm.get('parentDeliveryAddress').get('pincode').value);
-      this.stillBirthCertificateForm.get('parentPermanentAddress').get('addressLine1').setValue(this.stillBirthCertificateForm.get('parentDeliveryAddress').get('addressLine1').value);
-      this.stillBirthCertificateForm.get('parentPermanentAddress').get('addressLine2').setValue(this.stillBirthCertificateForm.get('parentDeliveryAddress').get('addressLine2').value);
-      this.stillBirthCertificateForm.get('parentPermanentAddress').get('addressLine3').setValue(this.stillBirthCertificateForm.get('parentDeliveryAddress').get('addressLine3').value);
-      this.stillBirthCertificateForm.get('parentPermanentAddress').get('village').setValue(this.stillBirthCertificateForm.get('parentDeliveryAddress').get('village').value);
+      this.stillBirthCertificateForm.get('isPermanentPresentAddressSame').get('code').setValue("YES");
+      this.stillBirthCertificateForm.get('parentPermanentAddress').setValue(this.stillBirthCertificateForm.get('parentDeliveryAddress').value);
+      this.stillBirthCertificateForm.get('parentPermanentAddress').disable();
     } else if (!event.checked) {
-      this.stillBirthCertificateForm.value.isPermanentPresentAddressSame.code = "NO";
-      this.stillBirthCertificateForm.get('parentPermanentAddress').get('houseNo').reset();
-      this.stillBirthCertificateForm.get('parentPermanentAddress').get('tenamentNo').reset();
-      this.stillBirthCertificateForm.get('parentPermanentAddress').get('buildingName').reset();
-      this.stillBirthCertificateForm.get('parentPermanentAddress').get('state').reset();
-      this.stillBirthCertificateForm.get('parentPermanentAddress').get('district').reset();
-      this.stillBirthCertificateForm.get('parentPermanentAddress').get('talukaName').reset();
-      this.stillBirthCertificateForm.get('parentPermanentAddress').get('pincode').reset();
-      this.stillBirthCertificateForm.get('parentPermanentAddress').get('addressLine1').reset();
-      this.stillBirthCertificateForm.get('parentPermanentAddress').get('addressLine2').reset();
-      this.stillBirthCertificateForm.get('parentPermanentAddress').get('addressLine3').reset();
-      this.stillBirthCertificateForm.get('parentPermanentAddress').get('village').reset();
+      this.stillBirthCertificateForm.get('isPermanentPresentAddressSame').get('code').setValue("NO");
+      this.stillBirthCertificateForm.get('parentPermanentAddress').reset();
+      this.stillBirthCertificateForm.get('parentPermanentAddress').enable();
     }
+    this.stillBirthCertificateForm.get('parentPermanentAddress').get('addressType').setValue(parentPermanentAddressType);
   }
+
 
 	/**
 	 * Method is used to reset form its a output event from action bar.

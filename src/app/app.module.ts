@@ -18,6 +18,7 @@ import { CoreModule } from './core/core.module';
 import { ToastrModule } from 'ngx-toastr';
 import { AppRoutingModule } from './app-routing.module'; // route module
 import { MAT_DATE_LOCALE } from '@angular/material';
+import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material'
 import { AmazingTimePickerModule } from 'amazing-time-picker'; 
 /* Import child modules end */
 
@@ -66,7 +67,8 @@ import { NgProgressRouterModule } from '@ngx-progressbar/router';
 	exports: [ ],
 	providers: [
 		{ provide: LocationStrategy, useClass: HashLocationStrategy },
-		{ provide: MAT_DATE_LOCALE, useValue: 'en-GB'}
+		{ provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
+		{ provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { hasBackdrop: false }}
 	],
 	bootstrap: [AppComponent]
 })

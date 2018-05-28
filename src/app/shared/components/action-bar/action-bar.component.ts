@@ -56,11 +56,14 @@ export class ActionBarComponent implements OnInit {
 	saveAsDraft() {
 
 		this.isSaveBtnDisabled = true;
+		console.log(this.form.value);
+		console.log(this.form.getRawValue());
 
-		this.formService.saveFormData(this.form.value).subscribe(
+		this.formService.saveFormData(this.form.getRawValue()).subscribe(
 			res => {
 				this.form.patchValue(res);
 				this.isSaveBtnDisabled = false;
+				document.getElementById('matStepperNextBtn').click();
 				this.toastr.success(`${this.form.value.serviceDetail.name} information successfully saved`);
 			},
 			err => {
@@ -87,6 +90,11 @@ export class ActionBarComponent implements OnInit {
 		var count = 1;
 		if (this.form.valid) {
 			this.formService.submitFormData(this.form.get('serviceFormId').value).subscribe(res => {
+				console.log(res);
+				if(res.success){
+					this.form.get('canEdit').setValue(false);
+				}
+				
 				this.toastr.success(`${this.form.value.serviceDetail.name} information successfully submit`);
 				this.isSubmitBtnDisabled = false;
 				this.isBtnsDisabled = false;

@@ -9,7 +9,7 @@ import { BirthAndDeathRoutingModule } from './birth-and-death-routing.module';
 /* Import all shared, core and routing module end */
 
 /* Import birth and death certificate components start */
-import { BirthRegistrationComponent } from './birth-registration/birth-registration.component';
+import { BirthRegistrationComponent,ChildSelectionContent } from './birth-registration/birth-registration.component';
 import { DeathRegistrationComponent } from './death-registration/death-registration.component';
 import { NoBirthRecordComponent } from './no-birth-record/no-birth-record.component';
 import { NoDeathRecordComponent } from './no-death-record/no-death-record.component';
@@ -30,8 +30,12 @@ import { DeathCorrectionComponent } from './death-correction/death-correction.co
     ReactiveFormsModule,
     BirthAndDeathRoutingModule
   ],
+  entryComponents: [
+    ChildSelectionContent
+  ],
   declarations: [
     BirthRegistrationComponent,
+    ChildSelectionContent,
     NoBirthRecordComponent,
     NoDeathRecordComponent,
     CremationCertificateComponent,
