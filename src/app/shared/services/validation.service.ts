@@ -154,4 +154,23 @@ export class ValidationService {
         }
     }
 
+    // Name validation 
+    static fullNameValidator(control: FormControl) {
+        if (control.value) {
+            const matches = control.value.match(/^[a-zA-Z ]*$/);
+            return matches ? null : { 'invalidName': true };
+        } else {
+            return null;
+        }
+    }
+
+    static stillPregnancyDurationValidation(control: AbstractControl) {
+        // RFC 2822 compliant regex
+        if (Number(control.value) <= 50) {
+            return '';
+        } else {
+            return { 'invalidpregnanceTime': true };
+        }
+    }
+
 }
