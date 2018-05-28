@@ -1,0 +1,55 @@
+<p>Works!!</p>
+<div class="row" *ngFor = "let detail of ChildDetails" [formGroup]="ChildDetailsForm">
+    <mat-form-field class="col-md-4">
+        <input matInput (click)="picker.open()" (focus)="picker.open()" readonly [max]="maxBirthDate" [matDatepicker]="picker" placeholder="{{'birth_date' | translate:translateKey}}"
+         (dateChange)="delayCalculator($event)">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        
+    </mat-form-field>
+    
+    
+    <mat-form-field class="col-md-4">
+        <mat-label>{{'birth_time' | translate:translateKey}}</mat-label>
+        <input matInput type="time" atp-time-picker theme="dark"  name="birthTime" (focus)="openTimePicker()"
+            readonly/>
+        
+        
+    </mat-form-field>
+    
+    
+    
+    <mat-form-field class="col-md-4">
+        <input matInput maxlength="20" appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{'child_name' | translate:translateKey}}"
+             >
+        
+    </mat-form-field>
+
+    <mat-form-field  class="col-md-4">
+        <mat-select placeholder="{{'child_weight_kg' | translate:translateKey}}" >
+            <mat-option *ngFor="let childweight of ChildWeights" [value]="childweight.code">
+                {{childweight.name}} kgs.
+            </mat-option>
+        </mat-select>
+       
+    </mat-form-field>
+    
+    <mat-form-field class="col-md-4">
+        <input matInput maxlength="3" OnlyNumber placeholder="{{'child_weight_gms' | translate:translateKey}}">
+        
+    </mat-form-field>
+
+    <div class="col-md-4" >
+        <mat-label>{{'gender' | translate:translateKey}}</mat-label>
+        <mat-radio-group class="example-radio-group">
+            <mat-radio-button class="example-radio-button" *ngFor="let sex of Gender" [value]="sex.code">
+                {{sex.name}}
+            </mat-radio-button>
+        </mat-radio-group>
+    </div>
+
+</div> 
+
+<button matTooltip="close Dailog" matTooltipPosition='right' (click)="closeDailog()" mat-icon-button color="primary">
+    <mat-icon>close</mat-icon>
+</button>

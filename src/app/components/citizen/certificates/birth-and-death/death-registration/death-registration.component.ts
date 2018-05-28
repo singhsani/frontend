@@ -37,8 +37,7 @@ export class DeathRegistrationComponent implements OnInit {
 	//form related data.
 	private appId: number;
 	apiCode: string;
-	readOnly: boolean = false;
-	private prevMode: boolean = false;
+
 
 	private isLinear: boolean = false;
 	private deathCertificateForm: FormGroup;
@@ -123,7 +122,6 @@ export class DeathRegistrationComponent implements OnInit {
 	getDeathCertData() {
 		this.formService.getFormData(this.appId).subscribe((res) => {
 			this.response = res;
-			this.prevMode = !res.canEdit;
 
 			//for unknown condition
 			if (res.unknownCategory.code === undefined) {
@@ -166,8 +164,14 @@ export class DeathRegistrationComponent implements OnInit {
 		}
 		
 		this.deathCertificateForm.patchValue(this.response);
-		this.deathCertificateForm.get('unknownCategory').get('code').setValue(event);
-		
+
+		if (this.deathCertificateForm.get('isPermanentPresentAddressSame').get('code').value == 'YES') {
+			this.deathCertificateForm.get('presentAddress').disable();
+		} else {
+			this.deathCertificateForm.get('presentAddress').enable();
+		}
+
+		this.deathCertificateForm.get('unknownCategory').get('code').setValue(event);	
 	}
 
 	/**
@@ -470,13 +474,13 @@ export class DeathRegistrationComponent implements OnInit {
 	check(event) {
 		let parentPermanentAddressType = this.deathCertificateForm.get('permanentAddress').get('addressType').value;
 		if (event.checked) {
-			this.readOnly = true;
 			this.deathCertificateForm.get('isPermanentPresentAddressSame').get('code').setValue("YES");
 			this.deathCertificateForm.get('permanentAddress').setValue(this.deathCertificateForm.get('presentAddress').value);
+			this.deathCertificateForm.get('permanentAddress').disable();
 		} else if (!event.checked) {
-			this.readOnly = false;
 			this.deathCertificateForm.get('isPermanentPresentAddressSame').get('code').setValue("NO");
 			this.deathCertificateForm.get('permanentAddress').reset();
+			this.deathCertificateForm.get('permanentAddress').enable();
 		}
 		this.deathCertificateForm.get('permanentAddress').get('addressType').setValue(parentPermanentAddressType);
 	}
