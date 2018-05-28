@@ -36,7 +36,7 @@ export class FileUploadComponent implements OnInit {
 
 	@Input() uploadModel: any;
 
-	@Input() prevMode: boolean;
+	@Input() form: any;
 
 	@Input() attachments: any[];
 
