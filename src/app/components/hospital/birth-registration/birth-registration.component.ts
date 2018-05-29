@@ -2,13 +2,13 @@ import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators ,FormArray} from '@angular/forms';
 import { MatStepper } from '@angular/material/stepper';
-import { CommonService } from '../../.././../../shared/services/common.service'
-import { UploadFileService } from '../../../../../shared/upload-file.service';
-import { ValidationService } from '../../../../../shared/services/validation.service';
-import { FormsActionsService } from '../../../../../core/services/citizen/data-services/forms-actions.service';
-import { ManageRoutes } from '../../../../../config/routes-conf';
 import { AmazingTimePickerService } from 'amazing-time-picker';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { UploadFileService } from '../../../shared/upload-file.service';
+import { CommonService } from '../../../shared/services/common.service';
+import { ValidationService } from '../../../shared/services/validation.service';
+import { ManageRoutes } from '../../../config/routes-conf';
+import { HosFormActionsService } from '../../../core/services/hospital/data-services/hos-form-actions.service';
 
 import * as moment from 'moment';
 import * as _ from 'lodash';
@@ -105,7 +105,7 @@ export class BirthRegistrationComponent implements OnInit {
 	constructor(
 		private router: Router,
 		private route: ActivatedRoute,
-		private formService: FormsActionsService,
+		private formService: HosFormActionsService,
 		private uploadFileService: UploadFileService,
 		private commonService: CommonService,
 		private validationService: ValidationService,

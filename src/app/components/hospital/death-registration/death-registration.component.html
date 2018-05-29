@@ -153,7 +153,7 @@
 							</mat-radio-group>
 						</div>
 					</div>
-					<app-action-bar [form]="deathCertificateForm" [step]="'step1'" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
+					<app-hos-action-bar [form]="deathCertificateForm" [step]="'step1'" (handleErrors)="handleErrorsOnSubmit($event)"></app-hos-action-bar>
 				</mat-step>
 	
 				<mat-step>
@@ -226,7 +226,7 @@
 					</div>
 	
 	
-					<app-action-bar [form]="deathCertificateForm" [step]="'step2'" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
+					<app-hos-action-bar [form]="deathCertificateForm" [step]="'step2'" (handleErrors)="handleErrorsOnSubmit($event)"></app-hos-action-bar>
 				</mat-step>
 	
 				<mat-step>
@@ -371,7 +371,7 @@
 							</mat-form-field>
 						</div>
 					</div>
-					<app-action-bar [form]="deathCertificateForm" [step]="'step3'" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
+					<app-hos-action-bar [form]="deathCertificateForm" [step]="'step3'" (handleErrors)="handleErrorsOnSubmit($event)"></app-hos-action-bar>
 	
 				</mat-step>
 	
@@ -484,7 +484,7 @@
 						</div>
 					</div>
 	
-					<app-action-bar [form]="deathCertificateForm" [step]="'step4'" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
+					<app-hos-action-bar [form]="deathCertificateForm" [step]="'step4'" (handleErrors)="handleErrorsOnSubmit($event)"></app-hos-action-bar>
 				</mat-step>
 	
 				<mat-step>
@@ -519,7 +519,7 @@
 						<file-upload [form]="deathCertificateForm" [uploadModel]="setDataValue(3,'deceasedIdProof','1.1','deceasedIdProof')" [attachments]="attachments"></file-upload>
 					</div>
 	
-					<app-action-bar [form]="deathCertificateForm" [step]="'final'" (stepReset)="stepReset()" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
+					<app-hos-action-bar [form]="deathCertificateForm" [step]="'final'" (stepReset)="stepReset()" (handleErrors)="handleErrorsOnSubmit($event)"></app-hos-action-bar>
 				</mat-step>
 			</mat-horizontal-stepper>
 		</form>

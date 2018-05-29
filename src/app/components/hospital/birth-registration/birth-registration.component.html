@@ -109,7 +109,7 @@
 
                     </div>
 
-                    <app-action-bar [form]="birthCertificateForm" [step]="'step1'"></app-action-bar>
+                    <app-hos-action-bar [form]="birthCertificateForm" [step]="'step1'"></app-hos-action-bar>
 
                 </mat-step>
 
@@ -199,7 +199,7 @@
                             <control-messages [control]="birthCertificateForm.controls.fatherOccupations.controls.code"></control-messages>
                         </mat-form-field>
                         </div> -->
-                    <app-action-bar [form]="birthCertificateForm" [step]="'step2'"></app-action-bar>
+                    <app-hos-action-bar [form]="birthCertificateForm" [step]="'step2'"></app-hos-action-bar>
 
                 </mat-step>
 
@@ -338,7 +338,7 @@
                         </mat-form-field>
                     </div> -->
 
-                    <app-action-bar [form]="birthCertificateForm" [step]="'step2'"></app-action-bar>
+                    <app-hos-action-bar [form]="birthCertificateForm" [step]="'step2'"></app-hos-action-bar>
 
                 </mat-step>
 
@@ -502,7 +502,7 @@
                         </mat-form-field>
 
                         <div>
-                            <app-action-bar [form]="birthCertificateForm" [step]="'step3'"></app-action-bar>
+                            <app-hos-action-bar [form]="birthCertificateForm" [step]="'step3'"></app-hos-action-bar>
                         </div>
                     </div>
 
@@ -540,7 +540,7 @@
                     </div>
 
                     <div>
-                        <app-action-bar [form]="birthCertificateForm" [step]="'final'" (stepReset)="stepReset()" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
+                        <app-hos-action-bar [form]="birthCertificateForm" [step]="'final'" (stepReset)="stepReset()" (handleErrors)="handleErrorsOnSubmit($event)"></app-hos-action-bar>
                     </div>
                 </mat-step>
             </mat-horizontal-stepper>

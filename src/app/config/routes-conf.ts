@@ -1,10 +1,6 @@
 import * as _ from 'lodash';
 
 const ROUTEMAIN = {
-    'HEL-BR': {
-        'main': 'birthReg',
-        'type': 'birthReg'
-    },
     'HEL-DUPBR': {
         'main': 'duplicateBirthReg',
         'type': 'duplicateBirthReg'
@@ -12,10 +8,6 @@ const ROUTEMAIN = {
     'HEL-DUPDR': {
         'main': 'duplicateDeathReg',
         'type': 'duplicateDeathReg'
-    },
-    'HEL-DR': {
-        'main': 'deathReg',
-        'type': 'deathReg'
     },
     'HEL-NRCBR': {
         'main': 'NRCBirth',
@@ -28,10 +20,6 @@ const ROUTEMAIN = {
     'HEL-CR': {
         'main': 'cremationReg',
         'type': 'cremationReg'
-    },
-    'HEL-SB': {
-        'main': 'stillBirthReg',
-        'type': 'stillBirthReg'
     },
     'HEL-BCR': {
         'main': 'birthCorrectionReg',
@@ -269,16 +257,32 @@ const ROUTEMAIN = {
         'main': 'cancel-booking',
         'type': ''
     },
+    'SLOTBOOKING': {
+        'main': 'slot-booking',
+        'type': ''
+    },
 
     /* hospital routing configuration start*/
     'HOSPITALDASHBOARD': {
         'main': 'dashboard',
         'type': 'dashboard'
     },
-    'SLOTBOOKING': {
-        'main': 'slot-booking',
-        'type': ''
-    }
+    'HEL-BR': {
+        'main': 'birthReg',
+        'type': 'birthReg'
+    },
+    'HEL-DR': {
+        'main': 'deathReg',
+        'type': 'deathReg'
+    },
+    'HEL-SB': {
+        'main': 'stillBirthReg',
+        'type': 'stillBirthReg'
+    },
+    'HOSPITALMYAPPS': {
+        'main': 'my-applications',
+        'type': 'myApps'
+    },
 }
 
 const ROUTEPREFIX = {
@@ -342,17 +346,11 @@ const ROUTEPREFIX = {
 }
 
 const ROUTESLIST = {
-    'HEL-BR': {
-        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.CERTIFICATESMODULE + '/' + ROUTEPREFIX.BIRTHANDDEATHMODULE + '/' + ROUTEMAIN["HEL-BR"].main
-    },
     'HEL-DUPBR': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.CERTIFICATESMODULE + '/' + ROUTEPREFIX.BIRTHANDDEATHMODULE + '/' + ROUTEMAIN["HEL-DUPBR"].main
     },
     'HEL-DUPDR': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.CERTIFICATESMODULE + '/' + ROUTEPREFIX.BIRTHANDDEATHMODULE + '/' + ROUTEMAIN["HEL-DUPDR"].main
-    },
-    'HEL-DR': {
-        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.CERTIFICATESMODULE + '/' + ROUTEPREFIX.BIRTHANDDEATHMODULE + '/' + ROUTEMAIN["HEL-DR"].main
     },
     'HEL-NRCBR': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.CERTIFICATESMODULE + '/' + ROUTEPREFIX.BIRTHANDDEATHMODULE + '/' + ROUTEMAIN["HEL-NRCBR"].main
@@ -362,9 +360,6 @@ const ROUTESLIST = {
     },
     'HEL-CR': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.CERTIFICATESMODULE + '/' + ROUTEPREFIX.BIRTHANDDEATHMODULE + '/' + ROUTEMAIN["HEL-CR"].main
-    },
-    'HEL-SB': {
-        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.CERTIFICATESMODULE + '/' + ROUTEPREFIX.BIRTHANDDEATHMODULE + '/' + ROUTEMAIN["HEL-SB"].main
     },
     'HEL-BCR': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.CERTIFICATESMODULE + '/' + ROUTEPREFIX.BIRTHANDDEATHMODULE + '/' + ROUTEMAIN["HEL-BCR"].main
@@ -531,14 +526,26 @@ const ROUTESLIST = {
     'CANCELBOOKING': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.BOOKINGMODULE + '/' + ROUTEMAIN.CANCELBOOKING.main
     },
-
+    'SLOTBOOKING': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.APPOINTMENT + '/' + ROUTEPREFIX.SCHEDULEAPPOINTMENT + '/' + ROUTEMAIN["SLOTBOOKING"].main
+    },
+    
     /* hospital full routing configuration start*/
     'HOSPITALDASHBOARD': {
         'full': ROUTEPREFIX.HOSPITALMODULE + '/' + ROUTEMAIN.HOSPITALDASHBOARD.main
     },
-    'SLOTBOOKING': {
-        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.APPOINTMENT + '/' + ROUTEPREFIX.SCHEDULEAPPOINTMENT + '/' + ROUTEMAIN["SLOTBOOKING"].main
-    }
+    'HEL-BR': {
+        'full': ROUTEPREFIX.HOSPITALMODULE + '/' + ROUTEMAIN["HEL-BR"].main
+    },
+    'HEL-DR': {
+        'full': ROUTEPREFIX.HOSPITALMODULE + '/' + ROUTEMAIN["HEL-DR"].main
+    },
+    'HEL-SB': {
+        'full': ROUTEPREFIX.HOSPITALMODULE + '/' + ROUTEMAIN["HEL-SB"].main
+    },
+    'HOSPITALMYAPPS': {
+        'full': ROUTEPREFIX.HOSPITALMODULE + '/' + ROUTEMAIN.HOSPITALMYAPPS.main
+    },
 }
 
 

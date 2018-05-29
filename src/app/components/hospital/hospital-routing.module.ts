@@ -8,6 +8,10 @@ import { ManageRoutes } from './../../config/routes-conf';
 /* Import hospital components start */
 import { HospitalDashboardComponent } from './dashboard/dashboard.component';
 import { HospitalLayoutComponent } from '../../layouts/hospital-layout/hospital-layout.component';
+import { BirthRegistrationComponent } from './birth-registration/birth-registration.component';
+import { DeathRegistrationComponent } from './death-registration/death-registration.component';
+import { StillBirthComponent } from './still-birth/still-birth.component';
+import { HosMyApplicationsComponent } from './hos-my-applications/hos-my-applications.component';
 /* Import hospital components end */
 
 const routes: Routes = [
@@ -16,7 +20,11 @@ const routes: Routes = [
 		path: ManageRoutes.getPrefixRoute('HOSPITALMODULE'), component: HospitalLayoutComponent, canActivate: [HospitalGuard],
 		children: [
 			{ path: '', redirectTo: ManageRoutes.getMainRoute('HOSPITALDASHBOARD'), pathMatch: 'full' },
-			{ path: ManageRoutes.getMainRoute('HOSPITALDASHBOARD'), component: HospitalDashboardComponent, canActivate: [HospitalGuard] }
+			{ path: ManageRoutes.getMainRoute('HOSPITALDASHBOARD'), component: HospitalDashboardComponent, canActivate: [HospitalGuard] },
+			{ path: ManageRoutes.getMainRoute('HEL-BR') + '/:id/:apiCode', component: BirthRegistrationComponent, canActivate: [HospitalGuard] },
+			{ path: ManageRoutes.getMainRoute('HEL-DR') + '/:id/:apiCode', component: DeathRegistrationComponent, canActivate: [HospitalGuard] },
+			{ path: ManageRoutes.getMainRoute('HEL-SB') + '/:id/:apiCode', component: StillBirthComponent, canActivate: [HospitalGuard] },
+			{ path: ManageRoutes.getMainRoute('HOSPITALMYAPPS'), component: HosMyApplicationsComponent, canActivate: [HospitalGuard] },
 		]
 	},
 

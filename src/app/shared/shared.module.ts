@@ -34,6 +34,7 @@ import { BasicDetailsComponent } from './components/basic-details/basic-details.
 import { TitleBarComponent } from './components/title-bar/title-bar.component';
 import { LoadingIndicatorComponent } from './components/loading-indicator/loading-indicator.component';
 import { HosHttpService } from './services/hos-http.service';
+import { HosActionBarComponent } from './components/hos-action-bar/hos-action-bar.component';
 /* import pipes end*/
 
 const COMPONENTS = [
@@ -48,6 +49,7 @@ const COMPONENTS = [
 	PaymentGatewayComponent,
 	TitleBarComponent,
 	LoadingIndicatorComponent,
+	HosActionBarComponent,
 	ValidationFieldsDirective,
 	GujInputSourceDirective,
 	GujInputTargetDirective

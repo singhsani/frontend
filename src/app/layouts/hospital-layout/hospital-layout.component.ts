@@ -3,6 +3,8 @@ import { MediaMatcher } from '@angular/cdk/layout';
 
 import { HosAppService } from './../../core/services/hospital/app-services/hos-app.service';
 import { SessionStorageService } from 'angular-web-storage';
+import { HosFormActionsService } from '../../core/services/hospital/data-services/hos-form-actions.service';
+import { CommonService } from '../../shared/services/common.service';
 
 @Component({
 	selector: 'app-hospital-layout',
@@ -13,11 +15,16 @@ export class HospitalLayoutComponent implements OnInit {
 
 	@ViewChild('snav') snav;
 	mobileQuery: MediaQueryList;
+	profileObj: any = {};
+	fromAdmin: boolean = false;
 
 	constructor(private changeDetectorRef: ChangeDetectorRef,
 		private media: MediaMatcher,
 		private appService: HosAppService,
-		private session: SessionStorageService) {
+		private session: SessionStorageService,
+		private formService: HosFormActionsService,
+		private commonService: CommonService
+	) {
 
 		this.mobileQuery = media.matchMedia('(max-width: 600px)');
 		this._mobileQueryListener = () => changeDetectorRef.detectChanges();
@@ -27,6 +34,12 @@ export class HospitalLayoutComponent implements OnInit {
 	private _mobileQueryListener: () => void;
 
 	ngOnInit() {
+		this.getUserProfile();
+
+		// get the profile data when user gets update his profie
+		this.commonService.profileSubject.subscribe(res => {
+			this.profileObj = res;
+		})
 	}
 
 	onLogout() {
@@ -48,6 +61,15 @@ export class HospitalLayoutComponent implements OnInit {
 		if (this.mobileQuery.matches) {
 			this.snav.opened = false;
 		}
+	}
+
+	/**
+	 * This method use to get the profile data using api
+	 */
+	getUserProfile() {
+		this.formService.getUserProfile().subscribe(res => {
+			this.profileObj = res.data;
+		});
 	}
 
 }

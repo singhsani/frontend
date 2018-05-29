@@ -1,20 +1,20 @@
 import { ManageRoutes } from './../../../config/routes-conf';
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
-import * as _ from 'lodash';
 import { Router, ActivatedRoute } from '@angular/router';
-
-import { CommonService } from './../../services/common.service';
-import { ValidationService } from './../../services/validation.service';
-import { FormsActionsService } from './../../../core/services/citizen/data-services/forms-actions.service';
+import { HosFormActionsService } from '../../../core/services/hospital/data-services/hos-form-actions.service';
+import { CommonService } from '../../services/common.service';
 import { ToastrService } from 'ngx-toastr';
+import { ValidationService } from '../../services/validation.service';
+
+import * as _ from 'lodash';
 
 @Component({
-	selector: 'app-action-bar',
-	templateUrl: './action-bar.component.html',
-	styleUrls: ['./action-bar.component.scss']
+	selector: 'app-hos-action-bar',
+	templateUrl: './hos-action-bar.component.html',
+	styleUrls: ['./hos-action-bar.component.scss']
 })
-export class ActionBarComponent implements OnInit {
+export class HosActionBarComponent implements OnInit {
 
 	translateKey: string = 'actionBarScreen';
 
@@ -31,7 +31,7 @@ export class ActionBarComponent implements OnInit {
 	@Output() stepReset = new EventEmitter<any>();
 
 	constructor(
-		private formService: FormsActionsService,
+		private formService: HosFormActionsService,
 		private route: Router, private fb: FormBuilder,
 		private toastr: ToastrService,
 		private commonService: CommonService) {

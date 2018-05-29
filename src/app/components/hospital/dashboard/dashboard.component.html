@@ -1,5 +1,71 @@
 <div class="container pt-4">
 
+    <mat-card class="themeBox">
+        <div class="row ">
+            <h2 class="h2">
+                <mat-icon>search</mat-icon>
+                <span>Search Application</span>
+            </h2>
+            <div class="col-md-4 iconMat2">
+                <div class="iconMat">
+                    <mat-icon matPrefix>dashboard</mat-icon>
+                    <ng-select placeholder="Services">
+                        <ng-option *ngFor="let service of services" [value]="service.code">{{service.name}}</ng-option>
+                    </ng-select>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <mat-form-field class="iconMat">
+                    <mat-icon matPrefix>description</mat-icon>
+                    <input matInput placeholder="Enter Application Number" value="">
+                </mat-form-field>
+            </div>
+            <div class="col">
+                <button mat-raised-button color="primary" class="w-100">Search</button>
+            </div>
+        </div>
+    </mat-card>
+
+
+    <mat-card class="themeBox servicesList">
+        <div class="row ">
+            <h2 class="h2">
+                <mat-icon>dashboard</mat-icon>
+                <span>Services</span>
+            </h2>
+            <div class="col" *ngFor="let module of userServicesList">
+                <img src="{{getIconImg(module.code)}}" alt=""><br> {{module.name +' / '+ module.gujName}}</div>
+        </div>
+    </mat-card>
+
+    <mat-accordion *ngFor="let module of userServicesList">
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    {{module.name +' / '+ module.gujName}}
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <div class="row">
+                <!-- <div class="col-md-4 pt-4 pb-1 text-center bg-light" *ngFor="let service of module.services;"> -->
+                <div class="col-12 col-sm-6 col-md-6 col-lg-4 pb-4 text-center dashboardList" *ngFor="let service of module.services;">
+                    <mat-card>
+                        <mat-icon>account_circle</mat-icon>
+                        <mat-card-title innerHTML="{{ service.name +' / '+ service.gujName }}"></mat-card-title>
+                        <mat-card-actions>
+                            <button mat-raised-button color="primary" (click)="createRecord(service.code)">
+                                    <mat-icon>input</mat-icon> New Application
+                                </button>
+                        </mat-card-actions>
+                    </mat-card>
+                </div>
+            </div>
+
+        </mat-expansion-panel>
+    </mat-accordion>
+</div>
+<!-- <div class="container pt-4">
+
     <mat-accordion *ngFor="let module of userServicesList">
         <mat-expansion-panel>
             <mat-expansion-panel-header>
@@ -24,20 +90,4 @@
 
         </mat-expansion-panel>
     </mat-accordion>
-    <!-- <div *ngFor="let module of userServicesList">
-        <app-title-bar [title]="module.name +' / '+ module.gujName"></app-title-bar>
-        <div class="row">
-            <div class="col-md-4 pb-4 text-center" *ngFor="let service of module.services;">
-                <mat-card>
-                    <mat-icon>account_circle</mat-icon>
-                    <mat-card-title>{{service.name +' / '+ service.gujName}}</mat-card-title>
-                    <mat-card-actions>
-                        <button mat-raised-button color="primary" (click)="createRecord(service.code)">
-                        <mat-icon>input</mat-icon> New Application
-                    </button>
-                    </mat-card-actions>
-                </mat-card>
-            </div>
-        </div>
-    </div> -->
-</div>
+</div> -->
