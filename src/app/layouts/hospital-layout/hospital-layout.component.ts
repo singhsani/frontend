@@ -9,7 +9,7 @@ import { CommonService } from '../../shared/services/common.service';
 @Component({
 	selector: 'app-hospital-layout',
 	templateUrl: './hospital-layout.component.html',
-	styleUrls: ['./hospital-layout.component.scss']
+	styleUrls: ['../home-layout/home-layout.component.scss']
 })
 export class HospitalLayoutComponent implements OnInit {
 

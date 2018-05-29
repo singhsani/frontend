@@ -6,8 +6,8 @@
                 <mat-icon>search</mat-icon>
                 <span>Search Application</span>
             </h2>
-            <div class="col-md-4 iconMat2">
-                <div class="iconMat">
+            <div class="col-md-4">
+                <div class="iconMat3">
                     <mat-icon matPrefix>dashboard</mat-icon>
                     <ng-select placeholder="Services">
                         <ng-option *ngFor="let service of services" [value]="service.code">{{service.name}}</ng-option>
@@ -34,7 +34,9 @@
                 <span>Services</span>
             </h2>
             <div class="col" *ngFor="let module of userServicesList">
-                <img src="{{getIconImg(module.code)}}" alt=""><br> {{module.name +' / '+ module.gujName}}</div>
+                <span class="{{getIconClass(module.code)}}"><img src="{{getIconImg(module.code)}}" alt=""></span>
+                <div>{{module.name}}<br><!--{{module.gujName}}--></div>
+            </div>
         </div>
     </mat-card>
 

@@ -10,7 +10,7 @@
 // Define a custom typography config that overrides the font-family as well as the
 // `headlines` and `body-1` levels.
 $custom-typography: mat-typography-config(
-    $font-family:   'Roboto, Nunito',
+    $font-family:   'Open Sans, sans-serif',
     $display-4:     mat-typography-level(112px, 112px, 300),
     $display-3:     mat-typography-level(56px, 56px, 400),
     $display-2:     mat-typography-level(45px, 48px, 400),
@@ -36,19 +36,8 @@ $custom-typography: mat-typography-config(
 
 @include mat-core($custom-typography);
 
-.splashScreen {display: table; text-align:center;}
-.splashScreen svg {display: table-cell; vertical-align: middle;}
-
-// input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:focus, input:-webkit-autofill, textarea:-webkit-autofill, textarea:-webkit-autofill:hover, textarea:-webkit-autofill:focus, select:-webkit-autofill, select:-webkit-autofill:hover, select:-webkit-autofill:focus {
-// border: 0; box-shadow: inset 0 0 0px 9999px white;}
-// label.btn { display: inline-block; position: relative; color: #533e00; }
-// label.btn input { visibility: hidden; width: 100px; }
-// label.btn:before { content: 'Choose File'; display: block; border-radius: 3px; padding: 7px 0px; outline: none; white-space: nowrap; cursor: pointer; text-align: center; font-size: 15px; position: absolute; left: 0; right: 0; }
-// label.btn:hover:before {
-//     box-shadow: $buttonShadowHover;}
-// label.btn:before { content: 'Browse File'; background: $colorBlue; color: $colorWhite; 
-// box-shadow: $buttonShadow; }
-
+// .splashScreen {display: table; text-align:center;}
+// .splashScreen svg {display: table-cell; vertical-align: middle;}
 
 input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:focus, input:-webkit-autofill, textarea:-webkit-autofill, textarea:-webkit-autofill:hover, textarea:-webkit-autofill:focus, select:-webkit-autofill, select:-webkit-autofill:hover, select:-webkit-autofill:focus {border: 0; box-shadow: inset 0 0 0px 9999px white;}
 label.btn { display: inline-block; position: relative; color: #533e00; }
@@ -66,7 +55,7 @@ a {color: $colorBlack;}
 a:hover {color: $colorBlue; text-decoration: underline;}
 .mat-raised-button:hover {text-decoration: none;}
 
-html, body { background: #eee; color: $colorBlack; padding: 0; font-size: 0.95rem; font-weight: 400 !important; margin: 0; width: 100%; height: 100% !important; font-family: sans-serif; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+html, body { background: #eee; color: $colorBlack; padding: 0; font-size: 12px; font-weight: 400 !important; margin: 0; width: 100%; height: 100% !important; font-family: 'Open Sans', sans-serif; }
 h1 { font-size: 30px; margin-bottom: 10px; }
 
 .heading { position: relative; }
@@ -81,12 +70,16 @@ h1 { font-size: 30px; margin-bottom: 10px; }
 // .verticalAlign > .mat-card {width: 100%; max-width:400px; margin:0 auto;}
 .verticalAlign form {padding:0 30px;}
 
-.iconMat, .iconMat2 {
+.iconMat, .iconMat2, .iconMat3 {
 .mat-form-field-wrapper {/*margin-left: 30px;*/ left: 15px !important;}
 .mat-form-field-prefix, &>.mat-icon {position: absolute; top: 15px; left: -30px;}
 }
 .iconMat2 {position: relative; left: 15px;
-    .mat-icon {font-size: 22px; top: 21px;}
+    .mat-icon {font-size: 18px; top: 21px;}
+}
+.iconMat3 {
+    .mat-icon {top: 18px; left: 15px; font-size: 18px;}
+    .ng-select {padding-left: 30px !important;}
 }
 
 .headingBox {
@@ -109,7 +102,7 @@ h1 { font-size: 30px; margin-bottom: 10px; }
 .header {position: fixed; top:0; left:0; width: 100%; padding:2rem 1rem 0;}
 .header .logo {color: $colorWhite; font-weight: 400; line-height:normal; text-align: left; float: left;}
 .header .logo img {float: left;}
-.header .logo .logoName {padding-top: 5px; display: inline-block;}
+.header .logo .logoName {padding-top: 3px; display: inline-block;}
 .header ul  {float: right; list-style: none; margin-right:1rem;
     li {float: left;
         a {color: $colorWhite; text-decoration: none;}
@@ -146,15 +139,27 @@ h1 { font-size: 30px; margin-bottom: 10px; }
     .mat-raised-button {margin-bottom: 0 !important;}
 }
 
-
 .themeBox { /*background-color: $colorWhite;*/ position: relative; padding:50px 25px 20px !important; margin:1.2rem 0 2.5rem;}
-.h2 { font-size: 16px; margin-top: -1.2rem; margin-left: 1.5rem; position: absolute; top: 0; left: 0;
+.h2 { font-size: 14px; margin-top: -1.2rem; margin-left: 1.5rem; position: absolute; top: 0; left: 0;
     .mat-icon {padding-top: 12px; font-size: 25px; background-color: $colorBlue; color: $colorWhite; width: 50px; height: 50px; display:block; float: left; position: absolute; top: 0; left: 0; border-radius: 5px; box-shadow: $colorShadow; text-align: center;}
     span {float: left; display: block; padding: 28px 0 0 60px; color: #000;}
 }
 
-.servicesList {text-align: center;}
-  
+.servicesList {text-align: center; font-size: 12px;}
+.servicesList .col {background-color: #fff; margin: 35px 10px 0px; border: 1px solid #EDE7F6; border-radius:5px; box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14);}
+.servicesList .col > span {display: inline-block; margin-top: -30px; background-color: #ccc; padding: 5px; border-radius:5px;}
+.servicesList .col > div  {padding: 10px 0;}
+.yelloCard {box-shadow: 0 4px 20px 0 rgba(0,0,0,.14), 0 7px 10px -5px rgba(255,152,0,.4); background: linear-gradient(60deg,#ffa726,#fb8c00);}
+.redCard {box-shadow: 0 4px 20px 0 rgba(0,0,0,.14), 0 7px 10px -5px rgba(233,30,99,.4); background: linear-gradient(60deg,#ec407a,#d81b60);}
+.greenCard {box-shadow: 0 4px 20px 0 rgba(0,0,0,.14), 0 7px 10px -5px rgba(76,175,80,.4); background: linear-gradient(60deg,#66bb6a,#43a047);}
+.kyeBlueCard {box-shadow: 0 4px 20px 0 rgba(0,0,0,.14), 0 7px 10px -5px rgba(0,188,212,.4); background: linear-gradient(60deg,#26c6da,#00acc1);}
+.grayCard {box-shadow: 0 4px 20px 0 rgba(0,0,0,.14), 0 7px 10px -5px rgba(120,144,156,.4); 
+    background: linear-gradient(60deg,#90A4AE,#78909C);}
+
+
+
+
+
 // Profile
 .profilePage {
 .iconMat {
@@ -202,8 +207,12 @@ mat-label {align-self: center;}
     .mat-header-row > .mat-header-cell:first-child, .mat-row > .mat-cell:first-child {flex: inherit;  width: 35px; padding-left: 0;}
 }
 
-.mat-table .mat-row:nth-child(even){background-color:#E8EAF6;}
+.mat-table .mat-row:nth-child(even){background-color:#EDE7F6;}
 .mat-table .mat-row:nth-child(odd){background-color:$colorWhite;}
+.mat-table .mat-cell {font-size: 12px;}
+.mat-table .text-label.badge {background: #fff !important; padding: 7px 15px;}
+.mat-table .text-label.badge-primary {border: 1px solid #007bff; color: #007bff;}
+.mat-table .mat-row:nth-child(even) .text-label.badge {background: #EDE7F6 !important;}
 
 .mat-accordion {
     &>.mat-expansion-panel {background: none; box-shadow: none !important;
@@ -219,7 +228,7 @@ mat-label {align-self: center;}
 ::-webkit-scrollbar-thumb:hover {background: #5E35B1;}
 
 .ng-select {padding-bottom: 3px;}
-.ng-select .ng-select-container {min-height: 46px;}
+.ng-select .ng-select-container {min-height: 39px;}
 .ng-select .ng-has-value .ng-placeholder, .ng-select.ng-select-opened .ng-placeholder {
     -webkit-transform: translateY(-1em) scale(0.75) perspective(100px) translateZ(0.001px);
     transform: translateY(-1em) scale(0.75) perspective(100px) translateZ(0.001px);
@@ -227,13 +236,14 @@ mat-label {align-self: center;}
 .ng-select .ng-select-container .ng-value-container {padding: 0.7em 0 0;}
 // .ng-select .ng-input, .ng-select .ng-clear-wrapper {display: none;}
 
-
+.ng-select .ng-select-container .ng-value-container .ng-input {bottom: 1px;}
 
 // Custom Button
 .width150 {width: 150px;}
 .mat-raised-button {
     color: $colorWhite !important;
     font-weight: 400 !important;
+    font-size: 12px !important;
     margin-bottom: 13px !important;
     margin-left: 5px !important;
     margin-right: 5px !important;
@@ -318,7 +328,6 @@ mat-label {align-self: center;}
 .ng-dropdown-panel.ng-select-bottom {
     top: initial !important;
 }
-
 
 /* Start - CSS for IE Message to not-supported browser for application */
 #ie-toolbar { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 999999; background-color: #f3f3f3; }

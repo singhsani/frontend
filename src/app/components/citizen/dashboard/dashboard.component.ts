@@ -84,4 +84,21 @@ export class DashboardComponent implements OnInit {
 				break;
 		}
 	}
+
+	getIconClass(moduleCode: string){
+		switch (moduleCode) {
+			case 'SHOP-ESTAB':
+				return 'yelloCard';
+			case 'BIRTH-DEATH':
+				return 'redCard';
+			case 'FIRE':
+				return 'greenCard';
+			case 'MUTTON-FISH-POND':
+				return 'kyeBlueCard';
+			case 'PROPERTY-TAX':
+				return 'grayCard';
+			default:
+				break;
+		}
+	}
 }
