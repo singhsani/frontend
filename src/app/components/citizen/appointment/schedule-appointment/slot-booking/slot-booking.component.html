@@ -1,53 +1,101 @@
 <div class="container">
-	<app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
+	<app-title-bar [title]="'Slot Booking'"></app-title-bar>
+
+	<!-- list of booked slot -->
+	<div class="container">
+
+		<mat-table #table1 [dataSource]="calcelslots">
+
+			<ng-container matColumnDef="start date">
+				<mat-header-cell *matHeaderCellDef>Start Time</mat-header-cell>
+				<mat-cell *matCellDef="let row">{{ row.start | date:'yyyy-MM-dd HH:mm a z' }}</mat-cell>
+			</ng-container>
+
+			<ng-container matColumnDef="end date">
+				<mat-header-cell *matHeaderCellDef>End Time</mat-header-cell>
+				<mat-cell *matCellDef="let row">{{ row.end | date:'yyyy-MM-dd HH:mm a z'}}</mat-cell>
+			</ng-container>
+
+			<ng-container matColumnDef="resource name">
+				<mat-header-cell *matHeaderCellDef>Resource Name</mat-header-cell>
+				<mat-cell *matCellDef="let row">{{ row.resourceName}}</mat-cell>
+			</ng-container>
+
+			<ng-container matColumnDef="slot Status">
+				<mat-header-cell *matHeaderCellDef>Slot Status</mat-header-cell>
+				<mat-cell *matCellDef="let row">{{ row.bookingStatus }}</mat-cell>
+			</ng-container>
+
+			<ng-container matColumnDef="action">
+				<mat-header-cell *matHeaderCellDef>Action</mat-header-cell>
+				<mat-cell *matCellDef="let row">
+					<button mat-icon-button color="primary" *ngIf="row.bookingStatus === 'BOOKED'" (click)="redirectToCancel(row.uniqueId)">
+						<mat-icon title="cancel">alarm_off</mat-icon>
+					</button>
+				</mat-cell>
+			</ng-container>
+
+			<mat-header-row *matHeaderRowDef="bookedColumns"></mat-header-row>
+			<mat-row *matRowDef="let row; columns: bookedColumns;"></mat-row>
+
+		</mat-table>
+
+	</div>
+
 	<mat-card class="mb-4">
 		<form [formGroup]="appointmentForm">
 			<div class="row">
-				<mat-form-field class="col-4">
-					<mat-select placeholder="Select resources" formControlName="resources">
-						<mat-option>--</mat-option>
-						<mat-option *ngFor="let resources of resources" [value]="resources">
+				<mat-form-field class="col-4" formGroupName='resources'>
+					<mat-select placeholder="Select resources" formControlName="code" required>
+						<mat-option *ngFor="let resources of resources" [value]="resources.code">
 							{{resources.name}}
 						</mat-option>
 					</mat-select>
 				</mat-form-field>
-			</div>
-			<div class="row">
+
 				<mat-form-field class="col-4">
-					<input matInput [min]="minDate" (dateChange)="dateFormate($event.value,'appointmentdate')" [matDatepicker]="appointmentPicker" formControlName="appointmentdate"
-					 placeholder="Choose a date">
+					<input matInput [min]="minDate" (dateChange)="dateFormate($event.value,'appointmentdate')" [matDatepicker]="appointmentPicker"
+					 formControlName="appointmentdate" placeholder="Choose a date">
 					<mat-datepicker-toggle matSuffix [for]="appointmentPicker"></mat-datepicker-toggle>
 					<mat-datepicker #appointmentPicker></mat-datepicker>
 				</mat-form-field>
+
+				<div class="col-4">
+					<button mat-raised-button color="success" [disabled]="!appointmentForm.valid" (click)="onSubmit()">Search</button>
+				</div>
 			</div>
 		</form>
+		<!-- {{appointmentForm.value | json}} -->
 	</mat-card>
 </div>
 <!-- list of slot -->
 <div class="container">
 
-	<mat-table #table [dataSource]="slots">
+	<mat-table #table2 [dataSource]="slots">
 
 		<ng-container matColumnDef="start date">
-			<mat-header-cell *matHeaderCellDef>start date</mat-header-cell>
+			<mat-header-cell *matHeaderCellDef>Start Time</mat-header-cell>
 			<mat-cell *matCellDef="let row">{{ row.start | date:'yyyy-MM-dd HH:mm a z' }}</mat-cell>
 		</ng-container>
 
 		<ng-container matColumnDef="end date">
-			<mat-header-cell *matHeaderCellDef>end date</mat-header-cell>
+			<mat-header-cell *matHeaderCellDef>End Time</mat-header-cell>
 			<mat-cell *matCellDef="let row">{{ row.end | date:'yyyy-MM-dd HH:mm a z'}}</mat-cell>
 		</ng-container>
 
 		<ng-container matColumnDef="slot Status">
-			<mat-header-cell *matHeaderCellDef>slot Status</mat-header-cell>
+			<mat-header-cell *matHeaderCellDef>Slot Status</mat-header-cell>
 			<mat-cell *matCellDef="let row">{{ row.slotStatus }}</mat-cell>
 		</ng-container>
 
 		<ng-container matColumnDef="action">
 			<mat-header-cell *matHeaderCellDef>Action</mat-header-cell>
 			<mat-cell *matCellDef="let row">
-				<button mat-icon-button color="primary"  *ngIf="row.slotStatus === 'AVAILABLE'" (click)="redirectToBook(row.uniqueId)">
-					<mat-icon title="touch_app">touch_app</mat-icon>
+				<button mat-icon-button color="primary" *ngIf="row.slotStatus === 'AVAILABLE'" (click)="redirectToBook(row.uniqueId)">
+					<mat-icon title="Appointment">touch_app</mat-icon>
+				</button>
+				<button mat-icon-button color="primary" *ngIf="row.slotStatus === 'BOOKED'">
+					<mat-icon title="done">done</mat-icon>
 				</button>
 			</mat-cell>
 		</ng-container>

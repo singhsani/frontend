@@ -67,14 +67,15 @@ export class ValidationService {
     }
 
     // description validation(space allow) 
-    static descriptionValidator(control: FormControl) {
-        if (control.value) {
-            const matches = control.value.match(/^[a-zA-Z\-\s]*$/);
-            return matches ? null : { 'nameCharerror': true };
-        } else {
-            return null;
-        }
-    }
+    // static descriptionValidator(control: FormControl) {
+    //     if (control.value) {
+    //         const matches = control.value.match(/^[a-zA-Z\-\s]*$/);
+    //         return matches ? null : { 'nameCharerror': true };
+    //     } else {
+    //         return null;
+    //     }
+    // }
+    
     // Email validation
     static emailValidator(control: FormControl) {
         if (control.value) {

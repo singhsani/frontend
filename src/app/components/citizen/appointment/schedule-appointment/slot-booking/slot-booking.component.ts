@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import * as moment from 'moment';
 import { MatTableDataSource } from '@angular/material';
 
@@ -8,6 +8,7 @@ import { HttpService } from '../../../../../shared/services/http.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonService } from '../../../../../shared/services/common.service';
 import { ManageRoutes } from '../../../../../config/routes-conf';
+import { element } from 'protractor';
 
 const now = moment();
 
@@ -24,33 +25,31 @@ export class SlotBookingComponent implements OnInit {
 	apiType: string;
 	resources: any = [];
 	slots: any = [];
+	calcelslots: any = [];
 	bookedSlot: any = [];
 	appointmentForm: FormGroup;
-
-	//for mat table
-	displayedColumns = ['start date', 'end date', 'slot Status', 'action'];
-	dataSource = new MatTableDataSource();
-
-	//past date disable
-	minDate = now.toDate();
 
 	/**
 	* @param formService - Declare form service property .
 	* @param commonService - Declare sweet alert.
 	*/
 	constructor(
+		// private formService: FormsActionsService,
 		private http: HttpService,
 		private route: ActivatedRoute,
 		private fb: FormBuilder,
 		private router: Router,
 		private commonService: CommonService,
 		// private formService: FormsActionsService
-	) {
-		this.appointmentForm = fb.group({
-			resources: [''],
-			appointmentdate: moment().add(1, 'day').format("YYYY-MM-DD")
-		})
-	}
+	) { }
+
+	//for mat table
+	displayedColumns = ['start date', 'end date', 'slot Status', 'action'];
+	bookedColumns = ['start date', 'end date', 'resource name', 'slot Status', 'action'];
+	dataSource = new MatTableDataSource();
+
+	//past date disable
+	minDate = now.toDate();
 
 	ngOnInit() {
 		this.route.paramMap.subscribe(param => {
@@ -64,13 +63,24 @@ export class SlotBookingComponent implements OnInit {
 			this.router.navigate([ManageRoutes.getFullRoute('CITIZENDASHBOARD')]);
 		}
 		else {
+			this.controlName();
 			this.getResources();
-
-			if (this.appointmentForm.get('appointmentdate').value != null) {
-				this.getSlot();
-			}
+			this.appointmentList();
 		}
+	}
 
+	/**
+	* This method is declared form controls
+	*/
+	controlName() {
+		this.appointmentForm = this.fb.group({
+			resources: this.fb.group({
+				code: ['', Validators.required],
+				id: [''],
+				name: ['']
+			}),
+			appointmentdate: moment().add(1, 'day').format("YYYY-MM-DD")
+		})
 	}
 
 	/**
@@ -88,26 +98,34 @@ export class SlotBookingComponent implements OnInit {
 	}
 
 	/**
+	* This method use for get available slot 
+	*/
+	onSubmit() {
+		let resource = this.appointmentForm.controls.resources.get('code').value;
+		let appointmentdate = this.appointmentForm.get('appointmentdate').value;
+		this.getSlot(resource, appointmentdate);
+	}
+
+	/**
 	* This method is change date format 
 	*/
 	dateFormate(date, controlType) {
 		this.appointmentForm.get(controlType).setValue(moment(date).format("YYYY-MM-DD"));
-		this.getSlot();
 	}
 
 	/**
 	* This method is get available slots 
 	*/
-	getSlot() {
+	getSlot(resourcecode, startdate) {
 		let date = this.appointmentForm.get('appointmentdate').value;
-		let requestURL = `api/form/${this.apiType}/slots?resourceCode=RESOURCES&startDate=${date}&serviceId=${this.formId}`;
+		let requestURL = `api/form/${this.apiType}/slots?resourceCode=${resourcecode}&startDate=${startdate}&serviceId=${this.formId}`;
 
 		this.http.get(requestURL).subscribe(
 			slot => {
 				this.slots = slot.data;
 			},
 			err => {
-				this.commonService.openAlert("info", err, "info");
+				this.commonService.openAlert("error", err, "error");
 			});
 	}
 
@@ -119,13 +137,54 @@ export class SlotBookingComponent implements OnInit {
 		this.http.get(requestURL).subscribe(
 			res => {
 				this.bookedSlot = res.data;
+
 				if (this.bookedSlot.bookingStatus === 'BOOKED') {
 					this.commonService.openAlert("info", "slot booked", "info");
-					this.getSlot();
 				}
+				let resource = this.appointmentForm.controls.resources.get('code').value;
+				let appointmentdate = this.appointmentForm.get('appointmentdate').value;
+				this.getSlot(resource, appointmentdate);
+				this.appointmentList();
 			},
 			err => {
-				this.commonService.openAlert("info", err, "info");
+				this.commonService.openAlert("error", "ONLY_ONE_APPOINTMENT_ALLOWED", "error");
+			}
+		);
+	}
+
+	/**
+	* This method use for cancel booked slot 
+	*/
+	redirectToCancel(uniqueId) {
+		// GET /api/form/MFRenewal/slot/cancel?serviceId=3&amp;slotId=c1a0d51aa9444defbd86b0b4e82f4a63 HTTP/1.1
+		let requestURL = `api/form/${this.apiType}/slot/cancel?serviceId=${this.formId}&slotId=${uniqueId}`;
+		this.http.get(requestURL).subscribe(
+			res => {
+				this.commonService.openAlert("error", "canceled", "error");
+				let resource = this.appointmentForm.controls.resources.get('code').value;
+				let appointmentdate = this.appointmentForm.get('appointmentdate').value;
+				this.getSlot(resource, appointmentdate);
+				this.appointmentList();
+			},
+			err => {
+				this.commonService.openAlert("error", "SLOT_DETAILS_NOT_AVAILABLE", "error");
+			}
+		);
+
+	}
+
+	/**
+	* This method use for get appointment list 
+	*/
+	appointmentList() {
+		// {{HOST}}/api/form/pondLicense/appointments/11
+		let requestURL = `api/form/${this.apiType}/appointments/${this.formId}`;
+		this.http.get(requestURL).subscribe(
+			res => {
+				this.calcelslots = res.data;
+			},
+			err => {
+				this.commonService.openAlert("error", err, "error");
 			}
 		);
 	}

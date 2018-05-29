@@ -11,7 +11,7 @@ import { ValidationService } from './../../services/validation.service';
 export class AddressComponent implements OnInit {
 
 	@Input() addressFormGroup: FormGroup;
-	@Input() readOnly: boolean;
+	// @Input() readOnly: boolean;
 
 	translateKey: string = 'addressScreen';
 
