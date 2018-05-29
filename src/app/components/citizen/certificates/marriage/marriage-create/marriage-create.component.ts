@@ -78,6 +78,13 @@ export class MarriageCreateComponent implements OnInit {
         3: { checkedPar3: Boolean }
     }
 
+    // riligion in gujarati
+    religionGujgroom: string;
+    religionGujbride: string;
+    // smarital status in gujarati
+    maritalstatusGujgroom: string;
+    maritalstatusGujbride: string;
+
     /**
      * @param fb - Declare FormBuilder property.
      * @param validationError - Declare validation service property
@@ -318,6 +325,24 @@ export class MarriageCreateComponent implements OnInit {
                 if (res.secondWitnessBirthDate) {
                     this.age('secondWitnessBirthDate', 5);
                 }
+
+                // display riligion
+                this.religionGujgroom = _.result(_.find(this.religionArray, function (obj) {
+                    return obj.code === res.groomReligion.code;
+                }), 'gujName');
+
+                this.religionGujbride = _.result(_.find(this.religionArray, function (obj) {
+                    return obj.code === res.groomReligion.code;
+                }), 'gujName');
+
+                this.maritalstatusGujgroom = _.result(_.find(this.maritalstatusArray, function (obj) {
+                    return obj.code === res.marriageTimeGroomStatus.code;
+                }), 'gujName');
+
+                this.maritalstatusGujbride = _.result(_.find(this.maritalstatusArray, function (obj) {
+                    return obj.code === res.marriageTimeGroomStatus.code;
+                }), 'gujName');
+
             },
             err => {
                 console.log("get fail" + err);
@@ -385,16 +410,32 @@ export class MarriageCreateComponent implements OnInit {
     }
 
     /**
-     * This method is use for religion verification. 
+     * This method is use for religion verification and reset marriage status. 
      */
-    onChange(controlName) {
-        if (controlName == 'brideReligion' && this.marriageFormGroup.controls.brideReligion.get('code').value != null) {
-            this.marriageFormGroup.controls.marriageTimeBrideStatus.reset();
+    onChange(event, controlName) {
+        if (controlName == 'groomReligion') {
+            this.religionGujgroom = _.result(_.find(this.religionArray, function (obj) {
+                return obj.code === event;
+            }), 'gujName');
         }
-        if (controlName == 'groomReligion' && this.marriageFormGroup.controls.groomReligion.get('code').value != null) {
-            this.marriageFormGroup.controls.marriageTimeGroomStatus.reset();
-            this.marriageFormGroup.controls.aliveWives.reset();
+        if (controlName == 'brideReligion') {
+            this.religionGujbride = _.result(_.find(this.religionArray, function (obj) {
+                return obj.code === event;
+            }), 'gujName');
         }
+
+        if (controlName == 'marriageTimeGroomStatus') {
+            this.maritalstatusGujgroom = _.result(_.find(this.maritalstatusArray, function (obj) {
+                return obj.code === event.value;
+            }), 'gujName');
+        }
+
+        if (controlName == 'marriageTimeBrideStatus') {
+            this.maritalstatusGujbride = _.result(_.find(this.maritalstatusArray, function (obj) {
+                return obj.code === event.value;
+            }), 'gujName');
+        }
+
         let groomreligionChange = this.marriageFormGroup.controls.groomReligion.get("code").value;
         let bridereligionChange = this.marriageFormGroup.controls.brideReligion.get("code").value;
 
@@ -405,11 +446,10 @@ export class MarriageCreateComponent implements OnInit {
     }
 
     /**
-     * This method is use for set gujarati value. 
+     * This method is use reset value. 
      */
-    gujValue(control: string) {
-        let code = this.marriageFormGroup.get(control).get('code').value;
-        console.log(code);
+    changeReset(controlName) {
+        this.marriageFormGroup.get(controlName).reset();
     }
 
     /**

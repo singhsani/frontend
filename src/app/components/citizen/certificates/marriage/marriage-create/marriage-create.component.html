@@ -102,13 +102,13 @@
 							</mat-select>
 						</mat-form-field> -->
 						<div class="col-4" formGroupName="groomReligion">
-							<ng-select formControlName="code" placeholder="{{ 'religion' | translate:translateKey }}" (change)="onChange('groomReligion')">
+							<ng-select formControlName="code" placeholder="{{ 'religion' | translate:translateKey }}" (change)="onChange($event,'groomReligion');changeReset('marriageTimeGroomStatus');changeReset('aliveWives')">
 								<ng-option *ngFor="let religion of religionArray" [value]="religion.code">{{religion.name}}</ng-option>
 							</ng-select>
 						</div>
 
 						<div class="col-4" formGroupName="marriageTimeGroomStatus"> {{'marital_status' | translate:translateKey }}*
-							<mat-radio-group formControlName="code">
+							<mat-radio-group formControlName="code" (change)="onChange($event,'marriageTimeGroomStatus');changeReset('aliveWives')">
 								<span *ngFor="let status of maritalstatusArray">
 									<span *ngIf="status.name == 'Married'">
 										<mat-radio-button *ngIf="marriageFormGroup.controls.groomReligion.get('code').value === 'MUSLIM'" [value]="status.code">
@@ -131,7 +131,10 @@
 					<!-- gujrati -->
 					<div class="row">
 						<mat-form-field class="col-4">
-							<input matInput readonly placeholder="{{'religion' | translate:translateKey:'gu'}}" [value]="marriageFormGroup.controls.groomReligion.get('code').value != null ? marriageFormGroup.controls.groomReligion.get('gujName').value : ''">
+							<input matInput readonly placeholder="{{'religion' | translate:translateKey:'gu'}}" [value]="religionGujgroom">
+						</mat-form-field>
+						<mat-form-field class="col-4">
+							<input matInput readonly placeholder="{{'marital_status' | translate:translateKey:'gu'}}" [value]="maritalstatusGujgroom">
 						</mat-form-field>
 					</div>
 					<!-- /gujarati -->
@@ -225,12 +228,12 @@
 							</mat-select>
 						</mat-form-field> -->
 						<div class="col-4" formGroupName="brideReligion">
-							<ng-select formControlName="code" placeholder="{{ 'religion' | translate:translateKey }}" (change)="onChange('brideReligion')">
+							<ng-select formControlName="code" placeholder="{{ 'religion' | translate:translateKey }}" (change)="onChange($event,'brideReligion');changeReset('marriageTimeBrideStatus')">
 								<ng-option *ngFor="let religion of religionArray" [value]="religion.code">{{religion.name}}</ng-option>
 							</ng-select>
 						</div>
 						<div class="col-4" formGroupName="marriageTimeBrideStatus"> {{'marital_status' | translate:translateKey }}*
-							<mat-radio-group formControlName="code">
+							<mat-radio-group formControlName="code" (change)="onChange($event,'marriageTimeBrideStatus');">
 								<span *ngFor="let status of maritalstatusArray">
 									<span *ngIf="status.name == 'Married'">
 										<mat-radio-button *ngIf="marriageFormGroup.controls.brideReligion.get('code').value === 'MUSLIM'" [value]="status.code">
@@ -255,7 +258,10 @@
 					<!-- gujrati -->
 					<div class="row">
 						<mat-form-field class="col-4">
-							<input matInput readonly placeholder="{{'religion' | translate:translateKey:'gu'}}" [value]="marriageFormGroup.controls.brideReligion.get('gujName').value ? marriageFormGroup.controls.brideReligion.get('gujName').value : ''">
+							<input matInput readonly placeholder="{{'religion' | translate:translateKey:'gu'}}" [value]="religionGujbride">
+						</mat-form-field>
+						<mat-form-field class="col-4">
+							<input matInput readonly placeholder="{{'marital_status' | translate:translateKey:'gu'}}" [value]="maritalstatusGujbride">
 						</mat-form-field>
 					</div>
 					<!-- /gujarati -->
@@ -781,5 +787,5 @@
 		</form>
 		<!-- End  form -->
 	</mat-card>
-	<!-- {{ marriageFormGroup.value | json}} -->
+	{{ marriageFormGroup.value | json}}
 </div>
