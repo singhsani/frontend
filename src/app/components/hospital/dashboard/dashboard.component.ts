@@ -41,6 +41,7 @@ export class HospitalDashboardComponent implements OnInit {
 			this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);
 			this.formService.createFormData().subscribe(res => {
 				let redirectUrl = ManageRoutes.getFullRoute(apiCode);
+				console.log(redirectUrl);
 				this.router.navigate([redirectUrl, res.serviceFormId, apiCode]);
 			});
 		} else {
@@ -58,6 +59,23 @@ export class HospitalDashboardComponent implements OnInit {
 				
 			}
 		);
+	}
+
+	getIconImg(moduleCode: string){
+		switch (moduleCode) {
+			case 'SHOP-ESTAB':
+				return 'assets/icons/shop-estab.png';
+			case 'BIRTH-DEATH':
+				return 'assets/icons/birth-death.png';
+			case 'FIRE':
+				return 'assets/icons/fire.png';
+			case 'MUTTON-FISH-POND':
+				return 'assets/icons/mutton-fish-pond.png';
+			case 'PROPERTY-TAX':
+				return 'assets/icons/property-tax.png';
+			default:
+				break;
+		}
 	}
 
 }

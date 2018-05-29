@@ -12,6 +12,10 @@ import { HospitalRoutingModule } from './hospital-routing.module';
 /* Import hospital components start */
 import { HospitalDashboardComponent } from './dashboard/dashboard.component';
 import { HospitalLayoutComponent } from '../../layouts/hospital-layout/hospital-layout.component';
+import { BirthRegistrationComponent, ChildSelectionContent } from './birth-registration/birth-registration.component';
+import { DeathRegistrationComponent } from './death-registration/death-registration.component';
+import { StillBirthComponent } from './still-birth/still-birth.component';
+import { HosMyApplicationsComponent } from './hos-my-applications/hos-my-applications.component';
 /* Import hospital components end */
 
 @NgModule({
@@ -24,9 +28,17 @@ import { HospitalLayoutComponent } from '../../layouts/hospital-layout/hospital-
 		HospitalAuthModule,
 		HospitalRoutingModule,
 	],
+	entryComponents: [
+		ChildSelectionContent
+	],
 	declarations: [
+		ChildSelectionContent,
 		HospitalDashboardComponent,
-		HospitalLayoutComponent
+		HospitalLayoutComponent,
+		BirthRegistrationComponent,
+		DeathRegistrationComponent,
+		StillBirthComponent,
+		HosMyApplicationsComponent
 	]
 })
 export class HospitalModule { }

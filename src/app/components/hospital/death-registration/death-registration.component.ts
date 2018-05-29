@@ -3,11 +3,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatStepper } from '@angular/material/stepper'
 
-import { ManageRoutes } from './../../../../../config/routes-conf';
-import { UploadFileService } from '../../../../../shared/upload-file.service';
-import { ValidationService } from '../../../../../shared/services/validation.service';
-import { FormsActionsService } from '../../../../../core/services/citizen/data-services/forms-actions.service';
-import { CommonService } from '../../../../.././shared/services/common.service';
+import { ValidationService } from '../../../shared/services/validation.service';
+import { UploadFileService } from '../../../shared/upload-file.service';
+import { CommonService } from '../../../shared/services/common.service';
+import { HosFormActionsService } from '../../../core/services/hospital/data-services/hos-form-actions.service';
+import { ManageRoutes } from '../../../config/routes-conf';
 
 import * as moment from 'moment';
 
@@ -96,7 +96,7 @@ export class DeathRegistrationComponent implements OnInit {
 		private uploadFileService: UploadFileService,
 		private route: ActivatedRoute,
 		private commonService: CommonService,
-		private formService: FormsActionsService
+		private formService: HosFormActionsService
 	) {
 	}
 	/**

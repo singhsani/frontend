@@ -106,4 +106,25 @@ export class HosFormActionsService {
 		return this.http.get('api/user/citizenServices');
 	}
 
+	/**
+	 * This method is used to creat payments for payable services
+	 * @param paymentData -pass payment data here.
+	 */
+	makePayment(transactionId) {
+
+		return this.http.get(`api/form/${this.apiType}/pay/${transactionId}`);
+
+	}
+
+	/**
+	 * This method is use to generate print receipt
+	 * @param appId - citizen app id
+	 */
+	printReceipt(appId) {
+
+		this.requestURL = `api/form/${this.apiType}/printReceipt/${appId}`;
+
+		return this.http.get(this.requestURL, 'printReceipt');
+	}
+
 }
