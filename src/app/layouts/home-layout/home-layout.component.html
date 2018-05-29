@@ -14,7 +14,7 @@
             <button mat-icon-button position="end" (click)="selectLanguage('gu')">ગુજ</button> -->
             <div class="float-right">
             <button mat-icon-button  [matMenuTriggerFor]="menu" class="userName">
-                <mat-icon>account_circle</mat-icon>
+                <mat-icon>face</mat-icon>
                     {{profileObj.firstName + ' ' + profileObj.lastName}}
                 <mat-icon>arrow_drop_down</mat-icon>
             </button>
@@ -29,13 +29,13 @@
     <mat-sidenav-container class="example-sidenav-container">
         <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [(opened)]="!mobileQuery.matches">
             <mat-nav-list (click)="toggleSideNav()">
-                    <a *ngIf="!fromAdmin" mat-list-item routerLink="/citizen/dashboard/" routerLinkActive="active-route-link">Dashboard</a>
-                    <a mat-list-item routerLink="/citizen/my-applications/" routerLinkActive="active-route-link">My Applications</a>
-                    <a *ngIf="!fromAdmin" mat-list-item routerLink="/citizen/my-profile" routerLinkActive="active-route-link">My Profile</a>
-                    <a *ngIf="!fromAdmin" mat-list-item routerLink="/citizen/my-resource" routerLinkActive="active-route-link">Resource</a>
-                    <a *ngIf="!fromAdmin" mat-list-item routerLink="/citizen/my-transactions" routerLinkActive="active-route-link">Transactions</a>
-                    <a *ngIf="!fromAdmin" mat-list-item routerLink="/citizen/booking" routerLinkActive="active-route-link" [routerLinkActiveOptions]="{exact: true}">Booking</a>
-                    <a *ngIf="!fromAdmin" mat-list-item routerLink="/citizen/booking/cancel-booking" routerLinkActive="active-route-link" [routerLinkActiveOptions]="{exact: true}">Cancel Booking</a>
+                    <a *ngIf="!fromAdmin" mat-list-item routerLink="/citizen/dashboard/" routerLinkActive="active-route-link"><mat-icon>apps</mat-icon>Dashboard</a>
+                    <a mat-list-item routerLink="/citizen/my-applications/" routerLinkActive="active-route-link"><mat-icon>description</mat-icon>My Applications</a>
+                    <a *ngIf="!fromAdmin" mat-list-item routerLink="/citizen/my-profile" routerLinkActive="active-route-link"><mat-icon>face</mat-icon>My Profile</a>
+                    <a *ngIf="!fromAdmin" mat-list-item routerLink="/citizen/my-resource" routerLinkActive="active-route-link"><mat-icon>web_asset</mat-icon>Resource</a>
+                    <a *ngIf="!fromAdmin" mat-list-item routerLink="/citizen/my-transactions" routerLinkActive="active-route-link"><mat-icon>low_priority</mat-icon>Transactions</a>
+                    <a *ngIf="!fromAdmin" mat-list-item routerLink="/citizen/booking" routerLinkActive="active-route-link" [routerLinkActiveOptions]="{exact: true}"><mat-icon>collections_bookmark</mat-icon>Booking</a>
+                    <a *ngIf="!fromAdmin" mat-list-item routerLink="/citizen/booking/cancel-booking" routerLinkActive="active-route-link" [routerLinkActiveOptions]="{exact: true}"><mat-icon>collections_bookmark</mat-icon>Cancel Booking</a>
             </mat-nav-list>
         </mat-sidenav>
         <mat-sidenav-content>

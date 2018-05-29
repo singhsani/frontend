@@ -1,9 +1,9 @@
 
 <div class="container">
 	<app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
-	<mat-card class="mt-4 formClass">
+	<mat-card class="mb-4">
 		<form [formGroup]="searchBookingsForm" (ngSubmit)="getAllBooking()" autocomplete="off" ngNativeValidate>
-			<div class="row p-2">
+			<div class="row">
 				<mat-form-field class="col-md-4">
 					<mat-select placeholder="Select Resource" formControlName="resourceType">
 						<mat-option *ngFor="let resource of resources" [value]="resource.type">
@@ -11,7 +11,9 @@
 						</mat-option>
 					</mat-select>
 				</mat-form-field>
-				<button mat-raised-button color="primary" type="submit" class="col-md-2">Search</button>
+				<div class="col-md-4">
+						<button mat-raised-button color="primary" class="mt-2" type="submit">Search</button>
+				</div>
 			</div>
 		</form>
 	</mat-card>

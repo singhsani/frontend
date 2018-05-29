@@ -29,8 +29,8 @@
     <mat-sidenav-container class="example-sidenav-container">
         <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [(opened)]="!mobileQuery.matches">
             <mat-nav-list (click)="toggleSideNav()">
-                <a mat-list-item routerLink="/hospital/dashboard/" routerLinkActive="active-route-link">Dashboard</a>
-                <a mat-list-item routerLink="/hospital/my-applications/" routerLinkActive="active-route-link">My Applications</a>
+                <a mat-list-item routerLink="/hospital/dashboard/" routerLinkActive="active-route-link"><mat-icon>apps</mat-icon>Dashboard</a>
+                <a mat-list-item routerLink="/hospital/my-applications/" routerLinkActive="active-route-link"><mat-icon>description</mat-icon>My Applications</a>
             </mat-nav-list>
         </mat-sidenav>
         <mat-sidenav-content>
