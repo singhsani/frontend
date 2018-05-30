@@ -212,6 +212,14 @@ mat-label {align-self: center;}
 .mat-table .mat-cell {font-size: 12px;}
 .mat-table .text-label.badge {background: #fff !important; padding: 7px 15px;}
 .mat-table .text-label.badge-primary {border: 1px solid #007bff; color: #007bff;}
+.mat-table .text-label.badge-secondary {border: 1px solid #6c757d; color: #6c757d;}
+.mat-table .text-label.badge-success {border: 1px solid #22b573; color: #22b573;}
+.mat-table .text-label.badge-danger {border: 1px solid #dc3545; color: #dc3545;}
+.mat-table .text-label.badge-success {border: 1px solid #22b573; color: #22b573;}
+.mat-table .text-label.badge-warning {border: 1px solid #ffc107; color: #ffc107;}
+.mat-table .text-label.badge-info {border: 1px solid #17a2b8; color: #17a2b8;}
+.mat-table .text-label.badge-dark {border: 1px solid #343a40; color: #343a40;}
+
 .mat-table .mat-row:nth-child(even) .text-label.badge {background: #EDE7F6 !important;}
 
 .mat-accordion {
