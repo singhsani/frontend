@@ -20,7 +20,7 @@ export class ActionBarComponent implements OnInit {
 
 	@Input() form: FormGroup;
 	@Input() step: string;
-	commonForm: FormGroup;
+	commonControlForm: FormGroup;
 
 	isSaveBtnDisabled: boolean = false;
 	isSubmitBtnDisabled: boolean = false;
@@ -39,7 +39,7 @@ export class ActionBarComponent implements OnInit {
 
 	ngOnInit() {
 		this.formService.apiType = this.form.get('apiType').value;
-		this.commonFormControls();
+		this.commonControlFormControls();
 
 		setTimeout(() => {
 			if (this.form.value.hasOwnProperty('canEdit') && !this.form.value.canEdit && this.form.value.canEdit != null) {
@@ -68,12 +68,13 @@ export class ActionBarComponent implements OnInit {
 				this.isSaveBtnDisabled = false;
 				let count = 1;
 				for (const key in this.form.controls) {
-					if (key + '.' == err.error[0].property) {
+					if (key == err.error[0].property) {
 						this.handleErrors.emit(count);
 						break;
 					}
 					count++;
 				}
+				
 			}
 		);
 	}
@@ -88,10 +89,10 @@ export class ActionBarComponent implements OnInit {
 		var count = 1;
 		if (this.form.valid) {
 			this.formService.submitFormData(this.form.get('serviceFormId').value).subscribe(res => {
-				if(res.success){
+				if (res.success) {
 					this.form.get('canEdit').setValue(false);
 				}
-				
+
 				this.toastr.success(`${this.form.value.serviceDetail.name} information successfully submit`);
 				this.isSubmitBtnDisabled = false;
 				this.isBtnsDisabled = false;
@@ -119,6 +120,7 @@ export class ActionBarComponent implements OnInit {
 				}
 				count++
 			}
+
 		}
 	}
 
@@ -126,16 +128,32 @@ export class ActionBarComponent implements OnInit {
 	 * This method is use for clear the form
 	 */
 	resetForm() {
-		this.commonForm.patchValue(this.form.value);
+
+		// This logic is to get addressType with parent address formGroup before reseting form.
+		let addrObj: any = {};
+		_.forEach(this.form.value, (value, key) => {
+			if (_.isObject(value)) {
+				_.forEach(value, (typeValue, type) => {
+					if (type === 'addressType') {
+						addrObj[key] = {
+							addressType: typeValue
+						}
+					}
+				})
+			}
+		});
+
+		this.commonControlForm.patchValue(this.form.value);
 		this.form.reset();
-		this.form.patchValue(this.commonForm.value);
+		this.form.patchValue(this.commonControlForm.value);
+		this.form.patchValue(addrObj);
 		this.stepReset.emit();
 	}
 
 	/**
 	 * This method used to set common formControls in existing formGroups
 	 */
-	commonFormControls() {
+	commonControlFormControls() {
 
 		let formControlObj = {
 			id: null,
@@ -175,9 +193,9 @@ export class ActionBarComponent implements OnInit {
 			this.form.addControl('firstName', new FormControl('', [Validators.required, ValidationService.nameValidator]));
 			this.form.addControl('middleName', new FormControl('', [Validators.required, ValidationService.nameValidator]));
 			this.form.addControl('lastName', new FormControl('', [Validators.required, ValidationService.nameValidator]));
+			this.form.addControl('aadhaarNo', new FormControl('', [Validators.required, Validators.maxLength(12)]));
 			this.form.addControl('contactNo', new FormControl('', [Validators.required, Validators.maxLength(10)]));
 			this.form.addControl('email', new FormControl('', [Validators.required, ValidationService.emailValidator]));
-			this.form.addControl('aadhaarNo', new FormControl('', [Validators.required, Validators.maxLength(12)]));
 		}
 
 		this.form.addControl('serviceDetail', new FormGroup({
@@ -188,7 +206,7 @@ export class ActionBarComponent implements OnInit {
 		}));
 		/* ended common form controls in existing formGroups*/
 
-		this.commonForm = this.fb.group(formControlObj);
+		this.commonControlForm = this.fb.group(formControlObj);
 
 	}
 

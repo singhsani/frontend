@@ -1,16 +1,16 @@
 <div class="row mt-4">
 	<div class="col-sm-12 col-md-12">
 
-		<button *ngIf="step != 'step1'" mat-raised-button class="liteGrayBtn" matStepperPrevious>{{'back' | translate:translateKey}}</button>
-		<button *ngIf="!form.get('canEdit').value && step !== 'final'" mat-raised-button color="primary" matStepperNext>{{'next' | translate:translateKey}}</button>
+		<button type="button" *ngIf="step != 'step1'" mat-raised-button class="liteGrayBtn" matStepperPrevious>{{'back' | translate:translateKey}}</button>
+		<button type="button" *ngIf="!form.get('canEdit').value && step !== 'final'" mat-raised-button color="primary" matStepperNext>{{'next' | translate:translateKey}}</button>
 
-		<button mat-raised-button color="primary" [disabled]="isSubmitBtnDisabled"  *ngIf="form.get('canEdit').value" (click)="saveAsDraft()"
+		<button type="button" mat-raised-button color="primary" [disabled]="isSubmitBtnDisabled" *ngIf="form.get('canEdit').value" (click)="saveAsDraft()"
 		 >{{step == 'final'? 'save' : 'save_and_next' | translate:translateKey}}</button>
 
-		<button style="display:none" matStepperNext id="matStepperNextBtn"></button>
+		<button type="button" style="display:none" matStepperNext id="matStepperNextBtn"></button>
 
 		<ng-container *ngIf="step == 'final'">
-			<button mat-raised-button color="success" [disabled]="isSubmitBtnDisabled" *ngIf="form.get('canEdit').value" (click)="onSubmit()">{{'submit' | translate:translateKey}}</button>
-			<button mat-raised-button color="warn" [disabled]="isSubmitBtnDisabled" *ngIf="form.get('canEdit').value" (click)="resetForm()">{{'reset' | translate:translateKey}}</button>
+			<button type="button" mat-raised-button color="success" [disabled]="isSubmitBtnDisabled" *ngIf="form.get('canEdit').value" (click)="onSubmit()">{{'submit' | translate:translateKey}}</button>
+			<button type="button" mat-raised-button color="warn" [disabled]="isSubmitBtnDisabled" *ngIf="form.get('canEdit').value" (click)="resetForm()">{{'reset' | translate:translateKey}}</button>
 		</ng-container>
 	</div>

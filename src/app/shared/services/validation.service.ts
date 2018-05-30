@@ -49,7 +49,7 @@ export class ValidationService {
     // Name validation 
     static nameValidator(control: FormControl) {
         if (control.value) {
-            const matches = control.value.match(/^[a-zA-Z^\S]*$/);
+            const matches = control.value.match(/^[A-Za-z\s]+$/);
             return matches ? null : { 'invalidName': true };
         } else {
             return null;

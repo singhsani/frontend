@@ -32,6 +32,7 @@ export class NoDeathRecordComponent implements OnInit {
 	relationshipArray: any = [];
 	genderArray: any = [];
 	placeArray: any = [];
+	reasonArray: any = [];
 	attachments: any = [];
 	showButtons: boolean = false;
 	uploadModel: any = {};
@@ -63,29 +64,28 @@ export class NoDeathRecordComponent implements OnInit {
 
 		this.noRecordDeathForm = this.fb.group({
 
-			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
-			regNumber: null,
 			deceasedName: [null, Validators.required],
+			deathDate: [null, Validators.required],
+			fatherOrHusbandName: [null, Validators.required],
 			gender: this.fb.group({
 				code: [null, Validators.required],
 			}),
-			deathDate: [null, Validators.required],
 			deathPlace: this.fb.group({
 				code: [null, Validators.required],
 			}),
 			deathPlaceDetail: null,
-			fatherOrHusbandName: [null, Validators.required],
 			age: [null, Validators.required],
 			deathPlaceAddress: this.fb.group(this.addrComponent.addressControls()),
-			applicantName: [null, Validators.required],
 			applicantRelation: this.fb.group({
 				code: [null, Validators.required]
 			}),
 			applicantRelationDetail: null,
-			applicantContactNo: [null, Validators.maxLength(10)],
-			applicantEmail: [null, [Validators.required, ValidationService.emailValidator]],
-			reasonDetail: null,
-			attachments: []
+			reasonDetail: this.fb.group({
+				code: [null, Validators.required]
+			}),
+			attachments: [],
+			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
+			regNumber: null,
 
 		});
 	}
@@ -112,33 +112,24 @@ export class NoDeathRecordComponent implements OnInit {
 	/**
 	 * This method use to show java validations errors 
 	 */
-	handleErrorsOnSubmit(flag) {
+	handleErrorsOnSubmit(count) {
 
-		let step1 = 6;
-		let step2 = 15;
-		let step3 = 25;
+		let step1 = 7;
+		let step2 = 8;
+		let step3 = 9;
 
-		let count = 1;
-
-		_.forEach(this.noRecordDeathForm.controls, (key) => {
-
-			if (!key.valid) {
-				if (count <= step1) {
-					this.stepLable1 = this.stepLable1 +" is not completed";
-					this.stepper.selectedIndex = 0;
-					return false;
-				} else if (count <= step2) {
-					this.stepLable2 = this.stepLable2 +" is not completed";
-					this.stepper.selectedIndex = 1;
-					return false;
-				} else if (count <= step3) {
-					this.stepLable3 = this.stepLable3 +" is not completed";
-					this.stepper.selectedIndex = 2;
-					return false;
-				}
-			}
-			count++;
-		});
+		if (count <= step1) {
+			this.stepper.selectedIndex = 0;
+			return false;
+		} else if (count <= step2) {
+			this.stepper.selectedIndex = 1;
+			return false;
+		} else if (count <= step3) {
+			this.stepper.selectedIndex = 2;
+			return false;
+		} else if (count >= 32 && count <= 40) {
+			this.stepper.selectedIndex = 2;
+		}
 
 	}
 
@@ -150,6 +141,7 @@ export class NoDeathRecordComponent implements OnInit {
 			this.genderArray = res.GENDER;
 			this.placeArray = res.PLACE;
 			this.relationshipArray = res.RELATIONSHIP;
+			this.reasonArray = res.NRC_BIRTH_OR_DEATH_REASON;
 		});
 	}
 
@@ -168,6 +160,26 @@ export class NoDeathRecordComponent implements OnInit {
 		}
 
 		return this.uploadModel;
+	}
+
+	/**
+	 * This method is use for get the value of death place change
+	 * @param event - radio button change value
+	 */
+	deathPlaceChange(event) {
+		if (event.value !== 'OTHER_PLACE') {
+			this.noRecordDeathForm.get('deathPlaceDetail').setValue('');
+		}
+	}
+
+	/**
+	 * This method is use for get the value of applicant relation change
+	 * @param event - select box change value
+	*/
+	applicantRelChange(value) {
+		if (value !== 'OTHER_RELATIONSHIP') {
+			this.noRecordDeathForm.get('applicantRelationDetail').setValue('');
+		}
 	}
 
 }
