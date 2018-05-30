@@ -29,9 +29,8 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 
 
 /** import progress bar modules - start */
-import { NgProgressModule } from '@ngx-progressbar/core';
-import { NgProgressHttpModule } from '@ngx-progressbar/http';
-import { NgProgressRouterModule } from '@ngx-progressbar/router';
+import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
+import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
 /** import progress bar modules - end */
 
 @NgModule({
@@ -59,9 +58,8 @@ import { NgProgressRouterModule } from '@ngx-progressbar/router';
 			closeButton: true
 		}),
 		AppRoutingModule,
-		NgProgressModule.forRoot(),
-		NgProgressHttpModule,
-		NgProgressRouterModule,
+		LoadingBarRouterModule,
+		LoadingBarHttpClientModule,
 		AmazingTimePickerModule
 	],
 	exports: [ ],

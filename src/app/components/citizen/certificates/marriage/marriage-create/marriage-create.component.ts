@@ -79,11 +79,11 @@ export class MarriageCreateComponent implements OnInit {
     }
 
     // riligion in gujarati
-    religionGujgroom: string;
-    religionGujbride: string;
+    religionGujgroom: string = '';
+    religionGujbride: string = '';
     // smarital status in gujarati
-    maritalstatusGujgroom: string;
-    maritalstatusGujbride: string;
+    maritalstatusGujgroom: string = '';
+    maritalstatusGujbride: string = '';
 
     /**
      * @param fb - Declare FormBuilder property.
@@ -327,21 +327,29 @@ export class MarriageCreateComponent implements OnInit {
                 }
 
                 // display riligion
-                this.religionGujgroom = _.result(_.find(this.religionArray, function (obj) {
-                    return obj.code === res.groomReligion.code;
-                }), 'gujName');
+                if(!_.isUndefined(res.groomReligion.code)){
+                    this.religionGujgroom = _.result(_.find(this.religionArray, function (obj) {
+                        return obj.code === res.groomReligion.code;
+                    }), 'gujName');
+                }
 
-                this.religionGujbride = _.result(_.find(this.religionArray, function (obj) {
-                    return obj.code === res.groomReligion.code;
-                }), 'gujName');
+                if(!_.isUndefined(res.groomReligion.code)){
+                    this.religionGujbride = _.result(_.find(this.religionArray, function (obj) {
+                        return obj.code === res.groomReligion.code;
+                    }), 'gujName');
+                }
 
-                this.maritalstatusGujgroom = _.result(_.find(this.maritalstatusArray, function (obj) {
-                    return obj.code === res.marriageTimeGroomStatus.code;
-                }), 'gujName');
+                if(!_.isUndefined(res.marriageTimeGroomStatus.code)){
+                    this.maritalstatusGujgroom = _.result(_.find(this.maritalstatusArray, function (obj) {
+                        return obj.code === res.marriageTimeGroomStatus.code;
+                    }), 'gujName');
+                }
 
-                this.maritalstatusGujbride = _.result(_.find(this.maritalstatusArray, function (obj) {
-                    return obj.code === res.marriageTimeGroomStatus.code;
-                }), 'gujName');
+                if(!_.isUndefined(res.marriageTimeGroomStatus.code)){
+                    this.maritalstatusGujbride = _.result(_.find(this.maritalstatusArray, function (obj) {
+                        return obj.code === res.marriageTimeGroomStatus.code;
+                    }), 'gujName');
+                }
 
             },
             err => {
