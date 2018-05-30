@@ -153,5 +153,39 @@ export class FormsActionsService {
 		return this.http.get('api/user/citizenServices');
 	}
 
+	/**
+	 * This method is use for get country lists
+	 */
+	getCountryLookUp() {
+		return this.http.get('public/lookup/countries', this.getCommonHeaders());
+	}
+
+	/**
+	 * This method is use for get states lists
+	 * @param countryId - Country Id
+	 */
+	getStateLookUp(countryId) {
+		return this.http.get(`public/lookup/stateByCountryId/${countryId}`, this.getCommonHeaders());
+	}
+
+	/**
+	 * This method is use for get cities lists
+	 * @param stateId - state Id
+	 */
+	getCityLookUp(stateId) {
+		return this.http.get(`public/lookup/citiesByStateId/${stateId}`, this.getCommonHeaders());
+	}
+
+	/**
+	 * This method use to return headers for lookUp api
+	 */
+	getCommonHeaders() {
+
+		let headers = {
+			'Content-type': 'application/json'
+		};
+		return headers;
+	}
+
 
 }

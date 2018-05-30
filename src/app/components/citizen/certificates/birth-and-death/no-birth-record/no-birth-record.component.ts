@@ -32,6 +32,7 @@ export class NoBirthRecordComponent implements OnInit {
 	relationshipArray: any = [];
 	genderArray: any = [];
 	placeArray: any = [];
+	reasonArray: any = [];
 	showButtons: boolean = false;
 
 	attachments: any = [];
@@ -44,7 +45,7 @@ export class NoBirthRecordComponent implements OnInit {
 	stepLable3: string = "applicant_detail";
 
 	constructor(
-		private fb: FormBuilder, 
+		private fb: FormBuilder,
 		private validationService: ValidationService,
 		private router: Router,
 		private route: ActivatedRoute,
@@ -68,30 +69,30 @@ export class NoBirthRecordComponent implements OnInit {
 
 		this.noRecordBirthForm = this.fb.group({
 
-			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
-			regNumber: null,
-			childName: [null, Validators.required],
+			childName: [null, [Validators.required, ValidationService.nameValidator]],
+			fatherName: [null, [Validators.required, ValidationService.nameValidator]],
+			motherName: [null, [Validators.required, ValidationService.nameValidator]],
 			gender: this.fb.group({
 				code: [null, Validators.required],
 			}),
-			birthDate: [null, Validators.required],
 			birthPlace: this.fb.group({
 				code: [null, Validators.required],
 			}),
 			birthPlaceDetail: null,
-			fatherName: [null, Validators.required],
-			motherName: [null, Validators.required],
-			reasonDetail: null,
+			birthDate: [null, Validators.required],
+
 			birthPlaceAddress: this.fb.group(this.addrComponent.addressControls()),
-			applicantName: [null, Validators.required],
 			applicantRelation: this.fb.group({
 				code: [null, Validators.required]
 			}),
 			applicantRelationDetail: null,
-			applicantContactNo: [null, [Validators.required, Validators.maxLength(10)]],
-			applicantEmail: [null, [Validators.required, ValidationService.emailValidator]],
-			attachments: []
-			
+			reasonDetail: this.fb.group({
+				code: [null, Validators.required]
+			}),
+			attachments: [],
+			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
+			regNumber: null,
+
 		});
 	}
 
@@ -117,33 +118,24 @@ export class NoBirthRecordComponent implements OnInit {
 	/**
 	 * This method use to show java validations errors 
 	 */
-	handleErrorsOnSubmit(flag) {
+	handleErrorsOnSubmit(count) {
 
-		let step1 = 6;
-		let step2 = 15;
-		let step3 = 25;
+		let step1 = 7;
+		let step2 = 8;
+		let step3 = 9;
 
-		let count = 1;
-
-		_.forEach(this.noRecordBirthForm.controls, (key) => {
-
-			if (!key.valid) {
-				if (count <= step1) {
-					this.stepLable1 = this.stepLable1 + " is not completed";
-					this.stepper.selectedIndex = 0;
-					return false;
-				} else if (count <= step2) {
-					this.stepLable2 = this.stepLable2 +" is not completed";
-					this.stepper.selectedIndex = 1;
-					return false;
-				} else if (count <= step3) {
-					this.stepLable3 = this.stepLable3 +" is not completed";
-					this.stepper.selectedIndex = 2;
-					return false;
-				}
-			}
-			count++;
-		});
+		if (count <= step1) {
+			this.stepper.selectedIndex = 0;
+			return false;
+		} else if (count <= step2) {
+			this.stepper.selectedIndex = 1;
+			return false;
+		} else if (count <= step3) {
+			this.stepper.selectedIndex = 2;
+			return false;
+		} else if (count >= 32 && count <= 40) {
+			this.stepper.selectedIndex = 2;
+		}
 
 	}
 
@@ -155,6 +147,7 @@ export class NoBirthRecordComponent implements OnInit {
 			this.genderArray = res.GENDER;
 			this.placeArray = res.PLACE;
 			this.relationshipArray = res.RELATIONSHIP;
+			this.reasonArray = res.NRC_BIRTH_OR_DEATH_REASON;
 		});
 	}
 
@@ -175,8 +168,32 @@ export class NoBirthRecordComponent implements OnInit {
 		return this.uploadModel;
 	}
 
+	/**
+	 * This method is use for reset stepper and redirect to 1st step
+	 */
 	stepReset() {
 		this.stepper.reset();
+	}
+
+
+	/**
+	 * This method is use for get the value of birth place change
+	 * @param event - radio button change value
+	 */
+	birthPlaceChange(event) {
+		if (event.value !== 'OTHER_PLACE') {
+			this.noRecordBirthForm.get('birthPlaceDetail').setValue('');
+		}
+	}
+
+	/**
+	 * This method is use for get the value of applicant relation change
+	 * @param event - select box change value
+	 */
+	applicantRelChange(value) {
+		if (value !== 'OTHER_RELATIONSHIP') {
+			this.noRecordBirthForm.get('applicantRelationDetail').setValue('');
+		}
 	}
 
 }

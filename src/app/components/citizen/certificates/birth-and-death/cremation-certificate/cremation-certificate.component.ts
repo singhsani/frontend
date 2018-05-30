@@ -26,7 +26,7 @@ export class CremationCertificateComponent implements OnInit {
 	translateKey: string = 'cremationScreen';
 
 	appId: number;
-	apiCode: string; 
+	apiCode: string;
 
 	maxDate: Date = new Date();
 	relationshipArray: any = [];
@@ -35,15 +35,16 @@ export class CremationCertificateComponent implements OnInit {
 	applicantProof: any = [];
 
 	uploadModel: any = {};
+	relationFlag: boolean;
 
 	// Step Titles
 	stepLable1: string = "cremation_certificate_detail";
 	stepLable2: string = "applicant_detail";
 
 	constructor(
-		private fb: FormBuilder, 
+		private fb: FormBuilder,
 		private validationService: ValidationService,
-		private router: Router, 
+		private router: Router,
 		private route: ActivatedRoute,
 		private formService: FormsActionsService
 	) { }
@@ -86,11 +87,11 @@ export class CremationCertificateComponent implements OnInit {
 			deathPlace: this.fb.group({
 				code: [null, Validators.required]
 			}),
-			deathPlaceDetail: [null, Validators.required],
+			deathPlaceDetail: null,
 			issueDate: null,
 			authorityName: null,
 			attachments: [],
-			
+
 		});
 
 	}
@@ -115,27 +116,18 @@ export class CremationCertificateComponent implements OnInit {
 	/**
 	 * This method use to show java validations errors 
 	 */
-	handleErrorsOnSubmit(flag) {
+	handleErrorsOnSubmit(count) {
 
 		let step1 = 23;
 		let step2 = 25;
 
-		let count = 1;
-
-		_.forEach(this.cremationForm.controls, (key) => {
-			if (!key.valid) {
-				if (count <= step1) {
-					this.stepLable1 = this.stepLable1 +" is not completed";
-					this.stepper.selectedIndex = 0;
-					return false;
-				} else if (count <= step2) {
-					this.stepLable2 = this.stepLable2 +" is not completed";
-					this.stepper.selectedIndex = 1;
-					return false;
-				}
-			}
-			count++;
-		});
+		if (count <= step1) {
+			this.stepper.selectedIndex = 0;
+			return false;
+		} else if (count <= step2) {
+			this.stepper.selectedIndex = 1;
+			return false;
+		}
 
 	}
 
@@ -170,5 +162,28 @@ export class CremationCertificateComponent implements OnInit {
 
 	stepReset() {
 		this.stepper.reset();
+	}
+
+	/**
+	 * This method is use for get the value of applicant relation change
+	 * @param event - select box change value
+	 */
+	realtionChange(event) {
+		if (event.value !== 'OTHER_RELATIONSHIP') {
+			this.cremationForm.get('applicantRelationDetail').setValue('');
+			this.relationFlag = false;
+		} else {
+			this.relationFlag = true;
+		}
+	}
+
+	/**
+	 * This method is use for get the value of death place change
+	 * @param event - radio button change value
+	 */
+	placeChange(event) {
+		if (event.value !== 'OTHER_PLACE') {
+			this.cremationForm.get('deathPlaceDetail').setValue('');
+		}
 	}
 }

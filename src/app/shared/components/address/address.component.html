@@ -12,47 +12,53 @@
 		</mat-form-field> -->
 
 		<mat-form-field class="col-md-4">
-			<input matInput type="text" formControlName="buildingName" placeholder="{{'building_name' | translate: translateKey }}" >
+			<input matInput type="text" formControlName="buildingName" placeholder="{{'building_name' | translate: translateKey }}" maxlength="60">
 			<control-messages [control]="addressFormGroup.controls.buildingName"></control-messages>
 		</mat-form-field>
 
 		<mat-form-field class="col-md-4">
-			<input matInput type="text" formControlName="streetName" placeholder="{{'street_name' | translate: translateKey }}" >
+			<input matInput type="text" formControlName="streetName" placeholder="{{'street_name' | translate: translateKey }}" maxlength="60">
 			<control-messages [control]="addressFormGroup.controls.streetName"></control-messages>
 		</mat-form-field>
 
 		<mat-form-field class="col-md-4">
-			<input matInput type="text" formControlName="landmark" placeholder="{{'landmark' | translate: translateKey }}" >
+			<input matInput type="text" formControlName="landmark" placeholder="{{'landmark' | translate: translateKey }}" maxlength="100">
 			<control-messages [control]="addressFormGroup.controls.landmark"></control-messages>
 		</mat-form-field>
 
 		<mat-form-field class="col-md-4">
-			<input matInput type="text" formControlName="area" placeholder="{{'area' | translate: translateKey }}" >
+			<input matInput type="text" formControlName="area" placeholder="{{'area' | translate: translateKey }}" maxlength="60">
 			<control-messages [control]="addressFormGroup.controls.area"></control-messages>
 		</mat-form-field>
 
-		<mat-form-field class="col-md-4">
-			<input matInput appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" formControlName="state" placeholder="{{'state' | translate: translateKey }}"  required>
-			<control-messages [control]="addressFormGroup.controls.state"></control-messages>
-		</mat-form-field>
+		<div class="col-md-4">
+			<ng-select placeholder="{{'country' | translate: translateKey }} *" formControlName="country" required (change)="onCountryChange($event)">
+				<ng-option *ngFor="let country of countryListArray" [value]="country.name">{{country.name}}</ng-option>
+				<control-messages [control]="addressFormGroup.controls.country"></control-messages>
+			</ng-select>
+		</div>
+
+		<div class="col-md-4">
+			<ng-select placeholder="{{'state' | translate: translateKey }} *" formControlName="state" required (change)="onStateChange($event)">
+				<ng-option *ngFor="let state of stateListArray" [value]="state.name">{{state.name}}</ng-option>
+				<control-messages [control]="addressFormGroup.controls.state"></control-messages>
+			</ng-select>
+		</div>
 
 		<mat-form-field class="col-md-4">
-			<input matInput appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" formControlName="district" placeholder="{{'district' | translate: translateKey }}"  required>
+			<input matInput formControlName="district" placeholder="{{'district' | translate: translateKey }}" required maxlength="60">
 			<control-messages [control]="addressFormGroup.controls.district"></control-messages>
 		</mat-form-field>
 
-		<mat-form-field class="col-md-4">
-			<input matInput type="text" formControlName="city" placeholder="{{'city' | translate: translateKey }}"  required>
-			<control-messages [control]="addressFormGroup.controls.city"></control-messages>
-		</mat-form-field>
+		<div class="col-md-4">
+			<ng-select placeholder="{{'city' | translate: translateKey }} *" formControlName="city" required>
+				<ng-option *ngFor="let city of cityListArray" [value]="city.name">{{city.name}}</ng-option>
+				<control-messages [control]="addressFormGroup.controls.city"></control-messages>
+			</ng-select>
+		</div>
 
 		<mat-form-field class="col-md-4">
-			<input matInput type="text" formControlName="country" placeholder="{{'country' | translate: translateKey }}"  required >
-			<control-messages [control]="addressFormGroup.controls.country"></control-messages>
-		</mat-form-field>
-
-		<mat-form-field class="col-md-4">
-			<input matInput type="tel" OnlyNumber formControlName="pincode" placeholder="{{'pincode' | translate: translateKey }}" minlength="6" maxlength="6"  required>
+			<input matInput type="tel" OnlyNumber formControlName="pincode" placeholder="{{'pincode' | translate: translateKey }}" minlength="6" maxlength="6" required>
 			<control-messages [control]="addressFormGroup.controls.pincode"></control-messages>
 		</mat-form-field>
 
