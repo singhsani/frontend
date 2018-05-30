@@ -33,10 +33,10 @@
                 <mat-icon>dashboard</mat-icon>
                 <span>Services</span>
             </h2>
-            <div class="col" *ngFor="let module of userServicesList">
+            <a href="#" class="col" *ngFor="let module of userServicesList">
                 <span class="{{getIconClass(module.code)}}"><img src="{{getIconImg(module.code)}}" alt=""></span>
                 <div>{{module.name}}<br><!--{{module.gujName}}--></div>
-            </div>
+            </a>
             <!-- <div class="col" *ngFor="let module of userServicesList">
                 <img src="{{getIconImg(module.code)}}" alt=""><br> {{module.name +' / '+ module.gujName}}</div> -->
         </div>
