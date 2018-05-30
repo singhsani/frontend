@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormGroup, FormBuilder, Validators ,FormArray} from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { MatStepper } from '@angular/material/stepper';
 import { AmazingTimePickerService } from 'amazing-time-picker';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
@@ -12,6 +12,7 @@ import { HosFormActionsService } from '../../../core/services/hospital/data-serv
 
 import * as moment from 'moment';
 import * as _ from 'lodash';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
 	selector: 'app-birth-registration-app',
@@ -47,7 +48,7 @@ export class BirthRegistrationComponent implements OnInit {
 
 	private showButtons: boolean = false;
 	private submit: boolean = false;
-	private childs : FormArray;
+	private childs: FormArray;
 	showChildData: boolean = false;
 
 	//Birth Data LookUps
@@ -69,7 +70,7 @@ export class BirthRegistrationComponent implements OnInit {
 			id: null
 
 		},
-		
+
 		{
 			code: "2",
 			name: "2",
@@ -111,10 +112,9 @@ export class BirthRegistrationComponent implements OnInit {
 		private validationService: ValidationService,
 		private fb: FormBuilder,
 		private dialog: MatDialog,
-		private atp: AmazingTimePickerService
+		private atp: AmazingTimePickerService,
+		private toastrService: ToastrService
 	) {
-
-
 	}
 
 	/**
@@ -131,24 +131,23 @@ export class BirthRegistrationComponent implements OnInit {
 		});
 
 		if (!this.appId) {
-			this.router.navigate([ManageRoutes.getFullRoute('CITIZENDASHBOARD')]);
+			this.router.navigate([ManageRoutes.getFullRoute('HOSPITALDASHBOARD')]);
 		} else {
 			this.createBirthCertForm();
 			this.getBirthCertData();
 			this.getLookUpsData();
+
 		}
 	}
 
-	openTimePicker() {
+	openTimePicker(i: number) {
 		const amazingTimePicker = this.atp.open({
 			theme: 'material-purple',
 			changeToMinutes: true
 		});
 		amazingTimePicker.afterClose().subscribe(time => {
-			console.log(time);
 			if (time.length == 5) {
-				this.birthCertificateForm.get('birthTime').
-					setValue(time.concat(":00"));
+				this.getChildData().at(i).get('birthTime').setValue(time + ":00");
 			}
 		});
 	}
@@ -159,41 +158,41 @@ export class BirthRegistrationComponent implements OnInit {
 	createBirthCertForm() {
 		this.birthCertificateForm = this.fb.group({
 
-			birthDate: [null, Validators.required],
-			birthTime: [null, [Validators.required]],
-			childName: ['', [ValidationService.nameValidator]],
 			birthPlace: this.fb.group({
 				id: 1,
 				code: ['', Validators.required],
 				name: ''
 			}),
-			weightKg: this.fb.group({
-				id: null,
-				code: [null, Validators.required],
-				name: null
-			}),
-			weightGram: [null, [Validators.pattern('[0-9]+')]],
-			sex: this.fb.group({
-				id: null,
-				code: [null, Validators.required],
-				name: null
-			}),
+			otherPlace: null,
 			isOrphan: this.fb.group({
 				id: null,
 				code: ["NO", Validators.required],
 				name: null
 			}),
-			isTwins: this.fb.group({
+
+			childs: this.fb.array([this.createChildArray({
+				birthDate: null,
+				birthTime: null,
+				childName: null,
 				id: null,
-				code: ["NO", Validators.required],
-				name: null
-			}),
-			childs: this.fb.array([this.createChildArray()]),
+				sex: {
+					code: null
+				},
+				uniqueId: null,
+				version: null,
+				weightGram: null,
+				weightKg: {
+					code: null
+				}
+			})]),
 			noOfChilds: null,
 			//step 2
 			fatherFirstName: ['', [Validators.required, ValidationService.nameValidator]],
 			fatherMiddleName: ['', [Validators.required, ValidationService.nameValidator]],
 			fatherLastName: ['', [ValidationService.nameValidator, Validators.required]],
+			fatherFirstNameGuj: ['', [Validators.required, ValidationService.nameValidator]],
+			fatherMiddleNameGuj: ['', [Validators.required, ValidationService.nameValidator]],
+			fatherLastNameGuj: ['', [ValidationService.nameValidator, Validators.required]],
 
 			fatherEducation: this.fb.group({
 				id: null,
@@ -212,6 +211,9 @@ export class BirthRegistrationComponent implements OnInit {
 			motherFirstName: ['', [ValidationService.nameValidator, Validators.required]],
 			motherMiddleName: ['', [Validators.required, ValidationService.nameValidator]],
 			motherLastName: ['', [ValidationService.nameValidator, Validators.required]],
+			motherFirstNameGuj: ['', [ValidationService.nameValidator, Validators.required]],
+			motherMiddleNameGuj: ['', [Validators.required, ValidationService.nameValidator]],
+			motherLastNameGuj: ['', [ValidationService.nameValidator, Validators.required]],
 
 			motherEducation: this.fb.group({
 				id: null,
@@ -269,9 +271,18 @@ export class BirthRegistrationComponent implements OnInit {
 	 */
 	getBirthCertData() {
 		this.formService.getFormData(this.appId).subscribe(res => {
-			console.log(res);
 			this.attachments = res.attachments;
 			this.birthCertificateForm.patchValue(res);
+			this.childs = this.getChildData();
+
+			while (this.getChildData().length) {
+				this.childs.removeAt(0)
+			}
+
+			this.childs = res.childs;
+			for (let child of res.childs) {
+				this.addMoreChild(child);
+			}
 
 			//common for all only change form name
 			if (this.birthCertificateForm.get('isPermanentPresentAddressSame').get('code').value == 'YES') {
@@ -284,10 +295,10 @@ export class BirthRegistrationComponent implements OnInit {
 		});
 	}
 
-	timepick() {
-		if (String(this.birthCertificateForm.get('birthTime').value).length == 5) {
-			this.birthCertificateForm.get('birthTime').
-				setValue(String(this.birthCertificateForm.get('birthTime').value).concat(":00"));
+	timepick(i: number) {
+		if (String(this.getChildData()[i].get('birthTime').value).length == 5) {
+			this.getChildData()[i].
+				setValue(String(this.getChildData()[i].get('birthTime').value).concat(":00"));
 		}
 	}
 
@@ -295,10 +306,15 @@ export class BirthRegistrationComponent implements OnInit {
 	 * Method is used to calculate the delay between current date and birth date.
 	 * @param event - date event.
 	 */
-	delayCalculator(event) {
+	delayCalculator(event, i: number) {
 		let now = moment(new Date());
 		let diff = moment.duration(now.diff(event.value));
-		this.birthCertificateForm.get('birthDate').setValue(moment(event.value).format("YYYY-MM-DD"));
+		this.getChildData().at(i).get('birthDate').setValue(moment(event.value).format("YYYY-MM-DD"));
+		this.birthCertificateForm.get('delayedPeriod').setValue(diff.days() + diff.years() * 365 + diff.months() * 30);
+	}
+
+	getDelayPeriod() {
+		return this.birthCertificateForm.get('delayedPeriod').value
 	}
 
 
@@ -340,7 +356,6 @@ export class BirthRegistrationComponent implements OnInit {
 	 */
 	getLookUpsData() {
 		this.formService.getDataFromLookups().subscribe(respData => {
-			console.log(respData);
 			this.ChildWeights = respData.CHILD_WEIGHT;
 			this.DeliveryTreatmentOptions = respData.DELIVERY_TREATMENT;
 			this.TypeOfDelivery = respData.DELIVERY_TYPE;
@@ -408,123 +423,168 @@ export class BirthRegistrationComponent implements OnInit {
 		return this.uploadModel;
 	}
 
-	getChildData(){
+	getChildData() {
 		return this.birthCertificateForm.get('childs') as FormArray;
 	}
 
-	openChildSelectionDailog(event, noOfChild, oldval): void {
-		this.showChildData = false;
-		//this.birthCertificateForm.controls['childs'].reset();
-		while (this.getChildData().length) {
-			this.getChildData().removeAt(0);	
-		} 
+	// openChildSelectionDailog(noOfChild): void {
+	// 	this.showChildData = false;
+	// 	//to delete complete array
+	// 	// while (this.getChildData().length) {
+	// 	// 	this.getChildData().removeAt(0);	
+	// 	// } 
 
-		console.log(this.getChildData());
-		
-		for (let i = 0; i < parseInt(noOfChild.code); i++) {
-			this.getChildData().push(this.createChildArray());
+	// 	//to fill complete arra
+	// 	for (let i = 0; i < this.getChildData().length; i++) {
+	// 		this.getChildData().push(this.createChildArray());
+	// 	}
+
+	// 	this.childs = this.getChildData();
+
+	// 	this.showChildData = true;
+	// }
+
+
+
+	createChildArray(child) {
+		if (!child) {
+			child = {
+				birthDate: null,
+				birthTime: null,
+				childName: null,
+				id: null,
+				sex: this.fb.group({
+					code: null
+				}),
+				uniqueId: null,
+				version: null,
+				weightGram: null,
+				weightKg: this.fb.group({
+					code: null
+				})
+			}
 		}
-		this.childs = this.getChildData();
-
-		this.showChildData = true;
-		//this.childs = this.birthCertificateForm.get('childs') as FormArray; //this.birthCertificateForm.get('childs') as FormArray;
-		
-		// let dialogRef = this.dialog.open(ChildSelectionContent, {
-			
-		// 	data: {
-		// 		noOfChild: parseInt(noOfChild.code),
-		// 		childs: this.birthCertificateForm.get('childs').value
-		// 	}
-		// });
-
-		// dialogRef.afterClosed().subscribe(result => {
-		// 	console.log('The dialog was closed');
-		// });
-	}
-	createChildArray() {
 		return this.fb.group({
-			birthDate: null,
-			birthTime: null,
-			childName: null,
-			id: 3,
-			sex: null,
-			uniqueId: null,
-			version: null,
-			weightGram: null,
-			weightKg: null
-		})
-
-	}
-
-}
-
-@Component({
-	templateUrl: 'birth-childdata.html',
-})
-export class ChildSelectionContent {
-	private translateKey = "birthRegScreen";
-	private ChildDetails: any[] = [];
-	private noOfChild = 0;
-	private ChildDetailsForm : FormGroup;
-
-	private mainObject = {
-		birthDate : null,
-        birthTime : null,
-		childName : null,
-		id : 3,
-		sex	: {},
-		uniqueId : null,
-		version : null,
-		weightGram :	null,
-		weightKg: {}
-    }
-
-	constructor(
-		public dialogRef: MatDialogRef<BirthRegistrationComponent>,
-		private fb: FormBuilder,
-		private atp: AmazingTimePickerService,
-		@Inject(MAT_DIALOG_DATA) public data: any) {
-		console.log(data);
-		this.noOfChild = parseInt(data.noOfChild);
-		
-		console.log(this.ChildDetails);
-	}
-
-	createArrayOfDetails() {
-		for (let i = 0; i < this.noOfChild; i++) {
-			this.ChildDetails.push(this.createChildDetailsForm());
-		}
-	}
-
-	closeDailog(): void {
-		this.dialogRef.close();
-	}
-
-	createChildDetailsForm() {
-		this.ChildDetailsForm =  this.fb.group({
-			birthDate: null,
-			birthTime: null,
-			childName: null,
-			id: 3,
+			birthDate: [child.birthDate, Validators.required],
+			birthTime: [child.birthTime, Validators.required],
+			childName: [child.childName, [Validators.required, ValidationService.nameValidator]],
+			id: child.id,
 			sex: this.fb.group({
-				code: null
+				code: [child.sex.code, [Validators.required]]
 			}),
-			uniqueId: null,
-			version: null,
-			weightGram: null,
+			uniqueId: child.uniqueId,
+			version: child.version,
+			weightGram: child.weightGram,
 			weightKg: this.fb.group({
-				code: null
+				code: [child.weightKg.code, [Validators.required]]
 			})
 		})
 	}
 
-	openTimePicker() {
-		const amazingTimePicker = this.atp.open({
-			theme: 'material-purple',
-			changeToMinutes: true
-		});
-		amazingTimePicker.afterClose().subscribe(time => {
-			console.log(time);
-		});
+	addMoreChild(child) {
+		if (this.getChildData().length >= 6) {
+			this.commonService.openAlert("Warning", "Maximum Child Limit 6.", "warning");
+		} else {
+			this.getChildData().push(this.createChildArray(child));
+			this.birthCertificateForm.get('noOfChilds').setValue(this.getChildData().length);
+		}
+
 	}
+
+	deleteChild(childData: any, index: number) {
+
+		this.commonService.deleteAlert('Are you sure?', "You won't be able to revert this!", 'warning', '', performDelete => {
+
+			if (this.birthCertificateForm.get('noOfChilds').value <= 1) {
+				this.commonService.openAlert("Warning", "Atleast One Child Info Mandatory", "warning");
+			} else {
+				if (childData.id == null) {
+					this.getChildData().removeAt(index);
+					this.birthCertificateForm.get('noOfChilds').setValue(this.birthCertificateForm.get('noOfChilds').value - 1);
+					this.toastrService.success('Child details has been removed.')
+				} else {
+					//call api get response than delete
+					this.formService.deleteChildData(this.birthCertificateForm.get('id').value, childData.id).subscribe(respData => {
+						if (respData.success) {
+							this.getChildData().removeAt(index);
+							this.birthCertificateForm.get('noOfChilds').setValue(this.getChildData().length);
+							this.toastrService.success('Child details has been removed.')
+						}
+					})
+				}
+
+			}
+		}
+		);
+	}
+
+	// @Component({
+	// 	templateUrl: 'birth-childdata.html',
+	// })
+	// export class ChildSelectionContent {
+	// 	private translateKey = "birthRegScreen";
+	// 	private ChildDetails: any[] = [];
+	// 	private noOfChild = 0;
+	// 	private ChildDetailsForm : FormGroup;
+
+	// 	private mainObject = {
+	// 		birthDate : null,
+	//         birthTime : null,
+	// 		childName : null,
+	// 		id : 3,
+	// 		sex	: {},
+	// 		uniqueId : null,
+	// 		version : null,
+	// 		weightGram :	null,
+	// 		weightKg: {}
+	//     }
+
+	// 	constructor(
+	// 		public dialogRef: MatDialogRef<BirthRegistrationComponent>,
+	// 		private fb: FormBuilder,
+	// 		private atp: AmazingTimePickerService,
+	// 		@Inject(MAT_DIALOG_DATA) public data: any) {
+	// 		console.log(data);
+	// 		this.noOfChild = parseInt(data.noOfChild);
+
+	// 	}
+
+	// 	createArrayOfDetails() {
+	// 		for (let i = 0; i < this.noOfChild; i++) {
+	// 			this.ChildDetails.push(this.createChildDetailsForm());
+	// 		}
+	// 	}
+
+	// 	closeDailog(): void {
+	// 		this.dialogRef.close();
+	// 	}
+
+	// 	createChildDetailsForm() {
+	// 		this.ChildDetailsForm =  this.fb.group({
+	// 			birthDate: null,
+	// 			birthTime: null,
+	// 			childName: null,
+	// 			id: 3,
+	// 			sex: this.fb.group({
+	// 				code: null
+	// 			}),
+	// 			uniqueId: null,
+	// 			version: null,
+	// 			weightGram: null,
+	// 			weightKg: this.fb.group({
+	// 				code: null
+	// 			})
+	// 		})
+	// 	}
+
+	// 	openTimePicker() {
+	// 		const amazingTimePicker = this.atp.open({
+	// 			theme: 'material-purple',
+	// 			changeToMinutes: true
+	// 		});
+	// 		amazingTimePicker.afterClose().subscribe(time => {
+	// 			console.log(time);
+	// 		});
+	// 	}
+	// }
 }

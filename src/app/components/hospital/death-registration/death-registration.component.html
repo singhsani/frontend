@@ -504,19 +504,19 @@
 					<div *ngIf="showButtons">
 						<mat-checkbox labelPosition="after">{{'cremation_report' | translate:translateKey}}</mat-checkbox>
 						<br>
-						<file-upload  [form]="deathCertificateForm" [uploadModel]="setDataValue(1,'cremationReport','1.1','cremationReport')" [attachments]="attachments"></file-upload>
+						<app-hos-file-upload  [form]="deathCertificateForm" [uploadModel]="setDataValue(1,'cremationReport','1.1','cremationReport')" [attachments]="attachments"></app-hos-file-upload>
 					</div>
 	
 					<div *ngIf="showButtons">
 						<mat-checkbox labelPosition="after">{{'form4A_death_provided_by_doctor' | translate:translateKey}}</mat-checkbox>
 						<br>
-						<file-upload [form]="deathCertificateForm" [uploadModel]="setDataValue(2,'form4A','1.1','form4A')" [attachments]="attachments"></file-upload>
+						<app-hos-file-upload [form]="deathCertificateForm" [uploadModel]="setDataValue(2,'form4A','1.1','form4A')" [attachments]="attachments"></app-hos-file-upload>
 					</div>
 	
 					<div *ngIf="showButtons">
 						<mat-checkbox labelPosition="after">{{'deceased_id_proof' | translate:translateKey}}</mat-checkbox>
 						<br>
-						<file-upload [form]="deathCertificateForm" [uploadModel]="setDataValue(3,'deceasedIdProof','1.1','deceasedIdProof')" [attachments]="attachments"></file-upload>
+						<app-hos-file-upload [form]="deathCertificateForm" [uploadModel]="setDataValue(3,'deceasedIdProof','1.1','deceasedIdProof')" [attachments]="attachments"></app-hos-file-upload>
 					</div>
 	
 					<app-hos-action-bar [form]="deathCertificateForm" [step]="'final'" (stepReset)="stepReset()" (handleErrors)="handleErrorsOnSubmit($event)"></app-hos-action-bar>

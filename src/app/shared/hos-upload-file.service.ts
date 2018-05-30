@@ -1,0 +1,51 @@
+import { Injectable } from '@angular/core';
+import { HosHttpService } from './services/hos-http.service';
+import { CommonService } from './services/common.service';
+import { IfObservable } from 'rxjs/observable/IfObservable';
+import { HttpEvent, HttpEventType } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { SessionStorageService } from 'angular-web-storage';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class HosUploadFileService {
+  uploadFileUrl: string;
+  progress: { percentage: number } = { percentage: 0 }
+
+  constructor(
+    private httpService: HosHttpService,
+    private commonService: CommonService,
+    private session: SessionStorageService
+  ) {
+    this.uploadFileUrl = 'api/attachment/upload';
+  }
+
+  processFileToServer(formData: FormData, setProgress?: any, successResponse?: any) {
+
+    this.httpService.uploadFilePost(this.uploadFileUrl, formData).subscribe(event => {
+      switch (event.type) {
+        case HttpEventType.Sent:
+          break;
+        case HttpEventType.ResponseHeader:
+          break;
+        case HttpEventType.UploadProgress:
+          return setProgress(Math.round(100 * event.loaded / event.total));
+        case HttpEventType.Response:
+          return successResponse(event.body);
+      }
+    });
+  }
+
+  getFileFromServer(serviceFormId, fileId, type) {
+    let getFileUrl = 'api/attachment/' + serviceFormId + '/getFile/' + fileId;
+
+    return this.httpService.getUploadedFile(getFileUrl, type);
+  }
+
+  deleteFile(serviceFormId, fileId) {
+    let getFileUrl = 'api/attachment/' + serviceFormId + '/getFile/' + fileId + "/delete";
+    return this.httpService.deleteUploadedFile(getFileUrl)
+
+  }
+}

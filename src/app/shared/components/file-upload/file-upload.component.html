@@ -1,14 +1,7 @@
 <div class="row" *ngIf="!fromAdmin">
 	<div class="col-md-12">
-		<mat-progress-bar *ngIf="currentFileUpload" mode="determinate" value="{{progress.percentage}}"></mat-progress-bar>
+		<!-- <mat-progress-bar *ngIf="currentFileUpload" mode="determinate" value="{{progress.percentage}}"></mat-progress-bar> -->
 
-		<div *ngIf="currentFileUpload" class="progress">
-
-			<div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" attr.aria-valuenow="{{progress.percentage}}"
-			 aria-valuemin="0" aria-valuemax="100" [ngStyle]="{width:progress.percentage+'%'}">
-				{{progress.percentage}}%
-			</div>
-		</div>
 
 		<div *ngIf="showButton">
 			<label class="btn btn-default" [class.disabled]="!form.get('canEdit').value">
