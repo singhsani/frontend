@@ -1,6 +1,6 @@
 <div class="container">
     <app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
-    <mat-card class="mt-4 formClass">
+    <mat-card  class="mt-4 formClass">
 
         <form class="birth-certificate-form" [formGroup]="birthCertificateForm" autocomplete="off" ngNativeValidate>
 
@@ -11,25 +11,24 @@
                     </ng-template>
                     <div class="row">
 
-                        <mat-form-field class="col-md-4">
+                        <!-- <mat-form-field class="col-md-4">
                             <mat-select placeholder="{{'no_of_child' | translate:translateKey}}">
-                                <mat-option *ngFor="let noOfChild of NOOFCHILD" (click)="openChildSelectionDailog($event, noOfChild, oldval)" [value]="noOfChild.code">
+                                <mat-option *ngFor="let noOfChild of NOOFCHILD"  (click)="openChildSelectionDailog(noOfChild)" [value]="noOfChild.code">
                                     {{noOfChild.name}}
                                 </mat-option>
                             </mat-select>
-                        </mat-form-field>
+                        </mat-form-field> -->
 
-                        <mat-form-field formGroupName="birthPlace" class="col-md-4">
-                            <mat-select placeholder="{{'birth_place' | translate:translateKey}}" formControlName="code">
-                                <mat-option *ngFor="let birthplace of BirthPlaces" [value]="birthplace.code">
-                                    {{birthplace.name}}
-                                </mat-option>
-                            </mat-select>
-                            <!-- <control-messages [control]="birthCertificateForm.controls.birthPlace.controls.code"></control-messages> -->
-                        </mat-form-field>
-                        <div class="col-md-4" formGroupName="birthPlace" *ngIf="birthCertificateForm.value.birthPlace.code == 'OTHER_PLACE'">
+                        <div formGroupName="birthPlace" class="col-md-4">
+                            <ng-select placeholder="{{'birth_place' | translate:translateKey}}" formControlName="code">
+                                <ng-option  *ngFor="let birthplace of BirthPlaces" [value]="birthplace.code">{{birthplace.name}}</ng-option>
+                            </ng-select>
+                           <control-messages [control]="birthCertificateForm.controls.birthPlace.controls.code"></control-messages>
+                        </div>
+
+                        <div class="col-md-4"  *ngIf="birthCertificateForm.value.birthPlace.code == 'OTHER_PLACE'">
                             <mat-form-field class="birth-certificate-col-md-4">
-                                <input matInput placeholder="{{'other_birth_place' | translate:translateKey}}" formControlName="name">
+                                <input matInput placeholder="{{'other_birth_place' | translate:translateKey}}" formControlName="otherPlace">
                             </mat-form-field>
                         </div>
 
@@ -42,72 +41,71 @@
                                 <control-messages [control]="birthCertificateForm.controls.isOrphan.controls.code"></control-messages>
                             </mat-radio-group>
                         </div>
-
-
                     </div>
 
 
-                    <div *ngIf = "showChildData" formArrayName="childs">
-                    <div class="row"  *ngFor="let item of birthCertificateForm.get('childs').controls; let i = index;" [formGroupName]="i" >
-                        <span>Child Detail {{i+1}}</span> 
+                    <div  formArrayName="childs">
+                    <div class="row" *ngFor="let item of birthCertificateForm.get('childs').controls; let i = index;" [formGroupName]="i" >
+                        
+                        <div class="col-md-12">Child {{i+1}}
+                        <button matTooltip="Delete Child Information" [disabled] = "showButtons && !birthCertificateForm.controls.canEdit.value" (click)="deleteChild(item.value, i)" type="button" class="float-right" color="warn" mat-mini-fab *ngIf="i > 0">
+                            <mat-icon >delete</mat-icon>
+                        </button>
+                        </div>
                         <mat-form-field class="col-md-4" >
                             <input matInput (click)="picker.open()" (focus)="picker.open()" readonly [max]="maxBirthDate" [matDatepicker]="picker" placeholder="{{'birth_date' | translate:translateKey}}"
-                                formControlName="birthDate" (dateChange)="delayCalculator($event)">
+                                formControlName="birthDate" (dateChange)="delayCalculator($event, i)">
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                            <mat-datepicker #picker></mat-datepicker>
-                            <control-messages [control]="birthCertificateForm.controls.birthDate"></control-messages>
+                            <mat-datepicker #picker touchUi="true"></mat-datepicker>
+                            <control-messages [control]="birthCertificateForm.controls.childs.controls[i].controls.birthDate"></control-messages>
                         </mat-form-field>
 
                         <mat-form-field class="col-md-4" >
                             <mat-label>{{'birth_time' | translate:translateKey}}</mat-label>
-                            <input matInput type="time" atp-time-picker theme="dark" formControlName="birthTime" name="birthTime" (focus)="openTimePicker()"
+                            <input matInput type="time" atp-time-picker theme="dark" formControlName="birthTime" (focus)="openTimePicker(i)"
                                 readonly/>
-                            <!-- <input matInput type="time"   placeholder="HH:MM" formControlName="birthTime"> -->
-                            <control-messages [control]="birthCertificateForm.controls.birthTime"></control-messages>
+                            <control-messages [control]="birthCertificateForm.controls.childs.controls[i].controls.birthTime"></control-messages>
                         </mat-form-field>
 
 
                         <mat-form-field  class="col-md-4">
                             <input matInput maxlength="20" appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{'child_name' | translate:translateKey}}"
                                 name="childName" formControlName="childName">
-                            <control-messages [control]="birthCertificateForm.controls.childName"></control-messages>
+                            <control-messages [control]="birthCertificateForm.controls.childs.controls[i].controls.childName"></control-messages>
                         </mat-form-field>
 
-
-
-
-                        <div class="col-md-4" >
-                            <mat-form-field >
-                                <mat-select placeholder="{{'child_weight_kg' | translate:translateKey}}" formControlName="weightKg">
-                                    <mat-option *ngFor="let childweight of ChildWeights" [value]="childweight.code">
-                                        {{childweight.name}} kgs.
-                                    </mat-option>
-                                </mat-select>
-                                <!-- <control-messages [control]="birthCertificateForm.controls.weightKg.controls.code"></control-messages> -->
-                            </mat-form-field>
+                        <div class="col-md-4" formGroupName="weightKg" >
+                            <ng-select placeholder="{{'child_weight_kg' | translate:translateKey}}" formControlName="code">
+                                <ng-option *ngFor="let childweight of ChildWeights" [value]="childweight.code">{{childweight.name}} kgs.</ng-option>
+                            </ng-select>
+                            <control-messages [control]="birthCertificateForm.controls.childs.controls[i].controls.weightKg.controls.code"></control-messages>
                         </div>
 
 
                         <mat-form-field class="col-md-4" >
                             <input matInput maxlength="3" OnlyNumber placeholder="{{'child_weight_gms' | translate:translateKey}}" formControlName="weightGram">
-                            <mat-error *ngIf="birthCertificateForm.get('weightGram').errors?.pattern">
-                                Child Weight In (Gms) is incorrect.
-                            </mat-error>
+                            <control-messages [control]="birthCertificateForm.controls.childs.controls[i].controls.weightGram"></control-messages>
+                             
                         </mat-form-field>
 
-                        <div class="col-md-4" >
+                        <div class="col-md-4"  formGroupName="sex">
                             <div >
                                 <mat-label>{{'gender' | translate:translateKey}}</mat-label>
-                                <mat-radio-group class="example-radio-group" formControlName="sex">
+                                <mat-radio-group class="example-radio-group" formControlName="code">
                                     <mat-radio-button class="example-radio-button" *ngFor="let sex of Gender" [value]="sex.code">
                                         {{sex.name}}
                                     </mat-radio-button>
+                                    <control-messages [control]="birthCertificateForm.controls.childs.controls[i].controls.sex.controls.code"></control-messages>
                                 </mat-radio-group>
                             </div>
                         </div>
                     </div>
 
                     </div>
+                    
+                    <button class="float-right" [disabled] = "showButtons && !birthCertificateForm.controls.canEdit.value" matTooltip="Add More New Born Child" type="button" mat-mini-fab color="accent" (click)="addMoreChild()">
+                        <mat-icon>add</mat-icon>
+                    </button>
 
                     <app-hos-action-bar [form]="birthCertificateForm" [step]="'step1'"></app-hos-action-bar>
 
@@ -121,41 +119,55 @@
                     <div class="row">
 
                         <mat-form-field class="col-md-4">
-                            <input matInput maxlength="20" appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{'first_name' | translate:translateKey}}"
+                            <input matInput maxlength="20" [form]="birthCertificateForm" appGujInputSource targetElement="fatherFirstNameGuj" appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{'first_name' | translate:translateKey}}"
                                 formControlName="fatherFirstName">
                             <control-messages [control]="birthCertificateForm.controls.fatherFirstName"></control-messages>
                         </mat-form-field>
 
                         <mat-form-field class="col-md-4">
-                            <input matInput maxlength="20" appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{'middle_name' | translate:translateKey}}"
+                            <input matInput maxlength="20" appValidationFields [form]="birthCertificateForm" appGujInputSource targetElement="fatherMiddleNameGuj"[validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{'middle_name' | translate:translateKey}}"
                                 formControlName="fatherMiddleName">
                             <control-messages [control]="birthCertificateForm.controls.fatherMiddleName"></control-messages>
                         </mat-form-field>
 
 
                         <mat-form-field class="col-md-4">
-                            <input matInput maxlength="20" appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{'last_name' | translate:translateKey}}"
+                            <input matInput maxlength="20" appValidationFields [form]="birthCertificateForm" appGujInputSource targetElement="fatherLastNameGuj" [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{'last_name' | translate:translateKey}}"
                                 formControlName="fatherLastName">
                             <control-messages [control]="birthCertificateForm.controls.fatherLastName"></control-messages>
                         </mat-form-field>
 
-                        <mat-form-field formGroupName="fatherEducation" class="col-md-4">
-                            <mat-select placeholder="{{'education' | translate:translateKey}}" formControlName="code">
-                                <mat-option matTooltip="{{fathereducation.name}}" *ngFor="let fathereducation of FatherEducations" [value]="fathereducation.code">
-                                    {{fathereducation.name}}
-                                </mat-option>
-                            </mat-select>
-                            <control-messages [control]="birthCertificateForm.controls.fatherEducation.controls.code"></control-messages>
+                        <mat-form-field class="col-md-4">
+                            <input matInput maxlength="20" appPreventSpace placeholder="{{'first_name' | translate:translateKey:'gu'}}" formControlName="fatherFirstNameGuj">
+                            <control-messages [control]="birthCertificateForm.controls.fatherFirstNameGuj"></control-messages>
+                        </mat-form-field>
+                        
+                        <mat-form-field class="col-md-4">
+                            <input matInput maxlength="20" appPreventSpace placeholder="{{'middle_name' | translate:translateKey:'gu'}}" formControlName="fatherMiddleNameGuj">
+                            <control-messages [control]="birthCertificateForm.controls.fatherMiddleNameGuj"></control-messages>
+                        </mat-form-field>
+                        
+                        
+                        <mat-form-field class="col-md-4">
+                            <input matInput maxlength="20" appPreventSpace placeholder="{{'last_name' | translate:translateKey:'gu'}}" formControlName="fatherLastNameGuj">
+                            <control-messages [control]="birthCertificateForm.controls.fatherLastNameGuj"></control-messages>
                         </mat-form-field>
 
-                        <mat-form-field formGroupName="fatherOccupations" class="col-md-4">
-                            <mat-select placeholder="{{'occupation' | translate:translateKey}}" formControlName="code">
-                                <mat-option matTooltip="{{fatheroccupation.name}}" *ngFor="let fatheroccupation of FatherOccupation" [value]="fatheroccupation.code">
+                        <div formGroupName="fatherEducation" class="col-md-4">
+                            <ng-select placeholder="{{'education' | translate:translateKey}}" formControlName="code">
+                                <ng-option matTooltip="{{fathereducation.name}}" *ngFor="let fathereducation of FatherEducations" [value]="fathereducation.code">{{fathereducation.name}}</ng-option>
+                            </ng-select>
+                            <control-messages [control]="birthCertificateForm.controls.fatherEducation.controls.code"></control-messages>
+                        </div>
+
+                        <div formGroupName="fatherOccupations" class="col-md-4">
+                            <ng-select placeholder="{{'occupation' | translate:translateKey}}" formControlName="code">
+                                <ng-option matTooltip="{{fatheroccupation.name}}" *ngFor="let fatheroccupation of FatherOccupation" [value]="fatheroccupation.code">
                                     {{fatheroccupation.name}}
-                                </mat-option>
-                            </mat-select>
+                                </ng-option>
+                            </ng-select>
                             <control-messages [control]="birthCertificateForm.controls.fatherOccupations.controls.code"></control-messages>
-                        </mat-form-field>
+                        </div>
 
                         <mat-form-field class="col-md-4">
                             <input matInput maxlength="12" minlength="12" OnlyNumber placeholder="{{'aadhar_number' | translate:translateKey}}" formControlName="fatherAadharNumber">
@@ -163,25 +175,11 @@
                         </mat-form-field>
 
                     </div>
-                    <!-- <div class="row">
+                    <div class="row">
                     
-                        <mat-form-field class="col-md-4">
-                            <input matInput maxlength="20" appPreventSpace [value]="birthCertificateForm.controls.fatherFirstName.value" placeholder="{{'first_name' | translate:translateKey}}" formControlName="fatherFirstName">
-                            <control-messages [control]="birthCertificateForm.controls.fatherFirstName"></control-messages>
-                        </mat-form-field>
+                       
                     
-                        <mat-form-field class="col-md-4">
-                            <input matInput maxlength="20" appPreventSpace [value] ="birthCertificateForm.controls.fatherMiddleName.value" placeholder="{{'middle_name' | translate:translateKey}}" formControlName="fatherMiddleName">
-                            <control-messages [control]="birthCertificateForm.controls.fatherMiddleName"></control-messages>
-                        </mat-form-field>
-                    
-                    
-                        <mat-form-field class="col-md-4">
-                            <input matInput maxlength="20" appPreventSpace [value] ="birthCertificateForm.controls.fatherLastName.value" placeholder="{{'last_name' | translate:translateKey}}" formControlName="fatherLastName">
-                            <control-messages [control]="birthCertificateForm.controls.fatherLastName"></control-messages>
-                        </mat-form-field>
-                    
-                        <mat-form-field formGroupName="fatherEducation" class="col-md-4">
+                        <!-- <mat-form-field formGroupName="fatherEducation" class="col-md-4">
                             <mat-select placeholder="{{'education' | translate:translateKey}}"  formControlName="code">
                                 <mat-option *ngFor="let fathereducation of FatherEducations" [value] ="fathereducation.code">
                                     {{fathereducation.name}}
@@ -197,8 +195,8 @@
                                 </mat-option>
                             </mat-select>
                             <control-messages [control]="birthCertificateForm.controls.fatherOccupations.controls.code"></control-messages>
-                        </mat-form-field>
-                        </div> -->
+                        </mat-form-field> -->
+                        </div>
                     <app-hos-action-bar [form]="birthCertificateForm" [step]="'step2'"></app-hos-action-bar>
 
                 </mat-step>
@@ -210,40 +208,55 @@
 
                     <div class="row">
                         <mat-form-field class="col-md-4">
-                            <input matInput maxlength="20" appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{'first_name' | translate:translateKey}}"
+                            <input matInput maxlength="20" appValidationFields [form]="birthCertificateForm" appGujInputSource targetElement="motherFirstNameGuj" [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{'first_name' | translate:translateKey}}"
                                 formControlName="motherFirstName">
                             <control-messages [control]="birthCertificateForm.controls.motherFirstName"></control-messages>
                         </mat-form-field>
 
                         <mat-form-field class="col-md-4">
-                            <input matInput maxlength="20" appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{'middle_name' | translate:translateKey}}"
+                            <input matInput maxlength="20" appValidationFields [form]="birthCertificateForm" appGujInputSource targetElement="motherMiddleNameGuj" [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{'middle_name' | translate:translateKey}}"
                                 formControlName="motherMiddleName">
                             <control-messages [control]="birthCertificateForm.controls.motherMiddleName"></control-messages>
                         </mat-form-field>
 
                         <mat-form-field class="col-md-4">
-                            <input matInput maxlength="20" appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{'last_name' | translate:translateKey}}"
+                            <input matInput maxlength="20" appValidationFields [form]="birthCertificateForm" appGujInputSource targetElement="motherLastNameGuj" [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{'last_name' | translate:translateKey}}"
                                 formControlName="motherLastName">
                             <control-messages [control]="birthCertificateForm.controls.motherLastName"></control-messages>
                         </mat-form-field>
 
-                        <mat-form-field formGroupName="motherEducation" class="col-md-4">
-                            <mat-select placeholder="{{'education' | translate:translateKey}}" formControlName="code">
-                                <mat-option matTooltip="{{mothereducation.name}}" *ngFor="let mothereducation of MotherEducations" [value]="mothereducation.code">
-                                    {{mothereducation.name}}
-                                </mat-option>
-                            </mat-select>
-                            <control-messages [control]="birthCertificateForm.controls.motherEducation.controls.code"></control-messages>
+                        <mat-form-field class="col-md-4">
+                            <input matInput maxlength="20" appPreventSpace placeholder="{{'first_name'| translate:translateKey:'gu'}}" formControlName="motherFirstNameGuj">
+                            <control-messages [control]="birthCertificateForm.controls.motherFirstNameGuj"></control-messages>
+                        </mat-form-field>
+                        
+                        <mat-form-field class="col-md-4">
+                            <input matInput maxlength="20" appPreventSpace placeholder="{{'middle_name' | translate:translateKey:'gu'}}" formControlName="motherMiddleNameGuj">
+                            <control-messages [control]="birthCertificateForm.controls.motherMiddleNameGuj"></control-messages>
+                        </mat-form-field>
+                        
+                        <mat-form-field class="col-md-4">
+                            <input matInput maxlength="20" appPreventSpace placeholder="{{'last_name' | translate:translateKey:'gu'}}" formControlName="motherLastNameGuj">
+                            <control-messages [control]="birthCertificateForm.controls.motherLastNameGuj"></control-messages>
                         </mat-form-field>
 
-                        <mat-form-field formGroupName="motherOccupations" class="col-md-4">
-                            <mat-select placeholder="{{'occupation' | translate:translateKey}}" formControlName="code">
-                                <mat-option matTooltip="{{motheroccupation.name}}" *ngFor="let motheroccupation of MotherOccupation" [value]="motheroccupation.code">
+                        <div formGroupName="motherEducation" class="col-md-4">
+                            <ng-select placeholder="{{'education' | translate:translateKey}}" formControlName="code">
+                                <ng-option matTooltip="{{mothereducation.name}}" *ngFor="let mothereducation of MotherEducations" [value]="mothereducation.code">
+                                    {{mothereducation.name}}
+                                </ng-option>
+                            </ng-select>
+                            <control-messages [control]="birthCertificateForm.controls.motherEducation.controls.code"></control-messages>
+                        </div>
+
+                        <div formGroupName="motherOccupations" class="col-md-4">
+                            <ng-select placeholder="{{'occupation' | translate:translateKey}}" formControlName="code">
+                                <ng-option matTooltip="{{motheroccupation.name}}" *ngFor="let motheroccupation of MotherOccupation" [value]="motheroccupation.code">
                                     {{motheroccupation.name}}
-                                </mat-option>
-                            </mat-select>
+                                </ng-option>
+                            </ng-select>
                             <control-messages [control]="birthCertificateForm.controls.motherOccupations.controls.code"></control-messages>
-                        </mat-form-field>
+                        </div>
 
                         <mat-form-field class="col-md-4">
                             <input matInput maxlength="12" minlength="12" OnlyNumber placeholder="{{'aadhar_number' | translate:translateKey}}" formControlName="motherAadharNumber">
@@ -274,23 +287,23 @@
                             <control-messages [control]="birthCertificateForm.controls.motherDeliveryAge"></control-messages>
                         </mat-form-field>
 
-                        <mat-form-field formGroupName="deliveryTreatment" class="col-md-4">
-                            <mat-select placeholder="{{'treatment_taken_during_delivery' | translate:translateKey}}" formControlName="code">
-                                <mat-option matTooltip="{{dto.name}}" *ngFor="let dto of DeliveryTreatmentOptions" [value]="dto.code">
+                        <div formGroupName="deliveryTreatment" class="col-md-4">
+                            <ng-select placeholder="{{'treatment_taken_during_delivery' | translate:translateKey}}" formControlName="code">
+                                <ng-option matTooltip="{{dto.name}}" *ngFor="let dto of DeliveryTreatmentOptions" [value]="dto.code">
                                     {{dto.name}}
-                                </mat-option>
-                            </mat-select>
+                                </ng-option>
+                            </ng-select>
                             <control-messages [control]="birthCertificateForm.controls.deliveryTreatment.controls.code"></control-messages>
-                        </mat-form-field>
+                        </div>
 
-                        <mat-form-field formGroupName="deliveryType" class="col-md-4">
-                            <mat-select placeholder="{{'delivery_type' | translate:translateKey}}" formControlName="code">
-                                <mat-option *ngFor="let deliverytype of TypeOfDelivery" [value]="deliverytype.code">
+                        <div formGroupName="deliveryType" class="col-md-4">
+                            <ng-select placeholder="{{'delivery_type' | translate:translateKey}}" formControlName="code">
+                                <ng-option *ngFor="let deliverytype of TypeOfDelivery" [value]="deliverytype.code">
                                     {{deliverytype.name}}
-                                </mat-option>
-                            </mat-select>
+                                </ng-option>
+                            </ng-select>
                             <control-messages [control]="birthCertificateForm.controls.deliveryType.controls.code"></control-messages>
-                        </mat-form-field>
+                        </div>
 
                         <mat-form-field class="col-md-4">
                             <input matInput maxlength="2" OnlyNumber placeholder="{{'pregnancy_duration' | translate:translateKey}}" formControlName="pregnancyDuration">
@@ -303,23 +316,10 @@
                         </mat-form-field>
                     </div>
 
-                    <!-- <div class="row">
-                        <mat-form-field class="col-md-4">
-                            <input matInput maxlength="20" appPreventSpace [value] ="birthCertificateForm.controls.motherFirstName.value" placeholder="{{'first_name' | translate:translateKey}}" formControlName="motherFirstName">
-                            <control-messages [control]="birthCertificateForm.controls.motherFirstName"></control-messages>
-                        </mat-form-field>
+                    <div class="row">
                         
-                        <mat-form-field class="col-md-4">
-                            <input matInput maxlength="20"  appPreventSpace [value] ="birthCertificateForm.controls.motherMiddleName.value" placeholder="{{'middle_name' | translate:translateKey}}" formControlName="motherMiddleName">
-                            <control-messages [control]="birthCertificateForm.controls.motherMiddleName"></control-messages>
-                        </mat-form-field>
-                        
-                        <mat-form-field class="col-md-4">
-                            <input matInput maxlength="20" appPreventSpace [value] ="birthCertificateForm.controls.motherLastName.value" placeholder="{{'last_name' | translate:translateKey}}" formControlName="motherLastName">
-                            <control-messages [control]="birthCertificateForm.controls.motherLastName"></control-messages>
-                        </mat-form-field>
-                        
-                        <mat-form-field formGroupName="motherEducation" class="col-md-4">
+        
+                        <!-- <mat-form-field formGroupName="motherEducation" class="col-md-4">
                             <mat-select placeholder="{{'education' | translate:translateKey}}" formControlName="code">
                                 <mat-option *ngFor="let mothereducation of MotherEducations" [value] ="mothereducation.code">
                                     {{mothereducation.name}}
@@ -335,8 +335,8 @@
                                 </mat-option>
                             </mat-select>
                             <control-messages [control]="birthCertificateForm.controls.motherOccupations.controls.code"></control-messages>
-                        </mat-form-field>
-                    </div> -->
+                        </mat-form-field> -->
+                    </div>
 
                     <app-hos-action-bar [form]="birthCertificateForm" [step]="'step2'"></app-hos-action-bar>
 
@@ -358,69 +358,6 @@
                         <!-- <div formGroupName="parentDeliveryAddress"> -->
 
                         <app-address #address [addressFormGroup]="birthCertificateForm.controls.parentDeliveryAddress"></app-address>
-
-                        <!-- <div class="row">
-
-                                <mat-form-field class="col-md-4">
-                                    <input matInput maxlength="60" type="text" placeholder="{{'address_line1' | translate:translateKey}}" formControlName="addressLine1">
-                                </mat-form-field>
-    
-                                <mat-form-field class="col-md-4">
-                                    <input matInput maxlength="60" type="text" placeholder="{{'address_line2' | translate:translateKey}}" formControlName="addressLine2">
-                                </mat-form-field>
-    
-                                <mat-form-field class="col-md-4">
-                                    <input matInput maxlength="60" type="text" placeholder="{{'address_line3' | translate:translateKey}}" formControlName="addressLine3">
-                                </mat-form-field>
-    
-                                <mat-form-field class="col-md-4">
-                                    <input matInput maxlength="60" OnlyNumber placeholder="{{'house_number' | translate:translateKey}}" formControlName="houseNo">
-                                </mat-form-field>
-    
-                                <mat-form-field class="col-md-4">
-                                    <input matInput maxlength="60" OnlyNumber type="text" placeholder="{{'tenament_number' | translate:translateKey}}" formControlName="tenamentNo">
-                                </mat-form-field>
-    
-                                <mat-form-field class="col-md-4">
-                                    <input matInput maxlength="60" type="text" placeholder="{{'building_name' | translate:translateKey}}" formControlName="buildingName">
-                                </mat-form-field>
-    
-                                <mat-form-field class="col-md-4">
-                                    <input matInput maxlength="60" type="text" placeholder="{{'village_name' | translate:translateKey}}" formControlName="village">
-                                </mat-form-field>
-    
-                                <mat-form-field class="col-md-4">
-                                    <mat-select placeholder="{{'state' | translate:translateKey}}" formControlName="state" required>
-                                        <mat-option *ngFor="let state of States" [value]="state.name">
-                                            {{state.name}}
-                                        </mat-option>
-                                    </mat-select>
-                                    <control-messages [control]="birthCertificateForm.controls.parentDeliveryAddress.controls.state"></control-messages>
-                                </mat-form-field>
-    
-                                <mat-form-field class="col-md-4">
-                                    <mat-select placeholder="{{'district' | translate:translateKey}}" formControlName="district" required>
-                                        <mat-option *ngFor="let dist of District" [value]="dist.name">
-                                            {{dist.name}}
-                                        </mat-option>
-                                    </mat-select>
-                                    <control-messages [control]="birthCertificateForm.controls.parentDeliveryAddress.controls.district"></control-messages>
-                                </mat-form-field>
-    
-                                <mat-form-field class="col-md-4">
-                                    <input matInput maxlength="6" type="tel"  OnlyNumber placeholder="{{'pincode' | translate:translateKey}}" formControlName="pincode">
-                                    <control-messages [control]="birthCertificateForm.controls.parentDeliveryAddress.controls.pincode"></control-messages>
-                                </mat-form-field>
-    
-                                <mat-form-field class="col-md-4">
-                                    <input matInput maxlength="60" type="text" placeholder="{{'taluka_name' | translate:translateKey}}" formControlName="talukaName">
-                                    <control-messages [control]="birthCertificateForm.controls.parentDeliveryAddress.controls.talukaName"></control-messages>
-                                </mat-form-field>
-
-                            </div> -->
-                        <!-- </div> -->
-
-
                         <span formGroupName="isPermanentPresentAddressSame">
                             <mat-checkbox [disabled]="!birthCertificateForm.get('canEdit').value" (change)="check($event);" [checked]="birthCertificateForm.get('isPermanentPresentAddressSame').get('code').value == 'YES'? true : false">{{'is_permanent_address_same_as_present_address' | translate:translateKey}}</mat-checkbox>
                         </span>
@@ -428,69 +365,8 @@
                         <h2 class="mt-4">
                             {{'permanent_address_during_delivery' | translate:translateKey}}
                         </h2>
-
-                        <!-- <div formGroupName="parentPermanentAddress"> -->
-
                         <app-address #address [addressFormGroup]="birthCertificateForm.controls.parentPermanentAddress"></app-address>
-                        <!-- <div class="row">
-
-                                <mat-form-field class="col-md-4">
-                                    <input matInput maxlength="60" type="text" placeholder="{{'address_line1' | translate:translateKey}}" formControlName="addressLine1">
-                                </mat-form-field>
-    
-                                <mat-form-field class="col-md-4">
-                                    <input matInput maxlength="60" type="text" placeholder="{{'address_line2' | translate:translateKey}}" formControlName="addressLine2">
-                                </mat-form-field>
-    
-                                <mat-form-field class="col-md-4">
-                                    <input matInput maxlength="60" type="text" placeholder="{{'address_line3' | translate:translateKey}}" formControlName="addressLine3">
-                                </mat-form-field>
-    
-                                <mat-form-field class="col-md-4">
-                                    <input matInput maxlength="60" OnlyNumber type="text" placeholder="{{'house_number' | translate:translateKey}}" formControlName="houseNo">
-                                </mat-form-field>
-    
-                                <mat-form-field class="col-md-4">
-                                    <input matInput maxlength="60" OnlyNumber type="text" placeholder="{{'tenament_number' | translate:translateKey}}" formControlName="tenamentNo">
-                                </mat-form-field>
-    
-                                <mat-form-field class="col-md-4">
-                                    <input matInput maxlength="60" type="text" placeholder="{{'building_name' | translate:translateKey}}" formControlName="buildingName">
-                                </mat-form-field>
-    
-                                <mat-form-field class="col-md-4">
-                                    <input matInput maxlength="60" type="text" placeholder="{{'village_name' | translate:translateKey}}" formControlName="village">
-                                </mat-form-field>
-    
-                                <mat-form-field class="col-md-4">
-                                    <mat-select placeholder="{{'state' | translate:translateKey}}" formControlName="state" required>
-                                        <mat-option *ngFor="let state of States" [value]="state.name">
-                                            {{state.name}}
-                                        </mat-option>
-                                    </mat-select>
-                                    <control-messages [control]="birthCertificateForm.controls.parentPermanentAddress.controls.state"></control-messages>
-                                </mat-form-field>
-    
-                                <mat-form-field class="col-md-4">
-                                    <mat-select placeholder="{{'district' | translate:translateKey}}" formControlName="district" required>
-                                        <mat-option *ngFor="let dist of District" [value]="dist.name">
-                                            {{dist.name}}
-                                        </mat-option>
-                                    </mat-select>
-                                    <control-messages [control]="birthCertificateForm.controls.parentPermanentAddress.controls.district"></control-messages>
-                                </mat-form-field>
-    
-                                <mat-form-field class="col-md-4">
-                                    <input matInput maxlength="6" OnlyNumber placeholder="{{'pincode' | translate:translateKey}}" formControlName="pincode">
-                                    <control-messages [control]="birthCertificateForm.controls.parentPermanentAddress.controls.pincode"></control-messages>
-                                </mat-form-field>
-    
-                                <mat-form-field class="col-md-4">
-                                    <input matInput maxlength="60" type="text" placeholder="{{'taluka_name' | translate:translateKey}}" formControlName="talukaName">
-                                    <control-messages [control]="birthCertificateForm.controls.parentPermanentAddress.controls.talukaName"></control-messages>
-                                </mat-form-field>
-                            </div> -->
-                        <!-- </div> -->
+                    
 
                         <mat-form-field formGroupName="familyReligion" class="row col-md-4">
                             <mat-select placeholder="{{'religion' | translate:translateKey}}" formControlName="code" required>
@@ -524,14 +400,56 @@
                     <div *ngIf="showButtons">
                         <mat-checkbox labelPosition="after">{{'resident_proof' | translate:translateKey}}</mat-checkbox>
                         <br>
-                        <file-upload [form]="birthCertificateForm" [uploadModel]="setDataValue(1,'residentProof','1.1','residentProof')" [attachments]="attachments"></file-upload>
+                        <app-hos-file-upload [form]="birthCertificateForm" [uploadModel]="setDataValue(1,'residentProof','1.1','residentProof')" [attachments]="attachments"></app-hos-file-upload>
                     </div>
 
                     <div *ngIf="showButtons">
                         <mat-checkbox labelPosition="after">{{'doctors_certificate' | translate:translateKey}}</mat-checkbox>
                         <br>
-                        <file-upload [form]="birthCertificateForm" [uploadModel]="setDataValue(3,'doctorsCertificate','1.1','doctorsCertificate')"
-                            [attachments]="attachments"></file-upload>
+                        <app-hos-file-upload [form]="birthCertificateForm" [uploadModel]="setDataValue(2,'doctorsCertificate','1.1','doctorsCertificate')"
+                            [attachments]="attachments"></app-hos-file-upload>
+                    </div>
+
+                    <div *ngIf="showButtons">
+                        <mat-checkbox labelPosition="after">Know your customer (KYC) with Address Proof of either Parent</mat-checkbox>
+                        <br>
+                        <app-hos-file-upload [form]="birthCertificateForm" [uploadModel]="setDataValue(3,'kycWithAddressProof','1.1','kycWithAddressProof')"
+                            [attachments]="attachments"></app-hos-file-upload>
+                    </div>
+
+                    <div *ngIf="showButtons">
+                        <mat-checkbox labelPosition="after">Aaya’s ID Proof</mat-checkbox>
+                        <br>
+                        <app-hos-file-upload [form]="birthCertificateForm" [uploadModel]="setDataValue(4,'aayaIdProof','1.1','aayaIdProof')"
+                            [attachments]="attachments"></app-hos-file-upload>
+                    </div>
+
+                    <div *ngIf="showButtons">
+                        <mat-checkbox labelPosition="after">Health Worker Report</mat-checkbox>
+                        <br>
+                        <app-hos-file-upload [form]="birthCertificateForm" [uploadModel]="setDataValue(5,'healthWorkerReport','1.1','healthWorkerReport')"
+                            [attachments]="attachments"></app-hos-file-upload>
+                    </div>
+                    
+                    <div *ngIf="showButtons">
+                        <mat-checkbox labelPosition="after">Applicant’s ID (KYC) Proof</mat-checkbox>
+                        <br>
+                        <app-hos-file-upload [form]="birthCertificateForm" [uploadModel]="setDataValue(6,'applicantIdKycProof','1.1','applicantIdKycProof')"
+                            [attachments]="attachments"></app-hos-file-upload>
+                    </div>
+
+                    <div *ngIf="showButtons && getDelayPeriod() > 30 && getDelayPeriod() < 365">
+                        <mat-checkbox labelPosition="after">Affidavit or District Health Officer order</mat-checkbox>
+                        <br>
+                        <app-hos-file-upload [form]="birthCertificateForm" [uploadModel]="setDataValue(7,'affidavitOrhealthOrder','1.1','affidavitOrhealthOrder')"
+                            [attachments]="attachments"></app-hos-file-upload>
+                    </div>
+
+                    <div *ngIf="showButtons && getDelayPeriod() > 365 ">
+                        <mat-checkbox labelPosition="after">Court Order</mat-checkbox>
+                        <br>
+                        <app-hos-file-upload [form]="birthCertificateForm" [uploadModel]="setDataValue(8,'courtOrder','1.1','courtOrder')"
+                            [attachments]="attachments"></app-hos-file-upload>
                     </div>
 
                     <div>

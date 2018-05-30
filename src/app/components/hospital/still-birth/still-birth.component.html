@@ -367,12 +367,12 @@
 
                     <div *ngIf="showButtons">
                         <mat-checkbox labelPosition="after"> {{'resident_proof' | translate:translateKey}}</mat-checkbox>
-                        <file-upload [form]="stillBirthCertificateForm" [uploadModel]="setDataValue(1,'residentProof','1.1','residentProof')" [attachments]="attachments"></file-upload>
+                        <app-hos-file-upload [form]="stillBirthCertificateForm" [uploadModel]="setDataValue(1,'residentProof','1.1','residentProof')" [attachments]="attachments"></app-hos-file-upload>
                     </div>
 
                     <div *ngIf="showButtons">
                         <mat-checkbox labelPosition="after"> {{'doctors_certificate' | translate:translateKey}}</mat-checkbox>
-                        <file-upload [form]="stillBirthCertificateForm" [uploadModel]="setDataValue(3,'doctorsCertificate','1.1','doctorsCertificate')" [attachments]="attachments"></file-upload>
+                        <app-hos-file-upload [form]="stillBirthCertificateForm" [uploadModel]="setDataValue(3,'doctorsCertificate','1.1','doctorsCertificate')" [attachments]="attachments"></app-hos-file-upload>
                     </div>
 
                     <div>

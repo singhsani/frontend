@@ -35,6 +35,7 @@ import { TitleBarComponent } from './components/title-bar/title-bar.component';
 import { LoadingIndicatorComponent } from './components/loading-indicator/loading-indicator.component';
 import { HosHttpService } from './services/hos-http.service';
 import { HosActionBarComponent } from './components/hos-action-bar/hos-action-bar.component';
+import { HosFileUploadComponent } from './components/hos-file-upload/hos-file-upload.component';
 /* import pipes end*/
 
 const COMPONENTS = [
@@ -44,6 +45,7 @@ const COMPONENTS = [
 	ActionBarComponent, 
 	ControlMessagesComponent, 
 	FileUploadComponent,
+	HosFileUploadComponent,
 	AddressComponent,
 	BasicDetailsComponent,
 	PaymentGatewayComponent,

@@ -56,6 +56,7 @@ export class HosActionBarComponent implements OnInit {
 	saveAsDraft() {
 
 		this.isSaveBtnDisabled = true;
+		console.log(this.form.getRawValue());
 
 		this.formService.saveFormData(this.form.getRawValue()).subscribe(
 			res => {

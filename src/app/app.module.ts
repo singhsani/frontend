@@ -68,7 +68,7 @@ import { NgProgressRouterModule } from '@ngx-progressbar/router';
 	providers: [
 		{ provide: LocationStrategy, useClass: HashLocationStrategy },
 		{ provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
-		{ provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { hasBackdrop: false }}
+		
 	],
 	bootstrap: [AppComponent]
 })

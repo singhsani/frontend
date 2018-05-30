@@ -81,6 +81,11 @@ export class HosFormActionsService {
 		return this.http.delete(this.requestURL);
 	}
 
+	deleteChildData(id, childId){
+		this.requestURL = `api/form/${this.apiType}/child/` + id + `/delete/` + childId;
+		return this.http.delete(this.requestURL);
+	}
+
 	/**
 	 * This method is use to get lookup data respective to api type
 	 */
