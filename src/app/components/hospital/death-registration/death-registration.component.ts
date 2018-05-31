@@ -147,9 +147,10 @@ export class DeathRegistrationComponent implements OnInit {
 			this.apiCode = param.get('apiCode');
 			this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
 		});
+		this.getLookUpsData();
 		this.deathCertificateForm = this.createDeathCertificateForm();
 		this.getDeathCertData();
-		this.getLookUpsData();
+	
 	}
 
 	/**
@@ -170,6 +171,9 @@ export class DeathRegistrationComponent implements OnInit {
 		} else {
 			this.deathCertificateForm.get('presentAddress').enable();
 		}
+		if (!this.deathCertificateForm.controls.canEdit.value) {
+			this.deathCertificateForm.disable();
+		}
 
 		this.deathCertificateForm.get('unknownCategory').get('code').setValue(event);	
 	}
@@ -181,9 +185,12 @@ export class DeathRegistrationComponent implements OnInit {
 		return this.fb.group({
 
 			//step1
-			firstName: ['', [ValidationService.nameValidator, Validators.required]],
-			middleName: ['', [ValidationService.nameValidator]],
-			lastName: ['', [ValidationService.nameValidator, Validators.required]],
+			deceasedFirstName: ['', [ValidationService.nameValidator, Validators.required]],
+			deceasedMiddleName: ['', [ValidationService.nameValidator]],
+			deceasedLastName: ['', [ValidationService.nameValidator, Validators.required]],
+			deceasedFirstNameGuj: ['', [ValidationService.nameValidator, Validators.required]],
+			deceasedMiddleNameGuj: ['', [ValidationService.nameValidator]],
+			deceasedLastNameGuj: ['', [ValidationService.nameValidator, Validators.required]],
 			gender: this.fb.group({
 				code: ['', [Validators.required]],
 			}),
@@ -195,10 +202,16 @@ export class DeathRegistrationComponent implements OnInit {
 				code: ['', Validators.required]
 			}),
 			education: this.fb.group({
-				code: ['', Validators.required]
+				id: null,
+				code: [null, Validators.required],
+				name: null,
+				gujName: null
 			}),
 			occupation: this.fb.group({
-				code: ['', Validators.required]
+				id: null,
+				code: [null, Validators.required],
+				name: null,
+				gujName: null
 			}),
 			delayedPeriod: [''],
 			femaleDeathReason: this.fb.group({
@@ -212,7 +225,10 @@ export class DeathRegistrationComponent implements OnInit {
 			}),
 			otherPlace: null,
 			medicalTreatment: this.fb.group({
-				code: null
+				id: null,
+				code: [null, Validators.required],
+				name: null,
+				gujName: null
 			}),
 			medicalReason: this.fb.group({
 				code: ['', [Validators.required]]
@@ -287,9 +303,12 @@ export class DeathRegistrationComponent implements OnInit {
 	createDeathCertificateFormUnknown(): FormGroup {
 		return this.fb.group({
 			//step1
-			firstName: ['', [ValidationService.nameValidator]],
-			middleName: ['', [ValidationService.nameValidator]],
-			lastName: ['', [ValidationService.nameValidator]],
+			deceasedFirstName: ['', [ValidationService.nameValidator]],
+			deceasedMiddleName: ['', [ValidationService.nameValidator]],
+			deceasedLastName: ['', [ValidationService.nameValidator]],
+			deceasedFirstNameGuj: ['', [ValidationService.nameValidator]],
+			deceasedMiddleNameGuj: ['', [ValidationService.nameValidator]],
+			deceasedLastNameGuj: ['', [ValidationService.nameValidator]],
 			gender: this.fb.group({
 				code: ['', []],
 			}),
@@ -301,10 +320,16 @@ export class DeathRegistrationComponent implements OnInit {
 				code: ['',]
 			}),
 			education: this.fb.group({
-				code: ['',]
+				id: null,
+				code: [null],
+				name: null,
+				gujName: null
 			}),
 			occupation: this.fb.group({
-				code: ['',]
+				id: null,
+				code: [null],
+				name: null,
+				gujName: null
 			}),
 			delayedPeriod: ['',],
 			femaleDeathReason: this.fb.group({
@@ -317,7 +342,10 @@ export class DeathRegistrationComponent implements OnInit {
 			}),
 			otherPlace: null,
 			medicalTreatment: this.fb.group({
-				code: null
+				id: null,
+				code: [null],
+				name: null,
+				gujName: null
 			}),
 			medicalReason: this.fb.group({
 				code: null
@@ -385,6 +413,21 @@ export class DeathRegistrationComponent implements OnInit {
 			}),
 
 		});
+	}
+
+	gujNameFinder(event, controlName, arr) {
+		for (let i = 0; i < arr.length; i++) {
+			if (arr[i].code === event) {
+				console.log(arr[i].gujName);
+				if (arr[i].gujName === undefined) {
+					this.deathCertificateForm.get(controlName).get('gujName').setValue('');
+					return;
+				} else {
+					this.deathCertificateForm.get(controlName).get('gujName').setValue(arr[i].gujName);
+					return;
+				}
+			}
+		}
 	}
 
 	/**

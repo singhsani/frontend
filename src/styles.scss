@@ -354,4 +354,4 @@ mat-label {align-self: center;}
 #ie-toolbar div a:hover { color: #d65727; text-decoration: none; }
 /* End - CSS for IE Message to not-supported browser for application */
 
-.ngSelect .mat-error { position: static !important; bottom: -15px; left: 0;font-size: 11px;}
+.ngSelect .mat-error { position: relative !important; top: -17px !important; left: 0;font-size: 11px;}

@@ -452,7 +452,6 @@ export class MarriageCreateComponent implements OnInit {
             this.stepper.selectedIndex = 0;
         }
     }
-
     /**
      * This method is use reset value. 
      */
