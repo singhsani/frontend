@@ -61,11 +61,11 @@ export class AddressComponent implements OnInit {
 	 */
 	onCountryChange(name: string) {
 		if (name) {
-			this.addressFormGroup.get('state').setValue(null);
-			this.addressFormGroup.get('city').setValue(null);
-
 			this.getStateLists(name);
 		}
+
+		this.addressFormGroup.get('state').setValue(null);
+		this.addressFormGroup.get('city').setValue(null);
 	}
 
 	/**
@@ -74,9 +74,10 @@ export class AddressComponent implements OnInit {
 	 */
 	onStateChange(name: string) {
 		if (name) {
-			this.addressFormGroup.get('city').setValue(null);
 			this.getCityLists(name);
 		}
+		this.addressFormGroup.get('city').setValue(null);
+
 	}
 
 	/**
@@ -85,7 +86,7 @@ export class AddressComponent implements OnInit {
 	getCountryLists() {
 
 		this.formService.getCountryLookUp().subscribe(res => {
-			
+
 			this.countryListArray = _.cloneDeep(res.data);
 
 			setTimeout(() => {
@@ -94,7 +95,7 @@ export class AddressComponent implements OnInit {
 				}
 			}, 300);
 
-		})
+		});
 	}
 
 	/**
@@ -113,7 +114,7 @@ export class AddressComponent implements OnInit {
 				this.getCityLists(this.addressFormGroup.get('state').value);
 
 			}
-		})
+		});
 	}
 
 	/**
@@ -126,7 +127,7 @@ export class AddressComponent implements OnInit {
 
 		this.formService.getCityLookUp(obj.id).subscribe(res => {
 			this.cityListArray = _.cloneDeep(res.data);
-		})
+		});
 	}
 
 

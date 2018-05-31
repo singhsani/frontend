@@ -31,9 +31,8 @@
 							<mat-label>{{'gender' | translate: translateKey}}</mat-label>
 							<mat-radio-group class="example-radio-group" formControlName="code">
 								<mat-radio-button [value]="gender.code" *ngFor="let gender of genderArray">{{gender.name}}</mat-radio-button>
-								<br/>
-								<control-messages [control]="noRecordDeathForm.controls.gender.controls.code"></control-messages>
 							</mat-radio-group>
+							<control-messages [control]="noRecordDeathForm.controls.gender.controls.code"></control-messages>
 						</div>
 
 						<div formGroupName="deathPlace" class="col-md-4">
@@ -90,8 +89,8 @@
 
 					<div class="row">
 
-						<div formGroupName="applicantRelation" class="col-md-6">
-							<ng-select placeholder="{{'relation_with_applicant' | translate: translateKey}}" name="relation" formControlName="code"  (change)="applicantRelChange($event)">
+						<div formGroupName="applicantRelation" class="col-md-6 ngSelect">
+							<ng-select placeholder="{{'relation_with_applicant' | translate: translateKey}} *" name="relation" formControlName="code"  (change)="applicantRelChange($event)">
 								<ng-option *ngFor="let relation of relationshipArray" [value]="relation.code">{{relation.name}}</ng-option>
 							</ng-select>
 							<control-messages [control]="noRecordDeathForm.controls.applicantRelation.controls.code"></control-messages>

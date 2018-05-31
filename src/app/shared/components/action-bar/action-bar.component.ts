@@ -136,7 +136,7 @@ export class ActionBarComponent implements OnInit {
 				_.forEach(value, (typeValue, type) => {
 					if (type === 'addressType') {
 						addrObj[key] = {
-							addressType: typeValue
+							[type]: typeValue
 						}
 					}
 				})

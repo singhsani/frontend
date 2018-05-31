@@ -21,7 +21,7 @@
 						</mat-form-field>
 
 						<div formGroupName="applicantProof" [class.col-md-6]="!relationFlag" [class.col-md-3]="relationFlag">
-							<ng-select placeholder="{{'applicant_proof' | translate: translateKey}}" name="relation" formControlName="code" required>
+							<ng-select placeholder="{{'applicant_proof' | translate: translateKey}} *" name="relation" formControlName="code" required>
 								<ng-option *ngFor="let relation of applicantProof" [value]="relation.code">{{relation.name}}</ng-option>
 							</ng-select>
 							<control-messages [control]="cremationForm.controls.applicantProof.controls.code"></control-messages>
