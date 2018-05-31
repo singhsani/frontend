@@ -4,6 +4,7 @@ import swal from 'sweetalert2';
 import * as _ from 'lodash';
 
 import { SessionStorageService } from 'angular-web-storage';
+import * as moment from 'moment';
 
 @Injectable()
 export class CommonService {
@@ -150,6 +151,15 @@ export class CommonService {
 				return true;
 			else
 				return false;
+		}
+	}
+
+	getDateFormat(date: string, withTime:boolean) {
+		
+		if(withTime){
+			return moment(date).format('DD-MM-YYYY HH:MM:SS');
+		} else {
+			return moment(date).format('DD-MM-YYYY');
 		}
 	}
 

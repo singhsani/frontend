@@ -2,41 +2,63 @@
 
     <mat-toolbar color="primary" class="example-toolbar">
         <mat-toolbar-row class="dasHeader">
-         <div class="float-left">
-            <button mat-icon-button (click)="snav && snav.toggle()">
-                <mat-icon>menu</mat-icon>
-            </button>
-            <a mat-button routerLink="." class="logo">
-                <img src="assets/images/vmc-logo.png" alt="Vadodara Municipal Corporation">
-                <span class="logoText">Vadodara Municipal Corporation</span></a>
-            <span class="example-spacer"></span>
-         </div>
+            <div class="float-left">
+                <button mat-icon-button (click)="isExpanded=!isExpanded; openSideNav();" *ngIf="mobileQuery.matches">
+                    <mat-icon>menu</mat-icon>
+                </button>
+                <a mat-button routerLink="." class="logo">
+                    <img src="assets/images/vmc-logo.png" alt="Vadodara Municipal Corporation">
+                    <span class="logoText">Vadodara Municipal Corporation</span>
+                </a>
+                <span class="example-spacer"></span>
+            </div>
             <!-- <button mat-icon-button position="end" (click)="selectLanguage('en')">EN</button>
             <button mat-icon-button position="end" (click)="selectLanguage('gu')">ગુજ</button> -->
             <div class="float-right">
-            <button mat-icon-button  [matMenuTriggerFor]="menu" class="userName">
+                <button mat-icon-button [matMenuTriggerFor]="menu" class="userName">
                 <mat-icon>face</mat-icon>
                     {{profileObj.firstName + ' ' + profileObj.lastName}}
                 <mat-icon>arrow_drop_down</mat-icon>
             </button>
-            <mat-menu #menu="matMenu">
-                <button mat-menu-item routerLink="/citizen/my-profile">Profile</button>
-                <button mat-menu-item (click)="onLogout()">Logout</button>
-            </mat-menu>
-        </div>
+                <mat-menu #menu="matMenu">
+                    <button mat-menu-item routerLink="/citizen/my-profile">Profile</button>
+                    <button mat-menu-item (click)="onLogout()">Logout</button>
+                </mat-menu>
+            </div>
         </mat-toolbar-row>
     </mat-toolbar>
 
-    <mat-sidenav-container class="example-sidenav-container">
-        <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [(opened)]="!mobileQuery.matches">
+    <mat-sidenav-container class="example-sidenav-container" autosize>
+        <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [(opened)]="!mobileQuery.matches" (mouseenter)="isExpanded=!isExpanded" (mouseleave)="isExpanded=!isExpanded">
             <mat-nav-list (click)="toggleSideNav()">
-                    <a *ngIf="!fromAdmin" mat-list-item routerLink="/citizen/dashboard/" routerLinkActive="active-route-link"><mat-icon>apps</mat-icon>Dashboard</a>
-                    <a mat-list-item routerLink="/citizen/my-applications/" routerLinkActive="active-route-link"><mat-icon>description</mat-icon>My Applications</a>
-                    <a *ngIf="!fromAdmin" mat-list-item routerLink="/citizen/my-profile" routerLinkActive="active-route-link"><mat-icon>face</mat-icon>My Profile</a>
-                    <a *ngIf="!fromAdmin" mat-list-item routerLink="/citizen/my-resource" routerLinkActive="active-route-link"><mat-icon>web_asset</mat-icon>Resource</a>
-                    <a *ngIf="!fromAdmin" mat-list-item routerLink="/citizen/my-transactions" routerLinkActive="active-route-link"><mat-icon>low_priority</mat-icon>Transactions</a>
-                    <a *ngIf="!fromAdmin" mat-list-item routerLink="/citizen/booking" routerLinkActive="active-route-link" [routerLinkActiveOptions]="{exact: true}"><mat-icon>collections_bookmark</mat-icon>Booking</a>
-                    <a *ngIf="!fromAdmin" mat-list-item routerLink="/citizen/booking/cancel-booking" routerLinkActive="active-route-link" [routerLinkActiveOptions]="{exact: true}"><mat-icon>collections_bookmark</mat-icon>Cancel Booking</a>
+                <a *ngIf="!fromAdmin" mat-list-item routerLink="/citizen/dashboard/" routerLinkActive="active-route-link">
+                    <mat-icon>apps</mat-icon>
+                    <span *ngIf="isExpanded">Dashboard</span>
+                </a>
+                <a mat-list-item routerLink="/citizen/my-applications/" routerLinkActive="active-route-link">
+                    <mat-icon>description</mat-icon>
+                    <span *ngIf="isExpanded">My Applications</span>
+                </a>
+                <a *ngIf="!fromAdmin" mat-list-item routerLink="/citizen/my-profile" routerLinkActive="active-route-link">
+                    <mat-icon>face</mat-icon>
+                    <span *ngIf="isExpanded">My Profile</span>
+                </a>
+                <a *ngIf="!fromAdmin" mat-list-item routerLink="/citizen/my-resource" routerLinkActive="active-route-link">
+                    <mat-icon>web_asset</mat-icon>
+                    <span *ngIf="isExpanded">Resource</span>
+                </a>
+                <a *ngIf="!fromAdmin" mat-list-item routerLink="/citizen/my-transactions" routerLinkActive="active-route-link">
+                    <mat-icon>low_priority</mat-icon>
+                    <span *ngIf="isExpanded">Transactions</span>
+                </a>
+                <a *ngIf="!fromAdmin" mat-list-item routerLink="/citizen/booking" routerLinkActive="active-route-link" [routerLinkActiveOptions]="{exact: true}">
+                    <mat-icon>collections_bookmark</mat-icon>
+                    <span *ngIf="isExpanded">Booking</span>
+                </a>
+                <a *ngIf="!fromAdmin" mat-list-item routerLink="/citizen/booking/cancel-booking" routerLinkActive="active-route-link" [routerLinkActiveOptions]="{exact: true}">
+                    <mat-icon>collections_bookmark</mat-icon>
+                    <span *ngIf="isExpanded">Cancel Booking</span>
+                </a>
             </mat-nav-list>
         </mat-sidenav>
         <mat-sidenav-content>
