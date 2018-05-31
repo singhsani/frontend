@@ -54,10 +54,10 @@ export class BirthRegistrationComponent implements OnInit {
 	//Birth Data LookUps
 	private BirthPlaces: object[];
 	private Gender: Object[];
-	private FatherEducations: object[];
-	private FatherOccupation: object[];
-	private MotherEducations: object[];
-	private MotherOccupation: object[];
+	private FatherEducations: any[];
+	private FatherOccupation: any[];
+	private MotherEducations: any[];
+	private MotherOccupation: any[];
 	private DeliveryTreatmentOptions: object[];
 	private TypeOfDelivery: object[];
 	private Religion: object[];
@@ -133,9 +133,11 @@ export class BirthRegistrationComponent implements OnInit {
 		if (!this.appId) {
 			this.router.navigate([ManageRoutes.getFullRoute('HOSPITALDASHBOARD')]);
 		} else {
+			this.getLookUpsData();
 			this.createBirthCertForm();
 			this.getBirthCertData();
-			this.getLookUpsData();
+			
+
 
 		}
 	}
@@ -160,8 +162,8 @@ export class BirthRegistrationComponent implements OnInit {
 
 			birthPlace: this.fb.group({
 				id: 1,
-				code: ['', Validators.required],
-				name: ''
+				code: [null, Validators.required],
+				name: null
 			}),
 			otherPlace: null,
 			isOrphan: this.fb.group({
@@ -197,13 +199,15 @@ export class BirthRegistrationComponent implements OnInit {
 			fatherEducation: this.fb.group({
 				id: null,
 				code: [null, [Validators.required]],
-				name: null
+				name: null,
+				gujName: null
 			}),
 
 			fatherOccupations: this.fb.group({
 				id: null,
 				code: [null, [Validators.required]],
-				name: null
+				name: null,
+				gujName: null
 			}),
 			fatherAadharNumber: [null, [Validators.minLength(12), Validators.maxLength(12), ValidationService.aadharValidation]],
 
@@ -218,13 +222,15 @@ export class BirthRegistrationComponent implements OnInit {
 			motherEducation: this.fb.group({
 				id: null,
 				code: [null, Validators.required],
-				name: null
+				name: null,
+				gujName: null
 			}),
 
 			motherOccupations: this.fb.group({
 				id: null,
 				code: [null, Validators.required],
-				name: null
+				name: null,
+				gujName: null
 			}),
 			motherAadharNumber: [null, [Validators.minLength(12), Validators.maxLength(12), ValidationService.aadharValidation]],
 			motherPrevRegNumber: ['', [Validators.minLength(20), Validators.maxLength(20)]],
@@ -291,6 +297,10 @@ export class BirthRegistrationComponent implements OnInit {
 				this.birthCertificateForm.get('parentPermanentAddress').enable();
 			}
 
+			if (!this.birthCertificateForm.controls.canEdit.value){
+				this.birthCertificateForm.disable();
+			}
+
 			this.showButtons = true;
 		});
 	}
@@ -310,7 +320,10 @@ export class BirthRegistrationComponent implements OnInit {
 		let now = moment(new Date());
 		let diff = moment.duration(now.diff(event.value));
 		this.getChildData().at(i).get('birthDate').setValue(moment(event.value).format("YYYY-MM-DD"));
-		this.birthCertificateForm.get('delayedPeriod').setValue(diff.days() + diff.years() * 365 + diff.months() * 30);
+		if (this.birthCertificateForm.get('delayedPeriod').value === null){
+			this.birthCertificateForm.get('delayedPeriod').setValue(diff.days() + diff.years() * 365 + diff.months() * 30);
+		}
+		console.log(this.birthCertificateForm.get('delayedPeriod').value);
 	}
 
 	getDelayPeriod() {
@@ -368,6 +381,20 @@ export class BirthRegistrationComponent implements OnInit {
 			this.Religion = respData.RELIGION;
 			this.ISYESNO = respData.YES_NO;
 		})
+	}
+
+	gujNameFinder(event, controlName, arr) {
+		for (let i = 0; i < arr.length; i++) {
+			if (arr[i].code === event) {
+				if (arr[i].gujName === undefined) {
+					this.birthCertificateForm.get(controlName).get('gujName').setValue('');
+					return;
+				} else {
+					this.birthCertificateForm.get(controlName).get('gujName').setValue(arr[i].gujName);
+					return;
+				}
+			}
+		}
 	}
 
     /** 
@@ -467,7 +494,7 @@ export class BirthRegistrationComponent implements OnInit {
 		return this.fb.group({
 			birthDate: [child.birthDate, Validators.required],
 			birthTime: [child.birthTime, Validators.required],
-			childName: [child.childName, [Validators.required, ValidationService.nameValidator]],
+			childName: [child.childName, [ValidationService.nameValidator]],
 			id: child.id,
 			sex: this.fb.group({
 				code: [child.sex.code, [Validators.required]]
@@ -482,19 +509,19 @@ export class BirthRegistrationComponent implements OnInit {
 	}
 
 	addMoreChild(child) {
+
 		if (this.getChildData().length >= 6) {
 			this.commonService.openAlert("Warning", "Maximum Child Limit 6.", "warning");
 		} else {
 			this.getChildData().push(this.createChildArray(child));
 			this.birthCertificateForm.get('noOfChilds').setValue(this.getChildData().length);
 		}
+		console.log(this.birthCertificateForm.get('noOfChilds').value);
 
 	}
 
 	deleteChild(childData: any, index: number) {
-
 		this.commonService.deleteAlert('Are you sure?', "You won't be able to revert this!", 'warning', '', performDelete => {
-
 			if (this.birthCertificateForm.get('noOfChilds').value <= 1) {
 				this.commonService.openAlert("Warning", "Atleast One Child Info Mandatory", "warning");
 			} else {
