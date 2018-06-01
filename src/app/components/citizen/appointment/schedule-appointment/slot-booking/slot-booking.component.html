@@ -2,107 +2,121 @@
 	<app-title-bar [title]="'Slot Booking'"></app-title-bar>
 
 	<!-- list of booked slot -->
-	<div class="container">
+	<div class="example-container mat-elevation-z8">
 
-		<mat-table #table1 [dataSource]="calcelslots">
+		<div class="example-table-container">
+			<table mat-table #table1 [dataSource]="calcelslots" class="example-table">
 
-			<ng-container matColumnDef="start date">
-				<mat-header-cell *matHeaderCellDef>Start Time</mat-header-cell>
-				<mat-cell *matCellDef="let row">{{ row.start | date:'yyyy-MM-dd HH:mm a z' }}</mat-cell>
-			</ng-container>
+				<ng-container matColumnDef="start date">
+					<th mat-header-cell *matHeaderCellDef>Start Time</th>
+					<td mat-cell *matCellDef="let row">{{ row.start | date:'MM-dd-yyyy, h:mm a' }}</td>
+				</ng-container>
 
-			<ng-container matColumnDef="end date">
-				<mat-header-cell *matHeaderCellDef>End Time</mat-header-cell>
-				<mat-cell *matCellDef="let row">{{ row.end | date:'yyyy-MM-dd HH:mm a z'}}</mat-cell>
-			</ng-container>
+				<ng-container matColumnDef="end date">
+					<th mat-header-cell *matHeaderCellDef>End Time</th>
+					<td mat-cell *matCellDef="let row">{{ row.end | date:'MM-dd-yyyy, h:mm a'}}</td>
+				</ng-container>
 
-			<ng-container matColumnDef="resource name">
-				<mat-header-cell *matHeaderCellDef>Resource Name</mat-header-cell>
-				<mat-cell *matCellDef="let row">{{ row.resourceName}}</mat-cell>
-			</ng-container>
+				<ng-container matColumnDef="resource name">
+					<th mat-header-cell *matHeaderCellDef>Resource Name</th>
+					<td mat-cell *matCellDef="let row">{{ row.resourceName}}</td>
+				</ng-container>
 
-			<ng-container matColumnDef="slot Status">
-				<mat-header-cell *matHeaderCellDef>Slot Status</mat-header-cell>
-				<mat-cell *matCellDef="let row">{{ row.bookingStatus }}</mat-cell>
-			</ng-container>
+				<ng-container matColumnDef="slot Status">
+					<th mat-header-cell *matHeaderCellDef>Slot Status</th>
+					<td mat-cell *matCellDef="let row">{{ row.bookingStatus }}</td>
+				</ng-container>
 
-			<ng-container matColumnDef="action">
-				<mat-header-cell *matHeaderCellDef>Action</mat-header-cell>
-				<mat-cell *matCellDef="let row">
-					<button mat-icon-button color="primary" *ngIf="row.bookingStatus === 'BOOKED'" (click)="redirectToCancel(row.uniqueId)">
-						<mat-icon title="cancel">alarm_off</mat-icon>
-					</button>
-				</mat-cell>
-			</ng-container>
+				<ng-container matColumnDef="action">
+					<th mat-header-cell *matHeaderCellDef>Action</th>
+					<td mat-cell *matCellDef="let row">
+						<button mat-icon-button color="primary" *ngIf="row.bookingStatus === 'BOOKED'" (click)="redirectToCancel(row.uniqueId)">
+							<mat-icon matTooltip="cancel">alarm_off</mat-icon>
+						</button>
+					</td>
+				</ng-container>
 
-			<mat-header-row *matHeaderRowDef="bookedColumns"></mat-header-row>
-			<mat-row *matRowDef="let row; columns: bookedColumns;"></mat-row>
+				<tr mat-header-row *matHeaderRowDef="bookedColumns"></tr>
+				<tr mat-row *matRowDef="let row; columns: bookedColumns;"></tr>
 
-		</mat-table>
+			</table>
+		</div>
 
+		<div class="example-loading-shade" *ngIf="appointmentLength == 0 || appointmentLength == null">
+			<div class="example-rate-limit-reached">
+				No Appointment(s) found!
+			</div>
+		</div>
 	</div>
 
-	<mat-card class="mb-4">
+	<!--/ list of booked slot -->
+	<!-- resource selection form -->
+	<mat-card class="my-3">
 		<form [formGroup]="appointmentForm">
 			<div class="row">
-				<mat-form-field class="col-4" formGroupName='resources'>
-					<mat-select placeholder="Select resources" formControlName="code" required>
-						<mat-option *ngFor="let resources of resources" [value]="resources.code">
-							{{resources.name}}
-						</mat-option>
-					</mat-select>
-				</mat-form-field>
+				<div class="col-4" formGroupName='resources'>
+					<ng-select formControlName="code" required placeholder="Select resources" (change)="onSubmit()">
+						<ng-option *ngFor="let resources of resources" [value]="resources.code">{{resources.name}}</ng-option>
+					</ng-select>
+				</div>
 
 				<mat-form-field class="col-4">
-					<input matInput [min]="minDate" (dateChange)="dateFormate($event.value,'appointmentdate')" [matDatepicker]="appointmentPicker"
-					 formControlName="appointmentdate" placeholder="Choose a date">
+					<input matInput [min]="minDate" [disabled]="!appointmentForm.controls.resources" (dateChange)="dateFormate($event.value,'appointmentdate');onSubmit()"
+					 [matDatepicker]="appointmentPicker" formControlName="appointmentdate" placeholder="Choose a date" (click)="appointmentPicker.open()"
+					 (focus)="appointmentPicker.open()" readonly>
 					<mat-datepicker-toggle matSuffix [for]="appointmentPicker"></mat-datepicker-toggle>
 					<mat-datepicker #appointmentPicker></mat-datepicker>
 				</mat-form-field>
-
-				<div class="col-4">
-					<button mat-raised-button color="success" [disabled]="!appointmentForm.valid" (click)="onSubmit()">Search</button>
-				</div>
 			</div>
 		</form>
-		<!-- {{appointmentForm.value | json}} -->
 	</mat-card>
-</div>
-<!-- list of slot -->
-<div class="container">
+	<!--/ resource selection form -->
 
-	<mat-table #table2 [dataSource]="slots">
+	<!-- list of slot -->
+	<div class="example-container mat-elevation-z8">
 
-		<ng-container matColumnDef="start date">
-			<mat-header-cell *matHeaderCellDef>Start Time</mat-header-cell>
-			<mat-cell *matCellDef="let row">{{ row.start | date:'yyyy-MM-dd HH:mm a z' }}</mat-cell>
-		</ng-container>
+		<div class="example-table-container">
+			<table mat-table #table2 [dataSource]="slots" class="example-table">
 
-		<ng-container matColumnDef="end date">
-			<mat-header-cell *matHeaderCellDef>End Time</mat-header-cell>
-			<mat-cell *matCellDef="let row">{{ row.end | date:'yyyy-MM-dd HH:mm a z'}}</mat-cell>
-		</ng-container>
+				<ng-container matColumnDef="start date">
+					<th mat-header-cell *matHeaderCellDef>Start Time</th>
+					<td mat-cell *matCellDef="let row">{{ row.start | date:'h:mm:ss a' }}</td>
+				</ng-container>
 
-		<ng-container matColumnDef="slot Status">
-			<mat-header-cell *matHeaderCellDef>Slot Status</mat-header-cell>
-			<mat-cell *matCellDef="let row">{{ row.slotStatus }}</mat-cell>
-		</ng-container>
+				<ng-container matColumnDef="end date">
+					<th mat-header-cell *matHeaderCellDef>End Time</th>
+					<td mat-cell *matCellDef="let row">{{ row.end | date:'h:mm:ss a'}}</td>
+				</ng-container>
 
-		<ng-container matColumnDef="action">
-			<mat-header-cell *matHeaderCellDef>Action</mat-header-cell>
-			<mat-cell *matCellDef="let row">
-				<button mat-icon-button color="primary" *ngIf="row.slotStatus === 'AVAILABLE'" (click)="redirectToBook(row.uniqueId)">
-					<mat-icon title="Appointment">touch_app</mat-icon>
-				</button>
-				<button mat-icon-button color="primary" *ngIf="row.slotStatus === 'BOOKED'">
-					<mat-icon title="done">done</mat-icon>
-				</button>
-			</mat-cell>
-		</ng-container>
+				<ng-container matColumnDef="slot Status">
+					<th mat-header-cell *matHeaderCellDef>Slot Status</th>
+					<td mat-cell *matCellDef="let row">{{ row.slotStatus }}</td>
+				</ng-container>
 
-		<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-		<mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+				<ng-container matColumnDef="action">
+					<th mat-header-cell *matHeaderCellDef>Action</th>
+					<td mat-cell *matCellDef="let row">
+						<button mat-icon-button color="primary" *ngIf="row.slotStatus === 'AVAILABLE'" (click)="redirectToBook(row.uniqueId)">
+							<mat-icon matTooltip="Appointment">touch_app</mat-icon>
+						</button>
+						<button mat-icon-button color="primary" *ngIf="row.slotStatus === 'BOOKED'">
+							<mat-icon matTooltip="Booked">done</mat-icon>
+						</button>
+					</td>
+				</ng-container>
 
-	</mat-table>
+				<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+				<tr mat-row *matRowDef="let row; columns: displayedColumns;" [hidden]="row.slotStatus === 'BOOKED'"></tr>
+
+			</table>
+		</div>
+
+		<div class="example-loading-shade" *ngIf="resultsLength == 0 || resultsLength == null">
+			<div class="example-rate-limit-reached">
+				No record(s) found!
+			</div>
+		</div>
+	</div>
+	<!--/ list of slot -->
 
 </div>

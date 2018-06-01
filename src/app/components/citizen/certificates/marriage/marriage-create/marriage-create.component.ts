@@ -11,6 +11,7 @@ import { CommonService } from '../../.././../../shared/services/common.service';
 import * as _ from 'lodash';
 import * as moment from 'moment';
 import { ManageRoutes } from '../../../../../config/routes-conf';
+import { identity } from 'rxjs';
 
 @Component({
     selector: 'app-marriage-create',
@@ -39,11 +40,14 @@ export class MarriageCreateComponent implements OnInit {
     stepLable5: string = "Detail of Priest";
     stepLable6: string = "Detail of First Witness";
     stepLable7: string = "Detail of Second Witness";
-    stepLable8: string = "Upload";
+    stepLable9: string = "Upload";
+    stepLable8: string = "Applicant";
 
     // Lookups array list
     religionArray: any = [];
     maritalstatusArray: any = [];
+    applicantrelationArray: any = [];
+    identityproofArray: any = [];
 
     // Marriage date 
     disablefutureDate = new Date(moment().format('YYYY-MM-DD'));
@@ -78,12 +82,16 @@ export class MarriageCreateComponent implements OnInit {
         3: { checkedPar3: Boolean }
     }
 
-    // riligion in gujarati
+    // religion in gujarati
     religionGujgroom: string = '';
     religionGujbride: string = '';
-    // smarital status in gujarati
+    // marrital status in gujarati
     maritalstatusGujgroom: string = '';
     maritalstatusGujbride: string = '';
+    //applicant detail
+    applicantrelationGuj: string = '';
+    identityproofGuj: string = '';
+
 
     /**
      * @param fb - Declare FormBuilder property.
@@ -149,13 +157,13 @@ export class MarriageCreateComponent implements OnInit {
             groomBirthDate: ['', Validators.required],
             groomAge: [null, ValidationService.groomAgeValidator],
             groomReligion: this.fb.group({
-                code: [null],
+                code: [''],
                 gujName: [null],
                 name: [null]
             }),
             groomAadharNumber: ['', [Validators.required, Validators.maxLength(12)]],
             marriageTimeGroomStatus: this.fb.group({
-                code: ['']
+                code: [null, Validators.required]
             }),
             aliveWives: ['', [Validators.maxLength(2), Validators.minLength(0)]],
             groomAddress: this.fb.group(this.addrComponent.addressControls()),
@@ -167,13 +175,13 @@ export class MarriageCreateComponent implements OnInit {
             brideBirthDate: ['', Validators.required],
             brideAge: [null, ValidationService.brideAgeValidator],
             brideReligion: this.fb.group({
-                code: [null],
+                code: [''],
                 gujName: [null],
                 name: [null]
             }),
             brideAadharNumber: ['', [Validators.required, Validators.maxLength(12)]],
             marriageTimeBrideStatus: this.fb.group({
-                code: ['']
+                code: [null, Validators.required]
             }),
             brideAddress: this.fb.group(this.addrComponent.addressControls()),
 
@@ -230,6 +238,15 @@ export class MarriageCreateComponent implements OnInit {
             secondWitnessAddress: this.fb.group(this.addrComponent.addressControls()),
 
             //eighth step
+            applicantRelation: this.fb.group({
+                code: [null,Validators.required]
+            }),
+            applicantRelationOther: [''],
+            uniqueIdProofLable: this.fb.group({
+                code: [null,Validators.required]
+            }),
+            uniqueIdProof: ['',Validators.required],
+
             attachments: [''],
 
             // gujarati field
@@ -275,41 +292,41 @@ export class MarriageCreateComponent implements OnInit {
                 // for address
                 if (res.isGroomParResAddressSame.code == "YES") {
                     this.addObject['checkedPar1'] = true;
-                    this.marriageFormGroup.get('groomParentsAddressResidence').disable();
+                    this.changeDisable('groomParentsAddressResidence');
                 }
                 else {
                     this.addObject['checkedPar1'] = false;
-                    this.marriageFormGroup.get('isGroomParResAddressSame').get('code').setValue('NO');
+                    this.setValue('isGroomParResAddressSame', 'NO');
                 }
                 if (res.isBrideParResAddressSame.code == "YES") {
                     this.addObject['checkedPar2'] = true;
-                    this.marriageFormGroup.get('brideParentsAddressResidence').disable();
+                    this.changeDisable('brideParentsAddressResidence');
                 }
                 else {
                     this.addObject['checkedPar2'] = false;
-                    this.marriageFormGroup.get('isBrideParResAddressSame').get('code').setValue('NO');
+                    this.setValue('isBrideParResAddressSame', 'NO');
                 }
                 if (res.isPriestParResAddressSame.code == "YES") {
                     this.addObject['checkedPar3'] = true;
-                    this.marriageFormGroup.get('priestAddressResidence').disable();
+                    this.changeDisable('priestAddressResidence');
                 }
                 else {
                     this.addObject['checkedPar3'] = false;
-                    this.marriageFormGroup.get('isPriestParResAddressSame').get('code').setValue('NO');
+                    this.setValue('isPriestParResAddressSame', 'NO');
                 }
 
                 this.attachments = res.attachments;
+                this.showButtons = true;
                 this.marriageFormGroup.patchValue(res);
 
                 //set default value
                 this.marriageFormGroup.get('marriageRegistrationDate').setValue(moment().format('YYYY-MM-DD'));
-                this.showButtons = true;
-
-                //for display days
+                
+                //for display static days
                 if (res.groomBirthDate != null && res.marriageDate != null) {
                     this.CalculateAge();
                 }
-                //display parents age
+                //display static age calculation
                 if (res.groomParentsBirthDate) {
                     this.age('groomParentsBirthDate', 1);
                 }
@@ -326,29 +343,28 @@ export class MarriageCreateComponent implements OnInit {
                     this.age('secondWitnessBirthDate', 5);
                 }
 
-                // display riligion
-                if(!_.isUndefined(res.groomReligion.code)){
-                    this.religionGujgroom = _.result(_.find(this.religionArray, function (obj) {
-                        return obj.code === res.groomReligion.code;
-                    }), 'gujName');
+                //display static gujarati var
+                if (!_.isUndefined(res.groomReligion.code)) {
+                    this.onChange(res.groomReligion.code, this.religionArray, 'religionGujgroom')
                 }
 
-                if(!_.isUndefined(res.groomReligion.code)){
-                    this.religionGujbride = _.result(_.find(this.religionArray, function (obj) {
-                        return obj.code === res.groomReligion.code;
-                    }), 'gujName');
+                if (!_.isUndefined(res.groomReligion.code)) {
+                    this.onChange(res.groomReligion.code, this.religionArray, 'religionGujbride')
                 }
 
-                if(!_.isUndefined(res.marriageTimeGroomStatus.code)){
-                    this.maritalstatusGujgroom = _.result(_.find(this.maritalstatusArray, function (obj) {
-                        return obj.code === res.marriageTimeGroomStatus.code;
-                    }), 'gujName');
+                if (!_.isUndefined(res.marriageTimeGroomStatus.code)) {
+                    this.onChange(res.marriageTimeGroomStatus.code, this.maritalstatusArray, 'maritalstatusGujgroom')
                 }
 
-                if(!_.isUndefined(res.marriageTimeGroomStatus.code)){
-                    this.maritalstatusGujbride = _.result(_.find(this.maritalstatusArray, function (obj) {
-                        return obj.code === res.marriageTimeGroomStatus.code;
-                    }), 'gujName');
+                if (!_.isUndefined(res.marriageTimeGroomStatus.code)) {
+                    this.onChange(res.marriageTimeGroomStatus.code, this.maritalstatusArray, 'maritalstatusGujbride')
+                }
+
+                if (!_.isUndefined(res.applicantRelation.code)) {
+                    this.onChange(res.applicantRelation.code, this.applicantrelationArray, 'applicantrelationGuj')
+                }
+                if (!_.isUndefined(res.uniqueIdProofLable.code)) {
+                    this.onChange(res.uniqueIdProofLable.code, this.identityproofArray, 'identityproofGuj')
                 }
 
             },
@@ -365,6 +381,8 @@ export class MarriageCreateComponent implements OnInit {
         this.formService.getDataFromLookups().subscribe(res => {
             this.religionArray = res.RELIGION;
             this.maritalstatusArray = res.MARITAL_STATUS;
+            this.applicantrelationArray = res.MARRIAGE_APPLICANT_RELATION;
+            this.identityproofArray = res.MARRIAGE_ID_PROOFS;
         });
     }
 
@@ -418,45 +436,44 @@ export class MarriageCreateComponent implements OnInit {
     }
 
     /**
-     * This method is use for religion verification and reset marriage status. 
+     * This method is set gujarati value in change event. 
      */
-    onChange(event, controlName) {
-        if (controlName == 'groomReligion') {
-            this.religionGujgroom = _.result(_.find(this.religionArray, function (obj) {
-                return obj.code === event;
-            }), 'gujName');
-        }
-        if (controlName == 'brideReligion') {
-            this.religionGujbride = _.result(_.find(this.religionArray, function (obj) {
-                return obj.code === event;
-            }), 'gujName');
-        }
+    onChange(event, lookupArray, varName) {
 
-        if (controlName == 'marriageTimeGroomStatus') {
-            this.maritalstatusGujgroom = _.result(_.find(this.maritalstatusArray, function (obj) {
-                return obj.code === event.value;
-            }), 'gujName');
-        }
+        if (!_.isUndefined(this.getGujValue(lookupArray, event)))
+            this[varName] = this.getGujValue(lookupArray, event);
 
-        if (controlName == 'marriageTimeBrideStatus') {
-            this.maritalstatusGujbride = _.result(_.find(this.maritalstatusArray, function (obj) {
-                return obj.code === event.value;
-            }), 'gujName');
-        }
-
+        //check religion is same or not    
         let groomreligionChange = this.marriageFormGroup.controls.groomReligion.get("code").value;
         let bridereligionChange = this.marriageFormGroup.controls.brideReligion.get("code").value;
 
-        if (bridereligionChange != groomreligionChange && (groomreligionChange != null && bridereligionChange != null)) {
-            this.commonService.openAlert("Warning", "Bride Groom and Bride religion must be same. Your Marriage has to be Registered under Special Marriage Act. Kindly contact office of Special Marriage Registration at Kuber Bhavan, Kothi char Rasta, Vadodara", "warning");
-            this.stepper.selectedIndex = 0;
+        if (!_.isEmpty(groomreligionChange) && !_.isEmpty(bridereligionChange)) {
+            if (bridereligionChange != groomreligionChange) {
+                this.commonService.openAlert("Warning", "Bride Groom and Bride religion must be same. Your Marriage has to be Registered under Special Marriage Act. Kindly contact office of Special Marriage Registration at Kuber Bhavan, Kothi char Rasta, Vadodara", "warning");
+                this.stepper.selectedIndex = 0;
+            }
         }
     }
+
     /**
      * This method is use reset value. 
      */
     changeReset(controlName) {
         this.marriageFormGroup.get(controlName).reset();
+    }
+
+    /**
+     * This method is use disable value. 
+     */
+    changeDisable(controlName) {
+        this.marriageFormGroup.get(controlName).disable();
+    }
+
+    /**
+     * This method is use set 'YES' or 'NO' value for checkbox. 
+     */
+    setValue(controlName, value) {
+        this.marriageFormGroup.get(controlName).get('code').setValue(value);
     }
 
     /**
@@ -471,7 +488,8 @@ export class MarriageCreateComponent implements OnInit {
 
         if (event.checked) {
             this.addObject[`checkedPar${add}`] = true;
-            this.marriageFormGroup.get(ischeck).get('code').setValue("YES");
+            // this.marriageFormGroup.get(ischeck).get('code').setValue("YES");
+            this.setValue(ischeck, 'YES');
             firstControl.setValue(secondControl.value);
             firstControl.disable();
             this.marriageFormGroup.get(controlsecond).get('addressType').setValue(addressType);
@@ -483,7 +501,8 @@ export class MarriageCreateComponent implements OnInit {
             firstControl.enable();
             this.marriageFormGroup.get(controlsecond).get('addressType').setValue(addressType);
             this.marriageFormGroup.get(controlfirst).get('addressType').setValue(resAddressType);
-            this.marriageFormGroup.get(ischeck).get('code').setValue("NO");
+            // this.marriageFormGroup.get(ischeck).get('code').setValue("NO");
+            this.setValue(ischeck, 'NO');
         }
     }
 
@@ -519,6 +538,7 @@ export class MarriageCreateComponent implements OnInit {
         let step5 = 50;
         let step6 = 56;
         let step7 = 62;
+        let step8 = 66;
 
         if (flag != null) {
             //Check validation for step by step
@@ -553,6 +573,11 @@ export class MarriageCreateComponent implements OnInit {
                 this.stepper.selectedIndex = 6;
                 return false;
             }
+            else if (count <= step8) {
+                this.stepLable7 = "Applicant is not completed";
+                this.stepper.selectedIndex = 7;
+                return false;
+            }
             else {
                 console.log("else condition");
             }
@@ -568,6 +593,9 @@ export class MarriageCreateComponent implements OnInit {
         this.addObject['checkedPar1'] = false;
         this.addObject['checkedPar2'] = false;
         this.addObject['checkedPar3'] = false;
+        this.marriageFormGroup.get('isGroomParResAddressSame').get('code').setValue('NO');
+        this.marriageFormGroup.get('isBrideParResAddressSame').get('code').setValue('NO');
+        this.marriageFormGroup.get('isPriestParResAddressSame').get('code').setValue('NO');
         this.marriageFormGroup.get('groomAddress').get('addressType').setValue('GROOM_ADDRESS');
         this.marriageFormGroup.get('brideAddress').get('addressType').setValue('BRIDE_ADDRESS');
         this.marriageFormGroup.get('groomParentsAddress').get('addressType').setValue('GROOM_PARENTS_ADDRESS');
@@ -578,6 +606,15 @@ export class MarriageCreateComponent implements OnInit {
         this.marriageFormGroup.get('priestAddressResidence').get('addressType').setValue('PRIEST_ADDRESS_RESIDENCE');
         this.marriageFormGroup.get('firstWitnessAddress').get('addressType').setValue('FIRST_WITNESS_ADDRESS');
         this.marriageFormGroup.get('secondWitnessAddress').get('addressType').setValue('SECOND_WITNESS_ADDRESS');
+    }
+
+    /**
+     * Method is set gujarati value in inputs.
+     */
+    getGujValue(lookupArray, resCode) {
+        return _.result(_.find(lookupArray, function (obj) {
+            return obj.code === resCode;
+        }), 'gujName');
     }
 
 }
