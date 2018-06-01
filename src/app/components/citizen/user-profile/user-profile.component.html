@@ -1,39 +1,131 @@
-<div class=" col-lg-4 offset-lg-4 col-md-6 offset-md-3 col-sm-8 offset-sm-2">
-	<mat-card class="mt-4">
-		<h1 class="heading">Profile</h1>
-		<mat-card-content class="profilePage">
-			<form [formGroup]="userProfileForm" (ngSubmit)="onSubmitProfile(userProfileForm)" autocomplete="off" ngNativeValidate novalidate>
+<div class="container">
 
-				<mat-form-field class="iconMat" >
-						<mat-icon matPrefix>face</mat-icon>
-					<input matInput type="text" appValidationFields validationFieldsType="onlyNameWithOutSpace" placeholder="Firstname" formControlName="firstName" required>
-					<control-messages [control]="userProfileForm.controls.firstName"></control-messages>
-				</mat-form-field>
+	<app-title-bar [title]="'Profile'"></app-title-bar>
 
-				<mat-form-field class="iconMat" >
-						<mat-icon matPrefix>face</mat-icon>
-					<input matInput type="text" appValidationFields validationFieldsType="onlyNameWithOutSpace" placeholder="Lastname" formControlName="lastName" required>
-					<control-messages [control]="userProfileForm.controls.lastName"></control-messages>
-				</mat-form-field>
+	<mat-card class="mb-4 ">
 
-				<mat-form-field class="iconMat" >
-						<mat-icon matPrefix>mail_outline</mat-icon>
-					<input matInput type="email" placeholder="Email" formControlName="email" required readonly>
-						<control-messages [control]="userProfileForm.controls.email"></control-messages>
-				</mat-form-field>
+		<form [formGroup]="userProfileForm"
+			(ngSubmit)="onSubmitProfile(userProfileForm)" autocomplete="off"
+			ngNativeValidate novalidate>
+			<div class="row">
+			<mat-form-field class="col-md-4">
+				<input matInput type="text" appValidationFields
+					validationFieldsType="onlyNameWithOutSpace" placeholder="Firstname"
+					formControlName="firstName"
+					required>
+				<control-messages [control]="userProfileForm.controls.firstName"></control-messages>
+			</mat-form-field>
+			
+			<mat-form-field class="col-md-4">
+				<input matInput type="text" appValidationFields
+					validationFieldsType="onlyNameWithOutSpace" placeholder="Middle Name"
+					formControlName="middleName">
+				<control-messages [control]="userProfileForm.controls.middleName"></control-messages>
+			</mat-form-field>
 
-				<mat-form-field class="iconMat" >
-						<mat-icon matPrefix>phone_android</mat-icon>
-					<input matInput type="tel" OnlyNumber placeholder="Cell Number" formControlName="cellNo" minlength="10" maxlength="10"required readonly>
-				</mat-form-field>
+			<mat-form-field class="col-md-4">
+				<input matInput type="text" appValidationFields
+					validationFieldsType="onlyNameWithOutSpace" placeholder="Lastname"
+					formControlName="lastName"
+					required>
+				<control-messages [control]="userProfileForm.controls.lastName"></control-messages>
+			</mat-form-field>
 
-				<div class="text-center">
-				<button type="submit" mat-raised-button color="primary" [disabled]="userProfileForm.invalid" >
-					Update Profile
-				</button>
+			<div class="col-md-4">
+				<div>
+					<ng-select  formControlName="gender" placeholder="Gender">
+						<ng-option value="male">Male</ng-option>
+						<ng-option value="female">Female</ng-option>
+					</ng-select>
+				</div>
 			</div>
 
+			<mat-form-field class="col-4">
+				<input matInput [max]="disablefutureDate" [matDatepicker]="dobPicker"
+					formControlName="birthDate"
+					(dateChange)="dateFormat($event.value,'birthDate');"
+					placeholder="Date of birth" required (click)="dobPicker.open()"
+					(focus)="dobPicker.open()" readonly>
+				<mat-datepicker-toggle matSuffix [for]="dobPicker"></mat-datepicker-toggle>
+				<mat-datepicker #dobPicker touchUi="true"></mat-datepicker>
+				<control-messages [control]="userProfileForm.controls.birthDate"></control-messages>
+			</mat-form-field>
+			
+
+			<mat-form-field class="col-md-4">
+				<input matInput type="text" formControlName="buildingName" placeholder="building_name" >
+				<control-messages [control]="userProfileForm.controls.buildingName"></control-messages>
+			</mat-form-field>
+	
+			<mat-form-field class="col-md-4">
+				<input matInput type="text" formControlName="streetName" placeholder="street_name" >
+				<control-messages [control]="userProfileForm.controls.streetName"></control-messages>
+			</mat-form-field>
+	
+			<mat-form-field class="col-md-4">
+				<input matInput type="text" formControlName="landmark" placeholder="landmark" >
+				<control-messages [control]="userProfileForm.controls.landmark"></control-messages>
+			</mat-form-field>
+	
+			<mat-form-field class="col-md-4">
+				<input matInput type="text" formControlName="area" placeholder="area" >
+				<control-messages [control]="userProfileForm.controls.area"></control-messages>
+			</mat-form-field>
+	
+			<mat-form-field class="col-md-4">
+				<input matInput appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" formControlName="state" placeholder="state">
+				<control-messages [control]="userProfileForm.controls.state"></control-messages>
+			</mat-form-field>
+
+			<mat-form-field class="col-md-4">
+				<input matInput appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" formControlName="district" placeholder="district">
+				<control-messages [control]="userProfileForm.controls.district"></control-messages>
+			</mat-form-field>
+	
+			<mat-form-field class="col-md-4">
+				<input matInput type="text" formControlName="city" placeholder="city">
+				<control-messages [control]="userProfileForm.controls.city"></control-messages>
+			</mat-form-field>
+	
+			<mat-form-field class="col-md-4">
+				<input matInput type="text" formControlName="country" placeholder="country">
+				<control-messages [control]="userProfileForm.controls.country"></control-messages>
+			</mat-form-field>
+	
+			<mat-form-field class="col-md-4">
+				<input matInput type="tel" OnlyNumber formControlName="pincode" placeholder="pincode" minlength="6" maxlength="6">
+				<control-messages [control]="userProfileForm.controls.pincode"></control-messages>
+			</mat-form-field>
+
+			<mat-form-field class="col-md-4">
+				<input matInput type="email" placeholder="Email" formControlName="email"
+					required readonly>
+				<control-messages [control]="userProfileForm.controls.email"></control-messages>
+			</mat-form-field>
+
+			<mat-form-field class="col-md-4">
+				<input matInput type="tel" OnlyNumber placeholder="Cell Number"
+					formControlName="cellNo" minlength="10" maxlength="10" required
+					readonly>
+			</mat-form-field>
+
+			<div class="col-md-4">
+				<img [src]="userProfileForm.get('profilePic').value ?
+					userProfileForm.get('profilePic').value : 'assets/images/no-image.png'"
+					style="width: 100px;height: 100px;border-radius: 100%;" />
+				<br/>
+					<button type="button" md-button (click)="imgFileInput.click()">Change photo</button>
+					<input #profilePicfileInput hidden type="file" #imgFileInput (change)="uploadProfilePic($event)" accept="image/*" />
+				</div>
+
+				<div class="text-center">
+					<button type="submit" mat-raised-button color="primary"
+						[disabled]="userProfileForm.invalid">
+						Update Profile
+					</button>
+				</div>
+			</div>
 			</form>
-		</mat-card-content>
-	</mat-card>
-</div>
+
+		</mat-card>
+	</div>

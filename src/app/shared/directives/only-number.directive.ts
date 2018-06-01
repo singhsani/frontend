@@ -47,14 +47,20 @@ export class OnlyNumberDirective {
 	//Todo For limit Parse Int
 	validateFields(event) {
 		setTimeout(() => {
-			let checkNumber = (this.el.nativeElement.value);
+			let numberRegEx = /^[0-9]+$/;
+			if(!numberRegEx.test(this.el.nativeElement.value)){
+				this.el.nativeElement.value = "";
+				event.preventDefault();
+			}
+
+			/* let checkNumber = (this.el.nativeElement.value);
 			if (!isNaN(checkNumber)) {
 				this.el.nativeElement.value = checkNumber;
 				event.preventDefault();
 			}else{
 				this.el.nativeElement.value = "";
 				event.preventDefault();
-			}
+			} */
 		}, 100)
 	}
 }
