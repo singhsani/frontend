@@ -1,6 +1,6 @@
 import { ManageRoutes } from './../../../config/routes-conf';
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl, Validators, FormArray } from '@angular/forms';
 import * as _ from 'lodash';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -65,6 +65,7 @@ export class ActionBarComponent implements OnInit {
 				this.toastr.success(`${this.form.value.serviceDetail.name} information successfully saved`);
 			},
 			err => {
+				this.markFormGroupTouched(this.form);
 				this.isSaveBtnDisabled = false;
 				let count = 1;
 				for (const key in this.form.controls) {
@@ -74,7 +75,7 @@ export class ActionBarComponent implements OnInit {
 					}
 					count++;
 				}
-				
+
 			}
 		);
 	}
@@ -85,8 +86,9 @@ export class ActionBarComponent implements OnInit {
 	onSubmit() {
 
 		this.isSubmitBtnDisabled = true;
-
 		var count = 1;
+		this.markFormGroupTouched(this.form);
+
 		if (this.form.valid) {
 			this.formService.submitFormData(this.form.get('serviceFormId').value).subscribe(res => {
 				if (res.success) {
@@ -118,7 +120,7 @@ export class ActionBarComponent implements OnInit {
 					this.handleErrors.emit(count)
 					break;
 				}
-				count++
+				count++;
 			}
 
 		}
@@ -191,9 +193,9 @@ export class ActionBarComponent implements OnInit {
 		if (this.form.get('apiType').value != 'marriageReg') {
 
 			this.form.addControl('firstName', new FormControl('', [Validators.required, ValidationService.nameValidator]));
-			this.form.addControl('middleName', new FormControl('', [Validators.required, ValidationService.nameValidator]));
+			this.form.addControl('middleName', new FormControl('', ValidationService.nameValidator));
 			this.form.addControl('lastName', new FormControl('', [Validators.required, ValidationService.nameValidator]));
-			this.form.addControl('aadhaarNo', new FormControl('', [Validators.required, Validators.maxLength(12)]));
+			this.form.addControl('aadhaarNo', new FormControl('', Validators.maxLength(12)));
 			this.form.addControl('contactNo', new FormControl('', [Validators.required, Validators.maxLength(10)]));
 			this.form.addControl('email', new FormControl('', [Validators.required, ValidationService.emailValidator]));
 		}
@@ -208,6 +210,29 @@ export class ActionBarComponent implements OnInit {
 
 		this.commonControlForm = this.fb.group(formControlObj);
 
+	}
+
+	/**
+	 * Marks all controls in a form group as touched
+	 * @param formGroup - The group to caress
+	*/
+	markFormGroupTouched(formGroup: FormGroup) {
+		console.log(formGroup);
+		if (Reflect.getOwnPropertyDescriptor(formGroup, 'controls')) {
+			(<any>Object).values(formGroup.controls).forEach(control => {
+				if (control instanceof FormGroup) {
+					// FormGroup
+					this.markFormGroupTouched(control);
+				} else if (control instanceof FormArray) {
+					control.controls.forEach(c => {
+						if (c instanceof FormGroup)
+							this.markFormGroupTouched(c);
+					});
+				}
+				// FormControl
+				control.markAsTouched();
+			});
+		}
 	}
 
 }

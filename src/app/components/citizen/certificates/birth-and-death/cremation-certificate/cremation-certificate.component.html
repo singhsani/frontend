@@ -8,7 +8,7 @@
 				<mat-step [label]="stepLable1 | translate: translateKey">
 
 					<div class="row">
-						<div formGroupName="applicantRelation" class="col-md-6">
+						<div formGroupName="applicantRelation" class="col-md-6 radioBtnError">
 							<mat-label>{{'relation' | translate: translateKey}}</mat-label>
 							<mat-radio-group formControlName="code" required (change)="realtionChange($event)">
 								<mat-radio-button [value]="relation.code" *ngFor="let relation of relationshipArray">{{relation.name}}</mat-radio-button>
@@ -52,7 +52,7 @@
 							<control-messages [control]="cremationForm.controls.deathDate"></control-messages>
 						</mat-form-field>
 
-						<div formGroupName="gender" class="col-md-6">
+						<div formGroupName="gender" class="col-md-6 radioBtnError">
 							<mat-label>{{'gender' | translate: translateKey}}</mat-label>
 							<mat-radio-group formControlName="code" required>
 								<mat-radio-button [value]="gender.code" *ngFor="let gender of genderArray">{{gender.name +'/'+gender.gujName }}
@@ -66,7 +66,7 @@
 							<control-messages [control]="cremationForm.controls.deceasedName"></control-messages>
 						</mat-form-field>
 
-						<div formGroupName="deathPlace" class="col-md-4">
+						<div formGroupName="deathPlace" class="col-md-4 radioBtnError">
 							<mat-label>{{'place_of_death' | translate: translateKey}}</mat-label>
 							<mat-radio-group formControlName="code" required (change)="placeChange($event)">
 								<mat-radio-button [value]="place.code" *ngFor="let place of placeArray">{{place.name}}</mat-radio-button>

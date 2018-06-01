@@ -354,4 +354,6 @@ mat-label {align-self: center;}
 #ie-toolbar div a:hover { color: #d65727; text-decoration: none; }
 /* End - CSS for IE Message to not-supported browser for application */
 
+/* for display error immediate after ng-select and mat-radio-group */
 .ngSelect .mat-error { position: relative !important; top: -17px !important; left: 0;font-size: 11px;}
+.radioBtnError .mat-error { position: relative !important; top: -4px !important; left: 0;font-size: 11px;}

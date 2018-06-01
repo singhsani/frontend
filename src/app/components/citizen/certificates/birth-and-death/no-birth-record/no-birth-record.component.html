@@ -27,7 +27,7 @@
 							<control-messages [control]="noRecordBirthForm.controls.motherName"></control-messages>
 						</mat-form-field>
 
-						<div formGroupName="gender" class="col-md-4 ngSelect">
+						<div formGroupName="gender" class="col-md-4 radioBtnError">
 							<mat-label>{{'gender' | translate: translateKey}}</mat-label>
 							<mat-radio-group class="example-radio-group" formControlName="code">
 								<mat-radio-button [value]="gender.code" *ngFor="let gender of genderArray">{{gender.name}}</mat-radio-button>
@@ -35,7 +35,7 @@
 							<control-messages [control]="noRecordBirthForm.controls.gender.controls.code"></control-messages>
 						</div>
 
-						<div formGroupName="birthPlace" class="col-md-4 ngSelect">
+						<div formGroupName="birthPlace" class="col-md-4 radioBtnError">
 							<mat-label>{{'place_of_birth' | translate: translateKey}}</mat-label>
 							<mat-radio-group class="example-radio-group" formControlName="code" (change)="birthPlaceChange($event)">
 								<mat-radio-button [value]="place.code" *ngFor="let place of placeArray">{{place.name}}</mat-radio-button>
@@ -104,7 +104,7 @@
 							<input matInput type="text" formControlName="applicantRelationDetail" placeholder="{{'applicant_relation_detail' | translate: translateKey}}">
 						</mat-form-field>
 
-						<div class="col-md-12 mt-4" formGroupName="reasonDetail">
+						<div class="col-md-12 mt-4 radioBtnError" formGroupName="reasonDetail">
 							<mat-label>{{'reason_for_no_record' | translate: translateKey}} *</mat-label>
 							<mat-radio-group class="example-radio-group" formControlName="code">
 								<mat-radio-button [value]="reason.code" *ngFor="let reason of reasonArray">{{reason.name}}</mat-radio-button>

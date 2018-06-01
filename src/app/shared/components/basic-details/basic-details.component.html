@@ -5,7 +5,7 @@
     </mat-form-field>
 
     <mat-form-field class="col-md-4">
-        <input matInput appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{'middle_name' | translate:translateKey}}" formControlName="middleName" required>
+        <input matInput appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{'middle_name' | translate:translateKey}}" formControlName="middleName">
         <control-messages [control]="basicFormGroup.controls.middleName"></control-messages>
     </mat-form-field>
 
@@ -15,7 +15,7 @@
     </mat-form-field>
 
     <mat-form-field class="col-md-4">
-        <input matInput OnlyNumber maxlength="12" minlength="12" placeholder="{{'aadhar_number' | translate:translateKey}}" formControlName="aadhaarNo" required>
+        <input matInput OnlyNumber maxlength="12" minlength="12" placeholder="{{'aadhar_number' | translate:translateKey}}" formControlName="aadhaarNo">
         <control-messages [control]="basicFormGroup.controls.aadhaarNo"></control-messages>
     </mat-form-field>
 

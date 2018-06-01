@@ -1,6 +1,6 @@
 import { ManageRoutes } from './../../../config/routes-conf';
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl, Validators, FormArray, AbstractControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HosFormActionsService } from '../../../core/services/hospital/data-services/hos-form-actions.service';
 import { CommonService } from '../../services/common.service';
@@ -56,7 +56,6 @@ export class HosActionBarComponent implements OnInit {
 	saveAsDraft() {
 
 		this.isSaveBtnDisabled = true;
-		console.log(this.form.getRawValue());
 
 		this.formService.saveFormData(this.form.getRawValue()).subscribe(
 			res => {
@@ -66,10 +65,12 @@ export class HosActionBarComponent implements OnInit {
 				this.toastr.success(`${this.form.value.serviceDetail.name} information successfully saved`);
 			},
 			err => {
+				this.markFormGroupTouched(this.form);
+
 				this.isSaveBtnDisabled = false;
 				let count = 1;
 				for (const key in this.form.controls) {
-					if (key + '.' == err.error[0].property) {
+					if (key == err.error[0].property) {
 						this.handleErrors.emit(count);
 						break;
 					}
@@ -85,14 +86,15 @@ export class HosActionBarComponent implements OnInit {
 	onSubmit() {
 
 		this.isSubmitBtnDisabled = true;
+		this.markFormGroupTouched(this.form);
 
 		var count = 1;
 		if (this.form.valid) {
 			this.formService.submitFormData(this.form.get('serviceFormId').value).subscribe(res => {
-				if(res.success){
+				if (res.success) {
 					this.form.get('canEdit').setValue(false);
 				}
-				
+
 				this.toastr.success(`${this.form.value.serviceDetail.name} information successfully submit`);
 				this.isSubmitBtnDisabled = false;
 				this.isBtnsDisabled = false;
@@ -191,6 +193,28 @@ export class HosActionBarComponent implements OnInit {
 
 		this.commonForm = this.fb.group(formControlObj);
 
+	}
+
+	/**
+	 * Marks all controls in a form group as touched
+	 * @param formGroup - The group to caress
+	*/
+	markFormGroupTouched(formGroup: FormGroup) {
+		if (Reflect.getOwnPropertyDescriptor(formGroup, 'controls')) {
+			(<any>Object).values(formGroup.controls).forEach(control => {
+				if (control instanceof FormGroup) {
+					// FormGroup
+					this.markFormGroupTouched(control);
+				} else if (control instanceof FormArray) {
+					control.controls.forEach(c => {
+						if (c instanceof FormGroup)
+							this.markFormGroupTouched(c);
+					});
+				}
+				// FormControl
+				control.markAsTouched();
+			});
+		}
 	}
 
 }
