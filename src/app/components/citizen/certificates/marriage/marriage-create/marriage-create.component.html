@@ -102,25 +102,27 @@
 							</mat-select>
 						</mat-form-field> -->
 						<div class="col-4" formGroupName="groomReligion">
-							<ng-select formControlName="code" placeholder="{{ 'religion' | translate:translateKey }}" (change)="onChange($event,'groomReligion');changeReset('marriageTimeGroomStatus');changeReset('aliveWives')">
+							<ng-select formControlName="code" placeholder="{{ 'religion' | translate:translateKey }}" (change)="onChange($event,religionArray,'religionGujgroom');changeReset('marriageTimeGroomStatus');changeReset('aliveWives')">
 								<ng-option *ngFor="let religion of religionArray" [value]="religion.code">{{religion.name}}</ng-option>
 							</ng-select>
 						</div>
 
 						<div class="col-4" formGroupName="marriageTimeGroomStatus"> {{'marital_status' | translate:translateKey }}*
-							<mat-radio-group formControlName="code" (change)="onChange($event,'marriageTimeGroomStatus');changeReset('aliveWives')">
-								<span *ngFor="let status of maritalstatusArray">
-									<span *ngIf="status.name == 'Married'">
-										<mat-radio-button *ngIf="marriageFormGroup.controls.groomReligion.get('code').value === 'MUSLIM'" [value]="status.code">
+							<div class="radioBtnError">
+								<mat-radio-group formControlName="code" required (change)="onChange($event.value,maritalstatusArray,'maritalstatusGujgroom');changeReset('aliveWives')">
+									<span *ngFor="let status of maritalstatusArray">
+										<span *ngIf="status.name == 'Married'">
+											<mat-radio-button *ngIf="marriageFormGroup.controls.groomReligion.get('code').value === 'MUSLIM'" [value]="status.code">
+												{{status.name}}
+											</mat-radio-button>
+										</span>
+										<mat-radio-button *ngIf="status.name != 'Married'" [value]="status.code">
 											{{status.name}}
 										</mat-radio-button>
 									</span>
-									<mat-radio-button *ngIf="status.name != 'Married'" [value]="status.code">
-										{{status.name}}
-									</mat-radio-button>
-								</span>
-								<control-messages [control]="marriageFormGroup.controls.marriageTimeGroomStatus"></control-messages>
-							</mat-radio-group>
+								</mat-radio-group>
+								<control-messages [control]="marriageFormGroup.controls.marriageTimeGroomStatus.controls.code"></control-messages>
+							</div>
 						</div>
 
 						<mat-form-field class="col-4" *ngIf="marriageFormGroup.controls.groomReligion.get('code').value === 'MUSLIM' && marriageFormGroup.controls.marriageTimeGroomStatus.get('code').value === 'MARRIED'">
@@ -228,24 +230,26 @@
 							</mat-select>
 						</mat-form-field> -->
 						<div class="col-4" formGroupName="brideReligion">
-							<ng-select formControlName="code" placeholder="{{ 'religion' | translate:translateKey }}" (change)="onChange($event,'brideReligion');changeReset('marriageTimeBrideStatus')">
+							<ng-select formControlName="code" placeholder="{{ 'religion' | translate:translateKey }}" (change)="onChange($event,religionArray,'religionGujbride');changeReset('marriageTimeBrideStatus')">
 								<ng-option *ngFor="let religion of religionArray" [value]="religion.code">{{religion.name}}</ng-option>
 							</ng-select>
 						</div>
 						<div class="col-4" formGroupName="marriageTimeBrideStatus"> {{'marital_status' | translate:translateKey }}*
-							<mat-radio-group formControlName="code" (change)="onChange($event,'marriageTimeBrideStatus');">
-								<span *ngFor="let status of maritalstatusArray">
-									<span *ngIf="status.name == 'Married'">
-										<mat-radio-button *ngIf="marriageFormGroup.controls.brideReligion.get('code').value === 'MUSLIM'" [value]="status.code">
+							<div class="radioBtnError">
+								<mat-radio-group formControlName="code" required (change)="onChange($event.value,maritalstatusArray,'maritalstatusGujbride')">
+									<span *ngFor="let status of maritalstatusArray">
+										<span *ngIf="status.name == 'Married'">
+											<mat-radio-button *ngIf="marriageFormGroup.controls.brideReligion.get('code').value === 'MUSLIM'" [value]="status.code">
+												{{status.name}}
+											</mat-radio-button>
+										</span>
+										<mat-radio-button *ngIf="status.name != 'Married'" [value]="status.code">
 											{{status.name}}
 										</mat-radio-button>
 									</span>
-									<mat-radio-button *ngIf="status.name != 'Married'" [value]="status.code">
-										{{status.name}}
-									</mat-radio-button>
-								</span>
-								<control-messages [control]="marriageFormGroup.controls.marriageTimeBrideStatus"></control-messages>
-							</mat-radio-group>
+								</mat-radio-group>
+								<control-messages [control]="marriageFormGroup.controls.marriageTimeBrideStatus.controls.code"></control-messages>
+							</div>
 						</div>
 
 						<mat-form-field class="col-4">
@@ -266,30 +270,6 @@
 					</div>
 					<!-- /gujarati -->
 
-					<!-- gujrati -->
-					<!-- <div class="row">
-						<mat-form-field class="col-4">
-							<mat-select placeholder="{{ 'religion' | translate:translateKey:'gu' }}">
-								<mat-option *ngFor="let religion of religionArray" [value]="religion.code">{{religion.gujName}}</mat-option>
-							</mat-select>
-						</mat-form-field>
-
-						<div class="col-4" formGroupName="marriageTimeBrideStatus"> {{'marital_status' | translate:translateKey:'gu' }}*
-							<mat-radio-group formControlName="code">
-								<span *ngFor="let status of maritalstatusArray">
-									<span *ngIf="status.gujName == 'લગ્ન'">
-										<mat-radio-button *ngIf="marriageFormGroup.controls.brideReligion.get('code').value === 'MUSLIM'" [value]="status.code">
-											{{status.gujName}}
-										</mat-radio-button>
-									</span>
-									<mat-radio-button *ngIf="status.gujName != 'લગ્ન'" [value]="status.code">
-										{{status.gujName}}
-									</mat-radio-button>
-								</span>
-							</mat-radio-group>
-						</div>
-					</div> -->
-					<!-- /gujarati -->
 
 					<div class="row">
 						<div class="col-12">{{'address' | translate:translateKey }}:
@@ -526,7 +506,7 @@
 						</mat-form-field>
 
 						<mat-form-field class="col-4">
-							<input matInput OnlyNumber maxlength="12" minlength="12" type="tel" placeholder="{{'aadhar_number' | translate:translateKey }}" 
+							<input matInput OnlyNumber maxlength="12" minlength="12" type="tel" placeholder="{{'aadhar_number' | translate:translateKey }}"
 							 formControlName="priestAddressAadharNumber">
 							<control-messages [control]="marriageFormGroup.controls.priestAddressAadharNumber"></control-messages>
 						</mat-form-field>
@@ -699,81 +679,118 @@
 				</mat-step>
 				<!-- End Seventh step -->
 
-				<!-- Start eighth step -->
-				<mat-step [stepControl]="upload">
+
+				<!-- Eighth step -->
+				<mat-step [stepControl]="applicantDetail">
 					<ng-template matStepLabel>
 						<div [matTooltip]="stepLable8">{{stepLable8}}</div>
 					</ng-template>
 					<div class="row">
-
-						<div class="col-4">
-							<div *ngIf="showButtons">marriage_event_photo
-								<file-upload [form]="marriageFormGroup" [uploadModel]="setDataValue(1,'marriagephoto','1.1','marriagephoto')" [attachments]="attachments"></file-upload>
-							</div>
+						<div class="col-4 ngSelect" formGroupName="applicantRelation">
+							<ng-select formControlName="code" placeholder="{{ 'applicant_relation' | translate:translateKey }}" (change)="onChange($event,applicantrelationArray,'applicantrelationGuj');changeReset('applicantRelationOther')">
+								<ng-option *ngFor="let relation of applicantrelationArray" [value]="relation.code">{{relation.name}}</ng-option>
+							</ng-select>
+							<control-messages [control]="marriageFormGroup.controls.applicantRelation.controls.code"></control-messages>
 						</div>
 
-						<div class="col-4">
-							<div *ngIf="showButtons">groom_photo
-								<file-upload [form]="marriageFormGroup" [uploadModel]="setDataValue(2,'groomphoto','1.2','groomphoto')" [attachments]="attachments"></file-upload>
-							</div>
+						<mat-form-field class="col-4" *ngIf="marriageFormGroup.controls.applicantRelation.get('code').value === 'MR_OTHER_APPLICANT_RELATION'">
+							<input matInput type="text" formControlName="applicantRelationOther" placeholder="{{'applicant_relation_other' | translate:translateKey }}"
+							 appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'">
+						</mat-form-field>
+					</div>
+					<!-- gujrati -->
+					<div class="row">
+						<mat-form-field class="col-4">
+							<input matInput readonly placeholder="{{'applicant_relation' | translate:translateKey:'gu'}}" [value]="applicantrelationGuj">
+						</mat-form-field>
+					</div>
+					<!-- /gujarati -->
+
+					<div class="row">
+						<div class="col-4 ngSelect" formGroupName="uniqueIdProofLable">
+							<ng-select formControlName="code" placeholder="{{ 'id_proof_lable' | translate:translateKey }}" (change)="onChange($event,identityproofArray,'identityproofGuj');changeReset('uniqueIdProof')">
+								<ng-option *ngFor="let uniqueid of identityproofArray" [value]="uniqueid.code">{{uniqueid.name}}</ng-option>
+							</ng-select>
+							<control-messages [control]="marriageFormGroup.controls.uniqueIdProofLable.controls.code"></control-messages>
 						</div>
 
-						<div class="col-4" *ngIf="showButtons">bride_photo
-							<file-upload [form]="marriageFormGroup" [uploadModel]="setDataValue(3,'bridephoto','1.3','bridephoto')" [attachments]="attachments"></file-upload>
-						</div>
-						<div class="col-12">
-							<span>Upload Documents</span>
-						</div>
-						<div class="col-12">
-							<mat-checkbox [checked]="myModel" type="checkbox">
-								<!-- Resident proof of Groom and Bride(Driving License/Aadhar card/passport/Ration card/Election card) -->
-								resident_proof_of_groom_and_bride
-							</mat-checkbox>
-							<div [hidden]="!myModel">
-								<div *ngIf="showButtons">
-									<file-upload [form]="marriageFormGroup" [uploadModel]="setDataValue(4,'resProof','1.4','doc')" [attachments]="attachments"></file-upload>
-								</div>
-							</div>
-						</div>
-						<div class="col-12">
-							<mat-checkbox [disabled]="false">
-								<!-- Any KYC (Know your Customer)Document of Bride; -->
-								any_kyc_doc_bride
-							</mat-checkbox>
-							<div *ngIf="showButtons">
-								<file-upload [form]="marriageFormGroup" [uploadModel]="setDataValue(5,'kyc','1.5','doc')" [attachments]="attachments"></file-upload>
-							</div>
-						</div>
+						<mat-form-field class="col-4" *ngIf="marriageFormGroup.controls.uniqueIdProofLable.get('code').value">
+							<input matInput formControlName="uniqueIdProof" placeholder="{{'uniqueId_proof' | translate:translateKey }}">
+						</mat-form-field>
+					</div>
+					<!-- gujrati -->
+					<div class="row">
+						<mat-form-field class="col-4">
+							<input matInput readonly placeholder="{{'uniqueId_proof' | translate:translateKey:'gu'}}" [value]="identityproofGuj">
+						</mat-form-field>
+					</div>
+					<!-- /gujarati -->
 
-						<div class="col-12">
-							<mat-checkbox [disabled]="false">
-								<!-- Resident proof of Priest (Driving License/Aadhar card/passport/Ration card/Election card) </mat-checkbox> -->
-								resident_proof_of_priest
-							</mat-checkbox>
-							<div *ngIf="showButtons">
-								<file-upload [form]="marriageFormGroup" [uploadModel]="setDataValue(6,'priest','1.6','doc')" [attachments]="attachments"></file-upload>
-							</div>
-						</div>
-						<div class="col-12">
-							<mat-checkbox [disabled]="false">
-								<!-- Resident proof of Two local Witnesses (Driving License/Aadhar card/passport/Ration card/Election card) </mat-checkbox> -->
-								resident_proof_of_two_local_witnesses
-							</mat-checkbox>
-							<div *ngIf="showButtons">
-								<file-upload [form]="marriageFormGroup" [uploadModel]="setDataValue(7,'withness','1.6','doc')" [attachments]="attachments"></file-upload>
-							</div>
-						</div>
-
-						<div class="col-4">
+					<div class="row">
+						<div class="pt-4">
 							<app-action-bar [form]="marriageFormGroup" [step]="'step8'"></app-action-bar>
 						</div>
 					</div>
 				</mat-step>
 				<!-- End eighth step -->
 
-				<!-- Last step -->
-				<mat-step>
+				<!-- Start nine step -->
+				<mat-step [stepControl]="upload">
+					<ng-template matStepLabel>
+						<div [matTooltip]="stepLable9">{{stepLable9}}</div>
+					</ng-template>
 					<div class="row">
+						<div class="col-12 p-4">
+							<span>Upload Photos</span>
+						</div>
+						<div class="col-12">
+							<div *ngIf="showButtons">{{'marriage_event_photo' | translate:translateKey }}
+								<file-upload [form]="marriageFormGroup" [uploadModel]="setDataValue(1,'marriagephoto','1.1','marriagephoto')" [attachments]="attachments"></file-upload>
+							</div>
+						</div>
+
+						<div class="col-12">
+							<div *ngIf="showButtons">{{'groom_photo' | translate:translateKey }}
+								<file-upload [form]="marriageFormGroup" [uploadModel]="setDataValue(2,'groomphoto','1.2','groomphoto')" [attachments]="attachments"></file-upload>
+							</div>
+						</div>
+
+						<div class="col-12" *ngIf="showButtons">{{'bride_photo' | translate:translateKey }}
+							<file-upload [form]="marriageFormGroup" [uploadModel]="setDataValue(3,'bridephoto','1.3','bridephoto')" [attachments]="attachments"></file-upload>
+						</div>
+						<div class="col-12 p-4">
+							<span>Upload Documents</span>
+						</div>
+						<div class="col-12">
+							<!-- Resident proof of Groom and Bride(Driving License/Aadhar card/passport/Ration card/Election card) -->
+							{{'resident_proof_of_groom_and_bride' | translate:translateKey }}
+							<div *ngIf="showButtons">
+								<file-upload [form]="marriageFormGroup" [uploadModel]="setDataValue(4,'resProof','1.4','doc')" [attachments]="attachments"></file-upload>
+							</div>
+						</div>
+						<div class="col-12">
+							<!-- Any KYC (Know your Customer)Document of Bride; -->
+							{{'any_kyc_doc_bride' | translate:translateKey }}
+							<div *ngIf="showButtons">
+								<file-upload [form]="marriageFormGroup" [uploadModel]="setDataValue(5,'kyc','1.5','doc')" [attachments]="attachments"></file-upload>
+							</div>
+						</div>
+
+						<div class="col-12">
+							<!-- Resident proof of Priest (Driving License/Aadhar card/passport/Ration card/Election card) -->
+							{{'resident_proof_of_priest' | translate:translateKey }}
+							<div *ngIf="showButtons">
+								<file-upload [form]="marriageFormGroup" [uploadModel]="setDataValue(6,'priest','1.6','doc')" [attachments]="attachments"></file-upload>
+							</div>
+						</div>
+						<div class="col-12">
+							<!-- Resident proof of Two local Witnesses (Driving License/Aadhar card/passport/Ration card/Election card) -->
+							{{'resident_proof_of_two_local_witnesses' | translate:translateKey }}
+							<div *ngIf="showButtons">
+								<file-upload [form]="marriageFormGroup" [uploadModel]="setDataValue(7,'withness','1.6','doc')" [attachments]="attachments"></file-upload>
+							</div>
+						</div>
+
 						<div class="col-12">
 							<ng-template matStepLabel>Done</ng-template>
 							You are now done.
@@ -781,7 +798,7 @@
 						</div>
 					</div>
 				</mat-step>
-				<!-- End last step -->
+				<!-- End nine step -->
 
 			</mat-horizontal-stepper>
 		</form>

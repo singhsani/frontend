@@ -26,9 +26,9 @@ export class SlotBookingComponent implements OnInit {
 	resources: any = [];
 	slots: any = [];
 	calcelslots: any = [];
-	bookedSlot: any = [];
 	appointmentForm: FormGroup;
-
+	resultsLength: number = 0;
+	appointmentLength: number = 0;
 	/**
 	* @param formService - Declare form service property .
 	* @param commonService - Declare sweet alert.
@@ -79,7 +79,7 @@ export class SlotBookingComponent implements OnInit {
 				id: [''],
 				name: ['']
 			}),
-			appointmentdate: moment().add(1, 'day').format("YYYY-MM-DD")
+			appointmentdate: [moment().add(1, 'day').format("YYYY-MM-DD"), Validators.required]
 		})
 	}
 
@@ -104,6 +104,7 @@ export class SlotBookingComponent implements OnInit {
 		let resource = this.appointmentForm.controls.resources.get('code').value;
 		let appointmentdate = this.appointmentForm.get('appointmentdate').value;
 		this.getSlot(resource, appointmentdate);
+
 	}
 
 	/**
@@ -123,9 +124,10 @@ export class SlotBookingComponent implements OnInit {
 		this.http.get(requestURL).subscribe(
 			slot => {
 				this.slots = slot.data;
+				this.resultsLength = this.slots.length;
 			},
 			err => {
-				this.commonService.openAlert("error", err, "error");
+				this.commonService.openAlert("error", err.error[0].code, "error");
 			});
 	}
 
@@ -133,58 +135,61 @@ export class SlotBookingComponent implements OnInit {
 	* This method use for slot booking 
 	*/
 	redirectToBook(uniqueId) {
-		let requestURL = `api/form/${this.apiType}/slot/book?serviceId=${this.formId}&slotId=${uniqueId}`;
-		this.http.get(requestURL).subscribe(
-			res => {
-				this.bookedSlot = res.data;
 
-				if (this.bookedSlot.bookingStatus === 'BOOKED') {
-					this.commonService.openAlert("info", "slot booked", "info");
+		this.commonService.confirmAlert('Are you sure?', "", 'info', '', performDelete => {
+			let requestURL = `api/form/${this.apiType}/slot/book?serviceId=${this.formId}&slotId=${uniqueId}`;
+			this.http.get(requestURL).subscribe(
+				res => {
+
+					if (res.data.bookingStatus === 'BOOKED') {
+						this.commonService.successAlert("Success", "", "success");
+					}
+					let resource = this.appointmentForm.controls.resources.get('code').value;
+					let appointmentdate = this.appointmentForm.get('appointmentdate').value;
+					this.getSlot(resource, appointmentdate);
+					this.appointmentList();
+				},
+				err => {
+					this.commonService.openAlert("error", err.error[0].code, "error");
 				}
-				let resource = this.appointmentForm.controls.resources.get('code').value;
-				let appointmentdate = this.appointmentForm.get('appointmentdate').value;
-				this.getSlot(resource, appointmentdate);
-				this.appointmentList();
-			},
-			err => {
-				this.commonService.openAlert("error", "ONLY_ONE_APPOINTMENT_ALLOWED", "error");
-			}
-		);
+			);
+		});
 	}
 
 	/**
 	* This method use for cancel booked slot 
 	*/
 	redirectToCancel(uniqueId) {
-		// GET /api/form/MFRenewal/slot/cancel?serviceId=3&amp;slotId=c1a0d51aa9444defbd86b0b4e82f4a63 HTTP/1.1
-		let requestURL = `api/form/${this.apiType}/slot/cancel?serviceId=${this.formId}&slotId=${uniqueId}`;
-		this.http.get(requestURL).subscribe(
-			res => {
-				this.commonService.openAlert("error", "canceled", "error");
-				let resource = this.appointmentForm.controls.resources.get('code').value;
-				let appointmentdate = this.appointmentForm.get('appointmentdate').value;
-				this.getSlot(resource, appointmentdate);
-				this.appointmentList();
-			},
-			err => {
-				this.commonService.openAlert("error", "SLOT_DETAILS_NOT_AVAILABLE", "error");
-			}
-		);
 
+		this.commonService.deleteAlert('Are you sure?', "", 'warning', '', performDelete => {
+			let requestURL = `api/form/${this.apiType}/slot/cancel?serviceId=${this.formId}&slotId=${uniqueId}`;
+			this.http.get(requestURL).subscribe(
+				res => {
+					this.commonService.successAlert('Canceled!', '', 'success');
+					let resource = this.appointmentForm.controls.resources.get('code').value;
+					let appointmentdate = this.appointmentForm.get('appointmentdate').value;
+					this.getSlot(resource, appointmentdate);
+					this.appointmentList();
+				},
+				err => {
+					this.commonService.openAlert("error", err.error[0].code, "error");
+				}
+			);
+		});
 	}
 
 	/**
 	* This method use for get appointment list 
 	*/
 	appointmentList() {
-		// {{HOST}}/api/form/pondLicense/appointments/11
 		let requestURL = `api/form/${this.apiType}/appointments/${this.formId}`;
 		this.http.get(requestURL).subscribe(
 			res => {
 				this.calcelslots = res.data;
+				this.appointmentLength = this.calcelslots.length;
 			},
 			err => {
-				this.commonService.openAlert("error", err, "error");
+				this.commonService.openAlert("error", err.error[0].code, "error");
 			}
 		);
 	}

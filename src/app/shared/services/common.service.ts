@@ -155,12 +155,35 @@ export class CommonService {
 	}
 
 	getDateFormat(date: string, withTime:boolean) {
-		
+
 		if(withTime){
 			return moment(date).format('DD-MM-YYYY HH:MM:SS');
 		} else {
 			return moment(date).format('DD-MM-YYYY');
 		}
+	}
+
+	/**
+	* This method is use for confirmation.
+	*/
+	confirmAlert(title: string, message: string, type: string, html?: any, performEvent?: any) {
+
+		let options = {
+			title: title,
+			text: message,
+			type: type,
+			html: html,
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Yes!'
+		}
+
+		swal(options as any).then((result) => {
+			if (result.value && performEvent) {
+				performEvent();
+			}
+		})
 	}
 
 }
