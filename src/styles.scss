@@ -127,6 +127,10 @@ h1 { font-size: 30px; margin-bottom: 10px; }
 .cardH1.mat-card { padding: 15px 24px; margin: 20px 0; }
 .cardH1.mat-card h1 { font-size: 15px; text-transform: uppercase; position: relative; }
 .cardH1.mat-card h1::after { content: ''; background: $primaryGradient; position: absolute; left: -24px; top: 0; width: 5px; height: 100%; }
+.cardH2.mat-card { padding: 1px 24px; margin: 4px 0; }
+.cardH2.mat-card h2 { font-size: 14px; text-transform: uppercase; position: relative; }
+.cardH2.mat-card div { font-size: 14px; text-transform: uppercase; position: relative; cursor:pointer}
+.cardH2.mat-card h2::after { content: ''; background: $primaryGradient; position: absolute; left: -24px; top: 0; width: 5px; height: 100%; }
 
 .container {padding-bottom: 20px; max-width: inherit;}
 .formClass { padding: 0 !important;}

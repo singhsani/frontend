@@ -3,7 +3,7 @@
     <mat-toolbar color="primary" class="example-toolbar">
         <mat-toolbar-row class="dasHeader">
             <div class="float-left">
-                <button mat-icon-button (click)="isExpanded=!isExpanded; openSideNav();" *ngIf="mobileQuery.matches">
+                <button mat-icon-button (click)="isExpanded=!isExpanded; openSideNav();">
                     <mat-icon>menu</mat-icon>
                 </button>
                 <a mat-button routerLink="." class="logo">
@@ -16,10 +16,10 @@
             <button mat-icon-button position="end" (click)="selectLanguage('gu')">ગુજ</button> -->
             <div class="float-right">
                 <button mat-icon-button [matMenuTriggerFor]="menu" class="userName">
-                <mat-icon>face</mat-icon>
-                    {{profileObj.firstName + ' ' + profileObj.lastName}}
-                <mat-icon>arrow_drop_down</mat-icon>
-            </button>
+                    <mat-icon>face</mat-icon>
+                        {{profileObj.firstName + ' ' + profileObj.lastName}}
+                    <mat-icon>arrow_drop_down</mat-icon>
+                </button>
                 <mat-menu #menu="matMenu">
                     <button mat-menu-item routerLink="/citizen/my-profile">Profile</button>
                     <button mat-menu-item (click)="onLogout()">Logout</button>
@@ -29,7 +29,7 @@
     </mat-toolbar>
 
     <mat-sidenav-container class="example-sidenav-container" autosize>
-        <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [(opened)]="!mobileQuery.matches" (mouseenter)="isExpanded=!isExpanded" (mouseleave)="isExpanded=!isExpanded">
+        <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [(opened)]="!mobileQuery.matches">
             <mat-nav-list (click)="toggleSideNav()">
                 <a *ngIf="!fromAdmin" mat-list-item routerLink="/citizen/dashboard/" routerLinkActive="active-route-link">
                     <mat-icon>apps</mat-icon>

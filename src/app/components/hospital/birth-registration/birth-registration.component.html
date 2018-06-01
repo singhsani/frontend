@@ -48,11 +48,11 @@
                             
 
                             <mat-card class="col-md-12 cardH2">
-                                <h2>Child {{i+1}}</h2>
-                                <button matTooltip="Delete Child Information" [disabled]="showButtons && !birthCertificateForm.controls.canEdit.value" (click)="deleteChild(item.value, i)"
-                                    type="button" class="float-right" color="warn" mat-mini-fab *ngIf="i > 0">
-                                    <mat-icon>delete</mat-icon>
-                                </button>
+                                <h2 class="col-md-10 float-left">Child {{i+1}}</h2>
+                                <div class="col-md-2 float-right text-right" *ngIf="i==0"></div>
+                                <div matTooltip="Delete Child Information" [hidden]="showButtons && !birthCertificateForm.controls.canEdit.value" (click)="deleteChild(item.value, i)" class="col-md-2 float-right text-right" *ngIf="i > 0">
+                                    <mat-icon color="warn">delete</mat-icon>
+                                </div>
                             </mat-card>
                             
 

@@ -16,7 +16,7 @@ export class HospitalLayoutComponent implements OnInit {
 	@ViewChild('snav') snav;
 	mobileQuery: MediaQueryList;
 	profileObj: any = {};
-	fromAdmin: boolean = false;
+	isExpanded: boolean = true;
 
 	constructor(private changeDetectorRef: ChangeDetectorRef,
 		private media: MediaMatcher,
@@ -60,6 +60,16 @@ export class HospitalLayoutComponent implements OnInit {
 	toggleSideNav() {
 		if (this.mobileQuery.matches) {
 			this.snav.opened = false;
+		}
+	}
+
+	/**
+	 * This method is use to open side nav on mobile view
+	 */
+	openSideNav() {
+		if (this.mobileQuery.matches) {
+			this.isExpanded = true;
+			this.snav.opened = true;
 		}
 	}
 

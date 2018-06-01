@@ -21,7 +21,7 @@ export class HomeLayoutComponent implements OnInit {
 	mobileQuery: MediaQueryList;
 	profileObj: any = {};
 	fromAdmin: boolean = false;
-	isExpanded: boolean = false;
+	isExpanded: boolean = true;
 	
 	constructor(
 		private changeDetectorRef: ChangeDetectorRef,
@@ -76,6 +76,7 @@ export class HomeLayoutComponent implements OnInit {
 	 */
 	openSideNav() {
 		if (this.mobileQuery.matches) {
+			this.isExpanded = true;
 			this.snav.opened = true;
 		}
 	}
