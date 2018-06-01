@@ -1,10 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validator, Validators } from '@angular/forms';
 
 import { ToastrService } from 'ngx-toastr';
 import { CommonService } from './../../../shared/services/common.service';
 import { ValidationService } from './../../../shared/services/validation.service';
 import { FormsActionsService } from './../../../core/services/citizen/data-services/forms-actions.service';
+import * as moment from 'moment';
+import { HttpService } from '../../../shared/services/http.service';
+import { HttpEventType } from '@angular/common/http';
 
 @Component({
 	selector: 'app-user-profile',
@@ -12,7 +15,7 @@ import { FormsActionsService } from './../../../core/services/citizen/data-servi
 	styleUrls: ['./user-profile.component.scss']
 })
 export class UserProfileComponent implements OnInit {
-
+	@ViewChild('profilePicfileInput') profilePicfileInput: any;
 	/**
 	 * Declare userProfile formgroup property
 	 */
@@ -27,20 +30,39 @@ export class UserProfileComponent implements OnInit {
 		private fb: FormBuilder,
 		private formService: FormsActionsService,
 		private toaster: ToastrService,
-		private commonService: CommonService
-	) 
-	{ }
+		private commonService: CommonService,
+		private httpService: HttpService
+	) { }
+
+	// Marriage date 
+	disablefutureDate = new Date(moment().format('YYYY-MM-DD'));
+
+	progress: { percentage: number } = { percentage: 0 }
 
 	ngOnInit() {
 
 		this.userProfileForm = this.fb.group({
 			uniqueId: '',
 			firstName: [null, [Validators.required, ValidationService.nameValidator]],
+			middleName:[null, [ValidationService.nameValidator]],
 			lastName: [null, [Validators.required, ValidationService.nameValidator]],
 			email: [{ value: null, disabled: true }],
 			cellNo: [{ value: null, disabled: true }],
 			userType: '',
-			status: ''
+			status: '',
+			birthDate: [null, Validators.required],
+			gender: [null, [Validators.required]],
+			profilePic: null,
+
+			buildingName: [null, [Validators.maxLength(60), ValidationService.buildingNameValidator]],
+			streetName: [null, Validators.maxLength(60)],
+			landmark: [null, Validators.maxLength(100)],
+			area: [null, Validators.maxLength(60)],
+			state: [null, [Validators.maxLength(60)]],
+			district: [null, [Validators.maxLength(60)]],
+			city: [null, [Validators.maxLength(60)]],
+			country: [null, [Validators.maxLength(60)]],
+			pincode: [null, [Validators.maxLength(6)]]
 		});
 
 		this.getUserProfile();
@@ -51,8 +73,7 @@ export class UserProfileComponent implements OnInit {
 	 */
 	getUserProfile() {
 		this.formService.getUserProfile().subscribe(res => {
-
-			this.userProfileForm.setValue(res.data);
+			this.userProfileForm.patchValue(res.data);
 		});
 	}
 
@@ -62,9 +83,43 @@ export class UserProfileComponent implements OnInit {
 	 */
 	onSubmitProfile(formVals: FormGroup) {
 		this.formService.updateUserProfile(formVals.getRawValue()).subscribe(res => {
+			this.userProfileForm.patchValue(res.data);
 			this.toaster.success('Your profile has been updated successfully');
 			this.commonService.profileSubject.next(res.data);
 		});
+	}
+	/**
+	 * This method is change date format.
+	 */
+	dateFormat(date, controlType) {
+		this.userProfileForm.get(controlType).setValue(moment(date).format("YYYY-MM-DD"));
+	}
+
+
+	uploadProfilePic(event) {
+		let selectedFiles = event.target.files;
+		if (selectedFiles && selectedFiles.length) {
+			let fileType = selectedFiles[0].type;
+			if (fileType === 'image/png' || fileType === 'image/jpg' || fileType === 'image/jpeg' || fileType === 'image/gif') {
+
+				if (selectedFiles[0].size > 512000) {
+
+					this.commonService.openAlert("Warning", "File Size should be less than 512 KB", "warning");
+
+				} else {
+					
+					let reader = new FileReader();
+					reader.onload = (e: any) => {
+						this.userProfileForm.get('profilePic').setValue(e.target.result);
+					}
+					reader.readAsDataURL(selectedFiles[0]);
+					this.profilePicfileInput.nativeElement.value = "";
+				}
+			} else {
+				this.commonService.openAlert("Warning", "Please Select only image file", "warning");
+			}
+
+		}
 	}
 
 }

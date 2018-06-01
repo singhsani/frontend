@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpService } from '../../../../shared/services/http.service';
 import { Observable } from 'rxjs/Observable';
 import { SessionStorageService } from 'angular-web-storage';
+import { HttpEventType } from '@angular/common/http';
 
 @Injectable()
 export class FormsActionsService {
@@ -41,7 +42,7 @@ export class FormsActionsService {
 	 * This method is used to get all payable service list.
 	 */
 	getPayableServiceList() {
-		
+
 		return this.http.get('public/guest/payableServices', '');
 	}
 
@@ -49,7 +50,7 @@ export class FormsActionsService {
 	 * This method is used to get citizen app data
 	 * @param appId - citizen app id
 	 */
-	getFormData(appId):Observable<any> {
+	getFormData(appId): Observable<any> {
 
 		this.requestURL = `api/form/${this.apiType}/get/${appId}`;
 
@@ -103,7 +104,7 @@ export class FormsActionsService {
 	/**
 	 * This method is use to get lookup data respective to api type
 	 */
-	getDataFromLookups(){
+	getDataFromLookups() {
 
 		this.requestURL = `api/form/${this.apiType}/lookups`;
 
@@ -149,7 +150,7 @@ export class FormsActionsService {
 	/**
 	 * This method is use for get user services
 	 */
-	getUserServices(){
+	getUserServices() {
 		return this.http.get('api/user/citizenServices');
 	}
 
@@ -185,6 +186,22 @@ export class FormsActionsService {
 			'Content-type': 'application/json'
 		};
 		return headers;
+	}
+
+	uploadProfilePic(formData: FormData, setProgress?: any, successResponse?: any) {
+
+		this.http.uploadFilePost('api/user/upload/profile/pic', formData).subscribe(event => {
+			switch (event.type) {
+				case HttpEventType.Sent:
+					break;
+				case HttpEventType.ResponseHeader:
+					break;
+				case HttpEventType.UploadProgress:
+					return setProgress(Math.round(100 * event.loaded / event.total));
+				case HttpEventType.Response:
+					return successResponse(event.body);
+			}
+		});
 	}
 
 
