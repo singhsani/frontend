@@ -3,18 +3,20 @@
     <mat-toolbar color="primary" class="example-toolbar">
         <mat-toolbar-row class="dasHeader">
             <div class="float-left">
-                <button mat-icon-button (click)="snav && snav.toggle()">
-					<mat-icon>menu</mat-icon>
-				</button>
+                <button mat-icon-button (click)="isExpanded=!isExpanded; openSideNav();">
+                    <mat-icon>menu</mat-icon>
+                </button>
                 <a mat-button routerLink="." class="logo">
-					<img src="assets/images/vmc-logo.png" alt="Vadodara Municipal Corporation"> Vadodara Municipal Corporation</a>
+                    <img src="assets/images/vmc-logo.png" alt="Vadodara Municipal Corporation"> 
+                    <span class="logoText">Vadodara Municipal Corporation</span>
+                </a>
                 <span class="example-spacer"></span>
             </div>
             <!-- <button mat-icon-button position="end" (click)="selectLanguage('en')">EN</button>
 				<button mat-icon-button position="end" (click)="selectLanguage('gu')">ગુજ</button> -->
             <div class="float-right">
                 <button mat-icon-button [matMenuTriggerFor]="menu" class="userName">
-					<mat-icon>account_circle</mat-icon>
+					<mat-icon>face</mat-icon>
 						{{profileObj.firstName + ' ' + profileObj.lastName}}
 					<mat-icon>arrow_drop_down</mat-icon>
 				</button>
@@ -29,8 +31,14 @@
     <mat-sidenav-container class="example-sidenav-container">
         <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [(opened)]="!mobileQuery.matches">
             <mat-nav-list (click)="toggleSideNav()">
-                <a mat-list-item routerLink="/hospital/dashboard/" routerLinkActive="active-route-link"><mat-icon>apps</mat-icon>Dashboard</a>
-                <a mat-list-item routerLink="/hospital/my-applications/" routerLinkActive="active-route-link"><mat-icon>description</mat-icon>My Applications</a>
+                <a mat-list-item routerLink="/hospital/dashboard/" routerLinkActive="active-route-link">
+                    <mat-icon>apps</mat-icon>
+                    <span *ngIf="isExpanded">Dashboard</span>
+                </a>
+                <a mat-list-item routerLink="/hospital/my-applications/" routerLinkActive="active-route-link">
+                    <mat-icon>description</mat-icon>
+                    <span *ngIf="isExpanded">My Applications</span>
+                </a>
             </mat-nav-list>
         </mat-sidenav>
         <mat-sidenav-content>
