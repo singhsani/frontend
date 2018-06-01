@@ -21,7 +21,6 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class BirthRegistrationComponent implements OnInit {
 	@ViewChild('stepper') stepper: MatStepper;
-
 	@ViewChild('address') addressComp: any;
 
 	/**
@@ -162,7 +161,7 @@ export class BirthRegistrationComponent implements OnInit {
 
 			birthPlace: this.fb.group({
 				id: 1,
-				code: [null, Validators.required],
+				code: [null, [Validators.required]],
 				name: null
 			}),
 			otherPlace: null,
@@ -192,17 +191,15 @@ export class BirthRegistrationComponent implements OnInit {
 			fatherFirstName: ['', [Validators.required, ValidationService.nameValidator]],
 			fatherMiddleName: ['', [Validators.required, ValidationService.nameValidator]],
 			fatherLastName: ['', [ValidationService.nameValidator, Validators.required]],
-			fatherFirstNameGuj: ['', [Validators.required, ValidationService.nameValidator]],
-			fatherMiddleNameGuj: ['', [Validators.required, ValidationService.nameValidator]],
-			fatherLastNameGuj: ['', [ValidationService.nameValidator, Validators.required]],
-
+			fatherFirstNameGuj: ['', [Validators.required]],
+			fatherMiddleNameGuj: ['', [Validators.required]],
+			fatherLastNameGuj: ['', [Validators.required]],
 			fatherEducation: this.fb.group({
 				id: null,
 				code: [null, [Validators.required]],
 				name: null,
 				gujName: null
 			}),
-
 			fatherOccupations: this.fb.group({
 				id: null,
 				code: [null, [Validators.required]],
@@ -215,9 +212,9 @@ export class BirthRegistrationComponent implements OnInit {
 			motherFirstName: ['', [ValidationService.nameValidator, Validators.required]],
 			motherMiddleName: ['', [Validators.required, ValidationService.nameValidator]],
 			motherLastName: ['', [ValidationService.nameValidator, Validators.required]],
-			motherFirstNameGuj: ['', [ValidationService.nameValidator, Validators.required]],
-			motherMiddleNameGuj: ['', [Validators.required, ValidationService.nameValidator]],
-			motherLastNameGuj: ['', [ValidationService.nameValidator, Validators.required]],
+			motherFirstNameGuj: ['', [ Validators.required]],
+			motherMiddleNameGuj: ['', [Validators.required]],
+			motherLastNameGuj: ['', [Validators.required]],
 
 			motherEducation: this.fb.group({
 				id: null,
@@ -237,8 +234,6 @@ export class BirthRegistrationComponent implements OnInit {
 			petaKendraNumber: ['', [Validators.minLength(10), Validators.maxLength(10)]],
 			motherMarriageAge: [null, [Validators.minLength(2), Validators.maxLength(2), Validators.required]],
 			motherDeliveryAge: [null, [Validators.required, Validators.minLength(2), Validators.maxLength(2)]],
-			totalAliveChild: [null, [Validators.required, Validators.maxLength(2)]],
-
 			deliveryTreatment: this.fb.group({
 				id: null,
 				code: [null, Validators.required],
@@ -249,21 +244,24 @@ export class BirthRegistrationComponent implements OnInit {
 				code: [null, Validators.required],
 				name: null
 			}),
-
 			pregnancyDuration: ['', [Validators.required, ValidationService.pregnancyDurationValidation]],
+			totalAliveChild: [null, [Validators.required, Validators.maxLength(2)]],
+			
+			//step 4
+			parentDeliveryAddress: this.fb.group(this.addressComp.addressControls()),
 			isPermanentPresentAddressSame: this.fb.group({
 				id: null,
 				code: null,
 				name: null
 			}),
-
+			parentPermanentAddress: this.fb.group(this.addressComp.addressControls()),
 			familyReligion: this.fb.group({
 				id: null,
 				code: [null, Validators.required],
 				name: null
 			}),
-			parentDeliveryAddress: this.fb.group(this.addressComp.addressControls()),
-			parentPermanentAddress: this.fb.group(this.addressComp.addressControls()),
+
+			//step 5
 			attachments: [null, [Validators.required]],
 			delayedPeriod: null,
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
@@ -323,11 +321,10 @@ export class BirthRegistrationComponent implements OnInit {
 		if (this.birthCertificateForm.get('delayedPeriod').value === null){
 			this.birthCertificateForm.get('delayedPeriod').setValue(diff.days() + diff.years() * 365 + diff.months() * 30);
 		}
-		console.log(this.birthCertificateForm.get('delayedPeriod').value);
 	}
 
 	getDelayPeriod() {
-		return this.birthCertificateForm.get('delayedPeriod').value
+		return this.birthCertificateForm.get('delayedPeriod').value;
 	}
 
 
@@ -337,9 +334,9 @@ export class BirthRegistrationComponent implements OnInit {
 	 */
 	handleErrorsOnSubmit(count) {
 		this.submit = true;
-		let step1 = 9;
-		let step2 = 15;
-		let step3 = 29;
+		let step1 = 5;
+		let step2 = 9;
+		let step3 = 19;
 		let step4 = 33;
 		let step5 = 37;
 
@@ -516,7 +513,6 @@ export class BirthRegistrationComponent implements OnInit {
 			this.getChildData().push(this.createChildArray(child));
 			this.birthCertificateForm.get('noOfChilds').setValue(this.getChildData().length);
 		}
-		console.log(this.birthCertificateForm.get('noOfChilds').value);
 
 	}
 
