@@ -300,6 +300,8 @@ export class StillBirthComponent implements OnInit {
 	 */
 	getStillBirthFormData() {
 		this.formService.getFormData(this.appId).subscribe(res => {
+			this.attachments = res.attachments;
+			this.stillBirthCertificateForm.patchValue(res);
 
 			//common for all only change form name
 			if (this.stillBirthCertificateForm.get('isPermanentPresentAddressSame').get('code').value == 'YES') {
@@ -307,10 +309,11 @@ export class StillBirthComponent implements OnInit {
 			} else {
 				this.stillBirthCertificateForm.get('parentPermanentAddress').enable();
 			}
-
-			this.attachments = res.attachments;
-			this.stillBirthCertificateForm.patchValue(res);
+			
 			this.showButtons = true;
+			if (!this.stillBirthCertificateForm.controls.canEdit.value) {
+				this.stillBirthCertificateForm.disable();
+			}
 		});
 	}
 
