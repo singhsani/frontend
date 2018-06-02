@@ -2,26 +2,34 @@
 	<div class="col-md-12">
 		<!-- <mat-progress-bar *ngIf="currentFileUpload" mode="determinate" value="{{progress.percentage}}"></mat-progress-bar> -->
 
+		<span>{{fileName}}</span>
+		<span *ngIf="getFile">
+			{{getFile.realFileName}}
+		</span>
 
-		<div *ngIf="showButton">
-			<label class="btn btn-default" [class.disabled]="!form.get('canEdit').value">
-				<input #fileInput type="file" [class.disabled]="!form.get('canEdit').value" [disabled]="!form.get('canEdit').value" (change)="selectFile($event)">
-			</label>
-			<label *ngIf="imagetype">
-				<img [src]="priviewImage" alt="image" class="imageSize" />
-			</label>
+		<!-- <label *ngIf="getFile">
+				<img [src]="getFile.absolutePath" alt="image" class="imageSize" />
+			</label> -->
 
-			<button type="button" mat-raised-button color="primary" [disabled]="canUpload || !form.get('canEdit').value" (click)="upload()">
-				<mat-icon>file_upload</mat-icon> Upload
-			</button>
+		<label *ngIf="priviewImage">
+			<img [src]="priviewImage" alt="image" class="imageSize" />
+		</label>
 
-			<button [disabled]="canView || !form.get('canEdit').value" mat-raised-button type="button" color="accent" (click)="view()">
-				View
-			</button>
+		<label class="btn btn-default" [hidden]="canUpload || !form.get('canEdit').value">
+			<input #fileInput type="file" (change)="selectFile($event)">
+		</label>
 
-			<button [disabled]="canDelete || !form.get('canEdit').value" mat-raised-button type="button" color="warn" (click)="deleteFile()">
-				Delete
-			</button>
-		</div>
+		<button type="button" mat-raised-button color="primary" [hidden]="canUpload || !form.get('canEdit').value" (click)="upload()">
+			<mat-icon>file_upload</mat-icon> Upload
+		</button>
+
+		<button [hidden]="canView || !form.get('canEdit').value" mat-raised-button type="button" color="accent" (click)="view()">
+			View
+		</button>
+
+		<button [hidden]="canDelete || !form.get('canEdit').value" mat-raised-button type="button" color="warn" (click)="deleteFile()">
+			Delete
+		</button>
 	</div>
+
 </div>

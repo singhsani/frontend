@@ -745,49 +745,41 @@
 						</div>
 						<div class="col-12">
 							<div *ngIf="showButtons">{{'marriage_event_photo' | translate:translateKey }}
-								<file-upload [form]="marriageFormGroup" [uploadModel]="setDataValue(1,'marriagephoto','1.1','marriagephoto')" [attachments]="attachments"></file-upload>
+								<file-upload [form]="marriageFormGroup" [uploadModel]="setDataValue(1,'marriagePhoto','1.1','marriagephoto')"></file-upload>
 							</div>
 						</div>
 
 						<div class="col-12">
 							<div *ngIf="showButtons">{{'groom_photo' | translate:translateKey }}
-								<file-upload [form]="marriageFormGroup" [uploadModel]="setDataValue(2,'groomphoto','1.2','groomphoto')" [attachments]="attachments"></file-upload>
+								<file-upload [form]="marriageFormGroup" [uploadModel]="setDataValue(2,'groomPhoto','1.2','groomphoto')"></file-upload>
 							</div>
 						</div>
 
 						<div class="col-12" *ngIf="showButtons">{{'bride_photo' | translate:translateKey }}
-							<file-upload [form]="marriageFormGroup" [uploadModel]="setDataValue(3,'bridephoto','1.3','bridephoto')" [attachments]="attachments"></file-upload>
+							<file-upload [form]="marriageFormGroup" [uploadModel]="setDataValue(3,'bridePhoto','1.3','bridephoto')"></file-upload>
 						</div>
 						<div class="col-12 p-4">
 							<span>Upload Documents</span>
 						</div>
 						<div class="col-12">
-							<!-- Resident proof of Groom and Bride(Driving License/Aadhar card/passport/Ration card/Election card) -->
-							{{'resident_proof_of_groom_and_bride' | translate:translateKey }}
-							<div *ngIf="showButtons">
-								<file-upload [form]="marriageFormGroup" [uploadModel]="setDataValue(4,'resProof','1.4','doc')" [attachments]="attachments"></file-upload>
+							<div *ngIf="showButtons"> {{'resident_proof_of_groom_and_bride' | translate:translateKey }}
+								<file-upload [form]="marriageFormGroup" [uploadModel]="setDataValue(4,'residentProof','1.4','doc')"></file-upload>
 							</div>
 						</div>
 						<div class="col-12">
-							<!-- Any KYC (Know your Customer)Document of Bride; -->
-							{{'any_kyc_doc_bride' | translate:translateKey }}
-							<div *ngIf="showButtons">
-								<file-upload [form]="marriageFormGroup" [uploadModel]="setDataValue(5,'kyc','1.5','doc')" [attachments]="attachments"></file-upload>
+							<div *ngIf="showButtons">{{'any_kyc_doc_bride' | translate:translateKey }}
+								<file-upload [form]="marriageFormGroup" [uploadModel]="setDataValue(5,'kycDoc','1.5','doc')"></file-upload>
 							</div>
 						</div>
 
 						<div class="col-12">
-							<!-- Resident proof of Priest (Driving License/Aadhar card/passport/Ration card/Election card) -->
-							{{'resident_proof_of_priest' | translate:translateKey }}
-							<div *ngIf="showButtons">
-								<file-upload [form]="marriageFormGroup" [uploadModel]="setDataValue(6,'priest','1.6','doc')" [attachments]="attachments"></file-upload>
+							<div *ngIf="showButtons">{{'resident_proof_of_priest' | translate:translateKey }}
+								<file-upload [form]="marriageFormGroup" [uploadModel]="setDataValue(6,'priestProof','1.6','doc')"></file-upload>
 							</div>
 						</div>
 						<div class="col-12">
-							<!-- Resident proof of Two local Witnesses (Driving License/Aadhar card/passport/Ration card/Election card) -->
-							{{'resident_proof_of_two_local_witnesses' | translate:translateKey }}
-							<div *ngIf="showButtons">
-								<file-upload [form]="marriageFormGroup" [uploadModel]="setDataValue(7,'withness','1.6','doc')" [attachments]="attachments"></file-upload>
+							<div *ngIf="showButtons">{{'resident_proof_of_two_local_witnesses' | translate:translateKey }}
+								<file-upload [form]="marriageFormGroup" [uploadModel]="setDataValue(7,'withnessProof','1.6','doc')"></file-upload>
 							</div>
 						</div>
 
