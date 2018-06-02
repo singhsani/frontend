@@ -5,7 +5,6 @@ import { FormsActionsService } from './../../../core/services/citizen/data-servi
 import { ValidationService } from './../../services/validation.service';
 
 import * as _ from 'lodash';
-import { CountryService } from '../../services/country.service';
 
 @Component({
 	selector: 'app-address',
@@ -24,8 +23,7 @@ export class AddressComponent implements OnInit {
 	editMode: boolean = false;
 
 	constructor(
-		private formService: FormsActionsService,
-		private countryService: CountryService
+		private formService: FormsActionsService
 	) { }
 
 	ngOnInit() {
@@ -87,10 +85,9 @@ export class AddressComponent implements OnInit {
 	 */
 	getCountryLists() {
 
-		//this.formService.getCountryLookUp().subscribe(res => {
-				console.log(this.countryService.test);
+		this.formService.getCountryLookUp().subscribe(res => {
 
-			//this.countryListArray = this.countryService.getAll();
+			this.countryListArray = _.cloneDeep(res.data);
 
 			setTimeout(() => {
 				if (this.editMode && this.addressFormGroup.get('country').value) {
@@ -98,7 +95,7 @@ export class AddressComponent implements OnInit {
 				}
 			}, 300);
 
-		//});
+		});
 	}
 
 	/**
