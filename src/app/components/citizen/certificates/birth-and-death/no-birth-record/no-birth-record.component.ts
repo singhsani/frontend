@@ -35,8 +35,6 @@ export class NoBirthRecordComponent implements OnInit {
 	reasonArray: any = [];
 	showButtons: boolean = false;
 
-	attachments: any = [];
-
 	uploadModel: any = {};
 
 	// Step Titles
@@ -102,7 +100,6 @@ export class NoBirthRecordComponent implements OnInit {
 	getNoRecordBirthData() {
 		this.formService.getFormData(this.appId).subscribe(res => {
 			this.noRecordBirthForm.patchValue(res);
-			this.attachments = res.attachments;
 			this.showButtons = true;
 		});
 	}
@@ -155,13 +152,13 @@ export class NoBirthRecordComponent implements OnInit {
 	 * This method use to return file upload model
 	 * @param indentifier - get different indentifier for different file 
 	 */
-	setDataValue(indentifier: number) {
+	setDataValue(indentifier: number, labelName: string, formPart: string, variableName: string) {
 
 		this.uploadModel = {
 			fieldIdentifier: indentifier,
-			labelName: 'NRCBirth',
-			formPart: '3',
-			variableName: 'test',
+			labelName: labelName,
+			formPart: formPart,
+			variableName: variableName,
 			serviceFormId: this.appId,
 		}
 

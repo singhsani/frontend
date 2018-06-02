@@ -58,11 +58,19 @@ export class TranslateService {
 		this.setCurrentLanguage();
 		
 		if(lang){
-			return _.get(this.data, `${type}.${key}.${lang}`, key);
+			if(_.isEmpty(_.get(this.data, `${type}.${key}.${lang}`, key))){
+				return key;
+			} else {
+				return _.get(this.data, `${type}.${key}.${lang}`, key);
+			}
 		}
 
 		if(_.has(this.data, type)){
-			return _.get(this.data, `${type}.${key}.${this.currentLanguage}`, key);
+			if(_.isEmpty(_.get(this.data, `${type}.${key}.${this.currentLanguage}`, key))){
+				return key;
+			} else {
+				return _.get(this.data, `${type}.${key}.${this.currentLanguage}`, key);
+			}
 		} else {
 			return key;
 		}

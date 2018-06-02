@@ -55,7 +55,7 @@
 
 					<div *ngIf="showButtons">
 						<span class="text-primary">Upload Mandatory Documents For Deceased ID Proof's </span>
-						<file-upload [form]="noRecordDeathForm" [uploadModel]="setDataValue(1)" [attachments]="attachments"></file-upload>
+						<file-upload [form]="noRecordDeathForm" [uploadModel]="setDataValue(1,'Deceased','1.1','NRCDeathCertificate')"></file-upload>
 					</div>
 
 					<app-action-bar [form]="noRecordDeathForm" [step]="'step1'" (stepReset)="stepReset()" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
@@ -72,7 +72,7 @@
 
 					<div *ngIf="showButtons">
 						<span class="text-primary">Upload Mandatory Documents</span>
-						<file-upload [form]="noRecordDeathForm" [uploadModel]="setDataValue(2)" [attachments]="attachments"></file-upload>
+						<file-upload [form]="noRecordDeathForm" [uploadModel]="setDataValue(2,'BasicDeatils','2.1','NRCDeathCertificate')"></file-upload>
 					</div>
 
 					<app-action-bar [form]="noRecordDeathForm" [step]="'step2'" (stepReset)="stepReset()" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
@@ -111,12 +111,12 @@
 
 					<div *ngIf="showButtons">
 						<span class="text-primary">Upload Mandatory Documents For Applicant ID Proof's </span>
-						<file-upload [form]="noRecordDeathForm" [uploadModel]="setDataValue(3)" [attachments]="attachments"></file-upload>
+						<file-upload [form]="noRecordDeathForm" [uploadModel]="setDataValue(3,'ApplicantId','3.1','NRCDeathCertificate')"></file-upload>
 					</div>
 
 					<div *ngIf="showButtons">
 						<span class="text-primary">Additional Documents </span>
-						<file-upload [form]="noRecordDeathForm" [uploadModel]="setDataValue(4)" [attachments]="attachments"></file-upload>
+						<file-upload [form]="noRecordDeathForm" [uploadModel]="setDataValue(4,'AdditionalDoc','4.1','NRCDeathCertificate')"></file-upload>
 					</div>
 
 					<app-action-bar [form]="noRecordDeathForm" [step]="'final'" (stepReset)="stepReset()" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>

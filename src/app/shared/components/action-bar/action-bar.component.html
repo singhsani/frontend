@@ -5,7 +5,7 @@
 		<button type="button" *ngIf="!form.get('canEdit').value && step !== 'final'" mat-raised-button color="primary" matStepperNext>{{'next' | translate:translateKey}}</button>
 
 		<button type="button" mat-raised-button color="primary" [disabled]="isSubmitBtnDisabled" *ngIf="form.get('canEdit').value" (click)="saveAsDraft()"
-		 >{{step == 'final'? 'save' : 'save_and_next' | translate:translateKey}}</button>
+		 >{{(step == 'final' ? 'save' : 'save_and_next') | translate:translateKey}}</button>
 
 		<button type="button" style="display:none" matStepperNext id="matStepperNextBtn"></button>
 
