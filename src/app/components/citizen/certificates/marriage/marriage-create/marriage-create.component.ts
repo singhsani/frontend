@@ -63,7 +63,6 @@ export class MarriageCreateComponent implements OnInit {
 
     //File and image upload
     uploadModel: any = {};
-    private attachments: any[] = [];
     private showButtons: boolean = false;
 
     //age calculation
@@ -315,10 +314,9 @@ export class MarriageCreateComponent implements OnInit {
                     this.setValue('isPriestParResAddressSame', 'NO');
                 }
 
-                this.attachments = res.attachments;
-                this.showButtons = true;
                 this.marriageFormGroup.patchValue(res);
-
+                this.showButtons = true;
+                
                 //set default value
                 this.marriageFormGroup.get('marriageRegistrationDate').setValue(moment().format('YYYY-MM-DD'));
                 
