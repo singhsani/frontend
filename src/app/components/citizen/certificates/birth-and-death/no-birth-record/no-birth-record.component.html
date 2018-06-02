@@ -54,12 +54,11 @@
 							<mat-datepicker touchUi="true" #picker></mat-datepicker>
 							<control-messages [control]="noRecordBirthForm.controls.birthDate"></control-messages>
 						</mat-form-field>
-
 					</div>
 
 					<div *ngIf="showButtons" class="mt-4">
 						<span class="text-primary">Upload Mandatory Documents For Date Of Birth </span>
-						<file-upload [form]="noRecordBirthForm" [uploadModel]="setDataValue(1)" [attachments]="attachments"></file-upload>
+						<file-upload [form]="noRecordBirthForm" [uploadModel]="setDataValue(1,'DOB','1.1','NRCBirthCertificate')"></file-upload>
 					</div>
 
 					<app-action-bar [form]="noRecordBirthForm" [step]="'step1'" (stepReset)="stepReset()" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
@@ -76,7 +75,7 @@
 
 					<div *ngIf="showButtons">
 						<span class="text-primary">Upload Mandatory Documents For Place Of Birth </span>
-						<file-upload [form]="noRecordBirthForm" [uploadModel]="setDataValue(2)" [attachments]="attachments"></file-upload>
+						<file-upload [form]="noRecordBirthForm" [uploadModel]="setDataValue(2,'Palce','2.1','NRCBirthCertificate')"></file-upload>
 					</div>
 
 					<app-action-bar [form]="noRecordBirthForm" [step]="'step2'" (stepReset)="stepReset()" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
@@ -116,7 +115,7 @@
 
 					<div *ngIf="showButtons">
 						<span class="text-primary">Upload Mandatory Documents For Applicant ID Proof's </span>
-						<file-upload [form]="noRecordBirthForm" [uploadModel]="setDataValue(3)" [attachments]="attachments"></file-upload>
+						<file-upload [form]="noRecordBirthForm" [uploadModel]="setDataValue(3,'ApplicantId','3.1','NRCBirthCertificate')"></file-upload>
 					</div>
 
 					<app-action-bar [form]="noRecordBirthForm" [step]="'final'" (stepReset)="stepReset()" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>

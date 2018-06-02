@@ -217,7 +217,6 @@ export class ActionBarComponent implements OnInit {
 	 * @param formGroup - The group to caress
 	*/
 	markFormGroupTouched(formGroup: FormGroup) {
-		console.log(formGroup);
 		if (Reflect.getOwnPropertyDescriptor(formGroup, 'controls')) {
 			(<any>Object).values(formGroup.controls).forEach(control => {
 				if (control instanceof FormGroup) {

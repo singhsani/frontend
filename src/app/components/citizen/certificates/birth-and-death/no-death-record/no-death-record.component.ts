@@ -33,7 +33,6 @@ export class NoDeathRecordComponent implements OnInit {
 	genderArray: any = [];
 	placeArray: any = [];
 	reasonArray: any = [];
-	attachments: any = [];
 	showButtons: boolean = false;
 	uploadModel: any = {};
 
@@ -96,7 +95,6 @@ export class NoDeathRecordComponent implements OnInit {
 	getNoRecordDeathData() {
 		this.formService.getFormData(this.appId).subscribe(res => {
 			this.noRecordDeathForm.patchValue(res);
-			this.attachments = res.attachments;
 			this.showButtons = true;
 		});
 	}
@@ -149,7 +147,7 @@ export class NoDeathRecordComponent implements OnInit {
 	 * This method use to return file upload model
 	 * @param indentifier - get different indentifier for different file 
 	 */
-	setDataValue(indentifier: number) {
+	setDataValue(indentifier: number, labelName: string, formPart: string, variableName: string) {
 
 		this.uploadModel = {
 			fieldIdentifier: indentifier,
