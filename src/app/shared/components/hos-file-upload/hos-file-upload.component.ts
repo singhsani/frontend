@@ -36,11 +36,13 @@ export class HosFileUploadComponent implements OnInit {
 
 	@Input() form: any;
 
-	@Input() attachments: any[];
+    attachments: any[];
 
 	fileType: string;
 	imagetype: boolean = false;
 	fromAdmin: boolean = false;
+	getFile: string;
+	fileName: string = ' ';
 
 	/**
 	 * 
@@ -56,9 +58,13 @@ export class HosFileUploadComponent implements OnInit {
 	 * Initialize first component loads.
 	 */
 	ngOnInit() {
+		this.attachments = this.form.get('attachments').value;
 		this.disableOrEnableButton();
 		this.showButton = true;
 		this.fromAdmin = this.commonService.fromAdmin();
+		if (this.attachments && this.form.get('attachments').value.length) {
+			this.getFile = this.form.get('attachments').value.find(data => data.labelName === this.uploadModel.labelName)
+		}
 	}
 
 	/**
@@ -68,6 +74,8 @@ export class HosFileUploadComponent implements OnInit {
 	selectFile(event) {
 		this.selectedFiles = event.target.files;
 		this.fileType = this.selectedFiles[0].type;
+		this.fileName = this.selectedFiles[0].name;
+
 
 		if (this.fileType === 'image/png' || this.fileType === 'image/jpg' || this.fileType === 'image/jpeg' || this.fileType === 'image/gif') {
 			let reader = new FileReader();
@@ -116,11 +124,10 @@ export class HosFileUploadComponent implements OnInit {
 					this.selectedFiles = undefined;
 					this.fileInput.nativeElement.value = "";
 				});
-
 			}
-
 		}
 	}
+
 
 	/**
 	 * Method is used to disable or enable button.
@@ -182,6 +189,8 @@ export class HosFileUploadComponent implements OnInit {
 			this.canView = true;
 			this.canUpload = false;
 			this.imagetype = false;
+			this.fileName = '';
+			this.getFile = '';
 		})
 	}
 
