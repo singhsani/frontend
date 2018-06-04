@@ -53,6 +53,7 @@ export class MarriageCreateComponent implements OnInit {
     disablefutureDate = new Date(moment().format('YYYY-MM-DD'));
     groomagecalendar = moment().subtract(21, 'year').format("YYYY-MM-DD");
     brideagecalender = moment().subtract(18, 'year').format("YYYY-MM-DD");
+
     //Groom age
     groomage: number = null;
     groomdays: number = null;
@@ -238,18 +239,17 @@ export class MarriageCreateComponent implements OnInit {
 
             //eighth step
             applicantRelation: this.fb.group({
-                code: [null,Validators.required]
+                code: [null, Validators.required]
             }),
             applicantRelationOther: [''],
             uniqueIdProofLable: this.fb.group({
-                code: [null,Validators.required]
+                code: [null, Validators.required]
             }),
-            uniqueIdProof: ['',Validators.required],
+            uniqueIdProof: ['', Validators.required],
 
             attachments: [''],
 
             // gujarati field
-            marriagePlaceGuj: [''],
             groomFirstNameGuj: [''],
             groomMiddleNameGuj: [''],
             groomLastNameGuj: [''],
@@ -316,10 +316,10 @@ export class MarriageCreateComponent implements OnInit {
 
                 this.marriageFormGroup.patchValue(res);
                 this.showButtons = true;
-                
+
                 //set default value
                 this.marriageFormGroup.get('marriageRegistrationDate').setValue(moment().format('YYYY-MM-DD'));
-                
+
                 //for display static days
                 if (res.groomBirthDate != null && res.marriageDate != null) {
                     this.CalculateAge();
@@ -346,8 +346,8 @@ export class MarriageCreateComponent implements OnInit {
                     this.onChange(res.groomReligion.code, this.religionArray, 'religionGujgroom')
                 }
 
-                if (!_.isUndefined(res.groomReligion.code)) {
-                    this.onChange(res.groomReligion.code, this.religionArray, 'religionGujbride')
+                if (!_.isUndefined(res.brideReligion.code)) {
+                    this.onChange(res.brideReligion.code, this.religionArray, 'religionGujbride')
                 }
 
                 if (!_.isUndefined(res.marriageTimeGroomStatus.code)) {
@@ -420,6 +420,12 @@ export class MarriageCreateComponent implements OnInit {
         }
     }
 
+    birthCal() {
+        let marriagedate = this.marriageFormGroup.get("marriageDate").value;
+        this.groomagecalendar = moment(marriagedate).subtract(21, 'year').format("YYYY-MM-DD");
+        this.brideagecalender = moment(marriagedate).subtract(21, 'year').format("YYYY-MM-DD");
+    }
+
     /**
     * This method is calculate age.
     */
@@ -440,7 +446,9 @@ export class MarriageCreateComponent implements OnInit {
 
         if (!_.isUndefined(this.getGujValue(lookupArray, event)))
             this[varName] = this.getGujValue(lookupArray, event);
+    }
 
+    checkReligion() {
         //check religion is same or not    
         let groomreligionChange = this.marriageFormGroup.controls.groomReligion.get("code").value;
         let bridereligionChange = this.marriageFormGroup.controls.brideReligion.get("code").value;
@@ -448,7 +456,6 @@ export class MarriageCreateComponent implements OnInit {
         if (!_.isEmpty(groomreligionChange) && !_.isEmpty(bridereligionChange)) {
             if (bridereligionChange != groomreligionChange) {
                 this.commonService.openAlert("Warning", "Bride Groom and Bride religion must be same. Your Marriage has to be Registered under Special Marriage Act. Kindly contact office of Special Marriage Registration at Kuber Bhavan, Kothi char Rasta, Vadodara", "warning");
-                this.stepper.selectedIndex = 0;
             }
         }
     }
@@ -537,6 +544,7 @@ export class MarriageCreateComponent implements OnInit {
         let step6 = 56;
         let step7 = 62;
         let step8 = 66;
+        let step9 = 67;
 
         if (flag != null) {
             //Check validation for step by step
@@ -574,6 +582,10 @@ export class MarriageCreateComponent implements OnInit {
             else if (count <= step8) {
                 this.stepLable7 = "Applicant is not completed";
                 this.stepper.selectedIndex = 7;
+                return false;
+            }
+            else if (count == 67) {
+                this.checkReligion();
                 return false;
             }
             else {
