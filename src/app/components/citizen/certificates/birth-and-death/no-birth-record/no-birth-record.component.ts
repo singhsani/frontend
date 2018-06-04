@@ -180,7 +180,12 @@ export class NoBirthRecordComponent implements OnInit {
 	birthPlaceChange(event) {
 		if (event.value !== 'OTHER_PLACE') {
 			this.noRecordBirthForm.get('birthPlaceDetail').setValue('');
+			this.noRecordBirthForm.get('birthPlaceDetail').clearValidators();
+		} else {
+			this.noRecordBirthForm.get('birthPlaceDetail').setValidators([Validators.required]);
 		}
+		this.noRecordBirthForm.controls['birthPlaceDetail'].updateValueAndValidity();
+
 	}
 
 	/**
@@ -190,7 +195,12 @@ export class NoBirthRecordComponent implements OnInit {
 	applicantRelChange(value) {
 		if (value !== 'OTHER_RELATIONSHIP') {
 			this.noRecordBirthForm.get('applicantRelationDetail').setValue('');
+			this.noRecordBirthForm.get('applicantRelationDetail').clearValidators();
+		} else {
+			this.noRecordBirthForm.get('applicantRelationDetail').setValidators([Validators.required]);
 		}
+		this.noRecordBirthForm.controls['applicantRelationDetail'].updateValueAndValidity();
+
 	}
 
 }
