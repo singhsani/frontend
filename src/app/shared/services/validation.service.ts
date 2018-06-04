@@ -11,7 +11,7 @@ export class ValidationService {
      * @param validatorName - get form controls name eg. firstName, etc..
      * @param validatorValue - get validators type eg. required, maxlength, etc..
      */
-    static getValidatorErrorMessage(controlName, validatorName: string, validatorValue?: any) {
+    static getValidatorErrorMessage(controlName: string, validatorName: string, validatorValue?: any) {
         let config = {
             // error list
             required: `${_.startCase(controlName)} is Required`,
