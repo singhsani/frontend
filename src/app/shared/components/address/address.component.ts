@@ -28,7 +28,7 @@ export class AddressComponent implements OnInit {
 
 	ngOnInit() {
 		this.editMode = true;
-		//this.getCountryLists();
+		this.getCountryLists();
 	}
 
 	/**

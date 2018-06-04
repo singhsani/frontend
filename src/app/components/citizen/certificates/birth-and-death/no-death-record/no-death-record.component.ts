@@ -167,7 +167,11 @@ export class NoDeathRecordComponent implements OnInit {
 	deathPlaceChange(event) {
 		if (event.value !== 'OTHER_PLACE') {
 			this.noRecordDeathForm.get('deathPlaceDetail').setValue('');
+			this.noRecordDeathForm.get('deathPlaceDetail').clearValidators();
+		} else {
+			this.noRecordDeathForm.get('deathPlaceDetail').setValidators([Validators.required]);
 		}
+		this.noRecordDeathForm.controls['deathPlaceDetail'].updateValueAndValidity();
 	}
 
 	/**
@@ -177,7 +181,11 @@ export class NoDeathRecordComponent implements OnInit {
 	applicantRelChange(value) {
 		if (value !== 'OTHER_RELATIONSHIP') {
 			this.noRecordDeathForm.get('applicantRelationDetail').setValue('');
+			this.noRecordDeathForm.get('applicantRelationDetail').clearValidators();
+		} else {
+			this.noRecordDeathForm.get('applicantRelationDetail').setValidators([Validators.required]);
 		}
+		this.noRecordDeathForm.controls['applicantRelationDetail'].updateValueAndValidity();
 	}
 
 }
