@@ -70,6 +70,7 @@ export class HosActionBarComponent implements OnInit {
 				this.isSaveBtnDisabled = false;
 				let count = 1;
 				for (const key in this.form.controls) {
+					
 					if (key == err.error[0].property) {
 						this.handleErrors.emit(count);
 						break;
@@ -116,6 +117,8 @@ export class HosActionBarComponent implements OnInit {
 			this.isSubmitBtnDisabled = false;
 			let count = 1;
 			for (const key in this.form.controls) {
+				console.log(key);
+				console.log(count);
 				if (this.form.get(key).invalid) {
 					this.handleErrors.emit(count)
 					break;
@@ -180,7 +183,7 @@ export class HosActionBarComponent implements OnInit {
 			this.form.addControl('lastName', new FormControl('', [Validators.required, ValidationService.nameValidator]));
 			this.form.addControl('contactNo', new FormControl('', [Validators.required, Validators.maxLength(10)]));
 			this.form.addControl('email', new FormControl('', [Validators.required, ValidationService.emailValidator]));
-			this.form.addControl('aadhaarNo', new FormControl('', [Validators.required, Validators.maxLength(12)]));
+			this.form.addControl('aadhaarNo', new FormControl('', [ Validators.maxLength(12)]));
 		}
 
 		this.form.addControl('serviceDetail', new FormGroup({

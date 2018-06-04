@@ -1,7 +1,7 @@
 
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { MatStepper } from '@angular/material/stepper';
 import { HosFormActionsService } from '../../../core/services/hospital/data-services/hos-form-actions.service';
 import { UploadFileService } from '../../../shared/upload-file.service';
@@ -11,6 +11,7 @@ import { ManageRoutes } from '../../../config/routes-conf';
 
 import * as moment from 'moment';
 import * as _ from 'lodash';
+import { ToastrService } from 'ngx-toastr';
 import { AmazingTimePickerService } from 'amazing-time-picker';
 
 @Component({
@@ -31,7 +32,6 @@ export class StillBirthComponent implements OnInit {
 	 * file upload related declaration
 	 */
 	uploadModel: any = {};
-	private attachments: any[] = [];
 
 	/**
 	 * form related helping data.
@@ -55,125 +55,11 @@ export class StillBirthComponent implements OnInit {
 	private MotherOccupation: object[];
 	private DeliveryTreatmentOptions: object[];
 	private TypeOfDelivery: object[];
+	private childs: FormArray;
 	private Religion: object[];
 	private ChildWeights: object[];
 	private ISYESNO: object[];
 	private checked: boolean;
-
-	/**
-	 * Address Look Ups.
-	 */
-	private States: Object[] = [
-		{
-			id: 1,
-			name: 'Andhra Pradesh'
-		},
-		{
-			id: 2,
-			name: 'Assam'
-		},
-		{
-			id: 3,
-			name: 'Gujarat'
-		},
-		{
-			id: 4,
-			name: 'Chhattisgarh'
-		},
-		{
-			id: 5,
-			name: 'Kerala'
-		},
-		{
-			id: 6,
-			name: 'Rajasthan'
-		}
-	];
-	private District: Object[] = [
-		{
-			id: 1,
-			name: 'Surat'
-		},
-		{
-			id: 2,
-			name: 'Vadodara'
-		},
-		{
-			id: 3,
-			name: 'Gandhinagar'
-		},
-		{
-			id: 4,
-			name: 'Ahmedabad'
-		},
-		{
-			id: 5,
-			name: 'Anand'
-		},
-		{
-			id: 6,
-			name: 'Jamnagar'
-		}
-	];
-	private City: Object[] = [
-		{
-			id: 1,
-			name: 'Surat'
-		},
-		{
-			id: 2,
-			name: 'Vadodara'
-		},
-		{
-			id: 3,
-			name: 'Gandhinagar'
-		},
-		{
-			id: 4,
-			name: 'Ahmedabad'
-		},
-		{
-			id: 5,
-			name: 'Anand'
-		},
-		{
-			id: 6,
-			name: 'Jamnagar'
-		}
-
-	];
-	private Country: Object[] = [
-		{
-			id: 1,
-			name: 'UK',
-			code: 'uk'
-		},
-		{
-			id: 2,
-			name: 'US',
-			code: 'us'
-		},
-		{
-			id: 3,
-			name: 'India',
-			code: 'in'
-		},
-		{
-			id: 4,
-			name: 'France',
-			code: 'fr'
-		},
-		{
-			id: 5,
-			name: 'Brazil',
-			code: 'br'
-		},
-		{
-			id: 6,
-			name: 'China',
-			code: 'ch'
-		}
-	];
 
 	constructor(
 		private router: Router,
@@ -183,6 +69,7 @@ export class StillBirthComponent implements OnInit {
 		private commonService: CommonService,
 		private validationService: ValidationService,
 		private fb: FormBuilder,
+		private toastrService: ToastrService,
 		private atp: AmazingTimePickerService) {
 	}
 
@@ -207,61 +94,80 @@ export class StillBirthComponent implements OnInit {
 		this.stillBirthCertificateForm = this.fb.group({
 
 			//step 1 controls
-			birthDate: [null, [Validators.required]],
-			birthTime: [null, [Validators.required]],
-			childName: [null, [ValidationService.fullNameValidator]],
 			birthPlace: this.fb.group({
 				id: null,
 				code: [null, [Validators.required]],
 				name: null
 			}),
-			weightKg: this.fb.group({
-				id: null,
-				code: [null, Validators.required],
-				name: null
-			}),
-			weightGram: [null, [Validators.pattern('[0-9]+')]],
-			gender: this.fb.group({
-				id: null,
-				code: [null, [Validators.required]],
-				name: null
-			}),
+			otherPlace: null,
 			isOrphan: this.fb.group({
 				id: null,
 				code: [null, Validators.required],
 				name: null
 			}),
-			isTwins: this.fb.group({
+			childs: this.fb.array([this.createChildArray({
+				birthDate: null,
+				birthTime: null,
+				childName: null,
 				id: null,
-				code: [null, Validators.required],
-				name: null
-			}),
-
+				sex: {
+					code: null
+				},
+				prematureInfantReason:null,
+				uniqueId: null,
+				version: null,
+				weightGram: null,
+				weightKg: {
+					code: null
+				}
+			})]),
+			noOfChilds: null,
+			
 			//step 2
 			fatherFirstName: [null, [ValidationService.nameValidator, Validators.required]],
 			fatherMiddleName: [null, [Validators.nullValidator]],
 			fatherLastName: [null, [ValidationService.nameValidator, Validators.required]],
+			fatherFirstNameGuj: [null],
+			fatherMiddleNameGuj: [null],
+			fatherLastNameGuj: [null],
 			fatherEducation: this.fb.group({
-				code: [null, [Validators.required]],
+				id: null,
+				code: [null, Validators.required],
+				name: null,
+				gujName: null
 			}),
+			fatherOtherEducation:null,
 			fatherOccupations: this.fb.group({
-				code: [null, [Validators.required]],
+				id: null,
+				code: [null, Validators.required],
+				name: null,
+				gujName: null
 			}),
-			fatherAadharNumber: [null, [ValidationService.aadharValidation]],
+			fatherAadharNumber: [null, [Validators.minLength(12), Validators.maxLength(12), ValidationService.aadharValidation]],
 
 			//step 3
 			motherFirstName: [null, [ValidationService.nameValidator, Validators.required]],
 			motherMiddleName: [null, ValidationService.nameValidator],
 			motherLastName: [null, [ValidationService.nameValidator, Validators.required]],
+			motherFirstNameGuj:[null],
+			motherMiddleNameGuj:[null],
+			motherLastNameGuj: [null],
 			motherEducation: this.fb.group({
-				code: [null, Validators.required]
-			}),
-			motherOccupations: this.fb.group({
+				id: null,
 				code: [null, Validators.required],
+				name: null,
+				gujName: null
 			}),
-			motherAadharNumber: [null, [ValidationService.aadharValidation]],
-			motherPrevRegNumber: ['', [Validators.minLength(10), Validators.maxLength(10)]],
-			petaKendraNumber: ['', [Validators.minLength(10), Validators.maxLength(10)]],
+			motherOtherEducation:null,
+			motherOccupations: this.fb.group({
+				id: null,
+				code: [null, Validators.required],
+				name: null,
+				gujName: null
+			}),
+			motherAadharNumber: [null, [Validators.minLength(12), Validators.maxLength(12), ValidationService.aadharValidation]],
+			motherPrevRegNumber: [null, [Validators.minLength(10), Validators.maxLength(10)]],
+			petaKendraNumber: [null, [Validators.minLength(10), Validators.maxLength(10)]],
 			motherMarriageAge: [null, [Validators.minLength(2), Validators.maxLength(2), Validators.required]],
 			motherDeliveryAge: [null, [Validators.required, Validators.minLength(2), Validators.maxLength(2)]],
 
@@ -271,8 +177,8 @@ export class StillBirthComponent implements OnInit {
 			deliveryType: this.fb.group({
 				code: [null, Validators.required],
 			}),
+			delayPeriod:null,
 			pregnancyDuration: ['', [Validators.required, ValidationService.stillPregnancyDurationValidation]],
-			prematureInfantReason: ['', [Validators.required, Validators.maxLength(500)]],
 
 			//step 4
 			parentDeliveryAddress: this.fb.group(this.addressComp.addressControls()),
@@ -288,11 +194,88 @@ export class StillBirthComponent implements OnInit {
 				code: null
 			}),
 
+			//step 5
+			attachments: [null, Validators.required],
+
 			//applicant details
 			applicantHospitalName: [null, [ValidationService.nameValidator]],
-			applicantAddress: this.fb.group(this.addressComp.addressControls()),
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
 		})
+	}
+
+	getChildData() {
+		return this.stillBirthCertificateForm.get('childs') as FormArray;
+	}
+	createChildArray(child) {
+		if (!child) {
+			child = {
+				birthDate: null,
+				birthTime: null,
+				childName: null,
+				id: null,
+				sex: this.fb.group({
+					code: null
+				}),
+				prematureInfantReason:null,
+				uniqueId: null,
+				version: null,
+				weightGram: null,
+				weightKg: this.fb.group({
+					code: null
+				})
+			}
+		}
+		return this.fb.group({
+			birthDate: [child.birthDate, Validators.required],
+			birthTime: [child.birthTime, Validators.required],
+			childName: [child.childName, [ValidationService.nameValidator]],
+			id: child.id,
+			sex: this.fb.group({
+				code: [child.sex.code, [Validators.required]]
+			}),
+			prematureInfantReason:child.prematureInfantReason,
+			uniqueId: child.uniqueId,
+			version: child.version,
+			weightGram: child.weightGram,
+			weightKg: this.fb.group({
+				code: [child.weightKg.code, [Validators.required]]
+			})
+		})
+	}
+	addMoreChild(child) {
+
+		if (this.getChildData().length >= 6) {
+			this.commonService.openAlert("Warning", "Maximum Child Limit 6.", "warning");
+		} else {
+			this.getChildData().push(this.createChildArray(child));
+			this.stillBirthCertificateForm.get('noOfChilds').setValue(this.getChildData().length);
+		}
+
+	}
+
+	deleteChild(childData: any, index: number) {
+		this.commonService.deleteAlert('Are you sure?', "You won't be able to revert this!", 'warning', '', performDelete => {
+			if (this.stillBirthCertificateForm.get('noOfChilds').value <= 1) {
+				this.commonService.openAlert("Warning", "Atleast One Child Info Mandatory", "warning");
+			} else {
+				if (childData.id == null) {
+					this.getChildData().removeAt(index);
+					this.stillBirthCertificateForm.get('noOfChilds').setValue(this.stillBirthCertificateForm.get('noOfChilds').value - 1);
+					this.toastrService.success('Child details has been removed.')
+				} else {
+					//call api get response than delete
+					this.formService.deleteChildData(this.stillBirthCertificateForm.get('id').value, childData.id).subscribe(respData => {
+						if (respData.success) {
+							this.getChildData().removeAt(index);
+							this.stillBirthCertificateForm.get('noOfChilds').setValue(this.getChildData().length);
+							this.toastrService.success('Child details has been removed.')
+						}
+					})
+				}
+
+			}
+		}
+		);
 	}
 
 	/**
@@ -300,8 +283,17 @@ export class StillBirthComponent implements OnInit {
 	 */
 	getStillBirthFormData() {
 		this.formService.getFormData(this.appId).subscribe(res => {
-			this.attachments = res.attachments;
 			this.stillBirthCertificateForm.patchValue(res);
+			this.childs = this.getChildData();
+
+			while (this.getChildData().length) {
+				this.childs.removeAt(0)
+			}
+
+			this.childs = res.childs;
+			for (let child of res.childs) {
+				this.addMoreChild(child);
+			}
 
 			//common for all only change form name
 			if (this.stillBirthCertificateForm.get('isPermanentPresentAddressSame').get('code').value == 'YES') {
@@ -309,7 +301,7 @@ export class StillBirthComponent implements OnInit {
 			} else {
 				this.stillBirthCertificateForm.get('parentPermanentAddress').enable();
 			}
-			
+
 			this.showButtons = true;
 			if (!this.stillBirthCertificateForm.controls.canEdit.value) {
 				this.stillBirthCertificateForm.disable();
@@ -338,13 +330,30 @@ export class StillBirthComponent implements OnInit {
 	}
 
 	/**
-	   * Method is used to calculate the delay between current date and birth date.
-	   * @param event - date event.
-	   */
-	delayCalculator(event) {
+	 * Method is used to calculate the delay between current date and birth date.
+	 * @param event - date event.
+	 */
+	delayCalculator(event, i: number) {
 		let now = moment(new Date());
 		let diff = moment.duration(now.diff(event.value));
-		this.stillBirthCertificateForm.get('birthDate').setValue(moment(event.value).format("YYYY-MM-DD"));
+		this.getChildData().at(i).get('birthDate').setValue(moment(event.value).format("YYYY-MM-DD"));
+		if (this.stillBirthCertificateForm.get('delayPeriod').value === null) {
+			this.stillBirthCertificateForm.get('delayPeriod').setValue(diff.days() + diff.years() * 365 + diff.months() * 30);
+		}
+	}
+
+	gujNameFinder(event, controlName, arr) {
+		for (let i = 0; i < arr.length; i++) {
+			if (arr[i].code === event) {
+				if (arr[i].gujName === undefined) {
+					this.stillBirthCertificateForm.get(controlName).get('gujName').setValue('');
+					return;
+				} else {
+					this.stillBirthCertificateForm.get(controlName).get('gujName').setValue(arr[i].gujName);
+					return;
+				}
+			}
+		}
 	}
 
 	/**
@@ -360,15 +369,13 @@ export class StillBirthComponent implements OnInit {
 	/**
 	 * 
 	 */
-	openTimePicker() {
+	openTimePicker(i: number) {
 		const amazingTimePicker = this.atp.open({
-			theme: 'material-green',
-			changeToMinutes: true,
+			theme: 'material-purple',
 		});
 		amazingTimePicker.afterClose().subscribe(time => {
 			if (time.length == 5) {
-				this.stillBirthCertificateForm.get('birthTime').
-					setValue(time.concat(":00"));
+				this.getChildData().at(i).get('birthTime').setValue(time + ":00");
 			}
 		});
 	}
@@ -380,10 +387,10 @@ export class StillBirthComponent implements OnInit {
 	 */
 	handleErrorsOnSubmit(count) {
 		this.submit = true;
-		let step1 = 9;
+		let step1 = 5;
 		let step2 = 15;
-		let step3 = 29;
-		let step4 = 33;
+		let step3 = 33;
+		let step4 = 37;
 		let step5 = 37;
 
 		if (count <= step1) {
@@ -401,6 +408,8 @@ export class StillBirthComponent implements OnInit {
 		} else if (count <= step5) {
 			this.stepper.selectedIndex = 4;
 			return false;
+		} else if (count >= 59 && count <= 65) {
+			this.stepper.selectedIndex = 3;
 		}
 	}
 
@@ -446,7 +455,6 @@ export class StillBirthComponent implements OnInit {
 	   * @param variableName - file variable name.
 	   */
 	setDataValue(indentifier: number, labelName: string, formPart: string, variableName: string) {
-
 		this.uploadModel = {
 			fieldIdentifier: indentifier,
 			labelName: labelName,

@@ -3,24 +3,34 @@
     <!-- <mat-progress-bar *ngIf="currentFileUpload" mode="determinate" value="{{progress.percentage}}"></mat-progress-bar> -->
 
     <div *ngIf="showButton">
+
+      
+
       <label class="btn btn-default" [class.disabled]="!form.get('canEdit').value">
-        <input #fileInput type="file" [class.disabled]="!form.get('canEdit').value" [disabled]="!form.get('canEdit').value" (change)="selectFile($event)">
+        <input #fileInput required type="file" class="form-control" [class.disabled]="!form.get('canEdit').value" [disabled]="!form.get('canEdit').value" (change)="selectFile($event)">
       </label>
-      <label *ngIf="imagetype">
-        <img [src]="priviewImage" alt="image" class="imageSize" />
-      </label>
+
+      <span>{{fileName}}</span>
+      <span *ngIf="getFile">
+        {{getFile.realFileName}}
+      </span>
 
       <button type="button" mat-raised-button color="primary" [disabled]="canUpload || !form.get('canEdit').value" (click)="upload()">
         <mat-icon>file_upload</mat-icon> Upload
       </button>
 
-      <button [disabled]="canView || !form.get('canEdit').value" mat-raised-button type="button" color="accent" (click)="view()">
+      <button [disabled]="canView" mat-raised-button type="button" color="accent" (click)="view()">
         View
       </button>
 
       <button [disabled]="canDelete || !form.get('canEdit').value" mat-raised-button type="button" color="warn" (click)="deleteFile()">
         Delete
       </button>
+
+      <label *ngIf="imagetype">
+        <img [src]="priviewImage" alt="image" class="imageSize" />
+      </label>
+
     </div>
   </div>
 </div>

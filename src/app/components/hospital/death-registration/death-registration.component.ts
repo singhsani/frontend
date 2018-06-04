@@ -25,7 +25,7 @@ export class DeathRegistrationComponent implements OnInit {
 	/**
 	   * file upload related declaration
 	   */
-	private attachments: any[];
+	//private attachments: any[];
 	private showButtons: boolean = false;
 	private uploadModel: any = {};
 	private response;
@@ -33,8 +33,6 @@ export class DeathRegistrationComponent implements OnInit {
 	private addressTranslateKey = "addressScreen";
 	private basicTranslateKey = "basicDetailsScreen";
 
-	private showCheck: boolean = false;
-	createCompleteForm: boolean = false;
 
 	//form related data.
 	private appId: number;
@@ -100,8 +98,6 @@ export class DeathRegistrationComponent implements OnInit {
 		});
 	}
 
-
-	
 	/**
 	 * This method runs when page initialize first time.
 	 */
@@ -121,9 +117,9 @@ export class DeathRegistrationComponent implements OnInit {
 	 */
 	getDeathCertData() {
 		this.formService.getFormData(this.appId).subscribe((res) => {
-			console.log(res);
 			this.deathCertificateForm.patchValue(res);
-
+			//this.attachments = res.attachments;
+			this.showButtons = true;
 
 			//for unknown condition
 			if (res.unknownCategory.code === undefined) {
@@ -134,9 +130,6 @@ export class DeathRegistrationComponent implements OnInit {
 				this.decider(res.unknownCategory.code);
 			}
 
-			this.attachments = res.attachments;
-			this.showButtons = true;
-			this.createCompleteForm = true;
 			if (this.deathCertificateForm.get('isPermanentPresentAddressSame').get('code').value == 'YES') {
 				this.deathCertificateForm.get('presentAddress').disable();
 			} else {
@@ -155,7 +148,6 @@ export class DeathRegistrationComponent implements OnInit {
 	 * @param event - Yes or No.
 	 */
 	decider(event) {
-		console.log(event)
 		if (event === "YES") {
 			this.requiredFeild = false
 			this.deathCertificateForm.get('gender').get('code').clearValidators();
@@ -166,8 +158,7 @@ export class DeathRegistrationComponent implements OnInit {
 			this.deathCertificateForm.get('deathPlace').get('code').clearValidators()
 			this.deathCertificateForm.get('medicalTreatment').get('code').clearValidators()
 			this.deathCertificateForm.get('medicalReason').get('code').clearValidators()
-			this.upDateValidation()
-			//this.deathCertificateForm = this.createDeathCertificateFormUnknown();
+			this.upDateValidation();
 		} else if (event === "NO") {
 			this.requiredFeild = true;
 			this.deathCertificateForm.get('gender').get('code').setValidators(Validators.required);
@@ -180,7 +171,6 @@ export class DeathRegistrationComponent implements OnInit {
 			this.deathCertificateForm.get('medicalReason').get('code').setValidators([Validators.required])
 			this.upDateValidation()
 		}
-		console.log(this.requiredFeild);
 	}
 	upDateValidation(){
 		this.deathCertificateForm.get('gender').get('code').updateValueAndValidity();
@@ -199,7 +189,7 @@ export class DeathRegistrationComponent implements OnInit {
 	createDeathCertificateForm() {
 		this.deathCertificateForm =  this.fb.group({
 
-			//step1
+			//step1(17)
 			deceasedFirstName: ['', [ValidationService.nameValidator]],
 			deceasedMiddleName: ['', [ValidationService.nameValidator]],
 			deceasedLastName: ['', [ValidationService.nameValidator]],
@@ -209,8 +199,8 @@ export class DeathRegistrationComponent implements OnInit {
 			gender: this.fb.group({
 				code: [null],
 			}),
-			deathDate: ['', ],
-			birthDate: ['' ],
+			deathDate: [null],
+			birthDate: [null],
 			fatherOrHusbandName: ['', [ValidationService.nameValidator]],
 			motherName: ['', [ValidationService.nameValidator ]],
 			religion: this.fb.group({
@@ -222,6 +212,7 @@ export class DeathRegistrationComponent implements OnInit {
 				name: null,
 				gujName: null
 			}),
+			deceasedOtherEducation: null,
 			occupation: this.fb.group({
 				id: null,
 				code: [null  ],
@@ -233,7 +224,7 @@ export class DeathRegistrationComponent implements OnInit {
 				code: [null]
 			}),
 
-			//step 2
+			//step 2(8)
 			deathPlace: this.fb.group({
 				code: [null],
 				name: null
@@ -254,7 +245,7 @@ export class DeathRegistrationComponent implements OnInit {
 			sopariPanmasalaSince: null,
 			alcoholSince: null,
 
-			//step 3
+			//step 3(3)
 			//Present Address
 			presentAddress: this.fb.group(this.addressComp.addressControls()),
 
@@ -267,174 +258,47 @@ export class DeathRegistrationComponent implements OnInit {
 
 			//step 4
 			//Applicant Data
-			applicantAddress: this.fb.group(this.addressComp.addressControls()),
-
+			//Basic Details Component
 			applicantRelation: this.fb.group({
-				code: [null  ]
+				code: [null, [Validators.required]]
 			}),
 			relationOther: [''],
-			aadhaarNo: ['', [Validators.minLength(12), Validators.maxLength(12), ValidationService.aadharValidation]],
-			appHospitalName: [''  ],
-			email: ['', [ValidationService.emailValidator]],
-			contactNo: ['', [Validators.minLength(10), Validators.maxLength(10)]],
+			applicantAddress: this.fb.group(this.addressComp.addressControls()),
+			
+			// aadhaarNo: ['', [Validators.minLength(12), Validators.maxLength(12), ValidationService.aadharValidation]],
+			// appHospitalName: null,
+			// email: ['', [ValidationService.emailValidator]],
+			// contactNo: ['', [Validators.minLength(10), Validators.maxLength(10)]],
 
 			//Attachments Data step 5
+			attachments: [null, Validators.required],
 			unknownCategory: this.fb.group({
 				code: ["NO", [Validators.required]],
 			}),
 			unknownDescription: null,
 
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
-			attachments: [null],
-
-			id: null,
-			uniqueId: null,
-			version: null,
-			serviceFormId: null,
-			createdDate: null,
-			updatedDate: null,
-			serviceType: null,
-			fileStatus: null,
-			serviceName: null,
-			fileNumber: null,
-			pid: null,
-			outwardNo: null,
-			agree: null,
-			paymentStatus: null,
-			canEdit: null,
-			canDelete: null,
-			canSubmit: null,
-			serviceDetail: this.fb.group({
-				code: null,
-				feesOnScrutiny: null,
-				gujName: null,
-				name: null
-			}),
+			
 		});
 	}
 
-	// /**
-	//  * Method is used to create death certificate form for unknown deceased.
-	//  */
-	// createDeathCertificateFormUnknown(): FormGroup {
-	// 	return this.fb.group({
-	// 		//step1
-	// 		deceasedFirstName: ['', [ValidationService.nameValidator]],
-	// 		deceasedMiddleName: ['', [ValidationService.nameValidator]],
-	// 		deceasedLastName: ['', [ValidationService.nameValidator]],
-	// 		deceasedFirstNameGuj: ['', ],
-	// 		deceasedMiddleNameGuj: [''],
-	// 		deceasedLastNameGuj: [''],
-	// 		gender: this.fb.group({
-	// 			code: ['', []],
-	// 		}),
-	// 		deathDate: ['',],
-	// 		birthDate: ['',],
-	// 		fatherOrHusbandName: [null, [ValidationService.nameValidator]],
-	// 		motherName: ['', [ValidationService.nameValidator,]],
-	// 		religion: this.fb.group({
-	// 			code: ['',]
-	// 		}),
-	// 		education: this.fb.group({
-	// 			id: null,
-	// 			code: [null],
-	// 			name: null,
-	// 			gujName: null
-	// 		}),
-	// 		occupation: this.fb.group({
-	// 			id: null,
-	// 			code: [null],
-	// 			name: null,
-	// 			gujName: null
-	// 		}),
-	// 		delayedPeriod: ['',],
-	// 		femaleDeathReason: this.fb.group({
-	// 			code: null
-	// 		}),
 
-	// 		//step 2
-	// 		deathPlace: this.fb.group({
-	// 			code: null
-	// 		}),
-	// 		otherPlace: null,
-	// 		medicalTreatment: this.fb.group({
-	// 			id: null,
-	// 			code: [null],
-	// 			name: null,
-	// 			gujName: null
-	// 		}),
-	// 		medicalReason: this.fb.group({
-	// 			code: null
-	// 		}),
-	// 		deathReason: ['', [Validators.maxLength(100)]],
-	// 		smokingSince: null,
-	// 		tobaccoSince: null,
-	// 		sopariPanmasalaSince: null,
-	// 		alcoholSince: null,
+	/**
+	 * Get Delay Period
+	 */
+	getDelayPeriod() {
+		return this.deathCertificateForm.get('delayedPeriod').value;
+	}
 
-	// 		//step 3
-	// 		//Present Address
-	// 		presentAddress: this.fb.group(this.addressControls()),
-	// 		isPermanentPresentAddressSame: this.fb.group({
-	// 			code: null
-	// 		}),
-
-	// 		//Permanent Address
-	// 		permanentAddress: this.fb.group(this.addressControls()),
-
-	// 		//step 4
-	// 		//Applicant Data
-	// 		applicantAddress: this.fb.group(this.addressControls()),
-
-	// 		applicantRelation: this.fb.group({
-	// 			code: [null,]
-	// 		}),
-	// 		relationOther: null,
-	// 		aadhaarNo: [null, [ValidationService.aadharValidation]],
-	// 		appHospitalName: [ValidationService.nameValidator],
-	// 		contactNo: [null, [ValidationService.mobileNumberValidation]],
-	// 		email: [null, [ValidationService.emailValidator]],
-
-	// 		//Attachments Data step 5
-
-	// 		unknownCategory: this.fb.group({
-	// 			code: [null, [Validators.required]],
-	// 		}),
-	// 		unknownDescription: null,
-	// 		apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
-	// 		attachments: [],
-
-	// 		id: null,
-	// 		uniqueId: null,
-	// 		version: null,
-	// 		serviceFormId: null,
-	// 		serviceType: null,
-	// 		fileStatus: null,
-	// 		serviceName: null,
-	// 		fileNumber: null,
-	// 		pid: null,
-	// 		outwardNo: null,
-	// 		agree: null,
-	// 		paymentStatus: null,
-	// 		canEdit: null,
-	// 		canDelete: null,
-	// 		canSubmit: null,
-	// 		createdDate: null,
-	// 		updatedDate: null,
-	// 		serviceDetail: this.fb.group({
-	// 			code: null,
-	// 			feesOnScrutiny: null,
-	// 			gujName: null,
-	// 			name: null
-	// 		}),
-
-	// 	});
-	// }
-
+	/**
+	 * Gujarati Look Up Converter.
+	 * @param event - selected event
+	 * @param controlName - control name
+	 * @param arr - passed lookup array
+	 */
 	gujNameFinder(event, controlName, arr) {
 		for (let i = 0; i < arr.length; i++) {
 			if (arr[i].code === event) {
-				console.log(arr[i].gujName);
 				if (arr[i].gujName === undefined) {
 					this.deathCertificateForm.get(controlName).get('gujName').setValue('');
 					return;
@@ -444,29 +308,6 @@ export class DeathRegistrationComponent implements OnInit {
 				}
 			}
 		}
-	}
-
-	/**
-	 * Address Controls.
-	 */
-	addressControls() {
-		return {
-			id: null,
-			uniqueId: null,
-			version: null,
-			addressType: [''],
-			houseNo: ['', [Validators.required, Validators.maxLength(5)]],
-			tenamentNo: ['', Validators.maxLength(60)],
-			buildingName: ['', Validators.maxLength(60)],
-			state: ['', [Validators.required, Validators.maxLength(60)]],
-			district: ['', [Validators.required, Validators.maxLength(60)]],
-			talukaName: ['', [Validators.required, Validators.maxLength(60)]],
-			pincode: ['', [Validators.maxLength(6), Validators.minLength(6)]],
-			addressLine1: ['', Validators.maxLength(60)],
-			addressLine2: ['', Validators.maxLength(60)],
-			addressLine3: ['', Validators.maxLength(60)],
-			village: ['', Validators.maxLength(60)]
-		};
 	}
 
 	/**
@@ -502,11 +343,11 @@ export class DeathRegistrationComponent implements OnInit {
 	 */
 	handleErrorsOnSubmit(count) {
 		this.submit = true;
-		let step1 = 13;
-		let step2 = 21;
-		let step3 = 23;
-		let step4 = 28;
-		let step5 = 46;
+		let step1 = 17;
+		let step2 = 26;
+		let step3 = 29;
+		let step4 = 32;
+		let step5 = 33;
 		//Check form validation.
 		if (count <= step1) {
 			this.stepper.selectedIndex = 0;
@@ -523,6 +364,8 @@ export class DeathRegistrationComponent implements OnInit {
 		} else if (count <= step5) {
 			this.stepper.selectedIndex = 4;
 			return false;
+		} else if (count >= 54 && count <= 60) {
+			this.stepper.selectedIndex = 3;
 		}
 	}
 

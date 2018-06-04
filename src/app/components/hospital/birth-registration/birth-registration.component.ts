@@ -28,11 +28,11 @@ export class BirthRegistrationComponent implements OnInit {
 	 */
 	private checked: boolean;
 	uploadModel: any = {};
-	private attachments: any[] = [];
 	private disableONSubmit: boolean = false;
 	private noOfChild = 0;
 	private oldval;
 	private newValue;
+	private currentTime = (new Date()).toTimeString().split(' ')[0];
 
 	/**
 	 * form related helping data.
@@ -62,44 +62,6 @@ export class BirthRegistrationComponent implements OnInit {
 	private Religion: object[];
 	private ChildWeights: object[];
 	private ISYESNO: object[];
-	private NOOFCHILD = [
-		{
-			code: "1",
-			name: "1",
-			id: null
-
-		},
-
-		{
-			code: "2",
-			name: "2",
-			id: null
-
-		},
-		{
-			code: "3",
-			name: "3",
-			id: null
-
-		},
-		{
-			code: "4",
-			name: "4",
-			id: null
-
-		},
-		{
-			code: "5",
-			name: "5",
-			id: null
-
-		},
-		{
-			code: "6",
-			name: "6",
-			id: null
-		}
-	];
 
 
 	constructor(
@@ -135,16 +97,12 @@ export class BirthRegistrationComponent implements OnInit {
 			this.getLookUpsData();
 			this.createBirthCertForm();
 			this.getBirthCertData();
-			
-
-
 		}
 	}
 
 	openTimePicker(i: number) {
 		const amazingTimePicker = this.atp.open({
 			theme: 'material-purple',
-			changeToMinutes: true
 		});
 		amazingTimePicker.afterClose().subscribe(time => {
 			if (time.length == 5) {
@@ -159,6 +117,7 @@ export class BirthRegistrationComponent implements OnInit {
 	createBirthCertForm() {
 		this.birthCertificateForm = this.fb.group({
 
+			//step 1(6)
 			birthPlace: this.fb.group({
 				id: 1,
 				code: [null, [Validators.required]],
@@ -170,10 +129,11 @@ export class BirthRegistrationComponent implements OnInit {
 				code: ["NO", Validators.required],
 				name: null
 			}),
+			totalAliveChild: [null, [Validators.required, Validators.maxLength(2)]],
 
 			childs: this.fb.array([this.createChildArray({
 				birthDate: null,
-				birthTime: null,
+				birthTime: new Date().getTime(),
 				childName: null,
 				id: null,
 				sex: {
@@ -187,12 +147,12 @@ export class BirthRegistrationComponent implements OnInit {
 				}
 			})]),
 			noOfChilds: null,
-			//step 2
+			//step 2(10)
 			fatherFirstName: ['', [Validators.required, ValidationService.nameValidator]],
-			fatherMiddleName: ['', [Validators.required, ValidationService.nameValidator]],
+			fatherMiddleName: ['', [ValidationService.nameValidator]],
 			fatherLastName: ['', [ValidationService.nameValidator, Validators.required]],
 			fatherFirstNameGuj: ['', [Validators.required]],
-			fatherMiddleNameGuj: ['', [Validators.required]],
+			fatherMiddleNameGuj: [''],
 			fatherLastNameGuj: ['', [Validators.required]],
 			fatherEducation: this.fb.group({
 				id: null,
@@ -200,6 +160,7 @@ export class BirthRegistrationComponent implements OnInit {
 				name: null,
 				gujName: null
 			}),
+			fatherOtherEducation:null,
 			fatherOccupations: this.fb.group({
 				id: null,
 				code: [null, [Validators.required]],
@@ -208,12 +169,12 @@ export class BirthRegistrationComponent implements OnInit {
 			}),
 			fatherAadharNumber: [null, [Validators.minLength(12), Validators.maxLength(12), ValidationService.aadharValidation]],
 
-			//step 3
+			//step 3 (17)
 			motherFirstName: ['', [ValidationService.nameValidator, Validators.required]],
-			motherMiddleName: ['', [Validators.required, ValidationService.nameValidator]],
+			motherMiddleName: ['',  ValidationService.nameValidator],
 			motherLastName: ['', [ValidationService.nameValidator, Validators.required]],
 			motherFirstNameGuj: ['', [ Validators.required]],
-			motherMiddleNameGuj: ['', [Validators.required]],
+			motherMiddleNameGuj: [''],
 			motherLastNameGuj: ['', [Validators.required]],
 
 			motherEducation: this.fb.group({
@@ -222,6 +183,7 @@ export class BirthRegistrationComponent implements OnInit {
 				name: null,
 				gujName: null
 			}),
+			motherOtherEducation: null,
 
 			motherOccupations: this.fb.group({
 				id: null,
@@ -245,9 +207,9 @@ export class BirthRegistrationComponent implements OnInit {
 				name: null
 			}),
 			pregnancyDuration: ['', [Validators.required, ValidationService.pregnancyDurationValidation]],
-			totalAliveChild: [null, [Validators.required, Validators.maxLength(2)]],
 			
-			//step 4
+			
+			//step 4(3)
 			parentDeliveryAddress: this.fb.group(this.addressComp.addressControls()),
 			isPermanentPresentAddressSame: this.fb.group({
 				id: null,
@@ -264,9 +226,7 @@ export class BirthRegistrationComponent implements OnInit {
 			//step 5
 			attachments: [null, [Validators.required]],
 			delayedPeriod: null,
-			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
-
-
+			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode)
 		});
 	}
 
@@ -275,7 +235,7 @@ export class BirthRegistrationComponent implements OnInit {
 	 */
 	getBirthCertData() {
 		this.formService.getFormData(this.appId).subscribe(res => {
-			this.attachments = res.attachments;
+			//this.attachments = res.attachments;
 			this.birthCertificateForm.patchValue(res);
 			this.childs = this.getChildData();
 
@@ -334,11 +294,11 @@ export class BirthRegistrationComponent implements OnInit {
 	 */
 	handleErrorsOnSubmit(count) {
 		this.submit = true;
-		let step1 = 5;
-		let step2 = 9;
-		let step3 = 19;
-		let step4 = 33;
-		let step5 = 37;
+		let step1 = 6;
+		let step2 = 16;
+		let step3 = 33;
+		let step4 = 37;
+		let step5 = 38;
 
 		if (count <= step1) {
 			this.stepper.selectedIndex = 0;
@@ -355,7 +315,7 @@ export class BirthRegistrationComponent implements OnInit {
 		} else if (count <= step5) {
 			this.stepper.selectedIndex = 4;
 			return false;
-		} else if (count >= 52 && count <= 58) {
+		} else if (count >= 58 && count <= 64) {
 			this.stepper.selectedIndex = 3;
 		}
 
@@ -451,25 +411,6 @@ export class BirthRegistrationComponent implements OnInit {
 		return this.birthCertificateForm.get('childs') as FormArray;
 	}
 
-	// openChildSelectionDailog(noOfChild): void {
-	// 	this.showChildData = false;
-	// 	//to delete complete array
-	// 	// while (this.getChildData().length) {
-	// 	// 	this.getChildData().removeAt(0);	
-	// 	// } 
-
-	// 	//to fill complete arra
-	// 	for (let i = 0; i < this.getChildData().length; i++) {
-	// 		this.getChildData().push(this.createChildArray());
-	// 	}
-
-	// 	this.childs = this.getChildData();
-
-	// 	this.showChildData = true;
-	// }
-
-
-
 	createChildArray(child) {
 		if (!child) {
 			child = {
@@ -512,8 +453,14 @@ export class BirthRegistrationComponent implements OnInit {
 		} else {
 			this.getChildData().push(this.createChildArray(child));
 			this.birthCertificateForm.get('noOfChilds').setValue(this.getChildData().length);
+			this.setTotalChildAlive();
+			
 		}
 
+	}
+
+	setTotalChildAlive(){
+		this.birthCertificateForm.get('totalAliveChild').setValue(this.birthCertificateForm.get('noOfChilds').value);
 	}
 
 	deleteChild(childData: any, index: number) {
@@ -524,6 +471,7 @@ export class BirthRegistrationComponent implements OnInit {
 				if (childData.id == null) {
 					this.getChildData().removeAt(index);
 					this.birthCertificateForm.get('noOfChilds').setValue(this.birthCertificateForm.get('noOfChilds').value - 1);
+					this.setTotalChildAlive();
 					this.toastrService.success('Child details has been removed.')
 				} else {
 					//call api get response than delete
@@ -531,6 +479,7 @@ export class BirthRegistrationComponent implements OnInit {
 						if (respData.success) {
 							this.getChildData().removeAt(index);
 							this.birthCertificateForm.get('noOfChilds').setValue(this.getChildData().length);
+							this.setTotalChildAlive();
 							this.toastrService.success('Child details has been removed.')
 						}
 					})
@@ -540,74 +489,4 @@ export class BirthRegistrationComponent implements OnInit {
 		}
 		);
 	}
-
-	// @Component({
-	// 	templateUrl: 'birth-childdata.html',
-	// })
-	// export class ChildSelectionContent {
-	// 	private translateKey = "birthRegScreen";
-	// 	private ChildDetails: any[] = [];
-	// 	private noOfChild = 0;
-	// 	private ChildDetailsForm : FormGroup;
-
-	// 	private mainObject = {
-	// 		birthDate : null,
-	//         birthTime : null,
-	// 		childName : null,
-	// 		id : 3,
-	// 		sex	: {},
-	// 		uniqueId : null,
-	// 		version : null,
-	// 		weightGram :	null,
-	// 		weightKg: {}
-	//     }
-
-	// 	constructor(
-	// 		public dialogRef: MatDialogRef<BirthRegistrationComponent>,
-	// 		private fb: FormBuilder,
-	// 		private atp: AmazingTimePickerService,
-	// 		@Inject(MAT_DIALOG_DATA) public data: any) {
-	// 		console.log(data);
-	// 		this.noOfChild = parseInt(data.noOfChild);
-
-	// 	}
-
-	// 	createArrayOfDetails() {
-	// 		for (let i = 0; i < this.noOfChild; i++) {
-	// 			this.ChildDetails.push(this.createChildDetailsForm());
-	// 		}
-	// 	}
-
-	// 	closeDailog(): void {
-	// 		this.dialogRef.close();
-	// 	}
-
-	// 	createChildDetailsForm() {
-	// 		this.ChildDetailsForm =  this.fb.group({
-	// 			birthDate: null,
-	// 			birthTime: null,
-	// 			childName: null,
-	// 			id: 3,
-	// 			sex: this.fb.group({
-	// 				code: null
-	// 			}),
-	// 			uniqueId: null,
-	// 			version: null,
-	// 			weightGram: null,
-	// 			weightKg: this.fb.group({
-	// 				code: null
-	// 			})
-	// 		})
-	// 	}
-
-	// 	openTimePicker() {
-	// 		const amazingTimePicker = this.atp.open({
-	// 			theme: 'material-purple',
-	// 			changeToMinutes: true
-	// 		});
-	// 		amazingTimePicker.afterClose().subscribe(time => {
-	// 			console.log(time);
-	// 		});
-	// 	}
-	// }
 }
