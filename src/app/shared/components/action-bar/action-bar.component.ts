@@ -117,7 +117,19 @@ export class ActionBarComponent implements OnInit {
 			let count = 1;
 			for (const key in this.form.controls) {
 				if (this.form.get(key).invalid) {
-					this.handleErrors.emit(count)
+
+					if (this.form.get('apiType').value == 'marriageReg') {
+						let groomreligionChange = this.form.controls.groomReligion.get("code").value;
+						let bridereligionChange = this.form.controls.brideReligion.get("code").value;
+						if (!_.isEmpty(groomreligionChange) && !_.isEmpty(bridereligionChange)) {
+							if (groomreligionChange != bridereligionChange) {
+								this.handleErrors.emit(67);
+								break;
+							}
+						}
+					}
+
+					this.handleErrors.emit(count);
 					break;
 				}
 				count++;

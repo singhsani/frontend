@@ -13,7 +13,7 @@
 
 					<div class="row">
 						<mat-form-field class="col-4">
-							<input matInput [max]="disablefutureDate" [matDatepicker]="picker1" formControlName="marriageDate" (dateChange)="dateFormate($event.value,'marriageDate');CalculateAge()"
+							<input matInput [max]="disablefutureDate" [matDatepicker]="picker1" formControlName="marriageDate" (dateChange)="dateFormate($event.value,'marriageDate');CalculateAge();birthCal()"
 							 placeholder="{{ 'date_of_marriage' | translate:translateKey }}" (click)="picker1.open()" (focus)="picker1.open()"
 							 readonly>
 							<mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
@@ -102,7 +102,7 @@
 							</mat-select>
 						</mat-form-field> -->
 						<div class="col-4" formGroupName="groomReligion">
-							<ng-select formControlName="code" placeholder="{{ 'religion' | translate:translateKey }}" (change)="onChange($event,religionArray,'religionGujgroom');changeReset('marriageTimeGroomStatus');changeReset('aliveWives')">
+							<ng-select formControlName="code" placeholder="{{ 'religion' | translate:translateKey }}" (change)="onChange($event,religionArray,'religionGujgroom');checkReligion();changeReset('marriageTimeGroomStatus');changeReset('aliveWives')">
 								<ng-option *ngFor="let religion of religionArray" [value]="religion.code">{{religion.name}}</ng-option>
 							</ng-select>
 						</div>
@@ -230,7 +230,7 @@
 							</mat-select>
 						</mat-form-field> -->
 						<div class="col-4" formGroupName="brideReligion">
-							<ng-select formControlName="code" placeholder="{{ 'religion' | translate:translateKey }}" (change)="onChange($event,religionArray,'religionGujbride');changeReset('marriageTimeBrideStatus')">
+							<ng-select formControlName="code" placeholder="{{ 'religion' | translate:translateKey }}" (change)="onChange($event,religionArray,'religionGujbride');checkReligion();changeReset('marriageTimeBrideStatus')">
 								<ng-option *ngFor="let religion of religionArray" [value]="religion.code">{{religion.name}}</ng-option>
 							</ng-select>
 						</div>
@@ -716,6 +716,7 @@
 
 						<mat-form-field class="col-4" *ngIf="marriageFormGroup.controls.uniqueIdProofLable.get('code').value">
 							<input matInput formControlName="uniqueIdProof" placeholder="{{'uniqueId_proof' | translate:translateKey }}">
+							<control-messages [control]="marriageFormGroup.controls.uniqueIdProof"></control-messages>
 						</mat-form-field>
 					</div>
 					<!-- gujrati -->
