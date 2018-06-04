@@ -65,7 +65,7 @@
 
                             <mat-form-field class="col-md-4">
                                 <mat-label>{{'birth_time' | translate:translateKey}}</mat-label>
-                                <input matInput atp-time-picker type="time" start="currentTime" theme="dark" formControlName="birthTime" (focus)="openTimePicker(i)"
+                                <input matInput atp-time-picker type="time" theme="dark" formControlName="birthTime" (focus)="openTimePicker(i)"
                                     readonly required/>
                                 <control-messages [control]="birthCertificateForm.controls.childs.controls[i].controls.birthTime"></control-messages>
                             </mat-form-field>

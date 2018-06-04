@@ -13,6 +13,7 @@ import { HosFormActionsService } from '../../../core/services/hospital/data-serv
 import * as moment from 'moment';
 import * as _ from 'lodash';
 import { ToastrService } from 'ngx-toastr';
+import { Time } from '@angular/common';
 
 @Component({
 	selector: 'app-birth-registration-app',
@@ -32,7 +33,6 @@ export class BirthRegistrationComponent implements OnInit {
 	private noOfChild = 0;
 	private oldval;
 	private newValue;
-	private currentTime = (new Date()).toTimeString().split(' ')[0];
 
 	/**
 	 * form related helping data.
@@ -49,6 +49,7 @@ export class BirthRegistrationComponent implements OnInit {
 	private submit: boolean = false;
 	private childs: FormArray;
 	showChildData: boolean = false;
+	selectedTime: any
 
 	//Birth Data LookUps
 	private BirthPlaces: object[];
@@ -102,6 +103,8 @@ export class BirthRegistrationComponent implements OnInit {
 
 	openTimePicker(i: number) {
 		const amazingTimePicker = this.atp.open({
+			changeToMinutes: true,
+			time: (new Date()).toTimeString().split(' ')[0],
 			theme: 'material-purple',
 		});
 		amazingTimePicker.afterClose().subscribe(time => {
@@ -263,6 +266,7 @@ export class BirthRegistrationComponent implements OnInit {
 		});
 	}
 
+
 	timepick(i: number) {
 		if (String(this.getChildData()[i].get('birthTime').value).length == 5) {
 			this.getChildData()[i].
@@ -283,6 +287,9 @@ export class BirthRegistrationComponent implements OnInit {
 		}
 	}
 
+	/**
+	 * Method To get delay period.
+	 */
 	getDelayPeriod() {
 		return this.birthCertificateForm.get('delayedPeriod').value;
 	}

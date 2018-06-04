@@ -371,7 +371,9 @@ export class StillBirthComponent implements OnInit {
 	 */
 	openTimePicker(i: number) {
 		const amazingTimePicker = this.atp.open({
+			time: (new Date()).toTimeString().split(' ')[0],
 			theme: 'material-purple',
+			changeToMinutes: true,
 		});
 		amazingTimePicker.afterClose().subscribe(time => {
 			if (time.length == 5) {
