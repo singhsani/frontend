@@ -8,7 +8,8 @@
             </div>
         </div>
 
-        <table mat-table #table [dataSource]="dataSource" class="example-table" matSort matSortActive="created" matSortDisableClear matSortDirection="asc">
+        <table mat-table #table [dataSource]="dataSource" class="example-table" matSort matSortActive="created" matSortDisableClear
+            matSortDirection="asc">
 
             <ng-container matColumnDef="id">
                 <th mat-header-cell *matHeaderCellDef>#</th>
@@ -30,7 +31,8 @@
                 <td mat-cell *matCellDef="let row" class="text-center">
                     <mat-chip-list>
                         <span class="{{getFileStatusClass(row.fileStatus)}}" selected="true">{{ row.fileStatus}}</span>
-                        <span class="badge badge-warning text-label ml-2" *ngIf="(row.fileStatus === 'SUBMITTED' && row.serviceDetail.appointmentRequired == true)" (click)="redirectAppointment(row.serviceDetail.code, row.serviceFormId)" selected="true">
+                        <span class="badge badge-warning text-label ml-2" *ngIf="(row.fileStatus === 'SUBMITTED' && row.serviceDetail.appointmentRequired == true)"
+                            (click)="redirectAppointment(row.serviceDetail.code, row.serviceFormId)" selected="true">
                             Appointment
                         </span>
                     </mat-chip-list>
@@ -63,6 +65,10 @@
                     <button mat-icon-button [disabled]="row.canSubmit" (click)="printReceipt(row.serviceDetail.code, row.serviceDetail.name, row.serviceFormId)">
                         <mat-icon title="Print Receipt">print</mat-icon>
                     </button>
+
+                    <button mat-icon-button data-toggle="modal" (click)="openModal(template);jsonDisplay(row.serviceDetail.code, row.serviceDetail.name, row.serviceFormId)">
+                        <mat-icon title="JSON Format">center_focus_weak</mat-icon>
+                    </button>
                 </td>
             </ng-container>
 
@@ -73,4 +79,33 @@
         <mat-paginator [length]="resultsLength" [pageSize]="pageSize">
         </mat-paginator>
     </div>
+
+    <!-- The Modal -->
+    <ng-template #template>
+        <div class="modal-header">
+            <div class="col-9">
+                <h5 class="modal-title pull-left">Application JSON</h5>
+            </div>
+            <div class="col-2">
+                <button class="pull-left mat-icon-button" (click)="copyText(copytext)">
+                    <mat-icon title="Copy to Clipboard">content_copy</mat-icon>
+                </button>
+            </div>
+            <div class="col-1">
+                <button title="Close" class=" mat-icon-button" aria-label="Close" (click)="modalRef.hide()">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-12">
+                    <textarea type="text" readonly class="text-left textjson" value="{{JSONdata}}" #copytext> 
+                    </textarea>
+                </div>
+            </div>
+            <!-- <pre class="text-left" #copytext style="color: #9cdcfe;background: #212529;overflow: hidden">{{JSONdata}}</pre> -->
+        </div>
+    </ng-template>
+
 </div>

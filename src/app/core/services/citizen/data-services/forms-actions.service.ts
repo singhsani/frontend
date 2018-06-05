@@ -90,6 +90,17 @@ export class FormsActionsService {
 		return this.http.get(this.requestURL, 'printReceipt');
 	}
 
+
+	/**
+	 * This method is use to display JSON format.
+	 * @param appId - citizen app id
+	 */
+	viewJson(appId){
+		
+		let requestURL = `api/form/${this.apiType}/json/${appId}`;
+		return this.http.get(requestURL);
+	}
+
 	/**
 	 * This method is use to delete citizen record respective to id
 	 * @param appId - citizen app id
