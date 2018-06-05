@@ -6,6 +6,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MaterialModule } from './modules/material/material.module';// Import material module
 import { TranslateModule } from './modules/translate/translate.module';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { ModalModule } from 'ngx-bootstrap';
 
 /* Import http related servies start */
 import { HttpService } from './services/http.service';
@@ -42,9 +43,9 @@ import { CountryService } from './services/country.service';
 const COMPONENTS = [
 	OnlyNumberDirective,
 	PreventSpaceDirective,
-	InrPipe, 
-	ActionBarComponent, 
-	ControlMessagesComponent, 
+	InrPipe,
+	ActionBarComponent,
+	ControlMessagesComponent,
 	FileUploadComponent,
 	HosFileUploadComponent,
 	AddressComponent,
@@ -59,7 +60,7 @@ const COMPONENTS = [
 ]
 
 @NgModule({
-	declarations: [ 
+	declarations: [
 		...COMPONENTS
 	],
 	imports: [
@@ -69,12 +70,14 @@ const COMPONENTS = [
 		TranslateModule,
 		FormsModule,
 		NgSelectModule,
+		ModalModule.forRoot(),
 		ReactiveFormsModule
 	],
 	exports: [
 		MaterialModule,
 		TranslateModule,
 		NgSelectModule,
+		ModalModule,
 		...COMPONENTS
 	],
 	providers: [

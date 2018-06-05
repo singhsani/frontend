@@ -82,13 +82,11 @@ export class MarriageCreateComponent implements OnInit {
         3: { checkedPar3: Boolean }
     }
 
-    // religion in gujarati
+    // gujarati field (static)
     religionGujgroom: string = '';
     religionGujbride: string = '';
-    // marrital status in gujarati
     maritalstatusGujgroom: string = '';
     maritalstatusGujbride: string = '';
-    //applicant detail
     applicantrelationGuj: string = '';
     identityproofGuj: string = '';
 
@@ -161,7 +159,7 @@ export class MarriageCreateComponent implements OnInit {
                 gujName: [null],
                 name: [null]
             }),
-            groomAadharNumber: ['', [Validators.required, Validators.maxLength(12)]],
+            groomAadharNumber: ['', Validators.maxLength(12)],
             marriageTimeGroomStatus: this.fb.group({
                 code: [null, Validators.required]
             }),
@@ -179,7 +177,7 @@ export class MarriageCreateComponent implements OnInit {
                 gujName: [null],
                 name: [null]
             }),
-            brideAadharNumber: ['', [Validators.required, Validators.maxLength(12)]],
+            brideAadharNumber: ['', Validators.maxLength(12)],
             marriageTimeBrideStatus: this.fb.group({
                 code: [null, Validators.required]
             }),
@@ -285,7 +283,7 @@ export class MarriageCreateComponent implements OnInit {
     /**
      * This method is use to patch Value in marriage form
      */
-    getFormData(id) {
+    getFormData(id: number) {
         this.formService.getFormData(id).subscribe(
             res => {
                 // for address
@@ -326,19 +324,19 @@ export class MarriageCreateComponent implements OnInit {
                 }
                 //display static age calculation
                 if (res.groomParentsBirthDate) {
-                    this.age('groomParentsBirthDate', 1);
+                    this.parentAge('groomParentsBirthDate', 1);
                 }
                 if (res.brideParentsBirthDate) {
-                    this.age('brideParentsBirthDate', 2);
+                    this.parentAge('brideParentsBirthDate', 2);
                 }
                 if (res.priestBirthDate) {
-                    this.age('priestBirthDate', 3);
+                    this.parentAge('priestBirthDate', 3);
                 }
                 if (res.firstWitnessBirthDate) {
-                    this.age('firstWitnessBirthDate', 4);
+                    this.parentAge('firstWitnessBirthDate', 4);
                 }
                 if (res.secondWitnessBirthDate) {
-                    this.age('secondWitnessBirthDate', 5);
+                    this.parentAge('secondWitnessBirthDate', 5);
                 }
 
                 //display static gujarati var
@@ -387,7 +385,7 @@ export class MarriageCreateComponent implements OnInit {
     /**
      * This method is change date formate.
      */
-    dateFormate(date, controlType) {
+    dateFormate(date, controlType: string) {
         this.marriageFormGroup.get(controlType).setValue(moment(date).format("YYYY-MM-DD"));
     }
 
@@ -420,16 +418,29 @@ export class MarriageCreateComponent implements OnInit {
         }
     }
 
-    birthCal() {
+
+    /**
+     * This Method is set Datepicker when marriage date selected.
+     */
+    birthCalendar() {
         let marriagedate = this.marriageFormGroup.get("marriageDate").value;
         this.groomagecalendar = moment(marriagedate).subtract(21, 'year').format("YYYY-MM-DD");
-        this.brideagecalender = moment(marriagedate).subtract(21, 'year').format("YYYY-MM-DD");
+        this.brideagecalender = moment(marriagedate).subtract(18, 'year').format("YYYY-MM-DD");
+    }
+
+    /**
+     * This Method is set gujarati value in inputs (static).
+     */
+    getGujValue(lookupArray: Array<any>, resCode: string) {
+        return _.result(_.find(lookupArray, function (obj) {
+            return obj.code === resCode;
+        }), 'gujName');
     }
 
     /**
     * This method is calculate age.
     */
-    age(date, index) {
+    parentAge(date: string, index: number) {
         if (this.marriageFormGroup.get(date).value != null) {
             let bday = moment(this.marriageFormGroup.get(date).value, "YYYY-MM-DD");
             let year = moment().diff(bday, 'years', false);
@@ -442,12 +453,21 @@ export class MarriageCreateComponent implements OnInit {
     /**
      * This method is set gujarati value in change event. 
      */
-    onChange(event, lookupArray, varName) {
-
+    onChange(event: string, lookupArray: Array<any>, varName: string) {
         if (!_.isUndefined(this.getGujValue(lookupArray, event)))
             this[varName] = this.getGujValue(lookupArray, event);
     }
 
+    /**
+     * This method is remove gujarati static variable. 
+     */
+    removeGuj(varName: string) {
+        this[varName] = '';
+    }
+
+    /**
+     * This method is check religion. 
+     */
     checkReligion() {
         //check religion is same or not    
         let groomreligionChange = this.marriageFormGroup.controls.groomReligion.get("code").value;
@@ -463,28 +483,28 @@ export class MarriageCreateComponent implements OnInit {
     /**
      * This method is use reset value. 
      */
-    changeReset(controlName) {
+    changeReset(controlName: string) {
         this.marriageFormGroup.get(controlName).reset();
     }
 
     /**
      * This method is use disable value. 
      */
-    changeDisable(controlName) {
+    changeDisable(controlName: string) {
         this.marriageFormGroup.get(controlName).disable();
     }
 
     /**
      * This method is use set 'YES' or 'NO' value for checkbox. 
      */
-    setValue(controlName, value) {
+    setValue(controlName: string, value: string) {
         this.marriageFormGroup.get(controlName).get('code').setValue(value);
     }
 
     /**
-     * This method is use for autofill address . 
+     * This method is use for auto fill address . 
      */
-    check(event, ischeck, controlfirst, controlsecond, add) {
+    checkBox(event, ischeck: string, controlfirst: string, controlsecond: string, add: string) {
 
         let firstControl = this.marriageFormGroup.get(controlfirst);
         let secondControl = this.marriageFormGroup.get(controlsecond);
@@ -618,13 +638,5 @@ export class MarriageCreateComponent implements OnInit {
         this.marriageFormGroup.get('secondWitnessAddress').get('addressType').setValue('SECOND_WITNESS_ADDRESS');
     }
 
-    /**
-     * Method is set gujarati value in inputs.
-     */
-    getGujValue(lookupArray, resCode) {
-        return _.result(_.find(lookupArray, function (obj) {
-            return obj.code === resCode;
-        }), 'gujName');
-    }
 
 }

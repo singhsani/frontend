@@ -1,9 +1,12 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
+
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
-import { Observable ,  merge ,  of as observableOf } from 'rxjs';
-import { catchError ,  map ,  startWith ,  switchMap } from 'rxjs/operators';
+import { Observable, merge, of as observableOf } from 'rxjs';
+import { catchError, map, startWith, switchMap } from 'rxjs/operators';
 
 import { PaginationService } from '../../../core/services/citizen/data-services/pagination.service';
 import { FormsActionsService } from '../../../core/services/citizen/data-services/forms-actions.service';
@@ -34,6 +37,9 @@ export class MyApplicationsComponent implements OnInit {
 
 	appType: string = 'myApps';
 
+	modalRef: BsModalRef;
+	JSONdata: any;
+
 	@ViewChild(MatPaginator) paginator: MatPaginator;
 	@ViewChild(MatSort) sort: MatSort;
 
@@ -42,6 +48,7 @@ export class MyApplicationsComponent implements OnInit {
 		private paginationService: PaginationService,
 		private router: Router,
 		private commonService: CommonService,
+		private modalService: BsModalService
 	) { }
 
 	ngOnInit() {
@@ -77,7 +84,7 @@ export class MyApplicationsComponent implements OnInit {
 			).subscribe(data => {
 				this.dataSource.data = data;
 			}
-		);
+			);
 	}
 
 	/**
@@ -157,8 +164,8 @@ export class MyApplicationsComponent implements OnInit {
 				let data = res;
 				let Pagelink = "about:blank";
 				let pwa = window.open(Pagelink, "_new");
-				if(!pwa || pwa.closed || typeof pwa.closed=='undefined') {
-					this.commonService.openAlert('Pop-up!', 'Please disable your Pop-up blocker and try again.','warning');
+				if (!pwa || pwa.closed || typeof pwa.closed == 'undefined') {
+					this.commonService.openAlert('Pop-up!', 'Please disable your Pop-up blocker and try again.', 'warning');
 				}
 				pwa.document.open();
 				pwa.document.write(data);
@@ -169,6 +176,30 @@ export class MyApplicationsComponent implements OnInit {
 			}
 		);
 
+	}
+
+	/**
+	 * This method is use to show JOSN format.
+	 */
+	jsonDisplay(apiCode: string, apiName: string, id: number) {
+		this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);
+		this.formService.viewJson(id).subscribe(
+			res => {
+				this.JSONdata = JSON.stringify(res, null, 4);
+			},
+			err => {
+				this.commonService.successAlert('Error!', err.error[0].message, 'error');
+			}
+		);
+
+	}
+
+	/**
+	 * This method is use for copy text.
+	 */
+	copyText(copytext:any) {
+		copytext.select();
+		document.execCommand('copy');
 	}
 
 	/**
@@ -184,6 +215,13 @@ export class MyApplicationsComponent implements OnInit {
 			default:
 				return 'primary'
 		}
+	}
+
+	/**
+	 * This method is use for open modal.
+	 */
+	openModal(template: TemplateRef<any>) {
+		this.modalRef = this.modalService.show(template);
 	}
 
 }

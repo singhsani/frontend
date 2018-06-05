@@ -13,7 +13,7 @@
 
 					<div class="row">
 						<mat-form-field class="col-4">
-							<input matInput [max]="disablefutureDate" [matDatepicker]="picker1" formControlName="marriageDate" (dateChange)="dateFormate($event.value,'marriageDate');CalculateAge();birthCal()"
+							<input matInput [max]="disablefutureDate" [matDatepicker]="picker1" formControlName="marriageDate" (dateChange)="dateFormate($event.value,'marriageDate');CalculateAge();birthCalendar()"
 							 placeholder="{{ 'date_of_marriage' | translate:translateKey }}" (click)="picker1.open()" (focus)="picker1.open()"
 							 readonly>
 							<mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
@@ -102,7 +102,7 @@
 							</mat-select>
 						</mat-form-field> -->
 						<div class="col-4" formGroupName="groomReligion">
-							<ng-select formControlName="code" placeholder="{{ 'religion' | translate:translateKey }}" (change)="onChange($event,religionArray,'religionGujgroom');checkReligion();changeReset('marriageTimeGroomStatus');changeReset('aliveWives')">
+							<ng-select formControlName="code" placeholder="{{ 'religion' | translate:translateKey }}" (change)="onChange($event,religionArray,'religionGujgroom');checkReligion();changeReset('marriageTimeGroomStatus');changeReset('aliveWives');removeGuj('maritalstatusGujgroom')">
 								<ng-option *ngFor="let religion of religionArray" [value]="religion.code">{{religion.name}}</ng-option>
 							</ng-select>
 						</div>
@@ -143,8 +143,7 @@
 
 					<div class="row">
 						<mat-form-field class="col-4">
-							<input matInput OnlyNumber maxlength="12" minlength="12" type="tel" formControlName="groomAadharNumber" placeholder="{{'aadhar_number' | translate:translateKey }}"
-							 required>
+							<input matInput OnlyNumber maxlength="12" minlength="12" type="tel" formControlName="groomAadharNumber" placeholder="{{'aadhar_number' | translate:translateKey }}">
 							<control-messages [control]="marriageFormGroup.controls.groomAadharNumber"></control-messages>
 						</mat-form-field>
 					</div>
@@ -230,7 +229,7 @@
 							</mat-select>
 						</mat-form-field> -->
 						<div class="col-4" formGroupName="brideReligion">
-							<ng-select formControlName="code" placeholder="{{ 'religion' | translate:translateKey }}" (change)="onChange($event,religionArray,'religionGujbride');checkReligion();changeReset('marriageTimeBrideStatus')">
+							<ng-select formControlName="code" placeholder="{{ 'religion' | translate:translateKey }}" (change)="onChange($event,religionArray,'religionGujbride');checkReligion();changeReset('marriageTimeBrideStatus');removeGuj('maritalstatusGujbride')">
 								<ng-option *ngFor="let religion of religionArray" [value]="religion.code">{{religion.name}}</ng-option>
 							</ng-select>
 						</div>
@@ -253,8 +252,7 @@
 						</div>
 
 						<mat-form-field class="col-4">
-							<input matInput OnlyNumber maxlength="12" minlength="12" type="tel" formControlName="brideAadharNumber" placeholder="{{'aadhar_number' | translate:translateKey }}"
-							 required>
+							<input matInput OnlyNumber maxlength="12" minlength="12" type="tel" formControlName="brideAadharNumber" placeholder="{{'aadhar_number' | translate:translateKey }}">
 							<control-messages [control]="marriageFormGroup.controls.brideAadharNumber"></control-messages>
 						</mat-form-field>
 					</div>
@@ -329,7 +327,7 @@
 
 					<div class="row">
 						<mat-form-field class="col-4">
-							<input matInput [max]="disablefutureDate" [matDatepicker]="picker4" formControlName="groomParentsBirthDate" (dateChange)="dateFormate($event.value,'groomParentsBirthDate');age('groomParentsBirthDate',1)"
+							<input matInput [max]="disablefutureDate" [matDatepicker]="picker4" formControlName="groomParentsBirthDate" (dateChange)="dateFormate($event.value,'groomParentsBirthDate');parentAge('groomParentsBirthDate',1)"
 							 placeholder="{{'date_of_birth' | translate:translateKey }}" required (click)="picker4.open()" (focus)="picker4.open()"
 							 readonly>
 							<mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
@@ -353,7 +351,7 @@
 						</div>
 
 						<div formGroupName='isGroomParResAddressSame'>
-							<mat-checkbox type="checkbox" class="col-4" [checked]="addObject.checkedPar1" (change)="check($event,'isGroomParResAddressSame','groomParentsAddressResidence','groomParentsAddress','1')">{{'is_permanent_address_same_as_present_address' | translate:translateKey}}</mat-checkbox>
+							<mat-checkbox type="checkbox" class="col-4" [checked]="addObject.checkedPar1" (change)="checkBox($event,'isGroomParResAddressSame','groomParentsAddressResidence','groomParentsAddress','1')">{{'is_permanent_address_same_as_present_address' | translate:translateKey}}</mat-checkbox>
 						</div>
 						<div class="col-12"> {{'residence_address' | translate:translateKey }}:
 							<app-address #address [addressFormGroup]="marriageFormGroup.controls.groomParentsAddressResidence"></app-address>
@@ -412,7 +410,7 @@
 
 					<div class="row">
 						<mat-form-field class="col-4">
-							<input matInput [max]="disablefutureDate" [matDatepicker]="picker5" formControlName="brideParentsBirthDate" (dateChange)="dateFormate($event.value,'brideParentsBirthDate');age('brideParentsBirthDate',2)"
+							<input matInput [max]="disablefutureDate" [matDatepicker]="picker5" formControlName="brideParentsBirthDate" (dateChange)="dateFormate($event.value,'brideParentsBirthDate');parentAge('brideParentsBirthDate',2)"
 							 placeholder="{{'date_of_birth' | translate:translateKey }}" required (click)="picker5.open()" (focus)="picker5.open()"
 							 readonly>
 							<mat-datepicker-toggle matSuffix [for]="picker5"></mat-datepicker-toggle>
@@ -436,7 +434,7 @@
 						</div>
 
 						<div formGroupName='isBrideParResAddressSame'>
-							<mat-checkbox type="checkbox" class="col-4" [checked]="addObject.checkedPar2" (change)="check($event,'isBrideParResAddressSame','brideParentsAddressResidence','brideParentsAddress','2')">{{'is_permanent_address_same_as_present_address' | translate:translateKey}}</mat-checkbox>
+							<mat-checkbox type="checkbox" class="col-4" [checked]="addObject.checkedPar2" (change)="checkBox($event,'isBrideParResAddressSame','brideParentsAddressResidence','brideParentsAddress','2')">{{'is_permanent_address_same_as_present_address' | translate:translateKey}}</mat-checkbox>
 						</div>
 
 						<div class="col-12"> {{'residence_address' | translate:translateKey }}:
@@ -493,7 +491,7 @@
 
 					<div class="row">
 						<mat-form-field class="col-4">
-							<input matInput [max]="disablefutureDate" [matDatepicker]="picker6" formControlName="priestBirthDate" (dateChange)="dateFormate($event.value,'priestBirthDate');age('priestBirthDate',3)"
+							<input matInput [max]="disablefutureDate" [matDatepicker]="picker6" formControlName="priestBirthDate" (dateChange)="dateFormate($event.value,'priestBirthDate');parentAge('priestBirthDate',3)"
 							 placeholder="{{'date_of_birth' | translate:translateKey }}" required (click)="picker6.open()" (focus)="picker6.open()"
 							 readonly>
 							<mat-datepicker-toggle matSuffix [for]="picker6"></mat-datepicker-toggle>
@@ -516,7 +514,7 @@
 						</div>
 
 						<div class="col-4" formGroupName='isPriestParResAddressSame'>
-							<mat-checkbox type="checkbox" [checked]="addObject.checkedPar3" (change)="check($event,'isPriestParResAddressSame','priestAddressResidence','priestAddress','3')">{{'is_permanent_address_same_as_present_address' | translate:translateKey}}</mat-checkbox>
+							<mat-checkbox type="checkbox" [checked]="addObject.checkedPar3" (change)="checkBox($event,'isPriestParResAddressSame','priestAddressResidence','priestAddress','3')">{{'is_permanent_address_same_as_present_address' | translate:translateKey}}</mat-checkbox>
 						</div>
 
 						<div class="col-12"> {{'residence_address' | translate:translateKey }}:
@@ -576,7 +574,7 @@
 
 					<div class="row">
 						<mat-form-field class="col-4">
-							<input matInput [max]="disablefutureDate" [matDatepicker]="picker7" formControlName="firstWitnessBirthDate" (dateChange)="dateFormate($event.value,'firstWitnessBirthDate');age('firstWitnessBirthDate',4)"
+							<input matInput [max]="disablefutureDate" [matDatepicker]="picker7" formControlName="firstWitnessBirthDate" (dateChange)="dateFormate($event.value,'firstWitnessBirthDate');parentAge('firstWitnessBirthDate',4)"
 							 placeholder="{{'date_of_birth' | translate:translateKey }}" required (click)="picker7.open()" (focus)="picker7.open()"
 							 readonly>
 							<mat-datepicker-toggle matSuffix [for]="picker7"></mat-datepicker-toggle>
@@ -651,7 +649,7 @@
 
 					<div class="row">
 						<mat-form-field class="col-4">
-							<input matInput [max]="disablefutureDate" [matDatepicker]="picker8" formControlName="secondWitnessBirthDate" (dateChange)="dateFormate($event.value,'secondWitnessBirthDate');age('secondWitnessBirthDate',5)"
+							<input matInput [max]="disablefutureDate" [matDatepicker]="picker8" formControlName="secondWitnessBirthDate" (dateChange)="dateFormate($event.value,'secondWitnessBirthDate');parentAge('secondWitnessBirthDate',5)"
 							 placeholder="{{'date_of_birth' | translate:translateKey }}" required (click)="picker8.open()" (focus)="picker8.open()"
 							 readonly>
 							<mat-datepicker-toggle matSuffix [for]="picker8"></mat-datepicker-toggle>
