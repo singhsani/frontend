@@ -36,6 +36,7 @@ import { LoadingIndicatorComponent } from './components/loading-indicator/loadin
 import { HosHttpService } from './services/hos-http.service';
 import { HosActionBarComponent } from './components/hos-action-bar/hos-action-bar.component';
 import { HosFileUploadComponent } from './components/hos-file-upload/hos-file-upload.component';
+import { CountryService } from './services/country.service';
 /* import pipes end*/
 
 const COMPONENTS = [
@@ -86,7 +87,8 @@ const COMPONENTS = [
 			useClass: TokenInterceptor,
 			multi: true,
 		},
-		HosHttpService
+		HosHttpService,
+		CountryService
 	]
 })
 export class SharedModule { }
