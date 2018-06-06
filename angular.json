@@ -24,6 +24,7 @@
               "node_modules/bootstrap/dist/css/bootstrap.css",
               "node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
               "node_modules/ngx-toastr/toastr.css",
+              "src/assets/scss/fa.scss",
               "src/styles.scss"
             ],
             "scripts": [

@@ -64,7 +64,11 @@ export class LoginComponent implements OnInit {
 	 * This method is use for get User Authenticated Token from oAuth2 API.
 	 * @param formVals - login form values property.
 	 */
-	onLoginSubmit(formVals: FormGroup) {
+	onLoginSubmit(formVals) {
+
+		if (formVals.username){
+			formVals.username = _.trim(formVals.username);
+		}
 
 		this.isValidFlag = false;
 

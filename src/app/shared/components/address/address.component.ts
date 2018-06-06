@@ -95,17 +95,7 @@ export class AddressComponent implements OnInit {
 				}
 			}, 300);
 		});
-		/* this.formService.getCountryLookUp().subscribe(res => {
-
-			this.countryListArray = _.cloneDeep(res.data);
-
-			setTimeout(() => {
-				if (this.editMode && this.addressFormGroup.get('country').value) {
-					this.getStateLists(this.addressFormGroup.get('country').value);
-				}
-			}, 300);
-
-		}); */
+		
 	}
 
 	/**

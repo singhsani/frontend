@@ -1,36 +1,38 @@
-<div class="row">
+<div class="row" *ngIf="!fromAdmin">
   <div class="col-md-12">
     <!-- <mat-progress-bar *ngIf="currentFileUpload" mode="determinate" value="{{progress.percentage}}"></mat-progress-bar> -->
 
-    <div *ngIf="showButton">
+    <!-- Preview Image-->
+    <label *ngIf="priviewImage">
+      <img [src]="priviewImage" alt="image" class="imageSize" />
+    </label>
 
-      
+    <!-- Upload new file/Image-->
+    <label class="custom-file-upload" [hidden]="canUpload || !form.get('canEdit').value">
+      <input #fileInput type="file" (change)="selectFile($event)" />
 
-      <label class="btn btn-default" [class.disabled]="!form.get('canEdit').value">
-        <input #fileInput required type="file" class="form-control" [class.disabled]="!form.get('canEdit').value" [disabled]="!form.get('canEdit').value" (change)="selectFile($event)">
-      </label>
+      <button mat-mini-fab color="accent">
+        <i class="fa fa-paperclip"></i>
+      </button> &nbsp; Attach File
+    </label>
 
-      <span>{{fileName}}</span>
-      <span *ngIf="getFile">
-        {{getFile.realFileName}}
-      </span>
 
-      <button type="button" mat-raised-button color="primary" [disabled]="canUpload || !form.get('canEdit').value" (click)="upload()">
-        <mat-icon>file_upload</mat-icon> Upload
-      </button>
+    <!-- Uploaded file/image name-->
+    <label class="custom-file-upload" [hidden]="!canUpload || !form.get('canEdit').value">
+      <a (click)="view()">{{fileName}}</a> &nbsp;
+      <a *ngIf="getFile" (click)="view()">{{getFile.realFileName}}</a> &nbsp;
+    </label>
 
-      <button [disabled]="canView" mat-raised-button type="button" color="accent" (click)="view()">
-        View
-      </button>
+    <!-- delete button -->
+    <button [hidden]="!canUpload || !form.get('canEdit').value" type="button" mat-icon-button color="warn" (click)="deleteFile()">
+      <i class="fa fa-times"></i>
+    </button>
 
-      <button [disabled]="canDelete || !form.get('canEdit').value" mat-raised-button type="button" color="warn" (click)="deleteFile()">
-        Delete
-      </button>
+    <!-- If no file uploaded and form is submitted-->
+    <label *ngIf="!canUpload && !form.get('canEdit').value">
+      <span>No file uploaded</span>
+    </label>
 
-      <label *ngIf="imagetype">
-        <img [src]="priviewImage" alt="image" class="imageSize" />
-      </label>
-
-    </div>
   </div>
+
 </div>

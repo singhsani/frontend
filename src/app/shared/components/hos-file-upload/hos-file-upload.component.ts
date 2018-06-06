@@ -19,9 +19,6 @@ export class HosFileUploadComponent implements OnInit {
 	currentFileUpload: File
 	progress: { percentage: number } = { percentage: 0 }
 	fileData: any;
-	showButton: boolean = false;
-	canDelete: boolean;
-	canView: boolean;
 	canUpload: boolean;
 	id: any;
 	type: any;
@@ -36,9 +33,8 @@ export class HosFileUploadComponent implements OnInit {
 
 	@Input() form: any;
 
-    attachments: any[];
+	attachments: any[];
 
-	fileType: string;
 	imagetype: boolean = false;
 	fromAdmin: boolean = false;
 	getFile: string;
@@ -59,9 +55,10 @@ export class HosFileUploadComponent implements OnInit {
 	 */
 	ngOnInit() {
 		this.attachments = this.form.get('attachments').value;
+
 		this.disableOrEnableButton();
-		this.showButton = true;
 		this.fromAdmin = this.commonService.fromAdmin();
+
 		if (this.attachments && this.form.get('attachments').value.length) {
 			this.getFile = this.form.get('attachments').value.find(data => data.labelName === this.uploadModel.labelName)
 		}
@@ -73,11 +70,11 @@ export class HosFileUploadComponent implements OnInit {
 	 */
 	selectFile(event) {
 		this.selectedFiles = event.target.files;
-		this.fileType = this.selectedFiles[0].type;
+		let fileType = this.selectedFiles[0].type;
 		this.fileName = this.selectedFiles[0].name;
+		this.canUpload = true;
 
-
-		if (this.fileType === 'image/png' || this.fileType === 'image/jpg' || this.fileType === 'image/jpeg' || this.fileType === 'image/gif') {
+		if (fileType === 'image/png' || fileType === 'image/jpg' || fileType === 'image/jpeg' || fileType === 'image/gif') {
 			let reader = new FileReader();
 			reader.onload = (e: any) => {
 				this.priviewImage = e.target.result;
@@ -85,6 +82,8 @@ export class HosFileUploadComponent implements OnInit {
 			this.imagetype = true;
 			reader.readAsDataURL(event.target.files[0]);
 		}
+
+		this.upload();
 	}
 
 	/**
@@ -95,7 +94,8 @@ export class HosFileUploadComponent implements OnInit {
 			this.commonService.openAlert("Warning", "Please Select File to Upload", "warning");
 		} else {
 			if (this.selectedFiles[0].size > 5000000) {
-
+				this.fileName = ''
+				this.canUpload = false;
 				this.commonService.openAlert("Warning", "File Size should be less than 5 MB", "warning");
 
 			} else {
@@ -115,8 +115,6 @@ export class HosFileUploadComponent implements OnInit {
 					this.progress.percentage = setProgressBar;
 				}, successResponse => {
 					this.commonService.successAlert("File Uploaded", this.uploadModel.labelName + " successfully uploaded", "success");
-					this.canDelete = false;
-					this.canView = false;
 					this.canUpload = true;
 					this.id = successResponse.data.id;
 					this.type = successResponse.data.mimeType;
@@ -134,24 +132,18 @@ export class HosFileUploadComponent implements OnInit {
 	 */
 	disableOrEnableButton() {
 		if (this.attachments.length == 0) {
-			this.canDelete = true;
 			this.canUpload = false;
-			this.canView = true;
 			return;
 		} else {
 			for (let i = 0; i < this.attachments.length; i++) {
 				if ((this.attachments[i].fieldIdentifier === this.uploadModel.fieldIdentifier.toString()) && (this.attachments[i].labelName === this.uploadModel.labelName)) {
-					this.canDelete = false;
 					this.canUpload = true;
-					this.canView = false;
 					this.id = this.attachments[i].id;
 					this.type = this.attachments[i].mimeType;
 					return;
 				}
 			}
-			this.canDelete = true;
 			this.canUpload = false;
-			this.canView = true;
 			return;
 		}
 	}
@@ -164,8 +156,7 @@ export class HosFileUploadComponent implements OnInit {
 			this.downLoadFile(respData, this.type);
 		}, error => {
 
-		}
-		)
+		});
 	}
 
 	/**
@@ -185,8 +176,6 @@ export class HosFileUploadComponent implements OnInit {
 	deleteFile() {
 		this.uploadFileService.deleteFile(this.uploadModel.serviceFormId.toString(), this.id).subscribe(respData => {
 			this.commonService.successAlert("File Deleted", this.uploadModel.labelName + " successfully deleted", "success");
-			this.canDelete = true;
-			this.canView = true;
 			this.canUpload = false;
 			this.imagetype = false;
 			this.fileName = '';
