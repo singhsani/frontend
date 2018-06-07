@@ -44,6 +44,21 @@ export class SignUpComponent implements OnInit {
 			userType: "CITIZEN",
 			registerBy: null,
 
+			/* add extra fields */
+			buildingName: null,
+			streetName: null,
+			landmark: null,
+			area: null,
+			state: null,
+			district: null,
+			city: null,
+			pincode: null,
+			country: null,
+			profilePic: null,
+			middleName: null,
+			birthDate: null,
+			gender: null
+
 		}, { validator: this.matchingPasswords('password', 'confirmPassword') });
 	}
 
