@@ -32,17 +32,6 @@ export class MarriageCreateComponent implements OnInit {
     formId: number;
     apiCode: string;
 
-    // Steps Titles
-    stepLable1: string = "Bride Groom Detail";
-    stepLable2: string = "Bride Detail";
-    stepLable3: string = "Guirdian of Bried groom";
-    stepLable4: string = "Guirdian of Bride";
-    stepLable5: string = "Detail of Priest";
-    stepLable6: string = "Detail of First Witness";
-    stepLable7: string = "Detail of Second Witness";
-    stepLable9: string = "Upload";
-    stepLable8: string = "Applicant";
-
     // Lookups array list
     religionArray: any = [];
     maritalstatusArray: any = [];
@@ -155,7 +144,7 @@ export class MarriageCreateComponent implements OnInit {
             groomBirthDate: ['', Validators.required],
             groomAge: [null, ValidationService.groomAgeValidator],
             groomReligion: this.fb.group({
-                code: [''],
+                code: [null],
                 gujName: [null],
                 name: [null]
             }),
@@ -173,7 +162,7 @@ export class MarriageCreateComponent implements OnInit {
             brideBirthDate: ['', Validators.required],
             brideAge: [null, ValidationService.brideAgeValidator],
             brideReligion: this.fb.group({
-                code: [''],
+                code: [null],
                 gujName: [null],
                 name: [null]
             }),
@@ -571,36 +560,28 @@ export class MarriageCreateComponent implements OnInit {
             let count = flag;
 
             if (count <= step1) {
-                this.stepLable1 = "Bride groom Detail is not completed";
                 this.stepper.selectedIndex = 0;
                 return false;
             } else if (count <= step2) {
-                this.stepLable2 = "Bride Detail is not completed";
                 this.stepper.selectedIndex = 1;
                 return false;
             } else if (count <= step3) {
-                this.stepLable3 = "Guirdian of bried groom detail is not completed";
                 this.stepper.selectedIndex = 2;
                 return false;
             } else if (count <= step4) {
-                this.stepLable4 = "Guirdian of bried detail is not completed";
                 this.stepper.selectedIndex = 3;
                 return false;
             } else if (count <= step5) {
-                this.stepLable5 = "Priest detail is not completed";
                 this.stepper.selectedIndex = 4;
                 return false;
             } else if (count <= step6) {
-                this.stepLable6 = "First witness detail is not completed";
                 this.stepper.selectedIndex = 5;
                 return false;
             } else if (count <= step7) {
-                this.stepLable7 = "Second witness detail is not completed";
                 this.stepper.selectedIndex = 6;
                 return false;
             }
             else if (count <= step8) {
-                this.stepLable7 = "Applicant is not completed";
                 this.stepper.selectedIndex = 7;
                 return false;
             }

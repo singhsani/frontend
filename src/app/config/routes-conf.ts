@@ -169,6 +169,10 @@ const ROUTEMAIN = {
         'main': 'assessmentCertificate',
         'type': 'assessmentCertificate'
     },
+    'FL': {
+        'main': 'food-licence',
+        'type': 'foodLicence'
+    },
     'CITIZENAUTHLOGIN': {
         'main': 'login',
         'type': 'authorize'
@@ -327,6 +331,7 @@ const ROUTEPREFIX = {
     'ANIMALPONDMODULE': 'animal-pond',
     'MUTTONFISHMODULE': 'mutton-fish',
     'SHOPANDESTAMODULE': 'shop-esta',
+    'FOODMODULE':'food',
     /** end - citizen innner-licences modules routes configuretion */
 
     /** start - citizen tax module */
@@ -444,6 +449,9 @@ const ROUTESLIST = {
     },
     'POND-REN': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.LICENCEMODULE + '/' + ROUTEPREFIX.ANIMALPONDMODULE + '/' + ROUTEMAIN["POND-REN"].main
+    },
+    'FL': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.LICENCEMODULE + '/' + ROUTEPREFIX.FOODMODULE + '/' + ROUTEMAIN["FL"].main
     },
     'PRO-ASS': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TAXMODULE + '/' + ROUTEPREFIX.PROPERTYMODULE + '/' + ROUTEMAIN["PRO-ASS"].main

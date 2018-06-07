@@ -55,13 +55,13 @@
 		<form [formGroup]="appointmentForm">
 			<div class="row">
 				<div class="col-4" formGroupName='resources'>
-					<ng-select formControlName="code" required placeholder="Select resources" (change)="onSubmit()">
+					<ng-select formControlName="code" required placeholder="Select resources*" (change)="onSubmit()">
 						<ng-option *ngFor="let resources of resources" [value]="resources.code">{{resources.name}}</ng-option>
 					</ng-select>
 				</div>
 
 				<mat-form-field class="col-4">
-					<input matInput [min]="minDate" [disabled]="!appointmentForm.controls.resources" (dateChange)="dateFormate($event.value,'appointmentdate');onSubmit()"
+					<input matInput [min]="minDate" (dateChange)="dateFormate($event.value,'appointmentdate');onSubmit()"
 					 [matDatepicker]="appointmentPicker" formControlName="appointmentdate" placeholder="Choose a date" (click)="appointmentPicker.open()"
 					 (focus)="appointmentPicker.open()" readonly>
 					<mat-datepicker-toggle matSuffix [for]="appointmentPicker"></mat-datepicker-toggle>
