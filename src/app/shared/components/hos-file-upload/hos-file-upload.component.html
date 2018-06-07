@@ -1,38 +1,38 @@
 <div class="row" *ngIf="!fromAdmin">
-  <div class="col-md-12">
-    <!-- <mat-progress-bar *ngIf="currentFileUpload" mode="determinate" value="{{progress.percentage}}"></mat-progress-bar> -->
+	<div class="col-md-12">
+		<!-- <mat-progress-bar *ngIf="currentFileUpload" mode="determinate" value="{{progress.percentage}}"></mat-progress-bar> -->
 
-    <!-- Preview Image-->
-    <label *ngIf="priviewImage">
-      <img [src]="priviewImage" alt="image" class="imageSize" />
-    </label>
+		<!-- Preview Image-->
+		<label *ngIf="priviewImage">
+			<img [src]="priviewImage" alt="image" class="imageSize" />
+		</label>
 
-    <!-- Upload new file/Image-->
-    <label class="custom-file-upload" [hidden]="canUpload || !form.get('canEdit').value">
-      <input #fileInput type="file" (change)="selectFile($event)" />
+		<!-- Upload new file/Image-->
+		<label class="custom-file-upload" [hidden]="canUpload || !form.get('canEdit').value">
+			<input #fileInput type="file" (change)="selectFile($event)" />
 
-      <button mat-mini-fab color="accent">
-        <i class="fa fa-paperclip"></i>
-      </button> &nbsp; Attach File
-    </label>
+			<button mat-mini-fab color="accent">
+				<i class="fa fa-paperclip"></i>
+			</button> &nbsp; Attach File
+		</label>
 
 
-    <!-- Uploaded file/image name-->
-    <label class="custom-file-upload" [hidden]="!canUpload || !form.get('canEdit').value">
-      <a (click)="view()">{{fileName}}</a> &nbsp;
-      <a *ngIf="getFile" (click)="view()">{{getFile.realFileName}}</a> &nbsp;
-    </label>
+		<!-- Uploaded file/image name-->
+		<label class="custom-file-upload" [hidden]="!canUpload || !form.get('canEdit').value">
+			<a (click)="view()">{{fileName}}</a> &nbsp;
+			<a *ngIf="getFile" (click)="view()">{{getFile.realFileName}}</a> &nbsp;
+		</label>
 
-    <!-- delete button -->
-    <button [hidden]="!canUpload || !form.get('canEdit').value" type="button" mat-icon-button color="warn" (click)="deleteFile()">
-      <i class="fa fa-times"></i>
-    </button>
+		<!-- delete button -->
+		<button title="Delete File" [hidden]="!canUpload || !form.get('canEdit').value" type="button" mat-icon-button color="warn" (click)="deleteFile()">
+			<i class="fa fa-times"></i>
+		</button>
 
-    <!-- If no file uploaded and form is submitted-->
-    <label *ngIf="!canUpload && !form.get('canEdit').value">
-      <span>No file uploaded</span>
-    </label>
+		<!-- If no file uploaded and form is submitted-->
+		<label *ngIf="!canUpload && !form.get('canEdit').value">
+			<span>No file uploaded</span>
+		</label>
 
-  </div>
+	</div>
 
 </div>

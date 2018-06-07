@@ -7,6 +7,8 @@ import { AppService } from '../../../../core/services/citizen/app-services/app.s
 import { ManageRoutes } from '../../../../config/routes-conf';
 import { ToastrService } from 'ngx-toastr';
 
+import * as _ from 'lodash';
+
 @Component({
 	selector: 'app-sign-up',
 	templateUrl: './sign-up.component.html',
@@ -41,7 +43,7 @@ export class SignUpComponent implements OnInit {
 			confirmPassword: [null, Validators.required],
 			userType: "CITIZEN",
 			registerBy: null,
-			
+
 			/* add extra fields */
 			buildingName: null,
 			streetName: null,
@@ -52,9 +54,9 @@ export class SignUpComponent implements OnInit {
 			city: null,
 			pincode: null,
 			country: null,
-			profilePic:null,
+			profilePic: null,
 			middleName: null,
-			birthDate:null,
+			birthDate: null,
 			gender: null
 
 		}, { validator: this.matchingPasswords('password', 'confirmPassword') });
@@ -88,14 +90,22 @@ export class SignUpComponent implements OnInit {
 	 * This method is used to register a new user.
 	 * @param formVals - signup form values property.
 	 */
-	onSignUp(formVals: FormGroup) {
+	onSignUp(formVals) {
+
+		if (formVals.email) {
+			formVals.email = _.trim(formVals.email);
+		}
 
 		this.appService.registerUser(formVals).subscribe(
 			res => {
 				this.toster.success("We have sent a authentication link on your email");
 				this.router.navigate([ManageRoutes.getFullRoute('CITIZENAUTHVERIFY')],
 					{ queryParams: { uniqueId: res.data.uniqueId, code: res.data.cellOtp } });
-			});
+			},
+			err => {
+				this.toster.error(err.error[0].code);
+			}
+		);
 	}
 
 }

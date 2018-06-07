@@ -24,7 +24,7 @@
 		</label>
 
 		<!-- delete button -->
-		<button [hidden]="!canUpload || !form.get('canEdit').value" type="button" mat-icon-button color="warn" (click)="deleteFile()">
+		<button title="Delete File" [hidden]="!canUpload || !form.get('canEdit').value" type="button" mat-icon-button color="warn" (click)="deleteFile()">
 			<i class="fa fa-times"></i>
 		</button>
 
