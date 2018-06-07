@@ -1,13 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, FormControl, FormBuilder, Validator, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { ToastrService } from 'ngx-toastr';
 import { CommonService } from './../../../shared/services/common.service';
 import { ValidationService } from './../../../shared/services/validation.service';
 import { FormsActionsService } from './../../../core/services/citizen/data-services/forms-actions.service';
 import * as moment from 'moment';
-import { HttpService } from '../../../shared/services/http.service';
-import { HttpEventType } from '@angular/common/http';
 import { CountryService } from '../../../shared/services/country.service';
 import * as _ from 'lodash';
 
@@ -37,14 +35,11 @@ export class UserProfileComponent implements OnInit {
 		private formService: FormsActionsService,
 		private toaster: ToastrService,
 		private commonService: CommonService,
-		private httpService: HttpService,
 		private countryService:CountryService
 	) { }
 
-	// Marriage date 
+	// disable future date for birthday 
 	disablefutureDate = new Date(moment().format('YYYY-MM-DD'));
-
-	progress: { percentage: number } = { percentage: 0 }
 
 	ngOnInit() {
 
@@ -136,11 +131,9 @@ export class UserProfileComponent implements OnInit {
 	getCountryLists() {
 		this.countryService.countriesData.subscribe(data=>{
 			this.countryListArray = _.cloneDeep(data);
-			setTimeout(() => {
-				if (this.userProfileForm.get('country').value) {
-					this.getStateLists(this.userProfileForm.get('country').value);
-				}
-			}, 300);
+			if (this.userProfileForm.get('country').value) {
+				this.getStateLists(this.userProfileForm.get('country').value);
+			}
 		});
 	}
 
@@ -181,7 +174,6 @@ export class UserProfileComponent implements OnInit {
 		if (name) {
 			this.getStateLists(name);
 		}
-
 		this.userProfileForm.get('state').setValue(null);
 		this.userProfileForm.get('city').setValue(null);
 	}
@@ -195,7 +187,6 @@ export class UserProfileComponent implements OnInit {
 			this.getCityLists(name);
 		}
 		this.userProfileForm.get('city').setValue(null);
-
 	}
 
 }
