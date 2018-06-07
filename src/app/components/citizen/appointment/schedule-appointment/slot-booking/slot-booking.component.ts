@@ -9,6 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CommonService } from '../../../../../shared/services/common.service';
 import { ManageRoutes } from '../../../../../config/routes-conf';
 import { element } from 'protractor';
+import * as _ from 'lodash';
 
 const now = moment();
 
@@ -41,7 +42,9 @@ export class SlotBookingComponent implements OnInit {
 		private router: Router,
 		private commonService: CommonService,
 		// private formService: FormsActionsService
-	) { }
+	) {
+		this.controlName();
+	}
 
 	//for mat table
 	displayedColumns = ['start date', 'end date', 'slot Status', 'action'];
@@ -63,7 +66,6 @@ export class SlotBookingComponent implements OnInit {
 			this.router.navigate([ManageRoutes.getFullRoute('CITIZENDASHBOARD')]);
 		}
 		else {
-			this.controlName();
 			this.getResources();
 			this.appointmentList();
 		}
@@ -103,8 +105,9 @@ export class SlotBookingComponent implements OnInit {
 	onSubmit() {
 		let resource = this.appointmentForm.controls.resources.get('code').value;
 		let appointmentdate = this.appointmentForm.get('appointmentdate').value;
-		this.getSlot(resource, appointmentdate);
-
+		if (!_.isEmpty(resource)) {
+			this.getSlot();
+		}
 	}
 
 	/**
@@ -117,8 +120,10 @@ export class SlotBookingComponent implements OnInit {
 	/**
 	* This method is get available slots 
 	*/
-	getSlot(resourcecode, startdate) {
-		let date = this.appointmentForm.get('appointmentdate').value;
+	getSlot() {
+		let resourcecode = this.appointmentForm.controls.resources.get('code').value;
+		let startdate = this.appointmentForm.get('appointmentdate').value;
+
 		let requestURL = `api/form/${this.apiType}/slots?resourceCode=${resourcecode}&startDate=${startdate}&serviceId=${this.formId}`;
 
 		this.http.get(requestURL).subscribe(
@@ -140,13 +145,10 @@ export class SlotBookingComponent implements OnInit {
 			let requestURL = `api/form/${this.apiType}/slot/book?serviceId=${this.formId}&slotId=${uniqueId}`;
 			this.http.get(requestURL).subscribe(
 				res => {
-
 					if (res.data.bookingStatus === 'BOOKED') {
 						this.commonService.successAlert("Success", "", "success");
 					}
-					let resource = this.appointmentForm.controls.resources.get('code').value;
-					let appointmentdate = this.appointmentForm.get('appointmentdate').value;
-					this.getSlot(resource, appointmentdate);
+					this.getSlot();
 					this.appointmentList();
 				},
 				err => {
@@ -166,9 +168,7 @@ export class SlotBookingComponent implements OnInit {
 			this.http.get(requestURL).subscribe(
 				res => {
 					this.commonService.successAlert('Canceled!', '', 'success');
-					let resource = this.appointmentForm.controls.resources.get('code').value;
-					let appointmentdate = this.appointmentForm.get('appointmentdate').value;
-					this.getSlot(resource, appointmentdate);
+					this.getSlot();
 					this.appointmentList();
 				},
 				err => {

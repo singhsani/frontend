@@ -6,7 +6,7 @@ import { ManageRoutes } from '../../../config/routes-conf';
 import { AnimalPondModule } from './animal-pond/animal-pond.module';
 import { MuttonFishModule } from './mutton-fish/mutton-fish.module';
 import { ShopAndEstablishmentModule } from './shop-and-establishment/shop-and-establishment.module';
-
+import { FoodModule } from './food/food.module';
 //var manage_route_main = new manageRoutes();
 
 const routes: Routes = [
@@ -14,6 +14,7 @@ const routes: Routes = [
 	{ path: ManageRoutes.getPrefixRoute('ANIMALPONDMODULE'), loadChildren: () => AnimalPondModule, canLoad: [AuthGuard] },
 	{ path: ManageRoutes.getPrefixRoute('MUTTONFISHMODULE'), loadChildren: () => MuttonFishModule, canLoad: [AuthGuard] },
 	{ path: ManageRoutes.getPrefixRoute('SHOPANDESTAMODULE'), loadChildren: () => ShopAndEstablishmentModule, canLoad: [AuthGuard] },
+	{ path: ManageRoutes.getPrefixRoute('FOODMODULE'), loadChildren: () => FoodModule, canLoad: [AuthGuard] },
 ];
 
 @NgModule({

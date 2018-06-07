@@ -1,0 +1,148 @@
+<div class="container">
+  <app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
+  <mat-card class="mt-4 formClass">
+    <!--Start  form  -->
+    <form [formGroup]="foodlicForm">
+      <mat-horizontal-stepper>
+
+        <!-- First step -->
+        <mat-step [stepControl]="step-one">
+          <ng-template matStepLabel>
+            <div [matTooltip]="stepLable1">{{stepLable1}}</div>
+          </ng-template>
+          <app-basic-details [basicFormGroup]="foodlicForm"></app-basic-details>
+
+          <div class="row">
+            <mat-form-field class="col-4">
+              <input matInput type="text" formControlName="firmName" appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'"
+                placeholder="{{ 'firm_name'| translate: translateKey }}" required>
+              <control-messages [control]="foodlicForm.controls.firmName"></control-messages>
+            </mat-form-field>
+
+            <div class="col-4 ngSelect" formGroupName="firmZone">
+              <ng-select formControlName="code" placeholder="{{ 'firm_zone' | translate: translateKey }}" (change)="onChange()">
+                <ng-option *ngFor="let zone of firmZoneArray" [value]="zone.code">{{zone.name}}</ng-option>
+              </ng-select>
+              <control-messages [control]="foodlicForm.controls.firmZone.controls.code"></control-messages>
+            </div>
+
+            <div class="col-4 ngSelect" formGroupName="firmAdministrativeWard">
+              <ng-select formControlName="code" placeholder="{{ 'firm_administrative_ward' | translate:translateKey }}" (change)="onChange()">
+                <ng-option *ngFor="let ward of adminWardArray" [value]="ward.code">{{ward.name}}</ng-option>
+              </ng-select>
+              <control-messages [control]="foodlicForm.controls.firmAdministrativeWard.controls.code"></control-messages>
+            </div>
+
+            <mat-form-field class="col-4">
+              <input matInput type="text" formControlName="firmCity" appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'"
+                placeholder="{{ 'firm_city' | translate:translateKey }}" required>
+              <control-messages [control]="foodlicForm.controls.firmCity"></control-messages>
+            </mat-form-field>
+
+
+            <mat-form-field class="col-4">
+              <input matInput type="tel" OnlyNumber formControlName="firmPincode" placeholder="{{'firm_pincode' | translate: translateKey }}"
+                minlength="6" maxlength="6" required>
+              <control-messages [control]="foodlicForm.controls.firmPincode"></control-messages>
+            </mat-form-field>
+
+            <mat-form-field class="col-4">
+              <input matInput OnlyNumber placeholder="{{'mobile_no' | translate:translateKey}}" type="tel" maxlength="10" minlength="10"
+                formControlName="mobileNo" required>
+              <control-messages [control]="foodlicForm.controls.mobileNo"></control-messages>
+            </mat-form-field>
+
+            <mat-form-field class="col-4">
+              <input matInput OnlyNumber placeholder="{{'landline_no' | translate:translateKey}}" type="tel" maxlength="10" minlength="10"
+                formControlName="landlineNo" required>
+              <control-messages [control]="foodlicForm.controls.landlineNo"></control-messages>
+            </mat-form-field>
+
+            <mat-form-field class="col-4">
+              <input matInput appPreventSpace placeholder="{{'email' | translate:translateKey}}" type="email" formControlName="emailId"
+                required>
+              <control-messages [control]="foodlicForm.controls.emailId"></control-messages>
+            </mat-form-field>
+
+          </div>
+
+          <div class="row">
+            <div class="col-12">
+              <app-action-bar [form]="foodlicForm" [step]="'step1'"></app-action-bar>
+            </div>
+          </div>
+        </mat-step>
+        <!-- End First step -->
+
+        <!-- Second step -->
+        <mat-step [stepControl]="brideDetail">
+          <ng-template matStepLabel>
+            <div [matTooltip]="stepLable2">{{stepLable2}}</div>
+          </ng-template>
+          <div class="row">
+
+            <div class="col-4 ngSelect" formGroupName="businessType">
+              <ng-select formControlName="code" placeholder="{{ 'business_type' | translate:translateKey }}" (change)="onChange()">
+                <ng-option *ngFor="let type of businessTypeArray" [value]="type.code">{{type.name}}</ng-option>
+              </ng-select>
+              <control-messages [control]="foodlicForm.controls.businessType.controls.code"></control-messages>
+            </div>
+
+
+            <div class="col-4 ngSelect" formGroupName="foodRegType">
+              <ng-select formControlName="code" placeholder="{{ 'food_reg_type' | translate:translateKey }}" (change)="onChange()">
+                <ng-option *ngFor="let foodtype of foodRegTypeArray" [value]="foodtype.code">{{foodtype.name}}</ng-option>
+              </ng-select>
+              <control-messages [control]="foodlicForm.controls.foodRegType.controls.code"></control-messages>
+            </div>
+
+            <div class="col-4 ngSelect" formGroupName="businessCategory">
+              <ng-select formControlName="code" placeholder="{{ 'business_category' | translate:translateKey }}" (change)="onChange()">
+                <ng-option *ngFor="let category of businessCategoryArray" [value]="category.code">{{category.name}}</ng-option>
+              </ng-select>
+              <control-messages [control]="foodlicForm.controls.businessCategory.controls.code"></control-messages>
+            </div>
+
+            <div class="col-4 ngSelect" formGroupName="businessTurnOver">
+              <ng-select formControlName="code" placeholder="{{ 'business_turnOver' | translate:translateKey }}" (change)="onChange()">
+                <ng-option *ngFor="let turnover of businessTurnOverArray" [value]="turnover.code">{{turnover.name}}</ng-option>
+              </ng-select>
+              <control-messages [control]="foodlicForm.controls.businessTurnOver.controls.code"></control-messages>
+            </div>
+
+            <div class="col-4 ngSelect" formGroupName="regOrLic">
+              <ng-select formControlName="code" placeholder="{{ 'reg_or_lic' | translate:translateKey }}" (change)="onChange()">
+                <ng-option *ngFor="let reg of regOrLicArray" [value]="reg.code">{{reg.name}}</ng-option>
+              </ng-select>
+              <control-messages [control]="foodlicForm.controls.regOrLic.controls.code"></control-messages>
+            </div>
+
+            <div class="col-4 ngSelect" formGroupName="licenceForNoOfYear">
+              <ng-select formControlName="code" placeholder="{{ 'licence_Year' | translate:translateKey }}" (change)="onChange()">
+                <ng-option *ngFor="let year of licenceYearArray" [value]="year.code">{{year.name}}</ng-option>
+              </ng-select>
+              <control-messages [control]="foodlicForm.controls.licenceForNoOfYear.controls.code"></control-messages>
+            </div>
+
+            <div class="col-4 ngSelect" formGroupName="paymentMode">
+              <ng-select formControlName="code" placeholder="{{ 'payment_mode' | translate:translateKey }}" (change)="onChange()">
+                <ng-option *ngFor="let mode of paymentModeArray" [value]="mode.code">{{mode.name}}</ng-option>
+              </ng-select>
+              <control-messages [control]="foodlicForm.controls.paymentMode.controls.code"></control-messages>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-12">
+              You are now done.
+              <app-action-bar [form]="foodlicForm" [step]="'final'" (stepReset)="stepReset()" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
+            </div>
+          </div>
+        </mat-step>
+        <!-- End Second step -->
+      </mat-horizontal-stepper>
+    </form>
+    <!-- End  form -->
+    <!-- {{foodlicForm.value | json}} -->
+  </mat-card>
+</div>
