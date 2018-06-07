@@ -21,8 +21,6 @@ export class FileUploadComponent implements OnInit {
 	currentFileUpload: File
 	progress: { percentage: number } = { percentage: 0 }
 	fileData: any;
-	canDelete: boolean;
-	canView: boolean;
 	canUpload: boolean;
 	id: any;
 	type: any;
@@ -33,7 +31,6 @@ export class FileUploadComponent implements OnInit {
 	//file and image  upload
 	priviewImage: string = null;
 	fileName: string = ' ';
-	fileType: string;
 	fromAdmin: boolean = false;
 
 	getFile: string = ""
@@ -58,7 +55,7 @@ export class FileUploadComponent implements OnInit {
 	 * Initialize first component loads.
 	 */
 	ngOnInit() {
-		
+
 		this.attachments = this.form.get('attachments').value;
 
 		this.disableOrEnableButton();
@@ -67,7 +64,6 @@ export class FileUploadComponent implements OnInit {
 		if (this.attachments && this.form.get('attachments').value.length) {
 			this.getFile = this.form.get('attachments').value.find(data => data.labelName === this.uploadModel.labelName)
 		}
-
 	}
 
 	/**
@@ -76,16 +72,21 @@ export class FileUploadComponent implements OnInit {
 	 */
 	selectFile(event) {
 		this.selectedFiles = event.target.files;
-		this.fileType = this.selectedFiles[0].type;
+		let fileType = this.selectedFiles[0].type;
 		this.fileName = this.selectedFiles[0].name;
+		this.canUpload = true;
 
-		if (this.fileType === 'image/png' || this.fileType === 'image/jpg' || this.fileType === 'image/jpeg' || this.fileType === 'image/gif') {
+		if (fileType === 'image/png' || fileType === 'image/jpg' || fileType === 'image/jpeg' || fileType === 'image/gif') {
 			let reader = new FileReader();
 			reader.onload = (e: any) => {
 				this.priviewImage = e.target.result;
 			}
 			reader.readAsDataURL(event.target.files[0]);
+
 		}
+
+		this.upload();
+
 	}
 
 	/**
@@ -96,7 +97,8 @@ export class FileUploadComponent implements OnInit {
 			this.commonService.openAlert("Warning", "Please Select File to Upload", "warning");
 		} else {
 			if (this.selectedFiles[0].size > 5000000) {
-
+				this.fileName = ''
+				this.canUpload = false;
 				this.commonService.openAlert("Warning", "File Size should be less than 5 MB", "warning");
 
 			} else {
@@ -107,6 +109,7 @@ export class FileUploadComponent implements OnInit {
 				formData.append('formPart', this.uploadModel.formPart.toString());
 				formData.append('variableName', this.uploadModel.variableName);
 				formData.append('serviceFormId', this.uploadModel.serviceFormId.toString());
+
 				this.progress.percentage = 0;
 				this.currentFileUpload = this.selectedFiles.item(0);
 
@@ -116,10 +119,7 @@ export class FileUploadComponent implements OnInit {
 					this.progress.percentage = setProgressBar;
 				}, successResponse => {
 					this.commonService.successAlert("File Uploaded", this.uploadModel.labelName + " successfully uploaded", "success");
-					this.canDelete = false;
-					this.canView = false;
 					this.canUpload = true;
-					this.priviewImage = '';
 					this.id = successResponse.data.id;
 					this.type = successResponse.data.mimeType;
 					this.currentFileUpload = undefined;
@@ -137,24 +137,17 @@ export class FileUploadComponent implements OnInit {
 	 */
 	disableOrEnableButton() {
 		if (this.attachments.length == 0) {
-			this.canDelete = true;
 			this.canUpload = false;
-			this.canView = true;
-			return;
 		} else {
 			for (let i = 0; i < this.attachments.length; i++) {
 				if ((this.attachments[i].fieldIdentifier === this.uploadModel.fieldIdentifier.toString()) && (this.attachments[i].labelName === this.uploadModel.labelName)) {
-					this.canDelete = false;
 					this.canUpload = true;
-					this.canView = false;
 					this.id = this.attachments[i].id;
 					this.type = this.attachments[i].mimeType;
 					return;
 				}
 			}
-			this.canDelete = true;
 			this.canUpload = false;
-			this.canView = true;
 			return;
 		}
 	}
@@ -167,8 +160,7 @@ export class FileUploadComponent implements OnInit {
 			this.downLoadFile(respData, this.type);
 		}, error => {
 
-		}
-		)
+		});
 	}
 
 	/**
@@ -187,14 +179,14 @@ export class FileUploadComponent implements OnInit {
 	 */
 	deleteFile() {
 		this.commonService.deleteAlert('Are you sure?', '', 'warning', '', performDelete => {
-			this.uploadFileService.deleteFile(this.uploadModel.serviceFormId.toString(), this.id).subscribe(respData => {
-				this.commonService.successAlert("File Deleted", this.uploadModel.labelName + " successfully deleted", "success");
-				this.canDelete = true;
-				this.canView = true;
-				this.canUpload = false;
-				this.fileName = '';
-				this.getFile = '';
-			})
+			this.uploadFileService.deleteFile(this.uploadModel.serviceFormId.toString(), this.id).subscribe(
+				respData => {
+					this.commonService.successAlert("File Deleted", this.uploadModel.labelName + " successfully deleted", "success");
+					this.canUpload = false;
+					this.fileName = '';
+					this.getFile = '';
+					this.priviewImage = '';
+				});
 		});
 	}
 

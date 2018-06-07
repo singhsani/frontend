@@ -3,3 +3,22 @@
     width: 100px;
     height: 100px;
 }
+
+input[type="file"] {
+    display: none;
+}
+.custom-file-upload {
+    border: none;
+    display: inline-block;
+    padding: 0;
+    cursor: pointer;
+
+    a:hover {
+        color: #0000ee;
+        text-decoration: underline;
+    }
+}
+
+i {
+    font-size: 20px;
+}

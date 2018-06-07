@@ -1,3 +1,4 @@
+import { FormsActionsService } from './../../core/services/citizen/data-services/forms-actions.service';
 import { Injectable } from '@angular/core';
 import { HttpService } from './http.service';
 import { BehaviorSubject } from 'rxjs';
@@ -13,12 +14,12 @@ export class CountryService {
 
 	}
 
-	constructor(private http: HttpService) {
+	constructor(private http: HttpService, private formService: FormsActionsService) {
 		this.getCountryData();
 	}
 
 	getCountryData(){
-		this.http.get('public/lookup/countries').subscribe(res=>{
+		this.formService.getCountryLookUp().subscribe(res=>{
 			this.countryData.next(res.data);
 		})
 
