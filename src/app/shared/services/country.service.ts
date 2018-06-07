@@ -1,6 +1,5 @@
 import { FormsActionsService } from './../../core/services/citizen/data-services/forms-actions.service';
 import { Injectable } from '@angular/core';
-import { HttpService } from './http.service';
 import { BehaviorSubject } from 'rxjs';
 @Injectable({
 	providedIn: 'root'
@@ -14,7 +13,7 @@ export class CountryService {
 
 	}
 
-	constructor(private http: HttpService, private formService: FormsActionsService) {
+	constructor(private formService: FormsActionsService) {
 		this.getCountryData();
 	}
 

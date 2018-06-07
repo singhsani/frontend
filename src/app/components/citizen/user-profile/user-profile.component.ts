@@ -8,6 +8,8 @@ import { FormsActionsService } from './../../../core/services/citizen/data-servi
 import * as moment from 'moment';
 import { HttpService } from '../../../shared/services/http.service';
 import { HttpEventType } from '@angular/common/http';
+import { CountryService } from '../../../shared/services/country.service';
+import * as _ from 'lodash';
 
 @Component({
 	selector: 'app-user-profile',
@@ -21,6 +23,10 @@ export class UserProfileComponent implements OnInit {
 	 */
 	userProfileForm: FormGroup;
 
+	countryListArray: any = [];
+	stateListArray: any = [];
+	cityListArray: any = [];
+
 	/**
 	 * Constructor to declare defualt propeties of class
 	 * @param formService - Declare form Service property.
@@ -31,7 +37,8 @@ export class UserProfileComponent implements OnInit {
 		private formService: FormsActionsService,
 		private toaster: ToastrService,
 		private commonService: CommonService,
-		private httpService: HttpService
+		private httpService: HttpService,
+		private countryService:CountryService
 	) { }
 
 	// Marriage date 
@@ -74,6 +81,7 @@ export class UserProfileComponent implements OnInit {
 	getUserProfile() {
 		this.formService.getUserProfile().subscribe(res => {
 			this.userProfileForm.patchValue(res.data);
+			this.getCountryLists();
 		});
 	}
 
@@ -120,6 +128,74 @@ export class UserProfileComponent implements OnInit {
 			}
 
 		}
+	}
+
+	/**
+	 * This method is use to get country list using api
+	 */
+	getCountryLists() {
+		this.countryService.countriesData.subscribe(data=>{
+			this.countryListArray = _.cloneDeep(data);
+			setTimeout(() => {
+				if (this.userProfileForm.get('country').value) {
+					this.getStateLists(this.userProfileForm.get('country').value);
+				}
+			}, 300);
+		});
+	}
+
+	/**
+	 * This method is use to get state list using api
+	 * @param name - country name
+	 */
+	getStateLists(name) {
+		let obj = _.filter(this.countryListArray, { 'name': name })[0];
+
+		this.formService.getStateLookUp(obj.id).subscribe(res => {
+			this.stateListArray = _.cloneDeep(res.data);
+
+			if (this.userProfileForm.get('state').value) {
+				this.getCityLists(this.userProfileForm.get('state').value);
+
+			}
+		});
+	}
+
+	/**
+	 * This method is use to get city list using api
+	 * @param name - state name
+	 */
+	getCityLists(name) {
+		let obj = _.filter(this.stateListArray, { 'name': name })[0];
+
+		this.formService.getCityLookUp(obj.id).subscribe(res => {
+			this.cityListArray = _.cloneDeep(res.data);
+		});
+	}
+
+	/**
+	 * This method is use for change the country
+	 * @param name - name of country
+	 */
+	onCountryChange(name: string) {
+		if (name) {
+			this.getStateLists(name);
+		}
+
+		this.userProfileForm.get('state').setValue(null);
+		this.userProfileForm.get('city').setValue(null);
+	}
+
+	/**
+	 * This method is use for change the state
+	 * @param name - name of state
+	 */
+	onStateChange(name: string) {
+		if (name) {
+			this.getCityLists(name);
+		}
+		this.userProfileForm.get('city').setValue(null);
+
 	}
 
 }
