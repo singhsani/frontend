@@ -30,7 +30,7 @@ export class FileUploadComponent implements OnInit {
 
 	//file and image  upload
 	priviewImage: string = null;
-	fileName: string = ' ';
+	fileName: string = '';
 	fromAdmin: boolean = false;
 
 	getFile: string = ""

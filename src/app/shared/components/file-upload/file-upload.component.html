@@ -11,16 +11,17 @@
 		<label class="custom-file-upload" [hidden]="canUpload || !form.get('canEdit').value">
 			<input #fileInput type="file" (change)="selectFile($event)" />
 
-			<button mat-mini-fab color="accent">
+			<span class="attachment">
 				<i class="fa fa-paperclip"></i>
-			</button> &nbsp; Attach File
+			</span>
+			<span class="badge badge-primary ml-1">Attach File</span>
 		</label>
 
 
 		<!-- Uploaded file/image name-->
 		<label class="custom-file-upload" [hidden]="!canUpload || !form.get('canEdit').value">
-			<a (click)="view()">{{fileName}}</a>
-			<a *ngIf="getFile" (click)="view()">{{getFile.realFileName}}</a>
+			<span class="badge badge-info" (click)="view()" *ngIf="!getFile">{{fileName}}</span>
+			<span class="badge badge-info" *ngIf="getFile" (click)="view()">{{getFile.realFileName}}</span>
 		</label>
 
 		<!-- delete button -->
@@ -30,7 +31,7 @@
 
 		<!-- If no file uploaded and form is submitted-->
 		<label *ngIf="!canUpload && !form.get('canEdit').value">
-			<span>No file uploaded</span>
+			<span class="badge badge-dark">No file uploaded</span>
 		</label>
 
 	</div>
