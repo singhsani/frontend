@@ -15,10 +15,14 @@
             <!-- <button mat-icon-button position="end" (click)="selectLanguage('en')">EN</button>
             <button mat-icon-button position="end" (click)="selectLanguage('gu')">ગુજ</button> -->
             <div class="float-right">
+                <button class="btn btn-warning mr-2" data-toggle="modal" data-target="#gujModal">
+                    How to type in Gujarati?
+                </button>
                 <button mat-icon-button [matMenuTriggerFor]="menu" class="userName">
                     <!-- <mat-icon>face</mat-icon>
                     {{profileObj.firstName + ' ' + profileObj.lastName}} -->
-                    <img [src]="profileObj.profilePic ? profileObj.profilePic : 'assets/images/no-image.png'" style="width: 40px;height: 40px;margin-right: 5px;border-radius: 100%;" />
+                    <img [src]="profileObj.profilePic ? profileObj.profilePic : 'assets/images/no-image.png'" style="width: 40px;height: 40px;margin-right: 5px;border-radius: 100%;"
+                    />
                     <span *ngIf="profileObj.middleName">{{profileObj.firstName +' '+ profileObj.middleName + ' ' + profileObj.lastName}}</span>
                     <span *ngIf="!profileObj.middleName">{{profileObj.firstName + ' ' + profileObj.lastName}}</span>
                     <mat-icon>arrow_drop_down</mat-icon>
@@ -69,4 +73,33 @@
             <router-outlet></router-outlet>
         </mat-sidenav-content>
     </mat-sidenav-container>
+</div>
+
+<div class="modal" id="gujModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    Gujarati typing, Confused? Just hit play button.
+                </h4>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="embed-responsive embed-responsive-16by9 m-1 row">
+                    <video class="embed-responsive-item col-md-12" controls>
+                        <source src="assets/videos/Gujarati_Demo.mp4" type="video/mp4">
+                    </video>
+                </div>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+
+        </div>
+    </div>
 </div>
