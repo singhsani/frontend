@@ -113,4 +113,11 @@ export class HosAppService {
 		};
 		return headers;
 	}
+
+	/**
+	 * This method is use for get hospital user related lookups data.
+	 */
+	getHosUserLookups(){
+		return this.http.get('public/user/hospital/lookups');
+	}
 }
