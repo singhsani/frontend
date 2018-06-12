@@ -17,6 +17,7 @@ export class HospitalRegisterComponent implements OnInit {
 
 	regForm: FormGroup;
 	manageRoutes: any = ManageRoutes;
+	arrHospitalType: any;
 
 	/**
 	 * Constructor to declare defualt propeties of class
@@ -37,7 +38,11 @@ export class HospitalRegisterComponent implements OnInit {
 
 		this.regForm = this.fb.group({
 			hospitalName: [null, Validators.required],
-			hospitalType: [null, Validators.required],
+			hospitalType: this.fb.group({
+				id: 1,
+				code: [null, [Validators.required]],
+				name: null
+			}),
 			nursingHome: 'false',
 			userDetail: this.fb.group({
 				firstName: [null, [Validators.required, ValidationService.nameValidator]],
@@ -46,8 +51,23 @@ export class HospitalRegisterComponent implements OnInit {
 				cellNo: null,
 				password: [null, Validators.required],
 				confirmPassword: [null, Validators.required]
-			})
+			}),
+			addressLine1: [null, Validators.required],
+			addressLine2: [null, Validators.required],
+			city: ['Vadodara', Validators.required],
+			state: ['Gujarat', Validators.required],
+			country: ['India', Validators.required],
 		}, { validator: this.matchingPasswords('password', 'confirmPassword') });
+
+		this.regForm.get('city').disable();
+		this.regForm.get('state').disable();
+		this.regForm.get('country').disable();
+
+		this.appService.getHosUserLookups().subscribe(
+			res => {
+				this.arrHospitalType = res.data;
+			}
+		);
 	}
 
 	/**

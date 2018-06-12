@@ -4,26 +4,81 @@
 	</div>
 	<form [formGroup]="regForm" (ngSubmit)="onSignUp(regForm.value)" autocomplete="off" ngNativeValidate>
 		<div class="row">
+			<mat-card class="col-md-12 cardH2">
+				<h2>Hospital Details</h2>
+			</mat-card>
+
 			<mat-form-field class="col-md-6 iconMat">
 				<mat-icon matPrefix>face</mat-icon>
 				<input matInput type="text" placeholder="HospitalName" formControlName="hospitalName" required>
 				<control-messages [control]="regForm.controls.hospitalName"></control-messages>
 			</mat-form-field>
-
+			
 			<div class="col-md-6">
-				<div class="iconMat2">
+				<div class="iconMat2 ngSelect" formGroupName="hospitalType">
 					<mat-icon matPrefix>face</mat-icon>
-					<ng-select placeholder="Hospital Type" formControlName="hospitalType">
-						<ng-option value="GOVERNMENT">GOVERNMENT</ng-option>
-						<ng-option value="PRIVATE">PRIVATE</ng-option>
+					<ng-select placeholder="Hospital Type" formControlName="code">
+						<ng-option *ngFor="let hosType of arrHospitalType" [value]="hosType.code">{{hosType.name}}</ng-option>
 					</ng-select>
-					<control-messages [control]="regForm.controls.hospitalType"></control-messages>
+					<control-messages [control]="regForm.controls.hospitalType.controls.code"></control-messages>
 				</div>
 			</div>
+
+			<mat-form-field class="col-md-12 iconMat">
+				<mat-icon matPrefix>location_on</mat-icon>
+				<input matInput type="text" placeholder="Address Line 1" formControlName="addressLine1" required>
+				<control-messages [control]="regForm.controls.addressLine1"></control-messages>
+			</mat-form-field>
+
+			<mat-form-field class="col-md-12 iconMat">
+				<mat-icon matPrefix>location_on</mat-icon>
+				<input matInput type="text" placeholder="Address Line 2" formControlName="addressLine2" required>
+				<control-messages [control]="regForm.controls.addressLine2"></control-messages>
+			</mat-form-field>
+
+			<mat-form-field class="col-md-4 iconMat">
+				<mat-icon matPrefix>location_city</mat-icon>
+				<input matInput type="text" placeholder="City" formControlName="city" required>
+			</mat-form-field>
+
+			<mat-form-field class="col-md-4 iconMat">
+				<mat-icon matPrefix>location_city</mat-icon>
+				<input matInput type="text" placeholder="State" formControlName="state" required>
+			</mat-form-field>
+			
+			<mat-form-field class="col-md-4 iconMat">
+				<mat-icon matPrefix>place</mat-icon>
+				<input matInput type="text" placeholder="Country" formControlName="country" required>
+			</mat-form-field>
+
+			<div class="col-md-12 mb-1">
+				<div class="iconMat2">
+					<mat-icon matPrefix>local_hospital</mat-icon>
+					<mat-label>Nursing Home</mat-label>
+					<mat-radio-group class="example-radio-group" formControlName="nursingHome">
+						<mat-radio-button value="true">YES</mat-radio-button>
+						<mat-radio-button value="false">NO</mat-radio-button>
+					</mat-radio-group>
+				</div>
+			</div>
+			
 		</div>
-
-
-		<div class="row" formGroupName="userDetail">
+		
+		<!-- <div class="row m-1">
+			<div class="col-md-12 nursingHome">
+				<mat-icon matPrefix>local_hospital</mat-icon>
+				<mat-label>Nursing Home</mat-label>
+				<mat-radio-group class="example-radio-group" formControlName="nursingHome">
+					<mat-radio-button value="true">YES</mat-radio-button>
+					<mat-radio-button value="false">NO</mat-radio-button>
+				</mat-radio-group>
+			</div>
+		</div> -->
+		
+		<div class="row mt-2" formGroupName="userDetail">
+			<mat-card class="col-md-12 cardH2">
+				<h2>Contact person details</h2>
+			</mat-card>
 			<mat-form-field class="col-md-6 iconMat">
 				<mat-icon matPrefix>face</mat-icon>
 				<input matInput type="text" placeholder="Firstname" appValidationFields validationFieldsType="onlyNameWithOutSpace" formControlName="firstName"
@@ -66,15 +121,6 @@
 
 		</div>
 
-		<div class="row">
-			<div class="col-md-12 nursingHome">
-				<mat-label>Nursing Home</mat-label>
-				<mat-radio-group class="example-radio-group" formControlName="nursingHome">
-					<mat-radio-button value="true">YES</mat-radio-button>
-					<mat-radio-button value="false">NO</mat-radio-button>
-				</mat-radio-group>
-			</div>
-		</div>
 
 		<div class="text-center mt-4">
 			<button type="submit" mat-raised-button color="primary" [disabled]="regForm.invalid" class="width150">
