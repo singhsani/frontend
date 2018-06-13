@@ -32,6 +32,8 @@ export class DeathRegistrationComponent implements OnInit {
 	private translateKey = "deathRegScreen";
 	private addressTranslateKey = "addressScreen";
 	private basicTranslateKey = "basicDetailsScreen";
+	private uploadFileArray: Array<any> = ['cremationReport', 'form4A', 'deceasedIdProof'];
+	
 
 
 	//form related data.
@@ -51,22 +53,6 @@ export class DeathRegistrationComponent implements OnInit {
 	private deathPlaces: object[];
 	private DeceasedEducations: Object[];
 	private DeceasedOccupation: Object[];
-	private States: Object[] = [
-		{ id: 1, name: 'Andhra Pradesh', code: 'AND' },
-		{ id: 2, name: 'Assam', code: 'AS' },
-		{ id: 3, name: 'Gujarat', code: 'GUJ' },
-		{ id: 4, name: 'Chhattisgarh', code: 'CH' },
-		{ id: 5, name: 'Kerala', code: 'KL' },
-		{ id: 6, name: 'Rajasthan', code: 'RJ' }
-	];
-	private District: Object[] = [
-		{ id: 1, name: 'Surat' },
-		{ id: 2, name: 'Vadodara' },
-		{ id: 3, name: 'Gandhinagar' },
-		{ id: 4, name: 'Ahmedabad' },
-		{ id: 5, name: 'Anand' },
-		{ id: 6, name: 'Jamnagar' }
-	];
 	private RelationShip: object[];
 	private MedicalTreatmentOptions: object[];
 	private Religion: Object[];
@@ -118,6 +104,19 @@ export class DeathRegistrationComponent implements OnInit {
 	getDeathCertData() {
 		this.formService.getFormData(this.appId).subscribe((res) => {
 			this.deathCertificateForm.patchValue(res);
+
+			if (res.delayedPeriod != null) {
+				if (Number(res.delayedPeriod) > this.daysInThisYear()) {
+					if (this.uploadFileArray.indexOf('courtOrder') == -1) {
+						this.uploadFileArray.push('courtOrder');
+					}
+				} else if (Number(res.delayedPeriod) < this.daysInThisYear() && Number(res.delayedPeriod) > this.daysInThisMonth()) {
+					if (this.uploadFileArray.indexOf('affidavitOrhealthOrder') == -1) {
+						this.uploadFileArray.push('affidavitOrhealthOrder');
+					}
+				}
+			}
+
 			//this.attachments = res.attachments;
 			this.showButtons = true;
 
@@ -131,15 +130,57 @@ export class DeathRegistrationComponent implements OnInit {
 			}
 
 			if (this.deathCertificateForm.get('isPermanentPresentAddressSame').get('code').value == 'YES') {
-				this.deathCertificateForm.get('presentAddress').disable();
+				this.deathCertificateForm.get('permanentAddress').disable();
 			} else {
-				this.deathCertificateForm.get('presentAddress').enable();
+				this.deathCertificateForm.get('permanentAddress').enable();
 			}
 
 			if (!this.deathCertificateForm.controls.canEdit.value) {
 				this.deathCertificateForm.disable();
 			}
 		});
+	}
+
+	daysInThisMonth() {
+		var now = new Date();
+		return (new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate());
+	}
+
+	daysInThisYear() {
+		var now = new Date();
+		if (now.getFullYear() % 4 === 0) {
+			return 366;
+		} else {
+			return 365;
+		}
+	}
+
+	delayAlert(delay: number) {
+		if (delay > this.daysInThisMonth() && delay < this.daysInThisYear()) {
+			if ((this.uploadFileArray.indexOf('affidavitOrhealthOrder') === -1)) {
+				if ((this.uploadFileArray.indexOf('courtOrder') === -1)) {
+					this.uploadFileArray.push('affidavitOrhealthOrder');
+				} else {
+					this.uploadFileArray.pop();
+					this.uploadFileArray.push('affidavitOrhealthOrder');
+				}
+			}
+			let html = `<p>It will considered as delayed Death Registration because
+			 registration date is more than 30 days and there will be extra attachment (Affidavit Or health Order) as well as fees.`
+			this.commonService.openAlert("Delayed Registration", "", "", html);
+		} else if (delay > this.daysInThisYear()) {
+			if ((this.uploadFileArray.indexOf('courtOrder') === -1)) {
+				if ((this.uploadFileArray.indexOf('affidavitOrhealthOrder') === -1)) {
+					this.uploadFileArray.push('courtOrder');
+				} else {
+					this.uploadFileArray.pop();
+					this.uploadFileArray.push('courtOrder');
+				}
+			}
+			let html = `<p>It will considered as delayed Death Registration because
+			 registration date is more than 1 year and there will be extra attachment (Court Order) as well as fees.`
+			this.commonService.openAlert("Delayed Registration", "", "", html);
+		}
 	}
 
 
@@ -159,6 +200,7 @@ export class DeathRegistrationComponent implements OnInit {
 			this.deathCertificateForm.get('medicalTreatment').get('code').clearValidators()
 			this.deathCertificateForm.get('medicalReason').get('code').clearValidators()
 			this.upDateValidation();
+			this.uploadFileArray = [];
 		} else if (event === "NO") {
 			this.requiredFeild = true;
 			this.deathCertificateForm.get('gender').get('code').setValidators(Validators.required);
@@ -170,6 +212,16 @@ export class DeathRegistrationComponent implements OnInit {
 			this.deathCertificateForm.get('medicalTreatment').get('code').setValidators([Validators.required])
 			this.deathCertificateForm.get('medicalReason').get('code').setValidators([Validators.required])
 			this.upDateValidation()
+			this.uploadFileArray = ['cremationReport', 'form4A', 'deceasedIdProof'];
+			if (Number(this.getDelayPeriod()) > this.daysInThisYear()) {
+				if (this.uploadFileArray.indexOf('courtOrder') == -1) {
+					this.uploadFileArray.push('courtOrder');
+				}
+			} else if (Number(this.getDelayPeriod()) < this.daysInThisYear() && Number(this.getDelayPeriod()) > this.daysInThisMonth()) {
+				if (this.uploadFileArray.indexOf('affidavitOrhealthOrder') == -1) {
+					this.uploadFileArray.push('affidavitOrhealthOrder');
+				}
+			}
 		}
 	}
 	upDateValidation(){
@@ -271,11 +323,11 @@ export class DeathRegistrationComponent implements OnInit {
 			// contactNo: ['', [Validators.minLength(10), Validators.maxLength(10)]],
 
 			//Attachments Data step 5
-			attachments: [null, Validators.required],
+			attachments: [],
 			unknownCategory: this.fb.group({
 				code: ["NO", [Validators.required]],
 			}),
-			unknownDescription: null,
+			unknownDescription: [null,[Validators.maxLength(500)]],
 
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
 			
@@ -319,6 +371,7 @@ export class DeathRegistrationComponent implements OnInit {
 		let diff = moment.duration(now.diff(event.value));
 		let delay = diff.days() + diff.months() * 30 + diff.years() * 365;
 		this.deathCertificateForm.get('delayedPeriod').setValue(delay);
+		this.delayAlert(this.deathCertificateForm.get('delayedPeriod').value);
 	}
 
 	/**

@@ -42,7 +42,7 @@
             <ng-container matColumnDef="slotStatus">
                 <mat-header-cell *matHeaderCellDef>Available</mat-header-cell>
                 <mat-cell *matCellDef="let element;let indx=index;">
-                    <button mat-raised-button color="primary" [disabled]="element.slotStatus !='AVAILABLE'" (click)="bookSlots(element.uniqueId,indx)">
+                    <button mat-raised-button color="primary" [disabled]="element.status !='AVAILABLE'" (click)="bookSlots(element.uniqueId,indx)">
 						{{element.slotStatus}}
 					</button>
                 </mat-cell>

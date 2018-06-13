@@ -9,6 +9,7 @@ import { CommonService } from '../../../shared/services/common.service';
 import { ValidationService } from '../../../shared/services/validation.service';
 import { ManageRoutes } from '../../../config/routes-conf';
 
+
 import * as moment from 'moment';
 import * as _ from 'lodash';
 import { ToastrService } from 'ngx-toastr';
@@ -27,6 +28,8 @@ export class StillBirthComponent implements OnInit {
 	@ViewChild('address') addressComp: any;
 
 	translateKey: string = 'stillBirthScreen';
+	private uploadFileArray: Array<any> = ['residentProof', 'doctorsCertificate'];
+	
 
 	/**
 	 * file upload related declaration
@@ -195,7 +198,7 @@ export class StillBirthComponent implements OnInit {
 			}),
 
 			//step 5
-			attachments: [null, Validators.required],
+			attachments: [null],
 
 			//applicant details
 			applicantHospitalName: [null, [ValidationService.nameValidator]],
@@ -334,12 +337,13 @@ export class StillBirthComponent implements OnInit {
 	 * @param event - date event.
 	 */
 	delayCalculator(event, i: number) {
-		let now = moment(new Date());
-		let diff = moment.duration(now.diff(event.value));
+
 		this.getChildData().at(i).get('birthDate').setValue(moment(event.value).format("YYYY-MM-DD"));
-		if (this.stillBirthCertificateForm.get('delayPeriod').value === null) {
-			this.stillBirthCertificateForm.get('delayPeriod').setValue(diff.days() + diff.years() * 365 + diff.months() * 30);
-		}
+
+		let now = moment(new Date());
+		let currentDelayDate = String(this.getChildData().at(0).get('birthDate').value)
+		let diff = moment.duration(now.diff(new Date(Number(currentDelayDate.split('-')[0]), Number(currentDelayDate.split('-')[1]) - 1, Number(currentDelayDate.split('-')[2]))));
+		this.stillBirthCertificateForm.get('delayPeriod').setValue(diff.days() + diff.years() * 365 + diff.months() * 30);
 	}
 
 	gujNameFinder(event, controlName, arr) {
@@ -371,15 +375,18 @@ export class StillBirthComponent implements OnInit {
 	 */
 	openTimePicker(i: number) {
 		const amazingTimePicker = this.atp.open({
-			time: (new Date()).toTimeString().split(' ')[0],
 			theme: 'material-purple',
-			changeToMinutes: true,
+			changeToMinutes: true
 		});
 		amazingTimePicker.afterClose().subscribe(time => {
 			if (time.length == 5) {
 				this.getChildData().at(i).get('birthTime').setValue(time + ":00");
 			}
 		});
+	}
+	getTime(i){
+		return this.getChildData().at(i).get('birthTime').value;
+
 	}
 
 

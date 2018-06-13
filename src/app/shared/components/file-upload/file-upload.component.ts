@@ -12,6 +12,7 @@ import { CommonService } from '../../services/common.service';
 export class FileUploadComponent implements OnInit {
 
 	@ViewChild('fileInput') fileInput: any;
+	
 
 	/**
 	 * File Upload related variables
@@ -55,12 +56,11 @@ export class FileUploadComponent implements OnInit {
 	 * Initialize first component loads.
 	 */
 	ngOnInit() {
-
 		this.attachments = this.form.get('attachments').value;
 
 		this.disableOrEnableButton();
 		this.fromAdmin = this.commonService.fromAdmin();
-
+		
 		if (this.attachments && this.form.get('attachments').value.length) {
 			this.getFile = this.form.get('attachments').value.find(data => data.labelName === this.uploadModel.labelName)
 		}
@@ -82,9 +82,7 @@ export class FileUploadComponent implements OnInit {
 				this.priviewImage = e.target.result;
 			}
 			reader.readAsDataURL(event.target.files[0]);
-
 		}
-
 		this.upload();
 
 	}

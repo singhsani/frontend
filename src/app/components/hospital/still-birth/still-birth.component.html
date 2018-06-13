@@ -56,8 +56,7 @@
 
                             <mat-form-field class="col-md-4">
                                 <mat-label>{{'birth_time' | translate:translateKey}}</mat-label>
-                                <input matInput atp-time-picker type="time" start="currentTime" theme="dark" formControlName="birthTime" (focus)="openTimePicker(i)"
-                                    readonly required/>
+                                <input matInput type="time" atp-time-picker theme="dark"  formControlName="birthTime"  (focus)="openTimePicker(i)" readonly required/>
                                 <control-messages [control]="stillBirthCertificateForm.controls.childs.controls[i].controls.birthTime"></control-messages>
                             </mat-form-field>
 
@@ -360,7 +359,7 @@
                             {{'present_address_during_delivery' | translate:translateKey}}
                         </h2>
 
-                        <app-address #address [addressFormGroup]="stillBirthCertificateForm.controls.parentDeliveryAddress"></app-address>
+                        <app-address #address [requiredFeilds]="true" [addressFormGroup]="stillBirthCertificateForm.controls.parentDeliveryAddress"></app-address>
 
                         <span formGroupName="isPermanentPresentAddressSame">
                             <mat-checkbox [disabled]="!stillBirthCertificateForm.get('canEdit').value" (change)="check($event);" [checked]="stillBirthCertificateForm.get('isPermanentPresentAddressSame').get('code').value == 'YES'? true : false">{{'is_permanent_address_same_as_present_address' | translate:translateKey}}</mat-checkbox>
@@ -370,7 +369,7 @@
                             {{'permanent_address_during_delivery' | translate:translateKey}}
                         </h2>
 
-                        <app-address #address [addressFormGroup]="stillBirthCertificateForm.controls.parentPermanentAddress"></app-address>
+                        <app-address #address [requiredFeilds]="true" [addressFormGroup]="stillBirthCertificateForm.controls.parentPermanentAddress"></app-address>
 
                         <div class="row">
                             <div formGroupName="familyReligion" class="col-md-4 ngSelect">
@@ -414,7 +413,7 @@
                     </div>
 
                     <div>
-                        <app-hos-action-bar [form]="stillBirthCertificateForm" [step]="'final'" (stepReset)="stepReset()" (handleErrors)="handleErrorsOnSubmit($event)"></app-hos-action-bar>
+                        <app-hos-action-bar [uploadFiles]="uploadFileArray" [form]="stillBirthCertificateForm" [step]="'final'" (stepReset)="stepReset()" (handleErrors)="handleErrorsOnSubmit($event)"></app-hos-action-bar>
                     </div>
 
                 </mat-step>

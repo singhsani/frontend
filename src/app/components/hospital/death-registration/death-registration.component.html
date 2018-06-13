@@ -22,6 +22,12 @@
 
 					<div class="row">
 
+						<mat-form-field *ngIf="deathCertificateForm.get('unknownCategory').get('code').value ==='YES'" class="col-md-12">
+							<textarea required matInput maxlength="500" type="text" placeholder="{{'unknown_death_description' | translate:translateKey}}"
+							 formControlName="unknownDescription"></textarea>
+							<control-messages [control]="deathCertificateForm.controls.unknownDescription"></control-messages>
+						</mat-form-field>
+
 						<mat-form-field class="col-md-4">
 							<input matInput appValidationFields [form]="deathCertificateForm" appGujInputSource targetElement="deceasedFirstNameGuj"
 							 [validationFieldsType]="'onlyNameWithOutSpace'" maxlength="20" placeholder="{{'first_name' | translate:translateKey}}"
@@ -117,10 +123,10 @@
 							<control-messages [control]="deathCertificateForm.controls.education.controls.code"></control-messages>
 						</div>
 
-						
-						<mat-form-field  class="col-md-6">
-							<input [disabled]="showButtons && !deathCertificateForm.controls.canEdit.value" [required]="requiredFeild" readonly matInput maxlength="20" appPreventSpace placeholder="{{'education' | translate:translateKey:'gu'}}"
-							 [value]="deathCertificateForm.get('education').get('gujName').value">
+
+						<mat-form-field class="col-md-6">
+							<input [disabled]="showButtons && !deathCertificateForm.controls.canEdit.value" [required]="requiredFeild" readonly matInput
+							 maxlength="20" appPreventSpace placeholder="{{'education' | translate:translateKey:'gu'}}" [value]="deathCertificateForm.get('education').get('gujName').value">
 						</mat-form-field>
 
 						<div class="col-md-12" *ngIf="deathCertificateForm.value.education.code == 'NOT_STATED'">
@@ -221,28 +227,27 @@
 							</mat-radio-group>
 						</div>
 
-						
+
 						<mat-form-field class="col-md-12">
 							<label>{{'smoking_since' | translate:translateKey}}</label>
-							<input matInput OnlyNumber type="number" maxlength="2"  maxlength="10" formControlName="smokingSince">
+							<input matInput OnlyNumber type="number" min="0" max="100" maxlength="2" maxlength="10" formControlName="smokingSince">
 						</mat-form-field>
 
 						<mat-form-field class="col-md-12">
 							<label>{{'tobacco_since' | translate:translateKey}}</label>
-							<input matInput OnlyNumber type="number" maxlength="2"  maxlength="10" formControlName="tobaccoSince">
+							<input matInput OnlyNumber type="number" min="0" max="100" maxlength="2" maxlength="10" formControlName="tobaccoSince">
 						</mat-form-field>
 
 						<mat-form-field class="col-md-12">
 							<label>{{'sopari_panmasala_since' | translate:translateKey}}</label>
-							<input matInput OnlyNumber type="number" maxlength="2"  maxlength="10" formControlName="sopariPanmasalaSince">
+							<input matInput OnlyNumber type="number" min="0" max="100" maxlength="2" maxlength="10" formControlName="sopariPanmasalaSince">
 						</mat-form-field>
 
 						<mat-form-field class="col-md-12">
 							<label>{{'alcohol_since' | translate:translateKey}}</label>
-							<input matInput OnlyNumber type="number" maxlength="2" maxlength="10" formControlName="alcoholSince">
+							<input matInput OnlyNumber type="number" min="0" max="100" maxlength="2" maxlength="10" formControlName="alcoholSince">
 						</mat-form-field>
 					</div>
-
 
 					<app-hos-action-bar [form]="deathCertificateForm" [step]="'step2'" (handleErrors)="handleErrorsOnSubmit($event)"></app-hos-action-bar>
 				</mat-step>
@@ -257,7 +262,7 @@
 						<h2>
 							{{'present_address' | translate:translateKey}}
 						</h2>
-						<app-address #address [addressFormGroup]="deathCertificateForm.controls.presentAddress"></app-address>
+						<app-address #address [requiredFeilds]="requiredFeild" [addressFormGroup]="deathCertificateForm.controls.presentAddress"></app-address>
 					</div>
 
 					<span formGroupName="isPermanentPresentAddressSame">
@@ -268,7 +273,7 @@
 						<h2>
 							{{'permanent_address' | translate:translateKey}}
 						</h2>
-						<app-address #address [addressFormGroup]="deathCertificateForm.controls.permanentAddress"></app-address>
+						<app-address #address [requiredFeilds]="requiredFeild" [addressFormGroup]="deathCertificateForm.controls.permanentAddress"></app-address>
 					</div>
 
 					<app-hos-action-bar [form]="deathCertificateForm" [step]="'step3'" (handleErrors)="handleErrorsOnSubmit($event)"></app-hos-action-bar>
@@ -281,7 +286,7 @@
 							{{'applicant_details' | translate:translateKey}}</div>
 					</ng-template>
 
-					<div >
+					<div>
 						<app-basic-details [basicFormGroup]="deathCertificateForm"></app-basic-details>
 						<div class="row">
 							<div formGroupName="applicantRelation" class="col-md-6 ngSelect">
@@ -297,8 +302,8 @@
 								<control-messages [control]="deathCertificateForm.controls.relationOther"></control-messages>
 							</mat-form-field>
 						</div>
-						
-                     <!-- <mat-form-field class="col-md-4">
+
+						<!-- <mat-form-field class="col-md-4">
 							<input matInput appValidationFields [validationFieldsType]="'onlyNameWithSpace'" maxlength="20" placeholder="{{'applicant_hospital_name' | translate:translateKey}}"
 							 formControlName="appHospitalName">
 							<control-messages [control]="deathCertificateForm.controls.appHospitalName"></control-messages>
@@ -337,7 +342,7 @@
 					<div class="row">
 						<div class="container">
 							<mat-label>{{'applicant_or_hospital_address' | translate:translateKey}}</mat-label>
-							<app-address #address [addressFormGroup]="deathCertificateForm.controls.applicantAddress"></app-address>
+							<app-address #address [requiredFeilds]="true" [addressFormGroup]="deathCertificateForm.controls.applicantAddress"></app-address>
 						</div>
 					</div>
 
@@ -350,48 +355,44 @@
 							{{'upload_documents' | translate:translateKey}}</div>
 					</ng-template>
 
-					<div class="alert alert-warning">
-						{{'note' | translate:translateKey}} : {{'submit_hardcopy_at_madhyawarti_school' | translate:translateKey}}
+					<div class="row">
+						<div class="alert alert-warning  col-md-12">
+							{{'note' | translate:translateKey}} : {{'submit_hardcopy_at_madhyawarti_school' | translate:translateKey}}
+						</div>
+
+						<div class="alert alert-warning col-md-12">
+							{{'note' | translate:translateKey}} : {{'maximum_size_1_MB' | translate:translateKey}}
+						</div>
+
+
+						<div class="col-md-4" *ngIf="showButtons">
+							<label>{{'cremation_report' | translate:translateKey}}</label>
+							<app-hos-file-upload [form]="deathCertificateForm" [uploadModel]="setDataValue(1,'cremationReport','1.1','cremationReport')"></app-hos-file-upload>
+						</div>
+
+						<div class="col-md-4" *ngIf="showButtons">
+							<label>{{'form4A_death_provided_by_doctor' | translate:translateKey}}</label>
+							<app-hos-file-upload [form]="deathCertificateForm" [uploadModel]="setDataValue(2,'form4A','1.1','form4A')"></app-hos-file-upload>
+						</div>
+
+						<div class="col-md-4" *ngIf="showButtons">
+							<label labelPosition="after">{{'deceased_id_proof' | translate:translateKey}}</label>
+							<app-hos-file-upload [form]="deathCertificateForm" [uploadModel]="setDataValue(3,'deceasedIdProof','1.1','deceasedIdProof')"></app-hos-file-upload>
+						</div>
+
+						<div class="col-md-4" *ngIf="showButtons && (getDelayPeriod() > 30 && getDelayPeriod() < 365)">
+							<label labelPosition="after">affidavit_Or_health_Order</label>
+							<app-hos-file-upload [form]="deathCertificateForm" [uploadModel]="setDataValue(7,'affidavitOrhealthOrder','1.1','affidavitOrhealthOrder')"></app-hos-file-upload>
+						</div>
+
+						<div class="col-md-4" *ngIf="showButtons && getDelayPeriod() > 365 ">
+							<label labelPosition="after">court_Order</label>
+							<app-hos-file-upload [form]="deathCertificateForm" [uploadModel]="setDataValue(8,'courtOrder','1.1','courtOrder')"></app-hos-file-upload>
+						</div>
+
 					</div>
 
-					<div class="alert alert-warning">
-						{{'note' | translate:translateKey}} : {{'maximum_size_1_MB' | translate:translateKey}}
-					</div>
-
-					<div *ngIf="showButtons">
-						<label >{{'cremation_report' | translate:translateKey}}</label>
-						<br>
-						<app-hos-file-upload [form]="deathCertificateForm" [uploadModel]="setDataValue(1,'cremationReport','1.1','cremationReport')"
-						 ></app-hos-file-upload>
-					</div>
-
-					<div *ngIf="showButtons">
-						<label >{{'form4A_death_provided_by_doctor' | translate:translateKey}}</label>
-						<br>
-						<app-hos-file-upload [form]="deathCertificateForm" [uploadModel]="setDataValue(2,'form4A','1.1','form4A')"></app-hos-file-upload>
-					</div>
-
-					<div *ngIf="showButtons">
-						<label labelPosition="after">{{'deceased_id_proof' | translate:translateKey}}</label>
-						<br>
-						<app-hos-file-upload [form]="deathCertificateForm" [uploadModel]="setDataValue(3,'deceasedIdProof','1.1','deceasedIdProof')"
-						 ></app-hos-file-upload>
-					</div>
-
-					<div *ngIf="showButtons && getDelayPeriod() > 30 && getDelayPeriod() < 365">
-						<label labelPosition="after">affidavit_Or_health_Order</label>
-						<br>
-						<app-hos-file-upload [form]="deathCertificateForm" [uploadModel]="setDataValue(7,'affidavitOrhealthOrder','1.1','affidavitOrhealthOrder')"
-					 ></app-hos-file-upload>
-					</div>
-					
-					<div *ngIf="showButtons && getDelayPeriod() > 365 ">
-						<label labelPosition="after">court_Order</label>
-						<br>
-						<app-hos-file-upload [form]="deathCertificateForm" [uploadModel]="setDataValue(8,'courtOrder','1.1','courtOrder')"></app-hos-file-upload>
-					</div>
-
-					<app-hos-action-bar [form]="deathCertificateForm" [step]="'final'" (stepReset)="stepReset()" (handleErrors)="handleErrorsOnSubmit($event)"></app-hos-action-bar>
+					<app-hos-action-bar [uploadFiles]="uploadFileArray" [form]="deathCertificateForm" [step]="'final'" (stepReset)="stepReset()" (handleErrors)="handleErrorsOnSubmit($event)"></app-hos-action-bar>
 				</mat-step>
 			</mat-horizontal-stepper>
 		</form>

@@ -5,8 +5,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 /* Import all shared, core and routing module start */
 import { SharedModule } from '../../../../shared/shared.module';
 import { CoreModule } from '../../../../core/core.module';
+
 import { BandRoutingModule } from './band-routing.module';
-/* Import all shared, core and routing module end */
+import { BandBookingListComponent } from './band-booking-list/band-booking-list.component';
+import { BandBookingComponent } from './band-booking/band-booking.component';
 
 @NgModule({
 	imports: [
@@ -17,6 +19,8 @@ import { BandRoutingModule } from './band-routing.module';
 		ReactiveFormsModule,
 		BandRoutingModule
 	],
-	declarations: []
+	declarations: [
+		BandBookingListComponent,
+		BandBookingComponent]
 })
 export class BandModule { }

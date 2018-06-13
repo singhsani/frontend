@@ -1,0 +1,61 @@
+<div class="container">
+  <app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
+
+  <mat-card class="mt-4 formClass">
+
+    <form [formGroup]="shortlistBandForm" (ngSubmit)="getBandList()" autocomplete="off" ngNativeValidate>
+
+
+      <mat-form-field class="col-md-4">
+        <input readonly matInput (focus)="bandBookingPicker.open()" (click)="bandBookingPicker.open()" [matDatepicker]="bandBookingPicker"
+          formControlName="date" placeholder="Choose a date">
+        <mat-datepicker-toggle matSuffix [for]="bandBookingPicker"></mat-datepicker-toggle>
+        <mat-datepicker #bandBookingPicker touchUi="true"></mat-datepicker>
+      </mat-form-field>
+
+
+
+      <div class="col-md-2">
+        <button mat-raised-button color="primary" type="submit">Search</button>
+      </div>
+
+    </form>
+
+  </mat-card>
+
+  <mat-table *ngIf="availableBands.length > 0" #table [dataSource]="availableBands">
+
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef> # </mat-header-cell>
+      <mat-cell *matCellDef="let element;let indx=index;"> {{indx+1}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="startTime">
+      <mat-header-cell *matHeaderCellDef> Start Time </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.startTime}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="endTime">
+      <mat-header-cell *matHeaderCellDef> End Time </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.endTime}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+      <mat-header-cell *matHeaderCellDef> Available </mat-header-cell>
+      <mat-cell *matCellDef="let element;let indx=index;">
+        <button mat-raised-button color="primary" [disabled]="element.status !='AVAILABLE'" (click)="bookSlots(element.uniqueId,indx)">
+          {{element.status}}
+        </button>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+
+
+  <div *ngIf="availableBands.length==0" class="alert" style="text-align: center;margin: 20px;">
+    <strong>Data Not Available!</strong>
+    <div>Please select other Band.</div>
+  </div>
+</div>

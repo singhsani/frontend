@@ -225,6 +225,14 @@ const ROUTEMAIN = {
         'main': 'town-hall',
         'type': 'townhall'
     },
+    'BAND': {
+        'main': 'band',
+        'type': 'band'
+    },
+    'BANDBOOKINGLIST': {
+        'main': 'list',
+        'type': ''
+    },
     'TOWNHALLLIST': {
         'main': 'list',
         'type': ''
@@ -518,6 +526,9 @@ const ROUTESLIST = {
     },
     'TOWNHALLLIST': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.BOOKINGMODULE + '/' + ROUTEPREFIX.TOWNHALLMODULE + '/' + ROUTEMAIN.TOWNHALLLIST.main
+    },
+    'BANDBOOKINGLIST': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.BOOKINGMODULE + '/' + ROUTEPREFIX.BANDMODULE + '/' + ROUTEMAIN.BANDBOOKINGLIST.main
     },
     'TOWNHALLBOOK': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.BOOKINGMODULE + '/' + ROUTEPREFIX.TOWNHALLMODULE + '/' + ROUTEMAIN.TOWNHALLBOOK.main

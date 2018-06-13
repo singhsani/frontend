@@ -1,5 +1,5 @@
 import { ManageRoutes } from './../../../config/routes-conf';
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, OnChanges } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators, FormArray, AbstractControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HosFormActionsService } from '../../../core/services/hospital/data-services/hos-form-actions.service';
@@ -14,18 +14,22 @@ import * as _ from 'lodash';
 	templateUrl: './hos-action-bar.component.html',
 	styleUrls: ['./hos-action-bar.component.scss']
 })
-export class HosActionBarComponent implements OnInit {
+export class HosActionBarComponent implements OnInit, OnChanges {
 
 	translateKey: string = 'actionBarScreen';
 
 	@Input() form: FormGroup;
 	@Input() step: string;
 	commonForm: FormGroup;
+	@Input() uploadFiles: any;
+
 
 	isSaveBtnDisabled: boolean = false;
 	isSubmitBtnDisabled: boolean = false;
 
+
 	isBtnsDisabled: boolean = true;
+	uploadFilesArray: Array<any> = []
 
 	@Output() handleErrors = new EventEmitter<any>();
 	@Output() stepReset = new EventEmitter<any>();
@@ -40,6 +44,7 @@ export class HosActionBarComponent implements OnInit {
 	ngOnInit() {
 		this.formService.apiType = this.form.get('apiType').value;
 		this.commonFormControls();
+		this.uploadFilesArray = this.uploadFiles;
 
 		setTimeout(() => {
 			if (this.form.value.hasOwnProperty('canEdit') && !this.form.value.canEdit && this.form.value.canEdit != null) {
@@ -48,6 +53,31 @@ export class HosActionBarComponent implements OnInit {
 			}
 		}, 600);
 
+	}
+
+	/**
+	 * Method is responsible to check required file upload.
+	 */
+	mandatoryFileCheck() {
+		return new Promise<any>((resolve, reject) => {
+			this.formService.getFormData(this.form.get('serviceFormId').value).subscribe(respData => {
+				let tempArray = [];
+				respData.attachments.forEach(element => {
+					tempArray.push(element.labelName);
+				});
+				this.uploadFilesArray.forEach(el =>{
+					if(tempArray.indexOf(el) === -1){
+						resolve({ fileName: el, status: false });
+						return;
+					}
+				});
+				resolve({fileName:"",status:true});
+			})
+		})
+	}
+
+	ngOnChanges() {
+		this.uploadFilesArray = this.uploadFiles;
 	}
 
 	/**
@@ -70,7 +100,6 @@ export class HosActionBarComponent implements OnInit {
 				this.isSaveBtnDisabled = false;
 				let count = 1;
 				for (const key in this.form.controls) {
-					
 					if (key == err.error[0].property) {
 						this.handleErrors.emit(count);
 						break;
@@ -90,35 +119,43 @@ export class HosActionBarComponent implements OnInit {
 		this.markFormGroupTouched(this.form);
 
 		var count = 1;
+
 		if (this.form.valid) {
-			this.formService.submitFormData(this.form.get('serviceFormId').value).subscribe(res => {
-				if (res.success) {
-					this.form.get('canEdit').setValue(false);
-				}
+			this.mandatoryFileCheck().then(data => {
+				if (data.status) {
+					this.formService.submitFormData(this.form.get('serviceFormId').value).subscribe(res => {
+						if (res.success) {
+							this.form.get('canEdit').setValue(false);
+						}
 
-				this.toastr.success(`${this.form.value.serviceDetail.name} information successfully submit`);
-				this.isSubmitBtnDisabled = false;
-				this.isBtnsDisabled = false;
-				this.form.disable();
-			},
-				err => {
+						this.toastr.success(`${this.form.value.serviceDetail.name} information successfully submit`);
+						this.isSubmitBtnDisabled = false;
+						this.isBtnsDisabled = false;
+						this.form.disable();
+					},
+						err => {
+							this.isSubmitBtnDisabled = false;
+							if (err.status === 402) {
+								this.commonService.paymentAlert('', '', '', cb => {
+									this.formService.makePayment(err.error.data.transactionId).subscribe(res => {
+										this.toastr.success('Your payment has been processed successfully');
+									});
+								});
+							}
+						}
+					);
+				} else {
+					this.commonService.openAlert("File Upload", "Please Upload Mandatory File ".concat(data.fileName), "warning");
 					this.isSubmitBtnDisabled = false;
-
-					if (err.status === 402) {
-						this.commonService.paymentAlert('', '', '', cb => {
-							this.formService.makePayment(err.error.data.transactionId).subscribe(res => {
-								this.toastr.success('Your payment has been processed successfully');
-							});
-						});
-					}
+					return
 				}
-			);
+
+			})
+
 		} else {
 			this.isSubmitBtnDisabled = false;
 			let count = 1;
 			for (const key in this.form.controls) {
-				console.log(key);
-				console.log(count);
 				if (this.form.get(key).invalid) {
 					this.handleErrors.emit(count)
 					break;
@@ -179,11 +216,11 @@ export class HosActionBarComponent implements OnInit {
 		if (this.form.get('apiType').value != 'marriageReg') {
 
 			this.form.addControl('firstName', new FormControl('', [Validators.required, ValidationService.nameValidator]));
-			this.form.addControl('middleName', new FormControl('', [Validators.required, ValidationService.nameValidator]));
+			this.form.addControl('middleName', new FormControl('', [ ValidationService.nameValidator]));
 			this.form.addControl('lastName', new FormControl('', [Validators.required, ValidationService.nameValidator]));
 			this.form.addControl('contactNo', new FormControl('', [Validators.required, Validators.maxLength(10)]));
 			this.form.addControl('email', new FormControl('', [Validators.required, ValidationService.emailValidator]));
-			this.form.addControl('aadhaarNo', new FormControl('', [ Validators.maxLength(12)]));
+			this.form.addControl('aadhaarNo', new FormControl('', [Validators.maxLength(12)]));
 		}
 
 		this.form.addControl('serviceDetail', new FormGroup({
@@ -219,5 +256,4 @@ export class HosActionBarComponent implements OnInit {
 			});
 		}
 	}
-
 }

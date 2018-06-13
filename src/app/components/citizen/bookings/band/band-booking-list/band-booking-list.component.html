@@ -1,0 +1,201 @@
+<div class="container">
+  <app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
+
+  <mat-card class="mt-4 formClass">
+
+    <mat-card class="cardH1">
+      <h1>List of Booked Band on specified band and Date</h1>
+    </mat-card>
+
+    <form [formGroup]="searchBookedBandForm" (ngSubmit)="getBookedBandList()" autocomplete="off" ngNativeValidate>
+
+      <div class="row p-2">
+        <div class="col-md-5 ngSelect">
+          <ng-select placeholder="Select Band" formControlName="code">
+            <ng-option *ngFor="let bands of Bands" [value]="bands.code">
+              {{ bands.name }}
+            </ng-option>
+          </ng-select>
+        </div>
+
+        <mat-form-field class="col-md-5">
+          <input required [min]="minBandBookingDate" readonly matInput (focus)="bandBookingPicker.open()" (click)="bandBookingPicker.open()"
+            [matDatepicker]="bandBookingPicker" formControlName="date" placeholder="Choose a date">
+          <mat-datepicker-toggle matSuffix [for]="bandBookingPicker"></mat-datepicker-toggle>
+          <mat-datepicker #bandBookingPicker touchUi="true"></mat-datepicker>
+        </mat-form-field>
+
+        <div class="col-md-2">
+          <button [disabled]="!searchBookedBandForm.valid" mat-raised-button color="primary" type="submit">Search</button>
+        </div>
+      </div>
+    </form>
+
+  </mat-card>
+
+  <mat-table *ngIf="availableBands.length > 0" #table [dataSource]="availableBands">
+
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef> # </mat-header-cell>
+      <mat-cell *matCellDef="let element;let indx=index;"> {{indx+1}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="startTime">
+      <mat-header-cell *matHeaderCellDef> Start Time</mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.startTime}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="endTime">
+      <mat-header-cell *matHeaderCellDef> End Time</mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.endTime}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+      <mat-header-cell *matHeaderCellDef>Availablity</mat-header-cell>
+      <mat-cell *matCellDef="let element;let indx=index;">
+        {{element.status}}
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+
+  <mat-card *ngIf="showShortListForm && searchBookedBandForm.valid " class="mt-4 formClass">
+
+    <mat-card class="cardH1">
+      <h1>Shortlist Band by start and end time</h1>
+    </mat-card>
+
+    <form [formGroup]="shortlistBandForm" (ngSubmit)="getShortListedBandList()" autocomplete="off" ngNativeValidate>
+      <div class="row p-2">
+
+        <mat-form-field class="col-md-5">
+          <mat-label>{{'start_time' | translate:translateKey}}</mat-label>
+          <input matInput atp-time-picker type="time" theme="dark" formControlName="startTime" (focus)="openStartTimePicker()" readonly
+            required/>
+          <control-messages [control]="shortlistBandForm.controls.startTime"></control-messages>
+        </mat-form-field>
+
+        <mat-form-field class="col-md-5">
+          <mat-label>{{'end_time' | translate:translateKey}}</mat-label>
+          <input matInput atp-time-picker type="time" theme="dark" formControlName="endTime" (focus)="openEndTimePicker()" readonly
+            required/>
+          <control-messages [control]="shortlistBandForm.controls.endTime"></control-messages>
+        </mat-form-field>
+
+        <div class="col-md-2">
+          <button [disabled]="!shortlistBandForm.valid" mat-raised-button color="primary" type="submit">Shortlist</button>
+        </div>
+
+      </div>
+    </form>
+  </mat-card>
+
+
+
+  <mat-card *ngIf="showConfirmBookingForm" class="mt-4 formClass">
+
+    <mat-card class="cardH1 mb-4">
+      <h1>Band requirement Details Applicant and Payment Collection</h1>
+    </mat-card>
+
+    <form [formGroup]="confirmBandBookingForm" (ngSubmit)="confirmBandBooking()" autocomplete="off" ngNativeValidate>
+      <div class="row p-2">
+
+        <mat-form-field class="col-md-4">
+          <input matInput appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" type="text" formControlName="applicantName"
+            placeholder="{{'applicant_name' | translate: translateKey}}" required>
+          <control-messages [control]="confirmBandBookingForm.controls.applicantName"></control-messages>
+        </mat-form-field>
+
+        <mat-form-field class="col-md-4">
+          <input matInput appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" type="text" formControlName="applicantPermanentAddress"
+            placeholder="{{'applicanr_permanent_address' | translate: translateKey}}" required>
+          <control-messages [control]="confirmBandBookingForm.controls.applicantPermanentAddress"></control-messages>
+        </mat-form-field>
+
+        <mat-form-field class="col-md-4">
+          <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="applicantMobile" placeholder="{{'applicant_mobile_number' | translate: translateKey}}"
+            required>
+          <control-messages [control]="confirmBandBookingForm.controls.applicantMobile"></control-messages>
+        </mat-form-field>
+
+        <mat-form-field class="col-md-4">
+          <input readonly matInput type="text" formControlName="bookingDate" placeholder="{{'date' | translate: translateKey}}" required>
+          <control-messages [control]="confirmBandBookingForm.controls.bookingDate"></control-messages>
+        </mat-form-field>
+
+        <mat-form-field class="col-md-4">
+          <input readonly matInput type="text" formControlName="startTime" placeholder="{{'start_time' | translate: translateKey}}"
+            required>
+          <control-messages [control]="confirmBandBookingForm.controls.startTime"></control-messages>
+        </mat-form-field>
+
+        <mat-form-field class="col-md-4">
+          <input readonly matInput type="text" formControlName="endTime" placeholder="{{'end_time' | translate: translateKey}}" required>
+          <control-messages [control]="confirmBandBookingForm.controls.endTime"></control-messages>
+        </mat-form-field>
+
+        <mat-form-field class="col-md-4">
+          <input matInput type="text" formControlName="requiredPlaceAddress" placeholder="{{'required_place' | translate: translateKey}}"
+            required>
+          <control-messages [control]="confirmBandBookingForm.controls.requiredPlaceAddress"></control-messages>
+        </mat-form-field>
+
+        <div class="col-md-2">
+          <button [disabled]="!confirmBandBookingForm.valid" mat-raised-button color="primary" type="submit">Make Payment</button>
+        </div>
+
+      </div>
+    </form>
+  </mat-card>
+
+
+  <mat-card *ngIf="showConfirmPaymentForm" class="mt-4 formClass">
+
+    <mat-card class="cardH1 mb-4">
+      <h1>Your Selected Session Details Shown Below</h1>
+    </mat-card>
+
+    <div class="container row">
+
+      <div class="col-md-3">
+        <label>Sr. No</label>
+      </div>
+
+      <div class="col-md-3">
+        <label>Booking Date and Time Slot</label>
+      </div>
+
+      <div class="col-md-3">
+        <label>Total Amount</label>
+      </div>
+
+      <div class="col-md-3">
+        <label>Remarks</label>
+      </div>
+
+      <div class="col-md-3">
+        {{confirmBandBookingForm.get('id').value}}
+      </div>
+
+      <div class="col-md-3">
+        {{confirmBandBookingForm.get('bookingDate').value}} {{confirmBandBookingForm.get('startTime').value}}-{{confirmBandBookingForm.get('endTime').value}}
+      </div>
+
+      <div class="col-md-3">
+        {{bandBookingPaymentAmount}}
+      </div>
+
+      <div class="col-md-3">
+        Remarks
+      </div>
+
+      <div class="col-md 4">
+        <button (click)="makePaymentAfterConfirmBooking()" mat-raised-button color="primary" type="button">Confirm And Pay</button>
+      </div>
+
+    </div>
+  </mat-card>
+</div>

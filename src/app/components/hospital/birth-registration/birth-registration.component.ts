@@ -33,6 +33,7 @@ export class BirthRegistrationComponent implements OnInit {
 	private noOfChild = 0;
 	private oldval;
 	private newValue;
+	private uploadFileArray: Array<any>=['residentProof','doctorsCertificate','kycWithAddressProof','aayaIdProof','healthWorkerReport','applicantIdKycProof']
 
 	/**
 	 * form related helping data.
@@ -104,7 +105,6 @@ export class BirthRegistrationComponent implements OnInit {
 	openTimePicker(i: number) {
 		const amazingTimePicker = this.atp.open({
 			changeToMinutes: true,
-			time: (new Date()).toTimeString().split(' ')[0],
 			theme: 'material-purple',
 		});
 		amazingTimePicker.afterClose().subscribe(time => {
@@ -227,8 +227,8 @@ export class BirthRegistrationComponent implements OnInit {
 			}),
 
 			//step 5
-			attachments: [null, [Validators.required]],
-			delayedPeriod: null,
+			attachments: [null],
+			delayPeriod: null,
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode)
 		});
 	}
@@ -240,6 +240,20 @@ export class BirthRegistrationComponent implements OnInit {
 		this.formService.getFormData(this.appId).subscribe(res => {
 			//this.attachments = res.attachments;
 			this.birthCertificateForm.patchValue(res);
+
+			if(res.delayPeriod != null){
+				if(Number(res.delayPeriod)> this.daysInThisYear()){
+					if (this.uploadFileArray.indexOf('courtOrder') == -1){
+						this.uploadFileArray.push('courtOrder');
+					}
+				} else if (Number(res.delayPeriod) < this.daysInThisYear() && Number(res.delayPeriod) > this.daysInThisMonth()){
+					if (this.uploadFileArray.indexOf('affidavitOrhealthOrder') == -1) {
+						this.uploadFileArray.push('affidavitOrhealthOrder');
+					}
+				}
+			}
+
+			//for Child Form Array.
 			this.childs = this.getChildData();
 
 			while (this.getChildData().length) {
@@ -279,19 +293,69 @@ export class BirthRegistrationComponent implements OnInit {
 	 * @param event - date event.
 	 */
 	delayCalculator(event, i: number) {
-		let now = moment(new Date());
-		let diff = moment.duration(now.diff(event.value));
 		this.getChildData().at(i).get('birthDate').setValue(moment(event.value).format("YYYY-MM-DD"));
-		if (this.birthCertificateForm.get('delayedPeriod').value === null){
-			this.birthCertificateForm.get('delayedPeriod').setValue(diff.days() + diff.years() * 365 + diff.months() * 30);
+
+		//delay period calculation on the basis of first child birth date.
+		let now = moment(new Date());
+		let currentDelayDate = String(this.getChildData().at(0).get('birthDate').value)
+		let diff = moment.duration(now.diff(new Date(Number(currentDelayDate.split('-')[0]), Number(currentDelayDate.split('-')[1]) - 1, Number(currentDelayDate.split('-')[2]))));
+	
+		this.birthCertificateForm.get('delayPeriod').setValue(diff.days() + diff.years() * 365 + diff.months() * 30);
+
+
+		if (i == 0) {
+			this.delayAlert(this.birthCertificateForm.get('delayPeriod').value);
 		}
 	}
+
 
 	/**
 	 * Method To get delay period.
 	 */
 	getDelayPeriod() {
-		return this.birthCertificateForm.get('delayedPeriod').value;
+		return this.birthCertificateForm.get('delayPeriod').value;
+	}
+
+	delayAlert(delay: number){
+		if(delay > this.daysInThisMonth() && delay < this.daysInThisYear() ){
+			if ((this.uploadFileArray.indexOf('affidavitOrhealthOrder') === -1)) {
+				if ((this.uploadFileArray.indexOf('courtOrder') === -1)) {
+					this.uploadFileArray.push('affidavitOrhealthOrder');
+				} else {
+					this.uploadFileArray.pop();
+					this.uploadFileArray.push('affidavitOrhealthOrder');
+				}
+			}
+			let html = `<p>It will considered as delayed birth registration because
+			 registration date is more than 30 days and there will be extra attachment (Affidavit Or health Order) as well as fees.`
+			this.commonService.openAlert("Delayed Registration","","",html);
+		} else if(delay > this.daysInThisYear()){
+			if ((this.uploadFileArray.indexOf('courtOrder') === -1)){
+				if ((this.uploadFileArray.indexOf('affidavitOrhealthOrder') === -1)){
+					this.uploadFileArray.push('courtOrder');
+				} else {
+					this.uploadFileArray.pop();
+					this.uploadFileArray.push('courtOrder');
+				}
+			}
+			let html = `<p>It will considered as delayed birth registration because
+			 registration date is more than 1 year and there will be extra attachment (Court Order) as well as fees.`
+			this.commonService.openAlert("Delayed Registration", "", "", html);
+		} 
+	}
+
+	daysInThisMonth() {
+		var now = new Date();
+		return (new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate());
+	}
+
+	daysInThisYear() {
+		var now = new Date();
+        if(now.getFullYear() % 4 === 0){
+			return 366;
+		} else {
+			return 365;
+		}
 	}
 
 
@@ -497,3 +561,5 @@ export class BirthRegistrationComponent implements OnInit {
 		);
 	}
 }
+
+
