@@ -403,13 +403,13 @@
                     </div>
 
                     <div *ngIf="showButtons">
-                        <label> {{'resident_proof' | translate:translateKey}}</label>
-                        <app-hos-file-upload [form]="stillBirthCertificateForm" [uploadModel]="setDataValue(1,'residentProof','1.1','residentProof')"></app-hos-file-upload>
+                        <label> {{'resident_proof' | translate:translateKey}}{{!getFileObjectContained('1.1')?'': '*'}}</label>
+                        <app-hos-file-upload [form]="stillBirthCertificateForm" [uploadModel]="setDataValue(1.1,'Resident Proof','1.1','residentProof')"></app-hos-file-upload>
                     </div>
 
                     <div *ngIf="showButtons">
-                        <label> {{'doctors_certificate' | translate:translateKey}}</label>
-                        <app-hos-file-upload [form]="stillBirthCertificateForm" [uploadModel]="setDataValue(3,'doctorsCertificate','1.1','doctorsCertificate')"></app-hos-file-upload>
+                        <label> {{'doctors_certificate' | translate:translateKey}}{{!getFileObjectContained('1.2')?'': '*'}}</label>
+                        <app-hos-file-upload [form]="stillBirthCertificateForm" [uploadModel]="setDataValue(1.2,'Doctors Certificate','1.1','doctorsCertificate')"></app-hos-file-upload>
                     </div>
 
                     <div>

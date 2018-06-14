@@ -13,12 +13,6 @@ import { AmazingTimePickerService } from 'amazing-time-picker';
 })
 export class BandBookingComponent implements OnInit {
 
-  shortlistBandForm: FormGroup;
-  Bands: Array<any> = [];
-  availableBands: Array<any> = [];
-  displayedColumns: Array<string> = ['id', 'startTime', 'endTime', 'status'];
-  translateKey: string = 'bandListScreen';
-
   constructor(
     private fb: FormBuilder,
     private atp: AmazingTimePickerService,
@@ -29,49 +23,12 @@ export class BandBookingComponent implements OnInit {
     this.bookingService.resourceType = 'band';
   }
 
+  /**
+   * Method is used to initialize view.
+   */
   ngOnInit() {
-    this.getBandResourceList();
-    this.createBandBookingListForm();
   }
 
-  openTimePicker() {
-    const amazingTimePicker = this.atp.open({
-      changeToMinutes: true,
-      theme: 'material-purple',
-    });
-    amazingTimePicker.afterClose().subscribe(time => {
-      if (time.length == 5) {
-        this.shortlistBandForm.get('birthTime').setValue(time + ":00");
-      }
-    });
-  }
-
-  createBandBookingListForm() {
-    this.shortlistBandForm = this.fb.group({
-      code: null,
-      date: null
-    })
-  }
-
-  getBandResourceList() {
-    this.bookingService.getResourceList().subscribe(res => {
-      console.log(res);
-      this.Bands = res.data;
-    },
-      err => {
-        this.toster.error(err.error.error_description);
-      }
-    );
-  }
-
-  getBookedBandList() {
-    this.bookingService.getBookedBands(moment(this.shortlistBandForm.get('date').value).format("YYYY-MM-DD"), this.shortlistBandForm.get('code').value)
-      .subscribe(respDate => {
-        this.availableBands = respDate.data;
-        console.log(respDate);
-      }, err => {
-        this.toster.error(err.error.error_description);
-      })
-  }
+  
 
 }

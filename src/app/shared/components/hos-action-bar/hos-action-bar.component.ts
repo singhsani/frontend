@@ -63,11 +63,11 @@ export class HosActionBarComponent implements OnInit, OnChanges {
 			this.formService.getFormData(this.form.get('serviceFormId').value).subscribe(respData => {
 				let tempArray = [];
 				respData.attachments.forEach(element => {
-					tempArray.push(element.labelName);
+					tempArray.push(element.fieldIdentifier);
 				});
 				this.uploadFilesArray.forEach(el =>{
-					if(tempArray.indexOf(el) === -1){
-						resolve({ fileName: el, status: false });
+					if(tempArray.indexOf(el.fieldIdentifier) === -1){
+						resolve({ fileName: el.labelName, status: false });
 						return;
 					}
 				});
@@ -76,6 +76,9 @@ export class HosActionBarComponent implements OnInit, OnChanges {
 		})
 	}
 
+	/**
+	 * Method to capture change event.
+	 */
 	ngOnChanges() {
 		this.uploadFilesArray = this.uploadFiles;
 	}

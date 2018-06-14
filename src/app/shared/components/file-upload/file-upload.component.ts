@@ -62,7 +62,7 @@ export class FileUploadComponent implements OnInit {
 		this.fromAdmin = this.commonService.fromAdmin();
 		
 		if (this.attachments && this.form.get('attachments').value.length) {
-			this.getFile = this.form.get('attachments').value.find(data => data.labelName === this.uploadModel.labelName)
+			this.getFile = this.form.get('attachments').value.find(data => data.fieldIdentifier === this.uploadModel.fieldIdentifier)
 		}
 	}
 
@@ -138,7 +138,7 @@ export class FileUploadComponent implements OnInit {
 			this.canUpload = false;
 		} else {
 			for (let i = 0; i < this.attachments.length; i++) {
-				if ((this.attachments[i].fieldIdentifier === this.uploadModel.fieldIdentifier.toString()) && (this.attachments[i].labelName === this.uploadModel.labelName)) {
+				if (this.attachments[i].fieldIdentifier === this.uploadModel.fieldIdentifier.toString()) {
 					this.canUpload = true;
 					this.id = this.attachments[i].id;
 					this.type = this.attachments[i].mimeType;

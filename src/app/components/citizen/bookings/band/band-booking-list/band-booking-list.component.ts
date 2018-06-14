@@ -47,6 +47,9 @@ export class BandBookingListComponent implements OnInit {
     this.bookingService.resourceType = 'band';
   }
 
+  /**
+   * Method is used to initialize.
+   */
   ngOnInit() {
     this.getBandResourceList();
     this.createBandShortListForm();
@@ -55,6 +58,9 @@ export class BandBookingListComponent implements OnInit {
     this.showShortListForm = true;
   }
 
+  /**
+   * Method is used to create Band Booking form.
+   */
   createBandBookingListForm() {
     this.searchBookedBandForm = this.fb.group({
       code: [null, Validators.required],
@@ -62,6 +68,9 @@ export class BandBookingListComponent implements OnInit {
     });
   }
 
+  /**
+   * Method is used to create Band Srotlist form.
+   */
   createBandShortListForm() {
     this.shortlistBandForm = this.fb.group({
       startTime: [null, Validators.required],
@@ -69,6 +78,9 @@ export class BandBookingListComponent implements OnInit {
     });
   }
 
+  /**
+   * Method is used to create confirm band booking form.
+   */
   createConfirmBandBookingForm() {
     {
       this.confirmBandBookingForm = this.fb.group({
@@ -88,6 +100,9 @@ export class BandBookingListComponent implements OnInit {
     }
   }
 
+  /**
+   * Method is used to open time picker for start time.
+   */
   openStartTimePicker() {
     const amazingTimePicker = this.atp.open({
       onlyHour: true,
@@ -105,6 +120,9 @@ export class BandBookingListComponent implements OnInit {
     });
   }
 
+  /**
+   * Method is used to open time picker for end time.
+   */
   openEndTimePicker() {
     const amazingTimePicker = this.atp.open({
       onlyHour: true,
@@ -123,6 +141,9 @@ export class BandBookingListComponent implements OnInit {
   }
 
 
+  /**
+   * Method is used to get resource list.
+   */
   getBandResourceList() {
     this.bookingService.getResourceList().subscribe(res => {
       this.Bands = res.data;
@@ -133,6 +154,9 @@ export class BandBookingListComponent implements OnInit {
     );
   }
 
+  /**
+   * Method is used to get booked band list.
+   */
   getBookedBandList() {
     this.bookingService
       .getBookedBands(moment(this.searchBookedBandForm.get('date').value).format("YYYY-MM-DD"), this.searchBookedBandForm.get('code').value)
@@ -147,12 +171,14 @@ export class BandBookingListComponent implements OnInit {
       });
   }
 
+  /**
+   * Method is used to get shortlisted band list.
+   */
   getShortListedBandList() {
     this.bookingService
       .shortListBands(moment(this.searchBookedBandForm.get('date').value).format("YYYY-MM-DD"),
         this.shortlistBandForm.get('startTime').value, this.shortlistBandForm.get('endTime').value,
         this.searchBookedBandForm.get('code').value).subscribe(respData => {
-          console.log(respData);
           this.confirmBandBookingForm.patchValue(respData.data);
           this.showShortListForm = false;
           this.showConfirmBookingForm = true;
@@ -163,11 +189,12 @@ export class BandBookingListComponent implements OnInit {
         });
   }
 
+  /**
+   * Method is used to confirm band booking.
+   */
   confirmBandBooking() {
     this.showConfirmBookingForm = false;
-    console.log(this.confirmBandBookingForm.value);
     this.bookingService.confirmBandBooking(this.confirmBandBookingForm.value).subscribe(respData => {
-      console.log(respData);
       if (respData.success) {
         this.commonService.successAlert("Success", "Band SucessFully Booked", "success");
         this.showConfirmPaymentForm = false;
@@ -177,7 +204,6 @@ export class BandBookingListComponent implements OnInit {
         return;
       }
     }, err => {
-      console.log(err);
       if (err.status == 402) {
         this.bandBookingPaymentAmount = err.error.data.amount;
         this.paymentTransactionId = err.error.data.transactionId;
@@ -186,12 +212,13 @@ export class BandBookingListComponent implements OnInit {
     })
   }
 
+  /**
+   * Method is used to make payment after booking confirm.
+   */
   makePaymentAfterConfirmBooking() {
     this.bookingService.makePaymentService(this.paymentTransactionId).subscribe(respData => {
-      console.log(respData);
       this.confirmBandBooking();
     }, err => {
-      console.log(err);
       this.toster.error(err.message)
     })
   }

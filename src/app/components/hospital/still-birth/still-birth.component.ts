@@ -28,8 +28,10 @@ export class StillBirthComponent implements OnInit {
 	@ViewChild('address') addressComp: any;
 
 	translateKey: string = 'stillBirthScreen';
-	private uploadFileArray: Array<any> = ['residentProof', 'doctorsCertificate'];
-	
+	private uploadFileArray: Array<any> =
+		[{ labelName: 'Resident Proof', fieldIdentifier: '1.1' },
+		{ labelName: 'Doctors Certificate', fieldIdentifier: '1.2' }];
+
 
 	/**
 	 * file upload related declaration
@@ -116,7 +118,7 @@ export class StillBirthComponent implements OnInit {
 				sex: {
 					code: null
 				},
-				prematureInfantReason:null,
+				prematureInfantReason: null,
 				uniqueId: null,
 				version: null,
 				weightGram: null,
@@ -125,7 +127,7 @@ export class StillBirthComponent implements OnInit {
 				}
 			})]),
 			noOfChilds: null,
-			
+
 			//step 2
 			fatherFirstName: [null, [ValidationService.nameValidator, Validators.required]],
 			fatherMiddleName: [null, [Validators.nullValidator]],
@@ -139,7 +141,7 @@ export class StillBirthComponent implements OnInit {
 				name: null,
 				gujName: null
 			}),
-			fatherOtherEducation:null,
+			fatherOtherEducation: null,
 			fatherOccupations: this.fb.group({
 				id: null,
 				code: [null, Validators.required],
@@ -152,8 +154,8 @@ export class StillBirthComponent implements OnInit {
 			motherFirstName: [null, [ValidationService.nameValidator, Validators.required]],
 			motherMiddleName: [null, ValidationService.nameValidator],
 			motherLastName: [null, [ValidationService.nameValidator, Validators.required]],
-			motherFirstNameGuj:[null],
-			motherMiddleNameGuj:[null],
+			motherFirstNameGuj: [null],
+			motherMiddleNameGuj: [null],
 			motherLastNameGuj: [null],
 			motherEducation: this.fb.group({
 				id: null,
@@ -161,7 +163,7 @@ export class StillBirthComponent implements OnInit {
 				name: null,
 				gujName: null
 			}),
-			motherOtherEducation:null,
+			motherOtherEducation: null,
 			motherOccupations: this.fb.group({
 				id: null,
 				code: [null, Validators.required],
@@ -180,7 +182,7 @@ export class StillBirthComponent implements OnInit {
 			deliveryType: this.fb.group({
 				code: [null, Validators.required],
 			}),
-			delayPeriod:null,
+			delayPeriod: null,
 			pregnancyDuration: ['', [Validators.required, ValidationService.stillPregnancyDurationValidation]],
 
 			//step 4
@@ -206,9 +208,17 @@ export class StillBirthComponent implements OnInit {
 		})
 	}
 
+	/**
+	 * Method is used to get child array.
+	 */
 	getChildData() {
 		return this.stillBirthCertificateForm.get('childs') as FormArray;
 	}
+
+	/**
+	 * Method is used to create child array.
+	 * @param child - pass child object.
+	 */
 	createChildArray(child) {
 		if (!child) {
 			child = {
@@ -219,7 +229,7 @@ export class StillBirthComponent implements OnInit {
 				sex: this.fb.group({
 					code: null
 				}),
-				prematureInfantReason:null,
+				prematureInfantReason: null,
 				uniqueId: null,
 				version: null,
 				weightGram: null,
@@ -236,7 +246,7 @@ export class StillBirthComponent implements OnInit {
 			sex: this.fb.group({
 				code: [child.sex.code, [Validators.required]]
 			}),
-			prematureInfantReason:child.prematureInfantReason,
+			prematureInfantReason: child.prematureInfantReason,
 			uniqueId: child.uniqueId,
 			version: child.version,
 			weightGram: child.weightGram,
@@ -245,6 +255,11 @@ export class StillBirthComponent implements OnInit {
 			})
 		})
 	}
+
+	/**
+	 * Method is used to add more child in array.
+	 * @param child - Add child object.
+	 */
 	addMoreChild(child) {
 
 		if (this.getChildData().length >= 6) {
@@ -256,6 +271,11 @@ export class StillBirthComponent implements OnInit {
 
 	}
 
+	/**
+	 * Method is used to delete child information from child array.
+	 * @param childData - child data.
+	 * @param index - index of child array
+	 */
 	deleteChild(childData: any, index: number) {
 		this.commonService.deleteAlert('Are you sure?', "You won't be able to revert this!", 'warning', '', performDelete => {
 			if (this.stillBirthCertificateForm.get('noOfChilds').value <= 1) {
@@ -289,6 +309,8 @@ export class StillBirthComponent implements OnInit {
 			this.stillBirthCertificateForm.patchValue(res);
 			this.childs = this.getChildData();
 
+			
+
 			while (this.getChildData().length) {
 				this.childs.removeAt(0)
 			}
@@ -311,7 +333,6 @@ export class StillBirthComponent implements OnInit {
 			}
 		});
 	}
-
 
 	/**
 	 * Method is used to get LookUps related to still birth certificate form.
@@ -346,6 +367,36 @@ export class StillBirthComponent implements OnInit {
 		this.stillBirthCertificateForm.get('delayPeriod').setValue(diff.days() + diff.years() * 365 + diff.months() * 30);
 	}
 
+	/**
+	 * Method is used to get file status.
+	 * @param fieldIdentifier - file identifier.
+	 */
+	getFileObjectContained(fieldIdentifier: string) {
+		let found: boolean = false;
+		for (let i = 0; i < this.uploadFileArray.length; i++) {
+			if (this.uploadFileArray[i].fieldIdentifier == fieldIdentifier) {
+				found = true;
+				break;
+			}
+		}
+		return found;
+	}
+
+	/**
+	 * Method is used to create file object.
+	 * @param labelName - file labelName
+	 * @param fieldIdentifier - file identifier
+	 */
+	fileObjectCreater(labelName, fieldIdentifier): any {
+		return { labelName: labelName, fieldIdentifier: fieldIdentifier }
+	}
+
+	/**
+	 * 
+	 * @param event 
+	 * @param controlName 
+	 * @param arr 
+	 */
 	gujNameFinder(event, controlName, arr) {
 		for (let i = 0; i < arr.length; i++) {
 			if (arr[i].code === event) {
@@ -361,17 +412,7 @@ export class StillBirthComponent implements OnInit {
 	}
 
 	/**
-	 * 
-	 */
-	timepick() {
-		if (String(this.stillBirthCertificateForm.get('birthTime').value).length == 5) {
-			this.stillBirthCertificateForm.get('birthTime').
-				setValue(String(this.stillBirthCertificateForm.get('birthTime').value).concat(":00"));
-		}
-	}
-
-	/**
-	 * 
+	 * Method is used to open time picker.
 	 */
 	openTimePicker(i: number) {
 		const amazingTimePicker = this.atp.open({
@@ -384,11 +425,6 @@ export class StillBirthComponent implements OnInit {
 			}
 		});
 	}
-	getTime(i){
-		return this.getChildData().at(i).get('birthTime').value;
-
-	}
-
 
 	/**
 	 * Method is used to handle error/validation on submit

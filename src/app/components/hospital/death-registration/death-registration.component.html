@@ -42,7 +42,6 @@
 							<control-messages [control]="deathCertificateForm.controls.deceasedMiddleName"></control-messages>
 						</mat-form-field>
 
-
 						<mat-form-field class="col-md-4">
 							<input matInput appValidationFields [form]="deathCertificateForm" appGujInputSource targetElement="deceasedLastNameGuj" [validationFieldsType]="'onlyNameWithOutSpace'"
 							 maxlength="20" placeholder="{{'last_name' | translate:translateKey}}" formControlName="deceasedLastName" [required]="requiredFeild">
@@ -366,28 +365,43 @@
 
 
 						<div class="col-md-4" *ngIf="showButtons">
-							<label>{{'cremation_report' | translate:translateKey}}</label>
-							<app-hos-file-upload [form]="deathCertificateForm" [uploadModel]="setDataValue(1,'cremationReport','1.1','cremationReport')"></app-hos-file-upload>
+						<label>{{'applicant_id_proof' | translate:translateKey}}{{!getFileObjectContained('1.1')?'': '*'}}</label>
+							<app-hos-file-upload [form]="deathCertificateForm" [uploadModel]="setDataValue(1.1,'Applicant Id Proof','1.1','applicantIdProof')"></app-hos-file-upload>
 						</div>
 
 						<div class="col-md-4" *ngIf="showButtons">
-							<label>{{'form4A_death_provided_by_doctor' | translate:translateKey}}</label>
-							<app-hos-file-upload [form]="deathCertificateForm" [uploadModel]="setDataValue(2,'form4A','1.1','form4A')"></app-hos-file-upload>
+						<label>{{'cremation_report' | translate:translateKey}}{{!getFileObjectContained('1.2')?'': '*'}}</label>
+							<app-hos-file-upload [form]="deathCertificateForm" [uploadModel]="setDataValue(1.2,'Cremation Report','1.1','cremationReport')"></app-hos-file-upload>
 						</div>
 
 						<div class="col-md-4" *ngIf="showButtons">
-							<label labelPosition="after">{{'deceased_id_proof' | translate:translateKey}}</label>
-							<app-hos-file-upload [form]="deathCertificateForm" [uploadModel]="setDataValue(3,'deceasedIdProof','1.1','deceasedIdProof')"></app-hos-file-upload>
+						<label>{{'form4A_death_provided_by_doctor' | translate:translateKey}}{{!getFileObjectContained('1.3')?'': '*'}}</label>
+							<app-hos-file-upload [form]="deathCertificateForm" [uploadModel]="setDataValue(1.3,'Form 4A','1.1','form4A')"></app-hos-file-upload>
+						</div>
+
+						<div class="col-md-4" *ngIf="showButtons">
+						<label labelPosition="after">{{'deceased_id_proof' | translate:translateKey}}{{!getFileObjectContained('1.4')?'': '*'}}</label>
+							<app-hos-file-upload [form]="deathCertificateForm" [uploadModel]="setDataValue(1.4,'Deceased Id Proof','1.1','deceasedIdProof')"></app-hos-file-upload>
+						</div>
+
+						<div class="col-md-4" *ngIf="showButtons">
+						<label>{{'police_inquest' | translate:translateKey}}{{!getFileObjectContained('1.5')?'': '*'}}</label>
+							<app-hos-file-upload [form]="deathCertificateForm" [uploadModel]="setDataValue(1.5,'Police Inquest','1.1','policeInquest')"></app-hos-file-upload>
+						</div>
+						
+						<div class="col-md-4" *ngIf="showButtons">
+						<label labelPosition="after">{{'post_mortem_report' | translate:translateKey}}{{!getFileObjectContained('1.6')?'': '*'}}</label>
+							<app-hos-file-upload [form]="deathCertificateForm" [uploadModel]="setDataValue(1.6,'Post Mortem Report','1.1','pmreport')"></app-hos-file-upload>
 						</div>
 
 						<div class="col-md-4" *ngIf="showButtons && (getDelayPeriod() > 30 && getDelayPeriod() < 365)">
-							<label labelPosition="after">affidavit_Or_health_Order</label>
-							<app-hos-file-upload [form]="deathCertificateForm" [uploadModel]="setDataValue(7,'affidavitOrhealthOrder','1.1','affidavitOrhealthOrder')"></app-hos-file-upload>
+						<label labelPosition="after">affidavit_Or_health_Order{{!getFileObjectContained('1.7')?'': '*'}}</label>
+							<app-hos-file-upload [form]="deathCertificateForm" [uploadModel]="setDataValue(1.7,'Affidavit Or Health Order','1.1','affidavitOrhealthOrder')"></app-hos-file-upload>
 						</div>
 
 						<div class="col-md-4" *ngIf="showButtons && getDelayPeriod() > 365 ">
-							<label labelPosition="after">court_Order</label>
-							<app-hos-file-upload [form]="deathCertificateForm" [uploadModel]="setDataValue(8,'courtOrder','1.1','courtOrder')"></app-hos-file-upload>
+						<label labelPosition="after">court_Order{{!getFileObjectContained('1.8')?'': '*'}}</label>
+							<app-hos-file-upload [form]="deathCertificateForm" [uploadModel]="setDataValue(1.8,'Court Order','1.1','courtOrder')"></app-hos-file-upload>
 						</div>
 
 					</div>
