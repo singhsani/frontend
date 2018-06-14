@@ -32,26 +32,26 @@
 		</mat-form-field>
 
 		<div class="col-md-4 ngSelect">
-			<ng-select placeholder="{{'country' | translate: translateKey }} *" formControlName="country" required (change)="onCountryChange($event)">
+			<ng-select placeholder="{{'country' | translate: translateKey }} {{requiredFeilds?'*':''}}" formControlName="country" required (change)="onCountryChange($event)">
 				<ng-option *ngFor="let country of countryListArray" [value]="country.name">{{country.name}}</ng-option>
 			</ng-select>
 			<control-messages [control]="addressFormGroup.controls.country"></control-messages>
 		</div>
 
 		<div class="col-md-4 ngSelect">
-			<ng-select placeholder="{{'state' | translate: translateKey }} *" formControlName="state" required (change)="onStateChange($event)">
+			<ng-select placeholder="{{'state' | translate: translateKey }} {{requiredFeilds?'*':''}}" formControlName="state" required (change)="onStateChange($event)">
 				<ng-option *ngFor="let state of stateListArray" [value]="state.name">{{state.name}}</ng-option>
 			</ng-select>
 			<control-messages [control]="addressFormGroup.controls.state"></control-messages>
 		</div>
 
 		<mat-form-field class="col-md-4">
-			<input matInput formControlName="district" placeholder="{{'district' | translate: translateKey }}" required maxlength="60">
+			<input matInput formControlName="district" placeholder="{{'district' | translate: translateKey }}" [required]="requiredFeilds" maxlength="60">
 			<control-messages [control]="addressFormGroup.controls.district"></control-messages>
 		</mat-form-field>
 
 		<div class="col-md-4 ngSelect">
-			<ng-select placeholder="{{'city' | translate: translateKey }} *" formControlName="city" required>
+			<ng-select placeholder="{{'city' | translate: translateKey }} {{requiredFeilds?'*':''}}" formControlName="city" [required]="requiredFeilds">
 				<ng-option *ngFor="let city of cityListArray" [value]="city.name">{{city.name}}</ng-option>
 			</ng-select>
 			<control-messages [control]="addressFormGroup.controls.city"></control-messages>
@@ -59,7 +59,7 @@
 
 		<mat-form-field class="col-md-4">
 			<input matInput type="tel" OnlyNumber formControlName="pincode" placeholder="{{'pincode' | translate: translateKey }}" minlength="6"
-			 maxlength="6" required>
+			 maxlength="6" [required]="requiredFeilds">
 			<control-messages [control]="addressFormGroup.controls.pincode"></control-messages>
 		</mat-form-field>
 

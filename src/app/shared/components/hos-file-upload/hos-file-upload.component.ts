@@ -10,6 +10,8 @@ import { HosUploadFileService } from '../../hos-upload-file.service';
 export class HosFileUploadComponent implements OnInit {
 
 	@ViewChild('fileInput') fileInput: any;
+	requiredFile: boolean = true;
+
 
 	/**
 	 * File Upload related variables
@@ -55,15 +57,17 @@ export class HosFileUploadComponent implements OnInit {
 	 */
 	ngOnInit() {
 		this.attachments = this.form.get('attachments').value;
+		
 
 		this.disableOrEnableButton();
 		this.fromAdmin = this.commonService.fromAdmin();
 
 		if (this.attachments && this.form.get('attachments').value.length) {
-			this.getFile = this.form.get('attachments').value.find(data => data.labelName === this.uploadModel.labelName)
+			this.getFile = this.form.get('attachments').value.find(data => data.fieldIdentifier == this.uploadModel.fieldIdentifier)
 		}
 	}
 
+ 
 	/**
 	 * This method is use for select the file 
 	 * @param event - get selected file event
@@ -114,6 +118,8 @@ export class HosFileUploadComponent implements OnInit {
 				this.uploadFileService.processFileToServer(formData, setProgressBar => {
 					this.progress.percentage = setProgressBar;
 				}, successResponse => {
+					
+					this.requiredFile = false;
 					this.commonService.successAlert("File Uploaded", this.uploadModel.labelName + " successfully uploaded", "success");
 					this.canUpload = true;
 					this.id = successResponse.data.id;
@@ -175,8 +181,11 @@ export class HosFileUploadComponent implements OnInit {
 	 */
 	deleteFile() {
 		this.uploadFileService.deleteFile(this.uploadModel.serviceFormId.toString(), this.id).subscribe(respData => {
+
 			this.commonService.successAlert("File Deleted", this.uploadModel.labelName + " successfully deleted", "success");
+
 			this.canUpload = false;
+			this.requiredFile= true;
 			this.imagetype = false;
 			this.fileName = '';
 			this.getFile = '';

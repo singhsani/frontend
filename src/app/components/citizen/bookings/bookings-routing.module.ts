@@ -4,7 +4,6 @@ import { TownHallModule } from './town-hall/town-hall.module';
 import { AuthGuard } from '../../../core/guard/auth.guard';
 import { ManageRoutes } from '../../../config/routes-conf';
 import { BookingDashboardComponent } from './booking-dashboard/booking-dashboard.component';
-import { BandModule } from './band/band.module';
 import { GardenModule } from './garden/garden.module';
 import { GuestHouseModule } from './guest-house/guest-house.module';
 import { PlanetAreaModule } from './planet-area/planet-area.module';
@@ -13,11 +12,12 @@ import { SwimmingPoolModule } from './swimming-pool/swimming-pool.module';
 import { TheaterModule } from './theater/theater.module';
 import { ZooModule } from './zoo/zoo.module';
 import { CancelBookingComponent } from './cancel-booking/cancel-booking.component';
+import { BandModule } from './band/band.module';
 
 const routes: Routes = [
 	{ path: '', component: BookingDashboardComponent, canActivate: [AuthGuard] },
 	{ path: ManageRoutes.getPrefixRoute('TOWNHALLMODULE'), loadChildren: () => TownHallModule, canLoad: [AuthGuard] },
-	{ path: ManageRoutes.getPrefixRoute('BANDMODULE'), loadChildren: () => BandModule, canLoad: [AuthGuard] },
+	{ path: ManageRoutes.getPrefixRoute('BANDMODULE'), loadChildren: () => BandModule, canLoad: [AuthGuard] },	
 	{ path: ManageRoutes.getPrefixRoute('GARDENMODULE'), loadChildren: () => GardenModule, canLoad: [AuthGuard] },
 	{ path: ManageRoutes.getPrefixRoute('GUESTHOUSEMODULE'), loadChildren: () => GuestHouseModule, canLoad: [AuthGuard] },
 	{ path: ManageRoutes.getPrefixRoute('PLANETAREAMODULE'), loadChildren: () => PlanetAreaModule, canLoad: [AuthGuard] },

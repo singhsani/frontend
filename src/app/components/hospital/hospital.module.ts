@@ -16,6 +16,8 @@ import { BirthRegistrationComponent } from './birth-registration/birth-registrat
 import { DeathRegistrationComponent } from './death-registration/death-registration.component';
 import { StillBirthComponent } from './still-birth/still-birth.component';
 import { HosMyApplicationsComponent } from './hos-my-applications/hos-my-applications.component';
+
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 /* Import hospital components end */
 
 @NgModule({
@@ -27,6 +29,8 @@ import { HosMyApplicationsComponent } from './hos-my-applications/hos-my-applica
 		CoreModule,
 		HospitalAuthModule,
 		HospitalRoutingModule,
+		OwlDateTimeModule,
+		OwlNativeDateTimeModule
 	],
 	declarations: [
 		HospitalDashboardComponent,

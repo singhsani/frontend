@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';
 
 import { FormsActionsService } from './../../../core/services/citizen/data-services/forms-actions.service';
@@ -12,9 +12,10 @@ import { CountryService } from '../../services/country.service';
 	templateUrl: './address.component.html',
 	styleUrls: ['./address.component.scss']
 })
-export class AddressComponent implements OnInit {
+export class AddressComponent implements OnInit, OnChanges {
 
 	@Input() addressFormGroup: FormGroup;
+	@Input() requiredFeilds: boolean;
 
 	translateKey: string = 'addressScreen';
 	countryListArray: any = [];
@@ -25,12 +26,38 @@ export class AddressComponent implements OnInit {
 
 	constructor(
 		private formService: FormsActionsService,
-		private countryService:CountryService
+		private countryService: CountryService
 	) { }
 
 	ngOnInit() {
 		this.editMode = true;
 		this.getCountryLists();
+	}
+
+	ngOnChanges() {
+		if (this.requiredFeilds) {
+			this.addressFormGroup.get('state').setValidators([Validators.required]);
+			this.addressFormGroup.get('state').updateValueAndValidity()
+			this.addressFormGroup.get('district').setValidators([Validators.required]);
+			this.addressFormGroup.get('district').updateValueAndValidity()
+			this.addressFormGroup.get('city').setValidators([Validators.required]);
+			this.addressFormGroup.get('city').updateValueAndValidity()
+			this.addressFormGroup.get('country').setValidators([Validators.required]);
+			this.addressFormGroup.get('country').updateValueAndValidity()
+			this.addressFormGroup.get('pincode').setValidators([Validators.required]);
+			this.addressFormGroup.get('pincode').updateValueAndValidity()
+		} else {
+			this.addressFormGroup.get('state').clearValidators();
+			this.addressFormGroup.get('state').updateValueAndValidity()
+			this.addressFormGroup.get('district').clearValidators();
+			this.addressFormGroup.get('district').updateValueAndValidity()
+			this.addressFormGroup.get('city').clearValidators();
+			this.addressFormGroup.get('city').updateValueAndValidity()
+			this.addressFormGroup.get('country').clearValidators();
+			this.addressFormGroup.get('country').updateValueAndValidity()
+			this.addressFormGroup.get('pincode').clearValidators();
+			this.addressFormGroup.get('pincode').updateValueAndValidity()
+		}
 	}
 
 	/**
@@ -46,11 +73,11 @@ export class AddressComponent implements OnInit {
 			streetName: [null, Validators.maxLength(60)],
 			landmark: [null, Validators.maxLength(100)],
 			area: [null, Validators.maxLength(60)],
-			state: [null, [Validators.required, Validators.maxLength(60)]],
-			district: [null, [Validators.required, Validators.maxLength(60)]],
-			city: [null, [Validators.required, Validators.maxLength(60)]],
-			country: [null, [Validators.required, Validators.maxLength(60)]],
-			pincode: [null, [Validators.required, Validators.maxLength(6)]],
+			state: [null, [Validators.maxLength(60)]],
+			district: [null, [Validators.maxLength(60)]],
+			city: [null, [Validators.maxLength(60)]],
+			country: [null, [Validators.maxLength(60)]],
+			pincode: [null, [Validators.maxLength(6)]],
 
 		}
 
@@ -87,7 +114,7 @@ export class AddressComponent implements OnInit {
 	 */
 	getCountryLists() {
 
-		this.countryService.countriesData.subscribe(data=>{
+		this.countryService.countriesData.subscribe(data => {
 			this.countryListArray = _.cloneDeep(data);
 			setTimeout(() => {
 				if (this.editMode && this.addressFormGroup.get('country').value) {
@@ -95,7 +122,7 @@ export class AddressComponent implements OnInit {
 				}
 			}, 300);
 		});
-		
+
 	}
 
 	/**

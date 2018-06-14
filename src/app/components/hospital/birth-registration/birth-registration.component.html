@@ -65,8 +65,8 @@
 
                             <mat-form-field class="col-md-4">
                                 <mat-label>{{'birth_time' | translate:translateKey}}</mat-label>
-                                <input matInput atp-time-picker type="time" theme="dark" formControlName="birthTime" (focus)="openTimePicker(i)"
-                                    readonly required/>
+                                <input matInput atp-time-picker type="time" theme="dark" formControlName="birthTime" (focus)="openTimePicker(i)" readonly
+                                    required/>
                                 <control-messages [control]="birthCertificateForm.controls.childs.controls[i].controls.birthTime"></control-messages>
                             </mat-form-field>
 
@@ -177,8 +177,9 @@
                         </mat-form-field>
 
                         <div class="col-md-12" *ngIf="birthCertificateForm.value.fatherEducation.code == 'NOT_STATED'">
-                            <mat-form-field >
-                                <input matInput placeholder="{{'not_stated_education' | translate:translateKey}}" formControlName="fatherOtherEducation" required>
+                            <mat-form-field>
+                                <input matInput placeholder="{{'not_stated_education' | translate:translateKey}}" formControlName="fatherOtherEducation"
+                                    required>
                             </mat-form-field>
                         </div>
 
@@ -204,7 +205,7 @@
                         </mat-form-field>
                     </div>
 
-                    <app-hos-action-bar  (handleErrors)="handleErrorsOnSubmit($event)" [form]="birthCertificateForm" [step]="'step2'"></app-hos-action-bar>
+                    <app-hos-action-bar (handleErrors)="handleErrorsOnSubmit($event)" [form]="birthCertificateForm" [step]="'step2'"></app-hos-action-bar>
 
                 </mat-step>
 
@@ -271,7 +272,8 @@
 
                         <div class="col-md-12" *ngIf="birthCertificateForm.value.motherEducation.code == 'NOT_STATED'">
                             <mat-form-field>
-                                <input matInput  placeholder="{{'not_stated_education' | translate:translateKey}}" formControlName="motherOtherEducation" required>
+                                <input matInput placeholder="{{'not_stated_education' | translate:translateKey}}" formControlName="motherOtherEducation"
+                                    required>
                             </mat-form-field>
                         </div>
 
@@ -285,7 +287,7 @@
                             <control-messages [control]="birthCertificateForm.controls.motherOccupations.controls.code"></control-messages>
                         </div>
 
-                        
+
 
                         <mat-form-field formGroupName="motherOccupations" class="col-md-6">
                             <input [disabled]="showButtons && !birthCertificateForm.controls.canEdit.value" readonly matInput maxlength="20" appPreventSpace
@@ -346,7 +348,7 @@
                             <control-messages [control]="birthCertificateForm.controls.pregnancyDuration"></control-messages>
                         </mat-form-field>
 
-                        
+
                     </div>
 
                     <div class="row">
@@ -371,7 +373,7 @@
                         </mat-form-field> -->
                     </div>
 
-                    <app-hos-action-bar  (handleErrors)="handleErrorsOnSubmit($event)" [form]="birthCertificateForm" [step]="'step2'"></app-hos-action-bar>
+                    <app-hos-action-bar (handleErrors)="handleErrorsOnSubmit($event)" [form]="birthCertificateForm" [step]="'step2'"></app-hos-action-bar>
 
                 </mat-step>
 
@@ -390,7 +392,7 @@
                         </h2>
                         <!-- <div formGroupName="parentDeliveryAddress"> -->
 
-                        <app-address #address [addressFormGroup]="birthCertificateForm.controls.parentDeliveryAddress"></app-address>
+                        <app-address #address [requiredFeilds]="true" [addressFormGroup]="birthCertificateForm.controls.parentDeliveryAddress"></app-address>
                         <span formGroupName="isPermanentPresentAddressSame">
                             <mat-checkbox [disabled]="!birthCertificateForm.get('canEdit').value" (change)="check($event);" [checked]="birthCertificateForm.get('isPermanentPresentAddressSame').get('code').value == 'YES'? true : false">{{'is_permanent_address_same_as_present_address' | translate:translateKey}}</mat-checkbox>
                         </span>
@@ -399,7 +401,7 @@
                             {{'permanent_address_during_delivery' | translate:translateKey}}
                         </h2>
 
-                        <app-address #address [addressFormGroup]="birthCertificateForm.controls.parentPermanentAddress"></app-address>
+                        <app-address #address [requiredFeilds]="true" [addressFormGroup]="birthCertificateForm.controls.parentPermanentAddress"></app-address>
 
                         <div>
                             <div class="row">
@@ -415,7 +417,7 @@
                         </div>
 
                         <div>
-                            <app-hos-action-bar  (handleErrors)="handleErrorsOnSubmit($event)" [form]="birthCertificateForm" [step]="'step3'"></app-hos-action-bar>
+                            <app-hos-action-bar (handleErrors)="handleErrorsOnSubmit($event)" [form]="birthCertificateForm" [step]="'step3'"></app-hos-action-bar>
                         </div>
 
                     </div>
@@ -435,67 +437,53 @@
                         {{'note' | translate:translateKey}} : {{'file_size_less_than_5_mb' | translate:translateKey}}
                     </div>
 
-                    <div *ngIf="showButtons">
-                        <label labelPosition="after">{{'resident_proof' | translate:translateKey}}</label>
-                        <br>
-                        <app-hos-file-upload [form]="birthCertificateForm" [uploadModel]="setDataValue(1,'residentProof','1.1','residentProof')"
-                        ></app-hos-file-upload>
-                    </div>
+                    <div class="row">
 
-                    <div *ngIf="showButtons">
-                        <label>{{'doctors_certificate' | translate:translateKey}}</label>
+                        <div class="col-md-4" *ngIf="showButtons">
+                            <label labelPosition="after">{{'resident_proof' | translate:translateKey}}{{!getFileObjectContained('1.1')?'': '*'}}</label>
+                            <app-hos-file-upload [form]="birthCertificateForm" [uploadModel]="setDataValue(1.1,'Resident Proof','1.1','residentProof')"></app-hos-file-upload>
+                        </div>
 
-                        <app-hos-file-upload [form]="birthCertificateForm" [uploadModel]="setDataValue(2,'doctorsCertificate','1.1','doctorsCertificate')"
-                            ></app-hos-file-upload>
-                    </div>
+                        <div class="col-md-4" *ngIf="showButtons">
+                            <label>{{'doctors_certificate' | translate:translateKey}}{{!getFileObjectContained('1.2')?'': '*'}}</label>
 
-                    <div *ngIf="showButtons">
-                        <label labelPosition="after">kyc_With_Address_Proof</label>
-                        <br>
-                        <app-hos-file-upload [form]="birthCertificateForm" [uploadModel]="setDataValue(3,'kycWithAddressProof','1.1','kycWithAddressProof')"
-                            ></app-hos-file-upload>
-                    </div>
+                            <app-hos-file-upload [form]="birthCertificateForm" [uploadModel]="setDataValue(1.2,'Doctors Certificate','1.1','doctorsCertificate')"></app-hos-file-upload>
+                        </div>
 
-                    <div *ngIf="showButtons">
-                        <label labelPosition="after">aaya_Id_Proof</label>
-                        <br>
-                        <app-hos-file-upload [form]="birthCertificateForm" [uploadModel]="setDataValue(4,'aayaIdProof','1.1','aayaIdProof')" ></app-hos-file-upload>
-                    </div>
+                        <div class="col-md-4" *ngIf="showButtons">
+                            <label labelPosition="after">{{'kyc_With_Address_Proof' | translate:translateKey}}{{!getFileObjectContained('1.3')?'': '*'}}</label>
+                            <app-hos-file-upload [form]="birthCertificateForm" [uploadModel]="setDataValue(1.3,'Kyc With Address Proof','1.1','kycWithAddressProof')"></app-hos-file-upload>
+                        </div>
 
-                    <div *ngIf="showButtons">
-                        <label labelPosition="after">health_Worker_Report</label>
-                        <br>
-                        <app-hos-file-upload [form]="birthCertificateForm" [uploadModel]="setDataValue(5,'healthWorkerReport','1.1','healthWorkerReport')"
-                            ></app-hos-file-upload>
-                    </div>
+                        <div class="col-md-4" *ngIf="showButtons">
+                            <label labelPosition="after">{{'aaya_Id_Proof' | translate:translateKey}}{{!getFileObjectContained('1.4')?'': '*'}}</label>
+                            <app-hos-file-upload [form]="birthCertificateForm" [uploadModel]="setDataValue(1.4,'Aaya Id Proof','1.1','aayaIdProof')"></app-hos-file-upload>
+                        </div>
 
-                    <div *ngIf="showButtons">
-                        <label labelPosition="after">applicant_Id_Kyc_Proof</label>
-                        <br>
-                        <app-hos-file-upload [form]="birthCertificateForm" [uploadModel]="setDataValue(6,'applicantIdKycProof','1.1','applicantIdKycProof')"
-                            ></app-hos-file-upload>
-                    </div>
+                        <div class="col-md-4" *ngIf="showButtons">
+                            <label labelPosition="after">{{'health_Worker_Report' | translate:translateKey}}{{!getFileObjectContained('1.5')?'': '*'}}</label>
+                            <app-hos-file-upload [form]="birthCertificateForm" [uploadModel]="setDataValue(1.5,'Health Worker Report','1.1','healthWorkerReport')"></app-hos-file-upload>
+                        </div>
 
-                    <div *ngIf="showButtons && getDelayPeriod() > 30 && getDelayPeriod() < 365">
-                        <label labelPosition="after">affidavit_Or_health_Order</label>
-                        <br>
-                        <app-hos-file-upload [form]="birthCertificateForm" [uploadModel]="setDataValue(7,'affidavitOrhealthOrder','1.1','affidavitOrhealthOrder')"
-                            ></app-hos-file-upload>
-                    </div>
+                        <div class="col-md-4" *ngIf="showButtons">
+                            <label labelPosition="after">{{'applicant_Id_Kyc_Proof' | translate:translateKey}}{{!getFileObjectContained('1.6')?'': '*'}}</label>
+                            <app-hos-file-upload [form]="birthCertificateForm" [uploadModel]="setDataValue(1.6,'Applicant Id Kyc Proof','1.1','applicantIdKycProof')"></app-hos-file-upload>
+                        </div>
 
-                    <div *ngIf="showButtons && getDelayPeriod() > 365 ">
-                        <label labelPosition="after">court_Order</label>
-                        <br>
-                        <app-hos-file-upload [form]="birthCertificateForm" [uploadModel]="setDataValue(8,'courtOrder','1.1','courtOrder')" ></app-hos-file-upload>
+                        <div class="col-md-4" *ngIf="showButtons && getDelayPeriod() > 30 && getDelayPeriod() < 365">
+                            <label labelPosition="after">{{'affidavit_Or_health_Order' | translate:translateKey}}{{!getFileObjectContained('1.7')?'': '*'}}</label>
+                            <app-hos-file-upload [form]="birthCertificateForm" [uploadModel]="setDataValue(1.7,'Affidavit Or Health Order','1.1','affidavitOrhealthOrder')"></app-hos-file-upload>
+                        </div>
+
+                        <div class="col-md-4" *ngIf="showButtons && getDelayPeriod() > 365 ">
+                            <label labelPosition="after">{{'court_Order' | translate:translateKey}}{{!getFileObjectContained('1.8')?'': '*'}}</label>
+                            <app-hos-file-upload [form]="birthCertificateForm" [uploadModel]="setDataValue(1.8,'Court Order','1.1','courtOrder')"></app-hos-file-upload>
+                        </div>
+
                     </div>
 
                     <div>
-                        <label labelPosition="after">{{'doctors_id_proof' | translate:translateKey}}</label>
-                        <br>
-                    </div>
-
-                    <div>
-                        <app-hos-action-bar [form]="birthCertificateForm" [step]="'final'" (stepReset)="stepReset()" (handleErrors)="handleErrorsOnSubmit($event)"></app-hos-action-bar>
+                        <app-hos-action-bar [form]="birthCertificateForm" [uploadFiles]="uploadFileArray" [step]="'final'" (stepReset)="stepReset()" (handleErrors)="handleErrorsOnSubmit($event)"></app-hos-action-bar>
                     </div>
                 </mat-step>
             </mat-horizontal-stepper>

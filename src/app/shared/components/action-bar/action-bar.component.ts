@@ -1,5 +1,5 @@
 import { ManageRoutes } from './../../../config/routes-conf';
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, OnChanges } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators, FormArray } from '@angular/forms';
 import * as _ from 'lodash';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -14,13 +14,15 @@ import { ToastrService } from 'ngx-toastr';
 	templateUrl: './action-bar.component.html',
 	styleUrls: ['./action-bar.component.scss']
 })
-export class ActionBarComponent implements OnInit {
+export class ActionBarComponent implements OnInit, OnChanges {
 
 	translateKey: string = 'actionBarScreen';
 
 	@Input() form: FormGroup;
 	@Input() step: string;
 	commonControlForm: FormGroup;
+	@Input() uploadFiles: any;
+	uploadFilesArray: Array<any> = []
 
 	isSaveBtnDisabled: boolean = false;
 	isSubmitBtnDisabled: boolean = false;
@@ -40,6 +42,7 @@ export class ActionBarComponent implements OnInit {
 	ngOnInit() {
 		this.formService.apiType = this.form.get('apiType').value;
 		this.commonControlFormControls();
+		this.uploadFilesArray = this.uploadFiles;
 
 		setTimeout(() => {
 			if (this.form.value.hasOwnProperty('canEdit') && !this.form.value.canEdit && this.form.value.canEdit != null) {
@@ -48,6 +51,31 @@ export class ActionBarComponent implements OnInit {
 			}
 		}, 600);
 
+	}
+
+	ngOnChanges(){
+		this.uploadFilesArray = this.uploadFiles;
+	}
+
+	/**
+	 * Method is responsible to check required file upload.
+	 */
+	mandatoryFileCheck() {
+		return new Promise<any>((resolve, reject) => {
+			this.formService.getFormData(this.form.get('serviceFormId').value).subscribe(respData => {
+				let tempArray = [];
+				respData.attachments.forEach(element => {
+					tempArray.push(element.fieldIdentifier);
+				});
+				this.uploadFilesArray.forEach(el => {
+					if (tempArray.indexOf(el.fieldIdentifier) === -1) {
+						resolve({ fileName: el.labelName, status: false });
+						return;
+					}
+				});
+				resolve({ fileName: "", status: true });
+			})
+		})
 	}
 
 	/**
@@ -90,28 +118,35 @@ export class ActionBarComponent implements OnInit {
 		this.markFormGroupTouched(this.form);
 
 		if (this.form.valid) {
-			this.formService.submitFormData(this.form.get('serviceFormId').value).subscribe(res => {
-				if (res.success) {
-					this.form.get('canEdit').setValue(false);
-				}
+			this.mandatoryFileCheck().then(data => {
+				if (data.status) {
+					this.formService.submitFormData(this.form.get('serviceFormId').value).subscribe(res => {
+						if (res.success) {
+							this.form.get('canEdit').setValue(false);
+						}
 
-				this.toastr.success(`${this.form.value.serviceDetail.name} information successfully submit`);
-				this.isSubmitBtnDisabled = false;
-				this.isBtnsDisabled = false;
-				this.form.disable();
-			},
-				err => {
+						this.toastr.success(`${this.form.value.serviceDetail.name} information successfully submit`);
+						this.isSubmitBtnDisabled = false;
+						this.isBtnsDisabled = false;
+						this.form.disable();
+					},
+						err => {
+							this.isSubmitBtnDisabled = false;
+							if (err.status === 402) {
+								this.commonService.paymentAlert('', '', '', cb => {
+									this.formService.makePayment(err.error.data.transactionId).subscribe(res => {
+										this.toastr.success('Your payment has been processed successfully');
+									});
+								});
+							}
+						}
+					);
+				} else {
+					this.commonService.openAlert("File Upload", "Please Upload Mandatory File ".concat(data.fileName), "warning");
 					this.isSubmitBtnDisabled = false;
-
-					if (err.status === 402) {
-						this.commonService.paymentAlert('', '', '', cb => {
-							this.formService.makePayment(err.error.data.transactionId).subscribe(res => {
-								this.toastr.success('Your payment has been processed successfully');
-							});
-						});
-					}
+					return
 				}
-			);
+			});
 		} else {
 			this.isSubmitBtnDisabled = false;
 			let count = 1;

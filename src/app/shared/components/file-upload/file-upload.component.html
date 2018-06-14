@@ -3,13 +3,13 @@
 		<!-- <mat-progress-bar *ngIf="currentFileUpload" mode="determinate" value="{{progress.percentage}}"></mat-progress-bar> -->
 
 		<!-- Preview Image-->
-		<label *ngIf="priviewImage">
+		<!-- <label *ngIf="priviewImage">
 			<img [src]="priviewImage" alt="image" class="imageSize" />
-		</label>
+		</label> -->
 
 		<!-- Upload new file/Image-->
-		<label class="custom-file-upload" [hidden]="canUpload || !form.get('canEdit').value">
-			<input #fileInput type="file" (change)="selectFile($event)" />
+		<label class="custom-file-upload" [hidden]="canUpload || !form.get('canEdit').value">{{requiredFile}}
+			<input #fileInput [required]="requiredFile" type="file" (change)="selectFile($event)" />
 
 			<span class="attachment">
 				<i class="fa fa-paperclip"></i>

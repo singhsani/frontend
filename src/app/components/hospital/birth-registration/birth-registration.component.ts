@@ -33,6 +33,14 @@ export class BirthRegistrationComponent implements OnInit {
 	private noOfChild = 0;
 	private oldval;
 	private newValue;
+	private uploadFileArray: Array<any> =
+		[{ labelName: 'Resident Proof', fieldIdentifier: '1.1' },
+		{ labelName: 'Doctors Certificate', fieldIdentifier: '1.2' },
+		{ labelName: 'Kyc With Address Proof', fieldIdentifier: '1.3' },
+		{ labelName: 'Aaya Id Proof', fieldIdentifier: '1.4' },
+		{ labelName: 'Health Worker Report', fieldIdentifier: '1.5' },
+		{ labelName: 'Applicant Id Kyc Proof', fieldIdentifier: '1.6' }]
+	//private uploadFileArray: Array<any> = ['residentProof', 'doctorsCertificate', 'kycWithAddressProof', 'aayaIdProof', 'healthWorkerReport', 'applicantIdKycProof']
 
 	/**
 	 * form related helping data.
@@ -101,10 +109,13 @@ export class BirthRegistrationComponent implements OnInit {
 		}
 	}
 
+	/**
+	 * Method is used to open time picker for birth registration.
+	 * @param i - index of child.
+	 */
 	openTimePicker(i: number) {
 		const amazingTimePicker = this.atp.open({
 			changeToMinutes: true,
-			time: (new Date()).toTimeString().split(' ')[0],
 			theme: 'material-purple',
 		});
 		amazingTimePicker.afterClose().subscribe(time => {
@@ -163,7 +174,7 @@ export class BirthRegistrationComponent implements OnInit {
 				name: null,
 				gujName: null
 			}),
-			fatherOtherEducation:null,
+			fatherOtherEducation: null,
 			fatherOccupations: this.fb.group({
 				id: null,
 				code: [null, [Validators.required]],
@@ -174,9 +185,9 @@ export class BirthRegistrationComponent implements OnInit {
 
 			//step 3 (17)
 			motherFirstName: ['', [ValidationService.nameValidator, Validators.required]],
-			motherMiddleName: ['',  ValidationService.nameValidator],
+			motherMiddleName: ['', ValidationService.nameValidator],
 			motherLastName: ['', [ValidationService.nameValidator, Validators.required]],
-			motherFirstNameGuj: ['', [ Validators.required]],
+			motherFirstNameGuj: ['', [Validators.required]],
 			motherMiddleNameGuj: [''],
 			motherLastNameGuj: ['', [Validators.required]],
 
@@ -210,8 +221,8 @@ export class BirthRegistrationComponent implements OnInit {
 				name: null
 			}),
 			pregnancyDuration: ['', [Validators.required, ValidationService.pregnancyDurationValidation]],
-			
-			
+
+
 			//step 4(3)
 			parentDeliveryAddress: this.fb.group(this.addressComp.addressControls()),
 			isPermanentPresentAddressSame: this.fb.group({
@@ -227,8 +238,8 @@ export class BirthRegistrationComponent implements OnInit {
 			}),
 
 			//step 5
-			attachments: [null, [Validators.required]],
-			delayedPeriod: null,
+			attachments: [null],
+			delayPeriod: null,
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode)
 		});
 	}
@@ -240,6 +251,20 @@ export class BirthRegistrationComponent implements OnInit {
 		this.formService.getFormData(this.appId).subscribe(res => {
 			//this.attachments = res.attachments;
 			this.birthCertificateForm.patchValue(res);
+
+			if (res.delayPeriod != null) {
+				if (Number(res.delayPeriod) > this.daysInThisYear()) {
+					if (!this.getFileObjectContained('1.8')) {
+						this.uploadFileArray.push(this.fileObjectCreater('Court Order', '1.8'));
+					}
+				} else if (Number(res.delayPeriod) < this.daysInThisYear() && Number(res.delayPeriod) > this.daysInThisMonth()) {
+					if (!this.getFileObjectContained('1.7')) {
+						this.uploadFileArray.push(this.fileObjectCreater('Affidavit Or Health Order', '1.7'));
+					}
+				}
+			}
+
+			//for Child Form Array.
 			this.childs = this.getChildData();
 
 			while (this.getChildData().length) {
@@ -258,7 +283,7 @@ export class BirthRegistrationComponent implements OnInit {
 				this.birthCertificateForm.get('parentPermanentAddress').enable();
 			}
 
-			if (!this.birthCertificateForm.controls.canEdit.value){
+			if (!this.birthCertificateForm.controls.canEdit.value) {
 				this.birthCertificateForm.disable();
 			}
 
@@ -266,32 +291,84 @@ export class BirthRegistrationComponent implements OnInit {
 		});
 	}
 
-
-	timepick(i: number) {
-		if (String(this.getChildData()[i].get('birthTime').value).length == 5) {
-			this.getChildData()[i].
-				setValue(String(this.getChildData()[i].get('birthTime').value).concat(":00"));
-		}
-	}
-
 	/**
 	 * Method is used to calculate the delay between current date and birth date.
 	 * @param event - date event.
 	 */
 	delayCalculator(event, i: number) {
-		let now = moment(new Date());
-		let diff = moment.duration(now.diff(event.value));
 		this.getChildData().at(i).get('birthDate').setValue(moment(event.value).format("YYYY-MM-DD"));
-		if (this.birthCertificateForm.get('delayedPeriod').value === null){
-			this.birthCertificateForm.get('delayedPeriod').setValue(diff.days() + diff.years() * 365 + diff.months() * 30);
+
+		//delay period calculation on the basis of first child birth date.
+		let now = moment(new Date());
+		let currentDelayDate = String(this.getChildData().at(0).get('birthDate').value)
+		let diff = moment.duration(now.diff(new Date(Number(currentDelayDate.split('-')[0]), Number(currentDelayDate.split('-')[1]) - 1, Number(currentDelayDate.split('-')[2]))));
+
+		this.birthCertificateForm.get('delayPeriod').setValue(diff.days() + diff.years() * 365 + diff.months() * 30);
+
+
+		if (i == 0) {
+			this.delayAlert(this.birthCertificateForm.get('delayPeriod').value);
 		}
 	}
+
 
 	/**
 	 * Method To get delay period.
 	 */
 	getDelayPeriod() {
-		return this.birthCertificateForm.get('delayedPeriod').value;
+		return this.birthCertificateForm.get('delayPeriod').value;
+	}
+
+	/**
+	 * Method is used to provide alert on delay registration.
+	 * @param delay - delay period.
+	 */
+	delayAlert(delay: number) {
+		if (delay > this.daysInThisMonth() && delay < this.daysInThisYear()) {
+			if (!this.getFileObjectContained('1.7')) {
+				if (!this.getFileObjectContained('1.8')) {
+					this.uploadFileArray.push(this.fileObjectCreater('Affidavit Or Health Order', '1.7'));
+				} else {
+					this.uploadFileArray.pop();
+					this.uploadFileArray.push(this.fileObjectCreater('Affidavit Or Health Order', '1.7'));
+				}
+			}
+			let html = `<p>It will considered as delayed birth registration because
+			 registration date is more than 30 days and there will be extra attachment (Affidavit Or health Order) as well as fees.`
+			this.commonService.openAlert("Delayed Registration", "", "", html);
+		} else if (delay > this.daysInThisYear()) {
+			if (!this.getFileObjectContained('1.8')) {
+				if (!this.getFileObjectContained('1.7')) {
+					this.uploadFileArray.push(this.fileObjectCreater('Court Order', '1.8'));
+				} else {
+					this.uploadFileArray.pop();
+					this.uploadFileArray.push(this.fileObjectCreater('Court Order', '1.8'));
+				}
+			}
+			let html = `<p>It will considered as delayed birth registration because
+			 registration date is more than 1 year and there will be extra attachment (Court Order) as well as fees.`
+			this.commonService.openAlert("Delayed Registration", "", "", html);
+		}
+	}
+
+	/**
+	 * Method is used to get no of days in current month.
+	 */
+	daysInThisMonth() {
+		var now = new Date();
+		return (new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate());
+	}
+
+	/**
+	 * Method is used to get no of days in current year.
+	 */
+	daysInThisYear() {
+		var now = new Date();
+		if (now.getFullYear() % 4 === 0) {
+			return 366;
+		} else {
+			return 365;
+		}
 	}
 
 
@@ -329,6 +406,30 @@ export class BirthRegistrationComponent implements OnInit {
 	}
 
 	/**
+	 * Method is used to get file status.
+	 * @param fieldIdentifier - file identifier.
+	 */
+	getFileObjectContained(fieldIdentifier: string) {
+		let found: boolean = false;
+		for (let i = 0; i < this.uploadFileArray.length; i++) {
+			if (this.uploadFileArray[i].fieldIdentifier == fieldIdentifier) {
+				found = true;
+				break;
+			}
+		}
+		return found;
+	}
+
+	/**
+	 * Method is used to create file object.
+	 * @param labelName - file labelName
+	 * @param fieldIdentifier - file identifier
+	 */
+	fileObjectCreater(labelName, fieldIdentifier): any {
+		return { labelName: labelName, fieldIdentifier: fieldIdentifier }
+	}
+
+	/**
 	 * Method is used to get all lookups from api. 
 	 */
 	getLookUpsData() {
@@ -347,6 +448,12 @@ export class BirthRegistrationComponent implements OnInit {
 		})
 	}
 
+	/**
+	 * Gujarati Look Up Converter.
+	 * @param event - selected event
+	 * @param controlName - control name
+	 * @param arr - passed lookup array
+	 */
 	gujNameFinder(event, controlName, arr) {
 		for (let i = 0; i < arr.length; i++) {
 			if (arr[i].code === event) {
@@ -414,10 +521,17 @@ export class BirthRegistrationComponent implements OnInit {
 		return this.uploadModel;
 	}
 
+	/**
+	 * Method is used to get child array.
+	 */
 	getChildData() {
 		return this.birthCertificateForm.get('childs') as FormArray;
 	}
 
+	/**
+	 * Method is used to create child array.
+	 * @param child - pass child object.
+	 */
 	createChildArray(child) {
 		if (!child) {
 			child = {
@@ -453,23 +567,32 @@ export class BirthRegistrationComponent implements OnInit {
 		})
 	}
 
+	/**
+	 * Method is used to add more child in array.
+	 * @param child - Add child object.
+	 */
 	addMoreChild(child) {
-
 		if (this.getChildData().length >= 6) {
 			this.commonService.openAlert("Warning", "Maximum Child Limit 6.", "warning");
 		} else {
 			this.getChildData().push(this.createChildArray(child));
 			this.birthCertificateForm.get('noOfChilds').setValue(this.getChildData().length);
 			this.setTotalChildAlive();
-			
 		}
-
 	}
 
-	setTotalChildAlive(){
+	/**
+	 * Mehtod is used to set total alive child and populated automatically.
+	 */
+	setTotalChildAlive() {
 		this.birthCertificateForm.get('totalAliveChild').setValue(this.birthCertificateForm.get('noOfChilds').value);
 	}
 
+	/**
+	 * Method is used to delete child information from child array.
+	 * @param childData - child data.
+	 * @param index - index of child array
+	 */
 	deleteChild(childData: any, index: number) {
 		this.commonService.deleteAlert('Are you sure?', "You won't be able to revert this!", 'warning', '', performDelete => {
 			if (this.birthCertificateForm.get('noOfChilds').value <= 1) {
@@ -497,3 +620,5 @@ export class BirthRegistrationComponent implements OnInit {
 		);
 	}
 }
+
+

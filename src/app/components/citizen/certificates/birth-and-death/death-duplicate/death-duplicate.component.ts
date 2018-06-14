@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
-import { FormBuilder,FormGroupDirective, FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
+import { FormBuilder, FormGroupDirective, FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatHorizontalStepper, MatStep, MatStepLabel } from '@angular/material';
 
@@ -20,79 +20,12 @@ export class DeathDuplicateComponent implements OnInit {
 	@ViewChild(MatStepLabel) steplable: MatStepLabel;
 	@ViewChild(FormGroupDirective) f;
 
-	deathDuplicateForm: FormGroup;
-	translateKey: string = 'DeathDuplicateScreen';
+	private deathDuplicateForm: FormGroup;
+	private translateKey: string = 'DeathDuplicateScreen';
 
 	appId: number;
 	apiCode: string;
-	DeathRegYears = [
-		{
-			id: "2008",
-			code: 2008,
-			name: "2008"
-
-		},
-		{
-			id: "2009",
-			code: 2009,
-			name: "2009"
-
-		},
-		{
-			id: "2010",
-			code: 2010,
-			name: "2010"
-
-		},
-		{
-			id: "2011",
-			code: 2011,
-			name: "2011"
-
-		},
-		{
-			id: "2012",
-			code: 2012,
-			name: "2012"
-
-		}, {
-			id: "2013",
-			code: 2013,
-			name: "2013"
-
-		},
-		{
-			id: "2014",
-			code: 2014,
-			name: "2014"
-
-		},
-		{
-			id: "2015",
-			code: 2015,
-			name: "2015"
-
-		},
-		{
-			id: "2016",
-			code: 2016,
-			name: "2016"
-
-		},
-		{
-			id: "2017",
-			code: 2017,
-			name: "2017"
-
-		},
-		{
-			id: "2018",
-			code: 2018,
-			name: "2018"
-
-		}
-
-	];
+	private DeathRegYears: Number[] = [2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018];
 	private ISYESNO: object[];
 	private maxDeathDate = new Date();
 	private minDeathDate;

@@ -113,4 +113,46 @@ export class BookingService {
 	}
 
 
+	/**
+	 * Method is used to get all booked list from api
+	 * @param date - desired date.
+	 * @param resourceCode - resource code for band.
+	 */
+	getBookedBands(date, resourceCode) {
+		this.requestURL = `api/booking/${this.resourceType}/getBookedSlot?bookingDate=${date}&resourceCode=${resourceCode}`;
+		return this.http.get(this.requestURL);
+	}
+
+	/**
+	 * Method is used to shortlist bands. 
+	 * @param startDate - date of band booking.
+	 * @param startTime - start time
+	 * @param endTime - end time
+	 * @param resourceCode - resource code
+	 */
+	shortListBands(startDate, startTime, endTime, resourceCode) {
+		this.requestURL = `api/booking/${this.resourceType}/shortListSlot?startDate=${startDate}&startTime=${startTime}&endTime=${endTime}&resourceCode=${resourceCode}`;
+		return this.http.post(this.requestURL, '');
+	}
+
+	/**
+	 * Method is used to confirm band booking.
+	 * @param formData - pass complete band form.
+	 */
+	confirmBandBooking(formData) {
+		this.requestURL = `api/booking/${this.resourceType}/bookSlot`;
+		return this.http.post(this.requestURL, formData);
+	}
+
+	/**
+	 * Method is used to make payment for band booking.
+	 * @param transactionId - payment transaction id.
+	 */
+	makePaymentService(transactionId) {
+		this.requestURL = `api/booking/${this.resourceType}/pay/${transactionId}`;
+		return this.http.get(this.requestURL);
+	}
+	
+
+
 }

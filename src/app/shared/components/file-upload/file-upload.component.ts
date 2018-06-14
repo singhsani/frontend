@@ -12,6 +12,7 @@ import { CommonService } from '../../services/common.service';
 export class FileUploadComponent implements OnInit {
 
 	@ViewChild('fileInput') fileInput: any;
+	
 
 	/**
 	 * File Upload related variables
@@ -55,14 +56,13 @@ export class FileUploadComponent implements OnInit {
 	 * Initialize first component loads.
 	 */
 	ngOnInit() {
-
 		this.attachments = this.form.get('attachments').value;
 
 		this.disableOrEnableButton();
 		this.fromAdmin = this.commonService.fromAdmin();
-
+		
 		if (this.attachments && this.form.get('attachments').value.length) {
-			this.getFile = this.form.get('attachments').value.find(data => data.labelName === this.uploadModel.labelName)
+			this.getFile = this.form.get('attachments').value.find(data => data.fieldIdentifier === this.uploadModel.fieldIdentifier)
 		}
 	}
 
@@ -82,9 +82,7 @@ export class FileUploadComponent implements OnInit {
 				this.priviewImage = e.target.result;
 			}
 			reader.readAsDataURL(event.target.files[0]);
-
 		}
-
 		this.upload();
 
 	}
@@ -140,7 +138,7 @@ export class FileUploadComponent implements OnInit {
 			this.canUpload = false;
 		} else {
 			for (let i = 0; i < this.attachments.length; i++) {
-				if ((this.attachments[i].fieldIdentifier === this.uploadModel.fieldIdentifier.toString()) && (this.attachments[i].labelName === this.uploadModel.labelName)) {
+				if (this.attachments[i].fieldIdentifier === this.uploadModel.fieldIdentifier.toString()) {
 					this.canUpload = true;
 					this.id = this.attachments[i].id;
 					this.type = this.attachments[i].mimeType;
