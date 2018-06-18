@@ -19,11 +19,11 @@ export class NoBirthRecordComponent implements OnInit {
 
 	@ViewChild(MatHorizontalStepper) stepper: MatHorizontalStepper;
 	@ViewChild(MatStepLabel) steplable: MatStepLabel;
-	private uploadFileArray: Array<any> =
-		[{ labelName: 'Date Of Birth', fieldIdentifier: '1.1' },
+	private uploadFileArray: Array<any> = [
+		{ labelName: 'Date Of Birth', fieldIdentifier: '1.1' },
 		{ labelName: 'Place Of Birth', fieldIdentifier: '1.2' },
 		{ labelName: 'Applicant Id', fieldIdentifier: '1.3' }
-		]
+	]
 
 	@ViewChild('address') addrComponent: any;
 
@@ -160,10 +160,10 @@ export class NoBirthRecordComponent implements OnInit {
 	setDataValue(indentifier: number, labelName: string, formPart: string, variableName: string) {
 
 		this.uploadModel = {
-			fieldIdentifier: indentifier,
-			labelName: labelName,
-			formPart: formPart,
-			variableName: variableName,
+			fieldIdentifier: indentifier.toString(),
+			labelName: labelName.toString(),
+			formPart: formPart.toString(),
+			variableName: variableName.toString(),
 			serviceFormId: this.appId,
 		}
 

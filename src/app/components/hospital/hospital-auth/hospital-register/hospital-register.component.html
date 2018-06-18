@@ -2,7 +2,7 @@
 	<div class="headingBox">Register
 		<span>Sign up by entering the information below</span>
 	</div>
-	<form [formGroup]="regForm" (ngSubmit)="onSignUp(regForm.value)" autocomplete="off" ngNativeValidate>
+	<form [formGroup]="regForm" (ngSubmit)="onSignUp(regForm)" autocomplete="off" ngNativeValidate>
 		<div class="row">
 			<mat-card class="col-md-12 cardH2">
 				<h2>Hospital Details</h2>
@@ -17,7 +17,7 @@
 			<div class="col-md-6">
 				<div class="iconMat2 ngSelect" formGroupName="hospitalType">
 					<mat-icon matPrefix>face</mat-icon>
-					<ng-select placeholder="Hospital Type" formControlName="code">
+					<ng-select placeholder="Hospital Type *" formControlName="code">
 						<ng-option *ngFor="let hosType of arrHospitalType" [value]="hosType.code">{{hosType.name}}</ng-option>
 					</ng-select>
 					<control-messages [control]="regForm.controls.hospitalType.controls.code"></control-messages>
@@ -51,7 +51,7 @@
 				<input matInput type="text" placeholder="Country" formControlName="country" required>
 			</mat-form-field>
 
-			<div class="col-md-12 mb-1">
+			<!-- <div class="col-md-12 mb-1">
 				<div class="iconMat2">
 					<mat-icon matPrefix>local_hospital</mat-icon>
 					<mat-label>Nursing Home</mat-label>
@@ -60,20 +60,9 @@
 						<mat-radio-button value="false">NO</mat-radio-button>
 					</mat-radio-group>
 				</div>
-			</div>
+			</div> -->
 			
 		</div>
-		
-		<!-- <div class="row m-1">
-			<div class="col-md-12 nursingHome">
-				<mat-icon matPrefix>local_hospital</mat-icon>
-				<mat-label>Nursing Home</mat-label>
-				<mat-radio-group class="example-radio-group" formControlName="nursingHome">
-					<mat-radio-button value="true">YES</mat-radio-button>
-					<mat-radio-button value="false">NO</mat-radio-button>
-				</mat-radio-group>
-			</div>
-		</div> -->
 		
 		<div class="row mt-2" formGroupName="userDetail">
 			<mat-card class="col-md-12 cardH2">
