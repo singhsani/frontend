@@ -1,0 +1,54 @@
+<h2 mat-dialog-title>
+  Add Employee</h2>
+<mat-dialog-content>
+  <form [formGroup]="shopLicNewForm">
+
+    <mat-form-field class="col-md-6">
+      <input matInput type="text" formControlName="firstName" [(ngModel)]="commonFormGroup.firstName" placeholder="{{'first_name' | translate:translateKey }}"
+        appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" required>
+      <control-messages [control]="shopLicNewForm.controls.firstName"></control-messages>
+    </mat-form-field>
+
+    <mat-form-field class="col-md-6">
+      <input matInput type="text" formControlName="middleName" [(ngModel)]="commonFormGroup.middleName" placeholder="{{'middlename_name' | translate:translateKey }}"
+        appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" required>
+      <control-messages [control]="shopLicNewForm.controls.middleName"></control-messages>
+    </mat-form-field>
+
+    <mat-form-field class="col-md-6">
+      <input matInput type="text" formControlName="lastName" [(ngModel)]="commonFormGroup.lastName" placeholder="{{'last_name' | translate:translateKey }}"
+        appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" required>
+      <control-messages [control]="shopLicNewForm.controls.lastName"></control-messages>
+    </mat-form-field>
+
+    <mat-form-field class="col-md-6">
+      <input matInput type="textarea" formControlName="address" [(ngModel)]="commonFormGroup.address" placeholder="{{'address' | translate:translateKey }}"
+        appValidationFields required>
+      <control-messages [control]="shopLicNewForm.controls.address"></control-messages>
+    </mat-form-field>
+
+    <div class="col-md-6 ngSelect" formGroupName="relestionship">
+      <ng-select formControlName="code" placeholder="{{ 'relestionship' | translate:translateKey }}">
+        <ng-option [(ngModel)]="commonFormGroup.relestionship" *ngFor="let relation of applicantrelationArray" [value]="relation.code">{{relation.name}}</ng-option>
+      </ng-select>
+    </div>
+
+    <div class="col-md-6 ngSelect" formGroupName="gender">
+      <ng-select formControlName="code" placeholder="{{ 'gender' | translate:translateKey }}">
+        <ng-option [(ngModel)]="commonFormGroup.gender" *ngFor="let relation of applicantrelationArray" [value]="relation.code">{{relation.name}}</ng-option>
+      </ng-select>
+    </div>
+
+    <mat-form-field class="col-md-6">
+      <input matInput type="text" formControlName="age" [(ngModel)]="commonFormGroup.age" placeholder="{{'age' | translate:translateKey }}"
+        appValidationFields required>
+      <control-messages [control]="shopLicNewForm.controls.age"></control-messages>
+    </mat-form-field>
+  </form>
+
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close (click)="dialogRef.close()">No</button>
+  <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->
+  <button mat-button [mat-dialog-close]="commonFormGroup" [disabled]="!shopLicNewForm.valid" cdkFocusInitial>Save</button>
+</mat-dialog-actions>
