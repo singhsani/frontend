@@ -6,22 +6,26 @@ import { HttpService } from '../../../../../../shared/services/http.service';
 })
 export class NewShopEstablishmentService {
 
+  /**
+   * @param httpService - Declare http Service property.
+   * */
   constructor(
-    private httpService:HttpService
-  ) {
-    
-   }
+    private httpService: HttpService
+  ) { }
 
-   /**
-	 * This method is use to create new employer member
-	 */
-	createEmployerFamily(params) {
-		let apiUrl = `api/form/shopLicense/${params.formId}/person/add?type=${params.type}`;
-		return this.httpService.get(apiUrl);
+  /**
+  * This method is use to create new employer member
+  */
+  createEmployerFamily(params) {
+    let apiUrl = `api/form/shopLicense/${params.formId}/person/add?type=${params.type}`;
+    return this.httpService.get(apiUrl);
   }
 
+  /**
+  * This method is use to remove employer member
+  */
   removeEmployerFamily(params) {
-		let apiUrl = `api/form/shopLicense/${params.formId}/person/remove?${params.type}`;
-		return this.httpService.get(apiUrl);
-	}
+    let apiUrl = `api/form/shopLicense/${params.formId}/person/remove?${params.type}`;
+    return this.httpService.get(apiUrl);
+  }
 }

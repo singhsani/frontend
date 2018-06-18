@@ -11,7 +11,6 @@ import { ShopLicDuplicateComponent } from './shop-lic-duplicate/shop-lic-duplica
 import { ShopLicModificationComponent } from './shop-lic-modification/shop-lic-modification.component';
 import { ShopLicRenewalComponent } from './shop-lic-renewal/shop-lic-renewal.component';
 import { ShopLicCancellationComponent } from './shop-lic-cancellation/shop-lic-cancellation.component';
-import { EmployeeDetailsDialogComponent } from './common/component/employee-details-dialog/employee-details-dialog.component';
 import { NewShopEstablishmentService } from './common/services/new-shop-establishment.service';
 /* Import all shared, core and routing module end */
 
@@ -25,13 +24,12 @@ import { NewShopEstablishmentService } from './common/services/new-shop-establis
     ShopAndEstablishmentRoutingModule
   ],
   declarations: [
-  ShopLicNewComponent,
-  ShopLicDuplicateComponent,
-  ShopLicModificationComponent,
-  ShopLicRenewalComponent,
-  ShopLicCancellationComponent,
-  EmployeeDetailsDialogComponent],
-  entryComponents:[EmployeeDetailsDialogComponent],
-  providers:[NewShopEstablishmentService]
+    ShopLicNewComponent,
+    ShopLicDuplicateComponent,
+    ShopLicModificationComponent,
+    ShopLicRenewalComponent,
+    ShopLicCancellationComponent],
+
+  providers: [NewShopEstablishmentService]
 })
 export class ShopAndEstablishmentModule { }
