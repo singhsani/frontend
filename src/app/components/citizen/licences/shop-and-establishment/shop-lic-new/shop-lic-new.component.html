@@ -7,10 +7,488 @@
 				<!-- first step start-->
 				<mat-step [label]="stepLable1">
 					<app-basic-details [basicFormGroup]="shopLicNewForm"></app-basic-details>
-					<app-action-bar [form]="shopLicNewForm" [step]="'final'" (stepReset)="stepReset()" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
+					<app-action-bar [form]="shopLicNewForm" [step]="'step1'"></app-action-bar>
 				</mat-step>
+
+				<!-- step 2 Starts -->
+
+				<!-- End step 2 -->
+
+				<!-- step 3 Starts -->
+				<mat-step [label]="stepLable2">
+					<ng-template matStepLabel>
+						<div matTooltip="Establishment Details">Establishment Details</div>
+					</ng-template>
+
+					<div class="row">
+						<mat-form-field class="col-md-4">
+							<input matInput required maxlength="30" placeholder="Name of Establishment if Any" formControlName="establishmentName">
+							<control-messages [control]="shopLicNewForm.controls.establishmentName"></control-messages>
+						</mat-form-field>
+
+						<mat-form-field class="col-md-4">
+							<input matInput required maxlength="150" placeholder="Situation of Establishment" formControlName="situationOfEstablishment">
+							<control-messages [control]="shopLicNewForm.controls.situationOfEstablishment"></control-messages>
+						</mat-form-field>
+
+						<div class="col-md-4 ngSelect" formGroupName="noOfHumanWorking">
+							<ng-select placeholder="Working in organization Number of Human >10? *" formControlName="code" required>
+								<ng-option [value]="1">Yes</ng-option>
+								<ng-option [value]="0">No</ng-option>
+							</ng-select>
+							<control-messages [control]="shopLicNewForm.controls.noOfHumanWorking"></control-messages>
+						</div>
+
+						<div class="col-md-4 ngSelect" formGroupName="assessmentDoneByVMC">
+							<ng-select placeholder="Assessment Done by VMC *" formControlName="code" required>
+								<ng-option [value]="1">Yes</ng-option>
+								<ng-option [value]="0">No</ng-option>
+							</ng-select>
+							<control-messages [control]="shopLicNewForm.controls.assessmentDoneByVMC"></control-messages>
+						</div>
+
+						<mat-form-field class="col-md-4">
+							<input matInput required maxlength="15" placeholder="Enter Property Tax No" formControlName="propertyTaxNo">
+							<control-messages [control]="shopLicNewForm.controls.propertyTaxNo"></control-messages>
+						</mat-form-field>
+
+						<div class="col-md-4 ngSelect" formGroupName="wardNo">
+							<ng-select placeholder="{{'Ward No' | translate:translateKey}} *" formControlName="code">
+								<ng-option *ngFor="let no of wardNo" [value]="no.code">{{no.name}}</ng-option>
+							</ng-select>
+							<control-messages [control]="shopLicNewForm.controls.wardNo"></control-messages>
+						</div>
+
+						<mat-form-field class="col-md-4">
+							<input matInput OnlyNumber maxlength="12" placeholder="Aadhar Card No" formControlName="aadharNumber">
+						</mat-form-field>
+
+						<mat-form-field class="col-md-4">
+							<input matInput OnlyNumber maxlength="3" placeholder="Professional Tax PEC No" formControlName="professionalTaxPECNo">
+						</mat-form-field>
+
+						<mat-form-field class="col-md-4">
+							<input matInput OnlyNumber maxlength="3" placeholder="PRC NO" formControlName="prcNo">
+						</mat-form-field>
+
+						<div class="col-md-4 ngSelect" formGroupName="applicantVimaAmountPaid">
+							<ng-select placeholder="Group vima Amount Paid by Applicant?" formControlName="code" (ngModelChange)="showConfirm($event)">
+								<ng-option [value]="1">Yes</ng-option>
+								<ng-option [value]="0">No</ng-option>
+							</ng-select>
+						</div>
+
+						<mat-form-field class="col-md-4" *ngIf="shopLicNewForm.get('applicantVimaAmountPaid').value=='1'">
+							<input matInput OnlyNumber maxlength="10" placeholder="No" formControlName="number">
+						</mat-form-field>
+
+						<div class="col-md-12">Postal Address of Establishment
+							<app-address #postalAddressEstablishment [addressFormGroup]="shopLicNewForm.controls.postalAddress"></app-address>
+						</div>
+					</div>
+					<app-action-bar [form]="shopLicNewForm" [step]="'step3'"></app-action-bar>
+				</mat-step>
+				<!-- step 3 Ends -->
+
+				<!-- step 4 Starts -->
+				<mat-step [label]="stepLable2">
+					<ng-template matStepLabel>
+						<div matTooltip="Employer Details">Employer Details</div>
+					</ng-template>
+
+					<div class="row">
+						<mat-form-field class="col-md-12">
+							<label>Situation of office, storeroom, godown,warehouse or work place if any attached to a shop but outside the premises
+								different from those of shops.</label>
+							<input matInput required maxlength="100" formControlName="situationOfOffice">
+							<control-messages [control]="shopLicNewForm.controls.situationOfOffice"></control-messages>
+						</mat-form-field>
+
+						<mat-form-field class="col-md-6">
+							<input matInput required maxlength="50" placeholder="Name of Employer" formControlName="nameOfEmployer">
+							<control-messages [control]="shopLicNewForm.controls.nameOfEmployer"></control-messages>
+						</mat-form-field>
+
+						<mat-form-field class="col-md-6">
+							<input matInput required maxlength="100" placeholder="Residential Address Of Employer" formControlName="residentialAddressOfEmployee">
+							<control-messages [control]="shopLicNewForm.controls.residentialAddressOfEmployee"></control-messages>
+						</mat-form-field>
+
+						<mat-form-field class="col-md-6">
+							<input matInput required maxlength="100" placeholder="Name of Manager" formControlName="nameOfManager">
+							<control-messages [control]="shopLicNewForm.controls.nameOfManager"></control-messages>
+						</mat-form-field>
+
+						<!-- <mat-form-field class="col-md-6">
+							<input matInput required maxlength="100" placeholder="Residential Address Of NameofManager" formControlName="ResidentialAddressOfManager">
+							<control-messages [control]="shopLicNewForm.controls.ResidentialAddressOfManager"></control-messages>
+						</mat-form-field> -->
+
+						<div class="col-md-12 ngSelect" formGroupName="categoryOfBusiness">
+							<label>Category of Business i,e, shop commercial Establishment, Residential Hotel,Restaurant,Eating house, Theater, or Other
+								Place of Public amusement of Entertainment.</label>
+							<ng-select placeholder="{{'Category Of Business' | translate:translateKey}} *" formControlName="code">
+								<ng-option *ngFor="let category of businessCategory" [value]="category.code">{{category.name}}</ng-option>
+							</ng-select>
+							<control-messages [control]="shopLicNewForm.controls.categoryOfBusiness"></control-messages>
+						</div>
+
+						<div class="col-md-6 ngSelect" formGroupName="subCategoryOfBusiness">
+							<label>Sub Category of Business</label>
+							<ng-select formControlName="code" required>
+								<ng-option [value]="1">Yes</ng-option>
+								<ng-option [value]="0">No</ng-option>
+							</ng-select>
+							<control-messages [control]="shopLicNewForm.controls.subCategoryOfBusiness"></control-messages>
+						</div>
+
+						<mat-form-field class="col-md-6">
+							<input matInput required maxlength="50" placeholder="Name of Business" formControlName="nameOfBusiness">
+							<control-messages [control]="shopLicNewForm.controls.nameOfBusiness"></control-messages>
+						</mat-form-field>
+
+						<mat-form-field class="col-md-6">
+							<input matInput [max]="disablefutureDate" [matDatepicker]="DateOfCommencementOfBusiness" formControlName="commencementOfBusinessDate"
+							 (dateChange)="dateFormat($event.value,'commencementOfBusinessDate')" placeholder="Date of commencement of Business"
+							 (click)="DateOfCommencementOfBusiness.open()" (focus)="DateOfCommencementOfBusiness.open()" readonly>
+							<mat-datepicker-toggle matSuffix [for]="DateOfCommencementOfBusiness"></mat-datepicker-toggle>
+							<mat-datepicker #DateOfCommencementOfBusiness></mat-datepicker>
+							<control-messages [control]="shopLicNewForm.controls.commencementOfBusinessDate"></control-messages>
+						</mat-form-field>
+					</div>
+					<app-action-bar [form]="shopLicNewForm" [step]="'step4'"></app-action-bar>
+				</mat-step>
+				<!-- step 4 Ends -->
+
+				<!-- step 5 Starts -->
+				<mat-step [stepControl]="Detail">
+					<ng-template matStepLabel>
+						<div [matTooltip]="'Employer family' | translate: translateKey">{{'Employer family' | translate: translateKey}}</div>
+					</ng-template>
+
+					<div formArrayName="employerFamilyList">
+						<div class="row mt-4" *ngFor="let item of shopLicNewForm.get('employerFamilyList').controls; let i = index;" [formGroupName]="i">
+
+							<mat-card class="col-md-12 cardH2">
+								<h2 class="col-md-10 float-left">Employer family {{i+1}}</h2>
+								<div class="col-md-2 float-right text-right" *ngIf="i==0"></div>
+								<div matTooltip="Delete Child Information" [hidden]="!shopLicNewForm.controls.canEdit.value" class="col-md-2 float-right text-right"
+								 *ngIf="i > 0">
+									<mat-icon color="warn">delete</mat-icon>
+								</div>
+							</mat-card>
+
+							<!-- basic detail -->
+							<mat-form-field class="col-md-4">
+								<input matInput appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{'name' | translate:translateKey}}"
+								 formControlName="name" required>
+								<!-- <control-messages [control]="shopLicNewForm.controls.name"></control-messages> -->
+							</mat-form-field>
+
+							<mat-form-field class="col-md-4">
+								<input matInput OnlyNumber maxlength="12" minlength="12" placeholder="{{'aadhar_number' | translate:translateKey}}" formControlName="aadhaarNo">
+								<!-- <control-messages [control]="shopLicNewForm.controls.aadhaarNo"></control-messages> -->
+							</mat-form-field>
+
+							<mat-form-field class="col-md-4">
+								<input matInput OnlyNumber placeholder="{{'applicant_mobile' | translate:translateKey}}" type="tel" maxlength="10" minlength="10"
+								 formControlName="contactNo" required>
+								<!-- <control-messages [control]="shopLicNewForm.controls.contactNo"></control-messages> -->
+							</mat-form-field>
+
+							<mat-form-field class="col-md-4">
+								<input matInput appPreventSpace placeholder="{{'applicant_email' | translate:translateKey}}" type="email" formControlName="email"
+								 required>
+								<!-- <control-messages [control]="shopLicNewForm.controls.email"></control-messages> -->
+							</mat-form-field>
+							<!-- end basic detail -->
+
+							<mat-form-field class="col-md-4">
+								<input matInput formControlName="address" placeholder="{{'address' | translate:translateKey }}" name="address">
+								<!-- <control-messages [control]="shopLicNewForm.controls.partnerList.controls[i].controls.address"></control-messages> -->
+							</mat-form-field>
+
+							<mat-form-field class="col-md-4">
+								<input matInput maxlength="3" OnlyNumber placeholder="{{'age' | translate:translateKey}}" formControlName="age">
+								<!-- <control-messages [control]="shopLicNewForm.controls.partnerList.controls[i].controls.age"></control-messages> -->
+							</mat-form-field>
+
+							<div class="col-md-4 ngSelect" formGroupName="relationship">
+								<ng-select placeholder="{{'relationship' | translate:translateKey}} *" formControlName="code">
+									<ng-option *ngFor="let relationship of relationship" [value]="relationship.code">{{relationship.name}}</ng-option>
+								</ng-select>
+								<!-- <control-messages [control]="birthCertificateForm.controls.partnerList.controls[i].controls.relationship.controls.code"></control-messages> -->
+							</div>
+
+							<div class="col-md-4 radioBtnError" formGroupName="gender">
+								<div>
+									<mat-label>{{'gender' | translate:translateKey}} *</mat-label>
+									<mat-radio-group formControlName="code">
+										<mat-radio-button *ngFor="let gender of gender" [value]="gender.code">
+											{{gender.name}}
+										</mat-radio-button>
+									</mat-radio-group>
+									<!-- <control-messages [control]="shopLicNewForm.controls.partnerList.controls[i].controls.gender.controls.code"></control-messages>
+						 -->
+								</div>
+							</div>
+						</div>
+					</div>
+					<button class="float-right" [disabled]="!shopLicNewForm.controls.canEdit.value" matTooltip="Add More Partner" type="button"
+					 mat-mini-fab color="accent" (click)="addEmployerFamily('EMPLOYER_FAMILY')">
+						<mat-icon>add</mat-icon>
+					</button>
+
+					<app-action-bar [form]="shopLicNewForm" [step]="'step5'"></app-action-bar>
+				</mat-step>
+				<!-- step 5 Ends -->
+
+				<!-- step 6 Starts -->
+				<mat-step [stepControl]="Detail">
+					<ng-template matStepLabel>
+						<div [matTooltip]="'Partner List' | translate: translateKey">{{'Partner List' | translate: translateKey}}</div>
+					</ng-template>
+
+					<div formArrayName="partnerList">
+						<div class="row mt-4" *ngFor="let item of shopLicNewForm.get('partnerList').controls; let i = index;" [formGroupName]="i">
+
+							<mat-card class="col-md-12 cardH2">
+								<h2 class="col-md-10 float-left">Partner {{i+1}}</h2>
+								<div class="col-md-2 float-right text-right" *ngIf="i==0"></div>
+								<div matTooltip="Delete Child Information" [hidden]="!shopLicNewForm.controls.canEdit.value" class="col-md-2 float-right text-right"
+								 *ngIf="i > 0">
+									<mat-icon color="warn">delete</mat-icon>
+								</div>
+							</mat-card>
+
+							<!-- basic detail -->
+							<mat-form-field class="col-md-4">
+								<input matInput appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{'first_name' | translate:translateKey}}"
+								 formControlName="name" required>
+								<!-- <control-messages [control]="shopLicNewForm.controls.name"></control-messages> -->
+							</mat-form-field>
+
+							<mat-form-field class="col-md-4">
+								<input matInput OnlyNumber maxlength="12" minlength="12" placeholder="{{'aadhar_number' | translate:translateKey}}" formControlName="aadhaarNo">
+								<!-- <control-messages [control]="shopLicNewForm.controls.aadhaarNo"></control-messages> -->
+							</mat-form-field>
+
+							<mat-form-field class="col-md-4">
+								<input matInput OnlyNumber placeholder="{{'applicant_mobile' | translate:translateKey}}" type="tel" maxlength="10" minlength="10"
+								 formControlName="contactNo" required>
+								<!-- <control-messages [control]="shopLicNewForm.controls.contactNo"></control-messages> -->
+							</mat-form-field>
+
+							<mat-form-field class="col-md-4">
+								<input matInput appPreventSpace placeholder="{{'applicant_email' | translate:translateKey}}" type="email" formControlName="email"
+								 required>
+								<!-- <control-messages [control]="shopLicNewForm.controls.email"></control-messages> -->
+							</mat-form-field>
+							<!-- end basic detail -->
+
+							<mat-form-field class="col-md-4">
+								<input matInput formControlName="address" placeholder="{{'address' | translate:translateKey }}" name="address">
+								<!-- <control-messages [control]="shopLicNewForm.controls.partnerList.controls[i].controls.address"></control-messages> -->
+							</mat-form-field>
+
+							<mat-form-field class="col-md-4">
+								<input matInput maxlength="3" OnlyNumber placeholder="{{'age' | translate:translateKey}}" formControlName="age">
+								<!-- <control-messages [control]="shopLicNewForm.controls.partnerList.controls[i].controls.age"></control-messages> -->
+							</mat-form-field>
+
+							<div class="col-md-4 ngSelect" formGroupName="relationship">
+								<ng-select placeholder="{{'relationship' | translate:translateKey}} *" formControlName="code">
+									<ng-option *ngFor="let relationship of relationship" [value]="relationship.code">{{relationship.name}}</ng-option>
+								</ng-select>
+								<!-- <control-messages [control]="birthCertificateForm.controls.partnerList.controls[i].controls.relationship.controls.code"></control-messages> -->
+							</div>
+
+							<div class="col-md-4 radioBtnError" formGroupName="gender">
+								<div>
+									<mat-label>{{'gender' | translate:translateKey}} *</mat-label>
+									<mat-radio-group formControlName="code">
+										<mat-radio-button *ngFor="let gender of gender" [value]="gender.code">
+											{{gender.name}}
+										</mat-radio-button>
+									</mat-radio-group>
+									<!-- <control-messages [control]="shopLicNewForm.controls.partnerList.controls[i].controls.gender.controls.code"></control-messages>
+								 -->
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<button class="float-right" [disabled]="!shopLicNewForm.controls.canEdit.value" matTooltip="Add More Partner" type="button"
+					 mat-mini-fab color="accent" (click)="addMore('PARTNER')">
+						<mat-icon>add</mat-icon>
+					</button>
+
+					<app-action-bar [form]="shopLicNewForm" [step]="'step5'"></app-action-bar>
+				</mat-step>
+				<!-- step 6 Ends -->
+
+				<!-- step Attachment Starts -->
+				<mat-step [label]="stepLable2">
+					<ng-template matStepLabel>
+						<div matTooltip="Attachment">Owner Attachment</div>
+					</ng-template>
+					<div class="row">
+						<div class="col-md-12">
+							<h2>Owner Checklist</h2>
+						</div>
+
+						<div class="col-md-4">
+							<div *ngIf="showButtons">
+								<label>Organizational ownership agreement copy</label>
+								<file-upload [form]="shopLicNewForm" [uploadModel]="setDataValue(1,'OrganizationalOwnershipAgreementCopy','1.6','doc')"></file-upload>
+							</div>
+						</div>
+
+						<div class="col-md-4">
+							<div *ngIf="showButtons">
+								<label>Property tax current year receipt of organization</label>
+								<file-upload [form]="shopLicNewForm" [uploadModel]="setDataValue(2,'PropertyTaxCurrentYearReceiptOfOrganization','1.6','doc')"></file-upload>
+							</div>
+						</div>
+
+						<div class="col-md-4">
+							<div *ngIf="showButtons">
+								<label>Organization Business tax current year Receipt</label>
+								<file-upload [form]="shopLicNewForm" [uploadModel]="setDataValue(3,'OrganizationBusinessTaxCurrentYearReceipt','1.6','doc')"></file-upload>
+							</div>
+						</div>
+
+						<div class="col-md-4">
+							<div *ngIf="showButtons">
+								<label>Workers professional tax receipt</label>
+								<file-upload [form]="shopLicNewForm" [uploadModel]="setDataValue(4,'WorkersProfessionalTaxReceipt','1.6','doc')"></file-upload>
+							</div>
+						</div>
+
+						<div class="col-md-4">
+							<div *ngIf="showButtons">
+								<label>Partnership deed copy of Partner if there is a partner</label>
+								<file-upload [form]="shopLicNewForm" [uploadModel]="setDataValue(5,'PartnershipDeedCopyOfPartnerIfThereIsAPartner','1.6','doc')"></file-upload>
+							</div>
+						</div>
+
+						<div class="col-md-4">
+							<div *ngIf="showButtons">
+								<label>If there are more then 10 or more workers, Receipt of Gujarat Labor welfare fund</label>
+								<file-upload [form]="shopLicNewForm" [uploadModel]="setDataValue(6,'MoreWorkers','1.6','doc')"></file-upload>
+							</div>
+						</div>
+
+						<div class="col-md-4">
+							<div *ngIf="showButtons">
+								<label>Commercial basis in the concept</label>
+								<file-upload [form]="shopLicNewForm" [uploadModel]="setDataValue(7,'CommercialBasisInTheConcept','1.6','doc')"></file-upload>
+							</div>
+						</div>
+
+						<div class="col-md-4">
+							<div *ngIf="showButtons">
+								<label>Adhar Card</label>
+								<file-upload [form]="shopLicNewForm" [uploadModel]="setDataValue(8,'AdharCardOwner','1.6','doc')"></file-upload>
+							</div>
+						</div>
+
+						<div class="col-md-4">
+							<div *ngIf="showButtons">
+								<label>PAN Card</label>
+								<file-upload [form]="shopLicNewForm" [uploadModel]="setDataValue(9,'PANCardOwner','1.6','doc')"></file-upload>
+							</div>
+						</div>
+					</div>
+
+				</mat-step>
+
+				<mat-step [label]="stepLable2">
+					<ng-template matStepLabel>
+						<div matTooltip="Attachment">Tenant Attachment</div>
+					</ng-template>
+					<div class="row">
+						<div class="col-md-12">
+							<h2>Hire Tenant</h2>
+						</div>
+
+						<div class="col-md-4">
+							<div *ngIf="showButtons">
+								<label>Organization Rental Agreement</label>
+								<file-upload [form]="shopLicNewForm" [uploadModel]="setDataValue(10,'OrganizationRentalAgreement','1.6','doc')"></file-upload>
+							</div>
+						</div>
+
+						<div class="col-md-4">
+							<div *ngIf="showButtons">
+								<label>Property tax current Year Receipt of organization</label>
+								<file-upload [form]="shopLicNewForm" [uploadModel]="setDataValue(11,'PropertytaxcurrentYearReceiptoforganization','1.6','doc')"></file-upload>
+							</div>
+						</div>
+
+						<div class="col-md-4">
+							<div *ngIf="showButtons">
+								<label>organization business tax current year receipt</label>
+								<file-upload [form]="shopLicNewForm" [uploadModel]="setDataValue(12,'organizationbusinesstaxcurrentyearreceipt','1.6','doc')"></file-upload>
+							</div>
+						</div>
+
+						<div class="col-md-4">
+							<div *ngIf="showButtons">
+								<label>workers professional tax receipts</label>
+								<file-upload [form]="shopLicNewForm" [uploadModel]="setDataValue(13,'workersprofessionaltaxreceipts','1.6','doc')"></file-upload>
+							</div>
+						</div>
+
+						<div class="col-md-4">
+							<div *ngIf="showButtons">
+								<label>If there are more then 10 or more workers, Receipt of Gujarat Labor welfare fund</label>
+								<file-upload [form]="shopLicNewForm" [uploadModel]="setDataValue(14,'Laborwelfarefund','1.6','doc')"></file-upload>
+							</div>
+						</div>
+
+						<div class="col-md-4">
+							<div *ngIf="showButtons">
+								<label>Partnership deed copy of partner if there is a partner</label>
+								<file-upload [form]="shopLicNewForm" [uploadModel]="setDataValue(15,'Partnershipdeedcopy','1.6','doc')"></file-upload>
+							</div>
+						</div>
+
+						<div class="col-md-4">
+							<div *ngIf="showButtons">
+								<label>commercial basis in the concept</label>
+								<file-upload [form]="shopLicNewForm" [uploadModel]="setDataValue(16,'commercialbasisconcept','1.6','doc')"></file-upload>
+							</div>
+						</div>
+
+						<div class="col-md-4">
+							<div *ngIf="showButtons">
+								<label>PTenantrescribed certificate</label>
+								<file-upload [form]="shopLicNewForm" [uploadModel]="setDataValue(17,'Prescribedcertificate','1.6','doc')"></file-upload>
+							</div>
+						</div>
+
+						<div class="col-md-4">
+							<div *ngIf="showButtons">
+								<label>Adhar Card</label>
+								<file-upload [form]="shopLicNewForm" [uploadModel]="setDataValue(18,'AdharCardTenant','1.6','doc')"></file-upload>
+							</div>
+						</div>
+
+						<div class="col-md-4">
+							<div *ngIf="showButtons">
+								<label>PAN Card</label>
+								<file-upload [form]="shopLicNewForm" [uploadModel]="setDataValue(19,'PANCardTenant','1.6','doc')"></file-upload>
+							</div>
+						</div>
+
+					</div>
+
+				</mat-step>
+				<!-- step Attachment Ends -->
 
 			</mat-horizontal-stepper>
 		</form>
+		{{ shopLicNewForm.value | json }}
 	</mat-card>
 </div>
