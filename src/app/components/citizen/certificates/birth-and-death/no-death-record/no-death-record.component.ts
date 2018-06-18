@@ -22,6 +22,12 @@ export class NoDeathRecordComponent implements OnInit {
 
 	@ViewChild('address') addrComponent: any;
 
+	private uploadFileArray: Array<any> = [
+		{ labelName: 'Deceased', fieldIdentifier: '1.1' },
+		{ labelName: 'BasicDetails', fieldIdentifier: '1.2' },
+		{ labelName: 'Applicant Id', fieldIdentifier: '1.3' }
+	]
+
 	noRecordDeathForm: FormGroup;
 	translateKey: string = 'nrcDeathScreen';
 
@@ -150,10 +156,10 @@ export class NoDeathRecordComponent implements OnInit {
 	setDataValue(indentifier: number, labelName: string, formPart: string, variableName: string) {
 
 		this.uploadModel = {
-			fieldIdentifier: indentifier,
-			labelName: 'NRCDeath',
-			formPart: '6',
-			variableName: 'test',
+			fieldIdentifier: indentifier.toString(),
+			labelName: labelName.toString(),
+			formPart: formPart.toString(),
+			variableName: variableName.toString(),
 			serviceFormId: this.appId,
 		}
 
@@ -186,6 +192,31 @@ export class NoDeathRecordComponent implements OnInit {
 			this.noRecordDeathForm.get('applicantRelationDetail').setValidators([Validators.required]);
 		}
 		this.noRecordDeathForm.controls['applicantRelationDetail'].updateValueAndValidity();
+	}
+
+	/**
+	 * Method is used to get file status.
+	 * @param fieldIdentifier - file identifier.
+	 */
+
+	getFileObjectContained(fieldIdentifier: string) {
+		let found: boolean = false;
+		for (let i = 0; i < this.uploadFileArray.length; i++) {
+			if (this.uploadFileArray[i].fieldIdentifier == fieldIdentifier) {
+				found = true;
+				break;
+			}
+		}
+		return found;
+	}
+
+	/**
+	 * Method is used to create file object.
+	 * @param labelName - file labelName
+	 * @param fieldIdentifier - file identifier
+	 */
+	fileObjectCreater(labelName, fieldIdentifier): any {
+		return { labelName: labelName, fieldIdentifier: fieldIdentifier }
 	}
 
 }

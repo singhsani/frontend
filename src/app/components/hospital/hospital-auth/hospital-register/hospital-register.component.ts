@@ -54,14 +54,12 @@ export class HospitalRegisterComponent implements OnInit {
 			}),
 			addressLine1: [null, Validators.required],
 			addressLine2: [null, Validators.required],
-			city: ['Vadodara', Validators.required],
-			state: ['Gujarat', Validators.required],
-			country: ['India', Validators.required],
+			city: [{ value: 'Vadodara', disabled: true }, Validators.required],
+			state: [{ value: 'Gujarat', disabled: true }, Validators.required],
+			country: [{ value: 'India', disabled: true }, Validators.required],
+			
+			
 		}, { validator: this.matchingPasswords('password', 'confirmPassword') });
-
-		this.regForm.get('city').disable();
-		this.regForm.get('state').disable();
-		this.regForm.get('country').disable();
 
 		this.appService.getHosUserLookups().subscribe(
 			res => {
@@ -97,7 +95,7 @@ export class HospitalRegisterComponent implements OnInit {
 	 */
 	onSignUp(formVals: FormGroup) {
 
-		this.appService.registerUser(formVals).subscribe(
+		this.appService.registerUser(formVals.getRawValue()).subscribe(
 			res => {
 				this.router.navigate(['hospital/auth/login']);
 			});
