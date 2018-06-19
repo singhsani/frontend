@@ -10,11 +10,17 @@
 //     --step-bullet-color: white;
 //     counter-reset: current-step;
 // }
+.mat-error {
+    bottom: -15px;
+    left: 0;
+    font-size: 11px;
+}
 
-
-.imageSize{
+.imageSize {
     width: 100px;
     height: 100px;
 }
 
-.formClass {margin-bottom: 0 !important;}
+.formClass {
+    margin-bottom: 0 !important;
+}
