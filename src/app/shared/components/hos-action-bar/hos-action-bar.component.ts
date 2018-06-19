@@ -87,6 +87,7 @@ export class HosActionBarComponent implements OnInit, OnChanges {
 	 * This method is used for save form as draft using API
 	 */
 	saveAsDraft() {
+		console.log(this.form.value)
 
 		this.isSaveBtnDisabled = true;
 
@@ -172,6 +173,7 @@ export class HosActionBarComponent implements OnInit, OnChanges {
 	 * This method is use for clear the form
 	 */
 	resetForm() {
+		
 		this.commonForm.patchValue(this.form.value);
 		this.form.reset();
 		this.form.patchValue(this.commonForm.value);
