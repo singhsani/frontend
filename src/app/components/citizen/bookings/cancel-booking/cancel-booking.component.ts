@@ -28,7 +28,7 @@ export class CancelBookingComponent implements OnInit {
 		private router: Router,
 		private session: SessionStorageService,
 		private commonService: CommonService
-	) { 
+	) {
 		let resourcesList = [
 			{
 				type: 'townhall',
@@ -49,7 +49,7 @@ export class CancelBookingComponent implements OnInit {
 		]
 		this.resources = resourcesList;
 	}
-	
+
 	ngOnInit() {
 
 		this.searchBookingsForm = this.fb.group({
@@ -61,7 +61,7 @@ export class CancelBookingComponent implements OnInit {
 		this.getAllBooking();
 	}
 
-	getAllBooking(){
+	getAllBooking() {
 
 		this.bookingService.resourceType = this.searchBookingsForm.get('resourceType').value;
 
@@ -88,7 +88,7 @@ export class CancelBookingComponent implements OnInit {
 		});
 	}
 
-	diffr(date){
+	diffr(date) {
 		var now = moment(new Date());
 		var end = moment(date);
 		return end.diff(now, 'minutes');
@@ -102,13 +102,13 @@ export class CancelBookingComponent implements OnInit {
 
 		let className = '';
 
-		if(this.diffr(data.slot.end) <= 0)
+		if (this.diffr(data.slot.end) <= 0)
 			className = 'bg-info';
 		if (data.status == 'Booked' && (this.diffr(data.slot.end) > 0))
 			className = 'bg-warning';
-		if(data.status == 'Cancelled')
+		if (data.status == 'Cancelled')
 			className = 'bg-danger';
-		
+
 		return className;
 	}
 
