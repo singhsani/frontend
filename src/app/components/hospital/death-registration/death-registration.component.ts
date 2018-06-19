@@ -195,32 +195,38 @@ export class DeathRegistrationComponent implements OnInit {
 	 * @param delay - delay period
 	 */
 	delayAlert(delay: number) {
-		if (delay > this.daysInThisMonth() && delay < this.daysInThisYear()) {
-			if (!this.getFileObjectContained('1.7')) {
-				if (!this.getFileObjectContained('1.8')) {
-					this.uploadFileArray.push(this.fileObjectCreater('Affidavit Or Health Order', '1.7'));
-				} else {
-					this.uploadFileArray.pop();
-					this.uploadFileArray.push(this.fileObjectCreater('Affidavit Or Health Order', '1.7'));
-				}
-			}
-			let html = `<p>It will considered as delayed Death Registration because
-			 registration date is more than 30 days and there will be extra attachment (Affidavit Or health Order) as well as fees.`
-			this.commonService.openAlert("Delayed Registration", "", "", html);
-		} else if (delay > this.daysInThisYear()) {
-			if (!this.getFileObjectContained('1.8')) {
+		if (this.deathCertificateForm.get('unknownCategory').get('code').value == "YES"){
+			this.uploadFileArray = [this.fileObjectCreater('Police Inquest', '1.5'), this.fileObjectCreater('Post Mortem Report', '1.6')];
+		} else {
+			if (delay > this.daysInThisMonth() && delay < this.daysInThisYear()) {
 				if (!this.getFileObjectContained('1.7')) {
-
-					this.uploadFileArray.push(this.fileObjectCreater('Court Order', '1.8'));
-				} else {
-					this.uploadFileArray.pop();
-					this.uploadFileArray.push(this.fileObjectCreater('Court Order', '1.8'));
+					if (!this.getFileObjectContained('1.8')) {
+						this.uploadFileArray.push(this.fileObjectCreater('Affidavit Or Health Order', '1.7'));
+					} else {
+						this.uploadFileArray.pop();
+						this.uploadFileArray.push(this.fileObjectCreater('Affidavit Or Health Order', '1.7'));
+					}
 				}
-			}
-			let html = `<p>It will considered as delayed Death Registration because
+				let html = `<p>It will considered as delayed Death Registration because
+			 registration date is more than 30 days and there will be extra attachment (Affidavit Or health Order) as well as fees.`
+				this.commonService.openAlert("Delayed Registration", "", "", html);
+			} else if (delay > this.daysInThisYear()) {
+				if (!this.getFileObjectContained('1.8')) {
+					if (!this.getFileObjectContained('1.7')) {
+
+						this.uploadFileArray.push(this.fileObjectCreater('Court Order', '1.8'));
+					} else {
+						this.uploadFileArray.pop();
+						this.uploadFileArray.push(this.fileObjectCreater('Court Order', '1.8'));
+					}
+				}
+				let html = `<p>It will considered as delayed Death Registration because
 			 registration date is more than 1 year and there will be extra attachment (Court Order) as well as fees.`
-			this.commonService.openAlert("Delayed Registration", "", "", html);
+				this.commonService.openAlert("Delayed Registration", "", "", html);
+			}
+
 		}
+		
 	}
 
 
@@ -500,10 +506,10 @@ export class DeathRegistrationComponent implements OnInit {
 	   * @param formPart - file form part
 	   * @param variableName - file variable name.
 	   */
-	setDataValue(indentifier: number, labelName: string, formPart: string, variableName: string) {
+	setDataValue(indentifier: string, labelName: string, formPart: string, variableName: string) {
 
 		this.uploadModel = {
-			fieldIdentifier: indentifier,
+			fieldIdentifier: indentifier.toString(),
 			labelName: labelName,
 			formPart: formPart,
 			variableName: variableName,

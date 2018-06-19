@@ -36,7 +36,7 @@ import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
 @NgModule({
 	declarations: [
 		AppComponent,
-		PageNotFoundComponent
+		PageNotFoundComponent,
 	],
 	imports: [
 		HospitalModule,

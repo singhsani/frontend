@@ -509,7 +509,7 @@ export class BirthRegistrationComponent implements OnInit {
 	 * @param formPart - file form part
 	 * @param variableName - file variable name.
 	 */
-	setDataValue(indentifier: number, labelName: string, formPart: string, variableName: string) {
+	setDataValue(indentifier: string, labelName: string, formPart: string, variableName: string) {
 
 		this.uploadModel = {
 			fieldIdentifier: indentifier,
