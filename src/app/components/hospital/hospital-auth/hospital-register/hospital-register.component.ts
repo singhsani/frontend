@@ -98,6 +98,9 @@ export class HospitalRegisterComponent implements OnInit {
 		this.appService.registerUser(formVals.getRawValue()).subscribe(
 			res => {
 				this.router.navigate(['hospital/auth/login']);
+			},
+			err => {
+				this.toster.error(err.error[0].code);
 			});
 	}
 

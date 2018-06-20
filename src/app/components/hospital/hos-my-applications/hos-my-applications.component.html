@@ -63,6 +63,10 @@
                     <button mat-icon-button [disabled]="row.canSubmit" (click)="printReceipt(row.serviceDetail.code, row.serviceDetail.name, row.serviceFormId)">
                         <mat-icon title="Print Receipt">print</mat-icon>
                     </button>
+
+                    <button mat-icon-button data-toggle="modal" (click)="openModal(template);jsonDisplay(row.serviceDetail.code, row.serviceDetail.name, row.serviceFormId)">
+                        <mat-icon title="JSON Format">center_focus_weak</mat-icon>
+                    </button>
                 </mat-cell>
             </ng-container>
 
@@ -74,3 +78,33 @@
         </mat-paginator>
     </div>
 </div>
+
+
+<!-- Json Modal start -->
+<ng-template #template>
+    <div class="modal-header">
+        <div class="col-9">
+            <h5 class="modal-title pull-left">Application JSON</h5>
+        </div>
+        <div class="col-2">
+            <button class="pull-left mat-icon-button" (click)="copyText(copytext)">
+                <mat-icon title="Copy to Clipboard">content_copy</mat-icon>
+            </button>
+        </div>
+        <div class="col-1">
+            <button title="Close" class=" mat-icon-button" aria-label="Close" (click)="modalRef.hide()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </div>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-12">
+                <textarea type="text" readonly class="text-left textjson" value="{{JSONdata}}" #copytext> 
+                    </textarea>
+            </div>
+        </div>
+        <!-- <pre class="text-left" #copytext style="color: #9cdcfe;background: #212529;overflow: hidden">{{JSONdata}}</pre> -->
+    </div>
+</ng-template>
+<!-- Json Modal end -->

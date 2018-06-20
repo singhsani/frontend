@@ -132,4 +132,14 @@ export class HosFormActionsService {
 		return this.http.get(this.requestURL, 'printReceipt');
 	}
 
+	/**
+	 * This method is use to display JSON format.
+	 * @param appId - citizen app id
+	 */
+	viewJson(appId) {
+
+		let requestURL = `api/form/${this.apiType}/json/${appId}`;
+		return this.http.get(requestURL);
+	}
+
 }
