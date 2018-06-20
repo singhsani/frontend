@@ -1,5 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { Router } from '@angular/router';
+
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { Observable ,  merge ,  of as observableOf } from 'rxjs';
@@ -31,6 +34,9 @@ export class HosMyApplicationsComponent implements OnInit {
 	pageSize: number = 20;
 	isLoadingResults: boolean = true;
 
+	modalRef: BsModalRef;
+	JSONdata: any;
+
 	appType: string = 'myApps';
 
 	@ViewChild(MatPaginator) paginator: MatPaginator;
@@ -41,6 +47,7 @@ export class HosMyApplicationsComponent implements OnInit {
 		private paginationService: HosPaginationService,
 		private router: Router,
 		private commonService: CommonService,
+		private modalService: BsModalService
 	) { }
 
 	ngOnInit() {
@@ -184,5 +191,37 @@ export class HosMyApplicationsComponent implements OnInit {
 				return 'primary'
 		}
 	}
+
+	/**
+	 * This method is use for open modal.
+	 */
+	openModal(template: TemplateRef<any>) {
+		this.modalRef = this.modalService.show(template);
+	}
+
+	/**
+	 * This method is use to show JOSN format.
+	 */
+	jsonDisplay(apiCode: string, apiName: string, id: number) {
+		this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);
+		this.formService.viewJson(id).subscribe(
+			res => {
+				this.JSONdata = JSON.stringify(res, null, 4);
+			},
+			err => {
+				this.commonService.successAlert('Error!', err.error[0].message, 'error');
+			}
+		);
+
+	}
+
+	/**
+	 * This method is use for copy text.
+	 */
+	copyText(copytext: any) {
+		copytext.select();
+		document.execCommand('copy');
+	}
+
 
 }
