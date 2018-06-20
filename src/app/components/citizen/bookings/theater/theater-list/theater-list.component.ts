@@ -115,7 +115,7 @@ export class TheaterListComponent implements OnInit {
 	}
 
 	emailMatcher(): boolean{
-		if (this.theaterBookingForm.get('confirmEmailID').value.toString() !== this.theaterBookingForm.get('emailID').value.toString()){
+		if (this.theaterBookingForm.get('confirmEmailID').value !== this.theaterBookingForm.get('emailID').value){
 			return true;	
 		} else {
 			return false;
