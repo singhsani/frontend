@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { CommonService } from '../../services/common.service';
 import { HosUploadFileService } from '../../hos-upload-file.service';
+import { HttpResponse } from 'selenium-webdriver/http';
+import { HttpHeaderResponse } from '@angular/common/http';
 
 @Component({
 	selector: 'app-hos-file-upload',
@@ -63,7 +65,7 @@ export class HosFileUploadComponent implements OnInit {
 		this.fromAdmin = this.commonService.fromAdmin();
 
 		if (this.attachments && this.form.get('attachments').value.length) {
-			this.getFile = this.form.get('attachments').value.find(data => data.fieldIdentifier === this.uploadModel.fieldIdentifier)
+			this.getFile = this.form.get('attachments').value.find(data => data.fieldIdentifier.toString() === this.uploadModel.fieldIdentifier.toString())
 		}
 	}
 
@@ -77,7 +79,6 @@ export class HosFileUploadComponent implements OnInit {
 		let fileType = this.selectedFiles[0].type;
 		this.fileName = this.selectedFiles[0].name;
 		this.canUpload = true;
-
 		if (fileType === 'image/png' || fileType === 'image/jpg' || fileType === 'image/jpeg' || fileType === 'image/gif') {
 			let reader = new FileReader();
 			reader.onload = (e: any) => {
@@ -97,10 +98,16 @@ export class HosFileUploadComponent implements OnInit {
 		if (!this.selectedFiles) {
 			this.commonService.openAlert("Warning", "Please Select File to Upload", "warning");
 		} else {
+			let fileTypes: string[] = ['application/pdf','image/jpg','image/jpeg']
 			if (this.selectedFiles[0].size > 5000000) {
 				this.fileName = ''
 				this.canUpload = false;
 				this.commonService.openAlert("Warning", "File Size should be less than 5 MB", "warning");
+
+			} else if (!fileTypes.includes(this.selectedFiles[0].type)){
+				this.fileName = ''
+				this.canUpload = false;
+				this.commonService.openAlert("Warning", "File Type " + this.selectedFiles[0].type +" not valid please select pdf/jpg/jpeg", "warning");
 
 			} else {
 				let formData = new FormData();
@@ -180,16 +187,18 @@ export class HosFileUploadComponent implements OnInit {
 	 * Method is used to delete file using service form id.
 	 */
 	deleteFile() {
-		this.uploadFileService.deleteFile(this.uploadModel.serviceFormId.toString(), this.id).subscribe(respData => {
-
-			this.commonService.successAlert("File Deleted", this.uploadModel.labelName + " successfully deleted", "success");
-
-			this.canUpload = false;
-			this.requiredFile= true;
-			this.imagetype = false;
-			this.fileName = '';
-			this.getFile = '';
+		this.commonService.deleteAlert('Are you sure?', '', 'warning', '', performDelete => {
+		this.uploadFileService.deleteFile(this.uploadModel.serviceFormId.toString(), this.id).subscribe((respData: any) => {
+			if(respData.body){
+				this.commonService.successAlert("File Deleted", this.uploadModel.labelName + " successfully deleted", "success");
+				this.canUpload = false;
+				this.requiredFile = true;
+				this.imagetype = false;
+				this.fileName = '';
+				this.getFile = '';
+			}
 		})
-	}
+	});
+}
 
 }

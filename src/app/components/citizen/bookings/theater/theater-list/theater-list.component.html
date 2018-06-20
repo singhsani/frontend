@@ -1,27 +1,60 @@
+<!-- Theater Booking Module Starts from here -->
 <div class="container">
+
     <app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
-    <mat-card class="mt-4 formClass">
+
+    <div class="text-right">
+        <button mat-raised-button color="primary" type="button" routerLink = "../booking-status">Check Booking Status</button>
+    </div>
+
+    <mat-card class="mt-4">
+
+        <mat-card class="cardH1">
+            <h1>Check Booking Availability</h1>
+        </mat-card>
+
+        <!-- Cheack Theater booking avalibility -->
         <form [formGroup]="searchTheaterForm" (ngSubmit)="searchBooking()" autocomplete="off" ngNativeValidate>
-            <div class="row p-2">
-                <mat-form-field class="col-md-4">
-                    <mat-select placeholder="Select Hall" formControlName="code">
-                        <mat-option *ngFor="let theater of theaters" [value]="theater.code">
+
+            <div class="row">
+                <div class="col-md-4 ngSelect">
+                    <ng-select placeholder="Select Hall" formControlName="code">
+                        <ng-option *ngFor="let theater of theaters" [value]="theater.code">
                             {{ theater.name }}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-                <mat-form-field class="col-md-4">
-                    <input matInput [matDatepicker]="theaterBookingPicker" formControlName="date" placeholder="Choose a date">
-                    <mat-datepicker-toggle matSuffix [for]="theaterBookingPicker"></mat-datepicker-toggle>
-                    <mat-datepicker #theaterBookingPicker></mat-datepicker>
-                </mat-form-field>
-                <div class="col-md-2">
-                    <button mat-raised-button color="primary" type="submit">Search</button>
+                        </ng-option>
+                    </ng-select>
                 </div>
+
+                <div class="col-md-4 ngSelect">
+                    <ng-select placeholder="Select Category" formControlName="catcode">
+                        <ng-option *ngFor="let cat of Category" [value]="cat.code">
+                            {{ cat.name }}
+                        </ng-option>
+                    </ng-select>
+                </div>
+
+                <mat-form-field class="col-md-4">
+                    <input matInput (focus)="theaterBookingPicker.open()" (click)="theaterBookingPicker.open()" [matDatepicker]="theaterBookingPicker" formControlName="date" placeholder="Choose a date">
+                    <mat-datepicker-toggle matSuffix [for]="theaterBookingPicker"></mat-datepicker-toggle>
+                    <mat-datepicker #theaterBookingPicker touchUi="true"></mat-datepicker>
+                </mat-form-field>
+                
             </div>
+
+            <div class="row">
+
+                <div class="col-md-12 text-right">
+                    <button mat-raised-button color="primary" type="submit">Search</button>
+                    
+                </div>
+
+            </div>
+
         </form>
+
     </mat-card>
 
+    <!-- Table is used to display availble booking list -->
     <mat-table #table [dataSource]="availableStots">
 
         <ng-container matColumnDef="id">
@@ -42,8 +75,8 @@
         <ng-container matColumnDef="slotStatus">
             <mat-header-cell *matHeaderCellDef>Available</mat-header-cell>
             <mat-cell *matCellDef="let element;let indx=index;">
-                <button mat-raised-button color="primary" [disabled]="element.slotStatus !='AVAILABLE'" (click)="bookSlots(element.uniqueId,indx)">
-					{{element.slotStatus}}
+                <button mat-raised-button color="primary" *ngIf="element.slotStatus =='AVAILABLE'" (click)="bookSlots(element.uniqueId,indx)">
+					Book
 				</button>
             </mat-cell>
         </ng-container>
@@ -51,6 +84,69 @@
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
         <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
     </mat-table>
+
+    <!-- Theater Booking Form Content -->
+    <mat-card *ngIf="showTheaterBookingForm" class="mt-4">
+        <mat-card class="cardH1">
+            <h1>Theater Booking Form</h1>
+        </mat-card>
+
+        <div class ="alert alert-warning">
+            <p>
+                Provide proper Contact Details as same will be used to future communication
+            </p>
+        </div>
+
+        <!-- Theater Booking Form is used to collect all the important information from citizen or department -->
+        <form [formGroup]="theaterBookingForm" (ngSubmit)="confirmBooking()" autocomplete="off" ngNativeValidate>
+    
+            <div class="row">
+
+                <div class ="col-md-12">
+                    <mat-form-field >
+                        <input matInput appValidationFields [validationFieldsType]="'onlyNameWithSpace'" type="text" formControlName="organizationName"
+                            placeholder="{{'organization_name' | translate: translateKey}}" required>
+                    
+                        <control-messages [control]="theaterBookingForm.controls.organizationName"></control-messages>
+                    </mat-form-field>
+                    <p class="text-danger">
+                        (Refund Cheque will be issued with this name only. so please provide proper name)
+                    </p>
+                </div>
+                
+                <mat-form-field class="col-md-4">
+                    <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="mobileNumber" placeholder="{{'mobile_number' | translate: translateKey}}" required>
+                    <control-messages [control]="theaterBookingForm.controls.mobileNumber"></control-messages>
+                </mat-form-field>
+
+                <mat-form-field class="col-md-8">
+                    <textarea matInput  type="text" formControlName="address"
+                        placeholder="{{'address' | translate: translateKey}}" required></textarea>
+                    <control-messages [control]="theaterBookingForm.controls.address"></control-messages>
+                </mat-form-field>
+
+                <mat-form-field class="col-md-6">
+                    <input matInput  type="email" formControlName="emailID"
+                        placeholder="{{'email' | translate: translateKey}}" required>
+                    <control-messages [control]="theaterBookingForm.controls.emailID"></control-messages>
+                </mat-form-field>
+
+                <mat-form-field class="col-md-6">
+                    <input matInput  type="email" formControlName="confirmEmailID"
+                        placeholder="{{'confirm_email' | translate: translateKey}}" required>
+                        
+                    <control-messages [control]="theaterBookingForm.controls.confirmEmailID"></control-messages>
+                    <mat-error class="mt-2" *ngIf="emailMatcher()">email and confirm email must be same</mat-error>
+                </mat-form-field>
+            </div>
+    
+            <div class="row" *ngIf="theaterBookingForm.valid && !emailMatcher()">
+                <div class="col-md-12 text-right">
+                    <button mat-raised-button color="primary" type="submit">Confirm Booking</button>
+                </div>
+            </div>
+        </form>
+    </mat-card>
 
 
     <div *ngIf="availableStots.length==0" class="alert" style="text-align: center;margin: 20px;">

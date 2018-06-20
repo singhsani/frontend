@@ -257,6 +257,14 @@ const ROUTEMAIN = {
         'main': 'theater-list',
         'type': ''
     },
+    'THEATERBOOK': {
+        'main': 'book',
+        'type': ''
+    },
+    'THEATERBOOKINGSTATUS': {
+        'main': 'booking-status',
+        'type': ''
+    },
     'GUESTHOUSE': {
         'main': 'guest-house',
         'type': 'guesthouse'
@@ -539,9 +547,16 @@ const ROUTESLIST = {
     'THEATERLIST': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.BOOKINGMODULE + '/' + ROUTEPREFIX.THEATERMODULE + '/' + ROUTEMAIN.THEATERLIST.main
     },
+    'THEATERBOOK': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.BOOKINGMODULE + '/' + ROUTEPREFIX.THEATERMODULE + '/' + ROUTEMAIN.THEATERBOOK.main
+    },
+    'THEATERBOOKINGSTATUS': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.BOOKINGMODULE + '/' + ROUTEPREFIX.THEATERMODULE + '/' + ROUTEMAIN.THEATERBOOKINGSTATUS.main
+    },
     'GUESTHOUSELIST': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.BOOKINGMODULE + '/' + ROUTEPREFIX.GUESTHOUSEMODULE + '/' + ROUTEMAIN.GUESTHOUSELIST.main
     },
+    
     'CANCELBOOKING': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.BOOKINGMODULE + '/' + ROUTEMAIN.CANCELBOOKING.main
     },

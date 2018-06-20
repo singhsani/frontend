@@ -62,7 +62,7 @@ export class FileUploadComponent implements OnInit {
 		this.fromAdmin = this.commonService.fromAdmin();
 		
 		if (this.attachments && this.form.get('attachments').value.length) {
-			this.getFile = this.form.get('attachments').value.find(data => data.fieldIdentifier === this.uploadModel.fieldIdentifier)
+			this.getFile = this.form.get('attachments').value.find(data => data.fieldIdentifier.toString() === this.uploadModel.fieldIdentifier.toString())
 		}
 	}
 
@@ -178,12 +178,14 @@ export class FileUploadComponent implements OnInit {
 	deleteFile() {
 		this.commonService.deleteAlert('Are you sure?', '', 'warning', '', performDelete => {
 			this.uploadFileService.deleteFile(this.uploadModel.serviceFormId.toString(), this.id).subscribe(
-				respData => {
-					this.commonService.successAlert("File Deleted", this.uploadModel.labelName + " successfully deleted", "success");
-					this.canUpload = false;
-					this.fileName = '';
-					this.getFile = '';
-					this.priviewImage = '';
+				(respData: any) => {
+					if(respData.body){
+						this.commonService.successAlert("File Deleted", this.uploadModel.labelName + " successfully deleted", "success");
+						this.canUpload = false;
+						this.fileName = '';
+						this.getFile = '';
+						this.priviewImage = '';
+					}
 				});
 		});
 	}
