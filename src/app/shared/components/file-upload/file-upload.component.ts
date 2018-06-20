@@ -62,7 +62,7 @@ export class FileUploadComponent implements OnInit {
 		this.fromAdmin = this.commonService.fromAdmin();
 		
 		if (this.attachments && this.form.get('attachments').value.length) {
-			this.getFile = this.form.get('attachments').value.find(data => data.fieldIdentifier === this.uploadModel.fieldIdentifier)
+			this.getFile = this.form.get('attachments').value.find(data => data.fieldIdentifier.toString() === this.uploadModel.fieldIdentifier.toString())
 		}
 	}
 
