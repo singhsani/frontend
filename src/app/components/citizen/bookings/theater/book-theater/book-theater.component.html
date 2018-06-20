@@ -1,0 +1,33 @@
+<div class="container">
+
+  <app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
+
+  <mat-card class="mt-4 formClass">
+
+    <form [formGroup]="theaterBookingForm" (ngSubmit)="bookTheater()" autocomplete="off" ngNativeValidate>
+
+      <div class="row p-2">
+
+        <mat-form-field class="col-md-4">
+          <mat-select placeholder="Select Hall" formControlName="code">
+            <mat-option *ngFor="let theater of theaters" [value]="theater.code">
+              {{ theater.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="col-md-4">
+          <input matInput [matDatepicker]="theaterBookingPicker" formControlName="date" placeholder="Choose a date">
+          <mat-datepicker-toggle matSuffix [for]="theaterBookingPicker"></mat-datepicker-toggle>
+          <mat-datepicker #theaterBookingPicker></mat-datepicker>
+        </mat-form-field>
+
+        <div class="col-md-2">
+          <button mat-raised-button color="primary" type="submit" >Search</button>
+        </div>
+
+      </div>
+      
+    </form>
+  </mat-card>
+  </div>

@@ -7,6 +7,8 @@ import { SharedModule } from '../../../../shared/shared.module';
 import { CoreModule } from '../../../../core/core.module';
 import { TheaterRoutingModule } from './theater-routing.module';
 import { TheaterListComponent } from './theater-list/theater-list.component';
+import { BookTheaterComponent } from './book-theater/book-theater.component';
+import { BookingStatusComponent } from './booking-status/booking-status.component';
 /* Import all shared, core and routing module end */
 
 @NgModule({
@@ -18,6 +20,6 @@ import { TheaterListComponent } from './theater-list/theater-list.component';
 		ReactiveFormsModule,
 		TheaterRoutingModule
 	],
-	declarations: [TheaterListComponent]
+	declarations: [TheaterListComponent, BookTheaterComponent, BookingStatusComponent]
 })
 export class TheaterModule { }

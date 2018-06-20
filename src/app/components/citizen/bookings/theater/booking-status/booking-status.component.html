@@ -1,0 +1,30 @@
+<div class="container">
+
+  <app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
+
+  <mat-card class="mt-4">
+
+    <mat-card class="cardH1">
+      <h1>Check Booking Status</h1>
+    </mat-card>
+
+    <form [formGroup]="checkBookingStatsForm" (ngSubmit)="checkBookingStatus()" autocomplete="off" ngNativeValidate>
+
+      <div class="row">
+
+        <mat-form-field class="col-md-8">
+          <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="bookingNumber" placeholder="{{'booking_number' | translate: translateKey}}"
+            required>
+          <control-messages [control]="checkBookingStatsForm.controls.bookingNumber"></control-messages>
+        </mat-form-field>
+
+        <div class="col-md-4">
+          <button [disabled]="checkBookingStatsForm.invalid" mat-raised-button color="primary" type="submit">Get Status</button>
+          <button mat-raised-button color="primary" type="button" routerLink="../theater-list">cancel</button>
+
+        </div>
+      </div>
+
+    </form>
+  </mat-card>
+</div>
