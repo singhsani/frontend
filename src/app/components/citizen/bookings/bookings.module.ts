@@ -8,6 +8,8 @@ import { SharedModule } from '../../../shared/shared.module';
 import { CoreModule } from '../../../core/core.module';
 import { BookingDashboardComponent } from './booking-dashboard/booking-dashboard.component';
 import { CancelBookingComponent } from './cancel-booking/cancel-booking.component';
+import { PlanetariumComponent } from './planetarium/planetarium.component';
+import { ChildrenTheaterComponent } from './children-theater/children-theater.component';
 
 @NgModule({
   imports: [
@@ -19,6 +21,6 @@ import { CancelBookingComponent } from './cancel-booking/cancel-booking.componen
     MyDatePickerModule,
     CoreModule
   ],
-  declarations: [BookingDashboardComponent, CancelBookingComponent]
+  declarations: [BookingDashboardComponent, CancelBookingComponent, PlanetariumComponent, ChildrenTheaterComponent]
 })
 export class BookingsModule { }
