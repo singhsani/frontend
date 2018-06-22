@@ -5,7 +5,6 @@ import { MatHorizontalStepper, MatStepLabel } from '@angular/material';
 
 import { ValidationService } from '../../../../../shared/services/validation.service';
 import { FormsActionsService } from '../../../../../core/services/citizen/data-services/forms-actions.service';
-import { UploadFileService } from '../../../../../shared/upload-file.service';
 import { CommonService } from '../../.././../../shared/services/common.service';
 
 import * as _ from 'lodash';
@@ -24,8 +23,14 @@ export class MarriageCreateComponent implements OnInit {
     @ViewChild(MatStepLabel) steplable: MatStepLabel;
     @ViewChild('address') addrComponent: any;
 
-    translateKey: string = 'marriageRegScreen';
+    //Mandatory attachments Array
+    private uploadFileArray: Array<any> =
+        [{ labelName: 'Marriage Photo', fieldIdentifier: '1' },
+        { labelName: 'Groom Photo', fieldIdentifier: '2' },
+        { labelName: 'Bride Photo', fieldIdentifier: '3' }
+        ];
 
+    translateKey: string = 'marriageRegScreen';
     marriageFormGroup: FormGroup;
 
     // Select id for edit marriage form
@@ -40,6 +45,7 @@ export class MarriageCreateComponent implements OnInit {
 
     // Marriage date 
     disablefutureDate = new Date(moment().format('YYYY-MM-DD'));
+    adultPerson = moment().subtract(18, 'year').format("YYYY-MM-DD");
     groomagecalendar = moment().subtract(21, 'year').format("YYYY-MM-DD");
     brideagecalender = moment().subtract(18, 'year').format("YYYY-MM-DD");
 
@@ -84,11 +90,9 @@ export class MarriageCreateComponent implements OnInit {
      * @param fb - Declare FormBuilder property.
      * @param validationError - Declare validation service property
      * @param formService - Declare form service property 
-     * @param uploadFileService - Declare upload file service property.
      * @param commonService - Declare sweet alert.
      */
     constructor(
-        private uploadFileService: UploadFileService,
         private route: ActivatedRoute,
         public fb: FormBuilder,
         public validationError: ValidationService,
@@ -121,6 +125,7 @@ export class MarriageCreateComponent implements OnInit {
         }
 
     }
+    
     /**
     * This method is listed form controls.
     */
@@ -152,7 +157,7 @@ export class MarriageCreateComponent implements OnInit {
             marriageTimeGroomStatus: this.fb.group({
                 code: [null, Validators.required]
             }),
-            aliveWives: ['', [Validators.maxLength(2), Validators.minLength(0)]],
+            aliveWives: ['', [Validators.maxLength(1), Validators.minLength(0)]],
             groomAddress: this.fb.group(this.addrComponent.addressControls()),
 
             // second step**
@@ -455,7 +460,7 @@ export class MarriageCreateComponent implements OnInit {
     }
 
     /**
-     * This method is check religion. 
+     * This method is check religion is same or not.
      */
     checkReligion() {
         //check religion is same or not    
@@ -530,7 +535,7 @@ export class MarriageCreateComponent implements OnInit {
     setDataValue(indentifier: number, labelName: string, formPart: string, variableName: string) {
 
         this.uploadModel = {
-            fieldIdentifier: indentifier,
+            fieldIdentifier: indentifier.toString(),
             labelName: labelName,
             formPart: formPart,
             variableName: variableName,

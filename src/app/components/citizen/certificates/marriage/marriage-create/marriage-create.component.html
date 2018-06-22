@@ -17,7 +17,7 @@
 							 placeholder="{{ 'date_of_marriage' | translate:translateKey }}" (click)="picker1.open()" (focus)="picker1.open()"
 							 readonly>
 							<mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-							<mat-datepicker #picker1></mat-datepicker>
+							<mat-datepicker #picker1 touchUi="true" touchUi="true"></mat-datepicker>
 							<control-messages [control]="marriageFormGroup.controls.marriageDate"></control-messages>
 						</mat-form-field>
 
@@ -25,7 +25,7 @@
 								<input matInput [max]="disablefutureDate" [min]="marriageFormGroup.controls.marriageDate.value" [matDatepicker]="pickerReg"
 								 formControlName="marriageRegistrationDate" value="2018-05-19" readonly>
 								<mat-datepicker-toggle matSuffix [for]="pickerReg"></mat-datepicker-toggle>
-								<mat-datepicker #pickerReg></mat-datepicker>
+								<mat-datepicker #pickerReg touchUi="true"></mat-datepicker>
 								<control-messages [control]="marriageFormGroup.controls.marriageRegistrationDate"></control-messages>
 							</mat-form-field> -->
 					</div>
@@ -81,7 +81,7 @@
 							 placeholder="{{ 'date_of_birth' | translate:translateKey }}" required (click)="picker2.open()" (focus)="picker2.open()"
 							 readonly>
 							<mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-							<mat-datepicker #picker2></mat-datepicker>
+							<mat-datepicker #picker2 touchUi="true"></mat-datepicker>
 							<control-messages [control]="marriageFormGroup.controls.groomBirthDate"></control-messages>
 						</mat-form-field>
 
@@ -126,7 +126,8 @@
 						</div>
 
 						<mat-form-field class="col-md-4" *ngIf="marriageFormGroup.controls.groomReligion.get('code').value === 'MUSLIM' && marriageFormGroup.controls.marriageTimeGroomStatus.get('code').value === 'MARRIED'">
-							<input matInput OnlyNumber maxlength="3" minlength="0" formControlName="aliveWives" placeholder="{{'alive_wives' | translate:translateKey }}">
+							<input matInput OnlyNumber maxlength="1" minlength="0" pattern="[0-4]" formControlName="aliveWives" placeholder="{{'alive_wives' | translate:translateKey }}">
+							<mat-error *ngIf="marriageFormGroup.controls.aliveWives.value > 4">More than 4 is not allow</mat-error>
 						</mat-form-field>
 					</div>
 
@@ -154,7 +155,7 @@
 						</div>
 
 						<div class="col-12">
-							<app-action-bar [form]="marriageFormGroup" [step]="'step1'"></app-action-bar>
+							<app-action-bar [uploadFiles]="uploadFileArray" [form]="marriageFormGroup" [step]="'step1'"></app-action-bar>
 						</div>
 					</div>
 				</mat-step>
@@ -208,7 +209,7 @@
 							 placeholder="{{'date_of_birth' | translate:translateKey }}" required (click)="picker3.open()" (focus)="picker3.open()"
 							 readonly>
 							<mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
-							<mat-datepicker #picker3></mat-datepicker>
+							<mat-datepicker #picker3 touchUi="true"></mat-datepicker>
 							<control-messages [control]="marriageFormGroup.controls.brideBirthDate"></control-messages>
 						</mat-form-field>
 
@@ -275,7 +276,7 @@
 						</div>
 
 						<div class="col-12">
-							<app-action-bar [form]="marriageFormGroup" [step]="'step2'"></app-action-bar>
+							<app-action-bar [uploadFiles]="uploadFileArray" [form]="marriageFormGroup" [step]="'step2'"></app-action-bar>
 						</div>
 					</div>
 				</mat-step>
@@ -327,11 +328,11 @@
 
 					<div class="row">
 						<mat-form-field class="col-md-4">
-							<input matInput [max]="disablefutureDate" [matDatepicker]="picker4" formControlName="groomParentsBirthDate" (dateChange)="dateFormate($event.value,'groomParentsBirthDate');parentAge('groomParentsBirthDate',1)"
+							<input matInput [max]="adultPerson" [matDatepicker]="picker4" formControlName="groomParentsBirthDate" (dateChange)="dateFormate($event.value,'groomParentsBirthDate');parentAge('groomParentsBirthDate',1)"
 							 placeholder="{{'date_of_birth' | translate:translateKey }}" required (click)="picker4.open()" (focus)="picker4.open()"
 							 readonly>
 							<mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
-							<mat-datepicker #picker4></mat-datepicker>
+							<mat-datepicker #picker4 touchUi="true"></mat-datepicker>
 							<control-messages [control]="marriageFormGroup.controls.groomParentsBirthDate"></control-messages>
 						</mat-form-field>
 
@@ -358,7 +359,7 @@
 						</div>
 
 						<div class="col-md-4">
-							<app-action-bar [form]="marriageFormGroup" [step]="'step3'"></app-action-bar>
+							<app-action-bar [uploadFiles]="uploadFileArray" [form]="marriageFormGroup" [step]="'step3'"></app-action-bar>
 						</div>
 					</div>
 				</mat-step>
@@ -410,11 +411,11 @@
 
 					<div class="row">
 						<mat-form-field class="col-md-4">
-							<input matInput [max]="disablefutureDate" [matDatepicker]="picker5" formControlName="brideParentsBirthDate" (dateChange)="dateFormate($event.value,'brideParentsBirthDate');parentAge('brideParentsBirthDate',2)"
+							<input matInput [max]="adultPerson" [matDatepicker]="picker5" formControlName="brideParentsBirthDate" (dateChange)="dateFormate($event.value,'brideParentsBirthDate');parentAge('brideParentsBirthDate',2)"
 							 placeholder="{{'date_of_birth' | translate:translateKey }}" required (click)="picker5.open()" (focus)="picker5.open()"
 							 readonly>
 							<mat-datepicker-toggle matSuffix [for]="picker5"></mat-datepicker-toggle>
-							<mat-datepicker #picker5></mat-datepicker>
+							<mat-datepicker #picker5 touchUi="true"></mat-datepicker>
 							<control-messages [control]="marriageFormGroup.controls.brideParentsBirthDate"></control-messages>
 						</mat-form-field>
 
@@ -442,7 +443,7 @@
 						</div>
 
 						<div class="col-md-4">
-							<app-action-bar [form]="marriageFormGroup" [step]="'step4'"></app-action-bar>
+							<app-action-bar [uploadFiles]="uploadFileArray" [form]="marriageFormGroup" [step]="'step4'"></app-action-bar>
 						</div>
 					</div>
 				</mat-step>
@@ -491,11 +492,11 @@
 
 					<div class="row">
 						<mat-form-field class="col-md-4">
-							<input matInput [max]="disablefutureDate" [matDatepicker]="picker6" formControlName="priestBirthDate" (dateChange)="dateFormate($event.value,'priestBirthDate');parentAge('priestBirthDate',3)"
+							<input matInput [max]="adultPerson" [matDatepicker]="picker6" formControlName="priestBirthDate" (dateChange)="dateFormate($event.value,'priestBirthDate');parentAge('priestBirthDate',3)"
 							 placeholder="{{'date_of_birth' | translate:translateKey }}" required (click)="picker6.open()" (focus)="picker6.open()"
 							 readonly>
 							<mat-datepicker-toggle matSuffix [for]="picker6"></mat-datepicker-toggle>
-							<mat-datepicker #picker6></mat-datepicker>
+							<mat-datepicker #picker6 touchUi="true"></mat-datepicker>
 							<control-messages [control]="marriageFormGroup.controls.priestBirthDate"></control-messages>
 						</mat-form-field>
 
@@ -522,7 +523,7 @@
 						</div>
 
 						<div class="col-md-4">
-							<app-action-bar [form]="marriageFormGroup" [step]="'step5'"></app-action-bar>
+							<app-action-bar [uploadFiles]="uploadFileArray" [form]="marriageFormGroup" [step]="'step5'"></app-action-bar>
 						</div>
 					</div>
 				</mat-step>
@@ -574,11 +575,11 @@
 
 					<div class="row">
 						<mat-form-field class="col-md-4">
-							<input matInput [max]="disablefutureDate" [matDatepicker]="picker7" formControlName="firstWitnessBirthDate" (dateChange)="dateFormate($event.value,'firstWitnessBirthDate');parentAge('firstWitnessBirthDate',4)"
+							<input matInput [max]="adultPerson" [matDatepicker]="picker7" formControlName="firstWitnessBirthDate" (dateChange)="dateFormate($event.value,'firstWitnessBirthDate');parentAge('firstWitnessBirthDate',4)"
 							 placeholder="{{'date_of_birth' | translate:translateKey }}" required (click)="picker7.open()" (focus)="picker7.open()"
 							 readonly>
 							<mat-datepicker-toggle matSuffix [for]="picker7"></mat-datepicker-toggle>
-							<mat-datepicker #picker7></mat-datepicker>
+							<mat-datepicker #picker7 touchUi="true"></mat-datepicker>
 							<control-messages [control]="marriageFormGroup.controls.firstWitnessBirthDate"></control-messages>
 						</mat-form-field>
 
@@ -597,7 +598,7 @@
 						</div>
 
 						<div class="col-md-4">
-							<app-action-bar [form]="marriageFormGroup" [step]="'step6'"></app-action-bar>
+							<app-action-bar [uploadFiles]="uploadFileArray" [form]="marriageFormGroup" [step]="'step6'"></app-action-bar>
 						</div>
 					</div>
 				</mat-step>
@@ -649,11 +650,11 @@
 
 					<div class="row">
 						<mat-form-field class="col-md-4">
-							<input matInput [max]="disablefutureDate" [matDatepicker]="picker8" formControlName="secondWitnessBirthDate" (dateChange)="dateFormate($event.value,'secondWitnessBirthDate');parentAge('secondWitnessBirthDate',5)"
+							<input matInput [max]="adultPerson" [matDatepicker]="picker8" formControlName="secondWitnessBirthDate" (dateChange)="dateFormate($event.value,'secondWitnessBirthDate');parentAge('secondWitnessBirthDate',5)"
 							 placeholder="{{'date_of_birth' | translate:translateKey }}" required (click)="picker8.open()" (focus)="picker8.open()"
 							 readonly>
 							<mat-datepicker-toggle matSuffix [for]="picker8"></mat-datepicker-toggle>
-							<mat-datepicker #picker8></mat-datepicker>
+							<mat-datepicker #picker8 touchUi="true"></mat-datepicker>
 							<control-messages [control]="marriageFormGroup.controls.secondWitnessBirthDate"></control-messages>
 						</mat-form-field>
 
@@ -671,12 +672,11 @@
 						</div>
 
 						<div class="pt-4">
-							<app-action-bar [form]="marriageFormGroup" [step]="'step7'"></app-action-bar>
+							<app-action-bar [uploadFiles]="uploadFileArray" [form]="marriageFormGroup" [step]="'step7'"></app-action-bar>
 						</div>
 					</div>
 				</mat-step>
 				<!-- End Seventh step -->
-
 
 				<!-- Eighth step -->
 				<mat-step [stepControl]="applicantDetail">
@@ -688,7 +688,7 @@
 							<ng-select formControlName="code" placeholder="{{ 'applicant_relation' | translate:translateKey }}" (change)="onChange($event,applicantrelationArray,'applicantrelationGuj');changeReset('applicantRelationOther')">
 								<ng-option *ngFor="let relation of applicantrelationArray" [value]="relation.code">{{relation.name}}</ng-option>
 							</ng-select>
-							<control-messages [control]="marriageFormGroup.controls.applicantRelation.controls.code"></control-messages>
+							<control-messages [control]="marriageFormGroup.controls.applicantRelation"></control-messages>
 						</div>
 
 						<mat-form-field class="col-md-4" *ngIf="marriageFormGroup.controls.applicantRelation.get('code').value === 'MR_OTHER_APPLICANT_RELATION'">
@@ -709,7 +709,7 @@
 							<ng-select formControlName="code" placeholder="{{ 'id_proof_lable' | translate:translateKey }}" (change)="onChange($event,identityproofArray,'identityproofGuj');changeReset('uniqueIdProof')">
 								<ng-option *ngFor="let uniqueid of identityproofArray" [value]="uniqueid.code">{{uniqueid.name}}</ng-option>
 							</ng-select>
-							<control-messages [control]="marriageFormGroup.controls.uniqueIdProofLable.controls.code"></control-messages>
+							<control-messages [control]="marriageFormGroup.controls.uniqueIdProofLable"></control-messages>
 						</div>
 
 						<mat-form-field class="col-md-4" *ngIf="marriageFormGroup.controls.uniqueIdProofLable.get('code').value">
@@ -727,7 +727,7 @@
 
 					<div class="row">
 						<div class="pt-4">
-							<app-action-bar [form]="marriageFormGroup" [step]="'step8'"></app-action-bar>
+							<app-action-bar [uploadFiles]="uploadFileArray" [form]="marriageFormGroup" [step]="'step8'"></app-action-bar>
 						</div>
 					</div>
 				</mat-step>
@@ -785,7 +785,8 @@
 						<div class="col-12">
 							<ng-template matStepLabel>Done</ng-template>
 							You are now done.
-							<app-action-bar [form]="marriageFormGroup" [step]="'final'" (stepReset)="stepReset()" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
+							<app-action-bar [uploadFiles]="uploadFileArray" [form]="marriageFormGroup" [step]="'final'"
+							 (stepReset)="stepReset()" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
 						</div>
 					</div>
 				</mat-step>
