@@ -23,6 +23,7 @@ export class MarriageCreateComponent implements OnInit {
     @ViewChild(MatStepLabel) steplable: MatStepLabel;
     @ViewChild('address') addrComponent: any;
 
+    //Mandatory attachments Array
     private uploadFileArray: Array<any> =
         [{ labelName: 'Marriage Photo', fieldIdentifier: '1' },
         { labelName: 'Groom Photo', fieldIdentifier: '2' },
@@ -30,7 +31,6 @@ export class MarriageCreateComponent implements OnInit {
         ];
 
     translateKey: string = 'marriageRegScreen';
-
     marriageFormGroup: FormGroup;
 
     // Select id for edit marriage form
@@ -125,6 +125,7 @@ export class MarriageCreateComponent implements OnInit {
         }
 
     }
+    
     /**
     * This method is listed form controls.
     */
@@ -459,7 +460,7 @@ export class MarriageCreateComponent implements OnInit {
     }
 
     /**
-     * This method is check religion. 
+     * This method is check religion is same or not.
      */
     checkReligion() {
         //check religion is same or not    
