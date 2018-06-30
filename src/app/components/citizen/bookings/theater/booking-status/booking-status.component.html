@@ -1,30 +1,64 @@
+<!-- Booking Status Form starts from here -->
 <div class="container">
 
   <app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
 
-  <mat-card class="mt-4">
+  <mat-card class="m-auto col-md-8">
 
     <mat-card class="cardH1">
       <h1>Check Booking Status</h1>
     </mat-card>
-
+    <!-- Booking Status form  -->
     <form [formGroup]="checkBookingStatsForm" (ngSubmit)="checkBookingStatus()" autocomplete="off" ngNativeValidate>
 
       <div class="row">
-
-        <mat-form-field class="col-md-8">
+        <mat-form-field appearance="outline" class="col-md-12">
           <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="bookingNumber" placeholder="{{'booking_number' | translate: translateKey}}"
             required>
           <control-messages [control]="checkBookingStatsForm.controls.bookingNumber"></control-messages>
         </mat-form-field>
-
-        <div class="col-md-4">
+      
+        <div class="col-md-12 text-center">
           <button [disabled]="checkBookingStatsForm.invalid" mat-raised-button color="primary" type="submit">Get Status</button>
           <button mat-raised-button color="primary" type="button" routerLink="../theater-list">cancel</button>
-
         </div>
       </div>
 
     </form>
+  </mat-card>
+
+  <!-- Show Booking status in grid view -->
+  <mat-card *ngIf="showStatus" class="m-auto col-md-8">
+    <mat-card class="cardH1">
+      <h1>Booking Status</h1>
+    </mat-card>
+
+    <mat-table #table [dataSource]="availableStatus">
+    
+      <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef> id </mat-header-cell>
+        <mat-cell *matCellDef="let element;let indx=index;"> {{indx+1}} </mat-cell>
+      </ng-container>
+    
+      <ng-container matColumnDef="bookingNumber">
+        <mat-header-cell *matHeaderCellDef> Booking Number</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.bookingNumber}} </mat-cell>
+      </ng-container>
+    
+      <ng-container matColumnDef="applicantName">
+        <mat-header-cell *matHeaderCellDef> Applicant Name</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.applicantName}} </mat-cell>
+      </ng-container>
+    
+      <ng-container matColumnDef="currentStatus">
+        <mat-header-cell *matHeaderCellDef> Current Status</mat-header-cell>
+        <mat-cell *matCellDef="let element;">
+          {{element.currentStatus}}
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumnsForStatus"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumnsForStatus;"></mat-row>
+    </mat-table>
   </mat-card>
 </div>

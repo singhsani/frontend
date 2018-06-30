@@ -8,7 +8,7 @@
         <input matInput appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{'middle_name' | translate:translateKey}}" formControlName="middleName">
         <control-messages [control]="basicFormGroup.controls.middleName"></control-messages>
     </mat-form-field>
-
+    
     <mat-form-field class="col-md-4">
         <input matInput  placeholder="{{'last_name' | translate:translateKey}}" formControlName="lastName" required>
         <control-messages [control]="basicFormGroup.controls.lastName"></control-messages>

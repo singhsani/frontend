@@ -19,7 +19,7 @@
 
 
 		<!-- Uploaded file/image name-->
-		<label class="custom-file-upload" [hidden]="!canUpload || !form.get('canEdit').value">
+		<label class="custom-file-upload" [hidden]="!canUpload">
 			<span class="badge badge-info" (click)="view()" *ngIf="!getFile">{{fileName}}</span>
 			<span class="badge badge-info" *ngIf="getFile" (click)="view()">{{getFile.realFileName}}</span>
 		</label>

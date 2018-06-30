@@ -1,0 +1,36 @@
+<!-- HTML view of payment success -->
+<div *ngIf="paymentStatus == 'SUCCESS'" class="container pt-4">
+    
+    <mat-card>
+        <h1 class="alert alert-success">
+            Thankyou you have completed your payment. Please do not refresh or back.
+        </h1>
+        <div class="row">
+            <div class="col-md-6">
+                Transaction ID
+            </div>
+            <div class="col-md-6">
+                {{dispData.transactionId}}
+            </div>
+            <div class="col-md-6">
+                Status
+            </div>
+            <div class="col-md-6">
+                {{dispData.paymentStatus}}
+            </div>
+        </div>
+        <p>you will be redirected to home page after 10 secs </p>
+        <h1 class="text-success">{{dispTime}}</h1>
+    </mat-card>
+</div>
+
+<!-- HTML view of payment failure -->
+<div *ngIf="paymentStatus == 'FAILURE'" class="container pt-4">
+    <mat-card>
+        <h1 class="alert alert-danger">
+            Sorry your payment is failed due to unknown reason
+        </h1>
+        <p>you will be redirected to home page after 10 secs </p>
+        <h1 class="text-success">{{dispTime}}</h1>
+    </mat-card>
+</div>

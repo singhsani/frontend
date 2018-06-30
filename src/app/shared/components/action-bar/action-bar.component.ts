@@ -41,7 +41,7 @@ export class ActionBarComponent implements OnInit, OnChanges {
 
 	ngOnInit() {
 		this.formService.apiType = this.form.get('apiType').value;
-		this.commonControlFormControls();
+		this.commonFormControls();
 		this.uploadFilesArray = this.uploadFiles;
 
 		setTimeout(() => {
@@ -152,6 +152,7 @@ export class ActionBarComponent implements OnInit, OnChanges {
 			let count = 1;
 			for (const key in this.form.controls) {
 				if (this.form.get(key).invalid) {
+					console.log(key);
 
 					if (this.form.get('apiType').value == 'marriageReg') {
 						let groomreligionChange = this.form.controls.groomReligion.get("code").value;
@@ -202,7 +203,7 @@ export class ActionBarComponent implements OnInit, OnChanges {
 	/**
 	 * This method used to set common formControls in existing formGroups
 	 */
-	commonControlFormControls() {
+	commonFormControls() {
 
 		let formControlObj = {
 			id: null,

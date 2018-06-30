@@ -133,7 +133,7 @@ export class AddressComponent implements OnInit, OnChanges {
 
 		let obj = _.filter(this.countryListArray, { 'name': name })[0];
 
-		this.formService.getStateLookUp(obj.id).subscribe(res => {
+		this.formService.getStateLookUp(obj.code).subscribe(res => {
 
 			this.stateListArray = _.cloneDeep(res.data);
 
@@ -152,7 +152,7 @@ export class AddressComponent implements OnInit, OnChanges {
 
 		let obj = _.filter(this.stateListArray, { 'name': name })[0];
 
-		this.formService.getCityLookUp(obj.id).subscribe(res => {
+		this.formService.getCityLookUp(obj.code).subscribe(res => {
 			this.cityListArray = _.cloneDeep(res.data);
 		});
 	}

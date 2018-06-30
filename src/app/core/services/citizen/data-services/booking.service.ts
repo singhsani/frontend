@@ -107,7 +107,7 @@ export class BookingService {
 	 */
 	getDataFromLookups() {
 
-		this.requestURL = `api/form/${this.resourceType}/lookups`;
+		this.requestURL = `api/booking/${this.resourceType}/lookups`;
 
 		return this.http.get(this.requestURL);
 	}
@@ -151,6 +151,17 @@ export class BookingService {
 	makePaymentService(transactionId) {
 		this.requestURL = `api/booking/${this.resourceType}/pay/${transactionId}`;
 		return this.http.get(this.requestURL);
+	}
+
+	shortListTheater(theaterObject){
+		console.log(theaterObject);
+		this.requestURL = `api/booking/${this.resourceType}/slot/shortlistAPI?uuid=${theaterObject.uniqueId}`;
+		return this.http.post(this.requestURL, theaterObject);
+	}
+
+	bookSlotAmphiTheater(bookingInfo){
+		this.requestURL = `api/booking/${this.resourceType}/slot/bookAPI`;
+		return this.http.post(this.requestURL, bookingInfo);
 	}
 	
 

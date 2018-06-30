@@ -147,7 +147,7 @@ export class FormsActionsService {
 		return this.http.post('api/servicePayment/pay', paymentData);
 
 	}
-
+	
 	/**
 	 * This method is used to creat payments for payable services
 	 * @param paymentData -pass payment data here.

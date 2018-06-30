@@ -167,7 +167,7 @@ export class ValidationService {
 
     static stillPregnancyDurationValidation(control: AbstractControl) {
         // RFC 2822 compliant regex
-        if (Number(control.value) <= 50) {
+        if (Number(control.value) >= 25 && Number(control.value) <= 50) {
             return '';
         } else {
             return { 'invalidpregnanceTime': true };

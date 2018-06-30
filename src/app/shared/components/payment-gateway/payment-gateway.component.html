@@ -1,38 +1,21 @@
-<div class="container">
+<!-- <div class="container">
         <app-title-bar [title]="'site_title' | translate:translateKey"></app-title-bar>
 
 		<mat-card>
-			<h2>Total Amount</h2>
-			<div class="row mb-4">
-					<div class="col-md-3">
-						<p class="alert alert-primary">
-							Delay registration (Between 21 days to 30 days)
-						</p>
-					</div>
-					<div class="col-md-3">
-						<p>
-							2 Rupees +
-						</p>
-					</div>
-					<div class="col-md-3">
-						<p class="alert alert-success">
-							Departmental Charges (10 Rupees)
-						</p>
-					</div>
-					<div class="col-md-3">
-						<p>
-							= 12 Rupees
-						</p>
-					</div>
+
+			<div class="row">
+				<div class="col-md-4">
+					<button mat-raised-button type="button" color="primary" (click)="success()"> Success </button>
 				</div>
-			<h2>Select Payment Mode</h2>
-			<mat-radio-group class="example-radio-group mb-4">
-					<mat-radio-button class="example-radio-button" *ngFor="let payMode of PaymentModes" [value]="payMode.code">
-						{{payMode.name}}
-					</mat-radio-button>
-				</mat-radio-group>
-			<button mat-raised-button type="button" color="primary" (click)="makePayment()"> Pay </button>
+
+				<div class="col-md-4">
+					<button mat-raised-button type="button" color="warn" (click)="failure()"> Failure </button>
+				</div>
+			</div>
+
 		</mat-card>
+
+</div> -->
 
 <!-- <mat-card class="paygatewayclass">
 	<mat-card-title>Payment Gateway</mat-card-title>
@@ -78,4 +61,32 @@
 	</mat-card-content>
 </mat-card> -->
 
-</div>
+<!-- <h2>Total Amount</h2>
+			<div class="row mb-4">
+					<div class="col-md-3">
+						<p class="alert alert-primary">
+							Delay registration (Between 21 days to 30 days)
+						</p>
+					</div>
+					<div class="col-md-3">
+						<p>
+							2 Rupees +
+						</p>
+					</div>
+					<div class="col-md-3">
+						<p class="alert alert-success">
+							Departmental Charges (10 Rupees)
+						</p>
+					</div>
+					<div class="col-md-3">
+						<p>
+							= 12 Rupees
+						</p>
+					</div>
+				</div>
+			<h2>Select Payment Mode</h2>
+			<mat-radio-group class="example-radio-group mb-4">
+					<mat-radio-button class="example-radio-button" *ngFor="let payMode of PaymentModes" [value]="payMode.code">
+						{{payMode.name}}
+					</mat-radio-button>
+				</mat-radio-group> -->

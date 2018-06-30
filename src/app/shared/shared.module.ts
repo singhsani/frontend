@@ -31,6 +31,7 @@ import { ControlMessagesComponent } from './components/control-messages/control-
 import { FileUploadComponent } from './components/file-upload/file-upload.component';
 import { AddressComponent } from './components/address/address.component';
 import { PaymentGatewayComponent } from './components/payment-gateway/payment-gateway.component';
+import { PaymentResponsePageComponent } from './components/payment-response-page/payment-response-page.component'
 import { BasicDetailsComponent } from './components/basic-details/basic-details.component';
 import { TitleBarComponent } from './components/title-bar/title-bar.component';
 import { LoadingIndicatorComponent } from './components/loading-indicator/loading-indicator.component';
@@ -51,6 +52,7 @@ const COMPONENTS = [
 	AddressComponent,
 	BasicDetailsComponent,
 	PaymentGatewayComponent,
+	PaymentResponsePageComponent,
 	TitleBarComponent,
 	LoadingIndicatorComponent,
 	HosActionBarComponent,
@@ -61,7 +63,7 @@ const COMPONENTS = [
 
 @NgModule({
 	declarations: [
-		...COMPONENTS
+		...COMPONENTS,
 	],
 	imports: [
 		CommonModule,

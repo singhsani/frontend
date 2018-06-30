@@ -221,6 +221,10 @@ const ROUTEMAIN = {
         'main': 'payment-gateway',
         'type': ''
     },
+    'CITIZENPAYMENTGATEWAYRESPONSE': {
+        'main': 'payment-gateway-response',
+        'type': ''
+    },
     'TOWNHALL': {
         'main': 'town-hall',
         'type': 'townhall'
@@ -302,6 +306,14 @@ const ROUTEMAIN = {
     'HOSPITALMYAPPS': {
         'main': 'my-applications',
         'type': 'myApps'
+    },
+    'HOSPITALPAYMENTGATEWAY': {
+        'main': 'payment-gateway',
+        'type': ''
+    },
+    'HOSPITALPAYMENTGATEWAYRESPONSE': {
+        'main': 'payment-gateway-response',
+        'type': ''
     },
 }
 
@@ -532,6 +544,9 @@ const ROUTESLIST = {
     'CITIZENPAYMENTGATEWAY': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEMAIN.CITIZENPAYMENTGATEWAY.main
     },
+    'CITIZENPAYMENTGATEWAYRESPONSE': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEMAIN.CITIZENPAYMENTGATEWAYRESPONSE.main
+    },
     'TOWNHALLLIST': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.BOOKINGMODULE + '/' + ROUTEPREFIX.TOWNHALLMODULE + '/' + ROUTEMAIN.TOWNHALLLIST.main
     },
@@ -579,6 +594,12 @@ const ROUTESLIST = {
     },
     'HOSPITALMYAPPS': {
         'full': ROUTEPREFIX.HOSPITALMODULE + '/' + ROUTEMAIN.HOSPITALMYAPPS.main
+    },
+    'HOSPITALPAYMENTGATEWAY': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEMAIN.HOSPITALPAYMENTGATEWAY.main
+    },
+    'HOSPITALPAYMENTGATEWAYRESPONSE': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEMAIN.HOSPITALPAYMENTGATEWAYRESPONSE.main
     },
 }
 
