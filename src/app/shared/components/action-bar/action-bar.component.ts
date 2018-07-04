@@ -34,7 +34,7 @@ export class ActionBarComponent implements OnInit, OnChanges {
 
 	constructor(
 		private formService: FormsActionsService,
-		private route: Router, private fb: FormBuilder,
+		private router: Router, private fb: FormBuilder,
 		private toastr: ToastrService,
 		private commonService: CommonService) {
 	}
@@ -279,6 +279,13 @@ export class ActionBarComponent implements OnInit, OnChanges {
 				control.markAsTouched();
 			});
 		}
+	}
+
+	/**
+	 * This method is use to redirect on my application
+	 */
+	cancelForm(){
+		this.router.navigate(['citizen/my-applications']);
 	}
 
 }

@@ -11,6 +11,8 @@
 
 		<ng-container *ngIf="step == 'final'">
 			<button type="button" mat-raised-button color="success" [disabled]="isSubmitBtnDisabled" *ngIf="form.get('canEdit').value" (click)="onSubmit()">{{'submit' | translate:translateKey}}</button>
-			<button type="button" mat-raised-button color="warn" [disabled]="isSubmitBtnDisabled" *ngIf="form.get('canEdit').value" (click)="resetForm()">{{'reset' | translate:translateKey}}</button>
 		</ng-container>
+
+		<button type="button" mat-raised-button color="warn" (click)="cancelForm()">Cancel</button>
+		
 	</div>

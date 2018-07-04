@@ -3,7 +3,7 @@
 	<mat-card class="mt-4 formClass">
 
 		<!--Start  form  -->
-		<form [formGroup]="noRecordDeathForm">
+		<form [formGroup]="noRecordDeathForm" autocomplete="off" ngNativeValidate>
 			<mat-horizontal-stepper [linear]="false">
 
 				<!-- first step start-->
@@ -30,7 +30,7 @@
 						<div formGroupName="gender" class="col-md-4 radioBtnError">
 							<mat-label>{{'gender' | translate: translateKey}} *</mat-label>
 							<mat-radio-group class="example-radio-group" formControlName="code">
-								<mat-radio-button [value]="gender.code" *ngFor="let gender of genderArray">{{gender.name}}</mat-radio-button>
+								<mat-radio-button [value]="gender.code" *ngFor="let gender of genderArray">{{gender.name +'/'+gender.gujName }}</mat-radio-button>
 							</mat-radio-group>
 							<control-messages [control]="noRecordDeathForm.controls.gender.controls.code"></control-messages>
 						</div>
@@ -54,11 +54,6 @@
 						</mat-form-field>
 					</div>
 
-					<div *ngIf="showButtons">
-						<span class="text-primary">Upload Mandatory Documents For Deceased ID Proof's {{!getFileObjectContained('1.1')?'': '*'}} </span>
-						<file-upload [form]="noRecordDeathForm" [uploadModel]="setDataValue(1.1,'Deceased','1.1','NRCDeathCertificate')"></file-upload>
-					</div>
-
 					<app-action-bar [uploadFiles]="uploadFileArray" [form]="noRecordDeathForm" [step]="'step1'" (stepReset)="stepReset()" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
 
 				</mat-step>
@@ -67,13 +62,8 @@
 				<!-- second step start-->
 				<mat-step [label]="stepLable2 | translate: translateKey">
 
-					<div>Basic Details:
-						<app-address #address [addressFormGroup]="noRecordDeathForm.controls.deathPlaceAddress"></app-address>
-					</div>
-
-					<div *ngIf="showButtons">
-						<span class="text-primary">Upload Mandatory Documents {{!getFileObjectContained('1.2')?'': '*'}}</span>
-						<file-upload [form]="noRecordDeathForm" [uploadModel]="setDataValue(1.2,'BasicDetails','2.1','NRCDeathCertificate')"></file-upload>
+					<div>Address
+						<app-address #address [requiredFeilds]="true" [addressFormGroup]="noRecordDeathForm.controls.deathPlaceAddress"></app-address>
 					</div>
 
 					<app-action-bar [uploadFiles]="uploadFileArray" [form]="noRecordDeathForm" [step]="'step2'" (stepReset)="stepReset()" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
@@ -84,7 +74,7 @@
 				<!-- last step start-->
 				<mat-step [label]="stepLable3 | translate: translateKey">
 
-					<div>Basic Details:
+					<div>Basic Detail
 						<app-basic-details [basicFormGroup]="noRecordDeathForm"></app-basic-details>
 					</div>
 
@@ -111,19 +101,49 @@
 						</div>
 					</div>
 
-					<div *ngIf="showButtons">
-						<span class="text-primary">Upload Mandatory Documents For Applicant ID Proof's {{!getFileObjectContained('1.3')?'': '*'}}</span>
-						<file-upload [form]="noRecordDeathForm" [uploadModel]="setDataValue(1.3,'Applicant Id','3.1','NRCDeathCertificate')"></file-upload>
-					</div>
-
-					<div *ngIf="showButtons">
-						<span class="text-primary">Additional Documents </span>
-						<file-upload [form]="noRecordDeathForm" [uploadModel]="setDataValue(1.4,'AdditionalDoc','4.1','NRCDeathCertificate')"></file-upload>
-					</div>
-
-					<app-action-bar [uploadFiles]="uploadFileArray" [form]="noRecordDeathForm" [step]="'final'" (stepReset)="stepReset()" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
+					<app-action-bar [form]="noRecordDeathForm" [step]="'step3'" (stepReset)="stepReset()" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
 				</mat-step>
 				<!-- last step end-->
+
+				<!-- final step start-->
+				<mat-step [label]="stepLable4">
+				
+					<div class="alert alert-warning">
+						Note : Submit Hard Copy At Madhyawarti School
+					</div>
+				
+					<div class="alert alert-warning">
+						Note : File Size Less Than 5mb
+					</div>
+				
+					<div class="row">
+				
+						<div *ngIf="showButtons" class="col-md-4">
+							<label>Deceased ID Proof {{!getFileObjectContained('1.1')?'': '*'}} </label>
+							<file-upload [form]="noRecordDeathForm" [uploadModel]="setDataValue(1.1,'Deceased','1.1','NRCDeathCertificate')"></file-upload>
+						</div>
+				
+						<div *ngIf="showButtons" class="col-md-4">
+							<label>Upload Mandatory Documents {{!getFileObjectContained('1.2')?'': '*'}}</label>
+							<file-upload [form]="noRecordDeathForm" [uploadModel]="setDataValue(1.2,'BasicDetails','2.1','NRCDeathCertificate')"></file-upload>
+						</div>
+				
+						<div *ngIf="showButtons" class="col-md-4">
+							<label>Applicant ID Proof {{!getFileObjectContained('1.3')?'': '*'}}</label>
+							<file-upload [form]="noRecordDeathForm" [uploadModel]="setDataValue(1.3,'Applicant Id','3.1','NRCDeathCertificate')"></file-upload>
+						</div>
+						
+						<div *ngIf="showButtons" class="col-md-4">
+							<label>Additional Documents </label>
+							<file-upload [form]="noRecordDeathForm" [uploadModel]="setDataValue(1.4,'AdditionalDoc','4.1','NRCDeathCertificate')"></file-upload>
+						</div>
+				
+					</div>
+				
+					<app-action-bar [form]="noRecordDeathForm" [step]="'final'" [uploadFiles]="uploadFileArray" (stepReset)="stepReset()" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
+				</mat-step>
+				<!-- final step end-->
+
 			</mat-horizontal-stepper>
 		</form>
 	</mat-card>

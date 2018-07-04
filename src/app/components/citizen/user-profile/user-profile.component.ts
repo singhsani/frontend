@@ -144,7 +144,7 @@ export class UserProfileComponent implements OnInit {
 	getStateLists(name) {
 		let obj = _.filter(this.countryListArray, { 'name': name })[0];
 
-		this.formService.getStateLookUp(obj.id).subscribe(res => {
+		this.formService.getStateLookUp(obj.code).subscribe(res => {
 			this.stateListArray = _.cloneDeep(res.data);
 
 			if (this.userProfileForm.get('state').value) {
@@ -161,7 +161,7 @@ export class UserProfileComponent implements OnInit {
 	getCityLists(name) {
 		let obj = _.filter(this.stateListArray, { 'name': name })[0];
 
-		this.formService.getCityLookUp(obj.id).subscribe(res => {
+		this.formService.getCityLookUp(obj.code).subscribe(res => {
 			this.cityListArray = _.cloneDeep(res.data);
 		});
 	}
@@ -174,6 +174,9 @@ export class UserProfileComponent implements OnInit {
 		if (name) {
 			this.getStateLists(name);
 		}
+
+		this.stateListArray = [];
+		this.cityListArray = [];
 		this.userProfileForm.get('state').setValue(null);
 		this.userProfileForm.get('city').setValue(null);
 	}
@@ -186,6 +189,7 @@ export class UserProfileComponent implements OnInit {
 		if (name) {
 			this.getCityLists(name);
 		}
+		this.cityListArray = [];
 		this.userProfileForm.get('city').setValue(null);
 	}
 
