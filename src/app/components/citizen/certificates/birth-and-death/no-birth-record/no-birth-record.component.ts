@@ -69,6 +69,9 @@ export class NoBirthRecordComponent implements OnInit {
 		this.getLookupData();
 	}
 
+	/**
+	 * This method use for initialise form controls
+	 */
 	nrcBirthCertFormControls() {
 
 		this.noRecordBirthForm = this.fb.group({

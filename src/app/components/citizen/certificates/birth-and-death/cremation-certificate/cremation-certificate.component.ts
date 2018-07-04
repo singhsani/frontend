@@ -67,7 +67,9 @@ export class CremationCertificateComponent implements OnInit {
 
 	}
 
-
+	/**
+	 * This method use for initialise form controls
+	 */
 	cremationCertFormControls() {
 
 		this.cremationForm = this.fb.group({

@@ -66,6 +66,9 @@ export class NoDeathRecordComponent implements OnInit {
 		this.nrcDeathCertFormControls();
 	}
 
+	/**
+	 * This method use for initialise form controls
+	 */
 	nrcDeathCertFormControls() {
 
 		this.noRecordDeathForm = this.fb.group({
