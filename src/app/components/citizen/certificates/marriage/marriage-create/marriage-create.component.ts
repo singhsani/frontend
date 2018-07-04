@@ -11,6 +11,7 @@ import * as _ from 'lodash';
 import * as moment from 'moment';
 import { ManageRoutes } from '../../../../../config/routes-conf';
 import { identity } from 'rxjs';
+import { element } from 'protractor';
 
 @Component({
     selector: 'app-marriage-create',
@@ -91,6 +92,8 @@ export class MarriageCreateComponent implements OnInit {
      * @param validationError - Declare validation service property
      * @param formService - Declare form service property 
      * @param commonService - Declare sweet alert.
+     * @param route - Get url Id.
+     * @param router - Navigate other page.
      */
     constructor(
         private route: ActivatedRoute,
@@ -125,7 +128,7 @@ export class MarriageCreateComponent implements OnInit {
         }
 
     }
-    
+
     /**
     * This method is listed form controls.
     */
@@ -140,9 +143,10 @@ export class MarriageCreateComponent implements OnInit {
 
             // first step**
             marriageDate: [null, Validators.required],
-            marriageRegistrationDate: [''],
+            // marriageRegistrationDate: [''],
             marriagePlace: this.fb.group(this.addrComponent.addressControls()),
-
+            // for NRI marriage
+            isNriMarriage: [false, Validators.required],
             groomFirstName: ['abc', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
             groomMiddleName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
             groomLastName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
@@ -268,14 +272,53 @@ export class MarriageCreateComponent implements OnInit {
 
             secondWitnessFirstNameGuj: [''],
             secondWitnessMiddleNameGuj: [''],
-            secondWitnessLastNameGuj: ['']
+            secondWitnessLastNameGuj: [''],
 
+            // for NRI groom
+            isGroomVisa: [false],
+
+            groomPassportNumber: [null, [Validators.maxLength(9)]],
+            groomCountry: [''],
+            groomVisaNumber: ['', [Validators.maxLength(9)]],
+            groomVisaFrom: [''],
+            groomVisaTo: [''],
+            groomSocialSecurityNumber: ['', [Validators.maxLength(9)]],
+            groomEligibility: ['', [Validators.maxLength(50)]],
+            groomDesignation: ['', [Validators.maxLength(50)]],
+            groomPhoneNumber: ['', [Validators.maxLength(10)]],
+            groomEmail: ['', [Validators.maxLength(50), ValidationService.emailValidator]],
+            nriGroomAddress: ['', [Validators.maxLength(500)]],
+            groomCompanyName: ['', [Validators.maxLength(100)]],
+            groomCompanyPhoneNumber: ['', [Validators.maxLength(10)]],
+            groomCompanyAddress: ['', [Validators.maxLength(500)]],
+
+            // for NRI bride
+            isBrideVisa: [false],
+
+            bridePassportNumber: ['', [Validators.maxLength(9)]],
+            brideCountry: [''],
+            brideVisaNumber: ['', [Validators.maxLength(9)]],
+            brideVisaFrom: [''],
+            brideVisaTo: [''],
+            brideSocialSecurityNumber: ['', [Validators.maxLength(9)]],
+            brideEligibility: ['', [Validators.maxLength(50)]],
+            brideDesignation: ['', [Validators.maxLength(50)]],
+            brideEmail: ['', [Validators.maxLength(50), ValidationService.emailValidator]],
+            bridePhoneNumber: ['', [Validators.maxLength(10)]],
+            nriBrideAddress: ['', [Validators.maxLength(500)]],
+            brideCompanyName: ['', [Validators.maxLength(100)]],
+            brideCompanyPhoneNumber: ['', [Validators.maxLength(10)]],
+            brideCompanyAddress: ['', [Validators.maxLength(500)]],
+
+            nriGroomParentsAddress: ['', [Validators.maxLength(500)]],
+            nriBrideParentsAddress: ['', [Validators.maxLength(500)]]
         });
 
     }
 
     /**
      * This method is use to patch Value in marriage form
+     * @param id : Form Id.
      */
     getFormData(id: number) {
         this.formService.getFormData(id).subscribe(
@@ -310,7 +353,7 @@ export class MarriageCreateComponent implements OnInit {
                 this.showButtons = true;
 
                 //set default value
-                this.marriageFormGroup.get('marriageRegistrationDate').setValue(moment().format('YYYY-MM-DD'));
+                // this.marriageFormGroup.get('marriageRegistrationDate').setValue(moment().format('YYYY-MM-DD'));
 
                 //for display static days
                 if (res.groomBirthDate != null && res.marriageDate != null) {
@@ -378,6 +421,8 @@ export class MarriageCreateComponent implements OnInit {
 
     /**
      * This method is change date formate.
+     * @param date : Input date(any format).
+     * @param controlType : Input From Control.
      */
     dateFormate(date, controlType: string) {
         this.marriageFormGroup.get(controlType).setValue(moment(date).format("YYYY-MM-DD"));
@@ -389,7 +434,7 @@ export class MarriageCreateComponent implements OnInit {
     CalculateAge() {
         let marriagedate = this.marriageFormGroup.get("marriageDate").value;
         if (marriagedate === null || marriagedate === undefined) {
-            this.commonService.openAlert("Warning", "please select marriage date", "warning");
+            this.commonService.openAlert("Warning", "Please select Date of Marriage", "warning");
         }
 
         //display days and years
@@ -424,6 +469,8 @@ export class MarriageCreateComponent implements OnInit {
 
     /**
      * This Method is set gujarati value in inputs (static).
+     * @param lookupArray : Item List
+     * @param resCode : From control value
      */
     getGujValue(lookupArray: Array<any>, resCode: string) {
         return _.result(_.find(lookupArray, function (obj) {
@@ -432,8 +479,10 @@ export class MarriageCreateComponent implements OnInit {
     }
 
     /**
-    * This method is calculate age.
-    */
+     * This method is calculate age.
+     * @param date : parents birth date
+     * @param index : parents index
+     */
     parentAge(date: string, index: number) {
         if (this.marriageFormGroup.get(date).value != null) {
             let bday = moment(this.marriageFormGroup.get(date).value, "YYYY-MM-DD");
@@ -443,9 +492,71 @@ export class MarriageCreateComponent implements OnInit {
             this.ageObject[`days${index}`] = days;
         }
     }
+    
+    /**
+    * This method is Reset NIR marriage related field.
+    */
+    changeFieldReset() {
+        this.marriageFormGroup.get('isGroomVisa').setValue(false);
+        this.marriageFormGroup.get('isBrideVisa').setValue(false);
+
+        this.marriageFormGroup.get('nriGroomParentsAddress').reset();
+        this.marriageFormGroup.get('groomParentsAddress').reset();
+        this.marriageFormGroup.get('groomParentsAddressResidence').reset();
+
+        this.marriageFormGroup.get('nriBrideParentsAddress').reset();
+        this.marriageFormGroup.get('brideParentsAddress').reset();
+        this.marriageFormGroup.get('brideParentsAddressResidence').reset();
+
+        this.addObject['checkedPar1'] = false;
+        this.addObject['checkedPar2'] = false;
+        this.addObject['checkedPar3'] = false;
+        this.marriageFormGroup.get('isGroomParResAddressSame').get('code').setValue('NO');
+        this.marriageFormGroup.get('isBrideParResAddressSame').get('code').setValue('NO');
+        this.marriageFormGroup.get('groomParentsAddress').get('addressType').setValue('GROOM_PARENTS_ADDRESS');
+        this.marriageFormGroup.get('groomParentsAddressResidence').get('addressType').setValue('GROOM_PARENTS_ADDRESS_RESIDENCE');
+        this.marriageFormGroup.get('brideParentsAddress').get('addressType').setValue('BRIDE_PARENTS_ADDRESS');
+        this.marriageFormGroup.get('brideParentsAddressResidence').get('addressType').setValue('GROOM_PARENTS_ADDRESS_RESIDENCE');
+
+    }
 
     /**
-     * This method is set gujarati value in change event. 
+     * This method is Reset Visa related field.
+     * @param person : Groom or Bride (Change Event).
+     */
+    changeReflection(person: string) {
+
+        this.marriageFormGroup.get(`${person}PassportNumber`).reset();
+        this.marriageFormGroup.get(`${person}Country`).reset();
+        this.marriageFormGroup.get(`${person}VisaNumber`).reset();
+        this.marriageFormGroup.get(`${person}VisaFrom`).reset();
+        this.marriageFormGroup.get(`${person}VisaTo`).reset();
+        this.marriageFormGroup.get(`${person}SocialSecurityNumber`).reset();
+        this.marriageFormGroup.get(`${person}Eligibility`).reset();
+        this.marriageFormGroup.get(`${person}Designation`).reset();
+        this.marriageFormGroup.get(`${person}PhoneNumber`).reset();
+        this.marriageFormGroup.get(`${person}Email`).reset();
+        this.marriageFormGroup.get(`${person}CompanyName`).reset();
+        this.marriageFormGroup.get(`${person}CompanyAddress`).reset();
+        this.marriageFormGroup.get(`${person}CompanyPhoneNumber`).reset();
+        // this.marriageFormGroup.get(`nriGroomAddress`).reset();
+    }
+
+    /**
+     * This method is use when change selection of visa filed . 
+     * @param person : Groom or Bride(Change Event).
+     * @param type : Addrerss Type.
+     */
+    resetAddress(person: string, type: string) {
+        this.marriageFormGroup.get(person).reset();
+        this.marriageFormGroup.get(person).get('addressType').setValue(type);
+    }
+
+    /**
+     * This method is set gujarati value on change event. 
+     * @param event : get value on chnage event.
+     * @param lookupArray : Item List.
+     * @param varName : Static Variable.
      */
     onChange(event: string, lookupArray: Array<any>, varName: string) {
         if (!_.isUndefined(this.getGujValue(lookupArray, event)))
@@ -454,6 +565,7 @@ export class MarriageCreateComponent implements OnInit {
 
     /**
      * This method is remove gujarati static variable. 
+     * @param varName : Static Variable.
      */
     removeGuj(varName: string) {
         this[varName] = '';
@@ -483,6 +595,7 @@ export class MarriageCreateComponent implements OnInit {
 
     /**
      * This method is use disable value. 
+     * @param controlName : From control name
      */
     changeDisable(controlName: string) {
         this.marriageFormGroup.get(controlName).disable();
@@ -490,6 +603,8 @@ export class MarriageCreateComponent implements OnInit {
 
     /**
      * This method is use set 'YES' or 'NO' value for checkbox. 
+     * @param controlName : From control name.
+     * @param value : control value.
      */
     setValue(controlName: string, value: string) {
         this.marriageFormGroup.get(controlName).get('code').setValue(value);
@@ -497,6 +612,11 @@ export class MarriageCreateComponent implements OnInit {
 
     /**
      * This method is use for auto fill address . 
+     * @param event : check box event(boolean).
+     * @param ischeck : set 'Yes' or 'NO' value when check or uncheck.
+     * @param controlfirst : Address control.
+     * @param controlsecond : for copy address.
+     * @param add : Static variable index.
      */
     checkBox(event, ischeck: string, controlfirst: string, controlsecond: string, add: string) {
 
@@ -546,7 +666,7 @@ export class MarriageCreateComponent implements OnInit {
 
     /**
      * This method required for final form submition.
-     * @param count - flag of invalid control.
+     * @param flag - flag of invalid control.
      */
     handleErrorsOnSubmit(flag) {
 
@@ -594,6 +714,21 @@ export class MarriageCreateComponent implements OnInit {
                 this.checkReligion();
                 return false;
             }
+            // for NIR marriage
+            else if (count >= 90 && count <= 103) {
+                this.stepper.selectedIndex = 0;
+                return false;
+            } else if (count >= 103 && count <= 118) {
+                this.stepper.selectedIndex = 1;
+                return false;
+            } else if (count == 119) {
+                this.stepper.selectedIndex = 2;
+                return false;
+            } else if (count == 120) {
+                this.stepper.selectedIndex = 3;
+                return false;
+            }
+
             else {
                 console.log("else condition");
             }
