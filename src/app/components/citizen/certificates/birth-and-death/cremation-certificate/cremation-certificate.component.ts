@@ -22,6 +22,11 @@ export class CremationCertificateComponent implements OnInit {
 
 	@ViewChild('address') addrComponent: any;
 
+	private uploadFileArray: Array<any> = [
+		{ labelName: 'Address Proof', fieldIdentifier: '1.1' },
+		{ labelName: 'Unique Id', fieldIdentifier: '1.2' }
+	]
+
 	cremationForm: FormGroup;
 	translateKey: string = 'cremationScreen';
 
@@ -31,15 +36,14 @@ export class CremationCertificateComponent implements OnInit {
 	maxDate: Date = new Date();
 	relationshipArray: any = [];
 	genderArray: any = [];
-	placeArray: any = [];
-	applicantProof: any = [];
 
 	uploadModel: any = {};
-	relationFlag: boolean;
+	showButtons: boolean = false;
 
 	// Step Titles
-	stepLable1: string = "cremation_certificate_detail";
-	stepLable2: string = "applicant_detail";
+	stepLable1: string = "deceased_details";
+	stepLable2: string = "applicants_detail";
+	stepLable3: string = "upload_document";
 
 	constructor(
 		private fb: FormBuilder,
@@ -69,27 +73,29 @@ export class CremationCertificateComponent implements OnInit {
 		this.cremationForm = this.fb.group({
 
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
-			applicantRelation: this.fb.group({
-				code: [null, Validators.required]
-			}),
-			applicantRelationDetail: null,
-			applicantProof: this.fb.group({
-				code: [null, Validators.required]
-			}),
-			applicantAddress: this.fb.group(this.addrComponent.addressControls()),
-			cremationAddress: this.fb.group(this.addrComponent.addressControls()),
+
+			deceasedFirstName: [null, Validators.required],
+			deceasedMiddleName: [null],
+			deceasedLastName: [null, Validators.required],
+			
+			deceasedFirstNameGuj: [null, Validators.required],
+			deceasedMiddleNameGuj: [null],
+			deceasedLastNameGuj: [null, Validators.required],
+
 			deathDate: [null, Validators.required],
 			gender: this.fb.group({
 				code: [null, Validators.required]
 			}),
-			deceasedName: [null, Validators.required],
-			regNumber: null,
-			deathPlace: this.fb.group({
+
+			deathPlaceAddress: this.fb.group(this.addrComponent.addressControls()),
+			cremationAddress: this.fb.group(this.addrComponent.addressControls()),
+
+			applicantAddress: this.fb.group(this.addrComponent.addressControls()),
+			applicantRelation: this.fb.group({
 				code: [null, Validators.required]
 			}),
-			deathPlaceDetail: null,
-			issueDate: null,
-			authorityName: null,
+			applicantRelationDetail: null,
+			
 			attachments: [],
 
 		});
@@ -102,6 +108,7 @@ export class CremationCertificateComponent implements OnInit {
 	getCremationData() {
 		this.formService.getFormData(this.appId).subscribe(res => {
 			this.cremationForm.patchValue(res);
+			this.showButtons = true;
 		});
 	}
 
@@ -118,11 +125,14 @@ export class CremationCertificateComponent implements OnInit {
 	 */
 	handleErrorsOnSubmit(count) {
 
-		let step1 = 23;
-		let step2 = 25;
+		let step1 = 11;
+		let step2 = 14;
 
 		if (count <= step1) {
 			this.stepper.selectedIndex = 0;
+			return false;
+		} else if (count >= 33 && count <= 38) {
+			this.stepper.selectedIndex = 1;
 			return false;
 		} else if (count <= step2) {
 			this.stepper.selectedIndex = 1;
@@ -137,29 +147,47 @@ export class CremationCertificateComponent implements OnInit {
 	getLookupData() {
 		this.formService.getDataFromLookups().subscribe(res => {
 			this.genderArray = res.GENDER;
-			this.placeArray = res.PLACE;
 			this.relationshipArray = res.RELATIONSHIP;
-			this.applicantProof = res.APPLICANT_PROOF;
 		});
 	}
+
 
 	/**
 	 * This method use to return file upload model
 	 * @param indentifier - get different indentifier for different file 
 	 */
-	setDataValue(indentifier: number) {
+	setDataValue(indentifier: number, labelName: string, formPart: string, variableName: string) {
 
 		this.uploadModel = {
-			fieldIdentifier: indentifier,
-			labelName: 'cremationReg',
-			formPart: '3',
-			variableName: 'test',
+			fieldIdentifier: indentifier.toString(),
+			labelName: labelName.toString(),
+			formPart: formPart.toString(),
+			variableName: variableName.toString(),
 			serviceFormId: this.appId,
 		}
 
 		return this.uploadModel;
 	}
 
+	/**
+	 * Method is used to get file status.
+	 * @param fieldIdentifier - file identifier.
+	 */
+
+	getFileObjectContained(fieldIdentifier: string) {
+		let found: boolean = false;
+		for (let i = 0; i < this.uploadFileArray.length; i++) {
+			if (this.uploadFileArray[i].fieldIdentifier == fieldIdentifier) {
+				found = true;
+				break;
+			}
+		}
+		return found;
+	}
+
+	/**
+	 * This method use for reset steps
+	 */
 	stepReset() {
 		this.stepper.reset();
 	}
@@ -168,22 +196,14 @@ export class CremationCertificateComponent implements OnInit {
 	 * This method is use for get the value of applicant relation change
 	 * @param event - select box change value
 	 */
-	realtionChange(event) {
-		if (event.value !== 'OTHER_RELATIONSHIP') {
+	applicantRelChange(value) {
+		if (value !== 'OTHER_RELATIONSHIP') {
 			this.cremationForm.get('applicantRelationDetail').setValue('');
-			this.relationFlag = false;
+			this.cremationForm.get('applicantRelationDetail').clearValidators();
 		} else {
-			this.relationFlag = true;
+			this.cremationForm.get('applicantRelationDetail').setValidators([Validators.required]);
 		}
-	}
+		this.cremationForm.controls['applicantRelationDetail'].updateValueAndValidity();
 
-	/**
-	 * This method is use for get the value of death place change
-	 * @param event - radio button change value
-	 */
-	placeChange(event) {
-		if (event.value !== 'OTHER_PLACE') {
-			this.cremationForm.get('deathPlaceDetail').setValue('');
-		}
 	}
 }
