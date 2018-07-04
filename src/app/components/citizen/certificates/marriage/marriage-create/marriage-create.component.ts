@@ -11,6 +11,7 @@ import * as _ from 'lodash';
 import * as moment from 'moment';
 import { ManageRoutes } from '../../../../../config/routes-conf';
 import { identity } from 'rxjs';
+import { element } from 'protractor';
 
 @Component({
     selector: 'app-marriage-create',
@@ -125,7 +126,7 @@ export class MarriageCreateComponent implements OnInit {
         }
 
     }
-    
+
     /**
     * This method is listed form controls.
     */
@@ -140,9 +141,10 @@ export class MarriageCreateComponent implements OnInit {
 
             // first step**
             marriageDate: [null, Validators.required],
-            marriageRegistrationDate: [''],
+            // marriageRegistrationDate: [''],
             marriagePlace: this.fb.group(this.addrComponent.addressControls()),
-
+            // for NRI marriage
+            isNriMarriage: [false, Validators.required],
             groomFirstName: ['abc', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
             groomMiddleName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
             groomLastName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
@@ -268,8 +270,46 @@ export class MarriageCreateComponent implements OnInit {
 
             secondWitnessFirstNameGuj: [''],
             secondWitnessMiddleNameGuj: [''],
-            secondWitnessLastNameGuj: ['']
+            secondWitnessLastNameGuj: [''],
 
+            // for NRI groom
+            isGroomVisa: [false],
+
+            groomPassportNumber: [null, [Validators.maxLength(9)]],
+            groomCountry: [''],
+            groomVisaNumber: ['', [Validators.maxLength(9)]],
+            groomVisaFrom: [''],
+            groomVisaTo: [''],
+            groomSocialSecurityNumber: ['', [Validators.maxLength(9)]],
+            groomEligibility: ['', [Validators.maxLength(50)]],
+            groomDesignation: ['', [Validators.maxLength(50)]],
+            groomPhoneNumber: ['', [Validators.maxLength(10)]],
+            groomEmail: ['', [Validators.maxLength(50), ValidationService.emailValidator]],
+            nriGroomAddress: ['', [Validators.maxLength(500)]],
+            groomCompanyName: ['', [Validators.maxLength(100)]],
+            groomCompanyPhoneNumber: ['', [Validators.maxLength(10)]],
+            groomCompanyAddress: ['', [Validators.maxLength(500)]],
+
+            // for NRI bride
+            isBrideVisa: [false],
+
+            bridePassportNumber: ['', [Validators.maxLength(9)]],
+            brideCountry: [''],
+            brideVisaNumber: ['', [Validators.maxLength(9)]],
+            brideVisaFrom: [''],
+            brideVisaTo: [''],
+            brideSocialSecurityNumber: ['', [Validators.maxLength(9)]],
+            brideEligibility: ['', [Validators.maxLength(50)]],
+            brideDesignation: ['', [Validators.maxLength(50)]],
+            brideEmail: ['', [Validators.maxLength(50), ValidationService.emailValidator]],
+            bridePhoneNumber: ['', [Validators.maxLength(10)]],
+            nriBrideAddress: ['', [Validators.maxLength(500)]],
+            brideCompanyName: ['', [Validators.maxLength(100)]],
+            brideCompanyPhoneNumber: ['', [Validators.maxLength(10)]],
+            brideCompanyAddress: ['', [Validators.maxLength(500)]],
+
+            nriGroomParentsAddress: ['', [Validators.maxLength(500)]],
+            nriBrideParentsAddress: ['', [Validators.maxLength(500)]]
         });
 
     }
@@ -310,7 +350,7 @@ export class MarriageCreateComponent implements OnInit {
                 this.showButtons = true;
 
                 //set default value
-                this.marriageFormGroup.get('marriageRegistrationDate').setValue(moment().format('YYYY-MM-DD'));
+                // this.marriageFormGroup.get('marriageRegistrationDate').setValue(moment().format('YYYY-MM-DD'));
 
                 //for display static days
                 if (res.groomBirthDate != null && res.marriageDate != null) {
@@ -389,7 +429,7 @@ export class MarriageCreateComponent implements OnInit {
     CalculateAge() {
         let marriagedate = this.marriageFormGroup.get("marriageDate").value;
         if (marriagedate === null || marriagedate === undefined) {
-            this.commonService.openAlert("Warning", "please select marriage date", "warning");
+            this.commonService.openAlert("Warning", "Please select Date of Marriage", "warning");
         }
 
         //display days and years
@@ -443,9 +483,65 @@ export class MarriageCreateComponent implements OnInit {
             this.ageObject[`days${index}`] = days;
         }
     }
+    
+    /**
+    * This method is Reset NIR marriage related field.
+    */
+    changeFieldReset() {
+        this.marriageFormGroup.get('isGroomVisa').setValue(false);
+        this.marriageFormGroup.get('isBrideVisa').setValue(false);
+
+        this.marriageFormGroup.get('nriGroomParentsAddress').reset();
+        this.marriageFormGroup.get('groomParentsAddress').reset();
+        this.marriageFormGroup.get('groomParentsAddressResidence').reset();
+
+        this.marriageFormGroup.get('nriBrideParentsAddress').reset();
+        this.marriageFormGroup.get('brideParentsAddress').reset();
+        this.marriageFormGroup.get('brideParentsAddressResidence').reset();
+
+        this.addObject['checkedPar1'] = false;
+        this.addObject['checkedPar2'] = false;
+        this.addObject['checkedPar3'] = false;
+        this.marriageFormGroup.get('isGroomParResAddressSame').get('code').setValue('NO');
+        this.marriageFormGroup.get('isBrideParResAddressSame').get('code').setValue('NO');
+        this.marriageFormGroup.get('groomParentsAddress').get('addressType').setValue('GROOM_PARENTS_ADDRESS');
+        this.marriageFormGroup.get('groomParentsAddressResidence').get('addressType').setValue('GROOM_PARENTS_ADDRESS_RESIDENCE');
+        this.marriageFormGroup.get('brideParentsAddress').get('addressType').setValue('BRIDE_PARENTS_ADDRESS');
+        this.marriageFormGroup.get('brideParentsAddressResidence').get('addressType').setValue('GROOM_PARENTS_ADDRESS_RESIDENCE');
+
+    }
 
     /**
-     * This method is set gujarati value in change event. 
+    * This method is Reset Visa related field.
+    */
+    changeReflection(person: string) {
+
+        this.marriageFormGroup.get(`${person}PassportNumber`).reset();
+        this.marriageFormGroup.get(`${person}Country`).reset();
+        this.marriageFormGroup.get(`${person}VisaNumber`).reset();
+        this.marriageFormGroup.get(`${person}VisaFrom`).reset();
+        this.marriageFormGroup.get(`${person}VisaTo`).reset();
+        this.marriageFormGroup.get(`${person}SocialSecurityNumber`).reset();
+        this.marriageFormGroup.get(`${person}Eligibility`).reset();
+        this.marriageFormGroup.get(`${person}Designation`).reset();
+        this.marriageFormGroup.get(`${person}PhoneNumber`).reset();
+        this.marriageFormGroup.get(`${person}Email`).reset();
+        this.marriageFormGroup.get(`${person}CompanyName`).reset();
+        this.marriageFormGroup.get(`${person}CompanyAddress`).reset();
+        this.marriageFormGroup.get(`${person}CompanyPhoneNumber`).reset();
+        // this.marriageFormGroup.get(`nriGroomAddress`).reset();
+    }
+
+    /**
+     * This method is use when change selection of visa filed . 
+     */
+    resetAddress(person: string, type: string) {
+        this.marriageFormGroup.get(person).reset();
+        this.marriageFormGroup.get(person).get('addressType').setValue(type);
+    }
+
+    /**
+     * This method is set gujarati value on change event. 
      */
     onChange(event: string, lookupArray: Array<any>, varName: string) {
         if (!_.isUndefined(this.getGujValue(lookupArray, event)))
@@ -594,6 +690,21 @@ export class MarriageCreateComponent implements OnInit {
                 this.checkReligion();
                 return false;
             }
+            // for NIR marriage
+            else if (count >= 90 && count <= 103) {
+                this.stepper.selectedIndex = 0;
+                return false;
+            } else if (count >= 103 && count <= 118) {
+                this.stepper.selectedIndex = 1;
+                return false;
+            } else if (count == 119) {
+                this.stepper.selectedIndex = 2;
+                return false;
+            } else if (count == 120) {
+                this.stepper.selectedIndex = 3;
+                return false;
+            }
+
             else {
                 console.log("else condition");
             }
