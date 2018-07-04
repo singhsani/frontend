@@ -92,6 +92,8 @@ export class MarriageCreateComponent implements OnInit {
      * @param validationError - Declare validation service property
      * @param formService - Declare form service property 
      * @param commonService - Declare sweet alert.
+     * @param route - Get url Id.
+     * @param router - Navigate other page.
      */
     constructor(
         private route: ActivatedRoute,
@@ -316,6 +318,7 @@ export class MarriageCreateComponent implements OnInit {
 
     /**
      * This method is use to patch Value in marriage form
+     * @param id : Form Id.
      */
     getFormData(id: number) {
         this.formService.getFormData(id).subscribe(
@@ -418,6 +421,8 @@ export class MarriageCreateComponent implements OnInit {
 
     /**
      * This method is change date formate.
+     * @param date : Input date(any format).
+     * @param controlType : Input From Control.
      */
     dateFormate(date, controlType: string) {
         this.marriageFormGroup.get(controlType).setValue(moment(date).format("YYYY-MM-DD"));
@@ -464,6 +469,8 @@ export class MarriageCreateComponent implements OnInit {
 
     /**
      * This Method is set gujarati value in inputs (static).
+     * @param lookupArray : Item List
+     * @param resCode : From control value
      */
     getGujValue(lookupArray: Array<any>, resCode: string) {
         return _.result(_.find(lookupArray, function (obj) {
@@ -472,8 +479,10 @@ export class MarriageCreateComponent implements OnInit {
     }
 
     /**
-    * This method is calculate age.
-    */
+     * This method is calculate age.
+     * @param date : parents birth date
+     * @param index : parents index
+     */
     parentAge(date: string, index: number) {
         if (this.marriageFormGroup.get(date).value != null) {
             let bday = moment(this.marriageFormGroup.get(date).value, "YYYY-MM-DD");
@@ -512,8 +521,9 @@ export class MarriageCreateComponent implements OnInit {
     }
 
     /**
-    * This method is Reset Visa related field.
-    */
+     * This method is Reset Visa related field.
+     * @param person : Groom or Bride (Change Event).
+     */
     changeReflection(person: string) {
 
         this.marriageFormGroup.get(`${person}PassportNumber`).reset();
@@ -534,6 +544,8 @@ export class MarriageCreateComponent implements OnInit {
 
     /**
      * This method is use when change selection of visa filed . 
+     * @param person : Groom or Bride(Change Event).
+     * @param type : Addrerss Type.
      */
     resetAddress(person: string, type: string) {
         this.marriageFormGroup.get(person).reset();
@@ -542,6 +554,9 @@ export class MarriageCreateComponent implements OnInit {
 
     /**
      * This method is set gujarati value on change event. 
+     * @param event : get value on chnage event.
+     * @param lookupArray : Item List.
+     * @param varName : Static Variable.
      */
     onChange(event: string, lookupArray: Array<any>, varName: string) {
         if (!_.isUndefined(this.getGujValue(lookupArray, event)))
@@ -550,6 +565,7 @@ export class MarriageCreateComponent implements OnInit {
 
     /**
      * This method is remove gujarati static variable. 
+     * @param varName : Static Variable.
      */
     removeGuj(varName: string) {
         this[varName] = '';
@@ -579,6 +595,7 @@ export class MarriageCreateComponent implements OnInit {
 
     /**
      * This method is use disable value. 
+     * @param controlName : From control name
      */
     changeDisable(controlName: string) {
         this.marriageFormGroup.get(controlName).disable();
@@ -586,6 +603,8 @@ export class MarriageCreateComponent implements OnInit {
 
     /**
      * This method is use set 'YES' or 'NO' value for checkbox. 
+     * @param controlName : From control name.
+     * @param value : control value.
      */
     setValue(controlName: string, value: string) {
         this.marriageFormGroup.get(controlName).get('code').setValue(value);
@@ -593,6 +612,11 @@ export class MarriageCreateComponent implements OnInit {
 
     /**
      * This method is use for auto fill address . 
+     * @param event : check box event(boolean).
+     * @param ischeck : set 'Yes' or 'NO' value when check or uncheck.
+     * @param controlfirst : Address control.
+     * @param controlsecond : for copy address.
+     * @param add : Static variable index.
      */
     checkBox(event, ischeck: string, controlfirst: string, controlsecond: string, add: string) {
 
@@ -642,7 +666,7 @@ export class MarriageCreateComponent implements OnInit {
 
     /**
      * This method required for final form submition.
-     * @param count - flag of invalid control.
+     * @param flag - flag of invalid control.
      */
     handleErrorsOnSubmit(flag) {
 
