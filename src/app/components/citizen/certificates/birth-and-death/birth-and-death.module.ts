@@ -16,6 +16,7 @@ import { BirthDuplicateComponent } from './birth-duplicate/birth-duplicate.compo
 import { DeathDuplicateComponent } from './death-duplicate/death-duplicate.component';
 import { BirthCorrectionComponent } from './birth-correction/birth-correction.component';
 import { DeathCorrectionComponent } from './death-correction/death-correction.component';
+import { RecordSearchComponent } from './record-search/record-search.component';
 /* Import birth and death certificate components start */
 
 @NgModule({
@@ -35,6 +36,7 @@ import { DeathCorrectionComponent } from './death-correction/death-correction.co
 		DeathDuplicateComponent,
 		BirthCorrectionComponent,
 		DeathCorrectionComponent,
+		RecordSearchComponent,
 	]
 })
 export class BirthAndDeathModule { }

@@ -21,7 +21,7 @@ export class ActionBarComponent implements OnInit, OnChanges {
 
 	@Input() form: FormGroup;
 	@Input() step: string;
-	commonControlForm: FormGroup;
+	commonFormControl: FormGroup;
 	@Input() uploadFiles: any;
 	uploadFilesArray: Array<any> = []
 
@@ -179,8 +179,6 @@ export class ActionBarComponent implements OnInit, OnChanges {
 			let count = 1;
 			for (const key in this.form.controls) {
 				if (this.form.get(key).invalid) {
-					console.log(key);
-					console.log(count);
 
 					if (this.form.get('apiType').value == 'marriageReg') {
 						let groomreligionChange = this.form.controls.groomReligion.get("code").value;
@@ -221,9 +219,9 @@ export class ActionBarComponent implements OnInit, OnChanges {
 			}
 		});
 
-		this.commonControlForm.patchValue(this.form.value);
+		this.commonFormControl.patchValue(this.form.value);
 		this.form.reset();
-		this.form.patchValue(this.commonControlForm.value);
+		this.form.patchValue(this.commonFormControl.value);
 		this.form.patchValue(addrObj);
 		this.stepReset.emit();
 	}
@@ -282,7 +280,7 @@ export class ActionBarComponent implements OnInit, OnChanges {
 		}));
 		/* ended common form controls in existing formGroups*/
 
-		this.commonControlForm = this.fb.group(formControlObj);
+		this.commonFormControl = this.fb.group(formControlObj);
 
 	}
 

@@ -40,7 +40,7 @@ export class DashboardComponent implements OnInit {
 	 * This method is use to create new record for citizen
 	 */
 	createRecord(apiCode: string) {
-		if (apiCode == 'HEL-BCR' || apiCode == 'HEL-DCR'){
+		if (apiCode == 'HEL-BCR' || apiCode == 'HEL-DCR' || apiCode == 'HEL-NRCBR' || apiCode == 'HEL-NRCDR') {
 			let redirectUrl = ManageRoutes.getFullRoute(apiCode);
 			this.router.navigate([redirectUrl, false, apiCode]);
 		} else {
@@ -56,18 +56,18 @@ export class DashboardComponent implements OnInit {
 				this.toastr.error("Invalid API Code");
 			}
 		}
-		
+
 	}
 
-	getAllServices(){
+	getAllServices() {
 		this.formService.getUserServices().subscribe(
 			res => {
 				this.userServicesList = res.modules;
 				_.forEach(res.modules, (value, key) => {
-                    _.forEach(value.services, (value1, key1) => {
-                        this.services.push(value1);
-                    });
-                });
+					_.forEach(value.services, (value1, key1) => {
+						this.services.push(value1);
+					});
+				});
 			},
 			err => {
 				console.log(err);
@@ -75,7 +75,7 @@ export class DashboardComponent implements OnInit {
 		);
 	}
 
-	getIconImg(moduleCode: string){
+	getIconImg(moduleCode: string) {
 		switch (moduleCode) {
 			case 'SHOP-ESTAB':
 				return 'assets/icons/shop-estab.png';
@@ -92,7 +92,7 @@ export class DashboardComponent implements OnInit {
 		}
 	}
 
-	getIconClass(moduleCode: string){
+	getIconClass(moduleCode: string) {
 		switch (moduleCode) {
 			case 'SHOP-ESTAB':
 				return 'yelloCard';

@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/cor
 import { FormBuilder, FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatHorizontalStepper, MatStep, MatStepLabel } from '@angular/material';
+import { Location } from '@angular/common';
 
 import { ManageRoutes } from './../../../../../config/routes-conf';
 import { ValidationService } from '../../../../../shared/services/validation.service';
@@ -33,6 +34,7 @@ export class NoDeathRecordComponent implements OnInit {
 
 	appId: number;
 	apiCode: string;
+	manageRoutes: any = ManageRoutes;
 
 	maxDate: Date = new Date();
 	relationshipArray: any = [];
@@ -41,6 +43,8 @@ export class NoDeathRecordComponent implements OnInit {
 	reasonArray: any = [];
 	showButtons: boolean = false;
 	uploadModel: any = {};
+	isVisibeNRCForm: boolean = true;
+	showSearchForm: boolean = true;
 
 	// Step Titles
 	stepLable1: string = "no_record_certificate_detail";
@@ -48,9 +52,13 @@ export class NoDeathRecordComponent implements OnInit {
 	stepLable3: string = "applicant_detail";
 	stepLable4: string = "Upload Document";
 
-	constructor(private fb: FormBuilder, private validationService: ValidationService,
-		private router: Router, private route: ActivatedRoute,
-		private formService: FormsActionsService
+	constructor(
+		private fb: FormBuilder,
+		private validationService: ValidationService,
+		private router: Router,
+		private route: ActivatedRoute,
+		private formService: FormsActionsService,
+		private location: Location
 	) { }
 
 	ngOnInit() {
@@ -61,9 +69,16 @@ export class NoDeathRecordComponent implements OnInit {
 			this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
 		});
 
-		this.getNoRecordDeathData();
+		
 		this.getLookupData();
 		this.nrcDeathCertFormControls();
+
+		/* if serviceFormId is present in url then call get api and show NRC form*/
+		if (this.appId) {
+			this.showSearchForm = false;
+			this.isVisibeNRCForm = false;
+			this.getNoRecordDeathData();
+		}
 	}
 
 	/**
@@ -221,6 +236,26 @@ export class NoDeathRecordComponent implements OnInit {
 	 */
 	fileObjectCreater(labelName, fieldIdentifier): any {
 		return { labelName: labelName, fieldIdentifier: fieldIdentifier }
+	}
+
+	/**
+	 * This method use for get the output event from search component
+	 * @param event - Output event
+	 */
+	showNRCForm(event) {
+		this.isVisibeNRCForm = event;
+		if (!this.isVisibeNRCForm) {
+
+			this.formService.createFormData().subscribe(res => {
+				this.appId = res.serviceFormId;
+				let url = this.location.path().replace('false', this.appId.toString());
+				this.router.navigate([url]);
+				this.noRecordDeathForm.patchValue(res);
+				this.showButtons = true;
+			});
+
+			this.showSearchForm = false;
+		}
 	}
 
 }
