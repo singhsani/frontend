@@ -24,9 +24,7 @@ export class TransactionsComponent implements OnInit {
 
 	@ViewChild(MatPaginator) paginator: MatPaginator;
 
-	paymentsForm: FormGroup;
-	PayableServices: Object[];
-	displayedColumns: string[] = ['id', 'chalanNumber', 'amount', 'paymentDate', 'payableServices', 'paymentStatus','detailsButton'];
+	displayedColumns: string[] = ['id', 'chalanNumber', 'amount', 'paymentDate', 'payableServices', 'transactionId', 'paymentStatus','detailsButton'];
 	myControl: FormControl = new FormControl();
 	resultsLength: number = 0;
 	pageSize: number = 10;
@@ -40,34 +38,13 @@ export class TransactionsComponent implements OnInit {
 		private paginationService: PaginationService,
 		private router: Router, private fb: FormBuilder,
 		private commonService: CommonService) {
-
-		this.getPayableServicesList();
 	}
 
 	ngOnInit() {
-		this.paymentsForm = this.fb.group({
-			chalanNumber: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern('([0-9]|[A-Z]|[a-z])+')]],
-			amount: ['', [Validators.required, Validators.pattern('[0-9]+')]],
-			payableServices: this.fb.group({
-				code: ['', Validators.required]
-			})
-		});
 
 		this.getAllPaymentsList();
+
 	}
-
-	/*this.filteredOptions = this.myControl.valueChanges
-	   .pipe(
-		 startWith(''),
-		 map(tamount => this.filter(tamount))
-	   );*/
-
-	/*filter(tamount: string) {
-  
-	  return this.transArray.filter(option =>
-		option.tamount.toLowerCase().indexOf(tamount.toLowerCase()) === 0);
-	}*/
-
 
 	/**
 	 * Method is used to open transaction dailog details
@@ -116,41 +93,6 @@ export class TransactionsComponent implements OnInit {
 			).subscribe(data => {
 				this.dataSource.data = data
 			});
-	}
-
-	/**
-	   * 
-	   * @param payData - json data as payment data.
-	   */
-	makePayment(payData) {
-		this.formService.createPayment(payData).subscribe(respData => {
-
-			this.commonService.openAlert('Payment Successful','','success',
-				'<p> Id : ' + respData.id + '</p><br>' +
-				'<p> Amount : ' + respData.amount + '</p><br>' +
-				'<p> Chalan Number : ' + respData.chalanNumber + '</p><br>' +
-				'<p> Payment Date : ' + respData.paymentDate + '</p><br>' +
-				'<p> Service : ' + respData.payableServices + '</p><br>' +
-				'<p> Status : ' + respData.paymentStatus + '</p><br>',
-				cb => {
-					this.getAllPaymentsList();
-				}
-			)
-
-			this.paymentsForm.markAsPristine();
-			this.paymentsForm.markAsUntouched();
-			this.paymentsForm.reset();
-		});
-
-	}
-
-	/**
-	 * Method is used to get all payable services list from api.
-	 */
-	getPayableServicesList() {
-		this.formService.getPayableServiceList().subscribe(respData => {
-			this.PayableServices = respData.list;
-		})
 	}
 }
 

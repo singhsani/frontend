@@ -21,6 +21,7 @@ import { TransactionsComponent } from './transactions/transactions.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { MyApplicationsComponent } from './my-applications/my-applications.component';
 import { PaymentResponsePageComponent } from '../../shared/components/payment-response-page/payment-response-page.component'
+import { PayableServicesComponent } from './payable-services/payable-services.component';
 
 import { TaxModule } from './tax/tax.module';
 import { AppointmentModule } from './appointment/appointment.module';
@@ -39,6 +40,7 @@ const routes: Routes = [
 			{ path: ManageRoutes.getMainRoute('CITIZENMYTRANSACTIONS'), component: TransactionsComponent, canActivate: [AuthGuard] },
 			{ path: ManageRoutes.getMainRoute('CITIZENMYPROFILE'), component: UserProfileComponent, canActivate: [AuthGuard] },
 			{ path: ManageRoutes.getMainRoute('PAYMENTGATEWAYRESPONSE'), component: PaymentResponsePageComponent, canActivate: [AuthGuard] },
+			{ path: ManageRoutes.getMainRoute('CITIZENPAYABLESERVICES'), component: PayableServicesComponent, canActivate: [AuthGuard] },
 
 			{ path: ManageRoutes.getPrefixRoute('CERTIFICATESMODULE'), loadChildren: () => CertificatesModule, canLoad: [AuthGuard] },
 			{ path: ManageRoutes.getPrefixRoute('BOOKINGMODULE'), loadChildren: () => BookingsModule, canLoad: [AuthGuard] },

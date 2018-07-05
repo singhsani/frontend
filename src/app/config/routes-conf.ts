@@ -217,7 +217,10 @@ const ROUTEMAIN = {
         'main': 'login-through-admin',
         'type': 'login-through-admin'
     },
-
+    'CITIZENPAYABLESERVICES': {
+        'main': 'payable-services',
+        'type': ''
+    },
     'TOWNHALL': {
         'main': 'town-hall',
         'type': 'townhall'
@@ -532,7 +535,9 @@ const ROUTESLIST = {
     'CITIZENMYRESOURCE': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEMAIN.CITIZENMYRESOURCE.main
     },
-
+    'CITIZENPAYABLESERVICES': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEMAIN.CITIZENPAYABLESERVICES.main
+    },
     'TOWNHALLLIST': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.BOOKINGMODULE + '/' + ROUTEPREFIX.TOWNHALLMODULE + '/' + ROUTEMAIN.TOWNHALLLIST.main
     },

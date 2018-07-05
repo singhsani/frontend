@@ -18,6 +18,7 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 import { MyApplicationsComponent } from './my-applications/my-applications.component';
 import { AppointmentModule } from './appointment/appointment.module';
 import { GujPocComponent } from './guj-poc/guj-poc.component';
+import { PayableServicesComponent } from './payable-services/payable-services.component';
 /* Import citizen components end */
 
 
@@ -44,6 +45,7 @@ import { GujPocComponent } from './guj-poc/guj-poc.component';
 		UserProfileComponent,
 		MyApplicationsComponent,
 		GujPocComponent,
+		PayableServicesComponent,
 		
 	]
 })
