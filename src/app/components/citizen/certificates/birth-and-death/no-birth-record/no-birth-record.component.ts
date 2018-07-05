@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/cor
 import { FormBuilder, FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatHorizontalStepper, MatStep, MatStepLabel } from '@angular/material';
+import { Location } from '@angular/common';
 
 import { ManageRoutes } from './../../../../../config/routes-conf';
 import { ValidationService } from '../../../../../shared/services/validation.service';
@@ -32,6 +33,7 @@ export class NoBirthRecordComponent implements OnInit {
 
 	appId: number;
 	apiCode: string;
+	manageRoutes: any = ManageRoutes;
 
 	maxDate: Date = new Date();
 	relationshipArray: any = [];
@@ -39,6 +41,8 @@ export class NoBirthRecordComponent implements OnInit {
 	placeArray: any = [];
 	reasonArray: any = [];
 	showButtons: boolean = false;
+	isVisibeNRCForm: boolean = true;
+	showSearchForm: boolean = true;
 
 	uploadModel: any = {};
 
@@ -53,8 +57,11 @@ export class NoBirthRecordComponent implements OnInit {
 		private validationService: ValidationService,
 		private router: Router,
 		private route: ActivatedRoute,
-		private formService: FormsActionsService
-	) { }
+		private formService: FormsActionsService,
+		private location: Location
+	) {
+
+	}
 
 	ngOnInit() {
 
@@ -65,8 +72,15 @@ export class NoBirthRecordComponent implements OnInit {
 		});
 
 		this.nrcBirthCertFormControls();
-		this.getNoRecordBirthData();
 		this.getLookupData();
+
+		/* if serviceFormId is present in url then call get api and show NRC form*/
+		if (this.appId) {
+			this.showSearchForm = false;
+			this.isVisibeNRCForm = false;
+			this.getNoRecordBirthData();
+		}
+
 	}
 
 	/**
@@ -235,6 +249,26 @@ export class NoBirthRecordComponent implements OnInit {
 	 */
 	fileObjectCreater(labelName, fieldIdentifier): any {
 		return { labelName: labelName, fieldIdentifier: fieldIdentifier }
+	}
+
+	/**
+	 * This method use for get the output event from search component
+	 * @param event - Output event
+	 */
+	showNRCForm(event) {
+		this.isVisibeNRCForm = event;
+		if (!this.isVisibeNRCForm) {
+			
+			this.formService.createFormData().subscribe(res => {
+				this.appId = res.serviceFormId;
+				let url = this.location.path().replace('false', this.appId.toString());
+				this.router.navigate([url]);
+				this.noRecordBirthForm.patchValue(res);
+				this.showButtons = true;
+			});
+
+			this.showSearchForm = false;
+		}
 	}
 
 }
