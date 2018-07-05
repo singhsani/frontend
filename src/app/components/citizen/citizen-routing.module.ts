@@ -20,7 +20,6 @@ import { MyResourceComponent } from './my-resource/my-resource.component';
 import { TransactionsComponent } from './transactions/transactions.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { MyApplicationsComponent } from './my-applications/my-applications.component';
-import { PaymentGatewayComponent } from '../../shared/components/payment-gateway/payment-gateway.component';
 import { PaymentResponsePageComponent } from '../../shared/components/payment-response-page/payment-response-page.component'
 
 import { TaxModule } from './tax/tax.module';
@@ -39,8 +38,7 @@ const routes: Routes = [
 			{ path: ManageRoutes.getMainRoute('CITIZENMYRESOURCE'), component: MyResourceComponent, canActivate: [AuthGuard] },
 			{ path: ManageRoutes.getMainRoute('CITIZENMYTRANSACTIONS'), component: TransactionsComponent, canActivate: [AuthGuard] },
 			{ path: ManageRoutes.getMainRoute('CITIZENMYPROFILE'), component: UserProfileComponent, canActivate: [AuthGuard] },
-			{ path: ManageRoutes.getMainRoute('CITIZENPAYMENTGATEWAY'), component: PaymentGatewayComponent, canActivate: [AuthGuard] },
-			{ path: ManageRoutes.getMainRoute('CITIZENPAYMENTGATEWAYRESPONSE'), component: PaymentResponsePageComponent, canActivate: [AuthGuard] },
+			{ path: ManageRoutes.getMainRoute('PAYMENTGATEWAYRESPONSE'), component: PaymentResponsePageComponent, canActivate: [AuthGuard] },
 
 			{ path: ManageRoutes.getPrefixRoute('CERTIFICATESMODULE'), loadChildren: () => CertificatesModule, canLoad: [AuthGuard] },
 			{ path: ManageRoutes.getPrefixRoute('BOOKINGMODULE'), loadChildren: () => BookingsModule, canLoad: [AuthGuard] },

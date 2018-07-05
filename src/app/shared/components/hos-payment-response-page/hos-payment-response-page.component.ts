@@ -2,14 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { SessionStorageService } from 'angular-web-storage';
-import { FormsActionsService } from '../../../core/services/citizen/data-services/forms-actions.service';
+import { HosFormActionsService } from '../../../core/services/hospital/data-services/hos-form-actions.service';
 
 @Component({
-  selector: 'app-payment-response-page',
-  templateUrl: './payment-response-page.component.html',
-  styleUrls: ['./payment-response-page.component.scss']
+  selector: 'app-hos-payment-response-page',
+  templateUrl: './hos-payment-response-page.component.html',
+  styleUrls: ['./hos-payment-response-page.component.scss']
 })
-export class PaymentResponsePageComponent implements OnInit {
+export class HosPaymentResponsePageComponent implements OnInit {
+
 
   /**
    * responsible for payment status from gateway
@@ -35,7 +36,7 @@ export class PaymentResponsePageComponent implements OnInit {
    */
   constructor(
     private router: Router,
-    private formService: FormsActionsService,
+    private formService: HosFormActionsService,
     private sessionStore: SessionStorageService,
     private route: ActivatedRoute) {
     this.dispData = JSON.parse(this.sessionStore.get('paymentData'));
@@ -161,4 +162,5 @@ export class PaymentResponsePageComponent implements OnInit {
   clearSession() {
     this.sessionStore.remove('paymentData');
   }
+
 }

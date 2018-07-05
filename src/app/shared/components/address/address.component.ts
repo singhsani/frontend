@@ -93,6 +93,8 @@ export class AddressComponent implements OnInit, OnChanges {
 			this.getStateLists(name);
 		}
 
+		this.stateListArray = [];
+		this.cityListArray = [];
 		this.addressFormGroup.get('state').setValue(null);
 		this.addressFormGroup.get('city').setValue(null);
 	}
@@ -105,6 +107,8 @@ export class AddressComponent implements OnInit, OnChanges {
 		if (name) {
 			this.getCityLists(name);
 		}
+
+		this.cityListArray = [];
 		this.addressFormGroup.get('city').setValue(null);
 
 	}

@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MatHorizontalStepper, MatStep, MatStepLabel } from '@angular/material';
 
 import { ManageRoutes } from './../../../../../config/routes-conf';
 import { ValidationService } from '../../../../../shared/services/validation.service';
@@ -16,8 +15,7 @@ import * as moment from 'moment';
 })
 export class BirthDuplicateComponent implements OnInit {
 
-	@ViewChild(MatHorizontalStepper) stepper: MatHorizontalStepper;
-	@ViewChild(MatStepLabel) steplable: MatStepLabel;
+
 
 	birthDuplicateForm: FormGroup;
 	translateKey: string = 'BirthDuplicateScreen';
@@ -95,8 +93,7 @@ export class BirthDuplicateComponent implements OnInit {
 	private DuplicateCopyMode: object[];
 	private ISYESNO: object[];
 
-	// Step Titles
-	stepLable1: string = "Applicant Basic Details";
+
 	private maxBirthDate = new Date();
 	private minBirthDate;
 
@@ -137,7 +134,7 @@ export class BirthDuplicateComponent implements OnInit {
 	handleErrorsOnSubmit(count) {
 		let step1 = 6;
 		if (count <= step1) {
-			this.stepper.selectedIndex = 0;
+			//this.stepper.selectedIndex = 0;
 			return false;
 		}
 
@@ -205,7 +202,14 @@ export class BirthDuplicateComponent implements OnInit {
 	 * Method is used to reset form its a output event from action bar.
 	 */
 	stepReset() {
-		this.stepper.reset();
+		//this.stepper.reset();
+	}
+
+	/**
+	 * Methid is used to get duplicate death certficate data.
+	 */
+	getRegistrationNumberStatus(){
+		console.log(this.birthDuplicateForm.value);
 	}
 
 }

@@ -1,12 +1,17 @@
 import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 import { ManageRoutes } from './../../../../../config/routes-conf';
+import { UploadFileService } from '../../../../../shared/upload-file.service';
+import { CommonService } from '../../../../../shared/services/common.service';
+import { Location } from '@angular/common';
 
 import { ValidationService } from '../../../../../shared/services/validation.service';
 import { FormsActionsService } from '../../../../../core/services/citizen/data-services/forms-actions.service';
 import * as _ from 'lodash';
 import * as moment from 'moment';
+import { MatHorizontalStepper, MatStepLabel } from '@angular/material';
+import { merge } from 'rxjs';
 
 @Component({
 	selector: 'app-birth-correction',
@@ -15,9 +20,11 @@ import * as moment from 'moment';
 })
 export class BirthCorrectionComponent implements OnInit {
 
-	// @ViewChild(MatHorizontalStepper) stepper: MatHorizontalStepper;
-	// @ViewChild(MatStepLabel) steplable: MatStepLabel;
-	//@ViewChild('address') addressComp: any;
+	/**
+	 * get stepper element from view.
+	 */
+	@ViewChild(MatHorizontalStepper) stepper: MatHorizontalStepper;
+	@ViewChild(MatStepLabel) steplable: MatStepLabel;
 
 	/**
 	 * Birth correction form.
@@ -34,26 +41,84 @@ export class BirthCorrectionComponent implements OnInit {
 	 */
 	translateKey: string = 'birthCorrectionScreen';
 
+	/**
+	 * flag to display/hide application search form.
+	 */
+	showApplicationSearch: boolean = true;
 
+	/**
+	 * flag to display/hide application correction form.
+	 */
+	showcorrectionForm: boolean = false;
+
+	/**
+	 * flag to display/hide child name insertion form.
+	 */
+	allowChildNameInsertion: boolean = false;
+
+	/**
+	 * flag to display/hide child name correction form.
+	 */
+	allowChildNameCorrection: boolean = false;
+
+	/**
+	 * show file upload
+	 */
+	showButtons: boolean = false;
+
+	/**
+	 * used to file upload model.
+	 */
+	uploadModel: any = {};
+
+	/**
+	 * File upload validation array.
+	 */
+	private uploadFileArray: Array<any> =
+		[{ labelName: 'Resident Proof', fieldIdentifier: '1.1' },
+		{ labelName: 'Kyc Document of Mother', fieldIdentifier: '1.2' },
+		{ labelName: 'Kyc Document of Father', fieldIdentifier: '1.3' },
+	]
+
+	/**
+	 * Type of correction array.
+	 */
 	TypeOfCorrection: Array<any>;
 
-	BIRTH_CORRECTION_TYPE: Array<any>;
-
+	/**
+	 * Application Id/ Service Form Id
+	 */
 	appId: number;
+
+	/**
+	 * Api Code
+	 */
 	apiCode: string;
 
-	// Step Titles
-	stepLable1: string = "Child Basic Details";
-	stepLable2: string = "Applicant Basic Details";
 
+	/**
+	 * Constructor.
+	 * @param fb - form builder.
+	 * @param commonService - common service of alert.
+	 * @param location - location to update url.
+	 * @param validationService - common validation service.
+	 * @param router - router
+	 * @param route - activated route.
+	 * @param formService - common form service.
+	 */
 	constructor(
 		private fb: FormBuilder,
 		private validationService: ValidationService,
 		private router: Router,
 		private route: ActivatedRoute,
+		private location: Location,
+		private commonService: CommonService,
 		private formService: FormsActionsService
 	) { }
 
+	/**
+	 * Method initializes first.
+	 */
 	ngOnInit() {
 
 		this.route.paramMap.subscribe(param => {
@@ -62,25 +127,49 @@ export class BirthCorrectionComponent implements OnInit {
 			this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
 		});
 
-		/**
-		 * calling registration number status form method.
-		 */
-		this.registrationNumberStatusForm();
+		if (this.appId) {
 
-		/**
-		 * get birth correction data.
-		 */
-		this.getBirthCorrectionData();
+			/**
+			 * hide application search form.
+			 */
+			this.showApplicationSearch = false;
 
-		/**
-		 * get look up data.
-		 */
-		this.getLookupData();
+			/**
+			 * show application correction form.
+			 */
+			this.showcorrectionForm = true;
 
-		/**
-		 * create birth certificate form.
-		 */
-		this.birthCorrectionFormControls();
+			/**
+		 	 * create birth certificate form.
+		 	 */
+			this.birthCorrectionFormControls();
+
+			/**
+			 * get birth correction data.
+			 */
+			this.getBirthCorrectionData();
+
+			/**
+			 * get look up data.
+			 */
+			this.getLookupData();
+		} else {
+
+			/**
+			 * show application search form.
+			 */
+			this.showApplicationSearch = true;
+
+			/**
+			 * calling registration number status form method.
+			 */
+			this.registrationNumberStatusForm();
+
+			/**
+			 * get look up data.
+			 */
+			this.getLookupData();
+		}
 	}
 
 	/**
@@ -88,38 +177,132 @@ export class BirthCorrectionComponent implements OnInit {
 	 */
 	getBirthCorrectionData() {
 		this.formService.getFormData(this.appId).subscribe(res => {
+
 			this.birthCorrectionForm.patchValue(res);
+
+			let event = res.typeOfCorrection.code;
+
+			if (event === 'NAME_INSERTION') {
+					this.allowChildNameInsertion = true;
+					this.allowChildNameCorrection = false;
+			} else if (event === 'ONLY_CORRECTION') {
+				this.allowChildNameInsertion = false;
+				this.allowChildNameCorrection = true;
+			}
+
+			this.showButtons = true;
 		});
 	}
+
+	/**
+	 * Method is used to cread record.
+	 * @param data - original json data.
+	 */
+	createBirthCorrectionData(data) {
+
+		this.formService.createFormData().subscribe(res => {
+
+			this.birthCorrectionFormControls();
+
+			this.appId = res.serviceFormId;
+
+			this.birthCorrectionForm.patchValue(res);
+
+			let cururl = this.location.path().replace('false', this.appId.toString());
+
+			this.location.go(cururl);
+
+			this.getLookupData();
+
+			this.setValue(data);
+
+			this.showcorrectionForm = true;
+
+			this.showApplicationSearch = false;
+
+			this.showButtons = true;
+
+			this.changeCorrection(this.regStatusForm.get('typeOfCorrection').get('code').value);
+		})
+	}
+
+	/**
+	 * Method is used to decide insertion/correction form on get.
+	 * @param event - event type.
+	 */
+	changeCorrection(event) {
+
+		if (event === 'NAME_INSERTION') {
+			if (this.birthCorrectionForm.get('childName').value != "") {
+				this.allowChildNameInsertion = false;
+				this.allowChildNameCorrection = true;
+			} else {
+				this.allowChildNameInsertion = true
+			}
+		} else if (event === 'ONLY_CORRECTION') {
+			if (this.birthCorrectionForm.get('childName').value == "") {
+				this.allowChildNameInsertion = true;
+				this.allowChildNameCorrection = false;
+			} else {
+				this.allowChildNameCorrection = true
+			}
+		}
+	}
+
 
 	/**
 	 * call API to get registration data and status.
 	 */
 	getRegistrationNumberStatus() {
-		console.log(this.regStatusForm.value);
 
+		this.formService.getRegistrationStatus(this.regStatusForm.value).subscribe(resp => {
+			if (resp.success) {
+				this.createBirthCorrectionData(resp.data);
+			}
+		}, err => {
+			if (err.error[0].code == 'INSERTION_NOT_ALLOWED') {
+				this.commonService.openAlert("Invalid Operation", "Name Already Available, Insertion Not Allowed", "warning");
+				return;
+			} else if (err.error[0].code == 'CORRECTION_NOT_ALLOWED') {
+				this.commonService.openAlert("Invalid Operation", "Name Not Available, Correction Not Allowed Please Select Name Insertion", "warning");
+				return;
+			} else if (err.error[0].code == 'INVALID_REQUEST') {
+				this.commonService.openAlert("Invalid Request", "Request Not Valid", "warning");
+				return;
+			}
+		});
 	}
 
 	/**
-	 * Method is used to handle error/validation on submit
-	 * @param count - count of invalid control.
+	 * Method is used to set original data.
+	 * @param data - original json.
 	 */
-	handleErrorsOnSubmit(count) {
-		let step1 = 6;
-
-		if (count <= step1) {
-			//this.stepper.selectedIndex = 0;
-			return false;
-		}
-
+	setValue(data) {
+		this.birthCorrectionForm.get('fieldView').setValue(data.fieldView);
+		this.birthCorrectionForm.get('fieldList').setValue(data.fieldList);
+		this.birthCorrectionForm.get('childName').setValue(data.childName);
+		this.birthCorrectionForm.get('fatherFirstName').setValue(data.fatherFirstName);
+		this.birthCorrectionForm.get('fatherMiddleName').setValue(data.fatherMiddleName);
+		this.birthCorrectionForm.get('fatherLastName').setValue(data.fatherLastName);
+		this.birthCorrectionForm.get('fatherFirstNameGuj').setValue(data.fatherFirstNameGuj);
+		this.birthCorrectionForm.get('fatherMiddleNameGuj').setValue(data.fatherMiddleNameGuj);
+		this.birthCorrectionForm.get('fatherLastNameGuj').setValue(data.fatherLastNameGuj);
+		this.birthCorrectionForm.get('motherFirstName').setValue(data.motherFirstName);
+		this.birthCorrectionForm.get('motherMiddleName').setValue(data.motherMiddleName);
+		this.birthCorrectionForm.get('motherLastName').setValue(data.motherLastName);
+		this.birthCorrectionForm.get('motherFirstNameGuj').setValue(data.motherFirstNameGuj);
+		this.birthCorrectionForm.get('motherMiddleNameGuj').setValue(data.motherMiddleNameGuj);
+		this.birthCorrectionForm.get('motherLastNameGuj').setValue(data.motherLastNameGuj);
+		this.birthCorrectionForm.get('refNumber').setValue(this.regStatusForm.get('applicationNumber').value)
+		this.birthCorrectionForm.get('typeOfCorrection').get('code').setValue(this.regStatusForm.get('typeOfCorrection').get('code').value);
 	}
+
 
 	/**
 	 * This method is use for get lookup data
 	 */
 	getLookupData() {
 		this.formService.getDataFromLookups().subscribe(res => {
-			console.log(res);
 			this.TypeOfCorrection = res.BIRTH_CORRECTION_TYPE;
 		});
 	}
@@ -130,10 +313,24 @@ export class BirthCorrectionComponent implements OnInit {
 	registrationNumberStatusForm() {
 		this.regStatusForm = this.fb.group({
 			typeOfCorrection: this.fb.group({
-				code: [null, Validators.required]
+				code: [null, [Validators.required]]
 			}),
-			registrationNumber: null,
+			applicationNumber: [null, [Validators.required]],
 		});
+	}
+
+
+	/**
+	 * Method is used to handle error/validation on submit
+	 * @param count - count of invalid control.
+	 */
+	handleErrorsOnSubmit(count) {
+		let step1 = 6;
+
+		if (count <= step1) {
+			this.stepper.selectedIndex = 0;
+			return false;
+		}
 	}
 
 	/**
@@ -141,12 +338,9 @@ export class BirthCorrectionComponent implements OnInit {
 	 */
 	birthCorrectionFormControls() {
 		this.birthCorrectionForm = this.fb.group({
-			fieldView: "ALL",
-			fieldList: null,
-			childName: null,
-			birthDate: null,
-			registrationDate: moment(new Date()).format("YYYY-MM-DD"),
 
+			//step - 1 (13)
+			childName: null,
 			fatherFirstName: null,
 			fatherMiddleName: null,
 			fatherLastName: null,
@@ -163,16 +357,41 @@ export class BirthCorrectionComponent implements OnInit {
 			motherMiddleNameGuj: null,
 			motherLastNameGuj: null,
 
+			refNumber: null,
+
 			typeOfCorrection: this.fb.group({
 				code: [null]
 			}),
-			registrationNumber: null,
-			//correspondenceAddress: this.fb.group(this.addressComp.addressControls()),
-			relationWithApplicant: this.fb.group({
-				code: [null]
+
+			fieldView: "ALL",
+			fieldList: null,
+			id: null,
+			uniqueId: null,
+			version: null,
+			serviceFormId: null,
+			createdDate: null,
+			updatedDate: null,
+			serviceType: null,
+			fileStatus: null,
+			serviceName: null,
+			fileNumber: null,
+			pid: null,
+			outwardNo: null,
+			agree: false,
+			paymentStatus: null,
+			canEdit: true,
+			canDelete: true,
+			canSubmit: null,
+			serviceDetail: this.fb.group({
+				code: null,
+				name: null,
+				gujName: null,
+				feesOnScrutiny: null
 			}),
-			relationOther: null,
-			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode)
+
+			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
+
+			attachments: [null],
 		});
 	}
 
@@ -184,32 +403,44 @@ export class BirthCorrectionComponent implements OnInit {
 	}
 
 	/**
-	 * conditionally show child name insertion.
+	 * Method is used to set data value to upload method.
+	 * @param indentifier - file identifier
+	 * @param labelName - file label name.
+	 * @param formPart - file form part
+	 * @param variableName - file variable name.
 	 */
-	showInsertionForm(): boolean {
-		if (this.regStatusForm.get('typeOfCorrection').get('code').value === "NAME_INSERTION") {
-			return true;
-		} else {
-			return false;
+	setDataValue(indentifier: number, labelName: string, formPart: string, variableName: string) {
+		this.uploadModel = {
+			fieldIdentifier: indentifier.toString(),
+			labelName: labelName,
+			formPart: formPart,
+			variableName: variableName,
+			serviceFormId: this.appId,
 		}
+		return this.uploadModel;
+	}
+	/**
+	 * Method is used to get file status.
+	 * @param fieldIdentifier - file identifier.
+	 */
+	getFileObjectContained(fieldIdentifier: string) {
+		let found: boolean = false;
+		for (let i = 0; i < this.uploadFileArray.length; i++) {
+			if (this.uploadFileArray[i].fieldIdentifier == fieldIdentifier) {
+				found = true;
+				break;
+			}
+		}
+		return found;
 	}
 
 	/**
-	 * conditionally show child details correction.
+	 * Method is used to create file object.
+	 * @param labelName - file labelName
+	 * @param fieldIdentifier - file identifier
 	 */
-	showCorrectionForm(): boolean {
-		if (this.regStatusForm.get('typeOfCorrection').get('code').value === "ONLY_CORRECTION") {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	/**
-	 * update correction info
-	 */
-	updateCorrectionInfo() {
-		console.log(this.birthCorrectionForm.value);
+	fileObjectCreater(labelName, fieldIdentifier): any {
+		return { labelName: labelName, fieldIdentifier: fieldIdentifier }
 	}
 
 }

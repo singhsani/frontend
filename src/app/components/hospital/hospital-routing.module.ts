@@ -12,8 +12,7 @@ import { BirthRegistrationComponent } from './birth-registration/birth-registrat
 import { DeathRegistrationComponent } from './death-registration/death-registration.component';
 import { StillBirthComponent } from './still-birth/still-birth.component';
 import { HosMyApplicationsComponent } from './hos-my-applications/hos-my-applications.component';
-import { PaymentGatewayComponent } from '../../shared/components/payment-gateway/payment-gateway.component';
-import { PaymentResponsePageComponent } from '../../shared/components/payment-response-page/payment-response-page.component'
+import { HosPaymentResponsePageComponent } from '../../shared/components/hos-payment-response-page/hos-payment-response-page.component';
 /* Import hospital components end */
 
 const routes: Routes = [
@@ -27,8 +26,7 @@ const routes: Routes = [
 			{ path: ManageRoutes.getMainRoute('HEL-DR') + '/:id/:apiCode', component: DeathRegistrationComponent, canActivate: [HospitalGuard] },
 			{ path: ManageRoutes.getMainRoute('HEL-SB') + '/:id/:apiCode', component: StillBirthComponent, canActivate: [HospitalGuard] },
 			{ path: ManageRoutes.getMainRoute('HOSPITALMYAPPS'), component: HosMyApplicationsComponent, canActivate: [HospitalGuard] },
-			{ path: ManageRoutes.getMainRoute('HOSPITALPAYMENTGATEWAY'), component: PaymentGatewayComponent, canActivate: [HospitalGuard] },
-			{ path: ManageRoutes.getMainRoute('HOSPITALPAYMENTGATEWAYRESPONSE'), component: PaymentResponsePageComponent, canActivate: [HospitalGuard] },
+			{ path: ManageRoutes.getMainRoute('PAYMENTGATEWAYRESPONSE'), component: HosPaymentResponsePageComponent, canActivate: [HospitalGuard] },
 		]
 	},
 

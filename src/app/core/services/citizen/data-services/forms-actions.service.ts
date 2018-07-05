@@ -29,6 +29,15 @@ export class FormsActionsService {
 	}
 
 	/**
+	 * Method is used to get status after filter using registration number.
+	 * @param filterData - filter data.
+	 */
+	getRegistrationStatus(filterData){
+		this.requestURL = `api/form/${this.apiType}/search?applicationNumber=${filterData.applicationNumber}&correctionType=${filterData.typeOfCorrection.code}`;
+		return this.http.get(this.requestURL);
+	}
+
+	/**
 	 * This method is use to create new citizen resource
 	 */
 	createResourceData(resourceData) {
@@ -143,8 +152,11 @@ export class FormsActionsService {
 	 * @param paymentData -pass payment data here.
 	 */
 	createPayment(paymentData) {
+		this.requestURL = `public/postPayment`;
 
-		return this.http.post('api/servicePayment/pay', paymentData);
+		return this.http.post(this.requestURL, paymentData);
+
+		//return this.http.post('api/servicePayment/pay', paymentData);
 
 	}
 	
