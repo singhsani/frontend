@@ -337,7 +337,7 @@
                         </div>
 
                         <mat-form-field class="col-md-6">
-                            <input required matInput maxlength="2" OnlyNumber placeholder="{{'pregnancy_duration' | translate:translateKey}}(In weeks)"
+                            <input required matInput maxlength="2" OnlyNumber placeholder="{{'pregnancy_duration' | translate:translateKey}}"
                                 formControlName="pregnancyDuration">
                             <control-messages [control]="stillBirthCertificateForm.controls.pregnancyDuration"></control-messages>
                         </mat-form-field>
@@ -352,7 +352,6 @@
                 <mat-step>
 
                     <ng-template matStepLabel>{{'family_details' | translate:translateKey}}</ng-template>
-                    <app-basic-details [basicFormGroup]="stillBirthCertificateForm"></app-basic-details>
                     <div>
 
                         <h2>

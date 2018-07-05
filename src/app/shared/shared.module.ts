@@ -30,7 +30,7 @@ import { ActionBarComponent } from './components/action-bar/action-bar.component
 import { ControlMessagesComponent } from './components/control-messages/control-messages.component';
 import { FileUploadComponent } from './components/file-upload/file-upload.component';
 import { AddressComponent } from './components/address/address.component';
-import { PaymentGatewayComponent } from './components/payment-gateway/payment-gateway.component';
+import { PaymentResponsePageComponent } from './components/payment-response-page/payment-response-page.component'
 import { BasicDetailsComponent } from './components/basic-details/basic-details.component';
 import { TitleBarComponent } from './components/title-bar/title-bar.component';
 import { LoadingIndicatorComponent } from './components/loading-indicator/loading-indicator.component';
@@ -38,6 +38,7 @@ import { HosHttpService } from './services/hos-http.service';
 import { HosActionBarComponent } from './components/hos-action-bar/hos-action-bar.component';
 import { HosFileUploadComponent } from './components/hos-file-upload/hos-file-upload.component';
 import { CountryService } from './services/country.service';
+import { HosPaymentResponsePageComponent } from './components/hos-payment-response-page/hos-payment-response-page.component';
 /* import pipes end*/
 
 const COMPONENTS = [
@@ -50,7 +51,7 @@ const COMPONENTS = [
 	HosFileUploadComponent,
 	AddressComponent,
 	BasicDetailsComponent,
-	PaymentGatewayComponent,
+	PaymentResponsePageComponent,
 	TitleBarComponent,
 	LoadingIndicatorComponent,
 	HosActionBarComponent,
@@ -61,7 +62,8 @@ const COMPONENTS = [
 
 @NgModule({
 	declarations: [
-		...COMPONENTS
+		...COMPONENTS,
+		HosPaymentResponsePageComponent,
 	],
 	imports: [
 		CommonModule,

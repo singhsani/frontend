@@ -217,10 +217,7 @@ const ROUTEMAIN = {
         'main': 'login-through-admin',
         'type': 'login-through-admin'
     },
-    'CITIZENPAYMENTGATEWAY': {
-        'main': 'payment-gateway',
-        'type': ''
-    },
+
     'TOWNHALL': {
         'main': 'town-hall',
         'type': 'townhall'
@@ -303,6 +300,12 @@ const ROUTEMAIN = {
         'main': 'my-applications',
         'type': 'myApps'
     },
+   
+    'PAYMENTGATEWAYRESPONSE': {
+        'main': 'payment-gateway-response',
+        'type': ''
+    },
+    
 }
 
 const ROUTEPREFIX = {
@@ -529,9 +532,7 @@ const ROUTESLIST = {
     'CITIZENMYRESOURCE': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEMAIN.CITIZENMYRESOURCE.main
     },
-    'CITIZENPAYMENTGATEWAY': {
-        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEMAIN.CITIZENPAYMENTGATEWAY.main
-    },
+
     'TOWNHALLLIST': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.BOOKINGMODULE + '/' + ROUTEPREFIX.TOWNHALLMODULE + '/' + ROUTEMAIN.TOWNHALLLIST.main
     },

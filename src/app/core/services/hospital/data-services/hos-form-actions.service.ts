@@ -32,8 +32,11 @@ export class HosFormActionsService {
 	 * @param paymentData -pass payment data here.
 	 */
 	createPayment(paymentData) {
+		this.requestURL = `public/postPayment`;
 
-		return this.http.post('api/servicePayment/pay', paymentData);
+		return this.http.post(this.requestURL, paymentData);
+
+		//return this.http.post('api/servicePayment/pay', paymentData);
 
 	}
 

@@ -54,6 +54,7 @@ export class BirthRegistrationComponent implements OnInit {
 	private maxBirthDate = new Date();
 
 	private showButtons: boolean = false;
+	private showChildAddButton: boolean = false;
 	private submit: boolean = false;
 	private childs: FormArray;
 	showChildData: boolean = false;
@@ -221,6 +222,9 @@ export class BirthRegistrationComponent implements OnInit {
 				name: null
 			}),
 			pregnancyDuration: ['', [Validators.required, ValidationService.pregnancyDurationValidation]],
+			totalBoyChildsBeforePregnancy: 0,
+			totalGirlChildsBeforePregnancy: 0,
+			totalChildsBeforePregnancy: 0,
 
 
 			//step 4(3)
@@ -236,6 +240,7 @@ export class BirthRegistrationComponent implements OnInit {
 				code: [null, Validators.required],
 				name: null
 			}),
+			familyReligionOther: null,
 
 			//step 5
 			attachments: [null],
@@ -274,6 +279,10 @@ export class BirthRegistrationComponent implements OnInit {
 			this.childs = res.childs;
 			for (let child of res.childs) {
 				this.addMoreChild(child);
+			}
+
+			if (res.childs.length > 1) {
+				this.multipleChildAdder(true);
 			}
 
 			//common for all only change form name
@@ -351,6 +360,21 @@ export class BirthRegistrationComponent implements OnInit {
 		}
 	}
 
+	totalChildCalculate(){
+		console.log(this.birthCertificateForm.get('totalBoyChildsBeforePregnancy').value)
+		console.log(this.birthCertificateForm.get('totalGirlChildsBeforePregnancy').value)
+		
+		if (this.birthCertificateForm.get('totalGirlChildsBeforePregnancy').value == null || this.birthCertificateForm.get('totalGirlChildsBeforePregnancy').value == ''){
+			this.birthCertificateForm.get('totalGirlChildsBeforePregnancy').setValue(0)
+
+		} 
+		if (this.birthCertificateForm.get('totalBoyChildsBeforePregnancy').value == null || this.birthCertificateForm.get('totalBoyChildsBeforePregnancy').value == ''){
+			this.birthCertificateForm.get('totalBoyChildsBeforePregnancy').setValue(0);
+
+		}
+		this.birthCertificateForm.get('totalChildsBeforePregnancy').setValue(parseInt(this.birthCertificateForm.get('totalGirlChildsBeforePregnancy').value) + parseInt(this.birthCertificateForm.get('totalBoyChildsBeforePregnancy').value))
+	} 
+
 	/**
 	 * Method is used to get no of days in current month.
 	 */
@@ -380,9 +404,9 @@ export class BirthRegistrationComponent implements OnInit {
 		this.submit = true;
 		let step1 = 6;
 		let step2 = 16;
-		let step3 = 33;
-		let step4 = 37;
-		let step5 = 38;
+		let step3 = 36;
+		let step4 = 41;
+		let step5 = 42;
 
 		if (count <= step1) {
 			this.stepper.selectedIndex = 0;
@@ -509,7 +533,7 @@ export class BirthRegistrationComponent implements OnInit {
 	 * @param formPart - file form part
 	 * @param variableName - file variable name.
 	 */
-	setDataValue(indentifier:number, labelName: string, formPart: string, variableName: string) {
+	setDataValue(indentifier: number, labelName: string, formPart: string, variableName: string) {
 		this.uploadModel = {
 			fieldIdentifier: indentifier.toString(),
 			labelName: labelName,
@@ -525,6 +549,18 @@ export class BirthRegistrationComponent implements OnInit {
 	 */
 	getChildData() {
 		return this.birthCertificateForm.get('childs') as FormArray;
+	}
+
+	/**
+	 * method is used to show and hide multiple child add button.
+	 * @param event - boolean.
+	 */
+	multipleChildAdder(event) {
+		if (event) {
+			this.showChildAddButton = true
+		} else {
+			this.showChildAddButton = false
+		}
 	}
 
 	/**

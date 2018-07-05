@@ -194,7 +194,6 @@ export class BandBookingListComponent implements OnInit {
 		this.showConfirmBookingForm = false;
 		this.bookingService.confirmBandBooking(this.confirmBandBookingForm.value).subscribe(respData => {
 			if (respData.success) {
-				this.commonService.successAlert("Success", "Band SucessFully Booked", "success");
 				this.showConfirmPaymentForm = false;
 				this.showConfirmBookingForm = false;
 				this.commonService.successAlert("Success", "Band SucessFully Booked", "success");

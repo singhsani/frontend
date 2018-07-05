@@ -6,6 +6,7 @@ import { HosFormActionsService } from '../../../core/services/hospital/data-serv
 import { CommonService } from '../../services/common.service';
 import { ToastrService } from 'ngx-toastr';
 import { ValidationService } from '../../services/validation.service';
+import { SessionStorageService } from 'angular-web-storage';
 
 import * as _ from 'lodash';
 
@@ -35,6 +36,7 @@ export class HosActionBarComponent implements OnInit, OnChanges {
 	@Output() stepReset = new EventEmitter<any>();
 
 	constructor(
+		private sessionStore: SessionStorageService,
 		private formService: HosFormActionsService,
 		private route: Router, private fb: FormBuilder,
 		private toastr: ToastrService,
@@ -65,13 +67,13 @@ export class HosActionBarComponent implements OnInit, OnChanges {
 				respData.attachments.forEach(element => {
 					tempArray.push(element.fieldIdentifier);
 				});
-				this.uploadFilesArray.forEach(el =>{
-					if(tempArray.indexOf(el.fieldIdentifier) === -1){
+				this.uploadFilesArray.forEach(el => {
+					if (tempArray.indexOf(el.fieldIdentifier) === -1) {
 						resolve({ fileName: el.labelName, status: false });
 						return;
 					}
 				});
-				resolve({fileName:"",status:true});
+				resolve({ fileName: "", status: true });
 			})
 		})
 	}
@@ -140,13 +142,35 @@ export class HosActionBarComponent implements OnInit, OnChanges {
 						err => {
 							this.isSubmitBtnDisabled = false;
 							if (err.status === 402) {
+
+								let paymentData = err.error.data;
+
+								let payData = {
+									id: null,
+									uniqueId: null,
+									version: null,
+									refNumber: paymentData.serviceFormId,
+									response: JSON.stringify({
+										data: "paid",
+										status: true
+									}),
+									transactionId: paymentData.transactionId,
+									paymentStatus: "SUCCESS",
+									retUrl: "http://192.168.30.74:4200/",
+									retPath: 'hospital/payment-gateway-response',
+									myApplicationUrl: '/hospital/my-applications'
+								}
+
+								this.sessionStore.set('paymentData', JSON.stringify(payData));
+
 								this.commonService.paymentAlert('', '', '', cb => {
-									this.formService.makePayment(err.error.data.transactionId).subscribe(res => {
-										this.toastr.success('Your payment has been processed successfully');
-									});
+									window.location.href = `http://192.168.30.74:4300/#/admin/payment-gateway?retUrl=${payData.retUrl}&retPath=${payData.retPath}`;
 								});
+
+								return;
 							}
 						}
+
 					);
 				} else {
 					this.commonService.openAlert("File Upload", "Please Upload Mandatory File ".concat(data.fileName), "warning");
@@ -161,6 +185,8 @@ export class HosActionBarComponent implements OnInit, OnChanges {
 			let count = 1;
 			for (const key in this.form.controls) {
 				if (this.form.get(key).invalid) {
+					console.log(key);
+
 					this.handleErrors.emit(count)
 					break;
 				}
@@ -173,7 +199,7 @@ export class HosActionBarComponent implements OnInit, OnChanges {
 	 * This method is use for clear the form
 	 */
 	resetForm() {
-		
+
 		this.commonForm.patchValue(this.form.value);
 		this.form.reset();
 		this.form.patchValue(this.commonForm.value);
@@ -216,17 +242,13 @@ export class HosActionBarComponent implements OnInit, OnChanges {
 			if (!_.isObject(value))
 				this.form.addControl(key, new FormControl());
 		});
-
-		//temp condition
-		if (this.form.get('apiType').value != 'marriageReg') {
-
-			this.form.addControl('firstName', new FormControl('', [Validators.required, ValidationService.nameValidator]));
-			this.form.addControl('middleName', new FormControl('', [ ValidationService.nameValidator]));
-			this.form.addControl('lastName', new FormControl('', [Validators.required, ValidationService.nameValidator]));
-			this.form.addControl('contactNo', new FormControl('', [Validators.required, Validators.maxLength(10)]));
-			this.form.addControl('email', new FormControl('', [Validators.required, ValidationService.emailValidator]));
-			this.form.addControl('aadhaarNo', new FormControl('', [Validators.maxLength(12)]));
-		}
+		
+		this.form.addControl('firstName', new FormControl('', [ValidationService.nameValidator]));
+		this.form.addControl('middleName', new FormControl('', [ValidationService.nameValidator]));
+		this.form.addControl('lastName', new FormControl('', [ValidationService.nameValidator]));
+		this.form.addControl('contactNo', new FormControl('', [Validators.maxLength(10)]));
+		this.form.addControl('email', new FormControl('', [ValidationService.emailValidator]));
+		this.form.addControl('aadhaarNo', new FormControl('', [Validators.maxLength(12)]));
 
 		this.form.addControl('serviceDetail', new FormGroup({
 			code: new FormControl(),

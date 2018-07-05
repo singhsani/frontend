@@ -8,6 +8,7 @@ import { CommonService } from './../../services/common.service';
 import { ValidationService } from './../../services/validation.service';
 import { FormsActionsService } from './../../../core/services/citizen/data-services/forms-actions.service';
 import { ToastrService } from 'ngx-toastr';
+import { SessionStorageService } from 'angular-web-storage';
 
 @Component({
 	selector: 'app-action-bar',
@@ -34,6 +35,7 @@ export class ActionBarComponent implements OnInit, OnChanges {
 
 	constructor(
 		private formService: FormsActionsService,
+		private sessionStore: SessionStorageService,
 		private router: Router, private fb: FormBuilder,
 		private toastr: ToastrService,
 		private commonService: CommonService) {
@@ -41,7 +43,7 @@ export class ActionBarComponent implements OnInit, OnChanges {
 
 	ngOnInit() {
 		this.formService.apiType = this.form.get('apiType').value;
-		this.commonControlFormControls();
+		this.commonFormControls();
 		this.uploadFilesArray = this.uploadFiles;
 
 		setTimeout(() => {
@@ -53,7 +55,7 @@ export class ActionBarComponent implements OnInit, OnChanges {
 
 	}
 
-	ngOnChanges(){
+	ngOnChanges() {
 		this.uploadFilesArray = this.uploadFiles;
 	}
 
@@ -63,17 +65,21 @@ export class ActionBarComponent implements OnInit, OnChanges {
 	mandatoryFileCheck() {
 		return new Promise<any>((resolve, reject) => {
 			this.formService.getFormData(this.form.get('serviceFormId').value).subscribe(respData => {
-				let tempArray = [];
-				respData.attachments.forEach(element => {
-					tempArray.push(element.fieldIdentifier);
-				});
-				this.uploadFilesArray.forEach(el => {
-					if (tempArray.indexOf(el.fieldIdentifier) === -1) {
-						resolve({ fileName: el.labelName, status: false });
-						return;
-					}
-				});
-				resolve({ fileName: "", status: true });
+				if (respData.attachments) {
+					let tempArray = [];
+					respData.attachments.forEach(element => {
+						tempArray.push(element.fieldIdentifier);
+					});
+					this.uploadFilesArray.forEach(el => {
+						if (tempArray.indexOf(el.fieldIdentifier) === -1) {
+							resolve({ fileName: el.labelName, status: false });
+							return;
+						}
+					});
+					resolve({ fileName: "", status: true });
+				} else {
+					resolve({ fileName: "", status: true })
+				}
 			})
 		})
 	}
@@ -132,12 +138,33 @@ export class ActionBarComponent implements OnInit, OnChanges {
 					},
 						err => {
 							this.isSubmitBtnDisabled = false;
+
 							if (err.status === 402) {
+								let paymentData = err.error.data;
+
+								let payData = {
+									id: null,
+									uniqueId: null,
+									version: null,
+									refNumber: paymentData.serviceFormId,
+									response: JSON.stringify({
+										data: "paid",
+										status: true
+									}),
+									transactionId: paymentData.transactionId,
+									paymentStatus: "SUCCESS",
+									retUrl: "http://192.168.30.74:4200/",
+									retPath: 'citizen/payment-gateway-response',
+									myApplicationUrl: '/citizen/my-applications'
+								}
+
+								this.sessionStore.set('paymentData', JSON.stringify(payData));
+
 								this.commonService.paymentAlert('', '', '', cb => {
-									this.formService.makePayment(err.error.data.transactionId).subscribe(res => {
-										this.toastr.success('Your payment has been processed successfully');
-									});
+									window.location.href = `http://192.168.30.74:4300/#/admin/payment-gateway?retUrl=${payData.retUrl}&retPath=${payData.retPath}`;
 								});
+
+								return;
 							}
 						}
 					);
@@ -152,6 +179,8 @@ export class ActionBarComponent implements OnInit, OnChanges {
 			let count = 1;
 			for (const key in this.form.controls) {
 				if (this.form.get(key).invalid) {
+					console.log(key);
+					console.log(count);
 
 					if (this.form.get('apiType').value == 'marriageReg') {
 						let groomreligionChange = this.form.controls.groomReligion.get("code").value;
@@ -202,7 +231,7 @@ export class ActionBarComponent implements OnInit, OnChanges {
 	/**
 	 * This method used to set common formControls in existing formGroups
 	 */
-	commonControlFormControls() {
+	commonFormControls() {
 
 		let formControlObj = {
 			id: null,
@@ -237,15 +266,13 @@ export class ActionBarComponent implements OnInit, OnChanges {
 		});
 
 		//temp condition
-		if (this.form.get('apiType').value != 'marriageReg') {
 
-			this.form.addControl('firstName', new FormControl('', [Validators.required, ValidationService.nameValidator]));
-			this.form.addControl('middleName', new FormControl('', ValidationService.nameValidator));
-			this.form.addControl('lastName', new FormControl('', [Validators.required, ValidationService.nameValidator]));
-			this.form.addControl('aadhaarNo', new FormControl('', Validators.maxLength(12)));
-			this.form.addControl('contactNo', new FormControl('', [Validators.required, Validators.maxLength(10)]));
-			this.form.addControl('email', new FormControl('', [Validators.required, ValidationService.emailValidator]));
-		}
+		this.form.addControl('firstName', new FormControl('', [ ValidationService.nameValidator]));
+		this.form.addControl('middleName', new FormControl('', ValidationService.nameValidator));
+		this.form.addControl('lastName', new FormControl('', [ ValidationService.nameValidator]));
+		this.form.addControl('aadhaarNo', new FormControl('', Validators.maxLength(12)));
+		this.form.addControl('contactNo', new FormControl('', [ Validators.maxLength(10)]));
+		this.form.addControl('email', new FormControl('', [ValidationService.emailValidator]));
 
 		this.form.addControl('serviceDetail', new FormGroup({
 			code: new FormControl(),
@@ -284,7 +311,7 @@ export class ActionBarComponent implements OnInit, OnChanges {
 	/**
 	 * This method is use to redirect on my application
 	 */
-	cancelForm(){
+	cancelForm() {
 		this.router.navigate(['citizen/my-applications']);
 	}
 

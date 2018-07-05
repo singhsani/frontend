@@ -34,11 +34,18 @@
                             <control-messages [control]="birthCertificateForm.controls.isOrphan.controls.code"></control-messages>
                         </div>
 
-                        <mat-form-field class="col-md-4">
-                            <input readonly matInput type="tel" maxlength="2" OnlyNumber placeholder="{{'total_child_alive' | translate:translateKey}}"
+                        <div class="col-md-4">
+                            <mat-checkbox [disabled]="birthCertificateForm.get('noOfChilds').value >1 ||  birthCertificateForm.disabled" labelPosition="after"
+                                [checked]="showChildAddButton" (change)="multipleChildAdder($event.checked)">
+                                {{'child_more_than_one' | translate:translateKey}}
+                            </mat-checkbox>
+                        </div>
+
+                        <!-- <mat-form-field class="col-md-4">
+                            <input readonly matInput type="tel" maxlength="2" OnlyNumber placeholder="{{'child_more_than_one' | translate:translateKey}}"
                                 formControlName="totalAliveChild" required>
                             <control-messages [control]="birthCertificateForm.controls.totalAliveChild"></control-messages>
-                        </mat-form-field>
+                        </mat-form-field> -->
                     </div>
 
 
@@ -106,7 +113,7 @@
                         </div>
                     </div>
 
-                    <button class="float-right" *ngIf="birthCertificateForm.get('noOfChilds').value < 6" [disabled]="showButtons && !birthCertificateForm.controls.canEdit.value"
+                    <button class="float-right" *ngIf="birthCertificateForm.get('noOfChilds').value < 6 && showChildAddButton" [disabled]="showButtons && !birthCertificateForm.controls.canEdit.value"
                         matTooltip="Add More New Born Child" type="button" mat-mini-fab color="accent" (click)="addMoreChild()">
                         <mat-icon>add</mat-icon>
                     </button>
@@ -348,6 +355,24 @@
                             <control-messages [control]="birthCertificateForm.controls.pregnancyDuration"></control-messages>
                         </mat-form-field>
 
+                    </div>
+                    <div class="row">
+
+                        <mat-form-field class="col-md-4">
+                            <input required maxlength="1" (change)="totalChildCalculate()" OnlyNumber matInput placeholder="{{'total_boy_child' | translate:translateKey}}" formControlName="totalBoyChildsBeforePregnancy"
+                                required>
+                        </mat-form-field>
+
+                        <mat-form-field class="col-md-4">
+                            <input required maxlength="1" (change)="totalChildCalculate()" OnlyNumber matInput placeholder="{{'total_girl_child' | translate:translateKey}}" formControlName="totalGirlChildsBeforePregnancy"
+                                required>
+                        </mat-form-field>
+
+                        <mat-form-field class="col-md-4">
+                            <input readonly maxlength="1" OnlyNumber matInput placeholder="{{'total_child_befor_pregnancy' | translate:translateKey}}"
+                                formControlName="totalChildsBeforePregnancy" required>
+                        </mat-form-field>
+
 
                     </div>
 
@@ -384,10 +409,6 @@
 
                     <div>
                         <h2>
-                            {{'applicant_details' | translate:translateKey}}
-                        </h2>
-                        <app-basic-details [basicFormGroup]="birthCertificateForm"></app-basic-details>
-                        <h2>
                             {{'present_address_during_delivery' | translate:translateKey}}
                         </h2>
                         <!-- <div formGroupName="parentDeliveryAddress"> -->
@@ -404,6 +425,7 @@
                         <app-address #address [requiredFeilds]="true" [addressFormGroup]="birthCertificateForm.controls.parentPermanentAddress"></app-address>
 
                         <div>
+
                             <div class="row">
                                 <div formGroupName="familyReligion" class="col-md-4 ngSelect">
                                     <ng-select placeholder="{{'religion' | translate:translateKey}} *" formControlName="code" required>
@@ -413,7 +435,15 @@
                                     </ng-select>
                                     <control-messages [control]="birthCertificateForm.controls.familyReligion.controls.code"></control-messages>
                                 </div>
+
+                                <div class="col-md-8" *ngIf="birthCertificateForm.value.familyReligion.code == 'OTHER_RELIGION'">
+                                    <mat-form-field class="birth-certificate-col-md-4">
+                                        <input appValidationFields [validationFieldsType]="'onlyNameWithSpace'" matInput placeholder="{{'other_family_religion' | translate:translateKey}}"
+                                            formControlName="familyReligionOther" required>
+                                    </mat-form-field>
+                                </div>
                             </div>
+
                         </div>
 
                         <div>
@@ -471,7 +501,8 @@
                         </div>
 
                         <div class="col-md-4" *ngIf="showButtons && getDelayPeriod() > 30 && getDelayPeriod() < 365">
-                            <label labelPosition="after">{{'affidavit_Or_health_Order' | translate:translateKey}}{{!getFileObjectContained('1.7')?'': '*'}}</label>
+                            <label labelPosition="after">{{'affidavit_Or_health_Order' | translate:translateKey}}{{!getFileObjectContained('1.7')?'':
+                                '*'}}</label>
                             <app-hos-file-upload [form]="birthCertificateForm" [uploadModel]="setDataValue(1.7,'Affidavit Or Health Order','1.1','affidavitOrhealthOrder')"></app-hos-file-upload>
                         </div>
 
@@ -483,7 +514,8 @@
                     </div>
 
                     <div>
-                        <app-hos-action-bar [form]="birthCertificateForm" [uploadFiles]="uploadFileArray" [step]="'final'" (stepReset)="stepReset()" (handleErrors)="handleErrorsOnSubmit($event)"></app-hos-action-bar>
+                        <app-hos-action-bar [form]="birthCertificateForm" [uploadFiles]="uploadFileArray" [step]="'final'" (stepReset)="stepReset()"
+                            (handleErrors)="handleErrorsOnSubmit($event)"></app-hos-action-bar>
                     </div>
                 </mat-step>
             </mat-horizontal-stepper>
