@@ -56,6 +56,29 @@ export class FormsActionsService {
 	}
 
 	/**
+	 * This method is used to perform all payable service actions.
+	 */
+	paymentServiceGet() {
+		
+		this.requestURL = `public/guest/${this.apiType}`;
+
+		return this.http.get(this.requestURL);
+
+	}
+
+	/**
+	 * - This method is used to make payment process
+	 * @param reqData - payment dialog form data
+	 */
+	paymentServicePost(reqData) {
+		
+		this.requestURL = `api/servicePayment/${this.apiType}`;
+
+		return this.http.post(this.requestURL, reqData);
+
+	}
+
+	/**
 	 * This method is used to get citizen app data
 	 * @param appId - citizen app id
 	 */

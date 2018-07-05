@@ -58,6 +58,10 @@
                     <mat-icon>low_priority</mat-icon>
                     <span *ngIf="isExpanded">Transactions</span>
                 </a>
+                <a *ngIf="!fromAdmin" mat-list-item routerLink="/citizen/payable-services" routerLinkActive="active-route-link">
+                    <mat-icon>&#x20B9;</mat-icon>
+                    <span *ngIf="isExpanded">Payable Services</span>
+                </a>
                 <a *ngIf="!fromAdmin" mat-list-item routerLink="/citizen/booking" routerLinkActive="active-route-link" [routerLinkActiveOptions]="{exact: true}">
                     <mat-icon>collections_bookmark</mat-icon>
                     <span *ngIf="isExpanded">Booking</span>
