@@ -2,6 +2,9 @@ import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/cor
 import { FormBuilder, FormGroupDirective, FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatHorizontalStepper, MatStep, MatStepLabel } from '@angular/material';
+import { Location } from '@angular/common';
+import { CommonService } from '../../../../../shared/services/common.service';
+
 
 import { ManageRoutes } from './../../../../../config/routes-conf';
 import { ValidationService } from '../../../../../shared/services/validation.service';
@@ -14,26 +17,87 @@ import * as moment from 'moment';
 	templateUrl: './death-duplicate.component.html',
 	styleUrls: ['./death-duplicate.component.scss']
 })
+
 export class DeathDuplicateComponent implements OnInit {
 
+	/**
+	 * get element from html having id MatHorizontalStepper
+	 */
 	@ViewChild(MatHorizontalStepper) stepper: MatHorizontalStepper;
-	@ViewChild(MatStepLabel) steplable: MatStepLabel;
-	@ViewChild(FormGroupDirective) f;
 
+	/**
+	 * get element from html having id MatStepLabel
+	 */
+	@ViewChild(MatStepLabel) steplable: MatStepLabel;
+
+	/**
+	 * Routing configuration
+	 */
+	manageRoutes: any = ManageRoutes;
+
+	/**
+	 * flag to show/hide search form.
+	 */
+	showSearchForm: boolean = false;
+
+	/**
+	 * flag to show duplicate application
+	 */
+	isVisibeDuplicateForm: boolean = true;
+
+	/**
+	 * death duplicate form group.
+	 */
 	private deathDuplicateForm: FormGroup;
+
+	/**
+	 * language translate key.
+	 */
 	private translateKey: string = 'DeathDuplicateScreen';
 
+	/**
+	 * application id or service form id.
+	 */
 	appId: number;
+
+	/**
+	 * api code
+	 */
 	apiCode: string;
-	private DeathRegYears: Number[] = [2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018];
+
+	/**
+	 * Yes/no lookup
+	 */
 	private ISYESNO: object[];
+
+	/**
+	 * Maximum date validation
+	 */
 	private maxDeathDate = new Date();
+
+	/**
+	 * Min date validation
+	 */
 	private minDeathDate;
 
-	// Step Titles
-	stepLable1: string = "Applicant Basic Details";
+	/**
+	 * Duplicate copy mode lookup.
+	 */
+	DuplicateCopyMode: Array<any>;
 
+	/**
+	 * constructor
+	 * @param location 
+	 * @param commonService 
+	 * @param fb 
+	 * @param validationService 
+	 * @param router 
+	 * @param route 
+	 * @param formService 
+	 */
 	constructor(
+		private location: Location,
+		private commonService: CommonService,
 		private fb: FormBuilder,
 		private validationService: ValidationService,
 		private router: Router,
@@ -41,6 +105,9 @@ export class DeathDuplicateComponent implements OnInit {
 		private formService: FormsActionsService
 	) { }
 
+	/**
+	 * Method initializes first.
+	 */
 	ngOnInit() {
 
 		this.route.paramMap.subscribe(param => {
@@ -49,11 +116,49 @@ export class DeathDuplicateComponent implements OnInit {
 			this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
 		});
 
-		this.getDeathDuplicateData();
-		this.getLookupData();
 		this.DeathDuplicateFormControls();
+
+		if (this.appId) {
+			this.isVisibeDuplicateForm = false;
+			this.getDeathDuplicateData();
+			this.getLookupData();
+		} else {
+			this.showSearchForm = true;
+		}
 	}
 
+	/**
+	 * Method is used to create death record after application found.
+	 * @param data - original json.
+	 */
+	createDeathDuplicateRecord(data) {
+		this.formService.createFormData().subscribe(res => {
+
+			this.deathDuplicateForm.patchValue(res);
+
+			this.updateDuplicateRecordValue(data);
+
+			this.appId = res.serviceFormId;
+
+			let cururl = this.location.path().replace('false', this.appId.toString());
+
+			this.location.go(cururl);
+		}, err => {
+			this.commonService.openAlert("Warning", "Something Went Wrong", "warning");
+		});
+	}
+
+	/**
+	 * Method is used to update duplicate form data with original json.
+	 * @param data - original json.
+	 */
+	updateDuplicateRecordValue(data) {
+		this.deathDuplicateForm.get('deathDate').setValue(data.deathDate);
+	}
+
+	/**
+	 * Method is used to get death duplicate data.
+	 */
 	getDeathDuplicateData() {
 		this.formService.getFormData(this.appId).subscribe(res => {
 			this.deathDuplicateForm.patchValue(res);
@@ -66,12 +171,10 @@ export class DeathDuplicateComponent implements OnInit {
 	 */
 	handleErrorsOnSubmit(count) {
 		let step1 = 6;
-
 		if (count <= step1) {
 			this.stepper.selectedIndex = 0;
 			return false;
 		}
-
 	}
 
 	/**
@@ -79,15 +182,37 @@ export class DeathDuplicateComponent implements OnInit {
 	 */
 	getLookupData() {
 		this.formService.getDataFromLookups().subscribe(res => {
+			console.log(res);
+			this.DuplicateCopyMode = res.DUPLICATE_COPY_MODE;
+			this.ISYESNO = res.YES_NO;
 		});
 	}
 
+	/**
+	 * Method is used to craete death duplicate controls.
+	 */
 	DeathDuplicateFormControls() {
 		this.deathDuplicateForm = this.fb.group({
-			deathRegNumber: [null, Validators.required],
-			deathRegYear: [null, Validators.required],
-			deathDate: [null, Validators.required],
-			deathRegDate: [null, Validators.required],
+			deathRegNumber: [null],
+			deathRegYear: [null],
+			deathDate: [null],
+			deathRegDate: [null],
+			duplicateCopies: this.fb.group({
+				code: [null, [Validators.required]],
+				id: null,
+				name: null,
+			}),
+			duplicateCopyMode: this.fb.group({
+				code: [null, [Validators.required]],
+				gujName: null,
+				id: null,
+				name: null,
+				orderSequence: null,
+				type: null,
+				uniqueId: null,
+				version: null
+			}),
+			totalCopies: [null, Validators.required],
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode)
 		});
 	}
@@ -114,5 +239,18 @@ export class DeathDuplicateComponent implements OnInit {
 	 */
 	stepReset() {
 		this.stepper.reset();
+	}
+
+	/**
+	 * method is outpu event from search record.
+	 * @param event - returned event.
+	 */
+	showDuplicateForm(event) {
+		if (event) {
+			this.getLookupData();
+			this.createDeathDuplicateRecord(event);
+			this.isVisibeDuplicateForm = false;
+			this.showSearchForm = false;
+		}
 	}
 }

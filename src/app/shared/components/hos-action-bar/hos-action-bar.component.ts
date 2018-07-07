@@ -156,7 +156,7 @@ export class HosActionBarComponent implements OnInit, OnChanges {
 									}),
 									transactionId: paymentData.transactionId,
 									paymentStatus: "SUCCESS",
-									retUrl: "http://192.168.30.74:4200/",
+									retUrl: "http://192.168.10.107:8080/",
 									retPath: 'hospital/payment-gateway-response',
 									myApplicationUrl: '/hospital/my-applications'
 								}
@@ -164,7 +164,7 @@ export class HosActionBarComponent implements OnInit, OnChanges {
 								this.sessionStore.set('paymentData', JSON.stringify(payData));
 
 								this.commonService.paymentAlert('', '', '', cb => {
-									window.location.href = `http://192.168.30.74:4300/#/admin/payment-gateway?retUrl=${payData.retUrl}&retPath=${payData.retPath}`;
+									window.location.href = `http://192.168.10.107:8080/vmcadminportal/#/admin/payment-gateway?retUrl=${payData.retUrl}&retPath=${payData.retPath}`;
 								});
 
 								return;

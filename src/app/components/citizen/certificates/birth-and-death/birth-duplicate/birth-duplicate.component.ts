@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-
+import { Location } from '@angular/common';
+import { CommonService } from '../../../../../shared/services/common.service';
 import { ManageRoutes } from './../../../../../config/routes-conf';
 import { ValidationService } from '../../../../../shared/services/validation.service';
 import { FormsActionsService } from '../../../../../core/services/citizen/data-services/forms-actions.service';
@@ -13,98 +14,92 @@ import * as moment from 'moment';
 	templateUrl: './birth-duplicate.component.html',
 	styleUrls: ['./birth-duplicate.component.scss']
 })
+
 export class BirthDuplicateComponent implements OnInit {
 
-
-
+	/**
+	 * duplicate birth form.
+	 */
 	birthDuplicateForm: FormGroup;
-	translateKey: string = 'BirthDuplicateScreen';
 
+	/**
+	 * search application form
+	 */
+	searchForm: FormGroup;
+
+	/**
+	 * applicatio id or service form id.
+	 */
 	appId: number;
+
+	/**
+	 * api code
+	 */
 	apiCode: string;
-	BirthRegYears = [
-		{
-			id: "2008",
-			code: 2008,
-			name: "2008"
 
-		},
-		{
-			id: "2009",
-			code: 2009,
-			name: "2009"
-
-		},
-		{
-			id: "2010",
-			code: 2010,
-			name: "2010"
-
-		},
-		{
-			id: "2011",
-			code: "2011",
-			name: "2011"
-
-		},
-		{
-			id: "2012",
-			code: 2012,
-			name: "2012"
-
-		}, {
-			id: "2013",
-			code: 2013,
-			name: "2013"
-
-		},
-		{
-			id: "2014",
-			code: 2014,
-			name: "2014"
-
-		},
-		{
-			id: "2015",
-			code: 2015,
-			name: "2015"
-
-		},
-		{
-			id: "2016",
-			code: 2016,
-			name: "2016"
-
-		},
-		{
-			id: "2017",
-			code: 2017,
-			name: "2017"
-
-		},
-		{
-			id: "2018",
-			code: 2018,
-			name: "2018"
-
-		}
-
-	];
+	/**
+	 * Duplicate copy mode lookup.
+	 */
 	private DuplicateCopyMode: object[];
+
+	/**
+	 * Yes/no type lookup
+	 */
 	private ISYESNO: object[];
 
-
+	/**
+	 * validate max date.
+	 */
 	private maxBirthDate = new Date();
+
+	/**
+	 * validate minimm date.
+	 */
 	private minBirthDate;
 
+	/**
+	 * common routing configuration
+	 */
+	manageRoutes: any = ManageRoutes;
+
+	/**
+	 * show search form.
+	 */
+	showSearchForm: boolean = false;
+
+	/**
+	 * show hide duplicate form.
+	 */
+	isVisibeDuplicateForm: boolean = true;
+
+	/**
+	 * language translate key
+	 */
+	translateKey: string = 'BirthDuplicateScreen';
+
+	/**
+	 * Constructor
+	 * @param commonService - common service for alert.
+	 * @param fb - form builder.
+	 * @param location - location class to update url.
+	 * @param validationService - common validation  service.
+	 * @param router - common router.
+	 * @param route - activate route.
+	 * @param formService - common form service.
+	 */
 	constructor(
+		private commonService: CommonService,
 		private fb: FormBuilder,
+		private location: Location,
 		private validationService: ValidationService,
 		private router: Router,
 		private route: ActivatedRoute,
 		private formService: FormsActionsService
 	) { }
 
+	/**
+	 * Method initializes first.
+	 */
 	ngOnInit() {
 
 		this.route.paramMap.subscribe(param => {
@@ -113,9 +108,45 @@ export class BirthDuplicateComponent implements OnInit {
 			this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
 		});
 
-		this.getBirthDuplicateData();
-		this.getLookupData();
 		this.birthDuplicateFormControls();
+
+		if (this.appId) {
+			this.isVisibeDuplicateForm = false;
+			this.getBirthDuplicateData();
+			this.getLookupData();
+		} else {
+			this.showSearchForm = true;
+		}
+	}
+
+	/**
+	 * Method is used to create death record after search data found.
+	 * @param data - original json.
+	 */
+	createDuplicateBirthRecord(data) {
+		this.formService.createFormData().subscribe(res => {
+
+			this.birthDuplicateForm.patchValue(res);
+
+			this.updateDuplicateRecordValue(data);
+
+			this.appId = res.serviceFormId;
+
+			let cururl = this.location.path().replace('false', this.appId.toString());
+
+			this.location.go(cururl);
+		}, err => {
+			this.commonService.openAlert("Warning", "Something Went Wrong", "warning");
+		});
+	}
+
+	/**
+	 * Method is used to update duplicate form data with original json.
+	 * @param data - original json.
+	 */
+	updateDuplicateRecordValue(data) {
+		this.birthDuplicateForm.get('birthDate').setValue(data.childs[0].birthDate);
+		this.birthDuplicateForm.get('childName').setValue(data.childs[0].childName);
 	}
 
 	/**
@@ -137,7 +168,6 @@ export class BirthDuplicateComponent implements OnInit {
 			//this.stepper.selectedIndex = 0;
 			return false;
 		}
-
 	}
 
 	/**
@@ -155,11 +185,11 @@ export class BirthDuplicateComponent implements OnInit {
 	 */
 	birthDuplicateFormControls() {
 		this.birthDuplicateForm = this.fb.group({
-			birthRegNumber: [null, [Validators.required, ValidationService.birthRegNumber]],
-			birthRegYear: [null, Validators.required],
-			birthDate: [null, [Validators.required]],
-			birthRegDate: [null, Validators.required],
-			childName: [null, [Validators.required, ValidationService.nameValidator]],
+			birthRegNumber: [null],
+			birthRegYear: [null],
+			birthDate: [null],
+			birthRegDate: [null],
+			childName: [null],
 			duplicateCopies: this.fb.group({
 				code: [null, [Validators.required]],
 				id: null,
@@ -174,7 +204,6 @@ export class BirthDuplicateComponent implements OnInit {
 				type: null,
 				uniqueId: null,
 				version: null
-
 			}),
 			totalCopies: [null, Validators.required],
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode)
@@ -199,17 +228,15 @@ export class BirthDuplicateComponent implements OnInit {
 	}
 
 	/**
-	 * Method is used to reset form its a output event from action bar.
+	 * show duplicate birth certificate form.
+	 * @param event - data or false.
 	 */
-	stepReset() {
-		//this.stepper.reset();
+	showDuplicateForm(event) {
+		if (event) {
+			this.getLookupData();
+			this.createDuplicateBirthRecord(event);
+			this.isVisibeDuplicateForm = false;
+			this.showSearchForm = false;
+		}
 	}
-
-	/**
-	 * Methid is used to get duplicate death certficate data.
-	 */
-	getRegistrationNumberStatus(){
-		console.log(this.birthDuplicateForm.value);
-	}
-
 }

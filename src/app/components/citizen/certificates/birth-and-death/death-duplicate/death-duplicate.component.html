@@ -1,43 +1,43 @@
-<div class="container">
-    <div class="row pt-4">
-        <form [formGroup]="deathDuplicateForm">
-            
-                    <app-basic-details [basicFormGroup]="deathDuplicateForm"></app-basic-details>
-                    <div class="row">
-                    
-                        <mat-form-field class="col-md-4">
-                            <input required matInput maxlength="20" minlength="20" OnlyNumber placeholder="{{'death_reg_number' | translate:translateKey}}" formControlName="deathRegNumber">
-                            <control-messages [control]="deathDuplicateForm.controls.deathRegNumber"></control-messages>
-                        </mat-form-field>
-                    
-                        <div class="col-md-4 ngSelect">
-                            <ng-select placeholder="{{'death_reg_year' | translate:translateKey}} *" formControlName="deathRegYear">
-                                <ng-option *ngFor="let deathyear of DeathRegYears" [value]="deathyear">
-                                    {{deathyear}}
-                                </ng-option>
-                            </ng-select>
-                            <control-messages [control]="deathDuplicateForm.controls.deathRegYear"></control-messages>
-                        </div>
-                    
-                
-                        <mat-form-field class="col-md-4">
-                            <input  (click)="picker.open()" (focus)="picker.open()" matInput readonly [max]="maxDeathDate" [matDatepicker]="picker" placeholder="{{'death_date' | translate:translateKey}}" formControlName="deathDate"
-                                (dateChange)="deathDateCalculator($event)">
-                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                            <mat-datepicker #picker touchUi="true"></mat-datepicker>
-                            <control-messages [control]="deathDuplicateForm.controls.deathDate"></control-messages>
-                        </mat-form-field>
-                    
-                        <mat-form-field class="col-md-4">
-                            <input (click)="regpicker.open()" (focus)="regpicker.open()" matInput readonly [max]="maxDeathDate" [min]="minDeathDate" [matDatepicker]="regpicker" placeholder="{{'death_reg_date' | translate:translateKey}}"
-                                formControlName="deathRegDate" (dateChange)="deathRegCalculator($event)">
-                            <mat-datepicker-toggle matSuffix [for]="regpicker"></mat-datepicker-toggle>
-                            <mat-datepicker #regpicker touchUi="true"></mat-datepicker>
-                            <control-messages [control]="deathDuplicateForm.controls.deathRegDate"></control-messages>
-                        </mat-form-field>
-                    
-                    </div>
-                    <!-- <app-action-bar [form]="deathDuplicateForm" [step]="'final'" (stepReset)="stepReset()" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar> -->
+<record-search *ngIf="showSearchForm" [apiType]="manageRoutes.getApiTypeFromApiCode(this.apiCode)" (searchResult)="showDuplicateForm($event)">
+</record-search>
+
+<div class="container" [hidden]="isVisibeDuplicateForm">
+
+    <app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
+    
+    <mat-card>
+
+    <div class="row">
+        <form [formGroup]="deathDuplicateForm" autocomplete="off" ngNativeValidate>
+            <div class="row">
+                <div class="col-md-4" formGroupName="duplicateCopies">
+                    <mat-label>{{'duplicate_copies' | translate:translateKey}}</mat-label>
+                    <mat-radio-group formControlName="code">
+                        <mat-radio-button *ngFor="let yesNo of ISYESNO" [value]="yesNo.code">
+                            {{yesNo.name}}
+                        </mat-radio-button>
+                        <control-messages [control]="deathDuplicateForm.controls.duplicateCopies.controls.code"></control-messages>
+                    </mat-radio-group>
+                </div>
+
+                <mat-form-field formGroupName="duplicateCopyMode" class="col-md-4">
+                    <mat-select placeholder="{{'duplicate_copy_mode' | translate:translateKey}}" formControlName="code">
+                        <mat-option *ngFor="let duplicatemode of DuplicateCopyMode" [value]="duplicatemode.code">
+                            {{duplicatemode.name}}
+                        </mat-option>
+                    </mat-select>
+                    <control-messages [control]="deathDuplicateForm.controls.duplicateCopyMode.controls.code"></control-messages>
+                </mat-form-field>
+
+                <mat-form-field class="col-md-4">
+                    <input matInput maxlength="2" type="number" [min]="0" OnlyNumber placeholder="{{'total_copies' | translate:translateKey}}"
+                        formControlName="totalCopies">
+                    <control-messages [control]="deathDuplicateForm.controls.totalCopies"></control-messages>
+                </mat-form-field>
+
+            </div>
+            <app-action-bar [isstepper]="false" [form]="deathDuplicateForm" [step]="'final'"  (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
         </form>
     </div>
+    </mat-card>
 </div>
