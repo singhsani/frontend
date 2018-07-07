@@ -40,14 +40,17 @@ export class DashboardComponent implements OnInit {
 	 * This method is use to create new record for citizen
 	 */
 	createRecord(apiCode: string) {
-		if (apiCode == 'HEL-BCR' || apiCode == 'HEL-DCR' || apiCode == 'HEL-NRCBR' || apiCode == 'HEL-NRCDR') {
+
+		/**
+		 * catch application which should not be created by default.
+		 */
+		if (apiCode == 'HEL-BCR' || apiCode == 'HEL-DCR' || apiCode == 'HEL-NRCBR' || apiCode == 'HEL-NRCDR' || apiCode == 'HEL-DUPBR' || apiCode == 'HEL-DUPDR') {
 			let redirectUrl = ManageRoutes.getFullRoute(apiCode);
 			this.router.navigate([redirectUrl, false, apiCode]);
 		} else {
 			if (ManageRoutes.getApiTypeFromApiCode(apiCode)) {
 				this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);
 				this.formService.createFormData().subscribe(res => {
-					console.log(res);
 					let redirectUrl = ManageRoutes.getFullRoute(apiCode);
 					this.router.navigate([redirectUrl, res.serviceFormId, apiCode]);
 				});

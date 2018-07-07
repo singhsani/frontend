@@ -18,7 +18,7 @@ import { SessionStorageService } from 'angular-web-storage';
 export class ActionBarComponent implements OnInit, OnChanges {
 
 	translateKey: string = 'actionBarScreen';
-
+	@Input() isstepper: boolean = true;
 	@Input() form: FormGroup;
 	@Input() step: string;
 	commonFormControl: FormGroup;
@@ -42,6 +42,7 @@ export class ActionBarComponent implements OnInit, OnChanges {
 	}
 
 	ngOnInit() {
+		console.log(this.isstepper);
 		this.formService.apiType = this.form.get('apiType').value;
 		this.commonFormControls();
 		this.uploadFilesArray = this.uploadFiles;
@@ -95,7 +96,9 @@ export class ActionBarComponent implements OnInit, OnChanges {
 			res => {
 				this.form.patchValue(res);
 				this.isSaveBtnDisabled = false;
-				document.getElementById('matStepperNextBtn').click();
+				if(this.isstepper){
+					document.getElementById('matStepperNextBtn').click();
+				}
 				this.toastr.success(`${this.form.value.serviceDetail.name} information successfully saved`);
 			},
 			err => {
@@ -127,6 +130,7 @@ export class ActionBarComponent implements OnInit, OnChanges {
 			this.mandatoryFileCheck().then(data => {
 				if (data.status) {
 					this.formService.submitFormData(this.form.get('serviceFormId').value).subscribe(res => {
+
 						if (res.success) {
 							this.form.get('canEdit').setValue(false);
 						}
@@ -140,6 +144,7 @@ export class ActionBarComponent implements OnInit, OnChanges {
 							this.isSubmitBtnDisabled = false;
 
 							if (err.status === 402) {
+
 								let paymentData = err.error.data;
 
 								let payData = {
@@ -153,7 +158,8 @@ export class ActionBarComponent implements OnInit, OnChanges {
 									}),
 									transactionId: paymentData.transactionId,
 									paymentStatus: "SUCCESS",
-									retUrl: "http://192.168.30.74:4200/",
+		
+									retUrl: "http://192.168.10.107:8080/",
 									retPath: 'citizen/payment-gateway-response',
 									myApplicationUrl: '/citizen/my-applications'
 								}
@@ -161,13 +167,15 @@ export class ActionBarComponent implements OnInit, OnChanges {
 								this.sessionStore.set('paymentData', JSON.stringify(payData));
 
 								this.commonService.paymentAlert('', '', '', cb => {
-									window.location.href = `http://192.168.30.74:4300/#/admin/payment-gateway?retUrl=${payData.retUrl}&retPath=${payData.retPath}`;
+									//http://192.168.10.107:8080/vmcadminportal/
+									window.location.href = `http://192.168.10.107:8080/vmcadminportal/#/admin/payment-gateway?retUrl=${payData.retUrl}&retPath=${payData.retPath}`;
 								});
 
 								return;
 							}
 						}
 					);
+
 				} else {
 					this.commonService.openAlert("File Upload", "Please Upload Mandatory File ".concat(data.fileName), "warning");
 					this.isSubmitBtnDisabled = false;

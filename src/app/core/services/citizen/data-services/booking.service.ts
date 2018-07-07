@@ -155,7 +155,7 @@ export class BookingService {
 
 	shortListTheater(theaterObject){
 		console.log(theaterObject);
-		this.requestURL = `api/booking/${this.resourceType}/slot/shortlistAPI?uuid=${theaterObject.uniqueId}`;
+		this.requestURL = `api/booking/${this.resourceType}/slot/shortlistAPI?uniqueId=${theaterObject.uniqueId}`;
 		return this.http.post(this.requestURL, theaterObject);
 	}
 

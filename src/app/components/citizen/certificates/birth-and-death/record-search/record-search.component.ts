@@ -18,18 +18,54 @@ import * as moment from 'moment';
 })
 export class RecordSearchComponent implements OnInit {
 
+	/**
+	 * get api type through input.
+	 */
 	@Input() apiType: string;
+
+	/**
+	 * emit event.
+	 */
 	@Output() searchResult = new EventEmitter<any>();
 
+	/**
+	 * get element having id as MatPaginator from view.
+	 */
 	@ViewChild(MatPaginator) paginator: MatPaginator;
+
+	/**
+	 * get element having id as MatSort from view.
+	 */
 	@ViewChild(MatSort) sort: MatSort;
 
+	/**
+	 * search form.
+	 */
 	searchForm: FormGroup;
+
+	/**
+	 * language translate key.
+	 */
 	translateKey: string = 'searchScreen';
+
+	/**
+	 * maximum date validation.
+	 */
 	maxDate: Date = new Date();
+
+	/**
+	 * row data.
+	 */
 	rowData: any = {};
+
+	/**
+	 * initialize check box value with -1
+	 */
 	selected = -1;
 
+	/**
+	 * display table column.
+	 */
 	displayedColumns: any = [
 		'seq',
 		'id',
@@ -39,12 +75,110 @@ export class RecordSearchComponent implements OnInit {
 		'action'
 	];
 
+	/**
+	 * Registration year static look up.
+	 */
+	RegYear: Array<any> = [
+		{
+			id: "2008",
+			code: 2008,
+			name: "2008"
+
+		},
+		{
+			id: "2009",
+			code: 2009,
+			name: "2009"
+
+		},
+		{
+			id: "2010",
+			code: 2010,
+			name: "2010"
+
+		},
+		{
+			id: "2011",
+			code: "2011",
+			name: "2011"
+
+		},
+		{
+			id: "2012",
+			code: 2012,
+			name: "2012"
+
+		}, {
+			id: "2013",
+			code: 2013,
+			name: "2013"
+
+		},
+		{
+			id: "2014",
+			code: 2014,
+			name: "2014"
+
+		},
+		{
+			id: "2015",
+			code: 2015,
+			name: "2015"
+
+		},
+		{
+			id: "2016",
+			code: 2016,
+			name: "2016"
+
+		},
+		{
+			id: "2017",
+			code: 2017,
+			name: "2017"
+
+		},
+		{
+			id: "2018",
+			code: 2018,
+			name: "2018"
+
+		}
+
+	];
+
+	/**
+	 * data source useful to display data.
+	 */
 	dataSource = new MatTableDataSource();
 
+	/**
+	 * length of result in paginator.
+	 */
 	resultsLength: number = 0;
+
+	/**
+	 * total paze size.
+	 */
 	pageSize: number = 20;
+
+	/**
+	 * flag to load result from api.
+	 */
 	isLoadingResults: boolean = false;
 
+	/**
+	 * emit data false if record not found.
+	 */
+	emitData: boolean = false;
+
+	/**
+	 * constructor.
+	 * @param fb - form builder.
+	 * @param router - common angular router.
+	 * @param formService - common form service.
+	 * @param paginationService - common pagination service.
+	 */
 	constructor(
 		private fb: FormBuilder,
 		private router: Router,
@@ -52,12 +186,25 @@ export class RecordSearchComponent implements OnInit {
 		private paginationService: PaginationService,
 	) { }
 
+	/**
+	 * Method initializes first.
+	 */
 	ngOnInit() {
 
 		this.searchFormControls();
-		this.getAllData();
 
+		this.getLookUpdata();
+
+		//this.getAllData();
 		//this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
+	}
+
+	/**
+	 * Method is used to get look up data.
+	 */
+	getLookUpdata(){
+		this.formService.getDataFromLookups().subscribe(resp => {
+		})
 	}
 
 	/**
@@ -69,10 +216,10 @@ export class RecordSearchComponent implements OnInit {
 			regYear: this.fb.group({
 				code: null
 			}),
-			date: null,
+			date: moment().format("YYYY-MM-DD"),
 			fatherName: null,
-			childName: null,
-			motherName: null
+			name: null,
+			motherName: null,
 		})
 	}
 
@@ -89,9 +236,6 @@ export class RecordSearchComponent implements OnInit {
 	 * @param formsVal - Search form value
 	 */
 	getDetails(formsVal) {
-		// console.log(formsVal);
-
-		this.searchResult.emit(false);
 		this.getAllData();
 	}
 
@@ -104,10 +248,10 @@ export class RecordSearchComponent implements OnInit {
 				startWith({}),
 				switchMap(() => {
 					this.isLoadingResults = true;
-					this.paginationService.apiType = "myApps";
+					this.paginationService.apiType = this.apiType;
 					this.paginationService.pageIndex = (this.paginator.pageIndex + 1);
 					this.paginationService.pageSize = this.pageSize;
-					return this.paginationService!.getAllData();
+					return this.paginationService!.getSearchDataWithPagination(this.searchForm.value);
 				}),
 				map(data => {
 					this.isLoadingResults = false;
@@ -119,7 +263,13 @@ export class RecordSearchComponent implements OnInit {
 					return observableOf([]);
 				})
 			).subscribe(data => {
-				this.dataSource.data = data;
+				console.log(data);
+				if(!data.length && !this.emitData){
+					this.searchResult.emit(false);
+				} else {
+					this.emitData = true;
+					this.dataSource.data = data;
+				}
 			}
 			);
 	}

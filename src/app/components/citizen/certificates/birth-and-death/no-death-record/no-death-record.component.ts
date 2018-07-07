@@ -90,7 +90,7 @@ export class NoDeathRecordComponent implements OnInit {
 
 			deceasedName: [null, Validators.required],
 			deathDate: [null, Validators.required],
-			fatherOrHusbandName: [null, Validators.required],
+			fatherHusbandName: [null, Validators.required],
 			gender: this.fb.group({
 				code: [null, Validators.required],
 			}),

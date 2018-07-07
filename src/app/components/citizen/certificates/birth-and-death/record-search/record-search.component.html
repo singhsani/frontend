@@ -1,20 +1,20 @@
 <div class="container">
 	<app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
-	<mat-card class="mt-4 formClass">
+	<mat-card class="mt-4">
 		<!--Start  form  -->
 		<form [formGroup]="searchForm" autocomplete="off" ngNativeValidate>
-			<div class="row p-5">
+			<div class="row">
 				<mat-form-field class="col-md-4">
-					<input matInput type="text" formControlName="regNumber" appValidationFields validationFieldsType="onlyNameWithOutSpace" placeholder="{{'reg_number' | translate: translateKey}}">
+					<input matInput type="text" formControlName="regNumber" OnlyNumber placeholder="{{'reg_number' | translate: translateKey}}">
 				</mat-form-field>
 
 				<div formGroupName="regYear" class="col-md-4 ngSelect">
 					<ng-select placeholder="{{'reg_year' | translate: translateKey}}" name="relation" formControlName="code"
 					 (change)="applicantRelChange($event)">
-						<ng-option *ngFor="let relation of relationshipArray" [value]="relation.code">{{relation.name}}</ng-option>
+						<ng-option *ngFor="let regyear of RegYear" [value]="regyear.code">{{regyear.name}}</ng-option>
 					</ng-select>
 				</div>
-
+				
 				<mat-form-field class="col-md-4">
 					<input matInput [matDatepicker]="picker" [max]="maxDate" formControlName="date" (dateChange)="onDateChange($event.value)"
 					 placeholder="{{'birth_date' | translate: translateKey}}" (focus)="picker.open()">
@@ -27,14 +27,16 @@
 				</mat-form-field>
 
 				<mat-form-field class="col-md-4">
-					<input matInput type="text" formControlName="childName" appValidationFields validationFieldsType="onlyNameWithOutSpace" placeholder="{{'child_name' | translate: translateKey}}">
+					<input matInput type="text" formControlName="name" appValidationFields validationFieldsType="onlyNameWithOutSpace" placeholder="{{'child_name' | translate: translateKey}}">
 				</mat-form-field>
 
 				<mat-form-field class="col-md-4">
 					<input matInput type="text" formControlName="motherName" appValidationFields validationFieldsType="onlyNameWithOutSpace" placeholder="{{'mother_name' | translate: translateKey}}">
 				</mat-form-field>
 
+				<div class="col-md-12 text-right">
 				<button mat-raised-button color="primary" (click)="getDetails(searchForm.value)">{{'get_certificate_detail' | translate: translateKey}}</button>
+				</div>
 
 			</div>
 		</form>
@@ -94,6 +96,7 @@
 		</table>
 	
 		<mat-paginator [length]="resultsLength" [pageSize]="pageSize">
+			
 		</mat-paginator>
 	</div>
 	<!-- Table end-->
