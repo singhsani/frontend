@@ -156,7 +156,7 @@ export class HosActionBarComponent implements OnInit, OnChanges {
 									}),
 									transactionId: paymentData.transactionId,
 									paymentStatus: "SUCCESS",
-									retUrl: "http://192.168.10.107:8080/",
+									retUrl: "http://192.168.10.107:8080/vmcportal/",
 									retPath: 'hospital/payment-gateway-response',
 									myApplicationUrl: '/hospital/my-applications'
 								}
