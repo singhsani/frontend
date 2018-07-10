@@ -62,7 +62,7 @@
 
 						<mat-form-field class="col-md-4">
 							<input matInput type="text" formControlName="groomMiddleName" appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'"
-							 placeholder="{{ 'middlename_name' | translate:translateKey }}" required appGujInputSource targetElement="groomMiddleNameGuj"
+							 placeholder="{{ 'middlename_name' | translate:translateKey }}" appGujInputSource targetElement="groomMiddleNameGuj"
 							 [form]="marriageFormGroup">
 							<control-messages [control]="marriageFormGroup.controls.groomMiddleName"></control-messages>
 						</mat-form-field>
@@ -297,7 +297,7 @@
 
 						<mat-form-field class="col-md-4">
 							<input matInput type="text" formControlName="brideMiddleName" placeholder="{{'middlename_name' | translate:translateKey }}"
-							 appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" required appGujInputSource targetElement="brideMiddleNameGuj"
+							 appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" appGujInputSource targetElement="brideMiddleNameGuj"
 							 [form]="marriageFormGroup">
 							<control-messages [control]="marriageFormGroup.controls.brideMiddleName"></control-messages>
 						</mat-form-field>
@@ -360,11 +360,6 @@
 							<div class="radioBtnError">
 								<mat-radio-group formControlName="code" required (change)="onChange($event.value,maritalstatusArray,'maritalstatusGujbride')">
 									<span *ngFor="let status of maritalstatusArray">
-										<span *ngIf="status.name == 'Married'">
-											<mat-radio-button *ngIf="marriageFormGroup.controls.brideReligion.get('code').value === 'MUSLIM'" [value]="status.code">
-												{{status.name}}
-											</mat-radio-button>
-										</span>
 										<mat-radio-button *ngIf="status.name != 'Married'" [value]="status.code">
 											{{status.name}}
 										</mat-radio-button>
@@ -523,7 +518,7 @@
 
 						<mat-form-field class="col-md-4">
 							<input matInput type="text" formControlName="groomParentsMiddleName" placeholder="{{'middlename_name' | translate:translateKey }}"
-							 required appGujInputSource targetElement="groomParentsMiddleNameGuj" [form]="marriageFormGroup" appValidationFields
+							 appGujInputSource targetElement="groomParentsMiddleNameGuj" [form]="marriageFormGroup" appValidationFields
 							 [validationFieldsType]="'onlyNameWithOutSpace'">
 							<control-messages [control]="marriageFormGroup.controls.groomParentsMiddleName"></control-messages>
 						</mat-form-field>
@@ -617,7 +612,7 @@
 
 						<mat-form-field class="col-md-4">
 							<input matInput type="text" formControlName="brideParentsMiddleName" placeholder="{{'middlename_name' | translate:translateKey }}"
-							 required appGujInputSource targetElement="brideParentsMiddleNameGuj" [form]="marriageFormGroup" appValidationFields
+							 appGujInputSource targetElement="brideParentsMiddleNameGuj" [form]="marriageFormGroup" appValidationFields
 							 [validationFieldsType]="'onlyNameWithOutSpace'">
 							<control-messages [control]="marriageFormGroup.controls.brideParentsMiddleName"></control-messages>
 						</mat-form-field>
@@ -712,7 +707,7 @@
 
 						<mat-form-field class="col-md-4">
 							<input matInput type="text" formControlName="priestMiddleName" placeholder="{{'middlename_name' | translate:translateKey }}"
-							 required appGujInputSource targetElement="priestMiddleNameGuj" [form]="marriageFormGroup" appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'">
+							 appGujInputSource targetElement="priestMiddleNameGuj" [form]="marriageFormGroup" appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'">
 							<control-messages [control]="marriageFormGroup.controls.priestMiddleName"></control-messages>
 						</mat-form-field>
 
@@ -793,7 +788,7 @@
 
 						<mat-form-field class="col-md-4">
 							<input matInput type="text" formControlName="firstWitnessMiddleName" placeholder="{{'middlename_name' | translate:translateKey }}"
-							 required appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" appGujInputSource targetElement="firstWitnessMiddleNameGuj"
+							 appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" appGujInputSource targetElement="firstWitnessMiddleNameGuj"
 							 [form]="marriageFormGroup">
 							<control-messages [control]="marriageFormGroup.controls.firstWitnessMiddleName"></control-messages>
 						</mat-form-field>
@@ -868,7 +863,7 @@
 
 						<mat-form-field class="col-md-4">
 							<input matInput type="text" formControlName="secondWitnessMiddleName" placeholder="{{'middlename_name' | translate:translateKey }}"
-							 required appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" appGujInputSource targetElement="secondWitnessMiddleNameGuj"
+							 appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" appGujInputSource targetElement="secondWitnessMiddleNameGuj"
 							 [form]="marriageFormGroup">
 							<control-messages [control]="marriageFormGroup.controls.secondWitnessMiddleName"></control-messages>
 						</mat-form-field>

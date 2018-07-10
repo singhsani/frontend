@@ -42,7 +42,7 @@ export class ActionBarComponent implements OnInit, OnChanges {
 	}
 
 	ngOnInit() {
-		console.log(this.isstepper);
+		
 		this.formService.apiType = this.form.get('apiType').value;
 		this.commonFormControls();
 		this.uploadFilesArray = this.uploadFiles;
