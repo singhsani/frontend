@@ -148,7 +148,7 @@ export class MarriageCreateComponent implements OnInit {
             // for NRI marriage
             isNriMarriage: [false, Validators.required],
             groomFirstName: ['abc', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
-            groomMiddleName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
+            groomMiddleName: ['', [ValidationService.nameValidator, Validators.maxLength(50)]],
             groomLastName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
             groomBirthDate: ['', Validators.required],
             groomAge: [null, ValidationService.groomAgeValidator],
@@ -166,7 +166,7 @@ export class MarriageCreateComponent implements OnInit {
 
             // second step**
             brideFirstName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
-            brideMiddleName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
+            brideMiddleName: ['', [ValidationService.nameValidator, Validators.maxLength(50)]],
             brideLastName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
             brideBirthDate: ['', Validators.required],
             brideAge: [null, ValidationService.brideAgeValidator],
@@ -183,7 +183,7 @@ export class MarriageCreateComponent implements OnInit {
 
             //third step**
             groomParentsFirstName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
-            groomParentsMiddleName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
+            groomParentsMiddleName: ['', [ValidationService.nameValidator, Validators.maxLength(50)]],
             groomParentsLastName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
             groomParentsBirthDate: [null, Validators.required],
             groomParentsAadharNumber: ['', Validators.maxLength(12)],
@@ -195,7 +195,7 @@ export class MarriageCreateComponent implements OnInit {
 
             //forth step
             brideParentsFirstName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
-            brideParentsMiddleName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
+            brideParentsMiddleName: ['', [ValidationService.nameValidator, Validators.maxLength(50)]],
             brideParentsLastName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
             brideParentsBirthDate: [null, Validators.required],
             brideParentsAadharNumber: ['', Validators.maxLength(12)],
@@ -207,7 +207,7 @@ export class MarriageCreateComponent implements OnInit {
 
             //fifth step
             priestFirstName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
-            priestMiddleName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
+            priestMiddleName: ['', [ValidationService.nameValidator, Validators.maxLength(50)]],
             priestLastName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
             priestBirthDate: [null, Validators.required],
             priestAddressAadharNumber: ['', Validators.maxLength(12)],
@@ -219,7 +219,7 @@ export class MarriageCreateComponent implements OnInit {
 
             //sixth step
             firstWitnessFirstName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
-            firstWitnessMiddleName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
+            firstWitnessMiddleName: ['', [ValidationService.nameValidator, Validators.maxLength(50)]],
             firstWitnessLastName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
             firstWitnessBirthDate: [null, Validators.required],
             firstWitnessAadharNumber: ['', Validators.maxLength(12)],
@@ -227,7 +227,7 @@ export class MarriageCreateComponent implements OnInit {
 
             //seventh step
             secondWitnessFirstName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
-            secondWitnessMiddleName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
+            secondWitnessMiddleName: ['', [ValidationService.nameValidator, Validators.maxLength(50)]],
             secondWitnessLastName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
             secondWitnessBirthDate: [null, Validators.required],
             secondWitnessAadharNumber: ['', Validators.maxLength(12)],
