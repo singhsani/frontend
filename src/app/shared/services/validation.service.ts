@@ -33,6 +33,7 @@ export class ValidationService {
             invalidpregnanceTime: 'Pregnancy duration between 25 to 50',
             invalidbirthRegNumber: 'Invalid Birth Registration Date',
             invalidBuildingName: 'Building name is not valid',
+            invalidemployeeage:'Age must be greater than 13 year'
         }
 
         return config[validatorName];
@@ -101,6 +102,16 @@ export class ValidationService {
         if (control.value != null) {
             const matches = (control.value) >= 18;
             return matches ? null : { 'invalidbridebirthdate': true };
+        } else {
+            return null;
+        }
+    }
+
+    // employee age
+    static employeeAgeValidate(control: FormControl) {
+        if (control.value != null) {
+            const matches = parseInt(control.value) >= 14 && parseInt(control.value) <= 99 ;
+            return matches ? null : { 'invalidemployeeage': true };
         } else {
             return null;
         }
