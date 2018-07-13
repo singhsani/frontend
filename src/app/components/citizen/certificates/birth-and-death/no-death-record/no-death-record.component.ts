@@ -139,7 +139,7 @@ export class NoDeathRecordComponent implements OnInit {
 
 		let step1 = 7;
 		let step2 = 8;
-		let step3 = 9;
+		let step3 = 11;
 
 		if (count <= step1) {
 			this.stepper.selectedIndex = 0;

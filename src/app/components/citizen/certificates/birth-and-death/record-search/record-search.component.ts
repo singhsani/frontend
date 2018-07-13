@@ -8,6 +8,8 @@ import { catchError, map, startWith, switchMap } from 'rxjs/operators';
 
 import { PaginationService } from '../../../../../core/services/citizen/data-services/pagination.service';
 import { FormsActionsService } from '../../../../../core/services/citizen/data-services/forms-actions.service';
+import { CommonService } from './../../../../../shared/services/common.service';
+
 import * as _ from 'lodash';
 import * as moment from 'moment';
 
@@ -79,71 +81,17 @@ export class RecordSearchComponent implements OnInit {
 	 * Registration year static look up.
 	 */
 	RegYear: Array<any> = [
-		{
-			id: "2008",
-			code: 2008,
-			name: "2008"
-
-		},
-		{
-			id: "2009",
-			code: 2009,
-			name: "2009"
-
-		},
-		{
-			id: "2010",
-			code: 2010,
-			name: "2010"
-
-		},
-		{
-			id: "2011",
-			code: "2011",
-			name: "2011"
-
-		},
-		{
-			id: "2012",
-			code: 2012,
-			name: "2012"
-
-		}, {
-			id: "2013",
-			code: 2013,
-			name: "2013"
-
-		},
-		{
-			id: "2014",
-			code: 2014,
-			name: "2014"
-
-		},
-		{
-			id: "2015",
-			code: 2015,
-			name: "2015"
-
-		},
-		{
-			id: "2016",
-			code: 2016,
-			name: "2016"
-
-		},
-		{
-			id: "2017",
-			code: 2017,
-			name: "2017"
-
-		},
-		{
-			id: "2018",
-			code: 2018,
-			name: "2018"
-
-		}
+		{ id: "2008", code: 2008, name: "2008" },
+		{ id: "2009", code: 2009, name: "2009" },
+		{ id: "2010", code: 2010, name: "2010" },
+		{ id: "2011", code: "2011", name: "2011" },
+		{ id: "2012", code: 2012, name: "2012" },
+		{ id: "2013", code: 2013, name: "2013" },
+		{ id: "2014", code: 2014, name: "2014" },
+		{ id: "2015", code: 2015, name: "2015" },
+		{ id: "2016", code: 2016, name: "2016" },
+		{ id: "2017", code: 2017, name: "2017" },
+		{ id: "2018", code: 2018, name: "2018" }
 
 	];
 
@@ -167,10 +115,6 @@ export class RecordSearchComponent implements OnInit {
 	 */
 	isLoadingResults: boolean = false;
 
-	/**
-	 * emit data false if record not found.
-	 */
-	emitData: boolean = false;
 
 	/**
 	 * constructor.
@@ -184,6 +128,7 @@ export class RecordSearchComponent implements OnInit {
 		private router: Router,
 		private formService: FormsActionsService,
 		private paginationService: PaginationService,
+		private commonService: CommonService,
 	) { }
 
 	/**
@@ -193,16 +138,14 @@ export class RecordSearchComponent implements OnInit {
 
 		this.searchFormControls();
 
-		this.getLookUpdata();
+		//this.getLookUpdata();
 
-		//this.getAllData();
-		//this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
 	}
 
 	/**
 	 * Method is used to get look up data.
 	 */
-	getLookUpdata(){
+	getLookUpdata() {
 		this.formService.getDataFromLookups().subscribe(resp => {
 		})
 	}
@@ -263,15 +206,32 @@ export class RecordSearchComponent implements OnInit {
 					return observableOf([]);
 				})
 			).subscribe(data => {
-				console.log(data);
-				if(!data.length && !this.emitData){
-					this.searchResult.emit(false);
+				if (!data.length) {
+					this.showAlert();
 				} else {
-					this.emitData = true;
 					this.dataSource.data = data;
 				}
-			}
-			);
+			});
+	}
+
+	/**
+	 * This method use for displaying confirmation alert
+	 */
+	showAlert() {
+
+		let type: string = '';
+
+		if (this.apiType == 'duplicateBirthReg') {
+			type = 'NRCBirth';
+		} else if (this.apiType == 'duplicateDeathReg') {
+			type = 'NRCDeath';
+		} else {
+			type = this.apiType;
+		}
+
+		this.commonService.confirmAlert('No record found!', `Do you want to create ${type} certificate`, 'warning', '', confirm => {
+			this.searchResult.emit(false);
+		});
 	}
 
 	/**
@@ -279,19 +239,19 @@ export class RecordSearchComponent implements OnInit {
 	 * @param event - Checkbox event
 	 * @param data - Row Data
 	 */
-	onChkBoxClick(event, data){
-		if(event.checked)
+	onChkBoxClick(event, data) {
+		if (event.checked)
 			this.rowData = data;
 		else
 			this.rowData = {};
-		
+
 	}
 
 	/**
 	 * This method use for redirect to duplicate form
 	 * @param data - Row data
 	 */
-	redirectToDuplicate(data){
+	redirectToDuplicate(data) {
 		this.searchResult.emit(data);
 	}
 

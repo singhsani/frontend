@@ -212,6 +212,8 @@ export class MyApplicationsComponent implements OnInit {
 				return 'badge badge-primary text-label ml-2 small';
 			case 'SUBMITTED':
 				return 'badge badge-success text-label ml-2';
+			case 'PAYMENT':
+				return 'badge badge-success text-label ml-2';
 			default:
 				return 'primary'
 		}

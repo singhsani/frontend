@@ -1,3 +1,4 @@
+import { CommonService } from './../../../../../shared/services/common.service';
 import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -58,7 +59,8 @@ export class NoBirthRecordComponent implements OnInit {
 		private router: Router,
 		private route: ActivatedRoute,
 		private formService: FormsActionsService,
-		private location: Location
+		private location: Location,
+		private commonService: CommonService
 	) {
 
 	}
@@ -142,7 +144,7 @@ export class NoBirthRecordComponent implements OnInit {
 
 		let step1 = 7;
 		let step2 = 8;
-		let step3 = 9;
+		let step3 = 11;
 
 		if (count <= step1) {
 			this.stepper.selectedIndex = 0;
