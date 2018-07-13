@@ -42,8 +42,8 @@
 						<!-- Gujarati fields end-->
 
 						<mat-form-field class="col-md-6">
-							<input matInput [matDatepicker]="picker" [max]="maxDate" formControlName="deathDate" (dateChange)="onDateChange($event.value)"
-							 placeholder="{{'date_of_death' | translate: translateKey}}" required (focus)="picker.open()">
+							<input matInput readonly [matDatepicker]="picker" [max]="maxDate" formControlName="deathDate" (dateChange)="onDateChange($event.value)"
+							 placeholder="{{'date_of_death' | translate: translateKey}}" required (click)="picker.open()" (focus)="picker.open()" required>
 							<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
 							<mat-datepicker touchUi="true" #picker></mat-datepicker>
 							<control-messages [control]="cremationForm.controls.deathDate"></control-messages>

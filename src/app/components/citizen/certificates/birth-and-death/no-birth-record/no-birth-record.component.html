@@ -53,8 +53,8 @@
 						</mat-form-field>
 
 						<mat-form-field class="col-md-4">
-							<input matInput [matDatepicker]="picker" [max]="maxDate" formControlName="birthDate" (dateChange)="onDateChange($event.value)"
-							 placeholder="{{'date_of_birth' | translate: translateKey}} *" (focus)="picker.open()">
+							<input matInput readonly [matDatepicker]="picker" [max]="maxDate" formControlName="birthDate" (dateChange)="onDateChange($event.value)"
+							 placeholder="{{'date_of_birth' | translate: translateKey}}" (click)="picker.open()" (focus)="picker.open()" required>
 							<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
 							<mat-datepicker touchUi="true" #picker></mat-datepicker>
 							<control-messages [control]="noRecordBirthForm.controls.birthDate"></control-messages>

@@ -49,7 +49,10 @@ export class ControlMessagesComponent {
 				return;
 			}
 
-			name = key;
+			if (key === 'code')
+				name = 'this field';
+			else
+				name = key;
 		});
 
 		return name;

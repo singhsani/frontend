@@ -18,15 +18,15 @@
 						</mat-form-field>
 
 						<mat-form-field class="col-md-4">
-							<input matInput [matDatepicker]="picker" [max]="maxDate" formControlName="deathDate" (dateChange)="onDateChange($event.value)"
-							 placeholder="{{'date_of_death' | translate: translateKey}} *" (focus)="picker.open()">
+							<input matInput readonly [matDatepicker]="picker" [max]="maxDate" formControlName="deathDate" (dateChange)="onDateChange($event.value)"
+							 placeholder="{{'date_of_death' | translate: translateKey}}" (click)="picker.open()" (focus)="picker.open()" required>
 							<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
 							<mat-datepicker touchUi="true" #picker></mat-datepicker>
 							<control-messages [control]="noRecordDeathForm.controls.deathDate"></control-messages>
 						</mat-form-field>
 
 						<mat-form-field class="col-md-4">
-							<input matInput type="text" formControlName="fatherHusbandName" appValidationFields validationFieldsType="onlyNameWithOutSpace" placeholder="{{'father_or_husband_name' | translate: translateKey}}">
+							<input matInput type="text" formControlName="fatherHusbandName" appValidationFields validationFieldsType="onlyNameWithOutSpace" placeholder="{{'father_or_husband_name' | translate: translateKey}}" required>
 							<control-messages [control]="noRecordDeathForm.controls.fatherHusbandName"></control-messages>
 						</mat-form-field>
 
@@ -52,7 +52,7 @@
 						</mat-form-field>
 
 						<mat-form-field class="col-md-4">
-							<input matInput type="tel" OnlyNumber formControlName="age" placeholder="{{'age' | translate: translateKey}}">
+							<input matInput type="tel" OnlyNumber formControlName="age" placeholder="{{'age' | translate: translateKey}}" required>
 							<control-messages [control]="noRecordDeathForm.controls.age"></control-messages>
 						</mat-form-field>
 					</div>
@@ -100,7 +100,7 @@
 							<mat-radio-group class="example-radio-group" formControlName="code">
 								<mat-radio-button [value]="reason.code" *ngFor="let reason of reasonArray">{{reason.name}}</mat-radio-button>
 							</mat-radio-group>
-							<control-messages [control]="noRecordDeathForm.controls.reasonDetail"></control-messages>
+							<control-messages [control]="noRecordDeathForm.controls.reasonDetail.controls.code"></control-messages>
 						</div>
 					</div>
 

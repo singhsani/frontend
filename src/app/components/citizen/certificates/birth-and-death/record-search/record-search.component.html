@@ -5,12 +5,11 @@
 		<form [formGroup]="searchForm" autocomplete="off" ngNativeValidate>
 			<div class="row">
 				<mat-form-field class="col-md-4">
-					<input matInput type="text" formControlName="regNumber" OnlyNumber placeholder="{{'reg_number' | translate: translateKey}}">
+					<input matInput type="text" formControlName="regNumber" placeholder="{{'reg_number' | translate: translateKey}}">
 				</mat-form-field>
 
 				<div formGroupName="regYear" class="col-md-4 ngSelect">
-					<ng-select placeholder="{{'reg_year' | translate: translateKey}}" name="relation" formControlName="code"
-					 (change)="applicantRelChange($event)">
+					<ng-select placeholder="{{'reg_year' | translate: translateKey}}" name="relation" formControlName="code">
 						<ng-option *ngFor="let regyear of RegYear" [value]="regyear.code">{{regyear.name}}</ng-option>
 					</ng-select>
 				</div>
@@ -44,7 +43,7 @@
 	</mat-card>
 
 	<!-- Table start-->
-	<div class="example-container mat-elevation-z8" >
+	<div class="example-container mat-elevation-z8" [hidden]="resultsLength == 0">
 		<div class="example-loading-shade" *ngIf="isLoadingResults || resultsLength==0">
 			<mat-spinner *ngIf="isLoadingResults"></mat-spinner>
 			<div class="example-rate-limit-reached" *ngIf="resultsLength==0">
