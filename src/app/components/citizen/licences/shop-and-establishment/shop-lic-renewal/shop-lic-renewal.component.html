@@ -68,7 +68,7 @@
 							<input matInput OnlyNumber maxlength="12" placeholder="{{'aadhar_number' | translate:translateKey}}" formControlName="aadharNumber">
 						</mat-form-field>
 					</div>
-					
+
 					<div class="row">
 						<div class="col-md-12">{{'professional_tax' | translate:translateKey}}</div>
 					</div>
@@ -650,7 +650,6 @@
 					</ng-template>
 
 					<div class="row">
-
 						<mat-form-field class="col-md-6">
 							<input matInput type="tel" OnlyNumber placeholder="{{'total_adult_person' | translate:translateKey}}" formControlName="totalAdultEmployee"
 							 maxlength="2">
@@ -673,7 +672,8 @@
 						</mat-form-field>
 						<mat-form-field class="col-md-6">
 							<input matInput type="tel" OnlyNumber placeholder="{{'total_person' | translate:translateKey}}" formControlName="totalEmployee"
-							 maxlength="2" readonly>
+							 readonly>
+							 <!-- [value]="getTotalEmployeePerson()" -->
 							<control-messages [control]="shopLicRenewalForm.controls.totalEmployee"></control-messages>
 						</mat-form-field>
 					</div>
@@ -708,7 +708,6 @@
 								<file-upload [form]="shopLicRenewalForm" [uploadModel]="setDataValue(3,'Property Tax / Water Tax paid Receipt','1.3','doc')"></file-upload>
 							</div>
 						</div>
-
 
 						<div class="col-md-4">
 							<div *ngIf="showButtons">

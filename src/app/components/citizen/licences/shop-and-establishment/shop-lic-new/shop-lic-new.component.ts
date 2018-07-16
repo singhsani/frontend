@@ -563,6 +563,9 @@ export class ShopLicNewComponent implements OnInit {
 		}
 	}
 
+	/**
+	 * This method set total employee.
+	 */
 	getTotalEmployeePerson() {
 		let totalAdultEmployee = this.shopLicNewForm.get('totalAdultEmployee').value || 0;
 		let totalYoungEmployee = this.shopLicNewForm.get('totalYoungEmployee').value || 0;
@@ -570,7 +573,7 @@ export class ShopLicNewComponent implements OnInit {
 		let totalWomenEmployee = this.shopLicNewForm.get('totalWomenEmployee').value || 0;
 		let totalUnidentified = this.shopLicNewForm.get('totalUnidentified').value || 0;
 
-		let totalcount = parseInt(totalAdultEmployee) + parseInt(totalYoungEmployee) + parseInt(totalManEmployee) + parseInt(totalWomenEmployee)+ parseInt(totalUnidentified);
+		let totalcount = parseInt(totalAdultEmployee) + parseInt(totalYoungEmployee) + parseInt(totalManEmployee) + parseInt(totalWomenEmployee) + parseInt(totalUnidentified);
 
 		this.shopLicNewForm.get('totalEmployee').setValue(totalcount);
 		return totalcount;
@@ -639,8 +642,6 @@ export class ShopLicNewComponent implements OnInit {
 		this.stepper.reset();
 		this.shopLicNewForm.get('postalAddress').get('addressType').setValue('SHOP_LIC_POSTAL_ADDRESS');
 		// this.marriageFormGroup.get('isPriestParResAddressSame').get('code').setValue('NO');
-
-		// this.marriageFormGroup.get('brideAddress').get('addressType').setValue('BRIDE_ADDRESS');
 	}
 
 }

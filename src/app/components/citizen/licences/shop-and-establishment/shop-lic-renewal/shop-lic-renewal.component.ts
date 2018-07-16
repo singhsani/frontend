@@ -30,6 +30,7 @@ export class ShopLicRenewalComponent implements OnInit {
 	//File and image upload
 	uploadModel: any = {};
 
+	//lookup array list
 	gender: Array<any> = [];
 	SHOP_LIC_EMPLOYER_FAMILY_PERSON_RELATIONSHIP: Array<any> = [];
 	SHOP_LIC_OCCUPANCY_PERSON_RELATIONSHIP: Array<any> = [];
@@ -53,11 +54,15 @@ export class ShopLicRenewalComponent implements OnInit {
 
 		];
 
+	// serach api variable
 	serachLicenceObj = {
 		isDisplayRenewLicenceForm: <boolean>false,
 		searchLicenceNumber: <string>""
 	}
 
+	/**
+	 * This method for serach licence using licence number.
+	 */
 	searchLicence() {
 		this.shopAndEstablishmentService.searchLicence(this.serachLicenceObj.searchLicenceNumber).subscribe(
 			(res: any) => {
@@ -72,13 +77,58 @@ export class ShopLicRenewalComponent implements OnInit {
 				this.serachLicenceObj.isDisplayRenewLicenceForm = false;
 				if (err.error && err.error.length) {
 					this.commonService.openAlert("Warning", err.error[0].message, "warning");
-
 				}
 			})
 	}
 
 	/**
-	 * This method is use to create new record for citizen
+	* @param fb - Declare FormBuilder property.
+	* @param validationError - Declare validation service property
+	* @param formService - Declare form service property 
+	* @param uploadFileService - Declare upload file service property.
+	* @param commonService - Declare sweet alert.
+	* @param shopAndEstablishmentService - Call only shop licence api.
+	* @param toastrService - Show massage with timer.
+	*/
+	constructor(
+		private fb: FormBuilder,
+		private validationService: ValidationService,
+		private router: Router,
+		private route: ActivatedRoute,
+		private formService: FormsActionsService,
+		private shopAndEstablishmentService: ShopAndEstablishmentService,
+		private location: Location,
+		private commonService: CommonService
+	) { }
+
+	/**
+	 * This method call initially required methods.
+	 */
+	ngOnInit() {
+		this.route.paramMap.subscribe(param => {
+			this.formId = Number(param.get('id'));
+			this.apiCode = param.get('apiCode');
+			this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
+		});
+
+		this.getLookupData();
+		this.shopLicRenewalFormControls();
+
+		if (!this.formId) {
+			this.serachLicenceObj.isDisplayRenewLicenceForm = false;
+		}
+		else {
+			this.serachLicenceObj.isDisplayRenewLicenceForm = true;
+			this.getShopRenewalData();
+
+			this.shopLicRenewalForm.disable();
+			this.enableFielList();
+		}
+
+	}
+
+	/**
+	 * This method is use to create new record for citizen.
 	 */
 	createRecordPatchSerachData(searchData: any) {
 		this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
@@ -144,6 +194,7 @@ export class ShopLicRenewalComponent implements OnInit {
 			}); */
 			this.shopLicRenewalForm.disable();
 			this.enableFielList();
+
 			this.getCategoryDropdownData(this.shopLicRenewalForm.get('noOfHumanWorking').value.code);
 			this.getSubCategoryDropdownData(this.shopLicRenewalForm.get('categoryOfBusiness').value.code);
 			let currentUrl = this.location.path().replace('false', this.formId.toString());
@@ -153,7 +204,7 @@ export class ShopLicRenewalComponent implements OnInit {
 	}
 
 	/**
-	 * This method use for edit some fiels
+	 * This method use for edit some fiels.
 	 */
 	enableFielList() {
 		this.shopLicRenewalForm.get('enterHoliday').enable();
@@ -164,40 +215,9 @@ export class ShopLicRenewalComponent implements OnInit {
 		this.shopLicRenewalForm.get('totalEmployee').enable();
 	}
 
-	constructor(
-		private fb: FormBuilder,
-		private validationService: ValidationService,
-		private router: Router,
-		private route: ActivatedRoute,
-		private formService: FormsActionsService,
-		private shopAndEstablishmentService: ShopAndEstablishmentService,
-		private location: Location,
-		private commonService: CommonService
-	) { }
-
-	ngOnInit() {
-		this.route.paramMap.subscribe(param => {
-			this.formId = Number(param.get('id'));
-			this.apiCode = param.get('apiCode');
-			this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
-		});
-
-		this.getLookupData();
-		this.shopLicRenewalFormControls();
-
-		if (!this.formId) {
-			this.serachLicenceObj.isDisplayRenewLicenceForm = false;
-		}
-		else {
-			this.serachLicenceObj.isDisplayRenewLicenceForm = true;
-			this.getShopRenewalData();
-
-			this.shopLicRenewalForm.disable();
-			this.enableFielList();
-		}
-
-	}
-
+	/**
+	 * This method patch form data.
+	 */
 	getShopRenewalData() {
 		this.formService.getFormData(this.formId).subscribe(res => {
 			this.shopLicRenewalForm.patchValue(res);
@@ -230,7 +250,23 @@ export class ShopLicRenewalComponent implements OnInit {
 	}
 
 	/**
-	 * Method is used to handle error/validation on submit
+	 * This method set total employee.
+	 */
+	// getTotalEmployeePerson() {
+	// 	let totalAdultEmployee = this.shopLicRenewalForm.get('totalAdultEmployee').value || 0;
+	// 	let totalYoungEmployee = this.shopLicRenewalForm.get('totalYoungEmployee').value || 0;
+	// 	let totalManEmployee = this.shopLicRenewalForm.get('totalManEmployee').value || 0;
+	// 	let totalWomenEmployee = this.shopLicRenewalForm.get('totalWomenEmployee').value || 0;
+	// 	let totalUnidentified = this.shopLicRenewalForm.get('totalUnidentified').value || 0;
+
+	// 	let totalcount = parseInt(totalAdultEmployee) + parseInt(totalYoungEmployee) + parseInt(totalManEmployee) + parseInt(totalWomenEmployee) + parseInt(totalUnidentified);
+
+	// 	this.shopLicRenewalForm.get('totalEmployee').setValue(totalcount);
+	// 	return totalcount;
+	// }
+
+	/**
+	 * Method is used to handle error/validation on submit.
 	 * @param count - count of invalid control.
 	 */
 	handleErrorsOnSubmit(count) {
@@ -242,9 +278,8 @@ export class ShopLicRenewalComponent implements OnInit {
 	}
 
 	/**
-	 * This method is use for get lookup data
+	 * This method is use for get lookup data.
 	 */
-
 	getLookupData() {
 		this.formService.getDataFromLookups().subscribe(res => {
 			this.SHOP_LIC_EMPLOYER_FAMILY_PERSON_RELATIONSHIP = res.SHOP_LIC_EMPLOYER_FAMILY_PERSON_RELATIONSHIP;
@@ -260,6 +295,9 @@ export class ShopLicRenewalComponent implements OnInit {
 		});
 	}
 
+	/**
+	 * This method create form controls.
+	 */
 	shopLicRenewalFormControls() {
 		this.shopLicRenewalForm = this.fb.group({
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
@@ -362,11 +400,11 @@ export class ShopLicRenewalComponent implements OnInit {
 	}
 
 	/**
- * Method is used to count person
- * @param formType : form vontrol name
- * @param fieldsType : set value in this from control
- * @param filterType : filter type
- */
+ 	 * Method is used to count person
+ 	 * @param formType : form vontrol name
+ 	 * @param fieldsType : set value in this from control
+ 	 * @param filterType : filter type
+ 	 */
 	calulateNumberOfPerson(formType: string, fieldsType: string, filterType: string) {
 		let countNumber = [];
 		let data = (<FormArray>this.shopLicRenewalForm.get(formType)).controls;
@@ -402,6 +440,7 @@ export class ShopLicRenewalComponent implements OnInit {
 	 */
 	stepReset() {
 		this.stepper.reset();
+		this.shopLicRenewalForm.get('postalAddress').get('addressType').setValue('SHOP_LIC_POSTAL_ADDRESS');
 	}
 
 	/**
