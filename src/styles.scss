@@ -55,7 +55,7 @@ a {color: $colorBlack;}
 a:hover {color: $colorBlue; text-decoration: underline;}
 .mat-raised-button:hover {text-decoration: none;}
 
-html, body { background: #eee; color: $colorBlack; padding: 0; font-size: 12px; font-weight: 400 !important; margin: 0; width: 100%; height: 100% !important; font-family: 'Open Sans', sans-serif; }
+html, body { background: #fff; color: $colorBlack; padding: 0; font-size: 12px; font-weight: 400 !important; margin: 0; width: 100%; height: 100% !important; font-family: 'Open Sans', sans-serif; }
 h1 { font-size: 30px; margin-bottom: 10px; }
 
 .heading { position: relative; }
@@ -268,9 +268,9 @@ mat-label {align-self: center;}
     }
 }
 
-::-webkit-scrollbar {width: 5px;}
-::-webkit-scrollbar-track {background: #f1f1f1;}
-::-webkit-scrollbar-thumb {background: #7E57C2;}
+::-webkit-scrollbar {width: 6px; height: 6px;}
+::-webkit-scrollbar-track {background: #D1C4E9; border-radius:3px;}
+::-webkit-scrollbar-thumb {background: #7E57C2; border-radius:3px;}
 ::-webkit-scrollbar-thumb:hover {background: #5E35B1;}
 
 .ng-select {padding-bottom: 3px; margin-bottom: 1.25em;}
@@ -388,3 +388,69 @@ mat-label {align-self: center;}
 /* for display error immediate after ng-select and mat-radio-group */
 .ngSelect .mat-error { position: relative !important; top: -17px !important; left: 0;font-size: 11px;}
 .radioBtnError .mat-error { position: relative !important; top: -4px !important; left: 0;font-size: 11px;}
+
+
+
+
+/* NEW Design **********************************************/
+
+h1 {color: #333; font-size:19px; margin-bottom: 10px;}
+h2 {color: #333; font-size:18px; margin-bottom: 18px;
+    .mat-icon {font-size: 22px; float: left; margin-right: 13px;}
+}
+
+.mainMenu {
+    &>.mat-tab-header {border: 0;
+        .mat-tab-label-container {background: #f1f1f1; margin-bottom: 40px;}
+    }
+    .mat-tab-label {font-size: 16px; color: #808080; opacity: 1;}
+    .mat-icon {font-size: 22px; float: left; margin-right: 13px;}
+    .mat-tab-label-active {color:$colorBlue;}
+}
+
+
+/*** Dashboard ***/
+.maxW {max-width: 2015px; margin: 0 auto;}
+
+.welCome {padding: 23px; background: $colorLite url(assets/images/bg-logo.png) no-repeat right bottom; padding-right: 100px; margin-bottom: 40px;
+    p {font-size: 12px; color: #453960; padding-bottom: 0; margin-bottom: 0;}
+}
+
+.moduleList {
+    .mat-tab-header, .mat-tab-nav-bar {border: 0; padding-bottom: 25px;}
+    .mat-tab-label { opacity:1; height: auto; border: 1px solid #ececec;  margin: 0 14px; padding: 30px 0 35px; width: 190px; white-space: normal;}
+    .moduleIcon {width: 65px; height: 65px; background: #d1c4e9; border-radius:50%; display: inline-block;}
+    .mat-tab-label-content {font-size: 14px; color: #333;}
+    .count {color: #b3b3b3; font-size: 12px; display: inline-block; padding-top: 5px;}
+}
+
+.servicesList  {padding-bottom: 45px; width: 100%; float: left;
+    // .row {}
+    // .col-md-3, .col-sm-4 {padding-bottom: 18px;}
+    .colBtn {padding:9px 15px; width: 25%; float: left;}
+    .mat-primary {color: #423c51; font-size: 14px; border-radius: 17px; border:1px solid $colorBlue; display: block; width: 100%; text-overflow: ellipsis;
+        overflow: hidden; 
+        &:hover {background: $colorBlue; color: #fff;}
+    }
+}
+
+.recentList { border: 1px solid #e5e5e5; padding:15px 30px; list-style-type: none; float: left; width: 100%;
+    li {border-top: 1px solid #e5e5e5; padding: 15px 0; color: #4d4d4d; font-size: 12px; float: left; width: 100%; position: relative;
+        &:first-child {border: 0;}
+        div {color: #000; font-size: 14px; padding-bottom: 5px;}
+        .badge  {position: absolute; top: 25px; right: 0;}
+    }
+    
+}
+
+.badge.draft {background: #fff; color: #f4c64c; border: 1px solid #f4c64c; padding:0.4em 1em 0.3em; font-size: 12px; font-weight: normal; border-radius: 10rem;}
+.badge.submited {background: #fff; color: #78da71; border: 1px solid #78da71; padding:0.4em 1em 0.3em; font-size: 12px; font-weight: normal; border-radius: 10rem;}
+
+
+
+
+/***  noApplication  ***/
+.noApplication {width: 220px; margin: 0 auto; color: #000; font-size: 18px; text-align: center;
+    img {padding: 30px 0;}
+    .noActi {color: #989898; font-size: 14px; display: block; padding: 10px 0 60px 0;}
+}
