@@ -3,9 +3,9 @@
     <mat-toolbar color="primary" class="example-toolbar">
         <mat-toolbar-row class="dasHeader">
             <div class="float-left">
-                <button mat-icon-button (click)="isExpanded=!isExpanded; openSideNav();">
+                <!-- <button mat-icon-button (click)="isExpanded=!isExpanded; openSideNav();">
                     <mat-icon>menu</mat-icon>
-                </button>
+                </button> -->
                 <a mat-button routerLink="." class="logo">
                     <img src="assets/images/vmc-logo.png" alt="Vadodara Municipal Corporation">
                     <span class="logoText">Vadodara Municipal Corporation</span>
@@ -15,9 +15,9 @@
             <!-- <button mat-icon-button position="end" (click)="selectLanguage('en')">EN</button>
             <button mat-icon-button position="end" (click)="selectLanguage('gu')">ગુજ</button> -->
             <div class="float-right">
-                <button class="btn btn-warning mr-2" data-toggle="modal" data-target="#gujModal">
+                <!-- <button class="btn btn-warning mr-2" data-toggle="modal" data-target="#gujModal">
                     How to type in Gujarati?
-                </button>
+                </button> -->
                 <button mat-icon-button [matMenuTriggerFor]="menu" class="userName">
                     <!-- <mat-icon>face</mat-icon>
                     {{profileObj.firstName + ' ' + profileObj.lastName}} -->
@@ -34,49 +34,22 @@
             </div>
         </mat-toolbar-row>
     </mat-toolbar>
+    
+    <!-- <nav mat-tab-nav-bar>
+        <a mat-tab-link *ngFor="let link of links" routerLink="/{{manageRoutes.getFullRoute(link.linkCode)}}" (click)="activeLink = link.linkName" [active]="activeLink == link.linkName"> {{link.linkName}} </a>
+    </nav> -->
 
-    <mat-sidenav-container class="example-sidenav-container" autosize>
-        <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [(opened)]="!mobileQuery.matches">
-            <mat-nav-list (click)="toggleSideNav()">
-                <a *ngIf="!fromAdmin" mat-list-item routerLink="/citizen/dashboard/" routerLinkActive="active-route-link">
-                    <mat-icon>apps</mat-icon>
-                    <span *ngIf="isExpanded">Dashboard</span>
-                </a>
-                <a mat-list-item routerLink="/citizen/my-applications/" routerLinkActive="active-route-link">
-                    <mat-icon>description</mat-icon>
-                    <span *ngIf="isExpanded">My Applications</span>
-                </a>
-                <a *ngIf="!fromAdmin" mat-list-item routerLink="/citizen/my-profile" routerLinkActive="active-route-link">
-                    <mat-icon>face</mat-icon>
-                    <span *ngIf="isExpanded">My Profile</span>
-                </a>
-                <a *ngIf="!fromAdmin" mat-list-item routerLink="/citizen/my-resource" routerLinkActive="active-route-link">
-                    <mat-icon>web_asset</mat-icon>
-                    <span *ngIf="isExpanded">Resource</span>
-                </a>
-                <a *ngIf="!fromAdmin" mat-list-item routerLink="/citizen/my-transactions" routerLinkActive="active-route-link">
-                    <mat-icon>low_priority</mat-icon>
-                    <span *ngIf="isExpanded">Transactions</span>
-                </a>
-                <a *ngIf="!fromAdmin" mat-list-item routerLink="/citizen/payable-services" routerLinkActive="active-route-link">
-                    <mat-icon>&#x20B9;</mat-icon>
-                    <span *ngIf="isExpanded">Payable Services</span>
-                </a>
-                <a *ngIf="!fromAdmin" mat-list-item routerLink="/citizen/booking" routerLinkActive="active-route-link" [routerLinkActiveOptions]="{exact: true}">
-                    <mat-icon>collections_bookmark</mat-icon>
-                    <span *ngIf="isExpanded">Booking</span>
-                </a>
-                <a *ngIf="!fromAdmin" mat-list-item routerLink="/citizen/booking/cancel-booking" routerLinkActive="active-route-link" [routerLinkActiveOptions]="{exact: true}">
-                    <mat-icon>collections_bookmark</mat-icon>
-                    <span *ngIf="isExpanded">Cancel Booking</span>
-                </a>
-            </mat-nav-list>
-        </mat-sidenav>
-        <mat-sidenav-content>
-            <loading-indicator></loading-indicator>
-            <router-outlet></router-outlet>
-        </mat-sidenav-content>
-    </mat-sidenav-container>
+    <mat-tab-group (focusChange)="navigateToRoute($event)" mat-stretch-tabs>
+        <mat-tab *ngFor="let link of links">
+            <ng-template mat-tab-label>
+                <mat-icon class="example-tab-icon">thumb_up</mat-icon>
+                {{link.linkName}}
+            </ng-template>
+        </mat-tab>
+    </mat-tab-group>
+
+    <router-outlet></router-outlet>
+    
 </div>
 
 <div class="modal" id="gujModal">
