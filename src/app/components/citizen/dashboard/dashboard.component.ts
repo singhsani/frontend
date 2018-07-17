@@ -49,7 +49,10 @@ export class DashboardComponent implements OnInit {
 			this.router.navigate([redirectUrl, false, apiCode]);
 		}else if(apiCode == 'SHOP-REN'){
 			this.router.navigate([ManageRoutes.getFullRoute(apiCode),false, apiCode]);
-		} else {
+		}else if(apiCode == 'SHOP-TRAF'){
+			this.router.navigate([ManageRoutes.getFullRoute(apiCode),false, apiCode]);
+		}
+		 else {
 			if (ManageRoutes.getApiTypeFromApiCode(apiCode)) {
 				this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);
 				this.formService.createFormData().subscribe(res => {

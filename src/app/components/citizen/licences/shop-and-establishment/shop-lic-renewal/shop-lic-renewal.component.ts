@@ -129,6 +129,7 @@ export class ShopLicRenewalComponent implements OnInit {
 
 	/**
 	 * This method is use to create new record for citizen.
+	 * @param searchData: exciting licence number data
 	 */
 	createRecordPatchSerachData(searchData: any) {
 		this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
