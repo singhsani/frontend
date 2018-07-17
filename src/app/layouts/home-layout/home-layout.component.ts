@@ -1,3 +1,4 @@
+import { ManageRoutes } from './../../config/routes-conf';
 import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { MediaMatcher } from '@angular/cdk/layout';
 
@@ -5,6 +6,7 @@ import { AppService } from './../../core/services/citizen/app-services/app.servi
 import { CommonService } from './../../shared/services/common.service';
 import { SessionStorageService } from 'angular-web-storage';
 import { FormsActionsService } from '../../core/services/citizen/data-services/forms-actions.service';
+import { Router } from "@angular/router";
 
 @Component({
 	selector: 'app-home-layout',
@@ -16,12 +18,48 @@ import { FormsActionsService } from '../../core/services/citizen/data-services/f
  * Declare HomeLayoutComponent for handle Dashboard Layout functionalities.
  */
 export class HomeLayoutComponent implements OnInit {
-
 	@ViewChild('snav') snav;
 	mobileQuery: MediaQueryList;
 	profileObj: any = {};
 	fromAdmin: boolean = false;
 	isExpanded: boolean = true;
+	manageRoutes: any = ManageRoutes;
+	
+	links = [
+		{
+			'linkName': 'Dashboard',
+			'linkCode': 'CITIZENDASHBOARD'
+		},
+		{
+			'linkName': 'My Applications',
+			'linkCode': 'CITIZENMYAPPS'
+		},
+		{
+			'linkName': 'My Profile',
+			'linkCode': 'CITIZENMYPROFILE'
+		},
+		{
+			'linkName': 'Resource',
+			'linkCode': 'CITIZENMYRESOURCE'
+		},
+		{
+			'linkName': 'Transactions',
+			'linkCode': 'CITIZENMYTRANSACTIONS'
+		},
+		{
+			'linkName': 'Payable Services',
+			'linkCode': 'CITIZENPAYABLESERVICES'
+		},
+		/* {
+			'linkName': 'Booking',
+			'linkCode': 'test'
+		},
+		{
+			'linkName': 'Cancel Booking',
+			'linkCode': 'test'
+		} */
+	];
+	activeLink = this.links[0].linkName;
 	
 	constructor(
 		private changeDetectorRef: ChangeDetectorRef,
@@ -29,9 +67,10 @@ export class HomeLayoutComponent implements OnInit {
 		private appService: AppService,
 		private session: SessionStorageService,
 		private formService: FormsActionsService,
-		private commonService: CommonService
+		private commonService: CommonService,
+		private router: Router
 	) {
-
+		
 		this.mobileQuery = media.matchMedia('(max-width: 600px)');
 		this._mobileQueryListener = () => changeDetectorRef.detectChanges();
 		this.mobileQuery.addListener(this._mobileQueryListener);
@@ -88,5 +127,10 @@ export class HomeLayoutComponent implements OnInit {
 		this.formService.getUserProfile().subscribe(res => {
 			this.profileObj = res.data;
 		});
+	}
+
+	navigateToRoute(code){
+		console.log(ManageRoutes.getFullRoute(this.links[code.index].linkCode));
+		this.router.navigateByUrl(ManageRoutes.getFullRoute(this.links[code.index].linkCode));
 	}
 }

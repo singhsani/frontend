@@ -11,7 +11,7 @@ import { ShopLicDuplicateComponent } from './shop-lic-duplicate/shop-lic-duplica
 import { ShopLicModificationComponent } from './shop-lic-modification/shop-lic-modification.component';
 import { ShopLicRenewalComponent } from './shop-lic-renewal/shop-lic-renewal.component';
 import { ShopLicCancellationComponent } from './shop-lic-cancellation/shop-lic-cancellation.component';
-import { NewShopEstablishmentService } from './common/services/new-shop-establishment.service';
+import { ShopAndEstablishmentService } from './common/services/shop-and-establishment.service';
 /* Import all shared, core and routing module end */
 
 @NgModule({
@@ -30,6 +30,6 @@ import { NewShopEstablishmentService } from './common/services/new-shop-establis
     ShopLicRenewalComponent,
     ShopLicCancellationComponent],
 
-  providers: [NewShopEstablishmentService]
+  providers: [ShopAndEstablishmentService]
 })
 export class ShopAndEstablishmentModule { }
