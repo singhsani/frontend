@@ -374,6 +374,10 @@
 								<div class="col-md-2">{{calulateNumberOfPerson('employerFamilyList','totalWomenEmployerFamily','women')}}</div>
 							</div>
 							<div class="row">
+								<div class="col-md-8">{{'total_unidentified_person' | translate:translateKey}}</div>
+								<div class="col-md-4">{{calulateNumberOfPerson('employerFamilyList','totalUnidentifiedEmployerFamily','unidentified')}}</div>
+							</div>
+							<div class="row">
 								<div class="col-md-8">{{'total_person' | translate:translateKey}}</div>
 								<div class="col-md-4">{{calulateNumberOfPerson('employerFamilyList','totalFamilyMembers','total')}}</div>
 							</div>
@@ -496,6 +500,10 @@
 								<div class="col-md-2">{{calulateNumberOfPerson('occupancyList','totalManOccupancy','men')}}</div>
 								<div class="col-md-4">{{'total_women' | translate:translateKey}}</div>
 								<div class="col-md-2">{{calulateNumberOfPerson('occupancyList','totalWomenOccupancy','women')}}</div>
+							</div>
+							<div class="row">
+								<div class="col-md-8">{{'total_unidentified_person' | translate:translateKey}}</div>
+								<div class="col-md-4">{{calulateNumberOfPerson('occupancyList','totalUnidentifiedOccupancy','unidentified')}}</div>
 							</div>
 							<div class="row">
 								<div class="col-md-8">{{'total_person' | translate:translateKey}}</div>
@@ -635,6 +643,10 @@
 								<div class="col-md-2">{{calulateNumberOfPerson('partnerList','totalWomenEmployerFamily','women')}}</div>
 							</div>
 							<div class="row">
+								<div class="col-md-8">{{'total_unidentified_person' | translate:translateKey}}</div>
+								<div class="col-md-4">{{calulateNumberOfPerson('partnerList','totalUnidentifiedPartner','unidentified')}}</div>
+							</div>
+							<div class="row">
 								<div class="col-md-8">{{'total_person' | translate:translateKey}}</div>
 								<div class="col-md-4">{{calulateNumberOfPerson('partnerList','totalPartner','total')}}</div>
 							</div>
@@ -652,6 +664,7 @@
 					</ng-template>
 
 					<div class="row">
+
 						<mat-form-field class="col-md-6">
 							<input matInput type="tel" OnlyNumber placeholder="{{'total_adult_person' | translate:translateKey}}" formControlName="totalAdultEmployee"
 							 maxlength="2">
@@ -673,9 +686,13 @@
 							<control-messages [control]="shopLicModificationForm.controls.totalWomenEmployee"></control-messages>
 						</mat-form-field>
 						<mat-form-field class="col-md-6">
-							<input matInput type="tel" OnlyNumber placeholder="{{'total_person' | translate:translateKey}}" formControlName="totalEmployee"
-							 readonly>
-							<!-- [value]="getTotalEmployeePerson()" -->
+							<input matInput type="tel" OnlyNumber placeholder="{{'total_unidentified_person' | translate:translateKey}}" formControlName="totalUnidentified"
+							 maxlength="2">
+							<control-messages [control]="shopLicModificationForm.controls.totalUnidentified"></control-messages>
+						</mat-form-field>
+						<mat-form-field class="col-md-6">
+							<input matInput type="tel" OnlyNumber placeholder="{{'total_person' | translate:translateKey}}" [value]="getTotalEmployeePerson()"
+							 formControlName="totalEmployee" readonly>
 							<control-messages [control]="shopLicModificationForm.controls.totalEmployee"></control-messages>
 						</mat-form-field>
 					</div>
@@ -795,16 +812,18 @@
 								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(15,'PANCard','2.6','doc')"></file-upload>
 							</div>
 						</div>
-						
+
 						<div class="col-md-4">
 							<div *ngIf="showButtons">
-								<label>{{'In Case of Change of employer or death of employer death certificate of employer. NOC form family member in case of new employer' | translate: translateKey}}*</label>
+								<label>{{'In Case of Change of employer or death of employer death certificate of employer. NOC form family member in case
+									of new employer' | translate: translateKey}}*</label>
 								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(16,'EmployerChangeOrDeath','2.7','doc')"></file-upload>
 							</div>
 						</div>
 						<div class="col-md-4">
 							<div *ngIf="showButtons">
-								<label>{{'In case of sanstha trust society copy of register under the sanstha/trust/society Act before appropriate authority' | translate: translateKey}}*</label>
+								<label>{{'In case of sanstha trust society copy of register under the sanstha/trust/society Act before appropriate authority'
+									| translate: translateKey}}*</label>
 								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(17,'SansthaOrTrustOrSocietyAct','2.8','doc')"></file-upload>
 							</div>
 						</div>
@@ -866,7 +885,7 @@
 							</div>
 						</div>
 
-<!-- 						
+						<!-- 						
 						<div class="col-md-4">
 							<div *ngIf="showButtons">
 								<label>{{'prof_tax_PEC_receipt' | translate: translateKey}}*</label>

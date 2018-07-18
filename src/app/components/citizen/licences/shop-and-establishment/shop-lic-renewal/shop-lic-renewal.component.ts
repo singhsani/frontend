@@ -213,6 +213,7 @@ export class ShopLicRenewalComponent implements OnInit {
 		this.shopLicRenewalForm.get('totalYoungEmployee').enable();
 		this.shopLicRenewalForm.get('totalManEmployee').enable();
 		this.shopLicRenewalForm.get('totalWomenEmployee').enable();
+		this.shopLicRenewalForm.get('totalUnidentified').enable();
 		this.shopLicRenewalForm.get('totalEmployee').enable();
 	}
 
@@ -253,18 +254,18 @@ export class ShopLicRenewalComponent implements OnInit {
 	/**
 	 * This method set total employee.
 	 */
-	// getTotalEmployeePerson() {
-	// 	let totalAdultEmployee = this.shopLicRenewalForm.get('totalAdultEmployee').value || 0;
-	// 	let totalYoungEmployee = this.shopLicRenewalForm.get('totalYoungEmployee').value || 0;
-	// 	let totalManEmployee = this.shopLicRenewalForm.get('totalManEmployee').value || 0;
-	// 	let totalWomenEmployee = this.shopLicRenewalForm.get('totalWomenEmployee').value || 0;
-	// 	let totalUnidentified = this.shopLicRenewalForm.get('totalUnidentified').value || 0;
+	getTotalEmployeePerson() {
+		let totalAdultEmployee = this.shopLicRenewalForm.get('totalAdultEmployee').value || 0;
+		let totalYoungEmployee = this.shopLicRenewalForm.get('totalYoungEmployee').value || 0;
+		let totalManEmployee = this.shopLicRenewalForm.get('totalManEmployee').value || 0;
+		let totalWomenEmployee = this.shopLicRenewalForm.get('totalWomenEmployee').value || 0;
+		let totalUnidentified = this.shopLicRenewalForm.get('totalUnidentified').value || 0;
 
-	// 	let totalcount = parseInt(totalAdultEmployee) + parseInt(totalYoungEmployee) + parseInt(totalManEmployee) + parseInt(totalWomenEmployee) + parseInt(totalUnidentified);
+		let totalcount = parseInt(totalAdultEmployee) + parseInt(totalYoungEmployee) + parseInt(totalManEmployee) + parseInt(totalWomenEmployee) + parseInt(totalUnidentified);
 
-	// 	this.shopLicRenewalForm.get('totalEmployee').setValue(totalcount);
-	// 	return totalcount;
-	// }
+		this.shopLicRenewalForm.get('totalEmployee').setValue(totalcount);
+		return totalcount;
+	}
 
 	/**
 	 * Method is used to handle error/validation on submit.
@@ -368,6 +369,7 @@ export class ShopLicRenewalComponent implements OnInit {
 			totalYoungEmployerFamily: [null],
 			totalManEmployerFamily: [null],
 			totalWomenEmployerFamily: [null],
+			totalUnidentifiedEmployerFamily: [null],
 			totalFamilyMembers: [null],
 
 			occupancyList: this.fb.array([]),
@@ -375,6 +377,7 @@ export class ShopLicRenewalComponent implements OnInit {
 			totalYoungOccupancy: [null],
 			totalManOccupancy: [null],
 			totalWomenOccupancy: [null],
+			totalUnidentifiedOccupancy: [null],
 			totalOccupancy: [null],
 
 			partnerList: this.fb.array([]),
@@ -383,6 +386,7 @@ export class ShopLicRenewalComponent implements OnInit {
 			totalYoungPartner: [null],
 			totalManPartner: [null],
 			totalWomenPartner: [null],
+			totalUnidentifiedPartner: [null],
 			totalPartner: [null],
 
 			//employeeList: this.fb.array([]),
@@ -390,6 +394,7 @@ export class ShopLicRenewalComponent implements OnInit {
 			totalYoungEmployee: [null, Validators.required],
 			totalManEmployee: [null, Validators.required],
 			totalWomenEmployee: [null, Validators.required],
+			totalUnidentified: [null, Validators.required],
 			totalEmployee: [null, Validators.required],
 
 			typeOfOrganisation: this.fb.group({
@@ -400,32 +405,37 @@ export class ShopLicRenewalComponent implements OnInit {
 		});
 	}
 
-	/**
- 	 * Method is used to count person
- 	 * @param formType : form vontrol name
- 	 * @param fieldsType : set value in this from control
- 	 * @param filterType : filter type
- 	 */
+    /**
+	 * Method is used to count person
+	 * @param formType : form vontrol name
+	 * @param fieldsType : set value in this from control
+	 * @param filterType : filter type
+	 */
 	calulateNumberOfPerson(formType: string, fieldsType: string, filterType: string) {
 		let countNumber = [];
 		let data = (<FormArray>this.shopLicRenewalForm.get(formType)).controls;
 		if (data.length) {
 			switch (filterType) {
 				case 'young': // age is 14 -18 for young person
-					countNumber = data.filter((obj: any) => obj.get('age').value >= 14 && obj.get('age').value <= 18)
+					countNumber = data.filter((obj: any) => obj.get('age').value >= 14 && obj.get('age').value <= 18 && (obj.get('gender').value.code == "MALE" || obj.get('gender').value.code == "FEMALE"))
 					break;
 
 				case 'adult':// age is above 60 for adult person
-					countNumber = data.filter((obj: any) => obj.get('age').value > 60)
+					countNumber = data.filter((obj: any) => obj.get('age').value > 18 && (obj.get('gender').value.code == "MALE" || obj.get('gender').value.code == "FEMALE"))
 					break;
 
 				case 'men':
-					countNumber = data.filter((obj: any) => obj.get('gender').value.code == "MALE" && obj.get('age').value >= 19 && obj.get('age').value <= 60)
+					countNumber = data.filter((obj: any) => obj.get('gender').value.code == "MALE" && obj.get('age').value >= 14)
 					break;
 				case 'women':
-					countNumber = data.filter((obj: any) => obj.get('gender').value.code == "FEMALE" && obj.get('age').value >= 19 && obj.get('age').value <= 60)
+					countNumber = data.filter((obj: any) => obj.get('gender').value.code == "FEMALE" && obj.get('age').value >= 14)
 
 					break;
+				case 'unidentified':
+					countNumber = data.filter((obj: any) => obj.get('gender').value.code == "UNIDENTIFIED" && obj.get('age').value >= 14)
+
+					break;
+
 				case 'total':
 					countNumber = data;
 					break;

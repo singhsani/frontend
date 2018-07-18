@@ -72,12 +72,12 @@ export class ShopLicModificationComponent implements OnInit {
 			{ labelName: 'Agreement copy', fieldIdentifier: '19' },
 			{ labelName: 'worker professional tax receipt', fieldIdentifier: '20' },
 			{ labelName: 'If there are more then 10 or more workers Receipt of Gujarat Labor welfare fund', fieldIdentifier: '21' },
-			
+
 			{ labelName: 'partnership deed copy of partner if there is a partner', fieldIdentifier: '22' },
 			{ labelName: 'commercial basis in the concept', fieldIdentifier: '23' },
 			{ labelName: 'prescribed certificate', fieldIdentifier: '24' },
 			{ labelName: 'Managers Order copy of appointment Letter', fieldIdentifier: '25' },
-			
+
 			// { labelName: 'Professional Tax PEC No Receipt', fieldIdentifier: '1' },
 			// { labelName: 'Professional Tax PRC No Receipt', fieldIdentifier: '2' },
 			// { labelName: 'Property Tax / Water Tax paid Receipt', fieldIdentifier: '3' },
@@ -284,18 +284,18 @@ export class ShopLicModificationComponent implements OnInit {
 	/**
 	 * This method set total employee.
 	 */
-	// getTotalEmployeePerson() {
-	// 	let totalAdultEmployee = this.shopLicModificationForm.get('totalAdultEmployee').value || 0;
-	// 	let totalYoungEmployee = this.shopLicModificationForm.get('totalYoungEmployee').value || 0;
-	// 	let totalManEmployee = this.shopLicModificationForm.get('totalManEmployee').value || 0;
-	// 	let totalWomenEmployee = this.shopLicModificationForm.get('totalWomenEmployee').value || 0;
-	// 	let totalUnidentified = this.shopLicModificationForm.get('totalUnidentified').value || 0;
+	getTotalEmployeePerson() {
+		let totalAdultEmployee = this.shopLicModificationForm.get('totalAdultEmployee').value || 0;
+		let totalYoungEmployee = this.shopLicModificationForm.get('totalYoungEmployee').value || 0;
+		let totalManEmployee = this.shopLicModificationForm.get('totalManEmployee').value || 0;
+		let totalWomenEmployee = this.shopLicModificationForm.get('totalWomenEmployee').value || 0;
+		let totalUnidentified = this.shopLicModificationForm.get('totalUnidentified').value || 0;
 
-	// 	let totalcount = parseInt(totalAdultEmployee) + parseInt(totalYoungEmployee) + parseInt(totalManEmployee) + parseInt(totalWomenEmployee) + parseInt(totalUnidentified);
+		let totalcount = parseInt(totalAdultEmployee) + parseInt(totalYoungEmployee) + parseInt(totalManEmployee) + parseInt(totalWomenEmployee) + parseInt(totalUnidentified);
 
-	// 	this.shopLicModificationForm.get('totalEmployee').setValue(totalcount);
-	// 	return totalcount;
-	// }
+		this.shopLicModificationForm.get('totalEmployee').setValue(totalcount);
+		return totalcount;
+	}
 
 	/**
 	 * Method is used to handle error/validation on submit.
@@ -399,6 +399,7 @@ export class ShopLicModificationComponent implements OnInit {
 			totalYoungEmployerFamily: [null],
 			totalManEmployerFamily: [null],
 			totalWomenEmployerFamily: [null],
+			totalUnidentifiedEmployerFamily: [null],
 			totalFamilyMembers: [null],
 
 			occupancyList: this.fb.array([]),
@@ -406,6 +407,7 @@ export class ShopLicModificationComponent implements OnInit {
 			totalYoungOccupancy: [null],
 			totalManOccupancy: [null],
 			totalWomenOccupancy: [null],
+			totalUnidentifiedOccupancy: [null],
 			totalOccupancy: [null],
 
 			partnerList: this.fb.array([]),
@@ -414,6 +416,7 @@ export class ShopLicModificationComponent implements OnInit {
 			totalYoungPartner: [null],
 			totalManPartner: [null],
 			totalWomenPartner: [null],
+			totalUnidentifiedPartner: [null],
 			totalPartner: [null],
 
 			//employeeList: this.fb.array([]),
@@ -421,6 +424,7 @@ export class ShopLicModificationComponent implements OnInit {
 			totalYoungEmployee: [null, Validators.required],
 			totalManEmployee: [null, Validators.required],
 			totalWomenEmployee: [null, Validators.required],
+			totalUnidentified: [null, Validators.required],
 			totalEmployee: [null, Validators.required],
 
 			typeOfOrganisation: this.fb.group({

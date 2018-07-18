@@ -24,14 +24,13 @@ export class ShopLicNewComponent implements OnInit {
 	@ViewChild('postalAddressEstablishment') postalAddressEstablishment: any;
 
 	shopLicNewForm: FormGroup;
-	// addList: FormArray;
-
 	translateKey: string = 'shopLicNewScreen';
 
 	formId: number;
 	apiCode: string;
 
 	disablefutureDate = new Date(moment().format('YYYY-MM-DD'));
+	
 	//File and image upload
 	uploadModel: any = {};
 	private showButtons: boolean = false;
