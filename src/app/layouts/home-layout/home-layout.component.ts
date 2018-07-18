@@ -7,6 +7,7 @@ import { CommonService } from './../../shared/services/common.service';
 import { SessionStorageService } from 'angular-web-storage';
 import { FormsActionsService } from '../../core/services/citizen/data-services/forms-actions.service';
 import { Router } from "@angular/router";
+import * as _ from 'lodash';
 
 @Component({
 	selector: 'app-home-layout',
@@ -24,6 +25,7 @@ export class HomeLayoutComponent implements OnInit {
 	fromAdmin: boolean = false;
 	isExpanded: boolean = true;
 	manageRoutes: any = ManageRoutes;
+	tabIndex: number = 0;
 	
 	links = [
 		{
@@ -74,6 +76,7 @@ export class HomeLayoutComponent implements OnInit {
 		this.mobileQuery = media.matchMedia('(max-width: 600px)');
 		this._mobileQueryListener = () => changeDetectorRef.detectChanges();
 		this.mobileQuery.addListener(this._mobileQueryListener);
+		this.activateTab();
 	}
 
 	private _mobileQueryListener: () => void;
@@ -130,7 +133,14 @@ export class HomeLayoutComponent implements OnInit {
 	}
 
 	navigateToRoute(code){
-		console.log(ManageRoutes.getFullRoute(this.links[code.index].linkCode));
 		this.router.navigateByUrl(ManageRoutes.getFullRoute(this.links[code.index].linkCode));
+	}
+
+	activateTab(){
+		_.forEach(this.links, (link, id) => {
+			if('/'+ManageRoutes.getFullRoute(link.linkCode) == this.router.url){
+				this.tabIndex = id;
+			}
+		});
 	}
 }
