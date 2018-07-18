@@ -47,7 +47,12 @@ export class DashboardComponent implements OnInit {
 		if (apiCode == 'HEL-BCR' || apiCode == 'HEL-DCR' || apiCode == 'HEL-NRCBR' || apiCode == 'HEL-NRCDR' || apiCode == 'HEL-DUPBR' || apiCode == 'HEL-DUPDR') {
 			let redirectUrl = ManageRoutes.getFullRoute(apiCode);
 			this.router.navigate([redirectUrl, false, apiCode]);
-		} else {
+		}else if(apiCode == 'SHOP-REN'){
+			this.router.navigate([ManageRoutes.getFullRoute(apiCode),false, apiCode]);
+		}else if(apiCode == 'SHOP-TRAF'){
+			this.router.navigate([ManageRoutes.getFullRoute(apiCode),false, apiCode]);
+		}
+		 else {
 			if (ManageRoutes.getApiTypeFromApiCode(apiCode)) {
 				this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);
 				this.formService.createFormData().subscribe(res => {

@@ -68,7 +68,7 @@
 							<input matInput OnlyNumber maxlength="12" placeholder="{{'aadhar_number' | translate:translateKey}}" formControlName="aadharNumber">
 						</mat-form-field>
 					</div>
-					
+
 					<div class="row">
 						<div class="col-md-12">{{'professional_tax' | translate:translateKey}}</div>
 					</div>
@@ -372,6 +372,10 @@
 								<div class="col-md-2">{{calulateNumberOfPerson('employerFamilyList','totalWomenEmployerFamily','women')}}</div>
 							</div>
 							<div class="row">
+								<div class="col-md-8">{{'total_unidentified_person' | translate:translateKey}}</div>
+								<div class="col-md-4">{{calulateNumberOfPerson('employerFamilyList','totalUnidentifiedEmployerFamily','unidentified')}}</div>
+							</div>
+							<div class="row">
 								<div class="col-md-8">{{'total_person' | translate:translateKey}}</div>
 								<div class="col-md-4">{{calulateNumberOfPerson('employerFamilyList','totalFamilyMembers','total')}}</div>
 							</div>
@@ -494,6 +498,10 @@
 								<div class="col-md-2">{{calulateNumberOfPerson('occupancyList','totalManOccupancy','men')}}</div>
 								<div class="col-md-4">{{'total_women' | translate:translateKey}}</div>
 								<div class="col-md-2">{{calulateNumberOfPerson('occupancyList','totalWomenOccupancy','women')}}</div>
+							</div>
+							<div class="row">
+								<div class="col-md-8">{{'total_unidentified_person' | translate:translateKey}}</div>
+								<div class="col-md-4">{{calulateNumberOfPerson('occupancyList','totalUnidentifiedOccupancy','unidentified')}}</div>
 							</div>
 							<div class="row">
 								<div class="col-md-8">{{'total_person' | translate:translateKey}}</div>
@@ -633,6 +641,10 @@
 								<div class="col-md-2">{{calulateNumberOfPerson('partnerList','totalWomenEmployerFamily','women')}}</div>
 							</div>
 							<div class="row">
+								<div class="col-md-8">{{'total_unidentified_person' | translate:translateKey}}</div>
+								<div class="col-md-4">{{calulateNumberOfPerson('partnerList','totalUnidentifiedPartner','unidentified')}}</div>
+							</div>
+							<div class="row">
 								<div class="col-md-8">{{'total_person' | translate:translateKey}}</div>
 								<div class="col-md-4">{{calulateNumberOfPerson('partnerList','totalPartner','total')}}</div>
 							</div>
@@ -648,7 +660,6 @@
 					<ng-template matStepLabel>
 						<div [matTooltip]="'employee_list' | translate: translateKey">{{'employee_list' | translate: translateKey}}</div>
 					</ng-template>
-
 					<div class="row">
 
 						<mat-form-field class="col-md-6">
@@ -672,11 +683,19 @@
 							<control-messages [control]="shopLicRenewalForm.controls.totalWomenEmployee"></control-messages>
 						</mat-form-field>
 						<mat-form-field class="col-md-6">
-							<input matInput type="tel" OnlyNumber placeholder="{{'total_person' | translate:translateKey}}" formControlName="totalEmployee"
-							 maxlength="2" readonly>
+							<input matInput type="tel" OnlyNumber placeholder="{{'total_unidentified_person' | translate:translateKey}}" formControlName="totalUnidentified"
+							 maxlength="2">
+							<control-messages [control]="shopLicRenewalForm.controls.totalUnidentified"></control-messages>
+						</mat-form-field>
+						<mat-form-field class="col-md-6">
+							<input matInput type="tel" OnlyNumber placeholder="{{'total_person' | translate:translateKey}}" [value]="getTotalEmployeePerson()"
+							 formControlName="totalEmployee" readonly>
 							<control-messages [control]="shopLicRenewalForm.controls.totalEmployee"></control-messages>
 						</mat-form-field>
 					</div>
+
+					<app-action-bar [uploadFiles]="uploadFileArray" [form]="shopLicRenewalForm" [step]="'step6'"></app-action-bar>
+
 				</mat-step>
 				<!-- step 6 employee list Ends -->
 
@@ -709,7 +728,6 @@
 							</div>
 						</div>
 
-
 						<div class="col-md-4">
 							<div *ngIf="showButtons">
 								<label>{{'aadhar_number' | translate: translateKey}}*</label>
@@ -726,7 +744,6 @@
 
 					</div>
 					<app-action-bar [uploadFiles]="uploadFileArray" [form]="shopLicRenewalForm" [step]="'final'" (stepReset)="stepReset()" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
-
 
 				</mat-step>
 				<!-- step Attachment Ends -->

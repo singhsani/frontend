@@ -102,8 +102,8 @@ const ROUTEMAIN = {
         'type': 'shopRenwalLic'
     },
     'SHOP-TRAF': {
-        'main': '',
-        'type': ''
+        'main': 'shopTransferLicense',
+        'type': 'shopTransferLicense'
     },
     'MF-LIC': {
         'main': 'MFLicense',

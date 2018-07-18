@@ -24,14 +24,13 @@ export class ShopLicNewComponent implements OnInit {
 	@ViewChild('postalAddressEstablishment') postalAddressEstablishment: any;
 
 	shopLicNewForm: FormGroup;
-	// addList: FormArray;
-
 	translateKey: string = 'shopLicNewScreen';
 
 	formId: number;
 	apiCode: string;
 
 	disablefutureDate = new Date(moment().format('YYYY-MM-DD'));
+	
 	//File and image upload
 	uploadModel: any = {};
 	private showButtons: boolean = false;
@@ -89,6 +88,9 @@ export class ShopLicNewComponent implements OnInit {
 		private toastrService: ToastrService
 	) { }
 
+	/**
+	 * This method call initially required methods.
+	 */
 	ngOnInit() {
 		this.route.paramMap.subscribe(param => {
 			this.formId = Number(param.get('id'));
@@ -147,8 +149,8 @@ export class ShopLicNewComponent implements OnInit {
 
 			this.YES_NO = res.YES_NO;
 			this.wardNo = res.SHOP_LIC_WARD_NO;
-			this.gender = res.GENDER
-			this.SHOP_LIC_HOLIDAY = res.SHOP_LIC_HOLIDAY
+			this.gender = res.GENDER;
+			this.SHOP_LIC_HOLIDAY = res.SHOP_LIC_HOLIDAY;
 		});
 	}
 
@@ -459,34 +461,41 @@ export class ShopLicNewComponent implements OnInit {
 	isTableInEditMode(persontype: string) {
 		return this.addItem(persontype).controls.find((obj: any) => obj.isEditMode === true);
 	}
+
 	/**
-	*  Method is used edit editable dataview
+	*  Method is used edit editable data view.
+	* @param row: table row id
 	*/
-	editRecord(row) {
+	editRecord(row: any) {
 		row.isEditMode = true;
 		row.deepCopyInEditMode = Object.assign({}, row.value)
 	}
+
 	/**
 	* Method is used when user click for remove person
 	*/
-	deleteRecord(persontype, index) {
+	deleteRecord(persontype: string, index: any) {
 		this.commonService.confirmAlert('Are you sure?', "", 'info', '', performDelete => {
 			this.addItem(persontype).controls.splice(index, 1);
 			this.commonService.successAlert('Removed!', '', 'success');
 		});
 	}
+
 	/**
-	*  Method is used save editable dataview
+	*  Method is used save editable dataview.
+	* @param row: table row id
 	*/
-	saveRecord(row) {
+	saveRecord(row: any) {
 		if (row.valid) {
 			row.isEditMode = false;
 		}
 	}
+
 	/**
-	*  Method is used cancel editable dataview
+	*  Method is used cancel editable dataview.
+	* @param row: table row id
 	*/
-	cancelRecord(row) {
+	cancelRecord(row: any) {
 		if (row.deepCopyInEditMode) {
 			row.patchValue(row.deepCopyInEditMode);
 		}
@@ -495,8 +504,8 @@ export class ShopLicNewComponent implements OnInit {
 
 	/**
 	*  Method is used get selected data from lookup when change.
-	* @lookups : Array
-	* @code : String
+	* @param lookups : Array
+	* @param code : String
 	* return object
 	*/
 	getSelectedDataFromLookUps(lookups: Array<any>, code: string) {
@@ -535,6 +544,7 @@ export class ShopLicNewComponent implements OnInit {
 			console.log(error.message)
 		}
 	}
+
 	/**
 	* Method is used when change data of NoOfHumanWorking dropdown
 	* @event is value of NoOfHumanWorking dropdown
@@ -547,6 +557,7 @@ export class ShopLicNewComponent implements OnInit {
 			console.log(error.message)
 		}
 	}
+
 	/**
 	* Method is invoked when change dropdown of Type of Organization
 	* @event is value of Type of Organization dropdown
@@ -563,6 +574,9 @@ export class ShopLicNewComponent implements OnInit {
 		}
 	}
 
+	/**
+	 * This method set total employee.
+	 */
 	getTotalEmployeePerson() {
 		let totalAdultEmployee = this.shopLicNewForm.get('totalAdultEmployee').value || 0;
 		let totalYoungEmployee = this.shopLicNewForm.get('totalYoungEmployee').value || 0;
@@ -570,7 +584,7 @@ export class ShopLicNewComponent implements OnInit {
 		let totalWomenEmployee = this.shopLicNewForm.get('totalWomenEmployee').value || 0;
 		let totalUnidentified = this.shopLicNewForm.get('totalUnidentified').value || 0;
 
-		let totalcount = parseInt(totalAdultEmployee) + parseInt(totalYoungEmployee) + parseInt(totalManEmployee) + parseInt(totalWomenEmployee)+ parseInt(totalUnidentified);
+		let totalcount = parseInt(totalAdultEmployee) + parseInt(totalYoungEmployee) + parseInt(totalManEmployee) + parseInt(totalWomenEmployee) + parseInt(totalUnidentified);
 
 		this.shopLicNewForm.get('totalEmployee').setValue(totalcount);
 		return totalcount;
@@ -578,7 +592,7 @@ export class ShopLicNewComponent implements OnInit {
 
     /**
      * This method required for final form submition.
-     * @param count - flag of invalid control.
+     * @param flag - flag of invalid control.
      */
 	handleErrorsOnSubmit(flag) {
 
@@ -639,8 +653,6 @@ export class ShopLicNewComponent implements OnInit {
 		this.stepper.reset();
 		this.shopLicNewForm.get('postalAddress').get('addressType').setValue('SHOP_LIC_POSTAL_ADDRESS');
 		// this.marriageFormGroup.get('isPriestParResAddressSame').get('code').setValue('NO');
-
-		// this.marriageFormGroup.get('brideAddress').get('addressType').setValue('BRIDE_ADDRESS');
 	}
 
 }
