@@ -527,9 +527,9 @@ export class ShopLicModificationComponent implements OnInit {
 	}
 
 	/**
- * Method is used to add array in form
- * @param persontype : person array type
- */
+	 * Method is used to add array in form
+	 * @param persontype : person array type
+	 */
 	addItem(persontype: string) {
 		let returnArray: any;
 		switch (persontype) {
@@ -639,8 +639,10 @@ export class ShopLicModificationComponent implements OnInit {
 	}
 
 	/**
-	* Method is used when user click for remove person
-	*/
+	 * Method is used when user click for remove person
+	 * @param persontype : person type
+	 * @param index : list index
+	 */
 	deleteRecord(persontype: string, index: any) {
 		this.commonService.confirmAlert('Are you sure?', "", 'info', '', performDelete => {
 			this.addItem(persontype).controls.splice(index, 1);
