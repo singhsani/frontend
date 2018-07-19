@@ -30,27 +30,33 @@ export class HomeLayoutComponent implements OnInit {
 	links = [
 		{
 			'linkName': 'Dashboard',
-			'linkCode': 'CITIZENDASHBOARD'
+			'linkCode': 'CITIZENDASHBOARD',
+			'icon': 'apps'
 		},
 		{
 			'linkName': 'My Applications',
-			'linkCode': 'CITIZENMYAPPS'
+			'linkCode': 'CITIZENMYAPPS',
+			'icon': 'description'
 		},
 		{
 			'linkName': 'My Profile',
-			'linkCode': 'CITIZENMYPROFILE'
+			'linkCode': 'CITIZENMYPROFILE',
+			'icon': 'face'
 		},
 		{
 			'linkName': 'Resource',
-			'linkCode': 'CITIZENMYRESOURCE'
+			'linkCode': 'CITIZENMYRESOURCE',
+			'icon': 'web_asset'
 		},
 		{
 			'linkName': 'Transactions',
-			'linkCode': 'CITIZENMYTRANSACTIONS'
+			'linkCode': 'CITIZENMYTRANSACTIONS',
+			'icon': 'low_priority'
 		},
 		{
 			'linkName': 'Payable Services',
-			'linkCode': 'CITIZENPAYABLESERVICES'
+			'linkCode': 'CITIZENPAYABLESERVICES',
+			'icon': '&#x20B9;'
 		},
 		/* {
 			'linkName': 'Booking',
