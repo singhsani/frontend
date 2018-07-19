@@ -1,68 +1,95 @@
-<div class="container pt-4">
-
-    <mat-card class="themeBox formClass">
-        <div class="row ">
-            <h2 class="h2">
-                <mat-icon>search</mat-icon>
-                <span>Search Application</span>
-            </h2>
-            <div class="col-md-4">
-                <div class="iconMat3">
-                    <mat-icon matPrefix>dashboard</mat-icon>
-                    <ng-select placeholder="Services">
-                        <ng-option *ngFor="let service of services" [value]="service.code">{{service.name}}</ng-option>
-                    </ng-select>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <mat-form-field class="iconMat">
-                    <mat-icon matPrefix>description</mat-icon>
-                    <input matInput placeholder="Enter Application Number" value="">
-                </mat-form-field>
-            </div>
-            <div class="col">
-                <button mat-raised-button color="primary" class="w-100">Search</button>
-            </div>
+<div class="container clearfix">
+        <div class="welCome"> 
+            <h1>Welcome to VMC Online Citizen Portal</h1>
+            <p>Welcome to Vadodara Municipal Corporation's Virtual Civic Center, which is simple and convenient way for citizens to access various services from anywhere at anytime.<br>
+            The services of Virtual Civic Center can be accessed without paying any additional charge.</p>
         </div>
-    </mat-card>
-
-
-    <mat-card class="themeBox servicesList">
-        <div class="row ">
-            <h2 class="h2">
-                <mat-icon>dashboard</mat-icon>
-                <span>Services</span>
-            </h2>
-            <a href="#" class="col" *ngFor="let module of userServicesList">
-                <span class="{{getIconClass(module.code)}}"><img src="{{getIconImg(module.code)}}" alt=""></span>
-                <div>{{module.name}}<br><!--{{module.gujName}}--></div>
-            </a>
-        </div>
-    </mat-card>
-
-    <mat-accordion *ngFor="let module of userServicesList">
-        <mat-expansion-panel>
-            <mat-expansion-panel-header>
-                <mat-panel-title>
-                    {{module.name +' / '+ module.gujName}}
-                </mat-panel-title>
-            </mat-expansion-panel-header>
-
-            <div class="row">
-                <!-- <div class="col-md-4 pt-4 pb-1 text-center bg-light" *ngFor="let service of module.services;"> -->
-                <div class="col-12 col-sm-6 col-md-6 col-lg-4 pb-4 text-center dashboardList" *ngFor="let service of module.services;">
-                    <mat-card>
-                        <mat-icon>account_circle</mat-icon>
-                        <mat-card-title innerHTML="{{ service.name +' / '+ service.gujName }}"></mat-card-title>
-                        <mat-card-actions>
-                            <button mat-raised-button color="primary" (click)="createRecord(service.code)">
-                                <mat-icon>input</mat-icon> New Application
+        
+        <h2><mat-icon>dashboard</mat-icon>Module</h2>
+        
+        <div class="moduleList">
+            <mat-tab-group>
+                <mat-tab *ngFor="let module of userServicesList">
+                    <ng-template mat-tab-label>
+                        <!-- <mat-icon class="example-tab-icon">thumb_up</mat-icon> -->
+                        <span class="moduleIcon"></span>
+                        <div>{{ module.name }}</div>
+                        <!-- <div>{{ module.gujName }}</div> -->
+                        <span class="count">Services</span>
+                    </ng-template>
+                    <div class="servicesList row"> 
+                        <div class="colBtn col-md-3" *ngFor="let service of module.services;" matTooltip="{{ service.name }}">
+                            <button mat-stroked-button color="primary" (click)="createRecord(service.code)">
+                                {{ service.name }}
                             </button>
-                        </mat-card-actions>
-                    </mat-card>
-                </div>
-            </div>
+                        </div>            
+                    </div>
+                </mat-tab>
+            </mat-tab-group>
+        </div>
+        
+        <h2><mat-icon>description</mat-icon>Recent Application</h2>
+        
+        <ul class="recentList">
+            <li>
+                <div>Maheshbabu Prajapati</div>
+                Provisional Final NOC | Application ID : 2018-05-19-APP-WQ0PAAWX
+                <span class="badge draft">Draft</span>
+            </li>
+            <li>
+                <div>Maheshbabu Prajapati</div>
+                Provisional Final NOC | Application ID : 2018-05-19-APP-WQ0PAAWX
+                <span class="badge submited">Draft</span>
+            </li>
+        </ul>
+        
+        
+        </div>
 
-        </mat-expansion-panel>
-    </mat-accordion>
-</div>
+
+        <!-- <div class="noApplication">
+         <img src="assets/icons/no-application-found.png" alt=""><br>
+          No Application Found
+          <span class="noActi">It seems, No activity happed yet</span>
+          <a mat-raised-button class="mat-primary" routerLink=".">Create Application</a>
+    </div> --> 
+
+<!-- <mat-tab-group  mat-stretch-tabs class="mainMenu">
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon>dashboard</mat-icon>
+        Dashboard
+      </ng-template>
+      
+1
+    </mat-tab>
+  
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon>description</mat-icon>
+        My Applications
+      </ng-template>
+     
+    2
+
+
+
+    
+    </mat-tab>
+  
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon>description</mat-icon>
+        My Payment
+      </ng-template>
+      3 
+    </mat-tab>
+  </mat-tab-group> -->
+  
+
+
+
+
+
+    
+

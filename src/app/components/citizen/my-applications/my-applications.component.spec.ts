@@ -23,3 +23,6 @@ describe('MyApplicationsComponent', () => {
     expect(component).toBeTruthy();
   });
 });
+
+
+
