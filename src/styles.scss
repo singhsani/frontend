@@ -218,18 +218,7 @@ mat-label {align-self: center;}
     .mat-header-row > .mat-header-cell:first-child, .mat-row > .mat-cell:first-child {flex: inherit;  width: 35px; padding-left: 0;}
 }
 
-.mat-table .mat-row:nth-child(even){background-color:#EDE7F6;}
-.mat-table .mat-row:nth-child(odd){background-color:$colorWhite;}
-.mat-table .mat-cell {font-size: 12px;}
-.mat-table .text-label.badge {background: #fff !important; padding: 7px 15px;}
-.mat-table .text-label.badge-primary {border: 1px solid #007bff; color: #007bff;}
-.mat-table .text-label.badge-secondary {border: 1px solid #6c757d; color: #6c757d;}
-.mat-table .text-label.badge-success {border: 1px solid #22b573; color: #22b573;}
-.mat-table .text-label.badge-danger {border: 1px solid #dc3545; color: #dc3545;}
-.mat-table .text-label.badge-success {border: 1px solid #22b573; color: #22b573;}
-.mat-table .text-label.badge-warning {border: 1px solid #ffc107; color: #ffc107;}
-.mat-table .text-label.badge-info {border: 1px solid #17a2b8; color: #17a2b8;}
-.mat-table .text-label.badge-dark {border: 1px solid #343a40; color: #343a40;}
+
 
 .custom-file-upload .badge {font-size: 12px; background: #fff !important; padding: 7px 5px; white-space: normal !important; width: 250px;word-break: break-all;}
 .custom-file-upload .badge-primary {border: 1px solid $colorBlue !important; color: $colorBlue !important;}
@@ -258,7 +247,8 @@ mat-label {align-self: center;}
     overflow: visible;
 }
 
-.mat-table .mat-row:nth-child(even) .text-label.badge {background: #EDE7F6 !important;}
+mat-footer-row, mat-header-row, mat-row, td.mat-cell, td.mat-footer-cell, th.mat-header-cell {border-color:#e4e3eb;}
+// .mat-table .mat-row:nth-child(odd) .text-label.badge {background: #EDE7F6 !important;}
 
 .mat-accordion {
     &>.mat-expansion-panel {background: none; box-shadow: none !important;
@@ -410,14 +400,14 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
 
 
 /*** Dashboard ***/
-.maxW {max-width: 2015px; margin: 0 auto;}
+.container {max-width: 1130px; margin: 90px auto 30px;}
 
 .welCome {padding: 23px; background: $colorLite url(assets/images/bg-logo.png) no-repeat right bottom; padding-right: 100px; margin-bottom: 40px;
     p {font-size: 12px; color: #453960; padding-bottom: 0; margin-bottom: 0;}
 }
 
 .moduleList {
-    .mat-tab-header, .mat-tab-nav-bar {border: 0; padding-bottom: 25px;}
+    .mat-tab-header, .mat-tab-nav-bar {padding-bottom: 25px;}
     .mat-tab-label { opacity:1; height: auto; border: 1px solid #ececec;  margin: 0 14px; padding: 30px 0 35px; width: 190px; white-space: normal;}
     .moduleIcon {width: 65px; height: 65px; background: #d1c4e9; border-radius:50%; display: inline-block;}
     .mat-tab-label-content {font-size: 14px; color: #333;}
@@ -427,7 +417,7 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
 .servicesList  {padding-bottom: 45px; width: 100%; float: left;
     // .row {}
     // .col-md-3, .col-sm-4 {padding-bottom: 18px;}
-    .colBtn {padding:9px 15px; width: 25%; float: left;}
+    .colBtn {padding:9px 15px;} /* width: 25%; float: left;*/
     .mat-primary {color: #423c51; font-size: 14px; border-radius: 17px; border:1px solid $colorBlue; display: block; width: 100%; text-overflow: ellipsis;
         overflow: hidden; 
         &:hover {background: $colorBlue; color: #fff;}
@@ -448,9 +438,9 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
 
 
 
-
 /***  noApplication  ***/
 .noApplication {width: 220px; margin: 0 auto; color: #000; font-size: 18px; text-align: center;
     img {padding: 30px 0;}
     .noActi {color: #989898; font-size: 14px; display: block; padding: 10px 0 60px 0;}
 }
+

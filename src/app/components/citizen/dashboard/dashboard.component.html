@@ -1,62 +1,67 @@
+<div class="container clearfix">
+        <div class="welCome"> 
+            <h1>Welcome to VMC Online Citizen Portal</h1>
+            <p>Welcome to Vadodara Municipal Corporation's Virtual Civic Center, which is simple and convenient way for citizens to access various services from anywhere at anytime.<br>
+            The services of Virtual Civic Center can be accessed without paying any additional charge.</p>
+        </div>
+        
+        <h2><mat-icon>dashboard</mat-icon>Module</h2>
+        
+        <div class="moduleList">
+            <mat-tab-group>
+                <mat-tab *ngFor="let module of userServicesList">
+                    <ng-template mat-tab-label>
+                        <!-- <mat-icon class="example-tab-icon">thumb_up</mat-icon> -->
+                        <span class="moduleIcon"></span>
+                        <div>{{ module.name }}</div>
+                        <!-- <div>{{ module.gujName }}</div> -->
+                        <span class="count">Services</span>
+                    </ng-template>
+                    <div class="servicesList row"> 
+                        <div class="colBtn col-md-3" *ngFor="let service of module.services;" matTooltip="{{ service.name }}">
+                            <button mat-stroked-button color="primary" (click)="createRecord(service.code)">
+                                {{ service.name }}
+                            </button>
+                        </div>            
+                    </div>
+                </mat-tab>
+            </mat-tab-group>
+        </div>
+        
+        <h2><mat-icon>description</mat-icon>Recent Application</h2>
+        
+        <ul class="recentList">
+            <li>
+                <div>Maheshbabu Prajapati</div>
+                Provisional Final NOC | Application ID : 2018-05-19-APP-WQ0PAAWX
+                <span class="badge draft">Draft</span>
+            </li>
+            <li>
+                <div>Maheshbabu Prajapati</div>
+                Provisional Final NOC | Application ID : 2018-05-19-APP-WQ0PAAWX
+                <span class="badge submited">Draft</span>
+            </li>
+        </ul>
+        
+        
+        </div>
 
 
+        <!-- <div class="noApplication">
+         <img src="assets/icons/no-application-found.png" alt=""><br>
+          No Application Found
+          <span class="noActi">It seems, No activity happed yet</span>
+          <a mat-raised-button class="mat-primary" routerLink=".">Create Application</a>
+    </div> --> 
 
-<mat-tab-group  mat-stretch-tabs class="mainMenu">
+<!-- <mat-tab-group  mat-stretch-tabs class="mainMenu">
     <mat-tab>
       <ng-template mat-tab-label>
         <mat-icon>dashboard</mat-icon>
         Dashboard
       </ng-template>
       
-<div class="container maxW">
-
-
-    <div class="welCome"> 
-        <h1>Welcome to VMC Online Citizen Portal</h1>
-        <p>Welcome to Vadodara Municipal Corporation's Virtual Civic Center, which is simple and convenient way for citizens to access various services from anywhere at anytime.<br>
-        The services of Virtual Civic Center can be accessed without paying any additional charge.</p>
-    </div>
-    
-    <h2><mat-icon>dashboard</mat-icon>Module</h2>
-    
-    <div class="moduleList">
-        <mat-tab-group>
-            <mat-tab *ngFor="let module of userServicesList">
-                <ng-template mat-tab-label>
-                    <!-- <mat-icon class="example-tab-icon">thumb_up</mat-icon> -->
-                    <span class="moduleIcon"></span>
-                    <div>{{ module.name }}</div>
-                    <!-- <div>{{ module.gujName }}</div> -->
-                    <span class="count">Services</span>
-                </ng-template>
-                <div class="servicesList"> 
-                        <div class="colBtn" *ngFor="let service of module.services;">
-                        <button mat-stroked-button color="primary" (click)="createRecord(service.code)">
-                            {{ service.name }}
-                        </button>
-                    </div>            
-                </div>
-            </mat-tab>
-        </mat-tab-group>
-    </div>
-    
-    <h2><mat-icon>description</mat-icon>Recent Application</h2>
-    
-    <ul class="recentList">
-        <li>
-            <div>Maheshbabu Prajapati</div>
-            Provisional Final NOC | Application ID : 2018-05-19-APP-WQ0PAAWX
-            <span class="badge draft">Draft</span>
-        </li>
-        <li>
-            <div>Maheshbabu Prajapati</div>
-            Provisional Final NOC | Application ID : 2018-05-19-APP-WQ0PAAWX
-            <span class="badge submited">Draft</span>
-        </li>
-    </ul>
-    
-    
-    </div>
+1
     </mat-tab>
   
     <mat-tab>
@@ -65,36 +70,10 @@
         My Applications
       </ng-template>
      
-     <!-- <div class="noApplication">
-         <img src="assets/icons/no-application-found.png" alt=""><br>
-          No Application Found
-          <span class="noActi">It seems, No activity happed yet</span>
-          <a mat-raised-button class="mat-primary" routerLink=".">Create Application</a>
-    </div> -->
+    2
 
 
-    <table>
-      <thead>
-        <tr>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-        </tr>
-     </thead>
-     <tbody>
-        <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-    </tbody>
-    </table>
+
     
     </mat-tab>
   
@@ -103,9 +82,9 @@
         <mat-icon>description</mat-icon>
         My Payment
       </ng-template>
-      <!-- 3 -->
+      3 
     </mat-tab>
-  </mat-tab-group>
+  </mat-tab-group> -->
   
 
 
