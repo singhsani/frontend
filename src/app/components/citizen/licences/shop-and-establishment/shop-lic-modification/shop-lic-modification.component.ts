@@ -257,8 +257,8 @@ export class ShopLicModificationComponent implements OnInit {
 
 	/**
 	*  Method is used get selected data from lookup when change.
-	* @lookups : Array
-	* @code : String
+	* @param lookups : Array
+	* @param code : String
 	* return object
 	*/
 	getSelectedDataFromLookUps(lookups: Array<any>, code: string) {
@@ -274,7 +274,9 @@ export class ShopLicModificationComponent implements OnInit {
 			if (event === "SHOP_LIC_SELF_OWNERSHIP") {
 				// remove all controll becose if dropdown value is "SHOP_LIC_SELF_OWNERSHIP" then user add only one record.
 				(<FormArray>this.shopLicModificationForm.get('partnerList')).controls = [];
-				//this.addMorePerson('PARTNER');
+				this.addMorePerson('PARTNER');
+			}else{
+				(<FormArray>this.shopLicModificationForm.get('partnerList')).controls = [];
 			}
 		} catch (error) {
 			console.log(error.message)
@@ -480,18 +482,18 @@ export class ShopLicModificationComponent implements OnInit {
 	}
 
 	/**
-	* Method is used when get business category dropdown data
-	* @event is value is "YES" , "NO" and null
-	*/
+	 * Method is used when get business category dropdown data
+	 * @event is value is "YES" , "NO" and null
+	 */
 	getCategoryDropdownData(event) {
 		this.shopAndEstablishmentService.getCategoryByFilter(event).subscribe(res => {
 			this.businessCategory = res;
 		})
 	}
 	/**
-	* Method is used when get business sub category dropdown data
-	* @event is value fro category dropdown
-	*/
+	 * Method is used when get business sub category dropdown data
+	 * @event is value fro category dropdown
+	 */
 	getSubCategoryDropdownData(event) {
 		this.shopAndEstablishmentService.getSubCategory(event).subscribe(res => {
 			this.businessSubCategory = res;
@@ -623,8 +625,9 @@ export class ShopLicModificationComponent implements OnInit {
 	}
 
 	/**
-	*  Method is used check table is in edit mode
-	*/
+	 *  Method is used check table is in edit mode
+	 * @param persontype: person type 
+	 */
 	isTableInEditMode(persontype: string) {
 		return this.addItem(persontype).controls.find((obj: any) => obj.isEditMode === true);
 	}

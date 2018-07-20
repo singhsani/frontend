@@ -41,18 +41,20 @@ export class DashboardComponent implements OnInit {
 	 */
 	createRecord(apiCode: string) {
 
-		/**
-		 * catch application which should not be created by default.
-		 */
-		if (apiCode == 'HEL-BCR' || apiCode == 'HEL-DCR' || apiCode == 'HEL-NRCBR' || apiCode == 'HEL-NRCDR' || apiCode == 'HEL-DUPBR' || apiCode == 'HEL-DUPDR') {
-			let redirectUrl = ManageRoutes.getFullRoute(apiCode);
-			this.router.navigate([redirectUrl, false, apiCode]);
-		}else if(apiCode == 'SHOP-REN'){
-			this.router.navigate([ManageRoutes.getFullRoute(apiCode),false, apiCode]);
-		}else if(apiCode == 'SHOP-TRAF'){
-			this.router.navigate([ManageRoutes.getFullRoute(apiCode),false, apiCode]);
-		}
-		 else {
+		switch(apiCode){
+			case 'HEL-BCR':
+			case 'HEL-DCR':
+			case 'HEL-NRCBR':
+			case 'HEL-NRCDR':
+			case 'HEL-DUPBR':
+			case 'HEL-DUPDR':
+			case 'SHOP-REN':
+			case 'SHOP-TRAF':
+			case 'SHOP-CAN':
+			case 'SHOP-DUP':
+				this.router.navigate([ManageRoutes.getFullRoute(apiCode),false, apiCode]);
+			break;
+			default:
 			if (ManageRoutes.getApiTypeFromApiCode(apiCode)) {
 				this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);
 				this.formService.createFormData().subscribe(res => {
@@ -63,6 +65,7 @@ export class DashboardComponent implements OnInit {
 				// todo 
 				this.toastr.error("Invalid API Code");
 			}
+			break;
 		}
 
 	}

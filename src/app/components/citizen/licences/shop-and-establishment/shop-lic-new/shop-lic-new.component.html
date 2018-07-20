@@ -506,9 +506,10 @@
 						<label>{{'type_of_organization_label' | translate: translateKey}}</label>
 					</div>
 					<div class="col-md-12 ngSelect" formGroupName="typeOfOrganisation">
-						<ng-select formControlName="code" (change)="onChangeTypeOfOrganization($event)">
+						<ng-select formControlName="code" required (change)="onChangeTypeOfOrganization($event)">
 							<ng-option *ngFor="let org_type of SHOP_LIC_TYPE_OF_ORGANIZATION" [value]="org_type.code">{{org_type.name}}</ng-option>
 						</ng-select>
+						<control-messages [control]="shopLicNewForm.controls.typeOfOrganisation.controls.code"></control-messages>
 					</div>
 
 					<div class="row">
