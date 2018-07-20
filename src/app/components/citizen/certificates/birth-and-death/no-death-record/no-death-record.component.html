@@ -7,10 +7,11 @@
 
 		<!--Start  form  -->
 		<form [formGroup]="noRecordDeathForm" autocomplete="off" ngNativeValidate>
-			<mat-horizontal-stepper [linear]="false">
+
+			<mat-tab-group [(selectedIndex)]="tabIndex">
 
 				<!-- first step start-->
-				<mat-step [label]="stepLable1 | translate: translateKey">
+				<mat-tab [label]="stepLable1 | translate: translateKey">
 					<div class="row">
 						<mat-form-field class="col-md-4">
 							<input matInput type="text" formControlName="deceasedName" placeholder="{{'deceased_name' | translate: translateKey}}" required>
@@ -57,25 +58,25 @@
 						</mat-form-field>
 					</div>
 
-					<app-action-bar [uploadFiles]="uploadFileArray" [form]="noRecordDeathForm" [step]="'step1'" (stepReset)="stepReset()" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
+					<app-action-bar [uploadFiles]="uploadFileArray" [form]="noRecordDeathForm" [stepInfo]="{step: 'step1', next: 1, back: 0}" (handleErrors)="handleErrorsOnSubmit($event)" (tabIndex)="onTabChange($event)"></app-action-bar>
 
-				</mat-step>
+				</mat-tab>
 				<!-- end first step -->
 
 				<!-- second step start-->
-				<mat-step [label]="stepLable2 | translate: translateKey">
+				<mat-tab [label]="stepLable2 | translate: translateKey">
 
 					<div>Address
 						<app-address #address [requiredFeilds]="true" [addressFormGroup]="noRecordDeathForm.controls.deathPlaceAddress"></app-address>
 					</div>
 
-					<app-action-bar [uploadFiles]="uploadFileArray" [form]="noRecordDeathForm" [step]="'step2'" (stepReset)="stepReset()" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
+					<app-action-bar [uploadFiles]="uploadFileArray" [form]="noRecordDeathForm" [stepInfo]="{step: 'step2', next: 2, back: 0}" (handleErrors)="handleErrorsOnSubmit($event)" (tabIndex)="onTabChange($event)"></app-action-bar>
 
-				</mat-step>
+				</mat-tab>
 				<!-- second step end-->
 
 				<!-- last step start-->
-				<mat-step [label]="stepLable3 | translate: translateKey">
+				<mat-tab [label]="stepLable3 | translate: translateKey">
 
 					<div>Basic Detail
 						<app-basic-details [basicFormGroup]="noRecordDeathForm"></app-basic-details>
@@ -104,12 +105,12 @@
 						</div>
 					</div>
 
-					<app-action-bar [form]="noRecordDeathForm" [step]="'step3'" (stepReset)="stepReset()" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
-				</mat-step>
+					<app-action-bar [form]="noRecordDeathForm" [stepInfo]="{step: 'step3', next: 3, back: 1}" (handleErrors)="handleErrorsOnSubmit($event)" (tabIndex)="onTabChange($event)"></app-action-bar>
+				</mat-tab>
 				<!-- last step end-->
 
 				<!-- final step start-->
-				<mat-step [label]="stepLable4">
+				<mat-tab [label]="stepLable4">
 				
 					<div class="alert alert-warning">
 						Note : Submit Hard Copy At Madhyawarti School
@@ -143,11 +144,11 @@
 				
 					</div>
 				
-					<app-action-bar [form]="noRecordDeathForm" [step]="'final'" [uploadFiles]="uploadFileArray" (stepReset)="stepReset()" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
-				</mat-step>
+					<app-action-bar [form]="noRecordDeathForm" [stepInfo]="{step: 'final', next: 3, back: 2}" [uploadFiles]="uploadFileArray" (handleErrors)="handleErrorsOnSubmit($event)" (tabIndex)="onTabChange($event)"></app-action-bar>
+				</mat-tab>
 				<!-- final step end-->
 
-			</mat-horizontal-stepper>
+			</mat-tab-group>
 		</form>
 	</mat-card>
 </div>

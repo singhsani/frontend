@@ -39,6 +39,7 @@ export class CremationCertificateComponent implements OnInit {
 
 	uploadModel: any = {};
 	showButtons: boolean = false;
+	tabIndex: number = 0;
 
 	// Step Titles
 	stepLable1: string = "deceased_details";
@@ -131,13 +132,13 @@ export class CremationCertificateComponent implements OnInit {
 		let step2 = 14;
 
 		if (count <= step1) {
-			this.stepper.selectedIndex = 0;
+			this.tabIndex = 0;
 			return false;
 		} else if (count >= 33 && count <= 38) {
-			this.stepper.selectedIndex = 1;
+			this.tabIndex = 1;
 			return false;
 		} else if (count <= step2) {
-			this.stepper.selectedIndex = 1;
+			this.tabIndex = 1;
 			return false;
 		}
 
@@ -188,13 +189,6 @@ export class CremationCertificateComponent implements OnInit {
 	}
 
 	/**
-	 * This method use for reset steps
-	 */
-	stepReset() {
-		this.stepper.reset();
-	}
-
-	/**
 	 * This method is use for get the value of applicant relation change
 	 * @param event - select box change value
 	 */
@@ -207,5 +201,13 @@ export class CremationCertificateComponent implements OnInit {
 		}
 		this.cremationForm.controls['applicantRelationDetail'].updateValueAndValidity();
 
+	}
+
+	/**
+	 * This method use to get output event of tab change
+	 * @param evt - Tab index
+	 */
+	onTabChange(evt) {
+		this.tabIndex = evt;
 	}
 }

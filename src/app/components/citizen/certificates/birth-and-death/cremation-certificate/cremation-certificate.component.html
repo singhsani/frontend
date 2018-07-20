@@ -2,10 +2,10 @@
 	<app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
 	<mat-card class="mt-4 formClass">
 		<form [formGroup]="cremationForm" autocomplete="off" ngNativeValidate> 
-			<mat-horizontal-stepper [linear]="false">
+			<mat-tab-group [(selectedIndex)]="tabIndex">
 
 				<!-- first step start-->
-				<mat-step [label]="stepLable1 | translate: translateKey">
+				<mat-tab [label]="stepLable1 | translate: translateKey">
 
 					<div class="row">
 
@@ -69,14 +69,14 @@
 					</div>
 
 
-					<app-action-bar [form]="cremationForm" [step]="'step1'" (stepReset)="stepReset()" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
+					<app-action-bar [form]="cremationForm" [stepInfo]="{step: 'step1', next: 1, back: 0}" (handleErrors)="handleErrorsOnSubmit($event)" (tabIndex)="onTabChange($event)"></app-action-bar>
 
-				</mat-step>
+				</mat-tab>
 
 				<!-- end first step -->
 
 				<!-- second step start-->
-				<mat-step [label]="stepLable2 | translate: translateKey">
+				<mat-tab [label]="stepLable2 | translate: translateKey">
 
 					<div>
 						<app-basic-details [basicFormGroup]="cremationForm"></app-basic-details>
@@ -105,14 +105,14 @@
 
 					</div>
 
-					<app-action-bar [form]="cremationForm" [step]="'step2'" (stepReset)="stepReset()" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
+					<app-action-bar [form]="cremationForm" [stepInfo]="{step: 'step2', next: 2, back: 0}" (handleErrors)="handleErrorsOnSubmit($event)" (tabIndex)="onTabChange($event)"></app-action-bar>
 
-				</mat-step>
+				</mat-tab>
 				<!-- second step end-->
 
 
 				<!-- final step start-->
-				<mat-step [label]="stepLable3 | translate: translateKey">
+				<mat-tab [label]="stepLable3 | translate: translateKey">
 
 					<div class="alert alert-warning">
 						{{'note' | translate:translateKey}} : {{'submit_hard_copy_at_madhyawarti_school' | translate:translateKey}}
@@ -136,11 +136,11 @@
 						</div>
 					</div>
 
-					<app-action-bar [form]="cremationForm" [step]="'final'" [uploadFiles]="uploadFileArray" (stepReset)="stepReset()" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
-				</mat-step>
+					<app-action-bar [form]="cremationForm" [stepInfo]="{step: 'final', next: 2, back: 1}" [uploadFiles]="uploadFileArray" (handleErrors)="handleErrorsOnSubmit($event)" (tabIndex)="onTabChange($event)"></app-action-bar>
+				</mat-tab>
 				<!-- final step end-->
 
-			</mat-horizontal-stepper>
+			</mat-tab-group>
 		</form>
 	</mat-card>
 </div>
