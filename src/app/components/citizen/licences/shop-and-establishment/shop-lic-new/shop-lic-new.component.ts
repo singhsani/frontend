@@ -567,7 +567,9 @@ export class ShopLicNewComponent implements OnInit {
 			if (event === "SHOP_LIC_SELF_OWNERSHIP") {
 				// remove all controll becose if dropdown value is "SHOP_LIC_SELF_OWNERSHIP" then user add only one record.
 				(<FormArray>this.shopLicNewForm.get('partnerList')).controls = [];
-				//this.addMorePerson('PARTNER');
+				this.addMorePerson('PARTNER');
+			}else{
+				(<FormArray>this.shopLicNewForm.get('partnerList')).controls = [];
 			}
 		} catch (error) {
 			console.log(error.message)

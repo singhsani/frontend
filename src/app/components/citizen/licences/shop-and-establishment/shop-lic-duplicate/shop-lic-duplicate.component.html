@@ -1,14 +1,74 @@
 <div class="container">
 	<app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
-	<mat-card class="mt-4 formClass">
+
+	<mat-card [hidden]="serachLicenceObj.isDisplayDuplicateLicenceForm" class="mt-4 formClass">
+		<mat-form-field class="col-md-10">
+			<input matInput required placeholder="{{search_by_application_no | translate:translateKey}}" [(ngModel)]="serachLicenceObj.searchLicenceNumber">
+		</mat-form-field>
+		<button class="col-md-2" mat-raised-button color="primary" (click)="searchLicence()">{{search | translate:translateKey}}</button>
+	</mat-card>
+
+	<mat-card [hidden]="!serachLicenceObj.isDisplayDuplicateLicenceForm" class="mt-4 formClass">
 		<form [formGroup]="shopLicDuplicateForm">
 			<mat-horizontal-stepper [linear]="false">
 
-				<!-- first step start-->
-				<mat-step [label]="stepLable1">
-					<app-basic-details [basicFormGroup]="shopLicDuplicateForm"></app-basic-details>
-					<app-action-bar [form]="shopLicDuplicateForm" [step]="'final'" (stepReset)="stepReset()" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
+				<!-- step 1 Starts -->
+				<mat-step>
+					<ng-template matStepLabel>
+						<div matTooltip="{{'establishment_details' | translate:translateKey}}">{{'establishment_details' | translate:translateKey}}</div>
+					</ng-template>
+
+					<div class="row">
+						<mat-form-field class="col-md-4">
+							<input matInput required maxlength="30" placeholder="{{'name_of_establishment_if_any' | translate:translateKey}}" formControlName="establishmentName">
+							<control-messages [control]="shopLicDuplicateForm.controls.establishmentName"></control-messages>
+						</mat-form-field>
+						<!-- appGujInputSource targetElement="establishmentNameGuj" [form]="shopLicDuplicateForm" -->
+						<!-- gujarati -->
+						<!-- <mat-form-field class="col-md-6">
+							<input matInput type="text" required formControlName="establishmentNameGuj" appGujInputTarget [form]="shopLicDuplicateForm"
+							 placeholder="{{ 'name_of_establishment_if_any' | translate:translateKey:'gu' }}">
+							<control-messages [control]="shopLicDuplicateForm.controls.establishmentNameGuj"></control-messages>
+						</mat-form-field> -->
+						<!-- /gujarati -->
+
+						<div class="col-md-12">{{'postal_address_of_establishment' | translate:translateKey}}
+							<app-address #postalAddressEstablishment [addressFormGroup]="shopLicDuplicateForm.controls.postalAddress"></app-address>
+						</div>
+
+						<div class="col-md-4 ngSelect" formGroupName="wardNo">
+							<ng-select placeholder="{{'ward_no' | translate:translateKey}} *" formControlName="code" required>
+								<ng-option *ngFor="let no of wardNo" [value]="no.code">{{no.name}}</ng-option>
+							</ng-select>
+							<control-messages [control]="shopLicDuplicateForm.controls.wardNo.controls.code"></control-messages>
+						</div>
+
+						<mat-form-field class="col-md-4">
+							<input matInput required maxlength="150" placeholder="{{'name_of_employer' | translate:translateKey}}" formControlName="nameOfEmployer">
+							<control-messages [control]="shopLicDuplicateForm.controls.nameOfEmployer"></control-messages>
+						</mat-form-field>
+						<!-- appGujInputSource targetElement="nameOfEmployerGuj" [form]="shopLicDuplicateForm" -->
+						<!-- gujarati -->
+						<!-- <mat-form-field class="col-md-6">
+							<input matInput type="text" required formControlName="nameOfEmployerGuj" appGujInputTarget [form]="shopLicDuplicateForm" placeholder="{{ 'name_of_employer' | translate:translateKey:'gu' }}">
+							<control-messages [control]="shopLicDuplicateForm.controls.nameOfEmployerGuj"></control-messages>
+						</mat-form-field> -->
+
+						<mat-form-field class="col-md-4">
+							<input matInput required maxlength="15" placeholder="{{'business_property_tax_no' | translate:translateKey}}" formControlName="propertyTaxNo">
+							<control-messages [control]="shopLicDuplicateForm.controls.propertyTaxNo"></control-messages>
+						</mat-form-field>
+
+						<mat-form-field class="col-md-6">
+							<input matInput required maxlength="2" OnlyNumber placeholder="{{'no_of_copies' | translate:translateKey}}" formControlName="noOfCopies">
+							<control-messages [control]="shopLicDuplicateForm.controls.noOfCopies"></control-messages>
+						</mat-form-field>
+					</div>
+
+					<app-action-bar [uploadFiles]="uploadFileArray" [form]="shopLicDuplicateForm" [step]="'final'" (stepReset)="stepReset()"
+					 (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
 				</mat-step>
+				<!-- step 1 Ends -->
 
 			</mat-horizontal-stepper>
 		</form>

@@ -49,8 +49,8 @@ export class ShopLicRenewalComponent implements OnInit {
 			{ labelName: 'Professional Tax PEC No Receipt', fieldIdentifier: '1' },
 			{ labelName: 'Professional Tax PRC No Receipt', fieldIdentifier: '2' },
 			{ labelName: 'Property Tax / Water Tax paid Receipt', fieldIdentifier: '3' },
-			{ labelName: 'aadhar_number', fieldIdentifier: '4' },
-			{ labelName: 'PAN_card', fieldIdentifier: '5' },
+			{ labelName: 'Aadhar Number', fieldIdentifier: '4' },
+			{ labelName: 'PAN Card', fieldIdentifier: '5' },
 
 		];
 
@@ -243,8 +243,8 @@ export class ShopLicRenewalComponent implements OnInit {
 
 	/**
 	*  Method is used get selected data from lookup when change.
-	* @lookups : Array
-	* @code : String
+	* @param lookups : Array
+	* @param code : String
 	* return object
 	*/
 	getSelectedDataFromLookUps(lookups: Array<any>, code: string) {
@@ -272,9 +272,9 @@ export class ShopLicRenewalComponent implements OnInit {
 	 * @param count - count of invalid control.
 	 */
 	handleErrorsOnSubmit(count) {
-		let step1 = 6;
+		let step1 = 55;
 		if (count <= step1) {
-			this.stepper.selectedIndex = 0;
+			this.stepper.selectedIndex = 5;
 			return false;
 		}
 	}
