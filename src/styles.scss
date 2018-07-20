@@ -132,7 +132,7 @@ h1 { font-size: 30px; margin-bottom: 10px; }
 .cardH2.mat-card div { font-size: 14px; text-transform: uppercase; position: relative; cursor:pointer}
 .cardH2.mat-card h2::after { content: ''; background: $primaryGradient; position: absolute; left: -24px; top: 0; width: 5px; height: 100%; }
 
-.container {padding-bottom: 20px; max-width: inherit;}
+// .container {padding-bottom: 20px; max-width: inherit;}
 .formClass { padding: 0 !important;}
 // .formClass [class^="col-"], .formClass [class*=" col-"] { margin-top: 8px; margin-bottom: 8px; }
 .formClass .mat-form-field { width: 100% !important; }
@@ -169,14 +169,6 @@ h1 { font-size: 30px; margin-bottom: 10px; }
 
 
 
-
-
-// Profile
-.profilePage {
-.iconMat {
-    .mat-form-field-wrapper {margin-left: 30px; left: 0 !important;}
-    }
-}
 
 
 // Page Not found
@@ -389,9 +381,10 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
     .mat-icon {font-size: 22px; float: left; margin-right: 13px;}
 }
 
-.mainMenu {
+.mainMenu { // margin-bottom: 40px;
+    position: absolute; top: 49px; left: 0; width: 100%;
     &>.mat-tab-header {border: 0;
-        .mat-tab-label-container {background: #f1f1f1; margin-bottom: 40px;}
+        .mat-tab-label-container {background: #f1f1f1;}
     }
     .mat-tab-label {font-size: 16px; color: #808080; opacity: 1;}
     .mat-icon {font-size: 22px; float: left; margin-right: 13px;}
@@ -400,7 +393,7 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
 
 
 /*** Dashboard ***/
-.container {max-width: 1130px; margin: 90px auto 30px;}
+.container {max-width: 1130px; margin:90px auto 30px;}
 
 .welCome {padding: 23px; background: $colorLite url(assets/images/bg-logo.png) no-repeat right bottom; padding-right: 100px; margin-bottom: 40px;
     p {font-size: 12px; color: #453960; padding-bottom: 0; margin-bottom: 0;}
@@ -442,5 +435,36 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
 .noApplication {width: 220px; margin: 0 auto; color: #000; font-size: 18px; text-align: center;
     img {padding: 30px 0;}
     .noActi {color: #989898; font-size: 14px; display: block; padding: 10px 0 60px 0;}
+}
+
+
+
+/*** My Profile ***/
+.profilePage {margin:0; border: 1px solid #e9e9ec;
+    .col-md-3 {padding: 0;}
+    .col-md-9 {padding-left: 30px; padding-right: 30px;}
+    // .iconMat {
+    //     .mat-form-field-wrapper {margin-left: 30px; left: 0 !important;}
+    //     }
+
+    .updateProfileBtn {position: absolute; top: 20px; right: 30px;}
+    h2 {margin:20px 0 8px;}
+    }
+
+.userInfo {text-align: center; background: $colorLite; padding: 50px 0 60px; border-right: 1px solid #e9e9ec;
+    .userPhoto {padding-bottom: 50px;
+        .pic {width: 135px; height: 135px; border: 10px solid #cec2ed; margin-bottom: 25px; border-radius:68px; display: inline-block; position: relative;
+            img {border-radius:58px; width: 115px; height: 115px;}
+            .edtBtn {position: absolute; top: 0; right: -13px; background: #fff;
+                .mat-icon {color: #b3b3b3;}
+                &:hover {
+                    .mat-icon {color:$colorBlue;}
+                }
+                span {padding:0;}
+            }
+        }
+        span {font-size: 21px; color: #333; display: block; padding: 0 15px;}
+    }
+    p {line-height: 26px;}
 }
 
