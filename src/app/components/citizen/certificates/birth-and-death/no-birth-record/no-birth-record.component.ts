@@ -46,6 +46,7 @@ export class NoBirthRecordComponent implements OnInit {
 	showSearchForm: boolean = true;
 
 	uploadModel: any = {};
+	tabIndex: number = 0;
 
 	// Step Titles
 	stepLable1: string = "no_record_certificate_detail";
@@ -145,18 +146,18 @@ export class NoBirthRecordComponent implements OnInit {
 		let step1 = 7;
 		let step2 = 8;
 		let step3 = 11;
-
+		
 		if (count <= step1) {
-			this.stepper.selectedIndex = 0;
+			this.tabIndex = 0;
 			return false;
 		} else if (count <= step2) {
-			this.stepper.selectedIndex = 1;
+			this.tabIndex = 1;
 			return false;
 		} else if (count <= step3) {
-			this.stepper.selectedIndex = 2;
+			this.tabIndex = 2;
 			return false;
 		} else if (count >= 32 && count <= 40) {
-			this.stepper.selectedIndex = 2;
+			this.tabIndex = 2;
 		}
 
 	}
@@ -188,13 +189,6 @@ export class NoBirthRecordComponent implements OnInit {
 		}
 
 		return this.uploadModel;
-	}
-
-	/**
-	 * This method is use for reset stepper and redirect to 1st step
-	 */
-	stepReset() {
-		this.stepper.reset();
 	}
 
 
@@ -260,7 +254,7 @@ export class NoBirthRecordComponent implements OnInit {
 	showNRCForm(event) {
 		this.isVisibeNRCForm = event;
 		if (!this.isVisibeNRCForm) {
-			
+
 			this.formService.createFormData().subscribe(res => {
 				this.appId = res.serviceFormId;
 				let url = this.location.path().replace('false', this.appId.toString());
@@ -271,6 +265,14 @@ export class NoBirthRecordComponent implements OnInit {
 
 			this.showSearchForm = false;
 		}
+	}
+
+	/**
+	 * This method use to get output event of tab change
+	 * @param evt - Tab index
+	 */
+	onTabChange(evt) {
+		this.tabIndex = evt;
 	}
 
 }

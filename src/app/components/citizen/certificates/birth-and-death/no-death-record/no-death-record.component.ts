@@ -45,6 +45,7 @@ export class NoDeathRecordComponent implements OnInit {
 	uploadModel: any = {};
 	isVisibeNRCForm: boolean = true;
 	showSearchForm: boolean = true;
+	tabIndex: number = 0;
 
 	// Step Titles
 	stepLable1: string = "no_record_certificate_detail";
@@ -142,16 +143,16 @@ export class NoDeathRecordComponent implements OnInit {
 		let step3 = 11;
 
 		if (count <= step1) {
-			this.stepper.selectedIndex = 0;
+			this.tabIndex = 0;
 			return false;
 		} else if (count <= step2) {
-			this.stepper.selectedIndex = 1;
+			this.tabIndex = 1;
 			return false;
 		} else if (count <= step3) {
-			this.stepper.selectedIndex = 2;
+			this.tabIndex = 2;
 			return false;
 		} else if (count >= 32 && count <= 40) {
-			this.stepper.selectedIndex = 2;
+			this.tabIndex = 2;
 		}
 
 	}
@@ -256,6 +257,14 @@ export class NoDeathRecordComponent implements OnInit {
 
 			this.showSearchForm = false;
 		}
+	}
+
+	/**
+	 * This method use to get output event of tab change
+	 * @param evt - Tab index
+	 */
+	onTabChange(evt) {
+		this.tabIndex = evt;
 	}
 
 }

@@ -19,19 +19,19 @@ export class ActionBarComponent implements OnInit, OnChanges {
 
 	translateKey: string = 'actionBarScreen';
 	@Input() isstepper: boolean = true;
-	@Input() form: FormGroup;
 	@Input() step: string;
-	commonFormControl: FormGroup;
+	@Input() form: FormGroup;
 	@Input() uploadFiles: any;
+	@Input() stepInfo: any;
+
+	@Output() handleErrors = new EventEmitter<any>();
+	@Output() tabIndex = new EventEmitter<any>();
+
 	uploadFilesArray: Array<any> = []
 
 	isSaveBtnDisabled: boolean = false;
 	isSubmitBtnDisabled: boolean = false;
-
 	isBtnsDisabled: boolean = true;
-
-	@Output() handleErrors = new EventEmitter<any>();
-	@Output() stepReset = new EventEmitter<any>();
 
 	constructor(
 		private formService: FormsActionsService,
@@ -42,7 +42,7 @@ export class ActionBarComponent implements OnInit, OnChanges {
 	}
 
 	ngOnInit() {
-		
+
 		this.formService.apiType = this.form.get('apiType').value;
 		this.commonFormControls();
 		this.uploadFilesArray = this.uploadFiles;
@@ -86,6 +86,17 @@ export class ActionBarComponent implements OnInit, OnChanges {
 	}
 
 	/**
+	 * Method use to emit tab index
+	 * str- back or next string
+	 */
+	nextOrPrevious(str) {
+		if (str === 'back')
+			this.tabIndex.emit(this.stepInfo.back);
+		else
+			this.tabIndex.emit(this.stepInfo.next);
+	}
+
+	/**
 	 * This method is used for save form as draft using API
 	 */
 	saveAsDraft() {
@@ -96,8 +107,8 @@ export class ActionBarComponent implements OnInit, OnChanges {
 			res => {
 				this.form.patchValue(res);
 				this.isSaveBtnDisabled = false;
-				if(this.isstepper){
-					document.getElementById('matStepperNextBtn').click();
+				if (this.isstepper) {
+					this.tabIndex.emit(this.stepInfo.next);
 				}
 				this.toastr.success(`${this.form.value.serviceDetail.name} information successfully saved`);
 			},
@@ -158,7 +169,7 @@ export class ActionBarComponent implements OnInit, OnChanges {
 									}),
 									transactionId: paymentData.transactionId,
 									paymentStatus: "SUCCESS",
-		
+
 									retUrl: "http://192.168.10.107:8080/vmcportal/",
 									retPath: 'citizen/payment-gateway-response',
 									myApplicationUrl: '/citizen/my-applications'
@@ -208,31 +219,6 @@ export class ActionBarComponent implements OnInit, OnChanges {
 		}
 	}
 
-	/**
-	 * This method is use for clear the form
-	 */
-	resetForm() {
-
-		// This logic is to get addressType with parent address formGroup before reseting form.
-		let addrObj: any = {};
-		_.forEach(this.form.value, (value, key) => {
-			if (_.isObject(value)) {
-				_.forEach(value, (typeValue, type) => {
-					if (type === 'addressType') {
-						addrObj[key] = {
-							[type]: typeValue
-						}
-					}
-				})
-			}
-		});
-
-		this.commonFormControl.patchValue(this.form.value);
-		this.form.reset();
-		this.form.patchValue(this.commonFormControl.value);
-		this.form.patchValue(addrObj);
-		this.stepReset.emit();
-	}
 
 	/**
 	 * This method used to set common formControls in existing formGroups
@@ -257,12 +243,7 @@ export class ActionBarComponent implements OnInit, OnChanges {
 			canEdit: true,
 			canDelete: true,
 			canSubmit: null,
-			serviceDetail: {
-				code: null,
-				name: null,
-				gujName: null,
-				feesOnScrutiny: null
-			}
+
 		}
 
 		/* started common form controls in existing formGroups*/
@@ -273,11 +254,11 @@ export class ActionBarComponent implements OnInit, OnChanges {
 
 		//temp condition
 
-		this.form.addControl('firstName', new FormControl('', [ ValidationService.nameValidator]));
+		this.form.addControl('firstName', new FormControl('', [ValidationService.nameValidator]));
 		this.form.addControl('middleName', new FormControl('', ValidationService.nameValidator));
-		this.form.addControl('lastName', new FormControl('', [ ValidationService.nameValidator]));
+		this.form.addControl('lastName', new FormControl('', [ValidationService.nameValidator]));
 		this.form.addControl('aadhaarNo', new FormControl('', Validators.maxLength(12)));
-		this.form.addControl('contactNo', new FormControl('', [ Validators.maxLength(10)]));
+		this.form.addControl('contactNo', new FormControl('', [Validators.maxLength(10)]));
 		this.form.addControl('email', new FormControl('', [ValidationService.emailValidator]));
 
 		this.form.addControl('serviceDetail', new FormGroup({
@@ -287,8 +268,6 @@ export class ActionBarComponent implements OnInit, OnChanges {
 			feesOnScrutiny: new FormControl()
 		}));
 		/* ended common form controls in existing formGroups*/
-
-		this.commonFormControl = this.fb.group(formControlObj);
 
 	}
 
