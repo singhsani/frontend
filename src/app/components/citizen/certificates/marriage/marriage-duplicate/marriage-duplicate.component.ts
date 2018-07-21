@@ -24,6 +24,7 @@ export class MarriageDuplicateComponent implements OnInit {
 
 	appId: number;
 	apiCode: string;
+	tabIndex: number = 0;
 
 	// Marriage date 
 	disablefutureDate = new Date(moment().format('YYYY-MM-DD'));
@@ -110,18 +111,20 @@ export class MarriageDuplicateComponent implements OnInit {
 		let step2 = 6;
 
 		if (count <= step1) {
-			this.stepper.selectedIndex = 0;
+			this.tabIndex = 0;
 			return false;
 		} else if (count <= step2) {
-			this.stepper.selectedIndex = 1;
+			this.tabIndex = 1;
 			return false;
 		}
 	}
 
 	/**
-	 * Method is used to reset form its a output event from action bar.
+	 * This method use to get output event of tab change
+	 * @param evt - Tab index
 	 */
-	stepReset() {
-		this.stepper.reset();
+	onTabChange(evt) {
+		this.tabIndex = evt;
 	}
+
 }

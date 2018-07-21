@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatHorizontalStepper, MatStepLabel } from '@angular/material';
 
 import { ValidationService } from '../../../../../shared/services/validation.service';
 import { FormsActionsService } from '../../../../../core/services/citizen/data-services/forms-actions.service';
@@ -20,8 +19,6 @@ import { element } from 'protractor';
 })
 export class MarriageCreateComponent implements OnInit {
 
-    @ViewChild(MatHorizontalStepper) stepper: MatHorizontalStepper;
-    @ViewChild(MatStepLabel) steplable: MatStepLabel;
     @ViewChild('address') addrComponent: any;
 
     //Mandatory attachments Array
@@ -37,6 +34,7 @@ export class MarriageCreateComponent implements OnInit {
     // Select id for edit marriage form
     formId: number;
     apiCode: string;
+	tabIndex: number = 0;
 
     // Lookups array list
     religionArray: any = [];
@@ -685,29 +683,29 @@ export class MarriageCreateComponent implements OnInit {
             let count = flag;
 
             if (count <= step1) {
-                this.stepper.selectedIndex = 0;
+                this.tabIndex = 0;
                 return false;
             } else if (count <= step2) {
-                this.stepper.selectedIndex = 1;
+                this.tabIndex = 1;
                 return false;
             } else if (count <= step3) {
-                this.stepper.selectedIndex = 2;
+                this.tabIndex = 2;
                 return false;
             } else if (count <= step4) {
-                this.stepper.selectedIndex = 3;
+                this.tabIndex = 3;
                 return false;
             } else if (count <= step5) {
-                this.stepper.selectedIndex = 4;
+                this.tabIndex = 4;
                 return false;
             } else if (count <= step6) {
-                this.stepper.selectedIndex = 5;
+                this.tabIndex = 5;
                 return false;
             } else if (count <= step7) {
-                this.stepper.selectedIndex = 6;
+                this.tabIndex = 6;
                 return false;
             }
             else if (count <= step8) {
-                this.stepper.selectedIndex = 7;
+                this.tabIndex = 7;
                 return false;
             }
             else if (count == 67) {
@@ -716,16 +714,16 @@ export class MarriageCreateComponent implements OnInit {
             }
             // for NIR marriage
             else if (count >= 90 && count <= 103) {
-                this.stepper.selectedIndex = 0;
+                this.tabIndex = 0;
                 return false;
             } else if (count >= 103 && count <= 118) {
-                this.stepper.selectedIndex = 1;
+                this.tabIndex = 1;
                 return false;
             } else if (count == 119) {
-                this.stepper.selectedIndex = 2;
+                this.tabIndex = 2;
                 return false;
             } else if (count == 120) {
-                this.stepper.selectedIndex = 3;
+                this.tabIndex = 3;
                 return false;
             }
 
@@ -737,27 +735,35 @@ export class MarriageCreateComponent implements OnInit {
     }
 
     /**
+	 * This method use to get output event of tab change
+	 * @param evt - Tab index
+	 */
+	onTabChange(evt) {
+		this.tabIndex = evt;
+	}
+
+    /**
      * Method is used to reset form its a output event from action bar.
      */
-    stepReset() {
-        this.stepper.reset();
-        this.addObject['checkedPar1'] = false;
-        this.addObject['checkedPar2'] = false;
-        this.addObject['checkedPar3'] = false;
-        this.marriageFormGroup.get('isGroomParResAddressSame').get('code').setValue('NO');
-        this.marriageFormGroup.get('isBrideParResAddressSame').get('code').setValue('NO');
-        this.marriageFormGroup.get('isPriestParResAddressSame').get('code').setValue('NO');
-        this.marriageFormGroup.get('groomAddress').get('addressType').setValue('GROOM_ADDRESS');
-        this.marriageFormGroup.get('brideAddress').get('addressType').setValue('BRIDE_ADDRESS');
-        this.marriageFormGroup.get('groomParentsAddress').get('addressType').setValue('GROOM_PARENTS_ADDRESS');
-        this.marriageFormGroup.get('groomParentsAddressResidence').get('addressType').setValue('GROOM_PARENTS_ADDRESS_RESIDENCE');
-        this.marriageFormGroup.get('brideParentsAddress').get('addressType').setValue('BRIDE_PARENTS_ADDRESS');
-        this.marriageFormGroup.get('brideParentsAddressResidence').get('addressType').setValue('GROOM_PARENTS_ADDRESS_RESIDENCE');
-        this.marriageFormGroup.get('priestAddress').get('addressType').setValue('PRIEST_ADDRESS');
-        this.marriageFormGroup.get('priestAddressResidence').get('addressType').setValue('PRIEST_ADDRESS_RESIDENCE');
-        this.marriageFormGroup.get('firstWitnessAddress').get('addressType').setValue('FIRST_WITNESS_ADDRESS');
-        this.marriageFormGroup.get('secondWitnessAddress').get('addressType').setValue('SECOND_WITNESS_ADDRESS');
-    }
+    // stepReset() {
+    //     this.stepper.reset();
+    //     this.addObject['checkedPar1'] = false;
+    //     this.addObject['checkedPar2'] = false;
+    //     this.addObject['checkedPar3'] = false;
+    //     this.marriageFormGroup.get('isGroomParResAddressSame').get('code').setValue('NO');
+    //     this.marriageFormGroup.get('isBrideParResAddressSame').get('code').setValue('NO');
+    //     this.marriageFormGroup.get('isPriestParResAddressSame').get('code').setValue('NO');
+    //     this.marriageFormGroup.get('groomAddress').get('addressType').setValue('GROOM_ADDRESS');
+    //     this.marriageFormGroup.get('brideAddress').get('addressType').setValue('BRIDE_ADDRESS');
+    //     this.marriageFormGroup.get('groomParentsAddress').get('addressType').setValue('GROOM_PARENTS_ADDRESS');
+    //     this.marriageFormGroup.get('groomParentsAddressResidence').get('addressType').setValue('GROOM_PARENTS_ADDRESS_RESIDENCE');
+    //     this.marriageFormGroup.get('brideParentsAddress').get('addressType').setValue('BRIDE_PARENTS_ADDRESS');
+    //     this.marriageFormGroup.get('brideParentsAddressResidence').get('addressType').setValue('GROOM_PARENTS_ADDRESS_RESIDENCE');
+    //     this.marriageFormGroup.get('priestAddress').get('addressType').setValue('PRIEST_ADDRESS');
+    //     this.marriageFormGroup.get('priestAddressResidence').get('addressType').setValue('PRIEST_ADDRESS_RESIDENCE');
+    //     this.marriageFormGroup.get('firstWitnessAddress').get('addressType').setValue('FIRST_WITNESS_ADDRESS');
+    //     this.marriageFormGroup.get('secondWitnessAddress').get('addressType').setValue('SECOND_WITNESS_ADDRESS');
+    // }
 
 
 }
