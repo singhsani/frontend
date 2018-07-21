@@ -29,6 +29,7 @@ export class ShopLicRenewalComponent implements OnInit {
 	private showButtons: boolean = false;
 	//File and image upload
 	uploadModel: any = {};
+	tabIndex: number = 0;
 
 	//lookup array list
 	gender: Array<any> = [];
@@ -274,7 +275,7 @@ export class ShopLicRenewalComponent implements OnInit {
 	handleErrorsOnSubmit(count) {
 		let step1 = 55;
 		if (count <= step1) {
-			this.stepper.selectedIndex = 5;
+			this.tabIndex = 5;
 			return false;
 		}
 	}
@@ -449,9 +450,17 @@ export class ShopLicRenewalComponent implements OnInit {
 	/**
 	 * Method is used to reset form its a output event from action bar.
 	 */
-	stepReset() {
-		this.stepper.reset();
-		this.shopLicRenewalForm.get('postalAddress').get('addressType').setValue('SHOP_LIC_POSTAL_ADDRESS');
+	// stepReset() {
+	// 	this.stepper.reset();
+	// 	this.shopLicRenewalForm.get('postalAddress').get('addressType').setValue('SHOP_LIC_POSTAL_ADDRESS');
+	// }
+
+	/**
+	 * This method use to get output event of tab change
+	 * @param evt - Tab index
+	 */
+	onTabChange(evt) {
+		this.tabIndex = evt;
 	}
 
 	/**

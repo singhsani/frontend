@@ -30,6 +30,7 @@ export class ShopLicCancellationComponent implements OnInit {
 	private showButtons: boolean = false;
 	//File and image upload
 	uploadModel: any = {};
+	tabIndex: number = 0;
 
 	//lookup array
 	wardNo: Array<any> = [];
@@ -226,13 +227,12 @@ export class ShopLicCancellationComponent implements OnInit {
 		});
 	}
 
-	/**
-	 * Method is used to reset form its a output event from action bar.
+    /**
+	 * This method use to get output event of tab change
+	 * @param evt - Tab index
 	 */
-	stepReset() {
-		this.stepper.reset();
-		this.shopCancellationForm.get('postalAddress').get('addressType').setValue('SHOP_LIC_POSTAL_ADDRESS');
-
+	onTabChange(evt) {
+		this.tabIndex = evt;
 	}
 
 }

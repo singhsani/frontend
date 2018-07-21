@@ -110,7 +110,7 @@ export class ActionBarComponent implements OnInit, OnChanges {
 				if (this.isstepper) {
 					this.tabIndex.emit(this.stepInfo.next);
 				}
-				this.toastr.success(`${this.form.value.serviceDetail.name} information successfully saved`);
+				this.toastr.success(`${this.form.getRawValue().serviceDetail.name} information successfully saved`);
 			},
 			err => {
 				this.markFormGroupTouched(this.form);

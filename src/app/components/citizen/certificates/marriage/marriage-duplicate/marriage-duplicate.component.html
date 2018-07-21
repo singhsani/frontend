@@ -2,20 +2,20 @@
 	<app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
 	<mat-card class="mt-4 formClass">
 		<form [formGroup]="marriageDuplicateForm">
-			<mat-horizontal-stepper>
+			<mat-tab-group [(selectedIndex)]="tabIndex">
 
 				<!-- first step start-->
-				<mat-step [stepControl]="basicDetail" [label]="stepLable1">
+				<mat-tab [label]="stepLable1">
 					<app-basic-details [basicFormGroup]="marriageDuplicateForm"></app-basic-details>
 
 					<div class="col-12">
-						<app-action-bar [form]="marriageDuplicateForm" [step]="'step1'"></app-action-bar>
+						<app-action-bar [form]="marriageDuplicateForm" [stepInfo]="{step: 'step1', next: 1, back: 0}"  (tabIndex)="onTabChange($event)"></app-action-bar>
 					</div>
 
-				</mat-step>
+				</mat-tab>
 
 				<!-- second step start-->
-				<mat-step [stepControl]="groomandbrideDetail" [label]="stepLable2">
+				<mat-tab [label]="stepLable2">
 					<div class="row">
 
 						<mat-form-field class="col-4">
@@ -53,11 +53,11 @@
 						</mat-form-field>
 
 						<div class="col-12">
-							<app-action-bar [form]="marriageDuplicateForm" [step]="'final'" (stepReset)="stepReset()" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
+							<app-action-bar [form]="marriageDuplicateForm" [stepInfo]="{step: 'final', next: 0, back: 0}" (tabIndex)="onTabChange($event)" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
 						</div>
 					</div>
-				</mat-step>
-			</mat-horizontal-stepper>
+				</mat-tab>
+			</mat-tab-group>
 		</form>
 	</mat-card>
 </div>

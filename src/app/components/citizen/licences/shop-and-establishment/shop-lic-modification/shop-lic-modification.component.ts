@@ -32,6 +32,7 @@ export class ShopLicModificationComponent implements OnInit {
 	private showButtons: boolean = false;
 	//File and image upload
 	uploadModel: any = {};
+	tabIndex: number = 0;
 
 	//lookup array list
 	gender: Array<any> = [];
@@ -275,7 +276,7 @@ export class ShopLicModificationComponent implements OnInit {
 				// remove all controll becose if dropdown value is "SHOP_LIC_SELF_OWNERSHIP" then user add only one record.
 				(<FormArray>this.shopLicModificationForm.get('partnerList')).controls = [];
 				this.addMorePerson('PARTNER');
-			}else{
+			} else {
 				(<FormArray>this.shopLicModificationForm.get('partnerList')).controls = [];
 			}
 		} catch (error) {
@@ -299,18 +300,7 @@ export class ShopLicModificationComponent implements OnInit {
 		return totalcount;
 	}
 
-	/**
-	 * Method is used to handle error/validation on submit.
-	 * @param count - count of invalid control.
-	 */
-	handleErrorsOnSubmit(count) {
-		let step1 = 6;
-		if (count <= step1) {
-			this.stepper.selectedIndex = 0;
-			return false;
-		}
-	}
-
+	
 	/**
 	 * This method is use for get lookup data.
 	 */
@@ -476,9 +466,17 @@ export class ShopLicModificationComponent implements OnInit {
 	/**
 	 * Method is used to reset form its a output event from action bar.
 	 */
-	stepReset() {
-		this.stepper.reset();
-		this.shopLicModificationForm.get('postalAddress').get('addressType').setValue('SHOP_LIC_POSTAL_ADDRESS');
+	// stepReset() {
+	// 	this.stepper.reset();
+	// 	this.shopLicModificationForm.get('postalAddress').get('addressType').setValue('SHOP_LIC_POSTAL_ADDRESS');
+	// }
+
+	/**
+     * This method use to get output event of tab change
+     * @param evt - Tab index
+     */
+	onTabChange(evt) {
+		this.tabIndex = evt;
 	}
 
 	/**
@@ -701,6 +699,62 @@ export class ShopLicModificationComponent implements OnInit {
 			console.log(error.message)
 		}
 	}
+
+	 /**
+     * This method required for final form submition.
+     * @param flag - flag of invalid control.
+     */
+	handleErrorsOnSubmit(flag) {
+
+		let step1 = 16;
+		let step2 = 28;
+		let step3 = 35;
+		let step4 = 41;
+		let step5 = 47;
+		let step6 = 53;
+		let step7 = 62;
+		let step8 = 66;
+
+		if (flag != null) {
+			//Check validation for step by step
+			let count = flag;
+
+			if (count <= step1) {
+				this.tabIndex = 0;
+				return false;
+			} else if (count <= step2) {
+				this.tabIndex = 1;
+				return false;
+			} else if (count <= step3) {
+				this.tabIndex = 2;
+				return false;
+			} else if (count <= step4) {
+				this.tabIndex = 3;
+				return false;
+			} else if (count <= step5) {
+				this.tabIndex = 4;
+				return false;
+			} else if (count <= step6) {
+				this.tabIndex = 5;
+				return false;
+			} else if (count <= step7) {
+				this.tabIndex = 6;
+				return false;
+			} else if (count <= step8) {
+				this.tabIndex = 7;
+				return false;
+			}
+			// else if (count == 67) {
+			// 	this.checkReligion();
+			// 	return false;
+			// }
+			else {
+				console.log("else condition");
+			}
+
+		}
+	}
+
 
 	/**
      * Method is used to set data value to upload method.

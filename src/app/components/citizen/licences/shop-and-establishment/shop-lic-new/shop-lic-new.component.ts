@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MatHorizontalStepper, MatStepLabel } from '@angular/material';
 import { ManageRoutes } from './../../../../../config/routes-conf';
 import { CommonService } from '../../../../../shared/services/common.service';
 
@@ -19,8 +18,6 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class ShopLicNewComponent implements OnInit {
 
-	@ViewChild(MatHorizontalStepper) stepper: MatHorizontalStepper;
-	@ViewChild(MatStepLabel) steplable: MatStepLabel;
 	@ViewChild('postalAddressEstablishment') postalAddressEstablishment: any;
 
 	shopLicNewForm: FormGroup;
@@ -28,9 +25,10 @@ export class ShopLicNewComponent implements OnInit {
 
 	formId: number;
 	apiCode: string;
+	tabIndex: number = 0;
 
 	disablefutureDate = new Date(moment().format('YYYY-MM-DD'));
-	
+
 	//File and image upload
 	uploadModel: any = {};
 	private showButtons: boolean = false;
@@ -568,7 +566,7 @@ export class ShopLicNewComponent implements OnInit {
 				// remove all controll becose if dropdown value is "SHOP_LIC_SELF_OWNERSHIP" then user add only one record.
 				(<FormArray>this.shopLicNewForm.get('partnerList')).controls = [];
 				this.addMorePerson('PARTNER');
-			}else{
+			} else {
 				(<FormArray>this.shopLicNewForm.get('partnerList')).controls = [];
 			}
 		} catch (error) {
@@ -612,28 +610,28 @@ export class ShopLicNewComponent implements OnInit {
 			let count = flag;
 
 			if (count <= step1) {
-				this.stepper.selectedIndex = 0;
+				this.tabIndex = 0;
 				return false;
 			} else if (count <= step2) {
-				this.stepper.selectedIndex = 1;
+				this.tabIndex = 1;
 				return false;
 			} else if (count <= step3) {
-				this.stepper.selectedIndex = 2;
+				this.tabIndex = 2;
 				return false;
 			} else if (count <= step4) {
-				this.stepper.selectedIndex = 3;
+				this.tabIndex = 3;
 				return false;
 			} else if (count <= step5) {
-				this.stepper.selectedIndex = 4;
+				this.tabIndex = 4;
 				return false;
 			} else if (count <= step6) {
-				this.stepper.selectedIndex = 5;
+				this.tabIndex = 5;
 				return false;
 			} else if (count <= step7) {
-				this.stepper.selectedIndex = 6;
+				this.tabIndex = 6;
 				return false;
 			} else if (count <= step8) {
-				this.stepper.selectedIndex = 7;
+				this.tabIndex = 7;
 				return false;
 			}
 			// else if (count == 67) {
@@ -647,14 +645,13 @@ export class ShopLicNewComponent implements OnInit {
 		}
 	}
 
-
-    /**
-     * Method is used to reset form its a output event from action bar.
-     */
-	stepReset() {
-		this.stepper.reset();
-		this.shopLicNewForm.get('postalAddress').get('addressType').setValue('SHOP_LIC_POSTAL_ADDRESS');
-		// this.marriageFormGroup.get('isPriestParResAddressSame').get('code').setValue('NO');
+	/**
+	 * This method use to get output event of tab change
+	 * @param evt - Tab index
+	 */
+	onTabChange(evt) {
+		this.tabIndex = evt;
 	}
+
 
 }

@@ -3,20 +3,20 @@
 
 	<mat-card [hidden]="serachLicenceObj.isDisplayRenewLicenceForm" class="mt-4 formClass">
 		<mat-form-field class="col-md-10">
-			<input matInput required placeholder="Search by application number" [(ngModel)]="serachLicenceObj.searchLicenceNumber">
+			<input matInput required placeholder="{{'search_by_application_no' | translate:translateKey}}" [(ngModel)]="serachLicenceObj.searchLicenceNumber">
 		</mat-form-field>
-		<button class="col-md-2" mat-raised-button color="primary" (click)="searchLicence()">Search</button>
+		<button class="col-md-2" mat-raised-button color="primary" (click)="searchLicence()">{{'search' | translate:translateKey}}</button>
 	</mat-card>
 
 	<mat-card [hidden]="!serachLicenceObj.isDisplayRenewLicenceForm" class="mt-4 formClass">
 		<form [formGroup]="shopLicRenewalForm">
-			<mat-horizontal-stepper [linear]="false">
+			<mat-tab-group [(selectedIndex)]="tabIndex">
 
 
 				<!-- step 1 Starts -->
-				<mat-step>
-					<ng-template matStepLabel>
-						<div matTooltip="{{'establishment_details' | translate:translateKey}}">{{'establishment_details' | translate:translateKey}}</div>
+				<mat-tab>
+					<ng-template mat-tab-label>
+						<div>{{'establishment_details' | translate:translateKey}}</div>
 					</ng-template>
 
 					<div class="row">
@@ -105,14 +105,14 @@
 							<control-messages [control]="shopLicRenewalForm.controls.situationOfOffice"></control-messages>
 						</mat-form-field>
 					</div>
-					<!-- <app-action-bar [uploadFiles]="uploadFileArray" [form]="shopLicRenewalForm" [step]="'step3'"></app-action-bar> -->
-				</mat-step>
+					<!-- <app-action-bar [uploadFiles]="uploadFileArray" [form]="shopLicRenewalForm" (tabIndex)="onTabChange($event)" [stepInfo]="'step3'"></app-action-bar> -->
+				</mat-tab>
 				<!-- step 1 Ends -->
 
 				<!-- step 2 Starts -->
-				<mat-step>
-					<ng-template matStepLabel>
-						<div matTooltip="{{'employer_details' | translate:translateKey}}">{{'employer_details' | translate:translateKey}}</div>
+				<mat-tab>
+					<ng-template mat-tab-label>
+						<div>{{'employer_details' | translate:translateKey}}</div>
 					</ng-template>
 
 					<div class="row">
@@ -252,14 +252,14 @@
 						</div>
 					</div> -->
 
-					<!-- <app-action-bar [uploadFiles]="uploadFileArray" [form]="shopLicRenewalForm" [step]="'step4'"></app-action-bar> -->
-				</mat-step>
+					<!-- <app-action-bar [uploadFiles]="uploadFileArray" [form]="shopLicRenewalForm" (tabIndex)="onTabChange($event)" [stepInfo]="'step4'"></app-action-bar> -->
+				</mat-tab>
 				<!-- step 2 Ends -->
 
 				<!-- step 3 employer family Starts -->
-				<mat-step>
-					<ng-template matStepLabel>
-						<div [matTooltip]="'employer_family' | translate: translateKey">{{'employer_family' | translate: translateKey}}</div>
+				<mat-tab>
+					<ng-template mat-tab-label>
+						<div>{{'employer_family' | translate: translateKey}}</div>
 					</ng-template>
 
 					<div class="row">
@@ -381,14 +381,14 @@
 							</div>
 						</div>
 					</div>
-					<!-- <app-action-bar [uploadFiles]="uploadFileArray" [form]="shopLicRenewalForm" [step]="'step5'"></app-action-bar> -->
-				</mat-step>
+					<!-- <app-action-bar [uploadFiles]="uploadFileArray" [form]="shopLicRenewalForm" (tabIndex)="onTabChange($event)" [stepInfo]="'step5'"></app-action-bar> -->
+				</mat-tab>
 				<!-- step 3 employer family Ends -->
 
 				<!-- step 4 occupancy person Starts -->
-				<mat-step>
-					<ng-template matStepLabel>
-						<div [matTooltip]="'person_occuping' | translate: translateKey">{{'person_occuping' | translate: translateKey}}</div>
+				<mat-tab>
+					<ng-template mat-tab-label>
+						<div>{{'person_occuping' | translate: translateKey}}</div>
 					</ng-template>
 
 					<div class="row">
@@ -510,15 +510,15 @@
 						</div>
 					</div>
 
-					<!-- <app-action-bar [uploadFiles]="uploadFileArray" [form]="shopLicRenewalForm" [step]="'step5'"></app-action-bar> -->
+					<!-- <app-action-bar [uploadFiles]="uploadFileArray" [form]="shopLicRenewalForm" (tabIndex)="onTabChange($event)" [stepInfo]="'step5'"></app-action-bar> -->
 
-				</mat-step>
+				</mat-tab>
 				<!-- step 4 occupancy person Ends -->
 
 				<!-- step 5 partner list Starts -->
-				<mat-step>
-					<ng-template matStepLabel>
-						<div [matTooltip]="'partner_list' | translate: translateKey">{{'partner_list' | translate: translateKey}}</div>
+				<mat-tab>
+					<ng-template mat-tab-label>
+						<div>{{'partner_list' | translate: translateKey}}</div>
 					</ng-template>
 
 					<div class="col-md-12">
@@ -651,14 +651,14 @@
 						</div>
 					</div>
 
-					<!-- <app-action-bar [uploadFiles]="uploadFileArray" [form]="shopLicRenewalForm" [step]="'step5'"></app-action-bar> -->
-				</mat-step>
+					<!-- <app-action-bar [uploadFiles]="uploadFileArray" [form]="shopLicRenewalForm" (tabIndex)="onTabChange($event)" [stepInfo]="'step5'"></app-action-bar> -->
+				</mat-tab>
 				<!-- step 5 partner list Ends -->
 
 				<!-- step 6 employee list Starts -->
-				<mat-step>
-					<ng-template matStepLabel>
-						<div [matTooltip]="'employee_list' | translate: translateKey">{{'employee_list' | translate: translateKey}}</div>
+				<mat-tab>
+					<ng-template mat-tab-label>
+						<div>{{'employee_list' | translate: translateKey}}</div>
 					</ng-template>
 					<div class="row">
 
@@ -694,16 +694,16 @@
 						</mat-form-field>
 					</div>
 
-					<app-action-bar [uploadFiles]="uploadFileArray" [form]="shopLicRenewalForm" [step]="'step6'"></app-action-bar>
+					<app-action-bar [uploadFiles]="uploadFileArray" [form]="shopLicRenewalForm" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step6', next: 6, back: 5}"></app-action-bar>
 
-				</mat-step>
+				</mat-tab>
 				<!-- step 6 employee list Ends -->
 
 
 				<!-- step Attachment Starts -->
-				<mat-step>
-					<ng-template matStepLabel>
-						<div matTooltip="{{'owner_attachment' | translate: translateKey}}">{{'owner_attachment' | translate: translateKey}}</div>
+				<mat-tab>
+					<ng-template mat-tab-label>
+						<div>{{'owner_attachment' | translate: translateKey}}</div>
 					</ng-template>
 					<div class="row">
 
@@ -743,12 +743,12 @@
 						</div>
 
 					</div>
-					<app-action-bar [uploadFiles]="uploadFileArray" [form]="shopLicRenewalForm" [step]="'final'" (stepReset)="stepReset()" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
+					<app-action-bar [uploadFiles]="uploadFileArray" [form]="shopLicRenewalForm" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'final', next: 7, back: 5}" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
 
-				</mat-step>
+				</mat-tab>
 				<!-- step Attachment Ends -->
 
-			</mat-horizontal-stepper>
+			</mat-tab-group>
 		</form>
 	</mat-card>
 </div>

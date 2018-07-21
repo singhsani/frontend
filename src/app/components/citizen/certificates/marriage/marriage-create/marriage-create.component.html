@@ -3,12 +3,12 @@
 	<mat-card class="mt-4 formClass">
 		<!--Start  form  -->
 		<form [formGroup]="marriageFormGroup">
-			<mat-horizontal-stepper>
-
+			<mat-tab-group [(selectedIndex)]="tabIndex">
+				
 				<!-- First step -->
-				<mat-step [stepControl]="bridegroomDetail">
-					<ng-template matStepLabel>
-						<div [matTooltip]="'bride_groom_detail' | translate: translateKey">{{'bride_groom_detail' | translate: translateKey}}</div>
+				<mat-tab [label]="bridegroomDetail">
+					<ng-template mat-tab-label>
+						<div>{{'bride_groom_detail' | translate: translateKey}}</div>
 					</ng-template>
 
 					<div class="row">
@@ -277,16 +277,16 @@
 						</div>
 
 						<div class="col-12">
-							<app-action-bar [uploadFiles]="uploadFileArray" [form]="marriageFormGroup" [step]="'step1'"></app-action-bar>
+							<app-action-bar [uploadFiles]="uploadFileArray" [form]="marriageFormGroup" (tabIndex)="onTabChange($event)"  [stepInfo]="{step: 'step1', next: 1, back: 0}"></app-action-bar>
 						</div>
 					</div>
-				</mat-step>
+				</mat-tab>
 				<!-- End First step -->
 
 				<!-- Second step -->
-				<mat-step [stepControl]="brideDetail">
-					<ng-template matStepLabel>
-						<div [matTooltip]="'bride_detail' | translate: translateKey">{{'bride_detail' | translate: translateKey}}</div>
+				<mat-tab [label]="brideDetail">
+					<ng-template mat-tab-label>
+						<div>{{'bride_detail' | translate: translateKey}}</div>
 					</ng-template>
 					<div class="row">
 						<mat-form-field class="col-md-4">
@@ -497,16 +497,16 @@
 							</div>
 						</div>
 						<div class="col-12">
-							<app-action-bar [uploadFiles]="uploadFileArray" [form]="marriageFormGroup" [step]="'step2'"></app-action-bar>
+							<app-action-bar [uploadFiles]="uploadFileArray" [form]="marriageFormGroup" (tabIndex)="onTabChange($event)"  [stepInfo]="{step: 'step2', next: 2, back: 0}"></app-action-bar>
 						</div>
 					</div>
-				</mat-step>
+				</mat-tab>
 				<!-- End Second step -->
 
 				<!-- Third step -->
-				<mat-step [stepControl]="groomguardianDetail">
-					<ng-template matStepLabel>
-						<div [matTooltip]="'guardian_of_bried_groom' | translate: translateKey">{{'guardian_of_bried_groom' | translate: translateKey}}</div>
+				<mat-tab [label]="groomguardianDetail">
+					<ng-template mat-tab-label>
+						<div>{{'guardian_of_bried_groom' | translate: translateKey}}</div>
 					</ng-template>
 					<div class="row">
 						<mat-form-field class="col-md-4">
@@ -591,16 +591,16 @@
 					</div>
 					<div class="row">
 						<div class="col-md-12">
-							<app-action-bar [uploadFiles]="uploadFileArray" [form]="marriageFormGroup" [step]="'step3'"></app-action-bar>
+							<app-action-bar [uploadFiles]="uploadFileArray" [form]="marriageFormGroup" (tabIndex)="onTabChange($event)"  [stepInfo]="{step: 'step3', next: 3, back: 1}"></app-action-bar>
 						</div>
 					</div>
-				</mat-step>
+				</mat-tab>
 				<!-- End Third step -->
 
 				<!-- Forth step -->
-				<mat-step [stepControl]="brideguardianDetail">
-					<ng-template matStepLabel>
-						<div [matTooltip]="'guardian_of_bride' | translate: translateKey">{{'guardian_of_bride' | translate: translateKey}}</div>
+				<mat-tab [label]="brideguardianDetail">
+					<ng-template mat-tab-label>
+						<div>{{'guardian_of_bride' | translate: translateKey}}</div>
 					</ng-template>
 					<div class="row">
 						<mat-form-field class="col-md-4">
@@ -687,16 +687,16 @@
 
 					<div class="row">
 						<div class="col-md-12">
-							<app-action-bar [uploadFiles]="uploadFileArray" [form]="marriageFormGroup" [step]="'step4'"></app-action-bar>
+							<app-action-bar [uploadFiles]="uploadFileArray" [form]="marriageFormGroup" (tabIndex)="onTabChange($event)"  [stepInfo]="{step: 'step4', next: 4, back: 2}"></app-action-bar>
 						</div>
 					</div>
-				</mat-step>
+				</mat-tab>
 				<!-- End Forth step -->
 
 				<!-- Fifth step -->
-				<mat-step [stepControl]="priestDetail">
-					<ng-template matStepLabel>
-						<div [matTooltip]="'detail_of_priest' | translate: translateKey">{{'detail_of_priest' | translate: translateKey}}</div>
+				<mat-tab [label]="priestDetail">
+					<ng-template mat-tab-label>
+						<div>{{'detail_of_priest' | translate: translateKey}}</div>
 					</ng-template>
 					<div class="row">
 						<mat-form-field class="col-md-4">
@@ -767,16 +767,16 @@
 						</div>
 
 						<div class="col-md-4">
-							<app-action-bar [uploadFiles]="uploadFileArray" [form]="marriageFormGroup" [step]="'step5'"></app-action-bar>
+							<app-action-bar [uploadFiles]="uploadFileArray" [form]="marriageFormGroup" (tabIndex)="onTabChange($event)"  [stepInfo]="{step: 'step5', next: 5, back:3 }"></app-action-bar>
 						</div>
 					</div>
-				</mat-step>
+				</mat-tab>
 				<!-- End Fifth step -->
 
 				<!-- Sixth step -->
-				<mat-step [stepControl]="firstwitnessDetail">
-					<ng-template matStepLabel>
-						<div [matTooltip]="'detail_of_first_witness' | translate: translateKey">{{'detail_of_first_witness' | translate: translateKey}}</div>
+				<mat-tab [label]="firstwitnessDetail">
+					<ng-template mat-tab-label>
+						<div>{{'detail_of_first_witness' | translate: translateKey}}</div>
 					</ng-template>
 					<div class="row">
 						<mat-form-field class="col-md-4">
@@ -842,16 +842,16 @@
 						</div>
 
 						<div class="col-md-4">
-							<app-action-bar [uploadFiles]="uploadFileArray" [form]="marriageFormGroup" [step]="'step6'"></app-action-bar>
+							<app-action-bar [uploadFiles]="uploadFileArray" [form]="marriageFormGroup" (tabIndex)="onTabChange($event)"  [stepInfo]="{step: 'step6', next: 6, back: 4}"></app-action-bar>
 						</div>
 					</div>
-				</mat-step>
+				</mat-tab>
 				<!-- End sixth step -->
 
 				<!-- Seventh step -->
-				<mat-step [stepControl]="secondwitnessDetail">
-					<ng-template matStepLabel>
-						<div [matTooltip]="'detail_of_second_witness' | translate: translateKey">{{'detail_of_second_witness' | translate: translateKey}}</div>
+				<mat-tab [label]="secondwitnessDetail">
+					<ng-template mat-tab-label>
+						<div>{{'detail_of_second_witness' | translate: translateKey}}</div>
 					</ng-template>
 					<div class="row">
 						<mat-form-field class="col-md-4">
@@ -916,16 +916,16 @@
 						</div>
 
 						<div class="pt-4">
-							<app-action-bar [uploadFiles]="uploadFileArray" [form]="marriageFormGroup" [step]="'step7'"></app-action-bar>
+							<app-action-bar [uploadFiles]="uploadFileArray" [form]="marriageFormGroup" (tabIndex)="onTabChange($event)"  [stepInfo]="{step: 'step7', next: 7, back: 5}"></app-action-bar>
 						</div>
 					</div>
-				</mat-step>
+				</mat-tab>
 				<!-- End Seventh step -->
 
 				<!-- Eighth step -->
-				<mat-step [stepControl]="applicantDetail">
-					<ng-template matStepLabel>
-						<div [matTooltip]="'applicant' | translate: translateKey">{{'applicant' | translate: translateKey}}</div>
+				<mat-tab [label]="applicantDetail">
+					<ng-template mat-tab-label>
+						<div>{{'applicant' | translate: translateKey}}</div>
 					</ng-template>
 					<div class="row">
 						<div class="col-md-4 ngSelect" formGroupName="applicantRelation">
@@ -969,16 +969,16 @@
 
 					<div class="row">
 						<div class="pt-4">
-							<app-action-bar [uploadFiles]="uploadFileArray" [form]="marriageFormGroup" [step]="'step8'"></app-action-bar>
+							<app-action-bar [uploadFiles]="uploadFileArray" [form]="marriageFormGroup" (tabIndex)="onTabChange($event)"  [stepInfo]="{step: 'step8', next: 8, back: 6}"></app-action-bar>
 						</div>
 					</div>
-				</mat-step>
+				</mat-tab>
 				<!-- End eighth step -->
 
 				<!-- Start nine step -->
-				<mat-step [stepControl]="upload">
-					<ng-template matStepLabel>
-						<div [matTooltip]="'upload' | translate: translateKey">{{'upload' | translate: translateKey}}</div>
+				<mat-tab [label]="upload">
+					<ng-template mat-tab-label>
+						<div>{{'upload' | translate: translateKey}}</div>
 					</ng-template>
 					<div class="row">
 						<div class="col-12 p-4">
@@ -1025,15 +1025,15 @@
 						</div>
 
 						<div class="col-12">
-							<ng-template matStepLabel>Done</ng-template>
+							<ng-template mat-tab-label>Done</ng-template>
 							You are now done.
-							<app-action-bar [uploadFiles]="uploadFileArray" [form]="marriageFormGroup" [step]="'final'" (stepReset)="stepReset()" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
+							<app-action-bar [uploadFiles]="uploadFileArray" [form]="marriageFormGroup" (tabIndex)="onTabChange($event)"  [stepInfo]="{step: 'final', next: 8, back: 6}" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
 						</div>
 					</div>
-				</mat-step>
+				</mat-tab>
 				<!-- End nine step -->
 
-			</mat-horizontal-stepper>
+			</mat-tab-group>
 		</form>
 		<!-- End  form -->
 		<!-- {{marriageFormGroup.value | json}} -->
