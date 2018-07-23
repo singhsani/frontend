@@ -43,7 +43,7 @@ export class HomeLayoutComponent implements OnInit {
 			'linkCode': 'CITIZENMYPROFILE',
 			'icon': 'face'
 		},
-		{
+		/* {
 			'linkName': 'Resource',
 			'linkCode': 'CITIZENMYRESOURCE',
 			'icon': 'web_asset'
@@ -57,7 +57,7 @@ export class HomeLayoutComponent implements OnInit {
 			'linkName': 'Payable Services',
 			'linkCode': 'CITIZENPAYABLESERVICES',
 			'icon': '&#x20B9;'
-		},
+		}, */
 		/* {
 			'linkName': 'Booking',
 			'linkCode': 'test'
@@ -82,7 +82,6 @@ export class HomeLayoutComponent implements OnInit {
 		this.mobileQuery = media.matchMedia('(max-width: 600px)');
 		this._mobileQueryListener = () => changeDetectorRef.detectChanges();
 		this.mobileQuery.addListener(this._mobileQueryListener);
-		this.activateTab();
 	}
 
 	private _mobileQueryListener: () => void;
