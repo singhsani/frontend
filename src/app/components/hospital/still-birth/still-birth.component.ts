@@ -42,6 +42,9 @@ export class StillBirthComponent implements OnInit {
 	 * form related helping data.
 	 */
 	appId: number;
+
+	tabIndex: number = 0;
+
 	public stillBirthCertificateForm: FormGroup;
 	private minBirthDate: any;
 	private maxBirthDate = new Date();
@@ -65,6 +68,15 @@ export class StillBirthComponent implements OnInit {
 	private ChildWeights: object[];
 	private ISYESNO: object[];
 	private checked: boolean;
+
+	/**
+	 * step labels
+	 */
+	private stepLabel1 = 'child_details';
+	private stepLabel2 = 'fathers_details';
+	private stepLabel3 = 'mothers_details';
+	private stepLabel4 = 'family_details';
+	private stepLabel5 = 'upload_documents';
 
 	constructor(
 		private router: Router,
@@ -261,14 +273,12 @@ export class StillBirthComponent implements OnInit {
 	 * @param child - Add child object.
 	 */
 	addMoreChild(child) {
-
 		if (this.getChildData().length >= 6) {
 			this.commonService.openAlert("Warning", "Maximum Child Limit 6.", "warning");
 		} else {
 			this.getChildData().push(this.createChildArray(child));
 			this.stillBirthCertificateForm.get('noOfChilds').setValue(this.getChildData().length);
 		}
-
 	}
 
 	/**
@@ -308,8 +318,6 @@ export class StillBirthComponent implements OnInit {
 		this.formService.getFormData(this.appId).subscribe(res => {
 			this.stillBirthCertificateForm.patchValue(res);
 			this.childs = this.getChildData();
-
-			
 
 			while (this.getChildData().length) {
 				this.childs.removeAt(0)
@@ -358,9 +366,7 @@ export class StillBirthComponent implements OnInit {
 	 * @param event - date event.
 	 */
 	delayCalculator(event, i: number) {
-
 		this.getChildData().at(i).get('birthDate').setValue(moment(event.value).format("YYYY-MM-DD"));
-
 		let now = moment(new Date());
 		let currentDelayDate = String(this.getChildData().at(0).get('birthDate').value)
 		let diff = moment.duration(now.diff(new Date(Number(currentDelayDate.split('-')[0]), Number(currentDelayDate.split('-')[1]) - 1, Number(currentDelayDate.split('-')[2]))));
@@ -392,10 +398,10 @@ export class StillBirthComponent implements OnInit {
 	}
 
 	/**
-	 * 
-	 * @param event 
-	 * @param controlName 
-	 * @param arr 
+	 * Method is used to get Gujarati Name.
+	 * @param event - Event
+	 * @param controlName - Control Name To update 
+	 * @param arr - Array
 	 */
 	gujNameFinder(event, controlName, arr) {
 		for (let i = 0; i < arr.length; i++) {
@@ -439,22 +445,22 @@ export class StillBirthComponent implements OnInit {
 		let step5 = 37;
 
 		if (count <= step1) {
-			this.stepper.selectedIndex = 0;
+			this.tabIndex = 0;
 			return false;
 		} else if (count <= step2) {
-			this.stepper.selectedIndex = 1;
+			this.tabIndex = 1;
 			return false;
 		} else if (count <= step3) {
-			this.stepper.selectedIndex = 2;
+			this.tabIndex = 2;
 			return false;
 		} else if (count <= step4) {
-			this.stepper.selectedIndex = 3;
+			this.tabIndex = 3;
 			return false;
 		} else if (count <= step5) {
-			this.stepper.selectedIndex = 4;
+			this.tabIndex = 4;
 			return false;
 		} else if (count >= 59 && count <= 65) {
-			this.stepper.selectedIndex = 3;
+			this.tabIndex = 3;
 		}
 	}
 
@@ -484,7 +490,6 @@ export class StillBirthComponent implements OnInit {
 		this.stillBirthCertificateForm.get('parentPermanentAddress').get('addressType').setValue(parentPermanentAddressType);
 	}
 
-
 	/**
 	 * Method is used to reset form its a output event from action bar.
 	 */
@@ -508,5 +513,13 @@ export class StillBirthComponent implements OnInit {
 			serviceFormId: this.appId,
 		}
 		return this.uploadModel;
+	}
+
+	/**
+	 * This method use to get output event of tab change
+	 * @param evt - Tab index
+	 */
+	onTabChange(evt) {
+		this.tabIndex = evt;
 	}
 }
