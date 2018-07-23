@@ -256,7 +256,7 @@
 							<table class="table table-striped customDataTable">
 								<thead>
 									<tr>
-										<th colspan="2"></th>
+										<th colspan="2" *ngIf="shopLicNewForm.get('canEdit').value"></th>
 										<th>#</th>
 										<th>{{'name' | translate:translateKey}}</th>
 										<th>{{'address' | translate:translateKey}}</th>
@@ -267,7 +267,7 @@
 								</thead>
 								<tbody formArrayName="employerFamilyList">
 									<tr *ngFor="let item of shopLicNewForm.get('employerFamilyList').controls; let indx = index;" [formGroupName]="indx">
-										<td style="width: 40px;">
+										<td style="width: 40px;" *ngIf="shopLicNewForm.get('canEdit').value">
 											<button mat-icon-button color="primary" *ngIf="!item.isEditMode" (click)="editRecord(item)">
 												<mat-icon title="Edit">edit</mat-icon>
 											</button>
@@ -275,7 +275,7 @@
 												<mat-icon title="save">save</mat-icon>
 											</button>
 										</td>
-										<td style="width: 40px;">
+										<td style="width: 40px;" *ngIf="shopLicNewForm.get('canEdit').value">
 											<button mat-icon-button color="warn" *ngIf="!item.isEditMode" (click)="deleteRecord('EMPLOYER_FAMILY',indx)">
 												<mat-icon title="Delete">delete</mat-icon>
 											</button>
@@ -385,7 +385,7 @@
 							<table class="table table-striped customDataTable">
 								<thead>
 									<tr>
-										<th colspan="2"></th>
+										<th colspan="2" *ngIf="shopLicNewForm.get('canEdit').value"></th>
 										<th>#</th>
 										<th>{{'name' | translate:translateKey}}</th>
 										<th>{{'address' | translate:translateKey}}</th>
@@ -396,7 +396,7 @@
 								</thead>
 								<tbody formArrayName="occupancyList">
 									<tr *ngFor="let item of shopLicNewForm.get('occupancyList').controls; let indx = index;" [formGroupName]="indx">
-										<td style="width: 40px;">
+										<td style="width: 40px;" *ngIf="shopLicNewForm.get('canEdit').value">
 											<button mat-icon-button color="primary" *ngIf="!item.isEditMode" (click)="editRecord(item)">
 												<mat-icon title="Edit">edit</mat-icon>
 											</button>
@@ -404,7 +404,7 @@
 												<mat-icon title="save">save</mat-icon>
 											</button>
 										</td>
-										<td style="width: 40px;">
+										<td style="width: 40px;" *ngIf="shopLicNewForm.get('canEdit').value">
 											<button mat-icon-button color="warn" *ngIf="!item.isEditMode" (click)="deleteRecord('OCCUPANCY',indx)">
 												<mat-icon title="Delete">delete</mat-icon>
 											</button>
@@ -527,7 +527,7 @@
 							<table class="table table-striped customDataTable">
 								<thead>
 									<tr>
-										<th colspan="2"></th>
+										<th colspan="2" *ngIf="shopLicNewForm.get('canEdit').value"></th>
 										<th>#</th>
 										<th>{{'name' | translate:translateKey}}</th>
 										<th>{{'address' | translate:translateKey}}</th>
@@ -538,7 +538,7 @@
 								</thead>
 								<tbody formArrayName="partnerList">
 									<tr *ngFor="let item of shopLicNewForm.get('partnerList').controls; let indx = index;" [formGroupName]="indx">
-										<td style="width: 40px;">
+										<td style="width: 40px;" *ngIf="shopLicNewForm.get('canEdit').value">
 											<button mat-icon-button color="primary" *ngIf="!item.isEditMode" (click)="editRecord(item)">
 												<mat-icon title="Edit">edit</mat-icon>
 											</button>
@@ -546,7 +546,7 @@
 												<mat-icon title="save">save</mat-icon>
 											</button>
 										</td>
-										<td style="width: 40px;">
+										<td style="width: 40px;" *ngIf="shopLicNewForm.get('canEdit').value">
 											<button mat-icon-button color="warn" *ngIf="!item.isEditMode" (click)="deleteRecord('PARTNER',indx)">
 												<mat-icon title="Delete">delete</mat-icon>
 											</button>
@@ -777,7 +777,7 @@
 						</mat-form-field>
 						<mat-form-field class="col-md-6">
 							<input matInput type="tel" OnlyNumber placeholder="{{'total_person' | translate:translateKey}}" [value]="getTotalEmployeePerson()"
-							 formControlName="totalEmployee"  readonly>
+							 formControlName="totalEmployee" readonly>
 							<control-messages [control]="shopLicNewForm.controls.totalEmployee"></control-messages>
 						</mat-form-field>
 					</div>
@@ -942,8 +942,8 @@
 						</div>
 
 					</div>
-					<app-action-bar [uploadFiles]="uploadFileArray" [form]="shopLicNewForm" (handleErrors)="handleErrorsOnSubmit($event)"
-					 (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'final', next: 8, back: 6}"></app-action-bar>
+					<app-action-bar [uploadFiles]="uploadFileArray" [form]="shopLicNewForm" (handleErrors)="handleErrorsOnSubmit($event)" (tabIndex)="onTabChange($event)"
+					 [stepInfo]="{step: 'final', next: 8, back: 6}"></app-action-bar>
 
 				</mat-tab>
 				<!-- step Attachment Ends -->

@@ -276,7 +276,7 @@
 							<table class="table table-striped customDataTable">
 								<thead>
 									<tr>
-										<th colspan="2"></th>
+										<th colspan="2" *ngIf="shopLicModificationForm.get('canEdit').value"></th>
 										<th>#</th>
 										<th>{{'name' | translate:translateKey}}</th>
 										<th>{{'address' | translate:translateKey}}</th>
@@ -287,7 +287,7 @@
 								</thead>
 								<tbody formArrayName="employerFamilyList">
 									<tr *ngFor="let item of shopLicModificationForm.get('employerFamilyList').controls; let indx = index;" [formGroupName]="indx">
-										<td style="width: 40px;">
+										<td style="width: 40px;" *ngIf="shopLicModificationForm.get('canEdit').value">
 											<button mat-icon-button color="primary" *ngIf="!item.isEditMode" (click)="editRecord(item)">
 												<mat-icon title="Edit">edit</mat-icon>
 											</button>
@@ -295,7 +295,7 @@
 												<mat-icon title="save">save</mat-icon>
 											</button>
 										</td>
-										<td style="width: 40px;">
+										<td style="width: 40px;" *ngIf="shopLicModificationForm.get('canEdit').value">
 											<button mat-icon-button color="warn" *ngIf="!item.isEditMode" (click)="deleteRecord('EMPLOYER_FAMILY',indx)">
 												<mat-icon title="Delete">delete</mat-icon>
 											</button>
@@ -405,7 +405,7 @@
 							<table class="table table-striped customDataTable">
 								<thead>
 									<tr>
-										<th colspan="2"></th>
+										<th colspan="2" *ngIf="shopLicModificationForm.get('canEdit').value"></th>
 										<th>#</th>
 										<th>{{'name' | translate:translateKey}}</th>
 										<th>{{'address' | translate:translateKey}}</th>
@@ -416,7 +416,7 @@
 								</thead>
 								<tbody formArrayName="occupancyList">
 									<tr *ngFor="let item of shopLicModificationForm.get('occupancyList').controls; let indx = index;" [formGroupName]="indx">
-										<td style="width: 40px;">
+										<td style="width: 40px;" *ngIf="shopLicModificationForm.get('canEdit').value">
 											<button mat-icon-button color="primary" *ngIf="!item.isEditMode" (click)="editRecord(item)">
 												<mat-icon title="Edit">edit</mat-icon>
 											</button>
@@ -424,7 +424,7 @@
 												<mat-icon title="save">save</mat-icon>
 											</button>
 										</td>
-										<td style="width: 40px;">
+										<td style="width: 40px;" *ngIf="shopLicModificationForm.get('canEdit').value">
 											<button mat-icon-button color="warn" *ngIf="!item.isEditMode" (click)="deleteRecord('OCCUPANCY',indx)">
 												<mat-icon title="Delete">delete</mat-icon>
 											</button>
@@ -546,7 +546,7 @@
 							<table class="table table-striped customDataTable">
 								<thead>
 									<tr>
-										<th colspan="2"></th>
+										<th colspan="2" *ngIf="shopLicModificationForm.get('canEdit').value"></th>
 										<th>#</th>
 										<th>{{'name' | translate:translateKey}}</th>
 										<th>{{'address' | translate:translateKey}}</th>
@@ -557,7 +557,7 @@
 								</thead>
 								<tbody formArrayName="partnerList">
 									<tr *ngFor="let item of shopLicModificationForm.get('partnerList').controls; let indx = index;" [formGroupName]="indx">
-										<td style="width: 40px;">
+										<td style="width: 40px;" *ngIf="shopLicModificationForm.get('canEdit').value">
 											<button mat-icon-button color="primary" *ngIf="!item.isEditMode" (click)="editRecord(item)">
 												<mat-icon title="Edit">edit</mat-icon>
 											</button>
@@ -565,7 +565,7 @@
 												<mat-icon title="save">save</mat-icon>
 											</button>
 										</td>
-										<td style="width: 40px;">
+										<td style="width: 40px;" *ngIf="shopLicModificationForm.get('canEdit').value">
 											<button mat-icon-button color="warn" *ngIf="!item.isEditMode" (click)="deleteRecord('PARTNER',indx)">
 												<mat-icon title="Delete">delete</mat-icon>
 											</button>
