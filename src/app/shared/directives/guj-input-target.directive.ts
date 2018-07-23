@@ -1,6 +1,8 @@
 import { Directive, ElementRef, HostListener, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 declare var pramukhIME;
+declare var PramukhIndic;
+
 
 @Directive({
 	selector: '[appGujInputTarget]'

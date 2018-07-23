@@ -19,21 +19,23 @@ export class HosActionBarComponent implements OnInit, OnChanges {
 
 	translateKey: string = 'actionBarScreen';
 
+	@Input() isstepper: boolean = true;	
 	@Input() form: FormGroup;
 	@Input() step: string;
 	commonForm: FormGroup;
 	@Input() uploadFiles: any;
-
+	@Input() stepInfo: any;
 
 	isSaveBtnDisabled: boolean = false;
 	isSubmitBtnDisabled: boolean = false;
-
-
 	isBtnsDisabled: boolean = true;
+
 	uploadFilesArray: Array<any> = []
 
 	@Output() handleErrors = new EventEmitter<any>();
 	@Output() stepReset = new EventEmitter<any>();
+	@Output() tabIndex = new EventEmitter<any>();
+
 
 	constructor(
 		private sessionStore: SessionStorageService,
@@ -79,6 +81,17 @@ export class HosActionBarComponent implements OnInit, OnChanges {
 	}
 
 	/**
+	 * Method use to emit tab index
+	 * str- back or next string
+	 */
+	nextOrPrevious(str) {
+		if (str === 'back')
+			this.tabIndex.emit(this.stepInfo.back);
+		else
+			this.tabIndex.emit(this.stepInfo.next);
+	}
+
+	/**
 	 * Method to capture change event.
 	 */
 	ngOnChanges() {
@@ -97,7 +110,9 @@ export class HosActionBarComponent implements OnInit, OnChanges {
 			res => {
 				this.form.patchValue(res);
 				this.isSaveBtnDisabled = false;
-				document.getElementById('matStepperNextBtn').click();
+				if (this.isstepper) {
+					this.tabIndex.emit(this.stepInfo.next);
+				}
 				this.toastr.success(`${this.form.value.serviceDetail.name} information successfully saved`);
 			},
 			err => {
@@ -242,7 +257,7 @@ export class HosActionBarComponent implements OnInit, OnChanges {
 			if (!_.isObject(value))
 				this.form.addControl(key, new FormControl());
 		});
-		
+
 		this.form.addControl('firstName', new FormControl('', [ValidationService.nameValidator]));
 		this.form.addControl('middleName', new FormControl('', [ValidationService.nameValidator]));
 		this.form.addControl('lastName', new FormControl('', [ValidationService.nameValidator]));
@@ -282,5 +297,12 @@ export class HosActionBarComponent implements OnInit, OnChanges {
 				control.markAsTouched();
 			});
 		}
+	}
+
+	/**
+	 * This method is use to redirect on my application
+	 */
+	cancelForm() {
+		this.route.navigate(['hospital/my-applications']);
 	}
 }

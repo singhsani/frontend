@@ -43,6 +43,7 @@ export class DeathRegistrationComponent implements OnInit {
 	//form related data.
 	private appId: number;
 	apiCode: string;
+	tabIndex: number = 0;	
 
 
 	private isLinear: boolean = false;
@@ -62,6 +63,15 @@ export class DeathRegistrationComponent implements OnInit {
 	private Religion: Object[];
 	private Gender: Object[];
 	private ISYESNO: object[];
+
+	/**
+	 * step labels
+	 */
+	private stepLabel1 = 'deceased_details';
+	private stepLabel2 = 'death_details';
+	private stepLabel3 = 'address_details';
+	private stepLabel4 = 'applicant_details';
+	private stepLabel5 = 'upload_documents';
 
 	constructor(
 		private fb: FormBuilder,
@@ -455,22 +465,22 @@ export class DeathRegistrationComponent implements OnInit {
 		let step5 = 34;
 		//Check form validation.
 		if (count <= step1) {
-			this.stepper.selectedIndex = 0;
+			this.tabIndex = 0;
 			return false;
 		} else if (count <= step2) {
-			this.stepper.selectedIndex = 1;
+			this.tabIndex = 1;
 			return false;
 		} else if (count <= step3) {
-			this.stepper.selectedIndex = 2;
+			this.tabIndex = 2;
 			return false;
 		} else if (count <= step4) {
-			this.stepper.selectedIndex = 3;
+			this.tabIndex = 3;
 			return false;
 		} else if (count <= step5) {
-			this.stepper.selectedIndex = 4;
+			this.tabIndex = 4;
 			return false;
 		} else if (count >= 54 && count <= 60) {
-			this.stepper.selectedIndex = 3;
+			this.tabIndex = 3;
 		}
 	}
 
@@ -516,5 +526,13 @@ export class DeathRegistrationComponent implements OnInit {
 			serviceFormId: this.appId,
 		}
 		return this.uploadModel;
+	}
+
+	/**
+	 * This method use to get output event of tab change
+	 * @param evt - Tab index
+	 */
+	onTabChange(evt) {
+		this.tabIndex = evt;
 	}
 }

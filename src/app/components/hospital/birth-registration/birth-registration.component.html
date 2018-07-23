@@ -4,11 +4,13 @@
 
         <form class="birth-certificate-form" [formGroup]="birthCertificateForm" autocomplete="off" ngNativeValidate>
 
-            <mat-horizontal-stepper [linear]="isLinear" #stepper="matHorizontalStepper">
-                <mat-step>
-                    <ng-template matStepLabel>
-                        <div [matTooltip]="'child_details' | translate:translateKey">{{'child_details' | translate:translateKey}}</div>
+            <mat-tab-group [(selectedIndex)]="tabIndex">
+
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <div>{{stepLabel1 | translate: translateKey}}</div>
                     </ng-template>
+
                     <div class="row">
 
                         <div formGroupName="birthPlace" class="col-md-4 ngSelect">
@@ -118,15 +120,15 @@
                         <mat-icon>add</mat-icon>
                     </button>
 
-                    <app-hos-action-bar (handleErrors)="handleErrorsOnSubmit($event)" [form]="birthCertificateForm" [step]="'step1'"></app-hos-action-bar>
+                    <app-hos-action-bar [stepInfo]="{step: 'step1', next: 1, back: 0}" (tabIndex)="onTabChange($event)" (handleErrors)="handleErrorsOnSubmit($event)"
+                        [form]="birthCertificateForm"></app-hos-action-bar>
 
-                </mat-step>
+                </mat-tab>
 
-                <mat-step>
-                    <ng-template matStepLabel>
-                        <div [matTooltip]="'fathers_details' | translate:translateKey">{{'fathers_details' | translate:translateKey}}</div>
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <div>{{stepLabel2 | translate: translateKey}}</div>
                     </ng-template>
-
                     <div class="row">
 
                         <mat-form-field class="col-md-4">
@@ -212,13 +214,14 @@
                         </mat-form-field>
                     </div>
 
-                    <app-hos-action-bar (handleErrors)="handleErrorsOnSubmit($event)" [form]="birthCertificateForm" [step]="'step2'"></app-hos-action-bar>
+                    <app-hos-action-bar [stepInfo]="{step: 'step2', next: 2, back: 0}" (tabIndex)="onTabChange($event)" (handleErrors)="handleErrorsOnSubmit($event)"
+                        [form]="birthCertificateForm"></app-hos-action-bar>
 
-                </mat-step>
+                </mat-tab>
 
-                <mat-step>
-                    <ng-template matStepLabel>
-                        <div [matTooltip]="'mothers_details' | translate:translateKey">{{'mothers_details' | translate:translateKey}}</div>
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <div>{{stepLabel3 | translate: translateKey}}</div>
                     </ng-template>
 
                     <div class="row">
@@ -359,13 +362,13 @@
                     <div class="row">
 
                         <mat-form-field class="col-md-4">
-                            <input required maxlength="1" (change)="totalChildCalculate()" OnlyNumber matInput placeholder="{{'total_boy_child' | translate:translateKey}}" formControlName="totalBoyChildsBeforePregnancy"
-                                required>
+                            <input required maxlength="1" (change)="totalChildCalculate()" OnlyNumber matInput placeholder="{{'total_boy_child' | translate:translateKey}}"
+                                formControlName="totalBoyChildsBeforePregnancy" required>
                         </mat-form-field>
 
                         <mat-form-field class="col-md-4">
-                            <input required maxlength="1" (change)="totalChildCalculate()" OnlyNumber matInput placeholder="{{'total_girl_child' | translate:translateKey}}" formControlName="totalGirlChildsBeforePregnancy"
-                                required>
+                            <input required maxlength="1" (change)="totalChildCalculate()" OnlyNumber matInput placeholder="{{'total_girl_child' | translate:translateKey}}"
+                                formControlName="totalGirlChildsBeforePregnancy" required>
                         </mat-form-field>
 
                         <mat-form-field class="col-md-4">
@@ -398,13 +401,14 @@
                         </mat-form-field> -->
                     </div>
 
-                    <app-hos-action-bar (handleErrors)="handleErrorsOnSubmit($event)" [form]="birthCertificateForm" [step]="'step2'"></app-hos-action-bar>
+                    <app-hos-action-bar [stepInfo]="{step: 'step3', next: 3, back: 1}" (tabIndex)="onTabChange($event)" (handleErrors)="handleErrorsOnSubmit($event)"
+                        [form]="birthCertificateForm"></app-hos-action-bar>
 
-                </mat-step>
+                </mat-tab>
 
-                <mat-step>
-                    <ng-template matStepLabel>
-                        <div [matTooltip]="'family_details' | translate:translateKey">{{'family_details' | translate:translateKey}}</div>
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <div>{{stepLabel4 | translate: translateKey}}</div>
                     </ng-template>
 
                     <div>
@@ -447,16 +451,17 @@
                         </div>
 
                         <div>
-                            <app-hos-action-bar (handleErrors)="handleErrorsOnSubmit($event)" [form]="birthCertificateForm" [step]="'step3'"></app-hos-action-bar>
+                            <app-hos-action-bar [stepInfo]="{step: 'step4', next: 4, back: 2}" (tabIndex)="onTabChange($event)" (handleErrors)="handleErrorsOnSubmit($event)"
+                                [form]="birthCertificateForm"></app-hos-action-bar>
                         </div>
 
                     </div>
 
-                </mat-step>
+                </mat-tab>
 
-                <mat-step>
-                    <ng-template matStepLabel>
-                        <div [matTooltip]="'upload_documents' | translate:translateKey">{{'upload_documents' | translate:translateKey}}</div>
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <div>{{ stepLabel5 | translate: translateKey}}</div>
                     </ng-template>
 
                     <div class="alert alert-warning">
@@ -502,7 +507,8 @@
 
                         <div class="col-md-4" *ngIf="showButtons && getDelayPeriod() > 30 && getDelayPeriod() < 365">
                             <label labelPosition="after">{{'affidavit_Or_health_Order' | translate:translateKey}}{{!getFileObjectContained('1.7')?'':
-                                '*'}}</label>
+                                '*'}}
+                            </label>
                             <app-hos-file-upload [form]="birthCertificateForm" [uploadModel]="setDataValue(1.7,'Affidavit Or Health Order','1.1','affidavitOrhealthOrder')"></app-hos-file-upload>
                         </div>
 
@@ -514,11 +520,11 @@
                     </div>
 
                     <div>
-                        <app-hos-action-bar [form]="birthCertificateForm" [uploadFiles]="uploadFileArray" [step]="'final'" (stepReset)="stepReset()"
-                            (handleErrors)="handleErrorsOnSubmit($event)"></app-hos-action-bar>
+                        <app-hos-action-bar [stepInfo]="{step: 'final', next: 5, back: 3}" (tabIndex)="onTabChange($event)" [form]="birthCertificateForm"
+                            [uploadFiles]="uploadFileArray" (handleErrors)="handleErrorsOnSubmit($event)"></app-hos-action-bar>
                     </div>
-                </mat-step>
-            </mat-horizontal-stepper>
+                </mat-tab>
+            </mat-tab-group>
         </form>
     </mat-card>
 </div>

@@ -58,7 +58,8 @@ export class BirthRegistrationComponent implements OnInit {
 	private submit: boolean = false;
 	private childs: FormArray;
 	showChildData: boolean = false;
-	selectedTime: any
+	selectedTime: any;
+	tabIndex: number = 0;	
 
 	//Birth Data LookUps
 	private BirthPlaces: object[];
@@ -72,6 +73,15 @@ export class BirthRegistrationComponent implements OnInit {
 	private Religion: object[];
 	private ChildWeights: object[];
 	private ISYESNO: object[];
+
+	/**
+	 * step labels
+	 */
+	private stepLabel1 = 'child_details';
+	private stepLabel2 = 'fathers_details';
+	private stepLabel3 = 'mothers_details';
+	private stepLabel4 = 'family_details';
+	private stepLabel5 = 'upload_documents';
 
 
 	constructor(
@@ -409,22 +419,22 @@ export class BirthRegistrationComponent implements OnInit {
 		let step5 = 42;
 
 		if (count <= step1) {
-			this.stepper.selectedIndex = 0;
+			this.tabIndex = 0;
 			return false;
 		} else if (count <= step2) {
-			this.stepper.selectedIndex = 1;
+			this.tabIndex = 1;
 			return false;
 		} else if (count <= step3) {
-			this.stepper.selectedIndex = 2;
+			this.tabIndex = 2;
 			return false;
 		} else if (count <= step4) {
-			this.stepper.selectedIndex = 3;
+			this.tabIndex = 3;
 			return false;
 		} else if (count <= step5) {
-			this.stepper.selectedIndex = 4;
+			this.tabIndex = 4;
 			return false;
 		} else if (count >= 58 && count <= 64) {
-			this.stepper.selectedIndex = 3;
+			this.tabIndex = 3;
 		}
 
 	}
@@ -653,6 +663,14 @@ export class BirthRegistrationComponent implements OnInit {
 			}
 		}
 		);
+	}
+
+	/**
+	 * This method use to get output event of tab change
+	 * @param evt - Tab index
+	 */
+	onTabChange(evt) {
+		this.tabIndex = evt;
 	}
 }
 

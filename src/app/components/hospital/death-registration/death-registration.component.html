@@ -4,11 +4,11 @@
 
 		<form [formGroup]="deathCertificateForm" autocomplete="off" ngNativeValidate>
 
-			<mat-horizontal-stepper #stepper="matHorizontalStepper">
-				<mat-step>
-					<ng-template matStepLabel>
-						<div [matTooltip]="'deceased_details' | translate:translateKey">
-							{{'deceased_details' | translate:translateKey}}</div>
+			<mat-tab-group [(selectedIndex)]="tabIndex">
+
+				<mat-tab>
+					<ng-template mat-tab-label>
+						<div>{{stepLabel1 | translate: translateKey}}</div>
 					</ng-template>
 
 					<div class="row col-md-12" formGroupName="unknownCategory">
@@ -172,13 +172,12 @@
 							</mat-radio-group>
 						</div>
 					</div>
-					<app-hos-action-bar [form]="deathCertificateForm" [step]="'step1'" (handleErrors)="handleErrorsOnSubmit($event)"></app-hos-action-bar>
-				</mat-step>
+					<app-hos-action-bar [stepInfo]="{step: 'step1', next: 1, back: 0}" (tabIndex)="onTabChange($event)" [form]="deathCertificateForm" (handleErrors)="handleErrorsOnSubmit($event)"></app-hos-action-bar>
+				</mat-tab>
 
-				<mat-step>
-					<ng-template matStepLabel>
-						<div [matTooltip]="'death_details' | translate:translateKey">
-							{{'death_details' | translate:translateKey}}</div>
+				<mat-tab>
+					<ng-template mat-tab-label>
+						<div>{{stepLabel2 | translate: translateKey}}</div>
 					</ng-template>
 
 					<div class="row">
@@ -248,13 +247,12 @@
 						</mat-form-field>
 					</div>
 
-					<app-hos-action-bar [form]="deathCertificateForm" [step]="'step2'" (handleErrors)="handleErrorsOnSubmit($event)"></app-hos-action-bar>
-				</mat-step>
+					<app-hos-action-bar [stepInfo]="{step: 'step2', next: 2, back: 0}" (tabIndex)="onTabChange($event)" [form]="deathCertificateForm" [step]="'step2'" (handleErrors)="handleErrorsOnSubmit($event)"></app-hos-action-bar>
+				</mat-tab>
 
-				<mat-step>
-					<ng-template matStepLabel>
-						<div [matTooltip]="'address_details' | translate:translateKey">
-							{{'address_details' | translate:translateKey}}</div>
+				<mat-tab>
+					<ng-template mat-tab-label>
+						<div>{{stepLabel3 | translate: translateKey}}</div>
 					</ng-template>
 
 					<div class="container">
@@ -275,14 +273,12 @@
 						<app-address #address [requiredFeilds]="requiredFeild" [addressFormGroup]="deathCertificateForm.controls.permanentAddress"></app-address>
 					</div>
 
-					<app-hos-action-bar [form]="deathCertificateForm" [step]="'step3'" (handleErrors)="handleErrorsOnSubmit($event)"></app-hos-action-bar>
-				</mat-step>
+					<app-hos-action-bar [stepInfo]="{step: 'step3', next: 3, back: 1}" (tabIndex)="onTabChange($event)"  [form]="deathCertificateForm" [step]="'step3'" (handleErrors)="handleErrorsOnSubmit($event)"></app-hos-action-bar>
+				</mat-tab>
 
-				<mat-step>
-
-					<ng-template matStepLabel>
-						<div [matTooltip]="'applicant_details' | translate:translateKey">
-							{{'applicant_details' | translate:translateKey}}</div>
+				<mat-tab>
+					<ng-template mat-tab-label>
+						<div>{{stepLabel4 | translate: translateKey}}</div>
 					</ng-template>
 
 					<div>
@@ -345,13 +341,12 @@
 						</div>
 					</div>
 
-					<app-hos-action-bar [form]="deathCertificateForm" [step]="'step4'" (handleErrors)="handleErrorsOnSubmit($event)"></app-hos-action-bar>
-				</mat-step>
+					<app-hos-action-bar [stepInfo]="{step: 'step4', next: 4, back: 2}" (tabIndex)="onTabChange($event)" [form]="deathCertificateForm" [step]="'step4'" (handleErrors)="handleErrorsOnSubmit($event)"></app-hos-action-bar>
+				</mat-tab>
 
-				<mat-step>
-					<ng-template matStepLabel>
-						<div [matTooltip]="'upload_documents' | translate:translateKey">
-							{{'upload_documents' | translate:translateKey}}</div>
+				<mat-tab>
+					<ng-template mat-tab-label>
+						<div>{{stepLabel5 | translate: translateKey}}</div>
 					</ng-template>
 
 					<div class="row">
@@ -365,50 +360,51 @@
 
 
 						<div class="col-md-4" *ngIf="showButtons">
-						<label>{{'applicant_id_proof' | translate:translateKey}}{{!getFileObjectContained('1.1')?'': '*'}}</label>
+							<label>{{'applicant_id_proof' | translate:translateKey}}{{!getFileObjectContained('1.1')?'': '*'}}</label>
 							<app-hos-file-upload [form]="deathCertificateForm" [uploadModel]="setDataValue(1.1,'Applicant Id Proof','1.1','applicantIdProof')"></app-hos-file-upload>
 						</div>
 
 						<div class="col-md-4" *ngIf="showButtons">
-						<label>{{'cremation_report' | translate:translateKey}}{{!getFileObjectContained('1.2')?'': '*'}}</label>
+							<label>{{'cremation_report' | translate:translateKey}}{{!getFileObjectContained('1.2')?'': '*'}}</label>
 							<app-hos-file-upload [form]="deathCertificateForm" [uploadModel]="setDataValue(1.2,'Cremation Report','1.1','cremationReport')"></app-hos-file-upload>
 						</div>
 
 						<div class="col-md-4" *ngIf="showButtons">
-						<label>{{'form4A_death_provided_by_doctor' | translate:translateKey}}{{!getFileObjectContained('1.3')?'': '*'}}</label>
+							<label>{{'form4A_death_provided_by_doctor' | translate:translateKey}}{{!getFileObjectContained('1.3')?'': '*'}}</label>
 							<app-hos-file-upload [form]="deathCertificateForm" [uploadModel]="setDataValue(1.3,'Form 4A','1.1','form4A')"></app-hos-file-upload>
 						</div>
 
 						<div class="col-md-4" *ngIf="showButtons">
-						<label labelPosition="after">{{'deceased_id_proof' | translate:translateKey}}{{!getFileObjectContained('1.4')?'': '*'}}</label>
+							<label labelPosition="after">{{'deceased_id_proof' | translate:translateKey}}{{!getFileObjectContained('1.4')?'': '*'}}</label>
 							<app-hos-file-upload [form]="deathCertificateForm" [uploadModel]="setDataValue(1.4,'Deceased Id Proof','1.1','deceasedIdProof')"></app-hos-file-upload>
 						</div>
 
 						<div class="col-md-4" *ngIf="showButtons">
-						<label>{{'police_inquest' | translate:translateKey}}{{!getFileObjectContained('1.5')?'': '*'}}</label>
+							<label>{{'police_inquest' | translate:translateKey}}{{!getFileObjectContained('1.5')?'': '*'}}</label>
 							<app-hos-file-upload [form]="deathCertificateForm" [uploadModel]="setDataValue(1.5,'Police Inquest','1.1','policeInquest')"></app-hos-file-upload>
 						</div>
-						
+
 						<div class="col-md-4" *ngIf="showButtons">
-						<label labelPosition="after">{{'post_mortem_report' | translate:translateKey}}{{!getFileObjectContained('1.6')?'': '*'}}</label>
+							<label labelPosition="after">{{'post_mortem_report' | translate:translateKey}}{{!getFileObjectContained('1.6')?'': '*'}}</label>
 							<app-hos-file-upload [form]="deathCertificateForm" [uploadModel]="setDataValue(1.6,'Post Mortem Report','1.1','pmreport')"></app-hos-file-upload>
 						</div>
 
 						<div class="col-md-4" *ngIf="showButtons && (getDelayPeriod() > 30 && getDelayPeriod() < 365)">
-						<label labelPosition="after">affidavit_Or_health_Order{{!getFileObjectContained('1.7')?'': '*'}}</label>
+							<label labelPosition="after">affidavit_Or_health_Order{{!getFileObjectContained('1.7')?'': '*'}}</label>
 							<app-hos-file-upload [form]="deathCertificateForm" [uploadModel]="setDataValue(1.7,'Affidavit Or Health Order','1.1','affidavitOrhealthOrder')"></app-hos-file-upload>
 						</div>
 
 						<div class="col-md-4" *ngIf="showButtons && getDelayPeriod() > 365 ">
-						<label labelPosition="after">court_Order{{!getFileObjectContained('1.8')?'': '*'}}</label>
+							<label labelPosition="after">court_Order{{!getFileObjectContained('1.8')?'': '*'}}</label>
 							<app-hos-file-upload [form]="deathCertificateForm" [uploadModel]="setDataValue(1.8,'Court Order','1.1','courtOrder')"></app-hos-file-upload>
 						</div>
 
 					</div>
 
-					<app-hos-action-bar [uploadFiles]="uploadFileArray" [form]="deathCertificateForm" [step]="'final'" (stepReset)="stepReset()" (handleErrors)="handleErrorsOnSubmit($event)"></app-hos-action-bar>
-				</mat-step>
-			</mat-horizontal-stepper>
+					<app-hos-action-bar [stepInfo]="{step: 'final', next: 5, back: 3}" (tabIndex)="onTabChange($event)" [uploadFiles]="uploadFileArray" [form]="deathCertificateForm" [step]="'final'" (stepReset)="stepReset()"
+					 (handleErrors)="handleErrorsOnSubmit($event)"></app-hos-action-bar>
+				</mat-tab>
+			</mat-tab-group>
 		</form>
 	</mat-card>
 </div>

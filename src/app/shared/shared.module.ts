@@ -22,6 +22,7 @@ import { PreventSpaceDirective } from './directives/prevent-space.directive';
 import { ValidationFieldsDirective } from './directives/validation-fields.directive';
 import { GujInputSourceDirective } from './directives/guj-input-source.directive';
 import { GujInputTargetDirective } from './directives/guj-input-target.directive';
+import { InputTrimDirective } from './directives/input-trim.directive';
 /* import directives end*/
 
 /* import pipes start*/
@@ -55,9 +56,11 @@ const COMPONENTS = [
 	TitleBarComponent,
 	LoadingIndicatorComponent,
 	HosActionBarComponent,
+	InputTrimDirective,
 	ValidationFieldsDirective,
 	GujInputSourceDirective,
-	GujInputTargetDirective
+	GujInputTargetDirective,
+	
 ]
 
 @NgModule({

@@ -26,35 +26,16 @@
 				</div>
 			</div>
 		</form>
-
 	</mat-card>
 
 	<mat-card *ngIf="showcorrectionForm">
 		<form [formGroup]="birthCorrectionForm" (ngSubmit)="updateCorrectionInfo()" autocomplete="off">
+			<mat-tab-group [(selectedIndex)]="tabIndex">
+				<mat-tab [label]="stepLable1 | translate: translateKey">
 
-			<mat-horizontal-stepper [linear]="true" #stepper="matHorizontalStepper">
-				<!-- <mat-step>
-					<ng-template matStepLabel>
-						<div [matTooltip]="'Select_type' | translate:translateKey">{{'Select_Type' | translate:translateKey}}</div>
-					</ng-template>
-
-					<div class="row">
-						<div formGroupName="typeOfCorrection" class="col-md-12 ngSelect">
-							<ng-select (change)="changeCorrection($event)" placeholder="{{'type_of_correction' | translate:translateKey}}" formControlName="code">
-								<ng-option *ngFor="let type of TypeOfCorrection" [value]="type.code">
-									{{type.name}}
-								</ng-option>
-							</ng-select>
-							<control-messages [control]="birthCorrectionForm.controls.typeOfCorrection.controls.code"></control-messages>
-						</div>
-					</div>
-					<app-action-bar [uploadFiles]="[]" [form]="birthCorrectionForm" [step]="'step1'" (stepReset)="stepReset()" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
-				</mat-step> -->
-
-				<mat-step>
-					<ng-template matStepLabel>
-						<div [matTooltip]="'Edit_details' | translate:translateKey">{{'Edit Details' | translate:translateKey}}</div>
-					</ng-template>
+					<!-- <ng-template matStepLabel>
+							<div [matTooltip]="'Edit_details' | translate:translateKey">{{'Edit Details' | translate:translateKey}}</div>
+						</ng-template> -->
 
 					<div *ngIf="allowChildNameInsertion">
 						<mat-card class="cardH1">
@@ -174,54 +155,59 @@
 
 						</div>
 					</div>
-					<app-action-bar [uploadFiles]="uploadFileArray" [form]="birthCorrectionForm" [step]="'step1'" (stepReset)="stepReset()" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
+					<app-action-bar [uploadFiles]="uploadFileArray" [form]="birthCorrectionForm" [stepInfo]="{step: 'step1', next: 1, back: 0}"
+					 (tabIndex)="onTabChange($event)" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
 
 					<!-- 
-					<div class="col-md-12 text-right">
-						<button mat-raised-button color="primary" type="submit">{{'submit' | translate: translateKey}}</button>
+					<div class="col-md-12 text-right ">
+						<button mat-raised-button color="primary " type="submit ">{{'submit' | translate: translateKey}}</button>
 					</div> -->
 
 
-				</mat-step>
+				</mat-tab>
+				<mat-tab [label]="stepLable2 | translate: translateKey ">
 
-				<mat-step>
-					<ng-template matStepLabel>
-						<div [matTooltip]="'upload_documents' | translate:translateKey">{{'upload_documents' | translate:translateKey}}</div>
-					</ng-template>
+					<!-- <ng-template matStepLabel>
+							<div [matTooltip]=" 'upload_documents' | translate:translateKey ">{{'upload_documents' | translate:translateKey}}</div>
+						</ng-template> -->
 
 
-					<div class="alert alert-warning">
+					<div class="alert alert-warning ">
 						{{'note' | translate:translateKey}} :{{'submit_hard_copy_at_madhyawarti_school' | translate:translateKey}}
 					</div>
 
-					<div class="alert alert-warning">
+					<div class="alert alert-warning ">
 						{{'note' | translate:translateKey}} : {{'file_size_less_than_5_mb' | translate:translateKey}}
 					</div>
 
-					<div class="row">
+					<div class="row ">
 
-						<div class="col-md-4" *ngIf="showButtons">
-							<label labelPosition="after">{{'resident_proof' | translate:translateKey}}{{!getFileObjectContained('1.1')?'': '*'}}</label>
-							<file-upload [form]="birthCorrectionForm" [uploadModel]="setDataValue(1.1,'Resident Proof','1.1','residentProof')"></file-upload>
+						<div class="col-md-4 " *ngIf="showButtons ">
+							<label labelPosition="after ">{{'resident_proof' | translate:translateKey}}{{!getFileObjectContained('1.1')?'': '*'}}</label>
+							<file-upload [form]="birthCorrectionForm " [uploadModel]="setDataValue(1.1, 'Resident Proof', '1.1',
+					 'residentProof') "></file-upload>
 						</div>
-						
-						<div class="col-md-4" *ngIf="showButtons">
+
+						<div class="col-md-4 " *ngIf="showButtons ">
 							<label>{{'kyc_mother' | translate:translateKey}}{{!getFileObjectContained('1.2')?'': '*'}}</label>
-						
-							<file-upload [form]="birthCorrectionForm" [uploadModel]="setDataValue(1.2,'Kyc Document of Mother','1.1','kycMother')"></file-upload>
+
+							<file-upload [form]="birthCorrectionForm " [uploadModel]="setDataValue(1.2, 'Kyc Document of Mother', '1.1',
+					 'kycMother') "></file-upload>
 						</div>
-						
-						<div class="col-md-4" *ngIf="showButtons">
-							<label labelPosition="after">{{'kyc_father' | translate:translateKey}}{{!getFileObjectContained('1.3')?'': '*'}}</label>
-							<file-upload [form]="birthCorrectionForm" [uploadModel]="setDataValue(1.3,'Kyc Document of Father','1.1','kycFather')"></file-upload>
+
+						<div class="col-md-4 " *ngIf="showButtons ">
+							<label labelPosition="after ">{{'kyc_father' | translate:translateKey}}{{!getFileObjectContained('1.3')?'': '*'}}</label>
+							<file-upload [form]="birthCorrectionForm " [uploadModel]="setDataValue(1.3, 'Kyc Document of Father', '1.1',
+					 'kycFather') "></file-upload>
 						</div>
-						
+
 					</div>
 
-					<app-action-bar [uploadFiles]="uploadFileArray" [form]="birthCorrectionForm" [step]="'final'" (stepReset)="stepReset()" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
+					<app-action-bar [uploadFiles]="uploadFileArray" [form]="birthCorrectionForm" [stepInfo]="{step: 'final', next: 2, back: 1}" (tabIndex)="onTabChange($event)"
+					 (handleErrors)="handleErrorsOnSubmit($event) "></app-action-bar>
 
-				</mat-step>
-			</mat-horizontal-stepper>
+				</mat-tab>
+			</mat-tab-group>
 
 		</form>
 	</mat-card>

@@ -72,6 +72,19 @@ export class BirthCorrectionComponent implements OnInit {
 	uploadModel: any = {};
 
 	/**
+	 * used to set start index 0 to tab.
+	 */
+	tabIndex: number = 0;
+
+	/**
+	 * tab step labels
+	 */
+
+	stepLable1: string = 'Edit_details';
+	stepLable2: string = 'upload_documents';
+	
+
+	/**
 	 * File upload validation array.
 	 */
 	private uploadFileArray: Array<any> =
@@ -295,6 +308,14 @@ export class BirthCorrectionComponent implements OnInit {
 		this.birthCorrectionForm.get('motherLastNameGuj').setValue(data.motherLastNameGuj);
 		this.birthCorrectionForm.get('refNumber').setValue(this.regStatusForm.get('applicationNumber').value)
 		this.birthCorrectionForm.get('typeOfCorrection').get('code').setValue(this.regStatusForm.get('typeOfCorrection').get('code').value);
+
+		/**
+		 * save data
+		 */
+
+		this.formService.saveFormData(this.appId).subscribe(res => {
+			console.log(res);
+		})
 	}
 
 
@@ -328,7 +349,7 @@ export class BirthCorrectionComponent implements OnInit {
 		let step1 = 6;
 
 		if (count <= step1) {
-			this.stepper.selectedIndex = 0;
+			this.tabIndex = 0;
 			return false;
 		}
 	}
