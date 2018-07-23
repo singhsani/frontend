@@ -18,8 +18,6 @@ import { Location } from '@angular/common';
 })
 export class ShopLicCancellationComponent implements OnInit {
 
-	@ViewChild(MatHorizontalStepper) stepper: MatHorizontalStepper;
-	@ViewChild(MatStepLabel) steplable: MatStepLabel;
 	@ViewChild('postalAddressEstablishment') postalAddressEstablishment: any;
 
 	shopCancellationForm: FormGroup;
@@ -212,7 +210,7 @@ export class ShopLicCancellationComponent implements OnInit {
 		let step1 = 6;
 
 		if (count <= step1) {
-			this.stepper.selectedIndex = 0;
+			this.tabIndex = 0;
 			return false;
 		}
 
