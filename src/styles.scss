@@ -54,6 +54,7 @@ button:focus { outline: none !important;}
 a {color: $colorBlack;}
 a:hover {color: $colorBlue; text-decoration: underline;}
 .mat-raised-button:hover {text-decoration: none;}
+.w100p {width: 100%;}
 
 html, body { background: #fff; color: $colorBlack; padding: 0; font-size: 12px; font-weight: 400 !important; margin: 0; width: 100%; height: 100% !important; font-family: 'Open Sans', sans-serif; }
 h1 { font-size: 30px; margin-bottom: 10px; }
@@ -133,10 +134,11 @@ h1 { font-size: 30px; margin-bottom: 10px; }
 .cardH2.mat-card h2::after { content: ''; background: $primaryGradient; position: absolute; left: -24px; top: 0; width: 5px; height: 100%; }
 
 // .container {padding-bottom: 20px; max-width: inherit;}
-.formClass { padding: 0 !important;}
+.formClass {padding: 0 !important; box-shadow: none !important;}
+.cardBorder {border: 1px solid #e1e1e1;}
 // .formClass [class^="col-"], .formClass [class*=" col-"] { margin-top: 8px; margin-bottom: 8px; }
 .formClass .mat-form-field { width: 100% !important; }
-.formClass h2 { font-size: 1.2rem; margin-bottom: 15px; }
+// .formClass h2 { font-size: 1.2rem; margin-bottom: 15px; }
 .alignBottom { display: flex; }
 .alignBottom .mat-form-field { align-self: flex-end; }
 .liteGrayBtn { background: #607d8b; color: $colorWhite; }
@@ -185,7 +187,7 @@ h1 { font-size: 30px; margin-bottom: 10px; }
 
 // Custom CSS
 .mat-form-field {width: 100%; margin-top: 5px; margin-bottom: 5px; line-height: normal;}
-.mat-card:not([class*=mat-elevation-z]), .mat-elevation-z8 { box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14) !important; }
+// .mat-card:not([class*=mat-elevation-z]), .mat-elevation-z8 { box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14) !important; }
 .mat-radio-group { display: flex !important; flex-direction: row !important; }
 .mat-radio-button { margin: 4px 7px 4px 7px; }
 .mat-radio-container, .mat-radio-outer-circle, .mat-radio-inner-circle, .mat-checkbox-inner-container { width: 16px !important; height: 16px !important; }
@@ -213,14 +215,14 @@ mat-label {align-self: center;}
 
 
 .custom-file-upload .badge {font-size: 12px; background: #fff !important; padding: 7px 5px; white-space: normal !important; width: 250px;word-break: break-all;}
-.custom-file-upload .badge-primary {border: 1px solid $colorBlue !important; color: $colorBlue !important;}
-.custom-file-upload .badge-info:hover {border: 1px solid #22b573 !important; color: #22b573 !important;}
+.custom-file-upload .badge-primary {text-align: left; color: $colorBlue !important;}
+.custom-file-upload .badge-info {background: $colorBlue !important; color: #fff; border-radius:0; text-align: left;     padding: 12px 15px; font-weight: normal;}
+.custom-file-upload .badge-info:hover {background: $colorLite !important; color: $colorBlue;}
 .custom-file-upload .badge-secondary {border: 1px solid #6c757d; color: #6c757d;}
 .custom-file-upload .badge-success {border: 1px solid #22b573; color: #22b573;}
 .custom-file-upload .badge-danger {border: 1px solid #dc3545; color: #dc3545;}
 .custom-file-upload .badge-success {border: 1px solid #22b573; color: #22b573;}
 .custom-file-upload .badge-warning {border: 1px solid #ffc107; color: #ffc107;}
-.custom-file-upload .badge-info {border: 1px solid #17a2b8; color: #17a2b8;}
 .custom-file-upload .badge-dark {border: 1px solid #343a40; color: #343a40;}
 .custom-file-upload .attachment {
     color: $colorBlue;
@@ -237,7 +239,24 @@ mat-label {align-self: center;}
     outline: 0;
     border: none;
     overflow: visible;
+
+    .mat-icon {
+        width: 40px;
+        height: 40px;
+        text-align: center;
+        line-height: 38px;
+        border: 1px dashed $colorBlue;
+        float: left; margin-right: 13px;
+    }
 }
+
+.closeAttachFile {width: 36px !important; height: 36px !important; line-height: 36px !important; border-radius:0 !important; left: -36px; top: 0;
+    .mat-icon {font-size: 20px;
+        &:hover {background: #fff !important;}
+    }
+}
+
+
 
 mat-footer-row, mat-header-row, mat-row, td.mat-cell, td.mat-footer-cell, th.mat-header-cell {border-color:#e4e3eb;}
 // .mat-table .mat-row:nth-child(odd) .text-label.badge {background: #EDE7F6 !important;}
@@ -466,5 +485,26 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
         span {font-size: 21px; color: #333; display: block; padding: 0 15px;}
     }
     p {line-height: 26px;}
+}
+
+
+
+
+/*** Stepper Pages ***/
+
+.stepperNav {
+    .mat-tab-header {margin-bottom: 20px;}
+    .stepperMinHeight {min-height: 300px;}
+    // .mat-tab-body {min-height: 400px; padding-bottom:70px !important;
+    //     app-action-bar {width: 100%; position: absolute; bottom: 0; left: 0;}
+    // }
+   .row {margin: 0;}
+   h2 {padding:25px 0 0 15px; margin-bottom: 10px; width: 100%;}
+    &>.mat-tab-header {border: 0;
+        .mat-tab-label-container {background: #f1f1f1;}
+    }
+    .mat-tab-label {font-size: 16px; color: #808080; opacity: 1;}
+    // .mat-icon {font-size: 22px; float: left; margin-right: 13px;}
+    .mat-tab-label-active {color:$colorBlue;}
 }
 
