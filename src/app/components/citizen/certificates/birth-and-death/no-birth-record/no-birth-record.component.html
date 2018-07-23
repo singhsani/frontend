@@ -1,14 +1,15 @@
+
 <record-search *ngIf="showSearchForm" [apiType]="manageRoutes.getApiTypeFromApiCode(this.apiCode)" (searchResult)="showNRCForm($event)">
 </record-search>
 
-<div class="container formMatTab" [hidden]="isVisibeNRCForm">
-	<app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
-	<mat-card class="mt-4 formClass">
+<div [hidden]="isVisibeNRCForm"> <!-- class="formMatTab" -->
+	<!-- <app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar> -->
+	<mat-card class="formClass cardBorder">
 		<!--Start  form  -->
 
 		<form [formGroup]="noRecordBirthForm" autocomplete="off" ngNativeValidate>
 
-			<mat-tab-group [(selectedIndex)]="tabIndex">
+			<mat-tab-group [(selectedIndex)]="tabIndex" class="stepperNav">
 				<!-- first step start-->
 				<mat-tab [label]="stepLable1 | translate: translateKey">
 					<div class="row">
@@ -71,9 +72,10 @@
 				<!-- second step start-->
 				<mat-tab [label]="stepLable2 | translate: translateKey">
 
-					<div>Address
+						<h2>Address</h2>
+					
 						<app-address #address [requiredFeilds]="true" [addressFormGroup]="noRecordBirthForm.controls.birthPlaceAddress"></app-address>
-					</div>
+					
 
 					<app-action-bar [uploadFiles]="uploadFileArray" [form]="noRecordBirthForm" [stepInfo]="{step: 'step2', next: 2, back: 0}"
 					 (handleErrors)="handleErrorsOnSubmit($event)" (tabIndex)="onTabChange($event)"></app-action-bar>
@@ -84,9 +86,9 @@
 				<!-- third step start-->
 				<mat-tab [label]="stepLable3 | translate: translateKey">
 
-					<div>Basic Detail
-						<app-basic-details [basicFormGroup]="noRecordBirthForm"></app-basic-details>
-					</div>
+					<h2>Basic Detail</h2>
+					<app-basic-details [basicFormGroup]="noRecordBirthForm"></app-basic-details>
+					
 
 					<div class="row">
 
@@ -122,16 +124,17 @@
 
 				<!-- final step start-->
 				<mat-tab [label]="stepLable4">
-
-					<div class="alert alert-warning">
-						Note : Submit Hard Copy At Madhyawarti School
-					</div>
-
-					<div class="alert alert-warning">
-						Note : File Size Less Than 5mb
-					</div>
-
+					
 					<div class="row">
+					<div class="col-md-12">
+							<div class="alert alert-warning">
+								Note : Submit Hard Copy At Madhyawarti School
+							</div>
+	
+							<div class="alert alert-warning">
+								Note : File Size Less Than 5mb
+							</div>
+						</div>
 
 						<div *ngIf="showButtons" class="col-md-4">
 							<label>Date Of Birth {{!getFileObjectContained('1.1')?'': '*'}} </label>

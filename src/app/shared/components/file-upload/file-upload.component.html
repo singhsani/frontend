@@ -1,5 +1,5 @@
 <div class="row" *ngIf="!fromAdmin">
-	<div class="col-md-12">
+	
 		<!-- Preview Image-->
 		<!-- <label *ngIf="priviewImage">
 			<img [src]="priviewImage" alt="image" class="imageSize" />
@@ -10,7 +10,8 @@
 			<input #fileInput [required]="requiredFile" type="file" (change)="selectFile($event)" />
 
 			<span class="attachment">
-				<i class="fa fa-paperclip"></i>
+				<!-- <i class="fa fa-plus-square"></i> -->
+				<mat-icon>add</mat-icon>
 			</span>
 			<span class="badge badge-primary ml-1">Attach File</span>
 		</label>
@@ -24,8 +25,8 @@
 		</label>
 
 		<!-- delete button -->
-		<button title="Delete File" [hidden]="!canUpload || !form.get('canEdit').value" type="button" mat-icon-button color="warn" (click)="deleteFile()">
-			<i class="fa fa-times"></i>
+		<button title="Delete File" [hidden]="!canUpload || !form.get('canEdit').value" type="button" mat-icon-button color="warn" (click)="deleteFile()" class="closeAttachFile">
+			<mat-icon>close</mat-icon>
 		</button>
 
 		<!-- If no file uploaded and form is submitted-->
@@ -33,6 +34,6 @@
 			<span class="badge badge-dark">No file uploaded</span>
 		</label>
 
-	</div>
+	
 
 </div>
