@@ -1,3 +1,4 @@
+import { PaginationService } from './../../../core/services/citizen/data-services/pagination.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
@@ -17,6 +18,8 @@ export class DashboardComponent implements OnInit {
 	userServicesList: any;
 	manageRoutes: any = ManageRoutes;
 	services: any = [];
+	isRecentApp: boolean = false;
+	recentApp: any;
 
 	/**
 	 * Constructor to declare defualt propeties of class
@@ -27,13 +30,26 @@ export class DashboardComponent implements OnInit {
 	constructor(
 		private router: Router,
 		private formService: FormsActionsService,
-		private toastr: ToastrService
+		private toastr: ToastrService,
+		private paginationService: PaginationService,
 	) {
 		this.getAllServices();
 	}
 
 	ngOnInit() {
-
+		this.paginationService.apiType = 'myApps';
+		this.paginationService.pageIndex = 1;
+		this.paginationService.pageSize = 2;
+		this.paginationService.getAllData().subscribe( data => {
+			if(data.totalRecords > 0){
+				this.isRecentApp = true;
+				this.recentApp = data.data;
+			} else {
+				this.isRecentApp = false;
+				this.recentApp = [];
+			}
+		});
+		
 	}
 
 	/**
