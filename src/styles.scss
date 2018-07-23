@@ -216,7 +216,7 @@ mat-label {align-self: center;}
 
 .custom-file-upload .badge {font-size: 12px; background: #fff !important; padding: 7px 5px; white-space: normal !important; width: 250px;word-break: break-all;}
 .custom-file-upload .badge-primary {text-align: left; color: $colorBlue !important;}
-.custom-file-upload .badge-info {background: $colorBlue !important; color: #fff; border-radius:0; text-align: left;     padding: 12px 15px; font-weight: normal;}
+.custom-file-upload .badge-info {background: $colorBlue !important; color: #fff; border-radius:0; text-align: left; padding: 12px 35px 12px 15px; font-weight: normal;}
 .custom-file-upload .badge-info:hover {background: $colorLite !important; color: $colorBlue;}
 .custom-file-upload .badge-secondary {border: 1px solid #6c757d; color: #6c757d;}
 .custom-file-upload .badge-success {border: 1px solid #22b573; color: #22b573;}
@@ -507,4 +507,6 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
     // .mat-icon {font-size: 22px; float: left; margin-right: 13px;}
     .mat-tab-label-active {color:$colorBlue;}
 }
+
+.mat-tab-header-pagination-before, .mat-tab-header-pagination-after {background: $colorLite; }
 
