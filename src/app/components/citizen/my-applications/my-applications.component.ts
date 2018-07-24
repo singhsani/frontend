@@ -82,6 +82,7 @@ export class MyApplicationsComponent implements OnInit {
 					return observableOf([]);
 				})
 			).subscribe(data => {
+				this.isLoadingResults = false;
 				this.dataSource.data = data;
 			}
 			);
