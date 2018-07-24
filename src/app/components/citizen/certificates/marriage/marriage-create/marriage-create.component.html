@@ -3,7 +3,7 @@
 	<mat-card class="formClass cardBorder">
 		<!--Start  form  -->
 		<form [formGroup]="marriageFormGroup">
-			<mat-tab-group [(selectedIndex)]="tabIndex" class="stepperNav">
+			<mat-tab-group mat-stretch-tabs [(selectedIndex)]="tabIndex" class="stepperNav">
 				
 				<!-- First step -->
 				<mat-tab [label]="bridegroomDetail">
@@ -981,41 +981,41 @@
 					<div class="row">
 						<h2>Upload Photos</h2>
 						<div class="col-md-4">
-							<div *ngIf="showButtons">{{'marriage_event_photo' | translate:translateKey }}
+							<div *ngIf="showButtons"><label>{{'marriage_event_photo' | translate:translateKey }}</label>
 								<file-upload [form]="marriageFormGroup" [uploadModel]="setDataValue(1,'marriagePhoto','1.1','marriagephoto')"></file-upload>
 							</div>
 						</div>
 
 						<div class="col-md-4">
-							<div *ngIf="showButtons">{{'groom_photo' | translate:translateKey }}
+							<div *ngIf="showButtons"><label>{{'groom_photo' | translate:translateKey }}</label>
 								<file-upload [form]="marriageFormGroup" [uploadModel]="setDataValue(2,'groomPhoto','1.2','groomphoto')"></file-upload>
 							</div>
 						</div>
 
-						<div class="col-md-4" *ngIf="showButtons">{{'bride_photo' | translate:translateKey }}
+						<div class="col-md-4" *ngIf="showButtons"><label>{{'bride_photo' | translate:translateKey }}</label>
 							<file-upload [form]="marriageFormGroup" [uploadModel]="setDataValue(3,'bridePhoto','1.3','bridephoto')"></file-upload>
 						</div>
 						
 						<h2>Upload Documents</h2>
 						
 						<div class="col-md-4">
-							<div *ngIf="showButtons"> {{'resident_proof_of_groom_and_bride' | translate:translateKey }}
+							<div *ngIf="showButtons"><label>{{'resident_proof_of_groom_and_bride' | translate:translateKey }}</label>
 								<file-upload [form]="marriageFormGroup" [uploadModel]="setDataValue(4,'residentProof','1.4','doc')"></file-upload>
 							</div>
 						</div>
 						<div class="col-md-4">
-							<div *ngIf="showButtons">{{'any_kyc_doc_bride' | translate:translateKey }}
+							<div *ngIf="showButtons"><label>{{'any_kyc_doc_bride' | translate:translateKey }}</label>
 								<file-upload [form]="marriageFormGroup" [uploadModel]="setDataValue(5,'kycDoc','1.5','doc')"></file-upload>
 							</div>
 						</div>
 
 						<div class="col-md-4">
-							<div *ngIf="showButtons">{{'resident_proof_of_priest' | translate:translateKey }}
+							<div *ngIf="showButtons"><label>{{'resident_proof_of_priest' | translate:translateKey }}</label>
 								<file-upload [form]="marriageFormGroup" [uploadModel]="setDataValue(6,'priestProof','1.6','doc')"></file-upload>
 							</div>
 						</div>
 						<div class="col-md-4">
-							<div *ngIf="showButtons">{{'resident_proof_of_two_local_witnesses' | translate:translateKey }}
+							<div *ngIf="showButtons"><label>{{'resident_proof_of_two_local_witnesses' | translate:translateKey }}</label>
 								<file-upload [form]="marriageFormGroup" [uploadModel]="setDataValue(7,'withnessProof','1.6','doc')"></file-upload>
 							</div>
 						</div>

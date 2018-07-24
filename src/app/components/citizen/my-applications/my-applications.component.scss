@@ -16,13 +16,13 @@ table { width: 100%; }
 
 
 
-/* NEW my Application */
-.mat-elevation-z8 {box-shadow:none !important; border:1px solid #ececec;}
+/***  NEW my Application  ***/
+.borderOne {box-shadow:none !important; border:1px solid #ececec;}
 .myApplication {
     td {font-size:13px; color:#000;}
     th {font-size:14px; color:#000;}
     .mat-column-fileNumber {width: 200px;}
-    .mat-column-fileStatus {width: 120px;}
+    .mat-column-fileStatus {width: 100px; text-align: center; padding: 0 20px;}
     .mat-column-serviceType {width: 220px;}
     .mat-column-action {width: 220px;
         .mat-icon-button {background:#fff;margin-right:10px; border: 1px solid $colorBlue; width:28px; height:28px; line-height: 26px;
@@ -38,11 +38,8 @@ table { width: 100%; }
        
     }
 }
-.mat-paginator-container {color:#000;}
 
-.mat-table .mat-row:nth-child(even){background-color:$colorWhite;}
-.mat-table .mat-row:nth-child(odd){background-color:#EDE7F6;}
-.mat-table .text-label.badge {color: #fff; padding: 7px 15px;}
+.mat-table .text-label.badge {color: #fff; padding: 7px 15px; min-width: 100px;}
 .mat-table .text-label.badge-primary {border: 1px solid #007bff; color: #007bff;}
 .mat-table .text-label.badge-secondary {border: 1px solid #6c757d; color: #6c757d;}
 .mat-table .text-label.badge-success {border: 1px solid #22b573; color: #22b573;}
