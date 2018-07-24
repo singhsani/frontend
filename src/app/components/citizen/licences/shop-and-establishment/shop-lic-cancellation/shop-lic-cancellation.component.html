@@ -1,5 +1,4 @@
-<div class="container">
-	<app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
+	<!-- <app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar> -->
 
 	<mat-card [hidden]="serachLicenceObj.isDisplayCancelLicenceForm" class="mt-4 formClass">
 		<mat-form-field class="col-md-10">
@@ -8,9 +7,9 @@
 		<button class="col-md-2" mat-raised-button color="primary" (click)="searchLicence()">{{'search' | translate:translateKey}}</button>
 	</mat-card>
 
-	<mat-card [hidden]="!serachLicenceObj.isDisplayCancelLicenceForm" class="mt-4 formClass">
+	<mat-card [hidden]="!serachLicenceObj.isDisplayCancelLicenceForm" class="formClass cardBorder">
 		<form [formGroup]="shopCancellationForm">
-			<mat-tab-group [(selectedIndex)]="tabIndex">
+			<mat-tab-group [(selectedIndex)]="tabIndex" dynamicHeight="true" mat-stretch-tabs class="stepperNav">
 
 				<!-- step 1 Starts -->
 				<mat-tab>
@@ -59,7 +58,7 @@
 							<control-messages [control]="shopCancellationForm.controls.propertyTaxNo"></control-messages>
 						</mat-form-field>
 
-						<mat-form-field class="col-md-6">
+						<mat-form-field class="col-md-4">
 							<input matInput required maxlength="100" type="textarea" placeholder="{{'remark' | translate:translateKey}}" formControlName="remark">
 							<control-messages [control]="shopCancellationForm.controls.remark"></control-messages>
 						</mat-form-field>
@@ -73,4 +72,3 @@
 			</mat-tab-group>
 		</form>
 	</mat-card>
-</div>

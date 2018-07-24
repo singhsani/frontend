@@ -1,8 +1,7 @@
-<div class="container">
-	<app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
-	<mat-card class="mt-4 formClass">
+	<!-- <app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar> -->
+	<mat-card class="formClass cardBorder">
 		<form [formGroup]="marriageDuplicateForm">
-			<mat-tab-group [(selectedIndex)]="tabIndex">
+			<mat-tab-group [(selectedIndex)]="tabIndex"  [(selectedIndex)]="tabIndex"  class="stepperNav" dynamicHeight='true' mat-stretch-tabs>
 
 				<!-- first step start-->
 				<mat-tab [label]="stepLable1">
@@ -60,4 +59,3 @@
 			</mat-tab-group>
 		</form>
 	</mat-card>
-</div>
