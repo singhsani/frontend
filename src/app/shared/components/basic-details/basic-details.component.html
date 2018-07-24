@@ -20,7 +20,9 @@
     </mat-form-field>
 
     <mat-form-field class="col-md-4">
-        <input matInput OnlyNumber placeholder="{{'applicant_mobile' | translate:translateKey}}" type="tel" maxlength="10" minlength="10" formControlName="contactNo" required>
+        <span matPrefix>+91 &nbsp;</span>
+        <input matInput OnlyNumber placeholder="{{'applicant_mobile' | translate:translateKey}}" type="tel" maxlength="10" minlength="10"
+        formControlName="contactNo" required>
         <control-messages [control]="basicFormGroup.controls.contactNo"></control-messages>
     </mat-form-field>
 

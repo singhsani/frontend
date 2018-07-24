@@ -6,7 +6,7 @@
 		</label> -->
 
 		<!-- Upload new file/Image-->
-		<label class="custom-file-upload" [hidden]="canUpload || !form.get('canEdit').value">{{requiredFile}}
+		<label class="custom-file-upload" [hidden]="canUpload || !form.get('canEdit').value">
 			<input #fileInput [required]="requiredFile" type="file" (change)="selectFile($event)" />
 
 			<span class="attachment">
