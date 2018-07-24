@@ -209,13 +209,13 @@ export class MyApplicationsComponent implements OnInit {
 	getFileStatusClass(filestatus: string) {
 		switch (filestatus) {
 			case 'DRAFT':
-				return 'badge draft text-label ml-2 small';
+				return 'badge draft text-label';
 			case 'SUBMITTED':
-				return 'badge submited text-label ml-2';
+				return 'badge submited text-label';
 			case 'PAYMENT':
-				return 'badge rejected text-label ml-2';
+				return 'badge rejected text-label';
 			default:
-				return 'primary'
+				return 'badge primary text-label'
 		}
 	}
 
