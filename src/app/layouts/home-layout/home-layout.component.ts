@@ -26,6 +26,7 @@ export class HomeLayoutComponent implements OnInit {
 	isExpanded: boolean = true;
 	manageRoutes: any = ManageRoutes;
 	tabIndex: number = 0;
+	showMenu: boolean = true;
 	
 	links = [
 		{
@@ -137,14 +138,33 @@ export class HomeLayoutComponent implements OnInit {
 		});
 	}
 
+	/**
+	 * * This method is redirect to route based on selected tab
+	 * @param code - EVENT
+	 */
 	navigateToRoute(code){
 		this.router.navigateByUrl(ManageRoutes.getFullRoute(this.links[code.index].linkCode));
 	}
 
+	/**
+	 * This method is redirect to route based on selected tab
+	 * @param code - number
+	 */
+	navigateToRouteByIndex(code){
+		this.router.navigateByUrl(ManageRoutes.getFullRoute(this.links[code].linkCode));
+	}
+
+	/**
+	 * This method is check current activate route and set tab based on it.
+	 */
 	activateTab(){
 		_.forEach(this.links, (link, id) => {
 			if('/'+ManageRoutes.getFullRoute(link.linkCode) == this.router.url){
 				this.tabIndex = id;
+				/* this.showMenu = true;
+				return false; */
+			} else {
+				/* this.showMenu = false; */
 			}
 		});
 	}

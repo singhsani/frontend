@@ -94,7 +94,7 @@ export class FileUploadComponent implements OnInit {
 		if (!this.selectedFiles) {
 			this.commonService.openAlert("Warning", "Please Select File to Upload", "warning");
 		} else {
-			if (this.selectedFiles[0].size > 500000000) {
+			if (this.selectedFiles[0].size > 5000000) {
 				this.fileName = ''
 				this.canUpload = false;
 				this.commonService.openAlert("Warning", "File Size should be less than 5 MB", "warning");
