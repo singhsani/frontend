@@ -286,6 +286,7 @@ export class DeathRegistrationComponent implements OnInit {
 	 * Method is used to update validations of controls.
 	 */
 	upDateValidation() {
+		this.deathCertificateForm.removeControl
 		this.deathCertificateForm.get('gender').get('code').updateValueAndValidity();
 		this.deathCertificateForm.get('religion').get('code').updateValueAndValidity()
 		this.deathCertificateForm.get('education').get('code').updateValueAndValidity()

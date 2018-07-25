@@ -8,6 +8,8 @@ import { FormsModule, ReactiveFormsModule, FormGroup } from '@angular/forms';
 import { CoreModule } from '../../../../../core/core.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsActionsService } from '../../../../../core/services/citizen/data-services/forms-actions.service';
+
 
 import { DebugElement } from "@angular/core";
 import { By } from '@angular/platform-browser';
@@ -18,6 +20,7 @@ import { error } from '@angular/compiler/src/util';
 fdescribe('Component: BirthCorrectionComponent', () => {
 	let component: BirthCorrectionComponent;
 	let fixture: ComponentFixture<BirthCorrectionComponent>;
+	let service : FormsActionsService
 
 	beforeEach(async(() => {
 		TestBed.configureTestingModule({
@@ -54,16 +57,12 @@ fdescribe('Component: BirthCorrectionComponent', () => {
 	})
 
 	it('Should birth correcion form if user searched data successfully', (err) => {
-			component.ngOnInit();
-			component.showApplicationSearch = false;
-			component.appId = 12;
-			component.apiCode = 'HEL-BCR';
-			fixture.detectChanges();
-			component.showcorrectionForm = true;
-		    component.birthCorrectionFormControls();
-			fixture.detectChanges();
-			expect(component.showcorrectionForm).toBeTruthy();
-
-			console.log(err.toString());
+		component.appId = 23;
+		component.apiCode = 'HEL-BCR';
+		component.ngOnInit();
+		
+		fixture.detectChanges();
+		expect(component.showcorrectionForm).toBeTruthy();
+		fixture.detectChanges();
 	});
 });
