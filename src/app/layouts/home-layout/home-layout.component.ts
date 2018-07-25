@@ -39,26 +39,26 @@ export class HomeLayoutComponent implements OnInit {
 			'linkCode': 'CITIZENMYAPPS',
 			'icon': 'description'
 		},
-		{
+		/* {
 			'linkName': 'My Profile',
 			'linkCode': 'CITIZENMYPROFILE',
 			'icon': 'face'
 		},
-		/* {
+		{
 			'linkName': 'Resource',
 			'linkCode': 'CITIZENMYRESOURCE',
 			'icon': 'web_asset'
+		}, */
+		{
+			'linkName': 'Payable Services',
+			'linkCode': 'CITIZENPAYABLESERVICES',
+			'icon': '&#x20B9;'
 		},
 		{
 			'linkName': 'Transactions',
 			'linkCode': 'CITIZENMYTRANSACTIONS',
 			'icon': 'low_priority'
 		},
-		{
-			'linkName': 'Payable Services',
-			'linkCode': 'CITIZENPAYABLESERVICES',
-			'icon': '&#x20B9;'
-		}, */
 		/* {
 			'linkName': 'Booking',
 			'linkCode': 'test'

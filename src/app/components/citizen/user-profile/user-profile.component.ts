@@ -24,6 +24,7 @@ export class UserProfileComponent implements OnInit {
 	countryListArray: any = [];
 	stateListArray: any = [];
 	cityListArray: any = [];
+	firstLastName: string;
 
 	/**
 	 * Constructor to declare defualt propeties of class
@@ -76,6 +77,7 @@ export class UserProfileComponent implements OnInit {
 	getUserProfile() {
 		this.formService.getUserProfile().subscribe(res => {
 			this.userProfileForm.patchValue(res.data);
+			this.firstLastName = res.data.firstName + ' ' + res.data.lastName;
 			this.getCountryLists();
 		});
 	}

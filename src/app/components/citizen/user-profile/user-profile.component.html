@@ -1,4 +1,4 @@
-
+<app-title-bar title="My Profile"></app-title-bar>
 <div class="row profilePage">
 
 	<div class="col-md-3">
@@ -14,7 +14,7 @@
 					<input #profilePicfileInput hidden type="file" #imgFileInput (change)="uploadProfilePic($event)" accept="image/*" />
 
 				</div>
-				<span>{{userProfileForm.get('firstName').value}} {{userProfileForm.get('lastName').value}}</span>
+				<span>{{firstLastName}}</span>
 			</div>
 			<p>
 				{{userProfileForm.get('email').value}}

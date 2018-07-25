@@ -42,7 +42,8 @@
         <mat-tab *ngFor="let link of links; let i=index">
             <ng-template mat-tab-label>
                 <a (click)="navigateToRouteByIndex(i)">
-                    <mat-icon>{{link.icon}}</mat-icon>
+                    <mat-icon *ngIf="link.linkCode != 'CITIZENPAYABLESERVICES'">{{link.icon}}</mat-icon>
+                    <mat-icon *ngIf="link.linkCode == 'CITIZENPAYABLESERVICES'">&#x20B9;</mat-icon>
                     {{link.linkName}}
                 </a>
             </ng-template>
