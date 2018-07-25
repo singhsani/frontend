@@ -1,24 +1,14 @@
-    <!-- <app-title-bar [title]="'screen_title' | translate:'MyApplicationScreen'"></app-title-bar> -->
-<div class="example-container mat-elevation-z8 borderOne">
-        <div class="example-loading-shade" *ngIf="isLoadingResults || resultsLength==0">
-            <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
-            
-            <div class="noApplication" *ngIf="resultsLength==0">
-                    <img src="assets/icons/no-application-found.png" alt=""><br>
-                     No Application Found
-                     <span class="noActi">It seems, No activity happed yet</span>
-                     <a mat-raised-button class="mat-primary" routerLink=".">Create Application</a>
-               </div> 
-
-        <!-- <div class="noApplication" *ngIf="resultsLength==0">
-            <img src="assets/icons/no-application-found.png" alt="">
-            <br> No Application Found
-            <span class="noActi">It seems, No activity happed yet</span>
-            <a mat-raised-button class="mat-primary" routerLink=".">Create Application</a>
-        </div> -->
-
+<div class="noApplication" *ngIf="resultsLength==0 && !isLoadingResults">
+    <img src="assets/icons/no-application-found.png" alt="">
+    <br> No Application Found
+    <span class="noActi">It seems, No activity happed yet</span>
+    <a mat-raised-button class="mat-primary" routerLink="../dashboard">Create Application</a>
+</div>
+<!-- <app-title-bar [title]="'screen_title' | translate:'MyApplicationScreen'"></app-title-bar> -->
+<div class="example-container mat-elevation-z8 borderOne" [hidden]="resultsLength==0">
+    <div class="example-loading-shade" *ngIf="isLoadingResults">
+        <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
     </div>
-
 
     <table mat-table #table [dataSource]="dataSource" class="myApplication" matSort matSortActive="created" matSortDisableClear
         matSortDirection="asc">
@@ -88,7 +78,7 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
 
-    <mat-paginator [length]="resultsLength" [pageSize]="pageSize">
+    <mat-paginator [hidden]="resultsLength==0" [length]="resultsLength" [pageSize]="pageSize">
     </mat-paginator>
 </div>
 

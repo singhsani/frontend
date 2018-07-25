@@ -161,10 +161,10 @@ export class HomeLayoutComponent implements OnInit {
 		_.forEach(this.links, (link, id) => {
 			if('/'+ManageRoutes.getFullRoute(link.linkCode) == this.router.url){
 				this.tabIndex = id;
-				/* this.showMenu = true;
-				return false; */
+				this.showMenu = true;
+				return false;
 			} else {
-				/* this.showMenu = false; */
+				this.showMenu = false;
 			}
 		});
 	}
