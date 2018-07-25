@@ -4,7 +4,7 @@
 		<button type="button" *ngIf="stepInfo.step != 'step1'" mat-raised-button (click)="nextOrPrevious('back')">{{'back' | translate:translateKey}}</button>
 		<button type="button" *ngIf="!form.get('canEdit').value && stepInfo.step !== 'final'" mat-raised-button  (click)="nextOrPrevious('next')">{{'next' | translate:translateKey}}</button>
 
-		<button type="button" mat-raised-button (click)="cancelForm()">Cancel</button>
+		<!-- <button type="button" mat-raised-button (click)="cancelForm()">Cancel</button> -->
 	</div>
 
 		<div class="pull-right">
@@ -25,9 +25,9 @@
 <div *ngIf="!isstepper" class="row mt-4">
 	<div class="col-sm-12 col-md-12">
 
-		<div class="pull-left">
+		<!-- <div class="pull-left">
 			<button type="button" mat-raised-button (click)="cancelForm()">Cancel</button>
-		</div>
+		</div> -->
 		
 		<div class="pull-right">
 		<button type="button" mat-raised-button color="primary" [disabled]="isSubmitBtnDisabled" *ngIf="form.get('canEdit').value"

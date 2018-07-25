@@ -1,3 +1,4 @@
+<app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
 <record-search *ngIf="showSearchForm" [apiType]="manageRoutes.getApiTypeFromApiCode(this.apiCode)" (searchResult)="showNRCForm($event)">
 </record-search>
 
