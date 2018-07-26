@@ -10,73 +10,88 @@
         <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
     </div>
 
-    <table mat-table #table [dataSource]="dataSource" class="myApplication" matSort matSortActive="created" matSortDisableClear
-        matSortDirection="asc">
+    <mat-table [dataSource]="dataSource" class="myApplication" matSort matSortActive="created" matSortDisableClear matSortDirection="asc">
 
         <ng-container matColumnDef="id">
-            <th mat-header-cell *matHeaderCellDef>#</th>
-            <td mat-cell *matCellDef="let row; let i = index;">{{ paginator.pageIndex==0?i+1:((paginator.pageIndex+1)*10)+(i+1) }}</td>
+            <mat-header-cell *matHeaderCellDef>#</mat-header-cell>
+            <mat-cell *matCellDef="let row; let i = index;">
+                <span class="mobile-label">#</span>{{ paginator.pageIndex==0?i+1:((paginator.pageIndex+1)*10)+(i+1) }}</mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="applicantName">
-            <th mat-header-cell *matHeaderCellDef>Applicant Name</th>
-            <td mat-cell *matCellDef="let row">{{ row.applicantName }}</td>
+            <mat-header-cell *matHeaderCellDef>Applicant Name</mat-header-cell>
+            <mat-cell *matCellDef="let row">
+                <span class="mobile-label">Applicant Name :</span>
+                <div class="row-inside"> {{ row.applicantName }}</div>
+            </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="fileNumber">
-            <th mat-header-cell *matHeaderCellDef>File Number</th>
-            <td mat-cell *matCellDef="let row">{{ row.fileNumber }}</td>
+            <mat-header-cell *matHeaderCellDef>File Number</mat-header-cell>
+            <mat-cell *matCellDef="let row">
+                <span class="mobile-label">File Number :</span>
+                <div class="row-inside"> {{ row.fileNumber }}</div>
+            </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="fileStatus">
-            <th mat-header-cell *matHeaderCellDef>File Status</th>
-            <td mat-cell *matCellDef="let row" class="text-center">
-                <mat-chip-list>
-                    <span class="{{getFileStatusClass(row.fileStatus)}}" selected="true">{{ row.fileStatus}}</span>
-                    <span class="badge badge-warning text-label ml-2" *ngIf="(row.fileStatus === 'SUBMITTED' && row.serviceDetail.appointmentRequired == true)"
-                        (click)="redirectAppointment(row.serviceDetail.code, row.serviceFormId)" selected="true">
-                        Appointment
-                    </span>
-                </mat-chip-list>
-            </td>
+            <mat-header-cell *matHeaderCellDef>File Status</mat-header-cell>
+            <mat-cell *matCellDef="let row" class="text-center">
+                <span class="mobile-label">File Status :</span>
+                <div class="row-inside">
+                    <mat-chip-list>
+                        <span class="{{getFileStatusClass(row.fileStatus)}}" selected="true">{{ row.fileStatus}}</span>
+                        <span class="badge badge-warning text-label ml-2" *ngIf="(row.fileStatus === 'SUBMITTED' && row.serviceDetail.appointmentRequired == true)"
+                            (click)="redirectAppointment(row.serviceDetail.code, row.serviceFormId)" selected="true">
+                            Appointment
+                        </span>
+                    </mat-chip-list>
+                </div>
+            </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="serviceType">
-            <th mat-header-cell *matHeaderCellDef>Service Name</th>
-            <td mat-cell *matCellDef="let row">{{ row.serviceDetail.name }}</td>
+            <mat-header-cell *matHeaderCellDef>Service Name</mat-header-cell>
+            <mat-cell *matCellDef="let row">
+                <span class="mobile-label">Service Name :</span>
+                <div class="row-inside">{{ row.serviceDetail.name }}</div>
+            </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="action">
-            <th mat-header-cell *matHeaderCellDef class="text-center">Action</th>
-            <td mat-cell *matCellDef="let row">
-                <button mat-icon-button [disabled]="!row.canEdit" color="primary" (click)="redirectToEdit(row.serviceDetail.code, row.serviceFormId)">
-                    <mat-icon title="Edit">edit</mat-icon>
-                </button>
-                <button mat-icon-button [disabled]="!row.canDelete" color="primary" (click)="deleteRecord(row.serviceDetail.code, row.serviceFormId)">
-                    <mat-icon title="Delete">delete</mat-icon>
-                </button>
-                <!-- <button class="btn btn-default" mwlConfirmationPopover [popoverTitle]="Delete" [popoverMessage]="Are you sure?" placement="left" (confirm)="deleteRecord(row.serviceDetail.code, row.serviceFormId)" (cancel)="">
+            <mat-header-cell *matHeaderCellDef class="text-center">Action</mat-header-cell>
+            <mat-cell *matCellDef="let row">
+                <span class="mobile-label">Action :</span>
+                <div class="row-inside">
+                    <button mat-icon-button [disabled]="!row.canEdit" color="primary" (click)="redirectToEdit(row.serviceDetail.code, row.serviceFormId)">
+                        <mat-icon title="Edit">edit</mat-icon>
+                    </button>
+                    <button mat-icon-button [disabled]="!row.canDelete" color="primary" (click)="deleteRecord(row.serviceDetail.code, row.serviceFormId)">
+                        <mat-icon title="Delete">delete</mat-icon>
+                    </button>
+                    <!-- <button class="btn btn-default" mwlConfirmationPopover [popoverTitle]="Delete" [popoverMessage]="Are you sure?" placement="left" (confirm)="deleteRecord(row.serviceDetail.code, row.serviceFormId)" (cancel)="">
                         <mat-icon title="Delete">delete</mat-icon>
                     </button> -->
-                <!-- <button mat-icon-button [disabled]="!row.canSubmit" [style.color]="'#4CAF50'" (click)="submitRecord(row.serviceDetail.code, row.serviceDetail.name, row.serviceFormId)">
+                    <!-- <button mat-icon-button [disabled]="!row.canSubmit" [style.color]="'#4CAF50'" (click)="submitRecord(row.serviceDetail.code, row.serviceDetail.name, row.serviceFormId)">
                         <mat-icon title="Submit">done_all</mat-icon>
                     </button> -->
-                <button mat-icon-button [disabled]="row.canSubmit" color="primary" (click)="redirectToEdit(row.serviceDetail.code, row.serviceFormId)">
-                    <mat-icon title="Application Preview">remove_red_eye</mat-icon>
-                </button>
-                <button mat-icon-button [disabled]="row.canSubmit" color="primary" (click)="printReceipt(row.serviceDetail.code, row.serviceDetail.name, row.serviceFormId)">
-                    <mat-icon title="Print Receipt">print</mat-icon>
-                </button>
+                    <button mat-icon-button [disabled]="row.canSubmit" color="primary" (click)="redirectToEdit(row.serviceDetail.code, row.serviceFormId)">
+                        <mat-icon title="Application Preview">remove_red_eye</mat-icon>
+                    </button>
+                    <button mat-icon-button [disabled]="row.canSubmit" color="primary" (click)="printReceipt(row.serviceDetail.code, row.serviceDetail.name, row.serviceFormId)">
+                        <mat-icon title="Print Receipt">print</mat-icon>
+                    </button>
 
-                <button mat-icon-button data-toggle="modal" color="primary" (click)="openModal(template);jsonDisplay(row.serviceDetail.code, row.serviceDetail.name, row.serviceFormId)">
-                    <mat-icon title="JSON Format">center_focus_weak</mat-icon>
-                </button>
-            </td>
+                    <button mat-icon-button data-toggle="modal" color="primary" (click)="openModal(template);jsonDisplay(row.serviceDetail.code, row.serviceDetail.name, row.serviceFormId)">
+                        <mat-icon title="JSON Format">center_focus_weak</mat-icon>
+                    </button>
+                </div>
+            </mat-cell>
         </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
 
     <mat-paginator [hidden]="resultsLength==0" [length]="resultsLength" [pageSize]="pageSize">
     </mat-paginator>
