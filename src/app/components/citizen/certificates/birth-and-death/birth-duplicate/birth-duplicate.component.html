@@ -1,9 +1,9 @@
+<app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
+
 <record-search *ngIf="showSearchForm" [apiType]="manageRoutes.getApiTypeFromApiCode(this.apiCode)" (searchResult)="showDuplicateForm($event)">
 </record-search>
 
 <div class="container" [hidden]="isVisibeDuplicateForm">
-
-	<app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
 
 	<mat-card>
 		<form [formGroup]="birthDuplicateForm" autocomplete="off" ngNativeValidate>
@@ -37,7 +37,7 @@
 
 			</div>
 
-			<app-action-bar [isstepper]="false" [form]="birthDuplicateForm" [step]="'final'"></app-action-bar>
+			<app-action-bar [isstepper]="false" [form]="birthDuplicateForm" ></app-action-bar>
 
 		</form>
 

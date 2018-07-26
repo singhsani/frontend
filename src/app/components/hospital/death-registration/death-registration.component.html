@@ -1,17 +1,18 @@
+<app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
+
 <div class="container">
-	<app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
-	<mat-card class="mt-4 formClass">
+	<mat-card class="formClass cardBorder ">
 
 		<form [formGroup]="deathCertificateForm" autocomplete="off" ngNativeValidate>
 
-			<mat-tab-group [(selectedIndex)]="tabIndex">
+			<mat-tab-group mat-stretch-tabs dynamicHeight="true" [(selectedIndex)]="tabIndex" class="stepperNav">
 
 				<mat-tab>
 					<ng-template mat-tab-label>
 						<div>{{stepLabel1 | translate: translateKey}}</div>
 					</ng-template>
 
-					<div class="row col-md-12" formGroupName="unknownCategory">
+					<div class="row col-md-12 radioBtnError" formGroupName="unknownCategory">
 						<mat-label>{{'is_deceased_unknown' | translate:translateKey}} *</mat-label>
 						<mat-radio-group formControlName="code" (change)="decider($event.value)">
 							<mat-radio-button *ngFor="let yesno of ISYESNO" [value]="yesno.code">
@@ -149,30 +150,33 @@
 							<control-messages [control]="deathCertificateForm.controls.delayedPeriod"></control-messages>
 						</mat-form-field>
 
-					</div>
-
-					<div class="row">
 						<div class="col-md-6" formGroupName="gender">
-							<mat-label>{{'gender' | translate:translateKey}} {{requiredFeild?'*':''}}</mat-label>
-							<mat-radio-group formControlName="code">
-								<mat-radio-button *ngFor="let gender of Gender" [value]="gender.code">
-									{{gender.name}}
-								</mat-radio-button>
+							<div class="radioBtnError">
+								<mat-label>{{'gender' | translate:translateKey}} {{requiredFeild?'*':''}}</mat-label>
+								<mat-radio-group formControlName="code">
+									<mat-radio-button *ngFor="let gender of Gender" [value]="gender.code">
+										{{gender.name}}
+									</mat-radio-button>
+								</mat-radio-group>
 								<control-messages [control]="deathCertificateForm.controls.gender.controls.code"></control-messages>
-							</mat-radio-group>
+							</div>
 						</div>
 
-						<div class="col-md-6" formGroupName="femaleDeathReason">
+						<div class="col-md-6 radioBtnError" formGroupName="femaleDeathReason">
 							<mat-label>{{'female_death_region' | translate:translateKey}} {{requiredFeild?'*':''}}</mat-label>
 							<mat-radio-group formControlName="code">
 								<mat-radio-button *ngFor="let yesNo of ISYESNO" [value]="yesNo.code">
 									{{yesNo.name}}
 								</mat-radio-button>
-								<control-messages [control]="deathCertificateForm.controls.femaleDeathReason.controls.code"></control-messages>
 							</mat-radio-group>
+							<control-messages [control]="deathCertificateForm.controls.femaleDeathReason.controls.code"></control-messages>
 						</div>
+
 					</div>
-					<app-hos-action-bar [stepInfo]="{step: 'step1', next: 1, back: 0}" (tabIndex)="onTabChange($event)" [form]="deathCertificateForm" (handleErrors)="handleErrorsOnSubmit($event)"></app-hos-action-bar>
+
+					<app-hos-action-bar [stepInfo]="{step: 'step1', next: 1, back: 0}" (tabIndex)="onTabChange($event)" [form]="deathCertificateForm"
+					 (handleErrors)="handleErrorsOnSubmit($event)"></app-hos-action-bar>
+
 				</mat-tab>
 
 				<mat-tab>
@@ -215,7 +219,7 @@
 							<control-messages [control]="deathCertificateForm.controls.deathReason"></control-messages>
 						</mat-form-field>
 
-						<div class="col-md-12" formGroupName="medicalReason">
+						<div class="col-md-12 radioBtnError" formGroupName="medicalReason">
 							<label>{{'medical_reason' | translate:translateKey}} {{requiredFeild?'*':''}} </label>
 							<mat-radio-group formControlName="code">
 								<mat-radio-button *ngFor="let prove of ISYESNO" [value]="prove.code">
@@ -247,7 +251,8 @@
 						</mat-form-field>
 					</div>
 
-					<app-hos-action-bar [stepInfo]="{step: 'step2', next: 2, back: 0}" (tabIndex)="onTabChange($event)" [form]="deathCertificateForm" [step]="'step2'" (handleErrors)="handleErrorsOnSubmit($event)"></app-hos-action-bar>
+					<app-hos-action-bar [stepInfo]="{step: 'step2', next: 2, back: 0}" (tabIndex)="onTabChange($event)" [form]="deathCertificateForm"
+					 [step]="'step2'" (handleErrors)="handleErrorsOnSubmit($event)"></app-hos-action-bar>
 				</mat-tab>
 
 				<mat-tab>
@@ -255,25 +260,27 @@
 						<div>{{stepLabel3 | translate: translateKey}}</div>
 					</ng-template>
 
-					<div class="container">
+					<div class="row">
 						<h2>
 							{{'present_address' | translate:translateKey}}
 						</h2>
 						<app-address #address [requiredFeilds]="requiredFeild" [addressFormGroup]="deathCertificateForm.controls.presentAddress"></app-address>
 					</div>
 
-					<span formGroupName="isPermanentPresentAddressSame">
-						<mat-checkbox [disabled]="!deathCertificateForm.get('canEdit').value" (change)="check($event)" [checked]="deathCertificateForm.get('isPermanentPresentAddressSame').get('code').value == 'YES'? true : false">{{'is_permanent_address_same_as_present_address' | translate:translateKey}}</mat-checkbox>
-					</span>
+					<div class="row" formGroupName="isPermanentPresentAddressSame">
+						<mat-checkbox style="margin-left:15px;" [disabled]="!deathCertificateForm.get('canEdit').value" (change)="check($event)"
+						 [checked]="deathCertificateForm.get('isPermanentPresentAddressSame').get('code').value == 'YES'? true : false">{{'is_permanent_address_same_as_present_address' | translate:translateKey}}</mat-checkbox>
+					</div>
 
-					<div class="container">
+					<div class="row">
 						<h2>
 							{{'permanent_address' | translate:translateKey}}
 						</h2>
 						<app-address #address [requiredFeilds]="requiredFeild" [addressFormGroup]="deathCertificateForm.controls.permanentAddress"></app-address>
 					</div>
 
-					<app-hos-action-bar [stepInfo]="{step: 'step3', next: 3, back: 1}" (tabIndex)="onTabChange($event)"  [form]="deathCertificateForm" [step]="'step3'" (handleErrors)="handleErrorsOnSubmit($event)"></app-hos-action-bar>
+					<app-hos-action-bar [stepInfo]="{step: 'step3', next: 3, back: 1}" (tabIndex)="onTabChange($event)" [form]="deathCertificateForm"
+					 [step]="'step3'" (handleErrors)="handleErrorsOnSubmit($event)"></app-hos-action-bar>
 				</mat-tab>
 
 				<mat-tab>
@@ -297,51 +304,15 @@
 								<control-messages [control]="deathCertificateForm.controls.relationOther"></control-messages>
 							</mat-form-field>
 						</div>
-
-						<!-- <mat-form-field class="col-md-4">
-							<input matInput appValidationFields [validationFieldsType]="'onlyNameWithSpace'" maxlength="20" placeholder="{{'applicant_hospital_name' | translate:translateKey}}"
-							 formControlName="appHospitalName">
-							<control-messages [control]="deathCertificateForm.controls.appHospitalName"></control-messages>
-						</mat-form-field>
-
-						<div formGroupName="applicantRelation" class="col-md-4 ngSelect">
-							<ng-select placeholder="{{'applicant_relation' | translate:translateKey}}" formControlName="code">
-								<ng-option *ngFor="let app_rel of RelationShip" [value]="app_rel.code">
-									{{app_rel.name}}
-								</ng-option>
-							</ng-select>
-							<control-messages [control]="deathCertificateForm.controls.applicantRelation.controls.code"></control-messages>
-						</div>
-
-						<mat-form-field *ngIf="deathCertificateForm.value.applicantRelation.code == 'OTHER_RELATIONSHIP'" class="col-md-4">
-							<input required matInput placeholder="{{'other_relation' | translate:translateKey}}" formControlName="relationOther">
-							<control-messages [control]="deathCertificateForm.controls.relationOther"></control-messages>
-						</mat-form-field>
-
-						<mat-form-field class="col-md-4">
-							<input matInput placeholder="{{'applicant_email' | translate:translateKey}}" type="email" formControlName="email">
-							<control-messages [control]="deathCertificateForm.controls.email"></control-messages>
-						</mat-form-field>
-
-						<mat-form-field class="col-md-4">
-							<input matInput maxlength="12" OnlyNumber minlength="12" placeholder="{{'applicant_aadhar' | translate:translateKey}}" formControlName="aadhaarNo">
-							<control-messages [control]="deathCertificateForm.controls.aadhaarNo"></control-messages>
-						</mat-form-field>
-
-						<mat-form-field class="col">
-							<input matInput placeholder="{{'contact_No' | translate:translateKey}}" OnlyNumber maxlength="10" formControlName="contactNo">
-							<control-messages [control]="deathCertificateForm.controls.contactNo"></control-messages>
-						</mat-form-field> -->
 					</div>
 
 					<div class="row">
-						<div class="container">
-							<mat-label>{{'applicant_or_hospital_address' | translate:translateKey}}</mat-label>
-							<app-address #address [requiredFeilds]="true" [addressFormGroup]="deathCertificateForm.controls.applicantAddress"></app-address>
-						</div>
+						<h2>{{'applicant_or_hospital_address' | translate:translateKey}}</h2>
+						<app-address #address [requiredFeilds]="true" [addressFormGroup]="deathCertificateForm.controls.applicantAddress"></app-address>
 					</div>
 
-					<app-hos-action-bar [stepInfo]="{step: 'step4', next: 4, back: 2}" (tabIndex)="onTabChange($event)" [form]="deathCertificateForm" [step]="'step4'" (handleErrors)="handleErrorsOnSubmit($event)"></app-hos-action-bar>
+					<app-hos-action-bar [stepInfo]="{step: 'step4', next: 4, back: 2}" (tabIndex)="onTabChange($event)" [form]="deathCertificateForm"
+					 [step]="'step4'" (handleErrors)="handleErrorsOnSubmit($event)"></app-hos-action-bar>
 				</mat-tab>
 
 				<mat-tab>
@@ -401,8 +372,9 @@
 
 					</div>
 
-					<app-hos-action-bar [stepInfo]="{step: 'final', next: 5, back: 3}" (tabIndex)="onTabChange($event)" [uploadFiles]="uploadFileArray" [form]="deathCertificateForm" [step]="'final'" (stepReset)="stepReset()"
-					 (handleErrors)="handleErrorsOnSubmit($event)"></app-hos-action-bar>
+					<app-hos-action-bar [stepInfo]="{step: 'final', next: 5, back: 3}" (tabIndex)="onTabChange($event)" [uploadFiles]="uploadFileArray"
+					 [form]="deathCertificateForm" [step]="'final'" (stepReset)="stepReset()" (handleErrors)="handleErrorsOnSubmit($event)"></app-hos-action-bar>
+
 				</mat-tab>
 			</mat-tab-group>
 		</form>

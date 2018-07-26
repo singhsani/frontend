@@ -1,10 +1,11 @@
-<div class="container">
-    <app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
-    <mat-card class="mt-4 formClass">
+<app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
+
+<div>
+    <mat-card class="formClass cardBorder">
 
         <form [formGroup]="stillBirthCertificateForm" autocomplete="off" ngNativeValidate>
 
-            <mat-tab-group [(selectedIndex)]="tabIndex">
+            <mat-tab-group mat-stretch-tabs [(selectedIndex)]="tabIndex" class="stepperNav" dynamicHeight="true">
 
                 <mat-tab>
                     <ng-template mat-tab-label>
@@ -111,9 +112,8 @@
                         <mat-icon>add</mat-icon>
                     </button>
 
-
-
-                    <app-hos-action-bar [stepInfo]="{step: 'step1', next: 1, back: 0}" (tabIndex)="onTabChange($event)" (handleErrors)="handleErrorsOnSubmit($event)" [form]="stillBirthCertificateForm" [step]="'step1'"></app-hos-action-bar>
+                    <app-hos-action-bar [stepInfo]="{step: 'step1', next: 1, back: 0}" (tabIndex)="onTabChange($event)" (handleErrors)="handleErrorsOnSubmit($event)"
+                        [form]="stillBirthCertificateForm" [step]="'step1'"></app-hos-action-bar>
 
                 </mat-tab>
                 <mat-tab>
@@ -209,7 +209,8 @@
                         </mat-form-field>
                     </div>
 
-                    <app-hos-action-bar [stepInfo]="{step: 'step2', next: 2, back: 0}" (tabIndex)="onTabChange($event)" (handleErrors)="handleErrorsOnSubmit($event)" [form]="stillBirthCertificateForm" [step]="'step2'"></app-hos-action-bar>
+                    <app-hos-action-bar [stepInfo]="{step: 'step2', next: 2, back: 0}" (tabIndex)="onTabChange($event)" (handleErrors)="handleErrorsOnSubmit($event)"
+                        [form]="stillBirthCertificateForm" [step]="'step2'"></app-hos-action-bar>
 
                 </mat-tab>
 
@@ -351,7 +352,8 @@
 
                     </div>
 
-                    <app-hos-action-bar [stepInfo]="{step: 'step3', next: 3, back: 1}" (tabIndex)="onTabChange($event)" (handleErrors)="handleErrorsOnSubmit($event)" [form]="stillBirthCertificateForm" [step]="'step2'"></app-hos-action-bar>
+                    <app-hos-action-bar [stepInfo]="{step: 'step3', next: 3, back: 1}" (tabIndex)="onTabChange($event)" (handleErrors)="handleErrorsOnSubmit($event)"
+                        [form]="stillBirthCertificateForm" [step]="'step2'"></app-hos-action-bar>
 
                 </mat-tab>
 
@@ -359,40 +361,46 @@
                     <ng-template mat-tab-label>
                         <div>{{stepLabel4 | translate: translateKey}}</div>
                     </ng-template>
-                    <div>
+
+                    <div class="row">
 
                         <h2>
                             {{'present_address_during_delivery' | translate:translateKey}}
                         </h2>
 
                         <app-address #address [requiredFeilds]="true" [addressFormGroup]="stillBirthCertificateForm.controls.parentDeliveryAddress"></app-address>
+                    </div>
 
-                        <span formGroupName="isPermanentPresentAddressSame">
-                            <mat-checkbox [disabled]="!stillBirthCertificateForm.get('canEdit').value" (change)="check($event);" [checked]="stillBirthCertificateForm.get('isPermanentPresentAddressSame').get('code').value == 'YES'? true : false">{{'is_permanent_address_same_as_present_address' | translate:translateKey}}</mat-checkbox>
-                        </span>
-
+                    <div class="row" formGroupName="isPermanentPresentAddressSame">
+                        <mat-checkbox style="margin-left: 15px" [disabled]="!stillBirthCertificateForm.get('canEdit').value" (change)="check($event);"
+                            [checked]="stillBirthCertificateForm.get('isPermanentPresentAddressSame').get('code').value == 'YES'? true : false">{{'is_permanent_address_same_as_present_address' | translate:translateKey}}</mat-checkbox>
+                    </div>
+                    <div class="row">
                         <h2>
                             {{'permanent_address_during_delivery' | translate:translateKey}}
                         </h2>
 
                         <app-address #address [requiredFeilds]="true" [addressFormGroup]="stillBirthCertificateForm.controls.parentPermanentAddress"></app-address>
-
-                        <div class="row">
-                            <div formGroupName="familyReligion" class="col-md-4 ngSelect">
-                                <ng-select placeholder="{{'religion' | translate:translateKey}}" formControlName="code" required>
-                                    <ng-option *ngFor="let relegion of Religion" [value]="relegion.code">
-                                        {{relegion.name}}
-                                    </ng-option>
-                                </ng-select>
-                                <control-messages [control]="stillBirthCertificateForm.controls.familyReligion.controls.code"></control-messages>
-                            </div>
-                        </div>
-
-                        <app-hos-action-bar [stepInfo]="{step: 'step4', next: 4, back: 2}" (tabIndex)="onTabChange($event)" (handleErrors)="handleErrorsOnSubmit($event)" [form]="stillBirthCertificateForm" [step]="'step3'"></app-hos-action-bar>
-
                     </div>
+
+                    <div class="row">
+                        <div formGroupName="familyReligion" class="col-md-4 ngSelect">
+                            <ng-select placeholder="{{'religion' | translate:translateKey}}" formControlName="code" required>
+                                <ng-option *ngFor="let relegion of Religion" [value]="relegion.code">
+                                    {{relegion.name}}
+                                </ng-option>
+                            </ng-select>
+                            <control-messages [control]="stillBirthCertificateForm.controls.familyReligion.controls.code"></control-messages>
+                        </div>
+                    </div>
+
+                    <app-hos-action-bar [stepInfo]="{step: 'step4', next: 4, back: 2}" (tabIndex)="onTabChange($event)" (handleErrors)="handleErrorsOnSubmit($event)"
+                        [form]="stillBirthCertificateForm" [step]="'step3'"></app-hos-action-bar>
+
                 </mat-tab>
+
                 <mat-tab>
+
                     <ng-template mat-tab-label>
                         <div>{{stepLabel5 | translate: translateKey}}</div>
                     </ng-template>
@@ -409,19 +417,21 @@
                         {{'note' | translate:translateKey}} : {{'check_photo_upload' | translate:translateKey}}
                     </div>
 
-                    <div *ngIf="showButtons">
-                        <label> {{'resident_proof' | translate:translateKey}}{{!getFileObjectContained('1.1')?'': '*'}}</label>
-                        <app-hos-file-upload [form]="stillBirthCertificateForm" [uploadModel]="setDataValue(1.1,'Resident Proof','1.1','residentProof')"></app-hos-file-upload>
-                    </div>
+                    <div class="row">
+                        <div class="col-md-4" *ngIf="showButtons">
+                            <label> {{'resident_proof' | translate:translateKey}}{{!getFileObjectContained('1.1')?'': '*'}}</label>
+                            <app-hos-file-upload [form]="stillBirthCertificateForm" [uploadModel]="setDataValue(1.1,'Resident Proof','1.1','residentProof')"></app-hos-file-upload>
+                        </div>
 
-                    <div *ngIf="showButtons">
-                        <label> {{'doctors_certificate' | translate:translateKey}}{{!getFileObjectContained('1.2')?'': '*'}}</label>
-                        <app-hos-file-upload [form]="stillBirthCertificateForm" [uploadModel]="setDataValue(1.2,'Doctors Certificate','1.1','doctorsCertificate')"></app-hos-file-upload>
+                        <div class="col-md-4" *ngIf="showButtons">
+                            <label> {{'doctors_certificate' | translate:translateKey}}{{!getFileObjectContained('1.2')?'': '*'}}</label>
+                            <app-hos-file-upload [form]="stillBirthCertificateForm" [uploadModel]="setDataValue(1.2,'Doctors Certificate','1.1','doctorsCertificate')"></app-hos-file-upload>
+                        </div>
                     </div>
 
                     <div>
-                        <app-hos-action-bar [stepInfo]="{step: 'final', next: 5, back: 3}" (tabIndex)="onTabChange($event)" [uploadFiles]="uploadFileArray" [form]="stillBirthCertificateForm" [step]="'final'" (stepReset)="stepReset()"
-                            (handleErrors)="handleErrorsOnSubmit($event)"></app-hos-action-bar>
+                        <app-hos-action-bar [stepInfo]="{step: 'final', next: 5, back: 3}" (tabIndex)="onTabChange($event)" [uploadFiles]="uploadFileArray"
+                            [form]="stillBirthCertificateForm" [step]="'final'" (stepReset)="stepReset()" (handleErrors)="handleErrorsOnSubmit($event)"></app-hos-action-bar>
                     </div>
 
                 </mat-tab>

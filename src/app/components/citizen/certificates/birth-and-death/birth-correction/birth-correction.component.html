@@ -1,5 +1,7 @@
+<app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
+
 <div class="container">
-	<app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
+
 	<mat-card *ngIf="showApplicationSearch">
 
 		<form [formGroup]="regStatusForm" (ngSubmit)="getRegistrationNumberStatus()" autocomplete="off">
@@ -30,7 +32,7 @@
 
 	<mat-card *ngIf="showcorrectionForm">
 		<form [formGroup]="birthCorrectionForm" (ngSubmit)="updateCorrectionInfo()" autocomplete="off">
-			<mat-tab-group [(selectedIndex)]="tabIndex">
+			<mat-tab-group mat-stretch-tabs  class="stepperNav" dynamicHeight="true" [(selectedIndex)]="tabIndex">
 				<mat-tab [label]="stepLable1 | translate: translateKey">
 
 					<!-- <ng-template matStepLabel>

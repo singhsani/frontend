@@ -293,11 +293,5 @@ export class ActionBarComponent implements OnInit, OnChanges {
 		}
 	}
 
-	/**
-	 * This method is use to redirect on my application
-	 */
-	cancelForm() {
-		this.router.navigate(['citizen/my-applications']);
-	}
 
 }
