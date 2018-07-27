@@ -54,8 +54,8 @@
 	<mat-card class="my-3">
 		<form [formGroup]="appointmentForm">
 			<div class="row">
-				<div class="col-4" formGroupName='resources'>
-					<ng-select formControlName="code" required placeholder="Select resources*" (change)="onSubmit()">
+				<div class="col-6" formGroupName='resources'>
+					<ng-select formControlName="code" required placeholder="Select Place *" (change)="onSubmit()">
 						<ng-option *ngFor="let resources of resources" [value]="resources.code">{{resources.name}}</ng-option>
 					</ng-select>
 				</div>
