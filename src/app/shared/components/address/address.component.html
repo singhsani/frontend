@@ -1,16 +1,6 @@
 <div [formGroup]="addressFormGroup" class="formClass">
 	<div class="row">
 
-		<!-- <mat-form-field class="col-md-4">
-			<input matInput type="text" maxlength="5" formControlName="houseNo" placeholder="{{'house_no' | translate: translateKey }}" >
-			<control-messages [control]="addressFormGroup.controls.houseNo"></control-messages>
-		</mat-form-field> -->
-
-		<!-- <mat-form-field class="col-md-4">
-			<input matInput OnlyNumber formControlName="tenamentNo" placeholder="{{'tenament_no' | translate: translateKey }}" >
-			<control-messages [control]="addressFormGroup.controls.tenamentNo"></control-messages>
-		</mat-form-field> -->
-
 		<mat-form-field class="col-md-4">
 			<input matInput type="text" formControlName="buildingName" placeholder="{{'building_name' | translate: translateKey }}" maxlength="60">
 			<control-messages [control]="addressFormGroup.controls.buildingName"></control-messages>
@@ -45,45 +35,23 @@
 			<control-messages [control]="addressFormGroup.controls.state"></control-messages>
 		</div>
 
-		<mat-form-field class="col-md-4">
+		<!-- <mat-form-field class="col-md-4">
 			<input matInput formControlName="district" placeholder="{{'district' | translate: translateKey }}" [required]="requiredFeilds" maxlength="60">
 			<control-messages [control]="addressFormGroup.controls.district"></control-messages>
-		</mat-form-field>
+		</mat-form-field> -->
 
-		<div class="col-md-4 ngSelect">
-			<ng-select placeholder="{{'city' | translate: translateKey }} {{requiredFeilds?'*':''}}" formControlName="city" [required]="requiredFeilds">
+		<div class="col-md-6 ngSelect">
+			<ng-select placeholder="{{'city' | translate: translateKey }} / {{'district' | translate: translateKey }} {{requiredFeilds?'*':''}}" formControlName="city" [required]="requiredFeilds">
 				<ng-option *ngFor="let city of cityListArray" [value]="city.name">{{city.name}}</ng-option>
 			</ng-select>
 			<control-messages [control]="addressFormGroup.controls.city"></control-messages>
 		</div>
 
-		<mat-form-field class="col-md-4">
+		<mat-form-field class="col-md-6">
 			<input matInput type="tel" OnlyNumber formControlName="pincode" placeholder="{{'pincode' | translate: translateKey }}" minlength="6"
 			 maxlength="6" [required]="requiredFeilds">
 			<control-messages [control]="addressFormGroup.controls.pincode"></control-messages>
 		</mat-form-field>
 
-		<!-- <mat-form-field class="col-md-8">
-			<input matInput type="text" formControlName="addressLine1" placeholder="{{'address_line1' | translate: translateKey }}"
-			 class="pl-1 example-right-align">
-			<control-messages [control]="addressFormGroup.controls.addressLine1"></control-messages>
-		</mat-form-field>
-
-		<mat-form-field class="col-md-6">
-			<input matInput type="text" formControlName="addressLine2" placeholder="{{'address_line2' | translate: translateKey }}"
-			 class="pl-1 example-right-align">
-			<control-messages [control]="addressFormGroup.controls.addressLine2"></control-messages>
-		</mat-form-field>
-
-		<mat-form-field class="col-md-6">
-			<input matInput type="text" formControlName="addressLine3" placeholder="{{'address_line3' | translate: translateKey }}"
-			 class="pl-1 example-right-align">
-			<control-messages [control]="addressFormGroup.controls.addressLine3"></control-messages>
-		</mat-form-field> -->
-
-		<!-- <mat-form-field class="col">
-			<input matInput type="text" formControlName="village" placeholder="{{'village' | translate: translateKey }}" >
-			<control-messages [control]="addressFormGroup.controls.village"></control-messages>
-		</mat-form-field> -->
 	</div>
 </div>

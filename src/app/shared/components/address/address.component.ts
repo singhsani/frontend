@@ -37,26 +37,22 @@ export class AddressComponent implements OnInit, OnChanges {
 	ngOnChanges() {
 		if (this.requiredFeilds) {
 			this.addressFormGroup.get('state').setValidators([Validators.required]);
-			this.addressFormGroup.get('state').updateValueAndValidity()
-			this.addressFormGroup.get('district').setValidators([Validators.required]);
-			this.addressFormGroup.get('district').updateValueAndValidity()
+			this.addressFormGroup.get('state').updateValueAndValidity();
 			this.addressFormGroup.get('city').setValidators([Validators.required]);
-			this.addressFormGroup.get('city').updateValueAndValidity()
+			this.addressFormGroup.get('city').updateValueAndValidity();
 			this.addressFormGroup.get('country').setValidators([Validators.required]);
-			this.addressFormGroup.get('country').updateValueAndValidity()
+			this.addressFormGroup.get('country').updateValueAndValidity();
 			this.addressFormGroup.get('pincode').setValidators([Validators.required]);
-			this.addressFormGroup.get('pincode').updateValueAndValidity()
+			this.addressFormGroup.get('pincode').updateValueAndValidity();
 		} else {
 			this.addressFormGroup.get('state').clearValidators();
-			this.addressFormGroup.get('state').updateValueAndValidity()
-			this.addressFormGroup.get('district').clearValidators();
-			this.addressFormGroup.get('district').updateValueAndValidity()
+			this.addressFormGroup.get('state').updateValueAndValidity();
 			this.addressFormGroup.get('city').clearValidators();
-			this.addressFormGroup.get('city').updateValueAndValidity()
+			this.addressFormGroup.get('city').updateValueAndValidity();
 			this.addressFormGroup.get('country').clearValidators();
-			this.addressFormGroup.get('country').updateValueAndValidity()
+			this.addressFormGroup.get('country').updateValueAndValidity();
 			this.addressFormGroup.get('pincode').clearValidators();
-			this.addressFormGroup.get('pincode').updateValueAndValidity()
+			this.addressFormGroup.get('pincode').updateValueAndValidity();
 		}
 	}
 

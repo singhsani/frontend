@@ -103,7 +103,8 @@ export class SignUpComponent implements OnInit {
 					{ queryParams: { uniqueId: res.data.uniqueId, code: res.data.cellOtp } });
 			},
 			err => {
-				this.toster.error(err.error[0].code);
+				if (err.error[0])
+					this.toster.error(err.error[0].code);
 			}
 		);
 	}

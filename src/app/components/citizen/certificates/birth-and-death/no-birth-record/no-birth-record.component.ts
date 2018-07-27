@@ -2,7 +2,6 @@ import { CommonService } from './../../../../../shared/services/common.service';
 import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MatHorizontalStepper, MatStep, MatStepLabel } from '@angular/material';
 import { Location } from '@angular/common';
 
 import { ManageRoutes } from './../../../../../config/routes-conf';
@@ -19,8 +18,7 @@ import * as moment from 'moment';
 })
 export class NoBirthRecordComponent implements OnInit {
 
-	@ViewChild(MatHorizontalStepper) stepper: MatHorizontalStepper;
-	@ViewChild(MatStepLabel) steplable: MatStepLabel;
+
 	private uploadFileArray: Array<any> = [
 		{ labelName: 'Date Of Birth', fieldIdentifier: '1.1' },
 		{ labelName: 'Place Of Birth', fieldIdentifier: '1.2' },
