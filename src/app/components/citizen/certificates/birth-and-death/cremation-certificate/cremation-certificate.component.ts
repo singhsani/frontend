@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MatHorizontalStepper, MatStep, MatStepLabel } from '@angular/material';
 
 import { ManageRoutes } from './../../../../../config/routes-conf';
 import { ValidationService } from '../../../../../shared/services/validation.service';
@@ -16,9 +15,6 @@ import * as moment from 'moment';
 	styleUrls: ['./cremation-certificate.component.scss']
 })
 export class CremationCertificateComponent implements OnInit {
-
-	@ViewChild(MatHorizontalStepper) stepper: MatHorizontalStepper;
-	@ViewChild(MatStepLabel) steplable: MatStepLabel;
 
 	@ViewChild('address') addrComponent: any;
 
@@ -80,7 +76,7 @@ export class CremationCertificateComponent implements OnInit {
 			deceasedFirstName: [null, Validators.required],
 			deceasedMiddleName: [null],
 			deceasedLastName: [null, Validators.required],
-			
+
 			deceasedFirstNameGuj: [null, Validators.required],
 			deceasedMiddleNameGuj: [null],
 			deceasedLastNameGuj: [null, Validators.required],
@@ -98,7 +94,7 @@ export class CremationCertificateComponent implements OnInit {
 				code: [null, Validators.required]
 			}),
 			applicantRelationDetail: null,
-			
+
 			attachments: [],
 
 		});

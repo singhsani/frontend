@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MatHorizontalStepper, MatStep, MatStepLabel } from '@angular/material';
 import { Location } from '@angular/common';
 
 import { ManageRoutes } from './../../../../../config/routes-conf';
@@ -17,9 +16,6 @@ import * as moment from 'moment';
 	styleUrls: ['./no-death-record.component.scss']
 })
 export class NoDeathRecordComponent implements OnInit {
-
-	@ViewChild(MatHorizontalStepper) stepper: MatHorizontalStepper;
-	@ViewChild(MatStepLabel) steplable: MatStepLabel;
 
 	@ViewChild('address') addrComponent: any;
 
