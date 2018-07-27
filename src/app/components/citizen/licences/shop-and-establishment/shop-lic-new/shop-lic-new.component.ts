@@ -48,22 +48,35 @@ export class ShopLicNewComponent implements OnInit {
 	// required attachment array
 	private uploadFileArray: Array<any> =
 		[
-			{ labelName: 'Organizational Ownership Agreement Copy', fieldIdentifier: '1' },
-			{ labelName: 'Property Tax Current Year Receipt Of Organization', fieldIdentifier: '2' },
-			{ labelName: 'Organization Business Tax Current Year Receipt', fieldIdentifier: '3' },
-			{ labelName: 'Workers Professional Tax Receipt', fieldIdentifier: '4' },
-			{ labelName: 'Partnership Deed Copy Of Partner If There Is A Partner', fieldIdentifier: '5' },
-			{ labelName: 'Owner - Receipt of Gujarat Labor welfare fund', fieldIdentifier: '6' },
-			{ labelName: 'Commercial Basis In The Concept', fieldIdentifier: '7' },
+			{ labelName: 'Upload photo of License Holder (2MB Only)', fieldIdentifier: '1', required: true, category: 'SHOP_LIC_SELF_OWNERSHIP' },
+			{ labelName: 'Organizational ownership agreement copy', fieldIdentifier: '2', required: true, category: 'SHOP_LIC_SELF_OWNERSHIP' },
 
-			{ labelName: 'Organization Rental Agreement', fieldIdentifier: '10' },
-			{ labelName: 'Property tax current Year Receipt of organization', fieldIdentifier: '11' },
-			{ labelName: 'organization business tax current year receipt', fieldIdentifier: '12' },
-			{ labelName: 'workers professional tax receipts', fieldIdentifier: '13' },
-			{ labelName: 'Tenant- Receipt of Gujarat Labor welfare fund', fieldIdentifier: '14' },
-			{ labelName: 'Partnership deed copy of partner if there is a partner', fieldIdentifier: '15' },
-			{ labelName: 'commercial basis in the concept', fieldIdentifier: '16' },
-			{ labelName: 'Prescribed certificate', fieldIdentifier: '17' }
+			{ labelName: 'Property Tax Current Year Receipt Of Organization', fieldIdentifier: '3', required: true, category: 'common' },
+			{ labelName: 'Organization Business Tax Current Year Receipt', fieldIdentifier: '4', required: true, category: 'common' },
+			{ labelName: 'Workers Professional Tax Receipt', fieldIdentifier: '5', required: true, category: "common" },
+			// { labelName: 'Partnership Deed Copy Of Partner If There Is A Partner', fieldIdentifier: '6', required: false, category: "common" },
+			{ labelName: 'If there are more then 10 or more workers,  Receipt of Gujarat Labor welfare fund Commercial basis in the concept', fieldIdentifier: '7', required: true, category: "common" },
+			// { labelName: 'Aadhar Card No', fieldIdentifier: '8', required: false, category: "common" },
+			// { labelName: 'Election/ Voters ID', fieldIdentifier: '9', required: false, category: "common" },
+			// { labelName: 'PAN Card No', fieldIdentifier: '10', required: false, category: "common" },
+
+			{ labelName: 'Organization Rental Agreement', fieldIdentifier: '12', required: true, category: "SHOP_LIC_PARTNERSHIP" },
+			{ labelName: 'Sale / Purchase Deed', fieldIdentifier: '13', required: true, category: "SHOP_LIC_PARTNERSHIP" },
+			{ labelName: 'Prescribed certificate', fieldIdentifier: '14', required: true, category: "SHOP_LIC_PARTNERSHIP" },
+			{ labelName: 'Partnership Deed Copy Of Partner If There Is A Partner', fieldIdentifier: '6', required: true, category: "SHOP_LIC_PARTNERSHIP" },
+
+			{ labelName: 'Organization Rental Agreement', fieldIdentifier: '12', required: true, category: "SHOP_LIC_COMPANY" },
+			{ labelName: 'List of Directors and Nomination of Directors (Resolution)', fieldIdentifier: '16', required: true, category: "SHOP_LIC_COMPANY" },
+			{ labelName: 'Sale / Purchase Deed', fieldIdentifier: '13', required: true, category: "SHOP_LIC_COMPANY" },
+			{ labelName: 'Partnership Deed Copy Of Partner If There Is A Partner', fieldIdentifier: '6', required: true, category: "SHOP_LIC_COMPANY" },
+			{ labelName: 'Prescribed certificate', fieldIdentifier: '14', required: true, category: "SHOP_LIC_COMPANY" },
+
+			{ labelName: 'List of the Chairman and Member of co-operative society', fieldIdentifier: '17', required: true, category: "SHOP_LIC_TRUST" },
+			{ labelName: 'List of the Trustees/Member of Trust', fieldIdentifier: '15', required: true, category: "SHOP_LIC_TRUST" },
+			{ labelName: 'Registered Address and proof thereof', fieldIdentifier: '18', required: true, category: "SHOP_LIC_TRUST" },
+			{ labelName: 'Partnership Deed Copy Of Partner If There Is A Partner', fieldIdentifier: '6', required: true, category: "SHOP_LIC_TRUST" },
+			{ labelName: 'Prescribed certificate', fieldIdentifier: '14', required: true, category: "SHOP_LIC_TRUST" }
+
 		];
 
     /**
@@ -160,10 +173,9 @@ export class ShopLicNewComponent implements OnInit {
 		this.shopLicNewForm = this.fb.group({
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
 			serviceCode: 'SHOP-LIC',
-
 			/* Step 1 controls start */
-			establishmentName: [null, [Validators.required, Validators.maxLength(30)]],//count=4
-			establishmentNameGuj: [null, Validators.required],
+			establishmentName: [null, [Validators.required, Validators.maxLength(150)]],//count=4
+			establishmentNameGuj: [null, [Validators.required, Validators.maxLength(450)]],
 			postalAddress: this.fb.group(this.postalAddressEstablishment.addressControls()),
 			noOfHumanWorking: this.fb.group({
 				code: [null, Validators.required],
@@ -173,7 +185,7 @@ export class ShopLicNewComponent implements OnInit {
 				code: [null, Validators.required],
 				name: [null],
 			}),
-			propertyTaxNo: [null, [Validators.required, Validators.maxLength(15)]],
+			propertyTaxNo: [null, [Validators.required, Validators.maxLength(13), Validators.minLength(13)]],
 			wardNo: this.fb.group({
 				code: [null, Validators.required],
 				name: [null],
@@ -185,17 +197,17 @@ export class ShopLicNewComponent implements OnInit {
 				code: [null],
 				name: [null],
 			}),
-			number: ['', Validators.maxLength(15)],
+			number: ['', Validators.maxLength(20)],
 			situationOfOffice: [null, [Validators.required, Validators.maxLength(100)]],
 			/* Step 1 controls end */
 
 			/* Step 2 controls start */
-			nameOfEmployer: [null, [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
-			nameOfEmployerGuj: [null, Validators.required],
-			residentialAddressOfEmployer: [null, [Validators.required, Validators.maxLength(100)]],
-			residentialAddressOfEmployerGuj: [null, Validators.required],
-			nameOfManager: [null, [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
-			residentialAddressOfManager: [null, [Validators.required, Validators.maxLength(100)]],
+			nameOfEmployer: [null, [Validators.required, Validators.maxLength(100)]],
+			nameOfEmployerGuj: [null, [Validators.required, Validators.maxLength(300)]],
+			residentialAddressOfEmployer: [null, [Validators.required, Validators.maxLength(500)]],
+			residentialAddressOfEmployerGuj: [null, [Validators.required, Validators.maxLength(1500)]],
+			nameOfManager: [null, [Validators.required, Validators.maxLength(60)]],
+			residentialAddressOfManager: [null, [Validators.required, Validators.maxLength(500)]],
 			categoryOfBusiness: this.fb.group({
 				code: [null, Validators.required],
 				name: [null],
@@ -204,8 +216,8 @@ export class ShopLicNewComponent implements OnInit {
 				code: [null, Validators.required],
 				name: [null],
 			}),
-			nameOfBusiness: [null, [Validators.required, Validators.maxLength(50)]],
-			nameOfBusinessGuj: [null, Validators.required],
+			nameOfBusiness: [null, [Validators.required, Validators.maxLength(200)]],
+			nameOfBusinessGuj: [null, [Validators.required, Validators.maxLength(600)]],
 			commencementOfBusinessDate: [null, Validators.required],
 			enterHoliday: this.fb.group({
 				code: [null, Validators.required]
@@ -280,19 +292,19 @@ export class ShopLicNewComponent implements OnInit {
 		return this.fb.group({
 			serviceFormId: this.formId,
 			id: data.id ? data.id : null,
-			name: [data.name ? data.name : null, Validators.required],
+			name: [data.name ? data.name : null, [Validators.maxLength(100)]],
 			/* contactNo: [data.contactNo ? data.contactNo : null],
 			email: [data.email ? data.email : null],
 			aadhaarNo: [data.aadhaarNo ? data.aadhaarNo : null], */
-			address: [data.address ? data.address : null, Validators.required],
+			address: [data.address ? data.address : null, [Validators.maxLength(150)]],
 			serviceCode: "SHOP-LIC",
 			relationship: this.fb.group({
-				code: [data.relationship ? (data.relationship.code ? data.relationship.code : null) : null, Validators.required]//
+				code: [data.relationship ? (data.relationship.code ? data.relationship.code : null) : null]//
 			}),
 			gender: this.fb.group({
-				code: [data.gender ? (data.gender.code ? data.gender.code : null) : null, Validators.required]
+				code: [data.gender ? (data.gender.code ? data.gender.code : null) : null]
 			}),
-			age: [data.age ? data.age : null, [Validators.required, ValidationService.employeeAgeValidate]],
+			age: [data.age ? data.age : null, [ValidationService.employeeAgeValidate]],
 			// employee: [data.employee ? data.employee : null],
 			personType: [data.personType ? data.personType : null]
 		})

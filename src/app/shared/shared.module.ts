@@ -23,6 +23,7 @@ import { ValidationFieldsDirective } from './directives/validation-fields.direct
 import { GujInputSourceDirective } from './directives/guj-input-source.directive';
 import { GujInputTargetDirective } from './directives/guj-input-target.directive';
 import { InputTrimDirective } from './directives/input-trim.directive';
+import { AlphaNumericDirective } from './directives/alpha-numeric.directive';
 /* import directives end*/
 
 /* import pipes start*/
@@ -40,6 +41,7 @@ import { HosActionBarComponent } from './components/hos-action-bar/hos-action-ba
 import { HosFileUploadComponent } from './components/hos-file-upload/hos-file-upload.component';
 import { CountryService } from './services/country.service';
 import { HosPaymentResponsePageComponent } from './components/hos-payment-response-page/hos-payment-response-page.component';
+
 /* import pipes end*/
 
 const COMPONENTS = [
@@ -60,13 +62,14 @@ const COMPONENTS = [
 	ValidationFieldsDirective,
 	GujInputSourceDirective,
 	GujInputTargetDirective,
-	
+	AlphaNumericDirective
 ]
 
 @NgModule({
 	declarations: [
 		...COMPONENTS,
-		HosPaymentResponsePageComponent,
+		HosPaymentResponsePageComponent
+		
 	],
 	imports: [
 		CommonModule,

@@ -12,6 +12,7 @@ import { ShopLicModificationComponent } from './shop-lic-modification/shop-lic-m
 import { ShopLicRenewalComponent } from './shop-lic-renewal/shop-lic-renewal.component';
 import { ShopLicCancellationComponent } from './shop-lic-cancellation/shop-lic-cancellation.component';
 import { ShopAndEstablishmentService } from './common/services/shop-and-establishment.service';
+import { FilterAttachmentPipe } from './common/pipes/filter-attachment.pipe';
 /* Import all shared, core and routing module end */
 
 @NgModule({
@@ -28,7 +29,8 @@ import { ShopAndEstablishmentService } from './common/services/shop-and-establis
     ShopLicDuplicateComponent,
     ShopLicModificationComponent,
     ShopLicRenewalComponent,
-    ShopLicCancellationComponent],
+    ShopLicCancellationComponent,
+    FilterAttachmentPipe],
 
   providers: [ShopAndEstablishmentService]
 })
