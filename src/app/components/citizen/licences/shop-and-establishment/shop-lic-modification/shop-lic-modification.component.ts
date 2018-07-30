@@ -462,15 +462,6 @@ export class ShopLicModificationComponent implements OnInit {
 		}
 	}
 
-
-	/**
-	 * Method is used to reset form its a output event from action bar.
-	 */
-	// stepReset() {
-	// 	this.stepper.reset();
-	// 	this.shopLicModificationForm.get('postalAddress').get('addressType').setValue('SHOP_LIC_POSTAL_ADDRESS');
-	// }
-
 	/**
      * This method use to get output event of tab change
      * @param evt - Tab index

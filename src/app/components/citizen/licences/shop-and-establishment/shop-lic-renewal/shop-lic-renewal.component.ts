@@ -307,8 +307,8 @@ export class ShopLicRenewalComponent implements OnInit {
 			serviceCode: 'SHOP-REN',
 
 			/* Step 1 controls start */
-			establishmentName: [null, [Validators.required, Validators.maxLength(30)]],//count=4
-			establishmentNameGuj: [null, Validators.required],
+			establishmentName: [null, [Validators.required, Validators.maxLength(150)]],//count=4
+			establishmentNameGuj: [null, [Validators.required, Validators.maxLength(450)]],
 			postalAddress: this.fb.group(this.postalAddressEstablishment.addressControls()),
 			noOfHumanWorking: this.fb.group({
 				code: [null, Validators.required],
@@ -318,7 +318,7 @@ export class ShopLicRenewalComponent implements OnInit {
 				code: [null, Validators.required],
 				name: [null],
 			}),
-			propertyTaxNo: [null, [Validators.required, Validators.maxLength(15)]],
+			propertyTaxNo: [null, [Validators.required, Validators.maxLength(13), Validators.minLength(13)]],
 			wardNo: this.fb.group({
 				code: [null, Validators.required],
 				name: [null],
@@ -330,17 +330,17 @@ export class ShopLicRenewalComponent implements OnInit {
 				code: [null],
 				name: [null],
 			}),
-			number: ['', Validators.maxLength(15)],
+			number: ['', Validators.maxLength(20)],
 			situationOfOffice: [null, [Validators.required, Validators.maxLength(100)]],
 			/* Step 1 controls end */
 
 			/* Step 2 controls start */
-			nameOfEmployer: [null, [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
-			nameOfEmployerGuj: [null, Validators.required],
-			residentialAddressOfEmployer: [null, [Validators.required, Validators.maxLength(100)]],
-			residentialAddressOfEmployerGuj: [null, Validators.required],
-			nameOfManager: [null, [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
-			residentialAddressOfManager: [null, [Validators.required, Validators.maxLength(100)]],
+			nameOfEmployer: [null, [Validators.required, Validators.maxLength(100)]],
+			nameOfEmployerGuj: [null, [Validators.required, Validators.maxLength(300)]],
+			residentialAddressOfEmployer: [null, [Validators.required, Validators.maxLength(500)]],
+			residentialAddressOfEmployerGuj: [null, [Validators.required, Validators.maxLength(1500)]],
+			nameOfManager: [null, [Validators.required, Validators.maxLength(60)]],
+			residentialAddressOfManager: [null, [Validators.required, Validators.maxLength(500)]],
 			categoryOfBusiness: this.fb.group({
 				code: [null, Validators.required],
 				name: [null],
@@ -349,8 +349,8 @@ export class ShopLicRenewalComponent implements OnInit {
 				code: [null, Validators.required],
 				name: [null],
 			}),
-			nameOfBusiness: [null, [Validators.required, Validators.maxLength(50)]],
-			nameOfBusinessGuj: [null, Validators.required],
+			nameOfBusiness: [null, [Validators.required, Validators.maxLength(200)]],
+			nameOfBusinessGuj: [null, [Validators.required, Validators.maxLength(600)]],
 			commencementOfBusinessDate: [null, Validators.required],
 			enterHoliday: this.fb.group({
 				code: [null, Validators.required]
@@ -490,21 +490,21 @@ export class ShopLicRenewalComponent implements OnInit {
 	createArray(data?: any, persontype?: string) {
 
 		return this.fb.group({
-			//serviceFormId: this.formId,
+			serviceFormId: this.formId,
 			id: data.id ? data.id : null,
-			name: [data.name ? data.name : null, Validators.required],
+			name: [data.name ? data.name : null, [Validators.maxLength(100)]],
 			/* contactNo: [data.contactNo ? data.contactNo : null],
 			email: [data.email ? data.email : null],
 			aadhaarNo: [data.aadhaarNo ? data.aadhaarNo : null], */
-			address: [data.address ? data.address : null, Validators.required],
-			serviceCode: 'SHOP-REN',
+			address: [data.address ? data.address : null, [Validators.maxLength(150)]],
+			serviceCode: "SHOP-REN",
 			relationship: this.fb.group({
-				code: [data.relationship ? (data.relationship.code ? data.relationship.code : null) : null, Validators.required]//
+				code: [data.relationship ? (data.relationship.code ? data.relationship.code : null) : null]//
 			}),
 			gender: this.fb.group({
-				code: [data.gender ? (data.gender.code ? data.gender.code : null) : null, Validators.required]
+				code: [data.gender ? (data.gender.code ? data.gender.code : null) : null]
 			}),
-			age: [data.age ? data.age : null, [Validators.required, ValidationService.employeeAgeValidate]],
+			age: [data.age ? data.age : null, [ValidationService.employeeAgeValidate]],
 			// employee: [data.employee ? data.employee : null],
 			personType: [data.personType ? data.personType : null]
 		})
