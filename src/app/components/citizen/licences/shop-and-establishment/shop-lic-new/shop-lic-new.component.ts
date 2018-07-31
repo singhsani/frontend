@@ -251,6 +251,9 @@ export class ShopLicNewComponent implements OnInit {
 			totalUnidentifiedOccupancy: [null],
 			totalOccupancy: [null],
 
+			typeOfOrganisation: this.fb.group({
+				code: [null, Validators.required]
+			}),
 			partnerList: this.fb.array([]),
 
 			totalAdultPartner: [null],
@@ -265,12 +268,8 @@ export class ShopLicNewComponent implements OnInit {
 			totalYoungEmployee: [null, Validators.required],
 			totalManEmployee: [null, Validators.required],
 			totalWomenEmployee: [null, Validators.required],
-			totalUnidentified: [null, Validators.required],
+			totalUnidentified: [null],
 			totalEmployee: [null, Validators.required],
-
-			typeOfOrganisation: this.fb.group({
-				code: [null, Validators.required]
-			}),
 
 			// situationOfOfficeGuj: [null],
 			// nameOfManagerGuj: [null],
@@ -580,7 +579,7 @@ export class ShopLicNewComponent implements OnInit {
 		try {
 			(<FormArray>this.shopLicNewForm.get('partnerList')).controls = [];
 			this.shopLicNewForm.get('attachments').setValue([]);
-			if(event=="SHOP_LIC_SELF_OWNERSHIP"){
+			if (event == "SHOP_LIC_SELF_OWNERSHIP") {
 				// remove all controll becose if dropdown value is "SHOP_LIC_SELF_OWNERSHIP" then user add only one record.
 				this.addMorePerson('PARTNER');
 			}
@@ -643,42 +642,38 @@ export class ShopLicNewComponent implements OnInit {
      */
 	handleErrorsOnSubmit(flag) {
 
-		let step1 = 16;
-		let step2 = 28;
-		let step3 = 35;
-		let step4 = 41;
-		let step5 = 47;
-		let step6 = 53;
-		let step7 = 62;
-		let step8 = 66;
+		let step0 = 15;
+		let step1 = 27;
+		let step2 = 35;
+		let step3 = 41;
+		let step4 = 48;
+		let step5 = 56;
+		let step6 = 60;
 
 		if (flag != null) {
 			//Check validation for step by step
 			let count = flag;
 
-			if (count <= step1) {
+			if (count <= step0) {
 				this.tabIndex = 0;
 				return false;
-			} else if (count <= step2) {
+			} else if (count <= step1) {
 				this.tabIndex = 1;
 				return false;
-			} else if (count <= step3) {
+			} else if (count <= step2) {
 				this.tabIndex = 2;
 				return false;
-			} else if (count <= step4) {
+			} else if (count <= step3) {
 				this.tabIndex = 3;
 				return false;
-			} else if (count <= step5) {
+			} else if (count <= step4) {
 				this.tabIndex = 4;
 				return false;
-			} else if (count <= step6) {
+			} else if (count <= step5) {
 				this.tabIndex = 5;
 				return false;
-			} else if (count <= step7) {
+			} else if (count <= step6) {
 				this.tabIndex = 6;
-				return false;
-			} else if (count <= step8) {
-				this.tabIndex = 7;
 				return false;
 			}
 			// else if (count == 67) {

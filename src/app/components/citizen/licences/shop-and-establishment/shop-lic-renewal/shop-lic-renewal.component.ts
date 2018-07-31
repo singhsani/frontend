@@ -44,14 +44,41 @@ export class ShopLicRenewalComponent implements OnInit {
 	SHOP_LIC_HOLIDAY: Array<any> = [];
 
 
+
 	// required attachment array
 	private uploadFileArray: Array<any> =
 		[
-			{ labelName: 'Professional Tax PEC No Receipt', fieldIdentifier: '1' },
-			{ labelName: 'Professional Tax PRC No Receipt', fieldIdentifier: '2' },
-			{ labelName: 'Property Tax / Water Tax paid Receipt', fieldIdentifier: '3' },
-			{ labelName: 'Aadhar Number', fieldIdentifier: '4' },
-			{ labelName: 'PAN Card', fieldIdentifier: '5' },
+			{ labelName: 'Upload photo of License Holder (2MB Only)', fieldIdentifier: '1', category: 'SHOP_LIC_SELF_OWNERSHIP' },
+			{ labelName: 'Organizational ownership agreement copy', fieldIdentifier: '2', category: 'SHOP_LIC_SELF_OWNERSHIP' },
+
+			{ labelName: 'Organization Rental Agreement', fieldIdentifier: '12', category: "SHOP_LIC_PARTNERSHIP" },
+			{ labelName: 'Sale / Purchase Deed', fieldIdentifier: '13', category: "SHOP_LIC_PARTNERSHIP" },
+			{ labelName: 'Prescribed certificate', fieldIdentifier: '14', category: "SHOP_LIC_PARTNERSHIP" },
+			{ labelName: 'Partnership Deed Copy Of Partner If There Is A Partner', fieldIdentifier: '6', category: "SHOP_LIC_PARTNERSHIP" },
+
+			{ labelName: 'Organization Rental Agreement', fieldIdentifier: '12', category: "SHOP_LIC_COMPANY" },
+			{ labelName: 'List of Directors and Nomination of Directors (Resolution)', fieldIdentifier: '16', category: "SHOP_LIC_COMPANY" },
+			{ labelName: 'Sale / Purchase Deed', fieldIdentifier: '13', category: "SHOP_LIC_COMPANY" },
+			{ labelName: 'Partnership Deed Copy Of Partner If There Is A Partner', fieldIdentifier: '6', category: "SHOP_LIC_COMPANY" },
+			{ labelName: 'Prescribed certificate', fieldIdentifier: '14', category: "SHOP_LIC_COMPANY" },
+			{ labelName: 'Partnership Deed (Upload Deed pages which have name of partners, signature of partners,Business / Company Name, percentage of partnership )', fieldIdentifier: '19', category: "SHOP_LIC_COMPANY" },
+
+			{ labelName: 'List of the Trustees/Member of Trust', fieldIdentifier: '15', category: "SHOP_LIC_TRUST" },
+			{ labelName: 'List of the Chairman and Member of co-operative society', fieldIdentifier: '17', category: "SHOP_LIC_TRUST" },
+			{ labelName: 'Registered Address and proof thereof', fieldIdentifier: '18', category: "SHOP_LIC_TRUST" },
+			{ labelName: 'Partnership Deed Copy Of Partner If There Is A Partner', fieldIdentifier: '6', category: "SHOP_LIC_TRUST" },
+			{ labelName: 'Prescribed certificate', fieldIdentifier: '14', category: "SHOP_LIC_TRUST" },
+			{ labelName: 'Partnership Deed (Upload Deed pages which have name of partners, signature of partners,Business / Company Name, percentage of partnership )', fieldIdentifier: '19', category: "SHOP_LIC_TRUST" },
+
+			{ labelName: 'Property Tax Current Year Receipt Of Organization', fieldIdentifier: '3', category: 'common' },
+			{ labelName: 'Organization Business Tax Current Year Receipt', fieldIdentifier: '4', category: 'common' },
+			{ labelName: 'Workers Professional Tax Receipt', fieldIdentifier: '5', category: "common" },
+			// { labelName: 'Partnership Deed Copy Of Partner If There Is A Partner', fieldIdentifier: '6', required: false, category: "common" },
+			{ labelName: 'If there are more then 10 or more workers,  Receipt of Gujarat Labor welfare fund Commercial basis in the concept', fieldIdentifier: '7', category: "common" },
+			// { labelName: 'Aadhar Card No', fieldIdentifier: '8', required: false, category: "common" },
+			// { labelName: 'Election/ Voters ID', fieldIdentifier: '9', required: false, category: "common" },
+			// { labelName: 'PAN Card No', fieldIdentifier: '10', required: false, category: "common" },
+
 
 		];
 
@@ -209,7 +236,13 @@ export class ShopLicRenewalComponent implements OnInit {
 	 * This method use for edit some fiels.
 	 */
 	enableFielList() {
-		this.shopLicRenewalForm.get('enterHoliday').enable();
+		this.shopLicRenewalForm.get('noOfHumanWorking').enable();
+		this.shopLicRenewalForm.get('aadharNumber').enable();
+		this.shopLicRenewalForm.get('professionalTaxPECNo').enable();
+		this.shopLicRenewalForm.get('prcNo').enable();
+		this.shopLicRenewalForm.get('categoryOfBusiness').enable();
+		this.shopLicRenewalForm.get('subCategoryOfBusiness').enable();
+
 		this.shopLicRenewalForm.get('totalAdultEmployee').enable();
 		this.shopLicRenewalForm.get('totalYoungEmployee').enable();
 		this.shopLicRenewalForm.get('totalManEmployee').enable();
@@ -269,18 +302,6 @@ export class ShopLicRenewalComponent implements OnInit {
 	}
 
 	/**
-	 * Method is used to handle error/validation on submit.
-	 * @param count - count of invalid control.
-	 */
-	handleErrorsOnSubmit(count) {
-		let step1 = 55;
-		if (count <= step1) {
-			this.tabIndex = 5;
-			return false;
-		}
-	}
-
-	/**
 	 * This method is use for get lookup data.
 	 */
 	getLookupData() {
@@ -304,8 +325,7 @@ export class ShopLicRenewalComponent implements OnInit {
 	shopLicRenewalFormControls() {
 		this.shopLicRenewalForm = this.fb.group({
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
-			serviceCode: 'SHOP-REN',
-
+			serviceCode: 'SHOP-LIC',
 			/* Step 1 controls start */
 			establishmentName: [null, [Validators.required, Validators.maxLength(150)]],//count=4
 			establishmentNameGuj: [null, [Validators.required, Validators.maxLength(450)]],
@@ -324,8 +344,8 @@ export class ShopLicRenewalComponent implements OnInit {
 				name: [null],
 			}),
 			aadharNumber: ['', Validators.maxLength(12)],
-			professionalTaxPECNo: ['', Validators.maxLength(20)],
-			prcNo: ['', Validators.maxLength(20)],
+			professionalTaxPECNo: ['', [Validators.required, Validators.maxLength(20)]],
+			prcNo: ['', [Validators.required, Validators.maxLength(20)]],
 			applicantVimaAmountPaid: this.fb.group({
 				code: [null],
 				name: [null],
@@ -381,6 +401,9 @@ export class ShopLicRenewalComponent implements OnInit {
 			totalUnidentifiedOccupancy: [null],
 			totalOccupancy: [null],
 
+			typeOfOrganisation: this.fb.group({
+				code: [null, Validators.required]
+			}),
 			partnerList: this.fb.array([]),
 
 			totalAdultPartner: [null],
@@ -395,13 +418,18 @@ export class ShopLicRenewalComponent implements OnInit {
 			totalYoungEmployee: [null, Validators.required],
 			totalManEmployee: [null, Validators.required],
 			totalWomenEmployee: [null, Validators.required],
-			totalUnidentified: [null, Validators.required],
+			totalUnidentified: [null],
 			totalEmployee: [null, Validators.required],
 
-			typeOfOrganisation: this.fb.group({
-				code: [null, Validators.required]
-			}),
-			attachments: [],
+			// situationOfOfficeGuj: [null],
+			// nameOfManagerGuj: [null],
+			// residentialAddressOfManagerGuj: [null],
+			//enterHolidayGuj: [null],
+
+			/*  */
+			attachments: [''],
+			/*  */
+
 
 		});
 	}
@@ -448,19 +476,17 @@ export class ShopLicRenewalComponent implements OnInit {
 
 
 	/**
-	 * Method is used to reset form its a output event from action bar.
+	 * Method is used when change data of NoOfHumanWorking dropdown
+	 * @event is value of NoOfHumanWorking dropdown
 	 */
-	// stepReset() {
-	// 	this.stepper.reset();
-	// 	this.shopLicRenewalForm.get('postalAddress').get('addressType').setValue('SHOP_LIC_POSTAL_ADDRESS');
-	// }
-
-	/**
-	 * This method use to get output event of tab change
-	 * @param evt - Tab index
-	 */
-	onTabChange(evt) {
-		this.tabIndex = evt;
+	onChangeNoOfHumanWorking(event) {
+		try {
+			this.shopLicRenewalForm.get('categoryOfBusiness').reset();
+			this.shopLicRenewalForm.get('subCategoryOfBusiness').reset();
+			this.getCategoryDropdownData(event);
+		} catch (error) {
+			console.log(error.message)
+		}
 	}
 
 	/**
@@ -480,6 +506,38 @@ export class ShopLicRenewalComponent implements OnInit {
 		this.shopAndEstablishmentService.getSubCategory(event).subscribe(res => {
 			this.businessSubCategory = res;
 		})
+	}
+
+	/**
+	 * Method is invoked when change dropdown of Type of Organization
+	 * @event is value of Type of Organization dropdown
+	 */
+	onChangeTypeOfOrganization(event) {
+
+		try {
+			(<FormArray>this.shopLicRenewalForm.get('partnerList')).controls = [];
+			this.shopLicRenewalForm.get('attachments').setValue([]);
+			if (event == "SHOP_LIC_SELF_OWNERSHIP") {
+				// remove all controll becose if dropdown value is "SHOP_LIC_SELF_OWNERSHIP" then user add only one record.
+				// this.addMorePerson('PARTNER');
+			}
+		} catch (error) {
+			console.log(error.message)
+		}
+
+	}
+
+	/**
+* Method is used when change data of NoOfHumanWorking dropdown
+* @event is value of NoOfHumanWorking dropdown
+*/
+	onChangeCategorySelect(event) {
+		try {
+			this.shopLicRenewalForm.get('subCategoryOfBusiness').reset();
+			this.getSubCategoryDropdownData(event);
+		} catch (error) {
+			console.log(error.message)
+		}
 	}
 
 	/**
@@ -528,5 +586,63 @@ export class ShopLicRenewalComponent implements OnInit {
 		return this.uploadModel;
 	}
 
+	/**
+ * This method required for final form submition.
+ * @param flag - flag of invalid control.
+ */
+	handleErrorsOnSubmit(flag) {
+
+		let step0 = 15;
+		let step1 = 27;
+		let step2 = 35;
+		let step3 = 41;
+		let step4 = 48;
+		let step5 = 56;
+		let step6 = 60;
+
+		if (flag != null) {
+			//Check validation for step by step
+			let count = flag;
+
+			if (count <= step0) {
+				this.tabIndex = 0;
+				return false;
+			} else if (count <= step1) {
+				this.tabIndex = 1;
+				return false;
+			} else if (count <= step2) {
+				this.tabIndex = 2;
+				return false;
+			} else if (count <= step3) {
+				this.tabIndex = 3;
+				return false;
+			} else if (count <= step4) {
+				this.tabIndex = 4;
+				return false;
+			} else if (count <= step5) {
+				this.tabIndex = 5;
+				return false;
+			} else if (count <= step6) {
+				this.tabIndex = 6;
+				return false;
+			}
+			// else if (count == 67) {
+			// 	this.checkReligion();
+			// 	return false;
+			// }
+			else {
+				console.log("else condition");
+			}
+
+		}
+	}
+
+	/**
+	 * This method use to get output event of tab change
+	 * @param evt - Tab index
+	 */
+	onTabChange(evt) {
+		this.tabIndex = evt;
+	}
 
 }

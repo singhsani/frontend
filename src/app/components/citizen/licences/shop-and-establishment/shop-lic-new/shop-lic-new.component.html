@@ -807,6 +807,7 @@
 					<div>{{'attachment' | translate: translateKey}}</div>
 				</ng-template>
 				<div>
+					<h2>{{'category_wise_attachment' | translate: translateKey}}</h2>
 					<!-- SHOP_LIC_SELF_OWNERSHIP -->
 					<div class="row" *ngIf="shopLicNewForm.get('typeOfOrganisation').controls.code.value === 'SHOP_LIC_SELF_OWNERSHIP'">
 						<h2>{{'owner_checklist' | translate: translateKey}}</h2>
@@ -884,7 +885,7 @@
 
 					<!-- SHOP_LIC_PARTNERSHIP and SHOP_LIC_CO_OPERATIVE_SOCIETY -->
 					<div class="row" *ngIf="shopLicNewForm.get('typeOfOrganisation').controls.code.value === 'SHOP_LIC_PARTNERSHIP' || shopLicNewForm.get('typeOfOrganisation').controls.code.value === 'SHOP_LIC_CO_OPERATIVE_SOCIETY' ">
-						<h2>{{'partnership_and_coOpSoc_checklist' | translate: translateKey}}</h2>
+						<h2>{{'partnership_and_coopsoc_checklist' | translate: translateKey}}</h2>
 
 						<div class="col-md-4">
 							<div *ngIf="showButtons ">
