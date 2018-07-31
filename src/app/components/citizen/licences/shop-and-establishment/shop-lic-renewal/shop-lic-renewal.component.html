@@ -1,4 +1,4 @@
-<!-- <app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar> -->
+<app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
 
 <mat-card [hidden]="serachLicenceObj.isDisplayRenewLicenceForm" class="mt-4 formClass">
 	<mat-form-field class="col-md-10">
@@ -19,14 +19,14 @@
 
 				<div class="row">
 					<mat-form-field class="col-md-4">
-						<input matInput required maxlength="30" placeholder="{{'name_of_establishment_if_any' | translate:translateKey}}" formControlName="establishmentName"
+						<input matInput placeholder="{{'name_of_establishment_if_any' | translate:translateKey}}" formControlName="establishmentName"
 						 appGujInputSource targetElement="establishmentNameGuj" [form]="shopLicRenewalForm">
 						<control-messages [control]="shopLicRenewalForm.controls.establishmentName"></control-messages>
 					</mat-form-field>
 
 					<!-- gujarati -->
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" required formControlName="establishmentNameGuj" appGujInputTarget [form]="shopLicRenewalForm"
+						<input matInput type="text" formControlName="establishmentNameGuj" appGujInputTarget [form]="shopLicRenewalForm"
 						 placeholder="{{ 'name_of_establishment_if_any' | translate:translateKey:'gu' }}">
 						<control-messages [control]="shopLicRenewalForm.controls.establishmentNameGuj"></control-messages>
 					</mat-form-field>
@@ -52,7 +52,7 @@
 					</div>
 
 					<mat-form-field class="col-md-4">
-						<input matInput required maxlength="15" placeholder="{{'property_tax_no' | translate:translateKey}}" formControlName="propertyTaxNo">
+						<input matInput placeholder="{{'property_tax_no' | translate:translateKey}}" formControlName="propertyTaxNo">
 						<control-messages [control]="shopLicRenewalForm.controls.propertyTaxNo"></control-messages>
 					</mat-form-field>
 
@@ -64,7 +64,7 @@
 					</div>
 
 					<mat-form-field class="col-md-4">
-						<input matInput OnlyNumber maxlength="12" placeholder="{{'aadhar_number' | translate:translateKey}}" formControlName="aadharNumber">
+						<input matInput OnlyNumber placeholder="{{'aadhar_number' | translate:translateKey}}" formControlName="aadharNumber">
 					</mat-form-field>
 
 					<div class="col-md-4 ngSelect" formGroupName="applicantVimaAmountPaid">
@@ -74,7 +74,7 @@
 					</div>
 
 					<mat-form-field class="col-md-4" *ngIf="shopLicRenewalForm.get('applicantVimaAmountPaid').value.code == 'YES'">
-						<input matInput OnlyNumber maxlength="15" placeholder="{{'number' | translate:translateKey}}" formControlName="number">
+						<input matInput OnlyNumber placeholder="{{'number' | translate:translateKey}}" formControlName="number">
 					</mat-form-field>
 				</div>
 
@@ -83,11 +83,11 @@
 				</div>
 				<div class="row">
 					<mat-form-field class="col-md-4">
-						<input matInput OnlyNumber maxlength="20" placeholder="{{'professional_tax_PEC_no' | translate:translateKey}}" formControlName="professionalTaxPECNo">
+						<input matInput OnlyNumber placeholder="{{'professional_tax_PEC_no' | translate:translateKey}}" formControlName="professionalTaxPECNo">
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput OnlyNumber maxlength="20" placeholder="{{'PRC_no' | translate:translateKey}}" formControlName="prcNo">
+						<input matInput OnlyNumber placeholder="{{'PRC_no' | translate:translateKey}}" formControlName="prcNo">
 					</mat-form-field>
 					<div class="col-md-4">
 					</div>
@@ -99,7 +99,7 @@
 					<h2>{{'situation_label'| translate:translateKey}}</h2>
 
 					<mat-form-field class="col-md-4">
-						<input matInput required maxlength="100" formControlName="situationOfOffice" placeholder="{{'situation_of_establishment' | translate:translateKey}}">
+						<input matInput required formControlName="situationOfOffice" placeholder="{{'situation_of_establishment' | translate:translateKey}}">
 						<control-messages [control]="shopLicRenewalForm.controls.situationOfOffice"></control-messages>
 					</mat-form-field>
 				</div>
@@ -116,37 +116,37 @@
 				<div class="row">
 
 					<mat-form-field class="col-md-6">
-						<input matInput required maxlength="50" placeholder="{{'name_of_employer' | translate:translateKey}}" formControlName="nameOfEmployer"
+						<input matInput required placeholder="{{'name_of_employer' | translate:translateKey}}" formControlName="nameOfEmployer"
 						 appGujInputSource targetElement="nameOfEmployerGuj" [form]="shopLicRenewalForm">
 						<control-messages [control]="shopLicRenewalForm.controls.nameOfEmployer"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-6">
-						<input matInput required maxlength="100" placeholder="{{'residential_address_of_employer' | translate:translateKey}}" formControlName="residentialAddressOfEmployer"
+						<input matInput required placeholder="{{'residential_address_of_employer' | translate:translateKey}}" formControlName="residentialAddressOfEmployer"
 						 appGujInputSource targetElement="residentialAddressOfEmployerGuj" [form]="shopLicRenewalForm">
 						<control-messages [control]="shopLicRenewalForm.controls.residentialAddressOfEmployer"></control-messages>
 					</mat-form-field>
 
 					<!-- gujarati -->
 					<mat-form-field class="col-md-6">
-						<input matInput type="text" required formControlName="nameOfEmployerGuj" appGujInputTarget [form]="shopLicRenewalForm" placeholder="{{ 'name_of_employer' | translate:translateKey:'gu' }}">
+						<input matInput required formControlName="nameOfEmployerGuj" appGujInputTarget [form]="shopLicRenewalForm" placeholder="{{ 'name_of_employer' | translate:translateKey:'gu' }}">
 						<control-messages [control]="shopLicRenewalForm.controls.nameOfEmployerGuj"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-6">
-						<input matInput type="text" required formControlName="residentialAddressOfEmployerGuj" appGujInputTarget [form]="shopLicRenewalForm"
+						<input matInput required formControlName="residentialAddressOfEmployerGuj" appGujInputTarget [form]="shopLicRenewalForm"
 						 placeholder="{{ 'residential_address_of_employer' | translate:translateKey:'gu' }}">
 						<control-messages [control]="shopLicRenewalForm.controls.residentialAddressOfEmployerGuj"></control-messages>
 					</mat-form-field>
 					<!-- /gujarati -->
 
 					<mat-form-field class="col-md-6">
-						<input matInput required maxlength="50" placeholder="{{'name_of_manager' | translate:translateKey}}" formControlName="nameOfManager">
+						<input matInput required placeholder="{{'name_of_manager' | translate:translateKey}}" formControlName="nameOfManager">
 						<control-messages [control]="shopLicRenewalForm.controls.nameOfManager"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-6">
-						<input matInput required maxlength="100" placeholder="{{'residential_address_of_manager' | translate:translateKey}}" formControlName="residentialAddressOfManager">
+						<input matInput required placeholder="{{'residential_address_of_manager' | translate:translateKey}}" formControlName="residentialAddressOfManager">
 						<control-messages [control]="shopLicRenewalForm.controls.residentialAddressOfManager"></control-messages>
 					</mat-form-field>
 
@@ -190,7 +190,7 @@
 
 				<div class="row">
 					<mat-form-field class="col-md-4">
-						<input matInput required maxlength="50" placeholder="{{'name_of_business' | translate:translateKey}}" formControlName="nameOfBusiness"
+						<input matInput required placeholder="{{'name_of_business' | translate:translateKey}}" formControlName="nameOfBusiness"
 						 appGujInputSource targetElement="nameOfBusinessGuj" [form]="shopLicRenewalForm">
 						<control-messages [control]="shopLicRenewalForm.controls.nameOfBusiness"></control-messages>
 					</mat-form-field>
@@ -208,7 +208,7 @@
 						<ng-select placeholder="{{'holiday' | translate:translateKey}} *" formControlName="code">
 							<ng-option *ngFor="let holidays of SHOP_LIC_HOLIDAY" [value]="holidays.code">{{holidays.name}}</ng-option>
 						</ng-select>
-						<control-messages [control]="shopLicRenewalForm.controls.enterHoliday"></control-messages>
+						<control-messages [control]="shopLicNewForm.controls.enterHoliday.controls.code"></control-messages>
 					</div>
 
 					<!-- gujarati -->
@@ -703,42 +703,42 @@
 			<!-- step Attachment Starts -->
 			<mat-tab>
 				<ng-template mat-tab-label>
-					<div>{{'owner_attachment' | translate: translateKey}}</div>
+					<div>{{'attachment' | translate: translateKey}}</div>
 				</ng-template>
 
 				<div class="row">
 
 					<div class="col-md-4">
 						<div *ngIf="showButtons">
-							<label>{{'prof_tax_PEC_receipt' | translate: translateKey}}*</label>
+							<label>{{'prof_tax_PEC_receipt' | translate: translateKey}} *</label>
 							<file-upload [form]="shopLicRenewalForm" [uploadModel]="setDataValue(1,'ProfessionalTaxPECNoReceipt','1.1','doc')"></file-upload>
 						</div>
 					</div>
 
 					<div class="col-md-4">
 						<div *ngIf="showButtons">
-							<label>{{'prof_tax_PRC_receipt' | translate: translateKey}}*</label>
+							<label>{{'prof_tax_PRC_receipt' | translate: translateKey}} *</label>
 							<file-upload [form]="shopLicRenewalForm" [uploadModel]="setDataValue(2,'ProfessionalTaxPRCNoReceipt','1.2','doc')"></file-upload>
 						</div>
 					</div>
 
 					<div class="col-md-4">
 						<div *ngIf="showButtons">
-							<label>{{'property_tax_or_water_tax_paid_receipt' | translate: translateKey}}*</label>
-							<file-upload [form]="shopLicRenewalForm" [uploadModel]="setDataValue(3,'Property Tax / Water Tax paid Receipt','1.3','doc')"></file-upload>
+							<label>{{'property_tax_or_water_tax_paid_receipt' | translate: translateKey}} *</label>
+							<file-upload [form]="shopLicRenewalForm" [uploadModel]="setDataValue(3,'PropertyTaxOrWaterTaxPaidReceipt','1.3','doc')"></file-upload>
 						</div>
 					</div>
 
 					<div class="col-md-4">
 						<div *ngIf="showButtons">
-							<label>{{'aadhar_card_tenant' | translate: translateKey}}*</label>
+							<label>{{'aadhar_card_tenant' | translate: translateKey}} *</label>
 							<file-upload [form]="shopLicRenewalForm" [uploadModel]="setDataValue(4,'AdharCardTenant','1.4','doc')"></file-upload>
 						</div>
 					</div>
 
 					<div class="col-md-4">
 						<div *ngIf="showButtons">
-							<label>{{'PAN_card' | translate: translateKey}}*</label>
+							<label>{{'PAN_card' | translate: translateKey}}   </label>
 							<file-upload [form]="shopLicRenewalForm" [uploadModel]="setDataValue(5,'PANCardTenant','1.5','doc')"></file-upload>
 						</div>
 					</div>
