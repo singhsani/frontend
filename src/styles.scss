@@ -215,6 +215,7 @@ mat-label {align-self: center;}
 
 
 .custom-file-upload .badge {font-size: 12px; background: #fff !important; padding: 7px 5px; white-space: normal !important; width: 250px;word-break: break-all;}
+.custom-file-upload .badge.badge-primary.ml-1 {width: auto;}
 .custom-file-upload .badge-primary {text-align: left; color: $colorBlue !important;}
 .custom-file-upload .badge-info {background: $colorBlue !important; color: #fff; border-radius:0; text-align: left; padding: 12px 35px 12px 15px; font-weight: normal; white-space: nowrap !important; text-overflow: ellipsis; overflow: hidden;}
 .custom-file-upload .badge-info:hover {background: $colorLite !important; color: $colorBlue;}
@@ -250,7 +251,7 @@ mat-label {align-self: center;}
     }
 }
 
-.closeAttachFile {width: 36px !important; height: 36px !important; line-height: 36px !important; border-radius:0 !important; left: -36px; top: 0;
+.closeAttachFile {width: 36px !important; height: 36px !important; line-height: 36px !important; border-radius:0 !important; margin-left: -36px !important;
     .mat-icon {font-size: 20px;
         &:hover {background: #fff !important;}
     }
@@ -366,20 +367,6 @@ mat-footer-row, mat-header-row, mat-row, td.mat-cell, td.mat-footer-cell, th.mat
     border: #999 !important;
 }
 
-
-@media (max-width: 991px) { 
-.mainBg {display: block; vertical-align:inherit;}
-.verticalAlign {display: block; vertical-align:inherit; padding-top: 0;}
-
-.header {position: static; padding:15px 5px 70px;
-    ul { margin:0; padding: 4px 0 0 0;}
-    .logo {margin-left: 0 !important; padding-right: 0 !important;}
-}
-.dasHeader .logo {margin-left:0px !important;}
-.logoText {display: none;}
- 
-}
-
 .text-label{
     /* font-size: 0.8rem; */
     cursor:pointer;
@@ -458,12 +445,12 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
 }
 
 .recentList { border: 1px solid #e5e5e5; padding:15px 30px; list-style-type: none; float: left; width: 100%;
-    li {border-top: 1px solid #e5e5e5; padding: 15px 0; color: #4d4d4d; font-size: 12px; float: left; width: 100%; position: relative;
+    li {border-top: 1px solid #e5e5e5; padding: 15px 62px 15px 0; color: #4d4d4d; font-size: 12px; float: left; width: 100%; position: relative;
         &:first-child {border: 0;}
         div {color: #000; font-size: 14px; padding-bottom: 5px;}
-        .badge  {position: absolute; top: 25px; right: 0;}
+        .recenText {}
+        .badge  {position: absolute; top: 19px; right: 0; padding: 0 10px; height: 22px; line-height: 21px;}
     }
-    
 }
 
 .badge.draft {background: #fff; color: #f4c64c; border: 1px solid #f4c64c; padding:0.4em 1em 0.3em; font-size: 12px; font-weight: normal; border-radius: 10rem;}
@@ -540,3 +527,27 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
 
 .mat-tab-header-pagination-before, .mat-tab-header-pagination-after {background: $colorLite; }
 
+
+
+// Responsive CSS
+@media (max-width: 991px) { 
+    .mainBg {display: block; vertical-align:inherit;}
+    .verticalAlign {display: block; vertical-align:inherit; padding-top: 0;}
+    
+    .header {position: static; padding:15px 5px 70px;
+        ul { margin:0; padding: 4px 0 0 0;}
+        .logo {margin-left: 0 !important; padding-right: 0 !important;}
+    }
+    .dasHeader .logo {margin-left:0px !important;}
+    .logoText {display: none;}
+     
+}
+
+@media (max-width: 767px) { 
+    .welCome {padding: 20px;}
+    .servicesList {margin: 0;}
+    .recentList  {padding: 8px 15px;}
+
+    .profilePage .updateProfileBtn {position: static; width: 100%;}
+    .stepperNav .mat-raised-button {padding: 0 28px !important; line-height: 30px !important;} 
+}
