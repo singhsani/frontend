@@ -19,14 +19,14 @@
 
 				<div class="row">
 					<mat-form-field class="col-md-4">
-						<input matInput placeholder="{{'name_of_establishment_if_any' | translate:translateKey}}" formControlName="establishmentName"
+						<input matInput required maxlength="150" placeholder="{{'name_of_establishment_if_any' | translate:translateKey}}" formControlName="establishmentName"
 						 appGujInputSource targetElement="establishmentNameGuj" [form]="shopLicRenewalForm">
 						<control-messages [control]="shopLicRenewalForm.controls.establishmentName"></control-messages>
 					</mat-form-field>
 
 					<!-- gujarati -->
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" formControlName="establishmentNameGuj" appGujInputTarget [form]="shopLicRenewalForm"
+						<input matInput type="text" required maxlength="450" formControlName="establishmentNameGuj" appGujInputTarget [form]="shopLicRenewalForm"
 						 placeholder="{{ 'name_of_establishment_if_any' | translate:translateKey:'gu' }}">
 						<control-messages [control]="shopLicRenewalForm.controls.establishmentNameGuj"></control-messages>
 					</mat-form-field>
@@ -52,7 +52,8 @@
 					</div>
 
 					<mat-form-field class="col-md-4">
-						<input matInput placeholder="{{'property_tax_no' | translate:translateKey}}" formControlName="propertyTaxNo">
+						<input matInput required maxlength="13" minlength="13" appAlphaNumeric placeholder="{{'property_tax_no' | translate:translateKey}}"
+						 formControlName="propertyTaxNo">
 						<control-messages [control]="shopLicRenewalForm.controls.propertyTaxNo"></control-messages>
 					</mat-form-field>
 
@@ -64,7 +65,7 @@
 					</div>
 
 					<mat-form-field class="col-md-4">
-						<input matInput OnlyNumber placeholder="{{'aadhar_number' | translate:translateKey}}" formControlName="aadharNumber">
+						<input matInput OnlyNumber maxlength="12" placeholder="{{'aadhar_number' | translate:translateKey}}" formControlName="aadharNumber">
 					</mat-form-field>
 
 					<div class="col-md-4 ngSelect" formGroupName="applicantVimaAmountPaid">
@@ -74,7 +75,7 @@
 					</div>
 
 					<mat-form-field class="col-md-4" *ngIf="shopLicRenewalForm.get('applicantVimaAmountPaid').value.code == 'YES'">
-						<input matInput OnlyNumber placeholder="{{'number' | translate:translateKey}}" formControlName="number">
+						<input matInput appAlphaNumeric maxlength="20" placeholder="{{'number' | translate:translateKey}}" formControlName="number">
 					</mat-form-field>
 				</div>
 
@@ -83,27 +84,26 @@
 				</div>
 				<div class="row">
 					<mat-form-field class="col-md-4">
-						<input matInput OnlyNumber placeholder="{{'professional_tax_PEC_no' | translate:translateKey}}" formControlName="professionalTaxPECNo">
+						<input matInput maxlength="20" appAlphaNumeric placeholder="{{'professional_tax_PEC_no' | translate:translateKey}}" formControlName="professionalTaxPECNo">
+						<control-messages [control]="shopLicRenewalForm.controls.professionalTaxPECNo"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput OnlyNumber placeholder="{{'PRC_no' | translate:translateKey}}" formControlName="prcNo">
+						<input matInput maxlength="20" appAlphaNumeric placeholder="{{'PRC_no' | translate:translateKey}}" formControlName="prcNo">
+						<control-messages [control]="shopLicRenewalForm.controls.prcNo"></control-messages>
 					</mat-form-field>
-					<div class="col-md-4">
-					</div>
 				</div>
 
 				<div class="row">
-					<!-- <label>Situation of office, storeroom, godown,warehouse or work place if any attached to a shop but outside the premises
-									different from those of shops.</label> -->
+
 					<h2>{{'situation_label'| translate:translateKey}}</h2>
 
 					<mat-form-field class="col-md-4">
-						<input matInput required formControlName="situationOfOffice" placeholder="{{'situation_of_establishment' | translate:translateKey}}">
+						<input matInput type="text" required maxlength="100" formControlName="situationOfOffice" placeholder="{{'situation_of_establishment' | translate:translateKey}}">
 						<control-messages [control]="shopLicRenewalForm.controls.situationOfOffice"></control-messages>
 					</mat-form-field>
 				</div>
-				<!-- <app-action-bar [uploadFiles]="uploadFileArray" [form]="shopLicRenewalForm" (tabIndex)="onTabChange($event)" [stepInfo]="'step3'"></app-action-bar> -->
+				<app-action-bar [form]="shopLicRenewalForm" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step1', next: 1, back: 0}"></app-action-bar>
 			</mat-tab>
 			<!-- step 1 Ends -->
 
@@ -116,37 +116,38 @@
 				<div class="row">
 
 					<mat-form-field class="col-md-6">
-						<input matInput required placeholder="{{'name_of_employer' | translate:translateKey}}" formControlName="nameOfEmployer"
+						<input matInput type="text" required maxlength="100" placeholder="{{'name_of_employer' | translate:translateKey}}" formControlName="nameOfEmployer"
 						 appGujInputSource targetElement="nameOfEmployerGuj" [form]="shopLicRenewalForm">
 						<control-messages [control]="shopLicRenewalForm.controls.nameOfEmployer"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-6">
-						<input matInput required placeholder="{{'residential_address_of_employer' | translate:translateKey}}" formControlName="residentialAddressOfEmployer"
-						 appGujInputSource targetElement="residentialAddressOfEmployerGuj" [form]="shopLicRenewalForm">
+						<input matInput type="text" required maxlength="500" placeholder="{{'residential_address_of_employer' | translate:translateKey}}"
+						 formControlName="residentialAddressOfEmployer" appGujInputSource targetElement="residentialAddressOfEmployerGuj" [form]="shopLicRenewalForm">
 						<control-messages [control]="shopLicRenewalForm.controls.residentialAddressOfEmployer"></control-messages>
 					</mat-form-field>
 
 					<!-- gujarati -->
 					<mat-form-field class="col-md-6">
-						<input matInput required formControlName="nameOfEmployerGuj" appGujInputTarget [form]="shopLicRenewalForm" placeholder="{{ 'name_of_employer' | translate:translateKey:'gu' }}">
+						<input matInput type="text" maxlength="300" required formControlName="nameOfEmployerGuj" appGujInputTarget [form]="shopLicRenewalForm"
+						 placeholder="{{ 'name_of_employer' | translate:translateKey:'gu' }}">
 						<control-messages [control]="shopLicRenewalForm.controls.nameOfEmployerGuj"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-6">
-						<input matInput required formControlName="residentialAddressOfEmployerGuj" appGujInputTarget [form]="shopLicRenewalForm"
-						 placeholder="{{ 'residential_address_of_employer' | translate:translateKey:'gu' }}">
+						<input matInput type="text" maxlength="1500" required formControlName="residentialAddressOfEmployerGuj" appGujInputTarget
+						 [form]="shopLicRenewalForm" placeholder="{{ 'residential_address_of_employer' | translate:translateKey:'gu' }}">
 						<control-messages [control]="shopLicRenewalForm.controls.residentialAddressOfEmployerGuj"></control-messages>
 					</mat-form-field>
 					<!-- /gujarati -->
 
 					<mat-form-field class="col-md-6">
-						<input matInput required placeholder="{{'name_of_manager' | translate:translateKey}}" formControlName="nameOfManager">
+						<input matInput type="text" required maxlength="60" placeholder="{{'name_of_manager' | translate:translateKey}}" formControlName="nameOfManager">
 						<control-messages [control]="shopLicRenewalForm.controls.nameOfManager"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-6">
-						<input matInput required placeholder="{{'residential_address_of_manager' | translate:translateKey}}" formControlName="residentialAddressOfManager">
+						<input matInput required maxlength="500" placeholder="{{'residential_address_of_manager' | translate:translateKey}}" formControlName="residentialAddressOfManager">
 						<control-messages [control]="shopLicRenewalForm.controls.residentialAddressOfManager"></control-messages>
 					</mat-form-field>
 
@@ -166,14 +167,14 @@
 						<ng-select placeholder="{{'category_of_business' | translate:translateKey}} *" formControlName="code" (change)="onChangeCategorySelect($event)">
 							<ng-option *ngFor="let category of businessCategory" [value]="category.code">{{category.name}}</ng-option>
 						</ng-select>
-						<control-messages [control]="shopLicRenewalForm.controls.categoryOfBusiness"></control-messages>
+						<control-messages [control]="shopLicRenewalForm.get('categoryOfBusiness').controls.code"></control-messages>
 					</div>
 
 					<div class="col-md-6 ngSelect" formGroupName="subCategoryOfBusiness">
 						<ng-select placeholder="{{'sub_category_of_business' | translate:translateKey}} *" formControlName="code">
 							<ng-option *ngFor="let sub_category of businessSubCategory" [value]="sub_category.code">{{sub_category.name}}</ng-option>
 						</ng-select>
-						<control-messages [control]="shopLicRenewalForm.controls.subCategoryOfBusiness"></control-messages>
+						<control-messages [control]="shopLicRenewalForm.controls.subCategoryOfBusiness.controls.code"></control-messages>
 					</div>
 				</div>
 
@@ -190,7 +191,7 @@
 
 				<div class="row">
 					<mat-form-field class="col-md-4">
-						<input matInput required placeholder="{{'name_of_business' | translate:translateKey}}" formControlName="nameOfBusiness"
+						<input matInput required maxlength="200" placeholder="{{'name_of_business' | translate:translateKey}}" formControlName="nameOfBusiness"
 						 appGujInputSource targetElement="nameOfBusinessGuj" [form]="shopLicRenewalForm">
 						<control-messages [control]="shopLicRenewalForm.controls.nameOfBusiness"></control-messages>
 					</mat-form-field>
@@ -208,15 +209,17 @@
 						<ng-select placeholder="{{'holiday' | translate:translateKey}} *" formControlName="code">
 							<ng-option *ngFor="let holidays of SHOP_LIC_HOLIDAY" [value]="holidays.code">{{holidays.name}}</ng-option>
 						</ng-select>
-						<control-messages [control]="shopLicNewForm.controls.enterHoliday.controls.code"></control-messages>
+						<control-messages [control]="shopLicRenewalForm.controls.enterHoliday.controls.code"></control-messages>
 					</div>
 
 					<!-- gujarati -->
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" required formControlName="nameOfBusinessGuj" appGujInputTarget [form]="shopLicRenewalForm" placeholder="{{ 'name_of_business' | translate:translateKey:'gu' }}">
+						<input matInput type="text" maxlength="600" required formControlName="nameOfBusinessGuj" appGujInputTarget [form]="shopLicRenewalForm"
+						 placeholder="{{ 'name_of_business' | translate:translateKey:'gu' }}">
 						<control-messages [control]="shopLicRenewalForm.controls.nameOfBusinessGuj"></control-messages>
 					</mat-form-field>
 					<!-- /gujarati -->
+
 				</div>
 				<!-- todo  -->
 				<!-- <div class="alert alert-info">
@@ -247,7 +250,7 @@
 						</div>
 					</div> -->
 
-				<!-- <app-action-bar [uploadFiles]="uploadFileArray" [form]="shopLicRenewalForm" (tabIndex)="onTabChange($event)" [stepInfo]="'step4'"></app-action-bar> -->
+				<app-action-bar [form]="shopLicRenewalForm" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step2', next: 2, back: 0}"></app-action-bar>
 			</mat-tab>
 			<!-- step 2 Ends -->
 
@@ -378,7 +381,7 @@
 						</div>
 					</div>
 				</div>
-				<!-- <app-action-bar [uploadFiles]="uploadFileArray" [form]="shopLicRenewalForm" (tabIndex)="onTabChange($event)" [stepInfo]="'step5'"></app-action-bar> -->
+				<!-- <app-action-bar   [form]="shopLicRenewalForm" (tabIndex)="onTabChange($event)" [stepInfo]="'step5'"></app-action-bar> -->
 			</mat-tab>
 			<!-- step 3 employer family Ends -->
 
@@ -509,7 +512,7 @@
 					</div>
 				</div>
 
-				<!-- <app-action-bar [uploadFiles]="uploadFileArray" [form]="shopLicRenewalForm" (tabIndex)="onTabChange($event)" [stepInfo]="'step5'"></app-action-bar> -->
+				<!-- <app-action-bar   [form]="shopLicRenewalForm" (tabIndex)="onTabChange($event)" [stepInfo]="'step5'"></app-action-bar> -->
 
 			</mat-tab>
 			<!-- step 4 occupancy person Ends -->
@@ -651,7 +654,7 @@
 					</div>
 				</div>
 
-				<!-- <app-action-bar [uploadFiles]="uploadFileArray" [form]="shopLicRenewalForm" (tabIndex)="onTabChange($event)" [stepInfo]="'step5'"></app-action-bar> -->
+				<!-- <app-action-bar   [form]="shopLicRenewalForm" (tabIndex)="onTabChange($event)" [stepInfo]="'step5'"></app-action-bar> -->
 			</mat-tab>
 			<!-- step 5 partner list Ends -->
 
@@ -694,7 +697,7 @@
 					</mat-form-field>
 				</div>
 
-				<app-action-bar [uploadFiles]="uploadFileArray" [form]="shopLicRenewalForm" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step6', next: 6, back: 5}"></app-action-bar>
+				<app-action-bar [form]="shopLicRenewalForm" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step6', next: 6, back: 5}"></app-action-bar>
 
 			</mat-tab>
 			<!-- step 6 employee list Ends -->
@@ -705,48 +708,397 @@
 				<ng-template mat-tab-label>
 					<div>{{'attachment' | translate: translateKey}}</div>
 				</ng-template>
+				<div>
+					<h2>{{'category_wise_attachment' | translate: translateKey}}</h2>
+					<!-- SHOP_LIC_SELF_OWNERSHIP -->
+					<div class="row" *ngIf="shopLicRenewalForm.get('typeOfOrganisation').controls.code.value === 'SHOP_LIC_SELF_OWNERSHIP'">
+						<h2>{{'owner_checklist' | translate: translateKey}}</h2>
 
-				<div class="row">
-
-					<div class="col-md-4">
-						<div *ngIf="showButtons">
-							<label>{{'prof_tax_PEC_receipt' | translate: translateKey}} *</label>
-							<file-upload [form]="shopLicRenewalForm" [uploadModel]="setDataValue(1,'ProfessionalTaxPECNoReceipt','1.1','doc')"></file-upload>
+						<div class="col-md-4">
+							<div *ngIf="showButtons">
+								<label>{{'photo_of_License_Holder' | translate: translateKey}} *</label>
+								<file-upload [form]="shopLicRenewalForm" [uploadModel]="setDataValue(1,'PhotoofLicenseHolder','1.1','doc')"></file-upload>
+							</div>
 						</div>
+
+						<div class="col-md-4">
+							<div *ngIf="showButtons">
+								<label>{{'org_ownership_att' | translate: translateKey}} *</label>
+								<file-upload [form]="shopLicRenewalForm" [uploadModel]="setDataValue(2,'OrganizationalOwnershipAgreementCopy','1.2','doc')"></file-upload>
+							</div>
+						</div>
+						<div class="col-md-4 ">
+							<div *ngIf="showButtons ">
+								<label>{{'pro_tax_current_att' | translate: translateKey}} *</label>
+								<file-upload [form]="shopLicRenewalForm" [uploadModel]="setDataValue(3,'PropertyTaxCurrentYearReceiptOfOrganization', '1.3', 'doc') "></file-upload>
+							</div>
+						</div>
+						<!-- step Attachment Starts -->
+						<mat-tab>
+							<ng-template mat-tab-label>
+								<div>{{'attachment' | translate: translateKey}}</div>
+							</ng-template>
+
+							<div class="row">
+
+								<div class="col-md-4">
+									<div *ngIf="showButtons">
+										<label>{{'prof_tax_PEC_receipt' | translate: translateKey}} *</label>
+										<file-upload [form]="shopLicRenewalForm" [uploadModel]="setDataValue(1,'ProfessionalTaxPECNoReceipt','1.1','doc')"></file-upload>
+									</div>
+								</div>
+
+								<div class="col-md-4">
+									<div *ngIf="showButtons">
+										<label>{{'prof_tax_PRC_receipt' | translate: translateKey}} *</label>
+										<file-upload [form]="shopLicRenewalForm" [uploadModel]="setDataValue(2,'ProfessionalTaxPRCNoReceipt','1.2','doc')"></file-upload>
+									</div>
+								</div>
+
+								<div class="col-md-4">
+									<div *ngIf="showButtons">
+										<label>{{'property_tax_or_water_tax_paid_receipt' | translate: translateKey}} *</label>
+										<file-upload [form]="shopLicRenewalForm" [uploadModel]="setDataValue(3,'PropertyTaxOrWaterTaxPaidReceipt','1.3','doc')"></file-upload>
+									</div>
+								</div>
+
+								<div class="col-md-4">
+									<div *ngIf="showButtons">
+										<label>{{'aadhar_card_tenant' | translate: translateKey}} *</label>
+										<file-upload [form]="shopLicRenewalForm" [uploadModel]="setDataValue(4,'AdharCardTenant','1.4','doc')"></file-upload>
+									</div>
+								</div>
+
+								<div class="col-md-4">
+									<div *ngIf="showButtons">
+										<label>{{'PAN_card' | translate: translateKey}} </label>
+										<file-upload [form]="shopLicRenewalForm" [uploadModel]="setDataValue(5,'PANCardTenant','1.5','doc')"></file-upload>
+									</div>
+								</div>
+
+							</div>
+
+							<app-action-bar [form]="shopLicRenewalForm" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'final', next: 7, back: 5}"></app-action-bar>
+
+						</mat-tab>
+						<!-- step Attachment Ends -->
+
+						<div class="col-md-4 ">
+							<div *ngIf="showButtons ">
+								<label>{{'business_tax_current_att' | translate: translateKey}} *</label>
+								<file-upload [form]="shopLicRenewalForm" [uploadModel]="setDataValue(4, 'OrganizationBusinessTaxCurrentYearReceipt', '1.4', 'doc') "></file-upload>
+							</div>
+						</div>
+
+						<div class="col-md-4 ">
+							<div *ngIf="showButtons ">
+								<label>{{'workers_professional_tax_att' | translate: translateKey}} *</label>
+								<file-upload [form]="shopLicRenewalForm" [uploadModel]="setDataValue(5,'WorkersProfessionalTaxReceipt', '1.5','doc') "></file-upload>
+							</div>
+						</div>
+
+						<div class="col-md-4 ">
+							<div *ngIf="showButtons ">
+								<label>{{'partnership_deed_att' | translate: translateKey}} *</label>
+								<file-upload [form]="shopLicRenewalForm" [uploadModel]="setDataValue(6,'PartnershipDeedCopyOfPartnerIfThereIsAPartner', '1.6', 'doc') "></file-upload>
+							</div>
+						</div>
+
+						<div class="col-md-4 ">
+							<div *ngIf="showButtons ">
+								<label>{{'guj_labor_welfarefund_att' | translate: translateKey}} *</label>
+								<file-upload [form]="shopLicRenewalForm" [uploadModel]="setDataValue(7, 'OwnerMoreWorkers', '1.7', 'doc') "></file-upload>
+							</div>
+						</div>
+
+						<div class="col-md-4 ">
+							<div *ngIf="showButtons ">
+								<label>{{'aadhar_no' | translate: translateKey}}</label>
+								<file-upload [form]="shopLicRenewalForm" [uploadModel]="setDataValue(8, 'AdharCardOwner', '1.8', 'doc') "></file-upload>
+							</div>
+						</div>
+
+						<div class="col-md-4 ">
+							<div *ngIf="showButtons ">
+								<label>{{'election_or_voters_ID' | translate: translateKey}}</label>
+								<file-upload [form]="shopLicRenewalForm" [uploadModel]="setDataValue(9, 'ElectionVotersID', '1.9', 'doc') "></file-upload>
+							</div>
+						</div>
+
+						<div class="col-md-4 ">
+							<div *ngIf="showButtons ">
+								<label>{{'PAN_card' | translate: translateKey}}</label>
+								<file-upload [form]="shopLicRenewalForm" [uploadModel]="setDataValue(10, 'PANCardTenant', '2', 'doc') "></file-upload>
+							</div>
+						</div>
+
 					</div>
 
-					<div class="col-md-4">
-						<div *ngIf="showButtons">
-							<label>{{'prof_tax_PRC_receipt' | translate: translateKey}} *</label>
-							<file-upload [form]="shopLicRenewalForm" [uploadModel]="setDataValue(2,'ProfessionalTaxPRCNoReceipt','1.2','doc')"></file-upload>
+					<!-- SHOP_LIC_PARTNERSHIP and SHOP_LIC_CO_OPERATIVE_SOCIETY -->
+					<div class="row" *ngIf="shopLicRenewalForm.get('typeOfOrganisation').controls.code.value === 'SHOP_LIC_PARTNERSHIP' || shopLicRenewalForm.get('typeOfOrganisation').controls.code.value === 'SHOP_LIC_CO_OPERATIVE_SOCIETY' ">
+						<h2>{{'partnership_and_coopsoc_checklist' | translate: translateKey}}</h2>
+
+						<div class="col-md-4">
+							<div *ngIf="showButtons ">
+								<label>{{'org_tenant_att' | translate: translateKey}} *</label>
+								<file-upload [form]="shopLicRenewalForm" [uploadModel]="setDataValue(12,'OrganizationRentalAgreement', '2.2','doc') "></file-upload>
+							</div>
 						</div>
+						<div class="col-md-4">
+							<div *ngIf="showButtons">
+								<label>{{'sale_or_purchase_deed_att' | translate: translateKey}} *</label>
+								<file-upload [form]="shopLicRenewalForm" [uploadModel]="setDataValue(13, 'SaleOrPurchaseDeed', '2.3', 'doc') "></file-upload>
+							</div>
+						</div>
+
+						<div class="col-md-4 ">
+							<div *ngIf="showButtons ">
+								<label>{{'prescribed_certificate' | translate: translateKey}} *</label>
+								<file-upload [form]="shopLicRenewalForm" [uploadModel]="setDataValue(14, 'Prescribedcertificate', '2.4', 'doc') "></file-upload>
+							</div>
+						</div>
+						<div class="col-md-4 ">
+							<div *ngIf="showButtons ">
+								<label>{{'pro_tax_current_att' | translate: translateKey}} *</label>
+								<file-upload [form]="shopLicRenewalForm" [uploadModel]="setDataValue(3,'PropertyTaxCurrentYearReceiptOfOrganization', '1.3', 'doc') "></file-upload>
+							</div>
+						</div>
+
+						<div class="col-md-4 ">
+							<div *ngIf="showButtons ">
+								<label>{{'business_tax_current_att' | translate: translateKey}} *</label>
+								<file-upload [form]="shopLicRenewalForm" [uploadModel]="setDataValue(4, 'OrganizationBusinessTaxCurrentYearReceipt', '1.4', 'doc') "></file-upload>
+							</div>
+						</div>
+
+						<div class="col-md-4 ">
+							<div *ngIf="showButtons ">
+								<label>{{'workers_professional_tax_att' | translate: translateKey}} *</label>
+								<file-upload [form]="shopLicRenewalForm" [uploadModel]="setDataValue(5,'WorkersProfessionalTaxReceipt', '1.5','doc') "></file-upload>
+							</div>
+						</div>
+
+						<div class="col-md-4 ">
+							<div *ngIf="showButtons ">
+								<label>{{'partnership_deed_att' | translate: translateKey}} *</label>
+								<file-upload [form]="shopLicRenewalForm" [uploadModel]="setDataValue(6,'PartnershipDeedCopyOfPartnerIfThereIsAPartner', '1.6', 'doc') "></file-upload>
+							</div>
+						</div>
+
+						<div class="col-md-4 ">
+							<div *ngIf="showButtons ">
+								<label>{{'guj_labor_welfarefund_att' | translate: translateKey}} *</label>
+								<file-upload [form]="shopLicRenewalForm" [uploadModel]="setDataValue(7, 'OwnerMoreWorkers', '1.7', 'doc') "></file-upload>
+							</div>
+						</div>
+
+						<div class="col-md-4 ">
+							<div *ngIf="showButtons ">
+								<label>{{'aadhar_no' | translate: translateKey}}</label>
+								<file-upload [form]="shopLicRenewalForm" [uploadModel]="setDataValue(8, 'AdharCardOwner', '1.8', 'doc') "></file-upload>
+							</div>
+						</div>
+
+						<div class="col-md-4 ">
+							<div *ngIf="showButtons ">
+								<label>{{'election_or_voters_ID' | translate: translateKey}}</label>
+								<file-upload [form]="shopLicRenewalForm" [uploadModel]="setDataValue(9, 'ElectionVotersID', '1.9', 'doc') "></file-upload>
+							</div>
+						</div>
+
+						<div class="col-md-4 ">
+							<div *ngIf="showButtons ">
+								<label>{{'PAN_card' | translate: translateKey}}</label>
+								<file-upload [form]="shopLicRenewalForm" [uploadModel]="setDataValue(10, 'PANCardTenant', '2', 'doc') "></file-upload>
+							</div>
+						</div>
+
 					</div>
 
-					<div class="col-md-4">
-						<div *ngIf="showButtons">
-							<label>{{'property_tax_or_water_tax_paid_receipt' | translate: translateKey}} *</label>
-							<file-upload [form]="shopLicRenewalForm" [uploadModel]="setDataValue(3,'PropertyTaxOrWaterTaxPaidReceipt','1.3','doc')"></file-upload>
+					<!-- SHOP_LIC_COMPANY -->
+					<div class="row" *ngIf="shopLicRenewalForm.get('typeOfOrganisation').controls.code.value ==='SHOP_LIC_COMPANY'">
+						<h2>{{'company_checklist' | translate: translateKey}}</h2>
+						<div class="col-md-4">
+							<div *ngIf="showButtons ">
+								<label>{{'org_tenant_att' | translate: translateKey}} *</label>
+								<file-upload [form]="shopLicRenewalForm" [uploadModel]="setDataValue(12, 'OrganizationRentalAgreement', '2.2','doc') "></file-upload>
+							</div>
 						</div>
+						<div class="col-md-4 ">
+							<div *ngIf="showButtons ">
+								<label>{{'list_directors_nomination_directors' | translate: translateKey}} *</label>
+								<file-upload [form]="shopLicRenewalForm" [uploadModel]="setDataValue(16, 'ListOfDirectors', '2.6', 'doc') "></file-upload>
+							</div>
+						</div>
+						<div class="col-md-4 ">
+							<div *ngIf="showButtons ">
+								<label>{{'sale_or_purchase_deed_att' | translate: translateKey}} *</label>
+								<file-upload [form]="shopLicRenewalForm" [uploadModel]="setDataValue(13, 'SaleOrPurchaseDeed', '2.3', 'doc') "></file-upload>
+							</div>
+						</div>
+						<div class="col-md-4 ">
+							<div *ngIf="showButtons ">
+								<label>{{'prescribed_certificate' | translate: translateKey}} *</label>
+								<file-upload [form]="shopLicRenewalForm" [uploadModel]="setDataValue(14, 'Prescribedcertificate', '2.4', 'doc') "></file-upload>
+							</div>
+						</div>
+						<div class="col-md-4 ">
+							<div *ngIf="showButtons ">
+								<label>{{'Upload Deed pages which have name of partners' | translate: translateKey}} *</label>
+								<file-upload [form]="shopLicRenewalForm" [uploadModel]="setDataValue(19, 'DeedPagesPartners', '2.9', 'doc') "></file-upload>
+							</div>
+						</div>
+						<!-- Partnership Deed (Upload Deed pages which have name of partners, signature of partners,Business / Company Name, percentage of partnership ) -->
+						<div class="col-md-4 ">
+							<div *ngIf="showButtons ">
+								<label>{{'pro_tax_current_att' | translate: translateKey}} *</label>
+								<file-upload [form]="shopLicRenewalForm" [uploadModel]="setDataValue(3,'PropertyTaxCurrentYearReceiptOfOrganization', '1.3', 'doc') "></file-upload>
+							</div>
+						</div>
+
+						<div class="col-md-4 ">
+							<div *ngIf="showButtons ">
+								<label>{{'business_tax_current_att' | translate: translateKey}} *</label>
+								<file-upload [form]="shopLicRenewalForm" [uploadModel]="setDataValue(4, 'OrganizationBusinessTaxCurrentYearReceipt', '1.4', 'doc') "></file-upload>
+							</div>
+						</div>
+
+						<div class="col-md-4 ">
+							<div *ngIf="showButtons ">
+								<label>{{'workers_professional_tax_att' | translate: translateKey}} *</label>
+								<file-upload [form]="shopLicRenewalForm" [uploadModel]="setDataValue(5,'WorkersProfessionalTaxReceipt', '1.5','doc') "></file-upload>
+							</div>
+						</div>
+
+						<div class="col-md-4 ">
+							<div *ngIf="showButtons ">
+								<label>{{'partnership_deed_att' | translate: translateKey}} *</label>
+								<file-upload [form]="shopLicRenewalForm" [uploadModel]="setDataValue(6,'PartnershipDeedCopyOfPartnerIfThereIsAPartner', '1.6', 'doc') "></file-upload>
+							</div>
+						</div>
+
+						<div class="col-md-4 ">
+							<div *ngIf="showButtons ">
+								<label>{{'guj_labor_welfarefund_att' | translate: translateKey}} *</label>
+								<file-upload [form]="shopLicRenewalForm" [uploadModel]="setDataValue(7, 'OwnerMoreWorkers', '1.7', 'doc') "></file-upload>
+							</div>
+						</div>
+
+						<div class="col-md-4 ">
+							<div *ngIf="showButtons ">
+								<label>{{'aadhar_no' | translate: translateKey}}</label>
+								<file-upload [form]="shopLicRenewalForm" [uploadModel]="setDataValue(8, 'AdharCardOwner', '1.8', 'doc') "></file-upload>
+							</div>
+						</div>
+
+						<div class="col-md-4 ">
+							<div *ngIf="showButtons ">
+								<label>{{'election_or_voters_ID' | translate: translateKey}}</label>
+								<file-upload [form]="shopLicRenewalForm" [uploadModel]="setDataValue(9, 'ElectionVotersID', '1.9', 'doc') "></file-upload>
+							</div>
+						</div>
+
+						<div class="col-md-4 ">
+							<div *ngIf="showButtons ">
+								<label>{{'PAN_card' | translate: translateKey}}</label>
+								<file-upload [form]="shopLicRenewalForm" [uploadModel]="setDataValue(10, 'PANCardTenant', '2', 'doc') "></file-upload>
+							</div>
+						</div>
+
 					</div>
 
-					<div class="col-md-4">
-						<div *ngIf="showButtons">
-							<label>{{'aadhar_card_tenant' | translate: translateKey}} *</label>
-							<file-upload [form]="shopLicRenewalForm" [uploadModel]="setDataValue(4,'AdharCardTenant','1.4','doc')"></file-upload>
+					<!-- SHOP_LIC_TRUST and SHOP_LIC_BOARD-->
+					<div class="row" *ngIf="shopLicRenewalForm.get( 'typeOfOrganisation').controls.code.value ==='SHOP_LIC_TRUST' || shopLicRenewalForm.get( 'typeOfOrganisation').controls.code.value==='SHOP_LIC_BOARD' ">
+						<h2>{{'trust_and_board_checklist' | translate: translateKey}}</h2>
+						<div class="col-md-4">
+							<div *ngIf="showButtons ">
+								<label>{{'list_trustees_trust_member' | translate: translateKey}} *</label>
+								<file-upload [form]="shopLicRenewalForm" [uploadModel]="setDataValue(15, 'TrusteesMember', '2.5', 'doc') "></file-upload>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div *ngIf="showButtons ">
+								<label>{{'list_chairman_and_member_of_co_op_soc' | translate: translateKey}} *</label>
+								<file-upload [form]="shopLicRenewalForm" [uploadModel]="setDataValue(17, 'ChairmanMember', '2.7', 'doc') "></file-upload>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div *ngIf="showButtons ">
+								<label>{{'registered_address_proof' | translate: translateKey}} *</label>
+								<file-upload [form]="shopLicRenewalForm" [uploadModel]="setDataValue(18, 'RegiAddressProof', '2.8', 'doc') "></file-upload>
+							</div>
+						</div>
+						<div class="col-md-4 ">
+							<div *ngIf="showButtons ">
+								<label>{{'prescribed_certificate' | translate: translateKey}} *</label>
+								<file-upload [form]="shopLicRenewalForm" [uploadModel]="setDataValue(14, 'Prescribedcertificate', '2.4', 'doc') "></file-upload>
+							</div>
+						</div>
+						<div class="col-md-4 ">
+							<div *ngIf="showButtons ">
+								<label>{{'Upload Deed pages which have name of partners' | translate: translateKey}} *</label>
+								<file-upload [form]="shopLicRenewalForm" [uploadModel]="setDataValue(19, 'DeedPagesPartners', '2.9', 'doc') "></file-upload>
+							</div>
+						</div>
+						<div class="col-md-4 ">
+							<div *ngIf="showButtons ">
+								<label>{{'pro_tax_current_att' | translate: translateKey}} *</label>
+								<file-upload [form]="shopLicRenewalForm" [uploadModel]="setDataValue(3,'PropertyTaxCurrentYearReceiptOfOrganization', '1.3', 'doc') "></file-upload>
+							</div>
+						</div>
+
+						<div class="col-md-4 ">
+							<div *ngIf="showButtons ">
+								<label>{{'business_tax_current_att' | translate: translateKey}} *</label>
+								<file-upload [form]="shopLicRenewalForm" [uploadModel]="setDataValue(4, 'OrganizationBusinessTaxCurrentYearReceipt', '1.4', 'doc') "></file-upload>
+							</div>
+						</div>
+
+						<div class="col-md-4 ">
+							<div *ngIf="showButtons ">
+								<label>{{'workers_professional_tax_att' | translate: translateKey}} *</label>
+								<file-upload [form]="shopLicRenewalForm" [uploadModel]="setDataValue(5,'WorkersProfessionalTaxReceipt', '1.5','doc') "></file-upload>
+							</div>
+						</div>
+
+						<div class="col-md-4 ">
+							<div *ngIf="showButtons ">
+								<label>{{'partnership_deed_att' | translate: translateKey}} *</label>
+								<file-upload [form]="shopLicRenewalForm" [uploadModel]="setDataValue(6,'PartnershipDeedCopyOfPartnerIfThereIsAPartner', '1.6', 'doc') "></file-upload>
+							</div>
+						</div>
+
+						<div class="col-md-4 ">
+							<div *ngIf="showButtons ">
+								<label>{{'guj_labor_welfarefund_att' | translate: translateKey}} *</label>
+								<file-upload [form]="shopLicRenewalForm" [uploadModel]="setDataValue(7, 'OwnerMoreWorkers', '1.7', 'doc') "></file-upload>
+							</div>
+						</div>
+
+						<div class="col-md-4 ">
+							<div *ngIf="showButtons ">
+								<label>{{'aadhar_no' | translate: translateKey}}</label>
+								<file-upload [form]="shopLicRenewalForm" [uploadModel]="setDataValue(8, 'AdharCardOwner', '1.8', 'doc') "></file-upload>
+							</div>
+						</div>
+
+						<div class="col-md-4 ">
+							<div *ngIf="showButtons ">
+								<label>{{'election_or_voters_ID' | translate: translateKey}}</label>
+								<file-upload [form]="shopLicRenewalForm" [uploadModel]="setDataValue(9, 'ElectionVotersID', '1.9', 'doc') "></file-upload>
+							</div>
+						</div>
+
+						<div class="col-md-4 ">
+							<div *ngIf="showButtons ">
+								<label>{{'PAN_card' | translate: translateKey}}</label>
+								<file-upload [form]="shopLicRenewalForm" [uploadModel]="setDataValue(10, 'PANCardTenant', '2', 'doc') "></file-upload>
+							</div>
 						</div>
 					</div>
-
-					<div class="col-md-4">
-						<div *ngIf="showButtons">
-							<label>{{'PAN_card' | translate: translateKey}}   </label>
-							<file-upload [form]="shopLicRenewalForm" [uploadModel]="setDataValue(5,'PANCardTenant','1.5','doc')"></file-upload>
-						</div>
-					</div>
-
 				</div>
 
-				<app-action-bar [uploadFiles]="uploadFileArray" [form]="shopLicRenewalForm" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'final', next: 7, back: 5}"
-				 (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
+				<app-action-bar [uploadFiles]="uploadFileArray | filterAttachment:shopLicRenewalForm.get( 'typeOfOrganisation').value.code" [form]="shopLicRenewalForm" (handleErrors)="handleErrorsOnSubmit($event) " (tabIndex)="onTabChange($event) " [stepInfo]="{step: 'final', next:8, back: 6} "></app-action-bar>
 
 			</mat-tab>
 			<!-- step Attachment Ends -->

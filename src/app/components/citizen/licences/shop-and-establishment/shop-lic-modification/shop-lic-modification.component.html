@@ -10,7 +10,6 @@
 <mat-card [hidden]="!serachLicenceObj.isDisplayRenewLicenceForm" class="formClass cardBorder">
 	<form [formGroup]="shopLicModificationForm">
 		<mat-tab-group [(selectedIndex)]="tabIndex" dynamicHeight="true" mat-stretch-tabs class="stepperNav">
-
 			<!-- step 1 Starts -->
 			<mat-tab>
 				<ng-template mat-tab-label>
@@ -19,14 +18,14 @@
 
 				<div class="row">
 					<mat-form-field class="col-md-4">
-						<input matInput required maxlength="30" placeholder="{{'name_of_establishment_if_any' | translate:translateKey}}" formControlName="establishmentName"
+						<input matInput required maxlength="150" placeholder="{{'name_of_establishment_if_any' | translate:translateKey}}" formControlName="establishmentName"
 						 appGujInputSource targetElement="establishmentNameGuj" [form]="shopLicModificationForm">
 						<control-messages [control]="shopLicModificationForm.controls.establishmentName"></control-messages>
 					</mat-form-field>
 
 					<!-- gujarati -->
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" required formControlName="establishmentNameGuj" appGujInputTarget [form]="shopLicModificationForm"
+						<input matInput type="text" required maxlength="450" formControlName="establishmentNameGuj" appGujInputTarget [form]="shopLicModificationForm"
 						 placeholder="{{ 'name_of_establishment_if_any' | translate:translateKey:'gu' }}">
 						<control-messages [control]="shopLicModificationForm.controls.establishmentNameGuj"></control-messages>
 					</mat-form-field>
@@ -52,7 +51,8 @@
 					</div>
 
 					<mat-form-field class="col-md-4">
-						<input matInput required maxlength="15" placeholder="{{'property_tax_no' | translate:translateKey}}" formControlName="propertyTaxNo">
+						<input matInput required maxlength="13" minlength="13" appAlphaNumeric placeholder="{{'property_tax_no' | translate:translateKey}}"
+						 formControlName="propertyTaxNo">
 						<control-messages [control]="shopLicModificationForm.controls.propertyTaxNo"></control-messages>
 					</mat-form-field>
 
@@ -74,34 +74,33 @@
 					</div>
 
 					<mat-form-field class="col-md-4" *ngIf="shopLicModificationForm.get('applicantVimaAmountPaid').value.code == 'YES'">
-						<input matInput OnlyNumber maxlength="15" placeholder="{{'number' | translate:translateKey}}" formControlName="number">
+						<input matInput appAlphaNumeric maxlength="20" placeholder="{{'number' | translate:translateKey}}" formControlName="number">
 					</mat-form-field>
 				</div>
 
 				<div class="row">
 					<h2>{{'professional_tax' | translate:translateKey}}</h2>
-
+				</div>
+				<div class="row">
 					<mat-form-field class="col-md-4">
-						<input matInput maxlength="20" placeholder="{{'professional_tax_PEC_no' | translate:translateKey}}" formControlName="professionalTaxPECNo">
+						<input matInput maxlength="20" appAlphaNumeric placeholder="{{'professional_tax_PEC_no' | translate:translateKey}}" formControlName="professionalTaxPECNo">
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput maxlength="20" placeholder="{{'PRC_no' | translate:translateKey}}" formControlName="prcNo">
+						<input matInput maxlength="20" appAlphaNumeric placeholder="{{'PRC_no' | translate:translateKey}}" formControlName="prcNo">
 					</mat-form-field>
-					<div class="col-md-4">
-					</div>
 				</div>
 
 				<div class="row">
-					<!-- <label>Situation of office, storeroom, godown,warehouse or work place if any attached to a shop but outside the premises
-									different from those of shops.</label> -->
-					<h2> {{'situation_label'| translate:translateKey}}</h2>
-					<mat-form-field class="col-md-6">
-						<input matInput required maxlength="100" formControlName="situationOfOffice" placeholder="{{'situation_of_establishment' | translate:translateKey}}">
+
+					<h2>{{'situation_label'| translate:translateKey}}</h2>
+
+					<mat-form-field class="col-md-4">
+						<input matInput type="text" required maxlength="100" formControlName="situationOfOffice" placeholder="{{'situation_of_establishment' | translate:translateKey}}">
 						<control-messages [control]="shopLicModificationForm.controls.situationOfOffice"></control-messages>
 					</mat-form-field>
 				</div>
-				<app-action-bar [uploadFiles]="uploadFileArray" [form]="shopLicModificationForm" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step1', next: 1, back: 0}"></app-action-bar>
+				<app-action-bar [form]="shopLicModificationForm" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step1', next: 1, back: 0}"></app-action-bar>
 			</mat-tab>
 			<!-- step 1 Ends -->
 
@@ -114,82 +113,82 @@
 				<div class="row">
 
 					<mat-form-field class="col-md-6">
-						<input matInput required maxlength="50" placeholder="{{'name_of_employer' | translate:translateKey}}" formControlName="nameOfEmployer"
+						<input matInput type="text" required maxlength="100" placeholder="{{'name_of_employer' | translate:translateKey}}" formControlName="nameOfEmployer"
 						 appGujInputSource targetElement="nameOfEmployerGuj" [form]="shopLicModificationForm">
 						<control-messages [control]="shopLicModificationForm.controls.nameOfEmployer"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-6">
-						<input matInput required maxlength="100" placeholder="{{'residential_address_of_employer' | translate:translateKey}}" formControlName="residentialAddressOfEmployer"
-						 appGujInputSource targetElement="residentialAddressOfEmployerGuj" [form]="shopLicModificationForm">
+						<input matInput type="text" required maxlength="500" placeholder="{{'residential_address_of_employer' | translate:translateKey}}"
+						 formControlName="residentialAddressOfEmployer" appGujInputSource targetElement="residentialAddressOfEmployerGuj" [form]="shopLicModificationForm">
 						<control-messages [control]="shopLicModificationForm.controls.residentialAddressOfEmployer"></control-messages>
 					</mat-form-field>
 
 					<!-- gujarati -->
 					<mat-form-field class="col-md-6">
-						<input matInput type="text" required formControlName="nameOfEmployerGuj" appGujInputTarget [form]="shopLicModificationForm"
+						<input matInput type="text" maxlength="300" required formControlName="nameOfEmployerGuj" appGujInputTarget [form]="shopLicModificationForm"
 						 placeholder="{{ 'name_of_employer' | translate:translateKey:'gu' }}">
 						<control-messages [control]="shopLicModificationForm.controls.nameOfEmployerGuj"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-6">
-						<input matInput type="text" required formControlName="residentialAddressOfEmployerGuj" appGujInputTarget [form]="shopLicModificationForm"
-						 placeholder="{{ 'residential_address_of_employer' | translate:translateKey:'gu' }}">
+						<input matInput type="text" maxlength="1500" required formControlName="residentialAddressOfEmployerGuj" appGujInputTarget
+						 [form]="shopLicModificationForm" placeholder="{{ 'residential_address_of_employer' | translate:translateKey:'gu' }}">
 						<control-messages [control]="shopLicModificationForm.controls.residentialAddressOfEmployerGuj"></control-messages>
 					</mat-form-field>
 					<!-- /gujarati -->
 
 					<mat-form-field class="col-md-6">
-						<input matInput required maxlength="50" placeholder="{{'name_of_manager' | translate:translateKey}}" formControlName="nameOfManager">
+						<input matInput type="text" required maxlength="60" placeholder="{{'name_of_manager' | translate:translateKey}}" formControlName="nameOfManager">
 						<control-messages [control]="shopLicModificationForm.controls.nameOfManager"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-6">
-						<input matInput required maxlength="100" placeholder="{{'residential_address_of_manager' | translate:translateKey}}" formControlName="residentialAddressOfManager">
+						<input matInput required maxlength="500" placeholder="{{'residential_address_of_manager' | translate:translateKey}}" formControlName="residentialAddressOfManager">
 						<control-messages [control]="shopLicModificationForm.controls.residentialAddressOfManager"></control-messages>
 					</mat-form-field>
 
 					<!-- gujarati -->
 					<!-- <mat-form-field class="col-md-6">
-								<input matInput type="text" formControlName="nameOfManagerGuj" appGujInputTarget [form]="shopLicModificationForm" placeholder="{{ 'name_of_manager' | translate:translateKey:'gu' }}">
-							</mat-form-field>
-	
-							<mat-form-field class="col-md-6">
-								<input matInput type="text" formControlName="residentialAddressOfManagerGuj" appGujInputTarget [form]="shopLicModificationForm" placeholder="{{ 'residential_address_of_manager' | translate:translateKey:'gu' }}">
-							</mat-form-field> -->
+							<input matInput type="text" formControlName="nameOfManagerGuj" appGujInputTarget [form]="shopLicModificationForm" placeholder="{{ 'name_of_manager' | translate:translateKey:'gu' }}">
+						</mat-form-field>
+
+						<mat-form-field class="col-md-6">
+							<input matInput type="text" formControlName="residentialAddressOfManagerGuj" appGujInputTarget [form]="shopLicModificationForm" placeholder="{{ 'residential_address_of_manager' | translate:translateKey:'gu' }}">
+						</mat-form-field> -->
 					<!-- /gujarati -->
 
-					<!-- <label>Category_of_Business i,e, shop_commercial_Establishment_Residential_Hotel_Restaurant_Eating_house_Theater_or_Other_Place_of_Public_amusement_of_Entertainment.</label> -->
-					<h2> {{'category_label' | translate:translateKey}}</h2>
+					<h2>{{'category_label' | translate:translateKey}}</h2>
+
 					<div class="col-md-6 ngSelect" formGroupName="categoryOfBusiness">
 						<ng-select placeholder="{{'category_of_business' | translate:translateKey}} *" formControlName="code" (change)="onChangeCategorySelect($event)">
 							<ng-option *ngFor="let category of businessCategory" [value]="category.code">{{category.name}}</ng-option>
 						</ng-select>
-						<control-messages [control]="shopLicModificationForm.controls.categoryOfBusiness"></control-messages>
+						<control-messages [control]="shopLicModificationForm.get('categoryOfBusiness').controls.code"></control-messages>
 					</div>
 
 					<div class="col-md-6 ngSelect" formGroupName="subCategoryOfBusiness">
 						<ng-select placeholder="{{'sub_category_of_business' | translate:translateKey}} *" formControlName="code">
 							<ng-option *ngFor="let sub_category of businessSubCategory" [value]="sub_category.code">{{sub_category.name}}</ng-option>
 						</ng-select>
-						<control-messages [control]="shopLicModificationForm.controls.subCategoryOfBusiness"></control-messages>
+						<control-messages [control]="shopLicModificationForm.controls.subCategoryOfBusiness.controls.code"></control-messages>
 					</div>
 				</div>
 
 				<!-- gujrati -->
 				<!-- <div class="row">
-							<mat-form-field class="col-md-6">
-								<input matInput readonly placeholder="{{'category_of_business' | translate:translateKey:'gu'}}" [value]="businessCategoryGuj">
-							</mat-form-field>
-							<mat-form-field class="col-md-6">
-								<input matInput readonly placeholder="{{'sub_category_of_business' | translate:translateKey:'gu'}}" [value]="businessSubCategoryGuj">
-							</mat-form-field>
-						</div> -->
+						<mat-form-field class="col-md-6">
+							<input matInput readonly placeholder="{{'category_of_business' | translate:translateKey:'gu'}}" [value]="businessCategoryGuj">
+						</mat-form-field>
+						<mat-form-field class="col-md-6">
+							<input matInput readonly placeholder="{{'sub_category_of_business' | translate:translateKey:'gu'}}" [value]="businessSubCategoryGuj">
+						</mat-form-field>
+					</div> -->
 				<!-- /gujarati -->
 
 				<div class="row">
 					<mat-form-field class="col-md-4">
-						<input matInput required maxlength="50" placeholder="{{'name_of_business' | translate:translateKey:'gu'}}" formControlName="nameOfBusiness"
+						<input matInput required maxlength="200" placeholder="{{'name_of_business' | translate:translateKey}}" formControlName="nameOfBusiness"
 						 appGujInputSource targetElement="nameOfBusinessGuj" [form]="shopLicModificationForm">
 						<control-messages [control]="shopLicModificationForm.controls.nameOfBusiness"></control-messages>
 					</mat-form-field>
@@ -207,12 +206,12 @@
 						<ng-select placeholder="{{'holiday' | translate:translateKey}} *" formControlName="code">
 							<ng-option *ngFor="let holidays of SHOP_LIC_HOLIDAY" [value]="holidays.code">{{holidays.name}}</ng-option>
 						</ng-select>
-						<control-messages [control]="shopLicModificationForm.controls.enterHoliday"></control-messages>
+						<control-messages [control]="shopLicModificationForm.controls.enterHoliday.controls.code"></control-messages>
 					</div>
 
 					<!-- gujarati -->
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" required formControlName="nameOfBusinessGuj" appGujInputTarget [form]="shopLicModificationForm"
+						<input matInput type="text" maxlength="600" required formControlName="nameOfBusinessGuj" appGujInputTarget [form]="shopLicModificationForm"
 						 placeholder="{{ 'name_of_business' | translate:translateKey:'gu' }}">
 						<control-messages [control]="shopLicModificationForm.controls.nameOfBusinessGuj"></control-messages>
 					</mat-form-field>
@@ -221,36 +220,37 @@
 				</div>
 				<!-- todo  -->
 				<!-- <div class="alert alert-info">
-						<div class="row">
-							<div class="col-6">
-								<input matInput [value]="" formControlName="periodFrom" placeholder="{{ 'period_from' | translate:translateKey}}" readonly>
-							</div>
-							<div class="col-6">
-								<input matInput [value]="" formControlName="periodTo" placeholder="{{ 'period_to' | translate:translateKey}}" readonly>
-							</div>
+					<div class="row">
+						<div class="col-6">
+							<input matInput [value]="" formControlName="periodFrom" placeholder="{{ 'period_from' | translate:translateKey}}" readonly>
+						</div>
+						<div class="col-6">
+							<input matInput [value]="" formControlName="periodTo" placeholder="{{ 'period_to' | translate:translateKey}}" readonly>
 						</div>
 					</div>
-					<div class="alert alert-info mt-4">
-						<div class="row">
-							<div class="col-3">
-								<input matInput [value]="" formControlName="newRegistration" placeholder="{{ 'new_registration' | translate:translateKey}}"
-								 readonly>
-							</div>
-							<div class="col-3">
-								<input matInput [value]="" formControlName="renewal" placeholder="{{ 'renewal' | translate:translateKey}}" readonly>
-							</div>
-							<div class="col-3">
-								<input matInput [value]="" formControlName="adminCharges" placeholder="{{ 'admin_charges' | translate:translateKey}}" readonly>
-							</div>
-							<div class="col-3">
-								<input matInput [value]="" formControlName="netAmount" placeholder="{{ 'net_amount' | translate:translateKey}}" readonly>
-							</div>
+				</div>
+				<div class="alert alert-info mt-4">
+					<div class="row">
+						<div class="col-3">
+							<input matInput [value]="" formControlName="newRegistration" placeholder="{{ 'new_registration' | translate:translateKey}}"
+							 readonly>
 						</div>
-					</div> -->
+						<div class="col-3">
+							<input matInput [value]="" formControlName="renewal" placeholder="{{ 'renewal' | translate:translateKey}}" readonly>
+						</div>
+						<div class="col-3">
+							<input matInput [value]="" formControlName="adminCharges" placeholder="{{ 'admin_charges' | translate:translateKey}}" readonly>
+						</div>
+						<div class="col-3">
+							<input matInput [value]="" formControlName="netAmount" placeholder="{{ 'net_amount' | translate:translateKey}}" readonly>
+						</div>
+					</div>
+				</div> -->
 
-				<app-action-bar [uploadFiles]="uploadFileArray" [form]="shopLicModificationForm" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step2', next: 2, back: 0}"></app-action-bar>
+				<app-action-bar [form]="shopLicModificationForm" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step2', next: 2, back: 0}"></app-action-bar>
 			</mat-tab>
 			<!-- step 2 Ends -->
+
 
 			<!-- step 3 employer family Starts -->
 			<mat-tab>
@@ -306,7 +306,7 @@
 									<td>
 										<p *ngIf="!item.isEditMode">{{item.get('name').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
-											<input matInput appValidationFields [validationFieldsType]="'onlyNameWithSpace'" formControlName="name" required>
+											<input matInput appValidationFields [validationFieldsType]="'onlyNameWithSpace'" formControlName="name">
 											<control-messages [control]="item.controls.name"></control-messages>
 										</mat-form-field>
 									</td>
@@ -314,7 +314,7 @@
 									<td>
 										<p *ngIf="!item.isEditMode">{{item.get('address').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
-											<input matInput formControlName="address" required>
+											<input matInput formControlName="address">
 											<control-messages [control]="item.controls.address"></control-messages>
 										</mat-form-field>
 									</td>
@@ -335,7 +335,7 @@
 										<div class="ngSelect" formGroupName="gender">
 											<p *ngIf="!item.isEditMode">{{getSelectedDataFromLookUps(gender,item.get('gender').value.code)?.name}}</p>
 											<div class="ngSelect" *ngIf="item.isEditMode">
-												<ng-select *ngIf="item.isEditMode" formControlName="code" required>
+												<ng-select *ngIf="item.isEditMode" formControlName="code">
 													<ng-option *ngFor="let gender of gender" [value]="gender.code">{{gender.name}}</ng-option>
 												</ng-select>
 												<control-messages [control]="item.controls.gender.controls.code"></control-messages>
@@ -346,7 +346,7 @@
 									<td>
 										<p *ngIf="!item.isEditMode">{{item.get('age').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
-											<input matInput maxlength="2" OnlyNumber formControlName="age" required>
+											<input matInput maxlength="2" OnlyNumber formControlName="age">
 											<control-messages [control]="item.controls.age"></control-messages>
 										</mat-form-field>
 									</td>
@@ -379,7 +379,7 @@
 						</div>
 					</div>
 				</div>
-				<app-action-bar [uploadFiles]="uploadFileArray" [form]="shopLicModificationForm" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step3', next: 3, back:1}"></app-action-bar>
+				<app-action-bar [form]="shopLicModificationForm" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step3', next: 3, back: 1}"></app-action-bar>
 			</mat-tab>
 			<!-- step 3 employer family Ends -->
 
@@ -437,7 +437,7 @@
 									<td>
 										<p *ngIf="!item.isEditMode">{{item.get('name').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
-											<input matInput appValidationFields [validationFieldsType]="'onlyNameWithSpace'" formControlName="name" required>
+											<input matInput appValidationFields [validationFieldsType]="'onlyNameWithSpace'" formControlName="name">
 											<control-messages [control]="item.controls.name"></control-messages>
 										</mat-form-field>
 									</td>
@@ -477,7 +477,7 @@
 									<td>
 										<p *ngIf="!item.isEditMode">{{item.get('age').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
-											<input matInput maxlength="2" OnlyNumber formControlName="age" required>
+											<input matInput maxlength="2" OnlyNumber formControlName="age">
 											<control-messages *ngIf="item.isEditMode" [control]="item.controls.age"></control-messages>
 										</mat-form-field>
 									</td>
@@ -510,7 +510,7 @@
 					</div>
 				</div>
 
-				<app-action-bar [uploadFiles]="uploadFileArray" [form]="shopLicModificationForm" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step4', next: 4, back: 2}"></app-action-bar>
+				<app-action-bar [form]="shopLicModificationForm" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step4', next: 4, back: 2}"></app-action-bar>
 
 			</mat-tab>
 			<!-- step 4 occupancy person Ends -->
@@ -521,138 +521,143 @@
 					<div>{{'partner_list' | translate: translateKey}}</div>
 				</ng-template>
 
-				<h2>{{'type_of_organization_label' | translate: translateKey}}</h2>
+				<div class="stepperMinHeight">
+					<div class="row">
+						<h2>{{'type_of_organization_label' | translate: translateKey}}</h2>
 
-				<div class="col-md-12 ngSelect" formGroupName="typeOfOrganisation">
-					<ng-select formControlName="code" placeholder="{{ 'shop_lic_org_type' | translate:translateKey }}" (change)="onChangeTypeOfOrganization($event)">
-						<ng-option *ngFor="let org_type of SHOP_LIC_TYPE_OF_ORGANIZATION" [value]="org_type.code">{{org_type.name}}</ng-option>
-					</ng-select>
-				</div>
-
-				<div class="row">
-					<div class="col-md-10">
-						<h2>{{'details_of_partner_label' | translate: translateKey}}</h2>
+						<div class="col-md-4 ngSelect" formGroupName="typeOfOrganisation">
+							<ng-select formControlName="code" required placeholder="{{ 'shop_lic_org_type' | translate:translateKey }}" (change)="onChangeTypeOfOrganization($event)">
+								<ng-option *ngFor="let org_type of SHOP_LIC_TYPE_OF_ORGANIZATION" [value]="org_type.code">{{org_type.name}}</ng-option>
+							</ng-select>
+							<control-messages [control]="shopLicModificationForm.controls.typeOfOrganisation.controls.code"></control-messages>
+						</div>
 					</div>
-					<div class="col-md-2 pt-3" style="text-align: right;">
-						<button [disabled]="shopLicModificationForm.get('typeOfOrganisation').value.code==='SHOP_LIC_SELF_OWNERSHIP' ? !(shopLicModificationForm.get('partnerList').controls.length < 1) : !(shopLicModificationForm.get('partnerList').controls.length < 10)"
-						 type="button" matTooltip="{{'add_more' | translate: translateKey}}" mat-raised-button color="primary" (click)="addMorePerson('PARTNER')">
-							{{'add' | translate: translateKey }}
-						</button>
+
+					<div class="row">
+						<div class="col-md-10">
+							<h2>{{'details_of_partner_label' | translate: translateKey}}</h2>
+						</div>
+						<div class="col-md-2 pt-3" style="text-align: right;">
+							<button [disabled]="shopLicModificationForm.get('typeOfOrganisation').value.code==='SHOP_LIC_SELF_OWNERSHIP' ? !(shopLicModificationForm.get('partnerList').controls.length < 1) : !(shopLicModificationForm.get('partnerList').controls.length < 10)"
+							 type="button" matTooltip="{{'add_more' | translate: translateKey}}" mat-raised-button color="primary" (click)="addMorePerson('PARTNER')">
+								{{'add' | translate: translateKey }}
+							</button>
+						</div>
 					</div>
-				</div>
 
-				<div style="overflow-x: scroll;" *ngIf="shopLicModificationForm.get('partnerList').controls.length">
-					<div>
-						<table class="table table-striped customDataTable">
-							<thead>
-								<tr>
-									<th colspan="2" *ngIf="shopLicModificationForm.get('canEdit').value"></th>
-									<th>#</th>
-									<th>{{'name' | translate:translateKey}}</th>
-									<th>{{'address' | translate:translateKey}}</th>
-									<th>{{'relationship' | translate:translateKey}}</th>
-									<th>{{'gender' | translate:translateKey}}</th>
-									<th>{{'age' | translate:translateKey}}</th>
-								</tr>
-							</thead>
-							<tbody formArrayName="partnerList">
-								<tr *ngFor="let item of shopLicModificationForm.get('partnerList').controls; let indx = index;" [formGroupName]="indx">
-									<td style="width: 40px;" *ngIf="shopLicModificationForm.get('canEdit').value">
-										<button mat-icon-button color="primary" *ngIf="!item.isEditMode" (click)="editRecord(item)">
-											<mat-icon title="Edit">edit</mat-icon>
-										</button>
-										<button type="submit" [disabled]="item.invalid" mat-icon-button color="primary" *ngIf="item.isEditMode" (click)="saveRecord(item)">
-											<mat-icon title="save">save</mat-icon>
-										</button>
-									</td>
-									<td style="width: 40px;" *ngIf="shopLicModificationForm.get('canEdit').value">
-										<button mat-icon-button color="warn" *ngIf="!item.isEditMode" (click)="deleteRecord('PARTNER',indx)">
-											<mat-icon title="Delete">delete</mat-icon>
-										</button>
-										<button mat-icon-button color="warn" *ngIf="item.isEditMode" (click)="cancelRecord(item)">
-											<mat-icon title="Delete">cancel</mat-icon>
-										</button>
-									</td>
+					<div style="overflow-x: scroll;" *ngIf="shopLicModificationForm.get('partnerList').controls.length">
+						<div>
+							<table class="table table-striped customDataTable">
+								<thead>
+									<tr>
+										<th colspan="2" *ngIf="shopLicModificationForm.get('canEdit').value"></th>
+										<th>#</th>
+										<th>{{'name' | translate:translateKey}}</th>
+										<th>{{'address' | translate:translateKey}}</th>
+										<th>{{'relationship' | translate:translateKey}}</th>
+										<th>{{'gender' | translate:translateKey}}</th>
+										<th>{{'age' | translate:translateKey}}</th>
+									</tr>
+								</thead>
+								<tbody formArrayName="partnerList">
+									<tr *ngFor="let item of shopLicModificationForm.get('partnerList').controls; let indx = index;" [formGroupName]="indx">
+										<td style="width: 40px;" *ngIf="shopLicModificationForm.get('canEdit').value">
+											<button mat-icon-button color="primary" *ngIf="!item.isEditMode" (click)="editRecord(item)">
+												<mat-icon title="Edit">edit</mat-icon>
+											</button>
+											<button type="submit" [disabled]="item.invalid" mat-icon-button color="primary" *ngIf="item.isEditMode" (click)="saveRecord(item)">
+												<mat-icon title="save">save</mat-icon>
+											</button>
+										</td>
+										<td style="width: 40px;" *ngIf="shopLicModificationForm.get('canEdit').value">
+											<button mat-icon-button color="warn" *ngIf="!item.isEditMode" (click)="deleteRecord('PARTNER',indx)">
+												<mat-icon title="Delete">delete</mat-icon>
+											</button>
+											<button mat-icon-button color="warn" *ngIf="item.isEditMode" (click)="cancelRecord(item)">
+												<mat-icon title="Delete">cancel</mat-icon>
+											</button>
+										</td>
 
-									<td>{{indx+1}}</td>
+										<td>{{indx+1}}</td>
 
-									<td>
-										<p *ngIf="!item.isEditMode">{{item.get('name').value}}</p>
-										<mat-form-field *ngIf="item.isEditMode">
-											<input matInput appValidationFields [validationFieldsType]="'onlyNameWithSpace'" formControlName="name" required>
-											<control-messages [control]="item.controls.name"></control-messages>
-										</mat-form-field>
-									</td>
+										<td>
+											<p *ngIf="!item.isEditMode">{{item.get('name').value}}</p>
+											<mat-form-field *ngIf="item.isEditMode">
+												<input matInput appValidationFields [validationFieldsType]="'onlyNameWithSpace'" formControlName="name">
+												<control-messages [control]="item.controls.name"></control-messages>
+											</mat-form-field>
+										</td>
 
-									<td>
-										<p *ngIf="!item.isEditMode">{{item.get('address').value}}</p>
-										<mat-form-field *ngIf="item.isEditMode">
-											<input matInput formControlName="address" required>
-											<control-messages [control]="item.controls.address"></control-messages>
-										</mat-form-field>
-									</td>
+										<td>
+											<p *ngIf="!item.isEditMode">{{item.get('address').value}}</p>
+											<mat-form-field *ngIf="item.isEditMode">
+												<input matInput formControlName="address">
+												<control-messages [control]="item.controls.address"></control-messages>
+											</mat-form-field>
+										</td>
 
-									<td>
-										<div class="ngSelect" formGroupName="relationship">
-											<p *ngIf="!item.isEditMode">{{getSelectedDataFromLookUps(SHOP_LIC_PARTNER_PERSON_RELATIONSHIP,item.get('relationship').value.code)?.name}}</p>
-											<div class="ngSelect" *ngIf="item.isEditMode">
-												<ng-select formControlName="code">
-													<ng-option *ngFor="let partner_relationship of SHOP_LIC_PARTNER_PERSON_RELATIONSHIP" [value]="partner_relationship.code">{{partner_relationship.name}}</ng-option>
-												</ng-select>
-												<control-messages [control]="item.controls.relationship.controls.code"></control-messages>
+										<td>
+											<div class="ngSelect" formGroupName="relationship">
+												<p *ngIf="!item.isEditMode">{{getSelectedDataFromLookUps(SHOP_LIC_PARTNER_PERSON_RELATIONSHIP,item.get('relationship').value.code)?.name}}</p>
+												<div class="ngSelect" *ngIf="item.isEditMode">
+													<ng-select formControlName="code">
+														<ng-option *ngFor="let partner_relationship of SHOP_LIC_PARTNER_PERSON_RELATIONSHIP" [value]="partner_relationship.code">{{partner_relationship.name}}</ng-option>
+													</ng-select>
+													<control-messages [control]="item.controls.relationship.controls.code"></control-messages>
+												</div>
 											</div>
-										</div>
-									</td>
+										</td>
 
-									<td>
-										<div class="ngSelect" formGroupName="gender">
-											<p *ngIf="!item.isEditMode">{{getSelectedDataFromLookUps(gender,item.get('gender').value.code)?.name}}</p>
-											<div class="ngSelect" *ngIf="item.isEditMode">
-												<ng-select formControlName="code">
-													<ng-option *ngFor="let gender of gender" [value]="gender.code">{{gender.name}}</ng-option>
-												</ng-select>
-												<control-messages [control]="item.controls.gender.controls.code"></control-messages>
+										<td>
+											<div class="ngSelect" formGroupName="gender">
+												<p *ngIf="!item.isEditMode">{{getSelectedDataFromLookUps(gender,item.get('gender').value.code)?.name}}</p>
+												<div class="ngSelect" *ngIf="item.isEditMode">
+													<ng-select formControlName="code">
+														<ng-option *ngFor="let gender of gender" [value]="gender.code">{{gender.name}}</ng-option>
+													</ng-select>
+													<control-messages [control]="item.controls.gender.controls.code"></control-messages>
+												</div>
 											</div>
-										</div>
-									</td>
+										</td>
 
-									<td>
-										<p *ngIf="!item.isEditMode">{{item.get('age').value}}</p>
-										<mat-form-field *ngIf="item.isEditMode">
-											<input matInput maxlength="2" OnlyNumber formControlName="age" required>
-											<control-messages [control]="item.controls.age"></control-messages>
-										</mat-form-field>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
+										<td>
+											<p *ngIf="!item.isEditMode">{{item.get('age').value}}</p>
+											<mat-form-field *ngIf="item.isEditMode">
+												<input matInput maxlength="2" OnlyNumber formControlName="age">
+												<control-messages [control]="item.controls.age"></control-messages>
+											</mat-form-field>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
 
-					<div>
-						<div class="row">
-							<div class="col-md-4">{{'total_adult_person' | translate:translateKey}}</div>
-							<div class="col-md-2">{{calulateNumberOfPerson('partnerList','totalAdultPartner','adult')}}</div>
-							<div class="col-md-4">{{'total_young_person' | translate:translateKey}}</div>
-							<div class="col-md-2">{{calulateNumberOfPerson('partnerList','totalYoungPartner','young')}}</div>
-						</div>
-						<div class="row">
-							<div class="col-md-4">{{'total_men' | translate:translateKey}}</div>
-							<div class="col-md-2">{{calulateNumberOfPerson('partnerList','totalManPartner','men')}}</div>
-							<div class="col-md-4">{{'total_women' | translate:translateKey}}</div>
-							<div class="col-md-2">{{calulateNumberOfPerson('partnerList','totalWomenEmployerFamily','women')}}</div>
-						</div>
-						<div class="row">
-							<div class="col-md-8">{{'total_unidentified_person' | translate:translateKey}}</div>
-							<div class="col-md-4">{{calulateNumberOfPerson('partnerList','totalUnidentifiedPartner','unidentified')}}</div>
-						</div>
-						<div class="row">
-							<div class="col-md-8">{{'total_person' | translate:translateKey}}</div>
-							<div class="col-md-4">{{calulateNumberOfPerson('partnerList','totalPartner','total')}}</div>
+						<div>
+							<div class="row">
+								<div class="col-md-4">{{'total_adult_person' | translate:translateKey}}</div>
+								<div class="col-md-2">{{calulateNumberOfPerson('partnerList','totalAdultPartner','adult')}}</div>
+								<div class="col-md-4">{{'total_young_person' | translate:translateKey}}</div>
+								<div class="col-md-2">{{calulateNumberOfPerson('partnerList','totalYoungPartner','young')}}</div>
+							</div>
+							<div class="row">
+								<div class="col-md-4">{{'total_men' | translate:translateKey}}</div>
+								<div class="col-md-2">{{calulateNumberOfPerson('partnerList','totalManPartner','men')}}</div>
+								<div class="col-md-4">{{'total_women' | translate:translateKey}}</div>
+								<div class="col-md-2">{{calulateNumberOfPerson('partnerList','totalWomenEmployerFamily','women')}}</div>
+							</div>
+							<div class="row">
+								<div class="col-md-8">{{'total_unidentified_person' | translate:translateKey}}</div>
+								<div class="col-md-4">{{calulateNumberOfPerson('partnerList','totalUnidentifiedPartner','unidentified')}}</div>
+							</div>
+							<div class="row">
+								<div class="col-md-8">{{'total_person' | translate:translateKey}}</div>
+								<div class="col-md-4">{{calulateNumberOfPerson('partnerList','totalPartner','total')}}</div>
+							</div>
 						</div>
 					</div>
 				</div>
 
-				<app-action-bar [uploadFiles]="uploadFileArray" [form]="shopLicModificationForm" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step5', next: 5, back: 3}"></app-action-bar>
+				<app-action-bar [form]="shopLicModificationForm" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step5', next: 5, back: 3}"></app-action-bar>
 			</mat-tab>
 			<!-- step 5 partner list Ends -->
 
@@ -704,209 +709,352 @@
 			<!-- step Attachment Starts -->
 			<mat-tab>
 				<ng-template mat-tab-label>
-					<div>{{'owner_attachment' | translate: translateKey}}</div>
+					<div>{{'attachment' | translate: translateKey}}</div>
 				</ng-template>
-				<div class="row">
+				<div>
+					<h2>{{'category_wise_attachment' | translate: translateKey}}</h2>
+					<!-- SHOP_LIC_SELF_OWNERSHIP -->
+					<div class="row" *ngIf="shopLicModificationForm.get('typeOfOrganisation').controls.code.value === 'SHOP_LIC_SELF_OWNERSHIP'">
+						<h2>{{'owner_checklist' | translate: translateKey}}</h2>
 
-					<div class="col-md-4">
-						<div *ngIf="showButtons">
-							<label>{{'E_with_sign' | translate: translateKey}}*</label>
-							<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(1,'EWithSign','1.1','doc')"></file-upload>
-						</div>
-					</div>
-
-					<div class="col-md-4">
-						<div *ngIf="showButtons">
-							<label>{{'hami_patra_A_and_B' | translate: translateKey}}*</label>
-							<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(2,'HamiPatraAandB','1.2','doc')"></file-upload>
-						</div>
-					</div>
-
-					<div class="col-md-4">
-						<div *ngIf="showButtons">
-							<label>{{'establishment_photo' | translate: translateKey}}*</label>
-							<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(3,'EstablishmentPhoto','1.3','doc')"></file-upload>
-						</div>
-					</div>
-
-
-					<div class="col-md-4">
-						<div *ngIf="showButtons">
-							<label>{{'partnership_firm_copy' | translate: translateKey}}*</label>
-							<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(4,'APartnershipFirmCopy','1.4','doc')"></file-upload>
-						</div>
-					</div>
-
-					<div class="col-md-4">
-						<div *ngIf="showButtons">
-							<label>{{'company_name_certi' | translate: translateKey}}*</label>
-							<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(5,'BCompanyNameCertificate','1.5','doc')"></file-upload>
-						</div>
-					</div>
-
-					<div class="col-md-4">
-						<div *ngIf="showButtons">
-							<label>{{'directors_DIR_12' | translate: translateKey}}*</label>
-							<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(6,'CDirectors','1.6','doc')"></file-upload>
-						</div>
-					</div>
-					<div class="col-md-4">
-						<div *ngIf="showButtons">
-							<label>{{'sign_authority_letter' | translate: translateKey}}*</label>
-							<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(7,'SignAuthority','1.7','doc')"></file-upload>
-						</div>
-					</div>
-					<div class="col-md-4">
-						<div *ngIf="showButtons">
-							<label>{{'one_resolution_director_nominated' | translate: translateKey}}*</label>
-							<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(8,'DirectorNominatedResolution','1.8','doc')"></file-upload>
-						</div>
-					</div>
-
-					<div class="col-md-4">
-						<div *ngIf="showButtons">
-							<label>{{'rental_agreement' | translate: translateKey}}*</label>
-							<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(9,'OrganizationRentalAgreement','1.9','doc')"></file-upload>
-						</div>
-					</div>
-
-					<div class="col-md-4">
-						<div *ngIf="showButtons">
-							<label>{{'address_change' | translate: translateKey}}*</label>
-							<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(10,'AddressProof','2.1','doc')"></file-upload>
-						</div>
-					</div>
-
-					<div class="col-md-4">
-						<div *ngIf="showButtons">
-							<label>{{'electricity_bill' | translate: translateKey}}*</label>
-							<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(11,'ElectricityBill','2.2','doc')"></file-upload>
-						</div>
-					</div>
-
-					<div class="col-md-4">
-						<div *ngIf="showButtons">
-							<label>{{'rent_receipt' | translate: translateKey}}*</label>
-							<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(12,'RentReceipt','2.3','doc')"></file-upload>
-						</div>
-					</div>
-
-					<div class="col-md-4">
-						<div *ngIf="showButtons">
-							<label>{{'maintenance_receipt' | translate: translateKey}}*</label>
-							<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(13,'MaintenanceReceipt','2.4','doc')"></file-upload>
-						</div>
-					</div>
-
-					<div class="col-md-4">
-						<div *ngIf="showButtons">
-							<label>{{'aadhar_card' | translate: translateKey}}*</label>
-							<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(14,'AAdharCard','2.5','doc')"></file-upload>
-						</div>
-					</div>
-
-					<div class="col-md-4">
-						<div *ngIf="showButtons">
-							<label>{{'PAN_card' | translate: translateKey}}*</label>
-							<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(15,'PANCard','2.6','doc')"></file-upload>
-						</div>
-					</div>
-
-					<div class="col-md-4">
-						<div *ngIf="showButtons">
-							<label>{{'employer_death_certi_NOC' | translate: translateKey}}*</label>
-							<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(16,'EmployerChangeOrDeath','2.7','doc')"></file-upload>
-						</div>
-					</div>
-					<div class="col-md-4">
-						<div *ngIf="showButtons">
-							<label>{{'sanstha_or_trust_or_society_act' | translate: translateKey}}*</label>
-							<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(17,'SansthaOrTrustOrSocietyAct','2.8','doc')"></file-upload>
-						</div>
-					</div>
-
-					<div class="col-md-4">
-						<div *ngIf="showButtons">
-							<label>{{'sale_purchase_deed' | translate: translateKey}}*</label>
-							<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(18,'SalePurchaseDeed','2.9','doc')"></file-upload>
-						</div>
-					</div>
-
-					<div class="col-md-4">
-						<div *ngIf="showButtons">
-							<label>{{'agreement_copy' | translate: translateKey}}*</label>
-							<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(19,'AgreementCopy','3.1','doc')"></file-upload>
-						</div>
-					</div>
-
-					<div class="col-md-4">
-						<div *ngIf="showButtons">
-							<label>{{'worker_profe_tax_receipt' | translate: translateKey}}*</label>
-							<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(20,'WorkerProfessionalTaxReceipt','3.2','doc')"></file-upload>
-						</div>
-					</div>
-
-					<div class="col-md-4">
-						<div *ngIf="showButtons">
-							<label>{{'labor_welfare_fund' | translate: translateKey}}*</label>
-							<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(21,'GujaratLaborWelfareFundReceipt','3.3','doc')"></file-upload>
-						</div>
-					</div>
-
-
-					<div class="col-md-4">
-						<div *ngIf="showButtons">
-							<label>{{'partnership_deed_copy' | translate: translateKey}}*</label>
-							<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(22,'IfPartnershipCopy','3.4','doc')"></file-upload>
-						</div>
-					</div>
-
-					<div class="col-md-4">
-						<div *ngIf="showButtons">
-							<label>{{'commercial_basis_concept' | translate: translateKey}}*</label>
-							<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(23,'CommercialBasisInTheConcept','3.5','doc')"></file-upload>
-						</div>
-					</div>
-
-					<div class="col-md-4">
-						<div *ngIf="showButtons">
-							<label>{{'prescribed_certificate' | translate: translateKey}}*</label>
-							<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(24,'PrescribedCertificate','3.6','doc')"></file-upload>
-						</div>
-					</div>
-
-					<div class="col-md-4">
-						<div *ngIf="showButtons">
-							<label>{{'managers_appointment_letter' | translate: translateKey}}*</label>
-							<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(25,'ManagersOrderCopy','3.7','doc')"></file-upload>
-						</div>
-					</div>
-
-					<!-- 						
 						<div class="col-md-4">
 							<div *ngIf="showButtons">
-								<label>{{'prof_tax_PEC_receipt' | translate: translateKey}}*</label>
-								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(1,'ProfessionalTaxPECNoReceipt','1.1','doc')"></file-upload>
+								<label>{{'photo_of_License_Holder' | translate: translateKey}} *</label>
+								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(1,'PhotoofLicenseHolder','1.1','doc')"></file-upload>
 							</div>
 						</div>
 
 						<div class="col-md-4">
 							<div *ngIf="showButtons">
-								<label>{{'prof_tax_PRC_receipt' | translate: translateKey}}*</label>
-								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(2,'ProfessionalTaxPRCNoReceipt','1.2','doc')"></file-upload>
+								<label>{{'org_ownership_att' | translate: translateKey}} *</label>
+								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(2,'OrganizationalOwnershipAgreementCopy','1.2','doc')"></file-upload>
+							</div>
+						</div>
+						<div class="col-md-4 ">
+							<div *ngIf="showButtons ">
+								<label>{{'pro_tax_current_att' | translate: translateKey}} *</label>
+								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(3,'PropertyTaxCurrentYearReceiptOfOrganization', '1.3', 'doc') "></file-upload>
 							</div>
 						</div>
 
+						<div class="col-md-4 ">
+							<div *ngIf="showButtons ">
+								<label>{{'business_tax_current_att' | translate: translateKey}} *</label>
+								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(4, 'OrganizationBusinessTaxCurrentYearReceipt', '1.4', 'doc') "></file-upload>
+							</div>
+						</div>
+
+						<div class="col-md-4 ">
+							<div *ngIf="showButtons ">
+								<label>{{'workers_professional_tax_att' | translate: translateKey}} *</label>
+								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(5,'WorkersProfessionalTaxReceipt', '1.5','doc') "></file-upload>
+							</div>
+						</div>
+
+						<div class="col-md-4 ">
+							<div *ngIf="showButtons ">
+								<label>{{'partnership_deed_att' | translate: translateKey}} *</label>
+								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(6,'PartnershipDeedCopyOfPartnerIfThereIsAPartner', '1.6', 'doc') "></file-upload>
+							</div>
+						</div>
+
+						<div class="col-md-4 ">
+							<div *ngIf="showButtons ">
+								<label>{{'guj_labor_welfarefund_att' | translate: translateKey}} *</label>
+								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(7, 'OwnerMoreWorkers', '1.7', 'doc') "></file-upload>
+							</div>
+						</div>
+
+						<div class="col-md-4 ">
+							<div *ngIf="showButtons ">
+								<label>{{'aadhar_no' | translate: translateKey}}</label>
+								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(8, 'AdharCardOwner', '1.8', 'doc') "></file-upload>
+							</div>
+						</div>
+
+						<div class="col-md-4 ">
+							<div *ngIf="showButtons ">
+								<label>{{'election_or_voters_ID' | translate: translateKey}}</label>
+								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(9, 'ElectionVotersID', '1.9', 'doc') "></file-upload>
+							</div>
+						</div>
+
+						<div class="col-md-4 ">
+							<div *ngIf="showButtons ">
+								<label>{{'PAN_card' | translate: translateKey}}</label>
+								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(10, 'PANCardTenant', '2', 'doc') "></file-upload>
+							</div>
+						</div>
+
+					</div>
+
+					<!-- SHOP_LIC_PARTNERSHIP and SHOP_LIC_CO_OPERATIVE_SOCIETY -->
+					<div class="row" *ngIf="shopLicModificationForm.get('typeOfOrganisation').controls.code.value === 'SHOP_LIC_PARTNERSHIP' || shopLicModificationForm.get('typeOfOrganisation').controls.code.value === 'SHOP_LIC_CO_OPERATIVE_SOCIETY' ">
+						<h2>{{'partnership_and_coopsoc_checklist' | translate: translateKey}}</h2>
+
+						<div class="col-md-4">
+							<div *ngIf="showButtons ">
+								<label>{{'org_tenant_att' | translate: translateKey}} *</label>
+								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(12,'OrganizationRentalAgreement', '2.2','doc') "></file-upload>
+							</div>
+						</div>
 						<div class="col-md-4">
 							<div *ngIf="showButtons">
-								<label>{{'property_tax_or_water_tax_paid_receipt' | translate: translateKey}}*</label>
-								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(3,'Property Tax / Water Tax paid Receipt','1.3','doc')"></file-upload>
+								<label>{{'sale_or_purchase_deed_att' | translate: translateKey}} *</label>
+								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(13, 'SaleOrPurchaseDeed', '2.3', 'doc') "></file-upload>
 							</div>
-						</div> -->
+						</div>
 
+						<div class="col-md-4 ">
+							<div *ngIf="showButtons ">
+								<label>{{'prescribed_certificate' | translate: translateKey}} *</label>
+								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(14, 'Prescribedcertificate', '2.4', 'doc') "></file-upload>
+							</div>
+						</div>
+						<div class="col-md-4 ">
+							<div *ngIf="showButtons ">
+								<label>{{'pro_tax_current_att' | translate: translateKey}} *</label>
+								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(3,'PropertyTaxCurrentYearReceiptOfOrganization', '1.3', 'doc') "></file-upload>
+							</div>
+						</div>
+
+						<div class="col-md-4 ">
+							<div *ngIf="showButtons ">
+								<label>{{'business_tax_current_att' | translate: translateKey}} *</label>
+								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(4, 'OrganizationBusinessTaxCurrentYearReceipt', '1.4', 'doc') "></file-upload>
+							</div>
+						</div>
+
+						<div class="col-md-4 ">
+							<div *ngIf="showButtons ">
+								<label>{{'workers_professional_tax_att' | translate: translateKey}} *</label>
+								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(5,'WorkersProfessionalTaxReceipt', '1.5','doc') "></file-upload>
+							</div>
+						</div>
+
+						<div class="col-md-4 ">
+							<div *ngIf="showButtons ">
+								<label>{{'partnership_deed_att' | translate: translateKey}} *</label>
+								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(6,'PartnershipDeedCopyOfPartnerIfThereIsAPartner', '1.6', 'doc') "></file-upload>
+							</div>
+						</div>
+
+						<div class="col-md-4 ">
+							<div *ngIf="showButtons ">
+								<label>{{'guj_labor_welfarefund_att' | translate: translateKey}} *</label>
+								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(7, 'OwnerMoreWorkers', '1.7', 'doc') "></file-upload>
+							</div>
+						</div>
+
+						<div class="col-md-4 ">
+							<div *ngIf="showButtons ">
+								<label>{{'aadhar_no' | translate: translateKey}}</label>
+								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(8, 'AdharCardOwner', '1.8', 'doc') "></file-upload>
+							</div>
+						</div>
+
+						<div class="col-md-4 ">
+							<div *ngIf="showButtons ">
+								<label>{{'election_or_voters_ID' | translate: translateKey}}</label>
+								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(9, 'ElectionVotersID', '1.9', 'doc') "></file-upload>
+							</div>
+						</div>
+
+						<div class="col-md-4 ">
+							<div *ngIf="showButtons ">
+								<label>{{'PAN_card' | translate: translateKey}}</label>
+								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(10, 'PANCardTenant', '2', 'doc') "></file-upload>
+							</div>
+						</div>
+
+					</div>
+
+					<!-- SHOP_LIC_COMPANY -->
+					<div class="row" *ngIf="shopLicModificationForm.get('typeOfOrganisation').controls.code.value ==='SHOP_LIC_COMPANY'">
+						<h2>{{'company_checklist' | translate: translateKey}}</h2>
+						<div class="col-md-4">
+							<div *ngIf="showButtons ">
+								<label>{{'org_tenant_att' | translate: translateKey}} *</label>
+								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(12, 'OrganizationRentalAgreement', '2.2','doc') "></file-upload>
+							</div>
+						</div>
+						<div class="col-md-4 ">
+							<div *ngIf="showButtons ">
+								<label>{{'list_directors_nomination_directors' | translate: translateKey}} *</label>
+								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(16, 'ListOfDirectors', '2.6', 'doc') "></file-upload>
+							</div>
+						</div>
+						<div class="col-md-4 ">
+							<div *ngIf="showButtons ">
+								<label>{{'sale_or_purchase_deed_att' | translate: translateKey}} *</label>
+								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(13, 'SaleOrPurchaseDeed', '2.3', 'doc') "></file-upload>
+							</div>
+						</div>
+						<div class="col-md-4 ">
+							<div *ngIf="showButtons ">
+								<label>{{'prescribed_certificate' | translate: translateKey}} *</label>
+								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(14, 'Prescribedcertificate', '2.4', 'doc') "></file-upload>
+							</div>
+						</div>
+						<div class="col-md-4 ">
+							<div *ngIf="showButtons ">
+								<label>{{'Upload Deed pages which have name of partners' | translate: translateKey}} *</label>
+								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(19, 'DeedPagesPartners', '2.9', 'doc') "></file-upload>
+							</div>
+						</div>
+						<!-- Partnership Deed (Upload Deed pages which have name of partners, signature of partners,Business / Company Name, percentage of partnership ) -->
+						<div class="col-md-4 ">
+							<div *ngIf="showButtons ">
+								<label>{{'pro_tax_current_att' | translate: translateKey}} *</label>
+								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(3,'PropertyTaxCurrentYearReceiptOfOrganization', '1.3', 'doc') "></file-upload>
+							</div>
+						</div>
+
+						<div class="col-md-4 ">
+							<div *ngIf="showButtons ">
+								<label>{{'business_tax_current_att' | translate: translateKey}} *</label>
+								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(4, 'OrganizationBusinessTaxCurrentYearReceipt', '1.4', 'doc') "></file-upload>
+							</div>
+						</div>
+
+						<div class="col-md-4 ">
+							<div *ngIf="showButtons ">
+								<label>{{'workers_professional_tax_att' | translate: translateKey}} *</label>
+								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(5,'WorkersProfessionalTaxReceipt', '1.5','doc') "></file-upload>
+							</div>
+						</div>
+
+						<div class="col-md-4 ">
+							<div *ngIf="showButtons ">
+								<label>{{'partnership_deed_att' | translate: translateKey}} *</label>
+								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(6,'PartnershipDeedCopyOfPartnerIfThereIsAPartner', '1.6', 'doc') "></file-upload>
+							</div>
+						</div>
+
+						<div class="col-md-4 ">
+							<div *ngIf="showButtons ">
+								<label>{{'guj_labor_welfarefund_att' | translate: translateKey}} *</label>
+								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(7, 'OwnerMoreWorkers', '1.7', 'doc') "></file-upload>
+							</div>
+						</div>
+
+						<div class="col-md-4 ">
+							<div *ngIf="showButtons ">
+								<label>{{'aadhar_no' | translate: translateKey}}</label>
+								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(8, 'AdharCardOwner', '1.8', 'doc') "></file-upload>
+							</div>
+						</div>
+
+						<div class="col-md-4 ">
+							<div *ngIf="showButtons ">
+								<label>{{'election_or_voters_ID' | translate: translateKey}}</label>
+								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(9, 'ElectionVotersID', '1.9', 'doc') "></file-upload>
+							</div>
+						</div>
+
+						<div class="col-md-4 ">
+							<div *ngIf="showButtons ">
+								<label>{{'PAN_card' | translate: translateKey}}</label>
+								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(10, 'PANCardTenant', '2', 'doc') "></file-upload>
+							</div>
+						</div>
+
+					</div>
+
+					<!-- SHOP_LIC_TRUST and SHOP_LIC_BOARD-->
+					<div class="row" *ngIf="shopLicModificationForm.get( 'typeOfOrganisation').controls.code.value ==='SHOP_LIC_TRUST' || shopLicModificationForm.get( 'typeOfOrganisation').controls.code.value==='SHOP_LIC_BOARD' ">
+						<h2>{{'trust_and_board_checklist' | translate: translateKey}}</h2>
+						<div class="col-md-4">
+							<div *ngIf="showButtons ">
+								<label>{{'list_trustees_trust_member' | translate: translateKey}} *</label>
+								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(15, 'TrusteesMember', '2.5', 'doc') "></file-upload>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div *ngIf="showButtons ">
+								<label>{{'list_chairman_and_member_of_co_op_soc' | translate: translateKey}} *</label>
+								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(17, 'ChairmanMember', '2.7', 'doc') "></file-upload>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div *ngIf="showButtons ">
+								<label>{{'registered_address_proof' | translate: translateKey}} *</label>
+								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(18, 'RegiAddressProof', '2.8', 'doc') "></file-upload>
+							</div>
+						</div>
+						<div class="col-md-4 ">
+							<div *ngIf="showButtons ">
+								<label>{{'prescribed_certificate' | translate: translateKey}} *</label>
+								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(14, 'Prescribedcertificate', '2.4', 'doc') "></file-upload>
+							</div>
+						</div>
+						<div class="col-md-4 ">
+							<div *ngIf="showButtons ">
+								<label>{{'Upload Deed pages which have name of partners' | translate: translateKey}} *</label>
+								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(19, 'DeedPagesPartners', '2.9', 'doc') "></file-upload>
+							</div>
+						</div>
+						<div class="col-md-4 ">
+							<div *ngIf="showButtons ">
+								<label>{{'pro_tax_current_att' | translate: translateKey}} *</label>
+								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(3,'PropertyTaxCurrentYearReceiptOfOrganization', '1.3', 'doc') "></file-upload>
+							</div>
+						</div>
+
+						<div class="col-md-4 ">
+							<div *ngIf="showButtons ">
+								<label>{{'business_tax_current_att' | translate: translateKey}} *</label>
+								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(4, 'OrganizationBusinessTaxCurrentYearReceipt', '1.4', 'doc') "></file-upload>
+							</div>
+						</div>
+
+						<div class="col-md-4 ">
+							<div *ngIf="showButtons ">
+								<label>{{'workers_professional_tax_att' | translate: translateKey}} *</label>
+								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(5,'WorkersProfessionalTaxReceipt', '1.5','doc') "></file-upload>
+							</div>
+						</div>
+
+						<div class="col-md-4 ">
+							<div *ngIf="showButtons ">
+								<label>{{'partnership_deed_att' | translate: translateKey}} *</label>
+								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(6,'PartnershipDeedCopyOfPartnerIfThereIsAPartner', '1.6', 'doc') "></file-upload>
+							</div>
+						</div>
+
+						<div class="col-md-4 ">
+							<div *ngIf="showButtons ">
+								<label>{{'guj_labor_welfarefund_att' | translate: translateKey}} *</label>
+								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(7, 'OwnerMoreWorkers', '1.7', 'doc') "></file-upload>
+							</div>
+						</div>
+
+						<div class="col-md-4 ">
+							<div *ngIf="showButtons ">
+								<label>{{'aadhar_no' | translate: translateKey}}</label>
+								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(8, 'AdharCardOwner', '1.8', 'doc') "></file-upload>
+							</div>
+						</div>
+
+						<div class="col-md-4 ">
+							<div *ngIf="showButtons ">
+								<label>{{'election_or_voters_ID' | translate: translateKey}}</label>
+								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(9, 'ElectionVotersID', '1.9', 'doc') "></file-upload>
+							</div>
+						</div>
+
+						<div class="col-md-4 ">
+							<div *ngIf="showButtons ">
+								<label>{{'PAN_card' | translate: translateKey}}</label>
+								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(10, 'PANCardTenant', '2', 'doc') "></file-upload>
+							</div>
+						</div>
+
+					</div>
 				</div>
-				<app-action-bar [uploadFiles]="uploadFileArray" [form]="shopLicModificationForm" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'final', next: 7, back: 5}"
-				 (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
+
+				<app-action-bar [uploadFiles]="uploadFileArray | filterAttachment:shopLicModificationForm.get( 'typeOfOrganisation').value.code"
+				 [form]="shopLicModificationForm" (handleErrors)="handleErrorsOnSubmit($event) " (tabIndex)="onTabChange($event) " [stepInfo]="{step: 'final', next:8, back: 6} "></app-action-bar>
 
 			</mat-tab>
 			<!-- step Attachment Ends -->

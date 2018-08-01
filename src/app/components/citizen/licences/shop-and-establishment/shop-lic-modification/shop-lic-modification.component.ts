@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MatHorizontalStepper, MatStepLabel } from '@angular/material';
 import { ManageRoutes } from './../../../../../config/routes-conf';
 
 import { ValidationService } from '../../../../../shared/services/validation.service';
@@ -20,8 +19,6 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class ShopLicModificationComponent implements OnInit {
 
-	@ViewChild(MatHorizontalStepper) stepper: MatHorizontalStepper;
-	@ViewChild(MatStepLabel) steplable: MatStepLabel;
 	@ViewChild('postalAddressEstablishment') postalAddressEstablishment: any;
 
 	shopLicModificationForm: FormGroup;
@@ -46,42 +43,40 @@ export class ShopLicModificationComponent implements OnInit {
 	wardNo: Array<any> = [];
 	SHOP_LIC_HOLIDAY: Array<any> = [];
 
-
 	// required attachment array
 	private uploadFileArray: Array<any> =
 		[
-			{ lableName: 'Upload For "E" with Sign', fieldIdentifier: '1' },
-			{ lableName: 'Hami patra "A" & "B"', fieldIdentifier: '2' },
-			{ lableName: 'Name of Establishment Upload photo of Board or Place of Establishment', fieldIdentifier: '3' },
-			{ lableName: 'A In case of change in partnership firm copy of partnership deed receipt', fieldIdentifier: '4' },
-			{ lableName: 'B In case of change in company name Certificate of Incorporation', fieldIdentifier: '5' },
+			{ labelName: 'Upload photo of License Holder (2MB Only)', fieldIdentifier: '1', category: 'SHOP_LIC_SELF_OWNERSHIP' },
+			{ labelName: 'Organizational ownership agreement copy', fieldIdentifier: '2', category: 'SHOP_LIC_SELF_OWNERSHIP' },
 
-			{ lableName: 'C Incase of change of Directors (DIR-12)', fieldIdentifier: '6' },
-			{ lableName: 'Authority letter in case of sign authority', fieldIdentifier: '7' },
-			{ lableName: 'copy of resolution in one of director nominated 	', fieldIdentifier: '8' },
-			{ lableName: 'Organization Rental Agreement', fieldIdentifier: '9' },
-			{ lableName: 'Address Change', fieldIdentifier: '10' },
+			{ labelName: 'Organization Rental Agreement', fieldIdentifier: '12', category: "SHOP_LIC_PARTNERSHIP" },
+			{ labelName: 'Sale / Purchase Deed', fieldIdentifier: '13', category: "SHOP_LIC_PARTNERSHIP" },
+			{ labelName: 'Prescribed certificate', fieldIdentifier: '14', category: "SHOP_LIC_PARTNERSHIP" },
+			{ labelName: 'Partnership Deed Copy Of Partner If There Is A Partner', fieldIdentifier: '6', category: "SHOP_LIC_PARTNERSHIP" },
 
-			{ lableName: 'Electricity bill', fieldIdentifier: '11' },
-			{ lableName: 'Rent Receipt', fieldIdentifier: '12' },
-			{ lableName: 'Maintenance Receipt', fieldIdentifier: '13' },
-			{ labelName: 'aadhar_number', fieldIdentifier: '14' },
-			{ labelName: 'PAN_card', fieldIdentifier: '15' },
-			{ lableName: 'In Case of Change of employer or death of employer death certificate of employer. NOC form family member in case of new employer', fieldIdentifier: '16' },
-			{ labelName: 'In case of sanstha trust society copy of register under the sanstha/trust/society Act before appropriate authority', fieldIdentifier: '17' },
-			{ labelName: 'sale purchase deed', fieldIdentifier: '18' },
-			{ labelName: 'Agreement copy', fieldIdentifier: '19' },
-			{ labelName: 'worker professional tax receipt', fieldIdentifier: '20' },
-			{ labelName: 'If there are more then 10 or more workers Receipt of Gujarat Labor welfare fund', fieldIdentifier: '21' },
+			{ labelName: 'Organization Rental Agreement', fieldIdentifier: '12', category: "SHOP_LIC_COMPANY" },
+			{ labelName: 'List of Directors and Nomination of Directors (Resolution)', fieldIdentifier: '16', category: "SHOP_LIC_COMPANY" },
+			{ labelName: 'Sale / Purchase Deed', fieldIdentifier: '13', category: "SHOP_LIC_COMPANY" },
+			{ labelName: 'Partnership Deed Copy Of Partner If There Is A Partner', fieldIdentifier: '6', category: "SHOP_LIC_COMPANY" },
+			{ labelName: 'Prescribed certificate', fieldIdentifier: '14', category: "SHOP_LIC_COMPANY" },
+			{ labelName: 'Partnership Deed (Upload Deed pages which have name of partners, signature of partners,Business / Company Name, percentage of partnership )', fieldIdentifier: '19', category: "SHOP_LIC_COMPANY" },
 
-			{ labelName: 'partnership deed copy of partner if there is a partner', fieldIdentifier: '22' },
-			{ labelName: 'commercial basis in the concept', fieldIdentifier: '23' },
-			{ labelName: 'prescribed certificate', fieldIdentifier: '24' },
-			{ labelName: 'Managers Order copy of appointment Letter', fieldIdentifier: '25' },
+			{ labelName: 'List of the Trustees/Member of Trust', fieldIdentifier: '15', category: "SHOP_LIC_TRUST" },
+			{ labelName: 'List of the Chairman and Member of co-operative society', fieldIdentifier: '17', category: "SHOP_LIC_TRUST" },
+			{ labelName: 'Registered Address and proof thereof', fieldIdentifier: '18', category: "SHOP_LIC_TRUST" },
+			{ labelName: 'Partnership Deed Copy Of Partner If There Is A Partner', fieldIdentifier: '6', category: "SHOP_LIC_TRUST" },
+			{ labelName: 'Prescribed certificate', fieldIdentifier: '14', category: "SHOP_LIC_TRUST" },
+			{ labelName: 'Partnership Deed (Upload Deed pages which have name of partners, signature of partners,Business / Company Name, percentage of partnership )', fieldIdentifier: '19', category: "SHOP_LIC_TRUST" },
 
-			// { labelName: 'Professional Tax PEC No Receipt', fieldIdentifier: '1' },
-			// { labelName: 'Professional Tax PRC No Receipt', fieldIdentifier: '2' },
-			// { labelName: 'Property Tax / Water Tax paid Receipt', fieldIdentifier: '3' },
+			{ labelName: 'Property Tax Current Year Receipt Of Organization', fieldIdentifier: '3', category: 'common' },
+			{ labelName: 'Organization Business Tax Current Year Receipt', fieldIdentifier: '4', category: 'common' },
+			{ labelName: 'Workers Professional Tax Receipt', fieldIdentifier: '5', category: "common" },
+			// { labelName: 'Partnership Deed Copy Of Partner If There Is A Partner', fieldIdentifier: '6', required: false, category: "common" },
+			{ labelName: 'If there are more then 10 or more workers,  Receipt of Gujarat Labor welfare fund Commercial basis in the concept', fieldIdentifier: '7', category: "common" },
+			// { labelName: 'Aadhar Card No', fieldIdentifier: '8', required: false, category: "common" },
+			// { labelName: 'Election/ Voters ID', fieldIdentifier: '9', required: false, category: "common" },
+			// { labelName: 'PAN Card No', fieldIdentifier: '10', required: false, category: "common" },
+
 
 		];
 
@@ -272,12 +267,11 @@ export class ShopLicModificationComponent implements OnInit {
 	*/
 	onChangeTypeOfOrganization(event) {
 		try {
-			if (event === "SHOP_LIC_SELF_OWNERSHIP") {
+			(<FormArray>this.shopLicModificationForm.get('partnerList')).controls = [];
+			this.shopLicModificationForm.get('attachments').setValue([]);
+			if (event == "SHOP_LIC_SELF_OWNERSHIP") {
 				// remove all controll becose if dropdown value is "SHOP_LIC_SELF_OWNERSHIP" then user add only one record.
-				(<FormArray>this.shopLicModificationForm.get('partnerList')).controls = [];
 				this.addMorePerson('PARTNER');
-			} else {
-				(<FormArray>this.shopLicModificationForm.get('partnerList')).controls = [];
 			}
 		} catch (error) {
 			console.log(error.message)
@@ -325,11 +319,10 @@ export class ShopLicModificationComponent implements OnInit {
 	shopLicModificationFormControls() {
 		this.shopLicModificationForm = this.fb.group({
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
-			serviceCode: 'SHOP-REN',
-
+			serviceCode: 'SHOP-LIC',
 			/* Step 1 controls start */
-			establishmentName: [null, [Validators.required, Validators.maxLength(30)]],//count=4
-			establishmentNameGuj: [null, Validators.required],
+			establishmentName: [null, [Validators.required, Validators.maxLength(150)]],//count=4
+			establishmentNameGuj: [null, [Validators.required, Validators.maxLength(450)]],
 			postalAddress: this.fb.group(this.postalAddressEstablishment.addressControls()),
 			noOfHumanWorking: this.fb.group({
 				code: [null, Validators.required],
@@ -339,7 +332,7 @@ export class ShopLicModificationComponent implements OnInit {
 				code: [null, Validators.required],
 				name: [null],
 			}),
-			propertyTaxNo: [null, [Validators.required, Validators.maxLength(15)]],
+			propertyTaxNo: [null, [Validators.required, Validators.maxLength(13), Validators.minLength(13)]],
 			wardNo: this.fb.group({
 				code: [null, Validators.required],
 				name: [null],
@@ -351,17 +344,17 @@ export class ShopLicModificationComponent implements OnInit {
 				code: [null],
 				name: [null],
 			}),
-			number: ['', Validators.maxLength(15)],
+			number: ['', Validators.maxLength(20)],
 			situationOfOffice: [null, [Validators.required, Validators.maxLength(100)]],
 			/* Step 1 controls end */
 
 			/* Step 2 controls start */
-			nameOfEmployer: [null, [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
-			nameOfEmployerGuj: [null, Validators.required],
-			residentialAddressOfEmployer: [null, [Validators.required, Validators.maxLength(100)]],
-			residentialAddressOfEmployerGuj: [null, Validators.required],
-			nameOfManager: [null, [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
-			residentialAddressOfManager: [null, [Validators.required, Validators.maxLength(100)]],
+			nameOfEmployer: [null, [Validators.required, Validators.maxLength(100)]],
+			nameOfEmployerGuj: [null, [Validators.required, Validators.maxLength(300)]],
+			residentialAddressOfEmployer: [null, [Validators.required, Validators.maxLength(500)]],
+			residentialAddressOfEmployerGuj: [null, [Validators.required, Validators.maxLength(1500)]],
+			nameOfManager: [null, [Validators.required, Validators.maxLength(60)]],
+			residentialAddressOfManager: [null, [Validators.required, Validators.maxLength(500)]],
 			categoryOfBusiness: this.fb.group({
 				code: [null, Validators.required],
 				name: [null],
@@ -370,8 +363,8 @@ export class ShopLicModificationComponent implements OnInit {
 				code: [null, Validators.required],
 				name: [null],
 			}),
-			nameOfBusiness: [null, [Validators.required, Validators.maxLength(50)]],
-			nameOfBusinessGuj: [null, Validators.required],
+			nameOfBusiness: [null, [Validators.required, Validators.maxLength(200)]],
+			nameOfBusinessGuj: [null, [Validators.required, Validators.maxLength(600)]],
 			commencementOfBusinessDate: [null, Validators.required],
 			enterHoliday: this.fb.group({
 				code: [null, Validators.required]
@@ -402,6 +395,9 @@ export class ShopLicModificationComponent implements OnInit {
 			totalUnidentifiedOccupancy: [null],
 			totalOccupancy: [null],
 
+			typeOfOrganisation: this.fb.group({
+				code: [null, Validators.required]
+			}),
 			partnerList: this.fb.array([]),
 
 			totalAdultPartner: [null],
@@ -416,13 +412,18 @@ export class ShopLicModificationComponent implements OnInit {
 			totalYoungEmployee: [null, Validators.required],
 			totalManEmployee: [null, Validators.required],
 			totalWomenEmployee: [null, Validators.required],
-			totalUnidentified: [null, Validators.required],
+			totalUnidentified: [null],
 			totalEmployee: [null, Validators.required],
 
-			typeOfOrganisation: this.fb.group({
-				code: [null, Validators.required]
-			}),
-			attachments: [],
+			// situationOfOfficeGuj: [null],
+			// nameOfManagerGuj: [null],
+			// residentialAddressOfManagerGuj: [null],
+			//enterHolidayGuj: [null],
+
+			/*  */
+			attachments: [''],
+			/*  */
+
 
 		});
 	}
@@ -463,14 +464,6 @@ export class ShopLicModificationComponent implements OnInit {
 	}
 
 	/**
-     * This method use to get output event of tab change
-     * @param evt - Tab index
-     */
-	onTabChange(evt) {
-		this.tabIndex = evt;
-	}
-
-	/**
 	 * Method is used when get business category dropdown data
 	 * @event is value is "YES" , "NO" and null
 	 */
@@ -497,26 +490,26 @@ export class ShopLicModificationComponent implements OnInit {
 	createArray(data?: any, persontype?: string) {
 
 		return this.fb.group({
-			//serviceFormId: this.formId,
+			serviceFormId: this.formId,
 			id: data.id ? data.id : null,
-			name: [data.name ? data.name : null, Validators.required],
+			name: [data.name ? data.name : null, [Validators.maxLength(100)]],
 			/* contactNo: [data.contactNo ? data.contactNo : null],
 			email: [data.email ? data.email : null],
 			aadhaarNo: [data.aadhaarNo ? data.aadhaarNo : null], */
-			address: [data.address ? data.address : null, Validators.required],
-			serviceCode: 'SHOP-REN',
+			address: [data.address ? data.address : null, [Validators.maxLength(150)]],
+			serviceCode: "SHOP-LIC",
 			relationship: this.fb.group({
-				code: [data.relationship ? (data.relationship.code ? data.relationship.code : null) : null, Validators.required]//
+				code: [data.relationship ? (data.relationship.code ? data.relationship.code : null) : null]//
 			}),
 			gender: this.fb.group({
-				code: [data.gender ? (data.gender.code ? data.gender.code : null) : null, Validators.required]
+				code: [data.gender ? (data.gender.code ? data.gender.code : null) : null]
 			}),
-			age: [data.age ? data.age : null, [Validators.required, ValidationService.employeeAgeValidate]],
+			age: [data.age ? data.age : null, [ValidationService.employeeAgeValidate]],
 			// employee: [data.employee ? data.employee : null],
 			personType: [data.personType ? data.personType : null]
 		})
-	}
 
+	}
 	/**
 	 * Method is used to add array in form
 	 * @param persontype : person array type
@@ -691,48 +684,44 @@ export class ShopLicModificationComponent implements OnInit {
 		}
 	}
 
-	 /**
+    /**
      * This method required for final form submition.
      * @param flag - flag of invalid control.
      */
 	handleErrorsOnSubmit(flag) {
 
-		let step1 = 16;
-		let step2 = 28;
-		let step3 = 35;
-		let step4 = 41;
-		let step5 = 47;
-		let step6 = 53;
-		let step7 = 62;
-		let step8 = 66;
+		let step0 = 15;
+		let step1 = 27;
+		let step2 = 35;
+		let step3 = 41;
+		let step4 = 48;
+		let step5 = 56;
+		let step6 = 60;
 
 		if (flag != null) {
 			//Check validation for step by step
 			let count = flag;
 
-			if (count <= step1) {
+			if (count <= step0) {
 				this.tabIndex = 0;
 				return false;
-			} else if (count <= step2) {
+			} else if (count <= step1) {
 				this.tabIndex = 1;
 				return false;
-			} else if (count <= step3) {
+			} else if (count <= step2) {
 				this.tabIndex = 2;
 				return false;
-			} else if (count <= step4) {
+			} else if (count <= step3) {
 				this.tabIndex = 3;
 				return false;
-			} else if (count <= step5) {
+			} else if (count <= step4) {
 				this.tabIndex = 4;
 				return false;
-			} else if (count <= step6) {
+			} else if (count <= step5) {
 				this.tabIndex = 5;
 				return false;
-			} else if (count <= step7) {
+			} else if (count <= step6) {
 				this.tabIndex = 6;
-				return false;
-			} else if (count <= step8) {
-				this.tabIndex = 7;
 				return false;
 			}
 			// else if (count == 67) {
@@ -746,7 +735,13 @@ export class ShopLicModificationComponent implements OnInit {
 		}
 	}
 
-
+	/**
+	 * This method use to get output event of tab change
+	 * @param evt - Tab index
+	 */
+	onTabChange(evt) {
+		this.tabIndex = evt;
+	}
 	/**
      * Method is used to set data value to upload method.
      * @param indentifier - file identifier
