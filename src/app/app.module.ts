@@ -17,7 +17,6 @@ import { SharedModule } from './shared/shared.module'; // shared design module
 import { CoreModule } from './core/core.module';
 import { ToastrModule } from 'ngx-toastr';
 import { AppRoutingModule } from './app-routing.module'; // route module
-import { MAT_DATE_LOCALE } from '@angular/material';
 import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material'
 import { AmazingTimePickerModule } from 'amazing-time-picker'; 
 /* Import child modules end */
@@ -65,9 +64,7 @@ import { InputTrimDirective } from './shared/directives/input-trim.directive';
 	],
 	exports: [ ],
 	providers: [
-		{ provide: LocationStrategy, useClass: HashLocationStrategy },
-		{ provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
-		
+		{ provide: LocationStrategy, useClass: HashLocationStrategy }
 	],
 	bootstrap: [AppComponent]
 })
