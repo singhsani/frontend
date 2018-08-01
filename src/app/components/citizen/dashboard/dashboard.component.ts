@@ -20,6 +20,56 @@ export class DashboardComponent implements OnInit {
 	services: any = [];
 	isRecentApp: boolean = false;
 	recentApp: any;
+	bookingsAndTicketings: any = [
+			{
+				"id": 1,
+				"uniqueId": null,
+				"version": null,
+				"code": "BOOKINGMODULE",
+				"fieldView": "ALL",
+				"fieldList": null,
+				"name": "Booking Facilities",
+				"gujName": "Booking Facilities",
+				"services": [
+					{
+						"code": "TOWNHALLLIST",
+						"fieldView": "ALL",
+						"name": "Town Hall",
+						"gujName": "ટાઉનહોલ",
+						"appointmentRequired": false,
+						"active": true
+					},
+					{
+						"code": "GUESTHOUSELIST",
+						"fieldView": "ALL",
+						"name": "Guest House",
+						"gujName": "અતિથિગૃહ",
+						"appointmentRequired": false,
+						"active": true
+					}
+				]
+			},
+			{
+				"id": 2,
+				"uniqueId": null,
+				"version": null,
+				"code": "BOOKINGMODULE",
+				"fieldView": "ALL",
+				"fieldList": null,
+				"name": "Ticketing Facilities",
+				"gujName": "Ticketing Facilities",
+				"services": [
+					{
+						"code": "ZOO",
+						"fieldView": "ALL",
+						"name": "Zoo",
+						"gujName": "પ્રાણી સંગ્રહાલય",
+						"appointmentRequired": false,
+						"active": false
+					}
+				]
+			}
+		];
 
 	/**
 	 * Constructor to declare defualt propeties of class
