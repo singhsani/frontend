@@ -28,6 +28,10 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatExpansionModule } from '@angular/material/expansion';
 
+import { MAT_DATE_FORMATS } from '@angular/material';
+import { AppDateAdapter, APP_DATE_FORMATS } from './date.adapter';
+import { DateAdapter } from '@angular/material';
+
 
 const COMPONENTS = [
 	MatButtonModule,
@@ -67,6 +71,14 @@ const COMPONENTS = [
 	exports: [
 		...COMPONENTS
 	],
+	providers: [
+		{
+			provide: DateAdapter, useClass: AppDateAdapter
+		},
+		{
+			provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS
+		}
+	]
 })
 
 export class MaterialModule { }

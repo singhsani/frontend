@@ -32,7 +32,7 @@
 
 
 		<!-- If no file uploaded and form is submitted-->
-		<label *ngIf="!canUpload && !form.get('canEdit').value">
+		<label  class="custom-file-upload" *ngIf="!canUpload && !form.get('canEdit').value">
 			<span class="badge badge-dark">No file uploaded</span>
 		</label>
 

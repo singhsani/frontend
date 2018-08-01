@@ -73,7 +73,7 @@ export class AddressComponent implements OnInit, OnChanges {
 			district: [null, [Validators.maxLength(60)]],
 			city: [null, [Validators.maxLength(60)]],
 			country: [null, [Validators.maxLength(60)]],
-			pincode: [null, [Validators.maxLength(6)]],
+			pincode: [null, [Validators.maxLength(6)]]
 
 		}
 
