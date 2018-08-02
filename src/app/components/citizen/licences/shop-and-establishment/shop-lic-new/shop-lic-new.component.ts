@@ -577,7 +577,9 @@ export class ShopLicNewComponent implements OnInit {
 	onChangeTypeOfOrganization(event) {
 
 		try {
+			// debugger;
 			(<FormArray>this.shopLicNewForm.get('partnerList')).controls = [];
+			this.shopLicNewForm.get('partnerList').setValue([]);
 			this.shopLicNewForm.get('attachments').setValue([]);
 			if (event == "SHOP_LIC_SELF_OWNERSHIP") {
 				// remove all controll becose if dropdown value is "SHOP_LIC_SELF_OWNERSHIP" then user add only one record.

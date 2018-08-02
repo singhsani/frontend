@@ -119,16 +119,16 @@ export class ShopLicCancellationComponent implements OnInit {
 			serviceCode: 'SHOP-CAN',
 
 			/* Step 1 controls start */
-			establishmentName: [null, [Validators.required, Validators.maxLength(30)]],
+			establishmentName: [null, [Validators.required, Validators.maxLength(150)]],
 			// establishmentNameGuj: [null, Validators.required],
 			wardNo: this.fb.group({
 				code: [null, [Validators.required]],
 				name: [null],
 			}),
 			postalAddress: this.fb.group(this.postalAddressEstablishment.addressControls()),
-			nameOfEmployer: [null, [Validators.required, Validators.maxLength(150)]],
+			nameOfEmployer: [null, [Validators.required, Validators.maxLength(100)]],
 			// nameOfEmployerGuj:[null],
-			propertyTaxNo: [null, [Validators.required, Validators.maxLength(15)]],
+			propertyTaxNo: [null, [Validators.required, Validators.maxLength(13), Validators.minLength(13)]],
 
 			remark: [null, [Validators.required, Validators.maxLength(100)]],
 			/* Step 1 controls end */

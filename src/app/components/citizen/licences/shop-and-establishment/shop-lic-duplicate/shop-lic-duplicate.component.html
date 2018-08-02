@@ -1,4 +1,4 @@
-<!-- <app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar> -->
+<app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
 
 <mat-card [hidden]="serachLicenceObj.isDisplayDuplicateLicenceForm" class="mt-4 formClass">
 	<mat-form-field class="col-md-10">
@@ -19,7 +19,7 @@
 
 				<div class="row">
 					<mat-form-field class="col-md-4">
-						<input matInput required maxlength="30" placeholder="{{'name_of_establishment_if_any' | translate:translateKey}}" formControlName="establishmentName">
+						<input matInput required maxlength="150" placeholder="{{'name_of_establishment_if_any' | translate:translateKey}}" formControlName="establishmentName">
 						<control-messages [control]="shopLicDuplicateForm.controls.establishmentName"></control-messages>
 					</mat-form-field>
 					<!-- appGujInputSource targetElement="establishmentNameGuj" [form]="shopLicDuplicateForm" -->
@@ -44,7 +44,7 @@
 					</div>
 
 					<mat-form-field class="col-md-4">
-						<input matInput required maxlength="150" placeholder="{{'name_of_employer' | translate:translateKey}}" formControlName="nameOfEmployer">
+						<input matInput required maxlength="100" placeholder="{{'name_of_employer' | translate:translateKey}}" formControlName="nameOfEmployer">
 						<control-messages [control]="shopLicDuplicateForm.controls.nameOfEmployer"></control-messages>
 					</mat-form-field>
 					<!-- appGujInputSource targetElement="nameOfEmployerGuj" [form]="shopLicDuplicateForm" -->
@@ -55,7 +55,7 @@
 						</mat-form-field> -->
 
 					<mat-form-field class="col-md-4">
-						<input matInput required maxlength="15" placeholder="{{'business_property_tax_no' | translate:translateKey}}" formControlName="propertyTaxNo">
+						<input matInput required maxlength="13" minlength="13" appAlphaNumeric placeholder="{{'business_property_tax_no' | translate:translateKey}}" formControlName="propertyTaxNo">
 						<control-messages [control]="shopLicDuplicateForm.controls.propertyTaxNo"></control-messages>
 					</mat-form-field>
 

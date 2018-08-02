@@ -125,16 +125,16 @@ export class ShopLicDuplicateComponent implements OnInit {
 			refNumber: this.serachLicenceObj.searchLicenceNumber,
 
 			/* Step 1 controls start */
-			establishmentName: [null, [Validators.required, Validators.maxLength(30)]],
+			establishmentName: [null, [Validators.required, Validators.maxLength(150)]],
 			// establishmentNameGuj: [null, Validators.required],
 			wardNo: this.fb.group({
 				code: [null, [Validators.required]],
 				name: [null],
 			}),
 			postalAddress: this.fb.group(this.postalAddressEstablishment.addressControls()),
-			nameOfEmployer: [null, [Validators.required, Validators.maxLength(150)]],
+			nameOfEmployer: [null, [Validators.required, Validators.maxLength(100)]],
 			// nameOfEmployerGuj:[null],
-			propertyTaxNo: [null, [Validators.required, Validators.maxLength(15)]],
+			propertyTaxNo: [null, [Validators.required, Validators.maxLength(13), Validators.minLength(13)]],
 
 			noOfCopies: [null, [Validators.required]],
 			/* Step 1 controls end */
