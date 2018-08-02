@@ -807,7 +807,7 @@
 					<div>{{'attachment' | translate: translateKey}}</div>
 				</ng-template>
 				<div>
-					<h2>{{'category_wise_attachment' | translate: translateKey}}</h2>
+					<h2 *ngIf="!shopLicNewForm.get('typeOfOrganisation').value.code">{{'category_wise_attachment' | translate: translateKey}}</h2>
 					<!-- SHOP_LIC_SELF_OWNERSHIP -->
 					<div class="row" *ngIf="shopLicNewForm.get('typeOfOrganisation').controls.code.value === 'SHOP_LIC_SELF_OWNERSHIP'">
 						<h2>{{'owner_checklist' | translate: translateKey}}</h2>
