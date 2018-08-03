@@ -21,11 +21,12 @@ table { width: 100%; }
 .myApplication {
     .mat-cell {font-size:13px; color:#000;}
     .mat-header-cell {font-size:14px; color:#000;}
+    .mat-column-id {max-width: 50px;}
     .mat-column-fileNumber {width: 200px;}
-    .mat-column-fileStatus {width: 100px; text-align: center; padding: 0 20px;}
+    .mat-column-fileStatus {width: 100px; justify-content: center; padding: 0 20px;}
     .mat-column-serviceType {width: 220px;}
-    .mat-column-action {width: 220px;
-        .mat-icon-button {background:#fff;margin-right:10px; border: 1px solid $colorBlue; width:28px; height:28px; line-height: 28px;
+    .mat-column-action {width: 220px; padding-right: 0;
+        .mat-icon-button {background:#fff;margin:2px 5px 2px 0; border: 1px solid $colorBlue; width:28px; height:28px; line-height: 28px;
              .mat-icon-button .mat-icon, .mat-icon-button i {line-height: 22px;}
              .mat-icon {font-size: 17px;}
              &:hover {background:$colorBlue;
@@ -40,7 +41,9 @@ table { width: 100%; }
 }
 
 .mat-table .text-label.badge {color: #fff; padding: 7px 15px; min-width: 100px;}
-.mat-table .text-label.badge-primary {border: 1px solid #007bff; color: #007bff;}
+.mat-table .text-label.badge-primary, .mat-table .text-label.primary {border: 1px solid $colorBlue; background: $colorBlue;
+    &:hover {background: #fff; color:$colorBlue;}
+}
 .mat-table .text-label.badge-secondary {border: 1px solid #6c757d; color: #6c757d;}
 .mat-table .text-label.badge-success {border: 1px solid #22b573; color: #22b573;}
 .mat-table .text-label.badge-danger, .mat-table .text-label.rejected {border: 1px solid #ed5d7b; background: #ed5d7b;
@@ -71,20 +74,24 @@ table { width: 100%; }
     display: none;
   }
 
-@media(max-width: 600px) {
+@media(max-width: 767px) {
     .myApplication {
+        .mat-cell:first-child {padding-left: 0px;}
+        .mat-cell:last-child {padding-right: 0px;}
+        .mat-column-id {max-width:inherit;}
+        .mat-column-fileStatus {justify-content: left;}
         .mobile-label {
-            width: 40%;
+            width: 90px;
             display: inline-block;
             font-weight: bold;
         }
         .mobile-label1 {
-            width: 2%;
+            width: auto;
+            padding-right: 10px;
             display: inline-block;
             font-weight: bold;
         }
         .row-inside {
-            width: 56%;
             display: inline-block;
             font-weight: bold;
             padding-left: 4px;
@@ -102,7 +109,7 @@ table { width: 100%; }
             font-size: 12px !important;
         }
         .mat-icon-button {
-            margin: 2px;
+            margin-bottom: 5px;
         }
         .mat-column-fileStatus {
             width: inherit;
@@ -110,4 +117,8 @@ table { width: 100%; }
             padding: 0 0px;
         }
     }
+
+
+    .mat-footer-row::after, .mat-header-row::after, .mat-row::after {min-height: initial !important;}
+
 }

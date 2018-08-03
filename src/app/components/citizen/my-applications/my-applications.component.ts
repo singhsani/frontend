@@ -152,7 +152,7 @@ export class MyApplicationsComponent implements OnInit {
 	}
 
 	/**
-	 * This method use to delete citizen record.
+	 * This method use to application print receipt.
 	 * @param id citizen api code
 	 * @param id citizen api name
 	 * @param id citizen id
@@ -178,6 +178,36 @@ export class MyApplicationsComponent implements OnInit {
 		);
 
 	}
+
+
+	/**
+     * This method use to application print view.
+     * @param id citizen api code
+     * @param id citizen api name
+     * @param id citizen id
+     */
+    printView(apiCode: string, apiName: string, id: number) {
+
+        this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);
+        this.formService.printView(id).subscribe(
+            res => {
+                let data = res;
+                let Pagelink = "about:blank";
+                let pwa = window.open(Pagelink, "_new");
+                if (!pwa || pwa.closed || typeof pwa.closed == 'undefined') {
+                    this.commonService.openAlert('Pop-up!', 'Please disable your Pop-up blocker and try again.', 'warning');
+                }
+                pwa.document.open();
+                pwa.document.write(data);
+                pwa.print();
+            },
+            err => {
+                //this.commonService.successAlert('Error!', err.error[0].message, 'error');
+            }
+        );
+
+    }
+
 
 	/**
 	 * This method is use to show JOSN format.
@@ -216,7 +246,7 @@ export class MyApplicationsComponent implements OnInit {
 			case 'PAYMENT':
 				return 'badge rejected text-label';
 			default:
-				return 'badge primary text-label'
+				return 'badge file text-label'
 		}
 	}
 

@@ -44,7 +44,7 @@
                 <a (click)="navigateToRouteByIndex(i)">
                     <mat-icon *ngIf="link.linkCode != 'CITIZENPAYABLESERVICES'">{{link.icon}}</mat-icon>
                     <mat-icon *ngIf="link.linkCode == 'CITIZENPAYABLESERVICES'">&#x20B9;</mat-icon>
-                    {{link.linkName}}
+                    <div class="linkName">{{link.linkName}}</div>
                 </a>
             </ng-template>
         </mat-tab>

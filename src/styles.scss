@@ -122,7 +122,7 @@ h1 { font-size: 30px; margin-bottom: 10px; }
 .footer {text-align: center; color: $colorWhite; font-size: 11px; padding-top: 15px;}
 
 // Layouts - Dashboard
-.logo { padding: 0 10px 0 0 !important; margin-left: 20px !important;}
+.logo { padding: 0 10px 0 0 !important;}
 .logo img { padding-right: 5px; }
 .logo:hover {color: $colorWhite; text-decoration: none;}
 .cardH1.mat-card { padding: 15px 24px; margin: 20px 0; }
@@ -411,6 +411,7 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
     &>.mat-tab-header {border: 0;
         .mat-tab-label-container {background: #f1f1f1;}
     }
+    .mat-tab-labels {margin: 0 auto; max-width: 1100px;}
     .mat-tab-label {font-size: 16px; color: #808080; opacity: 1;}
     .mat-icon {font-size: 22px; float: left; margin-right: 13px;}
     .mat-tab-label-active {color:$colorBlue;}
@@ -430,7 +431,8 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
     .moduleIcon {width: 65px; height: 65px; line-height: 65px; background: #d1c4e9; border-radius:50%; display: inline-block;
         img {width: 40px;}
     }
-    .mat-tab-label-content {font-size: 14px; color: #333;}
+    .mat-tab-label-content {}
+    .moduleName {font-size: 14px; color: #333; min-height: 36px; line-height: normal;}
     .count {color: #b3b3b3; font-size: 12px; display: inline-block; padding-top: 5px;}
 }
 
@@ -456,6 +458,7 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
 .badge.draft {background: #fff; color: #f4c64c; border: 1px solid #f4c64c; padding:0.4em 1em 0.3em; font-size: 12px; font-weight: normal; border-radius: 10rem;}
 .badge.submited {background: #fff; color: #78da71; border: 1px solid #78da71; padding:0.4em 1em 0.3em; font-size: 12px; font-weight: normal; border-radius: 10rem;}
 .badge.rejected {background: #fff; color: #ed5d7b; border: 1px solid #ed5d7b; padding:0.4em 1em 0.3em; font-size: 12px; font-weight: normal; border-radius: 10rem;}
+.badge.primary {background: #fff; color:$colorBlue; border: 1px solid $colorBlue; padding:0.4em 1em 0.3em; font-size: 12px; font-weight: normal; border-radius: 10rem;}
 
 
 
@@ -538,16 +541,36 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
         ul { margin:0; padding: 4px 0 0 0;}
         .logo {margin-left: 0 !important; padding-right: 0 !important;}
     }
-    .dasHeader .logo {margin-left:0px !important;}
-    .logoText {display: none;}
+    .dasHeader {padding: 0 5px !important;
+       .logo {margin-left:0px !important; text-align: left;}
+       .logoText { font-size: 12px;}
+    }
+     
+
      
 }
 
 @media (max-width: 767px) { 
+    .userName span.ng-star-inserted {display: none;}
+
+    .container {margin-top: 70px;}
     .welCome {padding: 20px;}
     .servicesList {margin: 0;}
     .recentList  {padding: 8px 15px;}
 
     .profilePage .updateProfileBtn {position: static; width: 100%;}
-    .stepperNav .mat-raised-button {padding: 0 28px !important; line-height: 30px !important;} 
+    .stepperNav .mat-raised-button {padding: 0 20px !important; min-width: initial; line-height: 30px !important;} 
+
+    .mainMenu {
+        .linkName {display: none;}
+        .mat-icon {
+            margin-right:0;
+        }
+        .mat-tab-label {
+            width: 25% !important;
+            min-width: initial;
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+    }    
 }
