@@ -34,7 +34,7 @@ export class MarriageCreateComponent implements OnInit {
     // Select id for edit marriage form
     formId: number;
     apiCode: string;
-	tabIndex: number = 0;
+    tabIndex: number = 0;
 
     // Lookups array list
     religionArray: any = [];
@@ -59,15 +59,6 @@ export class MarriageCreateComponent implements OnInit {
     //File and image upload
     uploadModel: any = {};
     private showButtons: boolean = false;
-
-    //age calculation
-    ageObject = {
-        1: { 1: 'parent1', 2: 'days1' },
-        2: { 1: 'parent2', 2: 'days2' },
-        3: { 1: 'parent3', 2: 'days3' },
-        4: { 1: 'parent4', 2: 'days4' },
-        5: { 1: 'parent5', 2: 'days5' },
-    };
 
     //for same address
     addObject = {
@@ -357,23 +348,7 @@ export class MarriageCreateComponent implements OnInit {
                 if (res.groomBirthDate != null && res.marriageDate != null) {
                     this.CalculateAge();
                 }
-                //display static age calculation
-                if (res.groomParentsBirthDate) {
-                    this.parentAge('groomParentsBirthDate', 1);
-                }
-                if (res.brideParentsBirthDate) {
-                    this.parentAge('brideParentsBirthDate', 2);
-                }
-                if (res.priestBirthDate) {
-                    this.parentAge('priestBirthDate', 3);
-                }
-                if (res.firstWitnessBirthDate) {
-                    this.parentAge('firstWitnessBirthDate', 4);
-                }
-                if (res.secondWitnessBirthDate) {
-                    this.parentAge('secondWitnessBirthDate', 5);
-                }
-
+               
                 //display static gujarati var
                 if (!_.isUndefined(res.groomReligion.code)) {
                     this.onChange(res.groomReligion.code, this.religionArray, 'religionGujgroom')
@@ -479,18 +454,23 @@ export class MarriageCreateComponent implements OnInit {
     /**
      * This method is calculate age.
      * @param date : parents birth date
-     * @param index : parents index
      */
-    parentAge(date: string, index: number) {
+    parentAge(date: string) {
+        let days = 0;
+        let year = 0;
         if (this.marriageFormGroup.get(date).value != null) {
             let bday = moment(this.marriageFormGroup.get(date).value, "YYYY-MM-DD");
-            let year = moment().diff(bday, 'years', false);
-            let days = moment().diff(bday.add(year, 'years'), 'days', false);
-            this.ageObject[`parent${index}`] = year;
-            this.ageObject[`days${index}`] = days;
+            year = moment().diff(bday, 'years', false);
+            days = moment().diff(bday.add(year, 'years'), 'days', false);
+
+            return [year+" Year "+days+" Days"]
         }
+        else{
+            return null    
+        }
+        
     }
-    
+
     /**
     * This method is Reset NIR marriage related field.
     */
@@ -738,9 +718,9 @@ export class MarriageCreateComponent implements OnInit {
 	 * This method use to get output event of tab change
 	 * @param evt - Tab index
 	 */
-	onTabChange(evt) {
-		this.tabIndex = evt;
-	}
+    onTabChange(evt) {
+        this.tabIndex = evt;
+    }
 
     /**
      * Method is used to reset form its a output event from action bar.
