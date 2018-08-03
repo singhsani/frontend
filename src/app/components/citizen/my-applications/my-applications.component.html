@@ -89,7 +89,9 @@
                     <button mat-icon-button [disabled]="row.canSubmit" color="primary" (click)="printReceipt(row.serviceDetail.code, row.serviceDetail.name, row.serviceFormId)">
                         <mat-icon title="Print Receipt">print</mat-icon>
                     </button>
-
+                    <button mat-icon-button *ngIf="row.serviceDetail.code == 'HEL-MR'" color="primary" (click)="printView(row.serviceDetail.code, row.serviceDetail.name, row.serviceFormId)">
+                        <mat-icon title="Print View">pageview</mat-icon>
+                    </button>
                     <button mat-icon-button data-toggle="modal" color="primary" (click)="openModal(template);jsonDisplay(row.serviceDetail.code, row.serviceDetail.name, row.serviceFormId)">
                         <mat-icon title="JSON Format">center_focus_weak</mat-icon>
                     </button>

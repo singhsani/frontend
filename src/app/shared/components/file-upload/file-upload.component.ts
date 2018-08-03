@@ -169,7 +169,10 @@ export class FileUploadComponent implements OnInit {
 	downLoadFile(data: any, type: string) {
 		var blob = new Blob([data], { type: type.toString() });
 		var url = window.URL.createObjectURL(blob);
-		window.open(url);
+		var pwa = window.open(url);
+        if (!pwa || pwa.closed || typeof pwa.closed == 'undefined') {
+            this.commonService.openAlert('Pop-up!', 'Please disable your Pop-up blocker and try again.', 'warning');
+        }
 	}
 
 	/**
