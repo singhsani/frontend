@@ -198,8 +198,7 @@
 
 					<mat-form-field class="col-md-4">
 						<input matInput [max]="disablefutureDate" [matDatepicker]="DateOfCommencementOfBusiness" formControlName="commencementOfBusinessDate"
-						 (dateChange)="dateFormat($event.value,'commencementOfBusinessDate')" placeholder="{{ 'date_of_commencement_of_business' | translate:translateKey }}"
-						 (click)="DateOfCommencementOfBusiness.open()" (focus)="DateOfCommencementOfBusiness.open()" readonly>
+						 (dateChange)="dateFormat($event.value,'commencementOfBusinessDate')" placeholder="{{ 'date_of_commencement_of_business' | translate:translateKey }} (DD/MM/YYYY)">
 						<mat-datepicker-toggle matSuffix [for]="DateOfCommencementOfBusiness"></mat-datepicker-toggle>
 						<mat-datepicker touchUi="true" #DateOfCommencementOfBusiness></mat-datepicker>
 						<control-messages [control]="shopLicRenewalForm.controls.commencementOfBusinessDate"></control-messages>
@@ -1098,7 +1097,8 @@
 					</div>
 				</div>
 
-				<app-action-bar [uploadFiles]="uploadFileArray | filterAttachment:shopLicRenewalForm.get( 'typeOfOrganisation').value.code" [form]="shopLicRenewalForm" (handleErrors)="handleErrorsOnSubmit($event) " (tabIndex)="onTabChange($event) " [stepInfo]="{step: 'final', next:8, back: 6} "></app-action-bar>
+				<app-action-bar [uploadFiles]="uploadFileArray | filterAttachment:shopLicRenewalForm.get( 'typeOfOrganisation').value.code"
+				 [form]="shopLicRenewalForm" (handleErrors)="handleErrorsOnSubmit($event) " (tabIndex)="onTabChange($event) " [stepInfo]="{step: 'final', next:8, back: 6} "></app-action-bar>
 
 			</mat-tab>
 			<!-- step Attachment Ends -->
