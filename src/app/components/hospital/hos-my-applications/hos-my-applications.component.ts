@@ -184,11 +184,13 @@ export class HosMyApplicationsComponent implements OnInit {
 	getFileStatusClass(filestatus: string) {
 		switch (filestatus) {
 			case 'DRAFT':
-				return 'badge badge-primary text-label ml-2 small';
+				return 'badge draft text-label';
 			case 'SUBMITTED':
-				return 'badge badge-success text-label ml-2';
+				return 'badge submited text-label';
+			case 'PAYMENT':
+				return 'badge rejected text-label';
 			default:
-				return 'primary'
+				return 'badge file text-label'
 		}
 	}
 

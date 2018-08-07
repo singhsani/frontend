@@ -25,8 +25,8 @@
                     Deduction as per the rules will be made in the event of cancellation.
                 </li>
             </ol>
-            <div class="text-center">
-                <button mat-raised-button (click)="guideLineFlag= false;" color="primary">Submit</button>
+            <div class="text-right">
+                <button mat-raised-button (click)="guideLineFlag = false; showSearchForm= true;" color="primary">Submit</button>
             </div>
 
         </mat-card-content>
@@ -34,7 +34,7 @@
 </div>
 
 <!-- HTML for Town hall booking -->
-<div *ngIf="!guideLineFlag" class="container">
+<div *ngIf="showSearchForm" class="container">
 
     <app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
 
@@ -60,21 +60,21 @@
                 </div>
 
                 <mat-form-field class="col-md-6">
-                    <input matInput (click)="townHallBookingfromPicker.open()" (focus)="townHallBookingfromPicker.open()" [matDatepicker]="townHallBookingfromPicker"
-                        formControlName="startDate" placeholder="Choose start date">
+                    <input matInput [matDatepickerFilter]="myFilter" [matDatepicker]="townHallBookingfromPicker" formControlName="startDate"
+                        placeholder="Choose start date">
                     <mat-datepicker-toggle matSuffix [for]="townHallBookingfromPicker"></mat-datepicker-toggle>
                     <mat-datepicker #townHallBookingfromPicker touchUi="true"></mat-datepicker>
                 </mat-form-field>
 
                 <mat-form-field class="col-md-6">
-                    <input matInput (click)="townHallBookingtoPicker.open()" (focus)="townHallBookingtoPicker.open()" [matDatepicker]="townHallBookingtoPicker"
-                        formControlName="endDate" placeholder="Choose end date">
+                    <mat-label>Choose end date</mat-label>
+                    <input matInput [matDatepickerFilter]="myFilter" [matDatepicker]="townHallBookingtoPicker" formControlName="endDate" placeholder="DD/MM/YYYY">
                     <mat-datepicker-toggle matSuffix [for]="townHallBookingtoPicker"></mat-datepicker-toggle>
                     <mat-datepicker #townHallBookingtoPicker touchUi="true"></mat-datepicker>
                 </mat-form-field>
 
                 <div class="col-md-12 text-right">
-                    <button mat-raised-button color="primary" type="submit">Search</button>
+                    <button [disabled]="searchTownHallForm.invalid" mat-raised-button color="primary" type="submit">Search</button>
                 </div>
 
             </div>
@@ -82,60 +82,146 @@
 
     </mat-card>
 
-    <!-- <mat-table #table [dataSource]="availableStots">
-
-        <ng-container matColumnDef="id">
-            <mat-header-cell *matHeaderCellDef> # </mat-header-cell>
-            <mat-cell *matCellDef="let element;let indx=index;"> {{indx+1}} </mat-cell>
-        </ng-container>
-
-        <ng-container matColumnDef="start">
-            <mat-header-cell *matHeaderCellDef> Start Time</mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.start}} </mat-cell>
-        </ng-container>
-
-        <ng-container matColumnDef="end">
-            <mat-header-cell *matHeaderCellDef> End Time</mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.end}} </mat-cell>
-        </ng-container>
-
-        <ng-container matColumnDef="slotStatus">
-            <mat-header-cell *matHeaderCellDef>Available</mat-header-cell>
-            <mat-cell *matCellDef="let element;let indx=index;">
-                <button mat-raised-button color="primary" [disabled]="element.status !='AVAILABLE'" (click)="bookSlots(element.uniqueId,indx)">
-                    {{element.slotStatus}}
-                </button>
-            </mat-cell>
-        </ng-container>
-
-        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-    </mat-table> -->
-
-
-    <mat-card class="mt-4">
-
+    <mat-card class="mt-4" *ngIf="Dates.length>0">
         <mat-card class="cardH1">
             <h1>List Of Town Hall</h1>
         </mat-card>
 
         <div class="row">
+
             <div class="col-md-2 mb-1 p-1" *ngFor="let date of Dates">
-            <mat-card class="p-0 rounded border border-primary">
-                <mat-card-title class="bg-primary text-center text-light font-weight-bold p-0">{{returnProperDate(date.date)}}</mat-card-title>
-                <mat-card-content class="font-weight-bold">
-                    <mat-checkbox [disabled]="date.shift1.status == 'booked' || date.shift1.status == 'temp'" [checked]="date.shift1.status == 'booked' || date.shift1.status == 'temp'">SHIFT 1</mat-checkbox>
-                    <mat-checkbox [disabled]="date.shift2.status == 'booked' || date.shift2.status == 'temp'" [checked]="date.shift2.status == 'booked' || date.shift2.status == 'temp'">SHIFT 2</mat-checkbox>
-                    <mat-checkbox [disabled]="date.shift3.status == 'booked' || date.shift3.status == 'temp'" [checked]="date.shift3.status == 'booked' || date.shift3.status == 'temp'">SHIFT 3</mat-checkbox>
-                </mat-card-content>
-            </mat-card>
+                <mat-card class="p-0 rounded border border-primary">
+                    <mat-card-title class="bg-primary text-center text-light font-weight-bold p-0">{{returnProperDate(date. key)}}
+                    </mat-card-title>
+                    <mat-card-content class="font-weight-bold">
+                        <mat-checkbox (change)="selectShift(shift, $event.checked, i)" *ngFor="let shift of date.slotList; let i = index" [disabled]="shift.slotStatus != 'AVAILABLE'"
+                            [checked]="shift.slotStatus != 'AVAILABLE'">SHIFT {{shift.shiftType}}</mat-checkbox>
+                    </mat-card-content>
+                </mat-card>
             </div>
+
+            <div class="col-md-12 text-right">
+                <button mat-raised-button type="button" color="primary" (click)="shortlistShifts()">Shortlist</button>
+            </div>
+
         </div>
 
     </mat-card>
+</div>
 
-    <!-- <div *ngIf="availableStots.length==0" class="alert" style="text-align: center;margin: 20px;">
-        <strong>No record found!</strong>
-        <div>Please select other townhall.</div>
-    </div> -->
+<div class="container" *ngIf="showPaymentReciept">
+    <mat-card>
+
+        <div class="row border">
+            <div class="col-md-3">
+                Booking Date
+            </div>
+            <div class="col-md-3">
+                Booking From
+            </div>
+            <div class="col-md-3">
+                Booking To
+            </div>
+            <div class="col-md-3">
+                Amount (Rs.)
+            </div>
+        </div>
+
+        <div class="row border">
+            <div class="col-md-3">
+               {{paymentObject.bookingDate}}
+            </div>
+            <div class="col-md-3">
+               {{paymentObject.bookingFrom}}
+            </div>
+            <div class="col-md-3">
+               {{paymentObject.bookingTo}}
+            </div>
+            <div class="col-md-3">
+               {{paymentObject.amount}}
+            </div>
+        </div>
+
+        <div class="col-md-12 text-right">
+            <button mat-raised-button type="button" color="primary" (click)="confirmPayment()">Confirm Payment</button>
+        </div>
+        
+    </mat-card>
+</div>
+
+<div class="container" [hidden]="!showApplicationForm">
+
+    <mat-card class="cardH1">
+        <h1>Town Hall Application Form</h1>
+    </mat-card>
+
+    <mat-card>
+        <form [formGroup]="townHallApplicationForm" (ngSubmit)="submitTownhallApplication()">
+            <div class="row">
+                <mat-form-field class="col-md-4">
+                    <input matInput appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" type="text" formControlName="oraganizationName"
+                        placeholder="{{'oraganization_name' | translate: translateKey}}" required>
+                    <control-messages [control]="townHallApplicationForm.controls.oraganizationName"></control-messages>
+                </mat-form-field>
+
+                <mat-form-field class="col-md-4">
+                    <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="orgTelephoneNo" placeholder="{{'orgTelephone_no' | translate: translateKey}}"
+                        required>
+                    <control-messages [control]="townHallApplicationForm.controls.orgTelephoneNo"></control-messages>
+                </mat-form-field>
+
+                <mat-form-field class="col-md-4">
+                    <input matInput appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" formControlName="organizationPresidentName"
+                        placeholder="{{'organization_president_name' | translate: translateKey}}" required>
+                    <control-messages [control]="townHallApplicationForm.controls.organizationPresidentName"></control-messages>
+                </mat-form-field>
+
+                <mat-form-field class="col-md-4">
+                    <input matInput type="text" appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" formControlName="relationshipWithOrg"
+                        placeholder="{{'relationship_with_org' | translate: translateKey}}" required>
+                    <control-messages [control]="townHallApplicationForm.controls.relationshipWithOrg"></control-messages>
+                </mat-form-field>
+
+            </div>
+
+            <div>
+                <h2>
+                    {{'organizationAddress' | translate:translateKey}}
+                </h2>
+                <app-address #address [requiredFeilds]="true" [addressFormGroup]="townHallApplicationForm.controls.organizationAddress"></app-address>
+            </div>
+
+            <div class="row">
+
+                <mat-form-field class="col-md-4">
+                    <input matInput appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" type="text" formControlName="applicantName"
+                        placeholder="{{'applicant_name' | translate: translateKey}}" required>
+                    <control-messages [control]="townHallApplicationForm.controls.applicantName"></control-messages>
+                </mat-form-field>
+
+                <mat-form-field class="col-md-4">
+                    <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="applicantMobile" placeholder="{{'applicant_mobile' | translate: translateKey}}"
+                        required>
+                    <control-messages [control]="townHallApplicationForm.controls.applicantMobile"></control-messages>
+                </mat-form-field>
+
+                <mat-form-field class="col-md-4">
+                    <input matInput type="email" formControlName="emailID" placeholder="{{'applicant_email' | translate: translateKey}}" required>
+                    <control-messages [control]="townHallApplicationForm.controls.emailID"></control-messages>
+                </mat-form-field>
+            </div>
+
+            <div>
+                <h2>
+                    {{'applicantAddress' | translate:translateKey}}
+                </h2>
+                <app-address #address [requiredFeilds]="true" [addressFormGroup]="townHallApplicationForm.controls.applicantAddress"></app-address>
+            </div>
+
+            <div class="col-md-12 text-right">
+                <button [disabled]="!townHallApplicationForm.valid" mat-raised-button color="primary" type="submit">Submit Application</button>
+            </div>
+
+        </form>
+    </mat-card>
 </div>

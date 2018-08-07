@@ -1,3 +1,36 @@
+<div class="welCome">
+    <h1>Welcome to VMC Online Hospital Portal</h1>
+    <p>Welcome to Vadodara Municipal Corporation's Virtual Civic Center, which is simple and convenient way for citizens to
+        access various services from anywhere at anytime.
+        <br> The services of Virtual Civic Center can be accessed without paying any additional charge.</p>
+</div>
+
+<h2>
+    <mat-icon>dashboard</mat-icon>Birth & Death
+</h2>
+
+<div class="moduleList">
+    <mat-tab-group>
+        <mat-tab *ngFor="let module of userServicesList">
+            <ng-template mat-tab-label>
+                <!-- <mat-icon class="example-tab-icon">thumb_up</mat-icon> -->
+                <span class="moduleIcon"></span>
+                <div class="moduleName">{{ module.name }}</div>
+                <!-- <div>{{ module.gujName }}</div> -->
+                <span class="count">Services</span>
+            </ng-template>
+            <div class="servicesList row">
+                <div class="colBtn col-md-3" *ngFor="let service of module.services;" matTooltip="{{ service.name }}">
+                    <button mat-stroked-button color="primary" (click)="createRecord(service.code)">
+                        {{ service.name }}
+                    </button>
+                </div>
+            </div>
+        </mat-tab>
+    </mat-tab-group>
+</div>
+
+<!-- 
 <div class="container pt-4">
 
     <mat-card class="themeBox">
@@ -35,10 +68,10 @@
             </h2>
             <a href="#" class="col" *ngFor="let module of userServicesList">
                 <span class="{{getIconClass(module.code)}}"><img src="{{getIconImg(module.code)}}" alt=""></span>
-                <div>{{module.name}}<br><!--{{module.gujName}}--></div>
+                <div>{{module.name}}<br>{{module.gujName}}</div>
             </a>
-            <!-- <div class="col" *ngFor="let module of userServicesList">
-                <img src="{{getIconImg(module.code)}}" alt=""><br> {{module.name +' / '+ module.gujName}}</div> -->
+            <div class="col" *ngFor="let module of userServicesList">
+                <img src="{{getIconImg(module.code)}}" alt=""><br> {{module.name +' / '+ module.gujName}}</div> 
         </div>
     </mat-card>
 
@@ -51,7 +84,7 @@
             </mat-expansion-panel-header>
 
             <div class="row">
-                <!-- <div class="col-md-4 pt-4 pb-1 text-center bg-light" *ngFor="let service of module.services;"> -->
+                <div class="col-md-4 pt-4 pb-1 text-center bg-light" *ngFor="let service of module.services;"> 
                 <div class="col-12 col-sm-6 col-md-6 col-lg-4 pb-4 text-center dashboardList" *ngFor="let service of module.services;">
                     <mat-card>
                         <mat-icon>account_circle</mat-icon>
@@ -67,8 +100,8 @@
 
         </mat-expansion-panel>
     </mat-accordion>
-</div>
-<!-- <div class="container pt-4">
+</div> 
+<<div class="container pt-4">
 
     <mat-accordion *ngFor="let module of userServicesList">
         <mat-expansion-panel>

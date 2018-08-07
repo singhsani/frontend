@@ -60,7 +60,7 @@ import { InputTrimDirective } from './shared/directives/input-trim.directive';
 		AppRoutingModule,
 		LoadingBarRouterModule,
 		LoadingBarHttpClientModule,
-		AmazingTimePickerModule
+		AmazingTimePickerModule,
 	],
 	exports: [ ],
 	providers: [

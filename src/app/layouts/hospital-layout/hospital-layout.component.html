@@ -3,11 +3,11 @@
     <mat-toolbar color="primary" class="example-toolbar">
         <mat-toolbar-row class="dasHeader">
             <div class="float-left">
-                <button mat-icon-button (click)="isExpanded=!isExpanded; openSideNav();">
+                <!-- <button mat-icon-button (click)="isExpanded=!isExpanded; openSideNav();">
                     <mat-icon>menu</mat-icon>
-                </button>
+                </button> -->
                 <a mat-button routerLink="." class="logo">
-                    <img src="assets/images/vmc-logo.png" alt="Vadodara Municipal Corporation"> 
+                    <img src="assets/images/vmc-logo.png" alt="Vadodara Municipal Corporation">
                     <span class="logoText">Vadodara Municipal Corporation</span>
                 </a>
                 <span class="example-spacer"></span>
@@ -16,10 +16,10 @@
 				<button mat-icon-button position="end" (click)="selectLanguage('gu')">ગુજ</button> -->
             <div class="float-right">
                 <button mat-icon-button [matMenuTriggerFor]="menu" class="userName">
-					<mat-icon>face</mat-icon>
-						{{profileObj.firstName + ' ' + profileObj.lastName}}
-					<mat-icon>arrow_drop_down</mat-icon>
-				</button>
+                    <mat-icon>face</mat-icon>
+                    {{profileObj.firstName + ' ' + profileObj.lastName}}
+                    <mat-icon>arrow_drop_down</mat-icon>
+                </button>
                 <mat-menu #menu="matMenu">
                     <!-- <button mat-menu-item routerLink="/citizen/my-profile">Profile</button> -->
                     <button mat-menu-item (click)="onLogout()">Logout</button>
@@ -27,7 +27,7 @@
             </div>
         </mat-toolbar-row>
     </mat-toolbar>
-
+    <!-- 
     <mat-sidenav-container class="example-sidenav-container">
         <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [(opened)]="!mobileQuery.matches">
             <mat-nav-list (click)="toggleSideNav()">
@@ -45,5 +45,56 @@
             <loading-indicator></loading-indicator>
             <router-outlet></router-outlet>
         </mat-sidenav-content>
-    </mat-sidenav-container>
+    </mat-sidenav-container> -->
+
+    <!-- <nav mat-tab-nav-bar>
+            <a mat-tab-link *ngFor="let link of links" routerLink="/{{manageRoutes.getFullRoute(link.linkCode)}}" (click)="activeLink = link.linkName" [active]="activeLink == link.linkName"> {{link.linkName}} </a>
+        </nav> -->
+    <div class="clearfix" *ngIf="showMenu">
+        <mat-tab-group (focusChange)="navigateToRoute($event)" mat-stretch-tabs [selectedIndex]="tabIndex" class="mainMenu">
+            <mat-tab *ngFor="let link of links; let i=index">
+                <ng-template mat-tab-label>
+                    <a (click)="navigateToRouteByIndex(i)">
+                        <mat-icon *ngIf="link.linkCode != 'CITIZENPAYABLESERVICES'">{{link.icon}}</mat-icon>
+                        <mat-icon *ngIf="link.linkCode == 'CITIZENPAYABLESERVICES'">&#x20B9;</mat-icon>
+                        <div class="linkName">{{link.linkName}}</div>
+                    </a>
+                </ng-template>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+
+    <div class="container clearfix">
+        <router-outlet (activate)="activateTab()"></router-outlet>
+    </div>
+
+</div>
+
+<div class="modal" id="gujModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    Gujarati typing, Confused? Just hit play button.
+                </h4>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="embed-responsive embed-responsive-16by9 m-1 row">
+                    <video class="embed-responsive-item col-md-12" controls>
+                        <source src="assets/videos/Gujarati_Demo.mp4" type="video/mp4">
+                    </video>
+                </div>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+
+        </div>
+    </div>
 </div>

@@ -5,7 +5,7 @@
 		<form [formGroup]="searchForm" autocomplete="off" ngNativeValidate>
 			<div class="row">
 				<mat-form-field class="col-md-4">
-					<input matInput type="text" formControlName="regNumber" placeholder="{{'reg_number' | translate: translateKey}}">
+					<input matInput trim type="text" formControlName="regNumber" placeholder="{{'reg_number' | translate: translateKey}}">
 				</mat-form-field>
 
 				<div formGroupName="regYear" class="col-md-4 ngSelect">
