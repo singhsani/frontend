@@ -195,8 +195,7 @@
 
 					<mat-form-field class="col-md-4">
 						<input matInput [max]="disablefutureDate" [matDatepicker]="DateOfCommencementOfBusiness" formControlName="commencementOfBusinessDate"
-						 (dateChange)="dateFormat($event.value,'commencementOfBusinessDate')" placeholder="{{ 'date_of_commencement_of_business' | translate:translateKey }}"
-						 (click)="DateOfCommencementOfBusiness.open()" (focus)="DateOfCommencementOfBusiness.open()" readonly>
+						 (dateChange)="dateFormat($event.value,'commencementOfBusinessDate')" placeholder="{{ 'date_of_commencement_of_business' | translate:translateKey }} (DD/MM/YYYY)">
 						<mat-datepicker-toggle matSuffix [for]="DateOfCommencementOfBusiness"></mat-datepicker-toggle>
 						<mat-datepicker touchUi="true" #DateOfCommencementOfBusiness></mat-datepicker>
 						<control-messages [control]="shopLicModificationForm.controls.commencementOfBusinessDate"></control-messages>
