@@ -28,16 +28,40 @@ export class BookingService {
 	}
 
 	/**
-	 * This method is use for get date wise slots for particular resource 
-	 * @param resourceName - string
-	 * @param date - YYYY-MM-DD
+	 * Method is used to get all available slot using api.
+	 * @param filterData - filter data object.
 	 */
-	getAllSlots(resourceName, date){
-		
-		this.requestURL = `api/booking/${this.resourceType}/slots?resource=${resourceName}&date=${date}`;
-
+	getAllSlots(filterData){
+		this.requestURL = `api/booking/${this.resourceType}/slotsAPI?resource=${filterData.resourceName}&startDate=${filterData.startDate}&endDate=${filterData.endDate}`;
+        
 		return this.http.get(this.requestURL);
+	}
 
+	/**
+	 * Method is used to shortlist all selected shifts in townhall.
+	 * @param shortListData - selected dates, shifts.
+	 */
+	shortListTownHall(shortListData) {
+		this.requestURL = `api/booking/${this.resourceType}/shortlistAPI`;
+		return this.http.post(this.requestURL, shortListData);
+	}
+
+
+	/**
+	 * Method is used to search payment.
+	 * @param searchPaymentData - Search Payment Data.
+	 */
+	searchPayment(refNumber) {
+
+		this.requestURL =`api/booking/${this.resourceType}/getFees/${refNumber}`
+	
+		return this.http.get(this.requestURL);
+	}
+
+
+	commonBookSlot(bookingInfo) {
+		this.requestURL = `api/booking/${this.resourceType}/slot/bookAPI`;
+		return this.http.post(this.requestURL, bookingInfo);
 	}
 
 	/**
@@ -163,6 +187,8 @@ export class BookingService {
 		this.requestURL = `api/booking/${this.resourceType}/slot/bookAPI`;
 		return this.http.post(this.requestURL, bookingInfo);
 	}
+
+
 	
 
 

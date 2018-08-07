@@ -7,6 +7,8 @@ import { MaterialModule } from './modules/material/material.module';// Import ma
 import { TranslateModule } from './modules/translate/translate.module';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ModalModule } from 'ngx-bootstrap';
+import { NgxMaskModule } from 'ngx-mask'
+
 
 /* Import http related servies start */
 import { HttpService } from './services/http.service';
@@ -41,6 +43,7 @@ import { HosActionBarComponent } from './components/hos-action-bar/hos-action-ba
 import { HosFileUploadComponent } from './components/hos-file-upload/hos-file-upload.component';
 import { CountryService } from './services/country.service';
 import { HosPaymentResponsePageComponent } from './components/hos-payment-response-page/hos-payment-response-page.component';
+import { HosTitleBarComponent } from './components/hos-title-bar/hos-title-bar.component';
 
 /* import pipes end*/
 
@@ -56,6 +59,7 @@ const COMPONENTS = [
 	BasicDetailsComponent,
 	PaymentResponsePageComponent,
 	TitleBarComponent,
+	HosTitleBarComponent,
 	LoadingIndicatorComponent,
 	HosActionBarComponent,
 	InputTrimDirective,
@@ -68,7 +72,7 @@ const COMPONENTS = [
 @NgModule({
 	declarations: [
 		...COMPONENTS,
-		HosPaymentResponsePageComponent
+		HosPaymentResponsePageComponent,
 		
 	],
 	imports: [
@@ -79,6 +83,7 @@ const COMPONENTS = [
 		FormsModule,
 		NgSelectModule,
 		ModalModule.forRoot(),
+		NgxMaskModule.forRoot(),		
 		ReactiveFormsModule
 	],
 	exports: [

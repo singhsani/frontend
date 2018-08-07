@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+
 /* Import all shared, core and routing module start */
 import { CoreModule } from '../../core/core.module';
 import { SharedModule } from '../../shared/shared.module';
@@ -17,7 +18,6 @@ import { DeathRegistrationComponent } from './death-registration/death-registrat
 import { StillBirthComponent } from './still-birth/still-birth.component';
 import { HosMyApplicationsComponent } from './hos-my-applications/hos-my-applications.component';
 
-import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 /* Import hospital components end */
 
 @NgModule({
@@ -29,8 +29,6 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 		CoreModule,
 		HospitalAuthModule,
 		HospitalRoutingModule,
-		OwlDateTimeModule,
-		OwlNativeDateTimeModule
 	],
 	declarations: [
 		HospitalDashboardComponent,

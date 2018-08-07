@@ -432,6 +432,23 @@ export class StillBirthComponent implements OnInit {
 		});
 	}
 
+	changeTime(i: number, timeEvent){
+		let time = moment(timeEvent).format("hh:mm:ss");
+		this.getChildData().at(i).get('birthTime').setValue(time);
+	}
+	
+	setTime(i: number){
+		let date = this.getChildData().at(i).get('birthTime').value;
+		if(date){
+			let hr = date.split(':')[0];
+			let min = date.split(':')[1];
+			return new Date(0, 0, 0, hr, min);
+		} else {
+			return null
+		}
+		
+	}
+
 	/**
 	 * Method is used to handle error/validation on submit
 	 * @param count - count of invalid control.
