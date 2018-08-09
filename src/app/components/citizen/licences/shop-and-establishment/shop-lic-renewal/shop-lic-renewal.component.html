@@ -380,7 +380,7 @@
 						</div>
 					</div>
 				</div>
-				<!-- <app-action-bar   [form]="shopLicRenewalForm" (tabIndex)="onTabChange($event)" [stepInfo]="'step5'"></app-action-bar> -->
+				<app-action-bar  [form]="shopLicRenewalForm" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step3', next: 3, back: 1}"></app-action-bar>
 			</mat-tab>
 			<!-- step 3 employer family Ends -->
 
@@ -511,7 +511,7 @@
 					</div>
 				</div>
 
-				<!-- <app-action-bar   [form]="shopLicRenewalForm" (tabIndex)="onTabChange($event)" [stepInfo]="'step5'"></app-action-bar> -->
+				<app-action-bar  [form]="shopLicRenewalForm" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step4', next: 4, back: 2}"></app-action-bar>
 
 			</mat-tab>
 			<!-- step 4 occupancy person Ends -->
@@ -653,7 +653,7 @@
 					</div>
 				</div>
 
-				<!-- <app-action-bar   [form]="shopLicRenewalForm" (tabIndex)="onTabChange($event)" [stepInfo]="'step5'"></app-action-bar> -->
+				<app-action-bar  [form]="shopLicRenewalForm" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step5', next: 5, back: 3}"></app-action-bar>
 			</mat-tab>
 			<!-- step 5 partner list Ends -->
 
@@ -696,7 +696,7 @@
 					</mat-form-field>
 				</div>
 
-				<app-action-bar [form]="shopLicRenewalForm" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step6', next: 6, back: 5}"></app-action-bar>
+				<app-action-bar [form]="shopLicRenewalForm" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step6', next: 6, back: 4}"></app-action-bar>
 
 			</mat-tab>
 			<!-- step 6 employee list Ends -->
@@ -732,55 +732,6 @@
 								<file-upload [form]="shopLicRenewalForm" [uploadModel]="setDataValue(3,'PropertyTaxCurrentYearReceiptOfOrganization', '1.3', 'doc') "></file-upload>
 							</div>
 						</div>
-						<!-- step Attachment Starts -->
-						<mat-tab>
-							<ng-template mat-tab-label>
-								<div>{{'attachment' | translate: translateKey}}</div>
-							</ng-template>
-
-							<div class="row">
-
-								<div class="col-md-4">
-									<div *ngIf="showButtons">
-										<label>{{'prof_tax_PEC_receipt' | translate: translateKey}} *</label>
-										<file-upload [form]="shopLicRenewalForm" [uploadModel]="setDataValue(1,'ProfessionalTaxPECNoReceipt','1.1','doc')"></file-upload>
-									</div>
-								</div>
-
-								<div class="col-md-4">
-									<div *ngIf="showButtons">
-										<label>{{'prof_tax_PRC_receipt' | translate: translateKey}} *</label>
-										<file-upload [form]="shopLicRenewalForm" [uploadModel]="setDataValue(2,'ProfessionalTaxPRCNoReceipt','1.2','doc')"></file-upload>
-									</div>
-								</div>
-
-								<div class="col-md-4">
-									<div *ngIf="showButtons">
-										<label>{{'property_tax_or_water_tax_paid_receipt' | translate: translateKey}} *</label>
-										<file-upload [form]="shopLicRenewalForm" [uploadModel]="setDataValue(3,'PropertyTaxOrWaterTaxPaidReceipt','1.3','doc')"></file-upload>
-									</div>
-								</div>
-
-								<div class="col-md-4">
-									<div *ngIf="showButtons">
-										<label>{{'aadhar_card_tenant' | translate: translateKey}} *</label>
-										<file-upload [form]="shopLicRenewalForm" [uploadModel]="setDataValue(4,'AdharCardTenant','1.4','doc')"></file-upload>
-									</div>
-								</div>
-
-								<div class="col-md-4">
-									<div *ngIf="showButtons">
-										<label>{{'PAN_card' | translate: translateKey}} </label>
-										<file-upload [form]="shopLicRenewalForm" [uploadModel]="setDataValue(5,'PANCardTenant','1.5','doc')"></file-upload>
-									</div>
-								</div>
-
-							</div>
-
-							<app-action-bar [form]="shopLicRenewalForm" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'final', next: 7, back: 5}"></app-action-bar>
-
-						</mat-tab>
-						<!-- step Attachment Ends -->
 
 						<div class="col-md-4 ">
 							<div *ngIf="showButtons ">
@@ -1098,7 +1049,7 @@
 				</div>
 
 				<app-action-bar [uploadFiles]="uploadFileArray | filterAttachment:shopLicRenewalForm.get( 'typeOfOrganisation').value.code"
-				 [form]="shopLicRenewalForm" (handleErrors)="handleErrorsOnSubmit($event) " (tabIndex)="onTabChange($event) " [stepInfo]="{step: 'final', next:8, back: 6} "></app-action-bar>
+				 [form]="shopLicRenewalForm" (handleErrors)="handleErrorsOnSubmit($event) " (tabIndex)="onTabChange($event) " [stepInfo]="{step: 'final', next:7, back: 5} "></app-action-bar>
 
 			</mat-tab>
 			<!-- step Attachment Ends -->
