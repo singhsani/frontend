@@ -252,7 +252,7 @@ mat-label {align-self: center;}
 }
 
 .closeAttachFile {width: 36px !important; height: 36px !important; line-height: 36px !important; border-radius:0 !important; margin-left: -36px !important;
-    .mat-icon {font-size: 20px;
+    .mat-icon {font-size: 20px; border-radius:50%; 
         &:hover {background: #fff !important;}
     }
 }
@@ -276,7 +276,7 @@ mat-footer-row, mat-header-row, mat-row, td.mat-cell, td.mat-footer-cell, th.mat
 ::-webkit-scrollbar-thumb:hover {background: #5E35B1;}
 
 .ng-select {padding-bottom: 3px; margin-bottom: 1.25em;}
-.ng-select .ng-select-container {min-height: 43px;}
+.ng-select .ng-select-container {min-height: 40px;}
 .ng-select .ng-has-value .ng-placeholder, .ng-select.ng-select-opened .ng-placeholder {
     -webkit-transform: translateY(-1em) scale(0.75) perspective(100px) translateZ(0.001px);
     transform: translateY(-1em) scale(0.75) perspective(100px) translateZ(0.001px);
@@ -399,7 +399,7 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
 
 .titleBar {background: #f1f1f1; position: absolute; top: 49px; left: 0; width: 100%; padding: 6px 0;  z-index: 2;
     .container {padding: 0; margin: 0 auto; max-width: 1200px;}
-    .mat-button {min-width: 50px; float: left;
+    .mat-button {min-width: 36px; float: left; border-radius:50%; padding: 0; 
         .mat-icon {color: #666;}
     }
     h1 {color: #666; font-size: 16px; margin: 0; padding: 8px 0 0 15px; float: left;}
@@ -459,6 +459,7 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
 .badge.submited {background: #fff; color: #78da71; border: 1px solid #78da71; padding:0.4em 1em 0.3em; font-size: 12px; font-weight: normal; border-radius: 10rem;}
 .badge.rejected {background: #fff; color: #ed5d7b; border: 1px solid #ed5d7b; padding:0.4em 1em 0.3em; font-size: 12px; font-weight: normal; border-radius: 10rem;}
 .badge.primary {background: #fff; color:$colorBlue; border: 1px solid $colorBlue; padding:0.4em 1em 0.3em; font-size: 12px; font-weight: normal; border-radius: 10rem;}
+.badge.file {background: #fff; color:$colorBlue; border: 1px solid #17a2b8; padding:0.4em 1em 0.3em; font-size: 12px; font-weight: normal; border-radius: 10rem;}
 
 
 
@@ -518,7 +519,7 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
     //     app-action-bar {width: 100%; position: absolute; bottom: 0; left: 0;}
     // }
    .row {margin: 0;}
-   h2 {padding:25px 0 0 15px; margin-bottom: 10px; width: 100%;}
+   h2 {padding:25px 15px 0 15px; margin-bottom: 10px; width: 100%;}
     &>.mat-tab-header {border: 0;
         .mat-tab-label-container {background: #f1f1f1;}
     }
@@ -574,3 +575,8 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
         }
     }    
 }
+
+
+// *********  shop-lic-new  **********
+.idNubmer td:first-child, .idNubmer th:first-child {text-align: center; width: 40px;}
+.table-inputW100p .mat-form-field-infix {width: 100% !important;}
