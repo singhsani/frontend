@@ -184,8 +184,8 @@ export class MuttonFishNewComponent implements OnInit {
 			permanantAddress: this.fb.group(this.permanantAddressEstablishment.addressControls()),
 			temporaryAddress: this.fb.group(this.permanantAddressEstablishment.addressControls()),
 
-			holderTelephoneNo: [null, [Validators.maxLength(12)]],
-			holderMobileNo: [null, [Validators.required, Validators.maxLength(11)]],
+			holderTelephoneNo: [null, [Validators.maxLength(12), Validators.minLength(10)]],
+			holderMobileNo: [null, [Validators.required, Validators.maxLength(11), Validators.minLength(10)]],
 			holderFaxNo: [null, [Validators.maxLength(12)]],
 			holderAadharNo: [null, [Validators.required, Validators.maxLength(12)]],
 			holderPanNo: [null, [Validators.required, Validators.maxLength(10)]],
@@ -232,7 +232,7 @@ export class MuttonFishNewComponent implements OnInit {
 			id: data.id ? data.id : null,
 			name: [data.name ? data.name : null, [Validators.required, Validators.maxLength(100)]],
 			address: [data.address ? data.address : null, [Validators.required, Validators.maxLength(200)]],
-			mobileNo: [data.mobileNo ? data.mobileNo : null, [Validators.maxLength(11)]],
+			mobileNo: [data.mobileNo ? data.mobileNo : null, [Validators.maxLength(11), Validators.minLength(10)]],
 			personType: "MF_PERSON"
 		})
 
@@ -257,14 +257,23 @@ export class MuttonFishNewComponent implements OnInit {
 	 * @param persontype : person array type
 	 */
 	addMorePerson(persontype: string) {
+		let relationshipIdVAlue = this.muttonFishNewForm.get('relationshipId').value.code;
+
+		if (!relationshipIdVAlue) {
+			this.toastrService.warning("Please select relationship of applicant first.");
+			return false;
+		}
 
 		let isEditAnotherRow = this.isTableInEditMode(persontype);
 		if (!isEditAnotherRow) {
-			if (persontype === "MF_PERSON" && this.addItem(persontype).controls.length >= 5) {
-				this.toastrService.warning("Person not allowed more than 5");
+			if (relationshipIdVAlue == "PROPRIETOR" && this.addItem(persontype).controls.length >= 1) {
+				this.toastrService.warning("Person not allowed more than 1");
 				return false;
 			}
-
+			if ((relationshipIdVAlue == "PARTNER" || relationshipIdVAlue == "DIRECTOR" || relationshipIdVAlue == "AUTHORIZEDSIGNATORY") && this.addItem(persontype).controls.length >= 10) {
+				this.toastrService.warning("Person not allowed more than 10");
+				return false;
+			}
 			this.addItem(persontype).push(this.createArray({
 				personType: persontype
 			}));
@@ -276,6 +285,15 @@ export class MuttonFishNewComponent implements OnInit {
 		}
 		else {
 			this.commonService.openAlert("Warning", "You can add new recode after save existing recode.", "warning");
+		}
+	}
+
+	onChangeRelationWithOrg() {
+		try {
+			(<FormArray>this.muttonFishNewForm.get('relationshipList')).controls = [];
+			this.muttonFishNewForm.get('relationshipList').setValue([]);
+		} catch (error) {
+			console.log(error.message);
 		}
 	}
 
