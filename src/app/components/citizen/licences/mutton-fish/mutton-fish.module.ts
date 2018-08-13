@@ -11,6 +11,7 @@ import { MuttonFishDuplicateComponent } from './mutton-fish-duplicate/mutton-fis
 import { MuttonFishTransferComponent } from './mutton-fish-transfer/mutton-fish-transfer.component';
 import { MuttonFishRenewalComponent } from './mutton-fish-renewal/mutton-fish-renewal.component';
 import { MuttonFishCancellationComponent } from './mutton-fish-cancellation/mutton-fish-cancellation.component';
+import { MuttonFishService } from './common/services/mutton-fish.service';
 /* Import all shared, core and routing module end */
 
 @NgModule({
@@ -22,6 +23,7 @@ import { MuttonFishCancellationComponent } from './mutton-fish-cancellation/mutt
 		ReactiveFormsModule,
 		MuttonFishRoutingModule
 	],
-	declarations: [MuttonFishNewComponent, MuttonFishDuplicateComponent, MuttonFishTransferComponent, MuttonFishRenewalComponent, MuttonFishCancellationComponent]
+	declarations: [MuttonFishNewComponent, MuttonFishDuplicateComponent, MuttonFishTransferComponent, MuttonFishRenewalComponent, MuttonFishCancellationComponent],
+	providers: [MuttonFishService]
 })
 export class MuttonFishModule { }

@@ -26,17 +26,17 @@
 						<control-messages [control]="muttonFishNewForm.get('personType').controls.code"></control-messages>
 					</div>
 					<mat-form-field class="col-md-2">
-						<input matInput type="text" required maxlength="100" placeholder="{{'holder_firstname' | translate:translateKey}}" formControlName="holderFirstName"
+						<input matInput type="text" required maxlength="30" placeholder="{{'holder_firstname' | translate:translateKey}}" formControlName="holderFirstName"
 						 appGujInputSource targetElement="holderFirstNameGuj" [form]="muttonFishNewForm">
 						<control-messages [control]="muttonFishNewForm.controls.holderFirstName"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" required maxlength="100" placeholder="{{'holder_middlename' | translate:translateKey}}" formControlName="holderMiddleName"
+						<input matInput type="text" required maxlength="30" placeholder="{{'holder_middlename' | translate:translateKey}}" formControlName="holderMiddleName"
 						 appGujInputSource targetElement="holderMiddleNameGuj" [form]="muttonFishNewForm">
 						<control-messages [control]="muttonFishNewForm.controls.holderMiddleName"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" required maxlength="100" placeholder="{{'holder_lastname' | translate:translateKey}}" formControlName="holderLastName"
+						<input matInput type="text" required maxlength="30" placeholder="{{'holder_lastname' | translate:translateKey}}" formControlName="holderLastName"
 						 appGujInputSource targetElement="holderLastNameGuj" [form]="muttonFishNewForm">
 						<control-messages [control]="muttonFishNewForm.controls.holderLastName"></control-messages>
 					</mat-form-field>
@@ -45,29 +45,29 @@
 				<!-- gujarati -->
 				<div class="row">
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" maxlength="300" required formControlName="holderFirstNameGuj" appGujInputTarget [form]="muttonFishNewForm"
+						<input matInput type="text" maxlength="90" required formControlName="holderFirstNameGuj" appGujInputTarget [form]="muttonFishNewForm"
 						 placeholder="{{ 'holder_firstname' | translate:translateKey:'gu' }}">
 						<control-messages [control]="muttonFishNewForm.controls.holderFirstNameGuj"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" required maxlength="300" placeholder="{{'holder_middlename' | translate:translateKey}}" formControlName="holderMiddleNameGuj"
+						<input matInput type="text" required maxlength="90" placeholder="{{'holder_middlename' | translate:translateKey}}" formControlName="holderMiddleNameGuj"
 						 appGujInputTarget [form]="muttonFishNewForm">
-						<control-messages [control]="muttonFishNewForm.controls.holderMiddleName"></control-messages>
+						<control-messages [control]="muttonFishNewForm.controls.holderMiddleNameGuj"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" required maxlength="300" placeholder="{{'holder_lastname' | translate:translateKey}}" formControlName="holderLastNameGuj"
+						<input matInput type="text" required maxlength="90" placeholder="{{'holder_lastname' | translate:translateKey}}" formControlName="holderLastNameGuj"
 						 appGujInputTarget [form]="muttonFishNewForm">
-						<control-messages [control]="muttonFishNewForm.controls.holderLastName"></control-messages>
+						<control-messages [control]="muttonFishNewForm.controls.holderLastNameGuj"></control-messages>
 					</mat-form-field>
 				</div>
 				<!-- /gujarati -->
 
 				<div class="row">
-					<h2>{{'permanat_address_of_establishment' | translate:translateKey}}</h2>
+					<h2>{{'permanat_address' | translate:translateKey}}</h2>
 					<app-address #permanantAddressEstablishment [requiredFeilds]="muttonFishNewForm.controls.permanantAddress.value" [addressFormGroup]="muttonFishNewForm.controls.permanantAddress"></app-address>
 				</div>
 				<div class="row">
-					<h2>{{'temp_address_of_establishment' | translate:translateKey}}</h2>
+					<h2>{{'temp_address' | translate:translateKey}}</h2>
 					<app-address #temporaryAddressEstablishment [requiredFeilds]="muttonFishNewForm.controls.temporaryAddress.value" [addressFormGroup]="muttonFishNewForm.controls.temporaryAddress"></app-address>
 				</div>
 
@@ -130,7 +130,7 @@
 						<control-messages [control]="muttonFishNewForm.controls.extraDetailsOfBusiness"></control-messages>
 					</mat-form-field>
 					<div class="col-md-4 ngSelect" formGroupName="relationshipId">
-						<ng-select placeholder="{{'relationship_id' | translate:translateKey}} *" formControlName="code">
+						<ng-select placeholder="{{'relationship_id' | translate:translateKey}} *" formControlName="code" (change)="onChangeRelationWithOrg()">
 							<ng-option *ngFor="let id of MF_RELATIONSHIP_OF_APPLICANT" [value]="id.code">{{id.name}}</ng-option>
 						</ng-select>
 						<control-messages [control]="muttonFishNewForm.get('relationshipId').controls.code"></control-messages>
@@ -147,17 +147,16 @@
 				<!-- table -->
 				<div class="row">
 					<div class="col-md-10">
-						<h2>{{ 'if_shop_is_in_properitership' | translate:translateKey}}</h2>
-						<h2>{{ 'if_shop_is_in_partnership' | translate:translateKey}}</h2>
-
+						<h2 *ngIf="muttonFishNewForm.get('relationshipId').value.code == 'PROPRIETOR'">{{ 'if_shop_is_in_properitership' | translate:translateKey}}</h2>
+						<h2 *ngIf="muttonFishNewForm.get('relationshipId').value.code != 'PROPRIETOR'">{{ 'if_shop_is_in_partnership' | translate:translateKey}}</h2>
 					</div>
 					<div class="col-md-2 pt-3" style="text-align: right;">
-						<button type="button" [disabled]="!(muttonFishNewForm.get('relationshipList').controls.length < 5)" matTooltip="{{'add_more' | translate:translateKey}}"
+						<button type="button" [disabled]="muttonFishNewForm.get('relationshipId').value.code ? muttonFishNewForm.get('relationshipId').value.code=='PROPRIETOR' ? !(muttonFishNewForm.get('relationshipList').controls.length < 1) : !(muttonFishNewForm.get('relationshipList').controls.length < 10) : true" matTooltip="{{'add_more' | translate:translateKey}}"
 						 mat-raised-button color="primary" (click)="addMorePerson('MF_PERSON')">{{'add'| translate:translateKey}}</button>
 					</div>
 				</div>
 
-				<div style="overflow-x: scroll;" *ngIf="muttonFishNewForm.get('relationshipList').controls.length">
+				<div *ngIf="muttonFishNewForm.get('relationshipList').controls.length">
 					<div>
 						<table class="table table-striped customDataTable">
 							<thead>
@@ -193,7 +192,7 @@
 									<td>
 										<p *ngIf="!item.isEditMode">{{item.get('name').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
-											<input matInput appValidationFields [validationFieldsType]="'onlyNameWithSpace'" formControlName="name">
+											<input matInput maxlength="100" appValidationFields [validationFieldsType]="'onlyNameWithSpace'" formControlName="name">
 											<control-messages [control]="item.controls.name"></control-messages>
 										</mat-form-field>
 									</td>
@@ -201,7 +200,7 @@
 									<td>
 										<p *ngIf="!item.isEditMode">{{item.get('address').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
-											<input matInput formControlName="address">
+											<input matInput maxlength="200" formControlName="address">
 											<control-messages [control]="item.controls.address"></control-messages>
 										</mat-form-field>
 									</td>
@@ -213,7 +212,6 @@
 											<control-messages [control]="item.controls.mobileNo"></control-messages>
 										</mat-form-field>
 									</td>
-
 								</tr>
 							</tbody>
 						</table>
