@@ -23,6 +23,7 @@ export class LoginComponent implements OnInit {
 
 	loginForm: FormGroup;
 	isValidFlag: boolean = false;
+	loading: boolean = false;
 	manageRoutes: any = ManageRoutes;
 
 	/**
@@ -66,25 +67,29 @@ export class LoginComponent implements OnInit {
 	 */
 	onLoginSubmit(formVals) {
 
-		if (formVals.username){
+		if (formVals.username) {
 			formVals.username = _.trim(formVals.username);
 		}
 
 		this.isValidFlag = false;
 
-		if(this.loginForm.valid){
+		if (this.loginForm.valid) {
+			this.loading = true;
 			this.appService.obtainAccessToken(formVals).subscribe(
 				res => {
+					this.loading = false;
 					this.saveToken(res);
 				},
 				err => {
-					this.toster.error(err.error.error_description);
+					this.loading = false;
+					if (err.error.error_description)
+						this.toster.error(err.error.error_description);
 				}
 			);
-		}else{
+		} else {
 			this.isValidFlag = true;
 		}
-		
+
 	}
 
 	/**

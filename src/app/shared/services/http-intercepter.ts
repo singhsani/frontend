@@ -57,7 +57,7 @@ export class TokenInterceptor implements HttpInterceptor {
 			if (err instanceof HttpErrorResponse) {
 				switch (err.status) {
 					case 0:
-						this.commonService.openAlert('Error!', err.error.message, 'error', '', cb => {
+						this.commonService.openAlert('Oops...', 'Something went wrong!','error', '', cb => {
 							if (this.commonService.getUserType() === 'HOSPITAL') {
 								this.hosAppService.logout();
 							} else {
