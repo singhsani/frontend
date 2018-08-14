@@ -1,13 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ManageRoutes } from './../../../../../config/routes-conf';
 import { CommonService } from '../../../../../shared/services/common.service';
 
 import { ValidationService } from '../../../../../shared/services/validation.service';
 import { FormsActionsService } from '../../../../../core/services/citizen/data-services/forms-actions.service';
-import * as _ from 'lodash';
-import * as moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -40,8 +38,6 @@ export class MuttonFishNewComponent implements OnInit {
 	WARD: Array<any> = [];
 	BLOCK: Array<any> = [];
 	LOOKUP: any;
-	businessCategory: Array<any> = [];
-	businessSubCategory: Array<any> = [];
 
 	// required attachment array
 	private uploadFileArray: Array<any> =
@@ -116,6 +112,8 @@ export class MuttonFishNewComponent implements OnInit {
 			try {
 				this.muttonFishNewForm.patchValue(res);
 				this.showButtons = true;
+				this.onChangeZone(this.muttonFishNewForm.get('zoneNo').value.code);
+				this.onChangeWard(this.muttonFishNewForm.get('wardNo').value.code);
 				res.relationshipList.forEach(app => {
 					(<FormArray>this.muttonFishNewForm.get('relationshipList')).push(this.createArray(app));
 				});
@@ -136,6 +134,9 @@ export class MuttonFishNewComponent implements OnInit {
 			this.MF_STATUS_OF_BUSINESS = res.MF_STATUS_OF_BUSINESS;
 			this.PERSON_TYPE = res.PERSON_TYPE;
 			this.FIRM_ZONE = res.FIRM_ZONE;
+
+			this.onChangeZone(this.muttonFishNewForm.get('zoneNo').value.code);
+			this.onChangeWard(this.muttonFishNewForm.get('wardNo').value.code);
 		});
 	}
 
@@ -144,7 +145,7 @@ export class MuttonFishNewComponent implements OnInit {
 	*/
 	onChangeZone(event) {
 		this.WARD = [];
-		if (event && this.LOOKUP.hasOwnProperty(event)) {
+		if (event && this.LOOKUP && this.LOOKUP.hasOwnProperty(event)) {
 			this.WARD = this.LOOKUP[event];
 		}
 	}
@@ -154,7 +155,7 @@ export class MuttonFishNewComponent implements OnInit {
 	*/
 	onChangeWard(event) {
 		this.BLOCK = [];
-		if (event && this.LOOKUP.hasOwnProperty(event)) {
+		if (event && this.LOOKUP && this.LOOKUP.hasOwnProperty(event)) {
 			this.BLOCK = this.LOOKUP[event];
 		}
 	}
@@ -225,13 +226,13 @@ export class MuttonFishNewComponent implements OnInit {
 	 * @param data : person data array 
 	 * @param persontype : person array type 
 	 */
-	createArray(data?: any, persontype?: string) {
+	createArray(data: any = {}) {
 
 		return this.fb.group({
 			serviceFormId: this.formId,
 			id: data.id ? data.id : null,
 			name: [data.name ? data.name : null, [Validators.required, Validators.maxLength(100)]],
-			address: [data.address ? data.address : null, [Validators.required, Validators.maxLength(200)]],
+			address: [data.address ? data.address : null, [Validators.required, Validators.maxLength(150)]],
 			mobileNo: [data.mobileNo ? data.mobileNo : null, [Validators.maxLength(11), Validators.minLength(10)]],
 			personType: "MF_PERSON"
 		})
@@ -240,23 +241,15 @@ export class MuttonFishNewComponent implements OnInit {
 
 	/**
 	 * Method is used to add array in form
-	 * @param persontype : person array type
 	 */
-	addItem(persontype: string) {
-		let returnArray: any;
-		switch (persontype) {
-			case 'MF_PERSON':
-				returnArray = this.muttonFishNewForm.get('relationshipList') as FormArray;
-				break;
-		}
-		return returnArray;
+	addItem() {
+		return this.muttonFishNewForm.get('relationshipList') as FormArray;
 	}
 
 	/**
 	 * Method is used when user click for add person
-	 * @param persontype : person array type
 	 */
-	addMorePerson(persontype: string) {
+	addMorePerson() {
 		let relationshipIdVAlue = this.muttonFishNewForm.get('relationshipId').value.code;
 
 		if (!relationshipIdVAlue) {
@@ -264,21 +257,19 @@ export class MuttonFishNewComponent implements OnInit {
 			return false;
 		}
 
-		let isEditAnotherRow = this.isTableInEditMode(persontype);
+		let isEditAnotherRow = this.isTableInEditMode();
 		if (!isEditAnotherRow) {
-			if (relationshipIdVAlue == "PROPRIETOR" && this.addItem(persontype).controls.length >= 1) {
+			if (relationshipIdVAlue == "PROPRIETOR" && this.addItem().controls.length >= 1) {
 				this.toastrService.warning("Person not allowed more than 1");
 				return false;
 			}
-			if ((relationshipIdVAlue == "PARTNER" || relationshipIdVAlue == "DIRECTOR" || relationshipIdVAlue == "AUTHORIZEDSIGNATORY") && this.addItem(persontype).controls.length >= 10) {
+			if ((relationshipIdVAlue == "PARTNER" || relationshipIdVAlue == "DIRECTOR" || relationshipIdVAlue == "AUTHORIZEDSIGNATORY") && this.addItem().controls.length >= 10) {
 				this.toastrService.warning("Person not allowed more than 10");
 				return false;
 			}
-			this.addItem(persontype).push(this.createArray({
-				personType: persontype
-			}));
+			this.addItem().push(this.createArray());
 			// this.muttonFishNewForm.get('relationshipList').setValidators([Validators.required]);
-			let newlyadded = <any>this.addItem(persontype).controls;
+			let newlyadded = <any>this.addItem().controls;
 			if (newlyadded.length) {
 				(newlyadded[newlyadded.length - 1]).isEditMode = true;
 			}
@@ -318,8 +309,8 @@ export class MuttonFishNewComponent implements OnInit {
 	/**
 	*  Method is used check table is in edit mode
 	*/
-	isTableInEditMode(persontype: string) {
-		return this.addItem(persontype).controls.find((obj: any) => obj.isEditMode === true);
+	isTableInEditMode() {
+		return this.addItem().controls.find((obj: any) => obj.isEditMode === true);
 	}
 
 	/**
@@ -334,9 +325,9 @@ export class MuttonFishNewComponent implements OnInit {
 	/**
 	* Method is used when user click for remove person
 	*/
-	deleteRecord(persontype: string, index: any) {
+	deleteRecord(index: any) {
 		this.commonService.confirmAlert('Are you sure?', "", 'info', '', performDelete => {
-			this.addItem(persontype).controls.splice(index, 1);
+			this.addItem().controls.splice(index, 1);
 			this.commonService.successAlert('Removed!', '', 'success');
 		});
 	}

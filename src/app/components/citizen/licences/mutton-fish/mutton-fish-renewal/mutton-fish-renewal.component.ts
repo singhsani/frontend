@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ManageRoutes } from './../../../../../config/routes-conf';
 import { CommonService } from '../../../../../shared/services/common.service';
@@ -7,8 +7,6 @@ import { MuttonFishService } from '../common/services/mutton-fish.service';
 
 import { ValidationService } from '../../../../../shared/services/validation.service';
 import { FormsActionsService } from '../../../../../core/services/citizen/data-services/forms-actions.service';
-import * as _ from 'lodash';
-import * as moment from 'moment';
 import { Location } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
 
@@ -22,7 +20,7 @@ export class MuttonFishRenewalComponent implements OnInit {
 	@ViewChild('permanantAddressEstablishment') permanantAddressEstablishment: any;
 
 	muttonFishRenewalForm: FormGroup;
-	translateKey: string = 'muttonFishenewScreen';
+	translateKey: string = 'muttonFisheRenewScreen';
 
 	formId: number;
 	apiCode: string;
@@ -142,9 +140,9 @@ export class MuttonFishRenewalComponent implements OnInit {
 	}
 
 	/**
- * This method is use to create new record for citizen.
- * @param searchData: exciting licence number data
- */
+     * This method is use to create new record for citizen.
+     * @param searchData: exciting licence number data
+     */
 	createRecordPatchSerachData(searchData: any) {
 		this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
 		this.formService.createFormData().subscribe(res => {
@@ -332,7 +330,7 @@ export class MuttonFishRenewalComponent implements OnInit {
 			serviceFormId: this.formId,
 			id: data.id ? data.id : null,
 			name: [data.name ? data.name : null, [Validators.required, Validators.maxLength(100)]],
-			address: [data.address ? data.address : null, [Validators.required, Validators.maxLength(200)]],
+			address: [data.address ? data.address : null, [Validators.required, Validators.maxLength(150)]],
 			mobileNo: [data.mobileNo ? data.mobileNo : null, [Validators.maxLength(11)]],
 			personType: "MF_PERSON"
 		})
@@ -341,36 +339,27 @@ export class MuttonFishRenewalComponent implements OnInit {
 
 	/**
 	 * Method is used to add array in form
-	 * @param persontype : person array type
 	 */
-	addItem(persontype: string) {
-		let returnArray: any;
-		switch (persontype) {
-			case 'MF_PERSON':
-				returnArray = this.muttonFishRenewalForm.get('relationshipList') as FormArray;
-				break;
-		}
-		return returnArray;
+	addItem() {
+		return this.muttonFishRenewalForm.get('relationshipList') as FormArray;;
 	}
 
 	/**
 	 * Method is used when user click for add person
 	 * @param persontype : person array type
 	 */
-	addMorePerson(persontype: string) {
+	addMorePerson() {
 
-		let isEditAnotherRow = this.isTableInEditMode(persontype);
+		let isEditAnotherRow = this.isTableInEditMode();
 		if (!isEditAnotherRow) {
-			if (persontype === "MF_PERSON" && this.addItem(persontype).controls.length >= 5) {
+			if ( this.addItem().controls.length >= 5) {
 				this.toastrService.warning("Person not allowed more than 5");
 				return false;
 			}
 
-			this.addItem(persontype).push(this.createArray({
-				personType: persontype
-			}));
+			this.addItem().push(this.createArray());
 			// this.muttonFishRenewalForm.get('relationshipList').setValidators([Validators.required]);
-			let newlyadded = <any>this.addItem(persontype).controls;
+			let newlyadded = <any>this.addItem().controls;
 			if (newlyadded.length) {
 				(newlyadded[newlyadded.length - 1]).isEditMode = true;
 			}
@@ -401,8 +390,8 @@ export class MuttonFishRenewalComponent implements OnInit {
 	/**
 	*  Method is used check table is in edit mode
 	*/
-	isTableInEditMode(persontype: string) {
-		return this.addItem(persontype).controls.find((obj: any) => obj.isEditMode === true);
+	isTableInEditMode() {
+		return this.addItem().controls.find((obj: any) => obj.isEditMode === true);
 	}
 
 	/**
@@ -417,9 +406,9 @@ export class MuttonFishRenewalComponent implements OnInit {
 	/**
 	* Method is used when user click for remove person
 	*/
-	deleteRecord(persontype: string, index: any) {
+	deleteRecord(index: any) {
 		this.commonService.confirmAlert('Are you sure?', "", 'info', '', performDelete => {
-			this.addItem(persontype).controls.splice(index, 1);
+			this.addItem().controls.splice(index, 1);
 			this.commonService.successAlert('Removed!', '', 'success');
 		});
 	}
