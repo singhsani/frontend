@@ -200,7 +200,7 @@
 									<td>
 										<p *ngIf="!item.isEditMode">{{item.get('address').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
-											<input matInput maxlength="200" formControlName="address">
+											<input matInput maxlength="150" formControlName="address">
 											<control-messages [control]="item.controls.address"></control-messages>
 										</mat-form-field>
 									</td>
