@@ -22,7 +22,9 @@
                 </div>
 
                 <div class="text-center">
-                    <button mat-raised-button type="submit" class="mat-primary width150">Login</button>
+                    <button mat-raised-button type="submit" class="mat-primary width150">Login &nbsp;
+                        <img *ngIf="loading" [class.disabled]="loading" src="assets/images/loader.gif" />
+                    </button>
                 </div>
 
                 <div class="text-center pt-2">
