@@ -60,7 +60,7 @@
                 </div>
 
                 <mat-form-field class="col-md-6">
-                    <input matInput [matDatepickerFilter]="myFilter" [matDatepicker]="townHallBookingfromPicker" formControlName="startDate"
+                    <input matInput [matDatepickerFilter]="myFilter" [min]="minDate" [matDatepicker]="townHallBookingfromPicker" formControlName="startDate"
                         placeholder="Choose start date">
                     <mat-datepicker-toggle matSuffix [for]="townHallBookingfromPicker"></mat-datepicker-toggle>
                     <mat-datepicker #townHallBookingfromPicker touchUi="true"></mat-datepicker>
@@ -68,7 +68,7 @@
 
                 <mat-form-field class="col-md-6">
                     <mat-label>Choose end date</mat-label>
-                    <input matInput [matDatepickerFilter]="myFilter" [matDatepicker]="townHallBookingtoPicker" formControlName="endDate" placeholder="DD/MM/YYYY">
+                    <input matInput [matDatepickerFilter]="myFilter" [min]="minDate" [matDatepicker]="townHallBookingtoPicker" formControlName="endDate" placeholder="DD/MM/YYYY">
                     <mat-datepicker-toggle matSuffix [for]="townHallBookingtoPicker"></mat-datepicker-toggle>
                     <mat-datepicker #townHallBookingtoPicker touchUi="true"></mat-datepicker>
                 </mat-form-field>
@@ -129,27 +129,28 @@
 
         <div class="row border">
             <div class="col-md-3">
-               {{paymentObject.bookingDate}}
+                {{paymentObject.bookingDate}}
             </div>
             <div class="col-md-3">
-               {{paymentObject.bookingFrom}}
+                {{paymentObject.bookingFrom}}
             </div>
             <div class="col-md-3">
-               {{paymentObject.bookingTo}}
+                {{paymentObject.bookingTo}}
             </div>
             <div class="col-md-3">
-               {{paymentObject.amount}}
+                {{paymentObject.amount}}
             </div>
         </div>
 
         <div class="col-md-12 text-right">
             <button mat-raised-button type="button" color="primary" (click)="confirmPayment()">Confirm Payment</button>
         </div>
-        
+
     </mat-card>
 </div>
 
 <div class="container" [hidden]="!showApplicationForm">
+
 
     <mat-card class="cardH1">
         <h1>Town Hall Application Form</h1>
@@ -157,11 +158,16 @@
 
     <mat-card>
         <form [formGroup]="townHallApplicationForm" (ngSubmit)="submitTownhallApplication()">
+
+            <h2>
+                {{'organization_details' | translate:translateKey}}
+            </h2>
+
             <div class="row">
                 <mat-form-field class="col-md-4">
-                    <input matInput appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" type="text" formControlName="oraganizationName"
+                    <input matInput appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" type="text" formControlName="organizationName"
                         placeholder="{{'oraganization_name' | translate: translateKey}}" required>
-                    <control-messages [control]="townHallApplicationForm.controls.oraganizationName"></control-messages>
+                    <control-messages [control]="townHallApplicationForm.controls.organizationName"></control-messages>
                 </mat-form-field>
 
                 <mat-form-field class="col-md-4">
@@ -176,12 +182,6 @@
                     <control-messages [control]="townHallApplicationForm.controls.organizationPresidentName"></control-messages>
                 </mat-form-field>
 
-                <mat-form-field class="col-md-4">
-                    <input matInput type="text" appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" formControlName="relationshipWithOrg"
-                        placeholder="{{'relationship_with_org' | translate: translateKey}}" required>
-                    <control-messages [control]="townHallApplicationForm.controls.relationshipWithOrg"></control-messages>
-                </mat-form-field>
-
             </div>
 
             <div>
@@ -191,8 +191,11 @@
                 <app-address #address [requiredFeilds]="true" [addressFormGroup]="townHallApplicationForm.controls.organizationAddress"></app-address>
             </div>
 
-            <div class="row">
+            <h2>
+                {{'applicant_details' | translate:translateKey}}
+            </h2>
 
+            <div class="row">
                 <mat-form-field class="col-md-4">
                     <input matInput appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" type="text" formControlName="applicantName"
                         placeholder="{{'applicant_name' | translate: translateKey}}" required>
@@ -209,6 +212,12 @@
                     <input matInput type="email" formControlName="emailID" placeholder="{{'applicant_email' | translate: translateKey}}" required>
                     <control-messages [control]="townHallApplicationForm.controls.emailID"></control-messages>
                 </mat-form-field>
+
+                <mat-form-field class="col-md-4">
+                    <input matInput type="text" appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" formControlName="relationshipWithOrg"
+                        placeholder="{{'relationship_with_org' | translate: translateKey}}" required>
+                    <control-messages [control]="townHallApplicationForm.controls.relationshipWithOrg"></control-messages>
+                </mat-form-field>
             </div>
 
             <div>
@@ -217,6 +226,61 @@
                 </h2>
                 <app-address #address [requiredFeilds]="true" [addressFormGroup]="townHallApplicationForm.controls.applicantAddress"></app-address>
             </div>
+
+            <h2>
+                {{'bank_details' | translate:translateKey}}
+            </h2>
+
+            <div class="row">
+
+                <div formGroupName="bankName" class="col-md-4 ngSelect">
+                    <ng-select placeholder="{{'bank_name' | translate:translateKey}} *" formControlName="code">
+                        <ng-option *ngFor="let bank of BankOptions" [value]="bank.code">
+                            {{bank.name}}
+                        </ng-option>
+                    </ng-select>
+                    <control-messages [control]="townHallApplicationForm.controls.bankName.controls.code"></control-messages>
+                </div>
+
+                <mat-form-field class="col-md-4">
+                    <input matInput type="text" formControlName="accountHolderName" placeholder="{{'account_holder_name' | translate: translateKey}}"
+                        required>
+                    <control-messages [control]="townHallApplicationForm.controls.accountHolderName"></control-messages>
+                </mat-form-field>
+
+                <mat-form-field class="col-md-4">
+                    <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="accountNo" placeholder="{{'accont_no' | translate: translateKey}}"
+                        required>
+                    <control-messages [control]="townHallApplicationForm.controls.accountNo"></control-messages>
+                </mat-form-field>
+
+                <mat-form-field class="col-md-4">
+                    <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="ifscCode" placeholder="{{'ifsc_code' | translate: translateKey}}"
+                        required>
+                    <control-messages [control]="townHallApplicationForm.controls.ifscCode"></control-messages>
+                </mat-form-field>
+            </div>
+
+            <h2>
+                {{'booking_details' | translate:translateKey}}
+            </h2>
+
+            <div class="row">
+                <mat-form-field class="col-md-4">
+                    <textarea matInput type="text" formControlName="programShortDetails" placeholder="{{'program_short_details' | translate: translateKey}}"
+                        required></textarea>
+
+                    <control-messages [control]="townHallApplicationForm.controls.programShortDetails"></control-messages>
+                </mat-form-field>
+
+                <mat-form-field class="col-md-4">
+                    <textarea matInput type="text" formControlName="programPurpose" placeholder="{{'program_purpose' | translate: translateKey}}"
+                        required></textarea>
+
+                    <control-messages [control]="townHallApplicationForm.controls.programPurpose"></control-messages>
+                </mat-form-field>
+            </div>
+
 
             <div class="col-md-12 text-right">
                 <button [disabled]="!townHallApplicationForm.valid" mat-raised-button color="primary" type="submit">Submit Application</button>
