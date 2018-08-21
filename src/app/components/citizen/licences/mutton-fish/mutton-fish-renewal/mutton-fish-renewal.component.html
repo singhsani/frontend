@@ -179,15 +179,15 @@
 							<tbody formArrayName="relationshipList">
 								<tr *ngFor="let item of muttonFishRenewalForm.get('relationshipList').controls; let indx = index;" [formGroupName]="indx">
 									<td style="width: 40px;" *ngIf="muttonFishRenewalForm.get('canEdit').value">
-										<button mat-icon-button color="primary" *ngIf="!item.isEditMode" (click)="editRecord(item)">
+										<button mat-icon-button color="primary" *ngIf="!item.isEditMode" [disabled]="muttonFishRenewalForm.get('relationshipId').value.code == 'PROPRIETOR'" (click)="editRecord(item)">
 											<mat-icon title="Edit">edit</mat-icon>
 										</button>
-										<button type="submit" [disabled]="item.invalid" mat-icon-button color="primary" *ngIf="item.isEditMode" (click)="saveRecord(item)">
+										<button type="submit" [disabled]="item.invalid || muttonFishRenewalForm.get('relationshipId').value.code == 'PROPRIETOR'" mat-icon-button color="primary" *ngIf="item.isEditMode" (click)="saveRecord(item)">
 											<mat-icon title="save">save</mat-icon>
 										</button>
 									</td>
 									<td style="width: 40px;" *ngIf="muttonFishRenewalForm.get('canEdit').value">
-										<button mat-icon-button color="warn" *ngIf="!item.isEditMode" (click)="deleteRecord('MF_PERSON',indx)">
+										<button mat-icon-button color="warn" *ngIf="!item.isEditMode" [disabled]="muttonFishRenewalForm.get('relationshipId').value.code == 'PROPRIETOR'" (click)="deleteRecord(indx)">
 											<mat-icon title="Delete">delete</mat-icon>
 										</button>
 										<button mat-icon-button color="warn" *ngIf="item.isEditMode" (click)="cancelRecord(item)">

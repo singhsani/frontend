@@ -187,7 +187,7 @@
 										</button>
 									</td>
 									<td style="width: 40px;" *ngIf="muttonFishTransferForm.get('canEdit').value">
-										<button mat-icon-button color="warn" *ngIf="!item.isEditMode" (click)="deleteRecord('MF_PERSON',indx)">
+										<button mat-icon-button color="warn" *ngIf="!item.isEditMode" (click)="deleteRecord(indx)">
 											<mat-icon title="Delete">delete</mat-icon>
 										</button>
 										<button mat-icon-button color="warn" *ngIf="item.isEditMode" (click)="cancelRecord(item)">

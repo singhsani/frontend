@@ -58,6 +58,7 @@ export class MuttonFishNewComponent implements OnInit {
 			{ labelName: 'Rent Agreement', fieldIdentifier: '13', category: "rent" }
 		];
 
+	//upload file as per status of business
 	get uploadFileArrayData() {
 		let data = this.uploadFileArray;
 		if (this.muttonFishNewForm.get('statusOfBusinessId').value.code != 'RENT') {
@@ -141,8 +142,9 @@ export class MuttonFishNewComponent implements OnInit {
 	}
 
 	/**
-	* Method is used for get WARD as per zone selection
-	*/
+	 * Method is used for get WARD as per zone selection
+	 * @param event : selected zone code
+	 */
 	onChangeZone(event) {
 		this.WARD = [];
 		if (event && this.LOOKUP && this.LOOKUP.hasOwnProperty(event)) {
@@ -151,8 +153,9 @@ export class MuttonFishNewComponent implements OnInit {
 	}
 
 	/**
-	* Method is used for get block as per zone selection
-	*/
+	 * Method is used for get block as per zone selection
+	 * @param event : selected ward code
+	 */
 	onChangeWard(event) {
 		this.BLOCK = [];
 		if (event && this.LOOKUP && this.LOOKUP.hasOwnProperty(event)) {
@@ -223,8 +226,7 @@ export class MuttonFishNewComponent implements OnInit {
 
 	/**
 	 * Method is used to return array
-	 * @param data : person data array 
-	 * @param persontype : person array type 
+	 * @param data : person data array
 	 */
 	createArray(data: any = {}) {
 
@@ -250,20 +252,20 @@ export class MuttonFishNewComponent implements OnInit {
 	 * Method is used when user click for add person
 	 */
 	addMorePerson() {
-		let relationshipIdVAlue = this.muttonFishNewForm.get('relationshipId').value.code;
+		let relationshipIdValue = this.muttonFishNewForm.get('relationshipId').value.code;
 
-		if (!relationshipIdVAlue) {
+		if (!relationshipIdValue) {
 			this.toastrService.warning("Please select relationship of applicant first.");
 			return false;
 		}
 
 		let isEditAnotherRow = this.isTableInEditMode();
 		if (!isEditAnotherRow) {
-			if (relationshipIdVAlue == "PROPRIETOR" && this.addItem().controls.length >= 1) {
+			if (relationshipIdValue == "PROPRIETOR" && this.addItem().controls.length >= 1) {
 				this.toastrService.warning("Person not allowed more than 1");
 				return false;
 			}
-			if ((relationshipIdVAlue == "PARTNER" || relationshipIdVAlue == "DIRECTOR" || relationshipIdVAlue == "AUTHORIZEDSIGNATORY") && this.addItem().controls.length >= 10) {
+			if ((relationshipIdValue == "PARTNER" || relationshipIdValue == "DIRECTOR" || relationshipIdValue == "AUTHORIZEDSIGNATORY") && this.addItem().controls.length >= 10) {
 				this.toastrService.warning("Person not allowed more than 10");
 				return false;
 			}
@@ -279,6 +281,9 @@ export class MuttonFishNewComponent implements OnInit {
 		}
 	}
 
+	/**
+	 * Method is use for reset relationship 
+	 */
 	onChangeRelationWithOrg() {
 		try {
 			(<FormArray>this.muttonFishNewForm.get('relationshipList')).controls = [];
@@ -323,8 +328,9 @@ export class MuttonFishNewComponent implements OnInit {
 	}
 
 	/**
-	* Method is used when user click for remove person
-	*/
+	 * Method is used when user click for remove person
+	 * @param index : table index
+	 */
 	deleteRecord(index: any) {
 		this.commonService.confirmAlert('Are you sure?', "", 'info', '', performDelete => {
 			this.addItem().controls.splice(index, 1);
@@ -334,7 +340,7 @@ export class MuttonFishNewComponent implements OnInit {
 
 	/**
 	*  Method is used save editable dataview.
-	* @param row: table row id
+	* @param row: table row index
 	*/
 	saveRecord(row: any) {
 		if (row.valid) {
@@ -344,7 +350,7 @@ export class MuttonFishNewComponent implements OnInit {
 
 	/**
 	*  Method is used cancel editable dataview.
-	* @param row: table row id
+	* @param row: table row index
 	*/
 	cancelRecord(row: any) {
 		if (row.deepCopyInEditMode) {
