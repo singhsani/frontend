@@ -22,7 +22,6 @@ export class TownHallListComponent implements OnInit {
 
 	@ViewChild('address') addressComp: any;
 
-
 	/**
 	 * town hall search form group.
 	 */
@@ -317,7 +316,6 @@ export class TownHallListComponent implements OnInit {
 			applicantName: null,
 			relationshipWithOrg: null,
 			emailID: null,
-
 			/**
 			 * Bank Accoount Details
 			 */
