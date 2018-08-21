@@ -61,6 +61,7 @@ export class MuttonFishRenewalComponent implements OnInit {
 			{ labelName: 'Rent Agreement', fieldIdentifier: '13', category: "rent" }
 		];
 
+	//upload file as per status of business
 	get uploadFileArrayData() {
 		let data = this.uploadFileArray;
 		if (this.muttonFishRenewalForm.get('statusOfBusinessId').value.code != 'RENT') {
@@ -194,6 +195,9 @@ export class MuttonFishRenewalComponent implements OnInit {
 			}); */
 			this.muttonFishRenewalForm.disable();
 			this.enableFielList();
+			if (this.muttonFishRenewalForm.get('relationshipId').value.code == 'PROPRIETOR') {
+				this.muttonFishRenewalForm.get('relationshipList').disable();
+			}
 			let currentUrl = this.location.path().replace('false', this.formId.toString());
 			this.location.go(currentUrl);
 		});
@@ -204,7 +208,9 @@ export class MuttonFishRenewalComponent implements OnInit {
 	 * This method use for edit some fiels.
 	 */
 	enableFielList() {
+
 		this.muttonFishRenewalForm.get('relationshipList').enable();
+
 	}
 
 	/**
@@ -215,6 +221,8 @@ export class MuttonFishRenewalComponent implements OnInit {
 			try {
 				this.muttonFishRenewalForm.patchValue(res);
 				this.showButtons = true;
+				this.onChangeZone(this.muttonFishRenewalForm.get('zoneNo').value.code);
+				this.onChangeWard(this.muttonFishRenewalForm.get('wardNo').value.code);
 				res.relationshipList.forEach(app => {
 					(<FormArray>this.muttonFishRenewalForm.get('relationshipList')).push(this.createArray(app));
 				});
@@ -235,12 +243,15 @@ export class MuttonFishRenewalComponent implements OnInit {
 			this.MF_STATUS_OF_BUSINESS = res.MF_STATUS_OF_BUSINESS;
 			this.PERSON_TYPE = res.PERSON_TYPE;
 			this.FIRM_ZONE = res.FIRM_ZONE;
+			this.onChangeZone(this.muttonFishRenewalForm.get('zoneNo').value.code);
+			this.onChangeWard(this.muttonFishRenewalForm.get('wardNo').value.code);
 		});
 	}
 
 	/**
-	* Method is used for get WARD as per zone selection
-	*/
+	 * Method is used for get WARD as per zone selection
+	 * @param event : selected zone code
+	 */
 	onChangeZone(event) {
 		this.WARD = [];
 		if (event && this.LOOKUP.hasOwnProperty(event)) {
@@ -250,6 +261,7 @@ export class MuttonFishRenewalComponent implements OnInit {
 
 	/**
 	* Method is used for get block as per zone selection
+	* @param event : selected ward code
 	*/
 	onChangeWard(event) {
 		this.BLOCK = [];
@@ -322,16 +334,15 @@ export class MuttonFishRenewalComponent implements OnInit {
 	/**
 	 * Method is used to return array
 	 * @param data : person data array 
-	 * @param persontype : person array type 
 	 */
-	createArray(data?: any, persontype?: string) {
+	createArray(data: any = {}) {
 
 		return this.fb.group({
 			serviceFormId: this.formId,
 			id: data.id ? data.id : null,
 			name: [data.name ? data.name : null, [Validators.required, Validators.maxLength(100)]],
 			address: [data.address ? data.address : null, [Validators.required, Validators.maxLength(150)]],
-			mobileNo: [data.mobileNo ? data.mobileNo : null, [Validators.maxLength(11)]],
+			mobileNo: [data.mobileNo ? data.mobileNo : null, [Validators.maxLength(11), Validators.minLength(10)]],
 			personType: "MF_PERSON"
 		})
 
@@ -346,17 +357,25 @@ export class MuttonFishRenewalComponent implements OnInit {
 
 	/**
 	 * Method is used when user click for add person
-	 * @param persontype : person array type
 	 */
 	addMorePerson() {
+		let relationshipIdValue = this.muttonFishRenewalForm.get('relationshipId').value.code;
+
+		if (!relationshipIdValue) {
+			this.toastrService.warning("Please select relationship of applicant first.");
+			return false;
+		}
 
 		let isEditAnotherRow = this.isTableInEditMode();
 		if (!isEditAnotherRow) {
-			if ( this.addItem().controls.length >= 5) {
-				this.toastrService.warning("Person not allowed more than 5");
+			if (relationshipIdValue == "PROPRIETOR" && this.addItem().controls.length >= 1) {
+				this.toastrService.warning("Person not allowed more than 1");
 				return false;
 			}
-
+			if ((relationshipIdValue == "PARTNER" || relationshipIdValue == "DIRECTOR" || relationshipIdValue == "AUTHORIZEDSIGNATORY") && this.addItem().controls.length >= 10) {
+				this.toastrService.warning("Person not allowed more than 10");
+				return false;
+			}
 			this.addItem().push(this.createArray());
 			// this.muttonFishRenewalForm.get('relationshipList').setValidators([Validators.required]);
 			let newlyadded = <any>this.addItem().controls;
@@ -368,6 +387,7 @@ export class MuttonFishRenewalComponent implements OnInit {
 			this.commonService.openAlert("Warning", "You can add new recode after save existing recode.", "warning");
 		}
 	}
+
 
 	/**
      * Method is used to set data value to upload method.
@@ -396,17 +416,26 @@ export class MuttonFishRenewalComponent implements OnInit {
 
 	/**
 	*  Method is used edit editable data view.
-	* @param row: table row id
+	* @param row: table row index
 	*/
 	editRecord(row: any) {
+		if(this.muttonFishRenewalForm.get('relationshipId').value.code == 'PROPRIETOR'){
+			this.toastrService.warning("You can not edit record.");
+			return false;
+		}
 		row.isEditMode = true;
 		row.deepCopyInEditMode = Object.assign({}, row.value)
 	}
 
 	/**
-	* Method is used when user click for remove person
-	*/
+	 * Method is used when user click for remove person
+	 * @param index : table index
+	 */
 	deleteRecord(index: any) {
+		if(this.muttonFishRenewalForm.get('relationshipId').value.code == 'PROPRIETOR'){
+			this.toastrService.warning("You can not delete record.");
+			return false;
+		}
 		this.commonService.confirmAlert('Are you sure?', "", 'info', '', performDelete => {
 			this.addItem().controls.splice(index, 1);
 			this.commonService.successAlert('Removed!', '', 'success');
@@ -415,7 +444,7 @@ export class MuttonFishRenewalComponent implements OnInit {
 
 	/**
 	*  Method is used save editable dataview.
-	* @param row: table row id
+	* @param row: table row index
 	*/
 	saveRecord(row: any) {
 		if (row.valid) {
@@ -425,7 +454,7 @@ export class MuttonFishRenewalComponent implements OnInit {
 
 	/**
 	*  Method is used cancel editable dataview.
-	* @param row: table row id
+	* @param row: table row index
 	*/
 	cancelRecord(row: any) {
 		if (row.deepCopyInEditMode) {
