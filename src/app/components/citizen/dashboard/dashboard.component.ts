@@ -140,6 +140,7 @@ export class DashboardComponent implements OnInit {
 			case 'SHOP-DUP':
 			case 'MF-REN':
 			case 'MF-TRA':
+			case 'MF-DUP':
 				this.router.navigate([ManageRoutes.getFullRoute(apiCode),false, apiCode]);
 			break;
 			default:

@@ -1,16 +1,105 @@
-<div class="container">
-	<app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
-	<mat-card class="mt-4 formClass">
-		<form [formGroup]="muttonFishDuplicateForm">
-			<mat-horizontal-stepper [linear]="false">
+<app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
 
-				<!-- first step start-->
-				<mat-step [label]="stepLable1">
-					<app-basic-details [basicFormGroup]="muttonFishDuplicateForm"></app-basic-details>
-					<app-action-bar [form]="muttonFishDuplicateForm" [step]="'final'" (stepReset)="stepReset()" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
-				</mat-step>
+<mat-card [hidden]="serachLicenceObj.isDisplayDuplicateLicenceForm" class="mt-4 formClass">
+	<mat-form-field class="col-md-10">
+		<input matInput required placeholder="{{'search_by_application_no' | translate:translateKey}}" [(ngModel)]="serachLicenceObj.searchLicenceNumber">
+	</mat-form-field>
+	<button class="col-md-2" mat-raised-button color="primary" (click)="searchLicence()">{{'search' | translate:translateKey}}</button>
+</mat-card>
 
-			</mat-horizontal-stepper>
-		</form>
-	</mat-card>
-</div>
+<mat-card [hidden]="!serachLicenceObj.isDisplayDuplicateLicenceForm" class="formClass cardBorder">
+	<form [formGroup]="muttonFishDuplicateForm">
+		<mat-tab-group [(selectedIndex)]="tabIndex" dynamicHeight="true" mat-stretch-tabs class="stepperNav">
+
+			<!-- step 1 Starts -->
+			<mat-tab>
+				<ng-template mat-tab-label>
+					<div>{{'license_holder_detail' | translate:translateKey}}</div>
+				</ng-template>
+
+				<div class="row">
+
+					<div class="col-md-4 ngSelect" formGroupName="licenseType">
+						<ng-select placeholder="{{'license_type' | translate:translateKey}} *" formControlName="code">
+							<ng-option *ngFor="let type of MF_LICENSE_TYPE" [value]="type.code">{{type.name}}</ng-option>
+						</ng-select>
+						<control-messages [control]="muttonFishDuplicateForm.get('licenseType').controls.code"></control-messages>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-2 ngSelect" formGroupName="personType">
+						<ng-select placeholder="{{'person_type' | translate:translateKey}} *" formControlName="code">
+							<ng-option *ngFor="let type of PERSON_TYPE" [value]="type.code">{{type.name}}</ng-option>
+						</ng-select>
+						<control-messages [control]="muttonFishDuplicateForm.get('personType').controls.code"></control-messages>
+					</div>
+					<mat-form-field class="col-md-2">
+						<input matInput type="text" required maxlength="30" placeholder="{{'holder_firstname' | translate:translateKey}}" formControlName="holderFirstName"
+						 appGujInputSource targetElement="holderFirstNameGuj" [form]="muttonFishDuplicateForm">
+						<control-messages [control]="muttonFishDuplicateForm.controls.holderFirstName"></control-messages>
+					</mat-form-field>
+					<mat-form-field class="col-md-4">
+						<input matInput type="text" required maxlength="30" placeholder="{{'holder_middlename' | translate:translateKey}}" formControlName="holderMiddleName"
+						 appGujInputSource targetElement="holderMiddleNameGuj" [form]="muttonFishDuplicateForm">
+						<control-messages [control]="muttonFishDuplicateForm.controls.holderMiddleName"></control-messages>
+					</mat-form-field>
+					<mat-form-field class="col-md-4">
+						<input matInput type="text" required maxlength="30" placeholder="{{'holder_lastname' | translate:translateKey}}" formControlName="holderLastName"
+						 appGujInputSource targetElement="holderLastNameGuj" [form]="muttonFishDuplicateForm">
+						<control-messages [control]="muttonFishDuplicateForm.controls.holderLastName"></control-messages>
+					</mat-form-field>
+				</div>
+
+				<!-- gujarati -->
+				<div class="row">
+					<mat-form-field class="col-md-4">
+						<input matInput type="text" maxlength="90" required formControlName="holderFirstNameGuj" appGujInputTarget [form]="muttonFishDuplicateForm"
+						 placeholder="{{ 'holder_firstname' | translate:translateKey:'gu' }}">
+						<control-messages [control]="muttonFishDuplicateForm.controls.holderFirstNameGuj"></control-messages>
+					</mat-form-field>
+					<mat-form-field class="col-md-4">
+						<input matInput type="text" required maxlength="90" placeholder="{{'holder_middlename' | translate:translateKey}}" formControlName="holderMiddleNameGuj"
+						 appGujInputTarget [form]="muttonFishDuplicateForm">
+						<control-messages [control]="muttonFishDuplicateForm.controls.holderMiddleNameGuj"></control-messages>
+					</mat-form-field>
+					<mat-form-field class="col-md-4">
+						<input matInput type="text" required maxlength="90" placeholder="{{'holder_lastname' | translate:translateKey}}" formControlName="holderLastNameGuj"
+						 appGujInputTarget [form]="muttonFishDuplicateForm">
+						<control-messages [control]="muttonFishDuplicateForm.controls.holderLastNameGuj"></control-messages>
+					</mat-form-field>
+				</div>
+				<!-- /gujarati -->
+
+				<div class="row">
+					<h2>{{'permanat_address' | translate:translateKey}}</h2>
+					<app-address #permanantAddressEstablishment [requiredFeilds]="muttonFishDuplicateForm.controls.permanantAddress.value" [addressFormGroup]="muttonFishDuplicateForm.controls.permanantAddress"></app-address>
+				</div>
+				<div class="row">
+					<h2>{{'temp_address' | translate:translateKey}}</h2>
+					<app-address #temporaryAddressEstablishment [requiredFeilds]="muttonFishDuplicateForm.controls.temporaryAddress.value" [addressFormGroup]="muttonFishDuplicateForm.controls.temporaryAddress"></app-address>
+				</div>
+
+				<mat-form-field class="col-md-4">
+					<input matInput OnlyNumber maxlength="12" formControlName="holderTelephoneNo" placeholder="{{'holder_telephone_no' | translate:translateKey}}">
+				</mat-form-field>
+				<mat-form-field class="col-md-4">
+					<input matInput OnlyNumber maxlength="11" formControlName="holderMobileNo" placeholder="{{'holder_mobile_no' | translate:translateKey}}">
+				</mat-form-field>
+				<mat-form-field class="col-md-4">
+					<input matInput OnlyNumber maxlength="12" formControlName="holderFaxNo" placeholder="{{'holder_fax_no' | translate:translateKey}}">
+				</mat-form-field>
+				<mat-form-field class="col-md-4">
+					<input matInput OnlyNumber maxlength="12" formControlName="holderAadharNo" placeholder="{{'holder_aadhar_no' | translate:translateKey}}">
+				</mat-form-field>
+				<mat-form-field class="col-md-4">
+					<input matInput appAlphaNumeric maxlength="10" formControlName="holderPanNo" placeholder="{{'holder_pan_no' | translate:translateKey}}">
+				</mat-form-field>
+
+				<app-action-bar [uploadFiles]="uploadFileArray" [form]="muttonFishDuplicateForm" (handleErrors)="handleErrorsOnSubmit($event)" [stepInfo]="{step: 'final', next:1, back:0} "></app-action-bar>
+			</mat-tab>
+			<!-- step 1 Ends -->
+
+		</mat-tab-group>
+	</form>
+	<!-- {{ muttonFishDuplicateForm.value | json }} -->
+</mat-card>
