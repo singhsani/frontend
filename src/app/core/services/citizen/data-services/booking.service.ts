@@ -15,7 +15,6 @@ export class BookingService {
 	constructor(private http: HttpService) {
 
 	}
-
 	/**
 	 * This method is use for get all resource
 	 */
@@ -28,16 +27,52 @@ export class BookingService {
 	}
 
 	/**
-	 * This method is use for get date wise slots for particular resource 
-	 * @param resourceName - string
-	 * @param date - YYYY-MM-DD
+	 * Method is used to get all available slot using api.
+	 * @param filterData - filter data object.
 	 */
-	getAllSlots(resourceName, date){
-		
-		this.requestURL = `api/booking/${this.resourceType}/slots?resource=${resourceName}&date=${date}`;
-
+	getAllSlots(filterData){
+		this.requestURL = `api/booking/${this.resourceType}/slotsAPI?resource=${filterData.resourceName}&startDate=${filterData.startDate}&endDate=${filterData.endDate}`;
+        
 		return this.http.get(this.requestURL);
+	}
 
+	/**
+	 * Method is used to shortlist all selected shifts in townhall.
+	 * @param shortListData - selected dates, shifts.
+	 */
+	shortListTownHall(shortListData) {
+		this.requestURL = `api/booking/${this.resourceType}/shortlistAPI`;
+		return this.http.post(this.requestURL, shortListData);
+	}
+
+
+	/**
+	 * Method is used to search payment.
+	 * @param searchPaymentData - Search Payment Data.
+	 */
+	searchPayment(refNumber) {
+
+		this.requestURL =`api/booking/${this.resourceType}/getFees/${refNumber}`
+	
+		return this.http.get(this.requestURL);
+	}
+
+
+	commonBookSlot(bookingInfo) {
+		this.requestURL = `api/booking/${this.resourceType}/bookAPI`;
+		return this.http.post(this.requestURL, bookingInfo);
+	}
+
+	/**
+	 * This method is use for book slot
+	 * @param slotId - string
+	 * @param formData - form data
+	 */
+	commonCancelBookedSlot(slotId, formData) {
+
+		this.requestURL = `api/booking/${this.resourceType}/slot/cancel?uuid=${slotId}`;
+
+		return this.http.post(this.requestURL, formData);
 	}
 
 	/**
@@ -84,11 +119,11 @@ export class BookingService {
 	 * @param slotId - string
 	 * @param formData - form data
 	 */
-	cancelBookedSlot(slotId, formData) {
+	cancelBookedSlot(refNumber, formData) {
 
-		this.requestURL = `api/booking/${this.resourceType}/slot/cancel?uuid=${slotId}`;
+		this.requestURL = `api/booking/${this.resourceType}/cancelAPI?refNumber=${refNumber}`;
 
-		return this.http.post(this.requestURL, formData);
+		return this.http.get(this.requestURL);
 	}
 
 	/**
@@ -100,7 +135,7 @@ export class BookingService {
 
 		return this.http.get(this.requestURL);
 
-	}
+	} Object 
 
 	/**
 	 * This method is use to get lookup data respective to api type
@@ -163,6 +198,8 @@ export class BookingService {
 		this.requestURL = `api/booking/${this.resourceType}/slot/bookAPI`;
 		return this.http.post(this.requestURL, bookingInfo);
 	}
+
+
 	
 
 

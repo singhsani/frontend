@@ -536,39 +536,23 @@
 						</div>
 					</div>
 
-					<div style="overflow-x: scroll;" *ngIf="shopLicNewForm.get('partnerList').controls.length">
+					<div style="overflow-x: auto;" *ngIf="shopLicNewForm.get('partnerList').controls.length">
 						<div>
-							<table class="table table-striped customDataTable">
+							<table class="table table-striped customDataTable table-inputW100p idNubmer">
 								<thead>
 									<tr>
-										<th colspan="2" *ngIf="shopLicNewForm.get('canEdit').value"></th>
 										<th>#</th>
 										<th>{{'name' | translate:translateKey}}</th>
 										<th>{{'address' | translate:translateKey}}</th>
 										<th>{{'relationship' | translate:translateKey}}</th>
-										<th>{{'gender' | translate:translateKey}}</th>
-										<th>{{'age' | translate:translateKey}}</th>
+										<th width="120">{{'gender' | translate:translateKey}}</th>
+										<th width="60">{{'age' | translate:translateKey}}</th>
+										<th width="100" *ngIf="shopLicNewForm.get('canEdit').value"></th>
 									</tr>
 								</thead>
 								<tbody formArrayName="partnerList">
 									<tr *ngFor="let item of shopLicNewForm.get('partnerList').controls; let indx = index;" [formGroupName]="indx">
-										<td style="width: 40px;" *ngIf="shopLicNewForm.get('canEdit').value">
-											<button mat-icon-button color="primary" *ngIf="!item.isEditMode" (click)="editRecord(item)">
-												<mat-icon title="Edit">edit</mat-icon>
-											</button>
-											<button type="submit" [disabled]="item.invalid" mat-icon-button color="primary" *ngIf="item.isEditMode" (click)="saveRecord(item)">
-												<mat-icon title="save">save</mat-icon>
-											</button>
-										</td>
-										<td style="width: 40px;" *ngIf="shopLicNewForm.get('canEdit').value">
-											<button mat-icon-button color="warn" *ngIf="!item.isEditMode" (click)="deleteRecord('PARTNER',indx)">
-												<mat-icon title="Delete">delete</mat-icon>
-											</button>
-											<button mat-icon-button color="warn" *ngIf="item.isEditMode" (click)="cancelRecord(item)">
-												<mat-icon title="Delete">cancel</mat-icon>
-											</button>
-										</td>
-
+										
 										<td>{{indx+1}}</td>
 
 										<td>
@@ -618,6 +602,26 @@
 												<control-messages [control]="item.controls.age"></control-messages>
 											</mat-form-field>
 										</td>
+
+										<td>
+												<span *ngIf="shopLicNewForm.get('canEdit').value">
+												<button mat-icon-button color="primary" *ngIf="!item.isEditMode" (click)="editRecord(item)">
+													<mat-icon title="Edit">edit</mat-icon>
+												</button>
+												<button type="submit" [disabled]="item.invalid" mat-icon-button color="primary" *ngIf="item.isEditMode" (click)="saveRecord(item)">
+													<mat-icon title="save">save</mat-icon>
+												</button>
+											</span>
+											<span *ngIf="shopLicNewForm.get('canEdit').value">
+												<button mat-icon-button color="warn" *ngIf="!item.isEditMode" (click)="deleteRecord('PARTNER',indx)">
+													<mat-icon title="Delete">delete</mat-icon>
+												</button>
+												<button mat-icon-button color="warn" *ngIf="item.isEditMode" (click)="cancelRecord(item)">
+													<mat-icon title="Delete">cancel</mat-icon>
+												</button>
+												</span>
+											</td>
+											
 									</tr>
 								</tbody>
 							</table>
@@ -1148,7 +1152,7 @@
 				</div>
 
 				<app-action-bar [uploadFiles]="uploadFileArray | filterAttachment:shopLicNewForm.get( 'typeOfOrganisation').value.code" [form]="shopLicNewForm"
-				 (handleErrors)="handleErrorsOnSubmit($event) " (tabIndex)="onTabChange($event) " [stepInfo]="{step: 'final', next:8, back: 6} "></app-action-bar>
+				 (handleErrors)="handleErrorsOnSubmit($event) " (tabIndex)="onTabChange($event) " [stepInfo]="{step: 'final', next:7, back: 5} "></app-action-bar>
 
 			</mat-tab>
 			<!-- step Attachment Ends -->

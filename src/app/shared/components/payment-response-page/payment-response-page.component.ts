@@ -87,7 +87,7 @@ export class PaymentResponsePageComponent implements OnInit {
       id: null,
       uniqueId: null,
       version: null,
-      refNumber: data.serviceFormId,
+      refNumber: data.refNumber,
       response: JSON.stringify({
         data: "paid",
         status: true

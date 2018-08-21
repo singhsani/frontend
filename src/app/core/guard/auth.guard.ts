@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 
 import { AppService } from './../services/citizen/app-services/app.service';
 import { ManageRoutes } from '../../config/routes-conf';
+import { ToastrService } from 'ngx-toastr';
 
 /**
  * AuthGuard Class to handle Authentication of application.
@@ -18,7 +19,8 @@ export class AuthGuard implements CanActivate, CanLoad {
 	 */
 	constructor(
 		private appService: AppService,
-		private router: Router
+		private router: Router,
+		private toaster: ToastrService
 	) { }
 
 	/**
@@ -40,6 +42,7 @@ export class AuthGuard implements CanActivate, CanLoad {
 		if (this.appService.isLoggedIn()) {
 			return true;
 		} else {
+			this.toaster.error('Session has been expired');
 			this.router.navigate([ManageRoutes.getFullRoute('CITIZENAUTHLOGIN')]);
 			return false;
 		}

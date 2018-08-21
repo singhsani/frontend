@@ -102,7 +102,7 @@ export class HosActionBarComponent implements OnInit, OnChanges {
 	 * This method is used for save form as draft using API
 	 */
 	saveAsDraft() {
-		console.log(this.form.value)
+		console.log(this.form)
 
 		this.isSaveBtnDisabled = true;
 
@@ -297,12 +297,5 @@ export class HosActionBarComponent implements OnInit, OnChanges {
 				control.markAsTouched();
 			});
 		}
-	}
-
-	/**
-	 * This method is use to redirect on my application
-	 */
-	cancelForm() {
-		this.route.navigate(['hospital/my-applications']);
 	}
 }

@@ -146,7 +146,7 @@ export class ActionBarComponent implements OnInit, OnChanges {
 							this.form.get('canEdit').setValue(false);
 						}
 
-						this.toastr.success(`${this.form.value.serviceDetail.name} information successfully submit`);
+						this.toastr.success(`${this.form.getRawValue().serviceDetail.name} information successfully submit`);
 						this.isSubmitBtnDisabled = false;
 						this.isBtnsDisabled = false;
 						this.form.disable();

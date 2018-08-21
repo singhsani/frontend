@@ -74,12 +74,15 @@ export class CancelBookingComponent implements OnInit {
 			}
 		);
 
+		console.log(this.bookingList);
+
 	}
 
-	cancelBooking(uniqueId: string) {
+	cancelBooking(refNumber: string) {
+
 
 		this.commonService.submitAlert('Are you sure?', "You won't be able to revert this!", 'warning', '', performDelete => {
-			this.bookingService.cancelBookedSlot(uniqueId, '').subscribe(res => {
+			this.bookingService.cancelBookedSlot(refNumber, '').subscribe(res => {
 				this.toster.success('Booking has been Cancelled');
 				this.getAllBooking();
 			}, err => {
@@ -112,5 +115,12 @@ export class CancelBookingComponent implements OnInit {
 		return className;
 	}
 
-
+	/**
+     * Method is used to return Date in format (DD-MM-YYYY)
+     * @param date 
+     */
+	returnProperDate(date: string) {
+		let newDate = date.split("-");
+		return newDate[2] + "-" + newDate[1] + "-" + newDate[0]
+	}
 }

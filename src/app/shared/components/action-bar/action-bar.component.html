@@ -24,11 +24,9 @@
 
 <div *ngIf="!isstepper" class="row mt-4">
 	<div class="col-sm-12 col-md-12">
-
 		<!-- <div class="pull-left">
 			<button type="button" mat-raised-button (click)="cancelForm()">Cancel</button>
 		</div> -->
-
 		<div class="pull-right">
 			<button type="button" mat-raised-button color="primary" [disabled]="isSubmitBtnDisabled" *ngIf="form.get('canEdit').value"
 			 (click)="saveAsDraft()">{{(stepInfo.step == 'final' ? 'save' : 'save_and_next') | translate:translateKey}}</button>
@@ -36,7 +34,5 @@
 			<button type="button" mat-raised-button color="primary" [disabled]="isSubmitBtnDisabled" *ngIf="form.get('canEdit').value"
 			 (click)="onSubmit()">{{'submit' | translate:translateKey}}</button>
 		</div>
-
-
 	</div>
 </div>

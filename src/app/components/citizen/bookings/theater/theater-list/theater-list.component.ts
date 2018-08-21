@@ -221,19 +221,19 @@ export class TheaterListComponent implements OnInit {
 		/**
 		 * Get All Slots Available.
 		 */
-		this.bookingService.getAllSlots(resourceName, date).subscribe(res => {
+		// this.bookingService.getAllSlots(resourceName, date).subscribe(res => {
 
-			/**
-			 * Store Slots in Array to display in tabular way.
-			 */
-			this.availableStots = res.data;
-		}, err => {
+		// 	/**
+		// 	 * Store Slots in Array to display in tabular way.
+		// 	 */
+		// 	this.availableStots = res.data;
+		// }, err => {
 
-			/**
-			 * Toaster alert if error occured.
-			 */
-			this.toster.error(err.error.message);
-		});
+		// 	/**
+		// 	 * Toaster alert if error occured.
+		// 	 */
+		// 	this.toster.error(err.error.message);
+		// });
 	}
 
 	/**
