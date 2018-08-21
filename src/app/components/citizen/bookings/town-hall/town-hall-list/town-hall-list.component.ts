@@ -7,6 +7,12 @@ import { ManageRoutes } from '../../../../../config/routes-conf';
 import { BookingService } from '../../../../../core/services/citizen/data-services/booking.service';
 import { filter } from 'rxjs-compat/operator/filter';
 
+import { SessionStorageService } from 'angular-web-storage';
+import { CommonService } from '../../../../../shared/services/common.service';
+
+
+
+
 @Component({
 	selector: 'app-town-hall-list',
 	templateUrl: './town-hall-list.component.html',
@@ -15,7 +21,6 @@ import { filter } from 'rxjs-compat/operator/filter';
 export class TownHallListComponent implements OnInit {
 
 	@ViewChild('address') addressComp: any;
-	
 
 	/**
 	 * town hall search form group.
@@ -31,6 +36,19 @@ export class TownHallListComponent implements OnInit {
 	showPaymentReciept: boolean = false;
 
 	paymentObject: any;
+
+	/**
+	 * steps labels
+	 */
+	stepLabel1: string = 'Organization Details'
+	stepLabel2: string = 'Applicant Details'
+	stepLabel3: string = 'Bank Account Details'
+
+	tabIndex: number = 0;	
+
+	minDate: Date = new Date();
+	
+	
 	
 
 
@@ -53,6 +71,11 @@ export class TownHallListComponent implements OnInit {
 	 * Available Dates for Shortlist.
 	 */
 	Dates: Array<any> = [];
+
+	/**
+	 * Bank Lookups
+	 */
+	BankOptions: Array<any>;
 
 	availableStots: Array<any> = [];
 	displayedColumns: Array<string> = ['id', 'start', 'end', 'slotStatus'];
@@ -94,6 +117,10 @@ export class TownHallListComponent implements OnInit {
 
 	constructor(
 		private fb: FormBuilder,
+		private sessionStore: SessionStorageService,
+		private commonService: CommonService,
+		
+		
 		private bookingService: BookingService,
 		private toster: ToastrService,
 		private router: Router
@@ -102,8 +129,6 @@ export class TownHallListComponent implements OnInit {
 	}
 
 	ngOnInit() {
-
-		
 
 		//static data.
 		this.head_lines = `Online Town Hall Booking facility is the convenient and
@@ -116,24 +141,26 @@ export class TownHallListComponent implements OnInit {
 
 		this.createTownHallBookingApplicationForm();
 		
-
-		
-		
-
 		this.getTownHallResourceList();
 
-		this.purposes = [
-			{ name: 'Natak', code: 'Natak' },
-			{ name: 'Shsttriya Nrutya', code: 'Shsttriya Nrutya' },
-			{ name: 'Ras Garbha', code: 'Ras Garbha' },
-		];
+		this.bookingLookups();
 
+	}
+
+	bookingLookups(){
+		this.bookingService.getDataFromLookups().subscribe(resp => {
+
+			this.purposes = resp.PURPOSE;
+			this.BankOptions = resp.BANK;
+		}, err => {
+			console.log(err);
+		})
 	}
 
 	createTownHallAvailiblityForm() {
 		this.searchTownHallForm = this.fb.group({
 
-			code: ['TOWNHALL-1', Validators.required],
+			code: [null, Validators.required],
 
 			purpose: this.fb.group({
 				code: [null, Validators.required],
@@ -150,10 +177,6 @@ export class TownHallListComponent implements OnInit {
 	getTownHallResourceList() {
 		this.bookingService.getResourceList().subscribe(res => {
 			this.townHalls = res.data;
-			// if (res.data.length) {
-			// 	this.searchTownHallForm.get('code').setValue(res.data[0].code);
-			// 	this.searchBooking();
-			// }
 		},
 			err => {
 				this.toster.error(err.error.error_description);
@@ -180,9 +203,7 @@ export class TownHallListComponent implements OnInit {
 		 */
 		this.bookingService.getAllSlots(filterData).subscribe(resp => {
 			this.filteredReponse = resp;
-
 			let temp = resp.data.scheduleList;
-
 			this.Dates = temp.sort((a, b) => {
 				if ((new Date(a.key).getTime()) >= (new Date(b.key).getTime())) {
 					return 1
@@ -190,7 +211,6 @@ export class TownHallListComponent implements OnInit {
 					return -1
 				}
 			});
-
 			this.availableStots = resp.data;
 
 		}, err => {
@@ -237,32 +257,29 @@ export class TownHallListComponent implements OnInit {
 
 			this.showSearchForm = false;
 
-			console.log(resp.data);
-
 			this.townHallApplicationForm.patchValue(resp.data);
 
+			if (resp.data.paymentRequired) {
 
-		}, (err) => {
-
-
-
-
-			
-			if(err.status == 402){
-
-				this.bookingService.searchPayment(err.error.data.refNumber).subscribe(payResp => {
+				this.bookingService.searchPayment(resp.data.refNumber).subscribe(payResp => {
 
 					this.paymentObject = payResp;
 
 					this.showPaymentReciept = true;
 
 				})
+
 			}
+
+
+		}, (err) => {
+
+			console.log(err);
 		});
 	}
 
 
-	confirmPayment(){
+	confirmPayment() {
 		this.showPaymentReciept = false;
 		this.showApplicationForm = true;
 	}
@@ -299,24 +316,32 @@ export class TownHallListComponent implements OnInit {
 			applicantName: null,
 			relationshipWithOrg: null,
 			emailID: null,
-			
 			/**
 			 * Bank Accoount Details
 			 */
 			accountHolderName: null,
 			accountNo: null,
-			bankName: null,
-			
+			bankName: this.fb.group({
+				code: null
+			}),
+			ifscCode: [null],
+
 			/**
 			 * Booking Details
 			 */
-			bookingDate: "20-06",
-			bookingFrom: "20-07",
-			bookingPurposeMaster: null,
-			bookingTo: "20-11",
+			bookingDate: null,
+			bookingFrom: null,
+			bookingPurposeMaster: this.fb.group({
+				code: null,
+				name: null
+			}),
+
+			bookingTo: null,
 			cancelledDate: null,
-			expiryTime: "2018-08-06 :47",
+			expiryTime: null,
+
 			policePerformanceLicense: null,
+
 			programPurpose: null,
 			programShortDetails: null,
 
@@ -325,19 +350,55 @@ export class TownHallListComponent implements OnInit {
 			 */
 			orgTelephoneNo: null,
 			organizationAddress: this.fb.group(this.addressComp.addressControls()),
-			oraganizationName: null,
+			organizationName: null,
 			organizationPresidentName: null,
 		})
 
 	}
 
-	submitTownhallApplication(){
+	submitTownhallApplication() {
 
 		this.bookingService.commonBookSlot(this.townHallApplicationForm.value).subscribe(resp => {
-			console.log(resp);
-			//redirect to payment gateway.
-		})
 
+			/**
+			 * Response Data here 
+			 */
+		}, (err) => {
+
+			/**
+			 * Catch error here.
+			 */
+			if (err.status === 402) {
+
+				let paymentData = err.error.data;
+
+				let payData = {
+					id: null,
+					uniqueId: null,
+					version: null,
+					paymentType: paymentData.paymentType,
+					refNumber: paymentData.refNumber,
+					response: JSON.stringify({
+						data: "paid",
+						status: true
+					}),
+					transactionId: paymentData.transactionId,
+					paymentStatus: "SUCCESS",
+					retUrl: "http://192.168.30.74:4200/",
+					retPath: 'citizen/payment-gateway-response',
+					myApplicationUrl: '/citizen/booking/cancel-booking'
+				}
+
+				this.sessionStore.set('paymentData', JSON.stringify(payData));
+
+				this.commonService.paymentAlert('', '', '', cb => {
+					//http://192.168.10.107:8080/vmcadminportal/
+					window.location.href = `http://192.168.10.107:8080/vmcadminportal/#/admin/payment-gateway?retUrl=${payData.retUrl}&retPath=${payData.retPath}`;
+				});
+
+				return;
+			}
+		})
 	}
 
 	/**
@@ -347,5 +408,45 @@ export class TownHallListComponent implements OnInit {
 	returnProperDate(date: string) {
 		let newDate = date.split("-");
 		return newDate[2] + "-" + newDate[1] + "-" + newDate[0]
+	}
+
+	/**
+	 * This method use to get output event of tab change
+	 * @param evt - Tab index
+	 */
+	onTabChange(evt) {
+		this.tabIndex = evt;
+	}
+
+	/**
+	 * Method is used to handle error/validation on submit
+	 * @param count - count of invalid control.
+	 */
+	handleErrorsOnSubmit(count) {
+		let step1 = 6;
+		let step2 = 16;
+		let step3 = 36;
+		let step4 = 41;
+		let step5 = 42;
+
+		if (count <= step1) {
+			this.tabIndex = 0;
+			return false;
+		} else if (count <= step2) {
+			this.tabIndex = 1;
+			return false;
+		} else if (count <= step3) {
+			this.tabIndex = 2;
+			return false;
+		} else if (count <= step4) {
+			this.tabIndex = 3;
+			return false;
+		} else if (count <= step5) {
+			this.tabIndex = 4;
+			return false;
+		} else if (count >= 58 && count <= 64) {
+			this.tabIndex = 3;
+		}
+
 	}
 }

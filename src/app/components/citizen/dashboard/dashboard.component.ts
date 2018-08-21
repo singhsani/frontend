@@ -21,55 +21,75 @@ export class DashboardComponent implements OnInit {
 	isRecentApp: boolean = false;
 	recentApp: any;
 	bookingsAndTicketings: any = [
-			{
-				"id": 1,
-				"uniqueId": null,
-				"version": null,
-				"code": "BOOKINGMODULE",
-				"fieldView": "ALL",
-				"fieldList": null,
-				"name": "Booking Facilities",
-				"gujName": "Booking Facilities",
-				"services": [
-					{
-						"code": "TOWNHALLLIST",
-						"fieldView": "ALL",
-						"name": "Town Hall",
-						"gujName": "ટાઉનહોલ",
-						"appointmentRequired": false,
-						"active": true
-					},
-					{
-						"code": "GUESTHOUSELIST",
-						"fieldView": "ALL",
-						"name": "Guest House",
-						"gujName": "અતિથિગૃહ",
-						"appointmentRequired": false,
-						"active": true
-					}
-				]
-			},
-			{
-				"id": 2,
-				"uniqueId": null,
-				"version": null,
-				"code": "BOOKINGMODULE",
-				"fieldView": "ALL",
-				"fieldList": null,
-				"name": "Ticketing Facilities",
-				"gujName": "Ticketing Facilities",
-				"services": [
-					{
-						"code": "ZOO",
-						"fieldView": "ALL",
-						"name": "Zoo",
-						"gujName": "પ્રાણી સંગ્રહાલય",
-						"appointmentRequired": false,
-						"active": false
-					}
-				]
-			}
-		];
+		{
+			"id": 1,
+			"uniqueId": null,
+			"version": null,
+			"code": "BOOKINGMODULE",
+			"fieldView": "ALL",
+			"fieldList": null,
+			"name": "Booking Facilities",
+			"gujName": "Booking Facilities",
+			"services": [
+				{
+					"code": "TOWNHALLLIST",
+					"fieldView": "ALL",
+					"name": "Town Hall",
+					"gujName": "ટાઉનહોલ",
+					"appointmentRequired": false,
+					"active": true
+				},
+				{
+					"code": "GUESTHOUSELIST",
+					"fieldView": "ALL",
+					"name": "Guest House",
+					"gujName": "અતિથિગૃહ",
+					"appointmentRequired": false,
+					"active": true
+				}
+			]
+		},
+		{
+			"id": 2,
+			"uniqueId": null,
+			"version": null,
+			"code": "BOOKINGMODULE",
+			"fieldView": "ALL",
+			"fieldList": null,
+			"name": "Ticketing Facilities",
+			"gujName": "Ticketing Facilities",
+			"services": [
+				{
+					"code": "ZOO",
+					"fieldView": "ALL",
+					"name": "Zoo",
+					"gujName": "પ્રાણી સંગ્રહાલય",
+					"appointmentRequired": false,
+					"active": false
+				}
+			]
+		},
+		{
+			"id": 3,
+			"uniqueId": null,
+			"version": null,
+			"code": "BOOKINGMODULE",
+			"fieldView": "ALL",
+			"fieldList": null,
+			"name": "My Bookings",
+			"gujName": "My Bookings",
+			"services": [
+				{
+					"code": "CANCELBOOKING",
+					"fieldView": "ALL",
+					"name": "My Bookings",
+					"gujName": "My Bookings",
+					"appointmentRequired": false,
+					"active": true
+				}
+			]
+		}
+	];
 
 	/**
 	 * Constructor to declare defualt propeties of class
@@ -90,8 +110,8 @@ export class DashboardComponent implements OnInit {
 		this.paginationService.apiType = 'myApps';
 		this.paginationService.pageIndex = 1;
 		this.paginationService.pageSize = 2;
-		this.paginationService.getAllData().subscribe( data => {
-			if(data.totalRecords > 0){
+		this.paginationService.getAllData().subscribe(data => {
+			if (data.totalRecords > 0) {
 				this.isRecentApp = true;
 				this.recentApp = data.data;
 			} else {
@@ -99,7 +119,7 @@ export class DashboardComponent implements OnInit {
 				this.recentApp = [];
 			}
 		});
-		
+
 	}
 
 	/**
@@ -107,7 +127,7 @@ export class DashboardComponent implements OnInit {
 	 */
 	createRecord(apiCode: string) {
 
-		switch(apiCode){
+		switch (apiCode) {
 			case 'HEL-BCR':
 			case 'HEL-DCR':
 			case 'HEL-NRCBR':
@@ -123,17 +143,17 @@ export class DashboardComponent implements OnInit {
 				this.router.navigate([ManageRoutes.getFullRoute(apiCode),false, apiCode]);
 			break;
 			default:
-			if (ManageRoutes.getApiTypeFromApiCode(apiCode)) {
-				this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);
-				this.formService.createFormData().subscribe(res => {
-					let redirectUrl = ManageRoutes.getFullRoute(apiCode);
-					this.router.navigate([redirectUrl, res.serviceFormId, apiCode]);
-				});
-			} else {
-				// todo 
-				this.toastr.error("Invalid API Code");
-			}
-			break;
+				if (ManageRoutes.getApiTypeFromApiCode(apiCode)) {
+					this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);
+					this.formService.createFormData().subscribe(res => {
+						let redirectUrl = ManageRoutes.getFullRoute(apiCode);
+						this.router.navigate([redirectUrl, res.serviceFormId, apiCode]);
+					});
+				} else {
+					// todo 
+					this.toastr.error("Invalid API Code");
+				}
+				break;
 		}
 
 	}

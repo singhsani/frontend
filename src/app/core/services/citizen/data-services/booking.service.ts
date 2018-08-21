@@ -15,7 +15,6 @@ export class BookingService {
 	constructor(private http: HttpService) {
 
 	}
-
 	/**
 	 * This method is use for get all resource
 	 */
@@ -60,8 +59,20 @@ export class BookingService {
 
 
 	commonBookSlot(bookingInfo) {
-		this.requestURL = `api/booking/${this.resourceType}/slot/bookAPI`;
+		this.requestURL = `api/booking/${this.resourceType}/bookAPI`;
 		return this.http.post(this.requestURL, bookingInfo);
+	}
+
+	/**
+	 * This method is use for book slot
+	 * @param slotId - string
+	 * @param formData - form data
+	 */
+	commonCancelBookedSlot(slotId, formData) {
+
+		this.requestURL = `api/booking/${this.resourceType}/slot/cancel?uuid=${slotId}`;
+
+		return this.http.post(this.requestURL, formData);
 	}
 
 	/**
@@ -108,11 +119,11 @@ export class BookingService {
 	 * @param slotId - string
 	 * @param formData - form data
 	 */
-	cancelBookedSlot(slotId, formData) {
+	cancelBookedSlot(refNumber, formData) {
 
-		this.requestURL = `api/booking/${this.resourceType}/slot/cancel?uuid=${slotId}`;
+		this.requestURL = `api/booking/${this.resourceType}/cancelAPI?refNumber=${refNumber}`;
 
-		return this.http.post(this.requestURL, formData);
+		return this.http.get(this.requestURL);
 	}
 
 	/**
@@ -124,7 +135,7 @@ export class BookingService {
 
 		return this.http.get(this.requestURL);
 
-	}
+	} Object 
 
 	/**
 	 * This method is use to get lookup data respective to api type

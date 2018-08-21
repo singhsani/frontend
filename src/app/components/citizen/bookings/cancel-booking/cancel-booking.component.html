@@ -1,58 +1,64 @@
-
-<div class="container">
-	<app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
-	<mat-card class="mb-4">
-		<form [formGroup]="searchBookingsForm" (ngSubmit)="getAllBooking()" autocomplete="off" ngNativeValidate>
-			<div class="row">
-				<mat-form-field class="col-md-4">
-					<mat-select placeholder="Select Resource" formControlName="resourceType">
-						<mat-option *ngFor="let resource of resources" [value]="resource.type">
-							{{ resource.name }}
-						</mat-option>
-					</mat-select>
-				</mat-form-field>
-				<div class="col-md-4">
-						<button mat-raised-button color="primary" class="mt-2" type="submit">Search</button>
-				</div>
+<app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
+<mat-card class="mb-4">
+	<form [formGroup]="searchBookingsForm" (ngSubmit)="getAllBooking()" autocomplete="off" ngNativeValidate>
+		<div class="row">
+			<div class="col-md-8 ngSelect">
+				<ng-select placeholder="Select Resource" formControlName="resourceType">
+					<ng-option *ngFor="let resource of resources" [value]="resource.type">
+						{{ resource.name }}
+					</ng-option>
+				</ng-select>
 			</div>
-		</form>
-	</mat-card>
+			<div class="col-md-4">
+				<button mat-stroked-button style="width:100%" color="primary" class="mt-2" type="submit">Search</button>
+			</div>
+		</div>
+	</form>
+</mat-card>
 
-	<mat-table #table [dataSource]="bookingList">
-
-		<ng-container matColumnDef="id">
-			<mat-header-cell *matHeaderCellDef> # </mat-header-cell>
-			<mat-cell *matCellDef="let element;let indx=index;"> {{indx+1}} </mat-cell>
-		</ng-container>
-
-		<ng-container matColumnDef="start">
-			<mat-header-cell *matHeaderCellDef> From </mat-header-cell>
-			<mat-cell *matCellDef="let element;"> {{element.bookingFrom}}</mat-cell>
-		</ng-container>
-		
-		<ng-container matColumnDef="end">
-			<mat-header-cell *matHeaderCellDef> To </mat-header-cell>
-			<mat-cell *matCellDef="let element;"> {{element.bookingTo}} </mat-cell>
-		</ng-container>
-		
-		<ng-container matColumnDef="status">
-			<mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
-			<mat-cell *matCellDef="let element;"> {{element.status}} </mat-cell>
-		</ng-container>
-
-		<ng-container matColumnDef="action">
-			<mat-header-cell *matHeaderCellDef>Action</mat-header-cell>
-			<mat-cell *matCellDef="let element;">
-				<a class="badge badge-warning text-label" *ngIf="element.status =='Booked'" (click)="cancelBooking(element.uniqueId)">
-					Cancel
-				</a>
-				<!-- <span class="badge badge-info text-label" *ngIf="(diffr(element.end)<=0)">
-					Already Gone!
-				</span> -->
-			</mat-cell>
-		</ng-container>
-
-		<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-		<mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]=""></mat-row>
-	</mat-table>
+<div class="noApplication" *ngIf="bookingList.length == 0">
+	<img src="assets/icons/no-application-found.png" alt="">
+	<br> No Bookings Found
+	<span class="noActi">It seems, No activity happed yet</span>
+	<a mat-stroked-button class="mat-primary" routerLink="../../dashboard">Create Bookings</a>
 </div>
+
+<mat-table *ngIf="bookingList.length > 0" #table [dataSource]="bookingList">
+
+	<ng-container matColumnDef="id">
+		<mat-header-cell *matHeaderCellDef> # </mat-header-cell>
+		<mat-cell *matCellDef="let element;let indx=index;"> {{indx+1}} </mat-cell>
+	</ng-container>
+
+	<ng-container matColumnDef="start">
+		<mat-header-cell *matHeaderCellDef> From </mat-header-cell>
+		<mat-cell *matCellDef="let element;"> {{returnProperDate(element.bookingFrom)}}</mat-cell>
+	</ng-container>
+
+	<ng-container matColumnDef="end">
+		<mat-header-cell *matHeaderCellDef> To </mat-header-cell>
+		<mat-cell *matCellDef="let element;"> {{returnProperDate(element.bookingTo)}} </mat-cell>
+	</ng-container>
+
+	<ng-container matColumnDef="status">
+		<mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
+		<mat-cell *matCellDef="let element;"> {{element.status}} </mat-cell>
+	</ng-container>
+
+	<ng-container matColumnDef="action">
+		<mat-header-cell *matHeaderCellDef>Action</mat-header-cell>
+		<mat-cell *matCellDef="let element;" class="fullWidth">
+			<div class="row-inside">
+				<button mat-icon-button [disabled]="element.status !='Booked'" color="warn" (click)="cancelBooking(element.refNumber)">
+					<mat-icon title="Delete">delete</mat-icon>
+				</button>
+				<button mat-icon-button color="primary" (click)="printReceipt(row.serviceDetail.code, row.serviceDetail.name, row.serviceFormId)">
+					<mat-icon title="Print Receipt">print</mat-icon>
+				</button>
+			</div>
+		</mat-cell>
+	</ng-container>
+
+	<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+	<mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]=""></mat-row>
+</mat-table>
