@@ -1,15 +1,14 @@
-import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MatHorizontalStepper, MatStep, MatStepLabel } from '@angular/material';
 import { ManageRoutes } from './../../../../../config/routes-conf';
+import { CommonService } from '../../../../../shared/services/common.service';
+import { MuttonFishService } from '../common/services/mutton-fish.service';
 
 import { ValidationService } from '../../../../../shared/services/validation.service';
 import { FormsActionsService } from '../../../../../core/services/citizen/data-services/forms-actions.service';
-import * as _ from 'lodash';
-import { MuttonFishService } from '../common/services/mutton-fish.service';
-import { CommonService } from '../../../../../shared/services/common.service';
 import { Location } from '@angular/common';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
 	selector: 'app-mutton-fish-duplicate',
@@ -17,10 +16,6 @@ import { Location } from '@angular/common';
 	styleUrls: ['./mutton-fish-duplicate.component.scss']
 })
 export class MuttonFishDuplicateComponent implements OnInit {
-
-
-	@ViewChild(MatHorizontalStepper) stepper: MatHorizontalStepper;
-	@ViewChild(MatStepLabel) steplable: MatStepLabel;
 
 	@ViewChild('permanantAddressEstablishment') permanantAddressEstablishment: any;
 
@@ -31,63 +26,37 @@ export class MuttonFishDuplicateComponent implements OnInit {
 	apiCode: string;
 	tabIndex: number = 0;
 
+	//File and image upload
+	uploadModel: any = {};
+	private showButtons: boolean = false;
+
 	//Lookups Array
 	MF_LICENSE_TYPE: Array<any> = [];
+	MF_RELATIONSHIP_OF_APPLICANT: Array<any> = [];
+	MF_STATUS_OF_BUSINESS: Array<any> = [];
 	PERSON_TYPE: Array<any> = [];
+	FIRM_ZONE: Array<any> = [];
+	WARD: Array<any> = [];
+	BLOCK: Array<any> = [];
+	LOOKUP: any;
+	businessCategory: Array<any> = [];
+	businessSubCategory: Array<any> = [];
+
+	// required attachment array
+	private uploadFileArray: Array<any> = [];
+
 
 	// serach api variable
 	serachLicenceObj = {
 		isDisplayDuplicateLicenceForm: <boolean>false,
 		searchLicenceNumber: <string>""
 	}
-	/**
-	 * 
-	 * @param fb - Declare FormBuilder property.
-	 * @param validationService - Declare validation service property.
-	 * @param router - Declare router. 
-	 * @param route -  Declare url route.
-	 * @param formService - Declare form service property .
-	 * @param commonService - Declare sweet alert.
-	 * @param location - Declare for current URL.
-	 * @param shopAndEstablishmentService - Call only shop licence api.
-	 */
-	constructor(
-		private fb: FormBuilder,
-		private validationService: ValidationService,
-		private router: Router,
-		private route: ActivatedRoute,
-		private formService: FormsActionsService,
-		private muttonFishService: MuttonFishService,
-		private commonService: CommonService,
-		private location: Location
-	) { }
-
-	ngOnInit() {
-		this.route.paramMap.subscribe(param => {
-			this.formId = Number(param.get('id'));
-			this.apiCode = param.get('apiCode');
-			this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
-		});
-
-
-		this.getLookupData();
-		this.muttonFishDuplicateFormControls();
-
-		if (!this.formId) {
-			this.serachLicenceObj.isDisplayDuplicateLicenceForm = false;
-		}
-		else {
-			this.serachLicenceObj.isDisplayDuplicateLicenceForm = true;
-			this.getMuttonFishDuplicateData();
-			this.muttonFishDuplicateForm.disable();
-		}
-	}
 
 	/**
 	 * This method for serach licence using licence number.
 	 */
 	searchLicence() {
-		this.muttonFishService.searchLicence(this.serachLicenceObj.searchLicenceNumber).subscribe(
+		this.MuttonFishService.searchLicence(this.serachLicenceObj.searchLicenceNumber).subscribe(
 			(res: any) => {
 				if (res.success) {
 					this.serachLicenceObj.isDisplayDuplicateLicenceForm = true;
@@ -102,41 +71,157 @@ export class MuttonFishDuplicateComponent implements OnInit {
 				}
 			})
 	}
-	
-	getMuttonFishDuplicateData() {
+
+    /**
+     * @param fb - Declare FormBuilder property.
+     * @param validationError - Declare validation service property
+     * @param formService - Declare form service property 
+     * @param uploadFileService - Declare upload file service property.
+     * @param commonService - Declare sweet alert.
+	 * @param toastrService - Show massage with timer.
+     */
+	constructor(
+		private fb: FormBuilder,
+		private validationService: ValidationService,
+		private router: Router,
+		private route: ActivatedRoute,
+		private formService: FormsActionsService,
+		private commonService: CommonService,
+		private toastrService: ToastrService,
+		private MuttonFishService: MuttonFishService,
+		private location: Location
+	) { }
+
+	/**
+	 * This method call initially required methods.
+	 */
+	ngOnInit() {
+		this.route.paramMap.subscribe(param => {
+			this.formId = Number(param.get('id'));
+			this.apiCode = param.get('apiCode');
+			this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
+		});
+
+		this.getLookupData();
+		this.muttonFishDuplicateFormControls();
+
+		if (!this.formId) {
+			this.serachLicenceObj.isDisplayDuplicateLicenceForm = false;
+		}
+		else {
+			this.serachLicenceObj.isDisplayDuplicateLicenceForm = true;
+			this.getMuttonFishLicDuplicateData();
+			this.muttonFishDuplicateForm.disable();
+			// this.enableFielList();
+		}
+	}
+
+	/**
+     * This method is use to create new record for citizen.
+     * @param searchData: exciting licence number data
+     */
+	createRecordPatchSerachData(searchData: any) {
+		this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
+		this.formService.createFormData().subscribe(res => {
+
+			this.formId = res.serviceFormId;
+			this.muttonFishDuplicateForm.patchValue(searchData);
+
+			this.muttonFishDuplicateForm.patchValue({
+				id: res.id,
+				uniqueId: res.uniqueId,
+				version: res.version,
+				serviceFormId: res.serviceFormId,
+				createdDate: res.createdDate,
+				updatedDate: res.createdDate,
+				serviceType: res.serviceType,
+				// deptFileStatus: res.deptFileStatus,
+				serviceName: res.serviceName,
+				fileNumber: res.fileNumber,
+				pid: res.pid,
+				outwardNo: res.outwardNo,
+				agree: res.agree,
+
+				paymentStatus: res.paymentStatus,
+				canEdit: res.canEdit,
+				canDelete: res.canDelete,
+				canSubmit: res.canSubmit,
+				serviceCode: res.serviceCode,
+				applicationNo: res.applicationNo,
+
+				periodFrom: res.periodFrom,
+				periodTo: res.periodTo,
+				// newRegistration: res.newRegistration,
+				// renewal: res.renewal,
+				// adminCharges: res.adminCharges,
+				// netAmount: res.netAmount,
+				attachments: []
+			});
+
+			this.showButtons = true;
+
+			this.muttonFishDuplicateForm.disable();
+			this.enableFielList();
+		
+			let currentUrl = this.location.path().replace('false', this.formId.toString());
+			this.location.go(currentUrl);
+		});
+
+	}
+
+	/**
+	 * This method use for edit some fiels.
+	 */
+	enableFielList() {
+		//All form fields is in disable mode ,this is not valid form.
+		//when submit this form, at least one field is in enable mode. 
+		this.muttonFishDuplicateForm.get('serviceCode').enable();
+	}
+
+	/**
+	 * Method is used to get form data
+	 */
+	getMuttonFishLicDuplicateData() {
 		this.formService.getFormData(this.formId).subscribe(res => {
-			this.muttonFishDuplicateForm.patchValue(res);
+			try {
+				this.muttonFishDuplicateForm.patchValue(res);
+				this.showButtons = true;
+			
+			} catch (error) {
+				console.log(error.message);
+			}
 		});
 	}
 
 	/**
-	 * Method is used to handle error/validation on submit
-	 * @param count - count of invalid control.
-	 */
-	handleErrorsOnSubmit(count) {
-		let step1 = 6;
-
-		if (count <= step1) {
-			this.stepper.selectedIndex = 0;
-			return false;
-		}
-
-	}
-
-	/**
-	 * This method is use for get lookup data
-	 */
+	* Method is used to get lookup data
+	*/
 	getLookupData() {
 		this.formService.getDataFromLookups().subscribe(res => {
+			this.LOOKUP = res;
 			this.MF_LICENSE_TYPE = res.MF_LICENSE_TYPE;
+			this.MF_RELATIONSHIP_OF_APPLICANT = res.MF_RELATIONSHIP_OF_APPLICANT;
+			this.MF_STATUS_OF_BUSINESS = res.MF_STATUS_OF_BUSINESS;
 			this.PERSON_TYPE = res.PERSON_TYPE;
+			this.FIRM_ZONE = res.FIRM_ZONE;
 		});
 	}
-	
+
 	/**
-	 * 
-	 create form control
-	 */
+	* Method is used for get block as per zone selection
+	* @param event : selected ward code
+	*/
+	onChangeWard(event) {
+		this.BLOCK = [];
+		if (event && this.LOOKUP.hasOwnProperty(event)) {
+			this.BLOCK = this.LOOKUP[event];
+		}
+	}
+
+	/**
+	* Method is used to set form controls
+	* 'Guj' control is consider as a Gujarati fields
+	*/
 	muttonFishDuplicateFormControls() {
 		this.muttonFishDuplicateForm = this.fb.group({
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
@@ -157,61 +242,93 @@ export class MuttonFishDuplicateComponent implements OnInit {
 
 			permanantAddress: this.fb.group(this.permanantAddressEstablishment.addressControls()),
 			temporaryAddress: this.fb.group(this.permanantAddressEstablishment.addressControls()),
+
 			holderTelephoneNo: [null, [Validators.maxLength(12), Validators.minLength(10)]],
 			holderMobileNo: [null, [Validators.required, Validators.maxLength(11), Validators.minLength(10)]],
 			holderFaxNo: [null, [Validators.maxLength(12)]],
 			holderAadharNo: [null, [Validators.required, Validators.maxLength(12)]],
 			holderPanNo: [null, [Validators.required, Validators.maxLength(10)]],
 			/* Step 1 controls end */
+
+			/* Step 2 controls start */
+			// zoneNo: this.fb.group({ code: [null, Validators.required] }),
+			// wardNo: this.fb.group({ code: [null, Validators.required] }),
+			// blockNo: this.fb.group({ code: [null, Validators.required] }),
+			// businessAddress: this.fb.group(this.permanantAddressEstablishment.addressControls()),
+			// extraDetailsOfBusiness: [null, [Validators.maxLength(500)]],
+			// relationshipId: this.fb.group({
+			// 	code: [null, Validators.required]
+			// }),
+			// statusOfBusinessId: this.fb.group({
+			// 	code: [null, Validators.required]
+			// }),
+			// relationshipList: this.fb.array([]),
+			/* Step 3 controls end */
+
+			applicationDate: [],
+			licenseIssueDate: [null],
+			licenseDuplicatealDate: [null],
+			loinumber: [null],
+
+			/* Step 4 controls start*/
+			attachments: []
+			/* Step 4 controls end */
 		});
 	}
 
-
 	/**
-     * This method is use to create new record for citizen.
-     * @param searchData: exciting licence number data
+     * Method is used to set data value to upload method.
+     * @param indentifier - file identifier
+     * @param labelName - file label name.
+     * @param formPart - file form part
+     * @param variableName - file variable name.
      */
-	createRecordPatchSerachData(searchData: any) {
-		this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
-		this.formService.createFormData().subscribe(res => {
-			this.formId = res.serviceFormId;
-			this.muttonFishDuplicateForm.patchValue(searchData);
+	setDataValue(indentifier: number, labelName: string, formPart: string, variableName: string) {
+		this.uploadModel = {
+			fieldIdentifier: indentifier.toString(),
+			labelName: labelName,
+			formPart: formPart,
+			variableName: variableName,
+			serviceFormId: this.formId,
+		}
+		return this.uploadModel;
+	}
 
-			this.muttonFishDuplicateForm.patchValue({
-				id: res.id,
-				uniqueId: res.uniqueId,
-				version: res.version,
-				serviceFormId: res.serviceFormId,
-				createdDate: res.createdDate,
-				updatedDate: res.createdDate,
-				serviceType: res.serviceType,
-				
-				serviceName: res.serviceName,
-				fileNumber: res.fileNumber,
-				pid: res.pid,
-				outwardNo: res.outwardNo,
-				agree: res.agree,
+    /**
+     * This method required for final form submition.
+     * @param flag - flag of invalid control.
+     */
+	handleErrorsOnSubmit(flag) {
 
-				canEdit: res.canEdit,
-				canDelete: res.canDelete,
-				canSubmit: res.canSubmit,
-				serviceCode: res.serviceCode
-			});
+		let step0 = 15;
 
-			this.muttonFishDuplicateForm.disable();
-			//this.enableFielList();
-			let currentUrl = this.location.path().replace('false', this.formId.toString());
-			this.location.go(currentUrl);
-		});
+		if (flag != null) {
+			//Check validation for step by step
+			let count = flag;
 
+			if (count <= step0) {
+				this.tabIndex = 0;
+				return false;
+			}
+			// else if (count == 67) {
+			// 	this.checkReligion();
+			// 	return false;
+			// }
+			else {
+				console.log("else condition");
+			}
+
+		}
 	}
 
 	/**
-	 * Method is used to reset form its a output event from action bar.
+	 * This method use to get output event of tab change
+	 * @param evt - Tab index
 	 */
-	stepReset() {
-		this.stepper.reset();
+	onTabChange(evt) {
+		this.tabIndex = evt;
 	}
+
 
 
 }

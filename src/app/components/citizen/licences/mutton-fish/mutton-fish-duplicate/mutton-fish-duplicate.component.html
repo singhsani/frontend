@@ -95,7 +95,9 @@
 					<input matInput appAlphaNumeric maxlength="10" formControlName="holderPanNo" placeholder="{{'holder_pan_no' | translate:translateKey}}">
 				</mat-form-field>
 
-				<app-action-bar [uploadFiles]="uploadFileArray" [form]="muttonFishDuplicateForm" (handleErrors)="handleErrorsOnSubmit($event)" [stepInfo]="{step: 'final', next:1, back:0} "></app-action-bar>
+				<app-action-bar [uploadFiles]="uploadFileArray" [form]="muttonFishDuplicateForm" (handleErrors)="handleErrorsOnSubmit($event)"
+				 (tabIndex)="onTabChange($event) " [stepInfo]="{step: 'final', next:0, back:0} "></app-action-bar>
+
 			</mat-tab>
 			<!-- step 1 Ends -->
 
@@ -103,3 +105,4 @@
 	</form>
 	<!-- {{ muttonFishDuplicateForm.value | json }} -->
 </mat-card>
+
