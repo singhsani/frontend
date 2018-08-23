@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MatHorizontalStepper, MatStep, MatStepLabel } from '@angular/material';
 import { ManageRoutes } from './../../../../../config/routes-conf';
 import { ShopAndEstablishmentService } from '../common/services/shop-and-establishment.service';
 
@@ -32,7 +31,7 @@ export class ShopLicCancellationComponent implements OnInit {
 
 	//lookup array
 	wardNo: Array<any> = [];
-
+	uploadFileArray = [];
 	// serach api variable
 	serachLicenceObj = {
 		isDisplayCancelLicenceForm: <boolean>false,
