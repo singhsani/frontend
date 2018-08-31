@@ -136,7 +136,7 @@ export class MarriageCreateComponent implements OnInit {
             marriagePlace: this.fb.group(this.addrComponent.addressControls()),
             // for NRI marriage
             isNriMarriage: [false, Validators.required],
-            groomFirstName: ['abc', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
+            groomFirstName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
             groomMiddleName: ['', [ValidationService.nameValidator, Validators.maxLength(50)]],
             groomLastName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
             groomBirthDate: ['', Validators.required],
@@ -348,7 +348,7 @@ export class MarriageCreateComponent implements OnInit {
                 if (res.groomBirthDate != null && res.marriageDate != null) {
                     this.CalculateAge();
                 }
-               
+
                 //display static gujarati var
                 if (!_.isUndefined(res.groomReligion.code)) {
                     this.onChange(res.groomReligion.code, this.religionArray, 'religionGujgroom')
@@ -406,28 +406,30 @@ export class MarriageCreateComponent implements OnInit {
      */
     CalculateAge() {
         let marriagedate = this.marriageFormGroup.get("marriageDate").value;
-        if (marriagedate === null || marriagedate === undefined) {
+
+        if (!this.marriageFormGroup.get("marriageDate").valid && marriagedate != null) {
             this.commonService.openAlert("Warning", "Please select Date of Marriage", "warning");
         }
+    
+            //display days and years
+            let mday = moment(this.marriageFormGroup.get("marriageDate").value, "YYYY-MM-DD");
 
-        //display days and years
-        let mday = moment(this.marriageFormGroup.get("marriageDate").value, "YYYY-MM-DD");
+            if (this.marriageFormGroup.get("groomBirthDate").value && marriagedate) {
+                let bday = moment(this.marriageFormGroup.get("groomBirthDate").value, "YYYY-MM-DD");
+                this.groomage = mday.diff(bday, 'years', false);
+                this.groomdays = mday.diff(bday.add(this.groomage, 'years'), 'days', false);
 
-        if (this.marriageFormGroup.get("groomBirthDate").value != null && marriagedate != null) {
-            let bday = moment(this.marriageFormGroup.get("groomBirthDate").value, "YYYY-MM-DD");
-            this.groomage = mday.diff(bday, 'years', false);
-            this.groomdays = mday.diff(bday.add(this.groomage, 'years'), 'days', false);
+                this.marriageFormGroup.get("groomAge").setValue(this.groomage);
+            }
 
-            this.marriageFormGroup.get("groomAge").setValue(this.groomage);
-        }
+            if (this.marriageFormGroup.get("brideBirthDate").value && marriagedate) {
+                let bday = moment(this.marriageFormGroup.get("brideBirthDate").value, "YYYY-MM-DD");
+                this.brideage = mday.diff(bday, 'years', false);
+                this.bridedays = mday.diff(bday.add(this.brideage, 'years'), 'days', false);
 
-        if (this.marriageFormGroup.get("brideBirthDate").value != null && marriagedate != null) {
-            let bday = moment(this.marriageFormGroup.get("brideBirthDate").value, "YYYY-MM-DD");
-            this.brideage = mday.diff(bday, 'years', false);
-            this.bridedays = mday.diff(bday.add(this.brideage, 'years'), 'days', false);
-
-            this.marriageFormGroup.get("brideAge").setValue(this.brideage);
-        }
+                this.marriageFormGroup.get("brideAge").setValue(this.brideage);
+            }
+        
     }
 
 
@@ -463,12 +465,12 @@ export class MarriageCreateComponent implements OnInit {
             year = moment().diff(bday, 'years', false);
             days = moment().diff(bday.add(year, 'years'), 'days', false);
 
-            return [year+" Year "+days+" Days"]
+            return [year + " Year " + days + " Days"]
         }
-        else{
-            return null    
+        else {
+            return null
         }
-        
+
     }
 
     /**

@@ -133,6 +133,8 @@ export class MuttonFishTransferComponent implements OnInit {
 		else {
 			this.serachLicenceObj.isDisplayRenewLicenceForm = true;
 			this.getMuttonFishLicNewData();
+			this.muttonFishTransferForm.get('licenseType').get('code').disable();
+
 		}
 	}
 
@@ -414,7 +416,7 @@ export class MuttonFishTransferComponent implements OnInit {
 		row.isEditMode = true;
 		row.deepCopyInEditMode = Object.assign({}, row.value)
 	}
- 
+
 	/**
 	 * Method is used when user click for remove person
 	 * @param index : table index

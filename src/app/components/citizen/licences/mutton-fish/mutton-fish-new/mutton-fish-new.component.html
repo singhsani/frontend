@@ -151,13 +151,13 @@
 						<h2 *ngIf="muttonFishNewForm.get('relationshipId').value.code != 'PROPRIETOR'">{{ 'if_shop_is_in_partnership' | translate:translateKey}}</h2>
 					</div>
 					<div class="col-md-2 pt-3" style="text-align: right;">
-						<button type="button" [disabled]="muttonFishNewForm.get('relationshipId').value.code ? muttonFishNewForm.get('relationshipId').value.code=='PROPRIETOR' ? !(muttonFishNewForm.get('relationshipList').controls.length < 1) : !(muttonFishNewForm.get('relationshipList').controls.length < 10) : true" matTooltip="{{'add_more' | translate:translateKey}}"
-						 mat-raised-button color="primary" (click)="addMorePerson('MF_PERSON')">{{'add'| translate:translateKey}}</button>
+						<button type="button" [disabled]="muttonFishNewForm.get('relationshipId').value.code ? muttonFishNewForm.get('relationshipId').value.code=='PROPRIETOR' ? !(muttonFishNewForm.get('relationshipList').controls.length < 1) : !(muttonFishNewForm.get('relationshipList').controls.length < 10) : true"
+						 matTooltip="{{'add_more' | translate:translateKey}}" mat-raised-button color="primary" (click)="addMorePerson('MF_PERSON')">{{'add'| translate:translateKey}}</button>
 					</div>
 				</div>
 
 				<div *ngIf="muttonFishNewForm.get('relationshipList').controls.length">
-					<div>
+					<div class="table-responsive">
 						<table class="table table-striped customDataTable">
 							<thead>
 								<tr>
@@ -168,50 +168,63 @@
 									<th>{{'mobile_no' | translate:translateKey}}</th>
 								</tr>
 							</thead>
+
 							<tbody formArrayName="relationshipList">
-								<tr *ngFor="let item of muttonFishNewForm.get('relationshipList').controls; let indx = index;" [formGroupName]="indx">
-									<td style="width: 40px;" *ngIf="muttonFishNewForm.get('canEdit').value">
-										<button mat-icon-button color="primary" *ngIf="!item.isEditMode" (click)="editRecord(item)">
-											<mat-icon title="Edit">edit</mat-icon>
-										</button>
-										<button type="submit" [disabled]="item.invalid" mat-icon-button color="primary" *ngIf="item.isEditMode" (click)="saveRecord(item)">
-											<mat-icon title="save">save</mat-icon>
-										</button>
-									</td>
-									<td style="width: 40px;" *ngIf="muttonFishNewForm.get('canEdit').value">
-										<button mat-icon-button color="warn" *ngIf="!item.isEditMode" (click)="deleteRecord(indx)">
-											<mat-icon title="Delete">delete</mat-icon>
-										</button>
-										<button mat-icon-button color="warn" *ngIf="item.isEditMode" (click)="cancelRecord(item)">
-											<mat-icon title="Delete">cancel</mat-icon>
-										</button>
+								<tr *ngFor="let item of muttonFishNewForm.get('relationshipList').controls; let indx = index;">
+
+									<td colspan="6">
+										<table>
+											<tr>
+												<form [formGroupName]="indx" style="display: contents;">
+
+													<td *ngIf="muttonFishNewForm.get('canEdit').value">
+														<button mat-icon-button color="primary" *ngIf="!item.isEditMode" (click)="editRecord(item)">
+															<mat-icon title="Edit">edit</mat-icon>
+														</button>
+														<button type="submit" [disabled]="item.invalid" *ngIf="item.isEditMode" (click)="saveRecord(item)" mat-icon-button color="primary">
+															<mat-icon title="save">save</mat-icon>
+														</button>
+													</td>
+													<td *ngIf="muttonFishNewForm.get('canEdit').value">
+														<button mat-icon-button color="warn" *ngIf="!item.isEditMode" (click)="deleteRecord(indx)">
+															<mat-icon title="Delete">delete</mat-icon>
+														</button>
+														<button mat-icon-button color="warn" *ngIf="item.isEditMode" (click)="cancelRecord(item)">
+															<mat-icon title="Delete">cancel</mat-icon>
+														</button>
+													</td>
+
+													<td>{{indx+1}}</td>
+
+													<td>
+														<p *ngIf="!item.isEditMode">{{item.get('name').value}}</p>
+														<mat-form-field *ngIf="item.isEditMode">
+															<input matInput maxlength="100" appValidationFields [validationFieldsType]="'onlyNameWithSpace'" formControlName="name">
+															<control-messages [control]="item.controls.name"></control-messages>
+														</mat-form-field>
+													</td>
+
+													<td>
+														<p *ngIf="!item.isEditMode">{{item.get('address').value}}</p>
+														<mat-form-field *ngIf="item.isEditMode">
+															<input matInput maxlength="150" formControlName="address">
+															<control-messages [control]="item.controls.address"></control-messages>
+														</mat-form-field>
+													</td>
+
+													<td>
+														<p *ngIf="!item.isEditMode">{{item.get('mobileNo').value}}</p>
+														<mat-form-field *ngIf="item.isEditMode">
+															<input matInput maxlength="11" OnlyNumber formControlName="mobileNo">
+															<control-messages [control]="item.controls.mobileNo"></control-messages>
+														</mat-form-field>
+													</td>
+												</form>
+											</tr>
+										</table>
+
 									</td>
 
-									<td>{{indx+1}}</td>
-
-									<td>
-										<p *ngIf="!item.isEditMode">{{item.get('name').value}}</p>
-										<mat-form-field *ngIf="item.isEditMode">
-											<input matInput maxlength="100" appValidationFields [validationFieldsType]="'onlyNameWithSpace'" formControlName="name">
-											<control-messages [control]="item.controls.name"></control-messages>
-										</mat-form-field>
-									</td>
-
-									<td>
-										<p *ngIf="!item.isEditMode">{{item.get('address').value}}</p>
-										<mat-form-field *ngIf="item.isEditMode">
-											<input matInput maxlength="150" formControlName="address">
-											<control-messages [control]="item.controls.address"></control-messages>
-										</mat-form-field>
-									</td>
-
-									<td>
-										<p *ngIf="!item.isEditMode">{{item.get('mobileNo').value}}</p>
-										<mat-form-field *ngIf="item.isEditMode">
-											<input matInput maxlength="11" OnlyNumber formControlName="mobileNo">
-											<control-messages [control]="item.controls.mobileNo"></control-messages>
-										</mat-form-field>
-									</td>
 								</tr>
 							</tbody>
 						</table>

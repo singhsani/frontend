@@ -324,7 +324,7 @@ export class MuttonFishNewComponent implements OnInit {
 	*/
 	editRecord(row: any) {
 		row.isEditMode = true;
-		row.deepCopyInEditMode = Object.assign({}, row.value)
+		row.deepCopyInEditMode = Object.assign({}, row.value);
 	}
 
 	/**
