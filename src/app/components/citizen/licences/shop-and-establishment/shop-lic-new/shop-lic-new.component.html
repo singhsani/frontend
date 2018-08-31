@@ -536,15 +536,15 @@
 						</div>
 					</div>
 
-					<div style="overflow-x: auto;" *ngIf="shopLicNewForm.get('partnerList').controls.length">
+					<div style="min-height: 350px;" *ngIf="shopLicNewForm.get('partnerList').controls.length">
 						<div>
-							<table class="table table-striped customDataTable table-inputW100p idNubmer">
+							<table class="table table-striped customDataTable table-inputW100p idNubmer responsiveTables">
 								<thead>
 									<tr>
 										<th>#</th>
 										<th>{{'name' | translate:translateKey}}</th>
 										<th>{{'address' | translate:translateKey}}</th>
-										<th>{{'relationship' | translate:translateKey}}</th>
+										<th width="160">{{'relationship' | translate:translateKey}}</th>
 										<th width="120">{{'gender' | translate:translateKey}}</th>
 										<th width="60">{{'age' | translate:translateKey}}</th>
 										<th width="100" *ngIf="shopLicNewForm.get('canEdit').value"></th>
@@ -553,25 +553,30 @@
 								<tbody formArrayName="partnerList">
 									<tr *ngFor="let item of shopLicNewForm.get('partnerList').controls; let indx = index;" [formGroupName]="indx">
 										
-										<td>{{indx+1}}</td>
+										<td><span class="mobileLabel">#</span>{{indx+1}}</td>
 
-										<td>
+										<td><span class="mobileLabel">{{'name' | translate:translateKey}}</span>
+											<div class="mobileCon">
 											<p *ngIf="!item.isEditMode">{{item.get('name').value}}</p>
 											<mat-form-field *ngIf="item.isEditMode">
 												<input matInput appValidationFields [validationFieldsType]="'onlyNameWithSpace'" formControlName="name">
 												<control-messages [control]="item.controls.name"></control-messages>
 											</mat-form-field>
+										</div>
 										</td>
 
-										<td>
+										<td><span class="mobileLabel">{{'address' | translate:translateKey}}</span>
+											<div class="mobileCon">
 											<p *ngIf="!item.isEditMode">{{item.get('address').value}}</p>
 											<mat-form-field *ngIf="item.isEditMode">
 												<input matInput formControlName="address">
 												<control-messages [control]="item.controls.address"></control-messages>
 											</mat-form-field>
+											</div>
 										</td>
 
-										<td>
+										<td><span class="mobileLabel">{{'relationship' | translate:translateKey}}</span>
+											<div class="mobileCon">
 											<div class="ngSelect" formGroupName="relationship">
 												<p *ngIf="!item.isEditMode">{{getSelectedDataFromLookUps(SHOP_LIC_PARTNER_PERSON_RELATIONSHIP,item.get('relationship').value.code)?.name}}</p>
 												<div class="ngSelect" *ngIf="item.isEditMode">
@@ -581,9 +586,11 @@
 													<control-messages [control]="item.controls.relationship.controls.code"></control-messages>
 												</div>
 											</div>
+											</div>
 										</td>
 
-										<td>
+										<td><span class="mobileLabel">{{'gender' | translate:translateKey}}</span>
+											<div class="mobileCon">
 											<div class="ngSelect" formGroupName="gender">
 												<p *ngIf="!item.isEditMode">{{getSelectedDataFromLookUps(gender,item.get('gender').value.code)?.name}}</p>
 												<div class="ngSelect" *ngIf="item.isEditMode">
@@ -593,17 +600,20 @@
 													<control-messages [control]="item.controls.gender.controls.code"></control-messages>
 												</div>
 											</div>
+											</div>
 										</td>
 
-										<td>
+										<td><span class="mobileLabel">{{'age' | translate:translateKey}}</span>
+											<div class="mobileCon">
 											<p *ngIf="!item.isEditMode">{{item.get('age').value}}</p>
 											<mat-form-field *ngIf="item.isEditMode">
 												<input matInput maxlength="2" OnlyNumber formControlName="age">
-												<control-messages [control]="item.controls.age"></control-messages>
+												<control-messages  [control]="item.controls.age"></control-messages>
 											</mat-form-field>
+											</div>
 										</td>
 
-										<td>
+										<td><span class="mobileLabel"></span>
 												<span *ngIf="shopLicNewForm.get('canEdit').value">
 												<button mat-icon-button color="primary" *ngIf="!item.isEditMode" (click)="editRecord(item)">
 													<mat-icon title="Edit">edit</mat-icon>
