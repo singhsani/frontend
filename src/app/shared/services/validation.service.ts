@@ -33,7 +33,7 @@ export class ValidationService {
             invalidpregnanceTime: 'Pregnancy duration between 25 to 50',
             invalidbirthRegNumber: 'Invalid Birth Registration Date',
             invalidBuildingName: 'Building name is not valid',
-            invalidemployeeage:'Age must be greater than 13 year'
+            invalidemployeeage: 'Age must be greater than 13 year'
         }
 
         return config[validatorName];
@@ -43,6 +43,7 @@ export class ValidationService {
         let config = {
             invalidgroomage: 'Age must be greater than 21 year',
             invalidbridebirthdate: 'Age must be greater than 18 year',
+            invalidmarriagedate: 'Select Marriage date'
         }
         return config[validatorName];
     }
@@ -76,7 +77,7 @@ export class ValidationService {
     //         return null;
     //     }
     // }
-    
+
     // Email validation
     static emailValidator(control: FormControl) {
         if (control.value) {
@@ -89,28 +90,35 @@ export class ValidationService {
 
     // Groom age
     static groomAgeValidator(control: FormControl) {
-        if (control.value != null) {
+        if (control.value) {
             const matches = (control.value) >= 21;
             return matches ? null : { 'invalidgroomage': true };
-        } else {
+        }
+        else if (control.value != null && !control.value) {
+            return { 'invalidmarriagedate': true };
+        }
+        else {
             return null;
         }
     }
 
     // Bride age
     static brideAgeValidator(control: FormControl) {
-        if (control.value != null) {
+        if (control.value) {
             const matches = (control.value) >= 18;
             return matches ? null : { 'invalidbridebirthdate': true };
+        } else if (control.value != null && !control.value) {
+            return { 'invalidmarriagedate': true };
         } else {
             return null;
         }
+
     }
 
     // employee age
     static employeeAgeValidate(control: FormControl) {
         if (control.value != null) {
-            const matches = parseInt(control.value) >= 14 && parseInt(control.value) <= 99 ;
+            const matches = parseInt(control.value) >= 14 && parseInt(control.value) <= 99;
             return matches ? null : { 'invalidemployeeage': true };
         } else {
             return null;
