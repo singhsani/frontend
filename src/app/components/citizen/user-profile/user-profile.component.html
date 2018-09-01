@@ -60,7 +60,7 @@
 					</div>
 				</div>
 
-				<mat-form-field class="col-4">
+				<mat-form-field class="col-md-4">
 					<input matInput [max]="disablefutureDate" [matDatepicker]="dobPicker" formControlName="birthDate" (dateChange)="dateFormat($event.value,'birthDate');"
 					 placeholder="Date of birth" required (click)="dobPicker.open()" (focus)="dobPicker.open()" readonly>
 					<mat-datepicker-toggle matSuffix [for]="dobPicker"></mat-datepicker-toggle>

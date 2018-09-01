@@ -371,8 +371,6 @@ export class BirthRegistrationComponent implements OnInit {
 	}
 
 	totalChildCalculate(){
-		console.log(this.birthCertificateForm.get('totalBoyChildsBeforePregnancy').value)
-		console.log(this.birthCertificateForm.get('totalGirlChildsBeforePregnancy').value)
 		
 		if (this.birthCertificateForm.get('totalGirlChildsBeforePregnancy').value == null || this.birthCertificateForm.get('totalGirlChildsBeforePregnancy').value == ''){
 			this.birthCertificateForm.get('totalGirlChildsBeforePregnancy').setValue(0)

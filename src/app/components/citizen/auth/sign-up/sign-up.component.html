@@ -1,19 +1,20 @@
-
-			<mat-card class="borderRadius10 signUp">
-				<div class="headingBox">Register
-					<span>Sign up by entering the information below</span>
-				</div>
-		<form [formGroup]="regForm" (ngSubmit)="onSignUp(regForm.value)" autocomplete="off" novalidate>
-				<div class="row">
+<mat-card class="borderRadius10 signUp">
+	<div class="headingBox">Register
+		<span>Sign up by entering the information below</span>
+	</div>
+	<form [formGroup]="regForm" (ngSubmit)="onSignUp(regForm.value)" autocomplete="off" novalidate>
+		<div class="row">
 			<mat-form-field class="iconMat col-md-6">
 				<mat-icon matPrefix>face</mat-icon>
-				<input matInput type="text" placeholder="Firstname" appValidationFields validationFieldsType="onlyNameWithOutSpace" formControlName="firstName" required>
+				<input matInput type="text" placeholder="Firstname" appValidationFields validationFieldsType="onlyNameWithOutSpace" formControlName="firstName"
+				 required>
 				<control-messages [control]="regForm.controls.firstName"></control-messages>
 			</mat-form-field>
 
 			<mat-form-field class="iconMat col-md-6">
 				<mat-icon matPrefix>face</mat-icon>
-				<input matInput type="text" placeholder="Lastname" appValidationFields validationFieldsType="onlyNameWithOutSpace" formControlName="lastName" required>
+				<input matInput type="text" placeholder="Lastname" appValidationFields validationFieldsType="onlyNameWithOutSpace" formControlName="lastName"
+				 required>
 				<control-messages [control]="regForm.controls.lastName"></control-messages>
 			</mat-form-field>
 
@@ -32,30 +33,32 @@
 			<mat-form-field class="iconMat col-md-6">
 				<mat-icon matPrefix>lock_outline</mat-icon>
 				<input matInput type="password" placeholder="Password" formControlName="password" required>
+				<control-messages [control]="regForm.controls.password"></control-messages>
 			</mat-form-field>
 
 			<mat-form-field class="iconMat col-md-6">
 				<mat-icon matPrefix>lock_outline</mat-icon>
 				<input matInput type="password" placeholder="Confirm Password" formControlName="confirmPassword" required>
+				<control-messages [control]="regForm.controls.confirmPassword"></control-messages>
 			</mat-form-field>
 
 			<div class="col-md-6 offset-md-6">
-					<mat-error *ngIf="regForm.errors?.mismatchedPasswords">Password not match</mat-error>
+				<mat-error *ngIf="regForm.errors?.mismatchedPasswords">Password not match</mat-error>
 			</div>
-			
-			</div>
- 
-			<div class="text-center pt-1">
-				<button type="submit" mat-raised-button color="primary" [disabled]="regForm.invalid" class="width150">
-					Sign up
-				</button>
-			</div>
-			<div class="text-center pt-2">
-				Allready have an account ?
-				<a routerLink="/{{manageRoutes.getFullRoute('CITIZENAUTHLOGIN')}}">
-					<strong>Login</strong>
-				</a> here.
-			</div>
-		</form>
 
-	</mat-card>
+		</div>
+
+		<div class="text-center pt-1">
+			<button type="submit" mat-raised-button color="primary" [disabled]="regForm.invalid" class="width150">
+				Sign up
+			</button>
+		</div>
+		<div class="text-center pt-2">
+			Allready have an account ?
+			<a routerLink="/{{manageRoutes.getFullRoute('CITIZENAUTHLOGIN')}}">
+				<strong>Login</strong>
+			</a> here.
+		</div>
+	</form>
+
+</mat-card>
