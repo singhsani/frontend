@@ -13,8 +13,6 @@ import { ManageRoutes } from '../../../../config/routes-conf';
 })
 export class ResetPasswordComponent implements OnInit {
 
-	showWarning: boolean = false;
-
 	resetPassForm: FormGroup;
 
 	/**
@@ -24,9 +22,12 @@ export class ResetPasswordComponent implements OnInit {
 	 * @param router - Declare Routing Property.
 	 * @param session - Declare Session Storage Module property.
 	*/
-	constructor(private appService: AppService, private fb: FormBuilder,
+	constructor(
+		private appService: AppService,
+		private fb: FormBuilder,
 		private route: ActivatedRoute,
-		private router: Router, private session: SessionStorageService) {
+		private router: Router,
+		private session: SessionStorageService) {
 
 	}
 
@@ -78,7 +79,7 @@ export class ResetPasswordComponent implements OnInit {
 					};
 				} else {
 					this.resetPassForm.get('confirmPassword').setErrors(null);
-				} 
+				}
 			}
 		}
 	}
@@ -90,15 +91,9 @@ export class ResetPasswordComponent implements OnInit {
 	 */
 	onResetPassword(formVals: FormGroup) {
 
-		if (this.resetPassForm.get('password').value !== this.resetPassForm.get('confirmPassword').value) {
-			this.showWarning = true;
-		} else {
-
-			this.appService.resetPassword(formVals.getRawValue()).subscribe(
-				res => {
-
-					this.router.navigate([ManageRoutes.getFullRoute('CITIZENAUTHLOGIN')]);
-				});
-		}
+		this.appService.resetPassword(formVals.getRawValue()).subscribe(
+			res => {
+				this.router.navigate([ManageRoutes.getFullRoute('CITIZENAUTHLOGIN')]);
+		});
 	}
 }
