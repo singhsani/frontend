@@ -157,78 +157,77 @@
 				</div>
 
 				<div *ngIf="muttonFishNewForm.get('relationshipList').controls.length">
-					<div class="table-responsive">
-						<table class="table table-striped customDataTable">
+						<div class="table-responsive">
+						<table class="table table-striped mb-0">
 							<thead>
 								<tr>
-									<th colspan="2" *ngIf="muttonFishNewForm.get('canEdit').value"></th>
-									<th>#</th>
-									<th>{{'name' | translate:translateKey}}</th>
-									<th>{{'address' | translate:translateKey}}</th>
-									<th>{{'mobile_no' | translate:translateKey}}</th>
+									<th width="50">#</th>
+									<th width="29%">{{'name' | translate:translateKey}}</th>
+									<th width="29%">{{'address' | translate:translateKey}}</th>
+									<th width="29%">{{'mobile_no' | translate:translateKey}}</th>
+									<th width="150" *ngIf="muttonFishNewForm.get('canEdit').value"></th>
 								</tr>
 							</thead>
-
-							<tbody formArrayName="relationshipList">
-								<tr *ngFor="let item of muttonFishNewForm.get('relationshipList').controls; let indx = index;">
-
-									<td colspan="6">
-										<table>
+						</table>
+						</div>
+						
+							<ul formArrayName="relationshipList" class="listTable clearfix">
+								<li *ngFor="let item of muttonFishNewForm.get('relationshipList').controls; let indx = index;">
+									<form [formGroupName]="indx">
+											<div class="table-responsive">
+										<table class="table table-striped">
 											<tr>
-												<form [formGroupName]="indx" style="display: contents;">
+													<td width="50">{{indx+1}}</td>
 
-													<td *ngIf="muttonFishNewForm.get('canEdit').value">
-														<button mat-icon-button color="primary" *ngIf="!item.isEditMode" (click)="editRecord(item)">
-															<mat-icon title="Edit">edit</mat-icon>
-														</button>
-														<button type="submit" [disabled]="item.invalid" *ngIf="item.isEditMode" (click)="saveRecord(item)" mat-icon-button color="primary">
-															<mat-icon title="save">save</mat-icon>
-														</button>
-													</td>
-													<td *ngIf="muttonFishNewForm.get('canEdit').value">
-														<button mat-icon-button color="warn" *ngIf="!item.isEditMode" (click)="deleteRecord(indx)">
-															<mat-icon title="Delete">delete</mat-icon>
-														</button>
-														<button mat-icon-button color="warn" *ngIf="item.isEditMode" (click)="cancelRecord(item)">
-															<mat-icon title="Delete">cancel</mat-icon>
-														</button>
-													</td>
-
-													<td>{{indx+1}}</td>
-
-													<td>
-														<p *ngIf="!item.isEditMode">{{item.get('name').value}}</p>
+													<td width="29%">
+														<div *ngIf="!item.isEditMode">{{item.get('name').value}}</div>
 														<mat-form-field *ngIf="item.isEditMode">
 															<input matInput maxlength="100" appValidationFields [validationFieldsType]="'onlyNameWithSpace'" formControlName="name">
 															<control-messages [control]="item.controls.name"></control-messages>
 														</mat-form-field>
 													</td>
 
-													<td>
-														<p *ngIf="!item.isEditMode">{{item.get('address').value}}</p>
+													<td width="29%">
+														<div *ngIf="!item.isEditMode">{{item.get('address').value}}</div>
 														<mat-form-field *ngIf="item.isEditMode">
 															<input matInput maxlength="150" formControlName="address">
 															<control-messages [control]="item.controls.address"></control-messages>
 														</mat-form-field>
 													</td>
 
-													<td>
-														<p *ngIf="!item.isEditMode">{{item.get('mobileNo').value}}</p>
+													<td width="29%">
+														<div *ngIf="!item.isEditMode">{{item.get('mobileNo').value}}</div>
 														<mat-form-field *ngIf="item.isEditMode">
 															<input matInput maxlength="11" OnlyNumber formControlName="mobileNo">
 															<control-messages [control]="item.controls.mobileNo"></control-messages>
 														</mat-form-field>
 													</td>
-												</form>
+													<td width="150">
+													<div *ngIf="muttonFishNewForm.get('canEdit').value" class="float-left">
+															<button mat-icon-button color="primary" *ngIf="!item.isEditMode" (click)="editRecord(item)">
+																<mat-icon title="Edit">edit</mat-icon>
+															</button>
+															<button type="submit" [disabled]="item.invalid" *ngIf="item.isEditMode" (click)="saveRecord(item)" mat-icon-button color="primary">
+																<mat-icon title="save">save</mat-icon>
+															</button>
+														</div>
+														<div *ngIf="muttonFishNewForm.get('canEdit').value">
+																<button mat-icon-button color="warn" *ngIf="!item.isEditMode" (click)="deleteRecord(indx)">
+																	<mat-icon title="Delete">delete</mat-icon>
+																</button>
+																<button mat-icon-button color="warn" *ngIf="item.isEditMode" (click)="cancelRecord(item)">
+																	<mat-icon title="Delete">cancel</mat-icon>
+																</button>
+															</div>
+														</td>
 											</tr>
 										</table>
-
-									</td>
-
-								</tr>
-							</tbody>
-						</table>
-					</div>
+									</div>
+									</form>
+								</li>
+							</ul>
+						
+					
 				</div>
 				<!-- end table -->
 				<app-action-bar [form]="muttonFishNewForm" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step2', next: 2, back: 0}"></app-action-bar>

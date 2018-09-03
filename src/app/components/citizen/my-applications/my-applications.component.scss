@@ -26,7 +26,7 @@ table { width: 100%; }
     .mat-column-fileStatus {width: 100px; justify-content: center; padding: 0 20px;}
     .mat-column-serviceType {width: 220px;}
     .mat-column-action {width: 220px; padding-right: 0;
-        .mat-icon-button {background:#fff;margin:2px 5px 2px 0; border: 1px solid $colorBlue; width:28px; height:28px; line-height: 28px;
+        .mat-icon-button {background:#fff;margin:2px 5px 2px 0; border: 1px solid $colorBlue; width:28px; height:28px; line-height: normal;
              .mat-icon-button .mat-icon, .mat-icon-button i {line-height: 22px;}
              .mat-icon {font-size: 17px;}
              &:hover {background:$colorBlue;
