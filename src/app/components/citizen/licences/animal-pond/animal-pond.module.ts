@@ -8,6 +8,10 @@ import { CoreModule } from '../../../../core/core.module';
 import { AnimalPondRoutingModule } from './animal-pond-routing.module';
 import { AnimalPondNewComponent } from './animal-pond-new/animal-pond-new.component';
 import { AnimalPondRenewComponent } from './animal-pond-renew/animal-pond-renew.component';
+import { AnimalPondCancellationComponent } from './animal-pond-cancellation/animal-pond-cancellation.component';
+import { AnimalPondTransferComponent } from './animal-pond-transfer/animal-pond-transfer.component';
+import { AnimalPondDuplicateComponent } from './animal-pond-duplicate/animal-pond-duplicate.component';
+import { AnimalPondService } from './common/services/animal-pond.service';
 /* Import all shared, core and routing module end */
 
 @NgModule({
@@ -19,6 +23,7 @@ import { AnimalPondRenewComponent } from './animal-pond-renew/animal-pond-renew.
 		ReactiveFormsModule,
 		AnimalPondRoutingModule
 	],
-	declarations: [AnimalPondNewComponent, AnimalPondRenewComponent]
+	declarations: [AnimalPondNewComponent, AnimalPondRenewComponent, AnimalPondCancellationComponent, AnimalPondTransferComponent, AnimalPondDuplicateComponent],
+	providers: [AnimalPondService]
 })
 export class AnimalPondModule { }
