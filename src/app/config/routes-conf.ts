@@ -125,13 +125,25 @@ const ROUTEMAIN = {
         'main': 'MFDuplicate',
         'type': 'MFDuplicate'
     },
-    'POND-LIC': {
-        'main': 'pondLicense',
-        'type': 'pondLicense'
+    'APL-LIC': {
+        'main': 'APLicense',
+        'type': 'APLicense'
     },
-    'POND-REN': {
-        'main': 'pondRenewal',
-        'type': 'pondRenewal'
+    'APL-REN': {
+        'main': 'APLRenewal',
+        'type': 'APLRenewal'
+    },
+    'APL-CAN': {
+        'main': 'APLCancellation',
+        'type': 'APLCancellation'
+    },
+    'APL-TRA': {
+        'main': 'APLTransfer',
+        'type': 'APLTransfer'
+    },
+    'APL-DUP': {
+        'main': 'APLDuplication',
+        'type': 'APLDuplication'
     },
     'PRO-ASS': {
         'main': 'propertyAssessment',
@@ -303,12 +315,12 @@ const ROUTEMAIN = {
         'main': 'my-applications',
         'type': 'myApps'
     },
-   
+
     'PAYMENTGATEWAYRESPONSE': {
         'main': 'payment-gateway-response',
         'type': ''
     },
-    
+
 }
 
 const ROUTEPREFIX = {
@@ -353,7 +365,7 @@ const ROUTEPREFIX = {
     'ANIMALPONDMODULE': 'animal-pond',
     'MUTTONFISHMODULE': 'mutton-fish',
     'SHOPANDESTAMODULE': 'shop-esta',
-    'FOODMODULE':'food',
+    'FOODMODULE': 'food',
     /** end - citizen innner-licences modules routes configuretion */
 
     /** start - citizen tax module */
@@ -466,11 +478,20 @@ const ROUTESLIST = {
     'MF-DUP': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.LICENCEMODULE + '/' + ROUTEPREFIX.MUTTONFISHMODULE + '/' + ROUTEMAIN["MF-DUP"].main
     },
-    'POND-LIC': {
-        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.LICENCEMODULE + '/' + ROUTEPREFIX.ANIMALPONDMODULE + '/' + ROUTEMAIN["POND-LIC"].main
+    'APL-LIC': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.LICENCEMODULE + '/' + ROUTEPREFIX.ANIMALPONDMODULE + '/' + ROUTEMAIN["APL-LIC"].main
     },
-    'POND-REN': {
-        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.LICENCEMODULE + '/' + ROUTEPREFIX.ANIMALPONDMODULE + '/' + ROUTEMAIN["POND-REN"].main
+    'APL-REN': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.LICENCEMODULE + '/' + ROUTEPREFIX.ANIMALPONDMODULE + '/' + ROUTEMAIN["APL-REN"].main
+    },
+    'APL-CAN': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.LICENCEMODULE + '/' + ROUTEPREFIX.ANIMALPONDMODULE + '/' + ROUTEMAIN["APL-CAN"].main
+    },
+    'APL-TRA': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.LICENCEMODULE + '/' + ROUTEPREFIX.ANIMALPONDMODULE + '/' + ROUTEMAIN["APL-TRA"].main
+    },
+    'APL-DUP': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.LICENCEMODULE + '/' + ROUTEPREFIX.ANIMALPONDMODULE + '/' + ROUTEMAIN["APL-DUP"].main
     },
     'FL': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.LICENCEMODULE + '/' + ROUTEPREFIX.FOODMODULE + '/' + ROUTEMAIN["FL"].main
@@ -562,14 +583,14 @@ const ROUTESLIST = {
     'GUESTHOUSELIST': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.BOOKINGMODULE + '/' + ROUTEPREFIX.GUESTHOUSEMODULE + '/' + ROUTEMAIN.GUESTHOUSELIST.main
     },
-    
+
     'CANCELBOOKING': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.BOOKINGMODULE + '/' + ROUTEMAIN.CANCELBOOKING.main
     },
     'SLOTBOOKING': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.APPOINTMENT + '/' + ROUTEPREFIX.SCHEDULEAPPOINTMENT + '/' + ROUTEMAIN["SLOTBOOKING"].main
     },
-    
+
     /* hospital full routing configuration start*/
     'HOSPITALDASHBOARD': {
         'full': ROUTEPREFIX.HOSPITALMODULE + '/' + ROUTEMAIN.HOSPITALDASHBOARD.main
