@@ -35,6 +35,7 @@ export class AnimalPondNewComponent implements OnInit {
 	MF_STATUS_OF_BUSINESS: Array<any> = [];
 	PERSON_TYPE: Array<any> = [];
 	FIRM_ZONE: Array<any> = [];
+	ANIMAL_TYPE: Array<any> = [];
 	WARD: Array<any> = [];
 	BLOCK: Array<any> = [];
 	LOOKUP: any;
@@ -118,6 +119,9 @@ export class AnimalPondNewComponent implements OnInit {
 				res.relationshipList.forEach(app => {
 					(<FormArray>this.animalPondNewForm.get('relationshipList')).push(this.createArray(app));
 				});
+				res.animalDetails.forEach(app => {
+					(<FormArray>this.animalPondNewForm.get('animalDetails')).push(this.createAnimalArray(app));
+				});
 			} catch (error) {
 				console.log(error.message)
 			}
@@ -135,6 +139,7 @@ export class AnimalPondNewComponent implements OnInit {
 			this.MF_STATUS_OF_BUSINESS = res.MF_STATUS_OF_BUSINESS;
 			this.PERSON_TYPE = res.PERSON_TYPE;
 			this.FIRM_ZONE = res.FIRM_ZONE;
+			this.ANIMAL_TYPE = res.ANIMAL_TYPE;
 
 			this.onChangeZone(this.animalPondNewForm.get('zoneNo').value.code);
 			this.onChangeWard(this.animalPondNewForm.get('wardNo').value.code);
@@ -164,17 +169,27 @@ export class AnimalPondNewComponent implements OnInit {
 	}
 
 	/**
+	*  Method is used get selected data from lookup when change dropdown in grid.
+	* @param lookups : Array
+	* @param code : String
+	* return object
+	*/
+	getSelectedDataFromLookUps(lookups: Array<any>, code: string) {
+		return lookups.find((obj: any) => obj.code === code)
+	}
+
+	/**
 	* Method is used to set form controls
 	* 'Guj' control is consider as a Gujarati fields
 	*/
 	animalPondNewFormControls() {
 		this.animalPondNewForm = this.fb.group({
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
-			serviceCode: 'MF-LIC',
+			serviceCode: 'APL-LIC',
 			/* Step 1 controls start */
-			licenseType: this.fb.group({
-				code: [null]
-			}),
+			// licenseType: this.fb.group({
+			// 	code: [null]
+			// }),
 			personType: this.fb.group({
 				code: [null]
 			}),
@@ -207,10 +222,11 @@ export class AnimalPondNewComponent implements OnInit {
 			statusOfBusinessId: this.fb.group({
 				code: [null, Validators.required]
 			}),
+			relationshipList: this.fb.array([]),
 			/* Step 2 controls end */
 
 			/* Step 3 controls start */
-			relationshipList: this.fb.array([]),
+			animalDetails: this.fb.array([]),
 			/* Step 3 controls end */
 
 			applicationDate: [],
@@ -236,7 +252,7 @@ export class AnimalPondNewComponent implements OnInit {
 			name: [data.name ? data.name : null, [Validators.required, Validators.maxLength(100)]],
 			address: [data.address ? data.address : null, [Validators.required, Validators.maxLength(150)]],
 			mobileNo: [data.mobileNo ? data.mobileNo : null, [Validators.maxLength(11), Validators.minLength(10)]],
-			personType: "MF_PERSON"
+			personType: "APL_PERSON"
 		})
 
 	}
@@ -244,8 +260,8 @@ export class AnimalPondNewComponent implements OnInit {
 	/**
 	 * Method is used to add array in form
 	 */
-	addItem() {
-		return this.animalPondNewForm.get('relationshipList') as FormArray;
+	addItem(controlName: any) {
+		return this.animalPondNewForm.get(controlName) as FormArray;
 	}
 
 	/**
@@ -259,19 +275,19 @@ export class AnimalPondNewComponent implements OnInit {
 			return false;
 		}
 
-		let isEditAnotherRow = this.isTableInEditMode();
+		let isEditAnotherRow = this.isTableInEditMode('relationshipList');
 		if (!isEditAnotherRow) {
-			if (relationshipIdValue == "PROPRIETOR" && this.addItem().controls.length >= 1) {
+			if (relationshipIdValue == "PROPRIETOR" && this.addItem('relationshipList').controls.length >= 1) {
 				this.toastrService.warning("Person not allowed more than 1");
 				return false;
 			}
-			if ((relationshipIdValue == "PARTNER" || relationshipIdValue == "DIRECTOR" || relationshipIdValue == "AUTHORIZEDSIGNATORY") && this.addItem().controls.length >= 10) {
+			if ((relationshipIdValue == "PARTNER" || relationshipIdValue == "DIRECTOR" || relationshipIdValue == "AUTHORIZEDSIGNATORY") && this.addItem('relationshipList').controls.length >= 10) {
 				this.toastrService.warning("Person not allowed more than 10");
 				return false;
 			}
-			this.addItem().push(this.createArray());
+			this.addItem('relationshipList').push(this.createArray());
 			// this.animalPondNewForm.get('relationshipList').setValidators([Validators.required]);
-			let newlyadded = <any>this.addItem().controls;
+			let newlyadded = <any>this.addItem('relationshipList').controls;
 			if (newlyadded.length) {
 				(newlyadded[newlyadded.length - 1]).isEditMode = true;
 			}
@@ -290,6 +306,47 @@ export class AnimalPondNewComponent implements OnInit {
 			this.animalPondNewForm.get('relationshipList').setValue([]);
 		} catch (error) {
 			console.log(error.message);
+		}
+	}
+
+	/**
+	 * Method is used to return array
+	 * @param data : person data array
+	 */
+	createAnimalArray(data: any = {}) {
+
+		return this.fb.group({
+			serviceFormId: this.formId,
+			id: data.id ? data.id : null,
+			animalType: this.fb.group({
+				code: [data.animalType ? (data.animalType.code ? data.animalType.code : null) : null]
+			}),
+			animalCount: [data.animalCount ? data.animalCount : null, [Validators.minLength(1)]],
+		})
+
+	}
+
+	/**
+	 * Method is used when user click for add person
+	 */
+	addMoreAnimal() {
+
+		let isEditAnotherRow = this.isTableInEditMode('animalDetails');
+		if (!isEditAnotherRow) {
+
+			if (this.addItem('animalDetails').controls.length >= 10) {
+				this.toastrService.warning("Person not allowed more than 10");
+				return false;
+			}
+			this.addItem('animalDetails').push(this.createAnimalArray());
+			// this.animalPondNewForm.get('relationshipList').setValidators([Validators.required]);
+			let newlyadded = <any>this.addItem('animalDetails').controls;
+			if (newlyadded.length) {
+				(newlyadded[newlyadded.length - 1]).isEditMode = true;
+			}
+		}
+		else {
+			this.commonService.openAlert("Warning", "You can add new recode after save existing recode.", "warning");
 		}
 	}
 
@@ -314,8 +371,8 @@ export class AnimalPondNewComponent implements OnInit {
 	/**
 	*  Method is used check table is in edit mode
 	*/
-	isTableInEditMode() {
-		return this.addItem().controls.find((obj: any) => obj.isEditMode === true);
+	isTableInEditMode(gridType: string) {
+		return this.addItem(gridType).controls.find((obj: any) => obj.isEditMode === true);
 	}
 
 	/**
@@ -331,9 +388,11 @@ export class AnimalPondNewComponent implements OnInit {
 	 * Method is used when user click for remove person
 	 * @param index : table index
 	 */
-	deleteRecord(index: any) {
+	deleteRecord(index: any, gridType: string) {
 		this.commonService.confirmAlert('Are you sure?', "", 'info', '', performDelete => {
-			this.addItem().controls.splice(index, 1);
+			this.addItem(gridType).controls.splice(index, 1);
+			// This method for reset removed Animal type
+			this.getSelectedAnimal();
 			this.commonService.successAlert('Removed!', '', 'success');
 		});
 	}
@@ -348,6 +407,27 @@ export class AnimalPondNewComponent implements OnInit {
 		}
 	}
 
+	/**
+	 * 	Method is used for update animal lookup(remove selected animal type).
+	 */
+	getSelectedAnimal(){
+		
+		let animalData=this.ANIMAL_TYPE.map((mapDataObj:any)=>{
+			mapDataObj.selected=false;
+			return mapDataObj
+		});
+		
+		let animalGrid =  <FormArray>this.animalPondNewForm.get('animalDetails');
+
+		animalGrid.controls.forEach(element => {
+			let findRecord =animalData.find((obj:any)=>obj.code == element.get('animalType').get('code').value)
+			if(findRecord){
+				findRecord.selected = true;
+			}
+		});
+		return animalData;	
+	}
+	
 	/**
 	*  Method is used cancel editable dataview.
 	* @param row: table row index
