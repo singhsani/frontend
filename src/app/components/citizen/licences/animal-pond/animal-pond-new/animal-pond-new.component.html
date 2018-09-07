@@ -10,15 +10,6 @@
 				</ng-template>
 
 				<div class="row">
-
-					<div class="col-md-4 ngSelect" formGroupName="licenseType">
-						<ng-select placeholder="{{'license_type' | translate:translateKey}} *" formControlName="code">
-							<ng-option *ngFor="let type of MF_LICENSE_TYPE" [value]="type.code">{{type.name}}</ng-option>
-						</ng-select>
-						<control-messages [control]="animalPondNewForm.get('licenseType').controls.code"></control-messages>
-					</div>
-				</div>
-				<div class="row">
 					<div class="col-md-2 ngSelect" formGroupName="personType">
 						<ng-select placeholder="{{'person_type' | translate:translateKey}} *" formControlName="code">
 							<ng-option *ngFor="let type of PERSON_TYPE" [value]="type.code">{{type.name}}</ng-option>
@@ -152,88 +143,173 @@
 					</div>
 					<div class="col-md-2 pt-3" style="text-align: right;">
 						<button type="button" [disabled]="animalPondNewForm.get('relationshipId').value.code ? animalPondNewForm.get('relationshipId').value.code=='PROPRIETOR' ? !(animalPondNewForm.get('relationshipList').controls.length < 1) : !(animalPondNewForm.get('relationshipList').controls.length < 10) : true"
-						 matTooltip="{{'add_more' | translate:translateKey}}" mat-raised-button color="primary" (click)="addMorePerson('MF_PERSON')">{{'add'| translate:translateKey}}</button>
+						 matTooltip="{{'add_more' | translate:translateKey}}" mat-raised-button color="primary" (click)="addMorePerson('APL_PERSON')">{{'add'| translate:translateKey}}</button>
 					</div>
 				</div>
 
 				<div *ngIf="animalPondNewForm.get('relationshipList').controls.length">
 					<div class="table-responsive">
-						<table class="table table-striped customDataTable">
+						<table class="table table-striped mb-0">
 							<thead>
 								<tr>
-									<th colspan="2" *ngIf="animalPondNewForm.get('canEdit').value"></th>
-									<th>#</th>
-									<th>{{'name' | translate:translateKey}}</th>
-									<th>{{'address' | translate:translateKey}}</th>
-									<th>{{'mobile_no' | translate:translateKey}}</th>
+									<th width="50">#</th>
+									<th width="29%">{{'name' | translate:translateKey}}</th>
+									<th width="29%">{{'address' | translate:translateKey}}</th>
+									<th width="29%">{{'mobile_no' | translate:translateKey}}</th>
+									<th width="150" *ngIf="animalPondNewForm.get('canEdit').value"></th>
 								</tr>
 							</thead>
-
-							<tbody formArrayName="relationshipList">
-								<tr *ngFor="let item of animalPondNewForm.get('relationshipList').controls; let indx = index;">
-
-									<td colspan="6">
-										<table>
-											<tr>
-												<form [formGroupName]="indx" style="display: contents;">
-
-													<td *ngIf="animalPondNewForm.get('canEdit').value">
-														<button mat-icon-button color="primary" *ngIf="!item.isEditMode" (click)="editRecord(item)">
-															<mat-icon title="Edit">edit</mat-icon>
-														</button>
-														<button type="submit" [disabled]="item.invalid" *ngIf="item.isEditMode" (click)="saveRecord(item)" mat-icon-button color="primary">
-															<mat-icon title="save">save</mat-icon>
-														</button>
-													</td>
-													<td *ngIf="animalPondNewForm.get('canEdit').value">
-														<button mat-icon-button color="warn" *ngIf="!item.isEditMode" (click)="deleteRecord(indx)">
-															<mat-icon title="Delete">delete</mat-icon>
-														</button>
-														<button mat-icon-button color="warn" *ngIf="item.isEditMode" (click)="cancelRecord(item)">
-															<mat-icon title="Delete">cancel</mat-icon>
-														</button>
-													</td>
-
-													<td>{{indx+1}}</td>
-
-													<td>
-														<p *ngIf="!item.isEditMode">{{item.get('name').value}}</p>
-														<mat-form-field *ngIf="item.isEditMode">
-															<input matInput maxlength="100" appValidationFields [validationFieldsType]="'onlyNameWithSpace'" formControlName="name">
-															<control-messages [control]="item.controls.name"></control-messages>
-														</mat-form-field>
-													</td>
-
-													<td>
-														<p *ngIf="!item.isEditMode">{{item.get('address').value}}</p>
-														<mat-form-field *ngIf="item.isEditMode">
-															<input matInput maxlength="150" formControlName="address">
-															<control-messages [control]="item.controls.address"></control-messages>
-														</mat-form-field>
-													</td>
-
-													<td>
-														<p *ngIf="!item.isEditMode">{{item.get('mobileNo').value}}</p>
-														<mat-form-field *ngIf="item.isEditMode">
-															<input matInput maxlength="11" OnlyNumber formControlName="mobileNo">
-															<control-messages [control]="item.controls.mobileNo"></control-messages>
-														</mat-form-field>
-													</td>
-												</form>
-											</tr>
-										</table>
-
-									</td>
-
-								</tr>
-							</tbody>
 						</table>
 					</div>
+
+					<ul formArrayName="relationshipList" class="listTable clearfix">
+						<li *ngFor="let item of animalPondNewForm.get('relationshipList').controls; let indx = index;">
+							<form [formGroupName]="indx">
+								<div class="table-responsive">
+									<table class="table table-striped">
+										<tr>
+											<td width="50">{{indx+1}}</td>
+
+											<td width="29%">
+												<div *ngIf="!item.isEditMode">{{item.get('name').value}}</div>
+												<mat-form-field *ngIf="item.isEditMode">
+													<input matInput maxlength="100" appValidationFields [validationFieldsType]="'onlyNameWithSpace'" formControlName="name">
+													<control-messages [control]="item.controls.name"></control-messages>
+												</mat-form-field>
+											</td>
+
+											<td width="29%">
+												<div *ngIf="!item.isEditMode">{{item.get('address').value}}</div>
+												<mat-form-field *ngIf="item.isEditMode">
+													<input matInput maxlength="150" formControlName="address">
+													<control-messages [control]="item.controls.address"></control-messages>
+												</mat-form-field>
+											</td>
+
+											<td width="29%">
+												<div *ngIf="!item.isEditMode">{{item.get('mobileNo').value}}</div>
+												<mat-form-field *ngIf="item.isEditMode">
+													<input matInput maxlength="11" OnlyNumber formControlName="mobileNo">
+													<control-messages [control]="item.controls.mobileNo"></control-messages>
+												</mat-form-field>
+											</td>
+											<td width="150">
+												<div *ngIf="animalPondNewForm.get('canEdit').value" class="float-left">
+													<button mat-icon-button color="primary" *ngIf="!item.isEditMode" (click)="editRecord(item)">
+														<mat-icon title="Edit">edit</mat-icon>
+													</button>
+													<button type="submit" [disabled]="item.invalid" *ngIf="item.isEditMode" (click)="saveRecord(item)" mat-icon-button color="primary">
+														<mat-icon title="save">save</mat-icon>
+													</button>
+												</div>
+												<div *ngIf="animalPondNewForm.get('canEdit').value">
+													<button mat-icon-button color="warn" *ngIf="!item.isEditMode" (click)="deleteRecord(indx,'relationshipList')">
+														<mat-icon title="Delete">delete</mat-icon>
+													</button>
+													<button mat-icon-button color="warn" *ngIf="item.isEditMode" (click)="cancelRecord(item)">
+														<mat-icon title="Delete">cancel</mat-icon>
+													</button>
+												</div>
+											</td>
+										</tr>
+									</table>
+								</div>
+							</form>
+						</li>
+					</ul>
 				</div>
 				<!-- end table -->
 				<app-action-bar [form]="animalPondNewForm" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step2', next: 2, back: 0}"></app-action-bar>
 			</mat-tab>
 			<!-- step 2 Ends -->
+
+			<!-- step 3 start -->
+			<mat-tab>
+				<ng-template mat-tab-label>
+					<div>{{'animal_detail' | translate:translateKey}}</div>
+				</ng-template>
+
+				<!-- table -->
+				<div class="row">
+					<!-- [disabled]="animalPondNewForm.get('animalDetails').controls.length < 10" -->
+					<div class="col-md-2 pt-3" style="text-align: right;">
+						<button type="button" (click)="addMoreAnimal()" matTooltip="{{'add_more' | translate:translateKey}}" mat-raised-button color="primary">{{'add'| translate:translateKey}}</button>
+					</div>
+				</div>
+
+				<div *ngIf="animalPondNewForm.get('animalDetails').controls.length">
+					<div class="table-responsive">
+						<table class="table table-striped mb-0">
+							<thead>
+								<tr>
+									<th width="50">#</th>
+									<th width="29%">{{'animalType' | translate:translateKey}}</th>
+									<th width="29%">{{'animalCount' | translate:translateKey}}</th>
+									<th width="150" *ngIf="animalPondNewForm.get('canEdit').value"></th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+
+					<ul formArrayName="animalDetails" class="listTable clearfix">
+						<li *ngFor="let item of animalPondNewForm.get('animalDetails').controls; let indx = index;">
+							<form [formGroupName]="indx">
+								<div class="table-responsive">
+									<table class="table table-striped">
+										<tr>
+											<td width="50">{{indx+1}}</td>
+
+											<td width="29%">
+												<div *ngIf="!item.isEditMode">
+													{{getSelectedDataFromLookUps(ANIMAL_TYPE,item.get('animalType').controls.code.value)?.name}}
+												</div>
+												<div class="ngSelect" *ngIf="item.isEditMode" formGroupName="animalType">
+													<ng-select placeholder="{{'animal_type' | translate:translateKey}} *" formControlName="code" (ngModelChange)="getSelectedAnimal()">
+														<ng-container *ngFor="let type of ANIMAL_TYPE">
+															<ng-option *ngIf="!type.selected" [value]="type.code">{{type.name}}</ng-option>
+														</ng-container>
+													</ng-select>
+													<control-messages [control]="item.get('animalType').controls.code"></control-messages>
+												</div>
+											</td>
+
+											<td width="29%">
+												<div *ngIf="!item.isEditMode">{{item.get('animalCount').value}}</div>
+												<mat-form-field *ngIf="item.isEditMode">
+													<input matInput maxlength="3" OnlyNumber formControlName="animalCount">
+													<control-messages [control]="item.controls.animalCount"></control-messages>
+												</mat-form-field>
+											</td>
+											<td width="150">
+												<div *ngIf="animalPondNewForm.get('canEdit').value" class="float-left">
+													<button mat-icon-button color="primary" *ngIf="!item.isEditMode" (click)="editRecord(item)">
+														<mat-icon title="Edit">edit</mat-icon>
+													</button>
+													<button type="submit" [disabled]="item.invalid" *ngIf="item.isEditMode" (click)="saveRecord(item)" mat-icon-button color="primary">
+														<mat-icon title="save">save</mat-icon>
+													</button>
+												</div>
+												<div *ngIf="animalPondNewForm.get('canEdit').value">
+													<button mat-icon-button color="warn" *ngIf="!item.isEditMode" (click)="deleteRecord(indx,'animalDetails')">
+														<mat-icon title="Delete">delete</mat-icon>
+													</button>
+													<button mat-icon-button color="warn" *ngIf="item.isEditMode" (click)="cancelRecord(item)">
+														<mat-icon title="Delete">cancel</mat-icon>
+													</button>
+												</div>
+											</td>
+										</tr>
+									</table>
+								</div>
+							</form>
+						</li>
+					</ul>
+				</div>
+				<!-- end table -->
+				<app-action-bar [form]="animalPondNewForm" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step2', next: 2, back: 0}"></app-action-bar>
+			</mat-tab>
+			<!-- step 3 end -->
+
 			<!-- step 4 Attachment Starts -->
 			<mat-tab>
 				<ng-template mat-tab-label>
