@@ -7,7 +7,7 @@
 			<mat-form-field class="iconMat col-md-6">
 				<mat-icon matPrefix>face</mat-icon>
 				<input matInput type="text" placeholder="Firstname" appValidationFields validationFieldsType="onlyNameWithOutSpace" formControlName="firstName"
-				 required>
+				 required #firstname="matInput">
 				<control-messages [control]="regForm.controls.firstName"></control-messages>
 			</mat-form-field>
 

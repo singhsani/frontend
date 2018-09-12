@@ -6,7 +6,9 @@ import * as _ from 'lodash';
 /**
  * This Class is use for perform common language translation for application.
  */
-@Injectable()
+@Injectable({
+	providedIn: 'root'
+})
 export class TranslateService {
 
 	private currentLanguage: string;

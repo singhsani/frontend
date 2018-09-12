@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validator, Validators, AbstractControl } from '@angular/forms';
 
@@ -8,6 +8,7 @@ import { ManageRoutes } from '../../../../config/routes-conf';
 import { ToastrService } from 'ngx-toastr';
 
 import * as _ from 'lodash';
+import { MatInput } from '@angular/material/input';
 
 @Component({
 	selector: 'app-sign-up',
@@ -18,6 +19,9 @@ export class SignUpComponent implements OnInit {
 
 	regForm: FormGroup;
 	manageRoutes: any = ManageRoutes;
+
+	@ViewChild('firstname') nameInput: MatInput;
+
 
 	/**
 	 * Constructor to declare defualt propeties of class
@@ -60,6 +64,8 @@ export class SignUpComponent implements OnInit {
 			gender: null
 
 		}, { validator: this.matchingPasswords('password', 'confirmPassword') });
+
+		this.nameInput.focus();
 	}
 
 	/**
