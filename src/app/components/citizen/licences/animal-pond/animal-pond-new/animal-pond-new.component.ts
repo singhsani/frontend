@@ -1,13 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
+
 import { ManageRoutes } from './../../../../../config/routes-conf';
 import { CommonService } from '../../../../../shared/services/common.service';
-
 import { ValidationService } from '../../../../../shared/services/validation.service';
 import { FormsActionsService } from '../../../../../core/services/citizen/data-services/forms-actions.service';
 import { ToastrService } from 'ngx-toastr';
-
 
 @Component({
 	selector: 'app-animal-pond-new',
@@ -30,7 +29,6 @@ export class AnimalPondNewComponent implements OnInit {
 	private showButtons: boolean = false;
 
 	//Lookups Array
-	MF_LICENSE_TYPE: Array<any> = [];
 	MF_RELATIONSHIP_OF_APPLICANT: Array<any> = [];
 	MF_STATUS_OF_BUSINESS: Array<any> = [];
 	PERSON_TYPE: Array<any> = [];
@@ -43,30 +41,21 @@ export class AnimalPondNewComponent implements OnInit {
 	// required attachment array
 	private uploadFileArray: Array<any> =
 		[
-			{ labelName: 'Photo of License Holder', fieldIdentifier: '1', category: 'common' },
-			{ labelName: 'One Copy of each site plan and key plan', fieldIdentifier: '2', category: 'common' },
-			{ labelName: 'Aadhar Card Scan Copy', fieldIdentifier: '3', category: "common" },
-			{ labelName: 'Pan Card Copy of Owner / Propwriter', fieldIdentifier: '4', category: "common" },
+			// { labelName: 'Photo of License Holder', fieldIdentifier: '1'},
+			// { labelName: 'One Copy of each site plan and key plan', fieldIdentifier: '2', category: 'common' },
+			{ labelName: 'Aadhar Card Scan Copy', fieldIdentifier: '3'},
+			// { labelName: 'Pan Card Copy of Owner / Propwriter', fieldIdentifier: '4', category: "common" },
 			// { labelName: 'Constitution copy of Firm', fieldIdentifier: '5', category: "common" },
-			{ labelName: 'Proof of Ownership / tenancy / Legal Occupancy', fieldIdentifier: '6', category: "common" },
-			{ labelName: 'Copy of Lease Deed If not Executed, Copy of Auction Letter, Possession Letter', fieldIdentifier: '7', category: "common" },
-			// { labelName: 'Copy of Term & conditions for allotment of Premises by the  Land owning Agency ', fieldIdentifier: '8', category: "common" },
-			{ labelName: 'Additional Document if Any', fieldIdentifier: '9', category: "common" },
-			{ labelName: 'Property Tax Bill paid Receipt', fieldIdentifier: '10', category: "common" },
-			{ labelName: 'Shop & Establishment Certificate', fieldIdentifier: '11', category: "common" },
+			{ labelName: 'Proof of Ownership / tenancy / Legal Occupancy', fieldIdentifier: '6' },
+			// { labelName: 'Copy of Lease Deed If not Executed, Copy of Auction Letter, Possession Letter', fieldIdentifier: '7'},
+			{ labelName: 'Copy of Term & conditions for allotment of Premises by the  Land owning Agency ', fieldIdentifier: '8', category: "common" },
+			// { labelName: 'Additional Document if Any', fieldIdentifier: '9'},
+			{ labelName: 'Property Tax Bill paid Receipt', fieldIdentifier: '10' },
+			{ labelName: 'Shop & Establishment Certificate', fieldIdentifier: '11'},
 
-			{ labelName: 'Occupation Certificate', fieldIdentifier: '12', category: "rent" },
-			{ labelName: 'Rent Agreement', fieldIdentifier: '13', category: "rent" }
+			{ labelName: 'Occupation Certificate', fieldIdentifier: '12'},
+			{ labelName: 'Rent Agreement', fieldIdentifier: '13' }
 		];
-
-	//upload file as per status of business
-	get uploadFileArrayData() {
-		let data = this.uploadFileArray;
-		if (this.animalPondNewForm.get('statusOfBusinessId').value.code != 'RENT') {
-			data = this.uploadFileArray.filter((obj) => obj.category != 'rent');
-		}
-		return data
-	}
 
     /**
      * @param fb - Declare FormBuilder property.
@@ -103,7 +92,7 @@ export class AnimalPondNewComponent implements OnInit {
 			this.getAnimalPondLicNewData();
 			this.getLookupData();
 			this.animalPondNewFormControls();
-		}
+		}		 
 	}
 
 	/**
@@ -134,12 +123,13 @@ export class AnimalPondNewComponent implements OnInit {
 	getLookupData() {
 		this.formService.getDataFromLookups().subscribe(res => {
 			this.LOOKUP = res;
-			this.MF_LICENSE_TYPE = res.MF_LICENSE_TYPE;
 			this.MF_RELATIONSHIP_OF_APPLICANT = res.MF_RELATIONSHIP_OF_APPLICANT;
 			this.MF_STATUS_OF_BUSINESS = res.MF_STATUS_OF_BUSINESS;
 			this.PERSON_TYPE = res.PERSON_TYPE;
 			this.FIRM_ZONE = res.FIRM_ZONE;
 			this.ANIMAL_TYPE = res.ANIMAL_TYPE;
+			// selected animal filter
+			this.getSelectedAnimal();
 
 			this.onChangeZone(this.animalPondNewForm.get('zoneNo').value.code);
 			this.onChangeWard(this.animalPondNewForm.get('wardNo').value.code);
@@ -191,7 +181,7 @@ export class AnimalPondNewComponent implements OnInit {
 			// 	code: [null]
 			// }),
 			personType: this.fb.group({
-				code: [null]
+				code: [null, Validators.required]
 			}),
 			holderFirstName: [null, [Validators.required, Validators.maxLength(30)]],
 			holderMiddleName: [null, [Validators.required, Validators.maxLength(30)]],
@@ -258,7 +248,24 @@ export class AnimalPondNewComponent implements OnInit {
 	}
 
 	/**
-	 * Method is used to add array in form
+	 * Method is used to return array
+	 * @param data : animal data array
+	 */
+	createAnimalArray(data: any = {}) {
+
+		return this.fb.group({
+			serviceFormId: this.formId,
+			id: data.id ? data.id : null,
+			animalType: this.fb.group({
+				code: [data.animalType ? (data.animalType.code ? data.animalType.code : null) : null, Validators.required]
+			}),
+			animalCount: [data.animalCount ? data.animalCount : null, [Validators.minLength(1)]],
+		})
+
+	}
+
+	/**
+	 * Method is used to add recode in array control
 	 */
 	addItem(controlName: any) {
 		return this.animalPondNewForm.get(controlName) as FormArray;
@@ -307,23 +314,6 @@ export class AnimalPondNewComponent implements OnInit {
 		} catch (error) {
 			console.log(error.message);
 		}
-	}
-
-	/**
-	 * Method is used to return array
-	 * @param data : person data array
-	 */
-	createAnimalArray(data: any = {}) {
-
-		return this.fb.group({
-			serviceFormId: this.formId,
-			id: data.id ? data.id : null,
-			animalType: this.fb.group({
-				code: [data.animalType ? (data.animalType.code ? data.animalType.code : null) : null]
-			}),
-			animalCount: [data.animalCount ? data.animalCount : null, [Validators.minLength(1)]],
-		})
-
 	}
 
 	/**
@@ -391,7 +381,7 @@ export class AnimalPondNewComponent implements OnInit {
 	deleteRecord(index: any, gridType: string) {
 		this.commonService.confirmAlert('Are you sure?', "", 'info', '', performDelete => {
 			this.addItem(gridType).controls.splice(index, 1);
-			// This method for reset removed Animal type
+			// This method for filter  selected animal type
 			this.getSelectedAnimal();
 			this.commonService.successAlert('Removed!', '', 'success');
 		});
@@ -399,7 +389,7 @@ export class AnimalPondNewComponent implements OnInit {
 
 	/**
 	*  Method is used save editable dataview.
-	* @param row: table row index
+	* @param row: row index
 	*/
 	saveRecord(row: any) {
 		if (row.valid) {
@@ -408,26 +398,26 @@ export class AnimalPondNewComponent implements OnInit {
 	}
 
 	/**
-	 * 	Method is used for update animal lookup(remove selected animal type).
+	 * 	Method is used for filter animal lookup(remove selected animal type).
 	 */
-	getSelectedAnimal(){
-		
-		let animalData=this.ANIMAL_TYPE.map((mapDataObj:any)=>{
-			mapDataObj.selected=false;
+	getSelectedAnimal() {
+
+		let animalData = this.ANIMAL_TYPE.map((mapDataObj: any) => {
+			mapDataObj.selected = false;
 			return mapDataObj
 		});
-		
-		let animalGrid =  <FormArray>this.animalPondNewForm.get('animalDetails');
+
+		let animalGrid = <FormArray>this.animalPondNewForm.get('animalDetails');
 
 		animalGrid.controls.forEach(element => {
-			let findRecord =animalData.find((obj:any)=>obj.code == element.get('animalType').get('code').value)
-			if(findRecord){
+			let findRecord = animalData.find((obj: any) => obj.code == element.get('animalType').get('code').value)
+			if (findRecord) {
 				findRecord.selected = true;
 			}
 		});
-		return animalData;	
+		return animalData;
 	}
-	
+
 	/**
 	*  Method is used cancel editable dataview.
 	* @param row: table row index
