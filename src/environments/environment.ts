@@ -6,6 +6,6 @@
 export const environment = {
 	production: false,
 	envName: 'dev',
-	envAPIServer: '/VMC/'
+	envAPIServer: 'http://192.168.30.64:8080/'
 };
 
