@@ -16,6 +16,7 @@ export class AddressComponent implements OnInit, OnChanges {
 
 	@Input() addressFormGroup: FormGroup;
 	@Input() requiredFeilds: boolean;
+	@Input() isDisplayGujFields: boolean = false;
 
 	translateKey: string = 'addressScreen';
 	countryListArray: any = [];
@@ -73,7 +74,16 @@ export class AddressComponent implements OnInit, OnChanges {
 			district: [null, [Validators.maxLength(60)]],
 			city: [null, [Validators.maxLength(60)]],
 			country: [null, [Validators.maxLength(60)]],
-			pincode: [null, [Validators.maxLength(6)]]
+			pincode: [null, [Validators.maxLength(6)]],
+
+			buildingNameGuj: [null, [Validators.maxLength(180)]],
+			streetNameGuj: [null, [Validators.maxLength(180)]],
+			landmarkGuj: [null, [Validators.maxLength(300)]],
+			areaGuj: [null, [Validators.maxLength(180)]],
+			stateGuj: [null, [Validators.maxLength(180)]],
+			districtGuj: [null, [Validators.maxLength(180)]],
+			cityGuj: [null, [Validators.maxLength(180)]],
+			countryGuj: [null, [Validators.maxLength(180)]]
 
 		}
 
@@ -157,5 +167,23 @@ export class AddressComponent implements OnInit, OnChanges {
 		});
 	}
 
+	/**
+	 * Gujarati Look Up Converter.
+	 * @param selectedValue - selected value from dropdown
+	 * @param controlName - control name of form
+	 * @param lookupName - passed lookup array
+	 */
+	getGujNameFromLookup(selectedValue: string, controlName: string, lookupName: Array<any>) {
+		if (this.isDisplayGujFields) {
+			if (lookupName && lookupName.length) {
+				let dataObj = lookupName.find((obj) => obj.name === selectedValue);
+				if (dataObj && dataObj.gujName) {
+					this.addressFormGroup.get(controlName).setValue(dataObj.gujName);
+				} else {
+					this.addressFormGroup.get(controlName).setValue('');
+				}
+			}
+		}
+	}
 
 }
