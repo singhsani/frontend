@@ -1,6 +1,7 @@
 <app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
 <mat-card class="formClass cardBorder">
 	<form [formGroup]="animalPondNewForm">
+		
 		<mat-tab-group [(selectedIndex)]="tabIndex" dynamicHeight="true" mat-stretch-tabs class="stepperNav">
 
 			<!-- step 1 Starts -->
@@ -59,23 +60,23 @@
 				</div>
 				<div class="row">
 					<h2>{{'temp_address' | translate:translateKey}}</h2>
-					<app-address #temporaryAddressEstablishment [requiredFeilds]="animalPondNewForm.controls.temporaryAddress.value" [addressFormGroup]="animalPondNewForm.controls.temporaryAddress"></app-address>
+					<app-address #permanantAddressEstablishment [requiredFeilds]="animalPondNewForm.controls.temporaryAddress.value" [addressFormGroup]="animalPondNewForm.controls.temporaryAddress"></app-address>
 				</div>
 
 				<mat-form-field class="col-md-4">
 					<input matInput OnlyNumber maxlength="12" formControlName="holderTelephoneNo" placeholder="{{'holder_telephone_no' | translate:translateKey}}">
 				</mat-form-field>
 				<mat-form-field class="col-md-4">
-					<input matInput OnlyNumber maxlength="11" formControlName="holderMobileNo" placeholder="{{'holder_mobile_no' | translate:translateKey}}">
+					<input matInput OnlyNumber required maxlength="11" formControlName="holderMobileNo" placeholder="{{'holder_mobile_no' | translate:translateKey}}">
 				</mat-form-field>
 				<mat-form-field class="col-md-4">
 					<input matInput OnlyNumber maxlength="12" formControlName="holderFaxNo" placeholder="{{'holder_fax_no' | translate:translateKey}}">
 				</mat-form-field>
 				<mat-form-field class="col-md-4">
-					<input matInput OnlyNumber maxlength="12" formControlName="holderAadharNo" placeholder="{{'holder_aadhar_no' | translate:translateKey}}">
+					<input matInput OnlyNumber maxlength="12" required formControlName="holderAadharNo" placeholder="{{'holder_aadhar_no' | translate:translateKey}}">
 				</mat-form-field>
 				<mat-form-field class="col-md-4">
-					<input matInput appAlphaNumeric maxlength="10" formControlName="holderPanNo" placeholder="{{'holder_pan_no' | translate:translateKey}}">
+					<input matInput appAlphaNumeric maxlength="10" required formControlName="holderPanNo" placeholder="{{'holder_pan_no' | translate:translateKey}}">
 				</mat-form-field>
 
 				<app-action-bar [form]="animalPondNewForm" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step1', next: 1, back: 0}"></app-action-bar>
@@ -108,13 +109,12 @@
 					</div>
 				</div>
 				<div class="row">
-					<h2>{{'business_shop_address' | translate:translateKey}}</h2>
+					<h2>{{'business_address' | translate:translateKey}}</h2>
 					<app-address #temporaryAddressEstablishment [requiredFeilds]="animalPondNewForm.controls.businessAddress.value" [addressFormGroup]="animalPondNewForm.controls.businessAddress"></app-address>
 				</div>
 
 				<div class="row">
 					<!-- <h2>{{'category_label' | translate:translateKey}}</h2> -->
-
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" required maxlength="500" placeholder="{{'extra_details_of_business' | translate:translateKey}}"
 						 formControlName="extraDetailsOfBusiness">
@@ -138,8 +138,8 @@
 				<!-- table -->
 				<div class="row">
 					<div class="col-md-10">
-						<h2 *ngIf="animalPondNewForm.get('relationshipId').value.code == 'PROPRIETOR'">{{ 'if_shop_is_in_properitership' | translate:translateKey}}</h2>
-						<h2 *ngIf="animalPondNewForm.get('relationshipId').value.code != 'PROPRIETOR'">{{ 'if_shop_is_in_partnership' | translate:translateKey}}</h2>
+						<h2 *ngIf="animalPondNewForm.get('relationshipId').value.code == 'PROPRIETOR'">{{ 'if_apl_is_in_properitership'| translate:translateKey}}</h2>
+						<h2 *ngIf="animalPondNewForm.get('relationshipId').value.code != 'PROPRIETOR'">{{ 'if_apl_is_in_partnership' | translate:translateKey}}</h2>
 					</div>
 					<div class="col-md-2 pt-3" style="text-align: right;">
 						<button type="button" [disabled]="animalPondNewForm.get('relationshipId').value.code ? animalPondNewForm.get('relationshipId').value.code=='PROPRIETOR' ? !(animalPondNewForm.get('relationshipList').controls.length < 1) : !(animalPondNewForm.get('relationshipList').controls.length < 10) : true"
@@ -226,14 +226,15 @@
 			<!-- step 3 start -->
 			<mat-tab>
 				<ng-template mat-tab-label>
-					<div>{{'animal_detail' | translate:translateKey}}</div>
+					<div>{{'insert_animal_detail' | translate:translateKey}}</div>
 				</ng-template>
 
 				<!-- table -->
 				<div class="row">
-					<!-- [disabled]="animalPondNewForm.get('animalDetails').controls.length < 10" -->
+					<div class="col-md-10"> </div>
 					<div class="col-md-2 pt-3" style="text-align: right;">
-						<button type="button" (click)="addMoreAnimal()" matTooltip="{{'add_more' | translate:translateKey}}" mat-raised-button color="primary">{{'add'| translate:translateKey}}</button>
+						<button type="button" (click)="addMoreAnimal()" [disabled]="animalPondNewForm.get('animalDetails').controls.length >= ANIMAL_TYPE.length"
+						 matTooltip="{{'add_more' | translate:translateKey}}" mat-raised-button color="primary">{{'add'| translate:translateKey}}</button>
 					</div>
 				</div>
 
@@ -253,6 +254,7 @@
 
 					<ul formArrayName="animalDetails" class="listTable clearfix">
 						<li *ngFor="let item of animalPondNewForm.get('animalDetails').controls; let indx = index;">
+
 							<form [formGroupName]="indx">
 								<div class="table-responsive">
 									<table class="table table-striped">
@@ -264,7 +266,8 @@
 													{{getSelectedDataFromLookUps(ANIMAL_TYPE,item.get('animalType').controls.code.value)?.name}}
 												</div>
 												<div class="ngSelect" *ngIf="item.isEditMode" formGroupName="animalType">
-													<ng-select placeholder="{{'animal_type' | translate:translateKey}} *" formControlName="code" (ngModelChange)="getSelectedAnimal()">
+													<ng-select placeholder="{{'animal_type' | translate:translateKey}} *" formControlName="code" (ngModelChange)="getSelectedAnimal()"
+													 required>
 														<ng-container *ngFor="let type of ANIMAL_TYPE">
 															<ng-option *ngIf="!type.selected" [value]="type.code">{{type.name}}</ng-option>
 														</ng-container>
@@ -306,7 +309,7 @@
 					</ul>
 				</div>
 				<!-- end table -->
-				<app-action-bar [form]="animalPondNewForm" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step2', next: 2, back: 0}"></app-action-bar>
+				<app-action-bar [form]="animalPondNewForm" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step3', next: 3, back: 1}"></app-action-bar>
 			</mat-tab>
 			<!-- step 3 end -->
 
@@ -317,65 +320,65 @@
 				</ng-template>
 				<div class="row">
 					<!-- <h2>{{'owner_checklist' | translate: translateKey}}</h2> -->
-
 					<div class="col-md-4">
 						<div *ngIf="showButtons">
-							<label>{{'photo_of_license_holder' | translate: translateKey}} *</label>
+							<label>{{'photo_of_license_holder' | translate: translateKey}} </label>
 							<file-upload [form]="animalPondNewForm" [uploadModel]="setDataValue(1,'PhotoofLicenseHolder','1.1','doc')"></file-upload>
 						</div>
 					</div>
-
+					<!--
 					<div class="col-md-4">
 						<div *ngIf="showButtons">
 							<label>{{'site_or_key_plan' | translate: translateKey}} *</label>
 							<file-upload [form]="animalPondNewForm" [uploadModel]="setDataValue(2,'siteorkeyplan','1.2','doc')"></file-upload>
 						</div>
 					</div>
-					<div class="col-md-4">
-						<div *ngIf="showButtons">
-							<label>{{'aadhar_card_scan_copy' | translate: translateKey}} *</label>
-							<file-upload [form]="animalPondNewForm" [uploadModel]="setDataValue(3,'PropertyTaxCurrentYearReceiptOfOrganization', '1.3', 'doc') "></file-upload>
-						</div>
-					</div>
+					 -->
 
 					<div class="col-md-4">
 						<div *ngIf="showButtons">
-							<label>{{'pan_card_owner_or_prop' | translate: translateKey}} *</label>
-							<file-upload [form]="animalPondNewForm" [uploadModel]="setDataValue(4, 'OrganizationBusinessTaxCurrentYearReceipt', '1.4', 'doc') "></file-upload>
+							<label>{{'pan_card_owner_or_prop' | translate: translateKey}} </label>
+							<file-upload [form]="animalPondNewForm" [uploadModel]="setDataValue(4, 'PanCardCopyofOwnerPropwriter', '1.4', 'doc') "></file-upload>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div *ngIf="showButtons">
+							<label>{{'aadhar_card_scan_copy' | translate: translateKey}} *</label>
+							<file-upload [form]="animalPondNewForm" [uploadModel]="setDataValue(3,'AadharCardScanCopy', '1.3', 'doc') "></file-upload>
 						</div>
 					</div>
 
 					<div class="col-md-4">
 						<div *ngIf="showButtons">
 							<label>{{'constitution_copy_of_firm' | translate: translateKey}} </label>
-							<file-upload [form]="animalPondNewForm" [uploadModel]="setDataValue(5,'WorkersProfessionalTaxReceipt', '1.5','doc') "></file-upload>
+							<file-upload [form]="animalPondNewForm" [uploadModel]="setDataValue(5,'ConstitutionCopyofFirm', '1.5','doc') "></file-upload>
 						</div>
 					</div>
 
 					<div class="col-md-4">
 						<div *ngIf="showButtons">
 							<label>{{'proof_of_ownership_tenancy' | translate: translateKey}} *</label>
-							<file-upload [form]="animalPondNewForm" [uploadModel]="setDataValue(6,'PartnershipDeedCopyOfPartnerIfThereIsAPartner', '1.6', 'doc') "></file-upload>
+							<file-upload [form]="animalPondNewForm" [uploadModel]="setDataValue(6,'ProofofOwnershiptenancyLegalOccupancy', '1.6', 'doc') "></file-upload>
 						</div>
 					</div>
 
 					<div class="col-md-4">
 						<div *ngIf="showButtons">
-							<label>{{'copy_of_lease_deed_or_auctioncopy_or_poss_letter' | translate: translateKey}} *</label>
-							<file-upload [form]="animalPondNewForm" [uploadModel]="setDataValue(7, 'OwnerMoreWorkers', '1.7', 'doc') "></file-upload>
+							<label>{{'copy_of_lease_deed_or_auctioncopy_or_poss_letter' | translate: translateKey}} </label>
+							<file-upload [form]="animalPondNewForm" [uploadModel]="setDataValue(7, 'CopyofLeaseDeedIfNotexecutedCopyofAuctionPossessionLetter', '1.7', 'doc') "></file-upload>
 						</div>
 					</div>
 
 					<div class="col-md-4">
 						<div *ngIf="showButtons">
-							<label>{{'premises_by_the_land_owning_agency' | translate: translateKey}}</label>
-							<file-upload [form]="animalPondNewForm" [uploadModel]="setDataValue(8, 'AdharCardOwner', '1.8', 'doc') "></file-upload>
+							<label>{{'premises_by_the_land_owning_agency' | translate: translateKey}}*</label>
+							<file-upload [form]="animalPondNewForm" [uploadModel]="setDataValue(8, 'premises_by_the_land_owning_agency', '1.8', 'doc') "></file-upload>
 						</div>
 					</div>
 
 					<div class="col-md-4">
 						<div *ngIf="showButtons">
-							<label>{{'additional_document_if_any' | translate: translateKey}} *</label>
+							<label>{{'additional_document_if_any' | translate: translateKey}} </label>
 							<file-upload [form]="animalPondNewForm" [uploadModel]="setDataValue(9, 'ElectionVotersID', '1.9', 'doc') "></file-upload>
 						</div>
 					</div>
@@ -393,27 +396,28 @@
 						</div>
 					</div>
 					<!-- two attachment for rental shop -->
-					<div class="col-md-4" *ngIf="animalPondNewForm.get('statusOfBusinessId').controls.code.value === 'RENT'">
+					<div class="col-md-4">
 						<div *ngIf="showButtons">
 							<label>{{'occupation_certi' | translate: translateKey}} *</label>
-							<file-upload [form]="animalPondNewForm" [uploadModel]="setDataValue(12,'PartnershipDeedCopyOfPartnerIfThereIsAPartner', '1.6', 'doc') "></file-upload>
+							<file-upload [form]="animalPondNewForm" [uploadModel]="setDataValue(12,'OccupationCerti', '1.6', 'doc') "></file-upload>
 						</div>
 					</div>
-					<div class="col-md-4" *ngIf="animalPondNewForm.get('statusOfBusinessId').controls.code.value === 'RENT'">
+					<div class="col-md-4">
 						<div *ngIf="showButtons">
 							<label>{{'rent_agreement' | translate: translateKey}} *</label>
-							<file-upload [form]="animalPondNewForm" [uploadModel]="setDataValue(13,'PartnershipDeedCopyOfPartnerIfThereIsAPartner', '1.6', 'doc') "></file-upload>
+							<file-upload [form]="animalPondNewForm" [uploadModel]="setDataValue(13,'RentAgreement', '1.6', 'doc') "></file-upload>
 						</div>
 					</div>
 				</div>
 
-				<app-action-bar [uploadFiles]="uploadFileArrayData" [form]="animalPondNewForm" (handleErrors)="handleErrorsOnSubmit($event)"
-				 (tabIndex)="onTabChange($event) " [stepInfo]="{step: 'final', next:3, back:1} "></app-action-bar>
+				<app-action-bar [uploadFiles]="uploadFileArray" [form]="animalPondNewForm" (handleErrors)="handleErrorsOnSubmit($event)"
+				 (tabIndex)="onTabChange($event) " [stepInfo]="{step: 'final', next:4, back:2} "></app-action-bar>
 
 			</mat-tab>
 			<!-- step Attachment Ends -->
 
 		</mat-tab-group>
 	</form>
+
 	<!-- {{ animalPondNewForm.value | json }} -->
 </mat-card>

@@ -8,7 +8,7 @@ import { AnimalPondTransferComponent } from './animal-pond-transfer/animal-pond-
 import { AnimalPondDuplicateComponent } from './animal-pond-duplicate/animal-pond-duplicate.component';
 
 const routes: Routes = [
-	{ path: '', component: AnimalPondNewComponent },
+	{ path: '', redirectTo: ManageRoutes.getMainRoute('APL-LIC'), pathMatch: 'full' },
 	{ path: ManageRoutes.getMainRoute('APL-LIC') + '/:id/:apiCode', component: AnimalPondNewComponent },
 	{ path: ManageRoutes.getMainRoute('APL-REN') + '/:id/:apiCode', component: AnimalPondRenewComponent },
 	{ path: ManageRoutes.getMainRoute('APL-CAN') + '/:id/:apiCode', component: AnimalPondCancellationComponent },
