@@ -64,11 +64,11 @@
 
 				<div class="row">
 					<h2>{{'permanat_address' | translate:translateKey}}</h2>
-					<app-address #permanantAddressEstablishment [requiredFeilds]="muttonFishNewForm.controls.permanantAddress.value" [addressFormGroup]="muttonFishNewForm.controls.permanantAddress"></app-address>
+					<app-address [isDisplayGujFields]="true" #permanantAddressEstablishment [requiredFeilds]="muttonFishNewForm.controls.permanantAddress.value" [addressFormGroup]="muttonFishNewForm.controls.permanantAddress"></app-address>
 				</div>
 				<div class="row">
 					<h2>{{'temp_address' | translate:translateKey}}</h2>
-					<app-address #temporaryAddressEstablishment [requiredFeilds]="muttonFishNewForm.controls.temporaryAddress.value" [addressFormGroup]="muttonFishNewForm.controls.temporaryAddress"></app-address>
+					<app-address [isDisplayGujFields]="true" #temporaryAddressEstablishment [requiredFeilds]="muttonFishNewForm.controls.temporaryAddress.value" [addressFormGroup]="muttonFishNewForm.controls.temporaryAddress"></app-address>
 				</div>
 
 				<mat-form-field class="col-md-4">
