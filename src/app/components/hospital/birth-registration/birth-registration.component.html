@@ -386,7 +386,7 @@
                     <h2>
                         {{'present_address_during_delivery' | translate:translateKey}}
                     </h2>
-                    <app-address #address [requiredFeilds]="true" [addressFormGroup]="birthCertificateForm.controls.parentDeliveryAddress"></app-address>
+                    <app-address [isDisplayGujFields]="true" #address [requiredFeilds]="true" [addressFormGroup]="birthCertificateForm.controls.parentDeliveryAddress"></app-address>
                 </div>
 
                 <div class="row" formGroupName="isPermanentPresentAddressSame">
@@ -398,7 +398,7 @@
                     <h2 class="mt-4">
                         {{'permanent_address_during_delivery' | translate:translateKey}}
                     </h2>
-                    <app-address #address [requiredFeilds]="true" [addressFormGroup]="birthCertificateForm.controls.parentPermanentAddress"></app-address>
+                    <app-address [isDisplayGujFields]="true" #address [requiredFeilds]="true" [addressFormGroup]="birthCertificateForm.controls.parentPermanentAddress"></app-address>
                 </div>
 
                 <div class="row">
