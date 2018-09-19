@@ -1,7 +1,7 @@
 <!-- HTML for Town hall booking Guideline-->
 
-<div *ngIf="guideLineFlag" class="container">
-    <mat-card class="border border-primary mt-4 p-0">
+<div *ngIf="guideLineFlag">
+    <mat-card class="border border-primary p-0">
         <mat-card-title class="alert alert-info text-center mb-0 font-weight-bold">
             Online Townhall Booking
         </mat-card-title>
@@ -11,7 +11,8 @@
             <ol class="m-4" style="font-size: large;">
                 <li>
                     All parties/organizers have to observe the VMC Rules(
-                    <a href="#">Mahatma Gandhi Nagar Gruh, Sir Sayaji Rao Nagar Gruh,Pandit Dindayal Upadhyay Nagar,Deepak Open Air theater
+                    <a href="#">Mahatma Gandhi Nagar Gruh, Sir Sayaji Rao Nagar Gruh,Pandit Dindayal Upadhyay Nagar,Deepak
+                        Open Air theater
                     </a>)
                 </li>
                 <li>
@@ -34,11 +35,11 @@
 </div>
 
 <!-- HTML for Town hall booking -->
-<div *ngIf="showSearchForm" class="container">
+<div *ngIf="showSearchForm">
 
     <app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
 
-    <mat-card class="mt-4">
+    <mat-card>
 
         <form [formGroup]="searchTownHallForm" (ngSubmit)="searchBooking()" autocomplete="off" ngNativeValidate>
 
@@ -49,6 +50,8 @@
                             {{ townHall.name }}
                         </ng-option>
                     </ng-select>
+                    <control-messages [control]="searchTownHallForm.controls.code"></control-messages>
+
                 </div>
 
                 <div formGroupName="purpose" class="col-md-6 ngSelect">
@@ -57,41 +60,51 @@
                             {{ purpose.name }}
                         </ng-option>
                     </ng-select>
+                    <control-messages [control]="searchTownHallForm.controls.purpose.controls.code">
+                    </control-messages>
+
                 </div>
 
                 <mat-form-field class="col-md-6">
-                    <input matInput [matDatepickerFilter]="myFilter" [min]="minDate" [matDatepicker]="townHallBookingfromPicker" formControlName="startDate"
-                        placeholder="Choose start date">
+                    <input matInput [matDatepickerFilter]="myFilter" (dateChange)="changeStartDate($event)" [min]="startMinDate" [matDatepicker]="townHallBookingfromPicker"
+                        formControlName="startDate" placeholder="Choose start date">
                     <mat-datepicker-toggle matSuffix [for]="townHallBookingfromPicker"></mat-datepicker-toggle>
                     <mat-datepicker #townHallBookingfromPicker touchUi="true"></mat-datepicker>
+                    <control-messages [control]="searchTownHallForm.controls.startDate">
+                    </control-messages>
+
                 </mat-form-field>
 
                 <mat-form-field class="col-md-6">
                     <mat-label>Choose end date</mat-label>
-                    <input matInput [matDatepickerFilter]="myFilter" [min]="minDate" [matDatepicker]="townHallBookingtoPicker" formControlName="endDate" placeholder="DD/MM/YYYY">
+                    <input matInput [readonly]="searchTownHallForm.controls.startDate.value == null" [matDatepickerFilter]="myFilter" [min]="endMinDate"
+                        [matDatepicker]="townHallBookingtoPicker" formControlName="endDate" placeholder="DD/MM/YYYY">
                     <mat-datepicker-toggle matSuffix [for]="townHallBookingtoPicker"></mat-datepicker-toggle>
                     <mat-datepicker #townHallBookingtoPicker touchUi="true"></mat-datepicker>
+                    <control-messages [control]="searchTownHallForm.controls.endDate">
+                    </control-messages>
                 </mat-form-field>
 
                 <div class="col-md-12 text-right">
-                    <button [disabled]="searchTownHallForm.invalid" mat-raised-button color="primary" type="submit">Search</button>
+                    <button mat-raised-button color="primary" type="submit">Search</button>
                 </div>
+                <!-- [disabled]="searchTownHallForm.invalid" -->
 
             </div>
         </form>
 
     </mat-card>
 
-    <mat-card class="mt-4" *ngIf="Dates.length>0">
+    <mat-card *ngIf="Dates.length>0">
         <mat-card class="cardH1">
             <h1>List Of Town Hall</h1>
         </mat-card>
 
-        <div class="row">
-
+        <!-- <div class="row">
             <div class="col-md-2 mb-1 p-1" *ngFor="let date of Dates">
                 <mat-card class="p-0 rounded border border-primary">
-                    <mat-card-title class="bg-primary text-center text-light font-weight-bold p-0">{{returnProperDate(date. key)}}
+                    <mat-card-title class="bg-primary text-center text-light font-weight-bold p-0">{{returnProperDate(date.
+                        key)}}
                     </mat-card-title>
                     <mat-card-content class="font-weight-bold">
                         <mat-checkbox (change)="selectShift(shift, $event.checked, i)" *ngFor="let shift of date.slotList; let i = index" [disabled]="shift.slotStatus != 'AVAILABLE'"
@@ -103,59 +116,167 @@
             <div class="col-md-12 text-right">
                 <button mat-raised-button type="button" color="primary" (click)="shortlistShifts()">Shortlist</button>
             </div>
+        </div> -->
 
+        <mat-accordion *ngFor="let month of filterMonths(); let i = index;">
+            <mat-expansion-panel [expanded]="i === 0">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        {{month.monthName}}
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div class="row">
+                    <mat-checkbox [checked]="!checkedAllinMonth(month)" labelPosition="after" (change)="selectAllShiftsInMonth($event.checked, month, i)">
+                        Select All shifts in {{month.monthName}}
+                    </mat-checkbox>
+                </div>
+
+                <div class="row">
+                    <div *ngFor="let date of filterAcc(month.id)" class="col-md-2 mb-1 p-1">
+                        <div>
+                            <mat-card class="p-0 rounded border border-primary">
+                                <mat-card-title class="bg-primary text-center text-light font-weight-bold p-0">{{returnProperDate(date.
+                                    key)}}
+                                </mat-card-title>
+                                <mat-card-content class="font-weight-bold">
+                                    <mat-checkbox (change)="selectShift(shift, $event.checked)" *ngFor="let shift of date.slotList; let i = index" [disabled]="shift.slotStatus == 'BOOKED' || shift.slotStatus == 'TEMPORARY_BLOCKED'"
+                                        [checked]="shift.slotStatus != 'AVAILABLE'">SHIFT
+                                        {{shift.shiftType}}
+                                    </mat-checkbox>
+                                </mat-card-content>
+                            </mat-card>
+                        </div>
+                    </div>
+                </div>
+            </mat-expansion-panel>
+        </mat-accordion>
+        <div class="col-md-12 text-right">
+            <button mat-raised-button data-toggle="modal" (click)="shortlistShifts()" data-target="#confirmShortlistModel" type="button"
+                [disabled]="selectedShift.length == 0" color="primary">Shortlist</button>
         </div>
 
     </mat-card>
 </div>
 
-<div class="container" *ngIf="showPaymentReciept">
-    <mat-card>
-
-        <div class="row border">
-            <div class="col-md-3">
-                Booking Date
+<div class="modal fade" id="confirmShortlistModel" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header customthead">
+                <h4 class="modal-title" id="exampleModalLabel">List Of Selected Slots</h4>
+                <button title="Close" data-dismiss="modal" class=" mat-icon-button" aria-label="Close">
+                    <mat-icon>close</mat-icon>
+                </button>
             </div>
-            <div class="col-md-3">
-                Booking From
+            <div class="modal-body" style="overflow-y:auto;max-height: 500px;">
+                <table class="table table-bordered">
+                    <thead class="customthead">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Start Date</th>
+                            <th scope="col">End Date</th>
+                            <th scope="col">Shift</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let shifts of selectedShift; let i = index;">
+                            <th scope="row">{{i+1}}</th>
+                            <td>{{shifts.start}}</td>
+                            <td>{{shifts.end}}</td>
+                            <td>{{shifts.shiftType}}</td>
+                            <td>
+                                <button mat-icon-button title="Remove Slot" [disabled]="selectedShift.length == 1" (click)="removeSelectedShift(shifts, i)">
+                                    <mat-icon color="warn">delete</mat-icon>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-            <div class="col-md-3">
-                Booking To
-            </div>
-            <div class="col-md-3">
-                Amount (Rs.)
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="confirmShortlist()">Confirm and
+                    Continue
+                </button>
             </div>
         </div>
+    </div>
+</div>
 
-        <div class="row border">
-            <div class="col-md-3">
-                {{paymentObject.bookingDate}}
-            </div>
-            <div class="col-md-3">
-                {{paymentObject.bookingFrom}}
-            </div>
-            <div class="col-md-3">
-                {{paymentObject.bookingTo}}
-            </div>
-            <div class="col-md-3">
-                {{paymentObject.amount}}
-            </div>
-        </div>
+<div *ngIf="showPaymentReciept">
+    <table class="table table-bordered">
+        <thead class="customthead">
+            <tr>
+                <th scope="col">Ref Number</th>
+                <th scope="col">Booking Date</th>
+                <th scope="col">Rent Amount</th>
+                <th scope="col">Deposit Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td scope="col">{{paymentObject.refNumber}}</td>
+                <td scope="col">{{paymentObject.bookingDate}}</td>
+                <td scope="col">{{paymentObject.rentAmount}}</td>
+                <td scope="col">{{paymentObject.depositAmount}}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="mt-5">
+        <h3 class="text-center">Booking Details</h3>
+
+        <table class="table table-bordered">
+            <thead class="customthead">
+                <tr>
+                    <th scope="col">Slots</th>
+                    <th scope="col">Shift</th>
+                    <th scope="col">Booking Date</th>
+                    <th scope="col">Start Time</th>
+                    <th scope="col">End Time</th>
+                    <th scope="row">Rent</th>
+                    <th scope="row">Electic Charge</th>
+                    <th scope="row">Administration Charges</th>
+                    <th scope="row">Show Tax</th>
+                    <th scope="row">Gst Amount</th>
+                    <th scope="row">Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of paymentObject.bookingDetails; let i = index">
+                    <td scope="col">{{i +1}}</td>
+                    <td scope="col">{{data.shiftType}}</td>
+                    <td scope="col">{{returnProperDate(data.bookingDate)}}</td>
+                    <td scope="col">{{data.startTime}}</td>
+                    <td scope="col">{{data.endTime}}</td>
+                    <td>{{data.rent}}</td>
+                    <td>{{data.electricCharges}}</td>
+                    <td>{{data.administrationCharges}}</td>
+                    <td>{{data.showTax}}</td>
+                    <td>{{data.gstAmount}}</td>
+                    <td>{{data.total}}</td>
+                </tr>
+            </tbody>
+        </table>
 
         <div class="col-md-12 text-right">
-            <button mat-raised-button type="button" color="primary" (click)="confirmPayment()">Confirm Payment</button>
+            <button mat-raised-button type="button" color="primary" (click)="confirmPayment()">Proceed For Application</button>
         </div>
-    </mat-card>
+    </div>
+
+
 </div>
 
-<div class="container" [hidden]="!showApplicationForm">
 
 
+<div [hidden]="!showApplicationForm">
     <mat-card class="cardH1">
         <h1>Town Hall Application Form</h1>
     </mat-card>
 
     <mat-card>
+
+
         <form [formGroup]="townHallApplicationForm" (ngSubmit)="submitTownhallApplication()">
 
             <h2>
@@ -164,7 +285,7 @@
 
             <div class="row">
                 <mat-form-field class="col-md-4">
-                    <input matInput appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" type="text" formControlName="organizationName"
+                    <input matInput maxlength="25" appValidationFields [validationFieldsType]="'onlyNameWithSpace'" type="text" formControlName="organizationName"
                         placeholder="{{'oraganization_name' | translate: translateKey}}" required>
                     <control-messages [control]="townHallApplicationForm.controls.organizationName"></control-messages>
                 </mat-form-field>
@@ -176,7 +297,7 @@
                 </mat-form-field>
 
                 <mat-form-field class="col-md-4">
-                    <input matInput appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" formControlName="organizationPresidentName"
+                    <input matInput maxlength="50" appValidationFields [validationFieldsType]="'onlyNameWithSpace'" formControlName="organizationPresidentName"
                         placeholder="{{'organization_president_name' | translate: translateKey}}" required>
                     <control-messages [control]="townHallApplicationForm.controls.organizationPresidentName"></control-messages>
                 </mat-form-field>
@@ -196,7 +317,7 @@
 
             <div class="row">
                 <mat-form-field class="col-md-4">
-                    <input matInput appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" type="text" formControlName="applicantName"
+                    <input matInput maxlength="50" appValidationFields [validationFieldsType]="'onlyNameWithSpace'" type="text" formControlName="applicantName"
                         placeholder="{{'applicant_name' | translate: translateKey}}" required>
                     <control-messages [control]="townHallApplicationForm.controls.applicantName"></control-messages>
                 </mat-form-field>
@@ -207,13 +328,38 @@
                     <control-messages [control]="townHallApplicationForm.controls.applicantMobile"></control-messages>
                 </mat-form-field>
 
+                <div class="col-md-4">
+                    <mat-form-field>
+                        <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="confirmMobile" placeholder="{{'confirm_mobile' | translate: translateKey}}"
+                            required>
+                        <control-messages [control]="townHallApplicationForm.controls.confirmMobile"></control-messages>
+                        
+                    </mat-form-field>
+                    <mat-error *ngIf="!mobileNumberMatcher() && townHallApplicationForm.controls.applicantMobile.touched && townHallApplicationForm.controls.confirmMobile.touched">
+                        Mobile Number & Confirm Mobile Number is not same
+                    </mat-error>
+                </div>
+
+
                 <mat-form-field class="col-md-4">
                     <input matInput type="email" formControlName="emailID" placeholder="{{'applicant_email' | translate: translateKey}}" required>
                     <control-messages [control]="townHallApplicationForm.controls.emailID"></control-messages>
                 </mat-form-field>
 
+                <div class="col-md-4">
+                    <mat-form-field>
+                        <input matInput type="email" formControlName="confirmEmailID" placeholder="{{'confirm_email' | translate: translateKey}}"
+                            required>
+                        <control-messages [control]="townHallApplicationForm.controls.confirmEmailID"></control-messages>
+                    </mat-form-field>
+                    <mat-error *ngIf="!emailMatcher() &&townHallApplicationForm.controls.emailID.touched && townHallApplicationForm.controls.confirmEmailID.touched">
+                        Email & Confirm Email is not same
+                    </mat-error>
+
+                </div>
+
                 <mat-form-field class="col-md-4">
-                    <input matInput type="text" appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" formControlName="relationshipWithOrg"
+                    <input matInput type="text" maxlength="20" appValidationFields [validationFieldsType]="'onlyNameWithSpace'" formControlName="relationshipWithOrg"
                         placeholder="{{'relationship_with_org' | translate: translateKey}}" required>
                     <control-messages [control]="townHallApplicationForm.controls.relationshipWithOrg"></control-messages>
                 </mat-form-field>
@@ -232,7 +378,7 @@
 
             <div class="row">
 
-                <div formGroupName="bankName" class="col-md-4 ngSelect">
+                <div formGroupName="bankName" class="col-md-3 ngSelect">
                     <ng-select placeholder="{{'bank_name' | translate:translateKey}} *" formControlName="code">
                         <ng-option *ngFor="let bank of BankOptions" [value]="bank.code">
                             {{bank.name}}
@@ -241,20 +387,20 @@
                     <control-messages [control]="townHallApplicationForm.controls.bankName.controls.code"></control-messages>
                 </div>
 
-                <mat-form-field class="col-md-4">
-                    <input matInput type="text" formControlName="accountHolderName" placeholder="{{'account_holder_name' | translate: translateKey}}"
+                <mat-form-field class="col-md-3">
+                    <input matInput type="text" maxlength="20" appValidationFields [validationFieldsType]="'onlyNameWithSpace'" formControlName="accountHolderName" placeholder="{{'account_holder_name' | translate: translateKey}}"
                         required>
                     <control-messages [control]="townHallApplicationForm.controls.accountHolderName"></control-messages>
                 </mat-form-field>
 
-                <mat-form-field class="col-md-4">
-                    <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="accountNo" placeholder="{{'accont_no' | translate: translateKey}}"
+                <mat-form-field class="col-md-3">
+                    <input matInput OnlyNumber maxlength="20" minlength="20" formControlName="accountNo" placeholder="{{'accont_no' | translate: translateKey}}"
                         required>
                     <control-messages [control]="townHallApplicationForm.controls.accountNo"></control-messages>
                 </mat-form-field>
 
-                <mat-form-field class="col-md-4">
-                    <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="ifscCode" placeholder="{{'ifsc_code' | translate: translateKey}}"
+                <mat-form-field class="col-md-3">
+                    <input matInput type="text" maxlength="11" formControlName="ifscCode" placeholder="{{'ifsc_code' | translate: translateKey}}"
                         required>
                     <control-messages [control]="townHallApplicationForm.controls.ifscCode"></control-messages>
                 </mat-form-field>
@@ -265,26 +411,25 @@
             </h2>
 
             <div class="row">
-                <mat-form-field class="col-md-4">
-                    <textarea matInput type="text" formControlName="programShortDetails" placeholder="{{'program_short_details' | translate: translateKey}}"
+                <mat-form-field class="col-md-6">
+                    <textarea matInput type="text" maxlength="200" formControlName="programShortDetails" placeholder="{{'program_short_details' | translate: translateKey}}"
                         required></textarea>
-
                     <control-messages [control]="townHallApplicationForm.controls.programShortDetails"></control-messages>
                 </mat-form-field>
 
-                <mat-form-field class="col-md-4">
-                    <textarea matInput type="text" formControlName="programPurpose" placeholder="{{'program_purpose' | translate: translateKey}}"
+                <mat-form-field class="col-md-6">
+                    <textarea matInput type="text" maxlength="200" formControlName="programPurpose" placeholder="{{'program_purpose' | translate: translateKey}}"
                         required></textarea>
-
                     <control-messages [control]="townHallApplicationForm.controls.programPurpose"></control-messages>
                 </mat-form-field>
             </div>
 
-
             <div class="col-md-12 text-right">
-                <button [disabled]="!townHallApplicationForm.valid" mat-raised-button color="primary" type="submit">Submit Application</button>
+                <button [disabled]="!townHallApplicationForm.valid || !emailMatcher() || !mobileNumberMatcher()" mat-raised-button color="primary"
+                    type="submit">
+                    Submit Application
+                </button>
             </div>
-
         </form>
     </mat-card>
 </div>

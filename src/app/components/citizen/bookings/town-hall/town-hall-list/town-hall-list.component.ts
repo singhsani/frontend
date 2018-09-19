@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormArray, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import * as moment from 'moment';
 import { Router } from '@angular/router';
@@ -7,7 +7,6 @@ import { ManageRoutes } from '../../../../../config/routes-conf';
 import { BookingService } from '../../../../../core/services/citizen/data-services/booking.service';
 import { filter } from 'rxjs-compat/operator/filter';
 
-import { SessionStorageService } from 'angular-web-storage';
 import { CommonService } from '../../../../../shared/services/common.service';
 
 
@@ -20,20 +19,27 @@ import { CommonService } from '../../../../../shared/services/common.service';
 })
 export class TownHallListComponent implements OnInit {
 
+
 	@ViewChild('address') addressComp: any;
 
 	/**
-	 * town hall search form group.
+	 * language translate key.
+	 */
+	translateKey: string = 'townHallListScreen';
+
+	/**
+	 * form groups.
 	 */
 	searchTownHallForm: FormGroup;
-
 	townHallApplicationForm: FormGroup;
 
-	showApplicationForm: boolean = false;
-
-	showSearchForm: boolean = false;
-
-	showPaymentReciept: boolean = false;
+	/**
+	 * Town hall form Lookups
+	 */
+	townHalls: Array<any> = [];
+	purposes: Array<any> = [];
+	selectedShift: Array<any> = [];
+	BankOptions: Array<any> = [];
 
 	paymentObject: any;
 
@@ -44,25 +50,36 @@ export class TownHallListComponent implements OnInit {
 	stepLabel2: string = 'Applicant Details'
 	stepLabel3: string = 'Bank Account Details'
 
-	tabIndex: number = 0;	
-
-	minDate: Date = new Date();
-	
-	
-	
-
+	tabIndex: number = 0;
 
 	/**
-	 * language translate key.
+	 * Minimum start date.
 	 */
-	translateKey: string = 'townHallListScreen';
+	startMinDate = moment(new Date()).add(1, 'day').toISOString();
 
 	/**
-	 * Town hall form Lookups
+	 * Minimum end date.
 	 */
-	townHalls: Array<any> = [];
-	purposes: Array<any> = [];
-	selectedShift: Array<any> = [];
+	endMinDate = moment(new Date()).add(1, 'day').toISOString();
+
+	/**
+	 * Used to get slots month wise [very important].
+	 */
+	public DateArray = [
+		{ month: 'Jan', id: '01', monthName: 'January' },
+		{ month: 'Fab', id: '02', monthName: 'February' },
+		{ month: 'Mar', id: '03', monthName: 'March' },
+		{ month: 'Apr', id: '04', monthName: 'April' },
+		{ month: 'May', id: '05', monthName: 'May' },
+		{ month: 'Jun', id: '06', monthName: 'June' },
+		{ month: 'Jul', id: '07', monthName: 'July' },
+		{ month: 'Aug', id: '08', monthName: 'August' },
+		{ month: 'Sep', id: '09', monthName: 'September' },
+		{ month: 'Oct', id: '10', monthName: 'October' },
+		{ month: 'Nov', id: '11', monthName: 'November' },
+		{ month: 'Dec', id: '12', monthName: 'December' },
+	];
+
 
 
 	filteredReponse: any;
@@ -75,16 +92,13 @@ export class TownHallListComponent implements OnInit {
 	/**
 	 * Bank Lookups
 	 */
-	BankOptions: Array<any>;
 
 	availableStots: Array<any> = [];
 	displayedColumns: Array<string> = ['id', 'start', 'end', 'slotStatus'];
-
-
 	disableDateList: Array<any> = ['2018-08-01', '2018-09-02', '2018-08-03', '2018-08-15'];
 
 	/**
-	 * used to disable specific date frm calender.
+	 * used to disable specific date from calender.
 	 */
 	myFilter = (d: Date): boolean => {
 
@@ -108,19 +122,26 @@ export class TownHallListComponent implements OnInit {
 		return !this.disableDateList.includes(day);
 	}
 
+	/**
+	 * Used to show headlines.
+	 */
 	head_lines: string;
+
 	/**
 	 * Flages
 	 */
-
 	guideLineFlag: boolean = true;
+
+	showApplicationForm: boolean = false;
+
+	showSearchForm: boolean = false;
+
+	showPaymentReciept: boolean = false;
+
 
 	constructor(
 		private fb: FormBuilder,
-		private sessionStore: SessionStorageService,
 		private commonService: CommonService,
-		
-		
 		private bookingService: BookingService,
 		private toster: ToastrService,
 		private router: Router
@@ -128,9 +149,14 @@ export class TownHallListComponent implements OnInit {
 		this.bookingService.resourceType = 'townhall';
 	}
 
+	/**
+	 * Method Initializes first after constructor.
+	 */
 	ngOnInit() {
 
-		//static data.
+		/**
+		 * Static headlines
+		 */
 		this.head_lines = `Online Town Hall Booking facility is the convenient and
 		easy way to book the town hall of Vadodara Municiple Corporation. You can
 		view the availiblity details of the town hall and select select one of multiple shifts for
@@ -140,40 +166,50 @@ export class TownHallListComponent implements OnInit {
 		this.createTownHallAvailiblityForm();
 
 		this.createTownHallBookingApplicationForm();
-		
+
 		this.getTownHallResourceList();
 
 		this.bookingLookups();
 
 	}
 
-	bookingLookups(){
-		this.bookingService.getDataFromLookups().subscribe(resp => {
+	/**
+	 * Method is used to change start date.
+	 * @param event - date event.
+	 */
+	changeStartDate(event) {
+		this.endMinDate = moment(event.target.value).add(1, 'day').toISOString();
+		this.searchTownHallForm.get('endDate').setValue(this.endMinDate);
+	}
 
+	/**
+	 * Method is used to get all lookups
+	 */
+	bookingLookups() {
+		this.bookingService.getDataFromLookups().subscribe(resp => {
 			this.purposes = resp.PURPOSE;
 			this.BankOptions = resp.BANK;
-		}, err => {
-			console.log(err);
 		})
 	}
 
+	/**
+	 * Method is used to create town hall search form.
+	 */
 	createTownHallAvailiblityForm() {
 		this.searchTownHallForm = this.fb.group({
-
-			code: [null, Validators.required],
-
+			code: [null, [Validators.required]],
 			purpose: this.fb.group({
-				code: [null, Validators.required],
+				code: [null, [Validators.required]],
 				name: null
 			}),
-
-			startDate: [null, Validators.required],
-
-			endDate: [null, Validators.required]
-
+			startDate: [moment(new Date()).add(1, 'day').toISOString(), Validators.required],
+			endDate: [moment(new Date()).add(1, 'day').toISOString(), Validators.required]
 		});
 	}
 
+	/**
+	 * Method is used to get all townhall resources list.
+	 */
 	getTownHallResourceList() {
 		this.bookingService.getResourceList().subscribe(res => {
 			this.townHalls = res.data;
@@ -185,57 +221,190 @@ export class TownHallListComponent implements OnInit {
 	}
 
 	/**
-	 * Method is used 
+	 * Method is used to get available slot wise townhalls.
 	 */
 	searchBooking() {
 
-		/**
-		 * Filter Object to get list of available dates.
-		 */
-		let filterData = {
-			resourceName: this.searchTownHallForm.get('code').value,
-			startDate: moment(this.searchTownHallForm.get('startDate').value).format("YYYY-MM-DD"),
-			endDate: moment(this.searchTownHallForm.get('endDate').value).format("YYYY-MM-DD"),
-		}
+		this.selectedShift = [];
 
-		/**
-		 * calling api to get all available slots.
-		 */
-		this.bookingService.getAllSlots(filterData).subscribe(resp => {
-			this.filteredReponse = resp;
-			let temp = resp.data.scheduleList;
-			this.Dates = temp.sort((a, b) => {
-				if ((new Date(a.key).getTime()) >= (new Date(b.key).getTime())) {
-					return 1
-				} else {
-					return -1
-				}
+		if (this.searchTownHallForm.valid) {
+
+			/**
+		     * Filter Object to get list of available dates.
+		     */
+
+			let filterData = {
+				resourceName: this.searchTownHallForm.get('code').value,
+				startDate: moment(this.searchTownHallForm.get('startDate').value).format("YYYY-MM-DD"),
+				endDate: moment(this.searchTownHallForm.get('endDate').value).format("YYYY-MM-DD"),
+			}
+
+			/**
+			 * calling api to get all available slots.
+			 */
+			this.bookingService.getAllSlots(filterData).subscribe(resp => {
+				this.filteredReponse = resp;
+				let temp = resp.data.scheduleList;
+				this.Dates = temp.sort((a, b) => {
+					if ((new Date(a.key).getTime()) >= (new Date(b.key).getTime())) {
+						return 1
+					} else {
+						return -1
+					}
+				});
+				this.availableStots = resp.data;
+			}, err => {
+				this.commonService.openAlertFormSaveValidation('Warning!', err.error, 'warning');
 			});
-			this.availableStots = resp.data;
+		}
+	}
 
-		}, err => {
-			this.toster.error(err.error.message);
-		});
+	/**
+	 * TODO Catch All Error
+	 */
+	AllError: Array<any> = [];
 
+	/**
+	 * Method is used to get All Error from Response.
+	 */
+	getAllErrors(form) {
+		for (let controls in form.controls) {
+			let control = form.get(controls)
+			if (control instanceof FormControl) {
+				if (control.invalid) {
+					let ErrData = {
+						controlName: controls,
+					}
+					this.AllError.push(ErrData);
+				}
+			} else if (control instanceof FormGroup) {
+				this.getAllErrors(control)
+			} else if (control instanceof FormArray) {
+				control.controls.forEach(c => {
+					if (c instanceof FormGroup) {
+						this.getAllErrors(c);
+					}
+				});
+			}
+		}
+	}
+
+	/**
+	 * Selection Parts is being started from  here.
+	 */
+	filterMonths(): Array<any> {
+		return this.DateArray.filter(month => this.Dates.find(d => d.key.split('-')[1] == month.id));
+	}
+
+	/**
+	 * Method is used to check all date wise shifts in month.
+	 * @param month - perticular month object.
+	 */
+	checkedAllinMonth(month) {
+		let myArray = this.filterAcc(month.id);
+		for (let i = 0; i < myArray.length; i++) {
+			for (let j = 0; j < myArray[i].slotList.length; j++) {
+				if (myArray[i].slotList[j].slotStatus == 'AVAILABLE') {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	/**
 	 * Method is used to select available shift.
 	 * @param shift - shift object.
 	 * @param checked - checked event
-	 * @param index - index of element
 	 */
-	selectShift(shift, checked, index) {
+	selectShift(shift, checked) {
+
 		if (checked) {
 			let data = this.selectedShift.find(uniqueId => uniqueId == shift.uniqueId)
 			if (!data) {
-				this.selectedShift.push(shift.uniqueId)
+				shift.slotStatus = 'CHECKED';
+				this.selectedShift.push(shift);
 			}
 		} else {
-			let data = this.selectedShift.findIndex(uniqueId => uniqueId == shift.uniqueId);
+			let data = this.selectedShift.findIndex(uniqueId => uniqueId.uniqueId == shift.uniqueId);
 			if (data > -1) {
-				this.selectedShift.splice(data, 1)
+				shift.slotStatus = 'AVAILABLE';
+				this.selectedShift.splice(data, 1);
 			}
+		}
+
+	}
+
+	/**
+	 * Used to get shifts of perticular month
+	 * @param id - month id
+	 */
+	filterAcc(id) {
+		return this.Dates.filter(t => t.key.split('-')[1] == id);
+	}
+
+	/**
+	 * Method is used to select all shifts in perticular month.
+	 * @param checked - checked event
+	 * @param month - perticular month
+	 * @param i - index
+	 */
+	selectAllShiftsInMonth(checked, month, i): void {
+		if (checked) {
+			this.filterAcc(month.id).forEach(obj => {
+				this.selectedShift = this.selectedShift.concat(obj.slotList.filter(status => status.slotStatus == 'AVAILABLE').map((data) => {
+					data.slotStatus = 'CHECKED';
+					return data;
+				}))
+			})
+		} else {
+			this.filterAcc(month.id).forEach(obj => {
+				obj.slotList.forEach(nestObj => {
+					let index = this.selectedShift.findIndex(myData => myData.uniqueId == nestObj.uniqueId);
+					if (index > -1) {
+						nestObj.slotStatus = 'AVAILABLE';
+						this.selectedShift.splice(index, 1)
+					}
+				})
+			})
+		}
+	}
+
+	/**
+	 * Method is used to shortlist selected townhalls.
+	 */
+	confirmShortlist() {
+
+		if (this.selectedShift.length > 0) {
+			let shortListData = {
+				resourceCode: this.filteredReponse.data.resourceCode,
+				purposeOfBooking: this.searchTownHallForm.get('purpose').value,
+				startDate: this.filteredReponse.data.startDate,
+				endDate: this.filteredReponse.data.endDate,
+				appointments: this.selectedShift.map(shifts => shifts.uniqueId)
+			}
+
+			this.bookingService.shortListTownHall(shortListData).subscribe(resp => {
+
+				this.showSearchForm = false;
+
+				this.townHallApplicationForm.patchValue(resp.data);
+
+				if (resp.data.status == 'PAYMENT_REQUIRED') {
+
+					this.bookingService.searchPayment(resp.data.refNumber).subscribe(payResp => {
+
+						this.paymentObject = payResp;
+
+						this.showPaymentReciept = true;
+					})
+				}
+			}, (err) => {
+				this.commonService.openAlertFormSaveValidation('Warning!', err.error, 'warning');
+			});
+
+		} else {
+			this.toster.show("Please Select shifts");
 		}
 	}
 
@@ -243,56 +412,37 @@ export class TownHallListComponent implements OnInit {
 	 * Method is used to shortlist all selected dates.
 	 */
 	shortlistShifts() {
-
-		let shortListData = {
-			resourceCode: this.filteredReponse.data.resourceCode,
-			purposeOfBooking: this.searchTownHallForm.get('purpose').value,
-			startDate: this.filteredReponse.data.startDate,
-			endDate: this.filteredReponse.data.endDate,
-			appointments: this.selectedShift
-		}
-
-
-		this.bookingService.shortListTownHall(shortListData).subscribe(resp => {
-
-			this.showSearchForm = false;
-
-			this.townHallApplicationForm.patchValue(resp.data);
-
-			if (resp.data.paymentRequired) {
-
-				this.bookingService.searchPayment(resp.data.refNumber).subscribe(payResp => {
-
-					this.paymentObject = payResp;
-
-					this.showPaymentReciept = true;
-
-				})
-
+		this.selectedShift = this.selectedShift.sort((a, b) => {
+			if ((new Date(a.start.split(' ')[0]).getTime()) >= (new Date(b.start.split(' ')[0]).getTime())) {
+				return 1;
+			} else {
+				return -1;
 			}
-
-
-		}, (err) => {
-
-			console.log(err);
 		});
 	}
 
+	/**
+	 * Method is used to remove selected townhalls.
+	 * @param shift - shift with details
+	 * @param index - index
+	 */
+	removeSelectedShift(shift, index) {
+		this.selectShift(shift, false);
+	}
 
+
+	/**
+	 * Used to show booking detaiis
+	 */
 	confirmPayment() {
 		this.showPaymentReciept = false;
 		this.showApplicationForm = true;
 	}
 
-	bookSlots(uniqueId: string, index: number) {
 
-		this.bookingService.bookSlot(uniqueId, '').subscribe(res => {
-			this.searchBooking();
-		}, err => {
-			this.toster.error(err.message);
-		});
-	}
-
+	/**
+	 * Method is used to create townhall booking application form.
+	 */
 	createTownHallBookingApplicationForm() {
 
 		this.townHallApplicationForm = this.fb.group({
@@ -312,52 +462,57 @@ export class TownHallListComponent implements OnInit {
 			 * Applicant Details
 			 */
 			applicantAddress: this.fb.group(this.addressComp.addressControls()),
-			applicantMobile: null,
-			applicantName: null,
-			relationshipWithOrg: null,
-			emailID: null,
+			applicantMobile: [null, [Validators.required]],
+			applicantName: [null, [Validators.required]],
+			relationshipWithOrg: [null, [Validators.required]],
+			emailID: [null, [Validators.required, Validators.email]],
+			confirmMobile: [null, [Validators.required]],
+			confirmEmailID: [null, [Validators.required, Validators.email]],
+
 			/**
 			 * Bank Accoount Details
 			 */
-			accountHolderName: null,
-			accountNo: null,
+			accountHolderName: [null, [Validators.required]],
+			accountNo: [null, [Validators.required]],
 			bankName: this.fb.group({
-				code: null
+				code: [null, [Validators.required]]
 			}),
-			ifscCode: [null],
+			ifscCode: [null, [Validators.required]],
 
 			/**
 			 * Booking Details
 			 */
-			bookingDate: null,
-			bookingFrom: null,
+			bookingDate: [null, [Validators.required]],
+			bookingFrom: [null, [Validators.required]],
 			bookingPurposeMaster: this.fb.group({
-				code: null,
+				code: [null, [Validators.required]],
 				name: null
 			}),
 
-			bookingTo: null,
+			bookingTo: [null, [Validators.required]],
 			cancelledDate: null,
 			expiryTime: null,
 
 			policePerformanceLicense: null,
 
-			programPurpose: null,
-			programShortDetails: null,
+			programPurpose: [null, [Validators.required]],
+			programShortDetails: [null, [Validators.required]],
 
 			/**
 			 * Organization Details
 			 */
-			orgTelephoneNo: null,
+			orgTelephoneNo: [null, [Validators.required]],
 			organizationAddress: this.fb.group(this.addressComp.addressControls()),
-			organizationName: null,
-			organizationPresidentName: null,
+			organizationName: [null, [Validators.required]],
+			organizationPresidentName: [null, [Validators.required]],
 		})
 
 	}
 
+	/**
+	 * Method is used to submit townhall application form.
+	 */
 	submitTownhallApplication() {
-
 		this.bookingService.commonBookSlot(this.townHallApplicationForm.value).subscribe(resp => {
 
 			/**
@@ -366,39 +521,35 @@ export class TownHallListComponent implements OnInit {
 		}, (err) => {
 
 			/**
-			 * Catch error here.
+			 * Catch error here for payment (402)
 			 */
 			if (err.status === 402) {
-
-				let paymentData = err.error.data;
-
-				let payData = {
-					id: null,
-					uniqueId: null,
-					version: null,
-					paymentType: paymentData.paymentType,
-					refNumber: paymentData.refNumber,
-					response: JSON.stringify({
-						data: "paid",
-						status: true
-					}),
-					transactionId: paymentData.transactionId,
-					paymentStatus: "SUCCESS",
-					retUrl: "http://192.168.30.74:4200/",
-					retPath: 'citizen/payment-gateway-response',
-					myApplicationUrl: '/citizen/booking/cancel-booking'
-				}
-
-				this.sessionStore.set('paymentData', JSON.stringify(payData));
-
-				this.commonService.paymentAlert('', '', '', cb => {
-					//http://192.168.10.107:8080/vmcadminportal/
-					window.location.href = `http://192.168.10.107:8080/vmcadminportal/#/admin/payment-gateway?retUrl=${payData.retUrl}&retPath=${payData.retPath}`;
-				});
-
-				return;
+				this.bookingService.proceedForPayment(err.error.data);
+			} else {
+				this.commonService.openAlertFormSaveValidation('Warning!', err.error, 'warning');
 			}
 		})
+	}
+
+	/**
+	 * Method is used to match number and comfirm number.
+	 */
+	mobileNumberMatcher(): boolean{
+		if (this.townHallApplicationForm.get('applicantMobile').value && this.townHallApplicationForm.get('confirmMobile').value){
+			return this.townHallApplicationForm.get('applicantMobile').value.toString() == this.townHallApplicationForm.get('confirmMobile').value.toString();
+		}
+
+		return false
+	}
+
+	/**
+	 * Method is used to match email and confirm email.
+	 */
+	emailMatcher(): boolean {
+		if (this.townHallApplicationForm.get('emailID').value && this.townHallApplicationForm.get('confirmEmailID').value){
+			return this.townHallApplicationForm.get('emailID').value.toString() == this.townHallApplicationForm.get('confirmEmailID').value.toString()
+		}
+		return false
 	}
 
 	/**
