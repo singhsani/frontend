@@ -263,7 +263,7 @@
 					<h2>
 						{{'present_address' | translate:translateKey}}
 					</h2>
-					<app-address #address [requiredFeilds]="requiredFeild" [addressFormGroup]="deathCertificateForm.controls.presentAddress"></app-address>
+					<app-address [isDisplayGujFields]="true" #address [requiredFeilds]="requiredFeild" [addressFormGroup]="deathCertificateForm.controls.presentAddress"></app-address>
 				</div>
 
 				<div class="row" formGroupName="isPermanentPresentAddressSame">
@@ -275,7 +275,7 @@
 					<h2>
 						{{'permanent_address' | translate:translateKey}}
 					</h2>
-					<app-address #address [requiredFeilds]="requiredFeild" [addressFormGroup]="deathCertificateForm.controls.permanentAddress"></app-address>
+					<app-address [isDisplayGujFields]="true" #address [requiredFeilds]="requiredFeild" [addressFormGroup]="deathCertificateForm.controls.permanentAddress"></app-address>
 				</div>
 
 				<app-hos-action-bar [stepInfo]="{step: 'step3', next: 3, back: 1}" (tabIndex)="onTabChange($event)" [form]="deathCertificateForm"
