@@ -16,49 +16,111 @@
 	</form>
 </mat-card>
 
-<div class="noApplication" *ngIf="bookingList.length == 0">
+<div class="noApplication" *ngIf="resultsLength==0 && !isLoadingResults">
 	<img src="assets/icons/no-application-found.png" alt="">
 	<br> No Bookings Found
 	<span class="noActi">It seems, No activity happed yet</span>
 	<a mat-stroked-button class="mat-primary" routerLink="../../dashboard">Create Bookings</a>
 </div>
 
-<mat-table *ngIf="bookingList.length > 0" #table [dataSource]="bookingList">
 
-	<ng-container matColumnDef="id">
-		<mat-header-cell *matHeaderCellDef> # </mat-header-cell>
-		<mat-cell *matCellDef="let element;let indx=index;"> {{indx+1}} </mat-cell>
-	</ng-container>
+<div class="example-container mat-elevation-z8 borderOne" [hidden]="resultsLength==0">
 
-	<ng-container matColumnDef="start">
-		<mat-header-cell *matHeaderCellDef> From </mat-header-cell>
-		<mat-cell *matCellDef="let element;"> {{returnProperDate(element.bookingFrom)}}</mat-cell>
-	</ng-container>
+	<div class="example-loading-shade" *ngIf="isLoadingResults">
+		<mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+	</div>
 
-	<ng-container matColumnDef="end">
-		<mat-header-cell *matHeaderCellDef> To </mat-header-cell>
-		<mat-cell *matCellDef="let element;"> {{returnProperDate(element.bookingTo)}} </mat-cell>
-	</ng-container>
+	<table mat-table class="myApplication" [dataSource]="bookingList" matSort matSortActive="created" matSortDisableClear matSortDirection="asc">
 
-	<ng-container matColumnDef="status">
-		<mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
-		<mat-cell *matCellDef="let element;"> {{element.status}} </mat-cell>
-	</ng-container>
+		<ng-container matColumnDef="id">
+			<mat-header-cell *matHeaderCellDef> # </mat-header-cell>
+			<mat-cell *matCellDef="let element;let indx=index;"> {{indx+1}} </mat-cell>
+		</ng-container>
 
-	<ng-container matColumnDef="action">
-		<mat-header-cell *matHeaderCellDef>Action</mat-header-cell>
-		<mat-cell *matCellDef="let element;" class="fullWidth">
-			<div class="row-inside">
-				<button mat-icon-button [disabled]="element.status !='Booked'" color="warn" (click)="cancelBooking(element.refNumber)">
-					<mat-icon title="Delete">delete</mat-icon>
-				</button>
-				<button mat-icon-button color="primary" (click)="printReceipt(row.serviceDetail.code, row.serviceDetail.name, row.serviceFormId)">
-					<mat-icon title="Print Receipt">print</mat-icon>
-				</button>
-			</div>
-		</mat-cell>
-	</ng-container>
+		<ng-container matColumnDef="start">
+			<mat-header-cell *matHeaderCellDef> From </mat-header-cell>
+			<mat-cell class="fullWidth" *matCellDef="let element;"> {{returnProperDate(element.bookingFrom)}}</mat-cell>
+		</ng-container>
 
-	<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-	<mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]=""></mat-row>
-</mat-table>
+		<ng-container matColumnDef="end">
+			<mat-header-cell *matHeaderCellDef> To </mat-header-cell>
+			<mat-cell class="fullWidth" *matCellDef="let element;"> {{returnProperDate(element.bookingTo)}} </mat-cell>
+		</ng-container>
+
+		<ng-container matColumnDef="status">
+			<mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
+			<mat-cell class="fullWidth" *matCellDef="let element;"> {{element.status}} </mat-cell>
+		</ng-container>
+		<ng-container matColumnDef="action">
+			<mat-header-cell *matHeaderCellDef>Action</mat-header-cell>
+			<mat-cell class="fullWidth" *matCellDef="let element;" class="fullWidth">
+				<div class="row-inside">
+				
+					<button mat-icon-button color="primary" (click)="printReceipt(element)">
+						<mat-icon title="Print Receipt">print</mat-icon>
+					</button>
+					<button *ngIf="element.status =='DEPOSIT_REQUIRED'" mat-icon-button color="primary" (click)="printPolicePerformanceLicense(element)">
+						<mat-icon title="Police Performance license">print</mat-icon>
+					</button>
+					<button mat-icon-button data-toggle="modal" color="primary" (click)="openModal(template, element.detailDTOList);">
+						<mat-icon title="View Booking Details">details</mat-icon>
+					</button>
+					
+				</div>
+			</mat-cell>
+		</ng-container>
+
+		<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+		<mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]=""></mat-row>
+	</table>
+
+	<mat-paginator [hidden]="resultsLength==0" [length]="resultsLength" [pageSize]="pageSize">
+	</mat-paginator>
+</div>
+
+
+
+<!-- The Modal -->
+<ng-template #template>
+	<div class="modal-header customthead">
+		<h4 class="modal-title pull-left">List of All slots</h4>
+		<div>
+			<button title="Close" class=" mat-icon-button" aria-label="Close" (click)="modalRef.hide()">
+				<mat-icon>close</mat-icon>
+			</button>
+		</div>
+	</div>
+	<div class="modal-body" style="overflow-y:auto;max-height: 500px;">
+		<table class="table table-bordered">
+			<thead class="customthead">
+				<tr>
+					<th scope="col">#</th>
+					<th scope="col">Booking Number</th>
+					<th scope="col">Booking Date</th>
+					<th scope="col">Start Time</th>
+					<th scope="col">End Time</th>
+					<th scope="col">Shift</th>
+					<th scope="col">Booking Status</th>
+					<th scope="col">Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let shifts of CancelSlotList; let i = index;">
+					<th scope="row">{{i+1}}</th>
+					<td>{{shifts.bookingNo}}</td>
+					<td>{{shifts.bookingDate}}</td>
+					<td>{{shifts.startTime}}</td>
+					<td>{{shifts.endTime}}</td>
+					<td>{{shifts.shiftType}}</td>
+					<td>{{shifts.status}}</td>
+
+					<td>
+						<button title="Cancel Request" mat-icon-button (click)="cancelBooking(shifts.refNumber)">
+							<mat-icon color="warn">cancel</mat-icon>
+						</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</ng-template>

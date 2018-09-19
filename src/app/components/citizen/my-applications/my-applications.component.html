@@ -10,7 +10,7 @@
         <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
     </div>
 
-    <mat-table [dataSource]="dataSource" class="myApplication" matSort matSortActive="created" matSortDisableClear matSortDirection="asc">
+    <table mat-table [dataSource]="dataSource" class="myApplication" matSort matSortActive="created" matSortDisableClear matSortDirection="asc">
 
         <ng-container matColumnDef="id">
             <mat-header-cell *matHeaderCellDef>#</mat-header-cell>
@@ -101,7 +101,7 @@
 
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
         <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-    </mat-table>
+    </table>
 
     <mat-paginator [hidden]="resultsLength==0" [length]="resultsLength" [pageSize]="pageSize">
     </mat-paginator>

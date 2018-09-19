@@ -24,7 +24,7 @@ export class PaymentResponsePageComponent implements OnInit {
   /**
    * display time count to redirect my application page.
    */
-  private dispTime: number = 0;
+  private dispTime: number = 10;
 
   /**
    * constructor
@@ -48,7 +48,7 @@ export class PaymentResponsePageComponent implements OnInit {
   ngOnInit() {
 
     if (this.dispData) {
-      this.route.queryParams.subscribe(resp => {
+      this.route.queryParams.subscribe(resp => { 
         if (resp.status) {
           this.paymentStatus = resp.status;
         }
@@ -101,8 +101,6 @@ export class PaymentResponsePageComponent implements OnInit {
      */
     this.formService.createPayment(payData).subscribe(payResp => {
 
-      console.log(payResp);
-
       if (payResp.success) {
 
         /**
@@ -150,7 +148,7 @@ export class PaymentResponsePageComponent implements OnInit {
      * setting time interval.
      */
     setInterval(() => {
-      this.dispTime = this.dispTime + 1
+      this.dispTime = this.dispTime - 1
     }, 1000)
 
   }
