@@ -72,7 +72,6 @@ export class AnimalPondRenewComponent implements OnInit {
 		this.animalPondService.searchLicence(this.serachLicenceObj.searchLicenceNumber).subscribe(
 			(res: any) => {
 				if (res.success) {
-					debugger;
 					this.serachLicenceObj.isDisplayRenewLicenceForm = true;
 					this.createRecordPatchSerachData(res.data);
 				} else {
@@ -138,6 +137,8 @@ export class AnimalPondRenewComponent implements OnInit {
  	 */
 	enableFielList() {
 		this.animalPondRenewForm.get('animalDetails').enable();
+		this.animalPondRenewForm.get('temporaryAddress').enable();
+
 	}
 
 	/**

@@ -18,17 +18,17 @@
 						<control-messages [control]="animalPondNewForm.get('personType').controls.code"></control-messages>
 					</div>
 					<mat-form-field class="col-md-2">
-						<input matInput type="text" required maxlength="30" placeholder="{{'holder_firstname' | translate:translateKey}}" formControlName="holderFirstName"
+						<input matInput type="text" required maxlength="30" appValidationFields validationFieldsType='onlyNameWithOutSpace' placeholder="{{'holder_firstname' | translate:translateKey}}" formControlName="holderFirstName"
 						 appGujInputSource targetElement="holderFirstNameGuj" [form]="animalPondNewForm">
 						<control-messages [control]="animalPondNewForm.controls.holderFirstName"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" required maxlength="30" placeholder="{{'holder_middlename' | translate:translateKey}}" formControlName="holderMiddleName"
+						<input matInput type="text" required maxlength="30" appValidationFields validationFieldsType='onlyNameWithOutSpace' placeholder="{{'holder_middlename' | translate:translateKey}}" formControlName="holderMiddleName"
 						 appGujInputSource targetElement="holderMiddleNameGuj" [form]="animalPondNewForm">
 						<control-messages [control]="animalPondNewForm.controls.holderMiddleName"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" required maxlength="30" placeholder="{{'holder_lastname' | translate:translateKey}}" formControlName="holderLastName"
+						<input matInput type="text" required maxlength="30" appValidationFields validationFieldsType='onlyNameWithOutSpace' placeholder="{{'holder_lastname' | translate:translateKey}}" formControlName="holderLastName"
 						 appGujInputSource targetElement="holderLastNameGuj" [form]="animalPondNewForm">
 						<control-messages [control]="animalPondNewForm.controls.holderLastName"></control-messages>
 					</mat-form-field>
@@ -56,11 +56,11 @@
 
 				<div class="row">
 					<h2>{{'permanat_address' | translate:translateKey}}</h2>
-					<app-address #permanantAddressEstablishment [requiredFeilds]="animalPondNewForm.controls.permanantAddress.value" [addressFormGroup]="animalPondNewForm.controls.permanantAddress"></app-address>
+					<app-address [isDisplayGujFields]="true" #permanantAddressEstablishment [requiredFeilds]="animalPondNewForm.controls.permanantAddress.value" [addressFormGroup]="animalPondNewForm.controls.permanantAddress"></app-address>
 				</div>
 				<div class="row">
 					<h2>{{'temp_address' | translate:translateKey}}</h2>
-					<app-address #permanantAddressEstablishment [requiredFeilds]="animalPondNewForm.controls.temporaryAddress.value" [addressFormGroup]="animalPondNewForm.controls.temporaryAddress"></app-address>
+					<app-address [isDisplayGujFields]="true" #permanantAddressEstablishment [requiredFeilds]="animalPondNewForm.controls.temporaryAddress.value" [addressFormGroup]="animalPondNewForm.controls.temporaryAddress"></app-address>
 				</div>
 
 				<mat-form-field class="col-md-4">
@@ -110,7 +110,7 @@
 				</div>
 				<div class="row">
 					<h2>{{'business_address' | translate:translateKey}}</h2>
-					<app-address #temporaryAddressEstablishment [requiredFeilds]="animalPondNewForm.controls.businessAddress.value" [addressFormGroup]="animalPondNewForm.controls.businessAddress"></app-address>
+					<app-address [isDisplayGujFields]="true" #temporaryAddressEstablishment [requiredFeilds]="animalPondNewForm.controls.businessAddress.value" [addressFormGroup]="animalPondNewForm.controls.businessAddress"></app-address>
 				</div>
 
 				<div class="row">
@@ -152,7 +152,7 @@
 						<table class="table table-striped mb-0">
 							<thead>
 								<tr>
-									<th width="50">#</th>
+									<th width="50" *ngIf="animalPondNewForm.get('canEdit').value">#</th>
 									<th width="29%">{{'name' | translate:translateKey}}</th>
 									<th width="29%">{{'address' | translate:translateKey}}</th>
 									<th width="29%">{{'mobile_no' | translate:translateKey}}</th>
@@ -238,7 +238,7 @@
 					</div>
 				</div>
 
-				<div *ngIf="animalPondNewForm.get('animalDetails').controls.length">
+				<div style="overflow-x: scroll;" *ngIf="animalPondNewForm.get('animalDetails').controls.length">
 					<div class="table-responsive">
 						<table class="table table-striped mb-0">
 							<thead>

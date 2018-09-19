@@ -26,17 +26,17 @@
 						<control-messages [control]="muttonFishNewForm.get('personType').controls.code"></control-messages>
 					</div>
 					<mat-form-field class="col-md-2">
-						<input matInput type="text" required maxlength="30" placeholder="{{'holder_firstname' | translate:translateKey}}" formControlName="holderFirstName"
+						<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithOutSpace' required maxlength="30" placeholder="{{'holder_firstname' | translate:translateKey}}" formControlName="holderFirstName"
 						 appGujInputSource targetElement="holderFirstNameGuj" [form]="muttonFishNewForm">
 						<control-messages [control]="muttonFishNewForm.controls.holderFirstName"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" required maxlength="30" placeholder="{{'holder_middlename' | translate:translateKey}}" formControlName="holderMiddleName"
+						<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithOutSpace' required maxlength="30" placeholder="{{'holder_middlename' | translate:translateKey}}" formControlName="holderMiddleName"
 						 appGujInputSource targetElement="holderMiddleNameGuj" [form]="muttonFishNewForm">
 						<control-messages [control]="muttonFishNewForm.controls.holderMiddleName"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" required maxlength="30" placeholder="{{'holder_lastname' | translate:translateKey}}" formControlName="holderLastName"
+						<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithOutSpace' required maxlength="30" placeholder="{{'holder_lastname' | translate:translateKey}}" formControlName="holderLastName"
 						 appGujInputSource targetElement="holderLastNameGuj" [form]="muttonFishNewForm">
 						<control-messages [control]="muttonFishNewForm.controls.holderLastName"></control-messages>
 					</mat-form-field>
