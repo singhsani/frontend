@@ -80,7 +80,7 @@ export class BookingService {
 			}),
 			transactionId: data.transactionId,
 			paymentStatus: "SUCCESS",
-			retUrl: "192.168.10.107:8080/vmcportal/",
+			retUrl: "http://192.168.10.107:8080/vmcportal/",
 			retPath: 'citizen/payment-gateway-response',
 			myApplicationUrl: '/citizen/booking/cancel-booking'
 		}
