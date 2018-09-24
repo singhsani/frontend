@@ -34,7 +34,12 @@
 
 		<ng-container matColumnDef="id">
 			<mat-header-cell *matHeaderCellDef> # </mat-header-cell>
-			<mat-cell *matCellDef="let element;let indx=index;"> {{indx+1}} </mat-cell>
+			<mat-cell *matCellDef="let element;let indx=index;"> {{(paginator.pageIndex * paginator.pageSize) + (indx+1)}} </mat-cell>
+		</ng-container>
+
+		<ng-container matColumnDef="refNumber">
+			<mat-header-cell *matHeaderCellDef>Reference Number</mat-header-cell>
+			<mat-cell *matCellDef="let element;"> {{element.refNumber}} </mat-cell>
 		</ng-container>
 
 		<ng-container matColumnDef="start">
@@ -62,7 +67,7 @@
 					<button *ngIf="element.status =='DEPOSIT_REQUIRED'" mat-icon-button color="primary" (click)="printPolicePerformanceLicense(element)">
 						<mat-icon title="Police Performance license">print</mat-icon>
 					</button>
-					<button mat-icon-button data-toggle="modal" color="primary" (click)="openModal(template, element.detailDTOList);">
+					<button mat-icon-button data-toggle="modal" color="primary" (click)="openModal(template, element.scheduleList);">
 						<mat-icon title="View Booking Details">details</mat-icon>
 					</button>
 					
@@ -71,10 +76,11 @@
 		</ng-container>
 
 		<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-		<mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]=""></mat-row>
+		<mat-row *matRowDef="let row; columns: displayedColumns;" ></mat-row>
 	</table>
 
-	<mat-paginator [hidden]="resultsLength==0" [length]="resultsLength" [pageSize]="pageSize">
+
+	<mat-paginator showFirstLastButtons [hidden]="resultsLength==0"  [pageSizeOptions]="[5, 10, 25, 100]" [length]="resultsLength">
 	</mat-paginator>
 </div>
 
