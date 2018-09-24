@@ -11,9 +11,9 @@ import { Location } from '@angular/common';
 import { CommonService } from '../../.././../../shared/services/common.service';
 
 @Component({
-  selector: 'app-animal-pond-transfer',
-  templateUrl: './animal-pond-transfer.component.html',
-  styleUrls: ['./animal-pond-transfer.component.scss']
+	selector: 'app-animal-pond-transfer',
+	templateUrl: './animal-pond-transfer.component.html',
+	styleUrls: ['./animal-pond-transfer.component.scss']
 })
 export class AnimalPondTransferComponent implements OnInit {
 
@@ -136,7 +136,9 @@ export class AnimalPondTransferComponent implements OnInit {
  	 * This method use for edit some fiels.
  	 */
 	enableFielList() {
+		this.animalPondTransferForm.get('relationshipList').enable();
 		this.animalPondTransferForm.get('animalDetails').enable();
+		this.animalPondTransferForm.get('totalAnimal').enable();
 		this.animalPondTransferForm.get('temporaryAddress').enable();
 
 	}
@@ -162,7 +164,7 @@ export class AnimalPondTransferComponent implements OnInit {
 				updatedDate: res.createdDate,
 				serviceType: res.serviceType,
 				// deptFileStatus: res.deptFileStatus,
-				fileStatus:res.fileStatus,
+				fileStatus: res.fileStatus,
 				serviceName: res.serviceName,
 				fileNumber: res.fileNumber,
 				pid: res.pid,
@@ -225,6 +227,8 @@ export class AnimalPondTransferComponent implements OnInit {
 				res.animalDetails.forEach(app => {
 					(<FormArray>this.animalPondTransferForm.get('animalDetails')).push(this.createAnimalArray(app));
 				});
+				// selected animal filter
+				this.getSelectedAnimal();
 			} catch (error) {
 				console.log(error.message)
 			}
@@ -242,7 +246,8 @@ export class AnimalPondTransferComponent implements OnInit {
 			this.PERSON_TYPE = res.PERSON_TYPE;
 			this.FIRM_ZONE = res.FIRM_ZONE;
 			this.ANIMAL_TYPE = res.ANIMAL_TYPE;
-		
+			// selected animal filter
+			this.getSelectedAnimal();
 			this.onChangeZone(this.animalPondTransferForm.get('zoneNo').value.code);
 			this.onChangeWard(this.animalPondTransferForm.get('wardNo').value.code);
 		});
@@ -287,12 +292,8 @@ export class AnimalPondTransferComponent implements OnInit {
 	animalPondTransferFormControls() {
 		this.animalPondTransferForm = this.fb.group({
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
-			serviceCode: 'APL-REN',
-			refNumber:[null],
-			/* Step 1 controls start */
-			// licenseType: this.fb.group({
-			// 	code: [null]
-			// }),
+			serviceCode: 'APL-TRA',
+			refNumber: [null],
 			personType: this.fb.group({
 				code: [null, Validators.required]
 			}),
@@ -306,8 +307,8 @@ export class AnimalPondTransferComponent implements OnInit {
 			permanantAddress: this.fb.group(this.permanantAddressEstablishment.addressControls()),
 			temporaryAddress: this.fb.group(this.permanantAddressEstablishment.addressControls()),
 
-			holderTelephoneNo: [null, [Validators.maxLength(12), Validators.minLength(10)]],
-			holderMobileNo: [null, [Validators.required, Validators.maxLength(11), Validators.minLength(10)]],
+			holderTelephoneNo: [null, [Validators.maxLength(10), Validators.minLength(10)]],
+			holderMobileNo: [null, [Validators.required, Validators.maxLength(10), Validators.minLength(10)]],
 			holderFaxNo: [null, [Validators.maxLength(12)]],
 			holderAadharNo: [null, [Validators.required, Validators.maxLength(12)]],
 			holderPanNo: [null, [Validators.required, Validators.maxLength(10)]],
@@ -330,6 +331,7 @@ export class AnimalPondTransferComponent implements OnInit {
 
 			/* Step 3 controls start */
 			animalDetails: this.fb.array([]),
+			totalAnimal: [null, Validators.required],
 			/* Step 3 controls end */
 
 			applicationDate: [],
@@ -354,7 +356,7 @@ export class AnimalPondTransferComponent implements OnInit {
 			id: data.id ? data.id : null,
 			name: [data.name ? data.name : null, [Validators.required, Validators.maxLength(100)]],
 			address: [data.address ? data.address : null, [Validators.required, Validators.maxLength(150)]],
-			mobileNo: [data.mobileNo ? data.mobileNo : null, [Validators.maxLength(11), Validators.minLength(10)]],
+			mobileNo: [data.mobileNo ? data.mobileNo : null, [Validators.maxLength(10), Validators.minLength(10)]],
 			personType: "APL_PERSON"
 		})
 
@@ -375,6 +377,25 @@ export class AnimalPondTransferComponent implements OnInit {
 			animalCount: [data.animalCount ? data.animalCount : null, [Validators.minLength(1)]],
 		})
 
+	}
+
+	/**
+	 * This Method for count total animals (all type of animal)
+	 */
+	getTotalAnimal() {
+		let totalAnimal = 0;
+		let animalGrid = <FormArray>this.animalPondTransferForm.get('animalDetails');
+
+		if (animalGrid.length) {
+			animalGrid.controls.forEach(element => {
+				let count = element.get('animalCount').value;
+				if (count && !isNaN(parseInt(count))) {
+					totalAnimal += parseInt(count);
+				}
+			});
+		}
+		this.animalPondTransferForm.get('totalAnimal').setValue(totalAnimal);
+		return totalAnimal;
 	}
 
 	/**
@@ -515,22 +536,21 @@ export class AnimalPondTransferComponent implements OnInit {
 	 */
 	getSelectedAnimal() {
 
+		let animalData = this.ANIMAL_TYPE.map((mapDataObj: any) => {
+			mapDataObj.selected = false;
+			return mapDataObj
+		});
 
-			let animalData = this.ANIMAL_TYPE.map((mapDataObj: any) => {
-				mapDataObj.selected = false;
-				return mapDataObj
-			});
+		let animalGrid = <FormArray>this.animalPondTransferForm.get('animalDetails');
 
-			let animalGrid = <FormArray>this.animalPondTransferForm.get('animalDetails');
+		animalGrid.controls.forEach(element => {
+			let findRecord = animalData.find((obj: any) => obj.code == element.get('animalType').get('code').value)
+			if (findRecord) {
+				findRecord.selected = true;
+			}
+		});
+		return animalData;
 
-			animalGrid.controls.forEach(element => {
-				let findRecord = animalData.find((obj: any) => obj.code == element.get('animalType').get('code').value)
-				if (findRecord) {
-					findRecord.selected = true;
-				}
-			});
-			return animalData;
-	
 	}
 
 	/**
@@ -550,11 +570,11 @@ export class AnimalPondTransferComponent implements OnInit {
      */
 	handleErrorsOnSubmit(flag) {
 
-		let step0 = 15;
-		let step1 = 27;
-		let step2 = 35;
-		let step3 = 41;
-		let step4 = 48;
+		let step0 = 16;
+		let step1 = 24;
+		let step2 = 26;
+		let step3 = 30;
+		let step4 = 31;
 
 		if (flag != null) {
 			//Check validation for step by step

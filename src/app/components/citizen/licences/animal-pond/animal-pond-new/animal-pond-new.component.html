@@ -1,7 +1,7 @@
 <app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
 <mat-card class="formClass cardBorder">
 	<form [formGroup]="animalPondNewForm">
-		
+
 		<mat-tab-group [(selectedIndex)]="tabIndex" dynamicHeight="true" mat-stretch-tabs class="stepperNav">
 
 			<!-- step 1 Starts -->
@@ -18,18 +18,21 @@
 						<control-messages [control]="animalPondNewForm.get('personType').controls.code"></control-messages>
 					</div>
 					<mat-form-field class="col-md-2">
-						<input matInput type="text" required maxlength="30" appValidationFields validationFieldsType='onlyNameWithOutSpace' placeholder="{{'holder_firstname' | translate:translateKey}}" formControlName="holderFirstName"
+						<input matInput type="text" required maxlength="30" appValidationFields validationFieldsType='onlyNameWithOutSpace'
+						 placeholder="{{'holder_firstname' | translate:translateKey}}" formControlName="holderFirstName"
 						 appGujInputSource targetElement="holderFirstNameGuj" [form]="animalPondNewForm">
 						<control-messages [control]="animalPondNewForm.controls.holderFirstName"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" required maxlength="30" appValidationFields validationFieldsType='onlyNameWithOutSpace' placeholder="{{'holder_middlename' | translate:translateKey}}" formControlName="holderMiddleName"
+						<input matInput type="text" required maxlength="30" appValidationFields validationFieldsType='onlyNameWithOutSpace'
+						 placeholder="{{'holder_middlename' | translate:translateKey}}" formControlName="holderMiddleName"
 						 appGujInputSource targetElement="holderMiddleNameGuj" [form]="animalPondNewForm">
 						<control-messages [control]="animalPondNewForm.controls.holderMiddleName"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" required maxlength="30" appValidationFields validationFieldsType='onlyNameWithOutSpace' placeholder="{{'holder_lastname' | translate:translateKey}}" formControlName="holderLastName"
-						 appGujInputSource targetElement="holderLastNameGuj" [form]="animalPondNewForm">
+						<input matInput type="text" required maxlength="30" appValidationFields validationFieldsType='onlyNameWithOutSpace'
+						 placeholder="{{'holder_lastname' | translate:translateKey}}" formControlName="holderLastName" appGujInputSource
+						 targetElement="holderLastNameGuj" [form]="animalPondNewForm">
 						<control-messages [control]="animalPondNewForm.controls.holderLastName"></control-messages>
 					</mat-form-field>
 				</div>
@@ -42,13 +45,13 @@
 						<control-messages [control]="animalPondNewForm.controls.holderFirstNameGuj"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" required maxlength="90" placeholder="{{'holder_middlename' | translate:translateKey}}" formControlName="holderMiddleNameGuj"
-						 appGujInputTarget [form]="animalPondNewForm">
+						<input matInput type="text" required maxlength="90" placeholder="{{'holder_middlename' | translate:translateKey}}"
+						 formControlName="holderMiddleNameGuj" appGujInputTarget [form]="animalPondNewForm">
 						<control-messages [control]="animalPondNewForm.controls.holderMiddleNameGuj"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" required maxlength="90" placeholder="{{'holder_lastname' | translate:translateKey}}" formControlName="holderLastNameGuj"
-						 appGujInputTarget [form]="animalPondNewForm">
+						<input matInput type="text" required maxlength="90" placeholder="{{'holder_lastname' | translate:translateKey}}"
+						 formControlName="holderLastNameGuj" appGujInputTarget [form]="animalPondNewForm">
 						<control-messages [control]="animalPondNewForm.controls.holderLastNameGuj"></control-messages>
 					</mat-form-field>
 				</div>
@@ -56,18 +59,20 @@
 
 				<div class="row">
 					<h2>{{'permanat_address' | translate:translateKey}}</h2>
-					<app-address [isDisplayGujFields]="true" #permanantAddressEstablishment [requiredFeilds]="animalPondNewForm.controls.permanantAddress.value" [addressFormGroup]="animalPondNewForm.controls.permanantAddress"></app-address>
+					<app-address [isDisplayGujFields]="true" #permanantAddressEstablishment [requiredFeilds]="animalPondNewForm.controls.permanantAddress.value"
+					 [addressFormGroup]="animalPondNewForm.controls.permanantAddress"></app-address>
 				</div>
 				<div class="row">
 					<h2>{{'temp_address' | translate:translateKey}}</h2>
-					<app-address [isDisplayGujFields]="true" #permanantAddressEstablishment [requiredFeilds]="animalPondNewForm.controls.temporaryAddress.value" [addressFormGroup]="animalPondNewForm.controls.temporaryAddress"></app-address>
+					<app-address [isDisplayGujFields]="true" #permanantAddressEstablishment [requiredFeilds]="animalPondNewForm.controls.temporaryAddress.value"
+					 [addressFormGroup]="animalPondNewForm.controls.temporaryAddress"></app-address>
 				</div>
 
 				<mat-form-field class="col-md-4">
-					<input matInput OnlyNumber maxlength="12" formControlName="holderTelephoneNo" placeholder="{{'holder_telephone_no' | translate:translateKey}}">
+					<input matInput OnlyNumber maxlength="10" formControlName="holderTelephoneNo" placeholder="{{'holder_telephone_no' | translate:translateKey}}">
 				</mat-form-field>
 				<mat-form-field class="col-md-4">
-					<input matInput OnlyNumber required maxlength="11" formControlName="holderMobileNo" placeholder="{{'holder_mobile_no' | translate:translateKey}}">
+					<input matInput OnlyNumber required maxlength="10" formControlName="holderMobileNo" placeholder="{{'holder_mobile_no' | translate:translateKey}}">
 				</mat-form-field>
 				<mat-form-field class="col-md-4">
 					<input matInput OnlyNumber maxlength="12" formControlName="holderFaxNo" placeholder="{{'holder_fax_no' | translate:translateKey}}">
@@ -110,7 +115,8 @@
 				</div>
 				<div class="row">
 					<h2>{{'business_address' | translate:translateKey}}</h2>
-					<app-address [isDisplayGujFields]="true" #temporaryAddressEstablishment [requiredFeilds]="animalPondNewForm.controls.businessAddress.value" [addressFormGroup]="animalPondNewForm.controls.businessAddress"></app-address>
+					<app-address [isDisplayGujFields]="true" #temporaryAddressEstablishment [requiredFeilds]="animalPondNewForm.controls.businessAddress.value"
+					 [addressFormGroup]="animalPondNewForm.controls.businessAddress"></app-address>
 				</div>
 
 				<div class="row">
@@ -138,12 +144,15 @@
 				<!-- table -->
 				<div class="row">
 					<div class="col-md-10">
-						<h2 *ngIf="animalPondNewForm.get('relationshipId').value.code == 'PROPRIETOR'">{{ 'if_apl_is_in_properitership'| translate:translateKey}}</h2>
-						<h2 *ngIf="animalPondNewForm.get('relationshipId').value.code != 'PROPRIETOR'">{{ 'if_apl_is_in_partnership' | translate:translateKey}}</h2>
+						<h2 *ngIf="animalPondNewForm.get('relationshipId').value.code == 'PROPRIETOR'">{{ 'if_apl_is_in_properitership'|
+							translate:translateKey}}</h2>
+						<h2 *ngIf="animalPondNewForm.get('relationshipId').value.code != 'PROPRIETOR'">{{ 'if_apl_is_in_partnership' |
+							translate:translateKey}}</h2>
 					</div>
 					<div class="col-md-2 pt-3" style="text-align: right;">
 						<button type="button" [disabled]="animalPondNewForm.get('relationshipId').value.code ? animalPondNewForm.get('relationshipId').value.code=='PROPRIETOR' ? !(animalPondNewForm.get('relationshipList').controls.length < 1) : !(animalPondNewForm.get('relationshipList').controls.length < 10) : true"
-						 matTooltip="{{'add_more' | translate:translateKey}}" mat-raised-button color="primary" (click)="addMorePerson('APL_PERSON')">{{'add'| translate:translateKey}}</button>
+						 matTooltip="{{'add_more' | translate:translateKey}}" mat-raised-button color="primary" (click)="addMorePerson('APL_PERSON')">{{'add'|
+							translate:translateKey}}</button>
 					</div>
 				</div>
 
@@ -173,7 +182,8 @@
 											<td width="29%">
 												<div *ngIf="!item.isEditMode">{{item.get('name').value}}</div>
 												<mat-form-field *ngIf="item.isEditMode">
-													<input matInput maxlength="100" appValidationFields [validationFieldsType]="'onlyNameWithSpace'" formControlName="name">
+													<input matInput maxlength="100" appValidationFields [validationFieldsType]="'onlyNameWithSpace'"
+													 formControlName="name">
 													<control-messages [control]="item.controls.name"></control-messages>
 												</mat-form-field>
 											</td>
@@ -189,7 +199,7 @@
 											<td width="29%">
 												<div *ngIf="!item.isEditMode">{{item.get('mobileNo').value}}</div>
 												<mat-form-field *ngIf="item.isEditMode">
-													<input matInput maxlength="11" OnlyNumber formControlName="mobileNo">
+													<input matInput maxlength="10" OnlyNumber formControlName="mobileNo">
 													<control-messages [control]="item.controls.mobileNo"></control-messages>
 												</mat-form-field>
 											</td>
@@ -198,7 +208,8 @@
 													<button mat-icon-button color="primary" *ngIf="!item.isEditMode" (click)="editRecord(item)">
 														<mat-icon title="Edit">edit</mat-icon>
 													</button>
-													<button type="submit" [disabled]="item.invalid" *ngIf="item.isEditMode" (click)="saveRecord(item)" mat-icon-button color="primary">
+													<button type="submit" [disabled]="item.invalid" *ngIf="item.isEditMode" (click)="saveRecord(item)"
+													 mat-icon-button color="primary">
 														<mat-icon title="save">save</mat-icon>
 													</button>
 												</div>
@@ -234,7 +245,8 @@
 					<div class="col-md-10"> </div>
 					<div class="col-md-2 pt-3" style="text-align: right;">
 						<button type="button" (click)="addMoreAnimal()" [disabled]="animalPondNewForm.get('animalDetails').controls.length >= ANIMAL_TYPE.length"
-						 matTooltip="{{'add_more' | translate:translateKey}}" mat-raised-button color="primary">{{'add'| translate:translateKey}}</button>
+						 matTooltip="{{'add_more' | translate:translateKey}}" mat-raised-button color="primary">{{'add'|
+							translate:translateKey}}</button>
 					</div>
 				</div>
 
@@ -244,8 +256,8 @@
 							<thead>
 								<tr>
 									<th width="50">#</th>
-									<th width="29%">{{'animalType' | translate:translateKey}}</th>
-									<th width="29%">{{'animalCount' | translate:translateKey}}</th>
+									<th width="29%">{{'animal_type' | translate:translateKey}}</th>
+									<th width="29%">{{'animal_count' | translate:translateKey}}</th>
 									<th width="150" *ngIf="animalPondNewForm.get('canEdit').value"></th>
 								</tr>
 							</thead>
@@ -266,8 +278,8 @@
 													{{getSelectedDataFromLookUps(ANIMAL_TYPE,item.get('animalType').controls.code.value)?.name}}
 												</div>
 												<div class="ngSelect" *ngIf="item.isEditMode" formGroupName="animalType">
-													<ng-select placeholder="{{'animal_type' | translate:translateKey}} *" formControlName="code" (ngModelChange)="getSelectedAnimal()"
-													 required>
+													<ng-select placeholder="{{'animal_type' | translate:translateKey}} *" formControlName="code"
+													 (ngModelChange)="getSelectedAnimal()" required>
 														<ng-container *ngFor="let type of ANIMAL_TYPE">
 															<ng-option *ngIf="!type.selected" [value]="type.code">{{type.name}}</ng-option>
 														</ng-container>
@@ -279,7 +291,7 @@
 											<td width="29%">
 												<div *ngIf="!item.isEditMode">{{item.get('animalCount').value}}</div>
 												<mat-form-field *ngIf="item.isEditMode">
-													<input matInput maxlength="3" OnlyNumber formControlName="animalCount">
+													<input matInput maxlength="3" OnlyNumber placeholder="{{'animal_count' | translate:translateKey}} *" formControlName="animalCount">
 													<control-messages [control]="item.controls.animalCount"></control-messages>
 												</mat-form-field>
 											</td>
@@ -288,7 +300,8 @@
 													<button mat-icon-button color="primary" *ngIf="!item.isEditMode" (click)="editRecord(item)">
 														<mat-icon title="Edit">edit</mat-icon>
 													</button>
-													<button type="submit" [disabled]="item.invalid" *ngIf="item.isEditMode" (click)="saveRecord(item)" mat-icon-button color="primary">
+													<button type="submit" [disabled]="item.invalid" *ngIf="item.isEditMode" (click)="saveRecord(item)"
+													 mat-icon-button color="primary">
 														<mat-icon title="save">save</mat-icon>
 													</button>
 												</div>
@@ -307,6 +320,14 @@
 							</form>
 						</li>
 					</ul>
+
+					<div class="row">
+						<div class="col-md-2">
+							<mat-form-field>
+								<input matInput maxlength="3" readonly placeholder="{{'total_animal' | translate:translateKey}}" OnlyNumber
+								 value="{{getTotalAnimal()}}" formControlName="totalAnimal"> </mat-form-field>
+						</div>
+					</div>
 				</div>
 				<!-- end table -->
 				<app-action-bar [form]="animalPondNewForm" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step3', next: 3, back: 1}"></app-action-bar>
