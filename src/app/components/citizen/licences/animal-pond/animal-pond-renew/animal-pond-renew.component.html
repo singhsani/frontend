@@ -78,10 +78,10 @@
 				</div>
 
 				<mat-form-field class="col-md-4">
-					<input matInput OnlyNumber maxlength="12" formControlName="holderTelephoneNo" placeholder="{{'holder_telephone_no' | translate:translateKey}}">
+					<input matInput OnlyNumber maxlength="10" formControlName="holderTelephoneNo" placeholder="{{'holder_telephone_no' | translate:translateKey}}">
 				</mat-form-field>
 				<mat-form-field class="col-md-4">
-					<input matInput OnlyNumber maxlength="11" formControlName="holderMobileNo" placeholder="{{'holder_mobile_no' | translate:translateKey}}">
+					<input matInput OnlyNumber maxlength="10" formControlName="holderMobileNo" placeholder="{{'holder_mobile_no' | translate:translateKey}}">
 				</mat-form-field>
 				<mat-form-field class="col-md-4">
 					<input matInput OnlyNumber maxlength="12" formControlName="holderFaxNo" placeholder="{{'holder_fax_no' | translate:translateKey}}">
@@ -203,7 +203,7 @@
 											<td width="29%">
 												<div *ngIf="!item.isEditMode">{{item.get('mobileNo').value}}</div>
 												<mat-form-field *ngIf="item.isEditMode">
-													<input matInput maxlength="11" OnlyNumber formControlName="mobileNo">
+													<input matInput maxlength="10" OnlyNumber formControlName="mobileNo">
 													<control-messages [control]="item.controls.mobileNo"></control-messages>
 												</mat-form-field>
 											</td>
@@ -321,6 +321,12 @@
 							</form>
 						</li>
 					</ul>
+					<div class="row">
+						<div class="col-md-2">
+							<mat-form-field>
+								<input matInput maxlength="3" readonly placeholder="{{'total_animal' | translate:translateKey}}" OnlyNumber value="{{getTotalAnimal()}}" formControlName="totalAnimal">								</mat-form-field>
+						</div>
+					</div>
 				</div> 
 				<!-- end table -->
 				<app-action-bar [form]="animalPondRenewForm" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step3', next: 3, back: 1}"></app-action-bar>

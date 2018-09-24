@@ -43,7 +43,7 @@ export class AnimalPondNewComponent implements OnInit {
 		[
 			// { labelName: 'Photo of License Holder', fieldIdentifier: '1'},
 			// { labelName: 'One Copy of each site plan and key plan', fieldIdentifier: '2', category: 'common' },
-			{ labelName: 'Aadhar Card Scan Copy', fieldIdentifier: '3'},
+			{ labelName: 'Aadhar Card Scan Copy', fieldIdentifier: '3' },
 			// { labelName: 'Pan Card Copy of Owner / Propwriter', fieldIdentifier: '4', category: "common" },
 			// { labelName: 'Constitution copy of Firm', fieldIdentifier: '5', category: "common" },
 			{ labelName: 'Proof of Ownership / tenancy / Legal Occupancy', fieldIdentifier: '6' },
@@ -51,9 +51,9 @@ export class AnimalPondNewComponent implements OnInit {
 			{ labelName: 'Copy of Term & conditions for allotment of Premises by the  Land owning Agency ', fieldIdentifier: '8', category: "common" },
 			// { labelName: 'Additional Document if Any', fieldIdentifier: '9'},
 			{ labelName: 'Property Tax Bill paid Receipt', fieldIdentifier: '10' },
-			{ labelName: 'Shop & Establishment Certificate', fieldIdentifier: '11'},
+			{ labelName: 'Shop & Establishment Certificate', fieldIdentifier: '11' },
 
-			{ labelName: 'Occupation Certificate', fieldIdentifier: '12'},
+			{ labelName: 'Occupation Certificate', fieldIdentifier: '12' },
 			{ labelName: 'Rent Agreement', fieldIdentifier: '13' }
 		];
 
@@ -85,14 +85,14 @@ export class AnimalPondNewComponent implements OnInit {
 			this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
 		});
 
+		this.getLookupData();
 		if (!this.formId) {
 			this.router.navigate([ManageRoutes.getFullRoute('CITIZENDASHBOARD')]);
 		}
 		else {
 			this.getAnimalPondLicNewData();
-			this.getLookupData();
 			this.animalPondNewFormControls();
-		}		 
+		}
 	}
 
 	/**
@@ -111,6 +111,8 @@ export class AnimalPondNewComponent implements OnInit {
 				res.animalDetails.forEach(app => {
 					(<FormArray>this.animalPondNewForm.get('animalDetails')).push(this.createAnimalArray(app));
 				});
+				// selected animal filter
+				this.getSelectedAnimal();
 			} catch (error) {
 				console.log(error.message)
 			}
@@ -177,9 +179,6 @@ export class AnimalPondNewComponent implements OnInit {
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
 			serviceCode: 'APL-LIC',
 			/* Step 1 controls start */
-			// licenseType: this.fb.group({
-			// 	code: [null]
-			// }),
 			personType: this.fb.group({
 				code: [null, Validators.required]
 			}),
@@ -193,8 +192,8 @@ export class AnimalPondNewComponent implements OnInit {
 			permanantAddress: this.fb.group(this.permanantAddressEstablishment.addressControls()),
 			temporaryAddress: this.fb.group(this.permanantAddressEstablishment.addressControls()),
 
-			holderTelephoneNo: [null, [Validators.maxLength(12), Validators.minLength(10)]],
-			holderMobileNo: [null, [Validators.required, Validators.maxLength(11), Validators.minLength(10)]],
+			holderTelephoneNo: [null, [Validators.maxLength(10), Validators.minLength(10)]],
+			holderMobileNo: [null, [Validators.required, Validators.maxLength(10), Validators.minLength(10)]],
 			holderFaxNo: [null, [Validators.maxLength(12)]],
 			holderAadharNo: [null, [Validators.required, Validators.maxLength(12)]],
 			holderPanNo: [null, [Validators.required, Validators.maxLength(10)]],
@@ -217,6 +216,7 @@ export class AnimalPondNewComponent implements OnInit {
 
 			/* Step 3 controls start */
 			animalDetails: this.fb.array([]),
+			totalAnimal: [null, Validators.required],
 			/* Step 3 controls end */
 
 			applicationDate: [],
@@ -241,10 +241,9 @@ export class AnimalPondNewComponent implements OnInit {
 			id: data.id ? data.id : null,
 			name: [data.name ? data.name : null, [Validators.required, Validators.maxLength(100)]],
 			address: [data.address ? data.address : null, [Validators.required, Validators.maxLength(150)]],
-			mobileNo: [data.mobileNo ? data.mobileNo : null, [Validators.maxLength(11), Validators.minLength(10)]],
+			mobileNo: [data.mobileNo ? data.mobileNo : null, [Validators.maxLength(10), Validators.minLength(10)]],
 			personType: "APL_PERSON"
 		})
-
 	}
 
 	/**
@@ -262,6 +261,25 @@ export class AnimalPondNewComponent implements OnInit {
 			animalCount: [data.animalCount ? data.animalCount : null, [Validators.minLength(1)]],
 		})
 
+	}
+
+	/**
+	 * This Method for count total animals (all type of animal)
+	 */
+	getTotalAnimal() {
+		let totalAnimal = 0;
+		let animalGrid = <FormArray>this.animalPondNewForm.get('animalDetails');
+
+		if (animalGrid.length) {
+			animalGrid.controls.forEach(element => {
+				let count = element.get('animalCount').value;
+				if (count && !isNaN(parseInt(count))) {
+					totalAnimal += parseInt(count);
+				}
+			});
+		}
+		this.animalPondNewForm.get('totalAnimal').setValue(totalAnimal);
+		return totalAnimal;
 	}
 
 	/**
@@ -435,11 +453,11 @@ export class AnimalPondNewComponent implements OnInit {
      */
 	handleErrorsOnSubmit(flag) {
 
-		let step0 = 15;
-		let step1 = 27;
-		let step2 = 35;
-		let step3 = 41;
-		let step4 = 48;
+		let step0 = 16;
+		let step1 = 24;
+		let step2 = 26;
+		let step3 = 30;
+		let step4 = 31;
 
 		if (flag != null) {
 			//Check validation for step by step
