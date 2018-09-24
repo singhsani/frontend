@@ -29,7 +29,7 @@ export class CancelBookingComponent implements OnInit {
 	resources: Array<any> = [];
 	bookingList = new MatTableDataSource();
 
-	displayedColumns: Array<string> = ['id', 'start', 'end', 'status', 'action'];
+	displayedColumns: Array<string> = ['id','refNumber', 'start', 'end', 'status', 'action'];
 	translateKey: string = 'cancelBookingScreen';
 	modalRef: BsModalRef;
 	CancelSlotList: Array<any> = [];
@@ -39,7 +39,6 @@ export class CancelBookingComponent implements OnInit {
 	 * pagination instance variables.
 	 */
 	resultsLength: number = 0;
-	pageSize: number = 20;
 	isLoadingResults: boolean = true;
 
 	constructor(
@@ -82,14 +81,15 @@ export class CancelBookingComponent implements OnInit {
 		});
 
 		this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
+
 		this.getAllBooking();
 	}
 
 	/**
 	 * This method is use for open modal.
 	 */
-	openModal(template: TemplateRef<any>, detailDTOList) {
-		this.CancelSlotList = detailDTOList.sort((a, b) => {
+	openModal(template: TemplateRef<any>, scheduleList) {
+		this.CancelSlotList = scheduleList.sort((a, b) => {
 			if ((new Date(a.bookingDate.split(' ')[0]).getTime()) <= (new Date(b.bookingDate.split(' ')[0]).getTime())) {
 				return 1;
 			} else {
@@ -104,6 +104,10 @@ export class CancelBookingComponent implements OnInit {
 	 * Get All Bookings Using API.
 	 */
 	getAllBooking() {
+
+		this.paginator.pageSize = 5;
+		this.paginator.pageIndex = 0
+		
 		merge(this.sort.sortChange, this.paginator.page)
 			.pipe(
 				startWith({}),
@@ -111,7 +115,7 @@ export class CancelBookingComponent implements OnInit {
 					this.isLoadingResults = true;
 					this.bookingService.resourceType = this.searchBookingsForm.get('resourceType').value;
 					this.bookingService.pageIndex = (this.paginator.pageIndex + 1);
-					this.bookingService.pageSize = this.pageSize;
+					this.bookingService.pageSize = this.paginator.pageSize;
 					return this.bookingService!.getAllBookings();
 				}),
 				map(data => {
@@ -155,6 +159,7 @@ export class CancelBookingComponent implements OnInit {
 		return end.diff(now, 'minutes');
 	}
 
+
 	/**
 	 * This method is use to get respective class name based on application status.
 	 * @param filestatus - Application Status
@@ -189,6 +194,12 @@ export class CancelBookingComponent implements OnInit {
 	printPolicePerformanceLicense(element) {
 		if (element.refNumber) {
 			this.bookingService.printPolicePerformanceLicense(element.refNumber).subscribe(response => {
+
+				// var blob = new Blob([response], { type: 'text/html' });
+				// var url = window.URL.createObjectURL(blob);
+				// window.open(url);
+				
+
 				let data = response;
 				let Pagelink = "about:blank";
 				let pwa = window.open(Pagelink, "_new");
@@ -196,8 +207,8 @@ export class CancelBookingComponent implements OnInit {
 				if (!pwa || pwa.closed || typeof pwa.closed == 'undefined') {
 					this.commonService.openAlert('Pop-up!', 'Please disable your Pop-up blocker and try again.', 'warning');
 				}
-
-				pwa.document.open();
+				
+			    pwa.document.open();
 				pwa.document.write(data);
 				pwa.print();
 
