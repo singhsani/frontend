@@ -35,7 +35,7 @@ export class CommonService {
 			if (result.value && cb) {
 				cb();
 			}
-		})
+		});
 
 	}
 

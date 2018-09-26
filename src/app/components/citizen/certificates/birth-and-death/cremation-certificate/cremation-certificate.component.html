@@ -59,7 +59,7 @@
 					<div formGroupName="gender" class="col-md-6 radioBtnError">
 						<mat-label>{{'gender' | translate: translateKey}} *</mat-label>
 						<mat-radio-group formControlName="code">
-							<mat-radio-button [value]="gender.code" *ngFor="let gender of genderArray">{{gender.name +'/'+gender.gujName }}
+							<mat-radio-button [value]="gender.code" *ngFor="let gender of genderArray">{{gender.name}}
 							</mat-radio-button>
 						</mat-radio-group>
 						<control-messages [control]="cremationForm.controls.gender.controls.code"></control-messages>

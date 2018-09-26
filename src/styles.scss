@@ -606,6 +606,11 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
     color: red;
 }
 
-
-
 .formClass .row  app-address {width: 100%;}
+
+/*For swal body*/
+.swal2-content{
+    max-height: 300px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}

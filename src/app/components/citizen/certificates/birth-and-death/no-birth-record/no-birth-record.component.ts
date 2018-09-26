@@ -50,7 +50,7 @@ export class NoBirthRecordComponent implements OnInit {
 	stepLable1: string = "no_record_certificate_detail";
 	stepLable2: string = "birth_blace_address_detail";
 	stepLable3: string = "applicant_detail";
-	stepLable4: string = "Upload Document";
+	stepLable4: string = "upload_documents";
 
 	constructor(
 		private fb: FormBuilder,

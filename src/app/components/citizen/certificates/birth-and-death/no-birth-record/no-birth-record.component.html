@@ -34,7 +34,7 @@
 					<div formGroupName="gender" class="col-md-4 radioBtnError">
 						<mat-label>{{'gender' | translate: translateKey}} *</mat-label>
 						<mat-radio-group formControlName="code">
-							<mat-radio-button [value]="gender.code" *ngFor="let gender of genderArray">{{gender.name +'/'+gender.gujName }}</mat-radio-button>
+							<mat-radio-button [value]="gender.code" *ngFor="let gender of genderArray">{{gender.name}}</mat-radio-button>
 						</mat-radio-group>
 						<control-messages [control]="noRecordBirthForm.controls.gender.controls.code"></control-messages>
 					</div>
@@ -121,7 +121,7 @@
 			<!-- third step end-->
 
 			<!-- final step start-->
-			<mat-tab [label]="stepLable4">
+			<mat-tab [label]="stepLable4 | translate: translateKey">
 
 				<div class="row">
 					<div class="col-md-12">
