@@ -61,7 +61,7 @@ export class ValidationService {
     // buildingName validation 
     static buildingNameValidator(control: FormControl) {
         if (control.value) {
-            const matches = control.value.match(/^[a-zA-Z0-9_/,\\-]*$/);
+            const matches = control.value.match(/^[a-zA-Z0-9_/,\s-]*$/);
             return matches ? null : { 'invalidBuildingName': true };
         } else {
             return null;

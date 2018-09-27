@@ -39,6 +39,8 @@ export class AddressComponent implements OnInit, OnChanges {
 		if (this.requiredFeilds) {
 			this.addressFormGroup.get('state').setValidators([Validators.required]);
 			this.addressFormGroup.get('state').updateValueAndValidity();
+			this.addressFormGroup.get('buildingName').setValidators([ValidationService.buildingNameValidator]);
+            this.addressFormGroup.get('buildingName').updateValueAndValidity();
 			this.addressFormGroup.get('city').setValidators([Validators.required]);
 			this.addressFormGroup.get('city').updateValueAndValidity();
 			this.addressFormGroup.get('country').setValidators([Validators.required]);

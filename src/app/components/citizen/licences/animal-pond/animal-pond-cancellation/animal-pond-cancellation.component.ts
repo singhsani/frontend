@@ -1,4 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
+import { ManageRoutes } from './../../../../../config/routes-conf';
+import { CommonService } from '../../../../../shared/services/common.service';
+import { AnimalPondService } from '../common/services/animal-pond.service';
+
+import { ValidationService } from '../../../../../shared/services/validation.service';
+import { FormsActionsService } from '../../../../../core/services/citizen/data-services/forms-actions.service';
+import { Location } from '@angular/common';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-animal-pond-cancellation',
@@ -7,9 +18,271 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AnimalPondCancellationComponent implements OnInit {
 
-  constructor() { }
+ 	@ViewChild('permanantAddressEstablishment') permanantAddressEstablishment: any;
 
-  ngOnInit() {
-  }
+	animalPondCancellationForm: FormGroup;
+	translateKey: string = 'animalPondCancellationScreen';
+
+	formId: number;
+	apiCode: string;
+	tabIndex: number = 0;
+
+	//File and image upload
+	uploadModel: any = {};
+	private showButtons: boolean = false;
+
+	//Lookups Array
+	PERSON_TYPE: Array<any> = [];
+
+	// required attachment array
+	private uploadFileArray: Array<any> = [];
+
+	// serach api variable
+	serachLicenceObj = {
+		isDisplayCancellationLicenceForm: <boolean>false,
+		searchLicenceNumber: <string>""
+	}
+
+	/**
+	 * This method for serach licence using licence number.
+	 */
+	searchLicence() {
+		this.AnimalPondService.searchLicence(this.serachLicenceObj.searchLicenceNumber).subscribe(
+			(res: any) => {
+				if (res.success) {
+					this.serachLicenceObj.isDisplayCancellationLicenceForm = true;
+					this.createRecordPatchSerachData(res.data);
+				} else {
+					this.serachLicenceObj.isDisplayCancellationLicenceForm = false;
+				}
+			}, (err: any) => {
+				this.serachLicenceObj.isDisplayCancellationLicenceForm = false;
+				if (err.error && err.error.length) {
+					this.commonService.openAlert("Warning", err.error[0].message, "warning");
+				}
+			})
+	}
+
+    /**
+     * @param fb - Declare FormBuilder property.
+     * @param validationError - Declare validation service property
+     * @param formService - Declare form service property 
+     * @param uploadFileService - Declare upload file service property.
+     * @param commonService - Declare sweet alert.
+	   * @param toastrService - Show massage with timer.
+     */
+	constructor(
+		private fb: FormBuilder,
+		private validationService: ValidationService,
+		private router: Router,
+		private route: ActivatedRoute,
+		private formService: FormsActionsService,
+		private commonService: CommonService,
+		private toastrService: ToastrService,
+		private AnimalPondService: AnimalPondService,
+		private location: Location
+	) { }
+
+	/**
+	 * This method call initially required methods.
+	 */
+	ngOnInit() {
+		this.route.paramMap.subscribe(param => {
+			this.formId = Number(param.get('id'));
+			this.apiCode = param.get('apiCode');
+			this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
+		});
+
+		this.getLookupData();
+		this.animalPondCancellationFormControls();
+
+		if (!this.formId) {
+			this.serachLicenceObj.isDisplayCancellationLicenceForm = false;
+		}
+		else {
+			this.serachLicenceObj.isDisplayCancellationLicenceForm = true;
+			this.getAnimalPondLicCancellationData();
+			this.animalPondCancellationForm.disable();
+			this.enableFielList();
+		}
+	}
+
+	/**
+     * This method is use to create new record for citizen.
+     * @param searchData: exciting licence number data
+     */
+	createRecordPatchSerachData(searchData: any) {
+		this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
+		this.formService.createFormData().subscribe(res => {
+
+			this.formId = res.serviceFormId;
+			this.animalPondCancellationForm.patchValue(searchData);
+
+			this.animalPondCancellationForm.patchValue({
+				id: res.id,
+				uniqueId: res.uniqueId,
+				version: res.version,
+				refNumber: this.serachLicenceObj.searchLicenceNumber,
+				serviceFormId: res.serviceFormId,
+				createdDate: res.createdDate,
+				updatedDate: res.createdDate,
+				serviceType: res.serviceType,
+				// deptFileStatus: res.deptFileStatus,
+				serviceName: res.serviceName,
+				fileNumber: res.fileNumber,
+				pid: res.pid,
+				outwardNo: res.outwardNo,
+				agree: res.agree,
+
+				paymentStatus: res.paymentStatus,
+				canEdit: res.canEdit,
+				canDelete: res.canDelete,
+				canSubmit: res.canSubmit,
+				serviceCode: res.serviceCode,
+				applicationNo: res.applicationNo,
+
+				periodFrom: res.periodFrom,
+				periodTo: res.periodTo,
+				// newRegistration: res.newRegistration,
+				// renewal: res.renewal,
+				// adminCharges: res.adminCharges,
+				// netAmount: res.netAmount,
+				attachments: []
+			});
+			this.showButtons = true;
+
+			this.animalPondCancellationForm.disable();
+			this.enableFielList();
+		
+			let currentUrl = this.location.path().replace('false', this.formId.toString());
+			this.location.go(currentUrl);
+		});
+
+	}
+
+	/**
+	 * This method use for edit some fiels.
+	 */
+	enableFielList() { 
+		this.animalPondCancellationForm.get('cancellationReason').enable();
+	}
+
+	/**
+	 * Method is used to get form data
+	 */
+	getAnimalPondLicCancellationData() {
+		this.formService.getFormData(this.formId).subscribe(res => {
+			try {
+				this.animalPondCancellationForm.patchValue(res);
+				this.showButtons = true;
+			} catch (error) {
+				console.log(error.message);
+			}
+		});
+	}
+
+	/**
+	* Method is used to get lookup data
+	*/
+	getLookupData() {
+		this.formService.getDataFromLookups().subscribe(res => {
+			this.PERSON_TYPE = res.PERSON_TYPE;
+		});
+	}
+
+
+	/**
+	* Method is used to set form controls
+	* 'Guj' control is consider as a Gujarati fields
+	*/
+	animalPondCancellationFormControls() {
+		this.animalPondCancellationForm = this.fb.group({
+			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
+			serviceCode: 'APL-CAN',
+			refNumber:[null],
+			/* Step 1 controls start */
+			personType: this.fb.group({
+				code: [null]
+			}),
+			holderFirstName: [null, [Validators.required, Validators.maxLength(30)]],
+			holderMiddleName: [null, [Validators.required, Validators.maxLength(30)]],
+			holderLastName: [null, [Validators.required, Validators.maxLength(30)]],
+			holderFirstNameGuj: [null, [Validators.required, Validators.maxLength(90)]],
+			holderMiddleNameGuj: [null, [Validators.required, Validators.maxLength(90)]],
+			holderLastNameGuj: [null, [Validators.required, Validators.maxLength(90)]],
+
+			permanantAddress: this.fb.group(this.permanantAddressEstablishment.addressControls()),
+			temporaryAddress: this.fb.group(this.permanantAddressEstablishment.addressControls()),
+
+			holderTelephoneNo: [null, [Validators.maxLength(12), Validators.minLength(10)]],
+			holderMobileNo: [null, [Validators.required, Validators.maxLength(11), Validators.minLength(10)]],
+			holderFaxNo: [null, [Validators.maxLength(12)]],
+			holderAadharNo: [null, [Validators.required, Validators.maxLength(12)]],
+			holderPanNo: [null, [Validators.required, Validators.maxLength(10)]],
+			/* Step 1 controls end */ 
+
+			applicationDate: [],
+			licenseIssueDate: [null],
+			licenseCancellationalDate: [null],
+			loinumber: [null],
+
+			cancellationReason:[null,Validators.maxLength(200)],
+			/* Step 4 controls start*/
+			attachments: []
+			/* Step 4 controls end */
+		});
+	}
+
+	/**
+     * Method is used to set data value to upload method.
+     * @param indentifier - file identifier
+     * @param labelName - file label name.
+     * @param formPart - file form part
+     * @param variableName - file variable name.
+     */
+	setDataValue(indentifier: number, labelName: string, formPart: string, variableName: string) {
+		this.uploadModel = {
+			fieldIdentifier: indentifier.toString(),
+			labelName: labelName,
+			formPart: formPart,
+			variableName: variableName,
+			serviceFormId: this.formId,
+		}
+		return this.uploadModel;
+	}
+
+    /**
+     * This method required for final form submition.
+     * @param flag - flag of invalid control.
+     */
+	handleErrorsOnSubmit(flag) {
+
+		let step0 = 23;
+
+		if (flag != null) {
+			//Check validation for step by step
+			let count = flag;
+
+			if (count <= step0) {
+				this.tabIndex = 0;
+				return false;
+			}
+			else {
+				console.log("else condition");
+			}
+
+		}
+	}
+
+	/**
+	 * This method use to get output event of tab change
+	 * @param evt - Tab index
+	 */
+	onTabChange(evt) {
+		this.tabIndex = evt;
+	}
+
+
 
 }
+

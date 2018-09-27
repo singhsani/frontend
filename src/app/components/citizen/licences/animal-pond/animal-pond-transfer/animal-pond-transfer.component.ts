@@ -159,6 +159,7 @@ export class AnimalPondTransferComponent implements OnInit {
 				id: res.id,
 				uniqueId: res.uniqueId,
 				version: res.version,
+				refNumber: this.serachLicenceObj.searchLicenceNumber,
 				serviceFormId: res.serviceFormId,
 				createdDate: res.createdDate,
 				updatedDate: res.createdDate,
@@ -187,7 +188,6 @@ export class AnimalPondTransferComponent implements OnInit {
 			});
 
 			this.showButtons = true;
-			this.animalPondTransferForm.get('refNumber').patchValue(this.serachLicenceObj.searchLicenceNumber);
 
 			(<FormArray>this.animalPondTransferForm.get('relationshipList')).controls = [];
 			searchData.relationshipList.forEach(app => {
