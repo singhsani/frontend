@@ -159,6 +159,7 @@ export class AnimalPondRenewComponent implements OnInit {
 				id: res.id,
 				uniqueId: res.uniqueId,
 				version: res.version,
+				refNumber: this.serachLicenceObj.searchLicenceNumber,
 				serviceFormId: res.serviceFormId,
 				createdDate: res.createdDate,
 				updatedDate: res.createdDate,
@@ -187,7 +188,7 @@ export class AnimalPondRenewComponent implements OnInit {
 			});
 
 			this.showButtons = true;
-			this.animalPondRenewForm.get('refNumber').patchValue(this.serachLicenceObj.searchLicenceNumber);
+			// this.animalPondRenewForm.get('refNumber').patchValue(this.serachLicenceObj.searchLicenceNumber);
 
 			(<FormArray>this.animalPondRenewForm.get('relationshipList')).controls = [];
 			searchData.relationshipList.forEach(app => {
@@ -229,7 +230,7 @@ export class AnimalPondRenewComponent implements OnInit {
 				});
 				// selected animal filter
 				this.getSelectedAnimal();
-				
+
 			} catch (error) {
 				console.log(error.message)
 			}

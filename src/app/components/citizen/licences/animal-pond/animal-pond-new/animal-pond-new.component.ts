@@ -260,7 +260,6 @@ export class AnimalPondNewComponent implements OnInit {
 			}),
 			animalCount: [data.animalCount ? data.animalCount : null, [Validators.minLength(1)]],
 		})
-
 	}
 
 	/**
