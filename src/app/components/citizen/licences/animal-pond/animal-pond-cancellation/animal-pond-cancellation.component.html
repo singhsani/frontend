@@ -4,8 +4,7 @@
   <mat-form-field class="col-md-10">
     <input matInput required placeholder="{{'search_by_application_no' | translate:translateKey}}" [(ngModel)]="serachLicenceObj.searchLicenceNumber">
   </mat-form-field>
-  <button class="col-md-2" mat-raised-button color="primary" (click)="searchLicence()">{{'search' |
-    translate:translateKey}}</button>
+  <button class="col-md-2" mat-raised-button color="primary" (click)="searchLicence()">{{'search' | translate:translateKey}}</button>
 </mat-card>
 
 <mat-card [hidden]="!serachLicenceObj.isDisplayCancellationLicenceForm" class="formClass cardBorder">
@@ -93,7 +92,7 @@
         </mat-form-field>
 
         <mat-form-field class="col-md-4">
-          <input matInput type="text" required maxlength="200" placeholder="{{'license_cancelation_cancellationReason' | translate:translateKey}}"
+          <input matInput type="text" required maxlength="200" placeholder="{{'license_cancelation_reason' | translate:translateKey}}"
             formControlName="cancellationReason">
           <control-messages [control]="animalPondCancellationForm.controls.cancellationReason"></control-messages>
         </mat-form-field>

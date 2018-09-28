@@ -241,14 +241,6 @@
 							</form>
 						</li>
 					</ul>
-					<div class="row">
-						<div class="col-md-2">
-							<mat-form-field>
-								<input matInput maxlength="3" readonly placeholder="{{'total_animal' | translate:translateKey}}" OnlyNumber
-								 value="{{getTotalAnimal()}}" formControlName="totalAnimal">
-							</mat-form-field>
-						</div>
-					</div>
 				</div>
 				<!-- end table -->
 				<app-action-bar [form]="animalPondTransferForm" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step2', next: 2, back: 0}"></app-action-bar>
@@ -341,6 +333,14 @@
 							</form>
 						</li>
 					</ul>
+					<div class="row">
+						<div class="col-md-2">
+							<mat-form-field>
+								<input matInput maxlength="3" readonly placeholder="{{'total_animal' | translate:translateKey}}" OnlyNumber
+								 value="{{getTotalAnimal()}}" formControlName="totalAnimal">
+							</mat-form-field>
+						</div>
+					</div>
 				</div>
 				<!-- end table -->
 				<app-action-bar [form]="animalPondTransferForm" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step3', next: 3, back: 1}"></app-action-bar>
