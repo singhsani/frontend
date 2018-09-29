@@ -53,7 +53,6 @@ export class HosMyApplicationsComponent implements OnInit {
 	ngOnInit() {
 		// If the user changes the sort order, reset back to the first page.
 		this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
-
 		this.getAllData();
 	}
 

@@ -79,12 +79,9 @@ export class StillBirthComponent implements OnInit {
 	private stepLabel5 = 'upload_documents';
 
 	constructor(
-		private router: Router,
 		private route: ActivatedRoute,
 		private formService: HosFormActionsService,
-		private uploadFileService: UploadFileService,
 		private commonService: CommonService,
-		private validationService: ValidationService,
 		private fb: FormBuilder,
 		private toastrService: ToastrService,
 		private atp: AmazingTimePickerService) {

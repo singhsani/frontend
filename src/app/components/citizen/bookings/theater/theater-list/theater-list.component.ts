@@ -72,9 +72,7 @@ export class TheaterListComponent implements OnInit {
 		private fb: FormBuilder,
 		private bookingService: BookingService,
 		private toster: ToastrService,
-		private validationService: ValidationService,
 		private router: Router,
-		private formService: FormsActionsService,
 		private commonService: CommonService
 	) {
 		/**

@@ -75,8 +75,6 @@ export class DeathRegistrationComponent implements OnInit {
 
 	constructor(
 		private fb: FormBuilder,
-		private validationService: ValidationService,
-		private uploadFileService: UploadFileService,
 		private route: ActivatedRoute,
 		private commonService: CommonService,
 		private formService: HosFormActionsService

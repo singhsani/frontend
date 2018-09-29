@@ -59,7 +59,7 @@ export class BirthRegistrationComponent implements OnInit {
 	private childs: FormArray;
 	showChildData: boolean = false;
 	selectedTime: any;
-	tabIndex: number = 0;	
+	tabIndex: number = 0;
 
 	//Birth Data LookUps
 	private BirthPlaces: object[];
@@ -88,11 +88,8 @@ export class BirthRegistrationComponent implements OnInit {
 		private router: Router,
 		private route: ActivatedRoute,
 		private formService: HosFormActionsService,
-		private uploadFileService: UploadFileService,
 		private commonService: CommonService,
-		private validationService: ValidationService,
 		private fb: FormBuilder,
-		private dialog: MatDialog,
 		private atp: AmazingTimePickerService,
 		private toastrService: ToastrService
 	) {
@@ -110,7 +107,6 @@ export class BirthRegistrationComponent implements OnInit {
 			this.apiCode = param.get('apiCode');
 			this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
 		});
-
 		if (!this.appId) {
 			this.router.navigate([ManageRoutes.getFullRoute('HOSPITALDASHBOARD')]);
 		} else {
@@ -370,18 +366,18 @@ export class BirthRegistrationComponent implements OnInit {
 		}
 	}
 
-	totalChildCalculate(){
-		
-		if (this.birthCertificateForm.get('totalGirlChildsBeforePregnancy').value == null || this.birthCertificateForm.get('totalGirlChildsBeforePregnancy').value == ''){
+	totalChildCalculate() {
+
+		if (this.birthCertificateForm.get('totalGirlChildsBeforePregnancy').value == null || this.birthCertificateForm.get('totalGirlChildsBeforePregnancy').value == '') {
 			this.birthCertificateForm.get('totalGirlChildsBeforePregnancy').setValue(0)
 
-		} 
-		if (this.birthCertificateForm.get('totalBoyChildsBeforePregnancy').value == null || this.birthCertificateForm.get('totalBoyChildsBeforePregnancy').value == ''){
+		}
+		if (this.birthCertificateForm.get('totalBoyChildsBeforePregnancy').value == null || this.birthCertificateForm.get('totalBoyChildsBeforePregnancy').value == '') {
 			this.birthCertificateForm.get('totalBoyChildsBeforePregnancy').setValue(0);
 
 		}
 		this.birthCertificateForm.get('totalChildsBeforePregnancy').setValue(parseInt(this.birthCertificateForm.get('totalGirlChildsBeforePregnancy').value) + parseInt(this.birthCertificateForm.get('totalBoyChildsBeforePregnancy').value))
-	} 
+	}
 
 	/**
 	 * Method is used to get no of days in current month.

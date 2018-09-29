@@ -1,11 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
-import * as moment from 'moment';
-import { Router } from '@angular/router';
-import { ManageRoutes } from '../../../../../config/routes-conf';
-import { BookingService } from '../../../../../core/services/citizen/data-services/booking.service';
-import { ValidationService } from '../../../../../shared/services/validation.service';
 
 @Component({
   selector: 'app-booking-status',
@@ -47,9 +41,7 @@ export class BookingStatusComponent implements OnInit {
    * @param router - routng service.
    */
   constructor(private fb: FormBuilder,
-    private bookingService: BookingService,
-    private toster: ToastrService,
-    private router: Router) { }
+  ) { }
 
   /**
    * Method initializes the view.
