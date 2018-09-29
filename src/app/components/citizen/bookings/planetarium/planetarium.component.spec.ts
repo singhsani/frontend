@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PlanetariumComponent } from './planetarium.component';
 
-describe('PlanetariumComponent', () => {
+describe('Planetarium Bookimg : PlanetariumComponent', () => {
   let component: PlanetariumComponent;
   let fixture: ComponentFixture<PlanetariumComponent>;
 

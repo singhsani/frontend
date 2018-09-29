@@ -23,12 +23,11 @@
 	<a mat-stroked-button class="mat-primary" routerLink="../../dashboard">Create Bookings</a>
 </div>
 
-
 <div class="example-container mat-elevation-z8 borderOne" [hidden]="resultsLength==0">
 
 	<div class="example-loading-shade" *ngIf="isLoadingResults">
 		<mat-spinner *ngIf="isLoadingResults"></mat-spinner>
-	</div>
+	</div> 
 
 	<table mat-table class="myApplication" [dataSource]="bookingList" matSort matSortActive="created" matSortDisableClear matSortDirection="asc">
 

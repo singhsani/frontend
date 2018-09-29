@@ -138,6 +138,8 @@ export class TownHallListComponent implements OnInit {
 
 	showPaymentReciept: boolean = false;
 
+	isLoadingResults: boolean = false;
+
 
 	constructor(
 		private fb: FormBuilder,
@@ -228,6 +230,8 @@ export class TownHallListComponent implements OnInit {
 		this.selectedShift = [];
 
 		if (this.searchTownHallForm.valid) {
+			this.isLoadingResults = true;
+
 
 			/**
 		     * Filter Object to get list of available dates.
@@ -253,7 +257,12 @@ export class TownHallListComponent implements OnInit {
 					}
 				});
 				this.availableStots = resp.data;
+
+				this.isLoadingResults = false;
+
 			}, err => {
+				this.isLoadingResults = false;
+
 				this.commonService.openAlertFormSaveValidation('Warning!', err.error, 'warning');
 			});
 		}
@@ -376,6 +385,8 @@ export class TownHallListComponent implements OnInit {
 	confirmShortlist() {
 
 		if (this.selectedShift.length > 0) {
+			this.isLoadingResults = true;
+
 			let shortListData = {
 				resourceCode: this.filteredReponse.data.resourceCode,
 				purposeOfBooking: this.searchTownHallForm.get('purpose').value,
@@ -397,6 +408,8 @@ export class TownHallListComponent implements OnInit {
 						this.paymentObject = payResp;
 
 						this.showPaymentReciept = true;
+
+						this.isLoadingResults = false;
 					})
 				}
 			}, (err) => {

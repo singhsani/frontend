@@ -5,7 +5,7 @@ import { BirthCorrectionComponent } from './birth-correction.component';
 
 import { TranslateModule } from '../../../../../shared/modules/translate/translate.module';
 import { SharedModule } from '../../../../../shared/shared.module';
-import { FormsModule, ReactiveFormsModule, FormGroup } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CoreModule } from '../../../../../core/core.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -21,7 +21,7 @@ import { error } from '@angular/compiler/src/util';
 import { MaterialModule } from '../../../../../shared/modules/material/material.module';
 
 
-fdescribe('Component: BirthCorrectionComponent', () => {
+describe('Component: BirthCorrectionComponent', () => {
 	let component: BirthCorrectionComponent;
 	let fixture: ComponentFixture<BirthCorrectionComponent>;
 	let service : FormsActionsService

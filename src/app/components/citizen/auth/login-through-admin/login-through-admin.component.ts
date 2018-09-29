@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { SessionStorageService } from 'angular-web-storage';
 import { FormsActionsService } from '../../../../core/services/citizen/data-services/forms-actions.service';
 import { ManageRoutes } from '../../../../config/routes-conf';
+import { CommonService } from '../../../../shared/services/common.service';
 
 @Component({
 	selector: 'app-login-through-admin',
@@ -16,19 +17,25 @@ export class LoginThroughAdminComponent implements OnInit {
 
 	constructor(
 		private session: SessionStorageService,
-		private router: Router,
-		private route: ActivatedRoute,
+		public router: Router,
+		public route: ActivatedRoute,
+		public commonService: CommonService,
 		private formService: FormsActionsService,
-	) { 
-		this.route.paramMap.subscribe(param => {
-			this.accessToken = param.get('authToken');
-			this.apiCode = param.get('apiCode');
-			this.saveToken();
-			this.createRecord();
-		});
-	}
+	) { }
 
 	ngOnInit() {
+		this.route.paramMap.subscribe(param => {
+			if (param) {
+				this.accessToken = param['authToken'];
+				this.apiCode = param['apiCode'];
+				if (this.accessToken && this.apiCode) {
+					this.saveToken();
+					this.createRecord();
+				} else {
+					this.commonService.openAlert('Error', 'Access Token Not Available', 'warning');
+				}
+			}
+		});
 	}
 
 	/**
@@ -49,5 +56,4 @@ export class LoginThroughAdminComponent implements OnInit {
 			this.router.navigate([redirectUrl, res.serviceFormId, this.apiCode]);
 		});
 	}
-
 }

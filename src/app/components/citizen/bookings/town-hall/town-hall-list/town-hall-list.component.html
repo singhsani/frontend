@@ -203,6 +203,10 @@
     </div>
 </div>
 
+<div class="example-loading-shade" *ngIf="isLoadingResults">
+    <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+</div>
+
 <div *ngIf="showPaymentReciept">
     <table class="table table-bordered">
         <thead class="customthead">
@@ -333,7 +337,7 @@
                         <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="confirmMobile" placeholder="{{'confirm_mobile' | translate: translateKey}}"
                             required>
                         <control-messages [control]="townHallApplicationForm.controls.confirmMobile"></control-messages>
-                        
+
                     </mat-form-field>
                     <mat-error *ngIf="!mobileNumberMatcher() && townHallApplicationForm.controls.applicantMobile.touched && townHallApplicationForm.controls.confirmMobile.touched">
                         Mobile Number & Confirm Mobile Number is not same
@@ -388,8 +392,8 @@
                 </div>
 
                 <mat-form-field class="col-md-3">
-                    <input matInput type="text" maxlength="20" appValidationFields [validationFieldsType]="'onlyNameWithSpace'" formControlName="accountHolderName" placeholder="{{'account_holder_name' | translate: translateKey}}"
-                        required>
+                    <input matInput type="text" maxlength="20" appValidationFields [validationFieldsType]="'onlyNameWithSpace'" formControlName="accountHolderName"
+                        placeholder="{{'account_holder_name' | translate: translateKey}}" required>
                     <control-messages [control]="townHallApplicationForm.controls.accountHolderName"></control-messages>
                 </mat-form-field>
 

@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TownHallBookComponent } from './town-hall-book.component';
 
-describe('TownHallBookComponent', () => {
+describe('TownHall Booking : TownHallBookComponent', () => {
   let component: TownHallBookComponent;
   let fixture: ComponentFixture<TownHallBookComponent>;
 
