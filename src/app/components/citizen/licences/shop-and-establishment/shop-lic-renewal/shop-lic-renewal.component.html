@@ -4,7 +4,8 @@
 	<mat-form-field class="col-md-10">
 		<input matInput required placeholder="{{'search_by_application_no' | translate:translateKey}}" [(ngModel)]="serachLicenceObj.searchLicenceNumber">
 	</mat-form-field>
-	<button class="col-md-2" mat-raised-button color="primary" (click)="searchLicence()">{{'search' | translate:translateKey}}</button>
+	<button class="col-md-2" [disabled]="!serachLicenceObj.searchLicenceNumber" mat-raised-button color="primary" (click)="searchLicence()">{{'search'
+		| translate:translateKey}}</button>
 </mat-card>
 
 <mat-card [hidden]="!serachLicenceObj.isDisplayRenewLicenceForm" class="formClass cardBorder">
@@ -19,15 +20,26 @@
 
 				<div class="row">
 					<mat-form-field class="col-md-4">
-						<input matInput required maxlength="150" placeholder="{{'name_of_establishment_if_any' | translate:translateKey}}" formControlName="establishmentName"
-						 appGujInputSource targetElement="establishmentNameGuj" [form]="shopLicRenewalForm">
+						<input matInput readonly required placeholder="{{'license_no' | translate:translateKey}}" formControlName="refNumber">
+						<control-messages [control]="shopLicRenewalForm.controls.refNumber"></control-messages>
+					</mat-form-field>
+					<mat-form-field class="col-md-4">
+						<input matInput readonly placeholder="{{'issue_date' | translate:translateKey}}" formControlName="licenseIssueDate">
+						<control-messages [control]="shopLicRenewalForm.controls.licenseIssueDate"></control-messages>
+					</mat-form-field>
+				</div>
+
+				<div class="row">
+					<mat-form-field class="col-md-4">
+						<input matInput required maxlength="150" placeholder="{{'name_of_establishment_if_any' | translate:translateKey}}"
+						 formControlName="establishmentName" appGujInputSource targetElement="establishmentNameGuj" [form]="shopLicRenewalForm">
 						<control-messages [control]="shopLicRenewalForm.controls.establishmentName"></control-messages>
 					</mat-form-field>
 
 					<!-- gujarati -->
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" required maxlength="450" formControlName="establishmentNameGuj" appGujInputTarget [form]="shopLicRenewalForm"
-						 placeholder="{{ 'name_of_establishment_if_any' | translate:translateKey:'gu' }}">
+						<input matInput type="text" required maxlength="450" formControlName="establishmentNameGuj" appGujInputTarget
+						 [form]="shopLicRenewalForm" placeholder="{{ 'name_of_establishment_if_any' | translate:translateKey:'gu' }}">
 						<control-messages [control]="shopLicRenewalForm.controls.establishmentNameGuj"></control-messages>
 					</mat-form-field>
 					<!-- /gujarati -->
@@ -65,7 +77,8 @@
 					</div>
 
 					<mat-form-field class="col-md-4">
-						<input matInput OnlyNumber maxlength="12" placeholder="{{'aadhar_number' | translate:translateKey}}" formControlName="aadharNumber">
+						<input matInput OnlyNumber maxlength="12" placeholder="{{'aadhar_number' | translate:translateKey}}"
+						 formControlName="aadharNumber">
 					</mat-form-field>
 
 					<div class="col-md-4 ngSelect" formGroupName="applicantVimaAmountPaid">
@@ -75,7 +88,8 @@
 					</div>
 
 					<mat-form-field class="col-md-4" *ngIf="shopLicRenewalForm.get('applicantVimaAmountPaid').value.code == 'YES'">
-						<input matInput appAlphaNumeric maxlength="20" placeholder="{{'number' | translate:translateKey}}" formControlName="number">
+						<input matInput appAlphaNumeric maxlength="20" placeholder="{{'number' | translate:translateKey}}"
+						 formControlName="number">
 					</mat-form-field>
 				</div>
 
@@ -84,12 +98,14 @@
 				</div>
 				<div class="row">
 					<mat-form-field class="col-md-4">
-						<input matInput maxlength="20" appAlphaNumeric placeholder="{{'professional_tax_PEC_no' | translate:translateKey}}" formControlName="professionalTaxPECNo">
+						<input matInput maxlength="20" appAlphaNumeric placeholder="{{'professional_tax_PEC_no' | translate:translateKey}}"
+						 formControlName="professionalTaxPECNo">
 						<control-messages [control]="shopLicRenewalForm.controls.professionalTaxPECNo"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput maxlength="20" appAlphaNumeric placeholder="{{'PRC_no' | translate:translateKey}}" formControlName="prcNo">
+						<input matInput maxlength="20" appAlphaNumeric placeholder="{{'PRC_no' | translate:translateKey}}"
+						 formControlName="prcNo">
 						<control-messages [control]="shopLicRenewalForm.controls.prcNo"></control-messages>
 					</mat-form-field>
 				</div>
@@ -116,14 +132,15 @@
 				<div class="row">
 
 					<mat-form-field class="col-md-6">
-						<input matInput type="text" required maxlength="100" placeholder="{{'name_of_employer' | translate:translateKey}}" formControlName="nameOfEmployer"
-						 appGujInputSource targetElement="nameOfEmployerGuj" [form]="shopLicRenewalForm">
+						<input matInput type="text" required maxlength="100" placeholder="{{'name_of_employer' | translate:translateKey}}"
+						 formControlName="nameOfEmployer" appGujInputSource targetElement="nameOfEmployerGuj" [form]="shopLicRenewalForm">
 						<control-messages [control]="shopLicRenewalForm.controls.nameOfEmployer"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-6">
 						<input matInput type="text" required maxlength="500" placeholder="{{'residential_address_of_employer' | translate:translateKey}}"
-						 formControlName="residentialAddressOfEmployer" appGujInputSource targetElement="residentialAddressOfEmployerGuj" [form]="shopLicRenewalForm">
+						 formControlName="residentialAddressOfEmployer" appGujInputSource targetElement="residentialAddressOfEmployerGuj"
+						 [form]="shopLicRenewalForm">
 						<control-messages [control]="shopLicRenewalForm.controls.residentialAddressOfEmployer"></control-messages>
 					</mat-form-field>
 
@@ -135,19 +152,21 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-6">
-						<input matInput type="text" maxlength="1500" required formControlName="residentialAddressOfEmployerGuj" appGujInputTarget
-						 [form]="shopLicRenewalForm" placeholder="{{ 'residential_address_of_employer' | translate:translateKey:'gu' }}">
+						<input matInput type="text" maxlength="1500" required formControlName="residentialAddressOfEmployerGuj"
+						 appGujInputTarget [form]="shopLicRenewalForm" placeholder="{{ 'residential_address_of_employer' | translate:translateKey:'gu' }}">
 						<control-messages [control]="shopLicRenewalForm.controls.residentialAddressOfEmployerGuj"></control-messages>
 					</mat-form-field>
 					<!-- /gujarati -->
 
 					<mat-form-field class="col-md-6">
-						<input matInput type="text" required maxlength="60" placeholder="{{'name_of_manager' | translate:translateKey}}" formControlName="nameOfManager">
+						<input matInput type="text" required maxlength="60" placeholder="{{'name_of_manager' | translate:translateKey}}"
+						 formControlName="nameOfManager">
 						<control-messages [control]="shopLicRenewalForm.controls.nameOfManager"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-6">
-						<input matInput required maxlength="500" placeholder="{{'residential_address_of_manager' | translate:translateKey}}" formControlName="residentialAddressOfManager">
+						<input matInput required maxlength="500" placeholder="{{'residential_address_of_manager' | translate:translateKey}}"
+						 formControlName="residentialAddressOfManager">
 						<control-messages [control]="shopLicRenewalForm.controls.residentialAddressOfManager"></control-messages>
 					</mat-form-field>
 
@@ -191,8 +210,8 @@
 
 				<div class="row">
 					<mat-form-field class="col-md-4">
-						<input matInput required maxlength="200" placeholder="{{'name_of_business' | translate:translateKey}}" formControlName="nameOfBusiness"
-						 appGujInputSource targetElement="nameOfBusinessGuj" [form]="shopLicRenewalForm">
+						<input matInput required maxlength="200" placeholder="{{'name_of_business' | translate:translateKey}}"
+						 formControlName="nameOfBusiness" appGujInputSource targetElement="nameOfBusinessGuj" [form]="shopLicRenewalForm">
 						<control-messages [control]="shopLicRenewalForm.controls.nameOfBusiness"></control-messages>
 					</mat-form-field>
 
@@ -284,7 +303,8 @@
 								</tr>
 							</thead>
 							<tbody formArrayName="employerFamilyList">
-								<tr *ngFor="let item of shopLicRenewalForm.get('employerFamilyList').controls; let indx = index;" [formGroupName]="indx">
+								<tr *ngFor="let item of shopLicRenewalForm.get('employerFamilyList').controls; let indx = index;"
+								 [formGroupName]="indx">
 									<!-- <td style="width: 40px;">
 											<button mat-icon-button color="primary" *ngIf="!item.isEditMode" (click)="editRecord(item)">
 												<mat-icon title="Edit">edit</mat-icon>
@@ -307,7 +327,8 @@
 									<td>
 										<p *ngIf="!item.isEditMode">{{item.get('name').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
-											<input matInput appValidationFields [validationFieldsType]="'onlyNameWithSpace'" formControlName="name" required>
+											<input matInput appValidationFields [validationFieldsType]="'onlyNameWithSpace'" formControlName="name"
+											 required>
 											<control-messages [control]="item.controls.name"></control-messages>
 										</mat-form-field>
 									</td>
@@ -380,7 +401,7 @@
 						</div>
 					</div>
 				</div>
-				<app-action-bar  [form]="shopLicRenewalForm" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step3', next: 3, back: 1}"></app-action-bar>
+				<app-action-bar [form]="shopLicRenewalForm" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step3', next: 3, back: 1}"></app-action-bar>
 			</mat-tab>
 			<!-- step 3 employer family Ends -->
 
@@ -438,7 +459,8 @@
 									<td>
 										<p *ngIf="!item.isEditMode">{{item.get('name').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
-											<input matInput appValidationFields [validationFieldsType]="'onlyNameWithSpace'" formControlName="name" required>
+											<input matInput appValidationFields [validationFieldsType]="'onlyNameWithSpace'" formControlName="name"
+											 required>
 											<control-messages [control]="item.controls.name"></control-messages>
 										</mat-form-field>
 									</td>
@@ -511,7 +533,7 @@
 					</div>
 				</div>
 
-				<app-action-bar  [form]="shopLicRenewalForm" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step4', next: 4, back: 2}"></app-action-bar>
+				<app-action-bar [form]="shopLicRenewalForm" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step4', next: 4, back: 2}"></app-action-bar>
 
 			</mat-tab>
 			<!-- step 4 occupancy person Ends -->
@@ -580,7 +602,8 @@
 									<td>
 										<p *ngIf="!item.isEditMode">{{item.get('name').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
-											<input matInput appValidationFields [validationFieldsType]="'onlyNameWithSpace'" formControlName="name" required>
+											<input matInput appValidationFields [validationFieldsType]="'onlyNameWithSpace'" formControlName="name"
+											 required>
 											<control-messages [control]="item.controls.name"></control-messages>
 										</mat-form-field>
 									</td>
@@ -653,7 +676,7 @@
 					</div>
 				</div>
 
-				<app-action-bar  [form]="shopLicRenewalForm" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step5', next: 5, back: 3}"></app-action-bar>
+				<app-action-bar [form]="shopLicRenewalForm" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step5', next: 5, back: 3}"></app-action-bar>
 			</mat-tab>
 			<!-- step 5 partner list Ends -->
 
@@ -665,13 +688,13 @@
 				<div class="row">
 
 					<mat-form-field class="col-md-6">
-						<input matInput type="tel" OnlyNumber placeholder="{{'total_adult_person' | translate:translateKey}}" formControlName="totalAdultEmployee"
-						 maxlength="2">
+						<input matInput type="tel" OnlyNumber placeholder="{{'total_adult_person' | translate:translateKey}}"
+						 formControlName="totalAdultEmployee" maxlength="2">
 						<control-messages [control]="shopLicRenewalForm.controls.totalAdultEmployee"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-6">
-						<input matInput type="tel" OnlyNumber placeholder="{{'total_young_person' | translate:translateKey}}" formControlName="totalYoungEmployee"
-						 maxlength="2">
+						<input matInput type="tel" OnlyNumber placeholder="{{'total_young_person' | translate:translateKey}}"
+						 formControlName="totalYoungEmployee" maxlength="2">
 						<control-messages [control]="shopLicRenewalForm.controls.totalYoungEmployee"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-6">
@@ -685,8 +708,8 @@
 						<control-messages [control]="shopLicRenewalForm.controls.totalWomenEmployee"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-6">
-						<input matInput type="tel" OnlyNumber placeholder="{{'total_unidentified_person' | translate:translateKey}}" formControlName="totalUnidentified"
-						 maxlength="2">
+						<input matInput type="tel" OnlyNumber placeholder="{{'total_unidentified_person' | translate:translateKey}}"
+						 formControlName="totalUnidentified" maxlength="2">
 						<control-messages [control]="shopLicRenewalForm.controls.totalUnidentified"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-6">
@@ -1049,7 +1072,8 @@
 				</div>
 
 				<app-action-bar [uploadFiles]="uploadFileArray | filterAttachment:shopLicRenewalForm.get( 'typeOfOrganisation').value.code"
-				 [form]="shopLicRenewalForm" (handleErrors)="handleErrorsOnSubmit($event) " (tabIndex)="onTabChange($event) " [stepInfo]="{step: 'final', next:7, back: 5} "></app-action-bar>
+				 [form]="shopLicRenewalForm" (handleErrors)="handleErrorsOnSubmit($event) " (tabIndex)="onTabChange($event) "
+				 [stepInfo]="{step: 'final', next:7, back: 5} "></app-action-bar>
 
 			</mat-tab>
 			<!-- step Attachment Ends -->

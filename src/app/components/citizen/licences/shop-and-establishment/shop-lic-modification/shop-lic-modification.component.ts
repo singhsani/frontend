@@ -119,7 +119,7 @@ export class ShopLicModificationComponent implements OnInit {
 	constructor(
 		private fb: FormBuilder,
 		private validationService: ValidationService,
-		private router: Router,
+		// private router: Router,
 		private route: ActivatedRoute,
 		private formService: FormsActionsService,
 		private shopAndEstablishmentService: ShopAndEstablishmentService,
@@ -168,6 +168,7 @@ export class ShopLicModificationComponent implements OnInit {
 				uniqueId: res.uniqueId,
 				version: res.version,
 				serviceFormId: res.serviceFormId,
+				refNumber: this.serachLicenceObj.searchLicenceNumber,
 				createdDate: res.createdDate,
 				updatedDate: res.createdDate,
 				serviceType: res.serviceType,
@@ -191,6 +192,9 @@ export class ShopLicModificationComponent implements OnInit {
 				// renewal: res.renewal,
 				// adminCharges: res.adminCharges,
 				// netAmount: res.netAmount,
+				licenseIssueDate: res.licenseIssueDate,
+				// licenseRenewalDate: res.licenseRenewalDate,
+				// loinumber: res.loinumber,
 				attachments: [],
 
 			});
@@ -294,7 +298,7 @@ export class ShopLicModificationComponent implements OnInit {
 		return totalcount;
 	}
 
-	
+
 	/**
 	 * This method is use for get lookup data.
 	 */
@@ -320,6 +324,7 @@ export class ShopLicModificationComponent implements OnInit {
 		this.shopLicModificationForm = this.fb.group({
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
 			serviceCode: 'SHOP-LIC',
+			refNumber: [null, Validators.required],
 			/* Step 1 controls start */
 			establishmentName: [null, [Validators.required, Validators.maxLength(150)]],//count=4
 			establishmentNameGuj: [null, [Validators.required, Validators.maxLength(450)]],
@@ -419,7 +424,7 @@ export class ShopLicModificationComponent implements OnInit {
 			// nameOfManagerGuj: [null],
 			// residentialAddressOfManagerGuj: [null],
 			//enterHolidayGuj: [null],
-
+			licenseIssueDate: [null],
 			/*  */
 			attachments: [''],
 			/*  */
@@ -690,13 +695,13 @@ export class ShopLicModificationComponent implements OnInit {
      */
 	handleErrorsOnSubmit(flag) {
 
-		let step0 = 15;
-		let step1 = 27;
-		let step2 = 35;
-		let step3 = 41;
-		let step4 = 48;
-		let step5 = 56;
-		let step6 = 60;
+		let step0 = 16;
+		let step1 = 28;
+		let step2 = 36;
+		let step3 = 42;
+		let step4 = 49;
+		let step5 = 57;
+		let step6 = 61;
 
 		if (flag != null) {
 			//Check validation for step by step

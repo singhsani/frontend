@@ -4,7 +4,8 @@
 	<mat-form-field class="col-md-10">
 		<input matInput required placeholder="{{'search_by_application_no' | translate:translateKey}}" [(ngModel)]="serachLicenceObj.searchLicenceNumber">
 	</mat-form-field>
-	<button class="col-md-2" mat-raised-button color="primary" (click)="searchLicence()">{{'search' | translate:translateKey}}</button>
+	<button class="col-md-2" [disabled]="!serachLicenceObj.searchLicenceNumber" mat-raised-button color="primary" (click)="searchLicence()">{{'search'
+		| translate:translateKey}}</button>
 </mat-card>
 
 <mat-card [hidden]="!serachLicenceObj.isDisplayRenewLicenceForm" class="formClass cardBorder">
@@ -18,7 +19,17 @@
 				</ng-template>
 
 				<div class="row">
+					<mat-form-field class="col-md-4">
+						<input matInput readonly required placeholder="{{'license_no' | translate:translateKey}}" formControlName="refNumber">
+						<control-messages [control]="muttonFishRenewalForm.controls.refNumber"></control-messages>
+					</mat-form-field>
+					<mat-form-field class="col-md-4">
+						<input matInput readonly placeholder="{{'issue_date' | translate:translateKey}}" formControlName="licenseIssueDate">
+						<control-messages [control]="muttonFishRenewalForm.controls.licenseIssueDate"></control-messages>
+					</mat-form-field>
+				</div>
 
+				<div class="row">
 					<div class="col-md-4 ngSelect" formGroupName="licenseType">
 						<ng-select placeholder="{{'license_type' | translate:translateKey}} *" formControlName="code">
 							<ng-option *ngFor="let type of MF_LICENSE_TYPE" [value]="type.code">{{type.name}}</ng-option>
@@ -34,18 +45,21 @@
 						<control-messages [control]="muttonFishRenewalForm.get('personType').controls.code"></control-messages>
 					</div>
 					<mat-form-field class="col-md-2">
-						<input matInput type="text" required maxlength="30" appValidationFields validationFieldsType='onlyNameWithOutSpace' placeholder="{{'holder_firstname' | translate:translateKey}}" formControlName="holderFirstName"
+						<input matInput type="text" required maxlength="30" appValidationFields validationFieldsType='onlyNameWithOutSpace'
+						 placeholder="{{'holder_firstname' | translate:translateKey}}" formControlName="holderFirstName"
 						 appGujInputSource targetElement="holderFirstNameGuj" [form]="muttonFishRenewalForm">
 						<control-messages [control]="muttonFishRenewalForm.controls.holderFirstName"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" required maxlength="30" appValidationFields validationFieldsType='onlyNameWithOutSpace' placeholder="{{'holder_middlename' | translate:translateKey}}" formControlName="holderMiddleName"
+						<input matInput type="text" required maxlength="30" appValidationFields validationFieldsType='onlyNameWithOutSpace'
+						 placeholder="{{'holder_middlename' | translate:translateKey}}" formControlName="holderMiddleName"
 						 appGujInputSource targetElement="holderMiddleNameGuj" [form]="muttonFishRenewalForm">
 						<control-messages [control]="muttonFishRenewalForm.controls.holderMiddleName"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" required maxlength="30" appValidationFields validationFieldsType='onlyNameWithOutSpace' placeholder="{{'holder_lastname' | translate:translateKey}}" formControlName="holderLastName"
-						 appGujInputSource targetElement="holderLastNameGuj" [form]="muttonFishRenewalForm">
+						<input matInput type="text" required maxlength="30" appValidationFields validationFieldsType='onlyNameWithOutSpace'
+						 placeholder="{{'holder_lastname' | translate:translateKey}}" formControlName="holderLastName" appGujInputSource
+						 targetElement="holderLastNameGuj" [form]="muttonFishRenewalForm">
 						<control-messages [control]="muttonFishRenewalForm.controls.holderLastName"></control-messages>
 					</mat-form-field>
 				</div>
@@ -58,13 +72,13 @@
 						<control-messages [control]="muttonFishRenewalForm.controls.holderFirstNameGuj"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" required maxlength="90" placeholder="{{'holder_middlename' | translate:translateKey}}" formControlName="holderMiddleNameGuj"
-						 appGujInputTarget [form]="muttonFishRenewalForm">
+						<input matInput type="text" required maxlength="90" placeholder="{{'holder_middlename' | translate:translateKey}}"
+						 formControlName="holderMiddleNameGuj" appGujInputTarget [form]="muttonFishRenewalForm">
 						<control-messages [control]="muttonFishRenewalForm.controls.holderMiddleNameGuj"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" required maxlength="90" placeholder="{{'holder_lastname' | translate:translateKey}}" formControlName="holderLastNameGuj"
-						 appGujInputTarget [form]="muttonFishRenewalForm">
+						<input matInput type="text" required maxlength="90" placeholder="{{'holder_lastname' | translate:translateKey}}"
+						 formControlName="holderLastNameGuj" appGujInputTarget [form]="muttonFishRenewalForm">
 						<control-messages [control]="muttonFishRenewalForm.controls.holderLastNameGuj"></control-messages>
 					</mat-form-field>
 				</div>
@@ -72,11 +86,13 @@
 
 				<div class="row">
 					<h2>{{'permanat_address' | translate:translateKey}}</h2>
-					<app-address #permanantAddressEstablishment [requiredFeilds]="muttonFishRenewalForm.controls.permanantAddress.value" [addressFormGroup]="muttonFishRenewalForm.controls.permanantAddress"></app-address>
+					<app-address #permanantAddressEstablishment [requiredFeilds]="muttonFishRenewalForm.controls.permanantAddress.value"
+					 [addressFormGroup]="muttonFishRenewalForm.controls.permanantAddress"></app-address>
 				</div>
 				<div class="row">
 					<h2>{{'temp_address' | translate:translateKey}}</h2>
-					<app-address #temporaryAddressEstablishment [requiredFeilds]="muttonFishRenewalForm.controls.temporaryAddress.value" [addressFormGroup]="muttonFishRenewalForm.controls.temporaryAddress"></app-address>
+					<app-address #temporaryAddressEstablishment [requiredFeilds]="muttonFishRenewalForm.controls.temporaryAddress.value"
+					 [addressFormGroup]="muttonFishRenewalForm.controls.temporaryAddress"></app-address>
 				</div>
 
 				<mat-form-field class="col-md-4">
@@ -126,7 +142,8 @@
 				</div>
 				<div class="row">
 					<h2>{{'business_shop_address' | translate:translateKey}}</h2>
-					<app-address #temporaryAddressEstablishment [requiredFeilds]="muttonFishRenewalForm.controls.businessAddress.value" [addressFormGroup]="muttonFishRenewalForm.controls.businessAddress"></app-address>
+					<app-address #temporaryAddressEstablishment [requiredFeilds]="muttonFishRenewalForm.controls.businessAddress.value"
+					 [addressFormGroup]="muttonFishRenewalForm.controls.businessAddress"></app-address>
 				</div>
 
 				<div class="row">
@@ -155,12 +172,15 @@
 				<!-- table -->
 				<div class="row">
 					<div class="col-md-10">
-						<h2 *ngIf="muttonFishRenewalForm.get('relationshipId').value.code == 'PROPRIETOR'">{{ 'if_shop_is_in_properitership' | translate:translateKey}}</h2>
-						<h2 *ngIf="muttonFishRenewalForm.get('relationshipId').value.code != 'PROPRIETOR'">{{ 'if_shop_is_in_partnership' | translate:translateKey}}</h2>
+						<h2 *ngIf="muttonFishRenewalForm.get('relationshipId').value.code == 'PROPRIETOR'">{{
+							'if_shop_is_in_properitership' | translate:translateKey}}</h2>
+						<h2 *ngIf="muttonFishRenewalForm.get('relationshipId').value.code != 'PROPRIETOR'">{{ 'if_shop_is_in_partnership'
+							| translate:translateKey}}</h2>
 					</div>
 					<div class="col-md-2 pt-3" style="text-align: right;">
-						<button type="button" *ngIf="muttonFishRenewalForm.get('canEdit').value" [disabled]="muttonFishRenewalForm.get('relationshipId').value.code ? muttonFishRenewalForm.get('relationshipId').value.code=='PROPRIETOR' ? !(muttonFishRenewalForm.get('relationshipList').controls.length < 1) : !(muttonFishRenewalForm.get('relationshipList').controls.length < 10) : true" matTooltip="{{'add_more' | translate:translateKey}}"
-						 mat-raised-button color="primary" (click)="addMorePerson('MF_PERSON')">{{'add'| translate:translateKey}}</button>
+						<button type="button" *ngIf="muttonFishRenewalForm.get('canEdit').value" [disabled]="muttonFishRenewalForm.get('relationshipId').value.code ? muttonFishRenewalForm.get('relationshipId').value.code=='PROPRIETOR' ? !(muttonFishRenewalForm.get('relationshipList').controls.length < 1) : !(muttonFishRenewalForm.get('relationshipList').controls.length < 10) : true"
+						 matTooltip="{{'add_more' | translate:translateKey}}" mat-raised-button color="primary" (click)="addMorePerson('MF_PERSON')">{{'add'|
+							translate:translateKey}}</button>
 					</div>
 				</div>
 
@@ -177,17 +197,21 @@
 								</tr>
 							</thead>
 							<tbody formArrayName="relationshipList">
-								<tr *ngFor="let item of muttonFishRenewalForm.get('relationshipList').controls; let indx = index;" [formGroupName]="indx">
+								<tr *ngFor="let item of muttonFishRenewalForm.get('relationshipList').controls; let indx = index;"
+								 [formGroupName]="indx">
 									<td style="width: 40px;" *ngIf="muttonFishRenewalForm.get('canEdit').value">
-										<button mat-icon-button color="primary" *ngIf="!item.isEditMode" [disabled]="muttonFishRenewalForm.get('relationshipId').value.code == 'PROPRIETOR'" (click)="editRecord(item)">
+										<button mat-icon-button color="primary" *ngIf="!item.isEditMode" [disabled]="muttonFishRenewalForm.get('relationshipId').value.code == 'PROPRIETOR'"
+										 (click)="editRecord(item)">
 											<mat-icon title="Edit">edit</mat-icon>
 										</button>
-										<button type="submit" [disabled]="item.invalid || muttonFishRenewalForm.get('relationshipId').value.code == 'PROPRIETOR'" mat-icon-button color="primary" *ngIf="item.isEditMode" (click)="saveRecord(item)">
+										<button type="submit" [disabled]="item.invalid || muttonFishRenewalForm.get('relationshipId').value.code == 'PROPRIETOR'"
+										 mat-icon-button color="primary" *ngIf="item.isEditMode" (click)="saveRecord(item)">
 											<mat-icon title="save">save</mat-icon>
 										</button>
 									</td>
 									<td style="width: 40px;" *ngIf="muttonFishRenewalForm.get('canEdit').value">
-										<button mat-icon-button color="warn" *ngIf="!item.isEditMode" [disabled]="muttonFishRenewalForm.get('relationshipId').value.code == 'PROPRIETOR'" (click)="deleteRecord(indx)">
+										<button mat-icon-button color="warn" *ngIf="!item.isEditMode" [disabled]="muttonFishRenewalForm.get('relationshipId').value.code == 'PROPRIETOR'"
+										 (click)="deleteRecord(indx)">
 											<mat-icon title="Delete">delete</mat-icon>
 										</button>
 										<button mat-icon-button color="warn" *ngIf="item.isEditMode" (click)="cancelRecord(item)">
@@ -200,7 +224,8 @@
 									<td>
 										<p *ngIf="!item.isEditMode">{{item.get('name').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
-											<input matInput maxlength="100"  appValidationFields [validationFieldsType]="'onlyNameWithSpace'" formControlName="name">
+											<input matInput maxlength="100" appValidationFields [validationFieldsType]="'onlyNameWithSpace'"
+											 formControlName="name">
 											<control-messages [control]="item.controls.name"></control-messages>
 										</mat-form-field>
 									</td>

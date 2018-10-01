@@ -180,7 +180,7 @@ export class MuttonFishNewComponent implements OnInit {
 			}),
 			holderFirstName: [null, [Validators.required, Validators.maxLength(30),ValidationService.nameValidator]],
 			holderMiddleName: [null, [Validators.required, Validators.maxLength(30),ValidationService.nameValidator]],
-			holderLastName: [null, [Validators.required, Validators.maxLength(30)],ValidationService.nameValidator],
+			holderLastName: [null, [Validators.required, Validators.maxLength(30),ValidationService.nameValidator]],
 			holderFirstNameGuj: [null, [Validators.required, Validators.maxLength(90)]],
 			holderMiddleNameGuj: [null, [Validators.required, Validators.maxLength(90)]],
 			holderLastNameGuj: [null, [Validators.required, Validators.maxLength(90)]],

@@ -132,6 +132,7 @@ export class MuttonFishDuplicateComponent implements OnInit {
 				uniqueId: res.uniqueId,
 				version: res.version,
 				serviceFormId: res.serviceFormId,
+				refNumber:this.serachLicenceObj.searchLicenceNumber,
 				createdDate: res.createdDate,
 				updatedDate: res.createdDate,
 				serviceType: res.serviceType,
@@ -226,6 +227,7 @@ export class MuttonFishDuplicateComponent implements OnInit {
 		this.muttonFishDuplicateForm = this.fb.group({
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
 			serviceCode: 'MF-DUP',
+			refNumber:[null],
 			/* Step 1 controls start */
 			licenseType: this.fb.group({
 				code: [null]
@@ -300,7 +302,7 @@ export class MuttonFishDuplicateComponent implements OnInit {
      */
 	handleErrorsOnSubmit(flag) {
 
-		let step0 = 15;
+		let step0 = 16;
 
 		if (flag != null) {
 			//Check validation for step by step
