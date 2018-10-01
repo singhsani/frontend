@@ -116,7 +116,7 @@ export class ShopLicCancellationComponent implements OnInit {
 		this.shopCancellationForm = this.fb.group({
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
 			serviceCode: 'SHOP-CAN',
-
+			refNumber:[null],
 			/* Step 1 controls start */
 			establishmentName: [null, [Validators.required, Validators.maxLength(150)]],
 			// establishmentNameGuj: [null, Validators.required],
@@ -131,7 +131,7 @@ export class ShopLicCancellationComponent implements OnInit {
 
 			remark: [null, [Validators.required, Validators.maxLength(100)]],
 			/* Step 1 controls end */
-
+			licenseIssueDate: [null],
 			attachments: [],
 
 		});
@@ -160,6 +160,7 @@ export class ShopLicCancellationComponent implements OnInit {
 				uniqueId: res.uniqueId,
 				version: res.version,
 				serviceFormId: res.serviceFormId,
+				refNumber:this.serachLicenceObj.searchLicenceNumber,
 				createdDate: res.createdDate,
 				updatedDate: res.createdDate,
 				serviceType: res.serviceType,
@@ -176,7 +177,9 @@ export class ShopLicCancellationComponent implements OnInit {
 				canSubmit: res.canSubmit,
 				serviceCode: res.serviceCode,
 				// applicationNo: res.applicationNo,
-
+				licenseIssueDate: res.licenseIssueDate,
+				// licenseRenewalDate: res.licenseRenewalDate,
+				// loinumber: res.loinumber,
 				attachments: [],
 
 			});

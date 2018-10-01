@@ -117,9 +117,8 @@ export class ShopLicDuplicateComponent implements OnInit {
 		this.shopLicDuplicateForm = this.fb.group({
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
 			serviceCode: 'SHOP-DUP',
-
 			//licence number 
-			refNumber: this.serachLicenceObj.searchLicenceNumber,
+			refNumber: [null],
 
 			/* Step 1 controls start */
 			establishmentName: [null, [Validators.required, Validators.maxLength(150)]],
@@ -134,10 +133,10 @@ export class ShopLicDuplicateComponent implements OnInit {
 			propertyTaxNo: [null, [Validators.required, Validators.maxLength(13), Validators.minLength(13)]],
 
 			noOfCopies: [null, [Validators.required]],
+			licenseIssueDate: [null]
 			/* Step 1 controls end */
 		});
 	}
-
 
 	/**
 	 * This method use for edit some fiels.
@@ -165,6 +164,7 @@ export class ShopLicDuplicateComponent implements OnInit {
 				createdDate: res.createdDate,
 				updatedDate: res.createdDate,
 				serviceType: res.serviceType,
+				refNumber:this.serachLicenceObj.searchLicenceNumber,
 				// deptFileStatus: res.deptFileStatus,
 				serviceName: res.serviceName,
 				fileNumber: res.fileNumber,
@@ -176,7 +176,10 @@ export class ShopLicDuplicateComponent implements OnInit {
 				canEdit: res.canEdit,
 				canDelete: res.canDelete,
 				canSubmit: res.canSubmit,
-				serviceCode: res.serviceCode
+				serviceCode: res.serviceCode,
+				licenseIssueDate: res.licenseIssueDate,
+				// licenseRenewalDate: res.licenseRenewalDate,
+				// loinumber: res.loinumber,
 			});
 
 			this.showButtons = true;

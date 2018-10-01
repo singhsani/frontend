@@ -4,7 +4,7 @@
 		<mat-form-field class="col-md-10">
 			<input matInput required placeholder="{{'search_by_application_no' | translate:translateKey}}" [(ngModel)]="serachLicenceObj.searchLicenceNumber">
 		</mat-form-field>
-		<button class="col-md-2" mat-raised-button color="primary" (click)="searchLicence()">{{'search' | translate:translateKey}}</button>
+		<button class="col-md-2" [disabled]="!serachLicenceObj.searchLicenceNumber" mat-raised-button color="primary" (click)="searchLicence()">{{'search' | translate:translateKey}}</button>
 	</mat-card>
 
 	<mat-card [hidden]="!serachLicenceObj.isDisplayCancelLicenceForm" class="formClass cardBorder">
@@ -17,6 +17,16 @@
 						<div>{{'establishment_details' | translate:translateKey}}</div>
 					</ng-template>
 
+					<div class="row">
+						<mat-form-field class="col-md-4">
+							<input matInput readonly required placeholder="{{'license_no' | translate:translateKey}}" formControlName="refNumber">
+							<control-messages [control]="shopCancellationForm.controls.refNumber"></control-messages>
+						</mat-form-field>
+						<mat-form-field class="col-md-4">
+							<input matInput readonly placeholder="{{'issue_date' | translate:translateKey}}" formControlName="licenseIssueDate">
+							<control-messages [control]="shopCancellationForm.controls.licenseIssueDate"></control-messages>
+						</mat-form-field>
+					</div>
 					<div class="row">
 						<mat-form-field class="col-md-4">
 							<input matInput required maxlength="150" placeholder="{{'name_of_establishment_if_any' | translate:translateKey}}" formControlName="establishmentName">

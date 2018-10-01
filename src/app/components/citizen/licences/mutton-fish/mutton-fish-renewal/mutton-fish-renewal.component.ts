@@ -156,6 +156,7 @@ export class MuttonFishRenewalComponent implements OnInit {
 				uniqueId: res.uniqueId,
 				version: res.version,
 				serviceFormId: res.serviceFormId,
+				refNumber:this.serachLicenceObj.searchLicenceNumber,
 				createdDate: res.createdDate,
 				updatedDate: res.createdDate,
 				serviceType: res.serviceType,
@@ -278,6 +279,7 @@ export class MuttonFishRenewalComponent implements OnInit {
 		this.muttonFishRenewalForm = this.fb.group({
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
 			serviceCode: 'MF-LIC',
+			refNumber:[null],
 			/* Step 1 controls start */
 			licenseType: this.fb.group({
 				code: [null]
@@ -469,11 +471,11 @@ export class MuttonFishRenewalComponent implements OnInit {
      */
 	handleErrorsOnSubmit(flag) {
 
-		let step0 = 15;
-		let step1 = 27;
-		let step2 = 35;
-		let step3 = 41;
-		let step4 = 48;
+		let step0 = 16;
+		let step1 = 28;
+		let step2 = 36;
+		let step3 = 42;
+		let step4 = 49;
 
 		if (flag != null) {
 			//Check validation for step by step

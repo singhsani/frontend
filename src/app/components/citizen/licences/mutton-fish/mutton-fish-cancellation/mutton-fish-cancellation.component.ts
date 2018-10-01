@@ -132,6 +132,7 @@ export class MuttonFishCancellationComponent implements OnInit {
 				uniqueId: res.uniqueId,
 				version: res.version,
 				serviceFormId: res.serviceFormId,
+				refNumber:this.serachLicenceObj.searchLicenceNumber,
 				createdDate: res.createdDate,
 				updatedDate: res.createdDate,
 				serviceType: res.serviceType,
@@ -162,7 +163,7 @@ export class MuttonFishCancellationComponent implements OnInit {
 
 			this.muttonFishCancellationForm.disable();
 			this.enableFielList();
-		
+
 			let currentUrl = this.location.path().replace('false', this.formId.toString());
 			this.location.go(currentUrl);
 		});
@@ -172,7 +173,7 @@ export class MuttonFishCancellationComponent implements OnInit {
 	/**
 	 * This method use for edit some fiels.
 	 */
-	enableFielList() { 
+	enableFielList() {
 		this.muttonFishCancellationForm.get('reason').enable();
 	}
 
@@ -184,7 +185,7 @@ export class MuttonFishCancellationComponent implements OnInit {
 			try {
 				this.muttonFishCancellationForm.patchValue(res);
 				this.showButtons = true;
-			
+
 			} catch (error) {
 				console.log(error.message);
 			}
@@ -224,6 +225,7 @@ export class MuttonFishCancellationComponent implements OnInit {
 		this.muttonFishCancellationForm = this.fb.group({
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
 			serviceCode: 'MF-DUP',
+			refNumber:[null],
 			/* Step 1 controls start */
 			licenseType: this.fb.group({
 				code: [null]
@@ -268,7 +270,7 @@ export class MuttonFishCancellationComponent implements OnInit {
 			licenseCancellationalDate: [null],
 			loinumber: [null],
 
-			reason:[],
+			reason: [],
 			/* Step 4 controls start*/
 			attachments: []
 			/* Step 4 controls end */

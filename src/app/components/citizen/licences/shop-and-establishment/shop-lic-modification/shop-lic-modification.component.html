@@ -4,7 +4,7 @@
 	<mat-form-field class="col-md-10">
 		<input matInput required placeholder="{{'search_by_application_no' | translate:translateKey}}" [(ngModel)]="serachLicenceObj.searchLicenceNumber">
 	</mat-form-field>
-	<button class="col-md-2" mat-raised-button color="primary" (click)="searchLicence()">{{'search' | translate:translateKey}}</button>
+	<button class="col-md-2" [disabled]="!serachLicenceObj.searchLicenceNumber" mat-raised-button color="primary" (click)="searchLicence()">{{'search'|translate:translateKey}}</button>
 </mat-card>
 
 <mat-card [hidden]="!serachLicenceObj.isDisplayRenewLicenceForm" class="formClass cardBorder">
@@ -18,15 +18,26 @@
 
 				<div class="row">
 					<mat-form-field class="col-md-4">
-						<input matInput required maxlength="150" placeholder="{{'name_of_establishment_if_any' | translate:translateKey}}" formControlName="establishmentName"
-						 appGujInputSource targetElement="establishmentNameGuj" [form]="shopLicModificationForm">
+						<input matInput readonly required placeholder="{{'license_no' | translate:translateKey}}" formControlName="refNumber">
+						<control-messages [control]="shopLicModificationForm.controls.refNumber"></control-messages>
+					</mat-form-field>
+					<mat-form-field class="col-md-4">
+						<input matInput readonly placeholder="{{'issue_date' | translate:translateKey}}" formControlName="licenseIssueDate">
+						<control-messages [control]="shopLicModificationForm.controls.licenseIssueDate"></control-messages>
+					</mat-form-field>
+				</div>
+
+				<div class="row">
+					<mat-form-field class="col-md-4">
+						<input matInput required maxlength="150" placeholder="{{'name_of_establishment_if_any' | translate:translateKey}}"
+						 formControlName="establishmentName" appGujInputSource targetElement="establishmentNameGuj" [form]="shopLicModificationForm">
 						<control-messages [control]="shopLicModificationForm.controls.establishmentName"></control-messages>
 					</mat-form-field>
 
 					<!-- gujarati -->
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" required maxlength="450" formControlName="establishmentNameGuj" appGujInputTarget [form]="shopLicModificationForm"
-						 placeholder="{{ 'name_of_establishment_if_any' | translate:translateKey:'gu' }}">
+						<input matInput type="text" required maxlength="450" formControlName="establishmentNameGuj" appGujInputTarget
+						 [form]="shopLicModificationForm" placeholder="{{ 'name_of_establishment_if_any' | translate:translateKey:'gu' }}">
 						<control-messages [control]="shopLicModificationForm.controls.establishmentNameGuj"></control-messages>
 					</mat-form-field>
 					<!-- /gujarati -->
@@ -64,7 +75,8 @@
 					</div>
 
 					<mat-form-field class="col-md-4">
-						<input matInput OnlyNumber maxlength="12" placeholder="{{'aadhar_number' | translate:translateKey}}" formControlName="aadharNumber">
+						<input matInput OnlyNumber maxlength="12" placeholder="{{'aadhar_number' | translate:translateKey}}"
+						 formControlName="aadharNumber">
 					</mat-form-field>
 
 					<div class="col-md-4 ngSelect" formGroupName="applicantVimaAmountPaid">
@@ -74,7 +86,8 @@
 					</div>
 
 					<mat-form-field class="col-md-4" *ngIf="shopLicModificationForm.get('applicantVimaAmountPaid').value.code == 'YES'">
-						<input matInput appAlphaNumeric maxlength="20" placeholder="{{'number' | translate:translateKey}}" formControlName="number">
+						<input matInput appAlphaNumeric maxlength="20" placeholder="{{'number' | translate:translateKey}}"
+						 formControlName="number">
 					</mat-form-field>
 				</div>
 
@@ -83,11 +96,13 @@
 				</div>
 				<div class="row">
 					<mat-form-field class="col-md-4">
-						<input matInput maxlength="20" appAlphaNumeric placeholder="{{'professional_tax_PEC_no' | translate:translateKey}}" formControlName="professionalTaxPECNo">
+						<input matInput maxlength="20" appAlphaNumeric placeholder="{{'professional_tax_PEC_no' | translate:translateKey}}"
+						 formControlName="professionalTaxPECNo">
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput maxlength="20" appAlphaNumeric placeholder="{{'PRC_no' | translate:translateKey}}" formControlName="prcNo">
+						<input matInput maxlength="20" appAlphaNumeric placeholder="{{'PRC_no' | translate:translateKey}}"
+						 formControlName="prcNo">
 					</mat-form-field>
 				</div>
 
@@ -113,14 +128,15 @@
 				<div class="row">
 
 					<mat-form-field class="col-md-6">
-						<input matInput type="text" required maxlength="100" placeholder="{{'name_of_employer' | translate:translateKey}}" formControlName="nameOfEmployer"
-						 appGujInputSource targetElement="nameOfEmployerGuj" [form]="shopLicModificationForm">
+						<input matInput type="text" required maxlength="100" placeholder="{{'name_of_employer' | translate:translateKey}}"
+						 formControlName="nameOfEmployer" appGujInputSource targetElement="nameOfEmployerGuj" [form]="shopLicModificationForm">
 						<control-messages [control]="shopLicModificationForm.controls.nameOfEmployer"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-6">
 						<input matInput type="text" required maxlength="500" placeholder="{{'residential_address_of_employer' | translate:translateKey}}"
-						 formControlName="residentialAddressOfEmployer" appGujInputSource targetElement="residentialAddressOfEmployerGuj" [form]="shopLicModificationForm">
+						 formControlName="residentialAddressOfEmployer" appGujInputSource targetElement="residentialAddressOfEmployerGuj"
+						 [form]="shopLicModificationForm">
 						<control-messages [control]="shopLicModificationForm.controls.residentialAddressOfEmployer"></control-messages>
 					</mat-form-field>
 
@@ -132,19 +148,21 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-6">
-						<input matInput type="text" maxlength="1500" required formControlName="residentialAddressOfEmployerGuj" appGujInputTarget
-						 [form]="shopLicModificationForm" placeholder="{{ 'residential_address_of_employer' | translate:translateKey:'gu' }}">
+						<input matInput type="text" maxlength="1500" required formControlName="residentialAddressOfEmployerGuj"
+						 appGujInputTarget [form]="shopLicModificationForm" placeholder="{{ 'residential_address_of_employer' | translate:translateKey:'gu' }}">
 						<control-messages [control]="shopLicModificationForm.controls.residentialAddressOfEmployerGuj"></control-messages>
 					</mat-form-field>
 					<!-- /gujarati -->
 
 					<mat-form-field class="col-md-6">
-						<input matInput type="text" required maxlength="60" placeholder="{{'name_of_manager' | translate:translateKey}}" formControlName="nameOfManager">
+						<input matInput type="text" required maxlength="60" placeholder="{{'name_of_manager' | translate:translateKey}}"
+						 formControlName="nameOfManager">
 						<control-messages [control]="shopLicModificationForm.controls.nameOfManager"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-6">
-						<input matInput required maxlength="500" placeholder="{{'residential_address_of_manager' | translate:translateKey}}" formControlName="residentialAddressOfManager">
+						<input matInput required maxlength="500" placeholder="{{'residential_address_of_manager' | translate:translateKey}}"
+						 formControlName="residentialAddressOfManager">
 						<control-messages [control]="shopLicModificationForm.controls.residentialAddressOfManager"></control-messages>
 					</mat-form-field>
 
@@ -188,8 +206,8 @@
 
 				<div class="row">
 					<mat-form-field class="col-md-4">
-						<input matInput required maxlength="200" placeholder="{{'name_of_business' | translate:translateKey}}" formControlName="nameOfBusiness"
-						 appGujInputSource targetElement="nameOfBusinessGuj" [form]="shopLicModificationForm">
+						<input matInput required maxlength="200" placeholder="{{'name_of_business' | translate:translateKey}}"
+						 formControlName="nameOfBusiness" appGujInputSource targetElement="nameOfBusinessGuj" [form]="shopLicModificationForm">
 						<control-messages [control]="shopLicModificationForm.controls.nameOfBusiness"></control-messages>
 					</mat-form-field>
 
@@ -262,8 +280,9 @@
 						<h2>{{ 'employer_family_table_label' | translate:translateKey}}</h2>
 					</div>
 					<div class="col-md-2 pt-3" style="text-align: right;">
-						<button type="button" [disabled]="!(shopLicModificationForm.get('employerFamilyList').controls.length < 5)" matTooltip="{{'add_more' | translate:translateKey}}"
-						 mat-raised-button color="primary" (click)="addMorePerson('EMPLOYER_FAMILY')">{{'add'| translate:translateKey}}</button>
+						<button type="button" [disabled]="!(shopLicModificationForm.get('employerFamilyList').controls.length < 5)"
+						 matTooltip="{{'add_more' | translate:translateKey}}" mat-raised-button color="primary" (click)="addMorePerson('EMPLOYER_FAMILY')">{{'add'|
+							translate:translateKey}}</button>
 					</div>
 				</div>
 
@@ -282,12 +301,14 @@
 								</tr>
 							</thead>
 							<tbody formArrayName="employerFamilyList">
-								<tr *ngFor="let item of shopLicModificationForm.get('employerFamilyList').controls; let indx = index;" [formGroupName]="indx">
+								<tr *ngFor="let item of shopLicModificationForm.get('employerFamilyList').controls; let indx = index;"
+								 [formGroupName]="indx">
 									<td style="width: 40px;" *ngIf="shopLicModificationForm.get('canEdit').value">
 										<button mat-icon-button color="primary" *ngIf="!item.isEditMode" (click)="editRecord(item)">
 											<mat-icon title="Edit">edit</mat-icon>
 										</button>
-										<button type="submit" [disabled]="item.invalid" mat-icon-button color="primary" *ngIf="item.isEditMode" (click)="saveRecord(item)">
+										<button type="submit" [disabled]="item.invalid" mat-icon-button color="primary" *ngIf="item.isEditMode"
+										 (click)="saveRecord(item)">
 											<mat-icon title="save">save</mat-icon>
 										</button>
 									</td>
@@ -413,12 +434,14 @@
 								</tr>
 							</thead>
 							<tbody formArrayName="occupancyList">
-								<tr *ngFor="let item of shopLicModificationForm.get('occupancyList').controls; let indx = index;" [formGroupName]="indx">
+								<tr *ngFor="let item of shopLicModificationForm.get('occupancyList').controls; let indx = index;"
+								 [formGroupName]="indx">
 									<td style="width: 40px;" *ngIf="shopLicModificationForm.get('canEdit').value">
 										<button mat-icon-button color="primary" *ngIf="!item.isEditMode" (click)="editRecord(item)">
 											<mat-icon title="Edit">edit</mat-icon>
 										</button>
-										<button type="submit" [disabled]="item.invalid" mat-icon-button color="primary" *ngIf="item.isEditMode" (click)="saveRecord(item)">
+										<button type="submit" [disabled]="item.invalid" mat-icon-button color="primary" *ngIf="item.isEditMode"
+										 (click)="saveRecord(item)">
 											<mat-icon title="save">save</mat-icon>
 										</button>
 									</td>
@@ -525,7 +548,8 @@
 						<h2>{{'type_of_organization_label' | translate: translateKey}}</h2>
 
 						<div class="col-md-4 ngSelect" formGroupName="typeOfOrganisation">
-							<ng-select formControlName="code" required placeholder="{{ 'shop_lic_org_type' | translate:translateKey }}" (change)="onChangeTypeOfOrganization($event)">
+							<ng-select formControlName="code" required placeholder="{{ 'shop_lic_org_type' | translate:translateKey }}"
+							 (change)="onChangeTypeOfOrganization($event)">
 								<ng-option *ngFor="let org_type of SHOP_LIC_TYPE_OF_ORGANIZATION" [value]="org_type.code">{{org_type.name}}</ng-option>
 							</ng-select>
 							<control-messages [control]="shopLicModificationForm.controls.typeOfOrganisation.controls.code"></control-messages>
@@ -559,12 +583,14 @@
 									</tr>
 								</thead>
 								<tbody formArrayName="partnerList">
-									<tr *ngFor="let item of shopLicModificationForm.get('partnerList').controls; let indx = index;" [formGroupName]="indx">
+									<tr *ngFor="let item of shopLicModificationForm.get('partnerList').controls; let indx = index;"
+									 [formGroupName]="indx">
 										<td style="width: 40px;" *ngIf="shopLicModificationForm.get('canEdit').value">
 											<button mat-icon-button color="primary" *ngIf="!item.isEditMode" (click)="editRecord(item)">
 												<mat-icon title="Edit">edit</mat-icon>
 											</button>
-											<button type="submit" [disabled]="item.invalid" mat-icon-button color="primary" *ngIf="item.isEditMode" (click)="saveRecord(item)">
+											<button type="submit" [disabled]="item.invalid" mat-icon-button color="primary" *ngIf="item.isEditMode"
+											 (click)="saveRecord(item)">
 												<mat-icon title="save">save</mat-icon>
 											</button>
 										</td>
@@ -669,13 +695,13 @@
 				<div class="row">
 
 					<mat-form-field class="col-md-6">
-						<input matInput type="tel" OnlyNumber placeholder="{{'total_adult_person' | translate:translateKey}}" formControlName="totalAdultEmployee"
-						 maxlength="2">
+						<input matInput type="tel" OnlyNumber placeholder="{{'total_adult_person' | translate:translateKey}}"
+						 formControlName="totalAdultEmployee" maxlength="2">
 						<control-messages [control]="shopLicModificationForm.controls.totalAdultEmployee"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-6">
-						<input matInput type="tel" OnlyNumber placeholder="{{'total_young_person' | translate:translateKey}}" formControlName="totalYoungEmployee"
-						 maxlength="2">
+						<input matInput type="tel" OnlyNumber placeholder="{{'total_young_person' | translate:translateKey}}"
+						 formControlName="totalYoungEmployee" maxlength="2">
 						<control-messages [control]="shopLicModificationForm.controls.totalYoungEmployee"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-6">
@@ -689,8 +715,8 @@
 						<control-messages [control]="shopLicModificationForm.controls.totalWomenEmployee"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-6">
-						<input matInput type="tel" OnlyNumber placeholder="{{'total_unidentified_person' | translate:translateKey}}" formControlName="totalUnidentified"
-						 maxlength="2">
+						<input matInput type="tel" OnlyNumber placeholder="{{'total_unidentified_person' | translate:translateKey}}"
+						 formControlName="totalUnidentified" maxlength="2">
 						<control-messages [control]="shopLicModificationForm.controls.totalUnidentified"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-6">
@@ -699,7 +725,8 @@
 						<control-messages [control]="shopLicModificationForm.controls.totalEmployee"></control-messages>
 					</mat-form-field>
 				</div>
-				<app-action-bar [uploadFiles]="uploadFileArray" [form]="shopLicModificationForm" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step6', next: 6, back: 4}"></app-action-bar>
+				<app-action-bar [uploadFiles]="uploadFileArray" [form]="shopLicModificationForm" (tabIndex)="onTabChange($event)"
+				 [stepInfo]="{step: 'step6', next: 6, back: 4}"></app-action-bar>
 
 			</mat-tab>
 			<!-- step 6 employee list Ends -->
@@ -1053,7 +1080,8 @@
 				</div>
 
 				<app-action-bar [uploadFiles]="uploadFileArray | filterAttachment:shopLicModificationForm.get( 'typeOfOrganisation').value.code"
-				 [form]="shopLicModificationForm" (handleErrors)="handleErrorsOnSubmit($event) " (tabIndex)="onTabChange($event) " [stepInfo]="{step: 'final', next:7, back: 5} "></app-action-bar>
+				 [form]="shopLicModificationForm" (handleErrors)="handleErrorsOnSubmit($event) " (tabIndex)="onTabChange($event) "
+				 [stepInfo]="{step: 'final', next:7, back: 5} "></app-action-bar>
 
 			</mat-tab>
 			<!-- step Attachment Ends -->
