@@ -147,6 +147,9 @@ export class AnimalPondCancellationComponent implements OnInit {
 				// renewal: res.renewal,
 				// adminCharges: res.adminCharges,
 				// netAmount: res.netAmount,
+				licenseIssueDate: res.licenseIssueDate,
+				// licenseRenewalDate: res.licenseRenewalDate,
+				// loinumber: res.loinumber,
 				attachments: []
 			});
 			this.showButtons = true;
@@ -217,7 +220,7 @@ export class AnimalPondCancellationComponent implements OnInit {
 			holderTelephoneNo: [null, [Validators.maxLength(12), Validators.minLength(10)]],
 			holderMobileNo: [null, [Validators.required, Validators.maxLength(11), Validators.minLength(10)]],
 			holderFaxNo: [null, [Validators.maxLength(12)]],
-			holderAadharNo: [null, [Validators.required, Validators.maxLength(12)]],
+			holderAadharNo: [null, [Validators.required, Validators.maxLength(12),Validators.minLength(12)]],
 			holderPanNo: [null, [Validators.required, Validators.maxLength(10)]],
 			/* Step 1 controls end */ 
 

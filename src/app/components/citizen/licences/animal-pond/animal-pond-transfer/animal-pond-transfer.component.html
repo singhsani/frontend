@@ -4,7 +4,7 @@
 	<mat-form-field class="col-md-10">
 		<input matInput required placeholder="{{'search_by_application_no' | translate:translateKey}}" [(ngModel)]="serachLicenceObj.searchLicenceNumber">
 	</mat-form-field>
-	<button class="col-md-2" mat-raised-button color="primary" (click)="searchLicence()">{{'search' |
+	<button class="col-md-2" [disabled]="!serachLicenceObj.searchLicenceNumber" mat-raised-button color="primary" (click)="searchLicence()">{{'search' |
 		translate:translateKey}}</button>
 </mat-card>
 <mat-card [hidden]="!serachLicenceObj.isDisplayTransferLicenceForm" class="formClass cardBorder">
@@ -17,11 +17,16 @@
 					<div>{{'license_holder_detail' | translate:translateKey}}</div>
 				</ng-template>
 
-				<!-- <div class="row">
+				<div class="row">
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" placeholder="{{'licensenumber' | translate:translateKey}}" formControlName="refNumber">
+						<input matInput readonly required placeholder="{{'license_no' | translate:translateKey}}" formControlName="refNumber">
+						<control-messages [control]="animalPondTransferForm.controls.refNumber"></control-messages>
 					</mat-form-field>
-				</div> -->
+					<mat-form-field class="col-md-4">
+						<input matInput readonly placeholder="{{'issue_date' | translate:translateKey}}" formControlName="licenseIssueDate">
+						<control-messages [control]="animalPondTransferForm.controls.licenseIssueDate"></control-messages>
+					</mat-form-field>
+				</div>
 
 				<div class="row">
 					<div class="col-md-2 ngSelect" formGroupName="personType">

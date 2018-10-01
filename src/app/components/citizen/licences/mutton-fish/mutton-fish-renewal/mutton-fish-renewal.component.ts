@@ -180,6 +180,9 @@ export class MuttonFishRenewalComponent implements OnInit {
 				// renewal: res.renewal,
 				// adminCharges: res.adminCharges,
 				// netAmount: res.netAmount,
+				licenseIssueDate: res.licenseIssueDate,
+				// licenseRenewalDate: res.licenseRenewalDate,
+				// loinumber: res.loinumber,
 				attachments: []
 			});
 

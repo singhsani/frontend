@@ -183,6 +183,9 @@ export class AnimalPondTransferComponent implements OnInit {
 				// renewal: res.renewal,
 				// adminCharges: res.adminCharges,
 				// netAmount: res.netAmount,
+				licenseIssueDate: res.licenseIssueDate,
+				// licenseRenewalDate: res.licenseRenewalDate,
+				// loinumber: res.loinumber,
 				attachments: [],
 
 			});
@@ -310,7 +313,7 @@ export class AnimalPondTransferComponent implements OnInit {
 			holderTelephoneNo: [null, [Validators.maxLength(10), Validators.minLength(10)]],
 			holderMobileNo: [null, [Validators.required, Validators.maxLength(10), Validators.minLength(10)]],
 			holderFaxNo: [null, [Validators.maxLength(12)]],
-			holderAadharNo: [null, [Validators.required, Validators.maxLength(12)]],
+			holderAadharNo: [null, [Validators.required, Validators.maxLength(12),Validators.minLength(12)]],
 			holderPanNo: [null, [Validators.required, Validators.maxLength(10)]],
 			/* Step 1 controls end */
 
@@ -374,7 +377,7 @@ export class AnimalPondTransferComponent implements OnInit {
 			animalType: this.fb.group({
 				code: [data.animalType ? (data.animalType.code ? data.animalType.code : null) : null, Validators.required]
 			}),
-			animalCount: [data.animalCount ? data.animalCount : null, [Validators.minLength(1)]],
+			animalCount: [data.animalCount ? data.animalCount : null, [Validators.minLength(1),Validators.required]],
 		})
 
 	}
