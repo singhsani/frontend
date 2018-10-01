@@ -4,7 +4,7 @@
   <mat-form-field class="col-md-10">
     <input matInput required placeholder="{{'search_by_application_no' | translate:translateKey}}" [(ngModel)]="serachLicenceObj.searchLicenceNumber">
   </mat-form-field>
-  <button class="col-md-2" mat-raised-button color="primary" (click)="searchLicence()">{{'search' |
+  <button class="col-md-2" [disabled]="!serachLicenceObj.searchLicenceNumber" mat-raised-button color="primary" (click)="searchLicence()">{{'search' |
     translate:translateKey}}</button>
 </mat-card>
 
@@ -17,6 +17,17 @@
         <ng-template mat-tab-label>
           <div>{{'license_holder_detail' | translate:translateKey}}</div>
         </ng-template>
+
+        <div class="row">
+					<mat-form-field class="col-md-4">
+						<input matInput readonly required placeholder="{{'license_no' | translate:translateKey}}" formControlName="refNumber">
+						<control-messages [control]="animalPondDuplicateForm.controls.refNumber"></control-messages>
+					</mat-form-field>
+					<mat-form-field class="col-md-4">
+						<input matInput readonly placeholder="{{'issue_date' | translate:translateKey}}" formControlName="licenseIssueDate">
+						<control-messages [control]="animalPondDuplicateForm.controls.licenseIssueDate"></control-messages>
+					</mat-form-field>
+				</div>
 
         <div class="row">
           <div class="col-md-2 ngSelect" formGroupName="personType">
@@ -78,18 +89,23 @@
 
         <mat-form-field class="col-md-4">
           <input matInput OnlyNumber maxlength="10" formControlName="holderTelephoneNo" placeholder="{{'holder_telephone_no' | translate:translateKey}}">
+          <control-messages [control]="animalPondDuplicateForm.controls.holderTelephoneNo"></control-messages>
         </mat-form-field>
         <mat-form-field class="col-md-4">
           <input matInput OnlyNumber maxlength="10" formControlName="holderMobileNo" placeholder="{{'holder_mobile_no' | translate:translateKey}}">
+          <control-messages [control]="animalPondDuplicateForm.controls.holderMobileNo"></control-messages>
         </mat-form-field>
         <mat-form-field class="col-md-4">
           <input matInput OnlyNumber maxlength="12" formControlName="holderFaxNo" placeholder="{{'holder_fax_no' | translate:translateKey}}">
+          <control-messages [control]="animalPondDuplicateForm.controls.holderFaxNo"></control-messages>
         </mat-form-field>
         <mat-form-field class="col-md-4">
           <input matInput OnlyNumber maxlength="12" formControlName="holderAadharNo" placeholder="{{'holder_aadhar_no' | translate:translateKey}}">
+          <control-messages [control]="animalPondDuplicateForm.controls.holderAadharNo"></control-messages>
         </mat-form-field>
         <mat-form-field class="col-md-4">
           <input matInput appAlphaNumeric maxlength="10" formControlName="holderPanNo" placeholder="{{'holder_pan_no' | translate:translateKey}}">
+          <control-messages [control]="animalPondDuplicateForm.controls.holderPanNo"></control-messages>
         </mat-form-field>
 
         <app-action-bar [uploadFiles]="uploadFileArray" [form]="animalPondDuplicateForm" (handleErrors)="handleErrorsOnSubmit($event)"
