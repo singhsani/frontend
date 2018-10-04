@@ -13,7 +13,7 @@ import { HospitalModule } from './components/hospital/hospital.module';
 import { ManageRoutes } from './config/routes-conf';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
-const routes: Routes = [
+export const routes: Routes = [
 
 	{ path: '', redirectTo: ManageRoutes.getPrefixRoute('CITIZENMODULE'), pathMatch: 'full' },
 	

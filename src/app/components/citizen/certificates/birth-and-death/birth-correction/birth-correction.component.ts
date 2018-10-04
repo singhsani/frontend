@@ -121,8 +121,6 @@ export class BirthCorrectionComponent implements OnInit {
 	 */
 	constructor(
 		private fb: FormBuilder,
-		private validationService: ValidationService,
-		private router: Router,
 		private route: ActivatedRoute,
 		private location: Location,
 		private commonService: CommonService,

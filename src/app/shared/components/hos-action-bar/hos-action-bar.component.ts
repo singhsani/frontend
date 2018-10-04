@@ -46,7 +46,10 @@ export class HosActionBarComponent implements OnInit, OnChanges {
 	}
 
 	ngOnInit() {
+		debugger;
 		this.formService.apiType = this.form.get('apiType').value;
+
+		debugger;
 		this.commonFormControls();
 		this.uploadFilesArray = this.uploadFiles;
 
@@ -95,6 +98,7 @@ export class HosActionBarComponent implements OnInit, OnChanges {
 	 * Method to capture change event.
 	 */
 	ngOnChanges() {
+		debugger;
 		this.uploadFilesArray = this.uploadFiles;
 	}
 
@@ -102,7 +106,6 @@ export class HosActionBarComponent implements OnInit, OnChanges {
 	 * This method is used for save form as draft using API
 	 */
 	saveAsDraft() {
-		console.log(this.form)
 
 		this.isSaveBtnDisabled = true;
 
@@ -200,7 +203,6 @@ export class HosActionBarComponent implements OnInit, OnChanges {
 			let count = 1;
 			for (const key in this.form.controls) {
 				if (this.form.get(key).invalid) {
-					console.log(key);
 
 					this.handleErrors.emit(count)
 					break;

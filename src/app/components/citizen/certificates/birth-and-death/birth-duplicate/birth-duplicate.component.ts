@@ -91,8 +91,6 @@ export class BirthDuplicateComponent implements OnInit {
 		private commonService: CommonService,
 		private fb: FormBuilder,
 		private location: Location,
-		private validationService: ValidationService,
-		private router: Router,
 		private route: ActivatedRoute,
 		private formService: FormsActionsService
 	) { }
@@ -109,6 +107,7 @@ export class BirthDuplicateComponent implements OnInit {
 		});
 
 		this.birthDuplicateFormControls();
+
 
 		if (this.appId) {
 			this.isVisibeDuplicateForm = false;

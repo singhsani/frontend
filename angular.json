@@ -100,7 +100,9 @@
             "tsConfig": "src/tsconfig.spec.json",
             "scripts": [
               "node_modules/jquery/dist/jquery.js",
-              "node_modules/bootstrap/dist/js/bootstrap.js"
+              "node_modules/bootstrap/dist/js/bootstrap.js",
+              "src/assets/js/pramukhime.js",
+              "src/assets/js/pramukhindic.js"
             ],
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.css",

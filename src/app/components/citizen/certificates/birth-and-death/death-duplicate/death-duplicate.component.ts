@@ -99,8 +99,6 @@ export class DeathDuplicateComponent implements OnInit {
 		private location: Location,
 		private commonService: CommonService,
 		private fb: FormBuilder,
-		private validationService: ValidationService,
-		private router: Router,
 		private route: ActivatedRoute,
 		private formService: FormsActionsService
 	) { }

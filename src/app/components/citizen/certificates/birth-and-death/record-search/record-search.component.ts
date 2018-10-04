@@ -125,7 +125,6 @@ export class RecordSearchComponent implements OnInit {
 	 */
 	constructor(
 		private fb: FormBuilder,
-		private router: Router,
 		private formService: FormsActionsService,
 		private paginationService: PaginationService,
 		private commonService: CommonService,
