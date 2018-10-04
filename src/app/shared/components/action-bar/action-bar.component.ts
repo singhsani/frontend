@@ -42,18 +42,18 @@ export class ActionBarComponent implements OnInit, OnChanges {
 	}
 
 	ngOnInit() {
+		//if (this.form) {
+			this.formService.apiType = this.form.get('apiType').value;
+			this.commonFormControls();
+			this.uploadFilesArray = this.uploadFiles;
 
-		this.formService.apiType = this.form.get('apiType').value;
-		this.commonFormControls();
-		this.uploadFilesArray = this.uploadFiles;
-
-		setTimeout(() => {
-			if (this.form.value.hasOwnProperty('canEdit') && !this.form.value.canEdit && this.form.value.canEdit != null) {
-				this.form.disable();
-				this.isBtnsDisabled = false;
-			}
-		}, 600);
-
+			setTimeout(() => {
+				if (this.form.value.hasOwnProperty('canEdit') && !this.form.value.canEdit && this.form.value.canEdit != null) {
+					this.form.disable();
+					this.isBtnsDisabled = false;
+				}
+			},600);
+		//}
 	}
 
 	ngOnChanges() {
@@ -215,7 +215,6 @@ export class ActionBarComponent implements OnInit, OnChanges {
 				}
 				count++;
 			}
-
 		}
 	}
 

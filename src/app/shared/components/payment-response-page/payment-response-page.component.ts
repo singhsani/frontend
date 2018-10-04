@@ -34,12 +34,11 @@ export class PaymentResponsePageComponent implements OnInit {
    * @param route - route service.
    */
   constructor(
-    private router: Router,
+    public router: Router,
     private formService: FormsActionsService,
     private sessionStore: SessionStorageService,
     private route: ActivatedRoute) {
     this.dispData = JSON.parse(this.sessionStore.get('paymentData'));
-    console.log(this.dispData);
   }
 
   /**

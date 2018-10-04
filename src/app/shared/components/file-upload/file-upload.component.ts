@@ -52,12 +52,13 @@ export class FileUploadComponent implements OnInit {
 		private commonService: CommonService
 	) { }
 
+
 	/**
 	 * Initialize first component loads.
 	 */
+	
 	ngOnInit() {
 		this.attachments = this.form.get('attachments').value;
-
 		this.disableOrEnableButton();
 		this.fromAdmin = this.commonService.fromAdmin();
 		

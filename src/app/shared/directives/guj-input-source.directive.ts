@@ -11,9 +11,7 @@ export class GujInputSourceDirective {
 	@Input('form') fg: FormGroup;
 	inputElement: HTMLInputElement;
 
-	constructor(
-		private elementRef: ElementRef
-	) {
+	constructor(public elementRef: ElementRef) {
 		this.inputElement = elementRef.nativeElement;
 	}
 

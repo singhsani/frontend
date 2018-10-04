@@ -40,7 +40,6 @@ export class HosPaymentResponsePageComponent implements OnInit {
     private sessionStore: SessionStorageService,
     private route: ActivatedRoute) {
     this.dispData = JSON.parse(this.sessionStore.get('paymentData'));
-    console.log(this.dispData);
   }
 
   /**
@@ -101,8 +100,6 @@ export class HosPaymentResponsePageComponent implements OnInit {
      * call api to get details after success payment.
      */
     this.formService.createPayment(payData).subscribe(payResp => {
-
-      console.log(payResp);
 
       if (payResp.success) {
 

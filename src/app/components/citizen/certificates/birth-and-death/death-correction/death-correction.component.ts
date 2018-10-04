@@ -98,8 +98,6 @@ export class DeathCorrectionComponent implements OnInit {
 		private fb: FormBuilder,
 		private commonService: CommonService,
 		private location: Location,
-		private validationService: ValidationService,
-		private router: Router,
 		private route: ActivatedRoute,
 		private formService: FormsActionsService
 	) { }

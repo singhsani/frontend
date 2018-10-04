@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 
 @Component({
 	selector: 'app-basic-details',
@@ -12,7 +12,7 @@ export class BasicDetailsComponent implements OnInit {
 
 	translateKey: string = 'basicDetailsScreen';
 
-	constructor(private fb: FormBuilder) {
+	constructor() {
 	}
 
 	ngOnInit() {
