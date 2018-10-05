@@ -29,8 +29,6 @@ export class EleConnectionNocComponent implements OnInit {
 
 	constructor(
 		private fb: FormBuilder,
-		private validationService: ValidationService,
-		private router: Router,
 		private route: ActivatedRoute,
 		private formService: FormsActionsService
 	) { }

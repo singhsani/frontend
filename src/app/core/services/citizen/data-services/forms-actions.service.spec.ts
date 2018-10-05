@@ -1,11 +1,15 @@
 import { TestBed, inject } from '@angular/core/testing';
 
 import { FormsActionsService } from './forms-actions.service';
+import { HttpService } from '../../../../shared/services/http.service';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { SessionStorageService } from 'angular-web-storage';
 
-describe('FormsActionsService', () => {
+ describe('Service : FormsActionsService', () => {
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-			providers: [FormsActionsService]
+			imports: [HttpClientTestingModule],
+			providers: [FormsActionsService, SessionStorageService, HttpService]
 		});
 	});
 

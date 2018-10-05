@@ -1,11 +1,14 @@
 import { TestBed, inject } from '@angular/core/testing';
 
 import { HosHttpService } from './hos-http.service';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { SessionStorageService } from 'angular-web-storage';
 
-describe('HosHttpService', () => {
+ describe('Shared Services : HosHttpService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [HosHttpService]
+      imports: [HttpClientTestingModule],
+      providers: [HosHttpService, SessionStorageService]
     });
   });
 

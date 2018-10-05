@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { GujPocComponent } from './guj-poc.component';
 
-describe('GujPocComponent', () => {
+xdescribe('GujPocComponent', () => {
   let component: GujPocComponent;
   let fixture: ComponentFixture<GujPocComponent>;
 

@@ -2,7 +2,7 @@ import { TestBed, inject } from '@angular/core/testing';
 
 import { LicenceService } from './licence.service';
 
-describe('LicenceService', () => {
+ describe('Service : LicenceService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [LicenceService]

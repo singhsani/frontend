@@ -1,11 +1,19 @@
 import { TestBed, inject } from '@angular/core/testing';
 
 import { BookingService } from './booking.service';
+import { HttpService } from '../../../../shared/services/http.service';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { SessionStorageService } from 'angular-web-storage';
+import { CommonService } from '../../../../shared/services/common.service';
 
-describe('BookingService', () => {
+ describe('Service : BookingService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [BookingService]
+      imports: [HttpClientTestingModule],
+      providers: [BookingService, 
+        CommonService, 
+        HttpService, 
+        SessionStorageService]
     });
   });
 

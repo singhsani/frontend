@@ -1,11 +1,14 @@
 import { TestBed, inject } from '@angular/core/testing';
 
 import { HosFormActionsService } from './hos-form-actions.service';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { SessionStorageService } from 'angular-web-storage';
 
-describe('HosFormActionsService', () => {
+ describe('Service : HosFormActionsService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [HosFormActionsService]
+      imports: [HttpClientTestingModule],
+      providers: [HosFormActionsService, SessionStorageService]
     });
   });
 

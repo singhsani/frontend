@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { WaterPermnantDisconComponent } from './water-permnant-discon.component';
 
-describe('WaterPermnantDisconComponent', () => {
+ describe('WaterPermnantDisconComponent', () => {
   let component: WaterPermnantDisconComponent;
   let fixture: ComponentFixture<WaterPermnantDisconComponent>;
 

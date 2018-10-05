@@ -1,11 +1,14 @@
 import { TestBed, inject } from '@angular/core/testing';
 
 import { HosPaginationService } from './hos-pagination.service';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { SessionStorageService } from 'angular-web-storage';
 
-describe('HosPaginationService', () => {
+ describe('Service : HosPaginationService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [HosPaginationService]
+      imports: [HttpClientTestingModule],
+      providers: [HosPaginationService, SessionStorageService]
     });
   });
 

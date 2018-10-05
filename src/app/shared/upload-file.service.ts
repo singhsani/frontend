@@ -13,9 +13,7 @@ export class UploadFileService {
 	progress: { percentage: number } = { percentage: 0 }
 
 	constructor(
-		private httpService: HttpService,
-		private commonService: CommonService,
-		private session: SessionStorageService
+		private httpService: HttpService
 	) {
 		this.uploadFileUrl = 'api/attachment/upload';
 	}

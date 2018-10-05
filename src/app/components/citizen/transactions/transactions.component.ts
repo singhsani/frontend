@@ -34,10 +34,7 @@ export class TransactionsComponent implements OnInit {
 	filteredOptions: Observable<any[]>;
 
 	constructor(private dialog: MatDialog,
-		private formService: FormsActionsService,
-		private paginationService: PaginationService,
-		private router: Router, private fb: FormBuilder,
-		private commonService: CommonService) {
+		private paginationService: PaginationService){
 	}
 
 	ngOnInit() {
