@@ -18,7 +18,7 @@ import { ValidationFieldsDirective } from '../../../shared/directives/validation
 import { ToastrService, ToastrModule } from 'ngx-toastr';
 import { RouterTestingModule } from '@angular/router/testing';
 
-describe('UserProfileComponent', () => {
+ describe('Component : UserProfileComponent', () => {
 	let component: UserProfileComponent;
 	let fixture: ComponentFixture<UserProfileComponent>;
 

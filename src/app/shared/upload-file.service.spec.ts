@@ -1,11 +1,15 @@
 import { TestBed, inject } from '@angular/core/testing';
 
 import { UploadFileService } from './upload-file.service';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { SessionStorageService } from 'angular-web-storage';
+import { HttpService } from './services/http.service';
 
-describe('UploadFileService', () => {
+ describe('Shared Services : UploadFileService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [UploadFileService]
+      imports: [HttpClientTestingModule],
+      providers: [UploadFileService, HttpService, SessionStorageService]
     });
   });
 

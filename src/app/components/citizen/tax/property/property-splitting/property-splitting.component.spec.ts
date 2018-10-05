@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PropertySplittingComponent } from './property-splitting.component';
 
-describe('PropertySplittingComponent', () => {
+xdescribe('PropertySplittingComponent', () => {
   let component: PropertySplittingComponent;
   let fixture: ComponentFixture<PropertySplittingComponent>;
 

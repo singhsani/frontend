@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DrainageConnNewComponent } from './drainage-conn-new.component';
 
-describe('DrainageConnNewComponent', () => {
+ describe('DrainageConnNewComponent', () => {
   let component: DrainageConnNewComponent;
   let fixture: ComponentFixture<DrainageConnNewComponent>;
 

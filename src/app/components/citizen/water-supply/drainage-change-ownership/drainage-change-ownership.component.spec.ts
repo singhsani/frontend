@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DrainageChangeOwnershipComponent } from './drainage-change-ownership.component';
 
-describe('DrainageChangeOwnershipComponent', () => {
+ describe('DrainageChangeOwnershipComponent', () => {
   let component: DrainageChangeOwnershipComponent;
   let fixture: ComponentFixture<DrainageChangeOwnershipComponent>;
 

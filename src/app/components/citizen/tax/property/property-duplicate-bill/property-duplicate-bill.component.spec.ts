@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PropertyDuplicateBillComponent } from './property-duplicate-bill.component';
 
-describe('PropertyDuplicateBillComponent', () => {
+xdescribe('PropertyDuplicateBillComponent', () => {
 	let component: PropertyDuplicateBillComponent;
 	let fixture: ComponentFixture<PropertyDuplicateBillComponent>;
 

@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { WaterConnNewComponent } from './water-conn-new.component';
 
-describe('WaterConnNewComponent', () => {
+ describe('WaterConnNewComponent', () => {
   let component: WaterConnNewComponent;
   let fixture: ComponentFixture<WaterConnNewComponent>;
 

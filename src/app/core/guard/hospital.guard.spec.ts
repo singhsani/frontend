@@ -1,11 +1,22 @@
 import { TestBed, async, inject } from '@angular/core/testing';
 
 import { HospitalGuard } from './hospital.guard';
+import { RouterTestingModule } from '@angular/router/testing';
+import { ToastrModule, ToastrService } from 'ngx-toastr';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { SessionStorageService } from 'angular-web-storage';
+import { HosAppService } from '../services/hospital/app-services/hos-app.service';
 
-describe('HospitalGuard', () => {
+ describe('Core Guard : HospitalGuard', () => {
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-			providers: [HospitalGuard]
+			imports: [RouterTestingModule,
+				ToastrModule.forRoot(),
+				HttpClientTestingModule],
+			providers: [HospitalGuard,
+				ToastrService,
+				HosAppService,
+				SessionStorageService]
 		});
 	});
 

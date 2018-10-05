@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PropertyExtractComponent } from './property-extract.component';
 
-describe('PropertyExtractComponent', () => {
+xdescribe('PropertyExtractComponent', () => {
 	let component: PropertyExtractComponent;
 	let fixture: ComponentFixture<PropertyExtractComponent>;
 
