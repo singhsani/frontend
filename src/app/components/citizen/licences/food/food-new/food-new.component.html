@@ -1,148 +1,267 @@
-<div class="container">
-  <app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
-  <mat-card class="mt-4 formClass">
-    <!--Start  form  -->
-    <form [formGroup]="foodlicForm">
-      <mat-horizontal-stepper>
+<app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
+<mat-card class="formClass cardBorder">
+  <form [formGroup]="foodLicNewForm">
 
-        <!-- First step -->
-        <mat-step [stepControl]="step-one">
-          <ng-template matStepLabel>
-            <div [matTooltip]="stepLable1">{{stepLable1}}</div>
-          </ng-template>
-          <app-basic-details [basicFormGroup]="foodlicForm"></app-basic-details>
+    <mat-tab-group [(selectedIndex)]="tabIndex" dynamicHeight="true" mat-stretch-tabs class="stepperNav">
 
-          <div class="row">
-            <mat-form-field class="col-4">
-              <input matInput type="text" formControlName="firmName" appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'"
-                placeholder="{{ 'firm_name'| translate: translateKey }}" required>
-              <control-messages [control]="foodlicForm.controls.firmName"></control-messages>
-            </mat-form-field>
+      <!-- step 1 Starts -->
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <div>{{'license_holder_detail' | translate:translateKey}}</div>
+        </ng-template>
 
-            <div class="col-4 ngSelect" formGroupName="firmZone">
-              <ng-select formControlName="code" placeholder="{{ 'firm_zone' | translate: translateKey }}" (change)="onChange()">
-                <ng-option *ngFor="let zone of firmZoneArray" [value]="zone.code">{{zone.name}}</ng-option>
-              </ng-select>
-              <control-messages [control]="foodlicForm.controls.firmZone.controls.code"></control-messages>
-            </div>
+        <div class="row">
 
-            <div class="col-4 ngSelect" formGroupName="firmAdministrativeWard">
-              <ng-select formControlName="code" placeholder="{{ 'firm_administrative_ward' | translate:translateKey }}" (change)="onChange()">
-                <ng-option *ngFor="let ward of adminWardArray" [value]="ward.code">{{ward.name}}</ng-option>
-              </ng-select>
-              <control-messages [control]="foodlicForm.controls.firmAdministrativeWard.controls.code"></control-messages>
-            </div>
+          <mat-form-field class="col-md-6">
+            <input matInput type="text" required maxlength="100" appValidationFields validationFieldsType='onlyNameWithSpace'
+              placeholder="{{'holder_name' | translate:translateKey}}" formControlName="holderName">
+            <control-messages [control]="foodLicNewForm.controls.holderName"></control-messages>
+          </mat-form-field>
 
-            <mat-form-field class="col-4">
-              <input matInput type="text" formControlName="firmCity" appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'"
-                placeholder="{{ 'firm_city' | translate:translateKey }}" required>
-              <control-messages [control]="foodlicForm.controls.firmCity"></control-messages>
-            </mat-form-field>
+          <mat-form-field class="col-md-6">
+            <textarea matInput rows="3" cols="50" maxlength="500" formControlName="holderAddress" placeholder="{{ 'holder_address' | translate:translateKey }}"
+              required> </textarea>
+            <control-messages [control]="foodLicNewForm.controls.holderAddress"></control-messages>
+          </mat-form-field>
 
+          <mat-form-field class="col-md-6">
+            <input matInput type="text" required maxlength="100" appValidationFields validationFieldsType='onlyNameWithSpace'
+              placeholder="{{'firm_name' | translate:translateKey}}" formControlName="firmName">
+            <control-messages [control]="foodLicNewForm.controls.firmName"></control-messages>
+          </mat-form-field>
 
-            <mat-form-field class="col-4">
-              <input matInput type="tel" OnlyNumber formControlName="firmPincode" placeholder="{{'firm_pincode' | translate: translateKey }}"
-                minlength="6" maxlength="6" required>
-              <control-messages [control]="foodlicForm.controls.firmPincode"></control-messages>
-            </mat-form-field>
+          <mat-form-field class="col-md-6">
+            <textarea matInput rows="3" cols="50" maxlength="500" formControlName="firmAddress" placeholder="{{ 'firm_address' | translate:translateKey }}"
+              required> </textarea>
+            <control-messages [control]="foodLicNewForm.controls.firmAddress"></control-messages>
+          </mat-form-field>
+        </div>
+        <!-- <mat-form-field class="col-md-4">
+					<input matInput OnlyNumber maxlength="10" formControlName="holderTelephoneNo" placeholder="{{'holder_telephone_no' | translate:translateKey}}">
+					<control-messages [control]="foodLicNewForm.controls.holderTelephoneNo"></control-messages>
+				</mat-form-field>
+				<mat-form-field class="col-md-4">
+					<input matInput OnlyNumber required maxlength="10" formControlName="holderMobileNo" placeholder="{{'holder_mobile_no' | translate:translateKey}}">
+					<control-messages [control]="foodLicNewForm.controls.holderMobileNo"></control-messages>
+				</mat-form-field>
+				<mat-form-field class="col-md-4">
+					<input matInput OnlyNumber maxlength="12" formControlName="holderFaxNo" placeholder="{{'holder_fax_no' | translate:translateKey}}">
+					<control-messages [control]="foodLicNewForm.controls.holderFaxNo"></control-messages>
+				</mat-form-field>
+				<mat-form-field class="col-md-4">
+					<input matInput OnlyNumber maxlength="12" required formControlName="holderAadharNo" placeholder="{{'holder_aadhar_no' | translate:translateKey}}">
+					<control-messages [control]="foodLicNewForm.controls.holderAadharNo"></control-messages>
+				</mat-form-field>
+				<mat-form-field class="col-md-4">
+					<input matInput appAlphaNumeric maxlength="10" required formControlName="holderPanNo" placeholder="{{'holder_pan_no' | translate:translateKey}}">
+					<control-messages [control]="foodLicNewForm.controls.holderPanNo"></control-messages>
+				</mat-form-field> -->
 
-            <mat-form-field class="col-4">
-              <input matInput OnlyNumber placeholder="{{'mobile_no' | translate:translateKey}}" type="tel" maxlength="10" minlength="10"
-                formControlName="mobileNo" required>
-              <control-messages [control]="foodlicForm.controls.mobileNo"></control-messages>
-            </mat-form-field>
+        <app-action-bar [form]="foodLicNewForm" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step1', next: 1, back: 0}"></app-action-bar>
+      </mat-tab>
+      <!-- step 1 Ends -->
 
-            <mat-form-field class="col-4">
-              <input matInput OnlyNumber placeholder="{{'landline_no' | translate:translateKey}}" type="tel" maxlength="10" minlength="10"
-                formControlName="landlineNo" required>
-              <control-messages [control]="foodlicForm.controls.landlineNo"></control-messages>
-            </mat-form-field>
+      <!-- step 2 Starts -->
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <div>{{'business_detail' | translate:translateKey}}</div>
+        </ng-template>
+        <div class="row">
+          <div class="col-md-4 ngSelect" formGroupName="firmZone">
+            <ng-select placeholder="{{'firm_zone' | translate:translateKey}} *" formControlName="code" (change)="onChangeZone($event);foodLicNewForm.get('firmAdministrativeWard').reset()">
+              <ng-option *ngFor="let zone of FIRM_ZONE" [value]="zone.code">{{zone.name}}</ng-option>
+            </ng-select>
+            <control-messages [control]="foodLicNewForm.get('firmZone').controls.code"></control-messages>
+          </div>
+          <div class="col-md-4 ngSelect" formGroupName="firmAdministrativeWard">
+            <ng-select placeholder="{{'ward_no' | translate:translateKey}} *" formControlName="code">
+              <ng-option *ngFor="let ward of WARD" [value]="ward.code">{{ward.name}}</ng-option>
+            </ng-select>
+            <control-messages [control]="foodLicNewForm.get('firmAdministrativeWard').controls.code"></control-messages>
+          </div>
+        </div>
 
-            <mat-form-field class="col-4">
-              <input matInput appPreventSpace placeholder="{{'email' | translate:translateKey}}" type="email" formControlName="emailId"
-                required>
-              <control-messages [control]="foodlicForm.controls.emailId"></control-messages>
-            </mat-form-field>
+        <div class="row">
 
+          <mat-form-field class="col-md-4">
+            <input matInput formControlName="firmCity" appValidationFields validationFieldsType='onlyNameWithOutSpace'
+              placeholder="{{'firm_city' | translate:translateKey}}">
+            <control-messages [control]="foodLicNewForm.controls.firmCity"></control-messages>
+          </mat-form-field>
+          <mat-form-field class="col-md-4">
+            <input matInput type="tel" OnlyNumber formControlName="firmPincode" placeholder="{{'pincode' | translate: translateKey }}"
+              minlength="6" maxlength="6">
+            <control-messages [control]="foodLicNewForm.controls.firmPincode"></control-messages>
+          </mat-form-field>
+          <mat-form-field class="col-md-4">
+            <input matInput OnlyNumber required maxlength="10" formControlName="mobileNo" placeholder="{{'holder_mobile_no' | translate:translateKey}}">
+            <control-messages [control]="foodLicNewForm.controls.mobileNo"></control-messages>
+          </mat-form-field>
+          <mat-form-field class="col-md-4">
+            <input matInput OnlyNumber maxlength="10" formControlName="firmLandLineNo" placeholder="{{'holder_telephone_no' | translate:translateKey}}">
+            <control-messages [control]="foodLicNewForm.controls.firmLandLineNo"></control-messages>
+          </mat-form-field>
+          <mat-form-field class="col-md-4">
+            <input matInput appPreventSpace placeholder="{{'applicant_email' | translate:translateKey}}" type="email"
+              formControlName="firmEmailId" required>
+            <control-messages [control]="foodLicNewForm.controls.firmEmailId"></control-messages>
+          </mat-form-field>
+
+          <div class="col-md-4 ngSelect" formGroupName="businessType">
+            <ng-select placeholder="{{'business_type' | translate:translateKey}} *" formControlName="code" (change)="onChangeCatType($event);foodLicNewForm.get('businessCategories').reset()">
+              <ng-option *ngFor="let type of FOOD_BUSINESS_TYPES" [value]="type.code">{{type.name}}</ng-option>
+            </ng-select>
+            <control-messages [control]="foodLicNewForm.get('businessType').controls.code"></control-messages>
+          </div>
+          <div class="col-md-4 ngSelect" formGroupName="regLicType">
+            <ng-select placeholder="{{'regLic_type_single_or_multi' | translate:translateKey}} *" formControlName="code">
+              <ng-option *ngFor="let type of FOOD_REG_LIC_SINGLE_OR_MULTIPLE" [value]="type.code">{{type.name}}</ng-option>
+            </ng-select>
+            <control-messages [control]="foodLicNewForm.controls.regLicType.controls.code"></control-messages>
           </div>
 
-          <div class="row">
-            <div class="col-12">
-              <app-action-bar [form]="foodlicForm" [step]="'step1'"></app-action-bar>
-            </div>
+          <div class="col-md-4 ngSelect" *ngIf="foodLicNewForm.get('businessType').controls.code.value === 'FOOD_MANUFACTURER_PROCESSOR_BUSINESSTYPE'">
+            <ng-select [multiple]="foodLicNewForm.controls.regLicType.controls.code.value == 'FOOD_REG_LIC_MULTIPLE'"
+              placeholder="{{'business_categories' | translate:translateKey}} *">
+              <ng-option *ngFor="let type of FOOD_OTHERS_BUSINESSTYPE" [value]="type.code">{{type.name}}</ng-option>
+            </ng-select>
+            <control-messages [control]="foodLicNewForm.get('businessType').controls.code"></control-messages>
           </div>
-        </mat-step>
-        <!-- End First step -->
-
-        <!-- Second step -->
-        <mat-step [stepControl]="brideDetail">
-          <ng-template matStepLabel>
-            <div [matTooltip]="stepLable2">{{stepLable2}}</div>
-          </ng-template>
-          <div class="row">
-
-            <div class="col-4 ngSelect" formGroupName="businessType">
-              <ng-select formControlName="code" placeholder="{{ 'business_type' | translate:translateKey }}" (change)="onChange()">
-                <ng-option *ngFor="let type of businessTypeArray" [value]="type.code">{{type.name}}</ng-option>
-              </ng-select>
-              <control-messages [control]="foodlicForm.controls.businessType.controls.code"></control-messages>
-            </div>
-
-
-            <div class="col-4 ngSelect" formGroupName="foodRegType">
-              <ng-select formControlName="code" placeholder="{{ 'food_reg_type' | translate:translateKey }}" (change)="onChange()">
-                <ng-option *ngFor="let foodtype of foodRegTypeArray" [value]="foodtype.code">{{foodtype.name}}</ng-option>
-              </ng-select>
-              <control-messages [control]="foodlicForm.controls.foodRegType.controls.code"></control-messages>
-            </div>
-
-            <div class="col-4 ngSelect" formGroupName="businessCategory">
-              <ng-select formControlName="code" placeholder="{{ 'business_category' | translate:translateKey }}" (change)="onChange()">
-                <ng-option *ngFor="let category of businessCategoryArray" [value]="category.code">{{category.name}}</ng-option>
-              </ng-select>
-              <control-messages [control]="foodlicForm.controls.businessCategory.controls.code"></control-messages>
-            </div>
-
-            <div class="col-4 ngSelect" formGroupName="businessTurnOver">
-              <ng-select formControlName="code" placeholder="{{ 'business_turnOver' | translate:translateKey }}" (change)="onChange()">
-                <ng-option *ngFor="let turnover of businessTurnOverArray" [value]="turnover.code">{{turnover.name}}</ng-option>
-              </ng-select>
-              <control-messages [control]="foodlicForm.controls.businessTurnOver.controls.code"></control-messages>
-            </div>
-
-            <div class="col-4 ngSelect" formGroupName="regOrLic">
-              <ng-select formControlName="code" placeholder="{{ 'reg_or_lic' | translate:translateKey }}" (change)="onChange()">
-                <ng-option *ngFor="let reg of regOrLicArray" [value]="reg.code">{{reg.name}}</ng-option>
-              </ng-select>
-              <control-messages [control]="foodlicForm.controls.regOrLic.controls.code"></control-messages>
-            </div>
-
-            <div class="col-4 ngSelect" formGroupName="licenceForNoOfYear">
-              <ng-select formControlName="code" placeholder="{{ 'licence_Year' | translate:translateKey }}" (change)="onChange()">
-                <ng-option *ngFor="let year of licenceYearArray" [value]="year.code">{{year.name}}</ng-option>
-              </ng-select>
-              <control-messages [control]="foodlicForm.controls.licenceForNoOfYear.controls.code"></control-messages>
-            </div>
-
-            <div class="col-4 ngSelect" formGroupName="paymentMode">
-              <ng-select formControlName="code" placeholder="{{ 'payment_mode' | translate:translateKey }}" (change)="onChange()">
-                <ng-option *ngFor="let mode of paymentModeArray" [value]="mode.code">{{mode.name}}</ng-option>
-              </ng-select>
-              <control-messages [control]="foodlicForm.controls.paymentMode.controls.code"></control-messages>
-            </div>
+          <div class="col-md-4" *ngIf="foodLicNewForm.get('businessType').controls.code.value === 'FOOD_OTHER'">
+            <mat-form-field>
+              <mat-select formControlName="businessCategories" placeholder="{{'business_categories_list' | translate:translateKey}} *"
+                [multiple]="foodLicNewForm.controls.regLicType.controls.code.value == 'FOOD_REG_LIC_SINGLE'">
+                <mat-option *ngFor="let topping of FOOD_BUSINESS_CATE_MANU" [value]="topping">{{topping.name}}</mat-option>
+              </mat-select>
+            </mat-form-field>
           </div>
 
-          <div class="row">
-            <div class="col-12">
-              You are now done.
-              <app-action-bar [form]="foodlicForm" [step]="'final'" (stepReset)="stepReset()" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
+          <div class="col-md-4 ngSelect" formGroupName="businessTurnOver">
+            <ng-select placeholder="{{'business_turnover' | translate:translateKey}} *" formControlName="code">
+              <ng-option *ngFor="let statusId of FOOD_BUSINESS_TURNOVER" [value]="statusId.code">{{statusId.name}}</ng-option>
+            </ng-select>
+            <control-messages [control]="foodLicNewForm.controls.businessTurnOver.controls.code"></control-messages>
+          </div>
+          <div class="col-md-4 ngSelect" formGroupName="isRegOrLic">
+            <ng-select placeholder="{{'isRegOrLic' | translate:translateKey}} *" formControlName="code">
+              <ng-option *ngFor="let statusId of FOOD_IS_REG_OR_LIC" [value]="statusId.code">{{statusId.name}}</ng-option>
+            </ng-select>
+            <control-messages [control]="foodLicNewForm.controls.isRegOrLic.controls.code"></control-messages>
+          </div>
+
+          <div class="col-md-4 ngSelect" formGroupName="licenceForNoOfYear">
+            <ng-select placeholder="{{'licenceForNoOfYear' | translate:translateKey}} *" formControlName="code">
+              <ng-option *ngFor="let statusId of FOOD_LICENCE_NO_OF_YEAR" [value]="statusId.code">{{statusId.name}}</ng-option>
+            </ng-select>
+            <control-messages [control]="foodLicNewForm.controls.licenceForNoOfYear.controls.code"></control-messages>
+          </div>
+          <div class="col-md-4 ngSelect" formGroupName="feesType">
+            <ng-select placeholder="{{'feesType' | translate:translateKey}} *" formControlName="code">
+              <ng-option *ngFor="let statusId of FOOD_LIC_FEES_TYPE" [value]="statusId.code">{{statusId.name}}</ng-option>
+            </ng-select>
+            <control-messages [control]="foodLicNewForm.controls.feesType.controls.code"></control-messages>
+          </div>
+          <mat-form-field class="col-md-4">
+            <input matInput OnlyNumber required maxlength="10" formControlName="totalFeesAmount" placeholder="{{'total_fees_amount' | translate:translateKey}}">
+            <control-messages [control]="foodLicNewForm.controls.totalFeesAmount"></control-messages>
+          </mat-form-field>
+          <div class="col-md-4 ngSelect" formGroupName="paymentMode">
+            <ng-select placeholder="{{'payment_mode' | translate:translateKey}} *" formControlName="code">
+              <ng-option *ngFor="let statusId of FOOD_PAYMENT_MODE" [value]="statusId.code">{{statusId.name}}</ng-option>
+            </ng-select>
+            <control-messages [control]="foodLicNewForm.controls.paymentMode.controls.code"></control-messages>
+          </div>
+        </div>
+
+        <app-action-bar [uploadFiles]="uploadFileArray" [form]="foodLicNewForm" (handleErrors)="handleErrorsOnSubmit($event)"
+          (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'final', next:4, back:0} "></app-action-bar>
+      </mat-tab>
+      <!-- step 2 Ends -->
+
+      <!-- step 3 Attachment Starts -->
+      <!-- <mat-tab>
+        <ng-template mat-tab-label>
+          <div>{{'attachment' | translate: translateKey}}</div>
+        </ng-template>
+        <div class="row">
+          <div class="col-md-4">
+            <div *ngIf="showButtons">
+              <label>{{'photo_of_license_holder' | translate: translateKey}} </label>
+              <file-upload [form]="foodLicNewForm" [uploadModel]="setDataValue(1,'PhotoofLicenseHolder','1.1','doc')"></file-upload>
             </div>
           </div>
-        </mat-step>
-        <!-- End Second step -->
-      </mat-horizontal-stepper>
-    </form>
-    <!-- End  form -->
-    <!-- {{foodlicForm.value | json}} -->
-  </mat-card>
-</div>
+         
+
+          <div class="col-md-4">
+            <div *ngIf="showButtons">
+              <label>{{'pan_card_owner_or_prop' | translate: translateKey}} </label>
+              <file-upload [form]="foodLicNewForm" [uploadModel]="setDataValue(4, 'PanCardCopyofOwnerPropwriter', '1.4', 'doc') "></file-upload>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div *ngIf="showButtons">
+              <label>{{'aadhar_card_scan_copy' | translate: translateKey}} *</label>
+              <file-upload [form]="foodLicNewForm" [uploadModel]="setDataValue(3,'AadharCardScanCopy', '1.3', 'doc') "></file-upload>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div *ngIf="showButtons">
+              <label>{{'constitution_copy_of_firm' | translate: translateKey}} </label>
+              <file-upload [form]="foodLicNewForm" [uploadModel]="setDataValue(5,'ConstitutionCopyofFirm', '1.5','doc') "></file-upload>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div *ngIf="showButtons">
+              <label>{{'proof_of_ownership_tenancy' | translate: translateKey}} *</label>
+              <file-upload [form]="foodLicNewForm" [uploadModel]="setDataValue(6,'ProofofOwnershiptenancyLegalOccupancy', '1.6', 'doc') "></file-upload>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div *ngIf="showButtons">
+              <label>{{'copy_of_lease_deed_or_auctioncopy_or_poss_letter' | translate: translateKey}} </label>
+              <file-upload [form]="foodLicNewForm" [uploadModel]="setDataValue(7, 'CopyofLeaseDeedIfNotexecutedCopyofAuctionPossessionLetter', '1.7', 'doc') "></file-upload>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div *ngIf="showButtons">
+              <label>{{'premises_by_the_land_owning_agency' | translate: translateKey}}*</label>
+              <file-upload [form]="foodLicNewForm" [uploadModel]="setDataValue(8, 'premises_by_the_land_owning_agency', '1.8', 'doc') "></file-upload>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div *ngIf="showButtons">
+              <label>{{'additional_document_if_any' | translate: translateKey}} </label>
+              <file-upload [form]="foodLicNewForm" [uploadModel]="setDataValue(9, 'ElectionVotersID', '1.9', 'doc') "></file-upload>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div *ngIf="showButtons">
+              <label>{{'property_tax_bill_paid_receipt' | translate: translateKey}} *</label>
+              <file-upload [form]="foodLicNewForm" [uploadModel]="setDataValue(10, 'PANCardTenant', '2', 'doc') "></file-upload>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div *ngIf="showButtons">
+              <label>{{'shop_establishment_certi' | translate: translateKey}} *</label>
+              <file-upload [form]="foodLicNewForm" [uploadModel]="setDataValue(11,'PartnershipDeedCopyOfPartnerIfThereIsAPartner', '1.6', 'doc') "></file-upload>
+            </div>
+          </div>
+        
+
+        <app-action-bar [uploadFiles]="uploadFileArray" [form]="foodLicNewForm" (handleErrors)="handleErrorsOnSubmit($event)"
+          (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'final', next:4, back:2} "></app-action-bar>
+
+      </mat-tab> -->
+      <!-- step 3 Attachment Ends -->
+
+    </mat-tab-group>
+  </form>
+
+  <!-- {{ foodLicNewForm.value | json }} -->
+</mat-card>

@@ -1,15 +1,13 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatHorizontalStepper, MatStepLabel } from '@angular/material';
 
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
+
+import { ManageRoutes } from './../../../../../config/routes-conf';
+import { CommonService } from '../../../../../shared/services/common.service';
 import { ValidationService } from '../../../../../shared/services/validation.service';
 import { FormsActionsService } from '../../../../../core/services/citizen/data-services/forms-actions.service';
-
-import * as _ from 'lodash';
-import * as moment from 'moment';
-import { ManageRoutes } from '../../../../../config/routes-conf';
-import { identity } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-food-new',
@@ -18,29 +16,41 @@ import { identity } from 'rxjs';
 })
 export class FoodNewComponent implements OnInit {
 
-  @ViewChild(MatHorizontalStepper) stepper: MatHorizontalStepper;
-  @ViewChild(MatStepLabel) steplable: MatStepLabel;
-
   // Select id for edit form
   formId: number;
   apiCode: string;
   foodlicForm: FormGroup;
 
-  translateKey: string = 'foodRegScreen';
-  // Steps Titles
-  stepLable1: string = "Aplicant Detail";
-  stepLable2: string = "Shop Detail";
+  @ViewChild('permanantAddressEstablishment') permanantAddressEstablishment: any;
 
-  //lookup array
-  firmZoneArray: any = [];
-  adminWardArray: any = [];
-  businessTypeArray: any = [];
-  foodRegTypeArray: any = [];
-  businessCategoryArray: any = [];
-  businessTurnOverArray: any = [];
-  regOrLicArray: any = [];
-  licenceYearArray: any = [];
-  paymentModeArray: any = [];
+  foodLicNewForm: FormGroup;
+  translateKey: string = 'animalPondScreen';
+
+  tabIndex: number = 0;
+
+  //File and image upload
+  uploadModel: any = {};
+  private showButtons: boolean = false;
+
+  //Lookups Array
+  WARD: Array<any> = [];
+  FOOD_BUSINESS_CATE_MANU : Array<any> = [];
+  FOOD_BUSINESS_CATE_OTH :  Array<any> = [];
+  LOOKUP: any;
+  // SOUTH_ZONE : Array<any> = [];
+  // EAST_ZONE : Array<any> = [];
+  // WEST_ZONE : Array<any> = [];
+  // NORTH_ZONE : Array<any> = [];
+  FIRM_ZONE : Array<any> = [];
+  FOOD_BUSINESS_TURNOVER : Array<any> = [];
+  FOOD_BUSINESS_TYPES : Array<any> = [];
+  FOOD_IS_REG_OR_LIC : Array<any> = [];
+  FOOD_LICENCE_NO_OF_YEAR : Array<any> = [];
+  FOOD_LIC_FEES_TYPE : Array<any> = [];
+  FOOD_MANUFACTURER_PROCESSOR_BUSINESSTYPE : Array<any> = [];
+  FOOD_OTHERS_BUSINESSTYPE : Array<any> = [];
+  FOOD_PAYMENT_MODE : Array<any> = [];
+  FOOD_REG_LIC_SINGLE_OR_MULTIPLE : Array<any> = [];
 
   /**
    * @param fb - Declare FormBuilder property.
@@ -48,197 +58,230 @@ export class FoodNewComponent implements OnInit {
    * @param formService - Declare form service property 
    * @param uploadFileService - Declare upload file service property.
    * @param commonService - Declare sweet alert.
+   * @param toastrService - Show massage with timer.
    */
   constructor(
+    private fb: FormBuilder,
+    private validationService: ValidationService,
+    private router: Router,
     private route: ActivatedRoute,
-    public fb: FormBuilder,
-    public validationError: ValidationService,
     private formService: FormsActionsService,
-    private router: Router
+    private commonService: CommonService,
+    private toastrService: ToastrService
   ) { }
 
+	/**
+	 * This method call initially required methods.
+	 */
   ngOnInit() {
-
     this.route.paramMap.subscribe(param => {
       this.formId = Number(param.get('id'));
       this.apiCode = param.get('apiCode');
       this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
     });
 
+    this.getLookupData();
     if (!this.formId) {
       this.router.navigate([ManageRoutes.getFullRoute('CITIZENDASHBOARD')]);
     }
     else {
-      this.controlName();
-      this.getLookupsData();
-      this.getFormData(this.formId);
-
+      this.getAnimalPondLicNewData();
+      this.foodLicNewFormControls();
     }
-
   }
 
-  /**
-  * This method is listed form controls.
-  */
-  controlName() {
-    this.foodlicForm = this.fb.group({
+	/**
+	 * Method is used to get form data
+	 */
+  getAnimalPondLicNewData() {
+    this.formService.getFormData(this.formId).subscribe(res => {
+      try {
+        this.foodLicNewForm.patchValue(res);
+        this.showButtons = true;
+        // this.onChangeZone(this.foodLicNewForm.get('zoneNo').value.code);
+        // this.onChangeWard(this.foodLicNewForm.get('wardNo').value.code);
+      } catch (error) {
+        console.log(error.message)
+      }
+    });
+  }
 
-      // "id": 8,
-      // "uniqueId": "2018-06-06-FL-K8NQBJHF",
-      // "version": 0,
-      // "serviceDetail": {
-      //     "code": "FL",
-      //     "name": "Food Licensing & Registration",
-      //     "gujName": "Food Licensing & Registration",
-      //     "feesOnScrutiny": false,
-      //     "appointmentRequired": false
-      //}
+	/**
+	* Method is used to get lookup data
+	*/
+  getLookupData() {
+    this.formService.getDataFromLookups().subscribe(res => {
+      this.LOOKUP = res;
+      this.FIRM_ZONE = res.FIRM_ZONE;
+      this.FOOD_BUSINESS_TURNOVER = res.FOOD_BUSINESS_TURNOVER;
+      this.FOOD_BUSINESS_TYPES = res.FOOD_BUSINESS_TYPES;
+      this.FOOD_LICENCE_NO_OF_YEAR = res.FOOD_LICENCE_NO_OF_YEAR;
+      this.FOOD_LIC_FEES_TYPE = res.FOOD_LIC_FEES_TYPE;
+      this.FOOD_IS_REG_OR_LIC = res.FOOD_IS_REG_OR_LIC;
+      this.FOOD_MANUFACTURER_PROCESSOR_BUSINESSTYPE = res.FOOD_MANUFACTURER_PROCESSOR_BUSINESSTYPE;
+      this.FOOD_OTHERS_BUSINESSTYPE = res.FOOD_OTHERS_BUSINESSTYPE;
+      this.FOOD_PAYMENT_MODE = res.FOOD_PAYMENT_MODE;
+      this.FOOD_REG_LIC_SINGLE_OR_MULTIPLE = res.FOOD_REG_LIC_SINGLE_OR_MULTIPLE;
+
+      this.onChangeZone(this.foodLicNewForm.get('firmZone').value.code);
+      // this.onChangeWard(this.foodLicNewForm.get('wardNo').value.code);
+    });
+  }
+
+	/**
+	 * Method is used for get WARD as per zone selection
+	 * @param event : selected zone code
+	 */
+  onChangeZone(event) {
+    this.WARD = [];
+    if (event && this.LOOKUP && this.LOOKUP.hasOwnProperty(event)) {
+      this.WARD = this.LOOKUP[event];
+    }
+  }
+
+	/**
+	 * Method is used for get FOOD BUSINESS CATE as per selection
+	 * @param event : selected ward code
+	 */
+  onChangeCatType(event) {
+    this.FOOD_BUSINESS_CATE_MANU = [];
+    if (event && this.LOOKUP && this.LOOKUP.hasOwnProperty(event)) {
+      this.FOOD_BUSINESS_CATE_MANU = this.LOOKUP[event];
+    }
+  }
+
+	/**
+	*  Method is used get selected data from lookup when change dropdown in grid.
+	* @param lookups : Array
+	* @param code : String
+	* return object
+	*/
+  getSelectedDataFromLookUps(lookups: Array<any>, code: string) {
+    return lookups.find((obj: any) => obj.code === code)
+  }
+
+	/**
+	* Method is used to set form controls
+	* 'Guj' control is consider as a Gujarati fields
+	*/
+  foodLicNewFormControls() {
+    this.foodLicNewForm = this.fb.group({
       apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
-      serviceFormId: [null],
-      serviceType: ['FOOD_LICENCE'],
-
-      deptFileStatus: [null],
-      serviceName: [null],
-      fileNumber: [null],
-      pid: [null],
-      outwardNo: [null],
-      // firstName: [null],
-      // lastName: [null],
-      // middleName: [null],
-      // contactNo: [null],
-      // email: [null],
-      // aadhaarNo: [null],
-
-      serviceCode: ["FL"],
-      firmName: [null, [Validators.required, ValidationService.nameValidator]],
+      serviceCode: 'FL',
+      /* Step 1 controls start */
+      fieldView: [null],
+      fieldList: [null],
+      holderName: [null,[Validators.required,Validators.maxLength(100)]],
+      holderAddress: [null],
+      firmName: [null],
+      firmAddress: [null],
       firmZone: this.fb.group({
         code: [null],
-        gujName: [null],
         name: [null]
       }),
       firmAdministrativeWard: this.fb.group({
         code: [null],
-        gujName: [null],
         name: [null]
       }),
       firmCity: [null],
-      firmPincode: [null, [Validators.required, Validators.maxLength(6)]],
-      mobileNo: [null],
-      landlineNo: [null],
-      emailId: [null, [Validators.required, ValidationService.emailValidator]],
+      firmPincode: [null,[Validators.maxLength(6),Validators.minLength(6)]],
+      mobileNo: [null,[Validators.maxLength(10)]],
+      firmLandLineNo: [null],
+      firmEmailId: [null, [Validators.required, ValidationService.emailValidator]],
+
       businessType: this.fb.group({
         code: [null],
-        gujName: [null],
         name: [null]
       }),
-      foodRegType: this.fb.group({
+      regLicType: this.fb.group({
         code: [null],
-        gujName: [null],
         name: [null]
       }),
-      businessCategory: this.fb.group({
-        code: [null],
-        gujName: [null],
-        name: [null]
-      }),
+      businessCategories:[null],
       businessTurnOver: this.fb.group({
         code: [null],
-        gujName: [null],
         name: [null]
       }),
-      regOrLic: this.fb.group({
+      isRegOrLic: this.fb.group({
         code: [null],
-        gujName: [null],
         name: [null]
       }),
       licenceForNoOfYear: this.fb.group({
         code: [null],
-        gujName: [null],
         name: [null]
       }),
+      feesType: this.fb.group({
+        code: [null],
+        name: [null]
+      }),
+      totalFeesAmount: [null],
       paymentMode: this.fb.group({
         code: [null],
-        gujName: [null],
         name: [null]
-      })
-    });
+      }),
+      loinumber: [null],
 
+      /* Step 4 controls start*/
+      attachments: ['']
+      /* Step 4 controls end */
+    });
   }
 
-
-  /**
-   * This method is use to patch Value
-   */
-  getFormData(id: number) {
-    this.formService.getFormData(id).subscribe(res => {
-      this.foodlicForm.patchValue(res);
-    }, err => {
-      console.log("get fail" + err);
+	/**
+     * Method is used to set data value to upload method.
+     * @param indentifier - file identifier
+     * @param labelName - file label name.
+     * @param formPart - file form part
+     * @param variableName - file variable name.
+     */
+  setDataValue(indentifier: number, labelName: string, formPart: string, variableName: string) {
+    this.uploadModel = {
+      fieldIdentifier: indentifier.toString(),
+      labelName: labelName,
+      formPart: formPart,
+      variableName: variableName,
+      serviceFormId: this.formId,
     }
-    );
+    return this.uploadModel;
   }
-
-
-  /**
-   * This method is loaded lookups array.
-   */
-  getLookupsData() {
-    this.formService.getDataFromLookups().subscribe(res => {
-      this.firmZoneArray = res.FIRM_ZONE;
-      this.adminWardArray = res.SOUTH_ZONE;
-      this.businessTypeArray = res.FOOD_BUSINESS_TYPES;
-      this.foodRegTypeArray = res.FOOD_REG_TYPE;
-      this.businessCategoryArray = res.FOOD_BUSINESS_TYPES;
-      this.businessTurnOverArray = res.FOOD_BUSINESS_TURN_OVER;
-      this.regOrLicArray = res.FOOD_REGISTRATION_OR_LICENCE;
-      this.licenceYearArray = res.FOOD_LICENCE_NO_OF_YEAR;
-      this.paymentModeArray = res.FOOD_PAYMENT_MODE;
-
-      // res.WEST_ZONE;
-      // res.NORTH_ZONE
-      // res.EAST_ZONE;
-    });
-  }
-
-  /**
-  * This method for dropdown.
-  */
-  onChange() {
-    // console.log("change event");
-  }
-
-
-  /**
-   * Method is used to reset form its a output event from action bar.
-   */
-  stepReset() {
-    this.stepper.reset();
-  }
-
 
   /**
    * This method required for final form submition.
-   * @param count - flag of invalid control.
+   * @param flag - flag of invalid control.
    */
   handleErrorsOnSubmit(flag) {
 
-    let step1 = 14;
-    let step2 = 21;
+    let step0 = 4;
+    let step1 = 24;
 
     if (flag != null) {
       //Check validation for step by step
       let count = flag;
 
-      if (count <= step1) {
-        this.stepper.selectedIndex = 0;
+      if (count <= step0) {
+        this.tabIndex = 0;
         return false;
-      } else if (count <= step2) {
-        this.stepper.selectedIndex = 1;
+      } else if (count <= step1) {
+        this.tabIndex = 1;
         return false;
-      }
+      } 
+      // else if (count == 67) {
+      // 	this.checkReligion();
+      // 	return false;
+      // }
       else {
         console.log("else condition");
       }
+
     }
   }
+
+	/**
+	 * This method use to get output event of tab change
+	 * @param evt - Tab index
+	 */
+  onTabChange(evt) {
+    this.tabIndex = evt;
+  }
+
 }
