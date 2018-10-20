@@ -26,35 +26,42 @@
                     <span *ngIf="!profileObj.middleName">{{profileObj.firstName + ' ' + profileObj.lastName}}</span>
                     <mat-icon>arrow_drop_down</mat-icon>
                 </button>
-                <mat-menu #menu="matMenu">
-                    <button mat-menu-item routerLink="/citizen/my-profile">Profile</button>
+                <mat-menu [overlapTrigger]="false" #menu="matMenu">
+                    <button mat-menu-item routerLink="/citizen/my-profile">Profile {{commonService.isLoading | async}}</button>
                     <button mat-menu-item (click)="onLogout()">Logout</button>
                 </mat-menu>
             </div>
         </mat-toolbar-row>
+
+        <div class="loader-overlay">
+            <mat-progress-bar mode="indeterminate" [color]="'accent'" [hidden]="(commonService.isLoading | async) == false"></mat-progress-bar>
+        </div>
+
     </mat-toolbar>
-    
+
+
     <!-- <nav mat-tab-nav-bar>
         <a mat-tab-link *ngFor="let link of links" routerLink="/{{manageRoutes.getFullRoute(link.linkCode)}}" (click)="activeLink = link.linkName" [active]="activeLink == link.linkName"> {{link.linkName}} </a>
     </nav> -->
-<div class="clearfix" *ngIf="showMenu">
-    <mat-tab-group (focusChange)="navigateToRoute($event)" mat-stretch-tabs [selectedIndex]="tabIndex" class="mainMenu">
-        <mat-tab *ngFor="let link of links; let i=index">
-            <ng-template mat-tab-label>
-                <a (click)="navigateToRouteByIndex(i)">
-                    <mat-icon *ngIf="link.linkCode != 'CITIZENPAYABLESERVICES'">{{link.icon}}</mat-icon>
-                    <mat-icon *ngIf="link.linkCode == 'CITIZENPAYABLESERVICES'">&#x20B9;</mat-icon>
-                    <div class="linkName">{{link.linkName}}</div>
-                </a>
-            </ng-template>
-        </mat-tab>
-    </mat-tab-group>
-</div>
+    <div class="clearfix" *ngIf="showMenu">
+
+        <mat-tab-group (focusChange)="navigateToRoute($event)" mat-stretch-tabs [selectedIndex]="tabIndex" class="mainMenu">
+            <mat-tab *ngFor="let link of links; let i=index">
+                <ng-template mat-tab-label>
+                    <a (click)="navigateToRouteByIndex(i)">
+                        <mat-icon *ngIf="link.linkCode != 'CITIZENPAYABLESERVICES'">{{link.icon}}</mat-icon>
+                        <mat-icon *ngIf="link.linkCode == 'CITIZENPAYABLESERVICES'">&#x20B9;</mat-icon>
+                        <div class="linkName">{{link.linkName}}</div>
+                    </a>
+                </ng-template>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
 
     <div class="container clearfix">
         <router-outlet (activate)="activateTab()"></router-outlet>
     </div>
-    
+
 </div>
 
 <div class="modal" id="gujModal">

@@ -26,13 +26,6 @@ import { AppComponent } from './app.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 /* import all component end */
 
-
-/** import progress bar modules - start */
-import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
-import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
-import { InputTrimDirective } from './shared/directives/input-trim.directive';
-/** import progress bar modules - end */
-
 @NgModule({
 	declarations: [
 		AppComponent,
@@ -58,8 +51,6 @@ import { InputTrimDirective } from './shared/directives/input-trim.directive';
 			closeButton: true
 		}),
 		AppRoutingModule,
-		LoadingBarRouterModule,
-		LoadingBarHttpClientModule,
 		AmazingTimePickerModule,
 	],
 	exports: [ ],

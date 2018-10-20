@@ -8,6 +8,7 @@ import { SessionStorageService } from 'angular-web-storage';
 import { FormsActionsService } from '../../core/services/citizen/data-services/forms-actions.service';
 import { Router } from "@angular/router";
 import * as _ from 'lodash';
+import { Subscription } from 'rxjs';
 
 @Component({
 	selector: 'app-home-layout',
@@ -69,6 +70,8 @@ export class HomeLayoutComponent implements OnInit {
 		} */
 	];
 	activeLink = this.links[0].linkName;
+
+	subscription: Subscription;
 	
 	constructor(
 		private changeDetectorRef: ChangeDetectorRef,
@@ -93,9 +96,9 @@ export class HomeLayoutComponent implements OnInit {
 		this.getUserProfile();
 
 		// get the profile data when user gets update his profie
-		this.commonService.profileSubject.subscribe(res => {
+		this.subscription = this.commonService.profileSubject.subscribe(res => {
 			this.profileObj = res;
-		})
+		});
 	}
 
 	onLogout() {
@@ -104,6 +107,7 @@ export class HomeLayoutComponent implements OnInit {
 
 	ngOnDestroy(): void {
 		this.mobileQuery.removeListener(this._mobileQueryListener);
+		this.subscription.unsubscribe();
 	}
 
 	selectLanguage(language: string) {

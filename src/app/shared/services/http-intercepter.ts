@@ -22,6 +22,8 @@ import 'rxjs/add/operator/do';
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
 
+	private requests: HttpRequest<any>[] = [];
+
 	constructor(
 		private commonService: CommonService,
 		private router: Router,
@@ -37,57 +39,81 @@ export class TokenInterceptor implements HttpInterceptor {
      * @param next - parameter for http handler
      */
 	intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-		const started = Date.now();
-        /**
-         * Handle newly created request with updated header (if given)
-         */
-		return next.handle(req).do((event: HttpEvent<any>) => {
-            /**
-             * Sucessfull Http Response Time.
-             */
-			if (event instanceof HttpResponse) {
-				const elapsed = Date.now() - started;
-			}
 
-		}, (err: any) => {
-            /**
-             * redirect to the error_handler route according to error status or error_code
-             * or show a modal
-             */
-			if (err instanceof HttpErrorResponse) {
-				switch (err.status) {
-					case 0:
-						this.commonService.openAlert('Oops...', 'Something went wrong!','error', '', cb => {
-							if (this.commonService.getUserType() === 'HOSPITAL') {
-								this.hosAppService.logout();
-							} else {
-								this.appService.logout();
+
+		this.requests.push(req);
+		this.commonService.isLoading.next(true);
+
+		return Observable.create(observer => {
+			const subscription = next.handle(req)
+				.subscribe(
+					event => {
+						if (event instanceof HttpResponse) {
+							this.removeRequest(req);
+							observer.next(event);
+						}
+					},
+					err => {
+						this.removeRequest(req);
+						observer.error(err);
+
+						if (err instanceof HttpErrorResponse) {
+
+							switch (err.status) {
+								case 0:
+									this.commonService.openAlert('Oops...', 'Something went wrong!', 'error', '', cb => {
+										if (this.commonService.getUserType() === 'HOSPITAL') {
+											this.hosAppService.logout();
+										} else {
+											this.appService.logout();
+										}
+									});
+									break;
+								case 400:
+									break;
+								case 401:
+									this.commonService.openAlert('Warning!', err.error.message, 'warning', '', cb => {
+										if (this.commonService.getUserType() === 'HOSPITAL') {
+											this.hosAppService.logout();
+										} else {
+											this.appService.logout();
+										}
+									});
+									break;
+								case 404:
+									this.commonService.openAlert('Error!', err.error.message, 'error');
+									break;
+								case 500:
+								case 601:// form save as draft error handling
+									this.commonService.openAlertFormSaveValidation('Warning!', err.error, 'warning');
+									break;
+								default:
+									break;
 							}
-						});
-						break;
-					case 400:
-						break;
-					case 401:
-						this.commonService.openAlert('Warning!', err.error.message, 'warning', '', cb => {
-							if (this.commonService.getUserType() === 'HOSPITAL') {
-								this.hosAppService.logout();
-							} else {
-								this.appService.logout();
-							}
-						});
-						break;
-					case 404:
-						this.commonService.openAlert('Error!', err.error.message, 'error');
-						break;
-					case 500:
-					case 601:// form save as draft error handling
-						this.commonService.openAlertFormSaveValidation('Warning!', err.error, 'warning');
-						break;
-					default:
-						break;
-				}
-			}
+						}
+
+					},
+					() => { this.removeRequest(req); observer.complete(); });
+			// teardown logic in case of cancelled requests
+			return () => {
+				this.removeRequest(req);
+				subscription.unsubscribe();
+			};
 		});
+	}
+
+
+	/**
+	 * This method is use to check whether request are running or not
+	 * @param req - Http request
+	 */
+	removeRequest(req: HttpRequest<any>) {
+		const i = this.requests.indexOf(req);
+		if (i >= 0) {
+			this.requests.splice(i, 1);
+
+		}
+		this.commonService.isLoading.next(this.requests.length > 0);
 	}
 
 
