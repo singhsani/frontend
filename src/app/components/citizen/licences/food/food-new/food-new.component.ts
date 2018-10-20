@@ -19,12 +19,11 @@ export class FoodNewComponent implements OnInit {
   // Select id for edit form
   formId: number;
   apiCode: string;
-  foodlicForm: FormGroup;
 
   @ViewChild('permanantAddressEstablishment') permanantAddressEstablishment: any;
 
   foodLicNewForm: FormGroup;
-  translateKey: string = 'animalPondScreen';
+  translateKey: string = 'foodNewScreen';
 
   tabIndex: number = 0;
 
@@ -34,23 +33,23 @@ export class FoodNewComponent implements OnInit {
 
   //Lookups Array
   WARD: Array<any> = [];
-  FOOD_BUSINESS_CATE_MANU : Array<any> = [];
-  FOOD_BUSINESS_CATE_OTH :  Array<any> = [];
+  FOOD_BUSINESS_CATE_MANU: Array<any> = [];
+  FOOD_BUSINESS_CATE_OTH: Array<any> = [];
   LOOKUP: any;
   // SOUTH_ZONE : Array<any> = [];
   // EAST_ZONE : Array<any> = [];
   // WEST_ZONE : Array<any> = [];
   // NORTH_ZONE : Array<any> = [];
-  FIRM_ZONE : Array<any> = [];
-  FOOD_BUSINESS_TURNOVER : Array<any> = [];
-  FOOD_BUSINESS_TYPES : Array<any> = [];
-  FOOD_IS_REG_OR_LIC : Array<any> = [];
-  FOOD_LICENCE_NO_OF_YEAR : Array<any> = [];
-  FOOD_LIC_FEES_TYPE : Array<any> = [];
-  FOOD_MANUFACTURER_PROCESSOR_BUSINESSTYPE : Array<any> = [];
-  FOOD_OTHERS_BUSINESSTYPE : Array<any> = [];
-  FOOD_PAYMENT_MODE : Array<any> = [];
-  FOOD_REG_LIC_SINGLE_OR_MULTIPLE : Array<any> = [];
+  FIRM_ZONE: Array<any> = [];
+  FOOD_BUSINESS_TURNOVER: Array<any> = [];
+  FOOD_BUSINESS_TYPES: Array<any> = [];
+  FOOD_IS_REG_OR_LIC: Array<any> = [];
+  FOOD_LICENCE_NO_OF_YEAR: Array<any> = [];
+  FOOD_LIC_FEES_TYPE: Array<any> = [];
+  FOOD_MANUFACTURER_PROCESSOR_BUSINESSTYPE: Array<any> = [];
+  FOOD_OTHERS_BUSINESSTYPE: Array<any> = [];
+  FOOD_PAYMENT_MODE: Array<any> = [];
+  FOOD_REG_LIC_SINGLE_OR_MULTIPLE: Array<any> = [];
 
   /**
    * @param fb - Declare FormBuilder property.
@@ -171,47 +170,44 @@ export class FoodNewComponent implements OnInit {
       /* Step 1 controls start */
       fieldView: [null],
       fieldList: [null],
-      holderName: [null,[Validators.required,Validators.maxLength(100)]],
-      holderAddress: [null],
-      firmName: [null],
-      firmAddress: [null],
+      holderName: [null, [Validators.required, Validators.maxLength(200)]],
+      holderAddress: [null, [Validators.required, Validators.maxLength(300)]],
+      firmName: [null,[Validators.required, Validators.maxLength(150)]],
+      firmAddress: [null,[Validators.required, Validators.maxLength(200)]],
       firmZone: this.fb.group({
-        code: [null],
+        code: [null,Validators.required],
         name: [null]
       }),
       firmAdministrativeWard: this.fb.group({
-        code: [null],
+        code: [null,Validators.required],
         name: [null]
       }),
-      firmCity: [null],
-      firmPincode: [null,[Validators.maxLength(6),Validators.minLength(6)]],
-      mobileNo: [null,[Validators.maxLength(10)]],
-      firmLandLineNo: [null],
+      firmCity: [null,Validators.required],
+      firmPincode: [null, [Validators.maxLength(6), Validators.minLength(6)]],
+      mobileNo: [null, [Validators.maxLength(10)]],
+      firmLandLineNo: [null,[Validators.maxLength(10)]],
       firmEmailId: [null, [Validators.required, ValidationService.emailValidator]],
 
       businessType: this.fb.group({
-        code: [null],
+        code: [null,Validators.required],
         name: [null]
       }),
       regLicType: this.fb.group({
-        code: [null],
+        code: [null,Validators.required],
         name: [null]
       }),
-      businessCategories:[null],
+      businessCategories: [null],
       businessTurnOver: this.fb.group({
-        code: [null],
+        code: [null,Validators.required],
         name: [null]
       }),
-      isRegOrLic: this.fb.group({
-        code: [null],
-        name: [null]
-      }),
+      isRegOrLic: [null,Validators.required],
       licenceForNoOfYear: this.fb.group({
-        code: [null],
+        code: [null,Validators.required],
         name: [null]
       }),
       feesType: this.fb.group({
-        code: [null],
+        code: [null,Validators.required],
         name: [null]
       }),
       totalFeesAmount: [null],
@@ -245,13 +241,43 @@ export class FoodNewComponent implements OnInit {
     return this.uploadModel;
   }
 
+  // set business turnover fields and registrastion type(disble mode) 
+  setDependedFields(event: any) {
+    console.log(event);
+    let catValue = event;
+    let sliptvalue = catValue.split('_');
+    console.log(sliptvalue);
+    if (sliptvalue[0] = 'LT12L') {
+      this.foodLicNewForm.get('businessTurnOver').value.code.setValue('LESS_THAN_12LK');
+    }
+    else if(sliptvalue[0] = 'MT12L'){
+      this.foodLicNewForm.get('businessTurnOver').value.code.setValue('GREATER_THAN_12LK');
+    }
+   
+    // if (data.length) {
+    // 	switch (filterType) {
+    // 		case 'young': // age is 14 -18 for young person
+    // 			countNumber = data.filter((obj: any) => obj.get('age').value >= 14 && obj.get('age').value <= 18 && (obj.get('gender').value.code == "MALE" || obj.get('gender').value.code == "FEMALE"))
+    // 			break;
+
+    // 		case 'total':
+    // 			countNumber = data;
+    // 			break;
+    // 	}
+    // 	this.shopLicNewForm.get(fieldsType).setValue(countNumber.length);
+    // 	return countNumber.length;
+    // }
+    // this.foodLicNewForm.get('businessTurnOver').value.code.setValue();
+    // this.foodLicNewForm.get('isRegOrLic').setValue('null');
+  }
+
   /**
    * This method required for final form submition.
    * @param flag - flag of invalid control.
    */
   handleErrorsOnSubmit(flag) {
 
-    let step0 = 4;
+    let step0 = 13;
     let step1 = 24;
 
     if (flag != null) {
@@ -264,7 +290,7 @@ export class FoodNewComponent implements OnInit {
       } else if (count <= step1) {
         this.tabIndex = 1;
         return false;
-      } 
+      }
       // else if (count == 67) {
       // 	this.checkReligion();
       // 	return false;
