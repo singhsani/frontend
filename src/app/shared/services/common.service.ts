@@ -1,3 +1,4 @@
+import { BehaviorSubject } from 'rxjs/Rx';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 
@@ -19,6 +20,8 @@ export class CommonService {
 	 * This property use for share the profile data
 	 */
 	profileSubject = new Subject<any>();
+	public isLoading = new BehaviorSubject(false);
+
 
 	constructor(private session: SessionStorageService) { }
 
