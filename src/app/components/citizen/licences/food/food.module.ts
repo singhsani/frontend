@@ -8,6 +8,7 @@ import { CoreModule } from '../../../../core/core.module';
 
 import { FoodRoutingModule } from './food-routing.module';
 import { FoodNewComponent } from './food-new/food-new.component';
+import { FoodRenewComponent } from './food-renew/food-renew.component';
 
 @NgModule({
   imports: [
@@ -18,6 +19,6 @@ import { FoodNewComponent } from './food-new/food-new.component';
     ReactiveFormsModule,
     FoodRoutingModule
   ],
-  declarations: [FoodNewComponent]
+  declarations: [FoodNewComponent, FoodRenewComponent]
 })
 export class FoodModule { }
