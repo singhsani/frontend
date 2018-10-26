@@ -13,7 +13,7 @@
 				</control-messages>
 			</div>
 			<div class="col-md-4">
-				<button mat-stroked-button style="width:100%" color="primary" class="mt-2" type="submit">
+				<button mat-stroked-button color="primary" class="w-100 mt-2" type="submit">
 					{{'search' | translate:translateKey}}
 				</button>
 			</div>
@@ -39,8 +39,8 @@
 	<table mat-table [dataSource]="bookingList" matSort matSortActive="created" matSortDisableClear matSortDirection="asc">
 
 		<ng-container matColumnDef="id">
-			<mat-header-cell *matHeaderCellDef style="max-width: 60px;">{{'s_no' | translate:translateKey}}</mat-header-cell>
-			<mat-cell *matCellDef="let element;let indx=index;" style="max-width: 60px;"> {{(paginator.pageIndex * paginator.pageSize) + (indx+1)}} </mat-cell>
+			<mat-header-cell *matHeaderCellDef >{{'s_no' | translate:translateKey}}</mat-header-cell>
+			<mat-cell *matCellDef="let element;let indx=index;"> {{(paginator.pageIndex * paginator.pageSize) + (indx+1)}} </mat-cell>
 		</ng-container>
 
 		<ng-container matColumnDef="refNumber">
@@ -55,22 +55,22 @@
 
 		<ng-container matColumnDef="start">
 			<mat-header-cell *matHeaderCellDef>{{'start_date' | translate:translateKey}} </mat-header-cell>
-			<mat-cell class="fullWidth" *matCellDef="let element;"> {{bookingUtils.returnProperDate(element.bookingFrom)}}</mat-cell>
+			<mat-cell  *matCellDef="let element;"> {{bookingUtils.returnProperDate(element.bookingFrom)}}</mat-cell>
 		</ng-container>
 
 		<ng-container matColumnDef="end">
 			<mat-header-cell *matHeaderCellDef>{{'end_date' | translate:translateKey}} </mat-header-cell>
-			<mat-cell class="fullWidth" *matCellDef="let element;"> {{bookingUtils.returnProperDate(element.bookingTo)}} </mat-cell>
+			<mat-cell  *matCellDef="let element;"> {{bookingUtils.returnProperDate(element.bookingTo)}} </mat-cell>
 		</ng-container>
 
 		<ng-container matColumnDef="status">
 			<mat-header-cell *matHeaderCellDef> {{'booking_status' | translate:translateKey}} </mat-header-cell>
-			<mat-cell class="fullWidth" *matCellDef="let element;"> {{element.status}} </mat-cell>
+			<mat-cell  *matCellDef="let element;"> {{element.status}} </mat-cell>
 		</ng-container>
 
 		<ng-container matColumnDef="action">
 			<mat-header-cell *matHeaderCellDef> {{'actions' | translate:translateKey}}</mat-header-cell>
-			<mat-cell class="fullWidth" *matCellDef="let element;">
+			<mat-cell *matCellDef="let element;">
 				<button *ngIf="element.status != bookingConstant.EXPIRED" mat-button [matMenuTriggerFor]="menu">
 					<mat-icon>more_vert</mat-icon>
 				</button>
@@ -116,7 +116,7 @@
 		</div>
 	</div>
 
-	<div class="modal-body" style="overflow-y:auto;max-height: 400px;">
+	<div class="modal-body scrollModel">
 
 		<table class="table table-bordered">
 			<thead class="customthead">
@@ -176,7 +176,7 @@
 			</button>
 		</div>
 	</div>
-	<div class="modal-body" style="overflow-y:auto;max-height: 500px;">
+	<div class="modal-body scrollModel">
 
 		<table class="table table-bordered">
 			<thead class="customthead">
