@@ -5,10 +5,19 @@ import { Router } from "@angular/router";
 	selector: 'app-title-bar',
 	template: `<div class="titleBar">
 					<div class="container clearfix">
-					<a mat-button (click)="navigateToRouteByIndex('CITIZENDASHBOARD')">
-						<mat-icon>arrow_back</mat-icon>
-					</a>
-					<h1>{{title}}</h1>
+					<ul class="breadcrumbNav clearfix">
+						<li>
+							<a mat-button class="backArrow" (click)="navigateToRouteByIndex('CITIZENDASHBOARD')">
+								<mat-icon>arrow_back</mat-icon>
+							</a>
+						</li>
+						<li>
+							<a mat-button (click)="navigateToRouteByIndex('CITIZENDASHBOARD')">
+								Home
+							</a>
+						</li>
+						<li>{{title}}</li>
+					</ul>
 					</div>
 				</div>`,
 	styles: [` `]
