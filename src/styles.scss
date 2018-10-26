@@ -474,8 +474,8 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
 
 /***  Common Table  ***/
 .mat-paginator-container {color:#000;}
-.mat-table .mat-row:nth-child(even){background-color:$colorWhite;}
-.mat-table .mat-row:nth-child(odd){background-color:#EDE7F6;}
+// .mat-table .mat-row:nth-child(even){background-color:$colorWhite;}
+// .mat-table .mat-row:nth-child(odd){background-color:#EDE7F6;}
 
 
 
@@ -622,3 +622,32 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
 .ng-select.ng-invalid.ng-touched .ng-select-container:after{
     border-bottom: 1px solid #f44336 !important;
 }
+
+.modal-lg.customWidth  {
+    max-width: 1000px;
+}
+
+.mat-table-sticky {
+    top: 0px;
+    position: sticky;
+    z-index: 100;
+}
+.mat-header-cell{
+    top: 0px;
+    position: sticky;
+    z-index: 100;
+    background-color: white;
+}
+
+/* This is use for printing receipt in div start */
+#sectionToPrint{visibility:hidden; height:10px; overflow: auto;}
+@media print {
+@page {margin: 0 !important;}
+body * {visibility: hidden;}
+#matSidenav {display: none !important; visibility: hidden !important;}
+.mat-drawer-content {margin-left: 0 !important;}
+#sectionToPrint, #sectionToPrint * {visibility: visible;}
+#sectionToPrint {position: fixed; top: 20px; left: 0; width: 100%; height: auto !important;}
+#sectionToPrint td, #sectionToPrint th {padding: 5px; font-size: 15px;}
+} 
+/* This is use for printing receipt in div end */

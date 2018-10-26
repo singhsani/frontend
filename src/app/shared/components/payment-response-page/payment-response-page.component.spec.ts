@@ -9,9 +9,7 @@ import { FormsActionsService } from '../../../core/services/citizen/data-service
 import { SessionStorageService } from 'angular-web-storage';
 import { HttpService } from '../../services/http.service';
 import { Router } from '@angular/router';
-import { routes } from '../../../app-routing.module';
 import { PageNotFoundComponent } from '../../../page-not-found/page-not-found.component';
-import { AppModule } from '../../../app.module';
 describe('Shared : PaymentResponsePageComponent', () => {
   let component: PaymentResponsePageComponent;
   let fixture: ComponentFixture<PaymentResponsePageComponent>;
@@ -20,7 +18,7 @@ describe('Shared : PaymentResponsePageComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [MaterialModule,
-        HttpClientTestingModule, RouterTestingModule.withRoutes(routes)],
+        HttpClientTestingModule, RouterTestingModule],
       providers: [
         FormsActionsService,
         HttpService,
@@ -31,7 +29,7 @@ describe('Shared : PaymentResponsePageComponent', () => {
       .compileComponents().then(() => {
         fixture = TestBed.createComponent(PaymentResponsePageComponent);
         component = fixture.componentInstance;
-        fixture.detectChanges();
+        //fixture.detectChanges();
       });
   }));
 

@@ -4,8 +4,6 @@ import { Observable } from 'rxjs';
 import { CommonService } from '../../../../shared/services/common.service';
 import { SessionStorageService } from 'angular-web-storage';
 
-
-
 @Injectable()
 export class BookingService {
 
@@ -25,11 +23,8 @@ export class BookingService {
 	 * This method is use for get all resource
 	 */
 	getResourceList() {
-
 		this.requestURL = `api/booking/${this.resourceType}/list`;
-
 		return this.http.get(this.requestURL);
-
 	}
 
 	/**
@@ -38,7 +33,6 @@ export class BookingService {
 	 */
 	getAllSlots(filterData) {
 		this.requestURL = `api/booking/${this.resourceType}/slotsAPI?resource=${filterData.resourceName}&startDate=${filterData.startDate}&endDate=${filterData.endDate}`;
-
 		return this.http.get(this.requestURL);
 	}
 
@@ -51,15 +45,21 @@ export class BookingService {
 		return this.http.post(this.requestURL, shortListData);
 	}
 
+	/**
+	 * Cancel Town hall api.
+	 * @param data - json data
+	 */
+	cancelTownHall(data:any){
+		this.requestURL = `api/booking/${this.resourceType}/cancelAPI`;
+		return this.http.post(this.requestURL, data);
+	}
 
 	/**
 	 * Method is used to search payment.
 	 * @param searchPaymentData - Search Payment Data.
 	 */
 	searchPayment(refNumber) {
-
 		this.requestURL = `api/booking/${this.resourceType}/getFees/${refNumber}`
-
 		return this.http.get(this.requestURL);
 	}
 
@@ -110,9 +110,7 @@ export class BookingService {
 	 * @param formData - form data
 	 */
 	commonCancelBookedSlot(slotId, formData) {
-
 		this.requestURL = `api/booking/${this.resourceType}/slot/cancel?uuid=${slotId}`;
-
 		return this.http.post(this.requestURL, formData);
 	}
 
@@ -141,11 +139,8 @@ export class BookingService {
 	 * @param enddate - YYYY-MM-DD
 	 */
 	getGuestHouseSlots(resourceName, startdate, enddate) {
-
 		this.requestURL = `api/booking/${this.resourceType}/slots?resource=${resourceName}&date=${startdate}&enddate=${enddate}`;
-
 		return this.http.get(this.requestURL);
-
 	}
 
 	/**
@@ -154,9 +149,7 @@ export class BookingService {
 	 * @param formData - form data
 	 */
 	bookSlot(slotId, formData) {
-
 		this.requestURL = `api/booking/${this.resourceType}/slot/book?uuid=${slotId}`;
-
 		return this.http.post(this.requestURL, formData);
 	}
 
@@ -167,9 +160,7 @@ export class BookingService {
 	 * @param toDate - YYYY/mm/dd
 	 */
 	bookGuestHouseSlot(resource, fromDate, toDate, formData?) {
-
 		this.requestURL = `api/booking/${this.resourceType}/book?resourceCode=${resource}&fromDate=${fromDate}&toDate=${toDate}`;
-
 		return this.http.post(this.requestURL, formData);
 	}
 
@@ -179,9 +170,7 @@ export class BookingService {
 	 * @param formData - form data
 	 */
 	cancelBookedSlot(refNumber, formData) {
-
 		this.requestURL = `api/booking/${this.resourceType}/cancelAPI?refNumber=${refNumber}`;
-
 		return this.http.get(this.requestURL);
 	}
 
@@ -189,9 +178,7 @@ export class BookingService {
 	 * This method is used to get all form data with pagination using API
 	 */
 	getAllBookings(): Observable<any> {
-
 		this.requestURL = `api/booking/${this.resourceType}/mybooking?page=${this.pageIndex}&limit=${this.pageSize}`;
-
 		return this.http.get(this.requestURL);
 	}
 
@@ -199,9 +186,7 @@ export class BookingService {
 	 * This method is use to get lookup data respective to api type
 	 */
 	getDataFromLookups() {
-
 		this.requestURL = `api/booking/${this.resourceType}/lookups`;
-
 		return this.http.get(this.requestURL);
 	}
 
@@ -247,7 +232,6 @@ export class BookingService {
 	}
 
 	shortListTheater(theaterObject) {
-		console.log(theaterObject);
 		this.requestURL = `api/booking/${this.resourceType}/slot/shortlistAPI?uniqueId=${theaterObject.uniqueId}`;
 		return this.http.post(this.requestURL, theaterObject);
 	}
@@ -256,9 +240,4 @@ export class BookingService {
 		this.requestURL = `api/booking/${this.resourceType}/slot/bookAPI`;
 		return this.http.post(this.requestURL, bookingInfo);
 	}
-
-
-
-
-
 }

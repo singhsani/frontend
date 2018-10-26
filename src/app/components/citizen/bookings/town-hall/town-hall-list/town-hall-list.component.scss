@@ -1,49 +1,36 @@
 /* Structure */
 
-.example-container {
-    display: flex;
-    flex-direction: column;
-    max-height: 500px;
-    min-width: 300px;
-    overflow: auto;
-}
+
+@import "./../../../../../../assets/scss/variables";
 
 .example-loading-shade { position: absolute; top: 0; left: 0; bottom: 56px; right: 0; background: rgba(0, 0, 0, 0.15); z-index: 1; display: flex; align-items: center; justify-content: center; }
 
-
-.example-header {
-    min-height: 64px;
-    padding: 8px 24px 0;
+.mat-error{
+    margin-top: -10px;
+    font-size: 11px
 }
 
-.mat-form-field {
-    font-size: 14px;
-    width: 100%;
+.mat-paginator-sticky {
+  bottom: 0px;
+  position: sticky;
+  z-index: 10;
 }
 
-.mat-table {
-    overflow: auto;
-    max-height: 500px;
-}
 
-.example-sidenav-container {
-    flex: 1;
-    background-color: #fff;
-}
+//For material Table 
 
-.example-is-mobile .example-sidenav-container {
-    flex: 1 0 auto;
-}
 
-.example-spacer {
-    flex: 1 1 auto;
-}
+/* Structure */
+.example-container { position: relative; }
+.example-table-container { position: relative; max-height: 400px; overflow: auto; }
+table { width: 100%; }
+.example-loading-shade { position: absolute; top: 0; left: 0; bottom: 56px; right: 0; background: rgba(0, 0, 0, 0.15); z-index: 1; display: flex; align-items: center; justify-content: center; }
+.example-rate-limit-reached { color: #980000; max-width: 360px; text-align: center; padding-top: 110px; }
 
 .customthead{
     background-color: #673ab7;
     color: white;
 }
-.mat-error{
-        margin-top: -10px;
-    font-size: 11px
-}
+
+
+
