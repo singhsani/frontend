@@ -1,16 +1,29 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { FormGroup, FormArray, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { MatPaginator, MatTableDataSource } from '@angular/material';
 import { ToastrService } from 'ngx-toastr';
 import * as moment from 'moment';
 import { Router } from '@angular/router';
-import { ManageRoutes } from '../../../../../config/routes-conf';
 import { BookingService } from '../../../../../core/services/citizen/data-services/booking.service';
-import { filter } from 'rxjs-compat/operator/filter';
-
 import { CommonService } from '../../../../../shared/services/common.service';
+import { BookingConstants, BookingUtils } from '../../config.enum';
 
-
-
+export interface BookingDetails {
+	administrationCharges: string
+	bookingDate: string
+	electricCharges: any
+	endTime: string
+	gstAmount: any
+	id: number
+	rent: number
+	shiftType: string
+	showTax: number
+	startTime: string
+	subTotal: number
+	total: string
+	uniqueId: number
+	version: number
+}
 
 @Component({
 	selector: 'app-town-hall-list',
@@ -21,11 +34,12 @@ export class TownHallListComponent implements OnInit {
 
 
 	@ViewChild('address') addressComp: any;
+	@ViewChild(MatPaginator) paginator: MatPaginator;
 
 	/**
 	 * language translate key.
 	 */
-	translateKey: string = 'townHallListScreen';
+	translateKey: string = 'townHallCitizenScreen';
 
 	/**
 	 * form groups.
@@ -94,7 +108,10 @@ export class TownHallListComponent implements OnInit {
 	 */
 
 	availableStots: Array<any> = [];
-	displayedColumns: Array<string> = ['id', 'start', 'end', 'slotStatus'];
+	displayedColumns: Array<string> = ['id', 'shiftType', 'bookingDate', 'startTime', 'endTime', 'rent', 'electricCharges', 'administrationCharges', 'showTax', 'subTotal', 'gstAmount', 'total'];
+
+	bookingDetailsDataSource = new MatTableDataSource<BookingDetails>([]);
+
 	disableDateList: Array<any> = ['2018-08-01', '2018-09-02', '2018-08-03', '2018-08-15'];
 
 	/**
@@ -139,6 +156,8 @@ export class TownHallListComponent implements OnInit {
 	showPaymentReciept: boolean = false;
 
 	isLoadingResults: boolean = false;
+	bookingConstants = BookingConstants;
+	bookingUtils: BookingUtils = new BookingUtils();
 
 
 	constructor(
@@ -146,7 +165,8 @@ export class TownHallListComponent implements OnInit {
 		private commonService: CommonService,
 		private bookingService: BookingService,
 		private toster: ToastrService,
-		private router: Router
+		private router: Router,
+		private CD: ChangeDetectorRef
 	) {
 		this.bookingService.resourceType = 'townhall';
 	}
@@ -172,7 +192,6 @@ export class TownHallListComponent implements OnInit {
 		this.getTownHallResourceList();
 
 		this.bookingLookups();
-
 	}
 
 	/**
@@ -228,7 +247,6 @@ export class TownHallListComponent implements OnInit {
 	searchBooking() {
 
 		this.selectedShift = [];
-
 		if (this.searchTownHallForm.valid) {
 			this.isLoadingResults = true;
 
@@ -265,38 +283,11 @@ export class TownHallListComponent implements OnInit {
 
 				this.commonService.openAlertFormSaveValidation('Warning!', err.error, 'warning');
 			});
+		} else {
+			this.bookingUtils.getAllErrors(this.searchTownHallForm);
 		}
 	}
 
-	/**
-	 * TODO Catch All Error
-	 */
-	AllError: Array<any> = [];
-
-	/**
-	 * Method is used to get All Error from Response.
-	 */
-	getAllErrors(form) {
-		for (let controls in form.controls) {
-			let control = form.get(controls)
-			if (control instanceof FormControl) {
-				if (control.invalid) {
-					let ErrData = {
-						controlName: controls,
-					}
-					this.AllError.push(ErrData);
-				}
-			} else if (control instanceof FormGroup) {
-				this.getAllErrors(control)
-			} else if (control instanceof FormArray) {
-				control.controls.forEach(c => {
-					if (c instanceof FormGroup) {
-						this.getAllErrors(c);
-					}
-				});
-			}
-		}
-	}
 
 	/**
 	 * Selection Parts is being started from  here.
@@ -341,7 +332,6 @@ export class TownHallListComponent implements OnInit {
 				this.selectedShift.splice(data, 1);
 			}
 		}
-
 	}
 
 	/**
@@ -385,6 +375,7 @@ export class TownHallListComponent implements OnInit {
 	confirmShortlist() {
 
 		if (this.selectedShift.length > 0) {
+
 			this.isLoadingResults = true;
 
 			let shortListData = {
@@ -401,21 +392,23 @@ export class TownHallListComponent implements OnInit {
 
 				this.townHallApplicationForm.patchValue(resp.data);
 
-				if (resp.data.status == 'PAYMENT_REQUIRED') {
+				if (resp.data.status == this.bookingConstants.PAYMENT_REQUIRED) {
 
 					this.bookingService.searchPayment(resp.data.refNumber).subscribe(payResp => {
-
 						this.paymentObject = payResp;
-
+						this.bookingDetailsDataSource.data = payResp.bookingDetails as BookingDetails[];
+						this.CD.detectChanges();
 						this.showPaymentReciept = true;
-
-						this.isLoadingResults = false;
+						this.CD.detectChanges();
+						this.bookingDetailsDataSource.paginator = this.paginator;
+						this.paginator.pageSize = 5;
+						this.paginator.pageIndex = 0
 					})
+
 				}
 			}, (err) => {
 				this.commonService.openAlertFormSaveValidation('Warning!', err.error, 'warning');
 			});
-
 		} else {
 			this.toster.show("Please Select shifts");
 		}
@@ -465,7 +458,7 @@ export class TownHallListComponent implements OnInit {
 			 */
 			id: null,
 			idfcCode: null,
-			refNumber: "2018-08JRI",
+			refNumber: null,
 			remarks: null,
 			status: null,
 			uniqueId: null,
@@ -505,9 +498,7 @@ export class TownHallListComponent implements OnInit {
 			bookingTo: [null, [Validators.required]],
 			cancelledDate: null,
 			expiryTime: null,
-
 			policePerformanceLicense: null,
-
 			programPurpose: [null, [Validators.required]],
 			programShortDetails: [null, [Validators.required]],
 
@@ -526,32 +517,37 @@ export class TownHallListComponent implements OnInit {
 	 * Method is used to submit townhall application form.
 	 */
 	submitTownhallApplication() {
-		this.bookingService.commonBookSlot(this.townHallApplicationForm.value).subscribe(resp => {
 
-			/**
-			 * Response Data here 
-			 */
-		}, (err) => {
+		if (this.townHallApplicationForm.valid && this.emailMatcher() && this.mobileNumberMatcher()) {
 
-			/**
-			 * Catch error here for payment (402)
-			 */
-			if (err.status === 402) {
-				this.bookingService.proceedForPayment(err.error.data);
-			} else {
-				this.commonService.openAlertFormSaveValidation('Warning!', err.error, 'warning');
-			}
-		})
+			this.bookingService.commonBookSlot(this.townHallApplicationForm.value).subscribe(resp => {
+
+				/**
+				 * Response Data here 
+				 */
+			}, (err) => {
+				if (err.status == 402) {
+					this.bookingService.proceedForPayment(err.error.data);
+				} else if (err.error[0].code == this.bookingConstants.INVALID_BOOKING_STATUS) {
+					this.commonService.openAlert("Invalid Booking Status", err.error[0].message, "warning", "", cb => {
+						this.router.navigate(['citizen/booking/cancel-booking'])
+					})
+				} else {
+					this.commonService.openAlertFormSaveValidation('Warning!', err.error, 'warning');
+				}
+			})
+		} else {
+			this.bookingUtils.getAllErrors(this.townHallApplicationForm);
+		}
 	}
 
 	/**
 	 * Method is used to match number and comfirm number.
 	 */
-	mobileNumberMatcher(): boolean{
-		if (this.townHallApplicationForm.get('applicantMobile').value && this.townHallApplicationForm.get('confirmMobile').value){
+	mobileNumberMatcher(): boolean {
+		if (this.townHallApplicationForm.get('applicantMobile').value && this.townHallApplicationForm.get('confirmMobile').value) {
 			return this.townHallApplicationForm.get('applicantMobile').value.toString() == this.townHallApplicationForm.get('confirmMobile').value.toString();
 		}
-
 		return false
 	}
 
@@ -559,20 +555,13 @@ export class TownHallListComponent implements OnInit {
 	 * Method is used to match email and confirm email.
 	 */
 	emailMatcher(): boolean {
-		if (this.townHallApplicationForm.get('emailID').value && this.townHallApplicationForm.get('confirmEmailID').value){
+		if (this.townHallApplicationForm.get('emailID').value && this.townHallApplicationForm.get('confirmEmailID').value) {
 			return this.townHallApplicationForm.get('emailID').value.toString() == this.townHallApplicationForm.get('confirmEmailID').value.toString()
 		}
 		return false
 	}
 
-	/**
-	 * Method is used to return Date in format (DD-MM-YYYY)
-	 * @param date 
-	 */
-	returnProperDate(date: string) {
-		let newDate = date.split("-");
-		return newDate[2] + "-" + newDate[1] + "-" + newDate[0]
-	}
+
 
 	/**
 	 * This method use to get output event of tab change
@@ -611,6 +600,5 @@ export class TownHallListComponent implements OnInit {
 		} else if (count >= 58 && count <= 64) {
 			this.tabIndex = 3;
 		}
-
 	}
 }

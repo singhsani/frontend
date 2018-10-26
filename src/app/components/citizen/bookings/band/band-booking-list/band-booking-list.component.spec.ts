@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from "@angular/common/http/testing";
-import { RouterTestingModule} from '@angular/router/testing'
+import { RouterTestingModule } from '@angular/router/testing'
 
 import { BandBookingListComponent } from './band-booking-list.component';
 import { TitleBarComponent } from '../../../../../shared/components/title-bar/title-bar.component';
@@ -41,14 +41,14 @@ describe('Band Booking : BandBookingListComponent', () => {
         ValidationFieldsDirective,
         TitleBarComponent,
         ControlMessagesComponent],
-        providers: [
-          AmazingTimePickerService,
-          BookingService,
-          HttpService,
-          SessionStorageService,
-          CommonService,
-          ToastrService
-        ]
+      providers: [
+        AmazingTimePickerService,
+        BookingService,
+        HttpService,
+        SessionStorageService,
+        CommonService,
+        ToastrService
+      ]
     })
       .compileComponents();
   }));

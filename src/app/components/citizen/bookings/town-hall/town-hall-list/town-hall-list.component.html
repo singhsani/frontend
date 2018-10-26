@@ -1,14 +1,22 @@
 <!-- HTML for Town hall booking Guideline-->
 
 <div *ngIf="guideLineFlag">
+
     <mat-card class="border border-primary p-0">
+
         <mat-card-title class="alert alert-info text-center mb-0 font-weight-bold">
-            Online Townhall Booking
+            {{'online_townhall_bookings'| translate: translateKey}}
         </mat-card-title>
+
         <mat-card-content class="border-top border-primary pl-4 pr-4">
-            <p style="font-size: large;">{{head_lines| translate: translateKey}}</p>
-            <h1>Rules and Regulations</h1>
-            <ol class="m-4" style="font-size: large;">
+
+            <p class="fsLarge">{{head_lines| translate: translateKey}}</p>
+
+            <h1>
+                {{'rules_and_regulations'| translate: translateKey}}
+            </h1>
+
+            <ol class="m-4 fsLarge">
                 <li>
                     All parties/organizers have to observe the VMC Rules(
                     <a href="#">Mahatma Gandhi Nagar Gruh, Sir Sayaji Rao Nagar Gruh,Pandit Dindayal Upadhyay Nagar,Deepak
@@ -27,7 +35,9 @@
                 </li>
             </ol>
             <div class="text-right">
-                <button mat-raised-button (click)="guideLineFlag = false; showSearchForm= true;" color="primary">Submit</button>
+                <button mat-raised-button (click)="guideLineFlag = false; showSearchForm= true;" color="primary">
+                    {{'submit'| translate: translateKey}}
+                </button>
             </div>
 
         </mat-card-content>
@@ -38,45 +48,45 @@
 <div *ngIf="showSearchForm">
 
     <app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
-
     <mat-card>
-
         <form [formGroup]="searchTownHallForm" (ngSubmit)="searchBooking()" autocomplete="off" ngNativeValidate>
 
             <div class="row">
                 <div class="col-md-6 ngSelect">
-                    <ng-select placeholder="Select Town Hall" formControlName="code">
+                    <ng-select placeholder="{{'select_town_hall'| translate: translateKey}}" formControlName="code">
                         <ng-option *ngFor="let townHall of townHalls" [value]="townHall.code">
                             {{ townHall.name }}
                         </ng-option>
                     </ng-select>
                     <control-messages [control]="searchTownHallForm.controls.code"></control-messages>
-
                 </div>
 
                 <div formGroupName="purpose" class="col-md-6 ngSelect">
-                    <ng-select placeholder="Select Purpose of booking Townhall" formControlName="code">
+                    <ng-select placeholder="{{'purpose_of_booking'| translate: translateKey}}" formControlName="code">
                         <ng-option *ngFor="let purpose of purposes" [value]="purpose.code">
                             {{ purpose.name }}
                         </ng-option>
                     </ng-select>
                     <control-messages [control]="searchTownHallForm.controls.purpose.controls.code">
                     </control-messages>
-
                 </div>
 
                 <mat-form-field class="col-md-6">
+                    <mat-label>
+                        {{'choose_start_date'| translate: translateKey}}
+                    </mat-label>
                     <input matInput [matDatepickerFilter]="myFilter" (dateChange)="changeStartDate($event)" [min]="startMinDate" [matDatepicker]="townHallBookingfromPicker"
-                        formControlName="startDate" placeholder="Choose start date">
+                        formControlName="startDate" placeholder="DD/MM/YYYY">
                     <mat-datepicker-toggle matSuffix [for]="townHallBookingfromPicker"></mat-datepicker-toggle>
                     <mat-datepicker #townHallBookingfromPicker touchUi="true"></mat-datepicker>
                     <control-messages [control]="searchTownHallForm.controls.startDate">
                     </control-messages>
-
                 </mat-form-field>
 
                 <mat-form-field class="col-md-6">
-                    <mat-label>Choose end date</mat-label>
+                    <mat-label>
+                        {{'choose_end_date'| translate: translateKey}}
+                    </mat-label>
                     <input matInput [readonly]="searchTownHallForm.controls.startDate.value == null" [matDatepickerFilter]="myFilter" [min]="endMinDate"
                         [matDatepicker]="townHallBookingtoPicker" formControlName="endDate" placeholder="DD/MM/YYYY">
                     <mat-datepicker-toggle matSuffix [for]="townHallBookingtoPicker"></mat-datepicker-toggle>
@@ -86,37 +96,20 @@
                 </mat-form-field>
 
                 <div class="col-md-12 text-right">
-                    <button mat-raised-button color="primary" type="submit">Search</button>
+                    <button mat-raised-button color="primary" type="submit">
+                        {{'search'| translate: translateKey}}
+                    </button>
                 </div>
-                <!-- [disabled]="searchTownHallForm.invalid" -->
-
             </div>
         </form>
-
     </mat-card>
 
     <mat-card *ngIf="Dates.length>0">
         <mat-card class="cardH1">
-            <h1>List Of Town Hall</h1>
+            <h1>
+                {{'list_of_town_hall'| translate: translateKey}}
+            </h1>
         </mat-card>
-
-        <!-- <div class="row">
-            <div class="col-md-2 mb-1 p-1" *ngFor="let date of Dates">
-                <mat-card class="p-0 rounded border border-primary">
-                    <mat-card-title class="bg-primary text-center text-light font-weight-bold p-0">{{returnProperDate(date.
-                        key)}}
-                    </mat-card-title>
-                    <mat-card-content class="font-weight-bold">
-                        <mat-checkbox (change)="selectShift(shift, $event.checked, i)" *ngFor="let shift of date.slotList; let i = index" [disabled]="shift.slotStatus != 'AVAILABLE'"
-                            [checked]="shift.slotStatus != 'AVAILABLE'">SHIFT {{shift.shiftType}}</mat-checkbox>
-                    </mat-card-content>
-                </mat-card>
-            </div>
-
-            <div class="col-md-12 text-right">
-                <button mat-raised-button type="button" color="primary" (click)="shortlistShifts()">Shortlist</button>
-            </div>
-        </div> -->
 
         <mat-accordion *ngFor="let month of filterMonths(); let i = index;">
             <mat-expansion-panel [expanded]="i === 0">
@@ -127,7 +120,7 @@
                 </mat-expansion-panel-header>
                 <div class="row">
                     <mat-checkbox [checked]="!checkedAllinMonth(month)" labelPosition="after" (change)="selectAllShiftsInMonth($event.checked, month, i)">
-                        Select All shifts in {{month.monthName}}
+                        {{'select_all_shift_in'| translate: translateKey}} {{month.monthName}}
                     </mat-checkbox>
                 </div>
 
@@ -135,13 +128,13 @@
                     <div *ngFor="let date of filterAcc(month.id)" class="col-md-2 mb-1 p-1">
                         <div>
                             <mat-card class="p-0 rounded border border-primary">
-                                <mat-card-title class="bg-primary text-center text-light font-weight-bold p-0">{{returnProperDate(date.
-                                    key)}}
+                                <mat-card-title class="bg-primary text-center text-light font-weight-bold p-0">
+                                    {{bookingUtils.returnProperDate(date.key)}}
                                 </mat-card-title>
                                 <mat-card-content class="font-weight-bold">
-                                    <mat-checkbox (change)="selectShift(shift, $event.checked)" *ngFor="let shift of date.slotList; let i = index" [disabled]="shift.slotStatus == 'BOOKED' || shift.slotStatus == 'TEMPORARY_BLOCKED'"
-                                        [checked]="shift.slotStatus != 'AVAILABLE'">SHIFT
-                                        {{shift.shiftType}}
+                                    <mat-checkbox (change)="selectShift(shift, $event.checked)" *ngFor="let shift of date.slotList; let i = index" [disabled]="shift.slotStatus == bookingConstants.BOOKED || shift.slotStatus == bookingConstants.TEMPORARY_BLOCKED"
+                                        [checked]="shift.slotStatus != 'AVAILABLE'">
+                                        {{'shift'| translate: translateKey}}&nbsp;{{shift.shiftType}}
                                     </mat-checkbox>
                                 </mat-card-content>
                             </mat-card>
@@ -150,9 +143,12 @@
                 </div>
             </mat-expansion-panel>
         </mat-accordion>
+
         <div class="col-md-12 text-right">
             <button mat-raised-button data-toggle="modal" (click)="shortlistShifts()" data-target="#confirmShortlistModel" type="button"
-                [disabled]="selectedShift.length == 0" color="primary">Shortlist</button>
+                [disabled]="selectedShift.length == 0" color="primary">
+                {{'shortlist'| translate: translateKey}}
+            </button>
         </div>
 
     </mat-card>
@@ -162,20 +158,22 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header customthead">
-                <h4 class="modal-title" id="exampleModalLabel">List Of Selected Slots</h4>
+                <h4 class="modal-title" id="exampleModalLabel">
+                    {{'list_selected_slot'| translate: translateKey}}
+                </h4>
                 <button title="Close" data-dismiss="modal" class=" mat-icon-button" aria-label="Close">
                     <mat-icon>close</mat-icon>
                 </button>
             </div>
-            <div class="modal-body" style="overflow-y:auto;max-height: 500px;">
+            <div class="modal-body scrollModel">
                 <table class="table table-bordered">
                     <thead class="customthead">
                         <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Start Date</th>
-                            <th scope="col">End Date</th>
-                            <th scope="col">Shift</th>
-                            <th scope="col">Action</th>
+                            <th scope="col">{{'s_no'| translate: translateKey}}</th>
+                            <th scope="col">{{'start_date'| translate: translateKey}}</th>
+                            <th scope="col">{{'end_date'| translate: translateKey}}</th>
+                            <th scope="col">{{'shift'| translate: translateKey}}</th>
+                            <th scope="col">{{'action'| translate: translateKey}}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -185,7 +183,7 @@
                             <td>{{shifts.end}}</td>
                             <td>{{shifts.shiftType}}</td>
                             <td>
-                                <button mat-icon-button title="Remove Slot" [disabled]="selectedShift.length == 1" (click)="removeSelectedShift(shifts, i)">
+                                <button mat-icon-button title="{{'remove_slot'| translate: translateKey}}" [disabled]="selectedShift.length == 1" (click)="removeSelectedShift(shifts, i)">
                                     <mat-icon color="warn">delete</mat-icon>
                                 </button>
                             </td>
@@ -194,33 +192,35 @@
                 </table>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="confirmShortlist()">Confirm and
-                    Continue
+
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    {{'cancel'| translate: translateKey}}
                 </button>
+
+                <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="confirmShortlist()">
+                    {{'confirm_and_continue'| translate: translateKey}}
+                </button>
+
             </div>
         </div>
     </div>
 </div>
 
-<div class="example-loading-shade" *ngIf="isLoadingResults">
-    <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
-</div>
-
 <div *ngIf="showPaymentReciept">
+
     <table class="table table-bordered">
         <thead class="customthead">
             <tr>
-                <th scope="col">Ref Number</th>
-                <th scope="col">Booking Date</th>
-                <th scope="col">Rent Amount</th>
-                <th scope="col">Deposit Amount</th>
+                <th scope="col">{{'ref_number'| translate: translateKey}}</th>
+                <th scope="col">{{'date_of_programme'| translate: translateKey}}</th>
+                <th scope="col">{{'rent_amount'| translate: translateKey}}</th>
+                <th scope="col">{{'deposit_amount'| translate: translateKey}}</th>
             </tr>
         </thead>
         <tbody>
             <tr>
                 <td scope="col">{{paymentObject.refNumber}}</td>
-                <td scope="col">{{paymentObject.bookingDate}}</td>
+                <td scope="col">{{bookingUtils.returnProperDate(paymentObject.bookingDate)}}</td>
                 <td scope="col">{{paymentObject.rentAmount}}</td>
                 <td scope="col">{{paymentObject.depositAmount}}</td>
             </tr>
@@ -228,43 +228,115 @@
     </table>
 
     <div class="mt-5">
-        <h3 class="text-center">Booking Details</h3>
+        <h3 class="text-center">
+            {{'booking_details'| translate: translateKey}}
+        </h3>
+        <div>
 
-        <table class="table table-bordered">
-            <thead class="customthead">
-                <tr>
-                    <th scope="col">Slots</th>
-                    <th scope="col">Shift</th>
-                    <th scope="col">Booking Date</th>
-                    <th scope="col">Start Time</th>
-                    <th scope="col">End Time</th>
-                    <th scope="row">Rent</th>
-                    <th scope="row">Electic Charge</th>
-                    <th scope="row">Administration Charges</th>
-                    <th scope="row">Show Tax</th>
-                    <th scope="row">Gst Amount</th>
-                    <th scope="row">Total</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let data of paymentObject.bookingDetails; let i = index">
-                    <td scope="col">{{i +1}}</td>
-                    <td scope="col">{{data.shiftType}}</td>
-                    <td scope="col">{{returnProperDate(data.bookingDate)}}</td>
-                    <td scope="col">{{data.startTime}}</td>
-                    <td scope="col">{{data.endTime}}</td>
-                    <td>{{data.rent}}</td>
-                    <td>{{data.electricCharges}}</td>
-                    <td>{{data.administrationCharges}}</td>
-                    <td>{{data.showTax}}</td>
-                    <td>{{data.gstAmount}}</td>
-                    <td>{{data.total}}</td>
-                </tr>
-            </tbody>
-        </table>
+            <table mat-table [dataSource]="bookingDetailsDataSource" matSort matSortActive="created" matSortDisableClear matSortDirection="asc">
 
-        <div class="col-md-12 text-right">
-            <button mat-raised-button type="button" color="primary" (click)="confirmPayment()">Proceed For Application</button>
+                <ng-container matColumnDef="id">
+                    <th mat-header-cell *matHeaderCellDef>
+                        {{'s_no'| translate: translateKey}}
+                    </th>
+                    <td mat-cell class="fullWidth" *matCellDef="let element;let indx=index;"> {{paginator?(paginator.pageIndex
+                        * paginator.pageSize) + (indx+1) : (indx+1)}}
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="shiftType">
+                    <th mat-header-cell *matHeaderCellDef>
+                        {{'shift_type'| translate: translateKey}}
+                    </th>
+                    <td mat-cell class="fullWidth" *matCellDef="let element;"> {{element.shiftType}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="bookingDate">
+                    <th mat-header-cell *matHeaderCellDef>
+                        {{'date_of_programme'| translate: translateKey}}
+                    </th>
+                    <td mat-cell class="fullWidth" *matCellDef="let element;"> {{bookingUtils.returnProperDate(element.bookingDate)}}
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="startTime">
+                    <th mat-header-cell *matHeaderCellDef>
+                        {{'start_time'| translate: translateKey}}
+                    </th>
+                    <td mat-cell class="fullWidth" *matCellDef="let element;"> {{element.startTime}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="endTime">
+                    <th mat-header-cell *matHeaderCellDef>
+                        {{'end_time'| translate: translateKey}}
+                    </th>
+                    <td mat-cell class="fullWidth" *matCellDef="let element;"> {{element.endTime}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="rent">
+                    <th mat-header-cell *matHeaderCellDef>
+                        {{'rent'| translate: translateKey}}
+                    </th>
+                    <td mat-cell class="fullWidth" *matCellDef="let element;"> {{element.rent}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="electricCharges">
+                    <th mat-header-cell *matHeaderCellDef>
+                        {{'electric_charges' | translate: translateKey}}
+                    </th>
+                    <td mat-cell class="fullWidth" *matCellDef="let element;"> {{element.electricCharges}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="administrationCharges">
+                    <th mat-header-cell *matHeaderCellDef>
+                        {{'administration_charges' | translate: translateKey}}
+                    </th>
+                    <td mat-cell class="fullWidth" *matCellDef="let element;"> {{element.administrationCharges}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="showTax">
+                    <th mat-header-cell *matHeaderCellDef>
+                        {{'show_tax'| translate: translateKey}}
+                    </th>
+                    <td mat-cell class="fullWidth" *matCellDef="let element;"> {{element.showTax}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="subTotal">
+                    <th mat-header-cell *matHeaderCellDef>
+                        {{'subtotal'| translate: translateKey}}
+                    </th>
+                    <td mat-cell class="fullWidth" *matCellDef="let element;"> {{element.subTotal}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="gstAmount">
+                    <th mat-header-cell *matHeaderCellDef>
+                        {{'gst_amount'| translate: translateKey}}
+                    </th>
+                    <td mat-cell class="fullWidth" *matCellDef="let element;"> {{element.gstAmount}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="total">
+                    <th mat-header-cell *matHeaderCellDef class="text-center">
+                        {{'total'| translate: translateKey}}
+                        <div>
+                            {{'sub_plus_gst'| translate: translateKey}}
+                        </div>
+                    </th>
+                    <td mat-cell class="fullWidth" *matCellDef="let element;"> {{element.total}} </td>
+                </ng-container>
+
+                <tr mat-header-row class="mat-header-sticky" *matHeaderRowDef="displayedColumns;"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+
+            <mat-paginator class="mat-paginator-sticky" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons>
+            </mat-paginator>
+        </div>
+
+        <div class="col-md-12 text-right mt-5">
+            <button mat-raised-button type="button" color="primary" (click)="confirmPayment()">
+                {{'proceed_for_application' | translate: translateKey}}
+            </button>
         </div>
     </div>
 
@@ -275,7 +347,9 @@
 
 <div [hidden]="!showApplicationForm">
     <mat-card class="cardH1">
-        <h1>Town Hall Application Form</h1>
+        <h1>
+            {{'townhall_application_form'| translate: translateKey}}
+        </h1>
     </mat-card>
 
     <mat-card>
@@ -417,7 +491,8 @@
             <div class="row">
                 <mat-form-field class="col-md-6">
                     <textarea matInput type="text" maxlength="200" formControlName="programShortDetails" placeholder="{{'program_short_details' | translate: translateKey}}"
-                        required></textarea>
+                        required>
+                    </textarea>
                     <control-messages [control]="townHallApplicationForm.controls.programShortDetails"></control-messages>
                 </mat-form-field>
 
@@ -429,9 +504,8 @@
             </div>
 
             <div class="col-md-12 text-right">
-                <button [disabled]="!townHallApplicationForm.valid || !emailMatcher() || !mobileNumberMatcher()" mat-raised-button color="primary"
-                    type="submit">
-                    Submit Application
+                <button mat-raised-button color="primary" type="submit">
+                    {{'submit_application'| translate: translateKey}}
                 </button>
             </div>
         </form>
