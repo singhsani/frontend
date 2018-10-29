@@ -1,7 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing'
-
 import { TownHallListComponent } from './town-hall-list.component';
 import { MaterialModule } from '../../../../../shared/modules/material/material.module';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -21,7 +20,7 @@ import { ToastrService, ToastrModule } from 'ngx-toastr';
 import { FormsActionsService } from '../../../../../core/services/citizen/data-services/forms-actions.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-describe('TownHall Booking : TownHallListComponent', () => {
+fdescribe('TownHall Booking : TownHallListComponent', () => {
   let component: TownHallListComponent;
   let fixture: ComponentFixture<TownHallListComponent>;
 
@@ -69,4 +68,14 @@ describe('TownHall Booking : TownHallListComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it("Should show insturtion page initally" , () => {
+    expect(component.guideLineFlag).toBeTruthy();
+  })
+
+  it("Should show Townhall search form after submit of guide line", () => {
+    component.guideLineFlag = false;
+    component.showSearchForm = true;
+    fixture.detectChanges();
+  })
 });

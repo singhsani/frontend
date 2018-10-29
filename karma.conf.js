@@ -3,6 +3,9 @@
 
 module.exports = function(config) {
     config.set({
+        files : [
+            { pattern: "node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css", included: true, watched: true }
+        ],
         basePath: '',
         frameworks: ['jasmine', '@angular-devkit/build-angular'],
         plugins: [

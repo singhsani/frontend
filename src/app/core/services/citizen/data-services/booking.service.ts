@@ -177,8 +177,11 @@ export class BookingService {
 	/**
 	 * This method is used to get all form data with pagination using API
 	 */
-	getAllBookings(): Observable<any> {
-		this.requestURL = `api/booking/${this.resourceType}/mybooking?page=${this.pageIndex}&limit=${this.pageSize}`;
+	getAllBookings(refNumber?: string): Observable<any> {
+		if(!refNumber){
+            refNumber = ""
+		}
+		this.requestURL = `api/booking/${this.resourceType}/mybooking?page=${this.pageIndex}&limit=${this.pageSize}&refNumber=${refNumber}`;
 		return this.http.get(this.requestURL);
 	}
 
