@@ -87,6 +87,7 @@ export class CancelBookingComponent implements OnInit {
 		this.getAllLookUP();
 		this.searchBookingsForm = this.fb.group({
 			resourceType: this.resources[0].type,
+			refNumber: [null]
 		});
 		this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
 		this.getAllBooking();
@@ -222,15 +223,17 @@ export class CancelBookingComponent implements OnInit {
 						this.bookingService.resourceType = this.searchBookingsForm.get('resourceType').value;
 						this.bookingService.pageIndex = (this.paginator.pageIndex + 1);
 						this.bookingService.pageSize = this.paginator.pageSize;
-						return this.bookingService!.getAllBookings();
+						return this.bookingService!.getAllBookings(this.searchBookingsForm.get('refNumber').value);
 					}),
 					map(data => {
 						this.isLoadingResults = false;
 						this.resultsLength = data.totalRecords;
 						return data.data;
 					}),
-					catchError(() => {
+					catchError((err) => {
+						//this.commonService.openAlertFormSaveValidation(err.error[0].code, err.error, "warning" )
 						this.isLoadingResults = false;
+						this.resultsLength = 0;
 						return observableOf([]);
 					})
 				).subscribe(data => {

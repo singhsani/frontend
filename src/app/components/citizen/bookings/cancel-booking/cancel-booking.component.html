@@ -3,7 +3,7 @@
 <mat-card class="mb-4">
 	<form [formGroup]="searchBookingsForm" (ngSubmit)="getAllBooking()" autocomplete="off" ngNativeValidate>
 		<div class="row">
-			<div class="col-md-8 ngSelect">
+			<div class="col-md-4 ngSelect">
 				<ng-select placeholder="{{'select_booking_resources' | translate:translateKey}}" formControlName="resourceType">
 					<ng-option *ngFor="let resource of resources" [value]="resource.type">
 						{{ resource.name }}
@@ -12,6 +12,11 @@
 				<control-messages [control]="searchBookingsForm.controls.resourceType">
 				</control-messages>
 			</div>
+			<mat-form-field class="col-md-4">
+				<input matInput maxlength="25"  type="text" formControlName="refNumber"
+				 placeholder="{{'ref_number' | translate: translateKey}}" trim="blur">
+				<control-messages [control]="searchBookingsForm.controls.refNumber"></control-messages>
+			</mat-form-field>
 			<div class="col-md-4">
 				<button mat-stroked-button color="primary" class="w-100 mt-2" type="submit">
 					{{'search' | translate:translateKey}}
