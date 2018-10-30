@@ -59,16 +59,16 @@ export class FinalFireNocComponent implements OnInit {
 			this.router.navigate([ManageRoutes.getFullRoute('CITIZENDASHBOARD')]);
 		}
 		else {
-			this.getMuttonFishLicNewData();
+			this.getFinalFireNocLicNewData();
 			this.getLookupData();
 			this.finalFireNocNewFormControls();
 		}
 	}
 
-		/**
+	/**
 	 * Method is used to get form data
 	 */
-	getMuttonFishLicNewData() {
+	getFinalFireNocLicNewData() {
 		this.formService.getFormData(this.formId).subscribe(res => {
 			try {
 				this.finalFireNocNewForm.patchValue(res);

@@ -4,7 +4,7 @@ import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { SessionStorageService } from 'angular-web-storage';
 
 import { TranslateModule } from '../../../../../shared/modules/translate/translate.module';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { ReactiveFormsModule,FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 //services
 import { FormsActionsService } from '../../../../../core/services/citizen/data-services/forms-actions.service';
@@ -20,70 +20,67 @@ import { ActionBarComponent } from '../../../../../shared/components/action-bar/
 import { FileUploadComponent } from '../../../../../shared/components/file-upload/file-upload.component';
 import { CommonService } from '../../../../../shared/services/common.service';
 import { HttpService } from '../../../../../shared/services/http.service';
+import { FoodService } from '../common/services/food.service';
+import { FoodTransferComponent } from './food-transfer.component';
 import { ValidationService } from '../../../../../shared/services/validation.service';
 
-import { FoodService } from '../common/services/food.service';
-import { FoodRenewComponent } from './food-renew.component';
-
-describe('FoodRenewComponent', () => {
-  let component: FoodRenewComponent;
-  let fixture: ComponentFixture<FoodRenewComponent>;
-  let service: FormsActionsService;
+describe('FoodTransferComponent', () => {
+  let component: FoodTransferComponent;
+  let fixture: ComponentFixture<FoodTransferComponent>;
+	let service: FormsActionsService;
 
   const createCompo = () => {
-    fixture = TestBed.createComponent(FoodRenewComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  }
+		fixture = TestBed.createComponent(FoodTransferComponent);
+		component = fixture.componentInstance;
+		fixture.detectChanges();
+	}
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
         MaterialModule,
-        NgSelectModule,
-        TranslateModule,
-        BrowserAnimationsModule,
-        HttpClientTestingModule,
+				NgSelectModule,
+				TranslateModule,
+				BrowserAnimationsModule,
+				HttpClientTestingModule,
         ReactiveFormsModule,
         FormsModule,
-        RouterTestingModule,
-        ToastrModule.forRoot({
-          timeOut: 5000,
-          positionClass: 'toast-top-right',
-          preventDuplicates: true,
-          progressBar: true,
-          closeButton: true
-        })],
-      declarations: [
-        FoodRenewComponent,
-        TitleBarComponent,
-        FileUploadComponent,
-        ActionBarComponent,
-        GujInputSourceDirective,
-        GujInputTargetDirective,
-        ValidationFieldsDirective,
-        ControlMessagesComponent],
-      providers: [
-        CommonService,
-        SessionStorageService,
-        FormsActionsService,
+				RouterTestingModule,
+				ToastrModule.forRoot({
+					timeOut: 5000,
+					positionClass: 'toast-top-right',
+					preventDuplicates: true,
+					progressBar: true,
+					closeButton: true
+				})],
+			declarations: [FoodTransferComponent,
+				TitleBarComponent,
+				FileUploadComponent,
+				ActionBarComponent,
+				GujInputSourceDirective,
+				GujInputTargetDirective,
+				ValidationFieldsDirective,
+				ControlMessagesComponent],
+			providers: [CommonService,
+				SessionStorageService,
+				FormsActionsService,
         HttpService,
         FoodService,
         ValidationService
       ]
     })
-      .compileComponents().then(() => {
-        createCompo();
-      });
+    .compileComponents().then(() => {
+			createCompo();
+		});
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(FoodRenewComponent);
+    fixture = TestBed.createComponent(FoodTransferComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+	it('should create', () => {
+		expect(component).toBeTruthy();
+	});
 });

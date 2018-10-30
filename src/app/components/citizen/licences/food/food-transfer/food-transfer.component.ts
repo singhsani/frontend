@@ -1,24 +1,25 @@
-
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { ManageRoutes } from './../../../../../config/routes-conf';
+import { CommonService } from '../../../../../shared/services/common.service';
+import { FoodService } from '../common/services/food.service';
 import { ValidationService } from '../../../../../shared/services/validation.service';
 import { FormsActionsService } from '../../../../../core/services/citizen/data-services/forms-actions.service';
+import { Location } from '@angular/common';
 
 @Component({
-  selector: 'app-food-new',
-  templateUrl: './food-new.component.html',
-  styleUrls: ['./food-new.component.scss']
+  selector: 'app-food-transfer',
+  templateUrl: './food-transfer.component.html',
+  styleUrls: ['./food-transfer.component.scss']
 })
-export class FoodNewComponent implements OnInit {
+export class FoodTransferComponent implements OnInit {
+
+  foodTransferForm: FormGroup;
+  translateKey: string = 'foodTransferScreen';
 
   formId: number;
   apiCode: string;
-
-  foodLicNewForm: FormGroup;
-  translateKey: string = 'foodNewScreen';
-
   tabIndex: number = 0;
 
   private showButtons: boolean = false;
@@ -41,19 +42,49 @@ export class FoodNewComponent implements OnInit {
   FOOD_PAYMENT_MODE: Array<any> = [];
   FOOD_REG_LIC_SINGLE_OR_MULTIPLE: Array<any> = [];
 
+
+  // serach api variable
+  serachLicenceObj = {
+    isDisplayTransferLicenceForm: <boolean>false,
+    searchLicenceNumber: <string>""
+  }
+
+	/**
+	 * This method for serach licence using licence number.
+	 */
+  searchLicence() {
+    this.FoodService.searchLicence(this.serachLicenceObj.searchLicenceNumber).subscribe(
+      (res: any) => {
+        if (res.success) {
+          this.serachLicenceObj.isDisplayTransferLicenceForm = true;
+          this.createRecordPatchSerachData(res.data);
+        } else {
+          this.serachLicenceObj.isDisplayTransferLicenceForm = false;
+        }
+      }, (err: any) => {
+        this.serachLicenceObj.isDisplayTransferLicenceForm = false;
+        if (err.error && err.error.length) {
+          this.commonService.openAlert("Warning", err.error[0].message, "warning");
+        }
+      })
+  }
+
   /**
    * @param fb - Declare FormBuilder property.
    * @param validationError - Declare validation service property
    * @param formService - Declare form service property 
-   * @param validationService - Declare validations property.
+   * @param FoodService - Declare search API.
+   * @param commonService - Declare sweet alert.
    */
   constructor(
     private fb: FormBuilder,
     private validationService: ValidationService,
-    private router: Router,
     private route: ActivatedRoute,
-    private formService: FormsActionsService
-    ) { }
+    private commonService: CommonService,
+    private formService: FormsActionsService,
+    private FoodService: FoodService,
+    private location: Location
+  ) { }
 
 	/**
 	 * This method call initially required methods.
@@ -66,23 +97,80 @@ export class FoodNewComponent implements OnInit {
     });
 
     this.getLookupData();
+    this.foodTransferFormControls();
+
     if (!this.formId) {
-      this.router.navigate([ManageRoutes.getFullRoute('CITIZENDASHBOARD')]);
+      this.serachLicenceObj.isDisplayTransferLicenceForm = false;
     }
     else {
-      this.getAnimalPondLicNewData();
-      this.foodLicNewFormControls();
+      this.serachLicenceObj.isDisplayTransferLicenceForm = true;
+      this.getFoodLicNewData();
     }
+  }
+
+
+	/**
+   * This method is use to create new record for citizen.
+   * @param searchData: exciting licence number data
+   */
+  createRecordPatchSerachData(searchData: any) {
+    this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
+    this.formService.createFormData().subscribe(res => {
+
+      this.formId = res.serviceFormId;
+      this.foodTransferForm.patchValue(searchData);
+
+      this.foodTransferForm.patchValue({
+        id: res.id,
+        uniqueId: res.uniqueId,
+        version: res.version,
+        serviceFormId: res.serviceFormId,
+        refNumber: this.serachLicenceObj.searchLicenceNumber,
+        createdDate: res.createdDate,
+        updatedDate: res.createdDate,
+        serviceType: res.serviceType,
+        // deptFileStatus: res.deptFileStatus,
+        serviceName: res.serviceName,
+        fileNumber: res.fileNumber,
+        pid: res.pid,
+        outwardNo: res.outwardNo,
+        agree: res.agree,
+
+        paymentStatus: res.paymentStatus,
+        canEdit: res.canEdit,
+        canDelete: res.canDelete,
+        canSubmit: res.canSubmit,
+        serviceCode: res.serviceCode,
+        applicationNo: res.applicationNo,
+
+        periodFrom: res.periodFrom,
+        periodTo: res.periodTo,
+        // newRegistration: res.newRegistration,
+        // renewal: res.renewal,
+        // adminCharges: res.adminCharges,
+        // netAmount: res.netAmount,
+        licenseIssueDate: res.licenseIssueDate,
+        // licenseRenewalDate: res.licenseRenewalDate,
+        // loinumber: res.loinumber,
+        // attachments: []
+      });
+
+      this.showButtons = true;
+
+      let currentUrl = this.location.path().replace('false', this.formId.toString());
+      this.location.go(currentUrl);
+    });
+
   }
 
 	/**
 	 * Method is used to get form data
 	 */
-  getAnimalPondLicNewData() {
+  getFoodLicNewData() {
     this.formService.getFormData(this.formId).subscribe(res => {
       try {
-        this.foodLicNewForm.patchValue(res);
-        this.showButtons = true;
+        this.foodTransferForm.patchValue(res);
+        this.showButtons = true;    
       } catch (error) {
         console.log(error.message)
       }
@@ -94,7 +182,7 @@ export class FoodNewComponent implements OnInit {
 	*/
   getLookupData() {
     this.formService.getDataFromLookups().subscribe(res => {
-      this.LOOKUP = res;
+       this.LOOKUP = res;
       this.FIRM_ZONE = res.FIRM_ZONE;
       this.FOOD_BUSINESS_TURNOVER = res.FOOD_BUSINESS_TURNOVER;
       this.FOOD_BUSINESS_TYPES = res.FOOD_BUSINESS_TYPES;
@@ -108,7 +196,7 @@ export class FoodNewComponent implements OnInit {
       this.FOOD_PAYMENT_MODE = res.FOOD_PAYMENT_MODE;
       this.FOOD_REG_LIC_SINGLE_OR_MULTIPLE = res.FOOD_REG_LIC_SINGLE_OR_MULTIPLE;
 
-      this.onChangeZone(this.foodLicNewForm.get('firmZone').value.code);
+      this.onChangeZone(this.foodTransferForm.get('firmZone').value.code);
     });
   }
 
@@ -123,63 +211,29 @@ export class FoodNewComponent implements OnInit {
     }
   }
 
-	/**
+  	/**
 	 * Method is used for get registration type or License type as per business turn over selection
 	 * @param event : selected ward code
 	 */
   onChangeRegOrLicType(event) {
     if (event == 'LESS_THAN_12LK') {
-      this.foodLicNewForm.get('regOrLic').setValue('Registration');
-      this.foodLicNewForm.get('regOrLic').disable();
+      this.foodTransferForm.get('regOrLic').setValue('Registration');
+      this.foodTransferForm.get('regOrLic').disable();
     }
     if (event == 'GREATER_THAN_12LK') {
-      this.foodLicNewForm.get('regOrLic').setValue('License');
-      this.foodLicNewForm.get('regOrLic').disable();
+      this.foodTransferForm.get('regOrLic').setValue('License');
+      this.foodTransferForm.get('regOrLic').disable();
 
     }
   }
 
-  // updateCatArray(event: any) {
-  //   console.log(event);
-  //   const catArray = <FormArray>this.foodLicNewForm.controls.businessCategories;
-  //   if (event) {
-  //     event.forEach(catValue => {
-  //       (catArray.push(this.pushItem(catValue)));
-  //     });
-  //   }
-  //   else {
-  //     let index = catArray.controls.findIndex(x => x.value == event)
-  //     catArray.removeAt(index);
-  //   }
-  // }
-
-  // pushItem(data?: any) {
-  //   return this.fb.group({
-  //     categoryCode: [data ? data : '']
-  //   });
-  // }
-
-
-  // set business turnover fields and registrastion type(disble mode) 
-  // setDependedFields(event: any) {
-  //   console.log(event);
-  //   let catValue = event;
-  //   let sliptvalue = catValue.split('_');
-  //   console.log(sliptvalue);
-  //   if (sliptvalue[0] = 'LT12L') {
-  //     this.foodLicNewForm.get('businessTurnOver').value.code.setValue('LESS_THAN_12LK');
-  //   }
-  //   else if(sliptvalue[0] = 'MT12L'){
-  //     this.foodLicNewForm.get('businessTurnOver').value.code.setValue('GREATER_THAN_12LK');
-  //   }
-  // }
 
 	/**
-	*  Method is used get selected data from lookup when change dropdown in grid.
-	* @param lookups : Array
-	* @param code : String
-	* return object
-	*/
+	  *  Method is used get selected data from lookup when change dropdown in grid.
+	  * @param lookups : Array
+	  * @param code : String
+	  * return object
+	  */
   getSelectedDataFromLookUps(lookups: Array<any>, code: string) {
     return lookups.find((obj: any) => obj.code === code)
   }
@@ -188,10 +242,11 @@ export class FoodNewComponent implements OnInit {
 	* Method is used to set form controls
 	* 'Guj' control is consider as a Gujarati fields
 	*/
-  foodLicNewFormControls() {
-    this.foodLicNewForm = this.fb.group({
-      apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
-      serviceCode: 'FL',
+  foodTransferFormControls() {
+    this.foodTransferForm = this.fb.group({
+       apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
+      serviceCode: 'FL-MODIFY',
+      refNumber:[null],
       /* Step 1 controls start */
       fieldView: [null],
       fieldList: [null],
@@ -219,7 +274,7 @@ export class FoodNewComponent implements OnInit {
       }),
       //businessCategories: this.fb.array([]),
       businessCategories: [null],
-      singleBusinessCategorie: [null],
+      singleBusinessCategorie:[null],
       businessTurnOver: this.fb.group({
         code: [null, Validators.required]
       }),
@@ -235,50 +290,45 @@ export class FoodNewComponent implements OnInit {
         code: [null]
       }),
       loinumber: [null]
-
-      /* Step 4 controls start*/
-      // attachments: ['']
-      /* Step 4 controls end */
     });
   }
 
-  /**
-   * This method required for final form submition.
-   * @param flag - flag of invalid control.
-   */
-  handleErrorsOnSubmit(flag) {
-
-    let step0 = 13;
-    let step1 = 24;
-
-    if (flag != null) {
-      //Check validation for step by step
-      let count = flag;
-
-      if (count <= step0) {
-        this.tabIndex = 0;
-        return false;
-      } else if (count <= step1) {
-        this.tabIndex = 1;
-        return false;
+    /**
+     * This method required for final form submition.
+     * @param flag - flag of invalid control.
+     */
+    handleErrorsOnSubmit(flag) {
+  
+      let step0 = 13;
+      let step1 = 24;
+  
+      if (flag != null) {
+        //Check validation for step by step
+        let count = flag;
+  
+        if (count <= step0) {
+          this.tabIndex = 0;
+          return false;
+        } else if (count <= step1) {
+          this.tabIndex = 1;
+          return false;
+        }
+        // else if (count == 67) {
+        // 	this.checkReligion();
+        // 	return false;
+        // }
+        else {
+          console.log("else condition");
+        }
+  
       }
-      // else if (count == 67) {
-      // 	this.checkReligion();
-      // 	return false;
-      // }
-      else {
-        console.log("else condition");
-      }
-
     }
-  }
-
-	/**
-	 * This method use to get output event of tab change
-	 * @param evt - Tab index
-	 */
-  onTabChange(evt) {
-    this.tabIndex = evt;
-  }
-
+  
+    /**
+     * This method use to get output event of tab change
+     * @param evt - Tab index
+     */
+    onTabChange(evt) {
+      this.tabIndex = evt;
+    }
 }
