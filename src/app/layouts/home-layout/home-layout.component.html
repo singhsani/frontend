@@ -27,7 +27,7 @@
                     <mat-icon>arrow_drop_down</mat-icon>
                 </button>
                 <mat-menu [overlapTrigger]="false" #menu="matMenu">
-                    <button mat-menu-item routerLink="/citizen/my-profile">Profile {{commonService.isLoading | async}}</button>
+                    <button mat-menu-item routerLink="/citizen/my-profile">Profile</button>
                     <button mat-menu-item (click)="onLogout()">Logout</button>
                 </mat-menu>
             </div>
