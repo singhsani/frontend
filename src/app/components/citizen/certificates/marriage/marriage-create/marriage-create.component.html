@@ -485,15 +485,13 @@
 				</div>
 				<!-- / NIR Marrige -->
 
-				<div class="row">
-					<div [hidden]="marriageFormGroup.controls.isBrideVisa.value == true">
+				<div class="row" [hidden]="marriageFormGroup.controls.isBrideVisa.value == true">
 						<h2>{{'address' | translate:translateKey }}:</h2>
 						<app-address #address [requiredFeilds]="!marriageFormGroup.controls.isBrideVisa.value" [addressFormGroup]="marriageFormGroup.controls.brideAddress"></app-address>
-
-					</div>
-
 				</div>
+				
 				<app-action-bar [uploadFiles]="uploadFileArray" [form]="marriageFormGroup" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step2', next: 2, back: 0}"></app-action-bar>
+			
 			</mat-tab>
 			<!-- End Second step -->
 

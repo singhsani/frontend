@@ -83,7 +83,7 @@ h1 { font-size: 30px; margin-bottom: 10px; }
     .ng-select {margin-left: 30px !important;}
 }
 
-.formClass {
+.formClass {color: #000;
     .iconMat {padding-left: 30px;
         .mat-form-field-wrapper {left: 0 !important;}
     }
@@ -192,12 +192,13 @@ h1 { font-size: 30px; margin-bottom: 10px; }
 
 
 // Custom CSS
+// .ngSelect, .mat-form-field, .mat-radio-button, .mat-checkbox {font-family: Tahoma,Roboto,Arial,sans-serif;}
 .mat-input-element {font-size: 14px !important;}
 .mat-form-field {width: 100%; margin-top: 5px; margin-bottom: 5px; line-height: normal;}
 .mat-form-field-label {color: #989898; font-weight: normal;}
 .mat-form-field-invalid .mat-input-element, .mat-warn .mat-input-element {color: #000; /*font-size: 14px;*/}
 .mat-form-field-appearance-legacy.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {font-size: 12px; font-weight: normal;
-    letter-spacing: 0.5px; color: #989898; font-family: arial;
+    letter-spacing: 0.5px; color: #777; font-family: arial;
     -webkit-transform: translateY(-1.28125em) scale(1) !important;
     -ms-transform: translateY(-1.28125em) scale(1) !important;
     transform: translateY(-1.28125em) scale(1) !important;}
@@ -210,6 +211,9 @@ h1 { font-size: 30px; margin-bottom: 10px; }
 .mat-checkbox-frame { border-width: 1px !important; border-color: #ccc !important; border-radius: 0 !important;}
 .mat-checkbox-checked.mat-accent .mat-checkbox-background, .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {background-color: #673ab6;}
 .mat-checkbox-checkmark-path {stroke: #fff!important;}
+.mat-checkbox-disabled.mat-checkbox-checked .mat-checkbox-background, .mat-checkbox-disabled.mat-checkbox-indeterminate .mat-checkbox-background
+ {background-color: #b0b0b0 !important;}
+
 .mat-radio-outer-circle {background-color: #f2f2f2; border-width: 1px !important; border-color: #ccc !important;}
  .mat-radio-checked {
     .mat-radio-outer-circle {background-color: #673ab6; border-color: #673ab6 !important;}
@@ -231,7 +235,7 @@ h1 { font-size: 30px; margin-bottom: 10px; }
 }
 
 .mat-input-element:disabled {color: rgba(0, 0, 0, .6);}
-.mat-form-field-appearance-legacy .mat-form-field-label {color: rgba(0, 0, 0, .6);}
+.mat-form-field-appearance-legacy .mat-form-field-label {color:#777;}
 .ng-select.ng-select-disabled .ng-select-container .ng-value-container .ng-value {color: rgba(0, 0, 0, .6)}
 .ng-select.ng-select-disabled .ng-select-container .ng-value-container .ng-placeholder {color: rgba(0, 0, 0, .6)}
 
@@ -306,9 +310,9 @@ mat-footer-row, mat-header-row, mat-row, td.mat-cell, td.mat-footer-cell, th.mat
     }
 }
 
-::-webkit-scrollbar {width: 6px; height: 6px;}
-::-webkit-scrollbar-track {background: #D1C4E9; border-radius:3px;}
-::-webkit-scrollbar-thumb {background: #7E57C2; border-radius:3px;}
+::-webkit-scrollbar {width: 4px; height: 4px;}
+::-webkit-scrollbar-track {background: #D1C4E9; border-radius:2px;}
+::-webkit-scrollbar-thumb {background: #7E57C2; border-radius:2px;}
 ::-webkit-scrollbar-thumb:hover {background: #5E35B1;}
 
 .ng-select {padding-bottom: 3px; margin-bottom: 1.25em;
@@ -317,10 +321,11 @@ mat-footer-row, mat-header-row, mat-row, td.mat-cell, td.mat-footer-cell, th.mat
 }
 .ng-select.ng-select-opened, .ng-select.ng-select-focused {font-weight: normal; color: #000;}
 .ng-select .ng-has-value .ng-placeholder, .ng-select.ng-select-opened .ng-placeholder {
-    font-size: 12px; font-weight: normal; letter-spacing: 0.5px; color: #989898; font-family: arial;
+    font-size: 12px; font-weight: normal; letter-spacing: 0.5px; color: #777 !important; font-family: arial;
     -webkit-transform: translateY(-1.55em) scale(1) !important;
     transform: translateY(-1.55em) scale(1) !important;
 }
+.ng-select .ng-select-container {color: #000 !important;}
 .ng-select .ng-select-container .ng-value-container {padding: 0.7em 0 0;}
 // .ng-select .ng-input, .ng-select .ng-clear-wrapper {display: none;}
 
@@ -350,7 +355,7 @@ mat-footer-row, mat-header-row, mat-row, td.mat-cell, td.mat-footer-cell, th.mat
     box-shadow: $buttonShadowHover !important;
 }
 
-.mat-raised-button.mat-primary {box-shadow: $buttonShadow !important; color: #fff !important;}
+.mat-raised-button.mat-primary {color: #fff !important;}
 
 .mat-raised-button.mat-primary:hover {
     box-shadow: $buttonShadowHover !important;}
@@ -475,16 +480,16 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
     }
     h1 {color: #666; font-size: 16px; margin: 0; padding: 8px 0 0 15px; float: left;}
     .breadcrumbNav {list-style-type: none; margin: 0;
-        li {float: left; color: #808080; font-size: 15px; margin-right: 18px; line-height: 32px; position: relative;
+        li {float: left; color: #808080; font-size: 15px; margin-right: 7px; padding-right: 2px; line-height: 32px; position: relative;
             a {color: #808080; min-width: 70px;
                 span {font-size: 15px;}
                 &:hover {text-decoration:none;}
             }
-            &::after {content :'/'; position:  absolute; top: 3px; right:2px; }
+            &::after {content :'/'; position:  absolute; top: 1px; right:-5px; }
             &:first-child { margin-right: 0;
                 &::after {display: none;}
             }
-            &:last-child { margin-right: 0;
+            &:last-child { margin-left: 17px; line-height: 36px;
                 &::after {display: none;}
             }
            
@@ -649,6 +654,8 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
    // .mat-tab-label-content {white-space: normal; padding: 0 10px;}
 }
 
+.fotButtonBar {background: #f2f2f2; padding: 25px 0 10px;}
+
 .mat-tab-header-pagination-before, .mat-tab-header-pagination-after {background: $colorLite; }
 
 .listTable { margin:0; padding:0; li {list-style-type:none; .table {margin: 0; td {padding:0 0.75rem; vertical-align: middle;} } } }
@@ -663,7 +670,8 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
 }
 
 // Responsive CSS
-@media (max-width: 991px) { 
+@media (max-width: 991px) {
+    .container {margin-top: 65px;}
     .mainBg {display: block; vertical-align:inherit;}
     .verticalAlign {display: block; vertical-align:inherit; padding-top: 0;}
     
@@ -676,7 +684,17 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
        .logoText { font-size: 12px;}
     }
      
+    .moduleList {
+        .mat-tab-label-container {overflow-x: auto; padding-bottom: 5px;}
+        .mat-tab-header-pagination {display: none !important;}
+    }
+    .servicesList {margin-right: -8px; margin-left: -8px;
+        .colBtn {padding: 8px;}
+    }
 
+    .titleBar {
+        .breadcrumbNav {padding: 0 15px;}
+    }
      
 }
 
