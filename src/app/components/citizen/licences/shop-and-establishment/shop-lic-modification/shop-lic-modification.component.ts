@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
+import {  ActivatedRoute } from '@angular/router';
 import { ManageRoutes } from './../../../../../config/routes-conf';
 
 import { ValidationService } from '../../../../../shared/services/validation.service';
@@ -76,8 +76,6 @@ export class ShopLicModificationComponent implements OnInit {
 			// { labelName: 'Aadhar Card No', fieldIdentifier: '8', required: false, category: "common" },
 			// { labelName: 'Election/ Voters ID', fieldIdentifier: '9', required: false, category: "common" },
 			// { labelName: 'PAN Card No', fieldIdentifier: '10', required: false, category: "common" },
-
-
 		];
 
 	// serach api variable

@@ -6,7 +6,6 @@ import { ShopAndEstablishmentService } from '../common/services/shop-and-establi
 
 import { ValidationService } from '../../../../../shared/services/validation.service';
 import { FormsActionsService } from '../../../../../core/services/citizen/data-services/forms-actions.service';
-import * as _ from 'lodash';
 import { CommonService } from '../../.././../../shared/services/common.service';
 import { Location } from '@angular/common';
 

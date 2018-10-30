@@ -146,6 +146,8 @@ export class DashboardComponent implements OnInit {
 			case 'APL-TRA':
 			case 'APL-CAN':
 			case 'APL-DUP':
+			case 'FL-REN':
+			case 'FL-MODIFY':
 				this.router.navigate([ManageRoutes.getFullRoute(apiCode),false, apiCode]);
 			break;
 			default:

@@ -182,8 +182,20 @@ const ROUTEMAIN = {
         'type': 'assessmentCertificate'
     },
     'FL': {
-        'main': 'food-licence',
+        'main': 'foodlicence',
         'type': 'foodLicence'
+    },
+    'FL-REN': {
+        'main': 'foodLicenceRenewal',
+        'type': 'foodLicenceRenewal'
+    },
+    'FL-MODIFY': {
+        'main': 'foodLicenceModify',
+        'type': 'foodLicenceModify'
+    },
+    'FL-DUP': {
+        'main': 'foodLicenceDuplicate',
+        'type': 'foodLicenceDuplicate'
     },
     'CITIZENAUTHLOGIN': {
         'main': 'login',
@@ -495,6 +507,15 @@ const ROUTESLIST = {
     },
     'FL': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.LICENCEMODULE + '/' + ROUTEPREFIX.FOODMODULE + '/' + ROUTEMAIN["FL"].main
+    },
+    'FL-REN': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.LICENCEMODULE + '/' + ROUTEPREFIX.FOODMODULE + '/' + ROUTEMAIN["FL-REN"].main
+    },
+    'FL-MODIFY': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.LICENCEMODULE + '/' + ROUTEPREFIX.FOODMODULE + '/' + ROUTEMAIN["FL-MODIFY"].main
+    },
+    'FL-DUP': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.LICENCEMODULE + '/' + ROUTEPREFIX.FOODMODULE + '/' + ROUTEMAIN["FL-DUP"].main
     },
     'PRO-ASS': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TAXMODULE + '/' + ROUTEPREFIX.PROPERTYMODULE + '/' + ROUTEMAIN["PRO-ASS"].main
