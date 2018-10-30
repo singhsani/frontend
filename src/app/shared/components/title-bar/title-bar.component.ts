@@ -16,7 +16,7 @@ import { Router } from "@angular/router";
 								Home
 							</a>
 						</li>
-						<li style="margin-left:-7px;line-height: 35px;">{{title}}</li>
+						<li>{{title}}</li>
 					</ul>
 					</div>
 				</div>`,
