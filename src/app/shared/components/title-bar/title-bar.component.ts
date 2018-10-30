@@ -16,7 +16,7 @@ import { Router } from "@angular/router";
 								Home
 							</a>
 						</li>
-						<li>{{title}}</li>
+						<li style="margin-left:-7px;line-height: 35px;">{{title}}</li>
 					</ul>
 					</div>
 				</div>`,
@@ -24,7 +24,7 @@ import { Router } from "@angular/router";
 })
 export class TitleBarComponent implements OnInit {
 
-	@Input()title: string;
+	@Input() title: string;
 
 	constructor(
 		private router: Router,
@@ -37,7 +37,7 @@ export class TitleBarComponent implements OnInit {
 	 * This method is redirect to route based on selected tab
 	 * @param code - number
 	 */
-	navigateToRouteByIndex(code){
+	navigateToRouteByIndex(code) {
 		this.router.navigateByUrl(ManageRoutes.getFullRoute(code));
 	}
 

@@ -25,13 +25,33 @@ export class CommonService {
 
 	constructor(private session: SessionStorageService) { }
 
+	/**
+	 * This method is use for return image URL
+	 * @param type - Alert type
+	 */
+	imageUrls(type: string) {
+		if (type === 'warning') {
+			return "assets/icons/warning.svg";
+		} else if (type === 'success') {
+			return "assets/icons/done.svg";
+		} else if (type === 'info') {
+			return "assets/icons/info.svg";
+		} else if (type === 'error') {
+			return "assets/icons/error.svg";
+		} else if (type === 'question') {
+			return "assets/icons/question.svg";
+		}
+	}
+
 	openAlert(title: string, message: string, type: string, html?: any, cb?: any) {
 		let options = {
-			title: title,
+			title: (title === 'Warning' || title === 'Error') ? '' : title,
 			text: message,
 			type: type,
 			html: html,
-			confirmButtonText: 'Ok'
+			confirmButtonText: 'Ok',
+			imageUrl: this.imageUrls(type),
+			imageClass: 'doneIcon'
 		}
 
 		swal(options as any).then((result) => {
@@ -60,6 +80,8 @@ export class CommonService {
 			//type: type,
 			html: html1,
 			confirmButtonText: 'Ok',
+			imageUrl: this.imageUrls(type),
+			imageClass: 'doneIcon',
 		}
 
 		swal(options as any).then((result) => {
@@ -80,7 +102,9 @@ export class CommonService {
 			showCancelButton: true,
 			confirmButtonColor: '#3085d6',
 			cancelButtonColor: '#d33',
-			confirmButtonText: 'Yes, delete it!'
+			confirmButtonText: 'Yes, delete it!',
+			imageUrl: 'assets/icons/delete.svg',
+			imageClass: 'deleteIcon',
 		}
 
 		swal(options as any).then((result) => {
@@ -100,7 +124,9 @@ export class CommonService {
 			showCancelButton: true,
 			confirmButtonColor: '#3085d6',
 			cancelButtonColor: '#d33',
-			confirmButtonText: 'Make a Payment!'
+			confirmButtonText: 'Make a Payment!',
+			imageUrl: this.imageUrls(type),
+			imageClass: 'doneIcon',
 		}
 
 		swal(options as any).then((result) => {
@@ -115,7 +141,9 @@ export class CommonService {
 		let options = {
 			title: title,
 			text: message,
-			type: type
+			type: type,
+			imageUrl: this.imageUrls(type),
+			imageClass: 'doneIcon',
 		}
 
 		swal(options as any);
@@ -130,7 +158,9 @@ export class CommonService {
 			showCancelButton: true,
 			confirmButtonColor: '#3085d6',
 			cancelButtonColor: '#d33',
-			confirmButtonText: 'Make a Payment'
+			confirmButtonText: 'Make a Payment',
+			imageUrl: this.imageUrls(type),
+			imageClass: 'doneIcon',
 		}
 
 		swal(options as any).then((result) => {
@@ -181,7 +211,9 @@ export class CommonService {
 			showCancelButton: true,
 			confirmButtonColor: '#3085d6',
 			cancelButtonColor: '#d33',
-			confirmButtonText: 'Yes!'
+			confirmButtonText: 'Yes!',
+			imageUrl: this.imageUrls(type),
+			imageClass: 'doneIcon',
 		}
 
 		swal(options as any).then((result) => {
