@@ -9,6 +9,7 @@ import { ValidationService } from '../../services/validation.service';
 import { SessionStorageService } from 'angular-web-storage';
 
 import * as _ from 'lodash';
+import { environment } from '../../../../environments/environment';
 
 @Component({
 	selector: 'app-hos-action-bar',
@@ -174,7 +175,7 @@ export class HosActionBarComponent implements OnInit, OnChanges {
 									}),
 									transactionId: paymentData.transactionId,
 									paymentStatus: "SUCCESS",
-									retUrl: "http://192.168.10.107:8080/vmcportal/",
+									retUrl: environment.citizenUrl,
 									retPath: 'hospital/payment-gateway-response',
 									myApplicationUrl: '/hospital/my-applications'
 								}
@@ -182,7 +183,7 @@ export class HosActionBarComponent implements OnInit, OnChanges {
 								this.sessionStore.set('paymentData', JSON.stringify(payData));
 
 								this.commonService.paymentAlert('', '', '', cb => {
-									window.location.href = `http://192.168.10.107:8080/vmcadminportal/#/admin/payment-gateway?retUrl=${payData.retUrl}&retPath=${payData.retPath}`;
+									window.location.href = environment.adminUrl +`#/admin/payment-gateway?retUrl=${payData.retUrl}&retPath=${payData.retPath}`;
 								});
 
 								return;

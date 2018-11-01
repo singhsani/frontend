@@ -9,6 +9,7 @@ import { ValidationService } from './../../services/validation.service';
 import { FormsActionsService } from './../../../core/services/citizen/data-services/forms-actions.service';
 import { ToastrService } from 'ngx-toastr';
 import { SessionStorageService } from 'angular-web-storage';
+import { environment } from '../../../../environments/environment';
 
 @Component({
 	selector: 'app-action-bar',
@@ -170,7 +171,7 @@ export class ActionBarComponent implements OnInit, OnChanges {
 									transactionId: paymentData.transactionId,
 									paymentStatus: "SUCCESS",
 
-									retUrl: "http://192.168.10.107:8080/vmcportal/",
+									retUrl: environment.citizenUrl,
 									retPath: 'citizen/payment-gateway-response',
 									myApplicationUrl: '/citizen/my-applications'
 								}
@@ -179,7 +180,7 @@ export class ActionBarComponent implements OnInit, OnChanges {
 
 								this.commonService.paymentAlert('', '', '', cb => {
 									//http://192.168.10.107:8080/vmcadminportal/
-									window.location.href = `http://192.168.10.107:8080/vmcadminportal/#/admin/payment-gateway?retUrl=${payData.retUrl}&retPath=${payData.retPath}`;
+									window.location.href = environment.adminUrl +`#/admin/payment-gateway?retUrl=${payData.retUrl}&retPath=${payData.retPath}`;
 								});
 
 								return;

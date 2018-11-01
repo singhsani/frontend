@@ -76,7 +76,7 @@
 		<ng-container matColumnDef="action">
 			<mat-header-cell *matHeaderCellDef> {{'actions' | translate:translateKey}}</mat-header-cell>
 			<mat-cell *matCellDef="let element;">
-				<button *ngIf="element.status != bookingConstant.EXPIRED" mat-button [matMenuTriggerFor]="menu">
+				<button *ngIf="element.status != bookingConstant.EXPIRED && element.status != bookingConstant.PAYMENT_REQUIRED" mat-button [matMenuTriggerFor]="menu">
 					<mat-icon>more_vert</mat-icon>
 				</button>
 				<mat-menu #menu="matMenu">
@@ -85,12 +85,12 @@
 						{{'receipt' | translate:translateKey}}
 					</button>
 
-					<button *ngIf="element.status == bookingConstant.DEPOSIT_REQUIRED" mat-menu-item color="primary" (click)="printPolicePerformanceLicense(element)">
+					<button *ngIf="element.status == bookingConstant.DEPOSIT_REQUIRED || element.status == bookingConstant.BOOKED" mat-menu-item color="primary" (click)="printPolicePerformanceLicense(element)">
 						<mat-icon title="Police Performance license" color="primary">print</mat-icon>
 						{{'police_performance_license' | translate:translateKey}}
 					</button>
 
-					<button *ngIf="element.status == bookingConstant.DEPOSIT_REQUIRED" mat-menu-item data-toggle="modal" color="primary" (click)="openModal(templateRequestModel, element.scheduleList, element.refNumber);">
+					<button *ngIf="element.status == bookingConstant.DEPOSIT_REQUIRED || element.status == bookingConstant.BOOKED" mat-menu-item data-toggle="modal" color="primary" (click)="openModal(templateRequestModel, element.scheduleList, element.refNumber);">
 						<mat-icon title="View Booking Details" color="primary">details</mat-icon>
 						{{'details' | translate:translateKey}}
 					</button>

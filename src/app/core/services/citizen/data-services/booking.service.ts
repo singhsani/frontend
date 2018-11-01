@@ -3,6 +3,7 @@ import { HttpService } from '../../../../shared/services/http.service';
 import { Observable } from 'rxjs';
 import { CommonService } from '../../../../shared/services/common.service';
 import { SessionStorageService } from 'angular-web-storage';
+import { environment } from '../../../../../environments/environment';
 
 @Injectable()
 export class BookingService {
@@ -80,7 +81,7 @@ export class BookingService {
 			}),
 			transactionId: data.transactionId,
 			paymentStatus: "SUCCESS",
-			retUrl: "http://192.168.10.107:8080/vmcportal/",
+			retUrl: environment.citizenUrl,
 			retPath: 'citizen/payment-gateway-response',
 			myApplicationUrl: '/citizen/booking/cancel-booking'
 		}
@@ -91,7 +92,7 @@ export class BookingService {
 		this.session.set('paymentData', JSON.stringify(payData));
 
 		this.commonService.paymentAlert('', '', '', cb => {
-			window.location.href = `http://192.168.10.107:8080/vmcadminportal/#/admin/payment-gateway?retUrl=${payData.retUrl}&retPath=${payData.retPath}`;
+			window.location.href = environment.adminUrl +`#/admin/payment-gateway?retUrl=${payData.retUrl}&retPath=${payData.retPath}`;
 		});
 	}
 
