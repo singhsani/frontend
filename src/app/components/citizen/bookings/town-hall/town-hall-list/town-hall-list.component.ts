@@ -285,6 +285,9 @@ export class TownHallListComponent implements OnInit {
 			});
 		} else {
 			this.bookingUtils.getAllErrors(this.searchTownHallForm);
+			this.commonService.openAlert("Feild Error", this.bookingConstants.ALL_FEILD_REQUIRED_MESSAGE, 'warning', '', cb => {
+				window.scrollTo(0, 0);
+			})
 		}
 	}
 
@@ -410,7 +413,7 @@ export class TownHallListComponent implements OnInit {
 				this.commonService.openAlertFormSaveValidation('Warning!', err.error, 'warning');
 			});
 		} else {
-			this.toster.show("Please Select shifts");
+			this.toster.show(this.bookingConstants.SELECT_SHIFT_MESSAGE);
 		}
 	}
 
@@ -538,6 +541,7 @@ export class TownHallListComponent implements OnInit {
 			})
 		} else {
 			this.bookingUtils.getAllErrors(this.townHallApplicationForm);
+			this.commonService.openAlert("Feild Error", this.bookingConstants.ALL_FEILD_REQUIRED_MESSAGE, 'warning')
 		}
 	}
 

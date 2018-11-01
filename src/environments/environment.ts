@@ -6,6 +6,10 @@
 export const environment = {
 	production: false,
 	envName: 'dev',
-	envAPIServer: '/VMC/'
+	envAPIServer: '/VMC/',
+
+	//Usefull url and api url's.
+	adminUrl: 'http://' + window.location.hostname + ':' + window.location.port + '/vmcadminportal/',
+	citizenUrl: 'http://' + window.location.hostname + ':' + window.location.port + '/vmcportal/',
 };
 

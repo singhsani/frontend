@@ -40,7 +40,7 @@ export class InputTrimDirective extends DefaultValueAccessor {
     return this._type;
   }
 
-  set type( value: string ) {
+  set type(value: string) {
     this._type = value || 'text';
   }
 
@@ -56,32 +56,30 @@ export class InputTrimDirective extends DefaultValueAccessor {
    * Set a new value to the field and model.
    *
    */
-  set value( val: any ) {
+  set value(val: any) {
     // update element
-    this.writeValue( val );
+    this.writeValue(val);
 
-    if (val !== this.value) {
+    // Cache the new value first
+    this._value = val;
 
-      // Cache the new value first
-      this._value = val;
+    // update model
+    this.onChange(val);
 
-      // update model
-      this.onChange( val );
 
-    }
 
   }
 
   /**
    * Updates the value on the blur event.
    */
-  @HostListener( 'blur', ['$event.type', '$event.target.value'] )
-  onBlur( event: string, value: string ): void {
+  @HostListener('blur', ['$event.type', '$event.target.value'])
+  onBlur(event: string, value: string): void {
 
     // update value if only changed
     // FIX: https://github.com/anein/angular2-trim-directive/issues/17
     if (value.trim() !== this.value) {
-      this.updateValue( event, value );
+      this.updateValue(event, value);
     }
 
     this.onTouched();
@@ -90,15 +88,15 @@ export class InputTrimDirective extends DefaultValueAccessor {
   /**
    * Updates the value on the input event.
    */
-  @HostListener( 'input', ['$event.type', '$event.target.value'] )
-  onInput( event: string, value: string ): void {
-    this.updateValue( event, value );
+  @HostListener('input', ['$event.type', '$event.target.value'])
+  onInput(event: string, value: string): void {
+    this.updateValue(event, value);
   }
 
-  constructor( @Inject( Renderer2 ) renderer: Renderer2,
-               @Inject( ElementRef ) elementRef: ElementRef,
-               @Optional() @Inject( COMPOSITION_BUFFER_MODE ) compositionMode: boolean ) {
-    super( renderer, elementRef, compositionMode );
+  constructor(@Inject(Renderer2) renderer: Renderer2,
+    @Inject(ElementRef) elementRef: ElementRef,
+    @Optional() @Inject(COMPOSITION_BUFFER_MODE) compositionMode: boolean) {
+    super(renderer, elementRef, compositionMode);
 
     this._sourceRenderer = renderer;
     this._sourceElementRef = elementRef;
@@ -111,18 +109,18 @@ export class InputTrimDirective extends DefaultValueAccessor {
    *
    * @param {any} value - new value
    */
-  public writeValue( value: any ): void {
+  public writeValue(value: any): void {
 
     if (!this._value) {
       this._value = value;
     }
 
-    this._sourceRenderer.setProperty( this._sourceElementRef.nativeElement, 'value', value );
+    this._sourceRenderer.setProperty(this._sourceElementRef.nativeElement, 'value', value);
 
     // a dirty trick (or magic) goes here:
     // it updates the element value if `setProperty` doesn't set it for some reason.
     if (this._type !== 'text') {
-      this._sourceRenderer.setAttribute( this._sourceElementRef.nativeElement, 'value', value );
+      this._sourceRenderer.setAttribute(this._sourceElementRef.nativeElement, 'value', value);
     }
 
   }
@@ -133,7 +131,7 @@ export class InputTrimDirective extends DefaultValueAccessor {
    * @param {string} value - input value
    * @param {string} event - input event
    */
-  private updateValue( event: string, value: string ): void {
+  private updateValue(event: string, value: string): void {
 
     // check if the user has set an optional attribute. Trimmmm!!! Uhahahaha!
     this.value = (this.trim !== '' && event !== this.trim) ? value : value.trim();

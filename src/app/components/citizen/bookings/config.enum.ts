@@ -25,7 +25,10 @@ export enum BookingConstants {
     TOWNHALL_FEES = "TOWNHALL_FEES",
     BY_FORCE = "BY_FORCE",
     BY_CITIZEN = "BY_CITIZEN",
-    INVALID_BOOKING_STATUS = "INVALID_BOOKING_STATUS"
+    INVALID_BOOKING_STATUS = "INVALID_BOOKING_STATUS",
+    ALL_FEILD_REQUIRED_MESSAGE="Please fill all the required feilds",
+    SELECT_SHIFT_MESSAGE="Please Select shift to cancel",
+    
 }
 
 /**
