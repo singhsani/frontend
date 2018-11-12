@@ -26,21 +26,22 @@ import { FileUploadComponent } from '../../../../../shared/components/file-uploa
 import { BehaviorSubject } from 'rxjs';
 import { convertToParamMap, ActivatedRoute } from '@angular/router';
 import { BasicDetailsComponent } from '../../../../../shared/components/basic-details/basic-details.component';
+import { Subject } from 'rxjs/Subject';
 
-describe('FoodNewComponent', () => {
-  let component: FoodNewComponent;
-  let fixture: ComponentFixture<FoodNewComponent>;
-  let activatedRoute: MockActivatedRoute;
+fdescribe('FoodNewComponent', () => {
+	let component: FoodNewComponent;
+	let fixture: ComponentFixture<FoodNewComponent>;
+	let activatedRoute: MockActivatedRoute;
 
 	beforeEach(() => {
 		activatedRoute = new MockActivatedRoute();
 	})
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [
+	beforeEach(async(() => {
+		TestBed.configureTestingModule({
+			declarations: [
 				FoodNewComponent,
-        TitleBarComponent,
-        BasicDetailsComponent,
+				TitleBarComponent,
+				BasicDetailsComponent,
 				ControlMessagesComponent,
 				AddressComponent,
 				ValidationFieldsDirective,
@@ -74,21 +75,88 @@ describe('FoodNewComponent', () => {
 				ToastrService,
 				{ provide: ActivatedRoute, useValue: activatedRoute }
 			]
-    })
-    .compileComponents();
-  }));
+		})
+			.compileComponents();
+	}));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(FoodNewComponent);
-    component = fixture.componentInstance;
-    activatedRoute.testParams = convertToParamMap({ id: 10, apiCode: "HEL-MR" })
-    //fixture.detectChanges();
-  });
+	beforeEach(() => {
+		fixture = TestBed.createComponent(FoodNewComponent);
+		component = fixture.componentInstance;
+		activatedRoute.testParams = convertToParamMap({ id: 10, apiCode: "HEL-MR" })
+		fixture.detectChanges();
+	});
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+	it('should create', () => {
+		expect(component).toBeTruthy();
+	});
+
+	it('form invalid when empty', () => {
+		expect(component.foodLicNewForm.valid).toBeFalsy();
+	});
+
+	it('email field validity', () => {
+		let errors = {};
+		let email = component.foodLicNewForm.controls['firmEmailId'];
+		errors = email.errors || {};
+		expect(errors['required']).toBeTruthy();
+		   // Set email to something
+			 email.setValue("test");
+			 errors = email.errors || {};
+			 expect(errors['required']).toBeFalsy();
+			//  expect(errors['pattern']).toBeTruthy();
+			//  ValidationService.emailValidator
+			 // Set email to something correct
+			 email.setValue("test@example.com");
+			 errors = email.errors || {};
+			 expect(errors['required']).toBeFalsy();
+			//  expect(errors['pattern']).toBeFalsy();
+	});
+	fit('form valid when submit', () => {
+		component.foodLicNewForm.patchValue({
+					"id": 1,
+					"uniqueId": " ",
+					"version": " ",
+					"applicationId": "2018-11-01-FL-I7H8FTYA",
+					"fileNumber": " ",
+					"loiNumber": " ",
+					"applicationName": "Food Licensing & Registration",
+					"type": "FL_LIC",
+					"status": "Payment Received",
+					"iagree": false,
+					"createdBy": "CITIZEN",
+					"holderName": "fdgfg",
+					"holderAddress": "dgffg",
+					"firmName": "fdgdfg",
+					"firmAddress": "fdggf",
+					"firmZone": " ",
+					"firmAdministrativeWard": " ",
+					"firmCity": "Vadodara",
+					"firmPincode": "231321",
+					"mobileNo": "3212313213",
+					"firmLandLineNo": "3211313211",
+					"firmEmailId": "sdf@yahoo.com",
+					"businessType": " ",
+					"regLicType": " ",
+					"businessTurnOver": " ",
+					"regOrLic": "License",
+					"licenceForNoOfYear": " ",
+					"feesType": " ",
+					"totalFeesAmount": " ",
+					"paymentMode": " "
+		});
+		expect(component.foodLicNewForm.valid).toBeFalsy();
+	});
+
 });
+
+// class FakeSpinnerService {
+//   private spinnerStateSource = new Subject();
+//   spinnerState = this.spinnerStateSource.asObservable();
+
+//   emit(val: boolean) {
+//     this.spinnerStateSource.next({ show: val });
+//   }
+// }
 export class MockActivatedRoute {
 	private paramsSubject = new BehaviorSubject(this.testParams);
 	private _testParams: {};
