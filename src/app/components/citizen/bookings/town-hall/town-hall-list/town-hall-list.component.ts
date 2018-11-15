@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { BookingService } from '../../../../../core/services/citizen/data-services/booking.service';
 import { CommonService } from '../../../../../shared/services/common.service';
 import { BookingConstants, BookingUtils } from '../../config.enum';
+import { ValidationService } from '../../../../../shared/services/validation.service';
 
 export interface BookingDetails {
 	administrationCharges: string
@@ -405,12 +406,13 @@ export class TownHallListComponent implements OnInit {
 						this.CD.detectChanges();
 						this.bookingDetailsDataSource.paginator = this.paginator;
 						this.paginator.pageSize = 5;
-						this.paginator.pageIndex = 0
+						this.paginator.pageIndex = 0;
+						this.isLoadingResults = false;
 					})
-
 				}
 			}, (err) => {
 				this.commonService.openAlertFormSaveValidation('Warning!', err.error, 'warning');
+				this.isLoadingResults = false;
 			});
 		} else {
 			this.toster.show(this.bookingConstants.SELECT_SHIFT_MESSAGE);
@@ -486,7 +488,7 @@ export class TownHallListComponent implements OnInit {
 			bankName: this.fb.group({
 				code: [null, [Validators.required]]
 			}),
-			ifscCode: [null, [Validators.required]],
+			ifscCode: [null, [Validators.required, ValidationService.ifscCodeValidator]],
 
 			/**
 			 * Booking Details
@@ -520,15 +522,15 @@ export class TownHallListComponent implements OnInit {
 	 * Method is used to submit townhall application form.
 	 */
 	submitTownhallApplication() {
-
 		if (this.townHallApplicationForm.valid && this.emailMatcher() && this.mobileNumberMatcher()) {
-
+			this.isLoadingResults = true;
 			this.bookingService.commonBookSlot(this.townHallApplicationForm.value).subscribe(resp => {
 
 				/**
 				 * Response Data here 
 				 */
 			}, (err) => {
+				this.isLoadingResults = false;
 				if (err.status == 402) {
 					this.bookingService.proceedForPayment(err.error.data);
 				} else if (err.error[0].code == this.bookingConstants.INVALID_BOOKING_STATUS) {

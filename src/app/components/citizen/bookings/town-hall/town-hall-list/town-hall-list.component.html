@@ -1,5 +1,9 @@
 <!-- HTML for Town hall booking Guideline-->
 
+<div class="example-loading-shade" *ngIf="isLoadingResults">
+    <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+</div>
+
 <div *ngIf="guideLineFlag">
 
     <mat-card class="border border-primary p-0">
@@ -48,9 +52,9 @@
 <div *ngIf="showSearchForm">
 
     <app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
-    <mat-card>
-        <form [formGroup]="searchTownHallForm" (ngSubmit)="searchBooking()" autocomplete="off" ngNativeValidate>
 
+    <mat-card class="cardBorder">
+        <form class="p-15" [formGroup]="searchTownHallForm" (ngSubmit)="searchBooking()" autocomplete="off" ngNativeValidate>
             <div class="row">
                 <div class="col-md-6 ngSelect">
                     <ng-select placeholder="{{'select_town_hall'| translate: translateKey}}" formControlName="code">
@@ -179,8 +183,8 @@
                     <tbody>
                         <tr *ngFor="let shifts of selectedShift; let i = index;">
                             <th scope="row">{{i+1}}</th>
-                            <td>{{shifts.start}}</td>
-                            <td>{{shifts.end}}</td>
+                            <td>{{bookingUtils.returnProperDate(shifts.start)}}</td>
+                            <td>{{bookingUtils.returnProperDate(shifts.end)}}</td>
                             <td>{{shifts.shiftType}}</td>
                             <td>
                                 <button mat-icon-button title="{{'remove_slot'| translate: translateKey}}" [disabled]="selectedShift.length == 1" (click)="removeSelectedShift(shifts, i)">
