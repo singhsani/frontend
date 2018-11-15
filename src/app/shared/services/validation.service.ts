@@ -33,7 +33,8 @@ export class ValidationService {
             invalidpregnanceTime: 'Pregnancy duration between 25 to 50',
             invalidbirthRegNumber: 'Invalid Birth Registration Date',
             invalidBuildingName: 'Building name is not valid',
-            invalidemployeeage: 'Age must be greater than 13 year'
+            invalidemployeeage: 'Age must be greater than 13 year',
+            invalidIfscCode: 'IFSC Code is not valid'
         }
 
         return config[validatorName];
@@ -190,6 +191,15 @@ export class ValidationService {
             return '';
         } else {
             return { 'invalidpregnanceTime': true };
+        }
+    }
+
+    static ifscCodeValidator(control : AbstractControl){
+        if (control.value) {
+            const matches = control.value.match(/^[A-Z]{4}0[0-9|A-Z]{6}/);
+            return matches ? null : { 'invalidIfscCode': true };
+        } else {
+            return null;
         }
     }
 

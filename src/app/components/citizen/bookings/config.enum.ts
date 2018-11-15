@@ -80,8 +80,11 @@ export class BookingUtils{
 	 * @param date - string date
 	 */
     returnProperDate(date: string) {
-        let newDate = date.split("-");
-        return newDate[2] + "-" + newDate[1] + "-" + newDate[0]
+        if(date){
+            let newDate = date.split(" ")[0].split("-");
+            return newDate[2] + "-" + newDate[1] + "-" + newDate[0];
+        }
+        return null;
     }
 }
 
