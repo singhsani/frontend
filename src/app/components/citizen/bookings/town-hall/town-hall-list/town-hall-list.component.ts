@@ -308,7 +308,7 @@ export class TownHallListComponent implements OnInit {
 		let myArray = this.filterAcc(month.id);
 		for (let i = 0; i < myArray.length; i++) {
 			for (let j = 0; j < myArray[i].slotList.length; j++) {
-				if (myArray[i].slotList[j].slotStatus == 'AVAILABLE') {
+				if (myArray[i].slotList[j].slotStatus == this.bookingConstants.AVAILABLE) {
 					return true;
 				}
 			}
@@ -332,7 +332,7 @@ export class TownHallListComponent implements OnInit {
 		} else {
 			let data = this.selectedShift.findIndex(uniqueId => uniqueId.uniqueId == shift.uniqueId);
 			if (data > -1) {
-				shift.slotStatus = 'AVAILABLE';
+				shift.slotStatus = this.bookingConstants.AVAILABLE;
 				this.selectedShift.splice(data, 1);
 			}
 		}
@@ -365,7 +365,7 @@ export class TownHallListComponent implements OnInit {
 				obj.slotList.forEach(nestObj => {
 					let index = this.selectedShift.findIndex(myData => myData.uniqueId == nestObj.uniqueId);
 					if (index > -1) {
-						nestObj.slotStatus = 'AVAILABLE';
+						nestObj.slotStatus = this.bookingConstants.AVAILABLE;
 						this.selectedShift.splice(index, 1)
 					}
 				})
@@ -459,6 +459,42 @@ export class TownHallListComponent implements OnInit {
 		this.townHallApplicationForm = this.fb.group({
 
 			/**
+			 * Organization Details
+			 */
+			organizationName: [null, [Validators.required]],
+			orgTelephoneNo: [null, [Validators.required]],
+			organizationPresidentName: [null, [Validators.required]],
+			organizationAddress: this.fb.group(this.addressComp.addressControls()),
+
+			/**
+			 * Applicant Details
+			 */
+			applicantName: [null, [Validators.required]],
+			applicantMobile: [null, [Validators.required]],
+			confirmMobile: [null, [Validators.required]],
+			emailID: [null, [Validators.required, Validators.email]],
+			confirmEmailID: [null, [Validators.required, Validators.email]],
+			relationshipWithOrg: [null, [Validators.required]],
+			applicantAddress: this.fb.group(this.addressComp.addressControls()),
+
+
+			/**
+			 * Bank Accoount Details
+			 */
+			bankName: this.fb.group({
+				code: [null, [Validators.required]]
+			}),
+			accountHolderName: [null, [Validators.required]],
+			accountNo: [null, [Validators.required]],
+			ifscCode: [null, [Validators.required, ValidationService.ifscCodeValidator]],
+
+			/**
+			 * Booking Details
+			 */
+			programShortDetails: [null, [Validators.required]],
+			programPurpose: [null, [Validators.required]],
+
+			/**
 			 * form details
 			 */
 			id: null,
@@ -468,52 +504,16 @@ export class TownHallListComponent implements OnInit {
 			status: null,
 			uniqueId: null,
 			version: 0,
-
-			/**
-			 * Applicant Details
-			 */
-			applicantAddress: this.fb.group(this.addressComp.addressControls()),
-			applicantMobile: [null, [Validators.required]],
-			applicantName: [null, [Validators.required]],
-			relationshipWithOrg: [null, [Validators.required]],
-			emailID: [null, [Validators.required, Validators.email]],
-			confirmMobile: [null, [Validators.required]],
-			confirmEmailID: [null, [Validators.required, Validators.email]],
-
-			/**
-			 * Bank Accoount Details
-			 */
-			accountHolderName: [null, [Validators.required]],
-			accountNo: [null, [Validators.required]],
-			bankName: this.fb.group({
-				code: [null, [Validators.required]]
-			}),
-			ifscCode: [null, [Validators.required, ValidationService.ifscCodeValidator]],
-
-			/**
-			 * Booking Details
-			 */
 			bookingDate: [null, [Validators.required]],
 			bookingFrom: [null, [Validators.required]],
-			bookingPurposeMaster: this.fb.group({
-				code: [null, [Validators.required]],
-				name: null
-			}),
-
 			bookingTo: [null, [Validators.required]],
 			cancelledDate: null,
 			expiryTime: null,
 			policePerformanceLicense: null,
-			programPurpose: [null, [Validators.required]],
-			programShortDetails: [null, [Validators.required]],
-
-			/**
-			 * Organization Details
-			 */
-			orgTelephoneNo: [null, [Validators.required]],
-			organizationAddress: this.fb.group(this.addressComp.addressControls()),
-			organizationName: [null, [Validators.required]],
-			organizationPresidentName: [null, [Validators.required]],
+			bookingPurposeMaster: this.fb.group({
+				code: [null, [Validators.required]],
+				name: null
+			}),
 		})
 
 	}
@@ -522,7 +522,17 @@ export class TownHallListComponent implements OnInit {
 	 * Method is used to submit townhall application form.
 	 */
 	submitTownhallApplication() {
-		if (this.townHallApplicationForm.valid && this.emailMatcher() && this.mobileNumberMatcher()) {
+		let errCount = this.bookingUtils.getAllErrors(this.townHallApplicationForm);
+		if (this.townHallApplicationForm.invalid) {
+			this.handleErrorsOnSubmit(errCount);
+			this.commonService.openAlert("Feild Error", this.bookingConstants.ALL_FEILD_REQUIRED_MESSAGE, 'warning')
+			return;
+		}
+		else if (!this.emailMatcher() || !this.mobileNumberMatcher()) {
+			this.handleErrorsOnSubmit(7);
+			this.commonService.openAlert("Feild Error", !this.emailMatcher() ? this.bookingConstants.EMAIL_MIS_MATCH_MESSAGE : this.bookingConstants.MOB_NO_MIS_MATCH_MESSAGE, 'warning')
+			return;
+		} else {
 			this.isLoadingResults = true;
 			this.bookingService.commonBookSlot(this.townHallApplicationForm.value).subscribe(resp => {
 
@@ -541,9 +551,7 @@ export class TownHallListComponent implements OnInit {
 					this.commonService.openAlertFormSaveValidation('Warning!', err.error, 'warning');
 				}
 			})
-		} else {
-			this.bookingUtils.getAllErrors(this.townHallApplicationForm);
-			this.commonService.openAlert("Feild Error", this.bookingConstants.ALL_FEILD_REQUIRED_MESSAGE, 'warning')
+			return;
 		}
 	}
 
@@ -582,29 +590,25 @@ export class TownHallListComponent implements OnInit {
 	 * @param count - count of invalid control.
 	 */
 	handleErrorsOnSubmit(count) {
-		let step1 = 6;
-		let step2 = 16;
-		let step3 = 36;
-		let step4 = 41;
-		let step5 = 42;
+		/**
+		 * No Of controls on perticular tab
+		 */
+		let step1 = 4;
+		let step2 = 11;
+		let step3 = 17;
 
-		if (count <= step1) {
+		/**
+		 * Redirection
+		 */
+		if (count < step1) {
 			this.tabIndex = 0;
 			return false;
-		} else if (count <= step2) {
+		} else if (count < step2) {
 			this.tabIndex = 1;
 			return false;
-		} else if (count <= step3) {
+		} else if (count < step3) {
 			this.tabIndex = 2;
 			return false;
-		} else if (count <= step4) {
-			this.tabIndex = 3;
-			return false;
-		} else if (count <= step5) {
-			this.tabIndex = 4;
-			return false;
-		} else if (count >= 58 && count <= 64) {
-			this.tabIndex = 3;
 		}
 	}
 }

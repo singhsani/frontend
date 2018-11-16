@@ -4,6 +4,8 @@
     <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
 </div>
 
+<app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
+
 <div *ngIf="guideLineFlag">
 
     <mat-card class="border border-primary p-0">
@@ -50,9 +52,6 @@
 
 <!-- HTML for Town hall booking -->
 <div *ngIf="showSearchForm">
-
-    <app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
-
     <mat-card class="cardBorder">
         <form class="p-15" [formGroup]="searchTownHallForm" (ngSubmit)="searchBooking()" autocomplete="off" ngNativeValidate>
             <div class="row">
@@ -343,175 +342,196 @@
             </button>
         </div>
     </div>
-
-
 </div>
 
-
-
 <div [hidden]="!showApplicationForm">
-    <mat-card class="cardH1">
-        <h1>
-            {{'townhall_application_form'| translate: translateKey}}
-        </h1>
-    </mat-card>
-
-    <mat-card>
-
-
+    <mat-card class="formClass cardBorder">
         <form [formGroup]="townHallApplicationForm" (ngSubmit)="submitTownhallApplication()">
 
-            <h2>
-                {{'organization_details' | translate:translateKey}}
-            </h2>
+            <mat-tab-group mat-stretch-tabs dynamicHeight="true" [(selectedIndex)]="tabIndex" class="stepperNav">
 
-            <div class="row">
-                <mat-form-field class="col-md-4">
-                    <input matInput maxlength="25" appValidationFields [validationFieldsType]="'onlyNameWithSpace'" type="text" formControlName="organizationName"
-                        placeholder="{{'oraganization_name' | translate: translateKey}}" required>
-                    <control-messages [control]="townHallApplicationForm.controls.organizationName"></control-messages>
-                </mat-form-field>
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <div>{{'organization_details' | translate:translateKey}}</div>
+                    </ng-template>
 
-                <mat-form-field class="col-md-4">
-                    <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="orgTelephoneNo" placeholder="{{'orgTelephone_no' | translate: translateKey}}"
-                        required>
-                    <control-messages [control]="townHallApplicationForm.controls.orgTelephoneNo"></control-messages>
-                </mat-form-field>
+                    <h2>
+                        {{'organization_details' | translate:translateKey}}
+                    </h2>
 
-                <mat-form-field class="col-md-4">
-                    <input matInput maxlength="50" appValidationFields [validationFieldsType]="'onlyNameWithSpace'" formControlName="organizationPresidentName"
-                        placeholder="{{'organization_president_name' | translate: translateKey}}" required>
-                    <control-messages [control]="townHallApplicationForm.controls.organizationPresidentName"></control-messages>
-                </mat-form-field>
+                    <div class="row">
+                        <mat-form-field class="col-md-4">
+                            <input matInput maxlength="25" appValidationFields [validationFieldsType]="'onlyNameWithSpace'" type="text" formControlName="organizationName"
+                                placeholder="{{'oraganization_name' | translate: translateKey}}" required>
+                            <control-messages [control]="townHallApplicationForm.controls.organizationName"></control-messages>
+                        </mat-form-field>
 
-            </div>
+                        <mat-form-field class="col-md-4">
+                            <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="orgTelephoneNo" placeholder="{{'orgTelephone_no' | translate: translateKey}}"
+                                required>
+                            <control-messages [control]="townHallApplicationForm.controls.orgTelephoneNo"></control-messages>
+                        </mat-form-field>
 
-            <div>
-                <h2>
-                    {{'organizationAddress' | translate:translateKey}}
-                </h2>
-                <app-address #address [requiredFeilds]="true" [addressFormGroup]="townHallApplicationForm.controls.organizationAddress"></app-address>
-            </div>
+                        <mat-form-field class="col-md-4">
+                            <input matInput maxlength="50" appValidationFields [validationFieldsType]="'onlyNameWithSpace'" formControlName="organizationPresidentName"
+                                placeholder="{{'organization_president_name' | translate: translateKey}}" required>
+                            <control-messages [control]="townHallApplicationForm.controls.organizationPresidentName"></control-messages>
+                        </mat-form-field>
 
-            <h2>
-                {{'applicant_details' | translate:translateKey}}
-            </h2>
+                    </div>
 
-            <div class="row">
-                <mat-form-field class="col-md-4">
-                    <input matInput maxlength="50" appValidationFields [validationFieldsType]="'onlyNameWithSpace'" type="text" formControlName="applicantName"
-                        placeholder="{{'applicant_name' | translate: translateKey}}" required>
-                    <control-messages [control]="townHallApplicationForm.controls.applicantName"></control-messages>
-                </mat-form-field>
+                    <div>
+                        <h2>
+                            {{'organizationAddress' | translate:translateKey}}
+                        </h2>
+                        <app-address #address [requiredFeilds]="true" [addressFormGroup]="townHallApplicationForm.controls.organizationAddress"></app-address>
+                    </div>
 
-                <mat-form-field class="col-md-4">
-                    <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="applicantMobile" placeholder="{{'applicant_mobile' | translate: translateKey}}"
-                        required>
-                    <control-messages [control]="townHallApplicationForm.controls.applicantMobile"></control-messages>
-                </mat-form-field>
+                    <div class="pull-right">
+                        <button type="button" mat-raised-button (click)="tabIndex= tabIndex +1;">{{'next' | translate:translateKey}}
+                        </button>
+                    </div>
+                </mat-tab>
 
-                <div class="col-md-4">
-                    <mat-form-field>
-                        <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="confirmMobile" placeholder="{{'confirm_mobile' | translate: translateKey}}"
-                            required>
-                        <control-messages [control]="townHallApplicationForm.controls.confirmMobile"></control-messages>
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <div>{{'applicant_details' | translate:translateKey}}</div>
+                    </ng-template>
+                    <h2>
+                        {{'applicant_details' | translate:translateKey}}
+                    </h2>
 
-                    </mat-form-field>
-                    <mat-error *ngIf="!mobileNumberMatcher() && townHallApplicationForm.controls.applicantMobile.touched && townHallApplicationForm.controls.confirmMobile.touched">
-                        Mobile Number & Confirm Mobile Number is not same
-                    </mat-error>
-                </div>
+                    <div class="row">
+                        <mat-form-field class="col-md-4">
+                            <input matInput maxlength="50" appValidationFields [validationFieldsType]="'onlyNameWithSpace'" type="text" formControlName="applicantName"
+                                placeholder="{{'applicant_name' | translate: translateKey}}" required>
+                            <control-messages [control]="townHallApplicationForm.controls.applicantName"></control-messages>
+                        </mat-form-field>
+
+                        <mat-form-field class="col-md-4">
+                            <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="applicantMobile" placeholder="{{'applicant_mobile' | translate: translateKey}}"
+                                required>
+                            <control-messages [control]="townHallApplicationForm.controls.applicantMobile"></control-messages>
+                        </mat-form-field>
+
+                        <div class="col-md-4">
+                            <mat-form-field>
+                                <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="confirmMobile" placeholder="{{'confirm_mobile' | translate: translateKey}}"
+                                    required>
+                                <control-messages [control]="townHallApplicationForm.controls.confirmMobile"></control-messages>
+
+                            </mat-form-field>
+                            <mat-error *ngIf="!mobileNumberMatcher() && townHallApplicationForm.controls.applicantMobile.touched && townHallApplicationForm.controls.confirmMobile.touched">
+                                Mobile Number & Confirm Mobile Number is not same
+                            </mat-error>
+                        </div>
 
 
-                <mat-form-field class="col-md-4">
-                    <input matInput type="email" formControlName="emailID" placeholder="{{'applicant_email' | translate: translateKey}}" required>
-                    <control-messages [control]="townHallApplicationForm.controls.emailID"></control-messages>
-                </mat-form-field>
+                        <mat-form-field class="col-md-4">
+                            <input matInput type="email" formControlName="emailID" placeholder="{{'applicant_email' | translate: translateKey}}" required>
+                            <control-messages [control]="townHallApplicationForm.controls.emailID"></control-messages>
+                        </mat-form-field>
 
-                <div class="col-md-4">
-                    <mat-form-field>
-                        <input matInput type="email" formControlName="confirmEmailID" placeholder="{{'confirm_email' | translate: translateKey}}"
-                            required>
-                        <control-messages [control]="townHallApplicationForm.controls.confirmEmailID"></control-messages>
-                    </mat-form-field>
-                    <mat-error *ngIf="!emailMatcher() &&townHallApplicationForm.controls.emailID.touched && townHallApplicationForm.controls.confirmEmailID.touched">
-                        Email & Confirm Email is not same
-                    </mat-error>
+                        <div class="col-md-4">
+                            <mat-form-field>
+                                <input matInput type="email" formControlName="confirmEmailID" placeholder="{{'confirm_email' | translate: translateKey}}"
+                                    required>
+                                <control-messages [control]="townHallApplicationForm.controls.confirmEmailID"></control-messages>
+                            </mat-form-field>
+                            <mat-error *ngIf="!emailMatcher() &&townHallApplicationForm.controls.emailID.touched && townHallApplicationForm.controls.confirmEmailID.touched">
+                                Email & Confirm Email is not same
+                            </mat-error>
 
-                </div>
+                        </div>
 
-                <mat-form-field class="col-md-4">
-                    <input matInput type="text" maxlength="20" appValidationFields [validationFieldsType]="'onlyNameWithSpace'" formControlName="relationshipWithOrg"
-                        placeholder="{{'relationship_with_org' | translate: translateKey}}" required>
-                    <control-messages [control]="townHallApplicationForm.controls.relationshipWithOrg"></control-messages>
-                </mat-form-field>
-            </div>
+                        <mat-form-field class="col-md-4">
+                            <input matInput type="text" maxlength="20" appValidationFields [validationFieldsType]="'onlyNameWithSpace'" formControlName="relationshipWithOrg"
+                                placeholder="{{'relationship_with_org' | translate: translateKey}}" required>
+                            <control-messages [control]="townHallApplicationForm.controls.relationshipWithOrg"></control-messages>
+                        </mat-form-field>
+                    </div>
 
-            <div>
-                <h2>
-                    {{'applicantAddress' | translate:translateKey}}
-                </h2>
-                <app-address #address [requiredFeilds]="true" [addressFormGroup]="townHallApplicationForm.controls.applicantAddress"></app-address>
-            </div>
+                    <div>
+                        <h2>
+                            {{'applicantAddress' | translate:translateKey}}
+                        </h2>
+                        <app-address #address [requiredFeilds]="true" [addressFormGroup]="townHallApplicationForm.controls.applicantAddress"></app-address>
+                    </div>
 
-            <h2>
-                {{'bank_details' | translate:translateKey}}
-            </h2>
+                    <div class="pull-right">
+                        <button type="button" mat-raised-button (click)="tabIndex= tabIndex -1; ">{{'back' | translate:translateKey}}</button>
+                        <button type="button" mat-raised-button (click)="tabIndex= tabIndex +1;">{{'next' | translate:translateKey}}
+                        </button>
+                    </div>
 
-            <div class="row">
+                </mat-tab>
 
-                <div formGroupName="bankName" class="col-md-3 ngSelect">
-                    <ng-select placeholder="{{'bank_name' | translate:translateKey}} *" formControlName="code">
-                        <ng-option *ngFor="let bank of BankOptions" [value]="bank.code">
-                            {{bank.name}}
-                        </ng-option>
-                    </ng-select>
-                    <control-messages [control]="townHallApplicationForm.controls.bankName.controls.code"></control-messages>
-                </div>
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <div>{{'bank_details' | translate:translateKey}}</div>
+                    </ng-template>
 
-                <mat-form-field class="col-md-3">
-                    <input matInput type="text" maxlength="20" appValidationFields [validationFieldsType]="'onlyNameWithSpace'" formControlName="accountHolderName"
-                        placeholder="{{'account_holder_name' | translate: translateKey}}" required>
-                    <control-messages [control]="townHallApplicationForm.controls.accountHolderName"></control-messages>
-                </mat-form-field>
+                    <h2>
+                        {{'bank_details' | translate:translateKey}}
+                    </h2>
 
-                <mat-form-field class="col-md-3">
-                    <input matInput OnlyNumber maxlength="20" minlength="20" formControlName="accountNo" placeholder="{{'accont_no' | translate: translateKey}}"
-                        required>
-                    <control-messages [control]="townHallApplicationForm.controls.accountNo"></control-messages>
-                </mat-form-field>
+                    <div class="row">
+                        <div formGroupName="bankName" class="col-md-3 ngSelect">
+                            <ng-select placeholder="{{'bank_name' | translate:translateKey}} *" formControlName="code">
+                                <ng-option *ngFor="let bank of BankOptions" [value]="bank.code">
+                                    {{bank.name}}
+                                </ng-option>
+                            </ng-select>
+                            <control-messages [control]="townHallApplicationForm.controls.bankName.controls.code"></control-messages>
+                        </div>
 
-                <mat-form-field class="col-md-3">
-                    <input matInput type="text" maxlength="11" formControlName="ifscCode" placeholder="{{'ifsc_code' | translate: translateKey}}"
-                        required>
-                    <control-messages [control]="townHallApplicationForm.controls.ifscCode"></control-messages>
-                </mat-form-field>
-            </div>
+                        <mat-form-field class="col-md-3">
+                            <input matInput type="text" maxlength="20" appValidationFields [validationFieldsType]="'onlyNameWithSpace'" formControlName="accountHolderName"
+                                placeholder="{{'account_holder_name' | translate: translateKey}}" required>
+                            <control-messages [control]="townHallApplicationForm.controls.accountHolderName"></control-messages>
+                        </mat-form-field>
 
-            <h2>
-                {{'booking_details' | translate:translateKey}}
-            </h2>
+                        <mat-form-field class="col-md-3">
+                            <input matInput OnlyNumber maxlength="20" minlength="20" formControlName="accountNo" placeholder="{{'accont_no' | translate: translateKey}}"
+                                required>
+                            <control-messages [control]="townHallApplicationForm.controls.accountNo"></control-messages>
+                        </mat-form-field>
 
-            <div class="row">
-                <mat-form-field class="col-md-6">
-                    <textarea matInput type="text" maxlength="200" formControlName="programShortDetails" placeholder="{{'program_short_details' | translate: translateKey}}"
-                        required>
+                        <mat-form-field class="col-md-3">
+                            <input matInput type="text" maxlength="11" formControlName="ifscCode" placeholder="{{'ifsc_code' | translate: translateKey}}"
+                                required>
+                            <control-messages [control]="townHallApplicationForm.controls.ifscCode"></control-messages>
+                        </mat-form-field>
+                    </div>
+
+                    <h2>
+                        {{'booking_details' | translate:translateKey}}
+                    </h2>
+
+                    <div class="row">
+                        <mat-form-field class="col-md-6">
+                            <textarea matInput type="text" maxlength="200" formControlName="programShortDetails" placeholder="{{'program_short_details' | translate: translateKey}}"
+                                required>
                     </textarea>
-                    <control-messages [control]="townHallApplicationForm.controls.programShortDetails"></control-messages>
-                </mat-form-field>
+                            <control-messages [control]="townHallApplicationForm.controls.programShortDetails"></control-messages>
+                        </mat-form-field>
 
-                <mat-form-field class="col-md-6">
-                    <textarea matInput type="text" maxlength="200" formControlName="programPurpose" placeholder="{{'program_purpose' | translate: translateKey}}"
-                        required></textarea>
-                    <control-messages [control]="townHallApplicationForm.controls.programPurpose"></control-messages>
-                </mat-form-field>
-            </div>
+                        <mat-form-field class="col-md-6">
+                            <textarea matInput type="text" maxlength="200" formControlName="programPurpose" placeholder="{{'program_purpose' | translate: translateKey}}"
+                                required></textarea>
+                            <control-messages [control]="townHallApplicationForm.controls.programPurpose"></control-messages>
+                        </mat-form-field>
+                    </div>
 
-            <div class="col-md-12 text-right">
-                <button mat-raised-button color="primary" type="submit">
-                    {{'submit_application'| translate: translateKey}}
-                </button>
-            </div>
+                    <div class="pull-right">
+                        <button type="button" mat-raised-button (click)="tabIndex= tabIndex -1; ">{{'back' | translate:translateKey}}</button>
+                        <button mat-raised-button color="primary" type="submit">
+                            {{'submit_application'| translate: translateKey}}
+                        </button>
+                    </div>
+
+                </mat-tab>
+            </mat-tab-group>
         </form>
     </mat-card>
 </div>

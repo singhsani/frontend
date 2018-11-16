@@ -92,7 +92,7 @@ export class PaymentResponsePageComponent implements OnInit {
         status: true
       }),
       transactionId: data.transactionId,
-      paymentStatus: "SUCCESS"
+      paymentStatus: this.paymentStatus
     }
 
     /**
