@@ -10,6 +10,7 @@ import { FoodRoutingModule } from './food-routing.module';
 import { FoodNewComponent } from './food-new/food-new.component';
 import { FoodRenewComponent } from './food-renew/food-renew.component';
 import { FoodTransferComponent } from './food-transfer/food-transfer.component';
+import { FoodDuplicateComponent } from './food-duplicate/food-duplicate.component';
 
 @NgModule({
   imports: [
@@ -20,6 +21,6 @@ import { FoodTransferComponent } from './food-transfer/food-transfer.component';
     ReactiveFormsModule,
     FoodRoutingModule
   ],
-  declarations: [FoodNewComponent, FoodRenewComponent, FoodTransferComponent]
+  declarations: [FoodNewComponent, FoodRenewComponent, FoodTransferComponent, FoodDuplicateComponent]
 })
 export class FoodModule { }
