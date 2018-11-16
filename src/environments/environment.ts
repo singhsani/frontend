@@ -6,7 +6,7 @@
 export const environment = {
 	production: false,
 	envName: 'dev',
-	envAPIServer: 'http://192.168.10.107:8080/VMC/',
+	envAPIServer: '/VMC/',
 
 	//Usefull url and api url's.
 	adminUrl: 'http://' + window.location.hostname + ':' + window.location.port + '/vmcadminportal/',
