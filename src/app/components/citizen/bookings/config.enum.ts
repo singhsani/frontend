@@ -28,7 +28,8 @@ export enum BookingConstants {
     INVALID_BOOKING_STATUS = "INVALID_BOOKING_STATUS",
     ALL_FEILD_REQUIRED_MESSAGE="Please fill all the required feilds",
     SELECT_SHIFT_MESSAGE="Please Select shift to cancel",
-    
+    MOB_NO_MIS_MATCH_MESSAGE ="Mobile Number and Confirm Mobile Number should match",
+    EMAIL_MIS_MATCH_MESSAGE ="Email and Confirm Email should match"
 }
 
 /**
@@ -43,6 +44,18 @@ export class BookingUtils{
     }
 
     getAllErrors(form) {
+        this.markAsTouched(form);
+        let count = 0;
+        for (const key in form.controls) {
+            if(form.get(key).invalid){
+                break;
+            }
+            count++;
+        }
+        return count;
+    }
+
+    markAsTouched(form){
         for (let controls in form.controls) {
             let control = form.get(controls)
             if (control instanceof FormControl) {
