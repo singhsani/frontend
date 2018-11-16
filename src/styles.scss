@@ -203,6 +203,7 @@ h1 { font-size: 30px; margin-bottom: 10px; }
     -ms-transform: translateY(-1.28125em) scale(1) !important;
     transform: translateY(-1.28125em) scale(1) !important;}
 // .mat-card:not([class*=mat-elevation-z]), .mat-elevation-z8 { box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14) !important; }
+.mat-card:not([class*=mat-elevation-z]), .mat-elevation-z8 { /*box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14) !important;*/ box-shadow: none !important;}
 .mat-radio-group { display: flex !important; flex-direction: row !important; }
 .mat-radio-button { margin: 4px 15px 4px 0px; }
 .mat-radio-container, .mat-radio-outer-circle, .mat-radio-inner-circle, .mat-checkbox-inner-container { width: 16px !important; height: 16px !important; }
