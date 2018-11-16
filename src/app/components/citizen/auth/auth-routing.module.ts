@@ -24,7 +24,7 @@ const routes: Routes = [
 			{ path: ManageRoutes.getMainRoute('CITIZENAUTHVERIFY'), component: UserVerificationComponent },
 			{ path: ManageRoutes.getMainRoute('CITIZENAUTHFORGOTPASS'), component: ForgotPasswordComponent },
 			{ path: ManageRoutes.getMainRoute('CITIZENAUTHRESETPASS'), component: ResetPasswordComponent },
-			{ path: ManageRoutes.getMainRoute('CITIZENAUTHLOGINTHROUGHADMIN') + '/:authToken/:apiCode', component: LoginThroughAdminComponent },
+			{ path: ManageRoutes.getMainRoute('CITIZENAUTHLOGINTHROUGHADMIN'), component: LoginThroughAdminComponent },
 		]
 	},
 	

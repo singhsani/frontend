@@ -24,16 +24,19 @@ export class LoginThroughAdminComponent implements OnInit {
 	) { }
 
 	ngOnInit() {
-		this.route.paramMap.subscribe(param => {
+		this.route.queryParams.subscribe(param => {
+
 			if (param) {
 				this.accessToken = param['authToken'];
 				this.apiCode = param['apiCode'];
 				if (this.accessToken && this.apiCode) {
 					this.saveToken();
-					this.createRecord();
+					
 				} else {
 					this.commonService.openAlert('Error', 'Access Token Not Available', 'warning');
 				}
+			} else {
+				this.router.navigate(['/404']);
 			}
 		});
 	}
@@ -42,8 +45,9 @@ export class LoginThroughAdminComponent implements OnInit {
 	 * This method will store Token to the Session Storage.
 	 */
 	saveToken() {
-		this.session.set('access_token', { 'token': this.accessToken, now: +new Date }, 999, 's');
-		this.session.set('fromAdmin', 'fromAdmin', 999, 's');
+		this.session.set('access_token', { 'token': this.accessToken, now: +new Date }, 999999, 's');
+		this.session.set('fromAdmin', 'fromAdmin', 999999, 's');
+		this.createRecord();
 	}
 
 	/**
