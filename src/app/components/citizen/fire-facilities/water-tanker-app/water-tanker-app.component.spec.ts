@@ -18,6 +18,14 @@ import { CommonService } from '../../../../shared/services/common.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TitleBarComponent } from '../../../../shared/components/title-bar/title-bar.component';
 
+import { GujInputSourceDirective } from '../../../../shared/directives/guj-input-source.directive';
+import { GujInputTargetDirective } from '../../../../shared/directives/guj-input-target.directive';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { AddressComponent } from '../../../../shared/components/address/address.component';
+import { FileUploadComponent } from '../../../../shared/components/file-upload/file-upload.component';
+import { ValidationService } from '../../../../shared/services/validation.service';
+import { ActivatedRoute, convertToParamMap } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
 
  describe('Fire Facilities : WaterTankerAppComponent', () => {
 	let component: WaterTankerAppComponent;
@@ -31,17 +39,24 @@ import { TitleBarComponent } from '../../../../shared/components/title-bar/title
 				ToastrModule.forRoot(),
 				HttpClientTestingModule,
 				TranslateModule,
-				MaterialModule],
+				MaterialModule,
+				NgSelectModule,
+				ActivatedRoute],
 			declarations: [WaterTankerAppComponent,
 				TitleBarComponent,
 				ActionBarComponent,
+				AddressComponent,
+				FileUploadComponent,
 				ControlMessagesComponent,
 				ValidationFieldsDirective,
+				GujInputSourceDirective,
+				GujInputTargetDirective,
 				BasicDetailsComponent],
 			providers: [FormsActionsService,
 				ToastrService,
 				CommonService,
 				SessionStorageService,
+				ValidationService,
 				HttpService]
 		}).compileComponents();
 	}));
