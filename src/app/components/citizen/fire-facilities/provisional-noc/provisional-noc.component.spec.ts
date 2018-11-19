@@ -18,7 +18,14 @@ import { CommonService } from '../../../../shared/services/common.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TitleBarComponent } from '../../../../shared/components/title-bar/title-bar.component';
 
-
+import { GujInputSourceDirective } from '../../../../shared/directives/guj-input-source.directive';
+import { GujInputTargetDirective } from '../../../../shared/directives/guj-input-target.directive';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { AddressComponent } from '../../../../shared/components/address/address.component';
+import { FileUploadComponent } from '../../../../shared/components/file-upload/file-upload.component';
+import { ValidationService } from '../../../../shared/services/validation.service';
+import { ActivatedRoute, convertToParamMap } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
 
  describe('Fire Facilities : ProvisionalNocComponent', () => {
 	let component: ProvisionalNocComponent;
@@ -32,18 +39,29 @@ import { TitleBarComponent } from '../../../../shared/components/title-bar/title
 				ToastrModule.forRoot(),
 				HttpClientTestingModule,
 				TranslateModule,
-				MaterialModule],
-			declarations: [ProvisionalNocComponent,
+				MaterialModule,
+				NgSelectModule],
+			declarations: [
+				ProvisionalNocComponent,
 				TitleBarComponent,
 				ActionBarComponent,
 				ControlMessagesComponent,
 				ValidationFieldsDirective,
-				BasicDetailsComponent],
-			providers: [FormsActionsService,
+				BasicDetailsComponent,
+				GujInputSourceDirective,
+				GujInputTargetDirective,
+				AddressComponent,
+				FileUploadComponent
+			],
+			providers: [
+				FormsActionsService,
 				ToastrService,
 				CommonService,
 				SessionStorageService,
-				HttpService]
+				HttpService,
+				ValidationService,
+				{ provide: ActivatedRoute}
+			]
 		}).compileComponents();
 	}));
 	beforeEach(() => {

@@ -1,16 +1,106 @@
-<div class="container">
-	<app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
-	<mat-card class="mt-4 formClass">
-		<form [formGroup]="waterTankerAppForm">
-			<mat-horizontal-stepper [linear]="false">
+<app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
+<mat-card class="formClass cardBorder">
+	<form [formGroup]="waterTankerAppForm">
 
-				<!-- first step start-->
-				<mat-step [label]="stepLable1">
-					<app-basic-details [basicFormGroup]="waterTankerAppForm"></app-basic-details>
-					<app-action-bar [form]="waterTankerAppForm" [step]="'final'" (stepReset)="stepReset()" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
-				</mat-step>
+		<mat-tab-group [(selectedIndex)]="tabIndex" dynamicHeight="true" mat-stretch-tabs class="stepperNav">
 
-			</mat-horizontal-stepper>
-		</form>
-	</mat-card>
-</div>
+			<!-- step 1 Starts -->
+			<mat-tab>
+				<ng-template mat-tab-label>
+					<div>{{'form_detail' | translate:translateKey}}</div>
+				</ng-template>
+
+				<div class="row">
+					<div class="col-md-6 ngSelect" formGroupName="requiredOnFloor">
+						<ng-select required placeholder="{{'select_floor' | translate:translateKey}} *" formControlName="code">
+							<ng-option *ngFor="let FLOOR of FS_REQUIRED_ON_FLOOR" [value]="FLOOR.code">{{FLOOR.name}}</ng-option>
+						</ng-select>
+						<control-messages [control]="waterTankerAppForm.get('requiredOnFloor').controls.code"></control-messages>
+					</div>
+
+					<div class="col-md-6 ngSelect" formGroupName="purpose">
+						<ng-select required placeholder="{{'purpose' | translate:translateKey}} *" formControlName="code">
+							<ng-option *ngFor="let PURPOSE of FS_WATER_TANKER_PURPOSE" [value]="PURPOSE.code">{{PURPOSE.name}}</ng-option>
+						</ng-select>
+						<control-messages [control]="waterTankerAppForm.get('purpose').controls.code"></control-messages>
+					</div>
+				</div>
+				<div class="row">
+					<h2>{{'if_purpose_fastival_or_sugg' | translate:translateKey}}</h2>
+					<mat-form-field class="col-md-6">
+						<input matInput type="text" required maxlength="150" placeholder="{{'who_is_suggested' | translate:translateKey}}"
+						 formControlName="whoSuggested">
+						<control-messages [control]="waterTankerAppForm.controls.whoSuggested"></control-messages>
+					</mat-form-field>
+				</div>
+				<!-- <mat-form-field class="col-md-6">
+						<textarea matInput rows="3" cols="50" maxlength="500" formControlName="holderAddress" placeholder="{{ 'upload_letter' | translate:translateKey }}"
+						 required> </textarea>
+						<control-messages [control]="waterTankerAppForm.controls.holderAddress"></control-messages>
+					</mat-form-field> -->
+				<!-- 
+					<mat-radio-group class="col-md-4">
+						<h2>withinVMCBoundary</h2>
+						<mat-radio-button value="1">Yes</mat-radio-button>
+						<mat-radio-button value="2">No</mat-radio-button>
+					</mat-radio-group> -->
+				<div class="row">
+					<mat-form-field class="col-md-4">
+						<input matInput required [min]="disablepastDate" [matDatepicker]="picker1" formControlName="requiredOnDate" placeholder="{{ 'required_on_which_date' | translate:translateKey }} (DD/MM/YYYY)">
+						<mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+						<mat-datepicker #picker1 touchUi="true"></mat-datepicker>
+						<control-messages [control]="waterTankerAppForm.controls.requiredOnDate"></control-messages>
+					</mat-form-field>
+			
+					<div class="col-md-4 ngSelect" formGroupName="requireIn">
+						<ng-select required placeholder="{{'require_in' | translate:translateKey}} *" formControlName="code" (change)="onChangeTime($event);waterTankerAppForm.get('requireAtTime').reset()">
+							<ng-option *ngFor="let time of FS_REQUIRE_IN" [value]="time.code">{{time.name}}</ng-option>
+						</ng-select>
+						<control-messages [control]="waterTankerAppForm.get('requireIn').controls.code"></control-messages>
+					</div>
+					<div class="col-md-4 ngSelect" formGroupName="requireAtTime">
+						<ng-select required placeholder="{{'require_at_time' | translate:translateKey}} *" formControlName="code">
+							<ng-option *ngFor="let attime of REQUIRE_TIME" [value]="attime.code">{{attime.name}}</ng-option>
+						</ng-select>
+						<control-messages [control]="waterTankerAppForm.get('requireAtTime').controls.code"></control-messages>
+					</div>
+					<!-- <mat-form-field class="col-md-4">
+						<input matInput formControlName="firmCity" appValidationFields validationFieldsType='onlyNameWithOutSpace'
+						 placeholder="{{'required_on_which_date' | translate:translateKey}}">
+						<control-messages [control]="waterTankerAppForm.controls.firmCity"></control-messages>
+					</mat-form-field>
+					<mat-form-field class="col-md-4">
+						<input matInput formControlName="firmCity" appValidationFields validationFieldsType='onlyNameWithOutSpace'
+						 placeholder="{{'required_time' | translate:translateKey}}">
+						<control-messages [control]="waterTankerAppForm.controls.firmCity"></control-messages>
+					</mat-form-field> -->
+				</div>
+
+				<div class="row">
+					<mat-form-field class="col-md-4">
+						<input matInput type="tel" OnlyNumber required formControlName="totalTankRequired" placeholder="{{'total_tank' | translate: translateKey }}"
+						 minlength="1" maxlength="1">
+						<control-messages [control]="waterTankerAppForm.controls.totalTankRequired"></control-messages>
+					</mat-form-field>
+					<mat-form-field class="col-md-4">
+						<input matInput type="tel" OnlyNumber required formControlName="totalAmount" placeholder="{{'total_amount' | translate: translateKey }}"
+						 maxlength="4">
+						<control-messages [control]="waterTankerAppForm.controls.totalAmount"></control-messages>
+					</mat-form-field>
+					<!-- <h2>{{'tank_delivery_address_with_contact' | translate:translateKey}}</h2>
+					<app-address [isDisplayGujFields]="true" #permanantAddressEstablishment [requiredFeilds]="waterTankerAppForm.controls.permanantAddress.value"
+					 [addressFormGroup]="waterTankerAppForm.controls.permanantAddress"></app-address> -->
+					<mat-form-field class="col-md-4">
+						<textarea matInput rows="3" cols="50" maxlength="500" formControlName="tankDeliveryAddress" placeholder="{{ 'tank_delivery_address' | translate:translateKey }}"
+						 required> </textarea>
+						<control-messages [control]="waterTankerAppForm.controls.tankDeliveryAddress"></control-messages>
+					</mat-form-field>
+				</div>
+				<app-action-bar [form]="waterTankerAppForm" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'final', next: 1, back: 0}"></app-action-bar>
+			</mat-tab>
+			<!-- step 1 Ends -->
+		</mat-tab-group>
+	</form>
+
+	<!-- {{ waterTankerAppForm.value | json }} -->
+</mat-card>
