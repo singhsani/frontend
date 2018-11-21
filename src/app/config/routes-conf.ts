@@ -387,6 +387,8 @@ const ROUTEPREFIX = {
     'PROPERTYMODULE': 'property',
     /** end - citizen inner-tax module */
 
+    'PROFESSIONALMODULE': 'professional',
+
     'APPOINTMENT': 'appointmant',
     'SCHEDULEAPPOINTMENT': 'schedule-appointment',
 

@@ -33,12 +33,7 @@
             </div>
         </mat-toolbar-row>
 
-        <div class="loader-overlay">
-            <mat-progress-bar mode="indeterminate" [color]="'accent'" [hidden]="(commonService.isLoading | async) == false"></mat-progress-bar>
-        </div>
-
     </mat-toolbar>
-
 
     <!-- <nav mat-tab-nav-bar>
         <a mat-tab-link *ngFor="let link of links" routerLink="/{{manageRoutes.getFullRoute(link.linkCode)}}" (click)="activeLink = link.linkName" [active]="activeLink == link.linkName"> {{link.linkName}} </a>
@@ -59,6 +54,8 @@
     </div>
 
     <div class="container clearfix">
+        <div class="loadingDiv" [style.display]="((commonService.isLoading | async) == false) ? 'none': 'block'"></div>
+
         <router-outlet (activate)="activateTab()"></router-outlet>
     </div>
 
