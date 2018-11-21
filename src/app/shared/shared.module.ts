@@ -95,7 +95,6 @@ const COMPONENTS = [
 	],
 	providers: [
 		ValidationService,
-		CommonService,
 		UploadFileService,
 		HttpService,
 		{

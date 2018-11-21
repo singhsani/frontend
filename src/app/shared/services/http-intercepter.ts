@@ -19,7 +19,9 @@ import { ManageRoutes } from '../../config/routes-conf';
 import 'rxjs/add/operator/do';
 
 
-@Injectable()
+@Injectable({
+	providedIn:	'root'
+})
 export class TokenInterceptor implements HttpInterceptor {
 
 	private requests: HttpRequest<any>[] = [];

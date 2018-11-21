@@ -9,7 +9,9 @@ import * as _ from 'lodash';
 import * as moment from 'moment';
 
 
-@Injectable()
+@Injectable({
+	providedIn: 'root'
+})
 export class CommonService {
 
 	/**
