@@ -86,9 +86,201 @@ describe('ShopLicNewComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+
+  it('should create', async () => {
     expect(component).toBeTruthy();
   });
+
+  it('establishmentName field is required', async () => {
+    let email = component.shopLicNewForm.get('establishmentName');
+    let errors = email.errors || {};
+    expect(errors['required']).toBeTruthy();
+  });
+
+  it('Shop new licence should be valid', async () => {
+    component.shopLicNewForm.patchValue({
+      apiType: "shopLicense",
+      serviceCode: "SHOP-LIC",
+      establishmentName: "krishna",
+      establishmentNameGuj: "ક્રિશ્ન",
+      postalAddress: {
+        id: 95,
+        uniqueId: null,
+        version: 0,
+        addressType: "SHOP_LIC_POSTAL_ADDRESS",
+        buildingName: "shapath 4 ",
+        streetName: "Street",
+        landmark: "Landmark",
+        area: "area",
+        state: "GUJARAT",
+        district: null,
+        city: "Vadodara",
+        country: "INDIA",
+        pincode: "380015",
+        buildingNameGuj: "શપથ ૪ ",
+        streetNameGuj: "શ્ત્રીત",
+        landmarkGuj: "ળંદ્મર્ક",
+        areaGuj: "અરેઅ",
+        stateGuj: "ગુજરાત",
+        districtGuj: null,
+        cityGuj: "વડોદરા",
+        countryGuj: "ભારત"
+      },
+      noOfHumanWorking: {
+        code: "YES",
+        name: "Yes"
+      },
+      assessmentDoneByVMC: {
+        code: "YES",
+        name: "Yes"
+      },
+      propertyTaxNo: "4156231212312",
+      wardNo: {
+        code: "SHIYABAG",
+        name: "Shiyabag"
+      },
+      aadharNumber: "554561456456",
+      professionalTaxPECNo: "ddd46564dc5456454545",
+      prcNo: "dsss4454564654545645",
+      applicantVimaAmountPaid: {
+        code: "YES",
+        name: "Yes"
+      },
+      number: "ABC5454ddmdjkkd55551",
+      situationOfOffice: "Situation of establishment",
+      nameOfEmployer: "Nascent",
+      nameOfEmployerGuj: "ણસએંત",
+      residentialAddressOfEmployer: "SG Highway shapath 4 Ahmedabad",
+      residentialAddressOfEmployerGuj: "શ ઃઇઘ્વય શપથ ૪ આહ્મેદબદ",
+      nameOfManager: "Name of manager",
+      residentialAddressOfManager: "SG Highway shapath 4 Ahmedabad",
+      categoryOfBusiness: {
+        code: "COMMERCIAL_ESTABLISHMENT_MORE_THEN_TEN",
+        name: "Commercial Establishment employing Ten or More Employees"
+      },
+      subCategoryOfBusiness: {
+        code: "SHOP_LIC_B_DOCTORS_NURSING_HOME",
+        name: "Doctors Layers Nursing home"
+      },
+      nameOfBusiness: "business name",
+      nameOfBusinessGuj: "બુસિનેસ્સ નમે",
+      commencementOfBusinessDate: "2018-11-02",
+      enterHoliday: {
+        code: "SHOP_LIC_SATURDAY"
+      },
+      periodFrom: null,
+      periodTo: null,
+      newRegistration: null,
+      renewal: null,
+      adminCharges: null,
+      netAmount: null,
+      employerFamilyList: [{
+        serviceFormId: 83,
+        id: 158,
+        name: "employee",
+        address: "address",
+        serviceCode: "SHOP-LIC",
+        relationship: {
+          code: "SHOP_LIC_PARTNER"
+        },
+        gender: {
+          code: "MALE"
+        },
+        age: 25,
+        personType: "EMPLOYER_FAMILY"
+      }],
+      totalAdultEmployerFamily: 1,
+      totalYoungEmployerFamily: 0,
+      totalManEmployerFamily: 1,
+      totalWomenEmployerFamily: 1,
+      totalUnidentifiedEmployerFamily: 0,
+      totalFamilyMembers: 1,
+      occupancyList: [{
+        serviceFormId: 83,
+        id: 157,
+        name: "person occupying name",
+        address: "address",
+        serviceCode: "SHOP-LIC",
+        relationship: {
+          code: "SHOP_LIC_EMPLOYEES_RESIDENT"
+        },
+        gender: {
+          code: "MALE"
+        },
+        age: 56,
+        personType: "OCCUPANCY"
+      }],
+      totalAdultOccupancy: 1,
+      totalYoungOccupancy: 0,
+      totalManOccupancy: 1,
+      totalWomenOccupancy: 0,
+      totalUnidentifiedOccupancy: 0,
+      totalOccupancy: 1,
+      typeOfOrganisation: {
+        code: "SHOP_LIC_PARTNERSHIP"
+      },
+      partnerList: [{
+        serviceFormId: 83,
+        id: 156,
+        name: "partner",
+        address: "partner address",
+        serviceCode: "SHOP-LIC",
+        relationship: {
+          code: "SHO_LIC_CEO"
+        },
+        gender: {
+          code: "FEMALE"
+        },
+        age: 42,
+        personType: "PARTNER"
+      }],
+      totalAdultPartner: 1,
+      totalYoungPartner: 0,
+      totalManPartner: 0,
+      totalWomenPartner: null,
+      totalUnidentifiedPartner: 0,
+      totalPartner: 1,
+      totalAdultEmployee: 2,
+      totalYoungEmployee: 5,
+      totalManEmployee: 7,
+      totalWomenEmployee: 9,
+      totalUnidentified: 4,
+      totalEmployee: 27,
+      attachments: [],
+      id: 40,
+      uniqueId: "2018-11-02-SHOP-LIC-BRU6ZVHR",
+      version: 6,
+      serviceFormId: 83,
+      createdDate: null,
+      updatedDate: "2018-11-02 11:57:51",
+      serviceType: "SHOP_LIC",
+      fileStatus: "DRAFT",
+      serviceName: null,
+      fileNumber: null,
+      pid: null,
+      outwardNo: null,
+      agree: false,
+      paymentStatus: null,
+      canEdit: true,
+      canDelete: true,
+      canSubmit: true,
+      firstName: null,
+      middleName: null,
+      lastName: null,
+      aadhaarNo: null,
+      contactNo: null,
+      email: null,
+      serviceDetail: {
+        code: "SHOP-LIC",
+        name: "Issue of New License",
+        gujName: "નવા લાયસન્સનો ઇશ્યૂ",
+        feesOnScrutiny: true
+      }
+    });
+    expect(component.shopLicNewForm.valid).toBeTruthy();
+  });
+
+
 });
 
 
