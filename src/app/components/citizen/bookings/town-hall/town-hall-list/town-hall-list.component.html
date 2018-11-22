@@ -8,21 +8,16 @@
 
 <div *ngIf="guideLineFlag">
 
-    <mat-card class="border border-primary p-0">
+    <mat-card class="cardBox">
+        <div class="pageTitle">{{'online_townhall_bookings'| translate: translateKey}}</div>
 
-        <mat-card-title class="alert alert-info text-center mb-0 font-weight-bold">
-            {{'online_townhall_bookings'| translate: translateKey}}
-        </mat-card-title>
+        <mat-card-content class="p-4">
 
-        <mat-card-content class="border-top border-primary pl-4 pr-4">
+            <p class="pb-2">{{head_lines| translate: translateKey}}</p>
 
-            <p class="fsLarge">{{head_lines| translate: translateKey}}</p>
+            <h2>{{'rules_and_regulations'| translate: translateKey}}</h2>
 
-            <h1>
-                {{'rules_and_regulations'| translate: translateKey}}
-            </h1>
-
-            <ol class="m-4 fsLarge">
+            <ol class="olList">
                 <li>
                     All parties/organizers have to observe the VMC Rules(
                     <a href="#">Mahatma Gandhi Nagar Gruh, Sir Sayaji Rao Nagar Gruh,Pandit Dindayal Upadhyay Nagar,Deepak
@@ -40,21 +35,27 @@
                     Deduction as per the rules will be made in the event of cancellation.
                 </li>
             </ol>
-            <div class="text-right">
-                <button mat-raised-button (click)="guideLineFlag = false; showSearchForm= true;" color="primary">
-                    {{'submit'| translate: translateKey}}
-                </button>
-            </div>
+            
+            
 
         </mat-card-content>
     </mat-card>
+    <div class="fotButtonBar">
+            <div class="col-sm-12 col-md-12 text-right">
+              <button mat-raised-button (click)="guideLineFlag = false; showSearchForm= true;" color="primary">
+                  {{'submit'| translate: translateKey}}
+              </button>
+            </div>
+          </div>
 </div>
 
 <!-- HTML for Town hall booking -->
 <div *ngIf="showSearchForm">
-    <mat-card class="cardBorder">
-        <form class="p-15" [formGroup]="searchTownHallForm" (ngSubmit)="searchBooking()" autocomplete="off" ngNativeValidate>
-            <div class="row">
+    <mat-card class="formClass cardBorder">
+        <div class="pageTitle">{{'screen_title'| translate: translateKey}}</div>
+        <div class="p-15">
+        <form [formGroup]="searchTownHallForm" (ngSubmit)="searchBooking()" autocomplete="off" ngNativeValidate>
+            <div class="row mt-3 mb-3">
                 <div class="col-md-6 ngSelect">
                     <ng-select placeholder="{{'select_town_hall'| translate: translateKey}}" formControlName="code">
                         <ng-option *ngFor="let townHall of townHalls" [value]="townHall.code">
@@ -97,22 +98,27 @@
                     <control-messages [control]="searchTownHallForm.controls.endDate">
                     </control-messages>
                 </mat-form-field>
-
-                <div class="col-md-12 text-right">
+                <!-- <div class="col-md-12 text-right">
                     <button mat-raised-button color="primary" type="submit">
                         {{'search'| translate: translateKey}}
                     </button>
+                </div> -->
+            </div>
+            <div class="row fotButtonBar">
+                <div class="col-sm-12 col-md-12 text-right">
+                    <button mat-raised-button color="primary" type="submit">
+                            {{'search'| translate: translateKey}}
+                    </button>
                 </div>
             </div>
+           
         </form>
+    </div>
     </mat-card>
 
-    <mat-card *ngIf="Dates.length>0">
-        <mat-card class="cardH1">
-            <h1>
-                {{'list_of_town_hall'| translate: translateKey}}
-            </h1>
-        </mat-card>
+    <div *ngIf="Dates.length>0" class="mt-4">
+        <mat-card class="formClass cardBorder">
+            <div class="pageTitle">{{'list_of_town_hall'| translate: translateKey}}</div>
 
         <mat-accordion *ngFor="let month of filterMonths(); let i = index;">
             <mat-expansion-panel [expanded]="i === 0">
@@ -121,40 +127,42 @@
                         {{month.monthName}}
                     </mat-panel-title>
                 </mat-expansion-panel-header>
-                <div class="row">
+                <div>
                     <mat-checkbox [checked]="!checkedAllinMonth(month)" labelPosition="after" (change)="selectAllShiftsInMonth($event.checked, month, i)">
                         {{'select_all_shift_in'| translate: translateKey}} {{month.monthName}}
                     </mat-checkbox>
                 </div>
 
                 <div class="row">
-                    <div *ngFor="let date of filterAcc(month.id)" class="col-md-2 mb-1 p-1">
-                        <div>
-                            <mat-card class="p-0 rounded border border-primary">
-                                <mat-card-title class="bg-primary text-center text-light font-weight-bold p-0">
+                    <div *ngFor="let date of filterAcc(month.id)" class="col-6 col-md-3 col-lg-2 mb-1 p-1">
+                            <div class="dateBox rounded border">
+                                <strong>
                                     {{bookingUtils.returnProperDate(date.key)}}
-                                </mat-card-title>
-                                <mat-card-content class="font-weight-bold">
+                                </strong>
+                                <div class="dateCon">
                                     <mat-checkbox (change)="selectShift(shift, $event.checked)" *ngFor="let shift of date.slotList; let i = index" [disabled]="shift.slotStatus == bookingConstants.BOOKED || shift.slotStatus == bookingConstants.TEMPORARY_BLOCKED"
                                         [checked]="shift.slotStatus != 'AVAILABLE'">
                                         {{'shift'| translate: translateKey}}&nbsp;{{shift.shiftType}}
                                     </mat-checkbox>
-                                </mat-card-content>
-                            </mat-card>
-                        </div>
+                                </div>
+                            </div>
+                        
                     </div>
                 </div>
             </mat-expansion-panel>
         </mat-accordion>
 
-        <div class="col-md-12 text-right">
-            <button mat-raised-button data-toggle="modal" (click)="shortlistShifts()" data-target="#confirmShortlistModel" type="button"
-                [disabled]="selectedShift.length == 0" color="primary">
-                {{'shortlist'| translate: translateKey}}
-            </button>
-        </div>
+        <div class="fotButtonBar">
+                <div class="col-sm-12 col-md-12 text-right">
+                    <button mat-raised-button data-toggle="modal" (click)="shortlistShifts()" data-target="#confirmShortlistModel" type="button"
+                        [disabled]="selectedShift.length == 0" color="primary">
+                        {{'shortlist'| translate: translateKey}}
+                    </button>
+                </div>
+              </div>
+</mat-card>
+    </div>
 
-    </mat-card>
 </div>
 
 <div class="modal fade" id="confirmShortlistModel" tabindex="-1" role="dialog" aria-hidden="true">
