@@ -168,23 +168,24 @@
 <div class="modal fade" id="confirmShortlistModel" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-            <div class="modal-header customthead">
+            <div class="modal-header">
                 <h4 class="modal-title" id="exampleModalLabel">
                     {{'list_selected_slot'| translate: translateKey}}
                 </h4>
-                <button title="Close" data-dismiss="modal" class=" mat-icon-button" aria-label="Close">
+                <button title="Close" data-dismiss="modal" class="mat-icon-button" aria-label="Close">
                     <mat-icon>close</mat-icon>
                 </button>
             </div>
             <div class="modal-body scrollModel">
-                <table class="table table-bordered">
-                    <thead class="customthead">
+                <div class="table-responsive">
+                <table class="table">
+                    <thead>
                         <tr>
-                            <th scope="col">{{'s_no'| translate: translateKey}}</th>
+                            <th scope="col" width="56">{{'s_no'| translate: translateKey}}</th>
                             <th scope="col">{{'start_date'| translate: translateKey}}</th>
                             <th scope="col">{{'end_date'| translate: translateKey}}</th>
                             <th scope="col">{{'shift'| translate: translateKey}}</th>
-                            <th scope="col">{{'action'| translate: translateKey}}</th>
+                            <th scope="col" width="65">{{'action'| translate: translateKey}}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -201,14 +202,15 @@
                         </tr>
                     </tbody>
                 </table>
+                </div>
             </div>
             <div class="modal-footer">
 
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                <button type="button" class="btn mat-raised-button" data-dismiss="modal">
                     {{'cancel'| translate: translateKey}}
                 </button>
 
-                <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="confirmShortlist()">
+                <button type="button" class="btn mat-raised-button mat-primary" data-dismiss="modal" (click)="confirmShortlist()">
                     {{'confirm_and_continue'| translate: translateKey}}
                 </button>
 
@@ -219,8 +221,9 @@
 
 <div *ngIf="showPaymentReciept">
 
-    <table class="table table-bordered">
-        <thead class="customthead">
+<div class="table-responsive">
+    <table class="table">
+        <thead>
             <tr>
                 <th scope="col">{{'ref_number'| translate: translateKey}}</th>
                 <th scope="col">{{'date_of_programme'| translate: translateKey}}</th>
@@ -237,6 +240,7 @@
             </tr>
         </tbody>
     </table>
+</div>
 
     <div class="mt-5">
         <h3 class="text-center">
@@ -344,11 +348,13 @@
             </mat-paginator>
         </div>
 
-        <div class="col-md-12 text-right mt-5">
-            <button mat-raised-button type="button" color="primary" (click)="confirmPayment()">
-                {{'proceed_for_application' | translate: translateKey}}
-            </button>
-        </div>
+        <div class="row mt-4 fotButtonBar">
+            <div class="col-sm-12 col-md-12 text-right">
+                <button mat-raised-button type="button" color="primary" (click)="confirmPayment()">
+                    {{'proceed_for_application' | translate: translateKey}}
+                </button>
+            </div>
+       </div>
     </div>
 </div>
 
@@ -395,9 +401,11 @@
                         <app-address #address [requiredFeilds]="true" [addressFormGroup]="townHallApplicationForm.controls.organizationAddress"></app-address>
                     </div>
 
-                    <div class="pull-right">
-                        <button type="button" mat-raised-button (click)="tabIndex= tabIndex +1;">{{'next' | translate:translateKey}}
-                        </button>
+                    <div class="row mt-4 fotButtonBar">
+                            <div class="col-sm-12 col-md-12 text-right">
+                                <button mat-raised-button type="button" color="primary" (click)="tabIndex= tabIndex +1;">{{'next' | translate:translateKey}}
+                                    </button>
+                            </div>
                     </div>
                 </mat-tab>
 
@@ -466,12 +474,14 @@
                         <app-address #address [requiredFeilds]="true" [addressFormGroup]="townHallApplicationForm.controls.applicantAddress"></app-address>
                     </div>
 
-                    <div class="pull-right">
-                        <button type="button" mat-raised-button (click)="tabIndex= tabIndex -1; ">{{'back' | translate:translateKey}}</button>
-                        <button type="button" mat-raised-button (click)="tabIndex= tabIndex +1;">{{'next' | translate:translateKey}}
-                        </button>
+                    <div class="row mt-4 fotButtonBar">
+                        <div class="col-sm-12 col-md-12 justify-content-between d-flex">
+                            <button type="button" mat-raised-button (click)="tabIndex= tabIndex -1; ">{{'back' | translate:translateKey}}</button>
+                            <button mat-raised-button type="button" color="primary" (click)="tabIndex= tabIndex +1;">{{'next' | translate:translateKey}}
+                            </button>
+                        </div>
                     </div>
-
+                    
                 </mat-tab>
 
                 <mat-tab>
@@ -530,13 +540,16 @@
                             <control-messages [control]="townHallApplicationForm.controls.programPurpose"></control-messages>
                         </mat-form-field>
                     </div>
-
-                    <div class="pull-right">
-                        <button type="button" mat-raised-button (click)="tabIndex= tabIndex -1; ">{{'back' | translate:translateKey}}</button>
-                        <button mat-raised-button color="primary" type="submit">
-                            {{'submit_application'| translate: translateKey}}
-                        </button>
+                    
+                    <div class="row mt-4 fotButtonBar">
+                        <div class="col-sm-12 col-md-12 justify-content-between d-flex">
+                            <button type="button" mat-raised-button (click)="tabIndex= tabIndex -1; ">{{'back' | translate:translateKey}}</button>
+                            <button mat-raised-button color="primary" type="submit">
+                                {{'submit_application'| translate: translateKey}}
+                            </button>
+                        </div>
                     </div>
+                    
 
                 </mat-tab>
             </mat-tab-group>
