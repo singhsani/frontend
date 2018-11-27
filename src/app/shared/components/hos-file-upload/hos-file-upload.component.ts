@@ -3,6 +3,8 @@ import { CommonService } from '../../services/common.service';
 import { HosUploadFileService } from '../../hos-upload-file.service';
 import { HttpResponse } from 'selenium-webdriver/http';
 import { HttpHeaderResponse } from '@angular/common/http';
+import { ToastrService } from 'ngx-toastr';
+
 
 @Component({
 	selector: 'app-hos-file-upload',
@@ -51,7 +53,8 @@ export class HosFileUploadComponent implements OnInit {
 	 */
 	constructor(
 		private uploadFileService: HosUploadFileService,
-		private commonService: CommonService
+		private commonService: CommonService,
+		private toastrService: ToastrService
 	) { }
 
 	/**
@@ -96,18 +99,18 @@ export class HosFileUploadComponent implements OnInit {
 	 */
 	upload() {
 		if (!this.selectedFiles) {
-			this.commonService.openAlert("Warning", "Please Select File to Upload", "warning");
+			this.toastrService.warning("Please Select File to Upload","Warning");
 		} else {
 			let fileTypes: string[] = ['application/pdf','image/jpg','image/jpeg']
 			if (this.selectedFiles[0].size > 5000000) {
 				this.fileName = ''
 				this.canUpload = false;
-				this.commonService.openAlert("Warning", "File Size should be less than 5 MB", "warning");
+				this.toastrService.warning("File Size should be less than 5 MB","Warning");
 
 			} else if (!fileTypes.includes(this.selectedFiles[0].type)){
 				this.fileName = ''
 				this.canUpload = false;
-				this.commonService.openAlert("Warning", "File Type " + this.selectedFiles[0].type +" not valid please select pdf/jpg/jpeg", "warning");
+				this.toastrService.warning("File Type " + this.selectedFiles[0].type +" not valid please select pdf/jpg/jpeg",);
 
 			} else {
 				let formData = new FormData();
@@ -127,7 +130,7 @@ export class HosFileUploadComponent implements OnInit {
 				}, successResponse => {
 					
 					this.requiredFile = false;
-					this.commonService.successAlert("File Uploaded", this.uploadModel.labelName + " successfully uploaded", "success");
+					this.toastrService.success(this.uploadModel.labelName + " successfully uploaded");
 					this.canUpload = true;
 					this.id = successResponse.data.id;
 					this.type = successResponse.data.mimeType;
@@ -190,7 +193,7 @@ export class HosFileUploadComponent implements OnInit {
 		this.commonService.deleteAlert('Are you sure?', '', 'warning', '', performDelete => {
 		this.uploadFileService.deleteFile(this.uploadModel.serviceFormId.toString(), this.id).subscribe((respData: any) => {
 			if(respData.body){
-				this.commonService.successAlert("File Deleted", this.uploadModel.labelName + " successfully deleted", "success");
+				this.toastrService.success(this.uploadModel.labelName + " successfully deleted");
 				this.canUpload = false;
 				this.requiredFile = true;
 				this.imagetype = false;

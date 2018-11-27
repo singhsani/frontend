@@ -312,7 +312,7 @@ export class DeathRegistrationComponent implements OnInit {
 			gender: this.fb.group({
 				code: [null],
 			}),
-			deathDate: [null],
+			deathDate: [null,],
 			birthDate: [null],
 			fatherOrHusbandName: ['', [ValidationService.nameValidator]],
 			motherName: ['', [ValidationService.nameValidator]],
@@ -375,7 +375,7 @@ export class DeathRegistrationComponent implements OnInit {
 			applicantRelation: this.fb.group({
 				code: [null, [Validators.required]]
 			}),
-			relationOther: [''],
+			relationOther: [null],
 			applicantAddress: this.fb.group(this.addressComp.addressControls()),
 
 			// aadhaarNo: ['', [Validators.minLength(12), Validators.maxLength(12), ValidationService.aadharValidation]],
@@ -449,6 +449,7 @@ export class DeathRegistrationComponent implements OnInit {
 	 */
 	birthFormatChanger(event) {
 		this.minDeathDate = event.value;
+		this.deathCertificateForm.get('deathDate').setValue(null);
 		this.deathCertificateForm.get('birthDate').setValue(moment(event.value).format("YYYY-MM-DD"));
 	}
 
@@ -499,6 +500,13 @@ export class DeathRegistrationComponent implements OnInit {
 			this.deathCertificateForm.get('permanentAddress').enable();
 		}
 		this.deathCertificateForm.get('permanentAddress').get('addressType').setValue(parentPermanentAddressType);
+	}
+
+	changeApplicantRelation(ev){
+		if(ev != 'OTHER_RELATIONSHIP'){
+			this.deathCertificateForm.get('relationOther').clearValidators();
+			this.deathCertificateForm.get('relationOther').updateValueAndValidity();
+		}
 	}
 
 	/**

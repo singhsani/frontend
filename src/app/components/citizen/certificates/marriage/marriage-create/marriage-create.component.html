@@ -1,8 +1,16 @@
 <app-title-bar [title]="'screen_title' | translate: translateKey">
+	<!-- <button class="pull-right" mat-stroked-button type="button" (click)="patchValue()">
+		Patch Value
+	</button> -->
 </app-title-bar>
+
+
+
 <mat-card class="formClass cardBorder">
+
 	<!--Start  form  -->
 	<form [formGroup]="marriageFormGroup">
+
 		<mat-tab-group mat-stretch-tabs [(selectedIndex)]="tabIndex" class="stepperNav" dynamicHeight='true' mat-stretch-tabs>
 
 			<!-- First step -->
@@ -31,7 +39,7 @@
 
 				<div class="row">
 					<h2>{{ 'place_of_marriage' | translate:translateKey }}:</h2>
-					<app-address #address [addressFormGroup]="marriageFormGroup.controls.marriagePlace"></app-address>
+					<app-address #address [isDisplayGujFields]="true" [addressFormGroup]="marriageFormGroup.controls.marriagePlace"></app-address>
 				</div>
 
 				<!-- For NIR Marrige -->
@@ -181,7 +189,8 @@
 						</div>
 					</div>
 
-					<div *ngIf="marriageFormGroup.controls.isGroomVisa.value == true">
+
+					<div *ngIf="marriageFormGroup.get('isGroomVisa').value">
 						<mat-form-field class="col-md-4">
 							<input matInput OnlyNumber required maxlength="9" minlength="9" type="tel" formControlName="groomPassportNumber" placeholder="{{'passport_number' | translate:translateKey }}">
 							<control-messages [control]="marriageFormGroup.controls.groomPassportNumber"></control-messages>
@@ -271,8 +280,8 @@
 				<!-- / NIR Marrige -->
 
 				<div class="row" [hidden]="marriageFormGroup.controls.isGroomVisa.value == true">
-						<h2>{{'address' | translate:translateKey }}:</h2>
-						<app-address #address [requiredFeilds]="!marriageFormGroup.controls.isGroomVisa.value" [addressFormGroup]="marriageFormGroup.controls.groomAddress"></app-address>
+					<h2>{{'address' | translate:translateKey }}:</h2>
+					<app-address #address [requiredFeilds]="!marriageFormGroup.controls.isGroomVisa.value" [addressFormGroup]="marriageFormGroup.controls.groomAddress"></app-address>
 				</div>
 
 				<app-action-bar [uploadFiles]="uploadFileArray" [form]="marriageFormGroup" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step1', next: 1, back: 0}"></app-action-bar>
@@ -486,12 +495,12 @@
 				<!-- / NIR Marrige -->
 
 				<div class="row" [hidden]="marriageFormGroup.controls.isBrideVisa.value == true">
-						<h2>{{'address' | translate:translateKey }}:</h2>
-						<app-address #address [requiredFeilds]="!marriageFormGroup.controls.isBrideVisa.value" [addressFormGroup]="marriageFormGroup.controls.brideAddress"></app-address>
+					<h2>{{'address' | translate:translateKey }}:</h2>
+					<app-address #address [requiredFeilds]="!marriageFormGroup.controls.isBrideVisa.value" [addressFormGroup]="marriageFormGroup.controls.brideAddress"></app-address>
 				</div>
-				
+
 				<app-action-bar [uploadFiles]="uploadFileArray" [form]="marriageFormGroup" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step2', next: 2, back: 0}"></app-action-bar>
-			
+
 			</mat-tab>
 			<!-- End Second step -->
 
@@ -572,7 +581,8 @@
 
 
 					<div formGroupName='isGroomParResAddressSame'>
-						<mat-checkbox type="checkbox" class="col-md-4" [checked]="addObject.checkedPar1" (change)="checkBox($event,'isGroomParResAddressSame','groomParentsAddressResidence','groomParentsAddress','1')">{{'is_permanent_address_same_as_present_address' | translate:translateKey}}</mat-checkbox>
+						<mat-checkbox type="checkbox" class="col-md-4" [checked]="addObject.checkedPar1" (change)="checkBox($event,'isGroomParResAddressSame','groomParentsAddressResidence','groomParentsAddress','1')">{{'is_permanent_address_same_as_present_address'
+							| translate:translateKey}}</mat-checkbox>
 					</div>
 				</div>
 
@@ -664,7 +674,8 @@
 
 
 					<div formGroupName='isBrideParResAddressSame'>
-						<mat-checkbox type="checkbox" class="col-md-4" [checked]="addObject.checkedPar2" (change)="checkBox($event,'isBrideParResAddressSame','brideParentsAddressResidence','brideParentsAddress','2')">{{'is_permanent_address_same_as_present_address' | translate:translateKey}}</mat-checkbox>
+						<mat-checkbox type="checkbox" class="col-md-4" [checked]="addObject.checkedPar2" (change)="checkBox($event,'isBrideParResAddressSame','brideParentsAddressResidence','brideParentsAddress','2')">{{'is_permanent_address_same_as_present_address'
+							| translate:translateKey}}</mat-checkbox>
 					</div>
 				</div>
 
@@ -744,7 +755,8 @@
 
 
 					<div class="col-md-4" formGroupName='isPriestParResAddressSame'>
-						<mat-checkbox type="checkbox" [checked]="addObject.checkedPar3" (change)="checkBox($event,'isPriestParResAddressSame','priestAddressResidence','priestAddress','3')">{{'is_permanent_address_same_as_present_address' | translate:translateKey}}</mat-checkbox>
+						<mat-checkbox type="checkbox" [checked]="addObject.checkedPar3" (change)="checkBox($event,'isPriestParResAddressSame','priestAddressResidence','priestAddress','3')">{{'is_permanent_address_same_as_present_address'
+							| translate:translateKey}}</mat-checkbox>
 					</div>
 				</div>
 

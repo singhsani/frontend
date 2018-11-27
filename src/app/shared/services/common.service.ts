@@ -1,6 +1,8 @@
 import { BehaviorSubject } from 'rxjs/Rx';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
+import { environment } from '../../../environments/environment';
+
 
 import { SessionStorageService } from 'angular-web-storage';
 
@@ -124,9 +126,10 @@ export class CommonService {
 			type: type,
 			html: html,
 			showCancelButton: true,
+			allowOutsideClick: false,
 			confirmButtonColor: '#3085d6',
 			cancelButtonColor: '#d33',
-			confirmButtonText: 'Make a Payment!',
+			confirmButtonText: 'Submit',
 			imageUrl: this.imageUrls(type),
 			imageClass: 'doneIcon',
 		}
@@ -223,6 +226,57 @@ export class CommonService {
 				performEvent();
 			}
 		})
+	}
+
+	commonAlert(title: string, message: string, type: string, confirmButtonText: string, allowOutsideClick?:boolean, html?: any, performAction?: any, rejectAction?: any) {
+
+		let options = {
+			title: title,
+			text: message,
+			type: type,
+			html: html,
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: confirmButtonText,
+			allowOutsideClick: allowOutsideClick,
+			imageUrl: this.imageUrls(type),
+			imageClass: 'doneIcon',
+		}
+
+		swal(options as any).then((result) => {
+			if (result.value && performAction) {
+				performAction();
+			} else {
+				rejectAction();
+			}
+		})
+	}
+
+	storePaymentInfo(paymentData, myApplicationUrl): any {
+		let payData = {
+			id: null,
+			uniqueId: null,
+			version: null,
+			refNumber: paymentData.serviceFormId,
+			response: JSON.stringify({
+				data: "paid",
+				status: true
+			}),
+			transactionId: paymentData.transactionId,
+			paymentStatus: null,
+			retUrl: environment.citizenUrl,
+			retPath: 'citizen/payment-gateway-response',
+			myApplicationUrl: myApplicationUrl,
+			amount: paymentData.amount
+		}
+		this.session.set('paymentData', JSON.stringify(payData));
+
+		return payData;
+	}
+
+	redirectToPaymentGateway(payData) {
+		window.location.href = environment.adminUrl + `#/admin/payment-gateway?retUrl=${payData.retUrl}&retPath=${payData.retPath}`;
 	}
 
 }

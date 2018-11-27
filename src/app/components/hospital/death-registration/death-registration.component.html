@@ -76,9 +76,9 @@
 						<control-messages [control]="deathCertificateForm.controls.birthDate"></control-messages>
 					</mat-form-field>
 
-					<mat-form-field class="col-md-6">
-						<input [required]="requiredFeild" matInput readonly (click)="pickerBirth.open()" (focus)="pickerBirth.open()" [max]="maxDeathDate"
-						 [min]="minDeathDate" [matDatepicker]="pickerBirth" (dateChange)="deathFormatChanger($event);delayCalculator($event)"
+					<mat-form-field class="col-md-6" *ngIf="deathCertificateForm.controls.birthDate.value != null">
+						<input  [required]="requiredFeild" matInput readonly (click)="pickerBirth.open()" (focus)="pickerBirth.open()" [max]="maxDeathDate"
+						 [min]="deathCertificateForm.controls.birthDate.value" [matDatepicker]="pickerBirth" (dateChange)="deathFormatChanger($event);delayCalculator($event)"
 						 placeholder="{{'date_of_death' | translate:translateKey}}" formControlName="deathDate">
 						<mat-datepicker-toggle matSuffix [for]="pickerBirth"></mat-datepicker-toggle>
 						<mat-datepicker #pickerBirth touchUi="true"></mat-datepicker>
@@ -291,7 +291,7 @@
 					<app-basic-details [basicFormGroup]="deathCertificateForm"></app-basic-details>
 					<div class="row">
 						<div formGroupName="applicantRelation" class="col-md-6 ngSelect">
-							<ng-select placeholder="{{'applicant_relation' | translate:translateKey}} *" formControlName="code">
+							<ng-select (change) ="changeApplicantRelation($event)" placeholder="{{'applicant_relation' | translate:translateKey}} *" formControlName="code">
 								<ng-option *ngFor="let app_rel of RelationShip" [value]="app_rel.code">
 									{{app_rel.name}}
 								</ng-option>

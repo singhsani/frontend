@@ -17,9 +17,13 @@ import { Router } from "@angular/router";
 							</a>
 						</li>
 						<li>{{title}}</li>
+				      <ng-content></ng-content>
+
 					</ul>
+
 					</div>
-				</div>`,
+				</div>
+`,
 	styles: [` `]
 })
 export class TitleBarComponent implements OnInit {

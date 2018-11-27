@@ -3,6 +3,7 @@ import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { UploadFileService } from './../../upload-file.service';
 
 import { CommonService } from '../../services/common.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
 	selector: 'file-upload',
@@ -49,7 +50,8 @@ export class FileUploadComponent implements OnInit {
 	 */
 	constructor(
 		private uploadFileService: UploadFileService,
-		private commonService: CommonService
+		private commonService: CommonService,
+		private tostr: ToastrService
 	) { }
 
 
@@ -117,7 +119,7 @@ export class FileUploadComponent implements OnInit {
 				this.uploadFileService.processFileToServer(formData, setProgressBar => {
 					this.progress.percentage = setProgressBar;
 				}, successResponse => {
-					this.commonService.successAlert("File Uploaded", this.uploadModel.labelName + " successfully uploaded", "success");
+					this.tostr.success( this.uploadModel.labelName + " successfully uploaded","File Uploaded");
 					this.canUpload = true;
 					this.id = successResponse.data.id;
 					this.type = successResponse.data.mimeType;
@@ -184,7 +186,7 @@ export class FileUploadComponent implements OnInit {
 			this.uploadFileService.deleteFile(this.uploadModel.serviceFormId.toString(), this.id).subscribe(
 				(respData: any) => {
 					if(respData.body){
-						this.commonService.successAlert("File Deleted", this.uploadModel.labelName + " successfully deleted", "success");
+						this.tostr.success(this.uploadModel.labelName + " successfully deleted", "File Deleted");
 						this.canUpload = false;
 						this.fileName = '';
 						this.getFile = '';

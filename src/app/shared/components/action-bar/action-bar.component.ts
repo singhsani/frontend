@@ -1,8 +1,7 @@
-import { ManageRoutes } from './../../../config/routes-conf';
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild, OnChanges } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators, FormArray } from '@angular/forms';
 import * as _ from 'lodash';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { CommonService } from './../../services/common.service';
 import { ValidationService } from './../../services/validation.service';
@@ -42,18 +41,21 @@ export class ActionBarComponent implements OnInit, OnChanges {
 		private commonService: CommonService) {
 	}
 
+	/**
+	 * Method initialize other opertaions.
+	 */
 	ngOnInit() {
 		//if (this.form) {
-			this.formService.apiType = this.form.get('apiType').value;
-			this.commonFormControls();
-			this.uploadFilesArray = this.uploadFiles;
+		this.formService.apiType = this.form.get('apiType').value;
+		this.commonFormControls();
+		this.uploadFilesArray = this.uploadFiles;
 
-			setTimeout(() => {
-				if (this.form.value.hasOwnProperty('canEdit') && !this.form.value.canEdit && this.form.value.canEdit != null) {
-					this.form.disable();
-					this.isBtnsDisabled = false;
-				}
-			},600);
+		setTimeout(() => {
+			if (this.form.value.hasOwnProperty('canEdit') && !this.form.value.canEdit && this.form.value.canEdit != null) {
+				this.form.disable();
+				this.isBtnsDisabled = false;
+			}
+		}, 600);
 		//}
 	}
 
@@ -124,7 +126,6 @@ export class ActionBarComponent implements OnInit, OnChanges {
 					}
 					count++;
 				}
-
 			}
 		);
 	}
@@ -154,35 +155,37 @@ export class ActionBarComponent implements OnInit, OnChanges {
 					},
 						err => {
 							this.isSubmitBtnDisabled = false;
-
+							let retUrl: string = '/citizen/my-applications';
 							if (err.status === 402) {
-
-								let paymentData = err.error.data;
-
-								let payData = {
-									id: null,
-									uniqueId: null,
-									version: null,
-									refNumber: paymentData.serviceFormId,
-									response: JSON.stringify({
-										data: "paid",
-										status: true
-									}),
-									transactionId: paymentData.transactionId,
-									paymentStatus: "SUCCESS",
-
-									retUrl: environment.citizenUrl,
-									retPath: 'citizen/payment-gateway-response',
-									myApplicationUrl: '/citizen/my-applications'
+								if (this.form.getRawValue().serviceDetail.appointmentRequired) {
+									retUrl = `/citizen/appointmant/schedule-appointment/slot-booking/` + this.form.getRawValue().serviceFormId + `/` + this.form.getRawValue().serviceDetail.code;
 								}
 
-								this.sessionStore.set('paymentData', JSON.stringify(payData));
-
-								this.commonService.paymentAlert('', '', '', cb => {
-									//http://192.168.10.107:8080/vmcadminportal/
-									window.location.href = environment.adminUrl +`#/admin/payment-gateway?retUrl=${payData.retUrl}&retPath=${payData.retPath}`;
+								let payData = this.commonService.storePaymentInfo(err.error.data, retUrl);
+								let html =
+									`
+								<div class="text-center">
+									<h2>Total Fee Pay</h2>
+									<div class="payAmount">
+										<i class="fa fa-inr" aria-hidden="true">` + payData.amount + `</i>
+									</div>
+									<p>Rupees in words</p>
+								</div>
+								`
+								this.commonService.commonAlert('Payment Details', '', 'info', 'Make Payment!', false, html, cb => {
+									window.location.href = environment.adminUrl + `#/admin/payment-gateway?retUrl=${payData.retUrl}&retPath=${payData.retPath}`;
+								}, rj => {
+									let errHtml = `			
+										<div>
+										<h1>Appointment Details</h1>
+										<div class="alert alert-danger">
+											Please Complete Payment, Otherwise the application will be considered as in-complete
+										</div>`
+									this.commonService.commonAlert("Application Incomplete", "", 'warning', 'Make Payment!', false, errHtml, ccb => {
+										window.location.href = environment.adminUrl + `#/admin/payment-gateway?retUrl=${payData.retUrl}&retPath=${payData.retPath}`;
+									})
+									return;
 								});
-
 								return;
 							}
 						}
@@ -199,7 +202,6 @@ export class ActionBarComponent implements OnInit, OnChanges {
 			let count = 1;
 			for (const key in this.form.controls) {
 				if (this.form.get(key).invalid) {
-
 					if (this.form.get('apiType').value == 'marriageReg') {
 						let groomreligionChange = this.form.controls.groomReligion.get("code").value;
 						let bridereligionChange = this.form.controls.brideReligion.get("code").value;
@@ -210,13 +212,37 @@ export class ActionBarComponent implements OnInit, OnChanges {
 							}
 						}
 					}
-
 					this.handleErrors.emit(count);
 					break;
 				}
 				count++;
 			}
 		}
+	}
+
+	/**
+	 * Method is used to perform appointment.
+	 */
+	payAndScheduleAppointment() {
+		//citizen/appointmant/schedule-appointment/slot-booking/45/HEL-MR
+
+		this.isSaveBtnDisabled = true;
+		this.formService.saveFormData(this.form.getRawValue()).subscribe(saveResp => {
+			this.isSaveBtnDisabled = true;
+			this.onSubmit();
+		},
+			err => {
+				this.markFormGroupTouched(this.form);
+				this.isSaveBtnDisabled = false;
+				let count = 1;
+				for (const key in this.form.controls) {
+					if (key == err.error[0].property) {
+						this.handleErrors.emit(count);
+						break;
+					}
+					count++;
+				}
+			})
 	}
 
 
@@ -265,7 +291,8 @@ export class ActionBarComponent implements OnInit, OnChanges {
 			code: new FormControl(),
 			name: new FormControl(),
 			gujName: new FormControl(),
-			feesOnScrutiny: new FormControl()
+			feesOnScrutiny: new FormControl(),
+			appointmentRequired: new FormControl()
 		}));
 		/* ended common form controls in existing formGroups*/
 
