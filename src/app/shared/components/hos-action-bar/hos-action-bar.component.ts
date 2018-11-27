@@ -1,7 +1,5 @@
-import { ManageRoutes } from './../../../config/routes-conf';
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild, OnChanges } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl, Validators, FormArray, AbstractControl } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
+import { FormGroup, FormBuilder, FormControl, Validators, FormArray } from '@angular/forms';
 import { HosFormActionsService } from '../../../core/services/hospital/data-services/hos-form-actions.service';
 import { CommonService } from '../../services/common.service';
 import { ToastrService } from 'ngx-toastr';
@@ -41,16 +39,13 @@ export class HosActionBarComponent implements OnInit, OnChanges {
 	constructor(
 		private sessionStore: SessionStorageService,
 		private formService: HosFormActionsService,
-		private route: Router, private fb: FormBuilder,
+		private fb: FormBuilder,
 		private toastr: ToastrService,
 		private commonService: CommonService) {
 	}
 
 	ngOnInit() {
-		debugger;
 		this.formService.apiType = this.form.get('apiType').value;
-
-		debugger;
 		this.commonFormControls();
 		this.uploadFilesArray = this.uploadFiles;
 
@@ -99,7 +94,6 @@ export class HosActionBarComponent implements OnInit, OnChanges {
 	 * Method to capture change event.
 	 */
 	ngOnChanges() {
-		debugger;
 		this.uploadFilesArray = this.uploadFiles;
 	}
 

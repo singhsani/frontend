@@ -4,8 +4,28 @@ import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-hos-title-bar',
-  templateUrl: './hos-title-bar.component.html',
-  styleUrls: ['./hos-title-bar.component.scss']
+  template: `<div class="titleBar">
+					<div class="container clearfix">
+					<ul class="breadcrumbNav clearfix">
+						<li>
+							<a mat-button class="backArrow" (click)="navigateToRouteByIndex('HOSPITALDASHBOARD')">
+								<mat-icon>arrow_back</mat-icon>
+							</a>
+						</li>
+						<li>
+							<a mat-button (click)="navigateToRouteByIndex('HOSPITALDASHBOARD')">
+								Home
+							</a>
+						</li>
+						<li>{{title}}</li>
+				      <ng-content></ng-content>
+
+					</ul>
+
+					</div>
+				</div>
+`,
+  styles: ['']
 })
 export class HosTitleBarComponent implements OnInit {
 

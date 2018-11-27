@@ -145,4 +145,15 @@ export class HosFormActionsService {
 		return this.http.get(requestURL);
 	}
 
+	/**
+     * This method is use to generate print view
+     * @param appId - citizen app id
+     */
+	printView(appId) {
+
+		this.requestURL = `api/form/${this.apiType}/printView/${appId}`;
+
+		return this.http.get(this.requestURL, 'printReceipt');
+	}
+
 }

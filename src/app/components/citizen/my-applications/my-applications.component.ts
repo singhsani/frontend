@@ -12,6 +12,7 @@ import { PaginationService } from '../../../core/services/citizen/data-services/
 import { FormsActionsService } from '../../../core/services/citizen/data-services/forms-actions.service';
 import { CommonService } from '../../../shared/services/common.service';
 import { ManageRoutes } from '../../../config/routes-conf';
+import * as moment from 'moment'
 
 @Component({
 	selector: 'app-my-applications',
@@ -24,16 +25,19 @@ export class MyApplicationsComponent implements OnInit {
 		'id',
 		'applicantName',
 		'fileNumber',
-		'fileStatus',
+		'dateOfApplication',
+		'departmentName',
 		'serviceType',
+		'fileStatus',
 		'action'
 	];
 
 	dataSource = new MatTableDataSource();
 
 	resultsLength: number = 0;
-	pageSize: number = 20;
+	pageSize: number = 5;
 	isLoadingResults: boolean = true;
+	translateKey: string="myApplicationScreen";
 
 	appType: string = 'myApps';
 
@@ -62,6 +66,9 @@ export class MyApplicationsComponent implements OnInit {
 	 * This method use to get all the citizen data with pagination.
 	 */
 	getAllData() {
+		this.paginator.pageSize = 5;
+		this.paginator.pageIndex = 0;
+		
 		merge(this.sort.sortChange, this.paginator.page)
 			.pipe(
 				startWith({}),
@@ -69,7 +76,7 @@ export class MyApplicationsComponent implements OnInit {
 					this.isLoadingResults = true;
 					this.paginationService.apiType = this.appType;
 					this.paginationService.pageIndex = (this.paginator.pageIndex + 1);
-					this.paginationService.pageSize = this.pageSize;
+					this.paginationService.pageSize = this.paginator.pageSize;
 					return this.paginationService!.getAllData();
 				}),
 				map(data => {
@@ -161,19 +168,15 @@ export class MyApplicationsComponent implements OnInit {
 
 		this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);
 		this.formService.printReceipt(id).subscribe(
-			res => {
-				let data = res;
-				let Pagelink = "about:blank";
-				let pwa = window.open(Pagelink, "_new");
-				if (!pwa || pwa.closed || typeof pwa.closed == 'undefined') {
-					this.commonService.openAlert('Pop-up!', 'Please disable your Pop-up blocker and try again.', 'warning');
-				}
-				pwa.document.open();
-				pwa.document.write(data);
-				pwa.print();
+			htmlResponse => {
+				let sectionToPrint: any = document.getElementById('sectionToPrint');
+				sectionToPrint.innerHTML = htmlResponse;
+				setTimeout(() => {
+					window.print();
+				});
 			},
 			err => {
-				//this.commonService.successAlert('Error!', err.error[0].message, 'error');
+				this.commonService.openAlert('Error!', err.error[0].message, 'error');
 			}
 		);
 
@@ -190,17 +193,13 @@ export class MyApplicationsComponent implements OnInit {
 
         this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);
         this.formService.printView(id).subscribe(
-            res => {
-                let data = res;
-                let Pagelink = "about:blank";
-                let pwa = window.open(Pagelink, "_new");
-                if (!pwa || pwa.closed || typeof pwa.closed == 'undefined') {
-                    this.commonService.openAlert('Pop-up!', 'Please disable your Pop-up blocker and try again.', 'warning');
-                }
-                pwa.document.open();
-                pwa.document.write(data);
-                pwa.print();
-            },
+            htmlResponse => {
+				let sectionToPrint: any = document.getElementById('sectionToPrint');
+				sectionToPrint.innerHTML = htmlResponse;
+				setTimeout(() => {
+					window.print();
+				});
+			},
             err => {
                 //this.commonService.successAlert('Error!', err.error[0].message, 'error');
             }
@@ -255,6 +254,11 @@ export class MyApplicationsComponent implements OnInit {
 	 */
 	openModal(template: TemplateRef<any>) {
 		this.modalRef = this.modalService.show(template);
+	}
+
+	getProperDate(date: string):string{
+		if (date) return moment(date).format("DD/MM/YYYY");
+		return null;
 	}
 
 }

@@ -1,23 +1,22 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnChanges, ChangeDetectorRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { ValidationService } from '../../../../../shared/services/validation.service';
 import { FormsActionsService } from '../../../../../core/services/citizen/data-services/forms-actions.service';
 import { CommonService } from '../../.././../../shared/services/common.service';
-
 import * as _ from 'lodash';
 import * as moment from 'moment';
 import { ManageRoutes } from '../../../../../config/routes-conf';
-import { identity } from 'rxjs';
-import { element } from 'protractor';
+
+
 
 @Component({
     selector: 'app-marriage-create',
     templateUrl: './marriage-create.component.html',
     styleUrls: ['./marriage-create.component.scss']
 })
-export class MarriageCreateComponent implements OnInit {
+export class MarriageCreateComponent implements OnInit, OnChanges {
 
     @ViewChild('address') addrComponent: any;
 
@@ -27,6 +26,353 @@ export class MarriageCreateComponent implements OnInit {
         { labelName: 'Groom Photo', fieldIdentifier: '2' },
         { labelName: 'Bride Photo', fieldIdentifier: '3' }
         ];
+
+        
+    public dummyJSON = {
+        "applicantAadharNumber": "",
+        "applicantEmail": "",
+        "marriageDate": "2018-11-05",
+        "marriagePlace": {
+            "buildingName": "dsfsdf",
+            "streetName": "gfgf",
+            "landmark": "fg",
+            "area": "gf",
+            "state": "GUJARAT",
+            "district": null,
+            "city": "Gandhinagar",
+            "country": "INDIA",
+            "pincode": "344235",
+            "buildingNameGuj": "દ્સ્ફ્સ્દ્ફ",
+            "streetNameGuj": "ગ્ફ્ગ્ફ",
+            "landmarkGuj": "ફ્ગફ્ગ",
+            "areaGuj": "ગ્ફ",
+            "stateGuj": "ગુજરાત",
+            "districtGuj": null,
+            "cityGuj": "ગાંધીનગર",
+            "countryGuj": "ભારત"
+        },
+        "isNriMarriage": false,
+        "groomFirstName": "gfdsg",
+        "groomMiddleName": null,
+        "groomLastName": "fgfdsgsdfg",
+        "groomBirthDate": "1997-11-02",
+        "groomAge": 21,
+        "groomReligion": {
+            "code": "HINDU",
+            "gujName": "હિંદુ",
+            "name": "Hindu"
+        },
+        "groomAadharNumber": "633363545675",
+        "marriageTimeGroomStatus": {
+            "code": "UNMARRIED"
+        },
+        "aliveWives": null,
+        "groomAddress": {
+            "buildingName": "gfh",
+            "streetName": "gfh",
+            "landmark": "hgf",
+            "area": "gfhd",
+            "state": "GUJARAT",
+            "district": null,
+            "city": "Junagadh",
+            "country": "INDIA",
+            "pincode": "474774",
+            "buildingNameGuj": "ગ્ફ્હ",
+            "streetNameGuj": "ગ્ફ્હ",
+            "landmarkGuj": "હ્ગ્ફ",
+            "areaGuj": "ગ્ફ્હ્દ",
+            "stateGuj": "ગુજરાત",
+            "districtGuj": null,
+            "cityGuj": "વડોદરા",
+            "countryGuj": "ભારત"
+        },
+        "brideFirstName": "tgh",
+        "brideMiddleName": "gf",
+        "brideLastName": "fhg",
+        "brideBirthDate": "2000-11-05",
+        "brideAge": 18,
+        "brideReligion": {
+            "code": "HINDU",
+            "gujName": "હિંદુ",
+            "name": "Hindu"
+        },
+        "brideAadharNumber": null,
+        "marriageTimeBrideStatus": {
+            "code": "UNMARRIED"
+        },
+        "brideAddress": {
+            "buildingName": "674",
+            "streetName": "ghfd",
+            "landmark": "sdhf",
+            "area": "hgd",
+            "state": "GUJARAT",
+            "district": null,
+            "city": "Vadodara",
+            "country": "INDIA",
+            "pincode": "457645",
+            "buildingNameGuj": "૬૭૪",
+            "streetNameGuj": "ઘ્ફ્દ",
+            "landmarkGuj": "સ્ધ્ફ",
+            "areaGuj": "હ્ગ્દ",
+            "stateGuj": "ગુજરાત",
+            "districtGuj": null,
+            "cityGuj": "વડોદરા",
+            "countryGuj": "ભારત"
+        },
+        "groomParentsFirstName": "gfndh",
+        "groomParentsMiddleName": "vchbdg",
+        "groomParentsLastName": "jfd",
+        "groomParentsBirthDate": "2000-11-06",
+        "groomParentsAadharNumber": "437657657657",
+        "groomParentsAddress": {
+            "buildingName": "64",
+            "streetName": "54",
+            "landmark": "653",
+            "area": "54645",
+            "state": "GUJARAT",
+            "district": null,
+            "city": "Morbi",
+            "country": "INDIA",
+            "pincode": "645643",
+            "buildingNameGuj": "૬૪",
+            "streetNameGuj": "૫૪",
+            "landmarkGuj": "૬૫૩",
+            "areaGuj": "૫૪૬૪૫",
+            "stateGuj": null,
+            "districtGuj": null,
+            "cityGuj": null,
+            "countryGuj": null
+        },
+        "groomParentsAddressResidence": {
+            "buildingName": "64",
+            "streetName": "54",
+            "landmark": "653",
+            "area": "54645",
+            "state": "GUJARAT",
+            "district": null,
+            "city": "Morbi",
+            "country": "INDIA",
+            "pincode": "645643",
+            "buildingNameGuj": "૬૪",
+            "streetNameGuj": "૫૪",
+            "landmarkGuj": "૬૫૩",
+            "areaGuj": "૫૪૬૪૫",
+            "stateGuj": null,
+            "districtGuj": null,
+            "cityGuj": null,
+            "countryGuj": null
+        },
+        "isGroomParResAddressSame": {
+            "code": "YES"
+        },
+        "brideParentsFirstName": "Johnhfg",
+        "brideParentsMiddleName": "Domnic",
+        "brideParentsLastName": "chawl",
+        "brideParentsBirthDate": "2000-11-06",
+        "brideParentsAadharNumber": "457645756546",
+        "brideParentsAddress": {
+            "buildingName": "7445",
+            "streetName": "474",
+            "landmark": "47544747647647",
+            "area": "4747hddfshdg",
+            "state": "Balochistan",
+            "district": null,
+            "city": "Chagai",
+            "country": "PAKISTAN",
+            "pincode": "457645",
+            "buildingNameGuj": "૭૪૪૫",
+            "streetNameGuj": "૪૭૪",
+            "landmarkGuj": "૪૭૫૪૪૭૪૭૬૪૭૬૪૭",
+            "areaGuj": "૪૭૪૭હ્દ્દ્ફ્શ્દ્ગ",
+            "stateGuj": null,
+            "districtGuj": null,
+            "cityGuj": null,
+            "countryGuj": null
+        },
+        "brideParentsAddressResidence": {
+            "buildingName": "7445",
+            "streetName": "474",
+            "landmark": "47544747647647",
+            "area": "4747hddfshdg",
+            "state": "Balochistan",
+            "district": null,
+            "city": "Chagai",
+            "country": "PAKISTAN",
+            "pincode": "457645",
+            "buildingNameGuj": "૭૪૪૫",
+            "streetNameGuj": "૪૭૪",
+            "landmarkGuj": "૪૭૫૪૪૭૪૭૬૪૭૬૪૭",
+            "areaGuj": "૪૭૪૭હ્દ્દ્ફ્શ્દ્ગ",
+            "stateGuj": null,
+            "districtGuj": null,
+            "cityGuj": null,
+            "countryGuj": null
+        },
+        "isBrideParResAddressSame": {
+            "code": "YES"
+        },
+        "priestFirstName": "hbd",
+        "priestMiddleName": "fghdgd",
+        "priestLastName": "fdjf",
+        "priestBirthDate": "2000-11-13",
+        "priestAddressAadharNumber": "",
+        "priestAddress": {
+            "buildingName": "54trhy",
+            "streetName": "dghshj",
+            "landmark": "jsdfg",
+            "area": "dfhnjfdh",
+            "state": "GUJARAT",
+            "district": null,
+            "city": "Vadodara",
+            "country": "INDIA",
+            "pincode": "400457",
+            "buildingNameGuj": "૫૪ત્ર્હ્ય",
+            "streetNameGuj": "દ્ઘ્શ્જ",
+            "landmarkGuj": "જ્સ્દ્ફ્ગ",
+            "areaGuj": "દ્ફ્હ્ન્જ્ફ્ધ",
+            "stateGuj": "ગુજરાત",
+            "districtGuj": null,
+            "cityGuj": "વડોદરા",
+            "countryGuj": "ભારત"
+        },
+        "priestAddressResidence": {
+            "buildingName": "54trhy",
+            "streetName": "dghshj",
+            "landmark": "jsdfg",
+            "area": "dfhnjfdh",
+            "state": "GUJARAT",
+            "district": null,
+            "city": "Vadodara",
+            "country": "INDIA",
+            "pincode": "400457",
+            "buildingNameGuj": "૫૪ત્ર્હ્ય",
+            "streetNameGuj": "દ્ઘ્શ્જ",
+            "landmarkGuj": "જ્સ્દ્ફ્ગ",
+            "areaGuj": "દ્ફ્હ્ન્જ્ફ્ધ",
+            "stateGuj": "ગુજરાત",
+            "districtGuj": null,
+            "cityGuj": "વડોદરા",
+            "countryGuj": "ભારત"
+        },
+        "isPriestParResAddressSame": {
+            "code": "YES"
+        },
+        "firstWitnessFirstName": "ghbdg",
+        "firstWitnessMiddleName": "gh",
+        "firstWitnessLastName": "fgs",
+        "firstWitnessBirthDate": "2000-11-13",
+        "firstWitnessAadharNumber": "547664563634",
+        "firstWitnessAddress": {
+            "buildingName": "4365346",
+            "streetName": "346346",
+            "landmark": "3636",
+            "area": "36536",
+            "state": "GUJARAT",
+            "district": null,
+            "city": "Vadodara",
+            "country": "INDIA",
+            "pincode": "111114",
+            "buildingNameGuj": "૪૩૬૫૩૪૬",
+            "streetNameGuj": "૩૪૬૩૪૬",
+            "landmarkGuj": "૩૬૩૬",
+            "areaGuj": "૩૬૫૩૬",
+            "stateGuj": "ગુજરાત",
+            "districtGuj": null,
+            "cityGuj": "વડોદરા",
+            "countryGuj": "ભારત"
+        },
+        "secondWitnessFirstName": "trghgdfg",
+        "secondWitnessMiddleName": "fghfd",
+        "secondWitnessLastName": "ghsdgh",
+        "secondWitnessBirthDate": "2000-11-06",
+        "secondWitnessAadharNumber": "542523453245",
+        "secondWitnessAddress": {
+            "buildingName": "dhf",
+            "streetName": "hdssd",
+            "landmark": "dshdsh",
+            "area": "dsh",
+            "state": "GUJARAT",
+            "district": null,
+            "city": "Vadodara",
+            "country": "INDIA",
+            "pincode": "245252",
+            "buildingNameGuj": "ધ્ફ",
+            "streetNameGuj": "હ્દ્સ્સ્દ",
+            "landmarkGuj": "દ્શ્દ્શ",
+            "areaGuj": "દ્શ",
+            "stateGuj": "ગુજરાત",
+            "districtGuj": null,
+            "cityGuj": "વડોદરા",
+            "countryGuj": "ભારત"
+        },
+        "applicantRelation": {
+            "code": "SELF"
+        },
+        "applicantRelationOther": null,
+        "uniqueIdProofLable": {
+            "code": "ELECTION_CARD_NUMBER"
+        },
+        "uniqueIdProof": "765rthdgdfy7547y65476454774574575474",
+        "groomFirstNameGuj": "ગ્ફ્દ્સ્ગ",
+        "groomMiddleNameGuj": null,
+        "groomLastNameGuj": "ફ્ગ્ફ્દ્સ્ગ્સ્દ્ફ્ગ",
+        "brideFirstNameGuj": "ત્ઘ",
+        "brideMiddleNameGuj": "ગ્ફ",
+        "brideLastNameGuj": "ફ્હ્ગ",
+        "groomParentsFirstNameGuj": "ગ્ફ્ન્ધ",
+        "groomParentsMiddleNameGuj": "વ્ચ્બ્દ્ગ",
+        "groomParentsLastNameGuj": "જ્ફ્દ",
+        "brideParentsFirstNameGuj": "ઓહ્ન્હ્ફ્ગ",
+        "brideParentsMiddleNameGuj": "ડોમ્નિ",
+        "brideParentsLastNameGuj": "ચવ્લ",
+        "priestFirstNameGuj": "હ્બ્દ",
+        "priestMiddleNameGuj": "ફ્ઘ્દ્ગ્દ",
+        "priestLastNameGuj": "ફ્દ્જ્ફ",
+        "firstWitnessFirstNameGuj": "ઘ્બ્દ્ગ",
+        "firstWitnessMiddleNameGuj": "ઘ",
+        "firstWitnessLastNameGuj": "ફ્ગ્સફ્હ્જ",
+        "secondWitnessFirstNameGuj": "ત્ર્ઘ્ગ્દ્ફ્ગ",
+        "secondWitnessMiddleNameGuj": "ફ્ઘ્ફ્દ",
+        "secondWitnessLastNameGuj": "ઘ્સ્દ્ઘદ્સ્ઘ્હ",
+        "isGroomVisa": false,
+        "groomPassportNumber": null,
+        "groomCountry": "",
+        "groomVisaNumber": null,
+        "groomVisaFrom": null,
+        "groomVisaTo": null,
+        "groomSocialSecurityNumber": null,
+        "groomEligibility": null,
+        "groomDesignation": null,
+        "groomPhoneNumber": null,
+        "groomEmail": null,
+        "nriGroomAddress": null,
+        "groomCompanyName": null,
+        "groomCompanyPhoneNumber": null,
+        "groomCompanyAddress": null,
+        "isBrideVisa": false,
+        "bridePassportNumber": null,
+        "brideCountry": "",
+        "brideVisaNumber": null,
+        "brideVisaFrom": null,
+        "brideVisaTo": null,
+        "brideSocialSecurityNumber": null,
+        "brideEligibility": null,
+        "brideDesignation": null,
+        "brideEmail": null,
+        "bridePhoneNumber": null,
+        "nriBrideAddress": null,
+        "brideCompanyName": null,
+        "brideCompanyPhoneNumber": null,
+        "brideCompanyAddress": null,
+        "nriGroomParentsAddress": null,
+        "nriBrideParentsAddress": null,
+        "firstName": null,
+        "middleName": null,
+        "lastName": null,
+        "aadhaarNo": null,
+        "contactNo": null,
+        "email": null,
+    } ;
 
     translateKey: string = 'marriageRegScreen';
     marriageFormGroup: FormGroup;
@@ -91,7 +437,8 @@ export class MarriageCreateComponent implements OnInit {
         private formService: FormsActionsService,
         private router: Router,
         private commonService: CommonService,
-    ) { }
+        private CD : ChangeDetectorRef
+    ) {}
 
     /**
     * This method is use for perform initialize time actions.
@@ -126,7 +473,7 @@ export class MarriageCreateComponent implements OnInit {
         this.marriageFormGroup = this.fb.group({
             // extra's important controls 
             apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
-            serviceCode: "HEL-MR",
+            serviceCode: null,
             applicantAadharNumber: [''],
             applicantEmail: [''],
 
@@ -264,7 +611,7 @@ export class MarriageCreateComponent implements OnInit {
             secondWitnessLastNameGuj: [''],
 
             // for NRI groom
-            isGroomVisa: [false],
+            isGroomVisa: null,
 
             groomPassportNumber: [null, [Validators.maxLength(9)]],
             groomCountry: [''],
@@ -380,6 +727,10 @@ export class MarriageCreateComponent implements OnInit {
         );
     }
 
+    ngOnChanges(){
+        this.CD.detectChanges();
+    }
+
     /**
      * This method is loaded lookups array.
      */
@@ -399,6 +750,10 @@ export class MarriageCreateComponent implements OnInit {
      */
     dateFormate(date, controlType: string) {
         this.marriageFormGroup.get(controlType).setValue(moment(date).format("YYYY-MM-DD"));
+    }
+
+    patchValue(){
+        this.marriageFormGroup.patchValue(this.dummyJSON);
     }
 
     /**
@@ -477,6 +832,7 @@ export class MarriageCreateComponent implements OnInit {
     * This method is Reset NIR marriage related field.
     */
     changeFieldReset() {
+        
         this.marriageFormGroup.get('isGroomVisa').setValue(false);
         this.marriageFormGroup.get('isBrideVisa').setValue(false);
 
@@ -505,6 +861,7 @@ export class MarriageCreateComponent implements OnInit {
      * @param person : Groom or Bride (Change Event).
      */
     changeReflection(person: string) {
+        debugger;
 
         this.marriageFormGroup.get(`${person}PassportNumber`).reset();
         this.marriageFormGroup.get(`${person}Country`).reset();
@@ -520,6 +877,8 @@ export class MarriageCreateComponent implements OnInit {
         this.marriageFormGroup.get(`${person}CompanyAddress`).reset();
         this.marriageFormGroup.get(`${person}CompanyPhoneNumber`).reset();
         // this.marriageFormGroup.get(`nriGroomAddress`).reset();
+
+        this.CD.detectChanges();
     }
 
     /**
@@ -649,6 +1008,8 @@ export class MarriageCreateComponent implements OnInit {
      * @param flag - flag of invalid control.
      */
     handleErrorsOnSubmit(flag) {
+
+        console.log(flag);
 
         let step1 = 17;
         let step2 = 26;

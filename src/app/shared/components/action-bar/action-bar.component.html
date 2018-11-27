@@ -12,11 +12,15 @@
 			<button type="button" mat-raised-button color="primary" [disabled]="isSubmitBtnDisabled" *ngIf="form.get('canEdit').value"
 			 (click)="saveAsDraft()">{{(stepInfo.step == 'final' ? 'save' : 'save_and_next') | translate:translateKey}}</button>
 
-			<ng-container *ngIf="stepInfo.step == 'final'">
+			<ng-container *ngIf="stepInfo.step == 'final' && !form.get('serviceDetail').get('appointmentRequired').value">
 				<button type="button" mat-raised-button color="primary" [disabled]="isSubmitBtnDisabled" *ngIf="form.get('canEdit').value"
 				 (click)="onSubmit()">{{'submit' | translate:translateKey}}</button>
 			</ng-container>
 
+			<ng-container *ngIf="stepInfo.step == 'final' && form.get('serviceDetail').get('appointmentRequired').value">
+				<button type="button" mat-raised-button color="primary" [disabled]="isSubmitBtnDisabled" *ngIf="form.get('canEdit').value"
+				 (click)="payAndScheduleAppointment()">{{'pay_and_schedule_appointment' | translate:translateKey}}</button>
+			</ng-container>
 		</div>
 
 	</div>

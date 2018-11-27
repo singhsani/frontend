@@ -22,9 +22,11 @@ export class HosMyApplicationsComponent implements OnInit {
 	displayedColumns: any = [
 		'id',
 		'applicantName',
+		'dateOfApplication',
 		'fileNumber',
-		'fileStatus',
+		'departmentName',
 		'serviceType',
+		'fileStatus',
 		'action'
 	];
 
@@ -150,8 +152,8 @@ export class HosMyApplicationsComponent implements OnInit {
 
 	/**
 	 * This method use to delete citizen record.
-	 * @param id citizen api code
-	 * @param id citizen api name
+	 * @param apiCode citizen api code
+	 * @param apiName citizen api name
 	 * @param id citizen id
 	 */
 	printReceipt(apiCode: string, apiName: string, id: number) {
@@ -159,15 +161,11 @@ export class HosMyApplicationsComponent implements OnInit {
 		this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);
 		this.formService.printReceipt(id).subscribe(
 			res => {
-				let data = res;
-				let Pagelink = "about:blank";
-				let pwa = window.open(Pagelink, "_new");
-				if(!pwa || pwa.closed || typeof pwa.closed=='undefined') {
-					this.commonService.openAlert('Pop-up!', 'Please disable your Pop-up blocker and try again.','warning');
-				}
-				pwa.document.open();
-				pwa.document.write(data);
-				pwa.print();
+				let sectionToPrint: any = document.getElementById('sectionToPrint');
+				sectionToPrint.innerHTML = res;
+				setTimeout(() => {
+					window.print();
+				});
 			},
 			err => {
 				//this.commonService.successAlert('Error!', err.error[0].message, 'error');
@@ -222,6 +220,30 @@ export class HosMyApplicationsComponent implements OnInit {
 	copyText(copytext: any) {
 		copytext.select();
 		document.execCommand('copy');
+	}
+
+	/**
+ * This method use to application print view.
+ * @param apiCode citizen api code
+ * @param apiName citizen api name
+ * @param id citizen id
+ */
+	printView(apiCode: string, apiName: string, id: number) {
+
+		this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);
+		this.formService.printView(id).subscribe(
+			htmlResponse => {
+				let sectionToPrint: any = document.getElementById('sectionToPrint');
+				sectionToPrint.innerHTML = htmlResponse;
+				setTimeout(() => {
+					window.print();
+				});
+			},
+			err => {
+				//this.commonService.successAlert('Error!', err.error[0].message, 'error');
+			}
+		);
+
 	}
 
 

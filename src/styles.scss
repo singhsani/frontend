@@ -830,3 +830,18 @@ body * {visibility: hidden;}
 #sectionToPrint td, #sectionToPrint th {padding: 5px; font-size: 15px;}
 } 
 /* This is use for printing receipt in div end */
+
+.vertline{
+    height: 100px;
+    width: 2px;
+    background-color: gray;
+}
+.payAmount{
+    color: black;
+    font: bold;
+    font-size: 60px;
+}
+
+.loadingDiv{ position:fixed; top:0px; right:0px; width:100%; height:100%; background: rgba(0, 0, 0, 0.15);
+  background-image:url('assets/images/mainLoading.gif');  background-repeat:no-repeat; background-position:center;
+  z-index:10000000; background-size: 120px; }
