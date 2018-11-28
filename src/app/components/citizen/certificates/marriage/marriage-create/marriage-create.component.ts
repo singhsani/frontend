@@ -1008,9 +1008,6 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
      * @param flag - flag of invalid control.
      */
     handleErrorsOnSubmit(flag) {
-
-        console.log(flag);
-
         let step1 = 17;
         let step2 = 26;
         let step3 = 34;

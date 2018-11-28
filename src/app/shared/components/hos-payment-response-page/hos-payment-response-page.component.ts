@@ -93,7 +93,7 @@ export class HosPaymentResponsePageComponent implements OnInit {
         status: true
       }),
       transactionId: data.transactionId,
-      paymentStatus: "SUCCESS"
+      paymentStatus: this.paymentStatus
     }
 
     /**

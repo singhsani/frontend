@@ -155,36 +155,34 @@ export class HosActionBarComponent implements OnInit, OnChanges {
 						err => {
 							this.isSubmitBtnDisabled = false;
 							if (err.status === 402) {
-
-								let paymentData = err.error.data;
-
-								let payData = {
-									id: null,
-									uniqueId: null,
-									version: null,
-									refNumber: paymentData.serviceFormId,
-									response: JSON.stringify({
-										data: "paid",
-										status: true
-									}),
-									transactionId: paymentData.transactionId,
-									paymentStatus: "SUCCESS",
-									retUrl: environment.citizenUrl,
-									retPath: 'hospital/payment-gateway-response',
-									myApplicationUrl: '/hospital/my-applications'
-								}
-
-								this.sessionStore.set('paymentData', JSON.stringify(payData));
-
-								this.commonService.paymentAlert('', '', '', cb => {
-									window.location.href = environment.adminUrl +`#/admin/payment-gateway?retUrl=${payData.retUrl}&retPath=${payData.retPath}`;
+								let retUrl: string = '/hospital/my-applications';
+								let payData = this.commonService.storePaymentInfo(err.error.data, retUrl, 'hospital/payment-gateway-response' );
+								let html =
+									`
+								<div class="text-center">
+									<h2>Total Fee Pay</h2>
+									<div class="payAmount">
+										<i class="fa fa-inr" aria-hidden="true">` + payData.amount + `</i>
+									</div>
+									<p>Rupees in words</p>
+								</div>
+								`
+								this.commonService.commonAlert('Payment Details', '', 'info', 'Make Payment!', false, html, cb => {
+									window.location.href = environment.adminUrl + `#/admin/payment-gateway?retUrl=${payData.retUrl}&retPath=${payData.retPath}`;
+								}, rj => {
+									let errHtml = `			
+										<div>
+										<h1>Appointment Details</h1>
+										<div class="alert alert-danger">
+											Please Complete Payment, Otherwise the application will be considered as in-complete
+										</div>`
+									this.commonService.commonAlert("Application Incomplete", "", 'warning', 'Make Payment!', false, errHtml, ccb => {
+										window.location.href = environment.adminUrl + `#/admin/payment-gateway?retUrl=${payData.retUrl}&retPath=${payData.retPath}`;
+									})
+									return;
 								});
-
-								return;
 							}
-						}
-
-					);
+						});
 				} else {
 					this.commonService.openAlert("File Upload", "Please Upload Mandatory File ".concat(data.fileName), "warning");
 					this.isSubmitBtnDisabled = false;

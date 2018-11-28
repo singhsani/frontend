@@ -924,6 +924,15 @@
 
 				<div class="stepperMinHeight">
 
+					<h2>{{'applicant_details'| translate: translateKey}}</h2>
+
+					<div class="row">
+						<app-basic-details [basicFormGroup]="marriageFormGroup">
+						</app-basic-details>
+					</div>
+
+					<h2>{{'applicant_relation'| translate: translateKey}}</h2>
+
 					<div class="row">
 						<div class="col-md-4 ngSelect" formGroupName="applicantRelation">
 							<ng-select formControlName="code" placeholder="{{ 'applicant_relation' | translate:translateKey }}" (change)="onChange($event,applicantrelationArray,'applicantrelationGuj');changeReset('applicantRelationOther')">
@@ -933,7 +942,7 @@
 						</div>
 
 						<mat-form-field class="col-md-4" *ngIf="marriageFormGroup.controls.applicantRelation.get('code').value === 'MR_OTHER_APPLICANT_RELATION'">
-							<input matInput type="text" required formControlName="applicantRelationOther" placeholder="{{'applicant_relation_other' | translate:translateKey }}"
+							<input matInput type="text" required formControlName="applicantRelationOther" placeholder="{{'other_relation' | translate:translateKey }}"
 							 appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'">
 						</mat-form-field>
 
@@ -944,7 +953,7 @@
 						<!-- /gujarati -->
 					</div>
 
-					<div class="row">
+					<!-- <div class="row">
 						<div class="col-md-4 ngSelect" formGroupName="uniqueIdProofLable">
 							<ng-select formControlName="code" placeholder="{{ 'id_proof_lable' | translate:translateKey }}" (change)="onChange($event,identityproofArray,'identityproofGuj');changeReset('uniqueIdProof')">
 								<ng-option *ngFor="let uniqueid of identityproofArray" [value]="uniqueid.code">{{uniqueid.name}}</ng-option>
@@ -957,12 +966,12 @@
 							<control-messages [control]="marriageFormGroup.controls.uniqueIdProof"></control-messages>
 						</mat-form-field>
 
-						<!-- gujrati -->
+						
 						<mat-form-field class="col-md-4">
 							<input matInput readonly placeholder="{{'uniqueId_proof' | translate:translateKey:'gu'}}" [value]="identityproofGuj">
 						</mat-form-field>
-						<!-- /gujarati -->
-					</div>
+						
+					</div> -->
 
 				</div>
 
@@ -1026,10 +1035,10 @@
 						</div>
 					</div>
 
-					<div class="col-md-12">
+					<!-- <div class="col-md-12">
 						<ng-template mat-tab-label>Done</ng-template>
 						You are now done.
-					</div>
+					</div> -->
 				</div>
 
 				<app-action-bar [uploadFiles]="uploadFileArray" [form]="marriageFormGroup" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'final', next: 8, back: 6}"

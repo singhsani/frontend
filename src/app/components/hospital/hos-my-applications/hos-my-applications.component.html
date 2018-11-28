@@ -75,10 +75,6 @@
                 <div class="row-inside">
                     <mat-chip-list>
                         <span class="{{getFileStatusClass(row.fileStatus)}}" selected="true">{{ row.fileStatus}}</span>
-                        <span class="badge badge-warning text-label ml-2" *ngIf="(row.fileStatus === 'SUBMITTED' && row.serviceDetail.appointmentRequired == true)"
-                            (click)="redirectAppointment(row.serviceDetail.code, row.serviceFormId)" selected="true">
-                            Appointment
-                        </span>
                     </mat-chip-list>
                 </div>
             </mat-cell>

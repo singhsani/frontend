@@ -253,7 +253,7 @@ export class CommonService {
 		})
 	}
 
-	storePaymentInfo(paymentData, myApplicationUrl): any {
+	storePaymentInfo(paymentData, myApplicationUrl, retPath = 'citizen/payment-gateway-response'): any {
 		let payData = {
 			id: null,
 			uniqueId: null,
@@ -266,7 +266,7 @@ export class CommonService {
 			transactionId: paymentData.transactionId,
 			paymentStatus: null,
 			retUrl: environment.citizenUrl,
-			retPath: 'citizen/payment-gateway-response',
+			retPath: retPath,
 			myApplicationUrl: myApplicationUrl,
 			amount: paymentData.amount
 		}
