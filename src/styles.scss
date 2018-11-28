@@ -845,3 +845,15 @@ body * {visibility: hidden;}
 .loadingDiv{ position:fixed; top:0px; right:0px; width:100%; height:100%; background: rgba(0, 0, 0, 0.15);
   background-image:url('assets/images/mainLoading.gif');  background-repeat:no-repeat; background-position:center;
   z-index:10000000; background-size: 120px; }
+
+  .deleteBtn {
+       .fa-times:before { content: "×" !important; }
+  }
+
+  .searchBox {position: absolute; top: -5px; right: 60px; width: 200px;
+    .mat-form-field-suffix .mat-icon-button {font-size: 18px !important; width: 2em; height: 2em;}
+    .ng-select {margin-bottom: 8px; width: 200px;}
+    .editBtn {min-width: auto !important; padding-left: 15px; margin: 0 0 0 30px !important; position: relative; top: -4px;
+    .mat-icon {font-size: 20px; padding: 2px 5px 0 0 !important;}
+    }
+    }
