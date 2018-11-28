@@ -21,6 +21,9 @@ import * as moment from 'moment'
 })
 export class MyApplicationsComponent implements OnInit {
 
+	/**
+	 * displayColumns are used for display the columns in material table.
+	 */
 	displayedColumns: any = [
 		'id',
 		'applicantName',
@@ -32,8 +35,10 @@ export class MyApplicationsComponent implements OnInit {
 		'action'
 	];
 
+	/**
+	 * Used for material table data population and pagination.
+	 */
 	dataSource = new MatTableDataSource();
-
 	resultsLength: number = 0;
 	pageSize: number = 5;
 	isLoadingResults: boolean = true;

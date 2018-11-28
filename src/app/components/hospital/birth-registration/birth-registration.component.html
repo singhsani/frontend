@@ -14,7 +14,7 @@
                 <div class="row">
 
                     <div formGroupName="birthPlace" class="col-md-4 ngSelect">
-                        <ng-select placeholder="{{'birth_place' | translate:translateKey}} *" formControlName="code">
+                        <ng-select (change)="changeBirthPlace($event)" placeholder="{{'birth_place' | translate:translateKey}} *" formControlName="code">
                             <ng-option *ngFor="let birthplace of BirthPlaces" [value]="birthplace.code">{{birthplace.name}}</ng-option>
                         </ng-select>
                         <control-messages [control]="birthCertificateForm.controls.birthPlace.controls.code"></control-messages>
@@ -24,6 +24,8 @@
                         <mat-form-field class="birth-certificate-col-md-4">
                             <input matInput placeholder="{{'other_birth_place' | translate:translateKey}}" formControlName="otherPlace" required>
                         </mat-form-field>
+                        <control-messages [control]="birthCertificateForm.controls.otherPlace"></control-messages>
+
                     </div>
 
                     <div class="col-md-4 radioBtnError" formGroupName="isOrphan">
@@ -71,10 +73,10 @@
                         <div class="col-md-4 pl-0 ml-0">
                             <mat-form-field class="col-md-10">
                                 <mat-label>{{'birth_time' | translate:translateKey}}</mat-label>
-                                <input placeholder="HH:MM" matInput type="time" atp-time-picker theme="dark" formControlName="birthTime" required/>
+                                <input (blur)="changeBirthTime($event.target.value, i)" placeholder="HH:MM" matInput type="time"  atp-time-picker theme="dark" formControlName="birthTime" required/>
                                 <control-messages [control]="birthCertificateForm.controls.childs.controls[i].controls.birthTime"></control-messages>
                             </mat-form-field>
-                            <button class="ml-0 pl-0" mat-icon-button type="button" (click)="openTimePicker(i)">
+                            <button class="ml-0 pl-0" [disabled]="!birthCertificateForm?.control?.canEdit?.value" mat-icon-button type="button" (click)="openTimePicker(i)">
                                 <mat-icon matTooltip="Select Birth Time" color="primary">alarm</mat-icon>
                             </button>
                         </div>
@@ -403,7 +405,7 @@
 
                 <div class="row">
                     <div formGroupName="familyReligion" class="col-md-4 ngSelect">
-                        <ng-select placeholder="{{'religion' | translate:translateKey}} *" formControlName="code" required>
+                        <ng-select (change)="changeFamilyReligion($event)" placeholder="{{'religion' | translate:translateKey}} *" formControlName="code" required>
                             <ng-option *ngFor="let relegion of Religion" [value]="relegion.code">
                                 {{relegion.name}}
                             </ng-option>
@@ -416,6 +418,7 @@
                             <input appValidationFields [validationFieldsType]="'onlyNameWithSpace'" matInput placeholder="{{'other_family_religion' | translate:translateKey}}"
                                 formControlName="familyReligionOther" required>
                         </mat-form-field>
+                        <control-messages [control]="birthCertificateForm.controls.familyReligionOther"></control-messages>
                     </div>
                 </div>
 

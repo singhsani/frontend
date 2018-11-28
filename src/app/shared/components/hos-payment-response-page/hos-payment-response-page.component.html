@@ -1,36 +1,65 @@
-<!-- HTML view of payment success -->
-<div *ngIf="paymentStatus == 'SUCCESS'" class="container pt-4">
+<div>
+  <div *ngIf="paymentStatus == 'SUCCESS'">
+    <div class="text-center">
+      <div class="circle">
+        <mat-icon class="checkIcon">check</mat-icon>
+      </div>
 
-  <mat-card>
-    <h1 class="alert alert-success">
-      Thankyou you have completed your payment. Please do not refresh or back.
-    </h1>
-    <div class="row">
-      <div class="col-md-6">
-        Transaction ID
-      </div>
-      <div class="col-md-6">
-        {{dispData.transactionId}}
-      </div>
-      <div class="col-md-6">
-        Status
-      </div>
-      <div class="col-md-6">
-        {{dispData.paymentStatus}}
-      </div>
+      <h4 class="mt-3" style="color:#2db300;">
+        Thankyou you have completed your payment.
+      </h4>
+      <h3 style="color:red;">
+        Please do not refresh or back.
+      </h3>
     </div>
-    <p>you will be redirected to home page after 10 secs </p>
-    <h1 class="text-success">{{dispTime}}</h1>
-  </mat-card>
-</div>
+    <table class="table table-bordered mt-3 text-center" style="max-width: 400px; margin: 0 auto;">
+      <tbody>
+        <tr>
+          <th scope="col">Transaction Id</th>
+          <td scope="col">
+            {{dispData.transactionId}}
+          </td>
+        </tr>
+        <tr>
+          <th scope="col">Status</th>
+          <td scope="col">
+            {{dispData.paymentStatus}}
+          </td>
+        </tr>
+        <tr>
+          <th scope="col">Reference Number</th>
+          <td scope="col">{{dispData.refNumber}}</td>
+        </tr>
+      </tbody>
+    </table>
 
-<!-- HTML view of payment failure -->
-<div *ngIf="paymentStatus == 'FAILURE'" class="container pt-4">
-  <mat-card>
-    <h1 class="alert alert-danger">
-      Sorry your payment is failed due to unknown reason
-    </h1>
-    <p>you will be redirected to home page after 10 secs </p>
-    <h1 class="text-success">{{dispTime}}</h1>
-  </mat-card>
+    <div class="text-center">
+      <p style="font-size:20px; color: #2db300">
+        You will be automatically redirect to home page after few second.
+      </p>
+      <h1 style="color:greenyellow; font-size: 70px;">
+        {{dispTime}}
+      </h1>
+    </div>
+  </div>
+
+
+  <div *ngIf="paymentStatus == 'FAILURE'">
+    <div class="text-center">
+      <mat-icon class="failure">cancel</mat-icon>
+
+      <h4 class="mt-3" style="color: red;">
+        !! Transaction Failure !!
+      </h4>
+    </div>
+
+    <div class="text-center">
+      <p style="font-size:20px; color: #2db300">
+        You will be automatically redirect to home page after few second.
+      </p>
+      <h1 style="color:greenyellow; font-size: 70px;">
+        {{dispTime}}
+      </h1>
+    </div>
+  </div>
 </div>

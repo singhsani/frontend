@@ -307,6 +307,40 @@ export class BirthRegistrationComponent implements OnInit {
 	}
 
 	/**
+	 * Used to caplture Change in birth place.
+	 * @param ev - event
+	 */
+	changeBirthPlace(ev: string){console.log(ev);
+		if (ev != 'OTHER_PLACE'){
+			this.birthCertificateForm.get('otherPlace').clearValidators();
+			this.birthCertificateForm.get('otherPlace').updateValueAndValidity();
+		}
+	}
+
+	/**
+	 * Used to capture change in family religion.
+	 * @param ev - event
+	 */
+	changeFamilyReligion(ev: string){
+		if (ev != 'OTHER_RELIGION') {
+			this.birthCertificateForm.get('familyReligionOther').clearValidators();
+			this.birthCertificateForm.get('familyReligionOther').updateValueAndValidity();
+		}
+	}
+
+	/**
+	 * Used to capture change in birth time for perticular child.
+	 * @param ev - event
+	 * @param index - index of child
+	 */
+	changeBirthTime(ev:string, index: number){
+		if(ev.length < 8){
+			ev = ev.concat(":00");
+		}
+		this.getChildData().at(index).get('birthTime').setValue(ev);
+	}
+
+	/**
 	 * Method is used to calculate the delay between current date and birth date.
 	 * @param event - date event.
 	 */
