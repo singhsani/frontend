@@ -575,9 +575,9 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
             }),
             applicantRelationOther: [''],
             uniqueIdProofLable: this.fb.group({
-                code: [null, Validators.required]
+                code: [null]
             }),
-            uniqueIdProof: ['', Validators.required],
+            uniqueIdProof: [''],
 
             attachments: [''],
 
