@@ -40,6 +40,9 @@ export class TranslateService {
 		}
 	}
 
+	/**
+	 * This method is use for get current application language.
+	 */
 	getLanguageData(){
 		
 		let headers = {
@@ -49,6 +52,13 @@ export class TranslateService {
 		this._http.get('public/locale/localeMsg',headers).subscribe(res => {
 			this.data = res.data;
 		});
+	}
+
+	/**
+	 * This method is use for get current application language.
+	 */
+	getCurrentLanguage() {
+		return this.currentLanguage;
 	}
 	
 	/**

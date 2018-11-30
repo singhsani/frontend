@@ -26,6 +26,7 @@ export class ActionBarComponent implements OnInit, OnChanges {
 
 	@Output() handleErrors = new EventEmitter<any>();
 	@Output() tabIndex = new EventEmitter<any>();
+	@Output() handleOnSaveAndNext = new EventEmitter<any>();
 
 	uploadFilesArray: Array<any> = []
 
@@ -113,6 +114,7 @@ export class ActionBarComponent implements OnInit, OnChanges {
 				if (this.isstepper) {
 					this.tabIndex.emit(this.stepInfo.next);
 				}
+				this.handleOnSaveAndNext.emit(res);
 				this.toastr.success(`${this.form.getRawValue().serviceDetail.name} information successfully saved`);
 			},
 			err => {

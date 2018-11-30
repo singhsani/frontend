@@ -42,12 +42,12 @@ const ROUTEMAIN = {
         'type': 'FSAarogyaParvanoNoc'
     },
     'FS-PROVI': {
-        'main': 'FSProvisionalNoc',
-        'type': 'FSProvisionalNoc'
+        'main': 'provisionalFireNoc',
+        'type': 'provisionalFireNoc'
     },
     'FS-FINAL': {
-        'main': 'FSFinalFireNoc',
-        'type': 'FSFinalFireNoc'
+        'main': 'finalFireNoc',
+        'type': 'finalFireNoc'
     },
     'FS-REN': {
         'main': 'FSRenewalNoc',
