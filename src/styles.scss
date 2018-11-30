@@ -850,10 +850,11 @@ body * {visibility: hidden;}
        .fa-times:before { content: "×" !important; }
   }
 
-  .searchBox {position: absolute; top: -5px; right: 60px; width: 200px;
+  .searchBox {position: absolute; top: -5px; right: 50px;
+    .mat-form-field  {width: 200px;}
     .mat-form-field-suffix .mat-icon-button {font-size: 18px !important; width: 2em; height: 2em;}
     .ng-select {margin-bottom: 8px; width: 200px;}
-    .editBtn {min-width: auto !important; padding-left: 15px; margin: 0 0 0 30px !important; position: relative; top: -4px;
-    .mat-icon {font-size: 20px; padding: 2px 5px 0 0 !important;}
+    .editBtn {min-width: auto !important; padding-left: 12px !important; width: 82px; margin-left: 20px !important; position: relative; top: -4px;
+        .mat-icon {font-size: 20px; padding: 2px 5px 0 0 !important;}
     }
-    }
+}

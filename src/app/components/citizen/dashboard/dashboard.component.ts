@@ -152,6 +152,10 @@ export class DashboardComponent implements OnInit {
 			case 'FS-FINAL':
 				this.router.navigate([ManageRoutes.getFullRoute(apiCode),false, apiCode]);
 			break;
+			case 'PEC_REG':
+			case 'PRC_REG':
+				this.router.navigate([ManageRoutes.getFullRoute(apiCode)]);
+				break;
 			default:
 				if (ManageRoutes.getApiTypeFromApiCode(apiCode)) {
 					this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);

@@ -31,6 +31,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MAT_DATE_FORMATS } from '@angular/material';
 import { AppDateAdapter, APP_DATE_FORMATS } from './date.adapter';
 import { DateAdapter } from '@angular/material';
+import { DateDirective } from './date.directive';
 
 
 const COMPONENTS = [
@@ -69,6 +70,7 @@ const COMPONENTS = [
 		...COMPONENTS
 	],
 	exports: [
+		DateDirective,
 		...COMPONENTS
 	],
 	providers: [
@@ -78,7 +80,8 @@ const COMPONENTS = [
 		{
 			provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS
 		}
-	]
+	],
+	declarations: [DateDirective]
 })
 
 export class MaterialModule { }

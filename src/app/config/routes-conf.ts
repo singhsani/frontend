@@ -305,6 +305,14 @@ const ROUTEMAIN = {
         'main': 'slot-booking',
         'type': ''
     },
+    'PEC_REG': {
+        'main': 'pec-registration',
+        'type': 'pecForm'
+    },
+    'PRC_REG': {
+        'main': 'prc-registration',
+        'type': 'prcForm'
+    },
 
     /* hospital routing configuration start*/
     'HOSPITALDASHBOARD': {
@@ -612,6 +620,12 @@ const ROUTESLIST = {
     },
     'SLOTBOOKING': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.APPOINTMENT + '/' + ROUTEPREFIX.SCHEDULEAPPOINTMENT + '/' + ROUTEMAIN["SLOTBOOKING"].main
+    },
+    'PEC_REG': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.PROFESSIONALMODULE + '/' + ROUTEMAIN["PEC_REG"].main
+    },
+    'PRC_REG': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.PROFESSIONALMODULE + '/' + ROUTEMAIN["PRC_REG"].main
     },
 
     /* hospital full routing configuration start*/

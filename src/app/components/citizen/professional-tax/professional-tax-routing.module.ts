@@ -1,3 +1,4 @@
+import { ManageRoutes } from './../../../config/routes-conf';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
@@ -6,8 +7,8 @@ import { PrcRegistrationComponent } from './prc-registration/prc-registration.co
 import { PecRegistrationComponent } from './pec-registration/pec-registration.component';
 
 const routes: Routes = [
-  { path: 'prc-registration', component: PrcRegistrationComponent, canActivate: [AuthGuard] },
-  { path: 'pec-registration', component: PecRegistrationComponent, canActivate: [AuthGuard] },
+  { path: ManageRoutes.getMainRoute('PEC_REG'), component: PecRegistrationComponent, canActivate: [AuthGuard] },
+  { path: ManageRoutes.getMainRoute('PRC_REG'), component: PrcRegistrationComponent, canActivate: [AuthGuard] }
 ];
 
 @NgModule({
