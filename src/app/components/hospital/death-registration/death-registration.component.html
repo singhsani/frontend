@@ -98,7 +98,7 @@
 					</mat-form-field>
 
 					<div formGroupName="occupation" class="col-md-6 ngSelect">
-						<ng-select placeholder="{{'occupation' | translate:translateKey}}" (change)="gujNameFinder($event,'occupation',DeceasedOccupation)"
+						<ng-select placeholder="{{'occupation' | translate:translateKey}} {{requiredFeild?'*':''}}" (change)="gujNameFinder($event,'occupation',DeceasedOccupation)"
 						 formControlName="code">
 							<ng-option *ngFor="let deceasedoccupation of DeceasedOccupation" [value]="deceasedoccupation.code">
 								{{deceasedoccupation.name}}
@@ -186,7 +186,7 @@
 				<div class="row">
 
 					<div class="col-md-4 ngSelect" formGroupName="deathPlace">
-						<ng-select placeholder="{{'place_of_death' | translate:translateKey}} {{requiredFeild?'*':''}}" formControlName="code">
+						<ng-select (change)="changeDeathPlace($event)" placeholder="{{'place_of_death' | translate:translateKey}} {{requiredFeild?'*':''}}" formControlName="code">
 							<ng-option *ngFor="let deathplace of deathPlaces" [value]="deathplace.code">
 								{{deathplace.name}}
 							</ng-option>
@@ -195,7 +195,7 @@
 					</div>
 
 					<mat-form-field *ngIf="deathCertificateForm.value.deathPlace.code == 'OTHER_PLACE'" class="col-md-8">
-						<input matInput placeholder="{{'other_death_place' | translate:translateKey}}" formControlName="otherPlace">
+						<input required matInput placeholder="{{'other_death_place' | translate:translateKey}}" formControlName="otherPlace">
 					</mat-form-field>
 
 					<div class="col-md-8 ngSelect" formGroupName="medicalTreatment">
@@ -307,7 +307,7 @@
 
 				<div class="row">
 					<h2>{{'applicant_or_hospital_address' | translate:translateKey}}</h2>
-					<app-address #address [requiredFeilds]="true" [addressFormGroup]="deathCertificateForm.controls.applicantAddress"></app-address>
+					<app-address #address [isDisplayGujFields]="true" [requiredFeilds]="true" [addressFormGroup]="deathCertificateForm.controls.applicantAddress"></app-address>
 				</div>
 
 				<app-hos-action-bar [stepInfo]="{step: 'step4', next: 4, back: 2}" (tabIndex)="onTabChange($event)" [form]="deathCertificateForm"
@@ -360,12 +360,12 @@
 					</div>
 
 					<div class="col-md-4" *ngIf="showButtons && (getDelayPeriod() > 30 && getDelayPeriod() < 365)">
-						<label labelPosition="after">affidavit_Or_health_Order{{!getFileObjectContained('1.7')?'': '*'}}</label>
+						<label labelPosition="after">{{'affidavit_Or_health_Order' | translate:translateKey}}{{!getFileObjectContained('1.7')?'': '*'}}</label>
 						<app-hos-file-upload [form]="deathCertificateForm" [uploadModel]="setDataValue(1.7,'Affidavit Or Health Order','1.1','affidavitOrhealthOrder')"></app-hos-file-upload>
 					</div>
 
 					<div class="col-md-4" *ngIf="showButtons && getDelayPeriod() > 365 ">
-						<label labelPosition="after">court_Order{{!getFileObjectContained('1.8')?'': '*'}}</label>
+						<label labelPosition="after">{{'court_Order' | translate:translateKey}}{{!getFileObjectContained('1.8')?'': '*'}}</label>
 						<app-hos-file-upload [form]="deathCertificateForm" [uploadModel]="setDataValue(1.8,'Court Order','1.1','courtOrder')"></app-hos-file-upload>
 					</div>
 

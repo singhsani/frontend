@@ -104,7 +104,7 @@
                     <!-- <button mat-icon-button [disabled]="!row.canSubmit" [style.color]="'#4CAF50'" (click)="submitRecord(row.serviceDetail.code, row.serviceDetail.name, row.serviceFormId)">
                                                 <mat-icon title="Submit">done_all</mat-icon>
                                             </button> -->
-                    <button mat-menu-item *ngIf="!row.canSubmit" color="primary" (click)="redirectToEdit(row.serviceDetail.code, row.serviceFormId)">
+                    <button mat-menu-item *ngIf="!row.canEdit" color="primary" (click)="redirectToEdit(row.serviceDetail.code, row.serviceFormId)">
                         <mat-icon title="Application Preview">remove_red_eye</mat-icon>
                         {{'preview_application' | translate:translateKey}}
                     </button>
@@ -114,7 +114,7 @@
                         {{'print_receipt' | translate:translateKey}}
                     </button>
 
-                    <button mat-menu-item *ngIf="row.serviceDetail.code == 'HEL-MR'" color="primary" (click)="printView(row.serviceDetail.code, row.serviceDetail.name, row.serviceFormId)">
+                    <button mat-menu-item *ngIf="row.fileStatus != 'DRAFT'" color="primary" (click)="printView(row.serviceDetail.code, row.serviceDetail.name, row.serviceFormId)">
                         <mat-icon title="Print View">pageview</mat-icon>
                         {{'print_view' | translate:translateKey}}
                     </button>

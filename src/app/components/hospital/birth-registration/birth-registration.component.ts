@@ -310,7 +310,7 @@ export class BirthRegistrationComponent implements OnInit {
 	 * Used to caplture Change in birth place.
 	 * @param ev - event
 	 */
-	changeBirthPlace(ev: string){console.log(ev);
+	changeBirthPlace(ev: string){
 		if (ev != 'OTHER_PLACE'){
 			this.birthCertificateForm.get('otherPlace').clearValidators();
 			this.birthCertificateForm.get('otherPlace').updateValueAndValidity();
@@ -334,7 +334,7 @@ export class BirthRegistrationComponent implements OnInit {
 	 * @param index - index of child
 	 */
 	changeBirthTime(ev:string, index: number){
-		if(ev.length < 8){
+		if(ev && ev.length < 8){
 			ev = ev.concat(":00");
 		}
 		this.getChildData().at(index).get('birthTime').setValue(ev);

@@ -199,6 +199,17 @@ export class DeathRegistrationComponent implements OnInit {
 	}
 
 	/**
+	 * Used to caplture Change in birth place.
+	 * @param ev - event
+	 */
+	changeDeathPlace(ev: string) {
+		if (ev != 'OTHER_PLACE') {
+			this.deathCertificateForm.get('otherPlace').clearValidators();
+			this.deathCertificateForm.get('otherPlace').updateValueAndValidity();
+		}
+	}
+
+	/**
 	 * Method is used to provide alert on delay registration.
 	 * @param delay - delay period
 	 */
@@ -258,6 +269,8 @@ export class DeathRegistrationComponent implements OnInit {
 			this.uploadFileArray = [this.fileObjectCreater('Police Inquest', '1.5'), this.fileObjectCreater('Post Mortem Report', '1.6')];
 		} else if (event === "NO") {
 			this.requiredFeild = true;
+			this.deathCertificateForm.get('unknownDescription').reset();
+			this.deathCertificateForm.get('unknownDescription').clearValidators();
 			this.deathCertificateForm.get('gender').get('code').setValidators(Validators.required);
 			this.deathCertificateForm.get('religion').get('code').setValidators([Validators.required])
 			this.deathCertificateForm.get('education').get('code').setValidators([Validators.required])
@@ -284,7 +297,7 @@ export class DeathRegistrationComponent implements OnInit {
 	 * Method is used to update validations of controls.
 	 */
 	upDateValidation() {
-		this.deathCertificateForm.removeControl
+		this.deathCertificateForm.get('unknownDescription').updateValueAndValidity();		
 		this.deathCertificateForm.get('gender').get('code').updateValueAndValidity();
 		this.deathCertificateForm.get('religion').get('code').updateValueAndValidity()
 		this.deathCertificateForm.get('education').get('code').updateValueAndValidity()
@@ -502,6 +515,10 @@ export class DeathRegistrationComponent implements OnInit {
 		this.deathCertificateForm.get('permanentAddress').get('addressType').setValue(parentPermanentAddressType);
 	}
 
+	/**
+	 * Used to caplture Change in birth place.
+	 * @param ev - event
+	 */
 	changeApplicantRelation(ev){
 		if(ev != 'OTHER_RELATIONSHIP'){
 			this.deathCertificateForm.get('relationOther').clearValidators();
