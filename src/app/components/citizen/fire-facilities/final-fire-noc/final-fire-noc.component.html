@@ -1,243 +1,544 @@
 <app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
-<mat-card class="formClass cardBorder">
-	<form [formGroup]="finalFireNocNewForm">
+
+<mat-card [hidden]="serachLicenceObj.isDisplayRenewLicenceForm" class="mt-4 formClass">
+	<mat-form-field class="col-md-10">
+	  <input matInput required placeholder="{{'search_by_application_no' | translate:translateKey}}" [(ngModel)]="serachLicenceObj.searchLicenceNumber">
+	</mat-form-field>
+	<button class="col-md-2" [disabled]="!serachLicenceObj.searchLicenceNumber" mat-raised-button color="primary" (click)="searchLicence()">{{'search'
+	  | translate:translateKey}}</button>
+  </mat-card>
+
+<mat-card [hidden]="!serachLicenceObj.isDisplayRenewLicenceForm" class="formClass cardBorder">
+
+	<form [formGroup]="finalFireNocForm">
 		<mat-tab-group [(selectedIndex)]="tabIndex" dynamicHeight="true" mat-stretch-tabs class="stepperNav">
 
 			<!-- step 1 Starts -->
 			<mat-tab>
 				<ng-template mat-tab-label>
-					<div>{{'license_holder_detail' | translate:translateKey}}</div>
+					<div>{{'applicant_detail' | translate:translateKey}}</div>
 				</ng-template>
 
 				<div class="row">
-
-					<div class="col-md-4 ngSelect" formGroupName="licenseType">
-						<ng-select placeholder="{{'license_type' | translate:translateKey}} *" formControlName="code">
-							<ng-option *ngFor="let type of MF_LICENSE_TYPE" [value]="type.code">{{type.name}}</ng-option>
-						</ng-select>
-						<control-messages [control]="finalFireNocNewForm.get('licenseType').controls.code"></control-messages>
-					</div>
+					<mat-form-field class="col-md-4">
+						<input matInput readonly placeholder="{{'provisional_noc_number' | translate:translateKey}}" formControlName="provisionalNocNumber"
+						 required>
+					</mat-form-field>
 				</div>
 				<div class="row">
-					<div class="col-md-2 ngSelect" formGroupName="personType">
-						<ng-select placeholder="{{'person_type' | translate:translateKey}} *" formControlName="code">
-							<ng-option *ngFor="let type of PERSON_TYPE" [value]="type.code">{{type.name}}</ng-option>
-						</ng-select>
-						<control-messages [control]="finalFireNocNewForm.get('personType').controls.code"></control-messages>
-					</div>
-					<mat-form-field class="col-md-2">
-						<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithOutSpace' required maxlength="30" placeholder="{{'holder_firstname' | translate:translateKey}}" formControlName="holderFirstName"
-						 appGujInputSource targetElement="holderFirstNameGuj" [form]="finalFireNocNewForm">
-						<control-messages [control]="finalFireNocNewForm.controls.holderFirstName"></control-messages>
+					<mat-form-field class="col-md-4">
+						<input matInput appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{'first_name' | translate:translateKey}}"
+						 formControlName="firstName" maxlength="100">
+						<control-messages [control]="finalFireNocForm.controls.firstName"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithOutSpace' required maxlength="30" placeholder="{{'holder_middlename' | translate:translateKey}}" formControlName="holderMiddleName"
-						 appGujInputSource targetElement="holderMiddleNameGuj" [form]="finalFireNocNewForm">
-						<control-messages [control]="finalFireNocNewForm.controls.holderMiddleName"></control-messages>
+						<input matInput appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{'middle_name' | translate:translateKey}}"
+						 formControlName="middleName" maxlength="100">
+						<control-messages [control]="finalFireNocForm.controls.middleName"></control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<input matInput appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{'last_name' | translate:translateKey}}"
+						 formControlName="lastName" required maxlength="100">
+						<control-messages [control]="finalFireNocForm.controls.lastName"></control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<!-- <span matPrefix>+91 &nbsp;</span> -->
+						<input matInput OnlyNumber placeholder="{{'applicant_mobile' | translate:translateKey}}" type="tel" maxlength="10"
+						 minlength="10" formControlName="contactNo" required>
+						<control-messages [control]="finalFireNocForm.controls.contactNo"></control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<!-- <span matPrefix>+91 &nbsp;</span> -->
+						<input matInput OnlyNumber placeholder="{{'office_contact_no' | translate:translateKey}}" type="tel" maxlength="10"
+						 minlength="10" formControlName="officeContactNo" required>
+						<control-messages [control]="finalFireNocForm.controls.officeContactNo"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithOutSpace' required maxlength="30" placeholder="{{'holder_lastname' | translate:translateKey}}" formControlName="holderLastName"
-						 appGujInputSource targetElement="holderLastNameGuj" [form]="finalFireNocNewForm">
-						<control-messages [control]="finalFireNocNewForm.controls.holderLastName"></control-messages>
+						<!-- <span matPrefix>+91 &nbsp;</span> -->
+						<input matInput OnlyNumber placeholder="{{'onsite_person_mobile_no' | translate:translateKey}}" type="tel"
+						 maxlength="10" minlength="10" formControlName="onsitePersonMobileNo" required>
+						<control-messages [control]="finalFireNocForm.controls.onsitePersonMobileNo"></control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<textarea matInput rows="3" cols="50" required maxlength="300" placeholder="{{'applicant_permanent_address' | translate:translateKey}}"
+						 formControlName="applicantPermanentAddress" appGujInputSource targetElement="applicantPermanentAddressGuj"
+						 [form]="finalFireNocForm"></textarea>
+						<control-messages [control]="finalFireNocForm.controls.applicantPermanentAddress"></control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<textarea matInput rows="3" cols="50" maxlength="900" type="text" required formControlName="applicantPermanentAddressGuj"
+						 appGujInputTarget [form]="finalFireNocForm" placeholder="{{ 'applicant_permanent_address' | translate:translateKey:'gu' }}"></textarea>
+						<control-messages [control]="finalFireNocForm.controls.applicantPermanentAddressGuj"></control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<input matInput appPreventSpace placeholder="{{'office_email_id' | translate:translateKey}}" type="email"
+						 formControlName="officeEmailId" required maxlength="50">
+						<control-messages [control]="finalFireNocForm.controls.officeEmailId"></control-messages>
 					</mat-form-field>
 				</div>
-
-				<!-- gujarati -->
-				<div class="row">
-					<mat-form-field class="col-md-4">
-						<input matInput type="text" maxlength="90" required formControlName="holderFirstNameGuj" appGujInputTarget [form]="finalFireNocNewForm"
-						 placeholder="{{ 'holder_firstname' | translate:translateKey:'gu' }}">
-						<control-messages [control]="finalFireNocNewForm.controls.holderFirstNameGuj"></control-messages>
-					</mat-form-field>
-					<mat-form-field class="col-md-4">
-						<input matInput type="text" required maxlength="90" placeholder="{{'holder_middlename' | translate:translateKey}}" formControlName="holderMiddleNameGuj"
-						 appGujInputTarget [form]="finalFireNocNewForm">
-						<control-messages [control]="finalFireNocNewForm.controls.holderMiddleNameGuj"></control-messages>
-					</mat-form-field>
-					<mat-form-field class="col-md-4">
-						<input matInput type="text" required maxlength="90" placeholder="{{'holder_lastname' | translate:translateKey}}" formControlName="holderLastNameGuj"
-						 appGujInputTarget [form]="finalFireNocNewForm">
-						<control-messages [control]="finalFireNocNewForm.controls.holderLastNameGuj"></control-messages>
-					</mat-form-field>
-				</div>
-				<!-- /gujarati -->
-
-				<div class="row">
-					<h2>{{'permanat_address' | translate:translateKey}}</h2>
-					<app-address [isDisplayGujFields]="true" #permanantAddressEstablishment [requiredFeilds]="finalFireNocNewForm.controls.permanantAddress.value" [addressFormGroup]="finalFireNocNewForm.controls.permanantAddress"></app-address>
-				</div>
-				<div class="row">
-					<h2>{{'temp_address' | translate:translateKey}}</h2>
-					<app-address [isDisplayGujFields]="true" #temporaryAddressEstablishment [requiredFeilds]="finalFireNocNewForm.controls.temporaryAddress.value" [addressFormGroup]="finalFireNocNewForm.controls.temporaryAddress"></app-address>
-				</div>
-
-				<mat-form-field class="col-md-4">
-					<input matInput OnlyNumber maxlength="12" formControlName="holderTelephoneNo" placeholder="{{'holder_telephone_no' | translate:translateKey}}">
-				</mat-form-field>
-				<mat-form-field class="col-md-4">
-					<input matInput OnlyNumber maxlength="11" formControlName="holderMobileNo" placeholder="{{'holder_mobile_no' | translate:translateKey}}">
-				</mat-form-field>
-				<mat-form-field class="col-md-4">
-					<input matInput OnlyNumber maxlength="12" formControlName="holderFaxNo" placeholder="{{'holder_fax_no' | translate:translateKey}}">
-				</mat-form-field>
-				<mat-form-field class="col-md-4">
-					<input matInput OnlyNumber maxlength="12" formControlName="holderAadharNo" placeholder="{{'holder_aadhar_no' | translate:translateKey}}">
-				</mat-form-field>
-				<mat-form-field class="col-md-4">
-					<input matInput appAlphaNumeric maxlength="10" formControlName="holderPanNo" placeholder="{{'holder_pan_no' | translate:translateKey}}">
-				</mat-form-field>
-
-				<app-action-bar [form]="finalFireNocNewForm" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step1', next: 1, back: 0}"></app-action-bar>
+				<app-action-bar [form]="finalFireNocForm" (tabIndex)="onTabChange($event)" (handleOnSaveAndNext)="handleOnSaveAndNext($event)"
+				 [stepInfo]="{step: 'step0', next: 1, back: 0}"></app-action-bar>
 			</mat-tab>
 			<!-- step 1 Ends -->
-
-			<!-- step 2 Starts -->
+			<!-- step 2 Start -->
 			<mat-tab>
 				<ng-template mat-tab-label>
-					<div>{{'business_detail' | translate:translateKey}}</div>
+					<div>{{'form_detail' | translate:translateKey}}</div>
 				</ng-template>
-				<div class="row">
-					<div class="col-md-4 ngSelect" formGroupName="zoneNo">
-						<ng-select placeholder="{{'business_under_zone' | translate:translateKey}} *" formControlName="code" (change)="onChangeZone($event);finalFireNocNewForm.get('wardNo').reset();finalFireNocNewForm.get('blockNo').reset()">
-							<ng-option *ngFor="let zone of FIRM_ZONE" [value]="zone.code">{{zone.name}}</ng-option>
-						</ng-select>
-						<control-messages [control]="finalFireNocNewForm.get('zoneNo').controls.code"></control-messages>
-					</div>
-					<div class="col-md-4 ngSelect" formGroupName="wardNo">
-						<ng-select placeholder="{{'ward_no' | translate:translateKey}} *" formControlName="code" (change)="onChangeWard($event);finalFireNocNewForm.get('blockNo').reset()">
-							<ng-option *ngFor="let ward of WARD" [value]="ward.code">{{ward.name}}</ng-option>
-						</ng-select>
-						<control-messages [control]="finalFireNocNewForm.get('wardNo').controls.code"></control-messages>
-					</div>
-					<div class="col-md-4 ngSelect" formGroupName="blockNo">
-						<ng-select placeholder="{{'block_no' | translate:translateKey}} *" formControlName="code">
-							<ng-option *ngFor="let block of BLOCK" [value]="block.code">{{block.name}}</ng-option>
-						</ng-select>
-						<control-messages [control]="finalFireNocNewForm.get('blockNo').controls.code"></control-messages>
-					</div>
-				</div>
-				<div class="row">
-					<h2>{{'business_shop_address' | translate:translateKey}}</h2>
-					<app-address #temporaryAddressEstablishment [requiredFeilds]="finalFireNocNewForm.controls.businessAddress.value" [addressFormGroup]="finalFireNocNewForm.controls.businessAddress"></app-address>
-				</div>
 
 				<div class="row">
-					<!-- <h2>{{'category_label' | translate:translateKey}}</h2> -->
 
+					<div class="col-md-4 ngSelect" formGroupName="appliedForId">
+						<ng-select required placeholder="{{'applied_for' | translate:translateKey}} *" formControlName="code">
+							<ng-option *ngFor="let type of FS_APPLIED_FOR" [value]="type.code">{{type.name}}</ng-option>
+						</ng-select>
+						<control-messages [control]="finalFireNocForm.get('appliedForId').controls.code"></control-messages>
+					</div>
+					<div class="col-md-4 ngSelect" formGroupName="usageTypeId">
+						<ng-select required placeholder="{{'usage_type' | translate:translateKey}} *" formControlName="code">
+							<ng-option *ngFor="let type of FS_USAGE_TYPE" [value]="type.code">{{type.name}}</ng-option>
+						</ng-select>
+						<control-messages [control]="finalFireNocForm.get('usageTypeId').controls.code"></control-messages>
+					</div>
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" required maxlength="500" placeholder="{{'extra_details_of_business' | translate:translateKey}}"
-						 formControlName="extraDetailsOfBusiness">
-						<control-messages [control]="finalFireNocNewForm.controls.extraDetailsOfBusiness"></control-messages>
+						<input matInput type="text" required maxlength="200" placeholder="{{'subject_to' | translate:translateKey}}"
+						 formControlName="subjectTo">
+						<control-messages [control]="finalFireNocForm.controls.subjectTo"></control-messages>
 					</mat-form-field>
-					<div class="col-md-4 ngSelect" formGroupName="relationshipId">
-						<ng-select placeholder="{{'relationship_id' | translate:translateKey}} *" formControlName="code" (change)="onChangeRelationWithOrg()">
-							<ng-option *ngFor="let id of MF_RELATIONSHIP_OF_APPLICANT" [value]="id.code">{{id.name}}</ng-option>
+				</div>
+				<div class="row">
+					<!-- purpose_of_building_use -->
+					<div class="col-md-12 ngSelect">
+						<ng-select required [items]="FS_PURPOSE_OF_BUILDING_USE" bindLabel="name" formControlName="purposeOfBuildingUse"
+						 [multiple]="true" placeholder="{{'purpose_of_building_use' | translate:translateKey}} *">
 						</ng-select>
-						<control-messages [control]="finalFireNocNewForm.get('relationshipId').controls.code"></control-messages>
-					</div>
-
-					<div class="col-md-4 ngSelect" formGroupName="statusOfBusinessId">
-						<ng-select placeholder="{{'business_status_id' | translate:translateKey}} *" formControlName="code">
-							<ng-option *ngFor="let statusId of MF_STATUS_OF_BUSINESS" [value]="statusId.code">{{statusId.name}}</ng-option>
-						</ng-select>
-						<control-messages [control]="finalFireNocNewForm.controls.statusOfBusinessId.controls.code"></control-messages>
+						<control-messages [control]="finalFireNocForm.get('purposeOfBuildingUse')"></control-messages>
 					</div>
 				</div>
 
-				<app-action-bar [form]="finalFireNocNewForm" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step2', next: 2, back: 0}"></app-action-bar>
+				<!-- <div class="row">
+					<h2>{{'permanat_address' | translate:translateKey}}</h2>
+					<app-address [isDisplayGujFields]="true" #permanantAddressEstablishment [requiredFeilds]="finalFireNocForm.controls.permanantAddress.value"
+					 [addressFormGroup]="finalFireNocForm.controls.permanantAddress"></app-address>
+				</div> -->
+				<app-action-bar [form]="finalFireNocForm" (tabIndex)="onTabChange($event)" (handleOnSaveAndNext)="handleOnSaveAndNext($event)"
+				 [stepInfo]="{step: 'step1', next: 2, back: 0}"></app-action-bar>
 			</mat-tab>
 			<!-- step 2 Ends -->
-			<!-- step 4 Attachment Starts -->
-			<!-- <mat-tab>
+
+			<!-- step 3 Starts -->
+			<mat-tab>
+				<ng-template mat-tab-label>
+					<div>{{'architect_detail' | translate:translateKey}}</div>
+				</ng-template>
+				<div class="row">
+
+					<mat-form-field class="col-md-4">
+						<input matInput type="text" appAlphaNumeric formControlName="architectRegistrationNumber" placeholder="{{'architect_regi_no' | translate: translateKey }} *"
+						 maxlength="15">
+						<control-messages [control]="finalFireNocForm.controls.architectRegistrationNumber"></control-messages>
+					</mat-form-field>
+
+				</div>
+				<div class="row">
+					<mat-form-field class="col-md-4">
+						<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace' required maxlength="100"
+						 placeholder="{{'architect_name' | translate:translateKey}}" formControlName="architectName" appGujInputSource
+						 targetElement="architectNameGuj" [form]="finalFireNocForm">
+						<control-messages [control]="finalFireNocForm.controls.architectName"></control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace' required maxlength="50"
+						 placeholder="{{'architect_firm_name' | translate:translateKey}}" formControlName="architectFirmName"
+						 appGujInputSource targetElement="architectFirmNameGuj" [form]="finalFireNocForm">
+						<control-messages [control]="finalFireNocForm.controls.architectFirmName"></control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<textarea matInput rows="3" cols="50" required maxlength="300" placeholder="{{'architect_permanent_address' | translate:translateKey}}"
+						 formControlName="architectPermanentAddress" appGujInputSource targetElement="architectPermanentAddressGuj"
+						 [form]="finalFireNocForm"></textarea>
+						<control-messages [control]="finalFireNocForm.controls.architectPermanentAddress"></control-messages>
+					</mat-form-field>
+
+					<!-- gujarati -->
+					<mat-form-field class="col-md-4">
+						<input matInput type="text" maxlength="300" required formControlName="architectNameGuj" appGujInputTarget [form]="finalFireNocForm"
+						 placeholder="{{ 'architect_name' | translate:translateKey:'gu' }}">
+						<control-messages [control]="finalFireNocForm.controls.architectNameGuj"></control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<input matInput type="text" maxlength="150" required formControlName="architectFirmNameGuj" appGujInputTarget
+						 [form]="finalFireNocForm" placeholder="{{ 'architect_firm_name' | translate:translateKey:'gu' }}">
+						<control-messages [control]="finalFireNocForm.controls.architectFirmNameGuj"></control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<textarea matInput rows="3" cols="50" maxlength="900" type="text" required formControlName="architectPermanentAddressGuj"
+						 appGujInputTarget [form]="finalFireNocForm" placeholder="{{ 'architect_permanent_address' | translate:translateKey:'gu' }}"></textarea>
+						<control-messages [control]="finalFireNocForm.controls.architectPermanentAddressGuj"></control-messages>
+					</mat-form-field>
+					<!-- /gujarati -->
+				</div>
+				<div class="row">
+
+					<mat-form-field class="col-md-4">
+						<input matInput required OnlyNumber maxlength="10" minlength="10" type="tel" formControlName="architectContactNo"
+						 placeholder="{{'architect_contact_number' | translate:translateKey }}*">
+						<control-messages [control]="finalFireNocForm.controls.architectContactNo"></control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<textarea matInput rows="3" cols="50" type="text" required maxlength="300" placeholder="{{'site_address' | translate:translateKey}}"
+						 formControlName="siteAddress" appGujInputSource targetElement="siteAddressGuj" [form]="finalFireNocForm"></textarea>
+						<control-messages [control]="finalFireNocForm.controls.siteAddress"></control-messages>
+					</mat-form-field>
+					<!-- gujarati -->
+					<mat-form-field class="col-md-4">
+						<textarea matInput rows="3" cols="50" maxlength="900" required formControlName="siteAddressGuj" appGujInputTarget
+						 [form]="finalFireNocForm" placeholder="{{ 'site_address' | translate:translateKey:'gu' }}"></textarea>
+						<control-messages [control]="finalFireNocForm.controls.siteAddressGuj"></control-messages>
+					</mat-form-field>
+					<!-- /gujarati -->
+
+					<div class="col-md-4 ngSelect" formGroupName="fireVendorType">
+						<ng-select placeholder="{{'fire_vendor_type' | translate:translateKey}} *" formControlName="code">
+							<ng-option *ngFor="let type of FS_FIRE_VENDOR_TYPE" [value]="type.code">{{type.name}}</ng-option>
+						</ng-select>
+						<control-messages [control]="finalFireNocForm.get('fireVendorType').controls.code"></control-messages>
+					</div>
+					<mat-form-field class="col-md-4">
+						<input matInput required appAlphaNumeric maxlength="15" type="text" formControlName="fireVendorRegistrationNumber"
+						 placeholder="{{'fire_vendor_registration_no' | translate:translateKey }}">
+						<control-messages [control]="finalFireNocForm.controls.fireVendorRegistrationNumber"></control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<input matInput type="text" required maxlength="300" placeholder="{{'fire_vendor_name' | translate:translateKey}}"
+						 formControlName="fireVendorName" appGujInputSource targetElement="architectNameGuj" [form]="finalFireNocForm">
+						<control-messages [control]="finalFireNocForm.controls.fireVendorName"></control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<textarea matInput rows="3" cols="50" type="text" required maxlength="900" placeholder="{{'fire_vendor_address' | translate:translateKey}}"
+						 formControlName="fireVendorAddress"></textarea>
+						<control-messages [control]="finalFireNocForm.controls.fireVendorAddress"></control-messages>
+					</mat-form-field>
+					<mat-form-field class="col-md-4">
+						<textarea matInput rows="3" cols="50" type="text" required maxlength="300" placeholder="{{'fire_vendor_office_address' | translate:translateKey}}"
+						 formControlName="fireVendorOfficeAddress"></textarea>
+						<control-messages [control]="finalFireNocForm.controls.fireVendorOfficeAddress"></control-messages>
+					</mat-form-field>
+				</div>
+
+				<app-action-bar [form]="finalFireNocForm" (tabIndex)="onTabChange($event)" (handleOnSaveAndNext)="handleOnSaveAndNext($event)"
+				 [stepInfo]="{step: 'step3', next: 3, back: 1}"></app-action-bar>
+			</mat-tab>
+			<!-- step 3 Ends -->
+
+			<!-- step 4 Starts -->
+			<mat-tab>
+				<ng-template mat-tab-label>
+					<div>{{'location_details' | translate:translateKey}}</div>
+				</ng-template>
+				<div class="row">
+					<mat-form-field class="col-md-4">
+						<input matInput maxlength="10" required appAlphaNumeric placeholder="{{'final_plot_no' | translate:translateKey}}"
+						 formControlName="fpNo">
+						<control-messages [control]="finalFireNocForm.controls.fpNo"></control-messages>
+					</mat-form-field>
+					<mat-form-field class="col-md-4">
+						<input matInput maxlength="10" required appAlphaNumeric placeholder="{{'revenue_survey_no' | translate:translateKey}}"
+						 formControlName="rsNo">
+						<control-messages [control]="finalFireNocForm.controls.rsNo"></control-messages>
+					</mat-form-field>
+					<mat-form-field class="col-md-4">
+						<input matInput maxlength="10" required appAlphaNumeric placeholder="{{'tika_no' | translate:translateKey}}"
+						 formControlName="tikaNo">
+						<control-messages [control]="finalFireNocForm.controls.tikaNo"></control-messages>
+					</mat-form-field>
+					<mat-form-field class="col-md-4">
+						<input matInput maxlength="10" required appAlphaNumeric placeholder="{{'town_planning_no' | translate:translateKey}}"
+						 formControlName="townPlanningNo">
+						<control-messages [control]="finalFireNocForm.controls.townPlanningNo"></control-messages>
+					</mat-form-field>
+					<mat-form-field class="col-md-4">
+						<input matInput maxlength="50" required appAlphaNumeric placeholder="{{'building_location' | translate:translateKey}}"
+						 formControlName="buildingLocation">
+						<control-messages [control]="finalFireNocForm.controls.buildingLocation"></control-messages>
+					</mat-form-field>
+					<mat-form-field class="col-md-4">
+						<input matInput maxlength="10" required appAlphaNumeric placeholder="{{'block_no' | translate:translateKey}}"
+						 formControlName="blockNo">
+						<control-messages [control]="finalFireNocForm.controls.blockNo"></control-messages>
+					</mat-form-field>
+					<mat-form-field class="col-md-4">
+						<input matInput maxlength="10" required appAlphaNumeric placeholder="{{'O_P_no' | translate:translateKey}}"
+						 formControlName="opNo">
+						<control-messages [control]="finalFireNocForm.controls.opNo"></control-messages>
+					</mat-form-field>
+					<mat-form-field class="col-md-4">
+						<input matInput maxlength="10" required appAlphaNumeric placeholder="{{'city_servay_no' | translate:translateKey}}"
+						 formControlName="cityServayNo">
+						<control-messages [control]="finalFireNocForm.controls.cityServayNo"></control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<input matInput maxlength="5" required OnlyNumber placeholder="{{'building_height' | translate:translateKey}}"
+						 formControlName="buildingHeight">
+						<control-messages [control]="finalFireNocForm.controls.buildingHeight"></control-messages>
+					</mat-form-field>
+					<mat-form-field class="col-md-4">
+						<input matInput maxlength="5" required appAlphaNumeric placeholder="{{'total_building_floor' | translate:translateKey}}"
+						 formControlName="totalBuildingFloor">
+						<control-messages [control]="finalFireNocForm.controls.totalBuildingFloor"></control-messages>
+					</mat-form-field>
+					<mat-form-field class="col-md-4">
+						<input matInput required OnlyNumber maxlength="3" type="tel" formControlName="noOfBasement" placeholder="{{'no_of_basement' | translate:translateKey }}">
+						<control-messages [control]="finalFireNocForm.controls.noOfBasement"></control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<input matInput required OnlyNumber maxlength="2" type="tel" formControlName="lowerBasement" placeholder="{{'lower_basement' | translate:translateKey }}">
+						<control-messages [control]="finalFireNocForm.controls.lowerBasement"></control-messages>
+					</mat-form-field>
+					<mat-form-field class="col-md-4">
+						<input matInput required OnlyNumber maxlength="2" type="tel" formControlName="upperBasement" placeholder="{{'upper_basement' | translate:translateKey }}">
+						<control-messages [control]="finalFireNocForm.controls.upperBasement"></control-messages>
+					</mat-form-field>
+					<mat-form-field class="col-md-4">
+						<input matInput required OnlyNumber maxlength="3" type="tel" formControlName="basementArea" placeholder="{{'basement_area' | translate:translateKey }}">
+						<control-messages [control]="finalFireNocForm.controls.basementArea"></control-messages>
+					</mat-form-field>
+					<div class="col-md-4">{{'multiple_towers' | translate:translateKey }} *
+						<mat-radio-group formControlName="multipleTowers" required>
+							<mat-radio-button [value]="true">
+								Yes
+							</mat-radio-button>
+							<mat-radio-button [value]="false">
+								No
+							</mat-radio-button>
+						</mat-radio-group>
+						<control-messages [control]="finalFireNocForm.controls.multipleTowers"></control-messages>
+					</div>
+					<mat-form-field class="col-md-4">
+						<input matInput required OnlyNumber maxlength="3" type="tel" formControlName="noOfTowers" placeholder="{{'no_of_towers' | translate:translateKey }}">
+						<control-messages [control]="finalFireNocForm.controls.noOfTowers"></control-messages>
+					</mat-form-field>
+					<mat-form-field class="col-md-4">
+						<input matInput required OnlyNumber maxlength="3" type="tel" formControlName="noOfApproachedRoad" placeholder="{{'no_of_approached_road' | translate:translateKey }}">
+						<control-messages [control]="finalFireNocForm.controls.noOfApproachedRoad"></control-messages>
+					</mat-form-field>
+					<mat-form-field class="col-md-4">
+						<input matInput required OnlyNumber maxlength="3" type="tel" formControlName="noOfVentilation" placeholder="{{'no_of_ventilation' | translate:translateKey }}">
+						<control-messages [control]="finalFireNocForm.controls.noOfVentilation"></control-messages>
+					</mat-form-field>
+					<mat-form-field class="col-md-4">
+						<input matInput maxlength="20" required appAlphaNumeric placeholder="{{'ventilation_provision_detail' | translate:translateKey}}"
+						 formControlName="ventilationProvisionDetail">
+						<control-messages [control]="finalFireNocForm.controls.ventilationProvisionDetail"></control-messages>
+					</mat-form-field>
+					<mat-form-field class="col-md-4">
+						<input matInput required OnlyNumber maxlength="4" type="tel" formControlName="plotArea" placeholder="{{'plot_area' | translate:translateKey }}">
+						<control-messages [control]="finalFireNocForm.controls.plotArea"></control-messages>
+					</mat-form-field>
+					<mat-form-field class="col-md-4">
+						<input matInput required OnlyNumber maxlength="4" type="tel" formControlName="constructionArea" placeholder="{{'construction_area' | translate:translateKey }}">
+						<control-messages [control]="finalFireNocForm.controls.constructionArea"></control-messages>
+					</mat-form-field>
+
+					<div class="col-md-4">{{'drawing_provided' | translate:translateKey }} *
+						<mat-radio-group formControlName="drawingProvided" required>
+							<mat-radio-button [value]="true">
+								Yes
+							</mat-radio-button>
+							<mat-radio-button [value]="false">
+								No
+							</mat-radio-button>
+						</mat-radio-group>
+						<control-messages [control]="finalFireNocForm.controls.drawingProvided"></control-messages>
+					</div>
+				</div>
+				<div class="row">
+					<mat-form-field class="col-md-4">
+						<textarea matInput rows="3" cols="50" required maxlength="200" placeholder="{{'site_address_with_building_name' | translate:translateKey}}"
+						 formControlName="siteAddressWithBuildingName"></textarea>
+						<control-messages [control]="finalFireNocForm.controls.siteAddressWithBuildingName"></control-messages>
+					</mat-form-field>
+					<mat-form-field class="col-md-4">
+						<textarea matInput rows="3" cols="50" required maxlength="200" placeholder="{{'other_information' | translate:translateKey}}"
+						 formControlName="otherInformation"></textarea>
+						<control-messages [control]="finalFireNocForm.controls.otherInformation"></control-messages>
+					</mat-form-field>
+				</div>
+				<div class="row">
+					<div class="col-md-4">{{'gas_line_in_underground' | translate:translateKey }} *
+						<mat-radio-group formControlName="gaslineInUnderground" required>
+							<mat-radio-button [value]="true">
+								Yes
+							</mat-radio-button>
+							<mat-radio-button [value]="false">
+								No
+							</mat-radio-button>
+						</mat-radio-group>
+						<control-messages [control]="finalFireNocForm.controls.gaslineInUnderground"></control-messages>
+					</div>
+					<div class="col-md-4">{{'underground_cabling' | translate:translateKey }} *
+						<mat-radio-group formControlName="undergroundCabling" required>
+							<mat-radio-button [value]="true">
+								Yes
+							</mat-radio-button>
+							<mat-radio-button [value]="false">
+								No
+							</mat-radio-button>
+						</mat-radio-group>
+						<control-messages [control]="finalFireNocForm.controls.undergroundCabling"></control-messages>
+					</div>
+					<div class="col-md-4">{{'ongc_line_in_underground' | translate:translateKey }} *
+						<mat-radio-group formControlName="ongcLineInUnderground" required>
+							<mat-radio-button [value]="true">
+								Yes
+							</mat-radio-button>
+							<mat-radio-button [value]="false">
+								No
+							</mat-radio-button>
+						</mat-radio-group>
+						<control-messages [control]="finalFireNocForm.controls.ongcLineInUnderground"></control-messages>
+					</div>
+				</div>
+				<app-action-bar [form]="finalFireNocForm" (tabIndex)="onTabChange($event)" (handleOnSaveAndNext)="handleOnSaveAndNext($event)"
+				 [stepInfo]="{step: 'step4', next: 4, back: 2}"></app-action-bar>
+			</mat-tab>
+			<!-- step 4 Ends -->
+
+			<!-- step 5 Starts -->
+			<mat-tab>
+				<ng-template mat-tab-label>
+					<div>{{'other_details' | translate:translateKey}}</div>
+				</ng-template>
+				<div class="row">
+					<div class="col-md-4 ngSelect" formGroupName="areaZone">
+						<ng-select placeholder="{{'area_zone' | translate:translateKey}} *" formControlName="code">
+							<ng-option *ngFor="let type of FS_AREA_ZONE" [value]="type.code">{{type.name}}</ng-option>
+						</ng-select>
+						<control-messages [control]="finalFireNocForm.get('areaZone').controls.code"></control-messages>
+					</div>
+					<div class="col-md-4 ngSelect" formGroupName="previouslyNocTaken">
+						<ng-select placeholder="{{'previously_noc_taken' | translate:translateKey}} *" formControlName="code">
+							<ng-option *ngFor="let type of FS_PREVIOUSLY_NOC_TAKEN" [value]="type.code">{{type.name}}</ng-option>
+						</ng-select>
+						<control-messages [control]="finalFireNocForm.get('previouslyNocTaken').controls.code"></control-messages>
+					</div>
+
+					<mat-form-field class="col-md-4">
+						<input matInput required OnlyNumber maxlength="4" type="tel" formControlName="undergroundWaterTankLength"
+						 placeholder="{{'underground_water_tank_length' | translate:translateKey }}">
+						<control-messages [control]="finalFireNocForm.controls.undergroundWaterTankLength"></control-messages>
+					</mat-form-field>
+					<mat-form-field class="col-md-4">
+						<input matInput required OnlyNumber maxlength="3" type="tel" formControlName="undergroundWaterTankBreadth"
+						 placeholder="{{'underground_water_tank_breadth' | translate:translateKey }}">
+						<control-messages [control]="finalFireNocForm.controls.undergroundWaterTankBreadth"></control-messages>
+					</mat-form-field>
+					<mat-form-field class="col-md-4">
+						<input matInput required OnlyNumber maxlength="3" type="tel" formControlName="undergroundWaterTankHeight"
+						 placeholder="{{'underground_water_tank_height' | translate:translateKey }}">
+						<control-messages [control]="finalFireNocForm.controls.undergroundWaterTankHeight"></control-messages>
+					</mat-form-field>
+					<mat-form-field class="col-md-4">
+						<input matInput required OnlyNumber maxlength="3" type="tel" formControlName="undergroundWaterTankCapacity"
+						 placeholder="{{'underground_water_tank_capacity' | translate:translateKey }}">
+						<control-messages [control]="finalFireNocForm.controls.undergroundWaterTankCapacity"></control-messages>
+					</mat-form-field>
+					<mat-form-field class="col-md-4">
+						<input matInput required OnlyNumber maxlength="3" type="tel" formControlName="undergroundWaterTankVolume"
+						 placeholder="{{'underground_water_tank_volume_LBH_in_M³' | translate:translateKey }}">
+						<control-messages [control]="finalFireNocForm.controls.undergroundWaterTankVolume"></control-messages>
+					</mat-form-field>
+
+					<div class="col-md-4">{{'underground_watertank_map_approved' | translate:translateKey }} *
+						<mat-radio-group formControlName="undergroundWatertankMapApproved" required (change)="dependentAttachment($event.value,'UNDERGROUND_WATER_TANK_MAP')">
+							<mat-radio-button [value]="true">
+								Yes
+							</mat-radio-button>
+							<mat-radio-button [value]="false">
+								No
+							</mat-radio-button>
+						</mat-radio-group>
+						<control-messages [control]="finalFireNocForm.controls.undergroundWatertankMapApproved"></control-messages>
+					</div>
+
+					<mat-form-field class="col-md-4">
+						<input matInput required OnlyNumber maxlength="5" type="tel" formControlName="overgroundWaterTankLength"
+						 placeholder="{{'overground_water_tank_length' | translate:translateKey }}">
+						<control-messages [control]="finalFireNocForm.controls.overgroundWaterTankLength"></control-messages>
+					</mat-form-field>
+					<mat-form-field class="col-md-4">
+						<input matInput required OnlyNumber maxlength="5" type="tel" formControlName="overgroundWaterTankBreadth"
+						 placeholder="{{'overground_water_tank_breadth' | translate:translateKey }}">
+						<control-messages [control]="finalFireNocForm.controls.overgroundWaterTankBreadth"></control-messages>
+					</mat-form-field>
+					<mat-form-field class="col-md-4">
+						<input matInput required OnlyNumber maxlength="5" type="tel" formControlName="overgroundWaterTankHeight"
+						 placeholder="{{'overground_water_tank_height' | translate:translateKey }}">
+						<control-messages [control]="finalFireNocForm.controls.overgroundWaterTankHeight"></control-messages>
+					</mat-form-field>
+					<mat-form-field class="col-md-4">
+						<input matInput required OnlyNumber maxlength="5" type="tel" formControlName="overgroundWaterTankCapacity"
+						 placeholder="{{'overground_water_tank_capacity' | translate:translateKey }}">
+						<control-messages [control]="finalFireNocForm.controls.overgroundWaterTankCapacity"></control-messages>
+					</mat-form-field>
+					<mat-form-field class="col-md-4">
+						<input matInput required OnlyNumber maxlength="5" type="tel" formControlName="overgroundWaterTankVolume"
+						 placeholder="{{'overground_water_tank_volume_LBH_in_M³' | translate:translateKey }}">
+						<control-messages [control]="finalFireNocForm.controls.overgroundWaterTankVolume"></control-messages>
+					</mat-form-field>
+					<div class="col-md-4">{{'overground_water_tank_map_approved' | translate:translateKey }} *
+						<mat-radio-group formControlName="overgroundWatertankMapApproved" required (change)="dependentAttachment($event.value,'OVERHEAD_WATER_TANK_MAP')">
+							<mat-radio-button [value]="true">
+								Yes
+							</mat-radio-button>
+							<mat-radio-button [value]="false">
+								No
+							</mat-radio-button>
+						</mat-radio-group>
+						<control-messages [control]="finalFireNocForm.controls.overgroundWatertankMapApproved"></control-messages>
+					</div>
+
+				</div>
+
+				<app-action-bar [form]="finalFireNocForm" (handleOnSaveAndNext)="handleOnSaveAndNext($event)" (tabIndex)="onTabChange($event)"
+				 [stepInfo]="{step: 'step5', next: 5, back: 3}"></app-action-bar>
+			</mat-tab>
+			<!-- step 5 Ends -->
+			<!-- step  Attachment Starts -->
+			<mat-tab>
 				<ng-template mat-tab-label>
 					<div>{{'attachment' | translate: translateKey}}</div>
 				</ng-template>
 				<div class="row">
-
-					<div class="col-md-4">
-						<div *ngIf="showButtons">
-							<label>{{'photo_of_license_holder' | translate: translateKey}} *</label>
-							<file-upload [form]="finalFireNocNewForm" [uploadModel]="setDataValue(1,'PhotoofLicenseHolder','1.1','doc')"></file-upload>
+					<div class="col-md-4" *ngFor="let doc of finalFireNocForm.get('serviceDetail').get('serviceUploadDocuments').value">
+						<div *ngIf="doc.requiredOnCitizenPortal && doc.isActive && showButtons">
+							<label>{{TranslateService.getCurrentLanguage()=='en'? doc.documentLabelEn : doc.documentLabelGuj }} <span *ngIf="doc.mandatory">*</span></label>
+							<file-upload [form]="finalFireNocForm" [uploadModel]="doc"></file-upload>
 						</div>
 					</div>
-
-					<div class="col-md-4">
-						<div *ngIf="showButtons">
-							<label>{{'site_or_key_plan' | translate: translateKey}} *</label>
-							<file-upload [form]="finalFireNocNewForm" [uploadModel]="setDataValue(2,'siteorkeyplan','1.2','doc')"></file-upload>
-						</div>
-					</div>
-					<div class="col-md-4">
-						<div *ngIf="showButtons">
-							<label>{{'aadhar_card_scan_copy' | translate: translateKey}} *</label>
-							<file-upload [form]="finalFireNocNewForm" [uploadModel]="setDataValue(3,'PropertyTaxCurrentYearReceiptOfOrganization', '1.3', 'doc') "></file-upload>
-						</div>
-					</div>
-
-					<div class="col-md-4">
-						<div *ngIf="showButtons">
-							<label>{{'pan_card_owner_or_prop' | translate: translateKey}} *</label>
-							<file-upload [form]="finalFireNocNewForm" [uploadModel]="setDataValue(4, 'OrganizationBusinessTaxCurrentYearReceipt', '1.4', 'doc') "></file-upload>
-						</div>
-					</div>
-
-					<div class="col-md-4">
-						<div *ngIf="showButtons">
-							<label>{{'constitution_copy_of_firm' | translate: translateKey}} </label>
-							<file-upload [form]="finalFireNocNewForm" [uploadModel]="setDataValue(5,'WorkersProfessionalTaxReceipt', '1.5','doc') "></file-upload>
-						</div>
-					</div>
-
-					<div class="col-md-4">
-						<div *ngIf="showButtons">
-							<label>{{'proof_of_ownership_tenancy' | translate: translateKey}} *</label>
-							<file-upload [form]="finalFireNocNewForm" [uploadModel]="setDataValue(6,'PartnershipDeedCopyOfPartnerIfThereIsAPartner', '1.6', 'doc') "></file-upload>
-						</div>
-					</div>
-
-					<div class="col-md-4">
-						<div *ngIf="showButtons">
-							<label>{{'copy_of_lease_deed_or_auctioncopy_or_poss_letter' | translate: translateKey}} *</label>
-							<file-upload [form]="finalFireNocNewForm" [uploadModel]="setDataValue(7, 'OwnerMoreWorkers', '1.7', 'doc') "></file-upload>
-						</div>
-					</div>
-
-					<div class="col-md-4">
-						<div *ngIf="showButtons">
-							<label>{{'premises_by_the_land_owning_agency' | translate: translateKey}}</label>
-							<file-upload [form]="finalFireNocNewForm" [uploadModel]="setDataValue(8, 'AdharCardOwner', '1.8', 'doc') "></file-upload>
-						</div>
-					</div>
-
-					<div class="col-md-4">
-						<div *ngIf="showButtons">
-							<label>{{'additional_document_if_any' | translate: translateKey}} *</label>
-							<file-upload [form]="finalFireNocNewForm" [uploadModel]="setDataValue(9, 'ElectionVotersID', '1.9', 'doc') "></file-upload>
-						</div>
-					</div>
-
-					<div class="col-md-4">
-						<div *ngIf="showButtons">
-							<label>{{'property_tax_bill_paid_receipt' | translate: translateKey}} *</label>
-							<file-upload [form]="finalFireNocNewForm" [uploadModel]="setDataValue(10, 'PANCardTenant', '2', 'doc') "></file-upload>
-						</div>
-					</div>
-					<div class="col-md-4">
-						<div *ngIf="showButtons">
-							<label>{{'shop_establishment_certi' | translate: translateKey}} *</label>
-							<file-upload [form]="finalFireNocNewForm" [uploadModel]="setDataValue(11,'PartnershipDeedCopyOfPartnerIfThereIsAPartner', '1.6', 'doc') "></file-upload>
-						</div>
-					</div>
-				
 				</div>
 
-				<app-action-bar [uploadFiles]="uploadFileArrayData" [form]="finalFireNocNewForm" (handleErrors)="handleErrorsOnSubmit($event)"
-				 (tabIndex)="onTabChange($event) " [stepInfo]="{step: 'final', next:3, back:1} "></app-action-bar>
+				<app-action-bar [uploadFiles]="uploadFilesArray" [form]="finalFireNocForm" (tabIndex)="onTabChange($event) "
+				 (handleOnSaveAndNext)="handleOnSaveAndNext($event)" (handleErrors)="handleErrorsOnSubmit($event)" [stepInfo]="{step: 'final', next:6, back:4} "></app-action-bar>
 
-			</mat-tab> -->
+			</mat-tab>
 			<!-- step Attachment Ends -->
-
 		</mat-tab-group>
 	</form>
-	<!-- {{ finalFireNocNewForm.value | json }} -->
+	<!-- {{ finalFireNocForm.value | json }} -->
 </mat-card>
