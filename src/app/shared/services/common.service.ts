@@ -247,7 +247,7 @@ export class CommonService {
 		swal(options as any).then((result) => {
 			if (result.value && performAction) {
 				performAction();
-			} else {
+			} else if (result.dismiss) {
 				rejectAction();
 			}
 		})

@@ -34,7 +34,8 @@ export class ValidationService {
             invalidbirthRegNumber: 'Invalid Birth Registration Date',
             invalidBuildingName: 'Building name is not valid',
             invalidemployeeage: 'Age must be greater than 13 year',
-            invalidIfscCode: 'IFSC Code is not valid'
+            invalidIfscCode: 'IFSC Code is not valid',
+            invalidPan: 'Invalid Pan Number'
         }
 
         return config[validatorName];
@@ -68,16 +69,6 @@ export class ValidationService {
             return null;
         }
     }
-
-    // description validation(space allow) 
-    // static descriptionValidator(control: FormControl) {
-    //     if (control.value) {
-    //         const matches = control.value.match(/^[a-zA-Z\-\s]*$/);
-    //         return matches ? null : { 'nameCharerror': true };
-    //     } else {
-    //         return null;
-    //     }
-    // }
 
     // Email validation
     static emailValidator(control: FormControl) {
@@ -198,6 +189,16 @@ export class ValidationService {
         if (control.value) {
             const matches = control.value.match(/^[A-Z]{4}0[0-9|A-Z]{6}/);
             return matches ? null : { 'invalidIfscCode': true };
+        } else {
+            return null;
+        }
+    }
+
+    // pan number validation 
+    static panValidator(control: FormControl) {
+        if (control.value) {
+            const matches = control.value.match(/^[a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}/);
+            return matches ? null : { 'invalidPan': true };
         } else {
             return null;
         }
