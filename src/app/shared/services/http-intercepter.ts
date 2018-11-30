@@ -17,6 +17,7 @@ import { CommonService } from './common.service';
 import { SessionStorageService } from 'angular-web-storage';
 import { ManageRoutes } from '../../config/routes-conf';
 import 'rxjs/add/operator/do';
+import { debug } from 'util';
 
 
 @Injectable({
@@ -41,7 +42,6 @@ export class TokenInterceptor implements HttpInterceptor {
      * @param next - parameter for http handler
      */
 	intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-
 
 		this.requests.push(req);
 		this.commonService.isLoading.next(true);
@@ -74,7 +74,7 @@ export class TokenInterceptor implements HttpInterceptor {
 								case 400:
 									break;
 								case 401:
-									this.commonService.openAlert('Warning!', err.error.message, 'warning', '', cb => {
+									this.commonService.openAlert('Warning!', err.error.message ? err.error.message : err.error.error, 'warning', '', cb => {
 										if (this.commonService.getUserType() === 'HOSPITAL') {
 											this.hosAppService.logout();
 										} else {
@@ -83,7 +83,7 @@ export class TokenInterceptor implements HttpInterceptor {
 									});
 									break;
 								case 404:
-									this.commonService.openAlert('Error!', err.error.message, 'error');
+									this.commonService.openAlert('Error!', err.error.message ? err.error.message : err.error.error, 'error');
 									break;
 								case 500:
 								case 501:

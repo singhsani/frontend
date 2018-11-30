@@ -30,7 +30,7 @@ export class LoginThroughAdminComponent implements OnInit {
 				this.accessToken = param['authToken'];
 				this.apiCode = param['apiCode'];
 				if (this.accessToken && this.apiCode) {
-					this.saveToken();
+					this.saveToken(this.apiCode);
 					
 				} else {
 					this.commonService.openAlert('Error', 'Access Token Not Available', 'warning');
@@ -44,10 +44,20 @@ export class LoginThroughAdminComponent implements OnInit {
 	/**
 	 * This method will store Token to the Session Storage.
 	 */
-	saveToken() {
+	saveToken(apiCode) {
 		this.session.set('access_token', { 'token': this.accessToken, now: +new Date }, 999999, 's');
 		this.session.set('fromAdmin', 'fromAdmin', 999999, 's');
-		this.createRecord();
+		
+		switch (apiCode) {
+			case 'PEC_REG':
+			case 'PRC_REG':
+				this.router.navigate([ManageRoutes.getFullRoute(apiCode)]);
+				break;
+			default:
+				this.createRecord();
+				break;
+		}
+		
 	}
 
 	/**
