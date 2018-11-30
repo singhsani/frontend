@@ -178,13 +178,13 @@ export class ActionBarComponent implements OnInit, OnChanges {
 									window.location.href = environment.adminUrl + `#/admin/payment-gateway?retUrl=${payData.retUrl}&retPath=${payData.retPath}`;
 								}, rj => {
 									let errHtml = `			
-										<div>
-										<h1>Appointment Details</h1>
 										<div class="alert alert-danger">
 											Please Complete Payment, Otherwise the application will be considered as in-complete
 										</div>`
 									this.commonService.commonAlert("Application Incomplete", "", 'warning', 'Make Payment!', false, errHtml, ccb => {
 										window.location.href = environment.adminUrl + `#/admin/payment-gateway?retUrl=${payData.retUrl}&retPath=${payData.retPath}`;
+									}, arj => {
+										retUrl;
 									})
 									return;
 								});

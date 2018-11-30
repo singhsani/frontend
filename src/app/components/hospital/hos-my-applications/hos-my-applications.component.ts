@@ -29,11 +29,12 @@ export class HosMyApplicationsComponent implements OnInit {
 		'fileStatus',
 		'action'
 	];
+	translateKey: string = "hosMyAppsScreen";
 
 	dataSource = new MatTableDataSource();
 
 	resultsLength: number = 0;
-	pageSize: number = 20;
+	pageSize: number = 5;
 	isLoadingResults: boolean = true;
 
 	modalRef: BsModalRef;
@@ -62,6 +63,10 @@ export class HosMyApplicationsComponent implements OnInit {
 	 * This method use to get all the citizen data with pagination.
 	 */
 	getAllData() {
+
+		this.paginator.pageSize = 5;
+		this.paginator.pageIndex = 0;
+
 		merge(this.sort.sortChange, this.paginator.page)
 			.pipe(
 				startWith({}),
@@ -69,7 +74,7 @@ export class HosMyApplicationsComponent implements OnInit {
 					this.isLoadingResults = true;
 					this.paginationService.apiType = this.appType;
 					this.paginationService.pageIndex = (this.paginator.pageIndex + 1);
-					this.paginationService.pageSize = this.pageSize;
+					this.paginationService.pageSize = this.paginator.pageSize;
 					return this.paginationService!.getAllData();
 				}),
 				map(data => {

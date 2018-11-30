@@ -203,6 +203,7 @@ export class StillBirthComponent implements OnInit {
 			familyReligion: this.fb.group({
 				code: null
 			}),
+			familyReligionOther: null,
 
 			relationWithApplicant: this.fb.group({
 				code: null
@@ -215,6 +216,41 @@ export class StillBirthComponent implements OnInit {
 			applicantHospitalName: [null, [ValidationService.nameValidator]],
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
 		})
+	}
+
+
+	/**
+ * Used to caplture Change in birth place.
+ * @param ev - event
+ */
+	changeBirthPlace(ev: string) {
+		if (ev != 'OTHER_PLACE') {
+			this.stillBirthCertificateForm.get('otherPlace').clearValidators();
+			this.stillBirthCertificateForm.get('otherPlace').updateValueAndValidity();
+		}
+	}
+
+	/**
+	 * Used to capture change in family religion.
+	 * @param ev - event
+	 */
+	changeFamilyReligion(ev: string) {
+		if (ev != 'OTHER_RELIGION') {
+			this.stillBirthCertificateForm.get('familyReligionOther').clearValidators();
+			this.stillBirthCertificateForm.get('familyReligionOther').updateValueAndValidity();
+		}
+	}
+
+	/**
+	 * Used to capture change in birth time for perticular child.
+	 * @param ev - event
+	 * @param index - index of child
+	 */
+	changeBirthTime(ev: string, index: number) {
+		if (ev && ev.length < 8) {
+			ev = ev.concat(":00");
+		}
+		this.getChildData().at(index).get('birthTime').setValue(ev);
 	}
 
 	/**

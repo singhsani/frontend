@@ -13,7 +13,7 @@
                 <div class="row">
 
                     <div formGroupName="birthPlace" class="col-md-4 ngSelect">
-                        <ng-select placeholder="{{'birth_place' | translate:translateKey}} *" formControlName="code">
+                        <ng-select (change)="changeBirthPlace($event)" placeholder="{{'birth_place' | translate:translateKey}} *" formControlName="code">
                             <ng-option *ngFor="let birthplace of BirthPlaces" [value]="birthplace.code">{{birthplace.name}}</ng-option>
                         </ng-select>
                         <control-messages [control]="stillBirthCertificateForm.controls.birthPlace.controls.code"></control-messages>
@@ -21,8 +21,9 @@
 
                     <div class="col-md-4" *ngIf="stillBirthCertificateForm.value.birthPlace.code == 'OTHER_PLACE'">
                         <mat-form-field>
-                            <input matInput placeholder="{{'other_birth_place' | translate:translateKey}}" formControlName="otherPlace" required>
+                            <input matInput placeholder="{{'other_place' | translate:translateKey}}" formControlName="otherPlace" required>
                         </mat-form-field>
+                        <control-messages [control]="stillBirthCertificateForm.controls.otherPlace"></control-messages>
                     </div>
 
                     <div class="col-md-4 radioBtnError" formGroupName="isOrphan">
@@ -58,10 +59,10 @@
                         <div class="col-md-4 pl-0 ml-0">
                             <mat-form-field class="col-md-10">
                                 <mat-label>{{'birth_time' | translate:translateKey}}</mat-label>
-                                <input placeholder="HH:MM" matInput type="time" atp-time-picker theme="dark" formControlName="birthTime" required/>
+                                <input (blur)="changeBirthTime($event.target.value, i)" placeholder="HH:MM" matInput type="time" atp-time-picker theme="dark" formControlName="birthTime" required/>
                                 <control-messages [control]="stillBirthCertificateForm.controls.childs.controls[i].controls.birthTime"></control-messages>
                             </mat-form-field>
-                            <button class="ml-0 pl-0" mat-icon-button type="button" (click)="openTimePicker(i)">
+                            <button class="ml-0 pl-0" [disabled]="!stillBirthCertificateForm?.controls?.canEdit?.value" mat-icon-button type="button" (click)="openTimePicker(i)">
                                 <mat-icon matTooltip="Select Birth Time" color="primary">alarm</mat-icon>
                             </button>
                         </div>
@@ -101,7 +102,7 @@
                         </div>
 
                         <mat-form-field class="col-md-12">
-                            <textarea required matInput maxlength="500" type="text" placeholder="{{'premature_infant_reason' | translate:translateKey}}"
+                            <textarea required matInput maxlength="500" type="text" placeholder="{{'premature_infant_reason' | translate: translateKey}}"
                                 formControlName="prematureInfantReason"></textarea>
                             <control-messages [control]="stillBirthCertificateForm.controls.childs.controls[i].controls.prematureInfantReason"></control-messages>
                         </mat-form-field>
@@ -369,7 +370,7 @@
                         {{'present_address_during_delivery' | translate:translateKey}}
                     </h2>
 
-                    <app-address #address [requiredFeilds]="true" [addressFormGroup]="stillBirthCertificateForm.controls.parentDeliveryAddress"></app-address>
+                    <app-address #address [isDisplayGujFields]="true" [requiredFeilds]="true" [addressFormGroup]="stillBirthCertificateForm.controls.parentDeliveryAddress"></app-address>
                 </div>
 
                 <div class="row" formGroupName="isPermanentPresentAddressSame">
@@ -381,17 +382,25 @@
                         {{'permanent_address_during_delivery' | translate:translateKey}}
                     </h2>
 
-                    <app-address #address [requiredFeilds]="true" [addressFormGroup]="stillBirthCertificateForm.controls.parentPermanentAddress"></app-address>
+                    <app-address #address [isDisplayGujFields]="true" [requiredFeilds]="true" [addressFormGroup]="stillBirthCertificateForm.controls.parentPermanentAddress"></app-address>
                 </div>
 
                 <div class="row">
                     <div formGroupName="familyReligion" class="col-md-4 ngSelect">
-                        <ng-select placeholder="{{'religion' | translate:translateKey}}" formControlName="code" required>
+                        <ng-select (change)="changeFamilyReligion($event)" placeholder="{{'religion' | translate:translateKey}}" formControlName="code" required>
                             <ng-option *ngFor="let relegion of Religion" [value]="relegion.code">
                                 {{relegion.name}}
                             </ng-option>
                         </ng-select>
                         <control-messages [control]="stillBirthCertificateForm.controls.familyReligion.controls.code"></control-messages>
+                    </div>
+
+                    <div class="col-md-8" *ngIf="stillBirthCertificateForm.value.familyReligion.code == 'OTHER_RELIGION'">
+                        <mat-form-field class="birth-certificate-col-md-4">
+                            <input appValidationFields [validationFieldsType]="'onlyNameWithSpace'" matInput placeholder="{{'other_religion' | translate:translateKey}}"
+                                formControlName="familyReligionOther" required>
+                        </mat-form-field>
+                        <control-messages [control]="stillBirthCertificateForm.controls.familyReligionOther"></control-messages>
                     </div>
                 </div>
 
