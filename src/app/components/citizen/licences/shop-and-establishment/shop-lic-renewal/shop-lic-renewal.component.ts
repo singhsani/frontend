@@ -10,7 +10,7 @@ import { Location } from '@angular/common';
 import { CommonService } from '../../.././../../shared/services/common.service';
 
 import { TranslateService } from '../../../../../shared/modules/translate/translate.service';
-
+import * as _ from 'lodash';
 @Component({
 	selector: 'app-shop-lic-renewal',
 	templateUrl: './shop-lic-renewal.component.html',
