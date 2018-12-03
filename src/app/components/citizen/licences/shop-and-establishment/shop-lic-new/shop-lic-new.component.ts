@@ -10,6 +10,7 @@ import * as _ from 'lodash';
 import * as moment from 'moment';
 import { ShopAndEstablishmentService } from './../common/services/shop-and-establishment.service';
 import { ToastrService } from 'ngx-toastr';
+import { TranslateService } from '../../../../../shared/modules/translate/translate.service';
 
 @Component({
 	selector: 'app-shop-lic-new',
@@ -46,41 +47,7 @@ export class ShopLicNewComponent implements OnInit {
 	SHOP_LIC_HOLIDAY: Array<any> = [];
 
 	// required attachment array
-	private uploadFileArray: Array<any> =
-		[
-			{ labelName: 'Upload photo of License Holder (2MB Only)', fieldIdentifier: '1', category: 'SHOP_LIC_SELF_OWNERSHIP' },
-			{ labelName: 'Organizational ownership agreement copy', fieldIdentifier: '2', category: 'SHOP_LIC_SELF_OWNERSHIP' },
-
-			{ labelName: 'Organization Rental Agreement', fieldIdentifier: '12', category: "SHOP_LIC_PARTNERSHIP" },
-			{ labelName: 'Sale / Purchase Deed', fieldIdentifier: '13', category: "SHOP_LIC_PARTNERSHIP" },
-			{ labelName: 'Prescribed certificate', fieldIdentifier: '14', category: "SHOP_LIC_PARTNERSHIP" },
-			{ labelName: 'Partnership Deed Copy Of Partner If There Is A Partner', fieldIdentifier: '6', category: "SHOP_LIC_PARTNERSHIP" },
-
-			{ labelName: 'Organization Rental Agreement', fieldIdentifier: '12', category: "SHOP_LIC_COMPANY" },
-			{ labelName: 'List of Directors and Nomination of Directors (Resolution)', fieldIdentifier: '16', category: "SHOP_LIC_COMPANY" },
-			{ labelName: 'Sale / Purchase Deed', fieldIdentifier: '13', category: "SHOP_LIC_COMPANY" },
-			{ labelName: 'Partnership Deed Copy Of Partner If There Is A Partner', fieldIdentifier: '6', category: "SHOP_LIC_COMPANY" },
-			{ labelName: 'Prescribed certificate', fieldIdentifier: '14', category: "SHOP_LIC_COMPANY" },
-			{ labelName: 'Partnership Deed (Upload Deed pages which have name of partners, signature of partners,Business / Company Name, percentage of partnership )', fieldIdentifier: '19', category: "SHOP_LIC_COMPANY" },
-
-			{ labelName: 'List of the Trustees/Member of Trust', fieldIdentifier: '15', category: "SHOP_LIC_TRUST" },
-			{ labelName: 'List of the Chairman and Member of co-operative society', fieldIdentifier: '17', category: "SHOP_LIC_TRUST" },
-			{ labelName: 'Registered Address and proof thereof', fieldIdentifier: '18', category: "SHOP_LIC_TRUST" },
-			{ labelName: 'Partnership Deed Copy Of Partner If There Is A Partner', fieldIdentifier: '6', category: "SHOP_LIC_TRUST" },
-			{ labelName: 'Prescribed certificate', fieldIdentifier: '14', category: "SHOP_LIC_TRUST" },
-			{ labelName: 'Partnership Deed (Upload Deed pages which have name of partners, signature of partners,Business / Company Name, percentage of partnership )', fieldIdentifier: '19', category: "SHOP_LIC_TRUST" },
-
-			{ labelName: 'Property Tax Current Year Receipt Of Organization', fieldIdentifier: '3', category: 'common' },
-			{ labelName: 'Organization Business Tax Current Year Receipt', fieldIdentifier: '4', category: 'common' },
-			{ labelName: 'Workers Professional Tax Receipt', fieldIdentifier: '5', category: "common" },
-			// { labelName: 'Partnership Deed Copy Of Partner If There Is A Partner', fieldIdentifier: '6', required: false, category: "common" },
-			{ labelName: 'If there are more then 10 or more workers,  Receipt of Gujarat Labor welfare fund Commercial basis in the concept', fieldIdentifier: '7', category: "common" },
-			// { labelName: 'Aadhar Card No', fieldIdentifier: '8', required: false, category: "common" },
-			// { labelName: 'Election/ Voters ID', fieldIdentifier: '9', required: false, category: "common" },
-			// { labelName: 'PAN Card No', fieldIdentifier: '10', required: false, category: "common" },
-
-
-		];
+	private uploadFilesArray: Array<any> = [];
 
     /**
      * @param fb - Declare FormBuilder property.
@@ -99,7 +66,8 @@ export class ShopLicNewComponent implements OnInit {
 		private formService: FormsActionsService,
 		private commonService: CommonService,
 		private shopAndEstablishmentService: ShopAndEstablishmentService,
-		private toastrService: ToastrService
+		private toastrService: ToastrService,
+		private TranslateService: TranslateService
 	) { }
 
 	/**
@@ -144,6 +112,14 @@ export class ShopLicNewComponent implements OnInit {
 				}); */
 				this.getCategoryDropdownData(this.shopLicNewForm.get('noOfHumanWorking').value.code);
 				this.getSubCategoryDropdownData(this.shopLicNewForm.get('categoryOfBusiness').value.code);
+
+
+				res.serviceDetail.serviceUploadDocuments.forEach(app => {
+					(<FormArray>this.shopLicNewForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.createDocumentsGrp(app));
+				});
+				this.requiredDocumentList();
+
+
 			} catch (error) {
 				console.log(error.message)
 			}
@@ -278,11 +254,75 @@ export class ShopLicNewComponent implements OnInit {
 
 			/*  */
 			attachments: [''],
+			serviceDetail: this.fb.group({
+				code: null,
+				name: null,
+				gujName: null,
+				feesOnScrutiny: null,
+				appointmentRequired: false,
+				serviceUploadDocuments: this.fb.array([])
+			})
 			/*  */
 
 
 		});
 	}
+	/**
+	 * This Method for create attachment array in service detail
+	 * @param data : value of array
+	 */
+	createDocumentsGrp(data?: any): FormGroup {
+		return this.fb.group({
+			dependentFieldName: [data.dependentFieldName ? data.dependentFieldName : null],
+			documentIdentifier: [data.documentIdentifier ? data.documentIdentifier : null],
+			documentKey: [data.documentKey ? data.documentKey : null],
+			documentLabelEn: [data.documentLabelEn ? data.documentLabelEn : null],
+			documentLabelGuj: [data.documentLabelGuj ? data.documentLabelGuj : null],
+			fieldIdentifier: [data.fieldIdentifier ? data.fieldIdentifier : null],
+			formPart: [data.formPart ? data.formPart : null],
+			id: [data.id ? data.id : null],
+			code: [data.code ? data.code : null],
+			isActive: [data.isActive],
+			mandatory: [data.mandatory ? data.mandatory : false],
+			maxFileSizeInMB: [data.maxFileSizeInMB ? data.maxFileSizeInMB : 5],
+			requiredOnAdminPortal: [data.requiredOnAdminPortal],
+			requiredOnCitizenPortal: [data.requiredOnCitizenPortal]
+		});
+	}
+
+	/**
+	 * Method is create required document array
+	 */
+	requiredDocumentList() {
+		this.uploadFilesArray = [];
+		let organizationCategory = this.shopLicNewForm.get('typeOfOrganisation').value.code;
+		if (organizationCategory) {
+			_.forEach(this.shopLicNewForm.get('serviceDetail').get('serviceUploadDocuments').value, (value) => {
+
+
+				if (value.dependentFieldName == null && value.mandatory && value.isActive && value.requiredOnCitizenPortal) {
+					this.uploadFilesArray.push({
+						'labelName': value.documentLabelEn,
+						'fieldIdentifier': value.fieldIdentifier,
+						'documentIdentifier': value.documentIdentifier
+					})
+				}
+
+				if (value.dependentFieldName) {
+					let dependentFieldArray = value.dependentFieldName.split(",");
+					if (dependentFieldArray.includes(organizationCategory) && value.mandatory && value.isActive && value.requiredOnCitizenPortal) {
+						this.uploadFilesArray.push({
+							'labelName': value.documentLabelEn,
+							'fieldIdentifier': value.fieldIdentifier,
+							'documentIdentifier': value.documentIdentifier
+						})
+					}
+				}
+
+			});
+		}
+	}
+
 
 	/**
 	 * Method is used to return array
@@ -585,6 +625,7 @@ export class ShopLicNewComponent implements OnInit {
 				// remove all controll becose if dropdown value is "SHOP_LIC_SELF_OWNERSHIP" then user add only one record.
 				this.addMorePerson('PARTNER');
 			}
+			this.requiredDocumentList();
 			/*let categoryAttachment = this.shopLicNewForm.get('attachments').value;
 			switch (event) {
 				case 'SHOP_LIC_SELF_OWNERSHIP':
@@ -696,6 +737,4 @@ export class ShopLicNewComponent implements OnInit {
 	onTabChange(evt) {
 		this.tabIndex = evt;
 	}
-
-
 }
