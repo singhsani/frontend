@@ -737,351 +737,44 @@
 				<ng-template mat-tab-label>
 					<div>{{'attachment' | translate: translateKey}}</div>
 				</ng-template>
-				<div>
-					<h2>{{'category_wise_attachment' | translate: translateKey}}</h2>
-					<!-- SHOP_LIC_SELF_OWNERSHIP -->
-					<div class="row" *ngIf="shopLicModificationForm.get('typeOfOrganisation').controls.code.value === 'SHOP_LIC_SELF_OWNERSHIP'">
-						<h2>{{'owner_checklist' | translate: translateKey}}</h2>
 
-						<div class="col-md-4">
-							<div *ngIf="showButtons">
-								<label>{{'photo_of_License_Holder' | translate: translateKey}} *</label>
-								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(1,'PhotoofLicenseHolder','1.1','doc')"></file-upload>
-							</div>
-						</div>
 
-						<div class="col-md-4">
-							<div *ngIf="showButtons">
-								<label>{{'org_ownership_att' | translate: translateKey}} *</label>
-								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(2,'OrganizationalOwnershipAgreementCopy','1.2','doc')"></file-upload>
-							</div>
-						</div>
-						<div class="col-md-4 ">
-							<div *ngIf="showButtons ">
-								<label>{{'pro_tax_current_att' | translate: translateKey}} *</label>
-								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(3,'PropertyTaxCurrentYearReceiptOfOrganization', '1.3', 'doc') "></file-upload>
-							</div>
-						</div>
+				<div class="row">
 
-						<div class="col-md-4 ">
-							<div *ngIf="showButtons ">
-								<label>{{'business_tax_current_att' | translate: translateKey}} *</label>
-								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(4, 'OrganizationBusinessTaxCurrentYearReceipt', '1.4', 'doc') "></file-upload>
-							</div>
-						</div>
+					<h2 *ngIf="!shopLicModificationForm.get('typeOfOrganisation').value.code">{{'category_wise_attachment' | translate:
+						translateKey}}
+					</h2>
+					<ng-container *ngIf="shopLicModificationForm.get('typeOfOrganisation').value.code">
 
-						<div class="col-md-4 ">
-							<div *ngIf="showButtons ">
-								<label>{{'workers_professional_tax_att' | translate: translateKey}} *</label>
-								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(5,'WorkersProfessionalTaxReceipt', '1.5','doc') "></file-upload>
-							</div>
-						</div>
+						<h2 *ngIf="shopLicModificationForm.get('typeOfOrganisation').controls.code.value === 'SHOP_LIC_SELF_OWNERSHIP'">
+							{{'owner_checklist' | translate: translateKey}}
+						</h2>
 
-						<div class="col-md-4 ">
-							<div *ngIf="showButtons ">
-								<label>{{'partnership_deed_att' | translate: translateKey}} *</label>
-								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(6,'PartnershipDeedCopyOfPartnerIfThereIsAPartner', '1.6', 'doc') "></file-upload>
-							</div>
-						</div>
+						<h2 *ngIf="shopLicModificationForm.get('typeOfOrganisation').controls.code.value === 'SHOP_LIC_PARTNERSHIP' || shopLicModificationForm.get('typeOfOrganisation').controls.code.value === 'SHOP_LIC_CO_OPERATIVE_SOCIETY' ">
+							{{'partnership_and_coopsoc_checklist' | translate: translateKey}}
+						</h2>
 
-						<div class="col-md-4 ">
-							<div *ngIf="showButtons ">
-								<label>{{'guj_labor_welfarefund_att' | translate: translateKey}} *</label>
-								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(7, 'OwnerMoreWorkers', '1.7', 'doc') "></file-upload>
-							</div>
-						</div>
+						<h2 *ngIf="shopLicModificationForm.get('typeOfOrganisation').controls.code.value ==='SHOP_LIC_COMPANY' ">
+							{{'company_checklist' | translate: translateKey}}
+						</h2>
 
-						<div class="col-md-4 ">
-							<div *ngIf="showButtons ">
-								<label>{{'aadhar_no' | translate: translateKey}}</label>
-								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(8, 'AdharCardOwner', '1.8', 'doc') "></file-upload>
-							</div>
-						</div>
+						<h2 *ngIf="shopLicModificationForm.get( 'typeOfOrganisation').controls.code.value ==='SHOP_LIC_TRUST' || shopLicModificationForm.get( 'typeOfOrganisation').controls.code.value==='SHOP_LIC_BOARD' ">
+							{{'trust_and_board_checklist' | translate: translateKey}}
+						</h2>
 
-						<div class="col-md-4 ">
-							<div *ngIf="showButtons ">
-								<label>{{'election_or_voters_ID' | translate: translateKey}}</label>
-								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(9, 'ElectionVotersID', '1.9', 'doc') "></file-upload>
+						<ng-container *ngFor="let doc of shopLicModificationForm.get('serviceDetail').get('serviceUploadDocuments').value  | filterAttachment:shopLicModificationForm.get( 'typeOfOrganisation').value.code">
+							<div class="col-md-4" *ngIf="doc.requiredOnCitizenPortal && doc.isActive && showButtons">
+								<label>{{TranslateService.getCurrentLanguage()=='en'? doc.documentLabelEn : doc.documentLabelGuj }} <span *ngIf="doc.mandatory">*</span></label>
+								<file-upload [form]="shopLicModificationForm" [uploadModel]="doc"></file-upload>
 							</div>
-						</div>
+						</ng-container>
 
-						<div class="col-md-4 ">
-							<div *ngIf="showButtons ">
-								<label>{{'PAN_card' | translate: translateKey}}</label>
-								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(10, 'PANCardTenant', '2', 'doc') "></file-upload>
-							</div>
-						</div>
+					</ng-container>
 
-					</div>
-
-					<!-- SHOP_LIC_PARTNERSHIP and SHOP_LIC_CO_OPERATIVE_SOCIETY -->
-					<div class="row" *ngIf="shopLicModificationForm.get('typeOfOrganisation').controls.code.value === 'SHOP_LIC_PARTNERSHIP' || shopLicModificationForm.get('typeOfOrganisation').controls.code.value === 'SHOP_LIC_CO_OPERATIVE_SOCIETY' ">
-						<h2>{{'partnership_and_coopsoc_checklist' | translate: translateKey}}</h2>
-
-						<div class="col-md-4">
-							<div *ngIf="showButtons ">
-								<label>{{'org_tenant_att' | translate: translateKey}} *</label>
-								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(12,'OrganizationRentalAgreement', '2.2','doc') "></file-upload>
-							</div>
-						</div>
-						<div class="col-md-4">
-							<div *ngIf="showButtons">
-								<label>{{'sale_or_purchase_deed_att' | translate: translateKey}} *</label>
-								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(13, 'SaleOrPurchaseDeed', '2.3', 'doc') "></file-upload>
-							</div>
-						</div>
-
-						<div class="col-md-4 ">
-							<div *ngIf="showButtons ">
-								<label>{{'prescribed_certificate' | translate: translateKey}} *</label>
-								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(14, 'Prescribedcertificate', '2.4', 'doc') "></file-upload>
-							</div>
-						</div>
-						<div class="col-md-4 ">
-							<div *ngIf="showButtons ">
-								<label>{{'pro_tax_current_att' | translate: translateKey}} *</label>
-								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(3,'PropertyTaxCurrentYearReceiptOfOrganization', '1.3', 'doc') "></file-upload>
-							</div>
-						</div>
-
-						<div class="col-md-4 ">
-							<div *ngIf="showButtons ">
-								<label>{{'business_tax_current_att' | translate: translateKey}} *</label>
-								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(4, 'OrganizationBusinessTaxCurrentYearReceipt', '1.4', 'doc') "></file-upload>
-							</div>
-						</div>
-
-						<div class="col-md-4 ">
-							<div *ngIf="showButtons ">
-								<label>{{'workers_professional_tax_att' | translate: translateKey}} *</label>
-								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(5,'WorkersProfessionalTaxReceipt', '1.5','doc') "></file-upload>
-							</div>
-						</div>
-
-						<div class="col-md-4 ">
-							<div *ngIf="showButtons ">
-								<label>{{'partnership_deed_att' | translate: translateKey}} *</label>
-								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(6,'PartnershipDeedCopyOfPartnerIfThereIsAPartner', '1.6', 'doc') "></file-upload>
-							</div>
-						</div>
-
-						<div class="col-md-4 ">
-							<div *ngIf="showButtons ">
-								<label>{{'guj_labor_welfarefund_att' | translate: translateKey}} *</label>
-								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(7, 'OwnerMoreWorkers', '1.7', 'doc') "></file-upload>
-							</div>
-						</div>
-
-						<div class="col-md-4 ">
-							<div *ngIf="showButtons ">
-								<label>{{'aadhar_no' | translate: translateKey}}</label>
-								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(8, 'AdharCardOwner', '1.8', 'doc') "></file-upload>
-							</div>
-						</div>
-
-						<div class="col-md-4 ">
-							<div *ngIf="showButtons ">
-								<label>{{'election_or_voters_ID' | translate: translateKey}}</label>
-								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(9, 'ElectionVotersID', '1.9', 'doc') "></file-upload>
-							</div>
-						</div>
-
-						<div class="col-md-4 ">
-							<div *ngIf="showButtons ">
-								<label>{{'PAN_card' | translate: translateKey}}</label>
-								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(10, 'PANCardTenant', '2', 'doc') "></file-upload>
-							</div>
-						</div>
-
-					</div>
-
-					<!-- SHOP_LIC_COMPANY -->
-					<div class="row" *ngIf="shopLicModificationForm.get('typeOfOrganisation').controls.code.value ==='SHOP_LIC_COMPANY'">
-						<h2>{{'company_checklist' | translate: translateKey}}</h2>
-						<div class="col-md-4">
-							<div *ngIf="showButtons ">
-								<label>{{'org_tenant_att' | translate: translateKey}} *</label>
-								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(12, 'OrganizationRentalAgreement', '2.2','doc') "></file-upload>
-							</div>
-						</div>
-						<div class="col-md-4 ">
-							<div *ngIf="showButtons ">
-								<label>{{'list_directors_nomination_directors' | translate: translateKey}} *</label>
-								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(16, 'ListOfDirectors', '2.6', 'doc') "></file-upload>
-							</div>
-						</div>
-						<div class="col-md-4 ">
-							<div *ngIf="showButtons ">
-								<label>{{'sale_or_purchase_deed_att' | translate: translateKey}} *</label>
-								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(13, 'SaleOrPurchaseDeed', '2.3', 'doc') "></file-upload>
-							</div>
-						</div>
-						<div class="col-md-4 ">
-							<div *ngIf="showButtons ">
-								<label>{{'prescribed_certificate' | translate: translateKey}} *</label>
-								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(14, 'Prescribedcertificate', '2.4', 'doc') "></file-upload>
-							</div>
-						</div>
-						<div class="col-md-4 ">
-							<div *ngIf="showButtons ">
-								<label>{{'Upload Deed pages which have name of partners' | translate: translateKey}} *</label>
-								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(19, 'DeedPagesPartners', '2.9', 'doc') "></file-upload>
-							</div>
-						</div>
-						<!-- Partnership Deed (Upload Deed pages which have name of partners, signature of partners,Business / Company Name, percentage of partnership ) -->
-						<div class="col-md-4 ">
-							<div *ngIf="showButtons ">
-								<label>{{'pro_tax_current_att' | translate: translateKey}} *</label>
-								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(3,'PropertyTaxCurrentYearReceiptOfOrganization', '1.3', 'doc') "></file-upload>
-							</div>
-						</div>
-
-						<div class="col-md-4 ">
-							<div *ngIf="showButtons ">
-								<label>{{'business_tax_current_att' | translate: translateKey}} *</label>
-								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(4, 'OrganizationBusinessTaxCurrentYearReceipt', '1.4', 'doc') "></file-upload>
-							</div>
-						</div>
-
-						<div class="col-md-4 ">
-							<div *ngIf="showButtons ">
-								<label>{{'workers_professional_tax_att' | translate: translateKey}} *</label>
-								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(5,'WorkersProfessionalTaxReceipt', '1.5','doc') "></file-upload>
-							</div>
-						</div>
-
-						<div class="col-md-4 ">
-							<div *ngIf="showButtons ">
-								<label>{{'partnership_deed_att' | translate: translateKey}} *</label>
-								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(6,'PartnershipDeedCopyOfPartnerIfThereIsAPartner', '1.6', 'doc') "></file-upload>
-							</div>
-						</div>
-
-						<div class="col-md-4 ">
-							<div *ngIf="showButtons ">
-								<label>{{'guj_labor_welfarefund_att' | translate: translateKey}} *</label>
-								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(7, 'OwnerMoreWorkers', '1.7', 'doc') "></file-upload>
-							</div>
-						</div>
-
-						<div class="col-md-4 ">
-							<div *ngIf="showButtons ">
-								<label>{{'aadhar_no' | translate: translateKey}}</label>
-								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(8, 'AdharCardOwner', '1.8', 'doc') "></file-upload>
-							</div>
-						</div>
-
-						<div class="col-md-4 ">
-							<div *ngIf="showButtons ">
-								<label>{{'election_or_voters_ID' | translate: translateKey}}</label>
-								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(9, 'ElectionVotersID', '1.9', 'doc') "></file-upload>
-							</div>
-						</div>
-
-						<div class="col-md-4 ">
-							<div *ngIf="showButtons ">
-								<label>{{'PAN_card' | translate: translateKey}}</label>
-								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(10, 'PANCardTenant', '2', 'doc') "></file-upload>
-							</div>
-						</div>
-
-					</div>
-
-					<!-- SHOP_LIC_TRUST and SHOP_LIC_BOARD-->
-					<div class="row" *ngIf="shopLicModificationForm.get( 'typeOfOrganisation').controls.code.value ==='SHOP_LIC_TRUST' || shopLicModificationForm.get( 'typeOfOrganisation').controls.code.value==='SHOP_LIC_BOARD' ">
-						<h2>{{'trust_and_board_checklist' | translate: translateKey}}</h2>
-						<div class="col-md-4">
-							<div *ngIf="showButtons ">
-								<label>{{'list_trustees_trust_member' | translate: translateKey}} *</label>
-								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(15, 'TrusteesMember', '2.5', 'doc') "></file-upload>
-							</div>
-						</div>
-						<div class="col-md-4">
-							<div *ngIf="showButtons ">
-								<label>{{'list_chairman_and_member_of_co_op_soc' | translate: translateKey}} *</label>
-								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(17, 'ChairmanMember', '2.7', 'doc') "></file-upload>
-							</div>
-						</div>
-						<div class="col-md-4">
-							<div *ngIf="showButtons ">
-								<label>{{'registered_address_proof' | translate: translateKey}} *</label>
-								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(18, 'RegiAddressProof', '2.8', 'doc') "></file-upload>
-							</div>
-						</div>
-						<div class="col-md-4 ">
-							<div *ngIf="showButtons ">
-								<label>{{'prescribed_certificate' | translate: translateKey}} *</label>
-								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(14, 'Prescribedcertificate', '2.4', 'doc') "></file-upload>
-							</div>
-						</div>
-						<div class="col-md-4 ">
-							<div *ngIf="showButtons ">
-								<label>{{'Upload Deed pages which have name of partners' | translate: translateKey}} *</label>
-								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(19, 'DeedPagesPartners', '2.9', 'doc') "></file-upload>
-							</div>
-						</div>
-						<div class="col-md-4 ">
-							<div *ngIf="showButtons ">
-								<label>{{'pro_tax_current_att' | translate: translateKey}} *</label>
-								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(3,'PropertyTaxCurrentYearReceiptOfOrganization', '1.3', 'doc') "></file-upload>
-							</div>
-						</div>
-
-						<div class="col-md-4 ">
-							<div *ngIf="showButtons ">
-								<label>{{'business_tax_current_att' | translate: translateKey}} *</label>
-								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(4, 'OrganizationBusinessTaxCurrentYearReceipt', '1.4', 'doc') "></file-upload>
-							</div>
-						</div>
-
-						<div class="col-md-4 ">
-							<div *ngIf="showButtons ">
-								<label>{{'workers_professional_tax_att' | translate: translateKey}} *</label>
-								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(5,'WorkersProfessionalTaxReceipt', '1.5','doc') "></file-upload>
-							</div>
-						</div>
-
-						<div class="col-md-4 ">
-							<div *ngIf="showButtons ">
-								<label>{{'partnership_deed_att' | translate: translateKey}} *</label>
-								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(6,'PartnershipDeedCopyOfPartnerIfThereIsAPartner', '1.6', 'doc') "></file-upload>
-							</div>
-						</div>
-
-						<div class="col-md-4 ">
-							<div *ngIf="showButtons ">
-								<label>{{'guj_labor_welfarefund_att' | translate: translateKey}} *</label>
-								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(7, 'OwnerMoreWorkers', '1.7', 'doc') "></file-upload>
-							</div>
-						</div>
-
-						<div class="col-md-4 ">
-							<div *ngIf="showButtons ">
-								<label>{{'aadhar_no' | translate: translateKey}}</label>
-								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(8, 'AdharCardOwner', '1.8', 'doc') "></file-upload>
-							</div>
-						</div>
-
-						<div class="col-md-4 ">
-							<div *ngIf="showButtons ">
-								<label>{{'election_or_voters_ID' | translate: translateKey}}</label>
-								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(9, 'ElectionVotersID', '1.9', 'doc') "></file-upload>
-							</div>
-						</div>
-
-						<div class="col-md-4 ">
-							<div *ngIf="showButtons ">
-								<label>{{'PAN_card' | translate: translateKey}}</label>
-								<file-upload [form]="shopLicModificationForm" [uploadModel]="setDataValue(10, 'PANCardTenant', '2', 'doc') "></file-upload>
-							</div>
-						</div>
-
-					</div>
 				</div>
 
-				<app-action-bar [uploadFiles]="uploadFileArray | filterAttachment:shopLicModificationForm.get( 'typeOfOrganisation').value.code"
-				 [form]="shopLicModificationForm" (handleErrors)="handleErrorsOnSubmit($event) " (tabIndex)="onTabChange($event) "
-				 [stepInfo]="{step: 'final', next:7, back: 5} "></app-action-bar>
+				<app-action-bar [uploadFiles]="uploadFilesArray" [form]="shopLicModificationForm" (handleErrors)="handleErrorsOnSubmit($event) "
+				 (tabIndex)="onTabChange($event) " [stepInfo]="{step: 'final', next:7, back: 5} "></app-action-bar>
 
 			</mat-tab>
 			<!-- step Attachment Ends -->
