@@ -50,17 +50,17 @@ table { width: 100%; }
 .mat-table .text-label.badge {color: #fff; padding: 7px 5px 7px 18px; min-width: 100px; position: relative; text-align: left;}
 .mat-table .text-label.badge::before {content: " "; position: absolute; top: 50%; left: 4px; margin-top: -3px; width: 6px; height: 6px; border-radius:50%; background: #000;}
 .mat-table .text-label.badge:hover::before {margin-top: -4px; width: 8px; height: 8px;}
-.mat-table .text-label.badge-primary, .mat-table .text-label.primary {border: 1px solid $colorBlue; background: $colorBlue;
+.mat-table .text-label.badge-primary, .mat-table .text-label.primary {color:$colorBlue; border: 0px solid $colorBlue; background: none;
     &:hover {background: #fff; color:$colorBlue;}
     &::before {background: $colorBlue;}
 }
 
-.mat-table .text-label.badge-danger, .mat-table .text-label.rejected {border: 1px solid #ed5d7b; background: #ed5d7b;
+.mat-table .text-label.badge-danger, .mat-table .text-label.rejected {color:#ed5d7b; border: 0px solid #ed5d7b; background: none;
     &:hover {background: #fff; color:#ed5d7b}
     &::before {background: #ed5d7b;}
 }
 
-.mat-table .text-label.badge-success, .mat-table .text-label.submited {border: 1px solid #78da71; background: #78da71;
+.mat-table .text-label.badge-success, .mat-table .text-label.submited {color:#78da71; border: 0px solid #78da71; background: none;
     &:hover {background: #fff; color:#78da71}
     &::before {background: #78da71;}
 }
@@ -70,7 +70,7 @@ table { width: 100%; }
     &::before {background: #fbb03b;}
  }
 
-.mat-table .text-label.badge-info, .mat-table .text-label.file {border: 1px solid #17a2b8; background: #17a2b8;
+.mat-table .text-label.badge-info, .mat-table .text-label.file {color:#17a2b8; border: 0px solid #17a2b8; background: none;
     &:hover {background: #fff; color:#17a2b8}
     &::before {background: #17a2b8;}
 }
