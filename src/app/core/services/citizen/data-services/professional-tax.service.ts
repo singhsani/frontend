@@ -109,8 +109,15 @@ export class ProfessionalTaxService {
 	/**
 	 * This method use for get all ward numbers
 	 */
+  // getAllWardNos() {
+  //   return this.http.get('api/wardMaster/get/active/all');
+  // }
+
+  /**
+	 * This method use for get all ward numbers
+	 */
   getAllWardNos() {
-    return this.http.get('api/wardMaster/get/active/all');
+    return this.http.get('api/pecForm/data');
   }
 
 	/**

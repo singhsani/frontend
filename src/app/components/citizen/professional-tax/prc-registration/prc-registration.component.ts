@@ -679,7 +679,7 @@ export class PrcRegistrationComponent implements OnInit {
 	*/
 	getAllWardNos() {
 		this.profeService.getAllWardNos().subscribe(res => {
-			this.wardNoArray = res.data;
+			this.wardNoArray = res.WARD;
 		});
 	}
 
