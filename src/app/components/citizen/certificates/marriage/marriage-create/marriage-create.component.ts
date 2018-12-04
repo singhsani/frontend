@@ -582,33 +582,33 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
             attachments: [''],
 
             // gujarati field
-            groomFirstNameGuj: [''],
-            groomMiddleNameGuj: [''],
-            groomLastNameGuj: [''],
+            groomFirstNameGuj: ['',[Validators.maxLength(150)]],
+            groomMiddleNameGuj: ['',[Validators.maxLength(150)]],
+            groomLastNameGuj: ['',[Validators.maxLength(150)]],
 
-            brideFirstNameGuj: [''],
-            brideMiddleNameGuj: [''],
-            brideLastNameGuj: [''],
+            brideFirstNameGuj: ['',[Validators.maxLength(150)]],
+            brideMiddleNameGuj: ['',[Validators.maxLength(150)]],
+            brideLastNameGuj: ['',[Validators.maxLength(150)]],
 
-            groomParentsFirstNameGuj: [''],
-            groomParentsMiddleNameGuj: [''],
-            groomParentsLastNameGuj: [''],
+            groomParentsFirstNameGuj: ['',[Validators.maxLength(150)]],
+            groomParentsMiddleNameGuj: ['',[Validators.maxLength(150)]],
+            groomParentsLastNameGuj: ['',[Validators.maxLength(150)]],
 
-            brideParentsFirstNameGuj: [''],
-            brideParentsMiddleNameGuj: [''],
-            brideParentsLastNameGuj: [''],
+            brideParentsFirstNameGuj: ['',[Validators.maxLength(150)]],
+            brideParentsMiddleNameGuj: ['',[Validators.maxLength(150)]],
+            brideParentsLastNameGuj: ['',[Validators.maxLength(150)]],
 
-            priestFirstNameGuj: [''],
-            priestMiddleNameGuj: [''],
-            priestLastNameGuj: [''],
+            priestFirstNameGuj: ['',[Validators.maxLength(150)]],
+            priestMiddleNameGuj: ['',[Validators.maxLength(150)]],
+            priestLastNameGuj: ['',[Validators.maxLength(150)]],
 
-            firstWitnessFirstNameGuj: [''],
-            firstWitnessMiddleNameGuj: [''],
-            firstWitnessLastNameGuj: [''],
+            firstWitnessFirstNameGuj: ['',[Validators.maxLength(150)]],
+            firstWitnessMiddleNameGuj: ['',[Validators.maxLength(150)]],
+            firstWitnessLastNameGuj: ['',[Validators.maxLength(150)]],
 
-            secondWitnessFirstNameGuj: [''],
-            secondWitnessMiddleNameGuj: [''],
-            secondWitnessLastNameGuj: [''],
+            secondWitnessFirstNameGuj: ['',[Validators.maxLength(150)]],
+            secondWitnessMiddleNameGuj: ['',[Validators.maxLength(150)]],
+            secondWitnessLastNameGuj: ['',[Validators.maxLength(150)]],
 
             // for NRI groom
             isGroomVisa: null,
@@ -861,7 +861,6 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
      * @param person : Groom or Bride (Change Event).
      */
     changeReflection(person: string) {
-        debugger;
 
         this.marriageFormGroup.get(`${person}PassportNumber`).reset();
         this.marriageFormGroup.get(`${person}Country`).reset();

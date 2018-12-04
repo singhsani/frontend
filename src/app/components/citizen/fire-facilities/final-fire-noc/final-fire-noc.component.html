@@ -2,11 +2,11 @@
 
 <mat-card [hidden]="serachLicenceObj.isDisplayRenewLicenceForm" class="mt-4 formClass">
 	<mat-form-field class="col-md-10">
-	  <input matInput required placeholder="{{'search_by_application_no' | translate:translateKey}}" [(ngModel)]="serachLicenceObj.searchLicenceNumber">
+		<input matInput required placeholder="{{'search_by_application_no' | translate:translateKey}}" [(ngModel)]="serachLicenceObj.searchLicenceNumber">
 	</mat-form-field>
 	<button class="col-md-2" [disabled]="!serachLicenceObj.searchLicenceNumber" mat-raised-button color="primary" (click)="searchLicence()">{{'search'
-	  | translate:translateKey}}</button>
-  </mat-card>
+		| translate:translateKey}}</button>
+</mat-card>
 
 <mat-card [hidden]="!serachLicenceObj.isDisplayRenewLicenceForm" class="formClass cardBorder">
 
@@ -114,12 +114,18 @@
 				</div>
 				<div class="row">
 					<!-- purpose_of_building_use -->
-					<div class="col-md-12 ngSelect">
+					<div class="col-md-8 ngSelect">
 						<ng-select required [items]="FS_PURPOSE_OF_BUILDING_USE" bindLabel="name" formControlName="purposeOfBuildingUse"
-						 [multiple]="true" placeholder="{{'purpose_of_building_use' | translate:translateKey}} *">
+						 [multiple]="true" (ngModelChange)="otherRemark($event);finalFireNocForm.controls.otherPurposeRemark.reset()"
+						 placeholder="{{'purpose_of_building_use' | translate:translateKey}} *">
 						</ng-select>
 						<control-messages [control]="finalFireNocForm.get('purposeOfBuildingUse')"></control-messages>
 					</div>
+					<mat-form-field class="col-md-4" *ngIf="codeOther">
+						<input matInput type="text" maxlength="200" placeholder="{{'other_purpose_remark' | translate:translateKey}}"
+						 formControlName="otherPurposeRemark">
+						<control-messages [control]="finalFireNocForm.controls.otherPurposeRemark"></control-messages>
+					</mat-form-field>
 				</div>
 
 				<!-- <div class="row">
@@ -318,7 +324,8 @@
 						<input matInput required OnlyNumber maxlength="3" type="tel" formControlName="basementArea" placeholder="{{'basement_area' | translate:translateKey }}">
 						<control-messages [control]="finalFireNocForm.controls.basementArea"></control-messages>
 					</mat-form-field>
-					<div class="col-md-4">{{'multiple_towers' | translate:translateKey }} *
+					<div class="col-md-4 radioBtnError">
+						<mat-label>{{'multiple_towers' | translate:translateKey }} *</mat-label>
 						<mat-radio-group formControlName="multipleTowers" required>
 							<mat-radio-button [value]="true">
 								Yes
@@ -355,7 +362,8 @@
 						<control-messages [control]="finalFireNocForm.controls.constructionArea"></control-messages>
 					</mat-form-field>
 
-					<div class="col-md-4">{{'drawing_provided' | translate:translateKey }} *
+					<div class="col-md-4 radioBtnError">
+						<mat-label>{{'drawing_provided' | translate:translateKey }} *</mat-label>
 						<mat-radio-group formControlName="drawingProvided" required>
 							<mat-radio-button [value]="true">
 								Yes
@@ -380,7 +388,8 @@
 					</mat-form-field>
 				</div>
 				<div class="row">
-					<div class="col-md-4">{{'gas_line_in_underground' | translate:translateKey }} *
+					<div class="col-md-4 radioBtnError">
+						<mat-label>{{'gas_line_in_underground' | translate:translateKey }} *</mat-label>
 						<mat-radio-group formControlName="gaslineInUnderground" required>
 							<mat-radio-button [value]="true">
 								Yes
@@ -391,7 +400,8 @@
 						</mat-radio-group>
 						<control-messages [control]="finalFireNocForm.controls.gaslineInUnderground"></control-messages>
 					</div>
-					<div class="col-md-4">{{'underground_cabling' | translate:translateKey }} *
+					<div class="col-md-4 radioBtnError">
+						<mat-label>{{'underground_cabling' | translate:translateKey }} *</mat-label>
 						<mat-radio-group formControlName="undergroundCabling" required>
 							<mat-radio-button [value]="true">
 								Yes
@@ -402,7 +412,8 @@
 						</mat-radio-group>
 						<control-messages [control]="finalFireNocForm.controls.undergroundCabling"></control-messages>
 					</div>
-					<div class="col-md-4">{{'ongc_line_in_underground' | translate:translateKey }} *
+					<div class="col-md-4 radioBtnError">
+						<mat-label>{{'ongc_line_in_underground' | translate:translateKey }} *</mat-label>
 						<mat-radio-group formControlName="ongcLineInUnderground" required>
 							<mat-radio-button [value]="true">
 								Yes
@@ -464,7 +475,8 @@
 						<control-messages [control]="finalFireNocForm.controls.undergroundWaterTankVolume"></control-messages>
 					</mat-form-field>
 
-					<div class="col-md-4">{{'underground_watertank_map_approved' | translate:translateKey }} *
+					<div class="col-md-4 radioBtnError">
+						<mat-label>{{'underground_watertank_map_approved' | translate:translateKey }} *</mat-label>
 						<mat-radio-group formControlName="undergroundWatertankMapApproved" required (change)="dependentAttachment($event.value,'UNDERGROUND_WATER_TANK_MAP')">
 							<mat-radio-button [value]="true">
 								Yes
@@ -501,7 +513,8 @@
 						 placeholder="{{'overground_water_tank_volume_LBH_in_M³' | translate:translateKey }}">
 						<control-messages [control]="finalFireNocForm.controls.overgroundWaterTankVolume"></control-messages>
 					</mat-form-field>
-					<div class="col-md-4">{{'overground_water_tank_map_approved' | translate:translateKey }} *
+					<div class="col-md-4 radioBtnError">
+						<mat-label>{{'overground_water_tank_map_approved' | translate:translateKey }} *</mat-label>
 						<mat-radio-group formControlName="overgroundWatertankMapApproved" required (change)="dependentAttachment($event.value,'OVERHEAD_WATER_TANK_MAP')">
 							<mat-radio-button [value]="true">
 								Yes

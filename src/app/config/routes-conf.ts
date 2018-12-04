@@ -82,8 +82,8 @@ const ROUTEMAIN = {
         'type': 'FSElectricConnectionNoc'
     },
     'FS-NAV': {
-        'main': 'FSNavaratriNoc',
-        'type': 'FSNavaratriNoc'
+        'main': 'navratriNoc',
+        'type': 'navratriNoc'
     },
     'SHOP-LIC': {
         'main': 'shopLicense',

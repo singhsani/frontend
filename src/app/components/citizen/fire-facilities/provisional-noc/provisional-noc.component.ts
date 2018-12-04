@@ -17,7 +17,7 @@ export class ProvisionalNocComponent implements OnInit {
 	@ViewChild('permanantAddressEstablishment') permanantAddressEstablishment: any;
 
 	provisionalNocForm: FormGroup;
-	translateKey: string = 'provisionaNocScreen';
+	translateKey: string = 'provisionalFireNocScreen';
 
 	formId: number;
 	apiCode: string;
@@ -26,7 +26,7 @@ export class ProvisionalNocComponent implements OnInit {
 	// required attachment array
 	private uploadFilesArray: Array<any> = [];
 	private showButtons: boolean = false;
-
+	private codeOther:boolean = false;
 	//Lookups Array
 	FS_AREA_ZONE: Array<any> = [];
 	FS_APPLIED_FOR: Array<any> = [];
@@ -35,7 +35,6 @@ export class ProvisionalNocComponent implements OnInit {
 	FS_USAGE_TYPE: Array<any> = [];
 	FS_AFTERNOON: Array<any> = [];
 	FS_PURPOSE_OF_BUILDING_USE: Array<any> = [];
-	LOOKUP: any;
 
 	/**
      * @param fb - Declare FormBuilder property.
@@ -147,8 +146,7 @@ export class ProvisionalNocComponent implements OnInit {
 	* Method is used to get lookup data
 	*/
 	getLookupData() {
-		this.formService.getDataFromLookups().subscribe(res => {
-			this.LOOKUP = res;
+		this.formService.getDataFromLookups().subscribe(res => {s
 			this.FS_APPLIED_FOR = res.FS_APPLIED_FOR;
 			this.FS_AREA_ZONE = res.FS_AREA_ZONE;
 			this.FS_FIRE_VENDOR_TYPE = res.FS_FIRE_VENDOR_TYPE;
@@ -188,6 +186,7 @@ export class ProvisionalNocComponent implements OnInit {
 			}),
 			subjectTo: [null, [Validators.required, Validators.maxLength(200)]],
 			purposeOfBuildingUse: [null],//array
+			otherPurposeRemark:[null,[Validators.maxLength(200)]],
 			architectName: [null, [Validators.required, Validators.maxLength(100)]],
 			architectNameGuj: [null, [Validators.required, Validators.maxLength(300)]],
 			architectFirmName: [null, [Validators.required, Validators.maxLength(50)]],
@@ -298,9 +297,9 @@ export class ProvisionalNocComponent implements OnInit {
 
 		let step0 = 14;
 		let step1 = 18;
-		let step2 = 33;
-		let step3 = 60;
-		let step4 = 74;
+		let step2 = 34;
+		let step3 = 61;
+		let step4 = 75;
 
 		if (flag != null) {
 			//Check validation for step by step
@@ -348,5 +347,20 @@ export class ProvisionalNocComponent implements OnInit {
 	 */
 	handleOnSaveAndNext(res) {
 		this.requiredDocumentList();
+	}
+
+	/**
+	 * add other remark in Purpose of Building array 
+	 * @param event : on change event value
+	 */
+	otherRemark(event:Event){
+		_.forEach(event,(value) => {
+			if(value.code == 'OTHER'){
+				this.codeOther = true;
+			}
+			else{
+				this.codeOther = false
+			}
+		});
 	}
 }
