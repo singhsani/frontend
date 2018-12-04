@@ -9,6 +9,8 @@ import { FormsActionsService } from '../../../../../core/services/citizen/data-s
 import { AnimalPondService } from '../common/services/animal-pond.service';
 import { Location } from '@angular/common';
 import { CommonService } from '../../.././../../shared/services/common.service';
+import * as _ from 'lodash';
+import { TranslateService } from '../../../../../shared/modules/translate/translate.service';
 
 @Component({
 	selector: 'app-animal-pond-renew',
@@ -41,23 +43,7 @@ export class AnimalPondRenewComponent implements OnInit {
 	LOOKUP: any;
 
 	// required attachment array
-	private uploadFileArray: Array<any> =
-		[
-			// { labelName: 'Photo of License Holder', fieldIdentifier: '1'},
-			// { labelName: 'One Copy of each site plan and key plan', fieldIdentifier: '2', category: 'common' },
-			{ labelName: 'Aadhar Card Scan Copy', fieldIdentifier: '3' },
-			// { labelName: 'Pan Card Copy of Owner / Propwriter', fieldIdentifier: '4', category: "common" },
-			// { labelName: 'Constitution copy of Firm', fieldIdentifier: '5', category: "common" },
-			{ labelName: 'Proof of Ownership / tenancy / Legal Occupancy', fieldIdentifier: '6' },
-			// { labelName: 'Copy of Lease Deed If not Executed, Copy of Auction Letter, Possession Letter', fieldIdentifier: '7'},
-			{ labelName: 'Copy of Term & conditions for allotment of Premises by the  Land owning Agency ', fieldIdentifier: '8', category: "common" },
-			// { labelName: 'Additional Document if Any', fieldIdentifier: '9'},
-			{ labelName: 'Property Tax Bill paid Receipt', fieldIdentifier: '10' },
-			{ labelName: 'Shop & Establishment Certificate', fieldIdentifier: '11' },
-
-			{ labelName: 'Occupation Certificate', fieldIdentifier: '12' },
-			{ labelName: 'Rent Agreement', fieldIdentifier: '13' }
-		];
+	private uploadFilesArray: Array<any> = [];
 
 	// serach api variable
 	serachLicenceObj = {
@@ -104,7 +90,8 @@ export class AnimalPondRenewComponent implements OnInit {
 		private commonService: CommonService,
 		private animalPondService: AnimalPondService,
 		private toastrService: ToastrService,
-		private location: Location
+		private location: Location,
+		private TranslateService: TranslateService
 	) { }
 
 	/**
@@ -131,7 +118,43 @@ export class AnimalPondRenewComponent implements OnInit {
 			this.enableFielList();
 		}
 	}
+	/**
+ * Method is add required document  
+ */
+	requiredDocumentList() {
+		_.forEach(this.animalPondRenewForm.get('serviceDetail').get('serviceUploadDocuments').value, (value) => {
+			if (value.mandatory && value.isActive && value.requiredOnCitizenPortal) {
+				this.uploadFilesArray.push({
+					'labelName': value.documentLabelEn,
+					'fieldIdentifier': value.fieldIdentifier,
+					'documentIdentifier': value.documentIdentifier
+				})
+			}
+		});
+	}
 
+	/**
+	 * This Method for create attachment array in service detail
+	 * @param data : value of array
+	 */
+	createDocumentsGrp(data?: any): FormGroup {
+		return this.fb.group({
+			dependentFieldName: [data.dependentFieldName ? data.dependentFieldName : null],
+			documentIdentifier: [data.documentIdentifier ? data.documentIdentifier : null],
+			documentKey: [data.documentKey ? data.documentKey : null],
+			documentLabelEn: [data.documentLabelEn ? data.documentLabelEn : null],
+			documentLabelGuj: [data.documentLabelGuj ? data.documentLabelGuj : null],
+			fieldIdentifier: [data.fieldIdentifier ? data.fieldIdentifier : null],
+			formPart: [data.formPart ? data.formPart : null],
+			id: [data.id ? data.id : null],
+			isActive: [data.isActive],
+			mandatory: [data.mandatory ? data.mandatory : false],
+			maxFileSizeInMB: [data.maxFileSizeInMB ? data.maxFileSizeInMB : 5],
+			requiredOnAdminPortal: [data.requiredOnAdminPortal],
+			requiredOnCitizenPortal: [data.requiredOnCitizenPortal],
+			// version: [data.version ? data.version : null]
+		});
+	}
 	/**
  	 * This method use for edit some fiels.
  	 */
@@ -210,6 +233,10 @@ export class AnimalPondRenewComponent implements OnInit {
 
 			let currentUrl = this.location.path().replace('false', this.formId.toString());
 			this.location.go(currentUrl);
+			res.serviceDetail.serviceUploadDocuments.forEach(app => {
+				(<FormArray>this.animalPondRenewForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.createDocumentsGrp(app));
+			});
+			this.requiredDocumentList();
 		});
 
 	}
@@ -231,6 +258,11 @@ export class AnimalPondRenewComponent implements OnInit {
 				res.animalDetails.forEach(app => {
 					(<FormArray>this.animalPondRenewForm.get('animalDetails')).push(this.createAnimalArray(app));
 				});
+				res.serviceDetail.serviceUploadDocuments.forEach(app => {
+					(<FormArray>this.animalPondRenewForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.createDocumentsGrp(app));
+				});
+				this.requiredDocumentList();
+
 				// selected animal filter
 				this.getSelectedAnimal();
 
@@ -315,7 +347,7 @@ export class AnimalPondRenewComponent implements OnInit {
 			holderTelephoneNo: [null, [Validators.maxLength(10), Validators.minLength(10)]],
 			holderMobileNo: [null, [Validators.required, Validators.maxLength(10), Validators.minLength(10)]],
 			holderFaxNo: [null, [Validators.maxLength(12)]],
-			holderAadharNo: [null, [Validators.required, Validators.maxLength(12),Validators.minLength(12)]],
+			holderAadharNo: [null, [Validators.required, Validators.maxLength(12), Validators.minLength(12)]],
 			holderPanNo: [null, [Validators.required, Validators.maxLength(10)]],
 			/* Step 1 controls end */
 
@@ -345,7 +377,17 @@ export class AnimalPondRenewComponent implements OnInit {
 			loinumber: [null],
 
 			/* Step 4 controls start*/
-			attachments: []
+			attachments: [],
+			serviceDetail: this.fb.group({
+				code: null,
+				name: null,
+				gujName: null,
+				feesOnScrutiny: null,
+				appointmentRequired: false,
+				serviceUploadDocuments: this.fb.array([
+
+				])
+			})
 			/* Step 4 controls end */
 		});
 	}
@@ -378,7 +420,7 @@ export class AnimalPondRenewComponent implements OnInit {
 			animalType: this.fb.group({
 				code: [data.animalType ? (data.animalType.code ? data.animalType.code : null) : null, Validators.required]
 			}),
-			animalCount: [data.animalCount ? data.animalCount : null, [Validators.minLength(1),Validators.required]],
+			animalCount: [data.animalCount ? data.animalCount : null, [Validators.minLength(1), Validators.required]],
 		})
 
 	}
