@@ -31,10 +31,10 @@
 						<control-messages [control]="shopLicNewForm.controls.noOfHumanWorking.controls.code"></control-messages>
 					</div>
 
-					<div class="row">
+					
 						<h2>{{'postal_address_of_establishment' | translate:translateKey}}</h2>
 						<app-address #postalAddressEstablishment [addressFormGroup]="shopLicNewForm.controls.postalAddress"></app-address>
-					</div>
+					
 
 					<div class="col-md-4 ngSelect" formGroupName="assessmentDoneByVMC">
 						<ng-select placeholder="{{'assessment_done_by_VMC' | translate:translateKey}}*" formControlName="code" required>
