@@ -530,7 +530,11 @@ export class PrcRegistrationComponent implements OnInit {
 					this.monthIdx = 0;
 				}
 			} else {
-				this.monthIdx = dateStr.getMonth();
+				if (this.empDetailYear === dateStr.getFullYear()) {
+					this.monthIdx = dateStr.getMonth();
+				} else {
+					this.monthIdx = 0;
+				}
 			}
 
 			this.currentMonthIdx = this.empDetailYear == new Date().getFullYear() ? (new Date().getMonth() + 1) : 12;
