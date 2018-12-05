@@ -146,7 +146,7 @@ export class ProvisionalNocComponent implements OnInit {
 	* Method is used to get lookup data
 	*/
 	getLookupData() {
-		this.formService.getDataFromLookups().subscribe(res => {s
+		this.formService.getDataFromLookups().subscribe(res => {
 			this.FS_APPLIED_FOR = res.FS_APPLIED_FOR;
 			this.FS_AREA_ZONE = res.FS_AREA_ZONE;
 			this.FS_FIRE_VENDOR_TYPE = res.FS_FIRE_VENDOR_TYPE;

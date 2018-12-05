@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatInput } from '@angular/material';
@@ -20,7 +20,7 @@ import * as _ from 'lodash';
 	templateUrl: './prc-registration.component.html',
 	styleUrls: ['./prc-registration.component.scss'],
 })
-export class PrcRegistrationComponent implements OnInit {
+export class PrcRegistrationComponent implements OnInit, OnDestroy {
 
 	@ViewChild('officeAddr') officeAddrComponent: any;
 	@ViewChild('resAddr') resAddrComponent: any;
@@ -87,7 +87,11 @@ export class PrcRegistrationComponent implements OnInit {
 		this.getAllWardNos();
 
 		this.searchInput.focus();
+	}
 
+	ngOnDestroy() {
+		if (this.modalRef)
+			this.modalRef.hide();
 	}
 
 	/**
