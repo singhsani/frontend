@@ -155,8 +155,8 @@ export class PecRegistrationComponent implements OnInit {
 			professionConstitution: this.fb.group({
 				code: [null, Validators.required], name: null,
 			}),
-			applicableRate: [{ value: 0, disabled: true }]
-
+			applicableRate: [{ value: 0, disabled: true }],
+			otherProfession: [null, Validators.required]
 		});
 
 		/** set default addressType */
@@ -370,13 +370,16 @@ export class PecRegistrationComponent implements OnInit {
 		this.pecRegForm.get('pecNo').disable();
 		this.pecRegForm.get('prcNo').disable();
 		this.pecRegForm.get('rcDate').disable();
-		this.pecRegForm.get('applicableRate').disable();
 		this.pecRegForm.get('registrationDate').disable();
 		this.pecRegForm.get('commencementDate').disable();
+
+		this.pecRegForm.get('applicableRate').disable();
 		this.pecRegForm.get('entry').disable();
 		this.pecRegForm.get('subEntry').disable();
 		this.pecRegForm.get('professionConstitution').disable();
 		this.pecRegForm.get('constitution').disable();
+		this.pecRegForm.get('otherProfession').disable();
+
 	}
 
 	/**
@@ -397,15 +400,24 @@ export class PecRegistrationComponent implements OnInit {
 			this.subEntryNoArray = [];
 			this.subEntryNoArray = res.data;
 
-			if (entryCode == 'ENTRY_008') {
-				this.pecRegForm.get('subEntry').get('code').setValue('008_A');
+			if (entryCode == 'ENTRY_008' || entryCode == 'ENTRY_009' || entryCode == 'ENTRY_010') {
+				let code = '';
+				if (entryCode == 'ENTRY_008') code = '008_A';
+				if (entryCode == 'ENTRY_009') code = '009_A';
+				if (entryCode == 'ENTRY_010') code = '010_A';
+
+				this.pecRegForm.get('subEntry.code').setValue(code);
 				this.pecRegForm.get('applicableRate').setValue(this.subEntryNoArray[0].taxRate);
-			} else if (entryCode == 'ENTRY_009') {
-				this.pecRegForm.get('subEntry').get('code').setValue('009_A');
-				this.pecRegForm.get('applicableRate').setValue(this.subEntryNoArray[0].taxRate);
-			} else if (entryCode == 'ENTRY_010') {
-				this.pecRegForm.get('subEntry').get('code').setValue('010_A');
-				this.pecRegForm.get('applicableRate').setValue(this.subEntryNoArray[0].taxRate);
+				this.pecRegForm.get('professionConstitution.code').setValue('OTHER');
+
+				this.pecRegForm.get('subEntry').disable();
+				this.pecRegForm.get('professionConstitution').disable();
+				this.pecRegForm.get('otherProfession').setValidators([Validators.required]);
+			} else {
+				this.pecRegForm.get('otherProfession').setValue(null);
+				this.pecRegForm.get('otherProfession').clearValidators();
+				this.pecRegForm.get('subEntry').enable();
+				this.pecRegForm.get('professionConstitution').enable();
 			}
 		});
 	}
