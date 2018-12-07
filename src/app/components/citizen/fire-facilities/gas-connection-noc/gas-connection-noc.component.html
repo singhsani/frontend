@@ -1,16 +1,210 @@
-<div class="container">
-	<app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
-	<mat-card class="mt-4 formClass">
-		<form [formGroup]="gasConnectionForm">
-			<mat-horizontal-stepper [linear]="false">
+<app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
+<form [formGroup]="gasConnectionForm">
+	<h3 *ngIf="gasConnectionForm.get('oldReferenceNumber').value">{{'Old_Refrance_NO' | translate:translateKey}} :
+		{{gasConnectionForm.get('oldReferenceNumber').value}}</h3>
+	<mat-card class="formClass cardBorder">
 
-				<!-- first step start-->
-				<mat-step [label]="stepLable1">
-					<app-basic-details [basicFormGroup]="gasConnectionForm"></app-basic-details>
-					<app-action-bar [form]="gasConnectionForm" [step]="'final'" (stepReset)="stepReset()" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
-				</mat-step>
+		<mat-tab-group [(selectedIndex)]="tabIndex" dynamicHeight="true" mat-stretch-tabs class="stepperNav">
 
-			</mat-horizontal-stepper>
-		</form>
+			<!-- step 1 Starts -->
+			<mat-tab>
+				<ng-template mat-tab-label>
+					<div>{{'applicant_detail' | translate:translateKey}}</div>
+				</ng-template>
+
+
+				<div class="row">
+
+					<mat-form-field class="col-md-4">
+						<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace' required maxlength="100"
+						 placeholder="{{'applicant_Name' | translate:translateKey}}" formControlName="applicantName" appGujInputSource
+						 targetElement="applicantNameGuj" [form]="gasConnectionForm">
+						<control-messages [control]="gasConnectionForm.controls.applicantName"></control-messages>
+					</mat-form-field>
+					<!-- gujarati -->
+					<mat-form-field class="col-md-4">
+						<input matInput type="text" maxlength="300" required formControlName="applicantNameGuj" appGujInputTarget [form]="gasConnectionForm"
+						 placeholder="{{ 'applicant_Name' | translate:translateKey:'gu' }}">
+						<control-messages [control]="gasConnectionForm.controls.applicantNameGuj"></control-messages>
+					</mat-form-field>
+					<!-- gujarati -->
+
+
+					<mat-form-field class="col-md-4">
+						<input matInput [max]="disablefutureDate" [matDatepicker]="DateOfapplicationDate" formControlName="applicationDate"
+						 (dateChange)="dateFormat($event.value,'applicationDate')" placeholder="{{ 'application_Date' | translate:translateKey }} (DD/MM/YYYY)">
+						<mat-datepicker-toggle matSuffix [for]="DateOfapplicationDate"></mat-datepicker-toggle>
+						<mat-datepicker touchUi="true" #DateOfapplicationDate></mat-datepicker>
+						<control-messages [control]="gasConnectionForm.controls.applicationDate"></control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<!-- <span matPrefix>+91 &nbsp;</span> -->
+						<input matInput OnlyNumber placeholder="{{'contact_No' | translate:translateKey}}" type="tel" maxlength="10"
+						 minlength="10" formControlName="contactNo" required>
+						<control-messages [control]="gasConnectionForm.controls.contactNo"></control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<!-- <span matPrefix>+91 &nbsp;</span> -->
+						<input matInput OnlyNumber placeholder="{{'mobile_No' | translate:translateKey}}" type="tel" maxlength="10"
+						 minlength="10" formControlName="mobileNo" required>
+						<control-messages [control]="gasConnectionForm.controls.mobileNo"></control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<input matInput appPreventSpace placeholder="{{'email' | translate:translateKey}}" type="email" formControlName="email"
+						 required maxlength="50">
+						<control-messages [control]="gasConnectionForm.controls.email"></control-messages>
+					</mat-form-field>
+
+				</div>
+				<app-action-bar [form]="gasConnectionForm" (tabIndex)="onTabChange($event)" (handleErrors)="handleErrorsOnSubmit($event)"
+				[stepInfo]="{step: 'step1', next: 1, back: 0}"></app-action-bar>
+
+
+
+
+			</mat-tab>
+			<!-- step 1 Ends -->
+
+
+			<!-- step 2 Starts -->
+			<mat-tab>
+				<ng-template mat-tab-label>
+					<div>{{'forms_detail' | translate:translateKey}}</div>
+				</ng-template>
+
+
+				<div class="row">
+
+					<mat-form-field class="col-md-4">
+						<input matInput type="text" appAlphaNumeric formControlName="gasConnectionNo" placeholder="{{'gas_Connection_No' | translate: translateKey }}"
+						 maxlength="15" required>
+						<control-messages [control]="gasConnectionForm.controls.gasConnectionNo"></control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace' required maxlength="100"
+						 placeholder="{{'connection_Holder_Name' | translate:translateKey}}" formControlName="connectionHolderName"
+						 appGujInputSource targetElement="connectionHolderNameGuj" [form]="gasConnectionForm">
+						<control-messages [control]="gasConnectionForm.controls.connectionHolderName"></control-messages>
+					</mat-form-field>
+					<!-- gujarati -->
+					<mat-form-field class="col-md-4">
+						<input matInput type="text" maxlength="300" required formControlName="connectionHolderNameGuj" appGujInputTarget [form]="gasConnectionForm"
+						 placeholder="{{ 'connection_Holder_Name' | translate:translateKey:'gu' }}">
+						<control-messages [control]="gasConnectionForm.controls.connectionHolderNameGuj"></control-messages>
+					</mat-form-field>
+					<!-- gujarati -->
+
+					<mat-form-field class="col-md-4">
+						<input matInput [max]="disablefutureDate" [matDatepicker]="DateOfincidentDate" formControlName="incidentDate"
+						 (dateChange)="dateFormat($event.value,'incidentDate')" placeholder="{{ 'incident_Date' | translate:translateKey }} (DD/MM/YYYY)">
+						<mat-datepicker-toggle matSuffix [for]="DateOfincidentDate"></mat-datepicker-toggle>
+						<mat-datepicker touchUi="true" #DateOfincidentDate></mat-datepicker>
+						<control-messages [control]="gasConnectionForm.controls.incidentDate"></control-messages>
+					</mat-form-field>
+
+					<div class="col-md-4 ngSelect" formGroupName="firePlaceType">
+						<ng-select required placeholder="{{'fire_Place_Type' | translate:translateKey}} *" formControlName="code">
+							<ng-option *ngFor="let fire_place of FS_FIRE_PLACE" [value]="fire_place.code">{{fire_place.name}}</ng-option>
+						</ng-select>
+						<control-messages [control]="gasConnectionForm.get('firePlaceType').controls.code"></control-messages>
+					</div>
+
+					<mat-form-field class="col-md-4">
+						<textarea matInput rows="3" cols="50" required maxlength="300" placeholder="{{'subject' | translate:translateKey}}"
+						 formControlName="subject"></textarea>
+						<control-messages [control]="gasConnectionForm.controls.subject"></control-messages>
+					</mat-form-field>
+
+				</div>
+				<div class="row">
+					<div class="col-md-4 ngSelect" formGroupName="connectionPurpose">
+						<ng-select required placeholder="{{'connection_Purpose' | translate:translateKey}} *" formControlName="code" (change)="onChangeConnectionPurpose($event)">
+							<ng-option *ngFor="let purpose of FS_CONNECTION_PURPOSE" [value]="purpose.code">{{purpose.name}}</ng-option>
+						</ng-select>
+						<control-messages [control]="gasConnectionForm.get('connectionPurpose').controls.code"></control-messages>
+					</div>
+
+					<mat-form-field class="col-md-4" *ngIf="gasConnectionForm.get('connectionPurpose').get('code').value">
+						<input matInput type="text" appAlphaNumeric formControlName="propertyNo" placeholder="{{'property_No' | translate: translateKey }}" maxlength="12" required>
+						<control-messages [control]="gasConnectionForm.controls.propertyNo"></control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4" *ngIf="gasConnectionForm.get('connectionPurpose').get('code').value=='COMMERCIAL'">
+						<input matInput OnlyNumber placeholder="{{'shop_No' | translate:translateKey}}" type="tel" maxlength="12"
+						 formControlName="shopNo">
+						<control-messages [control]="gasConnectionForm.controls.shopNo"></control-messages>
+					</mat-form-field>
+				</div>
+
+				<div class="row">
+					<mat-form-field class="col-md-4">
+						<textarea matInput rows="3" cols="50" required maxlength="300" placeholder="{{'fire_Place_Address' | translate:translateKey}}"
+						 formControlName="firePlaceAddress" appGujInputSource targetElement="firePlaceAddressGuj" [form]="gasConnectionForm"></textarea>
+						<control-messages [control]="gasConnectionForm.controls.firePlaceAddress"></control-messages>
+					</mat-form-field>
+					<!-- gujarati -->
+					<mat-form-field class="col-md-4">
+						<textarea matInput rows="3" cols="50" maxlength="900" required formControlName="firePlaceAddressGuj"
+						 appGujInputTarget [form]="gasConnectionForm" placeholder="{{ 'fire_Place_Address' | translate:translateKey:'gu' }}"></textarea>
+						<control-messages [control]="gasConnectionForm.controls.firePlaceAddressGuj"></control-messages>
+					</mat-form-field>
+					<!-- gujarati -->
+
+
+
+
+					<div class="col-md-4">{{'highRise_Fire_NOC_Taken' | translate:translateKey }} *
+						<mat-radio-group formControlName="highRiseFireNOCTaken" required>
+							<mat-radio-button [value]="true">
+									{{'Yes_txt' | translate:translateKey }}
+							</mat-radio-button>
+							<mat-radio-button [value]="false">
+									{{'No_txt' | translate:translateKey }}
+							</mat-radio-button>
+						</mat-radio-group>
+						<control-messages [control]="gasConnectionForm.controls.highRiseFireNOCTaken"></control-messages>
+					</div>
+
+
+					<mat-form-field class="col-md-4">
+						<input matInput OnlyNumber placeholder="{{'fire_Loss_Amount' | translate:translateKey}}" type="tel" maxlength="10"
+						 formControlName="fireLossAmount" required>
+						<control-messages [control]="gasConnectionForm.controls.fireLossAmount"></control-messages>
+					</mat-form-field>
+
+				</div>
+				<app-action-bar [form]="gasConnectionForm" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step2', next: 2, back: 0}"></app-action-bar>
+
+			</mat-tab>
+			<!-- step 2 Ends -->
+
+			<!-- step 3 Starts -->
+			<mat-tab>
+				<ng-template mat-tab-label>
+					<div>{{'attachment' | translate:translateKey}}</div>
+				</ng-template>
+
+
+				<div class="row">
+					<div class="col-md-4" *ngFor="let doc of gasConnectionForm.get('serviceDetail').get('serviceUploadDocuments').value">
+						<div *ngIf="doc.requiredOnCitizenPortal && doc.isActive && showButtons">
+							<label>{{TranslateService.getCurrentLanguage()=='en'? doc.documentLabelEn : doc.documentLabelGuj }} <span *ngIf="doc.mandatory">*</span></label>
+							<file-upload [form]="gasConnectionForm" [uploadModel]="doc"></file-upload>
+						</div>
+					</div>
+				</div>
+
+				<app-action-bar [uploadFiles]="uploadFilesArray" [form]="gasConnectionForm" (tabIndex)="onTabChange($event) "
+				 (handleErrors)="handleErrorsOnSubmit($event)" [stepInfo]="{step: 'final', next: 3, back: 1}"></app-action-bar>
+
+			</mat-tab>
+			<!-- step 3 Ends -->
+
+		</mat-tab-group>
+
 	</mat-card>
-</div>
+</form>

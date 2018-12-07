@@ -74,12 +74,12 @@ const ROUTEMAIN = {
         'type': 'FSTempFireworkShopNoc'
     },
     'FS-GAS': {
-        'main': 'FSGasConnectionNoc',
-        'type': 'FSGasConnectionNoc'
+        'main': 'gasConnectionNoc',
+        'type': 'gasConnectionNoc'
     },
     'FS-ELE': {
-        'main': 'FSElectricConnectionNoc',
-        'type': 'FSElectricConnectionNoc'
+        'main': 'electricConnectionNoc',
+        'type': 'electricConnectionNoc'
     },
     'FS-NAV': {
         'main': 'navratriNoc',

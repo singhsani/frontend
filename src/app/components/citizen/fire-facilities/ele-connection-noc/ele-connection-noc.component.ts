@@ -7,6 +7,8 @@ import { ManageRoutes } from '../../../../config/routes-conf';
 import { ValidationService } from '../../../../shared/services/validation.service';
 import { FormsActionsService } from '../../../../core/services/citizen/data-services/forms-actions.service';
 import * as _ from 'lodash';
+import * as moment from 'moment';
+import { TranslateService } from '../../../../shared/modules/translate/translate.service';
 
 @Component({
 	selector: 'app-ele-connection-noc',
@@ -15,22 +17,30 @@ import * as _ from 'lodash';
 })
 export class EleConnectionNocComponent implements OnInit {
 
-	@ViewChild(MatHorizontalStepper) stepper: MatHorizontalStepper;
-	@ViewChild(MatStepLabel) steplable: MatStepLabel;
-
+	tabIndex: number = 0;
+	
 	electricConnectionForm: FormGroup;
 	translateKey: string = 'electricAppScreen';
 
 	appId: number;
 	apiCode: string;
 
-	// Step Titles
-	stepLable1: string = "Applicant Basic Details";
+	disablefutureDate = new Date(moment().format('YYYY-MM-DD'));
+
+	//Lookups Array
+	FS_CONNECTION_PURPOSE: Array<any> = [];
+	FS_FIRE_PLACE_TYPE: Array<any> = [];
+
+	// required attachment array
+	private uploadFilesArray: Array<any> = [];
+	private showButtons: boolean = false;
+
 
 	constructor(
 		private fb: FormBuilder,
 		private route: ActivatedRoute,
-		private formService: FormsActionsService
+		private formService: FormsActionsService,
+		private TranslateService: TranslateService
 	) { }
 
 	ngOnInit() {
@@ -49,43 +59,166 @@ export class EleConnectionNocComponent implements OnInit {
 	getElectricConnectionData() {
 		this.formService.getFormData(this.appId).subscribe(res => {
 			this.electricConnectionForm.patchValue(res);
+			this.showButtons = true;
+			res.serviceDetail.serviceUploadDocuments.forEach(app => {
+				(<FormArray>this.electricConnectionForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.createDocumentsGrp(app));
+			});
+			this.requiredDocumentList();
 		});
 	}
 
 	/**
-	 * Method is used to handle error/validation on submit
-	 * @param count - count of invalid control.
-	 */
-	handleErrorsOnSubmit(count) {
-		let step1 = 6;
-
-		if (count <= step1) {
-			this.stepper.selectedIndex = 0;
-			return false;
-		}
-
-	}
-
-	/**
-	 * This method is use for get lookup data
-	 */
+ 		* This method is use for get lookup data
+ 	*/
 	getLookupData() {
 		this.formService.getDataFromLookups().subscribe(res => {
-
+			this.FS_CONNECTION_PURPOSE = res.FS_CONNECTION_PURPOSE;
+			this.FS_FIRE_PLACE_TYPE = res.FS_FIRE_PLACE_TYPE;
 		});
 	}
+
+
 
 	electricConnectionFormControls() {
 		this.electricConnectionForm = this.fb.group({
-			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode)
+			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
+			serviceCode: 'FS-ELE',
+
+			/* Step 1 controls start */
+
+			oldReferenceNumber: [null],
+			applicantName: [null, [Validators.required, Validators.maxLength(100)]],
+			applicantNameGuj: [null, [Validators.required, Validators.maxLength(300)]],
+			applicationDate: [null, Validators.required],
+			contactNo: [null, [Validators.required, Validators.maxLength(10), Validators.minLength(10)]],
+			mobileNo: [null, [Validators.required, Validators.maxLength(10), Validators.minLength(10)]],
+			email: [null, [Validators.required, Validators.maxLength(50)]],
+
+			/* Step 2 controls start */
+			electricityConnectionNo: [null, [Validators.required, Validators.maxLength(20)]],
+			connectionHolderName: [null, [Validators.required, Validators.maxLength(100)]],
+			connectionHolderNameGuj: [null, [Validators.required, Validators.maxLength(300)]],
+			connectionHolderAddress: [null, [Validators.required, Validators.maxLength(500)]],
+			connectionHolderAddressGuj: [null, [Validators.required, Validators.maxLength(1500)]],
+			incidentDate: [null, Validators.required],
+			propertyNo: [null, [Validators.required, Validators.maxLength(15)]],
+			firePlaceAddress: [null, [Validators.required, Validators.maxLength(300)]],
+			subject: [null, [Validators.required, Validators.maxLength(300)]],
+			firePlaceType: this.fb.group({
+				code: [null, Validators.required]
+			}),
+			fireLossAmount: [null, [Validators.required, Validators.maxLength(10)]],
+
+			/* Step 3 controls start */
+			attachments: [],
+			serviceDetail: this.fb.group({
+				code: null,
+				name: null,
+				gujName: null,
+				feesOnScrutiny: null,
+				appointmentRequired: false,
+				serviceUploadDocuments: this.fb.array([
+
+				])
+			}),
+			/* Step 6 controls end */
 		});
 	}
 
 	/**
-	 * Method is used to reset form its a output event from action bar.
+	 * Method is create required document array
 	 */
-	stepReset() {
-		this.stepper.reset();
+	requiredDocumentList() {
+		_.forEach(this.electricConnectionForm.get('serviceDetail').get('serviceUploadDocuments').value, (value) => {
+			if (value.mandatory && value.isActive && value.requiredOnCitizenPortal) {
+				this.uploadFilesArray.push({
+					'labelName': value.documentLabelEn,
+					'fieldIdentifier': value.fieldIdentifier,
+					'documentIdentifier': value.documentIdentifier
+				})
+			}
+		});
+	}
+
+	/**
+	 * This Method for create attachment array in service detail
+	 * @param data : value of array
+	 */
+	createDocumentsGrp(data?: any): FormGroup {
+		return this.fb.group({
+			dependentFieldName: [data.dependentFieldName ? data.dependentFieldName : null],
+			documentIdentifier: [data.documentIdentifier ? data.documentIdentifier : null],
+			documentKey: [data.documentKey ? data.documentKey : null],
+			documentLabelEn: [data.documentLabelEn ? data.documentLabelEn : null],
+			documentLabelGuj: [data.documentLabelGuj ? data.documentLabelGuj : null],
+			fieldIdentifier: [data.fieldIdentifier ? data.fieldIdentifier : null],
+			formPart: [data.formPart ? data.formPart : null],
+			id: [data.id ? data.id : null],
+			isActive: [data.isActive],
+			mandatory: [data.mandatory ? data.mandatory : false],
+			maxFileSizeInMB: [data.maxFileSizeInMB ? data.maxFileSizeInMB : 5],
+			requiredOnAdminPortal: [data.requiredOnAdminPortal],
+			requiredOnCitizenPortal: [data.requiredOnCitizenPortal]
+		});
+	}
+
+	/**
+	 * This method is change date format.
+	 * @param date : selected date
+	 * @param controlType : form control name
+	 */
+	dateFormat(date, controlType: string) {
+		this.electricConnectionForm.get(controlType).setValue(moment(date).format("YYYY-MM-DD"));
+	}
+
+	getPropertyStatus(){
+		this.electricConnectionForm.get('canEdit').setValue(false);
+		setTimeout(()=>{
+			this.electricConnectionForm.get('canEdit').setValue(true);
+		},5000)
+	}
+
+	/**
+     * This method required for final form submition.
+     * @param flag - flag of invalid control.
+     */
+	handleErrorsOnSubmit(flag) {
+
+		let step0 = 9;
+		let step1 = 20;
+		let step2 = 22;
+
+		if (flag != null) {
+			//Check validation for step by step
+			let count = flag;
+			// console.log(flag);
+			if (count <= step0) {
+				this.tabIndex = 0;
+				return false;
+			} else if (count <= step1) {
+				this.tabIndex = 1;
+				return false;
+			} else if (count <= step2) {
+				this.tabIndex = 2;
+				return false;
+			}
+			// else if (count == 67) {
+			// 	this.checkReligion();
+			// 	return false;
+			// }
+			else {
+				console.log("else condition");
+			}
+
+		}
+	}
+
+	/**
+ 	 * This method use to get output event of tab change
+ 	 * @param evt - Tab index
+ 	 */
+	onTabChange(evt) {
+		this.tabIndex = evt;
 	}
 
 }
