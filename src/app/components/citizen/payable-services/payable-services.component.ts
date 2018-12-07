@@ -1,9 +1,12 @@
-import { CommonService } from './../../../shared/services/common.service';
-import { FormsActionsService } from './../../../core/services/citizen/data-services/forms-actions.service';
 import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, FormControl, Validators, Form } from '@angular/forms';
+
+import { ToastrService } from 'ngx-toastr';
+import { CommonService } from './../../../shared/services/common.service';
+import { FormsActionsService } from './../../../core/services/citizen/data-services/forms-actions.service';
+
 import * as _ from 'lodash';
 
 @Component({
@@ -14,17 +17,20 @@ import * as _ from 'lodash';
 export class PayableServicesComponent implements OnInit {
 
 	translateKey: string = "addTransctionScreen";
+
 	paymentsForm: FormGroup;
 	PayableServices: Object[];
-	myControl: FormControl = new FormControl();
-	modesOfPayment: any = ['CASH', 'Check/DD', 'Card'];
 	currPaySerData: any;
-	isSearchBtnDisplay: boolean = true;
+	isRecordExists: boolean = false;
+	payModeArr: Array<any> = [
+		{ name: 'Net Banking', code: 'NETBANKING' }, { name: 'Debit / Credit Card banking', code: 'CARDBANKING' }
+	];
 
 	constructor(
 		private dialog: MatDialog,
 		private formService: FormsActionsService,
 		private fb: FormBuilder,
+		private toaster: ToastrService,
 		private commonService: CommonService
 	) {
 		this.getPayableServicesList();
@@ -40,25 +46,14 @@ export class PayableServicesComponent implements OnInit {
 	 */
 	createPayementControls() {
 		this.paymentsForm = this.fb.group({
-			refNumber: [null, [Validators.required]],
-			amount: [null, [Validators.required]],
+			refNumber: [null, Validators.required],
+			amount: 0,
 			payableServices: this.fb.group({
 				code: [null, Validators.required]
 			}),
-			paymentMode: this.fb.group({
-				code: [null, Validators.required]
-			}),
-			bankName: [null, Validators.required],
-			branchName: [null, Validators.required],
-			checkDdNumber: [null, Validators.required],
-			acNo: [null, Validators.required],
-			acHolderName: [null, Validators.required],
-			checkDdDate: [null, Validators.required],
-			cardNo: [null, Validators.required],
-			nameOnCard: [null, Validators.required],
-			CVV: [null, Validators.required],
-			cardExpiry: [null, Validators.required],
-			transNo: [null, Validators.required]
+			payMode: this.fb.group({
+				code: null
+			})
 		});
 	}
 
@@ -67,17 +62,23 @@ export class PayableServicesComponent implements OnInit {
 	 * @param payData - json data as payment data.
 	 */
 	makePayment(payData) {
+
+		if (this.paymentsForm.get('amount').value < 0 || !this.paymentsForm.get('amount').value) {
+			this.commonService.openAlert("Warning", "Please Enter Amount", "warning");
+			return;
+		}
+
+		if (!this.paymentsForm.get('payMode.code').value) {
+			this.commonService.openAlert("Warning", "Select payment mode", "warning");
+			return;
+		}
+
 		this.formService.apiType = 'servicePayment';
 
 		let paymentData = {
 			"refNumber": payData.refNumber,
 			"amount": payData.amount,
 			"serviceType": payData.payableServices.code,
-			"bankName": payData.bankName,
-			"branchName": payData.branchName,
-			"chequeDate": payData.checkDdDate,
-			"paymentMode": payData.paymentMode.code,
-			"transactionId": payData.transNo
 		}
 
 		this.commonService.submitAlert('Payment Confirmation', "Are you sure?", 'warning', '', performDelete => {
@@ -93,11 +94,11 @@ export class PayableServicesComponent implements OnInit {
 					'<p> Service : ' + respData.serviceName + '</p><br>' +
 					'<p> Status : ' + respData.paymentStatus + '</p><br>',
 					cb => {
-					}
-				)
+					});
 
 				this.paymentsForm.markAsPristine();
 				this.paymentsForm.markAsUntouched();
+				this.isRecordExists = false;
 				this.paymentsForm.reset();
 			});
 		})
@@ -111,7 +112,7 @@ export class PayableServicesComponent implements OnInit {
 		this.formService.paymentServiceGet().subscribe(respData => {
 			this.PayableServices = respData.list;
 
-			if(this.paymentsForm.get('payableServices').get('code')){
+			if (this.paymentsForm.get('payableServices').get('code')) {
 				this.showHideSearchable(this.paymentsForm.get('payableServices').get('code').value);
 			}
 		})
@@ -122,15 +123,22 @@ export class PayableServicesComponent implements OnInit {
 	 * @param searchable - boolean (true/false)
 	 */
 	showHideSearchable(paySerCode) {
-
+		this.isRecordExists = false;
+		this.paymentsForm.get('amount').setValue(null);
+		this.paymentsForm.get('refNumber').setValue(null);
 		this.currPaySerData = _.filter(this.PayableServices, { 'code': paySerCode })[0];
-
 	}
 
 	/**
 	 * - This method is used to get the type of tax and referance number and get the amount from the API
 	 */
 	getAmountData() {
+
+		if (this.paymentsForm.invalid) {
+			this.markFormGroupTouched(this.paymentsForm);
+			this.commonService.openAlert("Warning", "Enter all the required information", "warning");
+			return;
+		}
 
 		let serviceType = this.paymentsForm.get('payableServices').get('code').value;
 		let refNumber = this.paymentsForm.get('refNumber').value;
@@ -142,16 +150,44 @@ export class PayableServicesComponent implements OnInit {
 			serviceType: serviceType
 		}
 
+		this.isRecordExists = false;
+		this.paymentsForm.get('amount').setValue(null);
+
 		this.formService.paymentServicePost(resData).subscribe(
 			res => {
-				if (this.currPaySerData.fixAmount) {
-					this.paymentsForm.get('amount').setValue(res.amount);
-					this.paymentsForm.get('amount').disable();
+				if (res) {
+					this.isRecordExists = true;
+
+					if (this.currPaySerData.fixAmount) {
+						this.paymentsForm.get('amount').setValue(res.amount);
+						this.paymentsForm.get('amount').disable();
+					} else {
+						this.paymentsForm.get('amount').setValue(res.amount);
+					}
 				} else {
-					this.paymentsForm.get('amount').setValue(res.amount);
+					this.toaster.warning('No record found !');
 				}
+
 			}
 		);
 	}
+
+	/**
+	 * Marks all controls in a form group as touched
+	 * @param formGroup - The group to caress
+	*/
+	markFormGroupTouched(formGroup: FormGroup) {
+		if (Reflect.getOwnPropertyDescriptor(formGroup, 'controls')) {
+			(<any>Object).values(formGroup.controls).forEach(control => {
+				if (control instanceof FormGroup) {
+					// FormGroup
+					this.markFormGroupTouched(control);
+				}
+				// FormControl
+				control.markAsTouched();
+			});
+		}
+	}
+
 
 }
