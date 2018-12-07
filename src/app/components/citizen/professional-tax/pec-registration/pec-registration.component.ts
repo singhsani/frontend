@@ -135,7 +135,7 @@ export class PecRegistrationComponent implements OnInit {
 			// third step controls
 			pancardNo: [null, ValidationService.panValidator],
 			centralSalesTax: null,
-			shopAndLicenseNo: null,
+			shopAndLicenseNo: [null, Validators.required],
 			gujaratSalesTax: null,
 			professionalTax: null,
 			companyRegNo: null,
@@ -156,7 +156,7 @@ export class PecRegistrationComponent implements OnInit {
 				code: [null, Validators.required], name: null,
 			}),
 			applicableRate: [{ value: 0, disabled: true }],
-			otherProfession: [null, Validators.required]
+			otherProfession: null
 		});
 
 		/** set default addressType */
@@ -416,6 +416,8 @@ export class PecRegistrationComponent implements OnInit {
 			} else {
 				this.pecRegForm.get('otherProfession').setValue(null);
 				this.pecRegForm.get('otherProfession').clearValidators();
+				this.pecRegForm.get('otherProfession').updateValueAndValidity();
+
 				this.pecRegForm.get('subEntry').enable();
 				this.pecRegForm.get('professionConstitution').enable();
 			}

@@ -1,3 +1,4 @@
+import { ToastrService } from 'ngx-toastr';
 import { Injectable, Injector } from '@angular/core';
 import { Router } from '@angular/router';
 import {
@@ -28,6 +29,7 @@ export class TokenInterceptor implements HttpInterceptor {
 	private requests: HttpRequest<any>[] = [];
 
 	constructor(
+		private toaster: ToastrService,
 		private commonService: CommonService,
 		private router: Router,
 		private session: SessionStorageService,
@@ -95,6 +97,9 @@ export class TokenInterceptor implements HttpInterceptor {
 									break;
 								case 601:// form save as draft error handling
 									this.commonService.openAlertFormSaveValidation('Warning!', err.error, 'warning');
+									break;
+								case 602:// for payment status
+									this.toaster.error(err.error[0].message);
 									break;
 								default:
 									break;
