@@ -1,12 +1,13 @@
-import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, FormArray, Validator } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MatHorizontalStepper, MatStep, MatStepLabel } from '@angular/material';
 import { ManageRoutes } from '../../../../config/routes-conf';
-
 import { ValidationService } from '../../../../shared/services/validation.service';
 import { FormsActionsService } from '../../../../core/services/citizen/data-services/forms-actions.service';
 import * as _ from 'lodash';
+import { TranslateService } from '../../../../shared/modules/translate/translate.service';
+import * as moment from 'moment';
+import { AmazingTimePickerService } from 'amazing-time-picker';
 
 @Component({
 	selector: 'app-temp-structure-noc',
@@ -15,77 +16,357 @@ import * as _ from 'lodash';
 })
 export class TempStructureNocComponent implements OnInit {
 
-	@ViewChild(MatHorizontalStepper) stepper: MatHorizontalStepper;
-	@ViewChild(MatStepLabel) steplable: MatStepLabel;
+	@ViewChild('permanantAddressEstablishment') permanantAddressEstablishment: any;
 
-	tempStructureForm: FormGroup;
-	translateKey: string = 'tempStructureScreen';
+	tempStructureNocForm: FormGroup;
+	translateKey: string = 'temporaryStuctureFireNocScreen';
 
-	appId: number;
+	formId: number;
 	apiCode: string;
+	tabIndex: number = 0;
 
-	// Step Titles
-	stepLable1: string = "Applicant Basic Details";
+	// required attachment array
+	private uploadFilesArray: Array<any> = [];
+	private showButtons: boolean = false;
+	
+	//Lookups Array
+	FS_COMMUNICATION_ARRANGEMENT: Array<any> = [];
+	FS_SITTING_ARRANGEMENT: Array<any> = [];
+	FS_WIRING_TYPE: Array<any> = [];
 
+	/**
+     * @param fb - Declare FormBuilder property.
+     * @param validationError - Declare validation service property
+     * @param formService - Declare form service property 
+	 * @param atp - Time Picker
+     */
 	constructor(
 		private fb: FormBuilder,
+		private validationService: ValidationService,
+		private router: Router,
 		private route: ActivatedRoute,
-		private formService: FormsActionsService
+		private formService: FormsActionsService,
+		private TranslateService: TranslateService,
+		private atp: AmazingTimePickerService
 	) { }
 
+	/**
+	 * This method call initially required methods.
+	 */
 	ngOnInit() {
 
 		this.route.paramMap.subscribe(param => {
-			this.appId = Number(param.get('id'));
+			this.formId = Number(param.get('id'));
 			this.apiCode = param.get('apiCode');
 			this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
 		});
-
-		this.getTempStructureData();
 		this.getLookupData();
-		this.tempStructureFormControls();
-	}
-
-	getTempStructureData() {
-		this.formService.getFormData(this.appId).subscribe(res => {
-			this.tempStructureForm.patchValue(res);
-		});
+		if (!this.formId) {
+			this.router.navigate([ManageRoutes.getFullRoute('CITIZENDASHBOARD')]);
+		}
+		else {
+			this.gettempStructureNocNewData();
+			this.tempStructureNocFormControls();
+		}
 	}
 
 	/**
-	 * Method is used to handle error/validation on submit
-	 * @param count - count of invalid control.
+	 * Method is create required document array
 	 */
-	handleErrorsOnSubmit(count) {
-		let step1 = 6;
+	requiredDocumentList() {
 
-		if (count <= step1) {
-			this.stepper.selectedIndex = 0;
-			return false;
+		_.forEach(this.tempStructureNocForm.get('serviceDetail').get('serviceUploadDocuments').value, (value) => {
+			if (value.mandatory && value.isActive && value.requiredOnCitizenPortal) {
+				this.uploadFilesArray.push({
+					'labelName': value.documentLabelEn,
+					'fieldIdentifier': value.fieldIdentifier,
+					'documentIdentifier': value.documentIdentifier
+				})
+			}
+		});
+		//check for attachment is mandatory
+		this.dependentAttachment(this.tempStructureNocForm.get('securityArrangement').value, 'SECURITY_ARRANGEMENT');
+	}
+
+	/**
+	 * Method is handel depended documents (depended on form field value ).
+	 * @param event 
+	 * @param dependedKey 
+	 */
+	dependentAttachment(eventValue: any, dependedKey: string) {
+
+		var control = (<FormArray>this.tempStructureNocForm.get('serviceDetail').get('serviceUploadDocuments')).controls
+		var fields = control.find((data) => data.get('documentIdentifier').value === dependedKey);
+
+		if (eventValue && fields) {
+			fields.get('mandatory').setValue(true);
+			if (fields.get('isActive').value && fields.get('requiredOnCitizenPortal').value) {
+				this.uploadFilesArray.push({
+					'labelName': fields.get('documentLabelEn').value,
+					'fieldIdentifier': fields.get('fieldIdentifier').value,
+					'documentIdentifier': dependedKey
+				})
+			}
+		} else {
+			if (fields) {
+				fields.get('mandatory').setValue(false);
+				var indewx = this.uploadFilesArray.findIndex((data) => data.documentIdentifier === dependedKey)
+				if (indewx != -1) {
+					this.uploadFilesArray.splice(indewx, 1);
+				}
+			}
 		}
 
 	}
 
+
+    /**
+     * This method is change date formate.
+     * @param date : Input date(any format).
+     * @param controlType : Input From Control.
+     */
+	dateFormate(date, controlType: string) {
+		this.tempStructureNocForm.get(controlType).setValue(moment(date).format("YYYY-MM-DD"));
+	}
+
 	/**
-	 * This method is use for get lookup data
+	 * This method for set validation on form control
+	 * @param formControl - control name
 	 */
+	onChange(controlName: string, formControl: string) {
+		this.tempStructureNocForm.get(formControl).reset();
+		if (controlName) {
+			this.tempStructureNocForm.get(formControl).setValidators([Validators.required]);
+		}
+		else {
+			this.tempStructureNocForm.get(formControl).clearValidators();
+		}
+	}
+
+	/**
+	 * Method is used to get form data
+	 */
+	gettempStructureNocNewData() {
+		this.formService.getFormData(this.formId).subscribe(res => {
+
+			try {
+				this.tempStructureNocForm.patchValue(res);
+				this.showButtons = true;
+
+				res.serviceDetail.serviceUploadDocuments.forEach(app => {
+					(<FormArray>this.tempStructureNocForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.createDocumentsGrp(app));
+				});
+				this.requiredDocumentList();
+
+			} catch (error) {
+				console.log(error.message)
+			}
+		});
+	}
+
+	/**
+	* Method is used to get lookup data
+	*/
 	getLookupData() {
 		this.formService.getDataFromLookups().subscribe(res => {
-
-		});
-	}
-
-	tempStructureFormControls() {
-		this.tempStructureForm = this.fb.group({
-			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode)
+			this.FS_COMMUNICATION_ARRANGEMENT = res.FS_COMMUNICATION_ARRANGEMENT;
+			this.FS_SITTING_ARRANGEMENT = res.FS_SITTING_ARRANGEMENT;
+			this.FS_WIRING_TYPE = res.FS_WIRING_TYPE;
 		});
 	}
 
 	/**
-	 * Method is used to reset form its a output event from action bar.
+	 * Method is used to set form controls
+	 * 'Guj' control is consider as a Gujarati fields
 	 */
-	stepReset() {
-		this.stepper.reset();
+	tempStructureNocFormControls() {
+		this.tempStructureNocForm = this.fb.group({
+			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
+			serviceCode: 'FS-TEMPSTRUCT',
+			/* Step 1 controls start */
+			firstName: [null, [Validators.required, Validators.maxLength(100)]],
+			lastName: [null, [Validators.required, Validators.maxLength(100)]],
+			middleName: [null, Validators.maxLength(100)],
+			mobileNo: [null, [Validators.required, Validators.maxLength(10)]],
+			email: [null, [Validators.required, Validators.maxLength(50)]],
+			applicantName: [null, [Validators.required, Validators.maxLength(100)]],
+			applicantNameGuj: [null, [Validators.required, Validators.maxLength(300)]],
+			oldReferenceNumber: [null, [Validators.maxLength(10)]],//not now
+			applicationDate: [null],//not now
+			officeContactNo: [null, [Validators.required, Validators.maxLength(10)]],
+			onsitePersonMobileNo: [null, [Validators.required, Validators.maxLength(10)]],
+			officeEmailId: [null, [Validators.required, Validators.maxLength(50)]],
+
+			fromDate: [null, [Validators.required, Validators.maxLength(10)]],
+			toDate: [null, [Validators.required, Validators.maxLength(10)]],
+			fromTime: [null, [Validators.required, Validators.maxLength(10)]],
+			toTime: [null, [Validators.required, Validators.maxLength(10)]],
+			forProgram: [null, [Validators.required, Validators.maxLength(50)]],
+			forProgramGuj: [null, [Validators.required, Validators.maxLength(150)]],
+			venue: [null, [Validators.required, Validators.maxLength(150)]],
+			policeCommisionerLetterDate: [null],
+			policeCommisionerLetterNo: [null, [Validators.required, Validators.maxLength(10)]],
+			landOwnerConsentIncluded: [false, [Validators.required]],//true/false
+			landOwnerConsentDescription: [null, [Validators.required, Validators.maxLength(200)]],
+			organizeName: [null, [Validators.required, Validators.maxLength(150)]],
+			organizeNameGuj: [null, [Validators.required, Validators.maxLength(300)]],
+			organizerAddress: [null, [Validators.required, Validators.maxLength(200)]],
+			organizerAddressGuj: [null, [Validators.required, Validators.maxLength(400)]],
+			organizerContactNo: [null, [Validators.required, Validators.maxLength(10)]],
+			temporaryStructureAddress: [null, [Validators.required, Validators.maxLength(500)]],
+			temporaryStructureAddressGuj: [null, [Validators.required, Validators.maxLength(1500)]],
+
+			fpNo: [null, [Validators.required, Validators.maxLength(5)]],
+			rsNo: [null, [Validators.required, Validators.maxLength(5)]],
+			tikaNo: [null, [Validators.required, Validators.maxLength(5)]],
+			buildingLocation: [null, [Validators.required, Validators.maxLength(5)]],
+			tpNo: [null, [Validators.required, Validators.maxLength(5)]],
+			blockNo: [null, [Validators.required, Validators.maxLength(5)]],
+			structurePurpose: [null, [Validators.required, Validators.maxLength(200)]],
+			opNo: [null, [Validators.required, Validators.maxLength(10)]],
+			noOfGatheringPersons: [null, [Validators.required, Validators.maxLength(10)]],
+			noOfExits: [null, [Validators.required, Validators.maxLength(3)]],
+			layoutPlanIncluded: [null, [Validators.required]],//true/false
+			requiredNOCForArea: [null, [Validators.required, Validators.maxLength(3)]],
+
+			hazardousPerformanceDetail: [null, [Validators.required, Validators.maxLength(200)]],
+			shamiyanaLength: [null, [Validators.required, Validators.maxLength(5)]],
+			shamiyanaWidth: [null, [Validators.required, Validators.maxLength(5)]],
+			archGateHeight: [null, [Validators.required, Validators.maxLength(5)]],
+			archGateWidth: [null, [Validators.required, Validators.maxLength(5)]],
+			approachedWayToVenue: [null, [Validators.required, Validators.maxLength(200)]],
+			internalRoadWidth: [null, [Validators.required, Validators.maxLength(5)]],
+			noOfFirefightingEquipment: [null, [Validators.required, Validators.maxLength(5)]],
+			refillingCertificateAttached: [null, [Validators.required]],//true/false
+			stageHeight: [null, [Validators.required, Validators.maxLength(3)]],
+			stageWidth: [null, [Validators.required, Validators.maxLength(3)]],
+			usageOfInflammable: [null, [Validators.required, Validators.maxLength(500)]],
+			securityArrangement: [null, [Validators.required]],//true/false
+			parkingArrangement: [null, [Validators.required]],//true/false
+			exitNoSmokingSignboard: [null, [Validators.required]],//true/false
+			preciseProgramPlaceHFL: [null, [Validators.required, Validators.maxLength(150)]],
+			lightningArresterArrangement: [null, [Validators.required]],//true/false
+			standbyFireEngineDemanded: [null, [Validators.required]],//true/false
+			sittingArrangement: this.fb.group({
+				code: [null,Validators.required]
+			}),
+			wiringType: this.fb.group({
+				code: [null,Validators.required]
+			}),
+			communicationArrangementType: this.fb.group({
+				code: [null,Validators.required]
+			}),
+
+			/* Step 6 controls start*/
+			attachments: [],
+			serviceDetail: this.fb.group({
+				code: null,
+				name: null,
+				gujName: null,
+				feesOnScrutiny: null,
+				appointmentRequired: false,
+				serviceUploadDocuments: this.fb.array([
+
+				])
+			}),
+			/* Step 6 controls end */
+		});
+	}
+
+	/**
+	 * This Method for create attachment array in service detail
+	 * @param data : value of array
+	 */
+	createDocumentsGrp(data?: any): FormGroup {
+		return this.fb.group({
+			// dependentFieldName: [data.dependentFieldName ? data.dependentFieldName : null],
+			documentIdentifier: [data.documentIdentifier ? data.documentIdentifier : null],
+			documentKey: [data.documentKey ? data.documentKey : null],
+			documentLabelEn: [data.documentLabelEn ? data.documentLabelEn : null],
+			documentLabelGuj: [data.documentLabelGuj ? data.documentLabelGuj : null],
+			fieldIdentifier: [data.fieldIdentifier ? data.fieldIdentifier : null],
+			formPart: [data.formPart ? data.formPart : null],
+			id: [data.id ? data.id : null],
+			isActive: [data.isActive],
+			mandatory: [data.mandatory ? data.mandatory : false],
+			maxFileSizeInMB: [data.maxFileSizeInMB ? data.maxFileSizeInMB : 5],
+			requiredOnAdminPortal: [data.requiredOnAdminPortal],
+			requiredOnCitizenPortal: [data.requiredOnCitizenPortal],
+			// version: [data.version ? data.version : null]
+		});
+	}
+
+	/**
+	 * This method required for final form submition.
+	 * @param flag - flag of invalid control.
+	 */
+	handleErrorsOnSubmit(flag) {
+
+		let step0 = 14;
+		let step1 = 32;
+		let step2 = 44;
+		let step3 = 65;
+
+		if (flag != null) {
+			//Check validation for step by step
+			let count = flag;
+			// console.log(flag);
+			if (count <= step0) {
+				this.tabIndex = 0;
+				return false;
+			} else if (count <= step1) {
+				this.tabIndex = 1;
+				return false;
+			} else if (count <= step2) {
+				this.tabIndex = 2;
+				return false;
+			} else if (count <= step3) {
+				this.tabIndex = 3;
+				return false;
+			} 
+			// else if (count == 67) {
+			// 	this.checkReligion();
+			// 	return false;
+			// }
+			else {
+				console.log("else condition");
+			}
+
+		}
+	}
+
+
+	/**
+	   * This method use to get output event of tab change
+	   * @param evt - Tab index
+	   */
+	onTabChange(evt) {
+		this.tabIndex = evt;
+	}
+
+	/**
+	 * This method is handle depended documents on save event
+	 * @param res - form response after save event
+	 */
+	handleOnSaveAndNext(res) {
+		this.requiredDocumentList();
+	}
+
+	/**
+	 * Method is used to open time picker.
+	 * @param controlName - control name.
+	 */
+	openTimePicker(controlName: string) {
+		const amazingTimePicker = this.atp.open({
+			changeToMinutes: true,
+			theme: 'material-purple',
+		});
+		amazingTimePicker.afterClose().subscribe(time => {
+			if (time.length == 5) {
+				this.tempStructureNocForm.get(controlName).setValue(time + ":00");
+			}
+		});
 	}
 
 }
+

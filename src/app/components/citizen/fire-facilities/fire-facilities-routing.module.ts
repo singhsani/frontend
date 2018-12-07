@@ -23,7 +23,7 @@ const routes: Routes = [
 	{ path: ManageRoutes.getMainRoute('FS-WATER') + '/:id/:apiCode', component: WaterTankerAppComponent },
 	{ path: ManageRoutes.getMainRoute('FS-AMBU') + '/:id/:apiCode', component: AmbulanceAppComponent },
 	{ path: ManageRoutes.getMainRoute('FS-BODY') + '/:id/:apiCode', component: BodyWanAppComponent },
-	{ path: ManageRoutes.getMainRoute('FS-STRUCT') + '/:id/:apiCode', component: TempStructureNocComponent },
+	{ path: ManageRoutes.getMainRoute('FS-TEMPSTRUCT') + '/:id/:apiCode', component: TempStructureNocComponent },
 	{ path: ManageRoutes.getMainRoute('FS-FIREWORK') + '/:id/:apiCode', component: TempFireworksNocComponent },
 	{ path: ManageRoutes.getMainRoute('FS-GAS') + '/:id/:apiCode', component: GasConnectionNocComponent },
 	{ path: ManageRoutes.getMainRoute('FS-ELE') + '/:id/:apiCode', component: EleConnectionNocComponent },
