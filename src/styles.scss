@@ -643,8 +643,9 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
 }
 
 /*** Stepper Pages ***/
-.stepperNav {
+.stepperNav { 
     .mat-tab-header {margin-bottom: 20px;}
+       
     .stepperMinHeight {min-height: 300px; align-content: start;}
     // .mat-tab-body {min-height: 400px; padding-bottom:70px !important;
     //     app-action-bar {width: 100%; position: absolute; bottom: 0; left: 0;}
@@ -658,9 +659,10 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
     // .mat-icon {font-size: 22px; float: left; margin-right: 13px;}
     .mat-tab-label-active {color:$colorBlue; font-weight: 500;}
    // .mat-tab-label-content {white-space: normal; padding: 0 10px;}
+ 
 }
 
-.fotButtonBar {background: #f2f2f2; padding: 25px 0 10px;}
+.fotButtonBar {background: #f2f2f2; padding: 25px 0 10px; margin-top: 140px !important;}
 
 .mat-tab-header-pagination-before, .mat-tab-header-pagination-after {background: $colorLite; }
 
@@ -864,3 +866,9 @@ body * {visibility: hidden;}
 }
 
 .ng-dropdown-panel.ng-select-top{ bottom: initial !important;}
+
+
+ // Select Dropdown //  
+//  .mat-tab-body-wrapper {overflow: visible !important;}
+//  .mat-tab-body-content {overflow: visible !important;}
+//  .mat-tab-group.mat-tab-group-dynamic-height .mat-tab-body.mat-tab-body-active {overflow: visible !important;}
