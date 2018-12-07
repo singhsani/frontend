@@ -18,7 +18,7 @@ export class NavratriNocComponent implements OnInit {
 	@ViewChild('permanantAddressEstablishment') permanantAddressEstablishment: any;
 
 	navaratriNocForm: FormGroup;
-	translateKey: string = 'navratriNocScreen';
+	translateKey: string = 'navratriFireNocScreen';
 
 	formId: number;
 	apiCode: string;
@@ -27,16 +27,8 @@ export class NavratriNocComponent implements OnInit {
 	// required attachment array
 	private uploadFilesArray: Array<any> = [];
 	private showButtons: boolean = false;
-	private codeOther: boolean = false;
 	//Lookups Array
-	FS_AREA_ZONE: Array<any> = [];
-	FS_APPLIED_FOR: Array<any> = [];
-	FS_FIRE_VENDOR_TYPE: Array<any> = [];
-	FS_PREVIOUSLY_NOC_TAKEN: Array<any> = [];
-	FS_USAGE_TYPE: Array<any> = [];
-	FS_AFTERNOON: Array<any> = [];
-	FS_PURPOSE_OF_BUILDING_USE: Array<any> = [];
-	LOOKUP: any;
+	// FS_AREA_ZONE: Array<any> = [];
 
 	/**
      * @param fb - Declare FormBuilder property.
@@ -63,7 +55,7 @@ export class NavratriNocComponent implements OnInit {
 			this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
 		});
 
-		this.getLookupData();
+		// this.getLookupData();
 		if (!this.formId) {
 			this.router.navigate([ManageRoutes.getFullRoute('CITIZENDASHBOARD')]);
 		}
@@ -77,7 +69,7 @@ export class NavratriNocComponent implements OnInit {
 	 * Method is create required document array
 	 */
 	requiredDocumentList() {
-		
+
 		_.forEach(this.navaratriNocForm.get('serviceDetail').get('serviceUploadDocuments').value, (value) => {
 			if (value.mandatory && value.isActive && value.requiredOnCitizenPortal) {
 				this.uploadFilesArray.push({
@@ -89,7 +81,9 @@ export class NavratriNocComponent implements OnInit {
 		});
 		//check for attachment is mandatory
 		this.dependentAttachment(this.navaratriNocForm.get('securityArrangement').value, 'SECURITY_ARRANGEMENT');
-		this.dependentAttachment(this.navaratriNocForm.get('vmcconsentLetterIncluded').value, 'CONSENT_LETTER');
+		this.dependentAttachment(this.navaratriNocForm.get('vmcConsentLetterIncluded').value, 'CONSENT_LETTER');
+		this.dependentAttachment(this.navaratriNocForm.get('weatherExitShownInMap').value,'LOCATION_MAP');
+		this.dependentAttachment(this.navaratriNocForm.get('trainedFiremanStaffKept').value,'TRAIN_FIRE_PERSON_LIST');
 	}
 
 	/**
@@ -129,9 +123,23 @@ export class NavratriNocComponent implements OnInit {
      * @param date : Input date(any format).
      * @param controlType : Input From Control.
      */
-    dateFormate(date, controlType: string) {
-        this.navaratriNocForm.get(controlType).setValue(moment(date).format("YYYY-MM-DD"));
-    }
+	dateFormate(date, controlType: string) {
+		this.navaratriNocForm.get(controlType).setValue(moment(date).format("YYYY-MM-DD"));
+	}
+
+	/**
+	 * This method for set validation on form control
+	 * @param formControl - control name
+	 */
+	onChange(controlName: string, formControl: string) {
+		this.navaratriNocForm.get(formControl).reset();
+		if (controlName) {
+			this.navaratriNocForm.get(formControl).setValidators([Validators.required]);
+		}
+		else {	
+			this.navaratriNocForm.get(formControl).clearValidators();
+		}
+	}
 
 	/**
 	 * Method is used to get form data
@@ -157,17 +165,11 @@ export class NavratriNocComponent implements OnInit {
 	/**
 	* Method is used to get lookup data
 	*/
-	getLookupData() {
-		this.formService.getDataFromLookups().subscribe(res => {
-			this.LOOKUP = res;
-			this.FS_APPLIED_FOR = res.FS_APPLIED_FOR;
-			this.FS_AREA_ZONE = res.FS_AREA_ZONE;
-			this.FS_FIRE_VENDOR_TYPE = res.FS_FIRE_VENDOR_TYPE;
-			this.FS_PREVIOUSLY_NOC_TAKEN = res.FS_PREVIOUSLY_NOC_TAKEN;
-			this.FS_USAGE_TYPE = res.FS_USAGE_TYPE;
-			this.FS_PURPOSE_OF_BUILDING_USE = res.FS_PURPOSE_OF_BUILDING_USE
-		});
-	}
+	// getLookupData() {
+	// 	this.formService.getDataFromLookups().subscribe(res => {
+	// 		this.FS_APPLIED_FOR = res.FS_APPLIED_FOR;
+	// 	});
+	// }
 
 	/**
 	 * Method is used to set form controls
@@ -202,9 +204,9 @@ export class NavratriNocComponent implements OnInit {
 			landOwnerConsentIncluded: [null, [Validators.required]],
 			garbaInVMCRange: [null, [Validators.required, Validators.maxLength(10)]],
 			landOwnerIsVMC: [null, [Validators.required, Validators.maxLength(10)]],
-			vmcfeeReceiptNo: [null, [Validators.required, Validators.maxLength(15)]],
-			vmcconsentLetterIncluded: [null, [Validators.required, Validators.maxLength(15)]],
-			consentLetterDate: [null, [Validators.required, Validators.maxLength(10)]],
+			vmcfeeReceiptNo: [null, [Validators.maxLength(15)]],
+			vmcConsentLetterIncluded: [null, [Validators.maxLength(15)]],
+			consentLetterDate: [null, [Validators.maxLength(10)]],
 			hazardousPerformanceDetail: [null, [Validators.required, Validators.maxLength(150)]],
 			noOfGatheringPersons: [null, [Validators.required, Validators.maxLength(5)]],
 
@@ -277,7 +279,7 @@ export class NavratriNocComponent implements OnInit {
 
 		let step0 = 9;
 		let step1 = 18;
-		let step2 = 25;
+		let step2 = 29;
 		let step3 = 50;
 		let step4 = 59;
 
@@ -329,19 +331,5 @@ export class NavratriNocComponent implements OnInit {
 		this.requiredDocumentList();
 	}
 
-	/**
-	 * add other remark in Purpose of Building array 
-	 * @param event : on change event value
-	 */
-	otherRemark(event: Event) {
-		_.forEach(event, (value) => {
-			if (value.code == 'OTHER') {
-				this.codeOther = true;
-			}
-			else {
-				this.codeOther = false
-			}
-		});
-	}
 }
 

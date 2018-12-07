@@ -65,9 +65,9 @@ const ROUTEMAIN = {
         'main': 'FSBodywan',
         'type': 'FSBodywan'
     },
-    'FS-STRUCT': {
-        'main': 'FSTempStructNoc',
-        'type': 'FSTempStructNoc'
+    'FS-TEMPSTRUCT': {
+        'main': 'temporaryStructureNoc',
+        'type': 'temporaryStructureNoc'
     },
     'FS-FIREWORK': {
         'main': 'FSTempFireworkShopNoc',
@@ -455,8 +455,8 @@ const ROUTESLIST = {
     'FS-BODY': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.FIREFACILITIESMODULE + '/' + ROUTEMAIN["FS-BODY"].main
     },
-    'FS-STRUCT': {
-        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.FIREFACILITIESMODULE + '/' + ROUTEMAIN["FS-STRUCT"].main
+    'FS-TEMPSTRUCT': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.FIREFACILITIESMODULE + '/' + ROUTEMAIN["FS-TEMPSTRUCT"].main
     },
     'FS-FIREWORK': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.FIREFACILITIESMODULE + '/' + ROUTEMAIN["FS-FIREWORK"].main

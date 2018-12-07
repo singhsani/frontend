@@ -309,7 +309,7 @@ export class FinalFireNocComponent implements OnInit {
 			buildingLocation: [null, [Validators.required, Validators.maxLength(50)]],
 			blockNo: [null, [Validators.required, Validators.maxLength(10)]],
 			opNo: [null, [Validators.required, Validators.maxLength(10)]],
-			cityServayNo: [null, [Validators.required, Validators.maxLength(10)]],
+			citySurveyNo: [null, [Validators.required, Validators.maxLength(10)]],
 			buildingHeight: [null, [Validators.required, Validators.maxLength(5)]],
 			totalBuildingFloor: [null, [Validators.required, Validators.maxLength(5)]],
 			noOfBasement: [null, [Validators.required, Validators.maxLength(3)]],

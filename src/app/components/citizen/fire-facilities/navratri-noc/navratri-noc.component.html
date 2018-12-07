@@ -55,7 +55,7 @@
 
 				</div>
 				<app-action-bar [form]="navaratriNocForm" (tabIndex)="onTabChange($event)" (handleOnSaveAndNext)="handleOnSaveAndNext($event)"
-				 [stepInfo]="{step: 'step0', next: 1, back: 0}"></app-action-bar>
+				 [stepInfo]="{step: 'step1', next: 1, back: 0}"></app-action-bar>
 			</mat-tab>
 			<!-- step 1 Ends -->
 			<!-- step 2 Start -->
@@ -79,7 +79,7 @@
 					</div>
 
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" appAlphaNumeric formControlName="policeCommisionerLetterNo" placeholder="{{'architect_regi_no' | translate: translateKey }} *"
+						<input matInput type="text" appAlphaNumeric formControlName="policeCommisionerLetterNo" placeholder="{{'police_commisioner_letter_no' | translate: translateKey }} *"
 						 maxlength="20">
 						<control-messages [control]="navaratriNocForm.controls.policeCommisionerLetterNo"></control-messages>
 					</mat-form-field>
@@ -132,7 +132,7 @@
 
 				</div>
 				<app-action-bar [form]="navaratriNocForm" (tabIndex)="onTabChange($event)" (handleOnSaveAndNext)="handleOnSaveAndNext($event)"
-				 [stepInfo]="{step: 'step1', next: 2, back: 1}"></app-action-bar>
+				 [stepInfo]="{step: 'step2', next: 2, back: 0}"></app-action-bar>
 			</mat-tab>
 			<!-- step 2 Ends -->
 
@@ -188,7 +188,7 @@
 
 					<div class="col-md-12 radioBtnError">
 						<mat-label>{{'land_owner_is_vmc' | translate:translateKey }} *</mat-label>
-						<mat-radio-group formControlName="landOwnerIsVMC" required>
+						<mat-radio-group formControlName="landOwnerIsVMC" required (change)="onChange('landOwnerIsVMC','vmcfeeReceiptNo');onChange('landOwnerIsVMC','vmcconsentLetterIncluded');onChange('landOwnerIsVMC','consentLetterDate');onChange('landOwnerIsVMC','landOwnerConsentIncluded');">
 							<mat-radio-button [value]="true">
 								Yes
 							</mat-radio-button>
@@ -199,15 +199,16 @@
 						<control-messages [control]="navaratriNocForm.controls.landOwnerIsVMC"></control-messages>
 					</div>
 
+					<!-- below 4 fields is depend on land_owner_is_vmc field value -->
+
 					<mat-form-field class="col-md-4" *ngIf="navaratriNocForm.controls.landOwnerIsVMC.value">
 						<input matInput type="text" appAlphaNumeric formControlName="vmcfeeReceiptNo" placeholder="{{'vmc_fee_receipt_no' | translate: translateKey }} "
 						 maxlength="15">
 						<control-messages [control]="navaratriNocForm.controls.vmcfeeReceiptNo"></control-messages>
 					</mat-form-field>
-
 					<div class="col-md-4 radioBtnError" *ngIf="navaratriNocForm.controls.landOwnerIsVMC.value">
 						<mat-label>{{'vmc_consent_letter_included' | translate:translateKey }} *</mat-label>
-						<mat-radio-group formControlName="vmcconsentLetterIncluded" required (change)="dependentAttachment($event.value,'CONSENT_LETTER')">
+						<mat-radio-group formControlName="vmcConsentLetterIncluded" required (change)="dependentAttachment($event.value,'CONSENT_LETTER')">
 							<mat-radio-button [value]="true">
 								Yes
 							</mat-radio-button>
@@ -227,7 +228,6 @@
 				</div>
 
 				<div class="row">
-					<!-- if vmc_consent_letter_included is true than no need of land_owner_consent_included -->
 					<div class="col-md-4 radioBtnError" *ngIf="!navaratriNocForm.controls.landOwnerIsVMC.value">
 						<mat-label>{{'land_owner_consent_included' | translate:translateKey }} *</mat-label>
 						<mat-radio-group formControlName="landOwnerConsentIncluded">
@@ -250,7 +250,7 @@
 				</div>
 
 				<app-action-bar [form]="navaratriNocForm" (tabIndex)="onTabChange($event)" (handleOnSaveAndNext)="handleOnSaveAndNext($event)"
-				 [stepInfo]="{step: 'step2', next: 3, back: 1}"></app-action-bar>
+				 [stepInfo]="{step: 'step3', next: 3, back: 1}"></app-action-bar>
 			</mat-tab>
 			<!-- step 3 Ends -->
 
@@ -366,7 +366,7 @@
 
 					<div class="col-md-4 radioBtnError">
 						<mat-label>{{'trained_fireman_staff_kept' | translate:translateKey }} *</mat-label>
-						<mat-radio-group formControlName="trainedFiremanStaffKept" required>
+						<mat-radio-group formControlName="trainedFiremanStaffKept" required (change)="dependentAttachment($event.value,'TRAIN_FIRE_PERSON_LIST')">
 							<mat-radio-button [value]="true">
 								Yes
 							</mat-radio-button>
@@ -392,7 +392,7 @@
 
 					<div class="col-md-4 radioBtnError">
 						<mat-label>{{'weather_exit_shown_in_map' | translate:translateKey }} *</mat-label>
-						<mat-radio-group formControlName="weatherExitShownInMap" required>
+						<mat-radio-group formControlName="weatherExitShownInMap" required (change)="dependentAttachment($event.value,'LOCATION_MAP')">
 							<mat-radio-button [value]="true">
 								Yes
 							</mat-radio-button>
@@ -422,22 +422,14 @@
 						<control-messages [control]="navaratriNocForm.controls.highTensionLineOverGround"></control-messages>
 					</div>
 
-					<div class="col-md-4 radioBtnError">
-						<mat-label>{{'fire_safety_action_with_proof' | translate:translateKey }} *</mat-label>
-						<mat-radio-group formControlName="fireSafetyActionWithProof" required>
-							<mat-radio-button [value]="true">
-								Yes
-							</mat-radio-button>
-							<mat-radio-button [value]="false">
-								No
-							</mat-radio-button>
-						</mat-radio-group>
+					<mat-form-field class="col-md-4">
+						<textarea matInput rows="2" cols="50" required maxlength="150" placeholder="{{'fire_safety_action_with_proof' | translate:translateKey}}"
+						 formControlName="fireSafetyActionWithProof"></textarea>
 						<control-messages [control]="navaratriNocForm.controls.fireSafetyActionWithProof"></control-messages>
-					</div>
-
+					</mat-form-field>
 				</div>
 				<app-action-bar [form]="navaratriNocForm" (tabIndex)="onTabChange($event)" (handleOnSaveAndNext)="handleOnSaveAndNext($event)"
-				 [stepInfo]="{step: 'step3', next: 4, back: 2}"></app-action-bar>
+				 [stepInfo]="{step: 'step4', next: 4, back: 2}"></app-action-bar>
 			</mat-tab>
 			<!-- step 4 Ends -->
 
