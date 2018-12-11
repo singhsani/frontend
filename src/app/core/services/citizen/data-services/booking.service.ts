@@ -41,7 +41,7 @@ export class BookingService {
 	 * Method is used to shortlist all selected shifts in townhall.
 	 * @param shortListData - selected dates, shifts.
 	 */
-	shortListTownHall(shortListData) {
+	shortListBookings(shortListData) {
 		this.requestURL = `api/booking/${this.resourceType}/shortlistAPI`;
 		return this.http.post(this.requestURL, shortListData);
 	}
@@ -101,7 +101,7 @@ export class BookingService {
 	 * @param bookingInfo - booking information.
 	 */
 	commonBookSlot(bookingInfo) {
-		this.requestURL = `api/booking/${this.resourceType}/bookAPI`;
+		this.requestURL = `api/booking/${this.resourceType}/slot/bookAPI`;
 		return this.http.post(this.requestURL, bookingInfo);
 	}
 
@@ -132,6 +132,16 @@ export class BookingService {
 		this.requestURL = `api/booking/${this.resourceType}/printReceipt/${refNumber}`;
 		return this.http.get(this.requestURL, 'printReceipt');
 	}
+
+	/**
+	 * Method Is used to print acknowledgement receipt
+	 * @param refNumber - reference number
+	 */
+	printAcknowledgementReceipt(refNumber : string){
+		this.requestURL = `api/booking/${this.resourceType}/print/acknowledgement/${refNumber}`;
+		return this.http.get(this.requestURL, 'printReceipt');
+	}
+	
 
 	/**
 	 * This method is use for get date wise slots for particular resource 

@@ -37,6 +37,9 @@ export class TownHallListComponent implements OnInit {
 	@ViewChild('address') addressComp: any;
 	@ViewChild(MatPaginator) paginator: MatPaginator;
 
+	bookingConstants = BookingConstants;
+	bookingUtils: BookingUtils = new BookingUtils();
+
 	/**
 	 * language translate key.
 	 */
@@ -80,20 +83,7 @@ export class TownHallListComponent implements OnInit {
 	/**
 	 * Used to get slots month wise [very important].
 	 */
-	public DateArray = [
-		{ month: 'Jan', id: '01', monthName: 'January' },
-		{ month: 'Fab', id: '02', monthName: 'February' },
-		{ month: 'Mar', id: '03', monthName: 'March' },
-		{ month: 'Apr', id: '04', monthName: 'April' },
-		{ month: 'May', id: '05', monthName: 'May' },
-		{ month: 'Jun', id: '06', monthName: 'June' },
-		{ month: 'Jul', id: '07', monthName: 'July' },
-		{ month: 'Aug', id: '08', monthName: 'August' },
-		{ month: 'Sep', id: '09', monthName: 'September' },
-		{ month: 'Oct', id: '10', monthName: 'October' },
-		{ month: 'Nov', id: '11', monthName: 'November' },
-		{ month: 'Dec', id: '12', monthName: 'December' },
-	];
+	public DateArray = this.bookingUtils.DateArray
 
 
 
@@ -157,8 +147,7 @@ export class TownHallListComponent implements OnInit {
 	showPaymentReciept: boolean = false;
 
 	isLoadingResults: boolean = false;
-	bookingConstants = BookingConstants;
-	bookingUtils: BookingUtils = new BookingUtils();
+
 
 
 	constructor(
@@ -169,7 +158,7 @@ export class TownHallListComponent implements OnInit {
 		private router: Router,
 		private CD: ChangeDetectorRef
 	) {
-		this.bookingService.resourceType = 'townhall';
+		this.bookingService.resourceType = this.bookingConstants.TOWNHALL_RESOURCE_TYPE;
 	}
 
 	/**
@@ -181,7 +170,7 @@ export class TownHallListComponent implements OnInit {
 		 * Static headlines
 		 */
 		this.head_lines = `Online Town Hall Booking facility is the convenient and
-		easy way to book the town hall of Vadodara Municiple Corporation. You can
+		easy way to book the town hall of Vadodara Municpal Corporation. You can
 		view the availiblity details of the town hall and select select one of multiple shifts for
 		booking. The booking is confirmed on the successfull online payment of the rent amount
 		for selected shift(s).`
@@ -390,7 +379,7 @@ export class TownHallListComponent implements OnInit {
 				appointments: this.selectedShift.map(shifts => shifts.uniqueId)
 			}
 
-			this.bookingService.shortListTownHall(shortListData).subscribe(resp => {
+			this.bookingService.shortListBookings(shortListData).subscribe(resp => {
 
 				this.showSearchForm = false;
 

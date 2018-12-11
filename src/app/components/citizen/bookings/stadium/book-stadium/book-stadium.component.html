@@ -1,0 +1,379 @@
+<!-- HTML for Stadium booking Guideline-->
+<app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
+
+<div *ngIf="guideLineFlag">
+  <mat-card class="cardBox">
+
+    <div class="pageTitle">{{'online_stadium_bookings'| translate: translateKey}}</div>
+
+    <mat-card-content class="p-4">
+
+      <p class="pb-2">{{head_lines| translate: translateKey}}</p>
+
+      <h2>{{'rules_and_regulations'| translate: translateKey}}</h2>
+
+      <ol class="olList">
+
+        <li>
+          All parties/organizers have to observe the VMC Rules
+        </li>
+
+        <li>
+          Production of all necessary permission is mandatory for applicant before commencement of programe.
+        </li>
+
+        <li>
+          Deduction as per the rules will be made in the event of cancellation.
+        </li>
+
+      </ol>
+    </mat-card-content>
+  </mat-card>
+  <div class="fotButtonBar">
+    <div class="col-sm-12 col-md-12 text-right">
+      <button mat-raised-button (click)="guideLineFlag = false;showStadiumSearchForm= true;" color="primary">
+        {{'submit'| translate: translateKey}}
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- HTML for Stadium booking -->
+<div *ngIf="showStadiumSearchForm">
+  <mat-card class="formClass cardBorder">
+    <div class="pageTitle">{{'screen_title'| translate: translateKey}}</div>
+    <div class="p-15">
+      <form [formGroup]="stadiumSearchForm" (ngSubmit)="searchBooking()" autocomplete="off" ngNativeValidate>
+        <div class="row mt-3 mb-3">
+          <div class="col-md-6 ngSelect">
+            <ng-select placeholder="{{'select_stadium'| translate: translateKey}}" formControlName="code">
+              <ng-option *ngFor="let stadium of STADIUMS" [value]="stadium.code">
+                {{ stadium.name }}
+              </ng-option>
+            </ng-select>
+            <control-messages [control]="stadiumSearchForm.controls.code"></control-messages>
+          </div>
+
+          <div formGroupName="purpose" class="col-md-6 ngSelect">
+            <ng-select placeholder="{{'purpose_of_booking'| translate: translateKey}}" formControlName="code">
+              <ng-option *ngFor="let purpose of PURPOSES" [value]="purpose.code">
+                {{ purpose.name }}
+              </ng-option>
+            </ng-select>
+            <control-messages [control]="stadiumSearchForm.controls.purpose.controls.code">
+            </control-messages>
+          </div>
+
+          <mat-form-field class="col-md-6">
+            <mat-label>
+              {{'choose_start_date'| translate: translateKey}}
+            </mat-label>
+            <input matInput [matDatepickerFilter]="myFilter" (dateChange)="changeStartDate($event)" [min]="startMinDate" [matDatepicker]="stadiumBookingfromPicker"
+              formControlName="startDate" placeholder="DD/MM/YYYY">
+            <mat-datepicker-toggle matSuffix [for]="stadiumBookingfromPicker"></mat-datepicker-toggle>
+            <mat-datepicker #stadiumBookingfromPicker touchUi="true"></mat-datepicker>
+            <control-messages [control]="stadiumSearchForm.controls.startDate">
+            </control-messages>
+          </mat-form-field>
+
+          <mat-form-field class="col-md-6">
+            <mat-label>
+              {{'choose_end_date'| translate: translateKey}}
+            </mat-label>
+            <input matInput [readonly]="stadiumSearchForm.controls.startDate.value == null" [matDatepickerFilter]="myFilter" [min]="endMinDate"
+              [matDatepicker]="stadiumBookingtoPicker" formControlName="endDate" placeholder="DD/MM/YYYY">
+            <mat-datepicker-toggle matSuffix [for]="stadiumBookingtoPicker"></mat-datepicker-toggle>
+            <mat-datepicker #stadiumBookingtoPicker touchUi="true"></mat-datepicker>
+            <control-messages [control]="stadiumSearchForm.controls.endDate">
+            </control-messages>
+          </mat-form-field>
+
+        </div>
+        <div class="row fotButtonBar">
+          <div class="col-sm-12 col-md-12 text-right">
+            <button mat-raised-button color="primary" type="submit">
+              {{'search'| translate: translateKey}}
+            </button>
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </mat-card>
+
+  <div *ngIf="Dates.length>0" class="mt-4">
+
+    <mat-card class="formClass cardBorder">
+
+      <div class="pageTitle">{{'list_of_stadium'| translate: translateKey}}</div>
+
+      <mat-accordion *ngFor="let month of filterMonths(); let i = index;">
+        <mat-expansion-panel [expanded]="i === 0">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              {{month.monthName}}
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div>
+            <mat-checkbox [checked]="!checkedAllinMonth(month)" labelPosition="after" (change)="selectAllShiftsInMonth($event.checked, month, i)">
+              {{'select_all_shift_in'| translate: translateKey}} {{month.monthName}}
+            </mat-checkbox>
+          </div>
+
+          <div class="row">
+            <div *ngFor="let date of filterAcc(month.id)" class="col-6 col-md-3 col-lg-2 mb-1 p-1">
+              <div class="dateBox rounded border">
+                <strong>
+                  {{bookingUtils.returnProperDate(date.key)}}
+                </strong>
+                <div class="dateCon">
+                  <mat-checkbox (change)="selectShift(shift, $event.checked)" *ngFor="let shift of date.slotList; let i = index" [disabled]="shift.slotStatus == bookingConstants.BOOKED || shift.slotStatus == bookingConstants.TEMPORARY_BLOCKED"
+                    [checked]="shift.slotStatus != bookingConstants.AVAILABLE">
+                    &nbsp;{{shift.slotStatus == bookingConstants.CHECKED ? bookingConstants.AVAILABLE : shift.slotStatus }}
+                  </mat-checkbox>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+
+      <div class="fotButtonBar">
+        <div class="col-sm-12 col-md-12 text-right">
+          <button mat-raised-button data-toggle="modal" (click)="shortlistShifts(confirmationModel)" data-target="#confirmShortlistModel" type="button"
+            [disabled]="selectedShift.length == 0" color="primary">
+            {{'shortlist'| translate: translateKey}}
+          </button>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+</div>
+
+
+<ng-template #confirmationModel>
+  <div class="modal-header customthead">
+    <h4 class="modal-title" id="exampleModalLabel">
+      {{'list_selected_slot'| translate: translateKey}}
+    </h4>
+    <button title="Close" data-dismiss="modal" class="mat-icon-button" aria-label="Close" (click)="confirmRef.hide()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <div class="modal-body scrollModel">
+    <div class="table-responsive">
+      <table class="table">
+        <thead class="customthead">
+          <tr>
+            <th scope="col" width="56">{{'s_no'| translate: translateKey}}</th>
+            <th scope="col">{{'start_date'| translate: translateKey}}</th>
+            <th scope="col">{{'end_date'| translate: translateKey}}</th>
+            <th scope="col">{{'slot_status'| translate: translateKey}}</th>
+            <th scope="col">{{'occupancy'| translate: translateKey}}</th>
+            <th scope="col" width="65">{{'action'| translate: translateKey}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let shifts of selectedShift; let i = index;">
+            <th scope="row">{{i+1}}</th>
+            <td>{{bookingUtils.returnProperDate(shifts.start)}}</td>
+            <td>{{bookingUtils.returnProperDate(shifts.end)}}</td>
+            <td>{{shifts.slotStatus == bookingConstants.CHECKED ? bookingConstants.AVAILABLE : shift.slotStatus }}</td>
+            <td>{{shifts.occupancy}}</td>
+
+            <td>
+              <button mat-icon-button title="{{'remove_slot'| translate: translateKey}}" [disabled]="selectedShift.length == 1" (click)="removeSelectedShift(shifts, i)">
+                <mat-icon color="warn">delete</mat-icon>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="modal-footer">
+
+    <button type="button" class="btn mat-raised-button" data-dismiss="modal" (click)="confirmRef.hide()">
+      {{'cancel'| translate: translateKey}}
+    </button>
+
+    <button type="button" class="btn mat-raised-button mat-primary" data-dismiss="modal" (click)="confirmShortlist()">
+      {{'confirm_and_continue'| translate: translateKey}}
+    </button>
+  </div>
+</ng-template>
+
+
+<ng-template #receiptModel>
+  <div class="modal-header customthead">
+    <h4 class="modal-title">
+      {{'stadium_booking_details'| translate: translateKey}}
+    </h4>
+    <button title="Close" data-dismiss="modal" class="mat-icon-button" aria-label="Close" (click)="receiptRef.hide()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <div class="modal-body scrollModel">
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">{{'booking_date'| translate: translateKey}}</th>
+            <th scope="col">{{'rent_amount'| translate: translateKey}}</th>
+            <th scope="col">{{'deposit_amount'| translate: translateKey}}</th>
+            <th scope="col">{{'GST'| translate: translateKey}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td scope="col">{{bookingUtils.returnProperDate(paymentObject.BOOKING_DATE)}}</td>
+            <td scope="col">{{paymentObject.RENT_FEES}}</td>
+            <td scope="col">{{paymentObject.DEPOSIT_FEES}}</td>
+            <td scope="col">{{paymentObject.GST}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn mat-raised-button mat-primary" data-dismiss="modal" (click)="showStadiumApplicationForm = true; receiptRef.hide()">
+      {{'proceed_for_appication'| translate: translateKey}}
+    </button>
+  </div>
+</ng-template>
+
+
+<div [hidden]="!showStadiumApplicationForm">
+  <mat-card class="formClass cardBorder">
+    <form [formGroup]="stadiumApplicationForm" (ngSubmit)="submitStadiumApplication()">
+
+      <mat-tab-group mat-stretch-tabs dynamicHeight="true" [(selectedIndex)]="tabIndex" class="stepperNav">
+
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <div>{{'applicant_or_organization_details' | translate:translateKey}}</div>
+          </ng-template>
+          <h2>
+            {{'applicant_details' | translate:translateKey}}
+          </h2>
+
+          <div class="row">
+            <mat-form-field class="col-md-4">
+              <input matInput maxlength="50" appValidationFields [validationFieldsType]="'onlyNameWithSpace'" type="text" formControlName="applicantName"
+                placeholder="{{'applicant_name' | translate: translateKey}}" required>
+              <control-messages [control]="stadiumApplicationForm.controls.applicantName"></control-messages>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-4">
+              <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="applicantMobile" placeholder="{{'applicant_mobile' | translate: translateKey}}"
+                required>
+              <control-messages [control]="stadiumApplicationForm.controls.applicantMobile"></control-messages>
+            </mat-form-field>
+
+            <div class="col-md-4">
+              <mat-form-field>
+                <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="confirmMobile" placeholder="{{'confirm_mobile' | translate: translateKey}}"
+                  required>
+                <control-messages [control]="stadiumApplicationForm.controls.confirmMobile"></control-messages>
+
+              </mat-form-field>
+              <mat-error *ngIf="!mobileNumberMatcher() && stadiumApplicationForm.controls.applicantMobile.touched && stadiumApplicationForm.controls.confirmMobile.touched">
+                {{bookingConstants.MOB_NO_MIS_MATCH_MESSAGE}}
+              </mat-error>
+            </div>
+
+
+            <mat-form-field class="col-md-4">
+              <input matInput type="email" formControlName="emailId" placeholder="{{'applicant_email' | translate: translateKey}}" required>
+              <control-messages [control]="stadiumApplicationForm.controls.emailId"></control-messages>
+            </mat-form-field>
+
+            <div class="col-md-4">
+              <mat-form-field>
+                <input matInput type="email" formControlName="confirmEmailId" placeholder="{{'confirm_email' | translate: translateKey}}"
+                  required>
+                <control-messages [control]="stadiumApplicationForm.controls.confirmEmailId"></control-messages>
+              </mat-form-field>
+              <mat-error *ngIf="!emailMatcher() && stadiumApplicationForm.controls.emailId.touched && stadiumApplicationForm.controls.confirmEmailId.touched">
+                {{bookingConstants.EMAIL_MIS_MATCH_MESSAGE}}
+              </mat-error>
+
+            </div>
+
+
+          </div>
+
+          <div>
+            <h2>
+              {{'applicantAddress' | translate:translateKey}}
+            </h2>
+            <app-address #address [requiredFeilds]="true" [addressFormGroup]="stadiumApplicationForm.controls.applicantAddress"></app-address>
+          </div>
+
+          <div class="row mt-4 fotButtonBar">
+            <div class="col-sm-12 col-md-12 text-right">
+              <button mat-raised-button type="button" color="primary" (click)="tabIndex= tabIndex +1;">{{'next' | translate:translateKey}}
+              </button>
+            </div>
+          </div>
+
+        </mat-tab>
+
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <div>{{'bank_details' | translate:translateKey}}</div>
+          </ng-template>
+
+          <h2>
+            {{'bank_details' | translate:translateKey}}
+          </h2>
+
+          <div class="row">
+            <div formGroupName="bankName" class="col-md-6 ngSelect">
+              <ng-select placeholder="{{'bank_name' | translate:translateKey}} *" formControlName="code">
+                <ng-option *ngFor="let bank of BANKS" [value]="bank.code">
+                  {{bank.name}}
+                </ng-option>
+              </ng-select>
+              <control-messages [control]="stadiumApplicationForm.controls.bankName.controls.code"></control-messages>
+            </div>
+
+            <mat-form-field class="col-md-6">
+              <input matInput type="text" maxlength="20" appValidationFields [validationFieldsType]="'onlyNameWithSpace'" formControlName="accountHolderName"
+                placeholder="{{'account_holder_name' | translate: translateKey}}" required>
+              <control-messages [control]="stadiumApplicationForm.controls.accountHolderName"></control-messages>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-6">
+              <input matInput OnlyNumber maxlength="20" minlength="20" formControlName="accountNo" placeholder="{{'accont_no' | translate: translateKey}}"
+                required>
+              <control-messages [control]="stadiumApplicationForm.controls.accountNo"></control-messages>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-6">
+              <input matInput type="text" maxlength="11" formControlName="ifscCode" placeholder="{{'ifsc_code' | translate: translateKey}}"
+                required>
+              <control-messages [control]="stadiumApplicationForm.controls.ifscCode"></control-messages>
+            </mat-form-field>
+          </div>
+
+      
+          <div class="row mt-4 fotButtonBar">
+            <div class="col-sm-12 col-md-12 justify-content-between d-flex">
+              <button type="button" mat-raised-button (click)="tabIndex= tabIndex -1; ">{{'back' | translate:translateKey}}</button>
+              <button mat-raised-button color="primary" type="submit">
+                {{'submit_application'| translate: translateKey}}
+              </button>
+            </div>
+          </div>
+
+
+        </mat-tab>
+      </mat-tab-group>
+    </form>
+  </mat-card>
+</div>
+
+<!-- this div is used for printing the receipt -->
+<div id="sectionToPrint"></div>

@@ -273,6 +273,10 @@ const ROUTEMAIN = {
         'main': 'stadium-list',
         'type': ''
     },
+    'STADIUMBOOK': {
+        'main': 'book-stadium',
+        'type': ''
+    },
     'THEATER': {
         'main': 'theater',
         'type': 'amphiTheater'
@@ -601,6 +605,9 @@ const ROUTESLIST = {
     },
     'STADIUMLIST': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.BOOKINGMODULE + '/' + ROUTEPREFIX.STADIUMMODULE + '/' + ROUTEMAIN.STADIUMLIST.main
+    },
+    'STADIUMBOOK': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.BOOKINGMODULE + '/' + ROUTEPREFIX.STADIUMMODULE + '/' + ROUTEMAIN.STADIUMBOOK.main
     },
     'THEATERLIST': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.BOOKINGMODULE + '/' + ROUTEPREFIX.THEATERMODULE + '/' + ROUTEMAIN.THEATERLIST.main

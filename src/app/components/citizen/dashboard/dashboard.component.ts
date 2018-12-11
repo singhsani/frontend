@@ -46,6 +46,14 @@ export class DashboardComponent implements OnInit {
 					"gujName": "અતિથિગૃહ",
 					"appointmentRequired": false,
 					"active": true
+				},
+				{
+					"code": "STADIUMBOOK",
+					"fieldView": "ALL",
+					"name": "Stadium",
+					"gujName": "સ્ટેડિયમ",
+					"appointmentRequired": false,
+					"active": true
 				}
 			]
 		},

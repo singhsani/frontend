@@ -1,9 +1,4 @@
 <!-- HTML for Town hall booking Guideline-->
-
-<div class="example-loading-shade" *ngIf="isLoadingResults">
-    <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
-</div>
-
 <app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
 
 <div *ngIf="guideLineFlag">
@@ -35,18 +30,18 @@
                     Deduction as per the rules will be made in the event of cancellation.
                 </li>
             </ol>
-            
-            
+
+
 
         </mat-card-content>
     </mat-card>
     <div class="fotButtonBar">
-            <div class="col-sm-12 col-md-12 text-right">
-              <button mat-raised-button (click)="guideLineFlag = false; showSearchForm= true;" color="primary">
-                  {{'submit'| translate: translateKey}}
-              </button>
-            </div>
-          </div>
+        <div class="col-sm-12 col-md-12 text-right">
+            <button mat-raised-button (click)="guideLineFlag = false; showSearchForm= true;" color="primary">
+                {{'submit'| translate: translateKey}}
+            </button>
+        </div>
+    </div>
 </div>
 
 <!-- HTML for Town hall booking -->
@@ -54,87 +49,87 @@
     <mat-card class="formClass cardBorder">
         <div class="pageTitle">{{'screen_title'| translate: translateKey}}</div>
         <div class="p-15">
-        <form [formGroup]="searchTownHallForm" (ngSubmit)="searchBooking()" autocomplete="off" ngNativeValidate>
-            <div class="row mt-3 mb-3">
-                <div class="col-md-6 ngSelect">
-                    <ng-select placeholder="{{'select_town_hall'| translate: translateKey}}" formControlName="code">
-                        <ng-option *ngFor="let townHall of townHalls" [value]="townHall.code">
-                            {{ townHall.name }}
-                        </ng-option>
-                    </ng-select>
-                    <control-messages [control]="searchTownHallForm.controls.code"></control-messages>
-                </div>
+            <form [formGroup]="searchTownHallForm" (ngSubmit)="searchBooking()" autocomplete="off" ngNativeValidate>
+                <div class="row mt-3 mb-3">
+                    <div class="col-md-6 ngSelect">
+                        <ng-select placeholder="{{'select_town_hall'| translate: translateKey}}" formControlName="code">
+                            <ng-option *ngFor="let townHall of townHalls" [value]="townHall.code">
+                                {{ townHall.name }}
+                            </ng-option>
+                        </ng-select>
+                        <control-messages [control]="searchTownHallForm.controls.code"></control-messages>
+                    </div>
 
-                <div formGroupName="purpose" class="col-md-6 ngSelect">
-                    <ng-select placeholder="{{'purpose_of_booking'| translate: translateKey}}" formControlName="code">
-                        <ng-option *ngFor="let purpose of purposes" [value]="purpose.code">
-                            {{ purpose.name }}
-                        </ng-option>
-                    </ng-select>
-                    <control-messages [control]="searchTownHallForm.controls.purpose.controls.code">
-                    </control-messages>
-                </div>
+                    <div formGroupName="purpose" class="col-md-6 ngSelect">
+                        <ng-select placeholder="{{'purpose_of_booking'| translate: translateKey}}" formControlName="code">
+                            <ng-option *ngFor="let purpose of purposes" [value]="purpose.code">
+                                {{ purpose.name }}
+                            </ng-option>
+                        </ng-select>
+                        <control-messages [control]="searchTownHallForm.controls.purpose.controls.code">
+                        </control-messages>
+                    </div>
 
-                <mat-form-field class="col-md-6">
-                    <mat-label>
-                        {{'choose_start_date'| translate: translateKey}}
-                    </mat-label>
-                    <input matInput [matDatepickerFilter]="myFilter" (dateChange)="changeStartDate($event)" [min]="startMinDate" [matDatepicker]="townHallBookingfromPicker"
-                        formControlName="startDate" placeholder="DD/MM/YYYY">
-                    <mat-datepicker-toggle matSuffix [for]="townHallBookingfromPicker"></mat-datepicker-toggle>
-                    <mat-datepicker #townHallBookingfromPicker touchUi="true"></mat-datepicker>
-                    <control-messages [control]="searchTownHallForm.controls.startDate">
-                    </control-messages>
-                </mat-form-field>
+                    <mat-form-field class="col-md-6">
+                        <mat-label>
+                            {{'choose_start_date'| translate: translateKey}}
+                        </mat-label>
+                        <input matInput [matDatepickerFilter]="myFilter" (dateChange)="changeStartDate($event)" [min]="startMinDate" [matDatepicker]="townHallBookingfromPicker"
+                            formControlName="startDate" placeholder="DD/MM/YYYY">
+                        <mat-datepicker-toggle matSuffix [for]="townHallBookingfromPicker"></mat-datepicker-toggle>
+                        <mat-datepicker #townHallBookingfromPicker touchUi="true"></mat-datepicker>
+                        <control-messages [control]="searchTownHallForm.controls.startDate">
+                        </control-messages>
+                    </mat-form-field>
 
-                <mat-form-field class="col-md-6">
-                    <mat-label>
-                        {{'choose_end_date'| translate: translateKey}}
-                    </mat-label>
-                    <input matInput [readonly]="searchTownHallForm.controls.startDate.value == null" [matDatepickerFilter]="myFilter" [min]="endMinDate"
-                        [matDatepicker]="townHallBookingtoPicker" formControlName="endDate" placeholder="DD/MM/YYYY">
-                    <mat-datepicker-toggle matSuffix [for]="townHallBookingtoPicker"></mat-datepicker-toggle>
-                    <mat-datepicker #townHallBookingtoPicker touchUi="true"></mat-datepicker>
-                    <control-messages [control]="searchTownHallForm.controls.endDate">
-                    </control-messages>
-                </mat-form-field>
-                <!-- <div class="col-md-12 text-right">
+                    <mat-form-field class="col-md-6">
+                        <mat-label>
+                            {{'choose_end_date'| translate: translateKey}}
+                        </mat-label>
+                        <input matInput [readonly]="searchTownHallForm.controls.startDate.value == null" [matDatepickerFilter]="myFilter" [min]="endMinDate"
+                            [matDatepicker]="townHallBookingtoPicker" formControlName="endDate" placeholder="DD/MM/YYYY">
+                        <mat-datepicker-toggle matSuffix [for]="townHallBookingtoPicker"></mat-datepicker-toggle>
+                        <mat-datepicker #townHallBookingtoPicker touchUi="true"></mat-datepicker>
+                        <control-messages [control]="searchTownHallForm.controls.endDate">
+                        </control-messages>
+                    </mat-form-field>
+                    <!-- <div class="col-md-12 text-right">
                     <button mat-raised-button color="primary" type="submit">
                         {{'search'| translate: translateKey}}
                     </button>
                 </div> -->
-            </div>
-            <div class="row fotButtonBar">
-                <div class="col-sm-12 col-md-12 text-right">
-                    <button mat-raised-button color="primary" type="submit">
-                            {{'search'| translate: translateKey}}
-                    </button>
                 </div>
-            </div>
-           
-        </form>
-    </div>
+                <div class="row fotButtonBar">
+                    <div class="col-sm-12 col-md-12 text-right">
+                        <button mat-raised-button color="primary" type="submit">
+                            {{'search'| translate: translateKey}}
+                        </button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
     </mat-card>
 
     <div *ngIf="Dates.length>0" class="mt-4">
         <mat-card class="formClass cardBorder">
             <div class="pageTitle">{{'list_of_town_hall'| translate: translateKey}}</div>
 
-        <mat-accordion *ngFor="let month of filterMonths(); let i = index;">
-            <mat-expansion-panel [expanded]="i === 0">
-                <mat-expansion-panel-header>
-                    <mat-panel-title>
-                        {{month.monthName}}
-                    </mat-panel-title>
-                </mat-expansion-panel-header>
-                <div>
-                    <mat-checkbox [checked]="!checkedAllinMonth(month)" labelPosition="after" (change)="selectAllShiftsInMonth($event.checked, month, i)">
-                        {{'select_all_shift_in'| translate: translateKey}} {{month.monthName}}
-                    </mat-checkbox>
-                </div>
+            <mat-accordion *ngFor="let month of filterMonths(); let i = index;">
+                <mat-expansion-panel [expanded]="i === 0">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            {{month.monthName}}
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div>
+                        <mat-checkbox [checked]="!checkedAllinMonth(month)" labelPosition="after" (change)="selectAllShiftsInMonth($event.checked, month, i)">
+                            {{'select_all_shift_in'| translate: translateKey}} {{month.monthName}}
+                        </mat-checkbox>
+                    </div>
 
-                <div class="row">
-                    <div *ngFor="let date of filterAcc(month.id)" class="col-6 col-md-3 col-lg-2 mb-1 p-1">
+                    <div class="row">
+                        <div *ngFor="let date of filterAcc(month.id)" class="col-6 col-md-3 col-lg-2 mb-1 p-1">
                             <div class="dateBox rounded border">
                                 <strong>
                                     {{bookingUtils.returnProperDate(date.key)}}
@@ -146,23 +141,22 @@
                                     </mat-checkbox>
                                 </div>
                             </div>
-                        
-                    </div>
-                </div>
-            </mat-expansion-panel>
-        </mat-accordion>
 
-        <div class="fotButtonBar">
+                        </div>
+                    </div>
+                </mat-expansion-panel>
+            </mat-accordion>
+
+            <div class="fotButtonBar">
                 <div class="col-sm-12 col-md-12 text-right">
                     <button mat-raised-button data-toggle="modal" (click)="shortlistShifts()" data-target="#confirmShortlistModel" type="button"
                         [disabled]="selectedShift.length == 0" color="primary">
                         {{'shortlist'| translate: translateKey}}
                     </button>
                 </div>
-              </div>
-</mat-card>
+            </div>
+        </mat-card>
     </div>
-
 </div>
 
 <div class="modal fade" id="confirmShortlistModel" tabindex="-1" role="dialog" aria-hidden="true">
@@ -178,30 +172,30 @@
             </div>
             <div class="modal-body scrollModel">
                 <div class="table-responsive">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col" width="56">{{'s_no'| translate: translateKey}}</th>
-                            <th scope="col">{{'start_date'| translate: translateKey}}</th>
-                            <th scope="col">{{'end_date'| translate: translateKey}}</th>
-                            <th scope="col">{{'shift'| translate: translateKey}}</th>
-                            <th scope="col" width="65">{{'action'| translate: translateKey}}</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let shifts of selectedShift; let i = index;">
-                            <th scope="row">{{i+1}}</th>
-                            <td>{{bookingUtils.returnProperDate(shifts.start)}}</td>
-                            <td>{{bookingUtils.returnProperDate(shifts.end)}}</td>
-                            <td>{{shifts.shiftType}}</td>
-                            <td>
-                                <button mat-icon-button title="{{'remove_slot'| translate: translateKey}}" [disabled]="selectedShift.length == 1" (click)="removeSelectedShift(shifts, i)">
-                                    <mat-icon color="warn">delete</mat-icon>
-                                </button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col" width="56">{{'s_no'| translate: translateKey}}</th>
+                                <th scope="col">{{'start_date'| translate: translateKey}}</th>
+                                <th scope="col">{{'end_date'| translate: translateKey}}</th>
+                                <th scope="col">{{'shift'| translate: translateKey}}</th>
+                                <th scope="col" width="65">{{'action'| translate: translateKey}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let shifts of selectedShift; let i = index;">
+                                <th scope="row">{{i+1}}</th>
+                                <td>{{bookingUtils.returnProperDate(shifts.start)}}</td>
+                                <td>{{bookingUtils.returnProperDate(shifts.end)}}</td>
+                                <td>{{shifts.shiftType}}</td>
+                                <td>
+                                    <button mat-icon-button title="{{'remove_slot'| translate: translateKey}}" [disabled]="selectedShift.length == 1" (click)="removeSelectedShift(shifts, i)">
+                                        <mat-icon color="warn">delete</mat-icon>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
             <div class="modal-footer">
@@ -221,26 +215,26 @@
 
 <div *ngIf="showPaymentReciept">
 
-<div class="table-responsive">
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">{{'ref_number'| translate: translateKey}}</th>
-                <th scope="col">{{'date_of_programme'| translate: translateKey}}</th>
-                <th scope="col">{{'rent_amount'| translate: translateKey}}</th>
-                <th scope="col">{{'deposit_amount'| translate: translateKey}}</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td scope="col">{{paymentObject.refNumber}}</td>
-                <td scope="col">{{bookingUtils.returnProperDate(paymentObject.bookingDate)}}</td>
-                <td scope="col">{{paymentObject.rentAmount}}</td>
-                <td scope="col">{{paymentObject.depositAmount}}</td>
-            </tr>
-        </tbody>
-    </table>
-</div>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">{{'ref_number'| translate: translateKey}}</th>
+                    <th scope="col">{{'date_of_programme'| translate: translateKey}}</th>
+                    <th scope="col">{{'rent_amount'| translate: translateKey}}</th>
+                    <th scope="col">{{'deposit_amount'| translate: translateKey}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td scope="col">{{paymentObject.refNumber}}</td>
+                    <td scope="col">{{bookingUtils.returnProperDate(paymentObject.bookingDate)}}</td>
+                    <td scope="col">{{paymentObject.rentAmount}}</td>
+                    <td scope="col">{{paymentObject.depositAmount}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
     <div class="mt-5">
         <h3 class="text-center">
@@ -354,7 +348,7 @@
                     {{'proceed_for_application' | translate: translateKey}}
                 </button>
             </div>
-       </div>
+        </div>
     </div>
 </div>
 
@@ -402,10 +396,11 @@
                     </div>
 
                     <div class="row mt-4 fotButtonBar">
-                            <div class="col-sm-12 col-md-12 text-right">
-                                <button mat-raised-button type="button" color="primary" (click)="tabIndex= tabIndex +1;">{{'next' | translate:translateKey}}
-                                    </button>
-                            </div>
+                        <div class="col-sm-12 col-md-12 text-right">
+                            <button mat-raised-button type="button" color="primary" (click)="tabIndex= tabIndex +1;">{{'next'
+                                | translate:translateKey}}
+                            </button>
+                        </div>
                     </div>
                 </mat-tab>
 
@@ -477,11 +472,12 @@
                     <div class="row mt-4 fotButtonBar">
                         <div class="col-sm-12 col-md-12 justify-content-between d-flex">
                             <button type="button" mat-raised-button (click)="tabIndex= tabIndex -1; ">{{'back' | translate:translateKey}}</button>
-                            <button mat-raised-button type="button" color="primary" (click)="tabIndex= tabIndex +1;">{{'next' | translate:translateKey}}
+                            <button mat-raised-button type="button" color="primary" (click)="tabIndex= tabIndex +1;">{{'next'
+                                | translate:translateKey}}
                             </button>
                         </div>
                     </div>
-                    
+
                 </mat-tab>
 
                 <mat-tab>
@@ -540,7 +536,7 @@
                             <control-messages [control]="townHallApplicationForm.controls.programPurpose"></control-messages>
                         </mat-form-field>
                     </div>
-                    
+
                     <div class="row mt-4 fotButtonBar">
                         <div class="col-sm-12 col-md-12 justify-content-between d-flex">
                             <button type="button" mat-raised-button (click)="tabIndex= tabIndex -1; ">{{'back' | translate:translateKey}}</button>
@@ -549,7 +545,7 @@
                             </button>
                         </div>
                     </div>
-                    
+
 
                 </mat-tab>
             </mat-tab-group>
