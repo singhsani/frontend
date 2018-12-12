@@ -1,10 +1,10 @@
 
 <mat-card class="mb-4">
 
-	<form [formGroup]="paymentsForm" autocomplete="off" ngNativeValidate>
+	<form [formGroup]="paymentsForm" autocomplete="off" ngNativeValidate novalidate>
 		<div class="row">
 			<div formGroupName="payableServices" class="col-md-4 ngSelect">
-				<ng-select placeholder="Select Payable Service" formControlName="code" (change)="showHideSearchable($event)">
+				<ng-select placeholder="Select Payable Service *" formControlName="code" (change)="showHideSearchable($event)">
 					<ng-option *ngFor="let payservice of PayableServices" [value]="payservice.code">
 						{{payservice.name}}
 					</ng-option>
@@ -13,7 +13,7 @@
 			</div>
 
 			<mat-form-field class="col-md-4">
-				<input matInput placeholder="Reference Number" formControlName="refNumber">
+				<input matInput placeholder="Reference Number" formControlName="refNumber" required>
 				<control-messages [control]="paymentsForm.get('refNumber')"></control-messages>
 			</mat-form-field>
 

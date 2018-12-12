@@ -221,15 +221,11 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 			if (this.prcInitialDate != this.prcRegForm.get('rcDate').value && fieldName === 'rcDate') {
 
 				/* If PRC is exist then show alert and clear emp details */
-				if (this.prcRegForm.get('prcNo').value) {
+				if (this.prcRegForm.get('prcNo').value && this.empDetailsListArray.length > 0) {
 
 					this.commonService.commonAlert('Are you sure', 'If RC Date changed then all the entries will be delete', 'question', 'Yes, submit it!', true, '', cb => {
 
-						this.profeService.updatePrcForm(this.prcRegForm.getRawValue().prcNo, moment(this.prcRegForm.get('rcDate').value).format("YYYY-MM-DD")).subscribe(res => {
-							this.setValuesInForm(res, 'rcDateChanged');
-						});
-
-						if (this.prcRegForm.get('rcDateEditAble').value) {
+						if (this.prcRegForm.get('rcDateEditAble').value && this.prcRegForm.get('employeeSalarySummary').value.length > 0) {
 							this.profeService.updatePrcForm(this.prcRegForm.getRawValue().prcNo, moment(this.prcRegForm.get('rcDate').value).format("YYYY-MM-DD")).subscribe(res => {
 								this.setValuesInForm(res, 'rcDateChanged');
 							});
@@ -320,12 +316,18 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 							}
 						}
 
-						this.prcRegForm.get('rcDate').disable();
-						this.prcRegForm.get('prcNo').setValue(res.prcNo);
+						if (this.prcRegForm.get('prcNo').value) {
+							this.commonService.openAlert("PRC Information Updated Successful", "", "success", `PRC number is ${res.prcNo}`, cb => {
+								this.router.navigateByUrl(ManageRoutes.getFullRoute('CITIZENDASHBOARD'));
+							});
+						} else {
+							this.prcRegForm.get('rcDate').disable();
+							this.prcRegForm.get('prcNo').setValue(res.prcNo);
 
-						this.commonService.openAlert("PRC Registration Successful", "", "success", `PRC number is ${res.prcNo}`, cb =>{
-							this.router.navigateByUrl(ManageRoutes.getFullRoute('CITIZENDASHBOARD'));
-						});
+							this.commonService.openAlert("PRC Registration Successful", "", "success", `PRC number is ${res.prcNo}`, cb => {
+								this.router.navigateByUrl(ManageRoutes.getFullRoute('CITIZENDASHBOARD'));
+							});
+						}
 					}
 				});
 			} else {
@@ -429,18 +431,16 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 				/** If prcNo exist then check for rcDateEditAble is false then disable the field else enable the field */
 
 				if (this.prcRegForm.get('prcNo').value) {
-					if (!this.prcRegForm.get('rcDateEditAble').value) {
-						this.prcRegForm.get('rcDate').disable();
-					} else {
+					if (this.prcRegForm.get('rcDateEditAble').value) {
+						this.isPRCExist = false;
 						this.prcRegForm.get('rcDate').enable();
+					} else {
+						this.prcRegForm.get('rcDate').disable();
+						this.isPRCExist = true;
 					}
 				}
 
 				this.prcInitialDate = this.prcRegForm.get('rcDate').value;
-
-				if (flag != 'rcDateChanged') {
-					this.isPRCExist = true;
-				}
 
 				this.empDetailsListArray = _.orderBy(res.data.employeeSalarySummary, ['year', (el) => (this.monthArray.indexOf(el.month))], ["asc", "asc"]);
 

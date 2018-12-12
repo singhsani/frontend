@@ -59,11 +59,12 @@ export class FileUploadComponent implements OnInit {
 	 */
 
 	ngOnInit() {
-		this.attachments = this.form.get('attachments').value;
+		this.attachments = (this.form.get('attachments') && this.form.get('attachments').value) ? this.form.get('attachments').value : [];
+		
 		this.disableOrEnableButton();
 		this.fromAdmin = this.commonService.fromAdmin();
 
-		if (this.attachments && this.form.get('attachments').value.length) {
+		if (this.attachments && this.attachments.length > 0) {
 			this.getFile = this.form.get('attachments').value.find(data => data.fieldIdentifier.toString() === this.uploadModel.fieldIdentifier.toString())
 		}
 	}
@@ -136,18 +137,22 @@ export class FileUploadComponent implements OnInit {
 			if (!this.selectedFiles) {
 				this.commonService.openAlert("Warning", "Please Select File to Upload", "warning");
 			} else {
-
-				if (this.selectedFiles[0].size > 5000000) {
+				let size = this.uploadModel.maxFileSizeInMB ? Math.floor(this.uploadModel.maxFileSizeInMB * 1000000) : 5000000;
+				if (this.selectedFiles[0].size > size) {
 					this.fileName = ''
 					this.canUpload = false;
-					this.commonService.openAlert("Warning", "File Size should be less than 5 MB", "warning");
-				} else {
+					this.commonService.openAlert("Warning", `File Size should be less than ${this.uploadModel.maxFileSizeInMB ? this.uploadModel.maxFileSizeInMB : 5 } MB`, "warning");
+					return;
+				} else if (this.selectedFiles[0].size <= 0){
+					this.commonService.openAlert("Warning", `File must have the content and size should not be 0 MB `, "warning");
+					return;
+				}else {
 					let formData = new FormData();
 
 					formData.append('fieldIdentifier', this.uploadModel.fieldIdentifier.toString());
-					formData.append('labelName', this.uploadModel.labelName);
+					formData.append('labelName', this.uploadModel.labelName ? this.uploadModel.labelName: this.uploadModel.documentLabelEn);
 					formData.append('formPart', this.uploadModel.formPart.toString());
-					formData.append('variableName', this.uploadModel.variableName);
+					formData.append('variableName', this.uploadModel.variableName ? this.uploadModel.variableName : this.uploadModel.documentIdentifier);
 					formData.append('serviceFormId', this.uploadModel.serviceFormId.toString());
 
 					this.progress.percentage = 0;
@@ -158,7 +163,7 @@ export class FileUploadComponent implements OnInit {
 					this.uploadFileService.processFileToServer(formData, setProgressBar => {
 						this.progress.percentage = setProgressBar;
 					}, successResponse => {
-						this.tostr.success(this.uploadModel.labelName + " successfully uploaded", "File Uploaded");
+						this.tostr.success(this.uploadModel.labelName ? this.uploadModel.labelName : this.uploadModel.documentLabelEn + " successfully uploaded", "File Uploaded");
 						this.canUpload = true;
 						this.id = successResponse.data.id;
 						this.type = successResponse.data.mimeType;
@@ -177,7 +182,10 @@ export class FileUploadComponent implements OnInit {
 					this.fileName = ''
 					this.canUpload = false;
 					this.commonService.openAlert("Warning", "File Size should be less than " + this.uploadModel.maxFileSizeInMB + " MB", "warning");
-
+					return;
+				} else if (this.selectedFiles[0].size <= 0) {
+					this.commonService.openAlert("Warning", `File must have the contents and size should not be 0 MB `, "warning");
+					return;
 				} else {
 					let formData = new FormData();
 

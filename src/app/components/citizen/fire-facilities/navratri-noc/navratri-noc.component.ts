@@ -233,17 +233,7 @@ export class NavratriNocComponent implements OnInit {
 			fireSafetyActionWithProof: [null, [Validators.required, Validators.maxLength(200)]],
 
 			/* Step 6 controls start*/
-			attachments: [],
-			serviceDetail: this.fb.group({
-				code: null,
-				name: null,
-				gujName: null,
-				feesOnScrutiny: null,
-				appointmentRequired: false,
-				serviceUploadDocuments: this.fb.array([
-
-				])
-			}),
+			attachments: []
 			/* Step 6 controls end */
 		});
 	}

@@ -46,7 +46,6 @@ export class ActionBarComponent implements OnInit, OnChanges {
 	 * Method initialize other opertaions.
 	 */
 	ngOnInit() {
-		//if (this.form) {
 		this.formService.apiType = this.form.get('apiType').value;
 		this.commonFormControls();
 		this.uploadFilesArray = this.uploadFiles;
@@ -57,7 +56,6 @@ export class ActionBarComponent implements OnInit, OnChanges {
 				this.isBtnsDisabled = false;
 			}
 		}, 600);
-		//}
 	}
 
 	ngOnChanges() {
@@ -294,7 +292,8 @@ export class ActionBarComponent implements OnInit, OnChanges {
 			name: new FormControl(),
 			gujName: new FormControl(),
 			feesOnScrutiny: new FormControl(),
-			appointmentRequired: new FormControl()
+			appointmentRequired: new FormControl(),
+			serviceUploadDocuments: this.fb.array([])
 		}));
 		/* ended common form controls in existing formGroups*/
 
