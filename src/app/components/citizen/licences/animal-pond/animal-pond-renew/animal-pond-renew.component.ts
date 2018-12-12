@@ -377,17 +377,7 @@ export class AnimalPondRenewComponent implements OnInit {
 			loinumber: [null],
 
 			/* Step 4 controls start*/
-			attachments: [],
-			serviceDetail: this.fb.group({
-				code: null,
-				name: null,
-				gujName: null,
-				feesOnScrutiny: null,
-				appointmentRequired: false,
-				serviceUploadDocuments: this.fb.array([
-
-				])
-			})
+			attachments: []
 			/* Step 4 controls end */
 		});
 	}

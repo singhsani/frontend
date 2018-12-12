@@ -6,7 +6,7 @@
 		</label> -->
 
 		<!-- Upload new file/Image-->
-		<label class="custom-file-upload" [hidden]="canUpload || !form.get('canEdit').value">
+		<label class="custom-file-upload" [hidden]="canUpload || (form.get('canEdit') && !form.get('canEdit').value)">
 			<input #fileInput [required]="requiredFile" type="file" (change)="selectFile($event)" />
 
 			<span class="attachment">
@@ -25,12 +25,12 @@
 		</label>
 
 		<!-- delete button -->
-		<button title="Delete File" [hidden]="!canUpload || !form.get('canEdit').value || currentFileUpload" type="button" mat-icon-button color="warn" (click)="deleteFile()" class="closeAttachFile">
+		<button title="Delete File" [hidden]="!canUpload || (form.get('canEdit') && !form.get('canEdit').value) || currentFileUpload" type="button" mat-icon-button color="warn" (click)="deleteFile()" class="closeAttachFile">
 			<mat-icon>delete</mat-icon>
 		</button>
 
 		<!-- If no file uploaded and form is submitted-->
-		<label  class="custom-file-upload" *ngIf="!canUpload && !form.get('canEdit').value">
+		<label  class="custom-file-upload" *ngIf="!canUpload && (form.get('canEdit') && !form.get('canEdit').value)">
 			<span class="badge badge-dark">No file uploaded</span>
 		</label>
 

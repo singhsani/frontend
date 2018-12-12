@@ -110,17 +110,7 @@ export class EleConnectionNocComponent implements OnInit {
 			fireLossAmount: [null, [Validators.required, Validators.maxLength(10)]],
 
 			/* Step 3 controls start */
-			attachments: [],
-			serviceDetail: this.fb.group({
-				code: null,
-				name: null,
-				gujName: null,
-				feesOnScrutiny: null,
-				appointmentRequired: false,
-				serviceUploadDocuments: this.fb.array([
-
-				])
-			}),
+			attachments: []
 			/* Step 6 controls end */
 		});
 	}

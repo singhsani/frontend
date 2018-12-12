@@ -403,15 +403,7 @@ export class ShopLicModificationComponent implements OnInit {
 			//enterHolidayGuj: [null],
 			licenseIssueDate: [null],
 			/*  */
-			attachments: [''],
-			serviceDetail: this.fb.group({
-				code: null,
-				name: null,
-				gujName: null,
-				feesOnScrutiny: null,
-				appointmentRequired: false,
-				serviceUploadDocuments: this.fb.array([])
-			})
+			attachments: ['']
 			/*  */
 
 
