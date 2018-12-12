@@ -1,71 +1,68 @@
-
-	<!-- <app-title-bar [title]="'site_title' | translate:translateKey"></app-title-bar> -->
-
-	<mat-card class="mb-4">
-
-		<mat-table #table [dataSource]="dataSource">
-
-			<ng-container matColumnDef="id">
-				<mat-header-cell *matHeaderCellDef>Payment ID</mat-header-cell>
-				<mat-cell *matCellDef="let element">
-					<span class="mobile-label">Payment ID</span> {{element.id}} </mat-cell>
-			</ng-container>
+<div class="example-container mat-elevation-z8 borderOne" [hidden]="resultsLength==0">
 
 
-			<ng-container matColumnDef="chalanNumber">
-				<mat-header-cell *matHeaderCellDef>Reference Number</mat-header-cell>
-				<mat-cell *matCellDef="let element">
-					<span class="mobile-label">Reference Number</span> {{element.refNumber}} </mat-cell>
-			</ng-container>
+	<mat-table #table [dataSource]="dataSource" class="myApplication">
+
+		<ng-container matColumnDef="id">
+			<mat-header-cell *matHeaderCellDef>#</mat-header-cell>
+			<mat-cell *matCellDef="let element" class="fullWidth">
+				<span class="mobile-label">#</span> {{element.id}} </mat-cell>
+		</ng-container>
 
 
-			<ng-container matColumnDef="amount">
-				<mat-header-cell *matHeaderCellDef>Amount</mat-header-cell>
-				<mat-cell *matCellDef="let element">
-					<span class="mobile-label">Amount</span> {{element.amount}} </mat-cell>
-			</ng-container>
+		<ng-container matColumnDef="chalanNumber">
+			<mat-header-cell *matHeaderCellDef>Reference Number</mat-header-cell>
+			<mat-cell *matCellDef="let element" class="fullWidth">
+				<span class="mobile-label">Reference Number</span> {{element.refNumber}} </mat-cell>
+		</ng-container>
 
-			<ng-container matColumnDef="paymentDate">
-				<mat-header-cell *matHeaderCellDef>Payment Date</mat-header-cell>
-				<mat-cell *matCellDef="let element">
-					<span class="mobile-label">Payment Date</span>{{element.paymentDate}}</mat-cell>
-			</ng-container>
 
-			<ng-container matColumnDef="payableServices">
-				<mat-header-cell *matHeaderCellDef>Service Name</mat-header-cell>
-				<mat-cell *matCellDef="let element">
-					<span class="mobile-label">Service Name</span>{{element.serviceName}}</mat-cell>
-			</ng-container>
+		<ng-container matColumnDef="amount">
+			<mat-header-cell *matHeaderCellDef>Amount</mat-header-cell>
+			<mat-cell *matCellDef="let element" class="fullWidth">
+				<span class="mobile-label">Amount</span> {{element.amount}} </mat-cell>
+		</ng-container>
 
-			<ng-container matColumnDef="transactionId">
-				<mat-header-cell *matHeaderCellDef>Transaction ID</mat-header-cell>
-				<mat-cell *matCellDef="let element">
-					<span class="mobile-label">Transaction ID</span>{{element.transactionId}}</mat-cell>
-			</ng-container>
+		<ng-container matColumnDef="paymentDate">
+			<mat-header-cell *matHeaderCellDef>Payment Date</mat-header-cell>
+			<mat-cell *matCellDef="let element" class="fullWidth">
+				<span class="mobile-label">Payment Date</span>{{element.paymentDate}}</mat-cell>
+		</ng-container>
 
-			<ng-container matColumnDef="paymentStatus">
-				<mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
-				<mat-cell *matCellDef="let element">
-					<span class="mobile-label">Status</span> {{element.paymentStatus}} </mat-cell>
-			</ng-container>
+		<ng-container matColumnDef="payableServices">
+			<mat-header-cell *matHeaderCellDef>Service Name</mat-header-cell>
+			<mat-cell *matCellDef="let element" class="fullWidth">
+				<span class="mobile-label">Service Name</span>{{element.serviceName}}</mat-cell>
+		</ng-container>
 
-			<ng-container matColumnDef="detailsButton">
-				<mat-header-cell *matHeaderCellDef></mat-header-cell>
-				<mat-cell *matCellDef="let element">
-					<span class="mobile-label">></span>
-					<button matTooltip="View Details" matTooltipPosition='right' (click)="openDailog(element)" mat-icon-button color="primary">
-						<mat-icon>lock_open</mat-icon>
-					</button>
-				</mat-cell>
-			</ng-container>
-	
-			<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-			<mat-row *matRowDef="let row; columns: displayedColumns;" ></mat-row>
+		<ng-container matColumnDef="transactionId">
+			<mat-header-cell *matHeaderCellDef>Transaction ID</mat-header-cell>
+			<mat-cell *matCellDef="let element" class="fullWidth">
+				<span class="mobile-label">Transaction ID</span>{{element.transactionId}}</mat-cell>
+		</ng-container>
 
-		</mat-table>
+		<ng-container matColumnDef="paymentStatus">
+			<mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
+			<mat-cell *matCellDef="let element" class="fullWidth">
+				<span class="mobile-label">Status</span> {{element.paymentStatus}} </mat-cell>
+		</ng-container>
 
-		<mat-paginator [length]="resultsLength" [pageSize]="pageSize">
-		</mat-paginator>
+		<ng-container matColumnDef="detailsButton">
+			<mat-header-cell *matHeaderCellDef>Action</mat-header-cell>
+			<mat-cell *matCellDef="let element" class="fullWidth">
+				<span class="mobile-label">Action</span>
+				<button matTooltip="View Details" matTooltipPosition='right' (click)="openDailog(element)" mat-icon-button color="primary">
+					<mat-icon>lock_open</mat-icon>
+				</button>
+			</mat-cell>
+		</ng-container>
 
-	</mat-card>
+		<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+		<mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
 
+	</mat-table>
+
+	<mat-paginator [length]="resultsLength" [pageSize]="pageSize">
+	</mat-paginator>
+
+</div>

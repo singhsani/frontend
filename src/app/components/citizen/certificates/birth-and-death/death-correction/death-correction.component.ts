@@ -338,10 +338,8 @@ export class DeathCorrectionComponent implements OnInit {
 				gujName: null,
 				feesOnScrutiny: null
 			}),
-
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
-
-			attachments: [],
+			attachments: []
 		});
 	}
 
