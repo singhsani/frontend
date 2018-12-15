@@ -73,7 +73,7 @@
 					</mat-form-field>
 				</div>
 				<app-action-bar [form]="provisionalNocForm" (tabIndex)="onTabChange($event)" (handleOnSaveAndNext)="handleOnSaveAndNext($event)"
-				 [stepInfo]="{step: 'step0', next: 1, back: 0}"></app-action-bar>
+				 [stepInfo]="{step: 'step1', next: 1, back: 0}"></app-action-bar>
 			</mat-tab>
 			<!-- step 1 Ends -->
 			<!-- step 2 Start -->
@@ -124,7 +124,7 @@
 					 [addressFormGroup]="provisionalNocForm.controls.permanantAddress"></app-address>
 				</div> -->
 				<app-action-bar [form]="provisionalNocForm" (tabIndex)="onTabChange($event)" (handleOnSaveAndNext)="handleOnSaveAndNext($event)"
-				 [stepInfo]="{step: 'step1', next: 2, back: 0}"></app-action-bar>
+				 [stepInfo]="{step: 'step2', next: 2, back: 0}"></app-action-bar>
 			</mat-tab>
 			<!-- step 2 Ends -->
 
@@ -188,7 +188,7 @@
 
 					<mat-form-field class="col-md-4">
 						<input matInput required OnlyNumber maxlength="10" minlength="10" type="tel" formControlName="architectContactNo"
-						 placeholder="{{'architect_contact_number' | translate:translateKey }}*">
+						 placeholder="{{'architect_contact_number' | translate:translateKey }}">
 						<control-messages [control]="provisionalNocForm.controls.architectContactNo"></control-messages>
 					</mat-form-field>
 
@@ -236,7 +236,7 @@
 				</div>
 
 				<app-action-bar [form]="provisionalNocForm" (tabIndex)="onTabChange($event)" (handleOnSaveAndNext)="handleOnSaveAndNext($event)"
-				 [stepInfo]="{step: 'step2', next: 3, back: 1}"></app-action-bar>
+				 [stepInfo]="{step: 'step3', next: 3, back: 1}"></app-action-bar>
 			</mat-tab>
 			<!-- step 3 Ends -->
 
@@ -411,7 +411,7 @@
 					</div>
 				</div>
 				<app-action-bar [form]="provisionalNocForm" (tabIndex)="onTabChange($event)" (handleOnSaveAndNext)="handleOnSaveAndNext($event)"
-				 [stepInfo]="{step: 'step3', next: 4, back: 2}"></app-action-bar>
+				 [stepInfo]="{step: 'step4', next: 4, back: 2}"></app-action-bar>
 			</mat-tab>
 			<!-- step 4 Ends -->
 
@@ -512,7 +512,7 @@
 				</div>
 
 				<app-action-bar [form]="provisionalNocForm" (handleOnSaveAndNext)="handleOnSaveAndNext($event)" (tabIndex)="onTabChange($event)"
-				 [stepInfo]="{step: 'step4', next: 5, back: 3}"></app-action-bar>
+				 [stepInfo]="{step: 'step5', next: 5, back: 3}"></app-action-bar>
 			</mat-tab>
 			<!-- step 5 Ends -->
 

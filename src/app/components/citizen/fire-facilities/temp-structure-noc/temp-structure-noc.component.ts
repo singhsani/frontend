@@ -86,6 +86,8 @@ export class TempStructureNocComponent implements OnInit {
 		});
 		//check for attachment is mandatory
 		this.dependentAttachment(this.tempStructureNocForm.get('securityArrangement').value, 'SECURITY_ARRANGEMENT');
+		this.dependentAttachment(this.tempStructureNocForm.get('securityArrangement').value, 'LOCATION_MAP');
+		this.dependentAttachment(this.tempStructureNocForm.get('securityArrangement').value, 'PERMISSION_FROM_LAND_OWNER');
 	}
 
 	/**
@@ -340,6 +342,18 @@ export class TempStructureNocComponent implements OnInit {
 	 */
 	handleOnSaveAndNext(res) {
 		this.requiredDocumentList();
+	}
+
+	/**
+	 * Used to capture change in birth time for perticular child.
+	 * @param ev - event
+	 * @param index - index of child
+	 */
+	changeTimeFormat(ev:string, controlName: string){
+		if(ev && ev.length < 8){
+			ev = ev.concat(":00");
+		}
+		this.tempStructureNocForm.get(controlName).setValue(ev);
 	}
 
 	/**
