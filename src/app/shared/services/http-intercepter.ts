@@ -31,8 +31,6 @@ export class TokenInterceptor implements HttpInterceptor {
 	constructor(
 		private toaster: ToastrService,
 		private commonService: CommonService,
-		private router: Router,
-		private session: SessionStorageService,
 		private appService: AppService,
 		private hosAppService: HosAppService) {
 
@@ -44,6 +42,8 @@ export class TokenInterceptor implements HttpInterceptor {
      * @param next - parameter for http handler
      */
 	intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+
+	
 
 		this.requests.push(req);
 		this.commonService.isLoading.next(true);
@@ -62,27 +62,39 @@ export class TokenInterceptor implements HttpInterceptor {
 						observer.error(err);
 
 						if (err instanceof HttpErrorResponse) {
-
+							
 							switch (err.status) {
 								case 0:
-									this.commonService.openAlert('Oops...', 'Something went wrong!', 'error', '', cb => {
-										if (this.commonService.getUserType() === 'HOSPITAL') {
-											this.hosAppService.logout();
-										} else {
-											this.appService.logout();
-										}
-									});
+									this.toaster.error("Something went wrong!");
+									if (this.commonService.getUserType() === 'HOSPITAL') {
+										this.hosAppService.logout();
+									} else {
+										this.appService.logout();
+									}
+									// this.commonService.openAlert('Oops...', 'Something went wrong!', 'error', '', cb => {
+									// 	if (this.commonService.getUserType() === 'HOSPITAL') {
+									// 		this.hosAppService.logout();
+									// 	} else {
+									// 		this.appService.logout();
+									// 	}
+									// });
 									break;
 								case 400:
 									break;
 								case 401:
-									this.commonService.openAlert('Warning!', err.error.message ? err.error.message : err.error.error, 'warning', '', cb => {
-										if (this.commonService.getUserType() === 'HOSPITAL') {
-											this.hosAppService.logout();
-										} else {
-											this.appService.logout();
-										}
-									});
+									this.toaster.error(err.error.message ? err.error.message : err.error.error);
+									if (this.commonService.getUserType() === 'HOSPITAL') {
+										this.hosAppService.logout();
+									} else {
+										this.appService.logout();
+									}
+									// this.commonService.openAlert('Warning!', err.error.message ? err.error.message : err.error.error, 'warning', '', cb => {
+									// 	if (this.commonService.getUserType() === 'HOSPITAL') {
+									// 		this.hosAppService.logout();
+									// 	} else {
+									// 		this.appService.logout();
+									// 	}
+									// });
 									break;
 								case 404:
 									this.commonService.openAlert('Error!', err.error.message ? err.error.message : err.error.error, 'error');

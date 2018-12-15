@@ -116,17 +116,20 @@ export class ActionBarComponent implements OnInit, OnChanges {
 				this.toastr.success(`${this.form.getRawValue().serviceDetail.name} information successfully saved`);
 			},
 			err => {
+
 				this.markFormGroupTouched(this.form);
 				this.isSaveBtnDisabled = false;
 				let count = 1;
 				for (const key in this.form.controls) {
-					if (key == err.error[0].property) {
+					if (err.error[0] && key == err.error[0].property) {
 						this.handleErrors.emit(count);
 						break;
 					}
 					count++;
 				}
 			}
+
+
 		);
 	}
 
@@ -143,11 +146,9 @@ export class ActionBarComponent implements OnInit, OnChanges {
 			this.mandatoryFileCheck().then(data => {
 				if (data.status) {
 					this.formService.submitFormData(this.form.get('serviceFormId').value).subscribe(res => {
-
 						if (res.success) {
 							this.form.get('canEdit').setValue(false);
 						}
-
 						this.toastr.success(`${this.form.getRawValue().serviceDetail.name} information successfully submit`);
 						this.isSubmitBtnDisabled = false;
 						this.isBtnsDisabled = false;
@@ -182,7 +183,11 @@ export class ActionBarComponent implements OnInit, OnChanges {
 									this.commonService.commonAlert("Application Incomplete", "", 'warning', 'Make Payment!', false, errHtml, ccb => {
 										window.location.href = environment.adminUrl + `#/admin/payment-gateway?retUrl=${payData.retUrl}&retPath=${payData.retPath}`;
 									}, arj => {
-										retUrl;
+										this.form.get('canEdit').setValue(false);
+										//this.toastr.success(`${this.form.getRawValue().serviceDetail.name} information successfully submit`);
+										this.isSubmitBtnDisabled = false;
+										this.isBtnsDisabled = false;
+										this.form.disable();
 									})
 									return;
 								});
@@ -190,7 +195,6 @@ export class ActionBarComponent implements OnInit, OnChanges {
 							}
 						}
 					);
-
 				} else {
 					this.commonService.openAlert("File Upload", "Please Upload Mandatory File ".concat(data.fileName), "warning");
 					this.isSubmitBtnDisabled = false;
@@ -228,20 +232,28 @@ export class ActionBarComponent implements OnInit, OnChanges {
 
 		this.isSaveBtnDisabled = true;
 		this.formService.saveFormData(this.form.getRawValue()).subscribe(saveResp => {
-			this.isSaveBtnDisabled = true;
+			this.form.patchValue(saveResp);
+			this.isSaveBtnDisabled = false;
+			if (this.isstepper) {
+				this.tabIndex.emit(this.stepInfo.next);
+			}
+			this.handleOnSaveAndNext.emit(saveResp);
+			//this.toastr.success(`${this.form.getRawValue().serviceDetail.name} information successfully saved`);
 			this.onSubmit();
 		},
 			err => {
+
 				this.markFormGroupTouched(this.form);
 				this.isSaveBtnDisabled = false;
 				let count = 1;
 				for (const key in this.form.controls) {
-					if (key == err.error[0].property) {
+					if (err.error[0] && key == err.error[0].property) {
 						this.handleErrors.emit(count);
 						break;
 					}
 					count++;
 				}
+
 			})
 	}
 

@@ -10,8 +10,9 @@ import { ManageRoutes } from '../../../../../config/routes-conf';
 import * as _ from 'lodash';
 import { AppointmentServices } from '../../appointment.service';
 import { FormsActionsService } from '../../../../../core/services/citizen/data-services/forms-actions.service';
+import { Configuration } from '../../configuration';
 
-const now = moment();
+
 
 export interface SlotDetails {
 	end: string
@@ -36,7 +37,7 @@ export class SlotBookingComponent implements OnInit {
 	@ViewChild(MatSort) sort: MatSort;
 	slotDataSource = new MatTableDataSource<SlotDetails>([]);
 
-	translateKey: '';
+	translateKey = 'appointmentBookingScreen';
 	formId: any;
 	apiCode: any;
 	apiType: string;
@@ -45,6 +46,20 @@ export class SlotBookingComponent implements OnInit {
 	calcelslots: any = [];
 	appointmentForm: FormGroup;
 	modalRef: BsModalRef;
+
+	/**
+	 * common configuration file
+	 */
+	private config: Configuration = new Configuration();
+
+	/**
+	 * Setting Date Validation
+	 */
+
+	/**
+	* Minimum start date.
+	*/
+	minDate = moment(new Date()).add(1, 'day').toISOString();
 
 	/**
 	 * pagination instance variables.
@@ -74,9 +89,6 @@ export class SlotBookingComponent implements OnInit {
 	displayedColumns = ['sno', 'date', 'start_time', 'end_time', 'status', 'action'];
 	bookedColumns = ['start date', 'end date', 'resource name', 'slot Status', 'action'];
 	dataSource = new MatTableDataSource();
-
-	//past date disable
-	minDate = now.toDate();
 
 	ngOnInit() {
 		this.route.paramMap.subscribe(param => {
@@ -124,7 +136,8 @@ export class SlotBookingComponent implements OnInit {
 		this.appointmentService.getResources().subscribe((resp) => {
 			this.resources = resp.data;
 		}, (err) => {
-			this.commonService.openAlert("Error", err.error[0].message, "warning");
+			if (err.error[0])
+				this.commonService.openAlert("Error", err.error[0].message, "warning");
 		})
 	}
 
@@ -132,9 +145,10 @@ export class SlotBookingComponent implements OnInit {
 	* This method use for get available slot 
 	*/
 	onSubmit() {
-		let resource = this.appointmentForm.controls.resources.get('code').value;
-		let appointmentdate = this.appointmentForm.get('appointmentdate').value;
-		if (!_.isEmpty(resource)) {
+		if (this.appointmentForm.invalid) {
+			this.config.getAllErrors(this.appointmentForm);
+			this.commonService.openAlert("Error", Configuration.ALL_FEILD_REQUIRED_MESSAGE, "warning");
+		} else {
 			this.getSlot();
 		}
 	}
@@ -160,7 +174,8 @@ export class SlotBookingComponent implements OnInit {
 			this.isLoadingResults = false;
 		},
 			err => {
-				this.commonService.openAlert("error", err.error[0].code, "error");
+				if (err.error[0])
+					this.commonService.openAlert("error", err.error[0].message, "error");
 			});
 	}
 
@@ -199,7 +214,6 @@ export class SlotBookingComponent implements OnInit {
 			this.appointmentService.bookSlot(this.formId, slotData.uniqueId).subscribe(resp => {
 				let res = resp.data;
 				if (res.bookingStatus === 'BOOKED') {
-
 					let appdetailhtml = `			
 								<div>
 								<h1>Appointment Details</h1>
@@ -222,7 +236,7 @@ export class SlotBookingComponent implements OnInit {
 								</table>
 								</div>`;
 
-					this.commonService.commonAlert("Appointment Scheduled Successfully", "", "info", "OK", true, appdetailhtml);
+					this.commonService.openAlert("Schedule Appointment", "Appointment Scheduled Successfully", "info", appdetailhtml);
 					let redirectUrl = ManageRoutes.getFullRoute('CITIZENMYAPPS');
 					this.router.navigate([redirectUrl]);
 				} else {
@@ -232,10 +246,14 @@ export class SlotBookingComponent implements OnInit {
 				this.appointmentList();
 
 			}, err => {
-				this.commonService.openAlert("Appointment Schedule Error", err.error[0].message, "error");
+				if (err.error[0]) {
+					if (err.error[0].code == Configuration.ONLY_ONE_APPOINTMENT_ALLOWED_CODE) {
+						this.commonService.openAlert(Configuration.APPOINTMENT_SCHEDULE_ERROR, Configuration.ONLY_ONE_APPOINTMENT_ALLOWED_ERROR, "error");
+					}
+				}
 			})
 		}, reject => {
-			console.log("Rejected");
+			//console.log("Rejected");
 		});
 	}
 
@@ -247,10 +265,13 @@ export class SlotBookingComponent implements OnInit {
 		this.commonService.deleteAlert('Are you sure?', "", 'warning', '', performDelete => {
 			this.appointmentService.cancelSlot(this.formId, uniqueId).subscribe(res => {
 				this.commonService.successAlert('Canceled!', '', 'success');
+				this.modalRef.hide();
 				//this.getSlot();
 				this.appointmentList();
 			}, err => {
-				this.commonService.openAlert("Cancellation Error", err.error[0].message, "error");
+				if (err.error[0] && err.error[0].code == Configuration.NOT_ALLOWED_TO_CANCEL_CODE) {
+					this.commonService.openAlert(Configuration.APPOINTMENT_CANCELLAION_ERROR, Configuration.NOT_ALLOWED_TO_CANCEL, "error");
+				}
 			});
 		});
 	}
@@ -263,7 +284,8 @@ export class SlotBookingComponent implements OnInit {
 			this.calcelslots = res.data;
 			this.appointmentLength = this.calcelslots.length;
 		}, err => {
-			this.commonService.openAlert("error", err.error[0].code, "error");
+			if (err.error[0])
+				this.commonService.openAlert("error", err.error[0].code, "error");
 		})
 	}
 
