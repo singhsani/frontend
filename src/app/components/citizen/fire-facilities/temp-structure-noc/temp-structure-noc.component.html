@@ -105,7 +105,7 @@
 					<div class="col-md-6 pl-0 ml-0">
 						<mat-form-field class="col-md-10">
 							<mat-label>{{'from_time' | translate:translateKey}}</mat-label>
-							<input placeholder="HH:MM" matInput type="time" atp-time-picker theme="dark" formControlName="fromTime" required />
+							<input (blur)="changeTimeFormat($event.target.value, 'fromTime')" placeholder="HH:MM" matInput type="time" atp-time-picker theme="dark" formControlName="fromTime" required />
 							<control-messages [control]="tempStructureNocForm.controls.fromTime"></control-messages>
 						</mat-form-field>
 						<button class="ml-0 pl-0" [disabled]="!tempStructureNocForm?.controls?.canEdit?.value" mat-icon-button type="button"
@@ -113,10 +113,11 @@
 							<mat-icon matTooltip="Select Time" color="primary">alarm</mat-icon>
 						</button>
 					</div>
+					
 					<div class="col-md-6 pl-0 ml-0">
 						<mat-form-field class="col-md-10">
 							<mat-label>{{'to_time' | translate:translateKey}}</mat-label>
-							<input placeholder="HH:MM" matInput type="time" atp-time-picker theme="dark" formControlName="toTime" required />
+							<input (blur)="changeTimeFormat($event.target.value, 'toTime')" placeholder="HH:MM" matInput type="time" atp-time-picker theme="dark" formControlName="toTime" required />
 							<control-messages [control]="tempStructureNocForm.controls.toTime"></control-messages>
 						</mat-form-field>
 						<button class="ml-0 pl-0" [disabled]="!tempStructureNocForm?.controls?.canEdit?.value" mat-icon-button type="button"
@@ -161,7 +162,7 @@
 						<div class="row">
 							<div class="col-md-12 radioBtnError">
 								<mat-label>{{'land_owner_consent_included' | translate:translateKey }} *</mat-label>
-								<mat-radio-group formControlName="landOwnerConsentIncluded">
+								<mat-radio-group formControlName="landOwnerConsentIncluded" required (change)="dependentAttachment($event.value,'PERMISSION_FROM_LAND_OWNER')"	>
 									<mat-radio-button [value]="true">
 										Yes
 									</mat-radio-button>
@@ -288,7 +289,7 @@
 
 					<div class="col-md-4 radioBtnError">
 						<mat-label>{{'layout_plan_included' | translate:translateKey }} *</mat-label>
-						<mat-radio-group formControlName="layoutPlanIncluded" required>
+						<mat-radio-group formControlName="layoutPlanIncluded" required  (change)="dependentAttachment($event.value,'LOCATION_MAP')"	>
 							<mat-radio-button [value]="true">
 								Yes
 							</mat-radio-button>

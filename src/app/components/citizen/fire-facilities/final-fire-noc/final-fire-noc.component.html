@@ -83,7 +83,7 @@
 					</mat-form-field>
 				</div>
 				<app-action-bar [form]="finalFireNocForm" (tabIndex)="onTabChange($event)" (handleOnSaveAndNext)="handleOnSaveAndNext($event)"
-				 [stepInfo]="{step: 'step0', next: 1, back: 0}"></app-action-bar>
+				 [stepInfo]="{step: 'step1', next: 1, back: 0}"></app-action-bar>
 			</mat-tab>
 			<!-- step 1 Ends -->
 			<!-- step 2 Start -->
@@ -134,7 +134,7 @@
 					 [addressFormGroup]="finalFireNocForm.controls.permanantAddress"></app-address>
 				</div> -->
 				<app-action-bar [form]="finalFireNocForm" (tabIndex)="onTabChange($event)" (handleOnSaveAndNext)="handleOnSaveAndNext($event)"
-				 [stepInfo]="{step: 'step1', next: 2, back: 0}"></app-action-bar>
+				 [stepInfo]="{step: 'step2', next: 2, back: 0}"></app-action-bar>
 			</mat-tab>
 			<!-- step 2 Ends -->
 
@@ -198,7 +198,7 @@
 
 					<mat-form-field class="col-md-4">
 						<input matInput required OnlyNumber maxlength="10" minlength="10" type="tel" formControlName="architectContactNo"
-						 placeholder="{{'architect_contact_number' | translate:translateKey }}*">
+						 placeholder="{{'architect_contact_number' | translate:translateKey }}">
 						<control-messages [control]="finalFireNocForm.controls.architectContactNo"></control-messages>
 					</mat-form-field>
 

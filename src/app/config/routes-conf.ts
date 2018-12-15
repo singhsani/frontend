@@ -69,9 +69,9 @@ const ROUTEMAIN = {
         'main': 'temporaryStructureNoc',
         'type': 'temporaryStructureNoc'
     },
-    'FS-FIREWORK': {
-        'main': 'FSTempFireworkShopNoc',
-        'type': 'FSTempFireworkShopNoc'
+    'FS-FIREWORKSHOP': {
+        'main': 'temporaryFireworkShopNoc',
+        'type': 'temporaryFireworkShopNoc'
     },
     'FS-GAS': {
         'main': 'gasConnectionNoc',
@@ -462,8 +462,8 @@ const ROUTESLIST = {
     'FS-TEMPSTRUCT': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.FIREFACILITIESMODULE + '/' + ROUTEMAIN["FS-TEMPSTRUCT"].main
     },
-    'FS-FIREWORK': {
-        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.FIREFACILITIESMODULE + '/' + ROUTEMAIN["FS-FIREWORK"].main
+    'FS-FIREWORKSHOP': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.FIREFACILITIESMODULE + '/' + ROUTEMAIN["FS-FIREWORKSHOP"].main
     },
     'FS-GAS': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.FIREFACILITIESMODULE + '/' + ROUTEMAIN["FS-GAS"].main

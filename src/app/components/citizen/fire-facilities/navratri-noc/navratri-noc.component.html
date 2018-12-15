@@ -188,7 +188,7 @@
 
 					<div class="col-md-12 radioBtnError">
 						<mat-label>{{'land_owner_is_vmc' | translate:translateKey }} *</mat-label>
-						<mat-radio-group formControlName="landOwnerIsVMC" required (change)="onChange('landOwnerIsVMC','vmcfeeReceiptNo');onChange('landOwnerIsVMC','vmcconsentLetterIncluded');onChange('landOwnerIsVMC','consentLetterDate');onChange('landOwnerIsVMC','landOwnerConsentIncluded');">
+						<mat-radio-group formControlName="landOwnerIsVMC" required (change)="onChange('landOwnerIsVMC','vmcfeeReceiptNo');onChange('landOwnerIsVMC','vmcConsentLetterIncluded');onChange('landOwnerIsVMC','consentLetterDate');onChange('landOwnerIsVMC','landOwnerConsentIncluded');">
 							<mat-radio-button [value]="true">
 								Yes
 							</mat-radio-button>
@@ -216,7 +216,7 @@
 								No
 							</mat-radio-button>
 						</mat-radio-group>
-						<control-messages [control]="navaratriNocForm.controls.vmcconsentLetterIncluded"></control-messages>
+						<control-messages [control]="navaratriNocForm.controls.vmcConsentLetterIncluded"></control-messages>
 					</div>
 					<mat-form-field class="col-md-4" *ngIf="navaratriNocForm.controls.landOwnerIsVMC.value">
 						<input matInput [matDatepicker]="picker4" formControlName="consentLetterDate" placeholder="{{'consent_letter_date' | translate:translateKey }} (DD/MM/YYYY)"

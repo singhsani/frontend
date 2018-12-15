@@ -131,13 +131,17 @@ export class NavratriNocComponent implements OnInit {
 	 * This method for set validation on form control
 	 * @param formControl - control name
 	 */
-	onChange(controlName: string, formControl: string) {
-		this.navaratriNocForm.get(formControl).reset();
+	onChange(controlName: string, dependentControl: string) {
+		
+		this.navaratriNocForm.get(dependentControl).reset();
 		if (controlName) {
-			this.navaratriNocForm.get(formControl).setValidators([Validators.required]);
+			this.navaratriNocForm.get(dependentControl).setValidators([Validators.required]);
+			// this.navaratriNocForm.updateValueAndValidity();
 		}
 		else {	
-			this.navaratriNocForm.get(formControl).clearValidators();
+			this.navaratriNocForm.get(dependentControl).clearValidators();
+			// this.navaratriNocForm.updateValueAndValidity();
+
 		}
 	}
 
