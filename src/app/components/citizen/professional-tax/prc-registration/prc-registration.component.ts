@@ -105,7 +105,7 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 			uniqueId: null,
 			version: null,
 			code: null,
-			serviceFormId: null,
+			taxFormId: null,
 			defaultDemandGenerated: false,
 			rcDateEditAble: false,
 
@@ -199,12 +199,16 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 	 * This method is used to enable form control when click on edit button
 	 */
 	editPRCDetail() {
-		this.commonService.commonAlert('Are you sure', `You want to edit ${this.prcRegForm.get('pecNo').value ? this.prcRegForm.get('pecNo').value : this.prcRegForm.get('prcNo').value} details`, 'question', 'Yes', true, '', cb => {
-			if (this.prcRegForm.get('pecNo').value) {
-				this.router.navigate(['../pec-registration'], { relativeTo: this.route, queryParams: { 'regNo': this.prcRegForm.get('pecNo').value } });
-			} else {
-				this.router.navigate(['../pec-registration'], { relativeTo: this.route, queryParams: { 'regNo': this.prcRegForm.get('prcNo').value } });
-			}
+		//this.commonService.commonAlert('Are you sure', `You want to edit ${this.prcRegForm.get('pecNo').value ? this.prcRegForm.get('pecNo').value : this.prcRegForm.get('prcNo').value} details`, 'question', 'Yes', true, '', cb => {
+		this.commonService.commonAlert('Are you sure', `You will be redirect to PEC  `, 'question', 'Yes', true, '', cb => {
+			
+			let redirectUrl = ManageRoutes.getFullRoute('PEC_REG');
+			
+			//if (this.prcRegForm.get('pecNo').value) {
+				this.router.navigate([redirectUrl, this.prcRegForm.get('pecNo').value, 'fromPRC']);
+			//} else {
+			//	this.router.navigate([redirectUrl, this.prcRegForm.get('prcNo').value, 'fromPRC']);
+			//}
 		}, dis => {
 
 		});
@@ -421,9 +425,9 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 
 			this.prcRegForm.patchValue(res.data);
 
-			if (res.data.serviceType === 'BUS_REG_PEC') {
+			if (res.data.formType === 'BUS_REG_PEC') {
 				this.prcRegForm.get('id').setValue(null);
-				this.prcRegForm.get('serviceFormId').setValue(null);
+				this.prcRegForm.get('taxFormId').setValue(null);
 				this.prcRegForm.get('defaultDemandGenerated').setValue(false);
 				this.prcRegForm.get('rcDate').enable();
 			} else {

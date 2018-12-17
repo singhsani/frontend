@@ -1,3 +1,4 @@
+import { FormsActionsService } from './../../../../core/services/citizen/data-services/forms-actions.service';
 import { element } from 'protractor';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
@@ -39,7 +40,11 @@ export class PecRegistrationComponent implements OnInit {
 	bankNameArray: any = [];
 	entryNoArray: any = [];
 	subEntryNoArray: any = [];
+	attachmentList: any = [];
 	tabIndex: number = 0;
+	serviceFormId: number;
+	apiCode: string = '';
+	showButtons: boolean = false;
 
 	maxDate: Date = new Date();
 	maxCommDate = moment().subtract(1, 'months').endOf('month').format('YYYY-MM-DD');// maxt Date for commencement
@@ -52,15 +57,35 @@ export class PecRegistrationComponent implements OnInit {
 		private router: Router,
 		private route: ActivatedRoute,
 		private toastr: ToastrService,
+		private formService: FormsActionsService,
 		private profeService: ProfessionalTaxService,
 		private commonService: CommonService
 	) {
 
 		this.profeService.apiType = "pecForm";
+		this.formService.apiType = "pecForm";
 	}
 
 	ngOnInit() {
+
 		this.pecRegistrationFormControls();
+
+		this.route.paramMap.subscribe(param => {
+			this.isQryParamExist = false;
+			this.apiCode = param.get('apiCode');
+
+			if (this.apiCode === 'fromPRC') {
+				this.isQryParamExist = true;
+				let pecNoTextBox = <HTMLInputElement>document.getElementById('pecNoTextBox');
+				pecNoTextBox.value = param.get('id');
+				this.searchPecRegByECRCNo(null, param.get('id'), true);
+			} else {
+				this.serviceFormId = Number(param.get('id'));
+				this.searchPecRegByECRCNo(null, '', false);
+				this.getAllDocumentLists(this.serviceFormId);
+			}
+		});
+
 		this.addMoreCenus();
 
 		this.getDataFromLookups();
@@ -70,15 +95,6 @@ export class PecRegistrationComponent implements OnInit {
 		this.getAllWardNos();
 		this.getBankNames();
 
-		this.route.queryParams.subscribe(param => {
-			this.isQryParamExist = false;
-			if (param && param.regNo) {
-				this.isQryParamExist = true;
-				let pecNoTextBox = <HTMLInputElement>document.getElementById('pecNoTextBox');
-				pecNoTextBox.value = param.regNo;
-				this.searchPecRegByECRCNo(null, param.regNo);
-			}
-		});
 	}
 
 	/**
@@ -89,7 +105,7 @@ export class PecRegistrationComponent implements OnInit {
 		this.pecRegForm = this.fb.group({
 
 			id: null,
-			serviceFormId: null,
+			taxFormId: null,
 			uniqueId: null,
 			version: null,
 			code: null,
@@ -156,7 +172,8 @@ export class PecRegistrationComponent implements OnInit {
 				code: [null, Validators.required], name: null,
 			}),
 			applicableRate: [{ value: 0, disabled: true }],
-			otherProfession: null
+			otherProfession: null,
+			attachments: []
 		});
 
 		/** set default addressType */
@@ -179,6 +196,18 @@ export class PecRegistrationComponent implements OnInit {
 			creditAmount: 0,
 			totalTaxAmount: 0,
 			applicableRate: 0
+		});
+	}
+
+	getAllDocumentLists(taxFormId) {
+		this.profeService.getAllDocuments().subscribe(res => {
+			if (res && res.length > 0) {
+				_.forEach(res, (element) => {
+					element['serviceFormId'] = taxFormId;
+				});
+
+				this.attachmentList = _.cloneDeep(res);
+			}
 		});
 	}
 
@@ -268,26 +297,63 @@ export class PecRegistrationComponent implements OnInit {
 			return;
 		}
 
+		var hasDuplicate = false;
 		this.pecRegForm.get('censusNo').value.map(v => v.census).sort().sort((a, b) => {
-			if (a === b) {
-				this.commonService.openAlert("Census number should not be repeated", "", "warning");
+			if (a === b) hasDuplicate = true;
+		});
+
+		if (hasDuplicate) {
+			this.commonService.openAlert("Census/Property number should not be repeated", "", "warning");
+			return;
+		}
+
+		this.mandatoryFileCheck().then(data => {
+			if (data.status) {
+				this.profeService.pftSaveFormData(this.pecRegForm.getRawValue()).subscribe(res => {
+					if (Object.keys(res).length) {
+						if (this.pecRegForm.get('pecNo').value) {
+							this.commonService.openAlert("PEC Information Updated Successful", "", "success", `PEC number is ${res.pecNo}`, cb => {
+								this.router.navigateByUrl(ManageRoutes.getFullRoute('CITIZENDASHBOARD'));
+							});
+						} else {
+							this.commonService.openAlert("PEC Registration Successful", "", "success", `PEC number is ${res.pecNo}`, cb => {
+								this.router.navigateByUrl(ManageRoutes.getFullRoute('CITIZENDASHBOARD'));
+							});
+						}
+						this.pecRegForm.patchValue(res);
+					}
+				});
+			} else {
+				this.commonService.openAlert("File Upload", `Please upload file for "${data.fileName}"`, "warning");
+				return
 			}
 		});
 
-		this.profeService.pftSaveFormData(this.pecRegForm.getRawValue()).subscribe(res => {
-			if (Object.keys(res).length) {
-				if (this.pecRegForm.get('pecNo').value) {
-					this.commonService.openAlert("PEC Information Updated Successful", "", "success", `PEC number is ${res.pecNo}`, cb =>{
-						this.router.navigateByUrl(ManageRoutes.getFullRoute('CITIZENDASHBOARD'));
+	}
+
+	/**
+	 * Method is responsible to check required file upload.
+	 */
+	mandatoryFileCheck() {
+		return new Promise<any>((resolve, reject) => {
+			this.formService.getFormData(this.serviceFormId).subscribe(respData => {
+				if (respData.attachments) {
+					let tempArray = [];
+					respData.attachments.forEach(element => {
+						tempArray.push(element.fieldIdentifier);
 					});
+					this.attachmentList.forEach(el => {
+						if (tempArray.indexOf(el.fieldIdentifier) === -1 && el.mandatory) {
+							resolve({ fileName: el.documentLabelEn, status: false });
+							return;
+						}
+					});
+					resolve({ fileName: "", status: true });
 				} else {
-					this.commonService.openAlert("PEC Registration Successful", "", "success", `PEC number is ${res.pecNo}`, cb =>{
-						this.router.navigateByUrl(ManageRoutes.getFullRoute('CITIZENDASHBOARD'));
-					});
+					resolve({ fileName: "", status: true })
 				}
-				this.pecRegForm.patchValue(res);
-			}
-		});
+			})
+		})
 	}
 
 	/**
@@ -300,65 +366,84 @@ export class PecRegistrationComponent implements OnInit {
 	/**
 	 * This method is used to search the business registration info by ECRC no.
 	 * @param ecrcNo - business registartion ecrc no.
-	 */
-	searchPecRegByECRCNo(event, pecNo) {
+	*/
+	searchPecRegByECRCNo(event, pecNo, fromPRC) {
 
 		if (event)
 			event.stopPropagation();
 
-		if (pecNo == '') {
+		if (fromPRC && pecNo == '') {
 			this.commonService.openAlert("Warning", "Enter PEC/PRC Number", "warning");
 			return;
 		}
 
-		this.profeService.getSearchDetails(pecNo).subscribe(res => {
-			if (res.data && Object.keys(res.data).length) {
+		if (fromPRC) {
+			this.profeService.getSearchDetails(pecNo).subscribe(res => {
+				this.setValuesInForm(res.data, fromPRC);
+			});
+		} else {
+			this.formService.getFormData(this.serviceFormId).subscribe(res => {
+				this.setValuesInForm(res, fromPRC);
+			});
+		}
 
-				this.pecRegForm.patchValue(res.data);
+	}
 
-				/* set the census numbers */
-				if (res.data.censusNo && res.data.censusNo.length > 0) {
-					this.censusCollection.controls.splice(0);
-					_.forEach(res.data.censusNo, (element) => {
-						this.censusCollection.push(this.fb.group(element));
-					});
-				}
+	setValuesInForm(res, fromPRC) {
+		if (res && Object.keys(res).length) {
 
-				if (!this.isQryParamExist) {
-					this.pecRegForm.disable();
-					this.isDeleteBtnShow = false;
-					this.censusCollection.controls.forEach(control => {
-						if (control instanceof FormGroup) {
-							control.get('census').disable();
-						}
-					});
-				} else {
-					this.pecRegForm.get('pecNo').disable();
-					this.pecRegForm.get('rcDate').disable();
-					this.pecRegForm.get('registrationDate').disable();
-					this.pecRegForm.get('commencementDate').disable();
-					this.pecRegForm.get('entry').disable();
-					this.pecRegForm.get('subEntry').disable();
-					this.pecRegForm.get('professionConstitution').disable();
-					this.pecRegForm.get('constitution').disable();
-				}
+			this.pecRegForm.patchValue(res);
 
-				/* call subentry service on entry basis */
-				if (res.data.entry.code) {
-					this.getAllSubEntries(res.data.entry.code);
-				}
-				/* call state service on country basis */
-				if (this.pecRegForm.get('officeAddress').get('country').value)
-					this.officeAddrComponent.getStateLists(this.pecRegForm.get('officeAddress').get('country').value);
-				if (this.pecRegForm.get('residentialAddress').get('country').value)
-					this.resAddrComponent.getStateLists(this.pecRegForm.get('residentialAddress').get('country').value);
-			} else {
-				this.toastr.warning('No record found!');
-				this.resetForm();
-				this.setDefaultFeilds();
-				this.pecRegForm.get('commencementDate').enable();
+			this.showButtons = true;
+
+			if (this.apiCode === 'fromPRC') {
+				this.serviceFormId = res.serviceFormId;
+				this.getAllDocumentLists(this.serviceFormId);
 			}
-		});
+
+			/* set the census numbers */
+			if (res.censusNo && res.censusNo.length > 0) {
+				this.censusCollection.controls.splice(0);
+				_.forEach(res.censusNo, (element) => {
+					this.censusCollection.push(this.fb.group(element));
+				});
+			}
+
+			if (!this.isQryParamExist && fromPRC) {
+				this.pecRegForm.disable();
+				this.isDeleteBtnShow = false;
+				this.censusCollection.controls.forEach(control => {
+					if (control instanceof FormGroup) {
+						control.get('census').disable();
+					}
+				});
+			} else if (this.isQryParamExist && fromPRC) {
+				this.pecRegForm.get('pecNo').disable();
+				this.pecRegForm.get('rcDate').disable();
+				this.pecRegForm.get('registrationDate').disable();
+				this.pecRegForm.get('commencementDate').disable();
+				this.pecRegForm.get('entry').disable();
+				this.pecRegForm.get('subEntry').disable();
+				this.pecRegForm.get('professionConstitution').disable();
+				this.pecRegForm.get('constitution').disable();
+				this.pecRegForm.get('otherProfession').disable();
+			}
+
+			/* call subentry service on entry basis */
+			if (res.entry.code) {
+				this.getAllSubEntries(res.entry.code);
+			}
+			/* call state service on country basis */
+			if (this.pecRegForm.get('officeAddress').get('country').value)
+				this.officeAddrComponent.getStateLists(this.pecRegForm.get('officeAddress').get('country').value);
+			if (this.pecRegForm.get('residentialAddress').get('country').value)
+				this.resAddrComponent.getStateLists(this.pecRegForm.get('residentialAddress').get('country').value);
+		} else {
+			this.toastr.warning('No record found!');
+			this.resetForm();
+			this.setDefaultFeilds();
+			this.pecRegForm.get('commencementDate').enable();
+		}
 	}
 
 	/**
@@ -413,13 +498,16 @@ export class PecRegistrationComponent implements OnInit {
 				this.pecRegForm.get('subEntry').disable();
 				this.pecRegForm.get('professionConstitution').disable();
 				this.pecRegForm.get('otherProfession').setValidators([Validators.required]);
+				this.pecRegForm.get('otherProfession').updateValueAndValidity();
 			} else {
 				this.pecRegForm.get('otherProfession').setValue(null);
 				this.pecRegForm.get('otherProfession').clearValidators();
 				this.pecRegForm.get('otherProfession').updateValueAndValidity();
 
-				this.pecRegForm.get('subEntry').enable();
-				this.pecRegForm.get('professionConstitution').enable();
+				if (!this.pecRegForm.get('pecNo').value) {
+					this.pecRegForm.get('subEntry').enable();
+					this.pecRegForm.get('professionConstitution').enable();
+				}
 			}
 		});
 	}

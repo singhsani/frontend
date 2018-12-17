@@ -7,7 +7,7 @@ import { PrcRegistrationComponent } from './prc-registration/prc-registration.co
 import { PecRegistrationComponent } from './pec-registration/pec-registration.component';
 
 const routes: Routes = [
-  { path: ManageRoutes.getMainRoute('PEC_REG'), component: PecRegistrationComponent, canActivate: [AuthGuard] },
+  { path: ManageRoutes.getMainRoute('PEC_REG') + '/:id/:apiCode', component: PecRegistrationComponent, canActivate: [AuthGuard] },
   { path: ManageRoutes.getMainRoute('PRC_REG'), component: PrcRegistrationComponent, canActivate: [AuthGuard] }
 ];
 

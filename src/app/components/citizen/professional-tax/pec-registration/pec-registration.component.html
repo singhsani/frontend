@@ -3,7 +3,7 @@
 		<mat-form-field>
 			<input matInput autocomplete="off" trim="blur" appAlphaNumeric id="pecNoTextBox" #pecNoTextBox maxlength="12" type="text"
 			 placeholder="{{'ecrc_no' | translate: prcTranslateKey}}">
-			<button mat-button matSuffix mat-icon-button (click)="searchPecRegByECRCNo($event,pecNoTextBox.value)">
+			<button mat-button matSuffix mat-icon-button (click)="searchPecRegByECRCNo($event,pecNoTextBox.value,true)">
 				<mat-icon>search</mat-icon>
 			</button>
 		</mat-form-field>
@@ -205,7 +205,7 @@
 							<control-messages [control]="pecRegForm.get('censusNo')['controls'][i].get('census')"></control-messages>
 						</mat-form-field>
 
-						<div class="col-md-12 pt-3">
+						<div class="col-md-12 pt-3" *ngIf="isDeleteBtnShow">
 							<button type="button" mat-raised-button color="primary" (click)="addMoreCenus()" title="{{'add_more_census' | translate:'translateKey'}}">
 								<mat-icon matPrefix>add</mat-icon>Add More Census
 							</button>
@@ -273,11 +273,36 @@
 				<div class="fotButtonBar clearfix">
 					<div class="col-sm-12 col-md-12">
 						<button class="liteBorder pull-left" type="button" mat-raised-button (click)="tabIndex = 2">{{'back' | translate:actionBarKey}}</button>
-						<button class="pull-right" mat-raised-button color="success" (click)="onSubmit()">{{'submit' | translate:actionBarKey}}</button>
+						<button class="pull-right" type="button" mat-raised-button color="primary" (click)="tabIndex = 4">{{'next' | translate:actionBarKey}}</button>
 					</div>
 				</div>
 
 			</mat-tab>
+
+			<mat-tab>
+				<ng-template mat-tab-label>
+					<div>{{'attachment' | translate: translateKey}}</div>
+				</ng-template>
+				<div class="row">
+					<div class="col-md-4" *ngFor="let doc of attachmentList">
+						<div *ngIf="doc.requiredOnCitizenPortal && doc.isActive && showButtons">
+							<label>{{doc.documentLabelEn}}
+								<span *ngIf="doc.mandatory">*</span>
+							</label>
+							<file-upload [form]="pecRegForm" [uploadModel]="doc"></file-upload>
+						</div>
+					</div>
+				</div>
+			
+				<div class="fotButtonBar clearfix">
+					<div class="col-sm-12 col-md-12">
+						<button class="liteBorder pull-left" type="button" mat-raised-button (click)="tabIndex = 3">{{'back' | translate:actionBarKey}}</button>
+						<button *ngIf="isDeleteBtnShow" class="pull-right" mat-raised-button color="success" (click)="onSubmit()">{{'submit' | translate:actionBarKey}}</button>
+					</div>
+				</div>
+
+			</mat-tab>
+
 			<!-- fourth step end-->
 
 		</mat-tab-group>
