@@ -13,6 +13,7 @@ import { TempFireworksNocComponent } from './temp-fireworks-noc/temp-fireworks-n
 import { GasConnectionNocComponent } from './gas-connection-noc/gas-connection-noc.component';
 import { EleConnectionNocComponent } from './ele-connection-noc/ele-connection-noc.component';
 import { NavratriNocComponent } from './navratri-noc/navratri-noc.component';
+import { RevisedFireNOCComponent } from './revised-fire-noc/revised-fire-noc.component';
 
 const routes: Routes = [
 	{ path: '', component: AarogyaParvanoNocComponent },
@@ -28,6 +29,7 @@ const routes: Routes = [
 	{ path: ManageRoutes.getMainRoute('FS-GAS') + '/:id/:apiCode', component: GasConnectionNocComponent },
 	{ path: ManageRoutes.getMainRoute('FS-ELE') + '/:id/:apiCode', component: EleConnectionNocComponent },
 	{ path: ManageRoutes.getMainRoute('FS-NAV') + '/:id/:apiCode', component: NavratriNocComponent },
+	{ path: ManageRoutes.getMainRoute('FS-REVISED') + '/:id/:apiCode', component: RevisedFireNOCComponent }
 ];
 
 @NgModule({

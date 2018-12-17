@@ -18,6 +18,7 @@ import { GasConnectionNocComponent } from './gas-connection-noc/gas-connection-n
 import { EleConnectionNocComponent } from './ele-connection-noc/ele-connection-noc.component';
 import { NavratriNocComponent } from './navratri-noc/navratri-noc.component';
 import { AarogyaParvanoNocComponent } from './aarogya-parvano-noc/aarogya-parvano-noc.component';
+import { RevisedFireNOCComponent } from './revised-fire-noc/revised-fire-noc.component';
 /* Import all shared, core and routing module end */
 
 @NgModule({
@@ -29,6 +30,20 @@ import { AarogyaParvanoNocComponent } from './aarogya-parvano-noc/aarogya-parvan
 		ReactiveFormsModule,
 		FireFacilitiesRoutingModule
 	],
-	declarations: [ProvisionalNocComponent, FinalFireNocComponent, FireRenewalNocComponent, WaterTankerAppComponent, AmbulanceAppComponent, BodyWanAppComponent, TempStructureNocComponent, TempFireworksNocComponent, GasConnectionNocComponent, EleConnectionNocComponent, NavratriNocComponent, AarogyaParvanoNocComponent]
+	declarations: [
+		ProvisionalNocComponent, 
+		FinalFireNocComponent, 
+		FireRenewalNocComponent, 
+		WaterTankerAppComponent, 
+		AmbulanceAppComponent, 
+		BodyWanAppComponent, 
+		TempStructureNocComponent, 
+		TempFireworksNocComponent, 
+		GasConnectionNocComponent, 
+		EleConnectionNocComponent, 
+		NavratriNocComponent, 
+		AarogyaParvanoNocComponent, 
+		RevisedFireNOCComponent
+	]
 })
 export class FireFacilitiesModule { }
