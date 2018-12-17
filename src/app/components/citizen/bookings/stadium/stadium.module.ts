@@ -7,6 +7,7 @@ import { SharedModule } from '../../../../shared/shared.module';
 import { CoreModule } from '../../../../core/core.module';
 import { StadiumRoutingModule } from './stadium-routing.module';
 import { StadiumListComponent } from './stadium-list/stadium-list.component';
+import { BookStadiumComponent } from './book-stadium/book-stadium.component';
 /* Import all shared, core and routing module end */
 
 @NgModule({
@@ -18,6 +19,6 @@ import { StadiumListComponent } from './stadium-list/stadium-list.component';
 		ReactiveFormsModule,
 		StadiumRoutingModule
 	],
-	declarations: [StadiumListComponent]
+	declarations: [StadiumListComponent, BookStadiumComponent]
 })
 export class StadiumModule { }

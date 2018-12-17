@@ -27,7 +27,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
         { labelName: 'Bride Photo', fieldIdentifier: '3' }
         ];
 
-        
+
     public dummyJSON = {
         "applicantAadharNumber": "",
         "applicantEmail": "",
@@ -372,7 +372,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
         "aadhaarNo": null,
         "contactNo": null,
         "email": null,
-    } ;
+    };
 
     translateKey: string = 'marriageRegScreen';
     marriageFormGroup: FormGroup;
@@ -437,8 +437,8 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
         private formService: FormsActionsService,
         private router: Router,
         private commonService: CommonService,
-        private CD : ChangeDetectorRef
-    ) {}
+        private CD: ChangeDetectorRef
+    ) { }
 
     /**
     * This method is use for perform initialize time actions.
@@ -489,7 +489,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
             groomBirthDate: ['', Validators.required],
             groomAge: [null, ValidationService.groomAgeValidator],
             groomReligion: this.fb.group({
-                code: [null],
+                code: [null, [Validators.required]],
                 gujName: [null],
                 name: [null]
             }),
@@ -507,7 +507,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
             brideBirthDate: ['', Validators.required],
             brideAge: [null, ValidationService.brideAgeValidator],
             brideReligion: this.fb.group({
-                code: [null],
+                code: [null, [Validators.required]],
                 gujName: [null],
                 name: [null]
             }),
@@ -582,33 +582,33 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
             attachments: [''],
 
             // gujarati field
-            groomFirstNameGuj: ['',[Validators.maxLength(150)]],
-            groomMiddleNameGuj: ['',[Validators.maxLength(150)]],
-            groomLastNameGuj: ['',[Validators.maxLength(150)]],
+            groomFirstNameGuj: ['', [Validators.maxLength(150)]],
+            groomMiddleNameGuj: ['', [Validators.maxLength(150)]],
+            groomLastNameGuj: ['', [Validators.maxLength(150)]],
 
-            brideFirstNameGuj: ['',[Validators.maxLength(150)]],
-            brideMiddleNameGuj: ['',[Validators.maxLength(150)]],
-            brideLastNameGuj: ['',[Validators.maxLength(150)]],
+            brideFirstNameGuj: ['', [Validators.maxLength(150)]],
+            brideMiddleNameGuj: ['', [Validators.maxLength(150)]],
+            brideLastNameGuj: ['', [Validators.maxLength(150)]],
 
-            groomParentsFirstNameGuj: ['',[Validators.maxLength(150)]],
-            groomParentsMiddleNameGuj: ['',[Validators.maxLength(150)]],
-            groomParentsLastNameGuj: ['',[Validators.maxLength(150)]],
+            groomParentsFirstNameGuj: ['', [Validators.maxLength(150)]],
+            groomParentsMiddleNameGuj: ['', [Validators.maxLength(150)]],
+            groomParentsLastNameGuj: ['', [Validators.maxLength(150)]],
 
-            brideParentsFirstNameGuj: ['',[Validators.maxLength(150)]],
-            brideParentsMiddleNameGuj: ['',[Validators.maxLength(150)]],
-            brideParentsLastNameGuj: ['',[Validators.maxLength(150)]],
+            brideParentsFirstNameGuj: ['', [Validators.maxLength(150)]],
+            brideParentsMiddleNameGuj: ['', [Validators.maxLength(150)]],
+            brideParentsLastNameGuj: ['', [Validators.maxLength(150)]],
 
-            priestFirstNameGuj: ['',[Validators.maxLength(150)]],
-            priestMiddleNameGuj: ['',[Validators.maxLength(150)]],
-            priestLastNameGuj: ['',[Validators.maxLength(150)]],
+            priestFirstNameGuj: ['', [Validators.maxLength(150)]],
+            priestMiddleNameGuj: ['', [Validators.maxLength(150)]],
+            priestLastNameGuj: ['', [Validators.maxLength(150)]],
 
-            firstWitnessFirstNameGuj: ['',[Validators.maxLength(150)]],
-            firstWitnessMiddleNameGuj: ['',[Validators.maxLength(150)]],
-            firstWitnessLastNameGuj: ['',[Validators.maxLength(150)]],
+            firstWitnessFirstNameGuj: ['', [Validators.maxLength(150)]],
+            firstWitnessMiddleNameGuj: ['', [Validators.maxLength(150)]],
+            firstWitnessLastNameGuj: ['', [Validators.maxLength(150)]],
 
-            secondWitnessFirstNameGuj: ['',[Validators.maxLength(150)]],
-            secondWitnessMiddleNameGuj: ['',[Validators.maxLength(150)]],
-            secondWitnessLastNameGuj: ['',[Validators.maxLength(150)]],
+            secondWitnessFirstNameGuj: ['', [Validators.maxLength(150)]],
+            secondWitnessMiddleNameGuj: ['', [Validators.maxLength(150)]],
+            secondWitnessLastNameGuj: ['', [Validators.maxLength(150)]],
 
             // for NRI groom
             isGroomVisa: null,
@@ -693,7 +693,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
 
                 //for display static days
                 if (res.groomBirthDate != null && res.marriageDate != null) {
-                    this.CalculateAge();
+                    this.CalculateAge('groomBirthDate');
                 }
 
                 //display static gujarati var
@@ -720,14 +720,20 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
                     this.onChange(res.uniqueIdProofLable.code, this.identityproofArray, 'identityproofGuj')
                 }
 
+                if (!this.marriageFormGroup.controls.canEdit.value) {
+                    this.marriageFormGroup.disable();
+                }
+
             },
             err => {
                 console.log("get fail" + err);
             }
         );
+
+
     }
 
-    ngOnChanges(){
+    ngOnChanges() {
         this.CD.detectChanges();
     }
 
@@ -749,23 +755,29 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
      * @param controlType : Input From Control.
      */
     dateFormate(date, controlType: string) {
-        this.marriageFormGroup.get(controlType).setValue(moment(date).format("YYYY-MM-DD"));
+        if(date){
+            this.marriageFormGroup.get(controlType).setValue(moment(date).format("YYYY-MM-DD"));
+        }
     }
 
-    patchValue(){
+    /**
+     * Method is used for testing only
+     */
+    patchValue() {
         this.marriageFormGroup.patchValue(this.dummyJSON);
     }
 
     /**
      * This method is calculate groom and bride age.
      */
-    CalculateAge() {
+    CalculateAge(controType: string) {
         let marriagedate = this.marriageFormGroup.get("marriageDate").value;
 
-        if (!this.marriageFormGroup.get("marriageDate").valid && marriagedate != null) {
-            this.commonService.openAlert("Warning", "Please select Date of Marriage", "warning");
-        }
-    
+        if(marriagedate && this.marriageFormGroup.get(controType).value){
+            if (!this.marriageFormGroup.get("marriageDate").valid && marriagedate != null) {
+                this.commonService.openAlert("Warning", "Please select Date of Marriage", "warning");
+            }
+
             //display days and years
             let mday = moment(this.marriageFormGroup.get("marriageDate").value, "YYYY-MM-DD");
 
@@ -784,7 +796,15 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
 
                 this.marriageFormGroup.get("brideAge").setValue(this.brideage);
             }
-        
+        } else {
+            this.commonService.openAlert("Warning", "Please select Date of Marriage", "warning");
+            this.marriageFormGroup.get("groomAge").setValue(null);
+            this.marriageFormGroup.get("brideAge").setValue(null);
+            this.groomage= null;
+            this.groomdays= null;
+            this.brideage= null;
+            this.bridedays= null;
+        }
     }
 
 
@@ -793,8 +813,10 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
      */
     birthCalendar() {
         let marriagedate = this.marriageFormGroup.get("marriageDate").value;
-        this.groomagecalendar = moment(marriagedate).subtract(21, 'year').format("YYYY-MM-DD");
-        this.brideagecalender = moment(marriagedate).subtract(18, 'year').format("YYYY-MM-DD");
+        if(marriagedate){
+            this.groomagecalendar = moment(marriagedate).subtract(21, 'year').format("YYYY-MM-DD");
+            this.brideagecalender = moment(marriagedate).subtract(18, 'year').format("YYYY-MM-DD");
+        }
     }
 
     /**
@@ -832,7 +854,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
     * This method is Reset NIR marriage related field.
     */
     changeFieldReset() {
-        
+
         this.marriageFormGroup.get('isGroomVisa').setValue(false);
         this.marriageFormGroup.get('isBrideVisa').setValue(false);
 
@@ -897,8 +919,11 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
      * @param varName : Static Variable.
      */
     onChange(event: string, lookupArray: Array<any>, varName: string) {
-        if (!_.isUndefined(this.getGujValue(lookupArray, event)))
+        if (!_.isUndefined(this.getGujValue(lookupArray, event))){
             this[varName] = this.getGujValue(lookupArray, event);
+        } else {
+            this[varName] = null;
+        }
     }
 
     /**

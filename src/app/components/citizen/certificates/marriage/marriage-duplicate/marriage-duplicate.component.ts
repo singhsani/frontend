@@ -30,8 +30,8 @@ export class MarriageDuplicateComponent implements OnInit {
 	disablefutureDate = new Date(moment().format('YYYY-MM-DD'));
 
 	// Step Titles
-	stepLable1: string = "Applicant Basic Details";
-	stepLable2: string = "Marriage Details";
+	stepLable1: string = "applicant_basic_details";
+	stepLable2: string = "marriage_details";
 
     /**
      * @param fb - Declare FormBuilder property.

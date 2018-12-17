@@ -137,6 +137,7 @@ export class FileUploadComponent implements OnInit {
 			if (!this.selectedFiles) {
 				this.commonService.openAlert("Warning", "Please Select File to Upload", "warning");
 			} else {
+				let fileTypes: string[] = ['application/pdf', 'image/jpg', 'image/jpeg']
 				let size = this.uploadModel.maxFileSizeInMB ? Math.floor(this.uploadModel.maxFileSizeInMB * 1000000) : 5000000;
 				if (this.selectedFiles[0].size > size) {
 					this.fileName = ''
@@ -146,7 +147,11 @@ export class FileUploadComponent implements OnInit {
 				} else if (this.selectedFiles[0].size <= 0){
 					this.commonService.openAlert("Warning", `File must have the content and size should not be 0 MB `, "warning");
 					return;
-				}else {
+				} else if (!fileTypes.includes(this.selectedFiles[0].type)) {
+					this.fileName = ''
+					this.canUpload = false;
+					this.commonService.openAlert("Warning","File Type " + this.selectedFiles[0].type + " not valid please select pdf/jpg/jpeg", 'warning');
+				} else {
 					let formData = new FormData();
 
 					formData.append('fieldIdentifier', this.uploadModel.fieldIdentifier.toString());

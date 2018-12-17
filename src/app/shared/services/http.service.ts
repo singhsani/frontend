@@ -14,6 +14,9 @@ import { environment } from './../../../environments/environment';
 import { SessionStorageService } from 'angular-web-storage';
 
 import { Observable ,  Subject } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
+import { ManageRoutes } from '../../config/routes-conf';
 
 /**
  * This class is use for perform all common http requests.
@@ -22,6 +25,8 @@ import { Observable ,  Subject } from 'rxjs';
 export class HttpService {
 
 	constructor(private httpClient: HttpClient,
+		private tostr: ToastrService,
+		private router : Router,
 		private session: SessionStorageService) {
 	}
 
@@ -42,6 +47,12 @@ export class HttpService {
 						"Authorization": "Bearer " + this.session.get("access_token").token,
 						"Content-Type": "application/json"
 					})
+				}
+			} else {
+				if (!this.session.get("access_token")) {
+					this.tostr.error("Session Expired Please Login Again!");
+					this.router.navigate([ManageRoutes.getFullRoute('CITIZENAUTHLOGIN')]);
+					return;
 				}
 			}
 

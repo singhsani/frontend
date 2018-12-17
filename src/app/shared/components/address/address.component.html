@@ -106,7 +106,7 @@
 		<div class="row" *ngIf="isDisplayGujFields">
 			
 			<mat-form-field class="col-md-4">
-				<input [readonly]="true" matInput type="text" formControlName="cityGuj" placeholder="{{'city' | translate: translateKey:'gu' }} / {{'district' | translate: translateKey }} {{requiredFeilds?'*':''}}" maxlength="180">
+				<input [readonly]="true" matInput type="text" formControlName="cityGuj" placeholder="{{'city' | translate: translateKey:'gu' }} / {{'district' | translate: translateKey:'gu' }} {{requiredFeilds?'*':''}}" maxlength="180">
 				<control-messages [control]="addressFormGroup.controls.cityGuj"></control-messages>
 			</mat-form-field>
 			

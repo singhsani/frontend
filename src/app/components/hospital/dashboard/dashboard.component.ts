@@ -41,7 +41,6 @@ export class HospitalDashboardComponent implements OnInit {
 			this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);
 			this.formService.createFormData().subscribe(res => {
 				let redirectUrl = ManageRoutes.getFullRoute(apiCode);
-				console.log(redirectUrl);
 				this.router.navigate([redirectUrl, res.serviceFormId, apiCode]);
 			});
 		} else {

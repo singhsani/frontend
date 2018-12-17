@@ -1,8 +1,8 @@
 <div class="noApplication" *ngIf="resultsLength==0 && !isLoadingResults">
     <img src="assets/icons/no-application-found.png" alt="">
-    <br> No Application Found
-    <span class="noActi">It seems, No activity happed yet</span>
-    <a mat-raised-button class="mat-primary" routerLink="../dashboard">Create Application</a>
+    <br> {{'no_application' | translate:translateKey}}
+    <span class="noActi">{{'no_activity' | translate:translateKey}}</span>
+    <a mat-raised-button class="mat-primary" routerLink="../dashboard">{{'create_application' | translate:translateKey}}</a>
 </div>
 <!-- <app-title-bar [title]="'screen_title' | translate:'MyApplicationScreen'"></app-title-bar> -->
 <div class="example-container mat-elevation-z8 borderOne" [hidden]="resultsLength==0">
@@ -15,61 +15,61 @@
         <ng-container matColumnDef="id">
             <mat-header-cell *matHeaderCellDef>#</mat-header-cell>
             <mat-cell *matCellDef="let row; let i = index;" class="fullWidth">
-                <div class="mobile-label">Sequence No</div>
+                <div class="mobile-label">{{'s_no' | translate:translateKey}}</div>
                 <div class="mobile-label1">:</div>
                 <div class="row-inside"> {{(paginator.pageIndex * paginator.pageSize) + (i+1)}} </div>
             </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="applicantName">
-            <mat-header-cell *matHeaderCellDef>Applicant Name</mat-header-cell>
+            <mat-header-cell *matHeaderCellDef>{{'applicant_name' | translate:translateKey}}</mat-header-cell>
             <mat-cell *matCellDef="let row" class="fullWidth">
-                <div class="mobile-label">Applicant Name </div>
+                <div class="mobile-label">{{'applicant_name' | translate:translateKey}}</div>
                 <div class="mobile-label1">:</div>
                 <div class="row-inside"> {{ row.applicantName }}</div>
             </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="fileNumber">
-            <mat-header-cell *matHeaderCellDef>Application Number</mat-header-cell>
+            <mat-header-cell *matHeaderCellDef>{{'application_number' | translate:translateKey}}</mat-header-cell>
             <mat-cell *matCellDef="let row" class="fullWidth">
-                <div class="mobile-label">Application Number</div>
+                <div class="mobile-label">{{'application_number' | translate:translateKey}}</div>
                 <div class="mobile-label1">:</div>
                 <div class="row-inside"> {{ row.uniqueId }}</div>
             </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="dateOfApplication">
-            <mat-header-cell *matHeaderCellDef>Date Of Application</mat-header-cell>
+            <mat-header-cell *matHeaderCellDef>{{'date_of_application' | translate:translateKey}}</mat-header-cell>
             <mat-cell *matCellDef="let row" class="fullWidth">
-                <div class="mobile-label">Date Of Application</div>
+                <div class="mobile-label">{{'date_of_application' | translate:translateKey}}</div>
                 <div class="mobile-label1">:</div>
                 <div class="row-inside"> {{getProperDate(row.createdDate)}} </div>
             </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="departmentName">
-            <mat-header-cell *matHeaderCellDef>Department Name</mat-header-cell>
+            <mat-header-cell *matHeaderCellDef>{{'department_name' | translate:translateKey}}</mat-header-cell>
             <mat-cell *matCellDef="let row" class="fullWidth">
-                <div class="mobile-label">Department Name</div>
+                <div class="mobile-label">{{'department_name' | translate:translateKey}}</div>
                 <div class="mobile-label1">:</div>
                 <div class="row-inside"> {{row.serviceDetail.name}} </div>
             </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="serviceType">
-            <mat-header-cell *matHeaderCellDef>Service Name</mat-header-cell>
+            <mat-header-cell *matHeaderCellDef>{{'service_name' | translate:translateKey}}</mat-header-cell>
             <mat-cell *matCellDef="let row" class="fullWidth">
-                <div class="mobile-label">Service Name </div>
+                <div class="mobile-label">{{'service_name' | translate:translateKey}}</div>
                 <div class="mobile-label1">:</div>
                 <div class="row-inside">{{ row.serviceDetail.name }}</div>
             </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="fileStatus">
-            <mat-header-cell *matHeaderCellDef>File Status</mat-header-cell>
+            <mat-header-cell *matHeaderCellDef>{{'file_status' | translate:translateKey}}</mat-header-cell>
             <mat-cell *matCellDef="let row" class="fullWidth">
-                <div class="mobile-label">File Status </div>
+                <div class="mobile-label">{{'file_status' | translate:translateKey}}</div>
                 <div class="mobile-label1">:</div>
                 <div class="row-inside">
                     <mat-chip-list>
@@ -80,9 +80,9 @@
         </ng-container>
 
         <ng-container matColumnDef="action">
-            <mat-header-cell *matHeaderCellDef>Action</mat-header-cell>
+            <mat-header-cell *matHeaderCellDef>{{'action' | translate:translateKey}}</mat-header-cell>
             <mat-cell *matCellDef="let row">
-                <div class="mobile-label">Action</div>
+                <div class="mobile-label">{{'action' | translate:translateKey}}</div>
                 <div class="mobile-label1">:</div>
                 <button class="actionBtn" mat-button [matMenuTriggerFor]="menu">
                     <mat-icon>more_vert</mat-icon>
@@ -90,12 +90,12 @@
                 <mat-menu #menu="matMenu">
 
                     <button mat-menu-item *ngIf="row.canEdit" color="primary" (click)="redirectToEdit(row.serviceDetail.code, row.serviceFormId)">
-                        <mat-icon title="Edit">edit</mat-icon>
+                        <mat-icon title="{{'edit_application' | translate:translateKey}}">edit</mat-icon>
                         {{'edit_application' | translate:translateKey}}
                     </button>
 
                     <button mat-menu-item *ngIf="row.canDelete" color="primary" (click)="deleteRecord(row.serviceDetail.code, row.serviceFormId)">
-                        <mat-icon title="Delete">delete</mat-icon>
+                        <mat-icon title="{{'delete_application' | translate:translateKey}}">delete</mat-icon>
                         {{'delete_application' | translate:translateKey}}
                     </button>
                     <!-- <button class="btn btn-default" mwlConfirmationPopover [popoverTitle]="Delete" [popoverMessage]="Are you sure?" placement="left" (confirm)="deleteRecord(row.serviceDetail.code, row.serviceFormId)" (cancel)="">
@@ -105,28 +105,28 @@
                                                 <mat-icon title="Submit">done_all</mat-icon>
                                             </button> -->
                     <button mat-menu-item *ngIf="!row.canEdit" color="primary" (click)="redirectToEdit(row.serviceDetail.code, row.serviceFormId)">
-                        <mat-icon title="Application Preview">remove_red_eye</mat-icon>
+                        <mat-icon title="{{'preview_application' | translate:translateKey}}">remove_red_eye</mat-icon>
                         {{'preview_application' | translate:translateKey}}
                     </button>
 
                     <button mat-menu-item *ngIf="row.fileStatus == 'PAYMENT_RECEIVED'" color="primary" (click)="printReceipt(row.serviceDetail.code, row.serviceDetail.name, row.serviceFormId)">
-                        <mat-icon title="Print Receipt">print</mat-icon>
+                        <mat-icon title="{{'print_receipt' | translate:translateKey}}">print</mat-icon>
                         {{'print_receipt' | translate:translateKey}}
                     </button>
 
                     <button mat-menu-item *ngIf="row.fileStatus != 'DRAFT'" color="primary" (click)="printView(row.serviceDetail.code, row.serviceDetail.name, row.serviceFormId)">
-                        <mat-icon title="Print View">pageview</mat-icon>
+                        <mat-icon title="{{'print_view' | translate:translateKey}}">pageview</mat-icon>
                         {{'print_view' | translate:translateKey}}
                     </button>
 
                     <button mat-menu-item color="primary" (click)="openModal(template);jsonDisplay(row.serviceDetail.code, row.serviceDetail.name, row.serviceFormId)">
-                        <mat-icon title="JSON Format">center_focus_weak</mat-icon>
+                        <mat-icon title="{{'application_json' | translate:translateKey}}">center_focus_weak</mat-icon>
                         {{'application_json' | translate:translateKey}}
                     </button>
 
                     <button (click)="redirectAppointment(row.serviceDetail.code, row.serviceFormId)" mat-menu-item color="primary" *ngIf="(row.fileStatus === 'PAYMENT_RECEIVED' && row.serviceDetail.appointmentRequired == true)">
-                        <mat-icon title="Re-Schedule Appointment">schedule</mat-icon>
-                        Re-Schedule Appointment
+                        <mat-icon title="{{'reschedule_appointment' | translate:translateKey}}">schedule</mat-icon>
+                        {{'reschedule_appointment' | translate:translateKey}}
                     </button>
 
                 </mat-menu>
@@ -145,15 +145,15 @@
 <ng-template #template>
     <div class="modal-header">
         <div class="col-9">
-            <h5 class="modal-title pull-left">Application JSON</h5>
+            <h5 class="modal-title pull-left">{{'application_json' | translate:translateKey}}</h5>
         </div>
         <div class="col-2">
             <button class="pull-left mat-icon-button" (click)="copyText(copytext)">
-                <mat-icon title="Copy to Clipboard">content_copy</mat-icon>
+                <mat-icon title="{{'copy_clipboard' | translate:translateKey}}">content_copy</mat-icon>
             </button>
         </div>
         <div class="col-1">
-            <button title="Close" class=" mat-icon-button" aria-label="Close" (click)="modalRef.hide()">
+            <button title="{{'close' | translate:translateKey}}" class=" mat-icon-button" aria-label="Close" (click)="modalRef.hide()">
                 <mat-icon>close</mat-icon>
             </button>
         </div>

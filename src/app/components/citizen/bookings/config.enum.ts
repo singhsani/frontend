@@ -11,6 +11,7 @@ export enum BookingConstants {
     APPROVED = "APPROVED",
     REJECTED = "REJECTED",
     BOOKED = "BOOKED",
+    CHECKED = "CHECKED",
     CANCELLED = "CANCELLED",
     EXPIRED = "EXPIRED",
     PAYMENT_RECEIVED = "PAYMENT_RECEIVED",
@@ -27,15 +28,34 @@ export enum BookingConstants {
     BY_CITIZEN = "BY_CITIZEN",
     INVALID_BOOKING_STATUS = "INVALID_BOOKING_STATUS",
     ALL_FEILD_REQUIRED_MESSAGE="Please fill all the required feilds",
-    SELECT_SHIFT_MESSAGE="Please Select shift to cancel",
+    SELECT_SHIFT_MESSAGE="Please Select shift",
     MOB_NO_MIS_MATCH_MESSAGE ="Mobile Number and Confirm Mobile Number should match",
-    EMAIL_MIS_MATCH_MESSAGE ="Email and Confirm Email should match"
+    EMAIL_MIS_MATCH_MESSAGE ="Email and Confirm Email should match",
+    TOWNHALL_RESOURCE_TYPE ="townhall",
+    STADIUM_RESOURCE_TYPE = "stadium",
+
+
 }
 
 /**
  * Booking Module Utils
  */
 export class BookingUtils{
+
+    public DateArray = [
+        { month: 'Jan', id: '01', monthName: 'January' },
+        { month: 'Fab', id: '02', monthName: 'February' },
+        { month: 'Mar', id: '03', monthName: 'March' },
+        { month: 'Apr', id: '04', monthName: 'April' },
+        { month: 'May', id: '05', monthName: 'May' },
+        { month: 'Jun', id: '06', monthName: 'June' },
+        { month: 'Jul', id: '07', monthName: 'July' },
+        { month: 'Aug', id: '08', monthName: 'August' },
+        { month: 'Sep', id: '09', monthName: 'September' },
+        { month: 'Oct', id: '10', monthName: 'October' },
+        { month: 'Nov', id: '11', monthName: 'November' },
+        { month: 'Dec', id: '12', monthName: 'December' },
+    ];
 
     constructor(){}
 
