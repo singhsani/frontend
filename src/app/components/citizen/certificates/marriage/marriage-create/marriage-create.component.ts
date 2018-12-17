@@ -755,7 +755,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
      * @param controlType : Input From Control.
      */
     dateFormate(date, controlType: string) {
-        if(date){
+        if (date) {
             this.marriageFormGroup.get(controlType).setValue(moment(date).format("YYYY-MM-DD"));
         }
     }
@@ -771,39 +771,41 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
      * This method is calculate groom and bride age.
      */
     CalculateAge(controType: string) {
-        let marriagedate = this.marriageFormGroup.get("marriageDate").value;
+        if (controType) {
+            let marriagedate = this.marriageFormGroup.get("marriageDate").value;
 
-        if(marriagedate && this.marriageFormGroup.get(controType).value){
-            if (!this.marriageFormGroup.get("marriageDate").valid && marriagedate != null) {
+            if (marriagedate && this.marriageFormGroup.get(controType).value) {
+                if (!this.marriageFormGroup.get("marriageDate").valid && marriagedate != null) {
+                    this.commonService.openAlert("Warning", "Please select Date of Marriage", "warning");
+                }
+
+                //display days and years
+                let mday = moment(this.marriageFormGroup.get("marriageDate").value, "YYYY-MM-DD");
+
+                if (this.marriageFormGroup.get("groomBirthDate").value && marriagedate) {
+                    let bday = moment(this.marriageFormGroup.get("groomBirthDate").value, "YYYY-MM-DD");
+                    this.groomage = mday.diff(bday, 'years', false);
+                    this.groomdays = mday.diff(bday.add(this.groomage, 'years'), 'days', false);
+
+                    this.marriageFormGroup.get("groomAge").setValue(this.groomage);
+                }
+
+                if (this.marriageFormGroup.get("brideBirthDate").value && marriagedate) {
+                    let bday = moment(this.marriageFormGroup.get("brideBirthDate").value, "YYYY-MM-DD");
+                    this.brideage = mday.diff(bday, 'years', false);
+                    this.bridedays = mday.diff(bday.add(this.brideage, 'years'), 'days', false);
+
+                    this.marriageFormGroup.get("brideAge").setValue(this.brideage);
+                }
+            } else {
                 this.commonService.openAlert("Warning", "Please select Date of Marriage", "warning");
+                this.marriageFormGroup.get("groomAge").setValue(null);
+                this.marriageFormGroup.get("brideAge").setValue(null);
+                this.groomage = null;
+                this.groomdays = null;
+                this.brideage = null;
+                this.bridedays = null;
             }
-
-            //display days and years
-            let mday = moment(this.marriageFormGroup.get("marriageDate").value, "YYYY-MM-DD");
-
-            if (this.marriageFormGroup.get("groomBirthDate").value && marriagedate) {
-                let bday = moment(this.marriageFormGroup.get("groomBirthDate").value, "YYYY-MM-DD");
-                this.groomage = mday.diff(bday, 'years', false);
-                this.groomdays = mday.diff(bday.add(this.groomage, 'years'), 'days', false);
-
-                this.marriageFormGroup.get("groomAge").setValue(this.groomage);
-            }
-
-            if (this.marriageFormGroup.get("brideBirthDate").value && marriagedate) {
-                let bday = moment(this.marriageFormGroup.get("brideBirthDate").value, "YYYY-MM-DD");
-                this.brideage = mday.diff(bday, 'years', false);
-                this.bridedays = mday.diff(bday.add(this.brideage, 'years'), 'days', false);
-
-                this.marriageFormGroup.get("brideAge").setValue(this.brideage);
-            }
-        } else {
-            this.commonService.openAlert("Warning", "Please select Date of Marriage", "warning");
-            this.marriageFormGroup.get("groomAge").setValue(null);
-            this.marriageFormGroup.get("brideAge").setValue(null);
-            this.groomage= null;
-            this.groomdays= null;
-            this.brideage= null;
-            this.bridedays= null;
         }
     }
 
@@ -813,7 +815,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
      */
     birthCalendar() {
         let marriagedate = this.marriageFormGroup.get("marriageDate").value;
-        if(marriagedate){
+        if (marriagedate) {
             this.groomagecalendar = moment(marriagedate).subtract(21, 'year').format("YYYY-MM-DD");
             this.brideagecalender = moment(marriagedate).subtract(18, 'year').format("YYYY-MM-DD");
         }
@@ -919,7 +921,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
      * @param varName : Static Variable.
      */
     onChange(event: string, lookupArray: Array<any>, varName: string) {
-        if (!_.isUndefined(this.getGujValue(lookupArray, event))){
+        if (!_.isUndefined(this.getGujValue(lookupArray, event))) {
             this[varName] = this.getGujValue(lookupArray, event);
         } else {
             this[varName] = null;
@@ -1040,22 +1042,21 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
         let step6 = 56;
         let step7 = 62;
         let step8 = 66;
-        let step9 = 67;
 
         if (flag != null) {
             //Check validation for step by step
             let count = flag;
-
-            if (count <= step1) {
+            //second condition for NIR marriage
+            if ((count <= step1) || (count >= 90 && count <= 103)) {
                 this.tabIndex = 0;
                 return false;
-            } else if (count <= step2) {
+            } else if ((count <= step2) || (count >= 103 && count <= 118)) {
                 this.tabIndex = 1;
                 return false;
-            } else if (count <= step3) {
+            } else if ((count <= step3) || (count == 119)) {
                 this.tabIndex = 2;
                 return false;
-            } else if (count <= step4) {
+            } else if ((count <= step4) || (count == 120)) {
                 this.tabIndex = 3;
                 return false;
             } else if (count <= step5) {
@@ -1076,21 +1077,6 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
                 this.checkReligion();
                 return false;
             }
-            // for NIR marriage
-            else if (count >= 90 && count <= 103) {
-                this.tabIndex = 0;
-                return false;
-            } else if (count >= 103 && count <= 118) {
-                this.tabIndex = 1;
-                return false;
-            } else if (count == 119) {
-                this.tabIndex = 2;
-                return false;
-            } else if (count == 120) {
-                this.tabIndex = 3;
-                return false;
-            }
-
             else {
                 console.log("else condition");
             }

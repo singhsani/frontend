@@ -357,7 +357,7 @@ export class MuttonFishRenewalComponent implements OnInit {
 	 * Method is used to add array in form
 	 */
 	addItem() {
-		return this.muttonFishRenewalForm.get('relationshipList') as FormArray;;
+		return this.muttonFishRenewalForm.get('relationshipList') as FormArray;
 	}
 
 	/**
