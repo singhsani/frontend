@@ -8,7 +8,7 @@ export class AlphaNumericDirective {
   constructor(private el: ElementRef) { }
 
   @HostListener('keydown', ['$event']) onKeyDown(event: KeyboardEvent) {
-    let e = <KeyboardEvent>event;
+    let e = event;
     /*
         8 - for backspace
         9 - for tab
