@@ -106,13 +106,6 @@ export class ProfessionalTaxService {
     return this.http.get('api/profConstMaster/get/active/all');
   }
 
-	/**
-	 * This method use for get all ward numbers
-	 */
-  // getAllWardNos() {
-  //   return this.http.get('api/wardMaster/get/active/all');
-  // }
-
   /**
 	 * This method use for get all ward numbers
 	 */
@@ -125,6 +118,13 @@ export class ProfessionalTaxService {
 	 */
   getBankNames() {
     return this.http.get('api/bankMaster/get/active/all');
+  }
+
+  /**
+	 * This method use for get all document
+	 */
+  getAllDocuments() {
+    return this.http.get('api/pecForm/doc/list');
   }
 
 }

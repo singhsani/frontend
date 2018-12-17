@@ -75,7 +75,7 @@ export class ActionBarComponent implements OnInit, OnChanges {
 					});
 					this.uploadFilesArray.forEach(el => {
 						if (tempArray.indexOf(el.fieldIdentifier) === -1) {
-							resolve({ fileName: el.labelName, status: false });
+							resolve({ fileName: el.labelName ? el.labelName : el.documentLabelEn, status: false });
 							return;
 						}
 					});
