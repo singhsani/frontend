@@ -23,5 +23,13 @@ export class FireFacilitiesService {
     
     return this.http.get(`api/form/finalFireNoc/searchByProvisionalNumber/${licenceNumber}`);
 	}
-
+	
+	/**
+	 * 
+	 * @param licenceNumber - serach bu licence num
+	 * return this.http.get(`api/form/foodLicence/search/${licenceNumber}`);
+	 */
+	searchRevisedFireNOC(nocNo) {
+    	return this.http.get(`api/form/revisedFireNoc/searchByNocNumber/${nocNo}`);
+	}
 }

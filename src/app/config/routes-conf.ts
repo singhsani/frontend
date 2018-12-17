@@ -85,6 +85,10 @@ const ROUTEMAIN = {
         'main': 'navratriNoc',
         'type': 'navratriNoc'
     },
+    'FS-REVISED': {
+        'main': 'revisedFireNoc',
+        'type': 'revisedFireNoc'
+    },
     'SHOP-LIC': {
         'main': 'shopLicense',
         'type': 'shopLicense'
@@ -473,6 +477,9 @@ const ROUTESLIST = {
     },
     'FS-NAV': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.FIREFACILITIESMODULE + '/' + ROUTEMAIN["FS-NAV"].main
+    },
+    'FS-REVISED': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.FIREFACILITIESMODULE + '/' + ROUTEMAIN["FS-REVISED"].main
     },
     'SHOP-LIC': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.LICENCEMODULE + '/' + ROUTEPREFIX.SHOPANDESTAMODULE + '/' + ROUTEMAIN["SHOP-LIC"].main

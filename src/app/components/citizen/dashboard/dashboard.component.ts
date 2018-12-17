@@ -158,6 +158,7 @@ export class DashboardComponent implements OnInit {
 			case 'FL-MODIFY':
 			case 'FL-DUP':
 			case 'FS-FINAL':
+			case 'FS-REVISED':
 				this.router.navigate([ManageRoutes.getFullRoute(apiCode),false, apiCode]);
 			break;
 			case 'PEC_REG':
