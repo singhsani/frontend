@@ -200,10 +200,10 @@ export class DeathRegistrationComponent implements OnInit {
 
 	/**
 	 * Used to caplture Change in birth place.
-	 * @param ev - event
+	 * @param deathPlace - event
 	 */
-	changeDeathPlace(ev: string) {
-		if (ev != 'OTHER_PLACE') {
+	changeDeathPlace(deathPlace: string) {
+		if (deathPlace != 'OTHER_PLACE') {
 			this.deathCertificateForm.get('otherPlace').clearValidators();
 			this.deathCertificateForm.get('otherPlace').updateValueAndValidity();
 		}
@@ -517,10 +517,10 @@ export class DeathRegistrationComponent implements OnInit {
 
 	/**
 	 * Used to caplture Change in birth place.
-	 * @param ev - event
+	 * @param relation - event
 	 */
-	changeApplicantRelation(ev){
-		if(ev != 'OTHER_RELATIONSHIP'){
+	changeApplicantRelation(relation: string){
+		if (relation != 'OTHER_RELATIONSHIP'){
 			this.deathCertificateForm.get('relationOther').clearValidators();
 			this.deathCertificateForm.get('relationOther').updateValueAndValidity();
 		}

@@ -432,7 +432,7 @@
                                 <control-messages [control]="townHallApplicationForm.controls.confirmMobile"></control-messages>
 
                             </mat-form-field>
-                            <mat-error *ngIf="!mobileNumberMatcher() && townHallApplicationForm.controls.applicantMobile.touched && townHallApplicationForm.controls.confirmMobile.touched">
+                            <mat-error *ngIf="!bookingUtils.matcher(townHallApplicationForm, 'applicantMobile', 'confirmMobile') && townHallApplicationForm.controls.applicantMobile.touched && townHallApplicationForm.controls.confirmMobile.touched">
                                 Mobile Number & Confirm Mobile Number is not same
                             </mat-error>
                         </div>
@@ -449,7 +449,7 @@
                                     required>
                                 <control-messages [control]="townHallApplicationForm.controls.confirmEmailID"></control-messages>
                             </mat-form-field>
-                            <mat-error *ngIf="!emailMatcher() &&townHallApplicationForm.controls.emailID.touched && townHallApplicationForm.controls.confirmEmailID.touched">
+                            <mat-error *ngIf="!bookingUtils.matcher(townHallApplicationForm, 'emailID', 'confirmEmailID') &&townHallApplicationForm.controls.emailID.touched && townHallApplicationForm.controls.confirmEmailID.touched">
                                 Email & Confirm Email is not same
                             </mat-error>
 

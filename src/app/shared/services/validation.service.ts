@@ -176,15 +176,6 @@ export class ValidationService {
         }
     }
 
-    static stillPregnancyDurationValidation(control: AbstractControl) {
-        // RFC 2822 compliant regex
-        if (Number(control.value) >= 25 && Number(control.value) <= 50) {
-            return '';
-        } else {
-            return { 'invalidpregnanceTime': true };
-        }
-    }
-
     static ifscCodeValidator(control : AbstractControl){
         if (control.value) {
             const matches = control.value.match(/^[A-Z]{4}0[0-9|A-Z]{6}/);

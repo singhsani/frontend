@@ -3,11 +3,11 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import * as moment from 'moment';
 import { Router } from '@angular/router';
-import { ManageRoutes } from '../../../../../config/routes-conf';
 import { BookingService } from '../../../../../core/services/citizen/data-services/booking.service';
 import { ValidationService } from '../../../../../shared/services/validation.service';
 import { CommonService } from '../../../../../shared/services/common.service';
-import { FormsActionsService } from '../../../../../core/services/citizen/data-services/forms-actions.service';
+import { BookingConstants, BookingUtils } from '../../config.enum';
+
 
 @Component({
 	selector: 'app-theater-list',
@@ -15,6 +15,14 @@ import { FormsActionsService } from '../../../../../core/services/citizen/data-s
 	styleUrls: ['./theater-list.component.scss']
 })
 export class TheaterListComponent implements OnInit {
+
+	/**
+	 * Loading Booking Configuration
+	 */
+
+	 bookingUtils: BookingUtils = new BookingUtils();
+
+	 bookingConstants =  BookingConstants;
 
 	/**
 	 * boolean flags to handle view.
@@ -354,28 +362,28 @@ export class TheaterListComponent implements OnInit {
 		})
 	}
 
-	/**
-	 * Method is used to match email & confirm email.
-	 */
-	emailMatcher(): boolean {
-		if (this.theaterBookingForm.get('applicantEmail').value !== this.theaterBookingForm.get('confirmEmail').value) {
-			return true;
-		} else {
-			return false;
-		}
-	}
+	// /**
+	//  * Method is used to match email & confirm email.
+	//  */
+	// emailMatcher(): boolean {
+	// 	if (this.theaterBookingForm.get('applicantEmail').value !== this.theaterBookingForm.get('confirmEmail').value) {
+	// 		return true;
+	// 	} else {
+	// 		return false;
+	// 	}
+	// }
 
-	/**
-	 * Method is used to mobile number and confirm mobile number.
-	 */
-	mobileNoMatcher(): boolean {
-		if (this.theaterBookingForm.get('applicantContactNo').value !== this.theaterBookingForm.get('confirmContactNo').value) {
-			return true;
-		} else {
-			return false;
-		}
+	// /**
+	//  * Method is used to mobile number and confirm mobile number.
+	//  */
+	// mobileNoMatcher(): boolean {
+	// 	if (this.theaterBookingForm.get('applicantContactNo').value !== this.theaterBookingForm.get('confirmContactNo').value) {
+	// 		return true;
+	// 	} else {
+	// 		return false;
+	// 	}
 
-	}
+	// }
 
 	/**
 	 * Method is used to check agree and terms & condition verification.

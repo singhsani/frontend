@@ -67,7 +67,7 @@ export class ValidationFieldsDirective {
           // let it happen, don't do anything
           return;
         }
-        if (e.keyCode != 32 && ((e.keyCode < 65 || e.keyCode > 96))) {
+        if (e.keyCode != 32 && (e.keyCode < 65 || e.keyCode > 96)) {
           e.preventDefault();
         }
         break;

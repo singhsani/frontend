@@ -8,9 +8,6 @@ import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 import { CommonService } from '../../../../../shared/services/common.service';
 import { ToastrService } from 'ngx-toastr';
-import { Location } from '@angular/common';
-
-import { TitleBarComponent } from '../../../../../shared/components/title-bar/title-bar.component';
 
 export interface BookingDetails {
   administrationCharges: string
@@ -189,7 +186,7 @@ export class BookStadiumComponent implements OnInit {
 			 * calling api to get all available slots.
 			 */
       this.bookingService.getAllSlots(filterData).subscribe(resp => {
-        console.log(resp);
+        //console.log(resp);
         this.filteredReponse = resp;
         let temp = resp.data.scheduleList;
         this.Dates = temp.sort((a, b) => {
@@ -202,7 +199,8 @@ export class BookStadiumComponent implements OnInit {
         this.availableStots = resp.data;
       });
     } else {
-
+      this.bookingUtils.getAllErrors(this.stadiumSearchForm);
+      this.commonService.openAlert("Feild Error", this.bookingConstants.ALL_FEILD_REQUIRED_MESSAGE, 'warning');
     }
   }
 
@@ -409,8 +407,8 @@ export class BookStadiumComponent implements OnInit {
 	 * Method is used to shortlist all selected dates.
 	 */
   shortlistShifts(confirmationModel: TemplateRef<any>) {
-    this.selectedShift = this.selectedShift.sort((a, b) => {
-      if ((new Date(a.start.split(' ')[0]).getTime()) >= (new Date(b.start.split(' ')[0]).getTime())) {
+    this.selectedShift.sort((a, b) => {
+      if ((new Date(a.start).getTime()) >= (new Date(b.start).getTime())) {
         return 1;
       } else {
         return -1;

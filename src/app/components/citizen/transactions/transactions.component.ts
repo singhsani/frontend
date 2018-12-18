@@ -1,17 +1,10 @@
 import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { MatTableDataSource, MatPaginator } from '@angular/material';
-import { Router } from '@angular/router';
-import { FormGroup, FormBuilder, FormControl, Validators, Form } from '@angular/forms';
-
+import {FormControl} from '@angular/forms';
 import { Observable ,  merge ,  of as observableOf } from 'rxjs';
 import { catchError ,  map ,  startWith ,  switchMap } from 'rxjs/operators';
-
 import { PaginationService } from '../../../core/services/citizen/data-services/pagination.service';
-import { FormsActionsService } from '../../../core/services/citizen/data-services/forms-actions.service';
-import { CommonService } from './../../../shared/services/common.service';
-
-import swal from 'sweetalert2'
 
 @Component({
 	selector: 'app-transactions',
@@ -48,8 +41,7 @@ export class TransactionsComponent implements OnInit {
 	 * @param transaction - pass transaction object.
 	 */
 	openDailog(transaction): void {
-
-		let dialogRef = this.dialog.open(TransactionDataDialog, {
+    this.dialog.open(TransactionDataDialog, {
 			width: '400px',
 			data: {
 				tData: transaction

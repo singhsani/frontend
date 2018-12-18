@@ -35,7 +35,11 @@
 						</mat-form-field>
 
 						<mat-form-field class="col-4">
-							<input matInput formControlName="marriageRegDate" placeholder="{{ 'marriage_reg_date' | translate:translateKey }}" readonly>
+							<input matInput [min]="marriageDuplicateForm.controls.marriageDate.value" [max]="disablefutureDate" [matDatepicker]="marriageRegDatepicker" formControlName="marriageRegDate" (dateChange)="dateFormate($event.value,'marriageRegDate')"
+							 placeholder="{{ 'marriage_reg_date' | translate:translateKey }}" required>
+							<mat-datepicker-toggle matSuffix [for]="marriageRegDatepicker"></mat-datepicker-toggle>
+							<mat-datepicker #marriageRegDatepicker></mat-datepicker>
+							<control-messages [control]="marriageDuplicateForm.controls.marriageRegDate"></control-messages>
 						</mat-form-field>
 
 						<mat-form-field class="col-4">
@@ -55,8 +59,9 @@
 						</mat-form-field>
 
 						<div class="col-12">
-							<app-action-bar [form]="marriageDuplicateForm" [stepInfo]="{step: 'final', next: 0, back: 0}" (tabIndex)="onTabChange($event)" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
+							<app-action-bar [form]="marriageDuplicateForm" [stepInfo]="{step: 'final', next: 1, back: 0}" (tabIndex)="onTabChange($event)" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
 						</div>
+						
 					</div>
 				</mat-tab>
 			</mat-tab-group>

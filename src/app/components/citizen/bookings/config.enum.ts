@@ -119,5 +119,15 @@ export class BookingUtils{
         }
         return null;
     }
+
+    /**
+     * Method is used to match two cotrols of form.
+     * @param form - form group
+     * @param c1 - control 1
+     * @param c2 - control 2
+     */
+    matcher(form: FormGroup, c1: string, c2: string): boolean{
+        return form.get(c1).value == form.get(c2).value
+    }
 }
 

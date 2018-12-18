@@ -169,7 +169,7 @@
                 <mat-form-field class="col-md-6">
                     <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="confirmContactNo" placeholder="{{'confirm_mobile_number' | translate: translateKey}}" required>
                     <control-messages [control]="theaterBookingForm.controls.confirmContactNo"></control-messages>
-                    <mat-error class="mt-2" *ngIf="mobileNoMatcher()">{{'mobileno_warning' | translate: translateKey}}</mat-error>
+                    <mat-error class="mt-2" *ngIf="bookingUtils.matcher(theaterBookingForm, 'applicantContactNo','confirmContactNo')">{{'mobileno_warning' | translate: translateKey}}</mat-error>
                 </mat-form-field>
 
                 <mat-form-field class="col-md-12">
@@ -189,7 +189,7 @@
                         placeholder="{{'confirm_email' | translate: translateKey}}" required>
                         
                     <control-messages [control]="theaterBookingForm.controls.confirmEmail"></control-messages>
-                    <mat-error class="mt-2" *ngIf="emailMatcher()">{{'email_warning' | translate: translateKey}}</mat-error>
+                    <mat-error class="mt-2" *ngIf="bookingUtils.matcher(theaterBookingForm, 'applicantEmail','confirmEmail')">{{'email_warning' | translate: translateKey}}</mat-error>
                 </mat-form-field>
             </div>
             <div class="row">
@@ -201,12 +201,11 @@
             
             <div class="row" >
                 <div class="col-md-12 text-right">
-                    <button [disabled]="theaterBookingForm.invalid || emailMatcher() || mobileNoMatcher() || agreeAndTermsVerification()" mat-raised-button color="primary" type="submit">{{'confirm_booking' | translate: translateKey}}</button>
+                    <button [disabled]="theaterBookingForm.invalid || bookingUtils.matcher(theaterBookingForm, 'applicantEmail','confirmEmail') || bookingUtils.matcher(theaterBookingForm, 'applicantContactNo','confirmContactNo') || agreeAndTermsVerification()" mat-raised-button color="primary" type="submit">{{'confirm_booking' | translate: translateKey}}</button>
                 </div>
             </div>
         </form>
     </mat-card>
-
 
     <div *ngIf="availableStots.length==0" class="alert" style="text-align: center;margin: 20px;">
         <strong>No record found!</strong>
