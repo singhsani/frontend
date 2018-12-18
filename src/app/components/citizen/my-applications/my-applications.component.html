@@ -124,7 +124,7 @@
                         {{'application_json' | translate:translateKey}}
                     </button>
 
-                    <button (click)="redirectAppointment(row.serviceDetail.code, row.serviceFormId)" mat-menu-item color="primary" *ngIf="(row.fileStatus === 'PAYMENT_RECEIVED' && row.serviceDetail.appointmentRequired == true)">
+                    <button (click)="redirectAppointment(row.serviceDetail.code, row.serviceFormId)" mat-menu-item color="primary" *ngIf="((row.fileStatus === 'PAYMENT_RECEIVED' || row.fileStatus === 'SUBMITTED') && row.serviceDetail.appointmentRequired == true)">
                         <mat-icon title="{{'reschedule_appointment' | translate:translateKey}}">schedule</mat-icon>
                         {{'reschedule_appointment' | translate:translateKey}}
                     </button>
