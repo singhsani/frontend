@@ -89,37 +89,37 @@
                 </button>
                 <mat-menu #menu="matMenu">
 
-                    <button mat-menu-item *ngIf="row.canEdit || (row.serviceType === 'PEC_REG' || row.serviceType === 'PRC_REG')" color="primary" (click)="redirectToEdit(row.serviceDetail.code, row.serviceFormId)">
+                    <button mat-menu-item *ngIf="isEditOptDisplay(row)" color="primary" (click)="redirectToEdit(row.serviceDetail.code, row.serviceFormId)">
                         <mat-icon title="{{'edit_application' | translate:translateKey}}">edit</mat-icon>
                         {{'edit_application' | translate:translateKey}}
                     </button>
-
-                    <button mat-menu-item *ngIf="row.canDelete" color="primary" (click)="deleteRecord(row.serviceDetail.code, row.serviceFormId)">
+                    
+                    <button mat-menu-item *ngIf="isDeleteOptDisplay(row)" color="primary" (click)="deleteRecord(row.serviceDetail.code, row.serviceFormId)">
                         <mat-icon title="{{'delete_application' | translate:translateKey}}">delete</mat-icon>
                         {{'delete_application' | translate:translateKey}}
                     </button>
                     <!-- <button class="btn btn-default" mwlConfirmationPopover [popoverTitle]="Delete" [popoverMessage]="Are you sure?" placement="left" (confirm)="deleteRecord(row.serviceDetail.code, row.serviceFormId)" (cancel)="">
-                                                <mat-icon title="Delete">delete</mat-icon>
-                                            </button> -->
+                                                                    <mat-icon title="Delete">delete</mat-icon>
+                                                                </button> -->
                     <!-- <button mat-icon-button [disabled]="!row.canSubmit" [style.color]="'#4CAF50'" (click)="submitRecord(row.serviceDetail.code, row.serviceDetail.name, row.serviceFormId)">
-                                                <mat-icon title="Submit">done_all</mat-icon>
-                                            </button> -->
-                    <button mat-menu-item *ngIf="!row.canEdit && (row.serviceType !== 'PEC_REG' && row.serviceType !== 'PRC_REG')" color="primary" (click)="redirectToEdit(row.serviceDetail.code, row.serviceFormId)">
+                                                                    <mat-icon title="Submit">done_all</mat-icon>
+                                                                </button> -->
+                    <button mat-menu-item *ngIf="isPreviewOptDisplay(row)" color="primary" (click)="redirectToEdit(row.serviceDetail.code, row.serviceFormId)">
                         <mat-icon title="{{'preview_application' | translate:translateKey}}">remove_red_eye</mat-icon>
                         {{'preview_application' | translate:translateKey}}
                     </button>
-
+                    
                     <button mat-menu-item *ngIf="row.fileStatus == 'PAYMENT_RECEIVED'" color="primary" (click)="printReceipt(row.serviceDetail.code, row.serviceDetail.name, row.serviceFormId)">
                         <mat-icon title="{{'print_receipt' | translate:translateKey}}">print</mat-icon>
                         {{'print_receipt' | translate:translateKey}}
                     </button>
-
-                    <button mat-menu-item *ngIf="row.fileStatus != 'DRAFT' && row.serviceType !== 'PEC_REG' && row.serviceType !== 'PRC_REG'" color="primary" (click)="printView(row.serviceDetail.code, row.serviceDetail.name, row.serviceFormId)">
+                    
+                    <button mat-menu-item *ngIf="isPrintViewDisplay(row)" color="primary" (click)="printView(row.serviceDetail.code, row.serviceDetail.name, row.serviceFormId)">
                         <mat-icon title="{{'print_view' | translate:translateKey}}">pageview</mat-icon>
                         {{'print_view' | translate:translateKey}}
                     </button>
-
-                    <button mat-menu-item *ngIf="row.serviceType !== 'PEC_REG' && row.serviceType !== 'PRC_REG'" color="primary" (click)="openModal(template);jsonDisplay(row.serviceDetail.code, row.serviceDetail.name, row.serviceFormId)">
+                    
+                    <button mat-menu-item *ngIf="isAppJsonOptDisplay(row)" color="primary" (click)="openModal(template);jsonDisplay(row.serviceDetail.code, row.serviceDetail.name, row.serviceFormId)">
                         <mat-icon title="{{'application_json' | translate:translateKey}}">center_focus_weak</mat-icon>
                         {{'application_json' | translate:translateKey}}
                     </button>

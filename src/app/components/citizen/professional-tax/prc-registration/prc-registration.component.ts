@@ -200,7 +200,7 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 	 */
 	editPRCDetail() {
 		//this.commonService.commonAlert('Are you sure', `You want to edit ${this.prcRegForm.get('pecNo').value ? this.prcRegForm.get('pecNo').value : this.prcRegForm.get('prcNo').value} details`, 'question', 'Yes', true, '', cb => {
-		this.commonService.commonAlert('Are you sure', `You will be redirect to PEC  `, 'question', 'Yes', true, '', cb => {
+		this.commonService.commonAlert('Are you sure', 'You will be redirecting to PEC', 'question', 'Yes', true, '', cb => {
 			
 			let redirectUrl = ManageRoutes.getFullRoute('PEC_REG');
 			
@@ -322,14 +322,14 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 
 						if (this.prcRegForm.get('prcNo').value) {
 							this.commonService.openAlert("PRC Information Updated Successful", "", "success", `PRC number is ${res.prcNo}`, cb => {
-								this.router.navigateByUrl(ManageRoutes.getFullRoute('CITIZENDASHBOARD'));
+								this.router.navigateByUrl(ManageRoutes.getFullRoute('CITIZENMYAPPS'));
 							});
 						} else {
 							this.prcRegForm.get('rcDate').disable();
 							this.prcRegForm.get('prcNo').setValue(res.prcNo);
 
 							this.commonService.openAlert("PRC Registration Successful", "", "success", `PRC number is ${res.prcNo}`, cb => {
-								this.router.navigateByUrl(ManageRoutes.getFullRoute('CITIZENDASHBOARD'));
+								this.router.navigateByUrl(ManageRoutes.getFullRoute('CITIZENMYAPPS'));
 							});
 						}
 					}

@@ -159,8 +159,8 @@ export class DashboardComponent implements OnInit {
 			case 'FL-DUP':
 			case 'FS-FINAL':
 			case 'FS-REVISED':
-				this.router.navigate([ManageRoutes.getFullRoute(apiCode),false, apiCode]);
-			break;
+				this.router.navigate([ManageRoutes.getFullRoute(apiCode), false, apiCode]);
+				break;
 			case 'PRC_REG':
 				this.router.navigate([ManageRoutes.getFullRoute(apiCode)]);
 				break;
@@ -199,34 +199,18 @@ export class DashboardComponent implements OnInit {
 	getIconImg(moduleCode: string) {
 		switch (moduleCode) {
 			case 'SHOP-ESTAB':
-				return 'assets/icons/shop-estab.png';
+				return { card: 'yelloCard', icon: 'assets/icons/shop-estab.png' };
 			case 'BIRTH-DEATH':
-				return 'assets/icons/birth-death.png';
+				return { card: 'redCard', icon: 'assets/icons/birth-death.png' };
 			case 'FIRE':
-				return 'assets/icons/fire.png';
+				return { card: 'greenCard', icon: 'assets/icons/fire.png' };
 			case 'MUTTON-FISH-POND':
-				return 'assets/icons/mutton-fish-pond.png';
+				return { card: 'kyeBlueCard', icon: 'assets/icons/mutton-fish-pond.png' };
 			case 'PROPERTY-TAX':
-				return 'assets/icons/property-tax.png';
+				return { card: 'grayCard', icon: 'assets/icons/property-tax.png' };
 			default:
 				break;
 		}
 	}
 
-	getIconClass(moduleCode: string) {
-		switch (moduleCode) {
-			case 'SHOP-ESTAB':
-				return 'yelloCard';
-			case 'BIRTH-DEATH':
-				return 'redCard';
-			case 'FIRE':
-				return 'greenCard';
-			case 'MUTTON-FISH-POND':
-				return 'kyeBlueCard';
-			case 'PROPERTY-TAX':
-				return 'grayCard';
-			default:
-				break;
-		}
-	}
 }

@@ -17,8 +17,7 @@ export class DateDirective {
     }, 100)
   }
 
-  @HostListener('keydown', ['$event']) onKeyDown(event: KeyboardEvent) {
-    let e = <KeyboardEvent>event;
+  @HostListener('keydown', ['$event']) onKeyDown(e: KeyboardEvent) {
 		/* 
 			8 -  for backspace
 			9 -  for tab
@@ -46,15 +45,14 @@ export class DateDirective {
     }
   }
 
-  @HostListener('keyup', ['$event']) onkeyup(event: KeyboardEvent) {
-    let e = <KeyboardEvent>event;
+  @HostListener('keyup', ['$event']) onkeyup(e: KeyboardEvent) {
 
     let numberRegEx = /^[0-9/]+$/;
     let val = String(this.el.nativeElement.value);
 
     if (!numberRegEx.test(this.el.nativeElement.value)) {
       this.el.nativeElement.value = "";
-      event.preventDefault();
+      e.preventDefault();
     } else if (val.length <= 10) {
       if (val.length == 2 && e.keyCode != 8) {
         this.el.nativeElement.value = this.el.nativeElement.value.concat("/")

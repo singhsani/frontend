@@ -264,4 +264,58 @@ export class MyApplicationsComponent implements OnInit {
 		return null;
 	}
 
+	/**
+	 * This method is use for edit option
+	 * @param row - Table row oject
+	 */
+	isEditOptDisplay(row) {
+		if (row.serviceType === 'PEC_REG' && row.serviceType === 'PRC_REG')
+			return false;
+		else if (row.canEdit)
+			return true;
+	}
+
+	/**
+	 * This method is use for delete option
+	 * @param row - Table row oject
+	 */
+	isDeleteOptDisplay(row) {
+		if (row.canDelete)
+			return true;
+	}
+
+	/**
+	 * This method is use for preview option
+	 * @param row - Table row oject
+	 */
+	isPreviewOptDisplay(row) {
+		if (row.serviceType === 'PEC_REG' && row.serviceType === 'PRC_REG')
+			return false;
+		else if (!row.canEdit)
+			return true;
+	}
+
+	/**
+	 * This method is use for print view option
+	 * @param row - Table row oject
+	 */
+	isPrintViewDisplay(row) {
+		if (row.serviceType === 'PEC_REG' || row.serviceType === 'PRC_REG')
+			return false;
+		else if (row.fileStatus != 'DRAFT')
+			return true;
+	}
+
+	/**
+	 * This method is use for application json option
+	 * @param row - Table row oject
+	 */
+	isAppJsonOptDisplay(row) {
+		if (row.serviceType === 'PEC_REG' || row.serviceType === 'PRC_REG')
+			return false;
+		else
+			return true;
+	}
+
+
 }
