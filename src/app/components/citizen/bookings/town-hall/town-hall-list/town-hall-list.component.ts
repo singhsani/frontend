@@ -412,8 +412,8 @@ export class TownHallListComponent implements OnInit {
 	 * Method is used to shortlist all selected dates.
 	 */
 	shortlistShifts() {
-		this.selectedShift = this.selectedShift.sort((a, b) => {
-			if ((new Date(a.start.split(' ')[0]).getTime()) >= (new Date(b.start.split(' ')[0]).getTime())) {
+		this.selectedShift.sort((a, b) => {
+			if ((new Date(a.start).getTime()) >= (new Date(b.start).getTime())) {
 				return 1;
 			} else {
 				return -1;
@@ -517,9 +517,9 @@ export class TownHallListComponent implements OnInit {
 			this.commonService.openAlert("Feild Error", this.bookingConstants.ALL_FEILD_REQUIRED_MESSAGE, 'warning')
 			return;
 		}
-		else if (!this.emailMatcher() || !this.mobileNumberMatcher()) {
+		else if (!this.bookingUtils.matcher(this.townHallApplicationForm, 'emailID', 'confirmEmailID') || !this.bookingUtils.matcher(this.townHallApplicationForm, 'applicantMobile', 'confirmMobile')) {
 			this.handleErrorsOnSubmit(7);
-			this.commonService.openAlert("Feild Error", !this.emailMatcher() ? this.bookingConstants.EMAIL_MIS_MATCH_MESSAGE : this.bookingConstants.MOB_NO_MIS_MATCH_MESSAGE, 'warning')
+			this.commonService.openAlert("Feild Error", !this.bookingUtils.matcher(this.townHallApplicationForm, 'emailID', 'confirmEmailID') ? this.bookingConstants.EMAIL_MIS_MATCH_MESSAGE : this.bookingConstants.MOB_NO_MIS_MATCH_MESSAGE, 'warning')
 			return;
 		} else {
 			this.isLoadingResults = true;
@@ -544,25 +544,25 @@ export class TownHallListComponent implements OnInit {
 		}
 	}
 
-	/**
-	 * Method is used to match number and comfirm number.
-	 */
-	mobileNumberMatcher(): boolean {
-		if (this.townHallApplicationForm.get('applicantMobile').value && this.townHallApplicationForm.get('confirmMobile').value) {
-			return this.townHallApplicationForm.get('applicantMobile').value.toString() == this.townHallApplicationForm.get('confirmMobile').value.toString();
-		}
-		return false
-	}
+	// /**
+	//  * Method is used to match number and comfirm number.
+	//  */
+	// mobileNumberMatcher(): boolean {
+	// 	if (this.townHallApplicationForm.get('applicantMobile').value && this.townHallApplicationForm.get('confirmMobile').value) {
+	// 		return this.townHallApplicationForm.get('applicantMobile').value.toString() == this.townHallApplicationForm.get('confirmMobile').value.toString();
+	// 	}
+	// 	return false
+	// }
 
-	/**
-	 * Method is used to match email and confirm email.
-	 */
-	emailMatcher(): boolean {
-		if (this.townHallApplicationForm.get('emailID').value && this.townHallApplicationForm.get('confirmEmailID').value) {
-			return this.townHallApplicationForm.get('emailID').value.toString() == this.townHallApplicationForm.get('confirmEmailID').value.toString()
-		}
-		return false
-	}
+	// /**
+	//  * Method is used to match email and confirm email.
+	//  */
+	// emailMatcher(): boolean {
+	// 	if (this.townHallApplicationForm.get('emailID').value && this.townHallApplicationForm.get('confirmEmailID').value) {
+	// 		return this.townHallApplicationForm.get('emailID').value.toString() == this.townHallApplicationForm.get('confirmEmailID').value.toString()
+	// 	}
+	// 	return false
+	// }
 
 
 

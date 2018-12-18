@@ -192,7 +192,7 @@ export class StillBirthComponent implements OnInit {
 				code: [null, Validators.required],
 			}),
 			delayPeriod: null,
-			pregnancyDuration: ['', [Validators.required, ValidationService.stillPregnancyDurationValidation]],
+			pregnancyDuration: ['', [Validators.required, ValidationService.pregnancyDurationValidation]],
 
 			//step 4
 			parentDeliveryAddress: this.fb.group(this.addressComp.addressControls()),
@@ -221,10 +221,10 @@ export class StillBirthComponent implements OnInit {
 
 	/**
  * Used to caplture Change in birth place.
- * @param ev - event
+ * @param birthPlace - event
  */
-	changeBirthPlace(ev: string) {
-		if (ev != 'OTHER_PLACE') {
+	changeBirthPlace(birthPlace: string) {
+		if (birthPlace != 'OTHER_PLACE') {
 			this.stillBirthCertificateForm.get('otherPlace').clearValidators();
 			this.stillBirthCertificateForm.get('otherPlace').updateValueAndValidity();
 		}
@@ -232,10 +232,10 @@ export class StillBirthComponent implements OnInit {
 
 	/**
 	 * Used to capture change in family religion.
-	 * @param ev - event
+	 * @param relogion - event
 	 */
-	changeFamilyReligion(ev: string) {
-		if (ev != 'OTHER_RELIGION') {
+	changeFamilyReligion(relogion: string) {
+		if (relogion != 'OTHER_RELIGION') {
 			this.stillBirthCertificateForm.get('familyReligionOther').clearValidators();
 			this.stillBirthCertificateForm.get('familyReligionOther').updateValueAndValidity();
 		}
@@ -243,14 +243,14 @@ export class StillBirthComponent implements OnInit {
 
 	/**
 	 * Used to capture change in birth time for perticular child.
-	 * @param ev - event
+	 * @param time - event
 	 * @param index - index of child
 	 */
-	changeBirthTime(ev: string, index: number) {
-		if (ev && ev.length < 8) {
-			ev = ev.concat(":00");
+	changeBirthTime(time: string, index: number) {
+		if (time && time.length < 8) {
+			time = time.concat(":00");
 		}
-		this.getChildData().at(index).get('birthTime').setValue(ev);
+		this.getChildData().at(index).get('birthTime').setValue(time);
 	}
 
 	/**

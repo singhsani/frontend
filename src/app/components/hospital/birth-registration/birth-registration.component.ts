@@ -310,8 +310,8 @@ export class BirthRegistrationComponent implements OnInit {
 	 * Used to caplture Change in birth place.
 	 * @param ev - event
 	 */
-	changeBirthPlace(ev: string){
-		if (ev != 'OTHER_PLACE'){
+	changeBirthPlace(birthPlace: string){
+		if (birthPlace != 'OTHER_PLACE'){
 			this.birthCertificateForm.get('otherPlace').clearValidators();
 			this.birthCertificateForm.get('otherPlace').updateValueAndValidity();
 		}
@@ -321,8 +321,8 @@ export class BirthRegistrationComponent implements OnInit {
 	 * Used to capture change in family religion.
 	 * @param ev - event
 	 */
-	changeFamilyReligion(ev: string){
-		if (ev != 'OTHER_RELIGION') {
+	changeFamilyReligion(religion: string){
+		if (religion != 'OTHER_RELIGION') {
 			this.birthCertificateForm.get('familyReligionOther').clearValidators();
 			this.birthCertificateForm.get('familyReligionOther').updateValueAndValidity();
 		}

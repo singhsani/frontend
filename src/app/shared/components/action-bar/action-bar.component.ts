@@ -102,9 +102,7 @@ export class ActionBarComponent implements OnInit, OnChanges {
 	 * This method is used for save form as draft using API
 	 */
 	saveAsDraft() {
-
 		this.isSaveBtnDisabled = true;
-
 		this.formService.saveFormData(this.form.getRawValue()).subscribe(
 			res => {
 				this.form.patchValue(res);
@@ -116,20 +114,8 @@ export class ActionBarComponent implements OnInit, OnChanges {
 				this.toastr.success(`${this.form.getRawValue().serviceDetail.name} information successfully saved`);
 			},
 			err => {
-
-				this.markFormGroupTouched(this.form);
-				this.isSaveBtnDisabled = false;
-				let count = 1;
-				for (const key in this.form.controls) {
-					if (err.error[0] && key == err.error[0].property) {
-						this.handleErrors.emit(count);
-						break;
-					}
-					count++;
-				}
+				this.onSaveError(err);
 			}
-
-
 		);
 	}
 
@@ -137,7 +123,6 @@ export class ActionBarComponent implements OnInit, OnChanges {
 	 * This method is use for submit form using API
 	 */
 	onSubmit() {
-
 		this.isSubmitBtnDisabled = true;
 		var count = 1;
 		this.markFormGroupTouched(this.form);
@@ -242,19 +227,25 @@ export class ActionBarComponent implements OnInit, OnChanges {
 			this.onSubmit();
 		},
 			err => {
-
-				this.markFormGroupTouched(this.form);
-				this.isSaveBtnDisabled = false;
-				let count = 1;
-				for (const key in this.form.controls) {
-					if (err.error[0] && key == err.error[0].property) {
-						this.handleErrors.emit(count);
-						break;
-					}
-					count++;
-				}
-
+				this.onSaveError(err);
 			})
+	}
+
+	/**
+	 * Method Is used to throw error on save.
+	 * @param err - Error Response.
+	 */
+	onSaveError(err: any) {
+		this.markFormGroupTouched(this.form);
+		this.isSaveBtnDisabled = false;
+		let count = 1;
+		for (const key in this.form.controls) {
+			if (err.error[0] && key == err.error[0].property) {
+				this.handleErrors.emit(count);
+				break;
+			}
+			count++;
+		}
 	}
 
 

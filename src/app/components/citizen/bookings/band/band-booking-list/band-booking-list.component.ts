@@ -25,7 +25,7 @@ export class BandBookingListComponent implements OnInit {
 	showShortListForm: boolean = false;
 
 	paymentTransactionId: string;
-	bandBookingPaymentAmount: Number = 0;
+	bandBookingPaymentAmount: number = 0;
 
 	Bands: Array<any> = [];
 	TemporaryBookedBands: Array<any> = [];
@@ -102,7 +102,7 @@ export class BandBookingListComponent implements OnInit {
 	 * Method is used to open time picker for start time.
 	 */
 	openStartTimePicker() {
-		const amazingTimePicker = this.atp.open({
+		const amazingStartTimePicker = this.atp.open({
 			onlyHour: true,
 			time: '09:00',
 			rangeTime: {
@@ -111,9 +111,9 @@ export class BandBookingListComponent implements OnInit {
 			},
 			theme: 'material-purple',
 		});
-		amazingTimePicker.afterClose().subscribe(time => {
-			if (time.length == 5) {
-				this.shortlistBandForm.get('startTime').setValue(time + ":00");
+		amazingStartTimePicker.afterClose().subscribe(startTime => {
+			if (startTime.length == 5) {
+				this.shortlistBandForm.get('startTime').setValue(startTime + ":00");
 			}
 		});
 	}
@@ -122,7 +122,7 @@ export class BandBookingListComponent implements OnInit {
 	 * Method is used to open time picker for end time.
 	 */
 	openEndTimePicker() {
-		const amazingTimePicker = this.atp.open({
+		const amazingEndTimePicker = this.atp.open({
 			onlyHour: true,
 			time: '09:00',
 			rangeTime: {
@@ -131,9 +131,9 @@ export class BandBookingListComponent implements OnInit {
 			},
 			theme: 'material-purple',
 		});
-		amazingTimePicker.afterClose().subscribe(time => {
-			if (time.length == 5) {
-				this.shortlistBandForm.get('endTime').setValue(time + ":00");
+		amazingEndTimePicker.afterClose().subscribe(endTime => {
+			if (endTime.length == 5) {
+				this.shortlistBandForm.get('endTime').setValue(endTime + ":00");
 			}
 		});
 	}

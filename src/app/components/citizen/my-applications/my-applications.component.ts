@@ -173,9 +173,9 @@ export class MyApplicationsComponent implements OnInit {
 
 		this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);
 		this.formService.printReceipt(id).subscribe(
-			htmlResponse => {
-				let sectionToPrint: any = document.getElementById('sectionToPrint');
-				sectionToPrint.innerHTML = htmlResponse;
+			receiptResponse => {
+				let sectionToPrintReceipt: any = document.getElementById('sectionToPrint');
+				sectionToPrintReceipt.innerHTML = receiptResponse;
 				setTimeout(() => {
 					window.print();
 				});
@@ -184,7 +184,6 @@ export class MyApplicationsComponent implements OnInit {
 				this.commonService.openAlert('Error!', err.error[0].message, 'error');
 			}
 		);
-
 	}
 
 
@@ -209,7 +208,6 @@ export class MyApplicationsComponent implements OnInit {
                 //this.commonService.successAlert('Error!', err.error[0].message, 'error');
             }
         );
-
     }
 
 

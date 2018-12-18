@@ -276,9 +276,9 @@ export class CancelBookingComponent implements OnInit {
 	 */
 	printPolicePerformanceLicense(element) {
 		if (element.refNumber) {
-			this.bookingService.printPolicePerformanceLicense(element.refNumber).subscribe(response => {
-				let sectionToPrint: any = document.getElementById('sectionToPrint');
-				sectionToPrint.innerHTML = response;
+			this.bookingService.printPolicePerformanceLicense(element.refNumber).subscribe(respPPL => {
+				let sectionToPrintPPL: any = document.getElementById('sectionToPrint');
+				sectionToPrintPPL.innerHTML = respPPL;
 				setTimeout(() => {
 					window.print();
 				});

@@ -95,7 +95,7 @@ export class MarriageDuplicateComponent implements OnInit {
 
 			marriageRegNumber: ['', Validators.required],
 			marriageDate: ['', Validators.required],
-			marriageRegDate: ['', Validators.required],
+			marriageRegDate: [new Date(), Validators.required],
 			marriageRegYear: ['', Validators.required],
 			groomName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
 			brideName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]]
@@ -124,6 +124,7 @@ export class MarriageDuplicateComponent implements OnInit {
 	 * @param evt - Tab index
 	 */
 	onTabChange(evt) {
+		console.log(evt);
 		this.tabIndex = evt;
 	}
 
