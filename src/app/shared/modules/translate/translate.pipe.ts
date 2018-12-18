@@ -15,8 +15,6 @@ export class TranslatePipe implements PipeTransform {
 
 		if(args){
 			return this.translateService.translate(value, args, lang);
-		} else {
-
 		}
 	}
 

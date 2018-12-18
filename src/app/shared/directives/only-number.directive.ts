@@ -7,8 +7,7 @@ export class OnlyNumberDirective {
 
 	constructor(private el: ElementRef) { }
 
-	@HostListener('keydown', ['$event']) onKeyDown(event: KeyboardEvent) {
-		let e = <KeyboardEvent>event;
+	@HostListener('keydown', ['$event']) onKeyDown(e: KeyboardEvent) {
 		/* 
 			8 -  for backspace
 			9 -  for tab

@@ -128,10 +128,7 @@ export class CremationCertificateComponent implements OnInit {
 		if (count <= step1) {
 			this.tabIndex = 0;
 			return false;
-		} else if (count >= 33 && count <= 38) {
-			this.tabIndex = 1;
-			return false;
-		} else if (count <= step2) {
+		} else if ((count >= 33 && count <= 38) || (count <= step2)) {
 			this.tabIndex = 1;
 			return false;
 		}

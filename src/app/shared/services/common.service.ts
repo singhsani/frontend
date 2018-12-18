@@ -58,12 +58,7 @@ export class CommonService {
 			imageClass: 'doneIcon'
 		}
 
-		swal(options as any).then((result) => {
-			if (result.value && cb) {
-				cb();
-			}
-		});
-
+		this.isCallback(options, cb);
 	}
 
 	openAlertFormSaveValidation(title: string, message: any, type: string, html?: any, cb?: any) {
@@ -88,12 +83,7 @@ export class CommonService {
 			imageClass: 'doneIcon',
 		}
 
-		swal(options as any).then((result) => {
-			if (result.value && cb) {
-				cb();
-			}
-		})
-
+		this.isCallback(options, cb);
 	}
 
 	deleteAlert(title: string, message: string, type: string, html?: any, performDelete?: any) {
@@ -111,11 +101,8 @@ export class CommonService {
 			imageClass: 'deleteIcon',
 		}
 
-		swal(options as any).then((result) => {
-			if (result.value && performDelete) {
-				performDelete();
-			}
-		})
+		this.isCallback(options, performDelete);
+		
 	}
 
 	submitAlert(title: string, message: string, type: string, html?: any, performSubmit?: any) {
@@ -134,11 +121,8 @@ export class CommonService {
 			imageClass: 'doneIcon',
 		}
 
-		swal(options as any).then((result) => {
-			if (result.value && performSubmit) {
-				performSubmit();
-			}
-		})
+		this.isCallback(options, performSubmit);
+		
 	}
 
 	successAlert(title: string, message: string, type: string) {
@@ -168,11 +152,8 @@ export class CommonService {
 			imageClass: 'doneIcon',
 		}
 
-		swal(options as any).then((result) => {
-			if (result.value && pay) {
-				pay();
-			}
-		})
+		this.isCallback(options, pay);
+		
 	}
 
 	getUserType(): string {
@@ -194,9 +175,9 @@ export class CommonService {
 		}
 	}
 
-	getDateFormat(date: string, withTime:boolean) {
+	getDateFormat(date: string, withTime: boolean) {
 
-		if(withTime){
+		if (withTime) {
 			return moment(date).format('DD-MM-YYYY HH:MM:SS');
 		} else {
 			return moment(date).format('DD-MM-YYYY');
@@ -221,14 +202,10 @@ export class CommonService {
 			imageClass: 'doneIcon',
 		}
 
-		swal(options as any).then((result) => {
-			if (result.value && performEvent) {
-				performEvent();
-			}
-		})
+		this.isCallback(options, performEvent);
 	}
 
-	commonAlert(title: string, message: string, type: string, confirmButtonText: string, allowOutsideClick?:boolean, html?: any, performAction?: any, rejectAction?: any) {
+	commonAlert(title: string, message: string, type: string, confirmButtonText: string, allowOutsideClick?: boolean, html?: any, performAction?: any, rejectAction?: any) {
 
 		let options = {
 			title: title,
@@ -277,6 +254,20 @@ export class CommonService {
 
 	redirectToPaymentGateway(payData) {
 		window.location.href = environment.adminUrl + `#/admin/payment-gateway?retUrl=${payData.retUrl}&retPath=${payData.retPath}`;
+	}
+
+
+	/**
+	 * This mthod is use for return the callback if exist
+	 * @param options - Swal options
+	 * @param cb - Callback
+	 */
+	isCallback(options: any, cb) {
+		swal(options as any).then((result) => {
+			if (result.value && cb) {
+				cb();
+			}
+		});
 	}
 
 }

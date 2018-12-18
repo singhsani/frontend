@@ -313,11 +313,11 @@ export class PecRegistrationComponent implements OnInit {
 					if (Object.keys(res).length) {
 						if (this.pecRegForm.get('pecNo').value) {
 							this.commonService.openAlert("PEC Information Updated Successful", "", "success", `PEC number is ${res.pecNo}`, cb => {
-								this.router.navigateByUrl(ManageRoutes.getFullRoute('CITIZENDASHBOARD'));
+								this.router.navigateByUrl(ManageRoutes.getFullRoute('CITIZENMYAPPS'));
 							});
 						} else {
 							this.commonService.openAlert("PEC Registration Successful", "", "success", `PEC number is ${res.pecNo}`, cb => {
-								this.router.navigateByUrl(ManageRoutes.getFullRoute('CITIZENDASHBOARD'));
+								this.router.navigateByUrl(ManageRoutes.getFullRoute('CITIZENMYAPPS'));
 							});
 						}
 						this.pecRegForm.patchValue(res);

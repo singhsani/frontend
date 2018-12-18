@@ -48,8 +48,8 @@ export class StadiumListComponent implements OnInit {
 	}
 
 	searchBooking() {
-		let resourceName = this.searchStadiumForm.value.code;
-		let date = moment(this.searchStadiumForm.value.date).format("YYYY-MM-DD");
+		// let resourceName = this.searchStadiumForm.value.code;
+		// let date = moment(this.searchStadiumForm.value.date).format("YYYY-MM-DD");
 		// this.bookingService.getAllSlots(resourceName, date).subscribe(res => {
 		// 	this.availableStots = res.data;
 		// }, err => {

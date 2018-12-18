@@ -217,12 +217,12 @@ export class TheaterListComponent implements OnInit {
 		/**
 		 * Get resource name.
 		 */
-		let resourceName = this.searchTheaterForm.value.code;
+		// let resourceName = this.searchTheaterForm.value.code;
 
 		/**
 		 * Get booking date in YYYY-MM-DD formet.
 		 */
-		let date = moment(this.searchTheaterForm.value.date).format("YYYY-MM-DD");
+		// let date = moment(this.searchTheaterForm.value.date).format("YYYY-MM-DD");
 
 		/**
 		 * Get All Slots Available.
