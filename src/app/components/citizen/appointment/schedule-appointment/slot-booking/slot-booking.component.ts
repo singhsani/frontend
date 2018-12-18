@@ -214,7 +214,9 @@ export class SlotBookingComponent implements OnInit {
 			this.appointmentService.bookSlot(this.formId, slotData.uniqueId).subscribe(resp => {
 				let res = resp.data;
 				if (res.bookingStatus === 'BOOKED') {
-					let appdetailhtml = `			
+					this.formService.submitFormData(this.formId).subscribe(submitResp => {
+						if(submitResp.success){
+							let appdetailhtml = `			
 								<div>
 								<h1>Appointment Details</h1>
 								<div class="alert alert-danger">
@@ -236,9 +238,11 @@ export class SlotBookingComponent implements OnInit {
 								</table>
 								</div>`;
 
-					this.commonService.openAlert("Schedule Appointment", "Appointment Scheduled Successfully", "info", appdetailhtml);
-					let redirectUrl = ManageRoutes.getFullRoute('CITIZENMYAPPS');
-					this.router.navigate([redirectUrl]);
+							this.commonService.openAlert("Schedule Appointment", "Appointment Scheduled Successfully", "info", appdetailhtml);
+							let redirectUrl = ManageRoutes.getFullRoute('CITIZENMYAPPS');
+							this.router.navigate([redirectUrl]);
+						}
+					});
 				} else {
 					this.commonService.openAlert("Error", "Appointment Pending", "warning")
 				}

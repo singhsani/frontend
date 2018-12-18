@@ -267,12 +267,11 @@ export class ActionBarComponent implements OnInit, OnChanges {
 			fileNumber: null,
 			pid: null,
 			outwardNo: null,
-			agree: false,
+			agree: null,
 			paymentStatus: null,
-			canEdit: true,
-			canDelete: true,
+			canEdit: null,
+			canDelete: null,
 			canSubmit: null,
-
 		}
 
 		/* started common form controls in existing formGroups*/

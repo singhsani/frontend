@@ -30,7 +30,7 @@
 		</form>
 	</mat-card>
 
-	<mat-card *ngIf="showcorrectionForm">
+	<mat-card [hidden]="!showcorrectionForm">
 		<form [formGroup]="birthCorrectionForm" (ngSubmit)="updateCorrectionInfo()" autocomplete="off">
 			<mat-tab-group mat-stretch-tabs  class="stepperNav" dynamicHeight="true" [(selectedIndex)]="tabIndex">
 				<mat-tab [label]="stepLable1 | translate: translateKey">

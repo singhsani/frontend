@@ -131,6 +131,11 @@ export class BirthCorrectionComponent implements OnInit {
 	 * Method initializes first.
 	 */
 	ngOnInit() {
+		this.birthCorrectionFormControls();
+		/**
+			 * get look up data.
+			 */
+		this.getLookupData();
 
 		this.route.paramMap.subscribe(param => {
 			this.appId = Number(param.get('id'));
@@ -151,19 +156,11 @@ export class BirthCorrectionComponent implements OnInit {
 			this.showcorrectionForm = true;
 
 			/**
-		 	 * create birth certificate form.
-		 	 */
-			this.birthCorrectionFormControls();
-
-			/**
 			 * get birth correction data.
 			 */
 			this.getBirthCorrectionData();
 
-			/**
-			 * get look up data.
-			 */
-			this.getLookupData();
+			
 		} else {
 
 			/**
@@ -175,11 +172,6 @@ export class BirthCorrectionComponent implements OnInit {
 			 * calling registration number status form method.
 			 */
 			this.registrationNumberStatusForm();
-
-			/**
-			 * get look up data.
-			 */
-			this.getLookupData();
 		}
 	}
 
@@ -210,30 +202,20 @@ export class BirthCorrectionComponent implements OnInit {
 	 * @param data - original json data.
 	 */
 	createBirthCorrectionData(data) {
-
+		console.log(data);
 		this.formService.createFormData().subscribe(res => {
-
-			this.birthCorrectionFormControls();
-
-			this.appId = res.serviceFormId;
-
+			console.log(res)
 			this.birthCorrectionForm.patchValue(res);
-
+			this.appId = res.serviceFormId;
 			let cururl = this.location.path().replace('false', this.appId.toString());
-
 			this.location.go(cururl);
-
 			this.getLookupData();
-
 			this.setValue(data);
-
 			this.showcorrectionForm = true;
-
 			this.showApplicationSearch = false;
-
 			this.showButtons = true;
-
 			this.changeCorrection(this.regStatusForm.get('typeOfCorrection').get('code').value);
+			console.log(this.birthCorrectionForm.value);
 		})
 	}
 
@@ -289,6 +271,7 @@ export class BirthCorrectionComponent implements OnInit {
 	 * @param data - original json.
 	 */
 	setValue(data) {
+		console.log(data);
 		this.birthCorrectionForm.get('fieldView').setValue(data.fieldView);
 		this.birthCorrectionForm.get('fieldList').setValue(data.fieldList);
 		this.birthCorrectionForm.get('childName').setValue(data.childName);
@@ -306,14 +289,15 @@ export class BirthCorrectionComponent implements OnInit {
 		this.birthCorrectionForm.get('motherLastNameGuj').setValue(data.motherLastNameGuj);
 		this.birthCorrectionForm.get('refNumber').setValue(this.regStatusForm.get('applicationNumber').value)
 		this.birthCorrectionForm.get('typeOfCorrection').get('code').setValue(this.regStatusForm.get('typeOfCorrection').get('code').value);
+		console.log(this.birthCorrectionForm.value)
 
 		/**
 		 * save data
 		 */
 
-		this.formService.saveFormData(this.appId).subscribe(res => {
-			console.log(res);
-		})
+		// this.formService.saveFormData(this.appId).subscribe(res => {
+		// 	console.log(res);
+		// })
 	}
 
 
@@ -384,34 +368,42 @@ export class BirthCorrectionComponent implements OnInit {
 
 			fieldView: "ALL",
 			fieldList: null,
-			id: null,
-			uniqueId: null,
-			version: null,
-			serviceFormId: null,
-			createdDate: null,
-			updatedDate: null,
-			serviceType: null,
-			fileStatus: null,
-			serviceName: null,
-			fileNumber: null,
-			pid: null,
-			outwardNo: null,
-			agree: false,
-			paymentStatus: null,
-			canEdit: true,
-			canDelete: true,
-			canSubmit: null,
-			serviceDetail: this.fb.group({
-				code: null,
-				name: null,
-				gujName: null,
-				feesOnScrutiny: null
-			}),
+			// id: null,
+			// uniqueId: null,
+			// version: null,
+			// serviceFormId: null,
+			// createdDate: null,
+			// updatedDate: null,
+			// serviceType: null,
+			// fileStatus: null,
+			// serviceName: null,
+			// fileNumber: null,
+			// pid: null,
+			// outwardNo: null,
+			// agree: false,
+			// paymentStatus: null,
+			// canEdit: true,
+			// canDelete: true,
+			// canSubmit: null,
+			// serviceDetail: this.fb.group({
+			// 	code: null,
+			// 	name: null,
+			// 	gujName: null,
+			// 	feesOnScrutiny: null
+			// }),
 
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
 
-			attachments: [null],
+			attachments: [],
 		});
+	}
+
+	/**
+	 * This method use to get output event of tab change
+	 * @param evt - Tab index
+	 */
+	onTabChange(evt) {
+		this.tabIndex = evt;
 	}
 
 	/**
