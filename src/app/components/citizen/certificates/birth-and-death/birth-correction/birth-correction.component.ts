@@ -131,16 +131,23 @@ export class BirthCorrectionComponent implements OnInit {
 	 * Method initializes first.
 	 */
 	ngOnInit() {
-		this.birthCorrectionFormControls();
-		/**
-			 * get look up data.
-			 */
-		this.getLookupData();
+		
 
 		this.route.paramMap.subscribe(param => {
 			this.appId = Number(param.get('id'));
 			this.apiCode = param.get('apiCode');
 			this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
+
+			/**
+			 * Creating Controls Of Birth Correction Form.
+			 */
+			this.birthCorrectionFormControls();
+
+			/**
+			 * get look up data.
+			 */
+			this.getLookupData();
+			
 		});
 
 		if (this.appId) {
@@ -159,10 +166,7 @@ export class BirthCorrectionComponent implements OnInit {
 			 * get birth correction data.
 			 */
 			this.getBirthCorrectionData();
-
-			
 		} else {
-
 			/**
 			 * show application search form.
 			 */
@@ -271,7 +275,6 @@ export class BirthCorrectionComponent implements OnInit {
 	 * @param data - original json.
 	 */
 	setValue(data) {
-		console.log(data);
 		this.birthCorrectionForm.get('fieldView').setValue(data.fieldView);
 		this.birthCorrectionForm.get('fieldList').setValue(data.fieldList);
 		this.birthCorrectionForm.get('childName').setValue(data.childName);
@@ -289,15 +292,14 @@ export class BirthCorrectionComponent implements OnInit {
 		this.birthCorrectionForm.get('motherLastNameGuj').setValue(data.motherLastNameGuj);
 		this.birthCorrectionForm.get('refNumber').setValue(this.regStatusForm.get('applicationNumber').value)
 		this.birthCorrectionForm.get('typeOfCorrection').get('code').setValue(this.regStatusForm.get('typeOfCorrection').get('code').value);
-		console.log(this.birthCorrectionForm.value)
 
 		/**
 		 * save data
 		 */
 
-		// this.formService.saveFormData(this.appId).subscribe(res => {
-		// 	console.log(res);
-		// })
+		this.formService.saveFormData(this.birthCorrectionForm.value).subscribe(res => {
+			this.birthCorrectionForm.patchValue(res);
+		})
 	}
 
 

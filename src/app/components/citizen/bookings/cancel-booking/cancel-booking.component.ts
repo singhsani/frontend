@@ -9,7 +9,7 @@ import { CommonService } from '../../../../shared/services/common.service';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { merge, of as observableOf } from 'rxjs';
 import { catchError, map, startWith, switchMap } from 'rxjs/operators';
-import { BookingConstants, BookingUtils } from '../config.enum';
+import { BookingConstants, BookingUtils } from '../booking-config';
 
 @Component({
 	selector: 'app-cancel-booking',

@@ -1,13 +1,18 @@
 import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MatHorizontalStepper, MatStep, MatStepLabel } from '@angular/material';
+import { MatHorizontalStepper, MatStep, MatStepLabel, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { ManageRoutes } from './../../../../../config/routes-conf';
 
 import { ValidationService } from '../../../../../shared/services/validation.service';
 import { FormsActionsService } from '../../../../../core/services/citizen/data-services/forms-actions.service';
 import * as _ from 'lodash';
 import * as moment from 'moment';
+import { PaginationService } from '../../../../../core/services/citizen/data-services/pagination.service';
+import { Observable, merge, of as observableOf } from 'rxjs';
+import { catchError, map, startWith, switchMap } from 'rxjs/operators';
+import { CertificateConfig } from '../../certificate-config';
+import { CommonService } from '../../../../../shared/services/common.service';
 
 @Component({
 	selector: 'app-marriage-duplicate',
@@ -18,6 +23,17 @@ export class MarriageDuplicateComponent implements OnInit {
 
 	@ViewChild(MatHorizontalStepper) stepper: MatHorizontalStepper;
 	@ViewChild(MatStepLabel) steplable: MatStepLabel;
+
+	/**
+	 * get element having id as MatPaginator from view.
+	 */
+	@ViewChild(MatPaginator) paginator: MatPaginator;
+
+	/**
+	 * get element having id as MatSort from view.
+	 */
+	@ViewChild(MatSort) sort: MatSort;
+	config : CertificateConfig;
 
 	marriageDuplicateForm: FormGroup;
 	translateKey: string = 'duplicateMarriageRegScreen';
@@ -33,6 +49,26 @@ export class MarriageDuplicateComponent implements OnInit {
 	stepLable1: string = "applicant_basic_details";
 	stepLable2: string = "marriage_details";
 
+	/**
+ * data source useful to display data.
+ */
+	dataSource = new MatTableDataSource();
+
+	/**
+	 * length of result in paginator.
+	 */
+	resultsLength: number = 0;
+
+	/**
+	 * total paze size.
+	 */
+	pageSize: number = 20;
+
+	/**
+	 * flag to load result from api.
+	 */
+	isLoadingResults: boolean = false;
+
     /**
      * @param fb - Declare FormBuilder property.
      * @param validationError - Declare validation service property
@@ -40,11 +76,14 @@ export class MarriageDuplicateComponent implements OnInit {
      */
 	constructor(
 		private fb: FormBuilder,
-		private validationService: ValidationService,
 		private router: Router,
 		private route: ActivatedRoute,
-		private formService: FormsActionsService
-	) { }
+		private paginationService: PaginationService,
+		private formService: FormsActionsService,
+		private commonService : CommonService
+	) {
+		this.config = new CertificateConfig();
+	 }
 
 	ngOnInit() {
 
@@ -87,12 +126,9 @@ export class MarriageDuplicateComponent implements OnInit {
 
 	marriageDuplicateFormControls() {
 		this.marriageDuplicateForm = this.fb.group({
-
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
-
 			deptFileStatus: null,
 			serviceCode: "HEL-DUPMR",
-
 			marriageRegNumber: ['', Validators.required],
 			marriageDate: ['', Validators.required],
 			marriageRegDate: [new Date(), Validators.required],
@@ -127,5 +163,52 @@ export class MarriageDuplicateComponent implements OnInit {
 		console.log(evt);
 		this.tabIndex = evt;
 	}
+
+	getApplicationDetails(){
+		if(this.marriageDuplicateForm.valid){
+			this.getAllData()
+		}else {
+			this.config.getAllErrors(this.marriageDuplicateForm);
+			this.commonService.openAlert("Field Error", this.config.ALL_FEILD_REQUIRED_MESSAGE, "warning");
+		}
+	}
+
+	/**
+	 * This method use to get all the citizen data with pagination.
+	 */
+	getAllData() {
+		this.config.
+		getAllData(this.marriageDuplicateForm, this.sort, 
+			this.paginator, this.pageSize, 
+			this.marriageDuplicateForm.get('apiType').value).subscribe(data => {
+				console.log(data);
+			})
+		// merge(this.sort.sortChange, this.paginator.page)
+		// 	.pipe(
+		// 		startWith({}),
+		// 		switchMap(() => {
+		// 			this.isLoadingResults = true;
+		// 			this.paginationService.apiType = this.marriageDuplicateForm.get('apiType').value;
+		// 			this.paginationService.pageIndex = (this.paginator.pageIndex + 1);
+		// 			this.paginationService.pageSize = this.pageSize;
+		// 			return this.paginationService!.getSearchDataWithPagination(this.marriageDuplicateForm.value);
+		// 		}),
+		// 		map(data => {
+		// 			this.isLoadingResults = false;
+		// 			this.resultsLength = data.totalRecords;
+		// 			return data.data;
+		// 		}),
+		// 		catchError(() => {
+		// 			this.isLoadingResults = false;
+		// 			return observableOf([]);
+		// 		})
+		// 	).subscribe(data => {
+		// 		if (!data.length) {
+		// 		} else {
+		// 			this.dataSource.data = data;
+		// 		}
+		// 	});
+	}
+
 
 }

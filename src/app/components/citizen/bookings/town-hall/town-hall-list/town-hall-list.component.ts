@@ -6,7 +6,7 @@ import * as moment from 'moment';
 import { Router } from '@angular/router';
 import { BookingService } from '../../../../../core/services/citizen/data-services/booking.service';
 import { CommonService } from '../../../../../shared/services/common.service';
-import { BookingConstants, BookingUtils } from '../../config.enum';
+import { BookingConstants, BookingUtils } from '../../booking-config';
 import { ValidationService } from '../../../../../shared/services/validation.service';
 
 export interface BookingDetails {

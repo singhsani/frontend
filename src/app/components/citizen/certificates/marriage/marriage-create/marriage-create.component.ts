@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, OnChanges, ChangeDetectorRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 
 import { ValidationService } from '../../../../../shared/services/validation.service';
 import { FormsActionsService } from '../../../../../core/services/citizen/data-services/forms-actions.service';
@@ -8,8 +8,8 @@ import { CommonService } from '../../.././../../shared/services/common.service';
 import * as _ from 'lodash';
 import * as moment from 'moment';
 import { ManageRoutes } from '../../../../../config/routes-conf';
-
-
+import { CertificateConfig } from '../../certificate-config';
+import { TranslateService } from '../../../../../shared/modules/translate/translate.service';
 
 @Component({
     selector: 'app-marriage-create',
@@ -21,11 +21,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
     @ViewChild('address') addrComponent: any;
 
     //Mandatory attachments Array
-    private uploadFileArray: Array<any> =
-        [{ labelName: 'Marriage Photo', fieldIdentifier: '1' },
-        { labelName: 'Groom Photo', fieldIdentifier: '2' },
-        { labelName: 'Bride Photo', fieldIdentifier: '3' }
-        ];
+    private uploadFileArray: Array<any> = [];
 
 
     public dummyJSON = {
@@ -421,6 +417,12 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
     applicantrelationGuj: string = '';
     identityproofGuj: string = '';
 
+    /**
+     * Using Common Configuration
+     */
+
+     config: CertificateConfig = new CertificateConfig();
+
 
     /**
      * @param fb - Declare FormBuilder property.
@@ -437,7 +439,8 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
         private formService: FormsActionsService,
         private router: Router,
         private commonService: CommonService,
-        private CD: ChangeDetectorRef
+        private CD: ChangeDetectorRef,
+        private translateService: TranslateService
     ) { }
 
     /**
@@ -659,6 +662,13 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
     getFormData(id: number) {
         this.formService.getFormData(id).subscribe(
             res => {
+
+                res.serviceDetail.serviceUploadDocuments.forEach(app => {
+                    (<FormArray>this.marriageFormGroup.get('serviceDetail').get('serviceUploadDocuments')).push(this.config.createDocumentsGrp(app));
+                });
+
+                this.config.requiredDocumentList(this.marriageFormGroup, this.uploadFileArray)
+                
                 // for address
                 if (res.isGroomParResAddressSame.code == "YES") {
                     this.addObject['checkedPar1'] = true;
@@ -723,6 +733,8 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
                 if (!this.marriageFormGroup.controls.canEdit.value) {
                     this.marriageFormGroup.disable();
                 }
+
+                console.log(this.marriageFormGroup.value)
 
             },
             err => {

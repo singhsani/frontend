@@ -2,22 +2,22 @@
 
 	<app-title-bar [title]="'screen_title' | translate: translateKey">
 	</app-title-bar>
-	<mat-card class="formClass cardBorder">
-		<form [formGroup]="marriageDuplicateForm">
-			<mat-tab-group [(selectedIndex)]="tabIndex"  [(selectedIndex)]="tabIndex"  class="stepperNav" dynamicHeight='true' mat-stretch-tabs>
+	<mat-card class="cardBorder">
+		<form [formGroup]="marriageDuplicateForm" (ngSubmit)="getApplicationDetails()" autocomplete="off">
+			<!-- <mat-tab-group [(selectedIndex)]="tabIndex"  [(selectedIndex)]="tabIndex"  class="stepperNav" dynamicHeight='true' mat-stretch-tabs> -->
 
 				<!-- first step start-->
-				<mat-tab [label]="stepLable1">
+				<!-- <mat-tab [label]="stepLable1">
 					<app-basic-details [basicFormGroup]="marriageDuplicateForm"></app-basic-details>
 
 					<div class="col-12">
 						<app-action-bar [form]="marriageDuplicateForm" [stepInfo]="{step: 'step1', next: 1, back: 0}"  (tabIndex)="onTabChange($event)"></app-action-bar>
 					</div>
 
-				</mat-tab>
+				</mat-tab> -->
 
 				<!-- second step start-->
-				<mat-tab [label]="stepLable2">
+				<!-- <mat-tab [label]="stepLable2"> -->
 					<div class="row">
 
 						<mat-form-field class="col-4">
@@ -58,12 +58,73 @@
 							<control-messages [control]="marriageDuplicateForm.controls.brideName"></control-messages>
 						</mat-form-field>
 
-						<div class="col-12">
+						
+
+						<!-- <div class="col-12">
 							<app-action-bar [form]="marriageDuplicateForm" [stepInfo]="{step: 'final', next: 1, back: 0}" (tabIndex)="onTabChange($event)" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
-						</div>
+						</div> -->
 						
 					</div>
-				</mat-tab>
-			</mat-tab-group>
+					<div class="row fotButtonBar">
+						<div class="col-sm-12 col-md-12 text-right">
+							<button mat-raised-button color="primary" type="submit">
+								{{'search'| translate: translateKey}}
+							</button>
+						</div>
+					</div>
+				<!-- </mat-tab>
+			</mat-tab-group> -->
 		</form>
 	</mat-card>
+
+	<!-- Table start-->
+	<div class="example-container mat-elevation-z8" [hidden]="resultsLength == 0">
+		
+		<table mat-table #table [dataSource]="dataSource" class="example-table" matSort matSortActive="created" matSortDisableClear
+		 matSortDirection="asc">
+	
+			<ng-container matColumnDef="id">
+				<th mat-header-cell *matHeaderCellDef>#</th>
+				<td mat-cell *matCellDef="let row; let i = index;">{{ paginator.pageIndex==0?i+1:((paginator.pageIndex+1)*10)+(i+1) }}</td>
+			</ng-container>
+	
+			<ng-container matColumnDef="seq">
+				<th mat-header-cell *matHeaderCellDef></th>
+				<td mat-cell *matCellDef="let row;let i = index;">
+					<mat-checkbox [checked]="selected === i" (change)="onChkBoxClick($event,row);selected = i"></mat-checkbox>
+				</td>
+			</ng-container>
+	
+			<ng-container matColumnDef="applicantName">
+				<th mat-header-cell *matHeaderCellDef>Applicant Name</th>
+				<td mat-cell *matCellDef="let row">{{ row.applicantName }}</td>
+			</ng-container>
+	
+			<ng-container matColumnDef="fileNumber">
+				<th mat-header-cell *matHeaderCellDef>File Number</th>
+				<td mat-cell *matCellDef="let row">{{ row.fileNumber }}</td>
+			</ng-container>
+	
+			<ng-container matColumnDef="serviceType">
+				<th mat-header-cell *matHeaderCellDef>Service Name</th>
+				<td mat-cell *matCellDef="let row">{{ row.serviceDetail.name }}</td>
+			</ng-container>
+	
+			<ng-container matColumnDef="action">
+				<th mat-header-cell *matHeaderCellDef>Action</th>
+				<td mat-cell *matCellDef="let row">
+					<button *ngIf="rowData.id == row.id" mat-icon-button color="primary" (click)="redirectToDuplicate(row)">
+						Duplicate Certificate
+					</button>
+				</td>
+			</ng-container>
+	
+			<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+			<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+		</table>
+	
+		<mat-paginator [length]="resultsLength" [pageSize]="pageSize">
+	
+		</mat-paginator>
+	</div>
+	<!-- Table end-->
