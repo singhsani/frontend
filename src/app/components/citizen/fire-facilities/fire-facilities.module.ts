@@ -11,7 +11,6 @@ import { FinalFireNocComponent } from './final-fire-noc/final-fire-noc.component
 import { FireRenewalNocComponent } from './fire-renewal-noc/fire-renewal-noc.component';
 import { WaterTankerAppComponent } from './water-tanker-app/water-tanker-app.component';
 import { AmbulanceAppComponent } from './ambulance-app/ambulance-app.component';
-import { BodyWanAppComponent } from './body-wan-app/body-wan-app.component';
 import { TempStructureNocComponent } from './temp-structure-noc/temp-structure-noc.component';
 import { TempFireworksNocComponent } from './temp-fireworks-noc/temp-fireworks-noc.component';
 import { GasConnectionNocComponent } from './gas-connection-noc/gas-connection-noc.component';
@@ -19,6 +18,7 @@ import { EleConnectionNocComponent } from './ele-connection-noc/ele-connection-n
 import { NavratriNocComponent } from './navratri-noc/navratri-noc.component';
 import { AarogyaParvanoNocComponent } from './aarogya-parvano-noc/aarogya-parvano-noc.component';
 import { RevisedFireNOCComponent } from './revised-fire-noc/revised-fire-noc.component';
+import { DeadBodyWanComponent } from './dead-body-wan/dead-body-wan.component';
 /* Import all shared, core and routing module end */
 
 @NgModule({
@@ -35,15 +35,14 @@ import { RevisedFireNOCComponent } from './revised-fire-noc/revised-fire-noc.com
 		FinalFireNocComponent, 
 		FireRenewalNocComponent, 
 		WaterTankerAppComponent, 
-		AmbulanceAppComponent, 
-		BodyWanAppComponent, 
+		AmbulanceAppComponent,
 		TempStructureNocComponent, 
 		TempFireworksNocComponent, 
 		GasConnectionNocComponent, 
 		EleConnectionNocComponent, 
 		NavratriNocComponent, 
 		AarogyaParvanoNocComponent, 
-		RevisedFireNOCComponent
+		RevisedFireNOCComponent, DeadBodyWanComponent
 	]
 })
 export class FireFacilitiesModule { }
