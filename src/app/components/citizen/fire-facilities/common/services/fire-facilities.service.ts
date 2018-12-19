@@ -32,4 +32,13 @@ export class FireFacilitiesService {
 	searchRevisedFireNOC(nocNo) {
     	return this.http.get(`api/form/revisedFireNoc/searchByNocNumber/${nocNo}`);
 	}
+	
+	/**
+	 * 
+	 * @param licenceNumber - serach bu licence num
+	 * return this.http.get(`api/form/foodLicence/search/${licenceNumber}`);
+	 */
+	searchRenewalFireNOC(nocNo) {
+    	return this.http.get(`api/form/renewalFireNoc/searchByFinalNocNumber/${nocNo}`);
+	}
 }

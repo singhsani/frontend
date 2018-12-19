@@ -50,8 +50,8 @@ const ROUTEMAIN = {
         'type': 'finalFireNoc'
     },
     'FS-REN': {
-        'main': 'FSRenewalNoc',
-        'type': 'FSRenewalNoc'
+        'main': 'renewalFireNoc',
+        'type': 'renewalFireNoc'
     },
     'FS-WATER': {
         'main': 'FSWaterTanker',
@@ -62,8 +62,8 @@ const ROUTEMAIN = {
         'type': 'FSAmbulance'
     },
     'FS-BODY': {
-        'main': 'FSBodywan',
-        'type': 'FSBodywan'
+        'main': 'deadBodyWan',
+        'type': 'deadBodyWan'
     },
     'FS-TEMPSTRUCT': {
         'main': 'temporaryStructureNoc',
