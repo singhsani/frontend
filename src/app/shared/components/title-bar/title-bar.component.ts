@@ -10,7 +10,7 @@ import { ManageRoutes } from './../../../config/routes-conf';
 					<div class="container clearfix position-relative">
 					<ul class="breadcrumbNav clearfix">
 						<li>
-							<a mat-button class="backArrow" (click)="onBackArrowClick()">
+							<a mat-button class="backArrow" (click)="navigateToRouteByIndex('CITIZENDASHBOARD')">
 								<mat-icon>arrow_back</mat-icon>
 							</a>
 						</li>

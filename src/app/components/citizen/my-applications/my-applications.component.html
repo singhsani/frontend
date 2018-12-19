@@ -109,7 +109,7 @@
                         {{'preview_application' | translate:translateKey}}
                     </button>
                     
-                    <button mat-menu-item *ngIf="row.fileStatus == 'PAYMENT_RECEIVED'" color="primary" (click)="printReceipt(row.serviceDetail.code, row.serviceDetail.name, row.serviceFormId)">
+                    <button mat-menu-item *ngIf="row.fileStatus == 'PAYMENT_RECEIVED' || row.fileStatus == 'SUBMITTED'" color="primary" (click)="printReceipt(row.serviceDetail.code, row.serviceDetail.name, row.serviceFormId)">
                         <mat-icon title="{{'print_receipt' | translate:translateKey}}">print</mat-icon>
                         {{'print_receipt' | translate:translateKey}}
                     </button>

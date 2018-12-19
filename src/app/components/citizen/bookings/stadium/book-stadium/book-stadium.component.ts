@@ -3,7 +3,7 @@ import * as moment from 'moment';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { BookingService } from '../../../../../core/services/citizen/data-services/booking.service';
-import { BookingConstants, BookingUtils } from '../../config.enum';
+import { BookingConstants, BookingUtils } from '../../booking-config';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 import { CommonService } from '../../../../../shared/services/common.service';

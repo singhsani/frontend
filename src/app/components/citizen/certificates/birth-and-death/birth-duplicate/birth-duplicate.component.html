@@ -5,7 +5,7 @@
 
 <div class="container" [hidden]="isVisibeDuplicateForm">
 
-	<mat-card>
+	<mat-card class="cardBorder">
 		<form [formGroup]="birthDuplicateForm" autocomplete="off" ngNativeValidate>
 
 			<div class="row">
@@ -37,7 +37,7 @@
 
 			</div>
 
-			<app-action-bar [isstepper]="false" [form]="birthDuplicateForm" ></app-action-bar>
+			<app-action-bar [isstepper]="false" [form]="birthDuplicateForm" [stepInfo]="{step: 'final', next: 0, back: 0}" ></app-action-bar>
 
 		</form>
 

@@ -1,7 +1,7 @@
 <app-title-bar [title]="'screen_title' | translate: translateKey">
-	<!-- <button class="pull-right" mat-stroked-button type="button" (click)="patchValue()">
+	<button class="pull-right" mat-stroked-button type="button" (click)="patchValue()">
 		Patch Value
-	</button> -->
+	</button>
 </app-title-bar>
 
 
@@ -1014,7 +1014,17 @@
 				<ng-template mat-tab-label>
 					<div>{{'upload' | translate: translateKey}}</div>
 				</ng-template>
+
 				<div class="row">
+					<div class="col-md-4" *ngFor="let doc of marriageFormGroup.get('serviceDetail').get('serviceUploadDocuments').value">
+						<div *ngIf="doc.requiredOnCitizenPortal && doc.isActive && showButtons">
+							<label>{{translateService.getCurrentLanguage()=='en'? doc.documentLabelEn : doc.documentLabelGuj }} <span *ngIf="doc.mandatory">*</span></label>
+							<file-upload [form]="marriageFormGroup" [uploadModel]="doc"></file-upload>
+						</div>
+					</div>
+				</div>
+
+				<!-- <div class="row">
 					<h2>Upload Photos</h2>
 					<div class="col-md-4">
 						<div *ngIf="showButtons">
@@ -1063,11 +1073,11 @@
 						</div>
 					</div>
 
-					<!-- <div class="col-md-12">
+					<div class="col-md-12">
 						<ng-template mat-tab-label>Done</ng-template>
 						You are now done.
 					</div> -->
-				</div>
+				<!-- </div>  -->
 
 				<app-action-bar [uploadFiles]="uploadFileArray" [form]="marriageFormGroup" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'final', next: 8, back: 6}"
 				 (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
