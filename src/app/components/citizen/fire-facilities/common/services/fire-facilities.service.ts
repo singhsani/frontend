@@ -6,6 +6,7 @@ import { HttpService } from '../../../../../shared/services/http.service';
 })
 export class FireFacilitiesService {
 	requestURL: string;
+	apiType:string;
  	/**
 	 * Constructor to declare defualt propeties of class.
 	 * @param http - Declare Http Service property.
@@ -40,5 +41,15 @@ export class FireFacilitiesService {
 	 */
 	searchRenewalFireNOC(nocNo) {
     	return this.http.get(`api/form/renewalFireNoc/searchByFinalNocNumber/${nocNo}`);
+	}
+
+	/**
+	 * This method for delete array details
+	 * @param objId - Array item id
+	 */
+	deleteArrayData(id, objId) {
+		// api/form/provisionalHospitalNoc/hospitalOTDetail/{id}/delete/{hospitalOTDetailId}
+		this.requestURL = `api/form/${this.apiType}/hospitalOTDetail/` + id + `/delete/` + objId;
+		return this.http.delete(this.requestURL);
 	}
 }

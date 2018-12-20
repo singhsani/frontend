@@ -73,6 +73,10 @@ const ROUTEMAIN = {
         'main': 'temporaryFireworkShopNoc',
         'type': 'temporaryFireworkShopNoc'
     },
+    'FS-PROVI-HOSPITAL': {
+        'main': 'provisionalHospitalNoc',
+        'type': 'provisionalHospitalNoc'
+    },
     'FS-GAS': {
         'main': 'gasConnectionNoc',
         'type': 'gasConnectionNoc'
@@ -468,6 +472,9 @@ const ROUTESLIST = {
     },
     'FS-FIREWORKSHOP': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.FIREFACILITIESMODULE + '/' + ROUTEMAIN["FS-FIREWORKSHOP"].main
+    },
+    'FS-PROVI-HOSPITAL': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.FIREFACILITIESMODULE + '/' + ROUTEMAIN["FS-PROVI-HOSPITAL"].main
     },
     'FS-GAS': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.FIREFACILITIESMODULE + '/' + ROUTEMAIN["FS-GAS"].main

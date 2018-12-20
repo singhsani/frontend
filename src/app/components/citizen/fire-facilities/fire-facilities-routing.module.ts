@@ -14,6 +14,7 @@ import { EleConnectionNocComponent } from './ele-connection-noc/ele-connection-n
 import { NavratriNocComponent } from './navratri-noc/navratri-noc.component';
 import { RevisedFireNOCComponent } from './revised-fire-noc/revised-fire-noc.component';
 import { DeadBodyWanComponent } from './dead-body-wan/dead-body-wan.component';
+import { ProHospitalNocComponent } from './pro-hospital-noc/pro-hospital-noc.component';
 
 const routes: Routes = [
 	{ path: '', component: AarogyaParvanoNocComponent },
@@ -29,7 +30,8 @@ const routes: Routes = [
 	{ path: ManageRoutes.getMainRoute('FS-GAS') + '/:id/:apiCode', component: GasConnectionNocComponent },
 	{ path: ManageRoutes.getMainRoute('FS-ELE') + '/:id/:apiCode', component: EleConnectionNocComponent },
 	{ path: ManageRoutes.getMainRoute('FS-NAV') + '/:id/:apiCode', component: NavratriNocComponent },
-	{ path: ManageRoutes.getMainRoute('FS-REVISED') + '/:id/:apiCode', component: RevisedFireNOCComponent }
+	{ path: ManageRoutes.getMainRoute('FS-REVISED') + '/:id/:apiCode', component: RevisedFireNOCComponent },
+	{ path: ManageRoutes.getMainRoute('FS-PROVI-HOSPITAL') + '/:id/:apiCode', component: ProHospitalNocComponent }
 ];
 
 @NgModule({

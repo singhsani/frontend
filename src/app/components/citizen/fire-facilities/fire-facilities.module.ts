@@ -19,6 +19,7 @@ import { NavratriNocComponent } from './navratri-noc/navratri-noc.component';
 import { AarogyaParvanoNocComponent } from './aarogya-parvano-noc/aarogya-parvano-noc.component';
 import { RevisedFireNOCComponent } from './revised-fire-noc/revised-fire-noc.component';
 import { DeadBodyWanComponent } from './dead-body-wan/dead-body-wan.component';
+import { ProHospitalNocComponent } from './pro-hospital-noc/pro-hospital-noc.component';
 /* Import all shared, core and routing module end */
 
 @NgModule({
@@ -42,7 +43,9 @@ import { DeadBodyWanComponent } from './dead-body-wan/dead-body-wan.component';
 		EleConnectionNocComponent, 
 		NavratriNocComponent, 
 		AarogyaParvanoNocComponent, 
-		RevisedFireNOCComponent, DeadBodyWanComponent
+		RevisedFireNOCComponent, 
+		DeadBodyWanComponent,
+		ProHospitalNocComponent
 	]
 })
 export class FireFacilitiesModule { }
