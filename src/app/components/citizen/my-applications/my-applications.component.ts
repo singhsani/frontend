@@ -247,6 +247,8 @@ export class MyApplicationsComponent implements OnInit {
 				return 'badge submited text-label';
 			case 'PAYMENT':
 				return 'badge rejected text-label';
+			case 'REJECTED':
+				return 'badge rejected text-label';
 			default:
 				return 'badge file text-label'
 		}
@@ -262,6 +264,17 @@ export class MyApplicationsComponent implements OnInit {
 	getProperDate(date: string):string{
 		if (date) return moment(date).format("DD/MM/YYYY");
 		return null;
+	}
+
+	/**
+	 * This method is use for display more button
+	 * @param row - Table row oject
+	 */
+	isMoreBtnVisible(row){
+		if (row.serviceType === 'PEC_REG' || row.serviceType === 'PRC_REG')
+			return false;
+		else
+			return true;
 	}
 
 	/**
@@ -289,7 +302,7 @@ export class MyApplicationsComponent implements OnInit {
 	 * @param row - Table row oject
 	 */
 	isPreviewOptDisplay(row) {
-		if (row.serviceType === 'PEC_REG' && row.serviceType === 'PRC_REG')
+		if (row.serviceType === 'PEC_REG' || row.serviceType === 'PRC_REG')
 			return false;
 		else if (!row.canEdit)
 			return true;
