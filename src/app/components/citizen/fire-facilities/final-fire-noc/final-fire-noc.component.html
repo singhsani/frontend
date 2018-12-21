@@ -24,24 +24,26 @@
 						<input matInput readonly placeholder="{{'provisional_noc_number' | translate:translateKey}}" formControlName="provisionalNocNumber"
 						 required>
 					</mat-form-field>
+					<mat-form-field class="col-md-4">
+						<input matInput readonly placeholder="{{'final_fire_noc_number' | translate:translateKey}}" formControlName="finalFireNocNumber"
+						 required>
+					</mat-form-field>
 				</div>
 				<div class="row">
-					<mat-form-field class="col-md-4">
-						<input matInput appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{'first_name' | translate:translateKey}}"
-						 formControlName="firstName" maxlength="100">
-						<control-messages [control]="finalFireNocForm.controls.firstName"></control-messages>
-					</mat-form-field>
-					<mat-form-field class="col-md-4">
-						<input matInput appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{'middle_name' | translate:translateKey}}"
-						 formControlName="middleName" maxlength="100">
-						<control-messages [control]="finalFireNocForm.controls.middleName"></control-messages>
-					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{'last_name' | translate:translateKey}}"
-						 formControlName="lastName" required maxlength="100">
-						<control-messages [control]="finalFireNocForm.controls.lastName"></control-messages>
+						<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace' required maxlength="100"
+						 placeholder="{{'applicant_Name' | translate:translateKey}}" formControlName="applicantName" appGujInputSource
+						 targetElement="applicantNameGuj" [form]="finalFireNocForm">
+						<control-messages [control]="finalFireNocForm.controls.applicantName"></control-messages>
 					</mat-form-field>
+					<!-- gujarati -->
+					<mat-form-field class="col-md-4">
+						<input matInput type="text" maxlength="300" required formControlName="applicantNameGuj" appGujInputTarget [form]="finalFireNocForm"
+						 placeholder="{{ 'applicant_Name' | translate:translateKey:'gu' }}">
+						<control-messages [control]="finalFireNocForm.controls.applicantNameGuj"></control-messages>
+					</mat-form-field>
+					<!-- gujarati -->
 
 					<mat-form-field class="col-md-4">
 						<!-- <span matPrefix>+91 &nbsp;</span> -->
@@ -228,9 +230,15 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" required maxlength="300" placeholder="{{'fire_vendor_name' | translate:translateKey}}"
-						 formControlName="fireVendorName" appGujInputSource targetElement="architectNameGuj" [form]="finalFireNocForm">
+						<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace' required maxlength="150"
+						 placeholder="{{'fire_vendor_name' | translate:translateKey}}" formControlName="fireVendorName" appGujInputSource
+						 targetElement="fireVendorNameGuj" [form]="finalFireNocForm">
 						<control-messages [control]="finalFireNocForm.controls.fireVendorName"></control-messages>
+					</mat-form-field>
+					<mat-form-field class="col-md-4">
+						<input matInput type="text" maxlength="450" required formControlName="fireVendorNameGuj" appGujInputTarget [form]="finalFireNocForm"
+						 placeholder="{{ 'fire_vendor_name' | translate:translateKey:'gu' }}">
+						<control-messages [control]="finalFireNocForm.controls.fireVendorNameGuj"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
@@ -377,10 +385,19 @@
 				</div>
 				<div class="row">
 					<mat-form-field class="col-md-4">
-						<textarea matInput rows="3" cols="50" required maxlength="200" placeholder="{{'site_address_with_building_name' | translate:translateKey}}"
-						 formControlName="siteAddressWithBuildingName"></textarea>
+						<textarea matInput rows="3" cols="50" type="text" required maxlength="200" placeholder="{{'site_address_with_building_name' | translate:translateKey}}"
+						 formControlName="siteAddressWithBuildingName" appGujInputSource targetElement="siteAddressWithBuildingNameGuj"
+						 [form]="finalFireNocForm"></textarea>
 						<control-messages [control]="finalFireNocForm.controls.siteAddressWithBuildingName"></control-messages>
 					</mat-form-field>
+					<!-- gujarati -->
+					<mat-form-field class="col-md-4">
+						<textarea matInput rows="3" cols="50" maxlength="600" required formControlName="siteAddressWithBuildingNameGuj"
+						 appGujInputTarget [form]="finalFireNocForm" placeholder="{{ 'site_address_with_building_name' | translate:translateKey:'gu' }}"></textarea>
+						<control-messages [control]="finalFireNocForm.controls.siteAddressWithBuildingNameGuj"></control-messages>
+					</mat-form-field>
+					<!-- /gujarati -->
+
 					<mat-form-field class="col-md-4">
 						<textarea matInput rows="3" cols="50" required maxlength="200" placeholder="{{'other_information' | translate:translateKey}}"
 						 formControlName="otherInformation"></textarea>

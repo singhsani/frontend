@@ -297,7 +297,7 @@ export class RevisedFireNOCComponent implements OnInit {
 			}),
 			fireVendorRegistrationNumber: [null, [Validators.required, Validators.maxLength(15)]],
 			fireVendorName: [null, [Validators.required, Validators.maxLength(150)]],
-			fireVendorNameGuj: [null, [Validators.required, Validators.maxLength(450)]], //todo
+			fireVendorNameGuj: [null, [Validators.required, Validators.maxLength(450)]],
 
 			fireVendorAddress: [null, [Validators.required, Validators.maxLength(300)]],
 			fireVendorOfficeAddress: [null, [Validators.required, Validators.maxLength(300)]],

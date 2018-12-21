@@ -123,8 +123,9 @@
 
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" appAlphaNumeric formControlName="propertyNo" placeholder="{{'propertyNo' | translate: translateKey }}"
-						 maxlength="15" required >
+						 maxlength="15" required (change)="getPropertyStatus($event.target.value)">
 						<control-messages [control]="electricConnectionForm.controls.propertyNo"></control-messages>
+						<mat-error *ngIf="electricConnectionForm.get('propertyNo').hasError('outstandingRemainingProperty')">{{propertyStatusOutstanding.message}}</mat-error>
 					</mat-form-field>
 
 					<div class="col-md-4 ngSelect" formGroupName="firePlaceType">
