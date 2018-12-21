@@ -399,7 +399,7 @@ export class ShopLicNewComponent implements OnInit {
 				personType: persontype
 			}));
 			// this.shopLicNewForm.get('employerFamilyList').setValidators([Validators.required]);
-			let newlyadded = <any>this.addItem(persontype).controls;
+			let newlyadded = this.addItem(persontype).controls;
 			if (newlyadded.length) {
 				(newlyadded[newlyadded.length - 1]).isEditMode = true;
 			}

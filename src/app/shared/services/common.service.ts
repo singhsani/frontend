@@ -263,7 +263,7 @@ export class CommonService {
 	 * @param cb - Callback
 	 */
 	isCallback(options: any, cb) {
-		swal(options as any).then((result) => {
+		swal(options).then((result) => {
 			if (result.value && cb) {
 				cb();
 			}

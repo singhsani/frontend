@@ -173,7 +173,8 @@ export class PecRegistrationComponent implements OnInit {
 			}),
 			applicableRate: [{ value: 0, disabled: true }],
 			otherProfession: null,
-			attachments: []
+			attachments: [],
+			formStatus: null
 		});
 
 		/** set default addressType */
@@ -297,6 +298,7 @@ export class PecRegistrationComponent implements OnInit {
 			return;
 		}
 
+		/* This is logic for check whether census repeated or not */
 		var hasDuplicate = false;
 		this.pecRegForm.get('censusNo').value.map(v => v.census).sort().sort((a, b) => {
 			if (a === b) hasDuplicate = true;
@@ -306,21 +308,24 @@ export class PecRegistrationComponent implements OnInit {
 			this.commonService.openAlert("Census/Property number should not be repeated", "", "warning");
 			return;
 		}
+		/* This is logic for check whether census repeated or not */
+
+		this.pecRegForm.get('formStatus').setValue('SUBMITTED');
 
 		this.mandatoryFileCheck().then(data => {
 			if (data.status) {
 				this.profeService.pftSaveFormData(this.pecRegForm.getRawValue()).subscribe(res => {
 					if (Object.keys(res).length) {
-						if (this.pecRegForm.get('pecNo').value) {
-							this.commonService.openAlert("PEC Information Updated Successful", "", "success", `PEC number is ${res.pecNo}`, cb => {
+						// if (this.pecRegForm.get('pecNo').value) {
+						// 	this.commonService.openAlert("PEC Information Updated Successful", "", "success", `PEC number is ${res.pecNo}`, cb => {
+						// 		this.router.navigateByUrl(ManageRoutes.getFullRoute('CITIZENMYAPPS'));
+						// 	});
+						// } else {
+						this.commonService.openAlert("PEC Registration Successful", "", "success", `Your Application Number is<br> <b>${res.uniqueId}</b> <br> Visit the department with original document`, cb => {
 								this.router.navigateByUrl(ManageRoutes.getFullRoute('CITIZENMYAPPS'));
-							});
-						} else {
-							this.commonService.openAlert("PEC Registration Successful", "", "success", `PEC number is ${res.pecNo}`, cb => {
-								this.router.navigateByUrl(ManageRoutes.getFullRoute('CITIZENMYAPPS'));
-							});
-						}
-						this.pecRegForm.patchValue(res);
+						});
+						// }
+						//this.pecRegForm.patchValue(res);
 					}
 				});
 			} else {
@@ -441,9 +446,29 @@ export class PecRegistrationComponent implements OnInit {
 		} else {
 			this.toastr.warning('No record found!');
 			this.resetForm();
-			this.setDefaultFeilds();
 			this.pecRegForm.get('commencementDate').enable();
+			this.isDeleteBtnShow = true;
+			this.pecRegForm.enable();
+			this.setDefaultFeilds();
+			this.defaultDisabledField();
 		}
+	}
+
+
+	/**
+	 * This method is use for set default disable field
+	 */
+	defaultDisabledField() {
+		this.pecRegForm.get('pecNo').disable();
+		this.pecRegForm.get('prcNo').disable();
+		this.pecRegForm.get('applicableRate').disable();
+		this.pecRegForm.get('registrationDate').disable();
+		this.pecRegForm.get('rcDate').disable();
+
+		this.censusCollection.controls.splice(0);
+		this.addMoreCenus();
+
+		this.pecRegForm.get('commencementDate').enable();
 	}
 
 	/**

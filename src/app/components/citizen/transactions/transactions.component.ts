@@ -108,6 +108,10 @@ export class TransactionsComponent implements OnInit {
     Status: {{tData.paymentStatus}}
   </li>
 </ol>
+
+	<div mat-dialog-actions class="pull-right">
+		<button mat-raised-button color="primary" (click)="onNoClick()" cdkFocusInitial>Ok</button>
+	</div>
   `
 })
 

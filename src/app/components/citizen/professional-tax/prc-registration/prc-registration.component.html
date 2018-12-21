@@ -3,14 +3,14 @@
 
         <mat-form-field>
             <input matInput autocomplete="off" trim="blur" appAlphaNumeric maxlength="12" #ecrcNoTextBox #searchInput="matInput" type="text"
-                placeholder="{{'ecrc_no' | translate: translateKey}}">
+                placeholder="{{'pec_no' | translate: translateKey}}">
             <button mat-button matSuffix mat-icon-button (click)="searchEmpRegByECRCNo($event,ecrcNoTextBox.value)">
                 <mat-icon>search</mat-icon>
             </button>
         </mat-form-field>
 
-        <button mat-raised-button type="button" class="editBtn" [hidden]="!prcRegForm.get('pecNo').value" color="primary" (click)="editPRCDetail()">
-            <mat-icon>edit</mat-icon>{{'edit' | translate:translateKey}}</button>
+        <!-- <button mat-raised-button type="button" class="editBtn" [hidden]="!prcRegForm.get('pecNo').value" color="primary" (click)="editPRCDetail()">
+            <mat-icon>edit</mat-icon>{{'edit' | translate:translateKey}}</button> -->
     </form>
 </app-title-bar>
 
@@ -28,9 +28,9 @@
                         <input matInput autocomplete="off" maxlength="100" formControlName="pecNo" type="text" placeholder="{{'pec_no' | translate: pecTranslateKey}}">
                     </mat-form-field>
 
-                    <mat-form-field class="col-md-4">
+                    <!-- <mat-form-field class="col-md-4">
                         <input matInput autocomplete="off" maxlength="100" formControlName="prcNo" type="text" placeholder="{{'prc_no' | translate: translateKey}}">
-                    </mat-form-field>
+                    </mat-form-field> -->
 
                     <mat-form-field class="col-md-4">
                         <input matInput autocomplete="off" appDate formControlName="registrationDate" [max]="maxDate" [matDatepicker]="picker" (dateChange)="onDateChange('registrationDate', $event.value)"

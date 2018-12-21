@@ -1,5 +1,5 @@
 <app-title-bar [title]="'screen_title' | translate: translateKey">
-	<form class="searchBox">
+	<!-- <form class="searchBox">
 		<mat-form-field>
 			<input matInput autocomplete="off" trim="blur" appAlphaNumeric id="pecNoTextBox" #pecNoTextBox maxlength="12" type="text"
 			 placeholder="{{'ecrc_no' | translate: prcTranslateKey}}">
@@ -10,7 +10,7 @@
 		<button mat-raised-button type="button" color="primary" class="editBtn" [hidden]="!pecRegForm.get('pecNo').value" (click)="editPECDetail()">
 			<mat-icon>edit</mat-icon>{{'edit' | translate :prcTranslateKey}}
 		</button>
-	</form>
+	</form> -->
 </app-title-bar>
 
 <mat-card class="formClass cardBorder">
@@ -23,13 +23,13 @@
 
 				<div class="row stepperMinHeight">
 
-					<mat-form-field class="col-md-4">
+					<!-- <mat-form-field class="col-md-4">
 						<input matInput autocomplete="off" maxlength="12" formControlName="pecNo" type="text" placeholder="{{'pec_no' | translate: translateKey}}">
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<input matInput autocomplete="off" maxlength="12" formControlName="prcNo" type="text" placeholder="{{'prc_no' | translate: prcTranslateKey}}">
-					</mat-form-field>
+					</mat-form-field> -->
 
 					<mat-form-field class="col-md-4">
 						<input matInput autocomplete="off" appDate formControlName="registrationDate" [max]="maxDate" [matDatepicker]="picker" (dateChange)="onDateChange('registrationDate', $event.value)"

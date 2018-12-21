@@ -35,7 +35,7 @@
             <mat-cell *matCellDef="let row" class="fullWidth">
                 <div class="mobile-label">{{'application_number' | translate:translateKey}}</div>
                 <div class="mobile-label1">:</div>
-                <div class="row-inside"> {{ row.uniqueId }}</div>
+                <div class="row-inside"> {{ row.formNumber ? row.formNumber : row.uniqueId }}</div>
             </mat-cell>
         </ng-container>
 
@@ -83,8 +83,8 @@
             <mat-header-cell *matHeaderCellDef>{{'action' | translate:translateKey}}</mat-header-cell>
             <mat-cell *matCellDef="let row">
                 <div class="mobile-label">{{'action' | translate:translateKey}}</div>
-                <div class="mobile-label1">:</div>
-                <button class="actionBtn" mat-button [matMenuTriggerFor]="menu">
+                <div class="mobile-label1" *ngIf="isMoreBtnVisible(row)">:</div>
+                <button *ngIf="isMoreBtnVisible(row)" class="actionBtn" mat-button [matMenuTriggerFor]="menu">
                     <mat-icon>more_vert</mat-icon>
                 </button>
                 <mat-menu #menu="matMenu">

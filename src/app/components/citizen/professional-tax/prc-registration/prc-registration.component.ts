@@ -170,7 +170,8 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 			timeInterval: null,
 			demands: [],
 			empCount: 0,
-			employeeSalarySummary: null
+			employeeSalarySummary: null,
+			formStatus: null
 
 		});
 
@@ -201,11 +202,11 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 	editPRCDetail() {
 		//this.commonService.commonAlert('Are you sure', `You want to edit ${this.prcRegForm.get('pecNo').value ? this.prcRegForm.get('pecNo').value : this.prcRegForm.get('prcNo').value} details`, 'question', 'Yes', true, '', cb => {
 		this.commonService.commonAlert('Are you sure', 'You will be redirecting to PEC', 'question', 'Yes', true, '', cb => {
-			
+
 			let redirectUrl = ManageRoutes.getFullRoute('PEC_REG');
-			
+
 			//if (this.prcRegForm.get('pecNo').value) {
-				this.router.navigate([redirectUrl, this.prcRegForm.get('pecNo').value, 'fromPRC']);
+			this.router.navigate([redirectUrl, this.prcRegForm.get('pecNo').value, 'fromPRC']);
 			//} else {
 			//	this.router.navigate([redirectUrl, this.prcRegForm.get('prcNo').value, 'fromPRC']);
 			//}
@@ -291,6 +292,8 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 
 				this.profeService.apiType = this.apiType;
 
+				this.prcRegForm.get('formStatus').setValue('SUBMITTED');
+
 				/*employee details clone into control empsummary */
 				this.prcRegForm.get('employeeSalarySummary').setValue(_.cloneDeep(this.empDetailsListArray));
 
@@ -320,18 +323,19 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 							}
 						}
 
-						if (this.prcRegForm.get('prcNo').value) {
-							this.commonService.openAlert("PRC Information Updated Successful", "", "success", `PRC number is ${res.prcNo}`, cb => {
-								this.router.navigateByUrl(ManageRoutes.getFullRoute('CITIZENMYAPPS'));
-							});
-						} else {
-							this.prcRegForm.get('rcDate').disable();
-							this.prcRegForm.get('prcNo').setValue(res.prcNo);
+						// if (this.prcRegForm.get('prcNo').value) {
+						// 	this.commonService.openAlert("PRC Information Updated Successful", "", "success", `PRC number is ${res.prcNo}`, cb => {
+						// 		this.router.navigateByUrl(ManageRoutes.getFullRoute('CITIZENMYAPPS'));
+						// 	});
+						// } else {
+						this.prcRegForm.get('rcDate').disable();
+						this.prcRegForm.get('prcNo').setValue(res.prcNo);
 
-							this.commonService.openAlert("PRC Registration Successful", "", "success", `PRC number is ${res.prcNo}`, cb => {
-								this.router.navigateByUrl(ManageRoutes.getFullRoute('CITIZENMYAPPS'));
-							});
-						}
+						this.commonService.openAlert("PRC Registration Successful", "", "success", `Your Application Number is<br> <b>${res.uniqueId}</b>`, cb => {
+							this.router.navigateByUrl(ManageRoutes.getFullRoute('CITIZENMYAPPS'));
+						});
+
+						//}
 					}
 				});
 			} else {
