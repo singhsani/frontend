@@ -9,6 +9,7 @@ import { FormsActionsService } from '../../../../core/services/citizen/data-serv
 import * as _ from 'lodash';
 import * as moment from 'moment';
 import { TranslateService } from '../../../../shared/modules/translate/translate.service';
+import { FireFacilitiesService } from '../common/services/fire-facilities.service';
 
 @Component({
 	selector: 'app-ele-connection-noc',
@@ -18,7 +19,7 @@ import { TranslateService } from '../../../../shared/modules/translate/translate
 export class EleConnectionNocComponent implements OnInit {
 
 	tabIndex: number = 0;
-	
+
 	electricConnectionForm: FormGroup;
 	translateKey: string = 'electricAppScreen';
 
@@ -26,6 +27,7 @@ export class EleConnectionNocComponent implements OnInit {
 	apiCode: string;
 
 	disablefutureDate = new Date(moment().format('YYYY-MM-DD'));
+	propertyStatusOutstanding={};
 
 	//Lookups Array
 	FS_CONNECTION_PURPOSE: Array<any> = [];
@@ -40,7 +42,8 @@ export class EleConnectionNocComponent implements OnInit {
 		private fb: FormBuilder,
 		private route: ActivatedRoute,
 		private formService: FormsActionsService,
-		private TranslateService: TranslateService
+		private TranslateService: TranslateService,
+		private fireFacilitiesService: FireFacilitiesService
 	) { }
 
 	ngOnInit() {
@@ -161,11 +164,26 @@ export class EleConnectionNocComponent implements OnInit {
 		this.electricConnectionForm.get(controlType).setValue(moment(date).format("YYYY-MM-DD"));
 	}
 
-	getPropertyStatus(){
-		this.electricConnectionForm.get('canEdit').setValue(false);
-		setTimeout(()=>{
-			this.electricConnectionForm.get('canEdit').setValue(true);
-		},5000)
+	getPropertyStatus(number) {
+		this.propertyStatusOutstanding={};
+		this.fireFacilitiesService.getPropertyTaxNoStatus(number).subscribe(res => {
+			if (res.success) {
+				if(res.data.outstanding){
+					this.electricConnectionForm.get('canEdit').setValue(false);
+					this.electricConnectionForm.get('propertyNo').setErrors({'outstandingRemainingProperty': true });
+					this.propertyStatusOutstanding=res.data;
+				}else{
+					this.electricConnectionForm.get('canEdit').setValue(true);
+					this.electricConnectionForm.get('propertyNo').setErrors(null);
+				}
+			} else {
+				
+			}
+		}, (err: any) => {
+			if (err.error && err.error.length) {
+				//this.commonService.openAlert("Warning", err.error[0].message, "warning");
+			}
+		})
 	}
 
 	/**

@@ -52,4 +52,13 @@ export class FireFacilitiesService {
 		this.requestURL = `api/form/${this.apiType}/hospitalOTDetail/` + id + `/delete/` + objId;
 		return this.http.delete(this.requestURL);
 	}
+	/**
+	 * 
+	 * @param propertyTaxNo - serach by propertyTaxNo
+	 * return return this.http.post(`api/property/getOutstanding/${propertyTaxNo}`, {});
+	 */
+
+	getPropertyTaxNoStatus(propertyTaxNo) {
+		return this.http.post(`api/property/getOutstanding/${propertyTaxNo}`, {});
+	}
 }
