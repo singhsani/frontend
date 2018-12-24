@@ -142,6 +142,7 @@ export class DashboardComponent implements OnInit {
 			case 'HEL-NRCDR':
 			case 'HEL-DUPBR':
 			case 'HEL-DUPDR':
+			case 'HEL-DUPMR':
 			case 'SHOP-REN':
 			case 'SHOP-TRAF':
 			case 'SHOP-CAN':

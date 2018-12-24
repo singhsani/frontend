@@ -1,12 +1,16 @@
 import { FormGroup, FormControl, FormArray, FormBuilder } from "@angular/forms";
+import { PaginationService } from "../core/services/citizen/data-services/pagination.service";
 import * as moment from 'moment';
 import * as _ from 'lodash';
+import { merge, of as observableOf } from 'rxjs';
+import { catchError, map, startWith, switchMap } from 'rxjs/operators';
 
 
 /**
  * Kindly extend this class for getting all utils and constants
  */
 export class ComponentConfig {
+
 
     /**
      * Message Constants
@@ -33,7 +37,7 @@ export class ComponentConfig {
         { month: 'Dec', id: '12', monthName: 'December' },
     ];
 
-    constructor() { }
+    constructor(protected paginationService? : PaginationService) { }
 
     /**
 	 * This Method for create attachment array in service detail
@@ -160,6 +164,31 @@ export class ComponentConfig {
      */
     matcher(form: FormGroup, c1: string, c2: string): boolean {
         return form.get(c1).value == form.get(c2).value
+    }
+
+    /**
+    * This method use to get all the citizen data with pagination.
+    */
+    getAllData(sort, paginator, pageSize, apiType, form?: FormGroup) {
+        return merge(sort.sortChange, paginator.page)
+            .pipe(
+                startWith({}),
+                switchMap(() => {
+                    this.paginationService.apiType = apiType;
+                    this.paginationService.pageIndex = (paginator.pageIndex + 1);
+                    this.paginationService.pageSize = paginator.pageSize;;
+                    if(form){
+                        return this.paginationService!.getSearchDataWithPagination(form.value);
+                    }
+                    return this.paginationService!.getAllData();
+                }),
+                map(data => {
+                    return data;
+                }),
+                catchError(() => {
+                    return observableOf([]);
+                })
+            )
     }
 
     

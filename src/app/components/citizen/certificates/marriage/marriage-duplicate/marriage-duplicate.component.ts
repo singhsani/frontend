@@ -9,10 +9,9 @@ import { FormsActionsService } from '../../../../../core/services/citizen/data-s
 import * as _ from 'lodash';
 import * as moment from 'moment';
 import { PaginationService } from '../../../../../core/services/citizen/data-services/pagination.service';
-import { Observable, merge, of as observableOf } from 'rxjs';
-import { catchError, map, startWith, switchMap } from 'rxjs/operators';
 import { CertificateConfig } from '../../certificate-config';
 import { CommonService } from '../../../../../shared/services/common.service';
+import { Location } from '@angular/common';
 
 @Component({
 	selector: 'app-marriage-duplicate',
@@ -33,14 +32,24 @@ export class MarriageDuplicateComponent implements OnInit {
 	 * get element having id as MatSort from view.
 	 */
 	@ViewChild(MatSort) sort: MatSort;
-	config : CertificateConfig;
+	config: CertificateConfig;
 
 	marriageDuplicateForm: FormGroup;
+	marriageSearchForm: FormGroup;
+
 	translateKey: string = 'duplicateMarriageRegScreen';
 
 	appId: number;
 	apiCode: string;
 	tabIndex: number = 0;
+
+	/**
+	 * row data.
+	 */
+	rowData: any = {};
+
+	maxYear = new Date().getFullYear();
+
 
 	// Marriage date 
 	disablefutureDate = new Date(moment().format('YYYY-MM-DD'));
@@ -48,6 +57,18 @@ export class MarriageDuplicateComponent implements OnInit {
 	// Step Titles
 	stepLable1: string = "applicant_basic_details";
 	stepLable2: string = "marriage_details";
+
+	/**
+	 * display table column.
+	 */
+	displayedColumns: any = [
+		'id',
+		'seq',
+		'applicantName',
+		'fileNumber',
+		'serviceType',
+		'action'
+	];
 
 	/**
  * data source useful to display data.
@@ -69,6 +90,18 @@ export class MarriageDuplicateComponent implements OnInit {
 	 */
 	isLoadingResults: boolean = false;
 
+	/**
+	 * show search form.
+	 */
+	showSearchForm: boolean = false;
+
+	/**
+	 * show hide duplicate form.
+	 */
+	isVisibeDuplicateForm: boolean = true;
+	DUPLICATE_COPY_MODE: Array<any> = [];
+	YES_NO: Array<any> = [];
+
     /**
      * @param fb - Declare FormBuilder property.
      * @param validationError - Declare validation service property
@@ -76,32 +109,124 @@ export class MarriageDuplicateComponent implements OnInit {
      */
 	constructor(
 		private fb: FormBuilder,
+		private location: Location,
 		private router: Router,
 		private route: ActivatedRoute,
 		private paginationService: PaginationService,
 		private formService: FormsActionsService,
-		private commonService : CommonService
+		private commonService: CommonService
 	) {
-		this.config = new CertificateConfig();
-	 }
+		this.config = new CertificateConfig(this.paginationService);
+	}
 
+	/**
+	 * Component life cycle intializes first after constructor.
+	 */
 	ngOnInit() {
-
 		this.route.paramMap.subscribe(param => {
 			this.appId = Number(param.get('id'));
 			this.apiCode = param.get('apiCode');
 			this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
 		});
-		if (!this.appId) {
-			this.router.navigate([ManageRoutes.getFullRoute('CITIZENDASHBOARD')]);
-		}
-		else {
+		this.marriageSearchControls();
+		this.marriageDuplicateControls();
+		if (this.appId) {
+			this.isVisibeDuplicateForm = false;
 			this.getMarriageDuplicateData();
 			this.getLookupData();
-			this.marriageDuplicateFormControls();
+		} else {
+			this.showSearchForm = true;
 		}
 	}
 
+	/**
+	 * Method is used to create marriage search form controls.
+	 */
+	marriageSearchControls() {
+		this.marriageSearchForm = this.fb.group({
+			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
+			deptFileStatus: null,
+			serviceCode: "HEL-DUPMR",
+			marriageRegNumber: null,
+			marriageDate: ['', Validators.required],
+			marriageRegDate: null,
+			marriageRegYear: ['', [Validators.required, Validators.max(this.maxYear), Validators.min(this.maxYear - 100)]],
+			groomName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
+			brideName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]]
+		});
+	}
+
+	/**
+	 * Method is used to create duplicate form controls.
+	 */
+	marriageDuplicateControls() {
+		this.marriageDuplicateForm = this.fb.group({
+			//step1
+			duplicateCopies: this.fb.group({
+				code: [null, [Validators.required]],
+				id: null,
+				name: null,
+			}),
+			duplicateCopyMode: this.fb.group({
+				code: [null, [Validators.required]],
+				gujName: null,
+				id: null,
+				name: null,
+				orderSequence: null,
+				type: null,
+				uniqueId: null,
+				version: null
+			}),
+			totalCopies: [null, Validators.required],
+			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
+			deptFileStatus: null,
+			serviceCode: "HEL-DUPMR",
+			marriageRegNumber: null,
+			marriageDate: ['', Validators.required],
+			marriageRegDate: null,
+			marriageRegYear: null,
+			groomName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
+			brideName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
+
+			fieldView: "ALL",
+			fieldList: null,
+			applicantName: null,
+			applicantNameGuj: null,
+		});
+	}
+
+	/**
+	 * Method is used to create death record after search data found.
+	 * @param data - original json.
+	 */
+	createDuplicateBirthRecord(data) {
+		this.formService.createFormData().subscribe(res => {
+			this.marriageDuplicateForm.patchValue(res);
+			this.updateDuplicateRecordValue(data);
+			this.appId = res.serviceFormId;
+			let cururl = this.location.path().replace('false', this.appId.toString());
+			this.location.go(cururl);
+		}, err => {
+			this.commonService.openAlert("Warning", "Something Went Wrong", "warning");
+		});
+	}
+
+	/**
+	 * Method is used to update duplicate form data with original json.
+	 * @param data - original json.
+	 */
+	updateDuplicateRecordValue(data) {
+		this.marriageDuplicateForm.get("marriageRegNumber").setValue(data.fileNumber)
+		this.marriageDuplicateForm.get("marriageDate").setValue(data.marriageDate)
+		this.marriageDuplicateForm.get("marriageRegDate").setValue(data.marriageRegDate)
+		this.marriageDuplicateForm.get("marriageRegYear").setValue(data.marriageRegYear)
+		this.marriageDuplicateForm.get("groomName").setValue(data.groomFirstName + " " + data.groomMiddleName + " " + data.groomLastName)
+		this.marriageDuplicateForm.get("brideName").setValue(data.brideFirstName + " " + data.brideMiddleName + " " + data.brideLastName)
+	}
+
+	/**
+	 * Method is used to get marriage duplicate form data.
+	 */
 	getMarriageDuplicateData() {
 		this.formService.getFormData(this.appId).subscribe(res => {
 			this.marriageDuplicateForm.patchValue(res);
@@ -109,11 +234,24 @@ export class MarriageDuplicateComponent implements OnInit {
 	}
 
 	/**
+	 * This method use for checkbox change event
+	 * @param event - Checkbox event
+	 * @param data - Row Data
+	 */
+	onChkBoxClick(event, data) {
+		if (event.checked)
+			this.rowData = data;
+		else
+			this.rowData = {};
+	}
+
+	/**
 	 * This method is use for get lookup data
 	 */
 	getLookupData() {
 		this.formService.getDataFromLookups().subscribe(res => {
-
+			this.DUPLICATE_COPY_MODE = res.DUPLICATE_COPY_MODE;
+			this.YES_NO = res.YES_NO;
 		});
 	}
 
@@ -121,30 +259,17 @@ export class MarriageDuplicateComponent implements OnInit {
 	 * This method is change date formate
 	 */
 	dateFormate(date, controlType) {
-		this.marriageDuplicateForm.get(controlType).setValue(moment(date).format("YYYY-MM-DD"));
+		this.marriageSearchForm.get(controlType).setValue(moment(date).format("YYYY-MM-DD"));
 	}
 
-	marriageDuplicateFormControls() {
-		this.marriageDuplicateForm = this.fb.group({
-			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
-			deptFileStatus: null,
-			serviceCode: "HEL-DUPMR",
-			marriageRegNumber: ['', Validators.required],
-			marriageDate: ['', Validators.required],
-			marriageRegDate: [new Date(), Validators.required],
-			marriageRegYear: ['', Validators.required],
-			groomName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
-			brideName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]]
-		});
-	}
 
 	/**
 	 * Method is used to handle error/validation on submit
 	 * @param count - count of invalid control.
 	 */
 	handleErrorsOnSubmit(count) {
-		let step1 = 6;
-		let step2 = 6;
+		let step1 = 3;
+		let step2 = 4;
 
 		if (count <= step1) {
 			this.tabIndex = 0;
@@ -160,15 +285,17 @@ export class MarriageDuplicateComponent implements OnInit {
 	 * @param evt - Tab index
 	 */
 	onTabChange(evt) {
-		console.log(evt);
 		this.tabIndex = evt;
 	}
 
-	getApplicationDetails(){
-		if(this.marriageDuplicateForm.valid){
+	/**
+	 * Method is used to get all application list.
+	 */
+	getApplicationDetails() {
+		if (this.marriageSearchForm.valid) {
 			this.getAllData()
-		}else {
-			this.config.getAllErrors(this.marriageDuplicateForm);
+		} else {
+			this.config.getAllErrors(this.marriageSearchForm);
 			this.commonService.openAlert("Field Error", this.config.ALL_FEILD_REQUIRED_MESSAGE, "warning");
 		}
 	}
@@ -177,12 +304,14 @@ export class MarriageDuplicateComponent implements OnInit {
 	 * This method use to get all the citizen data with pagination.
 	 */
 	getAllData() {
-		this.config.
-		getAllData(this.marriageDuplicateForm, this.sort, 
-			this.paginator, this.pageSize, 
-			this.marriageDuplicateForm.get('apiType').value).subscribe(data => {
-				console.log(data);
-			})
+		this.paginator.pageSize = 5;
+		this.paginator.pageIndex = 0;
+		this.config.getAllData(this.sort, this.paginator, this.pageSize, this.marriageSearchForm.get('apiType').value, this.marriageSearchForm).subscribe((data: any) => {
+			if (data.data.length) {
+				this.resultsLength = data.totalRecords
+				this.dataSource.data = data.data;
+			}
+		});
 		// merge(this.sort.sortChange, this.paginator.page)
 		// 	.pipe(
 		// 		startWith({}),
@@ -210,5 +339,14 @@ export class MarriageDuplicateComponent implements OnInit {
 		// 	});
 	}
 
-
+	/**
+	 * This method use for redirect to duplicate form
+	 * @param data - Row data
+	 */
+	redirectToDuplicate(data) {
+		this.getLookupData();
+		this.createDuplicateBirthRecord(data);
+		this.showSearchForm = false;
+		this.isVisibeDuplicateForm = false;
+	}
 }
