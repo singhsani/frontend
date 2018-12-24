@@ -213,36 +213,22 @@ export class SlotBookingComponent implements OnInit {
 		this.commonService.commonAlert('Are you sure?', "", 'info', 'Schedule Appointment', false, html, cb => {
 			this.appointmentService.bookSlot(this.formId, slotData.uniqueId).subscribe(resp => {
 				let res = resp.data;
-				if (res.bookingStatus === 'BOOKED') {
-					this.formService.submitFormData(this.formId).subscribe(submitResp => {
-						if(submitResp.success){
-							let appdetailhtml = `			
-								<div>
-								<h1>Appointment Details</h1>
-								<div class="alert alert-danger">
-									Please Carry Orignal hard copy of all checklist document at marriage Registrar Office
-								</div>
-								<table class="table table-sm table-bordered">
-									<tr>
-									<th>Date Of Appointment</th>
-									<td>` + this.properDate(res.start) + `</td>
-									</tr>
-									<tr>
-									<th>Time Of Appointment</th>
-									<td>` + this.properTime(res.start) + ` to ` + this.properTime(res.end) + `</td>
-									</tr>
-									<tr>
-									<th>Visit Registrar Office Address</th>
-									<td>` + res.resourceName + `</td>
-									</tr>
-								</table>
-								</div>`;
-
-							this.commonService.openAlert("Schedule Appointment", "Appointment Scheduled Successfully", "info", appdetailhtml);
-							let redirectUrl = ManageRoutes.getFullRoute('CITIZENMYAPPS');
-							this.router.navigate([redirectUrl]);
+				if (res.bookingStatus == 'BOOKED') {
+					this.formService.getFormData(this.formId).subscribe(formData => {
+						if (formData.fileStatus == "SUBMITTED") {
+							this.successResponse(res);
+						} else {
+							this.formService.submitFormData(this.formId).subscribe(submitResp => {
+								if (submitResp.success) {
+									this.successResponse(res);
+								}
+							}, submitErr => {
+								this.commonService.openAlert("Error", "Error Occured for final submit : " + submitErr.error[0].message, "warning")
+							});
 						}
-					});
+					}, getError => {
+						this.commonService.openAlert("Error", "Error Occured for final submit : " + getError.error[0].message, "warning")
+					})
 				} else {
 					this.commonService.openAlert("Error", "Appointment Pending", "warning")
 				}
@@ -278,6 +264,38 @@ export class SlotBookingComponent implements OnInit {
 				}
 			});
 		});
+	}
+
+	/**
+	 * Method is used to success response with details.
+	 * @param res - success response data
+	 */
+	successResponse(res) {
+		let appdetailhtml = `			
+		<div>
+		<h1>Appointment Details</h1>
+		<div class="alert alert-danger">
+			Please Carry Orignal hard copy of all checklist document at marriage Registrar Office
+		</div>
+		<table class="table table-sm table-bordered">
+			<tr>
+			<th>Date Of Appointment</th>
+			<td>` + this.properDate(res.start) + `</td>
+			</tr>
+			<tr>
+			<th>Time Of Appointment</th>
+			<td>` + this.properTime(res.start) + ` to ` + this.properTime(res.end) + `</td>
+			</tr>
+			<tr>
+			<th>Visit Registrar Office Address</th>
+			<td>` + res.resourceName + `</td>
+			</tr>
+		</table>
+		</div>`;
+
+		this.commonService.openAlert("Schedule Appointment", "Appointment Scheduled Successfully", "info", appdetailhtml);
+		let redirectUrl = ManageRoutes.getFullRoute('CITIZENMYAPPS');
+		this.router.navigate([redirectUrl]);
 	}
 
 	/**

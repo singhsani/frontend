@@ -1,9 +1,10 @@
-import { Directive, ElementRef, HostListener } from '@angular/core';
+import { Directive, ElementRef, HostListener, Input } from '@angular/core';
 
 @Directive({
 	selector: '[OnlyNumber]'
 })
 export class OnlyNumberDirective {
+	@Input() OnlyYear: boolean = false;
 
 	constructor(private el: ElementRef) { }
 
@@ -47,10 +48,19 @@ export class OnlyNumberDirective {
 	validateFields(event) {
 		setTimeout(() => {
 			let numberRegEx = /^[0-9]+$/;
-			if(!numberRegEx.test(this.el.nativeElement.value)){
-				this.el.nativeElement.value = "";
-				event.preventDefault();
+			if(this.OnlyYear){
+				let curVal = parseInt(this.el.nativeElement.value);
+				if (!numberRegEx.test(this.el.nativeElement.value) || curVal > (new Date().getFullYear()) || ((curVal.toString().length == 4) && ((new Date().getFullYear()) - 100) > curVal )) {
+					this.el.nativeElement.value = "";
+					event.preventDefault();
+				}
+			} else {
+				if (!numberRegEx.test(this.el.nativeElement.value)) {
+					this.el.nativeElement.value = "";
+					event.preventDefault();
+				}	
 			}
+			
 
 			/* let checkNumber = (this.el.nativeElement.value);
 			if (!isNaN(checkNumber)) {

@@ -24,6 +24,8 @@ export class ValidationService {
             invalideDate: 'Date Invalid',
             invalidAadharno: 'Aadhar Number length should be 12',
             invalidNumberEntry: 'Enter only Number',
+            max: `Maximum value should be ${validatorValue.max}`,
+            min: `Minimum value should be ${validatorValue.min}`,
             minlength: `Minimum length ${validatorValue.requiredLength} characters`,
             maxlength: `Cannot exceed ${validatorValue.requiredLength} characters`,
             invalidName: `${_.startCase(controlName)} Is Not Valid`,

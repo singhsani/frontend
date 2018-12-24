@@ -20,8 +20,9 @@ import { ManageRoutes } from './../../../config/routes-conf';
 							</a>
 						</li>
 						<li>{{title}}</li>
+						<ng-content></ng-content>
 					</ul>
-					<ng-content></ng-content>
+					
 					</div>
 				</div>
 `,

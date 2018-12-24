@@ -191,11 +191,13 @@ export class FileUploadComponent implements OnInit {
 				if (this.selectedFiles[0].size > Math.floor(this.uploadModel.maxFileSizeInMB * 1000000)) {
 					this.fileName = ''
 					this.canUpload = false;
+					this.fileInput.nativeElement.value = "";
 					this.commonService.openAlert("Warning", "File Size should be less than " + this.uploadModel.maxFileSizeInMB + " MB", "warning");
 					return;
 				} else if (this.selectedFiles[0].size <= 0) {
 					this.fileName = ''
 					this.canUpload = false;
+					this.fileInput.nativeElement.value = "";
 					this.commonService.openAlert("Warning", `File must have some contents and size should not be 0 MB `, "warning");
 					return;
 				} else {
