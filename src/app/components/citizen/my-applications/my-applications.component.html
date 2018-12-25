@@ -6,9 +6,6 @@
 </div>
 <!-- <app-title-bar [title]="'screen_title' | translate:'MyApplicationScreen'"></app-title-bar> -->
 <div class="example-container mat-elevation-z8 borderOne" [hidden]="resultsLength==0">
-    <div class="example-loading-shade" *ngIf="isLoadingResults">
-        <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
-    </div>
 
     <table mat-table [dataSource]="dataSource" class="myApplication" matSort matSortActive="created" matSortDisableClear matSortDirection="asc">
 
@@ -90,8 +87,13 @@
                 <mat-menu #menu="matMenu">
 
                     <button mat-menu-item *ngIf="isEditOptDisplay(row)" color="primary" (click)="redirectToEdit(row.serviceDetail.code, row.serviceFormId)">
-                        <mat-icon title="{{'edit_application' | translate:translateKey}}">edit</mat-icon>
+                        <mat-icon class="m-1" title="{{'edit_application' | translate:translateKey}}">edit</mat-icon>
                         {{'edit_application' | translate:translateKey}}
+                    </button>
+
+                    <button mat-menu-item *ngIf="isRejectNoteOptDisplay(row)" color="primary" (click)="openModal(rejectTemplate);remarksDisplay(row)">
+                        <mat-icon class="m-1" title="Why Rejected?">help_outline</mat-icon>
+                        Why Rejected
                     </button>
                     
                     <button mat-menu-item *ngIf="isDeleteOptDisplay(row)" color="primary" (click)="deleteRecord(row.serviceDetail.code, row.serviceFormId)">
@@ -147,7 +149,7 @@
         <div class="col-9">
             <h5 class="modal-title pull-left">{{'application_json' | translate:translateKey}}</h5>
         </div>
-        <div class="col-2">
+        <div class="col-1">
             <button class="pull-left mat-icon-button" (click)="copyText(copytext)">
                 <mat-icon title="{{'copy_clipboard' | translate:translateKey}}">content_copy</mat-icon>
             </button>
@@ -166,6 +168,33 @@
             </div>
         </div>
         <!-- <pre class="text-left" #copytext style="color: #9cdcfe;background: #212529;overflow: hidden">{{JSONdata}}</pre> -->
+    </div>
+</ng-template>
+
+
+<ng-template #rejectTemplate>
+    <div class="modal-header">
+        <div class="col-9">
+            <h5 class="modal-title pull-left">Remarks</h5>
+        </div>
+        <div class="col-1">
+            <button class="pull-left mat-icon-button" (click)="copyText(copytext)">
+                <mat-icon title="{{'copy_clipboard' | translate:translateKey}}">content_copy</mat-icon>
+            </button>
+        </div>
+        <div class="col-1">
+            <button title="{{'close' | translate:translateKey}}" class=" mat-icon-button" aria-label="Close" (click)="modalRef.hide()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </div>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-12">
+                <textarea type="text" readonly class="text-left remarks" value="{{rejectRemarks}}" #copytext> 
+                </textarea>
+            </div>
+        </div>
     </div>
 </ng-template>
 

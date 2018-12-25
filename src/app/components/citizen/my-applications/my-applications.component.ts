@@ -48,6 +48,7 @@ export class MyApplicationsComponent implements OnInit {
 
 	modalRef: BsModalRef;
 	JSONdata: any;
+	rejectRemarks: string = '';
 
 	@ViewChild(MatPaginator) paginator: MatPaginator;
 	@ViewChild(MatSort) sort: MatSort;
@@ -228,6 +229,13 @@ export class MyApplicationsComponent implements OnInit {
 	}
 
 	/**
+	 * This method is use to show reject remarks.
+	 */
+	remarksDisplay(data) {
+		this.rejectRemarks = data.remarks;
+	}
+
+	/**
 	 * This method is use for copy text.
 	 */
 	copyText(copytext:any) {
@@ -271,7 +279,7 @@ export class MyApplicationsComponent implements OnInit {
 	 * @param row - Table row oject
 	 */
 	isMoreBtnVisible(row){
-		if (row.serviceType === 'PEC_REG' || row.serviceType === 'PRC_REG')
+		if (!row.remarks && (row.serviceType === 'PEC_REG' || row.serviceType === 'PRC_REG'))
 			return false;
 		else
 			return true;
@@ -329,6 +337,19 @@ export class MyApplicationsComponent implements OnInit {
 		else
 			return true;
 	}
+
+	/**
+	 * This method is use for application json option
+	 * @param row - Table row oject
+	 */
+	isRejectNoteOptDisplay(row) {
+		if (row.remarks)
+			return true;
+		else
+			return false;
+	}
+
+
 
 
 }
