@@ -17,11 +17,13 @@ export class AddressComponent implements OnInit, OnChanges {
 	@Input() addressFormGroup: FormGroup;
 	@Input() requiredFeilds: boolean;
 	@Input() isDisplayGujFields: boolean = false;
+	@Input() formType: string = null;
 
 	translateKey: string = 'addressScreen';
 	countryListArray: any = [];
 	stateListArray: any = [];
 	cityListArray: any = [];
+	isBuildinAreaReq: boolean = false;
 
 	editMode: boolean = false;
 
@@ -38,25 +40,37 @@ export class AddressComponent implements OnInit, OnChanges {
 	ngOnChanges() {
 		if (this.requiredFeilds) {
 			this.addressFormGroup.get('state').setValidators([Validators.required]);
-			this.addressFormGroup.get('state').updateValueAndValidity();
 			this.addressFormGroup.get('buildingName').setValidators([ValidationService.buildingNameValidator]);
-            this.addressFormGroup.get('buildingName').updateValueAndValidity();
 			this.addressFormGroup.get('city').setValidators([Validators.required]);
-			this.addressFormGroup.get('city').updateValueAndValidity();
 			this.addressFormGroup.get('country').setValidators([Validators.required]);
-			this.addressFormGroup.get('country').updateValueAndValidity();
 			this.addressFormGroup.get('pincode').setValidators([Validators.required,Validators.minLength(6),Validators.maxLength(6)]);
-			this.addressFormGroup.get('pincode').updateValueAndValidity();
 		} else {
 			this.addressFormGroup.get('state').clearValidators();
-			this.addressFormGroup.get('state').updateValueAndValidity();
 			this.addressFormGroup.get('city').clearValidators();
-			this.addressFormGroup.get('city').updateValueAndValidity();
 			this.addressFormGroup.get('country').clearValidators();
-			this.addressFormGroup.get('country').updateValueAndValidity();
 			this.addressFormGroup.get('pincode').clearValidators();
-			this.addressFormGroup.get('pincode').updateValueAndValidity();
 		}
+
+		/*If in your module need buildname & area require then pass module name from component in Input property */
+		if (this.formType == 'PFT') {
+			this.isBuildinAreaReq = true;
+			this.addressFormGroup.get('buildingName').setValidators([Validators.required]);
+			this.addressFormGroup.get('area').setValidators([Validators.required]);
+		}else{
+			/*If no need of buildname & area require then this logic works */
+			this.isBuildinAreaReq = false;
+			this.addressFormGroup.get('buildingName').clearValidators();
+			this.addressFormGroup.get('area').clearValidators();
+		}
+
+		/* After perform set or remove validator action this will update value and validity */
+		this.addressFormGroup.get('buildingName').updateValueAndValidity();
+		this.addressFormGroup.get('area').updateValueAndValidity();
+		this.addressFormGroup.get('pincode').updateValueAndValidity();
+		this.addressFormGroup.get('country').updateValueAndValidity();
+		this.addressFormGroup.get('city').updateValueAndValidity();
+		this.addressFormGroup.get('state').updateValueAndValidity();
+		
 	}
 
 	/**

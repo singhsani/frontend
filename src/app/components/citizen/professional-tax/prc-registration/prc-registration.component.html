@@ -3,7 +3,7 @@
 
         <mat-form-field>
             <input matInput autocomplete="off" trim="blur" appAlphaNumeric maxlength="12" #ecrcNoTextBox #searchInput="matInput" type="text"
-                placeholder="{{'pec_no' | translate: translateKey}}">
+                placeholder="{{'pec_no' | translate: pecTranslateKey}}">
             <button mat-button matSuffix mat-icon-button (click)="searchEmpRegByECRCNo($event,ecrcNoTextBox.value)">
                 <mat-icon>search</mat-icon>
             </button>

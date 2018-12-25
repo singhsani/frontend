@@ -402,8 +402,15 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 
 		event.stopPropagation();
 
+
 		if (ecrcNo == '') {
-			this.commonService.openAlert("Warning", "Enter PEC/PRC Number", "warning");
+			this.commonService.openAlert("Warning", "Enter PEC Number", "warning");
+			return;
+		}
+
+		let isMatch = ecrcNo.match(/PEC/g);
+		if (!isMatch){
+			this.commonService.openAlert("Warning", "Only can search with PEC number", "warning");
 			return;
 		}
 
@@ -437,7 +444,6 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 			} else {
 
 				/** If prcNo exist then check for rcDateEditAble is false then disable the field else enable the field */
-
 				if (this.prcRegForm.get('prcNo').value) {
 					if (this.prcRegForm.get('rcDateEditAble').value) {
 						this.isPRCExist = false;

@@ -114,10 +114,10 @@
 
 
 					<h2>{{'office_address' | translate: translateKey}}</h2>
-					<app-address #officeAddr [requiredFeilds]="true" [addressFormGroup]="pecRegForm.get('officeAddress')"></app-address>
+					<app-address #officeAddr [requiredFeilds]="true" [formType]="'PFT'" [addressFormGroup]="pecRegForm.get('officeAddress')"></app-address>
 
 					<h2>{{'residential_address' | translate: translateKey}}</h2>
-					<app-address #resAddr [requiredFeilds]="true" [addressFormGroup]="pecRegForm.get('residentialAddress')"></app-address>
+					<app-address #resAddr [requiredFeilds]="true" [formType]="'PFT'" [addressFormGroup]="pecRegForm.get('residentialAddress')"></app-address>
 				</div>
 
 				<div class="fotButtonBar clearfix">
