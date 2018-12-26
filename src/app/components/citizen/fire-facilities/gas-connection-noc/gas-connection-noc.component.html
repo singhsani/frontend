@@ -129,8 +129,9 @@
 					</div>
 
 					<mat-form-field class="col-md-4" *ngIf="gasConnectionForm.get('connectionPurpose').get('code').value">
-						<input matInput type="text" appAlphaNumeric formControlName="propertyNo" placeholder="{{'property_No' | translate: translateKey }}" maxlength="12" required>
+						<input matInput type="text" appAlphaNumeric formControlName="propertyNo" placeholder="{{'property_No' | translate: translateKey }}" maxlength="15" required (change)="getPropertyStatus($event.target.value)">
 						<control-messages [control]="gasConnectionForm.controls.propertyNo"></control-messages>
+						<mat-error *ngIf="gasConnectionForm.get('propertyNo').hasError('outstandingRemainingProperty')">{{propertyStatusOutstanding?.message}}</mat-error>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4" *ngIf="gasConnectionForm.get('connectionPurpose').get('code').value=='COMMERCIAL'">

@@ -118,6 +118,16 @@ export class HttpService {
 	}
 
 	/**
+	 * This method is use for send POST form data to API.
+	 * @param url - Additional request URL.
+	 * @param body - POST method parameters
+	 * @param options - Header(s) which will pass with particular request.
+	 */
+	postFormData(url: string, formData: any, options?: any): Observable<any> {
+		return this.uploadFilePost(url,formData,options).map(data=>data.body);
+	}
+
+	/**
 	 * This method is use for send POST http Request to API for upload file.
 	 * @param url - Additional request URL.
 	 * @param body - POST method parameters

@@ -2,45 +2,47 @@ import { Injectable } from '@angular/core';
 import { HttpService } from '../../../../../shared/services/http.service';
 
 @Injectable({
-  providedIn: 'root'
+	providedIn: 'root'
 })
 export class FireFacilitiesService {
 	requestURL: string;
-	apiType:string;
- 	/**
-	 * Constructor to declare defualt propeties of class.
-	 * @param http - Declare Http Service property.
-	 */
+	apiType: string;
+	/**
+   * Constructor to declare defualt propeties of class.
+   * @param http - Declare Http Service property.
+   */
 	constructor(private http: HttpService) { }
 
 	/**
-	 * This method for search licence using number
-	 * @param licenceNumber 
+	 * This method for search final noc by using provisional number
+	 * @param provisionalNo 
 	 */
-	searchLicence(licenceNumber) {
-		// 	this.requestURL = `api/form/foodLicence/search`;
-		//   	return this.http.post(this.requestURL,licenceNumber);
-    // return this.http.get(`api/form/foodLicence/search/${licenceNumber}`);
-    
-    return this.http.get(`api/form/finalFireNoc/searchByProvisionalNumber/${licenceNumber}`);
+	searchByProvisionalNumber(provisionalNo) {
+		const formData = new FormData();
+		formData.append('provisionalNo', provisionalNo);
+		return this.http.postFormData(`api/form/finalFireNoc/searchByProvisionalNumber`, formData);
 	}
-	
+
 	/**
 	 * 
 	 * @param licenceNumber - serach bu licence num
 	 * return this.http.get(`api/form/foodLicence/search/${licenceNumber}`);
 	 */
 	searchRevisedFireNOC(nocNo) {
-    	return this.http.get(`api/form/revisedFireNoc/searchByNocNumber/${nocNo}`);
+		const formData = new FormData();
+		formData.append('nocNo', nocNo);
+		return this.http.postFormData(`api/form/revisedFireNoc/searchByNocNumber`, formData);
 	}
-	
+
 	/**
 	 * 
 	 * @param licenceNumber - serach bu licence num
 	 * return this.http.get(`api/form/foodLicence/search/${licenceNumber}`);
 	 */
-	searchRenewalFireNOC(nocNo) {
-    	return this.http.get(`api/form/renewalFireNoc/searchByFinalNocNumber/${nocNo}`);
+	searchRenewalFireNOC(finalNocNo) {
+		const formData = new FormData();
+		formData.append('finalNocNo', finalNocNo);
+		return this.http.postFormData(`api/form/renewalFireNoc/searchByFinalNocNumber`, formData);
 	}
 
 	/**
@@ -55,10 +57,12 @@ export class FireFacilitiesService {
 	/**
 	 * 
 	 * @param propertyTaxNo - serach by propertyTaxNo
-	 * return return this.http.post(`api/property/getOutstanding/${propertyTaxNo}`, {});
+	 * return this.http.postFormData(`api/property/getOutstanding`, formData);
 	 */
 
 	getPropertyTaxNoStatus(propertyTaxNo) {
-		return this.http.post(`api/property/getOutstanding/${propertyTaxNo}`, {});
+		const formData = new FormData();
+		formData.append('propertyTaxNo', propertyTaxNo);
+		return this.http.postFormData(`api/property/getOutstanding`, formData);
 	}
 }

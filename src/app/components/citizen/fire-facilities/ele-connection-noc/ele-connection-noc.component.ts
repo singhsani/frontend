@@ -164,6 +164,10 @@ export class EleConnectionNocComponent implements OnInit {
 		this.electricConnectionForm.get(controlType).setValue(moment(date).format("YYYY-MM-DD"));
 	}
 
+	/**
+	 * this method is used to get property tax status	 * 
+	 * @param number 
+	 */
 	getPropertyStatus(number) {
 		this.propertyStatusOutstanding={};
 		this.fireFacilitiesService.getPropertyTaxNoStatus(number).subscribe(res => {
