@@ -25,6 +25,7 @@ export class PayableServicesComponent implements OnInit {
 	payModeArr: Array<any> = [
 		{ name: 'Net Banking', code: 'NETBANKING' }, { name: 'Debit / Credit Card banking', code: 'CARDBANKING' }
 	];
+	placeholder: string = 'Reference Number';
 
 	constructor(
 		private dialog: MatDialog,
@@ -123,6 +124,16 @@ export class PayableServicesComponent implements OnInit {
 	 * @param searchable - boolean (true/false)
 	 */
 	showHideSearchable(paySerCode) {
+
+		switch (paySerCode) {
+			case 'PROFESSIONAL_TAX':
+				this.placeholder = 'EC / RC Number';
+				break;
+			default:
+				this.placeholder = 'Reference Number';
+				break;
+		}
+		
 		this.isRecordExists = false;
 		this.paymentsForm.get('amount').setValue(null);
 		this.paymentsForm.get('refNumber').setValue(null);
