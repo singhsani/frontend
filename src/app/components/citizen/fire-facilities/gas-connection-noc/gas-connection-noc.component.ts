@@ -6,6 +6,7 @@ import { FormsActionsService } from '../../../../core/services/citizen/data-serv
 import * as _ from 'lodash';
 import * as moment from 'moment';
 import { TranslateService } from '../../../../shared/modules/translate/translate.service';
+import { FireFacilitiesService } from '../common/services/fire-facilities.service';
 
 @Component({
 	selector: 'app-gas-connection-noc',
@@ -24,6 +25,7 @@ export class GasConnectionNocComponent implements OnInit {
 	apiCode: string;
 	
 	disablefutureDate = new Date(moment().format('YYYY-MM-DD'));
+	propertyStatusOutstanding={};
 
 	//Lookups Array
 	FS_CONNECTION_PURPOSE: Array<any> = [];
@@ -38,7 +40,8 @@ export class GasConnectionNocComponent implements OnInit {
 		private fb: FormBuilder,
 		private route: ActivatedRoute,
 		private formService: FormsActionsService,
-		private TranslateService: TranslateService
+		private TranslateService: TranslateService,
+		private fireFacilitiesService: FireFacilitiesService
 	) { }
 
 	ngOnInit() {
@@ -105,7 +108,7 @@ export class GasConnectionNocComponent implements OnInit {
 				code: [null, Validators.required]
 			}),
 			shopNo: [null, [Validators.maxLength(12)]],
-			propertyNo: [null, [Validators.required, Validators.maxLength(12)]],
+			propertyNo: [null, [Validators.required, Validators.maxLength(15)]],
 
 			firePlaceType: this.fb.group({
 				code: [null, Validators.required]
@@ -167,6 +170,32 @@ export class GasConnectionNocComponent implements OnInit {
 	 */
 	dateFormat(date, controlType: string) {
 		this.gasConnectionForm.get(controlType).setValue(moment(date).format("YYYY-MM-DD"));
+	}
+
+	/**
+	 * this method is used to get property tax status	 * 
+	 * @param number 
+	 */
+	getPropertyStatus(number) {
+		this.propertyStatusOutstanding={};
+		this.fireFacilitiesService.getPropertyTaxNoStatus(number).subscribe(res => {
+			if (res.success) {
+				if(res.data.outstanding){
+					this.gasConnectionForm.get('canEdit').setValue(false);
+					this.gasConnectionForm.get('propertyNo').setErrors({'outstandingRemainingProperty': true });
+					this.propertyStatusOutstanding=res.data;
+				}else{
+					this.gasConnectionForm.get('canEdit').setValue(true);
+					this.gasConnectionForm.get('propertyNo').setErrors(null);
+				}
+			} else {
+				
+			}
+		}, (err: any) => {
+			if (err.error && err.error.length) {
+				//this.commonService.openAlert("Warning", err.error[0].message, "warning");
+			}
+		})
 	}
 
 	onChangeConnectionPurpose(event) {

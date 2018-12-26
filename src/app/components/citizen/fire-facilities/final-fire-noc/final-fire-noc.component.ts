@@ -50,7 +50,7 @@ export class FinalFireNocComponent implements OnInit {
 	 * This method for serach licence using licence number.
 	 */
 	searchLicence() {
-		this.FireFacilitiesService.searchLicence(this.serachLicenceObj.searchLicenceNumber).subscribe(
+		this.FireFacilitiesService.searchByProvisionalNumber(this.serachLicenceObj.searchLicenceNumber).subscribe(
 			(res: any) => {
 
 				if (res.success) {
@@ -237,7 +237,7 @@ export class FinalFireNocComponent implements OnInit {
 				// licenseRenewalDate: res.licenseRenewalDate,
 				// loinumber: res.loinumber,
 				serviceDetail: res.serviceDetail,
-				// attachments: res.attachments,
+				// attachments: res.attachments
 			});
 
 			this.showButtons = true;
