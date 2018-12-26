@@ -15,7 +15,7 @@ import { ManageRoutes } from './../../../config/routes-conf';
 							</a>
 						</li>
 						<li>
-							<a mat-button (click)="navigateToRouteByIndex('CITIZENDASHBOARD')">
+							<a (click)="navigateToRouteByIndex('CITIZENDASHBOARD')">
 								Home
 							</a>
 						</li>
