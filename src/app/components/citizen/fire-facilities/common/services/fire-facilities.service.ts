@@ -17,7 +17,7 @@ export class FireFacilitiesService {
 	 * This method for search final noc by using provisional number
 	 * @param provisionalNo 
 	 */
-	searchByProvisionalNumber(provisionalNo) {
+	searchByProvisionalNumber(provisionalNo:any) {
 		const formData = new FormData();
 		formData.append('provisionalNo', provisionalNo);
 		return this.http.postFormData(`api/form/finalFireNoc/searchByProvisionalNumber`, formData);
@@ -25,10 +25,10 @@ export class FireFacilitiesService {
 
 	/**
 	 * 
-	 * @param licenceNumber - serach bu licence num
+	 * @param licenceNumber - serach licence number
 	 * return this.http.get(`api/form/foodLicence/search/${licenceNumber}`);
 	 */
-	searchRevisedFireNOC(nocNo) {
+	searchRevisedFireNOC(nocNo:any) {
 		const formData = new FormData();
 		formData.append('nocNo', nocNo);
 		return this.http.postFormData(`api/form/revisedFireNoc/searchByNocNumber`, formData);
@@ -39,7 +39,7 @@ export class FireFacilitiesService {
 	 * @param licenceNumber - serach bu licence num
 	 * return this.http.get(`api/form/foodLicence/search/${licenceNumber}`);
 	 */
-	searchRenewalFireNOC(finalNocNo) {
+	searchRenewalFireNOC(finalNocNo:any) {
 		const formData = new FormData();
 		formData.append('finalNocNo', finalNocNo);
 		return this.http.postFormData(`api/form/renewalFireNoc/searchByFinalNocNumber`, formData);
@@ -49,7 +49,7 @@ export class FireFacilitiesService {
 	 * This method for delete array details
 	 * @param objId - Array item id
 	 */
-	deleteArrayData(id, objId) {
+	deleteArrayData(id:any, objId:any) {
 		// api/form/provisionalHospitalNoc/hospitalOTDetail/{id}/delete/{hospitalOTDetailId}
 		this.requestURL = `api/form/${this.apiType}/hospitalOTDetail/` + id + `/delete/` + objId;
 		return this.http.delete(this.requestURL);
@@ -60,9 +60,17 @@ export class FireFacilitiesService {
 	 * return this.http.postFormData(`api/property/getOutstanding`, formData);
 	 */
 
-	getPropertyTaxNoStatus(propertyTaxNo) {
+	getPropertyTaxNoStatus(propertyTaxNo:any) {
 		const formData = new FormData();
 		formData.append('propertyTaxNo', propertyTaxNo);
 		return this.http.postFormData(`api/property/getOutstanding`, formData);
+	}
+
+	/**
+	 * This methos for calculate water tanker fee.
+	 */
+	getWaterTankersFee(formData) {
+		this.requestURL = `api/form/${this.apiType}/calculateAmount`;
+		return this.http.post(this.requestURL, formData);
 	}
 }

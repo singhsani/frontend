@@ -5,7 +5,7 @@ import { ManageRoutes } from './../../../../config/routes-conf';
 import { ValidationService } from '../../../../shared/services/validation.service';
 import { FormsActionsService } from '../../../../core/services/citizen/data-services/forms-actions.service';
 import * as moment from 'moment';
-
+import { FireFacilitiesService } from '../common/services/fire-facilities.service';
 @Component({
 	selector: 'app-water-tanker-app',
 	templateUrl: './water-tanker-app.component.html',
@@ -36,6 +36,9 @@ export class WaterTankerAppComponent implements OnInit {
 
 	disablepastDate = new Date(moment().format('YYYY-MM-DD'));
 
+	// required attachment array
+	private uploadFilesArray: Array<any> = [];
+
 	/**
 	 * @param fb - Declare FormBuilder property.
 	 * @param validationError - Declare validation service property
@@ -47,7 +50,9 @@ export class WaterTankerAppComponent implements OnInit {
 		private validationService: ValidationService,
 		private router: Router,
 		private route: ActivatedRoute,
-		private formService: FormsActionsService
+		private formService: FormsActionsService,
+		public fireFacilitiesService: FireFacilitiesService
+
 	) { }
 
 	/**
@@ -58,6 +63,7 @@ export class WaterTankerAppComponent implements OnInit {
 			this.formId = Number(param.get('id'));
 			this.apiCode = param.get('apiCode');
 			this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
+			this.fireFacilitiesService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
 		});
 
 		this.getLookupData();
@@ -65,7 +71,7 @@ export class WaterTankerAppComponent implements OnInit {
 			this.router.navigate([ManageRoutes.getFullRoute('CITIZENDASHBOARD')]);
 		}
 		else {
-			this.getAnimalPondLicNewData();
+			this.getWaterTankerLicNewData();
 			this.waterTankerAppFormControls();
 		}
 	}
@@ -73,7 +79,7 @@ export class WaterTankerAppComponent implements OnInit {
 	/**
 	 * Method is used to get form data
 	 */
-	getAnimalPondLicNewData() {
+	getWaterTankerLicNewData() {
 		this.formService.getFormData(this.formId).subscribe(res => {
 			try {
 				this.waterTankerAppForm.patchValue(res);
@@ -131,22 +137,22 @@ export class WaterTankerAppComponent implements OnInit {
 			serviceCode: 'FS-WATER',
 			/* Step 1 controls start */
 			requiredOnFloor: this.fb.group({
-				"code": [null,Validators.required]
+				"code": [null, Validators.required]
 			}),
 			purpose: this.fb.group({
-				"code": [null,Validators.required]
+				"code": [null, Validators.required]
 			}),
 			whoSuggested: [null, [Validators.required, Validators.maxLength(150)]],
 			withinVMCBoundary: [true],
-			requiredOnDate: [null,Validators.required],
+			requiredOnDate: [null, Validators.required],
 			requireIn: this.fb.group({
-				"code": [null,Validators.required]
+				"code": [null, Validators.required]
 			}),
 			requireAtTime: this.fb.group({
-				"code": [null,Validators.required]
+				"code": [null, Validators.required]
 			}),
-			totalTankRequired: [null, [Validators.required,Validators.maxLength(1)]],
-			totalAmount: [null,[Validators.maxLength(5)]],
+			totalTankRequired: [null, [Validators.required, Validators.maxLength(1)]],
+			totalAmount: [null, [Validators.maxLength(5)]],
 			tankDeliveryAddress: [null, [Validators.required, Validators.maxLength(200)]],
 
 			// loinumber: [null]
@@ -157,6 +163,24 @@ export class WaterTankerAppComponent implements OnInit {
 		});
 	}
 
+	/**
+	 * This method required for calculation of total tanks fee.
+	 */
+	calculateTotalAmount() {
+		if (this.waterTankerAppForm.get('totalTankRequired').value && this.waterTankerAppForm.controls.requiredOnFloor.get('code')) {
+			this.fireFacilitiesService.getWaterTankersFee(this.waterTankerAppForm.value).subscribe(
+				res => {
+					this.waterTankerAppForm.patchValue(res);
+				},
+				err => {
+					console.log(err.message)
+				}
+			);
+		}
+		else{
+			this.waterTankerAppForm.get('totalAmount').reset();
+		}
+	}
 
 	/**
 	 * This method required for final form submition.

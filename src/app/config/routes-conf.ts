@@ -54,8 +54,8 @@ const ROUTEMAIN = {
         'type': 'renewalFireNoc'
     },
     'FS-WATER': {
-        'main': 'FSWaterTanker',
-        'type': 'FSWaterTanker'
+        'main': 'waterTankerSupply',
+        'type': 'waterTankerSupply'
     },
     'FS-AMBU': {
         'main': 'FSAmbulance',
