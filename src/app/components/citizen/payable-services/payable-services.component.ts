@@ -125,15 +125,11 @@ export class PayableServicesComponent implements OnInit {
 	 */
 	showHideSearchable(paySerCode) {
 
-		switch (paySerCode) {
-			case 'PROFESSIONAL_TAX':
-				this.placeholder = 'EC / RC Number';
-				break;
-			default:
-				this.placeholder = 'Reference Number';
-				break;
-		}
-		
+		if (paySerCode === 'PROFESSIONAL_TAX')
+			this.placeholder = 'EC / RC Number';
+		else
+			this.placeholder = 'Reference Number';
+
 		this.isRecordExists = false;
 		this.paymentsForm.get('amount').setValue(null);
 		this.paymentsForm.get('refNumber').setValue(null);

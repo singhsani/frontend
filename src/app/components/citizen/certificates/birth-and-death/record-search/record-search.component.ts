@@ -193,7 +193,7 @@ export class RecordSearchComponent implements OnInit {
 					this.paginationService.apiType = this.apiType;
 					this.paginationService.pageIndex = (this.paginator.pageIndex + 1);
 					this.paginationService.pageSize = this.pageSize;
-					return this.paginationService!.getSearchDataWithPagination(this.searchForm.value);
+					return this.paginationService!.getSearchDataWithPagination(this.searchForm.value);//NOSONAR
 				}),
 				map(data => {
 					this.isLoadingResults = false;

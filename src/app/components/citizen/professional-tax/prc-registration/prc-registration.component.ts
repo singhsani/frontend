@@ -378,7 +378,7 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 		}
 		let difference = monthLists.filter(this.comparer(this.empDetailsListArray));
 
-		return { flag: difference.length > 0 ? false : true, data: difference };
+		return { flag: difference.length > 0 ? false : true, data: difference };// NOSONAR
 
 	}
 

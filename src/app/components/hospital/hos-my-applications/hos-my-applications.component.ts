@@ -75,7 +75,7 @@ export class HosMyApplicationsComponent implements OnInit {
 					this.paginationService.apiType = this.appType;
 					this.paginationService.pageIndex = (this.paginator.pageIndex + 1);
 					this.paginationService.pageSize = this.paginator.pageSize;
-					return this.paginationService!.getAllData();
+					return this.paginationService!.getAllData(); //NOSONAR
 				}),
 				map(data => {
 					this.isLoadingResults = false;

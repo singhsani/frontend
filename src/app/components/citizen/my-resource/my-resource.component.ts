@@ -81,7 +81,7 @@ export class MyResourceComponent implements OnInit {
 					this.paginationService.apiType = this.appType;
 					this.paginationService.pageIndex = (this.paginator.pageIndex + 1);
 					this.paginationService.pageSize = this.pageSize;
-					return this.paginationService!.getAllResourceData();
+					return this.paginationService!.getAllResourceData();// NOSONAR
 				}),
 				map(data => {
 					this.isLoadingResults = false;
