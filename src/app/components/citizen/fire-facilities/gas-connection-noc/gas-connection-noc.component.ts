@@ -188,9 +188,7 @@ export class GasConnectionNocComponent implements OnInit {
 					this.gasConnectionForm.get('canEdit').setValue(true);
 					this.gasConnectionForm.get('propertyNo').setErrors(null);
 				}
-			} else {
-				
-			}
+			} 
 		}, (err: any) => {
 			if (err.error && err.error.length) {
 				//this.commonService.openAlert("Warning", err.error[0].message, "warning");

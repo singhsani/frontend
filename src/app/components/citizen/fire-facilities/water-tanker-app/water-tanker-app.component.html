@@ -19,7 +19,7 @@
 					</div>
 
 					<div class="col-md-6 ngSelect" formGroupName="purpose">
-						<ng-select required placeholder="{{'purpose' | translate:translateKey}} *" formControlName="code">
+						<ng-select required placeholder="{{'purpose' | translate:translateKey}} *" formControlName="code" (change)="calculateTotalAmount()">
 							<ng-option *ngFor="let PURPOSE of FS_WATER_TANKER_PURPOSE" [value]="PURPOSE.code">{{PURPOSE.name}}</ng-option>
 						</ng-select>
 						<control-messages [control]="waterTankerAppForm.get('purpose').controls.code"></control-messages>
@@ -79,13 +79,8 @@
 				<div class="row">
 					<mat-form-field class="col-md-4">
 						<input matInput type="tel" OnlyNumber required formControlName="totalTankRequired" placeholder="{{'total_tank' | translate: translateKey }}"
-						 minlength="1" maxlength="1">
+						 minlength="1" maxlength="1" (change)="calculateTotalAmount()">
 						<control-messages [control]="waterTankerAppForm.controls.totalTankRequired"></control-messages>
-					</mat-form-field>
-					<mat-form-field class="col-md-4">
-						<input matInput type="tel" OnlyNumber required formControlName="totalAmount" placeholder="{{'total_amount' | translate: translateKey }}"
-						 maxlength="4">
-						<control-messages [control]="waterTankerAppForm.controls.totalAmount"></control-messages>
 					</mat-form-field>
 					<!-- <h2>{{'tank_delivery_address_with_contact' | translate:translateKey}}</h2>
 					<app-address [isDisplayGujFields]="true" #permanantAddressEstablishment [requiredFeilds]="waterTankerAppForm.controls.permanantAddress.value"
@@ -95,8 +90,14 @@
 						 required> </textarea>
 						<control-messages [control]="waterTankerAppForm.controls.tankDeliveryAddress"></control-messages>
 					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<input matInput type="tel" readonly OnlyNumber required formControlName="totalAmount" placeholder="{{'total_amount' | translate: translateKey }}"
+						 maxlength="4">
+						<control-messages [control]="waterTankerAppForm.controls.totalAmount"></control-messages>
+					</mat-form-field>
 				</div>
-				<app-action-bar [form]="waterTankerAppForm" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'final', next: 1, back: 0}"></app-action-bar>
+				<app-action-bar [form]="waterTankerAppForm" [uploadFiles]="uploadFilesArray" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'final', next: 1, back: 0}"></app-action-bar>
 			</mat-tab>
 			<!-- step 1 Ends -->
 		</mat-tab-group>

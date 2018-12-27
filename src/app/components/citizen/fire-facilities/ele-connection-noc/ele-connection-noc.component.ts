@@ -180,8 +180,6 @@ export class EleConnectionNocComponent implements OnInit {
 					this.electricConnectionForm.get('canEdit').setValue(true);
 					this.electricConnectionForm.get('propertyNo').setErrors(null);
 				}
-			} else {
-				
 			}
 		}, (err: any) => {
 			if (err.error && err.error.length) {

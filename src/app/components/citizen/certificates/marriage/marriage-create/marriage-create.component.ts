@@ -794,7 +794,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
                 //display days and years
                 let mday = moment(this.marriageFormGroup.get("marriageDate").value, "YYYY-MM-DD");
 
-                if (this.marriageFormGroup.get("groomBirthDate").value && marriagedate) {
+                if (this.marriageFormGroup.get("groomBirthDate").value) {
                     let bday = moment(this.marriageFormGroup.get("groomBirthDate").value, "YYYY-MM-DD");
                     this.groomage = mday.diff(bday, 'years', false);
                     this.groomdays = mday.diff(bday.add(this.groomage, 'years'), 'days', false);
@@ -802,7 +802,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
                     this.marriageFormGroup.get("groomAge").setValue(this.groomage);
                 }
 
-                if (this.marriageFormGroup.get("brideBirthDate").value && marriagedate) {
+                if (this.marriageFormGroup.get("brideBirthDate").value) {
                     let bday = moment(this.marriageFormGroup.get("brideBirthDate").value, "YYYY-MM-DD");
                     this.brideage = mday.diff(bday, 'years', false);
                     this.bridedays = mday.diff(bday.add(this.brideage, 'years'), 'days', false);

@@ -175,7 +175,7 @@ export class FireRenewalNocComponent implements OnInit {
 	createRecordPatchSerachData(searchData: any) {
 		this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
 		this.formService.createFormData().subscribe(res => {
-			debugger;
+			
 			this.formId = res.serviceFormId;
 			this.renewalFireNocForm.patchValue(searchData);
 
