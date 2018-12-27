@@ -61,7 +61,7 @@ export class TransactionsComponent implements OnInit {
 					this.isLoadingResults = true;
 					this.paginationService.pageIndex = (this.paginator.pageIndex + 1);
 					this.paginationService.pageSize = this.pageSize;
-					return this.paginationService!.getAllPaymentsData();
+					return this.paginationService!.getAllPaymentsData();// NOSONAR
 				}),
 				map(data => {
 					// Flip flag to show that loading has finished.

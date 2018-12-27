@@ -867,6 +867,12 @@ body * {visibility: hidden;}
 
 .ng-dropdown-panel.ng-select-top{ bottom: initial !important;}
 
+.table-responsive {max-height: 400px;}
+ .table thead th {border-bottom: 1px solid #dee2e6; font-size: 12px;}
+ .table thead th, .table thead td {vertical-align: top;line-height: normal;}
+ .table thead tr > th:first-child, .table tbody tr > td:first-child {padding-left: 0;}
+.noRecord { background-color: #f2f2f2;}
+
 
  // Select Dropdown //  
 //  .mat-tab-body-wrapper {overflow: visible !important;}

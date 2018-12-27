@@ -223,7 +223,7 @@ export class CancelBookingComponent implements OnInit {
 						this.bookingService.resourceType = this.searchBookingsForm.get('resourceType').value;
 						this.bookingService.pageIndex = (this.paginator.pageIndex + 1);
 						this.bookingService.pageSize = this.paginator.pageSize;
-						return this.bookingService!.getAllBookings(this.searchBookingsForm.get('refNumber').value);
+						return this.bookingService!.getAllBookings(this.searchBookingsForm.get('refNumber').value);//NOSONAR
 					}),
 					map(data => {
 						this.isLoadingResults = false;

@@ -176,11 +176,11 @@ export class ComponentConfig {
                 switchMap(() => {
                     this.paginationService.apiType = apiType;
                     this.paginationService.pageIndex = (paginator.pageIndex + 1);
-                    this.paginationService.pageSize = paginator.pageSize;;
+                    this.paginationService.pageSize = paginator.pageSize;
                     if(form){
-                        return this.paginationService!.getSearchDataWithPagination(form.value);
+                        return this.paginationService!.getSearchDataWithPagination(form.value);// NOSONAR
                     }
-                    return this.paginationService!.getAllData();
+                    return this.paginationService!.getAllData();// NOSONAR
                 }),
                 map(data => {
                     return data;

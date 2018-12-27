@@ -1,3 +1,4 @@
+import { ToastrService } from 'ngx-toastr';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -23,8 +24,13 @@ export class ForgotPasswordComponent implements OnInit {
 	 * @param fb - Declare formbuilder property.
 	 * @param router - Declare Routing Property.
 	 */
-	constructor( private fb: FormBuilder, private route: ActivatedRoute,
-		private router: Router, private appService: AppService) {
+	constructor( 
+		private fb: FormBuilder,
+		private toaster: ToastrService,
+		private route: ActivatedRoute,
+		private router: Router, 
+		private appService: AppService
+	) {
 
 	}
 
@@ -48,6 +54,8 @@ export class ForgotPasswordComponent implements OnInit {
 				 * Redirect to reset password
 				 */
 				this.router.navigate([ManageRoutes.getFullRoute('CITIZENAUTHRESETPASS')], { queryParams: { uniqueId: res.data.uniqueId, code: res.data.cellOtp } });
+			}, err => {
+				this.toaster.error(err.error[0].code);
 			});
 	}
 
