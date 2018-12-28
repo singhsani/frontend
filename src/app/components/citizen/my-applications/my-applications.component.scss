@@ -28,9 +28,9 @@ table { width: 100%; }
     .mat-column-fileNumber {min-width: 220px;}
     // .mat-column-applicantName {width: 250px;}
     // .mat-column-applicantName {width: 250px;}
-    // .mat-column-dateOfApplication {width: 200px;}
+     .mat-column-dateOfApplication {max-width: 100px;}
     // .mat-column-serviceType {width: 220px;}
-    .mat-column-fileStatus {max-width: 115px; /*width: 100px; justify-content: center;*/}
+    .mat-column-fileStatus {max-width: 145px; /*width: 100px; justify-content: center;*/}
     .mat-column-action {max-width: 60px; padding-right: 0;
         .mat-icon-button {background:#fff;margin:2px 5px 2px 0; border: 1px solid $colorBlue; width:28px; height:28px; line-height: normal;
              .mat-icon-button .mat-icon, .mat-icon-button i {line-height: 22px;}
