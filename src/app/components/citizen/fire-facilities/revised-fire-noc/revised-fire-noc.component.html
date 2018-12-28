@@ -1,7 +1,5 @@
 <app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
 
-
-
 <mat-card [hidden]="serachLicenceObj.isDisplayRenewLicenceForm" class="mt-4 formClass">
 	<mat-form-field class="col-md-10">
 		<input matInput required placeholder="{{'search_by_application_no' | translate:translateKey}}" [(ngModel)]="serachLicenceObj.searchLicenceNumber">
@@ -26,8 +24,10 @@
 
 				<div class="row">
 					<mat-form-field class="col-md-4">
-						<input matInput readonly placeholder="{{'provisional_noc_number' | translate:translateKey}}" formControlName="provisionalNocNumber"
-						 required>
+						<input matInput readonly placeholder="{{'provisional_noc_number' | translate:translateKey}}" formControlName="provisionalNocNumber">
+					</mat-form-field>
+					<mat-form-field class="col-md-4" *ngIf="revisedFireNocForm.get('finalFireNocNumber').value">
+						<input matInput readonly placeholder="{{'final_noc_number' | translate:translateKey}}" formControlName="finalFireNocNumber">
 					</mat-form-field>
 				</div>
 				<div class="row">
@@ -538,7 +538,7 @@
 					</mat-form-field>
 					<div class="col-md-4 radioBtnError">
 						<mat-label>{{'overground_water_tank_map_approved' | translate:translateKey }} *</mat-label>
-						<mat-radio-group formControlName="overgroundWatertankMapApproved" required >
+						<mat-radio-group formControlName="overgroundWatertankMapApproved" required>
 							<mat-radio-button [value]="true">
 								Yes
 							</mat-radio-button>

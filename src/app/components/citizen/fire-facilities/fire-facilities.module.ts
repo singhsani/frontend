@@ -16,10 +16,10 @@ import { TempFireworksNocComponent } from './temp-fireworks-noc/temp-fireworks-n
 import { GasConnectionNocComponent } from './gas-connection-noc/gas-connection-noc.component';
 import { EleConnectionNocComponent } from './ele-connection-noc/ele-connection-noc.component';
 import { NavratriNocComponent } from './navratri-noc/navratri-noc.component';
-import { AarogyaParvanoNocComponent } from './aarogya-parvano-noc/aarogya-parvano-noc.component';
 import { RevisedFireNOCComponent } from './revised-fire-noc/revised-fire-noc.component';
 import { DeadBodyWanComponent } from './dead-body-wan/dead-body-wan.component';
 import { ProHospitalNocComponent } from './pro-hospital-noc/pro-hospital-noc.component';
+import { FinalHospitalNocComponent } from './final-hospital-noc/final-hospital-noc.component';
 /* Import all shared, core and routing module end */
 
 @NgModule({
@@ -41,11 +41,11 @@ import { ProHospitalNocComponent } from './pro-hospital-noc/pro-hospital-noc.com
 		TempFireworksNocComponent, 
 		GasConnectionNocComponent, 
 		EleConnectionNocComponent, 
-		NavratriNocComponent, 
-		AarogyaParvanoNocComponent, 
+		NavratriNocComponent,  
 		RevisedFireNOCComponent, 
 		DeadBodyWanComponent,
-		ProHospitalNocComponent
+		ProHospitalNocComponent,
+		FinalHospitalNocComponent
 	]
 })
 export class FireFacilitiesModule { }

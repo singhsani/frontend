@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AarogyaParvanoNocComponent } from './aarogya-parvano-noc/aarogya-parvano-noc.component';
 import { ManageRoutes } from '../../../config/routes-conf';
 import { ProvisionalNocComponent } from './provisional-noc/provisional-noc.component';
 import { FinalFireNocComponent } from './final-fire-noc/final-fire-noc.component';
@@ -15,10 +14,10 @@ import { NavratriNocComponent } from './navratri-noc/navratri-noc.component';
 import { RevisedFireNOCComponent } from './revised-fire-noc/revised-fire-noc.component';
 import { DeadBodyWanComponent } from './dead-body-wan/dead-body-wan.component';
 import { ProHospitalNocComponent } from './pro-hospital-noc/pro-hospital-noc.component';
+import { FinalHospitalNocComponent } from './final-hospital-noc/final-hospital-noc.component';
 
 const routes: Routes = [
-	{ path: '', component: AarogyaParvanoNocComponent },
-	{ path: ManageRoutes.getMainRoute('FS-AARO') + '/:id/:apiCode', component: AarogyaParvanoNocComponent },
+	{ path: '', component: ProvisionalNocComponent },
 	{ path: ManageRoutes.getMainRoute('FS-PROVI') + '/:id/:apiCode', component: ProvisionalNocComponent },
 	{ path: ManageRoutes.getMainRoute('FS-FINAL') + '/:id/:apiCode', component: FinalFireNocComponent },
 	{ path: ManageRoutes.getMainRoute('FS-REN') + '/:id/:apiCode', component: FireRenewalNocComponent },
@@ -31,7 +30,8 @@ const routes: Routes = [
 	{ path: ManageRoutes.getMainRoute('FS-ELE') + '/:id/:apiCode', component: EleConnectionNocComponent },
 	{ path: ManageRoutes.getMainRoute('FS-NAV') + '/:id/:apiCode', component: NavratriNocComponent },
 	{ path: ManageRoutes.getMainRoute('FS-REVISED') + '/:id/:apiCode', component: RevisedFireNOCComponent },
-	{ path: ManageRoutes.getMainRoute('FS-PROVI-HOSPITAL') + '/:id/:apiCode', component: ProHospitalNocComponent }
+	{ path: ManageRoutes.getMainRoute('FS-PROVI-HOSPITAL') + '/:id/:apiCode', component: ProHospitalNocComponent },
+	{ path: ManageRoutes.getMainRoute('FS-FINAL-HOSPITAL') + '/:id/:apiCode', component: FinalHospitalNocComponent }
 ];
 
 @NgModule({

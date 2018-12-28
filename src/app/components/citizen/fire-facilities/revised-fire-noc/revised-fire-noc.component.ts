@@ -354,6 +354,8 @@ export class RevisedFireNOCComponent implements OnInit {
 			overgroundWaterTankVolume: [null, [Validators.required, Validators.maxLength(3)]],
 			overgroundWatertankMapApproved: [null, Validators.required],
 
+
+			finalFireNocNumber:[null],
 			/* Step 6 controls start*/
 			attachments: []
 			/* Step 6 controls end */

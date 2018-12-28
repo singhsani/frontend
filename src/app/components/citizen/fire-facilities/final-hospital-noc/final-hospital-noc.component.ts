@@ -1,4 +1,3 @@
-
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray, Validator } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -10,16 +9,17 @@ import { TranslateService } from '../../../../shared/modules/translate/translate
 import { CommonService } from '../../../../shared/services/common.service';
 import { ToastrService } from 'ngx-toastr';
 import { FireFacilitiesService } from '../common/services/fire-facilities.service';
+import { Location } from '@angular/common';
 
 @Component({
-  selector: 'app-pro-hospital-noc',
-  templateUrl: './pro-hospital-noc.component.html',
-  styleUrls: ['./pro-hospital-noc.component.scss']
+  selector: 'app-final-hospital-noc',
+  templateUrl: './final-hospital-noc.component.html',
+  styleUrls: ['./final-hospital-noc.component.scss']
 })
-export class ProHospitalNocComponent implements OnInit {
+export class FinalHospitalNocComponent implements OnInit {
 
-  provisionalHospitalNocForm: FormGroup;
-  translateKey: string = 'provisionalHospitalNocScreen';
+  finalHospitalNocForm: FormGroup;
+  translateKey: string = 'finalHospitalNocScreen';
 
   formId: number;
   apiCode: string;
@@ -40,7 +40,7 @@ export class ProHospitalNocComponent implements OnInit {
     "serviceDetail": {
       "code": "FS-PROVI-HOSPITAL",
       "fieldView": "ALL",
-      "name": "Provisional NOC For Hospital",
+      "name": "hospital NOC For Hospital",
       "gujName": "હોસ્પિટલ માટે અનિવાર્ય એનઓસી",
       "feesOnScrutiny": false,
       "appointmentRequired": false,
@@ -207,7 +207,7 @@ export class ProHospitalNocComponent implements OnInit {
         }
       ]
     },
-    "serviceType": "FS_PROVISIONAL_HOSPITAL_NOC",
+    // "serviceType": "FS_hospital_HOSPITAL_NOC",
     "deptFileStatus": null,
     "serviceName": null,
     "fileNumber": "2018-12-20-APP-LCF0HDND",
@@ -228,8 +228,8 @@ export class ProHospitalNocComponent implements OnInit {
     "fieldList": null,
     "applicantName": null,
     "applicantNameGuj": null,
-    "hospitalNOCServiceType": "PROVISIONAL_HOSPITAL_NOC",
-    "provisionalNocNumber": null,
+    // "hospitalNOCServiceType": "hospital_HOSPITAL_NOC",
+    "hospitalNocNumber": "14d9a65375af4cb",
     "applicationDate": "2018-12-20",
     "oldReferenceNumber": null,
     "officeContactNo": "8467487658",
@@ -358,9 +358,37 @@ export class ProHospitalNocComponent implements OnInit {
     "nabhOwnership": "4554",
     "lastThreeYearFireIncidents": "4545",
     "servingSince": "45t454654",
-    "attachments": [   ]
+    "attachments": []
   }
   // **********
+
+
+  // serach api variable
+  serachLicenceObj = {
+    isDisplayRenewLicenceForm: <boolean>false,
+    searchLicenceNumber: <string>""
+  }
+
+	/**
+	 * This method for serach licence using licence number.
+	 */
+  searchLicence() {
+    this.fireFacilitiesService.searchFinalHospitalNOC(this.serachLicenceObj.searchLicenceNumber).subscribe(
+      (res: any) => {
+
+        if (res.success) {
+          this.serachLicenceObj.isDisplayRenewLicenceForm = true;
+          this.createRecordPatchSerachData(res.data);
+        } else {
+          this.serachLicenceObj.isDisplayRenewLicenceForm = false;
+        }
+      }, (err: any) => {
+        this.serachLicenceObj.isDisplayRenewLicenceForm = false;
+        if (err.error && err.error.length) {
+          this.commonService.openAlert("Warning", err.error[0].message, "warning");
+        }
+      })
+  }
 
   /**
    * @param fb - Declare FormBuilder property.
@@ -376,7 +404,8 @@ export class ProHospitalNocComponent implements OnInit {
     private TranslateService: TranslateService,
     private commonService: CommonService,
     private toastrService: ToastrService,
-    private fireFacilitiesService: FireFacilitiesService
+    private fireFacilitiesService: FireFacilitiesService,
+    private location: Location
   ) { }
 
 	/**
@@ -392,13 +421,14 @@ export class ProHospitalNocComponent implements OnInit {
     });
 
     this.getLookupData();
+    this.finalHospitalNocFormControls();
+
     if (!this.formId) {
-      this.router.navigate([ManageRoutes.getFullRoute('CITIZENDASHBOARD')]);
+      this.serachLicenceObj.isDisplayRenewLicenceForm = false;
     }
     else {
+      this.serachLicenceObj.isDisplayRenewLicenceForm = true;
       this.getprovisionaNocLicNewData();
-      this.provisionalHospitalNocFormControls();
-
     }
   }
 
@@ -406,7 +436,7 @@ export class ProHospitalNocComponent implements OnInit {
 	 * Method is create required document array
 	 */
   requiredDocumentList() {
-    _.forEach(this.provisionalHospitalNocForm.get('serviceDetail').get('serviceUploadDocuments').value, (value) => {
+    _.forEach(this.finalHospitalNocForm.get('serviceDetail').get('serviceUploadDocuments').value, (value) => {
       if (value.mandatory && value.isActive && value.requiredOnCitizenPortal) {
         this.uploadFilesArray.push({
           'labelName': value.documentLabelEn,
@@ -416,9 +446,9 @@ export class ProHospitalNocComponent implements OnInit {
       }
     });
     //check for attachment is mandatory
-    this.dependentAttachment(this.provisionalHospitalNocForm.get('drawingWithScale').value, 'APPROVED_LAYOUT_PLAN');
-    this.dependentAttachment(this.provisionalHospitalNocForm.get('drawingProvided').value, 'APPROVED_APPROACHED ROAD');
-    this.dependentAttachment(this.provisionalHospitalNocForm.get('trainedFiremanStaffKept').value, 'TRAIN_FIRE_PERSON_LIST');
+    this.dependentAttachment(this.finalHospitalNocForm.get('drawingWithScale').value, 'APPROVED_LAYOUT_PLAN');
+    this.dependentAttachment(this.finalHospitalNocForm.get('drawingProvided').value, 'APPROVED_APPROACHED ROAD');
+    this.dependentAttachment(this.finalHospitalNocForm.get('trainedFiremanStaffKept').value, 'TRAIN_FIRE_PERSON_LIST');
   }
 
 	/**
@@ -428,7 +458,7 @@ export class ProHospitalNocComponent implements OnInit {
 	 */
   dependentAttachment(eventValue: any, dependedKey: string) {
 
-    var control = (<FormArray>this.provisionalHospitalNocForm.get('serviceDetail').get('serviceUploadDocuments')).controls
+    var control = (<FormArray>this.finalHospitalNocForm.get('serviceDetail').get('serviceUploadDocuments')).controls
     var fields = control.find((data) => data.get('documentIdentifier').value === dependedKey);
 
     if (eventValue && fields) {
@@ -459,15 +489,15 @@ export class ProHospitalNocComponent implements OnInit {
     this.formService.getFormData(this.formId).subscribe(res => {
 
       try {
-        this.provisionalHospitalNocForm.patchValue(res);
+        this.finalHospitalNocForm.patchValue(res);
         this.showButtons = true;
 
         res.hospitalOTDetails.forEach(app => {
-          (<FormArray>this.provisionalHospitalNocForm.get('hospitalOTDetails')).push(this.createOTDetailArray(app));
+          (<FormArray>this.finalHospitalNocForm.get('hospitalOTDetails')).push(this.createOTDetailArray(app));
         });
 
         res.serviceDetail.serviceUploadDocuments.forEach(app => {
-          (<FormArray>this.provisionalHospitalNocForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.createDocumentsGrp(app));
+          (<FormArray>this.finalHospitalNocForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.createDocumentsGrp(app));
         });
         this.requiredDocumentList();
 
@@ -489,16 +519,82 @@ export class ProHospitalNocComponent implements OnInit {
     });
   }
 
+  /**
+     * This method is use to create new record for citizen.
+     * @param searchData: exciting licence number data
+     */
+  createRecordPatchSerachData(searchData: any) {
+    this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
+    this.formService.createFormData().subscribe(res => {
+
+      this.formId = res.serviceFormId;
+      this.finalHospitalNocForm.patchValue(searchData);
+
+      this.finalHospitalNocForm.patchValue({
+        id: res.id,
+        uniqueId: res.uniqueId,
+        version: res.version,
+        serviceFormId: res.serviceFormId,
+        hospitalNocNumber: this.serachLicenceObj.searchLicenceNumber,
+        createdDate: res.createdDate,
+        updatedDate: res.createdDate,
+        serviceType: res.serviceType,
+        // deptFileStatus: res.deptFileStatus,
+        serviceName: res.serviceName,
+        fileNumber: res.fileNumber,
+        pid: res.pid,
+        outwardNo: res.outwardNo,
+        agree: res.agree,
+
+        paymentStatus: res.paymentStatus,
+        canEdit: res.canEdit,
+        canDelete: res.canDelete,
+        canSubmit: res.canSubmit,
+        serviceCode: res.serviceCode,
+        applicationNo: res.applicationNo,
+        finalFireNocNumber: res.finalFireNocNumber,
+
+        // periodFrom: res.periodFrom,
+        // periodTo: res.periodTo,
+        // newRegistration: res.newRegistration,
+        // renewal: res.renewal,
+        // adminCharges: res.adminCharges,
+        // netAmount: res.netAmount,
+        // licenseIssueDate: res.licenseIssueDate,
+        // licenseRenewalDate: res.licenseRenewalDate,
+        // loinumber: res.loinumber,
+        serviceDetail: res.serviceDetail,
+        // attachments: res.attachments
+      });
+
+      this.showButtons = true;
+      searchData.hospitalOTDetails.forEach(app => {
+        (<FormArray>this.finalHospitalNocForm.get('hospitalOTDetails')).push(this.createOTDetailArray(app));
+      });
+
+      res.serviceDetail.serviceUploadDocuments.forEach(app => {
+        app.id = null;
+        (<FormArray>this.finalHospitalNocForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.createDocumentsGrp(app));
+      });
+      this.requiredDocumentList();
+
+      let currentUrl = this.location.path().replace('false', this.formId.toString());
+      this.location.go(currentUrl);
+    });
+
+  }
+
 	/**
 	 * Method is used to set form controls
 	 * 'Guj' control is consider as a Gujarati fields
 	 */
-  provisionalHospitalNocFormControls() {
-    this.provisionalHospitalNocForm = this.fb.group({
+  finalHospitalNocFormControls() {
+    this.finalHospitalNocForm = this.fb.group({
       apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
-      serviceCode: 'FS-PROVI-HOSPITAL',
+      serviceCode: 'FS-FINAL-HOSPITAL',
       /* Step 1 controls start */
-      provisionalNocNumber: [null],
+      provisionalNocNumber:[null],
+      hospitalNocNumber: [null],
       applicationDate: [null],
       oldReferenceNumber: [null],
       firstName: [null, [Validators.required, Validators.maxLength(100)]],
@@ -561,7 +657,6 @@ export class ProHospitalNocComponent implements OnInit {
       constructedArea: [null, [Validators.required, Validators.maxLength(5)]],
       noOfApproachedRoad: [null, [Validators.required, Validators.maxLength(3)]],
 
-
       architectRegistrationNumber: [null, [Validators.required, Validators.maxLength(15)]],
       architectName: [null, [Validators.required, Validators.maxLength(100)]],
       architectNameGuj: [null, [Validators.required, Validators.maxLength(300)]],
@@ -611,6 +706,7 @@ export class ProHospitalNocComponent implements OnInit {
       lastThreeYearFireIncidents: [null, [Validators.required, Validators.maxLength(50)]],
       servingSince: [null, [Validators.required, Validators.maxLength(200)]],
 
+      finalFireNocNumber: [null],
       /* Step 6 controls start*/
       attachments: []
       /* Step 6 controls end */
@@ -646,7 +742,7 @@ export class ProHospitalNocComponent implements OnInit {
  */
   addOTDetail(length: number) {
 
-    let returnArray = this.provisionalHospitalNocForm.get('hospitalOTDetails') as FormArray;
+    let returnArray = this.finalHospitalNocForm.get('hospitalOTDetails') as FormArray;
     if (returnArray.length >= length) {
       this.commonService.openAlert("Warning", "Maximum Limit " + length + " .", "warning");
     } else {
@@ -677,22 +773,22 @@ export class ProHospitalNocComponent implements OnInit {
 	 */
 
   deleteOT(OTData: any, index: number) {
-    let returnArray = this.provisionalHospitalNocForm.get('hospitalOTDetails') as FormArray;
+    let returnArray = this.finalHospitalNocForm.get('hospitalOTDetails') as FormArray;
 
     this.commonService.deleteAlert('Are you sure?', "You won't be able to revert this!", 'warning', '', performDelete => {
-      if (this.provisionalHospitalNocForm.get('numberOfOT').value <= 0) {
+      if (this.finalHospitalNocForm.get('numberOfOT').value <= 0) {
         this.commonService.openAlert("Warning", "OT detail mandatory", "warning");
       } else {
         if (OTData.id == null) {
           returnArray.removeAt(index);
-          this.provisionalHospitalNocForm.get('numberOfOT').setValue(this.provisionalHospitalNocForm.get('numberOfOT').value - 1);
+          this.finalHospitalNocForm.get('numberOfOT').setValue(this.finalHospitalNocForm.get('numberOfOT').value - 1);
           this.toastrService.success('OT details has been removed.')
         } else {
           //call api get response than delete
-          this.fireFacilitiesService.deleteArrayData(this.provisionalHospitalNocForm.get('id').value, OTData.id).subscribe(respData => {
+          this.fireFacilitiesService.deleteArrayData(this.finalHospitalNocForm.get('id').value, OTData.id).subscribe(respData => {
             if (respData.success) {
               returnArray.removeAt(index);
-              this.provisionalHospitalNocForm.get('numberOfOT').setValue(returnArray.length);
+              this.finalHospitalNocForm.get('numberOfOT').setValue(returnArray.length);
               this.toastrService.success('OT details has been removed.')
             }
           })
@@ -787,7 +883,7 @@ export class ProHospitalNocComponent implements OnInit {
    * temp methos
    */
   patchValue() {
-    this.provisionalHospitalNocForm.patchValue(this.dummyJSON);
+    this.finalHospitalNocForm.patchValue(this.dummyJSON);
   }
 }
 
