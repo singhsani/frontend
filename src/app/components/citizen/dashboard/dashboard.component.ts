@@ -161,6 +161,7 @@ export class DashboardComponent implements OnInit {
 			case 'FS-FINAL':
 			case 'FS-REVISED':
 			case 'FS-REN':
+			case 'FS-FINAL-HOSPITAL':
 				this.router.navigate([ManageRoutes.getFullRoute(apiCode), false, apiCode]);
 				break;
 			case 'PRC_REG':

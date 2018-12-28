@@ -37,10 +37,6 @@ const ROUTEMAIN = {
         'main': 'duplicateMarriageReg',
         'type': 'duplicateMarriageReg',
     },
-    'FS-AARO': {
-        'main': 'FSAarogyaParvanoNoc',
-        'type': 'FSAarogyaParvanoNoc'
-    },
     'FS-PROVI': {
         'main': 'provisionalFireNoc',
         'type': 'provisionalFireNoc'
@@ -76,6 +72,10 @@ const ROUTEMAIN = {
     'FS-PROVI-HOSPITAL': {
         'main': 'provisionalHospitalNoc',
         'type': 'provisionalHospitalNoc'
+    },
+    'FS-FINAL-HOSPITAL':{
+        'main': 'finalHospitalNoc',
+        'type': 'finalHospitalNoc'
     },
     'FS-GAS': {
         'main': 'gasConnectionNoc',
@@ -446,9 +446,6 @@ const ROUTESLIST = {
     'HEL-DUPMR': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.CERTIFICATESMODULE + '/' + ROUTEPREFIX.MARRIAGEMODULE + '/' + ROUTEMAIN["HEL-DUPMR"].main
     },
-    'FS-AARO': {
-        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.FIREFACILITIESMODULE + '/' + ROUTEMAIN["FS-AARO"].main
-    },
     'FS-PROVI': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.FIREFACILITIESMODULE + '/' + ROUTEMAIN["FS-PROVI"].main
     },
@@ -475,6 +472,9 @@ const ROUTESLIST = {
     },
     'FS-PROVI-HOSPITAL': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.FIREFACILITIESMODULE + '/' + ROUTEMAIN["FS-PROVI-HOSPITAL"].main
+    },
+    'FS-FINAL-HOSPITAL': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.FIREFACILITIESMODULE + '/' + ROUTEMAIN["FS-FINAL-HOSPITAL"].main
     },
     'FS-GAS': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.FIREFACILITIESMODULE + '/' + ROUTEMAIN["FS-GAS"].main

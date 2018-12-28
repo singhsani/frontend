@@ -7,7 +7,8 @@ import { HttpService } from '../../../../../shared/services/http.service';
 export class FireFacilitiesService {
 	requestURL: string;
 	apiType: string;
-	/**
+
+  /**
    * Constructor to declare defualt propeties of class.
    * @param http - Declare Http Service property.
    */
@@ -15,7 +16,7 @@ export class FireFacilitiesService {
 
 	/**
 	 * This method for search final noc by using provisional number
-	 * @param provisionalNo 
+	 * @param provisionalNo - provisional noc number 
 	 */
 	searchByProvisionalNumber(provisionalNo:any) {
 		const formData = new FormData();
@@ -24,9 +25,8 @@ export class FireFacilitiesService {
 	}
 
 	/**
-	 * 
-	 * @param licenceNumber - serach licence number
-	 * return this.http.get(`api/form/foodLicence/search/${licenceNumber}`);
+	 * This method for search Revised noc by using noc number
+	 * @param nocNo - provisional noc number 
 	 */
 	searchRevisedFireNOC(nocNo:any) {
 		const formData = new FormData();
@@ -35,14 +35,23 @@ export class FireFacilitiesService {
 	}
 
 	/**
-	 * 
-	 * @param licenceNumber - serach bu licence num
-	 * return this.http.get(`api/form/foodLicence/search/${licenceNumber}`);
+	 * This method for search Final noc by using noc number
+	 * @param finalNocNo - provisional noc number 
 	 */
 	searchRenewalFireNOC(finalNocNo:any) {
 		const formData = new FormData();
 		formData.append('finalNocNo', finalNocNo);
 		return this.http.postFormData(`api/form/renewalFireNoc/searchByFinalNocNumber`, formData);
+	}
+
+	/**
+	 * This method for search Hospital noc by using noc number
+	 * @param provisionalNo - provisional hospital noc number 
+	 */
+	searchFinalHospitalNOC(provisionalNo:any) {
+		const formData = new FormData();
+		formData.append('provisionalNo', provisionalNo);
+		return this.http.postFormData(`api/form/finalHospitalNoc/searchByProvisionalNumber`, formData);
 	}
 
 	/**
@@ -54,8 +63,8 @@ export class FireFacilitiesService {
 		this.requestURL = `api/form/${this.apiType}/hospitalOTDetail/` + id + `/delete/` + objId;
 		return this.http.delete(this.requestURL);
 	}
+
 	/**
-	 * 
 	 * @param propertyTaxNo - serach by propertyTaxNo
 	 * return this.http.postFormData(`api/property/getOutstanding`, formData);
 	 */
