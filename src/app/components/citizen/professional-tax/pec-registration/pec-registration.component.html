@@ -281,7 +281,7 @@
 
 			<mat-tab>
 				<ng-template mat-tab-label>
-					<div>{{'attachment' | translate: translateKey}}</div>
+					<div>{{'attachment' | translate: proTranslateKey}}</div>
 				</ng-template>
 				<div class="row">
 					<div class="col-md-4" *ngFor="let doc of attachmentList">
@@ -293,7 +293,7 @@
 						</div>
 					</div>
 				</div>
-			
+
 				<div class="fotButtonBar clearfix">
 					<div class="col-sm-12 col-md-12">
 						<button class="liteBorder pull-left" type="button" mat-raised-button (click)="tabIndex = 3">{{'back' | translate:actionBarKey}}</button>

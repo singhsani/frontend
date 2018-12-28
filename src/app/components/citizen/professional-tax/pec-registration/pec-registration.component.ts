@@ -26,6 +26,7 @@ export class PecRegistrationComponent implements OnInit {
 	translateKey: string = 'pecRegistrationScreen';
 	prcTranslateKey: string = 'prcRegistrationScreen';
 	actionBarKey: string = 'adminActionBar';
+	proTranslateKey: string = 'provisionalFireNocScreen';
 
 	// mat steps title
 	stepLable1: string = "employer_detail";
