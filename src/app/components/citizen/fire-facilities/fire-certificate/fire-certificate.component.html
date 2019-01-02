@@ -1,0 +1,134 @@
+<app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
+
+<mat-card class="formClass cardBorder">
+  <form [formGroup]="fireCertificateForm">
+    <mat-tab-group [(selectedIndex)]="tabIndex" dynamicHeight="true" mat-stretch-tabs class="stepperNav">
+
+      <!-- step 1 Starts -->
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <div>{{'applicant_detail' | translate:translateKey}}</div>
+        </ng-template>
+
+        <div class="row">
+          <mat-form-field class="col-md-4">
+            <input matInput appValidationFields [validationFieldsType]="'onlyNameWithSpace'" required maxlength="100"
+              placeholder="{{'applicant_name' | translate:translateKey}}" formControlName="applicantName"
+              appGujInputSource targetElement="applicantNameGuj" [form]="fireCertificateForm">
+            <control-messages [control]="fireCertificateForm.controls.applicantName"></control-messages>
+          </mat-form-field>
+
+          <mat-form-field class="col-md-4">
+            <input matInput type="text" maxlength="300" required formControlName="applicantNameGuj" appGujInputTarget
+              [form]="fireCertificateForm" placeholder="{{ 'applicant_name' | translate:translateKey:'gu' }}">
+            <control-messages [control]="fireCertificateForm.controls.applicantNameGuj"></control-messages>
+          </mat-form-field>
+
+          <mat-form-field class="col-md-4">
+            <input matInput [max]="disablefutureDate" [matDatepicker]="DateOfapplicationDate" formControlName="applicationDate"
+              (dateChange)="dateFormat($event.value,'applicationDate')" placeholder="{{ 'application_Date' | translate:translateKey }} (DD/MM/YYYY)">
+            <mat-datepicker-toggle matSuffix [for]="DateOfapplicationDate"></mat-datepicker-toggle>
+            <mat-datepicker touchUi="true" #DateOfapplicationDate></mat-datepicker>
+            <control-messages [control]="fireCertificateForm.controls.applicationDate"></control-messages>
+          </mat-form-field>
+
+          <mat-form-field class="col-md-4">
+            <input matInput [max]="disablefutureDate" [matDatepicker]="DateOfapplicationDate1" formControlName="applicationDate"
+              (dateChange)="dateFormat($event.value,'incidentDate')" placeholder="{{ 'incident_Date' | translate:translateKey }} (DD/MM/YYYY)">
+            <mat-datepicker-toggle matSuffix [for]="DateOfapplicationDate1"></mat-datepicker-toggle>
+            <mat-datepicker touchUi="true" #DateOfapplicationDate1></mat-datepicker>
+            <control-messages [control]="fireCertificateForm.controls.incidentDate"></control-messages>
+          </mat-form-field>
+
+          <div class="col-md-4 pl-0 ml-0">
+            <mat-form-field class="col-md-10">
+              <mat-label>{{'incident_time' | translate:translateKey}}</mat-label>
+              <input (blur)="changeTimeFormat($event.target.value, 'incidentTime')" placeholder="HH:MM" matInput type="time"
+                atp-time-picker theme="dark" formControlName="incidentTime" required />
+              <control-messages [control]="fireCertificateForm.controls.incidentTime"></control-messages>
+            </mat-form-field>
+            <button class="ml-0 pl-0" [disabled]="!fireCertificateForm?.controls?.canEdit?.value" mat-icon-button type="button"
+              (click)="openTimePicker('incidentTime')">
+              <mat-icon matTooltip="Select Time" color="primary">alarm</mat-icon>
+            </button>
+          </div>
+          <mat-form-field class="col-md-6">
+            <textarea matInput rows="2" cols="50" required maxlength="200" placeholder="{{'fire_place_address' | translate:translateKey}}"
+              formControlName="firePlaceAddress" appGujInputSource targetElement="firePlaceAddressGuj" [form]="fireCertificateForm"></textarea>
+            <control-messages [control]="fireCertificateForm.controls.firePlaceAddress"></control-messages>
+          </mat-form-field>
+          <mat-form-field class="col-md-6">
+            <textarea matInput type="text" rows="2" cols="50" maxlength="600" required formControlName="firePlaceAddressGuj"
+              appGujInputTarget [form]="fireCertificateForm" placeholder="{{ 'fire_place_address' | translate:translateKey:'gu' }}"></textarea>
+            <control-messages [control]="fireCertificateForm.controls.firePlaceAddressGuj"></control-messages>
+          </mat-form-field>
+
+          <mat-form-field class="col-md-6">
+            <textarea matInput rows="2" cols="50" required maxlength="200" placeholder="{{'connection_holder_address' | translate:translateKey}}"
+              formControlName="connectionHolderAddress" appGujInputSource targetElement="connectionHolderAddressGuj"
+              [form]="fireCertificateForm"></textarea>
+            <control-messages [control]="fireCertificateForm.controls.connectionHolderAddress"></control-messages>
+          </mat-form-field>
+          <mat-form-field class="col-md-6">
+            <textarea matInput type="text" rows="2" cols="50" maxlength="600" required formControlName="connectionHolderAddressGuj"
+              appGujInputTarget [form]="fireCertificateForm" placeholder="{{ 'fire_place_address' | translate:translateKey:'gu' }}"></textarea>
+            <control-messages [control]="fireCertificateForm.controls.connectionHolderAddressGuj"></control-messages>
+          </mat-form-field>
+
+          <mat-form-field class="col-md-4">
+            <input matInput type="text" maxlength="15" required formControlName="propertyNo" placeholder="{{ 'applicant_name' | translate:translateKey:'gu' }}">
+            <control-messages [control]="fireCertificateForm.controls.propertyNo"></control-messages>
+          </mat-form-field>
+
+          <div class="col-md-4 ngSelect" formGroupName="firePlaceType">
+            <ng-select placeholder="{{'fire_certificate_form' | translate:translateKey}} *" formControlName="code">
+              <ng-option *ngFor="let type of FS_FIRE_PLACE_TYPE" [value]="type.code">{{type.name}}</ng-option>
+            </ng-select>
+            <control-messages [control]="fireCertificateForm.get('firePlaceType').controls.code"></control-messages>
+          </div>
+
+        </div>
+        <!-- <mat-form-field class="col-md-4">
+            <input matInput OnlyNumber placeholder="{{'mobile_No' | translate:translateKey}}" type="tel" maxlength="10"
+              minlength="10" formControlName="mobileNo" required>
+            <control-messages [control]="fireCertificateForm.controls.mobileNo"></control-messages>
+          </mat-form-field> -->
+        <!-- 
+          <mat-form-field class="col-md-4">
+            <input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace' required maxlength="150"
+              placeholder="{{'deadPersonName' | translate:translateKey}}" formControlName="deadPersonName">
+            <control-messages [control]="fireCertificateForm.controls.deadPersonName"></control-messages>
+          </mat-form-field>
+
+        <div class="row">
+          <mat-form-field class="col-md-4">
+            <input matInput type="text" required maxlength="300" placeholder="{{'fromPlace' | translate:translateKey}}"
+              formControlName="fromPlace">
+            <control-messages [control]="fireCertificateForm.controls.fromPlace"></control-messages>
+          </mat-form-field>
+          <mat-form-field class="col-md-4">
+            <input matInput type="text" required maxlength="150" placeholder="{{'toPlace' | translate:translateKey}}"
+              formControlName="toPlace">
+            <control-messages [control]="fireCertificateForm.controls.toPlace"></control-messages>
+          </mat-form-field>
+        </div> -->
+        <!-- <div class="row">
+          <div class="col-md-4" *ngFor="let doc of fireCertificateForm.get('serviceDetail').get('serviceUploadDocuments').value">
+            <div *ngIf="doc.requiredOnCitizenPortal && doc.isActive && showButtons">
+              <label>{{TranslateService.getCurrentLanguage()=='en'? doc.documentLabelEn : doc.documentLabelGuj }} <span
+                  *ngIf="doc.mandatory">*</span></label>
+              <file-upload [form]="fireCertificateForm" [uploadModel]="doc"></file-upload>
+            </div>
+          </div>
+        </div> -->
+
+        <app-action-bar  [uploadFiles]="uploadFilesArray" [form]="fireCertificateForm" (tabIndex)="onTabChange($event)" (handleErrors)="handleErrorsOnSubmit($event)"
+          [isstepper]="false" [stepInfo]="{step: 'final', next: 1, back: 0}"></app-action-bar>
+
+      </mat-tab>
+      <!-- step 1 Ends -->
+
+
+    </mat-tab-group>
+  </form>
+</mat-card>
