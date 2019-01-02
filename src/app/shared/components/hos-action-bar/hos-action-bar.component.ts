@@ -177,10 +177,16 @@ export class HosActionBarComponent implements OnInit, OnChanges {
 									this.commonService.commonAlert("Application Incomplete", "", 'warning', 'Make Payment!', false, errHtml, ccb => {
 										window.location.href = environment.adminUrl + `#/admin/payment-gateway?retUrl=${payData.retUrl}&retPath=${payData.retPath}`;
 									}, arj => {
+										this.form.get('canEdit').setValue(false);
+										//this.toastr.success(`${this.form.getRawValue().serviceDetail.name} information successfully submit`);
+										this.isSubmitBtnDisabled = false;
+										this.isBtnsDisabled = false;
+										this.form.disable();
 										return;
 									})
 									return;
 								});
+								return;
 							}
 						});
 				} else {
@@ -196,8 +202,6 @@ export class HosActionBarComponent implements OnInit, OnChanges {
 			let count = 1;
 			for (const key in this.form.controls) {
 				if (this.form.get(key).invalid) {
-					console.log(key)
-
 					this.handleErrors.emit(count)
 					break;
 				}

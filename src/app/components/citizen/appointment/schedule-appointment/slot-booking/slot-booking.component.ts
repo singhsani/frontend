@@ -10,7 +10,7 @@ import { ManageRoutes } from '../../../../../config/routes-conf';
 import * as _ from 'lodash';
 import { AppointmentServices } from '../../appointment.service';
 import { FormsActionsService } from '../../../../../core/services/citizen/data-services/forms-actions.service';
-import { Configuration } from '../../configuration';
+import { AppointmentConfig } from '../../appointment-config';
 
 
 
@@ -50,7 +50,7 @@ export class SlotBookingComponent implements OnInit {
 	/**
 	 * common configuration file
 	 */
-	private config: Configuration = new Configuration();
+	private config: AppointmentConfig = new AppointmentConfig();
 
 	/**
 	 * Setting Date Validation
@@ -147,7 +147,7 @@ export class SlotBookingComponent implements OnInit {
 	onSubmit() {
 		if (this.appointmentForm.invalid) {
 			this.config.getAllErrors(this.appointmentForm);
-			this.commonService.openAlert("Error", Configuration.ALL_FEILD_REQUIRED_MESSAGE, "warning");
+			this.commonService.openAlert("Error", this.config.ALL_FEILD_REQUIRED_MESSAGE, "warning");
 		} else {
 			this.getSlot();
 		}
@@ -237,8 +237,8 @@ export class SlotBookingComponent implements OnInit {
 
 			}, err => {
 				if (err.error[0]) {
-					if (err.error[0].code == Configuration.ONLY_ONE_APPOINTMENT_ALLOWED_CODE) {
-						this.commonService.openAlert(Configuration.APPOINTMENT_SCHEDULE_ERROR, Configuration.ONLY_ONE_APPOINTMENT_ALLOWED_ERROR, "error");
+					if (err.error[0].code == this.config.ONLY_ONE_APPOINTMENT_ALLOWED_CODE) {
+						this.commonService.openAlert(this.config.APPOINTMENT_SCHEDULE_ERROR, this.config.ONLY_ONE_APPOINTMENT_ALLOWED_ERROR, "error");
 					}
 				}
 			})
@@ -259,8 +259,8 @@ export class SlotBookingComponent implements OnInit {
 				//this.getSlot();
 				this.appointmentList();
 			}, err => {
-				if (err.error[0] && err.error[0].code == Configuration.NOT_ALLOWED_TO_CANCEL_CODE) {
-					this.commonService.openAlert(Configuration.APPOINTMENT_CANCELLAION_ERROR, Configuration.NOT_ALLOWED_TO_CANCEL, "error");
+				if (err.error[0] && err.error[0].code == this.config.NOT_ALLOWED_TO_CANCEL_CODE) {
+					this.commonService.openAlert(this.config.APPOINTMENT_CANCELLAION_ERROR, this.config.NOT_ALLOWED_TO_CANCEL, "error");
 				}
 			});
 		});

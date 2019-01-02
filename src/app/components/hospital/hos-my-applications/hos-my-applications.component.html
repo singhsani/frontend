@@ -5,10 +5,10 @@
     <a mat-raised-button class="mat-primary" routerLink="../dashboard">{{'create_applications'| translate : translateKey }}</a>
 </div>
 
-<div class="example-container mat-elevation-z8 borderOne" [hidden]="resultsLength==0">
-    <div class="example-loading-shade" *ngIf="isLoadingResults">
+<div class="mat-elevation-z8 borderOne" [hidden]="resultsLength==0">
+    <!-- <div class="example-loading-shade" *ngIf="isLoadingResults">
         <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
-    </div>
+    </div> -->
 
     <mat-table [dataSource]="dataSource" class="myApplication" matSort matSortActive="created" matSortDisableClear matSortDirection="asc">
 
@@ -30,21 +30,21 @@
             </mat-cell>
         </ng-container>
 
-        <ng-container matColumnDef="dateOfApplication">
-            <mat-header-cell *matHeaderCellDef>{{'date_of_application'| translate : translateKey }}</mat-header-cell>
-            <mat-cell *matCellDef="let row" class="fullWidth">
-                <div class="mobile-label">{{'date_of_application'| translate : translateKey }}</div>
-                <div class="mobile-label1">:</div>
-                <div class="row-inside"> {{row.createdDate | date : 'dd/MM/yyyy'}} </div>
-            </mat-cell>
-        </ng-container>
-
         <ng-container matColumnDef="fileNumber">
             <mat-header-cell *matHeaderCellDef>{{'file_number'| translate : translateKey }}</mat-header-cell>
             <mat-cell *matCellDef="let row" class="fullWidth">
                 <div class="mobile-label">{{'file_number'| translate : translateKey }} </div>
                 <div class="mobile-label1">:</div>
                 <div class="row-inside"> {{ row.fileNumber }}</div>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="dateOfApplication">
+            <mat-header-cell *matHeaderCellDef>{{'date_of_application'| translate : translateKey }}</mat-header-cell>
+            <mat-cell *matCellDef="let row" class="fullWidth">
+                <div class="mobile-label">{{'date_of_application'| translate : translateKey }}</div>
+                <div class="mobile-label1">:</div>
+                <div class="row-inside"> {{row.createdDate | date : 'dd/MM/yyyy'}} </div>
             </mat-cell>
         </ng-container>
 
@@ -74,7 +74,7 @@
                 <div class="mobile-label1">:</div>
                 <div class="row-inside">
                     <mat-chip-list>
-                        <span class="{{getFileStatusClass(row.fileStatus)}}" selected="true">{{ row.fileStatus}}</span>
+                        <span class="{{getFileStatusClass(row.fileStatus)}}" selected="true">{{config.getProperErrorMessage(row.fileStatus)}}</span>
                     </mat-chip-list>
                 </div>
             </mat-cell>
@@ -85,7 +85,7 @@
             <mat-cell *matCellDef="let row" class="fullWidth">
                 <div class="mobile-label">{{'action'| translate : translateKey }}</div>
                 <div class="mobile-label1">:</div>
-                <button mat-button [matMenuTriggerFor]="menu">
+                <button mat-button class="actionBtn" [matMenuTriggerFor]="menu">
                     <mat-icon>more_vert</mat-icon>
                 </button>
                 <mat-menu #menu="matMenu">

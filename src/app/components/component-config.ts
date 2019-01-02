@@ -11,13 +11,12 @@ import { catchError, map, startWith, switchMap } from 'rxjs/operators';
  */
 export class ComponentConfig {
 
-
     /**
      * Message Constants
      */
-    ALL_FEILD_REQUIRED_MESSAGE = "Please fill all the required feilds";
-    MOB_NO_MIS_MATCH_MESSAGE = "Mobile Number and Confirm Mobile Number should match";
-    EMAIL_MIS_MATCH_MESSAGE = "Email and Confirm Email should match";
+    public ALL_FEILD_REQUIRED_MESSAGE = "Please fill all the required feilds";
+    public MOB_NO_MIS_MATCH_MESSAGE = "Mobile Number and Confirm Mobile Number should match";
+    public EMAIL_MIS_MATCH_MESSAGE = "Email and Confirm Email should match";
 
     /**
      * User Defined Date Array
@@ -37,13 +36,33 @@ export class ComponentConfig {
         { month: 'Dec', id: '12', monthName: 'December' },
     ];
 
-    constructor(protected paginationService? : PaginationService) { }
+    constructor(protected paginationService?: PaginationService) { }
+
+    /**
+	 * Method is used to get no of days in current month.
+	 */
+    public daysInThisMonth(): number {
+        var now = new Date();
+        return (new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate());
+    }
+
+	/**
+	 * Method is used to get no of days in current year.
+	 */
+    public daysInThisYear(): number {
+        var now = new Date();
+        if (now.getFullYear() % 4 === 0) {
+            return 366;
+        } else {
+            return 365;
+        }
+    }
 
     /**
 	 * This Method for create attachment array in service detail
 	 * @param data : value of array
 	 */
-    createDocumentsGrp(data?: any): FormGroup {
+    public createDocumentsGrp(data?: any): FormGroup {
         return new FormBuilder().group({
             // dependentFieldName: [data.dependentFieldName ? data.dependentFieldName : null],
             documentIdentifier: new FormControl(data.documentIdentifier ? data.documentIdentifier : null),
@@ -65,7 +84,7 @@ export class ComponentConfig {
 	/**
 	 * Method is create required document array
 	 */
-    requiredDocumentList(form: FormGroup, uploadFilesArray: Array<any>) {
+    public requiredDocumentList(form: FormGroup, uploadFilesArray: Array<any>) {
         _.forEach(form.get('serviceDetail').get('serviceUploadDocuments').value, (value) => {
             if (value.mandatory && value.isActive && value.requiredOnCitizenPortal) {
                 uploadFilesArray.push({
@@ -83,7 +102,7 @@ export class ComponentConfig {
     /**
      * to return proper date
      */
-    getProperErrorMessage(errorMessage: string): string {
+    public getProperErrorMessage(errorMessage: string): string {
         return errorMessage.split("_").join(" ");
     }
 
@@ -91,7 +110,7 @@ export class ComponentConfig {
      * to get all errors with index count.
      * @param form pass form here
      */
-    getAllErrors(form) {
+    public getAllErrors(form) {
         this.markAsTouched(form);
         let count = 0;
         for (const key in form.controls) {
@@ -107,7 +126,7 @@ export class ComponentConfig {
      * To mark invalid for as touched
      * @param form pass form here
      */
-    markAsTouched(form) {
+    public markAsTouched(form) {
         for (let controls in form.controls) {
             let control = form.get(controls)
             if (control instanceof FormControl) {
@@ -129,7 +148,7 @@ export class ComponentConfig {
      * to get proper day
      * @param date - pass date
      */
-    getDay(date: string): string {
+    public getDay(date: string): string {
 
         let Days: Array<any> = [
             { day: 'Sunday', code: 0 },
@@ -148,7 +167,7 @@ export class ComponentConfig {
 	 * Method is used to return Date in format (DD-MM-YYYY)
 	 * @param date - string date
 	 */
-    returnProperDate(date: string) {
+    public returnProperDate(date: string) {
         if (date) {
             let newDate = date.split(" ")[0].split("-");
             return newDate[2] + "-" + newDate[1] + "-" + newDate[0];
@@ -162,14 +181,14 @@ export class ComponentConfig {
      * @param c1 - control 1
      * @param c2 - control 2
      */
-    matcher(form: FormGroup, c1: string, c2: string): boolean {
+    public matcher(form: FormGroup, c1: string, c2: string): boolean {
         return form.get(c1).value == form.get(c2).value
     }
 
     /**
     * This method use to get all the citizen data with pagination.
     */
-    getAllData(sort, paginator, pageSize, apiType, form?: FormGroup) {
+    public getAllData(sort, paginator, pageSize, apiType, form?: FormGroup) {
         return merge(sort.sortChange, paginator.page)
             .pipe(
                 startWith({}),
@@ -177,7 +196,7 @@ export class ComponentConfig {
                     this.paginationService.apiType = apiType;
                     this.paginationService.pageIndex = (paginator.pageIndex + 1);
                     this.paginationService.pageSize = paginator.pageSize;
-                    if(form){
+                    if (form) {
                         return this.paginationService!.getSearchDataWithPagination(form.value);// NOSONAR
                     }
                     return this.paginationService!.getAllData();// NOSONAR
@@ -190,6 +209,4 @@ export class ComponentConfig {
                 })
             )
     }
-
-    
 }

@@ -10,6 +10,7 @@ import { HosFormActionsService } from '../../../core/services/hospital/data-serv
 import { ManageRoutes } from '../../../config/routes-conf';
 
 import * as moment from 'moment';
+import { HospitalConfig } from '../hospital-config';
 
 @Component({
 	selector: 'app-death-registration',
@@ -73,8 +74,11 @@ export class DeathRegistrationComponent implements OnInit {
 	private stepLabel4 = 'applicant_details';
 	private stepLabel5 = 'upload_documents';
 
+	config: HospitalConfig = new HospitalConfig();
+
 	constructor(
 		private fb: FormBuilder,
+		private router: Router,
 		private route: ActivatedRoute,
 		private commonService: CommonService,
 		private formService: HosFormActionsService
@@ -105,10 +109,17 @@ export class DeathRegistrationComponent implements OnInit {
 			this.appId = Number(param.get('id'));
 			this.apiCode = param.get('apiCode');
 			this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
+			/**
+		     * if appId not found navigate to dashboard
+		     */
+			if (!this.appId) {
+				this.router.navigate([ManageRoutes.getFullRoute('HOSPITALDASHBOARD')]);
+			} else {
+				this.createDeathCertificateForm();
+				this.getDeathCertData();
+				this.getLookUpsData();
+			}
 		});
-		this.createDeathCertificateForm();
-		this.getDeathCertData();
-		this.getLookUpsData();
 	}
 
 	/**
@@ -151,6 +162,16 @@ export class DeathRegistrationComponent implements OnInit {
 			if (!this.deathCertificateForm.controls.canEdit.value) {
 				this.deathCertificateForm.disable();
 			}
+
+
+			/**
+	         * Update Permanent Address If 'isPermanentPresentAddressSame' is checked.
+	         */
+			this.deathCertificateForm.controls.presentAddress.valueChanges.subscribe(data => {
+				if (this.deathCertificateForm.get('isPermanentPresentAddressSame').get('code').value == "YES") {
+					this.check({ checked: true });
+				}
+			});
 		});
 	}
 	/**
@@ -355,7 +376,7 @@ export class DeathRegistrationComponent implements OnInit {
 				code: [null],
 				name: null
 			}),
-			otherPlace: null,
+			otherPlace: [null, [Validators.maxLength(500)]],
 			medicalTreatment: this.fb.group({
 				id: null,
 				code: [null],
