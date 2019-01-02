@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Inject } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { MatStepper } from '@angular/material/stepper';
@@ -13,7 +13,7 @@ import { HosFormActionsService } from '../../../core/services/hospital/data-serv
 import * as moment from 'moment';
 import * as _ from 'lodash';
 import { ToastrService } from 'ngx-toastr';
-import { Time } from '@angular/common';
+import { HospitalConfig } from '../hospital-config';
 
 @Component({
 	selector: 'app-birth-registration-app',
@@ -21,18 +21,16 @@ import { Time } from '@angular/common';
 	styleUrls: ['./birth-registration.component.scss']
 })
 export class BirthRegistrationComponent implements OnInit {
+
+
 	@ViewChild('stepper') stepper: MatStepper;
 	@ViewChild('address') addressComp: any;
 
 	/**
 	 * file upload related declaration
 	 */
-	private checked: boolean;
 	uploadModel: any = {};
-	private disableONSubmit: boolean = false;
 	private noOfChild = 0;
-	private oldval;
-	private newValue;
 	private uploadFileArray: Array<any> =
 		[{ labelName: 'Resident Proof', fieldIdentifier: '1.1' },
 		{ labelName: 'Doctors Certificate', fieldIdentifier: '1.2' },
@@ -84,6 +82,11 @@ export class BirthRegistrationComponent implements OnInit {
 	private stepLabel5 = 'upload_documents';
 
 
+	/**
+	 * Using Common Configuration utilities.
+	 */
+	config: HospitalConfig = new HospitalConfig();
+
 	constructor(
 		private router: Router,
 		private route: ActivatedRoute,
@@ -99,14 +102,19 @@ export class BirthRegistrationComponent implements OnInit {
 	 * Method Is Initialized First
 	 */
 	ngOnInit() {
-		this.oldval = {
-			code: "0"
-		}
+
+		/**
+		 * Getting route parameters from url.
+		 */
 		this.route.paramMap.subscribe(param => {
 			this.appId = Number(param.get('id'));
 			this.apiCode = param.get('apiCode');
 			this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
 		});
+
+		/**
+		 * if appId not found navigate to dashboard
+		 */
 		if (!this.appId) {
 			this.router.navigate([ManageRoutes.getFullRoute('HOSPITALDASHBOARD')]);
 		} else {
@@ -144,7 +152,7 @@ export class BirthRegistrationComponent implements OnInit {
 				code: [null, [Validators.required]],
 				name: null
 			}),
-			otherPlace: null,
+			otherPlace: [null, [Validators.maxLength(500)]],
 			isOrphan: this.fb.group({
 				id: null,
 				code: ["NO", Validators.required],
@@ -181,7 +189,7 @@ export class BirthRegistrationComponent implements OnInit {
 				name: null,
 				gujName: null
 			}),
-			fatherOtherEducation: null,
+			fatherOtherEducation: [null, [Validators.maxLength(100)]],
 			fatherOccupations: this.fb.group({
 				id: null,
 				code: [null, [Validators.required]],
@@ -204,7 +212,7 @@ export class BirthRegistrationComponent implements OnInit {
 				name: null,
 				gujName: null
 			}),
-			motherOtherEducation: null,
+			motherOtherEducation: [null, [Validators.maxLength(100)]],
 
 			motherOccupations: this.fb.group({
 				id: null,
@@ -212,25 +220,28 @@ export class BirthRegistrationComponent implements OnInit {
 				name: null,
 				gujName: null
 			}),
+
 			motherAadharNumber: [null, [Validators.minLength(12), Validators.maxLength(12), ValidationService.aadharValidation]],
-			motherPrevRegNumber: ['', [Validators.minLength(20), Validators.maxLength(20)]],
-			petaKendraNumber: ['', [Validators.minLength(10), Validators.maxLength(10)]],
-			motherMarriageAge: [null, [Validators.minLength(2), Validators.maxLength(2), Validators.required]],
+			motherPrevRegNumber: [null, [Validators.minLength(20), Validators.maxLength(50)]],
+			petaKendraNumber: [null, [Validators.minLength(10), Validators.maxLength(10), ValidationService.petaKendraNumber]],
+			motherMarriageAge: [null, [Validators.required, Validators.min(18), Validators.minLength(2), Validators.maxLength(2)]],
 			motherDeliveryAge: [null, [Validators.required, Validators.minLength(2), Validators.maxLength(2)]],
 			deliveryTreatment: this.fb.group({
 				id: null,
 				code: [null, Validators.required],
 				name: null
 			}),
+
 			deliveryType: this.fb.group({
 				id: null,
 				code: [null, Validators.required],
 				name: null
 			}),
+
 			pregnancyDuration: ['', [Validators.required, ValidationService.pregnancyDurationValidation]],
-			totalBoyChildsBeforePregnancy: 0,
-			totalGirlChildsBeforePregnancy: 0,
-			totalChildsBeforePregnancy: 0,
+			totalBoyChildsBeforePregnancy: null,
+			totalGirlChildsBeforePregnancy: null,
+			totalChildsBeforePregnancy: null,
 
 
 			//step 4(3)
@@ -240,6 +251,7 @@ export class BirthRegistrationComponent implements OnInit {
 				code: null,
 				name: null
 			}),
+
 			parentPermanentAddress: this.fb.group(this.addressComp.addressControls()),
 			familyReligion: this.fb.group({
 				id: null,
@@ -256,7 +268,7 @@ export class BirthRegistrationComponent implements OnInit {
 	}
 
 	/**
-	 * This method use for get the citizen data
+	 * This method use for get the birth-certificate data.
 	 */
 	getBirthCertData() {
 		this.formService.getFormData(this.appId).subscribe(res => {
@@ -264,11 +276,11 @@ export class BirthRegistrationComponent implements OnInit {
 			this.birthCertificateForm.patchValue(res);
 
 			if (res.delayPeriod != null) {
-				if (Number(res.delayPeriod) > this.daysInThisYear()) {
+				if (Number(res.delayPeriod) > this.config.daysInThisYear()) {
 					if (!this.getFileObjectContained('1.8')) {
 						this.uploadFileArray.push(this.fileObjectCreater('Court Order', '1.8'));
 					}
-				} else if (Number(res.delayPeriod) < this.daysInThisYear() && Number(res.delayPeriod) > this.daysInThisMonth()) {
+				} else if (Number(res.delayPeriod) < this.config.daysInThisYear() && Number(res.delayPeriod) > this.config.daysInThisMonth()) {
 					if (!this.getFileObjectContained('1.7')) {
 						this.uploadFileArray.push(this.fileObjectCreater('Affidavit Or Health Order', '1.7'));
 					}
@@ -278,15 +290,24 @@ export class BirthRegistrationComponent implements OnInit {
 			//for Child Form Array.
 			this.childs = this.getChildData();
 
+			/**
+			 * Make Child array empty
+			 */
 			while (this.getChildData().length) {
 				this.childs.removeAt(0)
 			}
 
+			/**
+			 * Update Child Array
+			 */
 			this.childs = res.childs;
 			for (let child of res.childs) {
 				this.addMoreChild(child);
 			}
 
+			/**
+			 * Call multiple child adder.
+			 */
 			if (res.childs.length > 1) {
 				this.multipleChildAdder(true);
 			}
@@ -298,20 +319,33 @@ export class BirthRegistrationComponent implements OnInit {
 				this.birthCertificateForm.get('parentPermanentAddress').enable();
 			}
 
+			/**
+			 * disable form id does not have edit permission
+			 */
 			if (!this.birthCertificateForm.controls.canEdit.value) {
 				this.birthCertificateForm.disable();
 			}
 
 			this.showButtons = true;
+
+			/**
+		     * Update Permanent Address If 'isPermanentPresentAddressSame' is checked.
+		     */
+			this.birthCertificateForm.controls.parentDeliveryAddress.valueChanges.subscribe(data => {
+				if (this.birthCertificateForm.get('isPermanentPresentAddressSame').get('code').value == "YES") {
+					this.check({ checked: true });
+					return;
+				}
+			})
 		});
 	}
 
 	/**
 	 * Used to caplture Change in birth place.
-	 * @param ev - event
+	 * @param ev - birth place
 	 */
-	changeBirthPlace(birthPlace: string){
-		if (birthPlace != 'OTHER_PLACE'){
+	changeBirthPlace(birthPlace: string) {
+		if (birthPlace != 'OTHER_PLACE') {
 			this.birthCertificateForm.get('otherPlace').clearValidators();
 			this.birthCertificateForm.get('otherPlace').updateValueAndValidity();
 		}
@@ -319,9 +353,9 @@ export class BirthRegistrationComponent implements OnInit {
 
 	/**
 	 * Used to capture change in family religion.
-	 * @param ev - event
+	 * @param ev - religion
 	 */
-	changeFamilyReligion(religion: string){
+	changeFamilyReligion(religion: string) {
 		if (religion != 'OTHER_RELIGION') {
 			this.birthCertificateForm.get('familyReligionOther').clearValidators();
 			this.birthCertificateForm.get('familyReligionOther').updateValueAndValidity();
@@ -333,8 +367,8 @@ export class BirthRegistrationComponent implements OnInit {
 	 * @param ev - event
 	 * @param index - index of child
 	 */
-	changeBirthTime(ev:string, index: number){
-		if(ev && ev.length < 8){
+	changeBirthTime(ev: string, index: number) {
+		if (ev && ev.length < 8) {
 			ev = ev.concat(":00");
 		}
 		this.getChildData().at(index).get('birthTime').setValue(ev);
@@ -346,17 +380,45 @@ export class BirthRegistrationComponent implements OnInit {
 	 */
 	delayCalculator(event, i: number) {
 		this.getChildData().at(i).get('birthDate').setValue(moment(event.value).format("YYYY-MM-DD"));
-
 		//delay period calculation on the basis of first child birth date.
 		let now = moment(new Date());
-		let currentDelayDate = String(this.getChildData().at(0).get('birthDate').value)
-		let diff = moment.duration(now.diff(new Date(Number(currentDelayDate.split('-')[0]), Number(currentDelayDate.split('-')[1]) - 1, Number(currentDelayDate.split('-')[2]))));
+		if (event.value) {
+			let currentDelayDate = this.getChildData().at(0).get('birthDate').value;
+			let diff = moment.duration(now.diff(new Date(Number(currentDelayDate.split('-')[0]), Number(currentDelayDate.split('-')[1]) - 1, Number(currentDelayDate.split('-')[2]))));
+			this.birthCertificateForm.get('delayPeriod').setValue(diff.days() + diff.years() * 365 + diff.months() * 30);
+			if (i == 0) {
+				this.resetOtherChildDates();
+				this.maxBirthDate = moment(new Date(Number(currentDelayDate.split('-')[0]), Number(currentDelayDate.split('-')[1]) - 1, Number(currentDelayDate.split('-')[2]))).add(+1, 'days').toDate();
+				this.minBirthDate = moment(new Date(Number(currentDelayDate.split('-')[0]), Number(currentDelayDate.split('-')[1]) - 1, Number(currentDelayDate.split('-')[2]))).add(-1, 'days').toDate();
+				this.delayAlert(this.birthCertificateForm.get('delayPeriod').value);
+			}
+		} else {
+			this.resetOtherChildDates();
+		}
+	}
 
-		this.birthCertificateForm.get('delayPeriod').setValue(diff.days() + diff.years() * 365 + diff.months() * 30);
+	/**
+	 * Method Is used to change the validation for first child birth date.
+	 * @param index - index (trying to catch 0)
+	 */
+	resetDateValidation(index) {
+		if (index == 0) {
+			this.minBirthDate = null;
+			this.maxBirthDate = new Date();
+		} else {
+			let currentDelayDate = this.getChildData().at(0).get('birthDate').value;
+			this.maxBirthDate = moment(new Date(Number(currentDelayDate.split('-')[0]), Number(currentDelayDate.split('-')[1]) - 1, Number(currentDelayDate.split('-')[2]))).add(+1, 'days').toDate();
+			this.minBirthDate = moment(new Date(Number(currentDelayDate.split('-')[0]), Number(currentDelayDate.split('-')[1]) - 1, Number(currentDelayDate.split('-')[2]))).add(-1, 'days').toDate();
+		}
+	}
 
-
-		if (i == 0) {
-			this.delayAlert(this.birthCertificateForm.get('delayPeriod').value);
+	/**
+	 * Method Is used to reset other child birth date.
+	 */
+	resetOtherChildDates():void{
+		for (let k = 1; k < this.getChildData().length; k++) {
+			let initForm = this.getChildData().at(k);
+			initForm.get("birthDate").reset();
 		}
 	}
 
@@ -373,7 +435,12 @@ export class BirthRegistrationComponent implements OnInit {
 	 * @param delay - delay period.
 	 */
 	delayAlert(delay: number) {
-		if (delay > this.daysInThisMonth() && delay < this.daysInThisYear()) {
+		if (delay > this.config.MIN_BIRTH_DATE_VALIDATION && delay < this.config.daysInThisMonth()) {
+			let html = this.config.LESS_30_AND_MORE_21_MESSAGE;
+			this.commonService.openAlert(this.config.DELAYED_BIRTH_REGISTRATION_TITLE, "", "warning", html);
+			return;
+		}
+		else if (delay > this.config.daysInThisMonth() && delay < this.config.daysInThisYear()) {
 			if (!this.getFileObjectContained('1.7')) {
 				if (!this.getFileObjectContained('1.8')) {
 					this.uploadFileArray.push(this.fileObjectCreater('Affidavit Or Health Order', '1.7'));
@@ -382,10 +449,10 @@ export class BirthRegistrationComponent implements OnInit {
 					this.uploadFileArray.push(this.fileObjectCreater('Affidavit Or Health Order', '1.7'));
 				}
 			}
-			let html = `<p>It will considered as delayed birth registration because
-			 registration date is more than 30 days and there will be extra attachment (Affidavit Or health Order) as well as fees.`
-			this.commonService.openAlert("Delayed Registration", "", "", html);
-		} else if (delay > this.daysInThisYear()) {
+			let html = this.config.LESS_YEAR_AND_MORE_30_MESSAGE
+			this.commonService.openAlert(this.config.DELAYED_BIRTH_REGISTRATION_TITLE, "", "warning", html);
+			return;
+		} else if (delay > this.config.daysInThisYear()) {
 			if (!this.getFileObjectContained('1.8')) {
 				if (!this.getFileObjectContained('1.7')) {
 					this.uploadFileArray.push(this.fileObjectCreater('Court Order', '1.8'));
@@ -394,45 +461,24 @@ export class BirthRegistrationComponent implements OnInit {
 					this.uploadFileArray.push(this.fileObjectCreater('Court Order', '1.8'));
 				}
 			}
-			let html = `<p>It will considered as delayed birth registration because
-			 registration date is more than 1 year and there will be extra attachment (Court Order) as well as fees.`
-			this.commonService.openAlert("Delayed Registration", "", "", html);
+			let html = this.config.MORE_THAN_YEAR_MESSAGE;
+			this.commonService.openAlert(this.config.DELAYED_BIRTH_REGISTRATION_TITLE, "", "warning", html);
+			return;
 		}
 	}
 
+	/**
+	 * Method is used to calculate total child.
+	 */
 	totalChildCalculate() {
-
-		if (this.birthCertificateForm.get('totalGirlChildsBeforePregnancy').value == null || this.birthCertificateForm.get('totalGirlChildsBeforePregnancy').value == '') {
-			this.birthCertificateForm.get('totalGirlChildsBeforePregnancy').setValue(0)
-
-		}
-		if (this.birthCertificateForm.get('totalBoyChildsBeforePregnancy').value == null || this.birthCertificateForm.get('totalBoyChildsBeforePregnancy').value == '') {
-			this.birthCertificateForm.get('totalBoyChildsBeforePregnancy').setValue(0);
-
-		}
-		this.birthCertificateForm.get('totalChildsBeforePregnancy').setValue(parseInt(this.birthCertificateForm.get('totalGirlChildsBeforePregnancy').value) + parseInt(this.birthCertificateForm.get('totalBoyChildsBeforePregnancy').value))
-	}
-
-	/**
-	 * Method is used to get no of days in current month.
-	 */
-	daysInThisMonth() {
-		var now = new Date();
-		return (new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate());
-	}
-
-	/**
-	 * Method is used to get no of days in current year.
-	 */
-	daysInThisYear() {
-		var now = new Date();
-		if (now.getFullYear() % 4 === 0) {
-			return 366;
+		let girlChild = this.birthCertificateForm.get('totalGirlChildsBeforePregnancy').value;
+		let boyChild = this.birthCertificateForm.get('totalBoyChildsBeforePregnancy').value;
+		if (girlChild && boyChild) {
+			this.birthCertificateForm.get('totalChildsBeforePregnancy').setValue(parseInt(girlChild) + parseInt(boyChild))
 		} else {
-			return 365;
+			this.birthCertificateForm.get('totalChildsBeforePregnancy').setValue(null);
 		}
 	}
-
 
 	/**
 	 * Method is used to handle error/validation on submit
@@ -556,6 +602,7 @@ export class BirthRegistrationComponent implements OnInit {
 		this.birthCertificateForm.get('parentPermanentAddress').get('addressType').setValue(parentPermanentAddressType);
 	}
 
+
 	/**
 	 * Method is used to reset form its a output event from action bar.
 	 */
@@ -645,6 +692,27 @@ export class BirthRegistrationComponent implements OnInit {
 	 * @param child - Add child object.
 	 */
 	addMoreChild(child) {
+		if (child) {
+			this.updateMoreChild(child);
+		} else {
+			for (let k = 0; k < this.getChildData().length; k++) {
+				let initForm = this.getChildData().at(k);
+				if (initForm.invalid) {
+					this.config.getAllErrors(initForm);
+					this.commonService.openAlert("Child Details Error", this.config.ALL_FEILD_REQUIRED_MESSAGE + " of child " + (k + 1), "warning");
+					return;
+				}
+			}
+
+			this.updateMoreChild(child);
+		}
+	}
+
+	/**
+	 * Method Is used to update more child.
+	 * @param child - child details
+	 */
+	protected updateMoreChild(child) {
 		if (this.getChildData().length >= 6) {
 			this.commonService.openAlert("Warning", "Maximum Child Limit 6.", "warning");
 		} else {
@@ -653,6 +721,7 @@ export class BirthRegistrationComponent implements OnInit {
 			this.setTotalChildAlive();
 		}
 	}
+
 
 	/**
 	 * Mehtod is used to set total alive child and populated automatically.

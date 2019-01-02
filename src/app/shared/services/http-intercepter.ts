@@ -65,12 +65,15 @@ export class TokenInterceptor implements HttpInterceptor {
 							
 							switch (err.status) {
 								case 0:
-									this.toaster.error("Something went wrong!");
-									if (this.commonService.getUserType() === 'HOSPITAL') {
-										this.hosAppService.logout();
-									} else {
-										this.appService.logout();
+									let userType = this.commonService.getUserType();
+									if(userType){
+										if (userType == 'HOSPITAL') {
+											this.hosAppService.logout();
+										} else {
+											this.appService.logout();
+										}
 									}
+									this.toaster.error("Something went wrong!");
 									// this.commonService.openAlert('Oops...', 'Something went wrong!', 'error', '', cb => {
 									// 	if (this.commonService.getUserType() === 'HOSPITAL') {
 									// 		this.hosAppService.logout();

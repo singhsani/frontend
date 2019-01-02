@@ -1,4 +1,8 @@
-<app-hos-title-bar [title]="'screen_title' | translate: translateKey"></app-hos-title-bar>
+<app-hos-title-bar [title]="'screen_title' | translate: translateKey">
+	<!-- <button class="pull-right" mat-stroked-button type="button" (click)="deathCertificateForm.patchValue(config.getDeathDummyJSON())">
+			Patch Value
+		</button> -->
+</app-hos-title-bar>
 
 <mat-card class="formClass cardBorder ">
 
@@ -128,7 +132,7 @@
 						 maxlength="20" appPreventSpace placeholder="{{'education' | translate:translateKey:'gu'}}" [value]="deathCertificateForm.get('education').get('gujName').value">
 					</mat-form-field>
 
-					<div class="col-md-12" *ngIf="deathCertificateForm.value.education.code == 'NOT_STATED'">
+					<div class="col-md-12" *ngIf="deathCertificateForm.get('education').get('code').value == 'NOT_STATED'">
 						<mat-form-field>
 							<input matInput placeholder="{{'not_stated_education' | translate:translateKey}}" formControlName="deceasedOtherEducation"
 							 [required]="requiredFeild">
@@ -194,8 +198,8 @@
 						<control-messages [control]="deathCertificateForm.controls.deathPlace.controls.code"></control-messages>
 					</div>
 
-					<mat-form-field *ngIf="deathCertificateForm.value.deathPlace.code == 'OTHER_PLACE'" class="col-md-8">
-						<input required matInput placeholder="{{'other_death_place' | translate:translateKey}}" formControlName="otherPlace">
+					<mat-form-field *ngIf="deathCertificateForm.get('deathPlace').get('code').value == 'OTHER_PLACE'" class="col-md-8">
+						<input maxlength="500" required matInput placeholder="{{'other_death_place' | translate:translateKey}}" formControlName="otherPlace">
 					</mat-form-field>
 
 					<div class="col-md-8 ngSelect" formGroupName="medicalTreatment">
@@ -298,7 +302,7 @@
 							</ng-select>
 							<control-messages [control]="deathCertificateForm.controls.applicantRelation.controls.code"></control-messages>
 						</div>
-						<mat-form-field *ngIf="deathCertificateForm.value.applicantRelation.code == 'OTHER_RELATIONSHIP'" class="col-md-6">
+						<mat-form-field *ngIf="deathCertificateForm.get('applicantRelation').get('code').value == 'OTHER_RELATIONSHIP'" class="col-md-6">
 							<input required matInput placeholder="{{'other_relation' | translate:translateKey}}" formControlName="relationOther">
 							<control-messages [control]="deathCertificateForm.controls.relationOther"></control-messages>
 						</mat-form-field>

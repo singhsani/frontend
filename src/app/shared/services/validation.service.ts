@@ -37,7 +37,8 @@ export class ValidationService {
             invalidBuildingName: 'Building name is not valid',
             invalidemployeeage: 'Age must be greater than 13 year',
             invalidIfscCode: 'IFSC Code is not valid',
-            invalidPan: 'Invalid Pan Number'
+            invalidPan: 'Invalid Pan Number', 
+            invalidpetaKendraNumber: 'Should contains only alpha-numeric and numeric value'
         }
 
         return config[validatorName];
@@ -147,6 +148,14 @@ export class ValidationService {
             return '';
         } else {
             return { 'invalidpregnanceTime': true };
+        }
+    }
+
+    static petaKendraNumber(control: AbstractControl) {
+        if(String(control.value).split('').includes(" ")){
+            return { 'invalidpetaKendraNumber': true };
+        }else{
+            return ''
         }
     }
 

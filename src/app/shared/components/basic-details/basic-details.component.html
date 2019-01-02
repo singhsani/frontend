@@ -1,16 +1,16 @@
 <div class ="row" [formGroup]="basicFormGroup">
     <mat-form-field class="col-md-4" [hidden]="!basicFormGroup.controls.firstName.value">
-        <input matInput readonly appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{'first_name' | translate:translateKey}}" formControlName="firstName" required>
+        <input maxlength="50" matInput readonly appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{'first_name' | translate:translateKey}}" formControlName="firstName" required>
         <control-messages [control]="basicFormGroup.controls.firstName"></control-messages>
     </mat-form-field>
 
     <mat-form-field class="col-md-4" [hidden]="!basicFormGroup.controls.middleName.value">
-        <input matInput readonly appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{'middle_name' | translate:translateKey}}" formControlName="middleName">
+        <input maxlength="50" matInput readonly appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{'middle_name' | translate:translateKey}}" formControlName="middleName">
         <control-messages [control]="basicFormGroup.controls.middleName"></control-messages>
     </mat-form-field>
     
     <mat-form-field class="col-md-4" [hidden]="!basicFormGroup.controls.lastName.value">
-        <input matInput  readonly placeholder="{{'last_name' | translate:translateKey}}" formControlName="lastName" required>
+        <input maxlength="50" matInput  readonly placeholder="{{'last_name' | translate:translateKey}}" formControlName="lastName" required>
         <control-messages [control]="basicFormGroup.controls.lastName"></control-messages>
     </mat-form-field>
 

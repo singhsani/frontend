@@ -13,6 +13,7 @@ import { FormsActionsService } from '../../../core/services/citizen/data-service
 import { CommonService } from '../../../shared/services/common.service';
 import { ManageRoutes } from '../../../config/routes-conf';
 import * as moment from 'moment'
+import { CitizenConfig } from '../citizen-config';
 
 @Component({
 	selector: 'app-my-applications',
@@ -49,6 +50,8 @@ export class MyApplicationsComponent implements OnInit {
 	modalRef: BsModalRef;
 	JSONdata: any;
 	rejectRemarks: string = '';
+
+    config: CitizenConfig = new CitizenConfig();
 
 	@ViewChild(MatPaginator) paginator: MatPaginator;
 	@ViewChild(MatSort) sort: MatSort;

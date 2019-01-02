@@ -11,6 +11,7 @@ import { ManageRoutes } from '../../../config/routes-conf';
 import { CommonService } from '../../../shared/services/common.service';
 import { HosPaginationService } from '../../../core/services/hospital/data-services/hos-pagination.service';
 import { HosFormActionsService } from '../../../core/services/hospital/data-services/hos-form-actions.service';
+import { HospitalConfig } from '../hospital-config';
 
 @Component({
 	selector: 'app-hos-my-applications',
@@ -22,8 +23,8 @@ export class HosMyApplicationsComponent implements OnInit {
 	displayedColumns: any = [
 		'id',
 		'applicantName',
-		'dateOfApplication',
 		'fileNumber',
+		'dateOfApplication',
 		'departmentName',
 		'serviceType',
 		'fileStatus',
@@ -41,6 +42,8 @@ export class HosMyApplicationsComponent implements OnInit {
 	JSONdata: any;
 
 	appType: string = 'myApps';
+
+	config: HospitalConfig = new HospitalConfig();
 
 	@ViewChild(MatPaginator) paginator: MatPaginator;
 	@ViewChild(MatSort) sort: MatSort;

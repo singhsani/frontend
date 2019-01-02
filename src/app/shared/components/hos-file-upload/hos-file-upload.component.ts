@@ -105,13 +105,14 @@ export class HosFileUploadComponent implements OnInit {
 			if (this.selectedFiles[0].size > 5000000) {
 				this.fileName = ''
 				this.canUpload = false;
-				this.toastrService.warning("File Size should be less than 5 MB","Warning");
+				this.commonService.openAlert("File Upload", "File Size should be less than 5 MB", "warning")
+				this.fileInput.nativeElement.value = "";
 
 			} else if (!fileTypes.includes(this.selectedFiles[0].type)){
 				this.fileName = ''
 				this.canUpload = false;
-				this.toastrService.warning("File Type " + this.selectedFiles[0].type +" not valid please select pdf/jpg/jpeg",);
-
+				this.commonService.openAlert("File Upload", "File Type " + this.selectedFiles[0].type + " not valid please select pdf/jpg/jpeg", "warning");
+				this.fileInput.nativeElement.value = "";
 			} else {
 				let formData = new FormData();
 
