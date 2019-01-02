@@ -53,10 +53,6 @@ const ROUTEMAIN = {
         'main': 'waterTankerSupply',
         'type': 'waterTankerSupply'
     },
-    'FS-AMBU': {
-        'main': 'FSAmbulance',
-        'type': 'FSAmbulance'
-    },
     'FS-BODY': {
         'main': 'deadBodyWan',
         'type': 'deadBodyWan'
@@ -88,6 +84,10 @@ const ROUTEMAIN = {
     'FS-NAV': {
         'main': 'navratriNoc',
         'type': 'navratriNoc'
+    },
+    'FS_FIRE_CERTIFICATE':{
+        'main': 'fireCertificate',
+        'type': 'fireCertificate'
     },
     'FS-REVISED': {
         'main': 'revisedFireNoc',
@@ -458,9 +458,6 @@ const ROUTESLIST = {
     'FS-WATER': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.FIREFACILITIESMODULE + '/' + ROUTEMAIN["FS-WATER"].main
     },
-    'FS-AMBU': {
-        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.FIREFACILITIESMODULE + '/' + ROUTEMAIN["FS-AMBU"].main
-    },
     'FS-BODY': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.FIREFACILITIESMODULE + '/' + ROUTEMAIN["FS-BODY"].main
     },
@@ -484,6 +481,9 @@ const ROUTESLIST = {
     },
     'FS-NAV': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.FIREFACILITIESMODULE + '/' + ROUTEMAIN["FS-NAV"].main
+    },
+    'FS_FIRE_CERTIFICATE': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.FIREFACILITIESMODULE + '/' + ROUTEMAIN["FS_FIRE_CERTIFICATE"].main
     },
     'FS-REVISED': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.FIREFACILITIESMODULE + '/' + ROUTEMAIN["FS-REVISED"].main

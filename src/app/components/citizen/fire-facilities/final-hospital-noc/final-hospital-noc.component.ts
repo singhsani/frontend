@@ -564,7 +564,7 @@ export class FinalHospitalNocComponent implements OnInit {
         // licenseRenewalDate: res.licenseRenewalDate,
         // loinumber: res.loinumber,
         serviceDetail: res.serviceDetail,
-        // attachments: res.attachments
+       attachments:[]
       });
 
       this.showButtons = true;
