@@ -279,8 +279,7 @@
 						<control-messages [control]="revisedFireNocForm.controls.rsNo"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput maxlength="10" required placeholder="{{'tika_no' | translate:translateKey}}"
-						 formControlName="tikaNo">
+						<input matInput maxlength="10" required placeholder="{{'tika_no' | translate:translateKey}}" formControlName="tikaNo">
 						<control-messages [control]="revisedFireNocForm.controls.tikaNo"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
@@ -294,13 +293,11 @@
 						<control-messages [control]="revisedFireNocForm.controls.buildingLocation"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput maxlength="10" placeholder="{{'block_no' | translate:translateKey}}"
-						 formControlName="blockNo">
+						<input matInput maxlength="10" placeholder="{{'block_no' | translate:translateKey}}" formControlName="blockNo">
 						<control-messages [control]="revisedFireNocForm.controls.blockNo"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput maxlength="10" required placeholder="{{'O_P_no' | translate:translateKey}}"
-						 formControlName="opNo">
+						<input matInput maxlength="10" required placeholder="{{'O_P_no' | translate:translateKey}}" formControlName="opNo">
 						<control-messages [control]="revisedFireNocForm.controls.opNo"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
@@ -563,12 +560,12 @@
 					<div>{{'attachment' | translate: translateKey}}</div>
 				</ng-template>
 				<div class="row">
-					<div class="col-md-4" *ngFor="let doc of revisedFireNocForm.get('serviceDetail').get('serviceUploadDocuments').value">
-						<div *ngIf="doc.requiredOnCitizenPortal && doc.isActive && showButtons">
+					<ng-container *ngFor="let doc of revisedFireNocForm.get('serviceDetail').get('serviceUploadDocuments').value">
+						<div class="col-md-4" *ngIf="doc.requiredOnCitizenPortal && doc.isActive && showButtons">
 							<label>{{TranslateService.getCurrentLanguage()=='en'? doc.documentLabelEn : doc.documentLabelGuj }} <span *ngIf="doc.mandatory">*</span></label>
 							<file-upload [form]="revisedFireNocForm" [uploadModel]="doc"></file-upload>
 						</div>
-					</div>
+					</ng-container>
 				</div>
 
 				<app-action-bar [uploadFiles]="uploadFilesArray" [form]="revisedFireNocForm" (tabIndex)="onTabChange($event) "

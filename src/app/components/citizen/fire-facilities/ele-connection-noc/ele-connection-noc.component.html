@@ -173,12 +173,12 @@
 
 
 				<div class="row">
-					<div class="col-md-4" *ngFor="let doc of electricConnectionForm.get('serviceDetail').get('serviceUploadDocuments').value">
-						<div *ngIf="doc.requiredOnCitizenPortal && doc.isActive && showButtons">
+					<ng-container *ngFor="let doc of electricConnectionForm.get('serviceDetail').get('serviceUploadDocuments').value">
+						<div class="col-md-4" *ngIf="doc.requiredOnCitizenPortal && doc.isActive && showButtons">
 							<label>{{TranslateService.getCurrentLanguage()=='en'? doc.documentLabelEn : doc.documentLabelGuj }} <span *ngIf="doc.mandatory">*</span></label>
 							<file-upload [form]="electricConnectionForm" [uploadModel]="doc"></file-upload>
 						</div>
-					</div>
+					</ng-container>
 				</div>
 
 				<app-action-bar [uploadFiles]="uploadFilesArray" [form]="electricConnectionForm" (tabIndex)="onTabChange($event) "
