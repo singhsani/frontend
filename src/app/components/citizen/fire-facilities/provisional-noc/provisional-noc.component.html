@@ -13,6 +13,9 @@
 					<mat-form-field class="col-md-4">
 						<input matInput readonly placeholder="{{'provisional_noc_number' | translate:translateKey}}" formControlName="provisionalNocNumber">
 					</mat-form-field>
+					<mat-form-field class="col-md-4" *ngIf="provisionalNocForm.get('oldReferenceNumber').value">
+						<input matInput readonly placeholder="{{'old_refrance_number' | translate:translateKey}}" formControlName="oldReferenceNumber">
+					</mat-form-field>
 				</div>
 				<div class="row">
 
@@ -250,42 +253,38 @@
 				</ng-template>
 				<div class="row">
 					<mat-form-field class="col-md-4">
-						<input matInput maxlength="10" required appAlphaNumeric placeholder="{{'final_plot_no' | translate:translateKey}}"
-						 formControlName="fpNo">
+						<input matInput maxlength="10" required placeholder="{{'final_plot_no' | translate:translateKey}}" formControlName="fpNo">
 						<control-messages [control]="provisionalNocForm.controls.fpNo"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput maxlength="10" required appAlphaNumeric placeholder="{{'revenue_survey_no' | translate:translateKey}}"
+						<input matInput maxlength="10" required placeholder="{{'revenue_survey_no' | translate:translateKey}}"
 						 formControlName="rsNo">
 						<control-messages [control]="provisionalNocForm.controls.rsNo"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput maxlength="10" required appAlphaNumeric placeholder="{{'tika_no' | translate:translateKey}}"
-						 formControlName="tikaNo">
+						<input matInput maxlength="10" required placeholder="{{'tika_no' | translate:translateKey}}" formControlName="tikaNo">
 						<control-messages [control]="provisionalNocForm.controls.tikaNo"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput maxlength="10" required appAlphaNumeric placeholder="{{'town_planning_no' | translate:translateKey}}"
+						<input matInput maxlength="10" required placeholder="{{'town_planning_no' | translate:translateKey}}"
 						 formControlName="townPlanningNo">
 						<control-messages [control]="provisionalNocForm.controls.townPlanningNo"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput maxlength="50" required appAlphaNumeric placeholder="{{'building_location' | translate:translateKey}}"
+						<input matInput maxlength="50" required placeholder="{{'building_location' | translate:translateKey}}"
 						 formControlName="buildingLocation">
 						<control-messages [control]="provisionalNocForm.controls.buildingLocation"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput maxlength="10" required appAlphaNumeric placeholder="{{'block_no' | translate:translateKey}}"
-						 formControlName="blockNo">
+						<input matInput maxlength="10" required placeholder="{{'block_no' | translate:translateKey}}" formControlName="blockNo">
 						<control-messages [control]="provisionalNocForm.controls.blockNo"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput maxlength="10" required appAlphaNumeric placeholder="{{'O_P_no' | translate:translateKey}}"
-						 formControlName="opNo">
+						<input matInput maxlength="10" required placeholder="{{'O_P_no' | translate:translateKey}}" formControlName="opNo">
 						<control-messages [control]="provisionalNocForm.controls.opNo"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput maxlength="10" required appAlphaNumeric placeholder="{{'city_servay_no' | translate:translateKey}}"
+						<input matInput maxlength="10" required placeholder="{{'city_servay_no' | translate:translateKey}}"
 						 formControlName="citySurveyNo">
 						<control-messages [control]="provisionalNocForm.controls.citySurveyNo"></control-messages>
 					</mat-form-field>

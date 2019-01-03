@@ -1,8 +1,7 @@
 <app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
-<form [formGroup]="gasConnectionForm">
-	<h3 *ngIf="gasConnectionForm.get('oldReferenceNumber').value">{{'Old_Refrance_NO' | translate:translateKey}} :
-		{{gasConnectionForm.get('oldReferenceNumber').value}}</h3>
-	<mat-card class="formClass cardBorder">
+
+<mat-card class="formClass cardBorder">
+	<form [formGroup]="gasConnectionForm">
 
 		<mat-tab-group [(selectedIndex)]="tabIndex" dynamicHeight="true" mat-stretch-tabs class="stepperNav">
 
@@ -12,7 +11,11 @@
 					<div>{{'applicant_detail' | translate:translateKey}}</div>
 				</ng-template>
 
-
+				<div class="row">
+					<mat-form-field class="col-md-4" *ngIf="gasConnectionForm.get('oldReferenceNumber').value">
+						<input matInput readonly placeholder="{{'old_refrance_number' | translate:translateKey}}" formControlName="oldReferenceNumber">
+					</mat-form-field>
+				</div>
 				<div class="row">
 
 					<mat-form-field class="col-md-4">
@@ -60,7 +63,7 @@
 
 				</div>
 				<app-action-bar [form]="gasConnectionForm" (tabIndex)="onTabChange($event)" (handleErrors)="handleErrorsOnSubmit($event)"
-				[stepInfo]="{step: 'step1', next: 1, back: 0}"></app-action-bar>
+				 [stepInfo]="{step: 'step1', next: 1, back: 0}"></app-action-bar>
 
 
 
@@ -92,8 +95,8 @@
 					</mat-form-field>
 					<!-- gujarati -->
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" maxlength="300" required formControlName="connectionHolderNameGuj" appGujInputTarget [form]="gasConnectionForm"
-						 placeholder="{{ 'connection_Holder_Name' | translate:translateKey:'gu' }}">
+						<input matInput type="text" maxlength="300" required formControlName="connectionHolderNameGuj" appGujInputTarget
+						 [form]="gasConnectionForm" placeholder="{{ 'connection_Holder_Name' | translate:translateKey:'gu' }}">
 						<control-messages [control]="gasConnectionForm.controls.connectionHolderNameGuj"></control-messages>
 					</mat-form-field>
 					<!-- gujarati -->
@@ -122,14 +125,16 @@
 				</div>
 				<div class="row">
 					<div class="col-md-4 ngSelect" formGroupName="connectionPurpose">
-						<ng-select required placeholder="{{'connection_Purpose' | translate:translateKey}} *" formControlName="code" (change)="onChangeConnectionPurpose($event)">
+						<ng-select required placeholder="{{'connection_Purpose' | translate:translateKey}} *" formControlName="code"
+						 (change)="onChangeConnectionPurpose($event)">
 							<ng-option *ngFor="let purpose of FS_CONNECTION_PURPOSE" [value]="purpose.code">{{purpose.name}}</ng-option>
 						</ng-select>
 						<control-messages [control]="gasConnectionForm.get('connectionPurpose').controls.code"></control-messages>
 					</div>
 
 					<mat-form-field class="col-md-4" *ngIf="gasConnectionForm.get('connectionPurpose').get('code').value">
-						<input matInput type="text" appAlphaNumeric formControlName="propertyNo" placeholder="{{'property_No' | translate: translateKey }}" maxlength="15" required (change)="getPropertyStatus($event.target.value)">
+						<input matInput type="text" appAlphaNumeric formControlName="propertyNo" placeholder="{{'property_No' | translate: translateKey }}"
+						 maxlength="15" required (change)="getPropertyStatus($event.target.value)">
 						<control-messages [control]="gasConnectionForm.controls.propertyNo"></control-messages>
 						<mat-error *ngIf="gasConnectionForm.get('propertyNo').hasError('outstandingRemainingProperty')">{{propertyStatusOutstanding?.message}}</mat-error>
 					</mat-form-field>
@@ -161,10 +166,10 @@
 					<div class="col-md-4">{{'highRise_Fire_NOC_Taken' | translate:translateKey }} *
 						<mat-radio-group formControlName="highRiseFireNOCTaken" required>
 							<mat-radio-button [value]="true">
-									{{'Yes_txt' | translate:translateKey }}
+								{{'Yes_txt' | translate:translateKey }}
 							</mat-radio-button>
 							<mat-radio-button [value]="false">
-									{{'No_txt' | translate:translateKey }}
+								{{'No_txt' | translate:translateKey }}
 							</mat-radio-button>
 						</mat-radio-group>
 						<control-messages [control]="gasConnectionForm.controls.highRiseFireNOCTaken"></control-messages>
@@ -207,5 +212,5 @@
 
 		</mat-tab-group>
 
-	</mat-card>
-</form>
+	</form>
+</mat-card>

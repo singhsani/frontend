@@ -444,12 +444,10 @@ export class FinalFireNocComponent implements OnInit {
 	 * @param event : on change event value
 	 */
 	otherRemark(event: Event) {
+		this.codeOther = false;
 		_.forEach(event, (value) => {
 			if (value.code == 'OTHER') {
 				this.codeOther = true;
-			}
-			else {
-				this.codeOther = false
 			}
 		});
 	}

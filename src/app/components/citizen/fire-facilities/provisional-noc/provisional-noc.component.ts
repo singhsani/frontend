@@ -26,7 +26,7 @@ export class ProvisionalNocComponent implements OnInit {
 	// required attachment array
 	private uploadFilesArray: Array<any> = [];
 	private showButtons: boolean = false;
-	private codeOther:boolean = false;
+	private codeOther: boolean = false;
 	//Lookups Array
 	FS_AREA_ZONE: Array<any> = [];
 	FS_APPLIED_FOR: Array<any> = [];
@@ -185,7 +185,7 @@ export class ProvisionalNocComponent implements OnInit {
 			}),
 			subjectTo: [null, [Validators.required, Validators.maxLength(200)]],
 			purposeOfBuildingUse: [null],//array
-			otherPurposeRemark:[null,[Validators.maxLength(200)]],
+			otherPurposeRemark: [null, [Validators.maxLength(200)]],
 			architectName: [null, [Validators.required, Validators.maxLength(100)]],
 			architectNameGuj: [null, [Validators.required, Validators.maxLength(300)]],
 			architectFirmName: [null, [Validators.required, Validators.maxLength(50)]],
@@ -344,13 +344,11 @@ export class ProvisionalNocComponent implements OnInit {
 	 * add other remark in Purpose of Building array 
 	 * @param event : on change event value
 	 */
-	otherRemark(event:Event){
-		_.forEach(event,(value) => {
-			if(value.code == 'OTHER'){
+	otherRemark(event: Event) {
+		this.codeOther = false;
+		_.forEach(event, (value) => {
+			if (value.code == 'OTHER') {
 				this.codeOther = true;
-			}
-			else{
-				this.codeOther = false
 			}
 		});
 	}

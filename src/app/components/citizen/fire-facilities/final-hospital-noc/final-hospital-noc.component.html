@@ -1,11 +1,11 @@
 <app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
 
 <mat-card [hidden]="serachLicenceObj.isDisplayRenewLicenceForm" class="mt-4 formClass">
-	<mat-form-field class="col-md-10">
-		<input matInput required placeholder="{{'search_by_application_no' | translate:translateKey}}" [(ngModel)]="serachLicenceObj.searchLicenceNumber">
-	</mat-form-field>
-	<button class="col-md-2" [disabled]="!serachLicenceObj.searchLicenceNumber" mat-raised-button color="primary" (click)="searchLicence()">{{'search'
-		| translate:translateKey}}</button>
+  <mat-form-field class="col-md-10">
+    <input matInput required placeholder="{{'search_by_application_no' | translate:translateKey}}" [(ngModel)]="serachLicenceObj.searchLicenceNumber">
+  </mat-form-field>
+  <button class="col-md-2" [disabled]="!serachLicenceObj.searchLicenceNumber" mat-raised-button color="primary" (click)="searchLicence()">{{'search'
+    | translate:translateKey}}</button>
 </mat-card>
 
 <mat-card [hidden]="!serachLicenceObj.isDisplayRenewLicenceForm" class="formClass cardBorder">
@@ -24,9 +24,14 @@
             <input matInput readonly placeholder="{{'provisional_noc_number' | translate:translateKey}}"
               formControlName="provisionalNocNumber">
           </mat-form-field>
-					<mat-form-field class="col-md-4">
-						<input matInput readonly placeholder="{{'final_hospital_noc_number' | translate:translateKey}}" formControlName="finalFireNocNumber">
-					</mat-form-field>
+          <mat-form-field class="col-md-4">
+            <input matInput readonly placeholder="{{'final_hospital_noc_number' | translate:translateKey}}"
+              formControlName="finalFireNocNumber">
+          </mat-form-field>
+          <mat-form-field class="col-md-4" *ngIf="finalHospitalNocForm.get('oldReferenceNumber').value">
+            <input matInput readonly placeholder="{{'old_refrance_number' | translate:translateKey}}" formControlName="oldReferenceNumber">
+          </mat-form-field>
+
         </div>
         <div class="row">
           <mat-form-field class="col-md-4">
@@ -177,42 +182,42 @@
         <div class="row">
 
           <mat-form-field class="col-md-4">
-            <input matInput maxlength="10" required appAlphaNumeric placeholder="{{'final_plot_no' | translate:translateKey}}"
+            <input matInput maxlength="10" required placeholder="{{'final_plot_no' | translate:translateKey}}"
               formControlName="fpNo">
             <control-messages [control]="finalHospitalNocForm.controls.fpNo"></control-messages>
           </mat-form-field>
           <mat-form-field class="col-md-4">
-            <input matInput maxlength="10" required appAlphaNumeric placeholder="{{'revenue_survey_no' | translate:translateKey}}"
+            <input matInput maxlength="10" required placeholder="{{'revenue_survey_no' | translate:translateKey}}"
               formControlName="rsNo">
             <control-messages [control]="finalHospitalNocForm.controls.rsNo"></control-messages>
           </mat-form-field>
           <mat-form-field class="col-md-4">
-            <input matInput maxlength="10" required appAlphaNumeric placeholder="{{'tika_no' | translate:translateKey}}"
+            <input matInput maxlength="10" required placeholder="{{'tika_no' | translate:translateKey}}"
               formControlName="tikaNo">
             <control-messages [control]="finalHospitalNocForm.controls.tikaNo"></control-messages>
           </mat-form-field>
           <mat-form-field class="col-md-4">
-            <input matInput maxlength="10" required appAlphaNumeric placeholder="{{'town_planning_no' | translate:translateKey}}"
+            <input matInput maxlength="10" required placeholder="{{'town_planning_no' | translate:translateKey}}"
               formControlName="tpNo">
             <control-messages [control]="finalHospitalNocForm.controls.tpNo"></control-messages>
           </mat-form-field>
           <mat-form-field class="col-md-4">
-            <input matInput maxlength="50" required appAlphaNumeric placeholder="{{'building_location' | translate:translateKey}}"
+            <input matInput maxlength="50" required placeholder="{{'building_location' | translate:translateKey}}"
               formControlName="buildingLocation">
             <control-messages [control]="finalHospitalNocForm.controls.buildingLocation"></control-messages>
           </mat-form-field>
           <mat-form-field class="col-md-4">
-            <input matInput maxlength="10" appAlphaNumeric placeholder="{{'block_no' | translate:translateKey}}"
+            <input matInput maxlength="10" placeholder="{{'block_no' | translate:translateKey}}"
               formControlName="blockNo">
             <control-messages [control]="finalHospitalNocForm.controls.blockNo"></control-messages>
           </mat-form-field>
           <mat-form-field class="col-md-4">
-            <input matInput maxlength="10" required appAlphaNumeric placeholder="{{'o_p_no' | translate:translateKey}}"
+            <input matInput maxlength="10" required placeholder="{{'o_p_no' | translate:translateKey}}"
               formControlName="opNo">
             <control-messages [control]="finalHospitalNocForm.controls.opNo"></control-messages>
           </mat-form-field>
           <mat-form-field class="col-md-4">
-            <input matInput maxlength="10" required appAlphaNumeric placeholder="{{'city_servay_no' | translate:translateKey}}"
+            <input matInput maxlength="10" required placeholder="{{'city_servay_no' | translate:translateKey}}"
               formControlName="citySurveyNo">
             <control-messages [control]="finalHospitalNocForm.controls.citySurveyNo"></control-messages>
           </mat-form-field>
@@ -527,8 +532,8 @@
 
         </div>
 
-        <app-action-bar [form]="finalHospitalNocForm" (handleOnSaveAndNext)="handleOnSaveAndNext($event)"
-          (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step5', next: 5, back: 3}"></app-action-bar>
+        <app-action-bar [form]="finalHospitalNocForm" (handleOnSaveAndNext)="handleOnSaveAndNext($event)" (tabIndex)="onTabChange($event)"
+          [stepInfo]="{step: 'step5', next: 5, back: 3}"></app-action-bar>
       </mat-tab>
       <!-- step 5 Ends -->
 
@@ -799,8 +804,8 @@
 
         </div>
 
-        <app-action-bar [form]="finalHospitalNocForm" (handleOnSaveAndNext)="handleOnSaveAndNext($event)"
-          (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step6', next: 6, back: 4}"></app-action-bar>
+        <app-action-bar [form]="finalHospitalNocForm" (handleOnSaveAndNext)="handleOnSaveAndNext($event)" (tabIndex)="onTabChange($event)"
+          [stepInfo]="{step: 'step6', next: 6, back: 4}"></app-action-bar>
       </mat-tab>
       <!-- step 6 Ends -->
 

@@ -10,6 +10,12 @@
 				</ng-template>
 
 				<div class="row">
+					<mat-form-field class="col-md-4" *ngIf="navaratriNocForm.get('oldReferenceNumber').value">
+						<input matInput readonly placeholder="{{'old_refrance_number' | translate:translateKey}}" formControlName="oldReferenceNumber">
+					</mat-form-field>
+				</div>
+
+				<div class="row">
 					<mat-form-field class="col-md-4">
 						<input matInput readonly appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{'first_name' | translate:translateKey}}"
 						 formControlName="firstName" maxlength="100">
