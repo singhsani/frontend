@@ -193,7 +193,7 @@ export class TempStructureNocComponent implements OnInit {
 			email: [null, [Validators.required, Validators.maxLength(50)]],
 			applicantName: [null, [Validators.required, Validators.maxLength(100)]],
 			applicantNameGuj: [null, [Validators.required, Validators.maxLength(300)]],
-			oldReferenceNumber: [null, [Validators.maxLength(10)]],//not now
+			oldReferenceNumber: [null],
 			applicationDate: [null],//not now
 			officeContactNo: [null, [Validators.required, Validators.maxLength(10)]],
 			onsitePersonMobileNo: [null, [Validators.required, Validators.maxLength(10)]],
@@ -218,12 +218,12 @@ export class TempStructureNocComponent implements OnInit {
 			temporaryStructureAddress: [null, [Validators.required, Validators.maxLength(500)]],
 			temporaryStructureAddressGuj: [null, [Validators.required, Validators.maxLength(1500)]],
 
-			fpNo: [null, [Validators.required, Validators.maxLength(5)]],
-			rsNo: [null, [Validators.required, Validators.maxLength(5)]],
-			tikaNo: [null, [Validators.required, Validators.maxLength(5)]],
-			buildingLocation: [null, [Validators.required, Validators.maxLength(5)]],
-			tpNo: [null, [Validators.required, Validators.maxLength(5)]],
-			blockNo: [null, [Validators.required, Validators.maxLength(5)]],
+			fpNo: [null, [Validators.required, Validators.maxLength(10)]],
+			rsNo: [null, [Validators.required, Validators.maxLength(10)]],
+			tikaNo: [null, [Validators.required, Validators.maxLength(10)]],
+			buildingLocation: [null, [Validators.required, Validators.maxLength(50)]],
+			tpNo: [null, [Validators.required, Validators.maxLength(10)]],
+			blockNo: [null, [Validators.required, Validators.maxLength(10)]],
 			structurePurpose: [null, [Validators.required, Validators.maxLength(200)]],
 			opNo: [null, [Validators.required, Validators.maxLength(10)]],
 			noOfGatheringPersons: [null, [Validators.required, Validators.maxLength(10)]],

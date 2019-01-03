@@ -184,6 +184,7 @@ export class NavratriNocComponent implements OnInit {
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
 			serviceCode: 'FS-NAV',
 			/* Step 1 controls start */
+			oldReferenceNumber: [null],
 			firstName: [null, [Validators.required, Validators.maxLength(100)]],
 			lastName: [null, [Validators.required, Validators.maxLength(100)]],
 			middleName: [null, Validators.maxLength(100)],

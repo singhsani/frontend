@@ -59,6 +59,7 @@ export class DeadBodyWanComponent implements OnInit {
 		this.deadBodyWanForm = this.fb.group({
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
 			serviceCode: 'FS-BODY',
+			oldReferenceNumber: [null],
 			applicantName: [null, [Validators.required, Validators.maxLength(100)]],
 			applicantAddress: [null, [Validators.required, Validators.maxLength(300)]],
 			applicationDate: [null, Validators.required],

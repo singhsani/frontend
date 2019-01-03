@@ -11,6 +11,12 @@
 				</ng-template>
 
 				<div class="row">
+					<mat-form-field class="col-md-4" *ngIf="waterTankerAppForm.get('oldReferenceNumber').value">
+						<input matInput readonly placeholder="{{'old_refrance_number' | translate:translateKey}}" formControlName="oldReferenceNumber">
+					</mat-form-field>
+				</div>
+
+				<div class="row">
 					<div class="col-md-6 ngSelect" formGroupName="requiredOnFloor">
 						<ng-select required placeholder="{{'select_floor' | translate:translateKey}} *" formControlName="code">
 							<ng-option *ngFor="let FLOOR of FS_REQUIRED_ON_FLOOR" [value]="FLOOR.code">{{FLOOR.name}}</ng-option>
@@ -46,12 +52,13 @@
 					</mat-radio-group> -->
 				<div class="row">
 					<mat-form-field class="col-md-4">
-						<input matInput required [min]="disablepastDate" [matDatepicker]="picker1" formControlName="requiredOnDate" placeholder="{{ 'required_on_which_date' | translate:translateKey }} (DD/MM/YYYY)">
+						<input matInput required [min]="disablepastDate" [matDatepicker]="picker1" formControlName="requiredOnDate"
+						 placeholder="{{ 'required_on_which_date' | translate:translateKey }} (DD/MM/YYYY)">
 						<mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
 						<mat-datepicker #picker1 touchUi="true"></mat-datepicker>
 						<control-messages [control]="waterTankerAppForm.controls.requiredOnDate"></control-messages>
 					</mat-form-field>
-			
+
 					<div class="col-md-4 ngSelect" formGroupName="requireIn">
 						<ng-select required placeholder="{{'require_in' | translate:translateKey}} *" formControlName="code" (change)="onChangeTime($event);waterTankerAppForm.get('requireAtTime').reset()">
 							<ng-option *ngFor="let time of FS_REQUIRE_IN" [value]="time.code">{{time.name}}</ng-option>
@@ -97,7 +104,8 @@
 						<control-messages [control]="waterTankerAppForm.controls.totalAmount"></control-messages>
 					</mat-form-field>
 				</div>
-				<app-action-bar [form]="waterTankerAppForm" [uploadFiles]="uploadFilesArray" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'final', next: 1, back: 0}"></app-action-bar>
+				<app-action-bar [form]="waterTankerAppForm" [uploadFiles]="uploadFilesArray" (tabIndex)="onTabChange($event)"
+				 [stepInfo]="{step: 'final', next: 1, back: 0}"></app-action-bar>
 			</mat-tab>
 			<!-- step 1 Ends -->
 		</mat-tab-group>

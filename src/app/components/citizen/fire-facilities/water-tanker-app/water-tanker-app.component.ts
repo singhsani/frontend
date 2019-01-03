@@ -136,6 +136,7 @@ export class WaterTankerAppComponent implements OnInit {
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
 			serviceCode: 'FS-WATER',
 			/* Step 1 controls start */
+			oldReferenceNumber: [null],
 			requiredOnFloor: this.fb.group({
 				"code": [null, Validators.required]
 			}),

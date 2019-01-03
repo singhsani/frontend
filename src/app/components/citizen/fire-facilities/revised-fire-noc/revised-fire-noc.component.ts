@@ -303,14 +303,14 @@ export class RevisedFireNOCComponent implements OnInit {
 			fireVendorOfficeAddress: [null, [Validators.required, Validators.maxLength(300)]],
 
 			/* Step 4 controls start */
-			fpNo: [null, [Validators.required, Validators.maxLength(5)]],
-			rsNo: [null, [Validators.required, Validators.maxLength(5)]],
-			tikaNo: [null, [Validators.required, Validators.maxLength(5)]],
-			townPlanningNo: [null, [Validators.required, Validators.maxLength(5)]],
-			buildingLocation: [null, [Validators.required, Validators.maxLength(5)]],
-			blockNo: [null, [Validators.maxLength(5)]],
-			opNo: [null, [Validators.required, Validators.maxLength(5)]],
-			citySurveyNo: [null, [Validators.required, Validators.maxLength(5)]],
+			fpNo: [null, [Validators.required, Validators.maxLength(10)]],
+			rsNo: [null, [Validators.required, Validators.maxLength(10)]],
+			tikaNo: [null, [Validators.required, Validators.maxLength(10)]],
+			townPlanningNo: [null, [Validators.required, Validators.maxLength(10)]],
+			buildingLocation: [null, [Validators.required, Validators.maxLength(50)]],
+			blockNo: [null, [Validators.maxLength(10)]],
+			opNo: [null, [Validators.required, Validators.maxLength(10)]],
+			citySurveyNo: [null, [Validators.required, Validators.maxLength(10)]],
 			buildingHeight: [null, [Validators.required, Validators.maxLength(5)]],
 			totalBuildingFloor: [null, [Validators.required, Validators.maxLength(5)]],
 			noOfBasement: [null, [Validators.required, Validators.maxLength(3)]],
@@ -446,12 +446,10 @@ export class RevisedFireNOCComponent implements OnInit {
 	 * @param event : on change event value
 	 */
 	otherRemark(event: Event) {
+		this.codeOther = false;
 		_.forEach(event, (value) => {
 			if (value.code == 'OTHER') {
 				this.codeOther = true;
-			}
-			else {
-				this.codeOther = false
 			}
 		});
 	}

@@ -273,14 +273,14 @@ export class FireRenewalNocComponent implements OnInit {
 			fireVendorNameGuj: [null, [Validators.required, Validators.maxLength(450)]],
 
 			/* Step 3 controls start */
-			fpNo: [null, [Validators.required, Validators.maxLength(5)]],
-			rsNo: [null, [Validators.required, Validators.maxLength(5)]],
-			tikaNo: [null, [Validators.required, Validators.maxLength(5)]],
-			townPlanningNo: [null, [Validators.required, Validators.maxLength(5)]],
-			buildingLocation: [null, [Validators.required, Validators.maxLength(5)]],
-			blockNo: [null, [Validators.maxLength(5)]],
-			opNo: [null, [Validators.required, Validators.maxLength(5)]],
-			citySurveyNo: [null, [Validators.required, Validators.maxLength(5)]],
+			fpNo: [null, [Validators.required, Validators.maxLength(10)]],
+			rsNo: [null, [Validators.required, Validators.maxLength(10)]],
+			tikaNo: [null, [Validators.required, Validators.maxLength(10)]],
+			townPlanningNo: [null, [Validators.required, Validators.maxLength(10)]],
+			buildingLocation: [null, [Validators.required, Validators.maxLength(50)]],
+			blockNo: [null, [Validators.maxLength(10)]],
+			opNo: [null, [Validators.required, Validators.maxLength(10)]],
+			citySurveyNo: [null, [Validators.required, Validators.maxLength(10)]],
 
 			finalNOCIssueDate: [null],
 			nextRenewalDate: [null],
