@@ -178,7 +178,7 @@ export class TempFireworksNocComponent implements OnInit {
 			toDate: [null, [Validators.required, Validators.maxLength(10)]],
 			noOfShops: [null, [Validators.required, Validators.maxLength(10)]],
 			shopInVMCBoundry: [false, [Validators.required]],//true/false
-			requiredNOCForArea: [null, [Validators.required, Validators.maxLength(3)]],
+			// requiredNOCForArea: [null, [Validators.required, Validators.maxLength(3)]],
 			shopInOpenSpace: [null, [Validators.required, Validators.maxLength(150)]],
 			ownerIsVMC: [false, [Validators.required]],//true/false
 			ownerConsentLetterIncluded: [false, [Validators.required]],//true/false

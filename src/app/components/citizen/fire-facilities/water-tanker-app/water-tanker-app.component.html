@@ -38,23 +38,31 @@
 						 formControlName="whoSuggested">
 						<control-messages [control]="waterTankerAppForm.controls.whoSuggested"></control-messages>
 					</mat-form-field>
+
+					<div class="col-md-4 radioBtnError">
+						<mat-label>{{'within_vmc_boundary' | translate:translateKey }} *</mat-label>
+						<mat-radio-group formControlName="withinVMCBoundary" required>
+							<mat-radio-button [value]="true">
+								Yes
+							</mat-radio-button>
+							<mat-radio-button [value]="false">
+								No
+							</mat-radio-button>
+						</mat-radio-group>
+						<control-messages [control]="waterTankerAppForm.controls.withinVMCBoundary"></control-messages>
+					</div>
 				</div>
 				<!-- <mat-form-field class="col-md-6">
 						<textarea matInput rows="3" cols="50" maxlength="500" formControlName="holderAddress" placeholder="{{ 'upload_letter' | translate:translateKey }}"
 						 required> </textarea>
 						<control-messages [control]="waterTankerAppForm.controls.holderAddress"></control-messages>
 					</mat-form-field> -->
-				<!-- 
-					<mat-radio-group class="col-md-4">
-						<h2>withinVMCBoundary</h2>
-						<mat-radio-button value="1">Yes</mat-radio-button>
-						<mat-radio-button value="2">No</mat-radio-button>
-					</mat-radio-group> -->
+
 				<div class="row">
 					<mat-form-field class="col-md-4">
-						<input matInput required [min]="disablepastDate" [matDatepicker]="picker1" formControlName="requiredOnDate"
+						<input matInput readonly required [min]="disablepastDate" [matDatepicker]="picker1" formControlName="requiredOnDate"
 						 placeholder="{{ 'required_on_which_date' | translate:translateKey }} (DD/MM/YYYY)">
-						<mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+						<mat-datepicker-toggle disabled matSuffix [for]="picker1"></mat-datepicker-toggle>
 						<mat-datepicker #picker1 touchUi="true"></mat-datepicker>
 						<control-messages [control]="waterTankerAppForm.controls.requiredOnDate"></control-messages>
 					</mat-form-field>

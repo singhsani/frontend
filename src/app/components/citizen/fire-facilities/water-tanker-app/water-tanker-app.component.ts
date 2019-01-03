@@ -144,7 +144,7 @@ export class WaterTankerAppComponent implements OnInit {
 				"code": [null, Validators.required]
 			}),
 			whoSuggested: [null, [Validators.required, Validators.maxLength(150)]],
-			withinVMCBoundary: [true],
+			withinVMCBoundary: [null,[Validators.required]],
 			requiredOnDate: [null, Validators.required],
 			requireIn: this.fb.group({
 				"code": [null, Validators.required]

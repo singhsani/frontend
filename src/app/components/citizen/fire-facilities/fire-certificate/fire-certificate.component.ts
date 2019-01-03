@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ManageRoutes } from '../../../../config/routes-conf';
 import { FormsActionsService } from '../../../../core/services/citizen/data-services/forms-actions.service';
 import * as moment from 'moment';
 import { AmazingTimePickerService } from 'amazing-time-picker';
 import * as _ from 'lodash';
+import { TranslateService } from '../../../../shared/modules/translate/translate.service';
+
 @Component({
   selector: 'app-fire-certificate',
   templateUrl: './fire-certificate.component.html',
@@ -13,24 +15,26 @@ import * as _ from 'lodash';
 })
 export class FireCertificateComponent implements OnInit {
 
-  tabIndex: number = 0;
-
   fireCertificateForm: FormGroup;
   translateKey: string = 'fireCertificateScreen';
 
   appId: number;
   apiCode: string;
+  tabIndex: number = 0;
   //Lookups Array
   FS_FIRE_PLACE_TYPE: Array<any> = [];
   disablefutureDate = new Date(moment().format('YYYY-MM-DD'));
   // required attachment array
   private uploadFilesArray: Array<any> = [];
+  private showButtons: boolean = false;
 
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private formService: FormsActionsService,
-    private atp: AmazingTimePickerService
+    private atp: AmazingTimePickerService,
+    private router: Router,
+    private TranslateService:TranslateService
   ) { }
 
   ngOnInit() {
@@ -41,8 +45,13 @@ export class FireCertificateComponent implements OnInit {
       this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
     });
     this.getLookupData();
-    this.getFireCertificategetData();
-    this.fireCertificateFormControls();
+    if (!this.appId) {
+      this.router.navigate([ManageRoutes.getFullRoute('CITIZENDASHBOARD')]);
+    }
+    else {
+      this.getFireCertificategetData();
+      this.fireCertificateFormControls();
+    }
   }
 
 	/**
@@ -51,17 +60,17 @@ export class FireCertificateComponent implements OnInit {
   getFireCertificategetData() {
     this.formService.getFormData(this.appId).subscribe(res => {
 
-      try {
-        this.fireCertificateForm.patchValue(res);
+      // try {
+      this.fireCertificateForm.patchValue(res);
+      this.showButtons = true;
+      res.serviceDetail.serviceUploadDocuments.forEach(app => {
+        (<FormArray>this.fireCertificateForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.createDocumentsGrp(app));
+      });
+      this.requiredDocumentList();
 
-        res.serviceDetail.serviceUploadDocuments.forEach(app => {
-          (<FormArray>this.fireCertificateForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.createDocumentsGrp(app));
-        });
-        this.requiredDocumentList();
-
-      } catch (error) {
-        console.log(error.message)
-      }
+      // } catch (error) {
+      //   console.log(error.message)
+      // }
     });
   }
 
@@ -111,6 +120,7 @@ export class FireCertificateComponent implements OnInit {
     this.fireCertificateForm = this.fb.group({
       apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
       serviceCode: 'FS_FIRE_CERTIFICATE',
+
       applicantName: [null, [Validators.required, Validators.maxLength(100)]],
       applicantNameGuj: [null, [Validators.required, Validators.maxLength(300)]],
       applicationDate: [null, [Validators.required, Validators.maxLength(50)]],
@@ -176,6 +186,13 @@ export class FireCertificateComponent implements OnInit {
     this.fireCertificateForm.get(controlName).setValue(ev);
   }
 
+  /**
+ * This method is handle depended documents on save event
+ * @param res - form response after save event
+ */
+  handleOnSaveAndNext(res) {
+    this.requiredDocumentList();
+  }
 
 	/**
      * This method required for final form submition.
