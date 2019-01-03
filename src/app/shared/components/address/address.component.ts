@@ -43,7 +43,7 @@ export class AddressComponent implements OnInit, OnChanges {
 			this.addressFormGroup.get('buildingName').setValidators([ValidationService.buildingNameValidator]);
 			this.addressFormGroup.get('city').setValidators([Validators.required]);
 			this.addressFormGroup.get('country').setValidators([Validators.required]);
-			this.addressFormGroup.get('pincode').setValidators([Validators.required,Validators.minLength(6),Validators.maxLength(6)]);
+			this.addressFormGroup.get('pincode').setValidators([Validators.required, Validators.minLength(6), Validators.maxLength(6)]);
 		} else {
 			this.addressFormGroup.get('state').clearValidators();
 			this.addressFormGroup.get('city').clearValidators();
@@ -56,7 +56,7 @@ export class AddressComponent implements OnInit, OnChanges {
 			this.isBuildinAreaReq = true;
 			this.addressFormGroup.get('buildingName').setValidators([Validators.required]);
 			this.addressFormGroup.get('area').setValidators([Validators.required]);
-		}else{
+		} else {
 			/*If no need of buildname & area require then this logic works */
 			this.isBuildinAreaReq = false;
 			this.addressFormGroup.get('buildingName').clearValidators();
@@ -70,7 +70,7 @@ export class AddressComponent implements OnInit, OnChanges {
 		this.addressFormGroup.get('country').updateValueAndValidity();
 		this.addressFormGroup.get('city').updateValueAndValidity();
 		this.addressFormGroup.get('state').updateValueAndValidity();
-		
+
 	}
 
 	/**

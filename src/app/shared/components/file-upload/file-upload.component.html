@@ -19,8 +19,8 @@
 
 		<!-- Uploaded file/image name-->
 		<label class="custom-file-upload" [hidden]="!canUpload">
-			<span class="badge badge-info" (click)="view()" *ngIf="!getFile">{{fileName}}</span>
-			<span class="badge badge-info" *ngIf="getFile" (click)="view()">{{getFile.realFileName}}</span>
+			<span class="badge badge-info" title="{{fileName}}" (click)="view()" *ngIf="!getFile">{{fileName}}</span>
+			<span class="badge badge-info" title="{{getFile.realFileName}}" *ngIf="getFile" (click)="view()">{{getFile.realFileName}}</span>
 			<mat-progress-bar *ngIf="currentFileUpload" mode="determinate" value="{{progress.percentage}}"></mat-progress-bar>
 		</label>
 

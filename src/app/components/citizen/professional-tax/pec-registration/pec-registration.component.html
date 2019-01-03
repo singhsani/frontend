@@ -287,7 +287,7 @@
 					<div class="col-md-4" *ngFor="let doc of attachmentList">
 						<div *ngIf="doc.requiredOnCitizenPortal && doc.isActive && showButtons">
 							<label>{{doc.documentLabelEn}}
-								<span *ngIf="doc.mandatory">*</span>
+								<span class="text-danger" *ngIf="doc.mandatory">*</span>
 							</label>
 							<file-upload [form]="pecRegForm" [uploadModel]="doc"></file-upload>
 						</div>

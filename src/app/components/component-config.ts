@@ -14,7 +14,7 @@ export class ComponentConfig {
     /**
      * Message Constants
      */
-    public ALL_FEILD_REQUIRED_MESSAGE = "Please fill all the required feilds";
+    public ALL_FEILD_REQUIRED_MESSAGE = "Please enter all the required information";
     public MOB_NO_MIS_MATCH_MESSAGE = "Mobile Number and Confirm Mobile Number should match";
     public EMAIL_MIS_MATCH_MESSAGE = "Email and Confirm Email should match";
 
