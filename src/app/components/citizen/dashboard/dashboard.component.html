@@ -63,7 +63,7 @@
 <ul class="recentList" *ngIf="isRecentApp">
     <li *ngFor="let application of recentApp">
         <div>{{ application.applicantName?application.applicantName:'N/A' }}</div>
-        <div class="recenText">{{ application.serviceDetail.name }} | Application ID : {{ application.uniqueId }}</div>
+        <div class="recenText">{{ application.serviceDetail.name }} | Application / Registration Number : {{ application.fileNumber ? application.fileNumber : application.uniqueId }}</div>
         <span class="badge draft">{{ application.fileStatus }}</span>
     </li>
 </ul>

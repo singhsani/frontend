@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
+import { ComponentConfig } from './../../../component-config';
 import { ManageRoutes } from './../../../../config/routes-conf';
 import { ValidationService } from './../../../../shared/services/validation.service';
 import { CommonService } from './../../../../shared/services/common.service';
@@ -22,6 +23,7 @@ export class PecRegistrationComponent implements OnInit {
 
 	@ViewChild('officeAddr') officeAddrComponent: any;
 	@ViewChild('resAddr') resAddrComponent: any;
+	private config = new ComponentConfig;
 
 	translateKey: string = 'pecRegistrationScreen';
 	prcTranslateKey: string = 'prcRegistrationScreen';
@@ -294,8 +296,17 @@ export class PecRegistrationComponent implements OnInit {
 	onSubmit() {
 
 		if (this.pecRegForm.invalid) {
-			this.markFormGroupTouched(this.pecRegForm);
-			this.commonService.openAlert("Warning", "Enter all the required information", "warning");
+			let count = this.config.getAllErrors(this.pecRegForm);
+			this.commonService.openAlert("Warning", this.config.ALL_FEILD_REQUIRED_MESSAGE, "warning", "", cb => {
+				if (count >= 1 && count <= 29)
+					this.tabIndex = 0;
+				else if (count >= 30 && count <= 32)
+					this.tabIndex = 1;
+				else if (count >= 33 && count <= 37)
+					this.tabIndex = 2;
+				else if (count >= 38 && count <= 43)
+					this.tabIndex = 3;
+			});
 			return;
 		}
 
@@ -323,7 +334,7 @@ export class PecRegistrationComponent implements OnInit {
 						// 	});
 						// } else {
 						this.commonService.openAlert("PEC Registration Successful", "", "success", `Your Application Number is<br> <b>${res.uniqueId}</b> <br> Visit the department with original document`, cb => {
-								this.router.navigateByUrl(ManageRoutes.getFullRoute('CITIZENMYAPPS'));
+							this.router.navigateByUrl(ManageRoutes.getFullRoute('CITIZENMYAPPS'));
 						});
 						// }
 						//this.pecRegForm.patchValue(res);
@@ -599,29 +610,5 @@ export class PecRegistrationComponent implements OnInit {
 			}
 		}
 	}
-
-
-	/**
-	 * Marks all controls in a form group as touched
-	 * @param formGroup - The group to caress
-	*/
-	markFormGroupTouched(formGroup: FormGroup) {
-		if (Reflect.getOwnPropertyDescriptor(formGroup, 'controls')) {
-			(<any>Object).values(formGroup.controls).forEach(control => {
-				if (control instanceof FormGroup) {
-					// FormGroup
-					this.markFormGroupTouched(control);
-				} else if (control instanceof FormArray) {
-					control.controls.forEach(c => {
-						if (c instanceof FormGroup)
-							this.markFormGroupTouched(c);
-					});
-				}
-				// FormControl
-				control.markAsTouched();
-			});
-		}
-	}
-
 
 }

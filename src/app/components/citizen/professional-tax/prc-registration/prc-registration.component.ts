@@ -7,6 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 
+import { ComponentConfig } from '../../../component-config';
 import { ManageRoutes } from './../../../../config/routes-conf';
 import { ValidationService } from './../../../../shared/services/validation.service';
 import { CommonService } from './../../../../shared/services/common.service';
@@ -25,6 +26,7 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 	@ViewChild('officeAddr') officeAddrComponent: any;
 	@ViewChild('resAddr') resAddrComponent: any;
 	@ViewChild('searchInput') searchInput: MatInput;
+	private config = new ComponentConfig();
 
 	translateKey: string = 'prcRegistrationScreen';
 	pecTranslateKey: string = 'pecRegistrationScreen';
@@ -270,14 +272,12 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 
 		if (this.prcRegForm.getRawValue().pecNo) {
 
-			/*If form is invalid */
-			if (this.prcRegForm.invalid) {
-				this.markFormGroupTouched(this.prcRegForm);
-			}
-
 			/*If rc date not selected */
 			if (!this.prcRegForm.get('rcDate').value) {
-				this.commonService.openAlert("Warning", "RC date is required", "warning");
+				let count = this.config.getAllErrors(this.prcRegForm);
+				this.commonService.openAlert("Warning", "RC date is required", "warning", "", cb => {
+					if (count >= 1 && count <= 25) this.tabIndex = 0;
+				});
 				return;
 			}
 
@@ -505,8 +505,10 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 	openEmpModal(template: TemplateRef<any>) {
 
 		if (!this.prcRegForm.get('rcDate').value) {
-			this.commonService.openAlert("Warning", "RC date is required", "warning");
-			this.markFormGroupTouched(this.prcRegForm);
+			let count = this.config.getAllErrors(this.prcRegForm);
+			this.commonService.openAlert("Warning", "RC date is required", "warning", "", cb => {
+				if (count >= 1 && count <= 25) this.tabIndex = 0;
+			});
 			return;
 		}
 
@@ -574,8 +576,10 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 	editEmpModal(template: TemplateRef<any>, obj) {
 
 		if (!this.prcRegForm.get('rcDate').value) {
-			this.commonService.openAlert("Warning", "RC date is required", "warning");
-			this.markFormGroupTouched(this.prcRegForm);
+			let count = this.config.getAllErrors(this.prcRegForm);
+			this.commonService.openAlert("Warning", "RC date is required", "warning", "", cb => {
+				if (count >= 1 && count <= 25) this.tabIndex = 0;
+			});
 			return;
 		}
 
@@ -739,28 +743,6 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 				this.monthIdx = 0;
 				this.currentMonthIdx = 12;
 			}
-		}
-	}
-
-	/**
-	 * Marks all controls in a form group as touched
-	 * @param formGroup - The group to caress
-	*/
-	markFormGroupTouched(formGroup: FormGroup) {
-		if (Reflect.getOwnPropertyDescriptor(formGroup, 'controls')) {
-			(<any>Object).values(formGroup.controls).forEach(control => {
-				if (control instanceof FormGroup) {
-					// FormGroup
-					this.markFormGroupTouched(control);
-				} else if (control instanceof FormArray) {
-					control.controls.forEach(c => {
-						if (c instanceof FormGroup)
-							this.markFormGroupTouched(c);
-					});
-				}
-				// FormControl
-				control.markAsTouched();
-			});
 		}
 	}
 
