@@ -132,16 +132,14 @@ export class NavratriNocComponent implements OnInit {
 	 * @param formControl - control name
 	 */
 	onChange(controlName: string, dependentControl: string) {
-		
 		this.navaratriNocForm.get(dependentControl).reset();
-		if (controlName) {
+		if (this.navaratriNocForm.get(controlName).value) {
 			this.navaratriNocForm.get(dependentControl).setValidators([Validators.required]);
 			// this.navaratriNocForm.updateValueAndValidity();
 		}
 		else {	
 			this.navaratriNocForm.get(dependentControl).clearValidators();
 			// this.navaratriNocForm.updateValueAndValidity();
-
 		}
 	}
 
@@ -206,7 +204,7 @@ export class NavratriNocComponent implements OnInit {
 			garbaPlaceAddressGuj: [null, [Validators.required, Validators.maxLength(300)]],
 			fromDate: [null, [Validators.required]],
 			toDate: [null, [Validators.required]],
-			landOwnerConsentIncluded: [null, [Validators.required]],
+			landOwnerConsentIncluded: [null, [Validators.maxLength(10)]],
 			garbaInVMCRange: [null, [Validators.required, Validators.maxLength(10)]],
 			landOwnerIsVMC: [null, [Validators.required, Validators.maxLength(10)]],
 			vmcfeeReceiptNo: [null, [Validators.maxLength(15)]],
