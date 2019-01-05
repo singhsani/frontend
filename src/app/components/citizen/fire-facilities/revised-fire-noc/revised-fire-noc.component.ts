@@ -10,13 +10,13 @@ import * as _ from 'lodash';
 import { TranslateService } from '../../../../shared/modules/translate/translate.service';
 
 @Component({
-  selector: 'app-revised-fire-noc',
-  templateUrl: './revised-fire-noc.component.html',
-  styleUrls: ['./revised-fire-noc.component.scss']
+	selector: 'app-revised-fire-noc',
+	templateUrl: './revised-fire-noc.component.html',
+	styleUrls: ['./revised-fire-noc.component.scss']
 })
 export class RevisedFireNOCComponent implements OnInit {
 
-	
+
 	revisedFireNocForm: FormGroup;
 	//translateKey: string = 'finalFireNocScreen';
 	translateKey: string = 'revisedFireNocScreen';
@@ -259,7 +259,7 @@ export class RevisedFireNOCComponent implements OnInit {
 			/* Step 1 controls start */
 			provisionalNocNumber: [null],
 			oldReferenceNumber: [null],
-
+			finalFireNocNumber: [null],
 			applicantName: [null, [Validators.required, Validators.maxLength(100)]],
 			applicantNameGuj: [null, [Validators.required, Validators.maxLength(300)]],
 			applicationDate: [null],
@@ -327,7 +327,7 @@ export class RevisedFireNOCComponent implements OnInit {
 			drawingProvided: [null, Validators.required],
 			siteAddressWithBuildingName: [null, [Validators.required, Validators.maxLength(200)]],
 			siteAddressWithBuildingNameGuj: [null, [Validators.required, Validators.maxLength(600)]],//todo
-			
+
 			otherInformation: [null, [Validators.required, Validators.maxLength(200)]],
 			gaslineInUnderground: [null, Validators.required],
 			undergroundCabling: [null, Validators.required],
@@ -340,22 +340,22 @@ export class RevisedFireNOCComponent implements OnInit {
 			previouslyNocTaken: this.fb.group({
 				code: [null, Validators.required]
 			}),
-			undergroundWaterTankLength: [null, [Validators.required, Validators.maxLength(3)]],
-			undergroundWaterTankBreadth: [null, [Validators.required, Validators.maxLength(3)]],
-			undergroundWaterTankHeight: [null, [Validators.required, Validators.maxLength(3)]],
-			undergroundWaterTankCapacity: [null, [Validators.required, Validators.maxLength(3)]],
-			undergroundWaterTankVolume: [null, [Validators.required, Validators.maxLength(3)]],
+			undergroundWaterTankLength: [null, [Validators.required, Validators.maxLength(8)]],
+			undergroundWaterTankBreadth: [null, [Validators.required, Validators.maxLength(8)]],
+			undergroundWaterTankHeight: [null, [Validators.required, Validators.maxLength(8)]],
+			undergroundWaterTankCapacity: [null, [Validators.required, Validators.maxLength(8)]],
+			undergroundWaterTankVolume: [null, [Validators.required, Validators.maxLength(8)]],
 			undergroundWatertankMapApproved: [null, Validators.required],
-			
-			overgroundWaterTankCapacity: [null, [Validators.required, Validators.maxLength(5)]],
-			overgroundWaterTankLength: [null, [Validators.required, Validators.maxLength(3)]],
-			overgroundWaterTankBreadth: [null, [Validators.required, Validators.maxLength(3)]],
-			overgroundWaterTankHeight: [null, [Validators.required, Validators.maxLength(3)]],
-			overgroundWaterTankVolume: [null, [Validators.required, Validators.maxLength(3)]],
+
+			overgroundWaterTankCapacity: [null, [Validators.required, Validators.maxLength(8)]],
+			overgroundWaterTankLength: [null, [Validators.required, Validators.maxLength(8)]],
+			overgroundWaterTankBreadth: [null, [Validators.required, Validators.maxLength(8)]],
+			overgroundWaterTankHeight: [null, [Validators.required, Validators.maxLength(8)]],
+			overgroundWaterTankVolume: [null, [Validators.required, Validators.maxLength(8)]],
 			overgroundWatertankMapApproved: [null, Validators.required],
 
 
-			finalFireNocNumber:[null],
+			
 			/* Step 6 controls start*/
 			attachments: []
 			/* Step 6 controls end */
@@ -391,10 +391,10 @@ export class RevisedFireNOCComponent implements OnInit {
      */
 	handleErrorsOnSubmit(flag) {
 
-		let step0 = 12;
-		let step1 = 17;
-		let step2 = 33;
-		let step3 = 61;
+		let step0 = 13;
+		let step1 = 18;
+		let step2 = 34;
+		let step3 = 62;
 		let step4 = 75;
 
 		if (flag != null) {
@@ -446,11 +446,18 @@ export class RevisedFireNOCComponent implements OnInit {
 	 * @param event : on change event value
 	 */
 	otherRemark(event: Event) {
-		this.codeOther = false;
-		_.forEach(event, (value) => {
-			if (value.code == 'OTHER') {
-				this.codeOther = true;
+		try {
+			this.codeOther = false;
+			_.forEach(event, (value) => {
+				if (value.code == 'OTHER') {
+					this.codeOther = true;
+				}
+			});
+			if (!this.codeOther) {
+				this.revisedFireNocForm.get('otherPurposeRemark').reset();
 			}
-		});
+		} catch (e) {
+
+		}
 	}
 }

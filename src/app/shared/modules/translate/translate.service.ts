@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { SessionStorageService, SessionStorage } from 'angular-web-storage';
 import { HttpService } from '../../services/http.service';
 import * as _ from 'lodash';
-
+declare var pramukhIME;
+declare var PramukhIndic;
 /**
  * This Class is use for perform common language translation for application.
  */
@@ -86,6 +87,11 @@ export class TranslateService {
 		} else {
 			return key;
 		}
+	}
+
+	getEngToGujTranslation(engValue:string):string{
+		pramukhIME.addKeyboard(PramukhIndic, 'gujarati');
+		return pramukhIME.convert(engValue)
 	}
 
 }

@@ -22,7 +22,7 @@ export class DeadBodyWanComponent implements OnInit {
 	appId: number;
 	apiCode: string;
 
-	disablefutureDate = new Date(moment().format('YYYY-MM-DD'));
+	disablePastDate = new Date(moment().format('YYYY-MM-DD'));
 
 	constructor(
 		private fb: FormBuilder,
@@ -73,7 +73,7 @@ export class DeadBodyWanComponent implements OnInit {
 			nameOfAttender: [null, [Validators.required, Validators.maxLength(150)]],
 			departureTime: [null, [Validators.required, Validators.maxLength(10)]],
 			arrivalTime: [null, [Validators.required, Validators.maxLength(10)]],
-			concessionDetail: [null, [Validators.required, Validators.minLength(3)]],
+			concessionDetail: [null, [Validators.minLength(3)]],
 			nameOfOperator: [null, [Validators.required, Validators.maxLength(150)]]
 		});
 	}

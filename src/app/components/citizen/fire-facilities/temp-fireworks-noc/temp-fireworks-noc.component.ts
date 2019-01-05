@@ -133,6 +133,13 @@ export class TempFireworksNocComponent implements OnInit {
 				this.tempFireworksNocForm.patchValue(res);
 				this.showButtons = true;
 
+				//convert applicant name and set in applicantNameGuj filds 
+				let applicantNameGujFields = this.tempFireworksNocForm.get('applicantNameGuj');
+				let applicantNameValue = this.tempFireworksNocForm.get('applicantName').value;
+				if (!applicantNameGujFields.value) {
+					applicantNameGujFields.setValue(this.TranslateService.getEngToGujTranslation(applicantNameValue))
+				}
+
 				res.serviceDetail.serviceUploadDocuments.forEach(app => {
 					(<FormArray>this.tempFireworksNocForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.createDocumentsGrp(app));
 				});
@@ -162,16 +169,14 @@ export class TempFireworksNocComponent implements OnInit {
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
 			serviceCode: 'FS-FIREWORKSHOP',
 			/* Step 1 controls start */
-			firstName: [null, [Validators.required, Validators.maxLength(100)]],
-			lastName: [null, [Validators.required, Validators.maxLength(100)]],
-			middleName: [null, Validators.maxLength(100)],
-			mobileNo: [null, [Validators.required, Validators.maxLength(10)]],
-			email: [null, [Validators.required, Validators.maxLength(50)]],
 			applicantName: [null, [Validators.required, Validators.maxLength(100)]],
 			applicantNameGuj: [null, [Validators.required, Validators.maxLength(300)]],
+			mobileNo: [null, [Validators.required, Validators.maxLength(10)]],
+			email: [null, [Validators.required, Validators.maxLength(50)]],
 			oldReferenceNumber: [null, [Validators.maxLength(10)]],//not now
 			applicationDate: [null],//not now
 
+			/* Step 2 controls start */
 			applicationThroughPolice: [false, [Validators.required]],//true/false
 			temporaryShopAddress: [null, [Validators.required, Validators.maxLength(200)]],
 			fromDate: [null, [Validators.required, Validators.maxLength(10)]],
@@ -183,23 +188,24 @@ export class TempFireworksNocComponent implements OnInit {
 			ownerIsVMC: [false, [Validators.required]],//true/false
 			ownerConsentLetterIncluded: [false, [Validators.required]],//true/false
 			consentLetterDate: [null, [Validators.maxLength(100)]],//date
-			propertyNo: [null, [Validators.required, Validators.maxLength(10)]],
+			propertyNo: [null, [Validators.required, Validators.maxLength(15)]],
 			layoutPlanIncluded: [null, [Validators.required]],//true/false
 			weatherExitShownInMap: [null, [Validators.required]],//true/false
 			noOfExits: [null, [Validators.required, Validators.maxLength(3)]],
 			usageOfInflammable: [null, [Validators.required, Validators.maxLength(500)]],
-
+			
+			/* Step 3 controls start */
 			securityArrangement: [null, [Validators.required]],//true/false
 			parkingArrangement: [null, [Validators.required]],//true/false
 			exitNoSmokingSignboardProvision: [null, [Validators.required]],//true/false
 			standbyFireEngineDemanded: [null, [Validators.required]],//true/false
 			lastYearLicenceReceived: [null, [Validators.required]],//true/false
-			vmcfeeReceiptNo: [null, [Validators.required, Validators.maxLength(12)]],
+			vmcFeeReceiptNo: [null, [Validators.required, Validators.maxLength(12)]],
 			wiringType: this.fb.group({
 				code: [null, Validators.required]
 			}),
 
-			/*Attachment Step  */
+			/* Step 4 controls start */
 			attachments: []
 			/* Attachment Step end */
 		});

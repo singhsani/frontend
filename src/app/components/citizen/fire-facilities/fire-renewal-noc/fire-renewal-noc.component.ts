@@ -246,7 +246,6 @@ export class FireRenewalNocComponent implements OnInit {
 			/* Step 1 controls start */
 			finalFireNocNumber: [null],
 			oldReferenceNumber: [null],
-
 			applicantName: [null, [Validators.required, Validators.maxLength(100)]],
 			applicantNameGuj: [null, [Validators.required, Validators.maxLength(300)]],
 			applicationDate: [null],

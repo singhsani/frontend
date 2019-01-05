@@ -276,6 +276,7 @@ export class FinalFireNocComponent implements OnInit {
 			applicantPermanentAddressGuj: [null, [Validators.required, Validators.maxLength(900)]],
 			officeEmailId: [null, [Validators.required, Validators.maxLength(50)]],
 
+			/* Step 2 controls start */
 			appliedForId: this.fb.group({
 				code: [null, Validators.required]
 			}),
@@ -285,6 +286,7 @@ export class FinalFireNocComponent implements OnInit {
 			subjectTo: [null, [Validators.required, Validators.maxLength(200)]],
 			purposeOfBuildingUse: [null],//array
 			otherPurposeRemark: [null, [Validators.maxLength(200)]],
+			/* Step 3 controls start */
 			architectName: [null, [Validators.required, Validators.maxLength(100)]],
 			architectNameGuj: [null, [Validators.required, Validators.maxLength(300)]],
 			architectFirmName: [null, [Validators.required, Validators.maxLength(50)]],
@@ -303,6 +305,7 @@ export class FinalFireNocComponent implements OnInit {
 			fireVendorName: [null, [Validators.required, Validators.maxLength(150)]],
 			fireVendorNameGuj: [null, [Validators.required, Validators.maxLength(450)]],
 			fireVendorAddress: [null, [Validators.required, Validators.maxLength(900)]],
+			/* Step 4 controls start */
 			fireVendorOfficeAddress: [null, [Validators.required, Validators.maxLength(300)]],
 			fpNo: [null, [Validators.required, Validators.maxLength(10)]],
 			rsNo: [null, [Validators.required, Validators.maxLength(10)]],
@@ -332,23 +335,24 @@ export class FinalFireNocComponent implements OnInit {
 			gaslineInUnderground: [null, Validators.required],
 			undergroundCabling: [null, Validators.required],
 			ongcLineInUnderground: [null, Validators.required],
+			/* Step 5 controls start */
 			areaZone: this.fb.group({
 				code: [null, Validators.required]
 			}),
 			previouslyNocTaken: this.fb.group({
 				code: [null, Validators.required]
 			}),
-			undergroundWaterTankLength: [null, [Validators.required, Validators.maxLength(4)]],
-			undergroundWaterTankBreadth: [null, [Validators.required, Validators.maxLength(3)]],
-			undergroundWaterTankHeight: [null, [Validators.required, Validators.maxLength(3)]],
-			undergroundWaterTankCapacity: [null, [Validators.required, Validators.maxLength(3)]],
-			undergroundWaterTankVolume: [null, [Validators.required, Validators.maxLength(3)]],
+			undergroundWaterTankLength: [null, [Validators.required, Validators.maxLength(8)]],
+			undergroundWaterTankBreadth: [null, [Validators.required, Validators.maxLength(8)]],
+			undergroundWaterTankHeight: [null, [Validators.required, Validators.maxLength(8)]],
+			undergroundWaterTankCapacity: [null, [Validators.required, Validators.maxLength(8)]],
+			undergroundWaterTankVolume: [null, [Validators.required, Validators.maxLength(8)]],
 			undergroundWatertankMapApproved: [null, Validators.required],
-			overgroundWaterTankLength: [null, [Validators.required, Validators.maxLength(5)]],
-			overgroundWaterTankBreadth: [null, [Validators.required, Validators.maxLength(5)]],
-			overgroundWaterTankHeight: [null, [Validators.required, Validators.maxLength(5)]],
-			overgroundWaterTankCapacity: [null, [Validators.required, Validators.maxLength(5)]],
-			overgroundWaterTankVolume: [null, [Validators.required, Validators.maxLength(5)]],
+			overgroundWaterTankLength: [null, [Validators.required, Validators.maxLength(8)]],
+			overgroundWaterTankBreadth: [null, [Validators.required, Validators.maxLength(8)]],
+			overgroundWaterTankHeight: [null, [Validators.required, Validators.maxLength(8)]],
+			overgroundWaterTankCapacity: [null, [Validators.required, Validators.maxLength(8)]],
+			overgroundWaterTankVolume: [null, [Validators.required, Validators.maxLength(8)]],
 			overgroundWatertankMapApproved: [null, Validators.required],
 			/* Step 6 controls start*/
 			attachments: []
@@ -386,10 +390,10 @@ export class FinalFireNocComponent implements OnInit {
 	handleErrorsOnSubmit(flag) {
 
 		let step0 = 14;
-		let step1 = 18;
+		let step1 = 19;
 		let step2 = 34;
-		let step3 = 61;
-		let step4 = 75;
+		let step3 = 63;
+		let step4 = 77;
 
 		if (flag != null) {
 			//Check validation for step by step
@@ -444,11 +448,18 @@ export class FinalFireNocComponent implements OnInit {
 	 * @param event : on change event value
 	 */
 	otherRemark(event: Event) {
-		this.codeOther = false;
-		_.forEach(event, (value) => {
-			if (value.code == 'OTHER') {
-				this.codeOther = true;
+		try {
+			this.codeOther = false;
+			_.forEach(event, (value) => {
+				if (value.code == 'OTHER') {
+					this.codeOther = true;
+				}
+			});
+			if (!this.codeOther) {
+				this.finalFireNocForm.get('otherPurposeRemark').reset();
 			}
-		});
+		} catch (e) {
+
+		}
 	}
 }

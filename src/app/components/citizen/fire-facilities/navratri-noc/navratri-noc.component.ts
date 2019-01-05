@@ -82,8 +82,8 @@ export class NavratriNocComponent implements OnInit {
 		//check for attachment is mandatory
 		this.dependentAttachment(this.navaratriNocForm.get('securityArrangement').value, 'SECURITY_ARRANGEMENT');
 		this.dependentAttachment(this.navaratriNocForm.get('vmcConsentLetterIncluded').value, 'CONSENT_LETTER');
-		this.dependentAttachment(this.navaratriNocForm.get('weatherExitShownInMap').value,'LOCATION_MAP');
-		this.dependentAttachment(this.navaratriNocForm.get('trainedFiremanStaffKept').value,'TRAIN_FIRE_PERSON_LIST');
+		this.dependentAttachment(this.navaratriNocForm.get('weatherExitShownInMap').value, 'LOCATION_MAP');
+		this.dependentAttachment(this.navaratriNocForm.get('trainedFiremanStaffKept').value, 'TRAIN_FIRE_PERSON_LIST');
 	}
 
 	/**
@@ -137,7 +137,7 @@ export class NavratriNocComponent implements OnInit {
 			this.navaratriNocForm.get(dependentControl).setValidators([Validators.required]);
 			// this.navaratriNocForm.updateValueAndValidity();
 		}
-		else {	
+		else {
 			this.navaratriNocForm.get(dependentControl).clearValidators();
 			// this.navaratriNocForm.updateValueAndValidity();
 		}
@@ -152,6 +152,13 @@ export class NavratriNocComponent implements OnInit {
 			try {
 				this.navaratriNocForm.patchValue(res);
 				this.showButtons = true;
+
+				//convert applicant name and set in applicantNameGuj filds 
+				let applicantNameGujFields = this.navaratriNocForm.get('applicantNameGuj');
+				let applicantNameValue = this.navaratriNocForm.get('applicantName').value;
+				if (!applicantNameGujFields.value) {
+					applicantNameGujFields.setValue(this.TranslateService.getEngToGujTranslation(applicantNameValue))
+				}
 
 				res.serviceDetail.serviceUploadDocuments.forEach(app => {
 					(<FormArray>this.navaratriNocForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.createDocumentsGrp(app));
@@ -183,14 +190,12 @@ export class NavratriNocComponent implements OnInit {
 			serviceCode: 'FS-NAV',
 			/* Step 1 controls start */
 			oldReferenceNumber: [null],
-			firstName: [null, [Validators.required, Validators.maxLength(100)]],
-			lastName: [null, [Validators.required, Validators.maxLength(100)]],
-			middleName: [null, Validators.maxLength(100)],
-			contactNo: [null, [Validators.required, Validators.maxLength(10)]],
-			email: [null, [Validators.required, Validators.maxLength(50)]],
 			applicantName: [null, [Validators.required, Validators.maxLength(100)]],
 			applicantNameGuj: [null, [Validators.required, Validators.maxLength(300)]],
-
+			contactNo: [null, [Validators.required, Validators.maxLength(10)]],
+			email: [null, [Validators.required, Validators.maxLength(50)]],
+			
+			/* Step 2 controls start */
 			applicationThroughPolice: [null, [Validators.required, Validators.maxLength(10)]],
 			policeCommisionerLetterNo: [null, [Validators.required, Validators.maxLength(20)]],
 			policeCommisionerLetterDate: [null, [Validators.required]],
@@ -200,6 +205,8 @@ export class NavratriNocComponent implements OnInit {
 			organizerAddressGuj: [null, [Validators.required, Validators.maxLength(600)]],
 			organizerMobileNo: [null, [Validators.maxLength(10)]],
 			responsiblePersonMobileNo: [null, [Validators.required, Validators.maxLength(10)]],
+			
+			/* Step 3 controls start */
 			garbaPlaceAddress: [null, [Validators.required, Validators.maxLength(100)]],
 			garbaPlaceAddressGuj: [null, [Validators.required, Validators.maxLength(300)]],
 			fromDate: [null, [Validators.required]],
@@ -211,6 +218,8 @@ export class NavratriNocComponent implements OnInit {
 			vmcConsentLetterIncluded: [null, [Validators.maxLength(15)]],
 			consentLetterDate: [null, [Validators.maxLength(10)]],
 			hazardousPerformanceDetail: [null, [Validators.required, Validators.maxLength(150)]],
+			
+			/* Step 4 controls start */
 			noOfGatheringPersons: [null, [Validators.required, Validators.maxLength(5)]],
 
 			eventArea: [null, [Validators.required, Validators.maxLength(5)]],
@@ -235,9 +244,9 @@ export class NavratriNocComponent implements OnInit {
 			highTensionLineOverGround: [null, [Validators.required, Validators.maxLength(10)]],
 			fireSafetyActionWithProof: [null, [Validators.required, Validators.maxLength(200)]],
 
-			/* Step 6 controls start*/
+			/* Step 5 controls start*/
 			attachments: []
-			/* Step 6 controls end */
+			/* Step 5 controls end */
 		});
 	}
 
@@ -270,11 +279,11 @@ export class NavratriNocComponent implements OnInit {
      */
 	handleErrorsOnSubmit(flag) {
 
-		let step0 = 9;
-		let step1 = 18;
-		let step2 = 29;
-		let step3 = 50;
-		let step4 = 59;
+		let step0 = 7;
+		let step1 = 16;
+		let step2 = 27;
+		let step3 = 47;
+		let step4 = 57;
 
 		if (flag != null) {
 			//Check validation for step by step

@@ -16,23 +16,19 @@
 				</div>
 
 				<div class="row">
-					<mat-form-field class="col-md-4">
-						<input matInput readonly appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{'first_name' | translate:translateKey}}"
-						 formControlName="firstName" maxlength="100">
-						<control-messages [control]="navaratriNocForm.controls.firstName"></control-messages>
-					</mat-form-field>
-					<mat-form-field class="col-md-4">
-						<input matInput readonly appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{'middle_name' | translate:translateKey}}"
-						 formControlName="middleName" maxlength="100">
-						<control-messages [control]="navaratriNocForm.controls.middleName"></control-messages>
+					<mat-form-field class="col-md-6">
+						<input matInput appValidationFields [validationFieldsType]="'onlyNameWithSpace'" required maxlength="100"
+						 placeholder="{{'applicant_name' | translate:translateKey}}" formControlName="applicantName" appGujInputSource
+						 targetElement="applicantNameGuj" [form]="navaratriNocForm">
+						<control-messages [control]="navaratriNocForm.controls.applicantName"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput readonly appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{'last_name' | translate:translateKey}}"
-						 formControlName="lastName" required maxlength="100">
-						<control-messages [control]="navaratriNocForm.controls.lastName"></control-messages>
+						<input matInput type="text" maxlength="300" required formControlName="applicantNameGuj" appGujInputTarget [form]="navaratriNocForm"
+						 placeholder="{{ 'applicant_name' | translate:translateKey:'gu' }}">
+						<control-messages [control]="navaratriNocForm.controls.applicantNameGuj"></control-messages>
 					</mat-form-field>
-
+					
 					<mat-form-field class="col-md-4">
 						<!-- <span matPrefix>+91 &nbsp;</span> -->
 						<input matInput OnlyNumber placeholder="{{'applicant_mobile' | translate:translateKey}}" type="tel" maxlength="10"
@@ -46,18 +42,7 @@
 						<control-messages [control]="navaratriNocForm.controls.email"></control-messages>
 					</mat-form-field>
 
-					<mat-form-field class="col-md-6">
-						<input matInput appValidationFields [validationFieldsType]="'onlyNameWithSpace'" required maxlength="100"
-						 placeholder="{{'applicant_name' | translate:translateKey}}" formControlName="applicantName" appGujInputSource
-						 targetElement="applicantNameGuj" [form]="navaratriNocForm">
-						<control-messages [control]="navaratriNocForm.controls.applicantName"></control-messages>
-					</mat-form-field>
-
-					<mat-form-field class="col-md-4">
-						<input matInput type="text" maxlength="300" required formControlName="applicantNameGuj" appGujInputTarget [form]="navaratriNocForm"
-						 placeholder="{{ 'applicant_name' | translate:translateKey:'gu' }}">
-						<control-messages [control]="navaratriNocForm.controls.applicantNameGuj"></control-messages>
-					</mat-form-field>
+					
 
 				</div>
 				<app-action-bar [form]="navaratriNocForm" (tabIndex)="onTabChange($event)" (handleOnSaveAndNext)="handleOnSaveAndNext($event)"

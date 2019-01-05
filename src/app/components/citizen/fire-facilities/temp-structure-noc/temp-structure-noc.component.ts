@@ -154,6 +154,12 @@ export class TempStructureNocComponent implements OnInit {
 			try {
 				this.tempStructureNocForm.patchValue(res);
 				this.showButtons = true;
+				//convert applicant name and set in applicantNameGuj filds 
+				let applicantNameGujFields = this.tempStructureNocForm.get('applicantNameGuj');
+				let applicantNameValue = this.tempStructureNocForm.get('applicantName').value;
+				if (!applicantNameGujFields.value) {
+					applicantNameGujFields.setValue(this.TranslateService.getEngToGujTranslation(applicantNameValue))
+				}
 
 				res.serviceDetail.serviceUploadDocuments.forEach(app => {
 					(<FormArray>this.tempStructureNocForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.createDocumentsGrp(app));
@@ -186,19 +192,17 @@ export class TempStructureNocComponent implements OnInit {
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
 			serviceCode: 'FS-TEMPSTRUCT',
 			/* Step 1 controls start */
-			firstName: [null, [Validators.required, Validators.maxLength(100)]],
-			lastName: [null, [Validators.required, Validators.maxLength(100)]],
-			middleName: [null, Validators.maxLength(100)],
-			mobileNo: [null, [Validators.required, Validators.maxLength(10)]],
-			email: [null, [Validators.required, Validators.maxLength(50)]],
 			applicantName: [null, [Validators.required, Validators.maxLength(100)]],
 			applicantNameGuj: [null, [Validators.required, Validators.maxLength(300)]],
+			mobileNo: [null, [Validators.required, Validators.maxLength(10)]],
+			email: [null, [Validators.required, Validators.maxLength(50)]],
 			oldReferenceNumber: [null],
 			applicationDate: [null],//not now
 			officeContactNo: [null, [Validators.required, Validators.maxLength(10)]],
 			onsitePersonMobileNo: [null, [Validators.required, Validators.maxLength(10)]],
 			officeEmailId: [null, [Validators.required, Validators.maxLength(50)]],
-
+			
+			/* Step 2 controls start */
 			fromDate: [null, [Validators.required, Validators.maxLength(10)]],
 			toDate: [null, [Validators.required, Validators.maxLength(10)]],
 			fromTime: [null, [Validators.required, Validators.maxLength(10)]],
@@ -217,7 +221,8 @@ export class TempStructureNocComponent implements OnInit {
 			organizerContactNo: [null, [Validators.required, Validators.maxLength(10)]],
 			temporaryStructureAddress: [null, [Validators.required, Validators.maxLength(500)]],
 			temporaryStructureAddressGuj: [null, [Validators.required, Validators.maxLength(1500)]],
-
+			
+			/* Step 3 controls start */
 			fpNo: [null, [Validators.required, Validators.maxLength(10)]],
 			rsNo: [null, [Validators.required, Validators.maxLength(10)]],
 			tikaNo: [null, [Validators.required, Validators.maxLength(10)]],
@@ -229,8 +234,9 @@ export class TempStructureNocComponent implements OnInit {
 			noOfGatheringPersons: [null, [Validators.required, Validators.maxLength(10)]],
 			noOfExits: [null, [Validators.required, Validators.maxLength(3)]],
 			layoutPlanIncluded: [null, [Validators.required]],//true/false
-			requiredNOCForArea: [null, [Validators.required, Validators.maxLength(3)]],
-
+			requiredNOCForArea: [null, [Validators.required, Validators.maxLength(10)]],
+			
+			/* Step 4 controls start */
 			hazardousPerformanceDetail: [null, [Validators.required, Validators.maxLength(200)]],
 			shamiyanaLength: [null, [Validators.required, Validators.maxLength(5)]],
 			shamiyanaWidth: [null, [Validators.required, Validators.maxLength(5)]],
@@ -259,9 +265,9 @@ export class TempStructureNocComponent implements OnInit {
 				code: [null,Validators.required]
 			}),
 
-			/* Step 6 controls start*/
+			/* Step 5 controls start*/
 			attachments: []
-			/* Step 6 controls end */
+			/* Step 5 controls end */
 		});
 	}
 
@@ -294,10 +300,10 @@ export class TempStructureNocComponent implements OnInit {
 	 */
 	handleErrorsOnSubmit(flag) {
 
-		let step0 = 14;
-		let step1 = 32;
-		let step2 = 44;
-		let step3 = 65;
+		let step0 = 11;
+		let step1 = 29;
+		let step2 = 41;
+		let step3 = 62;
 
 		if (flag != null) {
 			//Check validation for step by step

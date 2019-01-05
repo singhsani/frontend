@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ManageRoutes } from '../../../../config/routes-conf';
@@ -23,9 +23,9 @@ export class GasConnectionNocComponent implements OnInit {
 
 	appId: number;
 	apiCode: string;
-	
+
 	disablefutureDate = new Date(moment().format('YYYY-MM-DD'));
-	propertyStatusOutstanding={};
+	propertyStatusOutstanding = {};
 
 	//Lookups Array
 	FS_CONNECTION_PURPOSE: Array<any> = [];
@@ -65,6 +65,12 @@ export class GasConnectionNocComponent implements OnInit {
 		this.formService.getFormData(this.appId).subscribe(res => {
 			this.gasConnectionForm.patchValue(res);
 			this.showButtons = true;
+			//convert applicant name and set in applicantNameGuj filds 
+			let applicantNameGujFields = this.gasConnectionForm.get('applicantNameGuj');
+			let applicantNameValue = this.gasConnectionForm.get('applicantName').value;
+			if (!applicantNameGujFields.value) {
+				applicantNameGujFields.setValue(this.TranslateService.getEngToGujTranslation(applicantNameValue))
+			}
 			res.serviceDetail.serviceUploadDocuments.forEach(app => {
 				(<FormArray>this.gasConnectionForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.createDocumentsGrp(app));
 			});
@@ -121,7 +127,7 @@ export class GasConnectionNocComponent implements OnInit {
 
 			/* Step 3 controls start */
 			attachments: [],
-			
+
 			/* Step 6 controls end */
 		});
 	}
@@ -177,18 +183,18 @@ export class GasConnectionNocComponent implements OnInit {
 	 * @param number 
 	 */
 	getPropertyStatus(number) {
-		this.propertyStatusOutstanding={};
+		this.propertyStatusOutstanding = {};
 		this.fireFacilitiesService.getPropertyTaxNoStatus(number).subscribe(res => {
 			if (res.success) {
-				if(res.data.outstanding){
+				if (res.data.outstanding) {
 					this.gasConnectionForm.get('canEdit').setValue(false);
-					this.gasConnectionForm.get('propertyNo').setErrors({'outstandingRemainingProperty': true });
-					this.propertyStatusOutstanding=res.data;
-				}else{
+					this.gasConnectionForm.get('propertyNo').setErrors({ 'outstandingRemainingProperty': true });
+					this.propertyStatusOutstanding = res.data;
+				} else {
 					this.gasConnectionForm.get('canEdit').setValue(true);
 					this.gasConnectionForm.get('propertyNo').setErrors(null);
 				}
-			} 
+			}
 		}, (err: any) => {
 			if (err.error && err.error.length) {
 				//this.commonService.openAlert("Warning", err.error[0].message, "warning");

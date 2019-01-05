@@ -16,20 +16,17 @@
 				</div>
 
 				<div class="row">
-					<mat-form-field class="col-md-4">
-						<input matInput readonly appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{'first_name' | translate:translateKey}}"
-						 formControlName="firstName" maxlength="100">
-						<control-messages [control]="tempFireworksNocForm.controls.firstName"></control-messages>
+					<mat-form-field class="col-md-6">
+						<input matInput appValidationFields [validationFieldsType]="'onlyNameWithSpace'" required maxlength="100"
+						 placeholder="{{'applicant_name' | translate:translateKey}}" formControlName="applicantName" appGujInputSource
+						 targetElement="applicantNameGuj" [form]="tempFireworksNocForm">
+						<control-messages [control]="tempFireworksNocForm.controls.applicantName"></control-messages>
 					</mat-form-field>
-					<mat-form-field class="col-md-4">
-						<input matInput readonly appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{'middle_name' | translate:translateKey}}"
-						 formControlName="middleName" maxlength="100">
-						<control-messages [control]="tempFireworksNocForm.controls.middleName"></control-messages>
-					</mat-form-field>
-					<mat-form-field class="col-md-4">
-						<input matInput readonly appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{'last_name' | translate:translateKey}}"
-						 formControlName="lastName" required maxlength="100">
-						<control-messages [control]="tempFireworksNocForm.controls.lastName"></control-messages>
+
+					<mat-form-field class="col-md-6">
+						<input matInput type="text" maxlength="300" required formControlName="applicantNameGuj" appGujInputTarget [form]="tempFireworksNocForm"
+						 placeholder="{{ 'applicant_name' | translate:translateKey:'gu' }}">
+						<control-messages [control]="tempFireworksNocForm.controls.applicantNameGuj"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
@@ -45,18 +42,6 @@
 						<control-messages [control]="tempFireworksNocForm.controls.email"></control-messages>
 					</mat-form-field>
 
-					<mat-form-field class="col-md-6">
-						<input matInput appValidationFields [validationFieldsType]="'onlyNameWithSpace'" required maxlength="100"
-						 placeholder="{{'applicant_name' | translate:translateKey}}" formControlName="applicantName" appGujInputSource
-						 targetElement="applicantNameGuj" [form]="tempFireworksNocForm">
-						<control-messages [control]="tempFireworksNocForm.controls.applicantName"></control-messages>
-					</mat-form-field>
-
-					<mat-form-field class="col-md-6">
-						<input matInput type="text" maxlength="300" required formControlName="applicantNameGuj" appGujInputTarget [form]="tempFireworksNocForm"
-						 placeholder="{{ 'applicant_name' | translate:translateKey:'gu' }}">
-						<control-messages [control]="tempFireworksNocForm.controls.applicantNameGuj"></control-messages>
-					</mat-form-field>
 
 				</div>
 				<app-action-bar [form]="tempFireworksNocForm" (tabIndex)="onTabChange($event)" (handleOnSaveAndNext)="handleOnSaveAndNext($event)"
@@ -188,7 +173,7 @@
 
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" appAlphaNumeric formControlName="propertyNo" placeholder="{{'property_no' | translate: translateKey }} *"
-						 maxlength="10">
+						 maxlength="15">
 						<control-messages [control]="tempFireworksNocForm.controls.propertyNo"></control-messages>
 					</mat-form-field>
 
@@ -303,8 +288,8 @@
 					</div>
 					<mat-form-field class="col-md-4">
 						<input matInput maxlength="12" required appAlphaNumeric placeholder="{{'vmc_fee_receipt_no' | translate:translateKey}}"
-						 formControlName="vmcfeeReceiptNo">
-						<control-messages [control]="tempFireworksNocForm.controls.vmcfeeReceiptNo"></control-messages>
+						 formControlName="vmcFeeReceiptNo">
+						<control-messages [control]="tempFireworksNocForm.controls.vmcFeeReceiptNo"></control-messages>
 					</mat-form-field>
 
 					<div class="col-md-4 ngSelect" formGroupName="wiringType">
