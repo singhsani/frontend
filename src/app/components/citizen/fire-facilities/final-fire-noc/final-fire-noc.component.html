@@ -33,15 +33,15 @@
 				<div class="row">
 
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace' required maxlength="100"
-						 placeholder="{{'applicant_Name' | translate:translateKey}}" formControlName="applicantName" appGujInputSource
-						 targetElement="applicantNameGuj" [form]="finalFireNocForm">
+						<input matInput type="text" readonly appValidationFields validationFieldsType='onlyNameWithSpace' required
+						 maxlength="100" placeholder="{{'applicant_Name' | translate:translateKey}}" formControlName="applicantName"
+						 appGujInputSource targetElement="applicantNameGuj" [form]="finalFireNocForm">
 						<control-messages [control]="finalFireNocForm.controls.applicantName"></control-messages>
 					</mat-form-field>
 					<!-- gujarati -->
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" maxlength="300" required formControlName="applicantNameGuj" appGujInputTarget [form]="finalFireNocForm"
-						 placeholder="{{ 'applicant_Name' | translate:translateKey:'gu' }}">
+						<input matInput type="text" readonly maxlength="300" required formControlName="applicantNameGuj"
+						 appGujInputTarget [form]="finalFireNocForm" placeholder="{{ 'applicant_Name' | translate:translateKey:'gu' }}">
 						<control-messages [control]="finalFireNocForm.controls.applicantNameGuj"></control-messages>
 					</mat-form-field>
 					<!-- gujarati -->
@@ -119,8 +119,7 @@
 					<!-- purpose_of_building_use -->
 					<div class="col-md-8 ngSelect">
 						<ng-select required [items]="FS_PURPOSE_OF_BUILDING_USE" bindLabel="name" formControlName="purposeOfBuildingUse"
-						 [multiple]="true" (ngModelChange)="otherRemark($event);finalFireNocForm.controls.otherPurposeRemark.reset()"
-						 placeholder="{{'purpose_of_building_use' | translate:translateKey}} *">
+						 [multiple]="true" (ngModelChange)="otherRemark($event);" placeholder="{{'purpose_of_building_use' | translate:translateKey}} *">
 						</ng-select>
 						<control-messages [control]="finalFireNocForm.get('purposeOfBuildingUse')"></control-messages>
 					</div>
@@ -276,8 +275,7 @@
 						<control-messages [control]="finalFireNocForm.controls.rsNo"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput maxlength="10" required placeholder="{{'tika_no' | translate:translateKey}}"
-						 formControlName="tikaNo">
+						<input matInput maxlength="10" required placeholder="{{'tika_no' | translate:translateKey}}" formControlName="tikaNo">
 						<control-messages [control]="finalFireNocForm.controls.tikaNo"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
@@ -291,13 +289,11 @@
 						<control-messages [control]="finalFireNocForm.controls.buildingLocation"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput maxlength="10" required placeholder="{{'block_no' | translate:translateKey}}"
-						 formControlName="blockNo">
+						<input matInput maxlength="10" required placeholder="{{'block_no' | translate:translateKey}}" formControlName="blockNo">
 						<control-messages [control]="finalFireNocForm.controls.blockNo"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput maxlength="10" required placeholder="{{'O_P_no' | translate:translateKey}}"
-						 formControlName="opNo">
+						<input matInput maxlength="10" required placeholder="{{'O_P_no' | translate:translateKey}}" formControlName="opNo">
 						<control-messages [control]="finalFireNocForm.controls.opNo"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
@@ -453,6 +449,7 @@
 				<ng-template mat-tab-label>
 					<div>{{'other_details' | translate:translateKey}}</div>
 				</ng-template>
+
 				<div class="row">
 					<div class="col-md-4 ngSelect" formGroupName="areaZone">
 						<ng-select placeholder="{{'area_zone' | translate:translateKey}} *" formControlName="code">
@@ -466,29 +463,32 @@
 						</ng-select>
 						<control-messages [control]="finalFireNocForm.get('previouslyNocTaken').controls.code"></control-messages>
 					</div>
+				</div>
 
+				<div class="row">
 					<mat-form-field class="col-md-4">
-						<input matInput required OnlyNumber maxlength="4" type="tel" formControlName="undergroundWaterTankLength"
-						 placeholder="{{'underground_water_tank_length' | translate:translateKey }}">
-						<control-messages [control]="finalFireNocForm.controls.undergroundWaterTankLength"></control-messages>
-					</mat-form-field>
-					<mat-form-field class="col-md-4">
-						<input matInput required OnlyNumber maxlength="3" type="tel" formControlName="undergroundWaterTankBreadth"
-						 placeholder="{{'underground_water_tank_breadth' | translate:translateKey }}">
-						<control-messages [control]="finalFireNocForm.controls.undergroundWaterTankBreadth"></control-messages>
-					</mat-form-field>
-					<mat-form-field class="col-md-4">
-						<input matInput required OnlyNumber maxlength="3" type="tel" formControlName="undergroundWaterTankHeight"
-						 placeholder="{{'underground_water_tank_height' | translate:translateKey }}">
-						<control-messages [control]="finalFireNocForm.controls.undergroundWaterTankHeight"></control-messages>
-					</mat-form-field>
-					<mat-form-field class="col-md-4">
-						<input matInput required OnlyNumber maxlength="3" type="tel" formControlName="undergroundWaterTankCapacity"
+						<input matInput required OnlyNumber maxlength="8" type="tel" formControlName="undergroundWaterTankCapacity"
 						 placeholder="{{'underground_water_tank_capacity' | translate:translateKey }}">
 						<control-messages [control]="finalFireNocForm.controls.undergroundWaterTankCapacity"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput required OnlyNumber maxlength="3" type="tel" formControlName="undergroundWaterTankVolume"
+						<input matInput required OnlyNumber maxlength="8" type="tel" formControlName="undergroundWaterTankLength"
+						 placeholder="{{'underground_water_tank_length' | translate:translateKey }}">
+						<control-messages [control]="finalFireNocForm.controls.undergroundWaterTankLength"></control-messages>
+					</mat-form-field>
+					<mat-form-field class="col-md-4">
+						<input matInput required OnlyNumber maxlength="8" type="tel" formControlName="undergroundWaterTankBreadth"
+						 placeholder="{{'underground_water_tank_breadth' | translate:translateKey }}">
+						<control-messages [control]="finalFireNocForm.controls.undergroundWaterTankBreadth"></control-messages>
+					</mat-form-field>
+					<mat-form-field class="col-md-4">
+						<input matInput required OnlyNumber maxlength="8" type="tel" formControlName="undergroundWaterTankHeight"
+						 placeholder="{{'underground_water_tank_height' | translate:translateKey }}">
+						<control-messages [control]="finalFireNocForm.controls.undergroundWaterTankHeight"></control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<input matInput required OnlyNumber maxlength="8" type="tel" formControlName="undergroundWaterTankVolume"
 						 placeholder="{{'underground_water_tank_volume_LBH_in_M³' | translate:translateKey }}">
 						<control-messages [control]="finalFireNocForm.controls.undergroundWaterTankVolume"></control-messages>
 					</mat-form-field>
@@ -505,29 +505,33 @@
 						</mat-radio-group>
 						<control-messages [control]="finalFireNocForm.controls.undergroundWatertankMapApproved"></control-messages>
 					</div>
+				</div>
+
+				<div class="row">
+					<mat-form-field class="col-md-4">
+						<input matInput required OnlyNumber maxlength="8" type="tel" formControlName="overgroundWaterTankCapacity"
+						 placeholder="{{'overground_water_tank_capacity' | translate:translateKey }}">
+						<control-messages [control]="finalFireNocForm.controls.overgroundWaterTankCapacity"></control-messages>
+					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput required OnlyNumber maxlength="5" type="tel" formControlName="overgroundWaterTankLength"
+						<input matInput required OnlyNumber maxlength="8" type="tel" formControlName="overgroundWaterTankLength"
 						 placeholder="{{'overground_water_tank_length' | translate:translateKey }}">
 						<control-messages [control]="finalFireNocForm.controls.overgroundWaterTankLength"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput required OnlyNumber maxlength="5" type="tel" formControlName="overgroundWaterTankBreadth"
+						<input matInput required OnlyNumber maxlength="8" type="tel" formControlName="overgroundWaterTankBreadth"
 						 placeholder="{{'overground_water_tank_breadth' | translate:translateKey }}">
 						<control-messages [control]="finalFireNocForm.controls.overgroundWaterTankBreadth"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput required OnlyNumber maxlength="5" type="tel" formControlName="overgroundWaterTankHeight"
+						<input matInput required OnlyNumber maxlength="8" type="tel" formControlName="overgroundWaterTankHeight"
 						 placeholder="{{'overground_water_tank_height' | translate:translateKey }}">
 						<control-messages [control]="finalFireNocForm.controls.overgroundWaterTankHeight"></control-messages>
 					</mat-form-field>
+
 					<mat-form-field class="col-md-4">
-						<input matInput required OnlyNumber maxlength="5" type="tel" formControlName="overgroundWaterTankCapacity"
-						 placeholder="{{'overground_water_tank_capacity' | translate:translateKey }}">
-						<control-messages [control]="finalFireNocForm.controls.overgroundWaterTankCapacity"></control-messages>
-					</mat-form-field>
-					<mat-form-field class="col-md-4">
-						<input matInput required OnlyNumber maxlength="5" type="tel" formControlName="overgroundWaterTankVolume"
+						<input matInput required OnlyNumber maxlength="8" type="tel" formControlName="overgroundWaterTankVolume"
 						 placeholder="{{'overground_water_tank_volume_LBH_in_M³' | translate:translateKey }}">
 						<control-messages [control]="finalFireNocForm.controls.overgroundWaterTankVolume"></control-messages>
 					</mat-form-field>

@@ -26,7 +26,7 @@
 
 
 					<mat-form-field class="col-md-4">
-						<input matInput [max]="disablefutureDate" [matDatepicker]="DateOfapplicationDate" formControlName="applicationDate"
+						<input matInput [min]="disablePastDate" [matDatepicker]="DateOfapplicationDate" formControlName="applicationDate"
 						 (dateChange)="dateFormat($event.value,'applicationDate')" placeholder="{{ 'application_Date' | translate:translateKey }} (DD/MM/YYYY)">
 						<mat-datepicker-toggle matSuffix [for]="DateOfapplicationDate"></mat-datepicker-toggle>
 						<mat-datepicker touchUi="true" #DateOfapplicationDate></mat-datepicker>
@@ -145,7 +145,7 @@
 				<div class="row">
 					<mat-form-field class="col-md-4">
 						<input matInput OnlyNumber placeholder="{{'concessionDetail' | translate:translateKey}}" type="tel" maxlength="3"
-						 formControlName="concessionDetail" required>
+						 formControlName="concessionDetail">
 						<control-messages [control]="deadBodyWanForm.controls.concessionDetail"></control-messages>
 					</mat-form-field>
 

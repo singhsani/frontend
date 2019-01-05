@@ -16,20 +16,18 @@
 				</div>
 
 				<div class="row">
-					<mat-form-field class="col-md-4">
-						<input matInput readonly appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{'first_name' | translate:translateKey}}"
-						 formControlName="firstName" maxlength="100">
-						<control-messages [control]="tempStructureNocForm.controls.firstName"></control-messages>
+					
+					<mat-form-field class="col-md-6">
+						<input matInput appValidationFields [validationFieldsType]="'onlyNameWithSpace'" required maxlength="100"
+						 placeholder="{{'applicant_name' | translate:translateKey}}" formControlName="applicantName" appGujInputSource
+						 targetElement="applicantNameGuj" [form]="tempStructureNocForm">
+						<control-messages [control]="tempStructureNocForm.controls.applicantName"></control-messages>
 					</mat-form-field>
-					<mat-form-field class="col-md-4">
-						<input matInput readonly appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{'middle_name' | translate:translateKey}}"
-						 formControlName="middleName" maxlength="100">
-						<control-messages [control]="tempStructureNocForm.controls.middleName"></control-messages>
-					</mat-form-field>
-					<mat-form-field class="col-md-4">
-						<input matInput readonly appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{'last_name' | translate:translateKey}}"
-						 formControlName="lastName" required maxlength="100">
-						<control-messages [control]="tempStructureNocForm.controls.lastName"></control-messages>
+
+					<mat-form-field class="col-md-6">
+						<input matInput type="text" maxlength="300" required formControlName="applicantNameGuj" appGujInputTarget [form]="tempStructureNocForm"
+						 placeholder="{{ 'applicant_name' | translate:translateKey:'gu' }}">
+						<control-messages [control]="tempStructureNocForm.controls.applicantNameGuj"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
@@ -45,18 +43,6 @@
 						<control-messages [control]="tempStructureNocForm.controls.email"></control-messages>
 					</mat-form-field>
 
-					<mat-form-field class="col-md-6">
-						<input matInput appValidationFields [validationFieldsType]="'onlyNameWithSpace'" required maxlength="100"
-						 placeholder="{{'applicant_name' | translate:translateKey}}" formControlName="applicantName" appGujInputSource
-						 targetElement="applicantNameGuj" [form]="tempStructureNocForm">
-						<control-messages [control]="tempStructureNocForm.controls.applicantName"></control-messages>
-					</mat-form-field>
-
-					<mat-form-field class="col-md-6">
-						<input matInput type="text" maxlength="300" required formControlName="applicantNameGuj" appGujInputTarget [form]="tempStructureNocForm"
-						 placeholder="{{ 'applicant_name' | translate:translateKey:'gu' }}">
-						<control-messages [control]="tempStructureNocForm.controls.applicantNameGuj"></control-messages>
-					</mat-form-field>
 
 
 					<mat-form-field class="col-md-4">
@@ -305,7 +291,7 @@
 						<control-messages [control]="tempStructureNocForm.controls.layoutPlanIncluded"></control-messages>
 					</div>
 					<mat-form-field class="col-md-4">
-						<input matInput maxlength="3" required appAlphaNumeric placeholder="{{'required_noc_for_area' | translate:translateKey}}"
+						<input matInput type="text" maxlength="10" required  placeholder="{{'required_noc_for_area' | translate:translateKey}}"
 						 formControlName="requiredNOCForArea">
 						<control-messages [control]="tempStructureNocForm.controls.requiredNOCForArea"></control-messages>
 					</mat-form-field>

@@ -140,7 +140,7 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4" *ngIf="gasConnectionForm.get('connectionPurpose').get('code').value=='COMMERCIAL'">
-						<input matInput OnlyNumber placeholder="{{'shop_No' | translate:translateKey}}" type="tel" maxlength="12"
+						<input matInput appAlphaNumeric placeholder="{{'shop_No' | translate:translateKey}}" type="tel" maxlength="12"
 						 formControlName="shopNo">
 						<control-messages [control]="gasConnectionForm.controls.shopNo"></control-messages>
 					</mat-form-field>

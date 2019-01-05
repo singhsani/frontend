@@ -1,3 +1,4 @@
+import { ManageRoutes } from './../../../config/routes-conf';
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild, OnChanges } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators, FormArray } from '@angular/forms';
 import * as _ from 'lodash';
@@ -138,6 +139,7 @@ export class ActionBarComponent implements OnInit, OnChanges {
 						this.isSubmitBtnDisabled = false;
 						this.isBtnsDisabled = false;
 						this.form.disable();
+						this.router.navigateByUrl(ManageRoutes.getFullRoute("CITIZENMYAPPS"));
 					},
 						err => {
 							this.isSubmitBtnDisabled = false;

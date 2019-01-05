@@ -63,6 +63,14 @@ export class EleConnectionNocComponent implements OnInit {
 		this.formService.getFormData(this.appId).subscribe(res => {
 			this.electricConnectionForm.patchValue(res);
 			this.showButtons = true;
+
+			//convert applicant name and set in applicantNameGuj filds 
+			let applicantNameGujFields=this.electricConnectionForm.get('applicantNameGuj');
+			let applicantNameValue=this.electricConnectionForm.get('applicantName').value;
+			if(!applicantNameGujFields.value){
+				applicantNameGujFields.setValue(this.TranslateService.getEngToGujTranslation(applicantNameValue))
+			}
+
 			res.serviceDetail.serviceUploadDocuments.forEach(app => {
 				(<FormArray>this.electricConnectionForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.createDocumentsGrp(app));
 			});
@@ -88,7 +96,6 @@ export class EleConnectionNocComponent implements OnInit {
 			serviceCode: 'FS-ELE',
 
 			/* Step 1 controls start */
-
 			oldReferenceNumber: [null],
 			applicantName: [null, [Validators.required, Validators.maxLength(100)]],
 			applicantNameGuj: [null, [Validators.required, Validators.maxLength(300)]],
@@ -96,7 +103,7 @@ export class EleConnectionNocComponent implements OnInit {
 			contactNo: [null, [Validators.required, Validators.maxLength(10), Validators.minLength(10)]],
 			mobileNo: [null, [Validators.required, Validators.maxLength(10), Validators.minLength(10)]],
 			email: [null, [Validators.required, Validators.maxLength(50)]],
-
+			
 			/* Step 2 controls start */
 			electricityConnectionNo: [null, [Validators.required, Validators.maxLength(20)]],
 			connectionHolderName: [null, [Validators.required, Validators.maxLength(100)]],

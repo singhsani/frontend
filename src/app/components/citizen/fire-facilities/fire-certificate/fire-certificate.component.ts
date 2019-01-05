@@ -63,6 +63,13 @@ export class FireCertificateComponent implements OnInit {
       // try {
       this.fireCertificateForm.patchValue(res);
       this.showButtons = true;
+      //convert applicant name and set in applicantNameGuj filds 
+			let applicantNameGujFields=this.fireCertificateForm.get('applicantNameGuj');
+			let applicantNameValue=this.fireCertificateForm.get('applicantName').value;
+			if(!applicantNameGujFields.value){
+				applicantNameGujFields.setValue(this.TranslateService.getEngToGujTranslation(applicantNameValue))
+      }
+      
       res.serviceDetail.serviceUploadDocuments.forEach(app => {
         (<FormArray>this.fireCertificateForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.createDocumentsGrp(app));
       });
@@ -120,7 +127,6 @@ export class FireCertificateComponent implements OnInit {
     this.fireCertificateForm = this.fb.group({
       apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
       serviceCode: 'FS_FIRE_CERTIFICATE',
-
       applicantName: [null, [Validators.required, Validators.maxLength(100)]],
       applicantNameGuj: [null, [Validators.required, Validators.maxLength(300)]],
       applicationDate: [null, [Validators.required, Validators.maxLength(50)]],

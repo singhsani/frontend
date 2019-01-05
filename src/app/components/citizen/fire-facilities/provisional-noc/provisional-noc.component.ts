@@ -54,7 +54,6 @@ export class ProvisionalNocComponent implements OnInit {
 	 * This method call initially required methods.
 	 */
 	ngOnInit() {
-
 		this.route.paramMap.subscribe(param => {
 			this.formId = Number(param.get('id'));
 			this.apiCode = param.get('apiCode');
@@ -130,7 +129,14 @@ export class ProvisionalNocComponent implements OnInit {
 			try {
 				this.provisionalNocForm.patchValue(res);
 				this.showButtons = true;
-
+				
+				//convert applicant name and set in applicantNameGuj filds 
+				let applicantNameGujFields=this.provisionalNocForm.get('applicantNameGuj');
+				let applicantNameValue=this.provisionalNocForm.get('applicantName').value;
+				if(!applicantNameGujFields.value){
+					applicantNameGujFields.setValue(this.TranslateService.getEngToGujTranslation(applicantNameValue))
+				}
+				
 				res.serviceDetail.serviceUploadDocuments.forEach(app => {
 					(<FormArray>this.provisionalNocForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.createDocumentsGrp(app));
 				});
@@ -164,7 +170,7 @@ export class ProvisionalNocComponent implements OnInit {
 		this.provisionalNocForm = this.fb.group({
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
 			serviceCode: 'FS-PROVI',
-			/* Step 1 controls start */
+			/* Step 1 controls start */ 
 			provisionalNocNumber: [null],
 			applicationDate: [null],
 			oldReferenceNumber: [null],
@@ -176,7 +182,8 @@ export class ProvisionalNocComponent implements OnInit {
 			applicantPermanentAddress: [null, [Validators.required, Validators.maxLength(300)]],
 			applicantPermanentAddressGuj: [null, [Validators.required, Validators.maxLength(900)]],
 			officeEmailId: [null, [Validators.required, Validators.maxLength(50)]],
-
+			
+			/* Step 2 controls start */ 
 			appliedForId: this.fb.group({
 				code: [null, Validators.required]
 			}),
@@ -186,6 +193,8 @@ export class ProvisionalNocComponent implements OnInit {
 			subjectTo: [null, [Validators.required, Validators.maxLength(200)]],
 			purposeOfBuildingUse: [null],//array
 			otherPurposeRemark: [null, [Validators.maxLength(200)]],
+
+			/* Step 3 controls start */ 
 			architectName: [null, [Validators.required, Validators.maxLength(100)]],
 			architectNameGuj: [null, [Validators.required, Validators.maxLength(300)]],
 			architectFirmName: [null, [Validators.required, Validators.maxLength(50)]],
@@ -204,6 +213,8 @@ export class ProvisionalNocComponent implements OnInit {
 			fireVendorName: [null, [Validators.required, Validators.maxLength(150)]],
 			fireVendorNameGuj: [null, [Validators.required, Validators.maxLength(450)]],
 			fireVendorAddress: [null, [Validators.required, Validators.maxLength(900)]],
+			
+			/* Step 4 controls start */ 
 			fireVendorOfficeAddress: [null, [Validators.required, Validators.maxLength(300)]],
 			fpNo: [null, [Validators.required, Validators.maxLength(10)]],
 			rsNo: [null, [Validators.required, Validators.maxLength(10)]],
@@ -233,23 +244,24 @@ export class ProvisionalNocComponent implements OnInit {
 			gaslineInUnderground: [null, Validators.required],
 			undergroundCabling: [null, Validators.required],
 			ongcLineInUnderground: [null, Validators.required],
+			/* Step 5 controls start */ 
 			areaZone: this.fb.group({
 				code: [null, Validators.required]
 			}),
 			previouslyNocTaken: this.fb.group({
 				code: [null, Validators.required]
 			}),
-			undergroundWaterTankLength: [null, [Validators.required, Validators.maxLength(4)]],
-			undergroundWaterTankBreadth: [null, [Validators.required, Validators.maxLength(3)]],
-			undergroundWaterTankHeight: [null, [Validators.required, Validators.maxLength(3)]],
-			undergroundWaterTankCapacity: [null, [Validators.required, Validators.maxLength(3)]],
-			undergroundWaterTankVolume: [null, [Validators.required, Validators.maxLength(3)]],
+			undergroundWaterTankLength: [null, [Validators.required, Validators.maxLength(8)]],
+			undergroundWaterTankBreadth: [null, [Validators.required, Validators.maxLength(8)]],
+			undergroundWaterTankHeight: [null, [Validators.required, Validators.maxLength(8)]],
+			undergroundWaterTankCapacity: [null, [Validators.required, Validators.maxLength(8)]],
+			undergroundWaterTankVolume: [null, [Validators.required, Validators.maxLength(8)]],
 			undergroundWatertankMapApproved: [null, Validators.required],
-			overgroundWaterTankLength: [null, [Validators.required, Validators.maxLength(5)]],
-			overgroundWaterTankBreadth: [null, [Validators.required, Validators.maxLength(5)]],
-			overgroundWaterTankHeight: [null, [Validators.required, Validators.maxLength(5)]],
-			overgroundWaterTankCapacity: [null, [Validators.required, Validators.maxLength(5)]],
-			overgroundWaterTankVolume: [null, [Validators.required, Validators.maxLength(5)]],
+			overgroundWaterTankLength: [null, [Validators.required, Validators.maxLength(8)]],
+			overgroundWaterTankBreadth: [null, [Validators.required, Validators.maxLength(8)]],
+			overgroundWaterTankHeight: [null, [Validators.required, Validators.maxLength(8)]],
+			overgroundWaterTankCapacity: [null, [Validators.required, Validators.maxLength(8)]],
+			overgroundWaterTankVolume: [null, [Validators.required, Validators.maxLength(8)]],
 			overgroundWatertankMapApproved: [null, Validators.required],
 			/* Step 6 controls start*/
 			attachments: []
@@ -286,11 +298,11 @@ export class ProvisionalNocComponent implements OnInit {
      */
 	handleErrorsOnSubmit(flag) {
 
-		let step0 = 14;
+		let step0 = 13;
 		let step1 = 18;
-		let step2 = 34;
-		let step3 = 61;
-		let step4 = 75;
+		let step2 = 33;
+		let step3 = 62;
+		let step4 = 76;
 
 		if (flag != null) {
 			//Check validation for step by step
@@ -345,11 +357,19 @@ export class ProvisionalNocComponent implements OnInit {
 	 * @param event : on change event value
 	 */
 	otherRemark(event: Event) {
-		this.codeOther = false;
-		_.forEach(event, (value) => {
-			if (value.code == 'OTHER') {
-				this.codeOther = true;
+		try {
+			this.codeOther = false;
+			_.forEach(event, (value) => {
+				if (value.code == 'OTHER') {
+					this.codeOther = true;
+				}
+			});
+			if (!this.codeOther) {
+				this.provisionalNocForm.get('otherPurposeRemark').reset();
 			}
-		});
+		} catch (e) {
+
+		}
+
 	}
 }
