@@ -1,0 +1,34 @@
+<h2 mat-dialog-title>{{formTitle}}</h2>
+
+
+<mat-dialog-content [formGroup]="form">
+  <div class="row">
+    <mat-form-field class="col-md-12">
+      <input matInput placeholder="otFacilities" formControlName="otFacilities" required>
+      <control-messages [control]="form.controls.otFacilities"></control-messages>
+    </mat-form-field>
+    <mat-form-field class="col-md-4">
+      <input matInput placeholder="areaInSquareMeterLength" OnlyNumber formControlName="areaInSquareMeterLength"
+        required>
+      <control-messages [control]="form.controls.areaInSquareMeterLength"></control-messages>
+    </mat-form-field>
+    <mat-form-field class="col-md-4">
+      <input matInput placeholder="areaInSquareMeterBreadth" OnlyNumber formControlName="areaInSquareMeterBreadth"
+        required>
+      <control-messages [control]="form.controls.areaInSquareMeterBreadth"></control-messages>
+    </mat-form-field>
+    <mat-form-field class="col-md-4">
+      <input matInput placeholder="areaInSquareMeter" OnlyNumber formControlName="areaInSquareMeter" required>
+      <control-messages [control]="form.controls.areaInSquareMeter"></control-messages>
+    </mat-form-field>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button class="mat-raised-button mat-primary" [disabled]="!form.valid" (click)="save()">
+    Save
+  </button>
+  <button class="mat-raised-button" (click)="close()">
+    Close
+  </button>
+</mat-dialog-actions>

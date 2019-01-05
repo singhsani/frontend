@@ -1,5 +1,5 @@
 
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray, Validator } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ManageRoutes } from '../../../../config/routes-conf';
@@ -10,6 +10,8 @@ import { TranslateService } from '../../../../shared/modules/translate/translate
 import { CommonService } from '../../../../shared/services/common.service';
 import { ToastrService } from 'ngx-toastr';
 import { FireFacilitiesService } from '../common/services/fire-facilities.service';
+import { MatDialog, MatDialogConfig } from "@angular/material";
+import { DialogFormComponent } from '../common/components/dialog-form/dialog-form.component';
 
 @Component({
 	selector: 'app-pro-hospital-noc',
@@ -34,6 +36,7 @@ export class ProHospitalNocComponent implements OnInit {
 	FS_OTHER_RISKS: Array<any> = [];
 	FS_FIRE_ALARM_ATTACHED_WTIH: Array<any> = [];
 	FS_OTHER_BUSINESS_DETAIL: Array<any> = [];
+
 
 	// ***************************************
 	public dummyJSON = {
@@ -376,7 +379,8 @@ export class ProHospitalNocComponent implements OnInit {
 		private TranslateService: TranslateService,
 		private commonService: CommonService,
 		private toastrService: ToastrService,
-		private fireFacilitiesService: FireFacilitiesService
+		private fireFacilitiesService: FireFacilitiesService,
+		private dialog: MatDialog
 	) { }
 
 	/**
@@ -533,7 +537,7 @@ export class ProHospitalNocComponent implements OnInit {
 
 			hospitalType: [null, [Validators.required, Validators.maxLength(50)]],
 			numberOfBed: [null, [Validators.required, Validators.maxLength(3)]],
-			numberOfOT: [null, [Validators.required, Validators.maxLength(1)]],
+			numberOfOT: [null, [Validators.required, Validators.maxLength(3)]],
 			hospitalOTDetails: this.fb.array([]),
 			exerciseSection: [null, [Validators.required, Validators.maxLength(3)]],
 			xraySection: [null, [Validators.required, Validators.maxLength(3)]],
@@ -640,24 +644,25 @@ export class ProHospitalNocComponent implements OnInit {
 		});
 	}
 
+
 	/**
    * Method is used to add more child in array.
    * @param length - number of row
    */
-	addOTDetail(length: number) {
+	// addOTDetail(length: number, data: any) {
 
-		let returnArray = this.provisionalHospitalNocForm.get('hospitalOTDetails') as FormArray;
-		if (returnArray.length >= length) {
-			this.commonService.openAlert("Warning", "Maximum Limit " + length + " .", "warning");
-		} else {
-			returnArray.push(this.createOTDetailArray(returnArray));
-		}
-	}
+	// 	let returnArray = this.provisionalHospitalNocForm.get('hospitalOTDetails') as FormArray;
+	// 	if (returnArray.length >= length) {
+	// 		this.commonService.openAlert("Warning", "Maximum Limit " + length + " .", "warning");
+	// 	} else {
+	// 		returnArray.push(this.createOTDetailArray(returnArray));
+	// 	}
+	// }
 
 	/**
-	   * Method is used to return array
-	   * @param data : person data array 
-	   */
+	 * Method is used to return array
+	 * @param data : person data array 
+	 */
 	createOTDetailArray(data?: any) {
 		return this.fb.group({
 			// serviceFormId: this.formId,
@@ -669,20 +674,74 @@ export class ProHospitalNocComponent implements OnInit {
 		})
 
 	}
+	/**
+	 * This method for dialog component , it's collect OT details
+	 */
+	openDialog() {
+		let returnArray = this.provisionalHospitalNocForm.get('hospitalOTDetails') as FormArray;
+		if (returnArray.length >= 15) {
+			this.commonService.openAlert("Warning", "Maximum Limit " + 15 + " .", "warning");
+		} else {
+			const dialogConfig = new MatDialogConfig();
+
+			dialogConfig.disableClose = true;
+			dialogConfig.autoFocus = true;
+			dialogConfig.data = {};
+
+			const dialogRef = this.dialog.open(DialogFormComponent, dialogConfig);
+
+			dialogRef.afterClosed().subscribe(
+				data => {
+					if (data) {
+						returnArray.push(this.createOTDetailArray(data));
+						this.provisionalHospitalNocForm.get('numberOfOT').setValue(returnArray.length)
+					}
+
+				}
+			);
+		}
+	}
+
+	editOT(arrayId: any, otdata: any) {
+		let id = otdata.controls.id.value;
+		let otFacilities = otdata.controls.otFacilities.value;
+		let areaInSquareMeterLength = otdata.controls.areaInSquareMeterLength.value;
+		let areaInSquareMeterBreadth = otdata.controls.areaInSquareMeterBreadth.value;
+		let areaInSquareMeter = otdata.controls.areaInSquareMeter.value;
+
+		const dialogConfig = new MatDialogConfig();
+
+		dialogConfig.disableClose = true;
+		dialogConfig.autoFocus = true;
+
+		dialogConfig.data = {
+			id, otFacilities, areaInSquareMeterLength,
+			areaInSquareMeterBreadth, areaInSquareMeter
+		}
+
+		const dialogRef = this.dialog.open(DialogFormComponent,
+			dialogConfig);
+
+		dialogRef.afterClosed().subscribe(
+			val => {
+				if (val) {
+					let returnArray = this.provisionalHospitalNocForm.get('hospitalOTDetails') as FormArray;
+					returnArray.controls[arrayId].setValue(val);
+				}
+			}
+		);
+	}
 
 	/**
 	 * Method is used to delete OT information from hospitalOTDetails array.
 	 * @param OTData - OT data.
 	 * @param index - index of hospitalOTDetails array
 	 */
-
 	deleteOT(OTData: any, index: number) {
 		let returnArray = this.provisionalHospitalNocForm.get('hospitalOTDetails') as FormArray;
-
+		// this.addItem(persontype).controls.splice(index, 1);
 		this.commonService.deleteAlert('Are you sure?', "You won't be able to revert this!", 'warning', '', performDelete => {
-			if (this.provisionalHospitalNocForm.get('numberOfOT').value <= 0) {
-				this.commonService.openAlert("Warning", "OT detail mandatory", "warning");
-			} else {
+			if (this.provisionalHospitalNocForm.get('numberOfOT').value >= 1) {
 				if (OTData.id == null) {
 					returnArray.removeAt(index);
 					this.provisionalHospitalNocForm.get('numberOfOT').setValue(this.provisionalHospitalNocForm.get('numberOfOT').value - 1);
@@ -703,6 +762,7 @@ export class ProHospitalNocComponent implements OnInit {
 		);
 	}
 
+
 	/**
 	   * add other risk detail in otherRisks array 
 	   * @param event : on change event value
@@ -715,6 +775,7 @@ export class ProHospitalNocComponent implements OnInit {
 			}
 		});
 	}
+
 
 	/**
 	  * This method required for final form submition.

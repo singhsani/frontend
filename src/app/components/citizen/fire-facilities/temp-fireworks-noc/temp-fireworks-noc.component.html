@@ -81,14 +81,14 @@
 
 					<mat-form-field class="col-md-6">
 						<input matInput [matDatepicker]="picker1" formControlName="fromDate" placeholder="{{'from_date' | translate:translateKey }} (DD/MM/YYYY)"
-						 required (dateChange)="dateFormate($event.value,'fromDate')">
+						 required (dateChange)="dateFormate($event.value,'fromDate');tempFireworksNocForm.controls.toDate.reset()">
 						<mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
 						<mat-datepicker #picker1 touchUi="true"></mat-datepicker>
 						<control-messages [control]="tempFireworksNocForm.controls.fromDate"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-6">
-						<input matInput [matDatepicker]="picker2" formControlName="toDate" placeholder="{{'to_date' | translate:translateKey }} (DD/MM/YYYY)"
+						<input matInput [matDatepicker]="picker2" [min]="tempFireworksNocForm.controls.fromDate.value"  formControlName="toDate" placeholder="{{'to_date' | translate:translateKey }} (DD/MM/YYYY)"
 						 required (dateChange)="dateFormate($event.value,'toDate')">
 						<mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
 						<mat-datepicker #picker2 touchUi="true"></mat-datepicker>
@@ -212,17 +212,8 @@
 						 formControlName="usageOfInflammable"></textarea>
 						<control-messages [control]="tempFireworksNocForm.controls.usageOfInflammable"></control-messages>
 					</mat-form-field>
-				</div>
-				<app-action-bar [form]="tempFireworksNocForm" (tabIndex)="onTabChange($event)" (handleOnSaveAndNext)="handleOnSaveAndNext($event)"
-				 [stepInfo]="{step: 'step2', next: 2, back: 0}"></app-action-bar>
-			</mat-tab>
-			<!-- step 2 Ends -->
 
-			<!-- step 3 Starts -->
-			<mat-tab>
-				<ng-template mat-tab-label>
-					<div>{{'place_detail' | translate:translateKey}}</div>
-				</ng-template>
+				</div>
 
 				<div class="row">
 					<div class="col-md-4 radioBtnError">
@@ -298,13 +289,15 @@
 						</ng-select>
 						<control-messages [control]="tempFireworksNocForm.get('wiringType').controls.code"></control-messages>
 					</div>
-
 				</div>
 
 				<app-action-bar [form]="tempFireworksNocForm" (tabIndex)="onTabChange($event)" (handleOnSaveAndNext)="handleOnSaveAndNext($event)"
-				 [stepInfo]="{step: 'step3', next: 3, back: 1}"></app-action-bar>
+				 [stepInfo]="{step: 'step2', next: 2, back: 0}"></app-action-bar>
 			</mat-tab>
-			<!-- step 3 Ends -->
+			<!-- step 2 Ends -->
+			<!-- place_detail -->
+
+
 
 			<!-- step  Attachment Starts -->
 			<mat-tab>
@@ -321,7 +314,7 @@
 				</div>
 
 				<app-action-bar [uploadFiles]="uploadFilesArray" [form]="tempFireworksNocForm" (tabIndex)="onTabChange($event) "
-				 (handleOnSaveAndNext)="handleOnSaveAndNext($event)" (handleErrors)="handleErrorsOnSubmit($event)" [stepInfo]="{step: 'final', next:6, back:4} "></app-action-bar>
+				 (handleOnSaveAndNext)="handleOnSaveAndNext($event)" (handleErrors)="handleErrorsOnSubmit($event)" [stepInfo]="{step: 'final', next:6, back:3} "></app-action-bar>
 
 			</mat-tab>
 			<!-- step Attachment Ends -->
