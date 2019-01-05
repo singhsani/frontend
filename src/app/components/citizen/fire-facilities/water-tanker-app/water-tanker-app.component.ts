@@ -13,13 +13,11 @@ import { FireFacilitiesService } from '../common/services/fire-facilities.servic
 })
 export class WaterTankerAppComponent implements OnInit {
 
+	waterTankerAppForm: FormGroup;
+	translateKey: string = 'waterSupplyScreen';
+
 	formId: number;
 	apiCode: string;
-	@ViewChild('permanantAddressEstablishment') permanantAddressEstablishment: any;
-
-	waterTankerAppForm: FormGroup;
-	translateKey: string = 'waterTankerScreen';
-
 	tabIndex: number = 0;
 
 	private showButtons: boolean = false;

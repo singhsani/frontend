@@ -20,6 +20,7 @@ import { DeadBodyWanComponent } from './dead-body-wan/dead-body-wan.component';
 import { ProHospitalNocComponent } from './pro-hospital-noc/pro-hospital-noc.component';
 import { FinalHospitalNocComponent } from './final-hospital-noc/final-hospital-noc.component';
 import { FireCertificateComponent } from './fire-certificate/fire-certificate.component';
+import { DialogFormComponent } from './common/components/dialog-form/dialog-form.component';
 /* Import all shared, core and routing module end */
 
 @NgModule({
@@ -45,7 +46,9 @@ import { FireCertificateComponent } from './fire-certificate/fire-certificate.co
 		DeadBodyWanComponent,
 		ProHospitalNocComponent,
 		FinalHospitalNocComponent,
-		FireCertificateComponent
-	]
+		FireCertificateComponent,
+		DialogFormComponent
+	],
+	entryComponents: [DialogFormComponent]
 })
 export class FireFacilitiesModule { }
