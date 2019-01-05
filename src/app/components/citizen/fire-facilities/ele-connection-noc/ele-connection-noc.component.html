@@ -17,27 +17,25 @@
 					</mat-form-field>
 				</div>
 
-
 				<div class="row">
 
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace' required maxlength="100"
-						 placeholder="{{'applicantName' | translate:translateKey}}" formControlName="applicantName" appGujInputSource
+						 placeholder="{{'applicant_name' | translate:translateKey}}" formControlName="applicantName" appGujInputSource
 						 targetElement="applicantNameGuj" [form]="electricConnectionForm">
 						<control-messages [control]="electricConnectionForm.controls.applicantName"></control-messages>
 					</mat-form-field>
 					<!-- gujarati -->
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" maxlength="300" required formControlName="applicantNameGuj" appGujInputTarget [form]="electricConnectionForm"
-						 placeholder="{{ 'applicantNameGuj' | translate:translateKey:'gu' }}">
+						 placeholder="{{ 'applicant_name' | translate:translateKey:'gu' }}">
 						<control-messages [control]="electricConnectionForm.controls.applicantNameGuj"></control-messages>
 					</mat-form-field>
 					<!-- gujarati -->
 
-
 					<mat-form-field class="col-md-4">
 						<input matInput [max]="disablefutureDate" [matDatepicker]="DateOfapplicationDate" formControlName="applicationDate"
-						 (dateChange)="dateFormat($event.value,'applicationDate')" placeholder="{{ 'applicationDate' | translate:translateKey }} (DD/MM/YYYY)">
+						 (dateChange)="dateFormat($event.value,'applicationDate')" placeholder="{{ 'application_date' | translate:translateKey }} (DD/MM/YYYY)">
 						<mat-datepicker-toggle matSuffix [for]="DateOfapplicationDate"></mat-datepicker-toggle>
 						<mat-datepicker touchUi="true" #DateOfapplicationDate></mat-datepicker>
 						<control-messages [control]="electricConnectionForm.controls.applicationDate"></control-messages>
@@ -45,14 +43,14 @@
 
 					<mat-form-field class="col-md-4">
 						<!-- <span matPrefix>+91 &nbsp;</span> -->
-						<input matInput OnlyNumber placeholder="{{'contactNo' | translate:translateKey}}" type="tel" maxlength="10"
+						<input matInput OnlyNumber placeholder="{{'contact_no' | translate:translateKey}}" type="tel" maxlength="10"
 						 minlength="10" formControlName="contactNo" required>
 						<control-messages [control]="electricConnectionForm.controls.contactNo"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<!-- <span matPrefix>+91 &nbsp;</span> -->
-						<input matInput OnlyNumber placeholder="{{'mobileNo' | translate:translateKey}}" type="tel" maxlength="10"
+						<input matInput OnlyNumber placeholder="{{'mobile_no' | translate:translateKey}}" type="tel" maxlength="10"
 						 minlength="10" formControlName="mobileNo" required>
 						<control-messages [control]="electricConnectionForm.controls.mobileNo"></control-messages>
 					</mat-form-field>
@@ -66,9 +64,6 @@
 				</div>
 				<app-action-bar [form]="electricConnectionForm" (tabIndex)="onTabChange($event)" (handleErrors)="handleErrorsOnSubmit($event)"
 				 [stepInfo]="{step: 'step1', next: 1, back: 0}"></app-action-bar>
-
-
-
 
 			</mat-tab>
 			<!-- step 1 Ends -->
@@ -84,21 +79,21 @@
 				<div class="row">
 
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" appAlphaNumeric formControlName="electricityConnectionNo" placeholder="{{'electricityConnectionNo' | translate: translateKey }}"
+						<input matInput type="text" appAlphaNumeric formControlName="electricityConnectionNo" placeholder="{{'electricity_connection_no' | translate: translateKey }}"
 						 maxlength="20" required>
 						<control-messages [control]="electricConnectionForm.controls.electricityConnectionNo"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace' required maxlength="100"
-						 placeholder="{{'connectionHolderName' | translate:translateKey}}" formControlName="connectionHolderName"
+						 placeholder="{{'connection_holder_name' | translate:translateKey}}" formControlName="connectionHolderName"
 						 appGujInputSource targetElement="connectionHolderNameGuj" [form]="electricConnectionForm">
 						<control-messages [control]="electricConnectionForm.controls.connectionHolderName"></control-messages>
 					</mat-form-field>
 					<!-- gujarati -->
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" maxlength="300" required formControlName="connectionHolderNameGuj" appGujInputTarget
-						 [form]="electricConnectionForm" placeholder="{{ 'connectionHolderNameGuj' | translate:translateKey:'gu' }}">
+						 [form]="electricConnectionForm" placeholder="{{ 'connection_holder_name' | translate:translateKey:'gu' }}">
 						<control-messages [control]="electricConnectionForm.controls.connectionHolderNameGuj"></control-messages>
 					</mat-form-field>
 					<!-- gujarati -->
@@ -106,35 +101,34 @@
 
 					<mat-form-field class="col-md-4">
 						<textarea matInput rows="3" cols="50" required maxlength="500" placeholder="{{'connectionHolderAddress' | translate:translateKey}}"
-						 formControlName="connectionHolderAddress" appGujInputSource targetElement="connectionHolderAddressGuj" [form]="electricConnectionForm"></textarea>
+						 formControlName="connection_holder_address" appGujInputSource targetElement="connectionHolderAddressGuj" [form]="electricConnectionForm"></textarea>
 						<control-messages [control]="electricConnectionForm.controls.connectionHolderAddress"></control-messages>
 					</mat-form-field>
 					<!-- gujarati -->
 					<mat-form-field class="col-md-4">
 						<textarea matInput rows="3" cols="50" maxlength="1500" required formControlName="connectionHolderAddressGuj"
-						 appGujInputTarget [form]="electricConnectionForm" placeholder="{{ 'connectionHolderAddressGuj' | translate:translateKey:'gu' }}"></textarea>
+						 appGujInputTarget [form]="electricConnectionForm" placeholder="{{ 'connection_holder_address' | translate:translateKey:'gu' }}"></textarea>
 						<control-messages [control]="electricConnectionForm.controls.connectionHolderAddressGuj"></control-messages>
 					</mat-form-field>
 					<!-- gujarati -->
 
-
 					<mat-form-field class="col-md-4">
 						<input matInput [max]="disablefutureDate" [matDatepicker]="DateOfincidentDate" formControlName="incidentDate"
-						 (dateChange)="dateFormat($event.value,'incidentDate')" placeholder="{{ 'incidentDate' | translate:translateKey }} (DD/MM/YYYY)">
+						 (dateChange)="dateFormat($event.value,'incidentDate')" placeholder="{{ 'incident_date' | translate:translateKey }} (DD/MM/YYYY)">
 						<mat-datepicker-toggle matSuffix [for]="DateOfincidentDate"></mat-datepicker-toggle>
 						<mat-datepicker touchUi="true" #DateOfincidentDate></mat-datepicker>
 						<control-messages [control]="electricConnectionForm.controls.incidentDate"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" appAlphaNumeric formControlName="propertyNo" placeholder="{{'propertyNo' | translate: translateKey }}"
+						<input matInput type="text" appAlphaNumeric formControlName="propertyNo" placeholder="{{'property_no' | translate: translateKey }}"
 						 maxlength="15" required (change)="getPropertyStatus($event.target.value)">
 						<control-messages [control]="electricConnectionForm.controls.propertyNo"></control-messages>
 						<mat-error *ngIf="electricConnectionForm.get('propertyNo').hasError('outstandingRemainingProperty')">{{propertyStatusOutstanding?.message}}</mat-error>
 					</mat-form-field>
 
 					<div class="col-md-4 ngSelect" formGroupName="firePlaceType">
-						<ng-select required placeholder="{{'firePlaceType' | translate:translateKey}} *" formControlName="code">
+						<ng-select required placeholder="{{'fire_place_type' | translate:translateKey}} *" formControlName="code">
 							<ng-option *ngFor="let fire_place of FS_FIRE_PLACE_TYPE" [value]="fire_place.code">{{fire_place.name}}</ng-option>
 						</ng-select>
 						<control-messages [control]="electricConnectionForm.get('firePlaceType').controls.code"></control-messages>
@@ -147,14 +141,14 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<textarea matInput rows="3" cols="50" required maxlength="300" placeholder="{{'firePlaceAddress' | translate:translateKey}}"
+						<textarea matInput rows="3" cols="50" required maxlength="300" placeholder="{{'fire_place_address' | translate:translateKey}}"
 						 formControlName="firePlaceAddress"></textarea>
 						<control-messages [control]="electricConnectionForm.controls.firePlaceAddress"></control-messages>
 					</mat-form-field>
 
 
 					<mat-form-field class="col-md-4">
-						<input matInput OnlyNumber placeholder="{{'fireLossAmount' | translate:translateKey}}" type="tel" maxlength="10"
+						<input matInput OnlyNumber placeholder="{{'fire_loss_amount' | translate:translateKey}}" type="tel" maxlength="10"
 						 formControlName="fireLossAmount" required>
 						<control-messages [control]="electricConnectionForm.controls.fireLossAmount"></control-messages>
 					</mat-form-field>
