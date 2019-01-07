@@ -16,7 +16,7 @@ import * as moment from 'moment';
 export class TempFireworksNocComponent implements OnInit {
 
 	tempFireworksNocForm: FormGroup;
-	translateKey: string = 'fireworksFireNocScreen';
+	translateKey: string = 'tempFireworksFireNocScreen';
 
 	formId: number;
 	apiCode: string;

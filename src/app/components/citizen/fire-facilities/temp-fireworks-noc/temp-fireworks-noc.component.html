@@ -62,10 +62,10 @@
 								<mat-label>{{'application_through_police' | translate:translateKey }} *</mat-label>
 								<mat-radio-group formControlName="applicationThroughPolice" required (change)="dependentAttachment($event.value,'PERMISSION_FROM_LAND_OWNER')">
 									<mat-radio-button [value]="true">
-										Yes
+										{{'yes_txt' | translate:translateKey }}
 									</mat-radio-button>
 									<mat-radio-button [value]="false">
-										No
+										{{'no_txt' | translate:translateKey }}
 									</mat-radio-button>
 								</mat-radio-group>
 								<control-messages [control]="tempFireworksNocForm.controls.applicationThroughPolice"></control-messages>
@@ -106,23 +106,17 @@
 								<mat-label>{{'shop_in_vmcboundry' | translate:translateKey }} *</mat-label>
 								<mat-radio-group formControlName="shopInVMCBoundry" required>
 									<mat-radio-button [value]="true">
-										Yes
+										{{'yes_txt' | translate:translateKey }}
 									</mat-radio-button>
 									<mat-radio-button [value]="false">
-										No
+										{{'no_txt' | translate:translateKey }}
 									</mat-radio-button>
 								</mat-radio-group>
 								<control-messages [control]="tempFireworksNocForm.controls.shopInVMCBoundry"></control-messages>
 							</div>
 						</div>
 					</div>
-
-					<!-- <mat-form-field class="col-md-4">
-						<input matInput maxlength="3" required appAlphaNumeric placeholder="{{'required_noc_for_area' | translate:translateKey}}"
-						 formControlName="requiredNOCForArea">
-						<control-messages [control]="tempFireworksNocForm.controls.requiredNOCForArea"></control-messages>
-					</mat-form-field> -->
-
+					
 					<mat-form-field class="col-md-4">
 						<input matInput placeholder="{{'shop_in_open_space' | translate:translateKey}}" formControlName="shopInOpenSpace"
 						 maxlength="150">
@@ -135,10 +129,10 @@
 								<mat-label>{{'owner_is_vmc' | translate:translateKey }} *</mat-label>
 								<mat-radio-group formControlName="ownerIsVMC" required>
 									<mat-radio-button [value]="true">
-										Yes
+										{{'yes_txt' | translate:translateKey }}
 									</mat-radio-button>
 									<mat-radio-button [value]="false">
-										No
+										{{'no_txt' | translate:translateKey }}
 									</mat-radio-button>
 								</mat-radio-group>
 								<control-messages [control]="tempFireworksNocForm.controls.ownerIsVMC"></control-messages>
@@ -152,10 +146,10 @@
 								<mat-label>{{'owner_consent_letter_included' | translate:translateKey }} *</mat-label>
 								<mat-radio-group formControlName="ownerConsentLetterIncluded" required>
 									<mat-radio-button [value]="true">
-										Yes
+										{{'yes_txt' | translate:translateKey }}
 									</mat-radio-button>
 									<mat-radio-button [value]="false">
-										No
+										{{'no_txt' | translate:translateKey }}
 									</mat-radio-button>
 								</mat-radio-group>
 								<control-messages [control]="tempFireworksNocForm.controls.ownerConsentLetterIncluded"></control-messages>
@@ -181,10 +175,10 @@
 						<mat-label>{{'layout_plan_included' | translate:translateKey }} *</mat-label>
 						<mat-radio-group formControlName="layoutPlanIncluded" required (change)="dependentAttachment($event.value,'LOCATION_MAP')">
 							<mat-radio-button [value]="true">
-								Yes
+								{{'yes_txt' | translate:translateKey }}
 							</mat-radio-button>
 							<mat-radio-button [value]="false">
-								No
+								{{'no_txt' | translate:translateKey }}
 							</mat-radio-button>
 						</mat-radio-group>
 						<control-messages [control]="tempFireworksNocForm.controls.layoutPlanIncluded"></control-messages>
@@ -193,17 +187,17 @@
 						<mat-label>{{'weather_exit_shown_in_map' | translate:translateKey }} *</mat-label>
 						<mat-radio-group formControlName="weatherExitShownInMap" required>
 							<mat-radio-button [value]="true">
-								Yes
+								{{'yes_txt' | translate:translateKey }}
 							</mat-radio-button>
 							<mat-radio-button [value]="false">
-								No
+								{{'no_txt' | translate:translateKey }}
 							</mat-radio-button>
 						</mat-radio-group>
 						<control-messages [control]="tempFireworksNocForm.controls.weatherExitShownInMap"></control-messages>
 					</div>
 
 					<mat-form-field class="col-md-4">
-						<input matInput required OnlyNumber maxlength="3" type="tel" formControlName="noOfExits" placeholder="{{'no_of_eExits' | translate:translateKey }}">
+						<input matInput required OnlyNumber maxlength="3" type="tel" formControlName="noOfExits" placeholder="{{'no_of_exits' | translate:translateKey }}">
 						<control-messages [control]="tempFireworksNocForm.controls.noOfExits"></control-messages>
 					</mat-form-field>
 
@@ -220,10 +214,10 @@
 						<mat-label>{{'security_arrangement' | translate:translateKey }} *</mat-label>
 						<mat-radio-group formControlName="securityArrangement" required (change)="dependentAttachment($event.value,'SECURITY_ARRANGEMENT')">
 							<mat-radio-button [value]="true">
-								Yes
+								{{'yes_txt' | translate:translateKey }}
 							</mat-radio-button>
 							<mat-radio-button [value]="false">
-								No
+								{{'no_txt' | translate:translateKey }}
 							</mat-radio-button>
 						</mat-radio-group>
 						<control-messages [control]="tempFireworksNocForm.controls.securityArrangement"></control-messages>
@@ -233,10 +227,10 @@
 						<mat-label>{{'parking_arrangement' | translate:translateKey }} *</mat-label>
 						<mat-radio-group formControlName="parkingArrangement" required>
 							<mat-radio-button [value]="true">
-								Yes
+								{{'yes_txt' | translate:translateKey }}
 							</mat-radio-button>
 							<mat-radio-button [value]="false">
-								No
+								{{'no_txt' | translate:translateKey }}
 							</mat-radio-button>
 						</mat-radio-group>
 						<control-messages [control]="tempFireworksNocForm.controls.parkingArrangement"></control-messages>
@@ -245,10 +239,10 @@
 						<mat-label>{{'exit_no_smoking_sign_board_provision' | translate:translateKey }} *</mat-label>
 						<mat-radio-group formControlName="exitNoSmokingSignboardProvision" required>
 							<mat-radio-button [value]="true">
-								Yes
+								{{'yes_txt' | translate:translateKey }}
 							</mat-radio-button>
 							<mat-radio-button [value]="false">
-								No
+								{{'no_txt' | translate:translateKey }}
 							</mat-radio-button>
 						</mat-radio-group>
 						<control-messages [control]="tempFireworksNocForm.controls.exitNoSmokingSignboardProvision"></control-messages>
@@ -257,10 +251,10 @@
 						<mat-label>{{'stand_by_fire_engine_demanded' | translate:translateKey }} *</mat-label>
 						<mat-radio-group formControlName="standbyFireEngineDemanded" required>
 							<mat-radio-button [value]="true">
-								Yes
+								{{'yes_txt' | translate:translateKey }}
 							</mat-radio-button>
 							<mat-radio-button [value]="false">
-								No
+								{{'no_txt' | translate:translateKey }}
 							</mat-radio-button>
 						</mat-radio-group>
 						<control-messages [control]="tempFireworksNocForm.controls.standbyFireEngineDemanded"></control-messages>
@@ -269,10 +263,10 @@
 						<mat-label>{{'last_year_licence_received' | translate:translateKey }} *</mat-label>
 						<mat-radio-group formControlName="lastYearLicenceReceived" required>
 							<mat-radio-button [value]="true">
-								Yes
+								{{'yes_txt' | translate:translateKey }}
 							</mat-radio-button>
 							<mat-radio-button [value]="false">
-								No
+								{{'no_txt' | translate:translateKey }}
 							</mat-radio-button>
 						</mat-radio-group>
 						<control-messages [control]="tempFireworksNocForm.controls.lastYearLicenceReceived"></control-messages>
@@ -295,9 +289,6 @@
 				 [stepInfo]="{step: 'step2', next: 2, back: 0}"></app-action-bar>
 			</mat-tab>
 			<!-- step 2 Ends -->
-			<!-- place_detail -->
-
-
 
 			<!-- step  Attachment Starts -->
 			<mat-tab>

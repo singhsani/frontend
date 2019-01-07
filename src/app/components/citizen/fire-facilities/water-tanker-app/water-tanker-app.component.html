@@ -25,7 +25,7 @@
 					</div>
 
 					<div class="col-md-6 ngSelect" formGroupName="purpose">
-						<ng-select required placeholder="{{'purpose' | translate:translateKey}} *" formControlName="code" (change)="calculateTotalAmount()">
+						<ng-select required placeholder="{{'tanker_purpose' | translate:translateKey}} *" formControlName="code" (change)="calculateTotalAmount()">
 							<ng-option *ngFor="let PURPOSE of FS_WATER_TANKER_PURPOSE" [value]="PURPOSE.code">{{PURPOSE.name}}</ng-option>
 						</ng-select>
 						<control-messages [control]="waterTankerAppForm.get('purpose').controls.code"></control-messages>
@@ -43,17 +43,17 @@
 						<mat-label>{{'within_vmc_boundary' | translate:translateKey }} *</mat-label>
 						<mat-radio-group formControlName="withinVMCBoundary" required>
 							<mat-radio-button [value]="true">
-								Yes
+								{{'yes_txt' | translate:translateKey }}
 							</mat-radio-button>
 							<mat-radio-button [value]="false">
-								No
+								{{'no_txt' | translate:translateKey }}
 							</mat-radio-button>
 						</mat-radio-group>
 						<control-messages [control]="waterTankerAppForm.controls.withinVMCBoundary"></control-messages>
 					</div>
 				</div>
 				<!-- <mat-form-field class="col-md-6">
-						<textarea matInput rows="3" cols="50" maxlength="500" formControlName="holderAddress" placeholder="{{ 'upload_letter' | translate:translateKey }}"
+						<textarea matInput rows="3" cols="50" maxlength="500" formControlName="holderAddress" placeholder="{{ 'holder_address' | translate:translateKey }}"
 						 required> </textarea>
 						<control-messages [control]="waterTankerAppForm.controls.holderAddress"></control-messages>
 					</mat-form-field> -->
