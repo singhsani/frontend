@@ -599,7 +599,7 @@ export class FinalHospitalNocComponent implements OnInit {
 			oldReferenceNumber: [null],
 			applicantName: [null, [Validators.required, Validators.maxLength(100)]],
 			applicantNameGuj: [null, [Validators.required, Validators.maxLength(300)]],
-			contactNo: [null, [Validators.required, Validators.maxLength(10)]],
+			contactNo: [null, [Validators.required, Validators.maxLength(12)]],
 			officeContactNo: [null, [Validators.required, Validators.maxLength(12)]],
 			onsitePersonMobileNo: [null, [Validators.required, Validators.maxLength(10), Validators.minLength(10)]],
 			workOfficeEmailId: [null, [Validators.required, Validators.maxLength(50)]],
@@ -617,14 +617,14 @@ export class FinalHospitalNocComponent implements OnInit {
 			ownerAddress: [null, [Validators.required, Validators.maxLength(150)]],
 			ownerAddressGuj: [null, [Validators.required, Validators.maxLength(300)]],
 
-			fpNo: [null, [Validators.required, Validators.maxLength(10)]],
-			rsNo: [null, [Validators.required, Validators.maxLength(10)]],
-			tikaNo: [null, [Validators.required, Validators.maxLength(10)]],
-			tpNo: [null, [Validators.required, Validators.maxLength(10)]],
+			fpNo: [null, [Validators.required, Validators.maxLength(8)]],
+			rsNo: [null, [Validators.required, Validators.maxLength(8)]],
+			tikaNo: [null, [Validators.required, Validators.maxLength(8)]],
+			tpNo: [null, [Validators.required, Validators.maxLength(8)]],
 			buildingLocation: [null, [Validators.required, Validators.maxLength(50)]],
-			blockNo: [null, [Validators.maxLength(10)]],
-			opNo: [null, [Validators.required, Validators.maxLength(10)]],
-			citySurveyNo: [null, [Validators.required, Validators.maxLength(10)]],
+			blockNo: [null, [Validators.maxLength(8)]],
+			opNo: [null, [Validators.required, Validators.maxLength(8)]],
+			citySurveyNo: [null, [Validators.required, Validators.maxLength(8)]],
 
 			hospitalType: [null, [Validators.required, Validators.maxLength(50)]],
 			numberOfBed: [null, [Validators.required, Validators.maxLength(3)]],
@@ -806,7 +806,7 @@ export class FinalHospitalNocComponent implements OnInit {
 		try {
 			this.otherRiskNote = false;
 			_.forEach(event, (value) => {
-				if (value.code == 'OTHER') {
+				if (value == 'OTHER') {
 					this.otherRiskNote = true;
 				}
 			});

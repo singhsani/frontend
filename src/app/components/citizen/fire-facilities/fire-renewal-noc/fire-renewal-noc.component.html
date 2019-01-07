@@ -55,8 +55,7 @@
 
 					<mat-form-field class="col-md-4">
 						<!-- <span matPrefix>+91 &nbsp;</span> -->
-						<input matInput OnlyNumber placeholder="{{'applicant_contactNo' | translate:translateKey}}" type="tel" maxlength="10"
-						 minlength="10" formControlName="contactNo" required>
+						<input matInput OnlyNumber placeholder="{{'applicant_contactNo' | translate:translateKey}}" type="tel" maxlength="12" formControlName="contactNo" required>
 						<control-messages [control]="renewalFireNocForm.controls.contactNo"></control-messages>
 					</mat-form-field>
 

@@ -250,7 +250,7 @@ export class FireRenewalNocComponent implements OnInit {
 			applicantNameGuj: [null, [Validators.required, Validators.maxLength(300)]],
 			applicationDate: [null],
 			officeContactNo: [null, [Validators.required, Validators.maxLength(12)]],
-			contactNo: [null, [Validators.required, Validators.maxLength(10)]],
+			contactNo: [null, [Validators.required, Validators.maxLength(12)]],
 			onsitePersonMobileNo: [null, [Validators.required, Validators.maxLength(10), Validators.minLength(10)]],
 			applicantPermanentAddress: [null, [Validators.required, Validators.maxLength(150)]],
 			applicantPermanentAddressGuj: [null, [Validators.required, Validators.maxLength(450)]],

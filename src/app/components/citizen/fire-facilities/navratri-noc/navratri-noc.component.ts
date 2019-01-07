@@ -192,7 +192,7 @@ export class NavratriNocComponent implements OnInit {
 			oldReferenceNumber: [null],
 			applicantName: [null, [Validators.required, Validators.maxLength(100)]],
 			applicantNameGuj: [null, [Validators.required, Validators.maxLength(300)]],
-			contactNo: [null, [Validators.required, Validators.maxLength(10)]],
+			contactNo: [null, [Validators.required, Validators.maxLength(12)]],
 			email: [null, [Validators.required, Validators.maxLength(50)]],
 			
 			/* Step 2 controls start */

@@ -38,8 +38,7 @@
 
 					<mat-form-field class="col-md-4">
 						<!-- <span matPrefix>+91 &nbsp;</span> -->
-						<input matInput OnlyNumber placeholder="{{'applicant_mobile' | translate:translateKey}}" type="tel" maxlength="10"
-						 minlength="10" formControlName="contactNo" required>
+						<input matInput OnlyNumber placeholder="{{'applicant_mobile' | translate:translateKey}}" type="tel" maxlength="12" formControlName="contactNo" required>
 						<control-messages [control]="provisionalHospitalNocForm.controls.contactNo"></control-messages>
 					</mat-form-field>
 
@@ -167,21 +166,21 @@
 				<div class="row">
 
 					<mat-form-field class="col-md-4">
-						<input matInput maxlength="10" required placeholder="{{'final_plot_no' | translate:translateKey}}"
+						<input matInput maxlength="8" required placeholder="{{'final_plot_no' | translate:translateKey}}"
 						 formControlName="fpNo">
 						<control-messages [control]="provisionalHospitalNocForm.controls.fpNo"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput maxlength="10" required placeholder="{{'revenue_survey_no' | translate:translateKey}}"
+						<input matInput maxlength="8" required placeholder="{{'revenue_survey_no' | translate:translateKey}}"
 						 formControlName="rsNo">
 						<control-messages [control]="provisionalHospitalNocForm.controls.rsNo"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput maxlength="10" required placeholder="{{'tika_no' | translate:translateKey}}" formControlName="tikaNo">
+						<input matInput maxlength="8" required placeholder="{{'tika_no' | translate:translateKey}}" formControlName="tikaNo">
 						<control-messages [control]="provisionalHospitalNocForm.controls.tikaNo"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput maxlength="10" required placeholder="{{'town_planning_no' | translate:translateKey}}"
+						<input matInput maxlength="8" required placeholder="{{'town_planning_no' | translate:translateKey}}"
 						 formControlName="tpNo">
 						<control-messages [control]="provisionalHospitalNocForm.controls.tpNo"></control-messages>
 					</mat-form-field>
@@ -191,15 +190,15 @@
 						<control-messages [control]="provisionalHospitalNocForm.controls.buildingLocation"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput maxlength="10" placeholder="{{'block_no' | translate:translateKey}}" formControlName="blockNo">
+						<input matInput maxlength="8" placeholder="{{'block_no' | translate:translateKey}}" formControlName="blockNo">
 						<control-messages [control]="provisionalHospitalNocForm.controls.blockNo"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput maxlength="10" required placeholder="{{'o_p_no' | translate:translateKey}}" formControlName="opNo">
+						<input matInput maxlength="8" required placeholder="{{'o_p_no' | translate:translateKey}}" formControlName="opNo">
 						<control-messages [control]="provisionalHospitalNocForm.controls.opNo"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput maxlength="10" required placeholder="{{'city_servay_no' | translate:translateKey}}"
+						<input matInput maxlength="8" required placeholder="{{'city_servay_no' | translate:translateKey}}"
 						 formControlName="citySurveyNo">
 						<control-messages [control]="provisionalHospitalNocForm.controls.citySurveyNo"></control-messages>
 					</mat-form-field>
@@ -550,7 +549,7 @@
 
 				<div class="row">
 					<div class="col-md-8 ngSelect">
-						<ng-select required [items]="FS_OTHER_RISKS" bindLabel="name" bindValue="name" formControlName="otherRisks"
+						<ng-select required [items]="FS_OTHER_RISKS" bindLabel="name" bindValue="code" formControlName="otherRisks"
 						 [multiple]="true" (ngModelChange)="otherRemark($event);"
 						 placeholder="{{'other_risks' | translate:translateKey}} *">
 						</ng-select>
