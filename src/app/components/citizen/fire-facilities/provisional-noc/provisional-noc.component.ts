@@ -176,7 +176,7 @@ export class ProvisionalNocComponent implements OnInit {
 			oldReferenceNumber: [null],
 			applicantName: [null, [Validators.required, Validators.maxLength(100)]],
 			applicantNameGuj: [null, [Validators.required, Validators.maxLength(300)]],
-			contactNo: [null, [Validators.required, Validators.maxLength(10)]],
+			contactNo: [null, [Validators.required, Validators.maxLength(12)]],
 			officeContactNo: [null, [Validators.required, Validators.maxLength(12)]],
 			onsitePersonMobileNo: [null, [Validators.required, Validators.maxLength(10), Validators.minLength(10)]],
 			applicantPermanentAddress: [null, [Validators.required, Validators.maxLength(300)]],

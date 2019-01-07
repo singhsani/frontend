@@ -218,7 +218,7 @@ export class TempStructureNocComponent implements OnInit {
 			organizeNameGuj: [null, [Validators.required, Validators.maxLength(300)]],
 			organizerAddress: [null, [Validators.required, Validators.maxLength(200)]],
 			organizerAddressGuj: [null, [Validators.required, Validators.maxLength(400)]],
-			organizerContactNo: [null, [Validators.required, Validators.maxLength(10)]],
+			organizerContactNo: [null, [Validators.required, Validators.maxLength(12)]],
 			temporaryStructureAddress: [null, [Validators.required, Validators.maxLength(500)]],
 			temporaryStructureAddressGuj: [null, [Validators.required, Validators.maxLength(1500)]],
 			

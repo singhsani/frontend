@@ -101,7 +101,7 @@ export class GasConnectionNocComponent implements OnInit {
 			applicantName: [null, [Validators.required, Validators.maxLength(100)]],
 			applicantNameGuj: [null, [Validators.required, Validators.maxLength(300)]],
 			applicationDate: [null, Validators.required],
-			contactNo: [null, [Validators.required, Validators.maxLength(10), Validators.minLength(10)]],
+			contactNo: [null, [Validators.required, Validators.maxLength(12)]],
 			mobileNo: [null, [Validators.required, Validators.maxLength(10), Validators.minLength(10)]],
 			email: [null, [Validators.required, Validators.maxLength(50)]],
 
