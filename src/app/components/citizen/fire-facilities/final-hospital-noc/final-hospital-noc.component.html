@@ -33,21 +33,18 @@
 				</div>
 				<div class="row">
 					<mat-form-field class="col-md-4">
-						<input matInput appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{'first_name' | translate:translateKey}}"
-						 formControlName="firstName" maxlength="100">
-						<control-messages [control]="finalHospitalNocForm.controls.firstName"></control-messages>
+						<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace' required maxlength="100"
+						 placeholder="{{'applicant_Name' | translate:translateKey}}" formControlName="applicantName" appGujInputSource
+						 targetElement="applicantNameGuj" [form]="finalHospitalNocForm">
+						<control-messages [control]="finalHospitalNocForm.controls.applicantName"></control-messages>
 					</mat-form-field>
+					<!-- gujarati -->
 					<mat-form-field class="col-md-4">
-						<input matInput appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{'middle_name' | translate:translateKey}}"
-						 formControlName="middleName" maxlength="100">
-						<control-messages [control]="finalHospitalNocForm.controls.middleName"></control-messages>
+						<input matInput type="text" maxlength="300" required formControlName="applicantNameGuj" appGujInputTarget [form]="finalHospitalNocForm"
+						 placeholder="{{ 'applicant_Name' | translate:translateKey:'gu' }}">
+						<control-messages [control]="finalHospitalNocForm.controls.applicantNameGuj"></control-messages>
 					</mat-form-field>
-
-					<mat-form-field class="col-md-4">
-						<input matInput appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{'last_name' | translate:translateKey}}"
-						 formControlName="lastName" required maxlength="100">
-						<control-messages [control]="finalHospitalNocForm.controls.lastName"></control-messages>
-					</mat-form-field>
+					<!-- gujarati -->
 
 					<mat-form-field class="col-md-4">
 						<!-- <span matPrefix>+91 &nbsp;</span> -->
@@ -58,8 +55,8 @@
 
 					<mat-form-field class="col-md-4">
 						<!-- <span matPrefix>+91 &nbsp;</span> -->
-						<input matInput OnlyNumber placeholder="{{'office_contact_no' | translate:translateKey}}" type="tel" maxlength="10"
-						 minlength="10" formControlName="officeContactNo" required>
+						<input matInput OnlyNumber placeholder="{{'office_contact_no' | translate:translateKey}}" type="tel" maxlength="12"
+						 formControlName="officeContactNo" required>
 						<control-messages [control]="finalHospitalNocForm.controls.officeContactNo"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
@@ -88,7 +85,7 @@
 				<div class="row">
 
 					<mat-form-field class="col-md-12">
-						<input matInput required OnlyNumber maxlength="10" minlength="10" type="tel" formControlName="medicalRegistrationNumber"
+						<input matInput required maxlength="10" type="tel" formControlName="medicalRegistrationNumber"
 						 placeholder="{{'medical_registration_number' | translate:translateKey }}">
 						<control-messages [control]="finalHospitalNocForm.controls.medicalRegistrationNumber"></control-messages>
 					</mat-form-field>
@@ -519,8 +516,8 @@
 
 					<mat-form-field class="col-md-4">
 						<!-- <span matPrefix>+91 &nbsp;</span> -->
-						<input matInput OnlyNumber placeholder="{{'architect_contact_no' | translate:translateKey}}" type="tel" maxlength="10"
-						 minlength="10" formControlName="architectContactNo" required>
+						<input matInput OnlyNumber placeholder="{{'architect_contact_no' | translate:translateKey}}" type="tel" maxlength="12"
+						 formControlName="architectContactNo" required>
 						<control-messages [control]="finalHospitalNocForm.controls.architectContactNo"></control-messages>
 					</mat-form-field>
 
@@ -556,7 +553,7 @@
 				<div class="row">
 					<div class="col-md-8 ngSelect">
 						<ng-select required [items]="FS_OTHER_RISKS" bindLabel="name" bindValue="name" formControlName="otherRisks"
-						 [multiple]="true" (ngModelChange)="otherRemark($event);finalHospitalNocForm.controls.otherRiskDetail.reset()"
+						 [multiple]="true" (ngModelChange)="otherRemark($event);"
 						 placeholder="{{'other_risks' | translate:translateKey}} *">
 						</ng-select>
 						<control-messages [control]="finalHospitalNocForm.get('otherRisks')"></control-messages>

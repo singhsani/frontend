@@ -597,15 +597,14 @@ export class FinalHospitalNocComponent implements OnInit {
 			hospitalNocNumber: [null],
 			applicationDate: [null],
 			oldReferenceNumber: [null],
-			firstName: [null, [Validators.required, Validators.maxLength(100)]],
-			lastName: [null, [Validators.required, Validators.maxLength(100)]],
-			middleName: [null, Validators.maxLength(100)],
+			applicantName: [null, [Validators.required, Validators.maxLength(100)]],
+			applicantNameGuj: [null, [Validators.required, Validators.maxLength(300)]],
 			contactNo: [null, [Validators.required, Validators.maxLength(10)]],
-			officeContactNo: [null, [Validators.required, Validators.maxLength(10)]],
+			officeContactNo: [null, [Validators.required, Validators.maxLength(12)]],
 			onsitePersonMobileNo: [null, [Validators.required, Validators.maxLength(10), Validators.minLength(10)]],
 			workOfficeEmailId: [null, [Validators.required, Validators.maxLength(50)]],
 
-			medicalRegistrationNumber: [null, [Validators.required, Validators.maxLength(15)]],
+			medicalRegistrationNumber: [null, [Validators.required, Validators.maxLength(10)]],
 			doctorName: [null, [Validators.required, Validators.maxLength(100)]],
 			doctorNameGuj: [null, [Validators.required, Validators.maxLength(300)]],
 			hospitalName: [null, [Validators.required, Validators.maxLength(50)]],
@@ -663,7 +662,7 @@ export class FinalHospitalNocComponent implements OnInit {
 			architectFirmName: [null, [Validators.required, Validators.maxLength(50)]],
 			architectFirmNameGuj: [null, [Validators.required, Validators.maxLength(150)]],
 			architectFirmNumber: [null, [Validators.required, Validators.maxLength(20)]],
-			architectContactNo: [null, [Validators.required, Validators.maxLength(10)]],
+			architectContactNo: [null, [Validators.required, Validators.maxLength(12)]],
 
 			noOfHospitalStaff: [null, [Validators.required, Validators.maxLength(4)]],
 			noOfSecurityStaff: [null, [Validators.required, Validators.maxLength(4)]],
@@ -804,12 +803,19 @@ export class FinalHospitalNocComponent implements OnInit {
 	   * @param event : on change event value
 	   */
 	otherRemark(event: Event) {
-		this.otherRiskNote = false;
-		_.forEach(event, (value) => {
-			if (value == 'Other') {
-				this.otherRiskNote = true;
+		try {
+			this.otherRiskNote = false;
+			_.forEach(event, (value) => {
+				if (value.code == 'OTHER') {
+					this.otherRiskNote = true;
+				}
+			});
+			if (!this.otherRiskNote) {
+				this.finalHospitalNocForm.get('otherRiskDetail').reset();
 			}
-		});
+		} catch (e) {
+
+		}
 	}
 
 	/**

@@ -270,7 +270,7 @@ export class FinalFireNocComponent implements OnInit {
 			applicantName: [null, [Validators.required, Validators.maxLength(100)]],
 			applicantNameGuj: [null, [Validators.required, Validators.maxLength(300)]],
 			contactNo: [null, [Validators.required, Validators.maxLength(10)]],
-			officeContactNo: [null, [Validators.required, Validators.maxLength(10)]],
+			officeContactNo: [null, [Validators.required, Validators.maxLength(12)]],
 			onsitePersonMobileNo: [null, [Validators.required, Validators.maxLength(10), Validators.minLength(10)]],
 			applicantPermanentAddress: [null, [Validators.required, Validators.maxLength(300)]],
 			applicantPermanentAddressGuj: [null, [Validators.required, Validators.maxLength(900)]],
@@ -295,7 +295,7 @@ export class FinalFireNocComponent implements OnInit {
 			architectPermanentAddress: [null, [Validators.required, Validators.maxLength(300)]],
 			architectPermanentAddressGuj: [null, [Validators.required, Validators.maxLength(900)]],
 
-			architectContactNo: [null, [Validators.required, Validators.maxLength(10)]],
+			architectContactNo: [null, [Validators.required, Validators.maxLength(12)]],
 			siteAddress: [null, [Validators.required, Validators.maxLength(300)]],
 			siteAddressGuj: [null, [Validators.required, Validators.maxLength(900)]],
 			fireVendorType: this.fb.group({

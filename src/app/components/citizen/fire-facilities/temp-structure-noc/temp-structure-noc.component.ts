@@ -198,7 +198,7 @@ export class TempStructureNocComponent implements OnInit {
 			email: [null, [Validators.required, Validators.maxLength(50)]],
 			oldReferenceNumber: [null],
 			applicationDate: [null],//not now
-			officeContactNo: [null, [Validators.required, Validators.maxLength(10)]],
+			officeContactNo: [null, [Validators.required, Validators.maxLength(12)]],
 			onsitePersonMobileNo: [null, [Validators.required, Validators.maxLength(10)]],
 			officeEmailId: [null, [Validators.required, Validators.maxLength(50)]],
 			
