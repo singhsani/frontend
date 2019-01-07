@@ -21,22 +21,20 @@
 					</mat-form-field>
 				</div>
 				<div class="row">
-					<mat-form-field class="col-md-4">
-						<input matInput appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{'first_name' | translate:translateKey}}"
-						 formControlName="firstName" maxlength="100">
-						<control-messages [control]="provisionalHospitalNocForm.controls.firstName"></control-messages>
-					</mat-form-field>
-					<mat-form-field class="col-md-4">
-						<input matInput appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{'middle_name' | translate:translateKey}}"
-						 formControlName="middleName" maxlength="100">
-						<control-messages [control]="provisionalHospitalNocForm.controls.middleName"></control-messages>
-					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{'last_name' | translate:translateKey}}"
-						 formControlName="lastName" required maxlength="100">
-						<control-messages [control]="provisionalHospitalNocForm.controls.lastName"></control-messages>
+						<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace' required maxlength="100"
+						 placeholder="{{'applicant_Name' | translate:translateKey}}" formControlName="applicantName" appGujInputSource
+						 targetElement="applicantNameGuj" [form]="provisionalHospitalNocForm">
+						<control-messages [control]="provisionalHospitalNocForm.controls.applicantName"></control-messages>
 					</mat-form-field>
+					<!-- gujarati -->
+					<mat-form-field class="col-md-4">
+						<input matInput type="text" maxlength="300" required formControlName="applicantNameGuj" appGujInputTarget [form]="provisionalHospitalNocForm"
+						 placeholder="{{ 'applicant_Name' | translate:translateKey:'gu' }}">
+						<control-messages [control]="provisionalHospitalNocForm.controls.applicantNameGuj"></control-messages>
+					</mat-form-field>
+					<!-- gujarati -->
 
 					<mat-form-field class="col-md-4">
 						<!-- <span matPrefix>+91 &nbsp;</span> -->
@@ -47,8 +45,8 @@
 
 					<mat-form-field class="col-md-4">
 						<!-- <span matPrefix>+91 &nbsp;</span> -->
-						<input matInput OnlyNumber placeholder="{{'office_contact_no' | translate:translateKey}}" type="tel" maxlength="10"
-						 minlength="10" formControlName="officeContactNo" required>
+						<input matInput OnlyNumber placeholder="{{'office_contact_no' | translate:translateKey}}" type="tel" maxlength="12"
+						 formControlName="officeContactNo" required>
 						<control-messages [control]="provisionalHospitalNocForm.controls.officeContactNo"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
@@ -77,7 +75,7 @@
 				<div class="row">
 
 					<mat-form-field class="col-md-12">
-						<input matInput required OnlyNumber maxlength="10" minlength="10" type="tel" formControlName="medicalRegistrationNumber"
+						<input matInput required maxlength="10" type="tel" formControlName="medicalRegistrationNumber"
 						 placeholder="{{'medical_registration_number' | translate:translateKey }}">
 						<control-messages [control]="provisionalHospitalNocForm.controls.medicalRegistrationNumber"></control-messages>
 					</mat-form-field>
@@ -516,8 +514,8 @@
 
 					<mat-form-field class="col-md-4">
 						<!-- <span matPrefix>+91 &nbsp;</span> -->
-						<input matInput OnlyNumber placeholder="{{'architect_contact_no' | translate:translateKey}}" type="tel" maxlength="10"
-						 minlength="10" formControlName="architectContactNo" required>
+						<input matInput OnlyNumber placeholder="{{'architect_contact_no' | translate:translateKey}}" type="tel" maxlength="12"
+						 formControlName="architectContactNo" required>
 						<control-messages [control]="provisionalHospitalNocForm.controls.architectContactNo"></control-messages>
 					</mat-form-field>
 
@@ -553,7 +551,7 @@
 				<div class="row">
 					<div class="col-md-8 ngSelect">
 						<ng-select required [items]="FS_OTHER_RISKS" bindLabel="name" bindValue="name" formControlName="otherRisks"
-						 [multiple]="true" (ngModelChange)="otherRemark($event);provisionalHospitalNocForm.controls.otherRiskDetail.reset()"
+						 [multiple]="true" (ngModelChange)="otherRemark($event);"
 						 placeholder="{{'other_risks' | translate:translateKey}} *">
 						</ng-select>
 						<control-messages [control]="provisionalHospitalNocForm.get('otherRisks')"></control-messages>

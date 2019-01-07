@@ -47,8 +47,7 @@
 
 					<mat-form-field class="col-md-4">
 						<!-- <span matPrefix>+91 &nbsp;</span> -->
-						<input matInput OnlyNumber placeholder="{{'office_contact_no' | translate:translateKey}}" type="tel" maxlength="10"
-						 minlength="10" formControlName="officeContactNo" required>
+						<input matInput OnlyNumber placeholder="{{'office_contact_no' | translate:translateKey}}" type="tel" maxlength="12" formControlName="officeContactNo" required>
 						<control-messages [control]="tempStructureNocForm.controls.officeContactNo"></control-messages>
 					</mat-form-field>
 

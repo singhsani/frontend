@@ -466,6 +466,13 @@ export class ProHospitalNocComponent implements OnInit {
 				this.provisionalHospitalNocForm.patchValue(res);
 				this.showButtons = true;
 
+				//convert applicant name and set in applicantNameGuj filds 
+				let applicantNameGujFields = this.provisionalHospitalNocForm.get('applicantNameGuj');
+				let applicantNameValue = this.provisionalHospitalNocForm.get('applicantName').value;
+				if (!applicantNameGujFields.value) {
+					applicantNameGujFields.setValue(this.TranslateService.getEngToGujTranslation(applicantNameValue))
+				}
+
 				res.hospitalOTDetails.forEach(app => {
 					(<FormArray>this.provisionalHospitalNocForm.get('hospitalOTDetails')).push(this.createOTDetailArray(app));
 				});
@@ -505,15 +512,14 @@ export class ProHospitalNocComponent implements OnInit {
 			provisionalNocNumber: [null],
 			applicationDate: [null],
 			oldReferenceNumber: [null],
-			firstName: [null, [Validators.required, Validators.maxLength(100)]],
-			lastName: [null, [Validators.required, Validators.maxLength(100)]],
-			middleName: [null, Validators.maxLength(100)],
+			applicantName: [null, [Validators.required, Validators.maxLength(100)]],
+			applicantNameGuj: [null, [Validators.required, Validators.maxLength(300)]],
 			contactNo: [null, [Validators.required, Validators.maxLength(10)]],
-			officeContactNo: [null, [Validators.required, Validators.maxLength(10)]],
+			officeContactNo: [null, [Validators.required, Validators.maxLength(12)]],
 			onsitePersonMobileNo: [null, [Validators.required, Validators.maxLength(10), Validators.minLength(10)]],
 			workOfficeEmailId: [null, [Validators.required, Validators.maxLength(50)]],
 
-			medicalRegistrationNumber: [null, [Validators.required, Validators.maxLength(15)]],
+			medicalRegistrationNumber: [null, [Validators.required, Validators.maxLength(10)]],
 			doctorName: [null, [Validators.required, Validators.maxLength(100)]],
 			doctorNameGuj: [null, [Validators.required, Validators.maxLength(300)]],
 			hospitalName: [null, [Validators.required, Validators.maxLength(50)]],
@@ -572,7 +578,7 @@ export class ProHospitalNocComponent implements OnInit {
 			architectFirmName: [null, [Validators.required, Validators.maxLength(50)]],
 			architectFirmNameGuj: [null, [Validators.required, Validators.maxLength(150)]],
 			architectFirmNumber: [null, [Validators.required, Validators.maxLength(20)]],
-			architectContactNo: [null, [Validators.required, Validators.maxLength(10)]],
+			architectContactNo: [null, [Validators.required, Validators.maxLength(12)]],
 
 			noOfHospitalStaff: [null, [Validators.required, Validators.maxLength(4)]],
 			noOfSecurityStaff: [null, [Validators.required, Validators.maxLength(4)]],
@@ -768,12 +774,19 @@ export class ProHospitalNocComponent implements OnInit {
 	   * @param event : on change event value
 	*/
 	otherRemark(event: Event) {
-		this.otherRiskNote = false;
-		_.forEach(event, (value) => {
-			if (value == 'Other') {
-				this.otherRiskNote = true;
+		try {
+			this.otherRiskNote = false;
+			_.forEach(event, (value) => {
+				if (value.code == 'OTHER') {
+					this.otherRiskNote = true;
+				}
+			});
+			if (!this.otherRiskNote) {
+				this.provisionalHospitalNocForm.get('otherRiskDetail').reset();
 			}
-		});
+		} catch (e) {
+			
+		}
 	}
 
 
@@ -783,12 +796,12 @@ export class ProHospitalNocComponent implements OnInit {
 	  */
 	handleErrorsOnSubmit(flag) {
 
-		let step0 = 12;
-		let step1 = 24;
-		let step2 = 32;
-		let step3 = 61;
-		let step4 = 68;
-		let step5 = 102;
+		let step0 = 11;
+		let step1 = 23;
+		let step2 = 31;
+		let step3 = 60;
+		let step4 = 67;
+		let step5 = 101;
 
 		if (flag != null) {
 			//Check validation for step by step
