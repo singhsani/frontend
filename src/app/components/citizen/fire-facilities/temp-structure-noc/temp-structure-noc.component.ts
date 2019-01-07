@@ -223,14 +223,14 @@ export class TempStructureNocComponent implements OnInit {
 			temporaryStructureAddressGuj: [null, [Validators.required, Validators.maxLength(1500)]],
 			
 			/* Step 3 controls start */
-			fpNo: [null, [Validators.required, Validators.maxLength(10)]],
-			rsNo: [null, [Validators.required, Validators.maxLength(10)]],
-			tikaNo: [null, [Validators.required, Validators.maxLength(10)]],
+			fpNo: [null, [Validators.required, Validators.maxLength(8)]],
+			rsNo: [null, [Validators.required, Validators.maxLength(8)]],
+			tikaNo: [null, [Validators.required, Validators.maxLength(8)]],
 			buildingLocation: [null, [Validators.required, Validators.maxLength(50)]],
-			tpNo: [null, [Validators.required, Validators.maxLength(10)]],
-			blockNo: [null, [Validators.required, Validators.maxLength(10)]],
+			tpNo: [null, [Validators.required, Validators.maxLength(8)]],
+			blockNo: [null, [Validators.required, Validators.maxLength(8)]],
 			structurePurpose: [null, [Validators.required, Validators.maxLength(200)]],
-			opNo: [null, [Validators.required, Validators.maxLength(10)]],
+			opNo: [null, [Validators.required, Validators.maxLength(5)]],
 			noOfGatheringPersons: [null, [Validators.required, Validators.maxLength(10)]],
 			noOfExits: [null, [Validators.required, Validators.maxLength(3)]],
 			layoutPlanIncluded: [null, [Validators.required]],//true/false
