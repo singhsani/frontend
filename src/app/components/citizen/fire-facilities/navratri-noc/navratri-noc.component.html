@@ -59,10 +59,10 @@
 						<mat-label>{{'application_through_police' | translate:translateKey }} *</mat-label>
 						<mat-radio-group formControlName="applicationThroughPolice" required>
 							<mat-radio-button [value]="true">
-								Yes
+								{{'yes_txt' | translate:translateKey }}
 							</mat-radio-button>
 							<mat-radio-button [value]="false">
-								No
+								{{'no_txt' | translate:translateKey }}
 							</mat-radio-button>
 						</mat-radio-group>
 						<control-messages [control]="navaratriNocForm.controls.applicationThroughPolice"></control-messages>
@@ -164,10 +164,10 @@
 						<mat-label>{{'garba_in_vmc_range' | translate:translateKey }} *</mat-label>
 						<mat-radio-group formControlName="garbaInVMCRange" required>
 							<mat-radio-button [value]="true">
-								Yes
+								{{'yes_txt' | translate:translateKey }}
 							</mat-radio-button>
 							<mat-radio-button [value]="false">
-								No
+								{{'no_txt' | translate:translateKey }}
 							</mat-radio-button>
 						</mat-radio-group>
 						<control-messages [control]="navaratriNocForm.controls.garbaInVMCRange"></control-messages>
@@ -180,10 +180,10 @@
 						<mat-label>{{'land_owner_is_vmc' | translate:translateKey }} *</mat-label>
 						<mat-radio-group formControlName="landOwnerIsVMC" required (change)="onChange('landOwnerIsVMC','vmcfeeReceiptNo');onChange('landOwnerIsVMC','vmcConsentLetterIncluded');onChange('landOwnerIsVMC','consentLetterDate');onChange('landOwnerIsVMC','landOwnerConsentIncluded');">
 							<mat-radio-button [value]="true">
-								Yes
+								{{'yes_txt' | translate:translateKey }}
 							</mat-radio-button>
 							<mat-radio-button [value]="false">
-								No
+								{{'no_txt' | translate:translateKey }}
 							</mat-radio-button>
 						</mat-radio-group>
 						<control-messages [control]="navaratriNocForm.controls.landOwnerIsVMC"></control-messages>
@@ -200,10 +200,10 @@
 						<mat-label>{{'vmc_consent_letter_included' | translate:translateKey }} *</mat-label>
 						<mat-radio-group formControlName="vmcConsentLetterIncluded" (change)="dependentAttachment($event.value,'CONSENT_LETTER')">
 							<mat-radio-button [value]="true">
-								Yes
+								{{'yes_txt' | translate:translateKey }}
 							</mat-radio-button>
 							<mat-radio-button [value]="false">
-								No
+								{{'no_txt' | translate:translateKey }}
 							</mat-radio-button>
 						</mat-radio-group>
 						<control-messages [control]="navaratriNocForm.controls.vmcConsentLetterIncluded"></control-messages>
@@ -222,10 +222,10 @@
 						<mat-label>{{'land_owner_consent_included' | translate:translateKey }} *</mat-label>
 						<mat-radio-group formControlName="landOwnerConsentIncluded" (change)="onChange('landOwnerIsVMC','landOwnerConsentIncluded');">
 							<mat-radio-button [value]="true">
-								Yes
+								{{'yes_txt' | translate:translateKey }}
 							</mat-radio-button>
 							<mat-radio-button [value]="false">
-								No
+								{{'no_txt' | translate:translateKey }}
 							</mat-radio-button>
 						</mat-radio-group>
 						<control-messages [control]="navaratriNocForm.controls.landOwnerConsentIncluded"></control-messages>
@@ -319,10 +319,10 @@
 						<mat-label>{{'layout_plan_included' | translate:translateKey }} *</mat-label>
 						<mat-radio-group formControlName="layoutPlanIncluded" required>
 							<mat-radio-button [value]="true">
-								Yes
+								{{'yes_txt' | translate:translateKey }}
 							</mat-radio-button>
 							<mat-radio-button [value]="false">
-								No
+								{{'no_txt' | translate:translateKey }}
 							</mat-radio-button>
 						</mat-radio-group>
 						<control-messages [control]="navaratriNocForm.controls.layoutPlanIncluded"></control-messages>
@@ -332,10 +332,10 @@
 						<mat-label>{{'security_arrangement' | translate:translateKey }} *</mat-label>
 						<mat-radio-group formControlName="securityArrangement" required (change)="dependentAttachment($event.value,'SECURITY_ARRANGEMENT')">
 							<mat-radio-button [value]="true">
-								Yes
+								{{'yes_txt' | translate:translateKey }}
 							</mat-radio-button>
 							<mat-radio-button [value]="false">
-								No
+								{{'no_txt' | translate:translateKey }}
 							</mat-radio-button>
 						</mat-radio-group>
 						<control-messages [control]="navaratriNocForm.controls.securityArrangement"></control-messages>
@@ -345,10 +345,10 @@
 						<mat-label>{{'parking_arrangement' | translate:translateKey }} *</mat-label>
 						<mat-radio-group formControlName="parkingArrangement" required>
 							<mat-radio-button [value]="true">
-								Yes
+								{{'yes_txt' | translate:translateKey }}
 							</mat-radio-button>
 							<mat-radio-button [value]="false">
-								No
+								{{'no_txt' | translate:translateKey }}
 							</mat-radio-button>
 						</mat-radio-group>
 						<control-messages [control]="navaratriNocForm.controls.parkingArrangement"></control-messages>
@@ -358,10 +358,10 @@
 						<mat-label>{{'trained_fireman_staff_kept' | translate:translateKey }} *</mat-label>
 						<mat-radio-group formControlName="trainedFiremanStaffKept" required (change)="dependentAttachment($event.value,'TRAIN_FIRE_PERSON_LIST')">
 							<mat-radio-button [value]="true">
-								Yes
+								{{'yes_txt' | translate:translateKey }}
 							</mat-radio-button>
 							<mat-radio-button [value]="false">
-								No
+								{{'no_txt' | translate:translateKey }}
 							</mat-radio-button>
 						</mat-radio-group>
 						<control-messages [control]="navaratriNocForm.controls.trainedFiremanStaffKept"></control-messages>
@@ -371,10 +371,10 @@
 						<mat-label>{{'fun_fair_planned' | translate:translateKey }} *</mat-label>
 						<mat-radio-group formControlName="funFairPlanned" required>
 							<mat-radio-button [value]="true">
-								Yes
+								{{'yes_txt' | translate:translateKey }}
 							</mat-radio-button>
 							<mat-radio-button [value]="false">
-								No
+								{{'no_txt' | translate:translateKey }}
 							</mat-radio-button>
 						</mat-radio-group>
 						<control-messages [control]="navaratriNocForm.controls.funFairPlanned"></control-messages>
@@ -384,10 +384,10 @@
 						<mat-label>{{'weather_exit_shown_in_map' | translate:translateKey }} *</mat-label>
 						<mat-radio-group formControlName="weatherExitShownInMap" required (change)="dependentAttachment($event.value,'LOCATION_MAP')">
 							<mat-radio-button [value]="true">
-								Yes
+								{{'yes_txt' | translate:translateKey }}
 							</mat-radio-button>
 							<mat-radio-button [value]="false">
-								No
+								{{'no_txt' | translate:translateKey }}
 							</mat-radio-button>
 						</mat-radio-group>
 						<control-messages [control]="navaratriNocForm.controls.weatherExitShownInMap"></control-messages>
@@ -403,10 +403,10 @@
 						<mat-label>{{'high_tension_line_overground' | translate:translateKey }} *</mat-label>
 						<mat-radio-group formControlName="highTensionLineOverGround" required>
 							<mat-radio-button [value]="true">
-								Yes
+								{{'yes_txt' | translate:translateKey }}
 							</mat-radio-button>
 							<mat-radio-button [value]="false">
-								No
+								{{'no_txt' | translate:translateKey }}
 							</mat-radio-button>
 						</mat-radio-group>
 						<control-messages [control]="navaratriNocForm.controls.highTensionLineOverGround"></control-messages>
