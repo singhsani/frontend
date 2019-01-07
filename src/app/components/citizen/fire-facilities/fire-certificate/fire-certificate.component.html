@@ -83,7 +83,7 @@
 					</mat-form-field>
 					<!--/ gujarati -->
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" maxlength="15" required formControlName="propertyNo" placeholder="{{ 'property_no' | translate:translateKey }}">
+						<input matInput type="text" appAlphaNumeric maxlength="15" required formControlName="propertyNo" placeholder="{{ 'property_no' | translate:translateKey }}">
 						<control-messages [control]="fireCertificateForm.controls.propertyNo"></control-messages>
 					</mat-form-field>
 
