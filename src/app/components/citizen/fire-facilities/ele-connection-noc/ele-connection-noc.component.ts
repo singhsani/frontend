@@ -21,7 +21,7 @@ export class EleConnectionNocComponent implements OnInit {
 	tabIndex: number = 0;
 
 	electricConnectionForm: FormGroup;
-	translateKey: string = 'electricAppScreen';
+	translateKey: string = 'eleConnectionScreen';
 
 	appId: number;
 	apiCode: string;
@@ -172,7 +172,7 @@ export class EleConnectionNocComponent implements OnInit {
 	}
 
 	/**
-	 * this method is used to get property tax status	 * 
+	 * this method is used to get property tax status 
 	 * @param number 
 	 */
 	getPropertyStatus(number) {

@@ -13,9 +13,7 @@ import { AmazingTimePickerService } from 'amazing-time-picker';
 })
 export class DeadBodyWanComponent implements OnInit {
 
-
 	tabIndex: number = 0;
-
 	deadBodyWanForm: FormGroup;
 	translateKey: string = 'deadBodyWanScreen';
 
@@ -83,7 +81,7 @@ export class DeadBodyWanComponent implements OnInit {
 	 * @param date : selected date
 	 * @param controlType : form control name
 	 */
-	dateFormat(date, controlType: string) {
+	dateFormat(date:any, controlType: string) {
 		this.deadBodyWanForm.get(controlType).setValue(moment(date).format("YYYY-MM-DD"));
 	}
 
