@@ -330,7 +330,7 @@
 
 					<div class="col-md-4 radioBtnError">
 						<mat-label>{{'drawing_with_scale' | translate:translateKey }} *</mat-label>
-						<mat-radio-group formControlName="drawingWithScale" required>
+						<mat-radio-group formControlName="drawingWithScale" required (change)="dependentAttachment($event.value,'APPROVED_LAYOUT_PLAN')">
 							<mat-radio-button [value]="true">
 								Yes
 							</mat-radio-button>
@@ -343,7 +343,7 @@
 
 					<div class="col-md-4 radioBtnError">
 						<mat-label>{{'drawing_provided' | translate:translateKey }} *</mat-label>
-						<mat-radio-group formControlName="drawingProvided" required>
+						<mat-radio-group formControlName="drawingProvided" required (change)="dependentAttachment($event.value,'APPROVED_APPROACHED_ROAD')">
 							<mat-radio-button [value]="true">
 								Yes
 							</mat-radio-button>
@@ -368,7 +368,7 @@
 					</div>
 
 					<mat-form-field class="col-md-4">
-						<input matInput maxlength="50" required placeholder="{{'building_height' | translate:translateKey}}"
+						<input matInput maxlength="50" required OnlyNumber placeholder="{{'building_height' | translate:translateKey}}"
 						 formControlName="buildingHeight">
 						<control-messages [control]="provisionalHospitalNocForm.controls.buildingHeight"></control-messages>
 					</mat-form-field>
@@ -579,7 +579,7 @@
 
 					<div class="col-md-4 radioBtnError">
 						<mat-label>{{'trained_fire_man_staff_kept' | translate:translateKey }} *</mat-label>
-						<mat-radio-group formControlName="trainedFiremanStaffKept" required>
+						<mat-radio-group formControlName="trainedFiremanStaffKept" required (change)="dependentAttachment($event.value,'TRAIN_FIRE_PERSON_LIST')">
 							<mat-radio-button [value]="true">
 								Yes
 							</mat-radio-button>

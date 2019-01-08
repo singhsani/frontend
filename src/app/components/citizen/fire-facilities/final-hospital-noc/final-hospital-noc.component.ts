@@ -10,6 +10,8 @@ import { CommonService } from '../../../../shared/services/common.service';
 import { ToastrService } from 'ngx-toastr';
 import { FireFacilitiesService } from '../common/services/fire-facilities.service';
 import { Location } from '@angular/common';
+import { MatDialog, MatDialogConfig } from "@angular/material";
+import { DialogFormComponent } from '../common/components/dialog-form/dialog-form.component';
 
 @Component({
 	selector: 'app-final-hospital-noc',
@@ -405,7 +407,8 @@ export class FinalHospitalNocComponent implements OnInit {
 		private commonService: CommonService,
 		private toastrService: ToastrService,
 		private fireFacilitiesService: FireFacilitiesService,
-		private location: Location
+		private location: Location,
+		private dialog: MatDialog
 	) { }
 
 	/**
@@ -436,6 +439,7 @@ export class FinalHospitalNocComponent implements OnInit {
 	 * Method is create required document array
 	 */
 	requiredDocumentList() {
+		this.uploadFilesArray = [];
 		_.forEach(this.finalHospitalNocForm.get('serviceDetail').get('serviceUploadDocuments').value, (value) => {
 			if (value.mandatory && value.isActive && value.requiredOnCitizenPortal) {
 				this.uploadFilesArray.push({
@@ -447,7 +451,7 @@ export class FinalHospitalNocComponent implements OnInit {
 		});
 		//check for attachment is mandatory
 		this.dependentAttachment(this.finalHospitalNocForm.get('drawingWithScale').value, 'APPROVED_LAYOUT_PLAN');
-		this.dependentAttachment(this.finalHospitalNocForm.get('drawingProvided').value, 'APPROVED_APPROACHED ROAD');
+		this.dependentAttachment(this.finalHospitalNocForm.get('drawingProvided').value, 'APPROVED_APPROACHED_ROAD');
 		this.dependentAttachment(this.finalHospitalNocForm.get('trainedFiremanStaffKept').value, 'TRAIN_FIRE_PERSON_LIST');
 	}
 
@@ -764,20 +768,78 @@ export class FinalHospitalNocComponent implements OnInit {
 		})
 
 	}
+	/**
+	 * This method for dialog component , it's collect OT details
+	 */
+	openDialog() {
+		let returnArray = this.finalHospitalNocForm.get('hospitalOTDetails') as FormArray;
+		if (returnArray.length >= 15) {
+			this.commonService.openAlert("Warning", "Maximum Limit " + 15 + " .", "warning");
+		} else {
+			const dialogConfig = new MatDialogConfig();
+
+			dialogConfig.disableClose = true;
+			dialogConfig.autoFocus = true;
+			dialogConfig.data = {};
+
+			const dialogRef = this.dialog.open(DialogFormComponent, dialogConfig);
+
+			dialogRef.afterClosed().subscribe(
+				data => {
+					if (data) {
+						returnArray.push(this.createOTDetailArray(data));
+						this.finalHospitalNocForm.get('numberOfOT').setValue(returnArray.length)
+					}
+
+				}
+			);
+		}
+	}
+     /**
+      * This methos for edit OT data
+      * @param arrayId : OT index
+      * @param otdata : object data
+      */
+	editOT(arrayId: any, otdata: any) {
+		let id = otdata.controls.id.value;
+		let otFacilities = otdata.controls.otFacilities.value;
+		let areaInSquareMeterLength = otdata.controls.areaInSquareMeterLength.value;
+		let areaInSquareMeterBreadth = otdata.controls.areaInSquareMeterBreadth.value;
+		let areaInSquareMeter = otdata.controls.areaInSquareMeter.value;
+
+		const dialogConfig = new MatDialogConfig();
+
+		dialogConfig.disableClose = true;
+		dialogConfig.autoFocus = true;
+
+		dialogConfig.data = {
+			id, otFacilities, areaInSquareMeterLength,
+			areaInSquareMeterBreadth, areaInSquareMeter
+		}
+
+		const dialogRef = this.dialog.open(DialogFormComponent,
+			dialogConfig);
+
+		dialogRef.afterClosed().subscribe(
+			val => {
+				if (val) {
+					let returnArray = this.finalHospitalNocForm.get('hospitalOTDetails') as FormArray;
+					returnArray.controls[arrayId].setValue(val);
+				}
+			}
+		);
+	}
 
 	/**
 	 * Method is used to delete OT information from hospitalOTDetails array.
 	 * @param OTData - OT data.
 	 * @param index - index of hospitalOTDetails array
 	 */
-
 	deleteOT(OTData: any, index: number) {
 		let returnArray = this.finalHospitalNocForm.get('hospitalOTDetails') as FormArray;
-
+		// this.addItem(persontype).controls.splice(index, 1);
 		this.commonService.deleteAlert('Are you sure?', "You won't be able to revert this!", 'warning', '', performDelete => {
-			if (this.finalHospitalNocForm.get('numberOfOT').value <= 0) {
-				this.commonService.openAlert("Warning", "OT detail mandatory", "warning");
-			} else {
+			if (this.finalHospitalNocForm.get('numberOfOT').value >= 1) {
 				if (OTData.id == null) {
 					returnArray.removeAt(index);
 					this.finalHospitalNocForm.get('numberOfOT').setValue(this.finalHospitalNocForm.get('numberOfOT').value - 1);

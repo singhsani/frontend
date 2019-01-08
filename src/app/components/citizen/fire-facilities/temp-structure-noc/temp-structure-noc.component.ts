@@ -28,7 +28,7 @@ export class TempStructureNocComponent implements OnInit {
 	// required attachment array
 	private uploadFilesArray: Array<any> = [];
 	private showButtons: boolean = false;
-	
+
 	//Lookups Array
 	FS_COMMUNICATION_ARRANGEMENT: Array<any> = [];
 	FS_SITTING_ARRANGEMENT: Array<any> = [];
@@ -74,7 +74,7 @@ export class TempStructureNocComponent implements OnInit {
 	 * Method is create required document array
 	 */
 	requiredDocumentList() {
-
+		this.uploadFilesArray = [];
 		_.forEach(this.tempStructureNocForm.get('serviceDetail').get('serviceUploadDocuments').value, (value) => {
 			if (value.mandatory && value.isActive && value.requiredOnCitizenPortal) {
 				this.uploadFilesArray.push({
@@ -85,9 +85,11 @@ export class TempStructureNocComponent implements OnInit {
 			}
 		});
 		//check for attachment is mandatory
+		// this.dependentAttachment(this.tempStructureNocForm.get('policeCommisionerLetterNo').value, 'POLICE_COMMISIONER_LETTER');
+		this.dependentAttachment(this.tempStructureNocForm.get('layoutPlanIncluded').value, 'LAY_OUT_PLAN');
 		this.dependentAttachment(this.tempStructureNocForm.get('securityArrangement').value, 'SECURITY_ARRANGEMENT');
-		this.dependentAttachment(this.tempStructureNocForm.get('securityArrangement').value, 'LOCATION_MAP');
-		this.dependentAttachment(this.tempStructureNocForm.get('securityArrangement').value, 'PERMISSION_FROM_LAND_OWNER');
+		this.dependentAttachment(this.tempStructureNocForm.get('landOwnerConsentIncluded').value, 'LAND_OWNER_CONCERN_LETTER');
+		
 	}
 
 	/**
@@ -201,7 +203,7 @@ export class TempStructureNocComponent implements OnInit {
 			officeContactNo: [null, [Validators.required, Validators.maxLength(12)]],
 			onsitePersonMobileNo: [null, [Validators.required, Validators.maxLength(10)]],
 			officeEmailId: [null, [Validators.required, Validators.maxLength(50)]],
-			
+
 			/* Step 2 controls start */
 			fromDate: [null, [Validators.required, Validators.maxLength(10)]],
 			toDate: [null, [Validators.required, Validators.maxLength(10)]],
@@ -221,7 +223,7 @@ export class TempStructureNocComponent implements OnInit {
 			organizerContactNo: [null, [Validators.required, Validators.maxLength(12)]],
 			temporaryStructureAddress: [null, [Validators.required, Validators.maxLength(500)]],
 			temporaryStructureAddressGuj: [null, [Validators.required, Validators.maxLength(1500)]],
-			
+
 			/* Step 3 controls start */
 			fpNo: [null, [Validators.required, Validators.maxLength(8)]],
 			rsNo: [null, [Validators.required, Validators.maxLength(8)]],
@@ -235,7 +237,7 @@ export class TempStructureNocComponent implements OnInit {
 			noOfExits: [null, [Validators.required, Validators.maxLength(3)]],
 			layoutPlanIncluded: [null, [Validators.required]],//true/false
 			requiredNOCForArea: [null, [Validators.required, Validators.maxLength(10)]],
-			
+
 			/* Step 4 controls start */
 			hazardousPerformanceDetail: [null, [Validators.required, Validators.maxLength(200)]],
 			shamiyanaLength: [null, [Validators.required, Validators.maxLength(5)]],
@@ -256,13 +258,13 @@ export class TempStructureNocComponent implements OnInit {
 			lightningArresterArrangement: [null, [Validators.required]],//true/false
 			standbyFireEngineDemanded: [null, [Validators.required]],//true/false
 			sittingArrangement: this.fb.group({
-				code: [null,Validators.required]
+				code: [null, Validators.required]
 			}),
 			wiringType: this.fb.group({
-				code: [null,Validators.required]
+				code: [null, Validators.required]
 			}),
 			communicationArrangementType: this.fb.group({
-				code: [null,Validators.required]
+				code: [null, Validators.required]
 			}),
 
 			/* Step 5 controls start*/
@@ -321,7 +323,7 @@ export class TempStructureNocComponent implements OnInit {
 			} else if (count <= step3) {
 				this.tabIndex = 3;
 				return false;
-			} 
+			}
 			// else if (count == 67) {
 			// 	this.checkReligion();
 			// 	return false;
@@ -355,8 +357,8 @@ export class TempStructureNocComponent implements OnInit {
 	 * @param ev - event
 	 * @param index - index of child
 	 */
-	changeTimeFormat(ev:string, controlName: string){
-		if(ev && ev.length < 8){
+	changeTimeFormat(ev: string, controlName: string) {
+		if (ev && ev.length < 8) {
 			ev = ev.concat(":00");
 		}
 		this.tempStructureNocForm.get(controlName).setValue(ev);

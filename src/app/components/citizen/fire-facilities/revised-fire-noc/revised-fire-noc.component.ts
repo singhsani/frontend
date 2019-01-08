@@ -18,7 +18,6 @@ export class RevisedFireNOCComponent implements OnInit {
 
 
 	revisedFireNocForm: FormGroup;
-	//translateKey: string = 'finalFireNocScreen';
 	translateKey: string = 'revisedFireNocScreen';
 
 	formId: number;
@@ -110,6 +109,7 @@ export class RevisedFireNOCComponent implements OnInit {
 	 * Method is create required document array
 	 */
 	requiredDocumentList() {
+		this.uploadFilesArray = [];
 		_.forEach(this.revisedFireNocForm.get('serviceDetail').get('serviceUploadDocuments').value, (value) => {
 			if (value.mandatory && value.isActive && value.requiredOnCitizenPortal) {
 				this.uploadFilesArray.push({
@@ -121,6 +121,7 @@ export class RevisedFireNOCComponent implements OnInit {
 		});
 		//check for attachment is mandatory
 		this.dependentAttachment(this.revisedFireNocForm.get('undergroundWatertankMapApproved').value, 'UNDERGROUND_WATER_TANK_MAP');
+		this.dependentAttachment(this.revisedFireNocForm.get('overgroundWatertankMapApproved').value, 'OVERHEAD_WATER_TANK_MAP');
 	}
 
 	/**

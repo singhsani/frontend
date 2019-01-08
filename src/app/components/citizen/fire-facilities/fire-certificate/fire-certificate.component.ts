@@ -108,6 +108,7 @@ export class FireCertificateComponent implements OnInit {
   * Method is create required document array
   */
   requiredDocumentList() {
+    this.uploadFilesArray = [];
     _.forEach(this.fireCertificateForm.get('serviceDetail').get('serviceUploadDocuments').value, (value) => {
       if (value.mandatory && value.isActive && value.requiredOnCitizenPortal) {
         this.uploadFilesArray.push({
@@ -192,13 +193,6 @@ export class FireCertificateComponent implements OnInit {
     this.fireCertificateForm.get(controlName).setValue(ev);
   }
 
-  /**
- * This method is handle depended documents on save event
- * @param res - form response after save event
- */
-  handleOnSaveAndNext(res) {
-    this.requiredDocumentList();
-  }
 
 	/**
      * This method required for final form submition.

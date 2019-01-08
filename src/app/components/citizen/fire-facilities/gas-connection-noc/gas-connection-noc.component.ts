@@ -136,6 +136,7 @@ export class GasConnectionNocComponent implements OnInit {
 	 * Method is create required document array
 	 */
 	requiredDocumentList() {
+		this.uploadFilesArray = [];
 		_.forEach(this.gasConnectionForm.get('serviceDetail').get('serviceUploadDocuments').value, (value) => {
 			if (value.mandatory && value.isActive && value.requiredOnCitizenPortal) {
 				this.uploadFilesArray.push({

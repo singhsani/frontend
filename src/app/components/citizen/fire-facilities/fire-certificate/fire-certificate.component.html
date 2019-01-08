@@ -11,7 +11,7 @@
 				</ng-template>
 
 				<div class="row">
-					<mat-form-field class="col-md-4" *ngIf="deadBodyWanForm.get('oldReferenceNumber').value">
+					<mat-form-field class="col-md-4" *ngIf="fireCertificateForm.get('oldReferenceNumber').value">
 						<input matInput readonly placeholder="{{'old_refrance_number' | translate:translateKey}}" formControlName="oldReferenceNumber">
 					</mat-form-field>
 				</div>
@@ -100,7 +100,7 @@
 					</mat-form-field>
 				</div>
 
-				<app-action-bar [form]="fireCertificateForm" (handleOnSaveAndNext)="handleOnSaveAndNext($event)" (tabIndex)="onTabChange($event)"
+				<app-action-bar [form]="fireCertificateForm" (tabIndex)="onTabChange($event)"
 				 [stepInfo]="{step: 'step0', next: 1, back: 0}"></app-action-bar>
 			</mat-tab>
 			<!-- step 1 Ends -->

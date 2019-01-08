@@ -114,6 +114,7 @@ export class FinalFireNocComponent implements OnInit {
 	 * Method is create required document array
 	 */
 	requiredDocumentList() {
+		this.uploadFilesArray = [];
 		_.forEach(this.finalFireNocForm.get('serviceDetail').get('serviceUploadDocuments').value, (value) => {
 			if (value.mandatory && value.isActive && value.requiredOnCitizenPortal) {
 				this.uploadFilesArray.push({
@@ -124,8 +125,8 @@ export class FinalFireNocComponent implements OnInit {
 			}
 		});
 		//check for attachment is mandatory
-		// this.dependentAttachment(this.finalFireNocForm.get('undergroundWatertankMapApproved').value, 'UNDERGROUND_WATER_TANK_MAP');
-		// this.dependentAttachment(this.finalFireNocForm.get('overgroundWatertankMapApproved').value, 'OVERHEAD_WATER_TANK_MAP');
+		this.dependentAttachment(this.finalFireNocForm.get('undergroundWatertankMapApproved').value, 'UNDERGROUND_WATER_TANK_MAP');
+		this.dependentAttachment(this.finalFireNocForm.get('overgroundWatertankMapApproved').value, 'OVERHEAD_WATER_TANK_MAP');
 	}
 
 	/**

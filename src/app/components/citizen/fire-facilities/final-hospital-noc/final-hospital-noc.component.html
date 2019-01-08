@@ -239,58 +239,67 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput maxlength="1" required OnlyNumber placeholder="{{'number_of_ot' | translate:translateKey}}"
-						 formControlName="numberOfOT">
+						<input matInput maxlength="3" required readonly OnlyNumber placeholder="{{'number_of_ot' | translate:translateKey}}"
+						 formControlName="numberOfOT" [value]="finalHospitalNocForm.get('hospitalOTDetails').controls.length">
 						<control-messages [control]="finalHospitalNocForm.controls.numberOfOT"></control-messages>
 					</mat-form-field>
 				</div>
-				<!-- add OT details -->
-				<div class="row">
-					<div class="col-md-10">
-						<!-- <h2>{{'o_t_details' | translate: translateKey }}</h2> -->
+					<!-- add OT details -->
+					<div class="row">
+						<div class="col-md-10">
+							<h2>{{'o_t_details' | translate: translateKey }}</h2>
+						</div>
+						<div class="col-md-2 pt-2" style="text-align: right;">
+							<button (click)="openDialog()" type="button" mat-raised-button color="primary" data-toggle="modal">
+								{{'add_ot_detail' | translate:translateKey}}
+							</button>
+						</div>
 					</div>
-					<div class="col-md-2 pt-2" style="text-align: right;">
-						<button type="button" *ngIf="finalHospitalNocForm.get('numberOfOT').value > 0" [disabled]="showButtons && !finalHospitalNocForm.controls.canEdit.value"
-						 matTooltip="Add More" mat-raised-button color="primary" (click)="addOTDetail(finalHospitalNocForm.get('numberOfOT').value)">{{'add_ot_detail'
-							| translate: translateKey}}</button>
+	
+					<div class="row">
+						<div class="col-md-12" *ngIf="finalHospitalNocForm.get('hospitalOTDetails').controls.length >= 1">
+							<!-- <h2 class="col-md-11 float-left">{{'o_t_occupational_therapy ' | translate:translateKey}} {{i+1}}</h2> -->
+	
+							<div class="table-responsive" formArrayName="hospitalOTDetails">
+								<table class="table">
+									<thead>
+										<tr>
+											<th scope="col" width="56">{{'s_no'| translate: translateKey}}</th>
+											<th scope="col">{{'ot_facilities'| translate: translateKey}}</th>
+											<th scope="col">{{'area_in_square_meter_length'| translate: translateKey}}</th>
+											<th scope="col">{{'area_in_square_meter_breadth'| translate: translateKey}}</th>
+											<th scope="col">{{'area_in_square_meter'| translate: translateKey}}</th>
+											<th scope="col">{{'action'| translate: translateKey}}</th>
+											<th scope="col">{{'action'| translate: translateKey}}</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr *ngFor="let item of finalHospitalNocForm.get('hospitalOTDetails').controls; let i = index;"
+										 [formGroupName]="i">
+											<th scope="row">{{i+1}}</th>
+											<td>{{item.controls.otFacilities.value}}</td>
+											<td>{{item.controls.areaInSquareMeterLength.value}}</td>
+											<td>{{item.controls.areaInSquareMeterBreadth.value}}</td>
+											<td>{{item.controls.areaInSquareMeter.value}}</td>
+											<td>
+												<button type="button" mat-icon-button (click)="editOT(i,item)">
+													<mat-icon matTooltip="Edit" class="m-1" color="primary">edit</mat-icon>
+												</button>
+											</td>
+											<td>
+												<button type="button" mat-icon-button (click)="deleteOT(item.value, i)" class="m-1">
+													<mat-icon matTooltip="Delete" color="warn">delete</mat-icon>
+												</button>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+	
 					</div>
-				</div>
-				<div formArrayName="hospitalOTDetails">
-					<div class="row" *ngFor="let item of finalHospitalNocForm.get('hospitalOTDetails').controls; let i = index;"
-					 [formGroupName]="i">
-
-						<h2 class="col-md-11 float-left">{{'o_t_occupational_therapy ' | translate:translateKey}} {{i+1}}</h2>
-						<button type="button" mat-icon-button [hidden]="showButtons && !finalHospitalNocForm.controls.canEdit.value"
-						 (click)="deleteOT(item.value, i)" class="col-md-1 float-right text-right" *ngIf="i >= 0">
-							<mat-icon matTooltip="Delete Information" color="warn">delete</mat-icon>
-						</button>
-
-						<mat-form-field class="col-md-3">
-							<input matInput maxlength="150" type="text" placeholder="{{'ot_facilities' | translate:translateKey}}" name="otFacilities"
-							 formControlName="otFacilities">
-							<control-messages [control]="finalHospitalNocForm.controls.hospitalOTDetails.controls[i].controls.otFacilities"></control-messages>
-						</mat-form-field>
-
-						<mat-form-field class="col-md-3">
-							<input matInput maxlength="5" OnlyNumber placeholder="{{'area_in_square_meter_length' | translate:translateKey}}"
-							 name="areaInSquareMeterLength" formControlName="areaInSquareMeterLength">
-							<control-messages [control]="finalHospitalNocForm.controls.hospitalOTDetails.controls[i].controls.areaInSquareMeterLength"></control-messages>
-						</mat-form-field>
-
-						<mat-form-field class="col-md-3">
-							<input matInput maxlength="5" OnlyNumber placeholder="{{'area_in_square_meter_breadth' | translate:translateKey}}"
-							 name="areaInSquareMeterBreadth" formControlName="areaInSquareMeterBreadth">
-							<control-messages [control]="finalHospitalNocForm.controls.hospitalOTDetails.controls[i].controls.areaInSquareMeterBreadth"></control-messages>
-						</mat-form-field>
-
-						<mat-form-field class="col-md-3">
-							<input matInput maxlength="5" placeholder="{{'area_in_square_meter' | translate:translateKey}}" name="areaInSquareMeter"
-							 formControlName="areaInSquareMeter">
-							<control-messages [control]="finalHospitalNocForm.controls.hospitalOTDetails.controls[i].controls.areaInSquareMeter"></control-messages>
-						</mat-form-field>
-					</div>
-
-				</div>
+					<!-- end  list of ot details -->
+	
 				<div class="row">
 
 					<mat-form-field class="col-md-4">
@@ -331,7 +340,7 @@
 
 					<div class="col-md-4 radioBtnError">
 						<mat-label>{{'drawing_with_scale' | translate:translateKey }} *</mat-label>
-						<mat-radio-group formControlName="drawingWithScale" required>
+						<mat-radio-group formControlName="drawingWithScale" required (change)="dependentAttachment($event.value,'APPROVED_LAYOUT_PLAN')">
 							<mat-radio-button [value]="true">
 								Yes
 							</mat-radio-button>
@@ -344,7 +353,7 @@
 
 					<div class="col-md-4 radioBtnError">
 						<mat-label>{{'drawing_provided' | translate:translateKey }} *</mat-label>
-						<mat-radio-group formControlName="drawingProvided" required>
+						<mat-radio-group formControlName="drawingProvided" required  (change)="dependentAttachment($event.value,'APPROVED_APPROACHED_ROAD')">
 							<mat-radio-button [value]="true">
 								Yes
 							</mat-radio-button>
@@ -581,7 +590,7 @@
 
 					<div class="col-md-4 radioBtnError">
 						<mat-label>{{'trained_fire_man_staff_kept' | translate:translateKey }} *</mat-label>
-						<mat-radio-group formControlName="trainedFiremanStaffKept" required>
+						<mat-radio-group formControlName="trainedFiremanStaffKept" required (change)="dependentAttachment($event.value,'TRAIN_FIRE_PERSON_LIST')">
 							<mat-radio-button [value]="true">
 								Yes
 							</mat-radio-button>

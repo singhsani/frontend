@@ -60,8 +60,8 @@
 						<div class="row">
 							<div class="col-md-12 radioBtnError">
 								<mat-label>{{'application_through_police' | translate:translateKey }} *</mat-label>
-								<mat-radio-group formControlName="applicationThroughPolice" required (change)="dependentAttachment($event.value,'PERMISSION_FROM_LAND_OWNER')">
-									<mat-radio-button [value]="true">
+								<mat-radio-group formControlName="applicationThroughPolice" required>
+									<mat-radio-button [value]="true" (change)="dependentAttachment($event.value,'LETTER_TO_APPLICANT')">
 										{{'yes_txt' | translate:translateKey }}
 									</mat-radio-button>
 									<mat-radio-button [value]="false">
@@ -88,8 +88,8 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-6">
-						<input matInput [matDatepicker]="picker2" [min]="tempFireworksNocForm.controls.fromDate.value"  formControlName="toDate" placeholder="{{'to_date' | translate:translateKey }} (DD/MM/YYYY)"
-						 required (dateChange)="dateFormate($event.value,'toDate')">
+						<input matInput [matDatepicker]="picker2" [min]="tempFireworksNocForm.controls.fromDate.value" formControlName="toDate"
+						 placeholder="{{'to_date' | translate:translateKey }} (DD/MM/YYYY)" required (dateChange)="dateFormate($event.value,'toDate')">
 						<mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
 						<mat-datepicker #picker2 touchUi="true"></mat-datepicker>
 						<control-messages [control]="tempFireworksNocForm.controls.toDate"></control-messages>
@@ -116,7 +116,7 @@
 							</div>
 						</div>
 					</div>
-					
+
 					<mat-form-field class="col-md-4">
 						<input matInput placeholder="{{'shop_in_open_space' | translate:translateKey}}" formControlName="shopInOpenSpace"
 						 maxlength="150">
@@ -145,7 +145,7 @@
 							<div class="col-md-12 radioBtnError">
 								<mat-label>{{'owner_consent_letter_included' | translate:translateKey }} *</mat-label>
 								<mat-radio-group formControlName="ownerConsentLetterIncluded" required>
-									<mat-radio-button [value]="true">
+									<mat-radio-button [value]="true" (change)="dependentAttachment($event.value,'CONSENT_LETTER')">
 										{{'yes_txt' | translate:translateKey }}
 									</mat-radio-button>
 									<mat-radio-button [value]="false">
@@ -173,7 +173,7 @@
 
 					<div class="col-md-4 radioBtnError">
 						<mat-label>{{'layout_plan_included' | translate:translateKey }} *</mat-label>
-						<mat-radio-group formControlName="layoutPlanIncluded" required (change)="dependentAttachment($event.value,'LOCATION_MAP')">
+						<mat-radio-group formControlName="layoutPlanIncluded" required >
 							<mat-radio-button [value]="true">
 								{{'yes_txt' | translate:translateKey }}
 							</mat-radio-button>

@@ -410,6 +410,7 @@ export class ProHospitalNocComponent implements OnInit {
 	 * Method is create required document array
 	 */
 	requiredDocumentList() {
+		this.uploadFilesArray = [];
 		_.forEach(this.provisionalHospitalNocForm.get('serviceDetail').get('serviceUploadDocuments').value, (value) => {
 			if (value.mandatory && value.isActive && value.requiredOnCitizenPortal) {
 				this.uploadFilesArray.push({
@@ -421,7 +422,7 @@ export class ProHospitalNocComponent implements OnInit {
 		});
 		//check for attachment is mandatory
 		this.dependentAttachment(this.provisionalHospitalNocForm.get('drawingWithScale').value, 'APPROVED_LAYOUT_PLAN');
-		this.dependentAttachment(this.provisionalHospitalNocForm.get('drawingProvided').value, 'APPROVED_APPROACHED ROAD');
+		this.dependentAttachment(this.provisionalHospitalNocForm.get('drawingProvided').value, 'APPROVED_APPROACHED_ROAD');
 		this.dependentAttachment(this.provisionalHospitalNocForm.get('trainedFiremanStaffKept').value, 'TRAIN_FIRE_PERSON_LIST');
 	}
 
@@ -707,7 +708,11 @@ export class ProHospitalNocComponent implements OnInit {
 			);
 		}
 	}
-
+     /**
+      * This methos for edit OT data
+      * @param arrayId : OT index
+      * @param otdata : object data
+      */
 	editOT(arrayId: any, otdata: any) {
 		let id = otdata.controls.id.value;
 		let otFacilities = otdata.controls.otFacilities.value;

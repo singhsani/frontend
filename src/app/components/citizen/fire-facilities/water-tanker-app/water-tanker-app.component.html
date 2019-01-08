@@ -25,19 +25,28 @@
 					</div>
 
 					<div class="col-md-6 ngSelect" formGroupName="purpose">
-						<ng-select required placeholder="{{'tanker_purpose' | translate:translateKey}} *" formControlName="code" (change)="calculateTotalAmount()">
+						<ng-select required placeholder="{{'tanker_purpose' | translate:translateKey}} *" formControlName="code" (change)="calculateTotalAmount();resetsuggestedfields()">
 							<ng-option *ngFor="let PURPOSE of FS_WATER_TANKER_PURPOSE" [value]="PURPOSE.code">{{PURPOSE.name}}</ng-option>
 						</ng-select>
 						<control-messages [control]="waterTankerAppForm.get('purpose').controls.code"></control-messages>
 					</div>
 				</div>
-				<div class="row">
+				<div class="row" *ngIf="waterTankerAppForm.get('purpose').get('code').value == 'FS_SUGGESTED'" >
 					<h2>{{'if_purpose_fastival_or_sugg' | translate:translateKey}}</h2>
 					<mat-form-field class="col-md-6">
 						<input matInput type="text" required maxlength="150" placeholder="{{'who_is_suggested' | translate:translateKey}}"
 						 formControlName="whoSuggested">
 						<control-messages [control]="waterTankerAppForm.controls.whoSuggested"></control-messages>
 					</mat-form-field>
+					<ng-container *ngFor="let doc of waterTankerAppForm.get('serviceDetail').get('serviceUploadDocuments').value">
+						<div class="col-md-4" *ngIf="doc.requiredOnCitizenPortal && doc.isActive && showButtons">
+							<label>{{TranslateService.getCurrentLanguage()=='en'? doc.documentLabelEn : doc.documentLabelGuj }} <span *ngIf="doc.mandatory">*</span></label>
+							<file-upload [form]="waterTankerAppForm" [uploadModel]="doc"></file-upload>
+						</div>
+					</ng-container>
+				</div>
+
+				<div class="row">
 
 					<div class="col-md-4 radioBtnError">
 						<mat-label>{{'within_vmc_boundary' | translate:translateKey }} *</mat-label>
@@ -51,14 +60,6 @@
 						</mat-radio-group>
 						<control-messages [control]="waterTankerAppForm.controls.withinVMCBoundary"></control-messages>
 					</div>
-				</div>
-				<!-- <mat-form-field class="col-md-6">
-						<textarea matInput rows="3" cols="50" maxlength="500" formControlName="holderAddress" placeholder="{{ 'holder_address' | translate:translateKey }}"
-						 required> </textarea>
-						<control-messages [control]="waterTankerAppForm.controls.holderAddress"></control-messages>
-					</mat-form-field> -->
-
-				<div class="row">
 					<mat-form-field class="col-md-4">
 						<input matInput readonly required [min]="disablepastDate" [matDatepicker]="picker1" formControlName="requiredOnDate"
 						 placeholder="{{ 'required_on_which_date' | translate:translateKey }} (DD/MM/YYYY)">
@@ -113,7 +114,8 @@
 					</mat-form-field>
 				</div>
 				<app-action-bar [form]="waterTankerAppForm" [uploadFiles]="uploadFilesArray" (tabIndex)="onTabChange($event)"
-				 [stepInfo]="{step: 'final', next: 1, back: 0}"></app-action-bar>
+				 [stepInfo]="{step: 'final', next: 1, back: 0}" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
+
 			</mat-tab>
 			<!-- step 1 Ends -->
 		</mat-tab-group>

@@ -69,7 +69,7 @@ export class NavratriNocComponent implements OnInit {
 	 * Method is create required document array
 	 */
 	requiredDocumentList() {
-
+		this.uploadFilesArray = [];
 		_.forEach(this.navaratriNocForm.get('serviceDetail').get('serviceUploadDocuments').value, (value) => {
 			if (value.mandatory && value.isActive && value.requiredOnCitizenPortal) {
 				this.uploadFilesArray.push({
@@ -80,10 +80,12 @@ export class NavratriNocComponent implements OnInit {
 			}
 		});
 		//check for attachment is mandatory
+		
+		this.dependentAttachment(this.navaratriNocForm.get('applicationThroughPolice').value, 'POLICE_COMMISSIONER_LETTER_NO');
 		this.dependentAttachment(this.navaratriNocForm.get('securityArrangement').value, 'SECURITY_ARRANGEMENT');
 		this.dependentAttachment(this.navaratriNocForm.get('vmcConsentLetterIncluded').value, 'CONSENT_LETTER');
 		this.dependentAttachment(this.navaratriNocForm.get('weatherExitShownInMap').value, 'LOCATION_MAP');
-		this.dependentAttachment(this.navaratriNocForm.get('trainedFiremanStaffKept').value, 'TRAIN_FIRE_PERSON_LIST');
+		// this.dependentAttachment(this.navaratriNocForm.get('trainedFiremanStaffKept').value, 'TRAIN_FIRE_PERSON_LIST');
 	}
 
 	/**
@@ -194,7 +196,7 @@ export class NavratriNocComponent implements OnInit {
 			applicantNameGuj: [null, [Validators.required, Validators.maxLength(300)]],
 			contactNo: [null, [Validators.required, Validators.maxLength(12)]],
 			email: [null, [Validators.required, Validators.maxLength(50)]],
-			
+
 			/* Step 2 controls start */
 			applicationThroughPolice: [null, [Validators.required, Validators.maxLength(10)]],
 			policeCommisionerLetterNo: [null, [Validators.required, Validators.maxLength(20)]],
@@ -205,7 +207,7 @@ export class NavratriNocComponent implements OnInit {
 			organizerAddressGuj: [null, [Validators.required, Validators.maxLength(600)]],
 			organizerMobileNo: [null, [Validators.maxLength(10)]],
 			responsiblePersonMobileNo: [null, [Validators.required, Validators.maxLength(10)]],
-			
+
 			/* Step 3 controls start */
 			garbaPlaceAddress: [null, [Validators.required, Validators.maxLength(100)]],
 			garbaPlaceAddressGuj: [null, [Validators.required, Validators.maxLength(300)]],
@@ -218,7 +220,7 @@ export class NavratriNocComponent implements OnInit {
 			vmcConsentLetterIncluded: [null, [Validators.maxLength(15)]],
 			consentLetterDate: [null, [Validators.maxLength(10)]],
 			hazardousPerformanceDetail: [null, [Validators.required, Validators.maxLength(150)]],
-			
+
 			/* Step 4 controls start */
 			noOfGatheringPersons: [null, [Validators.required, Validators.maxLength(5)]],
 
