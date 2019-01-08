@@ -1,11 +1,14 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ManageRoutes } from './../../../../config/routes-conf';
 import { ValidationService } from '../../../../shared/services/validation.service';
 import { FormsActionsService } from '../../../../core/services/citizen/data-services/forms-actions.service';
 import * as moment from 'moment';
+import * as _ from 'lodash';
 import { FireFacilitiesService } from '../common/services/fire-facilities.service';
+import { TranslateService } from '../../../../shared/modules/translate/translate.service';
+
 @Component({
 	selector: 'app-water-tanker-app',
 	templateUrl: './water-tanker-app.component.html',
@@ -49,6 +52,7 @@ export class WaterTankerAppComponent implements OnInit {
 		private router: Router,
 		private route: ActivatedRoute,
 		private formService: FormsActionsService,
+		private TranslateService: TranslateService,
 		public fireFacilitiesService: FireFacilitiesService
 
 	) { }
@@ -81,10 +85,39 @@ export class WaterTankerAppComponent implements OnInit {
 		this.formService.getFormData(this.formId).subscribe(res => {
 			try {
 				this.waterTankerAppForm.patchValue(res);
+
 				this.showButtons = true;
+				res.serviceDetail.serviceUploadDocuments.forEach(app => {
+					(<FormArray>this.waterTankerAppForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.createDocumentsGrp(app));
+				});
+				this.requiredDocumentList();
+				this.resetsuggestedfields();
 			} catch (error) {
 				console.log(error.message)
 			}
+		});
+	}
+
+	/**
+     * This Method for create attachment array in service detail
+     * @param data : value of array
+     */
+	createDocumentsGrp(data?: any): FormGroup {
+		return this.fb.group({
+			// dependentFieldName: [data.dependentFieldName ? data.dependentFieldName : null],
+			documentIdentifier: [data.documentIdentifier ? data.documentIdentifier : null],
+			documentKey: [data.documentKey ? data.documentKey : null],
+			documentLabelEn: [data.documentLabelEn ? data.documentLabelEn : null],
+			documentLabelGuj: [data.documentLabelGuj ? data.documentLabelGuj : null],
+			fieldIdentifier: [data.fieldIdentifier ? data.fieldIdentifier : null],
+			formPart: [data.formPart ? data.formPart : null],
+			id: [data.id ? data.id : null],
+			isActive: [data.isActive],
+			mandatory: [data.mandatory ? data.mandatory : false],
+			maxFileSizeInMB: [data.maxFileSizeInMB ? data.maxFileSizeInMB : 5],
+			requiredOnAdminPortal: [data.requiredOnAdminPortal],
+			requiredOnCitizenPortal: [data.requiredOnCitizenPortal],
+			// version: [data.version ? data.version : null]
 		});
 	}
 
@@ -102,6 +135,23 @@ export class WaterTankerAppComponent implements OnInit {
 			this.FS_AFTERNOON = res.FS_AFTERNOON;
 			this.onChangeTime(this.waterTankerAppForm.get('requireIn').value.code);
 		});
+	}
+
+	/**
+	 * Method is create required document array
+	 */
+	requiredDocumentList() {
+		_.forEach(this.waterTankerAppForm.get('serviceDetail').get('serviceUploadDocuments').value, (value) => {
+			if (value.mandatory && value.isActive && value.requiredOnCitizenPortal) {
+				this.uploadFilesArray.push({
+					'labelName': value.documentLabelEn,
+					'fieldIdentifier': value.fieldIdentifier,
+					'documentIdentifier': value.documentIdentifier
+				})
+			}
+		});
+		//check for attachment is mandatory
+		// this.dependentAttachment(this.provisionalHospitalNocForm.get('trainedFiremanStaffKept').value, 'TRAIN_FIRE_PERSON_LIST');
 	}
 
 	/**
@@ -142,7 +192,7 @@ export class WaterTankerAppComponent implements OnInit {
 				"code": [null, Validators.required]
 			}),
 			whoSuggested: [null, [Validators.required, Validators.maxLength(150)]],
-			withinVMCBoundary: [null,[Validators.required]],
+			withinVMCBoundary: [null, [Validators.required]],
 			requiredOnDate: [null, Validators.required],
 			requireIn: this.fb.group({
 				"code": [null, Validators.required]
@@ -157,9 +207,28 @@ export class WaterTankerAppComponent implements OnInit {
 			// loinumber: [null]
 
 			/* Step 4 controls start*/
-			// attachments: ['']
+			attachments: [],
+			serviceDetail: this.fb.group({
+				code: [null],
+				name: [null],
+				gujName: [null],
+				feesOnScrutiny: [null],
+				appointmentRequired: [null],
+				serviceUploadDocuments: this.fb.array([])
+			})
 			/* Step 4 controls end */
 		});
+	}
+
+	/**
+	 * This method for reset purpose.
+	 */
+	resetsuggestedfields() {
+	
+		if (this.waterTankerAppForm.get('purpose').get('code').value != 'FS_SUGGESTED') {
+			this.waterTankerAppForm.get('attachments').reset();
+			this.waterTankerAppForm.controls.whoSuggested.reset();
+		}
 	}
 
 	/**
@@ -176,7 +245,7 @@ export class WaterTankerAppComponent implements OnInit {
 				}
 			);
 		}
-		else{
+		else {
 			this.waterTankerAppForm.get('totalAmount').reset();
 		}
 	}

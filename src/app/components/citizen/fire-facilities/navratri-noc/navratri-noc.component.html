@@ -28,10 +28,11 @@
 						 placeholder="{{ 'applicant_name' | translate:translateKey:'gu' }}">
 						<control-messages [control]="navaratriNocForm.controls.applicantNameGuj"></control-messages>
 					</mat-form-field>
-					
+
 					<mat-form-field class="col-md-4">
 						<!-- <span matPrefix>+91 &nbsp;</span> -->
-						<input matInput OnlyNumber placeholder="{{'applicant_mobile' | translate:translateKey}}" type="tel" maxlength="12" formControlName="contactNo" required>
+						<input matInput OnlyNumber placeholder="{{'applicant_mobile' | translate:translateKey}}" type="tel" maxlength="12"
+						 formControlName="contactNo" required>
 						<control-messages [control]="navaratriNocForm.controls.contactNo"></control-messages>
 					</mat-form-field>
 
@@ -41,7 +42,7 @@
 						<control-messages [control]="navaratriNocForm.controls.email"></control-messages>
 					</mat-form-field>
 
-					
+
 
 				</div>
 				<app-action-bar [form]="navaratriNocForm" (tabIndex)="onTabChange($event)" (handleOnSaveAndNext)="handleOnSaveAndNext($event)"
@@ -57,7 +58,7 @@
 				<div class="row">
 					<div class="col-md-4 radioBtnError">
 						<mat-label>{{'application_through_police' | translate:translateKey }} *</mat-label>
-						<mat-radio-group formControlName="applicationThroughPolice" required>
+						<mat-radio-group formControlName="applicationThroughPolice" required (change)="dependentAttachment($event.value,' POLICE_COMMISSIONER_LETTER_NO')">
 							<mat-radio-button [value]="true">
 								{{'yes_txt' | translate:translateKey }}
 							</mat-radio-button>
@@ -356,7 +357,8 @@
 
 					<div class="col-md-4 radioBtnError">
 						<mat-label>{{'trained_fireman_staff_kept' | translate:translateKey }} *</mat-label>
-						<mat-radio-group formControlName="trainedFiremanStaffKept" required (change)="dependentAttachment($event.value,'TRAIN_FIRE_PERSON_LIST')">
+						<mat-radio-group formControlName="trainedFiremanStaffKept" required>
+							<!-- (change)="dependentAttachment($event.value,'TRAIN_FIRE_PERSON_LIST')" -->
 							<mat-radio-button [value]="true">
 								{{'yes_txt' | translate:translateKey }}
 							</mat-radio-button>

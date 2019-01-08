@@ -67,7 +67,7 @@ export class TempFireworksNocComponent implements OnInit {
 	 * Method is create required document array
 	 */
 	requiredDocumentList() {
-
+		this.uploadFilesArray = [];
 		_.forEach(this.tempFireworksNocForm.get('serviceDetail').get('serviceUploadDocuments').value, (value) => {
 			if (value.mandatory && value.isActive && value.requiredOnCitizenPortal) {
 				this.uploadFilesArray.push({
@@ -78,9 +78,11 @@ export class TempFireworksNocComponent implements OnInit {
 			}
 		});
 		//check for attachment is mandatory
+		
+		// this.dependentAttachment(this.tempFireworksNocForm.get('applicationThroughPolice').value, 'LETTER_TO_APPLICANT');
 		this.dependentAttachment(this.tempFireworksNocForm.get('securityArrangement').value, 'SECURITY_ARRANGEMENT');
-		this.dependentAttachment(this.tempFireworksNocForm.get('layoutPlanIncluded').value, 'LOCATION_MAP');
-		this.dependentAttachment(this.tempFireworksNocForm.get('applicationThroughPolice').value, 'PERMISSION_FROM_LAND_OWNER');
+		// this.dependentAttachment(this.tempFireworksNocForm.get('layoutPlanIncluded').value, 'LOCATION_MAP');
+		this.dependentAttachment(this.tempFireworksNocForm.get('ownerConsentLetterIncluded').value, 'CONSENT_LETTER');
 	}
 
 	/**
@@ -193,7 +195,7 @@ export class TempFireworksNocComponent implements OnInit {
 			weatherExitShownInMap: [null, [Validators.required]],//true/false
 			noOfExits: [null, [Validators.required, Validators.maxLength(3)]],
 			usageOfInflammable: [null, [Validators.required, Validators.maxLength(500)]],
-			
+
 			/* Step 3 controls start */
 			securityArrangement: [null, [Validators.required]],//true/false
 			parkingArrangement: [null, [Validators.required]],//true/false
@@ -257,7 +259,7 @@ export class TempFireworksNocComponent implements OnInit {
 			} else if (count <= step2) {
 				this.tabIndex = 2;
 				return false;
-			} 
+			}
 			// else if (count == 67) {
 			// 	this.checkReligion();
 			// 	return false;

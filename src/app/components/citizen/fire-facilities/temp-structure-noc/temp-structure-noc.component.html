@@ -155,7 +155,7 @@
 						<div class="row">
 							<div class="col-md-12 radioBtnError">
 								<mat-label>{{'land_owner_consent_included' | translate:translateKey }} *</mat-label>
-								<mat-radio-group formControlName="landOwnerConsentIncluded" required (change)="dependentAttachment($event.value,'PERMISSION_FROM_LAND_OWNER')">
+								<mat-radio-group formControlName="landOwnerConsentIncluded" required (change)="dependentAttachment($event.value,'LAND_OWNER_CONCERN_LETTER')">
 									<mat-radio-button [value]="true">
 										Yes
 									</mat-radio-button>
@@ -278,7 +278,7 @@
 
 					<div class="col-md-4 radioBtnError">
 						<mat-label>{{'layout_plan_included' | translate:translateKey }} *</mat-label>
-						<mat-radio-group formControlName="layoutPlanIncluded" required (change)="dependentAttachment($event.value,'LOCATION_MAP')">
+						<mat-radio-group formControlName="layoutPlanIncluded" required (change)="dependentAttachment($event.value,'LAY_OUT_PLAN')">
 							<mat-radio-button [value]="true">
 								Yes
 							</mat-radio-button>
