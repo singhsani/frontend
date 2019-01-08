@@ -786,6 +786,10 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
     width: 45vh !important;
     height: 55vh !important;
 }
+// cursor not-allowed on disabled dates
+.mat-calendar-body-disabled>.mat-calendar-body-cell-content:not(.mat-calendar-body-selected) {
+    cursor: not-allowed;
+}
 
 .mat-form-field-invalid .mat-icon {
     color: #f44336;
@@ -872,6 +876,22 @@ body * {visibility: hidden;}
  .table thead th, .table thead td {vertical-align: top;line-height: normal;}
  .table thead tr > th:first-child, .table tbody tr > td:first-child {padding-left: 0;}
 .noRecord { background-color: #f2f2f2;}
+
+// css for time picker
+#time-picker-wrapper.material-purple[_ngcontent-c25] #time-picker[_ngcontent-c25] .time-picker-header[_ngcontent-c25] {
+    background-color: indigo !important;
+}
+#time-picker-wrapper.material-purple[_ngcontent-c25] #time-picker[_ngcontent-c25] .time-picker-clock[_ngcontent-c25] > button.active[_ngcontent-c25] {
+    background:  indigo !important
+}
+
+#time-picker-wrapper.material-purple[_ngcontent-c25] #time-picker[_ngcontent-c25] .time-picker-clock[_ngcontent-c25] .time-picker-clock-arrow[_ngcontent-c25]{
+    background: indigo !important;
+}
+
+#time-picker-wrapper.material-purple[_ngcontent-c25] #time-picker[_ngcontent-c25] .time-picker-footer[_ngcontent-c25] button[_ngcontent-c25] {
+    color: indigo !important;
+}
 
 
  // Select Dropdown //  

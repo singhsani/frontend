@@ -1,26 +1,83 @@
 import { ComponentConfig } from "../component-config";
+import { FormGroup } from "@angular/forms";
 
 export class HospitalConfig extends ComponentConfig {
     public MIN_BIRTH_DATE_VALIDATION: number = 21;
+    public DELAYED_REGISTRATION_TITLE: string
+    public LESS_30_AND_MORE_21_MESSAGE: string;
+    public LESS_YEAR_AND_MORE_30_MESSAGE: string;
+    public MORE_THAN_YEAR_MESSAGE: string;
 
-    public DELAYED_BIRTH_REGISTRATION_TITLE: string = "Delayed Birth Registration";
+    constructor(private certType?: string) {
+        super();
+        if(this.certType){
+            this.DELAYED_REGISTRATION_TITLE = `Delayed ${this.certType.charAt(0).toUpperCase() + this.certType.slice(1)} Registration`;
 
-    public LESS_30_AND_MORE_21_MESSAGE: string  = `<p>It will considered as delayed birth registration because
+            this.LESS_30_AND_MORE_21_MESSAGE = `<p>It will considered as delayed ${this.certType} registration because
              registration date is more than 21 days and there will be extra Fee of Rs. 2 plus departmental charges as delayed fee.`;
-             
-    public LESS_YEAR_AND_MORE_30_MESSAGE: string = `<p>It will considered as delayed birth registration because
+
+            this.LESS_YEAR_AND_MORE_30_MESSAGE = `<p>It will considered as delayed ${this.certType} registration because
              registration date is more than 30 days so Rs. 5=00 plus departmental charges as delayed fee and
              extra attachment (Affidavit Or health Order) 
              on Rs. 20/- Stamp paper. Registration needs to be approved by Registrar of Birth, VMC.`;
-             
-    public MORE_THAN_YEAR_MESSAGE: string = `<p>It will considered as delayed birth registration because
+
+            this.MORE_THAN_YEAR_MESSAGE = `<p>It will considered as delayed ${this.certType} registration because
              registration date is more than 1 year and there will be extra attachment (Court Order) as well as fees.`;
-             
-    constructor(){
-        super();
+        }
     }
 
-     getDeathDummyJSON(){
+    /**
+	 * Method is used to get file status.
+	 * @param fieldIdentifier - file identifier.
+	 */
+
+    getFileObjectContained(uploadFileArray: Array<any>, fieldIdentifier: string) {
+        let found: boolean = false;
+        for (let i = 0; i < uploadFileArray.length; i++) {
+            if (uploadFileArray[i].fieldIdentifier == fieldIdentifier) {
+                found = true;
+                break;
+            }
+        }
+        return found;
+    }
+
+	/**
+	 * Method is used to create file object.
+	 * @param labelName - file labelName
+	 * @param fieldIdentifier - file identifier
+	 */
+    fileObjectCreater(labelName, fieldIdentifier): any {
+        return { labelName: labelName, fieldIdentifier: fieldIdentifier }
+    }
+
+    /**
+     * Method is used to update validity and value of perticular control.
+     * @param form - form group
+     * @param control - control
+     */
+    updateValueAndValidity(form: FormGroup, control: string, validation?: Array<any>) {
+        form.get(control).clearValidators();
+        form.get(control).setValidators(validation);
+        form.get(control).updateValueAndValidity();
+    }
+
+    /**
+   * Method is used to handle change with other options.
+   * @param otherParam - selected event
+   * @param expectedParam - expected params for condition checking.
+   * @param form - form group
+   * @param control - control
+   */
+    changeHandler(otherParam: string, expectedParam: string, form: FormGroup, control: string) {
+        if (otherParam != expectedParam) {
+            form.get(control).reset();
+            form.get(control).clearValidators();
+            form.get(control).updateValueAndValidity();
+        }
+    }
+
+    getDeathDummyJSON() {
         return {
             "unknownCategory": {
                 "code": "NO",

@@ -2,8 +2,7 @@
 
 <mat-card class="formClass cardBorder">
 
-    <form [formGroup]="stillBirthCertificateForm" autocomplete="off" ngNativeValidate>
-
+    <form [formGroup]="stillBirthCertificateForm" autocomplete="off" ngNativeValidate appReload [isFormSaved]="isFormSaved" [form]="stillBirthCertificateForm">
         <mat-tab-group mat-stretch-tabs [(selectedIndex)]="tabIndex" class="stepperNav" dynamicHeight="true">
 
             <mat-tab>
@@ -22,8 +21,9 @@
                     <div class="col-md-4" *ngIf="stillBirthCertificateForm.value.birthPlace.code == 'OTHER_PLACE'">
                         <mat-form-field>
                             <input matInput placeholder="{{'other_place' | translate:translateKey}}" formControlName="otherPlace" required>
+                            <control-messages [control]="stillBirthCertificateForm.controls.otherPlace">
+                            </control-messages>
                         </mat-form-field>
-                        <control-messages [control]="stillBirthCertificateForm.controls.otherPlace"></control-messages>
                     </div>
 
                     <div class="col-md-4 radioBtnError" formGroupName="isOrphan">
@@ -37,15 +37,30 @@
                     </div>
                 </div>
 
+                <!-- <button class="float-right" *ngIf="stillBirthCertificateForm.get('noOfChilds').value < 6" [disabled]="showButtons && !stillBirthCertificateForm.controls.canEdit.value"
+                    matTooltip="Add More New Born Child" type="button" mat-mini-fab color="accent" (click)="addMoreChild()">
+                    <mat-icon>add</mat-icon>
+                </button> -->
 
-                <div formArrayName="childs">
+                <div class="row float-right padaddbtn" *ngIf="stillBirthCertificateForm.get('noOfChilds').value < 6">
+                    <button color="primary" [disabled]="showButtons && !stillBirthCertificateForm.controls.canEdit.value" matTooltip="Add More New Born Child"
+                        type="button" mat-mini-fab (click)="addMoreChild()">
+                        <mat-icon class="v-inherit">add</mat-icon>
+                    </button>
+                </div>
+
+
+                <div formArrayName="childs" class="clear">
                     <div class="row mt-4" *ngFor="let item of stillBirthCertificateForm.get('childs').controls; let i = index;" [formGroupName]="i">
 
-                        <h2 class="col-md-10 float-left">Child {{i+1}}</h2>
-                        <button type="button" mat-icon-button [hidden]="showButtons && !stillBirthCertificateForm.controls.canEdit.value" (click)="deleteChild(item.value, i)"
-                            class="col-md-2 float-right text-right" *ngIf="i > 0">
-                            <mat-icon matTooltip="Delete Child Information" color="warn">delete</mat-icon>
-                        </button>
+                        <h2 class="col-md-11 float-left">Child {{i+1}}</h2>
+                        <div class="col-md-1 text-right">
+                            <button type="button" mat-icon-button [hidden]="showButtons && !stillBirthCertificateForm.controls.canEdit.value" (click)="deleteChild(item.value, i)"
+                                *ngIf="i > 0">
+                                <mat-icon class="v-inherit" matTooltip="Delete Child Information" color="warn">delete</mat-icon>
+                            </button>
+                        </div>
+
 
                         <mat-form-field class="col-md-4">
                             <mat-label>{{'birth_date' | translate:translateKey}}</mat-label>
@@ -59,10 +74,12 @@
                         <div class="col-md-4 pl-0 ml-0">
                             <mat-form-field class="col-md-10">
                                 <mat-label>{{'birth_time' | translate:translateKey}}</mat-label>
-                                <input (blur)="changeBirthTime($event.target.value, i)" placeholder="HH:MM" matInput type="time" atp-time-picker theme="dark" formControlName="birthTime" required/>
+                                <input (blur)="changeBirthTime($event.target.value, i)" placeholder="HH:MM" matInput type="time" atp-time-picker theme="dark"
+                                    formControlName="birthTime" required/>
                                 <control-messages [control]="stillBirthCertificateForm.controls.childs.controls[i].controls.birthTime"></control-messages>
                             </mat-form-field>
-                            <button class="ml-0 pl-0" [disabled]="!stillBirthCertificateForm?.controls?.canEdit?.value" mat-icon-button type="button" (click)="openTimePicker(i)">
+                            <button class="ml-0 pl-0" [disabled]="!stillBirthCertificateForm?.controls?.canEdit?.value" mat-icon-button type="button"
+                                (click)="openTimePicker(i)">
                                 <mat-icon matTooltip="Select Birth Time" color="primary">alarm</mat-icon>
                             </button>
                         </div>
@@ -77,7 +94,8 @@
 
                         <div class="col-md-4 ngSelect" formGroupName="weightKg">
                             <ng-select placeholder="{{'child_weight_kg' | translate:translateKey}} *" formControlName="code">
-                                <ng-option *ngFor="let childweight of ChildWeights" [value]="childweight.code">{{childweight.name}} kgs.</ng-option>
+                                <ng-option *ngFor="let childweight of ChildWeights" [value]="childweight.code">{{childweight.name}}
+                                    kgs.</ng-option>
                             </ng-select>
                             <control-messages [control]="stillBirthCertificateForm.controls.childs.controls[i].controls.weightKg.controls.code"></control-messages>
                         </div>
@@ -109,13 +127,10 @@
                     </div>
                 </div>
 
-                <button class="float-right" *ngIf="stillBirthCertificateForm.get('noOfChilds').value < 6" [disabled]="showButtons && !stillBirthCertificateForm.controls.canEdit.value"
-                    matTooltip="Add More New Born Child" type="button" mat-mini-fab color="accent" (click)="addMoreChild()">
-                    <mat-icon>add</mat-icon>
-                </button>
 
-                <app-hos-action-bar [stepInfo]="{step: 'step1', next: 1, back: 0}" (tabIndex)="onTabChange($event)" (handleErrors)="handleErrorsOnSubmit($event)"
-                    [form]="stillBirthCertificateForm" [step]="'step1'"></app-hos-action-bar>
+
+                <app-hos-action-bar [stepInfo]="{step: 'step1', next: 1, back: 0}" (saveEvent)="isFormSaved = $event?.isSaved" (tabIndex)="onTabChange($event)"
+                    (handleErrors)="handleErrorsOnSubmit($event)" [form]="stillBirthCertificateForm" [step]="'step1'"></app-hos-action-bar>
 
             </mat-tab>
             <mat-tab>
@@ -211,8 +226,8 @@
                     </mat-form-field>
                 </div>
 
-                <app-hos-action-bar [stepInfo]="{step: 'step2', next: 2, back: 0}" (tabIndex)="onTabChange($event)" (handleErrors)="handleErrorsOnSubmit($event)"
-                    [form]="stillBirthCertificateForm" [step]="'step2'"></app-hos-action-bar>
+                <app-hos-action-bar [stepInfo]="{step: 'step2', next: 2, back: 0}" (saveEvent)="isFormSaved = $event?.isSaved" (tabIndex)="onTabChange($event)"
+                    (handleErrors)="handleErrorsOnSubmit($event)" [form]="stillBirthCertificateForm" [step]="'step2'"></app-hos-action-bar>
 
             </mat-tab>
 
@@ -354,8 +369,8 @@
 
                 </div>
 
-                <app-hos-action-bar [stepInfo]="{step: 'step3', next: 3, back: 1}" (tabIndex)="onTabChange($event)" (handleErrors)="handleErrorsOnSubmit($event)"
-                    [form]="stillBirthCertificateForm" [step]="'step2'"></app-hos-action-bar>
+                <app-hos-action-bar [stepInfo]="{step: 'step3', next: 3, back: 1}" (saveEvent)="isFormSaved = $event?.isSaved" (tabIndex)="onTabChange($event)"
+                    (handleErrors)="handleErrorsOnSubmit($event)" [form]="stillBirthCertificateForm" [step]="'step2'"></app-hos-action-bar>
 
             </mat-tab>
 
@@ -375,7 +390,8 @@
 
                 <div class="row" formGroupName="isPermanentPresentAddressSame">
                     <mat-checkbox style="margin-left: 15px" [disabled]="!stillBirthCertificateForm.get('canEdit').value" (change)="check($event);"
-                        [checked]="stillBirthCertificateForm.get('isPermanentPresentAddressSame').get('code').value == 'YES'? true : false">{{'is_permanent_address_same_as_present_address' | translate:translateKey}}</mat-checkbox>
+                        [checked]="stillBirthCertificateForm.get('isPermanentPresentAddressSame').get('code').value == 'YES'? true : false">{{'is_permanent_address_same_as_present_address'
+                        | translate:translateKey}}</mat-checkbox>
                 </div>
                 <div class="row">
                     <h2>
@@ -387,7 +403,8 @@
 
                 <div class="row">
                     <div formGroupName="familyReligion" class="col-md-4 ngSelect">
-                        <ng-select (change)="changeFamilyReligion($event)" placeholder="{{'religion' | translate:translateKey}}" formControlName="code" required>
+                        <ng-select (change)="changeFamilyReligion($event)" placeholder="{{'religion' | translate:translateKey}}" formControlName="code"
+                            required>
                             <ng-option *ngFor="let relegion of Religion" [value]="relegion.code">
                                 {{relegion.name}}
                             </ng-option>
@@ -404,8 +421,8 @@
                     </div>
                 </div>
 
-                <app-hos-action-bar [stepInfo]="{step: 'step4', next: 4, back: 2}" (tabIndex)="onTabChange($event)" (handleErrors)="handleErrorsOnSubmit($event)"
-                    [form]="stillBirthCertificateForm" [step]="'step3'"></app-hos-action-bar>
+                <app-hos-action-bar [stepInfo]="{step: 'step4', next: 4, back: 2}" (saveEvent)="isFormSaved = $event?.isSaved" (tabIndex)="onTabChange($event)"
+                    (handleErrors)="handleErrorsOnSubmit($event)" [form]="stillBirthCertificateForm" [step]="'step3'"></app-hos-action-bar>
 
             </mat-tab>
 
@@ -440,8 +457,9 @@
                 </div>
 
                 <div>
-                    <app-hos-action-bar [stepInfo]="{step: 'final', next: 5, back: 3}" (tabIndex)="onTabChange($event)" [uploadFiles]="uploadFileArray"
-                        [form]="stillBirthCertificateForm" [step]="'final'" (stepReset)="stepReset()" (handleErrors)="handleErrorsOnSubmit($event)"></app-hos-action-bar>
+                    <app-hos-action-bar [stepInfo]="{step: 'final', next: 5, back: 3}" (saveEvent)="isFormSaved = $event?.isSaved" (tabIndex)="onTabChange($event)"
+                        [uploadFiles]="uploadFileArray" [form]="stillBirthCertificateForm" [step]="'final'" (stepReset)="stepReset()"
+                        (handleErrors)="handleErrorsOnSubmit($event)"></app-hos-action-bar>
                 </div>
 
             </mat-tab>

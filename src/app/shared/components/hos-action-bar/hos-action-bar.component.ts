@@ -18,12 +18,13 @@ export class HosActionBarComponent implements OnInit, OnChanges {
 
 	translateKey: string = 'actionBarScreen';
 
-	@Input() isstepper: boolean = true;	
+	@Input() isstepper: boolean = true;
 	@Input() form: FormGroup;
 	@Input() step: string;
 	commonForm: FormGroup;
 	@Input() uploadFiles: any;
 	@Input() stepInfo: any;
+
 
 	isSaveBtnDisabled: boolean = false;
 	isSubmitBtnDisabled: boolean = false;
@@ -32,17 +33,16 @@ export class HosActionBarComponent implements OnInit, OnChanges {
 	uploadFilesArray: Array<any> = []
 
 	@Output() handleErrors = new EventEmitter<any>();
-	@Output() stepReset = new EventEmitter<any>();
 	@Output() tabIndex = new EventEmitter<any>();
+	@Output() saveEvent : EventEmitter<any> = new EventEmitter<any>();
 
 
-	constructor(
+    constructor(
 		private sessionStore: SessionStorageService,
 		private formService: HosFormActionsService,
 		private fb: FormBuilder,
 		private toastr: ToastrService,
-		private commonService: CommonService) {
-	}
+		private commonService: CommonService) {}
 
 	ngOnInit() {
 		this.formService.apiType = this.form.get('apiType').value;
@@ -55,8 +55,9 @@ export class HosActionBarComponent implements OnInit, OnChanges {
 				this.isBtnsDisabled = false;
 			}
 		}, 600);
-
 	}
+
+
 
 	/**
 	 * Method is responsible to check required file upload.
@@ -112,10 +113,10 @@ export class HosActionBarComponent implements OnInit, OnChanges {
 					this.tabIndex.emit(this.stepInfo.next);
 				}
 				this.toastr.success(`${this.form.value.serviceDetail.name} information successfully saved`);
+				this.saveEvent.emit({isSaved : true});
 			},
 			err => {
 				this.markFormGroupTouched(this.form);
-
 				this.isSaveBtnDisabled = false;
 				let count = 1;
 				for (const key in this.form.controls) {
@@ -124,7 +125,8 @@ export class HosActionBarComponent implements OnInit, OnChanges {
 						break;
 					}
 					count++;
-				}
+				};
+				this.saveEvent.emit({ isSaved: false });
 			}
 		);
 	}
@@ -156,7 +158,7 @@ export class HosActionBarComponent implements OnInit, OnChanges {
 							this.isSubmitBtnDisabled = false;
 							if (err.status === 402) {
 								let retUrl: string = '/hospital/my-applications';
-								let payData = this.commonService.storePaymentInfo(err.error.data, retUrl, 'hospital/payment-gateway-response' );
+								let payData = this.commonService.storePaymentInfo(err.error.data, retUrl, 'hospital/payment-gateway-response');
 								let html =
 									`
 								<div class="text-center">
@@ -210,16 +212,6 @@ export class HosActionBarComponent implements OnInit, OnChanges {
 		}
 	}
 
-	/**
-	 * This method is use for clear the form
-	 */
-	resetForm() {
-
-		this.commonForm.patchValue(this.form.value);
-		this.form.reset();
-		this.form.patchValue(this.commonForm.value);
-		this.stepReset.emit();
-	}
 
 	/**
 	 * This method used to set common formControls in existing formGroups

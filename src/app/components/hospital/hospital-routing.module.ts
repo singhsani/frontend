@@ -13,6 +13,7 @@ import { DeathRegistrationComponent } from './death-registration/death-registrat
 import { StillBirthComponent } from './still-birth/still-birth.component';
 import { HosMyApplicationsComponent } from './hos-my-applications/hos-my-applications.component';
 import { HosPaymentResponsePageComponent } from '../../shared/components/hos-payment-response-page/hos-payment-response-page.component';
+import { CanDeactivateGuard } from '../../core/guard/can-deactivate.guard';
 /* Import hospital components end */
 
 const routes: Routes = [
@@ -22,9 +23,9 @@ const routes: Routes = [
 		children: [
 			{ path: '', redirectTo: ManageRoutes.getMainRoute('HOSPITALDASHBOARD'), pathMatch: 'full' },
 			{ path: ManageRoutes.getMainRoute('HOSPITALDASHBOARD'), component: HospitalDashboardComponent, canActivate: [HospitalGuard] },
-			{ path: ManageRoutes.getMainRoute('HEL-BR') + '/:id/:apiCode', component: BirthRegistrationComponent, canActivate: [HospitalGuard] },
-			{ path: ManageRoutes.getMainRoute('HEL-DR') + '/:id/:apiCode', component: DeathRegistrationComponent, canActivate: [HospitalGuard] },
-			{ path: ManageRoutes.getMainRoute('HEL-SB') + '/:id/:apiCode', component: StillBirthComponent, canActivate: [HospitalGuard] },
+			{ path: ManageRoutes.getMainRoute('HEL-BR') + '/:id/:apiCode', component: BirthRegistrationComponent, canActivate: [HospitalGuard], canDeactivate: [CanDeactivateGuard] },
+			{ path: ManageRoutes.getMainRoute('HEL-DR') + '/:id/:apiCode', component: DeathRegistrationComponent, canActivate: [HospitalGuard], canDeactivate : [CanDeactivateGuard] },
+			{ path: ManageRoutes.getMainRoute('HEL-SB') + '/:id/:apiCode', component: StillBirthComponent, canActivate: [HospitalGuard], canDeactivate: [CanDeactivateGuard]  },
 			{ path: ManageRoutes.getMainRoute('HOSPITALMYAPPS'), component: HosMyApplicationsComponent, canActivate: [HospitalGuard] },
 			{ path: ManageRoutes.getMainRoute('PAYMENTGATEWAYRESPONSE'), component: HosPaymentResponsePageComponent, canActivate: [HospitalGuard] },
 		]
