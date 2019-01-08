@@ -14,6 +14,8 @@ import * as moment from 'moment';
 import * as _ from 'lodash';
 import { ToastrService } from 'ngx-toastr';
 import { AmazingTimePickerService } from 'amazing-time-picker';
+import { Observable } from 'rxjs';
+import { HospitalConfig } from '../hospital-config';
 
 @Component({
 	selector: 'app-still-birth',
@@ -78,6 +80,9 @@ export class StillBirthComponent implements OnInit {
 	private stepLabel4 = 'family_details';
 	private stepLabel5 = 'upload_documents';
 
+	config: HospitalConfig = new HospitalConfig('still birth');
+	isFormSaved:boolean = false;
+
 	constructor(
 		private route: ActivatedRoute,
 		private formService: HosFormActionsService,
@@ -99,6 +104,16 @@ export class StillBirthComponent implements OnInit {
 		this.createStillBirthForm();
 		this.getStillBirthFormData();
 		this.getLookUpData();
+	}
+
+	/**
+	 * Method is used to ensure form saved or not on user navigation.
+	 */
+	canDeactivate(): Observable<boolean> | boolean {
+		if (!this.isFormSaved && this.stillBirthCertificateForm.touched) {
+			return confirm(this.config.CONFIRM_UNSAVE_SAVE_MESSAGE);
+		}
+		return true;
 	}
 
 	/**
@@ -372,6 +387,14 @@ export class StillBirthComponent implements OnInit {
 			if (!this.stillBirthCertificateForm.controls.canEdit.value) {
 				this.stillBirthCertificateForm.disable();
 			}
+
+			/**
+			 * Catch Changes in form to make status updated.
+			 */
+			this.stillBirthCertificateForm.valueChanges.subscribe(changeINForm => {
+				this.isFormSaved = false;
+				return;
+			})
 		});
 	}
 

@@ -26,6 +26,8 @@ import { GujInputSourceDirective } from './directives/guj-input-source.directive
 import { GujInputTargetDirective } from './directives/guj-input-target.directive';
 import { InputTrimDirective } from './directives/input-trim.directive';
 import { AlphaNumericDirective } from './directives/alpha-numeric.directive';
+import { ReloadDirective } from './directives/reload.directive';
+
 /* import directives end*/
 
 /* import pipes start*/
@@ -66,7 +68,8 @@ const COMPONENTS = [
 	ValidationFieldsDirective,
 	GujInputSourceDirective,
 	GujInputTargetDirective,
-	AlphaNumericDirective
+	AlphaNumericDirective,
+	ReloadDirective
 ]
 
 @NgModule({

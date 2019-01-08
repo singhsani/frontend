@@ -7,7 +7,7 @@ import { catchError, map, startWith, switchMap } from 'rxjs/operators';
 
 
 /**
- * Kindly extend this class for getting all utils and constants
+ * extend this class for getting all utils and constants
  */
 export class ComponentConfig {
 
@@ -17,6 +17,8 @@ export class ComponentConfig {
     public ALL_FEILD_REQUIRED_MESSAGE = "Please enter all the required information";
     public MOB_NO_MIS_MATCH_MESSAGE = "Mobile Number and Confirm Mobile Number should match";
     public EMAIL_MIS_MATCH_MESSAGE = "Email and Confirm Email should match";
+    public CONFIRM_UNSAVE_SAVE_MESSAGE = "Form Is not saved, Do you want to discard it?";
+    public CONFIRM_UNSAVE_SAVE_TITLE = "Discard Changes";
 
     /**
      * User Defined Date Array
@@ -208,5 +210,26 @@ export class ComponentConfig {
                     return observableOf([]);
                 })
             )
+    }
+
+    /**
+   * Gujarati Look Up Converter.
+   * @param event - selected event
+   * @param form - formGroup
+   * @param controlName - control name
+   * @param arr - passed lookup array
+   */
+    gujNameFinder(event, form: FormGroup, controlName: string, arr) {
+        for (let i = 0; i < arr.length; i++) {
+            if (arr[i].code === event) {
+                if (arr[i].gujName === undefined) {
+                    form.get(controlName).get('gujName').setValue('');
+                    return;
+                } else {
+                    form.get(controlName).get('gujName').setValue(arr[i].gujName);
+                    return;
+                }
+            }
+        }
     }
 }

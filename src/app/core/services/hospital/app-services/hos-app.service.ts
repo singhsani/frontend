@@ -99,8 +99,11 @@ export class HosAppService {
 	 * This method is use for call user logout service.
 	 */
 	logout() {
-		this.session.remove('hos_access_token');
-		this.router.navigate(['hospital/auth/login']);
+		this.router.navigate(['hospital/auth/login']).then(success => {
+			if (success) {
+				this.session.remove('hos_access_token');
+			}
+		});
 	}
 
 	/**
@@ -117,7 +120,7 @@ export class HosAppService {
 	/**
 	 * This method is use for get hospital user related lookups data.
 	 */
-	getHosUserLookups(){
+	getHosUserLookups() {
 		return this.http.get('public/user/hospital/lookups');
 	}
 }

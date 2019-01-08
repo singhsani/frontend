@@ -1,15 +1,16 @@
-<app-hos-title-bar [title]="'screen_title' | translate: translateKey">
+<app-hos-title-bar [title]="'screen_title' | translate: translateKey" >
 	<!-- <button class="pull-right" mat-stroked-button type="button" (click)="deathCertificateForm.patchValue(config.getDeathDummyJSON())">
 			Patch Value
 		</button> -->
 </app-hos-title-bar>
 
-<mat-card class="formClass cardBorder ">
+<mat-card class="formClass cardBorder " >
 
-	<form [formGroup]="deathCertificateForm" autocomplete="off" ngNativeValidate>
+	<form [formGroup]="deathCertificateForm" autocomplete="off"  ngNativeValidate appReload [isFormSaved] ="isFormSaved" [form]="deathCertificateForm">
+		<!-- appReload [form] = "deathCertificateForm" [isSaved]="isFormSaved" -->
 
 		<mat-tab-group mat-stretch-tabs dynamicHeight="true" [(selectedIndex)]="tabIndex" class="stepperNav">
-
+            <!-- Tab 1 -->
 			<mat-tab>
 				<ng-template mat-tab-label>
 					<div>{{stepLabel1 | translate: translateKey}}</div>
@@ -27,7 +28,7 @@
 				<div class="row">
 
 					<mat-form-field *ngIf="deathCertificateForm.get('unknownCategory').get('code').value ==='YES'" class="col-md-12">
-						<textarea required matInput maxlength="500" type="text" placeholder="{{'unknown_death_description' | translate:translateKey}}"
+						<textarea required matInput maxlength="100" type="text" placeholder="{{'unknown_death_description' | translate:translateKey}}"
 						 formControlName="unknownDescription"></textarea>
 						<control-messages [control]="deathCertificateForm.controls.unknownDescription"></control-messages>
 					</mat-form-field>
@@ -72,16 +73,15 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-6">
-						<input [required]="requiredFeild" matInput readonly (click)="pickerDeath.open()" (focus)="pickerDeath.open()" [max]="maxBirthDate"
-						 [matDatepicker]="pickerDeath" (dateChange)="birthFormatChanger($event)" placeholder="{{'date_of_birth' | translate:translateKey}}"
-						 formControlName="birthDate">
+						<input [required]="requiredFeild" matInput readonly [max]="maxBirthDate" [matDatepicker]="pickerDeath" (dateChange)="birthFormatChanger($event)"
+						 placeholder="{{'date_of_birth' | translate:translateKey}}" formControlName="birthDate">
 						<mat-datepicker-toggle matSuffix [for]="pickerDeath"></mat-datepicker-toggle>
 						<mat-datepicker #pickerDeath touchUi="true"></mat-datepicker>
 						<control-messages [control]="deathCertificateForm.controls.birthDate"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-6" *ngIf="deathCertificateForm.controls.birthDate.value != null">
-						<input  [required]="requiredFeild" matInput readonly (click)="pickerBirth.open()" (focus)="pickerBirth.open()" [max]="maxDeathDate"
+						<input [required]="requiredFeild" matInput readonly (click)="pickerBirth.open()" (focus)="pickerBirth.open()" [max]="maxDeathDate"
 						 [min]="deathCertificateForm.controls.birthDate.value" [matDatepicker]="pickerBirth" (dateChange)="deathFormatChanger($event);delayCalculator($event)"
 						 placeholder="{{'date_of_death' | translate:translateKey}}" formControlName="deathDate">
 						<mat-datepicker-toggle matSuffix [for]="pickerBirth"></mat-datepicker-toggle>
@@ -102,7 +102,7 @@
 					</mat-form-field>
 
 					<div formGroupName="occupation" class="col-md-6 ngSelect">
-						<ng-select placeholder="{{'occupation' | translate:translateKey}} {{requiredFeild?'*':''}}" (change)="gujNameFinder($event,'occupation',DeceasedOccupation)"
+						<ng-select placeholder="{{'occupation' | translate:translateKey}} {{requiredFeild?'*':''}}" (change)="config.gujNameFinder($event,deathCertificateForm,'occupation',DeceasedOccupation)"
 						 formControlName="code">
 							<ng-option *ngFor="let deceasedoccupation of DeceasedOccupation" [value]="deceasedoccupation.code">
 								{{deceasedoccupation.name}}
@@ -117,7 +117,7 @@
 					</mat-form-field>
 
 					<div formGroupName="education" class="col-md-6 ngSelect">
-						<ng-select placeholder="{{'education' | translate:translateKey}} {{requiredFeild?'*':''}}" (change)="gujNameFinder($event,'education',DeceasedEducations)"
+						<ng-select placeholder="{{'education' | translate:translateKey}} {{requiredFeild?'*':''}}" (change)="config.gujNameFinder($event,deathCertificateForm, 'education',DeceasedEducations)"
 						 formControlName="code">
 							<ng-option *ngFor="let deceasededucation of DeceasedEducations" [value]="deceasededucation.code">
 								{{deceasededucation.name}}
@@ -140,12 +140,21 @@
 					</div>
 
 					<div formGroupName="religion" class="col-md-6 ngSelect">
-						<ng-select placeholder="{{'religion' | translate:translateKey}} {{requiredFeild?'*':''}}" formControlName="code">
+						<ng-select placeholder="{{'religion' | translate:translateKey}} {{requiredFeild?'*':''}}" formControlName="code" (change)="config.changeHandler($event, 'OTHER_RELIGION', deathCertificateForm, 'religionOther')">
 							<ng-option *ngFor="let religion of Religion" [value]="religion.code">
 								{{religion.name}}
 							</ng-option>
 						</ng-select>
 						<control-messages [control]="deathCertificateForm.controls.religion.controls.code"></control-messages>
+					</div>
+
+					<div class="col-md-6" *ngIf="deathCertificateForm.get('religion').get('code').value == 'OTHER_RELIGION'">
+						<mat-form-field class="birth-certificate-col-md-4">
+							<input appValidationFields [validationFieldsType]="'onlyNameWithSpace'" matInput placeholder="{{'religion_other' | translate:translateKey}}"
+							 formControlName="religionOther" [required]="requiredFeild">
+							<control-messages [control]="deathCertificateForm.controls.religionOther">
+							</control-messages>
+						</mat-form-field>
 					</div>
 
 					<mat-form-field class="col-md-6">
@@ -156,32 +165,34 @@
 					<div class="col-md-6" formGroupName="gender">
 						<div class="radioBtnError">
 							<mat-label>{{'gender' | translate:translateKey}} {{requiredFeild?'*':''}}</mat-label>
-							<mat-radio-group formControlName="code">
+							<mat-radio-group formControlName="code" >
 								<mat-radio-button *ngFor="let gender of Gender" [value]="gender.code">
 									{{gender.name}}
 								</mat-radio-button>
 							</mat-radio-group>
 							<control-messages [control]="deathCertificateForm.controls.gender.controls.code"></control-messages>
 						</div>
-					</div>
+					</div> 
 
-					<div class="col-md-6 radioBtnError" formGroupName="femaleDeathReason">
-						<mat-label>{{'female_death_region' | translate:translateKey}} {{requiredFeild?'*':''}}</mat-label>
-						<mat-radio-group formControlName="code">
+					<div *ngIf="deathCertificateForm.controls.gender.controls.code.value == 'FEMALE'" class="col-md-6 radioBtnError" formGroupName="femaleDeathReason">
+						<mat-label>{{'female_death_region' | translate:translateKey}} {{requiredFeild ?'*':''}}</mat-label>
+						<!-- && deathCertificateForm.controls.gender.controls.code.value == 'FEMALE'-->
+						<mat-radio-group formControlName="code" >
 							<mat-radio-button *ngFor="let yesNo of ISYESNO" [value]="yesNo.code">
 								{{yesNo.name}}
 							</mat-radio-button>
 						</mat-radio-group>
 						<control-messages [control]="deathCertificateForm.controls.femaleDeathReason.controls.code"></control-messages>
 					</div>
-
 				</div>
 
-				<app-hos-action-bar [stepInfo]="{step: 'step1', next: 1, back: 0}" (tabIndex)="onTabChange($event)" [form]="deathCertificateForm"
+				<app-hos-action-bar [stepInfo]="{step: 'step1', next: 1, back: 0}" (saveEvent) = "isFormSaved = $event?.isSaved" (tabIndex)="onTabChange($event)" [form]="deathCertificateForm"
 				 (handleErrors)="handleErrorsOnSubmit($event)"></app-hos-action-bar>
 
 			</mat-tab>
+			<!-- Tab 1 Ends -->
 
+			<!-- Tab 2 Starts -->
 			<mat-tab>
 				<ng-template mat-tab-label>
 					<div>{{stepLabel2 | translate: translateKey}}</div>
@@ -190,7 +201,8 @@
 				<div class="row">
 
 					<div class="col-md-4 ngSelect" formGroupName="deathPlace">
-						<ng-select (change)="changeDeathPlace($event)" placeholder="{{'place_of_death' | translate:translateKey}} {{requiredFeild?'*':''}}" formControlName="code">
+						<ng-select (change)="config.changeHandler($event, 'OTHER_PLACE',deathCertificateForm, 'otherPlace')" placeholder="{{'place_of_death' | translate:translateKey}} {{requiredFeild?'*':''}}"
+						 formControlName="code">
 							<ng-option *ngFor="let deathplace of deathPlaces" [value]="deathplace.code">
 								{{deathplace.name}}
 							</ng-option>
@@ -199,11 +211,11 @@
 					</div>
 
 					<mat-form-field *ngIf="deathCertificateForm.get('deathPlace').get('code').value == 'OTHER_PLACE'" class="col-md-8">
-						<input maxlength="500" required matInput placeholder="{{'other_death_place' | translate:translateKey}}" formControlName="otherPlace">
+						<input maxlength="500" [required]="requiredFeild" matInput placeholder="{{'other_death_place' | translate:translateKey}}" formControlName="otherPlace">
 					</mat-form-field>
 
 					<div class="col-md-8 ngSelect" formGroupName="medicalTreatment">
-						<ng-select (change)="gujNameFinder($event,'medicalTreatment',MedicalTreatmentOptions)" placeholder="{{'medical_treatment' | translate:translateKey}} {{requiredFeild?'*':''}}"
+						<ng-select (change)="config.gujNameFinder($event,deathCertificateForm,'medicalTreatment',MedicalTreatmentOptions)" placeholder="{{'medical_treatment' | translate:translateKey}} {{requiredFeild?'*':''}}"
 						 formControlName="code">
 							<ng-option *ngFor="let mto of MedicalTreatmentOptions" [value]="mto.code">
 								{{mto.name}}
@@ -228,36 +240,42 @@
 							<mat-radio-button *ngFor="let prove of ISYESNO" [value]="prove.code">
 								{{prove.name}}
 							</mat-radio-button>
-							<control-messages [control]="deathCertificateForm.controls.medicalReason.controls.code"></control-messages>
 						</mat-radio-group>
+						<control-messages [control]="deathCertificateForm.controls.medicalReason.controls.code"></control-messages>
 					</div>
 
 
 					<mat-form-field class="col-md-12">
 						<label>{{'smoking_since' | translate:translateKey}}</label>
-						<input matInput OnlyNumber type="number" min="0" max="100" maxlength="2" maxlength="10" formControlName="smokingSince">
+						<input matInput OnlyNumber type="number" [min]="minAge" [max]="deceasedAge" maxlength="2" maxlength="10" formControlName="smokingSince">
+						<control-messages [control]="deathCertificateForm.controls.smokingSince"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-12">
 						<label>{{'tobacco_since' | translate:translateKey}}</label>
-						<input matInput OnlyNumber type="number" min="0" max="100" maxlength="2" maxlength="10" formControlName="tobaccoSince">
+						<input matInput OnlyNumber type="number" [min]="minAge" [max]="deceasedAge" maxlength="2" maxlength="10" formControlName="tobaccoSince">
+						<control-messages [control]="deathCertificateForm.controls.tobaccoSince"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-12">
 						<label>{{'sopari_panmasala_since' | translate:translateKey}}</label>
-						<input matInput OnlyNumber type="number" min="0" max="100" maxlength="2" maxlength="10" formControlName="sopariPanmasalaSince">
+						<input matInput OnlyNumber type="number" [min]="minAge" [max]="deceasedAge" maxlength="2" maxlength="10" formControlName="sopariPanmasalaSince">
+						<control-messages [control]="deathCertificateForm.controls.sopariPanmasalaSince"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-12">
 						<label>{{'alcohol_since' | translate:translateKey}}</label>
-						<input matInput OnlyNumber type="number" min="0" max="100" maxlength="2" maxlength="10" formControlName="alcoholSince">
+						<input matInput OnlyNumber type="number" [min]="minAge" [max]="deceasedAge" maxlength="2" maxlength="10" formControlName="alcoholSince">
+						<control-messages [control]="deathCertificateForm.controls.alcoholSince"></control-messages>
 					</mat-form-field>
 				</div>
 
-				<app-hos-action-bar [stepInfo]="{step: 'step2', next: 2, back: 0}" (tabIndex)="onTabChange($event)" [form]="deathCertificateForm"
+				<app-hos-action-bar [stepInfo]="{step: 'step2', next: 2, back: 0}" (saveEvent) = "isFormSaved = $event?.isSaved" (tabIndex)="onTabChange($event)" [form]="deathCertificateForm"
 				 [step]="'step2'" (handleErrors)="handleErrorsOnSubmit($event)"></app-hos-action-bar>
 			</mat-tab>
+			<!-- Tab 2 Ends -->
 
+			<!-- Tab 3 Starts -->
 			<mat-tab>
 				<ng-template mat-tab-label>
 					<div>{{stepLabel3 | translate: translateKey}}</div>
@@ -272,7 +290,8 @@
 
 				<div class="row" formGroupName="isPermanentPresentAddressSame">
 					<mat-checkbox style="margin-left:15px;" [disabled]="!deathCertificateForm.get('canEdit').value" (change)="check($event)"
-					 [checked]="deathCertificateForm.get('isPermanentPresentAddressSame').get('code').value == 'YES'? true : false">{{'is_permanent_address_same_as_present_address' | translate:translateKey}}</mat-checkbox>
+					 [checked]="deathCertificateForm.get('isPermanentPresentAddressSame').get('code').value == 'YES'? true : false">{{'is_permanent_address_same_as_present_address'
+						| translate:translateKey}}</mat-checkbox>
 				</div>
 
 				<div class="row">
@@ -282,10 +301,12 @@
 					<app-address [isDisplayGujFields]="true" #address [requiredFeilds]="requiredFeild" [addressFormGroup]="deathCertificateForm.controls.permanentAddress"></app-address>
 				</div>
 
-				<app-hos-action-bar [stepInfo]="{step: 'step3', next: 3, back: 1}" (tabIndex)="onTabChange($event)" [form]="deathCertificateForm"
+				<app-hos-action-bar [stepInfo]="{step: 'step3', next: 3, back: 1}" (saveEvent) = "isFormSaved = $event?.isSaved" (tabIndex)="onTabChange($event)" [form]="deathCertificateForm"
 				 [step]="'step3'" (handleErrors)="handleErrorsOnSubmit($event)"></app-hos-action-bar>
 			</mat-tab>
+			<!-- Tab 3 Ends -->
 
+			<!-- Tab 4 Starts -->
 			<mat-tab>
 				<ng-template mat-tab-label>
 					<div>{{stepLabel4 | translate: translateKey}}</div>
@@ -295,7 +316,8 @@
 					<app-basic-details [basicFormGroup]="deathCertificateForm"></app-basic-details>
 					<div class="row">
 						<div formGroupName="applicantRelation" class="col-md-6 ngSelect">
-							<ng-select (change) ="changeApplicantRelation($event)" placeholder="{{'applicant_relation' | translate:translateKey}} *" formControlName="code">
+							<ng-select (change)="config.changeHandler($event,'OTHER_RELATIONSHIP', deathCertificateForm, 'relationOther')" placeholder="{{'applicant_relation' | translate:translateKey}} *"
+							 formControlName="code">
 								<ng-option *ngFor="let app_rel of RelationShip" [value]="app_rel.code">
 									{{app_rel.name}}
 								</ng-option>
@@ -314,10 +336,12 @@
 					<app-address #address [isDisplayGujFields]="true" [requiredFeilds]="true" [addressFormGroup]="deathCertificateForm.controls.applicantAddress"></app-address>
 				</div>
 
-				<app-hos-action-bar [stepInfo]="{step: 'step4', next: 4, back: 2}" (tabIndex)="onTabChange($event)" [form]="deathCertificateForm"
+				<app-hos-action-bar [stepInfo]="{step: 'step4', next: 4, back: 2}" (saveEvent) = "isFormSaved = $event?.isSaved" (tabIndex)="onTabChange($event)" [form]="deathCertificateForm"
 				 [step]="'step4'" (handleErrors)="handleErrorsOnSubmit($event)"></app-hos-action-bar>
 			</mat-tab>
+			<!-- Tab 4 Ends -->
 
+			<!-- Tab 5 Starts -->
 			<mat-tab>
 				<ng-template mat-tab-label>
 					<div>{{stepLabel5 | translate: translateKey}}</div>
@@ -334,51 +358,64 @@
 
 
 					<div class="col-md-4" *ngIf="showButtons">
-						<label>{{'applicant_id_proof' | translate:translateKey}}{{!getFileObjectContained('1.1')?'': '*'}}</label>
+						<label>{{'applicant_id_proof' | translate:translateKey}}{{!config.getFileObjectContained(uploadFileArray, '1.1')?'':
+							'*'}}
+						</label>
 						<app-hos-file-upload [form]="deathCertificateForm" [uploadModel]="setDataValue(1.1,'Applicant Id Proof','1.1','applicantIdProof')"></app-hos-file-upload>
 					</div>
 
 					<div class="col-md-4" *ngIf="showButtons">
-						<label>{{'cremation_report' | translate:translateKey}}{{!getFileObjectContained('1.2')?'': '*'}}</label>
+						<label>{{'cremation_report' | translate:translateKey}}{{!config.getFileObjectContained(uploadFileArray, '1.2')?'':
+							'*'}}
+						</label>
 						<app-hos-file-upload [form]="deathCertificateForm" [uploadModel]="setDataValue(1.2,'Cremation Report','1.1','cremationReport')"></app-hos-file-upload>
 					</div>
 
 					<div class="col-md-4" *ngIf="showButtons">
-						<label>{{'form4A_death_provided_by_doctor' | translate:translateKey}}{{!getFileObjectContained('1.3')?'': '*'}}</label>
+						<label>{{'form4A_death_provided_by_doctor' | translate:translateKey}}{{!config.getFileObjectContained(uploadFileArray,
+							'1.3')?'': '*'}}</label>
 						<app-hos-file-upload [form]="deathCertificateForm" [uploadModel]="setDataValue(1.3,'Form 4A','1.1','form4A')"></app-hos-file-upload>
 					</div>
 
 					<div class="col-md-4" *ngIf="showButtons">
-						<label labelPosition="after">{{'deceased_id_proof' | translate:translateKey}}{{!getFileObjectContained('1.4')?'': '*'}}</label>
+						<label labelPosition="after">{{'deceased_id_proof' | translate:translateKey}}{{!config.getFileObjectContained(uploadFileArray,
+							'1.4')?'': '*'}}</label>
 						<app-hos-file-upload [form]="deathCertificateForm" [uploadModel]="setDataValue(1.4,'Deceased Id Proof','1.1','deceasedIdProof')"></app-hos-file-upload>
 					</div>
 
 					<div class="col-md-4" *ngIf="showButtons">
-						<label>{{'police_inquest' | translate:translateKey}}{{!getFileObjectContained('1.5')?'': '*'}}</label>
+						<label>{{'police_inquest' | translate:translateKey}}{{!config.getFileObjectContained(uploadFileArray,'1.5')?'': '*'}}</label>
 						<app-hos-file-upload [form]="deathCertificateForm" [uploadModel]="setDataValue(1.5,'Police Inquest','1.1','policeInquest')"></app-hos-file-upload>
 					</div>
 
 					<div class="col-md-4" *ngIf="showButtons">
-						<label labelPosition="after">{{'post_mortem_report' | translate:translateKey}}{{!getFileObjectContained('1.6')?'': '*'}}</label>
+						<label labelPosition="after">{{'post_mortem_report' | translate:translateKey}}{{!config.getFileObjectContained(uploadFileArray,'1.6')?'':
+							'*'}}
+						</label>
 						<app-hos-file-upload [form]="deathCertificateForm" [uploadModel]="setDataValue(1.6,'Post Mortem Report','1.1','pmreport')"></app-hos-file-upload>
 					</div>
 
 					<div class="col-md-4" *ngIf="showButtons && (getDelayPeriod() > 30 && getDelayPeriod() < 365)">
-						<label labelPosition="after">{{'affidavit_Or_health_Order' | translate:translateKey}}{{!getFileObjectContained('1.7')?'': '*'}}</label>
+						<label labelPosition="after">{{'affidavit_Or_health_Order' | translate:translateKey}}{{!config.getFileObjectContained(uploadFileArray,'1.7')?'':
+							'*'}}
+						</label>
 						<app-hos-file-upload [form]="deathCertificateForm" [uploadModel]="setDataValue(1.7,'Affidavit Or Health Order','1.1','affidavitOrhealthOrder')"></app-hos-file-upload>
 					</div>
 
 					<div class="col-md-4" *ngIf="showButtons && getDelayPeriod() > 365 ">
-						<label labelPosition="after">{{'court_Order' | translate:translateKey}}{{!getFileObjectContained('1.8')?'': '*'}}</label>
+						<label labelPosition="after">{{'court_Order' | translate:translateKey}}{{!config.getFileObjectContained(uploadFileArray,'1.8')?'':
+							'*'}}
+						</label>
 						<app-hos-file-upload [form]="deathCertificateForm" [uploadModel]="setDataValue(1.8,'Court Order','1.1','courtOrder')"></app-hos-file-upload>
 					</div>
 
 				</div>
 
-				<app-hos-action-bar [stepInfo]="{step: 'final', next: 5, back: 3}" (tabIndex)="onTabChange($event)" [uploadFiles]="uploadFileArray"
-				 [form]="deathCertificateForm" [step]="'final'" (stepReset)="stepReset()" (handleErrors)="handleErrorsOnSubmit($event)"></app-hos-action-bar>
+				<app-hos-action-bar [stepInfo]="{step: 'final', next: 5, back: 3}" (saveEvent) = "isFormSaved = $event?.isSaved"  (tabIndex)="onTabChange($event)" [uploadFiles]="uploadFileArray"
+				 [form]="deathCertificateForm" [step]="'final'" (handleErrors)="handleErrorsOnSubmit($event)"></app-hos-action-bar>
 
 			</mat-tab>
+			<!-- Tab 5 Ends -->
 		</mat-tab-group>
 	</form>
 </mat-card>

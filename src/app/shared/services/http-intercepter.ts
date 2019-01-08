@@ -107,8 +107,10 @@ export class TokenInterceptor implements HttpInterceptor {
 									// for professional Tax
 									if (typeof err.error === 'string')
 										this.commonService.openAlert('Error', JSON.parse(err.error)[0].message, 'error');
-									else
+									else if(err.error)
 										this.commonService.openAlert('Error', err.error[0].message, 'error');
+									else
+										this.commonService.openAlert('Error', "Internal Server Error" , 'error');
 									break;
 								case 601:// form save as draft error handling
 									this.commonService.openAlertFormSaveValidation('Warning!', err.error, 'warning');
