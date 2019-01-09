@@ -775,7 +775,7 @@ export class FinalHospitalNocComponent implements OnInit {
 		let returnArray = this.finalHospitalNocForm.get('hospitalOTDetails') as FormArray;
 		if (returnArray.length >= 15) {
 			this.commonService.openAlert("Warning", "Maximum Limit " + 15 + " .", "warning");
-		} else {
+		} else if (this.finalHospitalNocForm.get('canEdit').value) {
 			const dialogConfig = new MatDialogConfig();
 
 			dialogConfig.disableClose = true;
@@ -794,12 +794,15 @@ export class FinalHospitalNocComponent implements OnInit {
 				}
 			);
 		}
+		else {
+			this.commonService.openAlert("Warning", "OT Detail is already added", "warning");
+		}
 	}
-     /**
-      * This methos for edit OT data
-      * @param arrayId : OT index
-      * @param otdata : object data
-      */
+	/**
+	 * This methos for edit OT data
+	 * @param arrayId : OT index
+	 * @param otdata : object data
+	 */
 	editOT(arrayId: any, otdata: any) {
 		let id = otdata.controls.id.value;
 		let otFacilities = otdata.controls.otFacilities.value;
