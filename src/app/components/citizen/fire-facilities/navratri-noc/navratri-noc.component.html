@@ -58,7 +58,7 @@
 				<div class="row">
 					<div class="col-md-4 radioBtnError">
 						<mat-label>{{'application_through_police' | translate:translateKey }} *</mat-label>
-						<mat-radio-group formControlName="applicationThroughPolice" required (change)="dependentAttachment($event.value,' POLICE_COMMISSIONER_LETTER_NO')">
+						<mat-radio-group formControlName="applicationThroughPolice" required (change)="changeApplicationThroughPolice($event.value,true);dependentAttachment($event.value,'POLICE_COMMISSIONER_LETTER_NO')">
 							<mat-radio-button [value]="true">
 								{{'yes_txt' | translate:translateKey }}
 							</mat-radio-button>
@@ -69,20 +69,22 @@
 						<control-messages [control]="navaratriNocForm.controls.applicationThroughPolice"></control-messages>
 					</div>
 
-					<mat-form-field class="col-md-4">
+					<mat-form-field class="col-md-4" *ngIf="navaratriNocForm.get('applicationThroughPolice').value">
 						<input matInput type="text" appAlphaNumeric formControlName="policeCommisionerLetterNo" placeholder="{{'police_commisioner_letter_no' | translate: translateKey }} *"
 						 maxlength="20">
 						<control-messages [control]="navaratriNocForm.controls.policeCommisionerLetterNo"></control-messages>
 					</mat-form-field>
 
-					<mat-form-field class="col-md-4">
+					<mat-form-field class="col-md-4" *ngIf="navaratriNocForm.get('applicationThroughPolice').value">
 						<input matInput [matDatepicker]="picker3" formControlName="policeCommisionerLetterDate" placeholder="{{'police_commisioner_letter_date' | translate:translateKey }} (DD/MM/YYYY)"
 						 required (dateChange)="dateFormate($event.value,'policeCommisionerLetterDate')">
 						<mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
 						<mat-datepicker #picker3 touchUi="true"></mat-datepicker>
 						<control-messages [control]="navaratriNocForm.controls.policeCommisionerLetterDate"></control-messages>
 					</mat-form-field>
+				</div>
 
+				<div class="row">
 					<mat-form-field class="col-md-6">
 						<input matInput appValidationFields [validationFieldsType]="'onlyNameWithSpace'" required maxlength="100"
 						 placeholder="{{'organize_name' | translate:translateKey}}" formControlName="organizeName" appGujInputSource
@@ -176,10 +178,9 @@
 
 				</div>
 				<div class="row">
-
-					<div class="col-md-12 radioBtnError">
+					<div class="col-md-4 radioBtnError">
 						<mat-label>{{'land_owner_is_vmc' | translate:translateKey }} *</mat-label>
-						<mat-radio-group formControlName="landOwnerIsVMC" required (change)="onChange('landOwnerIsVMC','vmcfeeReceiptNo');onChange('landOwnerIsVMC','vmcConsentLetterIncluded');onChange('landOwnerIsVMC','consentLetterDate');onChange('landOwnerIsVMC','landOwnerConsentIncluded');">
+						<mat-radio-group formControlName="landOwnerIsVMC" required (change)="changeLandOwnerIsVMC($event.value,true)">
 							<mat-radio-button [value]="true">
 								{{'yes_txt' | translate:translateKey }}
 							</mat-radio-button>
@@ -190,38 +191,18 @@
 						<control-messages [control]="navaratriNocForm.controls.landOwnerIsVMC"></control-messages>
 					</div>
 
-					<!-- below 4 fields is depend on land_owner_is_vmc field value -->
-
-					<mat-form-field class="col-md-4" *ngIf="navaratriNocForm.controls.landOwnerIsVMC.value">
-						<input matInput type="text" appAlphaNumeric formControlName="vmcfeeReceiptNo" placeholder="{{'vmc_fee_receipt_no' | translate: translateKey }} *"
+					<mat-form-field class="col-md-8" *ngIf="navaratriNocForm.get('landOwnerIsVMC').value">
+						<input matInput type="text" appAlphaNumeric formControlName="vmcFeeReceiptNo" placeholder="{{'vmc_fee_receipt_no' | translate: translateKey }} *"
 						 maxlength="15">
-						<control-messages [control]="navaratriNocForm.controls.vmcfeeReceiptNo"></control-messages>
+						<control-messages [control]="navaratriNocForm.controls.vmcFeeReceiptNo"></control-messages>
 					</mat-form-field>
-					<div class="col-md-4 radioBtnError" *ngIf="navaratriNocForm.controls.landOwnerIsVMC.value">
-						<mat-label>{{'vmc_consent_letter_included' | translate:translateKey }} *</mat-label>
-						<mat-radio-group formControlName="vmcConsentLetterIncluded" (change)="dependentAttachment($event.value,'CONSENT_LETTER')">
-							<mat-radio-button [value]="true">
-								{{'yes_txt' | translate:translateKey }}
-							</mat-radio-button>
-							<mat-radio-button [value]="false">
-								{{'no_txt' | translate:translateKey }}
-							</mat-radio-button>
-						</mat-radio-group>
-						<control-messages [control]="navaratriNocForm.controls.vmcConsentLetterIncluded"></control-messages>
-					</div>
-					<mat-form-field class="col-md-4" *ngIf="navaratriNocForm.controls.landOwnerIsVMC.value">
-						<input matInput [matDatepicker]="picker4" formControlName="consentLetterDate" placeholder="{{'consent_letter_date' | translate:translateKey }} (DD/MM/YYYY) *"
-						 (dateChange)="dateFormate($event.value,'consentLetterDate')">
-						<mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
-						<mat-datepicker #picker4 touchUi="true"></mat-datepicker>
-						<control-messages [control]="navaratriNocForm.controls.consentLetterDate"></control-messages>
-					</mat-form-field>
+
 				</div>
 
 				<div class="row">
-					<div class="col-md-4 radioBtnError" *ngIf="!navaratriNocForm.controls.landOwnerIsVMC.value">
+					<div class="col-md-4 radioBtnError" >
 						<mat-label>{{'land_owner_consent_included' | translate:translateKey }} *</mat-label>
-						<mat-radio-group formControlName="landOwnerConsentIncluded" (change)="onChange('landOwnerIsVMC','landOwnerConsentIncluded');">
+						<mat-radio-group formControlName="landOwnerConsentIncluded" required (change)="changeLandOwnerConsentIncluded($event.value,true);dependentAttachment($event.value,'CONSENT_LETTER')">
 							<mat-radio-button [value]="true">
 								{{'yes_txt' | translate:translateKey }}
 							</mat-radio-button>
@@ -231,10 +212,19 @@
 						</mat-radio-group>
 						<control-messages [control]="navaratriNocForm.controls.landOwnerConsentIncluded"></control-messages>
 					</div>
+					<mat-form-field class="col-md-4" *ngIf="navaratriNocForm.controls.landOwnerConsentIncluded.value">
+						<input matInput [matDatepicker]="picker4" formControlName="consentLetterDate" placeholder="{{'consent_letter_date' | translate:translateKey }} (DD/MM/YYYY) *"
+						required (dateChange)="dateFormate($event.value,'consentLetterDate')">
+						<mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
+						<mat-datepicker #picker4 touchUi="true"></mat-datepicker>
+						<control-messages [control]="navaratriNocForm.controls.consentLetterDate"></control-messages>
+					</mat-form-field>
 				</div>
+
+				
 				<div class="row">
-					<mat-form-field class="col-md-6">
-						<textarea matInput rows="1" cols="100" required maxlength="150" placeholder="{{'hazardous_performance_detail' | translate:translateKey}}"
+					<mat-form-field class="col-md-12">
+						<textarea matInput rows="3" cols="50" required maxlength="150" placeholder="{{'hazardous_performance_detail' | translate:translateKey}}"
 						 formControlName="hazardousPerformanceDetail"></textarea>
 						<control-messages [control]="navaratriNocForm.controls.hazardousPerformanceDetail"></control-messages>
 					</mat-form-field>
@@ -252,66 +242,66 @@
 				</ng-template>
 				<div class="row">
 
-					<mat-form-field class="col-md-3">
+					<mat-form-field class="col-md-4">
 						<input matInput required OnlyNumber maxlength="5" type="tel" formControlName="noOfGatheringPersons" placeholder="{{'no_of_gathering_persons' | translate:translateKey }}">
 						<control-messages [control]="navaratriNocForm.controls.noOfGatheringPersons"></control-messages>
 					</mat-form-field>
 
-					<mat-form-field class="col-md-3">
+					<mat-form-field class="col-md-4">
 						<input matInput required OnlyNumber type="tel" formControlName="eventArea" placeholder="{{'event_area' | translate: translateKey }} "
 						 maxlength="5">
 						<control-messages [control]="navaratriNocForm.controls.eventArea"></control-messages>
 					</mat-form-field>
 
-					<mat-form-field class="col-md-3">
+					<mat-form-field class="col-md-4">
 						<input matInput required OnlyNumber type="tel" formControlName="sittingArea" placeholder="{{'sitting_area' | translate: translateKey }} "
 						 maxlength="5">
 						<control-messages [control]="navaratriNocForm.controls.sittingArea"></control-messages>
 					</mat-form-field>
 
-					<mat-form-field class="col-md-3">
+					<mat-form-field class="col-md-4">
 						<input matInput required OnlyNumber type="tel" formControlName="stageArea" placeholder="{{'stage_area' | translate: translateKey }} "
 						 maxlength="5">
 						<control-messages [control]="navaratriNocForm.controls.stageArea"></control-messages>
 					</mat-form-field>
 
-					<mat-form-field class="col-md-3">
+					<mat-form-field class="col-md-4">
 						<input matInput required OnlyNumber type="tel" formControlName="performanceArea" placeholder="{{'performance_area' | translate: translateKey }} "
 						 maxlength="5">
 						<control-messages [control]="navaratriNocForm.controls.performanceArea"></control-messages>
 					</mat-form-field>
 
-					<mat-form-field class="col-md-3">
+					<mat-form-field class="col-md-4">
 						<input matInput required OnlyNumber type="tel" formControlName="totalArea" placeholder="{{'total_area' | translate: translateKey }}"
 						 maxlength="5">
 						<control-messages [control]="navaratriNocForm.controls.totalArea"></control-messages>
 					</mat-form-field>
 
-					<mat-form-field class="col-md-3">
+					<mat-form-field class="col-md-4">
 						<input matInput required OnlyNumber type="tel" formControlName="shamiyanaLength" placeholder="{{'shamiyana_length' | translate: translateKey }} "
 						 maxlength="5">
 						<control-messages [control]="navaratriNocForm.controls.shamiyanaLength"></control-messages>
 					</mat-form-field>
 
-					<mat-form-field class="col-md-3">
+					<mat-form-field class="col-md-4">
 						<input matInput required OnlyNumber type="tel" formControlName="shamiyanaWidth" placeholder="{{'shamiyana_width' | translate: translateKey }} "
 						 maxlength="5">
 						<control-messages [control]="navaratriNocForm.controls.shamiyanaWidth"></control-messages>
 					</mat-form-field>
 
-					<mat-form-field class="col-md-3">
+					<mat-form-field class="col-md-4">
 						<input matInput required OnlyNumber type="tel" formControlName="archGateHeight" placeholder="{{'arch_gate_height' | translate: translateKey }} "
 						 maxlength="5">
 						<control-messages [control]="navaratriNocForm.controls.archGateHeight"></control-messages>
 					</mat-form-field>
 
-					<mat-form-field class="col-md-3">
+					<mat-form-field class="col-md-4">
 						<input matInput required OnlyNumber type="tel" formControlName="archGateWidth" placeholder="{{'arch_gate_width' | translate: translateKey }} "
 						 maxlength="5">
 						<control-messages [control]="navaratriNocForm.controls.archGateWidth"></control-messages>
 					</mat-form-field>
 
-					<mat-form-field class="col-md-3">
+					<mat-form-field class="col-md-4">
 						<input matInput required OnlyNumber maxlength="2" type="tel" formControlName="noOfExits" placeholder="{{'no_of_eExits' | translate:translateKey }}">
 						<control-messages [control]="navaratriNocForm.controls.noOfExits"></control-messages>
 					</mat-form-field>
@@ -358,7 +348,6 @@
 					<div class="col-md-4 radioBtnError">
 						<mat-label>{{'trained_fireman_staff_kept' | translate:translateKey }} *</mat-label>
 						<mat-radio-group formControlName="trainedFiremanStaffKept" required>
-							<!-- (change)="dependentAttachment($event.value,'TRAIN_FIRE_PERSON_LIST')" -->
 							<mat-radio-button [value]="true">
 								{{'yes_txt' | translate:translateKey }}
 							</mat-radio-button>
@@ -384,7 +373,7 @@
 
 					<div class="col-md-4 radioBtnError">
 						<mat-label>{{'weather_exit_shown_in_map' | translate:translateKey }} *</mat-label>
-						<mat-radio-group formControlName="weatherExitShownInMap" required (change)="dependentAttachment($event.value,'LOCATION_MAP')">
+						<mat-radio-group formControlName="weatherExitShownInMap" required>
 							<mat-radio-button [value]="true">
 								{{'yes_txt' | translate:translateKey }}
 							</mat-radio-button>
