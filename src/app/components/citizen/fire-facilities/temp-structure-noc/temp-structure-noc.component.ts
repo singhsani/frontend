@@ -134,20 +134,6 @@ export class TempStructureNocComponent implements OnInit {
 	}
 
 	/**
-	 * This method for set validation on form control
-	 * @param formControl - control name
-	 */
-	onChange(controlName: string, formControl: string) {
-		this.tempStructureNocForm.get(formControl).reset();
-		if (controlName) {
-			this.tempStructureNocForm.get(formControl).setValidators([Validators.required]);
-		}
-		else {
-			this.tempStructureNocForm.get(formControl).clearValidators();
-		}
-	}
-
-	/**
 	 * Method is used to get form data
 	 */
 	gettempStructureNocNewData() {

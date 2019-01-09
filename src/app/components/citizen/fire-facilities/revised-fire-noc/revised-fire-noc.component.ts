@@ -356,7 +356,7 @@ export class RevisedFireNOCComponent implements OnInit {
 			overgroundWatertankMapApproved: [null, Validators.required],
 
 
-			
+
 			/* Step 6 controls start*/
 			attachments: []
 			/* Step 6 controls end */
@@ -391,12 +391,12 @@ export class RevisedFireNOCComponent implements OnInit {
      * @param flag - flag of invalid control.
      */
 	handleErrorsOnSubmit(flag) {
-
 		let step0 = 13;
-		let step1 = 18;
+		let step1 = 19;
 		let step2 = 34;
 		let step3 = 62;
-		let step4 = 75;
+		let step4 = 76;
+		
 
 		if (flag != null) {
 			//Check validation for step by step
@@ -452,10 +452,12 @@ export class RevisedFireNOCComponent implements OnInit {
 			_.forEach(event, (value) => {
 				if (value.code == 'OTHER') {
 					this.codeOther = true;
+					// this.revisedFireNocForm.get('otherPurposeRemark').setValidators([Validators.required])
 				}
 			});
 			if (!this.codeOther) {
 				this.revisedFireNocForm.get('otherPurposeRemark').reset();
+				// this.revisedFireNocForm.get('otherPurposeRemark').clearValidators();
 			}
 		} catch (e) {
 

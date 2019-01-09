@@ -150,10 +150,15 @@ export class FireRenewalNocComponent implements OnInit {
 				this.renewalFireNocForm.patchValue(res);
 				this.showButtons = true;
 
+				this.renewalFireNocForm.disable();
+				this.renewalFireNocForm.get('apiType').enable();
+				
 				res.serviceDetail.serviceUploadDocuments.forEach(app => {
 					(<FormArray>this.renewalFireNocForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.createDocumentsGrp(app));
 				});
 				this.requiredDocumentList();
+
+				
 
 			} catch (error) {
 				console.log(error.message)

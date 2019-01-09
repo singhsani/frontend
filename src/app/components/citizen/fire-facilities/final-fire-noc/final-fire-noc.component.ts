@@ -392,7 +392,7 @@ export class FinalFireNocComponent implements OnInit {
 
 		let step0 = 14;
 		let step1 = 19;
-		let step2 = 34;
+		let step2 = 35;
 		let step3 = 63;
 		let step4 = 77;
 
@@ -454,12 +454,14 @@ export class FinalFireNocComponent implements OnInit {
 			_.forEach(event, (value) => {
 				if (value.code == 'OTHER') {
 					this.codeOther = true;
+					// this.finalFireNocForm.get('otherPurposeRemark').setValidators([Validators.required])
 				}
 			});
 			if (!this.codeOther) {
 				this.finalFireNocForm.get('otherPurposeRemark').reset();
+				// this.finalFireNocForm.get('otherPurposeRemark').clearValidators();
 			}
-		} catch (e) {
+		}catch (e) {
 
 		}
 	}

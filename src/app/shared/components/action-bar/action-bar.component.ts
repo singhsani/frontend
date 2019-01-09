@@ -203,6 +203,7 @@ export class ActionBarComponent implements OnInit, OnChanges {
 					let count = 1;
 					for (const key in this.form.controls) {
 						if (this.form.get(key).invalid) {
+							console.log(key +" and "+ count);
 							if (this.form.get('apiType').value == 'marriageReg') {
 								let groomreligionChange = this.form.controls.groomReligion.get("code").value;
 								let bridereligionChange = this.form.controls.brideReligion.get("code").value;

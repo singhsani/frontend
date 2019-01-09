@@ -196,11 +196,11 @@ export class ProvisionalNocComponent implements OnInit {
 			otherPurposeRemark: [null, [Validators.maxLength(200)]],
 
 			/* Step 3 controls start */ 
+			architectRegistrationNumber: [null, [Validators.required, Validators.maxLength(15)]],
 			architectName: [null, [Validators.required, Validators.maxLength(100)]],
 			architectNameGuj: [null, [Validators.required, Validators.maxLength(300)]],
 			architectFirmName: [null, [Validators.required, Validators.maxLength(50)]],
 			architectFirmNameGuj: [null, [Validators.required, Validators.maxLength(150)]],
-			architectRegistrationNumber: [null, [Validators.required, Validators.maxLength(15)]],
 			architectPermanentAddress: [null, [Validators.required, Validators.maxLength(300)]],
 			architectPermanentAddressGuj: [null, [Validators.required, Validators.maxLength(900)]],
 
@@ -301,7 +301,7 @@ export class ProvisionalNocComponent implements OnInit {
 
 		let step0 = 13;
 		let step1 = 18;
-		let step2 = 33;
+		let step2 = 34;
 		let step3 = 62;
 		let step4 = 76;
 
@@ -363,10 +363,12 @@ export class ProvisionalNocComponent implements OnInit {
 			_.forEach(event, (value) => {
 				if (value.code == 'OTHER') {
 					this.codeOther = true;
+					// this.provisionalNocForm.get('otherPurposeRemark').setValidators([Validators.required])
 				}
 			});
 			if (!this.codeOther) {
 				this.provisionalNocForm.get('otherPurposeRemark').reset();
+				// this.provisionalNocForm.get('otherPurposeRemark').clearValidators();
 			}
 		} catch (e) {
 
