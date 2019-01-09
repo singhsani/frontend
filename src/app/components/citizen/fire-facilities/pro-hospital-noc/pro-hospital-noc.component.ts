@@ -226,141 +226,142 @@ export class ProHospitalNocComponent implements OnInit {
 		"aadhaarNo": null,
 		"agree": false,
 		"paymentStatus": null,
+
 		"serviceCode": "FS-PROVI-HOSPITAL",
 		"fieldView": "ALL",
 		"fieldList": null,
-		"applicantName": null,
-		"applicantNameGuj": null,
+		"applicantName": "bhumika barad",
+		"applicantNameGuj": "ભુમિક બરદ",
 		"hospitalNOCServiceType": "PROVISIONAL_HOSPITAL_NOC",
-		"provisionalNocNumber": null,
-		"applicationDate": "2018-12-20",
+		"provisionalNocNumber": "FIR/PNOC/000000003",
+		"applicationDate": "2019-01-08",
 		"oldReferenceNumber": null,
-		"officeContactNo": "8467487658",
-		"onsitePersonMobileNo": "7875897438",
+		"officeContactNo": "344334433443",
+		"onsitePersonMobileNo": "3434433443",
 		"workOfficeEmailId": "barad@gmail.com",
-		"doctorName": "ncbvhjg",
-		"doctorNameGuj": "નબ્વ્હ્જ્ગ",
-		"medicalRegistrationNumber": "4789548789",
-		"hospitalName": "bv hdhq",
-		"hospitalNameGuj": "બ્વ હ્ધ",
-		"hospitalAddress": "bchjbfj\nnvjkf\nvnjfkbh",
-		"hospitalAddressGuj": "બ્ચ્જ્બ્ફ્જ\nન્વ્જ્ક્ફ\nવ્ન્જ્ફ્ક્ભ",
-		"ownerName": "gfyhghj",
-		"ownerNameGuj": "દ્ગ્ફ્દ્સ્ગ્ર",
-		"ownerAddress": "fgfdfbhfdhdfh",
-		"ownerAddressGuj": "ફ્દ્ર્ગ્ત્ર",
-		"ownerMobileNo": "7584546578",
-		"fpNo": "344",
-		"rsNo": "3434",
-		"tikaNo": "3432434",
-		"buildingLocation": "434",
-		"tpNo": "23",
-		"blockNo": "",
-		"opNo": "343",
-		"citySurveyNo": "524154",
-		"hospitalType": "dfdsf",
-		"numberOfBed": 23,
+		"doctorName": "dff",
+		"doctorNameGuj": "દ્ફ્ફ",
+		"medicalRegistrationNumber": "5565656",
+		"hospitalName": "dgf",
+		"hospitalNameGuj": "દ્ગ્ફ",
+		"hospitalAddress": "fef\ndfef\ndfdf",
+		"hospitalAddressGuj": "ફેફ\nદ્ફેફ\nદ્ફ્દ્ફ",
+		"ownerName": "gvsg fghs",
+		"ownerNameGuj": "ગ્વ્સ્ગ ફ્ઘ્સ",
+		"ownerAddress": "dfdsg\nfdgfsdg\ndfdf",
+		"ownerAddressGuj": "દ્ફ્દ્સ્ગ\nફ્દ્ગ્ફ્સ્દ્ગ\nદ્ફ્દ્ફ",
+		"ownerMobileNo": "6454564656",
+		"fpNo": "544444",
+		"rsNo": "gfggf",
+		"tikaNo": "dfgds",
+		"buildingLocation": "dgfd",
+		"tpNo": "fgf",
+		"blockNo": "fgf",
+		"opNo": "fgd",
+		"citySurveyNo": "fgf",
+		"hospitalType": "fdgfdg",
+		"numberOfBed": 4,
 		"numberOfOT": 2,
 		"hospitalOTDetails": [
 			{
-				"id": 1,
+				"id": 5,
 				"uniqueId": null,
 				"version": null,
-				"otFacilities": "vcb ",
-				"areaInSquareMeterLength": 43,
-				"areaInSquareMeterBreadth": 43,
-				"areaInSquareMeter": 43
+				"otFacilities": "dfgj efu",
+				"areaInSquareMeterLength": 9,
+				"areaInSquareMeterBreadth": 9,
+				"areaInSquareMeter": 9
 			},
 			{
-				"id": 2,
+				"id": 6,
 				"uniqueId": null,
 				"version": null,
-				"otFacilities": "fdvd",
-				"areaInSquareMeterLength": 53,
-				"areaInSquareMeterBreadth": 53,
-				"areaInSquareMeter": 53
+				"otFacilities": "dfd",
+				"areaInSquareMeterLength": 23,
+				"areaInSquareMeterBreadth": 23,
+				"areaInSquareMeter": 23
 			}
 		],
-		"exerciseSection": 32,
+		"exerciseSection": 23,
 		"drawingWithScale": false,
-		"xraySection": 23,
-		"laboratoryDepartment": "23",
-		"otherInvestigation": "23",
-		"storeDetails": "23",
-		"kitchenDetails": "23",
-		"buildingHeight": 23,
-		"floorArea": 23,
-		"gateDetailing": "23",
-		"rampLiftStairDetails": "23",
-		"liftDetails": "32",
-		"noOfBasement": 32,
-		"lowerBasement": 32,
-		"upperBasement": 233,
-		"totalBuildingFloor": 32,
-		"basementArea": 32,
-		"multipleTowers": true,
-		"noOfTowers": 32,
-		"noOfVentilation": 23,
+		"xraySection": 32,
+		"laboratoryDepartment": "32",
+		"otherInvestigation": "323",
+		"storeDetails": "32",
+		"kitchenDetails": "32",
+		"buildingHeight": 233,
+		"floorArea": 43,
+		"gateDetailing": "43",
+		"rampLiftStairDetails": "4",
+		"liftDetails": "34",
+		"noOfBasement": 34,
+		"lowerBasement": 43,
+		"upperBasement": 34,
+		"totalBuildingFloor": 34,
+		"basementArea": 34,
+		"multipleTowers": false,
+		"noOfTowers": 4,
+		"noOfVentilation": 34,
 		"ventilationProvision": false,
-		"plotArea": 23,
-		"constructedArea": 32,
-		"noOfApproachedRoad": 35,
-		"drawingProvided": true,
-		"architectName": "fdghfdh",
-		"architectNameGuj": "ફ્દ્ઘ્ફ્ધ",
-		"architectFirmName": "fhgf",
-		"architectFirmNameGuj": "ફ્હ્ગ્ફ",
-		"architectRegistrationNumber": "fgfdhdh",
-		"architectFirmNumber": "fhgfdh",
-		"architectContactNo": "5657678687",
-		"noOfHospitalStaff": 6546,
-		"noOfSecurityStaff": 6554,
+		"plotArea": 34,
+		"constructedArea": 34,
+		"noOfApproachedRoad": 34,
+		"drawingProvided": false,
+		"architectName": "hfg",
+		"architectNameGuj": "હ્ફ્ગ",
+		"architectFirmName": "bdrhfg",
+		"architectFirmNameGuj": "બ્દ્ર્હ્ફ્ગ",
+		"architectRegistrationNumber": "6767",
+		"architectFirmNumber": "787897878",
+		"architectContactNo": "8787878787",
+		"noOfHospitalStaff": 32,
+		"noOfSecurityStaff": 32,
 		"otherRisks": [
-			"Oxygen"
+			"LPG"
 		],
 		"otherRiskDetail": null,
-		"gasCylinderNOCDetail": "૫૬૬",
+		"gasCylinderNOCDetail": "32",
 		"anyStoreProvision": false,
 		"stairCase": {
-			"code": "EXTERNAL",
-			"name": "External",
-			"gujName": "બાહ્ય"
+			"code": "INTERNAL",
+			"name": "Internal",
+			"gujName": "આંતરિક"
 		},
-		"trainedFiremanStaffKept": true,
-		"exitGateDetail": "edrfet",
+		"trainedFiremanStaffKept": false,
+		"exitGateDetail": "test",
 		"otherBusinessDetail": {
-			"code": "KITCHEN",
-			"name": "Kitchen",
-			"gujName": "કિચન"
+			"code": "MEDICAL_STORE",
+			"name": "Medical Store",
+			"gujName": "તબીબી દુકાન"
 		},
-		"riskSegregation": "drtfgrtgf",
+		"riskSegregation": "dfg",
 		"anyEvacuationPlan": false,
 		"evacuationDrillPerformed": false,
 		"firefightingSystemAvailability": false,
-		"yardHydrant": "ftrggg",
+		"yardHydrant": "dg",
 		"raiserAvailability": false,
-		"noOfRaiser": 54,
+		"noOfRaiser": 43,
 		"smokeDetector": false,
-		"sprinkler": "45",
+		"sprinkler": "gffg",
 		"fireAlarmAttachedWith": {
 			"code": "SPRINKLER",
 			"name": "Sprinkler",
 			"gujName": "છંટકાવ કરનાર"
 		},
-		"autoExhaustSystem": "",
-		"electricalSafety": "bhgfh",
-		"evacuationSignBoard": "gfhgfh",
-		"refugeArea": "gfhf",
-		"travelDistance": 5353,
-		"overHeadWaterTankCapacity": 45,
-		"undergroundWaterTankCapacity": 54,
-		"alarmSystemTimeLimit": 454,
-		"highestFloodLevel": 4554,
-		"riskAnalysisSurveyDetail": "54",
-		"parkingDetail": "4554",
-		"nabhOwnership": "4554",
-		"lastThreeYearFireIncidents": "4545",
-		"servingSince": "45t454654",
+		"autoExhaustSystem": "fgfg",
+		"electricalSafety": "gfg",
+		"evacuationSignBoard": "gfg",
+		"refugeArea": "fgf",
+		"travelDistance": 65,
+		"overHeadWaterTankCapacity": 656,
+		"undergroundWaterTankCapacity": 75,
+		"alarmSystemTimeLimit": 57,
+		"highestFloodLevel": 57,
+		"riskAnalysisSurveyDetail": "57",
+		"parkingDetail": "57",
+		"nabhOwnership": "57",
+		"lastThreeYearFireIncidents": "57",
+		"servingSince": "57",
 		"attachments": []
 	}
 	// **********
@@ -651,21 +652,6 @@ export class ProHospitalNocComponent implements OnInit {
 		});
 	}
 
-
-	/**
-   * Method is used to add more child in array.
-   * @param length - number of row
-   */
-	// addOTDetail(length: number, data: any) {
-
-	// 	let returnArray = this.provisionalHospitalNocForm.get('hospitalOTDetails') as FormArray;
-	// 	if (returnArray.length >= length) {
-	// 		this.commonService.openAlert("Warning", "Maximum Limit " + length + " .", "warning");
-	// 	} else {
-	// 		returnArray.push(this.createOTDetailArray(returnArray));
-	// 	}
-	// }
-
 	/**
 	 * Method is used to return array
 	 * @param data : person data array 
@@ -688,7 +674,8 @@ export class ProHospitalNocComponent implements OnInit {
 		let returnArray = this.provisionalHospitalNocForm.get('hospitalOTDetails') as FormArray;
 		if (returnArray.length >= 15) {
 			this.commonService.openAlert("Warning", "Maximum Limit " + 15 + " .", "warning");
-		} else {
+		} else if (this.provisionalHospitalNocForm.get('canEdit').value) 
+		{
 			const dialogConfig = new MatDialogConfig();
 
 			dialogConfig.disableClose = true;
@@ -707,12 +694,15 @@ export class ProHospitalNocComponent implements OnInit {
 				}
 			);
 		}
+		else{
+			this.commonService.openAlert("Warning", "OT Detail is already added", "warning");
+		}
 	}
-     /**
-      * This methos for edit OT data
-      * @param arrayId : OT index
-      * @param otdata : object data
-      */
+	/**
+	 * This methos for edit OT data
+	 * @param arrayId : OT index
+	 * @param otdata : object data
+	 */
 	editOT(arrayId: any, otdata: any) {
 		let id = otdata.controls.id.value;
 		let otFacilities = otdata.controls.otFacilities.value;

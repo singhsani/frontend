@@ -240,7 +240,7 @@
 						<h2>{{'o_t_details' | translate: translateKey }}</h2>
 					</div>
 					<div class="col-md-2 pt-2" style="text-align: right;">
-						<button (click)="openDialog()" type="button" mat-raised-button color="primary" data-toggle="modal">
+						<button [disabled]="!provisionalHospitalNocForm.get('canEdit').value" (click)="openDialog()" type="button" mat-raised-button color="primary" data-toggle="modal">
 							{{'add_ot_detail' | translate:translateKey}}
 						</button>
 					</div>
@@ -259,8 +259,8 @@
 										<th scope="col">{{'area_in_square_meter_length'| translate: translateKey}}</th>
 										<th scope="col">{{'area_in_square_meter_breadth'| translate: translateKey}}</th>
 										<th scope="col">{{'area_in_square_meter'| translate: translateKey}}</th>
-										<th scope="col">{{'action'| translate: translateKey}}</th>
-										<th scope="col">{{'action'| translate: translateKey}}</th>
+										<th scope="col" *ngIf="provisionalHospitalNocForm.get('canEdit').value">{{'action'| translate: translateKey}}</th>
+										<th scope="col" *ngIf="provisionalHospitalNocForm.get('canEdit').value">{{'action'| translate: translateKey}}</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -271,12 +271,12 @@
 										<td>{{item.controls.areaInSquareMeterLength.value}}</td>
 										<td>{{item.controls.areaInSquareMeterBreadth.value}}</td>
 										<td>{{item.controls.areaInSquareMeter.value}}</td>
-										<td>
-											<button type="button" mat-icon-button (click)="editOT(i,item)">
+										<td *ngIf="provisionalHospitalNocForm.get('canEdit').value">
+											<button type="button" mat-icon-button  (click)="editOT(i,item)">
 												<mat-icon matTooltip="Edit" class="m-1" color="primary">edit</mat-icon>
 											</button>
 										</td>
-										<td>
+										<td *ngIf="provisionalHospitalNocForm.get('canEdit').value">
 											<button type="button" mat-icon-button (click)="deleteOT(item.value, i)" class="m-1">
 												<mat-icon matTooltip="Delete" color="warn">delete</mat-icon>
 											</button>
