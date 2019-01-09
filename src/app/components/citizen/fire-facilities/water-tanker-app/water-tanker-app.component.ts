@@ -141,6 +141,7 @@ export class WaterTankerAppComponent implements OnInit {
 	 * Method is create required document array
 	 */
 	requiredDocumentList() {
+		this.uploadFilesArray = [];
 		_.forEach(this.waterTankerAppForm.get('serviceDetail').get('serviceUploadDocuments').value, (value) => {
 			if (value.mandatory && value.isActive && value.requiredOnCitizenPortal) {
 				this.uploadFilesArray.push({
@@ -257,7 +258,6 @@ export class WaterTankerAppComponent implements OnInit {
 	handleErrorsOnSubmit(flag) {
 
 		let step0 = 13;
-		let step1 = 24;
 
 		if (flag != null) {
 			//Check validation for step by step
@@ -265,9 +265,6 @@ export class WaterTankerAppComponent implements OnInit {
 
 			if (count <= step0) {
 				this.tabIndex = 0;
-				return false;
-			} else if (count <= step1) {
-				this.tabIndex = 1;
 				return false;
 			}
 			// else if (count == 67) {

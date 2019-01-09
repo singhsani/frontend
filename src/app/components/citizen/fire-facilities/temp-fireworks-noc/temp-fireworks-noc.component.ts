@@ -242,9 +242,8 @@ export class TempFireworksNocComponent implements OnInit {
 	 */
 	handleErrorsOnSubmit(flag) {
 
-		let step0 = 11;
-		let step1 = 27;
-		let step2 = 45;
+		let step0 = 8;
+		let step1 = 30;
 
 		if (flag != null) {
 			//Check validation for step by step
@@ -256,10 +255,7 @@ export class TempFireworksNocComponent implements OnInit {
 			} else if (count <= step1) {
 				this.tabIndex = 1;
 				return false;
-			} else if (count <= step2) {
-				this.tabIndex = 2;
-				return false;
-			}
+			} 
 			// else if (count == 67) {
 			// 	this.checkReligion();
 			// 	return false;
