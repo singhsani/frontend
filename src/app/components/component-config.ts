@@ -19,6 +19,7 @@ export class ComponentConfig {
     public EMAIL_MIS_MATCH_MESSAGE = "Email and Confirm Email should match";
     public CONFIRM_UNSAVE_SAVE_MESSAGE = "Form Is not saved, Do you want to discard it?";
     public CONFIRM_UNSAVE_SAVE_TITLE = "Discard Changes";
+    public DATE_HINT_MSG = "Hint: DD/MM/YYYY";
 
     /**
      * User Defined Date Array
