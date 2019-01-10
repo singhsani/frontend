@@ -124,33 +124,36 @@ export class ActionBarComponent implements OnInit, OnChanges {
 	 * This method is use for submit form using API
 	 */
 	onSubmit() {
-		this.isSaveBtnDisabled = true;
-		this.formService.saveFormData(this.form.getRawValue()).subscribe(
-			res => {
-				this.form.patchValue(res);
-				if (this.isstepper) {
-					this.tabIndex.emit(this.stepInfo.next);
-				}
-				this.handleOnSaveAndNext.emit(res);
+		this.isSubmitBtnDisabled = true;
+		var count = 1;
+		this.markFormGroupTouched(this.form);
 
-				// call submit api after form save successfully
-				//this.isSubmitBtnDisabled = true;
-				var count = 1;
-				this.markFormGroupTouched(this.form);
+		if (this.form.valid) {
+			this.mandatoryFileCheck().then(data => {
+				if (data.status) {
 
-				if (this.form.valid) {
-					this.mandatoryFileCheck().then(data => {
-						if (data.status) {
-							this.formService.submitFormData(this.form.get('serviceFormId').value).subscribe(res => {
-								if (res.success) {
-									this.form.get('canEdit').setValue(false);
-								}
-								this.toastr.success(`${this.form.getRawValue().serviceDetail.name} information successfully submit`);
-								this.isSubmitBtnDisabled = false;
-								this.isBtnsDisabled = false;
-								this.form.disable();
-								this.router.navigateByUrl(ManageRoutes.getFullRoute("CITIZENMYAPPS"));
-							},
+					// call save api before submit 
+					this.formService.saveFormData(this.form.getRawValue()).subscribe(
+						res => {
+							this.form.patchValue(res);
+							this.isSaveBtnDisabled = false;
+							if (this.isstepper) {
+								this.tabIndex.emit(this.stepInfo.next);
+							}
+							this.handleOnSaveAndNext.emit(res);
+
+							// call submit Api
+							this.formService.submitFormData(this.form.get('serviceFormId').value).subscribe(
+								res => {
+									if (res.success) {
+										this.form.get('canEdit').setValue(false);
+									}
+									this.toastr.success(`${this.form.getRawValue().serviceDetail.name} information successfully submit`);
+									this.isSubmitBtnDisabled = false;
+									this.isBtnsDisabled = false;
+									this.form.disable();
+									this.router.navigateByUrl(ManageRoutes.getFullRoute("CITIZENMYAPPS"));
+								},
 								err => {
 									this.isSubmitBtnDisabled = false;
 									let retUrl: string = '/citizen/my-applications';
@@ -162,21 +165,21 @@ export class ActionBarComponent implements OnInit, OnChanges {
 										let payData = this.commonService.storePaymentInfo(err.error.data, retUrl);
 										let html =
 											`
-								<div class="text-center">
-									<h2>Total Fee Pay</h2>
-									<div class="payAmount">
-										<i class="fa fa-inr" aria-hidden="true">` + payData.amount + `</i>
-									</div>
-									<p>Rupees in words</p>
-								</div>
-								`
+										<div class="text-center">
+											<h2>Total Fee Pay</h2>
+											<div class="payAmount">
+												<i class="fa fa-inr" aria-hidden="true">` + payData.amount + `</i>
+											</div>
+											<p>Rupees in words</p>
+										</div>
+										`
 										this.commonService.commonAlert('Payment Details', '', 'info', 'Make Payment!', false, html, cb => {
 											window.location.href = environment.adminUrl + `#/admin/payment-gateway?retUrl=${payData.retUrl}&retPath=${payData.retPath}`;
 										}, rj => {
 											let errHtml = `			
-										<div class="alert alert-danger">
-											Please Complete Payment, Otherwise the application will be considered as in-complete
-										</div>`
+												<div class="alert alert-danger">
+													Please Complete Payment, Otherwise the application will be considered as in-complete
+												</div>`
 											this.commonService.commonAlert("Application Incomplete", "", 'warning', 'Make Payment!', false, errHtml, ccb => {
 												window.location.href = environment.adminUrl + `#/admin/payment-gateway?retUrl=${payData.retUrl}&retPath=${payData.retPath}`;
 											}, arj => {
@@ -192,43 +195,39 @@ export class ActionBarComponent implements OnInit, OnChanges {
 									}
 								}
 							);
-						} else {
-							this.commonService.openAlert("File Upload", "Please Upload Mandatory File ".concat(data.fileName), "warning");
+						},
+						err => {
 							this.isSubmitBtnDisabled = false;
-							return
+							this.onSaveError(err);
 						}
-					});
+					);
 				} else {
+					this.commonService.openAlert("File Upload", "Please Upload Mandatory File ".concat(data.fileName), "warning");
 					this.isSubmitBtnDisabled = false;
-					let count = 1;
-					for (const key in this.form.controls) {
-						if (this.form.get(key).invalid) {
-							console.log(key +" and "+ count);
-							if (this.form.get('apiType').value == 'marriageReg') {
-								let groomreligionChange = this.form.controls.groomReligion.get("code").value;
-								let bridereligionChange = this.form.controls.brideReligion.get("code").value;
-								if (!_.isEmpty(groomreligionChange) && !_.isEmpty(bridereligionChange)) {
-									if (groomreligionChange != bridereligionChange) {
-										this.handleErrors.emit(67);
-										break;
-									}
-								}
-							}
-							this.handleErrors.emit(count);
-							break;
-						}
-						count++;
-					}
+					return
 				}
-			},
-			err => {
-				this.isSaveBtnDisabled = false;
-				this.onSaveError(err);
+			});
+		} else {
+			this.isSubmitBtnDisabled = false;
+			let count = 1;
+			for (const key in this.form.controls) {
+				if (this.form.get(key).invalid) {
+					if (this.form.get('apiType').value == 'marriageReg') {
+						let groomreligionChange = this.form.controls.groomReligion.get("code").value;
+						let bridereligionChange = this.form.controls.brideReligion.get("code").value;
+						if (!_.isEmpty(groomreligionChange) && !_.isEmpty(bridereligionChange)) {
+							if (groomreligionChange != bridereligionChange) {
+								this.handleErrors.emit(67);
+								break;
+							}
+						}
+					}
+					this.handleErrors.emit(count);
+					break;
+				}
+				count++;
 			}
-		);
-
-
-
+		}
 	}
 
 	/**
