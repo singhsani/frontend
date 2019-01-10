@@ -7,7 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 
-import { ComponentConfig } from '../../../component-config';
+import { PftConfig } from '../pftConfig';
 import { ManageRoutes } from './../../../../config/routes-conf';
 import { ValidationService } from './../../../../shared/services/validation.service';
 import { CommonService } from './../../../../shared/services/common.service';
@@ -26,7 +26,7 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 	@ViewChild('officeAddr') officeAddrComponent: any;
 	@ViewChild('resAddr') resAddrComponent: any;
 	@ViewChild('searchInput') searchInput: MatInput;
-	private config = new ComponentConfig();
+	private config = new PftConfig();
 
 	translateKey: string = 'prcRegistrationScreen';
 	pecTranslateKey: string = 'pecRegistrationScreen';

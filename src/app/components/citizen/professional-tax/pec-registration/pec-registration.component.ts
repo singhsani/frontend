@@ -5,8 +5,8 @@ import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
-import { ComponentConfig } from './../../../component-config';
 import { ManageRoutes } from './../../../../config/routes-conf';
+import { PftConfig } from '../pftConfig';
 import { ValidationService } from './../../../../shared/services/validation.service';
 import { CommonService } from './../../../../shared/services/common.service';
 import { ProfessionalTaxService } from './../../../../core/services/citizen/data-services/professional-tax.service';
@@ -23,7 +23,7 @@ export class PecRegistrationComponent implements OnInit {
 
 	@ViewChild('officeAddr') officeAddrComponent: any;
 	@ViewChild('resAddr') resAddrComponent: any;
-	private config = new ComponentConfig;
+	private config = new PftConfig;
 
 	translateKey: string = 'pecRegistrationScreen';
 	prcTranslateKey: string = 'prcRegistrationScreen';
