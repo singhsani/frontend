@@ -38,7 +38,9 @@ export class ValidationService {
             invalidemployeeage: 'Age must be greater than 13 year',
             invalidIfscCode: 'IFSC Code is not valid',
             invalidPan: 'Invalid Pan Number', 
-            invalidpetaKendraNumber: 'Should contains only alpha-numeric and numeric value'
+            invalidpetaKendraNumber: 'Should contains only alpha-numeric and numeric value',
+            invalidAmount: 'Amount should be in digit and Only two digit allowed after decimal'
+
         }
 
         return config[validatorName];
@@ -58,6 +60,16 @@ export class ValidationService {
         if (control.value) {
             const matches = control.value.match(/^[A-Za-z\s]+$/);
             return matches ? null : { 'invalidName': true };
+        } else {
+            return null;
+        }
+    }
+
+    static amountValidator(control: FormControl) {
+        if (control.value) {
+            let regexp = /^\d*(\.\d{0,2})?$/;
+            const matches = regexp.test(control.value);
+            return matches ? null : { 'invalidAmount': true };
         } else {
             return null;
         }

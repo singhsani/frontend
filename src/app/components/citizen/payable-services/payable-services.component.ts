@@ -1,3 +1,5 @@
+import { ValidationService } from './../../../shared/services/validation.service';
+import { environment } from './../../../../environments/environment';
 import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
@@ -32,7 +34,7 @@ export class PayableServicesComponent implements OnInit {
 		private formService: FormsActionsService,
 		private fb: FormBuilder,
 		private toaster: ToastrService,
-		private commonService: CommonService
+		private commonService: CommonService,
 	) {
 		this.getPayableServicesList();
 		this.createPayementControls();
@@ -48,7 +50,7 @@ export class PayableServicesComponent implements OnInit {
 	createPayementControls() {
 		this.paymentsForm = this.fb.group({
 			refNumber: [null, Validators.required],
-			amount: 0,
+			amount: [0, ValidationService.amountValidator],
 			payableServices: this.fb.group({
 				code: [null, Validators.required]
 			}),
@@ -65,7 +67,13 @@ export class PayableServicesComponent implements OnInit {
 	makePayment(payData) {
 
 		if (this.paymentsForm.get('amount').value < 0 || !this.paymentsForm.get('amount').value) {
-			this.commonService.openAlert("Warning", "Please Enter Amount", "warning");
+			this.commonService.openAlert("Warning", "Please enter some amount", "warning");
+			return;
+		}
+
+		if (this.paymentsForm.get('amount').invalid) {
+			this.markFormGroupTouched(this.paymentsForm);
+			this.commonService.openAlert("Warning", "Please enter valid amount", "warning");
 			return;
 		}
 
@@ -74,35 +82,47 @@ export class PayableServicesComponent implements OnInit {
 			return;
 		}
 
-		this.formService.apiType = 'servicePayment';
-
-		let paymentData = {
-			"refNumber": payData.refNumber,
-			"amount": payData.amount,
-			"serviceType": payData.payableServices.code,
+		let obj = {
+			payableServiceType: payData.payableServices.code,
+			refNumber: payData.refNumber,
+			amount: payData.amount,
+			paymentMode: payData.payMode.code,
+		 	returnUrl: environment.returnUrl
 		}
 
-		this.commonService.submitAlert('Payment Confirmation', "Are you sure?", 'warning', '', performDelete => {
+		this.formService.paymentGatewayUrl(obj).subscribe(res => {
+			window.open(res.data, "_self");
+		});
 
-			this.formService.paymentServicePost(paymentData).subscribe(respData => {
+		// this.formService.apiType = 'servicePayment';
 
-				this.dialog.closeAll();
+		// let paymentData = {
+		// 	"refNumber": payData.refNumber,
+		// 	"amount": payData.amount,
+		// 	"serviceType": payData.payableServices.code,
+		// }
 
-				this.commonService.openAlert('Payment Successful', '', 'success',
-					'<p> Id : ' + respData.id + '</p><br>' +
-					'<p> Amount : ' + respData.amount + '</p><br>' +
-					'<p> Reference Number : ' + respData.refNumber + '</p><br>' +
-					'<p> Service : ' + respData.serviceName + '</p><br>' +
-					'<p> Status : ' + respData.paymentStatus + '</p><br>',
-					cb => {
-					});
+		// this.commonService.submitAlert('Payment Confirmation', "Are you sure?", 'warning', '', performDelete => {
 
-				this.paymentsForm.markAsPristine();
-				this.paymentsForm.markAsUntouched();
-				this.isRecordExists = false;
-				this.paymentsForm.reset();
-			});
-		})
+		// 	this.formService.paymentServicePost(paymentData).subscribe(respData => {
+
+		// 		this.dialog.closeAll();
+
+		// 		this.commonService.openAlert('Payment Successful', '', 'success',
+		// 			'<p> Id : ' + respData.id + '</p><br>' +
+		// 			'<p> Amount : ' + respData.amount + '</p><br>' +
+		// 			'<p> Reference Number : ' + respData.refNumber + '</p><br>' +
+		// 			'<p> Service : ' + respData.serviceName + '</p><br>' +
+		// 			'<p> Status : ' + respData.paymentStatus + '</p><br>',
+		// 			cb => {
+		// 			});
+
+		// 		this.paymentsForm.markAsPristine();
+		// 		this.paymentsForm.markAsUntouched();
+		// 		this.isRecordExists = false;
+		// 		this.paymentsForm.reset();
+		// 	});
+		// })
 	}
 
 	/**
@@ -178,6 +198,8 @@ export class PayableServicesComponent implements OnInit {
 			}
 		);
 	}
+
+
 
 	/**
 	 * Marks all controls in a form group as touched

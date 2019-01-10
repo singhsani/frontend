@@ -46,6 +46,7 @@ import { HosFileUploadComponent } from './components/hos-file-upload/hos-file-up
 import { CountryService } from './services/country.service';
 import { HosPaymentResponsePageComponent } from './components/hos-payment-response-page/hos-payment-response-page.component';
 import { HosTitleBarComponent } from './components/hos-title-bar/hos-title-bar.component';
+import { GatewayResponseComponent } from './components/gateway-response/gateway-response.component';
 
 /* import pipes end*/
 
@@ -69,13 +70,14 @@ const COMPONENTS = [
 	GujInputSourceDirective,
 	GujInputTargetDirective,
 	AlphaNumericDirective,
-	ReloadDirective
+	ReloadDirective,
+	HosPaymentResponsePageComponent,
+	GatewayResponseComponent
 ]
 
 @NgModule({
 	declarations: [
-		...COMPONENTS,
-		HosPaymentResponsePageComponent,
+		...COMPONENTS
 		
 	],
 	imports: [

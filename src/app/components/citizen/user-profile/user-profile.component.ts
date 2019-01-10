@@ -36,7 +36,7 @@ export class UserProfileComponent implements OnInit {
 		private formService: FormsActionsService,
 		private toaster: ToastrService,
 		private commonService: CommonService,
-		private countryService:CountryService
+		private countryService: CountryService
 	) { }
 
 	// disable future date for birthday 
@@ -47,7 +47,7 @@ export class UserProfileComponent implements OnInit {
 		this.userProfileForm = this.fb.group({
 			uniqueId: '',
 			firstName: [null, [Validators.required, ValidationService.nameValidator]],
-			middleName:[null, [ValidationService.nameValidator]],
+			middleName: [null, [ValidationService.nameValidator]],
 			lastName: [null, [Validators.required, ValidationService.nameValidator]],
 			email: [{ value: null, disabled: true }],
 			cellNo: [{ value: null, disabled: true }],
@@ -112,7 +112,7 @@ export class UserProfileComponent implements OnInit {
 					this.commonService.openAlert("Warning", "File Size should be less than 512 KB", "warning");
 
 				} else {
-					
+
 					let reader = new FileReader();
 					reader.onload = (e: any) => {
 						this.userProfileForm.get('profilePic').setValue(e.target.result);
@@ -131,7 +131,7 @@ export class UserProfileComponent implements OnInit {
 	 * This method is use to get country list using api
 	 */
 	getCountryLists() {
-		this.countryService.countriesData.subscribe(data=>{
+		this.countryService.countriesData.subscribe(data => {
 			this.countryListArray = _.cloneDeep(data);
 			if (this.userProfileForm.get('country').value) {
 				this.getStateLists(this.userProfileForm.get('country').value);
@@ -144,28 +144,20 @@ export class UserProfileComponent implements OnInit {
 	 * @param name - country name
 	 */
 	getStateLists(name) {
-		let obj = _.filter(this.countryListArray, { 'name': name })[0];
 
-		this.formService.getStateLookUp(obj.code).subscribe(res => {
-			this.stateListArray = _.cloneDeep(res.data);
+		this.stateListArray = this.countryListArray.find(con => con.name === name).states;
 
-			if (this.userProfileForm.get('state').value) {
-				this.getCityLists(this.userProfileForm.get('state').value);
-
-			}
-		});
+		if (this.userProfileForm.get('state').value) {
+			this.getCityLists(this.userProfileForm.get('state').value);
+		}
 	}
 
 	/**
 	 * This method is use to get city list using api
 	 * @param name - state name
 	 */
-	getCityLists(name) {
-		let obj = _.filter(this.stateListArray, { 'name': name })[0];
-
-		this.formService.getCityLookUp(obj.code).subscribe(res => {
-			this.cityListArray = _.cloneDeep(res.data);
-		});
+	getCityLists(state) {
+		this.cityListArray = this.stateListArray.find(obj => obj.name === state).cities;
 	}
 
 	/**
@@ -173,14 +165,14 @@ export class UserProfileComponent implements OnInit {
 	 * @param name - name of country
 	 */
 	onCountryChange(name: string) {
-		if (name) {
-			this.getStateLists(name);
-		}
-
 		this.stateListArray = [];
 		this.cityListArray = [];
 		this.userProfileForm.get('state').setValue(null);
 		this.userProfileForm.get('city').setValue(null);
+
+		if (name) {
+			this.getStateLists(name);
+		}
 	}
 
 	/**
@@ -188,11 +180,12 @@ export class UserProfileComponent implements OnInit {
 	 * @param name - name of state
 	 */
 	onStateChange(name: string) {
+		this.cityListArray = [];
+		this.userProfileForm.get('city').setValue(null);
+
 		if (name) {
 			this.getCityLists(name);
 		}
-		this.cityListArray = [];
-		this.userProfileForm.get('city').setValue(null);
 	}
 
 }

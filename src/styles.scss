@@ -893,6 +893,8 @@ body * {visibility: hidden;}
     color: indigo !important;
 }
 
+/* style for date format hint*/
+.default-show-hint { font-size: 11px;  display: block; position: absolute; bottom: -16px; right: -18px; }
 
  // Select Dropdown //  
 //  .mat-tab-body-wrapper {overflow: visible !important;}
