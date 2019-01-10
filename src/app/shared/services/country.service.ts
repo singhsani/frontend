@@ -10,7 +10,6 @@ export class CountryService {
 
 	get countriesData() {
 		return this.countryData.asObservable();
-
 	}
 
 	constructor(private formService: FormsActionsService) {
@@ -19,8 +18,8 @@ export class CountryService {
 
 	getCountryData(){
 		this.formService.getCountryLookUp().subscribe(res=>{
-			this.countryData.next(res.data);
-		})
+			this.countryData.next(res.countries);
+		});
 
 	}
 

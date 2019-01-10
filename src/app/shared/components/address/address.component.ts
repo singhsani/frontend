@@ -24,9 +24,7 @@ export class AddressComponent implements OnInit, OnChanges {
 	stateListArray: any = [];
 	cityListArray: any = [];
 	isBuildinAreaReq: boolean = false;
-
 	editMode: boolean = false;
-
 	constructor(
 		private formService: FormsActionsService,
 		private countryService: CountryService
@@ -100,7 +98,6 @@ export class AddressComponent implements OnInit, OnChanges {
 			districtGuj: [null, [Validators.maxLength(180)]],
 			cityGuj: [null, [Validators.maxLength(180)]],
 			countryGuj: [null, [Validators.maxLength(180)]]
-
 		}
 
 		return addrObj;
@@ -108,31 +105,33 @@ export class AddressComponent implements OnInit, OnChanges {
 
 	/**
 	 * This method is use for change the country
-	 * @param name - name of country
+	 * @param country - name of country
 	 */
-	onCountryChange(name: string) {
-		if (name) {
-			this.getStateLists(name);
-		}
+	onCountryChange(country: string) {
 
 		this.stateListArray = [];
 		this.cityListArray = [];
+
 		this.addressFormGroup.get('state').setValue(null);
 		this.addressFormGroup.get('city').setValue(null);
+
+		if (country) {
+			this.getStateLists(country);
+		}
+
 	}
 
 	/**
 	 * This method is use for change the state
-	 * @param name - name of state
+	 * @param state - name of state
 	 */
-	onStateChange(name: string) {
-		if (name) {
-			this.getCityLists(name);
-		}
-
+	onStateChange(state: string) {
 		this.cityListArray = [];
 		this.addressFormGroup.get('city').setValue(null);
 
+		if (state) {
+			this.getCityLists(state);
+		}
 	}
 
 	/**
@@ -146,7 +145,7 @@ export class AddressComponent implements OnInit, OnChanges {
 				if (this.editMode && this.addressFormGroup.get('country').value) {
 					this.getStateLists(this.addressFormGroup.get('country').value);
 				}
-			}, 300);
+			}, 1000);
 		});
 
 	}
@@ -155,32 +154,22 @@ export class AddressComponent implements OnInit, OnChanges {
 	 * This method is use to get state list using api
 	 * @param name - country name
 	 */
-	getStateLists(name) {
+	getStateLists(country) {
 
-		let obj = _.filter(this.countryListArray, { 'name': name })[0];
+		this.stateListArray = this.countryListArray.find(con => con.name === country).states;
 
-		this.formService.getStateLookUp(obj.code).subscribe(res => {
+		if (this.editMode && this.addressFormGroup.get('state').value) {
+			this.getCityLists(this.addressFormGroup.get('state').value);
+		}
 
-			this.stateListArray = _.cloneDeep(res.data);
-
-			if (this.editMode && this.addressFormGroup.get('state').value) {
-				this.getCityLists(this.addressFormGroup.get('state').value);
-
-			}
-		});
 	}
 
 	/**
 	 * This method is use to get city list using api
 	 * @param name - state name
 	 */
-	getCityLists(name) {
-
-		let obj = _.filter(this.stateListArray, { 'name': name })[0];
-
-		this.formService.getCityLookUp(obj.code).subscribe(res => {
-			this.cityListArray = _.cloneDeep(res.data);
-		});
+	getCityLists(state) {
+		this.cityListArray = this.stateListArray.find(obj => obj.name === state).cities;
 	}
 
 	/**

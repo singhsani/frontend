@@ -1,3 +1,4 @@
+import { GatewayResponseComponent } from './../../shared/components/gateway-response/gateway-response.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
@@ -42,6 +43,7 @@ const routes: Routes = [
 			{ path: ManageRoutes.getMainRoute('CITIZENMYPROFILE'), component: UserProfileComponent, canActivate: [AuthGuard] },
 			{ path: ManageRoutes.getMainRoute('PAYMENTGATEWAYRESPONSE'), component: PaymentResponsePageComponent, canActivate: [AuthGuard] },
 			{ path: ManageRoutes.getMainRoute('CITIZENPAYABLESERVICES'), component: PayableServicesComponent, canActivate: [AuthGuard] },
+			{ path: 'payment-response', component: GatewayResponseComponent, canActivate: [AuthGuard] },
 
 			{ path: ManageRoutes.getPrefixRoute('CERTIFICATESMODULE'), loadChildren: () => CertificatesModule, canLoad: [AuthGuard] },
 			{ path: ManageRoutes.getPrefixRoute('BOOKINGMODULE'), loadChildren: () => BookingsModule, canLoad: [AuthGuard] },

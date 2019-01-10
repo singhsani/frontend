@@ -215,7 +215,8 @@ export class FormsActionsService {
 	 * This method is use for get country lists
 	 */
 	getCountryLookUp() {
-		return this.http.get('public/lookup/countries', this.getCommonHeaders());
+		// return this.http.get('public/lookup/countries', this.getCommonHeaders());
+		return this.http.get('public/lookup/address', this.getCommonHeaders());
 	}
 
 	/**
@@ -232,6 +233,22 @@ export class FormsActionsService {
 	 */
 	getCityLookUp(stateId) {
 		return this.http.get(`public/lookup/citiesByStateId/${stateId}`, this.getCommonHeaders());
+	}
+
+	/**
+	 * This method is use for get cities lists
+	 * @param stateId - state Id
+	 */
+	paymentGatewayUrl(data) {
+		return this.http.post('public/payment/generateTokenUrl', data, this.getCommonHeaders());
+	}
+
+	/**
+	 * This method is use for get cities lists
+	 * @param stateId - state Id
+	 */
+	getPaymentResponse(token) {
+		return this.http.get(`public/payment/getTransactionDetails?rqst_token=${token}`, this.getCommonHeaders());
 	}
 
 	/**

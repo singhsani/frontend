@@ -28,6 +28,7 @@
 		<div class="row" *ngIf="isRecordExists">
 			<mat-form-field class="col-md-4">
 				<input matInput placeholder="Amount(Rs.)" formControlName="amount">
+				<control-messages [control]="paymentsForm.get('amount')"></control-messages>
 			</mat-form-field>
 
 			<div class="col-md-4" formGroupName="payMode">

@@ -1,41 +1,41 @@
+<mat-card class="borderRadius10">
+    <div class="headingBox">Welcome !
+        <span>Login by entering the information below</span>
+    </div>
+    <form [formGroup]="loginForm" (ngSubmit)="onLoginSubmit(loginForm.value)" autocomplete="off" ngNativeValidate novalidate>
 
-        <mat-card class="borderRadius10">
-            <div class="headingBox">Welcome !
-                <span>Login by entering the information below</span>
-            </div>
-            <form [formGroup]="loginForm" (ngSubmit)="onLoginSubmit(loginForm.value)" autocomplete="off" ngNativeValidate novalidate>
+        <mat-form-field class="iconMat">
+            <mat-icon matPrefix>face</mat-icon>
+            <input matInput type="text" placeholder="Email / Mobile" formControlName="username" required>
+            <mat-error *ngIf="isValidFlag">Username is Required</mat-error>
+            <mat-error *ngIf="!isValidFlag && (loginForm.get('username').invalid && (loginForm.get('username').dirty || loginForm.get('username').touched))">Username is Required</mat-error>
+        </mat-form-field>
 
-                <mat-form-field class="iconMat">
-                    <mat-icon matPrefix>face</mat-icon>
-                    <input matInput type="text" placeholder="Email / Mobile" formControlName="username" required>
-                    <mat-error *ngIf="isValidFlag">Username is Required</mat-error>
-                </mat-form-field>
+        <mat-form-field class="iconMat">
+            <mat-icon matPrefix>lock_outline</mat-icon>
+            <input matInput type="password" placeholder="Password" formControlName="password" required>
+            <mat-error *ngIf="isValidFlag">Password is Required</mat-error>
+            <mat-error *ngIf="!isValidFlag && (loginForm.get('password').invalid && (loginForm.get('password').dirty || loginForm.get('password').touched))">Password is Required</mat-error>
+        </mat-form-field>
 
-                <mat-form-field class="iconMat">
-                    <mat-icon matPrefix>lock_outline</mat-icon>
-                    <input matInput type="password" placeholder="Password" formControlName="password" required>
-                    <mat-error *ngIf="isValidFlag">Password is Required</mat-error>
-                </mat-form-field>
+        <div class="text-right">
+            <a routerLink="/{{manageRoutes.getFullRoute('CITIZENAUTHFORGOTPASS')}}" class="forPass">Forgot Password ?</a>
+        </div>
 
-                <div class="text-right">
-                    <a routerLink="/{{manageRoutes.getFullRoute('CITIZENAUTHFORGOTPASS')}}" class="forPass">Forgot Password ?</a>
-                </div>
+        <div class="text-center">
+            <button mat-raised-button type="submit" class="mat-primary width150">Login &nbsp;
+                <img *ngIf="loading" [class.disabled]="loading" src="assets/images/loader.gif" />
+            </button>
+        </div>
 
-                <div class="text-center">
-                    <button mat-raised-button type="submit" class="mat-primary width150">Login &nbsp;
-                        <img *ngIf="loading" [class.disabled]="loading" src="assets/images/loader.gif" />
-                    </button>
-                </div>
+        <div class="text-center pt-2">
+            <p>OR</p>
+            Don't have an account?
+            <a routerLink="/{{manageRoutes.getFullRoute('CITIZENAUTHSIGNUP')}}">
+                <strong>Sign up</strong>
+            </a> here
+        </div>
 
-                <div class="text-center pt-2">
-                    <p>OR</p>
-                    Don't have an account?
-                    <a routerLink="/{{manageRoutes.getFullRoute('CITIZENAUTHSIGNUP')}}">
-                        <strong>Sign up</strong>
-                    </a> here
-                </div>
+    </form>
 
-            </form>
-
-        </mat-card>
-      
+</mat-card>
