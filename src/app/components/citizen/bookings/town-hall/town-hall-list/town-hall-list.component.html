@@ -71,11 +71,8 @@
                     </div>
 
                     <mat-form-field class="col-md-6">
-                        <mat-label>
-                            {{'choose_start_date'| translate: translateKey}}
-                        </mat-label>
-                        <input matInput [matDatepickerFilter]="myFilter" (dateChange)="changeStartDate($event)" [min]="startMinDate" [matDatepicker]="townHallBookingfromPicker"
-                            formControlName="startDate" placeholder="DD/MM/YYYY">
+                        <mat-label>{{'choose_start_date'| translate: translateKey}}</mat-label>
+                        <input matInput [min]="startMinDate" [matDatepicker]="townHallBookingfromPicker" formControlName="startDate" placeholder="DD/MM/YYYY">
                         <mat-datepicker-toggle matSuffix [for]="townHallBookingfromPicker"></mat-datepicker-toggle>
                         <mat-datepicker #townHallBookingfromPicker touchUi="true"></mat-datepicker>
                         <control-messages [control]="searchTownHallForm.controls.startDate">
@@ -83,22 +80,16 @@
                     </mat-form-field>
 
                     <mat-form-field class="col-md-6">
-                        <mat-label>
-                            {{'choose_end_date'| translate: translateKey}}
-                        </mat-label>
-                        <input matInput [readonly]="searchTownHallForm.controls.startDate.value == null" [matDatepickerFilter]="myFilter" [min]="endMinDate"
-                            [matDatepicker]="townHallBookingtoPicker" formControlName="endDate" placeholder="DD/MM/YYYY">
+                        <mat-label>{{'choose_end_date'| translate: translateKey}}</mat-label>
+                        <input matInput [min]="endMinDate" [matDatepicker]="townHallBookingtoPicker" formControlName="endDate" placeholder="DD/MM/YYYY">
                         <mat-datepicker-toggle matSuffix [for]="townHallBookingtoPicker"></mat-datepicker-toggle>
                         <mat-datepicker #townHallBookingtoPicker touchUi="true"></mat-datepicker>
                         <control-messages [control]="searchTownHallForm.controls.endDate">
                         </control-messages>
                     </mat-form-field>
-                    <!-- <div class="col-md-12 text-right">
-                    <button mat-raised-button color="primary" type="submit">
-                        {{'search'| translate: translateKey}}
-                    </button>
-                </div> -->
+
                 </div>
+
                 <div class="row fotButtonBar">
                     <div class="col-sm-12 col-md-12 text-right">
                         <button mat-raised-button color="primary" type="submit">
@@ -113,9 +104,10 @@
 
     <div *ngIf="Dates.length>0" class="mt-4">
         <mat-card class="formClass cardBorder">
+            
             <div class="pageTitle">{{'list_of_town_hall'| translate: translateKey}}</div>
 
-            <mat-accordion *ngFor="let month of filterMonths(); let i = index;">
+            <mat-accordion *ngFor="let month of bookingUtils.filterMonths(Dates); let i = index;">
                 <mat-expansion-panel [expanded]="i === 0">
                     <mat-expansion-panel-header>
                         <mat-panel-title>
@@ -123,19 +115,20 @@
                         </mat-panel-title>
                     </mat-expansion-panel-header>
                     <div>
-                        <mat-checkbox [checked]="!checkedAllinMonth(month)" labelPosition="after" (change)="selectAllShiftsInMonth($event.checked, month, i)">
+                        <mat-checkbox [checked]="!bookingUtils.checkedAllinMonth(month, Dates)" [disabled]="bookingUtils.checkAllDisabledInmonth(month,Dates)" labelPosition="after" (change)="selectedShift =  bookingUtils.selectAllShiftsInMonth($event.checked, month, Dates, selectedShift,  i)">
                             {{'select_all_shift_in'| translate: translateKey}} {{month.monthName}}
                         </mat-checkbox>
                     </div>
 
                     <div class="row">
-                        <div *ngFor="let date of filterAcc(month.id)" class="col-6 col-md-3 col-lg-2 mb-1 p-1">
+                        <div *ngFor="let date of bookingUtils.filterAcc(month.id, Dates)" class="col-6 col-md-3 col-lg-2 mb-1 p-1">
                             <div class="dateBox rounded border">
                                 <strong>
                                     {{bookingUtils.returnProperDate(date.key)}}
                                 </strong>
                                 <div class="dateCon">
-                                    <mat-checkbox (change)="selectShift(shift, $event.checked)" *ngFor="let shift of date.slotList; let i = index" [disabled]="shift.slotStatus == bookingConstants.BOOKED || shift.slotStatus == bookingConstants.TEMPORARY_BLOCKED"
+                                    <mat-checkbox (change)="selectedShift = bookingUtils.selectShift(shift, $event.checked, selectedShift)" *ngFor="let shift of date.slotList; let i = index"
+                                        [disabled]="shift.slotStatus == bookingConstants.BOOKED || shift.slotStatus == bookingConstants.TEMPORARY_BLOCKED"
                                         [checked]="shift.slotStatus != 'AVAILABLE'">
                                         {{'shift'| translate: translateKey}}&nbsp;{{shift.shiftType}}
                                     </mat-checkbox>
@@ -189,7 +182,7 @@
                                 <td>{{bookingUtils.returnProperDate(shifts.end)}}</td>
                                 <td>{{shifts.shiftType}}</td>
                                 <td>
-                                    <button mat-icon-button title="{{'remove_slot'| translate: translateKey}}" [disabled]="selectedShift.length == 1" (click)="removeSelectedShift(shifts, i)">
+                                    <button mat-icon-button title="{{'remove_slot'| translate: translateKey}}" [disabled]="selectedShift.length == 1" (click)="selectedShift = bookingUtils.removeSelectedShift(shifts, selectedShift, i)">
                                         <mat-icon color="warn">delete</mat-icon>
                                     </button>
                                 </td>
@@ -344,7 +337,7 @@
 
         <div class="row mt-4 fotButtonBar">
             <div class="col-sm-12 col-md-12 text-right">
-                <button mat-raised-button type="button" color="primary" (click)="confirmPayment()">
+                <button mat-raised-button type="button" color="primary" (click)="showPaymentReciept = false;showApplicationForm = true;">
                     {{'proceed_for_application' | translate: translateKey}}
                 </button>
             </div>
