@@ -10,6 +10,7 @@ import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { merge, of as observableOf } from 'rxjs';
 import { catchError, map, startWith, switchMap } from 'rxjs/operators';
 import { BookingConstants, BookingUtils } from '../booking-config';
+import { environment } from '../../../../../environments/environment';
 
 @Component({
 	selector: 'app-cancel-booking',
@@ -37,8 +38,9 @@ export class CancelBookingComponent implements OnInit {
 
 	/**
 	 * Display Column
+	 * 'start', 'end',
 	 */
-	displayedColumns: Array<string> = ['id', 'refNumber', 'bookingDate', 'start', 'end', 'status', 'action'];
+	displayedColumns: Array<string> = ['id', 'refNumber', 'bookingDate', 'status', 'action'];
 
 	/**
 	 * ngx-bootstrap models.
@@ -83,7 +85,7 @@ export class CancelBookingComponent implements OnInit {
 	 * Method Initializes first.
 	 */
 	ngOnInit() {
-		this.bookingService.resourceType = 'townhall'
+		this.bookingService.resourceType = 'townhall';
 		this.getAllLookUP();
 		this.searchBookingsForm = this.fb.group({
 			resourceType: this.resources[0].type,
@@ -107,7 +109,7 @@ export class CancelBookingComponent implements OnInit {
 		this.refNumber = refNumber;
 		this.cancellationType = null;
 		this.CancelSlotList = scheduleList.sort((a, b) => {
-			if ((new Date(a.bookingDate.split(' ')[0]).getTime()) <= (new Date(b.bookingDate.split(' ')[0]).getTime())) {
+			if ((new Date(a.bookingDate).getTime()) <= (new Date(b.bookingDate).getTime())) {
 				return 1;
 			} else {
 				return -1;
@@ -150,8 +152,13 @@ export class CancelBookingComponent implements OnInit {
 	 * Method is used to get all selected list and mark it as checked
 	 */
 	getAllSelected(): boolean {
-		return (this.CancelRequestList.length == this.CancelSlotList.filter(shift => shift.status == this.bookingConstant.DEPOSIT_REQUIRED || shift.status == this.bookingConstant.BOOKED).length) ||
-			(this.CancelSlotList.filter(shift => shift.status == this.bookingConstant.CANCELLATION_REQUEST || shift.status == this.bookingConstant.CANCELLATION_APPROVED).length == this.CancelSlotList.length);
+		return (this.CancelRequestList.length ==
+			this.CancelSlotList.filter(shift => shift.status == this.bookingConstant.DEPOSIT_REQUIRED ||
+				shift.status == this.bookingConstant.SUBMITTED ||
+				shift.status == this.bookingConstant.PAYMENT_REQUIRED ||
+				shift.status == this.bookingConstant.BOOKED).length) ||
+			(this.CancelSlotList.filter(shift => shift.status == this.bookingConstant.CANCELLATION_REQUEST ||
+				shift.status == this.bookingConstant.CANCELLATION_APPROVED).length == this.CancelSlotList.length);
 	}
 
 	/**
@@ -303,5 +310,36 @@ export class CancelBookingComponent implements OnInit {
 		}, err => {
 			this.commonService.openAlert('Error', err.message, 'warning');
 		});
+	}
+
+	paymentRequest(element) {
+		this.bookingService.getTransactionDetails(element.refNumber).subscribe(transactionData => {
+		}, err => {
+			if (err.status = 402) {
+				this.isLoadingResults = false;
+				if (err.status == 402) {
+					let payData = this.bookingService.proceedForPayment(err.error.data);
+					this.commonService.commonAlert('Payment Details', '', 'info', 'Make Payment!', false, payData.html, cb => {
+						window.location.href = environment.adminUrl + `#/admin/payment-gateway?retUrl=${payData.payData.retUrl}&retPath=${payData.payData.retPath}`;
+					}, rj => {
+						let errHtml = `			
+						<div class="alert alert-danger">
+							Please Complete Payment, Otherwise the application will be considered as in-complete
+						</div>`
+						this.commonService.commonAlert("Application Incomplete", "", 'warning', 'Make Payment!', false, errHtml, ccb => {
+							window.location.href = environment.adminUrl + `#/admin/payment-gateway?retUrl=${payData.payData.retUrl}&retPath=${payData.payData.retPath}`;
+						}, arj => {
+
+						});
+						return;
+					});
+					return;
+				}
+			} else if (err.error[0].code == this.bookingConstant.INVALID_BOOKING_STATUS) {
+				this.commonService.openAlert("Invalid Booking Status", err.error[0].message, "warning", "")
+			} else {
+				this.commonService.openAlertFormSaveValidation('Warning!', err.error, 'warning');
+			}
+		})
 	}
 }

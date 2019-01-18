@@ -68,8 +68,8 @@
             <mat-label>
               {{'choose_start_date'| translate: translateKey}}
             </mat-label>
-            <input matInput [matDatepickerFilter]="myFilter" (dateChange)="changeStartDate($event)" [min]="startMinDate" [matDatepicker]="stadiumBookingfromPicker"
-              formControlName="startDate" placeholder="DD/MM/YYYY">
+            <!-- matDatepickerFilter]="myFilter" -->
+            <input matInput [min]="startMinDate" [matDatepicker]="stadiumBookingfromPicker" formControlName="startDate" placeholder="DD/MM/YYYY">
             <mat-datepicker-toggle matSuffix [for]="stadiumBookingfromPicker"></mat-datepicker-toggle>
             <mat-datepicker #stadiumBookingfromPicker touchUi="true"></mat-datepicker>
             <control-messages [control]="stadiumSearchForm.controls.startDate">
@@ -80,8 +80,8 @@
             <mat-label>
               {{'choose_end_date'| translate: translateKey}}
             </mat-label>
-            <input matInput [readonly]="stadiumSearchForm.controls.startDate.value == null" [matDatepickerFilter]="myFilter" [min]="endMinDate"
-              [matDatepicker]="stadiumBookingtoPicker" formControlName="endDate" placeholder="DD/MM/YYYY">
+            <input matInput [min]="endMinDate" [matDatepicker]="stadiumBookingtoPicker" formControlName="endDate"
+              placeholder="DD/MM/YYYY">
             <mat-datepicker-toggle matSuffix [for]="stadiumBookingtoPicker"></mat-datepicker-toggle>
             <mat-datepicker #stadiumBookingtoPicker touchUi="true"></mat-datepicker>
             <control-messages [control]="stadiumSearchForm.controls.endDate">
@@ -107,7 +107,7 @@
 
       <div class="pageTitle">{{'list_of_stadium'| translate: translateKey}}</div>
 
-      <mat-accordion *ngFor="let month of filterMonths(); let i = index;">
+      <mat-accordion *ngFor="let month of bookingUtils.filterMonths(Dates); let i = index;">
         <mat-expansion-panel [expanded]="i === 0">
           <mat-expansion-panel-header>
             <mat-panel-title>
@@ -115,19 +115,20 @@
             </mat-panel-title>
           </mat-expansion-panel-header>
           <div>
-            <mat-checkbox [checked]="!checkedAllinMonth(month)" labelPosition="after" (change)="selectAllShiftsInMonth($event.checked, month, i)">
+            <mat-checkbox [checked]="!bookingUtils.checkedAllinMonth(month, Dates)" [disabled]="bookingUtils.checkAllDisabledInmonth(month,Dates)" labelPosition="after" (change)="selectedShift = bookingUtils.selectAllShiftsInMonth($event.checked, month, Dates, selectedShift, i)">
               {{'select_all_shift_in'| translate: translateKey}} {{month.monthName}}
             </mat-checkbox>
           </div>
 
           <div class="row">
-            <div *ngFor="let date of filterAcc(month.id)" class="col-6 col-md-3 col-lg-2 mb-1 p-1">
+            <div *ngFor="let date of bookingUtils.filterAcc(month.id, Dates)" class="col-6 col-md-3 col-lg-2 mb-1 p-1">
               <div class="dateBox rounded border">
                 <strong>
                   {{bookingUtils.returnProperDate(date.key)}}
                 </strong>
                 <div class="dateCon">
-                  <mat-checkbox (change)="selectShift(shift, $event.checked)" *ngFor="let shift of date.slotList; let i = index" [disabled]="shift.slotStatus == bookingConstants.BOOKED || shift.slotStatus == bookingConstants.TEMPORARY_BLOCKED"
+                  <mat-checkbox (change)="selectedShift = bookingUtils.selectShift(shift, $event.checked, selectedShift)" *ngFor="let shift of date.slotList; let i = index"
+                    [disabled]="shift.slotStatus == bookingConstants.BOOKED || shift.slotStatus == bookingConstants.TEMPORARY_BLOCKED"
                     [checked]="shift.slotStatus != bookingConstants.AVAILABLE">
                     &nbsp;{{shift.slotStatus == bookingConstants.CHECKED ? bookingConstants.AVAILABLE : shift.slotStatus }}
                   </mat-checkbox>
@@ -141,8 +142,8 @@
 
       <div class="fotButtonBar">
         <div class="col-sm-12 col-md-12 text-right">
-          <button mat-raised-button data-toggle="modal" (click)="shortlistShifts(confirmationModel)" data-target="#confirmShortlistModel" type="button"
-            [disabled]="selectedShift.length == 0" color="primary">
+          <button mat-raised-button data-toggle="modal" (click)="shortlistShifts(confirmationModel)" data-target="#confirmShortlistModel"
+            type="button" [disabled]="selectedShift.length == 0" color="primary">
             {{'shortlist'| translate: translateKey}}
           </button>
         </div>
@@ -179,11 +180,11 @@
             <th scope="row">{{i+1}}</th>
             <td>{{bookingUtils.returnProperDate(shifts.start)}}</td>
             <td>{{bookingUtils.returnProperDate(shifts.end)}}</td>
-            <td>{{shifts.slotStatus == bookingConstants.CHECKED ? bookingConstants.AVAILABLE : shift.slotStatus }}</td>
+            <td>{{shifts.slotStatus == bookingConstants.CHECKED ? bookingConstants.AVAILABLE : shifts.slotStatus }}</td>
             <td>{{shifts.occupancy}}</td>
 
             <td>
-              <button mat-icon-button title="{{'remove_slot'| translate: translateKey}}" [disabled]="selectedShift.length == 1" (click)="removeSelectedShift(shifts, i)">
+              <button mat-icon-button title="{{'remove_slot'| translate: translateKey}}" [disabled]="selectedShift.length == 1" (click)="selectedShift = bookingUtils.removeSelectedShift(shifts,selectedShift,  i)">
                 <mat-icon color="warn">delete</mat-icon>
               </button>
             </td>
@@ -276,10 +277,13 @@
                 <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="confirmMobile" placeholder="{{'confirm_mobile' | translate: translateKey}}"
                   required>
                 <control-messages [control]="stadiumApplicationForm.controls.confirmMobile"></control-messages>
-
               </mat-form-field>
-              <mat-error *ngIf="!mobileNumberMatcher() && stadiumApplicationForm.controls.applicantMobile.touched && stadiumApplicationForm.controls.confirmMobile.touched">
+              <!-- <mat-error *ngIf="!mobileNumberMatcher() && stadiumApplicationForm.controls.applicantMobile.touched && stadiumApplicationForm.controls.confirmMobile.touched">
                 {{bookingConstants.MOB_NO_MIS_MATCH_MESSAGE}}
+              </mat-error> -->
+
+              <mat-error *ngIf="!bookingUtils.matcher(stadiumApplicationForm, 'applicantMobile', 'confirmMobile') && stadiumApplicationForm.controls.applicantMobile.touched && stadiumApplicationForm.controls.confirmMobile.touched">
+                 {{bookingConstants.MOB_NO_MIS_MATCH_MESSAGE}}                
               </mat-error>
             </div>
 
@@ -295,8 +299,11 @@
                   required>
                 <control-messages [control]="stadiumApplicationForm.controls.confirmEmailId"></control-messages>
               </mat-form-field>
-              <mat-error *ngIf="!emailMatcher() && stadiumApplicationForm.controls.emailId.touched && stadiumApplicationForm.controls.confirmEmailId.touched">
+              <!-- <mat-error *ngIf="!emailMatcher() && stadiumApplicationForm.controls.emailId.touched && stadiumApplicationForm.controls.confirmEmailId.touched">
                 {{bookingConstants.EMAIL_MIS_MATCH_MESSAGE}}
+              </mat-error> -->
+              <mat-error *ngIf="!bookingUtils.matcher(stadiumApplicationForm, 'emailId', 'confirmEmailId') && stadiumApplicationForm.controls.emailId.touched && stadiumApplicationForm.controls.confirmEmailId.touched">
+                 {{bookingConstants.EMAIL_MIS_MATCH_MESSAGE}}
               </mat-error>
 
             </div>
@@ -358,7 +365,7 @@
             </mat-form-field>
           </div>
 
-      
+
           <div class="row mt-4 fotButtonBar">
             <div class="col-sm-12 col-md-12 justify-content-between d-flex">
               <button type="button" mat-raised-button (click)="tabIndex= tabIndex -1; ">{{'back' | translate:translateKey}}</button>

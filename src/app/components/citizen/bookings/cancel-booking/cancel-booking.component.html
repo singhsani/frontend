@@ -58,7 +58,7 @@
 			<mat-cell *matCellDef="let element;"> {{bookingUtils.returnProperDate(element.bookingDate)}} </mat-cell>
 		</ng-container>
 
-		<ng-container matColumnDef="start">
+		<!-- <ng-container matColumnDef="start">
 			<mat-header-cell *matHeaderCellDef>{{'start_date' | translate:translateKey}} </mat-header-cell>
 			<mat-cell  *matCellDef="let element;"> {{bookingUtils.returnProperDate(element.bookingFrom)}}</mat-cell>
 		</ng-container>
@@ -66,7 +66,7 @@
 		<ng-container matColumnDef="end">
 			<mat-header-cell *matHeaderCellDef>{{'end_date' | translate:translateKey}} </mat-header-cell>
 			<mat-cell  *matCellDef="let element;"> {{bookingUtils.returnProperDate(element.bookingTo)}} </mat-cell>
-		</ng-container>
+		</ng-container> -->
 
 		<ng-container matColumnDef="status">
 			<mat-header-cell *matHeaderCellDef> {{'booking_status' | translate:translateKey}} </mat-header-cell>
@@ -76,10 +76,16 @@
 		<ng-container matColumnDef="action">
 			<mat-header-cell *matHeaderCellDef> {{'actions' | translate:translateKey}}</mat-header-cell>
 			<mat-cell *matCellDef="let element;">
-				<button *ngIf="element.status != bookingConstant.EXPIRED && element.status != bookingConstant.PAYMENT_REQUIRED" mat-button [matMenuTriggerFor]="menu">
+				<button *ngIf="(element.status != bookingConstant.EXPIRED) && !(element.status == bookingConstant.SUBMITTED && element.resourceType == 'STADIUM')" mat-button [matMenuTriggerFor]="menu">
 					<mat-icon>more_vert</mat-icon>
 				</button>
 				<mat-menu #menu="matMenu">
+
+					<button *ngIf="element.status == bookingConstant.PAYMENT_REQUIRED" mat-menu-item color="primary" (click)="paymentRequest(element)">
+						<mat-icon title="Print Receipt" color="primary">print</mat-icon>
+						{{'make_payment' | translate:translateKey}}
+					</button>
+
 					<button mat-menu-item color="primary" (click)="printReceipt(element)">
 						<mat-icon title="Print Receipt" color="primary">print</mat-icon>
 						{{'receipt' | translate:translateKey}}
@@ -94,6 +100,7 @@
 						<mat-icon title="View Booking Details" color="primary">details</mat-icon>
 						{{'details' | translate:translateKey}}
 					</button>
+
 				</mat-menu>
 			</mat-cell>
 		</ng-container>
@@ -145,12 +152,12 @@
 			<tbody>
 				<tr *ngFor="let shifts of CancelSlotList; let i = index;">
 					<th scope="row">{{i+1}}</th>
-					<td>{{shifts.bookingNo}}</td>
+					<td>{{shifts.bookingNo?shifts.bookingNo: 'NA' }}</td>
 					<td>{{bookingUtils.returnProperDate(shifts.bookingDate)}}</td>
 					<td>{{bookingUtils.getDay(shifts.bookingDate)}}</td>
 					<td>{{shifts.startTime}}</td>
 					<td>{{shifts.endTime}}</td>
-					<td>{{shifts.shiftType}}</td>
+					<td>{{shifts.shiftType == 'NONE' ? 'NA' : shifts.shiftType}}</td>
 					<td>{{shifts.status}}</td>
 					<td>
 						<mat-checkbox [disabled]="(shifts.status == bookingConstant.CANCELLATION_REQUEST || shifts.status == bookingConstant.CANCELLATION_APPROVED)"

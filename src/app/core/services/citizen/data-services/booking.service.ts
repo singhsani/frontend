@@ -65,10 +65,19 @@ export class BookingService {
 	}
 
 	/**
+	 * Method is used to get transaction details
+	 * @param refNumber - reference number.
+	 */
+	getTransactionDetails(refNumber) {
+		this.requestURL = `api/booking/${this.resourceType}/getTransactionDetail?refNumber=${refNumber}`;
+		return this.http.get(this.requestURL);
+	}
+
+	/**
 	 * Method is used to perform payment and after storing data to localhost redirects to payment gateway.
 	 * @param data - Object Data
 	 */
-	proceedForPayment(data: any){
+	proceedForPayment(data: any): any {
 		let payData = {
 			id: null,
 			uniqueId: null,
@@ -83,7 +92,8 @@ export class BookingService {
 			paymentStatus: "SUCCESS",
 			retUrl: environment.citizenUrl,
 			retPath: 'citizen/payment-gateway-response',
-			myApplicationUrl: '/citizen/booking/cancel-booking'
+			myApplicationUrl: '/citizen/booking/cancel-booking',
+			amount: data.amount
 		}
 
 		/**
@@ -91,9 +101,21 @@ export class BookingService {
 		 */
 		this.session.set('paymentData', JSON.stringify(payData));
 
-		this.commonService.paymentAlert('', '', '', cb => {
-			window.location.href = environment.adminUrl +`#/admin/payment-gateway?retUrl=${payData.retUrl}&retPath=${payData.retPath}`;
-		});
+		/**
+		 * Generation of HTML of payment alert.
+		 */
+
+		return {
+			payData: payData,
+			html: `
+				<div class="text-center">
+					<h2>Total Fee Pay</h2>
+					<div class="payAmount">
+						<i class="fa fa-inr" aria-hidden="true">${payData.amount}</i>
+					</div>
+					<p>Rupees in words</p>
+				</div>
+				`};
 	}
 
 	/**
@@ -137,12 +159,12 @@ export class BookingService {
 	 * Method Is used to print acknowledgement receipt
 	 * @param refNumber - reference number
 	 */
-	printAcknowledgementReceipt(refNumber : string){
+	printAcknowledgementReceipt(refNumber: string) {
 		this.requestURL = `api/booking/${this.resourceType}/print/acknowledgement/${refNumber}`;
 		return this.http.get(this.requestURL, 'printReceipt');
 	}
-	
 
+    // Part Should be common in future
 	/**
 	 * This method is use for get date wise slots for particular resource 
 	 * @param resourceName - string
@@ -189,8 +211,8 @@ export class BookingService {
 	 * This method is used to get all form data with pagination using API
 	 */
 	getAllBookings(refNumber?: string): Observable<any> {
-		if(!refNumber){
-            refNumber = ""
+		if (!refNumber) {
+			refNumber = ""
 		}
 		this.requestURL = `api/booking/${this.resourceType}/mybooking?page=${this.pageIndex}&limit=${this.pageSize}&refNumber=${refNumber}`;
 		return this.http.get(this.requestURL);
