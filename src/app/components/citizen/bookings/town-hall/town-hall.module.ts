@@ -6,10 +6,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../../../shared/shared.module';
 import { CoreModule } from '../../../../core/core.module';
 import { TownHallRoutingModule } from './town-hall-routing.module';
+import { TownHallBookComponent } from './townhall-book/townhall-book.component';
 /* Import all shared, core and routing module end */
 
-import { TownHallListComponent } from './town-hall-list/town-hall-list.component';
-import { TownHallBookComponent } from './town-hall-book/town-hall-book.component';
 
 @NgModule({
 	imports: [
@@ -21,8 +20,6 @@ import { TownHallBookComponent } from './town-hall-book/town-hall-book.component
 		TownHallRoutingModule
 	],
 	declarations: [
-		TownHallListComponent,
-		TownHallBookComponent
-	]
+		TownHallBookComponent	]
 })
 export class TownHallModule { }

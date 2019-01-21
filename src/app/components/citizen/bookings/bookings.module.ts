@@ -7,9 +7,9 @@ import { MyDatePickerModule } from 'mydatepicker';
 import { SharedModule } from '../../../shared/shared.module';
 import { CoreModule } from '../../../core/core.module';
 import { BookingDashboardComponent } from './booking-dashboard/booking-dashboard.component';
-import { CancelBookingComponent } from './cancel-booking/cancel-booking.component';
 import { PlanetariumComponent } from './planetarium/planetarium.component';
 import { ChildrenTheaterComponent } from './children-theater/children-theater.component';
+import { MyBookingComponent } from './my-booking/my-booking.component';
 
 @NgModule({
   imports: [
@@ -21,6 +21,6 @@ import { ChildrenTheaterComponent } from './children-theater/children-theater.co
     MyDatePickerModule,
     CoreModule
   ],
-  declarations: [BookingDashboardComponent, CancelBookingComponent, PlanetariumComponent, ChildrenTheaterComponent]
+  declarations: [BookingDashboardComponent, MyBookingComponent, PlanetariumComponent, ChildrenTheaterComponent]
 })
 export class BookingsModule { }

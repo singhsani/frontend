@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ManageRoutes } from '../../../../config/routes-conf';
-import { StadiumListComponent } from './stadium-list/stadium-list.component';
 import { BookStadiumComponent } from './book-stadium/book-stadium.component';
 
 

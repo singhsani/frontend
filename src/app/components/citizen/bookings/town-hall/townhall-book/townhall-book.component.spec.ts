@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing'
-import { TownHallListComponent } from './town-hall-list.component';
+import { TownHallBookComponent } from './townhall-book.component';
 import { MaterialModule } from '../../../../../shared/modules/material/material.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '../../../../../shared/modules/translate/translate.module';
@@ -21,8 +21,8 @@ import { FormsActionsService } from '../../../../../core/services/citizen/data-s
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 fdescribe('TownHall Booking : TownHallListComponent', () => {
-  let component: TownHallListComponent;
-  let fixture: ComponentFixture<TownHallListComponent>;
+  let component: TownHallBookComponent;
+  let fixture: ComponentFixture<TownHallBookComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -41,7 +41,7 @@ fdescribe('TownHall Booking : TownHallListComponent', () => {
           closeButton: true
         })],
       declarations: [
-        TownHallListComponent,
+        TownHallBookComponent,
         AddressComponent,
         GujInputTargetDirective,
         GujInputSourceDirective,
@@ -60,7 +60,7 @@ fdescribe('TownHall Booking : TownHallListComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TownHallListComponent);
+    fixture = TestBed.createComponent(TownHallBookComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

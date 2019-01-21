@@ -92,7 +92,7 @@ export class BookingService {
 			paymentStatus: "SUCCESS",
 			retUrl: environment.citizenUrl,
 			retPath: 'citizen/payment-gateway-response',
-			myApplicationUrl: '/citizen/booking/cancel-booking',
+			myApplicationUrl: '/citizen/bookings/my-bookings',
 			amount: data.amount
 		}
 

@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CancelBookingComponent } from './cancel-booking.component';
+import { MyBookingComponent } from './my-booking.component';
 import { MaterialModule } from '../../../../shared/modules/material/material.module';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -18,8 +18,8 @@ import { PaginationService } from '../../../../core/services/citizen/data-servic
 import { BsModalService,ModalModule } from 'ngx-bootstrap';
 
 describe('Cancel Booking : CancelBookingComponent', () => {
-  let component: CancelBookingComponent;
-  let fixture: ComponentFixture<CancelBookingComponent>;
+  let component: MyBookingComponent;
+  let fixture: ComponentFixture<MyBookingComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -38,7 +38,7 @@ describe('Cancel Booking : CancelBookingComponent', () => {
           progressBar: true,
           closeButton: true
         })],
-      declarations: [CancelBookingComponent, TitleBarComponent],
+      declarations: [MyBookingComponent, TitleBarComponent],
       providers: [BookingService,
         HttpService,
         CommonService,
@@ -50,7 +50,7 @@ describe('Cancel Booking : CancelBookingComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CancelBookingComponent);
+    fixture = TestBed.createComponent(MyBookingComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
