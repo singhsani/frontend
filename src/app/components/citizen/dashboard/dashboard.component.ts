@@ -32,7 +32,7 @@ export class DashboardComponent implements OnInit {
 			"gujName": "Booking Facilities",
 			"services": [
 				{
-					"code": "TOWNHALLLIST",
+					"code": "TOWNHALLBOOK",
 					"fieldView": "ALL",
 					"name": "Town Hall",
 					"gujName": "ટાઉનહોલ",

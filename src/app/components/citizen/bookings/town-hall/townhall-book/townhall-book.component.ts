@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
-import { FormGroup, FormArray, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatPaginator, MatTableDataSource } from '@angular/material';
 import { ToastrService } from 'ngx-toastr';
 import * as moment from 'moment';
@@ -28,11 +28,11 @@ export interface BookingDetails {
 }
 
 @Component({
-	selector: 'app-town-hall-list',
-	templateUrl: './town-hall-list.component.html',
-	styleUrls: ['./town-hall-list.component.scss']
+	selector: 'app-townhall-book',
+	templateUrl: './townhall-book.component.html',
+	styleUrls: ['./townhall-book.component.scss']
 })
-export class TownHallListComponent implements OnInit {
+export class TownHallBookComponent implements OnInit {
 
 
 	@ViewChild('address') addressComp: any;
@@ -377,14 +377,14 @@ export class TownHallListComponent implements OnInit {
 							window.location.href = environment.adminUrl + `#/admin/payment-gateway?retUrl=${payData.payData.retUrl}&retPath=${payData.payData.retPath}`;
 						}, arj => {
 							this.townHallApplicationForm.disable();
-							this.router.navigate(['citizen/booking/cancel-booking']);
+							this.router.navigate([this.bookingConstants.MY_BOOKINGS_URL]);
 						});
 						return;
 					});
 					return;
 				} else if (err.error[0].code == this.bookingConstants.INVALID_BOOKING_STATUS) {
 					this.commonService.openAlert("Invalid Booking Status", err.error[0].message, "warning", "", cb => {
-						this.router.navigate(['citizen/booking/cancel-booking'])
+						this.router.navigate([this.bookingConstants.MY_BOOKINGS_URL])
 					})
 				} else {
 					this.commonService.openAlertFormSaveValidation('Warning!', err.error, 'warning');

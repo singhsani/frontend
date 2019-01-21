@@ -282,7 +282,7 @@ const ROUTEMAIN = {
         'type': ''
     },
     'STADIUMBOOK': {
-        'main': 'book-stadium',
+        'main': 'book',
         'type': ''
     },
     'THEATER': {
@@ -310,7 +310,7 @@ const ROUTEMAIN = {
         'type': ''
     },
     'CANCELBOOKING': {
-        'main': 'cancel-booking',
+        'main': 'my-bookings',
         'type': ''
     },
     'SLOTBOOKING': {
@@ -366,7 +366,7 @@ const ROUTEPREFIX = {
     /** end - citizen auth module routes configuretion */
 
     /** start - citizen booking module routes configuretion */
-    'BOOKINGMODULE': 'booking',
+    'BOOKINGMODULE': 'bookings',
 
     /** start - citizen inner-booking modules routes configuretion */
     'BANDMODULE': 'band',

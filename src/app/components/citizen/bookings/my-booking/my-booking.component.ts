@@ -13,11 +13,11 @@ import { BookingConstants, BookingUtils } from '../booking-config';
 import { environment } from '../../../../../environments/environment';
 
 @Component({
-	selector: 'app-cancel-booking',
-	templateUrl: './cancel-booking.component.html',
-	styleUrls: ['./cancel-booking.component.scss']
+	selector: 'app-my-booking',
+	templateUrl: './my-booking.component.html',
+	styleUrls: ['./my-booking.component.scss']
 })
-export class CancelBookingComponent implements OnInit {
+export class MyBookingComponent implements OnInit {
 	@ViewChild(MatPaginator) paginator: MatPaginator;
 	@ViewChild(MatSort) sort: MatSort;
 	@ViewChild("templateResponseModel") templateResponseModel: TemplateRef<any>;

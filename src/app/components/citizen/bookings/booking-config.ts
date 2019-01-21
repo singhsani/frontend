@@ -34,6 +34,8 @@ export enum BookingConstants {
     EMAIL_MIS_MATCH_MESSAGE ="Email and Confirm Email should match",
     TOWNHALL_RESOURCE_TYPE ="townhall",
     STADIUM_RESOURCE_TYPE = "stadium",
+    BOOKINGS_FILE_UPLOAD_URL = 'api/attachment/booking/upload',
+    MY_BOOKINGS_URL = 'citizen/bookings/my-bookings'
 }
 
 /**

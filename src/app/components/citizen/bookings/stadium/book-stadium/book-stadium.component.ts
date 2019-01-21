@@ -275,13 +275,13 @@ export class BookStadiumComponent implements OnInit {
               sectionToPrint.innerHTML = acknowledgementHTML;
               setTimeout(() => {
                 window.print();
-                this.router.navigate(['citizen/booking/cancel-booking']);
+                this.router.navigate([this.bookingConstants.MY_BOOKINGS_URL]);
               });
             }, err => {
               this.commonService.openAlert("Error", err.error[0].message, "warning")
             })
           }, rA => {
-            this.router.navigate(['citizen/booking/cancel-booking']);
+            this.router.navigate([this.bookingConstants.MY_BOOKINGS_URL]);
           })
         }
       }, (err) => {
