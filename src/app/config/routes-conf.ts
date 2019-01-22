@@ -69,7 +69,7 @@ const ROUTEMAIN = {
         'main': 'provisionalHospitalNoc',
         'type': 'provisionalHospitalNoc'
     },
-    'FS-FINAL-HOSPITAL':{
+    'FS-FINAL-HOSPITAL': {
         'main': 'finalHospitalNoc',
         'type': 'finalHospitalNoc'
     },
@@ -85,7 +85,7 @@ const ROUTEMAIN = {
         'main': 'navratriNoc',
         'type': 'navratriNoc'
     },
-    'FS_FIRE_CERTIFICATE':{
+    'FS_FIRE_CERTIFICATE': {
         'main': 'fireCertificate',
         'type': 'fireCertificate'
     },
@@ -285,6 +285,14 @@ const ROUTEMAIN = {
         'main': 'book',
         'type': ''
     },
+    'SHOOTINGPERMISSION': {
+        'main': 'shootingPermission',
+        'type': 'shootingPermission'
+    },
+    'BOOKPERMISSION': {
+        'main': 'bookPermission',
+        'type': ''
+    },
     'THEATER': {
         'main': 'theater',
         'type': 'amphiTheater'
@@ -374,6 +382,7 @@ const ROUTEPREFIX = {
     'GUESTHOUSEMODULE': 'guest-house',
     'PLANETAREAMODULE': 'planet-area',
     'STADIUMMODULE': 'stadium',
+    'SHOOTINGPERMISSIONMODULE': 'shootingPermission',
     'SWIMMINGMODULE': 'swimming',
     'THEATERMODULE': 'theater',
     'TOWNHALLMODULE': 'town-hall',
@@ -622,6 +631,9 @@ const ROUTESLIST = {
     },
     'STADIUMBOOK': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.BOOKINGMODULE + '/' + ROUTEPREFIX.STADIUMMODULE + '/' + ROUTEMAIN.STADIUMBOOK.main
+    },
+    'BOOKPERMISSION': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.BOOKINGMODULE + '/' + ROUTEPREFIX.SHOOTINGPERMISSIONMODULE + '/' + ROUTEMAIN.BOOKPERMISSION.main
     },
     'THEATERLIST': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.BOOKINGMODULE + '/' + ROUTEPREFIX.THEATERMODULE + '/' + ROUTEMAIN.THEATERLIST.main

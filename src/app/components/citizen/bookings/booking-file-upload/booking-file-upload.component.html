@@ -1,0 +1,23 @@
+
+<div class="row">
+  <!-- Uploaded file/image name-->
+  <label class="custom-file-upload" [hidden]="!canUpload">
+    <span class="badge badge-info" title="{{fileName}}" (click)="view()" *ngIf="!getFile">{{fileName}}</span>
+    <span class="badge badge-info" title="{{getFile.realFileName}}" *ngIf="getFile" (click)="view()">{{getFile.realFileName}}</span>
+    <mat-progress-bar *ngIf="currentFileUpload" mode="determinate" value="{{progress.percentage}}"></mat-progress-bar>
+  </label>
+  
+  <!-- Upload new file/Image-->
+  <label class="custom-file-upload">
+    <input #fileInput type="file" (change)="selectFile($event)" />
+  
+    <span class="attachment">
+      <!-- <i class="fa fa-plus-square"></i> -->
+      <mat-icon>add</mat-icon>
+    </span>
+    <span [hidden]="canUpload" class="badge badge-primary ml-1">Attach File</span>
+  </label>
+  
+  
+  </div>
+  

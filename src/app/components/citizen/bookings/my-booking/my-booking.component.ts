@@ -77,7 +77,8 @@ export class MyBookingComponent implements OnInit {
 			{ type: 'townhall', name: 'Townhall' },
 			{ type: 'stadium', name: 'Stadium' },
 			{ type: 'amphiTheater', name: 'Amphi Theater' },
-			{ type: 'guesthouse', name: 'Guest House' }]
+			{ type: 'guesthouse', name: 'Guest House' },
+			{ type: 'shootingPermission', name: 'Shooting Permission' }]
 		this.resources = resourcesList;
 	}
 

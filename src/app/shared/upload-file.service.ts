@@ -45,4 +45,14 @@ export class UploadFileService {
 		return this.httpService.deleteUploadedFile(getFileUrl)
 
 	}
+
+	/**
+   * Read file from server for bookings.
+   * @param referenceNo - reference number.
+   * @param fileId - file id
+   */
+  getFileFromServiceForBookings(referenceNo, fileId) {
+    let getFileUrl = 'api/attachment/booking/' + referenceNo + '/getFile/' + fileId;
+    return this.httpService.getUploadedFile(getFileUrl);
+  }
 }
