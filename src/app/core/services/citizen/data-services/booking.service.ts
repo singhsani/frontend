@@ -60,7 +60,7 @@ export class BookingService {
 	 * @param searchPaymentData - Search Payment Data.
 	 */
 	searchPayment(refNumber) {
-		this.requestURL = `api/booking/${this.resourceType}/getFees/${refNumber}`
+		this.requestURL = `api/booking/${this.resourceType}/getFees/${refNumber}`;
 		return this.http.get(this.requestURL);
 	}
 

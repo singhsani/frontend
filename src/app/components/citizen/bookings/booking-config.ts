@@ -32,8 +32,10 @@ export enum BookingConstants {
     SELECT_SHIFT_MESSAGE="Please Select shift",
     MOB_NO_MIS_MATCH_MESSAGE ="Mobile Number and Confirm Mobile Number should match",
     EMAIL_MIS_MATCH_MESSAGE ="Email and Confirm Email should match",
+    FEILD_ERROR_TITLE = "Feild Error",
     TOWNHALL_RESOURCE_TYPE ="townhall",
     STADIUM_RESOURCE_TYPE = "stadium",
+    SHOOTING_PERMISSION_PLACE = "shootingPermission",
     BOOKINGS_FILE_UPLOAD_URL = 'api/attachment/booking/upload',
     MY_BOOKINGS_URL = 'citizen/bookings/my-bookings'
 }

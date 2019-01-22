@@ -10,6 +10,7 @@ import { BookingDashboardComponent } from './booking-dashboard/booking-dashboard
 import { PlanetariumComponent } from './planetarium/planetarium.component';
 import { ChildrenTheaterComponent } from './children-theater/children-theater.component';
 import { MyBookingComponent } from './my-booking/my-booking.component';
+// import { BookingFileUploadComponent } from './booking-file-upload/booking-file-upload.component';
 
 @NgModule({
   imports: [
@@ -21,6 +22,7 @@ import { MyBookingComponent } from './my-booking/my-booking.component';
     MyDatePickerModule,
     CoreModule
   ],
-  declarations: [BookingDashboardComponent, MyBookingComponent, PlanetariumComponent, ChildrenTheaterComponent]
+  declarations: [BookingDashboardComponent, MyBookingComponent, PlanetariumComponent, ChildrenTheaterComponent],
+  // exports :[BookingFileUploadComponent]
 })
 export class BookingsModule { }

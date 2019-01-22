@@ -143,7 +143,7 @@ export class HttpService {
 		return this.httpClient.request(req);
 	}
 
-	getUploadedFile(url:string,type:string){
+	getUploadedFile(url:string,type?:string){
 		let headers = new HttpHeaders().append("Authorization", "Bearer " + this.session.get("access_token").token)
 		return this.httpClient.get(this.getFullUrl(url), {responseType: 'arraybuffer',headers:headers});
 	}
@@ -164,5 +164,6 @@ export class HttpService {
 	private getFullUrl(url: string): string {
 		return environment.envAPIServer + url;
 	}
+	
 
 }

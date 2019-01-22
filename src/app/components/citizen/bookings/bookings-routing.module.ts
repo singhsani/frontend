@@ -13,6 +13,7 @@ import { TheaterModule } from './theater/theater.module';
 import { ZooModule } from './zoo/zoo.module';
 import { BandModule } from './band/band.module';
 import { MyBookingComponent } from './my-booking/my-booking.component';
+import { ShootingPermissionModule } from './shooting-permission/shooting-permission.module';
 
 const routes: Routes = [
 	{ path: '', component: BookingDashboardComponent, canActivate: [AuthGuard] },
@@ -25,7 +26,8 @@ const routes: Routes = [
 	{ path: ManageRoutes.getPrefixRoute('SWIMMINGMODULE'), loadChildren: () => SwimmingPoolModule, canLoad: [AuthGuard] },
 	{ path: ManageRoutes.getPrefixRoute('THEATERMODULE'), loadChildren: () => TheaterModule, canLoad: [AuthGuard] },
 	{ path: ManageRoutes.getPrefixRoute('ZOOMODULE'), loadChildren: () => ZooModule, canLoad: [AuthGuard] },
-	{ path: ManageRoutes.getMainRoute('CANCELBOOKING'),component:MyBookingComponent ,canActivate: [AuthGuard] }
+	{ path: ManageRoutes.getMainRoute('CANCELBOOKING'),component:MyBookingComponent ,canActivate: [AuthGuard] },
+	{ path: ManageRoutes.getMainRoute('SHOOTINGPERMISSION'),loadChildren: () => ShootingPermissionModule ,canLoad: [AuthGuard] }
 ];
 
 @NgModule({
