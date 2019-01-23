@@ -145,11 +145,10 @@ export class BookPermissionComponent implements OnInit {
   }
 
   /**
-   * 
+   * This method for get resource list
    */
   getResourceList() {
     this.bookingService.getResourceList().subscribe(resp => {
-      console.log(resp);
       this.SHOOTING_PERMISSION = resp.data;
     })
   }
@@ -190,7 +189,7 @@ export class BookPermissionComponent implements OnInit {
 			 * calling api to get all available slots.
 			 */
       this.bookingService.getAllSlots(filterData).subscribe(resp => {
-        //console.log(resp);
+
         this.filteredReponse = resp;
         let temp = resp.data.scheduleList;
         this.Dates = temp.sort((a, b) => {
@@ -208,12 +207,9 @@ export class BookPermissionComponent implements OnInit {
     }
   }
 
-  // changeStartDate() {
-  //   this.searchBooking();
-  // }
 
   /**
-	 * Selection Parts is being started from  here.
+	 * Selection Parts is being started from here.
 	 */
   filterMonths(): Array<any> {
     return this.bookingUtils.DateArray.filter(month => this.Dates.find(d => d.key.split('-')[1] == month.id));
