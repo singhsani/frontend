@@ -505,10 +505,18 @@
           </div>
 
           <div class="col-md-6">
-            <label labelPosition="after">{{'letter_mayor_counciler_others' | translate:translateKey}}
+            <label labelPosition="after">{{'previous_permission_orders_if_applicable' | translate:translateKey}}
             </label>
-            <booking-file-upload (uploaded)="isFileUploaded = $event" [form]="bookPermissionApplicationForm" [uploadModel]="{fieldIdentifier:'1', labelName:'letter_mayor_counciler_others', formPart:'1.1', refNumber:
-                bookPermissionApplicationForm.controls.refNumber.value, variableName: 'letter_mayor'}">
+            <booking-file-upload (uploaded)="isFileUploaded = $event" [form]="bookPermissionApplicationForm" [uploadModel]="{fieldIdentifier:'1', labelName:'previous_permission_orders_if_applicable', formPart:'1.1', refNumber:
+                bookPermissionApplicationForm.controls.refNumber.value, variableName: 'permission_orders'}">
+            </booking-file-upload>
+          </div>
+
+          <div class="col-md-6">
+            <label labelPosition="after">{{'vehicle_details' | translate:translateKey}}
+            </label>
+            <booking-file-upload (uploaded)="isFileUploaded = $event" [form]="bookPermissionApplicationForm" [uploadModel]="{fieldIdentifier:'2', labelName:'vehicle_details', formPart:'1.2', refNumber:
+                bookPermissionApplicationForm.controls.refNumber.value, variableName: 'vehicle_details'}">
             </booking-file-upload>
           </div>
 

@@ -165,9 +165,9 @@ export class BookingFileUploadComponent implements OnInit {
 	 * Method is used to delete file using service form id.
 	 */
   deleteFile() {
-    if (this.uploadModel.serviceFormId) { //for coomon file upload
+    if (this.uploadModel.refNumber) { //for coomon file upload
       this.commonService.deleteAlert('Are you sure?', '', 'warning', '', performDelete => {
-        this.uploadFileService.deleteFile(this.uploadModel.serviceFormId.toString(), this.id).subscribe(
+        this.uploadFileService.deleteFileFromServiceForBookings(this.uploadModel.refNumber.toString(), this.id).subscribe(
           (respData: any) => {
             if (respData.body) {
               this.tostr.success(this.uploadModel.labelName + " successfully deleted", "File Deleted");
@@ -179,18 +179,7 @@ export class BookingFileUploadComponent implements OnInit {
           });
       });
     } else {
-      // this.commonService.deleteAlert('Are you sure?', '', 'warning', '', performDelete => {
-      //   this.uploadFileService.deleteFile(this.form.get('serviceFormId').value.toString(), this.id).subscribe(
-      //     (respData: any) => {
-      //       if (respData.body) {
-      //         this.commonService.successAlert("File Deleted", this.uploadModel.documentLabelEn + " successfully deleted", "success");
-      //         this.canUpload = false;
-      //         this.fileName = '';
-      //         this.getFile = '';
-      //         this.priviewImage = '';
-      //       }
-      //     });
-      // });
+      this.commonService.successAlert("", this.uploadModel.documentLabelEn + " file is not found", "warning");
     }
   }
 

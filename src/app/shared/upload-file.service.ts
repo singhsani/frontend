@@ -18,7 +18,7 @@ export class UploadFileService {
 		this.uploadFileUrl = 'api/attachment/upload';
 	}
 
-	processFileToServer(formData: FormData, setProgress?: any, successResponse?: any){
+	processFileToServer(formData: FormData, setProgress?: any, successResponse?: any) {
 
 		this.httpService.uploadFilePost(this.uploadFileUrl, formData).subscribe(event => {
 			switch (event.type) {
@@ -34,25 +34,44 @@ export class UploadFileService {
 		});
 	}
 
-	getFileFromServer(serviceFormId,fileId,type){
-		let getFileUrl = 'api/attachment/'+serviceFormId+'/getFile/'+fileId;
-		
-		return this.httpService.getUploadedFile(getFileUrl,type);
-	}
-
-	deleteFile(serviceFormId, fileId){
-		let getFileUrl = 'api/attachment/' + serviceFormId + '/getFile/' + fileId+"/delete";
-		return this.httpService.deleteUploadedFile(getFileUrl)
-
+	/**
+	 * Read file from server using service id.
+	 * @param serviceFormId - service Id.
+	 * @param fileId - file id.
+	 * @param type - response type
+	 */
+	getFileFromServer(serviceFormId, fileId, type) {
+		let getFileUrl = 'api/attachment/' + serviceFormId + '/getFile/' + fileId;
+		return this.httpService.getUploadedFile(getFileUrl, type);
 	}
 
 	/**
-   * Read file from server for bookings.
-   * @param referenceNo - reference number.
-   * @param fileId - file id
-   */
-  getFileFromServiceForBookings(referenceNo, fileId) {
-    let getFileUrl = 'api/attachment/booking/' + referenceNo + '/getFile/' + fileId;
-    return this.httpService.getUploadedFile(getFileUrl);
-  }
+	 * Delete file from server using service id.
+	 * @param serviceFormId - reference number.
+	 * @param fileId - file id
+	 */
+	deleteFile(serviceFormId, fileId) {
+		let getFileUrl = 'api/attachment/' + serviceFormId + '/getFile/' + fileId + "/delete";
+		return this.httpService.deleteUploadedFile(getFileUrl)
+	}
+
+	/**
+	 * Read file from server for bookings.
+	 * @param referenceNo - reference number.
+	 * @param fileId - file id
+	 */
+	getFileFromServiceForBookings(referenceNo, fileId) {
+		let getFileUrl = 'api/attachment/booking/' + referenceNo + '/getFile/' + fileId;
+		return this.httpService.getUploadedFile(getFileUrl);
+	}
+
+	/**
+	 * Read file from server for bookings.
+	 * @param referenceNo - reference number.
+	 * @param fileId - file id
+	 */
+	deleteFileFromServiceForBookings(referenceNo, fileId) {
+		let getFileUrl = 'api/attachment/booking/' + referenceNo + '/getFile/' + fileId + '/delete';
+		return this.httpService.deleteUploadedFile(getFileUrl);
+	}
 }
