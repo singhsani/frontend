@@ -321,7 +321,7 @@ export class BookPermissionComponent implements OnInit {
   }
 
   /**
-   * Method is used to submit stadium application form.
+   * Method is used to submit shooting permission application form.
    */
   submitPermissionApplication(): void {
     let errCount = this.bookingUtils.getAllErrors(this.bookPermissionApplicationForm);
@@ -342,7 +342,7 @@ export class BookPermissionComponent implements OnInit {
      else {
       this.bookingService.commonBookSlot(this.bookPermissionApplicationForm.value).subscribe(resp => {
         if (resp.data.status == this.bookingConstants.SUBMITTED) {
-          this.commonService.commonAlert("Stadium Booking", "Stadium Booked Successfully", "success", "Print Acknowledgement Receipt", false, '', pA => {
+          this.commonService.commonAlert("Shooting Permission Booking", "Shooting Permission Booked Successfully", "success", "Print Acknowledgement Receipt", false, '', pA => {
             this.bookingService.printAcknowledgementReceipt(resp.data.refNumber).subscribe(acknowledgementHTML => {
               let sectionToPrint: any = document.getElementById('sectionToPrint');
               sectionToPrint.innerHTML = acknowledgementHTML;
@@ -363,47 +363,6 @@ export class BookPermissionComponent implements OnInit {
       return;
     }
   }
-
-// for reference
-  // submitStadiumApplication(): void {
-  //   let errCount = this.bookingUtils.getAllErrors(this.stadiumApplicationForm);
-  //   if (this.stadiumApplicationForm.invalid) {
-  //     this.handleErrorsOnSubmit(errCount);
-  //     this.commonService.openAlert(this.bookingConstants.FEILD_ERROR_TITLE, this.bookingConstants.ALL_FEILD_REQUIRED_MESSAGE, 'warning')
-  //     return;
-  //   }
-  //   else if (!this.bookingUtils.matcher(this.stadiumApplicationForm, 'emailId', 'confirmEmailId') || !this.bookingUtils.matcher(this.stadiumApplicationForm, 'applicantMobile', 'confirmMobile')) {
-  //     this.handleErrorsOnSubmit(7);
-  //     this.commonService.openAlert(this.bookingConstants.FEILD_ERROR_TITLE, !this.bookingUtils.matcher(this.stadiumApplicationForm, 'emailId', 'confirmEmailId') ? this.bookingConstants.EMAIL_MIS_MATCH_MESSAGE : this.bookingConstants.MOB_NO_MIS_MATCH_MESSAGE, 'warning')
-  //     return;
-  //   } else if(!this.isFileUploaded && this.stadiumApplicationForm.controls.concessionRequired.value){
-  //     this.handleErrorsOnSubmit(7);
-  //     this.commonService.openAlert(this.bookingConstants.FEILD_ERROR_TITLE, 'Attachment Required!', 'warning')
-  //     return;
-  //   } else {
-  //     this.bookingService.commonBookSlot(this.stadiumApplicationForm.value).subscribe(resp => {
-  //       if (resp.data.status == this.bookingConstants.SUBMITTED) {
-  //         this.commonService.commonAlert("Stadium Booking", "Stadium Booked Successfully", "success", "Print Acknowledgement Receipt", false, '', pA => {
-  //           this.bookingService.printAcknowledgementReceipt(resp.data.refNumber).subscribe(acknowledgementHTML => {
-  //             let sectionToPrint: any = document.getElementById('sectionToPrint');
-  //             sectionToPrint.innerHTML = acknowledgementHTML;
-  //             setTimeout(() => {
-  //               window.print();
-  //               this.router.navigate([this.bookingConstants.MY_BOOKINGS_URL]);
-  //             });
-  //           }, err => {
-  //             this.commonService.openAlert("Error", err.error[0].message, "warning")
-  //           })
-  //         }, rA => {
-  //           this.router.navigate([this.bookingConstants.MY_BOOKINGS_URL]);
-  //         })
-  //       }
-  //     }, (err) => {
-  //       this.commonService.openAlertFormSaveValidation('Warning!', err.error, 'warning');
-  //     })
-  //     return;
-  //   }
-  // }
 
   /**
 	 * Method is used to shortlist selected townhalls.
