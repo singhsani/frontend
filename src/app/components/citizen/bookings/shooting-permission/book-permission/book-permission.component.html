@@ -4,7 +4,7 @@
 <div *ngIf="guideLineFlag">
   <mat-card class="cardBox">
 
-    <div class="pageTitle">{{'online_bookPermission_bookings'| translate: translateKey}}</div>
+    <div class="pageTitle">{{'online_shootingPermission_booking_instruction'| translate: translateKey}}</div>
 
     <mat-card-content class="p-4">
 
@@ -46,7 +46,7 @@
       <form [formGroup]="bookPermissionSearchForm" (ngSubmit)="searchBooking()" autocomplete="off" ngNativeValidate>
         <div class="row mt-3 mb-3">
           <div class="col-md-6 ngSelect">
-            <ng-select placeholder="{{'select_bookPermission'| translate: translateKey}}" formControlName="code">
+            <ng-select placeholder="{{'select_place'| translate: translateKey}}" formControlName="code">
               <ng-option *ngFor="let bookPermission of SHOOTING_PERMISSION" [value]="bookPermission.code">
                 {{ bookPermission.name }}
               </ng-option>
@@ -105,7 +105,7 @@
 
     <mat-card class="formClass cardBorder">
 
-      <div class="pageTitle">{{'list_of_bookPermission'| translate: translateKey}}</div>
+      <div class="pageTitle">{{'list_of_book_permission'| translate: translateKey}}</div>
 
       <mat-accordion *ngFor="let month of filterMonths(); let i = index;">
         <mat-expansion-panel [expanded]="i === 0">
@@ -343,16 +343,16 @@
           <tr>
             <th scope="col">{{'booking_date'| translate: translateKey}}</th>
             <th scope="col">{{'rent_amount'| translate: translateKey}}</th>
-            <th scope="col">{{'deposit_amount'| translate: translateKey}}</th>
-            <th scope="col">{{'GST'| translate: translateKey}}</th>
+            <!-- <th scope="col">{{'deposit_amount'| translate: translateKey}}</th>
+            <th scope="col">{{'GST'| translate: translateKey}}</th> -->
           </tr>
         </thead>
         <tbody>
           <tr>
             <td scope="col">{{bookingUtils.returnProperDate(paymentObject.BOOKING_DATE)}}</td>
             <td scope="col">{{paymentObject.RENT_FEES}}</td>
-            <td scope="col">{{paymentObject.DEPOSIT_FEES}}</td>
-            <td scope="col">{{paymentObject.GST}}</td>
+            <!-- <td scope="col">{{paymentObject.DEPOSIT_FEES}}</td>
+            <td scope="col">{{paymentObject.GST}}</td> -->
           </tr>
         </tbody>
       </table>
@@ -376,9 +376,9 @@
           <ng-template mat-tab-label>
             <div>{{'applicant_or_organization_details' | translate:translateKey}}</div>
           </ng-template>
-          <h2>
+          <!-- <h2>
             {{'applicant_details' | translate:translateKey}}
-          </h2>
+          </h2> -->
 
           <div class="row">
             <mat-form-field class="col-md-4">
@@ -422,7 +422,7 @@
               </mat-error> -->
 
               <mat-error *ngIf="!bookingUtils.matcher(bookPermissionApplicationForm, 'applicantMobile', 'confirmMobile') && bookPermissionApplicationForm.controls.applicantMobile.touched && bookPermissionApplicationForm.controls.confirmMobile.touched">
-                 {{bookingConstants.MOB_NO_MIS_MATCH_MESSAGE}}                
+                {{bookingConstants.MOB_NO_MIS_MATCH_MESSAGE}}
               </mat-error>
             </div>
 
@@ -504,10 +504,14 @@
             </mat-form-field>
           </div>
 
+          <h2>
+            {{'attchaments' | translate:translateKey}}
+          </h2>
           <div class="col-md-6">
             <label labelPosition="after">{{'previous_permission_orders_if_applicable' | translate:translateKey}}
             </label>
-            <booking-file-upload (uploaded)="isFileUploaded = $event" [form]="bookPermissionApplicationForm" [uploadModel]="{fieldIdentifier:'1', labelName:'previous_permission_orders_if_applicable', formPart:'1.1', refNumber:
+            <booking-file-upload (uploaded)="isFileUploaded = $event" [form]="bookPermissionApplicationForm"
+              [uploadModel]="{fieldIdentifier:'1', labelName:'previous_permission_orders_if_applicable', formPart:'1.1', refNumber:
                 bookPermissionApplicationForm.controls.refNumber.value, variableName: 'permission_orders'}">
             </booking-file-upload>
           </div>
@@ -515,7 +519,8 @@
           <div class="col-md-6">
             <label labelPosition="after">{{'vehicle_details' | translate:translateKey}}
             </label>
-            <booking-file-upload (uploaded)="isFileUploaded = $event" [form]="bookPermissionApplicationForm" [uploadModel]="{fieldIdentifier:'2', labelName:'vehicle_details', formPart:'1.2', refNumber:
+            <booking-file-upload (uploaded)="isFileUploaded = $event" [form]="bookPermissionApplicationForm"
+              [uploadModel]="{fieldIdentifier:'2', labelName:'vehicle_details', formPart:'1.2', refNumber:
                 bookPermissionApplicationForm.controls.refNumber.value, variableName: 'vehicle_details'}">
             </booking-file-upload>
           </div>
@@ -529,7 +534,7 @@
               </button>
             </div>
           </div>
-          
+
         </mat-tab>
       </mat-tab-group>
     </form>

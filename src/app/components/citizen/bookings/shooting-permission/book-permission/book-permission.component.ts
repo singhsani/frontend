@@ -299,7 +299,6 @@ export class BookPermissionComponent implements OnInit {
         name: null
       }),
       gardenPark: [null],
-      category: [null],
       bookingFrom: [null],
       bookingTo: [null],
       remarks: [null],

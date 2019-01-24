@@ -100,6 +100,11 @@
 						<mat-icon title="View Booking Details" color="primary">details</mat-icon>
 						{{'details' | translate:translateKey}}
 					</button>
+					       
+                    <button mat-menu-item color="primary" (click)="openJSONModal(template);jsonDisplay(element)">
+                        <mat-icon class="m-1" title="{{'application_json' | translate:translateKey}}">center_focus_weak</mat-icon>
+                        {{'application_json' | translate:translateKey}}
+                    </button>
 
 				</mat-menu>
 			</mat-cell>
@@ -226,6 +231,34 @@
 			{{'ok' | translate:translateKey}}
 		</button>
 	</div>
+</ng-template>
+
+<!-- The JSON Modal -->
+<ng-template #template>
+    <div class="modal-header">
+        <div class="col-9">
+            <h5 class="modal-title pull-left">{{'application_json' | translate:translateKey}}</h5>
+        </div>
+        <div class="col-1">
+            <button class="pull-left mat-icon-button" (click)="copyText(copytext)">
+                <mat-icon title="{{'copy_clipboard' | translate:translateKey}}">content_copy</mat-icon>
+            </button>
+        </div>
+        <div class="col-1">
+            <button title="{{'close' | translate:translateKey}}" class=" mat-icon-button" aria-label="Close" (click)="modalJsonRef.hide()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </div>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-12">
+                <textarea type="text" readonly class="text-left textjson" value="{{JSONdata}}" #copytext> 
+                    </textarea>
+            </div>
+        </div>
+        <!-- <pre class="text-left" #copytext style="color: #9cdcfe;background: #212529;overflow: hidden">{{JSONdata}}</pre> -->
+    </div>
 </ng-template>
 
 <!-- this div is used for printing the receipt -->
