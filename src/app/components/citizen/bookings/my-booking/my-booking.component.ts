@@ -47,6 +47,8 @@ export class MyBookingComponent implements OnInit {
 	 */
 	modalReqRef: BsModalRef;
 	modalResRef: BsModalRef;
+	modalJsonRef :BsModalRef;
+	JSONdata: any;
 
 	/**
 	 * Lookups & arrays.
@@ -342,5 +344,36 @@ export class MyBookingComponent implements OnInit {
 				this.commonService.openAlertFormSaveValidation('Warning!', err.error, 'warning');
 			}
 		})
+	}
+
+	/**
+	 * This method is use for open modal.
+	 */
+	openJSONModal(template: TemplateRef<any>) {
+		this.modalJsonRef = this.modalService.show(template);
+	}
+
+		/**
+	 * This method is use to show JOSN format.
+	 */
+	jsonDisplay(element: any) {
+		// this.bookingService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);
+		this.bookingService.displayJson(element.refNumber).subscribe(
+			res => {
+				this.JSONdata = JSON.stringify(res, null, 4);
+			},
+			err => {
+				this.commonService.successAlert('Error!', err.error[0].message, 'error');
+			}
+		);
+
+	}
+
+	/**
+	 * This method is use for copy text.
+	 */
+	copyText(copytext:any) {
+		copytext.select();
+		document.execCommand('copy');
 	}
 }

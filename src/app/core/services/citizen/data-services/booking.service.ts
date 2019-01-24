@@ -276,4 +276,13 @@ export class BookingService {
 		this.requestURL = `api/booking/${this.resourceType}/slot/bookAPI`;
 		return this.http.post(this.requestURL, bookingInfo);
 	}
+
+	/**
+	 * This methos for display json on myBooking list
+	 * @param refNumber 
+	 */
+	displayJson(refNumber:any){
+		this.requestURL = `/api/booking/${this.resourceType}/json/${refNumber}`;
+		return this.http.get(this.requestURL);
+	}
 }
