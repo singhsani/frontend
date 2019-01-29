@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+
 import { ManageRoutes } from '../../../../config/routes-conf';
 import { PropertyNewAssessmentComponent } from './property-new-assessment/property-new-assessment.component';
 import { PropertyExtractComponent } from './property-extract/property-extract.component';

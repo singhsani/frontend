@@ -14,7 +14,6 @@ import { LoginThroughAdminComponent } from './login-through-admin/login-through-
 import { LoginLayoutComponent } from './../../../layouts/login-layout/login-layout.component';
 
 const routes: Routes = [
-
 	{
 		path: ManageRoutes.getPrefixRoute('CITIZENAUTHMODULE'), component: LoginLayoutComponent,
 		children: [
@@ -26,8 +25,7 @@ const routes: Routes = [
 			{ path: ManageRoutes.getMainRoute('CITIZENAUTHRESETPASS'), component: ResetPasswordComponent },
 			{ path: ManageRoutes.getMainRoute('CITIZENAUTHLOGINTHROUGHADMIN'), component: LoginThroughAdminComponent },
 		]
-	},
-	
+	}
 ];
 
 @NgModule({

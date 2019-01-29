@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common'; 
+import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { SharedModule } from '../../../../shared/shared.module';
@@ -17,23 +17,24 @@ import { PropertyVacantPremisesAppComponent } from './property-vacant-premises-a
 import { PropertyAssessmentCertificateComponent } from './property-assessment-certificate/property-assessment-certificate.component';
 
 @NgModule({
-  imports: [
-    CommonModule, 
-    FormsModule,
-    ReactiveFormsModule,
-    SharedModule,
-    CoreModule,
-    PropertyRoutingModule
-  ],
-  declarations: [
-    PropertyNewAssessmentComponent, 
-    PropertyExtractComponent, 
-    PropertyTransferComponent, 
-    PropertyDuplicateBillComponent, 
-    PropertyNoDueComponent, 
-    PropertyReAssessmentAppComponent, 
-    PropertySplittingComponent, 
-    PropertyVacantPremisesAppComponent, 
-    PropertyAssessmentCertificateComponent]
+	imports: [
+		CommonModule,
+		FormsModule,
+		ReactiveFormsModule,
+		SharedModule,
+		CoreModule,
+		PropertyRoutingModule
+	],
+	declarations: [
+		PropertyNewAssessmentComponent,
+		PropertyExtractComponent,
+		PropertyTransferComponent,
+		PropertyDuplicateBillComponent,
+		PropertyNoDueComponent,
+		PropertyReAssessmentAppComponent,
+		PropertySplittingComponent,
+		PropertyVacantPremisesAppComponent,
+		PropertyAssessmentCertificateComponent
+	]
 })
 export class PropertyModule { }
