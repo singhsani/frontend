@@ -12,7 +12,6 @@ import { BookingsModule } from './bookings/bookings.module';
 import { CertificatesModule } from './certificates/certificates.module';
 import { FireFacilitiesModule } from './fire-facilities/fire-facilities.module';
 import { GrievanceModule } from './grievance/grievance.module';
-import { ProfessionalTaxModule } from './professional-tax/professional-tax.module';
 /* import all modules end */
 
 /* Import citizen components other than auth start */
@@ -52,15 +51,11 @@ const routes: Routes = [
 			{ path: ManageRoutes.getPrefixRoute('GRIEVANCEMODULE'), loadChildren: () => GrievanceModule, canLoad: [AuthGuard] },
 			{ path: ManageRoutes.getPrefixRoute('TAXMODULE'), loadChildren: () => TaxModule, canLoad: [AuthGuard] },
 			{ path: ManageRoutes.getPrefixRoute('APPOINTMENT'), loadChildren: () => AppointmentModule, canLoad: [AuthGuard] },
-			
-			{ path: ManageRoutes.getPrefixRoute('PROFESSIONALMODULE'), loadChildren: () => ProfessionalTaxModule, canLoad: [AuthGuard] },
-			{ path: 'gujPOC', component:GujPocComponent, canActivate: [AuthGuard] }
+
+			{ path: 'gujPOC', component: GujPocComponent, canActivate: [AuthGuard] }
 		]
 	},
-
-	{
-		path: ManageRoutes.getPrefixRoute('CITIZENAUTHMODULE'),loadChildren: () => AuthModule
-	}
+	{ path: ManageRoutes.getPrefixRoute('CITIZENAUTHMODULE'), loadChildren: () => AuthModule }
 
 ];
 

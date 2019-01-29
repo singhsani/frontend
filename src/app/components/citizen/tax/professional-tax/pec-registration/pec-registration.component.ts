@@ -1,15 +1,14 @@
-import { FormsActionsService } from './../../../../core/services/citizen/data-services/forms-actions.service';
-import { element } from 'protractor';
+import { FormsActionsService } from '../../../../../core/services/citizen/data-services/forms-actions.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
-import { ManageRoutes } from './../../../../config/routes-conf';
+import { ManageRoutes } from '../../../../../config/routes-conf';
 import { PftConfig } from '../pftConfig';
-import { ValidationService } from './../../../../shared/services/validation.service';
-import { CommonService } from './../../../../shared/services/common.service';
-import { ProfessionalTaxService } from './../../../../core/services/citizen/data-services/professional-tax.service';
+import { ValidationService } from '../../../../../shared/services/validation.service';
+import { CommonService } from '../../../../../shared/services/common.service';
+import { ProfessionalTaxService } from '../../../../../core/services/citizen/data-services/professional-tax.service';
 
 import * as moment from 'moment';
 import * as _ from 'lodash';

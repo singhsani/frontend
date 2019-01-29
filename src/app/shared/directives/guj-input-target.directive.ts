@@ -18,6 +18,10 @@ export class GujInputTargetDirective {
 		this.inputElement = elementRef.nativeElement;
 	}
 
+	ngOnInit(){
+		this.inputElement.style.fontFamily = 'Shruti';
+	}
+
 	@HostListener('change')
 	private change() {
 		pramukhIME.resetSettings();
