@@ -8,10 +8,10 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 
 import { PftConfig } from '../pftConfig';
-import { ManageRoutes } from './../../../../config/routes-conf';
-import { ValidationService } from './../../../../shared/services/validation.service';
-import { CommonService } from './../../../../shared/services/common.service';
-import { ProfessionalTaxService } from './../../../../core/services/citizen/data-services/professional-tax.service';
+import { ManageRoutes } from '../../../../../config/routes-conf';
+import { ValidationService } from '../../../../../shared/services/validation.service';
+import { CommonService } from '../../../../../shared/services/common.service';
+import { ProfessionalTaxService } from '../../../../../core/services/citizen/data-services/professional-tax.service';
 
 import * as moment from 'moment';
 import * as _ from 'lodash';

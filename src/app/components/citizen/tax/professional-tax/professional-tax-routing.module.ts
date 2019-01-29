@@ -1,8 +1,8 @@
-import { ManageRoutes } from './../../../config/routes-conf';
+import { ManageRoutes } from '../../../../config/routes-conf';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { AuthGuard } from './../../../core/guard/auth.guard';
+import { AuthGuard } from '../../../../core/guard/auth.guard';
 import { PrcRegistrationComponent } from './prc-registration/prc-registration.component';
 import { PecRegistrationComponent } from './pec-registration/pec-registration.component';
 

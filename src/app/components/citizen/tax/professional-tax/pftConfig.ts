@@ -1,4 +1,4 @@
-import { CitizenConfig } from './../citizen-config';
+import { CitizenConfig } from '../../citizen-config';
 
 export class PftConfig extends CitizenConfig {
 
