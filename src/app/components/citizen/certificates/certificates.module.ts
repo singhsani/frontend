@@ -1,16 +1,21 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Routes, RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 /* Import all shared, core and routing module start */
 import { SharedModule } from '../../../shared/shared.module';
 import { CoreModule } from '../../../core/core.module';
-import { CertificatesRoutingModule } from './certificates-routing.module';
+import { AuthGuard } from './../../../core/guard/auth.guard';
+import { ManageRoutes } from './../../../config/routes-conf';
 /* Import all shared, core and routing module end */
 
-/* Import certificate components start */
+const routes: Routes = [
+  { path: '', redirectTo: ManageRoutes.getPrefixRoute('BIRTHANDDEATHMODULE'), pathMatch: 'full' },
+  { path: ManageRoutes.getPrefixRoute('BIRTHANDDEATHMODULE'), loadChildren: './birth-and-death/birth-and-death.module#BirthAndDeathModule', canLoad: [AuthGuard] },
+  { path: ManageRoutes.getPrefixRoute('MARRIAGEMODULE'), loadChildren: './marriage/marriage.module#MarriageModule', canLoad: [AuthGuard] },
+];
 
-/* Import certificate components end */
 
 @NgModule({
   imports: [
@@ -19,7 +24,7 @@ import { CertificatesRoutingModule } from './certificates-routing.module';
     CoreModule,
     FormsModule,
     ReactiveFormsModule,
-    CertificatesRoutingModule
+    RouterModule.forChild(routes)
   ],
   declarations: []
 })

@@ -31,11 +31,12 @@ export class DeathRegistrationComponent implements OnInit {
 	   */
 	//private attachments: any[];
 	private showButtons: boolean = false;
-	private uploadModel: any = {};
+	public uploadModel: any = {};
 	private response;
-	private translateKey = "deathRegScreen";
-	private addressTranslateKey = "addressScreen";
-	private basicTranslateKey = "basicDetailsScreen";
+	public translateKey = "deathRegScreen";
+	public addressTranslateKey = "addressScreen";
+	public basicTranslateKey = "basicDetailsScreen";
+
 	private uploadFileArray: Array<any> =
 		[{ labelName: 'Applicant Id Proof', fieldIdentifier: '1.1' },
 		{ labelName: 'Cremation Report', fieldIdentifier: '1.2' },

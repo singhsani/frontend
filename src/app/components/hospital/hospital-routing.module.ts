@@ -17,7 +17,6 @@ import { CanDeactivateGuard } from '../../core/guard/can-deactivate.guard';
 /* Import hospital components end */
 
 const routes: Routes = [
-
 	{
 		path: ManageRoutes.getPrefixRoute('HOSPITALMODULE'), component: HospitalLayoutComponent, canActivate: [HospitalGuard],
 		children: [
@@ -30,10 +29,7 @@ const routes: Routes = [
 			{ path: ManageRoutes.getMainRoute('PAYMENTGATEWAYRESPONSE'), component: HosPaymentResponsePageComponent, canActivate: [HospitalGuard] },
 		]
 	},
-
-	{
-		path: 'auth', loadChildren: () => HospitalAuthModule
-	}
+	{ path: 'auth', loadChildren: './hospital-auth/hospital-auth.module#HospitalAuthModule'}
 ];
 
 @NgModule({

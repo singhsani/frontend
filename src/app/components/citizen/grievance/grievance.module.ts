@@ -1,3 +1,4 @@
+import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -5,9 +6,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 /* Import all shared, core and routing module start */
 import { SharedModule } from '../../../shared/shared.module';
 import { CoreModule } from '../../../core/core.module';
-import { GrievanceRoutingModule } from './grievance-routing.module';
 /* Import all shared, core and routing module end */
 
+const routes: Routes = [];
 
 @NgModule({
 	imports: [
@@ -16,7 +17,7 @@ import { GrievanceRoutingModule } from './grievance-routing.module';
 		CoreModule,
 		FormsModule,
 		ReactiveFormsModule,
-		GrievanceRoutingModule
+		RouterModule.forChild(routes)
 	],
 	declarations: []
 })

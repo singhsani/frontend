@@ -1,29 +1,15 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-/* Import child modules start */
-import { CitizenModule } from './components/citizen/citizen.module';
-import { HospitalModule } from './components/hospital/hospital.module';
-/* Import child modules end */
-
-/* Import all the layout component start */
-
-/* Import all the layout component end */
-
 import { ManageRoutes } from './config/routes-conf';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 const routes: Routes = [
-
 	{ path: '', redirectTo: ManageRoutes.getPrefixRoute('CITIZENMODULE'), pathMatch: 'full' },
-	
-	{ path: ManageRoutes.getPrefixRoute('CITIZENMODULE'), loadChildren: () => CitizenModule },
-		
-	{ path: ManageRoutes.getPrefixRoute('HOSPITALMODULE'), loadChildren: () => HospitalModule },
-
+	{ path: ManageRoutes.getPrefixRoute('CITIZENMODULE'), loadChildren: './components/citizen/citizen.module#CitizenModule' },
+	{ path: ManageRoutes.getPrefixRoute('HOSPITALMODULE'), loadChildren: './components/hospital/hospital.module#HospitalModule' },
 	{ path: '**', redirectTo: '404'},
 	{ path: '404', component: PageNotFoundComponent}
-	
 ];
 
 @NgModule({

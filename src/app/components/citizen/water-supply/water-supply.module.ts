@@ -13,10 +13,20 @@ import { DrainageDisconnComponent } from './drainage-disconn/drainage-disconn.co
 import { DrainageChangeOwnershipComponent } from './drainage-change-ownership/drainage-change-ownership.component';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    WaterSupplyRoutingModule
-  ],
-  declarations: [WaterConnNewComponent, WaterChangeOwnershipComponent, WaterChangeUsageComponent, WaterPermnantDisconComponent, WaterPlumberLicComponent, WaterPlumberLicRenewalComponent, DrainageConnNewComponent, DrainageDisconnComponent, DrainageChangeOwnershipComponent]
+	imports: [
+		CommonModule,
+		WaterSupplyRoutingModule
+	],
+	declarations: [
+		WaterConnNewComponent,
+		WaterChangeOwnershipComponent,
+		WaterChangeUsageComponent,
+		WaterPermnantDisconComponent,
+		WaterPlumberLicComponent,
+		WaterPlumberLicRenewalComponent,
+		DrainageConnNewComponent,
+		DrainageDisconnComponent,
+		DrainageChangeOwnershipComponent
+	]
 })
 export class WaterSupplyModule { }
