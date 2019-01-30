@@ -30,58 +30,58 @@ export class DeathRegistrationComponent implements OnInit {
 	   * file upload related declaration
 	   */
 	//private attachments: any[];
-	private showButtons: boolean = false;
-	public uploadModel: any = {};
-	private response;
-	public translateKey = "deathRegScreen";
-	public addressTranslateKey = "addressScreen";
-	public basicTranslateKey = "basicDetailsScreen";
+	showButtons: boolean = false;
+	uploadModel: any = {};
+	response:any;
+	translateKey = "deathRegScreen";
+	addressTranslateKey = "addressScreen";
+	basicTranslateKey = "basicDetailsScreen";
 
-	private uploadFileArray: Array<any> =
+	uploadFileArray: Array<any> =
 		[{ labelName: 'Applicant Id Proof', fieldIdentifier: '1.1' },
 		{ labelName: 'Cremation Report', fieldIdentifier: '1.2' },
 		{ labelName: 'Form 4A', fieldIdentifier: '1.3' },
 		{ labelName: 'Deceased Id Proof', fieldIdentifier: '1.4' }]
 
 	//form related data.
-	private appId: number;
+		appId: number;
 	apiCode: string;
 	tabIndex: number = 0;
 
 
-	private isLinear: boolean = false;
-	private deathCertificateForm: FormGroup;
-	private submit: boolean = false;
-	private minBirthDate;
-	private minDeathDate;
-	private maxBirthDate = new Date();
-	private maxDeathDate = new Date();
+	isLinear: boolean = false;
+	deathCertificateForm: FormGroup;
+	submit: boolean = false;
+	minBirthDate;
+	minDeathDate;
+	maxBirthDate = new Date();
+	maxDeathDate = new Date();
 
 	//LookUps
-	private deathPlaces: object[];
-	private DeceasedEducations: Object[];
-	private DeceasedOccupation: Object[];
-	private RelationShip: object[];
-	private MedicalTreatmentOptions: object[];
-	private Religion: Object[];
-	private Gender: Object[];
-	private ISYESNO: object[];
+	deathPlaces: object[];
+	DeceasedEducations: Object[];
+	DeceasedOccupation: Object[];
+	RelationShip: object[];
+	MedicalTreatmentOptions: object[];
+	Religion: Object[];
+	Gender: Object[];
+	ISYESNO: object[];
 
 	/**
 	 * step labels
 	 */
-	private stepLabel1 = 'deceased_details';
-	private stepLabel2 = 'death_details';
-	private stepLabel3 = 'address_details';
-	private stepLabel4 = 'applicant_details';
-	private stepLabel5 = 'upload_documents';
+	stepLabel1 = 'deceased_details';
+	stepLabel2 = 'death_details';
+	stepLabel3 = 'address_details';
+	stepLabel4 = 'applicant_details';
+	stepLabel5 = 'upload_documents';
 
 	/**
 	 * deceasedAge for max vildation.
 	 */
-	private deceasedAge: number = 100;
-	private minAge: number = 0;
-	public isFormSaved: boolean = false;
+	deceasedAge: number = 100;
+	minAge: number = 0;
+	isFormSaved: boolean = false;
 
 	config: HospitalConfig = new HospitalConfig('death');
 	constructor(

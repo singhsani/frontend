@@ -11,7 +11,7 @@
 			<mat-form-field class="col-md-6 iconMat">
 				<mat-icon matPrefix>face</mat-icon>
 				<input matInput type="text" placeholder="HospitalName" formControlName="hospitalName" required>
-				<control-messages [control]="regForm.controls.hospitalName"></control-messages>
+				<control-messages [control]="regForm.get('hospitalName')"></control-messages>
 			</mat-form-field>
 			
 			<div class="col-md-6">
@@ -20,20 +20,20 @@
 					<ng-select placeholder="Hospital Type *" formControlName="code">
 						<ng-option *ngFor="let hosType of arrHospitalType" [value]="hosType.code">{{hosType.name}}</ng-option>
 					</ng-select>
-					<control-messages [control]="regForm.controls.hospitalType.controls.code"></control-messages>
+					<control-messages [control]="regForm.get('hospitalType').get('code')"></control-messages>
 				</div>
 			</div>
 
 			<mat-form-field class="col-md-12 iconMat">
 				<mat-icon matPrefix>location_on</mat-icon>
 				<input matInput type="text" placeholder="Address Line 1" formControlName="addressLine1" required>
-				<control-messages [control]="regForm.controls.addressLine1"></control-messages>
+				<control-messages [control]="regForm.get('addressLine1')"></control-messages>
 			</mat-form-field>
 
 			<mat-form-field class="col-md-12 iconMat">
 				<mat-icon matPrefix>location_on</mat-icon>
 				<input matInput type="text" placeholder="Address Line 2" formControlName="addressLine2" required>
-				<control-messages [control]="regForm.controls.addressLine2"></control-messages>
+				<control-messages [control]="regForm.get('addressLine2')"></control-messages>
 			</mat-form-field>
 
 			<mat-form-field class="col-md-4 iconMat">
@@ -72,26 +72,26 @@
 				<mat-icon matPrefix>face</mat-icon>
 				<input matInput type="text" placeholder="Firstname" appValidationFields validationFieldsType="onlyNameWithOutSpace" formControlName="firstName"
 				 required>
-				<control-messages [control]="regForm.controls.userDetail.controls.firstName"></control-messages>
+				<control-messages [control]="regForm.get('userDetail').get('firstName')"></control-messages>
 			</mat-form-field>
 
 			<mat-form-field class="col-md-6 iconMat">
 				<mat-icon matPrefix>face</mat-icon>
 				<input matInput type="text" placeholder="Lastname" appValidationFields validationFieldsType="onlyNameWithOutSpace" formControlName="lastName"
 				 required>
-				<control-messages [control]="regForm.controls.userDetail.controls.lastName"></control-messages>
+				<control-messages [control]="regForm.get('userDetail').get('lastName')"></control-messages>
 			</mat-form-field>
 
 			<mat-form-field class="col-md-6 iconMat">
 				<mat-icon matPrefix>mail_outline</mat-icon>
 				<input matInput type="email" placeholder="Email" formControlName="email" required>
-				<control-messages [control]="regForm.controls.userDetail.controls.email"></control-messages>
+				<control-messages [control]="regForm.get('userDetail').get('email')"></control-messages>
 			</mat-form-field>
 
 			<mat-form-field class="col-md-6 iconMat">
 				<mat-icon matPrefix>phone_android</mat-icon>
 				<input matInput type="tel" placeholder="Cell Number" formControlName="cellNo" minlength="10" maxlength="10" required>
-				<control-messages [control]="regForm.controls.userDetail.controls.cellNo"></control-messages>
+				<control-messages [control]="regForm.get('userDetail').get('cellNo')"></control-messages>
 			</mat-form-field>
 
 			<mat-form-field class="col-md-6 iconMat">

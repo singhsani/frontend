@@ -22,7 +22,7 @@ export class PecRegistrationComponent implements OnInit {
 
 	@ViewChild('officeAddr') officeAddrComponent: any;
 	@ViewChild('resAddr') resAddrComponent: any;
-	private config = new PftConfig;
+	public config = new PftConfig;
 
 	translateKey: string = 'pecRegistrationScreen';
 	prcTranslateKey: string = 'prcRegistrationScreen';

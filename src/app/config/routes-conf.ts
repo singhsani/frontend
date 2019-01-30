@@ -1,4 +1,3 @@
-import * as _ from 'lodash';
 
 const ROUTEMAIN = {
     'HEL-DUPBR': {
@@ -678,22 +677,23 @@ const ROUTESLIST = {
     },
 }
 
+import * as _ from 'lodash';
 
 export class ManageRoutes {
 
     static getFullRoute(routeType: string) {
-        return _.get(ROUTESLIST, `${routeType}.full`);
+        return ROUTESLIST[routeType]['full'];
     }
 
     static getMainRoute(routeType: string) {
-        return _.get(ROUTEMAIN, `${routeType}.main`);
+        return ROUTEMAIN[routeType]['main'];
     }
 
     static getPrefixRoute(routeType: string) {
-        return _.get(ROUTEPREFIX, `${routeType}`);
+        return ROUTEPREFIX[routeType];
     }
 
     static getApiTypeFromApiCode(apiCode: string) {
-        return _.get(ROUTEMAIN, `${apiCode}.type`);
+        return ROUTEMAIN[apiCode]['type'];
     }
 }
