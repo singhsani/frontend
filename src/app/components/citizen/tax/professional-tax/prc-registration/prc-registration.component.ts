@@ -26,7 +26,7 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 	@ViewChild('officeAddr') officeAddrComponent: any;
 	@ViewChild('resAddr') resAddrComponent: any;
 	@ViewChild('searchInput') searchInput: MatInput;
-	private config = new PftConfig();
+	public config = new PftConfig();
 
 	translateKey: string = 'prcRegistrationScreen';
 	pecTranslateKey: string = 'pecRegistrationScreen';

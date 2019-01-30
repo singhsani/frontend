@@ -14,17 +14,17 @@ export class PaymentResponsePageComponent implements OnInit {
   /**
    * responsible for payment status from gateway
    */
-  private paymentStatus: any;
+  paymentStatus: any;
 
   /**
    * data to display like amount, transaction is etc.
    */
-  private dispData: any;
+  dispData: any;
 
   /**
    * display time count to redirect my application page.
    */
-  private dispTime: number = 10;
+  dispTime: number = 10;
 
   /**
    * constructor

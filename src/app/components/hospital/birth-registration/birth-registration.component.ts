@@ -31,8 +31,8 @@ export class BirthRegistrationComponent implements OnInit {
 	 * file upload related declaration
 	 */
 	uploadModel: any = {};
-	private noOfChild = 0;
-	private uploadFileArray: Array<any> =
+	noOfChild = 0;
+	uploadFileArray: Array<any> =
 		[{ labelName: 'Resident Proof', fieldIdentifier: '1.1' },
 		{ labelName: 'Doctors Certificate', fieldIdentifier: '1.2' },
 		{ labelName: 'Kyc With Address Proof', fieldIdentifier: '1.3' },
@@ -46,41 +46,41 @@ export class BirthRegistrationComponent implements OnInit {
 	 */
 	appId: number;
 	apiCode: string;
-	private translateKey = "birthRegScreen";
+	translateKey = "birthRegScreen";
 
-	public birthCertificateForm: FormGroup;
-	private minBirthDate: any;
-	private maxBirthDate = new Date();
+	birthCertificateForm: FormGroup;
+	minBirthDate: any;
+	maxBirthDate = new Date();
 
-	private showButtons: boolean = false;
-	private showChildAddButton: boolean = false;
-	private submit: boolean = false;
-	private childs: FormArray;
+	showButtons: boolean = false;
+	showChildAddButton: boolean = false;
+	submit: boolean = false;
+	childs: FormArray;
 	showChildData: boolean = false;
 	selectedTime: any;
 	tabIndex: number = 0;
 
 	//Birth Data LookUps
-	private BirthPlaces: object[];
-	private Gender: Object[];
-	private FatherEducations: any[];
-	private FatherOccupation: any[];
-	private MotherEducations: any[];
-	private MotherOccupation: any[];
-	private DeliveryTreatmentOptions: object[];
-	private TypeOfDelivery: object[];
-	private Religion: object[];
-	private ChildWeights: object[];
-	private ISYESNO: object[];
+	BirthPlaces: object[];
+	Gender: Object[];
+	FatherEducations: any[];
+	FatherOccupation: any[];
+	MotherEducations: any[];
+	MotherOccupation: any[];
+	DeliveryTreatmentOptions: object[];
+	TypeOfDelivery: object[];
+	Religion: object[];
+	ChildWeights: object[];
+	ISYESNO: object[];
 
 	/**
 	 * step labels
 	 */
-	private stepLabel1 = 'child_details';
-	private stepLabel2 = 'fathers_details';
-	private stepLabel3 = 'mothers_details';
-	private stepLabel4 = 'family_details';
-	private stepLabel5 = 'upload_documents';
+	stepLabel1 = 'child_details';
+	stepLabel2 = 'fathers_details';
+	stepLabel3 = 'mothers_details';
+	stepLabel4 = 'family_details';
+	stepLabel5 = 'upload_documents';
 
 	/**
 	 * Regarding Form Save
