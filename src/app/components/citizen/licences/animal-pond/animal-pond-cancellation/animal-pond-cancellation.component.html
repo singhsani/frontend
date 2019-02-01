@@ -20,11 +20,11 @@
         <div class="row">
 					<mat-form-field class="col-md-4">
 						<input matInput readonly required placeholder="{{'license_no' | translate:translateKey}}" formControlName="refNumber">
-						<control-messages [control]="animalPondCancellationForm.controls.refNumber"></control-messages>
+						<control-messages [control]="animalPondCancellationForm.get('refNumber')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
 						<input matInput readonly placeholder="{{'issue_date' | translate:translateKey}}" formControlName="licenseIssueDate">
-						<control-messages [control]="animalPondCancellationForm.controls.licenseIssueDate"></control-messages>
+						<control-messages [control]="animalPondCancellationForm.get('licenseIssueDate')"></control-messages>
 					</mat-form-field>
 				</div>
 
@@ -33,25 +33,25 @@
             <ng-select placeholder="{{'person_type' | translate:translateKey}} *" formControlName="code">
               <ng-option *ngFor="let type of PERSON_TYPE" [value]="type.code">{{type.name}}</ng-option>
             </ng-select>
-            <control-messages [control]="animalPondCancellationForm.get('personType').controls.code"></control-messages>
+            <control-messages [control]="animalPondCancellationForm.get('personType').get('code')"></control-messages>
           </div>
           <mat-form-field class="col-md-2">
             <input matInput type="text" required maxlength="30" appValidationFields validationFieldsType='onlyNameWithOutSpace'
               placeholder="{{'holder_firstname' | translate:translateKey}}" formControlName="holderFirstName"
               appGujInputSource targetElement="holderFirstNameGuj" [form]="animalPondCancellationForm">
-            <control-messages [control]="animalPondCancellationForm.controls.holderFirstName"></control-messages>
+            <control-messages [control]="animalPondCancellationForm.get('holderFirstName')"></control-messages>
           </mat-form-field>
           <mat-form-field class="col-md-4">
             <input matInput type="text" required maxlength="30" appValidationFields validationFieldsType='onlyNameWithOutSpace'
               placeholder="{{'holder_middlename' | translate:translateKey}}" formControlName="holderMiddleName"
               appGujInputSource targetElement="holderMiddleNameGuj" [form]="animalPondCancellationForm">
-            <control-messages [control]="animalPondCancellationForm.controls.holderMiddleName"></control-messages>
+            <control-messages [control]="animalPondCancellationForm.get('holderMiddleName')"></control-messages>
           </mat-form-field>
           <mat-form-field class="col-md-4">
             <input matInput type="text" required maxlength="30" appValidationFields validationFieldsType='onlyNameWithOutSpace'
               placeholder="{{'holder_lastname' | translate:translateKey}}" formControlName="holderLastName"
               appGujInputSource targetElement="holderLastNameGuj" [form]="animalPondCancellationForm">
-            <control-messages [control]="animalPondCancellationForm.controls.holderLastName"></control-messages>
+            <control-messages [control]="animalPondCancellationForm.get('holderLastName')"></control-messages>
           </mat-form-field>
         </div>
 
@@ -60,30 +60,30 @@
           <mat-form-field class="col-md-4">
             <input matInput type="text" maxlength="90" required formControlName="holderFirstNameGuj" appGujInputTarget
               [form]="animalPondCancellationForm" placeholder="{{ 'holder_firstname' | translate:translateKey:'gu' }}">
-            <control-messages [control]="animalPondCancellationForm.controls.holderFirstNameGuj"></control-messages>
+            <control-messages [control]="animalPondCancellationForm.get('holderFirstNameGuj')"></control-messages>
           </mat-form-field>
           <mat-form-field class="col-md-4">
             <input matInput type="text" required maxlength="90" placeholder="{{'holder_middlename' | translate:translateKey}}"
               formControlName="holderMiddleNameGuj" appGujInputTarget [form]="animalPondCancellationForm">
-            <control-messages [control]="animalPondCancellationForm.controls.holderMiddleNameGuj"></control-messages>
+            <control-messages [control]="animalPondCancellationForm.get('holderMiddleNameGuj')"></control-messages>
           </mat-form-field>
           <mat-form-field class="col-md-4">
             <input matInput type="text" required maxlength="90" placeholder="{{'holder_lastname' | translate:translateKey}}"
               formControlName="holderLastNameGuj" appGujInputTarget [form]="animalPondCancellationForm">
-            <control-messages [control]="animalPondCancellationForm.controls.holderLastNameGuj"></control-messages>
+            <control-messages [control]="animalPondCancellationForm.get('holderLastNameGuj')"></control-messages>
           </mat-form-field>
         </div>
         <!-- /gujarati -->
 
         <div class="row">
           <h2>{{'permanat_address' | translate:translateKey}}</h2>
-          <app-address [isDisplayGujFields]="true" #permanantAddressEstablishment [requiredFeilds]="animalPondCancellationForm.controls.permanantAddress.value"
-            [addressFormGroup]="animalPondCancellationForm.controls.permanantAddress"></app-address>
+          <app-address [isDisplayGujFields]="true" #permanantAddressEstablishment [requiredFeilds]="animalPondCancellationForm.get('permanantAddress').value"
+            [addressFormGroup]="animalPondCancellationForm.get('permanantAddress')"></app-address>
         </div>
         <div class="row">
           <h2>{{'temp_address' | translate:translateKey}}</h2>
-          <app-address [isDisplayGujFields]="true" #permanantAddressEstablishment [requiredFeilds]="animalPondCancellationForm.controls.temporaryAddress.value"
-            [addressFormGroup]="animalPondCancellationForm.controls.temporaryAddress"></app-address>
+          <app-address [isDisplayGujFields]="true" #permanantAddressEstablishment [requiredFeilds]="animalPondCancellationForm.get('temporaryAddress').value"
+            [addressFormGroup]="animalPondCancellationForm.get('temporaryAddress')"></app-address>
         </div>
 
         <mat-form-field class="col-md-4">
@@ -105,7 +105,7 @@
         <mat-form-field class="col-md-4">
           <input matInput type="text" required maxlength="200" placeholder="{{'license_cancelation_reason' | translate:translateKey}}"
             formControlName="cancellationReason">
-          <control-messages [control]="animalPondCancellationForm.controls.cancellationReason"></control-messages>
+          <control-messages [control]="animalPondCancellationForm.get('cancellationReason')"></control-messages>
         </mat-form-field>
 
         <app-action-bar [uploadFiles]="uploadFileArray" [form]="animalPondCancellationForm" (handleErrors)="handleErrorsOnSubmit($event)"

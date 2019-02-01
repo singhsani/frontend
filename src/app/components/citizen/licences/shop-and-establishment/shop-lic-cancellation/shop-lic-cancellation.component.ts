@@ -9,6 +9,7 @@ import { FormsActionsService } from '../../../../../core/services/citizen/data-s
 import * as _ from 'lodash';
 import { CommonService } from '../../.././../../shared/services/common.service';
 import { Location } from '@angular/common';
+import { CitizenConfig } from '../../../citizen-config';
 
 @Component({
 	selector: 'app-shop-lic-cancellation',
@@ -21,6 +22,7 @@ export class ShopLicCancellationComponent implements OnInit {
 
 	shopCancellationForm: FormGroup;
 	translateKey: string = 'shopCancellationScreen';
+	public config = new CitizenConfig;
 
 	formId: number;
 	apiCode: string;

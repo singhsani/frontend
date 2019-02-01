@@ -19,59 +19,59 @@
 				<div class="row">
 					<mat-form-field class="col-md-4">
 						<input matInput readonly required placeholder="{{'license_no' | translate:translateKey}}" formControlName="refNumber">
-						<control-messages [control]="shopLicDuplicateForm.controls.refNumber"></control-messages>
+						<control-messages [control]="shopLicDuplicateForm.get('refNumber')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
 						<input matInput readonly placeholder="{{'issue_date' | translate:translateKey}}" formControlName="licenseIssueDate">
-						<control-messages [control]="shopLicDuplicateForm.controls.licenseIssueDate"></control-messages>
+						<control-messages [control]="shopLicDuplicateForm.get('licenseIssueDate')"></control-messages>
 					</mat-form-field>
 				</div>
 
 				<div class="row">
 					<mat-form-field class="col-md-4">
 						<input matInput required maxlength="150" placeholder="{{'name_of_establishment_if_any' | translate:translateKey}}" formControlName="establishmentName">
-						<control-messages [control]="shopLicDuplicateForm.controls.establishmentName"></control-messages>
+						<control-messages [control]="shopLicDuplicateForm.get('establishmentName')"></control-messages>
 					</mat-form-field>
 					<!-- appGujInputSource targetElement="establishmentNameGuj" [form]="shopLicDuplicateForm" -->
 					<!-- gujarati -->
 					<!-- <mat-form-field class="col-md-6">
 							<input matInput type="text" required formControlName="establishmentNameGuj" appGujInputTarget [form]="shopLicDuplicateForm"
 							 placeholder="{{ 'name_of_establishment_if_any' | translate:translateKey:'gu' }}">
-							<control-messages [control]="shopLicDuplicateForm.controls.establishmentNameGuj"></control-messages>
+							<control-messages [control]="shopLicDuplicateForm.get('establishmentNameGuj')"></control-messages>
 						</mat-form-field> -->
 					<!-- /gujarati -->
 
 					<div class="row">
 						<h2>{{'postal_address_of_establishment' | translate:translateKey}}</h2>
-						<app-address #postalAddressEstablishment [addressFormGroup]="shopLicDuplicateForm.controls.postalAddress"></app-address>
+						<app-address #postalAddressEstablishment [addressFormGroup]="shopLicDuplicateForm.get('postalAddress')"></app-address>
 					</div>
 
 					<div class="col-md-4 ngSelect" formGroupName="wardNo">
 						<ng-select placeholder="{{'ward_no' | translate:translateKey}} *" formControlName="code" required>
 							<ng-option *ngFor="let no of wardNo" [value]="no.code">{{no.name}}</ng-option>
 						</ng-select>
-						<control-messages [control]="shopLicDuplicateForm.controls.wardNo.controls.code"></control-messages>
+						<control-messages [control]="shopLicDuplicateForm.get('wardNo').get('code')"></control-messages>
 					</div>
 
 					<mat-form-field class="col-md-4">
 						<input matInput required maxlength="100" placeholder="{{'name_of_employer' | translate:translateKey}}" formControlName="nameOfEmployer">
-						<control-messages [control]="shopLicDuplicateForm.controls.nameOfEmployer"></control-messages>
+						<control-messages [control]="shopLicDuplicateForm.get('nameOfEmployer')"></control-messages>
 					</mat-form-field>
 					<!-- appGujInputSource targetElement="nameOfEmployerGuj" [form]="shopLicDuplicateForm" -->
 					<!-- gujarati -->
 					<!-- <mat-form-field class="col-md-6">
 							<input matInput type="text" required formControlName="nameOfEmployerGuj" appGujInputTarget [form]="shopLicDuplicateForm" placeholder="{{ 'name_of_employer' | translate:translateKey:'gu' }}">
-							<control-messages [control]="shopLicDuplicateForm.controls.nameOfEmployerGuj"></control-messages>
+							<control-messages [control]="shopLicDuplicateForm.get('nameOfEmployerGuj')"></control-messages>
 						</mat-form-field> -->
 
 					<mat-form-field class="col-md-4">
 						<input matInput required maxlength="13" minlength="13" appAlphaNumeric placeholder="{{'business_property_tax_no' | translate:translateKey}}" formControlName="propertyTaxNo">
-						<control-messages [control]="shopLicDuplicateForm.controls.propertyTaxNo"></control-messages>
+						<control-messages [control]="shopLicDuplicateForm.get('propertyTaxNo')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<input matInput required maxlength="2" OnlyNumber placeholder="{{'no_of_copies' | translate:translateKey}}" formControlName="noOfCopies">
-						<control-messages [control]="shopLicDuplicateForm.controls.noOfCopies"></control-messages>
+						<control-messages [control]="shopLicDuplicateForm.get('noOfCopies')"></control-messages>
 					</mat-form-field>
 				</div>
 

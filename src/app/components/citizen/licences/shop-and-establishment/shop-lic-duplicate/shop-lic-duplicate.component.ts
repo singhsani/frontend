@@ -8,6 +8,7 @@ import { ValidationService } from '../../../../../shared/services/validation.ser
 import { FormsActionsService } from '../../../../../core/services/citizen/data-services/forms-actions.service';
 import { CommonService } from '../../.././../../shared/services/common.service';
 import { Location } from '@angular/common';
+import { CitizenConfig } from '../../../citizen-config';
 
 @Component({
 	selector: 'app-shop-lic-duplicate',
@@ -20,6 +21,7 @@ export class ShopLicDuplicateComponent implements OnInit {
 
 	shopLicDuplicateForm: FormGroup;
 	translateKey: string = 'shopLicDuplicateScreen';
+	public config = new CitizenConfig;
 
 	formId: number;
 	apiCode: string;

@@ -30,7 +30,7 @@ export class AnimalPondRenewComponent implements OnInit {
 
 	//File and image upload
 	uploadModel: any = {};
-	private showButtons: boolean = false;
+	public showButtons: boolean = false;
 
 	//Lookups Array
 	MF_RELATIONSHIP_OF_APPLICANT: Array<any> = [];
@@ -43,7 +43,7 @@ export class AnimalPondRenewComponent implements OnInit {
 	LOOKUP: any;
 
 	// required attachment array
-	private uploadFilesArray: Array<any> = [];
+	public uploadFilesArray: Array<any> = [];
 
 	// serach api variable
 	serachLicenceObj = {
@@ -91,7 +91,7 @@ export class AnimalPondRenewComponent implements OnInit {
 		private animalPondService: AnimalPondService,
 		private toastrService: ToastrService,
 		private location: Location,
-		private TranslateService: TranslateService
+		public TranslateService: TranslateService
 	) { }
 
 	/**

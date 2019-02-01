@@ -12,6 +12,7 @@ import * as _ from 'lodash';
 import * as moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '../../../../../shared/modules/translate/translate.service';
+import { CitizenConfig } from '../../../citizen-config';
 
 @Component({
 	selector: 'app-shop-lic-modification',
@@ -24,10 +25,11 @@ export class ShopLicModificationComponent implements OnInit {
 
 	shopLicModificationForm: FormGroup;
 	translateKey: string = 'shopModificationScreen';
+	public config = new CitizenConfig;
 
 	formId: number;
 	apiCode: string;
-	private showButtons: boolean = false;
+	public showButtons: boolean = false;
 	//File and image upload
 	uploadModel: any = {};
 	tabIndex: number = 0;
@@ -45,8 +47,8 @@ export class ShopLicModificationComponent implements OnInit {
 	SHOP_LIC_HOLIDAY: Array<any> = [];
 
 	// required attachment array
-	private uploadFilesArray: Array<any> = [];
-
+	public uploadFilesArray: Array<any> = [];
+	disablefutureDate = new Date(moment().format('YYYY-MM-DD'));
 	// serach api variable
 	serachLicenceObj = {
 		isDisplayRenewLicenceForm: <boolean>false,
@@ -93,7 +95,7 @@ export class ShopLicModificationComponent implements OnInit {
 		private location: Location,
 		private commonService: CommonService,
 		private toastrService: ToastrService,
-		private TranslateService: TranslateService
+		public TranslateService: TranslateService
 	) { }
 
 	/**

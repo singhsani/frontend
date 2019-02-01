@@ -11,6 +11,8 @@ import { CommonService } from '../../.././../../shared/services/common.service';
 
 import { TranslateService } from '../../../../../shared/modules/translate/translate.service';
 import * as _ from 'lodash';
+import { CitizenConfig } from '../../../citizen-config';
+
 @Component({
 	selector: 'app-shop-lic-renewal',
 	templateUrl: './shop-lic-renewal.component.html',
@@ -22,10 +24,10 @@ export class ShopLicRenewalComponent implements OnInit {
 
 	shopLicRenewalForm: FormGroup;
 	translateKey: string = 'shopRenewalScreen';
-
+	public config = new CitizenConfig;
 	formId: number;
 	apiCode: string;
-	private showButtons: boolean = false;
+	public showButtons: boolean = false;
 	//File and image upload
 	uploadModel: any = {};
 	tabIndex: number = 0;
@@ -44,7 +46,7 @@ export class ShopLicRenewalComponent implements OnInit {
 
 
 	// required attachment array
-	private uploadFilesArray: Array<any> = [];
+	public uploadFilesArray: Array<any> = [];
 
 	// serach api variable
 	serachLicenceObj = {
@@ -91,7 +93,7 @@ export class ShopLicRenewalComponent implements OnInit {
 		private shopAndEstablishmentService: ShopAndEstablishmentService,
 		private location: Location,
 		private commonService: CommonService,
-		private TranslateService: TranslateService
+		public TranslateService: TranslateService
 	) { }
 
 	/**

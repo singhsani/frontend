@@ -29,13 +29,13 @@ export class AnimalPondCancellationComponent implements OnInit {
 
 	//File and image upload
 	uploadModel: any = {};
-	private showButtons: boolean = false;
+	public showButtons: boolean = false;
 
 	//Lookups Array
 	PERSON_TYPE: Array<any> = [];
 
 	// required attachment array
-	private uploadFileArray: Array<any> = [];
+	public uploadFileArray: Array<any> = [];
 
 	// serach api variable
 	serachLicenceObj = {
@@ -69,7 +69,7 @@ export class AnimalPondCancellationComponent implements OnInit {
      * @param formService - Declare form service property 
      * @param uploadFileService - Declare upload file service property.
      * @param commonService - Declare sweet alert.
-	   * @param toastrService - Show massage with timer.
+	 * @param toastrService - Show massage with timer.
      */
 	constructor(
 		private fb: FormBuilder,

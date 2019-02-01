@@ -15,25 +15,25 @@
 						<ng-select placeholder="{{'person_type' | translate:translateKey}} *" formControlName="code">
 							<ng-option *ngFor="let type of PERSON_TYPE" [value]="type.code">{{type.name}}</ng-option>
 						</ng-select>
-						<control-messages [control]="animalPondNewForm.get('personType').controls.code"></control-messages>
+						<control-messages [control]="animalPondNewForm.get('personType').get('code')"></control-messages>
 					</div>
 					<mat-form-field class="col-md-2">
 						<input matInput type="text" required maxlength="30" appValidationFields validationFieldsType='onlyNameWithOutSpace'
 						 placeholder="{{'holder_firstname' | translate:translateKey}}" formControlName="holderFirstName"
 						 appGujInputSource targetElement="holderFirstNameGuj" [form]="animalPondNewForm">
-						<control-messages [control]="animalPondNewForm.controls.holderFirstName"></control-messages>
+						<control-messages [control]="animalPondNewForm.get('holderFirstName')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" required maxlength="30" appValidationFields validationFieldsType='onlyNameWithOutSpace'
 						 placeholder="{{'holder_middlename' | translate:translateKey}}" formControlName="holderMiddleName"
 						 appGujInputSource targetElement="holderMiddleNameGuj" [form]="animalPondNewForm">
-						<control-messages [control]="animalPondNewForm.controls.holderMiddleName"></control-messages>
+						<control-messages [control]="animalPondNewForm.get('holderMiddleName')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" required maxlength="30" appValidationFields validationFieldsType='onlyNameWithOutSpace'
 						 placeholder="{{'holder_lastname' | translate:translateKey}}" formControlName="holderLastName" appGujInputSource
 						 targetElement="holderLastNameGuj" [form]="animalPondNewForm">
-						<control-messages [control]="animalPondNewForm.controls.holderLastName"></control-messages>
+						<control-messages [control]="animalPondNewForm.get('holderLastName')"></control-messages>
 					</mat-form-field>
 				</div>
 
@@ -42,51 +42,51 @@
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" maxlength="90" required formControlName="holderFirstNameGuj" appGujInputTarget [form]="animalPondNewForm"
 						 placeholder="{{ 'holder_firstname' | translate:translateKey:'gu' }}">
-						<control-messages [control]="animalPondNewForm.controls.holderFirstNameGuj"></control-messages>
+						<control-messages [control]="animalPondNewForm.get('holderFirstNameGuj')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" required maxlength="90" placeholder="{{'holder_middlename' | translate:translateKey:'gu'}}"
 						 formControlName="holderMiddleNameGuj" appGujInputTarget [form]="animalPondNewForm">
-						<control-messages [control]="animalPondNewForm.controls.holderMiddleNameGuj"></control-messages>
+						<control-messages [control]="animalPondNewForm.get('holderMiddleNameGuj')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" required maxlength="90" placeholder="{{'holder_lastname' | translate:translateKey:'gu'}}"
 						 formControlName="holderLastNameGuj" appGujInputTarget [form]="animalPondNewForm">
-						<control-messages [control]="animalPondNewForm.controls.holderLastNameGuj"></control-messages>
+						<control-messages [control]="animalPondNewForm.get('holderLastNameGuj')"></control-messages>
 					</mat-form-field>
 				</div>
 				<!-- /gujarati -->
 
 				<div class="row">
 					<h2>{{'permanat_address' | translate:translateKey}}</h2>
-					<app-address [isDisplayGujFields]="true" #permanantAddressEstablishment [requiredFeilds]="animalPondNewForm.controls.permanantAddress.value"
-					 [addressFormGroup]="animalPondNewForm.controls.permanantAddress"></app-address>
+					<app-address [isDisplayGujFields]="true" #permanantAddressEstablishment [requiredFeilds]="animalPondNewForm.get('permanantAddress').value"
+					 [addressFormGroup]="animalPondNewForm.get('permanantAddress')"></app-address>
 				</div>
 				<div class="row">
 					<h2>{{'temp_address' | translate:translateKey}}</h2>
-					<app-address [isDisplayGujFields]="true" #permanantAddressEstablishment [requiredFeilds]="animalPondNewForm.controls.temporaryAddress.value"
-					 [addressFormGroup]="animalPondNewForm.controls.temporaryAddress"></app-address>
+					<app-address [isDisplayGujFields]="true" #permanantAddressEstablishment [requiredFeilds]="animalPondNewForm.get('temporaryAddress').value"
+					 [addressFormGroup]="animalPondNewForm.get('temporaryAddress')"></app-address>
 				</div>
 
 				<mat-form-field class="col-md-4">
 					<input matInput OnlyNumber maxlength="10" formControlName="holderTelephoneNo" placeholder="{{'holder_telephone_no' | translate:translateKey}}">
-					<control-messages [control]="animalPondNewForm.controls.holderTelephoneNo"></control-messages>
+					<control-messages [control]="animalPondNewForm.get('holderTelephoneNo')"></control-messages>
 				</mat-form-field>
 				<mat-form-field class="col-md-4">
 					<input matInput OnlyNumber required maxlength="10" formControlName="holderMobileNo" placeholder="{{'holder_mobile_no' | translate:translateKey}}">
-					<control-messages [control]="animalPondNewForm.controls.holderMobileNo"></control-messages>
+					<control-messages [control]="animalPondNewForm.get('holderMobileNo')"></control-messages>
 				</mat-form-field>
 				<mat-form-field class="col-md-4">
 					<input matInput OnlyNumber maxlength="12" formControlName="holderFaxNo" placeholder="{{'holder_fax_no' | translate:translateKey}}">
-					<control-messages [control]="animalPondNewForm.controls.holderFaxNo"></control-messages>
+					<control-messages [control]="animalPondNewForm.get('holderFaxNo')"></control-messages>
 				</mat-form-field>
 				<mat-form-field class="col-md-4">
 					<input matInput OnlyNumber maxlength="12" required formControlName="holderAadharNo" placeholder="{{'holder_aadhar_no' | translate:translateKey}}">
-					<control-messages [control]="animalPondNewForm.controls.holderAadharNo"></control-messages>
+					<control-messages [control]="animalPondNewForm.get('holderAadharNo')"></control-messages>
 				</mat-form-field>
 				<mat-form-field class="col-md-4">
 					<input matInput appAlphaNumeric maxlength="10" required formControlName="holderPanNo" placeholder="{{'holder_pan_no' | translate:translateKey}}">
-					<control-messages [control]="animalPondNewForm.controls.holderPanNo"></control-messages>
+					<control-messages [control]="animalPondNewForm.get('holderPanNo')"></control-messages>
 				</mat-form-field>
 
 				<app-action-bar [form]="animalPondNewForm" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step1', next: 1, back: 0}"></app-action-bar>
@@ -103,25 +103,25 @@
 						<ng-select placeholder="{{'business_under_zone' | translate:translateKey}} *" formControlName="code" (change)="onChangeZone($event);animalPondNewForm.get('wardNo').reset();animalPondNewForm.get('blockNo').reset()">
 							<ng-option *ngFor="let zone of FIRM_ZONE" [value]="zone.code">{{zone.name}}</ng-option>
 						</ng-select>
-						<control-messages [control]="animalPondNewForm.get('zoneNo').controls.code"></control-messages>
+						<control-messages [control]="animalPondNewForm.get('zoneNo').get('code')"></control-messages>
 					</div>
 					<div class="col-md-4 ngSelect" formGroupName="wardNo">
 						<ng-select placeholder="{{'ward_no' | translate:translateKey}} *" formControlName="code" (change)="onChangeWard($event);animalPondNewForm.get('blockNo').reset()">
 							<ng-option *ngFor="let ward of WARD" [value]="ward.code">{{ward.name}}</ng-option>
 						</ng-select>
-						<control-messages [control]="animalPondNewForm.get('wardNo').controls.code"></control-messages>
+						<control-messages [control]="animalPondNewForm.get('wardNo').get('code')"></control-messages>
 					</div>
 					<div class="col-md-4 ngSelect" formGroupName="blockNo">
 						<ng-select placeholder="{{'block_no' | translate:translateKey}} *" formControlName="code">
 							<ng-option *ngFor="let block of BLOCK" [value]="block.code">{{block.name}}</ng-option>
 						</ng-select>
-						<control-messages [control]="animalPondNewForm.get('blockNo').controls.code"></control-messages>
+						<control-messages [control]="animalPondNewForm.get('blockNo').get('code')"></control-messages>
 					</div>
 				</div>
 				<div class="row">
 					<h2>{{'business_address' | translate:translateKey}}</h2>
-					<app-address [isDisplayGujFields]="true" #temporaryAddressEstablishment [requiredFeilds]="animalPondNewForm.controls.businessAddress.value"
-					 [addressFormGroup]="animalPondNewForm.controls.businessAddress"></app-address>
+					<app-address [isDisplayGujFields]="true" #temporaryAddressEstablishment [requiredFeilds]="animalPondNewForm.get('businessAddress').value"
+					 [addressFormGroup]="animalPondNewForm.get('businessAddress')"></app-address>
 				</div>
 
 				<div class="row">
@@ -129,20 +129,20 @@
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" required maxlength="500" placeholder="{{'extra_details_of_business' | translate:translateKey}}"
 						 formControlName="extraDetailsOfBusiness">
-						<control-messages [control]="animalPondNewForm.controls.extraDetailsOfBusiness"></control-messages>
+						<control-messages [control]="animalPondNewForm.get('extraDetailsOfBusiness')"></control-messages>
 					</mat-form-field>
 					<div class="col-md-4 ngSelect" formGroupName="relationshipId">
 						<ng-select placeholder="{{'relationship_id' | translate:translateKey}} *" formControlName="code" (change)="onChangeRelationWithOrg()">
 							<ng-option *ngFor="let id of MF_RELATIONSHIP_OF_APPLICANT" [value]="id.code">{{id.name}}</ng-option>
 						</ng-select>
-						<control-messages [control]="animalPondNewForm.get('relationshipId').controls.code"></control-messages>
+						<control-messages [control]="animalPondNewForm.get('relationshipId').get('code')"></control-messages>
 					</div>
 
 					<div class="col-md-4 ngSelect" formGroupName="statusOfBusinessId">
 						<ng-select placeholder="{{'business_status_id' | translate:translateKey}} *" formControlName="code">
 							<ng-option *ngFor="let statusId of MF_STATUS_OF_BUSINESS" [value]="statusId.code">{{statusId.name}}</ng-option>
 						</ng-select>
-						<control-messages [control]="animalPondNewForm.controls.statusOfBusinessId.controls.code"></control-messages>
+						<control-messages [control]="animalPondNewForm.get('statusOfBusinessId').get('code')"></control-messages>
 					</div>
 				</div>
 
@@ -155,13 +155,13 @@
 							translate:translateKey}}</h2>
 					</div>
 					<div class="col-md-2 pt-3" style="text-align: right;">
-						<button type="button" [disabled]="animalPondNewForm.get('relationshipId').value.code ? animalPondNewForm.get('relationshipId').value.code=='PROPRIETOR' ? !(animalPondNewForm.get('relationshipList').controls.length < 1) : !(animalPondNewForm.get('relationshipList').controls.length < 10) : true"
+						<button type="button" [disabled]="animalPondNewForm.get('relationshipId').value.code ? animalPondNewForm.get('relationshipId').value.code=='PROPRIETOR' ? !(animalPondNewForm.get('relationshipList')['controls'].length < 1) : !(animalPondNewForm.get('relationshipList')['controls'].length < 10) : true"
 						 matTooltip="{{'add_more' | translate:translateKey}}" mat-raised-button color="primary" (click)="addMorePerson('APL_PERSON')">{{'add'|
 							translate:translateKey}}</button>
 					</div>
 				</div>
 
-				<div *ngIf="animalPondNewForm.get('relationshipList').controls.length">
+				<div *ngIf="animalPondNewForm.get('relationshipList')['controls'].length">
 					<div class="table-responsive">
 						<table class="table table-striped mb-0">
 							<thead>
@@ -177,7 +177,7 @@
 					</div>
 
 					<ul formArrayName="relationshipList" class="listTable clearfix">
-						<li *ngFor="let item of animalPondNewForm.get('relationshipList').controls; let indx = index;">
+						<li *ngFor="let item of animalPondNewForm.get('relationshipList')['controls']; let indx = index;">
 							<form [formGroupName]="indx">
 								<div class="table-responsive">
 									<table class="table table-striped">
@@ -189,7 +189,7 @@
 												<mat-form-field *ngIf="item.isEditMode">
 													<input matInput maxlength="100" appValidationFields [validationFieldsType]="'onlyNameWithSpace'"
 													 formControlName="name">
-													<control-messages [control]="item.controls.name"></control-messages>
+													<control-messages [control]="item.get('name')"></control-messages>
 												</mat-form-field>
 											</td>
 
@@ -197,7 +197,7 @@
 												<div *ngIf="!item.isEditMode">{{item.get('address').value}}</div>
 												<mat-form-field *ngIf="item.isEditMode">
 													<input matInput maxlength="150" formControlName="address">
-													<control-messages [control]="item.controls.address"></control-messages>
+													<control-messages [control]="item.get('address')"></control-messages>
 												</mat-form-field>
 											</td>
 
@@ -205,7 +205,7 @@
 												<div *ngIf="!item.isEditMode">{{item.get('mobileNo').value}}</div>
 												<mat-form-field *ngIf="item.isEditMode">
 													<input matInput maxlength="10" OnlyNumber formControlName="mobileNo">
-													<control-messages [control]="item.controls.mobileNo"></control-messages>
+													<control-messages [control]="item.get('mobileNo')"></control-messages>
 												</mat-form-field>
 											</td>
 											<td width="150">
@@ -249,13 +249,13 @@
 				<div class="row">
 					<div class="col-md-10"> </div>
 					<div class="col-md-2 pt-3" style="text-align: right;">
-						<button type="button" (click)="addMoreAnimal()" [disabled]="animalPondNewForm.get('animalDetails').controls.length >= ANIMAL_TYPE.length"
+						<button type="button" (click)="addMoreAnimal()" [disabled]="animalPondNewForm.get('animalDetails')['controls'].length >= ANIMAL_TYPE.length"
 						 matTooltip="{{'add_more' | translate:translateKey}}" mat-raised-button color="primary">{{'add'|
 							translate:translateKey}}</button>
 					</div>
 				</div>
 
-				<div style="overflow-x: scroll;" *ngIf="animalPondNewForm.get('animalDetails').controls.length">
+				<div style="overflow-x: scroll;" *ngIf="animalPondNewForm.get('animalDetails')['controls'].length">
 					<div class="table-responsive">
 						<table class="table table-striped mb-0">
 							<thead>
@@ -270,7 +270,7 @@
 					</div>
 
 					<ul formArrayName="animalDetails" class="listTable clearfix">
-						<li *ngFor="let item of animalPondNewForm.get('animalDetails').controls; let indx = index;">
+						<li *ngFor="let item of animalPondNewForm.get('animalDetails')['controls']; let indx = index;">
 
 							<form [formGroupName]="indx">
 								<div class="table-responsive">
@@ -280,7 +280,7 @@
 
 											<td width="29%">
 												<div *ngIf="!item.isEditMode">
-													{{getSelectedDataFromLookUps(ANIMAL_TYPE,item.get('animalType').controls.code.value)?.name}}
+													{{getSelectedDataFromLookUps(ANIMAL_TYPE,item.get('animalType').get('code').value)?.name}}
 												</div>
 												<div class="ngSelect" *ngIf="item.isEditMode" formGroupName="animalType">
 													<ng-select placeholder="{{'animal_type' | translate:translateKey}} *" formControlName="code"
@@ -289,15 +289,16 @@
 															<ng-option *ngIf="!type.selected" [value]="type.code">{{type.name}}</ng-option>
 														</ng-container>
 													</ng-select>
-													<control-messages [control]="item.get('animalType').controls.code"></control-messages>
+													<control-messages [control]="item.get('animalType').get('code')"></control-messages>
 												</div>
 											</td>
 
 											<td width="29%">
 												<div *ngIf="!item.isEditMode">{{item.get('animalCount').value}}</div>
 												<mat-form-field *ngIf="item.isEditMode">
-													<input matInput maxlength="3" OnlyNumber placeholder="{{'animal_count' | translate:translateKey}} *" formControlName="animalCount">
-													<control-messages [control]="item.controls.animalCount"></control-messages>
+													<input matInput maxlength="3" OnlyNumber placeholder="{{'animal_count' | translate:translateKey}} *"
+													 formControlName="animalCount">
+													<control-messages [control]="item.get('animalCount')"></control-messages>
 												</mat-form-field>
 											</td>
 											<td width="150">
