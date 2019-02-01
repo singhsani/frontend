@@ -28,7 +28,7 @@ export class AnimalPondNewComponent implements OnInit {
 
 	//File and image upload
 	uploadModel: any = {};
-	private showButtons: boolean = false;
+	public showButtons: boolean = false;
 
 	//Lookups Array
 	MF_RELATIONSHIP_OF_APPLICANT: Array<any> = [];
@@ -41,7 +41,7 @@ export class AnimalPondNewComponent implements OnInit {
 	LOOKUP: any;
 
 	// required attachment array
-	private uploadFilesArray: Array<any> = [];
+	public uploadFilesArray: Array<any> = [];
 
     /**
      * @param fb - Declare FormBuilder property.
@@ -59,7 +59,7 @@ export class AnimalPondNewComponent implements OnInit {
 		private formService: FormsActionsService,
 		private commonService: CommonService,
 		private toastrService: ToastrService,
-		private TranslateService: TranslateService
+		public TranslateService: TranslateService
 	) { }
 
 	/**

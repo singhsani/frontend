@@ -21,11 +21,11 @@
 				<div class="row">
 					<mat-form-field class="col-md-4">
 						<input matInput readonly required placeholder="{{'license_no' | translate:translateKey}}" formControlName="refNumber">
-						<control-messages [control]="muttonFishRenewalForm.controls.refNumber"></control-messages>
+						<control-messages [control]="muttonFishRenewalForm.get('refNumber')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
 						<input matInput readonly placeholder="{{'issue_date' | translate:translateKey}}" formControlName="licenseIssueDate">
-						<control-messages [control]="muttonFishRenewalForm.controls.licenseIssueDate"></control-messages>
+						<control-messages [control]="muttonFishRenewalForm.get('licenseIssueDate')"></control-messages>
 					</mat-form-field>
 				</div>
 
@@ -34,7 +34,7 @@
 						<ng-select placeholder="{{'license_type' | translate:translateKey}} *" formControlName="code">
 							<ng-option *ngFor="let type of MF_LICENSE_TYPE" [value]="type.code">{{type.name}}</ng-option>
 						</ng-select>
-						<control-messages [control]="muttonFishRenewalForm.get('licenseType').controls.code"></control-messages>
+						<control-messages [control]="muttonFishRenewalForm.get('licenseType').get('code')"></control-messages>
 					</div>
 				</div>
 				<div class="row">
@@ -42,25 +42,25 @@
 						<ng-select placeholder="{{'person_type' | translate:translateKey}} *" formControlName="code">
 							<ng-option *ngFor="let type of PERSON_TYPE" [value]="type.code">{{type.name}}</ng-option>
 						</ng-select>
-						<control-messages [control]="muttonFishRenewalForm.get('personType').controls.code"></control-messages>
+						<control-messages [control]="muttonFishRenewalForm.get('personType').get('code')"></control-messages>
 					</div>
 					<mat-form-field class="col-md-2">
 						<input matInput type="text" required maxlength="30" appValidationFields validationFieldsType='onlyNameWithOutSpace'
 						 placeholder="{{'holder_firstname' | translate:translateKey}}" formControlName="holderFirstName"
 						 appGujInputSource targetElement="holderFirstNameGuj" [form]="muttonFishRenewalForm">
-						<control-messages [control]="muttonFishRenewalForm.controls.holderFirstName"></control-messages>
+						<control-messages [control]="muttonFishRenewalForm.get('holderFirstName')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" required maxlength="30" appValidationFields validationFieldsType='onlyNameWithOutSpace'
 						 placeholder="{{'holder_middlename' | translate:translateKey}}" formControlName="holderMiddleName"
 						 appGujInputSource targetElement="holderMiddleNameGuj" [form]="muttonFishRenewalForm">
-						<control-messages [control]="muttonFishRenewalForm.controls.holderMiddleName"></control-messages>
+						<control-messages [control]="muttonFishRenewalForm.get('holderMiddleName')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" required maxlength="30" appValidationFields validationFieldsType='onlyNameWithOutSpace'
 						 placeholder="{{'holder_lastname' | translate:translateKey}}" formControlName="holderLastName" appGujInputSource
 						 targetElement="holderLastNameGuj" [form]="muttonFishRenewalForm">
-						<control-messages [control]="muttonFishRenewalForm.controls.holderLastName"></control-messages>
+						<control-messages [control]="muttonFishRenewalForm.get('holderLastName')"></control-messages>
 					</mat-form-field>
 				</div>
 
@@ -69,30 +69,30 @@
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" maxlength="90" required formControlName="holderFirstNameGuj" appGujInputTarget [form]="muttonFishRenewalForm"
 						 placeholder="{{ 'holder_firstname' | translate:translateKey:'gu' }}">
-						<control-messages [control]="muttonFishRenewalForm.controls.holderFirstNameGuj"></control-messages>
+						<control-messages [control]="muttonFishRenewalForm.get('holderFirstNameGuj')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" required maxlength="90" placeholder="{{'holder_middlename' | translate:translateKey}}"
 						 formControlName="holderMiddleNameGuj" appGujInputTarget [form]="muttonFishRenewalForm">
-						<control-messages [control]="muttonFishRenewalForm.controls.holderMiddleNameGuj"></control-messages>
+						<control-messages [control]="muttonFishRenewalForm.get('holderMiddleNameGuj')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" required maxlength="90" placeholder="{{'holder_lastname' | translate:translateKey}}"
 						 formControlName="holderLastNameGuj" appGujInputTarget [form]="muttonFishRenewalForm">
-						<control-messages [control]="muttonFishRenewalForm.controls.holderLastNameGuj"></control-messages>
+						<control-messages [control]="muttonFishRenewalForm.get('holderLastNameGuj')"></control-messages>
 					</mat-form-field>
 				</div>
 				<!-- /gujarati -->
 
 				<div class="row">
 					<h2>{{'permanat_address' | translate:translateKey}}</h2>
-					<app-address #permanantAddressEstablishment [requiredFeilds]="muttonFishRenewalForm.controls.permanantAddress.value"
-					 [addressFormGroup]="muttonFishRenewalForm.controls.permanantAddress"></app-address>
+					<app-address #permanantAddressEstablishment [requiredFeilds]="muttonFishRenewalForm.get('permanantAddress').value"
+					 [addressFormGroup]="muttonFishRenewalForm.get('permanantAddress')"></app-address>
 				</div>
 				<div class="row">
 					<h2>{{'temp_address' | translate:translateKey}}</h2>
-					<app-address #temporaryAddressEstablishment [requiredFeilds]="muttonFishRenewalForm.controls.temporaryAddress.value"
-					 [addressFormGroup]="muttonFishRenewalForm.controls.temporaryAddress"></app-address>
+					<app-address #temporaryAddressEstablishment [requiredFeilds]="muttonFishRenewalForm.get('temporaryAddress').value"
+					 [addressFormGroup]="muttonFishRenewalForm.get('temporaryAddress')"></app-address>
 				</div>
 
 				<mat-form-field class="col-md-4">
@@ -125,25 +125,25 @@
 						<ng-select placeholder="{{'business_under_zone' | translate:translateKey}} *" formControlName="code" (change)="onChangeZone($event);muttonFishRenewalForm.get('wardNo').reset();muttonFishRenewalForm.get('blockNo').reset()">
 							<ng-option *ngFor="let zone of FIRM_ZONE" [value]="zone.code">{{zone.name}}</ng-option>
 						</ng-select>
-						<control-messages [control]="muttonFishRenewalForm.get('zoneNo').controls.code"></control-messages>
+						<control-messages [control]="muttonFishRenewalForm.get('zoneNo').get('code')"></control-messages>
 					</div>
 					<div class="col-md-4 ngSelect" formGroupName="wardNo">
 						<ng-select placeholder="{{'ward_no' | translate:translateKey}} *" formControlName="code" (change)="onChangeWard($event);muttonFishRenewalForm.get('blockNo').reset()">
 							<ng-option *ngFor="let ward of WARD" [value]="ward.code">{{ward.name}}</ng-option>
 						</ng-select>
-						<control-messages [control]="muttonFishRenewalForm.get('wardNo').controls.code"></control-messages>
+						<control-messages [control]="muttonFishRenewalForm.get('wardNo').get('code')"></control-messages>
 					</div>
 					<div class="col-md-4 ngSelect" formGroupName="blockNo">
 						<ng-select placeholder="{{'block_no' | translate:translateKey}} *" formControlName="code">
 							<ng-option *ngFor="let block of BLOCK" [value]="block.code">{{block.name}}</ng-option>
 						</ng-select>
-						<control-messages [control]="muttonFishRenewalForm.get('blockNo').controls.code"></control-messages>
+						<control-messages [control]="muttonFishRenewalForm.get('blockNo').get('code')"></control-messages>
 					</div>
 				</div>
 				<div class="row">
 					<h2>{{'business_shop_address' | translate:translateKey}}</h2>
-					<app-address #temporaryAddressEstablishment [requiredFeilds]="muttonFishRenewalForm.controls.businessAddress.value"
-					 [addressFormGroup]="muttonFishRenewalForm.controls.businessAddress"></app-address>
+					<app-address #temporaryAddressEstablishment [requiredFeilds]="muttonFishRenewalForm.get('businessAddress').value"
+					 [addressFormGroup]="muttonFishRenewalForm.get('businessAddress')"></app-address>
 				</div>
 
 				<div class="row">
@@ -152,20 +152,20 @@
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" required maxlength="500" placeholder="{{'extra_details_of_business' | translate:translateKey}}"
 						 formControlName="extraDetailsOfBusiness">
-						<control-messages [control]="muttonFishRenewalForm.controls.extraDetailsOfBusiness"></control-messages>
+						<control-messages [control]="muttonFishRenewalForm.get('extraDetailsOfBusiness')"></control-messages>
 					</mat-form-field>
 					<div class="col-md-4 ngSelect" formGroupName="relationshipId">
 						<ng-select placeholder="{{'relationship_id' | translate:translateKey}} *" formControlName="code" (change)="onChangeRelationWithOrg()">
 							<ng-option *ngFor="let id of MF_RELATIONSHIP_OF_APPLICANT" [value]="id.code">{{id.name}}</ng-option>
 						</ng-select>
-						<control-messages [control]="muttonFishRenewalForm.get('relationshipId').controls.code"></control-messages>
+						<control-messages [control]="muttonFishRenewalForm.get('relationshipId').get('code')"></control-messages>
 					</div>
 
 					<div class="col-md-4 ngSelect" formGroupName="statusOfBusinessId">
 						<ng-select placeholder="{{'business_status_id' | translate:translateKey}} *" formControlName="code">
 							<ng-option *ngFor="let statusId of MF_STATUS_OF_BUSINESS" [value]="statusId.code">{{statusId.name}}</ng-option>
 						</ng-select>
-						<control-messages [control]="muttonFishRenewalForm.controls.statusOfBusinessId.controls.code"></control-messages>
+						<control-messages [control]="muttonFishRenewalForm.get('statusOfBusinessId').get('code')"></control-messages>
 					</div>
 				</div>
 
@@ -178,13 +178,13 @@
 							| translate:translateKey}}</h2>
 					</div>
 					<div class="col-md-2 pt-3" style="text-align: right;">
-						<button type="button" *ngIf="muttonFishRenewalForm.get('canEdit').value" [disabled]="muttonFishRenewalForm.get('relationshipId').value.code ? muttonFishRenewalForm.get('relationshipId').value.code=='PROPRIETOR' ? !(muttonFishRenewalForm.get('relationshipList').controls.length < 1) : !(muttonFishRenewalForm.get('relationshipList').controls.length < 10) : true"
+						<button type="button" *ngIf="muttonFishRenewalForm.get('canEdit').value" [disabled]="muttonFishRenewalForm.get('relationshipId').value.code ? muttonFishRenewalForm.get('relationshipId').value.code=='PROPRIETOR' ? !(muttonFishRenewalForm.get('relationshipList')['controls'].length < 1) : !(muttonFishRenewalForm.get('relationshipList')['controls'].length < 10) : true"
 						 matTooltip="{{'add_more' | translate:translateKey}}" mat-raised-button color="primary" (click)="addMorePerson('MF_PERSON')">{{'add'|
 							translate:translateKey}}</button>
 					</div>
 				</div>
 
-				<div *ngIf="muttonFishRenewalForm.get('relationshipList').controls.length">
+				<div *ngIf="muttonFishRenewalForm.get('relationshipList')['controls'].length">
 					<div>
 						<table class="table table-striped customDataTable">
 							<thead>
@@ -197,7 +197,7 @@
 								</tr>
 							</thead>
 							<tbody formArrayName="relationshipList">
-								<tr *ngFor="let item of muttonFishRenewalForm.get('relationshipList').controls; let indx = index;"
+								<tr *ngFor="let item of muttonFishRenewalForm.get('relationshipList')['controls']; let indx = index;"
 								 [formGroupName]="indx">
 									<td style="width: 40px;" *ngIf="muttonFishRenewalForm.get('canEdit').value">
 										<button mat-icon-button color="primary" *ngIf="!item.isEditMode" [disabled]="muttonFishRenewalForm.get('relationshipId').value.code == 'PROPRIETOR'"
@@ -226,7 +226,7 @@
 										<mat-form-field *ngIf="item.isEditMode">
 											<input matInput maxlength="100" appValidationFields [validationFieldsType]="'onlyNameWithSpace'"
 											 formControlName="name">
-											<control-messages [control]="item.controls.name"></control-messages>
+											<control-messages [control]="item.get('name')"></control-messages>
 										</mat-form-field>
 									</td>
 
@@ -234,7 +234,7 @@
 										<p *ngIf="!item.isEditMode">{{item.get('address').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
 											<input matInput maxlength="150" formControlName="address">
-											<control-messages [control]="item.controls.address"></control-messages>
+											<control-messages [control]="item.get('address')"></control-messages>
 										</mat-form-field>
 									</td>
 
@@ -242,7 +242,7 @@
 										<p *ngIf="!item.isEditMode">{{item.get('mobileNo').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
 											<input matInput maxlength="11" OnlyNumber formControlName="mobileNo">
-											<control-messages [control]="item.controls.mobileNo"></control-messages>
+											<control-messages [control]="item.get('mobileNo')"></control-messages>
 										</mat-form-field>
 									</td>
 								</tr>
@@ -337,13 +337,13 @@
 						</div>
 					</div>
 					<!-- two attachment for rental shop -->
-					<div class="col-md-4" *ngIf="muttonFishRenewalForm.get('statusOfBusinessId').controls.code.value === 'RENT'">
+					<div class="col-md-4" *ngIf="muttonFishRenewalForm.get('statusOfBusinessId').get('code').value === 'RENT'">
 						<div *ngIf="showButtons">
 							<label>{{'occupation_certi' | translate: translateKey}} *</label>
 							<file-upload [form]="muttonFishRenewalForm" [uploadModel]="setDataValue(12,'PartnershipDeedCopyOfPartnerIfThereIsAPartner', '1.6', 'doc') "></file-upload>
 						</div>
 					</div>
-					<div class="col-md-4" *ngIf="muttonFishRenewalForm.get('statusOfBusinessId').controls.code.value === 'RENT'">
+					<div class="col-md-4" *ngIf="muttonFishRenewalForm.get('statusOfBusinessId').get('code').value === 'RENT'">
 						<div *ngIf="showButtons">
 							<label>{{'rent_agreement' | translate: translateKey}} *</label>
 							<file-upload [form]="muttonFishRenewalForm" [uploadModel]="setDataValue(13,'PartnershipDeedCopyOfPartnerIfThereIsAPartner', '1.6', 'doc') "></file-upload>

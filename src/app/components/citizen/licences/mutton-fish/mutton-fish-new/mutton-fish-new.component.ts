@@ -7,6 +7,7 @@ import { CommonService } from '../../../../../shared/services/common.service';
 import { ValidationService } from '../../../../../shared/services/validation.service';
 import { FormsActionsService } from '../../../../../core/services/citizen/data-services/forms-actions.service';
 import { ToastrService } from 'ngx-toastr';
+import { CitizenConfig } from '../../../citizen-config';
 
 @Component({
 	selector: 'app-mutton-fish-new',
@@ -20,6 +21,7 @@ export class MuttonFishNewComponent implements OnInit {
 
 	muttonFishNewForm: FormGroup;
 	translateKey: string = 'muttonFishNewScreen';
+	public config = new CitizenConfig;
 
 	formId: number;
 	apiCode: string;
@@ -27,7 +29,7 @@ export class MuttonFishNewComponent implements OnInit {
 
 	//File and image upload
 	uploadModel: any = {};
-	private showButtons: boolean = false;
+	public showButtons: boolean = false;
 
 	//Lookups Array
 	MF_LICENSE_TYPE: Array<any> = [];

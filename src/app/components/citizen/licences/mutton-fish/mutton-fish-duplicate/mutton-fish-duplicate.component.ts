@@ -43,7 +43,7 @@ export class MuttonFishDuplicateComponent implements OnInit {
 	businessSubCategory: Array<any> = [];
 
 	// required attachment array
-	private uploadFileArray: Array<any> = [];
+	public uploadFileArray: Array<any> = [];
 
 
 	// serach api variable
@@ -132,7 +132,7 @@ export class MuttonFishDuplicateComponent implements OnInit {
 				uniqueId: res.uniqueId,
 				version: res.version,
 				serviceFormId: res.serviceFormId,
-				refNumber:this.serachLicenceObj.searchLicenceNumber,
+				refNumber: this.serachLicenceObj.searchLicenceNumber,
 				createdDate: res.createdDate,
 				updatedDate: res.createdDate,
 				serviceType: res.serviceType,
@@ -166,7 +166,7 @@ export class MuttonFishDuplicateComponent implements OnInit {
 
 			this.muttonFishDuplicateForm.disable();
 			this.enableFielList();
-		
+
 			let currentUrl = this.location.path().replace('false', this.formId.toString());
 			this.location.go(currentUrl);
 		});
@@ -190,7 +190,7 @@ export class MuttonFishDuplicateComponent implements OnInit {
 			try {
 				this.muttonFishDuplicateForm.patchValue(res);
 				this.showButtons = true;
-			
+
 			} catch (error) {
 				console.log(error.message);
 			}
@@ -230,7 +230,7 @@ export class MuttonFishDuplicateComponent implements OnInit {
 		this.muttonFishDuplicateForm = this.fb.group({
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
 			serviceCode: 'MF-DUP',
-			refNumber:[null],
+			refNumber: [null],
 			/* Step 1 controls start */
 			licenseType: this.fb.group({
 				code: [null]

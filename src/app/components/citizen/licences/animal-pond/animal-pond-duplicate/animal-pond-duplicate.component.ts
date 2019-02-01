@@ -12,13 +12,13 @@ import { Location } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-animal-pond-duplicate',
-  templateUrl: './animal-pond-duplicate.component.html',
-  styleUrls: ['./animal-pond-duplicate.component.scss']
+	selector: 'app-animal-pond-duplicate',
+	templateUrl: './animal-pond-duplicate.component.html',
+	styleUrls: ['./animal-pond-duplicate.component.scss']
 })
 export class AnimalPondDuplicateComponent implements OnInit {
 
- 	@ViewChild('permanantAddressEstablishment') permanantAddressEstablishment: any;
+	@ViewChild('permanantAddressEstablishment') permanantAddressEstablishment: any;
 
 	animalPondDuplicateForm: FormGroup;
 	translateKey: string = 'animalPondDuplicateScreen';
@@ -29,13 +29,13 @@ export class AnimalPondDuplicateComponent implements OnInit {
 
 	//File and image upload
 	uploadModel: any = {};
-	private showButtons: boolean = false;
+	public showButtons: boolean = false;
 
 	//Lookups Array
 	PERSON_TYPE: Array<any> = [];
 
 	// required attachment array
-	private uploadFileArray: Array<any> = [];
+	public uploadFileArray: Array<any> = [];
 
 	// serach api variable
 	serachLicenceObj = {
@@ -69,7 +69,7 @@ export class AnimalPondDuplicateComponent implements OnInit {
      * @param formService - Declare form service property 
      * @param uploadFileService - Declare upload file service property.
      * @param commonService - Declare sweet alert.
-	   * @param toastrService - Show massage with timer.
+	* @param toastrService - Show massage with timer.
      */
 	constructor(
 		private fb: FormBuilder,
@@ -156,7 +156,7 @@ export class AnimalPondDuplicateComponent implements OnInit {
 
 			this.animalPondDuplicateForm.disable();
 			this.enableFielList();
-		
+
 			let currentUrl = this.location.path().replace('false', this.formId.toString());
 			this.location.go(currentUrl);
 		});
@@ -166,7 +166,7 @@ export class AnimalPondDuplicateComponent implements OnInit {
 	/**
 	 * This method use for edit some fiels.
 	 */
-	enableFielList() { 
+	enableFielList() {
 		this.animalPondDuplicateForm.get('temporaryAddress').enable();
 	}
 
@@ -202,7 +202,7 @@ export class AnimalPondDuplicateComponent implements OnInit {
 		this.animalPondDuplicateForm = this.fb.group({
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
 			serviceCode: 'APL-DUP',
-			refNumber:[null],
+			refNumber: [null],
 			/* Step 1 controls start */
 			personType: this.fb.group({
 				code: [null]
@@ -220,9 +220,9 @@ export class AnimalPondDuplicateComponent implements OnInit {
 			holderTelephoneNo: [null, [Validators.maxLength(12), Validators.minLength(10)]],
 			holderMobileNo: [null, [Validators.required, Validators.maxLength(11), Validators.minLength(10)]],
 			holderFaxNo: [null, [Validators.maxLength(12)]],
-			holderAadharNo: [null, [Validators.required, Validators.maxLength(12),Validators.minLength(12)]],
+			holderAadharNo: [null, [Validators.required, Validators.maxLength(12), Validators.minLength(12)]],
 			holderPanNo: [null, [Validators.required, Validators.maxLength(10)]],
-			/* Step 1 controls end */ 
+			/* Step 1 controls end */
 
 			applicationDate: [],
 			licenseIssueDate: [null],

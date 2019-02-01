@@ -20,11 +20,11 @@
 				<div class="row">
 					<mat-form-field class="col-md-4">
 						<input matInput readonly required placeholder="{{'license_no' | translate:translateKey}}" formControlName="refNumber">
-						<control-messages [control]="muttonFishDuplicateForm.controls.refNumber"></control-messages>
+						<control-messages [control]="muttonFishDuplicateForm.get('refNumber')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
 						<input matInput readonly placeholder="{{'issue_date' | translate:translateKey}}" formControlName="licenseIssueDate">
-						<control-messages [control]="muttonFishDuplicateForm.controls.licenseIssueDate"></control-messages>
+						<control-messages [control]="muttonFishDuplicateForm.get('licenseIssueDate')"></control-messages>
 					</mat-form-field>
 				</div>
 
@@ -34,7 +34,7 @@
 						<ng-select placeholder="{{'license_type' | translate:translateKey}} *" formControlName="code">
 							<ng-option *ngFor="let type of MF_LICENSE_TYPE" [value]="type.code">{{type.name}}</ng-option>
 						</ng-select>
-						<control-messages [control]="muttonFishDuplicateForm.get('licenseType').controls.code"></control-messages>
+						<control-messages [control]="muttonFishDuplicateForm.get('licenseType').get('code')"></control-messages>
 					</div>
 				</div>
 				<div class="row">
@@ -42,22 +42,22 @@
 						<ng-select placeholder="{{'person_type' | translate:translateKey}} *" formControlName="code">
 							<ng-option *ngFor="let type of PERSON_TYPE" [value]="type.code">{{type.name}}</ng-option>
 						</ng-select>
-						<control-messages [control]="muttonFishDuplicateForm.get('personType').controls.code"></control-messages>
+						<control-messages [control]="muttonFishDuplicateForm.get('personType').get('code')"></control-messages>
 					</div>
 					<mat-form-field class="col-md-2">
 						<input matInput type="text" required maxlength="30" appValidationFields validationFieldsType='onlyNameWithOutSpace' placeholder="{{'holder_firstname' | translate:translateKey}}" formControlName="holderFirstName"
 						 appGujInputSource targetElement="holderFirstNameGuj" [form]="muttonFishDuplicateForm">
-						<control-messages [control]="muttonFishDuplicateForm.controls.holderFirstName"></control-messages>
+						<control-messages [control]="muttonFishDuplicateForm.get('holderFirstName')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" required maxlength="30" appValidationFields validationFieldsType='onlyNameWithOutSpace' placeholder="{{'holder_middlename' | translate:translateKey}}" formControlName="holderMiddleName"
 						 appGujInputSource targetElement="holderMiddleNameGuj" [form]="muttonFishDuplicateForm">
-						<control-messages [control]="muttonFishDuplicateForm.controls.holderMiddleName"></control-messages>
+						<control-messages [control]="muttonFishDuplicateForm.get('holderMiddleName')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" required maxlength="30" appValidationFields validationFieldsType='onlyNameWithOutSpace' placeholder="{{'holder_lastname' | translate:translateKey}}" formControlName="holderLastName"
 						 appGujInputSource targetElement="holderLastNameGuj" [form]="muttonFishDuplicateForm">
-						<control-messages [control]="muttonFishDuplicateForm.controls.holderLastName"></control-messages>
+						<control-messages [control]="muttonFishDuplicateForm.get('holderLastName')"></control-messages>
 					</mat-form-field>
 				</div>
 
@@ -66,28 +66,28 @@
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" maxlength="90" required formControlName="holderFirstNameGuj" appGujInputTarget [form]="muttonFishDuplicateForm"
 						 placeholder="{{ 'holder_firstname' | translate:translateKey:'gu' }}">
-						<control-messages [control]="muttonFishDuplicateForm.controls.holderFirstNameGuj"></control-messages>
+						<control-messages [control]="muttonFishDuplicateForm.get('holderFirstNameGuj')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" required maxlength="90" placeholder="{{'holder_middlename' | translate:translateKey}}" formControlName="holderMiddleNameGuj"
 						 appGujInputTarget [form]="muttonFishDuplicateForm">
-						<control-messages [control]="muttonFishDuplicateForm.controls.holderMiddleNameGuj"></control-messages>
+						<control-messages [control]="muttonFishDuplicateForm.get('holderMiddleNameGuj')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" required maxlength="90" placeholder="{{'holder_lastname' | translate:translateKey}}" formControlName="holderLastNameGuj"
 						 appGujInputTarget [form]="muttonFishDuplicateForm">
-						<control-messages [control]="muttonFishDuplicateForm.controls.holderLastNameGuj"></control-messages>
+						<control-messages [control]="muttonFishDuplicateForm.get('holderLastNameGuj')"></control-messages>
 					</mat-form-field>
 				</div>
 				<!-- /gujarati -->
 
 				<div class="row">
 					<h2>{{'permanat_address' | translate:translateKey}}</h2>
-					<app-address #permanantAddressEstablishment [requiredFeilds]="muttonFishDuplicateForm.controls.permanantAddress.value" [addressFormGroup]="muttonFishDuplicateForm.controls.permanantAddress"></app-address>
+					<app-address #permanantAddressEstablishment [requiredFeilds]="muttonFishDuplicateForm.get('permanantAddress').value" [addressFormGroup]="muttonFishDuplicateForm.get('permanantAddress')"></app-address>
 				</div>
 				<div class="row">
 					<h2>{{'temp_address' | translate:translateKey}}</h2>
-					<app-address #temporaryAddressEstablishment [requiredFeilds]="muttonFishDuplicateForm.controls.temporaryAddress.value" [addressFormGroup]="muttonFishDuplicateForm.controls.temporaryAddress"></app-address>
+					<app-address #temporaryAddressEstablishment [requiredFeilds]="muttonFishDuplicateForm.get('temporaryAddress').value" [addressFormGroup]="muttonFishDuplicateForm.get('temporaryAddress')"></app-address>
 				</div>
 
 				<mat-form-field class="col-md-4">

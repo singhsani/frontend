@@ -28,7 +28,7 @@ export class MuttonFishRenewalComponent implements OnInit {
 
 	//File and image upload
 	uploadModel: any = {};
-	private showButtons: boolean = false;
+	public showButtons: boolean = false;
 
 	//Lookups Array
 	MF_LICENSE_TYPE: Array<any> = [];
@@ -43,7 +43,7 @@ export class MuttonFishRenewalComponent implements OnInit {
 	businessSubCategory: Array<any> = [];
 
 	// required attachment array
-	private uploadFileArray: Array<any> =
+	public uploadFileArray: Array<any> =
 		[
 			{ labelName: 'Photo of License Holder', fieldIdentifier: '1', category: 'common' },
 			{ labelName: 'One Copy of each site plan and key plan', fieldIdentifier: '2', category: 'common' },
@@ -156,7 +156,7 @@ export class MuttonFishRenewalComponent implements OnInit {
 				uniqueId: res.uniqueId,
 				version: res.version,
 				serviceFormId: res.serviceFormId,
-				refNumber:this.serachLicenceObj.searchLicenceNumber,
+				refNumber: this.serachLicenceObj.searchLicenceNumber,
 				createdDate: res.createdDate,
 				updatedDate: res.createdDate,
 				serviceType: res.serviceType,
@@ -282,7 +282,7 @@ export class MuttonFishRenewalComponent implements OnInit {
 		this.muttonFishRenewalForm = this.fb.group({
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
 			serviceCode: 'MF-LIC',
-			refNumber:[null],
+			refNumber: [null],
 			/* Step 1 controls start */
 			licenseType: this.fb.group({
 				code: [null]
@@ -424,7 +424,7 @@ export class MuttonFishRenewalComponent implements OnInit {
 	* @param row: table row index
 	*/
 	editRecord(row: any) {
-		if(this.muttonFishRenewalForm.get('relationshipId').value.code == 'PROPRIETOR'){
+		if (this.muttonFishRenewalForm.get('relationshipId').value.code == 'PROPRIETOR') {
 			this.toastrService.warning("You can not edit record.");
 			return false;
 		}
@@ -437,7 +437,7 @@ export class MuttonFishRenewalComponent implements OnInit {
 	 * @param index : table index
 	 */
 	deleteRecord(index: any) {
-		if(this.muttonFishRenewalForm.get('relationshipId').value.code == 'PROPRIETOR'){
+		if (this.muttonFishRenewalForm.get('relationshipId').value.code == 'PROPRIETOR') {
 			this.toastrService.warning("You can not delete record.");
 			return false;
 		}

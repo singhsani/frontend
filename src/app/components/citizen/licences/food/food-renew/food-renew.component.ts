@@ -24,7 +24,7 @@ export class FoodRenewComponent implements OnInit {
 	apiCode: string;
 	tabIndex: number = 0;
 
-	private showButtons: boolean = false;
+	public showButtons: boolean = false;
 
 	//Lookups Array
 	WARD: Array<any> = [];

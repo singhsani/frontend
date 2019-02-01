@@ -11,6 +11,7 @@ import * as moment from 'moment';
 import { ShopAndEstablishmentService } from './../common/services/shop-and-establishment.service';
 import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '../../../../../shared/modules/translate/translate.service';
+import { CitizenConfig } from '../../../citizen-config';
 
 @Component({
 	selector: 'app-shop-lic-new',
@@ -23,6 +24,7 @@ export class ShopLicNewComponent implements OnInit {
 
 	shopLicNewForm: FormGroup;
 	translateKey: string = 'shopLicNewScreen';
+	public config = new CitizenConfig;
 
 	formId: number;
 	apiCode: string;
@@ -32,7 +34,7 @@ export class ShopLicNewComponent implements OnInit {
 
 	//File and image upload
 	uploadModel: any = {};
-	private showButtons: boolean = false;
+	showButtons: boolean = false;
 
 	//Lookup Array
 	gender: Array<any> = [];
@@ -47,7 +49,7 @@ export class ShopLicNewComponent implements OnInit {
 	SHOP_LIC_HOLIDAY: Array<any> = [];
 
 	// required attachment array
-	private uploadFilesArray: Array<any> = [];
+	public uploadFilesArray: Array<any> = [];
 
     /**
      * @param fb - Declare FormBuilder property.
@@ -67,7 +69,7 @@ export class ShopLicNewComponent implements OnInit {
 		private commonService: CommonService,
 		private shopAndEstablishmentService: ShopAndEstablishmentService,
 		private toastrService: ToastrService,
-		private TranslateService: TranslateService
+		public TranslateService: TranslateService
 	) { }
 
 	/**

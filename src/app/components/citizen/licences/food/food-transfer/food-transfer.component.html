@@ -22,25 +22,25 @@
           <mat-form-field class="col-md-6">
             <input matInput type="text" required maxlength="300" appValidationFields validationFieldsType='onlyNameWithSpace'
               placeholder="{{'holder_name' | translate:translateKey}}" formControlName="holderName">
-            <control-messages [control]="foodTransferForm.controls.holderName"></control-messages>
+            <control-messages [control]="foodTransferForm.get('holderName')"></control-messages>
           </mat-form-field>
 
           <mat-form-field class="col-md-6">
             <input matInput type="text" required maxlength="150" placeholder="{{'firm_name' | translate:translateKey}}"
               formControlName="firmName">
-            <control-messages [control]="foodTransferForm.controls.firmName"></control-messages>
+            <control-messages [control]="foodTransferForm.get('firmName')"></control-messages>
           </mat-form-field>
 
           <mat-form-field class="col-md-6">
             <textarea matInput rows="3" cols="50" maxlength="500" formControlName="holderAddress" placeholder="{{ 'holder_address' | translate:translateKey }}"
               required> </textarea>
-            <control-messages [control]="foodTransferForm.controls.holderAddress"></control-messages>
+            <control-messages [control]="foodTransferForm.get('holderAddress')"></control-messages>
           </mat-form-field>
 
           <mat-form-field class="col-md-6">
             <textarea matInput rows="3" cols="50" maxlength="200" formControlName="firmAddress" placeholder="{{ 'firm_address' | translate:translateKey }}"
               required> </textarea>
-            <control-messages [control]="foodTransferForm.controls.firmAddress"></control-messages>
+            <control-messages [control]="foodTransferForm.get('firmAddress')"></control-messages>
           </mat-form-field>
         </div>
 
@@ -49,18 +49,18 @@
             <ng-select placeholder="{{'firm_zone' | translate:translateKey}} *" formControlName="code" (change)="onChangeZone($event);foodTransferForm.get('firmAdministrativeWard').reset()">
               <ng-option *ngFor="let zone of FIRM_ZONE" [value]="zone.code">{{zone.name}}</ng-option>
             </ng-select>
-            <control-messages [control]="foodTransferForm.get('firmZone').controls.code"></control-messages>
+            <control-messages [control]="foodTransferForm.get('firmZone').get('code')"></control-messages>
           </div>
           <div class="col-md-4 ngSelect" formGroupName="firmAdministrativeWard">
             <ng-select placeholder="{{'firm_ward_no' | translate:translateKey}} *" formControlName="code">
               <ng-option *ngFor="let ward of WARD" [value]="ward.code">{{ward.name}}</ng-option>
             </ng-select>
-            <control-messages [control]="foodTransferForm.get('firmAdministrativeWard').controls.code"></control-messages>
+            <control-messages [control]="foodTransferForm.get('firmAdministrativeWard').get('code')"></control-messages>
           </div>
           <mat-form-field class="col-md-4">
             <input matInput formControlName="firmCity" appValidationFields validationFieldsType='onlyNameWithOutSpace'
               placeholder="{{'firm_city' | translate:translateKey}}">
-            <control-messages [control]="foodTransferForm.controls.firmCity"></control-messages>
+            <control-messages [control]="foodTransferForm.get('firmCity')"></control-messages>
           </mat-form-field>
         </div>
 
@@ -69,20 +69,20 @@
           <mat-form-field class="col-md-4">
             <input matInput type="tel" OnlyNumber formControlName="firmPincode" placeholder="{{'firm_pincode' | translate: translateKey }}"
               minlength="6" maxlength="6">
-            <control-messages [control]="foodTransferForm.controls.firmPincode"></control-messages>
+            <control-messages [control]="foodTransferForm.get('firmPincode')"></control-messages>
           </mat-form-field>
           <mat-form-field class="col-md-4">
             <input matInput OnlyNumber required maxlength="10" formControlName="mobileNo" placeholder="{{'mobile_no' | translate:translateKey}}">
-            <control-messages [control]="foodTransferForm.controls.mobileNo"></control-messages>
+            <control-messages [control]="foodTransferForm.get('mobileNo')"></control-messages>
           </mat-form-field>
           <mat-form-field class="col-md-4">
             <input matInput OnlyNumber maxlength="10" formControlName="firmLandLineNo" placeholder="{{'tel_no' | translate:translateKey}}">
-            <control-messages [control]="foodTransferForm.controls.firmLandLineNo"></control-messages>
+            <control-messages [control]="foodTransferForm.get('firmLandLineNo')"></control-messages>
           </mat-form-field>
           <mat-form-field class="col-md-4">
             <input matInput appPreventSpace placeholder="{{'email' | translate:translateKey}}" type="email"
               formControlName="firmEmailId" required>
-            <control-messages [control]="foodTransferForm.controls.firmEmailId"></control-messages>
+            <control-messages [control]="foodTransferForm.get('firmEmailId')"></control-messages>
           </mat-form-field>
         </div>
         <app-action-bar [form]="foodTransferForm" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step1', next: 1, back: 0}"></app-action-bar>
@@ -100,14 +100,14 @@
             <ng-select placeholder="{{'business_type' | translate:translateKey}} *" formControlName="code" (change)="foodTransferForm.get('businessCategories').reset();foodTransferForm.get('regLicType').reset()">
               <ng-option *ngFor="let type of FOOD_BUSINESS_TYPES" [value]="type.code">{{type.name}}</ng-option>
             </ng-select>
-            <control-messages [control]="foodTransferForm.get('businessType').controls.code"></control-messages>
+            <control-messages [control]="foodTransferForm.get('businessType').get('code')"></control-messages>
           </div>
           <div class="col-md-4 ngSelect" formGroupName="regLicType">
             <ng-select placeholder="{{'regLic_type_single_or_multi' | translate:translateKey}} *" formControlName="code"
               (change)="foodTransferForm.get('businessCategories').reset()">
               <ng-option *ngFor="let type of FOOD_REG_LIC_SINGLE_OR_MULTIPLE" [value]="type.code">{{type.name}}</ng-option>
             </ng-select>
-            <control-messages [control]="foodTransferForm.controls.regLicType.controls.code"></control-messages>
+            <control-messages [control]="foodTransferForm.get('regLicType').get('code')"></control-messages>
           </div>
 
           <div class="col-md-4 ngSelect" formGroupName="businessTurnOver">
@@ -115,33 +115,33 @@
               (ngModelChange)="onChangeRegOrLicType($event)">
               <ng-option *ngFor="let statusId of FOOD_BUSINESS_TURNOVER" [value]="statusId.code">{{statusId.name}}</ng-option>
             </ng-select>
-            <control-messages [control]="foodTransferForm.controls.businessTurnOver.controls.code"></control-messages>
+            <control-messages [control]="foodTransferForm.get('businessTurnOver').get('code')"></control-messages>
           </div>
 
           <!-- when business turnover is less than 12 LK and select registration type  and business type is selected-->
           <!-- Multiple MANUFACTURER LESS_THAN_12LK -->
-          <div class="col-md-12 ngSelect" *ngIf="foodTransferForm.controls.regLicType.controls.code.value == 'FOOD_REG_LIC_MULTIPLE' && foodTransferForm.get('businessTurnOver').controls.code.value === 'LESS_THAN_12LK' && foodTransferForm.get('businessType').controls.code.value === 'FOOD_MANUFACTURER_PROCESSOR_BUSINESSTYPE'">
+          <div class="col-md-12 ngSelect" *ngIf="foodTransferForm.get('regLicType').get('code').value == 'FOOD_REG_LIC_MULTIPLE' && foodTransferForm.get('businessTurnOver').get('code').value === 'LESS_THAN_12LK' && foodTransferForm.get('businessType').get('code').value === 'FOOD_MANUFACTURER_PROCESSOR_BUSINESSTYPE'">
             <ng-select [items]="FOOD_MANUFACTURER_PROCESSOR_BUSINESSTYPE_LT12L" bindLabel="name" formControlName="businessCategories"
               [multiple]="true" (change)="foodTransferForm.get('singleBusinessCategorie').reset()" placeholder="{{'business_categories' | translate:translateKey}} *">
             </ng-select>
             <control-messages [control]="foodTransferForm.get('businessCategories')"></control-messages>
           </div>
           <!-- single MANUFACTURER LESS_THAN_12LK -->
-          <div class="col-md-12 ngSelect" *ngIf="foodTransferForm.controls.regLicType.controls.code.value != 'FOOD_REG_LIC_MULTIPLE' && foodTransferForm.get('businessTurnOver').controls.code.value === 'LESS_THAN_12LK' && foodTransferForm.get('businessType').controls.code.value === 'FOOD_MANUFACTURER_PROCESSOR_BUSINESSTYPE'">
+          <div class="col-md-12 ngSelect" *ngIf="foodTransferForm.get('regLicType').get('code').value != 'FOOD_REG_LIC_MULTIPLE' && foodTransferForm.get('businessTurnOver').get('code').value === 'LESS_THAN_12LK' && foodTransferForm.get('businessType').get('code').value === 'FOOD_MANUFACTURER_PROCESSOR_BUSINESSTYPE'">
             <ng-select [items]="FOOD_MANUFACTURER_PROCESSOR_BUSINESSTYPE_LT12L" bindLabel="name" formControlName="singleBusinessCategorie"
               (change)="foodTransferForm.get('businessCategories').reset()" placeholder="{{'business_categories' | translate:translateKey}} *">
             </ng-select>
             <control-messages [control]="foodTransferForm.get('singleBusinessCategorie')"></control-messages>
           </div>
           <!-- MULTIPLE FOOD_OTHER LESS_THAN_12LK -->
-          <div class="col-md-12 ngSelect" *ngIf="foodTransferForm.controls.regLicType.controls.code.value == 'FOOD_REG_LIC_MULTIPLE' && foodTransferForm.get('businessTurnOver').controls.code.value === 'LESS_THAN_12LK' && foodTransferForm.get('businessType').controls.code.value === 'FOOD_OTHER' ">
+          <div class="col-md-12 ngSelect" *ngIf="foodTransferForm.get('regLicType').get('code').value == 'FOOD_REG_LIC_MULTIPLE' && foodTransferForm.get('businessTurnOver').get('code').value === 'LESS_THAN_12LK' && foodTransferForm.get('businessType').get('code').value === 'FOOD_OTHER' ">
             <ng-select [items]="FOOD_OTHERS_BUSINESSTYPE_LT12L" bindLabel="name" formControlName="businessCategories"
               [multiple]="true" (change)="foodTransferForm.get('singleBusinessCategorie').reset()" placeholder="{{'business_categories' | translate:translateKey}} *">
             </ng-select>
             <control-messages [control]="foodTransferForm.get('businessCategories')"></control-messages>
           </div>
           <!-- single FOOD_OTHER LESS_THAN_12LK -->
-          <div class="col-md-12 ngSelect" *ngIf="foodTransferForm.controls.regLicType.controls.code.value != 'FOOD_REG_LIC_MULTIPLE' && foodTransferForm.get('businessTurnOver').controls.code.value === 'LESS_THAN_12LK' && foodTransferForm.get('businessType').controls.code.value === 'FOOD_OTHER' ">
+          <div class="col-md-12 ngSelect" *ngIf="foodTransferForm.get('regLicType').get('code').value != 'FOOD_REG_LIC_MULTIPLE' && foodTransferForm.get('businessTurnOver').get('code').value === 'LESS_THAN_12LK' && foodTransferForm.get('businessType').get('code').value === 'FOOD_OTHER' ">
             <ng-select [items]="FOOD_OTHERS_BUSINESSTYPE_LT12L" bindLabel="name" formControlName="singleBusinessCategorie"
               (change)="foodTransferForm.get('businessCategories').reset()" placeholder="{{'business_categories' | translate:translateKey}} *">
             </ng-select>
@@ -150,35 +150,35 @@
 
           <!-- when business turnover is more than 12 LK and select registration type  and business type is selected-->
           <!-- MULTIPLE MANUFACTURER GREATER_THAN_12LK -->
-          <div class="col-md-12 ngSelect" *ngIf="foodTransferForm.controls.regLicType.controls.code.value == 'FOOD_REG_LIC_MULTIPLE' && foodTransferForm.get('businessTurnOver').controls.code.value === 'GREATER_THAN_12LK' && foodTransferForm.get('businessType').controls.code.value === 'FOOD_MANUFACTURER_PROCESSOR_BUSINESSTYPE'">
+          <div class="col-md-12 ngSelect" *ngIf="foodTransferForm.get('regLicType').get('code').value == 'FOOD_REG_LIC_MULTIPLE' && foodTransferForm.get('businessTurnOver').get('code').value === 'GREATER_THAN_12LK' && foodTransferForm.get('businessType').get('code').value === 'FOOD_MANUFACTURER_PROCESSOR_BUSINESSTYPE'">
             <ng-select [items]="FOOD_MANUFACTURER_PROCESSOR_BUSINESSTYPE_MT12L" bindLabel="name" formControlName="businessCategories"
               [multiple]="true" (change)="foodTransferForm.get('singleBusinessCategorie').reset()" placeholder="{{'business_categories' | translate:translateKey}} *">
             </ng-select>
             <control-messages [control]="foodTransferForm.get('businessCategories')"></control-messages>
           </div>
           <!-- single MANUFACTURER GREATER_THAN_12LK -->
-          <div class="col-md-12 ngSelect" *ngIf="foodTransferForm.controls.regLicType.controls.code.value != 'FOOD_REG_LIC_MULTIPLE' && foodTransferForm.get('businessTurnOver').controls.code.value === 'GREATER_THAN_12LK' && foodTransferForm.get('businessType').controls.code.value === 'FOOD_MANUFACTURER_PROCESSOR_BUSINESSTYPE'">
+          <div class="col-md-12 ngSelect" *ngIf="foodTransferForm.get('regLicType').get('code').value != 'FOOD_REG_LIC_MULTIPLE' && foodTransferForm.get('businessTurnOver').get('code').value === 'GREATER_THAN_12LK' && foodTransferForm.get('businessType').get('code').value === 'FOOD_MANUFACTURER_PROCESSOR_BUSINESSTYPE'">
             <ng-select [items]="FOOD_MANUFACTURER_PROCESSOR_BUSINESSTYPE_MT12L" bindLabel="name" formControlName="singleBusinessCategorie"
               (change)="foodTransferForm.get('businessCategories').reset()" placeholder="{{'business_categories' | translate:translateKey}} *">
             </ng-select>
             <control-messages [control]="foodTransferForm.get('singleBusinessCategorie')"></control-messages>
           </div>
           <!-- MULTIPLE FOOD_OTHER GREATER_THAN_12LK  -->
-          <div class="col-md-12 ngSelect" *ngIf="foodTransferForm.controls.regLicType.controls.code.value == 'FOOD_REG_LIC_MULTIPLE' && foodTransferForm.get('businessTurnOver').controls.code.value === 'GREATER_THAN_12LK' && foodTransferForm.get('businessType').controls.code.value === 'FOOD_OTHER' ">
+          <div class="col-md-12 ngSelect" *ngIf="foodTransferForm.get('regLicType').get('code').value == 'FOOD_REG_LIC_MULTIPLE' && foodTransferForm.get('businessTurnOver').get('code').value === 'GREATER_THAN_12LK' && foodTransferForm.get('businessType').get('code').value === 'FOOD_OTHER' ">
             <ng-select [items]="FOOD_OTHERS_BUSINESSTYPE_MT12L" bindLabel="name" formControlName="businessCategories"
               [multiple]="true" (change)="foodTransferForm.get('singleBusinessCategorie').reset()" placeholder="{{'business_categories' | translate:translateKey}} *">
             </ng-select>
             <control-messages [control]="foodTransferForm.get('businessCategories')"></control-messages>
           </div>
           <!-- single FOOD_OTHER GREATER_THAN_12LK  -->
-          <div class="col-md-12 ngSelect" *ngIf="foodTransferForm.controls.regLicType.controls.code.value != 'FOOD_REG_LIC_MULTIPLE' && foodTransferForm.get('businessTurnOver').controls.code.value === 'GREATER_THAN_12LK' && foodTransferForm.get('businessType').controls.code.value === 'FOOD_OTHER' ">
+          <div class="col-md-12 ngSelect" *ngIf="foodTransferForm.get('regLicType').get('code').value != 'FOOD_REG_LIC_MULTIPLE' && foodTransferForm.get('businessTurnOver').get('code').value === 'GREATER_THAN_12LK' && foodTransferForm.get('businessType').get('code').value === 'FOOD_OTHER' ">
             <ng-select [items]="FOOD_OTHERS_BUSINESSTYPE_MT12L" bindLabel="name" formControlName="singleBusinessCategorie"
               (change)="foodTransferForm.get('businessCategories').reset()" placeholder="{{'business_categories' | translate:translateKey}} *">
             </ng-select>
             <control-messages [control]="foodTransferForm.get('singleBusinessCategorie')"></control-messages>
           </div>
-          <!-- <div class="col-md-8 ngSelect" formArrayName="businessCategories" *ngIf="foodTransferForm.get('businessTurnOver').controls.code.value === 'GREATER_THAN_12LK' && foodTransferForm.get('businessType').controls.code.value === 'FOOD_OTHER' && foodTransferForm.get('regLicType').controls.code.value !== null">
-            <ng-select [multiple]="foodTransferForm.controls.regLicType.controls.code.value == 'FOOD_REG_LIC_MULTIPLE'"
+          <!-- <div class="col-md-8 ngSelect" formArrayName="businessCategories" *ngIf="foodTransferForm.get('businessTurnOver').get('code').value === 'GREATER_THAN_12LK' && foodTransferForm.get('businessType').get('code').value === 'FOOD_OTHER' && foodTransferForm.get('regLicType').get('code').value !== null">
+            <ng-select [multiple]="foodTransferForm.get('regLicType').get('code').value == 'FOOD_REG_LIC_MULTIPLE'"
               placeholder="{{'business_categories' | translate:translateKey}} *">
               <ng-option *ngFor="let type of FOOD_OTHERS_BUSINESSTYPE_MT12L" [value]="type.code">{{type.name}}</ng-option>
             </ng-select>
@@ -188,35 +188,35 @@
           <!-- depend on business TurnOver -->
           <mat-form-field class="col-md-4">
             <input matInput required readonly formControlName="regOrLic" placeholder="{{'is_reg_or_lic' | translate:translateKey}}">
-            <control-messages [control]="foodTransferForm.controls.regOrLic"></control-messages>
+            <control-messages [control]="foodTransferForm.get('regOrLic')"></control-messages>
           </mat-form-field>
 
           <div class="col-md-4 ngSelect" formGroupName="licenceForNoOfYear">
             <ng-select placeholder="{{'licence_for_no_of_year' | translate:translateKey}} *" formControlName="code">
               <ng-option *ngFor="let statusId of FOOD_LICENCE_NO_OF_YEAR" [value]="statusId.code">{{statusId.name}}</ng-option>
             </ng-select>
-            <control-messages [control]="foodTransferForm.controls.licenceForNoOfYear.controls.code"></control-messages>
+            <control-messages [control]="foodTransferForm.get('licenceForNoOfYear').get('code')"></control-messages>
           </div>
           <!-- <div class="col-md-4 ngSelect" formGroupName="feesType">
             <ng-select placeholder="{{'feesType' | translate:translateKey}} *" formControlName="code">
               <ng-option *ngFor="let statusId of FOOD_LIC_FEES_TYPE" [value]="statusId.code">{{statusId.name}}</ng-option>
             </ng-select>
-            <control-messages [control]="foodTransferForm.controls.feesType.controls.code"></control-messages>
+            <control-messages [control]="foodTransferForm.get('feesType').get('code')"></control-messages>
           </div> -->
           <!-- <mat-form-field class="col-md-4">
             <input matInput OnlyNumber required maxlength="10" formControlName="totalFeesAmount" placeholder="{{'total_fees_amount' | translate:translateKey}}">
-            <control-messages [control]="foodTransferForm.controls.totalFeesAmount"></control-messages>
+            <control-messages [control]="foodTransferForm.get('totalFeesAmount')"></control-messages>
           </mat-form-field> -->
           <div class="col-md-4 ngSelect" formGroupName="paymentMode">
             <ng-select placeholder="{{'payment_mode' | translate:translateKey}} *" formControlName="code">
               <ng-option *ngFor="let statusId of FOOD_PAYMENT_MODE" [value]="statusId.code">{{statusId.name}}</ng-option>
             </ng-select>
-            <control-messages [control]="foodTransferForm.controls.paymentMode.controls.code"></control-messages>
+            <control-messages [control]="foodTransferForm.get('paymentMode').get('code')"></control-messages>
           </div>
         </div>
 
-        <app-action-bar [form]="foodTransferForm" (handleErrors)="handleErrorsOnSubmit($event)"
-          (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'final', next:4, back:0} "></app-action-bar>
+        <app-action-bar [form]="foodTransferForm" (handleErrors)="handleErrorsOnSubmit($event)" (tabIndex)="onTabChange($event)"
+          [stepInfo]="{step: 'final', next:4, back:0} "></app-action-bar>
       </mat-tab>
       <!-- step 2 Ends -->
 
