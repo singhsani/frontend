@@ -135,7 +135,7 @@ export class TownHallBookComponent implements OnInit {
 		easy way to book the town hall of Vadodara Municpal Corporation. You can
 		view the availiblity details of the town hall and select select one of multiple shifts for
 		booking. The booking is confirmed on the successfull online payment of the rent amount
-		for selected shift(s).`
+		for selected shift(s).`;
 		this.createTownHallAvailiblityForm();
 		this.createTownHallBookingApplicationForm();
 		this.getTownHallResourceList();
@@ -245,7 +245,7 @@ export class TownHallBookComponent implements OnInit {
 		this.bookingService.getDataFromLookups().subscribe(resp => {
 			this.purposes = resp.PURPOSE;
 			this.BankOptions = resp.BANK;
-		})
+		});
 	}
 
 	/**
@@ -321,8 +321,8 @@ export class TownHallBookComponent implements OnInit {
 				this.townHallApplicationForm.patchValue(resp.data);
 				if (resp.data.status == this.bookingConstants.PAYMENT_REQUIRED) {
 					this.bookingService.searchPayment(resp.data.refNumber).subscribe(payResp => {
-						this.paymentObject = payResp;
-						this.bookingDetailsDataSource.data = payResp.bookingDetails as BookingDetails[];
+						this.paymentObject = payResp.data;
+						this.bookingDetailsDataSource.data = payResp.data.bookingDetails as BookingDetails[];
 						this.CD.detectChanges();
 						this.showPaymentReciept = true;
 						this.CD.detectChanges();
@@ -358,30 +358,27 @@ export class TownHallBookComponent implements OnInit {
 		} else {
 			this.isLoadingResults = true;
 			this.bookingService.commonBookSlot(this.townHallApplicationForm.value).subscribe(resp => {
-
-				/**
-				 * Response Data here 
-				 */
 			}, (err) => {
 				this.isLoadingResults = false;
 				if (err.status == 402) {
-					let payData = this.bookingService.proceedForPayment(err.error.data);
-					this.commonService.commonAlert('Payment Details', '', 'info', 'Make Payment!', false, payData.html, cb => {
-						window.location.href = environment.adminUrl + `#/admin/payment-gateway?retUrl=${payData.payData.retUrl}&retPath=${payData.payData.retPath}`;
-					}, rj => {
-						let errHtml = `			
-						<div class="alert alert-danger">
-							Please Complete Payment, Otherwise the application will be considered as in-complete
-						</div>`
-						this.commonService.commonAlert("Application Incomplete", "", 'warning', 'Make Payment!', false, errHtml, ccb => {
-							window.location.href = environment.adminUrl + `#/admin/payment-gateway?retUrl=${payData.payData.retUrl}&retPath=${payData.payData.retPath}`;
-						}, arj => {
-							this.townHallApplicationForm.disable();
-							this.router.navigate([this.bookingConstants.MY_BOOKINGS_URL]);
-						});
-						return;
-					});
+					this.bookingUtils.redirectToPayment(err, this.commonService, this.bookingService, this.townHallApplicationForm, this.router);
 					return;
+					// let payData = this.bookingService.proceedForPayment(err.error.data);
+					// this.commonService.commonAlert('Payment Details', '', 'info', 'Make Payment!', false, payData.html, cb => {
+					// 	window.location.href = environment.adminUrl + `#/admin/payment-gateway?retUrl=${payData.payData.retUrl}&retPath=${payData.payData.retPath}`;
+					// }, rj => {
+					// 	let errHtml = `			
+					// 	<div class="alert alert-danger">
+					// 		Please Complete Payment, Otherwise the application will be considered as in-complete
+					// 	</div>`
+					// 	this.commonService.commonAlert("Application Incomplete", "", 'warning', 'Make Payment!', false, errHtml, ccb => {
+					// 		window.location.href = environment.adminUrl + `#/admin/payment-gateway?retUrl=${payData.payData.retUrl}&retPath=${payData.payData.retPath}`;
+					// 	}, arj => {
+					// 		this.townHallApplicationForm.disable();
+					// 		this.router.navigate([this.bookingConstants.MY_BOOKINGS_URL]);
+					// 	});
+					// 	return;
+					// });
 				} else if (err.error[0].code == this.bookingConstants.INVALID_BOOKING_STATUS) {
 					this.commonService.openAlert("Invalid Booking Status", err.error[0].message, "warning", "", cb => {
 						this.router.navigate([this.bookingConstants.MY_BOOKINGS_URL])

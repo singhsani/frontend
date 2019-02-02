@@ -86,7 +86,7 @@
 				<ng-select formControlName="code" required placeholder="{{'select_resource' | translate: translateKey}} *">
 					<ng-option *ngFor="let resources of resources" [value]="resources.code">{{resources.name}}</ng-option>
 				</ng-select>
-				<control-messages [control]="appointmentForm.controls.resources.controls.code"></control-messages>
+				<control-messages [control]="appointmentForm.get('resources').get('code')"></control-messages>
 			</div>
 
 			<mat-form-field class="col-md-4">
@@ -95,7 +95,7 @@
 				 " (click)="appointmentPicker.open()" (focus)="appointmentPicker.open()" readonly>
 				<mat-datepicker-toggle matSuffix [for]="appointmentPicker"></mat-datepicker-toggle>
 				<mat-datepicker #appointmentPicker></mat-datepicker>
-				<control-messages [control]="appointmentForm.controls.appointmentdate"></control-messages>
+				<control-messages [control]="appointmentForm.get('appointmentdate')"></control-messages>
 			</mat-form-field>
 
 			<div class="col-md-4">

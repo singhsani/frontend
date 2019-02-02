@@ -1,33 +1,292 @@
-<div class="container">
+<!-- Theater Booking Module Starts from here -->
 
-  <app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
+<!-- Theater Booking Title Bar Starts -->
+<app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
+<!-- Theater Booking Title Bar Ends -->
 
-  <mat-card class="mt-4 formClass">
+<!-- HTML for Theater booking Search Form Starts -->
+<div *ngIf="showTheaterSearchForm">
+    <mat-card class="formClass cardBorder">
+        <div class="pageTitle">{{'screen_title'| translate: translateKey}}</div>
+        <div class="p-15">
+            <form [formGroup]="searchTheaterForm" (ngSubmit)="searchBooking()" autocomplete="off" ngNativeValidate>
+                <div class="row mt-3 mb-3">
 
-    <form [formGroup]="theaterBookingForm" (ngSubmit)="bookTheater()" autocomplete="off" ngNativeValidate>
+                    <div class="col-md-6 ngSelect">
+                        <ng-select placeholder="{{'select_theater'| translate: translateKey}}" formControlName="code">
+                            <ng-option *ngFor="let theater of THEATERS" [value]="theater.code">
+                                {{ theater.name }}
+                            </ng-option>
+                        </ng-select>
+                        <control-messages [control]="searchTheaterForm.get('code')"></control-messages>
+                    </div>
 
-      <div class="row p-2">
+                    <div formGroupName="category" class="col-md-6 ngSelect">
+                        <ng-select placeholder="{{'category'| translate: translateKey}}" formControlName="code">
+                            <ng-option *ngFor="let cat of CATEGORIES" [value]="cat.code">
+                                {{ cat.name }}
+                            </ng-option>
+                        </ng-select>
+                        <control-messages [control]="searchTheaterForm.get('category').get('code')">
+                        </control-messages>
+                    </div>
 
-        <mat-form-field class="col-md-4">
-          <mat-select placeholder="Select Hall" formControlName="code">
-            <mat-option *ngFor="let theater of theaters" [value]="theater.code">
-              {{ theater.name }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+                    <mat-form-field class="col-md-6">
+                        <mat-label>
+                            {{'choose_start_date'| translate: translateKey}}
+                        </mat-label>
+                        <!-- matDatepickerFilter]="myFilter" -->
+                        <input matInput [min]="startMinDate" [matDatepicker]="theaterBookingfromPicker" formControlName="startDate" placeholder="DD/MM/YYYY">
+                        <mat-datepicker-toggle matSuffix [for]="theaterBookingfromPicker"></mat-datepicker-toggle>
+                        <mat-datepicker #theaterBookingfromPicker touchUi="true"></mat-datepicker>
+                        <control-messages [control]="searchTheaterForm.get('startDate')">
+                        </control-messages>
+                    </mat-form-field>
 
-        <mat-form-field class="col-md-4">
-          <input matInput [matDatepicker]="theaterBookingPicker" formControlName="date" placeholder="Choose a date">
-          <mat-datepicker-toggle matSuffix [for]="theaterBookingPicker"></mat-datepicker-toggle>
-          <mat-datepicker #theaterBookingPicker></mat-datepicker>
-        </mat-form-field>
+                    <mat-form-field class="col-md-6">
+                        <mat-label>
+                            {{'choose_end_date'| translate: translateKey}}
+                        </mat-label>
+                        <input matInput [min]="endMinDate" [matDatepicker]="theaterBookingtoPicker" formControlName="endDate" placeholder="DD/MM/YYYY">
+                        <mat-datepicker-toggle matSuffix [for]="theaterBookingtoPicker"></mat-datepicker-toggle>
+                        <mat-datepicker #theaterBookingtoPicker touchUi="true"></mat-datepicker>
+                        <control-messages [control]="searchTheaterForm.get('endDate')">
+                        </control-messages>
+                    </mat-form-field>
 
-        <div class="col-md-2">
-          <button mat-raised-button color="primary" type="submit" >Search</button>
+                </div>
+                
+                <div class="row fotButtonBar">
+                    <div class="col-sm-12 col-md-12 text-right">
+                        <button mat-raised-button color="primary" type="submit">
+                            {{'search'| translate: translateKey}}
+                        </button>
+                    </div>
+                </div>
+
+            </form>
         </div>
+    </mat-card>
 
-      </div>
-      
-    </form>
-  </mat-card>
-  </div>
+    <div *ngIf="Dates.length>0" class="mt-4">
+        <mat-card class="formClass cardBorder">
+            <div class="pageTitle">{{'list_of_theaters'| translate: translateKey}}</div>
+            <mat-accordion *ngFor="let month of bookingUtils.filterMonths(Dates); let i = index;">
+                <mat-expansion-panel [expanded]="i === 0">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            {{month.monthName}}
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div>
+                        <mat-checkbox [checked]="!bookingUtils.checkedAllinMonth(month, Dates)" [disabled]="bookingUtils.checkAllDisabledInmonth(month,Dates)"
+                            labelPosition="after" (change)="selectedShift = bookingUtils.selectAllShiftsInMonth($event.checked, month, Dates, selectedShift, i)">
+                            {{'select_all_shift_in'| translate: translateKey}} {{month.monthName}}
+                        </mat-checkbox>
+                    </div>
+                    <div class="row">
+                        <div *ngFor="let date of bookingUtils.filterAcc(month.id, Dates)" class="col-6 col-md-3 col-lg-2 mb-1 p-1">
+                            <div class="dateBox rounded border">
+                                <strong>
+                                    {{bookingUtils.returnProperDate(date.key)}}
+                                </strong>
+                                <div class="dateCon">
+                                    <mat-checkbox (change)="selectedShift = bookingUtils.selectShift(shift, $event.checked, selectedShift)" *ngFor="let shift of date.slotList; let i = index"
+                                        [disabled]="shift.slotStatus == bookingConstants.BOOKED || shift.slotStatus == bookingConstants.TEMPORARY_BLOCKED"
+                                        [checked]="shift.slotStatus != bookingConstants.AVAILABLE">
+                                        &nbsp;{{shift.slotStatus == bookingConstants.CHECKED ? bookingConstants.AVAILABLE : shift.slotStatus }}
+                                    </mat-checkbox>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </mat-expansion-panel>
+            </mat-accordion>
+
+            <div class="fotButtonBar">
+                <div class="col-sm-12 col-md-12 text-right">
+                    <button mat-raised-button data-toggle="modal" (click)="shortListTheater(confirmationModel)" data-target="#confirmShortlistModel"
+                        type="button" [disabled]="selectedShift.length == 0" color="primary">
+                        {{'shortlist'| translate: translateKey}}
+                    </button>
+                </div>
+            </div>
+        </mat-card>
+    </div>
+</div>
+
+<!-- Shortlist confirmation model starts -->
+<ng-template #confirmationModel>
+    <div class="modal-header customthead">
+        <h4 class="modal-title">
+            {{'list_selected_slot'| translate: translateKey}}
+        </h4>
+        <button title="Close" data-dismiss="modal" class="mat-icon-button" aria-label="Close" (click)="confirmRef.hide()">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+    <div class="modal-body scrollModel">
+        <div class="table-responsive">
+            <table class="table">
+                <thead class="customthead">
+                    <tr>
+                        <th scope="col" width="56">{{'s_no'| translate: translateKey}}</th>
+                        <th scope="col">{{'start_date'| translate: translateKey}}</th>
+                        <th scope="col">{{'end_date'| translate: translateKey}}</th>
+                        <th scope="col">{{'slot_status'| translate: translateKey}}</th>
+                        <th scope="col">{{'occupancy'| translate: translateKey}}</th>
+                        <th scope="col" width="65">{{'action'| translate: translateKey}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let shifts of selectedShift; let i = index;">
+                        <th scope="row">{{i+1}}</th>
+                        <td>{{bookingUtils.returnProperDate(shifts.start)}}</td>
+                        <td>{{bookingUtils.returnProperDate(shifts.end)}}</td>
+                        <td>{{shifts.slotStatus == bookingConstants.CHECKED ? bookingConstants.AVAILABLE : shifts.slotStatus
+                            }}</td>
+                        <td>{{shifts.occupancy}}</td>
+                        <td>
+                            <button mat-icon-button title="{{'remove_slot'| translate: translateKey}}" [disabled]="selectedShift.length == 1" (click)="selectedShift = bookingUtils.removeSelectedShift(shifts,selectedShift,  i)">
+                                <mat-icon color="warn">delete</mat-icon>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="modal-footer">
+
+        <button type="button" class="btn mat-raised-button" data-dismiss="modal" (click)="confirmRef.hide()">
+            {{'cancel'| translate: translateKey}}
+        </button>
+
+        <button type="button" class="btn mat-raised-button mat-primary" data-dismiss="modal" (click)="confirmShortlist()">
+            {{'confirm_and_continue'| translate: translateKey}}
+        </button>
+    </div>
+</ng-template>
+
+<!-- Booking Details -->
+<div [hidden]="!showTheaterBookingForm">
+    <mat-card class="cardH1">
+        <h1>
+            {{'theater_application_form'| translate: translateKey}}
+        </h1>
+    </mat-card>
+    <mat-card class="formClass formBorder">
+        <form [formGroup]="theaterBookingForm" (ngSubmit)="submitTheaterApplication()">
+            <mat-tab-group mat-stretch-tabs dynamicHeight="true" [(selectedIndex)]="tabIndex" class="stepperNav">
+
+                <!-- Tab 1 for booking details -->
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <div>{{'theater_booking_details' | translate:translateKey}}</div>
+                    </ng-template>
+
+                    <h2>
+                        {{'organization_details' | translate:translateKey}}
+                    </h2>
+
+                    <div class="row">
+                        <mat-form-field class="col-md-4">
+                            <input matInput maxlength="25" appValidationFields [validationFieldsType]="'onlyNameWithSpace'" type="text" formControlName="organizationName"
+                                placeholder="{{'oraganization_name' | translate: translateKey}}" required>
+                            <control-messages [control]="theaterBookingForm.get('organizationName')"></control-messages>
+                        </mat-form-field>
+
+                        <mat-form-field class="col-md-4">
+                            <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="organizationNumber" placeholder="{{'organization_number' | translate: translateKey}}"
+                                required>
+                            <control-messages [control]="theaterBookingForm.get('organizationNumber')"></control-messages>
+                        </mat-form-field>
+
+                        <mat-form-field class="col-md-4">
+                            <input matInput type="email" maxlength="50" formControlName="organizationEmail" placeholder="{{'organization_email' | translate: translateKey}}"
+                                required>
+                            <control-messages [control]="theaterBookingForm.get('organizationEmail')"></control-messages>
+                        </mat-form-field>
+
+                    </div>
+
+                    <div>
+                        <h2>
+                            {{'organizationAddress' | translate:translateKey}}
+                        </h2>
+                        <app-address #address [requiredFeilds]="true" [addressFormGroup]="theaterBookingForm.get('organizationAddress')"></app-address>
+                    </div>
+
+                    <div class="pull-right">
+                        <!-- <button type="button" mat-raised-button (click)="tabIndex= tabIndex -1; ">{{'back' | translate:translateKey}}</button> -->
+                        <button type="button" mat-raised-button (click)="tabIndex= tabIndex +1;">{{'next' | translate:translateKey}}
+                        </button>
+                    </div>
+                </mat-tab>
+                <!-- Tab 1 Ends -->
+
+                <!-- Tab 2 for bank details -->
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <div>
+                            {{'bank_details' | translate:translateKey}}
+                        </div>
+                    </ng-template>
+
+                    <h2>
+                        {{'bank_details' | translate:translateKey}}
+                    </h2>
+
+                    <div class="row">
+
+                        <div formGroupName="bankName" class="col-md-6 ngSelect">
+                            <ng-select placeholder="{{'bank_name' | translate:translateKey}} *" formControlName="code">
+                                <ng-option *ngFor="let bank of BANKS" [value]="bank.code">
+                                    {{bank.name}}
+                                </ng-option>
+                            </ng-select>
+                            <control-messages [control]="theaterBookingForm.get('bankName').get('code')"></control-messages>
+                        </div>
+
+                        <mat-form-field class="col-md-6">
+                            <input matInput type="text" maxlength="20" appValidationFields [validationFieldsType]="'onlyNameWithSpace'" formControlName="accountHolderName"
+                                placeholder="{{'account_holder_name' | translate: translateKey}}" required>
+                            <control-messages [control]="theaterBookingForm.get('accountHolderName')"></control-messages>
+                        </mat-form-field>
+
+                        <mat-form-field class="col-md-6">
+                            <input matInput OnlyNumber maxlength="20" minlength="20" formControlName="accountNo" placeholder="{{'accont_no' | translate: translateKey}}"
+                                required>
+                            <control-messages [control]="theaterBookingForm.get('accountNo')"></control-messages>
+                        </mat-form-field>
+
+                        <mat-form-field class="col-md-6">
+                            <input matInput type="text" maxlength="11" formControlName="ifscCode" placeholder="{{'ifsc_code' | translate: translateKey}}"
+                                required>
+                            <control-messages [control]="theaterBookingForm.get('ifscCode')"></control-messages>
+                        </mat-form-field>
+
+                        <h2>
+                            {{'terms_and_conditions' | translate:translateKey }}
+                        </h2>
+                        <div class="pl-2">
+                            <mat-checkbox class="d-block" labelPosition="after" formControlName="agree">
+                                {{'i_agree_with_above_bank_details_are_correct' | translate:translateKey}} </mat-checkbox>
+                            <mat-checkbox class="d-block" labelPosition="after" formControlName="termsCondition">
+                                {{'i_have_read_and_agree_with_terms_and_conditions' | translate:translateKey}} </mat-checkbox>
+                        </div>
+                    </div>
+
+                    <div class="pull-right">
+                        <button type="button" mat-raised-button (click)="tabIndex= tabIndex -1; ">{{'back' | translate:translateKey}}</button>
+                        <button mat-raised-button color="primary" type="submit">
+                            {{'submit_application'| translate: translateKey}}
+                        </button>
+                    </div>
+                </mat-tab>
+                <!-- Tab 2 Ends -->
+
+            </mat-tab-group>
+        </form>
+    </mat-card>
+</div>

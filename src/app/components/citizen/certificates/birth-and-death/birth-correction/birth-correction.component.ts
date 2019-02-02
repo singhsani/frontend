@@ -1,17 +1,11 @@
-import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
-import { Router, ActivatedRoute, Params } from '@angular/router';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { ManageRoutes } from './../../../../../config/routes-conf';
-import { UploadFileService } from '../../../../../shared/upload-file.service';
 import { CommonService } from '../../../../../shared/services/common.service';
 import { Location } from '@angular/common';
-
-import { ValidationService } from '../../../../../shared/services/validation.service';
 import { FormsActionsService } from '../../../../../core/services/citizen/data-services/forms-actions.service';
-import * as _ from 'lodash';
-import * as moment from 'moment';
 import { MatHorizontalStepper, MatStepLabel } from '@angular/material';
-import { merge } from 'rxjs';
 
 @Component({
 	selector: 'app-birth-correction',
@@ -87,7 +81,7 @@ export class BirthCorrectionComponent implements OnInit {
 	/**
 	 * File upload validation array.
 	 */
-	private uploadFileArray: Array<any> =
+	uploadFileArray: Array<any> =
 		[{ labelName: 'Resident Proof', fieldIdentifier: '1.1' },
 		{ labelName: 'Kyc Document of Mother', fieldIdentifier: '1.2' },
 		{ labelName: 'Kyc Document of Father', fieldIdentifier: '1.3' },

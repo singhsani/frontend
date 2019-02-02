@@ -3,8 +3,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { MatStepper } from '@angular/material/stepper';
 import { AmazingTimePickerService } from 'amazing-time-picker';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { UploadFileService } from '../../../shared/upload-file.service';
 import { CommonService } from '../../../shared/services/common.service';
 import { ValidationService } from '../../../shared/services/validation.service';
 import { ManageRoutes } from '../../../config/routes-conf';
@@ -61,17 +59,17 @@ export class BirthRegistrationComponent implements OnInit {
 	tabIndex: number = 0;
 
 	//Birth Data LookUps
-	BirthPlaces: object[];
-	Gender: Object[];
-	FatherEducations: any[];
-	FatherOccupation: any[];
-	MotherEducations: any[];
-	MotherOccupation: any[];
-	DeliveryTreatmentOptions: object[];
-	TypeOfDelivery: object[];
-	Religion: object[];
-	ChildWeights: object[];
-	ISYESNO: object[];
+	BirthPlaces: Array<any> = [];
+	Gender: Array<any> = [];
+	FatherEducations: Array<any> = [];
+	FatherOccupation: Array<any> = [];
+	MotherEducations: Array<any> = [];
+	MotherOccupation: Array<any> = [];
+	DeliveryTreatmentOptions: Array<any> = [];
+	TypeOfDelivery: Array<any> = [];
+	Religion: Array<any> = [];
+	ChildWeights: Array<any> = [];
+	ISYESNO: Array<any> = [];
 
 	/**
 	 * step labels

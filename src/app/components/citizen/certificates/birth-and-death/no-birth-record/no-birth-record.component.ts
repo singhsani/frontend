@@ -17,28 +17,23 @@ import * as moment from 'moment';
 	styleUrls: ['./no-birth-record.component.scss']
 })
 export class NoBirthRecordComponent implements OnInit {
-
-
-	private uploadFileArray: Array<any> = [
+	@ViewChild('address') addrComponent: any;
+	uploadFileArray: Array<any> = [
 		{ labelName: 'Date Of Birth', fieldIdentifier: '1.1' },
 		{ labelName: 'Place Of Birth', fieldIdentifier: '1.2' },
 		{ labelName: 'Applicant Id', fieldIdentifier: '1.3' }
 	]
-
-	@ViewChild('address') addrComponent: any;
-
 	noRecordBirthForm: FormGroup;
 	translateKey: string = 'nrcBirthScreen';
-
 	appId: number;
 	apiCode: string;
 	manageRoutes: any = ManageRoutes;
 
 	maxDate: Date = new Date();
-	relationshipArray: any = [];
-	genderArray: any = [];
-	placeArray: any = [];
-	reasonArray: any = [];
+	relationshipArray: Array<any> = [];
+	genderArray: Array<any> = [];
+	placeArray: Array<any> = [];
+	reasonArray: Array<any> = [];
 	showButtons: boolean = false;
 	isVisibeNRCForm: boolean = true;
 	showSearchForm: boolean = true;

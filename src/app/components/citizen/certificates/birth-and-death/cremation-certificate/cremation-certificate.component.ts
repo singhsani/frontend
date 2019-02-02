@@ -18,7 +18,7 @@ export class CremationCertificateComponent implements OnInit {
 
 	@ViewChild('address') addrComponent: any;
 
-	private uploadFileArray: Array<any> = [
+	uploadFileArray: Array<any> = [
 		{ labelName: 'Address Proof', fieldIdentifier: '1.1' },
 		{ labelName: 'Unique Id', fieldIdentifier: '1.2' }
 	]
@@ -68,35 +68,26 @@ export class CremationCertificateComponent implements OnInit {
 	cremationCertFormControls() {
 
 		this.cremationForm = this.fb.group({
-
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
-
 			deceasedFirstName: [null, Validators.required],
 			deceasedMiddleName: [null],
 			deceasedLastName: [null, Validators.required],
-
 			deceasedFirstNameGuj: [null, Validators.required],
 			deceasedMiddleNameGuj: [null],
 			deceasedLastNameGuj: [null, Validators.required],
-
 			deathDate: [null, Validators.required],
 			gender: this.fb.group({
 				code: [null, Validators.required]
 			}),
-
 			deathPlaceAddress: this.fb.group(this.addrComponent.addressControls()),
 			cremationAddress: this.fb.group(this.addrComponent.addressControls()),
-
 			applicantAddress: this.fb.group(this.addrComponent.addressControls()),
 			applicantRelation: this.fb.group({
 				code: [null, Validators.required]
 			}),
 			applicantRelationDetail: null,
-
 			attachments: [],
-
 		});
-
 	}
 
 	/**
@@ -121,10 +112,8 @@ export class CremationCertificateComponent implements OnInit {
 	 * This method use to show java validations errors 
 	 */
 	handleErrorsOnSubmit(count) {
-
 		let step1 = 11;
 		let step2 = 14;
-
 		if (count <= step1) {
 			this.tabIndex = 0;
 			return false;
@@ -132,7 +121,6 @@ export class CremationCertificateComponent implements OnInit {
 			this.tabIndex = 1;
 			return false;
 		}
-
 	}
 
 	/**
@@ -151,7 +139,6 @@ export class CremationCertificateComponent implements OnInit {
 	 * @param indentifier - get different indentifier for different file 
 	 */
 	setDataValue(indentifier: number, labelName: string, formPart: string, variableName: string) {
-
 		this.uploadModel = {
 			fieldIdentifier: indentifier.toString(),
 			labelName: labelName.toString(),
@@ -159,7 +146,6 @@ export class CremationCertificateComponent implements OnInit {
 			variableName: variableName.toString(),
 			serviceFormId: this.appId,
 		}
-
 		return this.uploadModel;
 	}
 
@@ -191,7 +177,6 @@ export class CremationCertificateComponent implements OnInit {
 			this.cremationForm.get('applicantRelationDetail').setValidators([Validators.required]);
 		}
 		this.cremationForm.controls['applicantRelationDetail'].updateValueAndValidity();
-
 	}
 
 	/**

@@ -1,6 +1,10 @@
 import { FormControl, FormGroup, FormArray } from "@angular/forms";
 import * as moment from 'moment';
 import { ComponentConfig } from "../../component-config";
+import { environment } from "../../../../environments/environment";
+import { CommonService } from "../../../shared/services/common.service";
+import { BookingService } from "../../../core/services/citizen/data-services/booking.service";
+import { Router } from "@angular/router";
 
 
 /**
@@ -159,6 +163,35 @@ export class BookingUtils extends ComponentConfig{
             }
         }
         return selectedShift;
+    }
+
+    /**
+     * Method is used to approach common payment handling for booking
+     * @param err - payment data
+     * @param commonService -commmon service instance
+     * @param bookingService - booking service instance
+     * @param form - form
+     * @param router router instance
+     */
+    redirectToPayment(err: any, commonService: CommonService, bookingService: BookingService, form?: FormGroup, router?: Router){
+        let payData = bookingService.proceedForPayment(err.error.data);
+        commonService.commonAlert('Payment Details', '', 'info', 'Make Payment!', false, payData.html, cb => {
+            window.location.href = environment.adminUrl + `#/admin/payment-gateway?retUrl=${payData.payData.retUrl}&retPath=${payData.payData.retPath}`;
+        }, rj => {
+            let errHtml = `			
+						<div class="alert alert-danger">
+							Please Complete Payment, Otherwise the application will be considered as in-complete
+						</div>`
+            commonService.commonAlert("Application Incomplete", "", 'warning', 'Make Payment!', false, errHtml, ccb => {
+                window.location.href = environment.adminUrl + `#/admin/payment-gateway?retUrl=${payData.payData.retUrl}&retPath=${payData.payData.retPath}`;
+            }, arj => {
+                if(form && router){
+                    form.disable();
+                    router.navigate([this.bookingConstants.MY_BOOKINGS_URL]);
+                }
+            });
+            return;
+        });
     }
 
     /**

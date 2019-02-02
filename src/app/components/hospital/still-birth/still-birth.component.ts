@@ -1,10 +1,9 @@
 
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { MatStepper } from '@angular/material/stepper';
 import { HosFormActionsService } from '../../../core/services/hospital/data-services/hos-form-actions.service';
-import { UploadFileService } from '../../../shared/upload-file.service';
 import { CommonService } from '../../../shared/services/common.service';
 import { ValidationService } from '../../../shared/services/validation.service';
 import { ManageRoutes } from '../../../config/routes-conf';
@@ -30,66 +29,59 @@ export class StillBirthComponent implements OnInit {
 	@ViewChild('address') addressComp: any;
 
 	translateKey: string = 'stillBirthScreen';
-	private uploadFileArray: Array<any> =
+	uploadFileArray: Array<any> = [] =
 		[{ labelName: 'Resident Proof', fieldIdentifier: '1.1' },
 		{ labelName: 'Doctors Certificate', fieldIdentifier: '1.2' }];
-
-
 	/**
 	 * file upload related declaration
 	 */
 	uploadModel: any = {};
-
 	/**
 	 * form related helping data.
 	 */
 	appId: number;
-
 	tabIndex: number = 0;
-
-	public stillBirthCertificateForm: FormGroup;
-	private minBirthDate: any;
-	private maxBirthDate = new Date();
-	private showButtons: boolean = false;
-	private submit: boolean = false;
+	stillBirthCertificateForm: FormGroup;
+	minBirthDate: any;
+	maxBirthDate = new Date();
+	showButtons: boolean = false;
+	submit: boolean = false;
 	apiCode: string;
-
 	/**
 	 * Still Birth Data LookUps.
 	 */
-	private BirthPlaces: object[];
-	private Gender: Object[];
-	private FatherEducations: object[];
-	private FatherOccupation: object[];
-	private MotherEducations: object[];
-	private MotherOccupation: object[];
-	private DeliveryTreatmentOptions: object[];
-	private TypeOfDelivery: object[];
-	private childs: FormArray;
-	private Religion: object[];
-	private ChildWeights: object[];
-	private ISYESNO: object[];
-	private checked: boolean;
-
+	BirthPlaces: Array<any> = [];
+	Gender: Array<any> = [];
+	FatherEducations: Array<any> = [];
+	FatherOccupation: Array<any> = [];
+	MotherEducations: Array<any> = [];
+	MotherOccupation: Array<any> = [];
+	DeliveryTreatmentOptions: Array<any> = [];
+	TypeOfDelivery: Array<any> = [];
+	childs: FormArray;
+	Religion: Array<any> = [];
+	ChildWeights: Array<any> = [];
+	ISYESNO: Array<any> = [];
+	checked: boolean;
 	/**
 	 * step labels
 	 */
-	private stepLabel1 = 'child_details';
-	private stepLabel2 = 'fathers_details';
-	private stepLabel3 = 'mothers_details';
-	private stepLabel4 = 'family_details';
-	private stepLabel5 = 'upload_documents';
-
+	stepLabel1 = 'child_details';
+	stepLabel2 = 'fathers_details';
+	stepLabel3 = 'mothers_details';
+	stepLabel4 = 'family_details';
+	stepLabel5 = 'upload_documents';
 	config: HospitalConfig = new HospitalConfig('still birth');
 	isFormSaved:boolean = false;
 
+
 	constructor(
-		private route: ActivatedRoute,
-		private formService: HosFormActionsService,
-		private commonService: CommonService,
-		private fb: FormBuilder,
-		private toastrService: ToastrService,
-		private atp: AmazingTimePickerService) {
+		public route: ActivatedRoute,
+		public formService: HosFormActionsService,
+		public commonService: CommonService,
+		public fb: FormBuilder,
+		public toastrService: ToastrService,
+		public atp: AmazingTimePickerService) {
 	}
 
 	/**

@@ -4,43 +4,33 @@
 </record-search>
 
 <div class="container" [hidden]="isVisibeDuplicateForm">
-
-	<mat-card class="cardBorder">
-		<form [formGroup]="birthDuplicateForm" autocomplete="off" ngNativeValidate>
-
-			<div class="row">
-
-				<div class="col-md-4" formGroupName="duplicateCopies">
-					<mat-label>{{'duplicate_copies' | translate:translateKey}}</mat-label>
-					<mat-radio-group formControlName="code">
-						<mat-radio-button *ngFor="let yesNo of ISYESNO" [value]="yesNo.code">
-							{{yesNo.name}}
-						</mat-radio-button>
-						<control-messages [control]="birthDuplicateForm.controls.duplicateCopies.controls.code"></control-messages>
-					</mat-radio-group>
-				</div>
-
-				<mat-form-field formGroupName="duplicateCopyMode" class="col-md-4">
-					<mat-select placeholder="{{'duplicate_copy_mode' | translate:translateKey}}" formControlName="code">
-						<mat-option *ngFor="let duplicatemode of DuplicateCopyMode" [value]="duplicatemode.code">
-							{{duplicatemode.name}}
-						</mat-option>
-					</mat-select>
-					<control-messages [control]="birthDuplicateForm.controls.duplicateCopyMode.controls.code"></control-messages>
-				</mat-form-field>
-
-				<mat-form-field class="col-md-4">
-					<input matInput maxlength="2" type="number" [min]="0" OnlyNumber placeholder="{{'total_copies' | translate:translateKey}}"
-					 formControlName="totalCopies">
-					<control-messages [control]="birthDuplicateForm.controls.totalCopies"></control-messages>
-				</mat-form-field>
-
-			</div>
-
-			<app-action-bar [isstepper]="false" [form]="birthDuplicateForm" [stepInfo]="{step: 'final', next: 0, back: 0}" ></app-action-bar>
-
-		</form>
-
-	</mat-card>
-
+    <mat-card class="cardBorder">
+        <form [formGroup]="birthDuplicateForm" autocomplete="off" ngNativeValidate>
+            <div class="row">
+                <div class="col-md-4" formGroupName="duplicateCopies">
+                    <mat-label>{{'duplicate_copies' | translate:translateKey}}</mat-label>
+                    <mat-radio-group formControlName="code">
+                        <mat-radio-button *ngFor="let yesNo of ISYESNO" [value]="yesNo.code">
+                            {{yesNo.name}}
+                        </mat-radio-button>
+                        <control-messages [control]="birthDuplicateForm.get('duplicateCopies').get('code')"></control-messages>
+                    </mat-radio-group>
+                </div>
+                <mat-form-field formGroupName="duplicateCopyMode" class="col-md-4">
+                    <mat-select placeholder="{{'duplicate_copy_mode' | translate:translateKey}}" formControlName="code">
+                        <mat-option *ngFor="let duplicatemode of DuplicateCopyMode" [value]="duplicatemode.code">
+                            {{duplicatemode.name}}
+                        </mat-option>
+                    </mat-select>
+                    <control-messages [control]="birthDuplicateForm.get('duplicateCopyMode').get('code')"></control-messages>
+                </mat-form-field>
+                <mat-form-field class="col-md-4">
+                    <input matInput maxlength="2" type="number" [min]="0" OnlyNumber placeholder="{{'total_copies' | translate:translateKey}}"
+                        formControlName="totalCopies">
+                    <control-messages [control]="birthDuplicateForm.get('totalCopies')"></control-messages>
+                </mat-form-field>
+            </div>
+            <app-action-bar [isstepper]="false" [form]="birthDuplicateForm" [stepInfo]="{step: 'final', next: 0, back: 0}"></app-action-bar>
+        </form>
+    </mat-card>
 </div>

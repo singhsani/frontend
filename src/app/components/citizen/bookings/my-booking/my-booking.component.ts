@@ -321,22 +321,23 @@ export class MyBookingComponent implements OnInit {
 			if (err.status = 402) {
 				this.isLoadingResults = false;
 				if (err.status == 402) {
-					let payData = this.bookingService.proceedForPayment(err.error.data);
-					this.commonService.commonAlert('Payment Details', '', 'info', 'Make Payment!', false, payData.html, cb => {
-						window.location.href = environment.adminUrl + `#/admin/payment-gateway?retUrl=${payData.payData.retUrl}&retPath=${payData.payData.retPath}`;
-					}, rj => {
-						let errHtml = `			
-						<div class="alert alert-danger">
-							Please Complete Payment, Otherwise the application will be considered as in-complete
-						</div>`
-						this.commonService.commonAlert("Application Incomplete", "", 'warning', 'Make Payment!', false, errHtml, ccb => {
-							window.location.href = environment.adminUrl + `#/admin/payment-gateway?retUrl=${payData.payData.retUrl}&retPath=${payData.payData.retPath}`;
-						}, arj => {
+					this.bookingUtils.redirectToPayment(err, this.commonService, this.bookingService)
+					// let payData = this.bookingService.proceedForPayment(err.error.data);
+					// this.commonService.commonAlert('Payment Details', '', 'info', 'Make Payment!', false, payData.html, cb => {
+					// 	window.location.href = environment.adminUrl + `#/admin/payment-gateway?retUrl=${payData.payData.retUrl}&retPath=${payData.payData.retPath}`;
+					// }, rj => {
+					// 	let errHtml = `			
+					// 	<div class="alert alert-danger">
+					// 		Please Complete Payment, Otherwise the application will be considered as in-complete
+					// 	</div>`
+					// 	this.commonService.commonAlert("Application Incomplete", "", 'warning', 'Make Payment!', false, errHtml, ccb => {
+					// 		window.location.href = environment.adminUrl + `#/admin/payment-gateway?retUrl=${payData.payData.retUrl}&retPath=${payData.payData.retPath}`;
+					// 	}, arj => {
 
-						});
-						return;
-					});
-					return;
+					// 	});
+					// 	return;
+					// });
+					// return;
 				}
 			} else if (err.error[0].code == this.bookingConstant.INVALID_BOOKING_STATUS) {
 				this.commonService.openAlert("Invalid Booking Status", err.error[0].message, "warning", "")
@@ -353,7 +354,7 @@ export class MyBookingComponent implements OnInit {
 		this.modalJsonRef = this.modalService.show(template);
 	}
 
-		/**
+	/**
 	 * This method is use to show JOSN format.
 	 */
 	jsonDisplay(element: any) {
@@ -366,7 +367,6 @@ export class MyBookingComponent implements OnInit {
 				this.commonService.successAlert('Error!', err.error[0].message, 'error');
 			}
 		);
-
 	}
 
 	/**

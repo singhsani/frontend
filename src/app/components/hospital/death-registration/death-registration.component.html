@@ -4,7 +4,7 @@
 		</button> -->
 </app-hos-title-bar>
 
-<mat-card class="formClass cardBorder " >
+<mat-card class="formClass cardBorder">
 
 	<form [formGroup]="deathCertificateForm" autocomplete="off"  ngNativeValidate appReload [isFormSaved] ="isFormSaved" [form]="deathCertificateForm">
 		<!-- appReload [form] = "deathCertificateForm" [isSaved]="isFormSaved" -->
@@ -30,46 +30,46 @@
 					<mat-form-field *ngIf="deathCertificateForm.get('unknownCategory').get('code').value ==='YES'" class="col-md-12">
 						<textarea required matInput maxlength="100" type="text" placeholder="{{'unknown_death_description' | translate:translateKey}}"
 						 formControlName="unknownDescription"></textarea>
-						<control-messages [control]="deathCertificateForm.controls.unknownDescription"></control-messages>
+						<control-messages [control]="deathCertificateForm.get('unknownDescription')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<input matInput appValidationFields [form]="deathCertificateForm" appGujInputSource targetElement="deceasedFirstNameGuj"
 						 [validationFieldsType]="'onlyNameWithOutSpace'" maxlength="20" placeholder="{{'first_name' | translate:translateKey}}"
 						 formControlName="deceasedFirstName" [required]="requiredFeild">
-						<control-messages [control]="deathCertificateForm.controls.deceasedFirstName"></control-messages>
+						<control-messages [control]="deathCertificateForm.get('deceasedFirstName')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<input matInput appValidationFields [form]="deathCertificateForm" appGujInputSource targetElement="deceasedMiddleNameGuj"
 						 [validationFieldsType]="'onlyNameWithOutSpace'" maxlength="20" placeholder="{{'middle_name' | translate:translateKey}}"
 						 formControlName="deceasedMiddleName">
-						<control-messages [control]="deathCertificateForm.controls.deceasedMiddleName"></control-messages>
+						<control-messages [control]="deathCertificateForm.get('deceasedMiddleName')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<input matInput appValidationFields [form]="deathCertificateForm" appGujInputSource targetElement="deceasedLastNameGuj" [validationFieldsType]="'onlyNameWithOutSpace'"
 						 maxlength="20" placeholder="{{'last_name' | translate:translateKey}}" formControlName="deceasedLastName" [required]="requiredFeild">
-						<control-messages [control]="deathCertificateForm.controls.deceasedLastName"></control-messages>
+						<control-messages [control]="deathCertificateForm.get('deceasedLastName')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<input [required]="requiredFeild" matInput maxlength="20" appGujInputTarget [form]="deathCertificateForm" placeholder="{{'first_name' | translate:translateKey:'gu'}}"
 						 formControlName="deceasedFirstNameGuj">
-						<control-messages [control]="deathCertificateForm.controls.deceasedFirstNameGuj"></control-messages>
+						<control-messages [control]="deathCertificateForm.get('deceasedFirstNameGuj')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" appGujInputTarget [form]="deathCertificateForm" maxlength="20" placeholder="{{'middle_name' | translate:translateKey:'gu'}}"
 						 formControlName="deceasedMiddleNameGuj">
-						<control-messages [control]="deathCertificateForm.controls.deceasedMiddleNameGuj"></control-messages>
+						<control-messages [control]="deathCertificateForm.get('deceasedMiddleNameGuj')"></control-messages>
 					</mat-form-field>
 
 
 					<mat-form-field class="col-md-4">
 						<input [required]="requiredFeild" matInput type="text" appGujInputTarget [form]="deathCertificateForm" maxlength="20" placeholder="{{'last_name' | translate:translateKey:'gu'}}"
 						 formControlName="deceasedLastNameGuj">
-						<control-messages [control]="deathCertificateForm.controls.deceasedLastNameGuj"></control-messages>
+						<control-messages [control]="deathCertificateForm.get('deceasedLastNameGuj')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-6">
@@ -77,28 +77,28 @@
 						 placeholder="{{'date_of_birth' | translate:translateKey}}" formControlName="birthDate">
 						<mat-datepicker-toggle matSuffix [for]="pickerDeath"></mat-datepicker-toggle>
 						<mat-datepicker #pickerDeath touchUi="true"></mat-datepicker>
-						<control-messages [control]="deathCertificateForm.controls.birthDate"></control-messages>
+						<control-messages [control]="deathCertificateForm.get('birthDate')"></control-messages>
 					</mat-form-field>
 
-					<mat-form-field class="col-md-6" *ngIf="deathCertificateForm.controls.birthDate.value != null">
+					<mat-form-field class="col-md-6" *ngIf="deathCertificateForm.get('birthDate').value != null">
 						<input [required]="requiredFeild" matInput readonly (click)="pickerBirth.open()" (focus)="pickerBirth.open()" [max]="maxDeathDate"
-						 [min]="deathCertificateForm.controls.birthDate.value" [matDatepicker]="pickerBirth" (dateChange)="deathFormatChanger($event);delayCalculator($event)"
+						 [min]="deathCertificateForm.get('birthDate').value" [matDatepicker]="pickerBirth" (dateChange)="deathFormatChanger($event);delayCalculator($event)"
 						 placeholder="{{'date_of_death' | translate:translateKey}}" formControlName="deathDate">
 						<mat-datepicker-toggle matSuffix [for]="pickerBirth"></mat-datepicker-toggle>
 						<mat-datepicker #pickerBirth touchUi="true"></mat-datepicker>
-						<control-messages [control]="deathCertificateForm.controls.deathDate"></control-messages>
+						<control-messages [control]="deathCertificateForm.get('deathDate')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-6">
 						<input [required]="requiredFeild" matInput appValidationFields [validationFieldsType]="'onlyNameWithSpace'" maxlength="20"
 						 placeholder="{{'mother_name' | translate:translateKey}}" name="motherName" formControlName="motherName">
-						<control-messages [control]="deathCertificateForm.controls.motherName"></control-messages>
+						<control-messages [control]="deathCertificateForm.get('motherName')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-6">
 						<input [required]="requiredFeild" matInput appValidationFields [validationFieldsType]="'onlyNameWithSpace'" maxlength="20"
 						 placeholder="{{'husband_or_father_name' | translate:translateKey}}" formControlName="fatherOrHusbandName">
-						<control-messages [control]="deathCertificateForm.controls.fatherOrHusbandName"></control-messages>
+						<control-messages [control]="deathCertificateForm.get('fatherOrHusbandName')"></control-messages>
 					</mat-form-field>
 
 					<div formGroupName="occupation" class="col-md-6 ngSelect">
@@ -108,11 +108,11 @@
 								{{deceasedoccupation.name}}
 							</ng-option>
 						</ng-select>
-						<control-messages [control]="deathCertificateForm.controls.occupation.controls.code"></control-messages>
+						<control-messages [control]="deathCertificateForm.get('occupation').get('code')"></control-messages>
 					</div>
 
 					<mat-form-field class="col-md-6">
-						<input [disabled]="showButtons && !deathCertificateForm.controls.canEdit.value" [required]="requiredFeild" readonly matInput
+						<input [disabled]="showButtons && !deathCertificateForm.get('canEdit').value" [required]="requiredFeild" readonly matInput
 						 maxlength="20" appPreventSpace placeholder="{{'occupation' | translate:translateKey:'gu'}}" [value]="deathCertificateForm.get('occupation').get('gujName').value">
 					</mat-form-field>
 
@@ -123,12 +123,12 @@
 								{{deceasededucation.name}}
 							</ng-option>
 						</ng-select>
-						<control-messages [control]="deathCertificateForm.controls.education.controls.code"></control-messages>
+						<control-messages [control]="deathCertificateForm.get('education').get('code')"></control-messages>
 					</div>
 
 
 					<mat-form-field class="col-md-6">
-						<input [disabled]="showButtons && !deathCertificateForm.controls.canEdit.value" [required]="requiredFeild" readonly matInput
+						<input [disabled]="showButtons && !deathCertificateForm.get('canEdit').value" [required]="requiredFeild" readonly matInput
 						 maxlength="20" appPreventSpace placeholder="{{'education' | translate:translateKey:'gu'}}" [value]="deathCertificateForm.get('education').get('gujName').value">
 					</mat-form-field>
 
@@ -145,21 +145,21 @@
 								{{religion.name}}
 							</ng-option>
 						</ng-select>
-						<control-messages [control]="deathCertificateForm.controls.religion.controls.code"></control-messages>
+						<control-messages [control]="deathCertificateForm.get('religion').get('code')"></control-messages>
 					</div>
 
 					<div class="col-md-6" *ngIf="deathCertificateForm.get('religion').get('code').value == 'OTHER_RELIGION'">
 						<mat-form-field class="birth-certificate-col-md-4">
 							<input appValidationFields [validationFieldsType]="'onlyNameWithSpace'" matInput placeholder="{{'religion_other' | translate:translateKey}}"
 							 formControlName="religionOther" [required]="requiredFeild">
-							<control-messages [control]="deathCertificateForm.controls.religionOther">
+							<control-messages [control]="deathCertificateForm.get('religionOther')">
 							</control-messages>
 						</mat-form-field>
 					</div>
 
 					<mat-form-field class="col-md-6">
 						<input matInput readonly placeholder="{{'delay_period' | translate:translateKey}}" formControlName="delayedPeriod">
-						<control-messages [control]="deathCertificateForm.controls.delayedPeriod"></control-messages>
+						<control-messages [control]="deathCertificateForm.get('delayedPeriod')"></control-messages>
 					</mat-form-field>
 
 					<div class="col-md-6" formGroupName="gender">
@@ -170,11 +170,11 @@
 									{{gender.name}}
 								</mat-radio-button>
 							</mat-radio-group>
-							<control-messages [control]="deathCertificateForm.controls.gender.controls.code"></control-messages>
+							<control-messages [control]="deathCertificateForm.get('gender').get('code')"></control-messages>
 						</div>
 					</div> 
 
-					<div *ngIf="deathCertificateForm.controls.gender.controls.code.value == 'FEMALE'" class="col-md-6 radioBtnError" formGroupName="femaleDeathReason">
+					<div *ngIf="deathCertificateForm.get('gender').get('code').value == 'FEMALE'" class="col-md-6 radioBtnError" formGroupName="femaleDeathReason">
 						<mat-label>{{'female_death_region' | translate:translateKey}} {{requiredFeild ?'*':''}}</mat-label>
 						<!-- && deathCertificateForm.controls.gender.controls.code.value == 'FEMALE'-->
 						<mat-radio-group formControlName="code" >
@@ -182,7 +182,7 @@
 								{{yesNo.name}}
 							</mat-radio-button>
 						</mat-radio-group>
-						<control-messages [control]="deathCertificateForm.controls.femaleDeathReason.controls.code"></control-messages>
+						<control-messages [control]="deathCertificateForm.get('femaleDeathReason').get('code')"></control-messages>
 					</div>
 				</div>
 
@@ -207,7 +207,7 @@
 								{{deathplace.name}}
 							</ng-option>
 						</ng-select>
-						<control-messages [control]="deathCertificateForm.controls.deathPlace.controls.code"></control-messages>
+						<control-messages [control]="deathCertificateForm.get('deathPlace').get('code')"></control-messages>
 					</div>
 
 					<mat-form-field *ngIf="deathCertificateForm.get('deathPlace').get('code').value == 'OTHER_PLACE'" class="col-md-8">
@@ -231,7 +231,7 @@
 
 					<mat-form-field class="col">
 						<input [required]="requiredFeild" matInput type="text" placeholder="{{'death_reason' | translate:translateKey}}" formControlName="deathReason">
-						<control-messages [control]="deathCertificateForm.controls.deathReason"></control-messages>
+						<control-messages [control]="deathCertificateForm.get('deathReason')"></control-messages>
 					</mat-form-field>
 
 					<div class="col-md-12 radioBtnError" formGroupName="medicalReason">
@@ -241,32 +241,32 @@
 								{{prove.name}}
 							</mat-radio-button>
 						</mat-radio-group>
-						<control-messages [control]="deathCertificateForm.controls.medicalReason.controls.code"></control-messages>
+						<control-messages [control]="deathCertificateForm.get('medicalReason').get('code')"></control-messages>
 					</div>
 
 
 					<mat-form-field class="col-md-12">
 						<label>{{'smoking_since' | translate:translateKey}}</label>
 						<input matInput OnlyNumber type="number" [min]="minAge" [max]="deceasedAge" maxlength="2" maxlength="10" formControlName="smokingSince">
-						<control-messages [control]="deathCertificateForm.controls.smokingSince"></control-messages>
+						<control-messages [control]="deathCertificateForm.get('smokingSince')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-12">
 						<label>{{'tobacco_since' | translate:translateKey}}</label>
 						<input matInput OnlyNumber type="number" [min]="minAge" [max]="deceasedAge" maxlength="2" maxlength="10" formControlName="tobaccoSince">
-						<control-messages [control]="deathCertificateForm.controls.tobaccoSince"></control-messages>
+						<control-messages [control]="deathCertificateForm.get('tobaccoSince')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-12">
 						<label>{{'sopari_panmasala_since' | translate:translateKey}}</label>
 						<input matInput OnlyNumber type="number" [min]="minAge" [max]="deceasedAge" maxlength="2" maxlength="10" formControlName="sopariPanmasalaSince">
-						<control-messages [control]="deathCertificateForm.controls.sopariPanmasalaSince"></control-messages>
+						<control-messages [control]="deathCertificateForm.get('sopariPanmasalaSince')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-12">
 						<label>{{'alcohol_since' | translate:translateKey}}</label>
 						<input matInput OnlyNumber type="number" [min]="minAge" [max]="deceasedAge" maxlength="2" maxlength="10" formControlName="alcoholSince">
-						<control-messages [control]="deathCertificateForm.controls.alcoholSince"></control-messages>
+						<control-messages [control]="deathCertificateForm.get('alcoholSince')"></control-messages>
 					</mat-form-field>
 				</div>
 
@@ -285,7 +285,7 @@
 					<h2>
 						{{'present_address' | translate:translateKey}}
 					</h2>
-					<app-address [isDisplayGujFields]="true" #address [requiredFeilds]="requiredFeild" [addressFormGroup]="deathCertificateForm.controls.presentAddress"></app-address>
+					<app-address [isDisplayGujFields]="true" #address [requiredFeilds]="requiredFeild" [addressFormGroup]="deathCertificateForm.get('presentAddress')"></app-address>
 				</div>
 
 				<div class="row" formGroupName="isPermanentPresentAddressSame">
@@ -298,7 +298,7 @@
 					<h2>
 						{{'permanent_address' | translate:translateKey}}
 					</h2>
-					<app-address [isDisplayGujFields]="true" #address [requiredFeilds]="requiredFeild" [addressFormGroup]="deathCertificateForm.controls.permanentAddress"></app-address>
+					<app-address [isDisplayGujFields]="true" #address [requiredFeilds]="requiredFeild" [addressFormGroup]="deathCertificateForm.get('permanentAddress')"></app-address>
 				</div>
 
 				<app-hos-action-bar [stepInfo]="{step: 'step3', next: 3, back: 1}" (saveEvent) = "isFormSaved = $event?.isSaved" (tabIndex)="onTabChange($event)" [form]="deathCertificateForm"
@@ -322,18 +322,18 @@
 									{{app_rel.name}}
 								</ng-option>
 							</ng-select>
-							<control-messages [control]="deathCertificateForm.controls.applicantRelation.controls.code"></control-messages>
+							<control-messages [control]="deathCertificateForm.get('applicantRelation').get('code')"></control-messages>
 						</div>
 						<mat-form-field *ngIf="deathCertificateForm.get('applicantRelation').get('code').value == 'OTHER_RELATIONSHIP'" class="col-md-6">
 							<input required matInput placeholder="{{'other_relation' | translate:translateKey}}" formControlName="relationOther">
-							<control-messages [control]="deathCertificateForm.controls.relationOther"></control-messages>
+							<control-messages [control]="deathCertificateForm.get('relationOther')"></control-messages>
 						</mat-form-field>
 					</div>
 				</div>
 
 				<div class="row">
 					<h2>{{'applicant_or_hospital_address' | translate:translateKey}}</h2>
-					<app-address #address [isDisplayGujFields]="true" [requiredFeilds]="true" [addressFormGroup]="deathCertificateForm.controls.applicantAddress"></app-address>
+					<app-address #address [isDisplayGujFields]="true" [requiredFeilds]="true" [addressFormGroup]="deathCertificateForm.get('applicantAddress')"></app-address>
 				</div>
 
 				<app-hos-action-bar [stepInfo]="{step: 'step4', next: 4, back: 2}" (saveEvent) = "isFormSaved = $event?.isSaved" (tabIndex)="onTabChange($event)" [form]="deathCertificateForm"

@@ -1,152 +1,149 @@
-
-<app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
+<app-title-bar [title]="'screen_title' | translate: translateKey">
+</app-title-bar>
 
 <mat-card class="formClass cardBorder">
-	<form [formGroup]="cremationForm" autocomplete="off" ngNativeValidate>
-		<mat-tab-group mat-stretch-tabs [(selectedIndex)]="tabIndex" class="stepperNav" dynamicHeight="true">
+    <form [formGroup]="cremationForm" autocomplete="off" ngNativeValidate>
+        <mat-tab-group mat-stretch-tabs [(selectedIndex)]="tabIndex" class="stepperNav" dynamicHeight="true">
 
-			<!-- first step start-->
-			<mat-tab [label]="stepLable1 | translate: translateKey">
+            <!-- first step start-->
+            <mat-tab [label]="stepLable1 | translate: translateKey">
 
-				<div class="row">
+                <div class="row">
 
-					<mat-form-field class="col-md-4">
-						<input matInput type="text" appGujInputSource targetElement="deceasedFirstNameGuj" [form]="cremationForm" appValidationFields
-						 [validationFieldsType]="'onlyNameWithOutSpace'" formControlName="deceasedFirstName" placeholder="{{'first_name' | translate: translateKey}}"
-						 required>
-						<control-messages [control]="cremationForm.controls.deceasedFirstName"></control-messages>
-					</mat-form-field>
+                    <mat-form-field class="col-md-4">
+                        <input matInput type="text" appGujInputSource targetElement="deceasedFirstNameGuj" [form]="cremationForm" appValidationFields
+                            [validationFieldsType]="'onlyNameWithOutSpace'" formControlName="deceasedFirstName" placeholder="{{'first_name' | translate: translateKey}}"
+                            required>
+                        <control-messages [control]="cremationForm.get('deceasedFirstName')"></control-messages>
+                    </mat-form-field>
 
-					<mat-form-field class="col-md-4">
-						<input matInput type="text" appGujInputSource targetElement="deceasedMiddleNameGuj" [form]="cremationForm" appValidationFields
-						 [validationFieldsType]="'onlyNameWithOutSpace'" formControlName="deceasedMiddleName" placeholder="{{'middle_name' | translate: translateKey}}">
-					</mat-form-field>
+                    <mat-form-field class="col-md-4">
+                        <input matInput type="text" appGujInputSource targetElement="deceasedMiddleNameGuj" [form]="cremationForm" appValidationFields
+                            [validationFieldsType]="'onlyNameWithOutSpace'" formControlName="deceasedMiddleName" placeholder="{{'middle_name' | translate: translateKey}}">
+                    </mat-form-field>
 
-					<mat-form-field class="col-md-4">
-						<input matInput type="text" appGujInputSource targetElement="deceasedLastNameGuj" [form]="cremationForm" appValidationFields
-						 [validationFieldsType]="'onlyNameWithOutSpace'" formControlName="deceasedLastName" placeholder="{{'last_name' | translate: translateKey}}"
-						 required>
-						<control-messages [control]="cremationForm.controls.deceasedLastName"></control-messages>
-					</mat-form-field>
+                    <mat-form-field class="col-md-4">
+                        <input matInput type="text" appGujInputSource targetElement="deceasedLastNameGuj" [form]="cremationForm" appValidationFields
+                            [validationFieldsType]="'onlyNameWithOutSpace'" formControlName="deceasedLastName" placeholder="{{'last_name' | translate: translateKey}}"
+                            required>
+                        <control-messages [control]="cremationForm.get('deceasedLastName')"></control-messages>
+                    </mat-form-field>
 
-					<!-- Gujarati fields start-->
-					<mat-form-field class="col-md-4">
-						<input matInput type="text" appPreventSpace appGujInputTarget [form]="cremationForm" formControlName="deceasedFirstNameGuj"
-						 placeholder="{{'first_name' | translate: translateKey: 'gu'}}" required>
-						<control-messages [control]="cremationForm.controls.deceasedFirstNameGuj"></control-messages>
-					</mat-form-field>
+                    <!-- Gujarati fields start-->
+                    <mat-form-field class="col-md-4">
+                        <input matInput type="text" appPreventSpace appGujInputTarget [form]="cremationForm" formControlName="deceasedFirstNameGuj"
+                            placeholder="{{'first_name' | translate: translateKey: 'gu'}}" required>
+                        <control-messages [control]="cremationForm.get('deceasedFirstNameGuj')"></control-messages>
+                    </mat-form-field>
 
-					<mat-form-field class="col-md-4">
-						<input matInput type="text" appPreventSpace appGujInputTarget [form]="cremationForm" formControlName="deceasedMiddleNameGuj"
-						 placeholder="{{'middle_name' | translate: translateKey: 'gu'}}">
-					</mat-form-field>
+                    <mat-form-field class="col-md-4">
+                        <input matInput type="text" appPreventSpace appGujInputTarget [form]="cremationForm" formControlName="deceasedMiddleNameGuj"
+                            placeholder="{{'middle_name' | translate: translateKey: 'gu'}}">
+                    </mat-form-field>
 
-					<mat-form-field class="col-md-4">
-						<input matInput type="text" appPreventSpace appGujInputTarget [form]="cremationForm" formControlName="deceasedLastNameGuj"
-						 placeholder="{{'last_name' | translate: translateKey :'gu'}}" required>
-						<control-messages [control]="cremationForm.controls.deceasedLastNameGuj"></control-messages>
-					</mat-form-field>
-					<!-- Gujarati fields end-->
+                    <mat-form-field class="col-md-4">
+                        <input matInput type="text" appPreventSpace appGujInputTarget [form]="cremationForm" formControlName="deceasedLastNameGuj"
+                            placeholder="{{'last_name' | translate: translateKey :'gu'}}" required>
+                        <control-messages [control]="cremationForm.get('deceasedLastNameGuj')"></control-messages>
+                    </mat-form-field>
+                    <!-- Gujarati fields end-->
 
-					<mat-form-field class="col-md-6">
-						<input matInput readonly [matDatepicker]="picker" [max]="maxDate" formControlName="deathDate" (dateChange)="onDateChange($event.value)"
-						 placeholder="{{'date_of_death' | translate: translateKey}} (DD/MM/YYYY)" required >
-						<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-						<mat-datepicker touchUi="true" #picker></mat-datepicker>
-						<control-messages [control]="cremationForm.controls.deathDate"></control-messages>
-					</mat-form-field>
+                    <mat-form-field class="col-md-6">
+                        <input matInput readonly [matDatepicker]="picker" [max]="maxDate" formControlName="deathDate" (dateChange)="onDateChange($event.value)"
+                            placeholder="{{'date_of_death' | translate: translateKey}} (DD/MM/YYYY)" required>
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker touchUi="true" #picker></mat-datepicker>
+                        <control-messages [control]="cremationForm.get('deathDate')"></control-messages>
+                    </mat-form-field>
 
-					<div formGroupName="gender" class="col-md-6 radioBtnError">
-						<mat-label>{{'gender' | translate: translateKey}} *</mat-label>
-						<mat-radio-group formControlName="code">
-							<mat-radio-button [value]="gender.code" *ngFor="let gender of genderArray">{{gender.name}}
-							</mat-radio-button>
-						</mat-radio-group>
-						<control-messages [control]="cremationForm.controls.gender.controls.code"></control-messages>
-					</div>
+                    <div formGroupName="gender" class="col-md-6 radioBtnError">
+                        <mat-label>{{'gender' | translate: translateKey}} *</mat-label>
+                        <mat-radio-group formControlName="code">
+                            <mat-radio-button [value]="gender.code" *ngFor="let gender of genderArray">{{gender.name}}
+                            </mat-radio-button>
+                        </mat-radio-group>
+                        <control-messages [control]="cremationForm.get('gender').get('code')"></control-messages>
+                    </div>
 
-					<h2> {{'place_of_death' | translate: translateKey}}</h2>
-					<app-address #address [requiredFeilds]="true" [addressFormGroup]="cremationForm.controls.deathPlaceAddress"></app-address>
-
-
-					<h2>{{'place_of_cremation' | translate: translateKey}}</h2>
-					<app-address #address [requiredFeilds]="true" [addressFormGroup]="cremationForm.controls.cremationAddress"></app-address>
-
-				</div>
-
-				<app-action-bar [form]="cremationForm" [stepInfo]="{step: 'step1', next: 1, back: 0}" (handleErrors)="handleErrorsOnSubmit($event)"
-				 (tabIndex)="onTabChange($event)"></app-action-bar>
-
-			</mat-tab>
-
-			<!-- end first step -->
-
-			<!-- second step start-->
-			<mat-tab [label]="stepLable2 | translate: translateKey">
-
-				<div class="row">
-
-					<h2>Basic Detail</h2>
-					<app-basic-details [basicFormGroup]="cremationForm"></app-basic-details>
-
-					<h2>{{'applicant_address' | translate: translateKey}} </h2>
-					<app-address #address [requiredFeilds]="true" [addressFormGroup]="cremationForm.controls.applicantAddress"></app-address>
-
-					<div formGroupName="applicantRelation" class="col-md-6 ngSelect">
-						<ng-select placeholder="{{'relation_with_applicant' | translate: translateKey}} *" name="relation" formControlName="code"
-						 (change)="applicantRelChange($event)">
-							<ng-option *ngFor="let relation of relationshipArray" [value]="relation.code">{{relation.name}}</ng-option>
-						</ng-select>
-						<control-messages [control]="cremationForm.controls.applicantRelation.controls.code"></control-messages>
-					</div>
-
-					<mat-form-field class="col-md-6" *ngIf="cremationForm.get('applicantRelation').get('code').value == 'OTHER_RELATIONSHIP'">
-						<input matInput type="text" formControlName="applicantRelationDetail" placeholder="{{'applicant_relation_detail' | translate: translateKey}}"
-						 required>
-						<control-messages [control]="cremationForm.controls.applicantRelationDetail"></control-messages>
-					</mat-form-field>
-
-				</div>
-
-				<app-action-bar [form]="cremationForm" [stepInfo]="{step: 'step2', next: 2, back: 0}" (handleErrors)="handleErrorsOnSubmit($event)"
-				 (tabIndex)="onTabChange($event)"></app-action-bar>
-
-			</mat-tab>
-			<!-- second step end-->
+                    <h2> {{'place_of_death' | translate: translateKey}}</h2>
+                    <app-address #address [requiredFeilds]="true" [addressFormGroup]="cremationForm.get('deathPlaceAddress')"></app-address>
 
 
-			<!-- final step start-->
-			<mat-tab [label]="stepLable3 | translate: translateKey">
+                    <h2>{{'place_of_cremation' | translate: translateKey}}</h2>
+                    <app-address #address [requiredFeilds]="true" [addressFormGroup]="cremationForm.get('cremationAddress')"></app-address>
 
-				<div class="row">
-					<div class="col-md-12">
-						<div class="alert alert-warning">
-							{{'note' | translate:translateKey}} : {{'submit_hard_copy_at_madhyawarti_school' | translate:translateKey}}
-						</div>
+                </div>
 
-						<div class="alert alert-warning">
-							{{'note' | translate:translateKey}} : {{'file_size_less_than_5_mb' | translate:translateKey}}
-						</div>
-					</div>
+                <app-action-bar [form]="cremationForm" [stepInfo]="{step: 'step1', next: 1, back: 0}" (handleErrors)="handleErrorsOnSubmit($event)"
+                    (tabIndex)="onTabChange($event)"></app-action-bar>
+
+            </mat-tab>
+
+            <!-- end first step -->
+
+            <!-- second step start-->
+            <mat-tab [label]="stepLable2 | translate: translateKey">
+
+                <div class="row">
+                    <h2>Basic Detail</h2>
+                    <app-basic-details [basicFormGroup]="cremationForm"></app-basic-details>
+
+                    <h2>{{'applicant_address' | translate: translateKey}} </h2>
+                    <app-address #address [requiredFeilds]="true" [addressFormGroup]="cremationForm.get('applicantAddress')"></app-address>
+
+                    <div formGroupName="applicantRelation" class="col-md-6 ngSelect">
+                        <ng-select placeholder="{{'relation_with_applicant' | translate: translateKey}} *" name="relation" formControlName="code"
+                            (change)="applicantRelChange($event)">
+                            <ng-option *ngFor="let relation of relationshipArray" [value]="relation.code">{{relation.name}}</ng-option>
+                        </ng-select>
+                        <control-messages [control]="cremationForm.get('applicantRelation').get('code')"></control-messages>
+                    </div>
+
+                    <mat-form-field class="col-md-6" *ngIf="cremationForm.get('applicantRelation').get('code').value == 'OTHER_RELATIONSHIP'">
+                        <input matInput type="text" formControlName="applicantRelationDetail" placeholder="{{'applicant_relation_detail' | translate: translateKey}}"
+                            required>
+                        <control-messages [control]="cremationForm.get('applicantRelationDetail')"></control-messages>
+                    </mat-form-field>
+
+                </div>
+
+                <app-action-bar [form]="cremationForm" [stepInfo]="{step: 'step2', next: 2, back: 0}" (handleErrors)="handleErrorsOnSubmit($event)"
+                    (tabIndex)="onTabChange($event)"></app-action-bar>
+
+            </mat-tab>
+            <!-- second step end-->
 
 
-					<div class="col-md-6" *ngIf="showButtons">
-						<label labelPosition="after">{{'address_proof' | translate:translateKey}}{{!getFileObjectContained('1.1')?'': '*'}}</label>
-						<file-upload [form]="cremationForm" [uploadModel]="setDataValue(1.1,'Address Proof','1.1','addressProof')"></file-upload>
-					</div>
+            <!-- final step start-->
+            <mat-tab [label]="stepLable3 | translate: translateKey">
 
-					<div class="col-md-6" *ngIf="showButtons">
-						<label>{{'unique_id' | translate:translateKey}}{{!getFileObjectContained('1.2')?'': '*'}}</label>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="alert alert-warning">
+                            {{'note' | translate:translateKey}} : {{'submit_hard_copy_at_madhyawarti_school' | translate:translateKey}}
+                        </div>
+                        <div class="alert alert-warning">
+                            {{'note' | translate:translateKey}} : {{'file_size_less_than_5_mb' | translate:translateKey}}
+                        </div>
+                    </div>
 
-						<file-upload [form]="cremationForm" [uploadModel]="setDataValue(1.2,'Unique Id','1.1','uniqueId')"></file-upload>
-					</div>
-				</div>
+                    <div class="col-md-6" *ngIf="showButtons">
+                        <label labelPosition="after">{{'address_proof' | translate:translateKey}}{{!getFileObjectContained('1.1')?'':
+                            '*'}}</label>
+                        <file-upload [form]="cremationForm" [uploadModel]="setDataValue(1.1,'Address Proof','1.1','addressProof')"></file-upload>
+                    </div>
 
-				<app-action-bar [form]="cremationForm" [stepInfo]="{step: 'final', next: 2, back: 1}" [uploadFiles]="uploadFileArray" (handleErrors)="handleErrorsOnSubmit($event)"
-				 (tabIndex)="onTabChange($event)"></app-action-bar>
-			</mat-tab>
-			<!-- final step end-->
+                    <div class="col-md-6" *ngIf="showButtons">
+                        <label>{{'unique_id' | translate:translateKey}}{{!getFileObjectContained('1.2')?'': '*'}}</label>
+                        <file-upload [form]="cremationForm" [uploadModel]="setDataValue(1.2,'Unique Id','1.1','uniqueId')"></file-upload>
+                    </div>
+                </div>
 
-		</mat-tab-group>
-	</form>
+                <app-action-bar [form]="cremationForm" [stepInfo]="{step: 'final', next: 2, back: 1}" [uploadFiles]="uploadFileArray" (handleErrors)="handleErrorsOnSubmit($event)"
+                    (tabIndex)="onTabChange($event)"></app-action-bar>
+            </mat-tab>
+            <!-- final step end-->
+
+        </mat-tab-group>
+    </form>
 </mat-card>
