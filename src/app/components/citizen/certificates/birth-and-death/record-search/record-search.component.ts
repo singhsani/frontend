@@ -1,11 +1,8 @@
 import { Component, OnInit, Output, EventEmitter, Input, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
-
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
-import { Observable, merge, of as observableOf } from 'rxjs';
+import { merge, of as observableOf } from 'rxjs';
 import { catchError, map, startWith, switchMap } from 'rxjs/operators';
-
 import { PaginationService } from '../../../../../core/services/citizen/data-services/pagination.service';
 import { FormsActionsService } from '../../../../../core/services/citizen/data-services/forms-actions.service';
 import { CommonService } from './../../../../../shared/services/common.service';
@@ -84,7 +81,7 @@ export class RecordSearchComponent implements OnInit {
 		{ id: "2008", code: 2008, name: "2008" },
 		{ id: "2009", code: 2009, name: "2009" },
 		{ id: "2010", code: 2010, name: "2010" },
-		{ id: "2011", code: "2011", name: "2011" },
+		{ id: "2011", code: 2011, name: "2011" },
 		{ id: "2012", code: 2012, name: "2012" },
 		{ id: "2013", code: 2013, name: "2013" },
 		{ id: "2014", code: 2014, name: "2014" },

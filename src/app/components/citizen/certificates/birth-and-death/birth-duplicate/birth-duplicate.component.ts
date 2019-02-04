@@ -40,22 +40,22 @@ export class BirthDuplicateComponent implements OnInit {
 	/**
 	 * Duplicate copy mode lookup.
 	 */
-	private DuplicateCopyMode: object[];
+	DuplicateCopyMode: Array<any> = [];
 
 	/**
 	 * Yes/no type lookup
 	 */
-	private ISYESNO: object[];
+	ISYESNO: Array<any> = [];
 
 	/**
 	 * validate max date.
 	 */
-	private maxBirthDate = new Date();
+	maxBirthDate = new Date();
 
 	/**
 	 * validate minimm date.
 	 */
-	private minBirthDate;
+	minBirthDate;
 
 	/**
 	 * common routing configuration

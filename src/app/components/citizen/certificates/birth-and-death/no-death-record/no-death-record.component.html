@@ -16,7 +16,7 @@
 				<div class="row">
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" formControlName="deceasedName" placeholder="{{'deceased_name' | translate: translateKey}}" required>
-						<control-messages [control]="noRecordDeathForm.controls.deceasedName"></control-messages>
+						<control-messages [control]="noRecordDeathForm.get('deceasedName')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
@@ -24,13 +24,13 @@
 						 placeholder="{{'date_of_death' | translate: translateKey}} (DD/MM/YYYY)" required>
 						<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
 						<mat-datepicker touchUi="true" #picker></mat-datepicker>
-						<control-messages [control]="noRecordDeathForm.controls.deathDate"></control-messages>
+						<control-messages [control]="noRecordDeathForm.get('deathDate')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" formControlName="fatherHusbandName" appValidationFields validationFieldsType="onlyNameWithOutSpace"
 						 placeholder="{{'father_or_husband_name' | translate: translateKey}}" required>
-						<control-messages [control]="noRecordDeathForm.controls.fatherHusbandName"></control-messages>
+						<control-messages [control]="noRecordDeathForm.get('fatherHusbandName')"></control-messages>
 					</mat-form-field>
 
 					<div formGroupName="gender" class="col-md-4 radioBtnError">
@@ -38,7 +38,7 @@
 						<mat-radio-group formControlName="code">
 							<mat-radio-button [value]="gender.code" *ngFor="let gender of genderArray">{{gender.name}}</mat-radio-button>
 						</mat-radio-group>
-						<control-messages [control]="noRecordDeathForm.controls.gender.controls.code"></control-messages>
+						<control-messages [control]="noRecordDeathForm.get('gender').get('code')"></control-messages>
 					</div>
 
 					<div formGroupName="deathPlace" class="col-md-4 radioBtnError">
@@ -46,18 +46,18 @@
 						<mat-radio-group formControlName="code" (change)="deathPlaceChange($event)">
 							<mat-radio-button [value]="place.code" *ngFor="let place of placeArray">{{place.name}}</mat-radio-button>
 						</mat-radio-group>
-						<control-messages [control]="noRecordDeathForm.controls.deathPlace.controls.code"></control-messages>
+						<control-messages [control]="noRecordDeathForm.get('deathPlace').get('code')"></control-messages>
 					</div>
 
 					<mat-form-field class="col-md-4" *ngIf="noRecordDeathForm.get('deathPlace').get('code').value == 'OTHER_PLACE'">
 						<input matInput type="text" formControlName="deathPlaceDetail" placeholder="{{'death_place_detail' | translate: translateKey}}"
 						 required>
-						<control-messages [control]="noRecordDeathForm.controls.deathPlaceDetail"></control-messages>
+						<control-messages [control]="noRecordDeathForm.get('deathPlaceDetail')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<input matInput type="tel" OnlyNumber formControlName="age" placeholder="{{'age' | translate: translateKey}}" required>
-						<control-messages [control]="noRecordDeathForm.controls.age"></control-messages>
+						<control-messages [control]="noRecordDeathForm.get('age')"></control-messages>
 					</mat-form-field>
 				</div>
 
@@ -72,7 +72,7 @@
 
 				<div class="row">
 					<h2>Address</h2>
-					<app-address #address [requiredFeilds]="true" [addressFormGroup]="noRecordDeathForm.controls.deathPlaceAddress"></app-address>
+					<app-address #address [requiredFeilds]="true" [addressFormGroup]="noRecordDeathForm.get('deathPlaceAddress')"></app-address>
 				</div>
 
 				<app-action-bar [uploadFiles]="uploadFileArray" [form]="noRecordDeathForm" [stepInfo]="{step: 'step2', next: 2, back: 0}"
@@ -94,13 +94,13 @@
 						 (change)="applicantRelChange($event)">
 							<ng-option *ngFor="let relation of relationshipArray" [value]="relation.code">{{relation.name}}</ng-option>
 						</ng-select>
-						<control-messages [control]="noRecordDeathForm.controls.applicantRelation.controls.code"></control-messages>
+						<control-messages [control]="noRecordDeathForm.get('applicantRelation').get('code')"></control-messages>
 					</div>
 
 					<mat-form-field class="col-md-6" *ngIf="noRecordDeathForm.get('applicantRelation').get('code').value == 'OTHER_RELATIONSHIP'">
 						<input matInput type="text" formControlName="applicantRelationDetail" placeholder="{{'applicant_relation_detail' | translate: translateKey}}"
 						 required>
-						<control-messages [control]="noRecordDeathForm.controls.applicantRelationDetail"></control-messages>
+						<control-messages [control]="noRecordDeathForm.get('applicantRelationDetail')"></control-messages>
 					</mat-form-field>
 
 					<div class="col-md-12 radioBtnError" formGroupName="reasonDetail">
@@ -108,7 +108,7 @@
 						<mat-radio-group formControlName="code">
 							<mat-radio-button [value]="reason.code" *ngFor="let reason of reasonArray">{{reason.name}}</mat-radio-button>
 						</mat-radio-group>
-						<control-messages [control]="noRecordDeathForm.controls.reasonDetail.controls.code"></control-messages>
+						<control-messages [control]="noRecordDeathForm.get('reasonDetail').get('code')"></control-messages>
 					</div>
 				</div>
 

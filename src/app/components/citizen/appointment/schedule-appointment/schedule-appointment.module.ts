@@ -9,7 +9,7 @@ import { SharedModule } from '../../../../shared/shared.module';
 import { SlotBookingComponent } from './slot-booking/slot-booking.component';
 
 const routes: Routes = [
-    { path: '', component: SlotBookingComponent },
+    // { path: '', redirectTo: ManageRoutes.getMainRoute('SLOTBOOKING'),  pathMatch : "full" },
     { path: ManageRoutes.getMainRoute('SLOTBOOKING') + '/:id/:apiCode', component: SlotBookingComponent }
 ];
 

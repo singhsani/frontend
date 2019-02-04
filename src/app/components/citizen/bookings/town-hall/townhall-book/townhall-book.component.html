@@ -7,11 +7,8 @@
         <div class="pageTitle">{{'online_townhall_bookings'| translate: translateKey}}</div>
 
         <mat-card-content class="p-4">
-
             <p class="pb-2">{{head_lines| translate: translateKey}}</p>
-
             <h2>{{'rules_and_regulations'| translate: translateKey}}</h2>
-
             <ol class="olList">
                 <li>
                     All parties/organizers have to observe the VMC Rules(
@@ -30,9 +27,6 @@
                     Deduction as per the rules will be made in the event of cancellation.
                 </li>
             </ol>
-
-
-
         </mat-card-content>
     </mat-card>
     <div class="fotButtonBar">
@@ -57,7 +51,7 @@
                                 {{ townHall.name }}
                             </ng-option>
                         </ng-select>
-                        <control-messages [control]="searchTownHallForm.controls.code"></control-messages>
+                        <control-messages [control]="searchTownHallForm.get('code')"></control-messages>
                     </div>
 
                     <div formGroupName="purpose" class="col-md-6 ngSelect">
@@ -66,7 +60,7 @@
                                 {{ purpose.name }}
                             </ng-option>
                         </ng-select>
-                        <control-messages [control]="searchTownHallForm.controls.purpose.controls.code">
+                        <control-messages [control]="searchTownHallForm.get('purpose').get('code')">
                         </control-messages>
                     </div>
 
@@ -75,7 +69,7 @@
                         <input matInput [min]="startMinDate" [matDatepicker]="townHallBookingfromPicker" formControlName="startDate" placeholder="DD/MM/YYYY">
                         <mat-datepicker-toggle matSuffix [for]="townHallBookingfromPicker"></mat-datepicker-toggle>
                         <mat-datepicker #townHallBookingfromPicker touchUi="true"></mat-datepicker>
-                        <control-messages [control]="searchTownHallForm.controls.startDate">
+                        <control-messages [control]="searchTownHallForm.get('startDate')">
                         </control-messages>
                     </mat-form-field>
 
@@ -84,7 +78,7 @@
                         <input matInput [min]="endMinDate" [matDatepicker]="townHallBookingtoPicker" formControlName="endDate" placeholder="DD/MM/YYYY">
                         <mat-datepicker-toggle matSuffix [for]="townHallBookingtoPicker"></mat-datepicker-toggle>
                         <mat-datepicker #townHallBookingtoPicker touchUi="true"></mat-datepicker>
-                        <control-messages [control]="searchTownHallForm.controls.endDate">
+                        <control-messages [control]="searchTownHallForm.get('endDate')">
                         </control-messages>
                     </mat-form-field>
 
@@ -93,6 +87,7 @@
                 <div class="row fotButtonBar">
                     <div class="col-sm-12 col-md-12 text-right">
                         <button mat-raised-button color="primary" type="submit">
+                            <mat-icon>search</mat-icon>
                             {{'search'| translate: translateKey}}
                         </button>
                     </div>
@@ -104,7 +99,7 @@
 
     <div *ngIf="Dates.length>0" class="mt-4">
         <mat-card class="formClass cardBorder">
-            
+
             <div class="pageTitle">{{'list_of_town_hall'| translate: translateKey}}</div>
 
             <mat-accordion *ngFor="let month of bookingUtils.filterMonths(Dates); let i = index;">
@@ -115,7 +110,8 @@
                         </mat-panel-title>
                     </mat-expansion-panel-header>
                     <div>
-                        <mat-checkbox [checked]="!bookingUtils.checkedAllinMonth(month, Dates)" [disabled]="bookingUtils.checkAllDisabledInmonth(month,Dates)" labelPosition="after" (change)="selectedShift =  bookingUtils.selectAllShiftsInMonth($event.checked, month, Dates, selectedShift,  i)">
+                        <mat-checkbox [checked]="!bookingUtils.checkedAllinMonth(month, Dates)" [disabled]="bookingUtils.checkAllDisabledInmonth(month,Dates)"
+                            labelPosition="after" (change)="selectedShift =  bookingUtils.selectAllShiftsInMonth($event.checked, month, Dates, selectedShift,  i)">
                             {{'select_all_shift_in'| translate: translateKey}} {{month.monthName}}
                         </mat-checkbox>
                     </div>
@@ -364,19 +360,19 @@
                         <mat-form-field class="col-md-4">
                             <input matInput maxlength="25" appValidationFields [validationFieldsType]="'onlyNameWithSpace'" type="text" formControlName="organizationName"
                                 placeholder="{{'oraganization_name' | translate: translateKey}}" required>
-                            <control-messages [control]="townHallApplicationForm.controls.organizationName"></control-messages>
+                            <control-messages [control]="townHallApplicationForm.get('organizationName')"></control-messages>
                         </mat-form-field>
 
                         <mat-form-field class="col-md-4">
                             <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="orgTelephoneNo" placeholder="{{'orgTelephone_no' | translate: translateKey}}"
                                 required>
-                            <control-messages [control]="townHallApplicationForm.controls.orgTelephoneNo"></control-messages>
+                            <control-messages [control]="townHallApplicationForm.get('orgTelephoneNo')"></control-messages>
                         </mat-form-field>
 
                         <mat-form-field class="col-md-4">
                             <input matInput maxlength="50" appValidationFields [validationFieldsType]="'onlyNameWithSpace'" formControlName="organizationPresidentName"
                                 placeholder="{{'organization_president_name' | translate: translateKey}}" required>
-                            <control-messages [control]="townHallApplicationForm.controls.organizationPresidentName"></control-messages>
+                            <control-messages [control]="townHallApplicationForm.get('organizationPresidentName')"></control-messages>
                         </mat-form-field>
 
                     </div>
@@ -385,7 +381,7 @@
                         <h2>
                             {{'organizationAddress' | translate:translateKey}}
                         </h2>
-                        <app-address #address [requiredFeilds]="true" [addressFormGroup]="townHallApplicationForm.controls.organizationAddress"></app-address>
+                        <app-address #address [requiredFeilds]="true" [addressFormGroup]="townHallApplicationForm.get('organizationAddress')"></app-address>
                     </div>
 
                     <div class="row mt-4 fotButtonBar">
@@ -409,49 +405,47 @@
                         <mat-form-field class="col-md-4">
                             <input matInput maxlength="50" appValidationFields [validationFieldsType]="'onlyNameWithSpace'" type="text" formControlName="applicantName"
                                 placeholder="{{'applicant_name' | translate: translateKey}}" required>
-                            <control-messages [control]="townHallApplicationForm.controls.applicantName"></control-messages>
+                            <control-messages [control]="townHallApplicationForm.get('applicantName')"></control-messages>
                         </mat-form-field>
 
                         <mat-form-field class="col-md-4">
                             <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="applicantMobile" placeholder="{{'applicant_mobile' | translate: translateKey}}"
                                 required>
-                            <control-messages [control]="townHallApplicationForm.controls.applicantMobile"></control-messages>
+                            <control-messages [control]="townHallApplicationForm.get('applicantMobile')"></control-messages>
                         </mat-form-field>
 
                         <div class="col-md-4">
                             <mat-form-field>
                                 <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="confirmMobile" placeholder="{{'confirm_mobile' | translate: translateKey}}"
                                     required>
-                                <control-messages [control]="townHallApplicationForm.controls.confirmMobile"></control-messages>
-
+                                <control-messages [control]="townHallApplicationForm.get('confirmMobile')"></control-messages>
                             </mat-form-field>
-                            <mat-error *ngIf="!bookingUtils.matcher(townHallApplicationForm, 'applicantMobile', 'confirmMobile') && townHallApplicationForm.controls.applicantMobile.touched && townHallApplicationForm.controls.confirmMobile.touched">
-                                Mobile Number & Confirm Mobile Number is not same
+                            <mat-error *ngIf="!bookingUtils.matcher(townHallApplicationForm, 'applicantMobile', 'confirmMobile') && townHallApplicationForm.get('applicantMobile').touched && townHallApplicationForm.get('confirmMobile').touched">
+                                {{bookingConstants.MOB_NO_MIS_MATCH_MESSAGE}}
                             </mat-error>
                         </div>
 
 
                         <mat-form-field class="col-md-4">
                             <input matInput type="email" formControlName="emailID" placeholder="{{'applicant_email' | translate: translateKey}}" required>
-                            <control-messages [control]="townHallApplicationForm.controls.emailID"></control-messages>
+                            <control-messages [control]="townHallApplicationForm.get('emailID')"></control-messages>
                         </mat-form-field>
 
                         <div class="col-md-4">
                             <mat-form-field>
                                 <input matInput type="email" formControlName="confirmEmailID" placeholder="{{'confirm_email' | translate: translateKey}}"
                                     required>
-                                <control-messages [control]="townHallApplicationForm.controls.confirmEmailID"></control-messages>
+                                <control-messages [control]="townHallApplicationForm.get('confirmEmailID')"></control-messages>
                             </mat-form-field>
-                            <mat-error *ngIf="!bookingUtils.matcher(townHallApplicationForm, 'emailID', 'confirmEmailID') &&townHallApplicationForm.controls.emailID.touched && townHallApplicationForm.controls.confirmEmailID.touched">
-                                Email & Confirm Email is not same
+                            <mat-error *ngIf="!bookingUtils.matcher(townHallApplicationForm, 'emailID', 'confirmEmailID') &&townHallApplicationForm.get('emailID').touched && townHallApplicationForm.get('confirmEmailID').touched">
+                                 {{bookingConstants.EMAIL_MIS_MATCH_MESSAGE}}
                             </mat-error>
-
                         </div>
 
                         <mat-form-field class="col-md-4">
                             <input matInput type="text" maxlength="20" appValidationFields [validationFieldsType]="'onlyNameWithSpace'" formControlName="relationshipWithOrg"
                                 placeholder="{{'relationship_with_org' | translate: translateKey}}" required>
-                            <control-messages [control]="townHallApplicationForm.controls.relationshipWithOrg"></control-messages>
+                            <control-messages [control]="townHallApplicationForm.get('relationshipWithOrg')"></control-messages>
                         </mat-form-field>
                     </div>
 
@@ -459,7 +453,7 @@
                         <h2>
                             {{'applicantAddress' | translate:translateKey}}
                         </h2>
-                        <app-address #address [requiredFeilds]="true" [addressFormGroup]="townHallApplicationForm.controls.applicantAddress"></app-address>
+                        <app-address #address [requiredFeilds]="true" [addressFormGroup]="townHallApplicationForm.get('applicantAddress')"></app-address>
                     </div>
 
                     <div class="row mt-4 fotButtonBar">
@@ -483,31 +477,31 @@
                     </h2>
 
                     <div class="row">
-                        <div formGroupName="bankName" class="col-md-3 ngSelect">
+                        <div formGroupName="bankName" class="col-md-6 ngSelect">
                             <ng-select placeholder="{{'bank_name' | translate:translateKey}} *" formControlName="code">
                                 <ng-option *ngFor="let bank of BankOptions" [value]="bank.code">
                                     {{bank.name}}
                                 </ng-option>
                             </ng-select>
-                            <control-messages [control]="townHallApplicationForm.controls.bankName.controls.code"></control-messages>
+                            <control-messages [control]="townHallApplicationForm.get('bankName').get('code')"></control-messages>
                         </div>
 
-                        <mat-form-field class="col-md-3">
+                        <mat-form-field class="col-md-6">
                             <input matInput type="text" maxlength="20" appValidationFields [validationFieldsType]="'onlyNameWithSpace'" formControlName="accountHolderName"
                                 placeholder="{{'account_holder_name' | translate: translateKey}}" required>
-                            <control-messages [control]="townHallApplicationForm.controls.accountHolderName"></control-messages>
+                            <control-messages [control]="townHallApplicationForm.get('accountHolderName')"></control-messages>
                         </mat-form-field>
 
-                        <mat-form-field class="col-md-3">
+                        <mat-form-field class="col-md-6">
                             <input matInput OnlyNumber maxlength="20" minlength="20" formControlName="accountNo" placeholder="{{'accont_no' | translate: translateKey}}"
                                 required>
-                            <control-messages [control]="townHallApplicationForm.controls.accountNo"></control-messages>
+                            <control-messages [control]="townHallApplicationForm.get('accountNo')"></control-messages>
                         </mat-form-field>
 
-                        <mat-form-field class="col-md-3">
+                        <mat-form-field class="col-md-6">
                             <input matInput type="text" maxlength="11" formControlName="ifscCode" placeholder="{{'ifsc_code' | translate: translateKey}}"
                                 required>
-                            <control-messages [control]="townHallApplicationForm.controls.ifscCode"></control-messages>
+                            <control-messages [control]="townHallApplicationForm.get('ifscCode')"></control-messages>
                         </mat-form-field>
                     </div>
 
@@ -520,13 +514,13 @@
                             <textarea matInput type="text" maxlength="200" formControlName="programShortDetails" placeholder="{{'program_short_details' | translate: translateKey}}"
                                 required>
                     </textarea>
-                            <control-messages [control]="townHallApplicationForm.controls.programShortDetails"></control-messages>
+                            <control-messages [control]="townHallApplicationForm.get('programShortDetails')"></control-messages>
                         </mat-form-field>
 
                         <mat-form-field class="col-md-6">
                             <textarea matInput type="text" maxlength="200" formControlName="programPurpose" placeholder="{{'program_purpose' | translate: translateKey}}"
                                 required></textarea>
-                            <control-messages [control]="townHallApplicationForm.controls.programPurpose"></control-messages>
+                            <control-messages [control]="townHallApplicationForm.get('programPurpose')"></control-messages>
                         </mat-form-field>
                     </div>
 
@@ -538,8 +532,6 @@
                             </button>
                         </div>
                     </div>
-
-
                 </mat-tab>
             </mat-tab-group>
         </form>

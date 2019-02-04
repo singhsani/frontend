@@ -282,7 +282,7 @@ export class BookingService {
 	 * @param refNumber 
 	 */
 	displayJson(refNumber:any){
-		this.requestURL = `/api/booking/${this.resourceType}/json/${refNumber}`;
+		this.requestURL = `api/booking/${this.resourceType}/json/${refNumber}`;
 		return this.http.get(this.requestURL);
 	}
 }

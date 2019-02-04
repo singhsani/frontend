@@ -1,12 +1,9 @@
-import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
-
 import { ManageRoutes } from './../../../../../config/routes-conf';
-import { ValidationService } from '../../../../../shared/services/validation.service';
 import { FormsActionsService } from '../../../../../core/services/citizen/data-services/forms-actions.service';
-
 import * as _ from 'lodash';
 import * as moment from 'moment';
 
@@ -19,7 +16,7 @@ export class NoDeathRecordComponent implements OnInit {
 
 	@ViewChild('address') addrComponent: any;
 
-	private uploadFileArray: Array<any> = [
+	uploadFileArray: Array<any> = [
 		{ labelName: 'Deceased', fieldIdentifier: '1.1' },
 		{ labelName: 'BasicDetails', fieldIdentifier: '1.2' },
 		{ labelName: 'Applicant Id', fieldIdentifier: '1.3' }
@@ -33,10 +30,10 @@ export class NoDeathRecordComponent implements OnInit {
 	manageRoutes: any = ManageRoutes;
 
 	maxDate: Date = new Date();
-	relationshipArray: any = [];
-	genderArray: any = [];
-	placeArray: any = [];
-	reasonArray: any = [];
+	relationshipArray: Array<any> = [];
+	genderArray: Array<any> = [];
+	placeArray: Array<any> = [];
+	reasonArray: Array<any> = [];
 	showButtons: boolean = false;
 	uploadModel: any = {};
 	isVisibeNRCForm: boolean = true;

@@ -34,7 +34,7 @@ export class DeathCorrectionComponent implements OnInit {
 	/**
 	 * Array is used to file upload validation.
 	 */
-	private uploadFileArray: Array<any> =
+	uploadFileArray: Array<any> =
 		[{ labelName: 'Resident Proof', fieldIdentifier: '1.1' },
 		{ labelName: 'Kyc Document of Deceased', fieldIdentifier: '1.2' },
 		];
@@ -163,11 +163,8 @@ export class DeathCorrectionComponent implements OnInit {
 	 * Get Death Correction data from API.
 	 */
 	getDeathCorrectionData() {
-
 		this.formService.getFormData(this.appId).subscribe(res => {
-
 			this.deathCorrectionForm.patchValue(res);
-
 			this.showButtons = true;
 		});
 	}
@@ -177,29 +174,17 @@ export class DeathCorrectionComponent implements OnInit {
 	 * @param data - original json data.
 	 */
 	createBirthCorrectionData(data) {
-
 		this.formService.createFormData().subscribe(res => {
-
 			this.deathCorrectionFormControls();
-
 			this.appId = res.serviceFormId;
-
 			this.deathCorrectionForm.patchValue(res);
-
 			let cururl = this.location.path().replace('false', this.appId.toString());
-
 			this.location.go(cururl);
-
 			this.getLookupData();
-
 			this.setValue(data);
-
 			this.showcorrectionForm = true;
-
 			this.showApplicationSearch = false;
-
 			this.showButtons = true;
-
 		})
 	}
 

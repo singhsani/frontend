@@ -16,7 +16,7 @@
                         <mat-radio-button *ngFor="let yesNo of ISYESNO" [value]="yesNo.code">
                             {{yesNo.name}}
                         </mat-radio-button>
-                        <control-messages [control]="deathDuplicateForm.controls.duplicateCopies.controls.code"></control-messages>
+                        <control-messages [control]="deathDuplicateForm.get('duplicateCopies').get('code')"></control-messages>
                     </mat-radio-group>
                 </div>
 
@@ -26,13 +26,13 @@
                             {{duplicatemode.name}}
                         </mat-option>
                     </mat-select>
-                    <control-messages [control]="deathDuplicateForm.controls.duplicateCopyMode.controls.code"></control-messages>
+                    <control-messages [control]="deathDuplicateForm.get('duplicateCopyMode').get('code')"></control-messages>
                 </mat-form-field>
 
                 <mat-form-field class="col-md-4">
                     <input matInput maxlength="2" type="number" [min]="0" OnlyNumber placeholder="{{'total_copies' | translate:translateKey}}"
                         formControlName="totalCopies">
-                    <control-messages [control]="deathDuplicateForm.controls.totalCopies"></control-messages>
+                    <control-messages [control]="deathDuplicateForm.get('totalCopies')"></control-messages>
                 </mat-form-field>
 
             </div>

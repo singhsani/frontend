@@ -31,6 +31,7 @@ export class DashboardComponent implements OnInit {
 			"name": "Booking Facilities",
 			"gujName": "Booking Facilities",
 			"services": [
+				
 				{
 					"code": "TOWNHALLBOOK",
 					"fieldView": "ALL",
@@ -40,13 +41,21 @@ export class DashboardComponent implements OnInit {
 					"active": true
 				},
 				{
-					"code": "GUESTHOUSELIST",
+					"code": "THEATERBOOK",
 					"fieldView": "ALL",
-					"name": "Guest House",
-					"gujName": "અતિથિગૃહ",
+					"name": "Amphi Theater",
+					"gujName": "એમ્ફી થિયેટર",
 					"appointmentRequired": false,
 					"active": true
 				},
+				// {
+				// 	"code": "GUESTHOUSELIST",
+				// 	"fieldView": "ALL",
+				// 	"name": "Guest House",
+				// 	"gujName": "અતિથિગૃહ",
+				// 	"appointmentRequired": false,
+				// 	"active": true
+				// },
 				{
 					"code": "STADIUMBOOK",
 					"fieldView": "ALL",
@@ -54,6 +63,14 @@ export class DashboardComponent implements OnInit {
 					"gujName": "સ્ટેડિયમ",
 					"appointmentRequired": false,
 					"active": true
+				},
+				{
+					"code": "ATITHIGRUHBOOK",
+					"fieldView": "ALL",
+					"name": "Atithigruh",
+					"gujName": "અતિથિગ્રહ",
+					"appointmentRequired": false,
+					"active": false
 				},
 				{
 					"code": "BOOKPERMISSION",

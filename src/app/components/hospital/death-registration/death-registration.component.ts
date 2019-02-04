@@ -1,10 +1,8 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ValidationErrors } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatStepper } from '@angular/material/stepper'
-
 import { ValidationService } from '../../../shared/services/validation.service';
-import { UploadFileService } from '../../../shared/upload-file.service';
 import { CommonService } from '../../../shared/services/common.service';
 import { HosFormActionsService } from '../../../core/services/hospital/data-services/hos-form-actions.service';
 import { ManageRoutes } from '../../../config/routes-conf';
@@ -29,7 +27,7 @@ export class DeathRegistrationComponent implements OnInit {
 	/**
 	   * file upload related declaration
 	   */
-	//private attachments: any[];
+	//private attachments: Array<any> = [];
 	showButtons: boolean = false;
 	uploadModel: any = {};
 	response:any;
@@ -58,14 +56,14 @@ export class DeathRegistrationComponent implements OnInit {
 	maxDeathDate = new Date();
 
 	//LookUps
-	deathPlaces: object[];
-	DeceasedEducations: Object[];
-	DeceasedOccupation: Object[];
-	RelationShip: object[];
-	MedicalTreatmentOptions: object[];
-	Religion: Object[];
-	Gender: Object[];
-	ISYESNO: object[];
+	deathPlaces: Array<any> = [];
+	DeceasedEducations: Array<any> = [];
+	DeceasedOccupation: Array<any> = [];
+	RelationShip: Array<any> = [];
+	MedicalTreatmentOptions: Array<any> = [];
+	Religion: Array<any> = [];
+	Gender: Array<any> = [];
+	ISYESNO: Array<any> = [];
 
 	/**
 	 * step labels
