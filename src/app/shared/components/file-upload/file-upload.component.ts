@@ -37,8 +37,7 @@ export class FileUploadComponent implements OnInit {
 	fileName: string = '';
 	fromAdmin: boolean = false;
 
-	getFile: string = ""
-
+	getFile: any = "";
 	attachments: any[];
 
 	/**

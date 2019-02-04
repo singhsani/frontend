@@ -16,6 +16,8 @@ export class HosFileUploadComponent implements OnInit {
 	@ViewChild('fileInput') fileInput: any;
 	requiredFile: boolean = true;
 
+	@Input() uploadModel: any;
+	@Input() form: any;
 
 	/**
 	 * File Upload related variables
@@ -34,16 +36,11 @@ export class HosFileUploadComponent implements OnInit {
 
 	//file and image  upload
 	priviewImage = '#';
-
-	@Input() uploadModel: any;
-
-	@Input() form: any;
-
 	attachments: any[];
 
 	imagetype: boolean = false;
 	fromAdmin: boolean = false;
-	getFile: string;
+	getFile: any;
 	fileName: string = ' ';
 
 	/**
