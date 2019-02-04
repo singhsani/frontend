@@ -5,8 +5,10 @@ import { ToastrService } from 'ngx-toastr';
 import { CommonService } from './../../../shared/services/common.service';
 import { ValidationService } from './../../../shared/services/validation.service';
 import { FormsActionsService } from './../../../core/services/citizen/data-services/forms-actions.service';
-import * as moment from 'moment';
+import { ComponentConfig } from './../../component-config';
 import { CountryService } from '../../../shared/services/country.service';
+
+import * as moment from 'moment';
 import * as _ from 'lodash';
 
 @Component({
@@ -20,6 +22,7 @@ export class UserProfileComponent implements OnInit {
 	 * Declare userProfile formgroup property
 	 */
 	userProfileForm: FormGroup;
+	public config = new ComponentConfig;
 
 	countryListArray: any = [];
 	stateListArray: any = [];

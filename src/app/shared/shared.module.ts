@@ -39,7 +39,6 @@ import { AddressComponent } from './components/address/address.component';
 import { PaymentResponsePageComponent } from './components/payment-response-page/payment-response-page.component'
 import { BasicDetailsComponent } from './components/basic-details/basic-details.component';
 import { TitleBarComponent } from './components/title-bar/title-bar.component';
-import { LoadingIndicatorComponent } from './components/loading-indicator/loading-indicator.component';
 import { HosHttpService } from './services/hos-http.service';
 import { HosActionBarComponent } from './components/hos-action-bar/hos-action-bar.component';
 import { HosFileUploadComponent } from './components/hos-file-upload/hos-file-upload.component';
@@ -63,7 +62,6 @@ const COMPONENTS = [
 	PaymentResponsePageComponent,
 	TitleBarComponent,
 	HosTitleBarComponent,
-	LoadingIndicatorComponent,
 	HosActionBarComponent,
 	InputTrimDirective,
 	ValidationFieldsDirective,

@@ -762,6 +762,7 @@ export class ManageRoutes {
     }
 
     static getApiTypeFromApiCode(apiCode: string) {
-        return ROUTEMAIN[apiCode]['type'];
+        if (apiCode)
+            return ROUTEMAIN[apiCode]['type'];
     }
 }

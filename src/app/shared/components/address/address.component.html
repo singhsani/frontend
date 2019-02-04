@@ -3,17 +3,17 @@
 		<div class="row">
 			<mat-form-field class="col-md-4">
 				<input matInput type="text" formControlName="buildingName" placeholder="{{'building_name' | translate: translateKey }} {{isBuildinAreaReq?'*':''}}" maxlength="60" appGujInputSource targetElement="buildingNameGuj" [form]="addressFormGroup" >
-				<control-messages [control]="addressFormGroup.controls.buildingName"></control-messages>
+				<control-messages [control]="addressFormGroup.get('buildingName')"></control-messages>
 			</mat-form-field>
 	
 			<mat-form-field class="col-md-4">
 				<input matInput type="text" formControlName="streetName" placeholder="{{'street_name' | translate: translateKey }}" maxlength="60" appGujInputSource targetElement="streetNameGuj" [form]="addressFormGroup">
-				<control-messages [control]="addressFormGroup.controls.streetName"></control-messages>
+				<control-messages [control]="addressFormGroup.get('streetName')"></control-messages>
 			</mat-form-field>
 	
 			<mat-form-field class="col-md-4">
 				<input matInput type="text" formControlName="landmark" placeholder="{{'landmark' | translate: translateKey }}" maxlength="100" appGujInputSource targetElement="landmarkGuj" [form]="addressFormGroup">
-				<control-messages [control]="addressFormGroup.controls.landmark"></control-messages>
+				<control-messages [control]="addressFormGroup.get('landmark')"></control-messages>
 			</mat-form-field>
 		</div>
 		
@@ -22,17 +22,17 @@
 			
 			<mat-form-field class="col-md-4">
 				<input matInput type="text" placeholder="{{'building_name' | translate: translateKey:'gu' }}" maxlength="180" formControlName="buildingNameGuj" appGujInputTarget [form]="addressFormGroup">
-				<control-messages [control]="addressFormGroup.controls.buildingNameGuj"></control-messages>
+				<control-messages [control]="addressFormGroup.get('buildingNameGuj')"></control-messages>
 			</mat-form-field>
 			
 			<mat-form-field class="col-md-4">
 				<input matInput type="text" formControlName="streetNameGuj" placeholder="{{'street_name' | translate: translateKey:'gu' }}" maxlength="180" appGujInputTarget [form]="addressFormGroup">
-				<control-messages [control]="addressFormGroup.controls.streetNameGuj"></control-messages>
+				<control-messages [control]="addressFormGroup.get('streetNameGuj')"></control-messages>
 			</mat-form-field>
 			
 			<mat-form-field class="col-md-4">
 				<input matInput type="text" formControlName="landmarkGuj" placeholder="{{'landmark' | translate: translateKey:'gu' }}" maxlength="300" appGujInputTarget [form]="addressFormGroup">
-				<control-messages [control]="addressFormGroup.controls.landmarkGuj"></control-messages>
+				<control-messages [control]="addressFormGroup.get('landmarkGuj')"></control-messages>
 			</mat-form-field>
 			
 		</div>
@@ -41,21 +41,21 @@
 		<div class="row">
 			<mat-form-field class="col-md-4">
 				<input matInput type="text" formControlName="area" placeholder="{{'area' | translate: translateKey }} {{isBuildinAreaReq?'*':''}}" maxlength="60" appGujInputSource targetElement="areaGuj" [form]="addressFormGroup">
-				<control-messages [control]="addressFormGroup.controls.area"></control-messages>
+				<control-messages [control]="addressFormGroup.get('area')"></control-messages>
 			</mat-form-field>
 	
 			<div class="col-md-4 ngSelect">
 				<ng-select placeholder="{{'country' | translate: translateKey }} {{requiredFeilds?'*':''}}" formControlName="country" required (change)="onCountryChange($event);getGujNameFromLookup($event,'countryGuj',countryListArray)">
 					<ng-option *ngFor="let country of countryListArray" [value]="country.name">{{country.name}}</ng-option>
 				</ng-select>
-				<control-messages [control]="addressFormGroup.controls.country"></control-messages>
+				<control-messages [control]="addressFormGroup.get('country')"></control-messages>
 			</div>
 	
 			<div class="col-md-4 ngSelect">
 				<ng-select placeholder="{{'state' | translate: translateKey }} {{requiredFeilds?'*':''}}" formControlName="state" required (change)="onStateChange($event);getGujNameFromLookup($event,'stateGuj',stateListArray)">
 					<ng-option *ngFor="let state of stateListArray" [value]="state.name">{{state.name}}</ng-option>
 				</ng-select>
-				<control-messages [control]="addressFormGroup.controls.state"></control-messages>
+				<control-messages [control]="addressFormGroup.get('state')"></control-messages>
 			</div>
 		</div>
 		
@@ -64,17 +64,17 @@
 			
 			<mat-form-field class="col-md-4">
 				<input matInput type="text" formControlName="areaGuj" placeholder="{{'area' | translate: translateKey:'gu' }}" maxlength="180" appGujInputTarget [form]="addressFormGroup">
-				<control-messages [control]="addressFormGroup.controls.areaGuj"></control-messages>
+				<control-messages [control]="addressFormGroup.get('areaGuj')"></control-messages>
 			</mat-form-field>
 			
 			<mat-form-field class="col-md-4">
 				<input [readonly]="true" matInput type="text" formControlName="countryGuj" placeholder="{{'country' | translate: translateKey:'gu' }} {{requiredFeilds?'*':''}}" maxlength="180">
-				<control-messages [control]="addressFormGroup.controls.countryGuj"></control-messages>
+				<control-messages [control]="addressFormGroup.get('countryGuj')"></control-messages>
 			</mat-form-field>
 			
 			<mat-form-field class="col-md-4">
 				<input [readonly]="true" matInput type="text" formControlName="stateGuj" placeholder="{{'state' | translate: translateKey:'gu' }} {{requiredFeilds?'*':''}}" maxlength="180">
-				<control-messages [control]="addressFormGroup.controls.stateGuj"></control-messages>
+				<control-messages [control]="addressFormGroup.get('stateGuj')"></control-messages>
 			</mat-form-field>
 			
 		</div>
@@ -82,23 +82,23 @@
 		<div class="row">
 			<!-- <mat-form-field class="col-md-4">
 				<input matInput formControlName="district" placeholder="{{'district' | translate: translateKey }}" [required]="requiredFeilds" maxlength="60" appGujInputSource targetElement="districtGuj" [form]="addressFormGroup">
-				<control-messages [control]="addressFormGroup.controls.district"></control-messages>
+				<control-messages [control]="addressFormGroup.get('district')"></control-messages>
 			</mat-form-field> 
 			<mat-form-field *ngIf="isDisplayGujFields" class="col-md-4">
 				<input matInput type="text" formControlName="districtGuj" placeholder="{{'district' | translate: translateKey }}" maxlength="180" appGujInputTarget [form]="addressFormGroup">
-				<control-messages [control]="addressFormGroup.controls.districtGuj"></control-messages>
+				<control-messages [control]="addressFormGroup.get('districtGuj')"></control-messages>
 			</mat-form-field>-->
 	
 			<div class="col-md-6 ngSelect">
 				<ng-select (change)="getGujNameFromLookup($event,'cityGuj',cityListArray)" placeholder="{{'city' | translate: translateKey }} / {{'district' | translate: translateKey }} {{requiredFeilds?'*':''}}" formControlName="city" [required]="requiredFeilds">
 					<ng-option *ngFor="let city of cityListArray" [value]="city.name">{{city.name}}</ng-option>
 				</ng-select>
-				<control-messages [control]="addressFormGroup.controls.city"></control-messages>
+				<control-messages [control]="addressFormGroup.get('city')"></control-messages>
 			</div>
 			<mat-form-field class="col-md-6">
 				<input matInput type="tel" OnlyNumber formControlName="pincode" placeholder="{{'pincode' | translate: translateKey }}" minlength="6"
 				 maxlength="6" [required]="requiredFeilds">
-				<control-messages [control]="addressFormGroup.controls.pincode"></control-messages>
+				<control-messages [control]="addressFormGroup.get('pincode')"></control-messages>
 			</mat-form-field>
 	
 		</div>
@@ -107,7 +107,7 @@
 			
 			<mat-form-field class="col-md-4">
 				<input [readonly]="true" matInput type="text" formControlName="cityGuj" placeholder="{{'city' | translate: translateKey:'gu' }} / {{'district' | translate: translateKey:'gu' }} {{requiredFeilds?'*':''}}" maxlength="180">
-				<control-messages [control]="addressFormGroup.controls.cityGuj"></control-messages>
+				<control-messages [control]="addressFormGroup.get('cityGuj')"></control-messages>
 			</mat-form-field>
 			
 		</div>

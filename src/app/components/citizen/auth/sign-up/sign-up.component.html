@@ -8,44 +8,43 @@
 				<mat-icon matPrefix>face</mat-icon>
 				<input matInput type="text" placeholder="Firstname" appValidationFields validationFieldsType="onlyNameWithOutSpace" formControlName="firstName"
 				 required #firstname="matInput" maxlength="50">
-				<control-messages [control]="regForm.controls.firstName"></control-messages>
+				<control-messages [control]="regForm.get('firstName')"></control-messages>
 			</mat-form-field>
 
 			<mat-form-field class="iconMat col-md-6">
 				<mat-icon matPrefix>face</mat-icon>
 				<input matInput type="text" placeholder="Lastname" appValidationFields validationFieldsType="onlyNameWithOutSpace" formControlName="lastName"
 				 required maxlength="50">
-				<control-messages [control]="regForm.controls.lastName"></control-messages>
+				<control-messages [control]="regForm.get('lastName')"></control-messages>
 			</mat-form-field>
 
 			<mat-form-field class="iconMat col-md-6">
 				<mat-icon matPrefix>mail_outline</mat-icon>
 				<input matInput type="email" placeholder="Email" formControlName="email" required maxlength="50">
-				<control-messages [control]="regForm.controls.email"></control-messages>
+				<control-messages [control]="regForm.get('email')"></control-messages>
 			</mat-form-field>
 
 			<mat-form-field class="iconMat col-md-6">
 				<mat-icon matPrefix>phone_android</mat-icon>
 				<input matInput type="tel" OnlyNumber placeholder="Cell Number" formControlName="cellNo" minlength="10" maxlength="10" required>
-				<control-messages [control]="regForm.controls.cellNo"></control-messages>
+				<control-messages [control]="regForm.get('cellNo')"></control-messages>
 			</mat-form-field>
 
 			<mat-form-field class="iconMat col-md-6">
 				<mat-icon matPrefix>lock_outline</mat-icon>
 				<input matInput type="password" placeholder="Password" formControlName="password" required maxlength="50">
-				<control-messages [control]="regForm.controls.password"></control-messages>
+				<control-messages [control]="regForm.get('password')"></control-messages>
 			</mat-form-field>
 
 			<mat-form-field class="iconMat col-md-6">
 				<mat-icon matPrefix>lock_outline</mat-icon>
 				<input matInput type="password" placeholder="Confirm Password" formControlName="confirmPassword" required maxlength="50">
-				<control-messages [control]="regForm.controls.confirmPassword"></control-messages>
+				<control-messages [control]="regForm.get('confirmPassword')"></control-messages>
 			</mat-form-field>
 
 			<div class="col-md-6 offset-md-6">
-				<mat-error *ngIf="regForm.errors?.mismatchedPasswords">Password not match</mat-error>
+				<mat-error *ngIf="regForm.errors && regForm.errors['mismatchedPasswords']">Password not match</mat-error>
 			</div>
-
 		</div>
 
 		<div class="text-center pt-1">

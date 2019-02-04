@@ -8,14 +8,12 @@
 		<!-- Upload new file/Image-->
 		<label class="custom-file-upload" [hidden]="canUpload || !form.get('canEdit').value">
 			<input #fileInput  type="file" (change)="selectFile($event)" />
-			
 
 			<span class="attachment">
 				<mat-icon>add</mat-icon>
 			</span>
 			<span class="badge badge-primary ml-1">Attach File</span>
 		</label>
-
 
 		<!-- Uploaded file/image name-->
 		<label class="custom-file-upload" [hidden]="!canUpload">
