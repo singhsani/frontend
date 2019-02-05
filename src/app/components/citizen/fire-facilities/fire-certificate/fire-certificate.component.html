@@ -2,7 +2,7 @@
 
 <mat-card class="formClass cardBorder">
 	<form [formGroup]="fireCertificateForm">
-		<mat-tab-group [(selectedIndex)]="tabIndex" dynamicHeight="true" mat-stretch-tabs class="stepperNav">
+		<mat-tab-group [(selectedIndex)]="fireFacilityConfig.currentTabIndex" dynamicHeight="true" mat-stretch-tabs class="stepperNav">
 
 			<!-- step 1 Starts -->
 			<mat-tab>
@@ -21,29 +21,31 @@
 						<input matInput appValidationFields [validationFieldsType]="'onlyNameWithSpace'" required maxlength="100"
 						 placeholder="{{'applicant_name' | translate:translateKey}}" formControlName="applicantName" appGujInputSource
 						 targetElement="applicantNameGuj" [form]="fireCertificateForm">
-						<control-messages [control]="fireCertificateForm.controls.applicantName"></control-messages>
+						<control-messages [control]="fireCertificateForm.get('applicantName')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" maxlength="300" required formControlName="applicantNameGuj" appGujInputTarget [form]="fireCertificateForm"
 						 placeholder="{{ 'applicant_name' | translate:translateKey:'gu' }}">
-						<control-messages [control]="fireCertificateForm.controls.applicantNameGuj"></control-messages>
+						<control-messages [control]="fireCertificateForm.get('applicantNameGuj')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<input matInput [max]="disablefutureDate" [matDatepicker]="DateOfapplicationDate" formControlName="applicationDate"
-						 (dateChange)="dateFormat($event.value,'applicationDate')" placeholder="{{ 'application_Date' | translate:translateKey }} (DD/MM/YYYY)">
+						 (dateChange)="dateFormat($event.value,'applicationDate')" placeholder="{{ 'application_Date' | translate:translateKey }}">
 						<mat-datepicker-toggle matSuffix [for]="DateOfapplicationDate"></mat-datepicker-toggle>
 						<mat-datepicker touchUi="true" #DateOfapplicationDate></mat-datepicker>
-						<control-messages [control]="fireCertificateForm.controls.applicationDate"></control-messages>
+						<div align="end" class="default-show-hint mat-hint mat-right">{{fireFacilityConfig.DATE_HINT_MSG}}</div>
+						<control-messages [control]="fireCertificateForm.get('applicationDate')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<input matInput [max]="disablefutureDate" [matDatepicker]="DateOfincidentDate" formControlName="incidentDate"
-						 (dateChange)="dateFormat($event.value,'incidentDate')" placeholder="{{ 'incident_Date' | translate:translateKey }} (DD/MM/YYYY)">
+						 (dateChange)="dateFormat($event.value,'incidentDate')" placeholder="{{ 'incident_Date' | translate:translateKey }}">
 						<mat-datepicker-toggle matSuffix [for]="DateOfincidentDate"></mat-datepicker-toggle>
 						<mat-datepicker touchUi="true" #DateOfincidentDate></mat-datepicker>
-						<control-messages [control]="fireCertificateForm.controls.incidentDate"></control-messages>
+						<div align="end" class="default-show-hint mat-hint mat-right">{{fireFacilityConfig.DATE_HINT_MSG}}</div>
+						<control-messages [control]="fireCertificateForm.get('incidentDate')"></control-messages>
 					</mat-form-field>
 
 					<div class="col-md-4 pl-0 ml-0">
@@ -51,7 +53,7 @@
 							<mat-label>{{'incident_time' | translate:translateKey}}</mat-label>
 							<input (blur)="changeTimeFormat($event.target.value, 'incidentTime')" placeholder="HH:MM" matInput type="time"
 							 atp-time-picker theme="dark" formControlName="incidentTime" required />
-							<control-messages [control]="fireCertificateForm.controls.incidentTime"></control-messages>
+							<control-messages [control]="fireCertificateForm.get('incidentTime')"></control-messages>
 						</mat-form-field>
 						<button class="ml-0 pl-0" [disabled]="!fireCertificateForm?.controls?.canEdit?.value" mat-icon-button type="button"
 						 (click)="openTimePicker('incidentTime')">
@@ -61,47 +63,46 @@
 					<mat-form-field class="col-md-6">
 						<textarea matInput rows="2" cols="50" required maxlength="200" placeholder="{{'fire_place_address' | translate:translateKey}}"
 						 formControlName="firePlaceAddress" appGujInputSource targetElement="firePlaceAddressGuj" [form]="fireCertificateForm"></textarea>
-						<control-messages [control]="fireCertificateForm.controls.firePlaceAddress"></control-messages>
+						<control-messages [control]="fireCertificateForm.get('firePlaceAddress')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-6">
 						<textarea matInput rows="2" cols="50" required maxlength="200" placeholder="{{'connection_holder_address' | translate:translateKey}}"
 						 formControlName="connectionHolderAddress" appGujInputSource targetElement="connectionHolderAddressGuj" [form]="fireCertificateForm"></textarea>
-						<control-messages [control]="fireCertificateForm.controls.connectionHolderAddress"></control-messages>
+						<control-messages [control]="fireCertificateForm.get('connectionHolderAddress')"></control-messages>
 					</mat-form-field>
 					<!-- gujarati -->
 					<mat-form-field class="col-md-6">
 						<textarea matInput type="text" rows="2" cols="50" maxlength="600" required formControlName="firePlaceAddressGuj"
 						 appGujInputTarget [form]="fireCertificateForm" placeholder="{{ 'fire_place_address' | translate:translateKey:'gu' }}"></textarea>
-						<control-messages [control]="fireCertificateForm.controls.firePlaceAddressGuj"></control-messages>
+						<control-messages [control]="fireCertificateForm.get('firePlaceAddressGuj')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-6">
 						<textarea matInput type="text" rows="2" cols="50" maxlength="600" required formControlName="connectionHolderAddressGuj"
 						 appGujInputTarget [form]="fireCertificateForm" placeholder="{{ 'connection_holder_address' | translate:translateKey:'gu' }}"></textarea>
-						<control-messages [control]="fireCertificateForm.controls.connectionHolderAddressGuj"></control-messages>
+						<control-messages [control]="fireCertificateForm.get('connectionHolderAddressGuj')"></control-messages>
 					</mat-form-field>
 					<!--/ gujarati -->
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" appAlphaNumeric maxlength="15" required formControlName="propertyNo" placeholder="{{ 'property_no' | translate:translateKey }}">
-						<control-messages [control]="fireCertificateForm.controls.propertyNo"></control-messages>
+						<control-messages [control]="fireCertificateForm.get('propertyNo')"></control-messages>
 					</mat-form-field>
 
 					<div class="col-md-4 ngSelect" formGroupName="firePlaceType">
 						<ng-select placeholder="{{'fire_certificate_form' | translate:translateKey}} *" formControlName="code">
 							<ng-option *ngFor="let type of FS_FIRE_PLACE_TYPE" [value]="type.code">{{type.name}}</ng-option>
 						</ng-select>
-						<control-messages [control]="fireCertificateForm.get('firePlaceType').controls.code"></control-messages>
+						<control-messages [control]="fireCertificateForm.get('firePlaceType').get('code')"></control-messages>
 					</div>
 
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" maxlength="50" required formControlName="fireLossAmount" placeholder="{{ 'fire_loss_amount' | translate:translateKey }}">
-						<control-messages [control]="fireCertificateForm.controls.fireLossAmount"></control-messages>
+						<control-messages [control]="fireCertificateForm.get('fireLossAmount')"></control-messages>
 					</mat-form-field>
 				</div>
 
-				<app-action-bar [form]="fireCertificateForm" (tabIndex)="onTabChange($event)"
-				 [stepInfo]="{step: 'step0', next: 1, back: 0}"></app-action-bar>
+				<app-action-bar [form]="fireCertificateForm" (tabIndex)="fireFacilityConfig.onFormTabChange($event)" [stepInfo]="{step: 'step0', next: 1, back: 0}"></app-action-bar>
 			</mat-tab>
 			<!-- step 1 Ends -->
 
@@ -112,14 +113,14 @@
 
 				<div class="row">
 					<ng-container *ngFor="let doc of fireCertificateForm.get('serviceDetail').get('serviceUploadDocuments').value">
-						<div class="col-md-4" *ngIf="doc.requiredOnCitizenPortal && doc.isActive && showButtons">
+						<div class="col-md-4" *ngIf="doc.requiredOnCitizenPortal && doc.isActive && fireFacilityConfig.isAttachmentButtonsVisible">
 							<label>{{TranslateService.getCurrentLanguage()=='en'? doc.documentLabelEn : doc.documentLabelGuj }} <span *ngIf="doc.mandatory">*</span></label>
 							<file-upload [form]="fireCertificateForm" [uploadModel]="doc"></file-upload>
 						</div>
 					</ng-container>
 				</div>
 
-				<app-action-bar [uploadFiles]="uploadFilesArray" [form]="fireCertificateForm" (tabIndex)="onTabChange($event)"
+				<app-action-bar [uploadFiles]="uploadFilesArray" [form]="fireCertificateForm" (tabIndex)="fireFacilityConfig.onFormTabChange($event)"
 				 (handleErrors)="handleErrorsOnSubmit($event)" [isstepper]="false" [stepInfo]="{step: 'final', next: 1, back: 0}"></app-action-bar>
 			</mat-tab>
 

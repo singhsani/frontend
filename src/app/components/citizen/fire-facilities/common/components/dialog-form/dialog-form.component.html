@@ -4,23 +4,24 @@
 <mat-dialog-content [formGroup]="form">
   <div class="row">
     <mat-form-field class="col-md-12">
-      <input matInput placeholder="{{'ot_facilities'| translate: translateKey}}" maxlength="150" formControlName="otFacilities" required>
-      <control-messages [control]="form.controls.otFacilities"></control-messages>
+      <input matInput placeholder="{{'ot_facilities'| translate: translateKey}}" maxlength="150" formControlName="otFacilities"
+        required>
+      <control-messages [control]="form.get('otFacilities')"></control-messages>
     </mat-form-field>
     <mat-form-field class="col-md-4">
-      <input matInput placeholder="{{'area_in_square_meter_length'| translate: translateKey}}" maxlength="5" OnlyNumber formControlName="areaInSquareMeterLength"
-        required>
-      <control-messages [control]="form.controls.areaInSquareMeterLength"></control-messages>
+      <input matInput placeholder="{{'area_in_square_meter_length'| translate: translateKey}}" maxlength="5" OnlyNumber
+        formControlName="areaInSquareMeterLength" required>
+      <control-messages [control]="form.get('areaInSquareMeterLength')"></control-messages>
     </mat-form-field>
     <mat-form-field class="col-md-4">
-      <input matInput placeholder="{{'area_in_square_meter_breadth'| translate: translateKey}}" maxlength="5" OnlyNumber formControlName="areaInSquareMeterBreadth"
-        required>
-      <control-messages [control]="form.controls.areaInSquareMeterBreadth"></control-messages>
+      <input matInput placeholder="{{'area_in_square_meter_breadth'| translate: translateKey}}" maxlength="5"
+        OnlyNumber formControlName="areaInSquareMeterBreadth" required>
+      <control-messages [control]="form.get('areaInSquareMeterBreadth')"></control-messages>
     </mat-form-field>
     <mat-form-field class="col-md-4">
-      <input matInput placeholder="{{'area_in_square_meter'| translate: translateKey}}" OnlyNumber maxlength="5" formControlName="areaInSquareMeter"
-        required>
-      <control-messages [control]="form.controls.areaInSquareMeter"></control-messages>
+      <input matInput placeholder="{{'area_in_square_meter'| translate: translateKey}}" OnlyNumber maxlength="5"
+        formControlName="areaInSquareMeter" required>
+      <control-messages [control]="form.get('areaInSquareMeter')"></control-messages>
     </mat-form-field>
   </div>
 </mat-dialog-content>

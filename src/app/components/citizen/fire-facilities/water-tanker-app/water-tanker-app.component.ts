@@ -1,3 +1,4 @@
+import { FireFacilityConfig } from './../config/FireFacilityConfig';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -21,9 +22,8 @@ export class WaterTankerAppComponent implements OnInit {
 
 	formId: number;
 	apiCode: string;
-	tabIndex: number = 0;
 
-	private showButtons: boolean = false;
+	fireFacilityConfig: FireFacilityConfig = new FireFacilityConfig();
 
 	//Lookups Array
 	FS_REQUIRE_IN: Array<any> = [];
@@ -38,7 +38,7 @@ export class WaterTankerAppComponent implements OnInit {
 	disablepastDate = new Date(moment().format('YYYY-MM-DD'));
 
 	// required attachment array
-	private uploadFilesArray: Array<any> = [];
+	uploadFilesArray: Array<any> = [];
 
 	/**
 	 * @param fb - Declare FormBuilder property.
@@ -52,7 +52,7 @@ export class WaterTankerAppComponent implements OnInit {
 		private router: Router,
 		private route: ActivatedRoute,
 		private formService: FormsActionsService,
-		private TranslateService: TranslateService,
+		public TranslateService: TranslateService,
 		public fireFacilitiesService: FireFacilitiesService
 
 	) { }
@@ -86,38 +86,15 @@ export class WaterTankerAppComponent implements OnInit {
 			try {
 				this.waterTankerAppForm.patchValue(res);
 
-				this.showButtons = true;
+				this.fireFacilityConfig.isAttachmentButtonsVisible = true;
 				res.serviceDetail.serviceUploadDocuments.forEach(app => {
-					(<FormArray>this.waterTankerAppForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.createDocumentsGrp(app));
+					(<FormArray>this.waterTankerAppForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.fireFacilityConfig.createDocumentsGrp(app));
 				});
 				this.requiredDocumentList();
 				this.resetsuggestedfields();
 			} catch (error) {
 				console.log(error.message)
 			}
-		});
-	}
-
-	/**
-     * This Method for create attachment array in service detail
-     * @param data : value of array
-     */
-	createDocumentsGrp(data?: any): FormGroup {
-		return this.fb.group({
-			// dependentFieldName: [data.dependentFieldName ? data.dependentFieldName : null],
-			documentIdentifier: [data.documentIdentifier ? data.documentIdentifier : null],
-			documentKey: [data.documentKey ? data.documentKey : null],
-			documentLabelEn: [data.documentLabelEn ? data.documentLabelEn : null],
-			documentLabelGuj: [data.documentLabelGuj ? data.documentLabelGuj : null],
-			fieldIdentifier: [data.fieldIdentifier ? data.fieldIdentifier : null],
-			formPart: [data.formPart ? data.formPart : null],
-			id: [data.id ? data.id : null],
-			isActive: [data.isActive],
-			mandatory: [data.mandatory ? data.mandatory : false],
-			maxFileSizeInMB: [data.maxFileSizeInMB ? data.maxFileSizeInMB : 5],
-			requiredOnAdminPortal: [data.requiredOnAdminPortal],
-			requiredOnCitizenPortal: [data.requiredOnCitizenPortal],
-			// version: [data.version ? data.version : null]
 		});
 	}
 
@@ -225,7 +202,7 @@ export class WaterTankerAppComponent implements OnInit {
 	 * This method for reset purpose.
 	 */
 	resetsuggestedfields() {
-	
+
 		if (this.waterTankerAppForm.get('purpose').get('code').value != 'FS_SUGGESTED') {
 			this.waterTankerAppForm.get('attachments').reset();
 			this.waterTankerAppForm.controls.whoSuggested.reset();
@@ -264,26 +241,14 @@ export class WaterTankerAppComponent implements OnInit {
 			let count = flag;
 
 			if (count <= step0) {
-				this.tabIndex = 0;
+				this.fireFacilityConfig.currentTabIndex = 0;
 				return false;
 			}
-			// else if (count == 67) {
-			// 	this.checkReligion();
-			// 	return false;
-			// }
 			else {
 				console.log("else condition");
 			}
 
 		}
-	}
-
-	/**
-	 * This method use to get output event of tab change
-	 * @param evt - Tab index
-	 */
-	onTabChange(evt) {
-		this.tabIndex = evt;
 	}
 
 }
