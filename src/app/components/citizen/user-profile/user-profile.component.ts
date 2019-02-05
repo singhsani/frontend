@@ -136,9 +136,11 @@ export class UserProfileComponent implements OnInit {
 	getCountryLists() {
 		this.countryService.countriesData.subscribe(data => {
 			this.countryListArray = _.cloneDeep(data);
-			if (this.userProfileForm.get('country').value) {
-				this.getStateLists(this.userProfileForm.get('country').value);
-			}
+			setTimeout(() => {
+				if (this.userProfileForm.get('country').value) {
+					this.getStateLists(this.userProfileForm.get('country').value);
+				}
+			}, 500);
 		});
 	}
 

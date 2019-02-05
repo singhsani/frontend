@@ -745,20 +745,22 @@ const ROUTESLIST = {
     },
 }
 
-import * as _ from 'lodash';
 
 export class ManageRoutes {
 
     static getFullRoute(routeType: string) {
-        return ROUTESLIST[routeType]['full'];
+        if (routeType)
+            return ROUTESLIST[routeType]['full'];
     }
 
     static getMainRoute(routeType: string) {
-        return ROUTEMAIN[routeType]['main'];
+        if (routeType)
+            return ROUTEMAIN[routeType]['main'];
     }
 
     static getPrefixRoute(routeType: string) {
-        return ROUTEPREFIX[routeType];
+        if(routeType)
+            return ROUTEPREFIX[routeType];
     }
 
     static getApiTypeFromApiCode(apiCode: string) {
