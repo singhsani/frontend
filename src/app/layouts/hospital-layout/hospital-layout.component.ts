@@ -45,7 +45,7 @@ export class HospitalLayoutComponent implements OnInit {
 		private appService: HosAppService,
 		private session: SessionStorageService,
 		private formService: HosFormActionsService,
-		private commonService: CommonService
+		public commonService: CommonService
 	) {
 
 		this.mobileQuery = media.matchMedia('(max-width: 600px)');

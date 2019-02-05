@@ -746,24 +746,24 @@ const ROUTESLIST = {
 }
 
 
-export class ManageRoutes {
+export const ManageRoutes = {
 
-    static getFullRoute(routeType: string) {
+    getFullRoute(routeType: string) {
         if (routeType)
             return ROUTESLIST[routeType]['full'];
-    }
+    },
 
-    static getMainRoute(routeType: string) {
+    getMainRoute(routeType: string) {
         if (routeType)
             return ROUTEMAIN[routeType]['main'];
-    }
+    },
 
-    static getPrefixRoute(routeType: string) {
+    getPrefixRoute(routeType: string) {
         if(routeType)
             return ROUTEPREFIX[routeType];
-    }
+    },
 
-    static getApiTypeFromApiCode(apiCode: string) {
+    getApiTypeFromApiCode(apiCode: string) {
         if (apiCode)
             return ROUTEMAIN[apiCode]['type'];
     }
