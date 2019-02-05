@@ -41,7 +41,9 @@ export enum BookingConstants {
     STADIUM_RESOURCE_TYPE = "stadium",
     SHOOTING_PERMISSION_PLACE = "shootingPermission",
     BOOKINGS_FILE_UPLOAD_URL = 'api/attachment/booking/upload',
-    MY_BOOKINGS_URL = 'citizen/bookings/my-bookings'
+    MY_BOOKINGS_URL = 'citizen/bookings/my-bookings',
+    AGREE_MESSAGE = 'Should be agree with given bank details',
+    TERMS_AND_CONDITION_MESSAGE = 'Should Accept the terms and condition of form'
 }
 
 /**

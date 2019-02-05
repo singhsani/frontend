@@ -4,12 +4,10 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { BookingService } from '../../../../../core/services/citizen/data-services/booking.service';
 import { BookingConstants, BookingUtils } from '../../booking-config';
-import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { MatPaginator, MatSort } from '@angular/material';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 import { CommonService } from '../../../../../shared/services/common.service';
 import { ToastrService } from 'ngx-toastr';
-
-
 
 @Component({
     selector: 'app-book-stadium',
@@ -21,7 +19,6 @@ export class BookStadiumComponent implements OnInit {
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild(MatSort) sort: MatSort;
     @ViewChild("confirmationModel") confirmationModel: TemplateRef<any>;
-    @ViewChild("receiptModel") receiptModel: TemplateRef<any>;
     @ViewChild('address') addressComp: any;
 
 
@@ -74,7 +71,6 @@ export class BookStadiumComponent implements OnInit {
        * ngx-bootstrap models.
        */
     confirmRef: BsModalRef;
-    receiptRef: BsModalRef;
 
 
     /**
@@ -304,11 +300,8 @@ export class BookStadiumComponent implements OnInit {
                 if (resp.data.status == this.bookingConstants.DRAFT) {
                     this.bookingService.searchPayment(resp.data.refNumber).subscribe(payResp => {
                         this.paymentObject = payResp.data;
-                        this.CD.detectChanges();
                         this.showPaymentReciept = true;
-                        this.CD.detectChanges();
                         this.confirmRef.hide();
-                        this.receiptRef = this.modalService.show(this.receiptModel, Object.assign({ ignoreBackdropClick: true }, { class: 'gray modal-lg customWidth' }));
                     })
                 }
             }, (err) => {

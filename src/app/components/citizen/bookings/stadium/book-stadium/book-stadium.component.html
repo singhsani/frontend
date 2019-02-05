@@ -26,6 +26,7 @@
     <div class="fotButtonBar">
         <div class="col-sm-12 col-md-12 text-right">
             <button mat-raised-button (click)="guideLineFlag = false;showStadiumSearchForm= true;" color="primary">
+                <mat-icon>thumb_up_alt</mat-icon>
                 {{'submit'| translate: translateKey}}
             </button>
         </div>
@@ -88,21 +89,18 @@
                 <div class="row fotButtonBar">
                     <div class="col-sm-12 col-md-12 text-right">
                         <button mat-raised-button color="primary" type="submit">
+                            <mat-icon>search</mat-icon>
                             {{'search'| translate: translateKey}}
                         </button>
                     </div>
                 </div>
-
             </form>
         </div>
     </mat-card>
 
     <div *ngIf="Dates.length>0" class="mt-4">
-
         <mat-card class="formClass cardBorder">
-
             <div class="pageTitle">{{'list_of_stadium'| translate: translateKey}}</div>
-
             <mat-accordion *ngFor="let month of bookingUtils.filterMonths(Dates); let i = index;">
                 <mat-expansion-panel [expanded]="i === 0">
                     <mat-expansion-panel-header>
@@ -131,7 +129,6 @@
                                     </mat-checkbox>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </mat-expansion-panel>
@@ -141,14 +138,15 @@
                 <div class="col-sm-12 col-md-12 text-right">
                     <button mat-raised-button data-toggle="modal" (click)="shortlistShifts(confirmationModel)" data-target="#confirmShortlistModel"
                         type="button" [disabled]="selectedShift.length == 0" color="primary">
+                        <mat-icon>check_circle_outline</mat-icon>
                         {{'shortlist'| translate: translateKey}}
                     </button>
                 </div>
             </div>
+
         </mat-card>
     </div>
 </div>
-
 
 <ng-template #confirmationModel>
     <div class="modal-header customthead">
@@ -177,10 +175,9 @@
                         <th scope="row">{{i+1}}</th>
                         <td>{{bookingUtils.returnProperDate(shifts.start)}}</td>
                         <td>{{bookingUtils.returnProperDate(shifts.end)}}</td>
-                        <td>{{shifts.slotStatus == bookingConstants.CHECKED ? bookingConstants.AVAILABLE : shifts.slotStatus
-                            }}</td>
+                        <td>{{shifts.slotStatus == bookingConstants.CHECKED ? bookingConstants.AVAILABLE : shifts.slotStatus}}
+                        </td>
                         <td>{{shifts.occupancy}}</td>
-
                         <td>
                             <button mat-icon-button title="{{'remove_slot'| translate: translateKey}}" [disabled]="selectedShift.length == 1" (click)="selectedShift = bookingUtils.removeSelectedShift(shifts,selectedShift,  i)">
                                 <mat-icon color="warn">delete</mat-icon>
@@ -191,30 +188,27 @@
             </table>
         </div>
     </div>
-    <div class="modal-footer">
 
-        <button type="button" class="btn mat-raised-button" data-dismiss="modal" (click)="confirmRef.hide()">
+    <div class="modal-footer">
+        <button type="button" mat-raised-button color="primary" data-dismiss="modal" (click)="confirmRef.hide()">
+            <mat-icon>cancel</mat-icon>
             {{'cancel'| translate: translateKey}}
         </button>
-
-        <button type="button" class="btn mat-raised-button mat-primary" data-dismiss="modal" (click)="confirmShortlist()">
+        <button type="button" mat-raised-button color="primary" data-dismiss="modal" (click)="confirmShortlist()">
+            <mat-icon>check_circle_outline</mat-icon>
             {{'confirm_and_continue'| translate: translateKey}}
         </button>
     </div>
+
 </ng-template>
 
-
-<ng-template #receiptModel>
-    <div class="modal-header customthead">
-        <h4 class="modal-title">
-            {{'stadium_booking_details'| translate: translateKey}}
-        </h4>
-        <button title="Close" data-dismiss="modal" class="mat-icon-button" aria-label="Close" (click)="receiptRef.hide()">
-            <mat-icon>close</mat-icon>
-        </button>
-    </div>
-    <div class="modal-body scrollModel">
-        <div class="table-responsive">
+<!-- Unpaid receipt view starts -->
+<div *ngIf="showPaymentReciept">
+    <mat-card class="formClass cardBorder">
+        <div class="pageTitle">
+            {{'theater_booking_details'| translate: translateKey}}
+        </div>
+        <div class="p-3 table-responsive">
             <table class="table">
                 <thead>
                     <tr>
@@ -234,14 +228,17 @@
                 </tbody>
             </table>
         </div>
-    </div>
-    <div class="modal-footer">
-        <button type="button" class="btn mat-raised-button mat-primary" data-dismiss="modal" (click)="showStadiumApplicationForm = true; receiptRef.hide()">
-            {{'proceed_for_appication'| translate: translateKey}}
-        </button>
-    </div>
-</ng-template>
-
+        <div class="fotButtonBar">
+            <div class="col-sm-12 col-md-12 text-right">
+                <button type="button" mat-raised-button color="primary" data-dismiss="modal" (click)="showStadiumApplicationForm = true; this.showPaymentReciept = false;">
+                    {{'proceed_for_appication'| translate: translateKey}}
+                    <mat-icon>navigate_next</mat-icon>
+                </button>
+            </div>
+        </div>
+    </mat-card>
+</div>
+<!-- Unpaid receipt view ends -->
 
 <div [hidden]="!showStadiumApplicationForm">
     <mat-card class="formClass cardBorder">
@@ -276,10 +273,6 @@
                                     required>
                                 <control-messages [control]="stadiumApplicationForm.get('confirmMobile')"></control-messages>
                             </mat-form-field>
-                            <!-- <mat-error *ngIf="!mobileNumberMatcher() && stadiumApplicationForm.controls.applicantMobile.touched && stadiumApplicationForm.controls.confirmMobile.touched">
-                {{bookingConstants.MOB_NO_MIS_MATCH_MESSAGE}}
-              </mat-error> -->
-
                             <mat-error *ngIf="!bookingUtils.matcher(stadiumApplicationForm, 'applicantMobile', 'confirmMobile') && stadiumApplicationForm.get('applicantMobile').touched && stadiumApplicationForm.get('confirmMobile').touched">
                                 {{bookingConstants.MOB_NO_MIS_MATCH_MESSAGE}}
                             </mat-error>
@@ -297,13 +290,9 @@
                                     required>
                                 <control-messages [control]="stadiumApplicationForm.get('confirmEmailId')"></control-messages>
                             </mat-form-field>
-                            <!-- <mat-error *ngIf="!emailMatcher() && stadiumApplicationForm.controls.emailId.touched && stadiumApplicationForm.controls.confirmEmailId.touched">
-                {{bookingConstants.EMAIL_MIS_MATCH_MESSAGE}}
-              </mat-error> -->
                             <mat-error *ngIf="!bookingUtils.matcher(stadiumApplicationForm, 'emailId', 'confirmEmailId') && stadiumApplicationForm.get('emailId').touched && stadiumApplicationForm.get('confirmEmailId').touched">
                                 {{bookingConstants.EMAIL_MIS_MATCH_MESSAGE}}
                             </mat-error>
-
                         </div>
 
 
@@ -318,8 +307,9 @@
 
                     <div class="row mt-4 fotButtonBar">
                         <div class="col-sm-12 col-md-12 text-right">
-                            <button mat-raised-button type="button" color="primary" (click)="tabIndex= tabIndex +1;">{{'next'
-                                | translate:translateKey}}
+                            <button mat-raised-button type="button" color="primary" (click)="tabIndex= tabIndex +1;">
+                                {{'next'| translate:translateKey}}
+                                <mat-icon>navigate_next</mat-icon>
                             </button>
                         </div>
                     </div>
@@ -367,13 +357,16 @@
 
                     <div class="row mt-4 fotButtonBar">
                         <div class="col-sm-12 col-md-12 justify-content-between d-flex">
-                            <button type="button" mat-raised-button (click)="tabIndex= tabIndex -1; ">{{'back' | translate:translateKey}}</button>
+                            <button type="button" color="primary" mat-raised-button (click)="tabIndex= tabIndex -1; ">
+                                <mat-icon>navigate_before</mat-icon>
+                                {{'back' | translate:translateKey}}
+                            </button>
                             <button mat-raised-button color="primary" type="submit">
+                                <mat-icon>check_circle_outline</mat-icon>
                                 {{'submit_application'| translate: translateKey}}
                             </button>
                         </div>
                     </div>
-
 
                 </mat-tab>
             </mat-tab-group>

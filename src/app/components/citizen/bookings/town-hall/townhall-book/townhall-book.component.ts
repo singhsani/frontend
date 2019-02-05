@@ -319,7 +319,7 @@ export class TownHallBookComponent implements OnInit {
 			this.bookingService.shortListBookings(shortListData).subscribe(resp => {
 				this.showSearchForm = false;
 				this.townHallApplicationForm.patchValue(resp.data);
-				if (resp.data.status == this.bookingConstants.PAYMENT_REQUIRED) {
+				if (resp.data.status == this.bookingConstants.DRAFT) {
 					this.bookingService.searchPayment(resp.data.refNumber).subscribe(payResp => {
 						this.paymentObject = payResp.data;
 						this.bookingDetailsDataSource.data = payResp.data.bookingDetails as BookingDetails[];

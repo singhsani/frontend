@@ -35,7 +35,7 @@ export class DashboardComponent implements OnInit {
 				{
 					"code": "TOWNHALLBOOK",
 					"fieldView": "ALL",
-					"name": "Town Hall",
+					"name": "Townhall",
 					"gujName": "ટાઉનહોલ",
 					"appointmentRequired": false,
 					"active": true
@@ -75,7 +75,7 @@ export class DashboardComponent implements OnInit {
 				{
 					"code": "BOOKPERMISSION",
 					"fieldView": "ALL",
-					"name": "ShootingPermission",
+					"name": "Shooting Permission",
 					"gujName": "પરવાનગી",
 					"appointmentRequired": false,
 					"active": true
