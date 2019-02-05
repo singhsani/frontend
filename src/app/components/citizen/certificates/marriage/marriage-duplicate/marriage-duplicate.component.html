@@ -11,9 +11,8 @@
 			<div class="row">
 
 				<mat-form-field class="col-4">
-					<input matInput type="text" formControlName="marriageRegNumber" placeholder="{{ 'marriage_reg_number' | translate:translateKey }}"
-					 >
-					<control-messages [control]="marriageSearchForm.controls.marriageRegNumber"></control-messages>
+					<input matInput type="text" formControlName="marriageRegNumber" placeholder="{{ 'marriage_reg_number' | translate:translateKey }}">
+					<control-messages [control]="marriageSearchForm.get('marriageRegNumber')"></control-messages>
 				</mat-form-field>
 
 				<mat-form-field class="col-4">
@@ -21,32 +20,33 @@
 					 placeholder="{{ 'date_of_marriage' | translate:translateKey }}" required>
 					<mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
 					<mat-datepicker #picker1></mat-datepicker>
-					<control-messages [control]="marriageSearchForm.controls.marriageDate"></control-messages>
+					<control-messages [control]="marriageSearchForm.get('marriageDate')"></control-messages>
 				</mat-form-field>
 
 				<mat-form-field class="col-4">
-					<input matInput [min]="marriageSearchForm.controls.marriageDate.value" [max]="disablefutureDate" [matDatepicker]="marriageRegDatepicker"
-					 formControlName="marriageRegDate" (dateChange)="dateFormate($event.value,'marriageRegDate')" placeholder="{{ 'marriage_reg_date' | translate:translateKey }}"
-					 >
+					<input matInput [min]="marriageSearchForm.get('marriageDate').value" [max]="disablefutureDate" [matDatepicker]="marriageRegDatepicker"
+					 formControlName="marriageRegDate" (dateChange)="dateFormate($event.value,'marriageRegDate')" placeholder="{{ 'marriage_reg_date' | translate:translateKey }}">
 					<mat-datepicker-toggle matSuffix [for]="marriageRegDatepicker"></mat-datepicker-toggle>
 					<mat-datepicker #marriageRegDatepicker></mat-datepicker>
-					<control-messages [control]="marriageSearchForm.controls.marriageRegDate"></control-messages>
+					<control-messages [control]="marriageSearchForm.get('marriageRegDate')"></control-messages>
 				</mat-form-field>
 
 				<mat-form-field class="col-4">
-					<input matInput OnlyNumber [OnlyYear]="true" minlength="4" maxlength="4" type="text" formControlName="marriageRegYear" placeholder="{{ 'marriage_reg_year' | translate:translateKey }}"
-					 required>
-					<control-messages [control]="marriageSearchForm.controls.marriageRegYear"></control-messages>
+					<input matInput OnlyNumber [OnlyYear]="true" minlength="4" maxlength="4" type="text" formControlName="marriageRegYear"
+					 placeholder="{{ 'marriage_reg_year' | translate:translateKey }}" required>
+					<control-messages [control]="marriageSearchForm.get('marriageRegYear')"></control-messages>
 				</mat-form-field>
 
 				<mat-form-field class="col-4">
-					<input matInput appValidationFields validationFieldsType="onlyNameWithSpace" type="text" formControlName="groomName" placeholder="{{ 'groom_name' | translate:translateKey }}" required>
-					<control-messages [control]="marriageSearchForm.controls.groomName"></control-messages>
+					<input matInput appValidationFields validationFieldsType="onlyNameWithSpace" type="text" formControlName="groomName"
+					 placeholder="{{ 'groom_name' | translate:translateKey }}" required>
+					<control-messages [control]="marriageSearchForm.get('groomName')"></control-messages>
 				</mat-form-field>
 
 				<mat-form-field class="col-4">
-					<input matInput appValidationFields validationFieldsType="onlyNameWithSpace" type="text" formControlName="brideName" placeholder="{{ 'bride_name' | translate:translateKey }}" required>
-					<control-messages [control]="marriageSearchForm.controls.brideName"></control-messages>
+					<input matInput appValidationFields validationFieldsType="onlyNameWithSpace" type="text" formControlName="brideName"
+					 placeholder="{{ 'bride_name' | translate:translateKey }}" required>
+					<control-messages [control]="marriageSearchForm.get('brideName')"></control-messages>
 				</mat-form-field>
 
 			</div>
@@ -66,11 +66,13 @@
 	<!-- Table start-->
 	<div class="example-container mat-elevation-z8" [hidden]="resultsLength == 0">
 
-		<table mat-table #table [dataSource]="dataSource" matSort matSortActive="created" matSortDisableClear matSortDirection="asc">
+		<table mat-table #table [dataSource]="dataSource" matSort matSortActive="created" matSortDisableClear
+		 matSortDirection="asc">
 
 			<ng-container matColumnDef="id">
 				<th mat-header-cell *matHeaderCellDef>#</th>
-				<td mat-cell *matCellDef="let row; let i = index;">{{ paginator.pageIndex==0?i+1:((paginator.pageIndex+1)*10)+(i+1) }}</td>
+				<td mat-cell *matCellDef="let row; let i = index;">{{ paginator.pageIndex==0?i+1:((paginator.pageIndex+1)*10)+(i+1)
+					}}</td>
 			</ng-container>
 
 			<ng-container matColumnDef="seq">
@@ -117,7 +119,8 @@
 
 	<mat-card class="cardBorder">
 		<form [formGroup]="marriageDuplicateForm" autocomplete="off">
-			<mat-tab-group mat-stretch-tabs [(selectedIndex)]="tabIndex" class="stepperNav" dynamicHeight='true' mat-stretch-tabs>
+			<mat-tab-group mat-stretch-tabs [(selectedIndex)]="tabIndex" class="stepperNav" dynamicHeight='true'
+			 mat-stretch-tabs>
 				<!-- First step -->
 				<mat-tab>
 					<ng-template mat-tab-label>
@@ -131,7 +134,7 @@
 								<mat-radio-button *ngFor="let yesNo of YES_NO" [value]="yesNo.code">
 									{{yesNo.name}}
 								</mat-radio-button>
-								<control-messages [control]="marriageDuplicateForm.controls.duplicateCopies.controls.code"></control-messages>
+								<control-messages [control]="marriageDuplicateForm.get('duplicateCopies').get('code')"></control-messages>
 							</mat-radio-group>
 						</div>
 
@@ -141,18 +144,19 @@
 									{{duplicatemode.name}}
 								</mat-option>
 							</mat-select>
-							<control-messages [control]="marriageDuplicateForm.controls.duplicateCopyMode.controls.code"></control-messages>
+							<control-messages [control]="marriageDuplicateForm.get('duplicateCopyMode').get('code')"></control-messages>
 						</mat-form-field>
 
 						<mat-form-field class="col-md-4">
 							<input matInput maxlength="2" type="number" [min]="0" OnlyNumber placeholder="{{'total_copies' | translate:translateKey}}"
 							 formControlName="totalCopies">
-							<control-messages [control]="marriageDuplicateForm.controls.totalCopies"></control-messages>
+							<control-messages [control]="marriageDuplicateForm.get('totalCopies')"></control-messages>
 						</mat-form-field>
 
 					</div>
 
-					<app-action-bar (tabIndex)="onTabChange($event)" (handleErrors)="handleErrorsOnSubmit($event)" [form]="marriageDuplicateForm" [stepInfo]="{step: 'step1', next: 1, back: 0}"></app-action-bar>
+					<app-action-bar (tabIndex)="onTabChange($event)" (handleErrors)="handleErrorsOnSubmit($event)" [form]="marriageDuplicateForm"
+					 [stepInfo]="{step: 'step1', next: 1, back: 0}"></app-action-bar>
 				</mat-tab>
 
 				<mat-tab>
@@ -167,7 +171,8 @@
 						</app-basic-details>
 					</div>
 
-					<app-action-bar (tabIndex)="onTabChange($event)" (handleErrors)="handleErrorsOnSubmit($event)" [form]="marriageDuplicateForm" [stepInfo]="{step: 'final', next: 1, back: 0}"></app-action-bar>
+					<app-action-bar (tabIndex)="onTabChange($event)" (handleErrors)="handleErrorsOnSubmit($event)" [form]="marriageDuplicateForm"
+					 [stepInfo]="{step: 'final', next: 1, back: 0}"></app-action-bar>
 
 				</mat-tab>
 

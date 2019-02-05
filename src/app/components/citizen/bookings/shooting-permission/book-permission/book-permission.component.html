@@ -51,7 +51,7 @@
                 {{ bookPermission.name }}
               </ng-option>
             </ng-select>
-            <control-messages [control]="bookPermissionSearchForm.controls.code"></control-messages>
+            <control-messages [control]="bookPermissionSearchForm.get('code')"></control-messages>
           </div>
 
           <div formGroupName="purpose" class="col-md-6 ngSelect">
@@ -60,7 +60,7 @@
                 {{ purpose.name }}
               </ng-option>
             </ng-select>
-            <control-messages [control]="bookPermissionSearchForm.controls.purpose.controls.code">
+            <control-messages [control]="bookPermissionSearchForm.get('purpose').get('code')">
             </control-messages>
           </div>
 
@@ -69,10 +69,11 @@
               {{'choose_start_date'| translate: translateKey}}
             </mat-label>
             <input matInput [min]="disablefutureDate" [matDatepicker]="bookPermissionBookingfromPicker" formControlName="startDate"
-              placeholder="DD/MM/YYYY" (dateChange)="bookPermissionSearchForm.controls.endDate.reset()">
+              placeholder="" (dateChange)="bookPermissionSearchForm.get('endDate').reset()">
             <mat-datepicker-toggle matSuffix [for]="bookPermissionBookingfromPicker"></mat-datepicker-toggle>
             <mat-datepicker #bookPermissionBookingfromPicker touchUi="true"></mat-datepicker>
-            <control-messages [control]="bookPermissionSearchForm.controls.startDate">
+            <div align="end" class="default-show-hint mat-hint mat-right">{{config.DATE_HINT_MSG}}</div>
+            <control-messages [control]="bookPermissionSearchForm.get('startDate')">
             </control-messages>
           </mat-form-field>
 
@@ -80,11 +81,12 @@
             <mat-label>
               {{'choose_end_date'| translate: translateKey}}
             </mat-label>
-            <input matInput [min]="bookPermissionSearchForm.controls.startDate.value" [matDatepicker]="bookPermissionBookingtoPicker"
-              formControlName="endDate" placeholder="DD/MM/YYYY" [max]="maxOneMonth">
+            <input matInput [min]="bookPermissionSearchForm.get('startDate').value" [matDatepicker]="bookPermissionBookingtoPicker"
+              formControlName="endDate" placeholder="" [max]="maxOneMonth">
             <mat-datepicker-toggle matSuffix [for]="bookPermissionBookingtoPicker"></mat-datepicker-toggle>
             <mat-datepicker #bookPermissionBookingtoPicker touchUi="true"></mat-datepicker>
-            <control-messages [control]="bookPermissionSearchForm.controls.endDate">
+            <div align="end" class="default-show-hint mat-hint mat-right">{{config.DATE_HINT_MSG}}</div>
+            <control-messages [control]="bookPermissionSearchForm.get('endDate')">
             </control-messages>
           </mat-form-field>
 
@@ -384,44 +386,44 @@
             <mat-form-field class="col-md-4">
               <input matInput maxlength="50" appValidationFields [validationFieldsType]="'onlyNameWithSpace'" type="text"
                 formControlName="orgName" placeholder="{{'organization_name' | translate: translateKey}}" required>
-              <control-messages [control]="bookPermissionApplicationForm.controls.orgName"></control-messages>
+              <control-messages [control]="bookPermissionApplicationForm.get('orgName')"></control-messages>
             </mat-form-field>
 
             <mat-form-field class="col-md-4">
               <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="orgContactNo" placeholder="{{'org_contact_no' | translate: translateKey}}"
                 required>
-              <control-messages [control]="bookPermissionApplicationForm.controls.orgContactNo"></control-messages>
+              <control-messages [control]="bookPermissionApplicationForm.get('orgContactNo')"></control-messages>
             </mat-form-field>
 
             <h2>
               {{'organization_address' | translate:translateKey}}
             </h2>
-            <app-address #address [requiredFeilds]="true" [addressFormGroup]="bookPermissionApplicationForm.controls.organizationAddress"></app-address>
+            <app-address #address [requiredFeilds]="true" [addressFormGroup]="bookPermissionApplicationForm.get('organizationAddress')"></app-address>
 
 
             <mat-form-field class="col-md-4">
               <input matInput maxlength="50" appValidationFields [validationFieldsType]="'onlyNameWithSpace'" type="text"
                 formControlName="applicantName" placeholder="{{'applicant_name' | translate: translateKey}}" required>
-              <control-messages [control]="bookPermissionApplicationForm.controls.applicantName"></control-messages>
+              <control-messages [control]="bookPermissionApplicationForm.get('applicantName')"></control-messages>
             </mat-form-field>
 
             <mat-form-field class="col-md-4">
               <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="applicantMobile" placeholder="{{'applicant_mobile' | translate: translateKey}}"
                 required>
-              <control-messages [control]="bookPermissionApplicationForm.controls.applicantMobile"></control-messages>
+              <control-messages [control]="bookPermissionApplicationForm.get('applicantMobile')"></control-messages>
             </mat-form-field>
 
             <div class="col-md-4">
               <mat-form-field>
                 <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="confirmMobile" placeholder="{{'confirm_mobile' | translate: translateKey}}"
                   required>
-                <control-messages [control]="bookPermissionApplicationForm.controls.confirmMobile"></control-messages>
+                <control-messages [control]="bookPermissionApplicationForm.get('confirmMobile')"></control-messages>
               </mat-form-field>
-              <!-- <mat-error *ngIf="!mobileNumberMatcher() && bookPermissionApplicationForm.controls.applicantMobile.touched && bookPermissionApplicationForm.controls.confirmMobile.touched">
+              <!-- <mat-error *ngIf="!mobileNumberMatcher() && bookPermissionApplicationForm.get('applicantMobile').touched && bookPermissionApplicationForm.get('confirmMobile').touched">
                 {{bookingConstants.MOB_NO_MIS_MATCH_MESSAGE}}
               </mat-error> -->
 
-              <mat-error *ngIf="!bookingUtils.matcher(bookPermissionApplicationForm, 'applicantMobile', 'confirmMobile') && bookPermissionApplicationForm.controls.applicantMobile.touched && bookPermissionApplicationForm.controls.confirmMobile.touched">
+              <mat-error *ngIf="!bookingUtils.matcher(bookPermissionApplicationForm, 'applicantMobile', 'confirmMobile') && bookPermissionApplicationForm.get('applicantMobile').touched && bookPermissionApplicationForm.get('confirmMobile').touched">
                 {{bookingConstants.MOB_NO_MIS_MATCH_MESSAGE}}
               </mat-error>
             </div>
@@ -429,19 +431,19 @@
             <mat-form-field class="col-md-4">
               <input matInput type="email" formControlName="emailId" placeholder="{{'applicant_email' | translate: translateKey}}"
                 required>
-              <control-messages [control]="bookPermissionApplicationForm.controls.emailId"></control-messages>
+              <control-messages [control]="bookPermissionApplicationForm.get('emailId')"></control-messages>
             </mat-form-field>
 
             <div class="col-md-4">
               <mat-form-field>
                 <input matInput type="email" formControlName="confirmEmailId" placeholder="{{'confirm_email' | translate: translateKey}}"
                   required>
-                <control-messages [control]="bookPermissionApplicationForm.controls.confirmEmailId"></control-messages>
+                <control-messages [control]="bookPermissionApplicationForm.get('confirmEmailId')"></control-messages>
               </mat-form-field>
-              <!-- <mat-error *ngIf="!emailMatcher() && bookPermissionApplicationForm.controls.emailId.touched && bookPermissionApplicationForm.controls.confirmEmailId.touched">
+              <!-- <mat-error *ngIf="!emailMatcher() && bookPermissionApplicationForm.get('emailId').touched && bookPermissionApplicationForm.get('confirmEmailId').touched">
                 {{bookingConstants.EMAIL_MIS_MATCH_MESSAGE}}
               </mat-error> -->
-              <mat-error *ngIf="!bookingUtils.matcher(bookPermissionApplicationForm, 'emailId', 'confirmEmailId') && bookPermissionApplicationForm.controls.emailId.touched && bookPermissionApplicationForm.controls.confirmEmailId.touched">
+              <mat-error *ngIf="!bookingUtils.matcher(bookPermissionApplicationForm, 'emailId', 'confirmEmailId') && bookPermissionApplicationForm.get('emailId').touched && bookPermissionApplicationForm.get('confirmEmailId').touched">
                 {{bookingConstants.EMAIL_MIS_MATCH_MESSAGE}}
               </mat-error>
 
@@ -452,7 +454,7 @@
             <h2>
               {{'applicant_address' | translate:translateKey}}
             </h2>
-            <app-address #address [requiredFeilds]="true" [addressFormGroup]="bookPermissionApplicationForm.controls.applicantAddress"></app-address>
+            <app-address #address [requiredFeilds]="true" [addressFormGroup]="bookPermissionApplicationForm.get('applicantAddress')"></app-address>
           </div>
 
           <div class="row mt-4 fotButtonBar">
@@ -481,26 +483,26 @@
                   {{bank.name}}
                 </ng-option>
               </ng-select>
-              <control-messages [control]="bookPermissionApplicationForm.controls.bankName.controls.code"></control-messages>
+              <control-messages [control]="bookPermissionApplicationForm.get('bankName').get('code')"></control-messages>
             </div>
 
             <mat-form-field class="col-md-6">
               <input matInput type="text" maxlength="20" appValidationFields [validationFieldsType]="'onlyNameWithSpace'"
                 formControlName="accountHolderName" placeholder="{{'account_holder_name' | translate: translateKey}}"
                 required>
-              <control-messages [control]="bookPermissionApplicationForm.controls.accountHolderName"></control-messages>
+              <control-messages [control]="bookPermissionApplicationForm.get('accountHolderName')"></control-messages>
             </mat-form-field>
 
             <mat-form-field class="col-md-6">
               <input matInput OnlyNumber maxlength="20" minlength="20" formControlName="accountNo" placeholder="{{'accont_no' | translate: translateKey}}"
                 required>
-              <control-messages [control]="bookPermissionApplicationForm.controls.accountNo"></control-messages>
+              <control-messages [control]="bookPermissionApplicationForm.get('accountNo')"></control-messages>
             </mat-form-field>
 
             <mat-form-field class="col-md-6">
               <input matInput type="text" maxlength="11" formControlName="ifscCode" placeholder="{{'ifsc_code' | translate: translateKey}}"
                 required>
-              <control-messages [control]="bookPermissionApplicationForm.controls.ifscCode"></control-messages>
+              <control-messages [control]="bookPermissionApplicationForm.get('ifscCode')"></control-messages>
             </mat-form-field>
           </div>
 
@@ -512,7 +514,7 @@
             </label>
             <booking-file-upload (uploaded)="isFileUploaded = $event" [form]="bookPermissionApplicationForm"
               [uploadModel]="{fieldIdentifier:'1', labelName:'previous_permission_orders_if_applicable', formPart:'1.1', refNumber:
-                bookPermissionApplicationForm.controls.refNumber.value, variableName: 'permission_orders'}">
+                bookPermissionApplicationForm.get('refNumber').value, variableName: 'permission_orders'}">
             </booking-file-upload>
           </div>
 
@@ -521,7 +523,7 @@
             </label>
             <booking-file-upload (uploaded)="isFileUploaded = $event" [form]="bookPermissionApplicationForm"
               [uploadModel]="{fieldIdentifier:'2', labelName:'vehicle_details', formPart:'1.2', refNumber:
-                bookPermissionApplicationForm.controls.refNumber.value, variableName: 'vehicle_details'}">
+                bookPermissionApplicationForm.get('refNumber').value, variableName: 'vehicle_details'}">
             </booking-file-upload>
           </div>
 

@@ -21,7 +21,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
     @ViewChild('address') addrComponent: any;
 
     //Mandatory attachments Array
-    private uploadFileArray: Array<any> = [];
+    public uploadFileArray: Array<any> = [];
 
 
     public dummyJSON = {
@@ -400,10 +400,10 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
 
     //File and image upload
     uploadModel: any = {};
-    private showButtons: boolean = false;
+    public showButtons: boolean = false;
 
     //for same address
-    addObject = {
+    addObject: any = {
         1: { checkedPar1: Boolean },
         2: { checkedPar2: Boolean },
         3: { checkedPar3: Boolean }
@@ -420,9 +420,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
     /**
      * Using Common Configuration
      */
-
-     config: CertificateConfig = new CertificateConfig();
-
+    config: CertificateConfig = new CertificateConfig();
 
     /**
      * @param fb - Declare FormBuilder property.
@@ -440,7 +438,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
         private router: Router,
         private commonService: CommonService,
         private CD: ChangeDetectorRef,
-        private translateService: TranslateService
+        public translateService: TranslateService
     ) { }
 
     /**
@@ -668,7 +666,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
                 });
 
                 this.config.requiredDocumentList(this.marriageFormGroup, this.uploadFileArray)
-                
+
                 // for address
                 if (res.isGroomParResAddressSame.code == "YES") {
                     this.addObject['checkedPar1'] = true;

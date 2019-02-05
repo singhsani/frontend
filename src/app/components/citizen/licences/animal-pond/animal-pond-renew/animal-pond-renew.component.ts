@@ -444,7 +444,7 @@ export class AnimalPondRenewComponent implements OnInit {
 	/**
 	 * Method is used when user click for add person
 	 */
-	addMorePerson() {
+	addMorePerson(aplType?: any) {
 		let relationshipIdValue = this.animalPondRenewForm.get('relationshipId').value.code;
 
 		if (!relationshipIdValue) {

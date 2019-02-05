@@ -28,7 +28,7 @@ export class MuttonFishTransferComponent implements OnInit {
 
 	//File and image upload
 	uploadModel: any = {};
-	private showButtons: boolean = false;
+	public showButtons: boolean = false;
 
 	//Lookups Array
 	MF_LICENSE_TYPE: Array<any> = [];
@@ -155,7 +155,7 @@ export class MuttonFishTransferComponent implements OnInit {
 				uniqueId: res.uniqueId,
 				version: res.version,
 				serviceFormId: res.serviceFormId,
-				refNumber:this.serachLicenceObj.searchLicenceNumber,
+				refNumber: this.serachLicenceObj.searchLicenceNumber,
 				createdDate: res.createdDate,
 				updatedDate: res.createdDate,
 				serviceType: res.serviceType,
@@ -265,7 +265,7 @@ export class MuttonFishTransferComponent implements OnInit {
 		this.muttonFishTransferForm = this.fb.group({
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
 			serviceCode: 'MF-LIC',
-			refNumber:[null],
+			refNumber: [null],
 			/* Step 1 controls start */
 			licenseType: this.fb.group({
 				code: [null]
@@ -346,7 +346,7 @@ export class MuttonFishTransferComponent implements OnInit {
 	/**
 	 * Method is used when user click for add person
 	 */
-	addMorePerson() {
+	addMorePerson(type?: any) {
 		let relationshipIdValue = this.muttonFishTransferForm.get('relationshipId').value.code;
 
 		if (!relationshipIdValue) {
