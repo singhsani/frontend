@@ -1,3 +1,4 @@
+import { FireFacilityConfig } from './../config/FireFacilityConfig';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray, Validator } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -18,15 +19,13 @@ export class ProvisionalNocComponent implements OnInit {
 
 	provisionalNocForm: FormGroup;
 	translateKey: string = 'provisionalFireNocScreen';
-
 	formId: number;
 	apiCode: string;
-	tabIndex: number = 0;
 
 	// required attachment array
-	private uploadFilesArray: Array<any> = [];
-	private showButtons: boolean = false;
-	private codeOther: boolean = false;
+	uploadFilesArray: Array<any> = [];
+	codeOther: boolean = false;
+
 	//Lookups Array
 	FS_AREA_ZONE: Array<any> = [];
 	FS_APPLIED_FOR: Array<any> = [];
@@ -35,6 +34,8 @@ export class ProvisionalNocComponent implements OnInit {
 	FS_USAGE_TYPE: Array<any> = [];
 	FS_AFTERNOON: Array<any> = [];
 	FS_PURPOSE_OF_BUILDING_USE: Array<any> = [];
+
+	fireFacilityConfig: FireFacilityConfig = new FireFacilityConfig();
 
 	/**
      * @param fb - Declare FormBuilder property.
@@ -47,7 +48,7 @@ export class ProvisionalNocComponent implements OnInit {
 		private router: Router,
 		private route: ActivatedRoute,
 		private formService: FormsActionsService,
-		private TranslateService: TranslateService
+		public TranslateService: TranslateService
 	) { }
 
 	/**
@@ -129,17 +130,17 @@ export class ProvisionalNocComponent implements OnInit {
 
 			try {
 				this.provisionalNocForm.patchValue(res);
-				this.showButtons = true;
-				
+				this.fireFacilityConfig.isAttachmentButtonsVisible = true;
+
 				//convert applicant name and set in applicantNameGuj filds 
-				let applicantNameGujFields=this.provisionalNocForm.get('applicantNameGuj');
-				let applicantNameValue=this.provisionalNocForm.get('applicantName').value;
-				if(!applicantNameGujFields.value){
+				let applicantNameGujFields = this.provisionalNocForm.get('applicantNameGuj');
+				let applicantNameValue = this.provisionalNocForm.get('applicantName').value;
+				if (!applicantNameGujFields.value) {
 					applicantNameGujFields.setValue(this.TranslateService.getEngToGujTranslation(applicantNameValue))
 				}
-				
+
 				res.serviceDetail.serviceUploadDocuments.forEach(app => {
-					(<FormArray>this.provisionalNocForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.createDocumentsGrp(app));
+					(<FormArray>this.provisionalNocForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.fireFacilityConfig.createDocumentsGrp(app));
 				});
 				this.requiredDocumentList();
 
@@ -171,20 +172,20 @@ export class ProvisionalNocComponent implements OnInit {
 		this.provisionalNocForm = this.fb.group({
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
 			serviceCode: 'FS-PROVI',
-			/* Step 1 controls start */ 
+			/* Step 1 controls start */
 			provisionalNocNumber: [null],
 			applicationDate: [null],
 			oldReferenceNumber: [null],
 			applicantName: [null, [Validators.required, Validators.maxLength(100)]],
 			applicantNameGuj: [null, [Validators.required, Validators.maxLength(300)]],
-			contactNo: [null, [Validators.required, Validators.maxLength(12)]],
-			officeContactNo: [null, [Validators.required, Validators.maxLength(12)]],
-			onsitePersonMobileNo: [null, [Validators.required, Validators.maxLength(10), Validators.minLength(10)]],
+			contactNo: [null, [Validators.required, Validators.maxLength(this.fireFacilityConfig.contactNumberLength)]],
+			officeContactNo: [null, [Validators.required, Validators.maxLength(this.fireFacilityConfig.contactNumberLength)]],
+			onsitePersonMobileNo: [null, [Validators.required, Validators.maxLength(this.fireFacilityConfig.mobileNumber_maxLength), Validators.minLength(this.fireFacilityConfig.mobileNumber_minLength)]],
 			applicantPermanentAddress: [null, [Validators.required, Validators.maxLength(300)]],
 			applicantPermanentAddressGuj: [null, [Validators.required, Validators.maxLength(900)]],
 			officeEmailId: [null, [Validators.required, Validators.maxLength(50)]],
-			
-			/* Step 2 controls start */ 
+
+			/* Step 2 controls start */
 			appliedForId: this.fb.group({
 				code: [null, Validators.required]
 			}),
@@ -195,7 +196,7 @@ export class ProvisionalNocComponent implements OnInit {
 			purposeOfBuildingUse: [null],//array
 			otherPurposeRemark: [null, [Validators.maxLength(200)]],
 
-			/* Step 3 controls start */ 
+			/* Step 3 controls start */
 			architectRegistrationNumber: [null, [Validators.required, Validators.maxLength(15)]],
 			architectName: [null, [Validators.required, Validators.maxLength(100)]],
 			architectNameGuj: [null, [Validators.required, Validators.maxLength(300)]],
@@ -204,7 +205,7 @@ export class ProvisionalNocComponent implements OnInit {
 			architectPermanentAddress: [null, [Validators.required, Validators.maxLength(300)]],
 			architectPermanentAddressGuj: [null, [Validators.required, Validators.maxLength(900)]],
 
-			architectContactNo: [null, [Validators.required, Validators.maxLength(12)]],
+			architectContactNo: [null, [Validators.required, Validators.maxLength(this.fireFacilityConfig.contactNumberLength)]],
 			siteAddress: [null, [Validators.required, Validators.maxLength(300)]],
 			siteAddressGuj: [null, [Validators.required, Validators.maxLength(900)]],
 			fireVendorType: this.fb.group({
@@ -214,8 +215,8 @@ export class ProvisionalNocComponent implements OnInit {
 			fireVendorName: [null, [Validators.required, Validators.maxLength(150)]],
 			fireVendorNameGuj: [null, [Validators.required, Validators.maxLength(450)]],
 			fireVendorAddress: [null, [Validators.required, Validators.maxLength(900)]],
-			
-			/* Step 4 controls start */ 
+
+			/* Step 4 controls start */
 			fireVendorOfficeAddress: [null, [Validators.required, Validators.maxLength(300)]],
 			fpNo: [null, [Validators.required, Validators.maxLength(8)]],
 			rsNo: [null, [Validators.required, Validators.maxLength(8)]],
@@ -245,7 +246,7 @@ export class ProvisionalNocComponent implements OnInit {
 			gaslineInUnderground: [null, Validators.required],
 			undergroundCabling: [null, Validators.required],
 			ongcLineInUnderground: [null, Validators.required],
-			/* Step 5 controls start */ 
+			/* Step 5 controls start */
 			areaZone: this.fb.group({
 				code: [null, Validators.required]
 			}),
@@ -271,29 +272,6 @@ export class ProvisionalNocComponent implements OnInit {
 	}
 
 	/**
-	 * This Method for create attachment array in service detail
-	 * @param data : value of array
-	 */
-	createDocumentsGrp(data?: any): FormGroup {
-		return this.fb.group({
-			// dependentFieldName: [data.dependentFieldName ? data.dependentFieldName : null],
-			documentIdentifier: [data.documentIdentifier ? data.documentIdentifier : null],
-			documentKey: [data.documentKey ? data.documentKey : null],
-			documentLabelEn: [data.documentLabelEn ? data.documentLabelEn : null],
-			documentLabelGuj: [data.documentLabelGuj ? data.documentLabelGuj : null],
-			fieldIdentifier: [data.fieldIdentifier ? data.fieldIdentifier : null],
-			formPart: [data.formPart ? data.formPart : null],
-			id: [data.id ? data.id : null],
-			isActive: [data.isActive],
-			mandatory: [data.mandatory ? data.mandatory : false],
-			maxFileSizeInMB: [data.maxFileSizeInMB ? data.maxFileSizeInMB : 5],
-			requiredOnAdminPortal: [data.requiredOnAdminPortal],
-			requiredOnCitizenPortal: [data.requiredOnCitizenPortal],
-			// version: [data.version ? data.version : null]
-		});
-	}
-
-	/**
      * This method required for final form submition.
      * @param flag - flag of invalid control.
      */
@@ -310,19 +288,19 @@ export class ProvisionalNocComponent implements OnInit {
 			let count = flag;
 			// console.log(flag);
 			if (count <= step0) {
-				this.tabIndex = 0;
+				this.fireFacilityConfig.currentTabIndex = 0;
 				return false;
 			} else if (count <= step1) {
-				this.tabIndex = 1;
+				this.fireFacilityConfig.currentTabIndex = 1;
 				return false;
 			} else if (count <= step2) {
-				this.tabIndex = 2;
+				this.fireFacilityConfig.currentTabIndex = 2;
 				return false;
 			} else if (count <= step3) {
-				this.tabIndex = 3;
+				this.fireFacilityConfig.currentTabIndex = 3;
 				return false;
 			} else if (count <= step4) {
-				this.tabIndex = 4;
+				this.fireFacilityConfig.currentTabIndex = 4;
 				return false;
 			}
 			// else if (count == 67) {
@@ -336,14 +314,6 @@ export class ProvisionalNocComponent implements OnInit {
 		}
 	}
 
-
-	/**
- 	 * This method use to get output event of tab change
- 	 * @param evt - Tab index
- 	 */
-	onTabChange(evt) {
-		this.tabIndex = evt;
-	}
 
 	/**
 	 * This method is handle depended documents on save event

@@ -11,7 +11,7 @@
 <mat-card [hidden]="!serachLicenceObj.isDisplayRenewLicenceForm" class="formClass cardBorder">
 
 	<form [formGroup]="finalHospitalNocForm">
-		<mat-tab-group [(selectedIndex)]="tabIndex" dynamicHeight="true" mat-stretch-tabs class="stepperNav">
+		<mat-tab-group [(selectedIndex)]="fireFacilityConfig.currentTabIndex" dynamicHeight="true" mat-stretch-tabs class="stepperNav">
 
 			<!-- step 1 Starts -->
 			<mat-tab>
@@ -36,44 +36,45 @@
 						<input matInput readonly type="text" appValidationFields validationFieldsType='onlyNameWithSpace' required
 						 maxlength="100" placeholder="{{'applicant_Name' | translate:translateKey}}" formControlName="applicantName"
 						 appGujInputSource targetElement="applicantNameGuj" [form]="finalHospitalNocForm">
-						<control-messages [control]="finalHospitalNocForm.controls.applicantName"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('applicantName')"></control-messages>
 					</mat-form-field>
 					<!-- gujarati -->
 					<mat-form-field class="col-md-4">
 						<input matInput readonly type="text" maxlength="300" required formControlName="applicantNameGuj"
 						 appGujInputTarget [form]="finalHospitalNocForm" placeholder="{{ 'applicant_Name' | translate:translateKey:'gu' }}">
-						<control-messages [control]="finalHospitalNocForm.controls.applicantNameGuj"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('applicantNameGuj')"></control-messages>
 					</mat-form-field>
 					<!-- gujarati -->
 
 					<mat-form-field class="col-md-4">
 						<!-- <span matPrefix>+91 &nbsp;</span> -->
-						<input matInput OnlyNumber placeholder="{{'applicant_mobile' | translate:translateKey}}" type="tel" maxlength="12"
+						<input matInput OnlyNumber placeholder="{{'applicant_mobile' | translate:translateKey}}" type="tel" [maxlength]="fireFacilityConfig.contactNumberLength"
 						 formControlName="contactNo" required>
-						<control-messages [control]="finalHospitalNocForm.controls.contactNo"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('contactNo')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<!-- <span matPrefix>+91 &nbsp;</span> -->
-						<input matInput OnlyNumber placeholder="{{'office_contact_no' | translate:translateKey}}" type="tel" maxlength="12"
+						<input matInput OnlyNumber placeholder="{{'office_contact_no' | translate:translateKey}}" type="tel" [maxlength]="fireFacilityConfig.contactNumberLength"
 						 formControlName="officeContactNo" required>
-						<control-messages [control]="finalHospitalNocForm.controls.officeContactNo"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('officeContactNo')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
 						<!-- <span matPrefix>+91 &nbsp;</span> -->
 						<input matInput OnlyNumber placeholder="{{'onsite_person_mobile_no' | translate:translateKey}}" type="tel"
-						 maxlength="10" minlength="10" formControlName="onsitePersonMobileNo" required>
-						<control-messages [control]="finalHospitalNocForm.controls.onsitePersonMobileNo"></control-messages>
+						 [maxlength]="fireFacilityConfig.mobileNumber_maxLength" [minlength]="fireFacilityConfig.mobileNumber_minLength"
+						 formControlName="onsitePersonMobileNo" required>
+						<control-messages [control]="finalHospitalNocForm.get('onsitePersonMobileNo')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<input matInput appPreventSpace placeholder="{{'office_email_id' | translate:translateKey}}" type="email"
 						 formControlName="workOfficeEmailId" required maxlength="50">
-						<control-messages [control]="finalHospitalNocForm.controls.workOfficeEmailId"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('workOfficeEmailId')"></control-messages>
 					</mat-form-field>
 				</div>
-				<app-action-bar [form]="finalHospitalNocForm" (tabIndex)="onTabChange($event)" (handleOnSaveAndNext)="handleOnSaveAndNext($event)"
-				 [stepInfo]="{step: 'step1', next: 1, back: 0}"></app-action-bar>
+				<app-action-bar [form]="finalHospitalNocForm" (tabIndex)="fireFacilityConfig.onFormTabChange($event)"
+				 (handleOnSaveAndNext)="handleOnSaveAndNext($event)" [stepInfo]="{step: 'step1', next: 1, back: 0}"></app-action-bar>
 			</mat-tab>
 			<!-- step 1 Ends -->
 			<!-- step 2 Start -->
@@ -86,45 +87,45 @@
 
 					<mat-form-field class="col-md-12">
 						<input matInput required maxlength="10" type="tel" formControlName="medicalRegistrationNumber" placeholder="{{'medical_registration_number' | translate:translateKey }}">
-						<control-messages [control]="finalHospitalNocForm.controls.medicalRegistrationNumber"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('medicalRegistrationNumber')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace' required maxlength="100"
 						 placeholder="{{'doctor_name' | translate:translateKey}}" formControlName="doctorName" appGujInputSource
 						 targetElement="doctorNameGuj" [form]="finalHospitalNocForm">
-						<control-messages [control]="finalHospitalNocForm.controls.doctorName"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('doctorName')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace' required maxlength="50"
 						 placeholder="{{'hospital_name' | translate:translateKey}}" formControlName="hospitalName" appGujInputSource
 						 targetElement="hospitalNameGuj" [form]="finalHospitalNocForm">
-						<control-messages [control]="finalHospitalNocForm.controls.hospitalName"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('hospitalName')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<textarea matInput rows="3" cols="50" required maxlength="300" placeholder="{{'hospital_address' | translate:translateKey}}"
 						 formControlName="hospitalAddress" appGujInputSource targetElement="hospitalAddressGuj" [form]="finalHospitalNocForm"></textarea>
-						<control-messages [control]="finalHospitalNocForm.controls.hospitalAddress"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('hospitalAddress')"></control-messages>
 					</mat-form-field>
 
 					<!-- gujarati -->
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" maxlength="300" required formControlName="doctorNameGuj" appGujInputTarget [form]="finalHospitalNocForm"
 						 placeholder="{{ 'doctor_name' | translate:translateKey:'gu' }}">
-						<control-messages [control]="finalHospitalNocForm.controls.doctorNameGuj"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('doctorNameGuj')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" maxlength="150" required formControlName="hospitalNameGuj" appGujInputTarget [form]="finalHospitalNocForm"
 						 placeholder="{{ 'hospital_name' | translate:translateKey:'gu' }}">
-						<control-messages [control]="finalHospitalNocForm.controls.hospitalNameGuj"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('hospitalNameGuj')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<textarea matInput rows="3" cols="50" maxlength="900" type="text" required formControlName="hospitalAddressGuj"
 						 appGujInputTarget [form]="finalHospitalNocForm" placeholder="{{ 'hospital_address' | translate:translateKey:'gu' }}"></textarea>
-						<control-messages [control]="finalHospitalNocForm.controls.hospitalAddressGuj"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('hospitalAddressGuj')"></control-messages>
 					</mat-form-field>
 					<!-- /gujarati -->
 
@@ -132,39 +133,39 @@
 						<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace' required maxlength="100"
 						 placeholder="{{'owner_name' | translate:translateKey}}" formControlName="ownerName" appGujInputSource
 						 targetElement="ownerNameGuj" [form]="finalHospitalNocForm">
-						<control-messages [control]="finalHospitalNocForm.controls.ownerName"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('ownerName')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<textarea matInput rows="3" cols="50" required maxlength="300" placeholder="{{'owner_address' | translate:translateKey}}"
 						 formControlName="ownerAddress" appGujInputSource targetElement="ownerAddressGuj" [form]="finalHospitalNocForm"></textarea>
-						<control-messages [control]="finalHospitalNocForm.controls.ownerAddress"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('ownerAddress')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<!-- <span matPrefix>+91 &nbsp;</span> -->
-						<input matInput OnlyNumber placeholder="{{'owner_mobile_no' | translate:translateKey}}" type="tel" maxlength="10"
-						 minlength="10" formControlName="ownerMobileNo" required>
-						<control-messages [control]="finalHospitalNocForm.controls.ownerMobileNo"></control-messages>
+						<input matInput OnlyNumber placeholder="{{'owner_mobile_no' | translate:translateKey}}" type="tel" [maxlength]="fireFacilityConfig.mobileNumber_maxLength"
+						 [minlength]="fireFacilityConfig.mobileNumber_minLength" formControlName="ownerMobileNo" required>
+						<control-messages [control]="finalHospitalNocForm.get('ownerMobileNo')"></control-messages>
 					</mat-form-field>
 					<!-- gujrati  -->
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" maxlength="300" required formControlName="ownerNameGuj" appGujInputTarget [form]="finalHospitalNocForm"
 						 placeholder="{{ 'owner_name' | translate:translateKey:'gu' }}">
-						<control-messages [control]="finalHospitalNocForm.controls.ownerNameGuj"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('ownerNameGuj')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<textarea matInput rows="3" cols="50" required maxlength="900" type="text" required formControlName="ownerAddressGuj"
 						 appGujInputTarget [form]="finalHospitalNocForm" placeholder="{{ 'owner_address' | translate:translateKey:'gu' }}"></textarea>
-						<control-messages [control]="finalHospitalNocForm.controls.ownerAddressGuj"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('ownerAddressGuj')"></control-messages>
 					</mat-form-field>
 					<!--/ gujrati  -->
 
 				</div>
 
-				<app-action-bar [form]="finalHospitalNocForm" (tabIndex)="onTabChange($event)" (handleOnSaveAndNext)="handleOnSaveAndNext($event)"
-				 [stepInfo]="{step: 'step2', next: 2, back: 0}"></app-action-bar>
+				<app-action-bar [form]="finalHospitalNocForm" (tabIndex)="fireFacilityConfig.onFormTabChange($event)"
+				 (handleOnSaveAndNext)="handleOnSaveAndNext($event)" [stepInfo]="{step: 'step2', next: 2, back: 0}"></app-action-bar>
 			</mat-tab>
 			<!-- step 2 Ends -->
 
@@ -177,44 +178,44 @@
 
 					<mat-form-field class="col-md-4">
 						<input matInput maxlength="8" required placeholder="{{'final_plot_no' | translate:translateKey}}" formControlName="fpNo">
-						<control-messages [control]="finalHospitalNocForm.controls.fpNo"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('fpNo')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
 						<input matInput maxlength="8" required placeholder="{{'revenue_survey_no' | translate:translateKey}}"
 						 formControlName="rsNo">
-						<control-messages [control]="finalHospitalNocForm.controls.rsNo"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('rsNo')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
 						<input matInput maxlength="8" required placeholder="{{'tika_no' | translate:translateKey}}" formControlName="tikaNo">
-						<control-messages [control]="finalHospitalNocForm.controls.tikaNo"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('tikaNo')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
 						<input matInput maxlength="8" required placeholder="{{'town_planning_no' | translate:translateKey}}"
 						 formControlName="tpNo">
-						<control-messages [control]="finalHospitalNocForm.controls.tpNo"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('tpNo')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
 						<input matInput maxlength="50" required placeholder="{{'building_location' | translate:translateKey}}"
 						 formControlName="buildingLocation">
-						<control-messages [control]="finalHospitalNocForm.controls.buildingLocation"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('buildingLocation')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
 						<input matInput maxlength="8" placeholder="{{'block_no' | translate:translateKey}}" formControlName="blockNo">
-						<control-messages [control]="finalHospitalNocForm.controls.blockNo"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('blockNo')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
 						<input matInput maxlength="8" required placeholder="{{'o_p_no' | translate:translateKey}}" formControlName="opNo">
-						<control-messages [control]="finalHospitalNocForm.controls.opNo"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('opNo')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
 						<input matInput maxlength="8" required placeholder="{{'city_servay_no' | translate:translateKey}}"
 						 formControlName="citySurveyNo">
-						<control-messages [control]="finalHospitalNocForm.controls.citySurveyNo"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('citySurveyNo')"></control-messages>
 					</mat-form-field>
 				</div>
 
-				<app-action-bar [form]="finalHospitalNocForm" (tabIndex)="onTabChange($event)" (handleOnSaveAndNext)="handleOnSaveAndNext($event)"
-				 [stepInfo]="{step: 'step3', next: 3, back: 1}"></app-action-bar>
+				<app-action-bar [form]="finalHospitalNocForm" (tabIndex)="fireFacilityConfig.onFormTabChange($event)"
+				 (handleOnSaveAndNext)="handleOnSaveAndNext($event)" [stepInfo]="{step: 'step3', next: 3, back: 1}"></app-action-bar>
 			</mat-tab>
 			<!-- step 3 Ends -->
 
@@ -228,19 +229,19 @@
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" maxlength="50" required placeholder="{{'hospital_type' | translate:translateKey}}"
 						 formControlName="hospitalType">
-						<control-messages [control]="finalHospitalNocForm.controls.hospitalType"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('hospitalType')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<input matInput maxlength="3" required OnlyNumber placeholder="{{'number_of_bed' | translate:translateKey}}"
 						 formControlName="numberOfBed">
-						<control-messages [control]="finalHospitalNocForm.controls.numberOfBed"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('numberOfBed')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<input matInput maxlength="3" required readonly OnlyNumber placeholder="{{'number_of_ot' | translate:translateKey}}"
-						 formControlName="numberOfOT" [value]="finalHospitalNocForm.get('hospitalOTDetails').controls.length">
-						<control-messages [control]="finalHospitalNocForm.controls.numberOfOT"></control-messages>
+						 formControlName="numberOfOT" [value]="finalHospitalNocForm.get('hospitalOTDetails')['controls'].length">
+						<control-messages [control]="finalHospitalNocForm.get('numberOfOT')"></control-messages>
 					</mat-form-field>
 				</div>
 				<!-- add OT details -->
@@ -257,7 +258,7 @@
 				</div>
 
 				<div class="row">
-					<div class="col-md-12" *ngIf="finalHospitalNocForm.get('hospitalOTDetails').controls.length >= 1">
+					<div class="col-md-12" *ngIf="finalHospitalNocForm.get('hospitalOTDetails')['controls'].length >= 1">
 						<!-- <h2 class="col-md-11 float-left">{{'o_t_occupational_therapy ' | translate:translateKey}} {{i+1}}</h2> -->
 
 						<div class="table-responsive" formArrayName="hospitalOTDetails">
@@ -274,13 +275,13 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr *ngFor="let item of finalHospitalNocForm.get('hospitalOTDetails').controls; let i = index;"
+									<tr *ngFor="let item of finalHospitalNocForm.get('hospitalOTDetails')['controls']; let i = index;"
 									 [formGroupName]="i">
 										<th scope="row">{{i+1}}</th>
-										<td>{{item.controls.otFacilities.value}}</td>
-										<td>{{item.controls.areaInSquareMeterLength.value}}</td>
-										<td>{{item.controls.areaInSquareMeterBreadth.value}}</td>
-										<td>{{item.controls.areaInSquareMeter.value}}</td>
+										<td>{{item.get('otFacilities').value}}</td>
+										<td>{{item.get('areaInSquareMeterLength').value}}</td>
+										<td>{{item.get('areaInSquareMeterBreadth').value}}</td>
+										<td>{{item.get('areaInSquareMeter').value}}</td>
 										<td *ngIf="finalHospitalNocForm.get('canEdit').value">
 											<button type="button" mat-icon-button (click)="editOT(i,item)">
 												<mat-icon matTooltip="Edit" class="m-1" color="primary">edit</mat-icon>
@@ -305,37 +306,37 @@
 					<mat-form-field class="col-md-4">
 						<input matInput OnlyNumber formControlName="exerciseSection" placeholder="{{'exercise_section' | translate: translateKey }} "
 						 maxlength="3">
-						<control-messages [control]="finalHospitalNocForm.controls.exerciseSection"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('exerciseSection')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<input matInput OnlyNumber required formControlName="xraySection" placeholder="{{'xray_section' | translate: translateKey }} "
 						 maxlength="3">
-						<control-messages [control]="finalHospitalNocForm.controls.xraySection"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('xraySection')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" required formControlName="laboratoryDepartment" placeholder="{{'laboratory_department' | translate: translateKey }} "
 						 maxlength="50">
-						<control-messages [control]="finalHospitalNocForm.controls.laboratoryDepartment"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('laboratoryDepartment')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" required formControlName="otherInvestigation" placeholder="{{'other_investigation' | translate: translateKey }} "
 						 maxlength="200">
-						<control-messages [control]="finalHospitalNocForm.controls.otherInvestigation"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('otherInvestigation')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" required formControlName="storeDetails" placeholder="{{'store_details' | translate: translateKey }} "
 						 maxlength="200">
-						<control-messages [control]="finalHospitalNocForm.controls.storeDetails"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('storeDetails')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" required formControlName="kitchenDetails" placeholder="{{'kitchen_details' | translate: translateKey }} "
 						 maxlength="50">
-						<control-messages [control]="finalHospitalNocForm.controls.kitchenDetails"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('kitchenDetails')"></control-messages>
 					</mat-form-field>
 
 					<div class="col-md-4 radioBtnError">
@@ -348,7 +349,7 @@
 								No
 							</mat-radio-button>
 						</mat-radio-group>
-						<control-messages [control]="finalHospitalNocForm.controls.drawingWithScale"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('drawingWithScale')"></control-messages>
 					</div>
 
 					<div class="col-md-4 radioBtnError">
@@ -361,7 +362,7 @@
 								No
 							</mat-radio-button>
 						</mat-radio-group>
-						<control-messages [control]="finalHospitalNocForm.controls.drawingProvided"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('drawingProvided')"></control-messages>
 					</div>
 
 					<div class="col-md-4 radioBtnError">
@@ -374,72 +375,72 @@
 								No
 							</mat-radio-button>
 						</mat-radio-group>
-						<control-messages [control]="finalHospitalNocForm.controls.multipleTowers"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('multipleTowers')"></control-messages>
 					</div>
 
 					<mat-form-field class="col-md-4">
 						<input matInput maxlength="50" required placeholder="{{'building_height' | translate:translateKey}}"
 						 formControlName="buildingHeight">
-						<control-messages [control]="finalHospitalNocForm.controls.buildingHeight"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('buildingHeight')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<input matInput maxlength="3" required OnlyNumber placeholder="{{'floor_area' | translate:translateKey}}"
 						 formControlName="floorArea">
-						<control-messages [control]="finalHospitalNocForm.controls.floorArea"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('floorArea')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" required formControlName="gateDetailing" placeholder="{{'gate_detailing' | translate: translateKey }} "
 						 maxlength="50">
-						<control-messages [control]="finalHospitalNocForm.controls.gateDetailing"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('gateDetailing')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" required formControlName="rampLiftStairDetails" placeholder="{{'ramp_lift_stair_details' | translate: translateKey }} "
 						 maxlength="50">
-						<control-messages [control]="finalHospitalNocForm.controls.rampLiftStairDetails"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('rampLiftStairDetails')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" required formControlName="liftDetails" placeholder="{{'lift_details' | translate: translateKey }} "
 						 maxlength="50">
-						<control-messages [control]="finalHospitalNocForm.controls.liftDetails"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('liftDetails')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<input matInput required OnlyNumber maxlength="5" type="tel" formControlName="noOfBasement" placeholder="{{'no_of_basement' | translate:translateKey }}">
-						<control-messages [control]="finalHospitalNocForm.controls.noOfBasement"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('noOfBasement')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<input matInput required OnlyNumber maxlength="3" type="tel" formControlName="lowerBasement" placeholder="{{'lower_basement' | translate:translateKey }}">
-						<control-messages [control]="finalHospitalNocForm.controls.lowerBasement"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('lowerBasement')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<input matInput required OnlyNumber maxlength="3" type="tel" formControlName="upperBasement" placeholder="{{'upper_basement' | translate:translateKey }}">
-						<control-messages [control]="finalHospitalNocForm.controls.upperBasement"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('upperBasement')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<input matInput maxlength="3" required appAlphaNumeric placeholder="{{'total_building_floor' | translate:translateKey}}"
 						 formControlName="totalBuildingFloor">
-						<control-messages [control]="finalHospitalNocForm.controls.totalBuildingFloor"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('totalBuildingFloor')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<input matInput required OnlyNumber maxlength="3" type="tel" formControlName="basementArea" placeholder="{{'basement_area' | translate:translateKey }}">
-						<control-messages [control]="finalHospitalNocForm.controls.basementArea"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('basementArea')"></control-messages>
 					</mat-form-field>
 
 
 					<mat-form-field class="col-md-4">
 						<input matInput required OnlyNumber maxlength="3" type="tel" formControlName="noOfTowers" placeholder="{{'no_of_towers' | translate:translateKey }}">
-						<control-messages [control]="finalHospitalNocForm.controls.noOfTowers"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('noOfTowers')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<input matInput required OnlyNumber maxlength="3" type="tel" formControlName="noOfVentilation" placeholder="{{'no_of_ventilation' | translate:translateKey }}">
-						<control-messages [control]="finalHospitalNocForm.controls.noOfVentilation"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('noOfVentilation')"></control-messages>
 					</mat-form-field>
 
 					<div class="col-md-4 radioBtnError">
@@ -452,27 +453,27 @@
 								No
 							</mat-radio-button>
 						</mat-radio-group>
-						<control-messages [control]="finalHospitalNocForm.controls.ventilationProvision"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('ventilationProvision')"></control-messages>
 					</div>
 
 					<mat-form-field class="col-md-4">
 						<input matInput required OnlyNumber maxlength="5" type="tel" formControlName="plotArea" placeholder="{{'plot_area' | translate:translateKey }}">
-						<control-messages [control]="finalHospitalNocForm.controls.plotArea"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('plotArea')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<input matInput required OnlyNumber maxlength="5" type="tel" formControlName="constructedArea" placeholder="{{'constructed_area' | translate:translateKey }}">
-						<control-messages [control]="finalHospitalNocForm.controls.constructedArea"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('constructedArea')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<input matInput required OnlyNumber maxlength="3" type="tel" formControlName="noOfApproachedRoad" placeholder="{{'no_of_approached_road' | translate:translateKey }}">
-						<control-messages [control]="finalHospitalNocForm.controls.noOfApproachedRoad"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('noOfApproachedRoad')"></control-messages>
 					</mat-form-field>
 
 				</div>
-				<app-action-bar [form]="finalHospitalNocForm" (tabIndex)="onTabChange($event)" (handleOnSaveAndNext)="handleOnSaveAndNext($event)"
-				 [stepInfo]="{step: 'step4', next: 4, back: 2}"></app-action-bar>
+				<app-action-bar [form]="finalHospitalNocForm" (tabIndex)="fireFacilityConfig.onFormTabChange($event)"
+				 (handleOnSaveAndNext)="handleOnSaveAndNext($event)" [stepInfo]="{step: 'step4', next: 4, back: 2}"></app-action-bar>
 			</mat-tab>
 			<!-- step 4 Ends -->
 
@@ -485,53 +486,53 @@
 					<mat-form-field class="col-md-12">
 						<input matInput type="text" appAlphaNumeric formControlName="architectRegistrationNumber" placeholder="{{'architect_regi_no' | translate: translateKey }} *"
 						 maxlength="15">
-						<control-messages [control]="finalHospitalNocForm.controls.architectRegistrationNumber"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('architectRegistrationNumber')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-6">
 						<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace' required maxlength="100"
 						 placeholder="{{'architect_name' | translate:translateKey}}" formControlName="architectName" appGujInputSource
 						 targetElement="architectNameGuj" [form]="finalHospitalNocForm">
-						<control-messages [control]="finalHospitalNocForm.controls.architectName"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('architectName')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-6">
 						<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace' required maxlength="50"
 						 placeholder="{{'architect_firm_name' | translate:translateKey}}" formControlName="architectFirmName"
 						 appGujInputSource targetElement="architectFirmNameGuj" [form]="finalHospitalNocForm">
-						<control-messages [control]="finalHospitalNocForm.controls.architectFirmName"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('architectFirmName')"></control-messages>
 					</mat-form-field>
 
 					<!-- gujarati -->
 					<mat-form-field class="col-md-6">
 						<input matInput type="text" maxlength="300" required formControlName="architectNameGuj" appGujInputTarget [form]="finalHospitalNocForm"
 						 placeholder="{{ 'architect_name' | translate:translateKey:'gu' }}">
-						<control-messages [control]="finalHospitalNocForm.controls.architectNameGuj"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('architectNameGuj')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-6">
 						<input matInput type="text" maxlength="150" required formControlName="architectFirmNameGuj" appGujInputTarget
 						 [form]="finalHospitalNocForm" placeholder="{{ 'architect_firm_name' | translate:translateKey:'gu' }}">
-						<control-messages [control]="finalHospitalNocForm.controls.architectFirmNameGuj"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('architectFirmNameGuj')"></control-messages>
 					</mat-form-field>
 					<!-- /gujarati -->
 
 					<mat-form-field class="col-md-4">
 						<input matInput maxlength="20" required appAlphaNumeric placeholder="{{'architect_firm_number' | translate:translateKey}}"
 						 formControlName="architectFirmNumber">
-						<control-messages [control]="finalHospitalNocForm.controls.architectFirmNumber"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('architectFirmNumber')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<!-- <span matPrefix>+91 &nbsp;</span> -->
-						<input matInput OnlyNumber placeholder="{{'architect_contact_no' | translate:translateKey}}" type="tel" maxlength="12"
-						 formControlName="architectContactNo" required>
-						<control-messages [control]="finalHospitalNocForm.controls.architectContactNo"></control-messages>
+						<input matInput OnlyNumber placeholder="{{'architect_contact_no' | translate:translateKey}}" type="tel"
+						 [maxlength]="fireFacilityConfig.contactNumberLength" formControlName="architectContactNo" required>
+						<control-messages [control]="finalHospitalNocForm.get('architectContactNo')"></control-messages>
 					</mat-form-field>
 
 				</div>
 
-				<app-action-bar [form]="finalHospitalNocForm" (handleOnSaveAndNext)="handleOnSaveAndNext($event)" (tabIndex)="onTabChange($event)"
+				<app-action-bar [form]="finalHospitalNocForm" (handleOnSaveAndNext)="handleOnSaveAndNext($event)" (tabIndex)="fireFacilityConfig.onFormTabChange($event)"
 				 [stepInfo]="{step: 'step5', next: 5, back: 3}"></app-action-bar>
 			</mat-tab>
 			<!-- step 5 Ends -->
@@ -544,17 +545,17 @@
 				<div class="row">
 					<mat-form-field class="col-md-4">
 						<input matInput required OnlyNumber maxlength="4" type="tel" formControlName="noOfHospitalStaff" placeholder="{{'no_of_hospital_staff' | translate:translateKey }}">
-						<control-messages [control]="finalHospitalNocForm.controls.noOfHospitalStaff"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('noOfHospitalStaff')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<input matInput required OnlyNumber maxlength="4" type="tel" formControlName="noOfSecurityStaff" placeholder="{{'no_of_security_staff' | translate:translateKey }}">
-						<control-messages [control]="finalHospitalNocForm.controls.noOfSecurityStaff"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('noOfSecurityStaff')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" maxlength="150" required formControlName="gasCylinderNOCDetail" placeholder="{{ 'gas_cylinder_noc_detail' | translate:translateKey}}">
-						<control-messages [control]="finalHospitalNocForm.controls.gasCylinderNOCDetail"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('gasCylinderNOCDetail')"></control-messages>
 					</mat-form-field>
 				</div>
 
@@ -568,7 +569,7 @@
 					<mat-form-field class="col-md-4" *ngIf="otherRiskNote">
 						<input matInput type="text" maxlength="200" placeholder="{{'other_risk_remark' | translate:translateKey}}"
 						 formControlName="otherRiskDetail">
-						<control-messages [control]="finalHospitalNocForm.controls.otherRiskDetail"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('otherRiskDetail')"></control-messages>
 					</mat-form-field>
 				</div>
 
@@ -584,7 +585,7 @@
 								No
 							</mat-radio-button>
 						</mat-radio-group>
-						<control-messages [control]="finalHospitalNocForm.controls.anyStoreProvision"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('anyStoreProvision')"></control-messages>
 					</div>
 
 					<div class="col-md-4 radioBtnError">
@@ -597,7 +598,7 @@
 								No
 							</mat-radio-button>
 						</mat-radio-group>
-						<control-messages [control]="finalHospitalNocForm.controls.trainedFiremanStaffKept"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('trainedFiremanStaffKept')"></control-messages>
 					</div>
 					<div class="col-md-4 radioBtnError">
 						<mat-label>{{'any_evacuation_plan' | translate:translateKey }} *</mat-label>
@@ -609,33 +610,33 @@
 								No
 							</mat-radio-button>
 						</mat-radio-group>
-						<control-messages [control]="finalHospitalNocForm.controls.anyEvacuationPlan"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('anyEvacuationPlan')"></control-messages>
 					</div>
 
 					<div class="col-md-4 ngSelect" formGroupName="stairCase">
 						<ng-select placeholder="{{'stair_case' | translate:translateKey}} *" formControlName="code">
 							<ng-option *ngFor="let type of FS_STAIR_CASE" [value]="type.code">{{type.name}}</ng-option>
 						</ng-select>
-						<control-messages [control]="finalHospitalNocForm.get('stairCase').controls.code"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('stairCase').get('code')"></control-messages>
 					</div>
 
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" formControlName="exitGateDetail" placeholder="{{'exit_gate_detail' | translate: translateKey }} "
 						 maxlength="50">
-						<control-messages [control]="finalHospitalNocForm.controls.exitGateDetail"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('exitGateDetail')"></control-messages>
 					</mat-form-field>
 
 					<div class="col-md-4 ngSelect" formGroupName="otherBusinessDetail">
 						<ng-select placeholder="{{'other_business_detail' | translate:translateKey}} *" formControlName="code">
 							<ng-option *ngFor="let type of FS_OTHER_BUSINESS_DETAIL" [value]="type.code">{{type.name}}</ng-option>
 						</ng-select>
-						<control-messages [control]="finalHospitalNocForm.get('otherBusinessDetail').controls.code"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('otherBusinessDetail').get('code')"></control-messages>
 					</div>
 
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" formControlName="riskSegregation" placeholder="{{'risk_segregation' | translate: translateKey }} "
 						 maxlength="50">
-						<control-messages [control]="finalHospitalNocForm.controls.riskSegregation"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('riskSegregation')"></control-messages>
 					</mat-form-field>
 
 					<div class="col-md-4 radioBtnError">
@@ -648,7 +649,7 @@
 								No
 							</mat-radio-button>
 						</mat-radio-group>
-						<control-messages [control]="finalHospitalNocForm.controls.evacuationDrillPerformed"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('evacuationDrillPerformed')"></control-messages>
 					</div>
 
 					<div class="col-md-4 radioBtnError">
@@ -661,13 +662,13 @@
 								No
 							</mat-radio-button>
 						</mat-radio-group>
-						<control-messages [control]="finalHospitalNocForm.controls.firefightingSystemAvailability"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('firefightingSystemAvailability')"></control-messages>
 					</div>
 
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" formControlName="yardHydrant" placeholder="{{'yard_hydrant' | translate: translateKey }} "
 						 maxlength="50">
-						<control-messages [control]="finalHospitalNocForm.controls.yardHydrant"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('yardHydrant')"></control-messages>
 					</mat-form-field>
 
 					<div class="col-md-4 radioBtnError">
@@ -680,12 +681,12 @@
 								No
 							</mat-radio-button>
 						</mat-radio-group>
-						<control-messages [control]="finalHospitalNocForm.controls.raiserAvailability"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('raiserAvailability')"></control-messages>
 					</div>
 
 					<mat-form-field class="col-md-4">
 						<input matInput OnlyNumber maxlength="4" type="tel" formControlName="noOfRaiser" placeholder="{{'no_of_raiser' | translate:translateKey }}">
-						<control-messages [control]="finalHospitalNocForm.controls.noOfRaiser"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('noOfRaiser')"></control-messages>
 					</mat-form-field>
 
 					<div class="col-md-4 radioBtnError">
@@ -698,106 +699,106 @@
 								No
 							</mat-radio-button>
 						</mat-radio-group>
-						<control-messages [control]="finalHospitalNocForm.controls.smokeDetector"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('smokeDetector')"></control-messages>
 					</div>
 
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" formControlName="sprinkler" placeholder="{{'sprinkler' | translate: translateKey }} "
 						 maxlength="50">
-						<control-messages [control]="finalHospitalNocForm.controls.sprinkler"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('sprinkler')"></control-messages>
 					</mat-form-field>
 
 					<div class="col-md-4 ngSelect" formGroupName="fireAlarmAttachedWith">
 						<ng-select placeholder="{{'fire_alarm_attached_with' | translate:translateKey}} " formControlName="code">
 							<ng-option *ngFor="let type of FS_FIRE_ALARM_ATTACHED_WTIH" [value]="type.code">{{type.name}}</ng-option>
 						</ng-select>
-						<control-messages [control]="finalHospitalNocForm.get('fireAlarmAttachedWith').controls.code"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('fireAlarmAttachedWith').get('code')"></control-messages>
 					</div>
 
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" formControlName="autoExhaustSystem" placeholder="{{'auto_exhaust_system' | translate: translateKey }} "
 						 maxlength="50">
-						<control-messages [control]="finalHospitalNocForm.controls.autoExhaustSystem"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('autoExhaustSystem')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" required formControlName="electricalSafety" placeholder="{{'electrical_safety' | translate: translateKey }} "
 						 maxlength="50">
-						<control-messages [control]="finalHospitalNocForm.controls.electricalSafety"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('electricalSafety')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" required formControlName="evacuationSignBoard" placeholder="{{'evacuation_sign_board' | translate: translateKey }} "
 						 maxlength="50">
-						<control-messages [control]="finalHospitalNocForm.controls.evacuationSignBoard"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('evacuationSignBoard')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" required formControlName="refugeArea" placeholder="{{'refuge_area' | translate: translateKey }} "
 						 maxlength="50">
-						<control-messages [control]="finalHospitalNocForm.controls.refugeArea"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('refugeArea')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<input matInput OnlyNumber maxlength="5" required type="tel" formControlName="travelDistance" placeholder="{{'travel_distance' | translate:translateKey }}">
-						<control-messages [control]="finalHospitalNocForm.controls.travelDistance"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('travelDistance')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<input matInput OnlyNumber maxlength="10" required type="tel" formControlName="overHeadWaterTankCapacity"
 						 placeholder="{{'over_head_water_tank_capacity' | translate:translateKey }}">
-						<control-messages [control]="finalHospitalNocForm.controls.overHeadWaterTankCapacity"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('overHeadWaterTankCapacity')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<input matInput OnlyNumber maxlength="10" required type="tel" formControlName="undergroundWaterTankCapacity"
 						 placeholder="{{'underground_water_tank_capacity' | translate:translateKey }}">
-						<control-messages [control]="finalHospitalNocForm.controls.undergroundWaterTankCapacity"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('undergroundWaterTankCapacity')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<input matInput OnlyNumber maxlength="10" required type="tel" formControlName="alarmSystemTimeLimit" placeholder="{{'alarm_system_time_limit' | translate:translateKey }}">
-						<control-messages [control]="finalHospitalNocForm.controls.alarmSystemTimeLimit"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('alarmSystemTimeLimit')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<input matInput OnlyNumber maxlength="10" required type="tel" formControlName="highestFloodLevel" placeholder="{{'highest_flood_level' | translate:translateKey }}">
-						<control-messages [control]="finalHospitalNocForm.controls.highestFloodLevel"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('highestFloodLevel')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" required formControlName="parkingDetail" placeholder="{{'parking_detail' | translate: translateKey }} "
 						 maxlength="100">
-						<control-messages [control]="finalHospitalNocForm.controls.parkingDetail"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('parkingDetail')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" required formControlName="riskAnalysisSurveyDetail" placeholder="{{'risk_analysis_survey_detail' | translate: translateKey }} "
 						 maxlength="50">
-						<control-messages [control]="finalHospitalNocForm.controls.riskAnalysisSurveyDetail"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('riskAnalysisSurveyDetail')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" required formControlName="nabhOwnership" placeholder="{{'nabh_ownership' | translate: translateKey }} "
 						 maxlength="50">
-						<control-messages [control]="finalHospitalNocForm.controls.nabhOwnership"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('nabhOwnership')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" required formControlName="lastThreeYearFireIncidents" placeholder="{{'last_three_year_fire_incidents' | translate: translateKey }} "
 						 maxlength="50">
-						<control-messages [control]="finalHospitalNocForm.controls.lastThreeYearFireIncidents"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('lastThreeYearFireIncidents')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" required formControlName="servingSince" placeholder="{{'serving_since' | translate: translateKey }} "
 						 maxlength="200">
-						<control-messages [control]="finalHospitalNocForm.controls.servingSince"></control-messages>
+						<control-messages [control]="finalHospitalNocForm.get('servingSince')"></control-messages>
 					</mat-form-field>
 
 				</div>
 
-				<app-action-bar [form]="finalHospitalNocForm" (handleOnSaveAndNext)="handleOnSaveAndNext($event)" (tabIndex)="onTabChange($event)"
+				<app-action-bar [form]="finalHospitalNocForm" (handleOnSaveAndNext)="handleOnSaveAndNext($event)" (tabIndex)="fireFacilityConfig.onFormTabChange($event)"
 				 [stepInfo]="{step: 'step6', next: 6, back: 4}"></app-action-bar>
 			</mat-tab>
 			<!-- step 6 Ends -->
@@ -809,14 +810,14 @@
 				</ng-template>
 				<div class="row">
 					<ng-container *ngFor="let doc of finalHospitalNocForm.get('serviceDetail').get('serviceUploadDocuments').value">
-						<div class="col-md-4" *ngIf="doc.requiredOnCitizenPortal && doc.isActive && showButtons">
+						<div class="col-md-4" *ngIf="doc.requiredOnCitizenPortal && doc.isActive && fireFacilityConfig.isAttachmentButtonsVisible">
 							<label>{{TranslateService.getCurrentLanguage()=='en'? doc.documentLabelEn : doc.documentLabelGuj }} <span *ngIf="doc.mandatory">*</span></label>
 							<file-upload [form]="finalHospitalNocForm" [uploadModel]="doc"></file-upload>
 						</div>
 					</ng-container>
 				</div>
 
-				<app-action-bar [uploadFiles]="uploadFilesArray" [form]="finalHospitalNocForm" (tabIndex)="onTabChange($event) "
+				<app-action-bar [uploadFiles]="uploadFilesArray" [form]="finalHospitalNocForm" (tabIndex)="fireFacilityConfig.onFormTabChange($event) "
 				 (handleOnSaveAndNext)="handleOnSaveAndNext($event)" (handleErrors)="handleErrorsOnSubmit($event)" [stepInfo]="{step: 'final', next:6, back:5} "></app-action-bar>
 
 			</mat-tab>

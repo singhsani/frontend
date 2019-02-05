@@ -1,3 +1,4 @@
+import { FireFacilityConfig } from './../config/FireFacilityConfig';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray, Validator } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -25,345 +26,16 @@ export class FinalHospitalNocComponent implements OnInit {
 
 	formId: number;
 	apiCode: string;
-	tabIndex: number = 0;
+	fireFacilityConfig: FireFacilityConfig = new FireFacilityConfig();
 
 	// required attachment array
-	private uploadFilesArray: Array<any> = [];
-	private showButtons: boolean = false;
-	private otherRiskNote: boolean = false;
+	uploadFilesArray: Array<any> = [];
+	otherRiskNote: boolean = false;
 	//Lookups Array
 	FS_STAIR_CASE: Array<any> = [];
 	FS_OTHER_RISKS: Array<any> = [];
 	FS_FIRE_ALARM_ATTACHED_WTIH: Array<any> = [];
 	FS_OTHER_BUSINESS_DETAIL: Array<any> = [];
-
-	// ***************************************
-	public dummyJSON = {
-		"serviceDetail": {
-			"code": "FS-PROVI-HOSPITAL",
-			"fieldView": "ALL",
-			"name": "hospital NOC For Hospital",
-			"gujName": "હોસ્પિટલ માટે અનિવાર્ય એનઓસી",
-			"feesOnScrutiny": false,
-			"appointmentRequired": false,
-			"serviceUploadDocuments": [
-				{
-					"id": 258,
-					"code": null,
-					"documentKey": "FS-PROVI-HOSPITAL_aa82fb3b06e54fc1b91e873482ca9798",
-					"documentIdentifier": "COPY_OF_OC_CC",
-					"documentLabelEn": "Copy of Occupation Certificate / Completion Certificate",
-					"documentLabelGuj": "વ્યવસાય પ્રમાણપત્રની નકલ / સમાપ્તિ પ્રમાણપત્ર",
-					"fieldIdentifier": "1",
-					"formPart": "1",
-					"dependentFieldName": null,
-					"mandatory": false,
-					"maxFileSizeInMB": 5,
-					"requiredOnAdminPortal": true,
-					"requiredOnCitizenPortal": true,
-					"isActive": true
-				},
-				{
-					"id": 259,
-					"code": null,
-					"documentKey": "FS-PROVI-HOSPITAL_4cc414f71c0f4ab486103bff1935d37e",
-					"documentIdentifier": "APPROVED_LAYOUT_PLAN",
-					"documentLabelEn": "Approved Layout Plan Vuda / VMC",
-					"documentLabelGuj": "માન્ય લેઆઉટ પ્લાન વુડા / વીએમસી",
-					"fieldIdentifier": "2",
-					"formPart": "1",
-					"dependentFieldName": null,
-					"mandatory": false,
-					"maxFileSizeInMB": 5,
-					"requiredOnAdminPortal": true,
-					"requiredOnCitizenPortal": true,
-					"isActive": true
-				},
-				{
-					"id": 260,
-					"code": null,
-					"documentKey": "FS-PROVI-HOSPITAL_33aa2f21deb74c49b1380776c51479d1",
-					"documentIdentifier": "APPROVED_APPROACHED ROAD",
-					"documentLabelEn": "Approved Approached road Vuda / VMC",
-					"documentLabelGuj": "મંજૂર થયેલ માર્ગ વુડા / વી.એમ.સી.",
-					"fieldIdentifier": "3",
-					"formPart": "1",
-					"dependentFieldName": null,
-					"mandatory": false,
-					"maxFileSizeInMB": 5,
-					"requiredOnAdminPortal": true,
-					"requiredOnCitizenPortal": true,
-					"isActive": true
-				},
-				{
-					"id": 261,
-					"code": null,
-					"documentKey": "FS-PROVI-HOSPITAL_6d30824d175a4e75b0accda655ea63da",
-					"documentIdentifier": "TANK_MEASUREMENT_WITH_MAP",
-					"documentLabelEn": "Measurement of Tank(Underground Overhead) with map",
-					"documentLabelGuj": "નકશા સાથે ટેન્ક (ભૂગર્ભ ઓવરહેડ) નું માપન",
-					"fieldIdentifier": "4",
-					"formPart": "1",
-					"dependentFieldName": null,
-					"mandatory": false,
-					"maxFileSizeInMB": 5,
-					"requiredOnAdminPortal": true,
-					"requiredOnCitizenPortal": true,
-					"isActive": true
-				},
-				{
-					"id": 262,
-					"code": null,
-					"documentKey": "FS-PROVI-HOSPITAL_21b274631dce438a899fadb308503983",
-					"documentIdentifier": "EXPLOSIVE_LICENSE",
-					"documentLabelEn": "Explosive License for ( LPG / CNG / Petrol Pump / Gas Pump / Gas Station / Gas Storage",
-					"documentLabelGuj": "વિસ્ફોટક લાયસન્સ (એલપીજી / સીએનજી / પેટ્રોલ પમ્પ / ગેસ પમ્પ / ગેસ સ્ટેશન / ગેસ સ્ટોરેજ",
-					"fieldIdentifier": "5",
-					"formPart": "1",
-					"dependentFieldName": null,
-					"mandatory": false,
-					"maxFileSizeInMB": 5,
-					"requiredOnAdminPortal": true,
-					"requiredOnCitizenPortal": true,
-					"isActive": true
-				},
-				{
-					"id": 263,
-					"code": null,
-					"documentKey": "FS-PROVI-HOSPITAL_370048126ab646c2859641174bc47926",
-					"documentIdentifier": "RAJA_CHITTHI",
-					"documentLabelEn": "Raja chitthi of VMC",
-					"documentLabelGuj": "વીએમસી રજાચિઠ્ઠી",
-					"fieldIdentifier": "6",
-					"formPart": "1",
-					"dependentFieldName": null,
-					"mandatory": false,
-					"maxFileSizeInMB": 5,
-					"requiredOnAdminPortal": true,
-					"requiredOnCitizenPortal": true,
-					"isActive": true
-				},
-				{
-					"id": 264,
-					"code": null,
-					"documentKey": "FS-PROVI-HOSPITAL_111dc8ba49ef44579a4ecc5a84b7e6cd",
-					"documentIdentifier": "STRUCTURAL_STABILITY_CERTIFICATE",
-					"documentLabelEn": "Structural stability certificate",
-					"documentLabelGuj": "માળખાકીય સ્થિરતા પ્રમાણપત્ર",
-					"fieldIdentifier": "7",
-					"formPart": "1",
-					"dependentFieldName": null,
-					"mandatory": true,
-					"maxFileSizeInMB": 5,
-					"requiredOnAdminPortal": true,
-					"requiredOnCitizenPortal": true,
-					"isActive": true
-				},
-				{
-					"id": 265,
-					"code": null,
-					"documentKey": "FS-PROVI-HOSPITAL_408226d1f3634ce8a55cf510204d0e8f",
-					"documentIdentifier": "TRAIN_FIRE_PERSON_LIST",
-					"documentLabelEn": "Train Fire Person List with their name & Mobile No",
-					"documentLabelGuj": "ટ્રેન ફાયર પર્સન લિસ્ટ તેમના નામ અને મોબાઇલ નંબર સાથે",
-					"fieldIdentifier": "8",
-					"formPart": "1",
-					"dependentFieldName": null,
-					"mandatory": false,
-					"maxFileSizeInMB": 5,
-					"requiredOnAdminPortal": true,
-					"requiredOnCitizenPortal": true,
-					"isActive": true
-				},
-				{
-					"id": 266,
-					"code": null,
-					"documentKey": "FS-PROVI-HOSPITAL_e4bbba3678124bfb903bdbed09b20db3",
-					"documentIdentifier": "LIFT_APPROVAL_CERTIFICATE",
-					"documentLabelEn": "Escalator / Lift approved by Govt. certificate",
-					"documentLabelGuj": "સરકાર દ્વારા મંજૂર એસ્કેલેટર / લિફ્ટ. પ્રમાણપત્ર",
-					"fieldIdentifier": "9",
-					"formPart": "1",
-					"dependentFieldName": null,
-					"mandatory": false,
-					"maxFileSizeInMB": 5,
-					"requiredOnAdminPortal": true,
-					"requiredOnCitizenPortal": true,
-					"isActive": true
-				},
-				{
-					"id": 267,
-					"code": null,
-					"documentKey": "FS-PROVI-HOSPITAL_8665aef62f0f4b4b8bdcbd753daebcb1",
-					"documentIdentifier": "FIRE_DRAWING_FLOOR_WISE",
-					"documentLabelEn": "Fire Drawing floor wise i.e. also approved by competent Authority",
-					"documentLabelGuj": "ફાયર ડ્રોઇંગ ફ્લોર મુજબની એટલે કે સક્ષમ અધિકારી દ્વારા મંજૂરી",
-					"fieldIdentifier": "10",
-					"formPart": "1",
-					"dependentFieldName": null,
-					"mandatory": false,
-					"maxFileSizeInMB": 5,
-					"requiredOnAdminPortal": true,
-					"requiredOnCitizenPortal": true,
-					"isActive": true
-				}
-			]
-		},
-		// "serviceType": "FS_hospital_HOSPITAL_NOC",
-		"deptFileStatus": null,
-		"serviceName": null,
-		"fileNumber": "2018-12-20-APP-LCF0HDND",
-		"pid": null,
-		"outwardNo": null,
-		"loiNumber": null,
-		"firstName": "bhumika",
-		"lastName": "barad",
-		"middleName": null,
-		"contactNo": "9558295586",
-		"mobileNo": "9558295586",
-		"email": "barad@gmail.com",
-		"aadhaarNo": null,
-		"agree": false,
-		"paymentStatus": null,
-		"serviceCode": "FS-PROVI-HOSPITAL",
-		"fieldView": "ALL",
-		"fieldList": null,
-		"applicantName": null,
-		"applicantNameGuj": null,
-		// "hospitalNOCServiceType": "hospital_HOSPITAL_NOC",
-		"hospitalNocNumber": "14d9a65375af4cb",
-		"applicationDate": "2018-12-20",
-		"oldReferenceNumber": null,
-		"officeContactNo": "8467487658",
-		"onsitePersonMobileNo": "7875897438",
-		"workOfficeEmailId": "barad@gmail.com",
-		"doctorName": "ncbvhjg",
-		"doctorNameGuj": "નબ્વ્હ્જ્ગ",
-		"medicalRegistrationNumber": "4789548789",
-		"hospitalName": "bv hdhq",
-		"hospitalNameGuj": "બ્વ હ્ધ",
-		"hospitalAddress": "bchjbfj\nnvjkf\nvnjfkbh",
-		"hospitalAddressGuj": "બ્ચ્જ્બ્ફ્જ\nન્વ્જ્ક્ફ\nવ્ન્જ્ફ્ક્ભ",
-		"ownerName": "gfyhghj",
-		"ownerNameGuj": "દ્ગ્ફ્દ્સ્ગ્ર",
-		"ownerAddress": "fgfdfbhfdhdfh",
-		"ownerAddressGuj": "ફ્દ્ર્ગ્ત્ર",
-		"ownerMobileNo": "7584546578",
-		"fpNo": "344",
-		"rsNo": "3434",
-		"tikaNo": "3432434",
-		"buildingLocation": "434",
-		"tpNo": "23",
-		"blockNo": "",
-		"opNo": "343",
-		"citySurveyNo": "524154",
-		"hospitalType": "dfdsf",
-		"numberOfBed": 23,
-		"numberOfOT": 2,
-		"hospitalOTDetails": [
-			{
-				"id": 1,
-				"uniqueId": null,
-				"version": null,
-				"otFacilities": "vcb ",
-				"areaInSquareMeterLength": 43,
-				"areaInSquareMeterBreadth": 43,
-				"areaInSquareMeter": 43
-			},
-			{
-				"id": 2,
-				"uniqueId": null,
-				"version": null,
-				"otFacilities": "fdvd",
-				"areaInSquareMeterLength": 53,
-				"areaInSquareMeterBreadth": 53,
-				"areaInSquareMeter": 53
-			}
-		],
-		"exerciseSection": 32,
-		"drawingWithScale": false,
-		"xraySection": 23,
-		"laboratoryDepartment": "23",
-		"otherInvestigation": "23",
-		"storeDetails": "23",
-		"kitchenDetails": "23",
-		"buildingHeight": 23,
-		"floorArea": 23,
-		"gateDetailing": "23",
-		"rampLiftStairDetails": "23",
-		"liftDetails": "32",
-		"noOfBasement": 32,
-		"lowerBasement": 32,
-		"upperBasement": 233,
-		"totalBuildingFloor": 32,
-		"basementArea": 32,
-		"multipleTowers": true,
-		"noOfTowers": 32,
-		"noOfVentilation": 23,
-		"ventilationProvision": false,
-		"plotArea": 23,
-		"constructedArea": 32,
-		"noOfApproachedRoad": 35,
-		"drawingProvided": true,
-		"architectName": "fdghfdh",
-		"architectNameGuj": "ફ્દ્ઘ્ફ્ધ",
-		"architectFirmName": "fhgf",
-		"architectFirmNameGuj": "ફ્હ્ગ્ફ",
-		"architectRegistrationNumber": "fgfdhdh",
-		"architectFirmNumber": "fhgfdh",
-		"architectContactNo": "5657678687",
-		"noOfHospitalStaff": 6546,
-		"noOfSecurityStaff": 6554,
-		"otherRisks": [
-			"Oxygen"
-		],
-		"otherRiskDetail": null,
-		"gasCylinderNOCDetail": "૫૬૬",
-		"anyStoreProvision": false,
-		"stairCase": {
-			"code": "EXTERNAL",
-			"name": "External",
-			"gujName": "બાહ્ય"
-		},
-		"trainedFiremanStaffKept": true,
-		"exitGateDetail": "edrfet",
-		"otherBusinessDetail": {
-			"code": "KITCHEN",
-			"name": "Kitchen",
-			"gujName": "કિચન"
-		},
-		"riskSegregation": "drtfgrtgf",
-		"anyEvacuationPlan": false,
-		"evacuationDrillPerformed": false,
-		"firefightingSystemAvailability": false,
-		"yardHydrant": "ftrggg",
-		"raiserAvailability": false,
-		"noOfRaiser": 54,
-		"smokeDetector": false,
-		"sprinkler": "45",
-		"fireAlarmAttachedWith": {
-			"code": "SPRINKLER",
-			"name": "Sprinkler",
-			"gujName": "છંટકાવ કરનાર"
-		},
-		"autoExhaustSystem": "",
-		"electricalSafety": "bhgfh",
-		"evacuationSignBoard": "gfhgfh",
-		"refugeArea": "gfhf",
-		"travelDistance": 5353,
-		"overHeadWaterTankCapacity": 45,
-		"undergroundWaterTankCapacity": 54,
-		"alarmSystemTimeLimit": 454,
-		"highestFloodLevel": 4554,
-		"riskAnalysisSurveyDetail": "54",
-		"parkingDetail": "4554",
-		"nabhOwnership": "4554",
-		"lastThreeYearFireIncidents": "4545",
-		"servingSince": "45t454654",
-		"attachments": []
-	}
-	// **********
-
 
 	// serach api variable
 	serachLicenceObj = {
@@ -403,7 +75,7 @@ export class FinalHospitalNocComponent implements OnInit {
 		private router: Router,
 		private route: ActivatedRoute,
 		private formService: FormsActionsService,
-		private TranslateService: TranslateService,
+		public TranslateService: TranslateService,
 		private commonService: CommonService,
 		private toastrService: ToastrService,
 		private fireFacilitiesService: FireFacilitiesService,
@@ -494,14 +166,14 @@ export class FinalHospitalNocComponent implements OnInit {
 
 			try {
 				this.finalHospitalNocForm.patchValue(res);
-				this.showButtons = true;
+				this.fireFacilityConfig.isAttachmentButtonsVisible = true;
 
 				res.hospitalOTDetails.forEach(app => {
 					(<FormArray>this.finalHospitalNocForm.get('hospitalOTDetails')).push(this.createOTDetailArray(app));
 				});
 
 				res.serviceDetail.serviceUploadDocuments.forEach(app => {
-					(<FormArray>this.finalHospitalNocForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.createDocumentsGrp(app));
+					(<FormArray>this.finalHospitalNocForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.fireFacilityConfig.createDocumentsGrp(app));
 				});
 				this.requiredDocumentList();
 
@@ -571,14 +243,14 @@ export class FinalHospitalNocComponent implements OnInit {
 				attachments: []
 			});
 
-			this.showButtons = true;
+			this.fireFacilityConfig.isAttachmentButtonsVisible = true;
 			searchData.hospitalOTDetails.forEach(app => {
 				(<FormArray>this.finalHospitalNocForm.get('hospitalOTDetails')).push(this.createOTDetailArray(app));
 			});
 
 			res.serviceDetail.serviceUploadDocuments.forEach(app => {
 				app.id = null;
-				(<FormArray>this.finalHospitalNocForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.createDocumentsGrp(app));
+				(<FormArray>this.finalHospitalNocForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.fireFacilityConfig.createDocumentsGrp(app));
 			});
 			this.requiredDocumentList();
 
@@ -603,9 +275,9 @@ export class FinalHospitalNocComponent implements OnInit {
 			oldReferenceNumber: [null],
 			applicantName: [null, [Validators.required, Validators.maxLength(100)]],
 			applicantNameGuj: [null, [Validators.required, Validators.maxLength(300)]],
-			contactNo: [null, [Validators.required, Validators.maxLength(12)]],
-			officeContactNo: [null, [Validators.required, Validators.maxLength(12)]],
-			onsitePersonMobileNo: [null, [Validators.required, Validators.maxLength(10), Validators.minLength(10)]],
+			contactNo: [null, [Validators.required, Validators.maxLength(this.fireFacilityConfig.contactNumberLength)]],
+			officeContactNo: [null, [Validators.required, Validators.maxLength(this.fireFacilityConfig.contactNumberLength)]],
+			onsitePersonMobileNo: [null, [Validators.required, Validators.maxLength(this.fireFacilityConfig.mobileNumber_maxLength), Validators.minLength(this.fireFacilityConfig.mobileNumber_minLength)]],
 			workOfficeEmailId: [null, [Validators.required, Validators.maxLength(50)]],
 
 			medicalRegistrationNumber: [null, [Validators.required, Validators.maxLength(10)]],
@@ -617,7 +289,7 @@ export class FinalHospitalNocComponent implements OnInit {
 			hospitalAddressGuj: [null, [Validators.required, Validators.maxLength(900)]],
 			ownerName: [null, [Validators.required, Validators.maxLength(100)]],
 			ownerNameGuj: [null, [Validators.required, Validators.maxLength(300)]],
-			ownerMobileNo: [null, [Validators.required, Validators.maxLength(10)]],
+			ownerMobileNo: [null, [Validators.required, Validators.maxLength(this.fireFacilityConfig.mobileNumber_maxLength), Validators.minLength(this.fireFacilityConfig.mobileNumber_minLength)]],
 			ownerAddress: [null, [Validators.required, Validators.maxLength(150)]],
 			ownerAddressGuj: [null, [Validators.required, Validators.maxLength(300)]],
 
@@ -666,7 +338,7 @@ export class FinalHospitalNocComponent implements OnInit {
 			architectFirmName: [null, [Validators.required, Validators.maxLength(50)]],
 			architectFirmNameGuj: [null, [Validators.required, Validators.maxLength(150)]],
 			architectFirmNumber: [null, [Validators.required, Validators.maxLength(20)]],
-			architectContactNo: [null, [Validators.required, Validators.maxLength(12)]],
+			architectContactNo: [null, [Validators.required, Validators.maxLength(this.fireFacilityConfig.contactNumberLength)]],
 
 			noOfHospitalStaff: [null, [Validators.required, Validators.maxLength(4)]],
 			noOfSecurityStaff: [null, [Validators.required, Validators.maxLength(4)]],
@@ -716,28 +388,6 @@ export class FinalHospitalNocComponent implements OnInit {
 		});
 	}
 
-	/**
-	 * This Method for create attachment array in service detail
-	 * @param data : value of array
-	 */
-	createDocumentsGrp(data?: any): FormGroup {
-		return this.fb.group({
-			// dependentFieldName: [data.dependentFieldName ? data.dependentFieldName : null],
-			documentIdentifier: [data.documentIdentifier ? data.documentIdentifier : null],
-			documentKey: [data.documentKey ? data.documentKey : null],
-			documentLabelEn: [data.documentLabelEn ? data.documentLabelEn : null],
-			documentLabelGuj: [data.documentLabelGuj ? data.documentLabelGuj : null],
-			fieldIdentifier: [data.fieldIdentifier ? data.fieldIdentifier : null],
-			formPart: [data.formPart ? data.formPart : null],
-			id: [data.id ? data.id : null],
-			isActive: [data.isActive],
-			mandatory: [data.mandatory ? data.mandatory : false],
-			maxFileSizeInMB: [data.maxFileSizeInMB ? data.maxFileSizeInMB : 5],
-			requiredOnAdminPortal: [data.requiredOnAdminPortal],
-			requiredOnCitizenPortal: [data.requiredOnCitizenPortal],
-			// version: [data.version ? data.version : null]
-		});
-	}
 
 	/**
    * Method is used to add more child in array.
@@ -901,42 +551,29 @@ export class FinalHospitalNocComponent implements OnInit {
 			let count = flag;
 			// console.log(flag);
 			if (count <= step0) {
-				this.tabIndex = 0;
+				this.fireFacilityConfig.currentTabIndex = 0;
 				return false;
 			} else if (count <= step1) {
-				this.tabIndex = 1;
+				this.fireFacilityConfig.currentTabIndex = 1;
 				return false;
 			} else if (count <= step2) {
-				this.tabIndex = 2;
+				this.fireFacilityConfig.currentTabIndex = 2;
 				return false;
 			} else if (count <= step3) {
-				this.tabIndex = 3;
+				this.fireFacilityConfig.currentTabIndex = 3;
 				return false;
 			} else if (count <= step4) {
-				this.tabIndex = 4;
+				this.fireFacilityConfig.currentTabIndex = 4;
 				return false;
 			} else if (count <= step5) {
-				this.tabIndex = 5;
+				this.fireFacilityConfig.currentTabIndex = 5;
 				return false;
 			}
-			// else if (count == 67) {
-			// 	this.checkReligion();
-			// 	return false;
-			// }
 			else {
 				console.log("else condition");
 			}
 
 		}
-	}
-
-
-	/**
- 	 * This method use to get output event of tab change
- 	 * @param evt - Tab index
- 	 */
-	onTabChange(evt) {
-		this.tabIndex = evt;
 	}
 
 	/**
@@ -945,14 +582,6 @@ export class FinalHospitalNocComponent implements OnInit {
 	 */
 	handleOnSaveAndNext(res) {
 		this.requiredDocumentList();
-	}
-
-
-	/**
-	 * temp methos
-	 */
-	patchValue() {
-		this.finalHospitalNocForm.patchValue(this.dummyJSON);
 	}
 }
 

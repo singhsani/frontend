@@ -1,3 +1,4 @@
+import { FireFacilityConfig } from './../config/FireFacilityConfig';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -13,7 +14,6 @@ import { AmazingTimePickerService } from 'amazing-time-picker';
 })
 export class DeadBodyWanComponent implements OnInit {
 
-	tabIndex: number = 0;
 	deadBodyWanForm: FormGroup;
 	translateKey: string = 'deadBodyWanScreen';
 
@@ -21,6 +21,7 @@ export class DeadBodyWanComponent implements OnInit {
 	apiCode: string;
 
 	disablePastDate = new Date(moment().format('YYYY-MM-DD'));
+	fireFacilityConfig: FireFacilityConfig = new FireFacilityConfig();
 
 	constructor(
 		private fb: FormBuilder,
@@ -62,7 +63,7 @@ export class DeadBodyWanComponent implements OnInit {
 			applicantAddress: [null, [Validators.required, Validators.maxLength(300)]],
 			applicationDate: [null, Validators.required],
 			vehicleRequirementTime: [null, [Validators.required, Validators.maxLength(10)]],
-			mobileNo: [null, [Validators.required, Validators.maxLength(10), Validators.minLength(10)]],
+			mobileNo: [null, [Validators.required, Validators.maxLength(this.fireFacilityConfig.mobileNumber_maxLength), Validators.minLength(this.fireFacilityConfig.mobileNumber_minLength)]],
 			deadPersonName: [null, [Validators.required, Validators.maxLength(150)]],
 			fromPlace: [null, [Validators.required, Validators.maxLength(300)]],
 			toPlace: [null, [Validators.required, Validators.maxLength(150)]],
@@ -81,7 +82,7 @@ export class DeadBodyWanComponent implements OnInit {
 	 * @param date : selected date
 	 * @param controlType : form control name
 	 */
-	dateFormat(date:any, controlType: string) {
+	dateFormat(date: any, controlType: string) {
 		this.deadBodyWanForm.get(controlType).setValue(moment(date).format("YYYY-MM-DD"));
 	}
 
@@ -106,8 +107,8 @@ export class DeadBodyWanComponent implements OnInit {
 	 * @param ev - event
 	 * @param index - index of child
 	 */
-	changeTimeFormat(ev:string, controlName: string){
-		if(ev && ev.length < 8){
+	changeTimeFormat(ev: string, controlName: string) {
+		if (ev && ev.length < 8) {
 			ev = ev.concat(":00");
 		}
 		this.deadBodyWanForm.get(controlName).setValue(ev);
@@ -119,29 +120,17 @@ export class DeadBodyWanComponent implements OnInit {
      * @param flag - flag of invalid control.
      */
 	handleErrorsOnSubmit(flag) {
-
 		let step0 = 16;
-
 		if (flag != null) {
 			//Check validation for step by step
 			let count = flag;
-			// console.log(flag);
 			if (count <= step0) {
-				this.tabIndex = 0;
+				this.fireFacilityConfig.currentTabIndex = 0;
 				return false;
-			}else {
+			} else {
 				console.log("else condition");
 			}
 
 		}
 	}
-
-	/**
- 	 * This method use to get output event of tab change
- 	 * @param evt - Tab index
- 	 */
-	onTabChange(evt) {
-		this.tabIndex = evt;
-	}
-
 }

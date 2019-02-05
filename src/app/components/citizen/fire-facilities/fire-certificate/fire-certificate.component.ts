@@ -1,3 +1,4 @@
+import { FireFacilityConfig } from './../config/FireFacilityConfig';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -20,13 +21,12 @@ export class FireCertificateComponent implements OnInit {
 
   appId: number;
   apiCode: string;
-  tabIndex: number = 0;
   //Lookups Array
   FS_FIRE_PLACE_TYPE: Array<any> = [];
   disablefutureDate = new Date(moment().format('YYYY-MM-DD'));
   // required attachment array
-  private uploadFilesArray: Array<any> = [];
-  private showButtons: boolean = false;
+  uploadFilesArray: Array<any> = [];
+  fireFacilityConfig: FireFacilityConfig = new FireFacilityConfig();
 
   constructor(
     private fb: FormBuilder,
@@ -34,7 +34,7 @@ export class FireCertificateComponent implements OnInit {
     private formService: FormsActionsService,
     private atp: AmazingTimePickerService,
     private router: Router,
-    private TranslateService:TranslateService
+    public TranslateService: TranslateService
   ) { }
 
   ngOnInit() {
@@ -62,45 +62,22 @@ export class FireCertificateComponent implements OnInit {
 
       // try {
       this.fireCertificateForm.patchValue(res);
-      this.showButtons = true;
+      this.fireFacilityConfig.isAttachmentButtonsVisible = true;
       //convert applicant name and set in applicantNameGuj filds 
-			let applicantNameGujFields=this.fireCertificateForm.get('applicantNameGuj');
-			let applicantNameValue=this.fireCertificateForm.get('applicantName').value;
-			if(!applicantNameGujFields.value){
-				applicantNameGujFields.setValue(this.TranslateService.getEngToGujTranslation(applicantNameValue))
+      let applicantNameGujFields = this.fireCertificateForm.get('applicantNameGuj');
+      let applicantNameValue = this.fireCertificateForm.get('applicantName').value;
+      if (!applicantNameGujFields.value) {
+        applicantNameGujFields.setValue(this.TranslateService.getEngToGujTranslation(applicantNameValue))
       }
-      
+
       res.serviceDetail.serviceUploadDocuments.forEach(app => {
-        (<FormArray>this.fireCertificateForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.createDocumentsGrp(app));
+        (<FormArray>this.fireCertificateForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.fireFacilityConfig.createDocumentsGrp(app));
       });
       this.requiredDocumentList();
 
       // } catch (error) {
       //   console.log(error.message)
       // }
-    });
-  }
-
-	/**
-	 * This Method for create attachment array in service detail
-	 * @param data : value of array
-	 */
-  createDocumentsGrp(data?: any): FormGroup {
-    return this.fb.group({
-      // dependentFieldName: [data.dependentFieldName ? data.dependentFieldName : null],
-      documentIdentifier: [data.documentIdentifier ? data.documentIdentifier : null],
-      documentKey: [data.documentKey ? data.documentKey : null],
-      documentLabelEn: [data.documentLabelEn ? data.documentLabelEn : null],
-      documentLabelGuj: [data.documentLabelGuj ? data.documentLabelGuj : null],
-      fieldIdentifier: [data.fieldIdentifier ? data.fieldIdentifier : null],
-      formPart: [data.formPart ? data.formPart : null],
-      id: [data.id ? data.id : null],
-      isActive: [data.isActive],
-      mandatory: [data.mandatory ? data.mandatory : false],
-      maxFileSizeInMB: [data.maxFileSizeInMB ? data.maxFileSizeInMB : 5],
-      requiredOnAdminPortal: [data.requiredOnAdminPortal],
-      requiredOnCitizenPortal: [data.requiredOnCitizenPortal],
-      // version: [data.version ? data.version : null]
     });
   }
 
@@ -207,21 +184,13 @@ export class FireCertificateComponent implements OnInit {
       let count = flag;
       // console.log(flag);
       if (count <= step0) {
-        this.tabIndex = 0;
+        this.fireFacilityConfig.currentTabIndex = 0;
         return false;
       } else {
         console.log("else condition");
       }
 
     }
-  }
-
-	/**
- 	 * This method use to get output event of tab change
- 	 * @param evt - Tab index
- 	 */
-  onTabChange(evt) {
-    this.tabIndex = evt;
   }
 
 }

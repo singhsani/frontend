@@ -1,3 +1,4 @@
+import { FireFacilityConfig } from './../config/FireFacilityConfig';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray, Validator } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -20,11 +21,10 @@ export class TempFireworksNocComponent implements OnInit {
 
 	formId: number;
 	apiCode: string;
-	tabIndex: number = 0;
 
 	// required attachment array
-	private uploadFilesArray: Array<any> = [];
-	private showButtons: boolean = false;
+	uploadFilesArray: Array<any> = [];
+	fireFacilityConfig: FireFacilityConfig = new FireFacilityConfig();
 
 	//Lookups Array
 	FS_WIRING_TYPE: Array<any> = [];
@@ -40,7 +40,7 @@ export class TempFireworksNocComponent implements OnInit {
 		private router: Router,
 		private route: ActivatedRoute,
 		private formService: FormsActionsService,
-		private TranslateService: TranslateService
+		public TranslateService: TranslateService
 	) { }
 
 	/**
@@ -78,7 +78,7 @@ export class TempFireworksNocComponent implements OnInit {
 			}
 		});
 		//check for attachment is mandatory
-		
+
 		// this.dependentAttachment(this.tempFireworksNocForm.get('applicationThroughPolice').value, 'LETTER_TO_APPLICANT');
 		this.dependentAttachment(this.tempFireworksNocForm.get('securityArrangement').value, 'SECURITY_ARRANGEMENT');
 		// this.dependentAttachment(this.tempFireworksNocForm.get('layoutPlanIncluded').value, 'LOCATION_MAP');
@@ -133,7 +133,7 @@ export class TempFireworksNocComponent implements OnInit {
 
 			try {
 				this.tempFireworksNocForm.patchValue(res);
-				this.showButtons = true;
+				this.fireFacilityConfig.isAttachmentButtonsVisible = true;
 
 				//convert applicant name and set in applicantNameGuj filds 
 				let applicantNameGujFields = this.tempFireworksNocForm.get('applicantNameGuj');
@@ -143,7 +143,7 @@ export class TempFireworksNocComponent implements OnInit {
 				}
 
 				res.serviceDetail.serviceUploadDocuments.forEach(app => {
-					(<FormArray>this.tempFireworksNocForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.createDocumentsGrp(app));
+					(<FormArray>this.tempFireworksNocForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.fireFacilityConfig.createDocumentsGrp(app));
 				});
 				this.requiredDocumentList();
 
@@ -173,7 +173,7 @@ export class TempFireworksNocComponent implements OnInit {
 			/* Step 1 controls start */
 			applicantName: [null, [Validators.required, Validators.maxLength(100)]],
 			applicantNameGuj: [null, [Validators.required, Validators.maxLength(300)]],
-			mobileNo: [null, [Validators.required, Validators.maxLength(10)]],
+			mobileNo: [null, [Validators.required, Validators.maxLength(this.fireFacilityConfig.mobileNumber_maxLength), Validators.minLength(this.fireFacilityConfig.mobileNumber_minLength)]],
 			email: [null, [Validators.required, Validators.maxLength(50)]],
 			oldReferenceNumber: [null, [Validators.maxLength(10)]],//not now
 			applicationDate: [null],//not now
@@ -213,28 +213,6 @@ export class TempFireworksNocComponent implements OnInit {
 		});
 	}
 
-	/**
-	 * This Method for create attachment array in service detail
-	 * @param data : value of array
-	 */
-	createDocumentsGrp(data?: any): FormGroup {
-		return this.fb.group({
-			// dependentFieldName: [data.dependentFieldName ? data.dependentFieldName : null],
-			documentIdentifier: [data.documentIdentifier ? data.documentIdentifier : null],
-			documentKey: [data.documentKey ? data.documentKey : null],
-			documentLabelEn: [data.documentLabelEn ? data.documentLabelEn : null],
-			documentLabelGuj: [data.documentLabelGuj ? data.documentLabelGuj : null],
-			fieldIdentifier: [data.fieldIdentifier ? data.fieldIdentifier : null],
-			formPart: [data.formPart ? data.formPart : null],
-			id: [data.id ? data.id : null],
-			isActive: [data.isActive],
-			mandatory: [data.mandatory ? data.mandatory : false],
-			maxFileSizeInMB: [data.maxFileSizeInMB ? data.maxFileSizeInMB : 5],
-			requiredOnAdminPortal: [data.requiredOnAdminPortal],
-			requiredOnCitizenPortal: [data.requiredOnCitizenPortal],
-			// version: [data.version ? data.version : null]
-		});
-	}
 
 	/**
 	 * This method required for final form submition.
@@ -250,16 +228,12 @@ export class TempFireworksNocComponent implements OnInit {
 			let count = flag;
 			// console.log(flag);
 			if (count <= step0) {
-				this.tabIndex = 0;
+				this.fireFacilityConfig.currentTabIndex = 0;
 				return false;
 			} else if (count <= step1) {
-				this.tabIndex = 1;
+				this.fireFacilityConfig.currentTabIndex = 1;
 				return false;
-			} 
-			// else if (count == 67) {
-			// 	this.checkReligion();
-			// 	return false;
-			// }
+			}
 			else {
 				console.log("else condition");
 			}
@@ -267,14 +241,6 @@ export class TempFireworksNocComponent implements OnInit {
 		}
 	}
 
-
-	/**
-	   * This method use to get output event of tab change
-	   * @param evt - Tab index
-	   */
-	onTabChange(evt) {
-		this.tabIndex = evt;
-	}
 
 	/**
 	 * This method is handle depended documents on save event

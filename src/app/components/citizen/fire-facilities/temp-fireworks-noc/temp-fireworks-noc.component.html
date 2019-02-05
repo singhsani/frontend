@@ -1,7 +1,7 @@
 <app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
 <mat-card class="formClass cardBorder">
 	<form [formGroup]="tempFireworksNocForm">
-		<mat-tab-group [(selectedIndex)]="tabIndex" dynamicHeight="true" mat-stretch-tabs class="stepperNav">
+		<mat-tab-group [(selectedIndex)]="fireFacilityConfig.currentTabIndex" dynamicHeight="true" mat-stretch-tabs class="stepperNav">
 
 			<!-- step 1 Starts -->
 			<mat-tab>
@@ -20,32 +20,32 @@
 						<input matInput appValidationFields [validationFieldsType]="'onlyNameWithSpace'" required maxlength="100"
 						 placeholder="{{'applicant_name' | translate:translateKey}}" formControlName="applicantName" appGujInputSource
 						 targetElement="applicantNameGuj" [form]="tempFireworksNocForm">
-						<control-messages [control]="tempFireworksNocForm.controls.applicantName"></control-messages>
+						<control-messages [control]="tempFireworksNocForm.get('applicantName')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-6">
 						<input matInput type="text" maxlength="300" required formControlName="applicantNameGuj" appGujInputTarget [form]="tempFireworksNocForm"
 						 placeholder="{{ 'applicant_name' | translate:translateKey:'gu' }}">
-						<control-messages [control]="tempFireworksNocForm.controls.applicantNameGuj"></control-messages>
+						<control-messages [control]="tempFireworksNocForm.get('applicantNameGuj')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<!-- <span matPrefix>+91 &nbsp;</span> -->
-						<input matInput OnlyNumber placeholder="{{'mobile_no' | translate:translateKey}}" type="tel" maxlength="10"
-						 minlength="10" formControlName="mobileNo" required>
-						<control-messages [control]="tempFireworksNocForm.controls.mobileNo"></control-messages>
+						<input matInput OnlyNumber placeholder="{{'mobile_no' | translate:translateKey}}" type="tel" [maxlength]="fireFacilityConfig.mobileNumber_maxLength"
+						 [minlength]="fireFacilityConfig.mobileNumber_minLength" formControlName="mobileNo" required>
+						<control-messages [control]="tempFireworksNocForm.get('mobileNo')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-8">
 						<input matInput appPreventSpace placeholder="{{'email_id' | translate:translateKey}}" type="email"
 						 formControlName="email" required maxlength="50">
-						<control-messages [control]="tempFireworksNocForm.controls.email"></control-messages>
+						<control-messages [control]="tempFireworksNocForm.get('email')"></control-messages>
 					</mat-form-field>
 
 
 				</div>
-				<app-action-bar [form]="tempFireworksNocForm" (tabIndex)="onTabChange($event)" (handleOnSaveAndNext)="handleOnSaveAndNext($event)"
-				 [stepInfo]="{step: 'step1', next: 1, back: 0}"></app-action-bar>
+				<app-action-bar [form]="tempFireworksNocForm" (tabIndex)="fireFacilityConfig.onFormTabChange($event)"
+				 (handleOnSaveAndNext)="handleOnSaveAndNext($event)" [stepInfo]="{step: 'step1', next: 1, back: 0}"></app-action-bar>
 			</mat-tab>
 			<!-- step 1 Ends -->
 			<!-- step 2 Start -->
@@ -68,7 +68,7 @@
 										{{'no_txt' | translate:translateKey }}
 									</mat-radio-button>
 								</mat-radio-group>
-								<control-messages [control]="tempFireworksNocForm.controls.applicationThroughPolice"></control-messages>
+								<control-messages [control]="tempFireworksNocForm.get('applicationThroughPolice')"></control-messages>
 							</div>
 						</div>
 					</div>
@@ -76,28 +76,30 @@
 					<mat-form-field class="col-md-6">
 						<textarea matInput rows="2" cols="50" required maxlength="200" placeholder="{{'temporary_shop_address' | translate:translateKey}}"
 						 formControlName="temporaryShopAddress"></textarea>
-						<control-messages [control]="tempFireworksNocForm.controls.temporaryShopAddress"></control-messages>
+						<control-messages [control]="tempFireworksNocForm.get('temporaryShopAddress')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-6">
-						<input matInput [matDatepicker]="picker1" formControlName="fromDate" placeholder="{{'from_date' | translate:translateKey }} (DD/MM/YYYY)"
-						 required (dateChange)="dateFormate($event.value,'fromDate');tempFireworksNocForm.controls.toDate.reset()">
+						<input matInput [matDatepicker]="picker1" formControlName="fromDate" placeholder="{{'from_date' | translate:translateKey }}"
+						 required (dateChange)="dateFormate($event.value,'fromDate');tempFireworksNocForm.get('toDate').reset()">
 						<mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
 						<mat-datepicker #picker1 touchUi="true"></mat-datepicker>
-						<control-messages [control]="tempFireworksNocForm.controls.fromDate"></control-messages>
+						<div align="end" class="default-show-hint mat-hint mat-right">{{fireFacilityConfig.DATE_HINT_MSG}}</div>
+						<control-messages [control]="tempFireworksNocForm.get('fromDate')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-6">
-						<input matInput [matDatepicker]="picker2" [min]="tempFireworksNocForm.controls.fromDate.value" formControlName="toDate"
-						 placeholder="{{'to_date' | translate:translateKey }} (DD/MM/YYYY)" required (dateChange)="dateFormate($event.value,'toDate')">
+						<input matInput [matDatepicker]="picker2" [min]="tempFireworksNocForm.get('fromDate').value" formControlName="toDate"
+						 placeholder="{{'to_date' | translate:translateKey }}" required (dateChange)="dateFormate($event.value,'toDate')">
 						<mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
 						<mat-datepicker #picker2 touchUi="true"></mat-datepicker>
-						<control-messages [control]="tempFireworksNocForm.controls.toDate"></control-messages>
+						<div align="end" class="default-show-hint mat-hint mat-right">{{fireFacilityConfig.DATE_HINT_MSG}}</div>
+						<control-messages [control]="tempFireworksNocForm.get('toDate')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<input matInput required OnlyNumber maxlength="10" type="tel" formControlName="noOfShops" placeholder="{{'no_of_shops' | translate:translateKey }}">
-						<control-messages [control]="tempFireworksNocForm.controls.noOfShops"></control-messages>
+						<control-messages [control]="tempFireworksNocForm.get('noOfShops')"></control-messages>
 					</mat-form-field>
 
 					<div class="col-md-4">
@@ -112,7 +114,7 @@
 										{{'no_txt' | translate:translateKey }}
 									</mat-radio-button>
 								</mat-radio-group>
-								<control-messages [control]="tempFireworksNocForm.controls.shopInVMCBoundry"></control-messages>
+								<control-messages [control]="tempFireworksNocForm.get('shopInVMCBoundry')"></control-messages>
 							</div>
 						</div>
 					</div>
@@ -120,7 +122,7 @@
 					<mat-form-field class="col-md-4">
 						<input matInput placeholder="{{'shop_in_open_space' | translate:translateKey}}" formControlName="shopInOpenSpace"
 						 maxlength="150">
-						<control-messages [control]="tempFireworksNocForm.controls.shopInOpenSpace"></control-messages>
+						<control-messages [control]="tempFireworksNocForm.get('shopInOpenSpace')"></control-messages>
 					</mat-form-field>
 
 					<div class="col-md-4">
@@ -135,7 +137,7 @@
 										{{'no_txt' | translate:translateKey }}
 									</mat-radio-button>
 								</mat-radio-group>
-								<control-messages [control]="tempFireworksNocForm.controls.ownerIsVMC"></control-messages>
+								<control-messages [control]="tempFireworksNocForm.get('ownerIsVMC')"></control-messages>
 							</div>
 						</div>
 					</div>
@@ -152,28 +154,29 @@
 										{{'no_txt' | translate:translateKey }}
 									</mat-radio-button>
 								</mat-radio-group>
-								<control-messages [control]="tempFireworksNocForm.controls.ownerConsentLetterIncluded"></control-messages>
+								<control-messages [control]="tempFireworksNocForm.get('ownerConsentLetterIncluded')"></control-messages>
 							</div>
 						</div>
 					</div>
 
 					<mat-form-field class="col-md-4">
-						<input matInput [matDatepicker]="picker3" formControlName="consentLetterDate" placeholder="{{'consent_letter_date' | translate:translateKey }} (DD/MM/YYYY)"
+						<input matInput [matDatepicker]="picker3" formControlName="consentLetterDate" placeholder="{{'consent_letter_date' | translate:translateKey }}"
 						 required (dateChange)="dateFormate($event.value,'consentLetterDate')">
 						<mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
 						<mat-datepicker #picker3 touchUi="true"></mat-datepicker>
-						<control-messages [control]="tempFireworksNocForm.controls.consentLetterDate"></control-messages>
+						<div align="end" class="default-show-hint mat-hint mat-right">{{fireFacilityConfig.DATE_HINT_MSG}}</div>
+						<control-messages [control]="tempFireworksNocForm.get('consentLetterDate')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" appAlphaNumeric formControlName="propertyNo" placeholder="{{'property_no' | translate: translateKey }} *"
 						 maxlength="15">
-						<control-messages [control]="tempFireworksNocForm.controls.propertyNo"></control-messages>
+						<control-messages [control]="tempFireworksNocForm.get('propertyNo')"></control-messages>
 					</mat-form-field>
 
 					<div class="col-md-4 radioBtnError">
 						<mat-label>{{'layout_plan_included' | translate:translateKey }} *</mat-label>
-						<mat-radio-group formControlName="layoutPlanIncluded" required >
+						<mat-radio-group formControlName="layoutPlanIncluded" required>
 							<mat-radio-button [value]="true">
 								{{'yes_txt' | translate:translateKey }}
 							</mat-radio-button>
@@ -181,7 +184,7 @@
 								{{'no_txt' | translate:translateKey }}
 							</mat-radio-button>
 						</mat-radio-group>
-						<control-messages [control]="tempFireworksNocForm.controls.layoutPlanIncluded"></control-messages>
+						<control-messages [control]="tempFireworksNocForm.get('layoutPlanIncluded')"></control-messages>
 					</div>
 					<div class="col-md-4 radioBtnError">
 						<mat-label>{{'weather_exit_shown_in_map' | translate:translateKey }} *</mat-label>
@@ -193,18 +196,18 @@
 								{{'no_txt' | translate:translateKey }}
 							</mat-radio-button>
 						</mat-radio-group>
-						<control-messages [control]="tempFireworksNocForm.controls.weatherExitShownInMap"></control-messages>
+						<control-messages [control]="tempFireworksNocForm.get('weatherExitShownInMap')"></control-messages>
 					</div>
 
 					<mat-form-field class="col-md-4">
 						<input matInput required OnlyNumber maxlength="3" type="tel" formControlName="noOfExits" placeholder="{{'no_of_exits' | translate:translateKey }}">
-						<control-messages [control]="tempFireworksNocForm.controls.noOfExits"></control-messages>
+						<control-messages [control]="tempFireworksNocForm.get('noOfExits')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<textarea matInput rows="2" cols="50" required maxlength="500" placeholder="{{'usage_of_in_flammable' | translate:translateKey}}"
 						 formControlName="usageOfInflammable"></textarea>
-						<control-messages [control]="tempFireworksNocForm.controls.usageOfInflammable"></control-messages>
+						<control-messages [control]="tempFireworksNocForm.get('usageOfInflammable')"></control-messages>
 					</mat-form-field>
 
 				</div>
@@ -220,7 +223,7 @@
 								{{'no_txt' | translate:translateKey }}
 							</mat-radio-button>
 						</mat-radio-group>
-						<control-messages [control]="tempFireworksNocForm.controls.securityArrangement"></control-messages>
+						<control-messages [control]="tempFireworksNocForm.get('securityArrangement')"></control-messages>
 					</div>
 
 					<div class="col-md-4 radioBtnError">
@@ -233,7 +236,7 @@
 								{{'no_txt' | translate:translateKey }}
 							</mat-radio-button>
 						</mat-radio-group>
-						<control-messages [control]="tempFireworksNocForm.controls.parkingArrangement"></control-messages>
+						<control-messages [control]="tempFireworksNocForm.get('parkingArrangement')"></control-messages>
 					</div>
 					<div class="col-md-4 radioBtnError">
 						<mat-label>{{'exit_no_smoking_sign_board_provision' | translate:translateKey }} *</mat-label>
@@ -245,7 +248,7 @@
 								{{'no_txt' | translate:translateKey }}
 							</mat-radio-button>
 						</mat-radio-group>
-						<control-messages [control]="tempFireworksNocForm.controls.exitNoSmokingSignboardProvision"></control-messages>
+						<control-messages [control]="tempFireworksNocForm.get('exitNoSmokingSignboardProvision')"></control-messages>
 					</div>
 					<div class="col-md-4 radioBtnError">
 						<mat-label>{{'stand_by_fire_engine_demanded' | translate:translateKey }} *</mat-label>
@@ -257,7 +260,7 @@
 								{{'no_txt' | translate:translateKey }}
 							</mat-radio-button>
 						</mat-radio-group>
-						<control-messages [control]="tempFireworksNocForm.controls.standbyFireEngineDemanded"></control-messages>
+						<control-messages [control]="tempFireworksNocForm.get('standbyFireEngineDemanded')"></control-messages>
 					</div>
 					<div class="col-md-4 radioBtnError">
 						<mat-label>{{'last_year_licence_received' | translate:translateKey }} *</mat-label>
@@ -269,24 +272,24 @@
 								{{'no_txt' | translate:translateKey }}
 							</mat-radio-button>
 						</mat-radio-group>
-						<control-messages [control]="tempFireworksNocForm.controls.lastYearLicenceReceived"></control-messages>
+						<control-messages [control]="tempFireworksNocForm.get('lastYearLicenceReceived')"></control-messages>
 					</div>
 					<mat-form-field class="col-md-4">
 						<input matInput maxlength="12" required appAlphaNumeric placeholder="{{'vmc_fee_receipt_no' | translate:translateKey}}"
 						 formControlName="vmcFeeReceiptNo">
-						<control-messages [control]="tempFireworksNocForm.controls.vmcFeeReceiptNo"></control-messages>
+						<control-messages [control]="tempFireworksNocForm.get('vmcFeeReceiptNo')"></control-messages>
 					</mat-form-field>
 
 					<div class="col-md-4 ngSelect" formGroupName="wiringType">
 						<ng-select placeholder="{{'wiring_type' | translate:translateKey}} *" formControlName="code">
 							<ng-option *ngFor="let type of FS_WIRING_TYPE " [value]="type.code">{{type.name}}</ng-option>
 						</ng-select>
-						<control-messages [control]="tempFireworksNocForm.get('wiringType').controls.code"></control-messages>
+						<control-messages [control]="tempFireworksNocForm.get('wiringType').get('code')"></control-messages>
 					</div>
 				</div>
 
-				<app-action-bar [form]="tempFireworksNocForm" (tabIndex)="onTabChange($event)" (handleOnSaveAndNext)="handleOnSaveAndNext($event)"
-				 [stepInfo]="{step: 'step2', next: 2, back: 0}"></app-action-bar>
+				<app-action-bar [form]="tempFireworksNocForm" (tabIndex)="fireFacilityConfig.onFormTabChange($event)"
+				 (handleOnSaveAndNext)="handleOnSaveAndNext($event)" [stepInfo]="{step: 'step2', next: 2, back: 0}"></app-action-bar>
 			</mat-tab>
 			<!-- step 2 Ends -->
 
@@ -297,14 +300,14 @@
 				</ng-template>
 				<div class="row">
 					<ng-container *ngFor="let doc of tempFireworksNocForm.get('serviceDetail').get('serviceUploadDocuments').value">
-						<div class="col-md-4" *ngIf="doc.requiredOnCitizenPortal && doc.isActive && showButtons">
+						<div class="col-md-4" *ngIf="doc.requiredOnCitizenPortal && doc.isActive && fireFacilityConfig.isAttachmentButtonsVisible">
 							<label>{{TranslateService.getCurrentLanguage()=='en'? doc.documentLabelEn : doc.documentLabelGuj }} <span *ngIf="doc.mandatory">*</span></label>
 							<file-upload [form]="tempFireworksNocForm" [uploadModel]="doc"></file-upload>
 						</div>
 					</ng-container>
 				</div>
 
-				<app-action-bar [uploadFiles]="uploadFilesArray" [form]="tempFireworksNocForm" (tabIndex)="onTabChange($event) "
+				<app-action-bar [uploadFiles]="uploadFilesArray" [form]="tempFireworksNocForm" (tabIndex)="fireFacilityConfig.onFormTabChange($event) "
 				 (handleOnSaveAndNext)="handleOnSaveAndNext($event)" (handleErrors)="handleErrorsOnSubmit($event)" [stepInfo]="{step: 'final', next:6, back:3} "></app-action-bar>
 
 			</mat-tab>

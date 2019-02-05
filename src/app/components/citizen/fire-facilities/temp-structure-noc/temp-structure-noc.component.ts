@@ -1,3 +1,4 @@
+import { FireFacilityConfig } from './../config/FireFacilityConfig';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray, Validator } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -23,11 +24,10 @@ export class TempStructureNocComponent implements OnInit {
 
 	formId: number;
 	apiCode: string;
-	tabIndex: number = 0;
 
 	// required attachment array
-	private uploadFilesArray: Array<any> = [];
-	private showButtons: boolean = false;
+	uploadFilesArray: Array<any> = [];
+	fireFacilityConfig: FireFacilityConfig = new FireFacilityConfig();
 
 	//Lookups Array
 	FS_COMMUNICATION_ARRANGEMENT: Array<any> = [];
@@ -46,7 +46,7 @@ export class TempStructureNocComponent implements OnInit {
 		private router: Router,
 		private route: ActivatedRoute,
 		private formService: FormsActionsService,
-		private TranslateService: TranslateService,
+		public TranslateService: TranslateService,
 		private atp: AmazingTimePickerService
 	) { }
 
@@ -89,7 +89,7 @@ export class TempStructureNocComponent implements OnInit {
 		this.dependentAttachment(this.tempStructureNocForm.get('layoutPlanIncluded').value, 'LAY_OUT_PLAN');
 		this.dependentAttachment(this.tempStructureNocForm.get('securityArrangement').value, 'SECURITY_ARRANGEMENT');
 		this.dependentAttachment(this.tempStructureNocForm.get('landOwnerConsentIncluded').value, 'LAND_OWNER_CONCERN_LETTER');
-		
+
 	}
 
 	/**
@@ -141,7 +141,7 @@ export class TempStructureNocComponent implements OnInit {
 
 			try {
 				this.tempStructureNocForm.patchValue(res);
-				this.showButtons = true;
+				this.fireFacilityConfig.isAttachmentButtonsVisible = true;
 				//convert applicant name and set in applicantNameGuj filds 
 				let applicantNameGujFields = this.tempStructureNocForm.get('applicantNameGuj');
 				let applicantNameValue = this.tempStructureNocForm.get('applicantName').value;
@@ -150,7 +150,7 @@ export class TempStructureNocComponent implements OnInit {
 				}
 
 				res.serviceDetail.serviceUploadDocuments.forEach(app => {
-					(<FormArray>this.tempStructureNocForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.createDocumentsGrp(app));
+					(<FormArray>this.tempStructureNocForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.fireFacilityConfig.createDocumentsGrp(app));
 				});
 				this.requiredDocumentList();
 
@@ -182,12 +182,12 @@ export class TempStructureNocComponent implements OnInit {
 			/* Step 1 controls start */
 			applicantName: [null, [Validators.required, Validators.maxLength(100)]],
 			applicantNameGuj: [null, [Validators.required, Validators.maxLength(300)]],
-			mobileNo: [null, [Validators.required, Validators.maxLength(10)]],
+			mobileNo: [null, [Validators.required, Validators.maxLength(this.fireFacilityConfig.mobileNumber_maxLength), Validators.minLength(this.fireFacilityConfig.mobileNumber_minLength)]],
 			email: [null, [Validators.required, Validators.maxLength(50)]],
 			oldReferenceNumber: [null],
 			applicationDate: [null],//not now
-			officeContactNo: [null, [Validators.required, Validators.maxLength(12)]],
-			onsitePersonMobileNo: [null, [Validators.required, Validators.maxLength(10)]],
+			officeContactNo: [null, [Validators.required, Validators.maxLength(this.fireFacilityConfig.contactNumberLength)]],
+			onsitePersonMobileNo: [null, [Validators.required, Validators.maxLength(this.fireFacilityConfig.mobileNumber_maxLength), Validators.minLength(this.fireFacilityConfig.mobileNumber_minLength)]],
 			officeEmailId: [null, [Validators.required, Validators.maxLength(50)]],
 
 			/* Step 2 controls start */
@@ -206,7 +206,7 @@ export class TempStructureNocComponent implements OnInit {
 			organizeNameGuj: [null, [Validators.required, Validators.maxLength(300)]],
 			organizerAddress: [null, [Validators.required, Validators.maxLength(200)]],
 			organizerAddressGuj: [null, [Validators.required, Validators.maxLength(400)]],
-			organizerContactNo: [null, [Validators.required, Validators.maxLength(12)]],
+			organizerContactNo: [null, [Validators.required, Validators.maxLength(this.fireFacilityConfig.contactNumberLength)]],
 			temporaryStructureAddress: [null, [Validators.required, Validators.maxLength(500)]],
 			temporaryStructureAddressGuj: [null, [Validators.required, Validators.maxLength(1500)]],
 
@@ -259,28 +259,6 @@ export class TempStructureNocComponent implements OnInit {
 		});
 	}
 
-	/**
-	 * This Method for create attachment array in service detail
-	 * @param data : value of array
-	 */
-	createDocumentsGrp(data?: any): FormGroup {
-		return this.fb.group({
-			// dependentFieldName: [data.dependentFieldName ? data.dependentFieldName : null],
-			documentIdentifier: [data.documentIdentifier ? data.documentIdentifier : null],
-			documentKey: [data.documentKey ? data.documentKey : null],
-			documentLabelEn: [data.documentLabelEn ? data.documentLabelEn : null],
-			documentLabelGuj: [data.documentLabelGuj ? data.documentLabelGuj : null],
-			fieldIdentifier: [data.fieldIdentifier ? data.fieldIdentifier : null],
-			formPart: [data.formPart ? data.formPart : null],
-			id: [data.id ? data.id : null],
-			isActive: [data.isActive],
-			mandatory: [data.mandatory ? data.mandatory : false],
-			maxFileSizeInMB: [data.maxFileSizeInMB ? data.maxFileSizeInMB : 5],
-			requiredOnAdminPortal: [data.requiredOnAdminPortal],
-			requiredOnCitizenPortal: [data.requiredOnCitizenPortal],
-			// version: [data.version ? data.version : null]
-		});
-	}
 
 	/**
 	 * This method required for final form submition.
@@ -298,36 +276,23 @@ export class TempStructureNocComponent implements OnInit {
 			let count = flag;
 			// console.log(flag);
 			if (count <= step0) {
-				this.tabIndex = 0;
+				this.fireFacilityConfig.currentTabIndex = 0;
 				return false;
 			} else if (count <= step1) {
-				this.tabIndex = 1;
+				this.fireFacilityConfig.currentTabIndex = 1;
 				return false;
 			} else if (count <= step2) {
-				this.tabIndex = 2;
+				this.fireFacilityConfig.currentTabIndex = 2;
 				return false;
 			} else if (count <= step3) {
-				this.tabIndex = 3;
+				this.fireFacilityConfig.currentTabIndex = 3;
 				return false;
 			}
-			// else if (count == 67) {
-			// 	this.checkReligion();
-			// 	return false;
-			// }
 			else {
 				console.log("else condition");
 			}
 
 		}
-	}
-
-
-	/**
-	   * This method use to get output event of tab change
-	   * @param evt - Tab index
-	   */
-	onTabChange(evt) {
-		this.tabIndex = evt;
 	}
 
 	/**

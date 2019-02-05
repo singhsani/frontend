@@ -1,3 +1,4 @@
+import { FireFacilityConfig } from './../config/FireFacilityConfig';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -16,7 +17,6 @@ import { FireFacilitiesService } from '../common/services/fire-facilities.servic
 export class GasConnectionNocComponent implements OnInit {
 
 
-	tabIndex: number = 0;
 
 	gasConnectionForm: FormGroup;
 	translateKey: string = 'gasConnectionScreen';
@@ -25,22 +25,21 @@ export class GasConnectionNocComponent implements OnInit {
 	apiCode: string;
 
 	disablefutureDate = new Date(moment().format('YYYY-MM-DD'));
-	propertyStatusOutstanding = {};
+	propertyStatusOutstanding: any = {};
 
 	//Lookups Array
 	FS_CONNECTION_PURPOSE: Array<any> = [];
 	FS_FIRE_PLACE: Array<any> = [];
 
 	// required attachment array
-	private uploadFilesArray: Array<any> = [];
-	private showButtons: boolean = false;
-
+	uploadFilesArray: Array<any> = [];
+	fireFacilityConfig: FireFacilityConfig = new FireFacilityConfig();
 
 	constructor(
 		private fb: FormBuilder,
 		private route: ActivatedRoute,
 		private formService: FormsActionsService,
-		private TranslateService: TranslateService,
+		public TranslateService: TranslateService,
 		private fireFacilitiesService: FireFacilitiesService
 	) { }
 
@@ -64,7 +63,7 @@ export class GasConnectionNocComponent implements OnInit {
 	getGasConnectionData() {
 		this.formService.getFormData(this.appId).subscribe(res => {
 			this.gasConnectionForm.patchValue(res);
-			this.showButtons = true;
+			this.fireFacilityConfig.isAttachmentButtonsVisible = true;
 			//convert applicant name and set in applicantNameGuj filds 
 			let applicantNameGujFields = this.gasConnectionForm.get('applicantNameGuj');
 			let applicantNameValue = this.gasConnectionForm.get('applicantName').value;
@@ -72,7 +71,7 @@ export class GasConnectionNocComponent implements OnInit {
 				applicantNameGujFields.setValue(this.TranslateService.getEngToGujTranslation(applicantNameValue))
 			}
 			res.serviceDetail.serviceUploadDocuments.forEach(app => {
-				(<FormArray>this.gasConnectionForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.createDocumentsGrp(app));
+				(<FormArray>this.gasConnectionForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.fireFacilityConfig.createDocumentsGrp(app));
 			});
 			this.requiredDocumentList();
 		});
@@ -101,8 +100,8 @@ export class GasConnectionNocComponent implements OnInit {
 			applicantName: [null, [Validators.required, Validators.maxLength(100)]],
 			applicantNameGuj: [null, [Validators.required, Validators.maxLength(300)]],
 			applicationDate: [null, Validators.required],
-			contactNo: [null, [Validators.required, Validators.maxLength(12)]],
-			mobileNo: [null, [Validators.required, Validators.maxLength(10), Validators.minLength(10)]],
+			contactNo: [null, [Validators.required, Validators.maxLength(this.fireFacilityConfig.contactNumberLength)]],
+			mobileNo: [null, [Validators.required, Validators.maxLength(this.fireFacilityConfig.mobileNumber_maxLength), Validators.minLength(this.fireFacilityConfig.mobileNumber_minLength)]],
 			email: [null, [Validators.required, Validators.maxLength(50)]],
 
 			/* Step 2 controls start */
@@ -145,28 +144,6 @@ export class GasConnectionNocComponent implements OnInit {
 					'documentIdentifier': value.documentIdentifier
 				})
 			}
-		});
-	}
-
-	/**
-	 * This Method for create attachment array in service detail
-	 * @param data : value of array
-	 */
-	createDocumentsGrp(data?: any): FormGroup {
-		return this.fb.group({
-			dependentFieldName: [data.dependentFieldName ? data.dependentFieldName : null],
-			documentIdentifier: [data.documentIdentifier ? data.documentIdentifier : null],
-			documentKey: [data.documentKey ? data.documentKey : null],
-			documentLabelEn: [data.documentLabelEn ? data.documentLabelEn : null],
-			documentLabelGuj: [data.documentLabelGuj ? data.documentLabelGuj : null],
-			fieldIdentifier: [data.fieldIdentifier ? data.fieldIdentifier : null],
-			formPart: [data.formPart ? data.formPart : null],
-			id: [data.id ? data.id : null],
-			isActive: [data.isActive],
-			mandatory: [data.mandatory ? data.mandatory : false],
-			maxFileSizeInMB: [data.maxFileSizeInMB ? data.maxFileSizeInMB : 5],
-			requiredOnAdminPortal: [data.requiredOnAdminPortal],
-			requiredOnCitizenPortal: [data.requiredOnCitizenPortal]
 		});
 	}
 
@@ -228,32 +205,20 @@ export class GasConnectionNocComponent implements OnInit {
 			let count = flag;
 			// console.log(flag);
 			if (count <= step0) {
-				this.tabIndex = 0;
+				this.fireFacilityConfig.currentTabIndex = 0;
 				return false;
 			} else if (count <= step1) {
-				this.tabIndex = 1;
+				this.fireFacilityConfig.currentTabIndex = 1;
 				return false;
 			} else if (count <= step2) {
-				this.tabIndex = 2;
+				this.fireFacilityConfig.currentTabIndex = 2;
 				return false;
 			}
-			// else if (count == 67) {
-			// 	this.checkReligion();
-			// 	return false;
-			// }
 			else {
 				console.log("else condition");
 			}
 
 		}
-	}
-
-	/**
- 	 * This method use to get output event of tab change
- 	 * @param evt - Tab index
- 	 */
-	onTabChange(evt) {
-		this.tabIndex = evt;
 	}
 
 }
