@@ -59,6 +59,7 @@
                 <div class="row fotButtonBar">
                     <div class="col-sm-12 col-md-12 text-right">
                         <button mat-raised-button color="primary" type="submit">
+                            <mat-icon>search</mat-icon>
                             {{'search'| translate: translateKey}}
                         </button>
                     </div>
@@ -107,6 +108,7 @@
                 <div class="col-sm-12 col-md-12 text-right">
                     <button mat-raised-button data-toggle="modal" (click)="shortListTheater(confirmationModel)" data-target="#confirmShortlistModel"
                         type="button" [disabled]="selectedShift.length == 0" color="primary">
+                            <mat-icon>check_circle_outline</mat-icon>
                         {{'shortlist'| translate: translateKey}}
                     </button>
                 </div>
@@ -156,26 +158,66 @@
             </table>
         </div>
     </div>
-    <div class="modal-footer">
 
-        <button type="button" class="btn mat-raised-button" data-dismiss="modal" (click)="confirmRef.hide()">
+    <div class="modal-footer">
+        <button type="button" mat-raised-button color="primary" data-dismiss="modal" (click)="confirmRef.hide()">
+             <mat-icon>cancel</mat-icon>
             {{'cancel'| translate: translateKey}}
         </button>
-
-        <button type="button" class="btn mat-raised-button mat-primary" data-dismiss="modal" (click)="confirmShortlist()">
+        <button type="button" mat-raised-button color="primary" data-dismiss="modal" (click)="confirmShortlist()">
+            <mat-icon>check_circle_outline</mat-icon>
             {{'confirm_and_continue'| translate: translateKey}}
         </button>
     </div>
 </ng-template>
+<!-- Confirmation Model Ends -->
+
+<!-- Unpaid receipt view starts -->
+<div *ngIf="showPaymentReciept">
+    <mat-card class="formClass cardBorder">
+        <div class="pageTitle">
+            {{'theater_booking_details'| translate: translateKey}}
+        </div>
+        <div class="p-3 table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">{{'booking_date'| translate: translateKey}}</th>
+                        <th scope="col">{{'rent_amount'| translate: translateKey}}</th>
+                        <th scope="col">{{'deposit_amount'| translate: translateKey}}</th>
+                        <th scope="col">{{'GST'| translate: translateKey}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td scope="col">{{bookingUtils.returnProperDate(paymentObject.BOOKING_DATE)}}</td>
+                        <td scope="col">{{paymentObject.RENT_FEES}}</td>
+                        <td scope="col">{{paymentObject.DEPOSIT_FEES}}</td>
+                        <td scope="col">{{paymentObject.GST}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="fotButtonBar">
+            <div class="col-sm-12 col-md-12 text-right">
+                <button type="button" mat-raised-button color="primary" data-dismiss="modal" (click)="showTheaterBookingForm = true; this.showPaymentReciept = false;">
+                    {{'proceed_for_appication'| translate: translateKey}}
+                    <mat-icon>navigate_next</mat-icon>
+                </button>
+            </div>
+        </div>
+    </mat-card>
+</div>
+<!-- Unpaid receipt view ends -->
 
 <!-- Booking Details -->
 <div [hidden]="!showTheaterBookingForm">
-    <mat-card class="cardH1">
+    <!-- <mat-card class="cardH1">
         <h1>
             {{'theater_application_form'| translate: translateKey}}
         </h1>
-    </mat-card>
-    <mat-card class="formClass formBorder">
+    </mat-card> -->
+    <mat-card class="formClass cardBorder">
         <form [formGroup]="theaterBookingForm" (ngSubmit)="submitTheaterApplication()">
             <mat-tab-group mat-stretch-tabs dynamicHeight="true" [(selectedIndex)]="tabIndex" class="stepperNav">
 
@@ -217,10 +259,13 @@
                         <app-address #address [requiredFeilds]="true" [addressFormGroup]="theaterBookingForm.get('organizationAddress')"></app-address>
                     </div>
 
-                    <div class="pull-right">
-                        <!-- <button type="button" mat-raised-button (click)="tabIndex= tabIndex -1; ">{{'back' | translate:translateKey}}</button> -->
-                        <button type="button" mat-raised-button (click)="tabIndex= tabIndex +1;">{{'next' | translate:translateKey}}
-                        </button>
+                    <div class="row mt-4 fotButtonBar">
+                        <div class="col-sm-12 col-md-12 text-right">
+                            <button mat-raised-button type="button" color="primary" (click)="tabIndex= tabIndex +1;">
+                                {{'next' | translate:translateKey}}
+                                <mat-icon>navigate_next</mat-icon>
+                            </button>
+                        </div>
                     </div>
                 </mat-tab>
                 <!-- Tab 1 Ends -->
@@ -277,15 +322,20 @@
                         </div>
                     </div>
 
-                    <div class="pull-right">
-                        <button type="button" mat-raised-button (click)="tabIndex= tabIndex -1; ">{{'back' | translate:translateKey}}</button>
-                        <button mat-raised-button color="primary" type="submit">
-                            {{'submit_application'| translate: translateKey}}
-                        </button>
+                    <div class="row mt-4 fotButtonBar">
+                        <div class="col-sm-12 col-md-12 justify-content-between d-flex">
+                            <button type="button" color="primary" mat-raised-button (click)="tabIndex= tabIndex -1; ">
+                                <mat-icon>navigate_before</mat-icon>
+                                {{'back' | translate:translateKey}}
+                            </button>
+                            <button mat-raised-button color="primary" type="submit">
+                                <mat-icon>check_circle_outline</mat-icon>
+                                {{'submit_application'| translate: translateKey}}
+                            </button>
+                        </div>
                     </div>
                 </mat-tab>
                 <!-- Tab 2 Ends -->
-
             </mat-tab-group>
         </form>
     </mat-card>

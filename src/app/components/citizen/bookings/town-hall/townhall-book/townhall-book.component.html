@@ -2,10 +2,8 @@
 <app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
 
 <div *ngIf="guideLineFlag">
-
     <mat-card class="cardBox">
         <div class="pageTitle">{{'online_townhall_bookings'| translate: translateKey}}</div>
-
         <mat-card-content class="p-4">
             <p class="pb-2">{{head_lines| translate: translateKey}}</p>
             <h2>{{'rules_and_regulations'| translate: translateKey}}</h2>
@@ -32,6 +30,7 @@
     <div class="fotButtonBar">
         <div class="col-sm-12 col-md-12 text-right">
             <button mat-raised-button (click)="guideLineFlag = false; showSearchForm= true;" color="primary">
+                <mat-icon>thumb_up_alt</mat-icon>
                 {{'submit'| translate: translateKey}}
             </button>
         </div>
@@ -130,7 +129,6 @@
                                     </mat-checkbox>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </mat-expansion-panel>
@@ -140,6 +138,7 @@
                 <div class="col-sm-12 col-md-12 text-right">
                     <button mat-raised-button data-toggle="modal" (click)="shortlistShifts()" data-target="#confirmShortlistModel" type="button"
                         [disabled]="selectedShift.length == 0" color="primary">
+                        <mat-icon>check_circle_outline</mat-icon>
                         {{'shortlist'| translate: translateKey}}
                     </button>
                 </div>
@@ -189,11 +188,13 @@
             </div>
             <div class="modal-footer">
 
-                <button type="button" class="btn mat-raised-button" data-dismiss="modal">
+                <button type="button" mat-raised-button color="primary" data-dismiss="modal">
+                    <mat-icon>cancel</mat-icon>
                     {{'cancel'| translate: translateKey}}
                 </button>
 
-                <button type="button" class="btn mat-raised-button mat-primary" data-dismiss="modal" (click)="confirmShortlist()">
+                <button type="button" mat-raised-button color="primary" data-dismiss="modal" (click)="confirmShortlist()">
+                    <mat-icon>check_circle_outline</mat-icon>
                     {{'confirm_and_continue'| translate: translateKey}}
                 </button>
 
@@ -204,33 +205,50 @@
 
 <div *ngIf="showPaymentReciept">
 
-    <div class="table-responsive">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">{{'ref_number'| translate: translateKey}}</th>
-                    <th scope="col">{{'date_of_programme'| translate: translateKey}}</th>
-                    <th scope="col">{{'rent_amount'| translate: translateKey}}</th>
-                    <th scope="col">{{'deposit_amount'| translate: translateKey}}</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td scope="col">{{paymentObject.refNumber}}</td>
-                    <td scope="col">{{bookingUtils.returnProperDate(paymentObject.bookingDate)}}</td>
-                    <td scope="col">{{paymentObject.rentAmount}}</td>
-                    <td scope="col">{{paymentObject.depositAmount}}</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+    <mat-card class="formClass cardBorder">
+        <div class="pageTitle">
+            {{'townhall_booking_details'| translate: translateKey}}
+        </div>
+        <div class="p-3 table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">
+                            {{'ref_number'| translate: translateKey}}
+                        </th>
+                        <th scope="col">
+                            {{'date_of_programme'| translate: translateKey}}
+                        </th>
+                        <th scope="col">
+                            {{'rent_amount'| translate: translateKey}}
+                        </th>
+                        <th scope="col">
+                            {{'deposit_amount'| translate: translateKey}}
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td scope="col">
+                            {{paymentObject.refNumber}}
+                        </td>
+                        <td scope="col">
+                            {{bookingUtils.returnProperDate(paymentObject.bookingDate)}}
+                        </td>
+                        <td scope="col">
+                            {{paymentObject.rentAmount}}
+                        </td>
+                        <td scope="col">
+                            {{paymentObject.depositAmount}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </mat-card>
 
     <div class="mt-5">
-        <h3 class="text-center">
-            {{'booking_details'| translate: translateKey}}
-        </h3>
         <div>
-
             <table mat-table [dataSource]="bookingDetailsDataSource" matSort matSortActive="created" matSortDisableClear matSortDirection="asc">
 
                 <ng-container matColumnDef="id">
@@ -331,10 +349,11 @@
             </mat-paginator>
         </div>
 
-        <div class="row mt-4 fotButtonBar">
+        <div class="fotButtonBar">
             <div class="col-sm-12 col-md-12 text-right">
                 <button mat-raised-button type="button" color="primary" (click)="showPaymentReciept = false;showApplicationForm = true;">
                     {{'proceed_for_application' | translate: translateKey}}
+                    <mat-icon>navigate_next</mat-icon>
                 </button>
             </div>
         </div>
@@ -388,6 +407,8 @@
                         <div class="col-sm-12 col-md-12 text-right">
                             <button mat-raised-button type="button" color="primary" (click)="tabIndex= tabIndex +1;">{{'next'
                                 | translate:translateKey}}
+                                <mat-icon>navigate_next</mat-icon>
+
                             </button>
                         </div>
                     </div>
@@ -438,7 +459,7 @@
                                 <control-messages [control]="townHallApplicationForm.get('confirmEmailID')"></control-messages>
                             </mat-form-field>
                             <mat-error *ngIf="!bookingUtils.matcher(townHallApplicationForm, 'emailID', 'confirmEmailID') &&townHallApplicationForm.get('emailID').touched && townHallApplicationForm.get('confirmEmailID').touched">
-                                 {{bookingConstants.EMAIL_MIS_MATCH_MESSAGE}}
+                                {{bookingConstants.EMAIL_MIS_MATCH_MESSAGE}}
                             </mat-error>
                         </div>
 
@@ -458,9 +479,13 @@
 
                     <div class="row mt-4 fotButtonBar">
                         <div class="col-sm-12 col-md-12 justify-content-between d-flex">
-                            <button type="button" mat-raised-button (click)="tabIndex= tabIndex -1; ">{{'back' | translate:translateKey}}</button>
-                            <button mat-raised-button type="button" color="primary" (click)="tabIndex= tabIndex +1;">{{'next'
-                                | translate:translateKey}}
+                            <button type="button" color="primary" mat-raised-button (click)="tabIndex= tabIndex -1; ">
+                                <mat-icon>navigate_before</mat-icon>
+                                {{'back' | translate:translateKey}}
+                            </button>
+                            <button mat-raised-button type="button" color="primary" (click)="tabIndex= tabIndex +1;">
+                                {{'next'| translate:translateKey}}
+                                <mat-icon>navigate_next</mat-icon>
                             </button>
                         </div>
                     </div>
@@ -526,8 +551,12 @@
 
                     <div class="row mt-4 fotButtonBar">
                         <div class="col-sm-12 col-md-12 justify-content-between d-flex">
-                            <button type="button" mat-raised-button (click)="tabIndex= tabIndex -1; ">{{'back' | translate:translateKey}}</button>
+                            <button type="button" color="primary" mat-raised-button (click)="tabIndex= tabIndex -1; ">
+                                <mat-icon>navigate_before</mat-icon>
+                                {{'back' | translate:translateKey}}
+                            </button>
                             <button mat-raised-button color="primary" type="submit">
+                                <mat-icon>check_circle_outline</mat-icon>
                                 {{'submit_application'| translate: translateKey}}
                             </button>
                         </div>

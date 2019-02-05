@@ -23,7 +23,6 @@ export class BookTheaterComponent implements OnInit {
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild(MatSort) sort: MatSort;
     @ViewChild("confirmationModel") confirmationModel: TemplateRef<any>;
-    @ViewChild("receiptModel") receiptModel: TemplateRef<any>;
     @ViewChild('address') addressComp: any;
 
     /**
@@ -87,7 +86,6 @@ export class BookTheaterComponent implements OnInit {
        * ngx-bootstrap models.
        */
     confirmRef: BsModalRef;
-    receiptRef: BsModalRef;
 
 	/**
 	 * Constructor
@@ -104,7 +102,8 @@ export class BookTheaterComponent implements OnInit {
         private bookingService: BookingService,
         private toster: ToastrService,
         private commonService: CommonService,
-        private modalService: BsModalService) { this.bookingService.resourceType = 'amphiTheater'; }
+        private modalService: BsModalService,
+        private router : Router) { this.bookingService.resourceType = 'amphiTheater'; }
 
 	/**
 	 * Method Initialzes first.
@@ -134,7 +133,6 @@ export class BookTheaterComponent implements OnInit {
             code: [null, [Validators.required]],
             category: this.fb.group({
                 code: [null, [Validators.required]],
-                name: null
             }),
             startDate: [null, [Validators.required]],
             endDate: [null, [Validators.required]]
@@ -164,32 +162,8 @@ export class BookTheaterComponent implements OnInit {
     getLookUps() {
         this.bookingService.getDataFromLookups().subscribe((respData) => {
             this.CATEGORIES = respData.PURPOSE;
-            this.searchTheaterForm.get('category').get('code').setValue(this.CATEGORIES[0].code);
+            this.BANKS = respData.BANK;
         });
-    }
-
-	/**
-	 * Method is used to get object on theater change.
-	 * @param event - time event.
-	 */
-    theaterChange(event) {
-        this.bookingObject = this.THEATERS.find(data => data.code === event);
-    }
-
-	/**
-	 * Method is used to invoke when dsate changes and update datye format.
-	 * @param event - date event.
-	 */
-    dateChange(event) {
-        this.searchTheaterForm.get('date').setValue(moment(event.value).format("YYYY-MM-DD"));
-    }
-
-    /**
-   * Method is used to get object on category change.
-   * @param event - category event.
-   */
-    categoryChange(event) {
-        this.categoryObject = this.CATEGORIES.find(data => data.code === event);
     }
 
 	/**
@@ -198,19 +172,12 @@ export class BookTheaterComponent implements OnInit {
     createTheaterBookingForm() {
         this.theaterBookingForm = this.fb.group({
             /**
-                   * Organization Details
-                   */
+             * Organization Details
+             */
             organizationName: [null, [Validators.required]],
             organizationNumber: [null, [Validators.required]],
             organizationEmail: [null, [Validators.required]],
             organizationAddress: this.fb.group(this.addressComp.addressControls()),
-            // applicantName: [null, [Validators.required]],
-            // applicantMobile: [null, [Validators.required]],
-            // confirmMobile: [null, [Validators.required]],
-            // emailID: [null, [Validators.required, Validators.email]],
-            // confirmEmailID: [null, [Validators.required, Validators.email]],
-            // relationshipWithOrg: [null, [Validators.required]],
-            // applicantAddress: this.fb.group(this.addressComp.addressControls()),
 			/**
 			 * Bank Accoount Details
 			 */
@@ -226,7 +193,6 @@ export class BookTheaterComponent implements OnInit {
             attachments: [],
             termsCondition: null,
             agree: null,
-
 			/**
 			 * form details
 			 */
@@ -307,34 +273,21 @@ export class BookTheaterComponent implements OnInit {
                 if (resp.success) {
                     this.showTheaterSearchForm = false;
                     this.theaterBookingForm.patchValue(resp.data);
-                    if (resp.data.status == this.bookingConstants.PAYMENT_REQUIRED) {
+                    if (resp.data.status == this.bookingConstants.DRAFT) {
                         this.bookingService.searchPayment(resp.data.refNumber).subscribe(payResp => {
                             this.paymentObject = payResp.data;
                             this.showPaymentReciept = true;
                             this.confirmRef.hide();
-                            this.receiptRef = this.modalService.show(this.receiptModel, Object.assign({ ignoreBackdropClick: true }, { class: 'gray modal-lg customWidth' }));
                         })
                     }
                 }
             }, err => {
-                if (err.status === 402) {
-                    this.paymentObject = err.error.data;
-                    this.showBookingInfo = true;
-                }
+                this.confirmRef.hide();
+                this.commonService.openAlert("Error", err.error[0].message, "warning");
             })
         } else {
             this.toster.show(this.bookingConstants.SELECT_SHIFT_MESSAGE);
         }
-    }
-
-	/**
-	 * Method is used to proceed for application.
-	 */
-    proceedForApplication() {
-        this.showShortListData = false;
-        this.showBookingInfo = false;
-        this.showTheaterBookingForm = true;
-        this.createTheaterBookingForm();
     }
 
 	/**
@@ -347,7 +300,7 @@ export class BookTheaterComponent implements OnInit {
                 this.showShortListData = true;
                 this.showBookingInfo = false;
                 this.showTheaterBookingForm = false;
-                this.commonService.successAlert("Success", "Theater SucessFully Booked", "success");
+                this.commonService.successAlert("Theater Booking Status", "Theater SucessFully Booked", "success");
             }
         }, err => {
             if (err.status === 602) {
@@ -357,18 +310,56 @@ export class BookTheaterComponent implements OnInit {
         })
     }
 
+    /**
+     * Method is used to submit theater application.
+     */
     submitTheaterApplication() {
-
+        let errCount = this.bookingUtils.getAllErrors(this.theaterBookingForm);
+        if (this.theaterBookingForm.invalid) {
+            this.handleErrorsOnSubmit(errCount);
+            this.commonService.openAlert("Feild Error", this.bookingConstants.ALL_FEILD_REQUIRED_MESSAGE, 'warning')
+            return;
+        } else if (!this.theaterBookingForm.get('agree').value) {
+            this.commonService.openAlert("Feild Error", this.bookingConstants.AGREE_MESSAGE, 'warning')
+            return;
+        } else if (!this.theaterBookingForm.get('termsCondition').value) {
+            this.commonService.openAlert("Feild Error", this.bookingConstants.TERMS_AND_CONDITION_MESSAGE, 'warning')
+            return;
+        } else {
+            this.bookingService.commonBookSlot(this.theaterBookingForm.value).subscribe(resp => {
+            }, (err) => {
+                if (err.status == 402) {
+                    this.bookingUtils.redirectToPayment(err, this.commonService, this.bookingService, this.theaterBookingForm, this.router);
+                    return;
+                } else if (err.error[0].code == this.bookingConstants.INVALID_BOOKING_STATUS) {
+                    this.commonService.openAlert("Invalid Booking Status", err.error[0].message, "warning", "", cb => {
+                        this.router.navigate([this.bookingConstants.MY_BOOKINGS_URL])
+                    })
+                } else {
+                    this.commonService.openAlertFormSaveValidation('Warning!', err.error, 'warning');
+                }
+            })
+            return;
+        }
     }
 
-	/**
-	 * Method is used to check agree and terms & condition verification.
+    /**
+	 * Method is used to handle error/validation on submit
+	 * @param count - count of invalid control.
 	 */
-    agreeAndTermsVerification(): boolean {
-        if (this.theaterBookingForm.get('termsCondition').value && this.theaterBookingForm.get('agree').value) {
+    handleErrorsOnSubmit(count) {
+        let step1 = 4;
+        let step2 = 11;
+        let step3 = 17;
+        if (count < step1) {
+            this.tabIndex = 0;
             return false;
-        } else {
-            return true;
+        } else if (count < step2) {
+            this.tabIndex = 1;
+            return false;
+        } else if (count < step3) {
+            this.tabIndex = 2;
+            return false;
         }
     }
 }
