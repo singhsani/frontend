@@ -262,7 +262,7 @@
 						<h2>{{ 'employer_family_table_label' | translate:translateKey}}</h2>
 					</div>
 					<div class="col-md-2 pt-3" style="text-align: right;">
-						<button type="button" [disabled]="!(shopLicNewForm.get('employerFamilyList').length < 5)" matTooltip="{{'add_more' | translate:translateKey}}"
+						<button type="button" [disabled]="!(shopLicNewForm.get('employerFamilyList')['controls'].length < 5)" matTooltip="{{'add_more' | translate:translateKey}}"
 						 mat-raised-button color="primary" (click)="addMorePerson('EMPLOYER_FAMILY')">{{'add'| translate:translateKey}}</button>
 					</div>
 				</div>
@@ -394,7 +394,7 @@
 						<h2>{{'occupying_position_of_management_table_label' | translate: translateKey }}</h2>
 					</div>
 					<div class="col-md-2 pt-3" style="text-align: right;">
-						<button type="button" [disabled]="!(shopLicNewForm.get('occupancyList').length < 2)" matTooltip="Add More Person Occuping"
+						<button type="button" [disabled]="!(shopLicNewForm.get('occupancyList')['controls'].length < 2)" matTooltip="Add More Person Occuping"
 						 mat-raised-button color="primary" (click)="addMorePerson('OCCUPANCY')">{{'add' | translate: translateKey}}</button>
 					</div>
 				</div>
@@ -540,7 +540,7 @@
 							<h2>{{'details_of_partner_label' | translate: translateKey}}</h2>
 						</div>
 						<div class="col-md-2 pt-3" style="text-align: right;">
-							<button [disabled]="shopLicNewForm.get('typeOfOrganisation').value.code==='SHOP_LIC_SELF_OWNERSHIP' ? !(shopLicNewForm.get('partnerList').length < 1) : !(shopLicNewForm.get('partnerList').length < 10)"
+							<button [disabled]="shopLicNewForm.get('typeOfOrganisation').value.code==='SHOP_LIC_SELF_OWNERSHIP' ? !(shopLicNewForm.get('partnerList')['controls'].length < 1) : !(shopLicNewForm.get('partnerList')['controls'].length < 10)"
 							 type="button" matTooltip="{{'add_more' | translate: translateKey}}" mat-raised-button color="primary" (click)="addMorePerson('PARTNER')">
 								{{'add' | translate: translateKey }}
 							</button>

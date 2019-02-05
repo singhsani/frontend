@@ -10,6 +10,7 @@ import { CommonService } from '../../../../../shared/services/common.service';
 import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '../../../../../shared/modules/translate/translate.service';
 import { ValidationService } from '../../../../../shared/services/validation.service';
+import { CitizenConfig } from '../../../citizen-config';
 
 export interface BookingDetails {
   administrationCharges: string
@@ -47,6 +48,7 @@ export class BookPermissionComponent implements OnInit {
   translateKey: string = "bookPermissionScreen";
   guideLineFlag: boolean = true;
   head_lines: string;
+  public config = new CitizenConfig;
 
   isFileUploaded : boolean = false;
   /**
@@ -94,7 +96,6 @@ export class BookPermissionComponent implements OnInit {
   confirmRef: BsModalRef;
   receiptRef: BsModalRef;
 
-
   /**
    * LookUps Constants
    */
@@ -105,7 +106,6 @@ export class BookPermissionComponent implements OnInit {
   displayedColumns: Array<string> = ['id', 'shiftType', 'bookingDate', 'startTime', 'endTime', 'rent', 'electricCharges', 'administrationCharges', 'showTax', 'subTotal', 'gstAmount', 'total'];
 
   bookingDetailsDataSource = new MatTableDataSource<BookingDetails>([]);
-
 
   constructor(private bookingService: BookingService,
     private router: Router,

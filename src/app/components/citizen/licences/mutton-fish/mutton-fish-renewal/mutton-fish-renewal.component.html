@@ -155,7 +155,7 @@
 						<control-messages [control]="muttonFishRenewalForm.get('extraDetailsOfBusiness')"></control-messages>
 					</mat-form-field>
 					<div class="col-md-4 ngSelect" formGroupName="relationshipId">
-						<ng-select placeholder="{{'relationship_id' | translate:translateKey}} *" formControlName="code" (change)="onChangeRelationWithOrg()">
+						<ng-select placeholder="{{'relationship_id' | translate:translateKey}} *" formControlName="code">
 							<ng-option *ngFor="let id of MF_RELATIONSHIP_OF_APPLICANT" [value]="id.code">{{id.name}}</ng-option>
 						</ng-select>
 						<control-messages [control]="muttonFishRenewalForm.get('relationshipId').get('code')"></control-messages>
