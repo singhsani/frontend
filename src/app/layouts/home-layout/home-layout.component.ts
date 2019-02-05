@@ -79,7 +79,7 @@ export class HomeLayoutComponent implements OnInit {
 		private appService: AppService,
 		private session: SessionStorageService,
 		private formService: FormsActionsService,
-		private commonService: CommonService,
+		public commonService: CommonService,
 		private router: Router
 	) {
 		

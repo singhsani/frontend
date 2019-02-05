@@ -13,6 +13,8 @@ import { BookingService } from '../../../../../core/services/citizen/data-servic
 })
 export class GuestHouseListComponent implements OnInit {
 
+	translateKey: string = 'guestHouseScreen';
+
 	searchGuestHouseForm: FormGroup;
 	guestHouses: Array<any> = [];
 	availableStots: Array<any> = [];
@@ -61,7 +63,7 @@ export class GuestHouseListComponent implements OnInit {
 
 	}
 
-	bookSlots(uniqueId: string, index: number) {
+	bookSlots() {
 
 		let resourceName = this.searchGuestHouseForm.value.code;
 		let startdate = moment(this.searchGuestHouseForm.value.startDate).format("YYYY-MM-DD");

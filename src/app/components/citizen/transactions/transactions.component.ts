@@ -116,7 +116,7 @@ export class TransactionsComponent implements OnInit {
 })
 
 export class TransactionDataDialog {
-	private tData: Object;
+	public tData: any;
 	constructor(
 		public dialogRef: MatDialogRef<TransactionDataDialog>,
 		@Inject(MAT_DIALOG_DATA) public data: any) {
