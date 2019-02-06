@@ -878,18 +878,18 @@ body * {visibility: hidden;}
 .noRecord { background-color: #f2f2f2;}
 
 // css for time picker
-#time-picker-wrapper.material-purple[_ngcontent-c25] #time-picker[_ngcontent-c25] .time-picker-header[_ngcontent-c25] {
+#time-picker-wrapper.material-purple #time-picker .time-picker-header {
     background-color: indigo !important;
 }
-#time-picker-wrapper.material-purple[_ngcontent-c25] #time-picker[_ngcontent-c25] .time-picker-clock[_ngcontent-c25] > button.active[_ngcontent-c25] {
+#time-picker-wrapper.material-purple #time-picker .time-picker-clock > button.active {
     background:  indigo !important
 }
 
-#time-picker-wrapper.material-purple[_ngcontent-c25] #time-picker[_ngcontent-c25] .time-picker-clock[_ngcontent-c25] .time-picker-clock-arrow[_ngcontent-c25]{
+#time-picker-wrapper.material-purple #time-picker .time-picker-clock.time-picker-clock-arrow{
     background: indigo !important;
 }
 
-#time-picker-wrapper.material-purple[_ngcontent-c25] #time-picker[_ngcontent-c25] .time-picker-footer[_ngcontent-c25] button[_ngcontent-c25] {
+#time-picker-wrapper.material-purple #time-picker .time-picker-footer button {
     color: indigo !important;
 }
 

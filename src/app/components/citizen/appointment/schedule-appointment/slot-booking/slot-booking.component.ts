@@ -92,11 +92,9 @@ export class SlotBookingComponent implements OnInit {
 
 	ngOnInit() {
 		this.route.paramMap.subscribe(param => {
-			console.log(param);
 			this.formId = Number(param.get('id'));
 			this.apiCode = param.get('apiCode');
 			this.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
-			console.log(this.apiType)
 			this.appointmentService.apiType = this.apiType;
 			this.formService.apiType = this.apiType;
 		});
