@@ -7,7 +7,6 @@ import { AuthGuard } from './../../../core/guard/auth.guard';
 import { ManageRoutes } from './../../../config/routes-conf';
 import { CoreModule } from '../../../core/core.module';
 import { SharedModule } from '../../../shared/shared.module';
-import { ScheduleAppointmentModule } from './schedule-appointment/schedule-appointment.module';
 
 const routes: Routes = [
 	{ path: '', redirectTo: ManageRoutes.getPrefixRoute('SCHEDULEAPPOINTMENT'), pathMatch: 'full' },
@@ -21,9 +20,8 @@ const routes: Routes = [
 		CoreModule,
 		FormsModule,
 		ReactiveFormsModule,
-		ScheduleAppointmentModule,
 		RouterModule.forChild(routes)
 	],
 	declarations: []
 })
-export class AppointmentModule { }
+export class AppointmentModule {}
