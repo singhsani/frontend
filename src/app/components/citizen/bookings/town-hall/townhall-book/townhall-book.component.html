@@ -547,6 +547,16 @@
                                 required></textarea>
                             <control-messages [control]="townHallApplicationForm.get('programPurpose')"></control-messages>
                         </mat-form-field>
+
+                        <h2>
+                            {{'terms_and_conditions' | translate:translateKey }}
+                        </h2>
+                        <div class="pl-2">
+                            <mat-checkbox class="d-block" labelPosition="after" formControlName="agree">
+                                {{'i_agree_with_above_bank_details_are_correct' | translate:translateKey}} </mat-checkbox>
+                            <mat-checkbox class="d-block" labelPosition="after" formControlName="termsCondition">
+                                {{'i_have_read_and_agree_with_terms_and_conditions' | translate:translateKey}} </mat-checkbox>
+                        </div>
                     </div>
 
                     <div class="row mt-4 fotButtonBar">

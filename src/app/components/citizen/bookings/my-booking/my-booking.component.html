@@ -37,9 +37,9 @@
 
 <div [hidden]="resultsLength==0">
 
-	<div class="example-loading-shade" *ngIf="isLoadingResults">
+	<!-- <div class="example-loading-shade" *ngIf="isLoadingResults">
 		<mat-spinner *ngIf="isLoadingResults"></mat-spinner>
-	</div>
+	</div> -->
 
 	<table mat-table [dataSource]="bookingList" matSort matSortActive="created" matSortDisableClear matSortDirection="asc">
 

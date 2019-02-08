@@ -202,6 +202,8 @@ export class TownHallBookComponent implements OnInit {
 			 */
 			programShortDetails: [null, [Validators.required]],
 			programPurpose: [null, [Validators.required]],
+			termsCondition: null,
+			agree: null,
 			/**
 			 * form details
 			 */
@@ -354,6 +356,12 @@ export class TownHallBookComponent implements OnInit {
 		else if (!this.bookingUtils.matcher(this.townHallApplicationForm, 'emailID', 'confirmEmailID') || !this.bookingUtils.matcher(this.townHallApplicationForm, 'applicantMobile', 'confirmMobile')) {
 			this.handleErrorsOnSubmit(7);
 			this.commonService.openAlert("Feild Error", !this.bookingUtils.matcher(this.townHallApplicationForm, 'emailID', 'confirmEmailID') ? this.bookingConstants.EMAIL_MIS_MATCH_MESSAGE : this.bookingConstants.MOB_NO_MIS_MATCH_MESSAGE, 'warning')
+			return;
+		} else if (!this.townHallApplicationForm.get('agree').value) {
+			this.commonService.openAlert("Feild Error", this.bookingConstants.AGREE_MESSAGE, 'warning')
+			return;
+		} else if (!this.townHallApplicationForm.get('termsCondition').value) {
+			this.commonService.openAlert("Feild Error", this.bookingConstants.TERMS_AND_CONDITION_MESSAGE, 'warning')
 			return;
 		} else {
 			this.isLoadingResults = true;

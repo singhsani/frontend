@@ -206,7 +206,7 @@
 <div *ngIf="showPaymentReciept">
     <mat-card class="formClass cardBorder">
         <div class="pageTitle">
-            {{'theater_booking_details'| translate: translateKey}}
+            {{'stadium_booking_details'| translate: translateKey}}
         </div>
         <div class="p-3 table-responsive">
             <table class="table">
@@ -300,7 +300,7 @@
 
                     <div>
                         <h2>
-                            {{'applicantAddress' | translate:translateKey}}
+                            {{'applicant_address' | translate:translateKey}}
                         </h2>
                         <app-address #address [requiredFeilds]="true" [addressFormGroup]="stadiumApplicationForm.get('applicantAddress')"></app-address>
                     </div>
@@ -342,7 +342,7 @@
                         </mat-form-field>
 
                         <mat-form-field class="col-md-6">
-                            <input matInput OnlyNumber maxlength="20" minlength="20" formControlName="accountNo" placeholder="{{'accont_no' | translate: translateKey}}"
+                            <input matInput OnlyNumber maxlength="20" minlength="20" formControlName="accountNo" placeholder="{{'account_no' | translate: translateKey}}"
                                 required>
                             <control-messages [control]="stadiumApplicationForm.get('accountNo')"></control-messages>
                         </mat-form-field>
@@ -352,6 +352,16 @@
                                 required>
                             <control-messages [control]="stadiumApplicationForm.get('ifscCode')"></control-messages>
                         </mat-form-field>
+
+                        <h2>
+                            {{'terms_and_conditions' | translate:translateKey }}
+                        </h2>
+                        <div class="pl-2">
+                            <mat-checkbox class="d-block" labelPosition="after" formControlName="agree">
+                                {{'i_agree_with_above_bank_details_are_correct' | translate:translateKey}} </mat-checkbox>
+                            <mat-checkbox class="d-block" labelPosition="after" formControlName="termsCondition">
+                                {{'i_have_read_and_agree_with_terms_and_conditions' | translate:translateKey}} </mat-checkbox>
+                        </div>
                     </div>
 
 
