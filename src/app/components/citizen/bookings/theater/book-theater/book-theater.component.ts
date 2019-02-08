@@ -43,7 +43,7 @@ export class BookTheaterComponent implements OnInit {
 	/**
 	 * Translation Key.
 	 */
-    translateKey = "theaterBookingScreen";
+    translateKey = "citizenTheaterBookingScreen";
 
 	/**
 	 * Forms.
@@ -190,7 +190,6 @@ export class BookTheaterComponent implements OnInit {
 			/**
 			 * Booking Details
 			 */
-            attachments: [],
             termsCondition: null,
             agree: null,
 			/**

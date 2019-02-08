@@ -27,7 +27,7 @@ export class BookStadiumComponent implements OnInit {
      */
 
 
-    translateKey: string = "stadiumScreen";
+    translateKey: string = "citizenStadiumScreen";
     guideLineFlag: boolean = true;
     head_lines: string;
 
@@ -169,7 +169,9 @@ export class BookStadiumComponent implements OnInit {
             scheduleList: [],
             status: null,
             uniqueId: null,
-            version: 0
+            version: 0,
+            termsCondition: null,
+            agree: null,
         });
     }
 
@@ -242,6 +244,12 @@ export class BookStadiumComponent implements OnInit {
         else if (!this.bookingUtils.matcher(this.stadiumApplicationForm, 'emailId', 'confirmEmailId') || !this.bookingUtils.matcher(this.stadiumApplicationForm, 'applicantMobile', 'confirmMobile')) {
             this.handleErrorsOnSubmit(7);
             this.commonService.openAlert("Feild Error", !this.bookingUtils.matcher(this.stadiumApplicationForm, 'emailId', 'confirmEmailId') ? this.bookingConstants.EMAIL_MIS_MATCH_MESSAGE : this.bookingConstants.MOB_NO_MIS_MATCH_MESSAGE, 'warning')
+            return;
+        } else if (!this.stadiumApplicationForm.get('agree').value) {
+            this.commonService.openAlert("Feild Error", this.bookingConstants.AGREE_MESSAGE, 'warning')
+            return;
+        } else if (!this.stadiumApplicationForm.get('termsCondition').value) {
+            this.commonService.openAlert("Feild Error", this.bookingConstants.TERMS_AND_CONDITION_MESSAGE, 'warning')
             return;
         } else {
             this.bookingService.commonBookSlot(this.stadiumApplicationForm.value).subscribe(resp => {

@@ -234,7 +234,7 @@
                     <div class="row">
                         <mat-form-field class="col-md-4">
                             <input matInput maxlength="25" appValidationFields [validationFieldsType]="'onlyNameWithSpace'" type="text" formControlName="organizationName"
-                                placeholder="{{'oraganization_name' | translate: translateKey}}" required>
+                                placeholder="{{'organization_name' | translate: translateKey}}" required>
                             <control-messages [control]="theaterBookingForm.get('organizationName')"></control-messages>
                         </mat-form-field>
 
@@ -254,7 +254,7 @@
 
                     <div>
                         <h2>
-                            {{'organizationAddress' | translate:translateKey}}
+                            {{'organization_address' | translate:translateKey}}
                         </h2>
                         <app-address #address [requiredFeilds]="true" [addressFormGroup]="theaterBookingForm.get('organizationAddress')"></app-address>
                     </div>
@@ -300,7 +300,7 @@
                         </mat-form-field>
 
                         <mat-form-field class="col-md-6">
-                            <input matInput OnlyNumber maxlength="20" minlength="20" formControlName="accountNo" placeholder="{{'accont_no' | translate: translateKey}}"
+                            <input matInput OnlyNumber maxlength="20" minlength="20" formControlName="accountNo" placeholder="{{'account_no' | translate: translateKey}}"
                                 required>
                             <control-messages [control]="theaterBookingForm.get('accountNo')"></control-messages>
                         </mat-form-field>
