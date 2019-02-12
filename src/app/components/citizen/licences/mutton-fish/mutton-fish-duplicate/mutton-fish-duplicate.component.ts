@@ -111,8 +111,6 @@ export class MuttonFishDuplicateComponent implements OnInit {
 		else {
 			this.serachLicenceObj.isDisplayDuplicateLicenceForm = true;
 			this.getMuttonFishLicDuplicateData();
-			this.muttonFishDuplicateForm.disable();
-			// this.enableFielList();
 		}
 	}
 
@@ -190,7 +188,8 @@ export class MuttonFishDuplicateComponent implements OnInit {
 			try {
 				this.muttonFishDuplicateForm.patchValue(res);
 				this.showButtons = true;
-
+				this.muttonFishDuplicateForm.disable();
+				this.enableFielList();
 			} catch (error) {
 				console.log(error.message);
 			}

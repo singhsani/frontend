@@ -111,8 +111,6 @@ export class MuttonFishCancellationComponent implements OnInit {
 		else {
 			this.serachLicenceObj.isDisplayCancellationLicenceForm = true;
 			this.getMuttonFishLicCancellationData();
-			this.muttonFishCancellationForm.disable();
-			this.enableFielList();
 		}
 	}
 
@@ -132,7 +130,7 @@ export class MuttonFishCancellationComponent implements OnInit {
 				uniqueId: res.uniqueId,
 				version: res.version,
 				serviceFormId: res.serviceFormId,
-				refNumber:this.serachLicenceObj.searchLicenceNumber,
+				refNumber: this.serachLicenceObj.searchLicenceNumber,
 				createdDate: res.createdDate,
 				updatedDate: res.createdDate,
 				serviceType: res.serviceType,
@@ -188,7 +186,8 @@ export class MuttonFishCancellationComponent implements OnInit {
 			try {
 				this.muttonFishCancellationForm.patchValue(res);
 				this.showButtons = true;
-
+				this.muttonFishCancellationForm.disable();
+				this.enableFielList();
 			} catch (error) {
 				console.log(error.message);
 			}
@@ -228,7 +227,7 @@ export class MuttonFishCancellationComponent implements OnInit {
 		this.muttonFishCancellationForm = this.fb.group({
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
 			serviceCode: 'MF-DUP',
-			refNumber:[null],
+			refNumber: [null],
 			/* Step 1 controls start */
 			licenseType: this.fb.group({
 				code: [null]
