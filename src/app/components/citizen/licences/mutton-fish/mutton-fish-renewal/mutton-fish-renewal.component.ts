@@ -135,8 +135,6 @@ export class MuttonFishRenewalComponent implements OnInit {
 		else {
 			this.serachLicenceObj.isDisplayRenewLicenceForm = true;
 			this.getMuttonFishLicNewData();
-			this.muttonFishRenewalForm.disable();
-			this.enableFielList();
 		}
 	}
 
@@ -147,7 +145,6 @@ export class MuttonFishRenewalComponent implements OnInit {
 	createRecordPatchSerachData(searchData: any) {
 		this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
 		this.formService.createFormData().subscribe(res => {
-
 			this.formId = res.serviceFormId;
 			this.muttonFishRenewalForm.patchValue(searchData);
 
@@ -197,11 +194,11 @@ export class MuttonFishRenewalComponent implements OnInit {
 			/* searchData.employeeList.forEach(app => {
 				(<FormArray>this.muttonFishRenewalForm.get('employeeList')).push(this.createArray(app));
 			}); */
-			this.muttonFishRenewalForm.disable();
-			this.enableFielList();
 			if (this.muttonFishRenewalForm.get('relationshipId').value.code == 'PROPRIETOR') {
 				this.muttonFishRenewalForm.get('relationshipList').disable();
 			}
+			this.muttonFishRenewalForm.disable();
+			this.enableFielList();
 			let currentUrl = this.location.path().replace('false', this.formId.toString());
 			this.location.go(currentUrl);
 		});
@@ -212,9 +209,7 @@ export class MuttonFishRenewalComponent implements OnInit {
 	 * This method use for edit some fiels.
 	 */
 	enableFielList() {
-
-		this.muttonFishRenewalForm.get('relationshipList').enable();
-
+		this.muttonFishRenewalForm.get('serviceCode').enable();
 	}
 
 	/**
@@ -230,6 +225,8 @@ export class MuttonFishRenewalComponent implements OnInit {
 				res.relationshipList.forEach(app => {
 					(<FormArray>this.muttonFishRenewalForm.get('relationshipList')).push(this.createArray(app));
 				});
+				this.muttonFishRenewalForm.disable();
+				this.enableFielList();
 			} catch (error) {
 				console.log(error.message);
 			}
