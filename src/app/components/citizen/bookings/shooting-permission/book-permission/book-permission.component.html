@@ -68,8 +68,8 @@
             <mat-label>
               {{'choose_start_date'| translate: translateKey}}
             </mat-label>
-            <input matInput [min]="disablefutureDate" [matDatepicker]="bookPermissionBookingfromPicker" formControlName="startDate"
-              placeholder="" (dateChange)="bookPermissionSearchForm.get('endDate').reset()">
+            <input matInput [min]="disablefutureDate" [matDatepicker]="bookPermissionBookingfromPicker"
+              formControlName="startDate" placeholder="" (dateChange)="bookPermissionSearchForm.get('endDate').reset()">
             <mat-datepicker-toggle matSuffix [for]="bookPermissionBookingfromPicker"></mat-datepicker-toggle>
             <mat-datepicker #bookPermissionBookingfromPicker touchUi="true"></mat-datepicker>
             <div align="end" class="default-show-hint mat-hint mat-right">{{config.DATE_HINT_MSG}}</div>
@@ -81,8 +81,9 @@
             <mat-label>
               {{'choose_end_date'| translate: translateKey}}
             </mat-label>
-            <input matInput [min]="bookPermissionSearchForm.get('startDate').value" [matDatepicker]="bookPermissionBookingtoPicker"
-              formControlName="endDate" placeholder="" [max]="maxOneMonth">
+            <input matInput [min]="bookPermissionSearchForm.get('startDate').value"
+              [matDatepicker]="bookPermissionBookingtoPicker" formControlName="endDate" placeholder=""
+              [max]="maxOneMonth">
             <mat-datepicker-toggle matSuffix [for]="bookPermissionBookingtoPicker"></mat-datepicker-toggle>
             <mat-datepicker #bookPermissionBookingtoPicker touchUi="true"></mat-datepicker>
             <div align="end" class="default-show-hint mat-hint mat-right">{{config.DATE_HINT_MSG}}</div>
@@ -93,7 +94,7 @@
         </div>
         <div class="row fotButtonBar">
           <div class="col-sm-12 col-md-12 text-right">
-            <button mat-raised-button color="primary" type="submit">
+            <button mat-raised-button color="primary" [disabled]="bookPermissionSearchForm.invalid" type="submit">
               {{'search'| translate: translateKey}}
             </button>
           </div>
@@ -117,7 +118,8 @@
             </mat-panel-title>
           </mat-expansion-panel-header>
           <div>
-            <mat-checkbox [checked]="!checkedAllinMonth(month)" labelPosition="after" (change)="selectAllShiftsInMonth($event.checked, month, i)">
+            <mat-checkbox [checked]="!checkedAllinMonth(month)" labelPosition="after"
+              (change)="selectAllShiftsInMonth($event.checked, month, i)">
               {{'select_all_days_in'| translate: translateKey}} {{month.monthName}}
             </mat-checkbox>
           </div>
@@ -129,7 +131,8 @@
                   {{bookingUtils.returnProperDate(date.key)}}
                 </strong>
                 <div class="dateCon">
-                  <mat-checkbox (change)="selectShift(days, $event.checked)" *ngFor="let days of date.slotList; let i = index"
+                  <mat-checkbox (change)="selectShift(days, $event.checked)"
+                    *ngFor="let days of date.slotList; let i = index"
                     [disabled]="days.slotStatus == bookingConstants.BOOKED || days.slotStatus == bookingConstants.TEMPORARY_BLOCKED"
                     [checked]="days.slotStatus != bookingConstants.AVAILABLE">
                     &nbsp;{{days.slotStatus == bookingConstants.CHECKED ? bookingConstants.AVAILABLE :
@@ -145,8 +148,8 @@
 
       <div class="fotButtonBar">
         <div class="col-sm-12 col-md-12 text-right">
-          <button mat-raised-button data-toggle="modal" (click)="shortlistShifts(confirmationModel)" data-target="#confirmShortlistModel"
-            type="button" [disabled]="selectedShift.length == 0" color="primary">
+          <button mat-raised-button data-toggle="modal" (click)="shortlistShifts(confirmationModel)"
+            data-target="#confirmShortlistModel" type="button" [disabled]="selectedShift.length == 0" color="primary">
             {{'shortlist'| translate: translateKey}}
           </button>
         </div>
@@ -187,8 +190,8 @@
             <td>{{days.occupancy}}</td>
 
             <td>
-              <button mat-icon-button title="{{'remove_slot'| translate: translateKey}}" [disabled]="selectedShift.length == 1"
-                (click)="removeSelectedShift(days, i)">
+              <button mat-icon-button title="{{'remove_slot'| translate: translateKey}}"
+                [disabled]="selectedShift.length == 1" (click)="removeSelectedShift(days, i)">
                 <mat-icon color="warn">delete</mat-icon>
               </button>
             </td>
@@ -361,7 +364,8 @@
     </div>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn mat-raised-button mat-primary" data-dismiss="modal" (click)="showPermissionApplicationForm = true; receiptRef.hide()">
+    <button type="button" class="btn mat-raised-button mat-primary" data-dismiss="modal"
+      (click)="showPermissionApplicationForm = true; receiptRef.hide()">
       {{'proceed_for_appication'| translate: translateKey}}
     </button>
   </div>
@@ -384,66 +388,71 @@
 
           <div class="row">
             <mat-form-field class="col-md-4">
-              <input matInput maxlength="50" appValidationFields [validationFieldsType]="'onlyNameWithSpace'" type="text"
-                formControlName="orgName" placeholder="{{'organization_name' | translate: translateKey}}" required>
+              <input matInput maxlength="50" appValidationFields [validationFieldsType]="'onlyNameWithSpace'"
+                type="text" formControlName="orgName" placeholder="{{'organization_name' | translate: translateKey}}"
+                required>
               <control-messages [control]="bookPermissionApplicationForm.get('orgName')"></control-messages>
             </mat-form-field>
 
             <mat-form-field class="col-md-4">
-              <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="orgContactNo" placeholder="{{'org_contact_no' | translate: translateKey}}"
-                required>
+              <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="orgContactNo"
+                placeholder="{{'org_contact_no' | translate: translateKey}}" required>
               <control-messages [control]="bookPermissionApplicationForm.get('orgContactNo')"></control-messages>
             </mat-form-field>
 
             <h2>
               {{'organization_address' | translate:translateKey}}
             </h2>
-            <app-address #address [requiredFeilds]="true" [addressFormGroup]="bookPermissionApplicationForm.get('organizationAddress')"></app-address>
+            <app-address #address [requiredFeilds]="true"
+              [addressFormGroup]="bookPermissionApplicationForm.get('organizationAddress')"></app-address>
 
 
             <mat-form-field class="col-md-4">
-              <input matInput maxlength="50" appValidationFields [validationFieldsType]="'onlyNameWithSpace'" type="text"
-                formControlName="applicantName" placeholder="{{'applicant_name' | translate: translateKey}}" required>
+              <input matInput maxlength="50" appValidationFields [validationFieldsType]="'onlyNameWithSpace'"
+                type="text" formControlName="applicantName" placeholder="{{'applicant_name' | translate: translateKey}}"
+                required>
               <control-messages [control]="bookPermissionApplicationForm.get('applicantName')"></control-messages>
             </mat-form-field>
 
             <mat-form-field class="col-md-4">
-              <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="applicantMobile" placeholder="{{'applicant_mobile' | translate: translateKey}}"
-                required>
+              <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="applicantMobile"
+                placeholder="{{'applicant_mobile' | translate: translateKey}}" required>
               <control-messages [control]="bookPermissionApplicationForm.get('applicantMobile')"></control-messages>
             </mat-form-field>
 
             <div class="col-md-4">
               <mat-form-field>
-                <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="confirmMobile" placeholder="{{'confirm_mobile' | translate: translateKey}}"
-                  required>
+                <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="confirmMobile"
+                  placeholder="{{'confirm_mobile' | translate: translateKey}}" required>
                 <control-messages [control]="bookPermissionApplicationForm.get('confirmMobile')"></control-messages>
               </mat-form-field>
               <!-- <mat-error *ngIf="!mobileNumberMatcher() && bookPermissionApplicationForm.get('applicantMobile').touched && bookPermissionApplicationForm.get('confirmMobile').touched">
                 {{bookingConstants.MOB_NO_MIS_MATCH_MESSAGE}}
               </mat-error> -->
 
-              <mat-error *ngIf="!bookingUtils.matcher(bookPermissionApplicationForm, 'applicantMobile', 'confirmMobile') && bookPermissionApplicationForm.get('applicantMobile').touched && bookPermissionApplicationForm.get('confirmMobile').touched">
+              <mat-error
+                *ngIf="!bookingUtils.matcher(bookPermissionApplicationForm, 'applicantMobile', 'confirmMobile') && bookPermissionApplicationForm.get('applicantMobile').touched && bookPermissionApplicationForm.get('confirmMobile').touched">
                 {{bookingConstants.MOB_NO_MIS_MATCH_MESSAGE}}
               </mat-error>
             </div>
 
             <mat-form-field class="col-md-4">
-              <input matInput type="email" formControlName="emailId" placeholder="{{'applicant_email' | translate: translateKey}}"
-                required>
+              <input matInput type="email" formControlName="emailId"
+                placeholder="{{'applicant_email' | translate: translateKey}}" required>
               <control-messages [control]="bookPermissionApplicationForm.get('emailId')"></control-messages>
             </mat-form-field>
 
             <div class="col-md-4">
               <mat-form-field>
-                <input matInput type="email" formControlName="confirmEmailId" placeholder="{{'confirm_email' | translate: translateKey}}"
-                  required>
+                <input matInput type="email" formControlName="confirmEmailId"
+                  placeholder="{{'confirm_email' | translate: translateKey}}" required>
                 <control-messages [control]="bookPermissionApplicationForm.get('confirmEmailId')"></control-messages>
               </mat-form-field>
               <!-- <mat-error *ngIf="!emailMatcher() && bookPermissionApplicationForm.get('emailId').touched && bookPermissionApplicationForm.get('confirmEmailId').touched">
                 {{bookingConstants.EMAIL_MIS_MATCH_MESSAGE}}
               </mat-error> -->
-              <mat-error *ngIf="!bookingUtils.matcher(bookPermissionApplicationForm, 'emailId', 'confirmEmailId') && bookPermissionApplicationForm.get('emailId').touched && bookPermissionApplicationForm.get('confirmEmailId').touched">
+              <mat-error
+                *ngIf="!bookingUtils.matcher(bookPermissionApplicationForm, 'emailId', 'confirmEmailId') && bookPermissionApplicationForm.get('emailId').touched && bookPermissionApplicationForm.get('confirmEmailId').touched">
                 {{bookingConstants.EMAIL_MIS_MATCH_MESSAGE}}
               </mat-error>
 
@@ -454,7 +463,8 @@
             <h2>
               {{'applicant_address' | translate:translateKey}}
             </h2>
-            <app-address #address [requiredFeilds]="true" [addressFormGroup]="bookPermissionApplicationForm.get('applicantAddress')"></app-address>
+            <app-address #address [requiredFeilds]="true"
+              [addressFormGroup]="bookPermissionApplicationForm.get('applicantAddress')"></app-address>
           </div>
 
           <div class="row mt-4 fotButtonBar">
@@ -483,25 +493,26 @@
                   {{bank.name}}
                 </ng-option>
               </ng-select>
-              <control-messages [control]="bookPermissionApplicationForm.get('bankName').get('code')"></control-messages>
+              <control-messages [control]="bookPermissionApplicationForm.get('bankName').get('code')">
+              </control-messages>
             </div>
 
             <mat-form-field class="col-md-6">
-              <input matInput type="text" maxlength="20" appValidationFields [validationFieldsType]="'onlyNameWithSpace'"
-                formControlName="accountHolderName" placeholder="{{'account_holder_name' | translate: translateKey}}"
-                required>
+              <input matInput type="text" maxlength="20" appValidationFields
+                [validationFieldsType]="'onlyNameWithSpace'" formControlName="accountHolderName"
+                placeholder="{{'account_holder_name' | translate: translateKey}}" required>
               <control-messages [control]="bookPermissionApplicationForm.get('accountHolderName')"></control-messages>
             </mat-form-field>
 
             <mat-form-field class="col-md-6">
-              <input matInput OnlyNumber maxlength="20" minlength="20" formControlName="accountNo" placeholder="{{'accont_no' | translate: translateKey}}"
-                required>
+              <input matInput OnlyNumber maxlength="20" minlength="20" formControlName="accountNo"
+                placeholder="{{'accont_no' | translate: translateKey}}" required>
               <control-messages [control]="bookPermissionApplicationForm.get('accountNo')"></control-messages>
             </mat-form-field>
 
             <mat-form-field class="col-md-6">
-              <input matInput type="text" maxlength="11" formControlName="ifscCode" placeholder="{{'ifsc_code' | translate: translateKey}}"
-                required>
+              <input matInput type="text" maxlength="11" formControlName="ifscCode"
+                placeholder="{{'ifsc_code' | translate: translateKey}}" required>
               <control-messages [control]="bookPermissionApplicationForm.get('ifscCode')"></control-messages>
             </mat-form-field>
           </div>

@@ -50,7 +50,7 @@ export class BookPermissionComponent implements OnInit {
   head_lines: string;
   public config = new CitizenConfig;
 
-  isFileUploaded : boolean = false;
+  isFileUploaded: boolean = false;
   /**
    * Booking Constants and utils
    */
@@ -165,7 +165,7 @@ export class BookPermissionComponent implements OnInit {
       }),
       startDate: [moment(new Date()).add(1, 'day').format('YYYY-MM-DD'), Validators.required],
       endDate: [null, Validators.required]
-    }); 
+    });
     this.maxOneMonth = moment(new Date()).add(moment.duration(1, 'M')).format('YYYY-MM-DD');
   }
 
@@ -278,7 +278,6 @@ export class BookPermissionComponent implements OnInit {
 
   createPermissionApplicationForm() {
     this.bookPermissionApplicationForm = this._fb.group({
-      id: [null],
       uniqueId: [null],
       version: [null],
       cancelledDate: [null],
@@ -286,13 +285,6 @@ export class BookPermissionComponent implements OnInit {
       refNumber: [null],
       resourceType: [null],
       resourceCode: [null],
-      accountHolderName: [null],
-      accountNo: [null],
-      bankName: this._fb.group({
-        code: [null, [Validators.required]],
-        name: null
-      }),
-      ifscCode: [null,[Validators.required,ValidationService.ifscCodeValidator]],
       scheduleList: [],
       bookingPurposeMaster: this._fb.group({
         code: [null, [Validators.required]],
@@ -303,18 +295,26 @@ export class BookPermissionComponent implements OnInit {
       bookingTo: [null],
       remarks: [null],
       organizationAddress: this._fb.group(this.addressComp.addressControls()),
-      applicantAddress : this._fb.group(this.addressComp.addressControls()),
+      applicantAddress: this._fb.group(this.addressComp.addressControls()),
       orgName: [null],
       orgContactNo: [null],
-      confirmMobile:[null],
+      confirmMobile: [null],
       applicantName: [null],
       applicantMobile: [null],
       emailId: [null],
-      confirmEmailId : [null],
+      confirmEmailId: [null],
       relationshipWithOrg: [null],
       presidentName: [null],
       shootingPurpose: [null],
       bookingDate: [null],
+
+      accountHolderName: [null],
+      accountNo: [null],
+      bankName: this._fb.group({
+        code: [null, [Validators.required]],
+        name: null
+      }),
+      ifscCode: [null, [Validators.required, ValidationService.ifscCodeValidator]],
       attachment: [null]
     });
   }
@@ -330,34 +330,40 @@ export class BookPermissionComponent implements OnInit {
       return;
     }
     else if (!this.bookingUtils.matcher(this.bookPermissionApplicationForm, 'emailId', 'confirmEmailId') || !this.bookingUtils.matcher(this.bookPermissionApplicationForm, 'applicantMobile', 'confirmMobile')) {
+      this.commonService.openAlert("Feild Error", !this.bookingUtils.matcher(this.bookPermissionApplicationForm, 'emailId', 'confirmEmailId') ? this.bookingConstants.EMAIL_MIS_MATCH_MESSAGE : this.bookingConstants.MOB_NO_MIS_MATCH_MESSAGE, 'warning');
       this.handleErrorsOnSubmit(7);
-      this.commonService.openAlert("Feild Error", !this.bookingUtils.matcher(this.bookPermissionApplicationForm, 'emailId', 'confirmEmailId')  ? this.bookingConstants.EMAIL_MIS_MATCH_MESSAGE : this.bookingConstants.MOB_NO_MIS_MATCH_MESSAGE, 'warning')
       return;
-    }else if(!this.isFileUploaded && this.bookPermissionApplicationForm.controls.concessionRequired.value){
-      this.handleErrorsOnSubmit(7);
+    } else if (!this.isFileUploaded) {
+      this.handleErrorsOnSubmit(32);
       this.commonService.openAlert(this.bookingConstants.FEILD_ERROR_TITLE, 'Attachment Required!', 'warning')
       return;
     }
-     else {
+    else {
       this.bookingService.commonBookSlot(this.bookPermissionApplicationForm.value).subscribe(resp => {
         if (resp.data.status == this.bookingConstants.SUBMITTED) {
-          this.commonService.commonAlert("Shooting Permission Booking", "Shooting Permission Booked Successfully", "success", "Print Acknowledgement Receipt", false, '', pA => {
-            this.bookingService.printAcknowledgementReceipt(resp.data.refNumber).subscribe(acknowledgementHTML => {
-              let sectionToPrint: any = document.getElementById('sectionToPrint');
-              sectionToPrint.innerHTML = acknowledgementHTML;
-              setTimeout(() => {
-                window.print();
-                this.router.navigate([this.bookingConstants.MY_BOOKINGS_URL]);
-              });
-            }, err => {
-              this.commonService.openAlert("Error", err.error[0].message, "warning")
-            })
+          this.commonService.commonAlert("Shooting Permission Booking", "Permission Booked Successfully", "success", "Print Acknowledgement Receipt", false, '', pA => {
+              this.bookingService.printAcknowledgementReceipt(resp.data.refNumber).subscribe(acknowledgementHTML => {
+                  let sectionToPrint: any = document.getElementById('sectionToPrint');
+                  sectionToPrint.innerHTML = acknowledgementHTML;
+                  setTimeout(() => {
+                      window.print();
+                      this.router.navigate([this.bookingConstants.MY_BOOKINGS_URL]);
+                  });
+              }, err => {
+                  this.commonService.openAlert("Error", err.error[0].message, "warning")
+              })
           }, rA => {
-            this.router.navigate([this.bookingConstants.MY_BOOKINGS_URL]);
+              this.router.navigate([this.bookingConstants.MY_BOOKINGS_URL]);
           })
-        }
+      }
       }, (err) => {
-        this.commonService.openAlertFormSaveValidation('Warning!', err.error, 'warning');
+         if (err.error[0].code == this.bookingConstants.INVALID_BOOKING_STATUS) {
+          this.commonService.openAlert("Invalid Booking Status", err.error[0].message, "warning", "", cb => {
+            this.router.navigate([this.bookingConstants.MY_BOOKINGS_URL])
+          })
+        } else {
+          this.commonService.openAlertFormSaveValidation('Warning!', err.error, 'warning');
+        }
       })
       return;
     }
@@ -451,9 +457,8 @@ export class BookPermissionComponent implements OnInit {
 		/**
 		 * No Of controls on perticular tab
 		 */
-    let step1 = 4;
-    let step2 = 11;
-    let step3 = 17;
+    let step1 = 26;
+    let step2 = 31;
 
 		/**
 		 * Redirection
@@ -463,9 +468,6 @@ export class BookPermissionComponent implements OnInit {
       return false;
     } else if (count < step2) {
       this.tabIndex = 1;
-      return false;
-    } else if (count < step3) {
-      this.tabIndex = 2;
       return false;
     }
   }
