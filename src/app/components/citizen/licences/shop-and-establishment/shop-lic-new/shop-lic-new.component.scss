@@ -1,4 +1,31 @@
 .customDataTable {
     td{vertical-align: middle;}
     p{margin-bottom: 0px}
+
+  .ngSelect { min-width: 160px; max-width: 160px;}
+  .ng-select div {text-overflow: ellipsis; overflow: hidden;}
+
+  thead tr > th:first-child, tbody tr > td:first-child {
+    padding-left: 10px;
   }
+
+  
+
+}
+
+@media (max-width: 767px) { 
+.customDataTable {
+   tbody tr > td {width: 100% !important; display: block;
+  .d-md-none {display: inline-block;  width: 100px;}
+  }
+   .mo-d-none {display: none; position: relative;}
+    p {display: inline-block;}
+  // .ngSelect {width: 100%; max-width: inherit;}
+}
+}
+
+
+
+
+
+  
