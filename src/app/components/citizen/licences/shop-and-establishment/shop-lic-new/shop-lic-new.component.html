@@ -456,7 +456,7 @@
 					<div>{{'person_occuping' | translate: translateKey}}</div>
 				</ng-template>
 
-				<div class="row">
+				<div class="row pb-3">
 					<div class="col-md-10">
 						<h2>{{'occupying_position_of_management_table_label' | translate: translateKey }}</h2>
 					</div>
@@ -467,9 +467,9 @@
 					</div>
 				</div>
 
-				<div style="overflow-x: scroll;" *ngIf="shopLicNewForm.get('occupancyList')['controls'].length">
+				<div *ngIf="shopLicNewForm.get('occupancyList')['controls'].length">
 					<div>
-						<table class="table table-striped customDataTable">
+						<table class="table table-striped responsiveTableRow">
 							<thead>
 								<tr class="mo-d-none">
 									<th>#</th>
@@ -508,9 +508,10 @@
 										</mat-form-field>
 									</td>
 
-									<td>
+									<td [ngClass]="{'preview-mode-add-class':!item.isEditMode}">
 										<div class="d-md-none">{{'relationship' | translate:translateKey}}</div>
-										<div class="ngSelect" formGroupName="relationship">
+
+										<div formGroupName="relationship">
 											<p *ngIf="!item.isEditMode">
 												{{getSelectedDataFromLookUps(SHOP_LIC_OCCUPANCY_PERSON_RELATIONSHIP,item.get('relationship').value.code)?.name}}
 											</p>
@@ -525,6 +526,7 @@
 													[control]="item.get('relationship').get('code')"></control-messages>
 											</div>
 										</div>
+
 									</td>
 
 									<td>
@@ -579,7 +581,31 @@
 							</tbody>
 						</table>
 					</div>
-					<div>
+
+					<table width="100%" class="table">
+						<tbody>
+							<tr>
+								<th width="200">{{'total_adult_person' | translate:translateKey}}</th>
+								<td>{{calulateNumberOfPerson('occupancyList','totalAdultOccupancy','adult')}}</td>
+								<th width="200">{{'total_young_person' | translate:translateKey}}</th>
+								<td>{{calulateNumberOfPerson('occupancyList','totalYoungOccupancy','young')}}</td>
+							</tr>
+							<tr>
+								<th>{{'total_men' | translate:translateKey}}</th>
+								<td>{{calulateNumberOfPerson('occupancyList','totalManOccupancy','men')}}</td>
+								<th>{{'total_women' | translate:translateKey}}</th>
+								<td>{{calulateNumberOfPerson('occupancyList','totalWomenOccupancy','women')}}</td>
+							</tr>
+							<tr>
+								<th>{{'total_unidentified_person' | translate:translateKey}}</th>
+								<td>{{calulateNumberOfPerson('occupancyList','totalUnidentifiedOccupancy','unidentified')}}</td>
+								<th>{{'total_person' | translate:translateKey}}</th>
+								<td>{{calulateNumberOfPerson('occupancyList','totalOccupancy','total')}}</td>
+							</tr>
+						</tbody>
+					</table>
+
+					<!-- <div>
 						<div class="row">
 							<div class="col-md-4">{{'total_adult_person' | translate:translateKey}}</div>
 							<div class="col-md-2">
@@ -607,7 +633,7 @@
 							<div class="col-md-4">{{calulateNumberOfPerson('occupancyList','totalOccupancy','total')}}
 							</div>
 						</div>
-					</div>
+					</div> -->
 				</div>
 
 				<app-action-bar [form]="shopLicNewForm" (tabIndex)="onTabChange($event)"
