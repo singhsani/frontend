@@ -15,7 +15,6 @@ import { PaymentResponsePageComponent } from '../../shared/components/payment-re
 import { PayableServicesComponent } from './payable-services/payable-services.component';
 import { GujPocComponent } from './guj-poc/guj-poc.component';
 import { GatewayResponseComponent } from './../../shared/components/gateway-response/gateway-response.component';
-import { VehicleModule } from '../citizen/tax/vehicle/vehicle.module';
 /* Import citizen components other than auth end */
 
 const routes: Routes = [
@@ -40,7 +39,6 @@ const routes: Routes = [
 			{ path: ManageRoutes.getPrefixRoute('GRIEVANCEMODULE'), loadChildren: './grievance/grievance.module#GrievanceModule' , canLoad: [AuthGuard] },
 			{ path: ManageRoutes.getPrefixRoute('TAXMODULE'), loadChildren: './tax/tax.module#TaxModule', canLoad: [AuthGuard] },
 			{ path: ManageRoutes.getPrefixRoute('APPOINTMENT'), loadChildren: './appointment/appointment.module#AppointmentModule', canLoad: [AuthGuard] },
-			{path: ManageRoutes.getPrefixRoute('VEHICLEMODULE'), loadChildren: () => VehicleModule, canLoad: [AuthGuard] },
 			{ path: 'gujPOC', component: GujPocComponent, canActivate: [AuthGuard] }
 		]
 	},

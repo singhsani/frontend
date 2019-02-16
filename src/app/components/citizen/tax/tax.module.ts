@@ -12,7 +12,7 @@ const routes: Routes = [
   { path: '', redirectTo: ManageRoutes.getPrefixRoute('PROPERTYMODULE'), pathMatch: 'full' },
   { path: ManageRoutes.getPrefixRoute('PROFESSIONALMODULE'), loadChildren: './professional-tax/professional-tax.module#ProfessionalTaxModule', canLoad: [AuthGuard] },
   { path: ManageRoutes.getPrefixRoute('PROPERTYMODULE'), loadChildren: './property/property.module#PropertyModule', canLoad: [AuthGuard] },
-  { path: "vehicle", loadChildren: './vehicle/vehicle.module#VehicleModule', canLoad: [AuthGuard] },
+  { path: "vehicle", loadChildren: './vehicle/vehicle.module#VehicleModule', canLoad: [AuthGuard] }
 ];
 
 
