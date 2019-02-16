@@ -46,7 +46,7 @@ import { CountryService } from './services/country.service';
 import { HosPaymentResponsePageComponent } from './components/hos-payment-response-page/hos-payment-response-page.component';
 import { HosTitleBarComponent } from './components/hos-title-bar/hos-title-bar.component';
 import { GatewayResponseComponent } from './components/gateway-response/gateway-response.component';
-
+import { PaymentOptionComponent } from './components/payment-option/payment-option.component';
 /* import pipes end*/
 
 const COMPONENTS = [
@@ -70,7 +70,8 @@ const COMPONENTS = [
 	AlphaNumericDirective,
 	ReloadDirective,
 	HosPaymentResponsePageComponent,
-	GatewayResponseComponent
+	GatewayResponseComponent,
+	PaymentOptionComponent
 ]
 
 @NgModule({

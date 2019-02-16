@@ -31,7 +31,7 @@ export class DashboardComponent implements OnInit {
 			"name": "Booking Facilities",
 			"gujName": "Booking Facilities",
 			"services": [
-				
+
 				{
 					"code": "TOWNHALLBOOK",
 					"fieldView": "ALL",
@@ -192,6 +192,9 @@ export class DashboardComponent implements OnInit {
 			case 'PRC_REG':
 				this.router.navigate([ManageRoutes.getFullRoute(apiCode)]);
 				break;
+			// case 'VEHICLE':
+			// 	this.router.navigate([ManageRoutes.getFullRoute(apiCode)]);
+			// 	break;
 			default:
 				if (ManageRoutes.getApiTypeFromApiCode(apiCode)) {
 					this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);

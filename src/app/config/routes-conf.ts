@@ -284,9 +284,9 @@ const ROUTEMAIN = {
         'main': 'book',
         'type': ''
     },
-    'ATITHIGRUHBOOK' : {
-        'main' : 'book',
-        'type' :''
+    'ATITHIGRUHBOOK': {
+        'main': 'book',
+        'type': ''
     },
     'SHOOTINGPERMISSION': {
         'main': 'shootingPermission',
@@ -363,6 +363,10 @@ const ROUTEMAIN = {
         'main': 'payment-gateway-response',
         'type': ''
     },
+    'VEHICLE': {
+        'main': 'new-registration',
+        'type': 'vehicle'
+    }
 
 }
 
@@ -384,7 +388,7 @@ const ROUTEPREFIX = {
     'GARDENMODULE': 'garden',
     'GUESTHOUSEMODULE': 'guest-house',
     'PLANETAREAMODULE': 'planet-area',
-    'ATITHIGRUHMODULE' : 'atithigruh',
+    'ATITHIGRUHMODULE': 'atithigruh',
     'STADIUMMODULE': 'stadium',
     'SHOOTINGPERMISSIONMODULE': 'shootingPermission',
     'SWIMMINGMODULE': 'swimming',
@@ -421,6 +425,7 @@ const ROUTEPREFIX = {
     /** end - citizen inner-tax module */
 
     'PROFESSIONALMODULE': 'professional',
+    'VEHICLEMODULE': 'vehicle',
 
     'APPOINTMENT': 'appointmant',
     'SCHEDULEAPPOINTMENT': 'schedule-appointment',
@@ -724,7 +729,10 @@ const ROUTESLIST = {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TAXMODULE + '/' + ROUTEPREFIX.PROFESSIONALMODULE + '/' + ROUTEMAIN["PEC_REG"].main
     },
     'PRC_REG': {
-        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.PROFESSIONALMODULE + '/' + ROUTEMAIN["PRC_REG"].main
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TAXMODULE + '/' + ROUTEPREFIX.PROFESSIONALMODULE + '/' + ROUTEMAIN["PRC_REG"].main
+    },
+    'VEHICLE': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TAXMODULE + '/' + ROUTEPREFIX.VEHICLEMODULE + '/' + ROUTEMAIN["VEHICLE"].main
     },
 
     /* hospital full routing configuration start*/
@@ -759,7 +767,7 @@ export const ManageRoutes = {
     },
 
     getPrefixRoute(routeType: string) {
-        if(routeType)
+        if (routeType)
             return ROUTEPREFIX[routeType];
     },
 
