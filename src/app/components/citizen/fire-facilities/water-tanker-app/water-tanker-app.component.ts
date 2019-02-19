@@ -137,7 +137,6 @@ export class WaterTankerAppComponent implements OnInit {
 	 * @param dependedKey 
 	 */
 	dependentAttachment(dependedKey: string) {
-		debugger;
 		var control = (<FormArray>this.waterTankerAppForm.get('serviceDetail').get('serviceUploadDocuments')).controls
 		var fields = control.find((data) => data.get('documentIdentifier').value === dependedKey);
 
@@ -229,7 +228,7 @@ export class WaterTankerAppComponent implements OnInit {
 	}
 
 	/**
-	 * This method for reset purpose.
+	 * This method for reset dependent field.
 	 */
 	resetsuggestedfields() {
 
@@ -280,7 +279,6 @@ export class WaterTankerAppComponent implements OnInit {
 	 * @param flag - flag of invalid control.
 	 */
 	handleErrorsOnSubmit(flag) {
-		debugger;
 		let step0 = 10;
 
 		if (flag != null) {
