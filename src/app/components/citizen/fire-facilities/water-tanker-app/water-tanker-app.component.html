@@ -34,7 +34,7 @@
 				<div class="row" *ngIf="waterTankerAppForm.get('purpose').get('code').value == 'FS_SUGGESTED'">
 					<h2>{{'if_purpose_fastival_or_sugg' | translate:translateKey}}</h2>
 					<mat-form-field class="col-md-6">
-						<input matInput type="text" required maxlength="150" placeholder="{{'who_is_suggested' | translate:translateKey}}"
+						<input matInput type="text" maxlength="150" placeholder="{{'who_is_suggested' | translate:translateKey}}"
 						 formControlName="whoSuggested">
 						<control-messages [control]="waterTankerAppForm.get('whoSuggested')"></control-messages>
 					</mat-form-field>
@@ -115,7 +115,7 @@
 					</mat-form-field>
 				</div>
 				<app-action-bar [form]="waterTankerAppForm" [uploadFiles]="uploadFilesArray" (tabIndex)="fireFacilityConfig.onFormTabChange($event)"
-				 [stepInfo]="{step: 'final', next: 1, back: 0}" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
+				 [stepInfo]="{step: 'final', next: 1, back: 0}"  (handleOnSaveAndNext)="handleOnSaveAndNext($event)" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
 
 			</mat-tab>
 			<!-- step 1 Ends -->

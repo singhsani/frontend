@@ -129,7 +129,37 @@ export class WaterTankerAppComponent implements OnInit {
 			}
 		});
 		//check for attachment is mandatory
-		// this.dependentAttachment(this.provisionalHospitalNocForm.get('trainedFiremanStaffKept').value, 'TRAIN_FIRE_PERSON_LIST');
+		// this.dependentAttachment(this.waterTankerAppForm.get('trainedFiremanStaffKept').value, 'TRAIN_FIRE_PERSON_LIST');
+	}
+	/**
+	 * Method is handel depended documents (depended on form field value ).
+	 * @param event 
+	 * @param dependedKey 
+	 */
+	dependentAttachment(dependedKey: string) {
+		debugger;
+		var control = (<FormArray>this.waterTankerAppForm.get('serviceDetail').get('serviceUploadDocuments')).controls
+		var fields = control.find((data) => data.get('documentIdentifier').value === dependedKey);
+
+		if (fields) {
+			fields.get('mandatory').setValue(true);
+			if (fields.get('isActive').value && fields.get('requiredOnCitizenPortal').value) {
+				this.uploadFilesArray.push({
+					'labelName': fields.get('documentLabelEn').value,
+					'fieldIdentifier': fields.get('fieldIdentifier').value,
+					'documentIdentifier': dependedKey
+				})
+			}
+		} else {
+			if (fields) {
+				fields.get('mandatory').setValue(false);
+				var indewx = this.uploadFilesArray.findIndex((data) => data.documentIdentifier === dependedKey)
+				if (indewx != -1) {
+					this.uploadFilesArray.splice(indewx, 1);
+				}
+			}
+		}
+
 	}
 
 	/**
@@ -169,7 +199,7 @@ export class WaterTankerAppComponent implements OnInit {
 			purpose: this.fb.group({
 				"code": [null, Validators.required]
 			}),
-			whoSuggested: [null, [Validators.required, Validators.maxLength(150)]],
+			whoSuggested: [null, [Validators.maxLength(150)]],
 			withinVMCBoundary: [null, [Validators.required]],
 			requiredOnDate: [null, Validators.required],
 			requireIn: this.fb.group({
@@ -203,10 +233,18 @@ export class WaterTankerAppComponent implements OnInit {
 	 */
 	resetsuggestedfields() {
 
-		if (this.waterTankerAppForm.get('purpose').get('code').value != 'FS_SUGGESTED') {
-			this.waterTankerAppForm.get('attachments').reset();
-			this.waterTankerAppForm.controls.whoSuggested.reset();
+		if (this.waterTankerAppForm.get('purpose').get('code').value == 'FS_SUGGESTED') {
+			this.waterTankerAppForm.controls.whoSuggested.setValidators([Validators.required]);
+			// console.log(this.waterTankerAppForm.get('serviceDetail').get('serviceUploadDocuments').value[0].mandatory)
+			this.dependentAttachment('UPLOAD_LETTER');
 		}
+		else {
+			this.waterTankerAppForm.get('whoSuggested').clearValidators();
+			this.waterTankerAppForm.get('whoSuggested').reset();
+			this.waterTankerAppForm.get('attachments').reset();
+		}
+		this.waterTankerAppForm.get('whoSuggested').updateValueAndValidity();
+
 	}
 
 	/**
@@ -229,12 +267,21 @@ export class WaterTankerAppComponent implements OnInit {
 	}
 
 	/**
+	 * This method is handle depended documents on save event
+	 * @param res - form response after save event
+	 */
+	handleOnSaveAndNext(res) {
+		this.requiredDocumentList();
+		this.resetsuggestedfields();
+	}
+
+	/**
 	 * This method required for final form submition.
 	 * @param flag - flag of invalid control.
 	 */
 	handleErrorsOnSubmit(flag) {
-
-		let step0 = 13;
+		debugger;
+		let step0 = 10;
 
 		if (flag != null) {
 			//Check validation for step by step
