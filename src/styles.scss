@@ -674,6 +674,7 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
         .table {margin: 0;
             td {padding:0 0.75rem; vertical-align: middle;}
         }
+      &:nth-child(even) form > .table-responsive tr {background: #fff;}
     }
 }
 
@@ -933,6 +934,7 @@ body * {visibility: hidden;}
         .ng-valid {display: flex;}
     }
   }
+  .tdPaddMob > tbody > tr > td {padding: 10px 0.75rem !important;}
 }
 
 // Part 2 End ------------------------------------------------
