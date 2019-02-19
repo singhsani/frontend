@@ -145,8 +145,8 @@
 				</div>
 
 				<!-- table -->
-				<div class="row">
-					<div class="col-md-10">
+				<div class="row justify-content-between">
+					<div>
 						<h2 *ngIf="muttonFishNewForm.get('relationshipId').value.code == 'PROPRIETOR'">{{ 'if_shop_is_in_properitership' | translate:translateKey}}</h2>
 						<h2 *ngIf="muttonFishNewForm.get('relationshipId').value.code != 'PROPRIETOR'">{{ 'if_shop_is_in_partnership' | translate:translateKey}}</h2>
 					</div>
@@ -158,9 +158,9 @@
 
 				<div *ngIf="muttonFishNewForm.get('relationshipList')['controls'].length">
 						<div class="table-responsive">
-						<table class="table table-striped mb-0">
+						<table class="table table-striped mb-0 responsiveTableRow">
 							<thead>
-								<tr>
+								<tr class="mo-d-none">
 									<th width="50">#</th>
 									<th width="29%">{{'name' | translate:translateKey}}</th>
 									<th width="29%">{{'address' | translate:translateKey}}</th>
@@ -175,11 +175,14 @@
 								<li *ngFor="let item of muttonFishNewForm.get('relationshipList')['controls']; let indx = index;">
 									<form [formGroupName]="indx">
 											<div class="table-responsive">
-										<table class="table table-striped">
+										<table class="table table-striped responsiveTableRow tdPaddMob">
 											<tr>
-													<td width="50">{{indx+1}}</td>
+													<td width="50">
+														<div class="d-md-none">#</div>
+														{{indx+1}}</td>
 
 													<td width="29%">
+														<div class="d-md-none">{{'name' | translate:translateKey}}</div>
 														<div *ngIf="!item.isEditMode">{{item.get('name').value}}</div>
 														<mat-form-field *ngIf="item.isEditMode">
 															<input matInput maxlength="100" appValidationFields [validationFieldsType]="'onlyNameWithSpace'" formControlName="name">
@@ -188,6 +191,7 @@
 													</td>
 
 													<td width="29%">
+														<div class="d-md-none">{{'address' | translate:translateKey}}</div>
 														<div *ngIf="!item.isEditMode">{{item.get('address').value}}</div>
 														<mat-form-field *ngIf="item.isEditMode">
 															<input matInput maxlength="150" formControlName="address">
@@ -196,6 +200,7 @@
 													</td>
 
 													<td width="29%">
+														<div class="d-md-none">{{'mobile_no' | translate:translateKey}}</div>
 														<div *ngIf="!item.isEditMode">{{item.get('mobileNo').value}}</div>
 														<mat-form-field *ngIf="item.isEditMode">
 															<input matInput maxlength="11" OnlyNumber formControlName="mobileNo">
