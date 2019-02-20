@@ -2,8 +2,8 @@ import { Component, OnInit, TemplateRef, ViewChild, ChangeDetectorRef } from '@a
 import * as moment from 'moment';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { BookingService } from '../../../../../core/services/citizen/data-services/booking.service';
-import { BookingConstants, BookingUtils } from '../../booking-config';
+//import { BookingService } from '../../../../../core/services/citizen/data-services/booking.service';
+import { BookingConstants, BookingUtils } from '../../config/booking-config';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 import { CommonService } from '../../../../../shared/services/common.service';
@@ -11,6 +11,7 @@ import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '../../../../../shared/modules/translate/translate.service';
 import { ValidationService } from '../../../../../shared/services/validation.service';
 import { CitizenConfig } from '../../../citizen-config';
+import { BookingService } from '../../shared-booking/services/booking-service.service';
 
 export interface BookingDetails {
   administrationCharges: string

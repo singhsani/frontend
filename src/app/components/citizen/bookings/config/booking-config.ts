@@ -1,10 +1,9 @@
-import { FormControl, FormGroup, FormArray } from "@angular/forms";
-import * as moment from 'moment';
-import { ComponentConfig } from "../../component-config";
-import { environment } from "../../../../environments/environment";
-import { CommonService } from "../../../shared/services/common.service";
-import { BookingService } from "../../../core/services/citizen/data-services/booking.service";
+import { FormGroup } from "@angular/forms";
+import { ComponentConfig } from "../../../component-config";
+import { environment } from "../../../../../environments/environment";
+import { CommonService } from "../../../../shared/services/common.service";
 import { Router } from "@angular/router";
+import { BookingService } from "../shared-booking/services/booking-service.service";
 
 
 /**
@@ -39,6 +38,7 @@ export enum BookingConstants {
     FEILD_ERROR_TITLE = "Feild Error",
     TOWNHALL_RESOURCE_TYPE ="townhall",
     STADIUM_RESOURCE_TYPE = "stadium",
+    CT_RESOURCE_TYPE ="childrenTheater",
     SHOOTING_PERMISSION_PLACE = "shootingPermission",
     BOOKINGS_FILE_UPLOAD_URL = 'api/attachment/booking/upload',
     MY_BOOKINGS_URL = 'citizen/bookings/my-bookings',

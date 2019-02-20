@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { BookingService } from '../../../../../core/services/citizen/data-services/booking.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
 import { AmazingTimePickerService } from 'amazing-time-picker';
+import { BookingService } from '../../shared-booking/services/booking-service.service';
 
 @Component({
   selector: 'app-band-booking',

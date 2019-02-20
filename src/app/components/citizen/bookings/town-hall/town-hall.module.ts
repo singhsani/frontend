@@ -7,16 +7,14 @@ import { SharedModule } from '../../../../shared/shared.module';
 import { CoreModule } from '../../../../core/core.module';
 import { TownHallRoutingModule } from './town-hall-routing.module';
 import { TownHallBookComponent } from './townhall-book/townhall-book.component';
+import { SharedBookingModule } from '../shared-booking/shared-booking.module';
 /* Import all shared, core and routing module end */
 
 
 @NgModule({
 	imports: [
 		CommonModule,
-		SharedModule,
-		CoreModule,
-		FormsModule,
-		ReactiveFormsModule,
+		SharedBookingModule,
 		TownHallRoutingModule
 	],
 	declarations: [

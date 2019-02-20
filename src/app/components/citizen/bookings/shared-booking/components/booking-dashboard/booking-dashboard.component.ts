@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ManageRoutes } from '../../../../config/routes-conf';
+import { ManageRoutes } from '../../../../../../config/routes-conf';
 
 @Component({
 	selector: 'app-booking-dashboard',

@@ -4,11 +4,11 @@ import { MatPaginator, MatTableDataSource } from '@angular/material';
 import { ToastrService } from 'ngx-toastr';
 import * as moment from 'moment';
 import { Router } from '@angular/router';
-import { BookingService } from '../../../../../core/services/citizen/data-services/booking.service';
+// import { BookingService } from '../../../../../core/services/citizen/data-services/booking.service';
 import { CommonService } from '../../../../../shared/services/common.service';
-import { BookingConstants, BookingUtils } from '../../booking-config';
+import { BookingConstants, BookingUtils } from '../../config/booking-config';
 import { ValidationService } from '../../../../../shared/services/validation.service';
-import { environment } from '../../../../../../environments/environment';
+import { BookingService } from '../../shared-booking/services/booking-service.service';
 
 export interface BookingDetails {
 	administrationCharges: string
