@@ -150,7 +150,7 @@
 						<h2 *ngIf="muttonFishNewForm.get('relationshipId').value.code == 'PROPRIETOR'">{{ 'if_shop_is_in_properitership' | translate:translateKey}}</h2>
 						<h2 *ngIf="muttonFishNewForm.get('relationshipId').value.code != 'PROPRIETOR'">{{ 'if_shop_is_in_partnership' | translate:translateKey}}</h2>
 					</div>
-					<div class="col-md-2 pt-3" style="text-align: right;">
+					<div class="col-md-2 pt-3 text-right">
 						<button type="button" *ngIf="muttonFishNewForm.get('canEdit').value" [disabled]="muttonFishNewForm.get('relationshipId').value.code ? muttonFishNewForm.get('relationshipId').value.code=='PROPRIETOR' ? !(muttonFishNewForm.get('relationshipList').length < 1) : !(muttonFishNewForm.get('relationshipList').length < 10) : true"
 						 matTooltip="{{'add_more' | translate:translateKey}}" mat-raised-button color="primary" (click)="addMorePerson('MF_PERSON')">{{'add'| translate:translateKey}}</button>
 					</div>
@@ -201,14 +201,14 @@
 
 													<td width="29%">
 														<div class="d-md-none">{{'mobile_no' | translate:translateKey}}</div>
-														<div *ngIf="!item.isEditMode">{{item.get('mobileNo').value}}</div>
+														<div *ngIf="!item.isEditMode">{{item.get('mobileNo').value}} &nbsp;</div>
 														<mat-form-field *ngIf="item.isEditMode">
 															<input matInput maxlength="11" OnlyNumber formControlName="mobileNo">
 															<control-messages [control]="item.get('mobileNo')"></control-messages>
 														</mat-form-field>
 													</td>
 													<td width="150">
-													<div *ngIf="muttonFishNewForm.get('canEdit').value" class="float-left">
+													<div class="float-left" *ngIf="muttonFishNewForm.get('canEdit').value">
 															<button mat-icon-button color="primary" *ngIf="!item.isEditMode" (click)="editRecord(item)">
 																<mat-icon title="Edit">edit</mat-icon>
 															</button>
