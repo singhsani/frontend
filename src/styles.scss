@@ -652,6 +652,7 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
     // }
    .row {margin: 0;}
    h2 {padding:25px 15px 0 15px; margin-bottom: 10px; width: 100%; font-size: 1.2rem; color: #000;}
+   .justify-content-between > .col-md-10 > h2 {padding-left: 0;}
     &>.mat-tab-header {border: 0;
         .mat-tab-label-container {background: #f1f1f1;}
     }
@@ -916,7 +917,15 @@ body * {visibility: hidden;}
     thead tr > th:first-child, tbody tr > td:first-child {padding-left: 10px; }
       td{vertical-align: middle;}
       p{margin-bottom: 0px}
+
+     .preview-mode-add-class .ngSelect {max-width: 200px;}
   }
+
+  .width40 {width: 40px;}
+  .width50 {width: 50px;}
+  .width80 {width: 80px;}
+  .width110 {width: 110px;}
+  .width160 {width: 160px;}
 // Responsive CSS Part 2 ------------------------------------------------
 
 @media (max-width: 767px) {
@@ -927,7 +936,7 @@ body * {visibility: hidden;}
          .d-md-none::before { content: ": "; position: absolute; top: 0; right: 5px;}
      }
      .mo-d-none {display: none;}
-      p {display: inline-block;}
+      p {/*display: inline-block;*/ display: flex;}
     // .ngSelect {width: 100%; max-width: inherit;}
     .ng-select.ng-select-single .ng-select-container .ng-value-container, .ng-select.ng-select-single .ng-select-container .ng-value-container .ng-value {white-space: inherit !important;}
     .preview-mode-add-class{

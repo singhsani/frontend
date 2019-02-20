@@ -296,7 +296,7 @@
 					<div>{{'employer_family' | translate: translateKey}}</div>
 				</ng-template>
 
-				<div class="row">
+				<div class="row  pb-3">
 					<div class="col-md-10">
 						<h2>{{ 'employer_family_table_label' | translate:translateKey}}</h2>
 					</div>
@@ -308,47 +308,30 @@
 					</div>
 				</div>
 
-				<div style="overflow-x: scroll;" *ngIf="shopLicNewForm.get('employerFamilyList')['controls'].length">
+				<div *ngIf="shopLicNewForm.get('employerFamilyList')['controls'].length">
 					<div>
-						<table class="table table-striped customDataTable">
+						<table class="table table-striped responsiveTableRow">
 							<thead>
-								<tr>
-									<th colspan="2" *ngIf="shopLicNewForm.get('canEdit').value"></th>
+								<tr class="mo-d-none">
 									<th>#</th>
 									<th>{{'name' | translate:translateKey}}</th>
 									<th>{{'address' | translate:translateKey}}</th>
 									<th>{{'relationship' | translate:translateKey}}</th>
-									<th>{{'gender' | translate:translateKey}}</th>
-									<th>{{'age' | translate:translateKey}}</th>
+									<th width="80">{{'gender' | translate:translateKey}}</th>
+									<th width="50">{{'age' | translate:translateKey}}</th>
+									<th colspan="2" *ngIf="shopLicNewForm.get('canEdit').value"></th>
 								</tr>
 							</thead>
 							<tbody formArrayName="employerFamilyList">
 								<tr *ngFor="let item of shopLicNewForm.get('employerFamilyList')['controls']; let indx = index;"
 									[formGroupName]="indx">
-									<td style="width: 40px;" *ngIf="shopLicNewForm.get('canEdit').value">
-										<button mat-icon-button color="primary" *ngIf="!item.isEditMode"
-											(click)="editRecord(item)">
-											<mat-icon title="Edit">edit</mat-icon>
-										</button>
-										<button type="submit" [disabled]="item.invalid" mat-icon-button color="primary"
-											*ngIf="item.isEditMode" (click)="saveRecord(item)">
-											<mat-icon title="save">save</mat-icon>
-										</button>
-									</td>
-									<td style="width: 40px;" *ngIf="shopLicNewForm.get('canEdit').value">
-										<button mat-icon-button color="warn" *ngIf="!item.isEditMode"
-											(click)="deleteRecord('EMPLOYER_FAMILY',indx)">
-											<mat-icon title="Delete">delete</mat-icon>
-										</button>
-										<button mat-icon-button color="warn" *ngIf="item.isEditMode"
-											(click)="cancelRecord(item)">
-											<mat-icon title="Delete">cancel</mat-icon>
-										</button>
-									</td>
-
-									<td>{{indx+1}}</td>
+									
+									<td>
+										<div class="d-md-none">#</div>
+										{{indx+1}}</td>
 
 									<td>
+										<div class="d-md-none">{{'name' | translate:translateKey}}</div>
 										<p *ngIf="!item.isEditMode">{{item.get('name').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
 											<input matInput appValidationFields
@@ -358,6 +341,7 @@
 									</td>
 
 									<td>
+										<div class="d-md-none">{{'address' | translate:translateKey}}</div>
 										<p *ngIf="!item.isEditMode">{{item.get('address').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
 											<input matInput formControlName="address">
@@ -365,9 +349,10 @@
 										</mat-form-field>
 									</td>
 
-									<td>
+									<td [ngClass]="{'preview-mode-add-class':!item.isEditMode}">
+										<div class="d-md-none">{{'relationship' | translate:translateKey}}</div>
 										<div class="ngSelect" formGroupName="relationship">
-											<p *ngIf="!item.isEditMode">
+											<p width50 *ngIf="!item.isEditMode">
 												{{getSelectedDataFromLookUps(SHOP_LIC_EMPLOYER_FAMILY_PERSON_RELATIONSHIP,item.get('relationship').value.code)?.name}}
 											</p>
 											<div class="ngSelect" *ngIf="item.isEditMode">
@@ -384,8 +369,9 @@
 									</td>
 
 									<td>
+										<div class="d-md-none">{{'gender' | translate:translateKey}}</div>
 										<div class="ngSelect" formGroupName="gender">
-											<p *ngIf="!item.isEditMode">
+											<p class="width80" *ngIf="!item.isEditMode">
 												{{getSelectedDataFromLookUps(gender,item.get('gender').value.code)?.name}}
 											</p>
 											<div class="ngSelect" *ngIf="item.isEditMode">
@@ -400,19 +386,68 @@
 									</td>
 
 									<td>
-										<p *ngIf="!item.isEditMode">{{item.get('age').value}}</p>
+										<div class="d-md-none">{{'age' | translate:translateKey}}</div>
+										<p class="width60" *ngIf="!item.isEditMode">{{item.get('age').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
 											<input matInput maxlength="2" OnlyNumber formControlName="age">
 											<control-messages [control]="item.get('age')"></control-messages>
 										</mat-form-field>
 									</td>
 
+									<td style="width: 40px;" *ngIf="shopLicNewForm.get('canEdit').value">
+											<button mat-icon-button color="primary" *ngIf="!item.isEditMode"
+												(click)="editRecord(item)">
+												<mat-icon title="Edit">edit</mat-icon>
+											</button>
+											<button type="submit" [disabled]="item.invalid" mat-icon-button color="primary"
+												*ngIf="item.isEditMode" (click)="saveRecord(item)">
+												<mat-icon title="save">save</mat-icon>
+											</button>
+										</td>
+										<td style="width: 40px;" *ngIf="shopLicNewForm.get('canEdit').value">
+											<button mat-icon-button color="warn" *ngIf="!item.isEditMode"
+												(click)="deleteRecord('EMPLOYER_FAMILY',indx)">
+												<mat-icon title="Delete">delete</mat-icon>
+											</button>
+											<button mat-icon-button color="warn" *ngIf="item.isEditMode"
+												(click)="cancelRecord(item)">
+												<mat-icon title="Delete">cancel</mat-icon>
+											</button>
+										</td>
 								</tr>
 							</tbody>
 						</table>
 					</div>
 
-					<div>
+					<table width="100%" class="table">
+							<tbody>
+								<tr>
+									<th width="200">{{'total_adult_person' | translate:translateKey}}</th>
+									<td>{{calulateNumberOfPerson('employerFamilyList','totalAdultEmployerFamily','adult')}}</td>
+									<th width="200">{{'total_young_person' | translate:translateKey}}</th>
+									<td>{{calulateNumberOfPerson('employerFamilyList','totalYoungEmployerFamily','young')}}</td>
+								</tr>
+								<tr>
+									<th>{{'total_men' | translate:translateKey}}</th>
+									<td>{{calulateNumberOfPerson('employerFamilyList','totalManEmployerFamily','men')}}</td>
+									<th>{{'total_women' | translate:translateKey}}</th>
+									<td>{{calulateNumberOfPerson('employerFamilyList','totalWomenEmployerFamily','women')}}</td>
+								</tr>
+								<tr>
+									<th>{{'total_unidentified_person' | translate:translateKey}}</th>
+									<td>{{calulateNumberOfPerson('employerFamilyList','totalUnidentifiedEmployerFamily','unidentified')}}</td>
+									<th>{{'total_person' | translate:translateKey}}</th>
+									<td>{{calulateNumberOfPerson('employerFamilyList','totalFamilyMembers','total')}}</td>
+								</tr>
+								<tr>
+									<th>{{'total_person' | translate:translateKey}}</th>
+									<td>{{calulateNumberOfPerson('employerFamilyList','totalFamilyMembers','total')}}</td>
+									<th></th>
+									<td></td>
+								</tr>
+							</tbody>
+						</table>
+					<!-- <div>
 						<div class="row">
 							<div class="col-md-4">{{'total_adult_person' | translate:translateKey}}</div>
 							<div class="col-md-2">
@@ -443,7 +478,7 @@
 							<div class="col-md-4">
 								{{calulateNumberOfPerson('employerFamilyList','totalFamilyMembers','total')}}</div>
 						</div>
-					</div>
+					</div> -->
 				</div>
 				<app-action-bar [form]="shopLicNewForm" (tabIndex)="onTabChange($event)"
 					[stepInfo]="{step: 'step3', next: 3, back: 1}"></app-action-bar>
@@ -476,8 +511,8 @@
 									<th>{{'name' | translate:translateKey}}</th>
 									<th>{{'address' | translate:translateKey}}</th>
 									<th>{{'relationship' | translate:translateKey}}</th>
-									<th>{{'gender' | translate:translateKey}}</th>
-									<th>{{'age' | translate:translateKey}}</th>
+									<th width="80">{{'gender' | translate:translateKey}}</th>
+									<th width="50">{{'age' | translate:translateKey}}</th>
 									<th colspan="2" *ngIf="shopLicNewForm.get('canEdit').value"></th>
 								</tr>
 							</thead>
@@ -532,7 +567,7 @@
 									<td>
 										<div class="d-md-none">{{'gender' | translate:translateKey}}</div>
 										<div class="ngSelect" formGroupName="gender">
-											<p *ngIf="!item.isEditMode">
+											<p class="width80" *ngIf="!item.isEditMode">
 												{{getSelectedDataFromLookUps(gender,item.get('gender').value.code)?.name}}
 											</p>
 											<div class="ngSelect" *ngIf="item.isEditMode">
@@ -548,7 +583,7 @@
 
 									<td>
 										<div class="d-md-none">{{'age' | translate:translateKey}}</div>
-										<p *ngIf="!item.isEditMode">{{item.get('age').value}}</p>
+										<p class="width50" *ngIf="!item.isEditMode">{{item.get('age').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
 											<input matInput maxlength="2" OnlyNumber formControlName="age">
 											<control-messages *ngIf="item.isEditMode" [control]="item.get('age')">
@@ -649,7 +684,7 @@
 				</ng-template>
 
 				<div class="stepperMinHeight">
-					<div class="row">
+					<div class="row pb-3">
 						<h2>{{'type_of_organization_label' | translate: translateKey}}</h2>
 
 						<div class="col-md-4 ngSelect" formGroupName="typeOfOrganisation">
@@ -681,25 +716,26 @@
 					<div style="min-height: 350px;" *ngIf="shopLicNewForm.get('partnerList')['controls'].length">
 						<div>
 							<table
-								class="table table-striped customDataTable table-inputW100p idNubmer responsiveTables">
+								class="table table-striped responsiveTableRow"> <!-- table-inputW100p idNubmer responsiveTables -->
 								<thead>
-									<tr>
+									<tr class="mo-d-none">
 										<th>#</th>
 										<th>{{'name' | translate:translateKey}}</th>
 										<th>{{'address' | translate:translateKey}}</th>
-										<th width="160">{{'relationship' | translate:translateKey}}</th>
-										<th width="120">{{'gender' | translate:translateKey}}</th>
-										<th width="60">{{'age' | translate:translateKey}}</th>
-										<th width="100" *ngIf="shopLicNewForm.get('canEdit').value"></th>
+										<th>{{'relationship' | translate:translateKey}}</th>
+										<th width="80">{{'gender' | translate:translateKey}}</th>
+										<th width="50">{{'age' | translate:translateKey}}</th>
+										<th *ngIf="shopLicNewForm.get('canEdit').value"></th>
 									</tr>
 								</thead>
 								<tbody formArrayName="partnerList">
 									<tr *ngFor="let item of shopLicNewForm.get('partnerList')['controls']; let indx = index;"
 										[formGroupName]="indx">
 
-										<td><span class="mobileLabel">#</span>{{indx+1}}</td>
+										<td><div class="d-md-none">#</div>{{indx+1}}</td>
 
-										<td><span class="mobileLabel">{{'name' | translate:translateKey}}</span>
+										<td>
+											<div class="d-md-none">{{'name' | translate:translateKey}}</div>
 											<div class="mobileCon">
 												<p *ngIf="!item.isEditMode">{{item.get('name').value}}</p>
 												<mat-form-field *ngIf="item.isEditMode">
@@ -711,7 +747,7 @@
 											</div>
 										</td>
 
-										<td><span class="mobileLabel">{{'address' | translate:translateKey}}</span>
+										<td><div class="d-md-none">{{'address' | translate:translateKey}}</div>
 											<div class="mobileCon">
 												<p *ngIf="!item.isEditMode">{{item.get('address').value}}</p>
 												<mat-form-field *ngIf="item.isEditMode">
@@ -722,7 +758,7 @@
 											</div>
 										</td>
 
-										<td><span class="mobileLabel">{{'relationship' | translate:translateKey}}</span>
+										<td><div class="d-md-none">{{'relationship' | translate:translateKey}}</div>
 											<div class="mobileCon">
 												<div class="ngSelect" formGroupName="relationship">
 													<p *ngIf="!item.isEditMode">
@@ -743,10 +779,10 @@
 											</div>
 										</td>
 
-										<td><span class="mobileLabel">{{'gender' | translate:translateKey}}</span>
+										<td><div class="d-md-none">{{'gender' | translate:translateKey}}</div>
 											<div class="mobileCon">
 												<div class="ngSelect" formGroupName="gender">
-													<p *ngIf="!item.isEditMode">
+													<p class="width80" *ngIf="!item.isEditMode">
 														{{getSelectedDataFromLookUps(gender,item.get('gender').value.code)?.name}}
 													</p>
 													<div class="ngSelect" *ngIf="item.isEditMode">
@@ -761,9 +797,9 @@
 											</div>
 										</td>
 
-										<td><span class="mobileLabel">{{'age' | translate:translateKey}}</span>
+										<td><div class="d-md-none">{{'age' | translate:translateKey}}</div>
 											<div class="mobileCon">
-												<p *ngIf="!item.isEditMode">{{item.get('age').value}}</p>
+												<p class="width50" *ngIf="!item.isEditMode">{{item.get('age').value}}</p>
 												<mat-form-field *ngIf="item.isEditMode">
 													<input matInput maxlength="2" OnlyNumber formControlName="age">
 													<control-messages [control]="item.get('age')"></control-messages>
@@ -771,7 +807,7 @@
 											</div>
 										</td>
 
-										<td><span class="mobileLabel"></span>
+										<td>
 											<span *ngIf="shopLicNewForm.get('canEdit').value">
 												<button mat-icon-button color="primary" *ngIf="!item.isEditMode"
 													(click)="editRecord(item)">
@@ -799,7 +835,36 @@
 							</table>
 						</div>
 
-						<div>
+						<table width="100%" class="table">
+								<tbody>
+									<tr>
+										<th width="200">{{'total_adult_person' | translate:translateKey}}</th>
+										<td>{{calulateNumberOfPerson('partnerList','totalAdultPartner','adult')}}</td>
+										<th width="200">{{'total_young_person' | translate:translateKey}}</th>
+										<td>{{calulateNumberOfPerson('partnerList','totalYoungPartner','young')}}</td>
+									</tr>
+									<tr>
+										<th>{{'total_men' | translate:translateKey}}</th>
+										<td>{{calulateNumberOfPerson('partnerList','totalManPartner','men')}}</td>
+										<th>{{'total_women' | translate:translateKey}}</th>
+										<td>{{calulateNumberOfPerson('partnerList','totalWomenEmployerFamily','women')}}</td>
+									</tr>
+									<tr>
+										<th>{{'total_unidentified_person' | translate:translateKey}}</th>
+										<td>{{calulateNumberOfPerson('partnerList','totalUnidentifiedPartner','unidentified')}}</td>
+										<th>{{'total_person' | translate:translateKey}}</th>
+										<td>{{calulateNumberOfPerson('partnerList','totalPartner','total')}}</td>
+									</tr>
+									<tr>
+										<th>{{'total_person' | translate:translateKey}}</th>
+										<td>{{calulateNumberOfPerson('partnerList','totalPartner','total')}}</td>
+										<th></th>
+										<td></td>
+									</tr>
+								</tbody>
+							</table>
+
+						<!-- <div>
 							<div class="row">
 								<div class="col-md-4">{{'total_adult_person' | translate:translateKey}}</div>
 								<div class="col-md-2">
@@ -827,7 +892,7 @@
 								<div class="col-md-4">{{calulateNumberOfPerson('partnerList','totalPartner','total')}}
 								</div>
 							</div>
-						</div>
+						</div> -->
 					</div>
 				</div>
 

@@ -170,14 +170,14 @@
 				</div>
 
 				<!-- table -->
-				<div class="row">
+				<div class="row justify-content-between">
 					<div class="col-md-10">
 						<h2 *ngIf="muttonFishRenewalForm.get('relationshipId').value.code == 'PROPRIETOR'">{{
 							'if_shop_is_in_properitership' | translate:translateKey}}</h2>
 						<h2 *ngIf="muttonFishRenewalForm.get('relationshipId').value.code != 'PROPRIETOR'">{{ 'if_shop_is_in_partnership'
 							| translate:translateKey}}</h2>
 					</div>
-					<div class="col-md-2 pt-3" style="text-align: right;">
+					<div class="col-md-2 pt-3 text-right">
 						<button type="button" *ngIf="muttonFishRenewalForm.get('canEdit').value" [disabled]="muttonFishRenewalForm.get('relationshipId').value.code ? muttonFishRenewalForm.get('relationshipId').value.code=='PROPRIETOR' ? !(muttonFishRenewalForm.get('relationshipList')['controls'].length < 1) : !(muttonFishRenewalForm.get('relationshipList')['controls'].length < 10) : true"
 						 matTooltip="{{'add_more' | translate:translateKey}}" mat-raised-button color="primary" (click)="addMorePerson('MF_PERSON')">{{'add'|
 							translate:translateKey}}</button>
@@ -186,42 +186,24 @@
 
 				<div *ngIf="muttonFishRenewalForm.get('relationshipList')['controls'].length">
 					<div>
-						<table class="table table-striped customDataTable">
+						<table class="table table-striped mb-0 responsiveTableRow">
 							<thead>
-								<tr>
-									<th colspan="2" *ngIf="muttonFishRenewalForm.get('canEdit').value"></th>
-									<th>#</th>
-									<th>{{'name' | translate:translateKey}}</th>
-									<th>{{'address' | translate:translateKey}}</th>
-									<th>{{'mobile_no' | translate:translateKey}}</th>
+								<tr class="mo-d-none">
+									<th width="50">#</th>
+									<th width="29%">{{'name' | translate:translateKey}}</th>
+									<th width="29%">{{'address' | translate:translateKey}}</th>
+									<th width="29%">{{'mobile_no' | translate:translateKey}}</th>
+									<th width="150" *ngIf="muttonFishRenewalForm.get('canEdit').value"></th>
 								</tr>
 							</thead>
 							<tbody formArrayName="relationshipList">
 								<tr *ngFor="let item of muttonFishRenewalForm.get('relationshipList')['controls']; let indx = index;"
 								 [formGroupName]="indx">
-									<td style="width: 40px;" *ngIf="muttonFishRenewalForm.get('canEdit').value">
-										<button mat-icon-button color="primary" *ngIf="!item.isEditMode" [disabled]="muttonFishRenewalForm.get('relationshipId').value.code == 'PROPRIETOR'"
-										 (click)="editRecord(item)">
-											<mat-icon title="Edit">edit</mat-icon>
-										</button>
-										<button type="submit" [disabled]="item.invalid || muttonFishRenewalForm.get('relationshipId').value.code == 'PROPRIETOR'"
-										 mat-icon-button color="primary" *ngIf="item.isEditMode" (click)="saveRecord(item)">
-											<mat-icon title="save">save</mat-icon>
-										</button>
-									</td>
-									<td style="width: 40px;" *ngIf="muttonFishRenewalForm.get('canEdit').value">
-										<button mat-icon-button color="warn" *ngIf="!item.isEditMode" [disabled]="muttonFishRenewalForm.get('relationshipId').value.code == 'PROPRIETOR'"
-										 (click)="deleteRecord(indx)">
-											<mat-icon title="Delete">delete</mat-icon>
-										</button>
-										<button mat-icon-button color="warn" *ngIf="item.isEditMode" (click)="cancelRecord(item)">
-											<mat-icon title="Delete">cancel</mat-icon>
-										</button>
-									</td>
+									
+									<td><div class="d-md-none">#</div>
+										{{indx+1}}</td>
 
-									<td>{{indx+1}}</td>
-
-									<td>
+									<td><div class="d-md-none">{{'name' | translate:translateKey}}</div>
 										<p *ngIf="!item.isEditMode">{{item.get('name').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
 											<input matInput maxlength="100" appValidationFields [validationFieldsType]="'onlyNameWithSpace'"
@@ -230,7 +212,7 @@
 										</mat-form-field>
 									</td>
 
-									<td>
+									<td><div class="d-md-none">{{'address' | translate:translateKey}}</div>
 										<p *ngIf="!item.isEditMode">{{item.get('address').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
 											<input matInput maxlength="150" formControlName="address">
@@ -238,13 +220,39 @@
 										</mat-form-field>
 									</td>
 
-									<td>
-										<p *ngIf="!item.isEditMode">{{item.get('mobileNo').value}}</p>
+									<td><div class="d-md-none">{{'mobile_no' | translate:translateKey}}</div>
+										<p *ngIf="!item.isEditMode">{{item.get('mobileNo').value}} &nbsp;</p>
 										<mat-form-field *ngIf="item.isEditMode">
 											<input matInput maxlength="11" OnlyNumber formControlName="mobileNo">
 											<control-messages [control]="item.get('mobileNo')"></control-messages>
 										</mat-form-field>
 									</td>
+
+									<td width="150">
+											<span *ngIf="muttonFishRenewalForm.get('canEdit').value">
+											<button mat-icon-button color="primary" *ngIf="!item.isEditMode" [disabled]="muttonFishRenewalForm.get('relationshipId').value.code == 'PROPRIETOR'"
+											 (click)="editRecord(item)">
+												<mat-icon title="Edit">edit</mat-icon>
+											</button>
+											<button type="submit" [disabled]="item.invalid || muttonFishRenewalForm.get('relationshipId').value.code == 'PROPRIETOR'"
+											 mat-icon-button color="primary" *ngIf="item.isEditMode" (click)="saveRecord(item)">
+												<mat-icon title="save">save</mat-icon>
+											</button>
+											</span>
+
+											<span *ngIf="muttonFishRenewalForm.get('canEdit').value">
+													<button mat-icon-button color="warn" *ngIf="!item.isEditMode" [disabled]="muttonFishRenewalForm.get('relationshipId').value.code == 'PROPRIETOR'"
+													 (click)="deleteRecord(indx)">
+														<mat-icon title="Delete">delete</mat-icon>
+													</button>
+													<button mat-icon-button color="warn" *ngIf="item.isEditMode" (click)="cancelRecord(item)">
+														<mat-icon title="Delete">cancel</mat-icon>
+													</button>
+												</span>
+
+										</td>
+										
+
 								</tr>
 							</tbody>
 						</table>
