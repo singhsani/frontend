@@ -7,7 +7,8 @@ import { CommonService } from '../../../../../shared/services/common.service';
 import { ValidationService } from '../../../../../shared/services/validation.service';
 import { FormsActionsService } from '../../../../../core/services/citizen/data-services/forms-actions.service';
 import { ToastrService } from 'ngx-toastr';
-import { CitizenConfig } from '../../../citizen-config';
+import { TranslateService } from '../../../../../shared/modules/translate/translate.service';
+import { LicenseConfiguration } from '../../license-configuration';
 
 @Component({
 	selector: 'app-mutton-fish-new',
@@ -21,15 +22,10 @@ export class MuttonFishNewComponent implements OnInit {
 
 	muttonFishNewForm: FormGroup;
 	translateKey: string = 'muttonFishNewScreen';
-	public config = new CitizenConfig;
+	licenseConfiguration: LicenseConfiguration = new LicenseConfiguration();
 
 	formId: number;
 	apiCode: string;
-	tabIndex: number = 0;
-
-	//File and image upload
-	uploadModel: any = {};
-	public showButtons: boolean = false;
 
 	//Lookups Array
 	MF_LICENSE_TYPE: Array<any> = [];
@@ -42,32 +38,8 @@ export class MuttonFishNewComponent implements OnInit {
 	LOOKUP: any;
 
 	// required attachment array
-	private uploadFileArray: Array<any> =
-		[
-			{ labelName: 'Photo of License Holder', fieldIdentifier: '1', category: 'common' },
-			{ labelName: 'One Copy of each site plan and key plan', fieldIdentifier: '2', category: 'common' },
-			{ labelName: 'Aadhar Card Scan Copy', fieldIdentifier: '3', category: "common" },
-			{ labelName: 'Pan Card Copy of Owner / Propwriter', fieldIdentifier: '4', category: "common" },
-			// { labelName: 'Constitution copy of Firm', fieldIdentifier: '5', category: "common" },
-			{ labelName: 'Proof of Ownership / tenancy / Legal Occupancy', fieldIdentifier: '6', category: "common" },
-			{ labelName: 'Copy of Lease Deed If not Executed, Copy of Auction Letter, Possession Letter', fieldIdentifier: '7', category: "common" },
-			// { labelName: 'Copy of Term & conditions for allotment of Premises by the  Land owning Agency ', fieldIdentifier: '8', category: "common" },
-			{ labelName: 'Additional Document if Any', fieldIdentifier: '9', category: "common" },
-			{ labelName: 'Property Tax Bill paid Receipt', fieldIdentifier: '10', category: "common" },
-			{ labelName: 'Shop & Establishment Certificate', fieldIdentifier: '11', category: "common" },
+	private uploadFileArray: Array<any> = [];
 
-			{ labelName: 'Occupation Certificate', fieldIdentifier: '12', category: "rent" },
-			{ labelName: 'Rent Agreement', fieldIdentifier: '13', category: "rent" }
-		];
-
-	//upload file as per status of business
-	get uploadFileArrayData() {
-		let data = this.uploadFileArray;
-		if (this.muttonFishNewForm.get('statusOfBusinessId').value.code != 'RENT') {
-			data = this.uploadFileArray.filter((obj) => obj.category != 'rent');
-		}
-		return data
-	}
 
     /**
      * @param fb - Declare FormBuilder property.
@@ -84,7 +56,8 @@ export class MuttonFishNewComponent implements OnInit {
 		private route: ActivatedRoute,
 		private formService: FormsActionsService,
 		private commonService: CommonService,
-		private toastrService: ToastrService
+		private toastrService: ToastrService,
+		public TranslateService: TranslateService
 	) { }
 
 	/**
@@ -114,12 +87,16 @@ export class MuttonFishNewComponent implements OnInit {
 		this.formService.getFormData(this.formId).subscribe(res => {
 			try {
 				this.muttonFishNewForm.patchValue(res);
-				this.showButtons = true;
+				this.licenseConfiguration.isAttachmentButtonsVisible = true;
 				this.onChangeZone(this.muttonFishNewForm.get('zoneNo').value.code);
 				this.onChangeWard(this.muttonFishNewForm.get('wardNo').value.code);
 				res.relationshipList.forEach(app => {
 					(<FormArray>this.muttonFishNewForm.get('relationshipList')).push(this.createArray(app));
 				});
+				res.serviceDetail.serviceUploadDocuments.forEach(app => {
+					(<FormArray>this.muttonFishNewForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.licenseConfiguration.createDocumentsGrp(app));
+				});
+				this.uploadFileArray = this.licenseConfiguration.requiredDocumentListMeetFish(this.muttonFishNewForm);
 			} catch (error) {
 				console.log(error.message)
 			}
@@ -173,6 +150,10 @@ export class MuttonFishNewComponent implements OnInit {
 		this.muttonFishNewForm = this.fb.group({
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
 			serviceCode: 'MF-LIC',
+			applicationDate: [],
+			licenseIssueDate: [null],
+			licenseRenewalDate: [null],
+			loinumber: [null],
 			/* Step 1 controls start */
 			licenseType: this.fb.group({
 				code: [null]
@@ -180,9 +161,9 @@ export class MuttonFishNewComponent implements OnInit {
 			personType: this.fb.group({
 				code: [null]
 			}),
-			holderFirstName: [null, [Validators.required, Validators.maxLength(30),ValidationService.nameValidator]],
-			holderMiddleName: [null, [Validators.required, Validators.maxLength(30),ValidationService.nameValidator]],
-			holderLastName: [null, [Validators.required, Validators.maxLength(30),ValidationService.nameValidator]],
+			holderFirstName: [null, [Validators.required, Validators.maxLength(30), ValidationService.nameValidator]],
+			holderMiddleName: [null, [Validators.required, Validators.maxLength(30), ValidationService.nameValidator]],
+			holderLastName: [null, [Validators.required, Validators.maxLength(30), ValidationService.nameValidator]],
 			holderFirstNameGuj: [null, [Validators.required, Validators.maxLength(90)]],
 			holderMiddleNameGuj: [null, [Validators.required, Validators.maxLength(90)]],
 			holderLastNameGuj: [null, [Validators.required, Validators.maxLength(90)]],
@@ -209,20 +190,12 @@ export class MuttonFishNewComponent implements OnInit {
 			statusOfBusinessId: this.fb.group({
 				code: [null, Validators.required]
 			}),
+			relationshipList: this.fb.array([]),
 			/* Step 2 controls end */
 
-			/* Step 3 controls start */
-			relationshipList: this.fb.array([]),
-			/* Step 3 controls end */
-
-			applicationDate: [],
-			licenseIssueDate: [null],
-			licenseRenewalDate: [null],
-			loinumber: [null],
-
-			/* Step 4 controls start*/
+			/* Step 3 controls start*/
 			attachments: []
-			/* Step 4 controls end */
+			/* Step 3 controls end */
 		});
 	}
 
@@ -231,7 +204,6 @@ export class MuttonFishNewComponent implements OnInit {
 	 * @param data : person data array
 	 */
 	createArray(data: any = {}) {
-
 		return this.fb.group({
 			serviceFormId: this.formId,
 			id: data.id ? data.id : null,
@@ -240,7 +212,6 @@ export class MuttonFishNewComponent implements OnInit {
 			mobileNo: [data.mobileNo ? data.mobileNo : null, [Validators.maxLength(11), Validators.minLength(10)]],
 			personType: "MF_PERSON"
 		})
-
 	}
 
 	/**
@@ -296,22 +267,13 @@ export class MuttonFishNewComponent implements OnInit {
 	}
 
 	/**
-     * Method is used to set data value to upload method.
-     * @param indentifier - file identifier
-     * @param labelName - file label name.
-     * @param formPart - file form part
-     * @param variableName - file variable name.
-     */
-	setDataValue(indentifier: number, labelName: string, formPart: string, variableName: string) {
-		this.uploadModel = {
-			fieldIdentifier: indentifier.toString(),
-			labelName: labelName,
-			formPart: formPart,
-			variableName: variableName,
-			serviceFormId: this.formId,
-		}
-		return this.uploadModel;
+	 * Method is use for change dynamic file attachment 
+	 */
+	onChangeStatusOfBusiness() {
+		this.uploadFileArray = this.licenseConfiguration.requiredDocumentListMeetFish(this.muttonFishNewForm);
 	}
+
+
 
 	/**
 	*  Method is used check table is in edit mode
@@ -366,52 +328,20 @@ export class MuttonFishNewComponent implements OnInit {
      * @param flag - flag of invalid control.
      */
 	handleErrorsOnSubmit(flag) {
-
-		let step0 = 15;
-		let step1 = 27;
-		let step2 = 35;
-		let step3 = 41;
-		let step4 = 48;
-
+		let step0 = 21;
+		let step1 = 29;
 		if (flag != null) {
 			//Check validation for step by step
-			let count = flag;
-
-			if (count <= step0) {
-				this.tabIndex = 0;
+			if (flag <= step0) {
+				this.licenseConfiguration.currentTabIndex = 0;
 				return false;
-			} else if (count <= step1) {
-				this.tabIndex = 1;
+			} else if (flag <= step1) {
+				this.licenseConfiguration.currentTabIndex = 1;
 				return false;
-			} else if (count <= step2) {
-				this.tabIndex = 2;
-				return false;
-			} else if (count <= step3) {
-				this.tabIndex = 3;
-				return false;
-			} else if (count <= step4) {
-				this.tabIndex = 4;
-				return false;
-			}
-			// else if (count == 67) {
-			// 	this.checkReligion();
-			// 	return false;
-			// }
-			else {
+			} else {
 				console.log("else condition");
 			}
-
 		}
 	}
-
-	/**
-	 * This method use to get output event of tab change
-	 * @param evt - Tab index
-	 */
-	onTabChange(evt) {
-		this.tabIndex = evt;
-	}
-
-
 }
 

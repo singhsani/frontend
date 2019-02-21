@@ -1,3 +1,4 @@
+import { LicenseConfiguration } from './../../license-configuration';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -9,6 +10,7 @@ import { ValidationService } from '../../../../../shared/services/validation.ser
 import { FormsActionsService } from '../../../../../core/services/citizen/data-services/forms-actions.service';
 import { Location } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
+import { TranslateService } from '../../../../../shared/modules/translate/translate.service';
 
 @Component({
 	selector: 'app-mutton-fish-renewal',
@@ -21,14 +23,10 @@ export class MuttonFishRenewalComponent implements OnInit {
 
 	muttonFishRenewalForm: FormGroup;
 	translateKey: string = 'muttonFisheRenewScreen';
+	licenseConfiguration: LicenseConfiguration = new LicenseConfiguration();
 
 	formId: number;
 	apiCode: string;
-	tabIndex: number = 0;
-
-	//File and image upload
-	uploadModel: any = {};
-	public showButtons: boolean = false;
 
 	//Lookups Array
 	MF_LICENSE_TYPE: Array<any> = [];
@@ -43,32 +41,8 @@ export class MuttonFishRenewalComponent implements OnInit {
 	businessSubCategory: Array<any> = [];
 
 	// required attachment array
-	public uploadFileArray: Array<any> =
-		[
-			{ labelName: 'Photo of License Holder', fieldIdentifier: '1', category: 'common' },
-			{ labelName: 'One Copy of each site plan and key plan', fieldIdentifier: '2', category: 'common' },
-			{ labelName: 'Aadhar Card Scan Copy', fieldIdentifier: '3', category: "common" },
-			{ labelName: 'Pan Card Copy of Owner / Propwriter', fieldIdentifier: '4', category: "common" },
-			// { labelName: 'Constitution copy of Firm', fieldIdentifier: '5', category: "common" },
-			{ labelName: 'Proof of Ownership / tenancy / Legal Occupancy', fieldIdentifier: '6', category: "common" },
-			{ labelName: 'Copy of Lease Deed If not Executed, Copy of Auction Letter, Possession Letter', fieldIdentifier: '7', category: "common" },
-			// { labelName: 'Copy of Term & conditions for allotment of Premises by the  Land owning Agency ', fieldIdentifier: '8', category: "common" },
-			{ labelName: 'Additional Document if Any', fieldIdentifier: '9', category: "common" },
-			{ labelName: 'Property Tax Bill paid Receipt', fieldIdentifier: '10', category: "common" },
-			{ labelName: 'Shop & Establishment Certificate', fieldIdentifier: '11', category: "common" },
+	private uploadFileArray: Array<any> = [];
 
-			{ labelName: 'Occupation Certificate', fieldIdentifier: '12', category: "rent" },
-			{ labelName: 'Rent Agreement', fieldIdentifier: '13', category: "rent" }
-		];
-
-	//upload file as per status of business
-	get uploadFileArrayData() {
-		let data = this.uploadFileArray;
-		if (this.muttonFishRenewalForm.get('statusOfBusinessId').value.code != 'RENT') {
-			data = this.uploadFileArray.filter((obj) => obj.category != 'rent');
-		}
-		return data
-	}
 
 	// serach api variable
 	serachLicenceObj = {
@@ -113,7 +87,8 @@ export class MuttonFishRenewalComponent implements OnInit {
 		private commonService: CommonService,
 		private toastrService: ToastrService,
 		private MuttonFishService: MuttonFishService,
-		private location: Location
+		private location: Location,
+		public TranslateService: TranslateService
 	) { }
 
 	/**
@@ -183,7 +158,7 @@ export class MuttonFishRenewalComponent implements OnInit {
 				attachments: []
 			});
 
-			this.showButtons = true;
+			this.licenseConfiguration.isAttachmentButtonsVisible = true;
 
 			(<FormArray>this.muttonFishRenewalForm.get('relationshipList')).controls = [];
 			searchData.relationshipList.forEach(app => {
@@ -191,6 +166,11 @@ export class MuttonFishRenewalComponent implements OnInit {
 				app.serviceFormId = null;
 				(<FormArray>this.muttonFishRenewalForm.get('relationshipList')).push(this.createArray(app));
 			});
+
+			res.serviceDetail.serviceUploadDocuments.forEach(app => {
+				(<FormArray>this.muttonFishRenewalForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.licenseConfiguration.createDocumentsGrp(app));
+			});
+			this.uploadFileArray = this.licenseConfiguration.requiredDocumentListMeetFish(this.muttonFishRenewalForm);
 			/* searchData.employeeList.forEach(app => {
 				(<FormArray>this.muttonFishRenewalForm.get('employeeList')).push(this.createArray(app));
 			}); */
@@ -219,7 +199,7 @@ export class MuttonFishRenewalComponent implements OnInit {
 		this.formService.getFormData(this.formId).subscribe(res => {
 			try {
 				this.muttonFishRenewalForm.patchValue(res);
-				this.showButtons = true;
+				this.licenseConfiguration.isAttachmentButtonsVisible = true;
 				this.onChangeZone(this.muttonFishRenewalForm.get('zoneNo').value.code);
 				this.onChangeWard(this.muttonFishRenewalForm.get('wardNo').value.code);
 				res.relationshipList.forEach(app => {
@@ -227,6 +207,12 @@ export class MuttonFishRenewalComponent implements OnInit {
 				});
 				this.muttonFishRenewalForm.disable();
 				this.enableFielList();
+
+				res.serviceDetail.serviceUploadDocuments.forEach(app => {
+					(<FormArray>this.muttonFishRenewalForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.licenseConfiguration.createDocumentsGrp(app));
+				});
+				this.uploadFileArray = this.licenseConfiguration.requiredDocumentListMeetFish(this.muttonFishRenewalForm);
+
 			} catch (error) {
 				console.log(error.message);
 			}
@@ -392,24 +378,6 @@ export class MuttonFishRenewalComponent implements OnInit {
 
 
 	/**
-     * Method is used to set data value to upload method.
-     * @param indentifier - file identifier
-     * @param labelName - file label name.
-     * @param formPart - file form part
-     * @param variableName - file variable name.
-     */
-	setDataValue(indentifier: number, labelName: string, formPart: string, variableName: string) {
-		this.uploadModel = {
-			fieldIdentifier: indentifier.toString(),
-			labelName: labelName,
-			formPart: formPart,
-			variableName: variableName,
-			serviceFormId: this.formId,
-		}
-		return this.uploadModel;
-	}
-
-	/**
 	*  Method is used check table is in edit mode
 	*/
 	isTableInEditMode() {
@@ -470,52 +438,18 @@ export class MuttonFishRenewalComponent implements OnInit {
      * @param flag - flag of invalid control.
      */
 	handleErrorsOnSubmit(flag) {
-
 		let step0 = 16;
 		let step1 = 28;
-		let step2 = 36;
-		let step3 = 42;
-		let step4 = 49;
-
 		if (flag != null) {
-			//Check validation for step by step
-			let count = flag;
-
-			if (count <= step0) {
-				this.tabIndex = 0;
+			if (flag <= step0) {
+				this.licenseConfiguration.currentTabIndex = 0;
 				return false;
-			} else if (count <= step1) {
-				this.tabIndex = 1;
+			} else if (flag <= step1) {
+				this.licenseConfiguration.currentTabIndex = 1;
 				return false;
-			} else if (count <= step2) {
-				this.tabIndex = 2;
-				return false;
-			} else if (count <= step3) {
-				this.tabIndex = 3;
-				return false;
-			} else if (count <= step4) {
-				this.tabIndex = 4;
-				return false;
-			}
-			// else if (count == 67) {
-			// 	this.checkReligion();
-			// 	return false;
-			// }
-			else {
+			} else {
 				console.log("else condition");
 			}
-
 		}
 	}
-
-	/**
-	 * This method use to get output event of tab change
-	 * @param evt - Tab index
-	 */
-	onTabChange(evt) {
-		this.tabIndex = evt;
-	}
-
-
-
 }

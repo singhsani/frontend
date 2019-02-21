@@ -14,6 +14,7 @@ import { MuttonFishTransferComponent } from './mutton-fish-transfer/mutton-fish-
 import { MuttonFishRenewalComponent } from './mutton-fish-renewal/mutton-fish-renewal.component';
 import { MuttonFishCancellationComponent } from './mutton-fish-cancellation/mutton-fish-cancellation.component';
 import { MuttonFishService } from './common/services/mutton-fish.service';
+import { FilterAttachmentMFPipe } from './common/pipes/filter-attachment-mf.pipe';
 /* Import all shared, core and routing module end */
 
 const routes: Routes = [
@@ -35,11 +36,11 @@ const routes: Routes = [
 		RouterModule.forChild(routes)
 	],
 	declarations: [
-		MuttonFishNewComponent, 
-		MuttonFishDuplicateComponent, 
-		MuttonFishTransferComponent, 
-		MuttonFishRenewalComponent, 
-		MuttonFishCancellationComponent
+		MuttonFishNewComponent,
+		MuttonFishDuplicateComponent,
+		MuttonFishTransferComponent,
+		MuttonFishRenewalComponent,
+		MuttonFishCancellationComponent, FilterAttachmentMFPipe
 	],
 	providers: [
 		MuttonFishService

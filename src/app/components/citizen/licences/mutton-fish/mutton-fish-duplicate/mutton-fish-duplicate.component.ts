@@ -1,3 +1,4 @@
+import { LicenseConfiguration } from './../../license-configuration';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -21,14 +22,10 @@ export class MuttonFishDuplicateComponent implements OnInit {
 
 	muttonFishDuplicateForm: FormGroup;
 	translateKey: string = 'muttonFishDuplicateScreen';
+	licenseConfiguration: LicenseConfiguration = new LicenseConfiguration();
 
 	formId: number;
 	apiCode: string;
-	tabIndex: number = 0;
-
-	//File and image upload
-	uploadModel: any = {};
-	private showButtons: boolean = false;
 
 	//Lookups Array
 	MF_LICENSE_TYPE: Array<any> = [];
@@ -44,7 +41,6 @@ export class MuttonFishDuplicateComponent implements OnInit {
 
 	// required attachment array
 	public uploadFileArray: Array<any> = [];
-
 
 	// serach api variable
 	serachLicenceObj = {
@@ -159,12 +155,8 @@ export class MuttonFishDuplicateComponent implements OnInit {
 				// loinumber: res.loinumber,
 				attachments: []
 			});
-
-			this.showButtons = true;
-
 			this.muttonFishDuplicateForm.disable();
 			this.enableFielList();
-
 			let currentUrl = this.location.path().replace('false', this.formId.toString());
 			this.location.go(currentUrl);
 		});
@@ -187,7 +179,6 @@ export class MuttonFishDuplicateComponent implements OnInit {
 		this.formService.getFormData(this.formId).subscribe(res => {
 			try {
 				this.muttonFishDuplicateForm.patchValue(res);
-				this.showButtons = true;
 				this.muttonFishDuplicateForm.disable();
 				this.enableFielList();
 			} catch (error) {
@@ -280,59 +271,21 @@ export class MuttonFishDuplicateComponent implements OnInit {
 		});
 	}
 
-	/**
-     * Method is used to set data value to upload method.
-     * @param indentifier - file identifier
-     * @param labelName - file label name.
-     * @param formPart - file form part
-     * @param variableName - file variable name.
-     */
-	setDataValue(indentifier: number, labelName: string, formPart: string, variableName: string) {
-		this.uploadModel = {
-			fieldIdentifier: indentifier.toString(),
-			labelName: labelName,
-			formPart: formPart,
-			variableName: variableName,
-			serviceFormId: this.formId,
-		}
-		return this.uploadModel;
-	}
-
     /**
      * This method required for final form submition.
      * @param flag - flag of invalid control.
      */
 	handleErrorsOnSubmit(flag) {
-
 		let step0 = 16;
-
 		if (flag != null) {
 			//Check validation for step by step
-			let count = flag;
-
-			if (count <= step0) {
-				this.tabIndex = 0;
+			if (flag <= step0) {
+				this.licenseConfiguration.currentTabIndex = 0;
 				return false;
-			}
-			// else if (count == 67) {
-			// 	this.checkReligion();
-			// 	return false;
-			// }
-			else {
+			} else {
 				console.log("else condition");
 			}
 
 		}
 	}
-
-	/**
-	 * This method use to get output event of tab change
-	 * @param evt - Tab index
-	 */
-	onTabChange(evt) {
-		this.tabIndex = evt;
-	}
-
-
-
 }
