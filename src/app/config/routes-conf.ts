@@ -308,6 +308,10 @@ const ROUTEMAIN = {
         'main': 'book',
         'type': ''
     },
+    'CHILDRENTHEATERBOOK': {
+        'main': 'book',
+        'type': ''
+    },
     'THEATERBOOKINGSTATUS': {
         'main': 'booking-status',
         'type': ''
@@ -390,6 +394,7 @@ const ROUTEPREFIX = {
     'PLANETAREAMODULE': 'planet-area',
     'ATITHIGRUHMODULE': 'atithigruh',
     'STADIUMMODULE': 'stadium',
+    'CHILDRENTHEATERMODULE': 'children-theater',
     'SHOOTINGPERMISSIONMODULE': 'shootingPermission',
     'SWIMMINGMODULE': 'swimming',
     'THEATERMODULE': 'theater',
@@ -650,6 +655,10 @@ const ROUTESLIST = {
     },
     'STADIUMBOOK': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.BOOKINGMODULE + '/' + ROUTEPREFIX.STADIUMMODULE + '/' + ROUTEMAIN.STADIUMBOOK.main
+    },
+    //children theater
+    'CHILDRENTHEATERBOOK': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.BOOKINGMODULE + '/' + ROUTEPREFIX.CHILDRENTHEATERMODULE + '/' + ROUTEMAIN.CHILDRENTHEATERBOOK.main
     },
 
     //ATITHIGRUH

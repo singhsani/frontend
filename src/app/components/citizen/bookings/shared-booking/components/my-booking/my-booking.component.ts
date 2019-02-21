@@ -1,16 +1,16 @@
 import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import * as moment from 'moment';
-import { BookingService } from '../../../../core/services/citizen/data-services/booking.service';
-import { CommonService } from '../../../../shared/services/common.service';
+// import { BookingService } from '../../../../../../core/services/citizen/data-services/booking.service';
+import { CommonService } from '../../../../../../shared/services/common.service';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { merge, of as observableOf } from 'rxjs';
 import { catchError, map, startWith, switchMap } from 'rxjs/operators';
-import { BookingConstants, BookingUtils } from '../booking-config';
-import { environment } from '../../../../../environments/environment';
+import { BookingConstants, BookingUtils } from '../../../config/booking-config';
+import { BookingService } from '../../services/booking-service.service';
 
 @Component({
 	selector: 'app-my-booking',
@@ -70,7 +70,7 @@ export class MyBookingComponent implements OnInit {
 
 	constructor(
 		private fb: FormBuilder,
-		private bookingService: BookingService,
+		public bookingService: BookingService,
 		private toster: ToastrService,
 		private modalService: BsModalService,
 		private commonService: CommonService
@@ -80,7 +80,9 @@ export class MyBookingComponent implements OnInit {
 			{ type: 'stadium', name: 'Stadium' },
 			{ type: 'amphiTheater', name: 'Amphi Theater' },
 			{ type: 'guesthouse', name: 'Guest House' },
-			{ type: 'shootingPermission', name: 'Shooting Permission' }]
+			{ type: 'childrenTheater', name: 'Children Theater' },
+			{ type: 'shootingPermission', name: 'Shooting Permission' },
+		]
 		this.resources = resourcesList;
 	}
 
@@ -88,14 +90,11 @@ export class MyBookingComponent implements OnInit {
 	 * Method Initializes first.
 	 */
 	ngOnInit() {
-		this.bookingService.resourceType = 'townhall';
-		this.getAllLookUP();
 		this.searchBookingsForm = this.fb.group({
-			resourceType: this.resources[0].type,
-			refNumber: [null]
+			resourceType: [null, Validators.required],
+			refNumber: null
 		});
 		this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
-		this.getAllBooking();
 	}
 
 	getAllLookUP() {
@@ -233,6 +232,7 @@ export class MyBookingComponent implements OnInit {
 						this.bookingService.resourceType = this.searchBookingsForm.get('resourceType').value;
 						this.bookingService.pageIndex = (this.paginator.pageIndex + 1);
 						this.bookingService.pageSize = this.paginator.pageSize;
+						this.getAllLookUP();
 						return this.bookingService!.getAllBookings(this.searchBookingsForm.get('refNumber').value);//NOSONAR
 					}),
 					map(data => {
@@ -322,23 +322,7 @@ export class MyBookingComponent implements OnInit {
 			if (err.status = 402) {
 				this.isLoadingResults = false;
 				if (err.status == 402) {
-					this.bookingUtils.redirectToPayment(err, this.commonService, this.bookingService)
-					// let payData = this.bookingService.proceedForPayment(err.error.data);
-					// this.commonService.commonAlert('Payment Details', '', 'info', 'Make Payment!', false, payData.html, cb => {
-					// 	window.location.href = environment.adminUrl + `#/admin/payment-gateway?retUrl=${payData.payData.retUrl}&retPath=${payData.payData.retPath}`;
-					// }, rj => {
-					// 	let errHtml = `			
-					// 	<div class="alert alert-danger">
-					// 		Please Complete Payment, Otherwise the application will be considered as in-complete
-					// 	</div>`
-					// 	this.commonService.commonAlert("Application Incomplete", "", 'warning', 'Make Payment!', false, errHtml, ccb => {
-					// 		window.location.href = environment.adminUrl + `#/admin/payment-gateway?retUrl=${payData.payData.retUrl}&retPath=${payData.payData.retPath}`;
-					// 	}, arj => {
-
-					// 	});
-					// 	return;
-					// });
-					// return;
+					this.bookingUtils.redirectToPayment(err, this.commonService, this.bookingService);
 				}
 			} else if (err.error[0].code == this.bookingConstant.INVALID_BOOKING_STATUS) {
 				this.commonService.openAlert("Invalid Booking Status", err.error[0].message, "warning", "")

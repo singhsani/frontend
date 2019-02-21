@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { BookingService } from '../../../../../core/services/citizen/data-services/booking.service';
+//import { BookingService } from '../../../../../core/services/citizen/data-services/booking.service';
 import { FormGroup, FormBuilder, Form, Validators, FormControl } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
 import { AmazingTimePickerService } from 'amazing-time-picker';
 import { CommonService } from '../../../../../shared/services/common.service';
-import { ValidationService } from '../../../../../shared/services/validation.service';
+import { BookingService } from '../../shared-booking/services/booking-service.service';
 
 @Component({
 	selector: 'app-band-booking-list',

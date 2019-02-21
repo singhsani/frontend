@@ -3,15 +3,13 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import * as moment from 'moment';
 import { Router } from '@angular/router';
-import { BookingService } from '../../../../../core/services/citizen/data-services/booking.service';
+// import { BookingService } from '../../../../../core/services/citizen/data-services/booking.service';
 import { ValidationService } from '../../../../../shared/services/validation.service';
 import { CommonService } from '../../../../../shared/services/common.service';
-import { BookingConstants, BookingUtils } from '../../booking-config';
+import { BookingConstants, BookingUtils } from '../../config/booking-config';
 import { MatPaginator, MatSort } from '@angular/material';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap';
-
-
-
+import { BookingService } from '../../shared-booking/services/booking-service.service';
 
 @Component({
     selector: 'app-book-theater',

@@ -4,7 +4,7 @@
     <span class="badge badge-info" title="{{fileName}}" (click)="view()" *ngIf="!getFile">{{fileName}}</span>
     <span class="badge badge-info" title="{{getFile.realFileName}}" *ngIf="getFile" (click)="view()">{{getFile.realFileName}}</span>
     <mat-progress-bar *ngIf="currentFileUpload" mode="determinate" value="{{progress.percentage}}"></mat-progress-bar>
-  </label>
+  </label> 
 
   <!-- Upload new file/Image-->
   <label class="custom-file-upload" [hidden]="canUpload || (form.get('canEdit') && !form.get('canEdit').value)">

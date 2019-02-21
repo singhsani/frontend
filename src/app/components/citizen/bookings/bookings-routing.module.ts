@@ -3,9 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { AuthGuard } from '../../../core/guard/auth.guard';
 import { ManageRoutes } from '../../../config/routes-conf';
-import { BookingDashboardComponent } from './booking-dashboard/booking-dashboard.component';
-import { MyBookingComponent } from './my-booking/my-booking.component';
-import { AtithigruhModule } from './atithigruh/atithigruh.module';
+import { BookingDashboardComponent } from './shared-booking/components/booking-dashboard/booking-dashboard.component';
+import { MyBookingComponent } from './shared-booking/components/my-booking/my-booking.component';
 
 
 const routes: Routes = [
@@ -16,6 +15,7 @@ const routes: Routes = [
 	{ path: ManageRoutes.getPrefixRoute('GUESTHOUSEMODULE'), loadChildren: './guest-house/guest-house.module#GuestHouseModule', canLoad: [AuthGuard] },
 	{ path: ManageRoutes.getPrefixRoute('PLANETAREAMODULE'), loadChildren: './planet-area/planet-area.module#PlanetAreaModule', canLoad: [AuthGuard] },
 	{ path: ManageRoutes.getPrefixRoute('STADIUMMODULE'), loadChildren: './stadium/stadium.module#StadiumModule', canLoad: [AuthGuard] },
+	{ path: ManageRoutes.getPrefixRoute('CHILDRENTHEATERMODULE'), loadChildren: './children-theater/children-theater.module#ChildrenTheaterModule', canLoad: [AuthGuard] },
 	{ path: ManageRoutes.getPrefixRoute('ATITHIGRUHMODULE'), loadChildren: './atithigruh/atithigruh.module#AtithigruhModule', canLoad: [AuthGuard] },
 	{ path: ManageRoutes.getPrefixRoute('SWIMMINGMODULE'), loadChildren: './swimming-pool/swimming-pool.module#SwimmingPoolModule', canLoad: [AuthGuard] },
 	{ path: ManageRoutes.getPrefixRoute('THEATERMODULE'), loadChildren: './theater/theater.module#TheaterModule', canLoad: [AuthGuard] },

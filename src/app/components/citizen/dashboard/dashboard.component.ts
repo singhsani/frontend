@@ -73,6 +73,14 @@ export class DashboardComponent implements OnInit {
 					"active": false
 				},
 				{
+					"code": "CHILDRENTHEATERBOOK",
+					"fieldView": "ALL",
+					"name": "Children Theater",
+					"gujName": "બાળકો થિયેટર",
+					"appointmentRequired": false,
+					"active": true
+				},
+				{
 					"code": "BOOKPERMISSION",
 					"fieldView": "ALL",
 					"name": "Shooting Permission",

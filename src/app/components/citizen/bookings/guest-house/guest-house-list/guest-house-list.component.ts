@@ -4,7 +4,8 @@ import { ToastrService } from 'ngx-toastr';
 import * as moment from 'moment';
 import { Router } from '@angular/router';
 import { ManageRoutes } from '../../../../../config/routes-conf';
-import { BookingService } from '../../../../../core/services/citizen/data-services/booking.service';
+import { BookingService } from '../../shared-booking/services/booking-service.service';
+//import { BookingService } from '../../../../../core/services/citizen/data-services/booking.service';
 
 @Component({
 	selector: 'app-guest-house-list',

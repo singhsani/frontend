@@ -66,7 +66,7 @@
 		<ng-container matColumnDef="action">
 			<mat-header-cell *matHeaderCellDef> {{'actions' | translate:translateKey}}</mat-header-cell>
 			<mat-cell *matCellDef="let element;">
-				<button *ngIf="(element.status != bookingConstant.DRAFT) && ((element.status != bookingConstant.EXPIRED) && !(element.status == bookingConstant.SUBMITTED && element.resourceType == 'STADIUM'))" mat-button [matMenuTriggerFor]="menu">
+				<button *ngIf="(element.status != bookingConstant.DRAFT) && (element.status != bookingConstant.EXPIRED) && (element.status != bookingConstant.SUBMITTED)" mat-button [matMenuTriggerFor]="menu">
 					<mat-icon>more_vert</mat-icon>
 				</button>
 				<mat-menu #menu="matMenu">
@@ -138,7 +138,7 @@
 					<th scope="col">{{'booking_status' | translate:translateKey}}</th>
 					<th scope="col" class="text-center">
 						{{'actions' | translate:translateKey}}
-						<mat-checkbox labelPosition="after" [disabled]="getAllDisabled()" [checked]="getAllSelected()" (change)="chooseAllForCancel($event.checked)">
+						<mat-checkbox labelPosition="after" [disabled]="getAllDisabled() || bookingService.resourceType == 'childrenTheater'" [checked]="getAllSelected()" (change)="chooseAllForCancel($event.checked)">
 							{{'select_all' | translate:translateKey}}
 						</mat-checkbox>
 					</th>
@@ -155,7 +155,7 @@
 					<td>{{shifts.shiftType == 'NONE' ? 'NA' : shifts.shiftType}}</td>
 					<td>{{bookingUtils.getProperErrorMessage(shifts.status)}}</td>
 					<td>
-						<mat-checkbox [disabled]="(shifts.status == bookingConstant.CANCELLATION_REQUEST || shifts.status == bookingConstant.CANCELLATION_APPROVED)"
+						<mat-checkbox [disabled]="(shifts.status == bookingConstant.CANCELLATION_REQUEST || shifts.status == bookingConstant.CANCELLATION_APPROVED || bookingService.resourceType == 'childrenTheater')"
 						 [checked]="getSelected(shifts.bookingNo) || (shifts.status == bookingConstant.CANCELLATION_REQUEST || shifts.status == bookingConstant.CANCELLATION_APPROVED)"
 						 (change)="chooseForCancel(shifts, $event.checked)">
 						</mat-checkbox>

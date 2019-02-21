@@ -2,12 +2,13 @@ import { Component, OnInit, TemplateRef, ViewChild, ChangeDetectorRef } from '@a
 import * as moment from 'moment';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { BookingService } from '../../../../../core/services/citizen/data-services/booking.service';
-import { BookingConstants, BookingUtils } from '../../booking-config';
+//import { BookingService } from '../../../../../core/services/citizen/data-services/booking.service';
+import { BookingConstants, BookingUtils } from '../../config/booking-config';
 import { MatPaginator, MatSort } from '@angular/material';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 import { CommonService } from '../../../../../shared/services/common.service';
 import { ToastrService } from 'ngx-toastr';
+import { BookingService } from '../../shared-booking/services/booking-service.service';
 
 @Component({
     selector: 'app-book-stadium',
@@ -25,8 +26,6 @@ export class BookStadiumComponent implements OnInit {
     /**
      * instance variable for stadium booking facility.
      */
-
-
     translateKey: string = "citizenStadiumScreen";
     guideLineFlag: boolean = true;
     head_lines: string;
@@ -34,7 +33,6 @@ export class BookStadiumComponent implements OnInit {
     /**
      * Booking Constants and utils
      */
-
     bookingConstants = BookingConstants;
     bookingUtils: BookingUtils = new BookingUtils();
 
@@ -90,8 +88,7 @@ export class BookStadiumComponent implements OnInit {
         private router: Router,
         private _fb: FormBuilder, private toster: ToastrService,
         private modalService: BsModalService,
-        private commonService: CommonService,
-        private CD: ChangeDetectorRef) {
+        private commonService: CommonService) {
         this.bookingService.resourceType = this.bookingConstants.STADIUM_RESOURCE_TYPE;
     }
 
@@ -196,7 +193,7 @@ export class BookStadiumComponent implements OnInit {
     }
 
     /**
-       * Method is used to get available slot wise townhalls.
+       * Method is used to get available stadium.
        */
     searchBooking() {
         this.selectedShift = [];
