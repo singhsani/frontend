@@ -2,15 +2,18 @@
 
 <mat-card [hidden]="serachLicenceObj.isDisplayRenewLicenceForm" class="mt-4 formClass">
 	<mat-form-field class="col-md-10">
-		<input matInput required placeholder="{{'search_by_application_no' | translate:translateKey}}" [(ngModel)]="serachLicenceObj.searchLicenceNumber">
+		<input matInput required placeholder="{{'search_by_application_no' | translate:translateKey}}"
+			[(ngModel)]="serachLicenceObj.searchLicenceNumber">
 	</mat-form-field>
-	<button class="col-md-2" [disabled]="!serachLicenceObj.searchLicenceNumber" mat-raised-button color="primary" (click)="searchLicence()">{{'search'
+	<button class="col-md-2" [disabled]="!serachLicenceObj.searchLicenceNumber" mat-raised-button color="primary"
+		(click)="searchLicence()">{{'search'
 		| translate:translateKey}}</button>
 </mat-card>
 
 <mat-card [hidden]="!serachLicenceObj.isDisplayRenewLicenceForm" class="formClass cardBorder">
 	<form [formGroup]="muttonFishTransferForm">
-		<mat-tab-group [(selectedIndex)]="tabIndex" dynamicHeight="true" mat-stretch-tabs class="stepperNav">
+		<mat-tab-group [(selectedIndex)]="licenseConfiguration.currentTabIndex" dynamicHeight="true" mat-stretch-tabs
+			class="stepperNav">
 
 			<!-- step 1 Starts -->
 			<mat-tab>
@@ -20,11 +23,13 @@
 
 				<div class="row">
 					<mat-form-field class="col-md-4">
-						<input matInput readonly required placeholder="{{'license_no' | translate:translateKey}}" formControlName="refNumber">
+						<input matInput readonly required placeholder="{{'license_no' | translate:translateKey}}"
+							formControlName="refNumber">
 						<control-messages [control]="muttonFishTransferForm.get('refNumber')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput readonly placeholder="{{'issue_date' | translate:translateKey}}" formControlName="licenseIssueDate">
+						<input matInput readonly placeholder="{{'issue_date' | translate:translateKey}}"
+							formControlName="licenseIssueDate">
 						<control-messages [control]="muttonFishTransferForm.get('licenseIssueDate')"></control-messages>
 					</mat-form-field>
 				</div>
@@ -33,9 +38,11 @@
 
 					<div class="col-md-4 ngSelect" formGroupName="licenseType">
 						<ng-select placeholder="{{'license_type' | translate:translateKey}} *" formControlName="code">
-							<ng-option *ngFor="let type of MF_LICENSE_TYPE" [value]="type.code">{{type.name}}</ng-option>
+							<ng-option *ngFor="let type of MF_LICENSE_TYPE" [value]="type.code">{{type.name}}
+							</ng-option>
 						</ng-select>
-						<control-messages [control]="muttonFishTransferForm.get('licenseType').get('code')"></control-messages>
+						<control-messages [control]="muttonFishTransferForm.get('licenseType').get('code')">
+						</control-messages>
 					</div>
 				</div>
 				<div class="row">
@@ -43,24 +50,31 @@
 						<ng-select placeholder="{{'person_type' | translate:translateKey}} *" formControlName="code">
 							<ng-option *ngFor="let type of PERSON_TYPE" [value]="type.code">{{type.name}}</ng-option>
 						</ng-select>
-						<control-messages [control]="muttonFishTransferForm.get('personType').get('code')"></control-messages>
+						<control-messages [control]="muttonFishTransferForm.get('personType').get('code')">
+						</control-messages>
 					</div>
 					<mat-form-field class="col-md-2">
-						<input matInput type="text" required maxlength="30" appValidationFields validationFieldsType='onlyNameWithOutSpace'
-						 placeholder="{{'holder_firstname' | translate:translateKey}}" formControlName="holderFirstName"
-						 appGujInputSource targetElement="holderFirstNameGuj" [form]="muttonFishTransferForm">
+						<input matInput type="text" required maxlength="30" appValidationFields
+							validationFieldsType='onlyNameWithOutSpace'
+							placeholder="{{'holder_firstname' | translate:translateKey}}"
+							formControlName="holderFirstName" appGujInputSource targetElement="holderFirstNameGuj"
+							[form]="muttonFishTransferForm">
 						<control-messages [control]="muttonFishTransferForm.get('holderFirstName')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" required maxlength="30" appValidationFields validationFieldsType='onlyNameWithOutSpace'
-						 placeholder="{{'holder_middlename' | translate:translateKey}}" formControlName="holderMiddleName"
-						 appGujInputSource targetElement="holderMiddleNameGuj" [form]="muttonFishTransferForm">
+						<input matInput type="text" required maxlength="30" appValidationFields
+							validationFieldsType='onlyNameWithOutSpace'
+							placeholder="{{'holder_middlename' | translate:translateKey}}"
+							formControlName="holderMiddleName" appGujInputSource targetElement="holderMiddleNameGuj"
+							[form]="muttonFishTransferForm">
 						<control-messages [control]="muttonFishTransferForm.get('holderMiddleName')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" required maxlength="30" appValidationFields validationFieldsType='onlyNameWithOutSpace'
-						 placeholder="{{'holder_lastname' | translate:translateKey}}" formControlName="holderLastName" appGujInputSource
-						 targetElement="holderLastNameGuj" [form]="muttonFishTransferForm">
+						<input matInput type="text" required maxlength="30" appValidationFields
+							validationFieldsType='onlyNameWithOutSpace'
+							placeholder="{{'holder_lastname' | translate:translateKey}}"
+							formControlName="holderLastName" appGujInputSource targetElement="holderLastNameGuj"
+							[form]="muttonFishTransferForm">
 						<control-messages [control]="muttonFishTransferForm.get('holderLastName')"></control-messages>
 					</mat-form-field>
 				</div>
@@ -68,51 +82,66 @@
 				<!-- gujarati -->
 				<div class="row">
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" maxlength="90" required formControlName="holderFirstNameGuj" appGujInputTarget [form]="muttonFishTransferForm"
-						 placeholder="{{ 'holder_firstname' | translate:translateKey:'gu' }}">
-						<control-messages [control]="muttonFishTransferForm.get('holderFirstNameGuj')"></control-messages>
+						<input matInput type="text" maxlength="90" required formControlName="holderFirstNameGuj"
+							appGujInputTarget [form]="muttonFishTransferForm"
+							placeholder="{{ 'holder_firstname' | translate:translateKey:'gu' }}">
+						<control-messages [control]="muttonFishTransferForm.get('holderFirstNameGuj')">
+						</control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" required maxlength="90" placeholder="{{'holder_middlename' | translate:translateKey}}"
-						 formControlName="holderMiddleNameGuj" appGujInputTarget [form]="muttonFishTransferForm">
-						<control-messages [control]="muttonFishTransferForm.get('holderMiddleNameGuj')"></control-messages>
+						<input matInput type="text" required maxlength="90"
+							placeholder="{{'holder_middlename' | translate:translateKey}}"
+							formControlName="holderMiddleNameGuj" appGujInputTarget [form]="muttonFishTransferForm">
+						<control-messages [control]="muttonFishTransferForm.get('holderMiddleNameGuj')">
+						</control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" required maxlength="90" placeholder="{{'holder_lastname' | translate:translateKey}}"
-						 formControlName="holderLastNameGuj" appGujInputTarget [form]="muttonFishTransferForm">
-						<control-messages [control]="muttonFishTransferForm.get('holderLastNameGuj')"></control-messages>
+						<input matInput type="text" required maxlength="90"
+							placeholder="{{'holder_lastname' | translate:translateKey}}"
+							formControlName="holderLastNameGuj" appGujInputTarget [form]="muttonFishTransferForm">
+						<control-messages [control]="muttonFishTransferForm.get('holderLastNameGuj')">
+						</control-messages>
 					</mat-form-field>
 				</div>
 				<!-- /gujarati -->
 
 				<div class="row">
 					<h2>{{'permanat_address' | translate:translateKey}}</h2>
-					<app-address #permanantAddressEstablishment [requiredFeilds]="muttonFishTransferForm.get('permanantAddress').value"
-					 [addressFormGroup]="muttonFishTransferForm.get('permanantAddress')"></app-address>
+					<app-address #permanantAddressEstablishment
+						[requiredFeilds]="muttonFishTransferForm.get('permanantAddress').value"
+						[addressFormGroup]="muttonFishTransferForm.get('permanantAddress')"></app-address>
 				</div>
 				<div class="row">
 					<h2>{{'temp_address' | translate:translateKey}}</h2>
-					<app-address #temporaryAddressEstablishment [requiredFeilds]="muttonFishTransferForm.get('temporaryAddress').value"
-					 [addressFormGroup]="muttonFishTransferForm.get('temporaryAddress')"></app-address>
+					<app-address #temporaryAddressEstablishment
+						[requiredFeilds]="muttonFishTransferForm.get('temporaryAddress').value"
+						[addressFormGroup]="muttonFishTransferForm.get('temporaryAddress')"></app-address>
 				</div>
 
 				<mat-form-field class="col-md-4">
-					<input matInput OnlyNumber maxlength="12" formControlName="holderTelephoneNo" placeholder="{{'holder_telephone_no' | translate:translateKey}}">
+					<input matInput OnlyNumber maxlength="12" formControlName="holderTelephoneNo"
+						placeholder="{{'holder_telephone_no' | translate:translateKey}}">
 				</mat-form-field>
 				<mat-form-field class="col-md-4">
-					<input matInput OnlyNumber maxlength="11" formControlName="holderMobileNo" placeholder="{{'holder_mobile_no' | translate:translateKey}}">
+					<input matInput OnlyNumber maxlength="11" formControlName="holderMobileNo"
+						placeholder="{{'holder_mobile_no' | translate:translateKey}}">
 				</mat-form-field>
 				<mat-form-field class="col-md-4">
-					<input matInput OnlyNumber maxlength="12" formControlName="holderFaxNo" placeholder="{{'holder_fax_no' | translate:translateKey}}">
+					<input matInput OnlyNumber maxlength="12" formControlName="holderFaxNo"
+						placeholder="{{'holder_fax_no' | translate:translateKey}}">
 				</mat-form-field>
 				<mat-form-field class="col-md-4">
-					<input matInput OnlyNumber maxlength="12" formControlName="holderAadharNo" placeholder="{{'holder_aadhar_no' | translate:translateKey}}">
+					<input matInput OnlyNumber maxlength="12" formControlName="holderAadharNo"
+						placeholder="{{'holder_aadhar_no' | translate:translateKey}}">
 				</mat-form-field>
 				<mat-form-field class="col-md-4">
-					<input matInput appAlphaNumeric maxlength="10" formControlName="holderPanNo" placeholder="{{'holder_pan_no' | translate:translateKey}}">
+					<input matInput appAlphaNumeric maxlength="10" formControlName="holderPanNo"
+						placeholder="{{'holder_pan_no' | translate:translateKey}}">
 				</mat-form-field>
 
-				<app-action-bar [form]="muttonFishTransferForm" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step1', next: 1, back: 0}"></app-action-bar>
+				<app-action-bar [form]="muttonFishTransferForm"
+					(tabIndex)="licenseConfiguration.onFormTabChange($event)"
+					[stepInfo]="{step: 'step1', next: 1, back: 0}"></app-action-bar>
 			</mat-tab>
 			<!-- step 1 Ends -->
 
@@ -123,50 +152,65 @@
 				</ng-template>
 				<div class="row">
 					<div class="col-md-4 ngSelect" formGroupName="zoneNo">
-						<ng-select placeholder="{{'business_under_zone' | translate:translateKey}} *" formControlName="code" (change)="onChangeZone($event);muttonFishTransferForm.get('wardNo').reset();muttonFishTransferForm.get('blockNo').reset()">
+						<ng-select placeholder="{{'business_under_zone' | translate:translateKey}} *"
+							formControlName="code"
+							(change)="onChangeZone($event);muttonFishTransferForm.get('wardNo').reset();muttonFishTransferForm.get('blockNo').reset()">
 							<ng-option *ngFor="let zone of FIRM_ZONE" [value]="zone.code">{{zone.name}}</ng-option>
 						</ng-select>
-						<control-messages [control]="muttonFishTransferForm.get('zoneNo').get('code')"></control-messages>
+						<control-messages [control]="muttonFishTransferForm.get('zoneNo').get('code')">
+						</control-messages>
 					</div>
 					<div class="col-md-4 ngSelect" formGroupName="wardNo">
-						<ng-select placeholder="{{'ward_no' | translate:translateKey}} *" formControlName="code" (change)="onChangeWard($event);muttonFishTransferForm.get('blockNo').reset()">
+						<ng-select placeholder="{{'ward_no' | translate:translateKey}} *" formControlName="code"
+							(change)="onChangeWard($event);muttonFishTransferForm.get('blockNo').reset()">
 							<ng-option *ngFor="let ward of WARD" [value]="ward.code">{{ward.name}}</ng-option>
 						</ng-select>
-						<control-messages [control]="muttonFishTransferForm.get('wardNo').get('code')"></control-messages>
+						<control-messages [control]="muttonFishTransferForm.get('wardNo').get('code')">
+						</control-messages>
 					</div>
 					<div class="col-md-4 ngSelect" formGroupName="blockNo">
 						<ng-select placeholder="{{'block_no' | translate:translateKey}} *" formControlName="code">
 							<ng-option *ngFor="let block of BLOCK" [value]="block.code">{{block.name}}</ng-option>
 						</ng-select>
-						<control-messages [control]="muttonFishTransferForm.get('blockNo').get('code')"></control-messages>
+						<control-messages [control]="muttonFishTransferForm.get('blockNo').get('code')">
+						</control-messages>
 					</div>
 				</div>
 				<div class="row">
 					<h2>{{'business_shop_address' | translate:translateKey}}</h2>
-					<app-address #temporaryAddressEstablishment [requiredFeilds]="muttonFishTransferForm.get('businessAddress').value"
-					 [addressFormGroup]="muttonFishTransferForm.get('businessAddress')"></app-address>
+					<app-address #temporaryAddressEstablishment
+						[requiredFeilds]="muttonFishTransferForm.get('businessAddress').value"
+						[addressFormGroup]="muttonFishTransferForm.get('businessAddress')"></app-address>
 				</div>
 
 				<div class="row">
 					<!-- <h2>{{'category_label' | translate:translateKey}}</h2> -->
 
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" required maxlength="500" placeholder="{{'extra_details_of_business' | translate:translateKey}}"
-						 formControlName="extraDetailsOfBusiness">
-						<control-messages [control]="muttonFishTransferForm.get('extraDetailsOfBusiness')"></control-messages>
+						<input matInput type="text" required maxlength="500"
+							placeholder="{{'extra_details_of_business' | translate:translateKey}}"
+							formControlName="extraDetailsOfBusiness">
+						<control-messages [control]="muttonFishTransferForm.get('extraDetailsOfBusiness')">
+						</control-messages>
 					</mat-form-field>
 					<div class="col-md-4 ngSelect" formGroupName="relationshipId">
-						<ng-select placeholder="{{'relationship_id' | translate:translateKey}} *" formControlName="code" (change)="onChangeRelationWithOrg()">
-							<ng-option *ngFor="let id of MF_RELATIONSHIP_OF_APPLICANT" [value]="id.code">{{id.name}}</ng-option>
+						<ng-select placeholder="{{'relationship_id' | translate:translateKey}} *" formControlName="code"
+							(change)="onChangeRelationWithOrg()">
+							<ng-option *ngFor="let id of MF_RELATIONSHIP_OF_APPLICANT" [value]="id.code">{{id.name}}
+							</ng-option>
 						</ng-select>
-						<control-messages [control]="muttonFishTransferForm.get('relationshipId').get('code')"></control-messages>
+						<control-messages [control]="muttonFishTransferForm.get('relationshipId').get('code')">
+						</control-messages>
 					</div>
 
 					<div class="col-md-4 ngSelect" formGroupName="statusOfBusinessId">
-						<ng-select placeholder="{{'business_status_id' | translate:translateKey}} *" formControlName="code">
-							<ng-option *ngFor="let statusId of MF_STATUS_OF_BUSINESS" [value]="statusId.code">{{statusId.name}}</ng-option>
+						<ng-select (change)="onChangeStatusOfBusiness()"
+							placeholder="{{'business_status_id' | translate:translateKey}} *" formControlName="code">
+							<ng-option *ngFor="let statusId of MF_STATUS_OF_BUSINESS" [value]="statusId.code">
+								{{statusId.name}}</ng-option>
 						</ng-select>
-						<control-messages [control]="muttonFishTransferForm.get('statusOfBusinessId').get('code')"></control-messages>
+						<control-messages [control]="muttonFishTransferForm.get('statusOfBusinessId').get('code')">
+						</control-messages>
 					</div>
 				</div>
 
@@ -179,15 +223,17 @@
 							'if_shop_is_in_partnership' | translate:translateKey}}</h2>
 					</div>
 					<div class="col-md-2 pt-3 text-right">
-						<button type="button" [disabled]="muttonFishTransferForm.get('relationshipId').value.code ? muttonFishTransferForm.get('relationshipId').value.code=='PROPRIETOR' ? !(muttonFishTransferForm.get('relationshipList')['controls'].length < 1) : !(muttonFishTransferForm.get('relationshipList')['controls'].length < 10) : true"
-						 matTooltip="{{'add_more' | translate:translateKey}}" mat-raised-button color="primary" (click)="addMorePerson('MF_PERSON')">{{'add'|
+						<button type="button"
+							[disabled]="muttonFishTransferForm.get('relationshipId').value.code ? muttonFishTransferForm.get('relationshipId').value.code=='PROPRIETOR' ? !(muttonFishTransferForm.get('relationshipList')['controls'].length < 1) : !(muttonFishTransferForm.get('relationshipList')['controls'].length < 10) : true"
+							matTooltip="{{'add_more' | translate:translateKey}}" mat-raised-button color="primary"
+							(click)="addMorePerson('MF_PERSON')">{{'add'|
 							translate:translateKey}}</button>
 					</div>
 				</div>
 
 				<div *ngIf="muttonFishTransferForm.get('relationshipList')['controls'].length">
 					<div>
-							<table class="table table-striped mb-0 responsiveTableRow">
+						<table class="table table-striped mb-0 responsiveTableRow">
 							<thead>
 								<tr class="mo-d-none">
 									<th width="50">#</th>
@@ -199,21 +245,25 @@
 							</thead>
 							<tbody formArrayName="relationshipList">
 								<tr *ngFor="let item of muttonFishTransferForm.get('relationshipList')['controls']; let indx = index;"
-								 [formGroupName]="indx">
-									
-									<td><div class="d-md-none">#</div>
-										{{indx+1}}</td>
+									[formGroupName]="indx">
 
-									<td><div class="d-md-none">{{'name' | translate:translateKey}}</div>
+									<td>
+										<div class="d-md-none">#</div>
+										{{indx+1}}
+									</td>
+
+									<td>
+										<div class="d-md-none">{{'name' | translate:translateKey}}</div>
 										<p *ngIf="!item.isEditMode">{{item.get('name').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
-											<input matInput maxlength="100" appValidationFields [validationFieldsType]="'onlyNameWithSpace'"
-											 formControlName="name">
+											<input matInput maxlength="100" appValidationFields
+												[validationFieldsType]="'onlyNameWithSpace'" formControlName="name">
 											<control-messages [control]="item.get('name')"></control-messages>
 										</mat-form-field>
 									</td>
 
-									<td><div class="d-md-none">{{'address' | translate:translateKey}}</div>
+									<td>
+										<div class="d-md-none">{{'address' | translate:translateKey}}</div>
 										<p *ngIf="!item.isEditMode">{{item.get('address').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
 											<input matInput maxlength="150" formControlName="address">
@@ -221,7 +271,8 @@
 										</mat-form-field>
 									</td>
 
-									<td><div class="d-md-none">{{'mobile_no' | translate:translateKey}}</div>
+									<td>
+										<div class="d-md-none">{{'mobile_no' | translate:translateKey}}</div>
 										<p *ngIf="!item.isEditMode">{{item.get('mobileNo').value}} &nbsp;</p>
 										<mat-form-field *ngIf="item.isEditMode">
 											<input matInput maxlength="11" OnlyNumber formControlName="mobileNo">
@@ -230,23 +281,26 @@
 									</td>
 
 									<td *ngIf="muttonFishTransferForm.get('canEdit').value">
-										 <span *ngIf="muttonFishTransferForm.get('canEdit').value">
-											<button mat-icon-button color="primary" *ngIf="!item.isEditMode" (click)="editRecord(item)">
+										<span *ngIf="muttonFishTransferForm.get('canEdit').value">
+											<button mat-icon-button color="primary" *ngIf="!item.isEditMode"
+												(click)="editRecord(item)">
 												<mat-icon title="Edit">edit</mat-icon>
 											</button>
-											<button type="submit" [disabled]="item.invalid" mat-icon-button color="primary" *ngIf="item.isEditMode"
-											 (click)="saveRecord(item)">
+											<button type="submit" [disabled]="item.invalid" mat-icon-button
+												color="primary" *ngIf="item.isEditMode" (click)="saveRecord(item)">
 												<mat-icon title="save">save</mat-icon>
 											</button>
-										 </span>
+										</span>
 										<span *ngIf="muttonFishTransferForm.get('canEdit').value">
-												<button mat-icon-button color="warn" *ngIf="!item.isEditMode" (click)="deleteRecord(indx)">
-													<mat-icon title="Delete">delete</mat-icon>
-												</button>
-												<button mat-icon-button color="warn" *ngIf="item.isEditMode" (click)="cancelRecord(item)">
-													<mat-icon title="Delete">cancel</mat-icon>
-												</button>
-											</span>
+											<button mat-icon-button color="warn" *ngIf="!item.isEditMode"
+												(click)="deleteRecord(indx)">
+												<mat-icon title="Delete">delete</mat-icon>
+											</button>
+											<button mat-icon-button color="warn" *ngIf="item.isEditMode"
+												(click)="cancelRecord(item)">
+												<mat-icon title="Delete">cancel</mat-icon>
+											</button>
+										</span>
 
 									</td>
 
@@ -256,7 +310,9 @@
 					</div>
 				</div>
 				<!-- end table -->
-				<app-action-bar [form]="muttonFishTransferForm" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step2', next: 2, back: 0}"></app-action-bar>
+				<app-action-bar [form]="muttonFishTransferForm"
+					(tabIndex)="licenseConfiguration.onFormTabChange($event)"
+					[stepInfo]="{step: 'step2', next: 2, back: 0}"></app-action-bar>
 			</mat-tab>
 			<!-- step 2 Ends -->
 			<!-- step 4 Attachment Starts -->
@@ -264,100 +320,23 @@
 				<ng-template mat-tab-label>
 					<div>{{'attachment' | translate: translateKey}}</div>
 				</ng-template>
+
 				<div class="row">
-					<!-- <h2>{{'owner_checklist' | translate: translateKey}}</h2> -->
-
-					<div class="col-md-4">
-						<div *ngIf="showButtons">
-							<label>{{'photo_of_license_holder' | translate: translateKey}} *</label>
-							<file-upload [form]="muttonFishTransferForm" [uploadModel]="setDataValue(1,'PhotoofLicenseHolder','1.1','doc')"></file-upload>
+					<ng-container
+						*ngFor="let doc of muttonFishTransferForm.get('serviceDetail').get('serviceUploadDocuments').value | filterAttachmentMF:muttonFishTransferForm.get('statusOfBusinessId').value.code">
+						<div class="col-md-4"
+							*ngIf="doc.requiredOnCitizenPortal && doc.isActive && licenseConfiguration.isAttachmentButtonsVisible">
+							<label>{{TranslateService.getCurrentLanguage()=='en'? doc.documentLabelEn : doc.documentLabelGuj }}
+								<span *ngIf="doc.mandatory">*</span></label>
+							<file-upload [form]="muttonFishTransferForm" [uploadModel]="doc"></file-upload>
 						</div>
-					</div>
-
-					<div class="col-md-4">
-						<div *ngIf="showButtons">
-							<label>{{'site_or_key_plan' | translate: translateKey}} *</label>
-							<file-upload [form]="muttonFishTransferForm" [uploadModel]="setDataValue(2,'siteorkeyplan','1.2','doc')"></file-upload>
-						</div>
-					</div>
-					<div class="col-md-4">
-						<div *ngIf="showButtons">
-							<label>{{'aadhar_card_scan_copy' | translate: translateKey}} *</label>
-							<file-upload [form]="muttonFishTransferForm" [uploadModel]="setDataValue(3,'PropertyTaxCurrentYearReceiptOfOrganization', '1.3', 'doc') "></file-upload>
-						</div>
-					</div>
-
-					<div class="col-md-4">
-						<div *ngIf="showButtons">
-							<label>{{'pan_card_owner_or_prop' | translate: translateKey}} *</label>
-							<file-upload [form]="muttonFishTransferForm" [uploadModel]="setDataValue(4, 'OrganizationBusinessTaxCurrentYearReceipt', '1.4', 'doc') "></file-upload>
-						</div>
-					</div>
-
-					<div class="col-md-4">
-						<div *ngIf="showButtons">
-							<label>{{'constitution_copy_of_firm' | translate: translateKey}} </label>
-							<file-upload [form]="muttonFishTransferForm" [uploadModel]="setDataValue(5,'WorkersProfessionalTaxReceipt', '1.5','doc') "></file-upload>
-						</div>
-					</div>
-
-					<div class="col-md-4">
-						<div *ngIf="showButtons">
-							<label>{{'proof_of_ownership_tenancy' | translate: translateKey}} *</label>
-							<file-upload [form]="muttonFishTransferForm" [uploadModel]="setDataValue(6,'PartnershipDeedCopyOfPartnerIfThereIsAPartner', '1.6', 'doc') "></file-upload>
-						</div>
-					</div>
-
-					<div class="col-md-4">
-						<div *ngIf="showButtons">
-							<label>{{'copy_of_lease_deed_or_auctioncopy_or_poss_letter' | translate: translateKey}} *</label>
-							<file-upload [form]="muttonFishTransferForm" [uploadModel]="setDataValue(7, 'OwnerMoreWorkers', '1.7', 'doc') "></file-upload>
-						</div>
-					</div>
-
-					<div class="col-md-4">
-						<div *ngIf="showButtons">
-							<label>{{'premises_by_the_land_owning_agency' | translate: translateKey}}</label>
-							<file-upload [form]="muttonFishTransferForm" [uploadModel]="setDataValue(8, 'AdharCardOwner', '1.8', 'doc') "></file-upload>
-						</div>
-					</div>
-
-					<div class="col-md-4">
-						<div *ngIf="showButtons">
-							<label>{{'additional_document_if_any' | translate: translateKey}} *</label>
-							<file-upload [form]="muttonFishTransferForm" [uploadModel]="setDataValue(9, 'ElectionVotersID', '1.9', 'doc') "></file-upload>
-						</div>
-					</div>
-
-					<div class="col-md-4">
-						<div *ngIf="showButtons">
-							<label>{{'property_tax_bill_paid_receipt' | translate: translateKey}} *</label>
-							<file-upload [form]="muttonFishTransferForm" [uploadModel]="setDataValue(10, 'PANCardTenant', '2', 'doc') "></file-upload>
-						</div>
-					</div>
-					<div class="col-md-4">
-						<div *ngIf="showButtons">
-							<label>{{'shop_establishment_certi' | translate: translateKey}} *</label>
-							<file-upload [form]="muttonFishTransferForm" [uploadModel]="setDataValue(11,'PartnershipDeedCopyOfPartnerIfThereIsAPartner', '1.6', 'doc') "></file-upload>
-						</div>
-					</div>
-					<!-- two attachment for rental shop -->
-					<div class="col-md-4" *ngIf="muttonFishTransferForm.get('statusOfBusinessId').get('code').value === 'RENT'">
-						<div *ngIf="showButtons">
-							<label>{{'occupation_certi' | translate: translateKey}} *</label>
-							<file-upload [form]="muttonFishTransferForm" [uploadModel]="setDataValue(12,'PartnershipDeedCopyOfPartnerIfThereIsAPartner', '1.6', 'doc') "></file-upload>
-						</div>
-					</div>
-					<div class="col-md-4" *ngIf="muttonFishTransferForm.get('statusOfBusinessId').get('code').value === 'RENT'">
-						<div *ngIf="showButtons">
-							<label>{{'rent_agreement' | translate: translateKey}} *</label>
-							<file-upload [form]="muttonFishTransferForm" [uploadModel]="setDataValue(13,'PartnershipDeedCopyOfPartnerIfThereIsAPartner', '1.6', 'doc') "></file-upload>
-						</div>
-					</div>
+					</ng-container>
 				</div>
 
-				<app-action-bar [uploadFiles]="uploadFileArrayData" [form]="muttonFishTransferForm" (handleErrors)="handleErrorsOnSubmit($event)"
-				 (tabIndex)="onTabChange($event) " [stepInfo]="{step: 'final', next:3, back:1} "></app-action-bar>
+				<app-action-bar [uploadFiles]="uploadFileArray" [form]="muttonFishTransferForm"
+					(handleErrors)="handleErrorsOnSubmit($event)"
+					(tabIndex)="licenseConfiguration.onFormTabChange($event) "
+					[stepInfo]="{step: 'final', next:3, back:1} "></app-action-bar>
 
 			</mat-tab>
 			<!-- step Attachment Ends -->

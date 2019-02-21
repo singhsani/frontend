@@ -67,7 +67,7 @@ export class ComponentConfig {
 	 */
     public createDocumentsGrp(data?: any): FormGroup {
         return new FormBuilder().group({
-            // dependentFieldName: [data.dependentFieldName ? data.dependentFieldName : null],
+            dependentFieldName: [data.dependentFieldName ? data.dependentFieldName : null],
             documentIdentifier: new FormControl(data.documentIdentifier ? data.documentIdentifier : null),
             documentKey: [data.documentKey ? data.documentKey : null],
             documentLabelEn: [data.documentLabelEn ? data.documentLabelEn : null],
