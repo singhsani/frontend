@@ -2,9 +2,11 @@
 
 <mat-card [hidden]="serachLicenceObj.isDisplayRenewLicenceForm" class="mt-4 formClass">
 	<mat-form-field class="col-md-10">
-		<input matInput required placeholder="{{'search_by_application_no' | translate:translateKey}}" [(ngModel)]="serachLicenceObj.searchLicenceNumber">
+		<input matInput required placeholder="{{'search_by_application_no' | translate:translateKey}}"
+			[(ngModel)]="serachLicenceObj.searchLicenceNumber">
 	</mat-form-field>
-	<button class="col-md-2" [disabled]="!serachLicenceObj.searchLicenceNumber" mat-raised-button color="primary" (click)="searchLicence()">{{'search'
+	<button class="col-md-2" [disabled]="!serachLicenceObj.searchLicenceNumber" mat-raised-button color="primary"
+		(click)="searchLicence()">{{'search'
 		| translate:translateKey}}</button>
 </mat-card>
 
@@ -20,76 +22,90 @@
 
 				<div class="row">
 					<mat-form-field class="col-md-4">
-						<input matInput readonly required placeholder="{{'license_no' | translate:translateKey}}" formControlName="refNumber">
+						<input matInput readonly required placeholder="{{'license_no' | translate:translateKey}}"
+							formControlName="refNumber">
 						<control-messages [control]="shopLicRenewalForm.get('refNumber')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput readonly placeholder="{{'issue_date' | translate:translateKey}}" formControlName="licenseIssueDate">
+						<input matInput readonly placeholder="{{'issue_date' | translate:translateKey}}"
+							formControlName="licenseIssueDate">
 						<control-messages [control]="shopLicRenewalForm.get('licenseIssueDate')"></control-messages>
 					</mat-form-field>
 				</div>
 
 				<div class="row">
 					<mat-form-field class="col-md-4">
-						<input matInput required maxlength="150" placeholder="{{'name_of_establishment_if_any' | translate:translateKey}}"
-						 formControlName="establishmentName" appGujInputSource targetElement="establishmentNameGuj" [form]="shopLicRenewalForm">
+						<input matInput required maxlength="150"
+							placeholder="{{'name_of_establishment_if_any' | translate:translateKey}}"
+							formControlName="establishmentName" appGujInputSource targetElement="establishmentNameGuj"
+							[form]="shopLicRenewalForm">
 						<control-messages [control]="shopLicRenewalForm.get('establishmentName')"></control-messages>
 					</mat-form-field>
 
 					<!-- gujarati -->
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" required maxlength="450" formControlName="establishmentNameGuj" appGujInputTarget
-						 [form]="shopLicRenewalForm" placeholder="{{ 'name_of_establishment_if_any' | translate:translateKey:'gu' }}">
+						<input matInput type="text" required maxlength="450" formControlName="establishmentNameGuj"
+							appGujInputTarget [form]="shopLicRenewalForm"
+							placeholder="{{ 'name_of_establishment_if_any' | translate:translateKey:'gu' }}">
 						<control-messages [control]="shopLicRenewalForm.get('establishmentNameGuj')"></control-messages>
 					</mat-form-field>
 					<!-- /gujarati -->
 
 					<div class="col-md-4 ngSelect" formGroupName="noOfHumanWorking">
-						<ng-select placeholder="{{'number_of_human_10' | translate:translateKey}} *" formControlName="code" (change)="onChangeNoOfHumanWorking($event)">
+						<ng-select placeholder="{{'number_of_human_10' | translate:translateKey}} *"
+							formControlName="code" (change)="onChangeNoOfHumanWorking($event)">
 							<ng-option *ngFor="let yes_no of YES_NO" [value]="yes_no.code">{{yes_no.name}}</ng-option>
 						</ng-select>
-						<control-messages [control]="shopLicRenewalForm.get('noOfHumanWorking').get('code')"></control-messages>
+						<control-messages [control]="shopLicRenewalForm.get('noOfHumanWorking').get('code')">
+						</control-messages>
 					</div>
 
 					<div class="row">
 						<h2>{{'postal_address_of_establishment' | translate:translateKey}}</h2>
-						<app-address #postalAddressEstablishment [addressFormGroup]="shopLicRenewalForm.get('postalAddress')"></app-address>
+						<app-address #postalAddressEstablishment
+							[addressFormGroup]="shopLicRenewalForm.get('postalAddress')"></app-address>
 					</div>
 
 					<div class="col-md-4 ngSelect" formGroupName="assessmentDoneByVMC">
-						<ng-select placeholder="{{'assessment_done_by_VMC' | translate:translateKey}}*" formControlName="code" required>
+						<ng-select placeholder="{{'assessment_done_by_VMC' | translate:translateKey}}*"
+							formControlName="code" required>
 							<ng-option *ngFor="let yes_no of YES_NO" [value]="yes_no.code">{{yes_no.name}}</ng-option>
 						</ng-select>
-						<control-messages [control]="shopLicRenewalForm.get('assessmentDoneByVMC').get('code')"></control-messages>
+						<control-messages [control]="shopLicRenewalForm.get('assessmentDoneByVMC').get('code')">
+						</control-messages>
 					</div>
 
 					<mat-form-field class="col-md-4">
-						<input matInput required maxlength="13" minlength="13" appAlphaNumeric placeholder="{{'property_tax_no' | translate:translateKey}}"
-						 formControlName="propertyTaxNo">
+						<input matInput required maxlength="13" minlength="13" appAlphaNumeric
+							placeholder="{{'property_tax_no' | translate:translateKey}}"
+							formControlName="propertyTaxNo">
 						<control-messages [control]="shopLicRenewalForm.get('propertyTaxNo')"></control-messages>
 					</mat-form-field>
 
 					<div class="col-md-4 ngSelect" formGroupName="wardNo">
-						<ng-select placeholder="{{'ward_no' | translate:translateKey}} *" formControlName="code" required>
+						<ng-select placeholder="{{'ward_no' | translate:translateKey}} *" formControlName="code"
+							required>
 							<ng-option *ngFor="let no of wardNo" [value]="no.code">{{no.name}}</ng-option>
 						</ng-select>
 						<control-messages [control]="shopLicRenewalForm.get('wardNo').get('code')"></control-messages>
 					</div>
 
 					<mat-form-field class="col-md-4">
-						<input matInput OnlyNumber maxlength="12" placeholder="{{'aadhar_number' | translate:translateKey}}"
-						 formControlName="aadharNumber">
+						<input matInput OnlyNumber maxlength="12"
+							placeholder="{{'aadhar_number' | translate:translateKey}}" formControlName="aadharNumber">
 					</mat-form-field>
 
 					<div class="col-md-4 ngSelect" formGroupName="applicantVimaAmountPaid">
-						<ng-select placeholder="{{'vima_amount' | translate:translateKey}}" formControlName="code" (change)="shopLicRenewalForm.get('number').reset()">
+						<ng-select placeholder="{{'vima_amount' | translate:translateKey}}" formControlName="code"
+							(change)="shopLicRenewalForm.get('number').reset()">
 							<ng-option *ngFor="let yes_no of YES_NO" [value]="yes_no.code">{{yes_no.name}}</ng-option>
 						</ng-select>
 					</div>
 
-					<mat-form-field class="col-md-4" *ngIf="shopLicRenewalForm.get('applicantVimaAmountPaid').value.code == 'YES'">
-						<input matInput appAlphaNumeric maxlength="20" placeholder="{{'number' | translate:translateKey}}"
-						 formControlName="number">
+					<mat-form-field class="col-md-4"
+						*ngIf="shopLicRenewalForm.get('applicantVimaAmountPaid').value.code == 'YES'">
+						<input matInput appAlphaNumeric maxlength="20"
+							placeholder="{{'number' | translate:translateKey}}" formControlName="number">
 					</mat-form-field>
 				</div>
 
@@ -98,14 +114,15 @@
 				</div>
 				<div class="row">
 					<mat-form-field class="col-md-4">
-						<input matInput maxlength="20" appAlphaNumeric placeholder="{{'professional_tax_PEC_no' | translate:translateKey}}"
-						 formControlName="professionalTaxPECNo">
+						<input matInput maxlength="20" appAlphaNumeric
+							placeholder="{{'professional_tax_PEC_no' | translate:translateKey}}"
+							formControlName="professionalTaxPECNo">
 						<control-messages [control]="shopLicRenewalForm.get('professionalTaxPECNo')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput maxlength="20" appAlphaNumeric placeholder="{{'PRC_no' | translate:translateKey}}"
-						 formControlName="prcNo">
+						<input matInput maxlength="20" appAlphaNumeric
+							placeholder="{{'PRC_no' | translate:translateKey}}" formControlName="prcNo">
 						<control-messages [control]="shopLicRenewalForm.get('prcNo')"></control-messages>
 					</mat-form-field>
 				</div>
@@ -115,11 +132,13 @@
 					<h2>{{'situation_label'| translate:translateKey}}</h2>
 
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" required maxlength="100" formControlName="situationOfOffice" placeholder="{{'situation_of_establishment' | translate:translateKey}}">
+						<input matInput type="text" required maxlength="100" formControlName="situationOfOffice"
+							placeholder="{{'situation_of_establishment' | translate:translateKey}}">
 						<control-messages [control]="shopLicRenewalForm.get('situationOfOffice')"></control-messages>
 					</mat-form-field>
 				</div>
-				<app-action-bar [form]="shopLicRenewalForm" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step1', next: 1, back: 0}"></app-action-bar>
+				<app-action-bar [form]="shopLicRenewalForm" (tabIndex)="onTabChange($event)"
+					[stepInfo]="{step: 'step1', next: 1, back: 0}"></app-action-bar>
 			</mat-tab>
 			<!-- step 1 Ends -->
 
@@ -132,42 +151,53 @@
 				<div class="row">
 
 					<mat-form-field class="col-md-6">
-						<input matInput type="text" required maxlength="100" placeholder="{{'name_of_employer' | translate:translateKey}}"
-						 formControlName="nameOfEmployer" appGujInputSource targetElement="nameOfEmployerGuj" [form]="shopLicRenewalForm">
+						<input matInput type="text" required maxlength="100"
+							placeholder="{{'name_of_employer' | translate:translateKey}}"
+							formControlName="nameOfEmployer" appGujInputSource targetElement="nameOfEmployerGuj"
+							[form]="shopLicRenewalForm">
 						<control-messages [control]="shopLicRenewalForm.get('nameOfEmployer')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-6">
-						<input matInput type="text" required maxlength="500" placeholder="{{'residential_address_of_employer' | translate:translateKey}}"
-						 formControlName="residentialAddressOfEmployer" appGujInputSource targetElement="residentialAddressOfEmployerGuj"
-						 [form]="shopLicRenewalForm">
-						<control-messages [control]="shopLicRenewalForm.get('residentialAddressOfEmployer')"></control-messages>
+						<input matInput type="text" required maxlength="500"
+							placeholder="{{'residential_address_of_employer' | translate:translateKey}}"
+							formControlName="residentialAddressOfEmployer" appGujInputSource
+							targetElement="residentialAddressOfEmployerGuj" [form]="shopLicRenewalForm">
+						<control-messages [control]="shopLicRenewalForm.get('residentialAddressOfEmployer')">
+						</control-messages>
 					</mat-form-field>
 
 					<!-- gujarati -->
 					<mat-form-field class="col-md-6">
-						<input matInput type="text" maxlength="300" required formControlName="nameOfEmployerGuj" appGujInputTarget [form]="shopLicRenewalForm"
-						 placeholder="{{ 'name_of_employer' | translate:translateKey:'gu' }}">
+						<input matInput type="text" maxlength="300" required formControlName="nameOfEmployerGuj"
+							appGujInputTarget [form]="shopLicRenewalForm"
+							placeholder="{{ 'name_of_employer' | translate:translateKey:'gu' }}">
 						<control-messages [control]="shopLicRenewalForm.get('nameOfEmployerGuj')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-6">
-						<input matInput type="text" maxlength="1500" required formControlName="residentialAddressOfEmployerGuj"
-						 appGujInputTarget [form]="shopLicRenewalForm" placeholder="{{ 'residential_address_of_employer' | translate:translateKey:'gu' }}">
-						<control-messages [control]="shopLicRenewalForm.get('residentialAddressOfEmployerGuj')"></control-messages>
+						<input matInput type="text" maxlength="1500" required
+							formControlName="residentialAddressOfEmployerGuj" appGujInputTarget
+							[form]="shopLicRenewalForm"
+							placeholder="{{ 'residential_address_of_employer' | translate:translateKey:'gu' }}">
+						<control-messages [control]="shopLicRenewalForm.get('residentialAddressOfEmployerGuj')">
+						</control-messages>
 					</mat-form-field>
 					<!-- /gujarati -->
 
 					<mat-form-field class="col-md-6">
-						<input matInput type="text" required maxlength="60" placeholder="{{'name_of_manager' | translate:translateKey}}"
-						 formControlName="nameOfManager">
+						<input matInput type="text" required maxlength="60"
+							placeholder="{{'name_of_manager' | translate:translateKey}}"
+							formControlName="nameOfManager">
 						<control-messages [control]="shopLicRenewalForm.get('nameOfManager')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-6">
-						<input matInput required maxlength="500" placeholder="{{'residential_address_of_manager' | translate:translateKey}}"
-						 formControlName="residentialAddressOfManager">
-						<control-messages [control]="shopLicRenewalForm.get('residentialAddressOfManager')"></control-messages>
+						<input matInput required maxlength="500"
+							placeholder="{{'residential_address_of_manager' | translate:translateKey}}"
+							formControlName="residentialAddressOfManager">
+						<control-messages [control]="shopLicRenewalForm.get('residentialAddressOfManager')">
+						</control-messages>
 					</mat-form-field>
 
 					<!-- gujarati -->
@@ -183,17 +213,23 @@
 					<h2>{{'category_label' | translate:translateKey}}</h2>
 
 					<div class="col-md-6 ngSelect" formGroupName="categoryOfBusiness">
-						<ng-select placeholder="{{'category_of_business' | translate:translateKey}} *" formControlName="code" (change)="onChangeCategorySelect($event)">
-							<ng-option *ngFor="let category of businessCategory" [value]="category.code">{{category.name}}</ng-option>
+						<ng-select placeholder="{{'category_of_business' | translate:translateKey}} *"
+							formControlName="code" (change)="onChangeCategorySelect($event)">
+							<ng-option *ngFor="let category of businessCategory" [value]="category.code">
+								{{category.name}}</ng-option>
 						</ng-select>
-						<control-messages [control]="shopLicRenewalForm.get('categoryOfBusiness').get('code')"></control-messages>
+						<control-messages [control]="shopLicRenewalForm.get('categoryOfBusiness').get('code')">
+						</control-messages>
 					</div>
 
 					<div class="col-md-6 ngSelect" formGroupName="subCategoryOfBusiness">
-						<ng-select placeholder="{{'sub_category_of_business' | translate:translateKey}} *" formControlName="code">
-							<ng-option *ngFor="let sub_category of businessSubCategory" [value]="sub_category.code">{{sub_category.name}}</ng-option>
+						<ng-select placeholder="{{'sub_category_of_business' | translate:translateKey}} *"
+							formControlName="code">
+							<ng-option *ngFor="let sub_category of businessSubCategory" [value]="sub_category.code">
+								{{sub_category.name}}</ng-option>
 						</ng-select>
-						<control-messages [control]="shopLicRenewalForm.get('subCategoryOfBusiness').get('code')"></control-messages>
+						<control-messages [control]="shopLicRenewalForm.get('subCategoryOfBusiness').get('code')">
+						</control-messages>
 					</div>
 				</div>
 
@@ -210,30 +246,38 @@
 
 				<div class="row">
 					<mat-form-field class="col-md-4">
-						<input matInput required maxlength="200" placeholder="{{'name_of_business' | translate:translateKey}}"
-						 formControlName="nameOfBusiness" appGujInputSource targetElement="nameOfBusinessGuj" [form]="shopLicRenewalForm">
+						<input matInput required maxlength="200"
+							placeholder="{{'name_of_business' | translate:translateKey}}"
+							formControlName="nameOfBusiness" appGujInputSource targetElement="nameOfBusinessGuj"
+							[form]="shopLicRenewalForm">
 						<control-messages [control]="shopLicRenewalForm.get('nameOfBusiness')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput [matDatepicker]="DateOfCommencementOfBusiness" formControlName="commencementOfBusinessDate" placeholder="{{ 'date_of_commencement_of_business' | translate:translateKey }} (DD/MM/YYYY)">
+						<input matInput [matDatepicker]="DateOfCommencementOfBusiness"
+							formControlName="commencementOfBusinessDate"
+							placeholder="{{ 'date_of_commencement_of_business' | translate:translateKey }} (DD/MM/YYYY)">
 						<mat-datepicker-toggle matSuffix [for]="DateOfCommencementOfBusiness"></mat-datepicker-toggle>
 						<mat-datepicker touchUi="true" #DateOfCommencementOfBusiness></mat-datepicker>
 						<div align="end" class="default-show-hint mat-hint mat-right">{{config.DATE_HINT_MSG}}</div>
-						<control-messages [control]="shopLicRenewalForm.get('commencementOfBusinessDate')"></control-messages>
+						<control-messages [control]="shopLicRenewalForm.get('commencementOfBusinessDate')">
+						</control-messages>
 					</mat-form-field>
 
 					<div class="col-md-4 ngSelect" formGroupName="enterHoliday">
 						<ng-select placeholder="{{'holiday' | translate:translateKey}} *" formControlName="code">
-							<ng-option *ngFor="let holidays of SHOP_LIC_HOLIDAY" [value]="holidays.code">{{holidays.name}}</ng-option>
+							<ng-option *ngFor="let holidays of SHOP_LIC_HOLIDAY" [value]="holidays.code">
+								{{holidays.name}}</ng-option>
 						</ng-select>
-						<control-messages [control]="shopLicRenewalForm.get('enterHoliday').get('code')"></control-messages>
+						<control-messages [control]="shopLicRenewalForm.get('enterHoliday').get('code')">
+						</control-messages>
 					</div>
 
 					<!-- gujarati -->
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" maxlength="600" required formControlName="nameOfBusinessGuj" appGujInputTarget [form]="shopLicRenewalForm"
-						 placeholder="{{ 'name_of_business' | translate:translateKey:'gu' }}">
+						<input matInput type="text" maxlength="600" required formControlName="nameOfBusinessGuj"
+							appGujInputTarget [form]="shopLicRenewalForm"
+							placeholder="{{ 'name_of_business' | translate:translateKey:'gu' }}">
 						<control-messages [control]="shopLicRenewalForm.get('nameOfBusinessGuj')"></control-messages>
 					</mat-form-field>
 					<!-- /gujarati -->
@@ -268,7 +312,8 @@
 						</div>
 					</div> -->
 
-				<app-action-bar [form]="shopLicRenewalForm" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step2', next: 2, back: 0}"></app-action-bar>
+				<app-action-bar [form]="shopLicRenewalForm" (tabIndex)="onTabChange($event)"
+					[stepInfo]="{step: 'step2', next: 2, back: 0}"></app-action-bar>
 			</mat-tab>
 			<!-- step 2 Ends -->
 
@@ -288,7 +333,8 @@
 					</div>
 				</div>
 
-				<div style="overflow-x: scroll;" *ngIf="shopLicRenewalForm.get('employerFamilyList')['controls'].length">
+				<div style="overflow-x: scroll;"
+					*ngIf="shopLicRenewalForm.get('employerFamilyList')['controls'].length">
 					<div>
 						<table class="table table-striped customDataTable">
 							<thead>
@@ -304,7 +350,7 @@
 							</thead>
 							<tbody formArrayName="employerFamilyList">
 								<tr *ngFor="let item of shopLicRenewalForm.get('employerFamilyList')['controls']; let indx = index;"
-								 [formGroupName]="indx">
+									[formGroupName]="indx">
 									<!-- <td style="width: 40px;">
 											<button mat-icon-button color="primary" *ngIf="!item.isEditMode" (click)="editRecord(item)">
 												<mat-icon title="Edit">edit</mat-icon>
@@ -325,52 +371,71 @@
 									<td>{{indx+1}}</td>
 
 									<td>
-										<p *ngIf="!item.isEditMode">{{item.get('name').value}}</p>
+										<p>{{item.get('name').value}}</p>
+										<!-- <p *ngIf="!item.isEditMode">{{item.get('name').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
-											<input matInput appValidationFields [validationFieldsType]="'onlyNameWithSpace'" formControlName="name"
-											 required>
+											<input matInput appValidationFields
+												[validationFieldsType]="'onlyNameWithSpace'" formControlName="name"
+												required>
 											<control-messages [control]="item.get('name')"></control-messages>
-										</mat-form-field>
+										</mat-form-field> -->
 									</td>
 
 									<td>
-										<p *ngIf="!item.isEditMode">{{item.get('address').value}}</p>
+										<p>{{item.get('address').value}}</p>
+										<!-- <p *ngIf="!item.isEditMode">{{item.get('address').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
 											<input matInput formControlName="address" required>
 											<control-messages [control]="item.get('address')"></control-messages>
-										</mat-form-field>
+										</mat-form-field> -->
 									</td>
 
 									<td>
-										<div class="ngSelect" formGroupName="relationship">
-											<p *ngIf="!item.isEditMode">{{getSelectedDataFromLookUps(SHOP_LIC_EMPLOYER_FAMILY_PERSON_RELATIONSHIP,item.get('relationship').value.code)?.name}}</p>
+										<p>{{getSelectedDataFromLookUps(SHOP_LIC_EMPLOYER_FAMILY_PERSON_RELATIONSHIP,item.get('relationship').value.code)?.name}}
+										</p>
+										<!-- <div class="ngSelect" formGroupName="relationship">
+											<p *ngIf="!item.isEditMode">
+												{{getSelectedDataFromLookUps(SHOP_LIC_EMPLOYER_FAMILY_PERSON_RELATIONSHIP,item.get('relationship').value.code)?.name}}
+											</p>
 											<div class="ngSelect" *ngIf="item.isEditMode">
 												<ng-select formControlName="code">
-													<ng-option *ngFor="let emp_family_relationship of SHOP_LIC_EMPLOYER_FAMILY_PERSON_RELATIONSHIP" [value]="emp_family_relationship.code">{{emp_family_relationship.name}}</ng-option>
+													<ng-option
+														*ngFor="let emp_family_relationship of SHOP_LIC_EMPLOYER_FAMILY_PERSON_RELATIONSHIP"
+														[value]="emp_family_relationship.code">
+														{{emp_family_relationship.name}}</ng-option>
 												</ng-select>
-												<control-messages [control]="item.get('relationship').get('code')"></control-messages>
+												<control-messages [control]="item.get('relationship').get('code')">
+												</control-messages>
 											</div>
-										</div>
+										</div> -->
 									</td>
 
 									<td>
-										<div class="ngSelect" formGroupName="gender">
-											<p *ngIf="!item.isEditMode">{{getSelectedDataFromLookUps(gender,item.get('gender').value.code)?.name}}</p>
+										<p>
+											{{getSelectedDataFromLookUps(gender,item.get('gender').value.code)?.name}}
+										</p>
+										<!-- <div class="ngSelect" formGroupName="gender">
+											<p *ngIf="!item.isEditMode">
+												{{getSelectedDataFromLookUps(gender,item.get('gender').value.code)?.name}}
+											</p>
 											<div class="ngSelect" *ngIf="item.isEditMode">
 												<ng-select *ngIf="item.isEditMode" formControlName="code" required>
-													<ng-option *ngFor="let gender of gender" [value]="gender.code">{{gender.name}}</ng-option>
+													<ng-option *ngFor="let gender of gender" [value]="gender.code">
+														{{gender.name}}</ng-option>
 												</ng-select>
-												<control-messages [control]="item.get('gender').get('code')"></control-messages>
+												<control-messages [control]="item.get('gender').get('code')">
+												</control-messages>
 											</div>
-										</div>
+										</div> -->
 									</td>
 
 									<td>
-										<p *ngIf="!item.isEditMode">{{item.get('age').value}}</p>
+										<p>{{item.get('age').value}}</p>
+										<!-- <p *ngIf="!item.isEditMode">{{item.get('age').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
 											<input matInput maxlength="2" OnlyNumber formControlName="age" required>
 											<control-messages [control]="item.get('age')"></control-messages>
-										</mat-form-field>
+										</mat-form-field> -->
 									</td>
 
 								</tr>
@@ -381,27 +446,38 @@
 					<div>
 						<div class="row">
 							<div class="col-md-4">{{'total_adult_person' | translate:translateKey}}</div>
-							<div class="col-md-2">{{calulateNumberOfPerson('employerFamilyList','totalAdultEmployerFamily','adult')}}</div>
+							<div class="col-md-2">
+								{{calulateNumberOfPerson('employerFamilyList','totalAdultEmployerFamily','adult')}}
+							</div>
 							<div class="col-md-4">{{'total_young_person' | translate:translateKey}}</div>
-							<div class="col-md-2">{{calulateNumberOfPerson('employerFamilyList','totalYoungEmployerFamily','young')}}</div>
+							<div class="col-md-2">
+								{{calulateNumberOfPerson('employerFamilyList','totalYoungEmployerFamily','young')}}
+							</div>
 						</div>
 						<div class="row">
 							<div class="col-md-4">{{'total_men' | translate:translateKey}}</div>
-							<div class="col-md-2">{{calulateNumberOfPerson('employerFamilyList','totalManEmployerFamily','men')}}</div>
+							<div class="col-md-2">
+								{{calulateNumberOfPerson('employerFamilyList','totalManEmployerFamily','men')}}</div>
 							<div class="col-md-4">{{'total_women' | translate:translateKey}}</div>
-							<div class="col-md-2">{{calulateNumberOfPerson('employerFamilyList','totalWomenEmployerFamily','women')}}</div>
+							<div class="col-md-2">
+								{{calulateNumberOfPerson('employerFamilyList','totalWomenEmployerFamily','women')}}
+							</div>
 						</div>
 						<div class="row">
 							<div class="col-md-8">{{'total_unidentified_person' | translate:translateKey}}</div>
-							<div class="col-md-4">{{calulateNumberOfPerson('employerFamilyList','totalUnidentifiedEmployerFamily','unidentified')}}</div>
+							<div class="col-md-4">
+								{{calulateNumberOfPerson('employerFamilyList','totalUnidentifiedEmployerFamily','unidentified')}}
+							</div>
 						</div>
 						<div class="row">
 							<div class="col-md-8">{{'total_person' | translate:translateKey}}</div>
-							<div class="col-md-4">{{calulateNumberOfPerson('employerFamilyList','totalFamilyMembers','total')}}</div>
+							<div class="col-md-4">
+								{{calulateNumberOfPerson('employerFamilyList','totalFamilyMembers','total')}}</div>
 						</div>
 					</div>
 				</div>
-				<app-action-bar [form]="shopLicRenewalForm" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step3', next: 3, back: 1}"></app-action-bar>
+				<app-action-bar [form]="shopLicRenewalForm" (tabIndex)="onTabChange($event)"
+					[stepInfo]="{step: 'step3', next: 3, back: 1}"></app-action-bar>
 			</mat-tab>
 			<!-- step 3 employer family Ends -->
 
@@ -436,7 +512,8 @@
 								</tr>
 							</thead>
 							<tbody formArrayName="occupancyList">
-								<tr *ngFor="let item of shopLicRenewalForm.get('occupancyList')['controls']; let indx = index;" [formGroupName]="indx">
+								<tr *ngFor="let item of shopLicRenewalForm.get('occupancyList')['controls']; let indx = index;"
+									[formGroupName]="indx">
 									<!-- <td style="width: 40px;">
 											<button mat-icon-button color="primary" *ngIf="!item.isEditMode" (click)="editRecord(item)">
 												<mat-icon title="Edit">edit</mat-icon>
@@ -457,24 +534,28 @@
 									<td>{{indx+1}}</td>
 
 									<td>
-										<p *ngIf="!item.isEditMode">{{item.get('name').value}}</p>
+										<p>{{item.get('name').value}}</p>
+										<!-- <p *ngIf="!item.isEditMode">{{item.get('name').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
 											<input matInput appValidationFields [validationFieldsType]="'onlyNameWithSpace'" formControlName="name"
 											 required>
 											<control-messages [control]="item.get('name')"></control-messages>
-										</mat-form-field>
+										</mat-form-field> -->
 									</td>
 
 									<td>
-										<p *ngIf="!item.isEditMode">{{item.get('address').value}}</p>
+										<p>{{item.get('address').value}}</p>
+										<!-- <p *ngIf="!item.isEditMode">{{item.get('address').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
 											<input matInput formControlName="address">
 											<control-messages *ngIf="item.isEditMode" [control]="item.get('address')"></control-messages>
-										</mat-form-field>
+										</mat-form-field> -->
 									</td>
 
 									<td>
-										<div class="ngSelect" formGroupName="relationship">
+										<p>{{getSelectedDataFromLookUps(SHOP_LIC_OCCUPANCY_PERSON_RELATIONSHIP,item.get('relationship').value.code)?.name}}
+										</p>
+										<!-- <div class="ngSelect" formGroupName="relationship">
 											<p *ngIf="!item.isEditMode">{{getSelectedDataFromLookUps(SHOP_LIC_OCCUPANCY_PERSON_RELATIONSHIP,item.get('relationship').value.code)?.name}}</p>
 											<div class="ngSelect" *ngIf="item.isEditMode">
 												<ng-select formControlName="code">
@@ -482,11 +563,13 @@
 												</ng-select>
 												<control-messages *ngIf="item.isEditMode" [control]="item.get('relationship').get('code')"></control-messages>
 											</div>
-										</div>
+										</div> -->
 									</td>
 
 									<td>
-										<div class="ngSelect" formGroupName="gender">
+										<p>{{getSelectedDataFromLookUps(gender,item.get('gender').value.code)?.name}}
+										</p>
+										<!-- <div class="ngSelect" formGroupName="gender">
 											<p *ngIf="!item.isEditMode">{{getSelectedDataFromLookUps(gender,item.get('gender').value.code)?.name}}</p>
 											<div class="ngSelect" *ngIf="item.isEditMode">
 												<ng-select formControlName="code">
@@ -494,15 +577,16 @@
 												</ng-select>
 												<control-messages *ngIf="item.isEditMode" [control]="item.get('gender').get('code')"></control-messages>
 											</div>
-										</div>
+										</div> -->
 									</td>
 
 									<td>
-										<p *ngIf="!item.isEditMode">{{item.get('age').value}}</p>
+										<p>{{item.get('age').value}}</p>
+										<!-- <p *ngIf="!item.isEditMode">{{item.get('age').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
 											<input matInput maxlength="2" OnlyNumber formControlName="age" required>
 											<control-messages *ngIf="item.isEditMode" [control]="item.get('age')"></control-messages>
-										</mat-form-field>
+										</mat-form-field> -->
 									</td>
 
 								</tr>
@@ -512,28 +596,36 @@
 					<div>
 						<div class="row">
 							<div class="col-md-4">{{'total_adult_person' | translate:translateKey}}</div>
-							<div class="col-md-2">{{calulateNumberOfPerson('occupancyList','totalAdultOccupancy','adult')}}</div>
+							<div class="col-md-2">
+								{{calulateNumberOfPerson('occupancyList','totalAdultOccupancy','adult')}}</div>
 							<div class="col-md-4">{{'total_young_person' | translate:translateKey}}</div>
-							<div class="col-md-2">{{calulateNumberOfPerson('occupancyList','totalYoungOccupancy','young')}}</div>
+							<div class="col-md-2">
+								{{calulateNumberOfPerson('occupancyList','totalYoungOccupancy','young')}}</div>
 						</div>
 						<div class="row">
 							<div class="col-md-4">{{'total_men' | translate:translateKey}}</div>
-							<div class="col-md-2">{{calulateNumberOfPerson('occupancyList','totalManOccupancy','men')}}</div>
+							<div class="col-md-2">{{calulateNumberOfPerson('occupancyList','totalManOccupancy','men')}}
+							</div>
 							<div class="col-md-4">{{'total_women' | translate:translateKey}}</div>
-							<div class="col-md-2">{{calulateNumberOfPerson('occupancyList','totalWomenOccupancy','women')}}</div>
+							<div class="col-md-2">
+								{{calulateNumberOfPerson('occupancyList','totalWomenOccupancy','women')}}</div>
 						</div>
 						<div class="row">
 							<div class="col-md-8">{{'total_unidentified_person' | translate:translateKey}}</div>
-							<div class="col-md-4">{{calulateNumberOfPerson('occupancyList','totalUnidentifiedOccupancy','unidentified')}}</div>
+							<div class="col-md-4">
+								{{calulateNumberOfPerson('occupancyList','totalUnidentifiedOccupancy','unidentified')}}
+							</div>
 						</div>
 						<div class="row">
 							<div class="col-md-8">{{'total_person' | translate:translateKey}}</div>
-							<div class="col-md-4">{{calulateNumberOfPerson('occupancyList','totalOccupancy','total')}}</div>
+							<div class="col-md-4">{{calulateNumberOfPerson('occupancyList','totalOccupancy','total')}}
+							</div>
 						</div>
 					</div>
 				</div>
 
-				<app-action-bar [form]="shopLicRenewalForm" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step4', next: 4, back: 2}"></app-action-bar>
+				<app-action-bar [form]="shopLicRenewalForm" (tabIndex)="onTabChange($event)"
+					[stepInfo]="{step: 'step4', next: 4, back: 2}"></app-action-bar>
 
 			</mat-tab>
 			<!-- step 4 occupancy person Ends -->
@@ -547,8 +639,10 @@
 				<h2>{{'type_of_organization_label' | translate: translateKey}}</h2>
 
 				<div class="col-md-12 ngSelect" formGroupName="typeOfOrganisation">
-					<ng-select formControlName="code" placeholder="{{ 'shop_lic_org_type' | translate:translateKey }}" (change)="onChangeTypeOfOrganization($event)">
-						<ng-option *ngFor="let org_type of SHOP_LIC_TYPE_OF_ORGANIZATION" [value]="org_type.code">{{org_type.name}}</ng-option>
+					<ng-select formControlName="code" placeholder="{{ 'shop_lic_org_type' | translate:translateKey }}"
+						(change)="onChangeTypeOfOrganization($event)">
+						<ng-option *ngFor="let org_type of SHOP_LIC_TYPE_OF_ORGANIZATION" [value]="org_type.code">
+							{{org_type.name}}</ng-option>
 					</ng-select>
 				</div>
 
@@ -579,7 +673,8 @@
 								</tr>
 							</thead>
 							<tbody formArrayName="partnerList">
-								<tr *ngFor="let item of shopLicRenewalForm.get('partnerList')['controls']; let indx = index;" [formGroupName]="indx">
+								<tr *ngFor="let item of shopLicRenewalForm.get('partnerList')['controls']; let indx = index;"
+									[formGroupName]="indx">
 									<!-- <td style="width: 40px;">
 											<button mat-icon-button color="primary" *ngIf="!item.isEditMode" (click)="editRecord(item)">
 												<mat-icon title="Edit">edit</mat-icon>
@@ -600,52 +695,72 @@
 									<td>{{indx+1}}</td>
 
 									<td>
-										<p *ngIf="!item.isEditMode">{{item.get('name').value}}</p>
+										<p>{{item.get('name').value}}</p>
+										<!-- <p *ngIf="!item.isEditMode">{{item.get('name').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
-											<input matInput appValidationFields [validationFieldsType]="'onlyNameWithSpace'" formControlName="name"
-											 required>
+											<input matInput appValidationFields
+												[validationFieldsType]="'onlyNameWithSpace'" formControlName="name"
+												required>
 											<control-messages [control]="item.get('name')"></control-messages>
-										</mat-form-field>
+										</mat-form-field> -->
 									</td>
 
 									<td>
-										<p *ngIf="!item.isEditMode">{{item.get('address').value}}</p>
+										<p>{{item.get('address').value}}</p>
+										<!-- <p *ngIf="!item.isEditMode">{{item.get('address').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
 											<input matInput formControlName="address" required>
 											<control-messages [control]="item.get('address')"></control-messages>
-										</mat-form-field>
+										</mat-form-field> -->
 									</td>
 
 									<td>
-										<div class="ngSelect" formGroupName="relationship">
-											<p *ngIf="!item.isEditMode">{{getSelectedDataFromLookUps(SHOP_LIC_PARTNER_PERSON_RELATIONSHIP,item.get('relationship').value.code)?.name}}</p>
+										<p>
+											{{getSelectedDataFromLookUps(SHOP_LIC_PARTNER_PERSON_RELATIONSHIP,item.get('relationship').value.code)?.name}}
+										</p>
+										<!-- <div class="ngSelect" formGroupName="relationship">
+											<p *ngIf="!item.isEditMode">
+												{{getSelectedDataFromLookUps(SHOP_LIC_PARTNER_PERSON_RELATIONSHIP,item.get('relationship').value.code)?.name}}
+											</p>
 											<div class="ngSelect" *ngIf="item.isEditMode">
 												<ng-select formControlName="code">
-													<ng-option *ngFor="let partner_relationship of SHOP_LIC_PARTNER_PERSON_RELATIONSHIP" [value]="partner_relationship.code">{{partner_relationship.name}}</ng-option>
+													<ng-option
+														*ngFor="let partner_relationship of SHOP_LIC_PARTNER_PERSON_RELATIONSHIP"
+														[value]="partner_relationship.code">
+														{{partner_relationship.name}}</ng-option>
 												</ng-select>
-												<control-messages [control]="item.get('relationship').get('code')"></control-messages>
+												<control-messages [control]="item.get('relationship').get('code')">
+												</control-messages>
 											</div>
-										</div>
+										</div> -->
 									</td>
 
 									<td>
-										<div class="ngSelect" formGroupName="gender">
-											<p *ngIf="!item.isEditMode">{{getSelectedDataFromLookUps(gender,item.get('gender').value.code)?.name}}</p>
+										<p>
+											{{getSelectedDataFromLookUps(gender,item.get('gender').value.code)?.name}}
+										</p>
+										<!-- <div class="ngSelect" formGroupName="gender">
+											<p *ngIf="!item.isEditMode">
+												{{getSelectedDataFromLookUps(gender,item.get('gender').value.code)?.name}}
+											</p>
 											<div class="ngSelect" *ngIf="item.isEditMode">
 												<ng-select formControlName="code">
-													<ng-option *ngFor="let gender of gender" [value]="gender.code">{{gender.name}}</ng-option>
+													<ng-option *ngFor="let gender of gender" [value]="gender.code">
+														{{gender.name}}</ng-option>
 												</ng-select>
-												<control-messages [control]="item.get('gender').get('code')"></control-messages>
+												<control-messages [control]="item.get('gender').get('code')">
+												</control-messages>
 											</div>
-										</div>
+										</div> -->
 									</td>
 
 									<td>
-										<p *ngIf="!item.isEditMode">{{item.get('age').value}}</p>
+										<p>{{item.get('age').value}}</p>
+										<!-- <p *ngIf="!item.isEditMode">{{item.get('age').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
 											<input matInput maxlength="2" OnlyNumber formControlName="age" required>
 											<control-messages [control]="item.get('age')"></control-messages>
-										</mat-form-field>
+										</mat-form-field> -->
 									</td>
 								</tr>
 							</tbody>
@@ -655,19 +770,25 @@
 					<div>
 						<div class="row">
 							<div class="col-md-4">{{'total_adult_person' | translate:translateKey}}</div>
-							<div class="col-md-2">{{calulateNumberOfPerson('partnerList','totalAdultPartner','adult')}}</div>
+							<div class="col-md-2">{{calulateNumberOfPerson('partnerList','totalAdultPartner','adult')}}
+							</div>
 							<div class="col-md-4">{{'total_young_person' | translate:translateKey}}</div>
-							<div class="col-md-2">{{calulateNumberOfPerson('partnerList','totalYoungPartner','young')}}</div>
+							<div class="col-md-2">{{calulateNumberOfPerson('partnerList','totalYoungPartner','young')}}
+							</div>
 						</div>
 						<div class="row">
 							<div class="col-md-4">{{'total_men' | translate:translateKey}}</div>
-							<div class="col-md-2">{{calulateNumberOfPerson('partnerList','totalManPartner','men')}}</div>
+							<div class="col-md-2">{{calulateNumberOfPerson('partnerList','totalManPartner','men')}}
+							</div>
 							<div class="col-md-4">{{'total_women' | translate:translateKey}}</div>
-							<div class="col-md-2">{{calulateNumberOfPerson('partnerList','totalWomenEmployerFamily','women')}}</div>
+							<div class="col-md-2">
+								{{calulateNumberOfPerson('partnerList','totalWomenEmployerFamily','women')}}</div>
 						</div>
 						<div class="row">
 							<div class="col-md-8">{{'total_unidentified_person' | translate:translateKey}}</div>
-							<div class="col-md-4">{{calulateNumberOfPerson('partnerList','totalUnidentifiedPartner','unidentified')}}</div>
+							<div class="col-md-4">
+								{{calulateNumberOfPerson('partnerList','totalUnidentifiedPartner','unidentified')}}
+							</div>
 						</div>
 						<div class="row">
 							<div class="col-md-8">{{'total_person' | translate:translateKey}}</div>
@@ -676,7 +797,8 @@
 					</div>
 				</div>
 
-				<app-action-bar [form]="shopLicRenewalForm" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step5', next: 5, back: 3}"></app-action-bar>
+				<app-action-bar [form]="shopLicRenewalForm" (tabIndex)="onTabChange($event)"
+					[stepInfo]="{step: 'step5', next: 5, back: 3}"></app-action-bar>
 			</mat-tab>
 			<!-- step 5 partner list Ends -->
 
@@ -688,38 +810,42 @@
 				<div class="row">
 
 					<mat-form-field class="col-md-6">
-						<input matInput type="tel" OnlyNumber placeholder="{{'total_adult_person' | translate:translateKey}}"
-						 formControlName="totalAdultEmployee" maxlength="2">
+						<input matInput type="tel" OnlyNumber
+							placeholder="{{'total_adult_person' | translate:translateKey}}"
+							formControlName="totalAdultEmployee" maxlength="2">
 						<control-messages [control]="shopLicRenewalForm.get('totalAdultEmployee')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-6">
-						<input matInput type="tel" OnlyNumber placeholder="{{'total_young_person' | translate:translateKey}}"
-						 formControlName="totalYoungEmployee" maxlength="2">
+						<input matInput type="tel" OnlyNumber
+							placeholder="{{'total_young_person' | translate:translateKey}}"
+							formControlName="totalYoungEmployee" maxlength="2">
 						<control-messages [control]="shopLicRenewalForm.get('totalYoungEmployee')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-6">
-						<input matInput type="tel" OnlyNumber placeholder="{{'total_men' | translate:translateKey}}" formControlName="totalManEmployee"
-						 maxlength="2">
+						<input matInput type="tel" OnlyNumber placeholder="{{'total_men' | translate:translateKey}}"
+							formControlName="totalManEmployee" maxlength="2">
 						<control-messages [control]="shopLicRenewalForm.get('totalManEmployee')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-6">
-						<input matInput type="tel" OnlyNumber placeholder="{{'total_women' | translate:translateKey}}" formControlName="totalWomenEmployee"
-						 maxlength="2">
+						<input matInput type="tel" OnlyNumber placeholder="{{'total_women' | translate:translateKey}}"
+							formControlName="totalWomenEmployee" maxlength="2">
 						<control-messages [control]="shopLicRenewalForm.get('totalWomenEmployee')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-6">
-						<input matInput type="tel" OnlyNumber placeholder="{{'total_unidentified_person' | translate:translateKey}}"
-						 formControlName="totalUnidentified" maxlength="2">
+						<input matInput type="tel" OnlyNumber
+							placeholder="{{'total_unidentified_person' | translate:translateKey}}"
+							formControlName="totalUnidentified" maxlength="2">
 						<control-messages [control]="shopLicRenewalForm.get('totalUnidentified')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-6">
-						<input matInput type="tel" OnlyNumber placeholder="{{'total_person' | translate:translateKey}}" [value]="getTotalEmployeePerson()"
-						 formControlName="totalEmployee" readonly>
+						<input matInput type="tel" OnlyNumber placeholder="{{'total_person' | translate:translateKey}}"
+							[value]="getTotalEmployeePerson()" formControlName="totalEmployee" readonly>
 						<control-messages [control]="shopLicRenewalForm.get('totalEmployee')"></control-messages>
 					</mat-form-field>
 				</div>
 
-				<app-action-bar [form]="shopLicRenewalForm" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step6', next: 6, back: 4}"></app-action-bar>
+				<app-action-bar [form]="shopLicRenewalForm" (tabIndex)="onTabChange($event)"
+					[stepInfo]="{step: 'step6', next: 6, back: 4}"></app-action-bar>
 
 			</mat-tab>
 			<!-- step 6 employee list Ends -->
@@ -738,25 +864,31 @@
 					</h2>
 					<ng-container *ngIf="shopLicRenewalForm.get('typeOfOrganisation').value.code">
 
-						<h2 *ngIf="shopLicRenewalForm.get('typeOfOrganisation').get('code').value === 'SHOP_LIC_SELF_OWNERSHIP'">
+						<h2
+							*ngIf="shopLicRenewalForm.get('typeOfOrganisation').get('code').value === 'SHOP_LIC_SELF_OWNERSHIP'">
 							{{'owner_checklist' | translate: translateKey}}
 						</h2>
 
-						<h2 *ngIf="shopLicRenewalForm.get('typeOfOrganisation').get('code').value === 'SHOP_LIC_PARTNERSHIP' || shopLicRenewalForm.get('typeOfOrganisation').get('code').value === 'SHOP_LIC_CO_OPERATIVE_SOCIETY' ">
+						<h2
+							*ngIf="shopLicRenewalForm.get('typeOfOrganisation').get('code').value === 'SHOP_LIC_PARTNERSHIP' || shopLicRenewalForm.get('typeOfOrganisation').get('code').value === 'SHOP_LIC_CO_OPERATIVE_SOCIETY' ">
 							{{'partnership_and_coopsoc_checklist' | translate: translateKey}}
 						</h2>
 
-						<h2 *ngIf="shopLicRenewalForm.get('typeOfOrganisation').get('code').value ==='SHOP_LIC_COMPANY' ">
+						<h2
+							*ngIf="shopLicRenewalForm.get('typeOfOrganisation').get('code').value ==='SHOP_LIC_COMPANY' ">
 							{{'company_checklist' | translate: translateKey}}
 						</h2>
 
-						<h2 *ngIf="shopLicRenewalForm.get( 'typeOfOrganisation').get('code').value ==='SHOP_LIC_TRUST' || shopLicRenewalForm.get( 'typeOfOrganisation').get('code').value==='SHOP_LIC_BOARD' ">
+						<h2
+							*ngIf="shopLicRenewalForm.get( 'typeOfOrganisation').get('code').value ==='SHOP_LIC_TRUST' || shopLicRenewalForm.get( 'typeOfOrganisation').get('code').value==='SHOP_LIC_BOARD' ">
 							{{'trust_and_board_checklist' | translate: translateKey}}
 						</h2>
 
-						<ng-container *ngFor="let doc of shopLicRenewalForm.get('serviceDetail').get('serviceUploadDocuments').value  | filterAttachment:shopLicRenewalForm.get( 'typeOfOrganisation').value.code">
+						<ng-container
+							*ngFor="let doc of shopLicRenewalForm.get('serviceDetail').get('serviceUploadDocuments').value  | filterAttachment:shopLicRenewalForm.get( 'typeOfOrganisation').value.code">
 							<div class="col-md-4" *ngIf="doc.requiredOnCitizenPortal && doc.isActive && showButtons">
-								<label>{{TranslateService.getCurrentLanguage()=='en'? doc.documentLabelEn : doc.documentLabelGuj }} <span *ngIf="doc.mandatory">*</span></label>
+								<label>{{TranslateService.getCurrentLanguage()=='en'? doc.documentLabelEn : doc.documentLabelGuj }}
+									<span *ngIf="doc.mandatory">*</span></label>
 								<file-upload [form]="shopLicRenewalForm" [uploadModel]="doc"></file-upload>
 							</div>
 						</ng-container>
@@ -765,8 +897,9 @@
 
 				</div>
 
-				<app-action-bar [uploadFiles]="uploadFilesArray" [form]="shopLicRenewalForm" (handleErrors)="handleErrorsOnSubmit($event) "
-				 (tabIndex)="onTabChange($event) " [stepInfo]="{step: 'final', next:7, back: 5} "></app-action-bar>
+				<app-action-bar [uploadFiles]="uploadFilesArray" [form]="shopLicRenewalForm"
+					(handleErrors)="handleErrorsOnSubmit($event) " (tabIndex)="onTabChange($event) "
+					[stepInfo]="{step: 'final', next:7, back: 5} "></app-action-bar>
 
 			</mat-tab>
 			<!-- step Attachment Ends -->
