@@ -160,14 +160,14 @@
 				</div>
 
 				<!-- table -->
-				<div class="row">
+				<div class="row justify-content-between">
 					<div class="col-md-10">
 						<h2 *ngIf="animalPondTransferForm.get('relationshipId').value.code == 'PROPRIETOR'">{{
 							'if_apl_is_in_properitership'| translate:translateKey}}</h2>
 						<h2 *ngIf="animalPondTransferForm.get('relationshipId').value.code != 'PROPRIETOR'">{{ 'if_apl_is_in_partnership'
 							| translate:translateKey}}</h2>
 					</div>
-					<div class="col-md-2 pt-3" style="text-align: right;">
+					<div class="col-md-2 pt-3 text-right">
 						<button type="button" [disabled]="animalPondTransferForm.get('relationshipId').value.code ? animalPondTransferForm.get('relationshipId').value.code=='PROPRIETOR' ? !(animalPondTransferForm.get('relationshipList')['controls'].length < 1) : !(animalPondTransferForm.get('relationshipList')['controls'].length < 10) : true"
 						 matTooltip="{{'add_more' | translate:translateKey}}" mat-raised-button color="primary" (click)="addMorePerson('APL_PERSON')">{{'add'|
 							translate:translateKey}}</button>
@@ -176,9 +176,9 @@
 
 				<div *ngIf="animalPondTransferForm.get('relationshipList')['controls'].length">
 					<div class="table-responsive">
-						<table class="table table-striped mb-0">
+						<table class="table table-striped mb-0 responsiveTableRow">
 							<thead>
-								<tr>
+								<tr class="mo-d-none">
 									<th width="50">#</th>
 									<th width="29%">{{'name' | translate:translateKey}}</th>
 									<th width="29%">{{'address' | translate:translateKey}}</th>
@@ -193,11 +193,14 @@
 						<li *ngFor="let item of animalPondTransferForm.get('relationshipList')['controls']; let indx = index;">
 							<form [formGroupName]="indx">
 								<div class="table-responsive">
-									<table class="table table-striped">
+									<table class="table table-striped responsiveTableRow tdPaddMob">
 										<tr>
-											<td width="50">{{indx+1}}</td>
+											<td width="50">
+												<div class="d-md-none">#</div>
+												{{indx+1}}</td>
 
 											<td width="29%">
+												<div class="d-md-none">{{'name' | translate:translateKey}}</div>
 												<div *ngIf="!item.isEditMode">{{item.get('name').value}}</div>
 												<mat-form-field *ngIf="item.isEditMode">
 													<input matInput maxlength="100" appValidationFields [validationFieldsType]="'onlyNameWithSpace'"
@@ -207,6 +210,7 @@
 											</td>
 
 											<td width="29%">
+												<div class="d-md-none">{{'address' | translate:translateKey}}</div>
 												<div *ngIf="!item.isEditMode">{{item.get('address').value}}</div>
 												<mat-form-field *ngIf="item.isEditMode">
 													<input matInput maxlength="150" formControlName="address">
@@ -215,7 +219,8 @@
 											</td>
 
 											<td width="29%">
-												<div *ngIf="!item.isEditMode">{{item.get('mobileNo').value}}</div>
+												<div class="d-md-none">{{'mobile_no' | translate:translateKey}}</div>
+												<div *ngIf="!item.isEditMode">{{item.get('mobileNo').value}} &nbsp;</div>
 												<mat-form-field *ngIf="item.isEditMode">
 													<input matInput maxlength="11" OnlyNumber formControlName="mobileNo">
 													<control-messages [control]="item.get('mobileNo')"></control-messages>
@@ -259,10 +264,10 @@
 				</ng-template>
 
 				<!-- table -->
-				<div class="row">
+				<div class="row justify-content-between">
 					<div class="col-md-10"> </div>
 					<!-- [disabled]="animalPondTransferForm.get('animalDetails')['controls'].length >= ANIMAL_TYPE.length" -->
-					<div class="col-md-2 pt-3" style="text-align: right;">
+					<div class="col-md-2 pt-3 text-right">
 						<button type="button" (click)="addMoreAnimal()" matTooltip="{{'add_more' | translate:translateKey}}"
 						 mat-raised-button color="primary">{{'add'| translate:translateKey}}</button>
 					</div>
@@ -270,12 +275,12 @@
 
 				<div *ngIf="animalPondTransferForm.get('animalDetails')['controls'].length">
 					<div class="table-responsive">
-						<table class="table table-striped mb-0">
+						<table class="table table-striped mb-0 responsiveTableRow">
 							<thead>
-								<tr>
+								<tr class="mo-d-none">
 									<th width="50">#</th>
-									<th width="29%">{{'animalType' | translate:translateKey}}</th>
-									<th width="29%">{{'animalCount' | translate:translateKey}}</th>
+									<th width="43.5%">{{'animalType' | translate:translateKey}}</th>
+									<th width="43.5%">{{'animalCount' | translate:translateKey}}</th>
 									<th width="150" *ngIf="animalPondTransferForm.get('canEdit').value"></th>
 								</tr>
 							</thead>
@@ -287,15 +292,18 @@
 
 							<form [formGroupName]="indx">
 								<div class="table-responsive">
-									<table class="table table-striped">
+									<table class="table table-striped responsiveTableRow tdPaddMob">
 										<tr>
-											<td width="50">{{indx+1}}</td>
+											<td width="50">
+												<div class="d-md-none">#</div>
+												{{indx+1}}</td>
 
-											<td width="29%">
+											<td width="43.5%">
+												<div class="d-md-none">{{'animalType' | translate:translateKey}}</div>
 												<div *ngIf="!item.isEditMode">
 													{{getSelectedDataFromLookUps(ANIMAL_TYPE,item.get('animalType').get('code').value)?.name}}
 												</div>
-												<div class="ngSelect" *ngIf="item.isEditMode" formGroupName="animalType">
+												<div class="ngSelect maxWidthAuto" *ngIf="item.isEditMode" formGroupName="animalType">
 													<ng-select placeholder="{{'animal_type' | translate:translateKey}} *" formControlName="code"
 													 (ngModelChange)="getSelectedAnimal()" required>
 														<ng-container *ngFor="let type of ANIMAL_TYPE">
@@ -306,7 +314,8 @@
 												</div>
 											</td>
 
-											<td width="29%">
+											<td width="43.5%">
+												<div class="d-md-none">{{'animalCount' | translate:translateKey}}</div>
 												<div *ngIf="!item.isEditMode">{{item.get('animalCount').value}}</div>
 												<mat-form-field *ngIf="item.isEditMode">
 													<input matInput maxlength="3" OnlyNumber formControlName="animalCount">
@@ -338,14 +347,17 @@
 							</form>
 						</li>
 					</ul>
-					<div class="row">
+					<div class="col-md-12 text-right pt-4">
+							<strong> {{'total_animal' | translate:translateKey}} : {{getTotalAnimal()}}</strong>
+						</div>
+					<!-- <div class="row">
 						<div class="col-md-2">
 							<mat-form-field>
 								<input matInput maxlength="3" readonly placeholder="{{'total_animal' | translate:translateKey}}" OnlyNumber
 								 value="{{getTotalAnimal()}}" formControlName="totalAnimal">
 							</mat-form-field>
 						</div>
-					</div>
+					</div> -->
 				</div>
 				<!-- end table -->
 				<app-action-bar [form]="animalPondTransferForm" (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step3', next: 3, back: 1}"></app-action-bar>
