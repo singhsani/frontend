@@ -3,28 +3,19 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { LayoutModule } from '@angular/cdk/layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { LocationStrategy, HashLocationStrategy } from '@angular/common';
-
-/* import all modules start */
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // angular animation module
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularWebStorageModule } from 'angular-web-storage';
-/* import all modules end */
 
-// import { CitizenModule } from './components/citizen/citizen.module';
 import { HospitalModule } from './components/hospital/hospital.module';
 import { CitizenModule } from './components/citizen/citizen.module';
-import { SharedModule } from './shared/shared.module'; // shared design module
+import { SharedModule } from './shared/shared.module';
 import { CoreModule } from './core/core.module';
 import { ToastrModule } from 'ngx-toastr';
-import { AppRoutingModule } from './app-routing.module'; // route module
-import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material'
-import { AmazingTimePickerModule } from 'amazing-time-picker'; 
-/* Import child modules end */
+import { AppRoutingModule } from './app-routing.module';
+import { AmazingTimePickerModule } from 'amazing-time-picker';
 
-/* import all component start */
 import { AppComponent } from './app.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-/* import all component end */
 
 @NgModule({
 	declarations: [
@@ -53,10 +44,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 		AppRoutingModule,
 		AmazingTimePickerModule,
 	],
-	exports: [ ],
-	providers: [
-		{ provide: LocationStrategy, useClass: HashLocationStrategy }
-	],
+	exports: [],
 	bootstrap: [AppComponent]
 })
 export class AppModule { }
