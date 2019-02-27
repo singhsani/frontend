@@ -84,21 +84,24 @@
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" maxlength="90" required formControlName="holderFirstNameGuj"
 							appGujInputTarget [form]="muttonFishTransferForm"
-							placeholder="{{ 'holder_firstname' | translate:translateKey:'gu' }}">
+							placeholder="{{ 'holder_firstname' | translate:translateKey:'gu' }}" appValidationFields
+							validationFieldsType='onlyNameWithOutSpace'>
 						<control-messages [control]="muttonFishTransferForm.get('holderFirstNameGuj')">
 						</control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" required maxlength="90"
-							placeholder="{{'holder_middlename' | translate:translateKey}}"
-							formControlName="holderMiddleNameGuj" appGujInputTarget [form]="muttonFishTransferForm">
+							placeholder="{{'holder_middlename' | translate:translateKey:'gu'}}" appValidationFields
+							validationFieldsType='onlyNameWithOutSpace' formControlName="holderMiddleNameGuj"
+							appGujInputTarget [form]="muttonFishTransferForm">
 						<control-messages [control]="muttonFishTransferForm.get('holderMiddleNameGuj')">
 						</control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" required maxlength="90"
-							placeholder="{{'holder_lastname' | translate:translateKey}}"
-							formControlName="holderLastNameGuj" appGujInputTarget [form]="muttonFishTransferForm">
+							placeholder="{{'holder_lastname' | translate:translateKey:'gu'}}" appValidationFields
+							validationFieldsType='onlyNameWithOutSpace' formControlName="holderLastNameGuj"
+							appGujInputTarget [form]="muttonFishTransferForm">
 						<control-messages [control]="muttonFishTransferForm.get('holderLastNameGuj')">
 						</control-messages>
 					</mat-form-field>
@@ -257,7 +260,8 @@
 										<p *ngIf="!item.isEditMode">{{item.get('name').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
 											<input matInput maxlength="100" appValidationFields
-												[validationFieldsType]="'onlyNameWithSpace'" formControlName="name">
+												[validationFieldsType]="'onlyNameWithSpace'" formControlName="name"
+												placeholder="{{'name' | translate:translateKey}}*">
 											<control-messages [control]="item.get('name')"></control-messages>
 										</mat-form-field>
 									</td>
@@ -266,7 +270,8 @@
 										<div class="d-md-none">{{'address' | translate:translateKey}}</div>
 										<p *ngIf="!item.isEditMode">{{item.get('address').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
-											<input matInput maxlength="150" formControlName="address">
+											<input matInput maxlength="200" formControlName="address"
+												placeholder="{{'address' | translate:translateKey}}*">
 											<control-messages [control]="item.get('address')"></control-messages>
 										</mat-form-field>
 									</td>
@@ -275,7 +280,8 @@
 										<div class="d-md-none">{{'mobile_no' | translate:translateKey}}</div>
 										<p *ngIf="!item.isEditMode">{{item.get('mobileNo').value}} &nbsp;</p>
 										<mat-form-field *ngIf="item.isEditMode">
-											<input matInput maxlength="11" OnlyNumber formControlName="mobileNo">
+											<input matInput maxlength="11" OnlyNumber formControlName="mobileNo"
+												placeholder="{{'mobile_no' | translate:translateKey}}">
 											<control-messages [control]="item.get('mobileNo')"></control-messages>
 										</mat-form-field>
 									</td>
