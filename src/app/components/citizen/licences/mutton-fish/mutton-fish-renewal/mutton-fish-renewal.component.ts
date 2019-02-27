@@ -329,7 +329,7 @@ export class MuttonFishRenewalComponent implements OnInit {
 			serviceFormId: this.formId,
 			id: data.id ? data.id : null,
 			name: [data.name ? data.name : null, [Validators.required, Validators.maxLength(100)]],
-			address: [data.address ? data.address : null, [Validators.required, Validators.maxLength(150)]],
+			address: [data.address ? data.address : null, [Validators.required, Validators.maxLength(200)]],
 			mobileNo: [data.mobileNo ? data.mobileNo : null, [Validators.maxLength(11), Validators.minLength(10)]],
 			personType: "MF_PERSON"
 		})

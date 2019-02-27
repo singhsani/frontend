@@ -156,10 +156,10 @@ export class MuttonFishNewComponent implements OnInit {
 			loinumber: [null],
 			/* Step 1 controls start */
 			licenseType: this.fb.group({
-				code: [null]
+				code: [null, [Validators.required]]
 			}),
 			personType: this.fb.group({
-				code: [null]
+				code: [null, [Validators.required]]
 			}),
 			holderFirstName: [null, [Validators.required, Validators.maxLength(30), ValidationService.nameValidator]],
 			holderMiddleName: [null, [Validators.required, Validators.maxLength(30), ValidationService.nameValidator]],
@@ -208,7 +208,7 @@ export class MuttonFishNewComponent implements OnInit {
 			serviceFormId: this.formId,
 			id: data.id ? data.id : null,
 			name: [data.name ? data.name : null, [Validators.required, Validators.maxLength(100)]],
-			address: [data.address ? data.address : null, [Validators.required, Validators.maxLength(150)]],
+			address: [data.address ? data.address : null, [Validators.required, Validators.maxLength(200)]],
 			mobileNo: [data.mobileNo ? data.mobileNo : null, [Validators.maxLength(11), Validators.minLength(10)]],
 			personType: "MF_PERSON"
 		})
@@ -272,8 +272,6 @@ export class MuttonFishNewComponent implements OnInit {
 	onChangeStatusOfBusiness() {
 		this.uploadFileArray = this.licenseConfiguration.requiredDocumentListMeetFish(this.muttonFishNewForm);
 	}
-
-
 
 	/**
 	*  Method is used check table is in edit mode
