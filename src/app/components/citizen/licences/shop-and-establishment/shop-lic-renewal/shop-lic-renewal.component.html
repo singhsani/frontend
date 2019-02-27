@@ -254,7 +254,7 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput [matDatepicker]="DateOfCommencementOfBusiness"
+						<input required matInput [matDatepicker]="DateOfCommencementOfBusiness"
 							formControlName="commencementOfBusinessDate"
 							placeholder="{{ 'date_of_commencement_of_business' | translate:translateKey }} (DD/MM/YYYY)">
 						<mat-datepicker-toggle matSuffix [for]="DateOfCommencementOfBusiness"></mat-datepicker-toggle>
@@ -639,7 +639,7 @@
 				<h2>{{'type_of_organization_label' | translate: translateKey}}</h2>
 
 				<div class="col-md-12 ngSelect" formGroupName="typeOfOrganisation">
-					<ng-select formControlName="code" placeholder="{{ 'shop_lic_org_type' | translate:translateKey }}"
+					<ng-select formControlName="code" placeholder="{{ 'shop_lic_org_type' | translate:translateKey }} *"
 						(change)="onChangeTypeOfOrganization($event)">
 						<ng-option *ngFor="let org_type of SHOP_LIC_TYPE_OF_ORGANIZATION" [value]="org_type.code">
 							{{org_type.name}}</ng-option>
@@ -812,23 +812,23 @@
 					<mat-form-field class="col-md-6">
 						<input matInput type="tel" OnlyNumber
 							placeholder="{{'total_adult_person' | translate:translateKey}}"
-							formControlName="totalAdultEmployee" maxlength="2">
+							formControlName="totalAdultEmployee" maxlength="2" required>
 						<control-messages [control]="shopLicRenewalForm.get('totalAdultEmployee')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-6">
 						<input matInput type="tel" OnlyNumber
 							placeholder="{{'total_young_person' | translate:translateKey}}"
-							formControlName="totalYoungEmployee" maxlength="2">
+							formControlName="totalYoungEmployee" maxlength="2" required>
 						<control-messages [control]="shopLicRenewalForm.get('totalYoungEmployee')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-6">
 						<input matInput type="tel" OnlyNumber placeholder="{{'total_men' | translate:translateKey}}"
-							formControlName="totalManEmployee" maxlength="2">
+							formControlName="totalManEmployee" maxlength="2" required>
 						<control-messages [control]="shopLicRenewalForm.get('totalManEmployee')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-6">
 						<input matInput type="tel" OnlyNumber placeholder="{{'total_women' | translate:translateKey}}"
-							formControlName="totalWomenEmployee" maxlength="2">
+							formControlName="totalWomenEmployee" maxlength="2" required>
 						<control-messages [control]="shopLicRenewalForm.get('totalWomenEmployee')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-6">
@@ -839,7 +839,7 @@
 					</mat-form-field>
 					<mat-form-field class="col-md-6">
 						<input matInput type="tel" OnlyNumber placeholder="{{'total_person' | translate:translateKey}}"
-							[value]="getTotalEmployeePerson()" formControlName="totalEmployee" readonly>
+							[value]="getTotalEmployeePerson()" formControlName="totalEmployee" readonly required>
 						<control-messages [control]="shopLicRenewalForm.get('totalEmployee')"></control-messages>
 					</mat-form-field>
 				</div>
