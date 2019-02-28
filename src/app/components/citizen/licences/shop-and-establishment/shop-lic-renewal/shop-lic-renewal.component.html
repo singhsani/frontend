@@ -323,29 +323,28 @@
 					<div>{{'employer_family' | translate: translateKey}}</div>
 				</ng-template>
 
-				<div class="row">
+				<div class="row justify-content-between pb-3">
 					<div class="col-md-10">
 						<h2>{{ 'employer_family_table_label' | translate:translateKey}}</h2>
 					</div>
-					<div class="col-md-2 pt-3" style="text-align: right;">
+					<div class="col-md-2 pt-3 text-right">
 						<!-- <button type="button" [disabled]="!(shopLicRenewalForm.get('employerFamilyList').length < 5)" matTooltip="{{'add_more' | translate:translateKey}}"
 							 mat-raised-button color="primary" (click)="addMorePerson('EMPLOYER_FAMILY')">{{'add'| translate:translateKey}}</button> -->
 					</div>
 				</div>
 
-				<div style="overflow-x: scroll;"
-					*ngIf="shopLicRenewalForm.get('employerFamilyList')['controls'].length">
+				<div *ngIf="shopLicRenewalForm.get('employerFamilyList')['controls'].length">
 					<div>
-						<table class="table table-striped customDataTable">
+						<table class="table table-striped  responsiveTableRow">
 							<thead>
-								<tr>
+								<tr class="mo-d-none">
 									<!-- <th colspan="2"></th> -->
-									<th>#</th>
+									<th width="35">#</th>
 									<th>{{'name' | translate:translateKey}}</th>
 									<th>{{'address' | translate:translateKey}}</th>
 									<th>{{'relationship' | translate:translateKey}}</th>
-									<th>{{'gender' | translate:translateKey}}</th>
-									<th>{{'age' | translate:translateKey}}</th>
+									<th width="100">{{'gender' | translate:translateKey}}</th>
+									<th width="60">{{'age' | translate:translateKey}}</th>
 								</tr>
 							</thead>
 							<tbody formArrayName="employerFamilyList">
@@ -368,9 +367,9 @@
 											</button>
 										</td> -->
 
-									<td>{{indx+1}}</td>
+									<td><div class="d-md-none">#</div>{{indx+1}}</td>
 
-									<td>
+									<td><div class="d-md-none">{{'name' | translate:translateKey}}</div>
 										<p>{{item.get('name').value}}</p>
 										<!-- <p *ngIf="!item.isEditMode">{{item.get('name').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
@@ -381,7 +380,7 @@
 										</mat-form-field> -->
 									</td>
 
-									<td>
+									<td><div class="d-md-none">{{'address' | translate:translateKey}}</div>
 										<p>{{item.get('address').value}}</p>
 										<!-- <p *ngIf="!item.isEditMode">{{item.get('address').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
@@ -390,7 +389,7 @@
 										</mat-form-field> -->
 									</td>
 
-									<td>
+									<td><div class="d-md-none">{{'relationship' | translate:translateKey}}</div>
 										<p>{{getSelectedDataFromLookUps(SHOP_LIC_EMPLOYER_FAMILY_PERSON_RELATIONSHIP,item.get('relationship').value.code)?.name}}
 										</p>
 										<!-- <div class="ngSelect" formGroupName="relationship">
@@ -410,7 +409,7 @@
 										</div> -->
 									</td>
 
-									<td>
+									<td><div class="d-md-none">{{'gender' | translate:translateKey}}</div>
 										<p>
 											{{getSelectedDataFromLookUps(gender,item.get('gender').value.code)?.name}}
 										</p>
@@ -429,7 +428,7 @@
 										</div> -->
 									</td>
 
-									<td>
+									<td><div class="d-md-none">{{'age' | translate:translateKey}}</div>
 										<p>{{item.get('age').value}}</p>
 										<!-- <p *ngIf="!item.isEditMode">{{item.get('age').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
@@ -443,7 +442,30 @@
 						</table>
 					</div>
 
-					<div>
+					<table width="100%" class="table">
+						<tbody>
+							<tr>
+								<th width="200">{{'total_adult_person' | translate:translateKey}}</th>
+								<td>{{calulateNumberOfPerson('employerFamilyList','totalAdultEmployerFamily','adult')}}</td>
+								<th width="200">{{'total_young_person' | translate:translateKey}}</th>
+								<td>{{calulateNumberOfPerson('employerFamilyList','totalYoungEmployerFamily','young')}}</td>
+							</tr>
+							<tr>
+								<th>{{'total_men' | translate:translateKey}}</th>
+								<td>{{calulateNumberOfPerson('employerFamilyList','totalManEmployerFamily','men')}}</td>
+								<th>{{'total_women' | translate:translateKey}}</th>
+								<td>{{calulateNumberOfPerson('employerFamilyList','totalWomenEmployerFamily','women')}}</td>
+							</tr>
+							<tr>
+								<th>{{'total_unidentified_person' | translate:translateKey}}</th>
+								<td>{{calulateNumberOfPerson('employerFamilyList','totalUnidentifiedEmployerFamily','unidentified')}}</td>
+								<th>{{'total_person' | translate:translateKey}}</th>
+								<td>{{calulateNumberOfPerson('employerFamilyList','totalFamilyMembers','total')}}</td>
+							</tr>
+						</tbody>
+					</table>
+
+					<!-- <div>
 						<div class="row">
 							<div class="col-md-4">{{'total_adult_person' | translate:translateKey}}</div>
 							<div class="col-md-2">
@@ -474,7 +496,7 @@
 							<div class="col-md-4">
 								{{calulateNumberOfPerson('employerFamilyList','totalFamilyMembers','total')}}</div>
 						</div>
-					</div>
+					</div> -->
 				</div>
 				<app-action-bar [form]="shopLicRenewalForm" (tabIndex)="onTabChange($event)"
 					[stepInfo]="{step: 'step3', next: 3, back: 1}"></app-action-bar>
@@ -487,28 +509,28 @@
 					<div>{{'person_occuping' | translate: translateKey}}</div>
 				</ng-template>
 
-				<div class="row">
+				<div class="row justify-content-between pb-3">
 					<div class="col-md-10">
 						<h2>{{'occupying_position_of_management_table_label' | translate: translateKey }}</h2>
 					</div>
-					<div class="col-md-2 pt-3" style="text-align: right;">
+					<div class="col-md-2 pt-3 text-right">
 						<!-- <button type="button" [disabled]="!(shopLicRenewalForm.get('occupancyList').length < 2)" matTooltip="Add More Person Occuping"
 							 mat-raised-button color="primary" (click)="addMorePerson('OCCUPANCY')">{{'add' | translate: translateKey}}</button> -->
 					</div>
 				</div>
 
-				<div style="overflow-x: scroll;" *ngIf="shopLicRenewalForm.get('occupancyList')['controls'].length">
+				<div *ngIf="shopLicRenewalForm.get('occupancyList')['controls'].length">
 					<div>
-						<table class="table table-striped customDataTable">
+						<table class="table table-striped responsiveTableRow">
 							<thead>
-								<tr>
+								<tr class="mo-d-none">
 									<!-- <th colspan="2"></th> -->
-									<th>#</th>
+									<th width="35">#</th>
 									<th>{{'name' | translate:translateKey}}</th>
 									<th>{{'address' | translate:translateKey}}</th>
 									<th>{{'relationship' | translate:translateKey}}</th>
-									<th>{{'gender' | translate:translateKey}}</th>
-									<th>{{'age' | translate:translateKey}}</th>
+									<th width="100">{{'gender' | translate:translateKey}}</th>
+									<th width="60">{{'age' | translate:translateKey}}</th>
 								</tr>
 							</thead>
 							<tbody formArrayName="occupancyList">
@@ -531,9 +553,9 @@
 											</button>
 										</td> -->
 
-									<td>{{indx+1}}</td>
+									<td><div class="d-md-none">#</div>{{indx+1}}</td>
 
-									<td>
+									<td><div class="d-md-none">{{'name' | translate:translateKey}}</div>
 										<p>{{item.get('name').value}}</p>
 										<!-- <p *ngIf="!item.isEditMode">{{item.get('name').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
@@ -543,7 +565,7 @@
 										</mat-form-field> -->
 									</td>
 
-									<td>
+									<td><div class="d-md-none">{{'address' | translate:translateKey}}</div>
 										<p>{{item.get('address').value}}</p>
 										<!-- <p *ngIf="!item.isEditMode">{{item.get('address').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
@@ -552,7 +574,7 @@
 										</mat-form-field> -->
 									</td>
 
-									<td>
+									<td><div class="d-md-none">{{'relationship' | translate:translateKey}}</div>
 										<p>{{getSelectedDataFromLookUps(SHOP_LIC_OCCUPANCY_PERSON_RELATIONSHIP,item.get('relationship').value.code)?.name}}
 										</p>
 										<!-- <div class="ngSelect" formGroupName="relationship">
@@ -566,7 +588,7 @@
 										</div> -->
 									</td>
 
-									<td>
+									<td><div class="d-md-none">{{'gender' | translate:translateKey}}</div>
 										<p>{{getSelectedDataFromLookUps(gender,item.get('gender').value.code)?.name}}
 										</p>
 										<!-- <div class="ngSelect" formGroupName="gender">
@@ -580,7 +602,7 @@
 										</div> -->
 									</td>
 
-									<td>
+									<td><div class="d-md-none">{{'age' | translate:translateKey}}</div>
 										<p>{{item.get('age').value}}</p>
 										<!-- <p *ngIf="!item.isEditMode">{{item.get('age').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
@@ -593,7 +615,32 @@
 							</tbody>
 						</table>
 					</div>
-					<div>
+
+					<table width="100%" class="table">
+						<tbody>
+							<tr>
+								<th width="200">{{'total_adult_person' | translate:translateKey}}</th>
+								<td>{{calulateNumberOfPerson('occupancyList','totalAdultOccupancy','adult')}}</td>
+								<th width="200">{{'total_young_person' | translate:translateKey}}</th>
+								<td>{{calulateNumberOfPerson('occupancyList','totalYoungOccupancy','young')}}</td>
+							</tr>
+							<tr>
+								<th>{{'total_men' | translate:translateKey}}</th>
+								<td>{{calulateNumberOfPerson('occupancyList','totalManOccupancy','men')}}</td>
+								<th>{{'total_women' | translate:translateKey}}</th>
+								<td>{{calulateNumberOfPerson('occupancyList','totalWomenOccupancy','women')}}</td>
+							</tr>
+							<tr>
+								<th>{{'total_unidentified_person' | translate:translateKey}}</th>
+								<td>{{calulateNumberOfPerson('occupancyList','totalUnidentifiedOccupancy','unidentified')}}</td>
+								<th>{{'total_person' | translate:translateKey}}</th>
+								<td>{{calulateNumberOfPerson('occupancyList','totalOccupancy','total')}}</td>
+							</tr>
+						</tbody>
+					</table>
+
+
+					<!-- <div>
 						<div class="row">
 							<div class="col-md-4">{{'total_adult_person' | translate:translateKey}}</div>
 							<div class="col-md-2">
@@ -621,7 +668,7 @@
 							<div class="col-md-4">{{calulateNumberOfPerson('occupancyList','totalOccupancy','total')}}
 							</div>
 						</div>
-					</div>
+					</div> -->
 				</div>
 
 				<app-action-bar [form]="shopLicRenewalForm" (tabIndex)="onTabChange($event)"
@@ -646,11 +693,11 @@
 					</ng-select>
 				</div>
 
-				<div class="row">
+				<div class="row justify-content-between pb-3">
 					<div class="col-md-10">
 						<h2>{{'details_of_partner_label' | translate: translateKey}}</h2>
 					</div>
-					<div class="col-md-2 pt-3" style="text-align: right;">
+					<div class="col-md-2 pt-3 text-right">
 						<!-- <button [disabled]="shopLicRenewalForm.get('typeOfOrganisation').value.code==='SHOP_LIC_SELF_OWNERSHIP' ? !(shopLicRenewalForm.get('partnerList').get('length < 1) : !(shopLicRenewalForm.get('partnerList').get('length < 10)"
 							 type="button" matTooltip="{{'add_more' | translate: translateKey}}" mat-raised-button color="primary" (click)="addMorePerson('PARTNER')">
 								{{'add' | translate: translateKey }}
@@ -658,18 +705,18 @@
 					</div>
 				</div>
 
-				<div style="overflow-x: scroll;" *ngIf="shopLicRenewalForm.get('partnerList')['controls'].length">
+				<div *ngIf="shopLicRenewalForm.get('partnerList')['controls'].length">
 					<div>
-						<table class="table table-striped customDataTable">
+						<table class="table table-striped responsiveTableRow">
 							<thead>
-								<tr>
+								<tr class="mo-d-none">
 									<!-- <th colspan="2"></th> -->
-									<th>#</th>
+									<th width="35">#</th>
 									<th>{{'name' | translate:translateKey}}</th>
 									<th>{{'address' | translate:translateKey}}</th>
 									<th>{{'relationship' | translate:translateKey}}</th>
-									<th>{{'gender' | translate:translateKey}}</th>
-									<th>{{'age' | translate:translateKey}}</th>
+									<th width="100">{{'gender' | translate:translateKey}}</th>
+									<th width="60">{{'age' | translate:translateKey}}</th>
 								</tr>
 							</thead>
 							<tbody formArrayName="partnerList">
@@ -692,9 +739,9 @@
 											</button>
 										</td> -->
 
-									<td>{{indx+1}}</td>
+									<td><div class="d-md-none">#</div>{{indx+1}}</td>
 
-									<td>
+									<td><div class="d-md-none">{{'name' | translate:translateKey}}</div>
 										<p>{{item.get('name').value}}</p>
 										<!-- <p *ngIf="!item.isEditMode">{{item.get('name').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
@@ -705,7 +752,7 @@
 										</mat-form-field> -->
 									</td>
 
-									<td>
+									<td><div class="d-md-none">{{'address' | translate:translateKey}}</div>
 										<p>{{item.get('address').value}}</p>
 										<!-- <p *ngIf="!item.isEditMode">{{item.get('address').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
@@ -714,7 +761,7 @@
 										</mat-form-field> -->
 									</td>
 
-									<td>
+									<td><div class="d-md-none">{{'relationship' | translate:translateKey}}</div>
 										<p>
 											{{getSelectedDataFromLookUps(SHOP_LIC_PARTNER_PERSON_RELATIONSHIP,item.get('relationship').value.code)?.name}}
 										</p>
@@ -735,7 +782,7 @@
 										</div> -->
 									</td>
 
-									<td>
+									<td><div class="d-md-none">{{'gender' | translate:translateKey}}</div>
 										<p>
 											{{getSelectedDataFromLookUps(gender,item.get('gender').value.code)?.name}}
 										</p>
@@ -754,7 +801,7 @@
 										</div> -->
 									</td>
 
-									<td>
+									<td><div class="d-md-none">{{'age' | translate:translateKey}}</div>
 										<p>{{item.get('age').value}}</p>
 										<!-- <p *ngIf="!item.isEditMode">{{item.get('age').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
@@ -767,7 +814,30 @@
 						</table>
 					</div>
 
-					<div>
+					<table width="100%" class="table">
+						<tbody>
+							<tr>
+								<th width="200">{{'total_adult_person' | translate:translateKey}}</th>
+								<td>{{calulateNumberOfPerson('partnerList','totalAdultPartner','adult')}}</td>
+								<th width="200">{{'total_young_person' | translate:translateKey}}</th>
+								<td>{{calulateNumberOfPerson('partnerList','totalYoungPartner','young')}}</td>
+							</tr>
+							<tr>
+								<th>{{'total_men' | translate:translateKey}}</th>
+								<td>{{calulateNumberOfPerson('partnerList','totalManPartner','men')}}</td>
+								<th>{{'total_women' | translate:translateKey}}</th>
+								<td>{{calulateNumberOfPerson('partnerList','totalWomenEmployerFamily','women')}}</td>
+							</tr>
+							<tr>
+								<th>{{'total_unidentified_person' | translate:translateKey}}</th>
+								<td>{{calulateNumberOfPerson('partnerList','totalUnidentifiedPartner','unidentified')}}</td>
+								<th>{{'total_person' | translate:translateKey}}</th>
+								<td>{{calulateNumberOfPerson('partnerList','totalPartner','total')}}</td>
+							</tr>
+						</tbody>
+					</table>
+
+					<!-- <div>
 						<div class="row">
 							<div class="col-md-4">{{'total_adult_person' | translate:translateKey}}</div>
 							<div class="col-md-2">{{calulateNumberOfPerson('partnerList','totalAdultPartner','adult')}}
@@ -794,7 +864,7 @@
 							<div class="col-md-8">{{'total_person' | translate:translateKey}}</div>
 							<div class="col-md-4">{{calulateNumberOfPerson('partnerList','totalPartner','total')}}</div>
 						</div>
-					</div>
+					</div> -->
 				</div>
 
 				<app-action-bar [form]="shopLicRenewalForm" (tabIndex)="onTabChange($event)"
