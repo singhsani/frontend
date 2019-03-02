@@ -1,5 +1,7 @@
 import { ComponentConfig } from "../component-config";
 import { FormGroup } from "@angular/forms";
+import * as _ from 'lodash';
+
 
 export class HospitalConfig extends ComponentConfig {
     public MIN_BIRTH_DATE_VALIDATION: number = 21;
@@ -75,6 +77,26 @@ export class HospitalConfig extends ComponentConfig {
             form.get(control).clearValidators();
             form.get(control).updateValueAndValidity();
         }
+    }
+
+    /**
+	 * Method is create required document array
+	 */
+    public documentList(res, uploadFilesArray: Array<any>) {
+        res.serviceDetail.serviceUploadDocuments.forEach(file => {
+            if (file.isActive && file.requiredOnCitizenPortal){
+                uploadFilesArray.push(file);
+            }
+        });
+        // _.forEach(form.get('serviceDetail').get('serviceUploadDocuments').value, (value) => {
+        //     if (value.isActive && value.requiredOnCitizenPortal) {
+        //         uploadFilesArray.push({
+        //             'labelName': value.documentLabelEn,
+        //             'fieldIdentifier': value.fieldIdentifier,
+        //             'documentIdentifier': value.documentIdentifier
+        //         })
+        //     }
+        // });
     }
 
     getDeathDummyJSON() {

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, ChangeDetectorRef, AfterContentInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { MatStepper } from '@angular/material/stepper';
@@ -13,6 +13,7 @@ import * as _ from 'lodash';
 import { ToastrService } from 'ngx-toastr';
 import { HospitalConfig } from '../hospital-config';
 import { Observable } from 'rxjs';
+import { TranslateService } from '../../../shared/modules/translate/translate.service';
 
 @Component({
 	selector: 'app-birth-registration-app',
@@ -30,13 +31,16 @@ export class BirthRegistrationComponent implements OnInit {
 	 */
 	uploadModel: any = {};
 	noOfChild = 0;
-	uploadFileArray: Array<any> =
-		[{ labelName: 'Resident Proof', fieldIdentifier: '1.1' },
-		{ labelName: 'Doctors Certificate', fieldIdentifier: '1.2' },
-		{ labelName: 'Kyc With Address Proof', fieldIdentifier: '1.3' },
-		{ labelName: 'Aaya Id Proof', fieldIdentifier: '1.4' },
-		{ labelName: 'Health Worker Report', fieldIdentifier: '1.5' },
-		{ labelName: 'Applicant Id Kyc Proof', fieldIdentifier: '1.6' }]
+	// uploadFileArray: Array<any> =
+	// 	[{ labelName: 'Resident Proof', fieldIdentifier: '1.1' },
+	// 	{ labelName: 'Doctors Certificate', fieldIdentifier: '1.2' },
+	// 	{ labelName: 'Kyc With Address Proof', fieldIdentifier: '1.3' },
+	// 	{ labelName: 'Aaya Id Proof', fieldIdentifier: '1.4' },
+	// 	{ labelName: 'Health Worker Report', fieldIdentifier: '1.5' },
+	// 	{ labelName: 'Applicant Id Kyc Proof', fieldIdentifier: '1.6' }]
+
+	uploadFileArray: Array<any> = [];
+
 	//private uploadFileArray: Array<any> = ['residentProof', 'doctorsCertificate', 'kycWithAddressProof', 'aayaIdProof', 'healthWorkerReport', 'applicantIdKycProof']
 
 	/**
@@ -84,7 +88,7 @@ export class BirthRegistrationComponent implements OnInit {
 	 * Regarding Form Save
 	 */
 
-	 isFormSaved: boolean ;
+	isFormSaved: boolean = false;
 
 
 	/**
@@ -99,7 +103,9 @@ export class BirthRegistrationComponent implements OnInit {
 		private commonService: CommonService,
 		private fb: FormBuilder,
 		private atp: AmazingTimePickerService,
-		private toastrService: ToastrService
+		private toastrService: ToastrService,
+		private CD : ChangeDetectorRef,
+		public translateService: TranslateService
 	) {
 	}
 
@@ -287,20 +293,35 @@ export class BirthRegistrationComponent implements OnInit {
 	 */
 	getBirthCertData() {
 		this.formService.getFormData(this.appId).subscribe(res => {
-			//this.attachments = res.attachments;
 			this.birthCertificateForm.patchValue(res);
 
+			//this.attachments = res.attachments;
+			// res.serviceDetail.serviceUploadDocuments.forEach(app => {
+			// 	(<FormArray>this.birthCertificateForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.config.createDocumentsGrp(app));
+			// });
+			this.config.documentList(res, this.uploadFileArray);
+		
+			/**
+			 * Change in mandatory documents.
+			 */
 			if (res.delayPeriod != null) {
-				if (Number(res.delayPeriod) > this.config.daysInThisYear()) {
-					if (!this.config.getFileObjectContained(this.uploadFileArray, '1.8')) {
-						this.uploadFileArray.push(this.config.fileObjectCreater('Court Order', '1.8'));
-					}
+				if (parseInt(res.delayPeriod) > this.config.daysInThisYear()) {
+					this.uploadFileArray.find(d => d.documentIdentifier == "AFFIDAVIT_HEALTH_OFFICER_ORDER").mandatory = false;
+					this.uploadFileArray.find(d => d.documentIdentifier == "ORDER_EXECUTIVE_MAGISTRATE").mandatory = true;
+
+					// if (!this.config.getFileObjectContained(this.uploadFileArray, '1.8')) {
+					// 	this.uploadFileArray.push(this.config.fileObjectCreater('Court Order', '1.8'));
+					// }
 				} else if (Number(res.delayPeriod) < this.config.daysInThisYear() && Number(res.delayPeriod) > this.config.daysInThisMonth()) {
-					if (!this.config.getFileObjectContained(this.uploadFileArray, '1.7')) {
-						this.uploadFileArray.push(this.config.fileObjectCreater('Affidavit Or Health Order', '1.7'));
-					}
+					this.uploadFileArray.find(d => d.documentIdentifier == "ORDER_EXECUTIVE_MAGISTRATE").mandatory = false;
+					this.uploadFileArray.find(d => d.documentIdentifier == "AFFIDAVIT_HEALTH_OFFICER_ORDER").mandatory = true;
+
+					// if (!this.config.getFileObjectContained(this.uploadFileArray, '1.7')) {
+					// 	this.uploadFileArray.push(this.config.fileObjectCreater('Affidavit Or Health Order', '1.7'));
+					// }
 				}
 			}
+
 
 			//for Child Form Array.
 			this.childs = this.getChildData();
@@ -341,6 +362,7 @@ export class BirthRegistrationComponent implements OnInit {
 				this.birthCertificateForm.disable();
 			}
 
+			this.changeInBirthPlace(res.birthPlace.code);
 			this.showButtons = true;
 
 			/**
@@ -351,16 +373,39 @@ export class BirthRegistrationComponent implements OnInit {
 					this.check({ checked: true });
 					return;
 				}
-			})
+			});
+
+			//change ayaa's id proof.
+
+			this.birthCertificateForm.controls.birthPlace.valueChanges.subscribe(birthPlace => {
+				this.changeInBirthPlace(birthPlace.code);
+				return;
+			});
 
 			/**
-			 * Catch Changes in form to make status updated.
+			 * form change subscriber
 			 */
-			this.birthCertificateForm.valueChanges.subscribe(changeINForm => {
-				this.isFormSaved = false;
-				return;
-			})
+			this.birthCertificateForm.valueChanges.subscribe((changeINForm) => {
+				if(this.birthCertificateForm.get('canEdit').value){
+					this.isFormSaved = false;
+					return;
+				}
+			});
 		});
+	}
+
+	
+
+	/**
+	 * Update birth place regarding changes.
+	 * @param val - birth place type.
+	 */
+	changeInBirthPlace(val : string){
+		if (val == 'HOME') {
+			this.uploadFileArray.find(f => f.documentIdentifier == 'AAYAS_REPORT_OR_DOCTOR_CERTIFICATE').mandatory = true;
+		} else {
+			this.uploadFileArray.find(f => f.documentIdentifier == 'AAYAS_REPORT_OR_DOCTOR_CERTIFICATE').mandatory = false;
+		}
 	}
 
 	/**
@@ -411,6 +456,7 @@ export class BirthRegistrationComponent implements OnInit {
 			this.maxBirthDate = moment(new Date(Number(currentDelayDate.split('-')[0]), Number(currentDelayDate.split('-')[1]) - 1, Number(currentDelayDate.split('-')[2]))).add(+1, 'days').toDate();
 			this.minBirthDate = moment(new Date(Number(currentDelayDate.split('-')[0]), Number(currentDelayDate.split('-')[1]) - 1, Number(currentDelayDate.split('-')[2]))).add(-1, 'days').toDate();
 		}
+		this.CD.detectChanges();
 	}
 
 	/**
@@ -441,25 +487,30 @@ export class BirthRegistrationComponent implements OnInit {
 			return;
 		}
 		else if (delay > this.config.daysInThisMonth() && delay < this.config.daysInThisYear()) {
-			if (!this.config.getFileObjectContained(this.uploadFileArray, '1.7')) {
-				if (!this.config.getFileObjectContained(this.uploadFileArray, '1.8')) {
-					this.uploadFileArray.push(this.config.fileObjectCreater('Affidavit Or Health Order', '1.7'));
-				} else {
-					this.uploadFileArray.pop();
-					this.uploadFileArray.push(this.config.fileObjectCreater('Affidavit Or Health Order', '1.7'));
-				}
-			}
+			this.uploadFileArray.find(d => d.documentIdentifier == "AFFIDAVIT_HEALTH_OFFICER_ORDER").mandatory = true;
+			this.uploadFileArray.find(d => d.documentIdentifier == "ORDER_EXECUTIVE_MAGISTRATE").mandatory = false;
+			
+			// if (!this.config.getFileObjectContained(this.uploadFileArray, '1.7')) {
+			// 	if (!this.config.getFileObjectContained(this.uploadFileArray, '1.8')) {
+			// 		this.uploadFileArray.push(this.config.fileObjectCreater('Affidavit Or Health Order', '1.7'));
+			// 	} else {
+			// 		this.uploadFileArray.pop();
+			// 		this.uploadFileArray.push(this.config.fileObjectCreater('Affidavit Or Health Order', '1.7'));
+			// 	}
+			// }
 			this.commonService.openAlert(this.config.DELAYED_REGISTRATION_TITLE, "", "warning", this.config.LESS_YEAR_AND_MORE_30_MESSAGE);
 			return;
 		} else if (delay > this.config.daysInThisYear()) {
-			if (!this.config.getFileObjectContained(this.uploadFileArray, '1.8')) {
-				if (!this.config.getFileObjectContained(this.uploadFileArray, '1.7')) {
-					this.uploadFileArray.push(this.config.fileObjectCreater('Court Order', '1.8'));
-				} else {
-					this.uploadFileArray.pop();
-					this.uploadFileArray.push(this.config.fileObjectCreater('Court Order', '1.8'));
-				}
-			}
+			this.uploadFileArray.find(d => d.documentIdentifier == "ORDER_EXECUTIVE_MAGISTRATE").mandatory = true;
+			this.uploadFileArray.find(d => d.documentIdentifier == "AFFIDAVIT_HEALTH_OFFICER_ORDER").mandatory = false;
+			// if (!this.config.getFileObjectContained(this.uploadFileArray, '1.8')) {
+			// 	if (!this.config.getFileObjectContained(this.uploadFileArray, '1.7')) {
+			// 		this.uploadFileArray.push(this.config.fileObjectCreater('Court Order', '1.8'));
+			// 	} else {
+			// 		this.uploadFileArray.pop();
+			// 		this.uploadFileArray.push(this.config.fileObjectCreater('Court Order', '1.8'));
+			// 	}
+			// }
 			this.commonService.openAlert(this.config.DELAYED_REGISTRATION_TITLE, "", "warning", this.config.MORE_THAN_YEAR_MESSAGE);
 			return;
 		}
@@ -511,30 +562,6 @@ export class BirthRegistrationComponent implements OnInit {
 
 	}
 
-	// /**
-	//  * Method is used to get file status.
-	//  * @param fieldIdentifier - file identifier.
-	//  */
-	// getFileObjectContained(fieldIdentifier: string) {
-	// 	let found: boolean = false;
-	// 	for (let i = 0; i < this.uploadFileArray.length; i++) {
-	// 		if (this.uploadFileArray[i].fieldIdentifier == fieldIdentifier) {
-	// 			found = true;
-	// 			break;
-	// 		}
-	// 	}
-	// 	return found;
-	// }
-
-	// /**
-	//  * Method is used to create file object.
-	//  * @param labelName - file labelName
-	//  * @param fieldIdentifier - file identifier
-	//  */
-	// fileObjectCreater(labelName, fieldIdentifier): any {
-	// 	return { labelName: labelName, fieldIdentifier: fieldIdentifier }
-	// }
-
 	/**
 	 * Method is used to get all lookups from api. 
 	 */
@@ -553,26 +580,6 @@ export class BirthRegistrationComponent implements OnInit {
 			this.ISYESNO = respData.YES_NO;
 		})
 	}
-
-	// /**
-	//  * Gujarati Look Up Converter.
-	//  * @param event - selected event
-	//  * @param controlName - control name
-	//  * @param arr - passed lookup array
-	//  */
-	// gujNameFinder(event, controlName, arr) {
-	// 	for (let i = 0; i < arr.length; i++) {
-	// 		if (arr[i].code === event) {
-	// 			if (arr[i].gujName === undefined) {
-	// 				this.birthCertificateForm.get(controlName).get('gujName').setValue('');
-	// 				return;
-	// 			} else {
-	// 				this.birthCertificateForm.get(controlName).get('gujName').setValue(arr[i].gujName);
-	// 				return;
-	// 			}
-	// 		}
-	// 	}
-	// }
 
     /** 
 	 * Method to change birthdate into desired (YYYY-MM-DD) formet.
@@ -599,15 +606,6 @@ export class BirthRegistrationComponent implements OnInit {
 		}
 		this.birthCertificateForm.get('parentPermanentAddress').get('addressType').setValue(parentPermanentAddressType);
 	}
-
-
-	// /**
-	//  * Method is used to reset form its a output event from action bar.
-	//  */
-	// stepReset() {
-	// 	this.stepper.reset();
-	// }
-
 
 	/**
 	 * Method is used to set data value to upload method.

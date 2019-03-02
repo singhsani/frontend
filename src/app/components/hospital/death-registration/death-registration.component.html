@@ -1,7 +1,7 @@
 <app-hos-title-bar [title]="'screen_title' | translate: translateKey" >
-	<!-- <button class="pull-right" mat-stroked-button type="button" (click)="deathCertificateForm.patchValue(config.getDeathDummyJSON())">
+	<button class="pull-right" mat-stroked-button type="button" (click)="deathCertificateForm.patchValue(config.getDeathDummyJSON())">
 			Patch Value
-		</button> -->
+		</button>
 </app-hos-title-bar>
 
 <mat-card class="formClass cardBorder">
@@ -356,8 +356,15 @@
 						{{'note' | translate:translateKey}} : {{'maximum_size_1_MB' | translate:translateKey}}
 					</div>
 
+					<div class="col-md-4" *ngFor="let doc of uploadFileArray">
+						<div>
+							<label>{{translateService.getCurrentLanguage()=='en'? doc.documentLabelEn : doc.documentLabelGuj }} <span *ngIf="doc.mandatory">*</span></label>
+							<app-hos-file-upload [form]="deathCertificateForm" [uploadModel]="doc"></app-hos-file-upload>
+						</div>
+					</div>
 
-					<div class="col-md-4" *ngIf="showButtons">
+
+					<!-- <div class="col-md-4" *ngIf="showButtons">
 						<label>{{'applicant_id_proof' | translate:translateKey}}{{!config.getFileObjectContained(uploadFileArray, '1.1')?'':
 							'*'}}
 						</label>
@@ -407,9 +414,10 @@
 							'*'}}
 						</label>
 						<app-hos-file-upload [form]="deathCertificateForm" [uploadModel]="setDataValue(1.8,'Court Order','1.1','courtOrder')"></app-hos-file-upload>
-					</div>
+					</div> -->
 
 				</div>
+				
 
 				<app-hos-action-bar [stepInfo]="{step: 'final', next: 5, back: 3}" (saveEvent) = "isFormSaved = $event?.isSaved"  (tabIndex)="onTabChange($event)" [uploadFiles]="uploadFileArray"
 				 [form]="deathCertificateForm" [step]="'final'" (handleErrors)="handleErrorsOnSubmit($event)"></app-hos-action-bar>

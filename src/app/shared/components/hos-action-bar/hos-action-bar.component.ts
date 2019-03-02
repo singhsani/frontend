@@ -34,15 +34,21 @@ export class HosActionBarComponent implements OnInit, OnChanges {
 
 	@Output() handleErrors = new EventEmitter<any>();
 	@Output() tabIndex = new EventEmitter<any>();
-	@Output() saveEvent : EventEmitter<any> = new EventEmitter<any>();
+
+	/**
+	 * Use to prevent unsaved loadings.
+	 */
+	@Output() saveEvent: EventEmitter<any> = new EventEmitter<any>();
+	// @Output() handleOnSaveAndNext = new EventEmitter<any>();
 
 
-    constructor(
+
+	constructor(
 		private sessionStore: SessionStorageService,
 		private formService: HosFormActionsService,
 		private fb: FormBuilder,
 		private toastr: ToastrService,
-		private commonService: CommonService) {}
+		private commonService: CommonService) { }
 
 	ngOnInit() {
 		this.formService.apiType = this.form.get('apiType').value;
@@ -65,17 +71,22 @@ export class HosActionBarComponent implements OnInit, OnChanges {
 	mandatoryFileCheck() {
 		return new Promise<any>((resolve, reject) => {
 			this.formService.getFormData(this.form.get('serviceFormId').value).subscribe(respData => {
-				let tempArray = [];
-				respData.attachments.forEach(element => {
-					tempArray.push(element.fieldIdentifier);
-				});
-				this.uploadFilesArray.forEach(el => {
-					if (tempArray.indexOf(el.fieldIdentifier) === -1) {
-						resolve({ fileName: el.labelName, status: false });
-						return;
-					}
-				});
-				resolve({ fileName: "", status: true });
+				if (respData.attachments) {
+					let tempArray = [];
+					respData.attachments.forEach(element => {
+						tempArray.push(element.fieldIdentifier);
+					});
+
+					this.uploadFilesArray.forEach(el => {
+						if ((tempArray.indexOf(el.fieldIdentifier) === -1) && el.mandatory) {
+							resolve({ fileName: el.labelName ? el.labelName : el.documentLabelEn, status: false });
+							return;
+						}
+					});
+					resolve({ fileName: "", status: true });
+				} else {
+					resolve({ fileName: "", status: true })
+				}
 			})
 		})
 	}
@@ -102,33 +113,38 @@ export class HosActionBarComponent implements OnInit, OnChanges {
 	 * This method is used for save form as draft using API
 	 */
 	saveAsDraft() {
-
 		this.isSaveBtnDisabled = true;
-
-		this.formService.saveFormData(this.form.getRawValue()).subscribe(
-			res => {
-				this.form.patchValue(res);
-				this.isSaveBtnDisabled = false;
-				if (this.isstepper) {
-					this.tabIndex.emit(this.stepInfo.next);
-				}
-				this.toastr.success(`${this.form.value.serviceDetail.name} information successfully saved`);
-				this.saveEvent.emit({isSaved : true});
-			},
-			err => {
-				this.markFormGroupTouched(this.form);
-				this.isSaveBtnDisabled = false;
-				let count = 1;
-				for (const key in this.form.controls) {
-					if (key == err.error[0].property) {
-						this.handleErrors.emit(count);
-						break;
-					}
-					count++;
-				};
-				this.saveEvent.emit({ isSaved: false });
+		this.formService.saveFormData(this.form.getRawValue()).subscribe(saveResp => {
+			this.form.patchValue(saveResp);
+			this.isSaveBtnDisabled = false;
+			if (this.isstepper) {
+				this.tabIndex.emit(this.stepInfo.next);
 			}
-		);
+
+			this.toastr.success(`${this.form.getRawValue().serviceDetail.name} information successfully saved`);
+			this.saveEvent.emit({ isSaved: true });
+		},
+			err => {
+				this.onSaveError(err);
+				this.saveEvent.emit({ isSaved: false });
+			})
+	}
+
+	/**
+	 * Method Is used to throw error on save.
+	 * @param err - Error Response.
+	 */
+	onSaveError(err: any) {
+		this.markFormGroupTouched(this.form);
+		this.isSaveBtnDisabled = false;
+		let count = 1;
+		for (const key in this.form.controls) {
+			if (err.error[0] && key == err.error[0].property) {
+				this.handleErrors.emit(count);
+				break;
+			}
+			count++;
+		}
 	}
 
 	/**
@@ -161,23 +177,23 @@ export class HosActionBarComponent implements OnInit, OnChanges {
 								let payData = this.commonService.storePaymentInfo(err.error.data, retUrl, 'hospital/payment-gateway-response');
 								let html =
 									`
-								<div class="text-center">
-									<h2>Total Fee Pay</h2>
-									<div class="payAmount">
-										<i class="fa fa-inr" aria-hidden="true">` + payData.amount + `</i>
+									<div class="text-center">
+										<h2>Total Fee Pay</h2>
+										<div class="payAmount">
+											<i class="fa fa-inr" aria-hidden="true">` + payData.amount + `</i>
+										</div>
+										<p>Rupees in words</p>
 									</div>
-									<p>Rupees in words</p>
-								</div>
 								`
 								this.commonService.commonAlert('Payment Details', '', 'info', 'Make Payment!', false, html, cb => {
-									window.location.href = environment.adminUrl + `#/admin/payment-gateway?retUrl=${payData.retUrl}&retPath=${payData.retPath}`;
+									window.location.href = environment.adminUrl + `admin/payment-gateway?retUrl=${payData.retUrl}&retPath=${payData.retPath}`;
 								}, rj => {
 									let errHtml = `			
 										<div class="alert alert-danger">
 											Please Complete Payment, Otherwise the application will be considered as in-complete
 										</div>`
 									this.commonService.commonAlert("Application Incomplete", "", 'warning', 'Make Payment!', false, errHtml, ccb => {
-										window.location.href = environment.adminUrl + `#/admin/payment-gateway?retUrl=${payData.retUrl}&retPath=${payData.retPath}`;
+										window.location.href = environment.adminUrl + `admin/payment-gateway?retUrl=${payData.retUrl}&retPath=${payData.retPath}`;
 									}, arj => {
 										this.form.get('canEdit').setValue(false);
 										//this.toastr.success(`${this.form.getRawValue().serviceDetail.name} information successfully submit`);
@@ -261,7 +277,9 @@ export class HosActionBarComponent implements OnInit, OnChanges {
 			code: new FormControl(),
 			name: new FormControl(),
 			gujName: new FormControl(),
-			feesOnScrutiny: new FormControl()
+			feesOnScrutiny: new FormControl(),
+			appointmentRequired: new FormControl(),
+			serviceUploadDocuments: this.fb.array([])
 		}));
 		/* ended common form controls in existing formGroups*/
 

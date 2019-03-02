@@ -3,13 +3,12 @@ import { CommonModule } from '@angular/common';
 
 import { BookingsRoutingModule } from './bookings-routing.module';
 import { MyDatePickerModule } from 'mydatepicker';
-import { PlanetariumComponent } from './planetarium/planetarium.component';
 import { SharedBookingModule } from './shared-booking/shared-booking.module';
+import { MyBookingComponent } from './components/my-booking/my-booking.component';
+import { BookingDashboardComponent } from './components/booking-dashboard/booking-dashboard.component';
 
 @NgModule({
-  declarations: [
-    PlanetariumComponent
-  ],
+  declarations: [MyBookingComponent, BookingDashboardComponent],
 
   imports: [
     CommonModule,
