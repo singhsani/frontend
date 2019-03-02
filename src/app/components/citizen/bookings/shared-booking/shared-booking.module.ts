@@ -4,8 +4,6 @@ import { BookingFileUploadComponent } from './components/booking-file-upload/boo
 import { SharedModule } from '../../../../shared/shared.module';
 import { CoreModule } from '../../../../core/core.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { BookingDashboardComponent } from './components/booking-dashboard/booking-dashboard.component';
-import { MyBookingComponent } from './components/my-booking/my-booking.component';
 import { BookingService } from './services/booking-service.service';
 
 const MODULES = [
@@ -20,11 +18,9 @@ const MODULES = [
     CommonModule,
     ...MODULES
   ],
-  declarations: [BookingFileUploadComponent, BookingDashboardComponent, MyBookingComponent],
+  declarations: [BookingFileUploadComponent],
   exports: [
     BookingFileUploadComponent,
-    BookingDashboardComponent,
-    MyBookingComponent,
   ...MODULES],
   providers: [BookingService]
 })

@@ -10,6 +10,7 @@ import { ManageRoutes } from '../../../config/routes-conf';
 import * as moment from 'moment';
 import { HospitalConfig } from '../hospital-config';
 import { Observable } from 'rxjs';
+import { TranslateService } from '../../../shared/modules/translate/translate.service';
 
 @Component({
 	selector: 'app-death-registration',
@@ -30,19 +31,13 @@ export class DeathRegistrationComponent implements OnInit {
 	//private attachments: Array<any> = [];
 	showButtons: boolean = false;
 	uploadModel: any = {};
-	response:any;
+	response: any;
 	translateKey = "deathRegScreen";
 	addressTranslateKey = "addressScreen";
 	basicTranslateKey = "basicDetailsScreen";
-
-	uploadFileArray: Array<any> =
-		[{ labelName: 'Applicant Id Proof', fieldIdentifier: '1.1' },
-		{ labelName: 'Cremation Report', fieldIdentifier: '1.2' },
-		{ labelName: 'Form 4A', fieldIdentifier: '1.3' },
-		{ labelName: 'Deceased Id Proof', fieldIdentifier: '1.4' }]
-
+	uploadFileArray: Array<any> = [];
 	//form related data.
-		appId: number;
+	appId: number;
 	apiCode: string;
 	tabIndex: number = 0;
 
@@ -87,7 +82,8 @@ export class DeathRegistrationComponent implements OnInit {
 		private router: Router,
 		private route: ActivatedRoute,
 		private commonService: CommonService,
-		private formService: HosFormActionsService
+		private formService: HosFormActionsService,
+		public translateService: TranslateService
 	) {
 	}
 
@@ -122,8 +118,8 @@ export class DeathRegistrationComponent implements OnInit {
 				this.router.navigate([ManageRoutes.getFullRoute('HOSPITALDASHBOARD')]);
 			} else {
 				this.createDeathCertificateForm();
-				this.getDeathCertData();
 				this.getLookUpsData();
+				this.getDeathCertData();
 			}
 		});
 	}
@@ -144,24 +140,21 @@ export class DeathRegistrationComponent implements OnInit {
 	getDeathCertData() {
 		this.formService.getFormData(this.appId).subscribe((res) => {
 			this.deathCertificateForm.patchValue(res);
-
+			this.config.documentList(res, this.uploadFileArray);
 			if (res.birthDate) {
 				this.birthFormatChanger({ value: new Date(res.birthDate) })
 			}
 
 			if (res.delayedPeriod != null) {
 				if (Number(res.delayedPeriod) > this.config.daysInThisYear()) {
-					if (!this.config.getFileObjectContained(this.uploadFileArray, '1.8')) {
-						this.uploadFileArray.push(this.config.fileObjectCreater('Court Order', '1.8'));
-					}
+					this.mandatoryAttachment(["ORDER_EXECUTIVE_MAGISTRATE"]);
+					this.removeMandatoryAttachment(["AFFIDAVIT_HEALTH_OFFICER_ORDER"]);
 				} else if (Number(res.delayedPeriod) < this.config.daysInThisYear() && Number(res.delayedPeriod) > this.config.daysInThisMonth()) {
-					if (!this.config.getFileObjectContained(this.uploadFileArray, '1.7')) {
-						this.uploadFileArray.push(this.config.fileObjectCreater('Affidavit Or Health Order', '1.7'));
-					}
+					this.mandatoryAttachment(["AFFIDAVIT_HEALTH_OFFICER_ORDER"]);
+					this.removeMandatoryAttachment(["ORDER_EXECUTIVE_MAGISTRATE"]);
 				}
 			}
 
-			//this.attachments = res.attachments;
 			this.showButtons = true;
 
 			//for unknown condition
@@ -210,28 +203,16 @@ export class DeathRegistrationComponent implements OnInit {
 	 */
 	delayAlert(delay: number) {
 		if (this.deathCertificateForm.get('unknownCategory').get('code').value == "YES") {
-			this.uploadFileArray = [this.config.fileObjectCreater('Police Inquest', '1.5'), this.config.fileObjectCreater('Post Mortem Report', '1.6')];
+			this.mandatoryAttachment(["POLICE_INQUEST", "PM_REPORT"]);
+			this.removeMandatoryAttachment(["ID_PROOF_DECEASED", "CREMATION_REPORT", "APPLICANT_ID_PROOF", "FORM_4A"]);
 		} else {
 			if (delay > this.config.daysInThisMonth() && delay < this.config.daysInThisYear()) {
-				if (!this.config.getFileObjectContained(this.uploadFileArray, '1.7')) {
-					if (!this.config.getFileObjectContained(this.uploadFileArray, '1.8')) {
-						this.uploadFileArray.push(this.config.fileObjectCreater('Affidavit Or Health Order', '1.7'));
-					} else {
-						this.uploadFileArray.pop();
-						this.uploadFileArray.push(this.config.fileObjectCreater('Affidavit Or Health Order', '1.7'));
-					}
-				}
+				this.mandatoryAttachment(["AFFIDAVIT_HEALTH_OFFICER_ORDER"]);
+				this.removeMandatoryAttachment(["ORDER_EXECUTIVE_MAGISTRATE"]);
 				this.commonService.openAlert(this.config.DELAYED_REGISTRATION_TITLE, "", "warning", this.config.LESS_YEAR_AND_MORE_30_MESSAGE);
 			} else if (delay > this.config.daysInThisYear()) {
-				if (!this.config.getFileObjectContained(this.uploadFileArray, '1.8')) {
-					if (!this.config.getFileObjectContained(this.uploadFileArray, '1.7')) {
-
-						this.uploadFileArray.push(this.config.fileObjectCreater('Court Order', '1.8'));
-					} else {
-						this.uploadFileArray.pop();
-						this.uploadFileArray.push(this.config.fileObjectCreater('Court Order', '1.8'));
-					}
-				}
+				this.mandatoryAttachment(["ORDER_EXECUTIVE_MAGISTRATE"]);
+				this.removeMandatoryAttachment(["AFFIDAVIT_HEALTH_OFFICER_ORDER"]);
 				this.commonService.openAlert(this.config.DELAYED_REGISTRATION_TITLE, "", "warning", this.config.MORE_THAN_YEAR_MESSAGE);
 			}
 		}
@@ -254,8 +235,6 @@ export class DeathRegistrationComponent implements OnInit {
 			this.deathCertificateForm.get('deathPlace').get('code').clearValidators()
 			this.deathCertificateForm.get('medicalTreatment').get('code').clearValidators()
 			this.deathCertificateForm.get('medicalReason').get('code').clearValidators()
-			this.upDateValidation();
-			this.uploadFileArray = [this.config.fileObjectCreater('Police Inquest', '1.5'), this.config.fileObjectCreater('Post Mortem Report', '1.6')];
 		} else if (event === "NO") {
 			this.requiredFeild = true;
 			this.deathCertificateForm.get('unknownDescription').reset();
@@ -268,33 +247,50 @@ export class DeathRegistrationComponent implements OnInit {
 			this.deathCertificateForm.get('deathPlace').get('code').setValidators([Validators.required])
 			this.deathCertificateForm.get('medicalTreatment').get('code').setValidators([Validators.required])
 			this.deathCertificateForm.get('medicalReason').get('code').setValidators([Validators.required])
-			this.upDateValidation()
-			this.uploadFileArray = [this.config.fileObjectCreater('Applicant Id Proof', '1.1'), this.config.fileObjectCreater('Cremation Report', '1.2'), this.config.fileObjectCreater('Form 4A', '1.3'), this.config.fileObjectCreater('Deceased Id Proof', '1.4')];
 			if (Number(this.getDelayPeriod()) > this.config.daysInThisYear()) {
-				if (!this.config.getFileObjectContained(this.uploadFileArray, '1.7')) {
-					this.uploadFileArray.push(this.config.fileObjectCreater('Court Order', '1.8'));
-				}
+				this.mandatoryAttachment(["ORDER_EXECUTIVE_MAGISTRATE"]);
+				this.removeMandatoryAttachment(["AFFIDAVIT_HEALTH_OFFICER_ORDER"]);
 			} else if (Number(this.getDelayPeriod()) < this.config.daysInThisYear() && Number(this.getDelayPeriod()) > this.config.daysInThisMonth()) {
-				if (!this.config.getFileObjectContained(this.uploadFileArray, '1.8')) {
-					this.uploadFileArray.push(this.config.fileObjectCreater('Affidavit Or Health Order', '1.7'));
-				}
+				this.mandatoryAttachment(["AFFIDAVIT_HEALTH_OFFICER_ORDER"]);
+				this.removeMandatoryAttachment(["ORDER_EXECUTIVE_MAGISTRATE"]);
 			}
 		}
+
+		this.upDateValidation(event);
 	}
 
 	/**
 	 * Method is used to update validations of controls.
 	 */
-	upDateValidation() {
+	upDateValidation(event: string) {
 		this.deathCertificateForm.get('unknownDescription').updateValueAndValidity();
 		this.deathCertificateForm.get('gender').get('code').updateValueAndValidity();
-		this.deathCertificateForm.get('religion').get('code').updateValueAndValidity()
-		this.deathCertificateForm.get('education').get('code').updateValueAndValidity()
-		this.deathCertificateForm.get('occupation').get('code').updateValueAndValidity()
-		this.deathCertificateForm.get('femaleDeathReason').get('code').updateValueAndValidity()
-		this.deathCertificateForm.get('deathPlace').get('code').updateValueAndValidity()
-		this.deathCertificateForm.get('medicalTreatment').get('code').updateValueAndValidity()
-		this.deathCertificateForm.get('medicalReason').get('code').updateValueAndValidity()
+		this.deathCertificateForm.get('religion').get('code').updateValueAndValidity();
+		this.deathCertificateForm.get('education').get('code').updateValueAndValidity();
+		this.deathCertificateForm.get('occupation').get('code').updateValueAndValidity();
+		this.deathCertificateForm.get('femaleDeathReason').get('code').updateValueAndValidity();
+		this.deathCertificateForm.get('deathPlace').get('code').updateValueAndValidity();
+		this.deathCertificateForm.get('medicalTreatment').get('code').updateValueAndValidity();
+		this.deathCertificateForm.get('medicalReason').get('code').updateValueAndValidity();
+		if(event == "YES"){
+			this.mandatoryAttachment(["POLICE_INQUEST", "PM_REPORT"]);
+			this.removeMandatoryAttachment(["ID_PROOF_DECEASED", "CREMATION_REPORT", "APPLICANT_ID_PROOF", "FORM_4A"]);
+		} else  {
+			this.mandatoryAttachment(["ID_PROOF_DECEASED", "CREMATION_REPORT", "APPLICANT_ID_PROOF", "FORM_4A"]);
+			this.removeMandatoryAttachment(["POLICE_INQUEST", "PM_REPORT"]);
+		}
+	}
+
+	mandatoryAttachment(arr : Array<any>){
+		arr.forEach(f => {
+			this.uploadFileArray.find(d => d.documentIdentifier == f).mandatory = true;
+		});
+	}
+
+	removeMandatoryAttachment(arr: Array<any>){
+		arr.forEach(f => {
+			this.uploadFileArray.find(d => d.documentIdentifier == f).mandatory = false;
+		});
 	}
 
 

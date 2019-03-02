@@ -73,7 +73,6 @@ export class BookingFileUploadComponent implements OnInit {
             }
             this.upload();
         }
-
     }
 
 	/**
@@ -84,41 +83,38 @@ export class BookingFileUploadComponent implements OnInit {
             this.commonService.openAlert("Warning", "Please Select File to Upload", "warning");
         } else {
             let fileTypes: string[] = ['application/pdf', 'image/jpg', 'image/jpeg'];
-
             let size = this.uploadModel.maxFileSizeInMB ? Math.floor(this.uploadModel.maxFileSizeInMB * 1000000) : 5000000;
             if (this.selectedFiles[0].size > size) {
-
                 this.fileName = ''
                 this.uploaded.emit(false);
+                this.canUpload = false;
                 this.commonService.openAlert("Warning", `File Size should be less than ${this.uploadModel.maxFileSizeInMB ? this.uploadModel.maxFileSizeInMB : 5} MB`, "warning");
-
+                this.fileInput.nativeElement.value = "";
                 return;
             } else if (this.selectedFiles[0].size <= 0) {
                 this.fileName = ''
                 this.uploaded.emit(false);
+                this.canUpload = false;
                 this.commonService.openAlert("Warning", `File must have some contents and size should not be 0 MB `, "warning");
+                this.fileInput.nativeElement.value = "";
                 return;
             } else if (!fileTypes.includes(this.selectedFiles[0].type)) {
-
                 this.fileName = ''
                 this.uploaded.emit(false);
+                this.canUpload = false;
                 this.commonService.openAlert("Warning", `File Type "${this.selectedFiles[0].type}" not valid, please select pdf/jpg/jpeg`, 'warning');
-
+                this.fileInput.nativeElement.value = "";
+                return;
             } else {
-
                 let formData = new FormData();
-
                 formData.append('fieldIdentifier', this.uploadModel.fieldIdentifier.toString());
                 formData.append('labelName', this.uploadModel.labelName.toString());
                 formData.append('formPart', this.uploadModel.formPart.toString());
                 formData.append('refNumber', this.uploadModel.refNumber.toString());
                 formData.append('variableName', this.uploadModel.variableName.toString());
-
                 this.progress.percentage = 0;
                 this.currentFileUpload = this.selectedFiles.item(0);
-
                 formData.append('file', this.currentFileUpload);
-
                 this.uploadFileService.processFileToServer(formData, setProgressBar => {
                     this.progress.percentage = setProgressBar;
                 }, successResponse => {
@@ -143,7 +139,8 @@ export class BookingFileUploadComponent implements OnInit {
         this.uploadFileService.getFileFromServiceForBookings(this.uploadModel.refNumber.toString(), this.id).subscribe(respData => {
             this.downLoadFile(respData, this.type);
         }, error => {
-            console.log(error);
+            this.commonService.openAlert("Error", "Error While Loading File", "warning");
+            return;
         });
     }
 
@@ -165,7 +162,7 @@ export class BookingFileUploadComponent implements OnInit {
 	 * Method is used to delete file using service form id.
 	 */
     deleteFile() {
-        if (this.uploadModel.refNumber) { //for coomon file upload
+        if (this.uploadModel.refNumber) { //for common file upload
             this.commonService.deleteAlert('Are you sure?', '', 'warning', '', performDelete => {
                 this.uploadFileService.deleteFileFromServiceForBookings(this.uploadModel.refNumber.toString(), this.id).subscribe(
                     (respData: any) => {
@@ -175,6 +172,7 @@ export class BookingFileUploadComponent implements OnInit {
                             this.fileName = '';
                             this.getFile = '';
                             this.priviewImage = '';
+                            this.uploaded.emit(false);
                         }
                     });
             });

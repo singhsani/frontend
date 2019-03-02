@@ -7,18 +7,18 @@
   </label> 
 
   <!-- Upload new file/Image-->
-  <label class="custom-file-upload" [hidden]="canUpload || (form.get('canEdit') && !form.get('canEdit').value)">
+  <label class="custom-file-upload" [hidden]="canUpload">
     <input #fileInput type="file" (change)="selectFile($event)" />
 
     <span class="attachment">
       <!-- <i class="fa fa-plus-square"></i> -->
       <mat-icon>add</mat-icon>
     </span>
-    <span [hidden]="canUpload" class="badge badge-primary ml-1">Attach File</span>
+    <span class="badge badge-primary ml-1">Attach File</span>
   </label>
 
   <!-- delete button -->
-  <button title="Delete File" [hidden]="!canUpload || (form.get('canEdit') && !form.get('canEdit').value) || currentFileUpload"
+  <button title="Delete File" [hidden]="!canUpload || currentFileUpload"
     type="button" mat-icon-button color="warn" (click)="deleteFile()" class="closeAttachFile">
     <mat-icon>delete</mat-icon>
   </button>

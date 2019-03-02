@@ -1,7 +1,7 @@
 <app-hos-title-bar [title]="'screen_title' | translate: translateKey">
-    <!-- <button class="pull-right" mat-stroked-button type="button" (click)="birthCertificateForm.patchValue(config.getBirthDummyJSON())">
+    <button class="pull-right" mat-stroked-button type="button" (click)="birthCertificateForm.patchValue(config.getBirthDummyJSON())">
         Patch Value
-    </button> -->
+    </button>
 </app-hos-title-bar>
 
 <mat-card class="formClass cardBorder">
@@ -461,7 +461,18 @@
                     {{'note' | translate:translateKey}} : {{'file_size_less_than_5_mb' | translate:translateKey}}
                 </div>
 
-                <div class="row">
+                <div class="row" >
+                    <div class="col-md-4" *ngFor="let doc of uploadFileArray">
+                        <!-- *ngIf="doc.requiredOnCitizenPortal && doc.isActive && showButtons" 
+                         birthCertificateForm.get('serviceDetail').get('serviceUploadDocuments').value-->
+                        <div >
+                            <label>{{translateService.getCurrentLanguage()=='en'? doc.documentLabelEn : doc.documentLabelGuj }} <span *ngIf="doc.mandatory">*</span></label>
+                            <app-hos-file-upload [form]="birthCertificateForm" [uploadModel]="doc"></app-hos-file-upload>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- <div class="row">
 
                     <div class="col-md-4" *ngIf="showButtons">
                         <label labelPosition="after">{{'resident_proof' | translate:translateKey}}{{!config.getFileObjectContained(uploadFileArray,
@@ -519,7 +530,7 @@
                         <app-hos-file-upload [form]="birthCertificateForm" [uploadModel]="setDataValue(1.8,'Court Order','1.1','courtOrder')"></app-hos-file-upload>
                     </div>
 
-                </div>
+                </div> -->
  
                 <div>
                     <app-hos-action-bar [stepInfo]="{step: 'final', next: 5, back: 3}" (saveEvent) = "isFormSaved = $event?.isSaved" (tabIndex)="onTabChange($event)" [form]="birthCertificateForm"

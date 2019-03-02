@@ -178,14 +178,14 @@ export class BookingUtils extends ComponentConfig{
     redirectToPayment(err: any, commonService: CommonService, bookingService: BookingService, form?: FormGroup, router?: Router){
         let payData = bookingService.proceedForPayment(err.error.data);
         commonService.commonAlert('Payment Details', '', 'info', 'Make Payment!', false, payData.html, cb => {
-            window.location.href = environment.adminUrl + `#/admin/payment-gateway?retUrl=${payData.payData.retUrl}&retPath=${payData.payData.retPath}`;
+            window.location.href = environment.adminUrl + `admin/payment-gateway?retUrl=${payData.payData.retUrl}&retPath=${payData.payData.retPath}`;
         }, rj => {
             let errHtml = `			
 						<div class="alert alert-danger">
 							Please Complete Payment, Otherwise the application will be considered as in-complete
 						</div>`
             commonService.commonAlert("Application Incomplete", "", 'warning', 'Make Payment!', false, errHtml, ccb => {
-                window.location.href = environment.adminUrl + `#/admin/payment-gateway?retUrl=${payData.payData.retUrl}&retPath=${payData.payData.retPath}`;
+                window.location.href = environment.adminUrl + `admin/payment-gateway?retUrl=${payData.payData.retUrl}&retPath=${payData.payData.retPath}`;
             }, arj => {
                 if(form && router){
                     form.disable();
