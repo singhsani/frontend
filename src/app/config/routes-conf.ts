@@ -341,6 +341,25 @@ const ROUTEMAIN = {
         'type': 'prcForm'
     },
 
+    /**
+     * Ticketing Facility Routes
+     */
+
+    'MYTICKETINGS': {
+        'main': 'my-ticketings',
+        'type': ''
+    },
+
+    'ZOO': {
+        'main': 'zoo',
+        'type': ''
+    },
+
+    'PLANETARIUM': {
+        'main': 'planetarium',
+        'type': 'prcForm'
+    },
+
     /* hospital routing configuration start*/
     'HOSPITALDASHBOARD': {
         'main': 'dashboard',
@@ -387,6 +406,12 @@ const ROUTEPREFIX = {
     /** start - citizen booking module routes configuretion */
     'BOOKINGMODULE': 'bookings',
 
+    /**
+     * start - citizen ticketings module routes configuretion
+     */
+
+    'TICKETINGSMODULES': 'ticketings',
+
     /** start - citizen inner-booking modules routes configuretion */
     'BANDMODULE': 'band',
     'GARDENMODULE': 'garden',
@@ -395,11 +420,12 @@ const ROUTEPREFIX = {
     'ATITHIGRUHMODULE': 'atithigruh',
     'STADIUMMODULE': 'stadium',
     'CHILDRENTHEATERMODULE': 'children-theater',
-    'SHOOTINGPERMISSIONMODULE': 'shootingPermission',
-    'SWIMMINGMODULE': 'swimming',
+    'SHOOTINGPERMISSIONMODULE': 'shooting-permission',
+    'SWIMMINGMODULE': 'swimming-pool',
     'THEATERMODULE': 'theater',
     'TOWNHALLMODULE': 'town-hall',
     'ZOOMODULE': 'zoo',
+    'PLANETARIUMMODULE': 'planetarium',
     /** end - citizen innner-booking modules routes configuretion */
 
     /** end - citizen booking module routes configuretion */
@@ -695,6 +721,23 @@ const ROUTESLIST = {
     //APPOINTMENT SLOT BOOKING
     'SLOTBOOKING': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.APPOINTMENT + '/' + ROUTEPREFIX.SCHEDULEAPPOINTMENT + '/' + ROUTEMAIN["SLOTBOOKING"].main
+    },
+
+
+    /** 
+     * Ticketing Routing Start
+     */
+
+    'ZOOBOOK': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TICKETINGSMODULES + '/' + ROUTEPREFIX.ZOOMODULE + '/' + ROUTEMAIN.ZOO.main
+    },
+
+    'PLANETARIUMBOOK': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TICKETINGSMODULES + '/' + ROUTEPREFIX.PLANETAREAMODULE + '/' + ROUTEMAIN.PLANETARIUM.main
+    },
+
+    'MYTICKETINGS': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TICKETINGSMODULES + '/' + ROUTEMAIN.MYTICKETINGS.main
     },
 
     /* BOOKING ROUTES ENDING */

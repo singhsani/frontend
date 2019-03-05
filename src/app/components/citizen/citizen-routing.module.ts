@@ -33,7 +33,8 @@ const routes: Routes = [
 			{ path: 'payment-response', component: GatewayResponseComponent, canActivate: [AuthGuard] },
 
 			{ path: ManageRoutes.getPrefixRoute('CERTIFICATESMODULE'), loadChildren: './certificates/certificates.module#CertificatesModule', canLoad: [AuthGuard] },
-			{ path: ManageRoutes.getPrefixRoute('BOOKINGMODULE'), loadChildren: './bookings/bookings.module#BookingsModule', canLoad: [AuthGuard] },
+			{ path: 'bookings', loadChildren: './bookings/bookings.module#BookingsModule', canLoad: [AuthGuard] },
+			{ path: 'ticketings', loadChildren: './ticketings/ticketings.module#TicketingsModule', canLoad: [AuthGuard] },
 			{ path: ManageRoutes.getPrefixRoute('LICENCEMODULE'), loadChildren: './licences/licences.module#LicencesModule', canLoad: [AuthGuard] },
 			{ path: ManageRoutes.getPrefixRoute('FIREFACILITIESMODULE'), loadChildren: './fire-facilities/fire-facilities.module#FireFacilitiesModule', canLoad: [AuthGuard] },
 			{ path: ManageRoutes.getPrefixRoute('GRIEVANCEMODULE'), loadChildren: './grievance/grievance.module#GrievanceModule' , canLoad: [AuthGuard] },

@@ -33,6 +33,15 @@ export class DashboardComponent implements OnInit {
 			"services": [
 
 				{
+					"code": "CANCELBOOKING",
+					"fieldView": "ALL",
+					"name": "My Bookings",
+					"gujName": "My Bookings",
+					"appointmentRequired": false,
+					"active": true
+				},
+
+				{
 					"code": "TOWNHALLBOOK",
 					"fieldView": "ALL",
 					"name": "Townhall",
@@ -94,17 +103,33 @@ export class DashboardComponent implements OnInit {
 			"id": 2,
 			"uniqueId": null,
 			"version": null,
-			"code": "BOOKINGMODULE",
+			"code": "TICKETINGMODULE",
 			"fieldView": "ALL",
 			"fieldList": null,
 			"name": "Ticketing Facilities",
 			"gujName": "Ticketing Facilities",
 			"services": [
 				{
+					"code": "MYTICKETINGS",
+					"fieldView": "ALL",
+					"name": "My Ticketings",
+					"gujName": "મારી ટિકિટિંગ્સ",
+					"appointmentRequired": false,
+					"active": true
+				},
+				{
 					"code": "ZOO",
 					"fieldView": "ALL",
 					"name": "Zoo",
 					"gujName": "પ્રાણી સંગ્રહાલય",
+					"appointmentRequired": false,
+					"active": false
+				},
+				{
+					"code": "PLANETARIUM",
+					"fieldView": "ALL",
+					"name": "Planetarium",
+					"gujName": "પ્લાનેટેરિયમ",
 					"appointmentRequired": false,
 					"active": false
 				}
