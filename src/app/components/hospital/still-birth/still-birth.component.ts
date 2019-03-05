@@ -15,6 +15,7 @@ import { ToastrService } from 'ngx-toastr';
 import { AmazingTimePickerService } from 'amazing-time-picker';
 import { Observable } from 'rxjs';
 import { HospitalConfig } from '../hospital-config';
+import { TranslateService } from '../../../shared/modules/translate/translate.service';
 
 @Component({
 	selector: 'app-still-birth',
@@ -29,9 +30,12 @@ export class StillBirthComponent implements OnInit {
 	@ViewChild('address') addressComp: any;
 
 	translateKey: string = 'stillBirthScreen';
-	uploadFileArray: Array<any> = [] =
-		[{ labelName: 'Resident Proof', fieldIdentifier: '1.1' },
-		{ labelName: 'Doctors Certificate', fieldIdentifier: '1.2' }];
+	// uploadFileArray: Array<any> = [] =
+	// 	[{ labelName: 'Resident Proof', fieldIdentifier: '1.1' },
+	// 	{ labelName: 'Doctors Certificate', fieldIdentifier: '1.2' }];
+
+	uploadFileArray: Array<any> = [];
+
 	/**
 	 * file upload related declaration
 	 */
@@ -81,6 +85,7 @@ export class StillBirthComponent implements OnInit {
 		public commonService: CommonService,
 		public fb: FormBuilder,
 		public toastrService: ToastrService,
+		public translateService: TranslateService,
 		public atp: AmazingTimePickerService) {
 	}
 
@@ -357,6 +362,7 @@ export class StillBirthComponent implements OnInit {
 	getStillBirthFormData() {
 		this.formService.getFormData(this.appId).subscribe(res => {
 			this.stillBirthCertificateForm.patchValue(res);
+			this.config.documentList(res, this.uploadFileArray);
 			this.childs = this.getChildData();
 
 			while (this.getChildData().length) {

@@ -6,6 +6,8 @@ import { CommonService } from '../../../../../shared/services/common.service';
 import { Location } from '@angular/common';
 import { FormsActionsService } from '../../../../../core/services/citizen/data-services/forms-actions.service';
 import { MatHorizontalStepper, MatStepLabel } from '@angular/material';
+import { BDCertificateConfig } from '../config/certificate-config';
+import { TranslateService } from '../../../../../shared/modules/translate/translate.service';
 
 @Component({
 	selector: 'app-birth-correction',
@@ -81,11 +83,13 @@ export class BirthCorrectionComponent implements OnInit {
 	/**
 	 * File upload validation array.
 	 */
-	uploadFileArray: Array<any> =
-		[{ labelName: 'Resident Proof', fieldIdentifier: '1.1' },
-		{ labelName: 'Kyc Document of Mother', fieldIdentifier: '1.2' },
-		{ labelName: 'Kyc Document of Father', fieldIdentifier: '1.3' },
-	]
+	// uploadFileArray: Array<any> =
+	// 	[{ labelName: 'Resident Proof', fieldIdentifier: '1.1' },
+	// 	{ labelName: 'Kyc Document of Mother', fieldIdentifier: '1.2' },
+	// 	{ labelName: 'Kyc Document of Father', fieldIdentifier: '1.3' },
+	// ]
+	uploadFileArray : Array<any> = [];
+
 
 	/**
 	 * Type of correction array.
@@ -102,6 +106,7 @@ export class BirthCorrectionComponent implements OnInit {
 	 */
 	apiCode: string;
 
+	config : BDCertificateConfig = new BDCertificateConfig();
 
 	/**
 	 * Constructor.
@@ -118,7 +123,8 @@ export class BirthCorrectionComponent implements OnInit {
 		private route: ActivatedRoute,
 		private location: Location,
 		private commonService: CommonService,
-		private formService: FormsActionsService
+		private formService: FormsActionsService,
+		public translateService : TranslateService
 	) { }
 
 	/**
@@ -180,6 +186,7 @@ export class BirthCorrectionComponent implements OnInit {
 		this.formService.getFormData(this.appId).subscribe(res => {
 
 			this.birthCorrectionForm.patchValue(res);
+			this.config.documentList(res, this.uploadFileArray);
 
 			let event = res.typeOfCorrection.code;
 
@@ -200,10 +207,9 @@ export class BirthCorrectionComponent implements OnInit {
 	 * @param data - original json data.
 	 */
 	createBirthCorrectionData(data) {
-		console.log(data);
 		this.formService.createFormData().subscribe(res => {
-			console.log(res)
 			this.birthCorrectionForm.patchValue(res);
+			this.config.documentList(res, this.uploadFileArray);
 			this.appId = res.serviceFormId;
 			let cururl = this.location.path().replace('false', this.appId.toString());
 			this.location.go(cururl);
@@ -213,7 +219,6 @@ export class BirthCorrectionComponent implements OnInit {
 			this.showApplicationSearch = false;
 			this.showButtons = true;
 			this.changeCorrection(this.regStatusForm.get('typeOfCorrection').get('code').value);
-			console.log(this.birthCorrectionForm.value);
 		})
 	}
 

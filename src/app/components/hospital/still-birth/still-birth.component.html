@@ -445,6 +445,17 @@
                 </div>
 
                 <div class="row">
+                    <div class="col-md-4" *ngFor="let doc of uploadFileArray">
+                        <!-- *ngIf="doc.requiredOnCitizenPortal && doc.isActive && showButtons" 
+                                         birthCertificateForm.get('serviceDetail').get('serviceUploadDocuments').value-->
+                        <div>
+                            <label>{{translateService.getCurrentLanguage()=='en'? doc.documentLabelEn : doc.documentLabelGuj }} <span *ngIf="doc.mandatory">*</span></label>
+                            <app-hos-file-upload [form]="stillBirthCertificateForm" [uploadModel]="doc"></app-hos-file-upload>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- <div class="row">
                     <div class="col-md-4" *ngIf="showButtons">
                         <label> {{'resident_proof' | translate:translateKey}}{{!getFileObjectContained('1.1')?'': '*'}}</label>
                         <app-hos-file-upload [form]="stillBirthCertificateForm" [uploadModel]="setDataValue(1.1,'Resident Proof','1.1','residentProof')"></app-hos-file-upload>
@@ -454,7 +465,7 @@
                         <label> {{'doctors_certificate' | translate:translateKey}}{{!getFileObjectContained('1.2')?'': '*'}}</label>
                         <app-hos-file-upload [form]="stillBirthCertificateForm" [uploadModel]="setDataValue(1.2,'Doctors Certificate','1.1','doctorsCertificate')"></app-hos-file-upload>
                     </div>
-                </div>
+                </div> -->
 
                 <div>
                     <app-hos-action-bar [stepInfo]="{step: 'final', next: 5, back: 3}" (saveEvent)="isFormSaved = $event?.isSaved" (tabIndex)="onTabChange($event)"

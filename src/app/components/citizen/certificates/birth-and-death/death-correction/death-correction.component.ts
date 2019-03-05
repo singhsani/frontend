@@ -11,6 +11,8 @@ import { CommonService } from '../../../../../shared/services/common.service';
 import { ValidationService } from '../../../../../shared/services/validation.service';
 import { FormsActionsService } from '../../../../../core/services/citizen/data-services/forms-actions.service';
 import * as _ from 'lodash';
+import { TranslateService } from '../../../../../shared/modules/translate/translate.service';
+import { BDCertificateConfig } from '../config/certificate-config';
 
 @Component({
 	selector: 'app-death-correction',
@@ -34,10 +36,12 @@ export class DeathCorrectionComponent implements OnInit {
 	/**
 	 * Array is used to file upload validation.
 	 */
-	uploadFileArray: Array<any> =
-		[{ labelName: 'Resident Proof', fieldIdentifier: '1.1' },
-		{ labelName: 'Kyc Document of Deceased', fieldIdentifier: '1.2' },
-		];
+	// uploadFileArray: Array<any> =
+	// 	[{ labelName: 'Resident Proof', fieldIdentifier: '1.1' },
+	// 	{ labelName: 'Kyc Document of Deceased', fieldIdentifier: '1.2' },
+	// 	];
+
+	uploadFileArray : Array<any> = [];
 
 	/**
 	 * death correction form group.
@@ -84,6 +88,8 @@ export class DeathCorrectionComponent implements OnInit {
 	 */
 	apiCode: string;
 
+	config: BDCertificateConfig
+
 	/**
 	 * Constructor.
 	 * @param fb - form builder.
@@ -99,7 +105,8 @@ export class DeathCorrectionComponent implements OnInit {
 		private commonService: CommonService,
 		private location: Location,
 		private route: ActivatedRoute,
-		private formService: FormsActionsService
+		private formService: FormsActionsService,
+		public translateService: TranslateService
 	) { }
 
 	/**
@@ -165,6 +172,7 @@ export class DeathCorrectionComponent implements OnInit {
 	getDeathCorrectionData() {
 		this.formService.getFormData(this.appId).subscribe(res => {
 			this.deathCorrectionForm.patchValue(res);
+			this.config.documentList(res, this.uploadFileArray);
 			this.showButtons = true;
 		});
 	}
@@ -178,6 +186,7 @@ export class DeathCorrectionComponent implements OnInit {
 			this.deathCorrectionFormControls();
 			this.appId = res.serviceFormId;
 			this.deathCorrectionForm.patchValue(res);
+			this.config.documentList(res, this.uploadFileArray);
 			let cururl = this.location.path().replace('false', this.appId.toString());
 			this.location.go(cururl);
 			this.getLookupData();
