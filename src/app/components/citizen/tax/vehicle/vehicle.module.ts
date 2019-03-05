@@ -12,7 +12,7 @@ import { ManageRoutes } from '../../../../config/routes-conf';
 import { AuthGuard } from '../../../../core/guard/auth.guard';
 
 const routes: Routes = [
-  { path: ManageRoutes.getMainRoute('VEHICLE') + '/:id/:apiCode', component: NewRegistrationComponent, canActivate: [AuthGuard] },
+  { path: 'new-registration/:id/:apiCode', component: NewRegistrationComponent, canActivate: [AuthGuard] },
 ];
 
 @NgModule({

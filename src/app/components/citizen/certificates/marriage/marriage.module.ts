@@ -16,8 +16,8 @@ import { MarriageDuplicateComponent } from './marriage-duplicate/marriage-duplic
 
 const routes: Routes = [
 	{ path: '', component: MarriageCreateComponent },
-	{ path: ManageRoutes.getMainRoute('HEL-MR') + '/:id/:apiCode', component: MarriageCreateComponent },
-	{ path: ManageRoutes.getMainRoute('HEL-DUPMR') + '/:id/:apiCode', component: MarriageDuplicateComponent },
+	{ path: 'marriageReg/:id/:apiCode', component: MarriageCreateComponent },
+	{ path: 'duplicateMarriageReg/:id/:apiCode', component: MarriageDuplicateComponent },
 ];
 
 @NgModule({

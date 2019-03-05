@@ -13,8 +13,8 @@ import { PecRegistrationComponent } from './pec-registration/pec-registration.co
 import { PrcRegistrationComponent } from './prc-registration/prc-registration.component';
 
 const routes: Routes = [
-	{ path: ManageRoutes.getMainRoute('PEC_REG') + '/:id/:apiCode', component: PecRegistrationComponent, canActivate: [AuthGuard] },
-	{ path: ManageRoutes.getMainRoute('PRC_REG'), component: PrcRegistrationComponent, canActivate: [AuthGuard] }
+	{ path: 'pec-registration/:id/:apiCode', component: PecRegistrationComponent, canActivate: [AuthGuard] },
+	{ path: 'prc-registration', component: PrcRegistrationComponent, canActivate: [AuthGuard] }
 ];
 
 @NgModule({
