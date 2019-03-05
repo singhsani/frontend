@@ -8,7 +8,7 @@ import { ValidationService } from '../../../../../shared/services/validation.ser
 import { FormsActionsService } from '../../../../../core/services/citizen/data-services/forms-actions.service';
 import { CommonService } from '../../.././../../shared/services/common.service';
 import { Location } from '@angular/common';
-import { CitizenConfig } from '../../../citizen-config';
+import { LicenseConfiguration } from '../../license-configuration';
 
 @Component({
 	selector: 'app-shop-lic-duplicate',
@@ -21,14 +21,10 @@ export class ShopLicDuplicateComponent implements OnInit {
 
 	shopLicDuplicateForm: FormGroup;
 	translateKey: string = 'shopLicDuplicateScreen';
-	public config = new CitizenConfig;
+	licenseConfiguration: LicenseConfiguration = new LicenseConfiguration();
 
 	formId: number;
 	apiCode: string;
-	private showButtons: boolean = false;
-	//File and image upload
-	uploadModel: any = {};
-	tabIndex: number = 0;
 
 	//lookup array
 	wardNo: Array<any> = [];
@@ -165,7 +161,7 @@ export class ShopLicDuplicateComponent implements OnInit {
 				createdDate: res.createdDate,
 				updatedDate: res.createdDate,
 				serviceType: res.serviceType,
-				refNumber:this.serachLicenceObj.searchLicenceNumber,
+				refNumber: this.serachLicenceObj.searchLicenceNumber,
 				// deptFileStatus: res.deptFileStatus,
 				serviceName: res.serviceName,
 				fileNumber: res.fileNumber,
@@ -183,8 +179,6 @@ export class ShopLicDuplicateComponent implements OnInit {
 				// loinumber: res.loinumber,
 			});
 
-			this.showButtons = true;
-
 			this.shopLicDuplicateForm.disable();
 			this.enableFielList();
 			let currentUrl = this.location.path().replace('false', this.formId.toString());
@@ -199,7 +193,6 @@ export class ShopLicDuplicateComponent implements OnInit {
 	getShopDuplicateData() {
 		this.formService.getFormData(this.formId).subscribe(res => {
 			this.shopLicDuplicateForm.patchValue(res);
-
 		});
 	}
 
@@ -209,12 +202,10 @@ export class ShopLicDuplicateComponent implements OnInit {
 	 */
 	handleErrorsOnSubmit(count) {
 		let step1 = 6;
-
 		if (count <= step1) {
-			this.tabIndex = 0;
+			this.licenseConfiguration.currentTabIndex = 0;
 			return false;
 		}
-
 	}
 
 	/**
@@ -225,14 +216,4 @@ export class ShopLicDuplicateComponent implements OnInit {
 			this.wardNo = res.SHOP_LIC_WARD_NO;
 		});
 	}
-
-	/**
-	 * This method use to get output event of tab change
-	 * @param evt - Tab index
-	 */
-	onTabChange(evt) {
-		this.tabIndex = evt;
-	}
-
-
 }

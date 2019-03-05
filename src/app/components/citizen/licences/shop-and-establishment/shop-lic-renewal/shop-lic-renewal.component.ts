@@ -11,7 +11,7 @@ import { CommonService } from '../../.././../../shared/services/common.service';
 
 import { TranslateService } from '../../../../../shared/modules/translate/translate.service';
 import * as _ from 'lodash';
-import { CitizenConfig } from '../../../citizen-config';
+import { LicenseConfiguration } from '../../license-configuration';
 
 @Component({
 	selector: 'app-shop-lic-renewal',
@@ -24,13 +24,10 @@ export class ShopLicRenewalComponent implements OnInit {
 
 	shopLicRenewalForm: FormGroup;
 	translateKey: string = 'shopRenewalScreen';
-	public config = new CitizenConfig;
+	licenseConfiguration: LicenseConfiguration = new LicenseConfiguration();
+
 	formId: number;
 	apiCode: string;
-	public showButtons: boolean = false;
-	//File and image upload
-	uploadModel: any = {};
-	tabIndex: number = 0;
 
 	//lookup array list
 	gender: Array<any> = [];
@@ -115,11 +112,9 @@ export class ShopLicRenewalComponent implements OnInit {
 		else {
 			this.serachLicenceObj.isDisplayRenewLicenceForm = true;
 			this.getShopRenewalData();
-
 			this.shopLicRenewalForm.disable();
 			this.enableFielList();
 		}
-
 	}
 
 	/**
@@ -169,7 +164,7 @@ export class ShopLicRenewalComponent implements OnInit {
 
 			});
 
-			this.showButtons = true;
+			this.licenseConfiguration.isAttachmentButtonsVisible = true;
 
 			(<FormArray>this.shopLicRenewalForm.get('employerFamilyList')).controls = [];
 			searchData.employerFamilyList.forEach(app => {
@@ -200,7 +195,7 @@ export class ShopLicRenewalComponent implements OnInit {
 			let currentUrl = this.location.path().replace('false', this.formId.toString());
 			this.location.go(currentUrl);
 			res.serviceDetail.serviceUploadDocuments.forEach(app => {
-				(<FormArray>this.shopLicRenewalForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.createDocumentsGrp(app));
+				(<FormArray>this.shopLicRenewalForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.licenseConfiguration.createDocumentsGrp(app));
 			});
 			this.requiredDocumentList();
 		});
@@ -232,7 +227,7 @@ export class ShopLicRenewalComponent implements OnInit {
 	getShopRenewalData() {
 		this.formService.getFormData(this.formId).subscribe(res => {
 			this.shopLicRenewalForm.patchValue(res);
-			this.showButtons = true;
+			this.licenseConfiguration.isAttachmentButtonsVisible = true;
 			res.employerFamilyList.forEach(app => {
 				(<FormArray>this.shopLicRenewalForm.get('employerFamilyList')).push(this.createArray(app));
 			});
@@ -247,9 +242,9 @@ export class ShopLicRenewalComponent implements OnInit {
 			}); */
 			this.getCategoryDropdownData(this.shopLicRenewalForm.get('noOfHumanWorking').value.code);
 			this.getSubCategoryDropdownData(this.shopLicRenewalForm.get('categoryOfBusiness').value.code);
-			
+
 			res.serviceDetail.serviceUploadDocuments.forEach(app => {
-				(<FormArray>this.shopLicRenewalForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.createDocumentsGrp(app));
+				(<FormArray>this.shopLicRenewalForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.licenseConfiguration.createDocumentsGrp(app));
 			});
 			this.requiredDocumentList();
 		});
@@ -413,28 +408,6 @@ export class ShopLicRenewalComponent implements OnInit {
 		});
 	}
 
-	/**
-	 * This Method for create attachment array in service detail
-	 * @param data : value of array
-	 */
-	createDocumentsGrp(data?: any): FormGroup {
-		return this.fb.group({
-			dependentFieldName: [data.dependentFieldName ? data.dependentFieldName : null],
-			documentIdentifier: [data.documentIdentifier ? data.documentIdentifier : null],
-			documentKey: [data.documentKey ? data.documentKey : null],
-			documentLabelEn: [data.documentLabelEn ? data.documentLabelEn : null],
-			documentLabelGuj: [data.documentLabelGuj ? data.documentLabelGuj : null],
-			fieldIdentifier: [data.fieldIdentifier ? data.fieldIdentifier : null],
-			formPart: [data.formPart ? data.formPart : null],
-			id: [data.id ? data.id : null],
-			code: [data.code ? data.code : null],
-			isActive: [data.isActive],
-			mandatory: [data.mandatory ? data.mandatory : false],
-			maxFileSizeInMB: [data.maxFileSizeInMB ? data.maxFileSizeInMB : 5],
-			requiredOnAdminPortal: [data.requiredOnAdminPortal],
-			requiredOnCitizenPortal: [data.requiredOnCitizenPortal]
-		});
-	}
 
 	/**
 	 * Method is create required document array
@@ -581,102 +554,59 @@ export class ShopLicRenewalComponent implements OnInit {
 	 * @param persontype : person array type 
 	 */
 	createArray(data?: any, persontype?: string) {
-
 		return this.fb.group({
 			serviceFormId: this.formId,
 			id: data.id ? data.id : null,
-			name: [data.name ? data.name : null, [Validators.maxLength(100)]],
+			name: [data.name ? data.name : null, [Validators.required, Validators.maxLength(100)]],
 			/* contactNo: [data.contactNo ? data.contactNo : null],
 			email: [data.email ? data.email : null],
 			aadhaarNo: [data.aadhaarNo ? data.aadhaarNo : null], */
-			address: [data.address ? data.address : null, [Validators.maxLength(150)]],
+			address: [data.address ? data.address : null, [Validators.required, Validators.maxLength(150)]],
 			serviceCode: "SHOP-REN",
 			relationship: this.fb.group({
-				code: [data.relationship ? (data.relationship.code ? data.relationship.code : null) : null]//
+				//code: [data.relationship ? (data.relationship.code ? data.relationship.code : null) : null]//
+				code: [data.relationship ? (data.relationship.code ? data.relationship.code : null) : null, [Validators.required]],
 			}),
 			gender: this.fb.group({
-				code: [data.gender ? (data.gender.code ? data.gender.code : null) : null]
+				//code: [data.gender ? (data.gender.code ? data.gender.code : null) : null]
+				code: [data.gender ? (data.gender.code ? data.gender.code : null) : null, [Validators.required]],
 			}),
-			age: [data.age ? data.age : null, [ValidationService.employeeAgeValidate]],
+			age: [data.age ? data.age : null, [Validators.required, ValidationService.employeeAgeValidate]],
 			// employee: [data.employee ? data.employee : null],
 			personType: [data.personType ? data.personType : null]
 		})
+	}
 
-	}
-	/**
-     * Method is used to set data value to upload method.
-     * @param indentifier - file identifier
-     * @param labelName - file label name.
-     * @param formPart - file form part
-     * @param variableName - file variable name.
-     */
-	setDataValue(indentifier: number, labelName: string, formPart: string, variableName: string) {
-		this.uploadModel = {
-			fieldIdentifier: indentifier.toString(),
-			labelName: labelName,
-			formPart: formPart,
-			variableName: variableName,
-			serviceFormId: this.formId,
-		}
-		return this.uploadModel;
-	}
 
 	/**
  * This method required for final form submition.
  * @param flag - flag of invalid control.
  */
 	handleErrorsOnSubmit(flag) {
-
-		let step0 = 16;
-		let step1 = 28;
-		let step2 = 36;
-		let step3 = 42;
-		let step4 = 49;
-		let step5 = 57;
-		let step6 = 61;
-
-		if (flag != null) {
-			//Check validation for step by step
-			let count = flag;
-
-			if (count <= step0) {
-				this.tabIndex = 0;
-				return false;
-			} else if (count <= step1) {
-				this.tabIndex = 1;
-				return false;
-			} else if (count <= step2) {
-				this.tabIndex = 2;
-				return false;
-			} else if (count <= step3) {
-				this.tabIndex = 3;
-				return false;
-			} else if (count <= step4) {
-				this.tabIndex = 4;
-				return false;
-			} else if (count <= step5) {
-				this.tabIndex = 5;
-				return false;
-			} else if (count <= step6) {
-				this.tabIndex = 6;
-				return false;
-			}
-			// else if (count == 67) {
-			// 	this.checkReligion();
-			// 	return false;
-			// }
-			else {
-				console.log("else condition");
-			}
-
+		switch (true) {
+			case flag <= 16:
+				this.licenseConfiguration.currentTabIndex = 0;
+				break;
+			case flag <= 28:
+				this.licenseConfiguration.currentTabIndex = 1;
+				break;
+			case flag <= 36:
+				this.licenseConfiguration.currentTabIndex = 2;
+				break;
+			case flag <= 42:
+				this.licenseConfiguration.currentTabIndex = 3;
+				break;
+			case flag <= 49:
+				this.licenseConfiguration.currentTabIndex = 4;
+				break;
+			case flag <= 57:
+				this.licenseConfiguration.currentTabIndex = 5;
+				break;
+			case flag <= 61:
+				this.licenseConfiguration.currentTabIndex = 6;
+				break;
+			default:
+				this.licenseConfiguration.currentTabIndex = 0;
 		}
-	}
-
-	/**
-	 * This method use to get output event of tab change
-	 * @param evt - Tab index
-	 */
-	onTabChange(evt) {
-		this.tabIndex = evt;
 	}
 }

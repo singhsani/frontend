@@ -19,11 +19,11 @@ import { FilterAttachmentMFPipe } from './common/pipes/filter-attachment-mf.pipe
 
 const routes: Routes = [
 	{ path: '', component: MuttonFishNewComponent },
-	{ path: ManageRoutes.getMainRoute('MF-LIC') + '/:id/:apiCode', component: MuttonFishNewComponent },
-	{ path: ManageRoutes.getMainRoute('MF-REN') + '/:id/:apiCode', component: MuttonFishRenewalComponent },
-	{ path: ManageRoutes.getMainRoute('MF-CAN') + '/:id/:apiCode', component: MuttonFishCancellationComponent },
-	{ path: ManageRoutes.getMainRoute('MF-TRA') + '/:id/:apiCode', component: MuttonFishTransferComponent },
-	{ path: ManageRoutes.getMainRoute('MF-DUP') + '/:id/:apiCode', component: MuttonFishDuplicateComponent },
+	{ path: 'MFLicense/:id/:apiCode', component: MuttonFishNewComponent },
+	{ path: 'MFRenewal/:id/:apiCode', component: MuttonFishRenewalComponent },
+	{ path: 'MFCancellation/:id/:apiCode', component: MuttonFishCancellationComponent },
+	{ path: 'MFTransfer/:id/:apiCode', component: MuttonFishTransferComponent },
+	{ path: 'MFDuplicate/:id/:apiCode', component: MuttonFishDuplicateComponent },
 ];
 
 @NgModule({

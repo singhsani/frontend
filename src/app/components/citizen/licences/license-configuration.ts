@@ -1,5 +1,5 @@
 import { ComponentConfig } from './../../component-config';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, FormControl, FormArray } from '@angular/forms';
 import * as _ from 'lodash';
 
 export class LicenseConfiguration extends ComponentConfig {
