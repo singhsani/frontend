@@ -753,8 +753,7 @@ export class BirthRegistrationComponent implements OnInit {
 				}
 
 			}
-		}
-		);
+		});
 	}
 
 	/**

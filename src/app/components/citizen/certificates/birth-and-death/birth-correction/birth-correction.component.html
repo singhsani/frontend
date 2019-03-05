@@ -185,7 +185,17 @@
                         {{'note' | translate:translateKey}} : {{'file_size_less_than_5_mb' | translate:translateKey}}
                     </div>
 
-                    <div class="row ">
+                    <div class="row">
+                        <div class="col-md-4" *ngFor="let doc of uploadFileArray">
+                            <div>
+                                <label>{{translateService.getCurrentLanguage()=='en'? doc.documentLabelEn : doc.documentLabelGuj
+                                    }} <span *ngIf="doc.mandatory">*</span></label>
+                                <app-hos-file-upload [form]="birthCorrectionForm" [uploadModel]="doc"></app-hos-file-upload>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- <div class="row ">
 
                         <div class="col-md-4 " *ngIf="showButtons ">
                             <label labelPosition="after ">{{'resident_proof' | translate:translateKey}}{{!getFileObjectContained('1.1')?'':
@@ -208,7 +218,7 @@
 					 'kycFather') "></file-upload>
                         </div>
 
-                    </div>
+                    </div> -->
 
                     <app-action-bar [uploadFiles]="uploadFileArray" [form]="birthCorrectionForm" [stepInfo]="{step: 'final', next: 2, back: 0}"
                         (tabIndex)="onTabChange($event)" (handleErrors)="handleErrorsOnSubmit($event) "></app-action-bar>
