@@ -19,20 +19,20 @@ import { FireCertificateComponent } from './fire-certificate/fire-certificate.co
 
 const routes: Routes = [
 	{ path: '', component: ProvisionalNocComponent },
-	{ path: ManageRoutes.getMainRoute('FS-PROVI') + '/:id/:apiCode', component: ProvisionalNocComponent },
-	{ path: ManageRoutes.getMainRoute('FS-FINAL') + '/:id/:apiCode', component: FinalFireNocComponent },
-	{ path: ManageRoutes.getMainRoute('FS-REN') + '/:id/:apiCode', component: FireRenewalNocComponent },
-	{ path: ManageRoutes.getMainRoute('FS-WATER') + '/:id/:apiCode', component: WaterTankerAppComponent },
-	{ path: ManageRoutes.getMainRoute('FS-BODY') + '/:id/:apiCode', component: DeadBodyWanComponent },
-	{ path: ManageRoutes.getMainRoute('FS-TEMPSTRUCT') + '/:id/:apiCode', component: TempStructureNocComponent },
-	{ path: ManageRoutes.getMainRoute('FS-FIREWORKSHOP') + '/:id/:apiCode', component: TempFireworksNocComponent },
-	{ path: ManageRoutes.getMainRoute('FS-GAS') + '/:id/:apiCode', component: GasConnectionNocComponent },
-	{ path: ManageRoutes.getMainRoute('FS-ELE') + '/:id/:apiCode', component: EleConnectionNocComponent },
-	{ path: ManageRoutes.getMainRoute('FS-NAV') + '/:id/:apiCode', component: NavratriNocComponent },
-	{ path: ManageRoutes.getMainRoute('FS-REVISED') + '/:id/:apiCode', component: RevisedFireNOCComponent },
-	{ path: ManageRoutes.getMainRoute('FS-PROVI-HOSPITAL') + '/:id/:apiCode', component: ProHospitalNocComponent },
-	{ path: ManageRoutes.getMainRoute('FS-FINAL-HOSPITAL') + '/:id/:apiCode', component: FinalHospitalNocComponent },
-	{ path: ManageRoutes.getMainRoute('FS_FIRE_CERTIFICATE') + '/:id/:apiCode', component: FireCertificateComponent }
+	{ path: 'provisionalFireNoc/:id/:apiCode', component: ProvisionalNocComponent },
+	{ path: 'finalFireNoc/:id/:apiCode', component: FinalFireNocComponent },
+	{ path: 'renewalFireNoc/:id/:apiCode', component: FireRenewalNocComponent },
+	{ path: 'waterTankerSupply/:id/:apiCode', component: WaterTankerAppComponent },
+	{ path: 'deadBodyWan/:id/:apiCode', component: DeadBodyWanComponent },
+	{ path: 'temporaryStructureNoc/:id/:apiCode', component: TempStructureNocComponent },
+	{ path: 'temporaryFireworkShopNoc/:id/:apiCode', component: TempFireworksNocComponent },
+	{ path: 'gasConnectionNoc/:id/:apiCode', component: GasConnectionNocComponent },
+	{ path: 'electricConnectionNoc/:id/:apiCode', component: EleConnectionNocComponent },
+	{ path: 'navratriNoc/:id/:apiCode', component: NavratriNocComponent },
+	{ path: 'revisedFireNoc/:id/:apiCode', component: RevisedFireNOCComponent },
+	{ path: 'provisionalHospitalNoc/:id/:apiCode', component: ProHospitalNocComponent },
+	{ path: 'finalHospitalNoc/:id/:apiCode', component: FinalHospitalNocComponent },
+	{ path: 'fireCertificate/:id/:apiCode', component: FireCertificateComponent }
 ];
 
 @NgModule({
