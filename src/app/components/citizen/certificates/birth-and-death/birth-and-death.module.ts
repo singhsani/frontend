@@ -22,13 +22,13 @@ import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
 	{ path: '', component: NoBirthRecordComponent },
-	{ path: ManageRoutes.getMainRoute('HEL-NRCBR') + '/:id/:apiCode', component: NoBirthRecordComponent },
-	{ path: ManageRoutes.getMainRoute('HEL-NRCDR') + '/:id/:apiCode', component: NoDeathRecordComponent },
-	{ path: ManageRoutes.getMainRoute('HEL-CR') + '/:id/:apiCode', component: CremationCertificateComponent },
-	{ path: ManageRoutes.getMainRoute('HEL-DUPBR') + '/:id/:apiCode', component: BirthDuplicateComponent },
-	{ path: ManageRoutes.getMainRoute('HEL-DUPDR') + '/:id/:apiCode', component: DeathDuplicateComponent },
-	{ path: ManageRoutes.getMainRoute('HEL-BCR') + '/:id/:apiCode', component: BirthCorrectionComponent },
-	{ path: ManageRoutes.getMainRoute('HEL-DCR') + '/:id/:apiCode', component: DeathCorrectionComponent },
+	{ path: 'NRCBirth/:id/:apiCode', component: NoBirthRecordComponent },
+	{ path: 'NRCDeath/:id/:apiCode', component: NoDeathRecordComponent },
+	{ path: 'cremationReg/:id/:apiCode', component: CremationCertificateComponent },
+	{ path: 'duplicateBirthReg/:id/:apiCode', component: BirthDuplicateComponent },
+	{ path: 'duplicateDeathReg/:id/:apiCode', component: DeathDuplicateComponent },
+	{ path: 'birthCorrectionReg/:id/:apiCode', component: BirthCorrectionComponent },
+	{ path: 'deathCorrectionReg/:id/:apiCode', component: DeathCorrectionComponent },
 ];
 
 @NgModule({

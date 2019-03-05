@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { AuthGuard } from './../../core/guard/auth.guard';
-import { ManageRoutes } from '../../config/routes-conf';
 
 /* Import citizen components other than auth start */
 import { HomeLayoutComponent } from './../../layouts/home-layout/home-layout.component';
@@ -20,30 +19,30 @@ import { GatewayResponseComponent } from './../../shared/components/gateway-resp
 const routes: Routes = [
 
 	{
-		path: ManageRoutes.getPrefixRoute('CITIZENMODULE'), component: HomeLayoutComponent, canActivate: [AuthGuard],
+		path: 'citizen', component: HomeLayoutComponent, canActivate: [AuthGuard],
 		children: [
-			{ path: '', redirectTo: ManageRoutes.getMainRoute('CITIZENDASHBOARD'), pathMatch: 'full' },
-			{ path: ManageRoutes.getMainRoute('CITIZENDASHBOARD'), component: DashboardComponent, canActivate: [AuthGuard] },
-			{ path: ManageRoutes.getMainRoute('CITIZENMYAPPS'), component: MyApplicationsComponent, canActivate: [AuthGuard] },
-			{ path: ManageRoutes.getMainRoute('CITIZENMYRESOURCE'), component: MyResourceComponent, canActivate: [AuthGuard] },
-			{ path: ManageRoutes.getMainRoute('CITIZENMYTRANSACTIONS'), component: TransactionsComponent, canActivate: [AuthGuard] },
-			{ path: ManageRoutes.getMainRoute('CITIZENMYPROFILE'), component: UserProfileComponent, canActivate: [AuthGuard] },
-			{ path: ManageRoutes.getMainRoute('PAYMENTGATEWAYRESPONSE'), component: PaymentResponsePageComponent, canActivate: [AuthGuard] },
-			{ path: ManageRoutes.getMainRoute('CITIZENPAYABLESERVICES'), component: PayableServicesComponent, canActivate: [AuthGuard] },
+			{ path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+			{ path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
+			{ path: 'my-applications', component: MyApplicationsComponent, canActivate: [AuthGuard] },
+			{ path: 'my-resource', component: MyResourceComponent, canActivate: [AuthGuard] },
+			{ path: 'my-transactions', component: TransactionsComponent, canActivate: [AuthGuard] },
+			{ path: 'my-profile', component: UserProfileComponent, canActivate: [AuthGuard] },
+			{ path: 'payment-gateway-response', component: PaymentResponsePageComponent, canActivate: [AuthGuard] },
+			{ path: 'payable-services', component: PayableServicesComponent, canActivate: [AuthGuard] },
 			{ path: 'payment-response', component: GatewayResponseComponent, canActivate: [AuthGuard] },
 
-			{ path: ManageRoutes.getPrefixRoute('CERTIFICATESMODULE'), loadChildren: './certificates/certificates.module#CertificatesModule', canLoad: [AuthGuard] },
+			{ path: 'certificates', loadChildren: './certificates/certificates.module#CertificatesModule', canLoad: [AuthGuard] },
 			{ path: 'bookings', loadChildren: './bookings/bookings.module#BookingsModule', canLoad: [AuthGuard] },
 			{ path: 'ticketings', loadChildren: './ticketings/ticketings.module#TicketingsModule', canLoad: [AuthGuard] },
-			{ path: ManageRoutes.getPrefixRoute('LICENCEMODULE'), loadChildren: './licences/licences.module#LicencesModule', canLoad: [AuthGuard] },
-			{ path: ManageRoutes.getPrefixRoute('FIREFACILITIESMODULE'), loadChildren: './fire-facilities/fire-facilities.module#FireFacilitiesModule', canLoad: [AuthGuard] },
-			{ path: ManageRoutes.getPrefixRoute('GRIEVANCEMODULE'), loadChildren: './grievance/grievance.module#GrievanceModule' , canLoad: [AuthGuard] },
-			{ path: ManageRoutes.getPrefixRoute('TAXMODULE'), loadChildren: './tax/tax.module#TaxModule', canLoad: [AuthGuard] },
-			{ path: ManageRoutes.getPrefixRoute('APPOINTMENT'), loadChildren: './appointment/appointment.module#AppointmentModule', canLoad: [AuthGuard] },
+			{ path: 'licence', loadChildren: './licences/licences.module#LicencesModule', canLoad: [AuthGuard] },
+			{ path: 'fire-facilities', loadChildren: './fire-facilities/fire-facilities.module#FireFacilitiesModule', canLoad: [AuthGuard] },
+			{ path: 'grievance', loadChildren: './grievance/grievance.module#GrievanceModule' , canLoad: [AuthGuard] },
+			{ path: 'tax', loadChildren: './tax/tax.module#TaxModule', canLoad: [AuthGuard] },
+			{ path: 'appointmant', loadChildren: './appointment/appointment.module#AppointmentModule', canLoad: [AuthGuard] },
 			{ path: 'gujPOC', component: GujPocComponent, canActivate: [AuthGuard] }
 		]
 	},
-	{ path: ManageRoutes.getPrefixRoute('CITIZENAUTHMODULE'), loadChildren: './auth/auth.module#AuthModule' }
+	{ path: 'auth', loadChildren: './auth/auth.module#AuthModule' }
 
 ];
 

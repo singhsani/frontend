@@ -7,13 +7,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../../shared/shared.module';
 import { CoreModule } from '../../../core/core.module';
 import { AuthGuard } from './../../../core/guard/auth.guard';
-import { ManageRoutes } from './../../../config/routes-conf';
 /* Import all shared, core and routing module end */
 
 const routes: Routes = [
-  { path: '', redirectTo: ManageRoutes.getPrefixRoute('BIRTHANDDEATHMODULE'), pathMatch: 'full' },
-  { path: ManageRoutes.getPrefixRoute('BIRTHANDDEATHMODULE'), loadChildren: './birth-and-death/birth-and-death.module#BirthAndDeathModule', canLoad: [AuthGuard] },
-  { path: ManageRoutes.getPrefixRoute('MARRIAGEMODULE'), loadChildren: './marriage/marriage.module#MarriageModule', canLoad: [AuthGuard] },
+  { path: '', redirectTo: 'birth-death', pathMatch: 'full' },
+  { path: 'birth-death', loadChildren: './birth-and-death/birth-and-death.module#BirthAndDeathModule', canLoad: [AuthGuard] },
+  { path: 'marriage', loadChildren: './marriage/marriage.module#MarriageModule', canLoad: [AuthGuard] },
 ];
 
 

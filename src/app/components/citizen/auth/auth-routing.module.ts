@@ -15,15 +15,15 @@ import { LoginLayoutComponent } from './../../../layouts/login-layout/login-layo
 
 const routes: Routes = [
 	{
-		path: ManageRoutes.getPrefixRoute('CITIZENAUTHMODULE'), component: LoginLayoutComponent,
+		path: 'auth', component: LoginLayoutComponent,
 		children: [
-			{ path: '', redirectTo: ManageRoutes.getMainRoute('CITIZENAUTHLOGIN'), pathMatch: 'full' },
-			{ path: ManageRoutes.getMainRoute('CITIZENAUTHLOGIN'), component: LoginComponent },
-			{ path: ManageRoutes.getMainRoute('CITIZENAUTHSIGNUP'), component: SignUpComponent },
-			{ path: ManageRoutes.getMainRoute('CITIZENAUTHVERIFY'), component: UserVerificationComponent },
-			{ path: ManageRoutes.getMainRoute('CITIZENAUTHFORGOTPASS'), component: ForgotPasswordComponent },
-			{ path: ManageRoutes.getMainRoute('CITIZENAUTHRESETPASS'), component: ResetPasswordComponent },
-			{ path: ManageRoutes.getMainRoute('CITIZENAUTHLOGINTHROUGHADMIN'), component: LoginThroughAdminComponent },
+			{ path: '', redirectTo: 'login', pathMatch: 'full' },
+			{ path: 'login', component: LoginComponent },
+			{ path: 'signup', component: SignUpComponent },
+			{ path: 'user-verify', component: UserVerificationComponent },
+			{ path: 'forgot-password', component: ForgotPasswordComponent },
+			{ path: 'reset-password', component: ResetPasswordComponent },
+			{ path: 'login-through-admin', component: LoginThroughAdminComponent },
 		]
 	}
 ];
