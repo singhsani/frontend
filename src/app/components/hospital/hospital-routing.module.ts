@@ -22,9 +22,9 @@ const routes: Routes = [
 		children: [
 			{ path: '', redirectTo: 'dashboard', pathMatch: 'full' },
 			{ path: 'dashboard', component: HospitalDashboardComponent, canActivate: [HospitalGuard] },
-			{ path: 'birthReg' + '/:id/:apiCode', component: BirthRegistrationComponent, canActivate: [HospitalGuard], canDeactivate: [CanDeactivateGuard] },
-			{ path: 'deathReg' + '/:id/:apiCode', component: DeathRegistrationComponent, canActivate: [HospitalGuard], canDeactivate : [CanDeactivateGuard] },
-			{ path: 'stillBirthReg' + '/:id/:apiCode', component: StillBirthComponent, canActivate: [HospitalGuard], canDeactivate: [CanDeactivateGuard]  },
+			{ path: 'birthReg/:id/:apiCode', component: BirthRegistrationComponent, canActivate: [HospitalGuard], canDeactivate: [CanDeactivateGuard] },
+			{ path: 'deathReg/:id/:apiCode', component: DeathRegistrationComponent, canActivate: [HospitalGuard], canDeactivate : [CanDeactivateGuard] },
+			{ path: 'stillBirthReg/:id/:apiCode', component: StillBirthComponent, canActivate: [HospitalGuard], canDeactivate: [CanDeactivateGuard]  },
 			{ path: 'my-applications', component: HosMyApplicationsComponent, canActivate: [HospitalGuard] },
 			{ path: 'payment-gateway-response', component: HosPaymentResponsePageComponent, canActivate: [HospitalGuard] },
 		]
