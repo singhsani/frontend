@@ -9,7 +9,7 @@ import { FormsActionsService } from '../../../../../core/services/citizen/data-s
 import * as _ from 'lodash';
 import { CommonService } from '../../.././../../shared/services/common.service';
 import { Location } from '@angular/common';
-import { CitizenConfig } from '../../../citizen-config';
+import { LicenseConfiguration } from '../../license-configuration';
 
 @Component({
 	selector: 'app-shop-lic-cancellation',
@@ -22,15 +22,10 @@ export class ShopLicCancellationComponent implements OnInit {
 
 	shopCancellationForm: FormGroup;
 	translateKey: string = 'shopCancellationScreen';
-	public config = new CitizenConfig;
+	licenseConfiguration: LicenseConfiguration = new LicenseConfiguration();
 
 	formId: number;
 	apiCode: string;
-	private showButtons: boolean = false;
-	//File and image upload
-	uploadModel: any = {};
-	tabIndex: number = 0;
-
 	//lookup array
 	wardNo: Array<any> = [];
 	uploadFileArray = [];
@@ -185,9 +180,6 @@ export class ShopLicCancellationComponent implements OnInit {
 				attachments: [],
 
 			});
-
-			this.showButtons = true;
-
 			this.shopCancellationForm.disable();
 			this.enableFielList();
 			let currentUrl = this.location.path().replace('false', this.formId.toString());
@@ -202,7 +194,6 @@ export class ShopLicCancellationComponent implements OnInit {
 	getShopCancellationData() {
 		this.formService.getFormData(this.formId).subscribe(res => {
 			this.shopCancellationForm.patchValue(res);
-
 		});
 	}
 
@@ -212,9 +203,8 @@ export class ShopLicCancellationComponent implements OnInit {
 	 */
 	handleErrorsOnSubmit(count) {
 		let step1 = 6;
-
 		if (count <= step1) {
-			this.tabIndex = 0;
+			this.licenseConfiguration.currentTabIndex = 0;
 			return false;
 		}
 
@@ -229,12 +219,6 @@ export class ShopLicCancellationComponent implements OnInit {
 		});
 	}
 
-    /**
-	 * This method use to get output event of tab change
-	 * @param evt - Tab index
-	 */
-	onTabChange(evt) {
-		this.tabIndex = evt;
-	}
+
 
 }

@@ -1,7 +1,7 @@
 <app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
 <mat-card class="formClass cardBorder">
 	<form [formGroup]="shopLicNewForm">
-		<mat-tab-group [(selectedIndex)]="tabIndex" dynamicHeight="true" mat-stretch-tabs class="stepperNav">
+		<mat-tab-group [(selectedIndex)]="licenseConfiguration.currentTabIndex" dynamicHeight="true" mat-stretch-tabs class="stepperNav">
 
 			<!-- step 1 Starts -->
 			<mat-tab>
@@ -111,7 +111,7 @@
 						<control-messages [control]="shopLicNewForm.get('situationOfOffice')"></control-messages>
 					</mat-form-field>
 				</div>
-				<app-action-bar [form]="shopLicNewForm" (tabIndex)="onTabChange($event)"
+				<app-action-bar [form]="shopLicNewForm" (tabIndex)="licenseConfiguration.onFormTabChange($event)"
 					[stepInfo]="{step: 'step1', next: 1, back: 0}"></app-action-bar>
 			</mat-tab>
 			<!-- step 1 Ends -->
@@ -233,7 +233,7 @@
 							placeholder="{{ 'date_of_commencement_of_business' | translate:translateKey }}">
 						<mat-datepicker-toggle matSuffix [for]="DateOfCommencementOfBusiness"></mat-datepicker-toggle>
 						<mat-datepicker touchUi="true" #DateOfCommencementOfBusiness></mat-datepicker>
-						<div align="end" class="default-show-hint mat-hint mat-right">{{config.DATE_HINT_MSG}}</div>
+						<div align="end" class="default-show-hint mat-hint mat-right">{{licenseConfiguration.DATE_HINT_MSG}}</div>
 						<control-messages [control]="shopLicNewForm.get('commencementOfBusinessDate')">
 						</control-messages>
 					</mat-form-field>
@@ -285,7 +285,7 @@
 						</div>
 					</div> -->
 
-				<app-action-bar [form]="shopLicNewForm" (tabIndex)="onTabChange($event)"
+				<app-action-bar [form]="shopLicNewForm" (tabIndex)="licenseConfiguration.onFormTabChange($event)"
 					[stepInfo]="{step: 'step2', next: 2, back: 0}"></app-action-bar>
 			</mat-tab>
 			<!-- step 2 Ends -->
@@ -302,6 +302,7 @@
 					</div>
 					<div class="col-md-2 pt-3" style="text-align: right;">
 						<button type="button"
+							*ngIf="shopLicNewForm.get('canEdit').value"
 							[disabled]="!(shopLicNewForm.get('employerFamilyList')['controls'].length < 5)"
 							matTooltip="{{'add_more' | translate:translateKey}}" mat-raised-button color="primary"
 							(click)="addMorePerson('EMPLOYER_FAMILY')">{{'add'| translate:translateKey}}</button>
@@ -411,8 +412,8 @@
 											<mat-icon title="Delete">delete</mat-icon>
 										</button>
 										<button mat-icon-button color="warn" *ngIf="item.isEditMode"
-											(click)="cancelRecord(item)">
-											<mat-icon title="Delete">cancel</mat-icon>
+											(click)="cancelRecord(item,indx)">
+											<mat-icon title="Cancel">cancel</mat-icon>
 										</button>
 									</td>
 								</tr>
@@ -485,7 +486,7 @@
 						</div>
 					</div> -->
 				</div>
-				<app-action-bar [form]="shopLicNewForm" (tabIndex)="onTabChange($event)"
+				<app-action-bar [form]="shopLicNewForm" (tabIndex)="licenseConfiguration.onFormTabChange($event)"
 					[stepInfo]="{step: 'step3', next: 3, back: 1}"></app-action-bar>
 			</mat-tab>
 			<!-- step 3 employer family Ends -->
@@ -501,7 +502,7 @@
 						<h2>{{'occupying_position_of_management_table_label' | translate: translateKey }}</h2>
 					</div>
 					<div class="col-md-2 pt-3" style="text-align: right;">
-						<button type="button" [disabled]="!(shopLicNewForm.get('occupancyList')['controls'].length < 2)"
+						<button type="button" *ngIf="shopLicNewForm.get('canEdit').value" [disabled]="!(shopLicNewForm.get('occupancyList')['controls'].length < 2)"
 							matTooltip="Add More Person Occuping" mat-raised-button color="primary"
 							(click)="addMorePerson('OCCUPANCY')">{{'add' | translate: translateKey}}</button>
 					</div>
@@ -612,8 +613,8 @@
 											<mat-icon title="Delete">delete</mat-icon>
 										</button>
 										<button mat-icon-button color="warn" *ngIf="item.isEditMode"
-											(click)="cancelRecord(item)">
-											<mat-icon title="Delete">cancel</mat-icon>
+											(click)="cancelRecord(item,indx)">
+											<mat-icon title="Cancel">cancel</mat-icon>
 										</button>
 									</td>
 
@@ -677,7 +678,7 @@
 					</div> -->
 				</div>
 
-				<app-action-bar [form]="shopLicNewForm" (tabIndex)="onTabChange($event)"
+				<app-action-bar [form]="shopLicNewForm" (tabIndex)="licenseConfiguration.onFormTabChange($event)"
 					[stepInfo]="{step: 'step4', next: 4, back: 2}"></app-action-bar>
 
 			</mat-tab>
@@ -711,6 +712,7 @@
 						</div>
 						<div class="col-md-2 pt-3" style="text-align: right;">
 							<button
+								*ngIf="shopLicNewForm.get('canEdit').value"
 								[disabled]="shopLicNewForm.get('typeOfOrganisation').value.code==='SHOP_LIC_SELF_OWNERSHIP' ? !(shopLicNewForm.get('partnerList')['controls'].length < 1) : !(shopLicNewForm.get('partnerList')['controls'].length < 10)"
 								type="button" matTooltip="{{'add_more' | translate: translateKey}}" mat-raised-button
 								color="primary" (click)="addMorePerson('PARTNER')">
@@ -837,8 +839,8 @@
 													<mat-icon title="Delete">delete</mat-icon>
 												</button>
 												<button mat-icon-button color="warn" *ngIf="item.isEditMode"
-													(click)="cancelRecord(item)">
-													<mat-icon title="Delete">cancel</mat-icon>
+													(click)="cancelRecord(item,indx)">
+													<mat-icon title="Cancel">cancel</mat-icon>
 												</button>
 											</span>
 										</td>
@@ -911,7 +913,7 @@
 					</div>
 				</div>
 
-				<app-action-bar [form]="shopLicNewForm" (tabIndex)="onTabChange($event)"
+				<app-action-bar [form]="shopLicNewForm" (tabIndex)="licenseConfiguration.onFormTabChange($event)"
 					[stepInfo]="{step: 'step5', next: 5, back: 3}"></app-action-bar>
 			</mat-tab>
 			<!-- step 5 partner list Ends -->
@@ -957,8 +959,8 @@
 											<button mat-icon-button color="warn" *ngIf="!item.isEditMode" (click)="deleteRecord('EMPLOYEES',indx)">
 												<mat-icon title="Delete">delete</mat-icon>
 											</button>
-											<button mat-icon-button color="warn" *ngIf="item.isEditMode" (click)="cancelRecord(item)">
-												<mat-icon title="Delete">cancel</mat-icon>
+											<button mat-icon-button color="warn" *ngIf="item.isEditMode" (click)="cancelRecord(item,indx)">
+												<mat-icon title="Cancel">cancel</mat-icon>
 											</button>
 										</td>
 
@@ -1063,7 +1065,7 @@
 						<control-messages [control]="shopLicNewForm.get('totalEmployee')"></control-messages>
 					</mat-form-field>
 				</div>
-				<app-action-bar [form]="shopLicNewForm" (tabIndex)="onTabChange($event)"
+				<app-action-bar [form]="shopLicNewForm" (tabIndex)="licenseConfiguration.onFormTabChange($event)"
 					[stepInfo]="{step: 'step6', next: 6, back: 4}"></app-action-bar>
 			</mat-tab>
 			<!-- step 6 employee list Ends -->
@@ -1102,7 +1104,7 @@
 
 						<ng-container
 							*ngFor="let doc of shopLicNewForm.get('serviceDetail').get('serviceUploadDocuments').value  | filterAttachment:shopLicNewForm.get('typeOfOrganisation').value.code">
-							<div class="col-md-4" *ngIf="doc.requiredOnCitizenPortal && doc.isActive && showButtons">
+							<div class="col-md-4" *ngIf="doc.requiredOnCitizenPortal && doc.isActive && licenseConfiguration.isAttachmentButtonsVisible">
 								<label>{{TranslateService.getCurrentLanguage()=='en'? doc.documentLabelEn : doc.documentLabelGuj }}
 									<span *ngIf="doc.mandatory">*</span></label>
 								<file-upload [form]="shopLicNewForm" [uploadModel]="doc"></file-upload>
@@ -1114,7 +1116,7 @@
 				</div>
 
 				<app-action-bar [uploadFiles]="uploadFilesArray" [form]="shopLicNewForm"
-					(handleErrors)="handleErrorsOnSubmit($event) " (tabIndex)="onTabChange($event) "
+					(handleErrors)="handleErrorsOnSubmit($event) " (tabIndex)="licenseConfiguration.onFormTabChange($event) "
 					[stepInfo]="{step: 'final', next:7, back: 5} "></app-action-bar>
 
 			</mat-tab>

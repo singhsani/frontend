@@ -18,12 +18,12 @@ import { FilterAttachmentPipe } from './common/pipes/filter-attachment.pipe';
 /* Import all shared, core and routing module end */
 
 const routes: Routes = [
-  { path: '', redirectTo: ManageRoutes.getMainRoute('SHOP-LIC'), pathMatch: 'full' },
-  { path: ManageRoutes.getMainRoute('SHOP-LIC') + '/:id/:apiCode', component: ShopLicNewComponent },
-  { path: ManageRoutes.getMainRoute('SHOP-CAN') + '/:id/:apiCode', component: ShopLicCancellationComponent },
-  { path: ManageRoutes.getMainRoute('SHOP-DUP') + '/:id/:apiCode', component: ShopLicDuplicateComponent },
-  { path: ManageRoutes.getMainRoute('SHOP-REN') + '/:id/:apiCode', component: ShopLicRenewalComponent },
-  { path: ManageRoutes.getMainRoute('SHOP-TRAF') + '/:id/:apiCode', component: ShopLicModificationComponent }
+  { path: '', redirectTo: 'shopLicense', pathMatch: 'full' },
+  { path: 'shopLicense/:id/:apiCode', component: ShopLicNewComponent },
+  { path: 'shopLicenseCancellation/:id/:apiCode', component: ShopLicCancellationComponent },
+  { path: 'duplicateShopLicense/:id/:apiCode', component: ShopLicDuplicateComponent },
+  { path: 'shopRenwalLic/:id/:apiCode', component: ShopLicRenewalComponent },
+  { path: 'shopTransferLicense/:id/:apiCode', component: ShopLicModificationComponent }
 ];
 
 @NgModule({

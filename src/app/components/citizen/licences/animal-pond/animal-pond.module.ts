@@ -17,12 +17,12 @@ import { AnimalPondService } from './common/services/animal-pond.service';
 /* Import all shared, core and routing module end */
 
 const routes: Routes = [
-	{ path: '', redirectTo: ManageRoutes.getMainRoute('APL-LIC'), pathMatch: 'full' },
-	{ path: ManageRoutes.getMainRoute('APL-LIC') + '/:id/:apiCode', component: AnimalPondNewComponent },
-	{ path: ManageRoutes.getMainRoute('APL-REN') + '/:id/:apiCode', component: AnimalPondRenewComponent },
-	{ path: ManageRoutes.getMainRoute('APL-CAN') + '/:id/:apiCode', component: AnimalPondCancellationComponent },
-	{ path: ManageRoutes.getMainRoute('APL-TRA') + '/:id/:apiCode', component: AnimalPondTransferComponent },
-	{ path: ManageRoutes.getMainRoute('APL-DUP') + '/:id/:apiCode', component: AnimalPondDuplicateComponent }
+	{ path: '', redirectTo: 'APLicense', pathMatch: 'full' },
+	{ path: 'APLicense/:id/:apiCode', component: AnimalPondNewComponent },
+	{ path: 'APLRenewal/:id/:apiCode', component: AnimalPondRenewComponent },
+	{ path: 'APLCancellation/:id/:apiCode', component: AnimalPondCancellationComponent },
+	{ path: 'APLTransfer/:id/:apiCode', component: AnimalPondTransferComponent },
+	{ path: 'APLDuplication/:id/:apiCode', component: AnimalPondDuplicateComponent }
 ];
 
 @NgModule({
@@ -35,10 +35,10 @@ const routes: Routes = [
 		RouterModule.forChild(routes)
 	],
 	declarations: [
-		AnimalPondNewComponent, 
-		AnimalPondRenewComponent, 
-		AnimalPondCancellationComponent, 
-		AnimalPondTransferComponent, 
+		AnimalPondNewComponent,
+		AnimalPondRenewComponent,
+		AnimalPondCancellationComponent,
+		AnimalPondTransferComponent,
 		AnimalPondDuplicateComponent
 	],
 	providers: [

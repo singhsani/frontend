@@ -12,7 +12,7 @@
 
 <mat-card [hidden]="!serachLicenceObj.isDisplayRenewLicenceForm" class="formClass cardBorder">
 	<form [formGroup]="shopLicRenewalForm">
-		<mat-tab-group [(selectedIndex)]="tabIndex" dynamicHeight="true" mat-stretch-tabs class="stepperNav">
+		<mat-tab-group [(selectedIndex)]="licenseConfiguration.currentTabIndex" dynamicHeight="true" mat-stretch-tabs class="stepperNav">
 
 			<!-- step 1 Starts -->
 			<mat-tab>
@@ -137,7 +137,7 @@
 						<control-messages [control]="shopLicRenewalForm.get('situationOfOffice')"></control-messages>
 					</mat-form-field>
 				</div>
-				<app-action-bar [form]="shopLicRenewalForm" (tabIndex)="onTabChange($event)"
+				<app-action-bar [form]="shopLicRenewalForm" (tabIndex)="licenseConfiguration.onFormTabChange($event)"
 					[stepInfo]="{step: 'step1', next: 1, back: 0}"></app-action-bar>
 			</mat-tab>
 			<!-- step 1 Ends -->
@@ -259,7 +259,7 @@
 							placeholder="{{ 'date_of_commencement_of_business' | translate:translateKey }} (DD/MM/YYYY)">
 						<mat-datepicker-toggle matSuffix [for]="DateOfCommencementOfBusiness"></mat-datepicker-toggle>
 						<mat-datepicker touchUi="true" #DateOfCommencementOfBusiness></mat-datepicker>
-						<div align="end" class="default-show-hint mat-hint mat-right">{{config.DATE_HINT_MSG}}</div>
+						<div align="end" class="default-show-hint mat-hint mat-right">{{licenseConfiguration.DATE_HINT_MSG}}</div>
 						<control-messages [control]="shopLicRenewalForm.get('commencementOfBusinessDate')">
 						</control-messages>
 					</mat-form-field>
@@ -312,7 +312,7 @@
 						</div>
 					</div> -->
 
-				<app-action-bar [form]="shopLicRenewalForm" (tabIndex)="onTabChange($event)"
+				<app-action-bar [form]="shopLicRenewalForm" (tabIndex)="licenseConfiguration.onFormTabChange($event)"
 					[stepInfo]="{step: 'step2', next: 2, back: 0}"></app-action-bar>
 			</mat-tab>
 			<!-- step 2 Ends -->
@@ -367,9 +367,12 @@
 											</button>
 										</td> -->
 
-									<td><div class="d-md-none">#</div>{{indx+1}}</td>
+									<td>
+										<div class="d-md-none">#</div>{{indx+1}}
+									</td>
 
-									<td><div class="d-md-none">{{'name' | translate:translateKey}}</div>
+									<td>
+										<div class="d-md-none">{{'name' | translate:translateKey}}</div>
 										<p>{{item.get('name').value}}</p>
 										<!-- <p *ngIf="!item.isEditMode">{{item.get('name').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
@@ -380,7 +383,8 @@
 										</mat-form-field> -->
 									</td>
 
-									<td><div class="d-md-none">{{'address' | translate:translateKey}}</div>
+									<td>
+										<div class="d-md-none">{{'address' | translate:translateKey}}</div>
 										<p>{{item.get('address').value}}</p>
 										<!-- <p *ngIf="!item.isEditMode">{{item.get('address').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
@@ -389,7 +393,8 @@
 										</mat-form-field> -->
 									</td>
 
-									<td><div class="d-md-none">{{'relationship' | translate:translateKey}}</div>
+									<td>
+										<div class="d-md-none">{{'relationship' | translate:translateKey}}</div>
 										<p>{{getSelectedDataFromLookUps(SHOP_LIC_EMPLOYER_FAMILY_PERSON_RELATIONSHIP,item.get('relationship').value.code)?.name}}
 										</p>
 										<!-- <div class="ngSelect" formGroupName="relationship">
@@ -409,7 +414,8 @@
 										</div> -->
 									</td>
 
-									<td><div class="d-md-none">{{'gender' | translate:translateKey}}</div>
+									<td>
+										<div class="d-md-none">{{'gender' | translate:translateKey}}</div>
 										<p>
 											{{getSelectedDataFromLookUps(gender,item.get('gender').value.code)?.name}}
 										</p>
@@ -428,7 +434,8 @@
 										</div> -->
 									</td>
 
-									<td><div class="d-md-none">{{'age' | translate:translateKey}}</div>
+									<td>
+										<div class="d-md-none">{{'age' | translate:translateKey}}</div>
 										<p>{{item.get('age').value}}</p>
 										<!-- <p *ngIf="!item.isEditMode">{{item.get('age').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
@@ -446,19 +453,23 @@
 						<tbody>
 							<tr>
 								<th width="200">{{'total_adult_person' | translate:translateKey}}</th>
-								<td>{{calulateNumberOfPerson('employerFamilyList','totalAdultEmployerFamily','adult')}}</td>
+								<td>{{calulateNumberOfPerson('employerFamilyList','totalAdultEmployerFamily','adult')}}
+								</td>
 								<th width="200">{{'total_young_person' | translate:translateKey}}</th>
-								<td>{{calulateNumberOfPerson('employerFamilyList','totalYoungEmployerFamily','young')}}</td>
+								<td>{{calulateNumberOfPerson('employerFamilyList','totalYoungEmployerFamily','young')}}
+								</td>
 							</tr>
 							<tr>
 								<th>{{'total_men' | translate:translateKey}}</th>
 								<td>{{calulateNumberOfPerson('employerFamilyList','totalManEmployerFamily','men')}}</td>
 								<th>{{'total_women' | translate:translateKey}}</th>
-								<td>{{calulateNumberOfPerson('employerFamilyList','totalWomenEmployerFamily','women')}}</td>
+								<td>{{calulateNumberOfPerson('employerFamilyList','totalWomenEmployerFamily','women')}}
+								</td>
 							</tr>
 							<tr>
 								<th>{{'total_unidentified_person' | translate:translateKey}}</th>
-								<td>{{calulateNumberOfPerson('employerFamilyList','totalUnidentifiedEmployerFamily','unidentified')}}</td>
+								<td>{{calulateNumberOfPerson('employerFamilyList','totalUnidentifiedEmployerFamily','unidentified')}}
+								</td>
 								<th>{{'total_person' | translate:translateKey}}</th>
 								<td>{{calulateNumberOfPerson('employerFamilyList','totalFamilyMembers','total')}}</td>
 							</tr>
@@ -498,7 +509,7 @@
 						</div>
 					</div> -->
 				</div>
-				<app-action-bar [form]="shopLicRenewalForm" (tabIndex)="onTabChange($event)"
+				<app-action-bar [form]="shopLicRenewalForm" (tabIndex)="licenseConfiguration.onFormTabChange($event)"
 					[stepInfo]="{step: 'step3', next: 3, back: 1}"></app-action-bar>
 			</mat-tab>
 			<!-- step 3 employer family Ends -->
@@ -553,9 +564,12 @@
 											</button>
 										</td> -->
 
-									<td><div class="d-md-none">#</div>{{indx+1}}</td>
+									<td>
+										<div class="d-md-none">#</div>{{indx+1}}
+									</td>
 
-									<td><div class="d-md-none">{{'name' | translate:translateKey}}</div>
+									<td>
+										<div class="d-md-none">{{'name' | translate:translateKey}}</div>
 										<p>{{item.get('name').value}}</p>
 										<!-- <p *ngIf="!item.isEditMode">{{item.get('name').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
@@ -565,7 +579,8 @@
 										</mat-form-field> -->
 									</td>
 
-									<td><div class="d-md-none">{{'address' | translate:translateKey}}</div>
+									<td>
+										<div class="d-md-none">{{'address' | translate:translateKey}}</div>
 										<p>{{item.get('address').value}}</p>
 										<!-- <p *ngIf="!item.isEditMode">{{item.get('address').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
@@ -574,7 +589,8 @@
 										</mat-form-field> -->
 									</td>
 
-									<td><div class="d-md-none">{{'relationship' | translate:translateKey}}</div>
+									<td>
+										<div class="d-md-none">{{'relationship' | translate:translateKey}}</div>
 										<p>{{getSelectedDataFromLookUps(SHOP_LIC_OCCUPANCY_PERSON_RELATIONSHIP,item.get('relationship').value.code)?.name}}
 										</p>
 										<!-- <div class="ngSelect" formGroupName="relationship">
@@ -588,7 +604,8 @@
 										</div> -->
 									</td>
 
-									<td><div class="d-md-none">{{'gender' | translate:translateKey}}</div>
+									<td>
+										<div class="d-md-none">{{'gender' | translate:translateKey}}</div>
 										<p>{{getSelectedDataFromLookUps(gender,item.get('gender').value.code)?.name}}
 										</p>
 										<!-- <div class="ngSelect" formGroupName="gender">
@@ -602,7 +619,8 @@
 										</div> -->
 									</td>
 
-									<td><div class="d-md-none">{{'age' | translate:translateKey}}</div>
+									<td>
+										<div class="d-md-none">{{'age' | translate:translateKey}}</div>
 										<p>{{item.get('age').value}}</p>
 										<!-- <p *ngIf="!item.isEditMode">{{item.get('age').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
@@ -632,7 +650,8 @@
 							</tr>
 							<tr>
 								<th>{{'total_unidentified_person' | translate:translateKey}}</th>
-								<td>{{calulateNumberOfPerson('occupancyList','totalUnidentifiedOccupancy','unidentified')}}</td>
+								<td>{{calulateNumberOfPerson('occupancyList','totalUnidentifiedOccupancy','unidentified')}}
+								</td>
 								<th>{{'total_person' | translate:translateKey}}</th>
 								<td>{{calulateNumberOfPerson('occupancyList','totalOccupancy','total')}}</td>
 							</tr>
@@ -671,7 +690,7 @@
 					</div> -->
 				</div>
 
-				<app-action-bar [form]="shopLicRenewalForm" (tabIndex)="onTabChange($event)"
+				<app-action-bar [form]="shopLicRenewalForm" (tabIndex)="licenseConfiguration.onFormTabChange($event)"
 					[stepInfo]="{step: 'step4', next: 4, back: 2}"></app-action-bar>
 
 			</mat-tab>
@@ -739,9 +758,12 @@
 											</button>
 										</td> -->
 
-									<td><div class="d-md-none">#</div>{{indx+1}}</td>
+									<td>
+										<div class="d-md-none">#</div>{{indx+1}}
+									</td>
 
-									<td><div class="d-md-none">{{'name' | translate:translateKey}}</div>
+									<td>
+										<div class="d-md-none">{{'name' | translate:translateKey}}</div>
 										<p>{{item.get('name').value}}</p>
 										<!-- <p *ngIf="!item.isEditMode">{{item.get('name').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
@@ -752,7 +774,8 @@
 										</mat-form-field> -->
 									</td>
 
-									<td><div class="d-md-none">{{'address' | translate:translateKey}}</div>
+									<td>
+										<div class="d-md-none">{{'address' | translate:translateKey}}</div>
 										<p>{{item.get('address').value}}</p>
 										<!-- <p *ngIf="!item.isEditMode">{{item.get('address').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
@@ -761,7 +784,8 @@
 										</mat-form-field> -->
 									</td>
 
-									<td><div class="d-md-none">{{'relationship' | translate:translateKey}}</div>
+									<td>
+										<div class="d-md-none">{{'relationship' | translate:translateKey}}</div>
 										<p>
 											{{getSelectedDataFromLookUps(SHOP_LIC_PARTNER_PERSON_RELATIONSHIP,item.get('relationship').value.code)?.name}}
 										</p>
@@ -782,7 +806,8 @@
 										</div> -->
 									</td>
 
-									<td><div class="d-md-none">{{'gender' | translate:translateKey}}</div>
+									<td>
+										<div class="d-md-none">{{'gender' | translate:translateKey}}</div>
 										<p>
 											{{getSelectedDataFromLookUps(gender,item.get('gender').value.code)?.name}}
 										</p>
@@ -801,7 +826,8 @@
 										</div> -->
 									</td>
 
-									<td><div class="d-md-none">{{'age' | translate:translateKey}}</div>
+									<td>
+										<div class="d-md-none">{{'age' | translate:translateKey}}</div>
 										<p>{{item.get('age').value}}</p>
 										<!-- <p *ngIf="!item.isEditMode">{{item.get('age').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
@@ -830,7 +856,8 @@
 							</tr>
 							<tr>
 								<th>{{'total_unidentified_person' | translate:translateKey}}</th>
-								<td>{{calulateNumberOfPerson('partnerList','totalUnidentifiedPartner','unidentified')}}</td>
+								<td>{{calulateNumberOfPerson('partnerList','totalUnidentifiedPartner','unidentified')}}
+								</td>
 								<th>{{'total_person' | translate:translateKey}}</th>
 								<td>{{calulateNumberOfPerson('partnerList','totalPartner','total')}}</td>
 							</tr>
@@ -867,7 +894,7 @@
 					</div> -->
 				</div>
 
-				<app-action-bar [form]="shopLicRenewalForm" (tabIndex)="onTabChange($event)"
+				<app-action-bar [form]="shopLicRenewalForm" (tabIndex)="licenseConfiguration.onFormTabChange($event)"
 					[stepInfo]="{step: 'step5', next: 5, back: 3}"></app-action-bar>
 			</mat-tab>
 			<!-- step 5 partner list Ends -->
@@ -914,7 +941,7 @@
 					</mat-form-field>
 				</div>
 
-				<app-action-bar [form]="shopLicRenewalForm" (tabIndex)="onTabChange($event)"
+				<app-action-bar [form]="shopLicRenewalForm" (tabIndex)="licenseConfiguration.onFormTabChange($event)"
 					[stepInfo]="{step: 'step6', next: 6, back: 4}"></app-action-bar>
 
 			</mat-tab>
@@ -956,7 +983,7 @@
 
 						<ng-container
 							*ngFor="let doc of shopLicRenewalForm.get('serviceDetail').get('serviceUploadDocuments').value  | filterAttachment:shopLicRenewalForm.get( 'typeOfOrganisation').value.code">
-							<div class="col-md-4" *ngIf="doc.requiredOnCitizenPortal && doc.isActive && showButtons">
+							<div class="col-md-4" *ngIf="doc.requiredOnCitizenPortal && doc.isActive && licenseConfiguration.isAttachmentButtonsVisible">
 								<label>{{TranslateService.getCurrentLanguage()=='en'? doc.documentLabelEn : doc.documentLabelGuj }}
 									<span *ngIf="doc.mandatory">*</span></label>
 								<file-upload [form]="shopLicRenewalForm" [uploadModel]="doc"></file-upload>
@@ -968,7 +995,7 @@
 				</div>
 
 				<app-action-bar [uploadFiles]="uploadFilesArray" [form]="shopLicRenewalForm"
-					(handleErrors)="handleErrorsOnSubmit($event) " (tabIndex)="onTabChange($event) "
+					(handleErrors)="handleErrorsOnSubmit($event) " (tabIndex)="licenseConfiguration.onFormTabChange($event) "
 					[stepInfo]="{step: 'final', next:7, back: 5} "></app-action-bar>
 
 			</mat-tab>

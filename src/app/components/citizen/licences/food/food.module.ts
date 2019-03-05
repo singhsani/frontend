@@ -15,10 +15,10 @@ import { FoodDuplicateComponent } from './food-duplicate/food-duplicate.componen
 
 const routes: Routes = [
 	{ path: '', component: FoodNewComponent },
-	{ path: ManageRoutes.getMainRoute('FL') + '/:id/:apiCode', component: FoodNewComponent },
-	{ path: ManageRoutes.getMainRoute('FL-REN') + '/:id/:apiCode', component: FoodRenewComponent },
-	{ path: ManageRoutes.getMainRoute('FL-MODIFY') + '/:id/:apiCode', component: FoodTransferComponent },
-	{ path: ManageRoutes.getMainRoute('FL-DUP') + '/:id/:apiCode', component: FoodDuplicateComponent }
+	{ path: 'foodlicence/:id/:apiCode', component: FoodNewComponent },
+	{ path: 'foodLicenceRenewal/:id/:apiCode', component: FoodRenewComponent },
+	{ path: 'foodLicenceModify/:id/:apiCode', component: FoodTransferComponent },
+	{ path: 'foodLicenceDuplicate/:id/:apiCode', component: FoodDuplicateComponent }
 ];
 
 @NgModule({

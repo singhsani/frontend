@@ -9,11 +9,11 @@ import { AuthGuard } from './../../../core/guard/auth.guard';
 import { ManageRoutes } from './../../../config/routes-conf';
 
 const routes: Routes = [
-  { path: '', redirectTo: ManageRoutes.getPrefixRoute('SHOPANDESTAMODULE'), pathMatch: 'full' },
-  { path: ManageRoutes.getPrefixRoute('ANIMALPONDMODULE'), loadChildren: './animal-pond/animal-pond.module#AnimalPondModule', canLoad: [AuthGuard] },
-  { path: ManageRoutes.getPrefixRoute('MUTTONFISHMODULE'), loadChildren: './mutton-fish/mutton-fish.module#MuttonFishModule', canLoad: [AuthGuard] },
-  { path: ManageRoutes.getPrefixRoute('SHOPANDESTAMODULE'), loadChildren: './shop-and-establishment/shop-and-establishment.module#ShopAndEstablishmentModule', canLoad: [AuthGuard] },
-  { path: ManageRoutes.getPrefixRoute('FOODMODULE'), loadChildren: './food/food.module#FoodModule', canLoad: [AuthGuard] },
+  { path: '', redirectTo: 'shop-esta', pathMatch: 'full' },
+  { path: 'animal-pond', loadChildren: './animal-pond/animal-pond.module#AnimalPondModule', canLoad: [AuthGuard] },
+  { path: 'mutton-fish', loadChildren: './mutton-fish/mutton-fish.module#MuttonFishModule', canLoad: [AuthGuard] },
+  { path: 'shop-esta', loadChildren: './shop-and-establishment/shop-and-establishment.module#ShopAndEstablishmentModule', canLoad: [AuthGuard] },
+  { path: 'food', loadChildren: './food/food.module#FoodModule', canLoad: [AuthGuard] },
 ];
 
 

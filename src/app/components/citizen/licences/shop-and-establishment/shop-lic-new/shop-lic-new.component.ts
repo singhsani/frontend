@@ -11,7 +11,7 @@ import * as moment from 'moment';
 import { ShopAndEstablishmentService } from './../common/services/shop-and-establishment.service';
 import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '../../../../../shared/modules/translate/translate.service';
-import { CitizenConfig } from '../../../citizen-config';
+import { LicenseConfiguration } from '../../license-configuration';
 
 @Component({
 	selector: 'app-shop-lic-new',
@@ -24,17 +24,12 @@ export class ShopLicNewComponent implements OnInit {
 
 	shopLicNewForm: FormGroup;
 	translateKey: string = 'shopLicNewScreen';
-	public config = new CitizenConfig;
+	licenseConfiguration: LicenseConfiguration = new LicenseConfiguration();
 
 	formId: number;
 	apiCode: string;
-	tabIndex: number = 0;
 
 	disablefutureDate = new Date(moment().format('YYYY-MM-DD'));
-
-	//File and image upload
-	uploadModel: any = {};
-	showButtons: boolean = false;
 
 	//Lookup Array
 	gender: Array<any> = [];
@@ -99,7 +94,7 @@ export class ShopLicNewComponent implements OnInit {
 		this.formService.getFormData(this.formId).subscribe(res => {
 			try {
 				this.shopLicNewForm.patchValue(res);
-				this.showButtons = true;
+				this.licenseConfiguration.isAttachmentButtonsVisible = true;
 				res.employerFamilyList.forEach(app => {
 					(<FormArray>this.shopLicNewForm.get('employerFamilyList')).push(this.createArray(app));
 				});
@@ -117,7 +112,7 @@ export class ShopLicNewComponent implements OnInit {
 
 
 				res.serviceDetail.serviceUploadDocuments.forEach(app => {
-					(<FormArray>this.shopLicNewForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.createDocumentsGrp(app));
+					(<FormArray>this.shopLicNewForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.licenseConfiguration.createDocumentsGrp(app));
 				});
 				this.requiredDocumentList();
 
@@ -154,6 +149,12 @@ export class ShopLicNewComponent implements OnInit {
 		this.shopLicNewForm = this.fb.group({
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
 			serviceCode: 'SHOP-LIC',
+			periodFrom: [null],
+			periodTo: [null],
+			newRegistration: [null],
+			renewal: [null],
+			adminCharges: [null],
+			netAmount: [null],
 			/* Step 1 controls start */
 			establishmentName: [null, [Validators.required, Validators.maxLength(150)]],//count=4
 			establishmentNameGuj: [null, [Validators.required, Validators.maxLength(450)]],
@@ -205,13 +206,8 @@ export class ShopLicNewComponent implements OnInit {
 			}),
 			/* Step 2 controls end */
 
-			periodFrom: [null],
-			periodTo: [null],
-			newRegistration: [null],
-			renewal: [null],
-			adminCharges: [null],
-			netAmount: [null],
 
+			/* Step 3 controls start */
 			employerFamilyList: this.fb.array([]),
 
 			totalAdultEmployerFamily: [null],
@@ -220,7 +216,10 @@ export class ShopLicNewComponent implements OnInit {
 			totalWomenEmployerFamily: [null],
 			totalUnidentifiedEmployerFamily: [null],
 			totalFamilyMembers: [null],
+			/* Step 3 controls end */
 
+
+			/* Step 4 controls start */
 			occupancyList: this.fb.array([]),
 			totalAdultOccupancy: [null],
 			totalYoungOccupancy: [null],
@@ -228,7 +227,10 @@ export class ShopLicNewComponent implements OnInit {
 			totalWomenOccupancy: [null],
 			totalUnidentifiedOccupancy: [null],
 			totalOccupancy: [null],
+			/* Step 4 controls end */
 
+
+			/* Step 5 controls start */
 			typeOfOrganisation: this.fb.group({
 				code: [null, Validators.required]
 			}),
@@ -241,6 +243,9 @@ export class ShopLicNewComponent implements OnInit {
 			totalUnidentifiedPartner: [null],
 			totalPartner: [null],
 
+			/* Step 5 controls end */
+
+			/* Step 6 controls start */
 			//employeeList: this.fb.array([]),
 			totalAdultEmployee: [null, Validators.required],
 			totalYoungEmployee: [null, Validators.required],
@@ -248,6 +253,7 @@ export class ShopLicNewComponent implements OnInit {
 			totalWomenEmployee: [null, Validators.required],
 			totalUnidentified: [null],
 			totalEmployee: [null, Validators.required],
+			/* Step 6 controls end */
 
 			// situationOfOfficeGuj: [null],
 			// nameOfManagerGuj: [null],
@@ -260,28 +266,7 @@ export class ShopLicNewComponent implements OnInit {
 
 		});
 	}
-	/**
-	 * This Method for create attachment array in service detail
-	 * @param data : value of array
-	 */
-	createDocumentsGrp(data?: any): FormGroup {
-		return this.fb.group({
-			dependentFieldName: [data.dependentFieldName ? data.dependentFieldName : null],
-			documentIdentifier: [data.documentIdentifier ? data.documentIdentifier : null],
-			documentKey: [data.documentKey ? data.documentKey : null],
-			documentLabelEn: [data.documentLabelEn ? data.documentLabelEn : null],
-			documentLabelGuj: [data.documentLabelGuj ? data.documentLabelGuj : null],
-			fieldIdentifier: [data.fieldIdentifier ? data.fieldIdentifier : null],
-			formPart: [data.formPart ? data.formPart : null],
-			id: [data.id ? data.id : null],
-			code: [data.code ? data.code : null],
-			isActive: [data.isActive],
-			mandatory: [data.mandatory ? data.mandatory : false],
-			maxFileSizeInMB: [data.maxFileSizeInMB ? data.maxFileSizeInMB : 5],
-			requiredOnAdminPortal: [data.requiredOnAdminPortal],
-			requiredOnCitizenPortal: [data.requiredOnCitizenPortal]
-		});
-	}
+
 
 	/**
 	 * Method is create required document array
@@ -322,24 +307,26 @@ export class ShopLicNewComponent implements OnInit {
 	 * @param data : person data array 
 	 * @param persontype : person array type 
 	 */
-	createArray(data?: any, persontype?: string) {
+	createArray(data?: any): FormGroup {
 
 		return this.fb.group({
 			serviceFormId: this.formId,
 			id: data.id ? data.id : null,
-			name: [data.name ? data.name : null, [Validators.maxLength(100)]],
+			name: [data.name ? data.name : null, [Validators.required, Validators.maxLength(100)]],
 			/* contactNo: [data.contactNo ? data.contactNo : null],
 			email: [data.email ? data.email : null],
 			aadhaarNo: [data.aadhaarNo ? data.aadhaarNo : null], */
-			address: [data.address ? data.address : null, [Validators.maxLength(150)]],
+			address: [data.address ? data.address : null, [Validators.required, Validators.maxLength(150)]],
 			serviceCode: "SHOP-LIC",
 			relationship: this.fb.group({
-				code: [data.relationship ? (data.relationship.code ? data.relationship.code : null) : null]//
+				//code: [data.relationship ? (data.relationship.code ? data.relationship.code : null) : null]//
+				code: [data.relationship ? (data.relationship.code ? data.relationship.code : null) : null, [Validators.required]],
 			}),
 			gender: this.fb.group({
-				code: [data.gender ? (data.gender.code ? data.gender.code : null) : null]
+				//code: [data.gender ? (data.gender.code ? data.gender.code : null) : null]
+				code: [data.gender ? (data.gender.code ? data.gender.code : null) : null, [Validators.required]],
 			}),
-			age: [data.age ? data.age : null, [ValidationService.employeeAgeValidate]],
+			age: [data.age ? data.age : null, [Validators.required, ValidationService.employeeAgeValidate]],
 			// employee: [data.employee ? data.employee : null],
 			personType: [data.personType ? data.personType : null]
 		})
@@ -403,7 +390,8 @@ export class ShopLicNewComponent implements OnInit {
 			// this.shopLicNewForm.get('employerFamilyList').setValidators([Validators.required]);
 			let newlyadded = this.addItem(persontype).controls;
 			if (newlyadded.length) {
-				(newlyadded[newlyadded.length - 1]).isEditMode = true;
+				this.editRecord((newlyadded[newlyadded.length - 1]));
+				(newlyadded[newlyadded.length - 1]).newRecordAdded = true;
 			}
 		}
 		else {
@@ -418,24 +406,6 @@ export class ShopLicNewComponent implements OnInit {
 	 */
 	dateFormat(date, controlType: string) {
 		this.shopLicNewForm.get(controlType).setValue(moment(date).format("YYYY-MM-DD"));
-	}
-
-	/**
-     * Method is used to set data value to upload method.
-     * @param indentifier - file identifier
-     * @param labelName - file label name.
-     * @param formPart - file form part
-     * @param variableName - file variable name.
-     */
-	setDataValue(indentifier: number, labelName: string, formPart: string, variableName: string) {
-		this.uploadModel = {
-			fieldIdentifier: indentifier.toString(),
-			labelName: labelName,
-			formPart: formPart,
-			variableName: variableName,
-			serviceFormId: this.formId,
-		}
-		return this.uploadModel;
 	}
 
 	/**
@@ -513,7 +483,7 @@ export class ShopLicNewComponent implements OnInit {
 	*/
 	editRecord(row: any) {
 		row.isEditMode = true;
-		row.deepCopyInEditMode = Object.assign({}, row.value)
+		row.deepCopyInEditMode = Object.assign({}, row.value);
 	}
 
 	/**
@@ -521,8 +491,8 @@ export class ShopLicNewComponent implements OnInit {
 	*/
 	deleteRecord(persontype: string, index: any) {
 		this.commonService.confirmAlert('Are you sure?', "", 'info', '', performDelete => {
-			this.addItem(persontype).controls.splice(index, 1);
-			this.commonService.successAlert('Removed!', '', 'success');
+			this.addItem(persontype).removeAt(index);
+			this.toastrService.success("Succesfully deleted", "Deleted");
 		});
 	}
 
@@ -533,6 +503,7 @@ export class ShopLicNewComponent implements OnInit {
 	saveRecord(row: any) {
 		if (row.valid) {
 			row.isEditMode = false;
+			row.newRecordAdded = false;
 		}
 	}
 
@@ -540,11 +511,20 @@ export class ShopLicNewComponent implements OnInit {
 	*  Method is used cancel editable dataview.
 	* @param row: table row id
 	*/
-	cancelRecord(row: any) {
-		if (row.deepCopyInEditMode) {
-			row.patchValue(row.deepCopyInEditMode);
+	cancelRecord(row: any, index: number) {
+		try {
+			if (row.newRecordAdded) {
+				this.addItem(row.get('personType').value).removeAt(index);
+			} else {
+				if (row.deepCopyInEditMode) {
+					row.patchValue(row.deepCopyInEditMode);
+				}
+				row.isEditMode = false;
+				row.newRecordAdded = false;
+			}
+		} catch (error) {
+
 		}
-		row.isEditMode = false;
 	}
 
 	/**
@@ -610,7 +590,6 @@ export class ShopLicNewComponent implements OnInit {
 	onChangeTypeOfOrganization(event) {
 
 		try {
-			// debugger;
 			(<FormArray>this.shopLicNewForm.get('partnerList')).controls = [];
 			this.shopLicNewForm.get('partnerList').setValue([]);
 			this.shopLicNewForm.get('attachments').setValue([]);
@@ -677,57 +656,59 @@ export class ShopLicNewComponent implements OnInit {
      * @param flag - flag of invalid control.
      */
 	handleErrorsOnSubmit(flag) {
-
-		let step0 = 15;
-		let step1 = 27;
-		let step2 = 35;
-		let step3 = 41;
-		let step4 = 48;
-		let step5 = 56;
-		let step6 = 60;
-
-		if (flag != null) {
-			//Check validation for step by step
-			let count = flag;
-
-			if (count <= step0) {
-				this.tabIndex = 0;
-				return false;
-			} else if (count <= step1) {
-				this.tabIndex = 1;
-				return false;
-			} else if (count <= step2) {
-				this.tabIndex = 2;
-				return false;
-			} else if (count <= step3) {
-				this.tabIndex = 3;
-				return false;
-			} else if (count <= step4) {
-				this.tabIndex = 4;
-				return false;
-			} else if (count <= step5) {
-				this.tabIndex = 5;
-				return false;
-			} else if (count <= step6) {
-				this.tabIndex = 6;
-				return false;
-			}
-			// else if (count == 67) {
-			// 	this.checkReligion();
-			// 	return false;
-			// }
-			else {
-				console.log("else condition");
-			}
-
+		switch (true) {
+			case flag <= 21:
+				this.licenseConfiguration.currentTabIndex = 0;
+				break;
+			case flag <= 33:
+				this.licenseConfiguration.currentTabIndex = 1;
+				break;
+			case flag <= 40:
+				this.licenseConfiguration.currentTabIndex = 2;
+				break;
+			case flag <= 47:
+				this.licenseConfiguration.currentTabIndex = 3;
+				break;
+			case flag <= 55:
+				this.licenseConfiguration.currentTabIndex = 4;
+				break;
+			case flag <= 61:
+				this.licenseConfiguration.currentTabIndex = 5;
+				break;
+			case flag <= 62:
+				this.licenseConfiguration.currentTabIndex = 6;
+				break;
+			default:
+				this.licenseConfiguration.currentTabIndex = 0;
 		}
+		this.checkDynamicTableValidate();
 	}
 
 	/**
-	 * This method use to get output event of tab change
-	 * @param evt - Tab index
+	 * this method is use for check validate dynamic attachment for employee family list , person occupying list and Partner list
 	 */
-	onTabChange(evt) {
-		this.tabIndex = evt;
+	checkDynamicTableValidate(): void {
+		try {
+			this.addItem("PARTNER").controls.forEach(element => {
+				if (element.invalid) {
+					element.isEditMode = true;
+				}
+			});
+
+			this.addItem("EMPLOYER_FAMILY").controls.forEach(element => {
+				if (element.invalid) {
+					element.isEditMode = true;
+				}
+			});
+
+			this.addItem("OCCUPANCY").controls.forEach(element => {
+				if (element.invalid) {
+					element.isEditMode = true;
+				}
+			});
+		} catch (error) {
+			console.error(error.message);
+		}
+
 	}
 }
