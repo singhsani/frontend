@@ -1,11 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ManageRoutes } from '../../../../../config/routes-conf';
 import { BookAtithigruhComponent } from './book-atithigruh/book-atithigruh.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: ManageRoutes.getMainRoute('ATITHIGRUHBOOK'), pathMatch: 'full' },
-  { path: ManageRoutes.getMainRoute('ATITHIGRUHBOOK'), component: BookAtithigruhComponent },
+  { path: '', redirectTo: 'book', pathMatch: 'full' },
+  { path: 'book', component: BookAtithigruhComponent },
 ];
 
 @NgModule({ 
