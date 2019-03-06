@@ -5,8 +5,8 @@ import { BookPermissionComponent } from './book-permission/book-permission.compo
 
 
 const routes: Routes = [
-	{ path: '', redirectTo: ManageRoutes.getMainRoute('BOOKPERMISSION'), pathMatch: 'full' },
-	{ path: ManageRoutes.getMainRoute('BOOKPERMISSION'), component: BookPermissionComponent },
+	{ path: '', redirectTo: 'bookPermission', pathMatch: 'full' },
+	{ path: 'bookPermission', component: BookPermissionComponent },
 ];
 
 @NgModule({
