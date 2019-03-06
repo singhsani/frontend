@@ -4,13 +4,12 @@ import { Routes, RouterModule } from '@angular/router';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 import { AuthGuard } from './../../../core/guard/auth.guard';
-import { ManageRoutes } from './../../../config/routes-conf';
 import { CoreModule } from '../../../core/core.module';
 import { SharedModule } from '../../../shared/shared.module';
 
 const routes: Routes = [
-	{ path: '', redirectTo: ManageRoutes.getPrefixRoute('SCHEDULEAPPOINTMENT'), pathMatch: 'full' },
-	{ path: ManageRoutes.getPrefixRoute('SCHEDULEAPPOINTMENT'), loadChildren: './schedule-appointment/schedule-appointment.module#ScheduleAppointmentModule', canLoad: [AuthGuard] }
+	{ path: '', redirectTo: 'schedule-appointment', pathMatch: 'full' },
+	{ path: 'schedule-appointment', loadChildren: './schedule-appointment/schedule-appointment.module#ScheduleAppointmentModule', canLoad: [AuthGuard] }
 ];
 
 @NgModule({
