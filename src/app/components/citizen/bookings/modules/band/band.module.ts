@@ -5,7 +5,6 @@ import { CommonModule } from '@angular/common';
 
 import { BandRoutingModule } from './band-routing.module';
 import { BandBookingListComponent } from './band-booking-list/band-booking-list.component';
-import { BandBookingComponent } from './band-booking/band-booking.component';
 import { SharedBookingModule } from '../../shared-booking/shared-booking.module';
 
 @NgModule({
@@ -15,7 +14,6 @@ import { SharedBookingModule } from '../../shared-booking/shared-booking.module'
 		BandRoutingModule
 	],
 	declarations: [
-		BandBookingListComponent,
-		BandBookingComponent]
+		BandBookingListComponent]
 })
 export class BandModule { }
