@@ -6,7 +6,7 @@ import { SlotBookingComponent } from './slot-booking/slot-booking.component';
 
 const routes: Routes = [
     { path: '', component: SlotBookingComponent },
-    { path: ManageRoutes.getMainRoute('SLOTBOOKING') + '/:id/:apiCode', component: SlotBookingComponent }
+    { path: 'slot-booking/:id/:apiCode', component: SlotBookingComponent }
 ];
 
 @NgModule({
