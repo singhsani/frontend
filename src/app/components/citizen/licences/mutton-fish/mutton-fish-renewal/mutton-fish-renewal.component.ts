@@ -268,10 +268,10 @@ export class MuttonFishRenewalComponent implements OnInit {
 			refNumber: [null],
 			/* Step 1 controls start */
 			licenseType: this.fb.group({
-				code: [null]
+				code: [null, [Validators.required]]
 			}),
 			personType: this.fb.group({
-				code: [null]
+				code: [null, [Validators.required]]
 			}),
 			holderFirstName: [null, [Validators.required, Validators.maxLength(30)]],
 			holderMiddleName: [null, [Validators.required, Validators.maxLength(30)]],
