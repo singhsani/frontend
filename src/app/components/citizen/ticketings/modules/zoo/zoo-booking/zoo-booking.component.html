@@ -1,0 +1,197 @@
+<app-title-bar [title]="'Zoo Ticket Booking' | translate: translateKey"></app-title-bar>
+
+<mat-tab-group [(selectedIndex)]="tabIndex" dynamicHeight="true" mat-stretch-tabs class="stepperNav">
+
+  <!-- Ticket Booking Tab Starts Here -->
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <div>{{'Ticket Booking' | translate:translateKey}}</div>
+    </ng-template>
+
+    <!-- Guildelines section starts here -->
+    <mat-card class="cardBox" *ngIf="guideLineFlag">
+      <div class="pageTitle">{{'Online Zoo Ticket Booking'| translate: translateKey}}</div>
+      <mat-card-content class="p-4">
+        <div class="guideline-intro">
+          <span>Enter Tickets </span>
+          <mat-icon class="middle-align">arrow_forward</mat-icon>
+          <span> Make Payments </span>
+          <mat-icon class="middle-align">arrow_forward</mat-icon>
+          <span> Print Ticket</span>
+        </div>
+        <p class="pb-2">{{head_lines| translate: translateKey}}</p>
+        <h2>{{'Ticket Rate Details'| translate: translateKey}}</h2>
+
+        <div class="example-container mat-elevation-z8 borderOne" [hidden]="resultsLength==0">
+
+          <table mat-table [dataSource]="dataSourceForPricing" class="myApplication">
+
+            <ng-container matColumnDef="id">
+              <mat-header-cell *matHeaderCellDef>#</mat-header-cell>
+              <mat-cell *matCellDef="let row; let i = index;" class="fullWidth">
+                <div class="mobile-label">{{'s_no' | translate:translateKey}}</div>
+                <div class="mobile-label1">:</div>
+                <div class="row-inside"> {{i+1}} </div>
+              </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="description">
+              <mat-header-cell *matHeaderCellDef>{{'Particulars' | translate:translateKey}}</mat-header-cell>
+              <mat-cell *matCellDef="let row" class="fullWidth">
+                <div class="mobile-label">{{'Particulars' | translate:translateKey}}</div>
+                <div class="mobile-label1">:</div>
+                <div class="row-inside"> {{ row.description }}</div>
+              </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="price">
+              <mat-header-cell *matHeaderCellDef>{{'Charges(Rs.)' | translate:translateKey}}</mat-header-cell>
+              <mat-cell *matCellDef="let row" class="fullWidth">
+                <div class="mobile-label">{{'Charges(Rs.)' | translate:translateKey}}</div>
+                <div class="mobile-label1">:</div>
+                <div class="row-inside"> {{ row.price }}</div>
+              </mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="displayedColumnsForPricingTable"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumnsForPricingTable;"></mat-row>
+          </table>
+        </div>
+
+        <br />
+
+        <h2>{{'Zoo Timings'| translate: translateKey}}</h2>
+
+        <div class="example-container mat-elevation-z8 borderOne" [hidden]="resultsLength==0">
+
+          <table mat-table [dataSource]="dataSourceForTiming" class="myApplication">
+
+            <ng-container matColumnDef="id">
+              <mat-header-cell *matHeaderCellDef>#</mat-header-cell>
+              <mat-cell *matCellDef="let row; let i = index;" class="fullWidth">
+                <div class="mobile-label">{{'s_no' | translate:translateKey}}</div>
+                <div class="mobile-label1">:</div>
+                <div class="row-inside"> {{i+1}} </div>
+              </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="months">
+              <mat-header-cell *matHeaderCellDef>{{'Months' | translate:translateKey}}</mat-header-cell>
+              <mat-cell *matCellDef="let row" class="fullWidth">
+                <div class="mobile-label">{{'Months' | translate:translateKey}}</div>
+                <div class="mobile-label1">:</div>
+                <div class="row-inside"> {{ row.months }}</div>
+              </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="slot">
+              <mat-header-cell *matHeaderCellDef>{{'Slot' | translate:translateKey}}</mat-header-cell>
+              <mat-cell *matCellDef="let row" class="fullWidth">
+                <div class="mobile-label">{{'Slot' | translate:translateKey}}</div>
+                <div class="mobile-label1">:</div>
+                <div class="row-inside"> {{ row.slot }}</div>
+              </mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="displayedColumnsForTimingTable"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumnsForTimingTable;"></mat-row>
+          </table>
+        </div>
+      </mat-card-content>
+
+      <div class="fotButtonBar">
+        <div class="col-sm-12 col-md-12 text-right">
+          <button mat-raised-button (click)="guideLineFlag = false; showTicketsBookingForm= true;" color="primary">
+            <mat-icon>thumb_up_alt</mat-icon>
+            {{'submit'| translate: translateKey}}
+          </button>
+        </div>
+      </div>
+    </mat-card>
+    <!-- Guildelines section ends here -->
+
+
+    <!-- Ticket Booking Section Starts Here -->
+
+    <mat-card class="cardBox" *ngIf="!guideLineFlag">
+      <form [formGroup]="ticketBookingForm">
+        <div class="pageTitle">{{'Ticket Details'| translate: translateKey}}</div>
+        <mat-card-content class="p-4">
+          <p class="pb-2">{{head_lines| translate: translateKey}}</p>
+          <h2>{{'Ticket Rate Details'| translate: translateKey}}</h2>
+
+
+          <table class="table table-striped responsiveTableRow">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th width="70">{{'No' | translate:translateKey}}</th>
+                <th>{{'Amount(Rs.)' | translate:translateKey}}</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr *ngFor="let row of ticketBookingRows; let indx = index;">
+                <td>
+                  <div>{{indx + 1}}</div>
+                </td>
+                <td>{{row.name}}</td>
+                <td [formGroupName]="row.formGroupName">
+                  <mat-form-field>
+                    <input #catRef matInput [maxlength]="row.max" OnlyNumber
+                      placeholder="{{row.placeHolder | translate:translateKey}}"
+                      [formControlName]="row.formControlName">
+                  </mat-form-field>
+                </td>
+                <td>
+                  <div>{{catRef.value * row.rate}}</div>
+                </td>
+              </tr>
+
+              <tr>
+                <td></td>
+                <td>Sub Total</td>
+                <td>Total Visitors: {{numberOfVisitors}}</td>
+                <td>{{totalAmount}}</td>
+              </tr>
+
+              <tr>
+                <td></td>
+                <td>Total Amount(Excluding Transaction Charges)</td>
+                <td></td>
+                <td>{{totalAmount}}</td>
+              </tr>
+            </tbody>
+          </table>
+
+        </mat-card-content>
+
+        <div class="fotButtonBar">
+          <div class="col-sm-12 col-md-12 text-right">
+            <button mat-raised-button (click)="guideLineFlag = false; showTicketsBookingForm= true;" color="primary">
+              <mat-icon>thumb_up_alt</mat-icon>
+              {{'submit'| translate: translateKey}}
+            </button>
+          </div>
+        </div>
+      </form>
+    </mat-card>
+
+    <!-- Ticket Booking Section Ends Here -->
+
+
+
+
+  </mat-tab>
+  <!-- Ticket Booking Tab Ends Here -->
+
+
+  <!-- Animal Adaption Tab Starts Here -->
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <div>{{'Animal Adaption' | translate:translateKey}}</div>
+    </ng-template>
+  </mat-tab>
+  <!-- Ticket Booking Tab Ends Here -->
+
+</mat-tab-group>
+<!-- </div> -->
