@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { ValidationService } from '../../../../../../shared/services/validation.service';
+import { TicketingsService } from '../../../shared-ticketing/services/ticketings.service';
+import { CommonService } from '../../../../../../shared/services/common.service';
+import { TicketingConstants } from '../../../config/ticketing-config';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-zoo-booking',
@@ -9,16 +14,20 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 })
 export class ZooBookingComponent implements OnInit {
 
+  // Loading Ticketing Configurations
+
+  ticketingConstants = TicketingConstants;
+
   /**
 	  * displayColumns are used for display the columns in material table.
 	*/
-  displayedColumnsForPricingTable: any = [
+  displayedColumnsForPricingTable: string[] = [
     'id',
     'description',
     'price'
   ];
 
-  displayedColumnsForTimingTable: any = [
+  displayedColumnsForTimingTable: string[] = [
     'id',
     'months',
     'slot'
@@ -29,6 +38,7 @@ export class ZooBookingComponent implements OnInit {
   */
   guideLineFlag: boolean = true;
   showTicketsBookingForm: boolean = false;
+  bankDetailsFlag: boolean = false;
 
   /**
     * Pricing data for ticket bookings for visiting zoo
@@ -57,7 +67,7 @@ export class ZooBookingComponent implements OnInit {
   ];
 
   /**
-    * Pricing data for ticket bookings for visiting zoo
+    * Timing data for ticket bookings for visiting zoo
   */
   timing: any[] = [
     {
@@ -89,13 +99,13 @@ export class ZooBookingComponent implements OnInit {
   totalAmount: number;
   numberOfVisitors: number;
 
-  // TIcket Booking Table Row Data:
+  // Ticket Booking Table Row Data:
 
   ticketBookingRows: any[] = [
     {
       name: 'Children',
       formGroupName: 'children',
-      formControlName: 'numberOfChildren',
+      formControlName: 'childNo',
       placeHolder: 'Number Of Children',
       max: 4,
       rate: 5
@@ -103,7 +113,7 @@ export class ZooBookingComponent implements OnInit {
     {
       name: 'Adults',
       formGroupName: 'adults',
-      formControlName: 'numberOfAdults',
+      formControlName: 'adultNo',
       placeHolder: 'Number Of Adults',
       max: 4,
       rate: 20
@@ -111,7 +121,7 @@ export class ZooBookingComponent implements OnInit {
     {
       name: 'Camera',
       formGroupName: 'camera',
-      formControlName: 'numberOfCamera',
+      formControlName: 'cameraNo',
       placeHolder: 'Number Of Camera',
       max: 3,
       rate: 50
@@ -119,11 +129,34 @@ export class ZooBookingComponent implements OnInit {
     {
       name: 'Video Camera',
       formGroupName: 'videoCamera',
-      formControlName: 'numberOfVideoCamera',
+      formControlName: 'videoCameraNo',
       placeHolder: 'Number Of Video Camera',
       max: 3,
       rate: 100
     }
+  ]
+
+  // Bank Details
+  bankDetailsForm: FormGroup;
+
+  /**
+	 * LookUps & Arrays.
+	*/
+
+  BANKS: Array<any> = [];
+
+  /**
+	 * Minimum start date.
+	*/
+  startMinDate = moment(new Date()).toISOString();
+
+  // Contact Details
+
+  idTypes: string[] = [
+    'Aadhar Card',
+    'Pan Card',
+    'Voter Id Card',
+    'Passport'
   ]
 
 
@@ -140,41 +173,107 @@ export class ZooBookingComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-  ) { }
+    private ticketingService: TicketingsService,
+    private commonService: CommonService
+  ) {
+
+    this.ticketingService.resourceType = 'zoo';
+  }
 
   ngOnInit() {
 
     this.dataSourceForPricing.data = this.pricing;
     this.dataSourceForTiming.data = this.timing;
 
-    this.shopLicNewFormControls();
+    this.ticketBookingFormControls();
+    // this.bankDetailsFormControls();
+    this.getLookUps();
   }
 
-  shopLicNewFormControls() {
+  /**
+	  * Get all booking category list from api.
+	*/
+  getLookUps() {
+    this.ticketingService.getDataFromLookups().subscribe((respData) => {
+      this.BANKS = respData.BANK;
+    });
+  }
+
+
+  ticketBookingFormControls() {
     this.ticketBookingForm = this.fb.group({
-      children: this.fb.group({
-        numberOfChildren: [null],
-        fees: []
+      "id": null,
+      "uniqueId": null,
+      "version": null,
+      "cancelledDate": null,
+      "status": null,
+      "refNumber": null,
+      "resourceType": null,
+      "payableServiceType": null,
+      "resourceCode": null,
+      // "accountHolderName": null,
+      // "accountNo": null,
+      // "bankName": null,
+      // "ifscCode": null,
+      "scheduleList": null,
+      "attachments": null,
+      "bookingDate": null,
+      "amount": 0.0,
+      "personSubTotal": 0.0,
+      "totalAmount": 0.0,
+      "paymentMode": null,
+      "totalPayableAmount": 0.0,
+
+      visitingDate: [null, Validators.required],
+      childNo: [''],
+      adultNo: [''],
+      cameraNo: [''],
+      videoCameraNo: [''],
+      applicantName: [null, Validators.required],
+      applicantMobile: [null, Validators.required],
+      idType: this.fb.group({
+        code: [null, Validators.required]
       }),
-      adults: this.fb.group({
-        numberOfAdults: [null],
-        fees: []
+      idNumber: [null, Validators.required],
+      bankName: this.fb.group({
+        code: [null, Validators.required],
       }),
-      camera: this.fb.group({
-        numberOfCamera: [null],
-        fees: []
-      }),
-      videoCamera: this.fb.group({
-        numberOfVideoCamera: [null],
-        fees: []
-      })
+      accountHolderName: [null, [Validators.required]],
+      accountNo: [null, [Validators.required]],
+      ifscCode: [null, [Validators.required, ValidationService.ifscCodeValidator]],
+      termsCondition: null,
+      agree: null,
     })
 
-    this.ticketBookingForm.valueChanges.subscribe( f => {
-      console.log(f);
-      this.numberOfVisitors = Number(f.children.numberOfChildren) + Number(f.adults.numberOfAdults) + Number(f.camera.numberOfCamera) + Number(f.videoCamera.numberOfVideoCamera);
-      this.totalAmount = (Number(f.children.numberOfChildren) * 5) + (Number(f.adults.numberOfAdults) * 20) + (Number(f.camera.numberOfCamera) * 50) + (Number(f.videoCamera.numberOfVideoCamera) * 100);
-    })
+  }
+
+  computeTotalAndVisitors() {
+    const f = this.ticketBookingForm.value;
+    this.numberOfVisitors = Number(f.childNo) + Number(f.adultNo);
+    this.totalAmount = (Number(f.childNo) * 5) + (Number(f.adultNo) * 20) + (Number(f.cameraNo) * 50) + (Number(f.videoCameraNo) * 100);
+    
+    this.ticketBookingForm.get('amount').setValue(this.totalAmount);
+    this.ticketBookingForm.get('totalAmount').setValue(this.totalAmount);
+    this.ticketBookingForm.get('personSubTotal').setValue(this.numberOfVisitors);
+
+  }
+
+  redirecToPayment() {
+    if (!this.bankDetailsForm.get('agree').value) {
+      this.commonService.openAlert("Feild Error", this.ticketingConstants.AGREE_MESSAGE, 'warning')
+      return;
+    } else if (!this.bankDetailsForm.get('termsCondition').value) {
+      this.commonService.openAlert("Feild Error", this.ticketingConstants.TERMS_AND_CONDITION_MESSAGE, 'warning')
+      return;
+    } else {
+    }
+  }
+
+  resetForm() {
+    this.ticketBookingForm.reset();
+    this.numberOfVisitors = 0;
+    this.subTotal = 0;
+    this.totalAmount = 0;
   }
 
 }
