@@ -10,7 +10,7 @@ import * as moment from 'moment';
 @Component({
   selector: 'app-zoo-booking',
   templateUrl: './zoo-booking.component.html',
-  styleUrls: ['./zoo-booking.component.scss', './../../../../my-applications/my-applications.component.scss']
+  styleUrls: ['./zoo-booking.component.scss']
 })
 export class ZooBookingComponent implements OnInit {
 
@@ -105,7 +105,7 @@ export class ZooBookingComponent implements OnInit {
     {
       name: 'Children',
       formGroupName: 'children',
-      formControlName: 'childNo',
+      formControlName: 'totalChild',
       placeHolder: 'Number Of Children',
       max: 4,
       rate: 5
@@ -113,7 +113,7 @@ export class ZooBookingComponent implements OnInit {
     {
       name: 'Adults',
       formGroupName: 'adults',
-      formControlName: 'adultNo',
+      formControlName: 'totalAdult',
       placeHolder: 'Number Of Adults',
       max: 4,
       rate: 20
@@ -121,7 +121,7 @@ export class ZooBookingComponent implements OnInit {
     {
       name: 'Camera',
       formGroupName: 'camera',
-      formControlName: 'cameraNo',
+      formControlName: 'totalCamera',
       placeHolder: 'Number Of Camera',
       max: 3,
       rate: 50
@@ -129,7 +129,7 @@ export class ZooBookingComponent implements OnInit {
     {
       name: 'Video Camera',
       formGroupName: 'videoCamera',
-      formControlName: 'videoCameraNo',
+      formControlName: 'totalVideoCamera',
       placeHolder: 'Number Of Video Camera',
       max: 3,
       rate: 100
@@ -225,10 +225,10 @@ export class ZooBookingComponent implements OnInit {
       "totalPayableAmount": 0.0,
 
       visitingDate: [null, Validators.required],
-      childNo: [''],
-      adultNo: [''],
-      cameraNo: [''],
-      videoCameraNo: [''],
+      totalChild: [''],
+      totalAdult: [''],
+      totalCamera: [''],
+      totalVideoCamera: [''],
       applicantName: [null, Validators.required],
       applicantMobile: [null, Validators.required],
       idType: this.fb.group({
@@ -249,8 +249,8 @@ export class ZooBookingComponent implements OnInit {
 
   computeTotalAndVisitors() {
     const f = this.ticketBookingForm.value;
-    this.numberOfVisitors = Number(f.childNo) + Number(f.adultNo);
-    this.totalAmount = (Number(f.childNo) * 5) + (Number(f.adultNo) * 20) + (Number(f.cameraNo) * 50) + (Number(f.videoCameraNo) * 100);
+    this.numberOfVisitors = Number(f.totalChild) + Number(f.totalAdult);
+    this.totalAmount = (Number(f.totalChild) * 5) + (Number(f.totalAdult) * 20) + (Number(f.totalCamera) * 50) + (Number(f.totalVideoCamera) * 100);
     
     this.ticketBookingForm.get('amount').setValue(this.totalAmount);
     this.ticketBookingForm.get('totalAmount').setValue(this.totalAmount);

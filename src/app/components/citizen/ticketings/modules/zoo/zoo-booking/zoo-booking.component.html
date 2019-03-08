@@ -24,7 +24,7 @@
 
         <div class="example-container mat-elevation-z8 borderOne" [hidden]="resultsLength==0">
 
-          <table mat-table [dataSource]="dataSourceForPricing" class="myApplication">
+          <table mat-table [dataSource]="dataSourceForPricing" class="myTicketPricingTabel">
 
             <ng-container matColumnDef="id">
               <mat-header-cell *matHeaderCellDef>#</mat-header-cell>
@@ -63,7 +63,7 @@
 
         <div class="example-container mat-elevation-z8 borderOne" [hidden]="resultsLength==0">
 
-          <table mat-table [dataSource]="dataSourceForTiming" class="myApplication">
+          <table mat-table [dataSource]="dataSourceForTiming" class="myTicketPricingTabel">
 
             <ng-container matColumnDef="id">
               <mat-header-cell *matHeaderCellDef>#</mat-header-cell>
@@ -117,7 +117,7 @@
           <p class="pb-2">{{head_lines| translate: translateKey}}</p>
           <h2>{{'Ticket Rate Details'| translate: translateKey}}</h2>
 
-          <mat-form-field class="col-md-4">
+          <mat-form-field class="col-md-6 col-sm-6 col-xs-4">
             <mat-label>{{'choose_start_date'| translate: translateKey}}</mat-label>
             <input matInput [min]="startMinDate" [matDatepicker]="zooTicketDatePicker" formControlName="bookingDate"
               placeholder="DD/MM/YYYY">
@@ -129,7 +129,7 @@
 
           <table class="table table-striped responsiveTableRow">
             <thead>
-              <tr>
+              <tr class="mo-d-none">
                 <th>#</th>
                 <th>Name</th>
                 <th width="70">{{'No' | translate:translateKey}}</th>
@@ -140,33 +140,46 @@
             <tbody>
               <tr *ngFor="let row of ticketBookingRows; let indx = index;">
                 <td>
+                  <div class="d-md-none">#</div>
                   <div>{{indx + 1}}</div>
                 </td>
-                <td>{{row.name}}</td>
                 <td>
-                  <mat-form-field>
-                    <input #catRef matInput [maxlength]="row.max" OnlyNumber
-                      placeholder="{{row.placeHolder | translate:translateKey}}" [formControlName]="row.formControlName"
-                      (change)="computeTotalAndVisitors()">
-                  </mat-form-field>
+                  <div class="d-md-none">Name:</div>
+                  {{row.name}}
                 </td>
                 <td>
+                  <div class="row">
+                      <div class="d-md-none"><span>{{'No' | translate:translateKey}}</span></div>
+                      <mat-form-field class="col-sm-4 col-md-12" style="padding-left: 0;">
+                        <input #catRef matInput [maxlength]="row.max" OnlyNumber
+                          placeholder="{{row.placeHolder | translate:translateKey}}"
+                          [formControlName]="row.formControlName" (change)="computeTotalAndVisitors()">
+                      </mat-form-field>
+                  </div>
+                </td>
+                <td>
+                  <div class="d-md-none">{{'Amount(Rs.)' | translate:translateKey}}</div>
                   <div>{{catRef.value * row.rate}}</div>
                 </td>
               </tr>
 
-              <tr>
+              <tr class="mo-d-none">
                 <td></td>
                 <td>Sub Total</td>
                 <td>Total Visitors: {{numberOfVisitors}}</td>
                 <td>{{totalAmount}}</td>
               </tr>
 
-              <tr>
+              <tr class="mo-d-none">
                 <td></td>
                 <td>Total Amount(Excluding Transaction Charges)</td>
                 <td></td>
                 <td>{{totalAmount}}</td>
+              </tr>
+
+              <tr class="d-md-none">
+                <td>Total Visitors: {{numberOfVisitors}}</td>
+                <td>Total Amount(Excluding Transaction Charges): {{totalAmount}}</td>
               </tr>
             </tbody>
           </table>
