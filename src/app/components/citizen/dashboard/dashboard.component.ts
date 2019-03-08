@@ -103,7 +103,7 @@ export class DashboardComponent implements OnInit {
 			"id": 2,
 			"uniqueId": null,
 			"version": null,
-			"code": "TICKETINGMODULE",
+			"code": "TICKETINGSMODULE",
 			"fieldView": "ALL",
 			"fieldList": null,
 			"name": "Ticketing Facilities",
@@ -126,35 +126,35 @@ export class DashboardComponent implements OnInit {
 					"active": true
 				},
 				{
-					"code": "PLANETARIUM",
+					"code": "PLANETARIUMBOOK",
 					"fieldView": "ALL",
 					"name": "Planetarium",
 					"gujName": "પ્લાનેટેરિયમ",
 					"appointmentRequired": false,
-					"active": false
-				}
-			]
-		},
-		{
-			"id": 3,
-			"uniqueId": null,
-			"version": null,
-			"code": "BOOKINGMODULE",
-			"fieldView": "ALL",
-			"fieldList": null,
-			"name": "My Bookings",
-			"gujName": "My Bookings",
-			"services": [
-				{
-					"code": "CANCELBOOKING",
-					"fieldView": "ALL",
-					"name": "My Bookings",
-					"gujName": "My Bookings",
-					"appointmentRequired": false,
 					"active": true
 				}
 			]
-		}
+		},
+		// {
+		// 	"id": 3,
+		// 	"uniqueId": null,
+		// 	"version": null,
+		// 	"code": "BOOKINGMODULE",
+		// 	"fieldView": "ALL",
+		// 	"fieldList": null,
+		// 	"name": "My Bookings",
+		// 	"gujName": "My Bookings",
+		// 	"services": [
+		// 		{
+		// 			"code": "CANCELBOOKING",
+		// 			"fieldView": "ALL",
+		// 			"name": "My Bookings",
+		// 			"gujName": "My Bookings",
+		// 			"appointmentRequired": false,
+		// 			"active": true
+		// 		}
+		// 	]
+		// }
 	];
 
 	/**
