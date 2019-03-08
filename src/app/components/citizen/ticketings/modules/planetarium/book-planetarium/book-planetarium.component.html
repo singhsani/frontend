@@ -1,0 +1,175 @@
+<app-title-bar [title]="'screen_title'">
+</app-title-bar>
+
+<!-- HTML for Town hall booking -->
+<div>
+    <mat-card class="formClass cardBorder">
+        <div class="pageTitle">Book Your Ticket</div>
+        <div class="p-15">
+            <form [formGroup]="ticketBookingForm" (ngSubmit)="confirmBooking()" autocomplete="off">
+                <div class="row mt-3 mb-3">
+
+                    <mat-form-field class="col-md-4">
+                        <mat-label>{{'visiting_date'| translate: translateKey}}</mat-label>
+                        <input matInput [min]="minDate" [matDatepicker]="datePicker" formControlName="visitingDate" placeholder="DD/MM/YYYY">
+                        <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
+                        <mat-datepicker #datePicker touchUi="true"></mat-datepicker>
+                        <control-messages [control]="ticketBookingForm.get('visitingDate')">
+                        </control-messages>
+                    </mat-form-field>
+
+                    <div formGroupName="category" class="col-md-4 ngSelect">
+                        <ng-select placeholder="{{'category'| translate: translateKey}}" formControlName="code">
+                            <ng-option *ngFor="let cat of CATEGORIES" [value]="cat.code">
+                                {{ cat.name }}
+                            </ng-option>
+                        </ng-select>
+                        <control-messages [control]="ticketBookingForm.get('category').get('code')">
+                        </control-messages>
+                    </div>
+
+                    <div formGroupName="planetariumShows" class="col-md-4 ngSelect">
+                        <ng-select placeholder="{{'planetarium_shows'| translate: translateKey}}" formControlName="code">
+                            <ng-option *ngFor="let cat of PLANETARIUMSHOWS" [value]="cat.code">
+                                {{ cat.name }}
+                            </ng-option>
+                        </ng-select>
+                        <control-messages [control]="ticketBookingForm.get('planetariumShows').get('code')">
+                        </control-messages>
+                    </div>
+                </div>
+
+                <div class="row" *ngIf="ticketBookingForm.get('category').get('code').value != 'SPECIAL'">
+                    <div class="col-md-12">
+                        <h2>{{'number_of_visitors' | translate: translateKey}}</h2>
+                        <div class="row">
+                            <mat-form-field class="col-md-4">
+                                <input matInput OnlyNumber min="1" max="4" type="number" formControlName="seats" placeholder="{{'select_seats' | translate: translateKey}}"
+                                    required>
+                                <control-messages [control]="ticketBookingForm.get('seats')"></control-messages>
+                                <mat-hint class="mt-3 font-weight-bold fsLarge">({{'above_3_years'| translate: translateKey}})</mat-hint>
+                            </mat-form-field>
+
+                            <div class="col-md-2 text-center">
+                                <mat-icon class="iconSign">clear</mat-icon>
+                            </div>
+
+                            <div class="col-md-2  text-center">
+                                <label>{{'rate' | translate: translateKey}}</label>
+                                <h2>{{RATE}}</h2>
+                            </div>
+
+                            <div class="col-md-2 text-center">
+                                <mat-icon class="iconSign">arrow_forward</mat-icon>
+                            </div>
+
+                            <div class="col-md-2 text-center">
+                                <label>{{'amount' | translate: translateKey}}</label>
+                                <h2>{{RATE * ticketBookingForm.get('seats').value}}</h2>
+                            </div>
+                        </div>
+                    </div>
+
+                    <mat-form-field class="col-md-4">
+                        <input matInput maxlength="25" appValidationFields [validationFieldsType]="'onlyNameWithoutSpace'" type="text" formControlName="firstName"
+                            placeholder="{{'first_name' | translate: translateKey}}" required>
+                        <control-messages [control]="ticketBookingForm.get('firstName')"></control-messages>
+                    </mat-form-field>
+
+                    <mat-form-field class="col-md-4">
+                        <input matInput maxlength="25" appValidationFields [validationFieldsType]="'onlyNameWithoutSpace'" type="text" formControlName="middleName"
+                            placeholder="{{'middle_name' | translate: translateKey}}" required>
+                        <control-messages [control]="ticketBookingForm.get('middleName')"></control-messages>
+                    </mat-form-field>
+
+                    <mat-form-field class="col-md-4">
+                        <input matInput maxlength="25" appValidationFields [validationFieldsType]="'onlyNameWithoutSpace'" type="text" formControlName="lastName"
+                            placeholder="{{'last_name' | translate: translateKey}}" required>
+                        <control-messages [control]="ticketBookingForm.get('lastName')"></control-messages>
+                    </mat-form-field>
+
+                    <mat-form-field class="col-md-4">
+                        <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="mobileNumber" placeholder="{{'mobile_number' | translate: translateKey}}"
+                            required>
+                        <control-messages [control]="ticketBookingForm.get('mobileNumber')"></control-messages>
+                    </mat-form-field>
+
+                    <div formGroupName="idType" class="col-md-4 ngSelect">
+                        <ng-select placeholder="{{'id_type'| translate: translateKey}}" formControlName="code">
+                            <ng-option *ngFor="let idType of IDTYPES" [value]="idType.code">
+                                {{ idType.name }}
+                            </ng-option>
+                        </ng-select>
+                        <control-messages [control]="ticketBookingForm.get('idType').get('code')">
+                        </control-messages>
+                    </div>
+
+                    <mat-form-field class="col-md-4">
+                        <input matInput OnlyNumber minlength="4" maxlength="4" formControlName="idNumber" placeholder="{{'id_number' | translate: translateKey}}"
+                            required>
+                        <control-messages [control]="ticketBookingForm.get('idNumber')"></control-messages>
+                        <mat-hint class="mt-3 font-weight-bold fsLarge">({{'last_4_digit_of_ID'| translate: translateKey}})</mat-hint>
+                    </mat-form-field>
+                </div>
+
+                <div class="row" *ngIf="ticketBookingForm.get('category').get('code').value == 'SPECIAL'">
+
+                    <div class="col-md-12">
+                        <label>{{'fee_and_timing_will_intimate_after_approval_from_department' | translate: translateKey}}</label>
+                    </div>
+
+                    <mat-form-field class="col-md-4">
+                        <input matInput maxlength="25" appValidationFields [validationFieldsType]="'onlyNameWithSpace'" type="text" formControlName="schoolName"
+                            placeholder="{{'school_name' | translate: translateKey}}" required>
+                        <control-messages [control]="ticketBookingForm.get('schoolName')"></control-messages>
+                    </mat-form-field>
+
+                    <mat-form-field class="col-md-4">
+                        <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="schoolMobileNumber" placeholder="{{'school_mobile_number' | translate: translateKey}}"
+                            required>
+                        <control-messages [control]="ticketBookingForm.get('schoolMobileNumber')"></control-messages>
+                    </mat-form-field>
+
+                    <mat-form-field class="col-md-4">
+                        <input matInput type="email" formControlName="schoolEmailId" placeholder="{{'school_mobile_number' | translate: translateKey}}"
+                            required>
+                        <control-messages [control]="ticketBookingForm.get('schoolEmailId')"></control-messages>
+                    </mat-form-field>
+
+                </div>
+
+                <div>
+                    <h2>
+                        {{'terms_and_conditions' | translate:translateKey }}
+                    </h2>
+                    <div class="pl-2">
+                        <mat-checkbox class="d-block" labelPosition="after" formControlName="termsCondition">
+                            {{'i_have_read_and_agree_with_terms_and_conditions' | translate:translateKey}}
+                        </mat-checkbox>
+                    </div>
+                </div>
+
+                <div class="row fotButtonBar">
+                    <div class="col-sm-12 col-md-12 text-right">
+                        
+                        <button mat-raised-button color="primary" type="submit" *ngIf="ticketBookingForm.get('category').get('code').value != 'SPECIAL'">
+                            <mat-icon>payment</mat-icon>
+                            {{'pay_and_print_ticket'| translate: translateKey}}
+                        </button>
+
+                        <button mat-raised-button color="primary" type="button" *ngIf="ticketBookingForm.get('category').get('code').value == 'SPECIAL'">
+                            <mat-icon>check_circle</mat-icon>
+                            {{'submit'| translate: translateKey}}
+                        </button>
+
+                        <button mat-raised-button color="primary" type="button" (click)="ticketBookingForm.reset()">
+                            <mat-icon>clear_all</mat-icon>
+                            {{'clear'| translate: translateKey}}
+                        </button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </mat-card>
+</div>
