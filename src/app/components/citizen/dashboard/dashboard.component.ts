@@ -118,12 +118,12 @@ export class DashboardComponent implements OnInit {
 					"active": true
 				},
 				{
-					"code": "ZOO",
+					"code": "ZOOBOOK",
 					"fieldView": "ALL",
 					"name": "Zoo",
 					"gujName": "પ્રાણી સંગ્રહાલય",
 					"appointmentRequired": false,
-					"active": false
+					"active": true
 				},
 				{
 					"code": "PLANETARIUM",
