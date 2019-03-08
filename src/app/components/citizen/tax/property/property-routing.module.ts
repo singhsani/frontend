@@ -13,7 +13,6 @@ import { PropertyVacantPremisesAppComponent } from './property-vacant-premises-a
 import { PropertyAssessmentCertificateComponent } from './property-assessment-certificate/property-assessment-certificate.component';
 
 const routes: Routes = [
-	{ path: '', component: PropertyNewAssessmentComponent },
 	{ path: ManageRoutes.getMainRoute('PRO-ASS') + '/:id/:apiCode', component: PropertyNewAssessmentComponent },
 	{ path: ManageRoutes.getMainRoute('PRO-EXT') + '/:id/:apiCode', component: PropertyExtractComponent },
 	{ path: ManageRoutes.getMainRoute('PRO-TRAN') + '/:id/:apiCode', component: PropertyTransferComponent },

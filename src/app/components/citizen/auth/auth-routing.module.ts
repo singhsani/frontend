@@ -9,7 +9,6 @@ import { SignUpComponent } from './sign-up/sign-up.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 /* Import auth components end */
 
-import { ManageRoutes } from '../../../config/routes-conf';
 import { LoginThroughAdminComponent } from './login-through-admin/login-through-admin.component';
 import { LoginLayoutComponent } from './../../../layouts/login-layout/login-layout.component';
 

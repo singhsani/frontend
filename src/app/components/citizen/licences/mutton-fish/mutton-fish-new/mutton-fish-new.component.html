@@ -71,7 +71,8 @@
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" required maxlength="90"
 							placeholder="{{'holder_lastname' | translate:translateKey:'gu'}}"
-							formControlName="holderLastNameGuj" appGujInputTarget [form]="muttonFishNewForm" appValidationFields validationFieldsType='onlyNameWithOutSpace'>
+							formControlName="holderLastNameGuj" appGujInputTarget [form]="muttonFishNewForm"
+							appValidationFields validationFieldsType='onlyNameWithOutSpace'>
 						<control-messages [control]="muttonFishNewForm.get('holderLastNameGuj')"></control-messages>
 					</mat-form-field>
 				</div>
@@ -95,7 +96,7 @@
 						placeholder="{{'holder_telephone_no' | translate:translateKey}}">
 				</mat-form-field>
 				<mat-form-field class="col-md-4">
-					<input matInput OnlyNumber maxlength="11" formControlName="holderMobileNo"
+					<input matInput OnlyNumber maxlength="11" required formControlName="holderMobileNo"
 						placeholder="{{'holder_mobile_no' | translate:translateKey}}">
 				</mat-form-field>
 				<mat-form-field class="col-md-4">
@@ -103,11 +104,11 @@
 						placeholder="{{'holder_fax_no' | translate:translateKey}}">
 				</mat-form-field>
 				<mat-form-field class="col-md-4">
-					<input matInput OnlyNumber maxlength="12" formControlName="holderAadharNo"
+					<input matInput OnlyNumber maxlength="12" required formControlName="holderAadharNo"
 						placeholder="{{'holder_aadhar_no' | translate:translateKey}}">
 				</mat-form-field>
 				<mat-form-field class="col-md-4">
-					<input matInput appAlphaNumeric maxlength="10" formControlName="holderPanNo"
+					<input matInput appAlphaNumeric maxlength="10" required formControlName="holderPanNo"
 						placeholder="{{'holder_pan_no' | translate:translateKey}}">
 				</mat-form-field>
 
@@ -231,7 +232,8 @@
 												<mat-form-field *ngIf="item.isEditMode">
 													<input matInput maxlength="100" appValidationFields
 														[validationFieldsType]="'onlyNameWithSpace'"
-														formControlName="name" placeholder="{{'name' | translate:translateKey}}*">
+														formControlName="name"
+														placeholder="{{'name' | translate:translateKey}}*">
 													<control-messages [control]="item.get('name')"></control-messages>
 												</mat-form-field>
 											</td>
@@ -240,7 +242,9 @@
 												<div class="d-md-none">{{'address' | translate:translateKey}}</div>
 												<div *ngIf="!item.isEditMode">{{item.get('address').value}}</div>
 												<mat-form-field *ngIf="item.isEditMode">
-													<input matInput maxlength="200" placeholder="{{'address' | translate:translateKey}}*" formControlName="address">
+													<input matInput maxlength="200"
+														placeholder="{{'address' | translate:translateKey}}*"
+														formControlName="address">
 													<control-messages [control]="item.get('address')">
 													</control-messages>
 												</mat-form-field>
@@ -251,8 +255,8 @@
 												<div *ngIf="!item.isEditMode">{{item.get('mobileNo').value}} &nbsp;
 												</div>
 												<mat-form-field *ngIf="item.isEditMode">
-													<input matInput maxlength="11" OnlyNumber
-														formControlName="mobileNo" placeholder="{{'mobile_no' | translate:translateKey}}">
+													<input matInput maxlength="11" OnlyNumber formControlName="mobileNo"
+														placeholder="{{'mobile_no' | translate:translateKey}}">
 													<control-messages [control]="item.get('mobileNo')">
 													</control-messages>
 												</mat-form-field>
