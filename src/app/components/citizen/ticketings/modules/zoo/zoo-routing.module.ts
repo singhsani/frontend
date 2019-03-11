@@ -3,10 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { ZooBookingComponent } from './zoo-booking/zoo-booking.component';
 
 const routes: Routes = [
-  {
-    path: 'zoo',
-    component: ZooBookingComponent
-  }
+  { path: '', redirectTo: 'book', pathMatch: 'full' },
+  { path: 'book', component: ZooBookingComponent },
 ];
 
 @NgModule({
