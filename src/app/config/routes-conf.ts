@@ -446,7 +446,7 @@ const ROUTEPREFIX = {
 
     'FIREFACILITIESMODULE': 'fire-facilities',
     'GRIEVANCEMODULE': 'grievance',
-    'LICENCEMODULE': 'licence',
+    'LICENCEMODULE': 'license',
 
     /** start - citizen innner-licences modules routes configuretion */
     'ANIMALPONDMODULE': 'animal-pond',
