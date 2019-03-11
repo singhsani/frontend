@@ -13,4 +13,4 @@ import { SharedTicketingModule } from '../../shared-ticketing/shared-ticketing.m
   ],
   declarations: [ZooBookingComponent]
 })
-export class ZooModule { }
+export class ZooTicketingModule { }

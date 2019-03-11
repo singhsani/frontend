@@ -4,7 +4,7 @@ import { ZooBookingComponent } from './zoo-booking/zoo-booking.component';
 
 const routes: Routes = [
   {
-    path: 'zoo',
+    path: 'zoo-ticketing',
     component: ZooBookingComponent
   }
 ];

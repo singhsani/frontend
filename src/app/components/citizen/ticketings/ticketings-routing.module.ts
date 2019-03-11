@@ -7,7 +7,7 @@ import { MyTicketingsComponent } from './components/my-ticketings/my-ticketings.
 const routes: Routes = [
   { path: '', component: DashboardComponent, canActivate: [AuthGuard] },
   { path: 'planetarium', loadChildren: './modules/planetarium/planetarium.module#PlanetariumModule', canLoad: [AuthGuard] },
-  { path: 'zoo', loadChildren: './modules/zoo/zoo.module#ZooModule', canLoad: [AuthGuard] },
+  { path: 'zoo', loadChildren: './modules/zoo-ticketing/zoo-ticketing.module#ZooTicketingModule', canLoad: [AuthGuard] },
   { path: 'my-ticketings', component: MyTicketingsComponent, canActivate: [AuthGuard] }
 ];
 

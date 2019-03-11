@@ -350,8 +350,8 @@ const ROUTEMAIN = {
         'type': ''
     },
 
-    'ZOO': {
-        'main': 'zoo',
+    'ZOOTICKETING': {
+        'main': 'zoo-ticketing',
         'type': ''
     },
 
@@ -724,12 +724,12 @@ const ROUTESLIST = {
     },
 
 
-    /** 
+    /**
      * Ticketing Routing Start
      */
 
     'ZOOBOOK': {
-        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TICKETINGSMODULES + '/' + ROUTEPREFIX.ZOOMODULE + '/' + ROUTEMAIN.ZOO.main
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TICKETINGSMODULES + '/' + ROUTEPREFIX.ZOOMODULE + '/' + ROUTEMAIN.ZOOTICKETING.main
     },
 
     'PLANETARIUMBOOK': {
