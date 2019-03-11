@@ -3,9 +3,8 @@ import { HttpService } from '../../../../../shared/services/http.service';
 
 @Injectable({
   providedIn: 'root'
-}
- */
-@Injectable()
+})
+
 export class TicketingsService {
 
   requestURL: string;
