@@ -354,10 +354,17 @@ const ROUTEMAIN = {
         'main': 'zoo-ticketing',
         'type': ''
     },
-
     'PLANETARIUM': {
         'main': 'planetarium',
-        'type': 'prcForm'
+        'type': ''
+    },
+    'ZOOBOOK': {
+        'main': 'book',
+        'type': ''
+    },
+    'PLANETARIUMBOOK': {
+        'main': 'book',
+        'type': ''
     },
 
     /* hospital routing configuration start*/
@@ -733,7 +740,7 @@ const ROUTESLIST = {
     },
 
     'PLANETARIUMBOOK': {
-        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TICKETINGSMODULES + '/' + ROUTEPREFIX.PLANETAREAMODULE + '/' + ROUTEMAIN.PLANETARIUM.main
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TICKETINGSMODULES + '/' + ROUTEPREFIX.PLANETARIUMMODULE + '/' + ROUTEMAIN.PLANETARIUMBOOK.main
     },
 
     'MYTICKETINGS': {
