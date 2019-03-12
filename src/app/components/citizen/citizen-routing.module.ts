@@ -34,7 +34,7 @@ const routes: Routes = [
 			{ path: 'certificates', loadChildren: './certificates/certificates.module#CertificatesModule', canLoad: [AuthGuard] },
 			{ path: 'bookings', loadChildren: './bookings/bookings.module#BookingsModule', canLoad: [AuthGuard] },
 			{ path: 'ticketings', loadChildren: './ticketings/ticketings.module#TicketingsModule', canLoad: [AuthGuard] },
-			{ path: 'licence', loadChildren: './licences/licences.module#LicencesModule', canLoad: [AuthGuard] },
+			{ path: 'license', loadChildren: './licences/licences.module#LicencesModule', canLoad: [AuthGuard] },
 			{ path: 'fire-facilities', loadChildren: './fire-facilities/fire-facilities.module#FireFacilitiesModule', canLoad: [AuthGuard] },
 			{ path: 'grievance', loadChildren: './grievance/grievance.module#GrievanceModule' , canLoad: [AuthGuard] },
 			{ path: 'tax', loadChildren: './tax/tax.module#TaxModule', canLoad: [AuthGuard] },

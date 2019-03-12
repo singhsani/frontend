@@ -1,10 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from '../../../../../shared/services/http.service';
 
-@Injectable({
-  providedIn: 'root'
-})
-
+@Injectable()
 export class TicketingsService {
 
   requestURL: string;
