@@ -3,12 +3,20 @@ import { Routes, RouterModule } from '@angular/router';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { AuthGuard } from '../../../core/guard/auth.guard';
 import { MyTicketingsComponent } from './components/my-ticketings/my-ticketings.component';
+import { ZooDashboardComponent } from './shared-ticketing/components/zoo-dashboard/zoo-dashboard.component';
 
 const routes: Routes = [
-  { path: '', component: DashboardComponent, canActivate: [AuthGuard] },
   { path: 'planetarium', loadChildren: './modules/planetarium/planetarium.module#PlanetariumModule', canLoad: [AuthGuard] },
-  { path: 'zoo', loadChildren: './modules/zoo/zoo.module#ZooModule', canLoad: [AuthGuard] },
-  { path: 'my-ticketings', component: MyTicketingsComponent, canActivate: [AuthGuard] }
+  // { path: 'adoption', loadChildren: './modules/animal-adoption/animal-adoption.module#AnimalAdoptionModule', canLoad: [AuthGuard] },
+  // { path: 'zoo', loadChildren: './modules/zoo-ticketing/zoo-ticketing.module#ZooTicketingModule', canLoad: [AuthGuard] },
+
+  { path: 'zoo-dashboard', component: ZooDashboardComponent, canActivate: [AuthGuard],
+    children: [
+      { path: ':adoption', loadChildren: './modules/animal-adoption/animal-adoption.module#AnimalAdoptionModule', canLoad: [AuthGuard] },
+      { path: ':zoo', loadChildren: './modules/zoo-ticketing/zoo-ticketing.module#ZooTicketingModule', canLoad: [AuthGuard]}
+    ]},
+  { path: 'my-ticketings', component: MyTicketingsComponent, canActivate: [AuthGuard] },
+  { path: '', component: DashboardComponent, canActivate: [AuthGuard] },
 ];
 
 

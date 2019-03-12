@@ -5,12 +5,16 @@ import { TicketingsRoutingModule } from './ticketings-routing.module';
 import { MyTicketingsComponent } from './components/my-ticketings/my-ticketings.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { SharedTicketingModule } from './shared-ticketing/shared-ticketing.module';
+import { CoreModule } from '../../../core/core.module';
+import { SharedModule } from '../../../shared/shared.module';
 
 @NgModule({
   imports: [
     CommonModule,
-    TicketingsRoutingModule,
-    SharedTicketingModule
+    CoreModule,
+    SharedModule,
+    SharedTicketingModule,
+    TicketingsRoutingModule
   ],
   declarations: [MyTicketingsComponent, DashboardComponent]
 })

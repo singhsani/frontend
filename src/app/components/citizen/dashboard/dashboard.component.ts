@@ -118,13 +118,13 @@ export class DashboardComponent implements OnInit {
 					"active": true
 				},
 				{
-					"code": "ZOOBOOK",
+					"code": "ZOO-DASHBOARD",
 					"fieldView": "ALL",
 					"name": "Zoo",
 					"gujName": "પ્રાણી સંગ્રહાલય",
 					"appointmentRequired": false,
 					"active": true
-				},
+        },
 				{
 					"code": "PLANETARIUMBOOK",
 					"fieldView": "ALL",
@@ -233,7 +233,7 @@ export class DashboardComponent implements OnInit {
 						this.router.navigate([redirectUrl, res.serviceFormId, apiCode]);
 					});
 				} else {
-					// todo 
+					// todo
 					this.toastr.error("Invalid API Code");
 				}
 				break;

@@ -3,12 +3,18 @@ import { Routes, RouterModule } from '@angular/router';
 import { ZooBookingComponent } from './zoo-booking/zoo-booking.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'book', pathMatch: 'full' },
-  { path: 'book', component: ZooBookingComponent },
+  {
+    path: '',
+    redirectTo: 'zoo-ticketing',
+  },
+  {
+    path: 'zoo-ticketing',
+    component: ZooBookingComponent
+  }
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class ZooRoutingModule { }
+export class ZooTicketingRoutingModule { }
