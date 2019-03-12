@@ -2,10 +2,8 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { AuthGuard } from '../../../core/guard/auth.guard';
-import { ManageRoutes } from '../../../config/routes-conf';
 import { BookingDashboardComponent } from './components/booking-dashboard/booking-dashboard.component';
 import { MyBookingComponent } from './components/my-booking/my-booking.component';
-
 
 const routes: Routes = [
 	{ path: '', component: BookingDashboardComponent, canActivate: [AuthGuard] },

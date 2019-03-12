@@ -177,7 +177,7 @@
             <th scope="col">{{'booking_date'| translate: translateKey}}</th>
             <!-- <th scope="col">{{'end_date'| translate: translateKey}}</th> -->
             <th scope="col">{{'slot_status'| translate: translateKey}}</th>
-            <th scope="col">{{'occupancy'| translate: translateKey}}</th>
+            <!-- <th scope="col">{{'occupancy'| translate: translateKey}}</th> -->
             <th scope="col" width="65">{{'action'| translate: translateKey}}</th>
           </tr>
         </thead>
@@ -187,8 +187,7 @@
             <td>{{bookingUtils.returnProperDate(days.start)}}</td>
             <!-- <td>{{bookingUtils.returnProperDate(days.end)}}</td> -->
             <td>{{days.slotStatus == bookingConstants.CHECKED ? bookingConstants.AVAILABLE : days.slotStatus }}</td>
-            <td>{{days.occupancy}}</td>
-
+            <!-- <td>{{days.occupancy}}</td> -->
             <td>
               <button mat-icon-button title="{{'remove_slot'| translate: translateKey}}"
                 [disabled]="selectedShift.length == 1" (click)="removeSelectedShift(days, i)">
@@ -212,126 +211,6 @@
   </div>
 </ng-template>
 
-<!-- 
-<div *ngIf="showBookingView">
-
-  <div class="table-responsive">
-    <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">{{'ref_number'| translate: translateKey}}</th>
-          <th scope="col">{{'date_of_programme'| translate: translateKey}}</th>
-          <th scope="col">{{'rent_amount'| translate: translateKey}}</th>
-          <th scope="col">{{'deposit_amount'| translate: translateKey}}</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td scope="col">{{paymentObject.refNumber}}</td>
-          <td scope="col">{{bookingUtils.returnProperDate(paymentObject.bookingDate)}}</td>
-          <td scope="col">{{paymentObject.rentAmount}}</td>
-          <td scope="col">{{paymentObject.depositAmount}}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="mt-5">
-    <h3 class="text-center">
-      {{'booking_details'| translate: translateKey}}
-    </h3>
-    <div>
-
-      <table mat-table [dataSource]="bookingDetailsDataSource" matSort matSortActive="created" matSortDisableClear
-        matSortDirection="asc">
-
-        <ng-container matColumnDef="id">
-          <th mat-header-cell *matHeaderCellDef>
-            {{'s_no'| translate: translateKey}}
-          </th>
-          <td mat-cell class="fullWidth" *matCellDef="let element;let indx=index;"> {{paginator?(paginator.pageIndex
-            * paginator.pageSize) + (indx+1) : (indx+1)}}
-          </td>
-        </ng-container>
-
-        <ng-container matColumnDef="bookingDate">
-          <th mat-header-cell *matHeaderCellDef>
-            {{'date_of_programme'| translate: translateKey}}
-          </th>
-          <td mat-cell class="fullWidth" *matCellDef="let element;">
-            {{bookingUtils.returnProperDate(element.bookingDate)}}
-          </td>
-        </ng-container>
-
-        <ng-container matColumnDef="rent">
-          <th mat-header-cell *matHeaderCellDef>
-            {{'rent'| translate: translateKey}}
-          </th>
-          <td mat-cell class="fullWidth" *matCellDef="let element;"> {{element.rent}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="electricCharges">
-          <th mat-header-cell *matHeaderCellDef>
-            {{'electric_charges' | translate: translateKey}}
-          </th>
-          <td mat-cell class="fullWidth" *matCellDef="let element;"> {{element.electricCharges}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="administrationCharges">
-          <th mat-header-cell *matHeaderCellDef>
-            {{'administration_charges' | translate: translateKey}}
-          </th>
-          <td mat-cell class="fullWidth" *matCellDef="let element;"> {{element.administrationCharges}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="showTax">
-          <th mat-header-cell *matHeaderCellDef>
-            {{'show_tax'| translate: translateKey}}
-          </th>
-          <td mat-cell class="fullWidth" *matCellDef="let element;"> {{element.showTax}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="subTotal">
-          <th mat-header-cell *matHeaderCellDef>
-            {{'subtotal'| translate: translateKey}}
-          </th>
-          <td mat-cell class="fullWidth" *matCellDef="let element;"> {{element.subTotal}}</td>
-        </ng-container>
-
-        <ng-container matColumnDef="gstAmount">
-          <th mat-header-cell *matHeaderCellDef>
-            {{'gst_amount'| translate: translateKey}}
-          </th>
-          <td mat-cell class="fullWidth" *matCellDef="let element;"> {{element.gstAmount}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="total">
-          <th mat-header-cell *matHeaderCellDef class="text-center">
-            {{'total'| translate: translateKey}}
-            <div>
-              {{'sub_plus_gst'| translate: translateKey}}
-            </div>
-          </th>
-          <td mat-cell class="fullWidth" *matCellDef="let element;"> {{element.total}} </td>
-        </ng-container>
-
-        <tr mat-header-row class="mat-header-sticky" *matHeaderRowDef="displayedColumns;"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      </table>
-
-      <mat-paginator class="mat-paginator-sticky" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons>
-      </mat-paginator>
-    </div>
-
-    <div class="row mt-4 fotButtonBar">
-      <div class="col-sm-12 col-md-12 text-right">
-        <button mat-raised-button type="button" color="primary" (click)="showBookingView = false;showApplicationForm = true;">
-          {{'proceed_for_application' | translate: translateKey}}
-        </button>
-      </div>
-    </div>
-  </div>
-</div> -->
 <ng-template #receiptModel>
   <div class="modal-header customthead">
     <h4 class="modal-title">

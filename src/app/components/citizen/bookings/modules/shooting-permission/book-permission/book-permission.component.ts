@@ -104,10 +104,6 @@ export class BookPermissionComponent implements OnInit {
   PURPOSES: Array<any> = [];
   CANCELLATION_TYPE: Array<any> = [];
 
-  displayedColumns: Array<string> = ['id', 'shiftType', 'bookingDate', 'startTime', 'endTime', 'rent', 'electricCharges', 'administrationCharges', 'showTax', 'subTotal', 'gstAmount', 'total'];
-
-  bookingDetailsDataSource = new MatTableDataSource<BookingDetails>([]);
-
   constructor(private bookingService: BookingService,
     private router: Router,
     private _fb: FormBuilder, private toster: ToastrService,
