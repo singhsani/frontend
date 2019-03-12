@@ -22,7 +22,7 @@
         <p class="pb-2">{{head_lines| translate: translateKey}}</p>
         <h2>{{'Ticket Rate Details'| translate: translateKey}}</h2>
 
-        <div class="example-container mat-elevation-z8 borderOne" [hidden]="resultsLength==0">
+        <div class="example-container mat-elevation-z8 borderOne">
 
           <table mat-table [dataSource]="dataSourceForPricing" class="myTicketPricingTabel">
 
@@ -61,7 +61,7 @@
 
         <h2>{{'Zoo Timings'| translate: translateKey}}</h2>
 
-        <div class="example-container mat-elevation-z8 borderOne" [hidden]="resultsLength==0">
+        <div class="example-container mat-elevation-z8 borderOne">
 
           <table mat-table [dataSource]="dataSourceForTiming" class="myTicketPricingTabel">
 
