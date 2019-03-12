@@ -354,6 +354,10 @@ const ROUTEMAIN = {
         'main': 'zoo-ticketing',
         'type': ''
     },
+    'ANIMAL-ADOPTION': {
+      'main': 'animal-adoption',
+      'type': ''
+    },
     'PLANETARIUM': {
         'main': 'planetarium',
         'type': ''
@@ -432,6 +436,8 @@ const ROUTEPREFIX = {
     'THEATERMODULE': 'theater',
     'TOWNHALLMODULE': 'town-hall',
     'ZOOMODULE': 'zoo',
+    'ZOODASHBOARD': 'zoo-dashboard',
+    'ANIMALADOPTIONMODULE': 'adoption',
     'PLANETARIUMMODULE': 'planetarium',
     /** end - citizen innner-booking modules routes configuretion */
 
@@ -735,8 +741,16 @@ const ROUTESLIST = {
      * Ticketing Routing Start
      */
 
+    'ZOO-DASHBOARD': {
+      'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TICKETINGSMODULES + '/' + ROUTEPREFIX.ZOODASHBOARD
+    },
+
     'ZOOBOOK': {
-        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TICKETINGSMODULES + '/' + ROUTEPREFIX.ZOOMODULE + '/' + ROUTEMAIN.ZOOTICKETING.main
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TICKETINGSMODULES + '/' + ROUTEPREFIX.ZOODASHBOARD + '/' + ROUTEPREFIX.ZOOMODULE + '/' + ROUTEMAIN['ZOOTICKETING'].main
+    },
+
+    'ANIMAL-ADOPTION': {
+      'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TICKETINGSMODULES + '/' + ROUTEPREFIX.ZOODASHBOARD + '/' + ROUTEPREFIX.ANIMALADOPTIONMODULE + '/' + ROUTEMAIN["ANIMAL-ADOPTION"].main
     },
 
     'PLANETARIUMBOOK': {

@@ -1,13 +1,13 @@
 import { ZooTicketingModule } from './zoo-ticketing.module';
 
 describe('ZooTicketingModule', () => {
-  let ZooTicketingModule: ZooTicketingModule;
+  let zooTicketingModule: ZooTicketingModule;
 
   beforeEach(() => {
-    ZooTicketingModule = new ZooTicketingModule();
+    zooTicketingModule = new ZooTicketingModule();
   });
 
   it('should create an instance', () => {
-    expect(ZooTicketingModule).toBeTruthy();
+    expect(zooTicketingModule).toBeTruthy();
   });
 });
