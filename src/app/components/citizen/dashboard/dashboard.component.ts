@@ -96,6 +96,14 @@ export class DashboardComponent implements OnInit {
 					"gujName": "પરવાનગી",
 					"appointmentRequired": false,
 					"active": true
+				},
+				{
+					"code": "SWIMMINGPOOL",
+					"fieldView": "ALL",
+					"name": "Swimming Pool",
+					"gujName": "સ્નાનાગાર",
+					"appointmentRequired": false,
+					"active": true
 				}
 			]
 		},

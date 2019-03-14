@@ -1,0 +1,631 @@
+<app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
+<mat-card class="formClass cardBorder">
+	<form [formGroup]="swimmingPoolForm">
+		<mat-tab-group [(selectedIndex)]="currentTabIndex" dynamicHeight="true" mat-stretch-tabs class="stepperNav">
+
+			<!-- step 1 Starts -->
+			<mat-tab>
+				<ng-template mat-tab-label>
+					<div>{{'details' | translate:translateKey}}</div>
+				</ng-template>
+
+				<div class="row">
+					<mat-form-field class="col-md-4">
+						<input matInput required maxlength="150"
+							placeholder="{{'name' | translate:translateKey}}"
+							formControlName="establishmentName" appGujInputSource targetElement="establishmentNameGuj"
+							[form]="swimmingPoolForm">
+						<control-messages [control]="swimmingPoolForm.get('establishmentName')"></control-messages>
+					</mat-form-field>
+
+					<!-- gujarati -->
+					<mat-form-field class="col-md-4">
+						<input matInput type="text" required maxlength="450" formControlName="establishmentNameGuj"
+							appGujInputTarget [form]="swimmingPoolForm"
+							placeholder="{{ 'name' | translate:translateKey:'gu' }}">
+						<control-messages [control]="swimmingPoolForm.get('establishmentNameGuj')"></control-messages>
+					</mat-form-field>
+					<!-- /gujarati -->
+
+					<div class="col-md-4 ngSelect" formGroupName="noOfHumanWorking">
+						<ng-select placeholder="{{'number_of_human' | translate:translateKey}} *"
+							formControlName="code" (change)="onChangeNoOfHumanWorking($event)">
+							<ng-option *ngFor="let yes_no of YES_NO" [value]="yes_no.code">{{yes_no.name}}</ng-option>
+						</ng-select>
+						<control-messages [control]="swimmingPoolForm.get('noOfHumanWorking').get('code')">
+						</control-messages>
+					</div>
+
+
+					<!-- <h2>{{'postal_address_of_establishment' | translate:translateKey}}</h2>
+					<app-address #postalAddressEstablishment [addressFormGroup]="swimmingPoolForm.get('postalAddress')">
+					</app-address> -->
+
+
+					<div class="col-md-4 ngSelect" formGroupName="assessmentDoneByVMC">
+						<ng-select placeholder="{{'assessment_done_by_VMC' | translate:translateKey}} *"
+							formControlName="code" required>
+							<ng-option *ngFor="let yes_no of YES_NO" [value]="yes_no.code">{{yes_no.name}}</ng-option>
+						</ng-select>
+						<control-messages [control]="swimmingPoolForm.get('assessmentDoneByVMC').get('code')">
+						</control-messages>
+					</div>
+
+					<!-- <mat-form-field class="col-md-4">
+						<input matInput required maxlength="13" minlength="13" appAlphaNumeric
+							placeholder="{{'property_tax_no' | translate:translateKey}}"
+							formControlName="propertyTaxNo">
+						<control-messages [control]="swimmingPoolForm.get('propertyTaxNo')"></control-messages>
+					</mat-form-field> -->
+
+					<div class="col-md-4 ngSelect" formGroupName="wardNo">
+						<ng-select placeholder="{{'ward_no' | translate:translateKey}} *" formControlName="code"
+							required>
+							<ng-option *ngFor="let no of wardNo" [value]="no.code">{{no.name}}</ng-option>
+						</ng-select>
+						<control-messages [control]="swimmingPoolForm.get('wardNo').get('code')"></control-messages>
+					</div>
+
+					<mat-form-field class="col-md-4">
+						<input matInput OnlyNumber maxlength="12"
+							placeholder="{{'aadhar_number' | translate:translateKey}}" formControlName="aadharNumber">
+					</mat-form-field>
+
+					<div class="col-md-4 ngSelect" formGroupName="applicantVimaAmountPaid">
+						<ng-select placeholder="{{'vima_amount' | translate:translateKey}}" formControlName="code"
+							(change)="swimmingPoolForm.get('number').reset()">
+							<ng-option *ngFor="let yes_no of YES_NO" [value]="yes_no.code">{{yes_no.name}}</ng-option>
+						</ng-select>
+					</div>
+
+					<mat-form-field class="col-md-4"
+						*ngIf="swimmingPoolForm.get('applicantVimaAmountPaid').value.code == 'YES'">
+						<input matInput appAlphaNumeric maxlength="20"
+							placeholder="{{'number' | translate:translateKey}}" formControlName="number">
+					</mat-form-field>
+				</div>
+
+				<div class="row">
+					<h2>{{'professional_tax' | translate:translateKey}}</h2>
+				</div>
+				<div class="row">
+					<mat-form-field class="col-md-4">
+						<input matInput maxlength="20" appAlphaNumeric
+							placeholder="{{'professional_tax_PEC_no' | translate:translateKey}}"
+							formControlName="professionalTaxPECNo">
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<input matInput maxlength="20" appAlphaNumeric
+							placeholder="{{'PRC_no' | translate:translateKey}}" formControlName="prcNo">
+					</mat-form-field>
+				</div>
+
+				<div class="row">
+
+					<!-- <h2>{{'situation_label'| translate:translateKey}}</h2>
+
+					<mat-form-field class="col-md-4">
+						<input matInput type="text" required maxlength="100" formControlName="situationOfOffice"
+							placeholder="{{'situation_of_establishment' | translate:translateKey}}">
+						<control-messages [control]="swimmingPoolForm.get('situationOfOffice')"></control-messages>
+					</mat-form-field> -->
+				</div>
+				<!-- <app-action-bar [form]="swimmingPoolForm" (tabIndex)="licenseConfiguration.onFormTabChange($event)"
+					[stepInfo]="{step: 'step1', next: 1, back: 0}"></app-action-bar> -->
+			</mat-tab>
+			<!-- step 1 Ends -->
+
+			<!-- step 2 Starts -->
+      <mat-card class="formClass cardBorder">
+        <form [formGroup]="swimmimgPoolBookingForm" (ngSubmit)="submitTheaterApplication()">
+            <mat-tab-group mat-stretch-tabs dynamicHeight="true" [(selectedIndex)]="currentTabIndex" class="stepperNav">
+
+                <!-- Tab 1 for booking details -->
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <div>{{'swimming_booking_details' | translate:translateKey}}</div>
+                    </ng-template>
+
+                    <h2>
+                        {{'organization_details' | translate:translateKey}}
+                    </h2>
+
+                    <div class="row">
+                        <mat-form-field class="col-md-4">
+                            <input matInput maxlength="25" appValidationFields [validationFieldsType]="'onlyNameWithSpace'" type="text" formControlName="organizationName"
+                                placeholder="{{'organization_name' | translate: translateKey}}" required>
+                            <control-messages [control]="swimmimgPoolBookingForm.get('organizationName')"></control-messages>
+                        </mat-form-field>
+
+                        <mat-form-field class="col-md-4">
+                            <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="organizationNumber" placeholder="{{'organization_number' | translate: translateKey}}"
+                                required>
+                            <control-messages [control]="swimmimgPoolBookingForm.get('organizationNumber')"></control-messages>
+                        </mat-form-field>
+
+                        <mat-form-field class="col-md-4">
+                            <input matInput type="email" maxlength="50" formControlName="organizationEmail" placeholder="{{'organization_email' | translate: translateKey}}"
+                                required>
+                            <control-messages [control]="swimmimgPoolBookingForm.get('organizationEmail')"></control-messages>
+                        </mat-form-field>
+
+                    </div>
+
+                    <!-- <div>
+                        <h2>
+                            {{'organization_address' | translate:translateKey}}
+                        </h2>
+                        <app-address #address [requiredFeilds]="true" [addressFormGroup]="swimmimgPoolBookingForm.get('organizationAddress')"></app-address>
+                    </div> -->
+
+                    <div class="row mt-4 fotButtonBar">
+                        <div class="col-sm-12 col-md-12 text-right">
+                            <button mat-raised-button type="button" color="primary" (click)="currentTabIndex= currentTabIndex +1;">
+                                {{'next' | translate:translateKey}}
+                                <mat-icon>navigate_next</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                </mat-tab>
+                <!-- Tab 1 Ends -->
+
+                <!-- Tab 2 for bank details -->
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <div>
+                            {{'bank_details' | translate:translateKey}}
+                        </div>
+                    </ng-template>
+
+                    <h2>
+                        {{'bank_details' | translate:translateKey}}
+                    </h2>
+
+                    <div class="row">
+
+                        <div formGroupName="bankName" class="col-md-6 ngSelect">
+                            <ng-select placeholder="{{'bank_name' | translate:translateKey}} *" formControlName="code">
+                                <ng-option *ngFor="let bank of BANKS" [value]="bank.code">
+                                    {{bank.name}}
+                                </ng-option>
+                            </ng-select>
+                            <control-messages [control]="swimmimgPoolBookingForm.get('bankName').get('code')"></control-messages>
+                        </div>
+
+                        <mat-form-field class="col-md-6">
+                            <input matInput type="text" maxlength="20" appValidationFields [validationFieldsType]="'onlyNameWithSpace'" formControlName="accountHolderName"
+                                placeholder="{{'account_holder_name' | translate: translateKey}}" required>
+                            <control-messages [control]="swimmimgPoolBookingForm.get('accountHolderName')"></control-messages>
+                        </mat-form-field>
+
+                        <mat-form-field class="col-md-6">
+                            <input matInput OnlyNumber maxlength="20" minlength="20" formControlName="accountNo" placeholder="{{'account_no' | translate: translateKey}}"
+                                required>
+                            <control-messages [control]="swimmimgPoolBookingForm.get('accountNo')"></control-messages>
+                        </mat-form-field>
+
+                        <mat-form-field class="col-md-6">
+                            <input matInput type="text" maxlength="11" formControlName="ifscCode" placeholder="{{'ifsc_code' | translate: translateKey}}"
+                                required>
+                            <control-messages [control]="swimmimgPoolBookingForm.get('ifscCode')"></control-messages>
+                        </mat-form-field>
+
+                        <h2>
+                            {{'terms_and_conditions' | translate:translateKey }}
+                        </h2>
+                        <div class="pl-2">
+                            <mat-checkbox class="d-block" labelPosition="after" formControlName="agree">
+                                {{'i_agree_with_above_bank_details_are_correct' | translate:translateKey}} </mat-checkbox>
+                            <mat-checkbox class="d-block" labelPosition="after" formControlName="termsCondition">
+                                {{'i_have_read_and_agree_with_terms_and_conditions' | translate:translateKey}} </mat-checkbox>
+                        </div>
+                    </div>
+
+                    <div class="row mt-4 fotButtonBar">
+                        <div class="col-sm-12 col-md-12 justify-content-between d-flex">
+                            <button type="button" color="primary" mat-raised-button (click)="currentTabIndex= currentTabIndex -1; ">
+                                <mat-icon>navigate_before</mat-icon>
+                                {{'back' | translate:translateKey}}
+                            </button>
+                            <button mat-raised-button color="primary" type="submit">
+                                <mat-icon>check_circle_outline</mat-icon>
+                                {{'submit_application'| translate: translateKey}}
+                            </button>
+                        </div>
+                    </div>
+                </mat-tab>
+                <!-- Tab 2 Ends -->
+            </mat-tab-group>
+        </form>
+    </mat-card>
+			<!-- step 2 Ends -->
+
+			<!-- step 3 employer family Starts -->
+			<mat-tab>
+				<ng-template mat-tab-label>
+					<div>{{'family_details' | translate: translateKey}}</div>
+				</ng-template>
+
+				<div class="row  pb-3">
+					<div class="col-md-10">
+						<h2>{{ 'family_table_label' | translate:translateKey}}</h2>
+					</div>
+					<div class="col-md-2 pt-3" style="text-align: right;">
+						<button type="button"
+							[disabled]="!(swimmingPoolForm.get('employerFamilyList')['controls'].length < 5)"
+							matTooltip="{{'add_more' | translate:translateKey}}" mat-raised-button color="primary"
+							(click)="addMorePerson('EMPLOYER_FAMILY')">{{'add'| translate:translateKey}}</button>
+					</div>
+				</div>
+
+				<!-- <div *ngIf="swimmingPoolForm.get('employerFamilyList')['controls'].length">
+					<div>
+						<table class="table table-striped responsiveTableRow">
+							<thead>
+								<tr class="mo-d-none">
+									<th>#</th>
+									<th>{{'name' | translate:translateKey}}</th>
+									<th>{{'address' | translate:translateKey}}</th>
+									<th>{{'relationship' | translate:translateKey}}</th>
+									<th width="80">{{'gender' | translate:translateKey}}</th>
+									<th width="50">{{'age' | translate:translateKey}}</th>
+									<th colspan="2" *ngIf="swimmingPoolForm.get('canEdit').value"></th>
+								</tr>
+							</thead>
+							<tbody formArrayName="employerFamilyList">
+								<tr *ngFor="let item of swimmingPoolForm.get('employerFamilyList')['controls']; let indx = index;"
+									[formGroupName]="indx">
+
+									<td>
+										<div class="d-md-none">#</div>
+										{{indx+1}}
+									</td>
+
+									<td>
+										<div class="d-md-none">{{'name' | translate:translateKey}}</div>
+										<p *ngIf="!item.isEditMode">{{item.get('name').value}}</p>
+										<mat-form-field *ngIf="item.isEditMode">
+											<input matInput appValidationFields
+												[validationFieldsType]="'onlyNameWithSpace'" formControlName="name">
+											<control-messages [control]="item.get('name')"></control-messages>
+										</mat-form-field>
+									</td>
+
+									<td>
+										<div class="d-md-none">{{'address' | translate:translateKey}}</div>
+										<p *ngIf="!item.isEditMode">{{item.get('address').value}}</p>
+										<mat-form-field *ngIf="item.isEditMode">
+											<input matInput formControlName="address">
+											<control-messages [control]="item.get('address')"></control-messages>
+										</mat-form-field>
+									</td>
+
+									<td [ngClass]="{'preview-mode-add-class':!item.isEditMode}">
+										<div class="d-md-none">{{'relationship' | translate:translateKey}}</div>
+										<div class="ngSelect" formGroupName="relationship">
+											<p width50 *ngIf="!item.isEditMode">
+												{{getSelectedDataFromLookUps(SWIMMING_LIC_EMPLOYER_FAMILY_PERSON_RELATIONSHIP,item.get('relationship').value.code)?.name}}
+											</p>
+											<div class="ngSelect" *ngIf="item.isEditMode">
+												<ng-select formControlName="code">
+													<ng-option
+														*ngFor="let emp_family_relationship of SWIMMING_LIC_EMPLOYER_FAMILY_PERSON_RELATIONSHIP"
+														[value]="emp_family_relationship.code">
+														{{emp_family_relationship.name}}</ng-option>
+												</ng-select>
+												<control-messages [control]="item.get('relationship').get('code')">
+												</control-messages>
+											</div>
+										</div>
+									</td>
+
+									<td>
+										<div class="d-md-none">{{'gender' | translate:translateKey}}</div>
+										<div class="ngSelect" formGroupName="gender">
+											<p class="width80" *ngIf="!item.isEditMode">
+												{{getSelectedDataFromLookUps(gender,item.get('gender').value.code)?.name}}
+											</p>
+											<div class="ngSelect" *ngIf="item.isEditMode">
+												<ng-select *ngIf="item.isEditMode" formControlName="code">
+													<ng-option *ngFor="let gender of gender" [value]="gender.code">
+														{{gender.name}}</ng-option>
+												</ng-select>
+												<control-messages [control]="item.get('gender').get('code')">
+												</control-messages>
+											</div>
+										</div>
+									</td>
+
+									<td>
+										<div class="d-md-none">{{'age' | translate:translateKey}}</div>
+										<p class="width60" *ngIf="!item.isEditMode">{{item.get('age').value}}</p>
+										<mat-form-field *ngIf="item.isEditMode">
+											<input matInput maxlength="2" OnlyNumber formControlName="age">
+											<control-messages [control]="item.get('age')"></control-messages>
+										</mat-form-field>
+									</td>
+
+									<td style="width: 40px;" *ngIf="swimmingPoolForm.get('canEdit').value">
+										<button mat-icon-button color="primary" *ngIf="!item.isEditMode"
+											(click)="editRecord(item)">
+											<mat-icon title="Edit">edit</mat-icon>
+										</button>
+										<button type="submit" [disabled]="item.invalid" mat-icon-button color="primary"
+											*ngIf="item.isEditMode" (click)="saveRecord(item)">
+											<mat-icon title="save">save</mat-icon>
+										</button>
+									</td>
+									<td style="width: 40px;" *ngIf="swimmingPoolForm.get('canEdit').value">
+										<button mat-icon-button color="warn" *ngIf="!item.isEditMode"
+											(click)="deleteRecord('EMPLOYER_FAMILY',indx)">
+											<mat-icon title="Delete">delete</mat-icon>
+										</button>
+										<button mat-icon-button color="warn" *ngIf="item.isEditMode"
+											(click)="cancelRecord(item,indx)">
+											<mat-icon title="Cancel">cancel</mat-icon>
+										</button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+
+					<table width="100%" class="table">
+						<tbody>
+							<tr>
+								<th width="200">{{'total_adult_person' | translate:translateKey}}</th>
+								<td>{{calulateNumberOfPerson('employerFamilyList','totalAdultEmployerFamily','adult')}}
+								</td>
+								<th width="200">{{'total_young_person' | translate:translateKey}}</th>
+								<td>{{calulateNumberOfPerson('employerFamilyList','totalYoungEmployerFamily','young')}}
+								</td>
+							</tr>
+							<tr>
+								<th>{{'total_men' | translate:translateKey}}</th>
+								<td>{{calulateNumberOfPerson('employerFamilyList','totalManEmployerFamily','men')}}</td>
+								<th>{{'total_women' | translate:translateKey}}</th>
+								<td>{{calulateNumberOfPerson('employerFamilyList','totalWomenEmployerFamily','women')}}
+								</td>
+							</tr>
+							<tr>
+								<th>{{'total_unidentified_person' | translate:translateKey}}</th>
+								<td>{{calulateNumberOfPerson('employerFamilyList','totalUnidentifiedEmployerFamily','unidentified')}}
+								</td>
+								<th>{{'total_person' | translate:translateKey}}</th>
+								<td>{{calulateNumberOfPerson('employerFamilyList','totalFamilyMembers','total')}}</td>
+							</tr>
+							<tr>
+								<th>{{'total_person' | translate:translateKey}}</th>
+								<td>{{calulateNumberOfPerson('employerFamilyList','totalFamilyMembers','total')}}</td>
+								<th></th>
+								<td></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<app-action-bar [form]="swimmingPoolForm" (tabIndex)="licenseConfiguration.onFormTabChange($event)"
+					[stepInfo]="{step: 'step3', next: 3, back: 1}"></app-action-bar> -->
+			</mat-tab>
+			<!-- step 3 employer family Ends -->
+
+			<!-- step 4 occupancy person Starts -->
+			<mat-tab>
+				<ng-template mat-tab-label>
+					<div>{{'person_occuping' | translate: translateKey}}</div>
+				</ng-template>
+
+				<div class="row pb-3">
+					<div class="col-md-10">
+						<h2>{{'occupying_position_of_management_table_label' | translate: translateKey }}</h2>
+					</div>
+					<div class="col-md-2 pt-3" style="text-align: right;">
+						<button type="button" [disabled]="!(swimmingPoolForm.get('occupancyList')['controls'].length < 2)"
+							matTooltip="Add More Person Occuping" mat-raised-button color="primary"
+							(click)="addMorePerson('OCCUPANCY')">{{'add' | translate: translateKey}}</button>
+					</div>
+				</div>
+
+				<!-- <div *ngIf="swimmingPoolForm.get('occupancyList')['controls'].length">
+					<div>
+						<table class="table table-striped responsiveTableRow">
+							<thead>
+								<tr class="mo-d-none">
+									<th>#</th>
+									<th>{{'name' | translate:translateKey}}</th>
+									<th>{{'address' | translate:translateKey}}</th>
+									<th>{{'relationship' | translate:translateKey}}</th>
+									<th width="80">{{'gender' | translate:translateKey}}</th>
+									<th width="50">{{'age' | translate:translateKey}}</th>
+									<th colspan="2" *ngIf="swimmingPoolForm.get('canEdit').value"></th>
+								</tr>
+							</thead>
+							<tbody formArrayName="occupancyList">
+								<tr *ngFor="let item of swimmingPoolForm.get('occupancyList')['controls']; let indx = index;"
+									[formGroupName]="indx">
+									<td>
+										<div class="d-md-none">#</div> {{indx+1}}
+									</td>
+
+									<td>
+										<div class="d-md-none">{{'name' | translate:translateKey}}</div>
+										<p *ngIf="!item.isEditMode">{{item.get('name').value}}</p>
+										<mat-form-field *ngIf="item.isEditMode">
+											<input matInput appValidationFields
+												[validationFieldsType]="'onlyNameWithSpace'" formControlName="name">
+											<control-messages [control]="item.get('name')"></control-messages>
+										</mat-form-field>
+									</td>
+
+									<td>
+										<div class="d-md-none">{{'address' | translate:translateKey}}</div>
+										<p *ngIf="!item.isEditMode">{{item.get('address').value}}</p>
+										<mat-form-field *ngIf="item.isEditMode">
+											<input matInput formControlName="address">
+											<control-messages *ngIf="item.isEditMode" [control]="item.get('address')">
+											</control-messages>
+										</mat-form-field>
+									</td>
+
+									<td [ngClass]="{'preview-mode-add-class':!item.isEditMode}">
+										<div class="d-md-none">{{'relationship' | translate:translateKey}}</div>
+
+										<div formGroupName="relationship">
+											<p *ngIf="!item.isEditMode">
+												{{getSelectedDataFromLookUps(SWIMMING_LIC_OCCUPANCY_PERSON_RELATIONSHIP,item.get('relationship').value.code)?.name}}
+											</p>
+											<div class="ngSelect" *ngIf="item.isEditMode">
+												<ng-select [items]="SWIMMING_LIC_OCCUPANCY_PERSON_RELATIONSHIP"
+													bindLabel="name" bindValue="code" formControlName="code">
+													<ng-template ng-option-tmp let-item="item">
+														<div [title]="item.name">{{item.name}}</div>
+													</ng-template>
+												</ng-select>
+												<control-messages *ngIf="item.isEditMode"
+													[control]="item.get('relationship').get('code')"></control-messages>
+											</div>
+										</div>
+
+									</td>
+
+									<td>
+										<div class="d-md-none">{{'gender' | translate:translateKey}}</div>
+										<div class="ngSelect" formGroupName="gender">
+											<p class="width80" *ngIf="!item.isEditMode">
+												{{getSelectedDataFromLookUps(gender,item.get('gender').value.code)?.name}}
+											</p>
+											<div class="ngSelect" *ngIf="item.isEditMode">
+												<ng-select formControlName="code">
+													<ng-option *ngFor="let gender of gender" [value]="gender.code">
+														{{gender.name}}</ng-option>
+												</ng-select>
+												<control-messages *ngIf="item.isEditMode"
+													[control]="item.get('gender').get('code')"></control-messages>
+											</div>
+										</div>
+									</td>
+
+									<td>
+										<div class="d-md-none">{{'age' | translate:translateKey}}</div>
+										<p class="width50" *ngIf="!item.isEditMode">{{item.get('age').value}}</p>
+										<mat-form-field *ngIf="item.isEditMode">
+											<input matInput maxlength="2" OnlyNumber formControlName="age">
+											<control-messages *ngIf="item.isEditMode" [control]="item.get('age')">
+											</control-messages>
+										</mat-form-field>
+									</td>
+
+									<td style="width: 40px;" *ngIf="swimmingPoolForm.get('canEdit').value">
+										<button mat-icon-button color="primary" *ngIf="!item.isEditMode"
+											(click)="editRecord(item)">
+											<mat-icon title="Edit">edit</mat-icon>
+										</button>
+										<button type="submit" [disabled]="item.invalid" mat-icon-button color="primary"
+											*ngIf="item.isEditMode" (click)="saveRecord(item)">
+											<mat-icon title="save">save</mat-icon>
+										</button>
+									</td>
+									<td style="width: 40px;" *ngIf="swimmingPoolForm.get('canEdit').value">
+										<button mat-icon-button color="warn" *ngIf="!item.isEditMode"
+											(click)="deleteRecord('OCCUPANCY',indx)">
+											<mat-icon title="Delete">delete</mat-icon>
+										</button>
+										<button mat-icon-button color="warn" *ngIf="item.isEditMode"
+											(click)="cancelRecord(item,indx)">
+											<mat-icon title="Cancel">cancel</mat-icon>
+										</button>
+									</td>
+
+								</tr>
+							</tbody>
+						</table>
+					</div>
+
+					<table width="100%" class="table">
+						<tbody>
+							<tr>
+								<th width="200">{{'total_adult_person' | translate:translateKey}}</th>
+								<td>{{calulateNumberOfPerson('occupancyList','totalAdultOccupancy','adult')}}</td>
+								<th width="200">{{'total_young_person' | translate:translateKey}}</th>
+								<td>{{calulateNumberOfPerson('occupancyList','totalYoungOccupancy','young')}}</td>
+							</tr>
+							<tr>
+								<th>{{'total_men' | translate:translateKey}}</th>
+								<td>{{calulateNumberOfPerson('occupancyList','totalManOccupancy','men')}}</td>
+								<th>{{'total_women' | translate:translateKey}}</th>
+								<td>{{calulateNumberOfPerson('occupancyList','totalWomenOccupancy','women')}}</td>
+							</tr>
+							<tr>
+								<th>{{'total_unidentified_person' | translate:translateKey}}</th>
+								<td>{{calulateNumberOfPerson('occupancyList','totalUnidentifiedOccupancy','unidentified')}}
+								</td>
+								<th>{{'total_person' | translate:translateKey}}</th>
+								<td>{{calulateNumberOfPerson('occupancyList','totalOccupancy','total')}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+				<app-action-bar [form]="swimmingPoolForm" (tabIndex)="licenseConfiguration.onFormTabChange($event)"
+					[stepInfo]="{step: 'step4', next: 4, back: 2}"></app-action-bar> -->
+
+			</mat-tab>
+			<!-- step 4 occupancy person Ends -->
+
+		
+			<!-- step Attachment Starts -->
+			<mat-tab>
+				<ng-template mat-tab-label>
+					<div>{{'attachment' | translate: translateKey}}</div>
+				</ng-template>
+
+				<div class="row">
+
+					<h2 *ngIf="!swimmingPoolForm.get('typeOfOrganisation').value.code">{{'category_wise_attachment' | translate:
+						translateKey}}
+					</h2>
+					<ng-container *ngIf="swimmingPoolForm.get('typeOfOrganisation').value.code">
+
+						<h2
+							*ngIf="swimmingPoolForm.get('typeOfOrganisation').get('code').value === 'SWIMMING_LIC_SELF_OWNERSHIP'">
+							{{'owner_checklist' | translate: translateKey}}
+						</h2>
+
+						<h2
+							*ngIf="swimmingPoolForm.get('typeOfOrganisation').get('code').value === 'SWIMMING_LIC_PARTNERSHIP' || swimmingPoolForm.get('typeOfOrganisation').get('code').value === 'SWIMMING_LIC_CO_OPERATIVE_SOCIETY' ">
+							{{'partnership_and_coopsoc_checklist' | translate: translateKey}}
+						</h2>
+
+						<h2 *ngIf="swimmingPoolForm.get('typeOfOrganisation').get('code').value ==='SWIMMING_LIC_COMPANY' ">
+							{{'company_checklist' | translate: translateKey}}
+						</h2>
+
+						<h2
+							*ngIf="swimmingPoolForm.get( 'typeOfOrganisation').get('code').value ==='SWIMMING_LIC_TRUST' || swimmingPoolForm.get( 'typeOfOrganisation').get('code').value==='SWIMMING_LIC_BOARD' ">
+							{{'trust_and_board_checklist' | translate: translateKey}}
+						</h2>
+
+						<!-- <ng-container
+							*ngFor="let doc of swimmingPoolForm.get('serviceDetail').get('serviceUploadDocuments').value  | filterAttachment:swimmingPoolForm.get('typeOfOrganisation').value.code">
+							<div class="col-md-4" *ngIf="doc.requiredOnCitizenPortal && doc.isActive && licenseConfiguration.isAttachmentButtonsVisible">
+								<label>{{TranslateService.getCurrentLanguage()=='en'? doc.documentLabelEn : doc.documentLabelGuj }}
+									<span *ngIf="doc.mandatory">*</span></label>
+								<file-upload [form]="swimmingPoolForm" [uploadModel]="doc"></file-upload>
+							</div>
+						</ng-container> -->
+
+					</ng-container>
+
+				</div>
+
+				<!-- <app-action-bar [uploadFiles]="uploadFilesArray" [form]="swimmingPoolForm"
+					(handleErrors)="handleErrorsOnSubmit($event) " (tabIndex)="licenseConfiguration.onFormTabChange($event) "
+					[stepInfo]="{step: 'final', next:7, back: 5} "></app-action-bar> -->
+
+			</mat-tab>
+			<!-- step Attachment Ends -->
+
+		</mat-tab-group>
+	</form>
+	<!-- {{ swimmingPoolForm.value | json }} -->
+</mat-card>

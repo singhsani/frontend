@@ -14,7 +14,7 @@ import { BookingDashboardComponent } from './components/booking-dashboard/bookin
     CommonModule,
     BookingsRoutingModule,
     MyDatePickerModule,
-    SharedBookingModule,
+    SharedBookingModule
   ],
 })
 export class BookingsModule { }

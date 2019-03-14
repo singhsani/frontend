@@ -1,0 +1,35 @@
+.mat-standard-chip {
+    border-radius: 0px;
+}
+
+/deep/ .mat-chip-list-wrapper {
+    display: table-cell !important;
+    flex-direction: row;
+    flex-wrap: initial;
+    align-items: center;
+    margin: -4px;
+}
+
+.clock-button {
+    position: absolute;
+    top: -6px;
+    right: 0;
+}
+
+.clock-input {
+    padding-right: 39px;
+}
+
+.csBlock {
+    border: 2px solid gray;
+    margin: 15px;
+}
+
+//  for ngx clock
+:host /deep/ .clock-face__number>span.disabled {
+    color: #e0dbdb !important;
+}
+
+:host /deep/ .clock-button > button > svg {
+    fill: indigo;
+}
