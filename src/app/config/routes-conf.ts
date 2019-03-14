@@ -296,6 +296,10 @@ const ROUTEMAIN = {
         'main': 'bookPermission',
         'type': ''
     },
+    'SWIMMINGPOOL': {
+        'main': 'swimmingPool',
+        'type': 'swimmingPool'
+    },
     'THEATER': {
         'main': 'theater',
         'type': 'amphiTheater'
@@ -355,8 +359,8 @@ const ROUTEMAIN = {
         'type': ''
     },
     'ANIMAL-ADOPTION': {
-      'main': 'animal-adoption',
-      'type': ''
+        'main': 'animal-adoption',
+        'type': ''
     },
     'PLANETARIUM': {
         'main': 'planetarium',
@@ -709,7 +713,10 @@ const ROUTESLIST = {
     'BOOKPERMISSION': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.BOOKINGMODULE + '/' + ROUTEPREFIX.SHOOTINGPERMISSIONMODULE + '/' + ROUTEMAIN.BOOKPERMISSION.main
     },
-
+    //SWIMMING POOL
+    'SWIMMINGPOOL': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.BOOKINGMODULE + '/' + ROUTEPREFIX.SWIMMINGMODULE + '/' + ROUTEMAIN.SWIMMINGPOOL.main
+    },
     //AMPHI-THEATER
     'THEATERLIST': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.BOOKINGMODULE + '/' + ROUTEPREFIX.THEATERMODULE + '/' + ROUTEMAIN.THEATERLIST.main
@@ -742,7 +749,7 @@ const ROUTESLIST = {
      */
 
     'ZOO-DASHBOARD': {
-      'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TICKETINGSMODULES + '/' + ROUTEPREFIX.ZOODASHBOARD
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TICKETINGSMODULES + '/' + ROUTEPREFIX.ZOODASHBOARD
     },
 
     'ZOOBOOK': {
@@ -750,7 +757,7 @@ const ROUTESLIST = {
     },
 
     'ANIMAL-ADOPTION': {
-      'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TICKETINGSMODULES + '/' + ROUTEPREFIX.ZOODASHBOARD + '/' + ROUTEPREFIX.ANIMALADOPTIONMODULE + '/' + ROUTEMAIN["ANIMAL-ADOPTION"].main
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TICKETINGSMODULES + '/' + ROUTEPREFIX.ZOODASHBOARD + '/' + ROUTEPREFIX.ANIMALADOPTIONMODULE + '/' + ROUTEMAIN["ANIMAL-ADOPTION"].main
     },
 
     'PLANETARIUMBOOK': {

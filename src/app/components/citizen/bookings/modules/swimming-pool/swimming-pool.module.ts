@@ -6,6 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../../../../shared/shared.module';
 import { CoreModule } from '../../../../../core/core.module';
 import { SwimmingPoolRoutingModule } from './swimming-pool-routing.module';
+import { SwimmingPoolComponent } from './swimming-pool/swimming-pool.component';
 /* Import all shared, core and routing module end */
 
 @NgModule({
@@ -17,6 +18,6 @@ import { SwimmingPoolRoutingModule } from './swimming-pool-routing.module';
 		ReactiveFormsModule,
 		SwimmingPoolRoutingModule
 	],
-	declarations: []
+	declarations: [SwimmingPoolComponent]
 })
 export class SwimmingPoolModule { }
