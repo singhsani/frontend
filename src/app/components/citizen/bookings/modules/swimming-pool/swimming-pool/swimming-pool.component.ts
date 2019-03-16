@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ManageRoutes } from '../../../../../../config/routes-conf';
 import { CommonService } from '../../../../../../shared/services/common.service';
 
 import { ValidationService } from '../../../../../../shared/services/validation.service';
@@ -20,20 +19,19 @@ import { BookingConstants, BookingUtils } from '../../../config/booking-config';
 })
 export class SwimmingPoolComponent implements OnInit {
 
-
   @ViewChild('postalAddressEstablishment') postalAddressEstablishment: any;
 
-  swimmingPoolForm: FormGroup;
   swimmimgPoolBookingForm: FormGroup;
   translateKey: string = 'swimmingPoolScreen';
+  isFileUploaded: boolean = false;
 
   formId: number;
   apiCode: string;
-  public currentTabIndex: number = 0;
-  disablefutureDate = new Date(moment().format('YYYY-MM-DD'));
+  public tabIndex: number = 0;
+  disableDate = new Date(moment().format('YYYY-MM-DD'));
   SWIMMING_POOL: Array<any> = [];
-
-
+  applicantageyear: number = null;
+  applicantagedays: number = null;
   /**
   * Loading Booking Configuration
   */
@@ -53,33 +51,29 @@ export class SwimmingPoolComponent implements OnInit {
    */
   constructor(
     private fb: FormBuilder,
-    private validationService: ValidationService,
+    public validationError: ValidationService,
     private bookingService: BookingService,
     private formService: FormsActionsService,
     private commonService: CommonService,
     private toastrService: ToastrService,
-    public TranslateService: TranslateService,
-    private router : Router) { this.bookingService.resourceType = 'swimmingPool'; }
+    public translateService: TranslateService,
+    private router: Router) { this.bookingService.resourceType = 'swimmingPool'; }
 
 	/**
 	 * This method call initially required methods.
 	 */
   ngOnInit() {
     this.swimmingPoolFormControls();
-    this.swimmingPoolControls2();
-
     this.getLookupData();
     this.getResourceList();
   }
-
 
 	/**
 	* Method is used to get lookup data
 	*/
   getLookupData() {
-   
-  }
 
+  }
 
   /**
    * This method for get resource list
@@ -95,18 +89,42 @@ export class SwimmingPoolComponent implements OnInit {
 	* 'Guj' control is consider as a Gujarati fields
 	*/
   swimmingPoolFormControls() {
-    this.swimmingPoolForm = this.fb.group({
-      apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
+    this.swimmimgPoolBookingForm = this.fb.group({
+      // apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
       // serviceCode: 'SWIMMING-LIC',
-      periodFrom: [null],
-      periodTo: [null],
-      newRegistration: [null],
-      renewal: [null],
-      adminCharges: [null],
-      netAmount: [null],
+      swimmingPoolName: this.fb.group({
+        code: [null, Validators.required],
+        name: [null],
+      }),
+      membershipType: this.fb.group({
+        code: [null, Validators.required],
+        name: [null],
+      }),
+      category: this.fb.group({
+        code: [null, Validators.required],
+        name: [null],
+      }),
+      batchDuration: this.fb.group({
+        code: [null, Validators.required],
+        name: [null],
+      }),
+      batchFor: this.fb.group({
+        code: [null, Validators.required],
+        name: [null],
+      }),
+      batchName: this.fb.group({
+        code: [null, Validators.required],
+        name: [null],
+      }),
       /* Step 1 controls start */
-      establishmentName: [null, [Validators.required, Validators.maxLength(150)]],//count=4
-      establishmentNameGuj: [null, [Validators.required, Validators.maxLength(450)]],
+      applicantFirstName: [null, [Validators.required, Validators.maxLength(30)]],
+      applicantMiddleName: [null, [Validators.required, Validators.maxLength(30)]],
+      applicantLastName: [null, [Validators.required, Validators.maxLength(30)]],
+      mobileNumber: [null, [Validators.required, Validators.maxLength(10)]],
+      emergancyNumber: [null, [Validators.required, Validators.maxLength(10)]],
+      birthDate: [null, [Validators.required, Validators.maxLength(10)]],
+      age: [null],
+      emailId: [null],
       // postalAddress: this.fb.group(this.postalAddressEstablishment.addressControls()),
       noOfHumanWorking: this.fb.group({
         code: [null, Validators.required],
@@ -157,7 +175,7 @@ export class SwimmingPoolComponent implements OnInit {
 
 
       /* Step 3 controls start */
-      employerFamilyList: this.fb.array([]),
+      familyList: this.fb.array([]),
 
       totalAdultEmployerFamily: [null],
       totalYoungEmployerFamily: [null],
@@ -194,75 +212,34 @@ export class SwimmingPoolComponent implements OnInit {
 
       /* Step 5 controls end */
 
-      /* Step 6 controls start */
-      //employeeList: this.fb.array([]),
-      totalAdultEmployee: [null, Validators.required],
-      totalYoungEmployee: [null, Validators.required],
-      totalManEmployee: [null, Validators.required],
-      totalWomenEmployee: [null, Validators.required],
-      totalUnidentified: [null],
-      totalEmployee: [null, Validators.required],
-      /* Step 6 controls end */
-
-      // situationOfOfficeGuj: [null],
-      // nameOfManagerGuj: [null],
-      // residentialAddressOfManagerGuj: [null],
-      //enterHolidayGuj: [null],
-
       /*  */
-      attachments: ['']
+      attachment: [null]
       /*  */
 
     });
 
   }
-  swimmingPoolControls2() {
-    this.swimmimgPoolBookingForm = this.fb.group({
-      /**
-       * Organization Details
-       */
-      organizationName: [null, [Validators.required]],
-      organizationNumber: [null, [Validators.required]],
-      organizationEmail: [null, [Validators.required]],
-      /**
-      * Bank Accoount Details
-      */
-      bankName: this.fb.group({
-        code: [null, [Validators.required]]
-      }),
-      accountHolderName: [null, [Validators.required]],
-      accountNo: [null, [Validators.required]],
-      ifscCode: [null, [Validators.required, ValidationService.ifscCodeValidator]],
-      /**
-      * Booking Details
-      */
-      termsCondition: null,
-      agree: null,
-      /**
-      * form details
-      */
-      id: null,
-      refNumber: null,
-      status: null,
-      uniqueId: null,
-      version: 0,
-      bookingDate: [null],
-      cancelledDate: null,
-      bookingPurposeMaster: this.fb.group({
-        code: [null],
-        name: null
-      })
-    })
+
+  /**
+	* Method is used for calculate age
+	*/
+  calculateAge() {
+    let bday = moment(this.swimmimgPoolBookingForm.get("birthDate").value, "YYYY-MM-DD");
+    this.applicantageyear = bday.diff(bday, 'years', false);
+    this.applicantagedays = bday.diff(bday.add(this.applicantageyear, 'years'), 'days', false);
+
+    this.swimmimgPoolBookingForm.get("age").setValue(this.applicantageyear);
   }
+
 
 	/**
 	 * Method is create required document array
 	 */
   requiredDocumentList() {
     this.uploadFilesArray = [];
-    let organizationCategory = this.swimmingPoolForm.get('typeOfOrganisation').value.code;
+    let organizationCategory = this.swimmimgPoolBookingForm.get('typeOfOrganisation').value.code;
     if (organizationCategory) {
-      _.forEach(this.swimmingPoolForm.get('serviceDetail').get('serviceUploadDocuments').value, (value) => {
+      _.forEach(this.swimmimgPoolBookingForm.get('serviceDetail').get('serviceUploadDocuments').value, (value) => {
 
 
         if (value.dependentFieldName == null && value.mandatory && value.isActive && value.requiredOnCitizenPortal) {
@@ -324,23 +301,9 @@ export class SwimmingPoolComponent implements OnInit {
 	 * Method is used to add array in form
 	 * @param persontype : person array type
 	 */
-  addItem(persontype: string) {
+  addItem() {
     let returnArray: any;
-    switch (persontype) {
-      case 'EMPLOYER_FAMILY':
-        returnArray = this.swimmingPoolForm.get('employerFamilyList') as FormArray;
-        break;
-      case 'OCCUPANCY':
-        returnArray = this.swimmingPoolForm.get('occupancyList') as FormArray;
-        break;
-      case 'PARTNER':
-        returnArray = this.swimmingPoolForm.get('partnerList') as FormArray;
-        break;
-			/* case 'EMPLOYEES':
-				returnArray= this.swimmingPoolForm.get('employeeList') as FormArray;
-			break; */
-
-    }
+    returnArray = this.swimmimgPoolBookingForm.get('familyList') as FormArray;
     return returnArray;
   }
 
@@ -348,34 +311,22 @@ export class SwimmingPoolComponent implements OnInit {
 	 * Method is used when user click for add person
 	 * @param persontype : person array type
 	 */
-  addMorePerson(persontype: string) {
+  addMorePerson(persontype?: string) {
 
-    let isEditAnotherRow = this.isTableInEditMode(persontype);
+    let isEditAnotherRow = this.isTableInEditMode();
     if (!isEditAnotherRow) {
-      if (persontype === "EMPLOYER_FAMILY" && this.addItem(persontype).controls.length >= 5) {
-        this.toastrService.warning("Employer family not allowed more than 5");
+      // if (persontype === "PARTNER") {
+      if (this.swimmimgPoolBookingForm.get('age').value && this.addItem().controls.length >= 10) {
+        this.toastrService.warning("Parners not allowed more than 10");
         return false;
-      }
-      if (persontype === "OCCUPANCY" && this.addItem(persontype).controls.length >= 2) {
-        this.toastrService.warning("Occuping Person not allowed more than 2");
-        return false;
-      }
-      if (persontype === "PARTNER") {
-        if (this.swimmingPoolForm.get('typeOfOrganisation').value.code === 'SWIMMING_LIC_SELF_OWNERSHIP' && this.addItem(persontype).controls.length >= 1) {
-          this.toastrService.warning("You can add only one partner becouse you are self ownership");
-          return false;
-        }
-        if (this.swimmingPoolForm.get('typeOfOrganisation').value.code != 'SWIMMING_LIC_SELF_OWNERSHIP' && this.addItem(persontype).controls.length >= 10) {
-          this.toastrService.warning("Parners not allowed more than 10");
-          return false;
-        }
+        // }
       }
 
-      this.addItem(persontype).push(this.createArray({
+      this.addItem().push(this.createArray({
         personType: persontype
       }));
-      // this.swimmingPoolForm.get('employerFamilyList').setValidators([Validators.required]);
-      let newlyadded = this.addItem(persontype).controls;
+      // this.swimmimgPoolBookingForm.get('employerFamilyList').setValidators([Validators.required]);
+      let newlyadded = this.addItem().controls;
       if (newlyadded.length) {
         this.editRecord((newlyadded[newlyadded.length - 1]));
         (newlyadded[newlyadded.length - 1]).newRecordAdded = true;
@@ -392,7 +343,7 @@ export class SwimmingPoolComponent implements OnInit {
 	 * @param controlType : form control name
 	 */
   dateFormat(date, controlType: string) {
-    this.swimmingPoolForm.get(controlType).setValue(moment(date).format("YYYY-MM-DD"));
+    this.swimmimgPoolBookingForm.get(controlType).setValue(moment(date).format("YYYY-MM-DD"));
   }
 
 	/**
@@ -425,34 +376,11 @@ export class SwimmingPoolComponent implements OnInit {
 	 */
   calulateNumberOfPerson(formType: string, fieldsType: string, filterType: string) {
     let countNumber = [];
-    let data = (<FormArray>this.swimmingPoolForm.get(formType)).controls;
+    let data = (<FormArray>this.swimmimgPoolBookingForm.get(formType)).controls;
     if (data.length) {
-      switch (filterType) {
-        case 'young': // age is 14 -18 for young person
-          countNumber = data.filter((obj: any) => obj.get('age').value >= 14 && obj.get('age').value <= 18 && (obj.get('gender').value.code == "MALE" || obj.get('gender').value.code == "FEMALE"))
-          break;
+      countNumber = data.filter((obj: any) => obj.get('age').value >= 14 && obj.get('age').value <= 18)
 
-        case 'adult':// age is above 60 for adult person
-          countNumber = data.filter((obj: any) => obj.get('age').value > 18 && (obj.get('gender').value.code == "MALE" || obj.get('gender').value.code == "FEMALE"))
-          break;
-
-        case 'men':
-          countNumber = data.filter((obj: any) => obj.get('gender').value.code == "MALE" && obj.get('age').value >= 14)
-          break;
-        case 'women':
-          countNumber = data.filter((obj: any) => obj.get('gender').value.code == "FEMALE" && obj.get('age').value >= 14)
-
-          break;
-        case 'unidentified':
-          countNumber = data.filter((obj: any) => obj.get('gender').value.code == "UNIDENTIFIED" && obj.get('age').value >= 14)
-
-          break;
-
-        case 'total':
-          countNumber = data;
-          break;
-      }
-      this.swimmingPoolForm.get(fieldsType).setValue(countNumber.length);
+      this.swimmimgPoolBookingForm.get(fieldsType).setValue(countNumber.length);
       return countNumber.length;
     }
   }
@@ -460,8 +388,8 @@ export class SwimmingPoolComponent implements OnInit {
 	/**
 	*  Method is used check table is in edit mode
 	*/
-  isTableInEditMode(persontype: string) {
-    return this.addItem(persontype).controls.find((obj: any) => obj.isEditMode === true);
+  isTableInEditMode() {
+    return this.addItem().controls.find((obj: any) => obj.isEditMode === true);
   }
 
 	/**
@@ -476,9 +404,9 @@ export class SwimmingPoolComponent implements OnInit {
 	/**
 	* Method is used when user click for remove person
 	*/
-  deleteRecord(persontype: string, index: any) {
+  deleteRecord( index: any) {
     this.commonService.confirmAlert('Are you sure?', "", 'info', '', performDelete => {
-      this.addItem(persontype).removeAt(index);
+      this.addItem().removeAt(index);
       this.toastrService.success("Succesfully deleted", "Deleted");
     });
   }
@@ -501,7 +429,7 @@ export class SwimmingPoolComponent implements OnInit {
   cancelRecord(row: any, index: number) {
     try {
       if (row.newRecordAdded) {
-        this.addItem(row.get('personType').value).removeAt(index);
+        this.addItem().removeAt(index);
       } else {
         if (row.deepCopyInEditMode) {
           row.patchValue(row.deepCopyInEditMode);
@@ -549,8 +477,8 @@ export class SwimmingPoolComponent implements OnInit {
 	*/
   onChangeNoOfHumanWorking(event) {
     try {
-      this.swimmingPoolForm.get('categoryOfBusiness').reset();
-      this.swimmingPoolForm.get('subCategoryOfBusiness').reset();
+      this.swimmimgPoolBookingForm.get('categoryOfBusiness').reset();
+      this.swimmimgPoolBookingForm.get('subCategoryOfBusiness').reset();
       this.getCategoryDropdownData(event);
     } catch (error) {
       console.log(error.message)
@@ -563,7 +491,7 @@ export class SwimmingPoolComponent implements OnInit {
 	*/
   onChangeCategorySelect(event) {
     try {
-      this.swimmingPoolForm.get('subCategoryOfBusiness').reset();
+      this.swimmimgPoolBookingForm.get('subCategoryOfBusiness').reset();
       this.getSubCategoryDropdownData(event);
     } catch (error) {
       console.log(error.message)
@@ -577,42 +505,42 @@ export class SwimmingPoolComponent implements OnInit {
   onChangeTypeOfOrganization(event) {
 
     try {
-      (<FormArray>this.swimmingPoolForm.get('partnerList')).controls = [];
-      this.swimmingPoolForm.get('partnerList').setValue([]);
-      this.swimmingPoolForm.get('attachments').setValue([]);
+      (<FormArray>this.swimmimgPoolBookingForm.get('partnerList')).controls = [];
+      this.swimmimgPoolBookingForm.get('partnerList').setValue([]);
+      this.swimmimgPoolBookingForm.get('attachments').setValue([]);
       if (event == "SWIMMING_LIC_SELF_OWNERSHIP") {
         // remove all controll becose if dropdown value is "SWIMMING_LIC_SELF_OWNERSHIP" then user add only one record.
         this.addMorePerson('PARTNER');
       }
       this.requiredDocumentList();
-			/*let categoryAttachment = this.swimmingPoolForm.get('attachments').value;
+			/*let categoryAttachment = this.swimmimgPoolBookingForm.get('attachments').value;
 			switch (event) {
 				case 'SWIMMING_LIC_SELF_OWNERSHIP':
 					// remove all controll becose if dropdown value is "SWIMMING_LIC_SELF_OWNERSHIP" then user add only one record.
 					this.addMorePerson('PARTNER');
 					if (categoryAttachment && categoryAttachment.length) {
 						let setNewAttachData = categoryAttachment.filter(attachObj => attachObj.labelName != "PhotoofLicenseHolder" && attachObj.labelName != "OrganizationalOwnershipAgreementCopy");
-						this.swimmingPoolForm.get('attachments').setValue(setNewAttachData);
+						this.swimmimgPoolBookingForm.get('attachments').setValue(setNewAttachData);
 					}
 					break;
 				case 'SWIMMING_LIC_PARTNERSHIP':
 				case 'SWIMMING_LIC_CO_OPERATIVE_SOCIETY':
 					if (categoryAttachment && categoryAttachment.length) {
 						let setNewAttachData = categoryAttachment.filter(attachObj => attachObj.labelName != "OrganizationRentalAgreement" && attachObj.labelName != "SaleOrPurchaseDeed");
-						this.swimmingPoolForm.get('attachments').setValue(setNewAttachData);
+						this.swimmimgPoolBookingForm.get('attachments').setValue(setNewAttachData);
 					}
 					break;
 				case 'SWIMMING_LIC_COMPANY':
 					if (categoryAttachment && categoryAttachment.length) {
 						let setNewAttachData = categoryAttachment.filter(attachObj => attachObj.labelName != "OrganizationRentalAgreement" && attachObj.labelName != 'ListOfDirectors' && attachObj.labelName != "Prescribedcertificate" && attachObj.labelName != 'SaleOrPurchaseDeed' && attachObj.labelName != 'DeedPagesPartners');
-						this.swimmingPoolForm.get('attachments').setValue(setNewAttachData);
+						this.swimmimgPoolBookingForm.get('attachments').setValue(setNewAttachData);
 					}
 					break;
 				case 'SWIMMING_LIC_TRUST':
 				case 'SWIMMING_LIC_BOARD':
 					if (categoryAttachment && categoryAttachment.length) {
 						let setNewAttachData = categoryAttachment.filter(attachObj => attachObj.labelName != "Prescribedcertificate" && attachObj.labelName != "ChairmanMember" && attachObj.labelName != 'RegiAddressProof');
-						this.swimmingPoolForm.get('attachments').setValue(setNewAttachData);
+						this.swimmimgPoolBookingForm.get('attachments').setValue(setNewAttachData);
 					}
 					break;
 			}*/
@@ -626,15 +554,15 @@ export class SwimmingPoolComponent implements OnInit {
 	 * This method set total employee.
 	 */
   getTotalEmployeePerson() {
-    let totalAdultEmployee = this.swimmingPoolForm.get('totalAdultEmployee').value || 0;
-    let totalYoungEmployee = this.swimmingPoolForm.get('totalYoungEmployee').value || 0;
-    let totalManEmployee = this.swimmingPoolForm.get('totalManEmployee').value || 0;
-    let totalWomenEmployee = this.swimmingPoolForm.get('totalWomenEmployee').value || 0;
-    let totalUnidentified = this.swimmingPoolForm.get('totalUnidentified').value || 0;
+    let totalAdultEmployee = this.swimmimgPoolBookingForm.get('totalAdultEmployee').value || 0;
+    let totalYoungEmployee = this.swimmimgPoolBookingForm.get('totalYoungEmployee').value || 0;
+    let totalManEmployee = this.swimmimgPoolBookingForm.get('totalManEmployee').value || 0;
+    let totalWomenEmployee = this.swimmimgPoolBookingForm.get('totalWomenEmployee').value || 0;
+    let totalUnidentified = this.swimmimgPoolBookingForm.get('totalUnidentified').value || 0;
 
     let totalcount = parseInt(totalAdultEmployee) + parseInt(totalYoungEmployee) + parseInt(totalManEmployee) + parseInt(totalWomenEmployee) + parseInt(totalUnidentified);
 
-    this.swimmingPoolForm.get('totalEmployee').setValue(totalcount);
+    this.swimmimgPoolBookingForm.get('totalEmployee').setValue(totalcount);
     return totalcount;
   }
 
@@ -645,28 +573,28 @@ export class SwimmingPoolComponent implements OnInit {
   handleErrorsOnSubmit(flag) {
     // switch (true) {
     //   case flag <= 21:
-    //     this.licenseConfiguration.currentTabIndex = 0;
+    //     this.licenseConfiguration.tabIndex = 0;
     //     break;
     //   case flag <= 33:
-    //     this.licenseConfiguration.currentTabIndex = 1;
+    //     this.licenseConfiguration.tabIndex = 1;
     //     break;
     //   case flag <= 40:
-    //     this.licenseConfiguration.currentTabIndex = 2;
+    //     this.licenseConfiguration.tabIndex = 2;
     //     break;
     //   case flag <= 47:
-    //     this.licenseConfiguration.currentTabIndex = 3;
+    //     this.licenseConfiguration.tabIndex = 3;
     //     break;
     //   case flag <= 55:
-    //     this.licenseConfiguration.currentTabIndex = 4;
+    //     this.licenseConfiguration.tabIndex = 4;
     //     break;
     //   case flag <= 61:
-    //     this.licenseConfiguration.currentTabIndex = 5;
+    //     this.licenseConfiguration.tabIndex = 5;
     //     break;
     //   case flag <= 62:
-    //     this.licenseConfiguration.currentTabIndex = 6;
+    //     this.licenseConfiguration.tabIndex = 6;
     //     break;
     //   default:
-    //     this.licenseConfiguration.currentTabIndex = 0;
+    //     this.licenseConfiguration.tabIndex = 0;
     // }
     this.checkDynamicTableValidate();
   }
@@ -676,23 +604,12 @@ export class SwimmingPoolComponent implements OnInit {
 	 */
   checkDynamicTableValidate(): void {
     try {
-      this.addItem("PARTNER").controls.forEach(element => {
+      this.addItem().controls.forEach(element => {
         if (element.invalid) {
           element.isEditMode = true;
         }
       });
 
-      this.addItem("EMPLOYER_FAMILY").controls.forEach(element => {
-        if (element.invalid) {
-          element.isEditMode = true;
-        }
-      });
-
-      this.addItem("OCCUPANCY").controls.forEach(element => {
-        if (element.invalid) {
-          element.isEditMode = true;
-        }
-      });
     } catch (error) {
       console.error(error.message);
     }
