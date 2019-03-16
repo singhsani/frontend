@@ -13,22 +13,6 @@ import { ValidationService } from '../../../../../../shared/services/validation.
 import { CitizenConfig } from '../../../../citizen-config';
 import { BookingService } from '../../../shared-booking/services/booking-service.service';
 
-export interface BookingDetails {
-  administrationCharges: string
-  bookingDate: string
-  electricCharges: any
-  endTime: string
-  gstAmount: any
-  id: number
-  rent: number
-  shiftType: string
-  showTax: number
-  startTime: string
-  subTotal: number
-  total: string
-  uniqueId: number
-  version: number
-}
 @Component({
   selector: 'app-book-permission',
   templateUrl: './book-permission.component.html',
