@@ -90,8 +90,13 @@ export class SwimmingPoolComponent implements OnInit {
 	*/
   swimmingPoolFormControls() {
     this.swimmimgPoolBookingForm = this.fb.group({
-      // apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
-      // serviceCode: 'SWIMMING-LIC',
+      uniqueId: [null],
+      version: [null],
+      cancelledDate: [null],
+      status: [null],
+      refNumber: [null],
+      resourceType: [null],
+      resourceCode: [null],
       swimmingPoolName: this.fb.group({
         code: [null, Validators.required],
         name: [null],
@@ -123,32 +128,18 @@ export class SwimmingPoolComponent implements OnInit {
       mobileNumber: [null, [Validators.required, Validators.maxLength(10)]],
       emergancyNumber: [null, [Validators.required, Validators.maxLength(10)]],
       birthDate: [null, [Validators.required, Validators.maxLength(10)]],
+      bloodGroup: this.fb.group({
+        code: [null, Validators.required],
+        name: [null],
+      }),
       age: [null],
       emailId: [null],
+      idProof: this.fb.group({
+        code: [null, Validators.required],
+        name: [null],
+      }),
+      idProofNo: [null, [Validators.required, Validators.maxLength(12)]],
       // postalAddress: this.fb.group(this.postalAddressEstablishment.addressControls()),
-      noOfHumanWorking: this.fb.group({
-        code: [null, Validators.required],
-        name: [null],
-      }),
-      assessmentDoneByVMC: this.fb.group({
-        code: [null, Validators.required],
-        name: [null],
-      }),
-      propertyTaxNo: [null, [Validators.required, Validators.maxLength(13), Validators.minLength(13)]],
-      wardNo: this.fb.group({
-        code: [null, Validators.required],
-        name: [null],
-      }),
-      aadharNumber: ['', Validators.maxLength(12)],
-      professionalTaxPECNo: ['', Validators.maxLength(20)],
-      prcNo: ['', Validators.maxLength(20)],
-      applicantVimaAmountPaid: this.fb.group({
-        code: [null],
-        name: [null],
-      }),
-      number: ['', Validators.maxLength(20)],
-      situationOfOffice: [null, [Validators.required, Validators.maxLength(100)]],
-      /* Step 1 controls end */
 
       /* Step 2 controls start */
       nameOfEmployer: [null, [Validators.required, Validators.maxLength(100)]],
@@ -173,7 +164,6 @@ export class SwimmingPoolComponent implements OnInit {
       }),
       /* Step 2 controls end */
 
-
       /* Step 3 controls start */
       familyList: this.fb.array([]),
 
@@ -184,33 +174,6 @@ export class SwimmingPoolComponent implements OnInit {
       totalUnidentifiedEmployerFamily: [null],
       totalFamilyMembers: [null],
       /* Step 3 controls end */
-
-
-      /* Step 4 controls start */
-      occupancyList: this.fb.array([]),
-      totalAdultOccupancy: [null],
-      totalYoungOccupancy: [null],
-      totalManOccupancy: [null],
-      totalWomenOccupancy: [null],
-      totalUnidentifiedOccupancy: [null],
-      totalOccupancy: [null],
-      /* Step 4 controls end */
-
-
-      /* Step 5 controls start */
-      typeOfOrganisation: this.fb.group({
-        code: [null, Validators.required]
-      }),
-      partnerList: this.fb.array([]),
-
-      totalAdultPartner: [null],
-      totalYoungPartner: [null],
-      totalManPartner: [null],
-      totalWomenPartner: [null],
-      totalUnidentifiedPartner: [null],
-      totalPartner: [null],
-
-      /* Step 5 controls end */
 
       /*  */
       attachment: [null]
@@ -404,7 +367,7 @@ export class SwimmingPoolComponent implements OnInit {
 	/**
 	* Method is used when user click for remove person
 	*/
-  deleteRecord( index: any) {
+  deleteRecord(index: any) {
     this.commonService.confirmAlert('Are you sure?', "", 'info', '', performDelete => {
       this.addItem().removeAt(index);
       this.toastrService.success("Succesfully deleted", "Deleted");
@@ -475,15 +438,15 @@ export class SwimmingPoolComponent implements OnInit {
 	* Method is used when change data of NoOfHumanWorking dropdown
 	* @event is value of NoOfHumanWorking dropdown
 	*/
-  onChangeNoOfHumanWorking(event) {
-    try {
-      this.swimmimgPoolBookingForm.get('categoryOfBusiness').reset();
-      this.swimmimgPoolBookingForm.get('subCategoryOfBusiness').reset();
-      this.getCategoryDropdownData(event);
-    } catch (error) {
-      console.log(error.message)
-    }
-  }
+  // onChangeNoOfHumanWorking(event) {
+  //   try {
+  //     this.swimmimgPoolBookingForm.get('categoryOfBusiness').reset();
+  //     this.swimmimgPoolBookingForm.get('subCategoryOfBusiness').reset();
+  //     this.getCategoryDropdownData(event);
+  //   } catch (error) {
+  //     console.log(error.message)
+  //   }
+  // }
 
 	/**
 	* Method is used when change data of NoOfHumanWorking dropdown
