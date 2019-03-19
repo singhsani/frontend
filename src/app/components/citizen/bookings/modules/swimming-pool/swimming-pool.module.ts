@@ -1,9 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 /* Import all shared, core and routing module start */
-import { SharedModule } from '../../../../../shared/shared.module';
+import { SharedBookingModule } from '../../shared-booking/shared-booking.module';
 import { CoreModule } from '../../../../../core/core.module';
 import { SwimmingPoolRoutingModule } from './swimming-pool-routing.module';
 import { SwimmingPoolComponent } from './swimming-pool/swimming-pool.component';
@@ -12,10 +11,8 @@ import { SwimmingPoolComponent } from './swimming-pool/swimming-pool.component';
 @NgModule({
 	imports: [
 		CommonModule,
-		SharedModule,
+		SharedBookingModule,
 		CoreModule,
-		FormsModule,
-		ReactiveFormsModule,
 		SwimmingPoolRoutingModule
 	],
 	declarations: [SwimmingPoolComponent]

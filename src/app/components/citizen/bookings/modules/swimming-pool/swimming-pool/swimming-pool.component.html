@@ -23,8 +23,7 @@
 					</div>
 
 					<div class="col-md-4 ngSelect" formGroupName="membershipType">
-						<ng-select placeholder="{{'membership_type' | translate:translateKey}} *" formControlName="code"
-							(change)="onChangeNoOfHumanWorking($event)">
+						<ng-select placeholder="{{'membership_type' | translate:translateKey}} *" formControlName="code">
 							<ng-option *ngFor="let yes_no of YES_NO" [value]="yes_no.code">{{yes_no.name}}</ng-option>
 						</ng-select>
 						<control-messages [control]="swimmimgPoolBookingForm.get('membershipType').get('code')">
@@ -58,11 +57,6 @@
 						</control-messages>
 					</div>
 
-					<!-- <mat-form-field class="col-md-4">
-						<input matInput OnlyNumber maxlength="12"
-							placeholder="{{'aadhar_number' | translate:translateKey}}" formControlName="aadharNumber">
-					</mat-form-field> -->
-
 					<div class="col-md-4 ngSelect" formGroupName="batchName">
 						<ng-select placeholder="{{'batch_name' | translate:translateKey}} *" formControlName="code"
 							required>
@@ -73,8 +67,6 @@
 					</div>
 				</div>
 
-				<!-- <app-action-bar [form]="swimmimgPoolBookingForm" (tabIndex)="licenseConfiguration.onFormTabChange($event)"
-					[stepInfo]="{step: 'step1', next: 1, back: 0}"></app-action-bar> -->
 				<div class="row mt-4 fotButtonBar">
 					<div class="col-sm-12 col-md-12 text-right">
 						<button mat-raised-button type="button" color="primary" (click)="tabIndex= tabIndex +1;">
@@ -94,14 +86,6 @@
 				</ng-template>
 
 				<div class="row">
-
-					<!-- <mat-form-field class="col-md-4">
-							<input matInput maxlength="30" appValidationFields
-								[validationFieldsType]="'onlyNameWithSpace'" type="text" formControlName="applicantName"
-								placeholder="{{'applicant_name' | translate: translateKey}}" required>
-							<control-messages [control]="swimmimgPoolBookingForm.get('applicantName')">
-							</control-messages>
-						</mat-form-field> -->
 
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" required maxlength="30" appValidationFields
@@ -164,6 +148,23 @@
 						<control-messages [control]="swimmimgPoolBookingForm.get('emailId')">
 						</control-messages>
 					</mat-form-field>
+					
+					<div class="col-md-4 ngSelect" formGroupName="idProof">
+						<ng-select placeholder="{{'id_proof' | translate:translateKey}} *" formControlName="code"
+							required>
+							<ng-option *ngFor="let yes_no of YES_NO" [value]="yes_no.code">{{yes_no.name}}</ng-option>
+						</ng-select>
+						<control-messages [control]="swimmimgPoolBookingForm.get('idProof').get('code')">
+						</control-messages>
+					</div>
+
+					<mat-form-field class="col-md-4">
+						<input matInput maxlength="10" formControlName="idProofNo"
+							placeholder="{{'id_proof_no' | translate: translateKey}}" required appAlphaNumeric>
+						<control-messages [control]="swimmimgPoolBookingForm.get('idProofNo')">
+						</control-messages>
+					</mat-form-field>
+
 
 				</div>
 
@@ -330,8 +331,6 @@
 						</tbody>
 					</table>
 				</div>
-				<!-- <app-action-bar [form]="swimmimgPoolBookingForm" (tabIndex)="licenseConfiguration.onFormTabChange($event)"
-					[stepInfo]="{step: 'step3', next: 3, back: 1}"></app-action-bar> -->
 				<div class="row mt-4 fotButtonBar">
 					<div class="col-sm-12 col-md-12 justify-content-between d-flex">
 						<button type="button" color="primary" mat-raised-button (click)="tabIndex= tabIndex -1; ">
@@ -355,21 +354,52 @@
 
 				<div class="row">
 
-					<ng-container *ngIf="swimmimgPoolBookingForm.get('typeOfOrganisation').value.code">
+					<ng-container>
 
 						<h2>
-							{{'checklist' | translate: translateKey}}
-						</h2>
-
-						<!-- <div class="col-md-6">
-							<label
-								labelPosition="after">{{'gazette_officer_certi' | translate:translateKey}}
+							{{'attchaments' | translate:translateKey}}
+						  </h2>
+						  <div class="col-md-4">
+							<label labelPosition="after">{{'photo' | translate:translateKey}}
 							</label>
-							<booking-file-upload (uploaded)="isFileUploaded = $event"
-								[form]="bookPermissionApplicationForm" [uploadModel]="{fieldIdentifier:'1', labelName:'previous_permission_orders_if_applicable', formPart:'1.1', refNumber:
-									bookPermissionApplicationForm.get('refNumber').value, variableName: 'permission_orders'}">
+							<booking-file-upload (uploaded)="isFileUploaded = $event" [form]="swimmimgPoolBookingForm"
+							  [uploadModel]="{fieldIdentifier:'4', labelName:'photo', formPart:'1.4', refNumber:
+								swimmimgPoolBookingForm.get('refNumber').value, variableName: 'photo'}">
 							</booking-file-upload>
-						</div> -->
+						  </div>
+						  <div class="col-md-4">
+							<label labelPosition="after">{{'gazettate_officer_letter' | translate:translateKey}}
+							</label>
+							<booking-file-upload (uploaded)="isFileUploaded = $event" [form]="swimmimgPoolBookingForm"
+							  [uploadModel]="{fieldIdentifier:'1', labelName:'gazettate_officer_letter', formPart:'1.1', refNumber:
+								swimmimgPoolBookingForm.get('refNumber').value, variableName: 'gazettate_officer_letter'}">
+							</booking-file-upload>
+						  </div>
+						  <div class="col-md-4">
+							<label labelPosition="after">{{'parents_or_gauardians_permission_letter' | translate:translateKey}}
+							</label>
+							<booking-file-upload (uploaded)="isFileUploaded = $event" [form]="swimmimgPoolBookingForm"
+							  [uploadModel]="{fieldIdentifier:'2', labelName:'gauardians_permission_letter', formPart:'1.2', refNumber:
+								swimmimgPoolBookingForm.get('refNumber').value, variableName: 'gauardians_permission_letter'}">
+							</booking-file-upload>
+						  </div>
+						  <div class="col-md-4">
+							<label labelPosition="after">{{'parents_or_gauardians_permission_letter' | translate:translateKey}}
+							</label>
+							<booking-file-upload (uploaded)="isFileUploaded = $event" [form]="swimmimgPoolBookingForm"
+							  [uploadModel]="{fieldIdentifier:'2', labelName:'gauardians_permission_letter', formPart:'1.2', refNumber:
+								swimmimgPoolBookingForm.get('refNumber').value, variableName: 'gauardians_permission_letter'}">
+							</booking-file-upload>
+						  </div>
+						  <div class="col-md-4">
+							<label labelPosition="after">{{'certified_doctors_certificate' | translate:translateKey}}
+							</label>
+							<booking-file-upload (uploaded)="isFileUploaded = $event" [form]="swimmimgPoolBookingForm"
+							  [uploadModel]="{fieldIdentifier:'3', labelName:'certified_doctors_certificate', formPart:'1.3', refNumber:
+								swimmimgPoolBookingForm.get('refNumber').value, variableName: 'certified_doctors_certificate'}">
+							</booking-file-upload>
+						  </div>
+						  
 						<!-- <ng-container
 							*ngFor="let doc of swimmimgPoolBookingForm.get('serviceDetail').get('serviceUploadDocuments').value  | filterAttachment:swimmimgPoolBookingForm.get('typeOfOrganisation').value.code">
 							<div class="col-md-4" *ngIf="doc.requiredOnCitizenPortal && doc.isActive && licenseConfiguration.isAttachmentButtonsVisible">
@@ -383,9 +413,6 @@
 
 				</div>
 
-				<!-- <app-action-bar [uploadFiles]="uploadFilesArray" [form]="swimmimgPoolBookingForm"
-					(handleErrors)="handleErrorsOnSubmit($event) " (tabIndex)="licenseConfiguration.onFormTabChange($event) "
-					[stepInfo]="{step: 'final', next:7, back: 5} "></app-action-bar> -->
 				<div class="row mt-4 fotButtonBar">
 					<div class="col-sm-12 col-md-12 justify-content-between d-flex">
 						<button type="button" color="primary" mat-raised-button (click)="tabIndex= tabIndex -1; ">
