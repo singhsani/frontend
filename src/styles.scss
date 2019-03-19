@@ -546,8 +546,9 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
         .moduleIcon{background-color: #78da71;}
     }
 
-    .mat-tab-label-content {}
-    .moduleName {font-size: 15px; color: #333; font-weight: 500; min-height: 36px; line-height: normal;}
+    .mat-tab-label .mat-tab-label-content { display: block !important; }
+    .moduleName {font-size: 15px; color: #333; font-weight: 500; min-height: 36px; line-height: normal;width: 184px;
+            white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important;}
     .count {color: #b3b3b3; font-size: 13px; font-weight: 400; display: inline-block; padding-top: 5px;}
     .mat-tab-label-active {background-color: $colorBlue; border: 1px solid #673ab7;
         .moduleName {color: #fff;}
@@ -908,10 +909,6 @@ body * {visibility: hidden;}
 //  .mat-tab-body-wrapper {overflow: visible !important;}
 //  .mat-tab-body-content {overflow: visible !important;}
 //  .mat-tab-group.mat-tab-group-dynamic-height .mat-tab-body.mat-tab-body-active {overflow: visible !important;}
-
-
-
-
 
 
 // Part 2 Start ------------------------------------------------
