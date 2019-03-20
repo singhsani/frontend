@@ -231,6 +231,22 @@ export class DashboardComponent implements OnInit {
 				this.router.navigate([ManageRoutes.getFullRoute(apiCode), false, apiCode]);
 				break;
 			case 'PRC_REG':
+			case 'PRO-ASS':
+			case 'PRO-EXT':
+			case 'PRO-TRAN':
+			case 'PRO-DUP':
+			case 'PRO-NDU':
+			case 'PRO-VAC':
+			case 'PRO-ASSCER':
+			case 'PRO-REFUND':
+			case 'PRO-TAX-REBATE':
+			case 'WTR-NEW':
+			case 'WTR-DISCON':
+			case 'WTR-TRXF-OWN':
+			case 'WTR-CHNG-USG':
+			case 'WTR-RECON':
+			case 'WTR-PLUMB-LIC':
+			case 'WTR-RNW-PLUMB-LIC':
 				this.router.navigate([ManageRoutes.getFullRoute(apiCode)]);
 				break;
 			default:
