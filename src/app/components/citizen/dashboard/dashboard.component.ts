@@ -282,4 +282,8 @@ export class DashboardComponent implements OnInit {
 		}
 	}
 
+	newAffordableHousing() {
+		this.router.navigate(["citizen/affordable-housing/new"]);
+	}
+
 }

@@ -918,7 +918,7 @@ body * {visibility: hidden;}
     thead tr > th:first-child, tbody tr > td:first-child {padding-left: 10px; }
       td{vertical-align: middle;}
       p{margin-bottom: 0px}
-
+      .mat-form-field-infix {width: 100%;}
      .preview-mode-add-class .ngSelect {max-width: 200px;}
   }
 

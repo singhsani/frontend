@@ -55,6 +55,21 @@
                 </div>
             </div>
         </mat-tab>
+
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <span class="moduleIcon"></span>
+                <div class="moduleName">Affordable Housing</div>
+                <span class="count">Services</span>
+            </ng-template>
+            <div class="servicesList row">
+                <div class="colBtn col-md-3" matTooltip="New Application">
+                    <button mat-stroked-button color="primary" (click)="newAffordableHousing()">
+                        New Application
+                    </button>
+                </div>
+            </div>
+        </mat-tab>
     </mat-tab-group>
 </div>
 
