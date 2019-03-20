@@ -152,6 +152,7 @@ const ROUTEMAIN = {
         'main': 'APLDuplication',
         'type': 'APLDuplication'
     },
+    /*Property routes starts */
     'PRO-ASS': {
         'main': 'propertyAssessment',
         'type': 'propertyAssessment'
@@ -172,22 +173,55 @@ const ROUTEMAIN = {
         'main': 'noDueCertificate',
         'type': 'noDueCertificate'
     },
-    'PRO-REASS': {
-        'main': 'propertyReassessment',
-        'type': 'propertyReassessment'
+    'PRO-ASSCER': {
+        'main': 'assessmentCertificate',
+        'type': 'assessmentCertificate'
     },
-    'PRO-SPLI': {
-        'main': 'splittingOfProperty',
-        'type': 'splittingOfProperty'
+    'PRO-REFUND': {
+        'main': 'refundAgainstVacancy',
+        'type': 'refundAgainstVacancy'
+    },
+    'PRO-TAX-REBATE': {
+        'main': 'propertyTaxRebate',
+        'type': 'propertyTaxRebate'
     },
     'PRO-VAC': {
         'main': 'vacantPremisesCertificate',
         'type': 'vacantPremisesCertificate'
     },
-    'PRO-ASSCER': {
-        'main': 'assessmentCertificate',
-        'type': 'assessmentCertificate'
+    /*Property routes end */
+
+    /*Water routes starts */
+    'WTR-NEW': {
+        'main': 'newWaterConnectionEntry',
+        'type': 'newWaterConnectionEntry'
     },
+    'WTR-DISCON': {
+        'main': 'disconnection',
+        'type': 'disconnection'
+    },
+    'WTR-TRXF-OWN': {
+        'main': 'transferOfOwnership',
+        'type': 'transferOfOwnership'
+    },
+    'WTR-CHNG-USG': {
+        'main': 'changeOfUsage',
+        'type': 'changeOfUsage'
+    },
+    'WTR-RECON': {
+        'main': 'reconnection',
+        'type': 'reconnection'
+    },
+    'WTR-PLUMB-LIC': {
+        'main': 'newPlumberLiecence',
+        'type': 'newPlumberLiecence'
+    },
+    'WTR-RNW-PLUMB-LIC': {
+        'main': 'renewalPlumberLiecence',
+        'type': 'renewalPlumberLiecence'
+    },
+    /*Water routes end */
+
     'FL': {
         'main': 'foodlicence',
         'type': 'foodLicence'
@@ -470,6 +504,7 @@ const ROUTEPREFIX = {
 
     /** start - citizen inner-tax module */
     'PROPERTYMODULE': 'property',
+    'WATERMODULE': 'water',
     /** end - citizen inner-tax module */
 
     'PROFESSIONALMODULE': 'professional',
@@ -611,6 +646,7 @@ const ROUTESLIST = {
     'FL-DUP': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.LICENCEMODULE + '/' + ROUTEPREFIX.FOODMODULE + '/' + ROUTEMAIN["FL-DUP"].main
     },
+    /*Property routes starts */
     'PRO-ASS': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TAXMODULE + '/' + ROUTEPREFIX.PROPERTYMODULE + '/' + ROUTEMAIN["PRO-ASS"].main
     },
@@ -626,18 +662,43 @@ const ROUTESLIST = {
     'PRO-NDU': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TAXMODULE + '/' + ROUTEPREFIX.PROPERTYMODULE + '/' + ROUTEMAIN["PRO-NDU"].main
     },
-    'PRO-REASS': {
-        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TAXMODULE + '/' + ROUTEPREFIX.PROPERTYMODULE + '/' + ROUTEMAIN["PRO-REASS"].main
-    },
-    'PRO-SPLI': {
-        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TAXMODULE + '/' + ROUTEPREFIX.PROPERTYMODULE + '/' + ROUTEMAIN["PRO-SPLI"].main
-    },
     'PRO-VAC': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TAXMODULE + '/' + ROUTEPREFIX.PROPERTYMODULE + '/' + ROUTEMAIN["PRO-VAC"].main
     },
     'PRO-ASSCER': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TAXMODULE + '/' + ROUTEPREFIX.PROPERTYMODULE + '/' + ROUTEMAIN["PRO-ASSCER"].main
     },
+    'PRO-REFUND': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TAXMODULE + '/' + ROUTEPREFIX.PROPERTYMODULE + '/' + ROUTEMAIN["PRO-REFUND"].main
+    },
+    'PRO-TAX-REBATE': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TAXMODULE + '/' + ROUTEPREFIX.PROPERTYMODULE + '/' + ROUTEMAIN["PRO-TAX-REBATE"].main
+    },
+    /*Property routes end */
+
+    /*Water routes starts */
+    'WTR-NEW': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TAXMODULE + '/' + ROUTEPREFIX.WATERMODULE + '/' + ROUTEMAIN["WTR-NEW"].main
+    },
+    'WTR-DISCON': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TAXMODULE + '/' + ROUTEPREFIX.WATERMODULE + '/' + ROUTEMAIN["WTR-DISCON"].main
+    },
+    'WTR-TRXF-OWN': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TAXMODULE + '/' + ROUTEPREFIX.WATERMODULE + '/' + ROUTEMAIN["WTR-TRXF-OWN"].main
+    },
+    'WTR-CHNG-USG': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TAXMODULE + '/' + ROUTEPREFIX.WATERMODULE + '/' + ROUTEMAIN["WTR-CHNG-USG"].main
+    },
+    'WTR-RECON': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TAXMODULE + '/' + ROUTEPREFIX.WATERMODULE + '/' + ROUTEMAIN["WTR-RECON"].main
+    },
+    'WTR-PLUMB-LIC': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TAXMODULE + '/' + ROUTEPREFIX.WATERMODULE + '/' + ROUTEMAIN["WTR-PLUMB-LIC"].main
+    },
+    'WTR-RNW-PLUMB-LIC': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TAXMODULE + '/' + ROUTEPREFIX.WATERMODULE + '/' + ROUTEMAIN["WTR-RNW-PLUMB-LIC"].main
+    },
+    /*Water routes end */
     'CITIZENAUTHLOGIN': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.CITIZENAUTHMODULE + '/' + ROUTEMAIN.CITIZENAUTHLOGIN.main
     },

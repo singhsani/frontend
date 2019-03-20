@@ -10,7 +10,8 @@ import { CoreModule } from './../../../core/core.module';
 const routes: Routes = [
   { path: 'professional', loadChildren: './professional-tax/professional-tax.module#ProfessionalTaxModule', canLoad: [AuthGuard] },
   { path: 'property', loadChildren: './property/property.module#PropertyModule', canLoad: [AuthGuard] },
-  { path: "vehicle", loadChildren: './vehicle/vehicle.module#VehicleModule', canLoad: [AuthGuard] }
+  { path: "vehicle", loadChildren: './vehicle/vehicle.module#VehicleModule', canLoad: [AuthGuard] },
+  { path: "water-supply", loadChildren: './water-supply/water-supply.module#WaterSupplyModule', canLoad: [AuthGuard] }
 ];
 
 
