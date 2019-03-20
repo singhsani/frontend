@@ -39,7 +39,8 @@ const routes: Routes = [
 			{ path: 'grievance', loadChildren: './grievance/grievance.module#GrievanceModule' , canLoad: [AuthGuard] },
 			{ path: 'tax', loadChildren: './tax/tax.module#TaxModule', canLoad: [AuthGuard] },
 			{ path: 'appointmant', loadChildren: './appointment/appointment.module#AppointmentModule', canLoad: [AuthGuard] },
-			{ path: 'gujPOC', component: GujPocComponent, canActivate: [AuthGuard] }
+			{ path: 'gujPOC', component: GujPocComponent, canActivate: [AuthGuard] },
+			{ path: 'affordable-housing', loadChildren: './affordable-housing/affordable-housing.module#AffordableHousingModule', canLoad: [AuthGuard] }
 		]
 	},
 	{ path: 'auth', loadChildren: './auth/auth.module#AuthModule' }
