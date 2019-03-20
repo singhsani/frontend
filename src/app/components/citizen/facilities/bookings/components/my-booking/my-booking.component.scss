@@ -1,0 +1,89 @@
+
+
+@import "src/assets/scss/variables";
+
+ .example-container { position: relative; }
+ .example-table-container { position: relative; max-height: 400px; overflow: auto; }
+ table { width: 100%; }
+.example-loading-shade { position: absolute; top: 0; left: 0; bottom: 56px; right: 0; background: rgba(0, 0, 0, 0.15); z-index: 1; display: flex; align-items: center; justify-content: center; }
+.example-rate-limit-reached { color: #980000; max-width: 360px; text-align: center; padding-top: 110px; }
+
+.customthead{
+    background-color: #673ab7;
+    color: white;
+}
+
+.scrollModel{
+    overflow-y:auto;
+    max-height: 500px;
+}
+
+.fsLarge{
+    font-size: large;
+}
+
+.textjson { color: #9cdcfe; background: #212529; overflow: scroll; height: 400px; width: 100%; }
+
+
+ .mat-table {
+    overflow: auto;
+    max-height: 500px;
+  }
+  
+  .mobile-label, .mobile-label1 {
+    display: none;
+  }
+
+@media(max-width: 767px) {
+    .myBookings {
+        .mat-cell {padding-left: 0; max-width: inherit;}
+        .mat-cell:first-child {padding-left: 0px;}
+        .mat-cell:last-child {padding-right: 0px;}
+        .mat-column-id {max-width:inherit;}
+        .mat-column-fileStatus {justify-content: left;}
+        .mobile-label {
+            width: 120px;
+            min-width: 120px;
+            display: inline-block;
+            font-weight: bold;
+        }
+        .mobile-label1 {
+            width: auto;
+            padding-right: 10px;
+            display: inline-block;
+            font-weight: bold;
+        }
+        .row-inside {
+            display: inline-block;
+            font-weight: bold;
+            padding-left: 4px;
+        }
+        .mat-header-row {
+            display: none;
+        }
+        .mat-row {
+            flex-direction: column;
+            align-items: start;
+            padding: 8px 10px;
+        }
+        .fullWidth {
+            width: 100% !important;
+            font-size: 12px !important;
+        }
+        .mat-icon-button {
+            margin-bottom: 5px;
+        }
+        .mat-column-fileStatus {
+            width: inherit;
+            text-align: left;
+            padding: 0 0px;
+        }
+    }
+
+
+    .mat-footer-row::after, .mat-header-row::after, .mat-row::after {min-height: initial !important;}
+
+}
+
+
+

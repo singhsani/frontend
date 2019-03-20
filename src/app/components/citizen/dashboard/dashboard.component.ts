@@ -33,7 +33,7 @@ export class DashboardComponent implements OnInit {
 			"services": [
 
 				{
-					"code": "CANCELBOOKING",
+					"code": "MYBOOKING",
 					"fieldView": "ALL",
 					"name": "My Bookings",
 					"gujName": "My Bookings",

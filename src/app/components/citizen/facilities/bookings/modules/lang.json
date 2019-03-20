@@ -1,0 +1,26 @@
+{
+    "townHallCitizenScreen": {
+        "proceed": {
+            "en": "Proceed",
+            "gu": "આગળ વધો"
+        },
+        "booking_number": {
+            "en": "Booking Number",
+            "gu": "બુકિંગ નંબર"
+        }
+    },
+    "cancelBookingCitizenScreen": {
+        "booking_number": {
+            "en": "Booking Number",
+            "gu": "બુકિંગ નંબર"
+        },
+        "receipt_reprint": {
+            "en": "Receipt Re-Print",
+            "gu": "રસીદ ફરીથી છાપવા"
+        },
+        "slot_or_shift_no": {
+            "en": "Shift/Slot Number",
+            "gu": "પાળી/સ્લોટ નંબર"
+        }
+    }
+}
