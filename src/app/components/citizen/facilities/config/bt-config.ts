@@ -4,6 +4,8 @@ import { BookingService } from "../bookings/shared-booking/services/booking-serv
 import { FormGroup } from "@angular/forms";
 import { environment } from "../../../../../environments/environment";
 import { Router } from "@angular/router";
+import { TicketingsService } from "../ticketings/shared-ticketing/services/ticketings.service";
+import { SessionStorageService } from "angular-web-storage";
 
 
 export class BTConstants {
@@ -36,6 +38,12 @@ export class BTConstants {
 
 export class BTConfig extends CitizenConfig {
 
+    session: SessionStorageService = new SessionStorageService();
+
+    constructor(){
+        super();
+    }
+
     /**
      * Method is used to approach common payment handling for booking
      * @param err - payment data
@@ -44,8 +52,8 @@ export class BTConfig extends CitizenConfig {
      * @param form - form
      * @param router router instance
      */
-    redirectToPayment(err: any, commonService: CommonService, bookingService: BookingService, form?: FormGroup, router?: Router) {
-        let payData = bookingService.proceedForPayment(err.error.data);
+    redirectToPayment(err: any, commonService: CommonService, btService: BookingService | TicketingsService, form?: FormGroup, router?: Router) {
+        let payData = this.proceedForPayment(err.error.data, btService.resourceType);
         commonService.commonAlert('Payment Details', '', 'info', 'Make Payment!', false, payData.html, cb => {
             window.location.href = environment.adminUrl + `admin/payment-gateway?retUrl=${payData.payData.retUrl}&retPath=${payData.payData.retPath}`;
         }, rj => {
@@ -63,6 +71,50 @@ export class BTConfig extends CitizenConfig {
             });
             return;
         });
+    }
+
+    /**
+     * Method is used to perform payment and after storing data to localhost redirects to payment gateway.
+     * @param data - Object Data
+     */
+    proceedForPayment(data: any, resourceType?:string): any {
+        let payData = {
+            id: null,
+            uniqueId: null,
+            version: null,
+            paymentType: data.paymentType,
+            refNumber: data.refNumber,
+            response: JSON.stringify({
+                data: "paid",
+                status: true
+            }),
+            resourceType: resourceType,
+            transactionId: data.transactionId,
+            paymentStatus: "SUCCESS",
+            retUrl: environment.citizenUrl,
+            retPath: 'citizen/payment-gateway-response',
+            myApplicationUrl: '/citizen/bookings/my-bookings',
+            amount: data.amount
+        }
+
+		/**
+		 * Storing Data to session. 
+		 */
+        this.session.set('paymentData', JSON.stringify(payData));
+
+		/**
+		 * Generation of HTML of payment alert.
+		 */
+        return {
+            payData: payData,
+            html: `
+				<div class="text-center">
+					<h2>Total amount to be paid</h2>
+					<div class="payAmount">
+						<i class="fa fa-inr" aria-hidden="true">${payData.amount}</i>
+					</div>
+				</div>
+				`};
     }
 
     /**
@@ -89,5 +141,5 @@ export class BTConfig extends CitizenConfig {
 
         return !disableDateList.includes(day);
     }
-    
+
 }

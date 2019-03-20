@@ -1,9 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from 'src/app/shared/services/http.service';
 import { Observable } from 'rxjs';
-import { CommonService } from 'src/app/shared/services/common.service';
-import { SessionStorageService } from 'angular-web-storage';
-import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +18,8 @@ export class BookingService {
 	 * Constructor to declare defualt propeties of class.
 	 * @param http - Declare Http Service property.
 	 */
-  constructor(public http: HttpService, private session: SessionStorageService, private commonService: CommonService) { }
+  constructor(public http: HttpService) { }
+
 	/**
 	 * This method is use for get all resource
 	 */
@@ -80,51 +78,6 @@ export class BookingService {
     return this.http.get(this.requestURL);
   }
 
-	/**
-	 * Method is used to perform payment and after storing data to localhost redirects to payment gateway.
-	 * @param data - Object Data
-	 */
-  proceedForPayment(data: any): any {
-    let payData = {
-      id: null,
-      uniqueId: null,
-      version: null,
-      paymentType: data.paymentType,
-      refNumber: data.refNumber,
-      response: JSON.stringify({
-        data: "paid",
-        status: true
-      }),
-      resourceType: this.resourceType,
-      transactionId: data.transactionId,
-      paymentStatus: "SUCCESS",
-      retUrl: environment.citizenUrl,
-      printUrl: `api/booking/${this.resourceType}/printReceipt/${data.refNumber}`,
-      retPath: 'citizen/payment-gateway-response',
-      myApplicationUrl: '/citizen/bookings/my-bookings',
-      amount: data.amount
-    }
-
-		/**
-		 * Storing Data to session. 
-		 */
-    this.session.set('paymentData', JSON.stringify(payData));
-
-		/**
-		 * Generation of HTML of payment alert.
-		 */
-
-    return {
-      payData: payData,
-      html: `
-				<div class="text-center">
-					<h2>Total amount to be paid</h2>
-					<div class="payAmount">
-						<i class="fa fa-inr" aria-hidden="true">${payData.amount}</i>
-					</div>
-				</div>
-				`};
-  }
 
 	/**
 	 * Method is used to book slot (common).
