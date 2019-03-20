@@ -86,7 +86,8 @@ export class PaymentResponsePageComponent implements OnInit {
       id: null,
       uniqueId: null,
       version: null,
-      refNumber: data.refNumber,
+      refNumber: data.refNumber ? data.refNumber : null,
+      resourceType: data.resourceType ? data.resourceType : null,
       response: JSON.stringify({
         data: "paid",
         status: true
@@ -99,43 +100,22 @@ export class PaymentResponsePageComponent implements OnInit {
      * call api to get details after success payment.
      */
     this.formService.createPayment(payData).subscribe(payResp => {
-
-      if (payResp.success) {
-
-        /**
-         * set time out to redirect.
-         */
         setTimeout(() => {
-          this.redirectToMyApplication(data.myApplicationUrl);
+          this.redirectToMyApplication(data.myApplicationUrl,payData.refNumber, payData.resourceType);
         }, 10000);
 
         /**
          * increase time to 10 secs.
          */
         this.interVal();
-      }
-    }, err => {
-
-      /**
-       * set time out to redirect.
-       */
-      setTimeout(() => {
-        this.redirectToMyApplication(data.myApplicationUrl);
-      }, 10000);
-
-      /**
-         * increase time to 10 secs.
-         */
-      this.interVal();
-
-    });
+      });
   }
 
   /**
    * method is used to redirect to my application page.
    */
-  redirectToMyApplication(myApplicationUrl) {
-    this.router.navigateByUrl(myApplicationUrl);
+  redirectToMyApplication(myApplicationUrl,refNumber = undefined, resourceType = undefined) {
+    this.router.navigateByUrl(myApplicationUrl + `?refNumber=${refNumber}&resourceType=${resourceType}`);
   }
 
   /**

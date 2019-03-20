@@ -32,8 +32,8 @@ const routes: Routes = [
 			{ path: 'payment-response', component: GatewayResponseComponent, canActivate: [AuthGuard] },
 
 			{ path: 'certificates', loadChildren: './certificates/certificates.module#CertificatesModule', canLoad: [AuthGuard] },
-			{ path: 'bookings', loadChildren: './bookings/bookings.module#BookingsModule', canLoad: [AuthGuard] },
-			{ path: 'ticketings', loadChildren: './ticketings/ticketings.module#TicketingsModule', canLoad: [AuthGuard] },
+			{ path: 'bookings', loadChildren: './facilities/bookings/bookings.module#BookingsModule', canLoad: [AuthGuard] },
+			{ path: 'ticketings', loadChildren: './facilities/ticketings/ticketings.module#TicketingsModule', canLoad: [AuthGuard] },
 			{ path: 'license', loadChildren: './licences/licences.module#LicencesModule', canLoad: [AuthGuard] },
 			{ path: 'fire-facilities', loadChildren: './fire-facilities/fire-facilities.module#FireFacilitiesModule', canLoad: [AuthGuard] },
 			{ path: 'grievance', loadChildren: './grievance/grievance.module#GrievanceModule' , canLoad: [AuthGuard] },

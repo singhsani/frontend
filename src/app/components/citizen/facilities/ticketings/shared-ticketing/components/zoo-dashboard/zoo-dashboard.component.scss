@@ -1,0 +1,22 @@
+@import 'src/assets/scss/variables';
+
+.zooServicesList  {padding-bottom: 45px; width: 100%; float: left;
+  // .row {}
+  // .col-md-3, .col-sm-4 {padding-bottom: 18px;}
+  .colBtn {padding:9px 15px;} /* width: 25%; float: left;*/
+  .mat-primary {color: #423c51; font-size: 15px; font-weight: 400; border-radius: 3px; border:1px solid #b2b2b2; display: block; width: 100%; text-overflow: ellipsis;
+      overflow: hidden;
+      &:hover {background: $colorBlue; border-color: $colorBlue; color: #fff;}
+  }
+
+  .activated-services-button {
+    background: $colorBlue;
+    border-color: $colorBlue;
+    color: #fff;
+  }
+}
+
+.activated-service {
+  width: 100%;
+  float: left;
+}

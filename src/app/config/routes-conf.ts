@@ -328,7 +328,7 @@ const ROUTEMAIN = {
         'main': 'guest-house-list',
         'type': ''
     },
-    'CANCELBOOKING': {
+    'MYBOOKING': {
         'main': 'my-bookings',
         'type': ''
     },
@@ -734,8 +734,8 @@ const ROUTESLIST = {
     },
 
     //COMMON CANCEL BOOKING
-    'CANCELBOOKING': {
-        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.BOOKINGMODULE + '/' + ROUTEMAIN.CANCELBOOKING.main
+    'MYBOOKING': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.BOOKINGMODULE + '/' + ROUTEMAIN.MYBOOKING.main
     },
 
     //APPOINTMENT SLOT BOOKING
