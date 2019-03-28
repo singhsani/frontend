@@ -79,12 +79,12 @@
 
         <div class="row">
           <h2>{{'permanat_address' | translate:translateKey}}</h2>
-          <app-address [isDisplayGujFields]="true" #permanantAddressEstablishment [requiredFeilds]="animalPondDuplicateForm.get('permanantAddress').value"
+          <app-address [isDisplayGujFields]="true" #permanantAddressEstablishment [requiredFeilds]="true"
             [addressFormGroup]="animalPondDuplicateForm.get('permanantAddress')"></app-address>
         </div>
         <div class="row">
           <h2>{{'temp_address' | translate:translateKey}}</h2>
-          <app-address [isDisplayGujFields]="true" #permanantAddressEstablishment [requiredFeilds]="animalPondDuplicateForm.get('temporaryAddress').value"
+          <app-address [isDisplayGujFields]="true" #permanantAddressEstablishment [requiredFeilds]="true"
             [addressFormGroup]="animalPondDuplicateForm.get('temporaryAddress')"></app-address>
         </div>
 
