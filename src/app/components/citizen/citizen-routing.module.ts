@@ -14,6 +14,8 @@ import { PaymentResponsePageComponent } from '../../shared/components/payment-re
 import { PayableServicesComponent } from './payable-services/payable-services.component';
 import { GujPocComponent } from './guj-poc/guj-poc.component';
 import { GatewayResponseComponent } from './../../shared/components/gateway-response/gateway-response.component';
+import { CommonPaybleComponent } from './common-payble/common-payble.component';
+
 /* Import citizen components other than auth end */
 
 const routes: Routes = [
@@ -28,7 +30,7 @@ const routes: Routes = [
 			{ path: 'my-transactions', component: TransactionsComponent, canActivate: [AuthGuard] },
 			{ path: 'my-profile', component: UserProfileComponent, canActivate: [AuthGuard] },
 			{ path: 'payment-gateway-response', component: PaymentResponsePageComponent, canActivate: [AuthGuard] },
-			{ path: 'payable-services', component: PayableServicesComponent, canActivate: [AuthGuard] },
+			{ path: 'payable-services', component: CommonPaybleComponent, canActivate: [AuthGuard] },
 			{ path: 'payment-response', component: GatewayResponseComponent, canActivate: [AuthGuard] },
 
 			{ path: 'certificates', loadChildren: './certificates/certificates.module#CertificatesModule', canLoad: [AuthGuard] },
