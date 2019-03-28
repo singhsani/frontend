@@ -1,4 +1,3 @@
-
 <mat-card class="mb-4">
 
 	<form [formGroup]="paymentsForm" autocomplete="off" ngNativeValidate novalidate>
@@ -25,8 +24,8 @@
 			</div>
 		</div>
 
-		<div class="row" *ngIf="isRecordExists">
-			<mat-form-field class="col-md-4">
+		<div class="row mt-4" *ngIf="isRecordExists">
+			<!-- <mat-form-field class="col-md-4">
 				<input matInput placeholder="Amount(Rs.)" formControlName="amount">
 				<control-messages [control]="paymentsForm.get('amount')"></control-messages>
 			</mat-form-field>
@@ -36,9 +35,26 @@
 				<mat-radio-group class="example-radio-group" formControlName="code">
 					<mat-radio-button [value]="mode.code" *ngFor="let mode of payModeArr">{{mode.name}}</mat-radio-button>
 				</mat-radio-group>
+			</div> -->
+
+			<div class="row">
+				<div class="col-md-12">
+					<label class="col-md-3 font16 font-weight-bold">Amount Payable :</label>
+					<span class="font16" style="color: #ff0000;">{{paymentsForm.get('amount').value}}</span>
+				</div>
+				
+				<div class="col-md-12" formGroupName="payMode">
+					<label class="col-md-3 font16 font-weight-bold">Payment Mode :</label>
+					<span style="display: inline-block">
+						<mat-radio-group class="example-radio-group" formControlName="code">
+							<mat-radio-button [value]="mode.code" *ngFor="let mode of payModeArr">{{mode.name}}</mat-radio-button>
+						</mat-radio-group>
+					</span>
+				</div>
+				
 			</div>
 
-			<div class="col-md-4 pt-3">
+			<div class="col-md-4 pt-3" style="margin-left: 92px;">
 				<button mat-raised-button class="paymentButton" color="primary" type="submit" (click)="makePayment(paymentsForm.value)">
 					Make Payment
 				</button>
