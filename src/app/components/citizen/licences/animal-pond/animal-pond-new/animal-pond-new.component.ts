@@ -83,8 +83,8 @@ export class AnimalPondNewComponent implements OnInit {
 	}
 
 	/**
- * Method is add required document  
- */
+    * Method is add required document  
+    */
 	requiredDocumentList() {
 		_.forEach(this.animalPondNewForm.get('serviceDetail').get('serviceUploadDocuments').value, (value) => {
 			if (value.mandatory && value.isActive && value.requiredOnCitizenPortal) {
@@ -131,9 +131,29 @@ export class AnimalPondNewComponent implements OnInit {
 				this.showButtons = true;
 				this.onChangeZone(this.animalPondNewForm.get('zoneNo').value.code);
 				this.onChangeWard(this.animalPondNewForm.get('wardNo').value.code);
+
+				// deflate add one array in relationship grid
+				if ((<FormArray>res.relationshipList).length == 0) {
+					this.addItem('relationshipList').push(this.createArray());
+					let newlyadded = <any>this.addItem('relationshipList').controls;
+					if (newlyadded.length) {
+						this.editRecord((newlyadded[newlyadded.length - 1]));
+						(newlyadded[newlyadded.length - 1]).newRecordAdded = true;
+					}
+				}
 				res.relationshipList.forEach(app => {
 					(<FormArray>this.animalPondNewForm.get('relationshipList')).push(this.createArray(app));
 				});
+
+				// deflate add one array in animal grid
+				if ((<FormArray>res.animalDetails).length == 0) {
+					this.addItem('animalDetails').push(this.createAnimalArray());
+					let newlyadded = <any>this.addItem('animalDetails').controls;
+					if (newlyadded.length) {
+						this.editRecord((newlyadded[newlyadded.length - 1]));
+						(newlyadded[newlyadded.length - 1]).newRecordAdded = true;
+					}
+				}
 				res.animalDetails.forEach(app => {
 					(<FormArray>this.animalPondNewForm.get('animalDetails')).push(this.createAnimalArray(app));
 				});
@@ -242,7 +262,19 @@ export class AnimalPondNewComponent implements OnInit {
 			statusOfBusinessId: this.fb.group({
 				code: [null, Validators.required]
 			}),
-			relationshipList: this.fb.array([]),
+			relationshipList: this.fb.array([
+				// 0: {
+				// 	id: 18,
+				// 	serviceFormId: 52,
+				// 	fieldView: "ALL",
+				// 	address: "bbb",
+				// 	gender: {},
+				// 	mobileNo: "6555555555",
+				// 	name: "bhumi",
+				// 	personType: "APL_PERSON",
+				// 	relationship: {}
+				// }
+			]),
 			/* Step 2 controls end */
 
 			/* Step 3 controls start */
@@ -289,7 +321,7 @@ export class AnimalPondNewComponent implements OnInit {
 			animalType: this.fb.group({
 				code: [data.animalType ? (data.animalType.code ? data.animalType.code : null) : null, Validators.required]
 			}),
-			animalCount: [data.animalCount ? data.animalCount : null, [Validators.minLength(1), Validators.required]],
+			animalCount: [data.animalCount ? data.animalCount : 0, [Validators.minLength(1), Validators.required]],
 		})
 	}
 
@@ -315,14 +347,16 @@ export class AnimalPondNewComponent implements OnInit {
 	/**
 	 * Method is used to add recode in array control
 	 */
-	addItem(controlName: any) {
-		return this.animalPondNewForm.get(controlName) as FormArray;
+	addItem(controlName: string) {
+		let returnArray: any;
+		returnArray = this.animalPondNewForm.get(controlName) as FormArray;
+		return returnArray;
 	}
 
 	/**
 	 * Method is used when user click for add person
 	 */
-	addMorePerson(aplType?:any) {
+	addMorePerson(aplType?: any) {
 		let relationshipIdValue = this.animalPondNewForm.get('relationshipId').value.code;
 
 		if (!relationshipIdValue) {
@@ -344,7 +378,9 @@ export class AnimalPondNewComponent implements OnInit {
 			// this.animalPondNewForm.get('relationshipList').setValidators([Validators.required]);
 			let newlyadded = <any>this.addItem('relationshipList').controls;
 			if (newlyadded.length) {
-				(newlyadded[newlyadded.length - 1]).isEditMode = true;
+				// (newlyadded[newlyadded.length - 1]).isEditMode = true;
+				this.editRecord((newlyadded[newlyadded.length - 1]));
+				(newlyadded[newlyadded.length - 1]).newRecordAdded = true;
 			}
 		}
 		else {
@@ -357,12 +393,25 @@ export class AnimalPondNewComponent implements OnInit {
 	 */
 	onChangeRelationWithOrg() {
 		try {
-			(<FormArray>this.animalPondNewForm.get('relationshipList')).controls = [];
-			this.animalPondNewForm.get('relationshipList').setValue([]);
+			let relationshipId = this.animalPondNewForm.get('relationshipId').value.code;
+			if (relationshipId == 'PROPRIETOR') {
+				(<FormArray>this.animalPondNewForm.get('relationshipList')).controls = [];
+				this.animalPondNewForm.get('relationshipList').setValue([]);
+
+				if ((<FormArray>this.animalPondNewForm.get('relationshipList')).length == 0) {
+					this.addItem('relationshipList').push(this.createArray());
+					let newlyadded = <any>this.addItem('relationshipList').controls;
+					if (newlyadded.length) {
+						this.editRecord((newlyadded[newlyadded.length - 1]));
+						(newlyadded[newlyadded.length - 1]).newRecordAdded = true;
+					}
+				}
+			}
 		} catch (error) {
 			console.log(error.message);
 		}
 	}
+
 
 	/**
 	 * Method is used when user click for add person
@@ -380,7 +429,8 @@ export class AnimalPondNewComponent implements OnInit {
 			// this.animalPondNewForm.get('relationshipList').setValidators([Validators.required]);
 			let newlyadded = <any>this.addItem('animalDetails').controls;
 			if (newlyadded.length) {
-				(newlyadded[newlyadded.length - 1]).isEditMode = true;
+				this.editRecord((newlyadded[newlyadded.length - 1]));
+				(newlyadded[newlyadded.length - 1]).newRecordAdded = true;
 			}
 		}
 		else {
@@ -389,12 +439,12 @@ export class AnimalPondNewComponent implements OnInit {
 	}
 
 	/**
-     * Method is used to set data value to upload method.
-     * @param indentifier - file identifier
-     * @param labelName - file label name.
-     * @param formPart - file form part
-     * @param variableName - file variable name.
-     */
+	 * Method is used to set data value to upload method.
+	 * @param indentifier - file identifier
+	 * @param labelName - file label name.
+	 * @param formPart - file form part
+	 * @param variableName - file variable name.
+	 */
 	setDataValue(indentifier: number, labelName: string, formPart: string, variableName: string) {
 		this.uploadModel = {
 			fieldIdentifier: indentifier.toString(),
@@ -442,6 +492,7 @@ export class AnimalPondNewComponent implements OnInit {
 	saveRecord(row: any) {
 		if (row.valid) {
 			row.isEditMode = false;
+			row.newRecordAdded = false;
 		}
 	}
 
@@ -470,17 +521,26 @@ export class AnimalPondNewComponent implements OnInit {
 	*  Method is used cancel editable dataview.
 	* @param row: table row index
 	*/
-	cancelRecord(row: any) {
-		if (row.deepCopyInEditMode) {
-			row.patchValue(row.deepCopyInEditMode);
+	cancelRecord(row: any, index: number, controlName: string) {
+		try {
+			if (row.newRecordAdded) {
+				this.addItem(controlName).removeAt(index);
+			} else {
+				if (row.deepCopyInEditMode) {
+					row.patchValue(row.deepCopyInEditMode);
+				}
+				row.isEditMode = false;
+				row.newRecordAdded = false;
+			}
+		} catch (error) {
+
 		}
-		row.isEditMode = false;
 	}
 
-    /**
-     * This method required for final form submition.
-     * @param flag - flag of invalid control.
-     */
+	/**
+	 * This method required for final form submition.
+	 * @param flag - flag of invalid control.
+	 */
 	handleErrorsOnSubmit(flag) {
 
 		let step0 = 16;
@@ -489,35 +549,49 @@ export class AnimalPondNewComponent implements OnInit {
 		let step3 = 30;
 		let step4 = 31;
 
-		if (flag != null) {
-			//Check validation for step by step
-			let count = flag;
-
-			if (count <= step0) {
+		switch (true) {
+			case flag <= step0:
 				this.tabIndex = 0;
-				return false;
-			} else if (count <= step1) {
+				break;
+			case flag <= step1:
 				this.tabIndex = 1;
-				return false;
-			} else if (count <= step2) {
+				break;
+			case flag <= step2:
 				this.tabIndex = 2;
-				return false;
-			} else if (count <= step3) {
+				break;
+			case flag <= step3:
 				this.tabIndex = 3;
-				return false;
-			} else if (count <= step4) {
+				break;
+			case flag <= step4:
 				this.tabIndex = 4;
-				return false;
-			}
-			// else if (count == 67) {
-			// 	this.checkReligion();
-			// 	return false;
-			// }
-			else {
-				console.log("else condition");
-			}
+				break;
+			default:
+				this.tabIndex = 0;
 
 		}
+		this.checkDynamicTableValidate();
+	}
+
+	/**
+	 * this method is use for check validate dynamic attachment for employee family list , person occupying list and Partner list
+	 */
+	checkDynamicTableValidate(): void {
+		try {
+			this.addItem("animalDetails").controls.forEach(element => {
+				if (element.invalid) {
+					element.isEditMode = true;
+				}
+			});
+
+			this.addItem("relationshipList").controls.forEach(element => {
+				if (element.invalid) {
+					element.isEditMode = true;
+				}
+			});
+		} catch (error) {
+			console.error(error.message);
+		}
+
 	}
 
 	/**
