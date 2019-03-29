@@ -109,13 +109,13 @@
 				<div class="row">
 					<h2>{{'permanat_address' | translate:translateKey}}</h2>
 					<app-address #permanantAddressEstablishment
-						[requiredFeilds]="muttonFishRenewalForm.get('permanantAddress').value"
+						[requiredFeilds]="true"
 						[addressFormGroup]="muttonFishRenewalForm.get('permanantAddress')"></app-address>
 				</div>
 				<div class="row">
 					<h2>{{'temp_address' | translate:translateKey}}</h2>
 					<app-address #temporaryAddressEstablishment
-						[requiredFeilds]="muttonFishRenewalForm.get('temporaryAddress').value"
+						[requiredFeilds]="true"
 						[addressFormGroup]="muttonFishRenewalForm.get('temporaryAddress')"></app-address>
 				</div>
 
@@ -179,7 +179,7 @@
 				<div class="row">
 					<h2>{{'business_shop_address' | translate:translateKey}}</h2>
 					<app-address #temporaryAddressEstablishment
-						[requiredFeilds]="muttonFishRenewalForm.get('businessAddress').value"
+						[requiredFeilds]="true"
 						[addressFormGroup]="muttonFishRenewalForm.get('businessAddress')"></app-address>
 				</div>
 
@@ -214,47 +214,47 @@
 					</div>
 				</div>
 
-				<!-- table -->
-				<div class="row justify-content-between">
-					<div class="col-md-10">
-						<h2 *ngIf="muttonFishRenewalForm.get('relationshipId').value.code == 'PROPRIETOR'">{{
-							'if_shop_is_in_properitership' | translate:translateKey}}</h2>
-						<h2 *ngIf="muttonFishRenewalForm.get('relationshipId').value.code != 'PROPRIETOR'">{{ 'if_shop_is_in_partnership'
-							| translate:translateKey}}</h2>
+					<!-- table -->
+					<div class="row">
+						<div class="col-md-10">
+							<h2 *ngIf="muttonFishRenewalForm.get('relationshipId').value.code == 'PROPRIETOR'">
+								{{ 'if_shop_is_in_properitership' | translate:translateKey}}</h2>
+							<h2 *ngIf="muttonFishRenewalForm.get('relationshipId').value.code != 'PROPRIETOR'">
+								{{ 'if_shop_is_in_partnership' | translate:translateKey}}</h2>
+						</div>
+						<div class="col-md-2 pt-3 text-right">
+							<button type="button" *ngIf="muttonFishRenewalForm.get('canEdit').value"
+								[disabled]="muttonFishRenewalForm.get('relationshipId').value.code ? muttonFishRenewalForm.get('relationshipId').value.code=='PROPRIETOR' ? !(muttonFishRenewalForm.get('relationshipList').length < 1) : !(muttonFishRenewalForm.get('relationshipList').length < 10) : true"
+								matTooltip="{{'add_more' | translate:translateKey}}" mat-raised-button color="primary"
+								(click)="addMorePerson('MF_PERSON')">{{'add'| translate:translateKey}}</button>
+						</div>
 					</div>
-					<div class="col-md-2 pt-3 text-right">
-						<button type="button" *ngIf="muttonFishRenewalForm.get('canEdit').value"
-							[disabled]="muttonFishRenewalForm.get('relationshipId').value.code ? muttonFishRenewalForm.get('relationshipId').value.code=='PROPRIETOR' ? !(muttonFishRenewalForm.get('relationshipList')['controls'].length < 1) : !(muttonFishRenewalForm.get('relationshipList')['controls'].length < 10) : true"
-							matTooltip="{{'add_more' | translate:translateKey}}" mat-raised-button color="primary"
-							(click)="addMorePerson('MF_PERSON')">{{'add'|
-							translate:translateKey}}</button>
-					</div>
-				</div>
-
-				<div *ngIf="muttonFishRenewalForm.get('relationshipList')['controls'].length">
-					<div>
+	
+					<div *ngIf="muttonFishRenewalForm.get('relationshipList')['controls'].length">
+	
 						<table class="table table-striped mb-0 responsiveTableRow">
 							<thead>
 								<tr class="mo-d-none">
-									<th width="50">#</th>
-									<th width="29%">{{'name' | translate:translateKey}}</th>
-									<th width="29%">{{'address' | translate:translateKey}}</th>
-									<th width="29%">{{'mobile_no' | translate:translateKey}}</th>
-									<th width="150" *ngIf="muttonFishRenewalForm.get('canEdit').value"></th>
+									<th>#</th>
+									<th>{{'name' | translate:translateKey}}</th>
+									<th>{{'address' | translate:translateKey}}</th>
+									<th>{{'mobile_no' | translate:translateKey}}</th>
+									<th *ngIf="muttonFishRenewalForm.get('canEdit').value"></th>
 								</tr>
 							</thead>
-							<tbody formArrayName="relationshipList">
+	
+							<tbody formArrayName="relationshipList" class="listTable clearfix">
 								<tr *ngFor="let item of muttonFishRenewalForm.get('relationshipList')['controls']; let indx = index;"
 									[formGroupName]="indx">
-
+	
 									<td>
 										<div class="d-md-none">#</div>
 										{{indx+1}}
 									</td>
-
+	
 									<td>
-										<div class="d-md-none">{{'name' | translate:translateKey}}</div>
-										<p *ngIf="!item.isEditMode">{{item.get('name').value}}</p>
+										<!-- <div class="d-md-none">{{'name' | translate:translateKey}}</div> -->
+										<div *ngIf="!item.isEditMode">{{item.get('name').value}}</div>
 										<mat-form-field *ngIf="item.isEditMode">
 											<input matInput maxlength="100" appValidationFields
 												[validationFieldsType]="'onlyNameWithSpace'" formControlName="name"
@@ -262,63 +262,57 @@
 											<control-messages [control]="item.get('name')"></control-messages>
 										</mat-form-field>
 									</td>
-
+	
 									<td>
-										<div class="d-md-none">{{'address' | translate:translateKey}}</div>
-										<p *ngIf="!item.isEditMode">{{item.get('address').value}}</p>
+										<!-- <div class="d-md-none">{{'address' | translate:translateKey}}</div> -->
+										<div *ngIf="!item.isEditMode">{{item.get('address').value}}</div>
 										<mat-form-field *ngIf="item.isEditMode">
-											<input matInput maxlength="200" formControlName="address"
-												placeholder="{{'address' | translate:translateKey}}*">
-											<control-messages [control]="item.get('address')"></control-messages>
+											<input matInput maxlength="200"
+												placeholder="{{'address' | translate:translateKey}}*"
+												formControlName="address">
+											<control-messages [control]="item.get('address')">
+											</control-messages>
 										</mat-form-field>
 									</td>
-
+	
 									<td>
-										<div class="d-md-none">{{'mobile_no' | translate:translateKey}}</div>
-										<p *ngIf="!item.isEditMode">{{item.get('mobileNo').value}} &nbsp;</p>
+										<!-- <div class="d-md-none">{{'mobile_no' | translate:translateKey}}</div> -->
+										<div *ngIf="!item.isEditMode">{{item.get('mobileNo').value}} &nbsp;
+										</div>
 										<mat-form-field *ngIf="item.isEditMode">
 											<input matInput maxlength="11" OnlyNumber formControlName="mobileNo"
 												placeholder="{{'mobile_no' | translate:translateKey}}">
-											<control-messages [control]="item.get('mobileNo')"></control-messages>
+											<control-messages [control]="item.get('mobileNo')">
+											</control-messages>
 										</mat-form-field>
 									</td>
-
-									<td width="150">
+									<td>
 										<span *ngIf="muttonFishRenewalForm.get('canEdit').value">
 											<button mat-icon-button color="primary" *ngIf="!item.isEditMode"
-												[disabled]="muttonFishRenewalForm.get('relationshipId').value.code == 'PROPRIETOR'"
 												(click)="editRecord(item)">
 												<mat-icon title="Edit">edit</mat-icon>
 											</button>
-											<button type="submit"
-												[disabled]="item.invalid || muttonFishRenewalForm.get('relationshipId').value.code == 'PROPRIETOR'"
-												mat-icon-button color="primary" *ngIf="item.isEditMode"
-												(click)="saveRecord(item)">
+											<button type="submit" [disabled]="item.invalid" *ngIf="item.isEditMode"
+												(click)="saveRecord(item)" mat-icon-button color="primary">
 												<mat-icon title="save">save</mat-icon>
 											</button>
 										</span>
-
 										<span *ngIf="muttonFishRenewalForm.get('canEdit').value">
 											<button mat-icon-button color="warn" *ngIf="!item.isEditMode"
-												[disabled]="muttonFishRenewalForm.get('relationshipId').value.code == 'PROPRIETOR'"
 												(click)="deleteRecord(indx)">
 												<mat-icon title="Delete">delete</mat-icon>
 											</button>
 											<button mat-icon-button color="warn" *ngIf="item.isEditMode"
-												(click)="cancelRecord(item)">
+												(click)="cancelRecord(item,indx)">
 												<mat-icon title="Delete">cancel</mat-icon>
 											</button>
 										</span>
-
 									</td>
-
-
 								</tr>
 							</tbody>
 						</table>
 					</div>
-				</div>
-				<!-- end table -->
+					<!-- end table -->
 				<app-action-bar [form]="muttonFishRenewalForm" (tabIndex)="licenseConfiguration.onFormTabChange($event)"
 					[stepInfo]="{step: 'step2', next: 2, back: 0}"></app-action-bar>
 			</mat-tab>

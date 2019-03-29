@@ -111,13 +111,13 @@
 				<div class="row">
 					<h2>{{'permanat_address' | translate:translateKey}}</h2>
 					<app-address #permanantAddressEstablishment
-						[requiredFeilds]="muttonFishTransferForm.get('permanantAddress').value"
+						[requiredFeilds]="true"
 						[addressFormGroup]="muttonFishTransferForm.get('permanantAddress')"></app-address>
 				</div>
 				<div class="row">
 					<h2>{{'temp_address' | translate:translateKey}}</h2>
 					<app-address #temporaryAddressEstablishment
-						[requiredFeilds]="muttonFishTransferForm.get('temporaryAddress').value"
+						[requiredFeilds]="true"
 						[addressFormGroup]="muttonFishTransferForm.get('temporaryAddress')"></app-address>
 				</div>
 
@@ -182,7 +182,7 @@
 				<div class="row">
 					<h2>{{'business_shop_address' | translate:translateKey}}</h2>
 					<app-address #temporaryAddressEstablishment
-						[requiredFeilds]="muttonFishTransferForm.get('businessAddress').value"
+						[requiredFeilds]="true"
 						[addressFormGroup]="muttonFishTransferForm.get('businessAddress')"></app-address>
 				</div>
 
@@ -217,103 +217,102 @@
 					</div>
 				</div>
 
-				<!-- table -->
-				<div class="row justify-content-between">
+				<div class="row">
 					<div class="col-md-10">
-						<h2 *ngIf="muttonFishTransferForm.get('relationshipId').value.code == 'PROPRIETOR'">{{
-							'if_shop_is_in_properitership' | translate:translateKey}}</h2>
-						<h2 *ngIf="muttonFishTransferForm.get('relationshipId').value.code != 'PROPRIETOR'">{{
-							'if_shop_is_in_partnership' | translate:translateKey}}</h2>
+						<h2 *ngIf="muttonFishTransferForm.get('relationshipId').value.code == 'PROPRIETOR'">
+							{{ 'if_shop_is_in_properitership' | translate:translateKey}}</h2>
+						<h2 *ngIf="muttonFishTransferForm.get('relationshipId').value.code != 'PROPRIETOR'">
+							{{ 'if_shop_is_in_partnership' | translate:translateKey}}</h2>
 					</div>
 					<div class="col-md-2 pt-3 text-right">
-						<button type="button"
-							[disabled]="muttonFishTransferForm.get('relationshipId').value.code ? muttonFishTransferForm.get('relationshipId').value.code=='PROPRIETOR' ? !(muttonFishTransferForm.get('relationshipList')['controls'].length < 1) : !(muttonFishTransferForm.get('relationshipList')['controls'].length < 10) : true"
+						<button type="button" *ngIf="muttonFishTransferForm.get('canEdit').value"
+							[disabled]="muttonFishTransferForm.get('relationshipId').value.code ? muttonFishTransferForm.get('relationshipId').value.code=='PROPRIETOR' ? !(muttonFishTransferForm.get('relationshipList').length < 1) : !(muttonFishTransferForm.get('relationshipList').length < 10) : true"
 							matTooltip="{{'add_more' | translate:translateKey}}" mat-raised-button color="primary"
-							(click)="addMorePerson('MF_PERSON')">{{'add'|
-							translate:translateKey}}</button>
+							(click)="addMorePerson('MF_PERSON')">{{'add'| translate:translateKey}}</button>
 					</div>
 				</div>
 
 				<div *ngIf="muttonFishTransferForm.get('relationshipList')['controls'].length">
-					<div>
-						<table class="table table-striped mb-0 responsiveTableRow">
-							<thead>
-								<tr class="mo-d-none">
-									<th width="50">#</th>
-									<th width="29%">{{'name' | translate:translateKey}}</th>
-									<th width="29%">{{'address' | translate:translateKey}}</th>
-									<th width="29%">{{'mobile_no' | translate:translateKey}}</th>
-									<th width="150" *ngIf="muttonFishTransferForm.get('canEdit').value"></th>
-								</tr>
-							</thead>
-							<tbody formArrayName="relationshipList">
-								<tr *ngFor="let item of muttonFishTransferForm.get('relationshipList')['controls']; let indx = index;"
-									[formGroupName]="indx">
 
-									<td>
-										<div class="d-md-none">#</div>
-										{{indx+1}}
-									</td>
+					<table class="table table-striped mb-0 responsiveTableRow">
+						<thead>
+							<tr class="mo-d-none">
+								<th>#</th>
+								<th>{{'name' | translate:translateKey}}</th>
+								<th>{{'address' | translate:translateKey}}</th>
+								<th>{{'mobile_no' | translate:translateKey}}</th>
+								<th *ngIf="muttonFishTransferForm.get('canEdit').value"></th>
+							</tr>
+						</thead>
 
-									<td>
-										<div class="d-md-none">{{'name' | translate:translateKey}}</div>
-										<p *ngIf="!item.isEditMode">{{item.get('name').value}}</p>
-										<mat-form-field *ngIf="item.isEditMode">
-											<input matInput maxlength="100" appValidationFields
-												[validationFieldsType]="'onlyNameWithSpace'" formControlName="name"
-												placeholder="{{'name' | translate:translateKey}}*">
-											<control-messages [control]="item.get('name')"></control-messages>
-										</mat-form-field>
-									</td>
+						<tbody formArrayName="relationshipList" class="listTable clearfix">
+							<tr *ngFor="let item of muttonFishTransferForm.get('relationshipList')['controls']; let indx = index;"
+								[formGroupName]="indx">
 
-									<td>
-										<div class="d-md-none">{{'address' | translate:translateKey}}</div>
-										<p *ngIf="!item.isEditMode">{{item.get('address').value}}</p>
-										<mat-form-field *ngIf="item.isEditMode">
-											<input matInput maxlength="200" formControlName="address"
-												placeholder="{{'address' | translate:translateKey}}*">
-											<control-messages [control]="item.get('address')"></control-messages>
-										</mat-form-field>
-									</td>
+								<td>
+									<div class="d-md-none">#</div>
+									{{indx+1}}
+								</td>
 
-									<td>
-										<div class="d-md-none">{{'mobile_no' | translate:translateKey}}</div>
-										<p *ngIf="!item.isEditMode">{{item.get('mobileNo').value}} &nbsp;</p>
-										<mat-form-field *ngIf="item.isEditMode">
-											<input matInput maxlength="11" OnlyNumber formControlName="mobileNo"
-												placeholder="{{'mobile_no' | translate:translateKey}}">
-											<control-messages [control]="item.get('mobileNo')"></control-messages>
-										</mat-form-field>
-									</td>
+								<td>
+									<!-- <div class="d-md-none">{{'name' | translate:translateKey}}</div> -->
+									<div *ngIf="!item.isEditMode">{{item.get('name').value}}</div>
+									<mat-form-field *ngIf="item.isEditMode">
+										<input matInput maxlength="100" appValidationFields
+											[validationFieldsType]="'onlyNameWithSpace'" formControlName="name"
+											placeholder="{{'name' | translate:translateKey}}*">
+										<control-messages [control]="item.get('name')"></control-messages>
+									</mat-form-field>
+								</td>
 
-									<td *ngIf="muttonFishTransferForm.get('canEdit').value">
-										<span *ngIf="muttonFishTransferForm.get('canEdit').value">
-											<button mat-icon-button color="primary" *ngIf="!item.isEditMode"
-												(click)="editRecord(item)">
-												<mat-icon title="Edit">edit</mat-icon>
-											</button>
-											<button type="submit" [disabled]="item.invalid" mat-icon-button
-												color="primary" *ngIf="item.isEditMode" (click)="saveRecord(item)">
-												<mat-icon title="save">save</mat-icon>
-											</button>
-										</span>
-										<span *ngIf="muttonFishTransferForm.get('canEdit').value">
-											<button mat-icon-button color="warn" *ngIf="!item.isEditMode"
-												(click)="deleteRecord(indx)">
-												<mat-icon title="Delete">delete</mat-icon>
-											</button>
-											<button mat-icon-button color="warn" *ngIf="item.isEditMode"
-												(click)="cancelRecord(item)">
-												<mat-icon title="Delete">cancel</mat-icon>
-											</button>
-										</span>
+								<td>
+									<!-- <div class="d-md-none">{{'address' | translate:translateKey}}</div> -->
+									<div *ngIf="!item.isEditMode">{{item.get('address').value}}</div>
+									<mat-form-field *ngIf="item.isEditMode">
+										<input matInput maxlength="200"
+											placeholder="{{'address' | translate:translateKey}}*"
+											formControlName="address">
+										<control-messages [control]="item.get('address')">
+										</control-messages>
+									</mat-form-field>
+								</td>
 
-									</td>
-
-								</tr>
-							</tbody>
-						</table>
-					</div>
+								<td>
+									<!-- <div class="d-md-none">{{'mobile_no' | translate:translateKey}}</div> -->
+									<div *ngIf="!item.isEditMode">{{item.get('mobileNo').value}} &nbsp;
+									</div>
+									<mat-form-field *ngIf="item.isEditMode">
+										<input matInput maxlength="11" OnlyNumber formControlName="mobileNo"
+											placeholder="{{'mobile_no' | translate:translateKey}}">
+										<control-messages [control]="item.get('mobileNo')">
+										</control-messages>
+									</mat-form-field>
+								</td>
+								<td>
+									<span *ngIf="muttonFishTransferForm.get('canEdit').value">
+										<button mat-icon-button color="primary" *ngIf="!item.isEditMode"
+											(click)="editRecord(item)">
+											<mat-icon title="Edit">edit</mat-icon>
+										</button>
+										<button type="submit" [disabled]="item.invalid" *ngIf="item.isEditMode"
+											(click)="saveRecord(item)" mat-icon-button color="primary">
+											<mat-icon title="save">save</mat-icon>
+										</button>
+									</span>
+									<span *ngIf="muttonFishTransferForm.get('canEdit').value">
+										<button mat-icon-button color="warn" *ngIf="!item.isEditMode"
+											(click)="deleteRecord(indx)">
+											<mat-icon title="Delete">delete</mat-icon>
+										</button>
+										<button mat-icon-button color="warn" *ngIf="item.isEditMode"
+											(click)="cancelRecord(item,indx)">
+											<mat-icon title="Delete">cancel</mat-icon>
+										</button>
+									</span>
+								</td>
+							</tr>
+						</tbody>
+					</table>
 				</div>
 				<!-- end table -->
 				<app-action-bar [form]="muttonFishTransferForm"

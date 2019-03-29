@@ -70,12 +70,12 @@ export class MuttonFishNewComponent implements OnInit {
 			this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
 		});
 
+		this.getLookupData();
 		if (!this.formId) {
 			this.router.navigate([ManageRoutes.getFullRoute('CITIZENDASHBOARD')]);
 		}
 		else {
 			this.getMuttonFishLicNewData();
-			this.getLookupData();
 			this.muttonFishNewFormControls();
 		}
 	}
@@ -90,6 +90,16 @@ export class MuttonFishNewComponent implements OnInit {
 				this.licenseConfiguration.isAttachmentButtonsVisible = true;
 				this.onChangeZone(this.muttonFishNewForm.get('zoneNo').value.code);
 				this.onChangeWard(this.muttonFishNewForm.get('wardNo').value.code);
+
+				// deflate add one array in relationship grid
+				if ((<FormArray>res.relationshipList).length == 0) {
+					this.addItem().push(this.createArray());
+					let newlyadded = <any>this.addItem().controls;
+					if (newlyadded.length) {
+						this.editRecord((newlyadded[newlyadded.length - 1]));
+						(newlyadded[newlyadded.length - 1]).newRecordAdded = true;
+					}
+				}
 				res.relationshipList.forEach(app => {
 					(<FormArray>this.muttonFishNewForm.get('relationshipList')).push(this.createArray(app));
 				});
@@ -218,7 +228,9 @@ export class MuttonFishNewComponent implements OnInit {
 	 * Method is used to add array in form
 	 */
 	addItem() {
-		return this.muttonFishNewForm.get('relationshipList') as FormArray;
+		let returnArray: any;
+		returnArray = this.muttonFishNewForm.get('relationshipList') as FormArray;
+		return returnArray;
 	}
 
 	/**
@@ -246,7 +258,9 @@ export class MuttonFishNewComponent implements OnInit {
 			// this.muttonFishNewForm.get('relationshipList').setValidators([Validators.required]);
 			let newlyadded = <any>this.addItem().controls;
 			if (newlyadded.length) {
-				(newlyadded[newlyadded.length - 1]).isEditMode = true;
+				// (newlyadded[newlyadded.length - 1]).isEditMode = true;
+				this.editRecord((newlyadded[newlyadded.length - 1]));
+				(newlyadded[newlyadded.length - 1]).newRecordAdded = true;
 			}
 		}
 		else {
@@ -261,6 +275,15 @@ export class MuttonFishNewComponent implements OnInit {
 		try {
 			(<FormArray>this.muttonFishNewForm.get('relationshipList')).controls = [];
 			this.muttonFishNewForm.get('relationshipList').setValue([]);
+
+			if ((<FormArray>this.muttonFishNewForm.get('relationshipList')).length == 0) {
+				this.addItem().push(this.createArray());
+				let newlyadded = <any>this.addItem().controls;
+				if (newlyadded.length) {
+					this.editRecord((newlyadded[newlyadded.length - 1]));
+					(newlyadded[newlyadded.length - 1]).newRecordAdded = true;
+				}
+			}
 		} catch (error) {
 			console.log(error.message);
 		}
@@ -307,18 +330,29 @@ export class MuttonFishNewComponent implements OnInit {
 	saveRecord(row: any) {
 		if (row.valid) {
 			row.isEditMode = false;
+			row.newRecordAdded = false;
 		}
 	}
 
+	
 	/**
 	*  Method is used cancel editable dataview.
 	* @param row: table row index
 	*/
-	cancelRecord(row: any) {
-		if (row.deepCopyInEditMode) {
-			row.patchValue(row.deepCopyInEditMode);
+	cancelRecord(row: any, index: number) {
+		try {
+			if (row.newRecordAdded) {
+				this.addItem().removeAt(index);
+			} else {
+				if (row.deepCopyInEditMode) {
+					row.patchValue(row.deepCopyInEditMode);
+				}
+				row.isEditMode = false;
+				row.newRecordAdded = false;
+			}
+		} catch (error) {
+
 		}
-		row.isEditMode = false;
 	}
 
     /**
@@ -328,18 +362,36 @@ export class MuttonFishNewComponent implements OnInit {
 	handleErrorsOnSubmit(flag) {
 		let step0 = 21;
 		let step1 = 29;
-		if (flag != null) {
-			//Check validation for step by step
-			if (flag <= step0) {
-				this.licenseConfiguration.currentTabIndex = 0;
-				return false;
-			} else if (flag <= step1) {
-				this.licenseConfiguration.currentTabIndex = 1;
-				return false;
-			} else {
-				console.log("else condition");
-			}
+
+		switch (true) {
+			case flag <= step0:
+			this.licenseConfiguration.currentTabIndex = 0;
+				break;
+			case flag <= step1:
+			this.licenseConfiguration.currentTabIndex = 1;
+				break;
+			
+			default:
+			this.licenseConfiguration.currentTabIndex = 0;
+
 		}
+		this.checkDynamicTableValidate();
+	}
+
+	/**
+	 * this method is use for check validate dynamic grid (relationshipList)
+	 */
+	checkDynamicTableValidate(): void {
+		try {
+			this.addItem().controls.forEach(element => {
+				if (element.invalid) {
+					element.isEditMode = true;
+				}
+			});
+		} catch (error) {
+			console.error(error.message);
+		}
+
 	}
 }
 
