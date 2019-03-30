@@ -278,5 +278,9 @@ export class FormsActionsService {
 		});
 	}
 
+	getDueDetails(num) {
+		return this.http.get(`api/professional/receipt/search/${num}`);
+	}
+
 
 }
