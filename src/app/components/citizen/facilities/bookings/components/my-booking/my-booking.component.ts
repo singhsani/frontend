@@ -4,7 +4,6 @@ import { ToastrService } from 'ngx-toastr';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import * as moment from 'moment';
-// import { BookingService } from '../../../../../../core/services/citizen/data-services/booking.service';
 import { CommonService } from 'src/app/shared/services/common.service';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { merge, of as observableOf } from 'rxjs';
@@ -107,9 +106,9 @@ export class MyBookingComponent implements OnInit {
 	 * Used to initiate print hook after successfull payment
 	 */
 		this.route.queryParams.subscribe(d => {
-			if (d.refNumber && d.resourceType) {
+			if (d.refNumber && d.resourceType && d.serviceType) {
 				this.bookingService.resourceType = d.resourceType;
-				this.printReceipt({ refNumber: d.refNumber });
+				this.printReceipt({ refNumber: d.refNumber }, d.serviceType);
 				setTimeout(() => {
 					this.location.go(this.router.url.split('?')[0]);
 				}, 3000);
@@ -323,8 +322,8 @@ export class MyBookingComponent implements OnInit {
 	 * Method is used to print Receipt.
 	 * @param element - json object for receipt.
 	 */
-	printReceipt(element) {
-		this.bookingService.printReceipt(element.refNumber).subscribe(response => {
+	printReceipt(element, serviceType: string) {
+		this.bookingService.printReceipt(element.refNumber, serviceType).subscribe(response => {
 			let sectionToPrint: any = document.getElementById('sectionToPrint');
 			sectionToPrint.innerHTML = response;
 			setTimeout(() => {
