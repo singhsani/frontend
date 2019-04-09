@@ -114,7 +114,8 @@ export class BTConfig extends CitizenConfig {
 						<i class="fa fa-inr" aria-hidden="true">${payData.amount}</i>
 					</div>
 				</div>
-				`};
+                `
+            };
     }
 
     /**

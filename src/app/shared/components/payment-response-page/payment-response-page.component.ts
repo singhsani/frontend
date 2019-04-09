@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { switchMap } from 'rxjs/operators';
+import { Router, ActivatedRoute } from '@angular/router';
 import { SessionStorageService } from 'angular-web-storage';
 import { FormsActionsService } from '../../../core/services/citizen/data-services/forms-actions.service';
 
@@ -100,8 +99,9 @@ export class PaymentResponsePageComponent implements OnInit {
      * call api to get details after success payment.
      */
     this.formService.createPayment(payData).subscribe(payResp => {
+      const payData = payResp.data.responseData;
         setTimeout(() => {
-          this.redirectToMyApplication(data.myApplicationUrl,payData.refNumber, payData.resourceType);
+          this.redirectToMyApplication(data.myApplicationUrl, payData.refNumber, payData.resourceType.toLowerCase(), payData.payableServiceType);
         }, 10000);
 
         /**
@@ -114,8 +114,8 @@ export class PaymentResponsePageComponent implements OnInit {
   /**
    * method is used to redirect to my application page.
    */
-  redirectToMyApplication(myApplicationUrl,refNumber = undefined, resourceType = undefined) {
-    this.router.navigateByUrl(myApplicationUrl + `?refNumber=${refNumber}&resourceType=${resourceType}`);
+  redirectToMyApplication(myApplicationUrl,refNumber = undefined, resourceType = undefined, serviceType = undefined) {
+    this.router.navigateByUrl(myApplicationUrl + `?refNumber=${refNumber}&resourceType=${resourceType}&serviceType=${serviceType}`);
   }
 
   /**

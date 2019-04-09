@@ -111,8 +111,8 @@ export class BookingService {
 	 * Method is used to print rent receipt.
 	 * @param refNumber - Reference Number
 	 */
-  printReceipt(refNumber) {
-    this.requestURL = `api/booking/${this.resourceType}/printReceipt/${refNumber}`;
+  printReceipt(refNumber, type:string) {
+    this.requestURL = `api/booking/${this.resourceType}/printReceipt?refNumber=${refNumber}&serviceType=${type}`;
     return this.http.get(this.requestURL, 'printReceipt');
   }
 
