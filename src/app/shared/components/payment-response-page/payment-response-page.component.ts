@@ -99,9 +99,9 @@ export class PaymentResponsePageComponent implements OnInit {
      * call api to get details after success payment.
      */
     this.formService.createPayment(payData).subscribe(payResp => {
-      const payData = payResp.data.responseData;
+      const payRespData = payResp.data.responseData;
         setTimeout(() => {
-          this.redirectToMyApplication(data.myApplicationUrl, payData.refNumber, payData.resourceType.toLowerCase(), payData.payableServiceType);
+          this.redirectToMyApplication(data.myApplicationUrl, payRespData.refNumber, payData.resourceType.toLowerCase(), payRespData.payableServiceType);
         }, 10000);
 
         /**

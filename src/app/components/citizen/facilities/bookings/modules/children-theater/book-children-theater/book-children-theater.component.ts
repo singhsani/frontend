@@ -147,7 +147,7 @@ export class BookChildrenTheaterComponent implements OnInit {
             relationshipWithOrg: [null, [Validators.required, Validators.maxLength(20)]],
 
             //step 3
-            accountHolderName: [null, [Validators.required, Validators.maxLength(20)]],
+            accountHolderName: [null, [Validators.required, Validators.maxLength(50)]],
             accountNo: [null, [Validators.required, Validators.maxLength(20)]],
             bankName: this._fb.group({
                 code: [null, [Validators.required]],
