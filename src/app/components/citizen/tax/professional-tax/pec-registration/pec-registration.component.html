@@ -120,6 +120,8 @@
 					<h2>{{'office_address' | translate: translateKey}}</h2>
 					<app-address #officeAddr [requiredFeilds]="true" [formType]="'PFT'" [addressFormGroup]="pecRegForm.get('officeAddress')"></app-address>
 
+					<mat-checkbox class="col-md-12 mt-2" formControlName="officeResidentialAddressSame" (change)="onSameAddressChange($event)">{{'same_address' | translate: translateKey}}</mat-checkbox>
+
 					<h2>{{'residential_address' | translate: translateKey}}</h2>
 					<app-address #resAddr [requiredFeilds]="true" [formType]="'PFT'" [addressFormGroup]="pecRegForm.get('residentialAddress')"></app-address>
 				</div>

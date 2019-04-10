@@ -154,6 +154,8 @@ export class NewRegistrationComponent implements OnInit {
       dishonorCharges: [{ value: 0, disabled: true }],
       vehicleApplicableRate: [{ value: 0, disabled: true }],
       totalPayable: [{ value: 0, disabled: true }],
+      attachments: [],
+      formStatus: null
     });
 
     this.vehicleRegistrationForm.patchValue({
@@ -199,10 +201,6 @@ export class NewRegistrationComponent implements OnInit {
       this.purchasingTypeArray = res.PURCHASING_TYPE;
       this.billingPeriodArray = res.BILLING_PERIOD;
       // this.wardNoArray = res.WARD_NO;
-
-      /** This piece of code is used to set the defalut value to respective control */
-      let purchaseTypeObj = _.filter(this.purchasingTypeArray, { 'code': 'NEW_RATE' })[0];
-      this.vehicleRegistrationForm.get('purchasingType').setValue(purchaseTypeObj.code);
     });
   }
 
@@ -213,6 +211,14 @@ export class NewRegistrationComponent implements OnInit {
   getVehicleData(id: number) {
     this.formService.getFormData(id).subscribe(res => {
       this.vehicleRegistrationForm.patchValue(res);
+
+      if (!res.purchasingType) {
+        /** This piece of code is used to set the defalut value to respective control */
+        let purchaseTypeObj = _.filter(this.purchasingTypeArray, { 'code': 'NEW_RATE' })[0];
+        this.vehicleRegistrationForm.get('purchasingType').setValue(purchaseTypeObj.code);
+      }
+
+
       this.showButtons = true;
 
       if (!this.vehicleRegistrationForm.get('canEdit').value) {
@@ -220,7 +226,7 @@ export class NewRegistrationComponent implements OnInit {
       }
 
       // if vehicle receipt present then format the receipt date
-      if (res.vehicleReceipts.length > 0) {
+      if (res.vehicleReceipts && res.vehicleReceipts.length > 0) {
         _.forEach(res.vehicleReceipts, (value, key) => {
           value.receiptDate = moment(value.receiptDate).format("DD/MM/YYYY")
         });
@@ -293,6 +299,8 @@ export class NewRegistrationComponent implements OnInit {
       this.commonService.openAlert("Warning", "Enter all the required information", "warning");
       return;
     }
+
+    this.vehicleRegistrationForm.get('formStatus').setValue('SUBMITTED');
 
     this.mandatoryFileCheck().then(data => {
       if (data.status) {
