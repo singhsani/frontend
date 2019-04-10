@@ -9,6 +9,7 @@
             "gu": "બુકિંગ નંબર"
         }
     },
+    
     "cancelBookingCitizenScreen": {
         "booking_number": {
             "en": "Booking Number",
@@ -16,11 +17,22 @@
         },
         "receipt_reprint": {
             "en": "Receipt Re-Print",
-            "gu": "રસીદ ફરીથી છાપવા"
+            "gu": "રસીદ ફરીથી છાપવા" 
         },
         "slot_or_shift_no": {
             "en": "Shift/Slot Number",
             "gu": "પાળી/સ્લોટ નંબર"
+        }
+    },
+
+    "citizenChildrenTheaterScreen" :{
+        "proceed": {
+            "en": "Proceed",
+            "gu": "આગળ વધો"
+        },
+        "date_of_programme":{
+            "en": "Date Of Programme",
+            "gu": "કાર્યક્રમની તારીખ"
         }
     }
 }

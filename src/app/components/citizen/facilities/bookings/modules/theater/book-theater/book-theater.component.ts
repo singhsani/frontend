@@ -172,7 +172,7 @@ export class BookTheaterComponent implements OnInit {
             /**
              * Organization Details
              */
-            organizationName: [null, [Validators.required]],
+            organizationName: [null, [Validators.required, Validators.maxLength(50)]],
             organizationNumber: [null, [Validators.required]],
             organizationEmail: [null, [Validators.required]],
             organizationAddress: this.fb.group(this.addressComp.addressControls()),
@@ -182,8 +182,8 @@ export class BookTheaterComponent implements OnInit {
             bankName: this.fb.group({
                 code: [null, [Validators.required]]
             }),
-            accountHolderName: [null, [Validators.required]],
-            accountNo: [null, [Validators.required]],
+            accountHolderName: [null, [Validators.required, Validators.maxLength(50)]],
+            accountNo: [null, [Validators.required, Validators.minLength(6), Validators.maxLength(20)]],
             ifscCode: [null, [Validators.required, ValidationService.ifscCodeValidator]],
 			/**
 			 * Booking Details
@@ -250,7 +250,7 @@ export class BookTheaterComponent implements OnInit {
                 return -1;
             }
         });
-        this.confirmRef = this.modalService.show(confirmationModel, Object.assign({ ignoreBackdropClick: true }, { class: 'gray modal-lg customWidth' }));
+        this.confirmRef = this.modalService.show(confirmationModel, Object.assign({ ignoreBackdropClick: true }, { class: 'gray modal-md customWidth' }));
     }
 
 	/**

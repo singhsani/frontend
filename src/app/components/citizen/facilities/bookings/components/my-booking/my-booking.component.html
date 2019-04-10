@@ -111,7 +111,14 @@
 							{{'receipt_reprint' | translate:translateKey}}
 						</button>
 
-						<button *ngIf="element.status == bookingConstant.DEPOSIT_REQUIRED" mat-menu-item color="primary" (click)="printPolicePerformanceLicense(element)">
+						<!-- Recepit Re-print Call -->
+						<button *ngIf="element.resourceType == (bookingConstant.TOWNHALL_RESOURCE_TYPE | uppercase)" mat-menu-item color="primary"
+						 (click)="printReceipt(element, bookingConstant.TOWNHALL_DEPOSIT)">
+							<mat-icon title="Print Receipt" color="primary">print</mat-icon>
+							{{'deposit_receipt' | translate:translateKey}}
+						</button>
+
+						<button *ngIf="element.status == bookingConstant.DEPOSIT_REQUIRED || element.status == bookingConstant.PPL_REQUIRED" mat-menu-item color="primary" (click)="printPolicePerformanceLicense(element)">
 							<mat-icon title="Police Performance license" color="primary">print</mat-icon>
 							{{'police_performance_license' | translate:translateKey}}
 						</button>
