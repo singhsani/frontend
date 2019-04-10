@@ -4,8 +4,9 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ValidationService } from 'src/app/shared/services/validation.service';
 import { TicketingsService } from '../../../shared-ticketing/services/ticketings.service';
 import { CommonService } from 'src/app/shared/services/common.service';
-import { TicketingConstants } from '../../../config/ticketing-config';
+import { TicketingConstants, TicketingUtils } from '../../../config/ticketing-config';
 import * as moment from 'moment';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-zoo-booking',
@@ -15,8 +16,8 @@ import * as moment from 'moment';
 export class ZooBookingComponent implements OnInit {
 
   // Loading Ticketing Configurations
-
   ticketingConstants = TicketingConstants;
+  ticketingUtils: TicketingUtils = new TicketingUtils();
 
   /**
 	  * displayColumns are used for display the columns in material table.
@@ -36,9 +37,9 @@ export class ZooBookingComponent implements OnInit {
   /**
     * Flags
   */
-  guideLineFlag: boolean = true;
-  showTicketsBookingForm: boolean = false;
-  bankDetailsFlag: boolean = false;
+  guideLineFlag = true;
+  showTicketsBookingForm = false;
+  bankDetailsFlag = false;
 
   /**
     * Pricing data for ticket bookings for visiting zoo
@@ -46,25 +47,27 @@ export class ZooBookingComponent implements OnInit {
   pricing: any[] = [
     {
       categoryName: 'Children',
-      description: 'Ticket(Children below 12 years of Age)',
-      price: 5
+      description: 'Children below 12 years of Age',
+      priceField: 'CHILD'
     },
     {
       categoryName: 'Adults',
-      description: 'Ticket(Adults)',
-      price: 20
+      description: 'Adults',
+      priceField: 'ADULT'
     },
     {
       categoryName: 'Camera',
       description: 'Camera Fees',
-      price: 50
+      priceField: 'CAMERA'
     },
     {
       categoryName: 'Video Camera',
       description: 'Video Camera Fees',
-      price: 100
+      priceField: 'VIDEOCAMERA'
     }
   ];
+
+  zooVisitingRates: any;
 
   /**
     * Timing data for ticket bookings for visiting zoo
@@ -78,7 +81,7 @@ export class ZooBookingComponent implements OnInit {
       'months': 'April to June',
       'slot': '9:00 AM To 6:30 PM'
     }
-  ]
+  ];
 
 
   /**
@@ -90,7 +93,7 @@ export class ZooBookingComponent implements OnInit {
   /**
    * language translate key.
   */
-  translateKey: string = 'zooBooking';
+  translateKey = 'citizenZooTicketingScreen';
 
   // Ticket Details
 
@@ -108,7 +111,7 @@ export class ZooBookingComponent implements OnInit {
       formControlName: 'totalChild',
       placeHolder: 'Number Of Children',
       max: 4,
-      rate: 5
+      priceField: 'CHILD'
     },
     {
       name: 'Adults',
@@ -116,7 +119,7 @@ export class ZooBookingComponent implements OnInit {
       formControlName: 'totalAdult',
       placeHolder: 'Number Of Adults',
       max: 4,
-      rate: 20
+      priceField: 'ADULT'
     },
     {
       name: 'Camera',
@@ -124,7 +127,7 @@ export class ZooBookingComponent implements OnInit {
       formControlName: 'totalCamera',
       placeHolder: 'Number Of Camera',
       max: 3,
-      rate: 50
+      priceField: 'CAMERA'
     },
     {
       name: 'Video Camera',
@@ -132,9 +135,9 @@ export class ZooBookingComponent implements OnInit {
       formControlName: 'totalVideoCamera',
       placeHolder: 'Number Of Video Camera',
       max: 3,
-      rate: 100
+      priceField: 'VIDEOCAMERA'
     }
-  ]
+  ];
 
   // Bank Details
   bankDetailsForm: FormGroup;
@@ -152,29 +155,21 @@ export class ZooBookingComponent implements OnInit {
 
   // Contact Details
 
-  idTypes: string[] = [
-    'Aadhar Card',
-    'Pan Card',
-    'Voter Id Card',
-    'Passport'
-  ]
+  idTypes: any[];
 
 
   /**
    * @param fb - Declare FormBuilder property.
-   * @param validationError - Declare validation service property
-   * @param formService - Declare form service property 
-   * @param uploadFileService - Declare upload file service property.
+   * @param ticketingService - Declare Ticketing Service
    * @param commonService - Declare sweet alert.
-   * @param shopAndEstablishmentService - Call only shop licence api.
-   * @param toastrService - Show massage with timer.
+   * @param router - Declare Routing Property.
   */
-
 
   constructor(
     private fb: FormBuilder,
     private ticketingService: TicketingsService,
-    private commonService: CommonService
+    private commonService: CommonService,
+    private router: Router
   ) {
 
     this.ticketingService.resourceType = 'zoo';
@@ -182,12 +177,13 @@ export class ZooBookingComponent implements OnInit {
 
   ngOnInit() {
 
+    // Initialise ticket pricing and timing tables
     this.dataSourceForPricing.data = this.pricing;
     this.dataSourceForTiming.data = this.timing;
 
     this.ticketBookingFormControls();
-    // this.bankDetailsFormControls();
     this.getLookUps();
+    this.getZooVisitingRates();
   }
 
   /**
@@ -196,62 +192,70 @@ export class ZooBookingComponent implements OnInit {
   getLookUps() {
     this.ticketingService.getDataFromLookups().subscribe((respData) => {
       this.BANKS = respData.BANK;
+      this.idTypes = respData.IDTYPE;
+    });
+  }
+
+  /**
+	  * Get Zoo Visiting Rates from api.
+	*/
+  getZooVisitingRates() {
+    this.ticketingService.getZooVisitingRates().subscribe((respData) => {
+      console.log(respData);
+      this.zooVisitingRates = respData.data;
     });
   }
 
 
   ticketBookingFormControls() {
+    // Currently the form is filled temporarily with some dummy data
     this.ticketBookingForm = this.fb.group({
-      "id": null,
-      "uniqueId": null,
-      "version": null,
-      "cancelledDate": null,
-      "status": null,
-      "refNumber": null,
-      "resourceType": null,
-      "payableServiceType": null,
-      "resourceCode": null,
-      // "accountHolderName": null,
-      // "accountNo": null,
-      // "bankName": null,
-      // "ifscCode": null,
-      "scheduleList": null,
-      "attachments": null,
-      "bookingDate": null,
-      "amount": 0.0,
-      "personSubTotal": 0.0,
-      "totalAmount": 0.0,
-      "paymentMode": null,
-      "totalPayableAmount": 0.0,
-
-      visitingDate: [null, Validators.required],
-      totalChild: [''],
-      totalAdult: [''],
-      totalCamera: [''],
-      totalVideoCamera: [''],
-      applicantName: [null, Validators.required],
-      applicantMobile: [null, Validators.required],
+      id: null,
+      uniqueId: null,
+      version: null,
+      cancelledDate: null,
+      status: null,
+      refNumber: null,
+      resourceType: null,
+      payableServiceType: null,
+      resourceCode: 'SARDARBAUGHZOO',
+      scheduleList: null,
+      attachments: null,
+      bookingDate: null,
+      amount: null,
+      personSubTotal: null,
+      totalAmount: null,
+      paymentMode: null,
+      totalPayableAmount: null,
+      applicantName: 'Sumit',
+      applicantMobile: 9727551757,
       idType: this.fb.group({
         code: [null, Validators.required]
       }),
-      idNumber: [null, Validators.required],
+      idNumber: [6737, Validators.required],
+      visitingDate: [moment().format('YYYY-MM-DD'), Validators.required],
+      totalChild: [5],
+      totalAdult: [6],
+      totalCamera: [7],
+      totalVideoCamera: [8],
       bankName: this.fb.group({
         code: [null, Validators.required],
       }),
-      accountHolderName: [null, [Validators.required]],
-      accountNo: [null, [Validators.required]],
-      ifscCode: [null, [Validators.required, ValidationService.ifscCodeValidator]],
-      termsCondition: null,
-      agree: null,
-    })
+      accountHolderName: ['Sumit', [Validators.required]],
+      accountNo: [45454354554543545435, [Validators.required]],
+      ifscCode: ['UTIB0000003', [Validators.required, ValidationService.ifscCodeValidator]],
+      termsCondition: [true],
+      agree: [true],
+    });
 
   }
 
+  // Will Compute total amount based on the user input
   computeTotalAndVisitors() {
     const f = this.ticketBookingForm.value;
     this.numberOfVisitors = Number(f.totalChild) + Number(f.totalAdult);
     this.totalAmount = (Number(f.totalChild) * 5) + (Number(f.totalAdult) * 20) + (Number(f.totalCamera) * 50) + (Number(f.totalVideoCamera) * 100);
-    
+
     this.ticketBookingForm.get('amount').setValue(this.totalAmount);
     this.ticketBookingForm.get('totalAmount').setValue(this.totalAmount);
     this.ticketBookingForm.get('personSubTotal').setValue(this.numberOfVisitors);
@@ -259,14 +263,28 @@ export class ZooBookingComponent implements OnInit {
   }
 
   redirecToPayment() {
-    if (!this.bankDetailsForm.get('agree').value) {
-      this.commonService.openAlert("Feild Error", this.ticketingConstants.AGREE_MESSAGE, 'warning')
-      return;
-    } else if (!this.bankDetailsForm.get('termsCondition').value) {
-      this.commonService.openAlert("Feild Error", this.ticketingConstants.TERMS_AND_CONDITION_MESSAGE, 'warning')
-      return;
-    } else {
-    }
+    this.ticketingService.bookZooTickets(this.ticketBookingForm.value).subscribe(res => {
+      console.log(res);
+      if (!this.ticketBookingForm.get('agree').value) {
+        this.commonService.openAlert('Feild Error', this.ticketingConstants.AGREE_MESSAGE, 'warning');
+        return;
+      } else if (!this.ticketBookingForm.get('termsCondition').value) {
+        this.commonService.openAlert('Feild Error', this.ticketingConstants.TERMS_AND_CONDITION_MESSAGE, 'warning');
+        return;
+      }
+    },
+      err => {
+        if (err.status === 402) {
+
+          this.ticketBookingForm.get('refNumber').setValue(err.error.data.refNumber);
+          // this.ticketingService.getTotalAmount(err.error.data.refNumber).subscribe(data => {
+            // console.log(data);
+            // this.ticketBookingForm.get('totalAmount').setValue(err.error.data.TOTAL);
+            this.ticketingUtils.redirectToPayment(err, this.commonService, this.ticketingService, this.ticketBookingForm, this.router);
+            // return;
+          // });
+        }
+      });
   }
 
   resetForm() {

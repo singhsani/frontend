@@ -57,7 +57,7 @@ export class BTConfig extends CitizenConfig {
         commonService.commonAlert('Payment Details', '', 'info', 'Make Payment!', false, payData.html, cb => {
             window.location.href = environment.adminUrl + `admin/payment-gateway?retUrl=${payData.payData.retUrl}&retPath=${payData.payData.retPath}`;
         }, rj => {
-            let errHtml = `			
+            let errHtml = `
 						<div class="alert alert-danger">
 							Please Complete Payment, Otherwise the application will be considered as in-complete
 						</div>`
@@ -98,7 +98,7 @@ export class BTConfig extends CitizenConfig {
         }
 
 		/**
-		 * Storing Data to session. 
+		 * Storing Data to session.
 		 */
         this.session.set('paymentData', JSON.stringify(payData));
 

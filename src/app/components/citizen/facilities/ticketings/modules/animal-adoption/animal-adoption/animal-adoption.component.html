@@ -1,3 +1,208 @@
-<p>
-  animal-adoption works!
-</p>
+<mat-card class="cardBox">
+  <div class="pageTitle">{{'Animal Adoption' | translate: translateKey}}</div>
+  <div class="row" *ngIf="showAnimalAdoptionPricingTable">
+
+    <mat-card-content class="p-4 col-md-6">
+      <h2>{{'Rules for adopting wildlife animal /birds (Friends of Zoo)'| translate: translateKey}}</h2>
+      <div class="example-table-container mat-elevation-z8 borderOne">
+
+        <table mat-table [dataSource]="dataSourceForPricing" class="myTicketPricingTabel">
+
+          <ng-container matColumnDef="id">
+            <mat-header-cell *matHeaderCellDef>#</mat-header-cell>
+            <mat-cell *matCellDef="let row; let i = index;" class="fullWidth">
+              <div class="mobile-label">{{'s_no' | translate:translateKey}}</div>
+              <div class="mobile-label1">:</div>
+              <div class="row-inside"> {{i+1}} </div>
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="animalBirdName">
+            <mat-header-cell *matHeaderCellDef>Animal / Bird Name</mat-header-cell>
+            <mat-cell *matCellDef="let row; let i = index;" class="fullWidth">
+              <div class="mobile-label">{{'Animal / Bird Name' | translate:translateKey}}</div>
+              <div class="mobile-label1">:</div>
+              <div class="row-inside"> {{row?.animalBirdName}} </div>
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="annualBoardingExpenses">
+            <mat-header-cell *matHeaderCellDef>annualBoardingExpenses</mat-header-cell>
+            <mat-cell *matCellDef="let row; let i = index;" class="fullWidth">
+              <div class="mobile-label">{{'annualBoardingExpenses' | translate:translateKey}}</div>
+              <div class="mobile-label1">:</div>
+              <div class="row-inside"> {{row?.annualBoardingExpenses}} </div>
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="annualMaintainanceExpenses">
+            <mat-header-cell *matHeaderCellDef>annualMaintainanceExpenses</mat-header-cell>
+            <mat-cell *matCellDef="let row; let i = index;" class="fullWidth">
+              <div class="mobile-label">{{'annualMaintainanceExpenses' | translate:translateKey}}</div>
+              <div class="mobile-label1">:</div>
+              <div class="row-inside"> {{row?.annualMaintainanceExpenses}} </div>
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="totalExpenses">
+            <mat-header-cell *matHeaderCellDef>totalExpenses</mat-header-cell>
+            <mat-cell *matCellDef="let row; let i = index;" class="fullWidth">
+              <div class="mobile-label">{{'totalExpenses' | translate:translateKey}}</div>
+              <div class="mobile-label1">:</div>
+              <div class="row-inside"> {{row?.totalExpenses}} </div>
+            </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="displayColumnsForAnimalAdoptionPricingTable; sticky: true;">
+          </mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayColumnsForAnimalAdoptionPricingTable;"></mat-row>
+        </table>
+      </div>
+    </mat-card-content>
+
+    <mat-card-content class="col-md-6 rules-padding rules-scrollable">
+      <h2>{{'Rules for adopting wildlife animal /birds (Friends of Zoo)'| translate: translateKey}}</h2>
+      <ol class="olList">
+        <li>
+            Animals/ Birds adopted will be under the sole ownership of the zoo. The adopter will be considered as a
+            FRIEND of the animal/ bird that he/she has adopted.
+        </li>
+        <li>
+            Total expenses towards maintenance of the adopted animals/birds have to be paid by cheque and a receipt of
+            the same will be issued.
+        </li>
+        <li>
+            The adopted animals/birds will be maintained as per the zoo facilities and norms. The adopter will not be
+            permitted to touch the adopted animals/birds or even feed any outside tood.</li>
+        <li>
+            Person/organization/company adopting Lions / Tigers / Leopards will be permitted to put <b>NAME PLATE</b> on
+            respective enclosures of these animal <b>BUT</b> as per size allowed by the corporation.
+        </li>
+        <li>The Friend of Zoo (Adopter) will be awarded a certificate from Vadodara Municipal Corporation and also 25
+            entry tickets free of cost.</li>
+        <li>Adopting person/organization/company will be invited for any educational programmes organized in the zoo.</li>
+        <li>The zoo welcomes contributions in the form of necessities for protection against cold, hot and rainy weathers.</li>
+        <li>The zoo also welcomes contribution in the form of wheelchairs, sound system, water cooler benches, chair
+            etc. which could be useful for visitors in the zoo.</li>
+        <li>Contributions/donations are also accepted on Environment Day, World Animal Day, Makar Sankranti,
+            Parushan and other such days and also in memory of their loved ones on birthdays and death aniversaries
+            towards daily / monthly feed expense. Such contributions will be accepted by cheques against which receipt
+            will be issued.</li>
+        <li>Any objections raise regarding adoption will be taken up in the cours (under Baroda jurisdiction) only.</li>
+        <li>Over and above rules mentioned above. Municipal Commissioner exercises the right to add new rules
+            deemed fit. The Municipal Commissioner also exercises the right to decide whether an animal bird can
+            given for adoption or not.</li>
+        <li>In the event of the adopted animal/ bird being exchanged with another zoo or organization or death during
+            adopting period, the Friends of the Zoo (adopter) will be not be paid back any amount.
+            le ne </li>
+        <li>Adoptions are also permitted on 6 months or half yearly basis person.</li>
+        <li>Adoption fees will be a onetime payment.</li>
+      </ol>
+    </mat-card-content>
+
+  </div>
+  <div class="fotButtonBar">
+    <div class="col-sm-12 col-md-12 text-right">
+      <button mat-raised-button (click)="showAnimalAdoptionPricingTable = false; showAnimalAdoptionForm= true;"
+        color="primary">
+        <mat-icon>thumb_up_alt</mat-icon>
+        {{'submit'| translate: translateKey}}
+      </button>
+    </div>
+  </div>
+
+  <mat-card-content class="p-4" *ngIf="showAnimalAdoptionForm">
+    <p class="pb-2">{{head_lines| translate: translateKey}}</p>
+    <h2>{{'Animal Adoption Aplication Form'| translate: translateKey}}</h2>
+
+    <form [formGroup]="animalAdoptionForm">
+      <div class="row">
+        <mat-form-field class="col-md-6">
+          <input matInput maxlength="25" appValidationFields [validationFieldsType]="'onlyNameWithSpace'" type="text"
+            formControlName="adoptingPersonOrganizationName"
+            placeholder="{{'Adopter / Organisation Name' | translate: translateKey}}" required>
+          <control-messages [control]="animalAdoptionForm.get('adoptingPersonOrganizationName')"></control-messages>
+        </mat-form-field>
+
+        <mat-form-field class="col-md-6">
+          <textarea matInput type="text" formControlName="adoptersAddress"
+            placeholder="{{'Adopter/Organisation Address' | translate: translateKey}}" required></textarea>
+          <control-messages [control]="animalAdoptionForm.get('adoptersAddress')"></control-messages>
+        </mat-form-field>
+
+        <mat-form-field class="col-md-6">
+          <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="adopterContactNumber"
+            placeholder="{{'Contact Number' | translate: translateKey}}" required>
+          <control-messages [control]="animalAdoptionForm.get('adopterContactNumber')"></control-messages>
+        </mat-form-field>
+
+        <mat-form-field class="col-md-6">
+          <input matInput type="email" formControlName="adopterEmailId"
+            placeholder="{{'applicant_email' | translate: translateKey}}">
+          <control-messages [control]="animalAdoptionForm.get('adopterEmailId')"></control-messages>
+        </mat-form-field>
+
+        <div class="col-md-6 ngSelect">
+          <ng-select [items]="animalAdoptionPricing"
+            placeholder="{{'Animal / Bird Preferred for adoption'| translate: translateKey}}"
+            (add)="selectAnimal($event)" bindLabel="animalBirdName">
+          </ng-select>
+          <control-messages [control]="animalAdoptionForm.get('animalName')">
+          </control-messages>
+        </div>
+
+
+        <mat-form-field class="col-md-6">
+          <input matInput type="number" [(ngModel)]="selectedAnimalAnnualBoardingExpenses"
+            [ngModelOptions]="{standalone: true}" placeholder="{{'annualBoardingExpenses' | translate: translateKey}}"
+            readonly required>
+        </mat-form-field>
+
+        <mat-form-field class="col-md-6">
+          <input matInput type="number" [(ngModel)]="selectedAnimalAnnualMaintainanceExpenses"
+            [ngModelOptions]="{standalone: true}"
+            placeholder="{{'annualMaintainanceExpenses' | translate: translateKey}}" readonly required>
+        </mat-form-field>
+
+        <mat-form-field class="col-md-6">
+          <input matInput type="text" formControlName="totalAdoptionCost"
+            placeholder="{{'Total Cost of Adoption' | translate: translateKey}}" readonly required>
+          <control-messages [control]="animalAdoptionForm.get('totalAdoptionCost')"></control-messages>
+        </mat-form-field>
+
+        <mat-form-field class="col-md-12">
+          <textarea matInput type="text" formControlName="message"
+            placeholder="{{'Message(Please also mention time period for adoption animal / birds)' | translate: translateKey}}"
+            required></textarea>
+          <control-messages [control]="animalAdoptionForm.get('message')"></control-messages>
+        </mat-form-field>
+
+        <div class="pl-3">
+          <mat-checkbox class="d-block" labelPosition="after" formControlName="agree">
+            {{'i_agree_with_above_bank_details_are_correct' | translate:translateKey}} </mat-checkbox>
+          <mat-checkbox class="d-block" labelPosition="after" formControlName="termsCondition">
+            {{'i_have_read_and_agree_with_terms_and_conditions' | translate:translateKey}} </mat-checkbox>
+        </div>
+
+      </div>
+    </form>
+
+    <div class="row mt-4 fotButtonBar">
+      <div class="col-sm-12 col-md-12 justify-content-between d-flex">
+        <button type="button" color="primary" mat-raised-button
+          (click)="showAnimalAdoptionPricingTable = true; showAnimalAdoptionForm = false;">
+          <mat-icon>navigate_before</mat-icon>
+          {{'back' | translate:translateKey}}
+        </button>
+        <button mat-raised-button color="primary" type="button" (click)="submitAnimalAdoptionRequest()">
+          <mat-icon>check_circle_outline</mat-icon>
+          {{'submit_application'| translate: translateKey}}
+        </button>
+      </div>
+    </div>
+
+  </mat-card-content>
+</mat-card>
+
+<!-- this div is used for printing the receipt -->
+<div id="sectionToPrint"></div>

@@ -9,8 +9,11 @@
     </ng-template> -->
 
     <!-- Guildelines section starts here -->
+
     <mat-card class="cardBox" *ngIf="guideLineFlag">
       <div class="pageTitle">{{'Online Zoo Ticket Booking'| translate: translateKey}}</div>
+
+      <!-- Card Content showing Zoo Ticketing Rates and Visiting Time -->
       <mat-card-content class="p-4">
         <div class="guideline-intro">
           <span>Enter Tickets </span>
@@ -49,7 +52,7 @@
               <mat-cell *matCellDef="let row" class="fullWidth">
                 <div class="mobile-label">{{'Charges(Rs.)' | translate:translateKey}}</div>
                 <div class="mobile-label1">:</div>
-                <div class="row-inside"> {{ row.price }}</div>
+                <div class="row-inside"> {{ zooVisitingRates ? zooVisitingRates[row.priceField] : '' }}</div>
               </mat-cell>
             </ng-container>
             <mat-header-row *matHeaderRowDef="displayedColumnsForPricingTable"></mat-header-row>
@@ -96,6 +99,7 @@
           </table>
         </div>
       </mat-card-content>
+      <!-- Card Content showing Zoo Ticketing Rates and Visiting Time Ends here -->
 
       <div class="fotButtonBar">
         <div class="col-sm-12 col-md-12 text-right">
@@ -159,7 +163,7 @@
                 </td>
                 <td>
                   <div class="d-md-none">{{'Amount(Rs.)' | translate:translateKey}}</div>
-                  <div>{{catRef.value * row.rate}}</div>
+                  <div>{{catRef.value * (zooVisitingRates ? zooVisitingRates[row.priceField] : '')}}</div>
                 </td>
               </tr>
 
@@ -201,8 +205,8 @@
 
             <div class="col-md-6 ngSelect" formGroupName="idType">
               <ng-select placeholder="{{'ID Type'| translate: translateKey}}" formControlName="code">
-                <ng-option *ngFor="let id of idTypes" [value]="id">
-                  {{ id }}
+                <ng-option *ngFor="let id of idTypes" [value]="id.code">
+                  {{ id?.name }}
                 </ng-option>
               </ng-select>
               <control-messages [control]="ticketBookingForm.get('idType').get('code')">
@@ -215,6 +219,7 @@
               <control-messages [control]="ticketBookingForm.get('idNumber')"></control-messages>
             </mat-form-field>
           </div>
+          <!-- Contact Details ends here-->
 
         </mat-card-content>
 
@@ -314,7 +319,7 @@
 
       </mat-card>
 
-      <!-- bank details -->
+      <!-- bank details ends here -->
 
     </form>
 
