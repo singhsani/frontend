@@ -14,7 +14,7 @@
         <mat-tab *ngFor="let module of bookingsAndTicketings">
             <ng-template mat-tab-label>
                 <!-- <mat-icon class="example-tab-icon">thumb_up</mat-icon> -->
-                <span class="moduleIcon"></span>
+                <span class="moduleIcon {{ module.code }}"></span>
                 <div class="moduleName" title="{{module.name}}">{{ module.name }}</div>
                 <!-- <div>{{ module.gujName }}</div> -->
                 <span class="count">Services</span>
@@ -42,7 +42,7 @@
         <mat-tab *ngFor="let module of userServicesList">
             <ng-template mat-tab-label>
                 <!-- <mat-icon class="example-tab-icon">thumb_up</mat-icon> -->
-                <span class="moduleIcon"></span>
+                <span class="moduleIcon {{ module.code }}"></span>
                 <div class="moduleName" title="{{module.name}}" >{{ module.name }}</div>
                 <!-- <div>{{ module.gujName }}</div> -->
                 <span class="count">Services</span>
@@ -58,7 +58,7 @@
 
         <mat-tab>
             <ng-template mat-tab-label>
-                <span class="moduleIcon"></span>
+                <span class="moduleIcon affordableHousing"></span>
                 <div class="moduleName">Affordable Housing</div>
                 <span class="count">Services</span>
             </ng-template>
