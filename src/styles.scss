@@ -956,3 +956,60 @@ body * {visibility: hidden;}
 .mat-header-cell{
     font-weight: bold;
 }
+
+
+
+
+
+
+// Start Icons ----------------------------------
+.moduleList .moduleIcon { background-repeat: no-repeat !important; background-position: center !important; border: 1px solid #673ab7;}
+.moduleList .mat-tab-label-active .moduleIcon.ng-star-inserted {background-repeat: no-repeat !important; background-position: center !important; border-color:#fff;}
+
+.BOOKINGMODULE  {background:url('assets/icons/booking-facilities.png') !important;}
+.moduleList .mat-tab-label-active .BOOKINGMODULE  {background:url('assets/icons/booking-facilities-h.png') !important;}
+
+.TICKETINGSMODULE  {background:url('assets/icons/ticketing-facilities.png') !important;}
+.moduleList .mat-tab-label-active .TICKETINGSMODULE {background:url('assets/icons/ticketing-facilities-h.png') !important;}
+
+
+
+.SHOP-ESTAB  {background:url('assets/icons/shop-and-establishment-license.png') !important;}
+.moduleList .mat-tab-label-active .SHOP-ESTAB {background:url('assets/icons/shop-and-establishment-license-h.png') !important;}
+
+
+
+.WATER-TAX  {background:url('assets/icons/water-tax.png') !important;}
+.moduleList .mat-tab-label-active .WATER-TAX {background:url('assets/icons/water-tax-h.png') !important;}
+
+.FIRE {background:url('assets/icons/fire-services.png') !important;}
+.moduleList .mat-tab-label-active .FIRE {background:url('assets/icons/fire-services-h.png') !important;}
+
+.FOOD-LIC  {background:url('assets/icons/food-licensing-registration.png') !important;}
+.moduleList .mat-tab-label-active .FOOD-LIC {background:url('assets/icons/food-licensing-registration-h.png') !important;}
+
+.ANIMAL-POND  {background:url('assets/icons/animal-pond-license.png') !important;}
+.moduleList .mat-tab-label-active .ANIMAL-POND {background:url('assets/icons/animal-pond-license-h.png') !important;}
+
+.PROFESSIONAL  {background:url('assets/icons/professional-tax.png') !important;}
+.moduleList .mat-tab-label-active .PROFESSIONAL {background:url('assets/icons/professional-tax-h.png') !important;}
+
+
+.MARRIAGE {background:url('assets/icons/marriage-registration.png') !important;}
+.moduleList .mat-tab-label-active .MARRIAGE {background:url('assets/icons/marriage-registration-h.png') !important;}
+
+.VEHICLE   {background:url('assets/icons/vehicle-tax.png') !important;}
+.moduleList .mat-tab-label-active .VEHICLE  {background:url('assets/icons/vehicle-tax-h.png') !important;}
+
+.PROPERTY-TAX  {background:url('assets/icons/property-tax.png') !important;}
+.moduleList .mat-tab-label-active .PROPERTY-TAX {background:url('assets/icons/property-tax-h.png') !important;}
+
+.MUTTON-FISH  {background:url('assets/icons/meat-and-fish-license.png') !important;}
+.moduleList .mat-tab-label-active .MUTTON-FISH {background:url('assets/icons/meat-and-fish-license-h.png') !important;}
+
+.BIRTH-DEATH  {background:url('assets/icons/birth-and-death.png') !important;}
+.moduleList .mat-tab-label-active .BIRTH-DEATH {background:url('assets/icons/birth-and-death-h.png') !important;}
+
+.affordableHousing  {background:url('assets/icons/affordable-housing.png') !important;}
+.moduleList .mat-tab-label-active .affordableHousing {background:url('assets/icons/affordable-housing-h.png') !important;}
+// End Icons ----------------------------------
