@@ -97,6 +97,16 @@ export class PecRegistrationComponent implements OnInit {
 		this.getAllWardNos();
 		this.getBankNames();
 
+		/**
+		     * Update Permanent Address If 'officeResidentialAddressSame' is checked.
+		     */
+		this.pecRegForm.controls.officeAddress.valueChanges.subscribe(data => {
+			if (this.pecRegForm.get('officeResidentialAddressSame').value) {
+				this.onSameAddressChange({ checked: true });
+				return;
+			}
+		});
+
 	}
 
 	/**
@@ -176,7 +186,8 @@ export class PecRegistrationComponent implements OnInit {
 			applicableRate: [{ value: 0, disabled: true }],
 			otherProfession: null,
 			attachments: [],
-			formStatus: null
+			formStatus: null,
+			officeResidentialAddressSame: null
 		});
 
 		/** set default addressType */
@@ -608,6 +619,20 @@ export class PecRegistrationComponent implements OnInit {
 				}
 			}
 		}
+	}
+
+	onSameAddressChange(event) {
+		let id = this.pecRegForm.get('residentialAddress.id').value;
+		if (event.checked) {
+			this.pecRegForm.get('residentialAddress').patchValue(this.pecRegForm.get('officeAddress').value);
+			if (this.pecRegForm.get('officeAddress').get('country').value) {
+				this.resAddrComponent.getStateLists(this.pecRegForm.get('officeAddress').get('country').value);
+			}
+		} else {
+			this.pecRegForm.get('residentialAddress').reset();
+		}
+		this.pecRegForm.get('residentialAddress.addressType').setValue('PF_PEC_RESIDENTIAL_ADDRESS');
+		this.pecRegForm.get('residentialAddress.id').setValue(id);
 	}
 
 }
