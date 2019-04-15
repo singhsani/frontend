@@ -402,15 +402,14 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 
 		event.stopPropagation();
 
-
 		if (ecrcNo == '') {
 			this.commonService.openAlert("Warning", "Enter PEC Number", "warning");
 			return;
 		}
 
 		let isMatch = ecrcNo.match(/PEC/g);
-		if (!isMatch){
-			this.commonService.openAlert("Warning", "Only can search with PEC number", "warning");
+		if (!isMatch) {
+			this.commonService.openAlert("Warning", "Only can be search with PEC number", "warning");
 			return;
 		}
 
@@ -432,7 +431,12 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 		this.prcInitialDate = undefined;
 
 		/** if response exist data then do further process */
-		if (res.data && Object.keys(res.data).length) {
+		if (res.data && Object.keys(res.data).length) {																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																
+
+			if (res.data.hasPrc) {
+				this.commonService.openAlert("PRC Is Already Exists", "", "warning", `Your PRC number is<br> <b>${res.data.prcNo}</b>`);
+				return;
+			}
 
 			this.prcRegForm.patchValue(res.data);
 
@@ -441,6 +445,11 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 				this.prcRegForm.get('taxFormId').setValue(null);
 				this.prcRegForm.get('defaultDemandGenerated').setValue(false);
 				this.prcRegForm.get('rcDate').enable();
+
+				if (!res.hasPrc) {
+					let count = this.config.getAllErrors(this.prcRegForm);
+					if (count >= 1 && count <= 25) this.tabIndex = 0;
+				}
 			} else {
 
 				/** If prcNo exist then check for rcDateEditAble is false then disable the field else enable the field */
@@ -504,9 +513,22 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 	 */
 	openEmpModal(template: TemplateRef<any>) {
 
+		if (!this.prcRegForm.get('pecNo').value) {
+			this.commonService.openAlert("Warning", "PEC is required for PRC registration", "warning");
+			return;
+		}
+
 		if (!this.prcRegForm.get('rcDate').value) {
 			let count = this.config.getAllErrors(this.prcRegForm);
 			this.commonService.openAlert("Warning", "RC date is required", "warning", "", cb => {
+				if (count >= 1 && count <= 25) this.tabIndex = 0;
+			});
+			return;
+		}
+
+		if (this.prcRegForm.get('rcDate').invalid) {
+			let count = this.config.getAllErrors(this.prcRegForm);
+			this.commonService.openAlert("Warning", "RC date should not be greater than Commencement date", "warning", "", cb => {
 				if (count >= 1 && count <= 25) this.tabIndex = 0;
 			});
 			return;

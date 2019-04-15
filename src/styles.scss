@@ -800,10 +800,6 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
     cursor: not-allowed;
 }
 
-.mat-form-field-invalid .mat-icon {
-    color: #f44336;
-}
-
 .formClass .row  app-address {width: 100%;}
 
 /*For swal body*/
@@ -958,10 +954,6 @@ body * {visibility: hidden;}
 }
 
 
-
-
-
-
 // Start Icons ----------------------------------
 .moduleList .moduleIcon { background-repeat: no-repeat !important; background-position: center !important; border: 1px solid #673ab7;}
 .moduleList .mat-tab-label-active .moduleIcon.ng-star-inserted {background-repeat: no-repeat !important; background-position: center !important; border-color:#fff;}
@@ -1010,3 +1002,20 @@ body * {visibility: hidden;}
 .affordableHousing  {background:url('assets/icons/affordable-housing.svg') !important;}
 .moduleList .mat-tab-label-active .affordableHousing {background:url('assets/icons/affordable-housing-h.svg') !important;}
 // End Icons ----------------------------------
+
+.mat-form-field-appearance-legacy.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label,
+.ng-select .ng-has-value .ng-placeholder, .ng-select.ng-select-opened .ng-placeholder,
+.mat-form-field-appearance-legacy .mat-form-field-label,
+.ng-select.ng-select-disabled .ng-select-container .ng-value-container .ng-placeholder,
+.mat-radio-button.mat-radio-disabled .mat-radio-label-content,
+.ng-select .ng-has-value .ng-placeholder, .ng-select.ng-select-opened .ng-placeholder,
+.ng-select .ng-select-container .ng-value-container .ng-placeholder,
+.ng-select.ng-select-disabled .ng-select-container .ng-value-container .ng-placeholder, .ng-select.ng-select-disabled .ng-select-container .ng-value-container .ng-value{
+    color: #292828 !important;
+}
+
+.mat-form-field-invalid .mat-icon, 
+.mat-form-field-invalid .mat-datepicker-toggle-default-icon,
+.mat-form-field.mat-form-field-invalid .mat-form-field-label {
+    color: #f44336 !important;
+}
