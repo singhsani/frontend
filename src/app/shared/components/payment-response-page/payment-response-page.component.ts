@@ -101,7 +101,7 @@ export class PaymentResponsePageComponent implements OnInit {
     this.formService.createPayment(payData).subscribe(payResp => {
       const payRespData = payResp.data.responseData;
         setTimeout(() => {
-          this.redirectToMyApplication(data.myApplicationUrl, payRespData.refNumber, payData.resourceType.toLowerCase(), payRespData.payableServiceType);
+          this.redirectToMyApplication(data.myApplicationUrl, payRespData.refNumber, payData.resourceType, payRespData.payableServiceType);
         }, 10000);
 
         /**
@@ -115,7 +115,11 @@ export class PaymentResponsePageComponent implements OnInit {
    * method is used to redirect to my application page.
    */
   redirectToMyApplication(myApplicationUrl,refNumber = undefined, resourceType = undefined, serviceType = undefined) {
-    this.router.navigateByUrl(myApplicationUrl + `?refNumber=${refNumber}&resourceType=${resourceType}&serviceType=${serviceType}`);
+    if(refNumber && resourceType && serviceType){
+      this.router.navigateByUrl(myApplicationUrl + `?refNumber=${refNumber}&resourceType=${resourceType}&serviceType=${serviceType}`);
+    } else {
+      this.router.navigateByUrl(myApplicationUrl);
+    }
   }
 
   /**

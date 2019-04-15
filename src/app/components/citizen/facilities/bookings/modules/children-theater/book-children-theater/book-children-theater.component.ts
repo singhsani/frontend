@@ -93,6 +93,15 @@ export class BookChildrenTheaterComponent implements OnInit {
         this.createCTApplicationForm();
         this.getLookUpData();
         this.getResourceList();
+
+        /**
+		 * Subscribe start date changes
+		 */
+        this.childrenTheaterSearchForm.controls.startDate.valueChanges.subscribe(data => {
+            this.childrenTheaterSearchForm.controls.endDate.reset();
+            this.endMinDate = data;
+            return;
+        })
     }
 
     /**
@@ -273,7 +282,7 @@ export class BookChildrenTheaterComponent implements OnInit {
                 return -1;
             }
         });
-        this.confirmRef = this.modalService.show(confirmationModel, Object.assign({ ignoreBackdropClick: true }, { class: 'gray modal-lg customWidth' }));
+        this.confirmRef = this.modalService.show(confirmationModel, Object.assign({ ignoreBackdropClick: true }, { class: 'gray modal-md' }));
     }
 
     /**
