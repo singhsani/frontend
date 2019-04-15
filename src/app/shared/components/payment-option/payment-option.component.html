@@ -34,7 +34,7 @@
       </mat-form-field>
 
       <mat-form-field class="col-md-4">
-        <input matInput placeholder="Check/DD Number" formControlName="chequeNo" required>
+        <input matInput OnlyNumber maxlength="10" placeholder="Check/DD Number" formControlName="chequeNo" required>
         <control-messages [control]="form.controls.chequeNo"></control-messages>
       </mat-form-field>
 

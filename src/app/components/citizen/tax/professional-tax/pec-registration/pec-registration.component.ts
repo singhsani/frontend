@@ -245,7 +245,18 @@ export class PecRegistrationComponent implements OnInit {
 	 * This method use to add more census number
 	 */
 	addMoreCenus() {
-		this.censusCollection.push(this.createCensus());
+		let isValid = true;
+		for (let i = 0; i < this.pecRegForm.get('censusNo')['controls'].length; i++) {
+			if (this.pecRegForm.get('censusNo')['controls'][i].invalid) {
+				isValid = false;
+				this.config.getAllErrors(this.pecRegForm.get('censusNo')['controls'][i]);
+				break;
+			}
+		}
+
+		if (isValid) {
+			this.censusCollection.push(this.createCensus());
+		}
 	}
 
 	/**
