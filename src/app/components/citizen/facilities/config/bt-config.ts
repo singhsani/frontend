@@ -25,7 +25,7 @@ export class BTConstants {
     static PPL_REQUIRED = "PPL_REQUIRED";
     static CANCELLATION_REQUEST = "CANCELLATION_REQUEST";
     static CANCELLATION_APPROVED = "CANCELLATION_APPROVED";
-    static AVAILABLE = "AVAILABLE";
+    static AVAILABLE = 'AVAILABLE';
     static RESCHEDULED = "RESCHEDULED";
     static TEMPORARY_BLOCKED = "TEMPORARY_BLOCKED";
     static MOB_NO_MIS_MATCH_MESSAGE = "Mobile Number and Confirm Mobile Number should match";
@@ -35,13 +35,15 @@ export class BTConstants {
     static AGREE_MESSAGE = 'Should be agree with given bank details';
     static TERMS_AND_CONDITION_MESSAGE = 'Should Accept the terms and condition of form';
     static MY_BOOKINGS_URL = 'citizen/bookings/my-bookings';
+    static MY_TICKETINGS_URL = 'citizen/ticketing/my-bookings';
+    static INVALID_BOOKING_STATUS = 'INVALID_BOOKING_STATUS';
 }
 
 export class BTConfig extends CitizenConfig {
 
     session: SessionStorageService = new SessionStorageService();
 
-    constructor(){
+    constructor() {
         super();
     }
 
@@ -58,7 +60,7 @@ export class BTConfig extends CitizenConfig {
         commonService.commonAlert('Payment Details', '', 'info', 'Make Payment!', false, payData.html, cb => {
             window.location.href = environment.adminUrl + `admin/payment-gateway?retUrl=${payData.payData.retUrl}&retPath=${payData.payData.retPath}`;
         }, rj => {
-            let errHtml = `			
+            let errHtml = `
 						<div class="alert alert-danger">
 							Please Complete Payment, Otherwise the application will be considered as in-complete
 						</div>`
@@ -99,7 +101,7 @@ export class BTConfig extends CitizenConfig {
         }
 
 		/**
-		 * Storing Data to session. 
+		 * Storing Data to session.
 		 */
         this.session.set('paymentData', JSON.stringify(payData));
 

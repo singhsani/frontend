@@ -1,4 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { TicketingsService } from '../../../shared-ticketing/services/ticketings.service';
+import { MatTableDataSource } from '@angular/material';
+import * as moment from 'moment';
+import { CommonService } from 'src/app/shared/services/common.service';
+import { Router } from '@angular/router';
+import { TicketingConstants } from '../../../config/ticketing-config';
 
 @Component({
   selector: 'app-animal-adoption',
@@ -7,9 +14,120 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AnimalAdoptionComponent implements OnInit {
 
-  constructor() { }
+  // Flags to display/hide view
+  showAnimalAdoptionPricingTable: boolean = true;
+  showAnimalAdoptionForm: boolean = false;
+
+  // Loading Ticketing Configurations
+
+  ticketingConstants = TicketingConstants;
+
+  // animpal adoption pricing
+  animalAdoptionPricing: any[];
+  selectedAnimalAnnualBoardingExpenses: number;
+  selectedAnimalAnnualMaintainanceExpenses: number;
+
+
+  animalAdoptionForm: FormGroup;
+
+  /**
+	  * displayColumns are used for display the columns in material table.
+	*/
+  displayColumnsForAnimalAdoptionPricingTable: string[] = [
+    'id',
+    'animalBirdName',
+    'annualBoardingExpenses',
+    'annualMaintainanceExpenses',
+    'totalExpenses'
+  ];
+
+  /**
+   * Used for material table data population and pagination.
+  */
+  dataSourceForPricing = new MatTableDataSource();
+
+  /**
+   * language translate key.
+  */
+  translateKey = 'animalAdoption';
+
+  constructor(
+    private fb: FormBuilder,
+    private ticketingService: TicketingsService,
+    private commonService: CommonService,
+    private router: Router
+  ) {
+    this.ticketingService.resourceType = 'zooanimaladoption';
+  }
 
   ngOnInit() {
+    this.generateAnimalAdoptionForm();
+    this.getZooVisitingRates();
+
+    this.animalAdoptionForm.valueChanges.subscribe( v => {
+      console.log(this.animalAdoptionForm);
+    })
+  }
+
+  getZooVisitingRates() {
+    this.ticketingService.getAnimalAdoptionFeesList().subscribe(d => {
+      this.animalAdoptionPricing = d.data;
+      this.dataSourceForPricing.data = d.data;
+    });
+  }
+
+  generateAnimalAdoptionForm() {
+    this.animalAdoptionForm = this.fb.group({
+      id: null,
+      uniqueId: null,
+      version: null,
+      cancelledDate: null,
+      bookingDate: null,
+      status: null,
+      refNumber: null,
+      resourceType: null,
+      payableServiceType: null,
+      resourceCode: null,
+      accountHolderName: null,
+      accountNo: null,
+      bankName: null,
+      ifscCode: null,
+      scheduleList: null,
+      attachments: null,
+      adoptionRequestDate: moment().format('YYYY-MM-DD'),
+
+      adoptingPersonOrganizationName: [null, Validators.required],
+      adoptersAddress: [null, Validators.required],
+      adopterContactNumber: [null, Validators.required],
+      adopterEmailId: [null, [Validators.email]],
+      animalName: [null, Validators.required],
+      totalAdoptionCost: [null, Validators.required],
+      message: [null, Validators.required],
+      agree: [null, Validators.required],
+      termsCondition: [null, Validators.required]
+    });
+  }
+
+  selectAnimal(animal) {
+    this.animalAdoptionForm.get('animalName').setValue(animal.animalBirdName);
+    this.animalAdoptionForm.get('totalAdoptionCost').setValue(animal.totalExpenses);
+    this.selectedAnimalAnnualMaintainanceExpenses = animal.annualMaintainanceExpenses;
+    this.selectedAnimalAnnualBoardingExpenses = animal.annualBoardingExpenses;
+  }
+
+  submitAnimalAdoptionRequest() {
+    this.ticketingService.animalAdoptionRequest(this.animalAdoptionForm.value).subscribe(resp => {
+      this.ticketingService.printAcknowledgementReceipt(resp.data.refNumber).subscribe(acknowledgementHTML => {
+        let sectionToPrint: any = document.getElementById('sectionToPrint');
+        sectionToPrint.innerHTML = acknowledgementHTML;
+        setTimeout(() => {
+          window.print();
+          // this.router.navigate([this.ticketingConstants.MY_BOOKINGS_URL]);
+        });
+      }, err => {
+        this.commonService.openAlert("Error", err.error[0].message, "warning")
+      });
+    });
   }
 
 }

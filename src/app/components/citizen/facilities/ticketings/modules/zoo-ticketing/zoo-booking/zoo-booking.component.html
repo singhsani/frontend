@@ -9,8 +9,11 @@
     </ng-template> -->
 
     <!-- Guildelines section starts here -->
+
     <mat-card class="cardBox" *ngIf="guideLineFlag">
       <div class="pageTitle">{{'Online Zoo Ticket Booking'| translate: translateKey}}</div>
+
+      <!-- Card Content showing Zoo Ticketing Rates and Visiting Time -->
       <mat-card-content class="p-4">
         <div class="guideline-intro">
           <span>Enter Tickets </span>
@@ -49,7 +52,7 @@
               <mat-cell *matCellDef="let row" class="fullWidth">
                 <div class="mobile-label">{{'Charges(Rs.)' | translate:translateKey}}</div>
                 <div class="mobile-label1">:</div>
-                <div class="row-inside"> {{ row.price }}</div>
+                <div class="row-inside"> {{ zooVisitingRates ? zooVisitingRates[row.priceField] : '' }}</div>
               </mat-cell>
             </ng-container>
             <mat-header-row *matHeaderRowDef="displayedColumnsForPricingTable"></mat-header-row>
@@ -96,6 +99,7 @@
           </table>
         </div>
       </mat-card-content>
+      <!-- Card Content showing Zoo Ticketing Rates and Visiting Time Ends here -->
 
       <div class="fotButtonBar">
         <div class="col-sm-12 col-md-12 text-right">
@@ -119,11 +123,11 @@
 
           <mat-form-field class="col-md-6 col-sm-6 col-xs-4">
             <mat-label>{{'choose_start_date'| translate: translateKey}}</mat-label>
-            <input matInput [min]="startMinDate" [matDatepicker]="zooTicketDatePicker" formControlName="bookingDate"
+            <input matInput [min]="startMinDate" [matDatepicker]="zooTicketDatePicker" (dateChange)="changeDateFormat($event)" formControlName="visitingDate"
               placeholder="DD/MM/YYYY">
             <mat-datepicker-toggle matSuffix [for]="zooTicketDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #zooTicketDatePicker touchUi="true"></mat-datepicker>
-            <control-messages [control]="ticketBookingForm.get('bookingDate')">
+            <control-messages [control]="ticketBookingForm.get('visitingDate')">
             </control-messages>
           </mat-form-field>
 
@@ -159,7 +163,7 @@
                 </td>
                 <td>
                   <div class="d-md-none">{{'Amount(Rs.)' | translate:translateKey}}</div>
-                  <div>{{catRef.value * row.rate}}</div>
+                  <div>{{catRef.value * (zooVisitingRates ? zooVisitingRates[row.priceField] : '')}}</div>
                 </td>
               </tr>
 
@@ -201,8 +205,8 @@
 
             <div class="col-md-6 ngSelect" formGroupName="idType">
               <ng-select placeholder="{{'ID Type'| translate: translateKey}}" formControlName="code">
-                <ng-option *ngFor="let id of idTypes" [value]="id">
-                  {{ id }}
+                <ng-option *ngFor="let id of idTypes" [value]="id.code">
+                  {{ id?.name }}
                 </ng-option>
               </ng-select>
               <control-messages [control]="ticketBookingForm.get('idType').get('code')">
@@ -215,6 +219,7 @@
               <control-messages [control]="ticketBookingForm.get('idNumber')"></control-messages>
             </mat-form-field>
           </div>
+          <!-- Contact Details ends here-->
 
         </mat-card-content>
 
@@ -225,11 +230,10 @@
               {{'Reset'| translate: translateKey}}
             </button>
 
-            <button mat-raised-button (click)="showTicketsBookingForm = false;  bankDetailsFlag = true;"
-              color="primary">
-              <mat-icon>thumb_up_alt</mat-icon>
-              {{'submit'| translate: translateKey}}
-            </button>
+            <button mat-raised-button color="primary" type="button" [disabled]="ticketBookingForm.invalid" (click)="redirecToPayment()">
+                <mat-icon>check_circle_outline</mat-icon>
+                {{'submit_application'| translate: translateKey}}
+              </button>
           </div>
         </div>
 
@@ -238,7 +242,7 @@
       <!-- Ticket Booking Section Ends Here -->
 
       <!-- bank details -->
-      <mat-card class="cardBox" *ngIf="bankDetailsFlag">
+      <!-- <mat-card class="cardBox" *ngIf="bankDetailsFlag">
         <div class="pageTitle">{{'bank_details'| translate: translateKey}}</div>
         <mat-card-content class="p-4">
           <ng-template mat-tab-label>
@@ -251,7 +255,6 @@
             {{'bank_details' | translate:translateKey}}
           </h2>
 
-          <!-- <form [formGroup]="bankDetailsForm"> -->
           <div class="row">
             <div formGroupName="bankName" class="col-md-6 ngSelect">
               <ng-select placeholder="{{'bank_name' | translate:translateKey}} *" formControlName="code">
@@ -292,7 +295,6 @@
             </div>
 
           </div>
-          <!-- </form> -->
 
 
           <div class="row mt-4 fotButtonBar">
@@ -312,9 +314,9 @@
 
 
 
-      </mat-card>
+      </mat-card> -->
 
-      <!-- bank details -->
+      <!-- bank details ends here -->
 
     </form>
 
@@ -332,3 +334,4 @@
 
 <!-- </mat-tab-group> -->
 <!-- </div> -->
+

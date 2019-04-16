@@ -1,5 +1,286 @@
-<app-title-bar [title]="'screen_title'"></app-title-bar>
+<!-- My Bookings Title Bar -->
+<app-title-bar [title]="'My Ticketing' | translate: translateKey"></app-title-bar>
 
-<p>
-  my-ticketings works!
-</p>
+<!-- Search Bookings By providing filter details -->
+<mat-card class="mb-4">
+	<form [formGroup]="searchBookingsForm" (ngSubmit)="getAllBooking()" autocomplete="off" ngNativeValidate>
+		<div class="row">
+			<div class="col-md-4 ngSelect">
+				<ng-select placeholder="{{'select_booking_resources' | translate:translateKey}}" formControlName="resourceType">
+					<ng-option *ngFor="let resource of resources" [value]="resource.type">
+						{{ resource.name }}
+					</ng-option>
+				</ng-select>
+				<control-messages [control]="searchBookingsForm.get('resourceType')">
+				</control-messages>
+			</div>
+			<mat-form-field class="col-md-4">
+				<input matInput maxlength="25" type="text" formControlName="refNumber" placeholder="{{'ref_number' | translate: translateKey}}"
+				 trim="blur">
+				<control-messages [control]="searchBookingsForm.get('refNumber')"></control-messages>
+			</mat-form-field>
+			<div class="col-md-4">
+				<button mat-stroked-button color="primary" class="w-100 mt-2" type="submit">
+					{{'search' | translate:translateKey}}
+				</button>
+			</div>
+		</div>
+	</form>
+</mat-card>
+
+<!-- If Bookings Not Found -->
+<div class="noApplication" *ngIf="resultsLength==0 && !isLoadingResults">
+	<img src="assets/icons/no-application-found.png" alt="">
+	<br> {{'no_bookings_found' | translate:translateKey}}
+	<span class="noActi">{{'no_activity' | translate:translateKey}}</span>
+	<a mat-stroked-button class="mat-primary" routerLink="../../dashboard">
+		{{'create_bookings' | translate:translateKey}}
+	</a>
+</div>
+
+<!-- My Bookings data table -->
+<div [hidden]="resultsLength==0">
+
+	<!-- <div class="example-loading-shade" *ngIf="isLoadingResults">
+		<mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+	</div> -->
+
+	<table mat-table class="myBookings" [dataSource]="bookingList" matSort matSortActive="created" matSortDisableClear matSortDirection="asc">
+
+		<ng-container matColumnDef="id">
+			<mat-header-cell *matHeaderCellDef>{{'s_no' | translate:translateKey}}</mat-header-cell>
+			<mat-cell *matCellDef="let element;let indx=index;">
+				<div class="mobile-label">{{'s_no' | translate:translateKey}}</div>
+				<div class="mobile-label1">:</div>
+				<div class="row-inside"> {{(paginator.pageIndex * paginator.pageSize) + (indx+1)}} </div>
+			</mat-cell>
+		</ng-container>
+
+		<ng-container matColumnDef="refNumber">
+			<mat-header-cell *matHeaderCellDef> {{'booking_number' | translate:translateKey}}</mat-header-cell>
+			<mat-cell *matCellDef="let element;">
+				<div class="mobile-label">{{'booking_number' | translate:translateKey}}</div>
+				<div class="mobile-label1">:</div>
+				<div class="row-inside">{{element.refNumber}}</div>
+
+			</mat-cell>
+		</ng-container>
+
+		<ng-container matColumnDef="bookingDate">
+			<mat-header-cell *matHeaderCellDef> {{'date_of_booking' | translate:translateKey}}</mat-header-cell>
+			<mat-cell *matCellDef="let element;">
+				<div class="mobile-label">{{'date_of_booking' | translate:translateKey}}</div>
+				<div class="mobile-label1">:</div>
+				<div class="row-inside">
+					{{bookingUtils.returnProperDate(element.bookingDate)}}
+				</div>
+			</mat-cell>
+		</ng-container>
+
+		<ng-container matColumnDef="status">
+			<mat-header-cell *matHeaderCellDef> {{'booking_status' | translate:translateKey}} </mat-header-cell>
+			<mat-cell *matCellDef="let element;">
+				<div class="mobile-label">{{'booking_status' | translate:translateKey}}</div>
+				<div class="mobile-label1">:</div>
+				<div class="row-inside">
+					{{bookingUtils.getProperErrorMessage(element.status)}}
+				</div>
+			</mat-cell>
+		</ng-container>
+
+		<ng-container matColumnDef="action">
+			<mat-header-cell *matHeaderCellDef> {{'actions' | translate:translateKey}}</mat-header-cell>
+			<mat-cell *matCellDef="let element;">
+				<div class="mobile-label">{{'actions' | translate:translateKey}}</div>
+				<div class="mobile-label1">:</div>
+				<button *ngIf="(element.status != ticketingConstants.DRAFT) && (element.status != ticketingConstants.EXPIRED) && (element.status != ticketingConstants.SUBMITTED)"
+				 mat-button [matMenuTriggerFor]="menu">
+					<mat-icon>more_vert</mat-icon>
+				</button>
+				<mat-menu #menu="matMenu">
+
+					<div *ngIf="(element.status != ticketingConstants.SUBMITTED)">
+
+						<button *ngIf="element.status == ticketingConstants.PAYMENT_REQUIRED" mat-menu-item color="primary" (click)="paymentRequest(element)">
+							<mat-icon title="Print Receipt" color="primary">print</mat-icon>
+							{{'make_payment' | translate:translateKey}}
+						</button>
+
+						<button *ngIf="element.status != ticketingConstants.PAYMENT_REQUIRED" mat-menu-item color="primary" (click)="printReceipt(element, element.payableServiceType)">
+							<mat-icon title="Print Receipt" color="primary">print</mat-icon>
+							{{'receipt_reprint' | translate:translateKey}}
+						</button>
+
+
+						<button *ngIf="element.status != ticketingConstants.PAYMENT_REQUIRED" mat-menu-item data-toggle="modal" color="primary" (click)="openModal(templateRequestModel, element.scheduleList, element.refNumber);">
+							<mat-icon title="View Booking Details" color="primary">details</mat-icon>
+							{{'details' | translate:translateKey}}
+						</button>
+					</div>
+
+					<button mat-menu-item color="primary" (click)="openJSONModal(template);jsonDisplay(element)">
+						<mat-icon class="m-1" title="{{'application_json' | translate:translateKey}}">center_focus_weak</mat-icon>
+						{{'application_json' | translate:translateKey}}
+					</button>
+
+				</mat-menu>
+			</mat-cell>
+		</ng-container>
+
+		<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+		<mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+	</table>
+
+
+	<mat-paginator showFirstLastButtons [hidden]="resultsLength==0" [pageSizeOptions]="[5, 10, 25, 100]" [length]="resultsLength">
+	</mat-paginator>
+</div>
+
+
+
+<!-- The Cancel Request Modal -->
+<ng-template #templateRequestModel>
+
+	<div class="modal-header customthead">
+		<h4 class="modal-title pull-left">{{'list_slots' | translate:translateKey}}</h4>
+		<div>
+			<button title="Close" class=" mat-icon-button" aria-label="Close" (click)="modalReqRef.hide()">
+				<mat-icon>close</mat-icon>
+			</button>
+		</div>
+	</div>
+
+	<div class="modal-body scrollModel">
+
+		<table class="table table-bordered">
+			<thead class="customthead">
+				<tr>
+					<th scope="col"> {{'s_no' | translate:translateKey}} </th>
+					<th scope="col">{{'slot_or_shift_no' | translate:translateKey}}</th>
+					<th scope="col"> {{'date_of_programme' | translate:translateKey}}</th>
+					<th scope="col"> {{'day_of_programme' | translate:translateKey}}</th>
+					<th scope="col"> {{'start_time' | translate:translateKey}}</th>
+					<th scope="col">{{'end_time' | translate:translateKey}}</th>
+					<th scope="col">{{'shift' | translate:translateKey}}</th>
+					<th scope="col">{{'booking_status' | translate:translateKey}}</th>
+					<th scope="col" class="text-center">
+						{{'actions' | translate:translateKey}}
+						<mat-checkbox labelPosition="after" [disabled]="getAllDisabled() || bookingService.resourceType == 'childrenTheater'" [checked]="getAllSelected()"
+						 (change)="chooseAllForCancel($event.checked)">
+							{{'select_all' | translate:translateKey}}
+						</mat-checkbox>
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let shifts of CancelSlotList; let i = index;">
+					<th scope="row">{{i+1}}</th>
+					<td>{{shifts.bookingNo?shifts.bookingNo: 'NA' }}</td>
+					<td>{{bookingUtils.returnProperDate(shifts.bookingDate)}}</td>
+					<td>{{bookingUtils.getDay(shifts.bookingDate)}}</td>
+					<td>{{shifts.startTime}}</td>
+					<td>{{shifts.endTime}}</td>
+					<td>{{shifts.shiftType == 'NONE' ? 'NA' : shifts.shiftType}}</td>
+					<td>{{bookingUtils.getProperErrorMessage(shifts.status)}}</td>
+					<td>
+						<mat-checkbox [disabled]="(shifts.status == ticketingConstants.CANCELLATION_REQUEST || shifts.status == ticketingConstants.CANCELLATION_APPROVED || bookingService.resourceType == 'childrenTheater')"
+						 [checked]="getSelected(shifts.bookingNo) || (shifts.status == ticketingConstants.CANCELLATION_REQUEST || shifts.status == ticketingConstants.CANCELLATION_APPROVED)"
+						 (change)="chooseForCancel(shifts, $event.checked)">
+						</mat-checkbox>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+	<div class="modal-footer customthead">
+		<button color="white" [disabled]="CancelRequestList.length == 0" title="{{'cancel_request' | translate:translateKey}}" mat-stroked-button
+		 (click)="RequestCancel()">
+			<mat-icon>check_circle_outline</mat-icon>
+			{{'cancel_request' | translate:translateKey}}
+		</button>
+	</div>
+
+</ng-template>
+
+<!-- The Cancel Response Modal -->
+<ng-template #templateResponseModel>
+	<div class="modal-header customthead">
+		<h4 class="modal-title pull-left">{{'list_cancellable_slot' | translate:translateKey}}</h4>
+		<div>
+			<button title="Close" class=" mat-icon-button" aria-label="Close" (click)="modalResRef.hide()">
+				<mat-icon>close</mat-icon>
+			</button>
+		</div>
+	</div>
+	<div class="modal-body scrollModel">
+
+		<table class="table table-bordered">
+			<thead class="customthead">
+				<tr>
+					<th scope="col">{{'s_no' | translate:translateKey}}</th>
+					<th scope="col">{{'booking_no' | translate:translateKey}} </th>
+					<th scope="col">{{'date_of_programme' | translate:translateKey}} </th>
+					<th scope="col">{{'day_of_programme' | translate:translateKey}} </th>
+					<th scope="col">{{'shift' | translate:translateKey}} </th>
+					<th scope="col">{{'cancellable' | translate:translateKey}} </th>
+					<th scope="col">{{'err_message' | translate:translateKey}} </th>
+					<th scope="col"> {{'refundable' | translate:translateKey}} </th>
+					<th scope="col">{{'refundable_amount' | translate:translateKey}} </th>
+					<th scope="col">{{'booking_status' | translate:translateKey}}</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let shifts of CancelResponseList; let i = index;">
+					<th scope="row">{{i+1}}</th>
+					<td>{{shifts.bookingNo}}</td>
+					<td>{{bookingUtils.returnProperDate(shifts.bookingDate)}}</td>
+					<td>{{bookingUtils.getDay(shifts.bookingDate)}}</td>
+					<td>{{shifts.shiftType}}</td>
+					<td>{{shifts.cancellable?'YES': 'NO'}}</td>
+					<td>{{shifts.errorMessage?bookingUtils.getProperErrorMessage(shifts.errorMessage): shifts.refundDetail?bookingUtils.getProperErrorMessage(shifts.refundDetail)
+						: ""}}</td>
+					<td>{{shifts.refundable?'YES': 'NO'}}</td>
+					<td>{{shifts.refundableAmount}}</td>
+					<td>{{bookingUtils.getProperErrorMessage(shifts.status)}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div class="modal-footer customthead">
+		<button color="white" mat-stroked-button (click)="modalResRef.hide()">
+			{{'ok' | translate:translateKey}}
+		</button>
+	</div>
+</ng-template>
+
+<!-- The JSON Modal -->
+<ng-template #template>
+	<div class="modal-header">
+		<div class="col-9">
+			<h5 class="modal-title pull-left">{{'application_json' | translate:translateKey}}</h5>
+		</div>
+		<div class="col-1">
+			<button class="pull-left mat-icon-button" (click)="copyText(copytext)">
+				<mat-icon title="{{'copy_clipboard' | translate:translateKey}}">content_copy</mat-icon>
+			</button>
+		</div>
+		<div class="col-1">
+			<button title="{{'close' | translate:translateKey}}" class=" mat-icon-button" aria-label="Close" (click)="modalJsonRef.hide()">
+				<mat-icon>close</mat-icon>
+			</button>
+		</div>
+	</div>
+	<div class="modal-body">
+		<div class="row">
+			<div class="col-12">
+				<textarea type="text" readonly class="text-left textjson" value="{{JSONdata}}" #copytext>
+                    </textarea>
+			</div>
+		</div>
+		<!-- <pre class="text-left" #copytext style="color: #9cdcfe;background: #212529;overflow: hidden">{{JSONdata}}</pre> -->
+	</div>
+</ng-template>
+
+<!-- this div is used for printing the receipt -->
+<div id="sectionToPrint"></div>

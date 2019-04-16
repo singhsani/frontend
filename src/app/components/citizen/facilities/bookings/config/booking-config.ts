@@ -8,7 +8,6 @@ import { BTConfig, BTConstants } from "../../config/bt-config";
 export class BookingConstants extends BTConstants {
     static TOWNHALL_DEPOSIT = "TOWNHALL_DEPOSIT";
     static TOWNHALL_FEES = "TOWNHALL_FEES";
-    static INVALID_BOOKING_STATUS = "INVALID_BOOKING_STATUS";
     static SELECT_SHIFT_MESSAGE="Please Select shift";
     static TOWNHALL_RESOURCE_TYPE ="townhall";
     static STADIUM_RESOURCE_TYPE = "stadium";
@@ -82,7 +81,7 @@ export class BookingUtils extends BTConfig {
 	 * Method is used to select all shifts in perticular month.
 	 * @param checked - checked event
 	 * @param month - perticular month
-     * @param Dates - Dates 
+     * @param Dates - Dates
 	 * @param i - index
 	 */
     selectAllShiftsInMonth(checked, month, Dates, selectedShift, i): void {
