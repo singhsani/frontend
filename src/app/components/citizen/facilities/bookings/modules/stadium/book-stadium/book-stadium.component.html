@@ -27,7 +27,7 @@
         <div class="col-sm-12 col-md-12 text-right">
             <button mat-raised-button (click)="guideLineFlag = false;showStadiumSearchForm= true;" color="primary">
                 <mat-icon>thumb_up_alt</mat-icon>
-                {{'submit'| translate: translateKey}}
+                {{'proceed'| translate: translateKey}}
             </button>
         </div>
     </div>
@@ -336,13 +336,13 @@
                         </div>
 
                         <mat-form-field class="col-md-6">
-                            <input matInput type="text" maxlength="20" appValidationFields [validationFieldsType]="'onlyNameWithSpace'" formControlName="accountHolderName"
+                            <input matInput type="text" maxlength="50" appValidationFields [validationFieldsType]="'onlyNameWithSpace'" formControlName="accountHolderName"
                                 placeholder="{{'account_holder_name' | translate: translateKey}}" required>
                             <control-messages [control]="stadiumApplicationForm.get('accountHolderName')"></control-messages>
                         </mat-form-field>
 
                         <mat-form-field class="col-md-6">
-                            <input matInput OnlyNumber maxlength="20" minlength="20" formControlName="accountNo" placeholder="{{'account_no' | translate: translateKey}}"
+                            <input matInput OnlyNumber maxlength="20" minlength="6" formControlName="accountNo" placeholder="{{'account_no' | translate: translateKey}}"
                                 required>
                             <control-messages [control]="stadiumApplicationForm.get('accountNo')"></control-messages>
                         </mat-form-field>

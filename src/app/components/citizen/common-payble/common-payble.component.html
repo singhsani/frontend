@@ -61,11 +61,11 @@
                   <td>{{responseData.ecrcNo}}</td>
                   <td>{{dues.month}}</td>
                   <td>{{dues.financialYear}}</td>
-                  <td>{{dues.professionalTax}}</td>
+                  <td>{{dues.remainingProfessionalTax}}</td>
                   <td>{{dues.interest}}</td>
                   <td>{{dues.penaltyFee}}</td>
                   <td>{{dues.compFee}}</td>
-                  <td>{{dues.professionalTax + dues.interest + dues.penaltyFee }}</td>
+                  <td>{{dues.remainingProfessionalTax + dues.interest + dues.penaltyFee }}</td>
                   <td>{{dues.creditAmount ? dues.creditAmount: 0}}</td>
                   <td>{{dues.financialYearSlab}}</td>
                   <td>{{dues.dueDate ? (dues.dueDate | date: 'dd/MM/yyyy'): '-'}}</td>

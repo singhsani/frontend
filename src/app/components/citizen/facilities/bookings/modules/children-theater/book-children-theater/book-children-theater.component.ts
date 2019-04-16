@@ -93,6 +93,15 @@ export class BookChildrenTheaterComponent implements OnInit {
         this.createCTApplicationForm();
         this.getLookUpData();
         this.getResourceList();
+
+        /**
+		 * Subscribe start date changes
+		 */
+        this.childrenTheaterSearchForm.controls.startDate.valueChanges.subscribe(data => {
+            this.childrenTheaterSearchForm.controls.endDate.reset();
+            this.endMinDate = data;
+            return;
+        })
     }
 
     /**
@@ -147,7 +156,7 @@ export class BookChildrenTheaterComponent implements OnInit {
             relationshipWithOrg: [null, [Validators.required, Validators.maxLength(20)]],
 
             //step 3
-            accountHolderName: [null, [Validators.required, Validators.maxLength(20)]],
+            accountHolderName: [null, [Validators.required, Validators.maxLength(50)]],
             accountNo: [null, [Validators.required, Validators.maxLength(20)]],
             bankName: this._fb.group({
                 code: [null, [Validators.required]],
@@ -273,7 +282,7 @@ export class BookChildrenTheaterComponent implements OnInit {
                 return -1;
             }
         });
-        this.confirmRef = this.modalService.show(confirmationModel, Object.assign({ ignoreBackdropClick: true }, { class: 'gray modal-lg customWidth' }));
+        this.confirmRef = this.modalService.show(confirmationModel, Object.assign({ ignoreBackdropClick: true }, { class: 'gray modal-md' }));
     }
 
     /**

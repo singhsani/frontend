@@ -4,7 +4,7 @@
 <!-- HTML for Children Theater booking Guideline-->
 <div *ngIf="guideLineFlag">
     <mat-card class="cardBox">
-        <div class="pageTitle">{{'online_children_theater_bookings'| translate: translateKey}}</div>
+        <div class="pageTitle">{{'online_children_theater_booking'| translate: translateKey}}</div>
         <mat-card-content class="p-4">
             <p class="pb-2">{{head_lines| translate: translateKey}}</p>
             <h2>{{'rules_and_regulations'| translate: translateKey}}</h2>
@@ -27,7 +27,7 @@
         <div class="col-sm-12 col-md-12 text-right">
             <button mat-raised-button (click)="guideLineFlag = false;showChildrenTheaterSearchForm= true;" color="primary">
                 <mat-icon>thumb_up_alt</mat-icon>
-                {{'submit'| translate: translateKey}}
+                {{'proceed'| translate: translateKey}}
             </button>
         </div>
     </div>
@@ -163,10 +163,10 @@
                 <thead class="customthead">
                     <tr>
                         <th scope="col" width="56">{{'s_no'| translate: translateKey}}</th>
-                        <th scope="col">{{'start_date'| translate: translateKey}}</th>
-                        <th scope="col">{{'end_date'| translate: translateKey}}</th>
+                        <th scope="col">{{'date_of_programme'| translate: translateKey}}</th>
+                        <!-- <th scope="col">{{'end_date'| translate: translateKey}}</th> -->
                         <th scope="col">{{'slot_status'| translate: translateKey}}</th>
-                        <th scope="col">{{'occupancy'| translate: translateKey}}</th>
+                        <!-- <th scope="col">{{'occupancy'| translate: translateKey}}</th> -->
                         <th scope="col" width="65">{{'action'| translate: translateKey}}</th>
                     </tr>
                 </thead>
@@ -174,10 +174,10 @@
                     <tr *ngFor="let shifts of selectedShift; let i = index;">
                         <th scope="row">{{i+1}}</th>
                         <td>{{bookingUtils.returnProperDate(shifts.start)}}</td>
-                        <td>{{bookingUtils.returnProperDate(shifts.end)}}</td>
+                        <!-- <td>{{bookingUtils.returnProperDate(shifts.end)}}</td> -->
                         <td>{{shifts.slotStatus == bookingConstants.CHECKED ? bookingConstants.AVAILABLE : shifts.slotStatus}}
                         </td>
-                        <td>{{shifts.occupancy}}</td>
+                        <!-- <td>{{shifts.occupancy}}</td> -->
                         <td>
                             <button mat-icon-button title="{{'remove_slot'| translate: translateKey}}" [disabled]="selectedShift.length == 1" (click)="selectedShift = bookingUtils.removeSelectedShift(shifts,selectedShift,  i)">
                                 <mat-icon color="warn">delete</mat-icon>
@@ -258,7 +258,7 @@
 
                     <div class="row">
                         <mat-form-field class="col-md-6">
-                            <input matInput maxlength="25" type="text" formControlName="organizationName" placeholder="{{'organization_name' | translate: translateKey}}"
+                            <input matInput maxlength="50" type="text" formControlName="organizationName" placeholder="{{'organization_name' | translate: translateKey}}"
                                 required>
                             <control-messages [control]="childrenTheaterApplicationForm.get('organizationName')"></control-messages>
                         </mat-form-field>
@@ -383,19 +383,19 @@
                         </div>
 
                         <mat-form-field class="col-md-6">
-                            <input matInput type="text" maxlength="20" appValidationFields [validationFieldsType]="'onlyNameWithSpace'" formControlName="accountHolderName"
+                            <input matInput type="text" maxlength="50" appValidationFields [validationFieldsType]="'onlyNameWithSpace'" formControlName="accountHolderName"
                                 placeholder="{{'account_holder_name' | translate: translateKey}}" required>
                             <control-messages [control]="childrenTheaterApplicationForm.get('accountHolderName')"></control-messages>
                         </mat-form-field>
 
                         <mat-form-field class="col-md-6">
-                            <input matInput OnlyNumber maxlength="20" minlength="20" formControlName="accountNo" placeholder="{{'account_no' | translate: translateKey}}"
+                            <input matInput OnlyNumber maxlength="20" minlength="6" formControlName="accountNo" placeholder="{{'account_no' | translate: translateKey}}"
                                 required>
                             <control-messages [control]="childrenTheaterApplicationForm.get('accountNo')"></control-messages>
                         </mat-form-field>
 
                         <mat-form-field class="col-md-6">
-                            <input matInput type="text" maxlength="11" formControlName="ifscCode" placeholder="{{'ifsc_code' | translate: translateKey}}"
+                            <input matInput type="text" maxlength="11" minlength="11" formControlName="ifscCode" placeholder="{{'ifsc_code' | translate: translateKey}}"
                                 required>
                             <control-messages [control]="childrenTheaterApplicationForm.get('ifscCode')"></control-messages>
                         </mat-form-field> 

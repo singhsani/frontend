@@ -1,6 +1,7 @@
 <div class="welCome">
     <h1>Welcome to VMC Online Citizen Portal</h1>
-    <p>Welcome to Vadodara Municipal Corporation's Virtual Civic Center, which is simple and convenient way for citizens to
+    <p>Welcome to Vadodara Municipal Corporation's Virtual Civic Center, which is simple and convenient way for
+        citizens to
         access various services from anywhere at anytime.
         <br> The services of Virtual Civic Center can be accessed without paying any additional charge.</p>
 </div>
@@ -14,7 +15,7 @@
         <mat-tab *ngFor="let module of bookingsAndTicketings">
             <ng-template mat-tab-label>
                 <!-- <mat-icon class="example-tab-icon">thumb_up</mat-icon> -->
-                <span class="moduleIcon"></span>
+                <span class="moduleIcon {{ module.code }}"></span>
                 <div class="moduleName" title="{{module.name}}">{{ module.name }}</div>
                 <!-- <div>{{ module.gujName }}</div> -->
                 <span class="count">Services</span>
@@ -34,16 +35,16 @@
 </div>
 
 <h2>
-    <mat-icon>dashboard</mat-icon>Module
+    <mat-icon>dashboard</mat-icon>Services
 </h2>
 
 <div class="moduleList">
-    <mat-tab-group>
+    <mat-tab-group [selectedIndex]="1">
         <mat-tab *ngFor="let module of userServicesList">
             <ng-template mat-tab-label>
                 <!-- <mat-icon class="example-tab-icon">thumb_up</mat-icon> -->
-                <span class="moduleIcon"></span>
-                <div class="moduleName" title="{{module.name}}" >{{ module.name }}</div>
+                <span class="moduleIcon {{ module.code }}"></span>
+                <div class="moduleName" title="{{module.name}}">{{ module.name }}</div>
                 <!-- <div>{{ module.gujName }}</div> -->
                 <span class="count">Services</span>
             </ng-template>
@@ -56,9 +57,9 @@
             </div>
         </mat-tab>
 
-        <mat-tab>
+        <!-- <mat-tab>
             <ng-template mat-tab-label>
-                <span class="moduleIcon"></span>
+                <span class="moduleIcon affordableHousing"></span>
                 <div class="moduleName">Affordable Housing</div>
                 <span class="count">Services</span>
             </ng-template>
@@ -69,22 +70,25 @@
                     </button>
                 </div>
             </div>
-        </mat-tab>
+        </mat-tab> -->
     </mat-tab-group>
 </div>
 
-<h2><mat-icon>description</mat-icon>Recent Application</h2>
+<h2>
+    <mat-icon>description</mat-icon>Recent Application
+</h2>
 
 <ul class="recentList" *ngIf="isRecentApp">
     <li *ngFor="let application of recentApp">
         <div>{{ application.applicantName?application.applicantName:'N/A' }}</div>
-        <div class="recenText">{{ application.serviceDetail.name }} | Application / Registration Number : {{ application.fileNumber ? application.fileNumber : application.uniqueId }}</div>
+        <div class="recenText">{{ application.serviceDetail.name }} | Application / Registration Number : {{
+            application.fileNumber ? application.fileNumber : application.uniqueId }}</div>
         <span class="badge draft">{{ application.fileStatus }}</span>
     </li>
 </ul>
 
 <div class="noApplication" *ngIf="!isRecentApp">
     <img src="assets/icons/no-application-found.png" alt=""><br>
-     No Application Found
-     <span class="noActi">It seems, No activity happed yet</span>
-</div> 
+    No Application Found
+    <span class="noActi">It seems, No activity happed yet</span>
+</div>

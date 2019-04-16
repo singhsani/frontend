@@ -232,7 +232,6 @@
 					<div class="pl-0 col-md-12">
 						<!-- <payment-option [form]="vehicleRegistrationForm"></payment-option> -->
 					</div>
-
 				</div>
 
 				<div class="fotButtonBar clearfix">
@@ -247,13 +246,8 @@
 						<!-- <button type="button" mat-raised-button color="warn" (click)="resetForm()">{{'clear' | translate: actionBarKey}}</button> -->
 					</div>
 				</div>
-
-				<!-- This div is used to print the receipt when form is submit -->
-				<div class="row" id="sectionToPrint"> </div>
-
 				<!-- <button *ngIf="makePaymentBtn" mat-raised-button color="success" (click)="processPayment()">{{'process_payment' |
 						translate: actionBarKey}}</button> -->
-
 			</mat-tab>
 
 			<mat-tab>
@@ -270,6 +264,9 @@
 						</div>
 					</div>
 				</div>
+
+				<!-- This div is used to print the receipt when form is submit -->
+				<div class="row" id="sectionToPrint"> </div>
 
 				<div class="fotButtonBar clearfix">
 					<div class="col-sm-12 col-md-12">

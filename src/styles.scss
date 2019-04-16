@@ -800,10 +800,6 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
     cursor: not-allowed;
 }
 
-.mat-form-field-invalid .mat-icon {
-    color: #f44336;
-}
-
 .formClass .row  app-address {width: 100%;}
 
 /*For swal body*/
@@ -951,3 +947,75 @@ body * {visibility: hidden;}
 }
 
 // Part 2 End ------------------------------------------------
+
+
+.mat-header-cell{
+    font-weight: bold;
+}
+
+
+// Start Icons ----------------------------------
+.moduleList .moduleIcon { background-repeat: no-repeat !important; background-position: center !important; border: 1px solid #673ab7;}
+.moduleList .mat-tab-label-active .moduleIcon.ng-star-inserted {background-repeat: no-repeat !important; background-position: center !important; border-color:#fff;}
+.BOOKINGMODULE  {background:url('assets/icons/booking-facilities.svg') !important;}
+.moduleList .mat-tab-label-active .BOOKINGMODULE  {background:url('assets/icons/booking-facilities-h.svg') !important;}
+
+.TICKETINGSMODULE  {background:url('assets/icons/ticketing-facilities.svg') !important;}
+.moduleList .mat-tab-label-active .TICKETINGSMODULE {background:url('assets/icons/ticketing-facilities-h.svg') !important;}
+
+
+
+.SHOP-ESTAB  {background:url('assets/icons/shop-and-establishment-license.svg') !important;}
+.moduleList .mat-tab-label-active .SHOP-ESTAB {background:url('assets/icons/shop-and-establishment-license-h.svg') !important;}
+
+.WATER-TAX  {background:url('assets/icons/water-tax.svg') !important;}
+.moduleList .mat-tab-label-active .WATER-TAX {background:url('assets/icons/water-tax-h.svg') !important;}
+
+.FIRE {background:url('assets/icons/fire-services.svg') !important;}
+.moduleList .mat-tab-label-active .FIRE {background:url('assets/icons/fire-services-h.svg') !important;}
+
+.FOOD-LIC  {background:url('assets/icons/food-licensing-registration.png') !important;}
+.moduleList .mat-tab-label-active .FOOD-LIC {background:url('assets/icons/food-licensing-registration-h.png') !important;}
+
+.ANIMAL-POND  {background:url('assets/icons/animal-pond-license.svg') !important;}
+.moduleList .mat-tab-label-active .ANIMAL-POND {background:url('assets/icons/animal-pond-license-h.svg') !important;}
+
+.PROFESSIONAL  {background:url('assets/icons/professional-tax.svg') !important;}
+.moduleList .mat-tab-label-active .PROFESSIONAL {background:url('assets/icons/professional-tax-h.svg') !important;}
+
+
+.MARRIAGE {background:url('assets/icons/marriage-registration.svg') !important;}
+.moduleList .mat-tab-label-active .MARRIAGE {background:url('assets/icons/marriage-registration-h.svg') !important;}
+
+.VEHICLE   {background:url('assets/icons/vehicle-tax.png') !important;}
+.moduleList .mat-tab-label-active .VEHICLE  {background:url('assets/icons/vehicle-tax-h.png') !important;}
+
+.PROPERTY-TAX  {background:url('assets/icons/property-tax.svg') !important;}
+.moduleList .mat-tab-label-active .PROPERTY-TAX {background:url('assets/icons/property-tax-h.svg') !important;}
+
+.MUTTON-FISH  {background:url('assets/icons/meat-and-fish-license.svg') !important;}
+.moduleList .mat-tab-label-active .MUTTON-FISH {background:url('assets/icons/meat-and-fish-license-h.svg') !important;}
+
+.BIRTH-DEATH  {background:url('assets/icons/birth-and-death.png') !important;}
+.moduleList .mat-tab-label-active .BIRTH-DEATH {background:url('assets/icons/birth-and-death-h.png') !important;}
+
+.affordableHousing  {background:url('assets/icons/affordable-housing.svg') !important;}
+.moduleList .mat-tab-label-active .affordableHousing {background:url('assets/icons/affordable-housing-h.svg') !important;}
+// End Icons ----------------------------------
+
+.mat-form-field-appearance-legacy.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label,
+.ng-select .ng-has-value .ng-placeholder, .ng-select.ng-select-opened .ng-placeholder,
+.mat-form-field-appearance-legacy .mat-form-field-label,
+.ng-select.ng-select-disabled .ng-select-container .ng-value-container .ng-placeholder,
+.mat-radio-button.mat-radio-disabled .mat-radio-label-content,
+.ng-select .ng-has-value .ng-placeholder, .ng-select.ng-select-opened .ng-placeholder,
+.ng-select .ng-select-container .ng-value-container .ng-placeholder,
+.ng-select.ng-select-disabled .ng-select-container .ng-value-container .ng-placeholder, .ng-select.ng-select-disabled .ng-select-container .ng-value-container .ng-value{
+    color: #292828 !important;
+}
+
+.mat-form-field-invalid .mat-icon, 
+.mat-form-field-invalid .mat-datepicker-toggle-default-icon,
+.mat-form-field.mat-form-field-invalid .mat-form-field-label {
+    color: #f44336 !important;
+}

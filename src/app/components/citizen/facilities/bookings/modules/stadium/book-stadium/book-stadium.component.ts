@@ -284,7 +284,7 @@ export class BookStadiumComponent implements OnInit {
                 return -1;
             }
         });
-        this.confirmRef = this.modalService.show(confirmationModel, Object.assign({ ignoreBackdropClick: true }, { class: 'gray modal-lg customWidth' }));
+        this.confirmRef = this.modalService.show(confirmationModel, Object.assign({ ignoreBackdropClick: true }, { class: 'gray .modal-md' }));
     }
 
     /**
