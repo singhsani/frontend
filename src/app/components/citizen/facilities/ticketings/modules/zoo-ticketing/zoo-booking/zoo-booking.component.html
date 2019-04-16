@@ -230,11 +230,10 @@
               {{'Reset'| translate: translateKey}}
             </button>
 
-            <button mat-raised-button (click)="showTicketsBookingForm = false;  bankDetailsFlag = true;"
-              color="primary">
-              <mat-icon>thumb_up_alt</mat-icon>
-              {{'submit'| translate: translateKey}}
-            </button>
+            <button mat-raised-button color="primary" type="button" (click)="redirecToPayment()">
+                <mat-icon>check_circle_outline</mat-icon>
+                {{'submit_application'| translate: translateKey}}
+              </button>
           </div>
         </div>
 
@@ -243,7 +242,7 @@
       <!-- Ticket Booking Section Ends Here -->
 
       <!-- bank details -->
-      <mat-card class="cardBox" *ngIf="bankDetailsFlag">
+      <!-- <mat-card class="cardBox" *ngIf="bankDetailsFlag">
         <div class="pageTitle">{{'bank_details'| translate: translateKey}}</div>
         <mat-card-content class="p-4">
           <ng-template mat-tab-label>
@@ -256,7 +255,6 @@
             {{'bank_details' | translate:translateKey}}
           </h2>
 
-          <!-- <form [formGroup]="bankDetailsForm"> -->
           <div class="row">
             <div formGroupName="bankName" class="col-md-6 ngSelect">
               <ng-select placeholder="{{'bank_name' | translate:translateKey}} *" formControlName="code">
@@ -297,7 +295,6 @@
             </div>
 
           </div>
-          <!-- </form> -->
 
 
           <div class="row mt-4 fotButtonBar">
@@ -317,7 +314,7 @@
 
 
 
-      </mat-card>
+      </mat-card> -->
 
       <!-- bank details ends here -->
 

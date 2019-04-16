@@ -24,7 +24,7 @@ export class BTConstants {
     static DEPOSIT_REQUIRED = "DEPOSIT_REQUIRED";
     static CANCELLATION_REQUEST = "CANCELLATION_REQUEST";
     static CANCELLATION_APPROVED = "CANCELLATION_APPROVED";
-    static AVAILABLE = "AVAILABLE";
+    static AVAILABLE = 'AVAILABLE';
     static RESCHEDULED = "RESCHEDULED";
     static TEMPORARY_BLOCKED = "TEMPORARY_BLOCKED";
     static MOB_NO_MIS_MATCH_MESSAGE = "Mobile Number and Confirm Mobile Number should match";
@@ -34,13 +34,15 @@ export class BTConstants {
     static AGREE_MESSAGE = 'Should be agree with given bank details';
     static TERMS_AND_CONDITION_MESSAGE = 'Should Accept the terms and condition of form';
     static MY_BOOKINGS_URL = 'citizen/bookings/my-bookings';
+    static MY_TICKETINGS_URL = 'citizen/ticketing/my-bookings';
+    static INVALID_BOOKING_STATUS = 'INVALID_BOOKING_STATUS';
 }
 
 export class BTConfig extends CitizenConfig {
 
     session: SessionStorageService = new SessionStorageService();
 
-    constructor(){
+    constructor() {
         super();
     }
 
