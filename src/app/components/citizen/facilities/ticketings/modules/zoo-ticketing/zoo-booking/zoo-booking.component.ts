@@ -206,6 +206,10 @@ export class ZooBookingComponent implements OnInit {
     });
   }
 
+  changeDateFormat(e) {
+    this.ticketBookingForm.get('visitingDate').setValue(moment(e.value).format('YYYY-MM-DD'));
+  }
+
 
   ticketBookingFormControls() {
     // Currently the form is filled temporarily with some dummy data
@@ -239,11 +243,11 @@ export class ZooBookingComponent implements OnInit {
       totalCamera: [7],
       totalVideoCamera: [8],
       bankName: this.fb.group({
-        code: [null, Validators.required],
+        code: [null],
       }),
-      accountHolderName: ['Sumit', [Validators.required]],
-      accountNo: [45454354554543545435, [Validators.required]],
-      ifscCode: ['UTIB0000003', [Validators.required, ValidationService.ifscCodeValidator]],
+      accountHolderName: [null],
+      accountNo: [null],
+      ifscCode: [null],
       termsCondition: [true],
       agree: [true],
     });

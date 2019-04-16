@@ -63,6 +63,10 @@ export class AnimalAdoptionComponent implements OnInit {
   ngOnInit() {
     this.generateAnimalAdoptionForm();
     this.getZooVisitingRates();
+
+    this.animalAdoptionForm.valueChanges.subscribe( v => {
+      console.log(this.animalAdoptionForm);
+    })
   }
 
   getZooVisitingRates() {

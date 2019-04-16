@@ -101,7 +101,7 @@
     </mat-card-content>
 
   </div>
-  <div class="fotButtonBar">
+  <div class="fotButtonBar" *ngIf="showAnimalAdoptionPricingTable">
     <div class="col-sm-12 col-md-12 text-right">
       <button mat-raised-button (click)="showAnimalAdoptionPricingTable = false; showAnimalAdoptionForm= true;"
         color="primary">
@@ -194,7 +194,7 @@
           <mat-icon>navigate_before</mat-icon>
           {{'back' | translate:translateKey}}
         </button>
-        <button mat-raised-button color="primary" type="button" (click)="submitAnimalAdoptionRequest()">
+        <button mat-raised-button color="primary" type="button" [disabled]="animalAdoptionForm.invalid" (click)="submitAnimalAdoptionRequest()">
           <mat-icon>check_circle_outline</mat-icon>
           {{'submit_application'| translate: translateKey}}
         </button>

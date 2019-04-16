@@ -123,11 +123,11 @@
 
           <mat-form-field class="col-md-6 col-sm-6 col-xs-4">
             <mat-label>{{'choose_start_date'| translate: translateKey}}</mat-label>
-            <input matInput [min]="startMinDate" [matDatepicker]="zooTicketDatePicker" formControlName="bookingDate"
+            <input matInput [min]="startMinDate" [matDatepicker]="zooTicketDatePicker" (dateChange)="changeDateFormat($event)" formControlName="visitingDate"
               placeholder="DD/MM/YYYY">
             <mat-datepicker-toggle matSuffix [for]="zooTicketDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #zooTicketDatePicker touchUi="true"></mat-datepicker>
-            <control-messages [control]="ticketBookingForm.get('bookingDate')">
+            <control-messages [control]="ticketBookingForm.get('visitingDate')">
             </control-messages>
           </mat-form-field>
 
@@ -230,7 +230,7 @@
               {{'Reset'| translate: translateKey}}
             </button>
 
-            <button mat-raised-button color="primary" type="button" (click)="redirecToPayment()">
+            <button mat-raised-button color="primary" type="button" [disabled]="ticketBookingForm.invalid" (click)="redirecToPayment()">
                 <mat-icon>check_circle_outline</mat-icon>
                 {{'submit_application'| translate: translateKey}}
               </button>
@@ -334,3 +334,4 @@
 
 <!-- </mat-tab-group> -->
 <!-- </div> -->
+
