@@ -35,7 +35,7 @@ export class BTConstants {
     static AGREE_MESSAGE = 'Should be agree with given bank details';
     static TERMS_AND_CONDITION_MESSAGE = 'Should Accept the terms and condition of form';
     static MY_BOOKINGS_URL = 'citizen/bookings/my-bookings';
-    static MY_TICKETINGS_URL = 'citizen/ticketing/my-bookings';
+    static MY_TICKETINGS_URL = 'citizen/ticketings/my-ticketings';
     static INVALID_BOOKING_STATUS = 'INVALID_BOOKING_STATUS';
 }
 
@@ -56,7 +56,10 @@ export class BTConfig extends CitizenConfig {
      * @param router router instance
      */
     redirectToPayment(err: any, commonService: CommonService, btService: BookingService | TicketingsService, form?: FormGroup, router?: Router) {
-        let payData = this.proceedForPayment(err.error.data, btService.resourceType);
+
+      let redirectURLAfterPayment = (btService instanceof TicketingsService) ? BTConstants.MY_TICKETINGS_URL : BTConstants.MY_BOOKINGS_URL
+
+      let payData = this.proceedForPayment(err.error.data, redirectURLAfterPayment, btService.resourceType);
         commonService.commonAlert('Payment Details', '', 'info', 'Make Payment!', false, payData.html, cb => {
             window.location.href = environment.adminUrl + `admin/payment-gateway?retUrl=${payData.payData.retUrl}&retPath=${payData.payData.retPath}`;
         }, rj => {
@@ -69,7 +72,7 @@ export class BTConfig extends CitizenConfig {
             }, arj => {
                 if (form && router) {
                     form.disable();
-                    router.navigate([BTConstants.MY_BOOKINGS_URL]);
+                    router.navigate([redirectURLAfterPayment]);
                 }
             });
             return;
@@ -80,7 +83,7 @@ export class BTConfig extends CitizenConfig {
      * Method is used to perform payment and after storing data to localhost redirects to payment gateway.
      * @param data - Object Data
      */
-    proceedForPayment(data: any, resourceType?:string): any {
+    proceedForPayment(data: any, redirectionURL: string, resourceType?: string): any {
         let payData = {
             id: null,
             uniqueId: null,
@@ -96,9 +99,9 @@ export class BTConfig extends CitizenConfig {
             paymentStatus: "SUCCESS",
             retUrl: environment.citizenUrl,
             retPath: 'citizen/payment-gateway-response',
-            myApplicationUrl: '/citizen/bookings/my-bookings',
+            myApplicationUrl: redirectionURL,
             amount: data.amount
-        }
+        };
 
 		/**
 		 * Storing Data to session.
