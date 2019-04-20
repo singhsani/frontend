@@ -107,7 +107,7 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput appAlphaNumeric autocomplete="off" type="text" maxlength="50" formControlName="vatNo" placeholder="{{'vat_no' | translate: translateKey}}">
+						<input matInput appAlphaNumeric autocomplete="off" type="text" maxlength="20" formControlName="vatNo" placeholder="{{'vat_no' | translate: translateKey}}">
 						<control-messages [control]="pecRegForm.get('vatNo')"></control-messages>
 					</mat-form-field>
 
@@ -183,7 +183,7 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-6">
-						<input matInput autocomplete="off" maxlength="50" appAlphaNumeric formControlName="shopAndLicenseNo" type="text" placeholder="{{'shop_and_license_no' | translate: translateKey}}"
+						<input matInput autocomplete="off" maxlength="20" appAlphaNumeric formControlName="shopAndLicenseNo" type="text" placeholder="{{'shop_and_license_no' | translate: translateKey}}"
 						 required>
 						<control-messages [control]="pecRegForm.get('shopAndLicenseNo')"></control-messages>
 					</mat-form-field>
@@ -202,7 +202,7 @@
 					<!-- This section is for adding multiple census number-->
 					<div class="width100p" formArrayName="censusNo">
 						<mat-form-field class="col-md-4" *ngFor="let item of pecRegForm.get('censusNo')['controls']; let i = index;" [formGroupName]="i">
-							<input matInput appAlphaNumeric autocomplete="off" maxlength="20" formControlName="census" type="text" placeholder="{{'census_no' | translate: translateKey}}"
+							<input matInput OnlyNumber autocomplete="off" maxlength="20" formControlName="census" type="text" placeholder="{{'census_no' | translate: translateKey}}"
 							 required>
 							<button *ngIf="pecRegForm.get('censusNo')['controls'].length > 1 && isDeleteBtnShow" title="Remove Census" class="deleteBtn pull-right text-right"
 							 type="button" mat-icon-button color="warn" (click)="removeCensus(i)">

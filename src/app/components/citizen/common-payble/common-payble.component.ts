@@ -30,7 +30,7 @@ export class CommonPaybleComponent implements OnInit {
     { name: 'Net Banking', code: 'NETBANKING' }, { name: 'Debit / Credit Card banking', code: 'CARDBANKING' }
   ];
   placeholder: string = 'Reference Number';
-  responseData: any = {};
+  responseData: any;
   duesDetailsArr: any = [];
 
   constructor(
@@ -75,12 +75,6 @@ export class CommonPaybleComponent implements OnInit {
       return;
     }
 
-    // if (this.paymentsForm.get('amount').invalid) {
-    //   this.markFormGroupTouched(this.paymentsForm);
-    //   this.commonService.openAlert("Warning", "Please enter valid amount", "warning");
-    //   return;
-    // }
-
     if (!this.paymentsForm.get('payMode.code').value) {
       this.commonService.openAlert("Warning", "Select payment mode", "warning");
       return;
@@ -98,6 +92,10 @@ export class CommonPaybleComponent implements OnInit {
       window.open(res.data, "_self");
     });
 
+  }
+
+  get f(){
+    return this.paymentsForm.controls;
   }
 
 	/**
@@ -126,6 +124,7 @@ export class CommonPaybleComponent implements OnInit {
       this.placeholder = 'Reference Number';
 
     this.isRecordExists = false;
+    this.responseData = undefined;
     this.paymentsForm.get('amount').setValue(null);
     this.paymentsForm.get('refNumber').setValue(null);
     this.currPaySerData = _.filter(this.PayableServices, { 'code': paySerCode })[0];

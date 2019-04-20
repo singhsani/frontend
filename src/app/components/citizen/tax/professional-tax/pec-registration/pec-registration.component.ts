@@ -129,6 +129,7 @@ export class PecRegistrationComponent implements OnInit {
 			timeInterval: null,
 			demands: [],
 			defaultDemandGenerated: false,
+			status: null,
 
 			// first step controls
 			pecNo: [{ value: null, disabled: true }],
