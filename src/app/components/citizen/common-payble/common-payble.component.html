@@ -11,8 +11,15 @@
         <control-messages [control]="paymentsForm.get('payableServices.code')"></control-messages>
       </div>
 
-      <mat-form-field class="col-md-4">
+      <!-- This is input for other services search-->
+      <mat-form-field class="col-md-4" *ngIf="f.payableServices.get('code').value !== 'PROFESSIONAL_TAX'">
         <input matInput placeholder="{{placeholder}}" formControlName="refNumber" required>
+        <control-messages [control]="paymentsForm.get('refNumber')"></control-messages>
+      </mat-form-field>
+
+      <!-- This is input for professional tax search-->
+      <mat-form-field class="col-md-4" *ngIf="f.payableServices.get('code').value === 'PROFESSIONAL_TAX'">
+        <input matInput appAlphaNumeric maxlength="12" placeholder="{{placeholder}}" formControlName="refNumber" required>
         <control-messages [control]="paymentsForm.get('refNumber')"></control-messages>
       </mat-form-field>
 
@@ -24,6 +31,32 @@
       </div>
     </div>
 
+    <div class="row" style="margin-left: -30px;" *ngIf="isRecordExists && responseData">
+        <div class="col-md-12">
+          <label class="col-md-2 font16 font-weight-bold">Name :</label>
+          <span class="font16">{{responseData?.applicantFullName}}</span>
+        </div>
+        <div class="col-md-12">
+          <label class="col-md-2 font16 font-weight-bold">Commencement Date :</label>
+          <span class="font16">{{responseData?.commencementDate | date: 'dd/MM/yyyy'}}</span>
+        </div>
+        <div class="col-md-12">
+          <label class="col-md-2 font16 font-weight-bold">Establishment Name :</label>
+          <span class="font16">{{responseData?.establishmentName}}</span>
+        </div>
+        <div class="col-md-12">
+          <label class="col-md-2 font16 font-weight-bold">Contact No :</label>
+          <span class="font16">{{responseData?.contactNo}}</span>
+        </div>
+        <div class="col-md-12">
+          <label class="col-md-2 font16 font-weight-bold">Address :</label>
+          <span class="font16">{{responseData?.officeAddress?.buildingName}}, {{responseData?.officeAddress?.area}}, {{responseData?.officeAddress?.city}}, 
+            {{responseData?.officeAddress?.state}}, {{responseData?.officeAddress?.country}}, {{responseData?.officeAddress?.pincode}}</span>
+        </div>
+    </div>
+
+
+    <!-- This table is display due detail of professional tax-->
     <div class="row mt-4" *ngIf="isRecordExists">
       <ng-container *ngIf="isECRCSearch">
         <div class="table-responsive">

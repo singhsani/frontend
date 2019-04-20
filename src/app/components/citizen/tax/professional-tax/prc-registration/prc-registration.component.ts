@@ -116,6 +116,7 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 			registrationDate: null,
 			applicantFullName: null,
 			applicantFullNameGuj: null,
+			status: null,
 
 			gender: this.fb.group({
 				code: null, name: null,
@@ -369,6 +370,11 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 		let currentDate = moment(new Date()); // current Date
 		let monthLists: any = []; // save difference between months from rcDate and currentDate
 
+		var date = moment("2008-04-01");
+		if (rcDate < date) {
+			rcDate = moment("2008-04-01");
+		}
+
 		/*Calculate the months between rcDate and currentDate */
 		while (currentDate > rcDate || rcDate.format('M') === currentDate.format('M')) {
 			if (rcDate.format('YYYY') != currentDate.format('YYYY') || ((this.monthArray.indexOf(_.toUpper(rcDate.format('MMMM'))) + 1) <= (this.monthArray.indexOf(_.toUpper(currentDate.format('MMMM'))) + 1))) {
@@ -408,6 +414,8 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 		}
 
 		let isMatch = ecrcNo.match(/PEC/g);
+		ecrcNo = ecrcNo.toUpperCase();
+
 		if (!isMatch) {
 			this.commonService.openAlert("Warning", "Only can be search with PEC number", "warning");
 			return;
@@ -431,7 +439,7 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 		this.prcInitialDate = undefined;
 
 		/** if response exist data then do further process */
-		if (res.data && Object.keys(res.data).length) {																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																
+		if (res.data && Object.keys(res.data).length) {
 
 			if (res.data.hasPrc) {
 				this.commonService.openAlert("PRC Is Already Exists", "", "warning", `Your PRC number is<br> <b>${res.data.prcNo}</b>`);
@@ -537,6 +545,10 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 		let rcDate = new Date(this.prcRegForm.get('rcDate').value).getFullYear();
 		this.yearArray = [];
 
+		if (rcDate < 2008) {
+			rcDate = 2008;
+		}
+
 		while (rcDate <= new Date().getFullYear()) {
 			this.yearArray.push(rcDate);
 			rcDate++;
@@ -575,7 +587,11 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 				if (this.empDetailYear === dateStr.getFullYear()) {
 					this.monthIdx = dateStr.getMonth();
 				} else {
-					this.monthIdx = 0;
+					if (this.empDetailYear == 2008) {
+						this.monthIdx = 3;
+					} else {
+						this.monthIdx = 0;
+					}
 				}
 			}
 
@@ -623,8 +639,13 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 	 * This method use for submit modal value and hide modal
 	 */
 	onSubmitEmpDetails() {
-		if (!this.empDetailMonth && !this.empDetailYear) {
-			this.commonService.openAlert("Warning", "Select month and year", "warning");
+		if (!this.empDetailMonth) {
+			this.commonService.openAlert("Warning", "Please select month", "warning");
+			return;
+		}
+
+		if (!this.empDetailYear) {
+			this.commonService.openAlert("Warning", "Please select year", "warning");
 			return;
 		}
 
@@ -736,6 +757,7 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 	 * @param event - Selected year
 	 */
 	empYearChange(event) {
+		this.empDetailMonth = null;
 		if (event === (new Date).getFullYear()) {
 			/** If the selected year will be same with current year*/
 
@@ -762,8 +784,13 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 					this.currentMonthIdx = 12;
 				}
 			} else {
-				this.monthIdx = 0;
-				this.currentMonthIdx = 12;
+				if (event == 2008) {
+					this.monthIdx = 3;
+					this.currentMonthIdx = 12;
+				} else {
+					this.monthIdx = 0;
+					this.currentMonthIdx = 12;
+				}
 			}
 		}
 	}
