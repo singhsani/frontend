@@ -16,14 +16,14 @@
       <!-- Card Content showing Zoo Ticketing Rates and Visiting Time -->
       <mat-card-content class="p-4">
         <div class="guideline-intro">
-          <span>Enter Tickets </span>
+          <span>{{'ticket-details'| translate: translateKey}} </span>
           <mat-icon class="middle-align">arrow_forward</mat-icon>
-          <span> Make Payments </span>
+          <span> {{'enter_tickets'| translate: translateKey}} </span>
           <mat-icon class="middle-align">arrow_forward</mat-icon>
-          <span> Print Ticket</span>
+          <span> {{'print_ticket'| translate: translateKey}}</span>
         </div>
         <p class="pb-2">{{head_lines| translate: translateKey}}</p>
-        <h2>{{'Ticket Rate Details'| translate: translateKey}}</h2>
+        <h2>{{'ticket-rate-details'| translate: translateKey}}</h2>
 
         <div class="example-container mat-elevation-z8 borderOne">
 
@@ -39,18 +39,18 @@
             </ng-container>
 
             <ng-container matColumnDef="description">
-              <mat-header-cell *matHeaderCellDef>{{'Particulars' | translate:translateKey}}</mat-header-cell>
+              <mat-header-cell *matHeaderCellDef>{{'particulars' | translate:translateKey}}</mat-header-cell>
               <mat-cell *matCellDef="let row" class="fullWidth">
-                <div class="mobile-label">{{'Particulars' | translate:translateKey}}</div>
+                <div class="mobile-label">{{'particulars' | translate:translateKey}}</div>
                 <div class="mobile-label1">:</div>
                 <div class="row-inside"> {{ row.description }}</div>
               </mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="price">
-              <mat-header-cell *matHeaderCellDef>{{'Charges(Rs.)' | translate:translateKey}}</mat-header-cell>
+              <mat-header-cell *matHeaderCellDef>{{'charges' | translate:translateKey}}</mat-header-cell>
               <mat-cell *matCellDef="let row" class="fullWidth">
-                <div class="mobile-label">{{'Charges(Rs.)' | translate:translateKey}}</div>
+                <div class="mobile-label">{{'charges' | translate:translateKey}}</div>
                 <div class="mobile-label1">:</div>
                 <div class="row-inside"> {{ zooVisitingRates ? zooVisitingRates[row.priceField] : '' }}</div>
               </mat-cell>
@@ -62,7 +62,7 @@
 
         <br />
 
-        <h2>{{'Zoo Timings'| translate: translateKey}}</h2>
+        <h2>{{'zoo_timings'| translate: translateKey}}</h2>
 
         <div class="example-container mat-elevation-z8 borderOne">
 
@@ -78,18 +78,18 @@
             </ng-container>
 
             <ng-container matColumnDef="months">
-              <mat-header-cell *matHeaderCellDef>{{'Months' | translate:translateKey}}</mat-header-cell>
+              <mat-header-cell *matHeaderCellDef>{{'months' | translate:translateKey}}</mat-header-cell>
               <mat-cell *matCellDef="let row" class="fullWidth">
-                <div class="mobile-label">{{'Months' | translate:translateKey}}</div>
+                <div class="mobile-label">{{'months' | translate:translateKey}}</div>
                 <div class="mobile-label1">:</div>
                 <div class="row-inside"> {{ row.months }}</div>
               </mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="slot">
-              <mat-header-cell *matHeaderCellDef>{{'Slot' | translate:translateKey}}</mat-header-cell>
+              <mat-header-cell *matHeaderCellDef>{{'slot' | translate:translateKey}}</mat-header-cell>
               <mat-cell *matCellDef="let row" class="fullWidth">
-                <div class="mobile-label">{{'Slot' | translate:translateKey}}</div>
+                <div class="mobile-label">{{'slot' | translate:translateKey}}</div>
                 <div class="mobile-label1">:</div>
                 <div class="row-inside"> {{ row.slot }}</div>
               </mat-cell>
@@ -116,13 +116,13 @@
       <!-- Ticket Booking Section Starts Here -->
 
       <mat-card class="cardBox" *ngIf="showTicketsBookingForm">
-        <div class="pageTitle">{{'Ticket Details'| translate: translateKey}}</div>
+        <div class="pageTitle">{{'ticket-details'| translate: translateKey}}</div>
         <mat-card-content class="p-4">
           <p class="pb-2">{{head_lines| translate: translateKey}}</p>
-          <h2>{{'Ticket Rate Details'| translate: translateKey}}</h2>
+          <h2>{{'ticket-rate-details'| translate: translateKey}}</h2>
 
           <mat-form-field class="col-md-6 col-sm-6 col-xs-4">
-            <mat-label>{{'choose_start_date'| translate: translateKey}}</mat-label>
+            <mat-label>{{'visiting-date'| translate: translateKey}}</mat-label>
             <input matInput [min]="startMinDate" [matDatepicker]="zooTicketDatePicker" (dateChange)="changeDateFormat($event)" formControlName="visitingDate"
               placeholder="DD/MM/YYYY">
             <mat-datepicker-toggle matSuffix [for]="zooTicketDatePicker"></mat-datepicker-toggle>
@@ -137,7 +137,7 @@
                 <th>#</th>
                 <th>Name</th>
                 <th width="70">{{'No' | translate:translateKey}}</th>
-                <th>{{'Amount(Rs.)' | translate:translateKey}}</th>
+                <th>{{'amount' | translate:translateKey}}</th>
               </tr>
             </thead>
 
@@ -148,12 +148,13 @@
                   <div>{{indx + 1}}</div>
                 </td>
                 <td>
-                  <div class="d-md-none">Name:</div>
+                  <div class="d-md-none">{{'name' | translate:translateKey}}:</div>
                   {{row.name}}
                 </td>
                 <td>
+                  <div class="d-md-none">{{'No' | translate:translateKey}}</div>
                   <div class="row">
-                      <div class="d-md-none"><span>{{'No' | translate:translateKey}}</span></div>
+
                       <mat-form-field class="col-sm-4 col-md-12" style="padding-left: 0;">
                         <input #catRef matInput [maxlength]="row.max" OnlyNumber
                           placeholder="{{row.placeHolder | translate:translateKey}}"
@@ -162,49 +163,49 @@
                   </div>
                 </td>
                 <td>
-                  <div class="d-md-none">{{'Amount(Rs.)' | translate:translateKey}}</div>
+                  <div class="d-md-none">{{'amount' | translate:translateKey}}</div>
                   <div>{{catRef.value * (zooVisitingRates ? zooVisitingRates[row.priceField] : '')}}</div>
                 </td>
               </tr>
 
               <tr class="mo-d-none">
                 <td></td>
-                <td>Sub Total</td>
-                <td>Total Visitors: {{numberOfVisitors}}</td>
+                <td>{{'sub_total' | translate:translateKey}}</td>
+                <td>{{'total_visitors' | translate:translateKey}}: {{numberOfVisitors}}</td>
                 <td>{{totalAmount}}</td>
               </tr>
 
               <tr class="mo-d-none">
                 <td></td>
-                <td>Total Amount(Excluding Transaction Charges)</td>
+                <td>{{'total_amount' | translate:translateKey}}</td>
                 <td></td>
                 <td>{{totalAmount}}</td>
               </tr>
 
               <tr class="d-md-none">
-                <td>Total Visitors: {{numberOfVisitors}}</td>
-                <td>Total Amount(Excluding Transaction Charges): {{totalAmount}}</td>
+                <td>{{'total_visitors' | translate:translateKey}}: {{numberOfVisitors}}</td>
+                <td>{{'total_amount' | translate:translateKey}}: {{totalAmount}}</td>
               </tr>
             </tbody>
           </table>
 
           <!-- Contact Details -->
-          <h2>{{'Contact Details'| translate: translateKey}}</h2>
+          <h2>{{'contact-details'| translate: translateKey}}</h2>
           <div class="row">
             <mat-form-field class="col-md-6">
               <input matInput maxlength="25" appValidationFields [validationFieldsType]="'onlyNameWithSpace'"
-                type="text" formControlName="applicantName" placeholder="{{'Name' | translate: translateKey}}" required>
+                type="text" formControlName="applicantName" placeholder="{{'name' | translate: translateKey}}" required>
               <control-messages [control]="ticketBookingForm.get('applicantName')"></control-messages>
             </mat-form-field>
 
             <mat-form-field class="col-md-6">
               <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="applicantMobile"
-                placeholder="{{'Mobile' | translate: translateKey}}" required>
+                placeholder="{{'mobile' | translate: translateKey}}" required>
               <control-messages [control]="ticketBookingForm.get('applicantMobile')"></control-messages>
             </mat-form-field>
 
             <div class="col-md-6 ngSelect" formGroupName="idType">
-              <ng-select placeholder="{{'ID Type'| translate: translateKey}}" formControlName="code">
+              <ng-select placeholder="{{'id_type'| translate: translateKey}}" formControlName="code">
                 <ng-option *ngFor="let id of idTypes" [value]="id.code">
                   {{ id?.name }}
                 </ng-option>
@@ -215,7 +216,7 @@
 
             <mat-form-field class="col-md-6">
               <input matInput formControlName="idNumber" maxlength="4"
-                placeholder="{{'ID Number' | translate: translateKey}}" required>
+                placeholder="{{'id-number' | translate: translateKey}}" required>
               <control-messages [control]="ticketBookingForm.get('idNumber')"></control-messages>
             </mat-form-field>
           </div>
@@ -227,10 +228,12 @@
           <div class="col-sm-12 col-md-12 text-right">
             <button mat-raised-button (click)="resetForm()" color="primary">
               <mat-icon>clear_all</mat-icon>
-              {{'Reset'| translate: translateKey}}
+              {{'reset'| translate: translateKey}}
             </button>
 
-            <button mat-raised-button color="primary" type="button" [disabled]="ticketBookingForm.invalid" (click)="redirecToPayment()">
+            <button mat-raised-button color="primary" type="button"
+              [disabled]="ticketBookingForm.invalid || (ticketBookingForm.get('totalChild').value < 1 && ticketBookingForm.get('totalAdult').value < 1)"
+              (click)="redirecToPayment()">
                 <mat-icon>check_circle_outline</mat-icon>
                 {{'book_ticket'| translate: translateKey}}
               </button>

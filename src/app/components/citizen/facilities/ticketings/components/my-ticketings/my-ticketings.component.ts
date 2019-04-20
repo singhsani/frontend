@@ -86,7 +86,7 @@ export class MyTicketingsComponent implements OnInit {
 	) {
 		let resourcesList = [
 			{ type: 'zoo', name: 'Zoo Ticketing' },
-			{ type: 'animaladoption', name: 'Animal Adoption' },
+			{ type: 'zooanimaladoption', name: 'Animal Adoption' },
 		]
 		this.resources = resourcesList;
 	}

@@ -106,7 +106,7 @@ export class ZooBookingComponent implements OnInit {
 
   ticketBookingRows: any[] = [
     {
-      name: 'Children',
+      name: 'children',
       formGroupName: 'children',
       formControlName: 'totalChild',
       placeHolder: 'Number Of Children',
@@ -114,7 +114,7 @@ export class ZooBookingComponent implements OnInit {
       priceField: 'CHILD'
     },
     {
-      name: 'Adults',
+      name: 'adults',
       formGroupName: 'adults',
       formControlName: 'totalAdult',
       placeHolder: 'Number Of Adults',
@@ -122,7 +122,7 @@ export class ZooBookingComponent implements OnInit {
       priceField: 'ADULT'
     },
     {
-      name: 'Camera',
+      name: 'camera',
       formGroupName: 'camera',
       formControlName: 'totalCamera',
       placeHolder: 'Number Of Camera',
@@ -130,7 +130,7 @@ export class ZooBookingComponent implements OnInit {
       priceField: 'CAMERA'
     },
     {
-      name: 'Video Camera',
+      name: 'video_camera',
       formGroupName: 'videoCamera',
       formControlName: 'totalVideoCamera',
       placeHolder: 'Number Of Video Camera',
