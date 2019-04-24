@@ -49,7 +49,7 @@ export class AnimalAdoptionComponent implements OnInit {
   /**
    * language translate key.
   */
-  translateKey = 'animalAdoption';
+  translateKey = 'animalAodptionScreen';
 
   constructor(
     private fb: FormBuilder,
@@ -103,7 +103,7 @@ export class AnimalAdoptionComponent implements OnInit {
       animalName: [null, Validators.required],
       totalAdoptionCost: [null, Validators.required],
       message: [null, Validators.required],
-      agree: [null, Validators.required],
+      agree: [],
       termsCondition: [null, Validators.required]
     });
   }
@@ -122,7 +122,7 @@ export class AnimalAdoptionComponent implements OnInit {
         sectionToPrint.innerHTML = acknowledgementHTML;
         setTimeout(() => {
           window.print();
-          // this.router.navigate([this.ticketingConstants.MY_BOOKINGS_URL]);
+          this.router.navigate([this.ticketingConstants.MY_TICKETINGS_URL]);
         });
       }, err => {
         this.commonService.openAlert("Error", err.error[0].message, "warning")

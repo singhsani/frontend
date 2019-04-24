@@ -1,7 +1,7 @@
 import { BTConfig, BTConstants } from '../../config/bt-config';
 
 /**
- * Booking Module Constants
+ * Ticketing Module Constants
  */
 export class TicketingConstants extends BTConstants {
   static AGREE_MESSAGE = 'Should be agree with given bank details';
