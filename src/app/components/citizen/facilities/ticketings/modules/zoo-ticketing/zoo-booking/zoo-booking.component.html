@@ -1,13 +1,5 @@
 <!-- <app-title-bar [title]="'Zoo Ticket Booking' | translate: translateKey"></app-title-bar> -->
 
-<!-- <mat-tab-group [(selectedIndex)]="tabIndex" dynamicHeight="true" mat-stretch-tabs class="stepperNav"> -->
-
-  <!-- Ticket Booking Tab Starts Here -->
-  <!-- <mat-tab>
-    <ng-template mat-tab-label>
-      <div>{{'Ticket Booking' | translate:translateKey}}</div>
-    </ng-template> -->
-
     <!-- Guildelines section starts here -->
 
     <mat-card class="cardBox" *ngIf="guideLineFlag">
@@ -302,7 +294,7 @@
 
           <div class="row mt-4 fotButtonBar">
             <div class="col-sm-12 col-md-12 justify-content-between d-flex">
-              <button type="button" color="primary" mat-raised-button (click)="tabIndex= tabIndex -1; ">
+              <button type="button" color="primary" mat-raised-button (click)="showTicketsBookingForm = true; bankDetailsFlag = false;; ">
                 <mat-icon>navigate_before</mat-icon>
                 {{'back' | translate:translateKey}}
               </button>

@@ -49,7 +49,7 @@ export class AnimalAdoptionComponent implements OnInit {
   /**
    * language translate key.
   */
-  translateKey = 'animalAdoption';
+  translateKey = 'animalAodptionScreen';
 
   constructor(
     private fb: FormBuilder,

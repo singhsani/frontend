@@ -21,7 +21,7 @@ table { width: 100%; }
 .borderOne {box-shadow:none !important; border:1px solid #b9b9b9;}
 .myTicketPricingTabel {
     mat-footer-row, mat-header-row, mat-row, td.mat-cell, td.mat-footer-cell, th.mat-header-cell {border-color: #b9b9b9;}
-    
+
     .mat-cell {font-size:13px; color:#000; padding-left: 5px; padding-right: 5px;}
     .mat-header-cell {font-size:14px; color:#000; padding-left: 5px; padding-right: 5px;}
     .mat-column-id {max-width: 50px; padding: 0 0 0 20px;}
@@ -43,7 +43,7 @@ table { width: 100%; }
              }
         }
     }
-    .actionBtn {min-width: 36px !important; border-radius:50%; padding: 0; 
+    .actionBtn {min-width: 36px !important; border-radius:50%; padding: 0;
         .mat-icon {color: rgb(68, 55, 55);}
     }
 }
@@ -89,12 +89,12 @@ table { width: 100%; }
 //     max-height: 500px;
 //     min-width: 300px;
 //   }
-  
+
   .mat-table {
     overflow: auto;
     max-height: 500px;
   }
-  
+
   .mobile-label, .mobile-label1 {
     display: none;
   }
@@ -158,4 +158,8 @@ table { width: 100%; }
 .guideline-intro {
     font-size: 18px;
     font-weight: 500;
+}
+
+.row {
+  margin: 0;
 }

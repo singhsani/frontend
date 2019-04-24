@@ -3,7 +3,7 @@
 
 <!-- Search Bookings By providing filter details -->
 <mat-card class="mb-4">
-	<form [formGroup]="searchBookingsForm" (ngSubmit)="getAllBooking()" autocomplete="off" ngNativeValidate>
+	<form [formGroup]="searchTicketingsForm" (ngSubmit)="getAllBooking()" autocomplete="off" ngNativeValidate>
 		<div class="row">
 			<div class="col-md-4 ngSelect">
 				<ng-select placeholder="{{'select_booking_resources' | translate:translateKey}}" formControlName="resourceType">
@@ -11,13 +11,13 @@
 						{{ resource.name }}
 					</ng-option>
 				</ng-select>
-				<control-messages [control]="searchBookingsForm.get('resourceType')">
+				<control-messages [control]="searchTicketingsForm?.get('resourceType')">
 				</control-messages>
 			</div>
 			<mat-form-field class="col-md-4">
-				<input matInput maxlength="25" type="text" formControlName="refNumber" placeholder="{{'ref_number' | translate: translateKey}}"
-				 trim="blur">
-				<control-messages [control]="searchBookingsForm.get('refNumber')"></control-messages>
+				<input matInput maxlength="25"  type="text" formControlName="refNumber"
+				 placeholder="{{'ref_number' | translate: translateKey}}" trim="blur">
+				<control-messages [control]="searchTicketingsForm?.get('refNumber')"></control-messages>
 			</mat-form-field>
 			<div class="col-md-4">
 				<button mat-stroked-button color="primary" class="w-100 mt-2" type="submit">
@@ -45,25 +45,16 @@
 		<mat-spinner *ngIf="isLoadingResults"></mat-spinner>
 	</div> -->
 
-	<table mat-table class="myBookings" [dataSource]="bookingList" matSort matSortActive="created" matSortDisableClear matSortDirection="asc">
+	<table mat-table [dataSource]="ticketingList" matSort matSortActive="created" matSortDisableClear matSortDirection="asc">
 
 		<ng-container matColumnDef="id">
-			<mat-header-cell *matHeaderCellDef>{{'s_no' | translate:translateKey}}</mat-header-cell>
-			<mat-cell *matCellDef="let element;let indx=index;">
-				<div class="mobile-label">{{'s_no' | translate:translateKey}}</div>
-				<div class="mobile-label1">:</div>
-				<div class="row-inside"> {{(paginator.pageIndex * paginator.pageSize) + (indx+1)}} </div>
-			</mat-cell>
+			<mat-header-cell *matHeaderCellDef >{{'s_no' | translate:translateKey}}</mat-header-cell>
+			<mat-cell *matCellDef="let element;let indx=index;"> {{(paginator.pageIndex * paginator.pageSize) + (indx+1)}} </mat-cell>
 		</ng-container>
 
 		<ng-container matColumnDef="refNumber">
-			<mat-header-cell *matHeaderCellDef> {{'booking_number' | translate:translateKey}}</mat-header-cell>
-			<mat-cell *matCellDef="let element;">
-				<div class="mobile-label">{{'booking_number' | translate:translateKey}}</div>
-				<div class="mobile-label1">:</div>
-				<div class="row-inside">{{element.refNumber}}</div>
-
-			</mat-cell>
+			<mat-header-cell *matHeaderCellDef> {{'ref_number' | translate:translateKey}}</mat-header-cell>
+			<mat-cell *matCellDef="let element;"> {{element.refNumber}} </mat-cell>
 		</ng-container>
 
 		<ng-container matColumnDef="bookingDate">
@@ -156,6 +147,7 @@
 			<thead class="customthead">
 				<tr>
 					<th scope="col"> {{'s_no' | translate:translateKey}} </th>
+					<th scope="col">{{'booking_no' | translate:translateKey}}</th>
 					<th scope="col">{{'slot_or_shift_no' | translate:translateKey}}</th>
 					<th scope="col"> {{'date_of_programme' | translate:translateKey}}</th>
 					<th scope="col"> {{'day_of_programme' | translate:translateKey}}</th>
