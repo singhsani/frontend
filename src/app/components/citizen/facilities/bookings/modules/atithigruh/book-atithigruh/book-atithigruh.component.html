@@ -1,3 +1,46 @@
-<p>
-  book-atithigruh works!
-</p>
+<app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
+
+
+<mat-card class="formClass cardBorder">
+
+    <div class="pageTitle">{{'screen_title'| translate: translateKey}}</div>
+
+    <div class="p-15">
+
+        <form [formGroup]="BookingTypeForm" (ngSubmit)="searchBooking()" autocomplete="off" ngNativeValidate>
+
+            <div class="row mt-3 mb-3">
+
+                <div class="col-md-6 ngSelect">
+                    <ng-select placeholder="{{'Select Booking Type'| translate: translateKey}}" formControlName="code">
+                        <ng-option *ngFor="let bt of BOOKING_TYPE" [value]="bt.code">
+                            {{ bt.name }}
+                        </ng-option>
+                    </ng-select>
+                    <control-messages [control]="BookingTypeForm.get('code')"></control-messages>
+                </div>
+
+                <div formGroupName="purpose" class="col-md-6 ngSelect">
+                    <ng-select placeholder="{{'purpose_of_booking'| translate: translateKey}}" formControlName="code">
+                        <ng-option *ngFor="let purpose of PURPOSE" [value]="purpose.code">
+                            {{ purpose.name }}
+                        </ng-option>
+                    </ng-select>
+                    <control-messages [control]="BookingTypeForm.get('purpose').get('code')">
+                    </control-messages>
+                </div>
+
+            </div>
+
+            <div class="row fotButtonBar">
+                <div class="col-sm-12 col-md-12 text-right">
+                    <button mat-raised-button color="primary" type="submit">
+                        <mat-icon>search</mat-icon>
+                        {{'search'| translate: translateKey}}
+                    </button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</mat-card>

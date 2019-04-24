@@ -67,9 +67,10 @@
                             {{'choose_start_date'| translate: translateKey}}
                         </mat-label>
                         <!-- matDatepickerFilter]="myFilter" -->
-                        <input matInput [min]="startMinDate" [matDatepicker]="stadiumBookingfromPicker" formControlName="startDate" placeholder="DD/MM/YYYY">
+                        <input appDate matInput [min]="startMinDate" [matDatepicker]="stadiumBookingfromPicker" formControlName="startDate" placeholder="DD/MM/YYYY">
                         <mat-datepicker-toggle matSuffix [for]="stadiumBookingfromPicker"></mat-datepicker-toggle>
                         <mat-datepicker #stadiumBookingfromPicker touchUi="true"></mat-datepicker>
+                        <div align="end" class="default-show-hint mat-hint mat-right">{{bookingUtils.DATE_HINT_MSG}}</div>
                         <control-messages [control]="childrenTheaterSearchForm.get('startDate')">
                         </control-messages>
                     </mat-form-field>
@@ -78,9 +79,10 @@
                         <mat-label>
                             {{'choose_end_date'| translate: translateKey}}
                         </mat-label>
-                        <input matInput [min]="endMinDate" [matDatepicker]="stadiumBookingtoPicker" formControlName="endDate" placeholder="DD/MM/YYYY">
+                        <input appDate matInput [min]="endMinDate" [matDatepicker]="stadiumBookingtoPicker" formControlName="endDate" placeholder="DD/MM/YYYY">
                         <mat-datepicker-toggle matSuffix [for]="stadiumBookingtoPicker"></mat-datepicker-toggle>
                         <mat-datepicker #stadiumBookingtoPicker touchUi="true"></mat-datepicker>
+                        <div align="end" class="default-show-hint mat-hint mat-right">{{bookingUtils.DATE_HINT_MSG}}</div>
                         <control-messages [control]="childrenTheaterSearchForm.get('endDate')">
                         </control-messages>
                     </mat-form-field>
@@ -326,13 +328,13 @@
                         </div>
                     
                         <mat-form-field class="col-md-4">
-                            <input matInput type="email" maxlength="20" formControlName="emailId" placeholder="{{'applicant_email' | translate: translateKey}}" required>
+                            <input matInput type="email" maxlength="30" formControlName="emailId" placeholder="{{'applicant_email' | translate: translateKey}}" required>
                             <control-messages [control]="childrenTheaterApplicationForm.get('emailId')"></control-messages>
                         </mat-form-field>
                     
                         <div class="col-md-4">
                             <mat-form-field>
-                                <input matInput type="email" maxlength="20" formControlName="confirmEmailId" placeholder="{{'confirm_email' | translate: translateKey}}"
+                                <input matInput type="email" maxlength="30" formControlName="confirmEmailId" placeholder="{{'confirm_email' | translate: translateKey}}"
                                     required>
                                 <control-messages [control]="childrenTheaterApplicationForm.get('confirmEmailId')"></control-messages>
                             </mat-form-field>

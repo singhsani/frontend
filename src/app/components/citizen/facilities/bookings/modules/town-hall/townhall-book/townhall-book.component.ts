@@ -96,7 +96,7 @@ export class TownHallBookComponent implements OnInit {
 
 	bookingDetailsDataSource = new MatTableDataSource<BookingDetails>([]);
 
-	disableDateList: Array<any> = ['2018-08-01', '2018-09-02', '2018-08-03', '2018-08-15'];
+	// disableDateList: Array<any> = ['2018-08-01', '2018-09-02', '2018-08-03', '2018-08-15'];
 
 	/**
 	 * Used to show headlines.
@@ -280,13 +280,17 @@ export class TownHallBookComponent implements OnInit {
 			this.bookingService.getAllSlots(filterData).subscribe(resp => {
 				this.filteredReponse = resp;
 				let temp = resp.data.scheduleList;
-				this.Dates = temp.sort((a, b) => {
-					if ((new Date(a.key).getTime()) >= (new Date(b.key).getTime())) {
-						return 1
-					} else {
-						return -1
-					}
-				});
+				if(temp){
+					this.Dates = temp.sort((a, b) => {
+						if ((new Date(a.key).getTime()) >= (new Date(b.key).getTime())) {
+							return 1
+						} else {
+							return -1
+						}
+					});
+				} else {
+					this.commonService.openAlertFormSaveValidation('Warning!', "Schedule List Not Found", 'warning');
+				}
 				this.availableStots = resp.data;
 				this.isLoadingResults = false;
 			}, err => {

@@ -93,7 +93,7 @@
 			<mat-cell *matCellDef="let element;">
 				<div class="mobile-label">{{'actions' | translate:translateKey}}</div>
 				<div class="mobile-label1">:</div>
-				<button *ngIf="(element.status != bookingConstant.DRAFT) && (element.status != bookingConstant.EXPIRED) && (element.status != bookingConstant.SUBMITTED)"
+				<button *ngIf="(element.status != bookingConstant.DRAFT) && (element.status != bookingConstant.EXPIRED)"
 				 mat-button [matMenuTriggerFor]="menu">
 					<mat-icon>more_vert</mat-icon>
 				</button>
