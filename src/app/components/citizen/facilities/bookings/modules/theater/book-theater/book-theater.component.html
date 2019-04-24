@@ -36,9 +36,10 @@
                             {{'choose_start_date'| translate: translateKey}}
                         </mat-label>
                         <!-- matDatepickerFilter]="myFilter" -->
-                        <input matInput [min]="startMinDate" [matDatepicker]="theaterBookingfromPicker" formControlName="startDate" placeholder="DD/MM/YYYY">
+                        <input appDate matInput [min]="startMinDate" [matDatepicker]="theaterBookingfromPicker" formControlName="startDate" placeholder="DD/MM/YYYY">
                         <mat-datepicker-toggle matSuffix [for]="theaterBookingfromPicker"></mat-datepicker-toggle>
                         <mat-datepicker #theaterBookingfromPicker touchUi="true"></mat-datepicker>
+                        <div align="end" class="default-show-hint mat-hint mat-right">{{bookingUtils.DATE_HINT_MSG}}</div>
                         <control-messages [control]="searchTheaterForm.get('startDate')">
                         </control-messages>
                     </mat-form-field>
@@ -47,9 +48,10 @@
                         <mat-label>
                             {{'choose_end_date'| translate: translateKey}}
                         </mat-label>
-                        <input matInput [min]="endMinDate" [matDatepicker]="theaterBookingtoPicker" formControlName="endDate" placeholder="DD/MM/YYYY">
+                        <input appDate matInput [min]="endMinDate" [matDatepicker]="theaterBookingtoPicker" formControlName="endDate" placeholder="DD/MM/YYYY">
                         <mat-datepicker-toggle matSuffix [for]="theaterBookingtoPicker"></mat-datepicker-toggle>
                         <mat-datepicker #theaterBookingtoPicker touchUi="true"></mat-datepicker>
+                        <div align="end" class="default-show-hint mat-hint mat-right">{{bookingUtils.DATE_HINT_MSG}}</div>
                         <control-messages [control]="searchTheaterForm.get('endDate')">
                         </control-messages>
                     </mat-form-field>

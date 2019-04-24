@@ -1,19 +1,22 @@
-import { Directive, ElementRef, HostListener, Renderer, Renderer2, OnInit } from '@angular/core';
+import { Directive, ElementRef, HostListener,Renderer2, OnInit, Input } from '@angular/core';
 
 @Directive({
   selector: '[appDate]'
 })
-export class DateDirective {
+export class DateDirective implements OnInit {
 
-  constructor(private el: ElementRef, private r: Renderer, private r2: Renderer) {
+  @Input("min") min : any;
+
+  constructor(private el: ElementRef, private r2: Renderer2) {
 
   }
-  ngOnInit() {
 
+  ngOnInit() {
     setTimeout(() => {
       // this.r2.setElementStyle(this.el.nativeElement, 'color', 'blue');
-      this.r2.setElementAttribute(this.el.nativeElement, 'placeholder', 'DD/MM/YYYY');
-      // this.r2.setElementAttribute(this.el.nativeElement, 'maxlength', '10');
+      // this.r2.setAttribute(this.el.nativeElement, 'placeholder', 'DD/MM/YYYY');
+      this.r2.setAttribute(this.el.nativeElement, 'maxlength', '10');
+      this.r2.setAttribute(this.el.nativeElement, 'minlength', '10');
     }, 100)
   }
 
@@ -46,7 +49,10 @@ export class DateDirective {
   }
 
   @HostListener('keyup', ['$event']) onkeyup(e: KeyboardEvent) {
+    this.checker(e);
+  }
 
+  checker(e: KeyboardEvent){
     let numberRegEx = /^[0-9/]+$/;
     let val = String(this.el.nativeElement.value);
 
@@ -55,13 +61,12 @@ export class DateDirective {
       e.preventDefault();
     } else if (val.length <= 10) {
       if (val.length == 2 && e.keyCode != 8) {
-        this.el.nativeElement.value = this.el.nativeElement.value.concat("/")
+        this.el.nativeElement.value = this.el.nativeElement.value.concat("/");
       }
       if (val.length == 5 && e.keyCode != 8) {
-        this.el.nativeElement.value = this.el.nativeElement.value.concat("/")
+        this.el.nativeElement.value = this.el.nativeElement.value.concat("/");
       }
     }
-
   }
 
 }

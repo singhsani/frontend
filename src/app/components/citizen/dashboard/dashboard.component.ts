@@ -79,7 +79,7 @@ export class DashboardComponent implements OnInit {
 					"name": "Atithigruh",
 					"gujName": "અતિથિગ્રહ",
 					"appointmentRequired": false,
-					"active": false
+					"active": true
 				},
 				{
 					"code": "CHILDRENTHEATERBOOK",
