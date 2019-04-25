@@ -253,7 +253,7 @@ export class CommonService {
 	}
 
 	redirectToPaymentGateway(payData) {
-		window.location.href = environment.adminUrl + `#/admin/payment-gateway?retUrl=${payData.retUrl}&retPath=${payData.retPath}`;
+		window.location.href = environment.adminUrl + `payment-gateway?retUrl=${payData.retUrl}&retPath=${payData.retPath}`;
 	}
 
 

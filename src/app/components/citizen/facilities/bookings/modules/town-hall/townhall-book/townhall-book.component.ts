@@ -386,14 +386,14 @@ export class TownHallBookComponent implements OnInit {
 					return;
 					// let payData = this.bookingService.proceedForPayment(err.error.data);
 					// this.commonService.commonAlert('Payment Details', '', 'info', 'Make Payment!', false, payData.html, cb => {
-					// 	window.location.href = environment.adminUrl + `#/admin/payment-gateway?retUrl=${payData.payData.retUrl}&retPath=${payData.payData.retPath}`;
+					// 	window.location.href = environment.adminUrl + `payment-gateway?retUrl=${payData.payData.retUrl}&retPath=${payData.payData.retPath}`;
 					// }, rj => {
 					// 	let errHtml = `			
 					// 	<div class="alert alert-danger">
 					// 		Please Complete Payment, Otherwise the application will be considered as in-complete
 					// 	</div>`
 					// 	this.commonService.commonAlert("Application Incomplete", "", 'warning', 'Make Payment!', false, errHtml, ccb => {
-					// 		window.location.href = environment.adminUrl + `#/admin/payment-gateway?retUrl=${payData.payData.retUrl}&retPath=${payData.payData.retPath}`;
+					// 		window.location.href = environment.adminUrl + `payment-gateway?retUrl=${payData.payData.retUrl}&retPath=${payData.payData.retPath}`;
 					// 	}, arj => {
 					// 		this.townHallApplicationForm.disable();
 					// 		this.router.navigate([this.bookingConstants.MY_BOOKINGS_URL]);

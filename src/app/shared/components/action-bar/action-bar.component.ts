@@ -174,14 +174,14 @@ export class ActionBarComponent implements OnInit, OnChanges {
 										</div>
 										`
 										this.commonService.commonAlert('Payment Details', '', 'info', 'Make Payment!', false, html, cb => {
-											window.location.href = environment.adminUrl + `admin/payment-gateway?retUrl=${payData.retUrl}&retPath=${payData.retPath}`;
+											window.location.href = environment.adminUrl + `payment-gateway?retUrl=${payData.retUrl}&retPath=${payData.retPath}`;
 										}, rj => {
 											let errHtml = `			
 												<div class="alert alert-danger">
 													Please Complete Payment, Otherwise the application will be considered as in-complete
 												</div>`
 											this.commonService.commonAlert("Application Incomplete", "", 'warning', 'Make Payment!', false, errHtml, ccb => {
-												window.location.href = environment.adminUrl + `admin/payment-gateway?retUrl=${payData.retUrl}&retPath=${payData.retPath}`;
+												window.location.href = environment.adminUrl + `payment-gateway?retUrl=${payData.retUrl}&retPath=${payData.retPath}`;
 											}, arj => {
 												this.form.get('canEdit').setValue(false);
 												//this.toastr.success(`${this.form.getRawValue().serviceDetail.name} information successfully submit`);
