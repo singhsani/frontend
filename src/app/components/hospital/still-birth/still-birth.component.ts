@@ -49,6 +49,7 @@ export class StillBirthComponent implements OnInit {
 	minBirthDate: any;
 	maxBirthDate = new Date();
 	showButtons: boolean = false;
+	showChildAddButton: boolean = false;
 	submit: boolean = false;
 	apiCode: string;
 	/**
@@ -66,6 +67,7 @@ export class StillBirthComponent implements OnInit {
 	Religion: Array<any> = [];
 	ChildWeights: Array<any> = [];
 	ISYESNO: Array<any> = [];
+	wardNoData: Array<any> = [];
 	checked: boolean;
 	/**
 	 * step labels
@@ -192,10 +194,11 @@ export class StillBirthComponent implements OnInit {
 				gujName: null
 			}),
 			motherAadharNumber: [null, [Validators.minLength(12), Validators.maxLength(12), ValidationService.aadharValidation]],
-			motherPrevRegNumber: [null, [Validators.minLength(10), Validators.maxLength(10)]],
-			petaKendraNumber: [null, [Validators.minLength(10), Validators.maxLength(10)]],
-			motherMarriageAge: [null, [Validators.minLength(2), Validators.maxLength(2), Validators.required]],
-			motherDeliveryAge: [null, [Validators.required, Validators.minLength(2), Validators.maxLength(2)]],
+			motherPrevRegNumber: [null, [Validators.maxLength(20)]],
+			mamtaRegNumber: [null, [Validators.required,Validators.maxLength(4)]],
+			petaKendraNumber: [null, [Validators.minLength(4), Validators.maxLength(4)]],
+			motherMarriageAge: [null, [Validators.required, Validators.minLength(2), Validators.maxLength(3), ValidationService.motherMarriageTimeAge]],
+			motherDeliveryAge: [null, [Validators.required, Validators.minLength(2), Validators.maxLength(3), ValidationService.motherMarriageTimeAge]],
 
 			deliveryTreatment: this.fb.group({
 				code: [null, [Validators.required]],
@@ -210,6 +213,16 @@ export class StillBirthComponent implements OnInit {
 			parentDeliveryAddress: this.fb.group(this.addressComp.addressControls()),
 			isPermanentPresentAddressSame: this.fb.group({
 				code: null
+			}),
+			withinCityLimits: this.fb.group({
+				id: null,
+				code: [null, Validators.required],
+				name: null
+			}),
+			wardNo: this.fb.group({
+				id: null,
+				code: [null],
+				name: null
 			}),
 			parentPermanentAddress: this.fb.group(this.addressComp.addressControls()),
 			familyReligion: this.fb.group({
@@ -292,7 +305,10 @@ export class StillBirthComponent implements OnInit {
 				weightGram: null,
 				weightKg: this.fb.group({
 					code: null
-				})
+				}),
+				Immediate_COD_1: null,
+				Immediate_COD_2: null,
+				Immediate_COD_3: null,
 			}
 		}
 		return this.fb.group({
@@ -309,7 +325,10 @@ export class StillBirthComponent implements OnInit {
 			weightGram: child.weightGram,
 			weightKg: this.fb.group({
 				code: [child.weightKg.code, [Validators.required]]
-			})
+			}),
+			Immediate_COD_1: [child.Immediate_COD_1, [Validators.required,Validators.maxLength(100)]],
+			Immediate_COD_2: [child.Immediate_COD_2, [Validators.required,Validators.maxLength(100)]],
+			Immediate_COD_3: [child.Immediate_COD_3, [Validators.required,Validators.maxLength(100)]],
 		})
 	}
 
@@ -385,6 +404,12 @@ export class StillBirthComponent implements OnInit {
 			if (!this.stillBirthCertificateForm.controls.canEdit.value) {
 				this.stillBirthCertificateForm.disable();
 			}
+			/**
+			 * Call multiple child adder.
+			 */
+			if (res.childs.length > 1) {
+				this.multipleChildAdder(true);
+			}
 
 			/**
 			 * Catch Changes in form to make status updated.
@@ -412,6 +437,7 @@ export class StillBirthComponent implements OnInit {
 			this.BirthPlaces = respData.PLACE;
 			this.Religion = respData.RELIGION;
 			this.ISYESNO = respData.YES_NO;
+			this.wardNoData = respData.WARD;
 		})
 	}
 
@@ -592,5 +618,17 @@ export class StillBirthComponent implements OnInit {
 	 */
 	onTabChange(evt) {
 		this.tabIndex = evt;
+	}
+
+	/**
+	 * method is used to show and hide multiple child add button.
+	 * @param event - boolean.
+	 */
+	multipleChildAdder(event) {
+		if (event) {
+			this.showChildAddButton = true
+		} else {
+			this.showChildAddButton = false
+		}
 	}
 }

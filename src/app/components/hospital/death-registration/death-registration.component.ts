@@ -11,6 +11,7 @@ import * as moment from 'moment';
 import { HospitalConfig } from '../hospital-config';
 import { Observable } from 'rxjs';
 import { TranslateService } from '../../../shared/modules/translate/translate.service';
+import { AmazingTimePickerService } from 'amazing-time-picker';
 
 @Component({
 	selector: 'app-death-registration',
@@ -59,6 +60,8 @@ export class DeathRegistrationComponent implements OnInit {
 	Religion: Array<any> = [];
 	Gender: Array<any> = [];
 	ISYESNO: Array<any> = [];
+	wardNoData: Array<any> = [];
+	MaritalStatusData: Array<any> = [];
 
 	/**
 	 * step labels
@@ -83,7 +86,8 @@ export class DeathRegistrationComponent implements OnInit {
 		private route: ActivatedRoute,
 		private commonService: CommonService,
 		private formService: HosFormActionsService,
-		public translateService: TranslateService
+		public translateService: TranslateService,
+		private atp: AmazingTimePickerService
 	) {
 	}
 
@@ -100,6 +104,8 @@ export class DeathRegistrationComponent implements OnInit {
 			this.RelationShip = respData.RELATIONSHIP;
 			this.Religion = respData.RELIGION;
 			this.ISYESNO = respData.YES_NO;
+			this.wardNoData = respData.WARD;
+			this.MaritalStatusData = respData.MARITAL_STATUS_DEATH;
 		});
 	}
 
@@ -272,22 +278,22 @@ export class DeathRegistrationComponent implements OnInit {
 		this.deathCertificateForm.get('deathPlace').get('code').updateValueAndValidity();
 		this.deathCertificateForm.get('medicalTreatment').get('code').updateValueAndValidity();
 		this.deathCertificateForm.get('medicalReason').get('code').updateValueAndValidity();
-		if(event == "YES"){
+		if (event == "YES") {
 			this.mandatoryAttachment(["POLICE_INQUEST", "PM_REPORT"]);
 			this.removeMandatoryAttachment(["ID_PROOF_DECEASED", "CREMATION_REPORT", "APPLICANT_ID_PROOF", "FORM_4A"]);
-		} else  {
+		} else {
 			this.mandatoryAttachment(["ID_PROOF_DECEASED", "CREMATION_REPORT", "APPLICANT_ID_PROOF", "FORM_4A"]);
 			this.removeMandatoryAttachment(["POLICE_INQUEST", "PM_REPORT"]);
 		}
 	}
 
-	mandatoryAttachment(arr : Array<any>){
+	mandatoryAttachment(arr: Array<any>) {
 		arr.forEach(f => {
 			this.uploadFileArray.find(d => d.documentIdentifier == f).mandatory = true;
 		});
 	}
 
-	removeMandatoryAttachment(arr: Array<any>){
+	removeMandatoryAttachment(arr: Array<any>) {
 		arr.forEach(f => {
 			this.uploadFileArray.find(d => d.documentIdentifier == f).mandatory = false;
 		});
@@ -313,6 +319,13 @@ export class DeathRegistrationComponent implements OnInit {
 			}),
 			deathDate: [null],
 			birthDate: [null],
+			deathTime:[null,[Validators.required]],
+			maritalStatus: this.fb.group({
+				id: null,
+				code: [null,[Validators.required]],
+				name: null,
+				gujName: null
+			}),
 			fatherOrHusbandName: ['', [ValidationService.nameValidator]],
 			motherName: ['', [ValidationService.nameValidator]],
 			religion: this.fb.group({
@@ -364,6 +377,16 @@ export class DeathRegistrationComponent implements OnInit {
 
 			isPermanentPresentAddressSame: this.fb.group({
 				code: null
+			}),
+			withinCityLimits: this.fb.group({
+				id: null,
+				code: [null, Validators.required],
+				name: null
+			}),
+			wardNo: this.fb.group({
+				id: null,
+				code: [null],
+				name: null
 			}),
 
 			//Permanent Address
@@ -506,5 +529,33 @@ export class DeathRegistrationComponent implements OnInit {
 	 */
 	onTabChange(evt) {
 		this.tabIndex = evt;
+	}
+
+	/**
+	 * Method is used to open time picker.
+	 * @param controlName - control name.
+	 */
+	openTimePicker(controlName: string) {
+		const amazingTimePicker = this.atp.open({
+			changeToMinutes: true,
+			theme: 'material-purple',
+		});
+		amazingTimePicker.afterClose().subscribe(time => {
+			if (time.length == 5) {
+				this.deathCertificateForm.get(controlName).setValue(time + ":00");
+			}
+		});
+	}
+
+	/**
+	 * Used to capture change in birth time for perticular child.
+	 * @param ev - event
+	 * @param index - index of child
+	 */
+	changeTimeFormat(ev: string, controlName: string) {
+		if (ev && ev.length < 8) {
+			ev = ev.concat(":00");
+		}
+		this.deathCertificateForm.get(controlName).setValue(ev);
 	}
 }
