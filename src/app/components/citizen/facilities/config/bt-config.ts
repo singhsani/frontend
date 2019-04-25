@@ -61,14 +61,14 @@ export class BTConfig extends CitizenConfig {
 
       let payData = this.proceedForPayment(err.error.data, redirectURLAfterPayment, btService.resourceType);
         commonService.commonAlert('Payment Details', '', 'info', 'Make Payment!', false, payData.html, cb => {
-            window.location.href = environment.adminUrl + `admin/payment-gateway?retUrl=${payData.payData.retUrl}&retPath=${payData.payData.retPath}`;
+            window.location.href = environment.adminUrl + `payment-gateway?retUrl=${payData.payData.retUrl}&retPath=${payData.payData.retPath}`;
         }, rj => {
             let errHtml = `
 						<div class="alert alert-danger">
 							Please Complete Payment, Otherwise the application will be considered as in-complete
 						</div>`
             commonService.commonAlert("Application Incomplete", "", 'warning', 'Make Payment!', false, errHtml, ccb => {
-                window.location.href = environment.adminUrl + `admin/payment-gateway?retUrl=${payData.payData.retUrl}&retPath=${payData.payData.retPath}?&printUrl=${payData.payData.printUrl}`;
+                window.location.href = environment.adminUrl + `payment-gateway?retUrl=${payData.payData.retUrl}&retPath=${payData.payData.retPath}?&printUrl=${payData.payData.printUrl}`;
             }, arj => {
                 if (form && router) {
                     form.disable();
