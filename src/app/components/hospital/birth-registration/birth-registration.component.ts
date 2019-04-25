@@ -74,6 +74,7 @@ export class BirthRegistrationComponent implements OnInit {
 	Religion: Array<any> = [];
 	ChildWeights: Array<any> = [];
 	ISYESNO: Array<any> = [];
+	wardNoData: Array<any> = [];
 
 	/**
 	 * step labels
@@ -104,7 +105,7 @@ export class BirthRegistrationComponent implements OnInit {
 		private fb: FormBuilder,
 		private atp: AmazingTimePickerService,
 		private toastrService: ToastrService,
-		private CD : ChangeDetectorRef,
+		private CD: ChangeDetectorRef,
 		public translateService: TranslateService
 	) {
 	}
@@ -134,7 +135,7 @@ export class BirthRegistrationComponent implements OnInit {
 			this.getBirthCertData();
 		}
 	}
-	
+
 	/**
      * Method is used to ensure form saved or not on user navigation.
     */
@@ -243,10 +244,11 @@ export class BirthRegistrationComponent implements OnInit {
 			}),
 
 			motherAadharNumber: [null, [Validators.minLength(12), Validators.maxLength(12), ValidationService.aadharValidation]],
-			motherPrevRegNumber: [null, [Validators.minLength(20), Validators.maxLength(50)]],
-			petaKendraNumber: [null, [Validators.minLength(10), Validators.maxLength(10), ValidationService.petaKendraNumber]],
-			motherMarriageAge: [null, [Validators.required, Validators.min(18), Validators.minLength(2), Validators.maxLength(2)]],
-			motherDeliveryAge: [null, [Validators.required, Validators.minLength(2), Validators.maxLength(2)]],
+			motherPrevRegNumber: [null, [Validators.maxLength(20)]],
+			mamtaRegNumber: [null, [Validators.required,Validators.maxLength(4)]],
+			petaKendraNumber: [null, [Validators.minLength(4),Validators.maxLength(4), ValidationService.petaKendraNumber]],
+			motherMarriageAge: [null, [Validators.required, Validators.minLength(2), Validators.maxLength(3), ValidationService.motherMarriageTimeAge]],
+			motherDeliveryAge: [null, [Validators.required, Validators.minLength(2), Validators.maxLength(3), ValidationService.motherMarriageTimeAge]],
 			deliveryTreatment: this.fb.group({
 				id: null,
 				code: [null, Validators.required],
@@ -273,6 +275,16 @@ export class BirthRegistrationComponent implements OnInit {
 				name: null
 			}),
 
+			withinCityLimits: this.fb.group({
+				id: null,
+				code: [null, Validators.required],
+				name: null
+			}),
+			wardNo: this.fb.group({
+				id: null,
+				code: [null],
+				name: null
+			}),
 			parentPermanentAddress: this.fb.group(this.addressComp.addressControls()),
 			familyReligion: this.fb.group({
 				id: null,
@@ -300,7 +312,7 @@ export class BirthRegistrationComponent implements OnInit {
 			// 	(<FormArray>this.birthCertificateForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.config.createDocumentsGrp(app));
 			// });
 			this.config.documentList(res, this.uploadFileArray);
-		
+
 			/**
 			 * Change in mandatory documents.
 			 */
@@ -386,7 +398,7 @@ export class BirthRegistrationComponent implements OnInit {
 			 * form change subscriber
 			 */
 			this.birthCertificateForm.valueChanges.subscribe((changeINForm) => {
-				if(this.birthCertificateForm.get('canEdit').value){
+				if (this.birthCertificateForm.get('canEdit').value) {
 					this.isFormSaved = false;
 					return;
 				}
@@ -394,13 +406,13 @@ export class BirthRegistrationComponent implements OnInit {
 		});
 	}
 
-	
+
 
 	/**
 	 * Update birth place regarding changes.
 	 * @param val - birth place type.
 	 */
-	changeInBirthPlace(val : string){
+	changeInBirthPlace(val: string) {
 		if (val == 'HOME') {
 			this.uploadFileArray.find(f => f.documentIdentifier == 'AAYAS_REPORT_OR_DOCTOR_CERTIFICATE').mandatory = true;
 		} else {
@@ -489,7 +501,7 @@ export class BirthRegistrationComponent implements OnInit {
 		else if (delay > this.config.daysInThisMonth() && delay < this.config.daysInThisYear()) {
 			this.uploadFileArray.find(d => d.documentIdentifier == "AFFIDAVIT_HEALTH_OFFICER_ORDER").mandatory = true;
 			this.uploadFileArray.find(d => d.documentIdentifier == "ORDER_EXECUTIVE_MAGISTRATE").mandatory = false;
-			
+
 			// if (!this.config.getFileObjectContained(this.uploadFileArray, '1.7')) {
 			// 	if (!this.config.getFileObjectContained(this.uploadFileArray, '1.8')) {
 			// 		this.uploadFileArray.push(this.config.fileObjectCreater('Affidavit Or Health Order', '1.7'));
@@ -537,9 +549,9 @@ export class BirthRegistrationComponent implements OnInit {
 		this.submit = true;
 		let step1 = 6;
 		let step2 = 16;
-		let step3 = 36;
-		let step4 = 41;
-		let step5 = 42;
+		let step3 = 37;
+		let step4 = 44;
+		let step5 = 45;
 
 		if (count <= step1) {
 			this.tabIndex = 0;
@@ -578,6 +590,7 @@ export class BirthRegistrationComponent implements OnInit {
 			this.BirthPlaces = respData.PLACE;
 			this.Religion = respData.RELIGION;
 			this.ISYESNO = respData.YES_NO;
+			this.wardNoData = respData.WARD;
 		})
 	}
 

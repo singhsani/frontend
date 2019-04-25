@@ -1,6 +1,7 @@
 <div class="welCome">
     <h1>Welcome to VMC Online Hospital Portal</h1>
-    <p>Welcome to Vadodara Municipal Corporation's Virtual Civic Center, which is simple and convenient way for citizens to
+    <p>Welcome to Vadodara Municipal Corporation's Virtual Civic Center, which is simple and convenient way for citizens
+        to
         access various services from anywhere at anytime.
         <br> The services of Virtual Civic Center can be accessed without paying any additional charge.</p>
 </div>
@@ -21,9 +22,10 @@
             </ng-template>
             <div class="servicesList row">
                 <div class="colBtn col-md-3" *ngFor="let service of module.services;" matTooltip="{{ service.name }}">
-                    <button mat-stroked-button color="primary" (click)="createRecord(service.code)">
+                    <button mat-stroked-button color="primary" (click)="createRecord(service.code)" [innerHtml]="service.name"></button>
+                    <!-- <button mat-stroked-button color="primary" (click)="createRecord(service.code)">
                         {{ service.name }}
-                    </button>
+                    </button> -->
                 </div>
             </div>
         </mat-tab>

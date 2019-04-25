@@ -34,14 +34,15 @@ export class ValidationService {
             invalidPinCode: `Pin Code Not Valid`,
             invalidAadhar: `Invalid Aadhar Number`,
             invalidNumber: `Invalid Mobile Number`,
-            invalidpregnanceTime: 'Pregnancy duration between 25 to 50',
+            invalidpregnanceTime: 'Pregnancy duration between 25 to 40',
             invalidbirthRegNumber: 'Invalid Birth Registration Date',
             invalidBuildingName: 'Building name is not valid',
             invalidemployeeage: 'Age must be greater than 13 year',
             invalidIfscCode: 'IFSC Code is not valid',
-            invalidPan: 'Invalid Pan Number', 
+            invalidPan: 'Invalid Pan Number',
             invalidpetaKendraNumber: 'Should contains only alpha-numeric and numeric value',
-            invalidAmount: 'Amount should be in digit and Only two digit allowed after decimal'
+            invalidAmount: 'Amount should be in digit and Only two digit allowed after decimal',
+            motherMarriageTimeAge: 'Mothers age at marriage time should not be less then 12 Years',
 
         }
 
@@ -156,9 +157,20 @@ export class ValidationService {
         }
     }
 
+    // mother age
+    static motherMarriageTimeAge(control: FormControl) {
+        if (control.value != null) {
+            const matches = parseInt(control.value) > 11;
+            return matches ? null : { 'motherMarriageTimeAge': true };
+        } else {
+            return null;
+        }
+    }
+
+
     static pregnancyDurationValidation(control: AbstractControl) {
         // RFC 2822 compliant regex
-        if (Number(control.value) >= 25 && Number(control.value) <= 50) {
+        if (Number(control.value) >= 25 && Number(control.value) <= 40) {
             return '';
         } else {
             return { 'invalidpregnanceTime': true };
@@ -166,9 +178,9 @@ export class ValidationService {
     }
 
     static petaKendraNumber(control: AbstractControl) {
-        if(String(control.value).split('').includes(" ")){
+        if (String(control.value).split('').includes(" ")) {
             return { 'invalidpetaKendraNumber': true };
-        }else{
+        } else {
             return ''
         }
     }
@@ -201,7 +213,7 @@ export class ValidationService {
         }
     }
 
-    static ifscCodeValidator(control : AbstractControl){
+    static ifscCodeValidator(control: AbstractControl) {
         if (control.value) {
             const matches = control.value.match(/^[A-Z]{4}0[0-9|A-Z]{6}/);
             return matches ? null : { 'invalidIfscCode': true };
