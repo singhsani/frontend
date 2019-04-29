@@ -58,7 +58,8 @@
                     <mat-icon>add</mat-icon>
                 </button> -->
 
-                <div class="row float-right padaddbtn" *ngIf="stillBirthCertificateForm.get('noOfChilds').value < 6 && showChildAddButton">
+                <div class="row float-right padaddbtn"
+                    *ngIf="stillBirthCertificateForm.get('noOfChilds').value < 6 && showChildAddButton">
                     <button color="primary" [disabled]="showButtons && !stillBirthCertificateForm.get('canEdit').value"
                         matTooltip="Add More New Born Child" type="button" mat-raised-button (click)="addMoreChild()">
                         <mat-icon>add</mat-icon>{{'Add_new_Child_Record' | translate: translateKey}}
@@ -171,36 +172,41 @@
                             <h2>{{'Cause_Of_Death' | translate: translateKey}}</h2>
 
                             <div class="row">
-                                <mat-form-field class="col-md-4">
-                                    <input matInput maxlength="100"
-                                        placeholder="{{'Immediate_COD_1' | translate:translateKey}}"
-                                        formControlName="Immediate_COD_1">
-                                    <control-messages
-                                        [control]="stillBirthCertificateForm.get('childs')['controls'][i].get('Immediate_COD_1')">
-                                    </control-messages>
-                                </mat-form-field>
 
-                                <mat-form-field class="col-md-4">
-                                    <input matInput maxlength="100"
-                                        placeholder="{{'Immediate_COD_2' | translate:translateKey}}"
-                                        formControlName="Immediate_COD_2">
+                                <div class="col-md-4 ngSelect" formGroupName="immediateCOD1">
+                                    <ng-select placeholder="{{'immediateCOD1' | translate:translateKey}} *"
+                                        formControlName="code">
+                                        <ng-option *ngFor="let Immediate_COD_Obj of IMMEDIATE_COD_Data" [value]="Immediate_COD_Obj.code">
+                                            {{Immediate_COD_Obj.name}}</ng-option>
+                                    </ng-select>
                                     <control-messages
-                                        [control]="stillBirthCertificateForm.get('childs')['controls'][i].get('Immediate_COD_2')">
+                                        [control]="stillBirthCertificateForm.get('childs')['controls'][i].get('immediateCOD1').get('code')">
                                     </control-messages>
-                                </mat-form-field>
+                                </div>
 
-                                <mat-form-field class="col-md-4">
-                                    <input matInput maxlength="100"
-                                        placeholder="{{'Immediate_COD_3' | translate:translateKey}}"
-                                        formControlName="Immediate_COD_3">
+                                <div class="col-md-4 ngSelect" formGroupName="immediateCOD2">
+                                    <ng-select placeholder="{{'immediateCOD2' | translate:translateKey}} "
+                                        formControlName="code">
+                                        <ng-option *ngFor="let Immediate_COD_Obj of IMMEDIATE_COD_Data" [value]="Immediate_COD_Obj.code">
+                                            {{Immediate_COD_Obj.name}}</ng-option>
+                                    </ng-select>
                                     <control-messages
-                                        [control]="stillBirthCertificateForm.get('childs')['controls'][i].get('Immediate_COD_3')">
+                                        [control]="stillBirthCertificateForm.get('childs')['controls'][i].get('immediateCOD2').get('code')">
                                     </control-messages>
-                                </mat-form-field>
+                                </div>
+
+                                <div class="col-md-4 ngSelect" formGroupName="immediateCOD3">
+                                    <ng-select placeholder="{{'immediateCOD3' | translate:translateKey}} "
+                                        formControlName="code">
+                                        <ng-option *ngFor="let Immediate_COD_Obj of IMMEDIATE_COD_Data" [value]="Immediate_COD_Obj.code">
+                                            {{Immediate_COD_Obj.name}}</ng-option>
+                                    </ng-select>
+                                    <control-messages
+                                        [control]="stillBirthCertificateForm.get('childs')['controls'][i].get('immediateCOD3').get('code')">
+                                    </control-messages>
+                                </div>
                             </div>
                         </div>
-
-
 
                     </div>
                 </div>
@@ -560,7 +566,7 @@
 
                     <div class="col-md-4 radioBtnError" formGroupName="withinCityLimits">
                         <mat-label>{{'Within_City_Limits' | translate:translateKey}} *</mat-label>
-                        <mat-radio-group formControlName="code">
+                        <mat-radio-group formControlName="code" (change)="stillBirthCertificateForm.get('wardNo').get('code').reset()">
                             <mat-radio-button class="example-radio-button" *ngFor="let opt of ISYESNO"
                                 [value]="opt.code">
                                 {{opt.name}}

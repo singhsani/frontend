@@ -62,6 +62,8 @@ export class DeathRegistrationComponent implements OnInit {
 	ISYESNO: Array<any> = [];
 	wardNoData: Array<any> = [];
 	MaritalStatusData: Array<any> = [];
+	IMMEDIATE_COD_Data: Array<any> = [];
+	DEATH_REPORT_CORONER_Data: Array<any> = [];
 
 	/**
 	 * step labels
@@ -106,6 +108,8 @@ export class DeathRegistrationComponent implements OnInit {
 			this.ISYESNO = respData.YES_NO;
 			this.wardNoData = respData.WARD;
 			this.MaritalStatusData = respData.MARITAL_STATUS_DEATH;
+			this.IMMEDIATE_COD_Data = respData.IMMEDIATE_COD;
+			this.DEATH_REPORT_CORONER_Data = respData.DEATH_REPORT_TO_CORONER;
 		});
 	}
 
@@ -319,13 +323,21 @@ export class DeathRegistrationComponent implements OnInit {
 			}),
 			deathDate: [null],
 			birthDate: [null],
-			deathTime:[null,[Validators.required]],
+			deathTime: [null, [Validators.required]],
 			maritalStatus: this.fb.group({
 				id: null,
-				code: [null,[Validators.required]],
+				code: [null, [Validators.required]],
 				name: null,
 				gujName: null
 			}),
+
+			spouseFirstName: null,
+			spouseFirstNameGuj: null,
+			spouseMiddleName: null,
+			spouseMiddleNameGuj: null,
+			spouseLastName: null,
+			spouseLastNameGuj: null,
+
 			fatherOrHusbandName: ['', [ValidationService.nameValidator]],
 			motherName: ['', [ValidationService.nameValidator]],
 			religion: this.fb.group({
@@ -365,7 +377,33 @@ export class DeathRegistrationComponent implements OnInit {
 			medicalReason: this.fb.group({
 				code: [null]
 			}),
-			deathReason: ['', [Validators.maxLength(100)]],
+			treatmentDurationFrom:null,
+			treatmentDurationTo:null,
+			//deathReason: ['', [Validators.maxLength(100)]],
+			
+			reportedToCoronor: this.fb.group({
+				id: null,
+				code: [null, Validators.required],
+				name: null
+			}),
+			immediateCOD1: this.fb.group({
+				id: null,
+				code: [null,[Validators.required]],
+				name: null,
+				gujName: null
+			}),
+			immediateCOD2: this.fb.group({
+				id: null,
+				code: [null],
+				name: null,
+				gujName: null
+			}),
+			immediateCOD3: this.fb.group({
+				id: null,
+				code: [null],
+				name: null,
+				gujName: null
+			}),
 			smokingSince: [null, [Validators.max(this.deceasedAge), Validators.min(this.minAge)]],
 			tobaccoSince: [null, [Validators.max(this.deceasedAge), Validators.min(this.minAge)]],
 			sopariPanmasalaSince: [null, [Validators.max(this.deceasedAge), Validators.min(this.minAge)]],
@@ -557,5 +595,38 @@ export class DeathRegistrationComponent implements OnInit {
 			ev = ev.concat(":00");
 		}
 		this.deathCertificateForm.get(controlName).setValue(ev);
+	}
+
+	/**
+	 * reset all spouse controlls
+	 */
+	resetSpouseCntrl(event: string) {
+		if (event != "MARRIED" && event != "MARRIED_SEPERATE") {
+			this.deathCertificateForm.get('spouseFirstName').reset();
+			this.deathCertificateForm.get('spouseFirstNameGuj').reset();
+			this.deathCertificateForm.get('spouseLastName').reset();
+			this.deathCertificateForm.get('spouseLastNameGuj').reset();
+			this.deathCertificateForm.get('spouseMiddleName').reset();
+			this.deathCertificateForm.get('spouseMiddleNameGuj').reset();
+		}
+	}
+
+	/**
+	 * reset 
+	 * @param event 
+	 */
+	changeMedicalTreatment(event: string){
+		if(event =='NO_MED_HELP_ATT'){
+			this.deathCertificateForm.get('treatmentDurationFrom').reset();
+			this.deathCertificateForm.get('treatmentDurationTo').reset();
+		}
+	}
+	/**
+	 * change date format
+	 * @param date 
+	 * @param controlType 
+	 */
+	dateFormat(date, controlType: string) {
+		this.deathCertificateForm.get(controlType).setValue(moment(date).format("YYYY-MM-DD"));
 	}
 }

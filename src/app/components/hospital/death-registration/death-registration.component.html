@@ -121,10 +121,13 @@
 							<mat-icon matTooltip="Select Time" color="primary">alarm</mat-icon>
 						</button>
 					</div>
+				</div>
+
+				<div class="row">
 
 					<div formGroupName="maritalStatus" class="col-md-6 ngSelect">
 						<ng-select placeholder="{{'marital_Status' | translate:translateKey}} {{requiredFeild?'*':''}}"
-							formControlName="code">
+							formControlName="code" (change)="resetSpouseCntrl($event)">
 							<ng-option *ngFor="let maritalStatusObj of MaritalStatusData"
 								[value]="maritalStatusObj.code">
 								{{maritalStatusObj.name}}
@@ -134,6 +137,69 @@
 						</control-messages>
 					</div>
 
+				</div>
+
+
+
+				<div class="row"
+					*ngIf="deathCertificateForm.get('maritalStatus').get('code').value=='MARRIED' || deathCertificateForm.get('maritalStatus').get('code').value=='MARRIED_SEPERATE'">
+
+					<mat-form-field class="col-md-4">
+						<input matInput appValidationFields [form]="deathCertificateForm" appGujInputSource
+							targetElement="spouseFirstNameGuj" [validationFieldsType]="'onlyNameWithOutSpace'"
+							maxlength="20" placeholder="{{'spouse_FirstName' | translate:translateKey}}"
+							formControlName="spouseFirstName" [required]="requiredFeild">
+						<control-messages [control]="deathCertificateForm.get('spouseFirstName')"></control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<input matInput appValidationFields [form]="deathCertificateForm" appGujInputSource
+							targetElement="spouseMiddleNameGuj" [validationFieldsType]="'onlyNameWithOutSpace'"
+							maxlength="20" placeholder="{{'spouse_MiddleName' | translate:translateKey}}"
+							formControlName="spouseMiddleName">
+						<control-messages [control]="deathCertificateForm.get('spouseMiddleName')"></control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<input matInput appValidationFields [form]="deathCertificateForm" appGujInputSource
+							targetElement="spouseLastNameGuj" [validationFieldsType]="'onlyNameWithOutSpace'"
+							maxlength="20" placeholder="{{'spouse_LastName' | translate:translateKey}}"
+							formControlName="spouseLastName" [required]="requiredFeild">
+						<control-messages [control]="deathCertificateForm.get('spouseLastName')"></control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<input [required]="requiredFeild" matInput maxlength="20" appGujInputTarget
+							[form]="deathCertificateForm"
+							placeholder="{{'spouse_FirstName' | translate:translateKey:'gu'}}"
+							formControlName="spouseFirstNameGuj">
+						<control-messages [control]="deathCertificateForm.get('spouseFirstNameGuj')">
+						</control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<input matInput type="text" appGujInputTarget [form]="deathCertificateForm" maxlength="20"
+							placeholder="{{'spouse_MiddleName' | translate:translateKey:'gu'}}"
+							formControlName="spouseMiddleNameGuj">
+						<control-messages [control]="deathCertificateForm.get('spouseMiddleNameGuj')">
+						</control-messages>
+					</mat-form-field>
+
+
+					<mat-form-field class="col-md-4">
+						<input [required]="requiredFeild" matInput type="text" appGujInputTarget
+							[form]="deathCertificateForm" maxlength="20"
+							placeholder="{{'spouse_LastName' | translate:translateKey:'gu'}}"
+							formControlName="spouseLastNameGuj">
+						<control-messages [control]="deathCertificateForm.get('spouseLastNameGuj')">
+						</control-messages>
+					</mat-form-field>
+
+				</div>
+
+
+
+				<div class="row">
 					<mat-form-field class="col-md-6">
 						<input [required]="requiredFeild" matInput appValidationFields
 							[validationFieldsType]="'onlyNameWithSpace'" maxlength="20"
@@ -286,14 +352,14 @@
 					</div>
 
 					<mat-form-field *ngIf="deathCertificateForm.get('deathPlace').get('code').value == 'OTHER_PLACE'"
-						class="col-md-8">
+						class="col-md-4">
 						<input maxlength="500" [required]="requiredFeild" matInput
 							placeholder="{{'other_death_place' | translate:translateKey}}" formControlName="otherPlace">
 					</mat-form-field>
 
-					<div class="col-md-8 ngSelect" formGroupName="medicalTreatment">
+					<div class="col-md-4 ngSelect" formGroupName="medicalTreatment">
 						<ng-select
-							(change)="config.gujNameFinder($event,deathCertificateForm,'medicalTreatment',MedicalTreatmentOptions)"
+							(change)="config.gujNameFinder($event,deathCertificateForm,'medicalTreatment',MedicalTreatmentOptions);changeMedicalTreatment($event)"
 							placeholder="{{'medical_treatment' | translate:translateKey}} {{requiredFeild?'*':''}}"
 							formControlName="code">
 							<ng-option *ngFor="let mto of MedicalTreatmentOptions" [value]="mto.code">
@@ -309,13 +375,99 @@
 							[value]="deathCertificateForm.get('medicalTreatment').get('gujName').value">
 					</mat-form-field>
 
+					<mat-form-field class="col-md-4"
+						*ngIf="deathCertificateForm.get('medicalTreatment').get('code').value && deathCertificateForm.get('medicalTreatment').get('code').value !='NO_MED_HELP_ATT' ">
+						<input matInput required [matDatepicker]="treatFromDatepicker" formControlName="treatmentDurationFrom"
+							(dateChange)="dateFormat($event.value,'treatmentDurationFrom')"
+							placeholder="{{ 'treatment_DurationFrom' | translate:translateKey }}">
+						<mat-datepicker-toggle matSuffix [for]="treatFromDatepicker"></mat-datepicker-toggle>
+						<mat-datepicker touchUi="true" #treatFromDatepicker></mat-datepicker>
+						<control-messages [control]="deathCertificateForm.get('treatmentDurationFrom')">
+						</control-messages>
+					</mat-form-field>
 
-					<mat-form-field class="col">
+					<mat-form-field class="col-md-4" *ngIf="deathCertificateForm.get('medicalTreatment').get('code').value && deathCertificateForm.get('medicalTreatment').get('code').value !='NO_MED_HELP_ATT' ">
+						<input matInput required [matDatepicker]="treatToDatePicker" formControlName="treatmentDurationTo"
+							(dateChange)="dateFormat($event.value,'treatmentDurationTo')"
+							placeholder="{{ 'treatment_DurationTo' | translate:translateKey }}">
+						<mat-datepicker-toggle matSuffix [for]="treatToDatePicker"></mat-datepicker-toggle>
+						<mat-datepicker touchUi="true" #treatToDatePicker></mat-datepicker>
+						<control-messages [control]="deathCertificateForm.get('treatmentDurationTo')">
+						</control-messages>
+					</mat-form-field>
+
+
+					<!-- <mat-form-field class="col">
 						<input [required]="requiredFeild" matInput type="text"
 							placeholder="{{'death_reason' | translate:translateKey}}" formControlName="deathReason">
 						<control-messages [control]="deathCertificateForm.get('deathReason')"></control-messages>
-					</mat-form-field>
+					</mat-form-field> -->
 
+
+				</div>
+
+				<h2>{{'Cause_Of_Death' | translate: translateKey}}</h2>
+				<div class="row">
+
+					<!-- <div class="col-md-3 radioBtnError" formGroupName="isOrphan">
+						<mat-label>{{'reported_to_coroner' | translate:translateKey }} *</mat-label>
+						<mat-radio-group class="example-radio-group" formControlName="code">
+							<mat-radio-button class="example-radio-button" *ngFor="let orphan of ISYESNO"
+								[value]="orphan.code">
+								{{orphan.name}}
+							</mat-radio-button>
+						</mat-radio-group>
+						<control-messages [control]="deathCertificateForm.get('isOrphan').get('code')">
+						</control-messages>
+					</div> -->
+
+					<div class="col-md-6 radioBtnError" formGroupName="reportedToCoronor">
+						<mat-label>{{'reported_to_coroner' | translate:translateKey}} *</mat-label>
+						<mat-radio-group formControlName="code">
+							<mat-radio-button class="example-radio-button"
+								*ngFor="let report_coroner_obj of DEATH_REPORT_CORONER_Data"
+								[value]="report_coroner_obj.code">
+								{{report_coroner_obj.name}}
+							</mat-radio-button>
+						</mat-radio-group>
+						<control-messages [control]="deathCertificateForm.get('reportedToCoronor')">
+						</control-messages>
+					</div>
+
+					<div class="col-md-6 ngSelect" formGroupName="immediateCOD1">
+						<ng-select placeholder="{{'immediateCOD1' | translate:translateKey}} *" formControlName="code">
+							<ng-option *ngFor="let Immediate_COD_Obj of IMMEDIATE_COD_Data"
+								[value]="Immediate_COD_Obj.code">
+								{{Immediate_COD_Obj.name}}</ng-option>
+						</ng-select>
+						<control-messages [control]="deathCertificateForm.get('immediateCOD1').get('code')">
+						</control-messages>
+					</div>
+
+					<div class="col-md-6 ngSelect" formGroupName="immediateCOD2">
+						<ng-select placeholder="{{'immediateCOD2' | translate:translateKey}}" formControlName="code">
+							<ng-option *ngFor="let Immediate_COD_Obj of IMMEDIATE_COD_Data"
+								[value]="Immediate_COD_Obj.code">
+								{{Immediate_COD_Obj.name}}</ng-option>
+						</ng-select>
+						<control-messages [control]="deathCertificateForm.get('immediateCOD2').get('code')">
+						</control-messages>
+					</div>
+
+					<div class="col-md-6 ngSelect" formGroupName="immediateCOD3">
+						<ng-select placeholder="{{'immediateCOD3' | translate:translateKey}}" formControlName="code">
+							<ng-option *ngFor="let Immediate_COD_Obj of IMMEDIATE_COD_Data"
+								[value]="Immediate_COD_Obj.code">
+								{{Immediate_COD_Obj.name}}</ng-option>
+						</ng-select>
+						<control-messages [control]="deathCertificateForm.get('immediateCOD3').get('code')">
+						</control-messages>
+					</div>
+
+				</div>
+
+
+				<div class="row">
 					<div class="col-md-12 radioBtnError" formGroupName="medicalReason">
 						<label>{{'medical_reason' | translate:translateKey}} {{requiredFeild?'*':''}} </label>
 						<mat-radio-group formControlName="code">
@@ -379,40 +531,40 @@
 						[addressFormGroup]="deathCertificateForm.get('presentAddress')"></app-address>
 				</div>
 
-				
+
 
 				<div class="row">
-                    <div class="col-md-4" formGroupName="isPermanentPresentAddressSame">
-                        <mat-checkbox style="margin-left:15px;" [disabled]="!deathCertificateForm.get('canEdit').value"
-						(change)="check($event)"
-						[checked]="deathCertificateForm.get('isPermanentPresentAddressSame').get('code').value == 'YES'? true : false">{{'is_permanent_address_same_as_present_address'
+					<div class="col-md-4" formGroupName="isPermanentPresentAddressSame">
+						<mat-checkbox style="margin-left:15px;" [disabled]="!deathCertificateForm.get('canEdit').value"
+							(change)="check($event)"
+							[checked]="deathCertificateForm.get('isPermanentPresentAddressSame').get('code').value == 'YES'? true : false">{{'is_permanent_address_same_as_present_address'
 						| translate:translateKey}}</mat-checkbox>
-                    </div>
+					</div>
 
-                    <div class="col-md-4 radioBtnError" formGroupName="withinCityLimits">
-                        <mat-label>{{'Within_City_Limits' | translate:translateKey}} *</mat-label>
-                        <mat-radio-group formControlName="code">
-                            <mat-radio-button class="example-radio-button" *ngFor="let opt of ISYESNO"
-                                [value]="opt.code">
-                                {{opt.name}}
-                            </mat-radio-button>
-                        </mat-radio-group>
-                        <control-messages [control]="deathCertificateForm.get('withinCityLimits')">
-                        </control-messages>
-                    </div>
+					<div class="col-md-4 radioBtnError" formGroupName="withinCityLimits">
+						<mat-label>{{'Within_City_Limits' | translate:translateKey}} *</mat-label>
+						<mat-radio-group formControlName="code" (change)="deathCertificateForm.get('wardNo').get('code').reset()">
+							<mat-radio-button class="example-radio-button" *ngFor="let opt of ISYESNO"
+								[value]="opt.code">
+								{{opt.name}}
+							</mat-radio-button>
+						</mat-radio-group>
+						<control-messages [control]="deathCertificateForm.get('withinCityLimits')">
+						</control-messages>
+					</div>
 
-                    <div formGroupName="wardNo" class="col-md-4 ngSelect"
-                        *ngIf="deathCertificateForm.get('withinCityLimits').get('code').value=='YES'">
-                        <ng-select placeholder="{{'ward_No' | translate:translateKey}} *" formControlName="code"
-                            required>
-                            <ng-option *ngFor="let wardObj of wardNoData" [value]="wardObj.code">
-                                {{wardObj.name}}
-                            </ng-option>
-                        </ng-select>
-                        <control-messages [control]="deathCertificateForm.get('wardNo').get('code')">
-                        </control-messages>
-                    </div>
-                </div>
+					<div formGroupName="wardNo" class="col-md-4 ngSelect"
+						*ngIf="deathCertificateForm.get('withinCityLimits').get('code').value=='YES'">
+						<ng-select placeholder="{{'ward_No' | translate:translateKey}} *" formControlName="code"
+							required>
+							<ng-option *ngFor="let wardObj of wardNoData" [value]="wardObj.code">
+								{{wardObj.name}}
+							</ng-option>
+						</ng-select>
+						<control-messages [control]="deathCertificateForm.get('wardNo').get('code')">
+						</control-messages>
+					</div>
+				</div>
 
 				<div class="row">
 					<h2>

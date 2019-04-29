@@ -68,6 +68,7 @@ export class StillBirthComponent implements OnInit {
 	ChildWeights: Array<any> = [];
 	ISYESNO: Array<any> = [];
 	wardNoData: Array<any> = [];
+	IMMEDIATE_COD_Data: Array<any> = [];
 	checked: boolean;
 	/**
 	 * step labels
@@ -147,7 +148,16 @@ export class StillBirthComponent implements OnInit {
 				weightGram: null,
 				weightKg: {
 					code: null
-				}
+				},
+				immediateCOD1: this.fb.group({
+					code: null
+				}),
+				immediateCOD2: this.fb.group({
+					code: null
+				}),
+				immediateCOD3: this.fb.group({
+					code: null
+				})
 			})]),
 			noOfChilds: null,
 
@@ -306,9 +316,15 @@ export class StillBirthComponent implements OnInit {
 				weightKg: this.fb.group({
 					code: null
 				}),
-				Immediate_COD_1: null,
-				Immediate_COD_2: null,
-				Immediate_COD_3: null,
+				immediateCOD1: this.fb.group({
+					code: null
+				}),
+				immediateCOD2: this.fb.group({
+					code: null
+				}),
+				immediateCOD3: this.fb.group({
+					code: null
+				})
 			}
 		}
 		return this.fb.group({
@@ -326,9 +342,15 @@ export class StillBirthComponent implements OnInit {
 			weightKg: this.fb.group({
 				code: [child.weightKg.code, [Validators.required]]
 			}),
-			Immediate_COD_1: [child.Immediate_COD_1, [Validators.required,Validators.maxLength(100)]],
-			Immediate_COD_2: [child.Immediate_COD_2, [Validators.required,Validators.maxLength(100)]],
-			Immediate_COD_3: [child.Immediate_COD_3, [Validators.required,Validators.maxLength(100)]],
+			immediateCOD1: this.fb.group({
+				code: [child.immediateCOD1.code, [Validators.required]]
+			}),
+			immediateCOD2: this.fb.group({
+				code: [child.immediateCOD2.code]
+			}),
+			immediateCOD3: this.fb.group({
+				code: [child.immediateCOD3.code]
+			})
 		})
 	}
 
@@ -438,6 +460,7 @@ export class StillBirthComponent implements OnInit {
 			this.Religion = respData.RELIGION;
 			this.ISYESNO = respData.YES_NO;
 			this.wardNoData = respData.WARD;
+			this.IMMEDIATE_COD_Data = respData.IMMEDIATE_COD;
 		})
 	}
 

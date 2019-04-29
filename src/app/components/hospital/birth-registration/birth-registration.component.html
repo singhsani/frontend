@@ -530,7 +530,7 @@
 
                     <div class="col-md-4 radioBtnError" formGroupName="withinCityLimits">
                         <mat-label>{{'Within_City_Limits' | translate:translateKey}} *</mat-label>
-                        <mat-radio-group formControlName="code">
+                        <mat-radio-group formControlName="code" (change)="birthCertificateForm.get('wardNo').get('code').reset()">
                             <mat-radio-button class="example-radio-button" *ngFor="let opt of ISYESNO"
                                 [value]="opt.code">
                                 {{opt.name}}
