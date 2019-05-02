@@ -73,8 +73,14 @@ export class BirthRegistrationComponent implements OnInit {
 	TypeOfDelivery: Array<any> = [];
 	Religion: Array<any> = [];
 	ChildWeights: Array<any> = [];
+	CHILD_WEIGHT_GM : Array<any> = [];
+	URBAN_PRIMARY_HEALTH_CENTER: Array<any> = [];
 	ISYESNO: Array<any> = [];
 	wardNoData: Array<any> = [];
+	MOTHER_DELIVERY_AGE : Array<any> = [];
+	MOTHER_MARRIAGE_AGE : Array<any> = [];
+	BIRTH_CERTI_MAILING_ADDRESS_TYPE : Array<any> = [];
+
 
 	/**
 	 * step labels
@@ -192,7 +198,9 @@ export class BirthRegistrationComponent implements OnInit {
 				},
 				uniqueId: null,
 				version: null,
-				weightGram: null,
+				weightGram: {
+					code: null
+				},
 				weightKg: {
 					code: null
 				}
@@ -246,9 +254,24 @@ export class BirthRegistrationComponent implements OnInit {
 			motherAadharNumber: [null, [Validators.minLength(12), Validators.maxLength(12), ValidationService.aadharValidation]],
 			motherPrevRegNumber: [null, [Validators.maxLength(20)]],
 			mamtaRegNumber: [null, [Validators.required,Validators.maxLength(4)]],
-			petaKendraNumber: [null, [Validators.minLength(4),Validators.maxLength(4), ValidationService.petaKendraNumber]],
-			motherMarriageAge: [null, [Validators.required, Validators.minLength(2), Validators.maxLength(3), ValidationService.motherMarriageTimeAge]],
-			motherDeliveryAge: [null, [Validators.required, Validators.minLength(2), Validators.maxLength(3), ValidationService.motherMarriageTimeAge]],
+			petaKendraNumber: this.fb.group({
+				id: null,
+				code: null,
+				name: null,
+				gujName: null
+			}),
+			motherMarriageAge: this.fb.group({
+				id: null,
+				code: [null, [Validators.required]],
+				name: null,
+				gujName: null
+			}),
+			motherDeliveryAge: this.fb.group({
+				id: null,
+				code: [null, [Validators.required]],
+				name: null,
+				gujName: null
+			}),
 			deliveryTreatment: this.fb.group({
 				id: null,
 				code: [null, Validators.required],
@@ -268,30 +291,34 @@ export class BirthRegistrationComponent implements OnInit {
 
 
 			//step 4(3)
-			parentDeliveryAddress: this.fb.group(this.addressComp.addressControls()),
-			isPermanentPresentAddressSame: this.fb.group({
-				id: null,
-				code: null,
-				name: null
-			}),
-
-			withinCityLimits: this.fb.group({
-				id: null,
-				code: [null, Validators.required],
-				name: null
-			}),
-			wardNo: this.fb.group({
-				id: null,
-				code: [null],
-				name: null
-			}),
-			parentPermanentAddress: this.fb.group(this.addressComp.addressControls()),
 			familyReligion: this.fb.group({
 				id: null,
 				code: [null, Validators.required],
 				name: null
 			}),
 			familyReligionOther: null,
+			parentDeliveryAddress: this.fb.group(this.addressComp.addressControls()),
+			isPermanentPresentAddressSame: this.fb.group({
+				id: null,
+				code: null,
+				name: null
+			}),
+			withinCityLimits: this.fb.group({
+				id: null,
+				code: [null, Validators.required],
+				name: null
+			}),
+			birthCertiMailingAddressType : this.fb.group({
+				id: null,
+				code: [null, Validators.required],
+				name: null
+			}),
+			parentPermanentAddress: this.fb.group(this.addressComp.addressControls()),
+			wardNo: this.fb.group({
+				id: null,
+				code: [null],
+				name: null
+			}),
 
 			//step 5
 			attachments: [null],
@@ -377,6 +404,7 @@ export class BirthRegistrationComponent implements OnInit {
 			this.changeInBirthPlace(res.birthPlace.code);
 			this.showButtons = true;
 
+
 			/**
 		     * Update Permanent Address If 'isPermanentPresentAddressSame' is checked.
 		     */
@@ -417,6 +445,23 @@ export class BirthRegistrationComponent implements OnInit {
 			this.uploadFileArray.find(f => f.documentIdentifier == 'AAYAS_REPORT_OR_DOCTOR_CERTIFICATE').mandatory = true;
 		} else {
 			this.uploadFileArray.find(f => f.documentIdentifier == 'AAYAS_REPORT_OR_DOCTOR_CERTIFICATE').mandatory = false;
+		}
+	}
+
+	/**
+	 * Method Is used to get proper child weight.
+	 * @param index - child index
+	 * @param evKg - child weight control in kgs.
+	 * @param evGrm - child weight control in grams.
+	 */
+	calculateChildWeight(index: number, evKg: string, evGrm: string){
+		let ctrl = this.getChildData().at(index);
+		if (parseInt(ctrl.get(evKg).get('code').value) == 0 && parseInt(ctrl.get(evGrm).get('code').value) < 300){
+			this.commonService.openAlert(this.config.Child_Weight_Error, this.config.MIN_CHILD_WEIGHT, "warning");
+			ctrl.get(evKg).reset();
+			ctrl.get(evGrm).reset();
+			this.config
+			return;
 		}
 	}
 
@@ -591,6 +636,21 @@ export class BirthRegistrationComponent implements OnInit {
 			this.Religion = respData.RELIGION;
 			this.ISYESNO = respData.YES_NO;
 			this.wardNoData = respData.WARD;
+			this.CHILD_WEIGHT_GM =respData.CHILD_WEIGHT_GM;
+			this.URBAN_PRIMARY_HEALTH_CENTER = respData.URBAN_PRIMARY_HEALTH_CENTER;
+			this.MOTHER_DELIVERY_AGE = respData.MOTHER_DELIVERY_AGE.sort((a, b) => {
+				if (a.code >= b.code) {
+					return 1;
+				}
+				return -1;
+			});;
+			this.MOTHER_MARRIAGE_AGE = respData.MOTHER_MARRIAGE_AGE.sort((a, b) => {
+				if (a.code >= b.code) {
+					return 1;
+				}
+				return -1;
+			});
+			this.BIRTH_CERTI_MAILING_ADDRESS_TYPE = respData.BIRTH_CERTI_MAILING_ADDRESS_TYPE;
 		})
 	}
 
@@ -673,7 +733,9 @@ export class BirthRegistrationComponent implements OnInit {
 				}),
 				uniqueId: null,
 				version: null,
-				weightGram: null,
+				weightGram: this.fb.group({
+					code: null
+				}),
 				weightKg: this.fb.group({
 					code: null
 				})
@@ -689,7 +751,9 @@ export class BirthRegistrationComponent implements OnInit {
 			}),
 			uniqueId: child.uniqueId,
 			version: child.version,
-			weightGram: child.weightGram,
+			weightGram: this.fb.group({
+				code: [child.weightGram.code, [Validators.required]]
+			}),
 			weightKg: this.fb.group({
 				code: [child.weightKg.code, [Validators.required]]
 			})

@@ -44,3 +44,217 @@
         </form>
     </div>
 </mat-card>
+
+<mat-card class="formClass cardBorder">
+    <form [formGroup]="atithigruhForm" (ngSubmit)="submit()">
+
+        <mat-tab-group mat-stretch-tabs dynamicHeight="true" [(selectedIndex)]="tabIndex" class="stepperNav">
+
+            <!-- <mat-tab>
+                <ng-template mat-tab-label>
+                    <div>{{'organization_details' | translate:translateKey}}</div>
+                </ng-template>
+
+                <h2>
+                    {{'organization_details' | translate:translateKey}}
+                </h2>
+
+                <div class="row">
+                    <mat-form-field class="col-md-4">
+                        <input matInput maxlength="25" appValidationFields [validationFieldsType]="'onlyNameWithSpace'" type="text" formControlName="organizationName"
+                            placeholder="{{'oraganization_name' | translate: translateKey}}" required>
+                        <control-messages [control]="atithigruhForm.get('organizationName')"></control-messages>
+                    </mat-form-field>
+
+                    <mat-form-field class="col-md-4">
+                        <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="orgTelephoneNo" placeholder="{{'orgTelephone_no' | translate: translateKey}}"
+                            required>
+                        <control-messages [control]="atithigruhForm.get('orgTelephoneNo')"></control-messages>
+                    </mat-form-field>
+
+                    <mat-form-field class="col-md-4">
+                        <input matInput maxlength="50" appValidationFields [validationFieldsType]="'onlyNameWithSpace'" formControlName="organizationPresidentName"
+                            placeholder="{{'organization_president_name' | translate: translateKey}}" required>
+                        <control-messages [control]="atithigruhForm.get('organizationPresidentName')"></control-messages>
+                    </mat-form-field>
+
+                </div>
+
+                <div>
+                    <h2>
+                        {{'organizationAddress' | translate:translateKey}}
+                    </h2>
+                    <app-address #address [requiredFeilds]="true" [addressFormGroup]="atithigruhForm.get('organizationAddress')"></app-address>
+                </div>
+
+                <div class="row mt-4 fotButtonBar">
+                    <div class="col-sm-12 col-md-12 text-right">
+                        <button mat-raised-button type="button" color="primary" (click)="tabIndex= tabIndex +1;">{{'next'
+                            | translate:translateKey}}
+                            <mat-icon>navigate_next</mat-icon>
+
+                        </button>
+                    </div>
+                </div>
+            </mat-tab> -->
+
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    <div>{{'applicant_details' | translate:translateKey}}</div>
+                </ng-template>
+                <h2>
+                    {{'applicant_details' | translate:translateKey}}
+                </h2>
+
+                <div class="row">
+                    <mat-form-field class="col-md-4">
+                        <input matInput maxlength="50" appValidationFields [validationFieldsType]="'onlyNameWithSpace'" type="text" formControlName="applicantName"
+                            placeholder="{{'applicant_name' | translate: translateKey}}" required>
+                        <control-messages [control]="atithigruhForm.get('applicantName')"></control-messages>
+                    </mat-form-field>
+
+                    <mat-form-field class="col-md-4">
+                        <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="applicantMobile" placeholder="{{'applicant_mobile' | translate: translateKey}}"
+                            required>
+                        <control-messages [control]="atithigruhForm.get('applicantMobile')"></control-messages>
+                    </mat-form-field>
+
+                    <div class="col-md-4">
+                        <mat-form-field>
+                            <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="confirmMobile" placeholder="{{'confirm_mobile' | translate: translateKey}}"
+                                required>
+                            <control-messages [control]="atithigruhForm.get('confirmMobile')"></control-messages>
+                        </mat-form-field>
+                        <mat-error *ngIf="!bookingUtils.matcher(atithigruhForm, 'applicantMobile', 'confirmMobile') && atithigruhForm.get('applicantMobile').touched && atithigruhForm.get('confirmMobile').touched">
+                            {{bookingConstants.MOB_NO_MIS_MATCH_MESSAGE}}
+                        </mat-error>
+                    </div>
+
+                    <mat-form-field class="col-md-4">
+                        <input matInput type="email" formControlName="emailID" placeholder="{{'applicant_email' | translate: translateKey}}" required>
+                        <control-messages [control]="atithigruhForm.get('emailID')"></control-messages>
+                    </mat-form-field>
+
+                    <div class="col-md-4">
+                        <mat-form-field>
+                            <input matInput type="email" formControlName="confirmEmailID" placeholder="{{'confirm_email' | translate: translateKey}}"
+                                required>
+                            <control-messages [control]="atithigruhForm.get('confirmEmailID')"></control-messages>
+                        </mat-form-field>
+                        <mat-error *ngIf="!bookingUtils.matcher(atithigruhForm, 'emailID', 'confirmEmailID') &&atithigruhForm.get('emailID').touched && atithigruhForm.get('confirmEmailID').touched">
+                            {{bookingConstants.EMAIL_MIS_MATCH_MESSAGE}}
+                        </mat-error>
+                    </div>
+
+                    <mat-form-field class="col-md-4">
+                        <input matInput type="text" maxlength="20" appValidationFields [validationFieldsType]="'onlyNameWithSpace'" formControlName="relationshipWithOrg"
+                            placeholder="{{'relationship_with_org' | translate: translateKey}}" required>
+                        <control-messages [control]="atithigruhForm.get('relationshipWithOrg')"></control-messages>
+                    </mat-form-field>
+                </div>
+
+                <div>
+                    <h2>
+                        {{'applicantAddress' | translate:translateKey}}
+                    </h2>
+                    <app-address #address [requiredFeilds]="true" [addressFormGroup]="atithigruhForm.get('applicantAddress')"></app-address>
+                </div>
+
+                <div class="row mt-4 fotButtonBar">
+                    <div class="col-sm-12 col-md-12 justify-content-between d-flex">
+                        <button type="button" color="primary" mat-raised-button (click)="tabIndex= tabIndex -1; ">
+                            <mat-icon>navigate_before</mat-icon>
+                            {{'back' | translate:translateKey}}
+                        </button>
+                        <button mat-raised-button type="button" color="primary" (click)="tabIndex= tabIndex +1;">
+                            {{'next'| translate:translateKey}}
+                            <mat-icon>navigate_next</mat-icon>
+                        </button>
+                    </div>
+                </div>
+
+            </mat-tab>
+
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    <div>{{'bank_details' | translate:translateKey}}</div>
+                </ng-template>
+
+                <h2>
+                    {{'bank_details' | translate:translateKey}}
+                </h2>
+
+                <div class="row">
+                    <div formGroupName="bankName" class="col-md-6 ngSelect">
+                        <ng-select placeholder="{{'bank_name' | translate:translateKey}} *" formControlName="code">
+                            <ng-option *ngFor="let bank of BankOptions" [value]="bank.code">
+                                {{bank.name}}
+                            </ng-option>
+                        </ng-select>
+                        <control-messages [control]="atithigruhForm.get('bankName').get('code')"></control-messages>
+                    </div>
+
+                    <mat-form-field class="col-md-6">
+                        <input matInput type="text" maxlength="50" appValidationFields [validationFieldsType]="'onlyNameWithSpace'" formControlName="accountHolderName"
+                            placeholder="{{'account_holder_name' | translate: translateKey}}" required>
+                        <control-messages [control]="atithigruhForm.get('accountHolderName')"></control-messages>
+                    </mat-form-field>
+
+                    <mat-form-field class="col-md-6">
+                        <input matInput OnlyNumber maxlength="20" minlength="6" formControlName="accountNo" placeholder="{{'accont_no' | translate: translateKey}}"
+                            required>
+                        <control-messages [control]="atithigruhForm.get('accountNo')"></control-messages>
+                    </mat-form-field>
+
+                    <mat-form-field class="col-md-6">
+                        <input matInput type="text" maxlength="11" formControlName="ifscCode" placeholder="{{'ifsc_code' | translate: translateKey}}"
+                            required>
+                        <control-messages [control]="atithigruhForm.get('ifscCode')"></control-messages>
+                    </mat-form-field>
+                </div>
+
+                <h2>
+                    {{'booking_details' | translate:translateKey}}
+                </h2>
+
+                <div class="row">
+                    <mat-form-field class="col-md-6">
+                        <textarea matInput type="text" maxlength="200" formControlName="programShortDetails" placeholder="{{'program_short_details' | translate: translateKey}}"
+                            required>
+                    </textarea>
+                        <control-messages [control]="atithigruhForm.get('programShortDetails')"></control-messages>
+                    </mat-form-field>
+
+                    <mat-form-field class="col-md-6">
+                        <textarea matInput type="text" maxlength="200" formControlName="programPurpose" placeholder="{{'program_purpose' | translate: translateKey}}"
+                            required></textarea>
+                        <control-messages [control]="atithigruhForm.get('programPurpose')"></control-messages>
+                    </mat-form-field>
+
+                    <h2>
+                        {{'terms_and_conditions' | translate:translateKey }}
+                    </h2>
+                    <div class="pl-2">
+                        <mat-checkbox class="d-block" labelPosition="after" formControlName="agree">
+                            {{'i_agree_with_above_bank_details_are_correct' | translate:translateKey}} </mat-checkbox>
+                        <mat-checkbox class="d-block" labelPosition="after" formControlName="termsCondition">
+                            {{'i_have_read_and_agree_with_terms_and_conditions' | translate:translateKey}} </mat-checkbox>
+                    </div>
+                </div>
+
+                <div class="row mt-4 fotButtonBar">
+                    <div class="col-sm-12 col-md-12 justify-content-between d-flex">
+                        <button type="button" color="primary" mat-raised-button (click)="tabIndex= tabIndex -1; ">
+                            <mat-icon>navigate_before</mat-icon>
+                            {{'back' | translate:translateKey}}
+                        </button>
+                        <button mat-raised-button color="primary" type="submit">
+                            <mat-icon>check_circle_outline</mat-icon>
+                            {{'submit_application'| translate: translateKey}}
+                        </button>
+                    </div>
+                </div>
+            </mat-tab>
+        </mat-tab-group>
+    </form>
+</mat-card>

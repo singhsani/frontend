@@ -69,6 +69,12 @@ export class StillBirthComponent implements OnInit {
 	ISYESNO: Array<any> = [];
 	wardNoData: Array<any> = [];
 	IMMEDIATE_COD_Data: Array<any> = [];
+	CHILD_WEIGHT_GM: Array<any> = [];
+	URBAN_PRIMARY_HEALTH_CENTER: Array<any> = [];
+	MOTHER_DELIVERY_AGE: Array<any> = [];
+	MOTHER_MARRIAGE_AGE: Array<any> = [];
+	BIRTH_CERTI_MAILING_ADDRESS_TYPE: Array<any> = [];
+
 	checked: boolean;
 	/**
 	 * step labels
@@ -79,7 +85,7 @@ export class StillBirthComponent implements OnInit {
 	stepLabel4 = 'family_details';
 	stepLabel5 = 'upload_documents';
 	config: HospitalConfig = new HospitalConfig('still birth');
-	isFormSaved:boolean = false;
+	isFormSaved: boolean = false;
 
 
 	constructor(
@@ -104,6 +110,8 @@ export class StillBirthComponent implements OnInit {
 		this.createStillBirthForm();
 		this.getStillBirthFormData();
 		this.getLookUpData();
+
+		this.BIRTH_CERTI_MAILING_ADDRESS_TYPE
 	}
 
 	/**
@@ -114,6 +122,23 @@ export class StillBirthComponent implements OnInit {
 			return confirm(this.config.CONFIRM_UNSAVE_SAVE_MESSAGE);
 		}
 		return true;
+	}
+
+	/**
+	 * Method Is used to get proper child weight.
+	 * @param index - child index
+	 * @param evKg - child weight control in kgs.
+	 * @param evGrm - child weight control in grams.
+	 */
+	calculateChildWeight(index: number, evKg: string, evGrm: string) {
+		let ctrl = this.getChildData().at(index);
+		if (parseInt(ctrl.get(evKg).get('code').value) == 0 && parseInt(ctrl.get(evGrm).get('code').value) < 300) {
+			this.commonService.openAlert(this.config.Child_Weight_Error, this.config.MIN_CHILD_WEIGHT, "warning");
+			ctrl.get(evKg).reset();
+			ctrl.get(evGrm).reset();
+			this.config
+			return;
+		}
 	}
 
 	/**
@@ -145,7 +170,9 @@ export class StillBirthComponent implements OnInit {
 				prematureInfantReason: null,
 				uniqueId: null,
 				version: null,
-				weightGram: null,
+				weightGram: {
+					code: null
+				},
 				weightKg: {
 					code: null
 				},
@@ -205,10 +232,25 @@ export class StillBirthComponent implements OnInit {
 			}),
 			motherAadharNumber: [null, [Validators.minLength(12), Validators.maxLength(12), ValidationService.aadharValidation]],
 			motherPrevRegNumber: [null, [Validators.maxLength(20)]],
-			mamtaRegNumber: [null, [Validators.required,Validators.maxLength(4)]],
-			petaKendraNumber: [null, [Validators.minLength(4), Validators.maxLength(4)]],
-			motherMarriageAge: [null, [Validators.required, Validators.minLength(2), Validators.maxLength(3), ValidationService.motherMarriageTimeAge]],
-			motherDeliveryAge: [null, [Validators.required, Validators.minLength(2), Validators.maxLength(3), ValidationService.motherMarriageTimeAge]],
+			mamtaRegNumber: [null, [Validators.maxLength(4)]],
+			petaKendraNumber: this.fb.group({
+				id: null,
+				code: [null, [Validators.required]],
+				name: null,
+				gujName: null
+			}),
+			motherMarriageAge: this.fb.group({
+				id: null,
+				code: [null, [Validators.required]],
+				name: null,
+				gujName: null
+			}),
+			motherDeliveryAge: this.fb.group({
+				id: null,
+				code: [null, [Validators.required]],
+				name: null,
+				gujName: null
+			}),
 
 			deliveryTreatment: this.fb.group({
 				code: [null, [Validators.required]],
@@ -234,6 +276,11 @@ export class StillBirthComponent implements OnInit {
 				code: [null],
 				name: null
 			}),
+			// birthCertiMailingAddressType: this.fb.group({
+			// 	id: null,
+			// 	code: [null, [Validators.required]],
+			// 	name: null
+			// }),
 			parentPermanentAddress: this.fb.group(this.addressComp.addressControls()),
 			familyReligion: this.fb.group({
 				code: null
@@ -312,7 +359,9 @@ export class StillBirthComponent implements OnInit {
 				prematureInfantReason: null,
 				uniqueId: null,
 				version: null,
-				weightGram: null,
+				weightGram: this.fb.group({
+					code: null
+				}),
 				weightKg: this.fb.group({
 					code: null
 				}),
@@ -338,7 +387,9 @@ export class StillBirthComponent implements OnInit {
 			prematureInfantReason: child.prematureInfantReason,
 			uniqueId: child.uniqueId,
 			version: child.version,
-			weightGram: child.weightGram,
+			weightGram: this.fb.group({
+				code: [child.weightGram.code, [Validators.required]]
+			}),
 			weightKg: this.fb.group({
 				code: [child.weightKg.code, [Validators.required]]
 			}),
@@ -447,7 +498,7 @@ export class StillBirthComponent implements OnInit {
 	 * Method is used to get LookUps related to still birth certificate form.
 	 */
 	getLookUpData() {
-		this.formService.getDataFromLookups().subscribe(respData => {
+		this.formService.getDataFromLookups().subscribe((respData) => {
 			this.ChildWeights = respData.CHILD_WEIGHT;
 			this.DeliveryTreatmentOptions = respData.DELIVERY_TREATMENT;
 			this.TypeOfDelivery = respData.DELIVERY_TYPE;
@@ -461,7 +512,24 @@ export class StillBirthComponent implements OnInit {
 			this.ISYESNO = respData.YES_NO;
 			this.wardNoData = respData.WARD;
 			this.IMMEDIATE_COD_Data = respData.IMMEDIATE_COD;
-		})
+			this.CHILD_WEIGHT_GM = respData.CHILD_WEIGHT_GM;
+			this.URBAN_PRIMARY_HEALTH_CENTER = respData.URBAN_PRIMARY_HEALTH_CENTER;
+			this.MOTHER_DELIVERY_AGE = respData.MOTHER_DELIVERY_AGE.sort((a, b) => {
+				if (a.code >= b.code) {
+					return 1;
+				}
+				return -1;
+			});;
+			this.MOTHER_MARRIAGE_AGE = respData.MOTHER_MARRIAGE_AGE.sort((a, b) => {
+				if (a.code >= b.code) {
+					return 1;
+				}
+				return -1;
+			});
+			this.BIRTH_CERTI_MAILING_ADDRESS_TYPE = respData.BIRTH_CERTI_MAILING_ADDRESS_TYPE
+		});
+
+		
 	}
 
 	/**
@@ -535,21 +603,21 @@ export class StillBirthComponent implements OnInit {
 		});
 	}
 
-	changeTime(i: number, timeEvent){
+	changeTime(i: number, timeEvent) {
 		let time = moment(timeEvent).format("hh:mm:ss");
 		this.getChildData().at(i).get('birthTime').setValue(time);
 	}
-	
-	setTime(i: number){
+
+	setTime(i: number) {
 		let date = this.getChildData().at(i).get('birthTime').value;
-		if(date){
+		if (date) {
 			let hr = date.split(':')[0];
 			let min = date.split(':')[1];
 			return new Date(0, 0, 0, hr, min);
 		} else {
 			return null
 		}
-		
+
 	}
 
 	/**

@@ -51,6 +51,10 @@ export class DeathRegistrationComponent implements OnInit {
 	maxBirthDate = new Date();
 	maxDeathDate = new Date();
 
+	minTreatmentDate : any;
+
+	maxTreatmentDate = new Date();
+
 	//LookUps
 	deathPlaces: Array<any> = [];
 	DeceasedEducations: Array<any> = [];
@@ -203,6 +207,18 @@ export class DeathRegistrationComponent implements OnInit {
 				return;
 			})
 
+			this.deathCertificateForm.get('gender').valueChanges.subscribe(gender => {				
+				if(gender.code == 'FEMALE'){
+					this.deathCertificateForm.get('femaleDeathReason').get('code').setValidators([Validators.required]);
+					this.deathCertificateForm.get('femaleDeathReason').get('code').updateValueAndValidity();
+					return;
+				} else {
+					this.deathCertificateForm.get('femaleDeathReason').get('code').reset();
+					this.deathCertificateForm.get('femaleDeathReason').get('code').clearValidators();
+					this.deathCertificateForm.get('femaleDeathReason').get('code').updateValueAndValidity();
+				}
+			})
+
 		});
 	}
 
@@ -241,7 +257,6 @@ export class DeathRegistrationComponent implements OnInit {
 			this.deathCertificateForm.get('religion').get('code').clearValidators()
 			this.deathCertificateForm.get('education').get('code').clearValidators()
 			this.deathCertificateForm.get('occupation').get('code').clearValidators()
-			this.deathCertificateForm.get('femaleDeathReason').get('code').clearValidators()
 			this.deathCertificateForm.get('deathPlace').get('code').clearValidators()
 			this.deathCertificateForm.get('medicalTreatment').get('code').clearValidators()
 			this.deathCertificateForm.get('medicalReason').get('code').clearValidators()
@@ -253,7 +268,6 @@ export class DeathRegistrationComponent implements OnInit {
 			this.deathCertificateForm.get('religion').get('code').setValidators([Validators.required])
 			this.deathCertificateForm.get('education').get('code').setValidators([Validators.required])
 			this.deathCertificateForm.get('occupation').get('code').setValidators([Validators.required])
-			this.deathCertificateForm.get('femaleDeathReason').get('code').setValidators([Validators.required])
 			this.deathCertificateForm.get('deathPlace').get('code').setValidators([Validators.required])
 			this.deathCertificateForm.get('medicalTreatment').get('code').setValidators([Validators.required])
 			this.deathCertificateForm.get('medicalReason').get('code').setValidators([Validators.required])
@@ -278,7 +292,6 @@ export class DeathRegistrationComponent implements OnInit {
 		this.deathCertificateForm.get('religion').get('code').updateValueAndValidity();
 		this.deathCertificateForm.get('education').get('code').updateValueAndValidity();
 		this.deathCertificateForm.get('occupation').get('code').updateValueAndValidity();
-		this.deathCertificateForm.get('femaleDeathReason').get('code').updateValueAndValidity();
 		this.deathCertificateForm.get('deathPlace').get('code').updateValueAndValidity();
 		this.deathCertificateForm.get('medicalTreatment').get('code').updateValueAndValidity();
 		this.deathCertificateForm.get('medicalReason').get('code').updateValueAndValidity();
@@ -311,6 +324,9 @@ export class DeathRegistrationComponent implements OnInit {
 		this.deathCertificateForm = this.fb.group({
 
 			//step1(19)
+			unknownCategory: this.fb.group({
+				code: ["NO", [Validators.required]],
+			}),
 			unknownDescription: [null, [Validators.maxLength(100)]],
 			deceasedFirstName: ['', [ValidationService.nameValidator]],
 			deceasedMiddleName: ['', [ValidationService.nameValidator]],
@@ -358,6 +374,7 @@ export class DeathRegistrationComponent implements OnInit {
 				gujName: null
 			}),
 			delayedPeriod: null,
+
 			femaleDeathReason: this.fb.group({
 				code: [null]
 			}),
@@ -404,9 +421,25 @@ export class DeathRegistrationComponent implements OnInit {
 				name: null,
 				gujName: null
 			}),
+			smokingAddiction : this.fb.group({
+				code : ['NO', [Validators.required]],
+				name : null
+			}),
 			smokingSince: [null, [Validators.max(this.deceasedAge), Validators.min(this.minAge)]],
+			tobaccoAddiction : this.fb.group({
+				code : ['NO', [Validators.required]],
+				name : null
+			}),
 			tobaccoSince: [null, [Validators.max(this.deceasedAge), Validators.min(this.minAge)]],
+			sopariAddiction : this.fb.group({
+				code : ['NO', [Validators.required]],
+				name : null
+			}),
 			sopariPanmasalaSince: [null, [Validators.max(this.deceasedAge), Validators.min(this.minAge)]],
+			alcoholAddiction : this.fb.group({
+				code : ['NO', [Validators.required]],
+				name : null
+			}),
 			alcoholSince: [null, [Validators.max(this.deceasedAge), Validators.min(this.minAge)]],
 
 			//step 3(3)
@@ -418,7 +451,7 @@ export class DeathRegistrationComponent implements OnInit {
 			}),
 			withinCityLimits: this.fb.group({
 				id: null,
-				code: [null, Validators.required],
+				code: [null, [Validators.required]],
 				name: null
 			}),
 			wardNo: this.fb.group({
@@ -441,9 +474,7 @@ export class DeathRegistrationComponent implements OnInit {
 
 			//Attachments Data step 5
 			attachments: [],
-			unknownCategory: this.fb.group({
-				code: ["NO", [Validators.required]],
-			}),
+			
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
 		});
 
@@ -497,11 +528,11 @@ export class DeathRegistrationComponent implements OnInit {
 	 */
 	handleErrorsOnSubmit(count) {
 		this.submit = true;
-		let step1 = 19;
-		let step2 = 28;
-		let step3 = 31;
-		let step4 = 34;
-		let step5 = 35;
+		let step1 = 28;
+		let step2 = 46;
+		let step3 = 51;
+		let step4 = 54;
+		let step5 = 58;
 		//Check form validation.
 		if (count <= step1) {
 			this.tabIndex = 0;
@@ -601,14 +632,24 @@ export class DeathRegistrationComponent implements OnInit {
 	 * reset all spouse controlls
 	 */
 	resetSpouseCntrl(event: string) {
+		let spouseDetails : Array<any> = ['spouseFirstName','spouseFirstNameGuj','spouseLastName','spouseLastNameGuj','spouseMiddleName','spouseMiddleNameGuj']
 		if (event != "MARRIED" && event != "MARRIED_SEPERATE") {
-			this.deathCertificateForm.get('spouseFirstName').reset();
-			this.deathCertificateForm.get('spouseFirstNameGuj').reset();
-			this.deathCertificateForm.get('spouseLastName').reset();
-			this.deathCertificateForm.get('spouseLastNameGuj').reset();
-			this.deathCertificateForm.get('spouseMiddleName').reset();
-			this.deathCertificateForm.get('spouseMiddleNameGuj').reset();
+			spouseDetails.forEach(d => {
+				this.deathCertificateForm.get(d).reset();
+				this.deathCertificateForm.get(d).clearValidators();
+				this.deathCertificateForm.get(d).updateValueAndValidity();
+			});
+		} else {
+			spouseDetails.forEach(d => {
+				this.deathCertificateForm.get(d).setValidators([Validators.required]);
+				this.deathCertificateForm.get(d).updateValueAndValidity();
+			});
 		}
+	}
+
+	changeInAddictions(addCtrl : string, event : string){
+		console.log(addCtrl);
+		console.log(event);
 	}
 
 	/**
@@ -618,7 +659,16 @@ export class DeathRegistrationComponent implements OnInit {
 	changeMedicalTreatment(event: string){
 		if(event =='NO_MED_HELP_ATT'){
 			this.deathCertificateForm.get('treatmentDurationFrom').reset();
+			this.deathCertificateForm.get('treatmentDurationFrom').clearValidators();
+			this.deathCertificateForm.get('treatmentDurationFrom').updateValueAndValidity();
 			this.deathCertificateForm.get('treatmentDurationTo').reset();
+			this.deathCertificateForm.get('treatmentDurationTo').clearValidators();
+			this.deathCertificateForm.get('treatmentDurationTo').updateValueAndValidity();
+		} else {
+			this.deathCertificateForm.get('treatmentDurationFrom').setValidators([Validators.required]);
+			this.deathCertificateForm.get('treatmentDurationTo').setValidators([Validators.required]);
+			this.deathCertificateForm.get('treatmentDurationFrom').updateValueAndValidity();
+			this.deathCertificateForm.get('treatmentDurationTo').updateValueAndValidity();
 		}
 	}
 	/**

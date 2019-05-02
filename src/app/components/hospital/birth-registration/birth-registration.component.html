@@ -130,10 +130,9 @@
 
                         <div class="col-md-4 ngSelect" formGroupName="weightKg">
                             <ng-select placeholder="{{'child_weight_kg' | translate:translateKey}} *"
-                                formControlName="code">
+                                formControlName="code" (change)="calculateChildWeight(i,'weightKg','weightGram')">
                                 <ng-option *ngFor="let childweight of ChildWeights" [value]="childweight.code">
                                     {{childweight.name}}
-                                    kgs.
                                 </ng-option>
                             </ng-select>
                             <control-messages
@@ -141,6 +140,16 @@
                             </control-messages>
                         </div>
 
+                        <div class="col-md-4 ngSelect" formGroupName="weightGram">
+                            <ng-select placeholder="{{'child_weight_gms' | translate:translateKey}} *" formControlName="code" (change)="calculateChildWeight(i,'weightKg','weightGram')">
+                                <ng-option *ngFor="let childweightgrm of CHILD_WEIGHT_GM" [value]="childweightgrm.code">
+                                    {{childweightgrm.name}}
+                                </ng-option>
+                            </ng-select>
+                            <control-messages [control]="birthCertificateForm.get('childs')['controls'][i].get('weightGram').get('code')">
+                            </control-messages>
+                        </div>
+<!-- 
                         <mat-form-field class="col-md-4">
                             <input matInput maxlength="3" OnlyNumber
                                 placeholder="{{'child_weight_gms' | translate:translateKey}}"
@@ -149,7 +158,7 @@
                                 [control]="birthCertificateForm.get('childs')['controls'][i].get('weightGram')">
                             </control-messages>
 
-                        </mat-form-field>
+                        </mat-form-field> -->
 
                         <div class="col-md-4 radioBtnError" formGroupName="sex">
                             <mat-label>{{'gender' | translate:translateKey}} *</mat-label>
@@ -411,14 +420,44 @@
                         </control-messages>
                     </mat-form-field>
 
-                    <mat-form-field class="col-md-4">
+                    <!-- <mat-form-field class="col-md-4">
                         <input matInput maxlength="4" minlength="4" OnlyNumber
                             placeholder="{{'peta_kendra_number' | translate:translateKey}}"
                             formControlName="petaKendraNumber">
                         <control-messages [control]="birthCertificateForm.get('petaKendraNumber')"></control-messages>
-                    </mat-form-field>
+                    </mat-form-field> -->
 
-                    <mat-form-field class="col-md-4">
+                    <div formGroupName="petaKendraNumber" class="col-md-4 ngSelect">
+                        <ng-select placeholder="{{'peta_kendra_number' | translate:translateKey}}" formControlName="code">
+                            <ng-option matTooltip="{{upch.name}}" *ngFor="let upch of URBAN_PRIMARY_HEALTH_CENTER" [value]="upch.code">
+                                {{upch.name}}
+                            </ng-option>
+                        </ng-select>
+                        <control-messages [control]="birthCertificateForm.get('petaKendraNumber').get('code')">
+                        </control-messages>
+                    </div>
+
+                    <div formGroupName="motherMarriageAge" class="col-md-4 ngSelect">
+                        <ng-select placeholder="{{'mother_age_at_time_of_marriage' | translate:translateKey}} *" formControlName="code">
+                            <ng-option matTooltip="{{maamt.name}}" *ngFor="let maamt of MOTHER_MARRIAGE_AGE" [value]="maamt.code">
+                                {{maamt.name}}
+                            </ng-option>
+                        </ng-select>
+                        <control-messages [control]="birthCertificateForm.get('motherMarriageAge').get('code')">
+                        </control-messages>
+                    </div>
+
+                    <div formGroupName="motherDeliveryAge" class="col-md-4 ngSelect">
+                        <ng-select placeholder="{{'mother_age_at_time_of_said_delivery' | translate:translateKey}} *" formControlName="code">
+                            <ng-option matTooltip="{{maasd.name}}" *ngFor="let maasd of MOTHER_DELIVERY_AGE" [value]="maasd.code">
+                                {{maasd.name}}
+                            </ng-option>
+                        </ng-select>
+                        <control-messages [control]="birthCertificateForm.get('motherDeliveryAge').get('code')">
+                        </control-messages>
+                    </div>
+
+                    <!-- <mat-form-field class="col-md-4">
                         <input matInput type="text" maxlength="3" minlength="2" OnlyNumber
                             placeholder="{{'mother_age_at_time_of_marriage' | translate:translateKey}}"
                             formControlName="motherMarriageAge" required>
@@ -430,7 +469,7 @@
                             placeholder="{{'mother_age_at_time_of_said_delivery' | translate:translateKey}}"
                             formControlName="motherDeliveryAge" required>
                         <control-messages [control]="birthCertificateForm.get('motherDeliveryAge')"></control-messages>
-                    </mat-form-field>
+                    </mat-form-field> -->
 
 
 
@@ -513,6 +552,28 @@
                 </ng-template>
 
                 <div class="row">
+                    <div formGroupName="familyReligion" class="col-md-4 ngSelect">
+                        <ng-select (change)="config.changeHandler($event,'OTHER_RELIGION', birthCertificateForm,'familyReligionOther' )" placeholder="{{'religion' | translate:translateKey}} *"
+                            formControlName="code" required>
+                            <ng-option *ngFor="let relegion of Religion" [value]="relegion.code">
+                                {{relegion.name}}
+                            </ng-option>
+                        </ng-select>
+                        <control-messages [control]="birthCertificateForm.get('familyReligion').get('code')">
+                        </control-messages>
+                    </div>
+                
+                    <div class="col-md-4" *ngIf="birthCertificateForm.get('familyReligion').get('code').value == 'OTHER_RELIGION'">
+                        <mat-form-field class="birth-certificate-col-md-4">
+                            <input appValidationFields [validationFieldsType]="'onlyNameWithSpace'" matInput placeholder="{{'other_religion' | translate:translateKey}}"
+                                formControlName="familyReligionOther" required>
+                            <control-messages [control]="birthCertificateForm.get('familyReligionOther')">
+                            </control-messages>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="row">
                     <h2>
                         {{'present_address_during_delivery' | translate:translateKey}}
                     </h2>
@@ -522,7 +583,7 @@
 
                 <div class="row">
                     <div class="col-md-4" formGroupName="isPermanentPresentAddressSame">
-                        <mat-checkbox style="margin-left:15px;" [disabled]="!birthCertificateForm.get('canEdit').value"
+                        <mat-checkbox  [disabled]="!birthCertificateForm.get('canEdit').value"
                             (change)="check($event);"
                             [checked]="birthCertificateForm.get('isPermanentPresentAddressSame').get('code').value == 'YES'? true : false">{{'is_permanent_address_same_as_present_address'
                             | translate:translateKey}}</mat-checkbox>
@@ -551,6 +612,17 @@
                         <control-messages [control]="birthCertificateForm.get('wardNo').get('code')">
                         </control-messages>
                     </div>
+
+                    <div class="col-md-4 radioBtnError" formGroupName="birthCertiMailingAddressType">
+                        <mat-label>{{'where_do_you_want_birth_certtificate' | translate:translateKey }} *</mat-label>
+                        <mat-radio-group class="example-radio-group" formControlName="code">
+                            <mat-radio-button class="example-radio-button" *ngFor="let loc of BIRTH_CERTI_MAILING_ADDRESS_TYPE" [value]="loc.code">
+                                {{loc.name}}
+                            </mat-radio-button>
+                        </mat-radio-group>
+                        <control-messages [control]="birthCertificateForm.get('birthCertiMailingAddressType').get('code')">
+                        </control-messages>
+                    </div>
                 </div>
 
                 <div class="row">
@@ -559,31 +631,6 @@
                     </h2>
                     <app-address [isDisplayGujFields]="true" #address [requiredFeilds]="true"
                         [addressFormGroup]="birthCertificateForm.get('parentPermanentAddress')"></app-address>
-                </div>
-
-                <div class="row">
-                    <div formGroupName="familyReligion" class="col-md-4 ngSelect">
-                        <ng-select
-                            (change)="config.changeHandler($event,'OTHER_RELIGION', birthCertificateForm,'familyReligionOther' )"
-                            placeholder="{{'religion' | translate:translateKey}} *" formControlName="code" required>
-                            <ng-option *ngFor="let relegion of Religion" [value]="relegion.code">
-                                {{relegion.name}}
-                            </ng-option>
-                        </ng-select>
-                        <control-messages [control]="birthCertificateForm.get('familyReligion').get('code')">
-                        </control-messages>
-                    </div>
-
-                    <div class="col-md-8"
-                        *ngIf="birthCertificateForm.get('familyReligion').get('code').value == 'OTHER_RELIGION'">
-                        <mat-form-field class="birth-certificate-col-md-4">
-                            <input appValidationFields [validationFieldsType]="'onlyNameWithSpace'" matInput
-                                placeholder="{{'other_religion' | translate:translateKey}}"
-                                formControlName="familyReligionOther" required>
-                            <control-messages [control]="birthCertificateForm.get('familyReligionOther')">
-                            </control-messages>
-                        </mat-form-field>
-                    </div>
                 </div>
 
                 <div>

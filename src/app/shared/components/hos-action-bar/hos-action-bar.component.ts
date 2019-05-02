@@ -5,6 +5,7 @@ import { CommonService } from '../../services/common.service';
 import { ToastrService } from 'ngx-toastr';
 import { ValidationService } from '../../services/validation.service';
 import { SessionStorageService } from 'angular-web-storage';
+import { Router } from "@angular/router";
 
 import * as _ from 'lodash';
 import { environment } from '../../../../environments/environment';
@@ -46,6 +47,7 @@ export class HosActionBarComponent implements OnInit, OnChanges {
 	constructor(
 		private sessionStore: SessionStorageService,
 		private formService: HosFormActionsService,
+		private route : Router,
 		private fb: FormBuilder,
 		private toastr: ToastrService,
 		private commonService: CommonService) { }
@@ -121,7 +123,7 @@ export class HosActionBarComponent implements OnInit, OnChanges {
 				this.tabIndex.emit(this.stepInfo.next);
 			}
 
-			this.toastr.success(`${this.form.getRawValue().serviceDetail.name} information successfully saved`);
+			this.toastr.success(`${this.form.getRawValue().serviceDetail.name.replace('<br>', '')} information successfully saved`);
 			this.saveEvent.emit({ isSaved: true });
 		},
 			err => {
@@ -165,14 +167,18 @@ export class HosActionBarComponent implements OnInit, OnChanges {
 							this.form.get('canEdit').setValue(false);
 						}
 
-						this.toastr.success(`${this.form.value.serviceDetail.name} information successfully submit`);
+						this.toastr.success(`${this.form.value.serviceDetail.name.replace('<br>', '')} information successfully submit`);
 						this.isSubmitBtnDisabled = false;
 						this.isBtnsDisabled = false;
 						this.form.disable();
+						this.saveEvent.emit({ isSaved: true });
+						this.route.navigate(['hospital/my-applications']);
+
 					},
 						err => {
 							this.isSubmitBtnDisabled = false;
 							if (err.status === 402) {
+								this.saveEvent.emit({ isSaved: true });
 								let retUrl: string = '/hospital/my-applications';
 								let payData = this.commonService.storePaymentInfo(err.error.data, retUrl, 'hospital/payment-gateway-response');
 								let html =
@@ -200,6 +206,7 @@ export class HosActionBarComponent implements OnInit, OnChanges {
 										this.isSubmitBtnDisabled = false;
 										this.isBtnsDisabled = false;
 										this.form.disable();
+										this.saveEvent.emit({ isSaved: true });
 										return;
 									})
 									return;
