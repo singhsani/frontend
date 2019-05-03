@@ -128,7 +128,6 @@
 
 					<mat-form-field class="col-md-4">
 						<input matInput [max]="disableDate" [matDatepicker]="datepicker" formControlName="birthDate"
-							(dateChange)="dateFormate($event.value,'groomBirthDate')"
 							placeholder="{{ 'date_of_birth' | translate:translateKey }} (DD/MM/YYYY)" required>
 						<mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
 						<mat-datepicker #datepicker touchUi="true"></mat-datepicker>

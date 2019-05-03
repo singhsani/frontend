@@ -30,6 +30,19 @@ export class SwimmingPoolComponent implements OnInit {
   public tabIndex: number = 0;
   disableDate = new Date(moment().format('YYYY-MM-DD'));
   SWIMMING_POOL: Array<any> = [];
+  BANKS:Array<any> = [];
+  YES_NO :Array<any> = [
+    {
+      "code": "YES",
+      "name": "Yes",
+      "gujName": "હા"
+    },
+    {
+      "code": "NO",
+      "name": "No",
+      "gujName": "ના"
+    }
+  ];
   applicantageyear: number = null;
   applicantagedays: number = null;
   /**

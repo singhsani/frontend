@@ -41,7 +41,7 @@ export class MuttonFishRenewalComponent implements OnInit {
 	businessSubCategory: Array<any> = [];
 
 	// required attachment array
-	private uploadFileArray: Array<any> = [];
+	public uploadFileArray: Array<any> = [];
 
 
 	// serach api variable

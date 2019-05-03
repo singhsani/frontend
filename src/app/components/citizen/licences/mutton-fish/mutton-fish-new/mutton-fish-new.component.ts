@@ -38,7 +38,7 @@ export class MuttonFishNewComponent implements OnInit {
 	LOOKUP: any;
 
 	// required attachment array
-	private uploadFileArray: Array<any> = [];
+	public uploadFileArray: Array<any> = [];
 
 
     /**
