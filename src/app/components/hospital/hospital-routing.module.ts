@@ -14,6 +14,7 @@ import { StillBirthComponent } from './still-birth/still-birth.component';
 import { HosMyApplicationsComponent } from './hos-my-applications/hos-my-applications.component';
 import { HosPaymentResponsePageComponent } from '../../shared/components/hos-payment-response-page/hos-payment-response-page.component';
 import { CanDeactivateGuard } from '../../core/guard/can-deactivate.guard';
+import { BirthCorrectionComponent } from './birth-correction/birth-correction.component';
 /* Import hospital components end */
 
 const routes: Routes = [
@@ -25,6 +26,7 @@ const routes: Routes = [
 			{ path: 'birthReg/:id/:apiCode', component: BirthRegistrationComponent, canActivate: [HospitalGuard], canDeactivate: [CanDeactivateGuard] },
 			{ path: 'deathReg/:id/:apiCode', component: DeathRegistrationComponent, canActivate: [HospitalGuard], canDeactivate : [CanDeactivateGuard] },
 			{ path: 'stillBirthReg/:id/:apiCode', component: StillBirthComponent, canActivate: [HospitalGuard], canDeactivate: [CanDeactivateGuard]  },
+			{ path: 'birthCorrectionReg/:id/:apiCode', component: BirthCorrectionComponent, canDeactivate: [CanDeactivateGuard] },
 			{ path: 'my-applications', component: HosMyApplicationsComponent, canActivate: [HospitalGuard] },
 			{ path: 'payment-gateway-response', component: HosPaymentResponsePageComponent, canActivate: [HospitalGuard] },
 		]

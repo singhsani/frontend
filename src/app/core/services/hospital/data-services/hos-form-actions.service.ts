@@ -18,6 +18,15 @@ export class HosFormActionsService {
 	}
 
 	/**
+	 * Method is used to get status after filter using registration number.
+	 * @param filterData - filter data.
+	 */
+	getRegistrationStatus(filterData) {
+		this.requestURL = `api/form/${this.apiType}/search?applicationNumber=${filterData.applicationNumber}&correctionType=${filterData.typeOfCorrection.code}`;
+		return this.http.get(this.requestURL);
+	}
+
+	/**
 	 * This method is use to create new citizen app
 	 */
 	createFormData() {

@@ -39,15 +39,19 @@ export class HospitalDashboardComponent implements OnInit {
 	 * This method is use to create new record for citizen
 	 */
 	createRecord(apiCode: string) {
-		if (ManageRoutes.getApiTypeFromApiCode(apiCode)){
-			this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);
-			this.formService.createFormData().subscribe(res => {
-				let redirectUrl = ManageRoutes.getFullRoute(apiCode);
-				this.router.navigate([redirectUrl, res.serviceFormId, apiCode]);
-			});
+		if (apiCode == 'HEL-BCR-HOSPITAL'){
+			this.router.navigate([ManageRoutes.getFullRoute(apiCode), false, apiCode]);
 		} else {
-			// todo 
-			this.toastr.error("Invalid API Code");
+			if (ManageRoutes.getApiTypeFromApiCode(apiCode)) {
+				this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);
+				this.formService.createFormData().subscribe(res => {
+					let redirectUrl = ManageRoutes.getFullRoute(apiCode);
+					this.router.navigate([redirectUrl, res.serviceFormId, apiCode]);
+				});
+			} else {
+				// todo 
+				this.toastr.error("Invalid API Code");
+			}
 		}
 	}
 
