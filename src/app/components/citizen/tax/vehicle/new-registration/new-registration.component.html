@@ -376,7 +376,7 @@
 								<b>Total</b>
 							</td>
 							<td>
-								{{totalVehicleTaxAmt}}
+								{{totalVehicleTaxAmt | number:'.1-2'}}
 							</td>
 						</tr>
 						<tr *ngIf="taxAmountArray.length == 0">

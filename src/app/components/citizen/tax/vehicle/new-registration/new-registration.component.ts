@@ -210,27 +210,20 @@ export class NewRegistrationComponent implements OnInit {
 	 */
   getVehicleData(id: number) {
     this.formService.getFormData(id).subscribe(res => {
-      this.vehicleRegistrationForm.patchValue(res);
-
-      if (!res.purchasingType) {
-        /** This piece of code is used to set the defalut value to respective control */
-        let purchaseTypeObj = _.filter(this.purchasingTypeArray, { 'code': 'NEW_RATE' })[0];
-        this.vehicleRegistrationForm.get('purchasingType').setValue(purchaseTypeObj.code);
-      }
-
-
-      this.showButtons = true;
-
-      if (!this.vehicleRegistrationForm.get('canEdit').value) {
-        this.vehicleRegistrationForm.disable();
-      }
-
-      // if vehicle receipt present then format the receipt date
-      if (res.vehicleReceipts && res.vehicleReceipts.length > 0) {
-        _.forEach(res.vehicleReceipts, (value, key) => {
-          value.receiptDate = moment(value.receiptDate).format("DD/MM/YYYY")
-        });
-      }
+      this.formService.getFormData(id).subscribe(res => {
+        this.vehicleRegistrationForm.patchValue(res);
+  
+        if (!this.vehicleRegistrationForm.get('canEdit').value) {
+          this.vehicleRegistrationForm.disable();
+        }
+  
+        // if vehicle receipt present then format the receipt date
+        if (res.vehicleReceipts && res.vehicleReceipts.length > 0) {
+          _.forEach(res.vehicleReceipts, (value, key) => {
+            value.receiptDate = moment(value.receiptDate).format("DD/MM/YYYY")
+          });
+        }
+      });
     });
   }
 
@@ -487,17 +480,17 @@ export class NewRegistrationComponent implements OnInit {
       this.commonService.openAlert("Warning", "Enter Vehicle Type, Basic Value and Purchase Date", "warning");
       return;
     }
-    // else if (event.index === 2 && this.vehicleRegistrationForm.get('canEdit').value) {
-    // 	this.formService.calculateTax(this.vehicleRegistrationForm.getRawValue()).subscribe(res => {
+    else if (event.index === 2 && this.vehicleRegistrationForm.get('canEdit').value) {
+    	this.vehicleServise.calculateTax(this.vehicleRegistrationForm.getRawValue()).subscribe(res => {
 
-    // 		this.vehicleRegistrationForm.patchValue({
-    // 			tokenFess: res.amountFields.tokenFees,
-    // 			dishonorCharges: res.amountFields.dishonorCharges ? res.amountFields.dishonorCharges : 0,
-    // 			applicableRate: res.applicableRate,
-    // 			totalPayable: res.totalPayable
-    // 		});
-    // 	});
-    // }
+    		this.vehicleRegistrationForm.patchValue({
+          tokenFess: res.amountFields.vehicleTokenFee,
+					dishonorCharges: res.amountFields.dishonorCharges ? res.amountFields.dishonorCharges : 0,
+					vehicleApplicableRate: res.vehicleApplicableRate,
+					totalPayable: res.amountFields.vehicleBasicValue
+    		});
+    	});
+    }
   }
 
   /**
