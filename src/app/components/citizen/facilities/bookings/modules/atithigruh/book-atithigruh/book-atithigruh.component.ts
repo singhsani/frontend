@@ -20,7 +20,7 @@ export class BookAtithigruhComponent implements OnInit {
 	bookingConstants = BookingConstants;
 	bookingUtils: BookingUtils = new BookingUtils();
 
-	protected ATITHIGRUH: Array<LookUPMap> = [{
+	ATITHIGRUH: Array<LookUPMap> = [{
 		name: "Sayajibaug Atithigruh No.1",
 		code: "Sayajibaug1"
 	}, {
@@ -76,20 +76,20 @@ export class BookAtithigruhComponent implements OnInit {
 		code: "Harani"
 	}];
 
-	protected BOOKING_TYPE: Array<LookUPMap> = [
+	 BOOKING_TYPE: Array<LookUPMap> = [
 		{ name: "Advance Booking(By Draw)", code: "ADVANCE" },
 		{ name: "Regular Booking", code: "REGULAR" },
 	]
 
-	protected PURPOSE: Array<LookUPMap> = [
+	 PURPOSE: Array<LookUPMap> = [
 		{ name: "Regular Booking", code: "REGULAR" },
 		{ name: "Advance Booking(By Draw)", code: "ADVANCE" }
 	]
 
 	BankOptions: Array<any> = [];
 
-	protected atithigruhForm: FormGroup;
-	protected BookingTypeForm: FormGroup;
+	atithigruhForm: FormGroup;
+	BookingTypeForm: FormGroup;
 
 	constructor(private _fb: FormBuilder) { }
 	ngOnInit() {

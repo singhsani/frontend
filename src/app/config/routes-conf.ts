@@ -426,6 +426,10 @@ const ROUTEMAIN = {
         'main': 'stillBirthReg',
         'type': 'stillBirthReg'
     },
+    'HEL-BCR-HOSPITAL' : {
+        'main': 'birthCorrectionReg',
+        'type': 'birthCorrectionReg'
+    },
     'HOSPITALMYAPPS': {
         'main': 'my-applications',
         'type': 'myApps'
@@ -888,6 +892,9 @@ const ROUTESLIST = {
     },
     'HEL-SB': {
         'full': ROUTEPREFIX.HOSPITALMODULE + '/' + ROUTEMAIN["HEL-SB"].main
+    },
+    'HEL-BCR-HOSPITAL' : {
+        'full': ROUTEPREFIX.HOSPITALMODULE + '/' + ROUTEMAIN["HEL-BCR-HOSPITAL"].main
     },
     'HOSPITALMYAPPS': {
         'full': ROUTEPREFIX.HOSPITALMODULE + '/' + ROUTEMAIN.HOSPITALMYAPPS.main
