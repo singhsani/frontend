@@ -39,7 +39,7 @@ export class MuttonFishTransferComponent implements OnInit {
 	LOOKUP: any;
 
 	// required attachment array
-	private uploadFileArray: Array<any> = [];
+	public uploadFileArray: Array<any> = [];
 
 	// serach api variable
 	serachLicenceObj = {

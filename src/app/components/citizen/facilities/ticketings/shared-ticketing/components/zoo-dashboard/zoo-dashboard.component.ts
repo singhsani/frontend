@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ManageRoutes } from '../../../../../../../config/routes-conf';
+import { TranslateService } from '../../../../../../../shared/modules/translate/translate.service';
 
 
 @Component({
@@ -10,6 +11,7 @@ import { ManageRoutes } from '../../../../../../../config/routes-conf';
 export class ZooDashboardComponent implements OnInit {
 
   manageRoutes: any = ManageRoutes;
+	translateKey: string = 'ZooDashboard';
 
   // Modules List
   modules: Array<any> = [
@@ -32,7 +34,7 @@ export class ZooDashboardComponent implements OnInit {
   ];
 
 
-  constructor() { }
+  constructor(public translateService: TranslateService) { }
 
   ngOnInit() {
   }
