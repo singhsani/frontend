@@ -21,7 +21,7 @@
                 <span class="count">Services</span>
             </ng-template>
             <div class="servicesList row">
-                <div class="colBtn col-md-3" *ngFor="let service of module.services;" matTooltip="{{ service.name }}">
+                <div class="colBtn col-md-3" *ngFor="let service of module.services;" matTooltip="{{ config.removeFromString(service.name, '<br>') }}">
                     <button mat-stroked-button color="primary" (click)="createRecord(service.code)" [innerHtml]="service.name"></button>
                     <!-- <button mat-stroked-button color="primary" (click)="createRecord(service.code)">
                         {{ service.name }}

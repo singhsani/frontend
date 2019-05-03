@@ -5,6 +5,7 @@ import { HosFormActionsService } from '../../../core/services/hospital/data-serv
 
 import { ManageRoutes } from '../../../config/routes-conf';
 import { ToastrService } from 'ngx-toastr';
+import { HospitalConfig } from '../hospital-config';
 
 @Component({
 	selector: 'app-dashboard',
@@ -14,6 +15,7 @@ import { ToastrService } from 'ngx-toastr';
 export class HospitalDashboardComponent implements OnInit {
 
 	userServicesList: any;
+	config : HospitalConfig = new HospitalConfig;
 	manageRoutes: any = ManageRoutes;
 	/**
 	 * Constructor to declare defualt propeties of class
