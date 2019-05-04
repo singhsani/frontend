@@ -320,7 +320,7 @@
 					</mat-form-field>
 
 					<mat-form-field  class="col-md-4" *ngIf="deathCertificateForm.get('medicalTreatment').get('code').value && deathCertificateForm.get('medicalTreatment').get('code').value !='NO_MED_HELP_ATT' ">
-						<input matInput [max]="maxTreatmentDate"  required [matDatepicker]="treatFromDatepicker" formControlName="treatmentDurationFrom" (dateChange)="dateFormat($event.value,'treatmentDurationFrom')"
+						<input matInput [min]="deathCertificateForm.get('birthDate').value" [max]="maxTreatmentDate"  required [matDatepicker]="treatFromDatepicker" formControlName="treatmentDurationFrom" (dateChange)="dateFormat($event.value,'treatmentDurationFrom')"
 						 placeholder="{{ 'treatment_DurationFrom' | translate:translateKey }}">
 						<mat-datepicker-toggle matSuffix [for]="treatFromDatepicker"></mat-datepicker-toggle>
 						<mat-datepicker touchUi="true" #treatFromDatepicker></mat-datepicker>
@@ -423,21 +423,20 @@
 							<td class="p-3">
 								<div class="radioBtnError" formGroupName="smokingAddiction">
 									<mat-label>{{'smoking_addiction' | translate:translateKey}} {{requiredFeild?'*':''}}</mat-label>
-									<mat-radio-group formControlName="code" class="example-radio-button" (change)="changeInAddictions('smokingSince', $event.value)">
+									<mat-radio-group formControlName="code" class="example-radio-button" >
 										<mat-radio-button *ngFor="let yesno of ISYESNO" [value]="yesno.code">
 											{{yesno.name}}
 										</mat-radio-button>
 									</mat-radio-group>
 								</div>
 							</td>
-							<td>
-								<mat-form-field>
+							<td *ngIf="deathCertificateForm.get('smokingAddiction').get('code').value == 'YES'">
+								<mat-form-field >
 									<label>{{'smoking_since' | translate:translateKey}}</label>
-									<input 
-									[readonly]="deathCertificateForm.get('smokingAddiction').get('code').value == 'NO'"
-									[required]="deathCertificateForm.get('smokingAddiction').get('code').value == 'YES'" matInput OnlyNumber
+									<input [required]="deathCertificateForm.get('smokingAddiction').get('code').value == 'YES'" matInput OnlyNumber
 									 [min]="minAge" [max]="deceasedAge" maxlength="2" maxlength="10" formControlName="smokingSince">
-									<control-messages [control]="deathCertificateForm.get('smokingSince')"></control-messages>
+									 <mat-error  class="fs" *ngIf="deathCertificateForm.get('smokingSince').hasError('max')">Years can not be more than deceased age</mat-error>
+									 <control-messages *ngIf="!deathCertificateForm.get('smokingSince').hasError('max')" [control]="deathCertificateForm.get('smokingSince')"></control-messages>
 								</mat-form-field>
 							</td>
 						</tr>
@@ -452,13 +451,14 @@
 									</mat-radio-group>
 								</div>
 							</td>
-							<td>
+							<td *ngIf="deathCertificateForm.get('tobaccoAddiction').get('code').value == 'YES'">
 								<mat-form-field >
 									<label>{{'tobacco_since' | translate:translateKey}}</label>
-									<input [readonly]="deathCertificateForm.get('tobaccoAddiction').get('code').value == 'NO'"
+									<input 
 									 [required]="deathCertificateForm.get('tobaccoAddiction').get('code').value == 'YES'" matInput OnlyNumber 
 									 [min]="minAge" [max]="deceasedAge" maxlength="2" maxlength="10" formControlName="tobaccoSince">
-									<control-messages [control]="deathCertificateForm.get('tobaccoSince')"></control-messages>
+									<mat-error  class="fs" *ngIf="deathCertificateForm.get('tobaccoSince').hasError('max')">Years can not be more than deceased age</mat-error>
+									<control-messages *ngIf="!deathCertificateForm.get('tobaccoSince').hasError('max')" [control]="deathCertificateForm.get('tobaccoSince')"></control-messages>
 								</mat-form-field>
 							</td>
 						</tr>
@@ -473,13 +473,14 @@
 									</mat-radio-group>
 								</div>
 							</td>
-							<td>
-								<mat-form-field>
+							<td *ngIf="deathCertificateForm.get('sopariAddiction').get('code').value == 'YES'">
+								<mat-form-field >
 									<label>{{'sopari_panmasala_since' | translate:translateKey}}</label>
-									<input [readonly]="deathCertificateForm.get('sopariAddiction').get('code').value == 'NO'"
-									[required]="deathCertificateForm.get('sopariAddiction').get('code').value == 'YES'" matInput OnlyNumber 
+									<input [required]="deathCertificateForm.get('sopariAddiction').get('code').value == 'YES'" matInput OnlyNumber 
 									 [min]="minAge" [max]="deceasedAge" maxlength="2" maxlength="10" formControlName="sopariPanmasalaSince">
-									<control-messages [control]="deathCertificateForm.get('sopariPanmasalaSince')">
+									<mat-error  class="fs" *ngIf="deathCertificateForm.get('sopariPanmasalaSince').hasError('max')">Years can not be more than deceased age
+									</mat-error>
+									<control-messages *ngIf="!deathCertificateForm.get('sopariPanmasalaSince').hasError('max')" [control]="deathCertificateForm.get('sopariPanmasalaSince')">
 									</control-messages>
 								</mat-form-field>
 							</td>
@@ -495,13 +496,15 @@
 									</mat-radio-group>
 								</div>
 							</td>
-							<td>
-								<mat-form-field>
+							<td *ngIf="deathCertificateForm.get('alcoholAddiction').get('code').value == 'YES'">
+								<mat-form-field >
 									<label>{{'alcohol_since' | translate:translateKey}}</label>
-									<input [readonly]="deathCertificateForm.get('alcoholAddiction').get('code').value == 'NO'"
+									<input
 									[required]="deathCertificateForm.get('alcoholAddiction').get('code').value == 'YES'" matInput OnlyNumber
 									 [min]="minAge" [max]="deceasedAge" maxlength="2" maxlength="10" formControlName="alcoholSince">
-									<control-messages [control]="deathCertificateForm.get('alcoholSince')"></control-messages>
+									<mat-error  class="fs" *ngIf="deathCertificateForm.get('alcoholSince').hasError('max')">Years can not be more than deceasedage
+									</mat-error>
+									<control-messages *ngIf="!deathCertificateForm.get('alcoholSince').hasError('max')" [control]="deathCertificateForm.get('alcoholSince')"></control-messages>
 								</mat-form-field>
 							</td>
 						</tr>

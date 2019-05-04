@@ -28,7 +28,7 @@ export class HospitalConfig extends ComponentConfig {
             this.MORE_THAN_YEAR_MESSAGE = `<p>It will considered as delayed ${this.certType} registration because
              registration date is more than 1 year and there will be extra attachment (Court Order) as well as fees.`;
             this.Child_Weight_Error = "Child Weight Error";
-            this.MIN_CHILD_WEIGHT = "Child Weight can dbe less than 300 grams";
+            this.MIN_CHILD_WEIGHT = "Child weight should be in between 0.300 to 10 kg";
 
         }
     }

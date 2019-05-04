@@ -641,15 +641,11 @@ export class DeathRegistrationComponent implements OnInit {
 			});
 		} else {
 			spouseDetails.forEach(d => {
+				if(!['spouseMiddleName', 'spouseMiddleNameGuj'].includes(d))
 				this.deathCertificateForm.get(d).setValidators([Validators.required]);
 				this.deathCertificateForm.get(d).updateValueAndValidity();
 			});
 		}
-	}
-
-	changeInAddictions(addCtrl : string, event : string){
-		console.log(addCtrl);
-		console.log(event);
 	}
 
 	/**
