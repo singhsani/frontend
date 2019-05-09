@@ -173,12 +173,12 @@
 				<div class="row stepperMinHeight">
 					<mat-form-field class="col-md-6">
 						<input matInput autocomplete="off" maxlength="10" appAlphaNumeric formControlName="pancardNo" type="text" placeholder="{{'pan_card_no' | translate: translateKey}}"
-						 required style="text-transform: uppercase;">
+						 required class="capitalCase">
 						<control-messages [control]="pecRegForm.get('pancardNo')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-6">
-						<input matInput autocomplete="off" maxlength="20" appAlphaNumeric formControlName="gstNo" type="text" placeholder="{{'gst_no' | translate: translateKey}}">
+						<input matInput autocomplete="off" class="capitalCase" maxlength="15" appAlphaNumeric formControlName="gstNo" type="text" placeholder="{{'gst_no' | translate: translateKey}}">
 						<control-messages [control]="pecRegForm.get('gstNo')"></control-messages>
 					</mat-form-field>
 

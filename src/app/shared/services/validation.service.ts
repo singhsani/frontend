@@ -40,6 +40,7 @@ export class ValidationService {
             invalidemployeeage: 'Age must be greater than 13 year',
             invalidIfscCode: 'IFSC Code is not valid',
             invalidPan: 'Invalid Pan Number',
+            invalidGstin: 'The GSTIN is invalid, Please enter a valid GSTIN',
             invalidpetaKendraNumber: 'Should contains only alpha-numeric and numeric value',
             invalidAmount: 'Amount should be in digit and Only two digit allowed after decimal',
             motherMarriageTimeAge: 'Mothers age at marriage time should not be less then 12 Years',
@@ -231,5 +232,15 @@ export class ValidationService {
             return null;
         }
     }
+
+    // gst number validation 
+	static gstinValidator(control: FormControl) {
+		if (control.value) {
+			const matches = control.value.match(/\d{2}[A-Z]{5}\d{4}[A-Z]{1}[A-Z\d]{1}[Z]{1}[A-Z\d]{1}/g);
+			return matches ? null : { 'invalidGstin': true };
+		} else {
+			return null;
+		}
+	}
 
 }
