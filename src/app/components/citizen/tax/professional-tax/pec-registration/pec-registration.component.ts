@@ -168,7 +168,7 @@ export class PecRegistrationComponent implements OnInit {
 			gujaratSalesTax: null,
 			professionalTax: null,
 			companyRegNo: null,
-			gstNo: null,
+			gstNo: [null, ValidationService.gstinValidator],
 			censusNo: this.fb.array([]),
 
 			// fourth step controls
@@ -320,14 +320,22 @@ export class PecRegistrationComponent implements OnInit {
 		if (this.pecRegForm.invalid) {
 			let count = this.config.getAllErrors(this.pecRegForm);
 			this.commonService.openAlert("Warning", this.config.ALL_FEILD_REQUIRED_MESSAGE, "warning", "", cb => {
-				if (count >= 1 && count <= 29)
-					this.tabIndex = 0;
-				else if (count >= 30 && count <= 32)
-					this.tabIndex = 1;
-				else if (count >= 33 && count <= 37)
-					this.tabIndex = 2;
-				else if (count >= 38 && count <= 43)
-					this.tabIndex = 3;
+				switch (true) {
+					case (count <= 30):
+						this.tabIndex = 0;
+						break;
+					case (count <= 33):
+						this.tabIndex = 1;
+						break;
+					case (count <= 41):
+						this.tabIndex = 2;
+						break;
+					case (count <= 46):
+						this.tabIndex = 3;
+						break;
+					default:
+						this.tabIndex = 0;
+				}
 			});
 			return;
 		}
@@ -348,6 +356,8 @@ export class PecRegistrationComponent implements OnInit {
 
 		this.mandatoryFileCheck().then(data => {
 			if (data.status) {
+				this.pecRegForm.get('pancardNo').setValue(this.pecRegForm.get('pancardNo').value.toUpperCase());
+				this.pecRegForm.get('gstNo').setValue(this.pecRegForm.get('gstNo').value.toUpperCase());
 				this.profeService.pftSaveFormData(this.pecRegForm.getRawValue()).subscribe(res => {
 					if (Object.keys(res).length) {
 						// if (this.pecRegForm.get('pecNo').value) {
