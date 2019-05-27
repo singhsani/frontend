@@ -92,10 +92,10 @@
 
 					<div *ngIf="(element.status != ticketingConstants.SUBMITTED)">
 
-						<button *ngIf="element.status == ticketingConstants.PAYMENT_REQUIRED" mat-menu-item color="primary" (click)="paymentRequest(element)">
+						<!-- <button *ngIf="element.status == ticketingConstants.PAYMENT_REQUIRED" mat-menu-item color="primary" (click)="paymentRequest(element)">
 							<mat-icon title="Print Receipt" color="primary">print</mat-icon>
 							{{'make_payment' | translate:translateKey}}
-						</button>
+						</button> -->
 
 						<button *ngIf="element.status != ticketingConstants.PAYMENT_REQUIRED" mat-menu-item color="primary" (click)="printReceipt(element, element.payableServiceType)">
 							<mat-icon title="Print Receipt" color="primary">print</mat-icon>

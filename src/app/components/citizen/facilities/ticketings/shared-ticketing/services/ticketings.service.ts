@@ -33,6 +33,23 @@ export class TicketingsService {
   }
 
   /**
+	 * This method is used to get form data 
+	*/
+  getFormData() {
+    // api/ticketing/planetarium/list
+    this.requestURL = `api/ticketing/${this.resourceType}/list`;
+    return this.http.get(this.requestURL);
+  }
+
+  /**
+	 * This method is used to book planetarium tickets
+	*/
+  bookPlanetariumTickets(ticketingInfo,resourceCode) {
+    this.requestURL = `api/ticketing/${this.resourceType}/book/?resourceCode=${resourceCode}`;
+    return this.http.post(this.requestURL, ticketingInfo);
+  }
+
+  /**
 	 * This method is used to get ticketing rates for visiting zoo
 	*/
   getZooVisitingRates() {
@@ -50,7 +67,6 @@ export class TicketingsService {
 
 
   // METHODS FOR ANIMAL ADOPTION MODULE OF ZOO MODULE
-
   animalAdoptionRequest(animalAdoptionRequestForm) {
     this.requestURL = `api/ticketing/${this.resourceType}/adoptionRequest/?resourceCode=SARDARBAUGHZOO_ANIMALADOPTION`;
     return this.http.post(this.requestURL, animalAdoptionRequestForm);
