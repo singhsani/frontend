@@ -65,7 +65,7 @@ export class AnimalAdoptionComponent implements OnInit {
     this.getZooVisitingRates();
 
     this.animalAdoptionForm.valueChanges.subscribe( v => {
-      console.log(this.animalAdoptionForm);
+      // console.log(this.animalAdoptionForm);
     })
   }
 
