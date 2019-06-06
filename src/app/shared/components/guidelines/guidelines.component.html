@@ -1,0 +1,56 @@
+<div>
+	<mat-card class="cardBox">
+		<div class="pageTitle">{{'welcome_to_vmc_hospital_portal'| translate: translateKey}}</div>
+		<!-- <app-guj-video></app-guj-video> -->
+		<div class="float-right">
+			<button class="btn btn-warning mr-2" type="button" data-toggle="modal" data-target="#gujModal">
+				How to type in Gujarati?
+			</button>
+		</div>
+		<mat-card-content class="p-4">
+			<p class="pb-2">{{message}}</p>
+			<h2>{{'mendatory_feilds'| translate: translateKey}}</h2>
+			<ol class="olList">
+				<li *ngFor ="let li of listMessage"> {{li}}</li>
+			</ol>
+		</mat-card-content>
+	</mat-card>
+
+	<div class="fotButtonBar">
+		<div class="col-sm-12 col-md-12 text-right">
+			<button mat-raised-button color="primary" type="button" (click)="hideGuideLine.emit(true)">
+				<mat-icon>thumb_up_alt</mat-icon>
+				{{'proceed'| translate: translateKey}}
+			</button>
+		</div>
+	</div>
+</div>
+
+<div class="modal" id="gujModal">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+
+			<!-- Modal Header -->
+			<div class="modal-header">
+				<h4 class="modal-title">
+					Gujarati typing, Confused? Just hit play button.
+				</h4>
+			</div>
+
+			<!-- Modal body -->
+			<div class="modal-body">
+				<div class="embed-responsive embed-responsive-16by9 m-1 row">
+					<video class="embed-responsive-item col-md-12" controls>
+						<source src="assets/videos/Gujarati_Demo.mp4" type="video/mp4">
+					</video>
+				</div>
+			</div>
+
+			<!-- Modal footer -->
+			<div class="modal-footer">
+				<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+			</div>
+
+		</div>
+	</div>
+</div>

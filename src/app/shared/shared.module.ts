@@ -47,6 +47,8 @@ import { HosPaymentResponsePageComponent } from './components/hos-payment-respon
 import { HosTitleBarComponent } from './components/hos-title-bar/hos-title-bar.component';
 import { GatewayResponseComponent } from './components/gateway-response/gateway-response.component';
 import { PaymentOptionComponent } from './components/payment-option/payment-option.component';
+import { GuidelinesComponent } from './components/guidelines/guidelines.component';
+import { GujVideoComponent } from './components/guj-video/guj-video.component';
 /* import pipes end*/
 
 const COMPONENTS = [
@@ -71,12 +73,15 @@ const COMPONENTS = [
 	ReloadDirective,
 	HosPaymentResponsePageComponent,
 	GatewayResponseComponent,
-	PaymentOptionComponent
+	PaymentOptionComponent,
+	GuidelinesComponent,
+	GujVideoComponent
+
 ]
 
 @NgModule({
 	declarations: [
-		...COMPONENTS
+		...COMPONENTS,
 		
 	],
 	imports: [

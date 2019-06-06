@@ -1,6 +1,12 @@
-<app-hos-title-bar [title]="'screen_title' | translate: translateKey"></app-hos-title-bar>
+<app-hos-title-bar class="titleBarUpdate" [title]="'screen_title' | translate: translateKey">
+		 
+</app-hos-title-bar>
 
-<mat-card class="formClass cardBorder">
+<div *ngIf="isGuideLineActive">
+    <app-guidelines [isGuileLineActive]="isGuideLineActive" [listMessage]="listMessage" [message]="message" (hideGuideLine)="$event?isGuideLineActive = false : isGuideLineActive = true"></app-guidelines>
+</div>
+
+<mat-card class="formClass cardBorder" [hidden]="isGuideLineActive">
 
     <form [formGroup]="stillBirthCertificateForm" autocomplete="off" ngNativeValidate appReload
         [isFormSaved]="isFormSaved" [form]="stillBirthCertificateForm">

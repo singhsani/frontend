@@ -19,6 +19,11 @@ import { Router } from "@angular/router";
       </li>
       <li>{{title}}</li>
       <ng-content></ng-content>
+      <div class="float-right">
+    <button class="btn btn-warning mr-2" type="button" data-toggle="modal" data-target="#gujModal">
+      How to type in Gujarati?
+    </button>
+  </div>
     </ul>
   </div>
 </div>`,

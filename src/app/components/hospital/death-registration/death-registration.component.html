@@ -4,7 +4,11 @@
 		</button> -->
 </app-hos-title-bar>
 
-<mat-card class="formClass cardBorder">
+<div *ngIf="isGuideLineActive">
+	<app-guidelines [isGuileLineActive]="isGuideLineActive" [listMessage]="listMessage" [message]="message" (hideGuideLine)="$event?isGuideLineActive = false : isGuideLineActive = true"></app-guidelines>
+</div>
+
+<mat-card class="formClass cardBorder" [hidden]="isGuideLineActive">
 
 	<form [formGroup]="deathCertificateForm" autocomplete="off" ngNativeValidate appReload [isFormSaved]="isFormSaved" [form]="deathCertificateForm">
 		<!-- appReload [form] = "deathCertificateForm" [isSaved]="isFormSaved" -->
