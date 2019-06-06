@@ -51,7 +51,7 @@ export class DeathRegistrationComponent implements OnInit {
 	maxBirthDate = new Date();
 	maxDeathDate = new Date();
 
-	minTreatmentDate : any;
+	minTreatmentDate: any;
 
 	maxTreatmentDate = new Date();
 
@@ -86,6 +86,56 @@ export class DeathRegistrationComponent implements OnInit {
 	isFormSaved: boolean = false;
 
 	config: HospitalConfig = new HospitalConfig('death');
+
+
+	/**
+	 * for guideline
+	 */
+	isGuideLineActive: boolean;
+
+	listMessage: Array<string> = [
+		"Unknown Category (whether deceased is unknown) is Mandatory",
+		"Unknown Description (if deaceased is unknown)  is Mandatory",
+		"Deceased First Name is Mandatory",
+		"Deceased LastName is Mandatory",
+		"Deceased First Name in Gujarati is Mandatory",
+		"Deceased Last Name in Gujarati is Mandatory",
+		"Gender Type is Mandatory",
+		"Death Date is Mandatory",
+		"Birth Date is Mandatory",
+		"Death Time is Mandatory",
+		"Marital Status is Mandatory",
+		"Spouse First Name is Mandatory",
+		"Spouse First Name in Gujarati is Mandatory",
+		"Spouse Last Name is Mandatory",
+		"Spouse Last Name in Gujarati is Mandatory",
+		"Father Or Husband Name is Mandatory",
+		"Mother Name is Mandatory",
+		"Religion is Mandatory",
+		"Education is Mandatory",
+		"Occupation is Mandatory",
+		"Female Death Reason (in case of female deceased) is Mandatory",
+		"Death Place is Mandatory",
+		"Medical Treatment is Mandatory",
+		"Medical Reason is Mandatory",
+		"Treatment Duration From is Mandatory",
+		"Treatment Duration To is Mandatory",
+		"Smoking Addiction is Mandatory",
+		"Tobacco Addiction is Mandatory",
+		"Sopari Addiction is Mandatory",
+		"Alcohol Addiction is Mandatory",
+		"Present Address is Mandatory",
+		"Ward No is Mandatory",
+		"Permanent Address is Mandatory",
+		"Applicant Relation is Mandatory",
+		"Given Attachemnt is Mandatory.",
+	];
+
+	message: string = `VMC - ERP Hospital Portal provides facility to registered hospital of Vadodara city to register birth
+				and death record which are occurred in their hospital. Those registered records will be used to generate the Birth and
+				Death certificate for the citizens of Vadodara City. Online Birth & Death Registration is the convenient and easy
+				way to issue Birth & death Certificate for citizen of Vadodara City`
+
 	constructor(
 		private fb: FormBuilder,
 		private router: Router,
@@ -153,6 +203,11 @@ export class DeathRegistrationComponent implements OnInit {
 	 */
 	getDeathCertData() {
 		this.formService.getFormData(this.appId).subscribe((res) => {
+			if (!res.canEdit) {
+				this.isGuideLineActive = false;
+			} else {
+				this.isGuideLineActive = true;
+			}
 			this.deathCertificateForm.patchValue(res);
 			this.config.documentList(res, this.uploadFileArray);
 			if (res.birthDate) {
@@ -207,8 +262,8 @@ export class DeathRegistrationComponent implements OnInit {
 				return;
 			})
 
-			this.deathCertificateForm.get('gender').valueChanges.subscribe(gender => {				
-				if(gender.code == 'FEMALE'){
+			this.deathCertificateForm.get('gender').valueChanges.subscribe(gender => {
+				if (gender.code == 'FEMALE') {
 					this.deathCertificateForm.get('femaleDeathReason').get('code').setValidators([Validators.required]);
 					this.deathCertificateForm.get('femaleDeathReason').get('code').updateValueAndValidity();
 					return;
@@ -255,6 +310,7 @@ export class DeathRegistrationComponent implements OnInit {
 			this.deathCertificateForm.get('unknownDescription').setValidators([Validators.required]);
 			this.deathCertificateForm.get('gender').get('code').clearValidators();
 			this.deathCertificateForm.get('religion').get('code').clearValidators()
+			this.deathCertificateForm.get('maritalStatus').get('code').clearValidators();
 			this.deathCertificateForm.get('education').get('code').clearValidators()
 			this.deathCertificateForm.get('occupation').get('code').clearValidators()
 			this.deathCertificateForm.get('deathPlace').get('code').clearValidators()
@@ -289,6 +345,7 @@ export class DeathRegistrationComponent implements OnInit {
 	upDateValidation(event: string) {
 		this.deathCertificateForm.get('unknownDescription').updateValueAndValidity();
 		this.deathCertificateForm.get('gender').get('code').updateValueAndValidity();
+		this.deathCertificateForm.get('maritalStatus').get('code').updateValueAndValidity();
 		this.deathCertificateForm.get('religion').get('code').updateValueAndValidity();
 		this.deathCertificateForm.get('education').get('code').updateValueAndValidity();
 		this.deathCertificateForm.get('occupation').get('code').updateValueAndValidity();
@@ -394,10 +451,10 @@ export class DeathRegistrationComponent implements OnInit {
 			medicalReason: this.fb.group({
 				code: [null]
 			}),
-			treatmentDurationFrom:null,
-			treatmentDurationTo:null,
+			treatmentDurationFrom: null,
+			treatmentDurationTo: null,
 			//deathReason: ['', [Validators.maxLength(100)]],
-			
+
 			reportedToCoronor: this.fb.group({
 				id: null,
 				code: [null, Validators.required],
@@ -405,7 +462,7 @@ export class DeathRegistrationComponent implements OnInit {
 			}),
 			immediateCOD1: this.fb.group({
 				id: null,
-				code: [null,[Validators.required]],
+				code: [null, [Validators.required]],
 				name: null,
 				gujName: null
 			}),
@@ -421,24 +478,24 @@ export class DeathRegistrationComponent implements OnInit {
 				name: null,
 				gujName: null
 			}),
-			smokingAddiction : this.fb.group({
-				code : ['NO', [Validators.required]],
-				name : null
+			smokingAddiction: this.fb.group({
+				code: ['NO', [Validators.required]],
+				name: null
 			}),
 			smokingSince: [null, [Validators.max(this.deceasedAge), Validators.min(this.minAge)]],
-			tobaccoAddiction : this.fb.group({
-				code : ['NO', [Validators.required]],
-				name : null
+			tobaccoAddiction: this.fb.group({
+				code: ['NO', [Validators.required]],
+				name: null
 			}),
 			tobaccoSince: [null, [Validators.max(this.deceasedAge), Validators.min(this.minAge)]],
-			sopariAddiction : this.fb.group({
-				code : ['NO', [Validators.required]],
-				name : null
+			sopariAddiction: this.fb.group({
+				code: ['NO', [Validators.required]],
+				name: null
 			}),
 			sopariPanmasalaSince: [null, [Validators.max(this.deceasedAge), Validators.min(this.minAge)]],
-			alcoholAddiction : this.fb.group({
-				code : ['NO', [Validators.required]],
-				name : null
+			alcoholAddiction: this.fb.group({
+				code: ['NO', [Validators.required]],
+				name: null
 			}),
 			alcoholSince: [null, [Validators.max(this.deceasedAge), Validators.min(this.minAge)]],
 
@@ -474,7 +531,7 @@ export class DeathRegistrationComponent implements OnInit {
 
 			//Attachments Data step 5
 			attachments: [],
-			
+
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
 		});
 
@@ -632,7 +689,7 @@ export class DeathRegistrationComponent implements OnInit {
 	 * reset all spouse controlls
 	 */
 	resetSpouseCntrl(event: string) {
-		let spouseDetails : Array<any> = ['spouseFirstName','spouseFirstNameGuj','spouseLastName','spouseLastNameGuj','spouseMiddleName','spouseMiddleNameGuj']
+		let spouseDetails: Array<any> = ['spouseFirstName', 'spouseFirstNameGuj', 'spouseLastName', 'spouseLastNameGuj', 'spouseMiddleName', 'spouseMiddleNameGuj']
 		if (event != "MARRIED" && event != "MARRIED_SEPERATE") {
 			spouseDetails.forEach(d => {
 				this.deathCertificateForm.get(d).reset();
@@ -641,8 +698,8 @@ export class DeathRegistrationComponent implements OnInit {
 			});
 		} else {
 			spouseDetails.forEach(d => {
-				if(!['spouseMiddleName', 'spouseMiddleNameGuj'].includes(d))
-				this.deathCertificateForm.get(d).setValidators([Validators.required]);
+				if (!['spouseMiddleName', 'spouseMiddleNameGuj'].includes(d))
+					this.deathCertificateForm.get(d).setValidators([Validators.required]);
 				this.deathCertificateForm.get(d).updateValueAndValidity();
 			});
 		}
@@ -652,8 +709,8 @@ export class DeathRegistrationComponent implements OnInit {
 	 * reset 
 	 * @param event 
 	 */
-	changeMedicalTreatment(event: string){
-		if(event =='NO_MED_HELP_ATT'){
+	changeMedicalTreatment(event: string) {
+		if (event == 'NO_MED_HELP_ATT') {
 			this.deathCertificateForm.get('treatmentDurationFrom').reset();
 			this.deathCertificateForm.get('treatmentDurationFrom').clearValidators();
 			this.deathCertificateForm.get('treatmentDurationFrom').updateValueAndValidity();

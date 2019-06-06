@@ -87,6 +87,43 @@ export class StillBirthComponent implements OnInit {
 	config: HospitalConfig = new HospitalConfig('still birth');
 	isFormSaved: boolean = false;
 
+	/**
+	 * common guide line
+	 */
+	isGuideLineActive: boolean;
+
+
+	listMessage: Array<string> = [
+		"Birth Place is Mandatory",
+		"Birth Date is Mandatory.",
+		"Birth Time is Mandatory.",
+		"Child Weight is Mandatory.",
+		"Gender type is Mandatory.",
+		"Father’s First Name is Mandatory Father’s Last Name is Mandatory.",
+		"Father’s Education Is mandatory Father’s Occupation is Mandatory.",
+		"Mother’s First Name is Mandatory Mother’s Last Name is Mandatory.",
+		"Mother’s Education Is mandatory Mother’s Occupation is Mandatory.",
+		"Mamta Card no is mandatory Mother’s age at the time of delivery is mandatory.",
+		"Mother’s age at time of said delivery is mandatory.",
+		"Treatment taken during delivery is mandatory.",
+		"Delivery Type is Mandatory.",
+		"Duration of Pregnancy (in weeks) is Mandatory.",
+		"Religion is Mandatory Both address is Mandatory.",
+		"Pregnancy Duration ",
+		"Parent Delivery Address is Mandatory",
+		"Ward Number is Mandatory",
+		"Parent Permanent Address is Mandatory",
+		"Family Religion is Mandatory",
+		"Relation With Applicant is Mandatory",
+		"Given Attachemnt is Mandatory.",
+	];
+
+	message: string = `VMC - ERP Hospital Portal provides facility to registered hospital of Vadodara city to register birth
+				and death record which are occurred in their hospital. Those registered records will be used to generate the Birth and
+				Death certificate for the citizens of Vadodara City. Online Birth & Death Registration is the convenient and easy
+				way to issue Birth & death Certificate for citizen of Vadodara City`
+
+
 
 	constructor(
 		public route: ActivatedRoute,
@@ -453,6 +490,11 @@ export class StillBirthComponent implements OnInit {
 	 */
 	getStillBirthFormData() {
 		this.formService.getFormData(this.appId).subscribe(res => {
+			if (!res.canEdit) {
+				this.isGuideLineActive = false;
+			} else {
+				this.isGuideLineActive = true;
+			}
 			this.stillBirthCertificateForm.patchValue(res);
 			this.config.documentList(res, this.uploadFileArray);
 			this.childs = this.getChildData();
@@ -529,7 +571,7 @@ export class StillBirthComponent implements OnInit {
 			this.BIRTH_CERTI_MAILING_ADDRESS_TYPE = respData.BIRTH_CERTI_MAILING_ADDRESS_TYPE
 		});
 
-		
+
 	}
 
 	/**

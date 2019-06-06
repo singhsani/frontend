@@ -5,9 +5,8 @@
 </app-hos-title-bar>
 
 <div class="container">
-
   <mat-card *ngIf="showApplicationSearch" class="formClass cardBorder">
-    <div class="pageTitle">{{'screen_title'| translate: translateKey}}</div>
+    <div class="pageTitle">{{'Search Child Record'| translate: translateKey}}</div>
 
     <div class="p-15">
 
@@ -38,18 +37,18 @@
     </div>
   </mat-card>
 
-  <mat-card >
-    <form [formGroup]="birthCorrectionForm" autocomplete="off">
-      <mat-tab-group mat-stretch-tabs class="stepperNav" dynamicHeight="true" [(selectedIndex)]="tabIndex">
-        <mat-tab [label]="stepLable1 | translate: translateKey">
+  <mat-card class="formClass cardBorder mt-2">
+    <form [formGroup]="birthCorrectionForm" autocomplete="off" class="p-15">
+      <!-- <mat-tab-group mat-stretch-tabs class="stepperNav" dynamicHeight="true" [(selectedIndex)]="tabIndex">
+        <mat-tab [label]="stepLable1 | translate: translateKey"> -->
 
           <!-- <ng-template matStepLabel>
 							<div [matTooltip]="'Edit_details' | translate:translateKey">{{'Edit Details' | translate:translateKey}}</div>
 						</ng-template> -->
 
-          <div *ngIf="allowChildNameInsertion">
+          <div>
             <mat-card class="cardH1">
-              <h1>Child Details</h1>
+              <h1>Child Name Insertion</h1>
             </mat-card>
 
             <div class="row">
@@ -61,7 +60,7 @@
             </div>
           </div>
 
-          <div *ngIf="allowChildNameCorrection">
+          <!-- <div *ngIf="allowChildNameCorrection">
 
             <mat-card class="cardH1">
               <h1>child Details</h1>
@@ -119,9 +118,9 @@
                   formControlName="fatherLastNameGuj" required>
                 <control-messages [control]="birthCorrectionForm.get('fatherLastNameGuj')"></control-messages>
               </mat-form-field>
-            </div>
+            </div> -->
 
-            <mat-card class="cardH1">
+            <!-- <mat-card class="cardH1">
               <h1>Mother Details</h1>
             </mat-card>
 
@@ -166,9 +165,9 @@
               </mat-form-field>
 
             </div>
-          </div>
-          <app-hos-action-bar [uploadFiles]="uploadFileArray" [form]="birthCorrectionForm" [stepInfo]="{step: 'step1', next: 1, back: 0}"
-            (tabIndex)="onTabChange($event)" (handleErrors)="handleErrorsOnSubmit($event)"></app-hos-action-bar>
+          </div> -->
+          <!-- <app-hos-action-bar [uploadFiles]="uploadFileArray" [form]="birthCorrectionForm" [stepInfo]="{step: 'step1', next: 1, back: 0}"
+            (tabIndex)="onTabChange($event)" (handleErrors)="handleErrorsOnSubmit($event)"></app-hos-action-bar> -->
 
           <!-- 
 					<div class="col-md-12 text-right ">
@@ -176,13 +175,14 @@
 					</div> -->
 
 
-        </mat-tab>
-        <mat-tab [label]="stepLable2 | translate: translateKey ">
+        <!-- </mat-tab>
+        <mat-tab [label]="stepLable2 | translate: translateKey "> -->
 
           <!-- <ng-template matStepLabel>
 							<div [matTooltip]=" 'upload_documents' | translate:translateKey ">{{'upload_documents' | translate:translateKey}}</div>
 						</ng-template> -->
 
+          <h2>Upload Mandetory Documents</h2>
 
           <div class="alert alert-warning ">
             {{'note' | translate:translateKey}} :{{'submit_hard_copy_at_madhyawarti_school' | translate:translateKey}}
@@ -205,8 +205,8 @@
           <app-hos-action-bar [uploadFiles]="uploadFileArray" [form]="birthCorrectionForm" [stepInfo]="{step: 'final', next: 2, back: 0}"
             (tabIndex)="onTabChange($event)" (handleErrors)="handleErrorsOnSubmit($event) "></app-hos-action-bar>
 
-        </mat-tab>
-      </mat-tab-group>
+        <!-- </mat-tab>
+      </mat-tab-group> -->
 
     </form>
   </mat-card>

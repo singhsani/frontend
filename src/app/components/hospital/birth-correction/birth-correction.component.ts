@@ -193,10 +193,11 @@ export class BirthCorrectionComponent implements OnInit {
       if (event === 'NAME_INSERTION') {
         this.allowChildNameInsertion = true;
         this.allowChildNameCorrection = false;
-      } else if (event === 'ONLY_CORRECTION') {
-        this.allowChildNameInsertion = false;
-        this.allowChildNameCorrection = true;
       }
+      // } else if (event === 'ONLY_CORRECTION') {
+      //   this.allowChildNameInsertion = false;
+      //   this.allowChildNameCorrection = true;
+      // }
 
       this.showButtons = true;
     });
@@ -235,14 +236,15 @@ export class BirthCorrectionComponent implements OnInit {
       } else {
         this.allowChildNameInsertion = true
       }
-    } else if (event === 'ONLY_CORRECTION') {
-      if (this.birthCorrectionForm.get('childName').value == "") {
-        this.allowChildNameInsertion = true;
-        this.allowChildNameCorrection = false;
-      } else {
-        this.allowChildNameCorrection = true
-      }
     }
+    // } else if (event === 'ONLY_CORRECTION') {
+    //   if (this.birthCorrectionForm.get('childName').value == "") {
+    //     this.allowChildNameInsertion = true;
+    //     this.allowChildNameCorrection = false;
+    //   } else {
+    //     this.allowChildNameCorrection = true
+    //   }
+    // }
   }
 
 
@@ -259,9 +261,9 @@ export class BirthCorrectionComponent implements OnInit {
       if (err.error[0].code == 'INSERTION_NOT_ALLOWED') {
         this.commonService.openAlert("Invalid Operation", "Name Already Available, Insertion Not Allowed", "warning");
         return;
-      } else if (err.error[0].code == 'CORRECTION_NOT_ALLOWED') {
-        this.commonService.openAlert("Invalid Operation", "Name Not Available, Correction Not Allowed Please Select Name Insertion", "warning");
-        return;
+      // } else if (err.error[0].code == 'CORRECTION_NOT_ALLOWED') {
+      //   this.commonService.openAlert("Invalid Operation", "Name Not Available, Correction Not Allowed Please Select Name Insertion", "warning");
+      //   return;
       } else if (err.error[0].code == 'INVALID_REQUEST') {
         this.commonService.openAlert("Invalid Request", "Request Not Valid", "warning");
         return;
@@ -394,7 +396,6 @@ export class BirthCorrectionComponent implements OnInit {
       // }),
 
       apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
-
       attachments: [],
     });
   }

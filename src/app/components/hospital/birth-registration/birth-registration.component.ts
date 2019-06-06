@@ -73,13 +73,13 @@ export class BirthRegistrationComponent implements OnInit {
 	TypeOfDelivery: Array<any> = [];
 	Religion: Array<any> = [];
 	ChildWeights: Array<any> = [];
-	CHILD_WEIGHT_GM : Array<any> = [];
+	CHILD_WEIGHT_GM: Array<any> = [];
 	URBAN_PRIMARY_HEALTH_CENTER: Array<any> = [];
 	ISYESNO: Array<any> = [];
 	wardNoData: Array<any> = [];
-	MOTHER_DELIVERY_AGE : Array<any> = [];
-	MOTHER_MARRIAGE_AGE : Array<any> = [];
-	BIRTH_CERTI_MAILING_ADDRESS_TYPE : Array<any> = [];
+	MOTHER_DELIVERY_AGE: Array<any> = [];
+	MOTHER_MARRIAGE_AGE: Array<any> = [];
+	BIRTH_CERTI_MAILING_ADDRESS_TYPE: Array<any> = [];
 
 
 	/**
@@ -102,6 +102,36 @@ export class BirthRegistrationComponent implements OnInit {
 	 * Using Common Configuration utilities.
 	 */
 	config: HospitalConfig = new HospitalConfig('birth');
+
+	/**
+	 * for guideline
+	 */
+
+	isGuideLineActive: boolean;
+
+	listMessage: Array<string> = [
+		"Birth Place is Mandatory",
+		"Birth Date is Mandatory.",
+		"Birth Time is Mandatory.",
+		"Child Weight is Mandatory.",
+		"Gender type is Mandatory.",
+		"Father’s First Name is Mandatory Father’s Last Name is Mandatory.",
+		"Father’s Education Is mandatory Father’s Occupation is Mandatory.",
+		"Mother’s First Name is Mandatory Mother’s Last Name is Mandatory.",
+		"Mother’s Education Is mandatory Mother’s Occupation is Mandatory.",
+		"Mamta Card no is mandatory Mother’s age at the time of delivery is mandatory.",
+		"Mother’s age at time of said delivery is mandatory.",
+		"Treatment taken during delivery is mandatory.",
+		"Delivery Type is Mandatory.",
+		"Duration of Pregnancy (in weeks) is Mandatory.",
+		"Religion is Mandatory Both address is Mandatory.",
+		"Given Attachemnt is Mandatory."
+	];
+
+	message: string = `VMC - ERP Hospital Portal provides facility to registered hospital of Vadodara city to register birth
+				and death record which are occurred in their hospital. Those registered records will be used to generate the Birth and
+				Death certificate for the citizens of Vadodara City. Online Birth & Death Registration is the convenient and easy
+				way to issue Birth & death Certificate for citizen of Vadodara City`
 
 	constructor(
 		private router: Router,
@@ -253,7 +283,7 @@ export class BirthRegistrationComponent implements OnInit {
 
 			motherAadharNumber: [null, [Validators.minLength(12), Validators.maxLength(12), ValidationService.aadharValidation]],
 			motherPrevRegNumber: [null, [Validators.maxLength(20)]],
-			mamtaRegNumber: [null, [Validators.required,Validators.maxLength(4)]],
+			mamtaRegNumber: [null, [Validators.required, Validators.maxLength(4)]],
 			petaKendraNumber: this.fb.group({
 				id: null,
 				code: null,
@@ -308,7 +338,7 @@ export class BirthRegistrationComponent implements OnInit {
 				code: [null, Validators.required],
 				name: null
 			}),
-			birthCertiMailingAddressType : this.fb.group({
+			birthCertiMailingAddressType: this.fb.group({
 				id: null,
 				code: [null, Validators.required],
 				name: null
@@ -332,6 +362,11 @@ export class BirthRegistrationComponent implements OnInit {
 	 */
 	getBirthCertData() {
 		this.formService.getFormData(this.appId).subscribe(res => {
+			if (!res.canEdit) {
+				this.isGuideLineActive = false;
+			} else {
+				this.isGuideLineActive = true;
+			}
 			this.birthCertificateForm.patchValue(res);
 
 			//this.attachments = res.attachments;
@@ -454,9 +489,9 @@ export class BirthRegistrationComponent implements OnInit {
 	 * @param evKg - child weight control in kgs.
 	 * @param evGrm - child weight control in grams.
 	 */
-	calculateChildWeight(index: number, evKg: string, evGrm: string){
+	calculateChildWeight(index: number, evKg: string, evGrm: string) {
 		let ctrl = this.getChildData().at(index);
-		if (parseInt(ctrl.get(evKg).get('code').value) == 0 && parseInt(ctrl.get(evGrm).get('code').value) < 300){
+		if (parseInt(ctrl.get(evKg).get('code').value) == 0 && parseInt(ctrl.get(evGrm).get('code').value) < 300) {
 			this.commonService.openAlert(this.config.Child_Weight_Error, this.config.MIN_CHILD_WEIGHT, "warning");
 			ctrl.get(evKg).reset();
 			ctrl.get(evGrm).reset();
@@ -636,7 +671,7 @@ export class BirthRegistrationComponent implements OnInit {
 			this.Religion = respData.RELIGION;
 			this.ISYESNO = respData.YES_NO;
 			this.wardNoData = respData.WARD;
-			this.CHILD_WEIGHT_GM =respData.CHILD_WEIGHT_GM;
+			this.CHILD_WEIGHT_GM = respData.CHILD_WEIGHT_GM;
 			this.URBAN_PRIMARY_HEALTH_CENTER = respData.URBAN_PRIMARY_HEALTH_CENTER;
 			this.MOTHER_DELIVERY_AGE = respData.MOTHER_DELIVERY_AGE.sort((a, b) => {
 				if (a.code >= b.code) {

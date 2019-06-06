@@ -37,7 +37,7 @@
             <mat-cell *matCellDef="let row" class="fullWidth">
                 <div class="mobile-label">{{'file_number'| translate : translateKey }} </div>
                 <div class="mobile-label1">:</div>
-                <div class="row-inside"> {{ row.fileNumber }}</div>
+                <div class="row-inside"> {{ row.fileNumber ? row.fileNumber : row.uniqueId }}</div>
             </mat-cell>
         </ng-container>
 
