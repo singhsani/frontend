@@ -15,7 +15,7 @@ export class GuidelinesComponent implements OnInit {
 
   @Output('hideGuideLine') hideGuideLine: EventEmitter<any> = new EventEmitter();
 
-  translateKey: string = "translate";
+  translateKey: string = "GuideLineScreen";
 
   constructor() { }
 
