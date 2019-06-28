@@ -5,10 +5,8 @@
 **/
 import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { BookingConstants, BookingUtils } from '../../../bookings/config/booking-config';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap';
-import { BookingService } from '../../../bookings/shared-booking/services/booking-service.service';
 import { ToastrService } from 'ngx-toastr';
 import { CommonService } from 'src/app/shared/services/common.service';
 import { merge, of as observableOf } from 'rxjs';
@@ -18,7 +16,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { TicketingsService } from '../../shared-ticketing/services/ticketings.service';
 import { TicketingConstants, TicketingUtils } from '../../config/ticketing-config';
-
 
 @Component({
   selector: 'app-my-ticketings',
@@ -43,8 +40,8 @@ export class MyTicketingsComponent implements OnInit {
 	/**
 	 * Common for all bookings
 	 */
-  bookingConstant = BookingConstants;
-  bookingUtils: BookingUtils = new BookingUtils();
+  bookingConstant = TicketingConstants;
+  bookingUtils: TicketingUtils = new TicketingUtils();
 
 	/**
 	 * Display Column
@@ -92,7 +89,6 @@ export class MyTicketingsComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    public bookingService: BookingService,
     public ticketingService: TicketingsService,
     private toster: ToastrService,
     private modalService: BsModalService,
@@ -105,6 +101,7 @@ export class MyTicketingsComponent implements OnInit {
     let resourcesList = [
       { type: 'zoo', name: 'Zoo Ticketing' },
       { type: 'zooanimaladoption', name: 'Animal Adoption' },
+      { type: 'planetarium', name: 'Planetarium' }
     ]
     this.resources = resourcesList;
   }
@@ -217,7 +214,7 @@ export class MyTicketingsComponent implements OnInit {
 	 */
   printPolicePerformanceLicense(element) {
     if (element.refNumber) {
-      this.bookingService.printPolicePerformanceLicense(element.refNumber).subscribe(respPPL => {
+      this.ticketingService.printPolicePerformanceLicense(element.refNumber).subscribe(respPPL => {
         let sectionToPrintPPL: any = document.getElementById('sectionToPrint');
         sectionToPrintPPL.innerHTML = respPPL;
         setTimeout(() => {
@@ -240,8 +237,8 @@ export class MyTicketingsComponent implements OnInit {
 	 * This method is use to show JOSN format.
 	 */
   jsonDisplay(element: any) {
-    // this.bookingService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);
-    this.bookingService.displayJson(element.refNumber).subscribe(
+    // this.ticketingService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);
+    this.ticketingService.displayJson(element.refNumber).subscribe(
       res => {
         console.log(res);
         this.JSONdata = JSON.stringify(res, null, 4);
@@ -301,7 +298,7 @@ export class MyTicketingsComponent implements OnInit {
 
       this.commonService.confirmAlert('Are you sure to cancel?', "You won't be able to revert this!", 'warning', '', performDelete => {
         this.modalReqRef.hide();
-        this.bookingService.cancelTownHall(object).subscribe(res => {
+        this.ticketingService.cancelTicketing(object).subscribe(res => {
           this.CancelResponseList = res.data.detail;
           this.getAllBooking();
           this.modalResRef = this.modalService.show(this.templateResponseModel, Object.assign({ ignoreBackdropClick: true }, { class: 'gray modal-lg customWidth' }))
@@ -379,7 +376,7 @@ export class MyTicketingsComponent implements OnInit {
       if (err.status = 402) {
         this.isLoadingResults = false;
         if (err.status == 402) {
-          this.ticketingUtils.redirectToPayment(err, this.commonService, this.bookingService);
+          this.ticketingUtils.redirectToPayment(err, this.commonService, this.ticketingService);
         }
       } else if (err.error[0].code === this.ticketingConstants.INVALID_BOOKING_STATUS) {
         this.commonService.openAlert("Invalid Booking Status", err.error[0].message, "warning", "")

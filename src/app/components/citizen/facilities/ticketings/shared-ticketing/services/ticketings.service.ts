@@ -44,9 +44,40 @@ export class TicketingsService {
   /**
 	 * This method is used to book planetarium tickets
 	*/
-  bookPlanetariumTickets(ticketingInfo,resourceCode) {
+  bookPlanetariumTickets(ticketingInfo, resourceCode) {
     this.requestURL = `api/ticketing/${this.resourceType}/book/?resourceCode=${resourceCode}`;
     return this.http.post(this.requestURL, ticketingInfo);
+  }
+  /**
+	 * This method is used to save draft data
+	*/
+  saveDraftTickets(ticketingInfo, resourceCode) {
+    this.requestURL = `api/ticketing/${this.resourceType}/save/?resourceCode=${resourceCode}`;
+    return this.http.post(this.requestURL, ticketingInfo);
+  }
+
+  /**
+ * This method is used to book special show tickets
+ */
+  specialShowTicketsBooking(ticketingInfo, resourceCode) {
+    this.requestURL = `api/ticketing/${this.resourceType}/bookSpecialShow/?resourceCode=${resourceCode}`;
+    return this.http.post(this.requestURL, ticketingInfo);
+  }
+
+  /**
+    * This method is used to check seats
+    */
+   getPlanetariumShowAvailability(resourceCode:any,showLangulage:any,visitingDate:any,totalVisitor:any) {
+    this.requestURL = `api/ticketing/${this.resourceType}/checkAvailableSeats?resourceCode=${resourceCode}&showLangulage=${showLangulage}&visitingDate=${visitingDate}&totalVisitor=${totalVisitor}`;
+    return this.http.get(this.requestURL);
+  }
+  // api/ticketing/planetarium/checkAvailableSeats-
+  /**
+    * This method is used to book planetarium tickets
+    */
+  getPlanetariumShowTimeSlot(date, resourceCode?) {
+    this.requestURL = `api/ticketing/${this.resourceType}/slotsAPI?resource=${resourceCode}&startDate=${date}&endDate=${date}`;
+    return this.http.get(this.requestURL);
   }
 
   /**
@@ -79,8 +110,6 @@ export class TicketingsService {
     this.requestURL = `api/ticketing/${this.resourceType}/getAnimalAdoptionFeesList`;
     return this.http.get(this.requestURL);
   }
-
-  // METHODS FOR ANIMAL ADOPTION MODULE OF ZOO MODULE ENDS HERE
 
   /**
 	 * Method Is used to print acknowledgement receipt
@@ -120,4 +149,30 @@ export class TicketingsService {
     return this.http.get(this.requestURL);
   }
 
+	/**
+	 * Method is used to print police performance license after rent payment.
+	 * @param refNumber - Reference Number
+	 */
+  printPolicePerformanceLicense(refNumber) {
+    this.requestURL = `api/ticketing/${this.resourceType}/certificate/${refNumber}`;
+    return this.http.get(this.requestURL, 'printReceipt');
+  }
+
+  	/**
+	 * This methos for display json on myBooking list
+	 * @param refNumber 
+	 */
+  displayJson(refNumber: any) {
+    this.requestURL = `api/ticketing/${this.resourceType}/json/${refNumber}`;
+    return this.http.get(this.requestURL);
+  }
+
+  /**
+	 * Cancel request .
+	 * @param data - json data
+	 */
+  cancelTicketing(data: any) {
+    this.requestURL = `api/ticketing/${this.resourceType}/cancelAPI`;
+    return this.http.post(this.requestURL, data);
+  }
 }

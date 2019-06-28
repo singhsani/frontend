@@ -5,9 +5,8 @@ import { CoreModule } from '../../../../../core/core.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TicketingsService } from './services/ticketings.service';
 import { ZooDashboardComponent } from './components/zoo-dashboard/zoo-dashboard.component';
-import { TicketingsRoutingModule } from '../ticketings-routing.module';
 import { RouterModule } from '@angular/router';
-
+import { TicketingFileUploadComponent } from './components/ticketing-file-upload/ticketing-file-upload.component';
 
 const MODULES = [
   SharedModule,
@@ -22,8 +21,9 @@ const MODULES = [
     CommonModule,
     ...MODULES
   ],
-  declarations: [ZooDashboardComponent],
+  declarations: [ZooDashboardComponent, TicketingFileUploadComponent],
   exports : [
+    TicketingFileUploadComponent,
     ...MODULES
   ],
   providers : [TicketingsService]
