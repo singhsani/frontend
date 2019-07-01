@@ -17,6 +17,11 @@ export class HosFormActionsService {
 
 	}
 
+	getChartData(){
+		this.requestURL = `api/user/chartDetails`;
+		return this.http.get(this.requestURL);
+	}
+
 	/**
 	 * Method is used to get status after filter using registration number.
 	 * @param filterData - filter data.
@@ -30,9 +35,7 @@ export class HosFormActionsService {
 	 * This method is use to create new citizen app
 	 */
 	createFormData() {
-
 		this.requestURL = `api/form/${this.apiType}/create`;
-
 		return this.http.get(this.requestURL);
 	}
 

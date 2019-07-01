@@ -223,6 +223,9 @@ export class DeathRegistrationComponent implements OnInit {
 					this.removeMandatoryAttachment(["ORDER_EXECUTIVE_MAGISTRATE"]);
 				}
 			}
+			else{
+				this.removeMandatoryAttachment(["POLICE_INQUEST", "PM_REPORT","AFFIDAVIT_HEALTH_OFFICER_ORDER", "ORDER_EXECUTIVE_MAGISTRATE"]);
+			}
 
 			this.showButtons = true;
 
@@ -283,18 +286,19 @@ export class DeathRegistrationComponent implements OnInit {
 	 * @param delay - delay period
 	 */
 	delayAlert(delay: number) {
+		console.log(delay)
 		if (this.deathCertificateForm.get('unknownCategory').get('code').value == "YES") {
 			this.mandatoryAttachment(["POLICE_INQUEST", "PM_REPORT"]);
 			this.removeMandatoryAttachment(["ID_PROOF_DECEASED", "CREMATION_REPORT", "APPLICANT_ID_PROOF", "FORM_4A"]);
 		} else {
 			if (delay > this.config.daysInThisMonth() && delay < this.config.daysInThisYear()) {
+				this.commonService.openAlert(this.config.DELAYED_REGISTRATION_TITLE, "", "warning", this.config.LESS_YEAR_AND_MORE_30_MESSAGE);
 				this.mandatoryAttachment(["AFFIDAVIT_HEALTH_OFFICER_ORDER"]);
 				this.removeMandatoryAttachment(["ORDER_EXECUTIVE_MAGISTRATE"]);
-				this.commonService.openAlert(this.config.DELAYED_REGISTRATION_TITLE, "", "warning", this.config.LESS_YEAR_AND_MORE_30_MESSAGE);
 			} else if (delay > this.config.daysInThisYear()) {
+				this.commonService.openAlert(this.config.DELAYED_REGISTRATION_TITLE, "", "warning", this.config.MORE_THAN_YEAR_MESSAGE);
 				this.mandatoryAttachment(["ORDER_EXECUTIVE_MAGISTRATE"]);
 				this.removeMandatoryAttachment(["AFFIDAVIT_HEALTH_OFFICER_ORDER"]);
-				this.commonService.openAlert(this.config.DELAYED_REGISTRATION_TITLE, "", "warning", this.config.MORE_THAN_YEAR_MESSAGE);
 			}
 		}
 	}

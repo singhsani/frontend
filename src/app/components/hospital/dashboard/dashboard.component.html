@@ -6,32 +6,53 @@
 </div>
 
 <h2>
-    <mat-icon>dashboard</mat-icon>Birth & Death
+    <mat-icon>dashboard</mat-icon>{{'birth_and_death' | translate:translateKey}}
 </h2>
 
 <div class="moduleList">
-    <mat-tab-group>
-        <mat-tab *ngFor="let module of userServicesList">
-            <ng-template mat-tab-label>
-                <!-- <mat-icon class="example-tab-icon">thumb_up</mat-icon> -->
+    <!-- <mat-tab-group> -->
+    <div *ngFor="let module of userServicesList">
+        <!-- <ng-template mat-tab-label>
+                <mat-icon class="example-tab-icon">thumb_up</mat-icon> 
                 <span class="moduleIcon"></span>
                 <div class="moduleName">{{ module.name }}</div>
-                <!-- <div>{{ module.gujName }}</div> -->
+                <div>{{ module.gujName }}</div>
                 <span class="count">Services</span>
-            </ng-template>
-            <div class="servicesList row">
-                <div class="colBtn col-md-3" *ngFor="let service of module.services;" matTooltip="{{ config.removeFromString(service.name, '<br>') }}">
-                    <button mat-stroked-button color="primary" (click)="createRecord(service.code)" [innerHtml]="service.name"></button>
-                    <!-- <button mat-stroked-button color="primary" (click)="createRecord(service.code)">
-                        {{ service.name }}
-                    </button> -->
+            </ng-template> -->
+
+        <div class="row ml_15" *ngIf="showChart">
+            <div class="col-md-3" *ngFor="let service of module.services;">
+                <div class="row col-md-12 chartHeight ">
+                    <app-base-chart *ngIf="!getFiltered(service.code)" [pieChartColors]="pieChartColors" [pieChartLabels]="pieChartLabels" [pieChartType]="pieChartType"
+                        [chartData]="getPieChartData(service.code)" class="w-100">
+                    </app-base-chart>
+
+                    <div *ngIf="getFiltered(service.code)" class="w-100 chartHeight  text-center font-weight-bold">
+                        <!-- <div class="w-50">
+                            <mat-icon color="primary">error</mat-icon>
+                        </div> -->
+                        <p class="mt20">
+                            No Application Found
+                        </p>
+                    </div>
                 </div>
-                <div class="colBtn col-md-3">
-                    <button mat-stroked-button color="primary" (click)="createRecord('HEL-BCR-HOSPITAL')" [innerHtml]="'Birth Correction Record'"></button>
+                <div class="row col-md-12 servicesList mt-2 justify-content-center">
+                    <p class="font-weight-bold">{{service.name}}</p>
+                    <button matTooltip="{{service.name}}" mat-stroked-button color="primary" (click)="createRecord(service.code)">
+                        {{'add_new_record' | translate:translateKey}}
+                    </button>
                 </div>
             </div>
-        </mat-tab>
-    </mat-tab-group>
+        </div>
+        <div class="row col-md-12 justify-content-center">
+            <div *ngFor="let legend of pieChartLabels; let i = index" class="mr-3 i-flex">
+                <div class="circle" [ngStyle]="{'backgroundColor' : pieChartColors[0].backgroundColor[i]}"> </div>
+                <p class="font-weight-bold pl-1">{{legend}}</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- </mat-tab-group> -->
 </div>
 
 <!-- 

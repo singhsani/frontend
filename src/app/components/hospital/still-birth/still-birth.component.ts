@@ -200,6 +200,7 @@ export class StillBirthComponent implements OnInit {
 				birthDate: null,
 				birthTime: null,
 				childName: null,
+				childNameGuj: null,
 				id: null,
 				sex: {
 					code: null
@@ -389,6 +390,7 @@ export class StillBirthComponent implements OnInit {
 				birthDate: null,
 				birthTime: null,
 				childName: null,
+				childNameGuj: null,
 				id: null,
 				sex: this.fb.group({
 					code: null
@@ -417,6 +419,7 @@ export class StillBirthComponent implements OnInit {
 			birthDate: [child.birthDate, Validators.required],
 			birthTime: [child.birthTime, Validators.required],
 			childName: [child.childName, [ValidationService.nameValidator]],
+			childNameGuj: child.childNameGuj,
 			id: child.id,
 			sex: this.fb.group({
 				code: [child.sex.code, [Validators.required]]

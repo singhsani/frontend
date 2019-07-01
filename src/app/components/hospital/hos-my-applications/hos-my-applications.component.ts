@@ -101,8 +101,12 @@ export class HosMyApplicationsComponent implements OnInit {
 	 * @param id - citizen id 
 	 */
 	redirectToEdit(apiCode: string, id: number) {
-		let redirectUrl = ManageRoutes.getFullRoute(apiCode);
-		this.router.navigate([redirectUrl, id, apiCode]);
+		if (apiCode == 'HEL-BCR') {
+			this.router.navigate([ManageRoutes.getFullRoute(apiCode + "-HOSPITAL"), id, apiCode]);
+		} else {
+			let redirectUrl = ManageRoutes.getFullRoute(apiCode);
+			this.router.navigate([redirectUrl, id, apiCode]);
+		}
 	}
 
 	/**

@@ -299,7 +299,7 @@ export class TownHallBookComponent implements OnInit {
 			});
 		} else {
 			this.bookingUtils.getAllErrors(this.searchTownHallForm);
-			this.commonService.openAlert("Feild Error", this.bookingConstants.ALL_FEILD_REQUIRED_MESSAGE, 'warning', '', cb => {
+			this.commonService.openAlert("Field Error", this.bookingConstants.ALL_FEILD_REQUIRED_MESSAGE, 'warning', '', cb => {
 				window.scrollTo(0, 0);
 			})
 		}
@@ -363,18 +363,18 @@ export class TownHallBookComponent implements OnInit {
 		let errCount = this.bookingUtils.getAllErrors(this.townHallApplicationForm);
 		if (this.townHallApplicationForm.invalid) {
 			this.handleErrorsOnSubmit(errCount);
-			this.commonService.openAlert("Feild Error", this.bookingConstants.ALL_FEILD_REQUIRED_MESSAGE, 'warning')
+			this.commonService.openAlert("Field Error", this.bookingConstants.ALL_FEILD_REQUIRED_MESSAGE, 'warning')
 			return;
 		}
 		else if (!this.bookingUtils.matcher(this.townHallApplicationForm, 'emailID', 'confirmEmailID') || !this.bookingUtils.matcher(this.townHallApplicationForm, 'applicantMobile', 'confirmMobile')) {
 			this.handleErrorsOnSubmit(7);
-			this.commonService.openAlert("Feild Error", !this.bookingUtils.matcher(this.townHallApplicationForm, 'emailID', 'confirmEmailID') ? this.bookingConstants.EMAIL_MIS_MATCH_MESSAGE : this.bookingConstants.MOB_NO_MIS_MATCH_MESSAGE, 'warning')
+			this.commonService.openAlert("Field Error", !this.bookingUtils.matcher(this.townHallApplicationForm, 'emailID', 'confirmEmailID') ? this.bookingConstants.EMAIL_MIS_MATCH_MESSAGE : this.bookingConstants.MOB_NO_MIS_MATCH_MESSAGE, 'warning')
 			return;
 		} else if (!this.townHallApplicationForm.get('agree').value) {
-			this.commonService.openAlert("Feild Error", this.bookingConstants.AGREE_MESSAGE, 'warning')
+			this.commonService.openAlert("Field Error", this.bookingConstants.AGREE_MESSAGE, 'warning')
 			return;
 		} else if (!this.townHallApplicationForm.get('termsCondition').value) {
-			this.commonService.openAlert("Feild Error", this.bookingConstants.TERMS_AND_CONDITION_MESSAGE, 'warning')
+			this.commonService.openAlert("Field Error", this.bookingConstants.TERMS_AND_CONDITION_MESSAGE, 'warning')
 			return;
 		} else {
 			this.isLoadingResults = true;

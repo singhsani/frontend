@@ -4,12 +4,12 @@
 		<!-- <app-guj-video></app-guj-video> -->
 		<div class="float-right">
 			<button class="btn btn-warning mr-2" type="button" data-toggle="modal" data-target="#gujModal">
-				How to type in Gujarati?
+				 {{'how_do_you_type_in_gujrati'| translate: translateKey}}
 			</button>
 		</div>
 		<mat-card-content class="p-4">
 			<p class="pb-2">{{message}}</p>
-			<h2>{{'mendatory_feilds'| translate: translateKey}}</h2>
+			<h2>{{'mandatory_feilds'| translate: translateKey}}</h2>
 			<ol class="olList">
 				<li *ngFor="let li of listMessage"> {{li}}</li>
 			</ol>
@@ -33,7 +33,7 @@
 			<!-- Modal Header -->
 			<div class="modal-header">
 				<h4 class="modal-title">
-					Gujarati typing, Confused? Just hit play button.
+					 {{'gujarati_typing_confused'| translate: translateKey}}
 				</h4>
 			</div>
 
@@ -49,7 +49,7 @@
 
 			<!-- Modal footer -->
 			<div class="modal-footer">
-				<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-danger" data-dismiss="modal">{{'close'| translate: translateKey}}</button>
 			</div>
 
 		</div>

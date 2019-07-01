@@ -109,12 +109,22 @@
                         </div>
 
                         <mat-form-field class="col-md-4">
-                            <input matInput maxlength="50" appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{'child_name' | translate:translateKey}}"
+                            <input matInput maxlength="50" [form]="birthCertificateForm.get('childs')['controls'][i]"
+                             appGujInputSource targetElement="childNameGuj" appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'"
+                             placeholder="{{'child_name' | translate:translateKey}}"
                                 name="childName" formControlName="childName">
                             <control-messages [control]="birthCertificateForm.get('childs')['controls'][i].get('childName')">
                             </control-messages>
                         </mat-form-field>
 
+                        <mat-form-field class="col-md-4">
+                            <input matInput maxlength="150" appPreventSpace appGujInputTarget [form]="birthCertificateForm.get('childs')['controls'][i]" placeholder="{{'child_name' | translate:translateKey:'gu'}}"
+                               formControlName="childNameGuj">
+                            <control-messages [control]="birthCertificateForm.get('childs')['controls'][i].get('childNameGuj')">
+                            </control-messages>
+                        </mat-form-field>
+
+    
                         <div class="col-md-4 ngSelect" formGroupName="weightKg">
                             <ng-select placeholder="{{'child_weight_kg' | translate:translateKey}} *" formControlName="code" (change)="calculateChildWeight(i,'weightKg','weightGram')">
                                 <ng-option *ngFor="let childweight of ChildWeights" [value]="childweight.code">
@@ -169,7 +179,7 @@
                 <div class="row">
 
                     <mat-form-field class="col-md-4">
-                        <input matInput maxlength="50" [form]="birthCertificateForm" appGujInputSource targetElement="fatherFirstNameGuj" appValidationFields
+                        <input matInput maxlength="200" [form]="birthCertificateForm" appGujInputSource targetElement="fatherFirstNameGuj" appValidationFields
                             [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{'first_name' | translate:translateKey}}"
                             formControlName="fatherFirstName" required>
                         <control-messages [control]="birthCertificateForm.get('fatherFirstName')"></control-messages>
@@ -191,7 +201,7 @@
                     </mat-form-field>
 
                     <mat-form-field class="col-md-4">
-                        <input matInput maxlength="150" appPreventSpace appGujInputTarget [form]="birthCertificateForm" placeholder="{{'first_name' | translate:translateKey:'gu'}}"
+                        <input matInput maxlength="600" appPreventSpace appGujInputTarget [form]="birthCertificateForm" placeholder="{{'first_name' | translate:translateKey:'gu'}}"
                             formControlName="fatherFirstNameGuj" required>
                         <control-messages [control]="birthCertificateForm.get('fatherFirstNameGuj')"></control-messages>
                     </mat-form-field>
@@ -267,7 +277,7 @@
 
                 <div class="row">
                     <mat-form-field class="col-md-4">
-                        <input matInput maxlength="50" appValidationFields [form]="birthCertificateForm" appGujInputSource targetElement="motherFirstNameGuj"
+                        <input matInput maxlength="200" appValidationFields [form]="birthCertificateForm" appGujInputSource targetElement="motherFirstNameGuj"
                             [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{'first_name' | translate:translateKey}}"
                             formControlName="motherFirstName" required>
                         <control-messages [control]="birthCertificateForm.get('motherFirstName')"></control-messages>
@@ -288,7 +298,7 @@
                     </mat-form-field>
 
                     <mat-form-field class="col-md-4">
-                        <input matInput maxlength="150" appPreventSpace appGujInputTarget [form]="birthCertificateForm" placeholder="{{'first_name'| translate:translateKey:'gu'}}"
+                        <input matInput maxlength="600" appPreventSpace appGujInputTarget [form]="birthCertificateForm" placeholder="{{'first_name'| translate:translateKey:'gu'}}"
                             formControlName="motherFirstNameGuj" required>
                         <control-messages [control]="birthCertificateForm.get('motherFirstNameGuj')"></control-messages>
                     </mat-form-field>
@@ -529,17 +539,17 @@
 
                     <div class="col-md-4 radioBtnError" formGroupName="withinCityLimits">
                         <mat-label>{{'Within_City_Limits' | translate:translateKey}} *</mat-label>
-                        <mat-radio-group formControlName="code" (change)="birthCertificateForm.get('wardNo').get('code').reset()">
+                        <mat-radio-group formControlName="code" (change)="changeInCityLimits($event)">
                             <mat-radio-button class="example-radio-button" *ngFor="let opt of ISYESNO" [value]="opt.code">
                                 {{opt.name}}
                             </mat-radio-button>
                         </mat-radio-group>
-                        <control-messages [control]="birthCertificateForm.get('withinCityLimits')">
+                        <control-messages [control]="birthCertificateForm.get('withinCityLimits').get('code')">
                         </control-messages>
                     </div>
 
                     <div formGroupName="wardNo" class="col-md-4 ngSelect" *ngIf="birthCertificateForm.get('withinCityLimits').get('code').value=='YES'">
-                        <ng-select placeholder="{{'ward_No' | translate:translateKey}} *" formControlName="code" required>
+                        <ng-select placeholder="{{'ward_No' | translate:translateKey}} *" formControlName="code" required="{{birthCertificateForm.get('withinCityLimits').get('code').value=='YES'}}">
                             <ng-option *ngFor="let wardObj of wardNoData" [value]="wardObj.code">
                                 {{wardObj.name}}
                             </ng-option>

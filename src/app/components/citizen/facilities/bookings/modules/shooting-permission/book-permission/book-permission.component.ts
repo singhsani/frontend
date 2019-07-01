@@ -182,7 +182,7 @@ export class BookPermissionComponent implements OnInit {
       });
     } else {
       this.bookingUtils.getAllErrors(this.bookPermissionSearchForm);
-      this.commonService.openAlert("Feild Error", this.bookingConstants.ALL_FEILD_REQUIRED_MESSAGE, 'warning');
+      this.commonService.openAlert("Field Error", this.bookingConstants.ALL_FEILD_REQUIRED_MESSAGE, 'warning');
     }
   }
 
@@ -305,11 +305,11 @@ export class BookPermissionComponent implements OnInit {
     let errCount = this.bookingUtils.getAllErrors(this.bookPermissionApplicationForm);
     if (this.bookPermissionApplicationForm.invalid) {
       this.handleErrorsOnSubmit(errCount);
-      this.commonService.openAlert("Feild Error", this.bookingConstants.ALL_FEILD_REQUIRED_MESSAGE, 'warning')
+      this.commonService.openAlert("Field Error", this.bookingConstants.ALL_FEILD_REQUIRED_MESSAGE, 'warning')
       return;
     }
     else if (!this.bookingUtils.matcher(this.bookPermissionApplicationForm, 'emailId', 'confirmEmailId') || !this.bookingUtils.matcher(this.bookPermissionApplicationForm, 'applicantMobile', 'confirmMobile')) {
-      this.commonService.openAlert("Feild Error", !this.bookingUtils.matcher(this.bookPermissionApplicationForm, 'emailId', 'confirmEmailId') ? this.bookingConstants.EMAIL_MIS_MATCH_MESSAGE : this.bookingConstants.MOB_NO_MIS_MATCH_MESSAGE, 'warning');
+      this.commonService.openAlert("Field Error", !this.bookingUtils.matcher(this.bookPermissionApplicationForm, 'emailId', 'confirmEmailId') ? this.bookingConstants.EMAIL_MIS_MATCH_MESSAGE : this.bookingConstants.MOB_NO_MIS_MATCH_MESSAGE, 'warning');
       this.handleErrorsOnSubmit(7);
       return;
     } else if (!this.isFileUploaded) {
