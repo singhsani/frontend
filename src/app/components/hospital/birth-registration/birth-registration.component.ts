@@ -221,7 +221,9 @@ export class BirthRegistrationComponent implements OnInit {
 			childs: this.fb.array([this.createChildArray({
 				birthDate: null,
 				birthTime: new Date().getTime(),
+				certificateNumber :null,
 				childName: null,
+				childNameGuj : null,
 				id: null,
 				sex: {
 					code: null
@@ -338,17 +340,19 @@ export class BirthRegistrationComponent implements OnInit {
 				code: [null, Validators.required],
 				name: null
 			}),
+			wardNo: this.fb.group({
+				id: null,
+				code: [null],
+				name: null
+			}),
+
 			birthCertiMailingAddressType: this.fb.group({
 				id: null,
 				code: [null, Validators.required],
 				name: null
 			}),
 			parentPermanentAddress: this.fb.group(this.addressComp.addressControls()),
-			wardNo: this.fb.group({
-				id: null,
-				code: [null],
-				name: null
-			}),
+			
 
 			//step 5
 			attachments: [null],
@@ -394,6 +398,9 @@ export class BirthRegistrationComponent implements OnInit {
 					// 	this.uploadFileArray.push(this.config.fileObjectCreater('Affidavit Or Health Order', '1.7'));
 					// }
 				}
+			} else {
+				this.uploadFileArray.find(d => d.documentIdentifier == "AFFIDAVIT_HEALTH_OFFICER_ORDER").mandatory = false;
+				this.uploadFileArray.find(d => d.documentIdentifier == "ORDER_EXECUTIVE_MAGISTRATE").mandatory = false;
 			}
 
 
@@ -630,8 +637,8 @@ export class BirthRegistrationComponent implements OnInit {
 		let step1 = 6;
 		let step2 = 16;
 		let step3 = 37;
-		let step4 = 44;
-		let step5 = 45;
+		let step4 = 45;
+		let step5 = 46;
 
 		if (count <= step1) {
 			this.tabIndex = 0;
@@ -761,7 +768,9 @@ export class BirthRegistrationComponent implements OnInit {
 			child = {
 				birthDate: null,
 				birthTime: null,
+				certificateNumber: null,
 				childName: null,
+				childNameGuj: null,
 				id: null,
 				sex: this.fb.group({
 					code: null
@@ -779,7 +788,9 @@ export class BirthRegistrationComponent implements OnInit {
 		return this.fb.group({
 			birthDate: [child.birthDate, Validators.required],
 			birthTime: [child.birthTime, Validators.required],
+			certificateNumber: child.certificateNumber,
 			childName: [child.childName, [ValidationService.nameValidator]],
+			childNameGuj: child.childNameGuj,
 			id: child.id,
 			sex: this.fb.group({
 				code: [child.sex.code, [Validators.required]]
@@ -866,6 +877,17 @@ export class BirthRegistrationComponent implements OnInit {
 
 			}
 		});
+	}
+
+	changeInCityLimits(ev : any){
+		if(ev.value == 'YES'){
+			this.birthCertificateForm.get('wardNo').get('code').setValidators([Validators.required])
+			this.birthCertificateForm.get('wardNo').get('code').updateValueAndValidity()
+		} else {
+			this.birthCertificateForm.get('wardNo').get('code').reset()
+			this.birthCertificateForm.get('wardNo').get('code').clearValidators()
+			this.birthCertificateForm.get('wardNo').get('code').updateValueAndValidity()
+		}
 	}
 
 	/**

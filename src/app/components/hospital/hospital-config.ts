@@ -9,12 +9,12 @@ export class HospitalConfig extends ComponentConfig {
     public LESS_30_AND_MORE_21_MESSAGE: string;
     public LESS_YEAR_AND_MORE_30_MESSAGE: string;
     public MORE_THAN_YEAR_MESSAGE: string;
-    public Child_Weight_Error : string;
-    public MIN_CHILD_WEIGHT : string;
+    public Child_Weight_Error: string;
+    public MIN_CHILD_WEIGHT: string;
 
     constructor(private certType?: string) {
         super();
-        if(this.certType){
+        if (this.certType) {
             this.DELAYED_REGISTRATION_TITLE = `Delayed ${this.certType.charAt(0).toUpperCase() + this.certType.slice(1)} Registration`;
 
             this.LESS_30_AND_MORE_21_MESSAGE = `<p>It will considered as delayed ${this.certType} registration because
@@ -89,7 +89,7 @@ export class HospitalConfig extends ComponentConfig {
 	 */
     public documentList(res, uploadFilesArray: Array<any>) {
         res.serviceDetail.serviceUploadDocuments.forEach(file => {
-            if (file.isActive && file.requiredOnCitizenPortal){
+            if (file.isActive && file.requiredOnCitizenPortal) {
                 uploadFilesArray.push(file);
             }
         });
@@ -386,7 +386,10 @@ export class HospitalConfig extends ComponentConfig {
         }
     }
 
-    removeFromString(org: string, toRemove : string): string{
-        return org.replace(toRemove, '')
+    removeFromString(org: string, toRemove: string): any {
+        return {
+            data: org.replace(toRemove, ''),
+            list: org.split(toRemove)
+        }
     }
 }

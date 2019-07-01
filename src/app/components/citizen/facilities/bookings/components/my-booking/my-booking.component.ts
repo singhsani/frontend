@@ -271,7 +271,7 @@ export class MyBookingComponent implements OnInit {
 				});
 		} else {
 			this.bookingUtils.getAllErrors(this.searchBookingsForm);
-			this.commonService.openAlert('Feild Error', this.bookingConstant.ALL_FEILD_REQUIRED_MESSAGE, 'warning');
+			this.commonService.openAlert('Field Error', this.bookingConstant.ALL_FEILD_REQUIRED_MESSAGE, 'warning');
 		}
 	}
 

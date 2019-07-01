@@ -76,7 +76,7 @@ export class BirthCorrectionComponent implements OnInit {
 	 * tab step labels
 	 */
 
-	stepLable1: string = 'Edit_details';
+	stepLable1: string = 'child_details';
 	stepLable2: string = 'upload_documents';
 	
 
@@ -202,6 +202,7 @@ export class BirthCorrectionComponent implements OnInit {
 		});
 	}
 
+	
 	/**
 	 * Method is used to cread record.
 	 * @param data - original json data.
@@ -274,9 +275,11 @@ export class BirthCorrectionComponent implements OnInit {
 	 * @param data - original json.
 	 */
 	setValue(data) {
+		console.log(data)
 		this.birthCorrectionForm.get('fieldView').setValue(data.fieldView);
 		this.birthCorrectionForm.get('fieldList').setValue(data.fieldList);
 		this.birthCorrectionForm.get('childName').setValue(data.childName);
+		this.birthCorrectionForm.get('childNameGuj').setValue(data.childNameGuj);
 		this.birthCorrectionForm.get('fatherFirstName').setValue(data.fatherFirstName);
 		this.birthCorrectionForm.get('fatherMiddleName').setValue(data.fatherMiddleName);
 		this.birthCorrectionForm.get('fatherLastName').setValue(data.fatherLastName);
@@ -345,6 +348,7 @@ export class BirthCorrectionComponent implements OnInit {
 
 			//step - 1 (13)
 			childName: null,
+			childNameGuj : null,
 			fatherFirstName: null,
 			fatherMiddleName: null,
 			fatherLastName: null,
@@ -369,30 +373,7 @@ export class BirthCorrectionComponent implements OnInit {
 
 			fieldView: "ALL",
 			fieldList: null,
-			// id: null,
-			// uniqueId: null,
-			// version: null,
-			// serviceFormId: null,
-			// createdDate: null,
-			// updatedDate: null,
-			// serviceType: null,
-			// fileStatus: null,
-			// serviceName: null,
-			// fileNumber: null,
-			// pid: null,
-			// outwardNo: null,
-			// agree: false,
-			// paymentStatus: null,
-			// canEdit: true,
-			// canDelete: true,
-			// canSubmit: null,
-			// serviceDetail: this.fb.group({
-			// 	code: null,
-			// 	name: null,
-			// 	gujName: null,
-			// 	feesOnScrutiny: null
-			// }),
-
+		
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
 
 			attachments: [],

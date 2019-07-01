@@ -14,6 +14,8 @@ import { environment } from './../../../environments/environment';
 import { SessionStorageService } from 'angular-web-storage';
 
 import { Observable ,  Subject } from 'rxjs';
+import { Router } from '@angular/router';
+import { ManageRoutes } from '../../config/routes-conf';
 
 @Injectable({
 	providedIn: 'root'
@@ -21,7 +23,8 @@ import { Observable ,  Subject } from 'rxjs';
 export class HosHttpService {
 
 	constructor(private httpClient: HttpClient,
-		private session: SessionStorageService) {
+		private session: SessionStorageService,
+	private router : Router) {
 	}
 
 	/**
@@ -41,6 +44,12 @@ export class HosHttpService {
 						"Authorization": "Bearer " + this.session.get("hos_access_token").token,
 						"Content-Type": "application/json"
 					})
+				}
+			} else {
+				if (!this.session.get("hos_access_token")) {
+					// this.tostr.error("Session Expired Please Login Again!");
+					this.router.navigate([ManageRoutes.getFullRoute('HOSPITALAUTHLOGIN')]);
+					return;
 				}
 			}
 

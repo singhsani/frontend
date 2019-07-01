@@ -9,7 +9,7 @@
             <div class="row">
 
                 <mat-form-field class="col-md-4">
-                    <input matInput maxlength="25" placeholder="{{'registration_number' | translate:translateKey}}" formControlName="applicationNumber"
+                    <input matInput maxlength="50" placeholder="{{'registration_number' | translate:translateKey}}" formControlName="applicationNumber"
                         required>
                     <control-messages [control]="regStatusForm.get('applicationNumber')"></control-messages>
                 </mat-form-field>
@@ -24,8 +24,8 @@
                 </div>
 
                 <div class="col-md-2 text-right">
-                    <button [disabled]="!regStatusForm.valid" mat-raised-button color="primary" type="submit">{{'search'
-                        | translate: translateKey}}</button>
+                    <button [disabled]="!regStatusForm.valid" mat-raised-button color="primary" type="submit">
+                        {{'search'| translate: translateKey}}</button>
                 </div>
             </div>
         </form>
@@ -36,41 +36,42 @@
             <mat-tab-group mat-stretch-tabs class="stepperNav" dynamicHeight="true" [(selectedIndex)]="tabIndex">
                 <mat-tab [label]="stepLable1 | translate: translateKey">
 
-                    <!-- <ng-template matStepLabel>
-							<div [matTooltip]="'Edit_details' | translate:translateKey">{{'Edit Details' | translate:translateKey}}</div>
-						</ng-template> -->
+                    <h2>{{'child_details' | translate:translateKey}}</h2>
 
                     <div *ngIf="allowChildNameInsertion">
-                        <mat-card class="cardH1">
-                            <h1>Child Details</h1>
-                        </mat-card>
-
                         <div class="row">
                             <mat-form-field class="col-md-4">
-                                <input required matInput maxlength="20" appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{'child_name' | translate:translateKey}}"
-                                    name="childName" formControlName="childName">
+                                <input required matInput [form]="birthCorrectionForm" maxlength="50" appGujInputSource targetElement="childNameGuj" appValidationFields
+                                    [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{'child_name' | translate:translateKey}}"
+                                    formControlName="childName">
                                 <control-messages [control]="birthCorrectionForm.get('childName')"></control-messages>
+                            </mat-form-field>
+
+                            <mat-form-field class="col-md-4">
+                                <input required matInput maxlength="150" appPreventSpace appGujInputTarget [form]="birthCorrectionForm" placeholder="{{'child_name' | translate:translateKey:'gu'}}"
+                                    formControlName="childNameGuj">
+                                <control-messages [control]="birthCorrectionForm.get('childNameGuj')"></control-messages>
                             </mat-form-field>
                         </div>
                     </div>
 
                     <div *ngIf="allowChildNameCorrection">
-
-                        <mat-card class="cardH1">
-                            <h1>child Details</h1>
-                        </mat-card>
-
                         <div class="row">
                             <mat-form-field class="col-md-4">
-                                <input required matInput maxlength="20" appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{'child_name' | translate:translateKey}}"
-                                    name="childName" formControlName="childName">
+                                <input required matInput maxlength="50" [form]="birthCorrectionForm" appGujInputSource targetElement="childNameGuj" appValidationFields
+                                    [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{'child_name' | translate:translateKey}}"
+                                    formControlName="childName">
                                 <control-messages [control]="birthCorrectionForm.get('childName')"></control-messages>
+                            </mat-form-field>
+
+                            <mat-form-field class="col-md-4">
+                                <input required matInput maxlength="150" appPreventSpace appGujInputTarget [form]="birthCorrectionForm" placeholder="{{'child_name' | translate:translateKey:'gu'}}"
+                                    formControlName="childNameGuj">
+                                <control-messages [control]="birthCorrectionForm.get('childNameGuj')"></control-messages>
                             </mat-form-field>
                         </div>
 
-                        <mat-card class="cardH1">
-                            <h1>Father Details</h1>
-                        </mat-card>
+                        <h2>{{'father_details' | translate:translateKey}}</h2>
 
                         <div class="row">
 
@@ -114,9 +115,7 @@
                             </mat-form-field>
                         </div>
 
-                        <mat-card class="cardH1">
-                            <h1>Mother Details</h1>
-                        </mat-card>
+                        <h2>{{'mother_details' | translate:translateKey}}</h2>
 
                         <div class="row">
                             <mat-form-field class="col-md-4">
@@ -163,19 +162,9 @@
                     <app-action-bar [uploadFiles]="uploadFileArray" [form]="birthCorrectionForm" [stepInfo]="{step: 'step1', next: 1, back: 0}"
                         (tabIndex)="onTabChange($event)" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
 
-                    <!-- 
-					<div class="col-md-12 text-right ">
-						<button mat-raised-button color="primary " type="submit ">{{'submit' | translate: translateKey}}</button>
-					</div> -->
-
-
                 </mat-tab>
                 <mat-tab [label]="stepLable2 | translate: translateKey ">
-
-                    <!-- <ng-template matStepLabel>
-							<div [matTooltip]=" 'upload_documents' | translate:translateKey ">{{'upload_documents' | translate:translateKey}}</div>
-						</ng-template> -->
-
+                    <h2>{{'upload_mandetory_documents' | translate:translateKey}}</h2>
 
                     <div class="alert alert-warning ">
                         {{'note' | translate:translateKey}} :{{'submit_hard_copy_at_madhyawarti_school' | translate:translateKey}}
@@ -190,35 +179,10 @@
                             <div>
                                 <label>{{translateService.getCurrentLanguage()=='en'? doc.documentLabelEn : doc.documentLabelGuj
                                     }} <span *ngIf="doc.mandatory">*</span></label>
-                                <app-hos-file-upload [form]="birthCorrectionForm" [uploadModel]="doc"></app-hos-file-upload>
+                                <file-upload [form]="birthCorrectionForm" [uploadModel]="doc"></file-upload>
                             </div>
                         </div>
                     </div>
-
-                    <!-- <div class="row ">
-
-                        <div class="col-md-4 " *ngIf="showButtons ">
-                            <label labelPosition="after ">{{'resident_proof' | translate:translateKey}}{{!getFileObjectContained('1.1')?'':
-                                '*'}}</label>
-                            <file-upload [form]="birthCorrectionForm " [uploadModel]="setDataValue(1.1, 'Resident Proof', '1.1',
-					 'residentProof') "></file-upload>
-                        </div>
-
-                        <div class="col-md-4 " *ngIf="showButtons ">
-                            <label>{{'kyc_mother' | translate:translateKey}}{{!getFileObjectContained('1.2')?'': '*'}}</label>
-
-                            <file-upload [form]="birthCorrectionForm " [uploadModel]="setDataValue(1.2, 'Kyc Document of Mother', '1.1',
-					 'kycMother') "></file-upload>
-                        </div>
-
-                        <div class="col-md-4 " *ngIf="showButtons ">
-                            <label labelPosition="after ">{{'kyc_father' | translate:translateKey}}{{!getFileObjectContained('1.3')?'':
-                                '*'}}</label>
-                            <file-upload [form]="birthCorrectionForm " [uploadModel]="setDataValue(1.3, 'Kyc Document of Father', '1.1',
-					 'kycFather') "></file-upload>
-                        </div>
-
-                    </div> -->
 
                     <app-action-bar [uploadFiles]="uploadFileArray" [form]="birthCorrectionForm" [stepInfo]="{step: 'final', next: 2, back: 0}"
                         (tabIndex)="onTabChange($event)" (handleErrors)="handleErrorsOnSubmit($event) "></app-action-bar>

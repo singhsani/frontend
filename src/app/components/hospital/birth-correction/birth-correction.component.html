@@ -1,213 +1,91 @@
 <app-hos-title-bar [title]="'screen_title' | translate: translateKey">
-  <!-- <button class="pull-right" mat-stroked-button type="button" (click)="birthCertificateForm.patchValue(config.getBirthDummyJSON())">
+	<!-- <button class="pull-right" mat-stroked-button type="button" (click)="birthCertificateForm.patchValue(config.getBirthDummyJSON())">
         Patch Value
     </button> -->
 </app-hos-title-bar>
-
+ 
 <div class="container">
-  <mat-card *ngIf="showApplicationSearch" class="formClass cardBorder">
-    <div class="pageTitle">{{'Search Child Record'| translate: translateKey}}</div>
+	<mat-card *ngIf="showApplicationSearch" class="formClass cardBorder">
+		<div class="pageTitle">{{'search_child_record'| translate: translateKey}}</div>
 
-    <div class="p-15">
+		<div class="p-15">
+			<form [formGroup]="regStatusForm" (ngSubmit)="getRegistrationNumberStatus()" autocomplete="off">
+				<div class="row">
+					<mat-form-field class="col-md-4">
+						<input matInput maxlength="50" placeholder="{{'registration_number' | translate:translateKey}}" formControlName="applicationNumber"
+						 required>
+						<control-messages [control]="regStatusForm.get('applicationNumber')"></control-messages>
+					</mat-form-field>
 
-      <form [formGroup]="regStatusForm" (ngSubmit)="getRegistrationNumberStatus()" autocomplete="off">
-        <div class="row">
-          <mat-form-field class="col-md-4">
-            <input matInput maxlength="25" placeholder="{{'registration_number' | translate:translateKey}}" formControlName="applicationNumber"
-              required>
-            <control-messages [control]="regStatusForm.get('applicationNumber')"></control-messages>
-          </mat-form-field>
+					<div formGroupName="typeOfCorrection" class="col-md-4 ngSelect">
+						<ng-select placeholder="{{'type_of_correction' | translate:translateKey}}*" formControlName="code">
+							<ng-option *ngFor="let type of TypeOfCorrection" [value]="type.code">
+								{{type.name}}
+							</ng-option>
+						</ng-select>
+						<control-messages [control]="regStatusForm.get('typeOfCorrection').get('code')"></control-messages>
+					</div>
+					<div class="col-md-4">
+						<button mat-stroked-button color="primary" class="w-100 mt-2" type="submit">
+							{{'search' | translate:translateKey}}
+						</button>
+					</div>
 
-          <div formGroupName="typeOfCorrection" class="col-md-4 ngSelect">
-            <ng-select placeholder="{{'type_of_correction' | translate:translateKey}}*" formControlName="code">
-              <ng-option *ngFor="let type of TypeOfCorrection" [value]="type.code">
-                {{type.name}}
-              </ng-option>
-            </ng-select>
-            <control-messages [control]="regStatusForm.get('typeOfCorrection').get('code')"></control-messages>
-          </div>
-          <div class="col-md-4">
-            <button mat-stroked-button color="primary" class="w-100 mt-2" type="submit">
-              {{'search' | translate:translateKey}}
-            </button>
-          </div>
+				</div>
+			</form>
+		</div>
+	</mat-card>
 
-        </div>
-      </form>
-    </div>
-  </mat-card>
+	<mat-card class="formClass cardBorder mt-2" [hidden]="!showcorrectionForm">
+		<form [formGroup]="birthCorrectionForm" autocomplete="off">
+			<mat-tab-group mat-stretch-tabs class="stepperNav" dynamicHeight="true" [(selectedIndex)]="tabIndex">
+				<mat-tab [label]="stepLable1 | translate: translateKey">
 
-  <mat-card class="formClass cardBorder mt-2">
-    <form [formGroup]="birthCorrectionForm" autocomplete="off" class="p-15">
-      <!-- <mat-tab-group mat-stretch-tabs class="stepperNav" dynamicHeight="true" [(selectedIndex)]="tabIndex">
-        <mat-tab [label]="stepLable1 | translate: translateKey"> -->
+					<h2>{{'child_name_insertion' | translate:translateKey}}</h2>
+					<div class="row">
+						<mat-form-field class="col-md-4">
+							<input required matInput [form]="birthCorrectionForm" maxlength="50" appGujInputSource targetElement="childNameGuj" appValidationFields
+							 [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{'child_name' | translate:translateKey}}" formControlName="childName">
+							<control-messages [control]="birthCorrectionForm.get('childName')"></control-messages>
+						</mat-form-field>
 
-          <!-- <ng-template matStepLabel>
-							<div [matTooltip]="'Edit_details' | translate:translateKey">{{'Edit Details' | translate:translateKey}}</div>
-						</ng-template> -->
+						<mat-form-field class="col-md-4">
+							<input required matInput maxlength="150" appPreventSpace appGujInputTarget [form]="birthCorrectionForm" placeholder="{{'child_name' | translate:translateKey:'gu'}}"
+							 formControlName="childNameGuj">
+							<control-messages [control]="birthCorrectionForm.get('childNameGuj')"></control-messages>
+						</mat-form-field>
+					</div>
 
-          <div>
-            <mat-card class="cardH1">
-              <h1>Child Name Insertion</h1>
-            </mat-card>
+					<app-hos-action-bar [uploadFiles]="uploadFileArray" [form]="birthCorrectionForm" [stepInfo]="{step: 'step1', next: 1, back: 0}"
+					 (tabIndex)="onTabChange($event)" (handleErrors)="handleErrorsOnSubmit($event) "></app-hos-action-bar>
 
-            <div class="row">
-              <mat-form-field class="col-md-4">
-                <input required matInput maxlength="20" appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{'child_name' | translate:translateKey}}"
-                  name="childName" formControlName="childName">
-                <control-messages [control]="birthCorrectionForm.get('childName')"></control-messages>
-              </mat-form-field>
-            </div>
-          </div>
+				</mat-tab>
+				<mat-tab [label]="stepLable2 | translate: translateKey">
+					<h2>{{'upload_mandetory_documents' | translate:translateKey}}</h2>
 
-          <!-- <div *ngIf="allowChildNameCorrection">
+					<div class="alert15 alert alert-warning ">
+						{{'note' | translate:translateKey}} :{{'submit_hard_copy_at_madhyawarti_school' | translate:translateKey}}
+					</div>
 
-            <mat-card class="cardH1">
-              <h1>child Details</h1>
-            </mat-card>
+					<div class="alert15 alert alert-warning ">
+						{{'note' | translate:translateKey}} : {{'file_size_less_than_5_mb' | translate:translateKey}}
+					</div>
 
-            <div class="row">
-              <mat-form-field class="col-md-4">
-                <input required matInput maxlength="20" appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{'child_name' | translate:translateKey}}"
-                  name="childName" formControlName="childName">
-                <control-messages [control]="birthCorrectionForm.get('childName')"></control-messages>
-              </mat-form-field>
-            </div>
+					<div class="row">
+						<div class="col-md-4" *ngFor="let doc of uploadFileArray">
+							<!-- <div> -->
+							<label>{{translateService.getCurrentLanguage()=='en'? doc.documentLabelEn : doc.documentLabelGuj }} <span *ngIf="doc.mandatory">*</span></label>
+							<app-hos-file-upload [form]="birthCorrectionForm" [uploadModel]="doc"></app-hos-file-upload>
+							<!-- </div> -->
+						</div>
+					</div>
 
-            <mat-card class="cardH1">
-              <h1>Father Details</h1>
-            </mat-card>
+					<app-hos-action-bar [uploadFiles]="uploadFileArray" [form]="birthCorrectionForm" [stepInfo]="{step: 'final', next: 0, back: 0}"
+					 (tabIndex)="onTabChange($event)" (handleErrors)="handleErrorsOnSubmit($event) "></app-hos-action-bar>
 
-            <div class="row">
+				</mat-tab>
+			</mat-tab-group>
 
-              <mat-form-field class="col-md-4">
-                <input matInput maxlength="20" appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" [form]="birthCorrectionForm"
-                  appGujInputSource targetElement="fatherFirstNameGuj" placeholder="{{'first_name' | translate:translateKey}}"
-                  formControlName="fatherFirstName" required>
-                <control-messages [control]="birthCorrectionForm.get('fatherFirstName')"></control-messages>
-              </mat-form-field>
-
-              <mat-form-field class="col-md-4">
-                <input matInput maxlength="20" appValidationFields [form]="birthCorrectionForm" appGujInputSource targetElement="fatherMiddleNameGuj"
-                  [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{'middle_name' | translate:translateKey}}"
-                  formControlName="fatherMiddleName">
-                <control-messages [control]="birthCorrectionForm.get('fatherMiddleName')"></control-messages>
-              </mat-form-field>
-
-              <mat-form-field class="col-md-4">
-                <input matInput maxlength="20" appValidationFields [form]="birthCorrectionForm" appGujInputSource targetElement="fatherLastNameGuj"
-                  [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{'last_name' | translate:translateKey}}" formControlName="fatherLastName"
-                  required>
-                <control-messages [control]="birthCorrectionForm.get('fatherLastName')"></control-messages>
-              </mat-form-field>
-
-              <mat-form-field class="col-md-4">
-                <input matInput maxlength="20" appPreventSpace appGujInputTarget [form]="birthCorrectionForm" placeholder="{{'first_name' | translate:translateKey:'gu'}}"
-                  formControlName="fatherFirstNameGuj" required>
-                <control-messages [control]="birthCorrectionForm.get('fatherFirstNameGuj')"></control-messages>
-              </mat-form-field>
-
-              <mat-form-field class="col-md-4">
-                <input matInput maxlength="20" appPreventSpace appGujInputTarget [form]="birthCorrectionForm" placeholder="{{'middle_name' | translate:translateKey:'gu'}}"
-                  formControlName="fatherMiddleNameGuj">
-                <control-messages [control]="birthCorrectionForm.get('fatherMiddleNameGuj')"></control-messages>
-              </mat-form-field>
-
-              <mat-form-field class="col-md-4">
-                <input matInput maxlength="20" appPreventSpace appGujInputTarget [form]="birthCorrectionForm" placeholder="{{'last_name' | translate:translateKey:'gu'}}"
-                  formControlName="fatherLastNameGuj" required>
-                <control-messages [control]="birthCorrectionForm.get('fatherLastNameGuj')"></control-messages>
-              </mat-form-field>
-            </div> -->
-
-            <!-- <mat-card class="cardH1">
-              <h1>Mother Details</h1>
-            </mat-card>
-
-            <div class="row">
-              <mat-form-field class="col-md-4">
-                <input matInput maxlength="20" appValidationFields [form]="birthCorrectionForm" appGujInputSource targetElement="motherFirstNameGuj"
-                  [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{'first_name' | translate:translateKey}}" formControlName="motherFirstName"
-                  required>
-                <control-messages [control]="birthCorrectionForm.get('motherFirstName')"></control-messages>
-              </mat-form-field>
-
-              <mat-form-field class="col-md-4">
-                <input matInput maxlength="20" appValidationFields [form]="birthCorrectionForm" appGujInputSource targetElement="motherMiddleNameGuj"
-                  [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{'middle_name' | translate:translateKey}}"
-                  formControlName="motherMiddleName">
-                <control-messages [control]="birthCorrectionForm.get('motherMiddleName')"></control-messages>
-              </mat-form-field>
-
-              <mat-form-field class="col-md-4">
-                <input matInput maxlength="20" appValidationFields [form]="birthCorrectionForm" appGujInputSource targetElement="motherLastNameGuj"
-                  [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{'last_name' | translate:translateKey}}" formControlName="motherLastName"
-                  required>
-                <control-messages [control]="birthCorrectionForm.get('motherLastName')"></control-messages>
-              </mat-form-field>
-
-              <mat-form-field class="col-md-4">
-                <input matInput maxlength="20" appPreventSpace appGujInputTarget [form]="birthCorrectionForm" placeholder="{{'first_name'| translate:translateKey:'gu'}}"
-                  formControlName="motherFirstNameGuj" required>
-                <control-messages [control]="birthCorrectionForm.get('motherFirstNameGuj')"></control-messages>
-              </mat-form-field>
-
-              <mat-form-field class="col-md-4">
-                <input matInput maxlength="20" appPreventSpace appGujInputTarget [form]="birthCorrectionForm" placeholder="{{'middle_name' | translate:translateKey:'gu'}}"
-                  formControlName="motherMiddleNameGuj">
-                <control-messages [control]="birthCorrectionForm.get('motherMiddleNameGuj')"></control-messages>
-              </mat-form-field>
-
-              <mat-form-field class="col-md-4">
-                <input matInput maxlength="20" appPreventSpace appGujInputTarget [form]="birthCorrectionForm" placeholder="{{'last_name' | translate:translateKey:'gu'}}"
-                  formControlName="motherLastNameGuj" required>
-                <control-messages [control]="birthCorrectionForm.get('motherLastNameGuj')"></control-messages>
-              </mat-form-field>
-
-            </div>
-          </div> -->
-          <!-- <app-hos-action-bar [uploadFiles]="uploadFileArray" [form]="birthCorrectionForm" [stepInfo]="{step: 'step1', next: 1, back: 0}"
-            (tabIndex)="onTabChange($event)" (handleErrors)="handleErrorsOnSubmit($event)"></app-hos-action-bar> -->
-
-          <!-- 
-					<div class="col-md-12 text-right ">
-						<button mat-raised-button color="primary " type="submit ">{{'submit' | translate: translateKey}}</button>
-					</div> -->
-
-
-        <!-- </mat-tab>
-        <mat-tab [label]="stepLable2 | translate: translateKey "> -->
-
-          <!-- <ng-template matStepLabel>
-							<div [matTooltip]=" 'upload_documents' | translate:translateKey ">{{'upload_documents' | translate:translateKey}}</div>
-						</ng-template> -->
-
-          <h2>Upload Mandetory Documents</h2>
-
-          <div class="alert alert-warning ">
-            {{'note' | translate:translateKey}} :{{'submit_hard_copy_at_madhyawarti_school' | translate:translateKey}}
-          </div>
-
-          <div class="alert alert-warning ">
-            {{'note' | translate:translateKey}} : {{'file_size_less_than_5_mb' | translate:translateKey}}
-          </div>
-
-          <div class="row">
-            <div class="col-md-4" *ngFor="let doc of uploadFileArray">
-              <div>
-                <label>{{translateService.getCurrentLanguage()=='en'? doc.documentLabelEn : doc.documentLabelGuj }} <span
-                    *ngIf="doc.mandatory">*</span></label>
-                <app-hos-file-upload [form]="birthCorrectionForm" [uploadModel]="doc"></app-hos-file-upload>
-              </div>
-            </div>
-          </div>
-
-          <app-hos-action-bar [uploadFiles]="uploadFileArray" [form]="birthCorrectionForm" [stepInfo]="{step: 'final', next: 2, back: 0}"
-            (tabIndex)="onTabChange($event)" (handleErrors)="handleErrorsOnSubmit($event) "></app-hos-action-bar>
-
-        <!-- </mat-tab>
-      </mat-tab-group> -->
-
-    </form>
-  </mat-card>
+		</form>
+	</mat-card>
 </div>

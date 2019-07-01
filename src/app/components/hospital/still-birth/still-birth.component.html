@@ -118,12 +118,21 @@
 
 
                         <mat-form-field class="col-md-4">
-                            <input matInput maxlength="20" appValidationFields
+                            <input matInput maxlength="50" appValidationFields
                                 [validationFieldsType]="'onlyNameWithOutSpace'"
                                 placeholder="{{'child_name' | translate:translateKey}}" name="childName"
-                                formControlName="childName">
+                                formControlName="childName"
+                                 [form]="stillBirthCertificateForm.get('childs')['controls'][i]" appGujInputSource targetElement="childNameGuj"
+                                 >
                             <control-messages
                                 [control]="stillBirthCertificateForm.get('childs')['controls'][i].get('childName')">
+                            </control-messages>
+                        </mat-form-field>
+
+                        <mat-form-field class="col-md-4">
+                            <input matInput maxlength="150" appPreventSpace appGujInputTarget [form]="stillBirthCertificateForm.get('childs')['controls'][i]"
+                                placeholder="{{'child_name' | translate:translateKey:'gu'}}" formControlName="childNameGuj">
+                            <control-messages [control]="stillBirthCertificateForm.get('childs')['controls'][i].get('childNameGuj')">
                             </control-messages>
                         </mat-form-field>
 

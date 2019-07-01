@@ -30,8 +30,8 @@ export class BTConstants {
     static TEMPORARY_BLOCKED = "TEMPORARY_BLOCKED";
     static MOB_NO_MIS_MATCH_MESSAGE = "Mobile Number and Confirm Mobile Number should match";
     static EMAIL_MIS_MATCH_MESSAGE = "Email and Confirm Email should match";
-    static FEILD_ERROR_TITLE = "Feild Error";
-    static ALL_FEILD_REQUIRED_MESSAGE = "Please fill all the required feilds";
+    static FEILD_ERROR_TITLE = "Field Error";
+    static ALL_FEILD_REQUIRED_MESSAGE = "Please fill all the required fields";
     static AGREE_MESSAGE = 'Should be agree with given bank details';
     static TERMS_AND_CONDITION_MESSAGE = 'Should Accept the terms and condition of form';
     static MY_BOOKINGS_URL = 'citizen/bookings/my-bookings';

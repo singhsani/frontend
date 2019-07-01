@@ -235,7 +235,7 @@ export class BookTheaterComponent implements OnInit {
         }
         else {
             this.bookingUtils.getAllErrors(this.searchTheaterForm);
-            this.commonService.openAlert("Feild Error", this.bookingConstants.ALL_FEILD_REQUIRED_MESSAGE, 'warning');
+            this.commonService.openAlert("Field Error", this.bookingConstants.ALL_FEILD_REQUIRED_MESSAGE, 'warning');
         }
     }
 
@@ -314,13 +314,13 @@ export class BookTheaterComponent implements OnInit {
         let errCount = this.bookingUtils.getAllErrors(this.theaterBookingForm);
         if (this.theaterBookingForm.invalid) {
             this.handleErrorsOnSubmit(errCount);
-            this.commonService.openAlert("Feild Error", this.bookingConstants.ALL_FEILD_REQUIRED_MESSAGE, 'warning')
+            this.commonService.openAlert("Field Error", this.bookingConstants.ALL_FEILD_REQUIRED_MESSAGE, 'warning')
             return;
         } else if (!this.theaterBookingForm.get('agree').value) {
-            this.commonService.openAlert("Feild Error", this.bookingConstants.AGREE_MESSAGE, 'warning')
+            this.commonService.openAlert("Field Error", this.bookingConstants.AGREE_MESSAGE, 'warning')
             return;
         } else if (!this.theaterBookingForm.get('termsCondition').value) {
-            this.commonService.openAlert("Feild Error", this.bookingConstants.TERMS_AND_CONDITION_MESSAGE, 'warning')
+            this.commonService.openAlert("Field Error", this.bookingConstants.TERMS_AND_CONDITION_MESSAGE, 'warning')
             return;
         } else {
             this.bookingService.commonBookSlot(this.theaterBookingForm.value).subscribe(resp => {

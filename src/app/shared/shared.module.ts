@@ -7,7 +7,9 @@ import { MaterialModule } from './modules/material/material.module';// Import ma
 import { TranslateModule } from './modules/translate/translate.module';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ModalModule } from 'ngx-bootstrap';
-import { NgxMaskModule } from 'ngx-mask'
+import { NgxMaskModule } from 'ngx-mask';
+import { ChartsModule } from "ng2-charts";
+
 
 
 /* Import http related servies start */
@@ -49,6 +51,7 @@ import { GatewayResponseComponent } from './components/gateway-response/gateway-
 import { PaymentOptionComponent } from './components/payment-option/payment-option.component';
 import { GuidelinesComponent } from './components/guidelines/guidelines.component';
 import { GujVideoComponent } from './components/guj-video/guj-video.component';
+import { BaseChartComponent } from './components/base-chart/base-chart.component';
 /* import pipes end*/
 
 const COMPONENTS = [
@@ -75,7 +78,9 @@ const COMPONENTS = [
 	GatewayResponseComponent,
 	PaymentOptionComponent,
 	GuidelinesComponent,
-	GujVideoComponent
+	GujVideoComponent,
+	BaseChartComponent,
+
 
 ]
 
@@ -91,15 +96,19 @@ const COMPONENTS = [
 		TranslateModule,
 		FormsModule,
 		NgSelectModule,
+		ChartsModule,
 		ModalModule.forRoot(),
 		NgxMaskModule.forRoot(),		
-		ReactiveFormsModule
+		ReactiveFormsModule,
+
 	],
 	exports: [
 		MaterialModule,
 		TranslateModule,
 		NgSelectModule,
 		ModalModule,
+		ChartsModule,
+
 		...COMPONENTS
 	],
 	providers: [
