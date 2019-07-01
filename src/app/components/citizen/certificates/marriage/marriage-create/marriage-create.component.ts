@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, OnChanges, ChangeDetectorRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 
 import { ValidationService } from '../../../../../shared/services/validation.service';
 import { FormsActionsService } from '../../../../../core/services/citizen/data-services/forms-actions.service';
@@ -438,7 +439,8 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
         private router: Router,
         private commonService: CommonService,
         private CD: ChangeDetectorRef,
-        public translateService: TranslateService
+        public translateService: TranslateService,
+        private toster: ToastrService
     ) { }
 
     /**
@@ -450,6 +452,9 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
             this.formId = Number(param.get('id'));
             this.apiCode = param.get('apiCode');
             this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
+        },
+        err => {
+            this.toster.error(err.error.error_description);
         });
 
         if (!this.formId) {
@@ -732,11 +737,12 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
                     this.marriageFormGroup.disable();
                 }
 
-                console.log(this.marriageFormGroup.value)
+                // console.log(this.marriageFormGroup.value)
 
             },
             err => {
-                console.log("get fail" + err);
+                this.toster.error(err.error.error_description);
+                // console.log("get fail" + err);
             }
         );
 
@@ -756,6 +762,9 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
             this.maritalstatusArray = res.MARITAL_STATUS;
             this.applicantrelationArray = res.MARRIAGE_APPLICANT_RELATION;
             this.identityproofArray = res.MARRIAGE_ID_PROOFS;
+        },
+        err =>{
+            this.toster.error(err.error.error_description);
         });
     }
 
@@ -1088,7 +1097,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
                 return false;
             }
             else {
-                console.log("else condition");
+                // console.log("else condition");
             }
 
         }

@@ -11,7 +11,8 @@
 	<!--Start  form  -->
 	<form [formGroup]="marriageFormGroup">
 
-		<mat-tab-group mat-stretch-tabs [(selectedIndex)]="tabIndex" class="stepperNav" dynamicHeight='true' mat-stretch-tabs>
+		<mat-tab-group mat-stretch-tabs [(selectedIndex)]="tabIndex" class="stepperNav" dynamicHeight='true'
+			mat-stretch-tabs>
 
 			<!-- First step -->
 			<mat-tab>
@@ -21,8 +22,10 @@
 
 				<div class="row">
 					<mat-form-field class="col-md-4">
-						<input required matInput [max]="disablefutureDate" [matDatepicker]="picker1" formControlName="marriageDate"
-						 (dateChange)="dateFormate($event.value,'marriageDate');CalculateAge('marriageDate');birthCalendar()" placeholder="{{ 'date_of_marriage' | translate:translateKey }} (DD/MM/YYYY)">
+						<input required matInput [max]="disablefutureDate" [matDatepicker]="picker1"
+							formControlName="marriageDate"
+							(dateChange)="dateFormate($event.value,'marriageDate');CalculateAge('marriageDate');birthCalendar()"
+							placeholder="{{ 'date_of_marriage' | translate:translateKey }} (DD/MM/YYYY)">
 						<mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
 						<mat-datepicker #picker1 touchUi="true"></mat-datepicker>
 						<control-messages [control]="marriageFormGroup.get('marriageDate')"></control-messages>
@@ -39,7 +42,8 @@
 
 				<div class="row">
 					<h2>{{ 'place_of_marriage' | translate:translateKey }}:</h2>
-					<app-address #address [isDisplayGujFields]="true" [addressFormGroup]="marriageFormGroup.get('marriagePlace')"></app-address>
+					<app-address #address [isDisplayGujFields]="true"
+						[addressFormGroup]="marriageFormGroup.get('marriagePlace')"></app-address>
 				</div>
 
 				<!-- For NIR Marrige -->
@@ -64,22 +68,25 @@
 				<div class="row">
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" maxlength="50" formControlName="groomFirstName" appValidationFields
-						 [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{ 'first_name' | translate:translateKey }}"
-						 required appGujInputSource targetElement="groomFirstNameGuj" [form]="marriageFormGroup">
+							[validationFieldsType]="'onlyNameWithOutSpace'"
+							placeholder="{{ 'first_name' | translate:translateKey }}" required appGujInputSource
+							targetElement="groomFirstNameGuj" [form]="marriageFormGroup">
 						<control-messages [control]="marriageFormGroup.get('groomFirstName')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" maxlength="50" formControlName="groomMiddleName" appValidationFields
-						 [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{ 'middlename_name' | translate:translateKey }}"
-						 appGujInputSource targetElement="groomMiddleNameGuj" [form]="marriageFormGroup">
+							[validationFieldsType]="'onlyNameWithOutSpace'"
+							placeholder="{{ 'middlename_name' | translate:translateKey }}" appGujInputSource
+							targetElement="groomMiddleNameGuj" [form]="marriageFormGroup">
 						<control-messages [control]="marriageFormGroup.get('groomMiddleName')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" maxlength="50" formControlName="groomLastName" appValidationFields
-						 [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{ 'last_name' | translate:translateKey }}"
-						 required appGujInputSource targetElement="groomLastNameGuj" [form]="marriageFormGroup">
+							[validationFieldsType]="'onlyNameWithOutSpace'"
+							placeholder="{{ 'last_name' | translate:translateKey }}" required appGujInputSource
+							targetElement="groomLastNameGuj" [form]="marriageFormGroup">
 						<control-messages [control]="marriageFormGroup.get('groomLastName')"></control-messages>
 					</mat-form-field>
 				</div>
@@ -87,34 +94,38 @@
 				<!-- gujarati -->
 				<div class="row">
 					<mat-form-field class="col-md-4">
-						<input matInput appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" type="text" maxlength="150"
-						 formControlName="groomFirstNameGuj" appGujInputTarget [form]="marriageFormGroup" placeholder="{{ 'first_name' | translate:translateKey:'gu' }}">
+						<input matInput type="text" maxlength="150" formControlName="groomFirstNameGuj"
+							appGujInputTarget [form]="marriageFormGroup"
+							placeholder="{{ 'first_name' | translate:translateKey:'gu' }}">
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" type="text" maxlength="150"
-						 formControlName="groomMiddleNameGuj" appGujInputTarget [form]="marriageFormGroup" placeholder="{{ 'middlename_name' | translate:translateKey:'gu' }}">
+						<input matInput type="text" maxlength="150" formControlName="groomMiddleNameGuj"
+							appGujInputTarget [form]="marriageFormGroup"
+							placeholder="{{ 'middlename_name' | translate:translateKey:'gu' }}">
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" type="text" maxlength="150"
-						 formControlName="groomLastNameGuj" appGujInputTarget [form]="marriageFormGroup" placeholder="{{ 'last_name' | translate:translateKey:'gu' }}">
+						<input matInput type="text" maxlength="150" formControlName="groomLastNameGuj" appGujInputTarget
+							[form]="marriageFormGroup" placeholder="{{ 'last_name' | translate:translateKey:'gu' }}">
 					</mat-form-field>
 				</div>
 				<!-- /gujarati -->
 
 				<div class="row">
 					<mat-form-field class="col-md-4">
-						<input matInput [max]="groomagecalendar" [matDatepicker]="picker2" formControlName="groomBirthDate" (dateChange)="dateFormate($event.value,'groomBirthDate');CalculateAge('groomBirthDate')"
-						 placeholder="{{ 'date_of_birth' | translate:translateKey }} (DD/MM/YYYY)" required>
+						<input matInput [max]="groomagecalendar" [matDatepicker]="picker2"
+							formControlName="groomBirthDate"
+							(dateChange)="dateFormate($event.value,'groomBirthDate');CalculateAge('groomBirthDate')"
+							placeholder="{{ 'date_of_birth' | translate:translateKey }} (DD/MM/YYYY)" required>
 						<mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
 						<mat-datepicker #picker2 touchUi="true"></mat-datepicker>
 						<control-messages [control]="marriageFormGroup.get('groomBirthDate')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput formControlName="groomAge" [value]="groomage" placeholder="{{'year' | translate:translateKey }}"
-						 readonly>
+						<input matInput formControlName="groomAge" [value]="groomage"
+							placeholder="{{'year' | translate:translateKey }}" readonly>
 						<control-messages [control]="marriageFormGroup.get('groomAge')"></control-messages>
 					</mat-form-field>
 
@@ -130,19 +141,25 @@
 							</mat-select>
 						</mat-form-field> -->
 					<div class="col-md-4" formGroupName="groomReligion">
-						<ng-select formControlName="code" placeholder="{{ 'religion' | translate:translateKey }}*" (change)="onChange($event,religionArray,'religionGujgroom');checkReligion();changeReset('marriageTimeGroomStatus');changeReset('aliveWives');removeGuj('maritalstatusGujgroom')">
-							<ng-option *ngFor="let religion of religionArray" [value]="religion.code">{{religion.name}}</ng-option>
+						<ng-select formControlName="code" placeholder="{{ 'religion' | translate:translateKey }}*"
+							(change)="onChange($event,religionArray,'religionGujgroom');checkReligion();changeReset('marriageTimeGroomStatus');changeReset('aliveWives');removeGuj('maritalstatusGujgroom')">
+							<ng-option *ngFor="let religion of religionArray" [value]="religion.code">{{religion.name}}
+							</ng-option>
 						</ng-select>
-						<control-messages [control]="marriageFormGroup.get('groomReligion').get('code')"></control-messages>
+						<control-messages [control]="marriageFormGroup.get('groomReligion').get('code')">
+						</control-messages>
 					</div>
 
 					<div class="col-md-4" formGroupName="marriageTimeGroomStatus">
 						<div class="radioBtnError">
 							<mat-label> {{'marital_status' | translate:translateKey }}*</mat-label>
-							<mat-radio-group formControlName="code" required (change)="onChange($event.value,maritalstatusArray,'maritalstatusGujgroom');changeReset('aliveWives')">
+							<mat-radio-group formControlName="code" required
+								(change)="onChange($event.value,maritalstatusArray,'maritalstatusGujgroom');changeReset('aliveWives')">
 								<span *ngFor="let status of maritalstatusArray">
 									<span *ngIf="status.name == 'Married'">
-										<mat-radio-button *ngIf="marriageFormGroup.get('groomReligion').get('code').value === 'MUSLIM'" [value]="status.code">
+										<mat-radio-button
+											*ngIf="marriageFormGroup.get('groomReligion').get('code').value === 'MUSLIM'"
+											[value]="status.code">
 											{{status.name}}
 										</mat-radio-button>
 									</span>
@@ -151,31 +168,38 @@
 									</mat-radio-button>
 								</span>
 							</mat-radio-group>
-							<control-messages [control]="marriageFormGroup.get('marriageTimeGroomStatus').get('code')"></control-messages>
+							<control-messages [control]="marriageFormGroup.get('marriageTimeGroomStatus').get('code')">
+							</control-messages>
 						</div>
 					</div>
 
-					<mat-form-field class="col-md-4" *ngIf="marriageFormGroup.get('groomReligion').get('code').value === 'MUSLIM' && marriageFormGroup.get('marriageTimeGroomStatus').get('code').value === 'MARRIED'">
-						<input matInput OnlyNumber maxlength="1" minlength="0" pattern="[0-4]" formControlName="aliveWives" placeholder="{{'alive_wives' | translate:translateKey }}">
-						<mat-error *ngIf="marriageFormGroup.get('aliveWives').value > 4">More than 4 is not allow</mat-error>
+					<mat-form-field class="col-md-4"
+						*ngIf="marriageFormGroup.get('groomReligion').get('code').value === 'MUSLIM' && marriageFormGroup.get('marriageTimeGroomStatus').get('code').value === 'MARRIED'">
+						<input matInput OnlyNumber maxlength="1" minlength="0" pattern="[0-4]"
+							formControlName="aliveWives" placeholder="{{'alive_wives' | translate:translateKey }}">
+						<mat-error *ngIf="marriageFormGroup.get('aliveWives').value > 4">More than 4 is not allow
+						</mat-error>
 					</mat-form-field>
 				</div>
 
 				<!-- gujrati -->
 				<div class="row">
 					<mat-form-field class="col-md-4">
-						<input matInput readonly placeholder="{{'religion' | translate:translateKey:'gu'}}" [value]="religionGujgroom">
+						<input matInput readonly placeholder="{{'religion' | translate:translateKey:'gu'}}"
+							[value]="religionGujgroom">
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput readonly placeholder="{{'marital_status' | translate:translateKey:'gu'}}" [value]="maritalstatusGujgroom">
+						<input matInput readonly placeholder="{{'marital_status' | translate:translateKey:'gu'}}"
+							[value]="maritalstatusGujgroom">
 					</mat-form-field>
 				</div>
 				<!-- /gujarati -->
 
 				<div class="row">
 					<mat-form-field class="col-md-4">
-						<input matInput OnlyNumber maxlength="12" minlength="12" type="tel" formControlName="groomAadharNumber"
-						 placeholder="{{'aadhar_number' | translate:translateKey }}">
+						<input matInput OnlyNumber maxlength="12" minlength="12" type="tel"
+							formControlName="groomAadharNumber"
+							placeholder="{{'aadhar_number' | translate:translateKey }}">
 						<control-messages [control]="marriageFormGroup.get('groomAadharNumber')"></control-messages>
 					</mat-form-field>
 				</div>
@@ -185,8 +209,9 @@
 					<div class="col-md-4">
 						<div class="radioBtnError">
 							<mat-label>{{'is_visa' | translate:translateKey }}</mat-label>
-							<mat-radio-group formControlName="isGroomVisa" (change)="changeReflection('groom');changeReset('nriGroomAddress');changeReset('nriGroomParentsAddress');resetAddress('groomAddress','GROOM_ADDRESS')"
-							 required>
+							<mat-radio-group formControlName="isGroomVisa"
+								(change)="changeReflection('groom');changeReset('nriGroomAddress');changeReset('nriGroomParentsAddress');resetAddress('groomAddress','GROOM_ADDRESS')"
+								required>
 								<mat-radio-button [value]="true">
 									Yes
 								</mat-radio-button>
@@ -201,95 +226,106 @@
 
 					<div *ngIf="marriageFormGroup.get('isGroomVisa').value">
 						<mat-form-field class="col-md-4">
-							<input matInput OnlyNumber required maxlength="9" minlength="9" type="tel" formControlName="groomPassportNumber"
-							 placeholder="{{'passport_number' | translate:translateKey }}">
-							<control-messages [control]="marriageFormGroup.get('groomPassportNumber')"></control-messages>
+							<input matInput OnlyNumber required maxlength="9" minlength="9" type="tel"
+								formControlName="groomPassportNumber"
+								placeholder="{{'passport_number' | translate:translateKey }}">
+							<control-messages [control]="marriageFormGroup.get('groomPassportNumber')">
+							</control-messages>
 						</mat-form-field>
 
 						<mat-form-field class="col-md-4">
-							<input matInput type="text" maxlength="50" formControlName="groomCountry" appValidationFields
-							 [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{ 'foreign_country' | translate:translateKey }}"
-							 required>
+							<input matInput type="text" maxlength="50" formControlName="groomCountry"
+								appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'"
+								placeholder="{{ 'foreign_country' | translate:translateKey }}" required>
 							<control-messages [control]="marriageFormGroup.get('groomCountry')"></control-messages>
 						</mat-form-field>
 
 						<mat-form-field class="col-md-4">
-							<input matInput OnlyNumber required maxlength="9" minlength="9" type="tel" formControlName="groomVisaNumber"
-							 placeholder="{{'visa_number' | translate:translateKey }}">
+							<input matInput OnlyNumber required maxlength="9" minlength="9" type="tel"
+								formControlName="groomVisaNumber"
+								placeholder="{{'visa_number' | translate:translateKey }}">
 							<control-messages [control]="marriageFormGroup.get('groomVisaNumber')"></control-messages>
 						</mat-form-field>
 
 						<mat-form-field class="col-md-6">
-							<input matInput required [max]="disablefutureDate" [matDatepicker]="visa1" formControlName="groomVisaFrom"
-							 (dateChange)="dateFormate($event.value,'groomVisaFrom')" placeholder="{{ 'visa_date_from' | translate:translateKey }} (DD/MM/YYYY)">
+							<input matInput required [max]="disablefutureDate" [matDatepicker]="visa1"
+								formControlName="groomVisaFrom" (dateChange)="dateFormate($event.value,'groomVisaFrom')"
+								placeholder="{{ 'visa_date_from' | translate:translateKey }} (DD/MM/YYYY)">
 							<mat-datepicker-toggle matSuffix [for]="visa1"></mat-datepicker-toggle>
 							<mat-datepicker #visa1 touchUi="true" touchUi="true"></mat-datepicker>
 							<control-messages [control]="marriageFormGroup.get('groomVisaFrom')"></control-messages>
 						</mat-form-field>
 
 						<mat-form-field class="col-md-6">
-							<input matInput required [min]="disablefutureDate" [matDatepicker]="visa2" formControlName="groomVisaTo"
-							 (dateChange)="dateFormate($event.value,'groomVisaTo')" placeholder="{{ 'visa_date_to' | translate:translateKey }} (DD/MM/YYYY)">
+							<input matInput required [min]="disablefutureDate" [matDatepicker]="visa2"
+								formControlName="groomVisaTo" (dateChange)="dateFormate($event.value,'groomVisaTo')"
+								placeholder="{{ 'visa_date_to' | translate:translateKey }} (DD/MM/YYYY)">
 							<mat-datepicker-toggle matSuffix [for]="visa2"></mat-datepicker-toggle>
 							<mat-datepicker #visa2 touchUi="true" touchUi="true"></mat-datepicker>
 							<control-messages [control]="marriageFormGroup.get('groomVisaTo')"></control-messages>
 						</mat-form-field>
 
 						<mat-form-field class="col-md-4">
-							<input matInput OnlyNumber required maxlength="9" minlength="9" type="tel" formControlName="groomSocialSecurityNumber"
-							 placeholder="{{'social_security_number' | translate:translateKey }}">
-							<control-messages [control]="marriageFormGroup.get('groomSocialSecurityNumber')"></control-messages>
+							<input matInput OnlyNumber required maxlength="9" minlength="9" type="tel"
+								formControlName="groomSocialSecurityNumber"
+								placeholder="{{'social_security_number' | translate:translateKey }}">
+							<control-messages [control]="marriageFormGroup.get('groomSocialSecurityNumber')">
+							</control-messages>
 						</mat-form-field>
 
 						<mat-form-field class="col-md-4">
-							<input matInput type="text" maxlength="50" formControlName="groomEligibility" appValidationFields
-							 [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{ 'eligibility' | translate:translateKey }}"
-							 required>
+							<input matInput type="text" maxlength="50" formControlName="groomEligibility"
+								appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'"
+								placeholder="{{ 'eligibility' | translate:translateKey }}" required>
 							<control-messages [control]="marriageFormGroup.get('groomEligibility')"></control-messages>
 						</mat-form-field>
 
 						<mat-form-field class="col-md-4">
-							<input matInput type="text" maxlength="50" formControlName="groomDesignation" appValidationFields
-							 [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{ 'designation' | translate:translateKey }}"
-							 required>
+							<input matInput type="text" maxlength="50" formControlName="groomDesignation"
+								appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'"
+								placeholder="{{ 'designation' | translate:translateKey }}" required>
 							<control-messages [control]="marriageFormGroup.get('groomDesignation')"></control-messages>
 						</mat-form-field>
 
 						<mat-form-field class="col-md-4">
-							<input matInput OnlyNumber placeholder="{{'mobile_no' | translate:translateKey}}" formControlName="groomPhoneNumber"
-							 type="tel" maxlength="10" minlength="10" required>
+							<input matInput OnlyNumber placeholder="{{'mobile_no' | translate:translateKey}}"
+								formControlName="groomPhoneNumber" type="tel" maxlength="10" minlength="10" required>
 							<control-messages [control]="marriageFormGroup.get('groomPhoneNumber')"></control-messages>
 						</mat-form-field>
 
 						<mat-form-field class="col-md-4">
-							<input matInput appPreventSpace maxlength="50" placeholder="{{'email' | translate:translateKey}}" type="email"
-							 formControlName="groomEmail" required>
+							<input matInput appPreventSpace maxlength="50"
+								placeholder="{{'email' | translate:translateKey}}" type="email"
+								formControlName="groomEmail" required>
 							<control-messages [control]="marriageFormGroup.get('groomEmail')"></control-messages>
 						</mat-form-field>
 
 						<mat-form-field class="col-md-4">
-							<textarea matInput rows="3" cols="50" maxlength="500" formControlName="nriGroomAddress" placeholder="{{ 'foreign_address' | translate:translateKey }}"
-							 required> </textarea>
+							<textarea matInput rows="3" cols="50" maxlength="500" formControlName="nriGroomAddress"
+								placeholder="{{ 'foreign_address' | translate:translateKey }}" required> </textarea>
 							<control-messages [control]="marriageFormGroup.get('nriGroomAddress')"></control-messages>
 						</mat-form-field>
 
 						<mat-form-field class="col-md-4">
-							<input matInput type="text" maxlength="100" formControlName="groomCompanyName" appValidationFields
-							 [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{ 'company_name' | translate:translateKey }}"
-							 required>
+							<input matInput type="text" maxlength="100" formControlName="groomCompanyName"
+								appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'"
+								placeholder="{{ 'company_name' | translate:translateKey }}" required>
 							<control-messages [control]="marriageFormGroup.get('groomCompanyName')"></control-messages>
 						</mat-form-field>
 
 						<mat-form-field class="col-md-4">
-							<input matInput required OnlyNumber maxlength="10" minlength="10" type="tel" formControlName="groomCompanyPhoneNumber"
-							 placeholder="{{'company_contact_number' | translate:translateKey }}">
-							<control-messages [control]="marriageFormGroup.get('groomCompanyPhoneNumber')"></control-messages>
+							<input matInput required OnlyNumber maxlength="10" minlength="10" type="tel"
+								formControlName="groomCompanyPhoneNumber"
+								placeholder="{{'company_contact_number' | translate:translateKey }}">
+							<control-messages [control]="marriageFormGroup.get('groomCompanyPhoneNumber')">
+							</control-messages>
 						</mat-form-field>
 
 						<mat-form-field class="col-md-4">
-							<textarea matInput rows="3" cols="50" maxlength="500" formControlName="groomCompanyAddress" placeholder="{{ 'company_address' | translate:translateKey }}"
-							 required> </textarea>
-							<control-messages [control]="marriageFormGroup.get('groomCompanyAddress')"></control-messages>
+							<textarea matInput rows="3" cols="50" maxlength="500" formControlName="groomCompanyAddress"
+								placeholder="{{ 'company_address' | translate:translateKey }}" required> </textarea>
+							<control-messages [control]="marriageFormGroup.get('groomCompanyAddress')">
+							</control-messages>
 						</mat-form-field>
 
 					</div>
@@ -298,11 +334,12 @@
 
 				<div class="row" [hidden]="marriageFormGroup.get('isGroomVisa').value == true">
 					<h2>{{'address' | translate:translateKey }}:</h2>
-					<app-address #address [requiredFeilds]="!marriageFormGroup.get('isGroomVisa').value" [addressFormGroup]="marriageFormGroup.get('groomAddress')"></app-address>
+					<app-address #address [requiredFeilds]="!marriageFormGroup.get('isGroomVisa').value"
+						[addressFormGroup]="marriageFormGroup.get('groomAddress')"></app-address>
 				</div>
 
-				<app-action-bar [uploadFiles]="uploadFileArray" [form]="marriageFormGroup" (tabIndex)="onTabChange($event)"
-				 [stepInfo]="{step: 'step1', next: 1, back: 0}"></app-action-bar>
+				<app-action-bar [uploadFiles]="uploadFileArray" [form]="marriageFormGroup"
+					(tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step1', next: 1, back: 0}"></app-action-bar>
 			</mat-tab>
 			<!-- End First step -->
 
@@ -313,23 +350,26 @@
 				</ng-template>
 				<div class="row">
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" maxlength="50" formControlName="brideFirstName" placeholder="{{'first_name' | translate:translateKey }}"
-						 appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" required appGujInputSource targetElement="brideFirstNameGuj"
-						 [form]="marriageFormGroup">
+						<input matInput type="text" maxlength="50" formControlName="brideFirstName"
+							placeholder="{{'first_name' | translate:translateKey }}" appValidationFields
+							[validationFieldsType]="'onlyNameWithOutSpace'" required appGujInputSource
+							targetElement="brideFirstNameGuj" [form]="marriageFormGroup">
 						<control-messages [control]="marriageFormGroup.get('brideFirstName')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" maxlength="50" formControlName="brideMiddleName" placeholder="{{'middlename_name' | translate:translateKey }}"
-						 appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" appGujInputSource targetElement="brideMiddleNameGuj"
-						 [form]="marriageFormGroup">
+						<input matInput type="text" maxlength="50" formControlName="brideMiddleName"
+							placeholder="{{'middlename_name' | translate:translateKey }}" appValidationFields
+							[validationFieldsType]="'onlyNameWithOutSpace'" appGujInputSource
+							targetElement="brideMiddleNameGuj" [form]="marriageFormGroup">
 						<control-messages [control]="marriageFormGroup.get('brideMiddleName')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" maxlength="50" formControlName="brideLastName" placeholder="{{'last_name' | translate:translateKey }}"
-						 appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" required appGujInputSource targetElement="brideLastNameGuj"
-						 [form]="marriageFormGroup">
+						<input matInput type="text" maxlength="50" formControlName="brideLastName"
+							placeholder="{{'last_name' | translate:translateKey }}" appValidationFields
+							[validationFieldsType]="'onlyNameWithOutSpace'" required appGujInputSource
+							targetElement="brideLastNameGuj" [form]="marriageFormGroup">
 						<control-messages [control]="marriageFormGroup.get('brideLastName')"></control-messages>
 					</mat-form-field>
 				</div>
@@ -337,34 +377,38 @@
 				<!-- gujarati -->
 				<div class="row">
 					<mat-form-field class="col-md-4">
-						<input appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" matInput type="text" maxlength="150"
-						 formControlName="brideFirstNameGuj" appGujInputTarget [form]="marriageFormGroup" placeholder="{{ 'first_name' | translate:translateKey:'gu' }}">
+						<input matInput type="text" maxlength="150" formControlName="brideFirstNameGuj"
+							appGujInputTarget [form]="marriageFormGroup"
+							placeholder="{{ 'first_name' | translate:translateKey:'gu' }}">
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" matInput type="text" maxlength="150"
-						 formControlName="brideMiddleNameGuj" appGujInputTarget [form]="marriageFormGroup" placeholder="{{ 'middlename_name' | translate:translateKey:'gu' }}">
+						<input matInput type="text" maxlength="150" formControlName="brideMiddleNameGuj"
+							appGujInputTarget [form]="marriageFormGroup"
+							placeholder="{{ 'middlename_name' | translate:translateKey:'gu' }}">
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" matInput type="text" maxlength="150"
-						 formControlName="brideLastNameGuj" appGujInputTarget [form]="marriageFormGroup" placeholder="{{ 'last_name' | translate:translateKey:'gu' }}">
+						<input matInput type="text" maxlength="150" formControlName="brideLastNameGuj" appGujInputTarget
+							[form]="marriageFormGroup" placeholder="{{ 'last_name' | translate:translateKey:'gu' }}">
 					</mat-form-field>
 				</div>
 				<!-- /gujarati -->
 
 				<div class="row">
 					<mat-form-field class="col-md-4">
-						<input matInput [max]="brideagecalender" [matDatepicker]="picker3" formControlName="brideBirthDate" (dateChange)="dateFormate($event.value,'brideBirthDate');CalculateAge('brideBirthDate')"
-						 placeholder="{{'date_of_birth' | translate:translateKey }} (DD/MM/YYYY)" required>
+						<input matInput [max]="brideagecalender" [matDatepicker]="picker3"
+							formControlName="brideBirthDate"
+							(dateChange)="dateFormate($event.value,'brideBirthDate');CalculateAge('brideBirthDate')"
+							placeholder="{{'date_of_birth' | translate:translateKey }} (DD/MM/YYYY)" required>
 						<mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
 						<mat-datepicker #picker3 touchUi="true"></mat-datepicker>
 						<control-messages [control]="marriageFormGroup.get('brideBirthDate')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput [value]="brideage" formControlName="brideAge" placeholder="{{'year' | translate:translateKey }}"
-						 readonly>
+						<input matInput [value]="brideage" formControlName="brideAge"
+							placeholder="{{'year' | translate:translateKey }}" readonly>
 						<control-messages [control]="marriageFormGroup.get('brideAge')"></control-messages>
 					</mat-form-field>
 
@@ -380,28 +424,34 @@
 							</mat-select>
 						</mat-form-field> -->
 					<div class="col-md-4" formGroupName="brideReligion">
-						<ng-select formControlName="code" placeholder="{{ 'religion' | translate:translateKey }}*" (change)="onChange($event,religionArray,'religionGujbride');checkReligion();changeReset('marriageTimeBrideStatus');removeGuj('maritalstatusGujbride')">
-							<ng-option *ngFor="let religion of religionArray" [value]="religion.code">{{religion.name}}</ng-option>
+						<ng-select formControlName="code" placeholder="{{ 'religion' | translate:translateKey }}*"
+							(change)="onChange($event,religionArray,'religionGujbride');checkReligion();changeReset('marriageTimeBrideStatus');removeGuj('maritalstatusGujbride')">
+							<ng-option *ngFor="let religion of religionArray" [value]="religion.code">{{religion.name}}
+							</ng-option>
 						</ng-select>
-						<control-messages [control]="marriageFormGroup.get('brideReligion').get('code')"></control-messages>
+						<control-messages [control]="marriageFormGroup.get('brideReligion').get('code')">
+						</control-messages>
 					</div>
 					<div class="col-md-4" formGroupName="marriageTimeBrideStatus">
 						<div class="radioBtnError">
 							<mat-label>{{'marital_status' | translate:translateKey }}*</mat-label>
-							<mat-radio-group formControlName="code" required (change)="onChange($event.value,maritalstatusArray,'maritalstatusGujbride')">
+							<mat-radio-group formControlName="code" required
+								(change)="onChange($event.value,maritalstatusArray,'maritalstatusGujbride')">
 								<span *ngFor="let status of maritalstatusArray">
 									<mat-radio-button *ngIf="status.name != 'Married'" [value]="status.code">
 										{{status.name}}
 									</mat-radio-button>
 								</span>
 							</mat-radio-group>
-							<control-messages [control]="marriageFormGroup.get('marriageTimeBrideStatus').get('code')"></control-messages>
+							<control-messages [control]="marriageFormGroup.get('marriageTimeBrideStatus').get('code')">
+							</control-messages>
 						</div>
 					</div>
 
 					<mat-form-field class="col-md-4">
-						<input matInput OnlyNumber maxlength="12" minlength="12" type="tel" formControlName="brideAadharNumber"
-						 placeholder="{{'aadhar_number' | translate:translateKey }}">
+						<input matInput OnlyNumber maxlength="12" minlength="12" type="tel"
+							formControlName="brideAadharNumber"
+							placeholder="{{'aadhar_number' | translate:translateKey }}">
 						<control-messages [control]="marriageFormGroup.get('brideAadharNumber')"></control-messages>
 					</mat-form-field>
 				</div>
@@ -409,10 +459,12 @@
 				<!-- gujrati -->
 				<div class="row">
 					<mat-form-field class="col-md-4">
-						<input matInput readonly placeholder="{{'religion' | translate:translateKey:'gu'}}" [value]="religionGujbride">
+						<input matInput readonly placeholder="{{'religion' | translate:translateKey:'gu'}}"
+							[value]="religionGujbride">
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput readonly placeholder="{{'marital_status' | translate:translateKey:'gu'}}" [value]="maritalstatusGujbride">
+						<input matInput readonly placeholder="{{'marital_status' | translate:translateKey:'gu'}}"
+							[value]="maritalstatusGujbride">
 					</mat-form-field>
 				</div>
 				<!-- /gujarati -->
@@ -421,8 +473,9 @@
 				<div class="row" *ngIf="marriageFormGroup.get('isNriMarriage').value == true">
 					<div class="col-md-4">
 						<mat-label>{{'is_visa' | translate:translateKey }}</mat-label>
-						<mat-radio-group formControlName="isBrideVisa" (change)="changeReflection('bride');changeReset('nriBrideAddress');changeReset('nriBrideParentsAddress');resetAddress('brideAddress','BRIDE_ADDRESS')"
-						 required>
+						<mat-radio-group formControlName="isBrideVisa"
+							(change)="changeReflection('bride');changeReset('nriBrideAddress');changeReset('nriBrideParentsAddress');resetAddress('brideAddress','BRIDE_ADDRESS')"
+							required>
 							<mat-radio-button [value]="true">
 								Yes
 							</mat-radio-button>
@@ -435,94 +488,107 @@
 
 					<div *ngIf="marriageFormGroup.get('isBrideVisa').value == true">
 						<mat-form-field class="col-md-4">
-							<input matInput required OnlyNumber maxlength="9" minlength="9" type="tel" formControlName="bridePassportNumber"
-							 placeholder="{{'passport_number' | translate:translateKey }}">
-							<control-messages [control]="marriageFormGroup.get('bridePassportNumber')"></control-messages>
+							<input matInput required OnlyNumber maxlength="9" minlength="9" type="tel"
+								formControlName="bridePassportNumber"
+								placeholder="{{'passport_number' | translate:translateKey }}">
+							<control-messages [control]="marriageFormGroup.get('bridePassportNumber')">
+							</control-messages>
 						</mat-form-field>
 
 						<mat-form-field class="col-md-4">
-							<input matInput type="text" formControlName="brideCountry" appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'"
-							 placeholder="{{ 'foreign_country' | translate:translateKey }}" required>
+							<input matInput type="text" formControlName="brideCountry" appValidationFields
+								[validationFieldsType]="'onlyNameWithOutSpace'"
+								placeholder="{{ 'foreign_country' | translate:translateKey }}" required>
 							<control-messages [control]="marriageFormGroup.get('brideCountry')"></control-messages>
 						</mat-form-field>
 
 						<mat-form-field class="col-md-4">
-							<input matInput required OnlyNumber maxlength="9" minlength="9" type="tel" formControlName="brideVisaNumber"
-							 placeholder="{{'visa_number' | translate:translateKey }}">
+							<input matInput required OnlyNumber maxlength="9" minlength="9" type="tel"
+								formControlName="brideVisaNumber"
+								placeholder="{{'visa_number' | translate:translateKey }}">
 							<control-messages [control]="marriageFormGroup.get('brideVisaNumber')"></control-messages>
 						</mat-form-field>
 
 						<mat-form-field class="col-md-6">
-							<input matInput [max]="disablefutureDate" [matDatepicker]="visa1" required formControlName="brideVisaFrom"
-							 (dateChange)="dateFormate($event.value,'brideVisaFrom')" placeholder="{{ 'visa_date_from' | translate:translateKey }} (DD/MM/YYYY)">
+							<input matInput [max]="disablefutureDate" [matDatepicker]="visa1" required
+								formControlName="brideVisaFrom" (dateChange)="dateFormate($event.value,'brideVisaFrom')"
+								placeholder="{{ 'visa_date_from' | translate:translateKey }} (DD/MM/YYYY)">
 							<mat-datepicker-toggle matSuffix [for]="visa1"></mat-datepicker-toggle>
 							<mat-datepicker #visa1 touchUi="true" touchUi="true"></mat-datepicker>
 							<control-messages [control]="marriageFormGroup.get('brideVisaFrom')"></control-messages>
 						</mat-form-field>
 
 						<mat-form-field class="col-md-6">
-							<input matInput [min]="disablefutureDate" [matDatepicker]="visa2" required formControlName="brideVisaTo"
-							 (dateChange)="dateFormate($event.value,'brideVisaTo')" placeholder="{{ 'visa_date_to' | translate:translateKey }} (DD/MM/YYYY)">
+							<input matInput [min]="disablefutureDate" [matDatepicker]="visa2" required
+								formControlName="brideVisaTo" (dateChange)="dateFormate($event.value,'brideVisaTo')"
+								placeholder="{{ 'visa_date_to' | translate:translateKey }} (DD/MM/YYYY)">
 							<mat-datepicker-toggle matSuffix [for]="visa2"></mat-datepicker-toggle>
 							<mat-datepicker #visa2 touchUi="true" touchUi="true"></mat-datepicker>
 							<control-messages [control]="marriageFormGroup.get('brideVisaTo')"></control-messages>
 						</mat-form-field>
 
 						<mat-form-field class="col-md-4">
-							<input matInput required OnlyNumber maxlength="9" minlength="9" type="tel" formControlName="brideSocialSecurityNumber"
-							 placeholder="{{'social_security_number' | translate:translateKey }}">
-							<control-messages [control]="marriageFormGroup.get('brideSocialSecurityNumber')"></control-messages>
+							<input matInput required OnlyNumber maxlength="9" minlength="9" type="tel"
+								formControlName="brideSocialSecurityNumber"
+								placeholder="{{'social_security_number' | translate:translateKey }}">
+							<control-messages [control]="marriageFormGroup.get('brideSocialSecurityNumber')">
+							</control-messages>
 						</mat-form-field>
 
 						<mat-form-field class="col-md-4">
-							<input matInput type="text" maxlength="50" formControlName="brideEligibility" appValidationFields
-							 [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{ 'eligibility' | translate:translateKey }}"
-							 required>
+							<input matInput type="text" maxlength="50" formControlName="brideEligibility"
+								appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'"
+								placeholder="{{ 'eligibility' | translate:translateKey }}" required>
 							<control-messages [control]="marriageFormGroup.get('brideEligibility')"></control-messages>
 						</mat-form-field>
 
 						<mat-form-field class="col-md-4">
-							<input matInput type="text" maxlength="50" formControlName="brideDesignation" appValidationFields
-							 [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{ 'designation' | translate:translateKey }}"
-							 required>
+							<input matInput type="text" maxlength="50" formControlName="brideDesignation"
+								appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'"
+								placeholder="{{ 'designation' | translate:translateKey }}" required>
 							<control-messages [control]="marriageFormGroup.get('brideDesignation')"></control-messages>
 						</mat-form-field>
 
 						<mat-form-field class="col-md-4">
-							<input matInput OnlyNumber placeholder="{{'mobile_no' | translate:translateKey}}" type="tel" maxlength="10"
-							 minlength="10" formControlName="bridePhoneNumber" required>
+							<input matInput OnlyNumber placeholder="{{'mobile_no' | translate:translateKey}}" type="tel"
+								maxlength="10" minlength="10" formControlName="bridePhoneNumber" required>
 							<control-messages [control]="marriageFormGroup.get('bridePhoneNumber')"></control-messages>
 						</mat-form-field>
 
 						<mat-form-field class="col-md-4">
-							<input matInput appPreventSpace maxlength="50" placeholder="{{'email' | translate:translateKey}}" type="email"
-							 formControlName="brideEmail" required>
+							<input matInput appPreventSpace maxlength="50"
+								placeholder="{{'email' | translate:translateKey}}" type="email"
+								formControlName="brideEmail" required>
 							<control-messages [control]="marriageFormGroup.get('brideEmail')"></control-messages>
 						</mat-form-field>
 
 						<mat-form-field class="col-md-4">
-							<textarea matInput rows="3" cols="50" maxlength="500" formControlName="nriBrideAddress" placeholder="{{ 'foreign_address' | translate:translateKey }}"
-							 required> </textarea>
+							<textarea matInput rows="3" cols="50" maxlength="500" formControlName="nriBrideAddress"
+								placeholder="{{ 'foreign_address' | translate:translateKey }}" required> </textarea>
 							<control-messages [control]="marriageFormGroup.get('nriBrideAddress')"></control-messages>
 						</mat-form-field>
 
 						<mat-form-field class="col-md-4">
-							<input matInput type="text" maxlength="100" formControlName="brideCompanyName" appValidationFields
-							 [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{ 'company_name' | translate:translateKey }}"
-							 required>
+							<input matInput type="text" maxlength="100" formControlName="brideCompanyName"
+								appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'"
+								placeholder="{{ 'company_name' | translate:translateKey }}" required>
 							<control-messages [control]="marriageFormGroup.get('brideCompanyName')"></control-messages>
 						</mat-form-field>
 
 						<mat-form-field class="col-md-4">
-							<input matInput required OnlyNumber maxlength="10" minlength="10" type="tel" formControlName="brideCompanyPhoneNumber"
-							 placeholder="{{'company_contact_number' | translate:translateKey }}">
-							<control-messages [control]="marriageFormGroup.get('brideCompanyPhoneNumber')"></control-messages>
+							<input matInput required OnlyNumber maxlength="10" minlength="10" type="tel"
+								formControlName="brideCompanyPhoneNumber"
+								placeholder="{{'company_contact_number' | translate:translateKey }}">
+							<control-messages [control]="marriageFormGroup.get('brideCompanyPhoneNumber')">
+							</control-messages>
 						</mat-form-field>
 
 						<mat-form-field class="col-md-4">
-							<textarea matInput required rows="3" cols="50" maxlength="500" formControlName="brideCompanyAddress" placeholder="{{ 'company_address' | translate:translateKey }}"
-							 required> </textarea>
-							<control-messages [control]="marriageFormGroup.get('brideCompanyAddress')"></control-messages>
+							<textarea matInput required rows="3" cols="50" maxlength="500"
+								formControlName="brideCompanyAddress"
+								placeholder="{{ 'company_address' | translate:translateKey }}" required> </textarea>
+							<control-messages [control]="marriageFormGroup.get('brideCompanyAddress')">
+							</control-messages>
 						</mat-form-field>
 
 					</div>
@@ -531,11 +597,12 @@
 
 				<div class="row" [hidden]="marriageFormGroup.get('isBrideVisa').value == true">
 					<h2>{{'address' | translate:translateKey }}:</h2>
-					<app-address #address [requiredFeilds]="!marriageFormGroup.get('isBrideVisa').value" [addressFormGroup]="marriageFormGroup.get('brideAddress')"></app-address>
+					<app-address #address [requiredFeilds]="!marriageFormGroup.get('isBrideVisa').value"
+						[addressFormGroup]="marriageFormGroup.get('brideAddress')"></app-address>
 				</div>
 
-				<app-action-bar [uploadFiles]="uploadFileArray" [form]="marriageFormGroup" (tabIndex)="onTabChange($event)"
-				 [stepInfo]="{step: 'step2', next: 2, back: 0}"></app-action-bar>
+				<app-action-bar [uploadFiles]="uploadFileArray" [form]="marriageFormGroup"
+					(tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step2', next: 2, back: 0}"></app-action-bar>
 
 			</mat-tab>
 			<!-- End Second step -->
@@ -547,23 +614,27 @@
 				</ng-template>
 				<div class="row">
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" maxlength="50" formControlName="groomParentsFirstName" placeholder="{{'first_name' | translate:translateKey }}"
-						 required appGujInputSource targetElement="groomParentsFirstNameGuj" [form]="marriageFormGroup"
-						 appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'">
+						<input matInput type="text" maxlength="50" formControlName="groomParentsFirstName"
+							placeholder="{{'first_name' | translate:translateKey }}" required appGujInputSource
+							targetElement="groomParentsFirstNameGuj" [form]="marriageFormGroup" appValidationFields
+							[validationFieldsType]="'onlyNameWithOutSpace'">
 						<control-messages [control]="marriageFormGroup.get('groomParentsFirstName')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" maxlength="50" formControlName="groomParentsMiddleName" placeholder="{{'middlename_name' | translate:translateKey }}"
-						 appGujInputSource targetElement="groomParentsMiddleNameGuj" [form]="marriageFormGroup" appValidationFields
-						 [validationFieldsType]="'onlyNameWithOutSpace'">
-						<control-messages [control]="marriageFormGroup.get('groomParentsMiddleName')"></control-messages>
+						<input matInput type="text" maxlength="50" formControlName="groomParentsMiddleName"
+							placeholder="{{'middlename_name' | translate:translateKey }}" appGujInputSource
+							targetElement="groomParentsMiddleNameGuj" [form]="marriageFormGroup" appValidationFields
+							[validationFieldsType]="'onlyNameWithOutSpace'">
+						<control-messages [control]="marriageFormGroup.get('groomParentsMiddleName')">
+						</control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" maxlength="50" formControlName="groomParentsLastName" placeholder="{{'last_name' | translate:translateKey }}"
-						 required appGujInputSource targetElement="groomParentsLastNameGuj" [form]="marriageFormGroup"
-						 appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'">
+						<input matInput type="text" maxlength="50" formControlName="groomParentsLastName"
+							placeholder="{{'last_name' | translate:translateKey }}" required appGujInputSource
+							targetElement="groomParentsLastNameGuj" [form]="marriageFormGroup" appValidationFields
+							[validationFieldsType]="'onlyNameWithOutSpace'">
 						<control-messages [control]="marriageFormGroup.get('groomParentsLastName')"></control-messages>
 					</mat-form-field>
 				</div>
@@ -571,27 +642,31 @@
 				<!-- gujarati -->
 				<div class="row">
 					<mat-form-field class="col-md-4">
-						<input matInput appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" type="text" maxlength="150"
-						 formControlName="groomParentsFirstNameGuj" appGujInputTarget [form]="marriageFormGroup" placeholder="{{ 'first_name' | translate:translateKey:'gu' }}">
+						<input matInput type="text" maxlength="150" formControlName="groomParentsFirstNameGuj"
+							appGujInputTarget [form]="marriageFormGroup"
+							placeholder="{{ 'first_name' | translate:translateKey:'gu' }}">
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" type="text" maxlength="150"
-						 formControlName="groomParentsMiddleNameGuj" appGujInputTarget [form]="marriageFormGroup" placeholder="{{ 'middlename_name' | translate:translateKey:'gu' }}">
+						<input matInput type="text" maxlength="150" formControlName="groomParentsMiddleNameGuj"
+							appGujInputTarget [form]="marriageFormGroup"
+							placeholder="{{ 'middlename_name' | translate:translateKey:'gu' }}">
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" type="text" maxlength="150"
-						 formControlName="groomParentsLastNameGuj" appGujInputTarget [form]="marriageFormGroup" placeholder="{{ 'last_name' | translate:translateKey:'gu' }}">
+						<input matInput type="text" maxlength="150" formControlName="groomParentsLastNameGuj"
+							appGujInputTarget [form]="marriageFormGroup"
+							placeholder="{{ 'last_name' | translate:translateKey:'gu' }}">
 					</mat-form-field>
 				</div>
 				<!-- /gujarati -->
 
 				<div class="row">
 					<mat-form-field class="col-md-4">
-						<input matInput [max]="adultPerson" [matDatepicker]="picker4" formControlName="groomParentsBirthDate"
-						 (dateChange)="dateFormate($event.value,'groomParentsBirthDate')" placeholder="{{'date_of_birth' | translate:translateKey }} (DD/MM/YYYY)"
-						 required>
+						<input matInput [max]="adultPerson" [matDatepicker]="picker4"
+							formControlName="groomParentsBirthDate"
+							(dateChange)="dateFormate($event.value,'groomParentsBirthDate')"
+							placeholder="{{'date_of_birth' | translate:translateKey }} (DD/MM/YYYY)" required>
 						<mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
 						<mat-datepicker #picker4 touchUi="true"></mat-datepicker>
 						<control-messages [control]="marriageFormGroup.get('groomParentsBirthDate')"></control-messages>
@@ -602,40 +677,45 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput OnlyNumber formControlName="groomParentsAadharNumber" maxlength="12" minlength="12" type="tel"
-						 placeholder="{{'aadhar_number' | translate:translateKey }}">
-						<control-messages [control]="marriageFormGroup.get('groomParentsAadharNumber')"></control-messages>
+						<input matInput OnlyNumber formControlName="groomParentsAadharNumber" maxlength="12"
+							minlength="12" type="tel" placeholder="{{'aadhar_number' | translate:translateKey }}">
+						<control-messages [control]="marriageFormGroup.get('groomParentsAadharNumber')">
+						</control-messages>
 					</mat-form-field>
 				</div>
 
 				<!-- For NIR Marrige -->
 				<div class="row" *ngIf="marriageFormGroup.get('isNriMarriage').value == true">
 					<mat-form-field class="col-md-4">
-						<textarea matInput rows="3" cols="50" maxlength="500" formControlName="nriGroomParentsAddress" placeholder="{{ 'foreign_address' | translate:translateKey }}"
-						 required> </textarea>
-						<control-messages [control]="marriageFormGroup.get('nriGroomParentsAddress')"></control-messages>
+						<textarea matInput rows="3" cols="50" maxlength="500" formControlName="nriGroomParentsAddress"
+							placeholder="{{ 'foreign_address' | translate:translateKey }}" required> </textarea>
+						<control-messages [control]="marriageFormGroup.get('nriGroomParentsAddress')">
+						</control-messages>
 					</mat-form-field>
 				</div>
 				<!-- / NIR Marrige -->
 
 				<div class="row" [hidden]="marriageFormGroup.get('isNriMarriage').value == true">
 					<h2>{{'address' | translate:translateKey }}:</h2>
-					<app-address #address [requiredFeilds]="!marriageFormGroup.get('isNriMarriage').value" [addressFormGroup]="marriageFormGroup.get('groomParentsAddress')"></app-address>
+					<app-address #address [requiredFeilds]="!marriageFormGroup.get('isNriMarriage').value"
+						[addressFormGroup]="marriageFormGroup.get('groomParentsAddress')"></app-address>
 
 
 					<div formGroupName='isGroomParResAddressSame'>
-						<mat-checkbox type="checkbox" class="col-md-4" [checked]="addObject.checkedPar1" (change)="checkBox($event,'isGroomParResAddressSame','groomParentsAddressResidence','groomParentsAddress','1')">{{'is_permanent_address_same_as_present_address'
+						<mat-checkbox type="checkbox" class="col-md-4" [checked]="addObject.checkedPar1"
+							(change)="checkBox($event,'isGroomParResAddressSame','groomParentsAddressResidence','groomParentsAddress','1')">{{'is_permanent_address_same_as_present_address'
 							| translate:translateKey}}</mat-checkbox>
 					</div>
 				</div>
 
 				<h2>{{'residence_address' | translate:translateKey }}:</h2>
-				<app-address #address [requiredFeilds]="!marriageFormGroup.get('isNriMarriage').value" [addressFormGroup]="marriageFormGroup.get('groomParentsAddressResidence')"></app-address>
+				<app-address #address [requiredFeilds]="!marriageFormGroup.get('isNriMarriage').value"
+					[addressFormGroup]="marriageFormGroup.get('groomParentsAddressResidence')"></app-address>
 
 
 
-				<app-action-bar [uploadFiles]="uploadFileArray" [form]="marriageFormGroup" (tabIndex)="onTabChange($event)"
-				 [stepInfo]="{step: 'step3', next: 3, back: 1}"></app-action-bar>
+				<app-action-bar [uploadFiles]="uploadFileArray" [form]="marriageFormGroup"
+					(tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step3', next: 3, back: 1}"></app-action-bar>
 
 
 			</mat-tab>
@@ -648,23 +728,27 @@
 				</ng-template>
 				<div class="row">
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" maxlength="50" formControlName="brideParentsFirstName" placeholder="{{'first_name' | translate:translateKey }}"
-						 required appGujInputSource targetElement="brideParentsFirstNameGuj" [form]="marriageFormGroup"
-						 appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'">
+						<input matInput type="text" maxlength="50" formControlName="brideParentsFirstName"
+							placeholder="{{'first_name' | translate:translateKey }}" required appGujInputSource
+							targetElement="brideParentsFirstNameGuj" [form]="marriageFormGroup" appValidationFields
+							[validationFieldsType]="'onlyNameWithOutSpace'">
 						<control-messages [control]="marriageFormGroup.get('brideParentsFirstName')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" maxlength="50" formControlName="brideParentsMiddleName" placeholder="{{'middlename_name' | translate:translateKey }}"
-						 appGujInputSource targetElement="brideParentsMiddleNameGuj" [form]="marriageFormGroup" appValidationFields
-						 [validationFieldsType]="'onlyNameWithOutSpace'">
-						<control-messages [control]="marriageFormGroup.get('brideParentsMiddleName')"></control-messages>
+						<input matInput type="text" maxlength="50" formControlName="brideParentsMiddleName"
+							placeholder="{{'middlename_name' | translate:translateKey }}" appGujInputSource
+							targetElement="brideParentsMiddleNameGuj" [form]="marriageFormGroup" appValidationFields
+							[validationFieldsType]="'onlyNameWithOutSpace'">
+						<control-messages [control]="marriageFormGroup.get('brideParentsMiddleName')">
+						</control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" maxlength="50" formControlName="brideParentsLastName" placeholder="{{'last_name' | translate:translateKey }}"
-						 required appGujInputSource targetElement="brideParentsLastNameGuj" [form]="marriageFormGroup"
-						 appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'">
+						<input matInput type="text" maxlength="50" formControlName="brideParentsLastName"
+							placeholder="{{'last_name' | translate:translateKey }}" required appGujInputSource
+							targetElement="brideParentsLastNameGuj" [form]="marriageFormGroup" appValidationFields
+							[validationFieldsType]="'onlyNameWithOutSpace'">
 						<control-messages [control]="marriageFormGroup.get('brideParentsLastName')"></control-messages>
 					</mat-form-field>
 				</div>
@@ -672,27 +756,31 @@
 				<!-- gujarati -->
 				<div class="row">
 					<mat-form-field class="col-md-4">
-						<input matInput appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" type="text" maxlength="150"
-						 formControlName="brideParentsFirstNameGuj" appGujInputTarget [form]="marriageFormGroup" placeholder="{{ 'first_name' | translate:translateKey:'gu' }}">
+						<input matInput type="text" maxlength="150" formControlName="brideParentsFirstNameGuj"
+							appGujInputTarget [form]="marriageFormGroup"
+							placeholder="{{ 'first_name' | translate:translateKey:'gu' }}">
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" type="text" maxlength="150"
-						 formControlName="brideParentsMiddleNameGuj" appGujInputTarget [form]="marriageFormGroup" placeholder="{{ 'middlename_name' | translate:translateKey:'gu' }}">
+						<input matInput type="text" maxlength="150" formControlName="brideParentsMiddleNameGuj"
+							appGujInputTarget [form]="marriageFormGroup"
+							placeholder="{{ 'middlename_name' | translate:translateKey:'gu' }}">
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" type="text" maxlength="150"
-						 formControlName="brideParentsLastNameGuj" appGujInputTarget [form]="marriageFormGroup" placeholder="{{ 'last_name' | translate:translateKey:'gu' }}">
+						<input matInput type="text" maxlength="150" formControlName="brideParentsLastNameGuj"
+							appGujInputTarget [form]="marriageFormGroup"
+							placeholder="{{ 'last_name' | translate:translateKey:'gu' }}">
 					</mat-form-field>
 				</div>
 				<!-- /gujarati -->
 
 				<div class="row">
 					<mat-form-field class="col-md-4">
-						<input matInput [max]="adultPerson" [matDatepicker]="picker5" formControlName="brideParentsBirthDate"
-						 (dateChange)="dateFormate($event.value,'brideParentsBirthDate')" placeholder="{{'date_of_birth' | translate:translateKey }} (DD/MM/YYYY)"
-						 required>
+						<input matInput [max]="adultPerson" [matDatepicker]="picker5"
+							formControlName="brideParentsBirthDate"
+							(dateChange)="dateFormate($event.value,'brideParentsBirthDate')"
+							placeholder="{{'date_of_birth' | translate:translateKey }} (DD/MM/YYYY)" required>
 						<mat-datepicker-toggle matSuffix [for]="picker5"></mat-datepicker-toggle>
 						<mat-datepicker #picker5 touchUi="true"></mat-datepicker>
 						<control-messages [control]="marriageFormGroup.get('brideParentsBirthDate')"></control-messages>
@@ -703,40 +791,45 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput OnlyNumber formControlName="brideParentsAadharNumber" maxlength="12" minlength="12" type="tel"
-						 placeholder="{{'aadhar_number' | translate:translateKey }}">
-						<control-messages [control]="marriageFormGroup.get('brideParentsAadharNumber')"></control-messages>
+						<input matInput OnlyNumber formControlName="brideParentsAadharNumber" maxlength="12"
+							minlength="12" type="tel" placeholder="{{'aadhar_number' | translate:translateKey }}">
+						<control-messages [control]="marriageFormGroup.get('brideParentsAadharNumber')">
+						</control-messages>
 					</mat-form-field>
 				</div>
 
 				<!-- For NIR Marrige -->
 				<div class="row" *ngIf="marriageFormGroup.get('isNriMarriage').value == true">
 					<mat-form-field class="col-md-4">
-						<textarea matInput rows="3" cols="50" maxlength="500" formControlName="nriBrideParentsAddress" placeholder="{{ 'foreign_address' | translate:translateKey }}"
-						 required> </textarea>
-						<control-messages [control]="marriageFormGroup.get('nriBrideParentsAddress')"></control-messages>
+						<textarea matInput rows="3" cols="50" maxlength="500" formControlName="nriBrideParentsAddress"
+							placeholder="{{ 'foreign_address' | translate:translateKey }}" required> </textarea>
+						<control-messages [control]="marriageFormGroup.get('nriBrideParentsAddress')">
+						</control-messages>
 					</mat-form-field>
 				</div>
 				<!-- / NIR Marrige -->
 
 				<div class="row" [hidden]="marriageFormGroup.get('isNriMarriage').value == true">
 					<h2>{{'address' | translate:translateKey }}:</h2>
-					<app-address #address [requiredFeilds]="!marriageFormGroup.get('isNriMarriage').value" [addressFormGroup]="marriageFormGroup.get('brideParentsAddress')"></app-address>
+					<app-address #address [requiredFeilds]="!marriageFormGroup.get('isNriMarriage').value"
+						[addressFormGroup]="marriageFormGroup.get('brideParentsAddress')"></app-address>
 
 
 					<div formGroupName='isBrideParResAddressSame'>
-						<mat-checkbox type="checkbox" class="col-md-4" [checked]="addObject.checkedPar2" (change)="checkBox($event,'isBrideParResAddressSame','brideParentsAddressResidence','brideParentsAddress','2')">{{'is_permanent_address_same_as_present_address'
+						<mat-checkbox type="checkbox" class="col-md-4" [checked]="addObject.checkedPar2"
+							(change)="checkBox($event,'isBrideParResAddressSame','brideParentsAddressResidence','brideParentsAddress','2')">{{'is_permanent_address_same_as_present_address'
 							| translate:translateKey}}</mat-checkbox>
 					</div>
 				</div>
 
 				<h2>{{'residence_address' | translate:translateKey }}:</h2>
-				<app-address #address [requiredFeilds]="!marriageFormGroup.get('isNriMarriage').value" [addressFormGroup]="marriageFormGroup.get('brideParentsAddressResidence')"></app-address>
+				<app-address #address [requiredFeilds]="!marriageFormGroup.get('isNriMarriage').value"
+					[addressFormGroup]="marriageFormGroup.get('brideParentsAddressResidence')"></app-address>
 
 
 
-				<app-action-bar [uploadFiles]="uploadFileArray" [form]="marriageFormGroup" (tabIndex)="onTabChange($event)"
-				 [stepInfo]="{step: 'step4', next: 4, back: 2}"></app-action-bar>
+				<app-action-bar [uploadFiles]="uploadFileArray" [form]="marriageFormGroup"
+					(tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step4', next: 4, back: 2}"></app-action-bar>
 
 
 			</mat-tab>
@@ -749,23 +842,26 @@
 				</ng-template>
 				<div class="row">
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" maxlength="50" formControlName="priestFirstName" placeholder="{{'first_name' | translate:translateKey }}"
-						 required appGujInputSource targetElement="priestFirstNameGuj" [form]="marriageFormGroup" appValidationFields
-						 [validationFieldsType]="'onlyNameWithOutSpace'">
+						<input matInput type="text" maxlength="50" formControlName="priestFirstName"
+							placeholder="{{'first_name' | translate:translateKey }}" required appGujInputSource
+							targetElement="priestFirstNameGuj" [form]="marriageFormGroup" appValidationFields
+							[validationFieldsType]="'onlyNameWithOutSpace'">
 						<control-messages [control]="marriageFormGroup.get('priestFirstName')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" maxlength="50" formControlName="priestMiddleName" placeholder="{{'middlename_name' | translate:translateKey }}"
-						 appGujInputSource targetElement="priestMiddleNameGuj" [form]="marriageFormGroup" appValidationFields
-						 [validationFieldsType]="'onlyNameWithOutSpace'">
+						<input matInput type="text" maxlength="50" formControlName="priestMiddleName"
+							placeholder="{{'middlename_name' | translate:translateKey }}" appGujInputSource
+							targetElement="priestMiddleNameGuj" [form]="marriageFormGroup" appValidationFields
+							[validationFieldsType]="'onlyNameWithOutSpace'">
 						<control-messages [control]="marriageFormGroup.get('priestMiddleName')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" maxlength="50" formControlName="priestLastName" placeholder="{{'last_name' | translate:translateKey }}"
-						 required appGujInputSource targetElement="priestLastNameGuj" [form]="marriageFormGroup" appValidationFields
-						 [validationFieldsType]="'onlyNameWithOutSpace'">
+						<input matInput type="text" maxlength="50" formControlName="priestLastName"
+							placeholder="{{'last_name' | translate:translateKey }}" required appGujInputSource
+							targetElement="priestLastNameGuj" [form]="marriageFormGroup" appValidationFields
+							[validationFieldsType]="'onlyNameWithOutSpace'">
 						<control-messages [control]="marriageFormGroup.get('priestLastName')"></control-messages>
 					</mat-form-field>
 				</div>
@@ -773,26 +869,30 @@
 				<!-- gujarati -->
 				<div class="row">
 					<mat-form-field class="col-md-4">
-						<input matInput appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" type="text" maxlength="150"
-						 formControlName="priestFirstNameGuj" appGujInputTarget [form]="marriageFormGroup" placeholder="{{ 'first_name' | translate:translateKey:'gu' }}">
+						<input matInput type="text" maxlength="150" formControlName="priestFirstNameGuj"
+							appGujInputTarget [form]="marriageFormGroup"
+							placeholder="{{ 'first_name' | translate:translateKey:'gu' }}">
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" type="text" maxlength="150"
-						 formControlName="priestMiddleNameGuj" appGujInputTarget [form]="marriageFormGroup" placeholder="{{ 'middlename_name' | translate:translateKey:'gu' }}">
+						<input matInput type="text" maxlength="150" formControlName="priestMiddleNameGuj"
+							appGujInputTarget [form]="marriageFormGroup"
+							placeholder="{{ 'middlename_name' | translate:translateKey:'gu' }}">
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" type="text" maxlength="150"
-						 formControlName="priestLastNameGuj" appGujInputTarget [form]="marriageFormGroup" placeholder="{{ 'last_name' | translate:translateKey:'gu' }}">
+						<input matInput type="text" maxlength="150" formControlName="priestLastNameGuj"
+							appGujInputTarget [form]="marriageFormGroup"
+							placeholder="{{ 'last_name' | translate:translateKey:'gu' }}">
 					</mat-form-field>
 				</div>
 				<!-- /gujarati -->
 
 				<div class="row">
 					<mat-form-field class="col-md-4">
-						<input matInput [max]="adultPerson" [matDatepicker]="picker6" formControlName="priestBirthDate" (dateChange)="dateFormate($event.value,'priestBirthDate')"
-						 placeholder="{{'date_of_birth' | translate:translateKey }} (DD/MM/YYYY)" required>
+						<input matInput [max]="adultPerson" [matDatepicker]="picker6" formControlName="priestBirthDate"
+							(dateChange)="dateFormate($event.value,'priestBirthDate')"
+							placeholder="{{'date_of_birth' | translate:translateKey }} (DD/MM/YYYY)" required>
 						<mat-datepicker-toggle matSuffix [for]="picker6"></mat-datepicker-toggle>
 						<mat-datepicker #picker6 touchUi="true"></mat-datepicker>
 						<control-messages [control]="marriageFormGroup.get('priestBirthDate')"></control-messages>
@@ -803,9 +903,11 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput OnlyNumber maxlength="12" minlength="12" type="tel" placeholder="{{'aadhar_number' | translate:translateKey }}"
-						 formControlName="priestAddressAadharNumber">
-						<control-messages [control]="marriageFormGroup.get('priestAddressAadharNumber')"></control-messages>
+						<input matInput OnlyNumber maxlength="12" minlength="12" type="tel"
+							placeholder="{{'aadhar_number' | translate:translateKey }}"
+							formControlName="priestAddressAadharNumber">
+						<control-messages [control]="marriageFormGroup.get('priestAddressAadharNumber')">
+						</control-messages>
 					</mat-form-field>
 
 					<h2>{{'address' | translate:translateKey }}:</h2>
@@ -813,16 +915,18 @@
 
 
 					<div class="col-md-4" formGroupName='isPriestParResAddressSame'>
-						<mat-checkbox type="checkbox" [checked]="addObject.checkedPar3" (change)="checkBox($event,'isPriestParResAddressSame','priestAddressResidence','priestAddress','3')">{{'is_permanent_address_same_as_present_address'
+						<mat-checkbox type="checkbox" [checked]="addObject.checkedPar3"
+							(change)="checkBox($event,'isPriestParResAddressSame','priestAddressResidence','priestAddress','3')">{{'is_permanent_address_same_as_present_address'
 							| translate:translateKey}}</mat-checkbox>
 					</div>
 				</div>
 
 				<h2> {{'residence_address' | translate:translateKey }}:</h2>
-				<app-address #address [addressFormGroup]="marriageFormGroup.get('priestAddressResidence')"></app-address>
+				<app-address #address [addressFormGroup]="marriageFormGroup.get('priestAddressResidence')">
+				</app-address>
 
-				<app-action-bar [uploadFiles]="uploadFileArray" [form]="marriageFormGroup" (tabIndex)="onTabChange($event)"
-				 [stepInfo]="{step: 'step5', next: 5, back:3 }"></app-action-bar>
+				<app-action-bar [uploadFiles]="uploadFileArray" [form]="marriageFormGroup"
+					(tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step5', next: 5, back:3 }"></app-action-bar>
 
 
 			</mat-tab>
@@ -835,23 +939,27 @@
 				</ng-template>
 				<div class="row">
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" maxlength="50" formControlName="firstWitnessFirstName" placeholder="{{'first_name' | translate:translateKey }}"
-						 required appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" appGujInputSource targetElement="firstWitnessFirstNameGuj"
-						 [form]="marriageFormGroup">
+						<input matInput type="text" maxlength="50" formControlName="firstWitnessFirstName"
+							placeholder="{{'first_name' | translate:translateKey }}" required appValidationFields
+							[validationFieldsType]="'onlyNameWithOutSpace'" appGujInputSource
+							targetElement="firstWitnessFirstNameGuj" [form]="marriageFormGroup">
 						<control-messages [control]="marriageFormGroup.get('firstWitnessFirstName')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" maxlength="50" formControlName="firstWitnessMiddleName" placeholder="{{'middlename_name' | translate:translateKey }}"
-						 appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" appGujInputSource targetElement="firstWitnessMiddleNameGuj"
-						 [form]="marriageFormGroup">
-						<control-messages [control]="marriageFormGroup.get('firstWitnessMiddleName')"></control-messages>
+						<input matInput type="text" maxlength="50" formControlName="firstWitnessMiddleName"
+							placeholder="{{'middlename_name' | translate:translateKey }}" appValidationFields
+							[validationFieldsType]="'onlyNameWithOutSpace'" appGujInputSource
+							targetElement="firstWitnessMiddleNameGuj" [form]="marriageFormGroup">
+						<control-messages [control]="marriageFormGroup.get('firstWitnessMiddleName')">
+						</control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" maxlength="50" formControlName="firstWitnessLastName" placeholder="{{'last_name' | translate:translateKey }}"
-						 required appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" appGujInputSource targetElement="firstWitnessLastNameGuj"
-						 [form]="marriageFormGroup">
+						<input matInput type="text" maxlength="50" formControlName="firstWitnessLastName"
+							placeholder="{{'last_name' | translate:translateKey }}" required appValidationFields
+							[validationFieldsType]="'onlyNameWithOutSpace'" appGujInputSource
+							targetElement="firstWitnessLastNameGuj" [form]="marriageFormGroup">
 						<control-messages [control]="marriageFormGroup.get('firstWitnessLastName')"></control-messages>
 					</mat-form-field>
 				</div>
@@ -859,27 +967,31 @@
 				<!-- gujarati -->
 				<div class="row">
 					<mat-form-field class="col-md-4">
-						<input matInput appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" type="text" maxlength="150"
-						 formControlName="firstWitnessFirstNameGuj" appGujInputTarget [form]="marriageFormGroup" placeholder="{{ 'first_name' | translate:translateKey:'gu' }}">
+						<input matInput type="text" maxlength="150" formControlName="firstWitnessFirstNameGuj"
+							appGujInputTarget [form]="marriageFormGroup"
+							placeholder="{{ 'first_name' | translate:translateKey:'gu' }}">
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" type="text" maxlength="150"
-						 formControlName="firstWitnessMiddleNameGuj" appGujInputTarget [form]="marriageFormGroup" placeholder="{{ 'middlename_name' | translate:translateKey:'gu' }}">
+						<input matInput type="text" maxlength="150" formControlName="firstWitnessMiddleNameGuj"
+							appGujInputTarget [form]="marriageFormGroup"
+							placeholder="{{ 'middlename_name' | translate:translateKey:'gu' }}">
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" type="text" maxlength="150"
-						 formControlName="firstWitnessLastNameGuj" appGujInputTarget [form]="marriageFormGroup" placeholder="{{ 'last_name' | translate:translateKey:'gu' }}">
+						<input matInput type="text" maxlength="150" formControlName="firstWitnessLastNameGuj"
+							appGujInputTarget [form]="marriageFormGroup"
+							placeholder="{{ 'last_name' | translate:translateKey:'gu' }}">
 					</mat-form-field>
 				</div>
 				<!-- /gujarati -->
 
 				<div class="row">
 					<mat-form-field class="col-md-4">
-						<input matInput [max]="adultPerson" [matDatepicker]="picker7" formControlName="firstWitnessBirthDate"
-						 (dateChange)="dateFormate($event.value,'firstWitnessBirthDate')" placeholder="{{'date_of_birth' | translate:translateKey }} (DD/MM/YYYY)"
-						 required>
+						<input matInput [max]="adultPerson" [matDatepicker]="picker7"
+							formControlName="firstWitnessBirthDate"
+							(dateChange)="dateFormate($event.value,'firstWitnessBirthDate')"
+							placeholder="{{'date_of_birth' | translate:translateKey }} (DD/MM/YYYY)" required>
 						<mat-datepicker-toggle matSuffix [for]="picker7"></mat-datepicker-toggle>
 						<mat-datepicker #picker7 touchUi="true"></mat-datepicker>
 						<control-messages [control]="marriageFormGroup.get('firstWitnessBirthDate')"></control-messages>
@@ -890,18 +1002,21 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput OnlyNumber maxlength="12" placeholder="{{'aadhar_number' | translate:translateKey }}" minlength="12"
-						 type="tel" formControlName="firstWitnessAadharNumber">
-						<control-messages [control]="marriageFormGroup.get('firstWitnessAadharNumber')"></control-messages>
+						<input matInput OnlyNumber maxlength="12"
+							placeholder="{{'aadhar_number' | translate:translateKey }}" minlength="12" type="tel"
+							formControlName="firstWitnessAadharNumber">
+						<control-messages [control]="marriageFormGroup.get('firstWitnessAadharNumber')">
+						</control-messages>
 					</mat-form-field>
 
 					<h2>{{'address' | translate:translateKey }}:</h2>
-					<app-address #address [addressFormGroup]="marriageFormGroup.get('firstWitnessAddress')"></app-address>
+					<app-address #address [addressFormGroup]="marriageFormGroup.get('firstWitnessAddress')">
+					</app-address>
 
 				</div>
 
-				<app-action-bar [uploadFiles]="uploadFileArray" [form]="marriageFormGroup" (tabIndex)="onTabChange($event)"
-				 [stepInfo]="{step: 'step6', next: 6, back: 4}"></app-action-bar>
+				<app-action-bar [uploadFiles]="uploadFileArray" [form]="marriageFormGroup"
+					(tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step6', next: 6, back: 4}"></app-action-bar>
 
 			</mat-tab>
 			<!-- End sixth step -->
@@ -913,23 +1028,28 @@
 				</ng-template>
 				<div class="row">
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" maxlength="50" formControlName="secondWitnessFirstName" placeholder="{{'first_name' | translate:translateKey }}"
-						 required appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" appGujInputSource targetElement="secondWitnessFirstNameGuj"
-						 [form]="marriageFormGroup">
-						<control-messages [control]="marriageFormGroup.get('secondWitnessFirstName')"></control-messages>
+						<input matInput type="text" maxlength="50" formControlName="secondWitnessFirstName"
+							placeholder="{{'first_name' | translate:translateKey }}" required appValidationFields
+							[validationFieldsType]="'onlyNameWithOutSpace'" appGujInputSource
+							targetElement="secondWitnessFirstNameGuj" [form]="marriageFormGroup">
+						<control-messages [control]="marriageFormGroup.get('secondWitnessFirstName')">
+						</control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" maxlength="50" formControlName="secondWitnessMiddleName" placeholder="{{'middlename_name' | translate:translateKey }}"
-						 appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" appGujInputSource targetElement="secondWitnessMiddleNameGuj"
-						 [form]="marriageFormGroup">
-						<control-messages [control]="marriageFormGroup.get('secondWitnessMiddleName')"></control-messages>
+						<input matInput type="text" maxlength="50" formControlName="secondWitnessMiddleName"
+							placeholder="{{'middlename_name' | translate:translateKey }}" appValidationFields
+							[validationFieldsType]="'onlyNameWithOutSpace'" appGujInputSource
+							targetElement="secondWitnessMiddleNameGuj" [form]="marriageFormGroup">
+						<control-messages [control]="marriageFormGroup.get('secondWitnessMiddleName')">
+						</control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" maxlength="50" formControlName="secondWitnessLastName" placeholder="{{'last_name' | translate:translateKey }}"
-						 required appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" appGujInputSource targetElement="secondWitnessLastNameGuj"
-						 [form]="marriageFormGroup">
+						<input matInput type="text" maxlength="50" formControlName="secondWitnessLastName"
+							placeholder="{{'last_name' | translate:translateKey }}" required appValidationFields
+							[validationFieldsType]="'onlyNameWithOutSpace'" appGujInputSource
+							targetElement="secondWitnessLastNameGuj" [form]="marriageFormGroup">
 						<control-messages [control]="marriageFormGroup.get('secondWitnessLastName')"></control-messages>
 					</mat-form-field>
 				</div>
@@ -937,30 +1057,35 @@
 				<!-- gujarati -->
 				<div class="row">
 					<mat-form-field class="col-md-4">
-						<input matInput appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" type="text" maxlength="150"
-						 formControlName="secondWitnessFirstNameGuj" appGujInputTarget [form]="marriageFormGroup" placeholder="{{ 'first_name' | translate:translateKey:'gu' }}">
+						<input matInput type="text" maxlength="150" formControlName="secondWitnessFirstNameGuj"
+							appGujInputTarget [form]="marriageFormGroup"
+							placeholder="{{ 'first_name' | translate:translateKey:'gu' }}">
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" type="text" maxlength="150"
-						 formControlName="secondWitnessMiddleNameGuj" appGujInputTarget [form]="marriageFormGroup" placeholder="{{ 'middlename_name' | translate:translateKey:'gu' }}">
+						<input matInput type="text" maxlength="150" formControlName="secondWitnessMiddleNameGuj"
+							appGujInputTarget [form]="marriageFormGroup"
+							placeholder="{{ 'middlename_name' | translate:translateKey:'gu' }}">
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" type="text" maxlength="150"
-						 formControlName="secondWitnessLastNameGuj" appGujInputTarget [form]="marriageFormGroup" placeholder="{{ 'last_name' | translate:translateKey:'gu' }}">
+						<input matInput type="text" maxlength="150" formControlName="secondWitnessLastNameGuj"
+							appGujInputTarget [form]="marriageFormGroup"
+							placeholder="{{ 'last_name' | translate:translateKey:'gu' }}">
 					</mat-form-field>
 				</div>
 				<!-- /gujarati -->
 
 				<div class="row">
 					<mat-form-field class="col-md-4">
-						<input matInput [max]="adultPerson" [matDatepicker]="picker8" formControlName="secondWitnessBirthDate"
-						 (dateChange)="dateFormate($event.value,'secondWitnessBirthDate')" placeholder="{{'date_of_birth' | translate:translateKey }} (DD/MM/YYYY)"
-						 required>
+						<input matInput [max]="adultPerson" [matDatepicker]="picker8"
+							formControlName="secondWitnessBirthDate"
+							(dateChange)="dateFormate($event.value,'secondWitnessBirthDate')"
+							placeholder="{{'date_of_birth' | translate:translateKey }} (DD/MM/YYYY)" required>
 						<mat-datepicker-toggle matSuffix [for]="picker8"></mat-datepicker-toggle>
 						<mat-datepicker #picker8 touchUi="true"></mat-datepicker>
-						<control-messages [control]="marriageFormGroup.get('secondWitnessBirthDate')"></control-messages>
+						<control-messages [control]="marriageFormGroup.get('secondWitnessBirthDate')">
+						</control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
@@ -968,18 +1093,20 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput OnlyNumber formControlName="secondWitnessAadharNumber" maxlength="12" minlength="12" type="tel"
-						 placeholder="{{'aadhar_number' | translate:translateKey }}">
-						<control-messages [control]="marriageFormGroup.get('secondWitnessAadharNumber')"></control-messages>
+						<input matInput OnlyNumber formControlName="secondWitnessAadharNumber" maxlength="12"
+							minlength="12" type="tel" placeholder="{{'aadhar_number' | translate:translateKey }}">
+						<control-messages [control]="marriageFormGroup.get('secondWitnessAadharNumber')">
+						</control-messages>
 					</mat-form-field>
 
 					<h2>{{'address' | translate:translateKey }}:</h2>
-					<app-address #address [addressFormGroup]="marriageFormGroup.get('secondWitnessAddress')"></app-address>
+					<app-address #address [addressFormGroup]="marriageFormGroup.get('secondWitnessAddress')">
+					</app-address>
 
 				</div>
 
-				<app-action-bar [uploadFiles]="uploadFileArray" [form]="marriageFormGroup" (tabIndex)="onTabChange($event)"
-				 [stepInfo]="{step: 'step7', next: 7, back: 5}"></app-action-bar>
+				<app-action-bar [uploadFiles]="uploadFileArray" [form]="marriageFormGroup"
+					(tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step7', next: 7, back: 5}"></app-action-bar>
 
 
 			</mat-tab>
@@ -1003,20 +1130,27 @@
 
 					<div class="row">
 						<div class="col-md-4 ngSelect" formGroupName="applicantRelation">
-							<ng-select formControlName="code" placeholder="{{ 'applicant_relation' | translate:translateKey }}" (change)="onChange($event,applicantrelationArray,'applicantrelationGuj');changeReset('applicantRelationOther')">
-								<ng-option *ngFor="let relation of applicantrelationArray" [value]="relation.code">{{relation.name}}</ng-option>
+							<ng-select formControlName="code"
+								placeholder="{{ 'applicant_relation' | translate:translateKey }}"
+								(change)="onChange($event,applicantrelationArray,'applicantrelationGuj');changeReset('applicantRelationOther')">
+								<ng-option *ngFor="let relation of applicantrelationArray" [value]="relation.code">
+									{{relation.name}}</ng-option>
 							</ng-select>
 							<control-messages [control]="marriageFormGroup.get('applicantRelation')"></control-messages>
 						</div>
 
-						<mat-form-field class="col-md-4" *ngIf="marriageFormGroup.get('applicantRelation').get('code').value === 'MR_OTHER_APPLICANT_RELATION'">
-							<input matInput type="text" required formControlName="applicantRelationOther" placeholder="{{'other_relation' | translate:translateKey }}"
-							 appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'">
+						<mat-form-field class="col-md-4"
+							*ngIf="marriageFormGroup.get('applicantRelation').get('code').value === 'MR_OTHER_APPLICANT_RELATION'">
+							<input matInput type="text" required formControlName="applicantRelationOther"
+								placeholder="{{'other_relation' | translate:translateKey }}" appValidationFields
+								[validationFieldsType]="'onlyNameWithOutSpace'">
 						</mat-form-field>
 
 						<!-- gujrati -->
 						<mat-form-field class="col-md-4">
-							<input matInput readonly placeholder="{{'applicant_relation' | translate:translateKey:'gu'}}" [value]="applicantrelationGuj">
+							<input matInput readonly
+								placeholder="{{'applicant_relation' | translate:translateKey:'gu'}}"
+								[value]="applicantrelationGuj">
 						</mat-form-field>
 						<!-- /gujarati -->
 					</div>
@@ -1043,8 +1177,8 @@
 
 				</div>
 
-				<app-action-bar [uploadFiles]="uploadFileArray" [form]="marriageFormGroup" (tabIndex)="onTabChange($event)"
-				 [stepInfo]="{step: 'step8', next: 8, back: 6}"></app-action-bar>
+				<app-action-bar [uploadFiles]="uploadFileArray" [form]="marriageFormGroup"
+					(tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step8', next: 8, back: 6}"></app-action-bar>
 
 
 			</mat-tab>
@@ -1057,9 +1191,11 @@
 				</ng-template>
 
 				<div class="row">
-					<div class="col-md-4" *ngFor="let doc of marriageFormGroup.get('serviceDetail').get('serviceUploadDocuments').value">
+					<div class="col-md-4"
+						*ngFor="let doc of marriageFormGroup.get('serviceDetail').get('serviceUploadDocuments').value">
 						<div *ngIf="doc.requiredOnCitizenPortal && doc.isActive && showButtons">
-							<label>{{translateService.getCurrentLanguage()=='en'? doc.documentLabelEn : doc.documentLabelGuj }} <span *ngIf="doc.mandatory">*</span></label>
+							<label>{{translateService.getCurrentLanguage()=='en'? doc.documentLabelEn : doc.documentLabelGuj }}
+								<span *ngIf="doc.mandatory">*</span></label>
 							<file-upload [form]="marriageFormGroup" [uploadModel]="doc"></file-upload>
 						</div>
 					</div>
@@ -1120,8 +1256,9 @@
 					</div> -->
 				<!-- </div>  -->
 
-				<app-action-bar [uploadFiles]="uploadFileArray" [form]="marriageFormGroup" (tabIndex)="onTabChange($event)"
-				 [stepInfo]="{step: 'final', next: 8, back: 6}" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
+				<app-action-bar [uploadFiles]="uploadFileArray" [form]="marriageFormGroup"
+					(tabIndex)="onTabChange($event)" [stepInfo]="{step: 'final', next: 8, back: 6}"
+					(handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
 			</mat-tab>
 			<!-- End nine step -->
 
