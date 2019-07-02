@@ -45,12 +45,13 @@ export class HosHttpService {
 						"Content-Type": "application/json"
 					})
 				}
-			} else {
-				if (!this.session.get("hos_access_token")) {
-					// this.tostr.error("Session Expired Please Login Again!");
-					this.router.navigate([ManageRoutes.getFullRoute('HOSPITALAUTHLOGIN')]);
-					return;
-				}
+			// } else {
+			// 	if (!this.session.get("hos_access_token")) {
+			// 		// this.tostr.error("Session Expired Please Login Again!");
+			// 		this.router.navigate(['auth/login']);
+			// 		return;
+			// 	}
+			// }
 			}
 
 		} else if(headerOptions == 'printReceipt'){

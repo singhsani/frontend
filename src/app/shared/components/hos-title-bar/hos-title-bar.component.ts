@@ -26,6 +26,36 @@ import { Router } from "@angular/router";
   </div>
     </ul>
   </div>
+</div>
+
+<div class="modal" id="gujModal">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+
+			<!-- Modal Header -->
+			<div class="modal-header">
+				<h4 class="modal-title">
+					 {{'gujarati_typing_confused'| translate: translateKey}}
+				</h4>
+			</div>
+
+			<!-- Modal body -->
+			<div class="modal-body">
+				<div class="embed-responsive embed-responsive-16by9 m-1 row">
+					<video class="embed-responsive-item col-md-12" controls>
+						<source src="assets/videos/Gujarati_Demo.mp4" type="video/mp4">
+						<source src="assets/videos/Gujarati_Demo.ogv" type="video/ogg">
+					</video>
+				</div>
+			</div>
+
+			<!-- Modal footer -->
+			<div class="modal-footer">
+				<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+			</div>
+
+		</div>
+	</div>
 </div>`,
 	styles: [``]
 })
