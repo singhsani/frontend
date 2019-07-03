@@ -944,6 +944,8 @@ body * {visibility: hidden;}
     .d-md-none + .ngSelect, .d-md-none + .mat-form-field {display: inherit;}
   }
   .tdPaddMob > tbody > tr > td {padding: 10px 0.75rem !important;}
+
+  .twoLineMsg control-messages mat-error.mat-error {bottom: -15px;}
 }
 
 // Part 2 End ------------------------------------------------

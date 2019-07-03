@@ -191,8 +191,8 @@
     <div class="modal-body">
         <div class="row">
             <div class="col-12">
-                <textarea type="text" readonly class="text-left remarks" value="{{rejectRemarks}}" #copytext> 
-                </textarea>
+                <div type="text" readonly class="text-left remarks" [innerHtml]="getInnerHTML()" #copytext> 
+                </div>
             </div>
         </div>
     </div>
