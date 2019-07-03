@@ -35,7 +35,7 @@ import { Router } from "@angular/router";
 			<!-- Modal Header -->
 			<div class="modal-header">
 				<h4 class="modal-title">
-					 {{'gujarati_typing_confused'| translate: translateKey}}
+					 {{'gujarati_typing_confused'| translate: "GuideLineScreen"}}
 				</h4>
 			</div>
 

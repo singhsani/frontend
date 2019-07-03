@@ -216,7 +216,7 @@ export class BirthRegistrationComponent implements OnInit {
 				code: ["NO", Validators.required],
 				name: null
 			}),
-			totalAliveChild: [null, [Validators.required, Validators.maxLength(2)]],
+			noOfChilds: null,
 
 			childs: this.fb.array([this.createChildArray({
 				birthDate: null,
@@ -237,7 +237,6 @@ export class BirthRegistrationComponent implements OnInit {
 					code: null
 				}
 			})]),
-			noOfChilds: null,
 			//step 2(10)
 			fatherFirstName: ['', [Validators.required, ValidationService.nameValidator]],
 			fatherMiddleName: ['', [ValidationService.nameValidator]],
@@ -315,11 +314,11 @@ export class BirthRegistrationComponent implements OnInit {
 				code: [null, Validators.required],
 				name: null
 			}),
-
-			pregnancyDuration: ['', [Validators.required, ValidationService.pregnancyDurationValidation]],
 			totalBoyChildsBeforePregnancy: null,
 			totalGirlChildsBeforePregnancy: null,
 			totalChildsBeforePregnancy: null,
+			pregnancyDuration: ['', [Validators.required, ValidationService.pregnancyDurationValidation]],
+			
 
 
 			//step 4(3)
@@ -357,6 +356,7 @@ export class BirthRegistrationComponent implements OnInit {
 			//step 5
 			attachments: [null],
 			delayPeriod: null,
+			totalAliveChild: [null, [Validators.required, Validators.maxLength(2)]],
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode)
 		});
 	}
@@ -634,11 +634,11 @@ export class BirthRegistrationComponent implements OnInit {
 	 */
 	handleErrorsOnSubmit(count) {
 		this.submit = true;
-		let step1 = 6;
-		let step2 = 16;
-		let step3 = 37;
-		let step4 = 45;
-		let step5 = 46;
+		let step1 = 5;
+		let step2 = 15;
+		let step3 = 36;
+		let step4 = 44;
+		let step5 = 48;
 
 		if (count <= step1) {
 			this.tabIndex = 0;
