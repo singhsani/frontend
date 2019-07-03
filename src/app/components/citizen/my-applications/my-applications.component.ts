@@ -43,15 +43,16 @@ export class MyApplicationsComponent implements OnInit {
 	resultsLength: number = 0;
 	pageSize: number = 5;
 	isLoadingResults: boolean = true;
-	translateKey: string="myApplicationScreen";
+	translateKey: string = "myApplicationScreen";
 
 	appType: string = 'myApps';
 
 	modalRef: BsModalRef;
 	JSONdata: any;
 	rejectRemarks: string = '';
+	reason: string = '';
 
-    config: CitizenConfig = new CitizenConfig();
+	config: CitizenConfig = new CitizenConfig();
 
 	@ViewChild(MatPaginator) paginator: MatPaginator;
 	@ViewChild(MatSort) sort: MatSort;
@@ -77,7 +78,7 @@ export class MyApplicationsComponent implements OnInit {
 	getAllData() {
 		this.paginator.pageSize = 5;
 		this.paginator.pageIndex = 0;
-		
+
 		merge(this.sort.sortChange, this.paginator.page)
 			.pipe(
 				startWith({}),
@@ -197,22 +198,22 @@ export class MyApplicationsComponent implements OnInit {
      * @param id citizen api name
      * @param id citizen id
      */
-    printView(apiCode: string, apiName: string, id: number) {
+	printView(apiCode: string, apiName: string, id: number) {
 
-        this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);
-        this.formService.printView(id).subscribe(
-            htmlResponse => {
+		this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);
+		this.formService.printView(id).subscribe(
+			htmlResponse => {
 				let sectionToPrint: any = document.getElementById('sectionToPrint');
 				sectionToPrint.innerHTML = htmlResponse;
 				setTimeout(() => {
 					window.print();
 				});
 			},
-            err => {
-                //this.commonService.successAlert('Error!', err.error[0].message, 'error');
-            }
-        );
-    }
+			err => {
+				//this.commonService.successAlert('Error!', err.error[0].message, 'error');
+			}
+		);
+	}
 
 
 	/**
@@ -236,12 +237,13 @@ export class MyApplicationsComponent implements OnInit {
 	 */
 	remarksDisplay(data) {
 		this.rejectRemarks = data.remarks;
+		this.reason = data.reason;
 	}
 
 	/**
 	 * This method is use for copy text.
 	 */
-	copyText(copytext:any) {
+	copyText(copytext: any) {
 		copytext.select();
 		document.execCommand('copy');
 	}
@@ -272,7 +274,7 @@ export class MyApplicationsComponent implements OnInit {
 		this.modalRef = this.modalService.show(template);
 	}
 
-	getProperDate(date: string):string{
+	getProperDate(date: string): string {
 		if (date) return moment(date).format("DD/MM/YYYY");
 		return null;
 	}
@@ -281,7 +283,7 @@ export class MyApplicationsComponent implements OnInit {
 	 * This method is use for display more button
 	 * @param row - Table row oject
 	 */
-	isMoreBtnVisible(row){
+	isMoreBtnVisible(row) {
 		if (!row.remarks && (row.serviceType === 'PEC_REG' || row.serviceType === 'PRC_REG'))
 			return false;
 		else
@@ -295,7 +297,7 @@ export class MyApplicationsComponent implements OnInit {
 	isEditOptDisplay(row) {
 		if (row.serviceType === 'PEC_REG' && row.serviceType === 'PRC_REG')
 			return false;
-		else if (row.canEdit)
+		else if (row.canEdit || row.fileStatus === 'QUERIED')
 			return true;
 	}
 
@@ -352,7 +354,9 @@ export class MyApplicationsComponent implements OnInit {
 			return false;
 	}
 
-
+	getInnerHTML(){
+		return `<b>Remarks :</b> ${this.rejectRemarks} <br> <b>Reason :</b> ${this.reason}`;
+	}
 
 
 }
