@@ -410,7 +410,7 @@ export class BookPlanetariumComponent implements OnInit {
         this.ticketingService.specialShowTicketsBooking(this.ticketBookingForm.value, this.ticketBookingForm.get('resourceCodeLK').get('code').value).subscribe(
           res => {
             // if (resp.data.status == this.bookingConstants.SUBMITTED) {
-            this.commonService.commonAlert("Booking", "Planetarium Booked Successfully", "success", "Print Acknowledgement Receipt", false, '', pA => {
+            this.commonService.commonAlert("Booking", "Planetarium Booking Request", "success", "Print Acknowledgement Receipt",  false, '', pA => {
               this.ticketingService.printAcknowledgementReceipt(res.data.refNumber).subscribe(acknowledgementHTML => {
                 let sectionToPrint: any = document.getElementById('sectionToPrint');
                 sectionToPrint.innerHTML = acknowledgementHTML;
