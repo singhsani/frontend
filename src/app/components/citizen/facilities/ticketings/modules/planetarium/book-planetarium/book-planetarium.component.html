@@ -1,4 +1,4 @@
-<app-title-bar [title]="'screen_title'">
+<app-title-bar [title]="pipe.transform('screen_title',translateKey)">
 </app-title-bar>
 <!-- <div class="moduleList">
     <div class="servicesList row pb-5">
@@ -16,7 +16,7 @@
 <!-- HTML for planetarium hall booking -->
 <div>
     <mat-card class="formClass cardBorder">
-        <div class="pageTitle">Book Your Ticket</div>
+        <div class="pageTitle">{{'book_your_ticket' | translate: translateKey}}</div>
         <div class="p-15">
             <form [formGroup]="ticketBookingForm">
                 <div class="row mt-3 mb-3">
@@ -74,7 +74,7 @@
                     [hidden]="ticketBookingForm.get('showCategory').get('code').value != 'PLANETARIUM_SPECIAL_SHOW'"
                         class="col-md-4 ngSelect">
                         <ng-select placeholder="{{'planetarium_shows_language'| translate: translateKey}}"
-                            formControlName="code" (change)="setShiftType()">
+                            formControlName="code" (change)="setShiftType();getPlanetariumShowAvailability()">
                             <ng-option *ngFor="let cat of PLANETARIUM_SPECIAL_SHOWS_LAG" [value]="cat.code">
                                 {{ cat.name }}
                             </ng-option>
@@ -123,12 +123,11 @@
                         </div>
                     </div>
                 </div>
-                <button
+                <!-- <button
                     *ngIf="ticketBookingForm.get('showCategory').get('code').value == 'PLANETARIUM_SPECIAL_SHOW' && ticketBookingForm.get('totalVisitor').value"
                     mat-raised-button color="primary" type="submit" (click)="getPlanetariumShowAvailability();">
-                    <!-- <mat-icon>check_circle</mat-icon> -->
-                    {{'Check_avalability'| translate: translateKey}}
-                </button>
+                    {{'check_avalability'| translate: translateKey}}
+                </button> -->
 
                 <div class="row"
                     *ngIf="ticketBookingForm.get('showCategory').get('code').value != 'PLANETARIUM_SPECIAL_SHOW'">
@@ -237,6 +236,9 @@
                         <mat-checkbox class="d-block" labelPosition="after" formControlName="termsCondition">
                             {{'i_have_read_and_agree_with_terms_and_conditions' | translate:translateKey}}
                         </mat-checkbox>
+                        <a href="javascript:void(0)" class="stretched-link" (click)="loadGuideLine()">
+                            Guideline/Terms and Conditions
+                        </a>
                         <!-- <control-messages [control]="ticketBookingForm.get('termsCondition')"></control-messages> -->
                     </div>
                 </div>
@@ -246,18 +248,18 @@
 
                         <button mat-raised-button color="primary" type="submit" (click)="redirecToPayment()"
                             *ngIf="ticketBookingForm.get('showCategory').get('code').value != 'PLANETARIUM_SPECIAL_SHOW'">
-                            <mat-icon>payment</mat-icon>
+                            <!-- <mat-icon>payment</mat-icon> -->
                             {{'pay_and_print_ticket'| translate: translateKey}}
                         </button>
 
                         <button mat-raised-button color="primary" type="submit" (click)="submitForVarification()"
                             *ngIf="ticketBookingForm.get('showCategory').get('code').value == 'PLANETARIUM_SPECIAL_SHOW' && seatAvailable == true">
-                            <mat-icon>check_circle</mat-icon>
+                            <!-- <mat-icon>check_circle</mat-icon> -->
                             {{'submit'| translate: translateKey}}
                         </button>
 
                         <button mat-raised-button color="primary" type="button" (click)="ticketBookingForm.reset()">
-                            <mat-icon>clear_all</mat-icon>
+                            <!-- <mat-icon>clear_all</mat-icon> -->
                             {{'clear'| translate: translateKey}}
                         </button>
                     </div>

@@ -25,6 +25,14 @@ export class TicketingsService {
   }
 
   /**
+   * this api for guideline
+   */
+  loadGuideLine() {
+    this.requestURL = `api/ticketing/${this.resourceType}/guideline`;
+    return this.http.get(this.requestURL, 'printReceipt');
+  }
+
+  /**
 	 * This method is used to book zoo tickets
 	*/
   bookZooTickets(ticketingInfo) {
@@ -35,7 +43,7 @@ export class TicketingsService {
   /**
 	 * This method is used to get form data 
 	*/
-  getFormData() {
+  getListData() {
     // api/ticketing/planetarium/list
     this.requestURL = `api/ticketing/${this.resourceType}/list`;
     return this.http.get(this.requestURL);
@@ -175,4 +183,12 @@ export class TicketingsService {
     this.requestURL = `api/ticketing/${this.resourceType}/cancelAPI`;
     return this.http.post(this.requestURL, data);
   }
+
+  /**
+	 * This method is used to get user profile data
+	 */
+	getUserProfile() {
+
+		return this.http.get('api/user/profile');
+	}
 }
