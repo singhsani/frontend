@@ -105,7 +105,7 @@
     <div class="col-sm-12 col-md-12 text-right">
       <button mat-raised-button (click)="showAnimalAdoptionPricingTable = false; showAnimalAdoptionForm= true;"
         color="primary">
-        <mat-icon>thumb_up_alt</mat-icon>
+        <!-- <mat-icon>thumb_up_alt</mat-icon> -->
         {{'submit'| translate: translateKey}}
       </button>
     </div>
@@ -191,11 +191,11 @@
       <div class="col-sm-12 col-md-12 justify-content-between d-flex">
         <button type="button" color="primary" mat-raised-button
           (click)="showAnimalAdoptionPricingTable = true; showAnimalAdoptionForm = false;">
-          <mat-icon>navigate_before</mat-icon>
+          <!-- <mat-icon>navigate_before</mat-icon> -->
           {{'back' | translate:translateKey}}
         </button>
         <button mat-raised-button color="primary" type="button" [disabled]="animalAdoptionForm.invalid" (click)="submitAnimalAdoptionRequest()">
-          <mat-icon>check_circle_outline</mat-icon>
+          <!-- <mat-icon>check_circle_outline</mat-icon> -->
           {{'submit_application'| translate: translateKey}}
         </button>
       </div>

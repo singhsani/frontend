@@ -7,11 +7,13 @@ import { CommonService } from 'src/app/shared/services/common.service';
 import { TicketingConstants, TicketingUtils } from '../../../config/ticketing-config';
 import * as moment from 'moment';
 import { Router } from '@angular/router';
+import { TranslatePipe } from 'src/app/shared/modules/translate/translate.pipe';
 
 @Component({
   selector: 'app-zoo-booking',
   templateUrl: './zoo-booking.component.html',
-  styleUrls: ['./zoo-booking.component.scss']
+  styleUrls: ['./zoo-booking.component.scss'],
+  providers:[TranslatePipe]
 })
 export class ZooBookingComponent implements OnInit {
 
@@ -19,6 +21,10 @@ export class ZooBookingComponent implements OnInit {
   ticketingConstants = TicketingConstants;
   ticketingUtils: TicketingUtils = new TicketingUtils();
 
+  /**
+   * language translate key.
+  */
+ translateKey = 'citizenZooTicketingScreen';
   /**
 	  * displayColumns are used for display the columns in material table.
 	*/
@@ -47,22 +53,22 @@ export class ZooBookingComponent implements OnInit {
   pricing: any[] = [
     {
       categoryName: 'Children',
-      description: 'Children below 12 years of Age',
+      description: this.pipe.transform("children_below_12_years_of_age",this.translateKey),
       priceField: 'CHILD'
     },
     {
       categoryName: 'Adults',
-      description: 'Adults',
+      description: this.pipe.transform("adults",this.translateKey),
       priceField: 'ADULT'
     },
     {
       categoryName: 'Camera',
-      description: 'Camera Fees',
+      description: this.pipe.transform("camera_fees",this.translateKey),
       priceField: 'CAMERA'
     },
     {
       categoryName: 'Video Camera',
-      description: 'Video Camera Fees',
+      description: this.pipe.transform("video_camera_fees",this.translateKey),
       priceField: 'VIDEOCAMERA'
     }
   ];
@@ -90,50 +96,46 @@ export class ZooBookingComponent implements OnInit {
   dataSourceForPricing = new MatTableDataSource();
   dataSourceForTiming = new MatTableDataSource();
 
-  /**
-   * language translate key.
-  */
-  translateKey = 'citizenZooTicketingScreen';
 
   // Ticket Details
 
   ticketBookingForm: FormGroup;
-  subTotal: number;
-  totalAmount: number;
-  numberOfVisitors: number;
+  subTotal: number = 0;
+  totalAmount: number = 0;
+  numberOfVisitors: number = 0;
 
   // Ticket Booking Table Row Data:
 
   ticketBookingRows: any[] = [
     {
-      name: 'children',
+      name: this.pipe.transform("children_below_12_years_of_age",this.translateKey),
       formGroupName: 'children',
       formControlName: 'totalChild',
-      placeHolder: 'Number Of Children',
+      placeHolder: this.pipe.transform("number_of_children",this.translateKey),
       max: 4,
       priceField: 'CHILD'
     },
     {
-      name: 'adults',
+      name: this.pipe.transform("adults",this.translateKey),
       formGroupName: 'adults',
       formControlName: 'totalAdult',
-      placeHolder: 'Number Of Adults',
+      placeHolder: this.pipe.transform("number_of_adults",this.translateKey),
       max: 4,
       priceField: 'ADULT'
     },
     {
-      name: 'camera',
+      name: this.pipe.transform("camera",this.translateKey),
       formGroupName: 'camera',
       formControlName: 'totalCamera',
-      placeHolder: 'Number Of Camera',
+      placeHolder: this.pipe.transform("number_of_camera",this.translateKey) ,
       max: 3,
       priceField: 'CAMERA'
     },
     {
-      name: 'video_camera',
+      name: this.pipe.transform("video_camera",this.translateKey),
       formGroupName: 'videoCamera',
       formControlName: 'totalVideoCamera',
-      placeHolder: 'Number Of Video Camera',
+      placeHolder: this.pipe.transform("number_of_video_camera",this.translateKey),
       max: 3,
       priceField: 'VIDEOCAMERA'
     }
@@ -169,7 +171,8 @@ export class ZooBookingComponent implements OnInit {
     private fb: FormBuilder,
     private ticketingService: TicketingsService,
     private commonService: CommonService,
-    private router: Router
+    private router: Router,
+    public pipe:TranslatePipe
   ) {
 
     this.ticketingService.resourceType = 'zoo';
@@ -238,10 +241,10 @@ export class ZooBookingComponent implements OnInit {
       }),
       idNumber: ['', Validators.required],
       visitingDate: [moment().format('YYYY-MM-DD'), Validators.required],
-      totalChild: [],
-      totalAdult: [],
-      totalCamera: [],
-      totalVideoCamera: [],
+      totalChild: [0],
+      totalAdult: [0],
+      totalCamera: [0],
+      totalVideoCamera: [0],
       bankName: this.fb.group({
         code: [null],
       }),

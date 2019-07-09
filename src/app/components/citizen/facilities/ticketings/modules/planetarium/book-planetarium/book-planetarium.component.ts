@@ -7,11 +7,13 @@ import { CommonService } from 'src/app/shared/services/common.service';
 import { Router } from '@angular/router';
 import { ValidationService } from '../../../../../../../shared/services/validation.service';
 import { ToastrService } from 'ngx-toastr';
+import { TranslatePipe } from 'src/app/shared/modules/translate/translate.pipe';
 
 @Component({
   selector: 'app-book-planetarium',
   templateUrl: './book-planetarium.component.html',
-  styleUrls: ['./book-planetarium.component.scss']
+  styleUrls: ['./book-planetarium.component.scss'],
+  providers: [TranslatePipe]
 })
 export class BookPlanetariumComponent implements OnInit {
 
@@ -61,16 +63,17 @@ export class BookPlanetariumComponent implements OnInit {
     private commonService: CommonService,
     private router: Router,
     private toster: ToastrService,
-    public validationError: ValidationService
+    public validationError: ValidationService,
+    public pipe: TranslatePipe
   ) {
-
     this.ticketingService.resourceType = 'planetarium';
   }
 
   ngOnInit() {
     this.createTicketBookingForm();
     this.getLookUps();
-    this.getFormData();
+    this.getListData();
+    this.profileData();
   }
   /**
 	* Get all booking category list from api.
@@ -85,19 +88,51 @@ export class BookPlanetariumComponent implements OnInit {
       this.PLANETARIUM_SHOW_CATEGORY = respData.PLANETARIUM_SHOW_CATEGORY;
       this.PLANETARIUM_VISITOR = respData.PLANETARIUM_VISITOR;
       this.PURPOSE = respData.PURPOSE;
-
+    }, err => {
+      this.toster.error("Server Error");
     });
   }
 
   /**
    * get form data
    */
-  getFormData() {
-    this.ticketingService.getFormData().subscribe(res => {
+  getListData() {
+    this.ticketingService.getListData().subscribe(res => {
       this.resourceName = res.data;
-    });
+    },
+      err => {
+        this.toster.error("Server Error");
+      });
+
+    //visitor rate chart
+    if (this.ticketBookingForm.get('showCategory').get('code').value == 'PLANETARIUM_GENERAL_SHOW') {
+      this.ticketingService.getZooVisitingRates().subscribe((respData) => {
+        this.planetariumVisitingRates = respData.data;
+        this.ticketBookingForm.get('rate').setValue(this.planetariumVisitingRates.visitorCharge);
+        this.totalVisitorLimit = this.planetariumVisitingRates.totalOccupancy;
+      },
+        err => {
+          this.commonService.openAlert("Error", err.error[0].message, "warning");
+        });
+    }
     // this.ticketingService.getFormData();
   }
+
+  /**
+   * Show applicant data(login user)
+   */
+  profileData() {
+    this.ticketingService.getUserProfile().subscribe(res => {
+      this.ticketBookingForm.get('firstName').setValue(res.data.firstName);
+      this.ticketBookingForm.get('lastName').setValue(res.data.lastName);
+      this.ticketBookingForm.get('applicantMobile').setValue(res.data.cellNo);
+
+    },
+      err => {
+        this.toster.error("Server Error");
+      });
+  }
+
   /** 
    * Change Date format
    */
@@ -125,15 +160,12 @@ export class BookPlanetariumComponent implements OnInit {
       this.ticketBookingForm.get('totalVisitor').setValue(visitors);
     }
   }
-
   /**
    * this method for check seats availability 
    */
   getPlanetariumShowAvailability() {
-    if (this.ticketBookingForm.get('resourceCodeLK').get('code').value &&
-      this.ticketBookingForm.get('specialShowLanguage').get('code').value &&
-      this.ticketBookingForm.get('visitingDate').value &&
-      this.ticketBookingForm.get('totalVisitor').value) {
+
+    if (this.ticketBookingForm.get('totalVisitor').value && this.ticketBookingForm.get('specialShowLanguage').get('code').value) {
 
       this.ticketingService.getPlanetariumShowAvailability(
         this.ticketBookingForm.get('resourceCodeLK').get('code').value,
@@ -144,10 +176,10 @@ export class BookPlanetariumComponent implements OnInit {
             this.seatAvailable = respData.data.seatAvailable;
             // this.commonService.successAlert('success', 'Available', 'success');
             if (this.seatAvailable) {
-              this.toster.success(this.ticketingConstants.AVAILABLE_SEATS);
+              this.toster.success(this.ticketBookingForm.get('totalVisitor').value + ' ' +this.ticketingConstants.AVAILABLE_SEATS);
             }
             else {
-              this.toster.error(this.ticketBookingForm.get('totalVisitor').value +' '+ this.ticketingConstants.NOT_AVAILABLE);
+              this.toster.error(this.ticketBookingForm.get('totalVisitor').value + ' ' + this.ticketingConstants.NOT_AVAILABLE);
             }
 
           },
@@ -156,10 +188,28 @@ export class BookPlanetariumComponent implements OnInit {
           });
     }
     else {
-      this.markFormGroupTouched(this.ticketBookingForm);
-      this.toster.error(this.ticketingConstants.ALL_FEILD_REQUIRED_MESSAGE);
+      this.ticketBookingForm.controls['totalVisitor'].markAsTouched();
+      // this.markFormGroupTouched(this.ticketBookingForm);
+      // this.toster.error(this.ticketingConstants.ALL_FEILD_REQUIRED_MESSAGE);
+    }
+
+  }
+
+  /**
+   *  Will Compute total amount 
+   */
+  computeTotalAndVisitors() {
+
+    this.getPlanetariumShowAvailability();
+    const f = this.ticketBookingForm.value;
+    if (this.ticketBookingForm.get('totalVisitor').valid) {
+      this.totalAmount = Number(f.totalVisitor) * (Number(f.rate));
+
+      this.ticketBookingForm.get('amount').setValue(this.totalAmount);
+
     }
   }
+
 
   /**
     * Get Show timming slots.
@@ -176,12 +226,116 @@ export class BookPlanetariumComponent implements OnInit {
   }
 
   /**
+   * Create form controls.
+   */
+  createTicketBookingForm() {
+    this.ticketBookingForm = this._fb.group({
+      id: null,
+      uniqueId: null,
+      version: null,
+      cancelledDate: null,
+      bookingDate: [moment(new Date()).format('YYYY-MM-DD')],
+      status: null,
+      refNumber: null,
+      resourceType: null,
+      payableServiceType: null,
+      resourceCode: 'SARDAR_PATEL_PLANETARIUM',
+      resourceCodeLK: this._fb.group({
+        name: null,
+        code: ['SARDAR_PATEL_PLANETARIUM', [Validators.required]]
+      }),
+      visitingDate: [moment().format('YYYY-MM-DD'), [Validators.required]],
+      showCategory: this._fb.group({
+        name: [null, [Validators.required]],
+        code: ['PLANETARIUM_GENERAL_SHOW', [Validators.required]]
+      }),
+      planetariumShowTiming: this._fb.group({
+        name: null,
+        code: [null, Validators.required]
+      }),
+      specialShowLanguage: this._fb.group({
+        name: null,
+        code: null
+      }),
+      seatNo: null,
+      totalVisitor: [null, [Validators.max(156)]],
+      visitors: this._fb.group({
+        name: null,
+        code: [null, Validators.required]
+      }),
+      rate: null,
+      amount: null,
+
+      showStartTime: null,
+      showEndTime: null,
+
+      schoolName: null,
+      schoolMobileNumber: null,
+      schoolEmailId: [null, [ValidationService.emailValidator]],
+
+      shiftType: null,
+      specialShow: null,
+
+      idType: this._fb.group({
+        name: null,
+        code: [null, Validators.required]
+      }),
+      // idNumber: [null, [Validators.required, Validators.maxLength(4), Validators.minLength(4)]],
+      idNumber: [null, [Validators.required, Validators.maxLength(4), Validators.minLength(4)]],
+      applicantName: null,
+      applicantMobile: null,
+      applicantEmailID: [null, [ValidationService.emailValidator]],
+      paymentMode: this._fb.group({
+        name: null,
+        code: null
+      }),
+
+      firstName: [null, [Validators.required, ValidationService.nameValidator]],
+      middleName: null,
+      lastName: [null, [Validators.required, ValidationService.nameValidator]],
+
+      accountHolderName: null,
+      accountNo: null,
+      bankName: null,
+      ifscCode: null,
+      attachments: [],
+
+      scheduleList: [],
+      // {
+      //   id: null,
+      //   uniqueId: null,
+      //   version: null,
+      //   cancellationType: null,
+      //   cancelledDate: null,
+      //   status: "PAYMENT_REQUIRED",
+      //   shiftType: "GUJARATI",
+      //   bookingDate: "2019-06-06",
+      //   startTime: "04:01:00",
+      //   endTime: "04:30:00",
+      //   bookingNo: null
+      // }],
+      bookingPurposeMaster: this._fb.group({
+        name: null,
+        code: null
+      }),
+      termsCondition: [null, [Validators.required]],
+      agree: null,
+      attachment: null
+    })
+  }
+
+  /**
    * This method for set and remove validation as per show selection
    * @param event 
    */
   setValidationForSpecialShow(event) {
     this.ticketBookingForm.reset();
+    // set default value
+    this.ticketBookingForm.get('resourceCodeLK').get('code').setValue('SARDAR_PATEL_PLANETARIUM');
+    this.ticketBookingForm.get('resourceCode').setValue('SARDAR_PATEL_PLANETARIUM');
+    this.ticketBookingForm.get('visitingDate').setValue(moment().format('YYYY-MM-DD'));
     this.ticketBookingForm.get('bookingDate').setValue(moment(new Date()).format('YYYY-MM-DD'));
+
     this.ticketBookingForm.get('showCategory').get('code').setValue(event);
     if (event == 'PLANETARIUM_SPECIAL_SHOW') {
       this.ticketBookingForm.get('schoolName').setValidators([Validators.required]);
@@ -249,114 +403,6 @@ export class BookPlanetariumComponent implements OnInit {
   }
 
   /**
-   * Create form controls.
-   */
-  createTicketBookingForm() {
-    this.ticketBookingForm = this._fb.group({
-      id: null,
-      uniqueId: null,
-      version: null,
-      cancelledDate: null,
-      bookingDate: [moment(new Date()).format('YYYY-MM-DD')],
-      status: null,
-      refNumber: null,
-      resourceType: null,
-      payableServiceType: null,
-      resourceCode: null,
-      resourceCodeLK: this._fb.group({
-        name: null,
-        code: [null, [Validators.required]]
-      }),
-      visitingDate: [null, [Validators.required]],
-      showCategory: this._fb.group({
-        name: [null, [Validators.required]],
-        code: [null, [Validators.required]]
-      }),
-      planetariumShowTiming: this._fb.group({
-        name: null,
-        code: null
-      }),
-      specialShowLanguage: this._fb.group({
-        name: null,
-        code: null
-      }),
-      seatNo: null,
-      totalVisitor: [null, [Validators.max(156)]],
-      visitors: this._fb.group({
-        name: null,
-        code: null
-      }),
-      rate: null,
-      amount: null,
-
-      showStartTime: null,
-      showEndTime: null,
-
-      schoolName: null,
-      schoolMobileNumber: null,
-      schoolEmailId: [null, [ValidationService.emailValidator]],
-
-      shiftType: null,
-      specialShow: null,
-
-      idType: this._fb.group({
-        name: null,
-        code: null
-      }),
-      // idNumber: [null, [Validators.required, Validators.maxLength(4), Validators.minLength(4)]],
-      idNumber: [null, [Validators.required, Validators.maxLength(4), Validators.minLength(4)]],
-      applicantName: null,
-      applicantMobile: null,
-      applicantEmailID: [null, [ValidationService.emailValidator]],
-      paymentMode: this._fb.group({
-        name: null,
-        code: null
-      }),
-
-      firstName: [null, [ValidationService.nameValidator]],
-      middleName: null,
-      lastName: [null, [ValidationService.nameValidator]],
-
-      accountHolderName: null,
-      accountNo: null,
-      bankName: null,
-      ifscCode: null,
-      attachments: [],
-
-      scheduleList: [],
-      // {
-      //   id: null,
-      //   uniqueId: null,
-      //   version: null,
-      //   cancellationType: null,
-      //   cancelledDate: null,
-      //   status: "PAYMENT_REQUIRED",
-      //   shiftType: "GUJARATI",
-      //   bookingDate: "2019-06-06",
-      //   startTime: "04:01:00",
-      //   endTime: "04:30:00",
-      //   bookingNo: null
-      // }],
-      bookingPurposeMaster: this._fb.group({
-        name: null,
-        code: null
-      }),
-      termsCondition: [null, [Validators.required]],
-      agree: null,
-      attachment: null
-    })
-  }
-
-  // Will Compute total amount 
-  computeTotalAndVisitors() {
-    const f = this.ticketBookingForm.value;
-
-    this.totalAmount = Number(f.totalVisitor) * (Number(f.rate));
-
-    this.ticketBookingForm.get('amount').setValue(this.totalAmount);
-  }
-
-  /**
    * Save form data
    */
   savePlanetariumTickets() {
@@ -410,7 +456,7 @@ export class BookPlanetariumComponent implements OnInit {
         this.ticketingService.specialShowTicketsBooking(this.ticketBookingForm.value, this.ticketBookingForm.get('resourceCodeLK').get('code').value).subscribe(
           res => {
             // if (resp.data.status == this.bookingConstants.SUBMITTED) {
-            this.commonService.commonAlert("Booking", "Planetarium Booking Request", "success", "Print Acknowledgement Receipt",  false, '', pA => {
+            this.commonService.commonAlert("Booking", "Planetarium Booking Request", "success", "Print Acknowledgement Receipt", false, '', pA => {
               this.ticketingService.printAcknowledgementReceipt(res.data.refNumber).subscribe(acknowledgementHTML => {
                 let sectionToPrint: any = document.getElementById('sectionToPrint');
                 sectionToPrint.innerHTML = acknowledgementHTML;
@@ -493,6 +539,19 @@ export class BookPlanetariumComponent implements OnInit {
         });
     }
 
+  }
+
+  /**
+   * Link for agreement.
+   */
+  loadGuideLine() {
+    this.ticketingService.loadGuideLine().subscribe(resp => {
+      const w = window.open('about:blank');
+      w.document.open();
+      w.document.title = "Planetarium Guide Line"
+      w.document.write(resp);
+      w.document.close();
+    })
   }
 
 }
