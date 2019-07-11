@@ -298,13 +298,13 @@ export class ShopLicModificationComponent implements OnInit {
 		this.shopLicModificationForm = this.fb.group({
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
 			serviceCode: 'SHOP-LIC',
-			periodFrom: [null],
-			periodTo: [null],
-			newRegistration: [null],
-			renewal: [null],
-			adminCharges: [null],
-			netAmount: [null],
-			licenseIssueDate: [null],
+			periodFrom: null,
+			periodTo: null,
+			newRegistration: null,
+			renewal: null,
+			adminCharges: null,
+			netAmount: null,
+			licenseIssueDate: null,
 
 			refNumber: [null, Validators.required],
 			/* Step 1 controls start */
@@ -313,25 +313,25 @@ export class ShopLicModificationComponent implements OnInit {
 			postalAddress: this.fb.group(this.postalAddressEstablishment.addressControls()),
 			noOfHumanWorking: this.fb.group({
 				code: [null, Validators.required],
-				name: [null],
+				name: null,
 			}),
 			assessmentDoneByVMC: this.fb.group({
 				code: [null, Validators.required],
-				name: [null],
+				name: null,
 			}),
 			propertyTaxNo: [null, [Validators.required, Validators.maxLength(13), Validators.minLength(13)]],
 			wardNo: this.fb.group({
 				code: [null, Validators.required],
-				name: [null],
+				name: null,
 			}),
 			aadharNumber: ['', Validators.maxLength(12)],
 			professionalTaxPECNo: ['', Validators.maxLength(20)],
 			prcNo: ['', Validators.maxLength(20)],
 			applicantVimaAmountPaid: this.fb.group({
-				code: [null],
-				name: [null],
+				code: null,
+				name: null,
 			}),
-			number: ['', Validators.maxLength(20)],
+			number: [''],
 			situationOfOffice: [null, [Validators.required, Validators.maxLength(100)]],
 			/* Step 1 controls end */
 
@@ -344,11 +344,11 @@ export class ShopLicModificationComponent implements OnInit {
 			residentialAddressOfManager: [null, [Validators.required, Validators.maxLength(500)]],
 			categoryOfBusiness: this.fb.group({
 				code: [null, Validators.required],
-				name: [null],
+				name: null,
 			}),
 			subCategoryOfBusiness: this.fb.group({
 				code: [null, Validators.required],
-				name: [null],
+				name: null,
 			}),
 			nameOfBusiness: [null, [Validators.required, Validators.maxLength(200)]],
 			nameOfBusinessGuj: [null, [Validators.required, Validators.maxLength(600)]],
@@ -361,23 +361,23 @@ export class ShopLicModificationComponent implements OnInit {
 			/* Step 3 controls start */
 
 			employerFamilyList: this.fb.array([]),
-			totalAdultEmployerFamily: [null],
-			totalYoungEmployerFamily: [null],
-			totalManEmployerFamily: [null],
-			totalWomenEmployerFamily: [null],
-			totalUnidentifiedEmployerFamily: [null],
-			totalFamilyMembers: [null],
+			totalAdultEmployerFamily: null,
+			totalYoungEmployerFamily: null,
+			totalManEmployerFamily: null,
+			totalWomenEmployerFamily: null,
+			totalUnidentifiedEmployerFamily: null,
+			totalFamilyMembers: null,
 			/* Step 3 controls end */
 			
 			/* Step 4 controls start */
 
 			occupancyList: this.fb.array([]),
-			totalAdultOccupancy: [null],
-			totalYoungOccupancy: [null],
-			totalManOccupancy: [null],
-			totalWomenOccupancy: [null],
-			totalUnidentifiedOccupancy: [null],
-			totalOccupancy: [null],
+			totalAdultOccupancy: null,
+			totalYoungOccupancy: null,
+			totalManOccupancy: null,
+			totalWomenOccupancy: null,
+			totalUnidentifiedOccupancy: null,
+			totalOccupancy: null,
 			/* Step 4 controls end */
 			
 			/* Step 5 controls start */
@@ -386,12 +386,12 @@ export class ShopLicModificationComponent implements OnInit {
 			}),
 			partnerList: this.fb.array([]),
 
-			totalAdultPartner: [null],
-			totalYoungPartner: [null],
-			totalManPartner: [null],
-			totalWomenPartner: [null],
-			totalUnidentifiedPartner: [null],
-			totalPartner: [null],
+			totalAdultPartner: null,
+			totalYoungPartner: null,
+			totalManPartner: null,
+			totalWomenPartner: null,
+			totalUnidentifiedPartner: null,
+			totalPartner: null,
 
 			/* Step 5 controls end */
 
@@ -402,16 +402,16 @@ export class ShopLicModificationComponent implements OnInit {
 			totalYoungEmployee: [null, Validators.required],
 			totalManEmployee: [null, Validators.required],
 			totalWomenEmployee: [null, Validators.required],
-			totalUnidentified: [null],
+			totalUnidentified: null,
 			totalEmployee: [null, Validators.required],
 			/* Step 6 controls end */
 
 
 
-			// situationOfOfficeGuj: [null],
-			// nameOfManagerGuj: [null],
-			// residentialAddressOfManagerGuj: [null],
-			//enterHolidayGuj: [null],
+			// situationOfOfficeGuj: null,
+			// nameOfManagerGuj: null,
+			// residentialAddressOfManagerGuj: null,
+			//enterHolidayGuj: null,
 			
 			/*  */
 			attachments: ['']
@@ -782,6 +782,18 @@ export class ShopLicModificationComponent implements OnInit {
 			console.error(error.message);
 		}
 
+	}
+	/**
+	 * Set validation as per dependent field value
+	 */
+	setValidationReq(formControlName: string) {
+		if (this.shopLicModificationForm.get('applicantVimaAmountPaid').get('code').value == 'YES') {
+			this.shopLicModificationForm.get(formControlName).setValidators([Validators.required, Validators.maxLength(20)]);
+		}
+		else {
+			this.shopLicModificationForm.get(formControlName).clearValidators();
+		}
+		this.shopLicModificationForm.get(formControlName).updateValueAndValidity();
 	}
 
 }
