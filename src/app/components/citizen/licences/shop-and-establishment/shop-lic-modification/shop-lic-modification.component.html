@@ -100,7 +100,7 @@
 
 					<div class="col-md-4 ngSelect" formGroupName="applicantVimaAmountPaid">
 						<ng-select placeholder="{{'vima_amount' | translate:translateKey}}" formControlName="code"
-							(change)="shopLicModificationForm.get('number').reset()">
+							(change)="shopLicModificationForm.get('number').reset();setValidationReq('number')">
 							<ng-option *ngFor="let yes_no of YES_NO" [value]="yes_no.code">{{yes_no.name}}</ng-option>
 						</ng-select>
 					</div>
@@ -258,7 +258,7 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput required [max]="disablefutureDate"
+						<input matInput required [max]="disablefutureDate" autocomplete="off" appDate
 							[matDatepicker]="DateOfCommencementOfBusiness" formControlName="commencementOfBusinessDate"
 							(dateChange)="dateFormat($event.value,'commencementOfBusinessDate')"
 							placeholder="{{ 'date_of_commencement_of_business' | translate:translateKey }} (DD/MM/YYYY)">
@@ -356,7 +356,7 @@
 									<th>{{'relationship' | translate:translateKey}}</th>
 									<th width="80">{{'gender' | translate:translateKey}}</th>
 									<th width="50">{{'age' | translate:translateKey}}</th>
-									<th width="110" *ngIf="shopLicModificationForm.get('canEdit').value"></th>
+									<th *ngIf="shopLicModificationForm.get('canEdit').value"></th>
 								</tr>
 							</thead>
 							<tbody formArrayName="employerFamilyList">
@@ -424,15 +424,17 @@
 
 									<td>
 										<div class="d-md-none">{{'age' | translate:translateKey}}</div>
-										<p class="width40" *ngIf="!item.isEditMode">{{item.get('age').value}}</p>
-										<mat-form-field *ngIf="item.isEditMode">
-											<input matInput maxlength="2" OnlyNumber formControlName="age">
-											<control-messages [control]="item.get('age')"></control-messages>
-										</mat-form-field>
+										<div class="adjustError">
+											<p class="width50" *ngIf="!item.isEditMode">{{item.get('age').value}}</p>
+											<mat-form-field *ngIf="item.isEditMode">
+												<input matInput maxlength="2" OnlyNumber formControlName="age">
+												<control-messages [control]="item.get('age')"></control-messages>
+											</mat-form-field>
+										</div>
 									</td>
 
 									<td>
-										<span class="width40" *ngIf="shopLicModificationForm.get('canEdit').value">
+										<span *ngIf="shopLicModificationForm.get('canEdit').value">
 											<button mat-icon-button color="primary" *ngIf="!item.isEditMode"
 												(click)="editRecord(item)">
 												<mat-icon title="Edit">edit</mat-icon>
@@ -443,7 +445,7 @@
 											</button>
 										</span>
 
-										<span class="width40" *ngIf="shopLicModificationForm.get('canEdit').value">
+										<span *ngIf="shopLicModificationForm.get('canEdit').value">
 											<button mat-icon-button color="warn" *ngIf="!item.isEditMode"
 												(click)="deleteRecord('EMPLOYER_FAMILY',indx)">
 												<mat-icon title="Delete">delete</mat-icon>
@@ -493,8 +495,8 @@
 								<td>{{calulateNumberOfPerson('employerFamilyList','totalFamilyMembers','total')}}</td>
 							</tr>
 							<tr>
-								<th>{{'total_person' | translate:translateKey}}</th>
-								<td>{{calulateNumberOfPerson('employerFamilyList','totalFamilyMembers','total')}}</td>
+								<!-- <th>{{'total_person' | translate:translateKey}}</th>
+								<td>{{calulateNumberOfPerson('employerFamilyList','totalFamilyMembers','total')}}</td> -->
 								<th></th>
 								<td></td>
 							</tr>
@@ -559,7 +561,7 @@
 									<th>{{'relationship' | translate:translateKey}}</th>
 									<th width="80">{{'gender' | translate:translateKey}}</th>
 									<th width="50">{{'age' | translate:translateKey}}</th>
-									<th width="110" *ngIf="shopLicModificationForm.get('canEdit').value"></th>
+									<th *ngIf="shopLicModificationForm.get('canEdit').value"></th>
 								</tr>
 							</thead>
 							<tbody formArrayName="occupancyList">
@@ -629,12 +631,14 @@
 
 									<td>
 										<div class="d-md-none">{{'age' | translate:translateKey}}</div>
-										<p *ngIf="!item.isEditMode">{{item.get('age').value}}</p>
-										<mat-form-field *ngIf="item.isEditMode">
-											<input matInput maxlength="2" OnlyNumber formControlName="age">
-											<control-messages *ngIf="item.isEditMode" [control]="item.get('age')">
-											</control-messages>
-										</mat-form-field>
+										<div class="adjustError">
+											<p *ngIf="!item.isEditMode">{{item.get('age').value}}</p>
+											<mat-form-field *ngIf="item.isEditMode">
+												<input matInput maxlength="2" OnlyNumber formControlName="age">
+												<control-messages *ngIf="item.isEditMode" [control]="item.get('age')">
+												</control-messages>
+											</mat-form-field>
+										</div>
 									</td>
 
 									<td>
@@ -767,7 +771,7 @@
 										<th>{{'relationship' | translate:translateKey}}</th>
 										<th width="80">{{'gender' | translate:translateKey}}</th>
 										<th width="50">{{'age' | translate:translateKey}}</th>
-										<th width="110" *ngIf="shopLicModificationForm.get('canEdit').value"></th>
+										<th *ngIf="shopLicModificationForm.get('canEdit').value"></th>
 									</tr>
 								</thead>
 								<tbody formArrayName="partnerList">
@@ -836,11 +840,14 @@
 
 										<td>
 											<div class="d-md-none">{{'age' | translate:translateKey}}</div>
-											<p class="width50" *ngIf="!item.isEditMode">{{item.get('age').value}}</p>
-											<mat-form-field *ngIf="item.isEditMode">
-												<input matInput maxlength="2" OnlyNumber formControlName="age">
-												<control-messages [control]="item.get('age')"></control-messages>
-											</mat-form-field>
+											<div class="adjustError">
+												<p class="width50" *ngIf="!item.isEditMode">{{item.get('age').value}}
+												</p>
+												<mat-form-field *ngIf="item.isEditMode">
+													<input matInput maxlength="2" OnlyNumber formControlName="age">
+													<control-messages [control]="item.get('age')"></control-messages>
+												</mat-form-field>
+											</div>
 										</td>
 
 										<td>

@@ -37,7 +37,7 @@ export class ValidationService {
             invalidpregnanceTime: 'Pregnancy duration between 25 to 40',
             invalidbirthRegNumber: 'Invalid Birth Registration Date',
             invalidBuildingName: 'Building name is not valid',
-            invalidemployeeage: 'Age must be greater than 13 year',
+            invalidemployeeage: 'Age must be >13 year',
             invalidIfscCode: 'IFSC Code is not valid',
             invalidPan: 'Enter valid PAN number e.g. ABCDE1234T',
             invalidGstin: 'The GSTIN is invalid, Please enter a valid GSTIN e.g. 29ABCDE1234F2Z5',

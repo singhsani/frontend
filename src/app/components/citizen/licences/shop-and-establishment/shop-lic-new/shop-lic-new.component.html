@@ -1,7 +1,8 @@
 <app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
 <mat-card class="formClass cardBorder">
 	<form [formGroup]="shopLicNewForm">
-		<mat-tab-group [(selectedIndex)]="licenseConfiguration.currentTabIndex" dynamicHeight="true" mat-stretch-tabs class="stepperNav">
+		<mat-tab-group [(selectedIndex)]="licenseConfiguration.currentTabIndex" dynamicHeight="true" mat-stretch-tabs
+			class="stepperNav">
 
 			<!-- step 1 Starts -->
 			<mat-tab>
@@ -73,7 +74,7 @@
 
 					<div class="col-md-4 ngSelect" formGroupName="applicantVimaAmountPaid">
 						<ng-select placeholder="{{'vima_amount' | translate:translateKey}}" formControlName="code"
-							(change)="shopLicNewForm.get('number').reset()">
+							(change)="shopLicNewForm.get('number').reset();setValidationReq('number')">
 							<ng-option *ngFor="let yes_no of YES_NO" [value]="yes_no.code">{{yes_no.name}}</ng-option>
 						</ng-select>
 					</div>
@@ -82,6 +83,7 @@
 						*ngIf="shopLicNewForm.get('applicantVimaAmountPaid').value.code == 'YES'">
 						<input matInput appAlphaNumeric maxlength="20"
 							placeholder="{{'number' | translate:translateKey}}" formControlName="number">
+						<control-messages [control]="shopLicNewForm.get('number')"></control-messages>
 					</mat-form-field>
 				</div>
 
@@ -227,13 +229,14 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput required [max]="disablefutureDate"
+						<input matInput required [max]="disablefutureDate" autocomplete="off" appDate
 							[matDatepicker]="DateOfCommencementOfBusiness" formControlName="commencementOfBusinessDate"
 							(dateChange)="dateFormat($event.value,'commencementOfBusinessDate')"
 							placeholder="{{ 'date_of_commencement_of_business' | translate:translateKey }}">
 						<mat-datepicker-toggle matSuffix [for]="DateOfCommencementOfBusiness"></mat-datepicker-toggle>
 						<mat-datepicker touchUi="true" #DateOfCommencementOfBusiness></mat-datepicker>
-						<div align="end" class="default-show-hint mat-hint mat-right">{{licenseConfiguration.DATE_HINT_MSG}}</div>
+						<div align="end" class="default-show-hint mat-hint mat-right">
+							{{licenseConfiguration.DATE_HINT_MSG}}</div>
 						<control-messages [control]="shopLicNewForm.get('commencementOfBusinessDate')">
 						</control-messages>
 					</mat-form-field>
@@ -301,8 +304,7 @@
 						<h2>{{ 'employer_family_table_label' | translate:translateKey}}</h2>
 					</div>
 					<div class="col-md-2 pt-3" style="text-align: right;">
-						<button type="button"
-							*ngIf="shopLicNewForm.get('canEdit').value"
+						<button type="button" *ngIf="shopLicNewForm.get('canEdit').value"
 							[disabled]="!(shopLicNewForm.get('employerFamilyList')['controls'].length < 5)"
 							matTooltip="{{'add_more' | translate:translateKey}}" mat-raised-button color="primary"
 							(click)="addMorePerson('EMPLOYER_FAMILY')">{{'add'| translate:translateKey}}</button>
@@ -320,7 +322,7 @@
 									<th>{{'relationship' | translate:translateKey}}</th>
 									<th width="80">{{'gender' | translate:translateKey}}</th>
 									<th width="50">{{'age' | translate:translateKey}}</th>
-									<th colspan="2" *ngIf="shopLicNewForm.get('canEdit').value"></th>
+									<th *ngIf="shopLicNewForm.get('canEdit').value"></th>
 								</tr>
 							</thead>
 							<tbody formArrayName="employerFamilyList">
@@ -389,32 +391,36 @@
 
 									<td>
 										<div class="d-md-none">{{'age' | translate:translateKey}}</div>
-										<p class="width60" *ngIf="!item.isEditMode">{{item.get('age').value}}</p>
-										<mat-form-field *ngIf="item.isEditMode">
-											<input matInput maxlength="2" OnlyNumber formControlName="age">
-											<control-messages [control]="item.get('age')"></control-messages>
-										</mat-form-field>
+										<div class="mobileCon adjustError">
+											<p class="width50" *ngIf="!item.isEditMode">{{item.get('age').value}}</p>
+											<mat-form-field *ngIf="item.isEditMode">
+												<input matInput maxlength="2" OnlyNumber formControlName="age">
+												<control-messages [control]="item.get('age')"></control-messages>
+											</mat-form-field>
+										</div>
 									</td>
 
-									<td style="width: 40px;" *ngIf="shopLicNewForm.get('canEdit').value">
-										<button mat-icon-button color="primary" *ngIf="!item.isEditMode"
-											(click)="editRecord(item)">
-											<mat-icon title="Edit">edit</mat-icon>
-										</button>
-										<button type="submit" [disabled]="item.invalid" mat-icon-button color="primary"
-											*ngIf="item.isEditMode" (click)="saveRecord(item)">
-											<mat-icon title="save">save</mat-icon>
-										</button>
-									</td>
-									<td style="width: 40px;" *ngIf="shopLicNewForm.get('canEdit').value">
-										<button mat-icon-button color="warn" *ngIf="!item.isEditMode"
-											(click)="deleteRecord('EMPLOYER_FAMILY',indx)">
-											<mat-icon title="Delete">delete</mat-icon>
-										</button>
-										<button mat-icon-button color="warn" *ngIf="item.isEditMode"
-											(click)="cancelRecord(item,indx)">
-											<mat-icon title="Cancel">cancel</mat-icon>
-										</button>
+									<td>
+										<span *ngIf="shopLicNewForm.get('canEdit').value">
+											<button mat-icon-button color="primary" *ngIf="!item.isEditMode"
+												(click)="editRecord(item)">
+												<mat-icon title="Edit">edit</mat-icon>
+											</button>
+											<button type="submit" [disabled]="item.invalid" mat-icon-button
+												color="primary" *ngIf="item.isEditMode" (click)="saveRecord(item)">
+												<mat-icon title="save">save</mat-icon>
+											</button>
+										</span>
+										<span *ngIf="shopLicNewForm.get('canEdit').value">
+											<button mat-icon-button color="warn" *ngIf="!item.isEditMode"
+												(click)="deleteRecord('EMPLOYER_FAMILY',indx)">
+												<mat-icon title="Delete">delete</mat-icon>
+											</button>
+											<button mat-icon-button color="warn" *ngIf="item.isEditMode"
+												(click)="cancelRecord(item,indx)">
+												<mat-icon title="Cancel">cancel</mat-icon>
+											</button>
+										</span>
 									</td>
 								</tr>
 							</tbody>
@@ -446,8 +452,8 @@
 								<td>{{calulateNumberOfPerson('employerFamilyList','totalFamilyMembers','total')}}</td>
 							</tr>
 							<tr>
-								<th>{{'total_person' | translate:translateKey}}</th>
-								<td>{{calulateNumberOfPerson('employerFamilyList','totalFamilyMembers','total')}}</td>
+								<!-- <th>{{'total_person' | translate:translateKey}}</th>
+								<td>{{calulateNumberOfPerson('employerFamilyList','totalFamilyMembers','total')}}</td> -->
 								<th></th>
 								<td></td>
 							</tr>
@@ -502,7 +508,8 @@
 						<h2>{{'occupying_position_of_management_table_label' | translate: translateKey }}</h2>
 					</div>
 					<div class="col-md-2 pt-3" style="text-align: right;">
-						<button type="button" *ngIf="shopLicNewForm.get('canEdit').value" [disabled]="!(shopLicNewForm.get('occupancyList')['controls'].length < 2)"
+						<button type="button" *ngIf="shopLicNewForm.get('canEdit').value"
+							[disabled]="!(shopLicNewForm.get('occupancyList')['controls'].length < 2)"
 							matTooltip="Add More Person Occuping" mat-raised-button color="primary"
 							(click)="addMorePerson('OCCUPANCY')">{{'add' | translate: translateKey}}</button>
 					</div>
@@ -519,7 +526,7 @@
 									<th>{{'relationship' | translate:translateKey}}</th>
 									<th width="80">{{'gender' | translate:translateKey}}</th>
 									<th width="50">{{'age' | translate:translateKey}}</th>
-									<th colspan="2" *ngIf="shopLicNewForm.get('canEdit').value"></th>
+									<th *ngIf="shopLicNewForm.get('canEdit').value"></th>
 								</tr>
 							</thead>
 							<tbody formArrayName="occupancyList">
@@ -589,33 +596,37 @@
 
 									<td>
 										<div class="d-md-none">{{'age' | translate:translateKey}}</div>
-										<p class="width50" *ngIf="!item.isEditMode">{{item.get('age').value}}</p>
-										<mat-form-field *ngIf="item.isEditMode">
-											<input matInput maxlength="2" OnlyNumber formControlName="age">
-											<control-messages *ngIf="item.isEditMode" [control]="item.get('age')">
-											</control-messages>
-										</mat-form-field>
+										<div class="adjustError">
+											<p class="width50" *ngIf="!item.isEditMode">{{item.get('age').value}}</p>
+											<mat-form-field *ngIf="item.isEditMode">
+												<input matInput maxlength="2" OnlyNumber formControlName="age">
+												<control-messages *ngIf="item.isEditMode" [control]="item.get('age')">
+												</control-messages>
+											</mat-form-field>
+										</div>
 									</td>
 
-									<td style="width: 40px;" *ngIf="shopLicNewForm.get('canEdit').value">
-										<button mat-icon-button color="primary" *ngIf="!item.isEditMode"
-											(click)="editRecord(item)">
-											<mat-icon title="Edit">edit</mat-icon>
-										</button>
-										<button type="submit" [disabled]="item.invalid" mat-icon-button color="primary"
-											*ngIf="item.isEditMode" (click)="saveRecord(item)">
-											<mat-icon title="save">save</mat-icon>
-										</button>
-									</td>
-									<td style="width: 40px;" *ngIf="shopLicNewForm.get('canEdit').value">
-										<button mat-icon-button color="warn" *ngIf="!item.isEditMode"
-											(click)="deleteRecord('OCCUPANCY',indx)">
-											<mat-icon title="Delete">delete</mat-icon>
-										</button>
-										<button mat-icon-button color="warn" *ngIf="item.isEditMode"
-											(click)="cancelRecord(item,indx)">
-											<mat-icon title="Cancel">cancel</mat-icon>
-										</button>
+									<td>
+										<span *ngIf="shopLicNewForm.get('canEdit').value">
+											<button mat-icon-button color="primary" *ngIf="!item.isEditMode"
+												(click)="editRecord(item)">
+												<mat-icon title="Edit">edit</mat-icon>
+											</button>
+											<button type="submit" [disabled]="item.invalid" mat-icon-button
+												color="primary" *ngIf="item.isEditMode" (click)="saveRecord(item)">
+												<mat-icon title="save">save</mat-icon>
+											</button>
+										</span>
+										<span *ngIf="shopLicNewForm.get('canEdit').value">
+											<button mat-icon-button color="warn" *ngIf="!item.isEditMode"
+												(click)="deleteRecord('OCCUPANCY',indx)">
+												<mat-icon title="Delete">delete</mat-icon>
+											</button>
+											<button mat-icon-button color="warn" *ngIf="item.isEditMode"
+												(click)="cancelRecord(item,indx)">
+												<mat-icon title="Cancel">cancel</mat-icon>
+											</button>
+										</span>
 									</td>
 
 								</tr>
@@ -711,8 +722,7 @@
 							<h2>{{'details_of_partner_label' | translate: translateKey}}</h2>
 						</div>
 						<div class="col-md-2 pt-3" style="text-align: right;">
-							<button
-								*ngIf="shopLicNewForm.get('canEdit').value"
+							<button *ngIf="shopLicNewForm.get('canEdit').value"
 								[disabled]="shopLicNewForm.get('typeOfOrganisation').value.code==='SHOP_LIC_SELF_OWNERSHIP' ? !(shopLicNewForm.get('partnerList')['controls'].length < 1) : !(shopLicNewForm.get('partnerList')['controls'].length < 10)"
 								type="button" matTooltip="{{'add_more' | translate: translateKey}}" mat-raised-button
 								color="primary" (click)="addMorePerson('PARTNER')">
@@ -812,7 +822,7 @@
 
 										<td>
 											<div class="d-md-none">{{'age' | translate:translateKey}}</div>
-											<div class="mobileCon">
+											<div class="mobileCon adjustError">
 												<p class="width50" *ngIf="!item.isEditMode">{{item.get('age').value}}
 												</p>
 												<mat-form-field *ngIf="item.isEditMode">
@@ -873,8 +883,8 @@
 									<td>{{calulateNumberOfPerson('partnerList','totalPartner','total')}}</td>
 								</tr>
 								<tr>
-									<th>{{'total_person' | translate:translateKey}}</th>
-									<td>{{calulateNumberOfPerson('partnerList','totalPartner','total')}}</td>
+									<!-- <th>{{'total_person' | translate:translateKey}}</th>
+									<td>{{calulateNumberOfPerson('partnerList','totalPartner','total')}}</td> -->
 									<th></th>
 									<td></td>
 								</tr>
@@ -1104,7 +1114,8 @@
 
 						<ng-container
 							*ngFor="let doc of shopLicNewForm.get('serviceDetail').get('serviceUploadDocuments').value  | filterAttachment:shopLicNewForm.get('typeOfOrganisation').value.code">
-							<div class="col-md-4" *ngIf="doc.requiredOnCitizenPortal && doc.isActive && licenseConfiguration.isAttachmentButtonsVisible">
+							<div class="col-md-4"
+								*ngIf="doc.requiredOnCitizenPortal && doc.isActive && licenseConfiguration.isAttachmentButtonsVisible">
 								<label>{{TranslateService.getCurrentLanguage()=='en'? doc.documentLabelEn : doc.documentLabelGuj }}
 									<span *ngIf="doc.mandatory">*</span></label>
 								<file-upload [form]="shopLicNewForm" [uploadModel]="doc"></file-upload>
@@ -1116,7 +1127,8 @@
 				</div>
 
 				<app-action-bar [uploadFiles]="uploadFilesArray" [form]="shopLicNewForm"
-					(handleErrors)="handleErrorsOnSubmit($event) " (tabIndex)="licenseConfiguration.onFormTabChange($event) "
+					(handleErrors)="handleErrorsOnSubmit($event) "
+					(tabIndex)="licenseConfiguration.onFormTabChange($event) "
 					[stepInfo]="{step: 'final', next:7, back: 5} "></app-action-bar>
 
 			</mat-tab>

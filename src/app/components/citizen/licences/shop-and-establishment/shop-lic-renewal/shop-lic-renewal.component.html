@@ -97,7 +97,7 @@
 
 					<div class="col-md-4 ngSelect" formGroupName="applicantVimaAmountPaid">
 						<ng-select placeholder="{{'vima_amount' | translate:translateKey}}" formControlName="code"
-							(change)="shopLicRenewalForm.get('number').reset()">
+							(change)="shopLicRenewalForm.get('number').reset();setValidationReq('number')">
 							<ng-option *ngFor="let yes_no of YES_NO" [value]="yes_no.code">{{yes_no.name}}</ng-option>
 						</ng-select>
 					</div>
@@ -254,7 +254,7 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input required matInput [matDatepicker]="DateOfCommencementOfBusiness"
+						<input required matInput autocomplete="off" appDate [matDatepicker]="DateOfCommencementOfBusiness"  autocomplete="off" appDate
 							formControlName="commencementOfBusinessDate"
 							placeholder="{{ 'date_of_commencement_of_business' | translate:translateKey }} (DD/MM/YYYY)">
 						<mat-datepicker-toggle matSuffix [for]="DateOfCommencementOfBusiness"></mat-datepicker-toggle>

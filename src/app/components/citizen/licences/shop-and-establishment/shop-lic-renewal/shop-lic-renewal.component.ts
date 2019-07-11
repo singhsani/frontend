@@ -308,25 +308,25 @@ export class ShopLicRenewalComponent implements OnInit {
 			postalAddress: this.fb.group(this.postalAddressEstablishment.addressControls()),
 			noOfHumanWorking: this.fb.group({
 				code: [null, Validators.required],
-				name: [null],
+				name: null,
 			}),
 			assessmentDoneByVMC: this.fb.group({
 				code: [null, Validators.required],
-				name: [null],
+				name: null,
 			}),
 			propertyTaxNo: [null, [Validators.required, Validators.maxLength(13), Validators.minLength(13)]],
 			wardNo: this.fb.group({
 				code: [null, Validators.required],
-				name: [null],
+				name: null,
 			}),
 			aadharNumber: ['', Validators.maxLength(12)],
 			professionalTaxPECNo: ['', [Validators.required, Validators.maxLength(20)]],
 			prcNo: ['', [Validators.required, Validators.maxLength(20)]],
 			applicantVimaAmountPaid: this.fb.group({
-				code: [null],
-				name: [null],
+				code: null,
+				name: null,
 			}),
-			number: ['', Validators.maxLength(20)],
+			number: [''],
 			situationOfOffice: [null, [Validators.required, Validators.maxLength(100)]],
 			/* Step 1 controls end */
 
@@ -339,11 +339,11 @@ export class ShopLicRenewalComponent implements OnInit {
 			residentialAddressOfManager: [null, [Validators.required, Validators.maxLength(500)]],
 			categoryOfBusiness: this.fb.group({
 				code: [null, Validators.required],
-				name: [null],
+				name: null,
 			}),
 			subCategoryOfBusiness: this.fb.group({
 				code: [null, Validators.required],
-				name: [null],
+				name: null,
 			}),
 			nameOfBusiness: [null, [Validators.required, Validators.maxLength(200)]],
 			nameOfBusinessGuj: [null, [Validators.required, Validators.maxLength(600)]],
@@ -353,55 +353,55 @@ export class ShopLicRenewalComponent implements OnInit {
 			}),
 			/* Step 2 controls end */
 
-			periodFrom: [null],
-			periodTo: [null],
-			newRegistration: [null],
-			renewal: [null],
-			adminCharges: [null],
-			netAmount: [null],
+			periodFrom: null,
+			periodTo: null,
+			newRegistration: null,
+			renewal: null,
+			adminCharges: null,
+			netAmount: null,
 
 			employerFamilyList: this.fb.array([]),
 
-			totalAdultEmployerFamily: [null],
-			totalYoungEmployerFamily: [null],
-			totalManEmployerFamily: [null],
-			totalWomenEmployerFamily: [null],
-			totalUnidentifiedEmployerFamily: [null],
-			totalFamilyMembers: [null],
+			totalAdultEmployerFamily: null,
+			totalYoungEmployerFamily: null,
+			totalManEmployerFamily: null,
+			totalWomenEmployerFamily: null,
+			totalUnidentifiedEmployerFamily: null,
+			totalFamilyMembers: null,
 
 			occupancyList: this.fb.array([]),
-			totalAdultOccupancy: [null],
-			totalYoungOccupancy: [null],
-			totalManOccupancy: [null],
-			totalWomenOccupancy: [null],
-			totalUnidentifiedOccupancy: [null],
-			totalOccupancy: [null],
+			totalAdultOccupancy: null,
+			totalYoungOccupancy: null,
+			totalManOccupancy: null,
+			totalWomenOccupancy: null,
+			totalUnidentifiedOccupancy: null,
+			totalOccupancy: null,
 
 			typeOfOrganisation: this.fb.group({
 				code: [null, Validators.required]
 			}),
 			partnerList: this.fb.array([]),
 
-			totalAdultPartner: [null],
-			totalYoungPartner: [null],
-			totalManPartner: [null],
-			totalWomenPartner: [null],
-			totalUnidentifiedPartner: [null],
-			totalPartner: [null],
+			totalAdultPartner: null,
+			totalYoungPartner: null,
+			totalManPartner: null,
+			totalWomenPartner: null,
+			totalUnidentifiedPartner: null,
+			totalPartner: null,
 
 			//employeeList: this.fb.array([]),
 			totalAdultEmployee: [null, Validators.required],
 			totalYoungEmployee: [null, Validators.required],
 			totalManEmployee: [null, Validators.required],
 			totalWomenEmployee: [null, Validators.required],
-			totalUnidentified: [null],
+			totalUnidentified: null,
 			totalEmployee: [null, Validators.required],
 
-			// situationOfOfficeGuj: [null],
-			// nameOfManagerGuj: [null],
-			// residentialAddressOfManagerGuj: [null],
-			//enterHolidayGuj: [null],
-			licenseIssueDate: [null],
+			// situationOfOfficeGuj: null,
+			// nameOfManagerGuj: null,
+			// residentialAddressOfManagerGuj: null,
+			//enterHolidayGuj: null,
+			licenseIssueDate: null,
 			/*  */
 			attachments: ['']
 			/*  */
@@ -468,7 +468,7 @@ export class ShopLicRenewalComponent implements OnInit {
 
 					break;
 				case 'unidentified':
-					countNumber = data.filter((obj: any) => obj.get('gender').value.code == "UNIDENTIFIED" && obj.get('age').value >= 14)
+					countNumber = data.filter((obj: any) => obj.get('gender').value.code == "TRANSGENDER" && obj.get('age').value >= 14)
 
 					break;
 
@@ -608,5 +608,18 @@ export class ShopLicRenewalComponent implements OnInit {
 			default:
 				this.licenseConfiguration.currentTabIndex = 0;
 		}
+	}
+
+	/**
+	 * Set validation as per dependent field value
+	 */
+	setValidationReq(formControlName: string) {
+		if (this.shopLicRenewalForm.get('applicantVimaAmountPaid').get('code').value == 'YES') {
+			this.shopLicRenewalForm.get(formControlName).setValidators([Validators.required, Validators.maxLength(20)]);
+		}
+		else {
+			this.shopLicRenewalForm.get(formControlName).clearValidators();
+		}
+		this.shopLicRenewalForm.get(formControlName).updateValueAndValidity();
 	}
 }
