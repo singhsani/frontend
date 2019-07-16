@@ -176,7 +176,7 @@ export class BookPlanetariumComponent implements OnInit {
             this.seatAvailable = respData.data.seatAvailable;
             // this.commonService.successAlert('success', 'Available', 'success');
             if (this.seatAvailable) {
-              this.toster.success(this.ticketBookingForm.get('totalVisitor').value + ' ' +this.ticketingConstants.AVAILABLE_SEATS);
+              this.toster.success(this.ticketBookingForm.get('totalVisitor').value + ' ' + this.ticketingConstants.AVAILABLE_SEATS);
             }
             else {
               this.toster.error(this.ticketBookingForm.get('totalVisitor').value + ' ' + this.ticketingConstants.NOT_AVAILABLE);
@@ -216,13 +216,16 @@ export class BookPlanetariumComponent implements OnInit {
    */
   getPlanetariumShowTimeSlot(e) {
     let showDate = moment(e.value).format('YYYY-MM-DD');
-    this.ticketingService.getPlanetariumShowTimeSlot(showDate, this.ticketBookingForm.get('resourceCodeLK').get('code').value).subscribe((respData) => {
-      // let planetariumVisitingSlot = respData.data;
-      // this.ticketBookingForm.get('rate').setValue(this.planetariumVisitingSlot.visitorCharge)
-    },
-      err => {
-        this.toster.error("Server Error");
-      });
+    if (!this.ticketBookingForm.get('visitingDate').invalid) {
+      this.ticketingService.getPlanetariumShowTimeSlot(showDate, this.ticketBookingForm.get('resourceCodeLK').get('code').value).subscribe((respData) => {
+        // let planetariumVisitingSlot = respData.data;
+        // this.ticketBookingForm.get('rate').setValue(this.planetariumVisitingSlot.visitorCharge)
+      },
+        err => {
+          this.toster.error("Server Error");
+        });
+    }
+
   }
 
   /**
@@ -406,7 +409,9 @@ export class BookPlanetariumComponent implements OnInit {
    * Save form data
    */
   savePlanetariumTickets() {
-    if (this.ticketBookingForm.get('visitingDate').value && this.ticketBookingForm.get('resourceCodeLK').get('code').value && this.ticketBookingForm.get('showCategory').get('code').value) {
+    if (this.ticketBookingForm.get('visitingDate').value
+      && this.ticketBookingForm.get('resourceCodeLK').get('code').value
+      && this.ticketBookingForm.get('showCategory').get('code').value == 'PLANETARIUM_SPECIAL_SHOW') {
       this.ticketBookingForm.get('resourceCode').setValue(this.ticketBookingForm.get('resourceCodeLK').get('code').value);
       this.ticketingService.saveDraftTickets(this.ticketBookingForm.value, this.ticketBookingForm.get('resourceCodeLK').get('code').value).subscribe(
         res => {
