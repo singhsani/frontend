@@ -6,6 +6,7 @@ import * as moment from 'moment';
 import { CommonService } from 'src/app/shared/services/common.service';
 import { Router } from '@angular/router';
 import { TicketingConstants } from '../../../config/ticketing-config';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-animal-adoption',
@@ -55,7 +56,8 @@ export class AnimalAdoptionComponent implements OnInit {
     private fb: FormBuilder,
     private ticketingService: TicketingsService,
     private commonService: CommonService,
-    private router: Router
+    private router: Router,
+    private toster: ToastrService
   ) {
     this.ticketingService.resourceType = 'zooanimaladoption';
   }
@@ -66,9 +68,26 @@ export class AnimalAdoptionComponent implements OnInit {
 
     this.animalAdoptionForm.valueChanges.subscribe( v => {
       // console.log(this.animalAdoptionForm);
+    });
+   this.getUserProfile();
+  }
+
+  /**
+   * get login user data
+   */
+  getUserProfile(){
+    this.ticketingService.getUserProfile().subscribe(res=>{
+      this.animalAdoptionForm.get('adopterEmailId').setValue(res.data.email);
+      this.animalAdoptionForm.get('adopterContactNumber').setValue(res.data.cellNo);
+    },
+    err =>{
+      this.toster.error("Server Error");
     })
   }
 
+  /**
+   * get rates of animal
+   */
   getZooVisitingRates() {
     this.ticketingService.getAnimalAdoptionFeesList().subscribe(d => {
       this.animalAdoptionPricing = d.data;
@@ -76,6 +95,9 @@ export class AnimalAdoptionComponent implements OnInit {
     });
   }
 
+  /**
+   * Generat form controls
+   */
   generateAnimalAdoptionForm() {
     this.animalAdoptionForm = this.fb.group({
       id: null,
