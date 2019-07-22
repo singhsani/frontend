@@ -180,8 +180,18 @@
         <div class="pl-3">
           <!-- <mat-checkbox class="d-block" labelPosition="after" formControlName="agree">
             {{'i_agree_with_above_bank_details_are_correct' | translate:translateKey}} </mat-checkbox> -->
+            <!-- <mat-checkbox class="d-block" labelPosition="after" formControlName="termsCondition">
+              {{'i_have_read_and_agree_with_terms_and_conditions' | translate:translateKey}} <a  class="stretchedLink" (click)="loadGuideLine()">
+                  Guideline/Terms and Conditions
+              </a>
+          </mat-checkbox> -->
+
           <mat-checkbox class="d-block" labelPosition="after" formControlName="termsCondition">
-            {{'i_have_read_and_agree_with_terms_and_conditions' | translate:translateKey}} </mat-checkbox>
+            {{'i_have_read_and_agree_with_terms_and_conditions' | translate:translateKey}}
+            <terms-conditions
+                [moduleNameParam]="{moduleName:ticketingService.moduleName,resourName: ticketingService.resourceType}">
+            </terms-conditions>
+        </mat-checkbox>
         </div>
 
       </div>

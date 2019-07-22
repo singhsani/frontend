@@ -546,17 +546,4 @@ export class BookPlanetariumComponent implements OnInit {
 
   }
 
-  /**
-   * Link for agreement.
-   */
-  loadGuideLine() {
-    this.ticketingService.loadGuideLine().subscribe(resp => {
-      const w = window.open('about:blank');
-      w.document.open();
-      w.document.title = "Planetarium Guide Line"
-      w.document.write(resp);
-      w.document.close();
-    })
-  }
-
 }

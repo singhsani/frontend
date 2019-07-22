@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 export class TicketingsService {
 
   requestURL: string;
+  moduleName:string = 'ticketing';
   resourceType: string;
   headers: any;
   apiType: string;
@@ -20,7 +21,7 @@ export class TicketingsService {
 	 * This method is use to get lookup data respective to api type
 	 */
   getDataFromLookups() {
-    this.requestURL = `api/ticketing/${this.resourceType}/lookups`;
+    this.requestURL = `api/${this.moduleName}/${this.resourceType}/lookups`;
     return this.http.get(this.requestURL);
   }
 
@@ -28,7 +29,7 @@ export class TicketingsService {
    * this api for guideline
    */
   loadGuideLine() {
-    this.requestURL = `api/ticketing/${this.resourceType}/guideline`;
+    this.requestURL = `api/${this.moduleName}/${this.resourceType}/guideline`;
     return this.http.get(this.requestURL, 'printReceipt');
   }
 
@@ -36,7 +37,7 @@ export class TicketingsService {
 	 * This method is used to book zoo tickets
 	*/
   bookZooTickets(ticketingInfo) {
-    this.requestURL = `api/ticketing/${this.resourceType}/book/?resourceCode=SARDARBAUGHZOO`;
+    this.requestURL = `api/${this.moduleName}/${this.resourceType}/book/?resourceCode=SARDARBAUGHZOO`;
     return this.http.post(this.requestURL, ticketingInfo);
   }
 
@@ -45,7 +46,7 @@ export class TicketingsService {
 	*/
   getListData() {
     // api/ticketing/planetarium/list
-    this.requestURL = `api/ticketing/${this.resourceType}/list`;
+    this.requestURL = `api/${this.moduleName}/${this.resourceType}/list`;
     return this.http.get(this.requestURL);
   }
 
@@ -53,14 +54,14 @@ export class TicketingsService {
 	 * This method is used to book planetarium tickets
 	*/
   bookPlanetariumTickets(ticketingInfo, resourceCode) {
-    this.requestURL = `api/ticketing/${this.resourceType}/book/?resourceCode=${resourceCode}`;
+    this.requestURL = `api/${this.moduleName}/${this.resourceType}/book/?resourceCode=${resourceCode}`;
     return this.http.post(this.requestURL, ticketingInfo);
   }
   /**
 	 * This method is used to save draft data
 	*/
   saveDraftTickets(ticketingInfo, resourceCode) {
-    this.requestURL = `api/ticketing/${this.resourceType}/save/?resourceCode=${resourceCode}`;
+    this.requestURL = `api/${this.moduleName}/${this.resourceType}/save/?resourceCode=${resourceCode}`;
     return this.http.post(this.requestURL, ticketingInfo);
   }
 
@@ -68,7 +69,7 @@ export class TicketingsService {
  * This method is used to book special show tickets
  */
   specialShowTicketsBooking(ticketingInfo, resourceCode) {
-    this.requestURL = `api/ticketing/${this.resourceType}/bookSpecialShow/?resourceCode=${resourceCode}`;
+    this.requestURL = `api/${this.moduleName}/${this.resourceType}/bookSpecialShow/?resourceCode=${resourceCode}`;
     return this.http.post(this.requestURL, ticketingInfo);
   }
 
@@ -76,15 +77,15 @@ export class TicketingsService {
     * This method is used to check seats
     */
    getPlanetariumShowAvailability(resourceCode:any,showLangulage:any,visitingDate:any,totalVisitor:any) {
-    this.requestURL = `api/ticketing/${this.resourceType}/checkAvailableSeats?resourceCode=${resourceCode}&showLangulage=${showLangulage}&visitingDate=${visitingDate}&totalVisitor=${totalVisitor}`;
+    this.requestURL = `api/${this.moduleName}/${this.resourceType}/checkAvailableSeats?resourceCode=${resourceCode}&showLangulage=${showLangulage}&visitingDate=${visitingDate}&totalVisitor=${totalVisitor}`;
     return this.http.get(this.requestURL);
   }
-  // api/ticketing/planetarium/checkAvailableSeats-
+  // api/${this.moduleName}/planetarium/checkAvailableSeats-
   /**
     * This method is used to book planetarium tickets
     */
   getPlanetariumShowTimeSlot(date, resourceCode?) {
-    this.requestURL = `api/ticketing/${this.resourceType}/slotsAPI?resource=${resourceCode}&startDate=${date}&endDate=${date}`;
+    this.requestURL = `api/${this.moduleName}/${this.resourceType}/slotsAPI?resource=${resourceCode}&startDate=${date}&endDate=${date}`;
     return this.http.get(this.requestURL);
   }
 
@@ -92,7 +93,7 @@ export class TicketingsService {
 	 * This method is used to get ticketing rates for visiting zoo
 	*/
   getZooVisitingRates() {
-    this.requestURL = `api/ticketing/${this.resourceType}/rateList`;
+    this.requestURL = `api/${this.moduleName}/${this.resourceType}/rateList`;
     return this.http.get(this.requestURL);
   }
 
@@ -100,14 +101,14 @@ export class TicketingsService {
 	 * This method is used to get total amount to be paid for visiting zoo
 	*/
   getTotalAmount(refNumber: string) {
-    this.requestURL = `api/ticketing/${this.resourceType}/getFees/${refNumber}`;
+    this.requestURL = `api/${this.moduleName}/${this.resourceType}/getFees/${refNumber}`;
     return this.http.get(this.requestURL);
   }
 
 
   // METHODS FOR ANIMAL ADOPTION MODULE OF ZOO MODULE
   animalAdoptionRequest(animalAdoptionRequestForm) {
-    this.requestURL = `api/ticketing/${this.resourceType}/adoptionRequest/?resourceCode=SARDARBAUGHZOO_ANIMALADOPTION`;
+    this.requestURL = `api/${this.moduleName}/${this.resourceType}/adoptionRequest/?resourceCode=SARDARBAUGHZOO_ANIMALADOPTION`;
     return this.http.post(this.requestURL, animalAdoptionRequestForm);
   }
 
@@ -115,7 +116,7 @@ export class TicketingsService {
 	 * Method Is used to get animal adoption fees
 	*/
   getAnimalAdoptionFeesList() {
-    this.requestURL = `api/ticketing/${this.resourceType}/getAnimalAdoptionFeesList`;
+    this.requestURL = `api/${this.moduleName}/${this.resourceType}/getAnimalAdoptionFeesList`;
     return this.http.get(this.requestURL);
   }
 
@@ -124,7 +125,7 @@ export class TicketingsService {
 	 * @param refNumber - reference number
 	 */
   printAcknowledgementReceipt(refNumber: string) {
-    this.requestURL = `api/ticketing/${this.resourceType}/print/acknowledgement/${refNumber}`;
+    this.requestURL = `api/${this.moduleName}/${this.resourceType}/print/acknowledgement/${refNumber}`;
     return this.http.get(this.requestURL, 'printReceipt');
   }
 
@@ -133,7 +134,7 @@ export class TicketingsService {
   * @param refNumber - reference number
   */
   printTicketingReceipt(refNumber: string, serviceType: string) {
-    this.requestURL = `api/ticketing/${this.resourceType}/printTicket/${refNumber}/${serviceType}`;
+    this.requestURL = `api/${this.moduleName}/${this.resourceType}/printTicket/${refNumber}/${serviceType}`;
     return this.http.get(this.requestURL, 'printReceipt');
   }
 
@@ -144,7 +145,7 @@ export class TicketingsService {
     if (!refNumber) {
       refNumber = ""
     }
-    this.requestURL = `api/ticketing/${this.resourceType}/myticketing?page=${this.pageIndex}&limit=${this.pageSize}&refNumber=${refNumber}`;
+    this.requestURL = `api/${this.moduleName}/${this.resourceType}/myticketing?page=${this.pageIndex}&limit=${this.pageSize}&refNumber=${refNumber}`;
     return this.http.get(this.requestURL);
   }
 
@@ -153,7 +154,7 @@ export class TicketingsService {
 	 * @param refNumber - reference number.
 	 */
   getTransactionDetails(refNumber) {
-    this.requestURL = `api/ticketing/${this.resourceType}/getTransactionDetail?refNumber=${refNumber}`;
+    this.requestURL = `api/${this.moduleName}/${this.resourceType}/getTransactionDetail?refNumber=${refNumber}`;
     return this.http.get(this.requestURL);
   }
 
@@ -162,7 +163,7 @@ export class TicketingsService {
 	 * @param refNumber - Reference Number
 	 */
   printPolicePerformanceLicense(refNumber) {
-    this.requestURL = `api/ticketing/${this.resourceType}/certificate/${refNumber}`;
+    this.requestURL = `api/${this.moduleName}/${this.resourceType}/certificate/${refNumber}`;
     return this.http.get(this.requestURL, 'printReceipt');
   }
 
@@ -171,7 +172,7 @@ export class TicketingsService {
 	 * @param refNumber 
 	 */
   displayJson(refNumber: any) {
-    this.requestURL = `api/ticketing/${this.resourceType}/json/${refNumber}`;
+    this.requestURL = `api/${this.moduleName}/${this.resourceType}/json/${refNumber}`;
     return this.http.get(this.requestURL);
   }
 
@@ -180,7 +181,7 @@ export class TicketingsService {
 	 * @param data - json data
 	 */
   cancelTicketing(data: any) {
-    this.requestURL = `api/ticketing/${this.resourceType}/cancelAPI`;
+    this.requestURL = `api/${this.moduleName}/${this.resourceType}/cancelAPI`;
     return this.http.post(this.requestURL, data);
   }
 

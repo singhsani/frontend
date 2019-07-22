@@ -69,16 +69,17 @@ export class AnimalAdoptionComponent implements OnInit {
     this.animalAdoptionForm.valueChanges.subscribe( v => {
       // console.log(this.animalAdoptionForm);
     });
-   this.getUserProfile();
+   this.profileData();
   }
 
   /**
    * get login user data
    */
-  getUserProfile(){
+  profileData(){
     this.ticketingService.getUserProfile().subscribe(res=>{
       this.animalAdoptionForm.get('adopterEmailId').setValue(res.data.email);
       this.animalAdoptionForm.get('adopterContactNumber').setValue(res.data.cellNo);
+      this.animalAdoptionForm.get('adoptingPersonOrganizationName').setValue(res.data.firstName + ' ' + res.data.lastName);
     },
     err =>{
       this.toster.error("Server Error");
@@ -152,4 +153,22 @@ export class AnimalAdoptionComponent implements OnInit {
     });
   }
 
+
+  /**
+   * Link for agreement.
+   */
+  // loadGuideLine() {
+  //   //   w.document.title = "Planetarium Guide Line"
+  //   let sectionToPrint;
+  //   this.ticketingService.loadGuideLine().subscribe(resp => {
+  //     sectionToPrint = document.getElementById('sectionTextPrint');
+  //     sectionToPrint.innerHTML = resp;
+  //   });
+
+  //   const dialogRef = this.dialog.open(GuidelinePopupComponent, sectionToPrint);
+    
+  //   dialogRef.afterClosed().subscribe(result => {
+  //     // console.log(`Dialog result: ${result}`);
+  //   });
+  // }
 }

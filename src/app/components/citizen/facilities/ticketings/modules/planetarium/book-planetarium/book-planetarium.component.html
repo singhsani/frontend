@@ -71,7 +71,7 @@
                     </div>
 
                     <div formGroupName="specialShowLanguage"
-                    [hidden]="ticketBookingForm.get('showCategory').get('code').value != 'PLANETARIUM_SPECIAL_SHOW'"
+                        [hidden]="ticketBookingForm.get('showCategory').get('code').value != 'PLANETARIUM_SPECIAL_SHOW'"
                         class="col-md-4 ngSelect">
                         <ng-select placeholder="{{'planetarium_shows_language'| translate: translateKey}}"
                             formControlName="code" (change)="setShiftType();getPlanetariumShowAvailability()">
@@ -136,28 +136,28 @@
                     </div>
                     <mat-form-field class="col-md-4">
                         <input matInput maxlength="50" formControlName="firstName"
-                            placeholder="{{'first_name' | translate: translateKey}}"  appValidationFields
+                            placeholder="{{'first_name' | translate: translateKey}}" appValidationFields
                             [validationFieldsType]="'onlyNameWithOutSpace'">
                         <control-messages [control]="ticketBookingForm.get('firstName')"></control-messages>
                     </mat-form-field>
 
                     <mat-form-field class="col-md-4">
                         <input matInput maxlength="50" formControlName="middleName"
-                            placeholder="{{'middle_name' | translate: translateKey}}"  appValidationFields
+                            placeholder="{{'middle_name' | translate: translateKey}}" appValidationFields
                             [validationFieldsType]="'onlyNameWithOutSpace'">
                         <control-messages [control]="ticketBookingForm.get('middleName')"></control-messages>
                     </mat-form-field>
 
                     <mat-form-field class="col-md-4">
                         <input matInput maxlength="50" formControlName="lastName"
-                            placeholder="{{'last_name' | translate: translateKey}}"  appValidationFields
+                            placeholder="{{'last_name' | translate: translateKey}}" appValidationFields
                             [validationFieldsType]="'onlyNameWithOutSpace'">
                         <control-messages [control]="ticketBookingForm.get('lastName')"></control-messages>
                     </mat-form-field>
 
                     <mat-form-field class="col-md-4">
                         <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="applicantMobile"
-                            placeholder="{{'mobile_number' | translate: translateKey}}" >
+                            placeholder="{{'mobile_number' | translate: translateKey}}">
                         <control-messages [control]="ticketBookingForm.get('applicantMobile')"></control-messages>
                     </mat-form-field>
 
@@ -173,7 +173,7 @@
 
                     <mat-form-field class="col-md-4">
                         <input matInput minlength="4" maxlength="4" formControlName="idNumber"
-                            placeholder="{{'id_number' | translate: translateKey}}" >
+                            placeholder="{{'id_number' | translate: translateKey}}">
                         <control-messages [control]="ticketBookingForm.get('idNumber')"></control-messages>
                         <mat-hint class="mt-3 font-weight-bold fsLarge">
                             ({{'last_4_digit_of_ID'| translate: translateKey}})</mat-hint>
@@ -235,11 +235,10 @@
                     <div class="pl-2">
                         <mat-checkbox class="d-block" labelPosition="after" formControlName="termsCondition">
                             {{'i_have_read_and_agree_with_terms_and_conditions' | translate:translateKey}}
+                            <terms-conditions
+                                [moduleNameParam]="{moduleName:ticketingService.moduleName,resourName: ticketingService.resourceType}">
+                            </terms-conditions>
                         </mat-checkbox>
-                        <a href="javascript:void(0)" class="stretched-link" (click)="loadGuideLine()">
-                            Guideline/Terms and Conditions
-                        </a>
-                        <!-- <control-messages [control]="ticketBookingForm.get('termsCondition')"></control-messages> -->
                     </div>
                 </div>
 

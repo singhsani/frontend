@@ -10,8 +10,6 @@ import { ModalModule } from 'ngx-bootstrap';
 import { NgxMaskModule } from 'ngx-mask';
 import { ChartsModule } from "ng2-charts";
 
-
-
 /* Import http related servies start */
 import { HttpService } from './services/http.service';
 import { TokenInterceptor } from './services/http-intercepter';
@@ -52,6 +50,7 @@ import { PaymentOptionComponent } from './components/payment-option/payment-opti
 import { GuidelinesComponent } from './components/guidelines/guidelines.component';
 import { GujVideoComponent } from './components/guj-video/guj-video.component';
 import { BaseChartComponent } from './components/base-chart/base-chart.component';
+import { TermsConditionsComponent, DialogContentComponent } from './components/terms-conditions/terms-conditions.component';
 /* import pipes end*/
 
 const COMPONENTS = [
@@ -80,14 +79,15 @@ const COMPONENTS = [
 	GuidelinesComponent,
 	GujVideoComponent,
 	BaseChartComponent,
-
+	TermsConditionsComponent,
+	DialogContentComponent
 
 ]
 
 @NgModule({
 	declarations: [
 		...COMPONENTS,
-		
+
 	],
 	imports: [
 		CommonModule,
@@ -98,7 +98,7 @@ const COMPONENTS = [
 		NgSelectModule,
 		ChartsModule,
 		ModalModule.forRoot(),
-		NgxMaskModule.forRoot(),		
+		NgxMaskModule.forRoot(),
 		ReactiveFormsModule,
 
 	],
@@ -122,6 +122,8 @@ const COMPONENTS = [
 		},
 		HosHttpService,
 		CountryService
-	]
+	],
+	entryComponents: [DialogContentComponent],
+
 })
 export class SharedModule { }
