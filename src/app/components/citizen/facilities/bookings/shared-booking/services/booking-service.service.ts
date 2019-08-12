@@ -9,6 +9,7 @@ export class BookingService {
 
   requestURL: string;
   resourceType: string;
+  moduleName: string = 'booking';
   headers: any;
   apiType: string;
   pageSize: number;
@@ -24,12 +25,12 @@ export class BookingService {
 	 * This method is use for get all resource
 	 */
   getResourceList() {
-    this.requestURL = `api/booking/${this.resourceType}/list`;
+    this.requestURL = `api/${this.moduleName}/${this.resourceType}/list`;
     return this.http.get(this.requestURL);
   }
 
   loadGuideLine() {
-    this.requestURL = `api/booking/${this.resourceType}/guideline`;
+    this.requestURL = `api/${this.moduleName}/${this.resourceType}/guideline`;
     return this.http.get(this.requestURL, 'printReceipt');
   }
 
@@ -38,7 +39,7 @@ export class BookingService {
 	 * @param filterData - filter data object.
 	 */
   getAllSlots(filterData) {
-    this.requestURL = `api/booking/${this.resourceType}/slotsAPI?resource=${filterData.resourceName}&startDate=${filterData.startDate}&endDate=${filterData.endDate}`;
+    this.requestURL = `api/${this.moduleName}/${this.resourceType}/slotsAPI?resource=${filterData.resourceName}&startDate=${filterData.startDate}&endDate=${filterData.endDate}`;
     return this.http.get(this.requestURL);
   }
 
@@ -47,7 +48,7 @@ export class BookingService {
 	 * @param shortListData - selected dates, shifts.
 	 */
   shortListBookings(shortListData) {
-    this.requestURL = `api/booking/${this.resourceType}/shortlistAPI`;
+    this.requestURL = `api/${this.moduleName}/${this.resourceType}/shortlistAPI`;
     return this.http.post(this.requestURL, shortListData);
   }
 
@@ -56,7 +57,7 @@ export class BookingService {
 	 * @param data - json data
 	 */
   cancelTownHall(data: any) {
-    this.requestURL = `api/booking/${this.resourceType}/cancelAPI`;
+    this.requestURL = `api/${this.moduleName}/${this.resourceType}/cancelAPI`;
     return this.http.post(this.requestURL, data);
   }
 
@@ -65,7 +66,7 @@ export class BookingService {
 	 * @param searchPaymentData - Search Payment Data.
 	 */
   searchPayment(refNumber) {
-    this.requestURL = `api/booking/${this.resourceType}/getFees/${refNumber}`;
+    this.requestURL = `api/${this.moduleName}/${this.resourceType}/getFees/${refNumber}`;
     return this.http.get(this.requestURL);
   }
 
@@ -74,17 +75,16 @@ export class BookingService {
 	 * @param refNumber - reference number.
 	 */
   getTransactionDetails(refNumber) {
-    this.requestURL = `api/booking/${this.resourceType}/getTransactionDetail?refNumber=${refNumber}`;
+    this.requestURL = `api/${this.moduleName}/${this.resourceType}/getTransactionDetail?refNumber=${refNumber}`;
     return this.http.get(this.requestURL);
   }
-
 
 	/**
 	 * Method is used to book slot (common).
 	 * @param bookingInfo - booking information.
 	 */
   commonBookSlot(bookingInfo) {
-    this.requestURL = `api/booking/${this.resourceType}/slot/bookAPI`;
+    this.requestURL = `api/${this.moduleName}/${this.resourceType}/slot/bookAPI`;
     return this.http.post(this.requestURL, bookingInfo);
   }
 
@@ -94,7 +94,7 @@ export class BookingService {
 	 * @param formData - form data
 	 */
   commonCancelBookedSlot(slotId, formData) {
-    this.requestURL = `api/booking/${this.resourceType}/slot/cancel?uuid=${slotId}`;
+    this.requestURL = `api/${this.moduleName}/${this.resourceType}/slot/cancel?uuid=${slotId}`;
     return this.http.post(this.requestURL, formData);
   }
 
@@ -103,7 +103,7 @@ export class BookingService {
 	 * @param refNumber - Reference Number
 	 */
   printPolicePerformanceLicense(refNumber) {
-    this.requestURL = `api/booking/${this.resourceType}/certificate/${refNumber}`;
+    this.requestURL = `api/${this.moduleName}/${this.resourceType}/certificate/${refNumber}`;
     return this.http.get(this.requestURL, 'printReceipt');
   }
 
@@ -111,8 +111,8 @@ export class BookingService {
 	 * Method is used to print rent receipt.
 	 * @param refNumber - Reference Number
 	 */
-  printReceipt(refNumber, type:string) {
-    this.requestURL = `api/booking/${this.resourceType}/printReceipt?refNumber=${refNumber}&serviceType=${type}`;
+  printReceipt(refNumber, type: string) {
+    this.requestURL = `api/${this.moduleName}/${this.resourceType}/printReceipt?refNumber=${refNumber}&serviceType=${type}`;
     return this.http.get(this.requestURL, 'printReceipt');
   }
 
@@ -121,7 +121,7 @@ export class BookingService {
 	 * @param refNumber - reference number
 	 */
   printAcknowledgementReceipt(refNumber: string) {
-    this.requestURL = `api/booking/${this.resourceType}/print/acknowledgement/${refNumber}`;
+    this.requestURL = `api/${this.moduleName}/${this.resourceType}/print/acknowledgement/${refNumber}`;
     return this.http.get(this.requestURL, 'printReceipt');
   }
 
@@ -133,7 +133,7 @@ export class BookingService {
 	 * @param enddate - YYYY-MM-DD
 	 */
   getGuestHouseSlots(resourceName, startdate, enddate) {
-    this.requestURL = `api/booking/${this.resourceType}/slots?resource=${resourceName}&date=${startdate}&enddate=${enddate}`;
+    this.requestURL = `api/${this.moduleName}/${this.resourceType}/slots?resource=${resourceName}&date=${startdate}&enddate=${enddate}`;
     return this.http.get(this.requestURL);
   }
 
@@ -143,7 +143,7 @@ export class BookingService {
 	 * @param formData - form data
 	 */
   bookSlot(slotId, formData) {
-    this.requestURL = `api/booking/${this.resourceType}/slot/book?uuid=${slotId}`;
+    this.requestURL = `api/${this.moduleName}/${this.resourceType}/slot/book?uuid=${slotId}`;
     return this.http.post(this.requestURL, formData);
   }
 
@@ -154,7 +154,7 @@ export class BookingService {
 	 * @param toDate - YYYY/mm/dd
 	 */
   bookGuestHouseSlot(resource, fromDate, toDate, formData?) {
-    this.requestURL = `api/booking/${this.resourceType}/book?resourceCode=${resource}&fromDate=${fromDate}&toDate=${toDate}`;
+    this.requestURL = `api/${this.moduleName}/${this.resourceType}/book?resourceCode=${resource}&fromDate=${fromDate}&toDate=${toDate}`;
     return this.http.post(this.requestURL, formData);
   }
 
@@ -164,7 +164,7 @@ export class BookingService {
 	 * @param formData - form data
 	 */
   cancelBookedSlot(refNumber, formData) {
-    this.requestURL = `api/booking/${this.resourceType}/cancelAPI?refNumber=${refNumber}`;
+    this.requestURL = `api/${this.moduleName}/${this.resourceType}/cancelAPI?refNumber=${refNumber}`;
     return this.http.get(this.requestURL);
   }
 
@@ -175,7 +175,7 @@ export class BookingService {
     if (!refNumber) {
       refNumber = ""
     }
-    this.requestURL = `api/booking/${this.resourceType}/mybooking?page=${this.pageIndex}&limit=${this.pageSize}&refNumber=${refNumber}`;
+    this.requestURL = `api/${this.moduleName}/${this.resourceType}/mybooking?page=${this.pageIndex}&limit=${this.pageSize}&refNumber=${refNumber}`;
     return this.http.get(this.requestURL);
   }
 
@@ -183,7 +183,7 @@ export class BookingService {
 	 * This method is use to get lookup data respective to api type
 	 */
   getDataFromLookups() {
-    this.requestURL = `api/booking/${this.resourceType}/lookups`;
+    this.requestURL = `api/${this.moduleName}/${this.resourceType}/lookups`;
     return this.http.get(this.requestURL);
   }
 
@@ -194,7 +194,7 @@ export class BookingService {
 	 * @param resourceCode - resource code for band.
 	 */
   getBookedBands(date, resourceCode) {
-    this.requestURL = `api/booking/${this.resourceType}/getBookedSlot?bookingDate=${date}&resourceCode=${resourceCode}`;
+    this.requestURL = `api/${this.moduleName}/${this.resourceType}/getBookedSlot?bookingDate=${date}&resourceCode=${resourceCode}`;
     return this.http.get(this.requestURL);
   }
 
@@ -206,7 +206,7 @@ export class BookingService {
 	 * @param resourceCode - resource code
 	 */
   shortListBands(startDate, startTime, endTime, resourceCode) {
-    this.requestURL = `api/booking/${this.resourceType}/shortListSlot?startDate=${startDate}&startTime=${startTime}&endTime=${endTime}&resourceCode=${resourceCode}`;
+    this.requestURL = `api/${this.moduleName}/${this.resourceType}/shortListSlot?startDate=${startDate}&startTime=${startTime}&endTime=${endTime}&resourceCode=${resourceCode}`;
     return this.http.post(this.requestURL, '');
   }
 
@@ -215,7 +215,7 @@ export class BookingService {
 	 * @param formData - pass complete band form.
 	 */
   confirmBandBooking(formData) {
-    this.requestURL = `api/booking/${this.resourceType}/bookSlot`;
+    this.requestURL = `api/${this.moduleName}/${this.resourceType}/bookSlot`;
     return this.http.post(this.requestURL, formData);
   }
 
@@ -224,17 +224,17 @@ export class BookingService {
 	 * @param transactionId - payment transaction id.
 	 */
   makePaymentService(transactionId) {
-    this.requestURL = `api/booking/${this.resourceType}/pay/${transactionId}`;
+    this.requestURL = `api/${this.moduleName}/${this.resourceType}/pay/${transactionId}`;
     return this.http.get(this.requestURL);
   }
 
   shortListTheater(theaterObject) {
-    this.requestURL = `api/booking/${this.resourceType}/slot/shortlistAPI?uniqueId=${theaterObject.uniqueId}`;
+    this.requestURL = `api/${this.moduleName}/${this.resourceType}/slot/shortlistAPI?uniqueId=${theaterObject.uniqueId}`;
     return this.http.post(this.requestURL, theaterObject);
   }
 
   bookSlotAmphiTheater(bookingInfo) {
-    this.requestURL = `api/booking/${this.resourceType}/slot/bookAPI`;
+    this.requestURL = `api/${this.moduleName}/${this.resourceType}/slot/bookAPI`;
     return this.http.post(this.requestURL, bookingInfo);
   }
 
@@ -243,7 +243,57 @@ export class BookingService {
 	 * @param refNumber 
 	 */
   displayJson(refNumber: any) {
-    this.requestURL = `api/booking/${this.resourceType}/json/${refNumber}`;
+    this.requestURL = `api/${this.moduleName}/${this.resourceType}/json/${refNumber}`;
     return this.http.get(this.requestURL);
   }
+
+  //swimming pool api
+  /**
+	 * This methos for display json on myBooking list
+	 */
+  filterPoolCode(poolCode: any) {
+    this.requestURL = `api/${this.moduleName}/${this.resourceType}/filter/batchCode/${poolCode}`;
+    return this.http.get(this.requestURL);
+  }
+
+  filterBatchCode(batchCode: any,poolName:any) {
+    this.requestURL = `api/${this.moduleName}/${this.resourceType}/filter/batchName/${batchCode}/${poolName}`;
+    return this.http.get(this.requestURL);
+  }
+  // api/booking/swimming/submit
+
+  /**
+	 * This method is used to get user profile data
+	 */
+  getUserProfile() {
+    return this.http.get('api/user/profile');
+  }
+
+  // api/booking/swimming/download/download/{fileName}
+
+  downloadGuidLineDocumemnt(filename: any, type: any) {
+    this.requestURL = `api/${this.moduleName}/${this.resourceType}/download/${filename}`;
+    // return this.http.get(this.requestURL);
+    return this.http.getUploadedFile(this.requestURL, type);
+
+  }
+  /**
+   * This method for save form data and get refNumber
+   */
+  saveDraftform(formInfo: any, resourceCode: any) {
+    // api/booking/swimming/save?resourceCode=LALBAUG_SWIMMING_POOL
+    this.requestURL = `api/${this.moduleName}/${this.resourceType}/save?resourceCode=${resourceCode}`;
+    return this.http.post(this.requestURL, formInfo);
+  }
+
+  /**
+   * this method for submit form data
+   */
+  submitFormData(formInfo: any) {
+    this.requestURL = `api/${this.moduleName}/${this.resourceType}/book`;
+    return this.http.post(this.requestURL, formInfo);
+  }
+
+   
+
 }

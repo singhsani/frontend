@@ -55,11 +55,11 @@ export class BTConfig extends CitizenConfig {
      * @param form - form
      * @param router router instance
      */
-    redirectToPayment(err: any, commonService: CommonService, btService: BookingService | TicketingsService, form?: FormGroup, router?: Router) {
+    redirectToPayment(err: any, commonService: CommonService, btService: BookingService | TicketingsService, form?: FormGroup, router?: Router, applicationrouter?: any) {
 
-      let redirectURLAfterPayment = (btService instanceof TicketingsService) ? BTConstants.MY_TICKETINGS_URL : BTConstants.MY_BOOKINGS_URL
+        let redirectURLAfterPayment = (btService instanceof TicketingsService) ? BTConstants.MY_TICKETINGS_URL : BTConstants.MY_BOOKINGS_URL
 
-      let payData = this.proceedForPayment(err.error.data, redirectURLAfterPayment, btService.resourceType);
+        let payData = this.proceedForPayment(err.error.data, redirectURLAfterPayment, btService.resourceType);
         commonService.commonAlert('Payment Details', '', 'info', 'Make Payment!', false, payData.html, cb => {
             window.location.href = environment.adminUrl + `payment-gateway?retUrl=${payData.payData.retUrl}&retPath=${payData.payData.retPath}`;
         }, rj => {
@@ -71,9 +71,15 @@ export class BTConfig extends CitizenConfig {
                 window.location.href = environment.adminUrl + `payment-gateway?retUrl=${payData.payData.retUrl}&retPath=${payData.payData.retPath}?&printUrl=${payData.payData.printUrl}`;
             }, arj => {
                 if (form && router) {
-                    form.disable();
-                    router.navigate([redirectURLAfterPayment]);
+                    if (applicationrouter) {
+                        router.navigate([applicationrouter]);
+                    }
+                    else {
+                        form.disable();
+                        router.navigate([redirectURLAfterPayment]);
+                    }
                 }
+
             });
             return;
         });
@@ -121,7 +127,7 @@ export class BTConfig extends CitizenConfig {
 					</div>
 				</div>
                 `
-            };
+        };
     }
 
     /**
