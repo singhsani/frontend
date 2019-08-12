@@ -191,5 +191,15 @@ export class TicketingsService {
 	getUserProfile() {
 
 		return this.http.get('api/user/profile');
+  }
+   /**
+	 * This method is used to creat payments for payable services
+	 * @param paymentData -pass payment data here.
+	 */
+	postFixedPayment(paymentData:any) {
+		let requestURL = `api/${this.moduleName}/${this.resourceType}/postFixedPayment`;
+
+		return this.http.post(requestURL, paymentData);
+
 	}
 }

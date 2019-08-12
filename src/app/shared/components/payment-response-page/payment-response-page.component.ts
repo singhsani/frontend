@@ -77,10 +77,6 @@ export class PaymentResponsePageComponent implements OnInit {
    * @param data 
    */
   locateTotargetPage(data) {
-
-    /**
-     * payment data object.
-     */
     let payData = {
       id: null,
       uniqueId: null,
@@ -95,6 +91,22 @@ export class PaymentResponsePageComponent implements OnInit {
       paymentStatus: this.paymentStatus
     }
 
+    //swimming pool module is LOI case module, this method is take payment first than submit form to newgan
+    if(data.resourceType == "swimming"){
+      this.formService.createLOIPayment(payData).subscribe(payResp => {
+        const payRespData = payResp.data.responseData;
+        
+          setTimeout(() => {
+            this.redirectToMyApplication(data.myApplicationUrl, payRespData.refNumber, payData.resourceType, payRespData.payableServiceType);
+          }, 10000);
+  
+          /**
+           * increase time to 10 secs.
+           */
+          this.interVal();
+        });
+    }
+    else{
     /**
      * call api to get details after success payment.
      */
@@ -109,6 +121,7 @@ export class PaymentResponsePageComponent implements OnInit {
          */
         this.interVal();
       });
+    }
   }
 
   /**

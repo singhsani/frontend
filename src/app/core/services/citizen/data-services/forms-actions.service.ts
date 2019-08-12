@@ -189,11 +189,20 @@ export class FormsActionsService {
 		this.requestURL = `public/postPayment`;
 
 		return this.http.post(this.requestURL, paymentData);
-
 		//return this.http.post('api/servicePayment/pay', paymentData);
-
 	}
 	
+	 /**
+	 * This method is used to creat payments for payable services
+	 * @param paymentData -pass payment data here.
+	 */
+	createLOIPayment(paymentData:any) {
+		// {{HOST}}/api/booking/swimming/postFixedPayment
+		let requestURL = `api/booking/swimming/postFixedPayment`;
+
+		return this.http.post(requestURL, paymentData);
+	}
+
 	/**
 	 * This method is used to creat payments for payable services
 	 * @param paymentData -pass payment data here.
