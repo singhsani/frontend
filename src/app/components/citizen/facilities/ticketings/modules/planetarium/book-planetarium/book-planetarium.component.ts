@@ -59,7 +59,7 @@ export class BookPlanetariumComponent implements OnInit {
   */
   constructor(
     private _fb: FormBuilder,
-    private ticketingService: TicketingsService,
+    public ticketingService: TicketingsService,
     private commonService: CommonService,
     private router: Router,
     private toster: ToastrService,
