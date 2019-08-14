@@ -180,7 +180,9 @@ export class HosActionBarComponent implements OnInit, OnChanges {
 							if (err.status === 402) {
 								this.saveEvent.emit({ isSaved: true });
 								let retUrl: string = '/hospital/my-applications';
-								let payData = this.commonService.storePaymentInfo(err.error.data, retUrl, 'hospital/payment-gateway-response');
+								let moduleWithAppointment = this.form.getRawValue().serviceDetail.appointmentRequired;
+
+								let payData = this.commonService.storePaymentInfo(err.error.data,retUrl);
 								let html =
 									`
 									<div class="text-center">

@@ -27,7 +27,6 @@ export class SwimmingPoolComponent implements OnInit {
   showDowlLoadFileTab: boolean = false;
   showSwimmingPoolForm: boolean = true;
 
-
   formId: number;
   apiCode: string;
   public tabIndex: number = 0;
@@ -62,7 +61,7 @@ export class SwimmingPoolComponent implements OnInit {
   APPLICANT_PROOF: Array<any> = [];
   BANK: Array<any> = [];
   session: any;
-
+  durationisReadOnly:boolean= false;
   /**
    * @param fb - Declare FormBuilder property.
    * @param validationError - Declare validation service property
@@ -155,6 +154,19 @@ export class SwimmingPoolComponent implements OnInit {
     }
     else {
 
+    }
+
+  }
+
+  /**
+   * Method for hide duration field
+   */
+  changeBatchDuration(event){
+    if(event == 'LEARNER'){
+      this.swimmimgPoolBookingForm.get('batchDuration').get('code').setValue('MONTHLY');
+      this.durationisReadOnly = true;
+    }else{
+      this.durationisReadOnly = false;
     }
 
   }
