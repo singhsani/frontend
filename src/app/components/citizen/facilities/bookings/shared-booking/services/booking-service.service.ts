@@ -294,6 +294,12 @@ export class BookingService {
     return this.http.post(this.requestURL, formInfo);
   }
 
+  searchRenewSwimmingPool(poolNumber:any){
+    // {{HOST}}/api/booking/swimmingrenewal/searchBySwimmnerNumber/{{REF_NUM}}
+    this.requestURL = `api/${this.moduleName}/swimmingrenewal/searchBySwimmnerNumber/${poolNumber}`;
+    return this.http.get(this.requestURL);
+
+  }
    
 
 }

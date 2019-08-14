@@ -334,6 +334,10 @@ const ROUTEMAIN = {
         'main': 'swimmingPool',
         'type': 'swimmingPool'
     },
+    'SWIMMINGPOOLRENEWAL': {
+        'main': 'swimmingPoolRenewal',
+        'type': 'swimmingPoolRenewal'
+    },
     'THEATER': {
         'main': 'theater',
         'type': 'amphiTheater'
@@ -426,7 +430,7 @@ const ROUTEMAIN = {
         'main': 'stillBirthReg',
         'type': 'stillBirthReg'
     },
-    'HEL-BCR-HOSPITAL' : {
+    'HEL-BCR-HOSPITAL': {
         'main': 'birthCorrectionReg',
         'type': 'birthCorrectionReg'
     },
@@ -782,6 +786,9 @@ const ROUTESLIST = {
     'SWIMMINGPOOL': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.BOOKINGMODULE + '/' + ROUTEPREFIX.SWIMMINGMODULE + '/' + ROUTEMAIN.SWIMMINGPOOL.main
     },
+    'SWIMMINGPOOLRENEWAL': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.BOOKINGMODULE + '/' + ROUTEPREFIX.SWIMMINGMODULE + '/' + ROUTEMAIN.SWIMMINGPOOLRENEWAL.main
+    },
     //AMPHI-THEATER
     'THEATERLIST': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.BOOKINGMODULE + '/' + ROUTEPREFIX.THEATERMODULE + '/' + ROUTEMAIN.THEATERLIST.main
@@ -893,7 +900,7 @@ const ROUTESLIST = {
     'HEL-SB': {
         'full': ROUTEPREFIX.HOSPITALMODULE + '/' + ROUTEMAIN["HEL-SB"].main
     },
-    'HEL-BCR-HOSPITAL' : {
+    'HEL-BCR-HOSPITAL': {
         'full': ROUTEPREFIX.HOSPITALMODULE + '/' + ROUTEMAIN["HEL-BCR-HOSPITAL"].main
     },
     'HOSPITALMYAPPS': {

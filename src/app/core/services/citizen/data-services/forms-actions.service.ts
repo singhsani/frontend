@@ -181,6 +181,13 @@ export class FormsActionsService {
 		return this.http.post('api/user/update', formData);
 	}
 
+	createTokenforServicePayment(payData:any){
+
+		this.requestURL = `public/payment/generateTokenUrl`;
+
+		return this.http.post(this.requestURL, payData);
+	}
+
 	/**
 	 * This method is used to creat payments for payable services
 	 * @param paymentData -pass payment data here.

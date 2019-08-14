@@ -40,6 +40,7 @@ export class ActionBarComponent implements OnInit, OnChanges {
 		private sessionStore: SessionStorageService,
 		private router: Router, private fb: FormBuilder,
 		private toastr: ToastrService,
+		private session: SessionStorageService,
 		private commonService: CommonService) {
 	}
 
@@ -158,7 +159,8 @@ export class ActionBarComponent implements OnInit, OnChanges {
 									this.isSubmitBtnDisabled = false;
 									let retUrl: string = '/citizen/my-applications';
 									if (err.status === 402) {
-										if (this.form.getRawValue().serviceDetail.appointmentRequired) {
+										let moduleWithAppointment = this.form.getRawValue().serviceDetail.appointmentRequired;
+										if (moduleWithAppointment) {
 											retUrl = `/citizen/appointmant/schedule-appointment/slot-booking/` + this.form.getRawValue().serviceFormId + `/` + this.form.getRawValue().serviceDetail.code;
 										}
 
@@ -173,8 +175,18 @@ export class ActionBarComponent implements OnInit, OnChanges {
 											<p>Rupees in words</p>
 										</div>
 										`
+
 										this.commonService.commonAlert('Payment Details', '', 'info', 'Make Payment!', false, html, cb => {
-											window.location.href = environment.adminUrl + `payment-gateway?retUrl=${payData.retUrl}&retPath=${payData.retPath}`;
+											// window.location.href = environment.adminUrl + `payment-gateway?retUrl=${payData.retUrl}&retPath=${payData.retPath}`;
+
+											this.formService.createTokenforServicePayment(payData).subscribe(resp => {
+
+												window.open(resp.data, "_self");
+
+											}, err => {
+												this.toastr.error(err.error.message);
+											})
+
 										}, rj => {
 											let errHtml = `			
 												<div class="alert alert-danger">
@@ -192,6 +204,8 @@ export class ActionBarComponent implements OnInit, OnChanges {
 											return;
 										});
 										return;
+									} else {
+										this.commonService.openAlert("Error", "Error Occured for final submit : " + err.error[0].message, "warning")
 									}
 								}
 							);

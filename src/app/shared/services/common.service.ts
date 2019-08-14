@@ -102,7 +102,7 @@ export class CommonService {
 		}
 
 		this.isCallback(options, performDelete);
-		
+
 	}
 
 	submitAlert(title: string, message: string, type: string, html?: any, performSubmit?: any) {
@@ -122,7 +122,7 @@ export class CommonService {
 		}
 
 		this.isCallback(options, performSubmit);
-		
+
 	}
 
 	successAlert(title: string, message: string, type: string) {
@@ -153,7 +153,7 @@ export class CommonService {
 		}
 
 		this.isCallback(options, pay);
-		
+
 	}
 
 	getUserType(): string {
@@ -230,22 +230,24 @@ export class CommonService {
 		})
 	}
 
-	storePaymentInfo(paymentData, myApplicationUrl, retPath = 'citizen/payment-gateway-response'): any {
+	storePaymentInfo(paymentData, myApplicationUrl): any {
 		let payData = {
 			id: null,
 			uniqueId: null,
 			version: null,
-			refNumber: paymentData.serviceFormId,
 			response: JSON.stringify({
 				data: "paid",
 				status: true
 			}),
-			transactionId: paymentData.transactionId,
 			paymentStatus: null,
-			retUrl: environment.citizenUrl,
-			retPath: retPath,
-			myApplicationUrl: myApplicationUrl,
-			amount: paymentData.amount
+			transactionId: paymentData.transactionId,
+			payableServiceType: paymentData.serviceCode,
+			refNumber: paymentData.refNumber,
+			amount: paymentData.amount,
+			paymentMode: "NETBANKING",
+			returnUrl: environment.returnUrl,
+			myApplicationUrl: myApplicationUrl
+
 		}
 		this.session.set('paymentData', JSON.stringify(payData));
 
