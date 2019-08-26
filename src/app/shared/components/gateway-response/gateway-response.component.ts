@@ -43,25 +43,19 @@ export class GatewayResponseComponent implements OnInit {
 	gatewayResponse(token) {
 		this.formService.getPaymentResponse(token).subscribe(res => {
 			this.responseObj = res.data;
-		
+
 			if (res.success) {
-
 				this.paymentStatus = res.success;
-				
-				this.postSessionData(this.dispData);
-
+				if (this.responseObj.txn_msg == 'failure') {
+					this.redirectToHome();
+				} else {
+					this.postSessionData(this.dispData);
+				}
 				this.clearSession();
 			}
 			else {
 				this.toastr.error('Transaction failed');
-
-				setTimeout(() => {
-					this.redirectToHome();
-				}, 10000);
-
-				this.interval = setInterval(() => {
-					this.dispTime = this.dispTime - 1
-				}, 1000);
+				this.redirectToHome();
 			}
 
 		});
@@ -86,38 +80,53 @@ export class GatewayResponseComponent implements OnInit {
 			paymentStatus: this.paymentStatus,
 			payableServiceType: data.payableServiceType
 		}
-			
+
 		this.formService.createPayment(payData).subscribe(payResp => {
 			const payRespData = payResp.data.responseData;
-			setTimeout(() => {
-				this.redirectToMyApplication(data.myApplicationUrl, payRespData.refNumber, payData.resourceType, payRespData.payableServiceType);
-			}, 10000);
 
-			this.interVal();
+			if (payRespData.fileStatus == "PAYMENT_RECEIVED") {
+				this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(payRespData.serviceType);
+				this.formService.submitFormData(payRespData.serviceFormId).subscribe(res => {
+					if (res) {
+						setTimeout(() => {
+							this.redirectToMyApplication(data.myApplicationUrl, payRespData.refNumber, payData.resourceType, payRespData.payableServiceType);
+						}, 10000);
+
+						this.interVal();
+					}
+				});
+			} else {
+				setTimeout(() => {
+					this.redirectToMyApplication(data.myApplicationUrl, payRespData.refNumber, payData.resourceType, payRespData.payableServiceType);
+				}, 10000);
+
+				this.interVal();
+			}
+
 		},
-		err => {
-			this.toastr.error('Internal server error');
-		});
+			err => {
+				this.toastr.error('Internal server error');
+			});
 	}
 
-	// redirectToMyApplication() {
-	// 	clearInterval(this.interval);
-	// 	this.router.navigate([ManageRoutes.getFullRoute('CITIZENMYAPPS')]);
-	// }
 
-	  /**
-   * method is used to redirect to my application page.
-   */
-  redirectToMyApplication(myApplicationUrl,refNumber = undefined, resourceType = undefined, serviceType = undefined) {
-    if(refNumber && resourceType && serviceType){
-      this.router.navigateByUrl(myApplicationUrl + `?refNumber=${refNumber}&resourceType=${resourceType}&serviceType=${serviceType}`);
-    } else {
-      this.router.navigateByUrl(myApplicationUrl);
-    }
-  }
+	/**
+ * method is used to redirect to my application page.
+ */
+	redirectToMyApplication(myApplicationUrl, refNumber = undefined, resourceType = undefined, serviceType = undefined) {
+		if (refNumber && resourceType && serviceType) {
+			this.router.navigateByUrl(myApplicationUrl + `?refNumber=${refNumber}&resourceType=${resourceType}&serviceType=${serviceType}`);
+		} else {
+			this.router.navigateByUrl(myApplicationUrl);
+		}
+	}
 
 	redirectToHome() {
-		this.router.navigate([ManageRoutes.getFullRoute('CITIZENMYAPPS')]);
+		setTimeout(() => {
+			this.router.navigate([ManageRoutes.getFullRoute('CITIZENMYAPPS')]);
+		}, 10000);
+
+		this.interVal();
 	}
 	/**
 	 * method is used to clear session data.
