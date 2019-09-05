@@ -300,6 +300,26 @@ export class BookingService {
     return this.http.get(this.requestURL);
 
   }
+
+  /*Below service is use for atithigruh */
+  atithigruhList() {
+    return this.http.get(`api/booking/${this.resourceType}/list`);
+  }
+
+  generateReference(data){
+    return this.http.post('api/booking/atithigruh/saveAdvanceBooking', data);
+  }
+
+  calculateFees(refNumber){
+    this.requestURL = `api/booking/atithigruh/calculateFees/${refNumber}`;
+    return this.http.get(this.requestURL);
+  }
+
+  submitAdvanceBooking(data){
+    this.requestURL = `api/booking/atithigruh/submitAdvanceBookingRequest`;
+    return this.http.post(this.requestURL, data, 'printReceipt');
+  }
+  /*Services end for atithigruh */
    
 
 }

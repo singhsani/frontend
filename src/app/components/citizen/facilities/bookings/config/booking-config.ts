@@ -9,9 +9,11 @@ export class BookingConstants extends BTConstants {
     static TOWNHALL_DEPOSIT = "TOWNHALL_DEPOSIT";
     static TOWNHALL_FEES = "TOWNHALL_FEES";
     static SELECT_SHIFT_MESSAGE="Please Select shift";
+    static SELECT_SLOT_MESSAGE="Please Select slot";
     static TOWNHALL_RESOURCE_TYPE ="townhall";
     static STADIUM_RESOURCE_TYPE = "stadium";
     static CT_RESOURCE_TYPE ="childrenTheater";
+    static ATITHIGRUH_RESOURCE_TYPE ="atithigruh";
     static SHOOTING_PERMISSION_PLACE = "shootingPermission";
     static BOOKINGS_FILE_UPLOAD_URL = 'api/attachment/booking/upload';
 }
