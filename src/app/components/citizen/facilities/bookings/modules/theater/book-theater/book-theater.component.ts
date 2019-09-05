@@ -10,6 +10,7 @@ import { BookingConstants, BookingUtils } from '../../../config/booking-config';
 import { MatPaginator, MatSort } from '@angular/material';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 import { BookingService } from '../../../shared-booking/services/booking-service.service';
+import { FormsActionsService } from 'src/app/core/services/citizen/data-services/forms-actions.service';
 
 @Component({
     selector: 'app-book-theater',
@@ -26,7 +27,7 @@ export class BookTheaterComponent implements OnInit {
     /**
        * Loading Booking Configuration
        */
-    bookingUtils: BookingUtils = new BookingUtils();
+    bookingUtils: BookingUtils;
     bookingConstants = BookingConstants;
 
 	/**
@@ -98,10 +99,14 @@ export class BookTheaterComponent implements OnInit {
     constructor(
         private fb: FormBuilder,
         private bookingService: BookingService,
-        private toster: ToastrService,
+        protected toster: ToastrService,
         private commonService: CommonService,
         private modalService: BsModalService,
-        private router : Router) { this.bookingService.resourceType = 'amphiTheater'; }
+        protected formService: FormsActionsService,
+        private router: Router) {
+        this.bookingUtils = new BookingUtils(formService, toster);
+        this.bookingService.resourceType = 'amphiTheater';
+    }
 
 	/**
 	 * Method Initialzes first.

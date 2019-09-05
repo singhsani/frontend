@@ -28,7 +28,7 @@ const routes: Routes = [
 			{ path: 'stillBirthReg/:id/:apiCode', component: StillBirthComponent, canActivate: [HospitalGuard], canDeactivate: [CanDeactivateGuard]  },
 			{ path: 'birthCorrectionReg/:id/:apiCode', component: BirthCorrectionComponent, canDeactivate: [CanDeactivateGuard] },
 			{ path: 'my-applications', component: HosMyApplicationsComponent, canActivate: [HospitalGuard] },
-			{ path: 'payment-gateway-response', component: HosPaymentResponsePageComponent, canActivate: [HospitalGuard] },
+			{ path: 'hos-payment-gateway-response', component: HosPaymentResponsePageComponent, canActivate: [HospitalGuard] },
 		]
 	},
 	{ path: 'auth', loadChildren: './hospital-auth/hospital-auth.module#HospitalAuthModule'}

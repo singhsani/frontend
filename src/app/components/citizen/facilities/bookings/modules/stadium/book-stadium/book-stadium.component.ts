@@ -9,6 +9,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 import { CommonService } from 'src/app/shared/services/common.service';
 import { ToastrService } from 'ngx-toastr';
 import { BookingService } from '../../../shared-booking/services/booking-service.service';
+import { FormsActionsService } from 'src/app/core/services/citizen/data-services/forms-actions.service';
 
 @Component({
     selector: 'app-book-stadium',
@@ -34,7 +35,7 @@ export class BookStadiumComponent implements OnInit {
      * Booking Constants and utils
      */
     bookingConstants = BookingConstants;
-    bookingUtils: BookingUtils = new BookingUtils();
+    bookingUtils: BookingUtils;
 
     /**
      * Flags for hide/show
@@ -88,7 +89,10 @@ export class BookStadiumComponent implements OnInit {
         private router: Router,
         private _fb: FormBuilder, private toster: ToastrService,
         private modalService: BsModalService,
-        private commonService: CommonService) {
+        private commonService: CommonService,
+        protected toastr: ToastrService,
+        protected formService: FormsActionsService) {
+        this.bookingUtils = new BookingUtils(formService, toastr);
         this.bookingService.resourceType = this.bookingConstants.STADIUM_RESOURCE_TYPE;
     }
 

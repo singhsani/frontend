@@ -230,7 +230,7 @@ export class CommonService {
 		})
 	}
 
-	storePaymentInfo(paymentData, myApplicationUrl): any {
+	storePaymentInfo(paymentData:any, myApplicationUrl:any,retAfterPayment:any): any {
 		let payData = {
 			id: null,
 			uniqueId: null,
@@ -245,7 +245,7 @@ export class CommonService {
 			refNumber: paymentData.refNumber,
 			amount: paymentData.amount,
 			paymentMode: "NETBANKING",
-			returnUrl: environment.returnUrl,
+			returnUrl: retAfterPayment,
 			myApplicationUrl: myApplicationUrl
 
 		}

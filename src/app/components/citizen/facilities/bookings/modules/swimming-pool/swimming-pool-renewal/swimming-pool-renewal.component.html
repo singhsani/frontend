@@ -1,17 +1,17 @@
 <app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
 
 <mat-card [hidden]="serachObj.isDisplayRenewLicenceForm" class="mt-4 formClass">
-	<mat-form-field class="col-md-10">
-		<input matInput required placeholder="{{'search_by_membership_no' | translate:translateKey}}"
-			[(ngModel)]="serachObj.searchLicenceNumber">
-	</mat-form-field>
-	<button class="col-md-2" [disabled]="!serachObj.searchLicenceNumber" mat-raised-button color="primary"
-		(click)="searchLicence()">{{'search'
+  <mat-form-field class="col-md-10">
+    <input matInput required placeholder="{{'search_by_membership_no' | translate:translateKey}}"
+      [(ngModel)]="serachObj.searchLicenceNumber">
+  </mat-form-field>
+  <button class="col-md-2" [disabled]="!serachObj.searchLicenceNumber" mat-raised-button color="primary"
+    (click)="searchLicence()">{{'search'
 		| translate:translateKey}}</button>
 </mat-card>
 
 <mat-card [hidden]="!serachObj.isDisplayRenewLicenceForm" class="formClass cardBorder">
-	<form [formGroup]="swimmimgPoolRenewalForm">
+  <form [formGroup]="swimmimgPoolRenewalForm" autocomplete="off">
     <mat-tab-group [(selectedIndex)]="tabIndex" dynamicHeight="true" mat-stretch-tabs class="stepperNav">
 
       <!-- Tab 1 Starts -->
@@ -23,8 +23,7 @@
         <div class="row">
 
           <div formGroupName="swimmingPoolName" class="col-md-4 ngSelect">
-            <ng-select required placeholder="{{'swimming_pool_name' | translate:translateKey}} *"
-              formControlName="code"
+            <ng-select required placeholder="{{'swimming_pool_name' | translate:translateKey}} *" formControlName="code"
               (change)="filterAsperPool($event);swimmimgPoolRenewalForm.get('batchName').reset();swimmimgPoolRenewalForm.get('batchFor').reset()">
               <ng-option *ngFor="let pool of SWIMMING_POOL_NAME" [value]="pool.code">
                 {{pool.name}}
@@ -35,8 +34,7 @@
           </div>
 
           <div class="col-md-4 ngSelect" formGroupName="membershipType">
-            <ng-select placeholder="{{'membership_type' | translate:translateKey}} *"
-              formControlName="code">
+            <ng-select placeholder="{{'membership_type' | translate:translateKey}} *" formControlName="code">
               <ng-option *ngFor="let member of MEMBERSHIP_TYPE" [value]="member.code">{{member.name}}
               </ng-option>
             </ng-select>
@@ -45,8 +43,8 @@
           </div>
 
           <div class="col-md-4 ngSelect" formGroupName="category">
-            <ng-select placeholder="{{'category' | translate:translateKey}} *" formControlName="code"
-              required (change)="swimmimgPoolRenewalForm.get('batchFor').reset();changeBatchDuration($event)">
+            <ng-select placeholder="{{'category' | translate:translateKey}} *" formControlName="code" required
+              (change)="changeBatchDuration($event);changeCtegory($event)">
               <ng-option *ngFor="let cat of CATEGORY" [value]="cat.code">{{cat.name}}</ng-option>
             </ng-select>
             <control-messages [control]="swimmimgPoolRenewalForm.get('category').get('code')">
@@ -54,9 +52,9 @@
           </div>
 
           <div class="col-md-4 ngSelect" formGroupName="batchDuration">
-            <ng-select placeholder="{{'batch_duration' | translate:translateKey}} *"
-              formControlName="code" required>
-              <ng-option *ngFor="let time of BATCH_DURATION" [value]="time.code" [disabled]='durationisReadOnly'>{{time.name}}
+            <ng-select placeholder="{{'batch_duration' | translate:translateKey}} *" formControlName="code" required>
+              <ng-option *ngFor="let time of BATCH_DURATION" [value]="time.code" [disabled]='durationisReadOnly'>
+                {{time.name}}
               </ng-option>
             </ng-select>
             <control-messages [control]="swimmimgPoolRenewalForm.get('batchDuration').get('code')">
@@ -64,8 +62,7 @@
           </div>
 
           <div class="col-md-4 ngSelect" formGroupName="batchFor">
-            <ng-select placeholder="{{'batch_for' | translate:translateKey}} *" formControlName="code"
-              required
+            <ng-select placeholder="{{'batch_for' | translate:translateKey}} *" formControlName="code" required
               (change)="filterAsperBatchName($event);swimmimgPoolRenewalForm.get('batchName').reset()">
               <ng-option *ngFor="let batchFor of BATCH_FOR" [value]="batchFor.code">{{batchFor.name}}
               </ng-option>
@@ -75,8 +72,7 @@
           </div>
 
           <div class="col-md-4 ngSelect" formGroupName="batchName">
-            <ng-select placeholder="{{'batch_name' | translate:translateKey}} *" formControlName="code"
-              required>
+            <ng-select placeholder="{{'batch_name' | translate:translateKey}} *" formControlName="code" required>
               <ng-option *ngFor="let batchName of BATCH_NAME" [value]="batchName.code">
                 {{batchName.name}}
               </ng-option>
@@ -92,8 +88,7 @@
               (click)="showDowlLoadFileTab = false; showSwimmingPoolForm = true;">
               {{'back' | translate:translateKey}}
             </button>
-            <button mat-raised-button type="button" color="primary"
-              (click)="tabIndex= tabIndex +1;saveFormData()">
+            <button mat-raised-button type="button" color="primary" (click)="tabIndex= tabIndex +1;saveFormData()">
               {{'save_and_next'| translate:translateKey}}
               <mat-icon>navigate_next</mat-icon>
             </button>
@@ -118,16 +113,14 @@
           </mat-form-field>
 
           <mat-form-field class="col-md-4">
-            <input matInput OnlyNumber minlength="10" maxlength="10"
-              formControlName="applicantMobileNumber"
+            <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="applicantMobileNumber"
               placeholder="{{'mobile_number' | translate: translateKey}}" required>
             <control-messages [control]="swimmimgPoolRenewalForm.get('applicantMobileNumber')">
             </control-messages>
           </mat-form-field>
 
           <mat-form-field class="col-md-4">
-            <input matInput OnlyNumber minlength="10" maxlength="10"
-              formControlName="applicantEmergencyNumber"
+            <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="applicantEmergencyNumber"
               placeholder="{{'applicant_emergency_number' | translate: translateKey}}" required>
             <control-messages [control]="swimmimgPoolRenewalForm.get('applicantEmergencyNumber')">
             </control-messages>
@@ -161,8 +154,7 @@
           </mat-form-field>
 
           <div class="col-md-4 ngSelect" formGroupName="applicantIDProof">
-            <ng-select placeholder="{{'id_proof' | translate:translateKey}} *" formControlName="code"
-              required>
+            <ng-select placeholder="{{'id_proof' | translate:translateKey}} *" formControlName="code" required>
               <ng-option *ngFor="let proof of APPLICANT_PROOF" [value]="proof.code">
                 {{proof.name}}
               </ng-option>
@@ -179,14 +171,12 @@
           </mat-form-field>
 
           <div class="col-md-4 ngSelect" formGroupName="applicantBloodGroup">
-            <ng-select placeholder="{{'blood_group' | translate:translateKey}} *" formControlName="code"
-              required>
+            <ng-select placeholder="{{'blood_group' | translate:translateKey}} *" formControlName="code" required>
               <ng-option *ngFor="let yes_no of BLOOD_GROUP" [value]="yes_no.code">
                 {{yes_no.name}}
               </ng-option>
             </ng-select>
-            <control-messages
-              [control]="swimmimgPoolRenewalForm.get('applicantBloodGroup').get('code')">
+            <control-messages [control]="swimmimgPoolRenewalForm.get('applicantBloodGroup').get('code')">
             </control-messages>
           </div>
         </div>
@@ -204,8 +194,7 @@
               <mat-icon>navigate_before</mat-icon>
               {{'back' | translate:translateKey}}
             </button>
-            <button mat-raised-button type="button" color="primary"
-              (click)="tabIndex= tabIndex +1;saveFormData()">
+            <button mat-raised-button type="button" color="primary" (click)="tabIndex= tabIndex +1;saveFormData()">
               {{'save_and_next'| translate:translateKey}}
               <mat-icon>navigate_next</mat-icon>
             </button>
@@ -218,7 +207,7 @@
       <!-- step Attachment Starts -->
       <mat-tab>
         <ng-template mat-tab-label>
-          <div>{{'attachment' | translate: translateKey}}</div>
+          <div>{{'bank_details' | translate: translateKey}}</div>
         </ng-template>
         <div class="row">
 
@@ -236,9 +225,9 @@
           </div>
 
           <mat-form-field class="col-md-6">
-            <input matInput type="text" maxlength="50" appValidationFields
-              [validationFieldsType]="'onlyNameWithSpace'" formControlName="accountHolderName"
-              placeholder="{{'account_holder_name' | translate: translateKey}}" required>
+            <input matInput type="text" maxlength="50" appValidationFields [validationFieldsType]="'onlyNameWithSpace'"
+              formControlName="accountHolderName" placeholder="{{'account_holder_name' | translate: translateKey}}"
+              required>
             <control-messages [control]="swimmimgPoolRenewalForm.get('accountHolderName')">
             </control-messages>
           </mat-form-field>
@@ -321,8 +310,12 @@
               <mat-icon>navigate_before</mat-icon>
               {{'back' | translate:translateKey}}
             </button>
-            <button mat-raised-button color="primary" type="submit">
+            <button mat-raised-button color="primary" type="submit" (click)="submitApplication()"
+              *ngIf="!dependentOnCategory">
               {{'submit_application'| translate: translateKey}}
+            </button>
+            <button mat-raised-button color="primary" (click)="printSwimmingReceipt()" *ngIf="dependentOnCategory">
+              {{'print_application'| translate: translateKey}}
             </button>
           </div>
         </div>
@@ -330,5 +323,6 @@
       <!-- step Attachment Ends -->
 
     </mat-tab-group>
-	</form>
+  </form>
 </mat-card>
+<div id="sectionToPrint"></div>

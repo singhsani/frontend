@@ -48,7 +48,7 @@ export class SwimmingPoolRenewalComponent implements OnInit {
   /**
   * Loading Booking Configuration
   */
-  bookingUtils: BookingUtils = new BookingUtils();
+  bookingUtils: BookingUtils ;
   bookingConstants = BookingConstants;
 
   // required attachment array
@@ -66,6 +66,8 @@ export class SwimmingPoolRenewalComponent implements OnInit {
   BANK: Array<any> = [];
   session: any;
   durationisReadOnly: boolean = false;
+  oldFormCategory: any;
+  dependentOnCategory: boolean = false;
 
   // serach api variable
   serachObj = {
@@ -105,14 +107,15 @@ export class SwimmingPoolRenewalComponent implements OnInit {
 	*/
   constructor(
     private fb: FormBuilder,
-    private validationService: ValidationService,
     private toastr: ToastrService,
-    private route: ActivatedRoute,
+    private router: Router,
     private formService: FormsActionsService,
     public bookingService: BookingService,
     private commonService: CommonService,
     public TranslateService: TranslateService
-  ) { this.bookingService.resourceType = 'swimming'; }
+  ) { 
+    this.bookingUtils = new BookingUtils(formService, toastr);
+    this.bookingService.resourceType = 'swimming'; }
 
 	/**
 	 * This method call initially required methods.
@@ -148,6 +151,11 @@ export class SwimmingPoolRenewalComponent implements OnInit {
 
     // this.formId = res.serviceFormId;
     this.swimmimgPoolRenewalForm.patchValue(searchData);
+    /**
+     * save category for last submit process
+     */
+    this.oldFormCategory = searchData.category.code;
+
     this.bookingService.saveDraftform(this.swimmimgPoolRenewalForm.value, this.swimmimgPoolRenewalForm.get('swimmingPoolName').get('code').value).subscribe(
       res => {
         this.swimmimgPoolRenewalForm.get('refNumber').setValue(res.refNumber);
@@ -205,16 +213,31 @@ export class SwimmingPoolRenewalComponent implements OnInit {
 
   }
 
+  /**
+   * This method for find user category
+   */
+  changeCtegory(event: any) {
+
+    if (event == 'SWIMMER' && this.oldFormCategory == 'LEARNER') {
+      this.dependentOnCategory = true;
+    }
+    else {
+      this.dependentOnCategory = false;
+    }
+
+  }
+
 	/**
 	 * This method use for edit some fiels.
 	 */
   enableFielList() {
     this.swimmimgPoolRenewalForm.get('swimmingPoolName').enable();
     this.swimmimgPoolRenewalForm.get('batchDuration').enable();
-    this.swimmimgPoolRenewalForm.get('membershipType').enable();
+    // this.swimmimgPoolRenewalForm.get('membershipType').enable();
     this.swimmimgPoolRenewalForm.get('category').enable();
     this.swimmimgPoolRenewalForm.get('batchDuration').enable();
     this.swimmimgPoolRenewalForm.get('batchFor').enable();
+    this.swimmimgPoolRenewalForm.get('batchName').enable();
   }
 
 	/**
@@ -235,7 +258,7 @@ export class SwimmingPoolRenewalComponent implements OnInit {
     });
   }
 
-	
+
 	/**
 	 * This method create form controls.
 	 */
@@ -467,14 +490,13 @@ export class SwimmingPoolRenewalComponent implements OnInit {
     this.swimmimgPoolRenewalForm.get(controlType).setValue(moment(date).format("YYYY-MM-DD"));
   }
 
-
   /**
    * Save form data
    */
   saveFormData() {
     // if (this.swimmimgPoolRenewalForm.get('swimmingPoolName').get('code').value) {
     // this.swimmimgPoolRenewalForm.get('swimmingPoolName').setValue(this.swimmimgPoolRenewalForm.get('resourceCodeLK').get('code').value);
-    this.bookingService.saveDraftform(this.swimmimgPoolRenewalForm.value, this.swimmimgPoolRenewalForm.get('swimmingPoolName').get('code').value).subscribe(
+    this.bookingService.saveDraftform(this.swimmimgPoolRenewalForm.getRawValue(), this.swimmimgPoolRenewalForm.get('swimmingPoolName').get('code').value).subscribe(
       res => {
         this.swimmimgPoolRenewalForm.get('refNumber').setValue(res.refNumber);
         this.swimmimgPoolRenewalForm.patchValue(res);
@@ -518,16 +540,119 @@ export class SwimmingPoolRenewalComponent implements OnInit {
     }
   }
 
-	/**
-	 * Set validation as per dependent field value
-	 */
-  setValidationReq(formControlName: string) {
-    if (this.swimmimgPoolRenewalForm.get('applicantVimaAmountPaid').get('code').value == 'YES') {
-      this.swimmimgPoolRenewalForm.get(formControlName).setValidators([Validators.required, Validators.maxLength(20)]);
+  /**
+   * Print receipt and processed for department approval
+   */
+  printSwimmingReceipt() {
+    let errCount = this.bookingUtils.getAllErrors(this.swimmimgPoolRenewalForm);
+    if (this.swimmimgPoolRenewalForm.invalid) {
+      this.handleErrorsOnSubmit(errCount);
+      this.commonService.openAlert("Field Error", this.bookingConstants.ALL_FEILD_REQUIRED_MESSAGE, 'warning')
+      return;
+    } else {
+      // print call
+      this.bookingService.saveDraftform(this.swimmimgPoolRenewalForm.getRawValue(), this.swimmimgPoolRenewalForm.get('swimmingPoolName').get('code').value).subscribe(
+        res => {
+          this.bookingService.printSwimmingReceipt(res.refNumber, 'SWIMMING_POOL_RENEWAL_FEES').subscribe(printHTML => {
+            let sectionToPrint: any = document.getElementById('sectionToPrint');
+            sectionToPrint.innerHTML = printHTML;
+            setTimeout(() => {
+              window.print();
+              this.router.navigate([this.bookingConstants.MY_BOOKINGS_URL]);
+            });
+
+          }, err => {
+            this.toastr.error("Server Error");
+
+          });
+
+        }, err => {
+          this.toastr.error("Server Error");
+
+        });
+
     }
+  }
+  /**
+  * Submit form data
+  */
+  submitApplication(): void {
+
+    let errCount = this.bookingUtils.getAllErrors(this.swimmimgPoolRenewalForm);
+    if (this.swimmimgPoolRenewalForm.invalid) {
+      this.handleErrorsOnSubmit(errCount);
+      this.commonService.openAlert("Field Error", this.bookingConstants.ALL_FEILD_REQUIRED_MESSAGE, 'warning')
+      return;
+    }
+    // else if (!this.bookingUtils.matcher(this.swimmimgPoolRenewalForm, 'emailId', 'confirmEmailId') || !this.bookingUtils.matcher(this.swimmimgPoolRenewalForm, 'applicantMobile', 'confirmMobile')) {
+    //   this.commonService.openAlert("Field Error", !this.bookingUtils.matcher(this.swimmimgPoolRenewalForm, 'emailId', 'confirmEmailId') ? this.bookingConstants.EMAIL_MIS_MATCH_MESSAGE : this.bookingConstants.MOB_NO_MIS_MATCH_MESSAGE, 'warning');
+    //   this.handleErrorsOnSubmit(7);
+    //   return;}
+    // else if (!this.isFileUploaded1 || !this.isFileUploaded2 || !this.isFileUploaded3 || !this.isFileUploaded4) {
+    //   this.handleErrorsOnSubmit(33);
+    //   this.commonService.openAlert(this.bookingConstants.FEILD_ERROR_TITLE, 'Attachment Required!', 'warning')
+    //   return;
+    // }
     else {
-      this.swimmimgPoolRenewalForm.get(formControlName).clearValidators();
+      // save call
+      this.bookingService.saveDraftform(this.swimmimgPoolRenewalForm.getRawValue(), this.swimmimgPoolRenewalForm.get('swimmingPoolName').get('code').value).subscribe(
+        res => {
+          this.swimmimgPoolRenewalForm.get('refNumber').setValue(res.refNumber);
+          this.swimmimgPoolRenewalForm.patchValue(res);
+          // payment call
+          this.bookingService.getTransactionDetails(this.swimmimgPoolRenewalForm.get('refNumber').value).subscribe(rep => {
+
+          }, (err) => {
+            if (err.status == 402) {
+              this.bookingUtils.redirectToPayment(err, this.commonService, this.bookingService, this.swimmimgPoolRenewalForm, this.router, 'citizen/bookings/swimming-pool/swimmingPoolRenewal');
+              return;
+
+              // submit and print call
+              // this.bookingService.submitFormData(this.swimmimgPoolRenewalForm.value).subscribe(resp => {
+
+              //   if (resp.data.status == this.bookingConstants.SUBMITTED) {
+              //     this.commonService.commonAlert("Swimming Pool", "Booked Successfully", "success", "Print Receipt", false, '', pA => {
+              //       this.bookingService.printReceipt(resp.data.refNumber, 'SWIMMING_POOL_FEES').subscribe(printHTML => {
+              //         let sectionToPrint: any = document.getElementById('sectionToPrint');
+              //         sectionToPrint.innerHTML = printHTML;
+              //         setTimeout(() => {
+              //           window.print();
+              //           this.router.navigate([this.bookingConstants.MY_BOOKINGS_URL]);
+              //         });
+              //       }, err => {
+              //         this.commonService.openAlert("Error", err.error[0].message, "warning")
+              //       })
+              //     }, rA => {
+              //       this.router.navigate([this.bookingConstants.MY_BOOKINGS_URL]);
+              //     })
+              //   }
+
+              // }, (err) => {
+              //   if (err.error[0].code == this.bookingConstants.INVALID_BOOKING_STATUS) {
+              //     this.commonService.openAlert("Invalid Booking Status", err.error[0].message, "warning", "", cb => {
+              //       this.router.navigate([this.bookingConstants.MY_BOOKINGS_URL])
+              //     })
+              //   } else {
+              //     this.commonService.openAlertFormSaveValidation('Warning!', err.error, 'warning');
+              //   }
+              // })
+
+            } else if (err.error[0].code == this.bookingConstants.INVALID_BOOKING_STATUS) {
+              this.commonService.openAlert("Invalid Booking Status", err.error[0].message, "warning", "", cb => {
+                this.router.navigate([this.bookingConstants.MY_BOOKINGS_URL]);
+              })
+            } else {
+              this.commonService.openAlertFormSaveValidation('Warning!', err.error, 'warning');
+            }
+          })
+
+        },
+        err => {
+          this.commonService.openAlertFormSaveValidation('Warning!', err.error, 'warning');
+        });
+
+      return;
     }
-    this.swimmimgPoolRenewalForm.get(formControlName).updateValueAndValidity();
+
   }
 }

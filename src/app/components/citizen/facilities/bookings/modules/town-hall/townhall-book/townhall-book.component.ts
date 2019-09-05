@@ -8,6 +8,7 @@ import { CommonService } from 'src/app/shared/services/common.service';
 import { BookingConstants, BookingUtils } from '../../../config/booking-config';
 import { ValidationService } from 'src/app/shared/services/validation.service';
 import { BookingService } from '../../../shared-booking/services/booking-service.service';
+import { FormsActionsService } from '../../../../../../../core/services/citizen/data-services/forms-actions.service';
 
 export interface BookingDetails {
 	administrationCharges: string
@@ -38,7 +39,7 @@ export class TownHallBookComponent implements OnInit {
 	@ViewChild(MatPaginator) paginator: MatPaginator;
 
 	bookingConstants = BookingConstants;
-	bookingUtils: BookingUtils = new BookingUtils();
+	bookingUtils: BookingUtils;
 
 	/**
 	 * language translate key.
@@ -118,8 +119,11 @@ export class TownHallBookComponent implements OnInit {
 		private bookingService: BookingService,
 		private toster: ToastrService,
 		private router: Router,
-		private CD: ChangeDetectorRef
+		private CD: ChangeDetectorRef,
+		protected formService: FormsActionsService,
+		protected toaster: ToastrService
 	) {
+		this.bookingUtils = new BookingUtils(formService, toaster);
 		this.bookingService.resourceType = this.bookingConstants.TOWNHALL_RESOURCE_TYPE;
 	}
 

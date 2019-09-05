@@ -1,5 +1,7 @@
 
 import { BTConfig, BTConstants } from "../../config/bt-config";
+import { ToastrService } from 'ngx-toastr';
+import { FormsActionsService } from '../../../../../core/services/citizen/data-services/forms-actions.service';
 
 
 /**
@@ -24,10 +26,12 @@ export class BookingConstants extends BTConstants {
 export class BookingUtils extends BTConfig {
 
     bookingConstants  = BookingConstants;
-
-    constructor(){
-        super();
-    }
+    
+    constructor(public formService?: FormsActionsService,
+        public toastr?: ToastrService
+     ) {
+         super(formService, toastr);
+     }
 
     /**
 	 * Selection Parts is being started from  here.

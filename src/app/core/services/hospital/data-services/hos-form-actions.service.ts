@@ -17,7 +17,7 @@ export class HosFormActionsService {
 
 	}
 
-	getChartData(){
+	getChartData() {
 		this.requestURL = `api/user/chartDetails`;
 		return this.http.get(this.requestURL);
 	}
@@ -49,14 +49,35 @@ export class HosFormActionsService {
 		return this.http.post(this.requestURL, paymentData);
 
 		//return this.http.post('api/servicePayment/pay', paymentData);
-
 	}
 
+	createTokenforServicePayment(payData: any) {
+
+		this.requestURL = `public/payment/generateTokenUrl`;
+
+		return this.http.post(this.requestURL, payData);
+	}
+
+	/**
+		 * This method is use for get cities lists
+		 * @param stateId - state Id
+		 */
+	getPaymentResponse(token) {
+		return this.http.get(`public/payment/getTransactionDetails?rqst_token=${token}`, this.getCommonHeaders());
+	}
+
+	getCommonHeaders() {
+
+		let headers = {
+			'Content-type': 'application/json'
+		};
+		return headers;
+	}
 	/**
 	 * This method is used to get citizen app data
 	 * @param appId - citizen app id
 	 */
-	getFormData(appId):Observable<any> {
+	getFormData(appId): Observable<any> {
 
 		this.requestURL = `api/form/${this.apiType}/get/${appId}`;
 
@@ -96,7 +117,7 @@ export class HosFormActionsService {
 		return this.http.delete(this.requestURL);
 	}
 
-	deleteChildData(id, childId){
+	deleteChildData(id, childId) {
 		this.requestURL = `api/form/${this.apiType}/child/` + id + `/delete/` + childId;
 		return this.http.delete(this.requestURL);
 	}
@@ -104,7 +125,7 @@ export class HosFormActionsService {
 	/**
 	 * This method is use to get lookup data respective to api type
 	 */
-	getDataFromLookups(){
+	getDataFromLookups() {
 
 		this.requestURL = `api/form/${this.apiType}/lookups`;
 
@@ -122,7 +143,7 @@ export class HosFormActionsService {
 	/**
 	 * This method is use for get user services
 	 */
-	getUserServices(){
+	getUserServices() {
 		return this.http.get('api/user/citizenServices');
 	}
 

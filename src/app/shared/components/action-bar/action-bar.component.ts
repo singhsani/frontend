@@ -158,13 +158,15 @@ export class ActionBarComponent implements OnInit, OnChanges {
 								err => {
 									this.isSubmitBtnDisabled = false;
 									let retUrl: string = '/citizen/my-applications';
+									let retAfterPayment :string = environment.returnUrl;
+									
 									if (err.status === 402) {
 										let moduleWithAppointment = this.form.getRawValue().serviceDetail.appointmentRequired;
 										if (moduleWithAppointment) {
 											retUrl = `/citizen/appointmant/schedule-appointment/slot-booking/` + this.form.getRawValue().serviceFormId + `/` + this.form.getRawValue().serviceDetail.code;
 										}
 
-										let payData = this.commonService.storePaymentInfo(err.error.data, retUrl);
+										let payData = this.commonService.storePaymentInfo(err.error.data, retUrl,retAfterPayment);
 										let html =
 											`
 										<div class="text-center">
@@ -193,7 +195,13 @@ export class ActionBarComponent implements OnInit, OnChanges {
 													Please Complete Payment, Otherwise the application will be considered as in-complete
 												</div>`
 											this.commonService.commonAlert("Application Incomplete", "", 'warning', 'Make Payment!', false, errHtml, ccb => {
-												window.location.href = environment.adminUrl + `payment-gateway?retUrl=${payData.retUrl}&retPath=${payData.retPath}`;
+												// window.location.href = environment.adminUrl + `payment-gateway?retUrl=${payData.retUrl}&retPath=${payData.retPath}`;
+												this.formService.createTokenforServicePayment(payData).subscribe(resp => {
+													window.open(resp.data, "_self");
+												}, err => {
+													this.toastr.error(err.error.message);
+												})
+
 											}, arj => {
 												this.form.get('canEdit').setValue(false);
 												//this.toastr.success(`${this.form.getRawValue().serviceDetail.name} information successfully submit`);
