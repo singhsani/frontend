@@ -1,4 +1,6 @@
 import { BTConfig, BTConstants } from '../../config/bt-config';
+import { FormsActionsService } from 'src/app/core/services/citizen/data-services/forms-actions.service';
+import { ToastrService } from 'ngx-toastr';
 
 /**
  * Ticketing Module Constants
@@ -21,7 +23,10 @@ export class TicketingConstants extends BTConstants {
  */
 export class TicketingUtils extends BTConfig {
 
-  constructor() {
+  constructor(public formService?: FormsActionsService,
+    public toastr?: ToastrService
+) {
     super();
   }
+
 }

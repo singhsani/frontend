@@ -9,6 +9,7 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap';
 import { CommonService } from 'src/app/shared/services/common.service';
 import { BookingService } from '../../../shared-booking/services/booking-service.service';
 import { ValidationService } from 'src/app/shared/services/validation.service';
+import { FormsActionsService } from 'src/app/core/services/citizen/data-services/forms-actions.service';
 
 @Component({
     selector: 'app-book-children-theater',
@@ -32,7 +33,7 @@ export class BookChildrenTheaterComponent implements OnInit {
        * Booking Constants and utils
        */
     bookingConstants = BookingConstants;
-    bookingUtils: BookingUtils = new BookingUtils();
+    bookingUtils: BookingUtils;
 
     /**
       * Flags for hide/show
@@ -76,8 +77,10 @@ export class BookChildrenTheaterComponent implements OnInit {
         private _fb: FormBuilder, private toster: ToastrService,
         private modalService: BsModalService,
         private commonService: CommonService,
-        private CD: ChangeDetectorRef) {
-
+        private CD: ChangeDetectorRef,
+        protected formService: FormsActionsService,
+        protected toaster: ToastrService) {
+        this.bookingUtils = new BookingUtils(formService, toster);
         this.bookingService.resourceType = this.bookingConstants.CT_RESOURCE_TYPE;
 
         this.head_lines = `Online Children theater Booking facility
@@ -171,7 +174,7 @@ export class BookChildrenTheaterComponent implements OnInit {
                 code: [null, [Validators.required]],
                 name: null
             }),
-            
+
             //other attributes
             id: null,
             uniqueId: null,

@@ -4,6 +4,7 @@ import * as moment from 'moment';
 import * as _ from 'lodash';
 import { merge, of as observableOf } from 'rxjs';
 import { catchError, map, startWith, switchMap } from 'rxjs/operators';
+import { ToastrService } from 'ngx-toastr';
 
 
 /**
@@ -39,7 +40,8 @@ export class ComponentConfig {
         { month: 'Dec', id: '12', monthName: 'December' },
     ];
 
-    constructor(protected paginationService?: PaginationService) { }
+    constructor(protected paginationService?: PaginationService,
+        public toastr?: ToastrService) { }
 
     /**
 	 * Method is used to get no of days in current month.

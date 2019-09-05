@@ -44,7 +44,7 @@ export class SwimmingPoolComponent implements OnInit {
   /**
   * Loading Booking Configuration
   */
-  bookingUtils: BookingUtils = new BookingUtils();
+  bookingUtils: BookingUtils;
   bookingConstants = BookingConstants;
 
   // required attachment array
@@ -79,7 +79,9 @@ export class SwimmingPoolComponent implements OnInit {
     private toastr: ToastrService,
     public translateService: TranslateService,
     private router: Router,
-  ) { this.bookingService.resourceType = 'swimming'; }
+  ) { 
+    this.bookingUtils = new BookingUtils(formService, toastr);
+    this.bookingService.resourceType = 'swimming'; }
 
 	/**
 	 * This method call initially required methods.

@@ -1,6 +1,7 @@
 import { Router, ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
+import * as _ from 'lodash';
 
 import { ManageRoutes } from './../../../config/routes-conf';
 import { FormsActionsService } from './../../../core/services/citizen/data-services/forms-actions.service';
@@ -18,7 +19,6 @@ export class GatewayResponseComponent implements OnInit {
 	interval: any;
 	paymentStatus: any;
 	dispData: any;
-
 
 	constructor(
 		private formService: FormsActionsService,
@@ -43,12 +43,13 @@ export class GatewayResponseComponent implements OnInit {
 	gatewayResponse(token) {
 		this.formService.getPaymentResponse(token).subscribe(res => {
 			this.responseObj = res.data;
-
+			
 			if (res.success) {
-				this.paymentStatus = res.success;
+			
 				if (this.responseObj.txn_msg == 'failure') {
 					this.redirectToHome();
 				} else {
+					this.paymentStatus = _.upperCase(this.responseObj.txn_msg);
 					this.postSessionData(this.dispData);
 				}
 				this.clearSession();
@@ -85,7 +86,8 @@ export class GatewayResponseComponent implements OnInit {
 			const payRespData = payResp.data.responseData;
 
 			if (payRespData.fileStatus == "PAYMENT_RECEIVED") {
-				this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(payRespData.serviceType);
+				
+				this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(payRespData.serviceDetail.code);
 				this.formService.submitFormData(payRespData.serviceFormId).subscribe(res => {
 					if (res) {
 						setTimeout(() => {
@@ -95,7 +97,10 @@ export class GatewayResponseComponent implements OnInit {
 						this.interVal();
 					}
 				});
-			} else {
+			}
+			// if (payRespData.status == "DEPOSIT_REQUIRED") { //for booking module
+
+			else {
 				setTimeout(() => {
 					this.redirectToMyApplication(data.myApplicationUrl, payRespData.refNumber, payData.resourceType, payRespData.payableServiceType);
 				}, 10000);

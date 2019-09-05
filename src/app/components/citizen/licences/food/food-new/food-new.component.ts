@@ -206,7 +206,7 @@ export class FoodNewComponent implements OnInit {
         code: [null, Validators.required]
       }),
       firmCity: [null, Validators.required],
-      firmPincode: [null, [Validators.maxLength(6), Validators.minLength(6)]],
+      firmPincode: [null, [ Validators.required,Validators.maxLength(6), Validators.minLength(6)]],
       mobileNo: [null, [Validators.maxLength(10)]],
       firmLandLineNo: [null, [Validators.maxLength(10)]],
       firmEmailId: [null, [Validators.required, ValidationService.emailValidator]],

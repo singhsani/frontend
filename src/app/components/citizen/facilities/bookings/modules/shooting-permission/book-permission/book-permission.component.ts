@@ -11,6 +11,7 @@ import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from 'src/app/shared/modules/translate/translate.service';
 import { ValidationService } from 'src/app/shared/services/validation.service';
 import { BookingService } from '../../../shared-booking/services/booking-service.service';
+import { FormsActionsService } from 'src/app/core/services/citizen/data-services/forms-actions.service';
 
 @Component({
   selector: 'app-book-permission',
@@ -38,7 +39,7 @@ export class BookPermissionComponent implements OnInit {
    * Booking Constants and utils
    */
   bookingConstants = BookingConstants;
-  bookingUtils: BookingUtils = new BookingUtils();
+  bookingUtils: BookingUtils;
 
   /**
    * Flags for hide/show
@@ -92,7 +93,10 @@ export class BookPermissionComponent implements OnInit {
     private modalService: BsModalService,
     private commonService: CommonService,
     private TranslateService: TranslateService,
-    private CD: ChangeDetectorRef) {
+    private CD: ChangeDetectorRef,
+		protected formService: FormsActionsService,
+		protected toaster: ToastrService) {
+      this.bookingUtils = new BookingUtils(formService, toster);
     this.bookingService.resourceType = this.bookingConstants.SHOOTING_PERMISSION_PLACE;
   }
 

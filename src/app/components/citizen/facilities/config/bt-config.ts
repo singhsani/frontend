@@ -6,6 +6,8 @@ import { environment } from "../../../../../environments/environment";
 import { Router } from "@angular/router";
 import { TicketingsService } from "../ticketings/shared-ticketing/services/ticketings.service";
 import { SessionStorageService } from "angular-web-storage";
+import { FormsActionsService } from "src/app/core/services/citizen/data-services/forms-actions.service";
+import { ToastrService } from "ngx-toastr";
 
 
 export class BTConstants {
@@ -43,7 +45,9 @@ export class BTConfig extends CitizenConfig {
 
     session: SessionStorageService = new SessionStorageService();
 
-    constructor() {
+    constructor(public formService?: FormsActionsService,
+        public toastr?: ToastrService
+    ) {
         super();
     }
 
@@ -59,19 +63,45 @@ export class BTConfig extends CitizenConfig {
 
         let redirectURLAfterPayment = (btService instanceof TicketingsService) ? BTConstants.MY_TICKETINGS_URL : BTConstants.MY_BOOKINGS_URL
 
-        let payData = this.proceedForPayment(err.error.data, redirectURLAfterPayment, btService.resourceType);
-        commonService.commonAlert('Payment Details', '', 'info', 'Make Payment!', false, payData.html, cb => {
-            window.location.href = environment.adminUrl + `payment-gateway?retUrl=${payData.payData.retUrl}&retPath=${payData.payData.retPath}`;
+        let payData = this.storePaymentInfo(err.error.data, redirectURLAfterPayment, btService.resourceType);
+
+        let html =
+            `
+                <div class="text-center">
+                    <h2>Total Fee Pay</h2>
+                    <div class="payAmount">
+                        <i class="fa fa-inr" aria-hidden="true">` + payData.amount + `</i>
+                    </div>
+                    <p>Rupees in words</p>
+                </div>
+                `
+        commonService.commonAlert('Payment Details', '', 'info', 'Make Payment!', false, html, cb => {
+            // window.location.href = environment.adminUrl + `payment-gateway?retUrl=${payData.payData.retUrl}&retPath=${payData.payData.retPath}`;
+
+            this.formService.createTokenforServicePayment(payData).subscribe(resp => {
+
+                window.open(resp.data, "_self");
+
+            }, err => {
+                this.toastr.error(err.error.message);
+            })
+
         }, rj => {
             let errHtml = `
 						<div class="alert alert-danger">
 							Please Complete Payment, Otherwise the application will be considered as in-complete
 						</div>`
             commonService.commonAlert("Application Incomplete", "", 'warning', 'Make Payment!', false, errHtml, ccb => {
-                window.location.href = `${environment.adminUrl}payment-gateway?retUrl=${payData.payData.retUrl}&retPath=${payData.payData.retPath}?&printUrl=${payData.payData.printUrl}`;
+                // window.location.href = environment.adminUrl + `payment-gateway?retUrl=${payData.retUrl}&retPath=${payData.retPath}`;
+                this.formService.createTokenforServicePayment(payData).subscribe(resp => {
+                    window.open(resp.data, "_self");
+                }, err => {
+                    this.toastr.error(err.error.message);
+                })
             }, arj => {
                 if (form && router) {
                     if (applicationrouter) {
+                        form.disable();
                         router.navigate([applicationrouter]);
                     }
                     else {
@@ -89,12 +119,12 @@ export class BTConfig extends CitizenConfig {
      * Method is used to perform payment and after storing data to localhost redirects to payment gateway.
      * @param data - Object Data
      */
-    proceedForPayment(data: any, redirectionURL: string, resourceType?: string): any {
+    storePaymentInfo(data: any, redirectionURL: string, resourceType?: string): any {
         let payData = {
             id: null,
             uniqueId: null,
             version: null,
-            paymentType: data.paymentType,
+            // paymentType: data.paymentType,
             refNumber: data.refNumber,
             response: JSON.stringify({
                 data: "paid",
@@ -102,11 +132,15 @@ export class BTConfig extends CitizenConfig {
             }),
             resourceType: resourceType,
             transactionId: data.transactionId,
-            paymentStatus: "SUCCESS",
-            retUrl: environment.citizenUrl,
-            retPath: 'citizen/payment-gateway-response',
+            paymentStatus: null,
+            // retUrl: environment.citizenUrl,
+            returnUrl: environment.returnUrl,
+            paymentMode: "NETBANKING",
+            // retPath: 'citizen/payment-gateway-response',
+            retPath: environment.citizenUrl,
             myApplicationUrl: redirectionURL,
             amount: data.amount
+
         };
 
 		/**
@@ -114,20 +148,8 @@ export class BTConfig extends CitizenConfig {
 		 */
         this.session.set('paymentData', JSON.stringify(payData));
 
-		/**
-		 * Generation of HTML of payment alert.
-		 */
-        return {
-            payData: payData,
-            html: `
-				<div class="text-center">
-					<h2>Total amount to be paid</h2>
-					<div class="payAmount">
-						<i class="fa fa-inr" aria-hidden="true">${payData.amount}</i>
-					</div>
-				</div>
-                `
-        };
+        return payData;
+
     }
 
     /**

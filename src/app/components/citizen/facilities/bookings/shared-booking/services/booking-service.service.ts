@@ -320,6 +320,11 @@ export class BookingService {
     return this.http.post(this.requestURL, data, 'printReceipt');
   }
   /*Services end for atithigruh */
-   
+
+     // {{HOST}}/api/booking/swimming/printSwimmingReceipt?refNumber={{REF_NUM}}&serviceType=SWIMMING_POOL_FEES
+     printSwimmingReceipt(refNumber:any, type: string) {
+      this.requestURL = `api/${this.moduleName}/${this.resourceType}/printSwimmingReceipt?refNumber=${refNumber}&serviceType=${type}`;
+      return this.http.get(this.requestURL, 'printReceipt');
+    }  
 
 }
