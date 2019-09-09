@@ -24,7 +24,7 @@ export class NewRegistrationComponent implements OnInit {
   @ViewChild('address') addrComponent: any;
   @ViewChild('template') modalTemplate: any;
 
-  translateKey: string = 'vehicleRegistrationScreen';
+  translateKey: string = 'newRegistrationScreen';
   actionBarKey: string = 'adminActionBar';
 
   // mat steps title
@@ -113,7 +113,7 @@ export class NewRegistrationComponent implements OnInit {
       }),
       engineNo: null,
       chasisNo: null,
-      registrationNo: "GJ-06",
+      registrationNo: "GJ-06-",
       vehicleBasicValue: null,
       makeModel: null,
       dealerName: null,
