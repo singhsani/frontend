@@ -99,7 +99,7 @@
 
 					<div class="col-md-4 pl-0 ml-0">
 						<mat-form-field class="col-md-10">
-							<mat-label>{{'death_Time' | translate:translateKey}}</mat-label>
+							<mat-label>{{'time_of_death' | translate:translateKey}}</mat-label>
 							<input class="clock-input" (blur)="changeTimeFormat($event.target.value, 'deathTime')" placeholder="HH:MM" matInput type="time"
 							 atp-time-picker theme="dark" formControlName="deathTime" required />
 							<control-messages [control]="deathCertificateForm.get('deathTime')"></control-messages>

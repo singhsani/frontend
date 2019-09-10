@@ -1,118 +1,133 @@
-<div class="container">
-    <app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
-    <mat-card *ngIf="showApplicationSearch">
-        <form [formGroup]="regStatusForm" (ngSubmit)="getRegistrationNumberStatus()" autocomplete="off">
+<app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
+<mat-card *ngIf="showApplicationSearch">
+    <form [formGroup]="regStatusForm" (ngSubmit)="getRegistrationNumberStatus()" autocomplete="off">
 
-            <div class="row">
-                <div formGroupName="typeOfCorrection" class="col-md-4 ngSelect">
-                    <ng-select placeholder="{{'type_of_correction' | translate:translateKey}}" formControlName="code">
-                        <ng-option *ngFor="let type of TypeOfCorrection" [value]="type.code">
-                            {{type.name}}
-                        </ng-option>
-                    </ng-select>
-                    <control-messages [control]="regStatusForm.get('typeOfCorrection').get('code')"></control-messages>
-                </div>
-
-                <mat-form-field class="col-md-6">
-                    <input matInput maxlength="25" placeholder="{{'registration_number' | translate:translateKey}}" formControlName="applicationNumber"
-                        required>
-                    <control-messages [control]="regStatusForm.get('applicationNumber')"></control-messages>
-                </mat-form-field>
-
-                <div class="col-md-2 text-right">
-                    <button *ngIf="regStatusForm.valid" mat-raised-button color="primary" type="submit">{{'search' | translate:
-                        translateKey}}</button>
-                </div>
+        <div class="row">
+            <div formGroupName="typeOfCorrection" class="col-md-4 ngSelect">
+                <ng-select placeholder="{{'type_of_correction' | translate:translateKey}}" formControlName="code">
+                    <ng-option *ngFor="let type of TypeOfCorrection" [value]="type.code">
+                        {{type.name}}
+                    </ng-option>
+                </ng-select>
+                <control-messages [control]="regStatusForm.get('typeOfCorrection').get('code')"></control-messages>
             </div>
-        </form>
-    </mat-card>
 
-    <mat-card *ngIf="showcorrectionForm">
-        <form [formGroup]="deathCorrectionForm" autocomplete="off">
-            <mat-horizontal-stepper [linear]="false" #stepper="matHorizontalStepper">
+            <mat-form-field class="col-md-6">
+                <input matInput maxlength="25" placeholder="{{'registration_number' | translate:translateKey}}"
+                    formControlName="applicationNumber" required>
+                <control-messages [control]="regStatusForm.get('applicationNumber')"></control-messages>
+            </mat-form-field>
 
-                <mat-step>
-                    <ng-template matStepLabel>
-                        <div [matTooltip]="'deceased_details' | translate:translateKey">{{'deceased_details' | translate:translateKey}}</div>
-                    </ng-template>
-                    <div class="row">
-                        <mat-form-field class="col-md-4">
-                            <input matInput appValidationFields [form]="deathCorrectionForm" appGujInputSource targetElement="deceasedFirstNameGuj" [validationFieldsType]="'onlyNameWithOutSpace'"
-                                maxlength="20" placeholder="{{'first_name' | translate:translateKey}}" formControlName="deceasedFirstName"
-                                required>
-                            <control-messages [control]="deathCorrectionForm.get('deceasedFirstName')"></control-messages>
-                        </mat-form-field>
-                        <mat-form-field class="col-md-4">
-                            <input matInput appValidationFields [form]="deathCorrectionForm" appGujInputSource targetElement="deceasedMiddleNameGuj"
-                                [validationFieldsType]="'onlyNameWithOutSpace'" maxlength="20" placeholder="{{'middle_name' | translate:translateKey}}"
-                                formControlName="deceasedMiddleName">
-                            <control-messages [control]="deathCorrectionForm.get('deceasedMiddleName')"></control-messages>
-                        </mat-form-field>
-                        <mat-form-field class="col-md-4">
-                            <input matInput appValidationFields [form]="deathCorrectionForm" appGujInputSource targetElement="deceasedLastNameGuj" [validationFieldsType]="'onlyNameWithOutSpace'"
-                                maxlength="20" placeholder="{{'last_name' | translate:translateKey}}" formControlName="deceasedLastName"
-                                required>
-                            <control-messages [control]="deathCorrectionForm.get('deceasedLastName')"></control-messages>
-                        </mat-form-field>
-                        <mat-form-field class="col-md-4">
-                            <input required matInput maxlength="20" appGujInputTarget [form]="deathCorrectionForm" placeholder="{{'first_name' | translate:translateKey:'gu'}}"
-                                formControlName="deceasedFirstNameGuj">
-                            <control-messages [control]="deathCorrectionForm.get('deceasedFirstNameGuj')"></control-messages>
-                        </mat-form-field>
-                        <mat-form-field class="col-md-4">
-                            <input matInput type="text" appGujInputTarget [form]="deathCorrectionForm" maxlength="20" placeholder="{{'middle_name' | translate:translateKey:'gu'}}"
-                                formControlName="deceasedMiddleNameGuj">
-                            <control-messages [control]="deathCorrectionForm.get('deceasedMiddleNameGuj')"></control-messages>
-                        </mat-form-field>
-                        <mat-form-field class="col-md-4">
-                            <input required matInput type="text" appGujInputTarget [form]="deathCorrectionForm" maxlength="20" placeholder="{{'last_name' | translate:translateKey:'gu'}}"
-                                formControlName="deceasedLastNameGuj">
-                            <control-messages [control]="deathCorrectionForm.get('deceasedLastNameGuj')"></control-messages>
-                        </mat-form-field>
-                    </div>
-                    <app-action-bar [uploadFiles]="uploadFileArray" [form]="deathCorrectionForm" [step]="'step1'" (stepReset)="stepReset()" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
-                </mat-step>
+            <div class="col-md-2 text-right">
+                <button *ngIf="regStatusForm.valid" mat-raised-button color="primary" type="submit">{{'search' | translate:
+                        translateKey}}</button>
+            </div>
+        </div>
+    </form>
+</mat-card>
 
-                <mat-step>
-                    <ng-template matStepLabel>
-                        <div [matTooltip]="'family_details' | translate:translateKey">{{'family_details' | translate:translateKey}}</div>
-                    </ng-template>
-                    <div class="row">
-                        <mat-form-field class="col-md-6">
-                            <input required matInput appValidationFields [validationFieldsType]="'onlyNameWithSpace'" maxlength="20" placeholder="{{'mother_name' | translate:translateKey}}"
-                                name="motherName" formControlName="motherName">
-                            <control-messages [control]="deathCorrectionForm.get('motherName')"></control-messages>
-                        </mat-form-field>
-                        <mat-form-field class="col-md-6">
-                            <input required matInput appValidationFields [validationFieldsType]="'onlyNameWithSpace'" maxlength="20" placeholder="{{'husband_or_father_name' | translate:translateKey}}"
-                                formControlName="fatherOrHusbandName">
-                            <control-messages [control]="deathCorrectionForm.get('fatherOrHusbandName')"></control-messages>
-                        </mat-form-field>
-                    </div>
-                    <app-action-bar [uploadFiles]="uploadFileArray" [form]="deathCorrectionForm" [step]="'step2'" (stepReset)="stepReset()" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
-                </mat-step>
+<mat-card *ngIf="showcorrectionForm" class="formClass cardBorder">
+    <form [formGroup]="deathCorrectionForm" autocomplete="off">
+        <mat-tab-group mat-stretch-tabs [(selectedIndex)]="tabIndex" class="stepperNav" dynamicHeight="true">
 
-                <mat-step>
-                    <ng-template matStepLabel>
-                        <div [matTooltip]="'upload_documents' | translate:translateKey">{{'upload_documents' | translate:translateKey}}</div>
-                    </ng-template>
-                    <div class="alert alert-warning">
-                        {{'note' | translate:translateKey}} :{{'submit_hard_copy_at_madhyawarti_school' | translate:translateKey}}
-                    </div>
-                    <div class="alert alert-warning">
-                        {{'note' | translate:translateKey}} : {{'file_size_less_than_5_mb' | translate:translateKey}}
-                    </div>
+            <mat-tab [label]="'deceased_details' | translate: translateKey">
 
-                    <div class="row">
-                        <div class="col-md-4" *ngFor="let doc of uploadFileArray">
-                            <div>
-                                <label>{{translateService.getCurrentLanguage()=='en'? doc.documentLabelEn : doc.documentLabelGuj }} <span *ngIf="doc.mandatory">*</span></label>
-                                <app-hos-file-upload [form]="deathCorrectionForm" [uploadModel]="doc"></app-hos-file-upload>
-                            </div>
+                <div class="row">
+                    <mat-form-field class="col-md-4">
+                        <input matInput appValidationFields [form]="deathCorrectionForm" appGujInputSource
+                            targetElement="deceasedFirstNameGuj" [validationFieldsType]="'onlyNameWithOutSpace'"
+                            maxlength="20" placeholder="{{'first_name' | translate:translateKey}}"
+                            formControlName="deceasedFirstName" required>
+                        <control-messages [control]="deathCorrectionForm.get('deceasedFirstName')"></control-messages>
+                    </mat-form-field>
+                    <mat-form-field class="col-md-4">
+                        <input matInput appValidationFields [form]="deathCorrectionForm" appGujInputSource
+                            targetElement="deceasedMiddleNameGuj" [validationFieldsType]="'onlyNameWithOutSpace'"
+                            maxlength="20" placeholder="{{'middle_name' | translate:translateKey}}"
+                            formControlName="deceasedMiddleName">
+                        <control-messages [control]="deathCorrectionForm.get('deceasedMiddleName')"></control-messages>
+                    </mat-form-field>
+                    <mat-form-field class="col-md-4">
+                        <input matInput appValidationFields [form]="deathCorrectionForm" appGujInputSource
+                            targetElement="deceasedLastNameGuj" [validationFieldsType]="'onlyNameWithOutSpace'"
+                            maxlength="20" placeholder="{{'last_name' | translate:translateKey}}"
+                            formControlName="deceasedLastName" required>
+                        <control-messages [control]="deathCorrectionForm.get('deceasedLastName')"></control-messages>
+                    </mat-form-field>
+                    <mat-form-field class="col-md-4">
+                        <input required matInput maxlength="20" appGujInputTarget [form]="deathCorrectionForm"
+                            placeholder="{{'first_name' | translate:translateKey:'gu'}}"
+                            formControlName="deceasedFirstNameGuj">
+                        <control-messages [control]="deathCorrectionForm.get('deceasedFirstNameGuj')">
+                        </control-messages>
+                    </mat-form-field>
+                    <mat-form-field class="col-md-4">
+                        <input matInput type="text" appGujInputTarget [form]="deathCorrectionForm" maxlength="20"
+                            placeholder="{{'middle_name' | translate:translateKey:'gu'}}"
+                            formControlName="deceasedMiddleNameGuj">
+                        <control-messages [control]="deathCorrectionForm.get('deceasedMiddleNameGuj')">
+                        </control-messages>
+                    </mat-form-field>
+                    <mat-form-field class="col-md-4">
+                        <input required matInput type="text" appGujInputTarget [form]="deathCorrectionForm"
+                            maxlength="20" placeholder="{{'last_name' | translate:translateKey:'gu'}}"
+                            formControlName="deceasedLastNameGuj">
+                        <control-messages [control]="deathCorrectionForm.get('deceasedLastNameGuj')"></control-messages>
+                    </mat-form-field>
+                </div>
+
+                <app-action-bar [uploadFiles]="uploadFileArray" [form]="deathCorrectionForm"
+                    [stepInfo]="{step: 'step0', next: 1, back: 0}" (handleErrors)="handleErrorsOnSubmit($event)"
+                    (tabIndex)="onTabChange($event)"></app-action-bar>
+                <!-- <app-action-bar [uploadFiles]="uploadFileArray" [form]="deathCorrectionForm" [step]="'step1'" 
+                    (stepReset)="stepReset()" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar> -->
+            </mat-tab>
+
+            <mat-tab [label]="'family_details' | translate: translateKey">
+
+                <div class="row">
+                    <mat-form-field class="col-md-6">
+                        <input required matInput appValidationFields [validationFieldsType]="'onlyNameWithSpace'"
+                            maxlength="20" placeholder="{{'mother_name' | translate:translateKey}}" name="motherName"
+                            formControlName="motherName">
+                        <control-messages [control]="deathCorrectionForm.get('motherName')"></control-messages>
+                    </mat-form-field>
+                    <mat-form-field class="col-md-6">
+                        <input required matInput appValidationFields [validationFieldsType]="'onlyNameWithSpace'"
+                            maxlength="20" placeholder="{{'husband_or_father_name' | translate:translateKey}}"
+                            formControlName="fatherOrHusbandName">
+                        <control-messages [control]="deathCorrectionForm.get('fatherOrHusbandName')"></control-messages>
+                    </mat-form-field>
+                </div>
+                <app-action-bar [uploadFiles]="uploadFileArray" [form]="deathCorrectionForm"
+                    [stepInfo]="{step: 'step1', next: 2, back: 0}" (handleErrors)="handleErrorsOnSubmit($event)"
+                    (tabIndex)="onTabChange($event)"></app-action-bar>
+                <!-- <app-action-bar [uploadFiles]="uploadFileArray" [form]="deathCorrectionForm" [step]="'step2'"
+                     (stepReset)="stepReset()" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar> -->
+            </mat-tab>
+
+            <mat-tab [label]="'upload_documents' | translate: translateKey">
+
+                <div class="alert alert-warning">
+                    {{'note' | translate:translateKey}}
+                    :{{'submit_hard_copy_at_madhyawarti_school' | translate:translateKey}}
+                </div>
+                <div class="alert alert-warning">
+                    {{'note' | translate:translateKey}} : {{'file_size_less_than_5_mb' | translate:translateKey}}
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-4" *ngFor="let doc of uploadFileArray">
+                        <div *ngIf="doc.requiredOnCitizenPortal && doc.isActive">
+                            <label>{{translateService.getCurrentLanguage()=='en'? doc.documentLabelEn : doc.documentLabelGuj }}
+                                <span *ngIf="doc.mandatory">*</span></label>
+                            <file-upload [form]="deathCorrectionForm" [uploadModel]="doc"></file-upload>
                         </div>
                     </div>
+                </div>
 
-                    <!-- <div class="row">
+                <!-- <div class="row">
                         <div class="col-md-4" *ngIf="showButtons">
                             <label labelPosition="after">{{'resident_proof' | translate:translateKey}}{{!getFileObjectContained('1.1')?'':
                                 '*'}}</label>
@@ -123,11 +138,15 @@
                             <file-upload [form]="deathCorrectionForm" [uploadModel]="setDataValue(1.2,'Kyc Document of Deceased','1.1','kycDeceased')"></file-upload>
                         </div>
                     </div> -->
-                    <app-action-bar [uploadFiles]="uploadFileArray" [form]="deathCorrectionForm" [step]="'final'" (stepReset)="stepReset()" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
-                </mat-step>
 
-            </mat-horizontal-stepper>
-        </form>
-    </mat-card>
 
-</div>
+                <app-action-bar [form]="deathCorrectionForm" [isstepper]="false"
+                    [stepInfo]="{step: 'final', next: 2, back: 1}" [uploadFiles]="uploadFileArray" [isstepper]="false"
+                    (handleErrors)="handleErrorsOnSubmit($event)" (tabIndex)="onTabChange($event)"></app-action-bar>
+                <!-- <app-action-bar [uploadFiles]="uploadFileArray" [form]="deathCorrectionForm" [step]="'final'" 
+                    (stepReset)="stepReset()" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar> -->
+            </mat-tab>
+
+        </mat-tab-group>
+    </form>
+</mat-card>

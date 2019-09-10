@@ -45,7 +45,7 @@ export class RecordSearchComponent implements OnInit {
 	/**
 	 * language translate key.
 	 */
-	translateKey: string = 'searchScreen';
+	translateKey: string = 'BDRecordsearchScreen';
 
 	/**
 	 * maximum date validation.

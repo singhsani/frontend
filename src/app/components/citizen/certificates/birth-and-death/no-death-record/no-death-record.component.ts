@@ -1,11 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { ManageRoutes } from './../../../../../config/routes-conf';
 import { FormsActionsService } from '../../../../../core/services/citizen/data-services/forms-actions.service';
 import * as _ from 'lodash';
 import * as moment from 'moment';
+import { TranslateService } from '../../../../../shared/modules/translate/translate.service';
+import { CertificateConfig } from '../../certificate-config';
 
 @Component({
 	selector: 'app-no-death-record',
@@ -39,19 +41,25 @@ export class NoDeathRecordComponent implements OnInit {
 	isVisibeNRCForm: boolean = true;
 	showSearchForm: boolean = true;
 	tabIndex: number = 0;
+	uploadFilesArray: Array<any> = [];
 
 	// Step Titles
 	stepLable1: string = "no_record_certificate_detail";
 	stepLable2: string = "death_place_address_detail";
 	stepLable3: string = "applicant_detail";
 	stepLable4: string = "upload_documents";
-
+	/**
+	* Using Common Configuration
+	*/
+	config: CertificateConfig = new CertificateConfig();
 	constructor(
 		private fb: FormBuilder,
 		private router: Router,
 		private route: ActivatedRoute,
 		private formService: FormsActionsService,
-		private location: Location
+		private location: Location,
+		public TranslateService: TranslateService
+
 	) { }
 
 	ngOnInit() {
@@ -62,7 +70,7 @@ export class NoDeathRecordComponent implements OnInit {
 			this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
 		});
 
-		
+
 		this.getLookupData();
 		this.nrcDeathCertFormControls();
 
@@ -113,10 +121,28 @@ export class NoDeathRecordComponent implements OnInit {
 	getNoRecordDeathData() {
 		this.formService.getFormData(this.appId).subscribe(res => {
 			this.noRecordDeathForm.patchValue(res);
+			res.serviceDetail.serviceUploadDocuments.forEach(app => {
+				(<FormArray>this.noRecordDeathForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.config.createDocumentsGrp(app));
+			});
+			this.requiredDocumentList();
 			this.showButtons = true;
 		});
 	}
-
+	/**
+	* Method is create required document array
+	*/
+	requiredDocumentList() {
+		this.uploadFilesArray = [];
+		_.forEach(this.noRecordDeathForm.get('serviceDetail').get('serviceUploadDocuments').value, (value) => {
+			if (value.mandatory && value.isActive && value.requiredOnCitizenPortal) {
+				this.uploadFilesArray.push({
+					'labelName': value.documentLabelEn,
+					'fieldIdentifier': value.fieldIdentifier,
+					'documentIdentifier': value.documentIdentifier
+				})
+			}
+		});
+	}
 	/**
 	 * This method is use for set user selected date 
 	 * @param date - get selected date
@@ -211,16 +237,16 @@ export class NoDeathRecordComponent implements OnInit {
 	 * @param fieldIdentifier - file identifier.
 	 */
 
-	getFileObjectContained(fieldIdentifier: string) {
-		let found: boolean = false;
-		for (let i = 0; i < this.uploadFileArray.length; i++) {
-			if (this.uploadFileArray[i].fieldIdentifier == fieldIdentifier) {
-				found = true;
-				break;
-			}
-		}
-		return found;
-	}
+	// getFileObjectContained(fieldIdentifier: string) {
+	// 	let found: boolean = false;
+	// 	for (let i = 0; i < this.uploadFileArray.length; i++) {
+	// 		if (this.uploadFileArray[i].fieldIdentifier == fieldIdentifier) {
+	// 			found = true;
+	// 			break;
+	// 		}
+	// 	}
+	// 	return found;
+	// }
 
 	/**
 	 * Method is used to create file object.
@@ -244,6 +270,10 @@ export class NoDeathRecordComponent implements OnInit {
 				let url = this.location.path().replace('false', this.appId.toString());
 				this.router.navigate([url]);
 				this.noRecordDeathForm.patchValue(res);
+				res.serviceDetail.serviceUploadDocuments.forEach(app => {
+					(<FormArray>this.noRecordDeathForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.config.createDocumentsGrp(app));
+				});
+				this.requiredDocumentList();
 				this.showButtons = true;
 			});
 

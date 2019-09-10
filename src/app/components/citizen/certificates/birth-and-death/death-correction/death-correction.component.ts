@@ -1,16 +1,14 @@
 import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MatHorizontalStepper, MatStep, MatStepLabel } from '@angular/material';
 import { ManageRoutes } from './../../../../../config/routes-conf';
 import { Location } from '@angular/common';
 import { CommonService } from '../../../../../shared/services/common.service';
 
-
-
 import { ValidationService } from '../../../../../shared/services/validation.service';
 import { FormsActionsService } from '../../../../../core/services/citizen/data-services/forms-actions.service';
 import * as _ from 'lodash';
+import * as moment from 'moment';
 import { TranslateService } from '../../../../../shared/modules/translate/translate.service';
 import { BDCertificateConfig } from '../config/certificate-config';
 
@@ -22,24 +20,9 @@ import { BDCertificateConfig } from '../config/certificate-config';
 export class DeathCorrectionComponent implements OnInit {
 
 	/**
-	 * get stepper element from view.
-	 */
-	@ViewChild(MatHorizontalStepper) stepper: MatHorizontalStepper;
-	@ViewChild(MatStepLabel) steplable: MatStepLabel;
-
-
-	/**
 	 * check registration number status form.
 	 */
 	regStatusForm: FormGroup;
-
-	/**
-	 * Array is used to file upload validation.
-	 */
-	// uploadFileArray: Array<any> =
-	// 	[{ labelName: 'Resident Proof', fieldIdentifier: '1.1' },
-	// 	{ labelName: 'Kyc Document of Deceased', fieldIdentifier: '1.2' },
-	// 	];
 
 	uploadFileArray : Array<any> = [];
 
@@ -88,8 +71,7 @@ export class DeathCorrectionComponent implements OnInit {
 	 */
 	apiCode: string;
 
-	config: BDCertificateConfig
-
+	tabIndex: number = 0;
 	/**
 	 * Constructor.
 	 * @param fb - form builder.
@@ -171,8 +153,10 @@ export class DeathCorrectionComponent implements OnInit {
 	 */
 	getDeathCorrectionData() {
 		this.formService.getFormData(this.appId).subscribe(res => {
+			debugger;
 			this.deathCorrectionForm.patchValue(res);
-			this.config.documentList(res, this.uploadFileArray);
+			this.documentList(res, this.uploadFileArray);
+
 			this.showButtons = true;
 		});
 	}
@@ -186,7 +170,8 @@ export class DeathCorrectionComponent implements OnInit {
 			this.deathCorrectionFormControls();
 			this.appId = res.serviceFormId;
 			this.deathCorrectionForm.patchValue(res);
-			this.config.documentList(res, this.uploadFileArray);
+			this.documentList(res, this.uploadFileArray);
+
 			let cururl = this.location.path().replace('false', this.appId.toString());
 			this.location.go(cururl);
 			this.getLookupData();
@@ -249,7 +234,7 @@ export class DeathCorrectionComponent implements OnInit {
 	getLookupDataForReg() {
 		this.formService.getDataFromLookups().subscribe(res => {
 			this.TypeOfCorrection = res.DEATH_CORRECTION_TYPE;
-			this.regStatusForm.get('typeOfCorrection').get('code').setValue(this.TypeOfCorrection[1].code);
+			this.regStatusForm.get('typeOfCorrection').get('code').setValue(this.TypeOfCorrection[0].code);
 		});
 	}
 
@@ -271,13 +256,15 @@ export class DeathCorrectionComponent implements OnInit {
 	 * @param count - count of invalid control.
 	 */
 	handleErrorsOnSubmit(count) {
-		let step1 = 6;
-		let step2 = 8;
+		debugger;
+		let step0 = 6;
+		let step1 = 8;
+		
 		if (count <= step1) {
-			this.stepper.selectedIndex = 0;
+			this.tabIndex = 0;
 			return false;
-		} else if (count <= step2 && count > step1) {
-			this.stepper.selectedIndex = 1;
+		} else if (count <= step1 && count > step0) {
+			this.tabIndex = 1;
 			return false;
 		}
 	}
@@ -337,30 +324,6 @@ export class DeathCorrectionComponent implements OnInit {
 		});
 	}
 
-	/**
-	 * Method is used to reset form its a output event from action bar.
-	 */
-	stepReset() {
-		this.stepper.reset();
-	}
-
-	/**
-	 * Method is used to set data value to upload method.
-	 * @param indentifier - file identifier
-	 * @param labelName - file label name.
-	 * @param formPart - file form part
-	 * @param variableName - file variable name.
-	 */
-	setDataValue(indentifier: number, labelName: string, formPart: string, variableName: string) {
-		this.uploadModel = {
-			fieldIdentifier: indentifier.toString(),
-			labelName: labelName,
-			formPart: formPart,
-			variableName: variableName,
-			serviceFormId: this.appId,
-		}
-		return this.uploadModel;
-	}
 
 	/**
 	 * Method is used to get file status.
@@ -385,4 +348,33 @@ export class DeathCorrectionComponent implements OnInit {
 	fileObjectCreater(labelName, fieldIdentifier): any {
 		return { labelName: labelName, fieldIdentifier: fieldIdentifier }
 	}
+
+	/**
+	 * This method use to get output event of tab change
+	 * @param evt - Tab index
+	 */
+	onTabChange(evt:number) {
+		this.tabIndex = evt;
+	}
+
+	
+    /**
+	 * Method is create required document array
+	 */
+    public documentList(res, uploadFilesArray: Array<any>) {
+        res.serviceDetail.serviceUploadDocuments.forEach(file => {
+            if (file.isActive && file.requiredOnCitizenPortal) {
+                uploadFilesArray.push(file);
+            }
+        });
+        // _.forEach(form.get('serviceDetail').get('serviceUploadDocuments').value, (value) => {
+        //     if (value.isActive && value.requiredOnCitizenPortal) {
+        //         uploadFilesArray.push({
+        //             'labelName': value.documentLabelEn,
+        //             'fieldIdentifier': value.fieldIdentifier,
+        //             'documentIdentifier': value.documentIdentifier
+        //         })
+        //     }
+        // });
+    }
 }

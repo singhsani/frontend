@@ -1,8 +1,9 @@
-import { CommonService } from './../../../../../shared/services/common.service';
 import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
+import { CertificateConfig } from '../../certificate-config';
+import { TranslateService } from '../../../../../shared/modules/translate/translate.service';
 
 import { ManageRoutes } from './../../../../../config/routes-conf';
 import { ValidationService } from '../../../../../shared/services/validation.service';
@@ -18,11 +19,11 @@ import * as moment from 'moment';
 })
 export class NoBirthRecordComponent implements OnInit {
 	@ViewChild('address') addrComponent: any;
-	uploadFileArray: Array<any> = [
-		{ labelName: 'Date Of Birth', fieldIdentifier: '1.1' },
-		{ labelName: 'Place Of Birth', fieldIdentifier: '1.2' },
-		{ labelName: 'Applicant Id', fieldIdentifier: '1.3' }
-	]
+	// uploadFileArray: Array<any> = [
+	// 	{ labelName: 'Date Of Birth', fieldIdentifier: '1.1' },
+	// 	{ labelName: 'Place Of Birth', fieldIdentifier: '1.2' },
+	// 	{ labelName: 'Applicant Id', fieldIdentifier: '1.3' }
+	// ]
 	noRecordBirthForm: FormGroup;
 	translateKey: string = 'nrcBirthScreen';
 	appId: number;
@@ -37,8 +38,9 @@ export class NoBirthRecordComponent implements OnInit {
 	showButtons: boolean = false;
 	isVisibeNRCForm: boolean = true;
 	showSearchForm: boolean = true;
+	uploadFilesArray: Array<any> = [];
 
-	uploadModel: any = {};
+	// uploadModel: any = {};
 	tabIndex: number = 0;
 
 	// Step Titles
@@ -46,14 +48,17 @@ export class NoBirthRecordComponent implements OnInit {
 	stepLable2: string = "birth_blace_address_detail";
 	stepLable3: string = "applicant_detail";
 	stepLable4: string = "upload_documents";
-
+	/**
+	 * Using Common Configuration
+	*/
+	config: CertificateConfig = new CertificateConfig();
 	constructor(
 		private fb: FormBuilder,
 		private router: Router,
 		private route: ActivatedRoute,
 		private formService: FormsActionsService,
 		private location: Location,
-		private commonService: CommonService
+		public TranslateService: TranslateService
 	) {
 
 	}
@@ -118,10 +123,28 @@ export class NoBirthRecordComponent implements OnInit {
 	getNoRecordBirthData() {
 		this.formService.getFormData(this.appId).subscribe(res => {
 			this.noRecordBirthForm.patchValue(res);
+			res.serviceDetail.serviceUploadDocuments.forEach(app => {
+				(<FormArray>this.noRecordBirthForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.config.createDocumentsGrp(app));
+			});
+			this.requiredDocumentList();
 			this.showButtons = true;
 		});
 	}
-
+	/**
+	* Method is create required document array
+	*/
+	requiredDocumentList() {
+		this.uploadFilesArray = [];
+		_.forEach(this.noRecordBirthForm.get('serviceDetail').get('serviceUploadDocuments').value, (value) => {
+			if (value.mandatory && value.isActive && value.requiredOnCitizenPortal) {
+				this.uploadFilesArray.push({
+					'labelName': value.documentLabelEn,
+					'fieldIdentifier': value.fieldIdentifier,
+					'documentIdentifier': value.documentIdentifier
+				})
+			}
+		});
+	}
 	/**
 	 * This method is use for set user selected date 
 	 * @param date - get selected date
@@ -138,7 +161,7 @@ export class NoBirthRecordComponent implements OnInit {
 		let step1 = 7;
 		let step2 = 8;
 		let step3 = 11;
-		
+
 		if (count <= step1) {
 			this.tabIndex = 0;
 			return false;
@@ -166,22 +189,22 @@ export class NoBirthRecordComponent implements OnInit {
 		});
 	}
 
-	/**
-	 * This method use to return file upload model
-	 * @param indentifier - get different indentifier for different file 
-	 */
-	setDataValue(indentifier: number, labelName: string, formPart: string, variableName: string) {
+	// /**
+	//  * This method use to return file upload model
+	//  * @param indentifier - get different indentifier for different file 
+	//  */
+	// setDataValue(indentifier: number, labelName: string, formPart: string, variableName: string) {
 
-		this.uploadModel = {
-			fieldIdentifier: indentifier.toString(),
-			labelName: labelName.toString(),
-			formPart: formPart.toString(),
-			variableName: variableName.toString(),
-			serviceFormId: this.appId,
-		}
+	// 	this.uploadModel = {
+	// 		fieldIdentifier: indentifier.toString(),
+	// 		labelName: labelName.toString(),
+	// 		formPart: formPart.toString(),
+	// 		variableName: variableName.toString(),
+	// 		serviceFormId: this.appId,
+	// 	}
 
-		return this.uploadModel;
-	}
+	// 	return this.uploadModel;
+	// }
 
 
 	/**
@@ -219,16 +242,17 @@ export class NoBirthRecordComponent implements OnInit {
 	 * @param fieldIdentifier - file identifier.
 	 */
 
-	getFileObjectContained(fieldIdentifier: string) {
-		let found: boolean = false;
-		for (let i = 0; i < this.uploadFileArray.length; i++) {
-			if (this.uploadFileArray[i].fieldIdentifier == fieldIdentifier) {
-				found = true;
-				break;
-			}
-		}
-		return found;
-	}
+	// getFileObjectContained(fieldIdentifier: string) {
+	// 	debugger;
+	// 	let found: boolean = false;
+	// 	for (let i = 0; i < this.uploadFileArray.length; i++) {
+	// 		if (this.uploadFileArray[i].fieldIdentifier == fieldIdentifier) {
+	// 			found = true;
+	// 			break;
+	// 		}
+	// 	}
+	// 	return found;
+	// }
 
 	/**
 	 * Method is used to create file object.
@@ -246,12 +270,15 @@ export class NoBirthRecordComponent implements OnInit {
 	showNRCForm(event) {
 		this.isVisibeNRCForm = event;
 		if (!this.isVisibeNRCForm) {
-
 			this.formService.createFormData().subscribe(res => {
 				this.appId = res.serviceFormId;
 				let url = this.location.path().replace('false', this.appId.toString());
 				this.router.navigate([url]);
 				this.noRecordBirthForm.patchValue(res);
+				res.serviceDetail.serviceUploadDocuments.forEach(app => {
+					(<FormArray>this.noRecordBirthForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.config.createDocumentsGrp(app));
+				});
+				this.requiredDocumentList();
 				this.showButtons = true;
 			});
 
