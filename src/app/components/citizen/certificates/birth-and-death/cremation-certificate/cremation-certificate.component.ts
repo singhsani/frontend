@@ -5,7 +5,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ManageRoutes } from './../../../../../config/routes-conf';
 import { ValidationService } from '../../../../../shared/services/validation.service';
 import { FormsActionsService } from '../../../../../core/services/citizen/data-services/forms-actions.service';
-
+import { TranslateService } from '../../../../../shared/modules/translate/translate.service';
+import { CertificateConfig } from '../../certificate-config';
 import * as _ from 'lodash';
 import * as moment from 'moment';
 
@@ -24,7 +25,7 @@ export class CremationCertificateComponent implements OnInit {
 	]
 
 	cremationForm: FormGroup;
-	translateKey: string = 'cremationScreen';
+	translateKey: string = 'cremationCertificateScreen';
 
 	appId: number;
 	apiCode: string;
@@ -36,16 +37,20 @@ export class CremationCertificateComponent implements OnInit {
 	uploadModel: any = {};
 	showButtons: boolean = false;
 	tabIndex: number = 0;
-
+	uploadFilesArray: Array<any> = [];
 	// Step Titles
 	stepLable1: string = "deceased_details";
 	stepLable2: string = "applicants_detail";
 	stepLable3: string = "upload_document";
-
+	/**
+	* Using Common Configuration
+	*/
+	config: CertificateConfig = new CertificateConfig();
 	constructor(
 		private fb: FormBuilder,
 		private route: ActivatedRoute,
-		private formService: FormsActionsService
+		private formService: FormsActionsService,
+		public TranslateService: TranslateService
 	) { }
 
 	ngOnInit() {
@@ -96,10 +101,28 @@ export class CremationCertificateComponent implements OnInit {
 	getCremationData() {
 		this.formService.getFormData(this.appId).subscribe(res => {
 			this.cremationForm.patchValue(res);
+			res.serviceDetail.serviceUploadDocuments.forEach(app => {
+				(<FormArray>this.cremationForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.config.createDocumentsGrp(app));
+			});
+			this.requiredDocumentList();
 			this.showButtons = true;
 		});
 	}
-
+	/**
+	* Method is create required document array
+	*/
+	requiredDocumentList() {
+		this.uploadFilesArray = [];
+		_.forEach(this.cremationForm.get('serviceDetail').get('serviceUploadDocuments').value, (value) => {
+			if (value.mandatory && value.isActive && value.requiredOnCitizenPortal) {
+				this.uploadFilesArray.push({
+					'labelName': value.documentLabelEn,
+					'fieldIdentifier': value.fieldIdentifier,
+					'documentIdentifier': value.documentIdentifier
+				})
+			}
+		});
+	}
 	/**
 	 * This method is use for set user selected date 
 	 * @param date - get selected date

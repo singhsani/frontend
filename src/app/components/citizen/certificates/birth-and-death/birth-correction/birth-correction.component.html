@@ -1,8 +1,6 @@
 <app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
 
-<div class="container">
-
-    <mat-card *ngIf="showApplicationSearch">
+    <mat-card *ngIf="showApplicationSearch" class="mt-4 container" >
 
         <form [formGroup]="regStatusForm" (ngSubmit)="getRegistrationNumberStatus()" autocomplete="off">
 
@@ -30,8 +28,7 @@
             </div>
         </form>
     </mat-card>
-
-    <mat-card [hidden]="!showcorrectionForm">
+    <mat-card [hidden]="!showcorrectionForm" class="formClass cardBorder">
         <form [formGroup]="birthCorrectionForm" autocomplete="off">
             <mat-tab-group mat-stretch-tabs class="stepperNav" dynamicHeight="true" [(selectedIndex)]="tabIndex">
                 <mat-tab [label]="stepLable1 | translate: translateKey">
@@ -164,7 +161,7 @@
 
                 </mat-tab>
                 <mat-tab [label]="stepLable2 | translate: translateKey ">
-                    <h2>{{'upload_mandetory_documents' | translate:translateKey}}</h2>
+                    <!-- <h2>{{'upload_mandetory_documents' | translate:translateKey}}</h2> -->
 
                     <div class="alert alert-warning ">
                         {{'note' | translate:translateKey}} :{{'submit_hard_copy_at_madhyawarti_school' | translate:translateKey}}
@@ -192,4 +189,3 @@
 
         </form>
     </mat-card>
-</div>
