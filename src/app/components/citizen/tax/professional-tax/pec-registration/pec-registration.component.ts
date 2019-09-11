@@ -357,7 +357,7 @@ export class PecRegistrationComponent implements OnInit {
 		this.mandatoryFileCheck().then(data => {
 			if (data.status) {
 				this.pecRegForm.get('pancardNo').setValue(this.pecRegForm.get('pancardNo').value.toUpperCase());
-				this.pecRegForm.get('gstNo').setValue(this.pecRegForm.get('gstNo').value.toUpperCase());
+				this.pecRegForm.get('gstNo').setValue(this.pecRegForm.get('gstNo').value ? this.pecRegForm.get('gstNo').value.toUpperCase() : null);
 				this.profeService.pftSaveFormData(this.pecRegForm.getRawValue()).subscribe(res => {
 					if (Object.keys(res).length) {
 						// if (this.pecRegForm.get('pecNo').value) {

@@ -110,6 +110,7 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 			taxFormId: null,
 			defaultDemandGenerated: false,
 			rcDateEditAble: false,
+			canEditForm: true,
 
 			prcNo: null,
 			pecNo: null,

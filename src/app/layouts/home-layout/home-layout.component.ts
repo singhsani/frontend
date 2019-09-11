@@ -1,3 +1,4 @@
+import { CountryService } from './../../shared/services/country.service';
 import { ManageRoutes } from './../../config/routes-conf';
 import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { MediaMatcher } from '@angular/cdk/layout';
@@ -80,7 +81,8 @@ export class HomeLayoutComponent implements OnInit {
 		private session: SessionStorageService,
 		private formService: FormsActionsService,
 		public commonService: CommonService,
-		private router: Router
+		private router: Router,
+		private countryService: CountryService
 	) {
 		
 		this.mobileQuery = media.matchMedia('(max-width: 600px)');
@@ -99,6 +101,8 @@ export class HomeLayoutComponent implements OnInit {
 		this.subscription = this.commonService.profileSubject.subscribe(res => {
 			this.profileObj = res;
 		});
+
+		this.countryService.countriesData.subscribe(data => { });
 	}
 
 	onLogout() {
