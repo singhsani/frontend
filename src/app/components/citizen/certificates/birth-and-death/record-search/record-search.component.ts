@@ -41,7 +41,7 @@ export class RecordSearchComponent implements OnInit {
 	 * search form.
 	 */
 	searchForm: FormGroup;
-
+	deathFromName: boolean = false;
 	/**
 	 * language translate key.
 	 */
@@ -133,7 +133,9 @@ export class RecordSearchComponent implements OnInit {
 	ngOnInit() {
 
 		this.searchFormControls();
-
+		if (this.apiType == 'duplicateDeathReg' || this.apiType == 'NRCDeath') {
+			this.deathFromName = true
+		}
 		//this.getLookUpdata();
 
 	}

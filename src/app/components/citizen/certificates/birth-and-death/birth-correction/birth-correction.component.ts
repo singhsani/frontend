@@ -1,13 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ManageRoutes } from './../../../../../config/routes-conf';
 import { CommonService } from '../../../../../shared/services/common.service';
 import { Location } from '@angular/common';
 import { FormsActionsService } from '../../../../../core/services/citizen/data-services/forms-actions.service';
-import { MatHorizontalStepper, MatStepLabel } from '@angular/material';
-import { BDCertificateConfig } from '../config/certificate-config';
 import { TranslateService } from '../../../../../shared/modules/translate/translate.service';
+import * as _ from 'lodash';
+import { CertificateConfig } from '../../certificate-config';
 
 @Component({
 	selector: 'app-birth-correction',
@@ -15,12 +15,6 @@ import { TranslateService } from '../../../../../shared/modules/translate/transl
 	styleUrls: ['./birth-correction.component.scss']
 })
 export class BirthCorrectionComponent implements OnInit {
-
-	/**
-	 * get stepper element from view.
-	 */
-	@ViewChild(MatHorizontalStepper) stepper: MatHorizontalStepper;
-	@ViewChild(MatStepLabel) steplable: MatStepLabel;
 
 	/**
 	 * Birth correction form.
@@ -106,7 +100,7 @@ export class BirthCorrectionComponent implements OnInit {
 	 */
 	apiCode: string;
 
-	config : BDCertificateConfig = new BDCertificateConfig();
+	configDoc: CertificateConfig = new CertificateConfig();
 
 	/**
 	 * Constructor.
@@ -124,7 +118,7 @@ export class BirthCorrectionComponent implements OnInit {
 		private location: Location,
 		private commonService: CommonService,
 		private formService: FormsActionsService,
-		public translateService : TranslateService
+		public TranslateService : TranslateService
 	) { }
 
 	/**
@@ -186,8 +180,13 @@ export class BirthCorrectionComponent implements OnInit {
 		this.formService.getFormData(this.appId).subscribe(res => {
 
 			this.birthCorrectionForm.patchValue(res);
-			this.config.documentList(res, this.uploadFileArray);
+			// this.config.documentList(res, this.uploadFileArray);
 
+			res.serviceDetail.serviceUploadDocuments.forEach(app => {
+				(<FormArray>this.birthCorrectionForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.configDoc.createDocumentsGrp(app));
+			});
+			this.requiredDocumentList();
+			this.showButtons = true;
 			let event = res.typeOfCorrection.code;
 
 			if (event === 'NAME_INSERTION') {
@@ -197,8 +196,6 @@ export class BirthCorrectionComponent implements OnInit {
 				this.allowChildNameInsertion = false;
 				this.allowChildNameCorrection = true;
 			}
-
-			this.showButtons = true;
 		});
 	}
 
@@ -210,7 +207,13 @@ export class BirthCorrectionComponent implements OnInit {
 	createBirthCorrectionData(data) {
 		this.formService.createFormData().subscribe(res => {
 			this.birthCorrectionForm.patchValue(res);
-			this.config.documentList(res, this.uploadFileArray);
+			// this.config.documentList(res, this.uploadFileArray);
+
+			res.serviceDetail.serviceUploadDocuments.forEach(app => {
+				(<FormArray>this.birthCorrectionForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.configDoc.createDocumentsGrp(app));
+			});
+			this.requiredDocumentList();
+
 			this.appId = res.serviceFormId;
 			let cururl = this.location.path().replace('false', this.appId.toString());
 			this.location.go(cururl);
@@ -275,7 +278,6 @@ export class BirthCorrectionComponent implements OnInit {
 	 * @param data - original json.
 	 */
 	setValue(data) {
-		console.log(data)
 		this.birthCorrectionForm.get('fieldView').setValue(data.fieldView);
 		this.birthCorrectionForm.get('fieldList').setValue(data.fieldList);
 		this.birthCorrectionForm.get('childName').setValue(data.childName);
@@ -412,28 +414,21 @@ export class BirthCorrectionComponent implements OnInit {
 		}
 		return this.uploadModel;
 	}
+	
+
 	/**
-	 * Method is used to get file status.
-	 * @param fieldIdentifier - file identifier.
-	 */
-	getFileObjectContained(fieldIdentifier: string) {
-		let found: boolean = false;
-		for (let i = 0; i < this.uploadFileArray.length; i++) {
-			if (this.uploadFileArray[i].fieldIdentifier == fieldIdentifier) {
-				found = true;
-				break;
+	* Method is create required document array
+	*/
+	requiredDocumentList() {
+		this.uploadFileArray = [];
+		_.forEach(this.birthCorrectionForm.get('serviceDetail').get('serviceUploadDocuments').value, (value) => {
+			if (value.mandatory && value.isActive && value.requiredOnCitizenPortal) {
+				this.uploadFileArray.push({
+					'labelName': value.documentLabelEn,
+					'fieldIdentifier': value.fieldIdentifier,
+					'documentIdentifier': value.documentIdentifier
+				})
 			}
-		}
-		return found;
+		});
 	}
-
-	/**
-	 * Method is used to create file object.
-	 * @param labelName - file labelName
-	 * @param fieldIdentifier - file identifier
-	 */
-	fileObjectCreater(labelName, fieldIdentifier): any {
-		return { labelName: labelName, fieldIdentifier: fieldIdentifier }
-	}
-
 }

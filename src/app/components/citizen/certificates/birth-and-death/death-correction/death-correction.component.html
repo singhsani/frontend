@@ -26,7 +26,7 @@
     </form>
 </mat-card>
 
-<mat-card *ngIf="showcorrectionForm" class="formClass cardBorder">
+<mat-card [hidden]="!showcorrectionForm" class="formClass cardBorder">
     <form [formGroup]="deathCorrectionForm" autocomplete="off">
         <mat-tab-group mat-stretch-tabs [(selectedIndex)]="tabIndex" class="stepperNav" dynamicHeight="true">
 
@@ -115,18 +115,18 @@
                 <div class="alert alert-warning">
                     {{'note' | translate:translateKey}} : {{'file_size_less_than_5_mb' | translate:translateKey}}
                 </div>
-
+<!-- dynamic documents -->
                 <div class="row">
-
-                    <div class="col-md-4" *ngFor="let doc of uploadFileArray">
-                        <div *ngIf="doc.requiredOnCitizenPortal && doc.isActive">
-                            <label>{{translateService.getCurrentLanguage()=='en'? doc.documentLabelEn : doc.documentLabelGuj }}
+                    <ng-container
+                        *ngFor="let doc of deathCorrectionForm.get('serviceDetail').get('serviceUploadDocuments').value">
+                        <div class="col-md-4"
+                            *ngIf="doc.requiredOnCitizenPortal && doc.isActive && showButtons">
+                            <label>{{TranslateService.getCurrentLanguage()=='en'? doc.documentLabelEn : doc.documentLabelGuj }}
                                 <span *ngIf="doc.mandatory">*</span></label>
                             <file-upload [form]="deathCorrectionForm" [uploadModel]="doc"></file-upload>
                         </div>
-                    </div>
+                    </ng-container>
                 </div>
-
                 <!-- <div class="row">
                         <div class="col-md-4" *ngIf="showButtons">
                             <label labelPosition="after">{{'resident_proof' | translate:translateKey}}{{!getFileObjectContained('1.1')?'':

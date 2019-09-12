@@ -4,13 +4,13 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ManageRoutes } from './../../../../../config/routes-conf';
 import { Location } from '@angular/common';
 import { CommonService } from '../../../../../shared/services/common.service';
+import { CertificateConfig } from '../../certificate-config';
 
 import { ValidationService } from '../../../../../shared/services/validation.service';
 import { FormsActionsService } from '../../../../../core/services/citizen/data-services/forms-actions.service';
 import * as _ from 'lodash';
 import * as moment from 'moment';
 import { TranslateService } from '../../../../../shared/modules/translate/translate.service';
-import { BDCertificateConfig } from '../config/certificate-config';
 
 @Component({
 	selector: 'app-death-correction',
@@ -24,7 +24,7 @@ export class DeathCorrectionComponent implements OnInit {
 	 */
 	regStatusForm: FormGroup;
 
-	uploadFileArray : Array<any> = [];
+	uploadFileArray: Array<any> = [];
 
 	/**
 	 * death correction form group.
@@ -70,6 +70,8 @@ export class DeathCorrectionComponent implements OnInit {
 	 * Api code
 	 */
 	apiCode: string;
+	config: CertificateConfig = new CertificateConfig();
+
 
 	tabIndex: number = 0;
 	/**
@@ -88,7 +90,7 @@ export class DeathCorrectionComponent implements OnInit {
 		private location: Location,
 		private route: ActivatedRoute,
 		private formService: FormsActionsService,
-		public translateService: TranslateService
+		public TranslateService: TranslateService
 	) { }
 
 	/**
@@ -102,6 +104,8 @@ export class DeathCorrectionComponent implements OnInit {
 			this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
 		});
 
+		this.deathCorrectionFormControls();
+
 		if (this.appId) {
 
 			/**
@@ -113,11 +117,6 @@ export class DeathCorrectionComponent implements OnInit {
 			 * show correction form.
 			 */
 			this.showcorrectionForm = true;
-
-			/**
-		 	 * create birth certificate form.
-		 	 */
-			this.deathCorrectionFormControls();
 
 			/**
 			 * get birth correction data.
@@ -153,10 +152,14 @@ export class DeathCorrectionComponent implements OnInit {
 	 */
 	getDeathCorrectionData() {
 		this.formService.getFormData(this.appId).subscribe(res => {
-			debugger;
-			this.deathCorrectionForm.patchValue(res);
-			this.documentList(res, this.uploadFileArray);
 
+			this.deathCorrectionForm.patchValue(res);
+			// this.documentList(res, this.uploadFileArray);
+
+			res.serviceDetail.serviceUploadDocuments.forEach(app => {
+				(<FormArray>this.deathCorrectionForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.config.createDocumentsGrp(app));
+			});
+			this.requiredDocumentList();
 			this.showButtons = true;
 		});
 	}
@@ -167,10 +170,18 @@ export class DeathCorrectionComponent implements OnInit {
 	 */
 	createBirthCorrectionData(data) {
 		this.formService.createFormData().subscribe(res => {
-			this.deathCorrectionFormControls();
+
+			// this.deathCorrectionFormControls();
 			this.appId = res.serviceFormId;
+
 			this.deathCorrectionForm.patchValue(res);
-			this.documentList(res, this.uploadFileArray);
+			// this.documentList(res, this.uploadFileArray);
+
+			res.serviceDetail.serviceUploadDocuments.forEach(app => {
+				(<FormArray>this.deathCorrectionForm.controls.serviceDetail.get('serviceUploadDocuments')).push(this.config.createDocumentsGrp(app));
+			});
+			this.requiredDocumentList();
+			this.showButtons = true;
 
 			let cururl = this.location.path().replace('false', this.appId.toString());
 			this.location.go(cururl);
@@ -179,6 +190,7 @@ export class DeathCorrectionComponent implements OnInit {
 			this.showcorrectionForm = true;
 			this.showApplicationSearch = false;
 			this.showButtons = true;
+
 		})
 	}
 
@@ -213,7 +225,7 @@ export class DeathCorrectionComponent implements OnInit {
 			if (err.error[0].code == 'INVALID_FILENUMBER') {
 				this.commonService.openAlert("Invalid Operation", "File Number Not Valid", "warning");
 			}
-			 else if (err.error[0].code == 'INVALID_REQUEST') {
+			else if (err.error[0].code == 'INVALID_REQUEST') {
 				this.commonService.openAlert("Invalid Request", "Request Not Valid", "warning");
 			}
 		});
@@ -256,10 +268,9 @@ export class DeathCorrectionComponent implements OnInit {
 	 * @param count - count of invalid control.
 	 */
 	handleErrorsOnSubmit(count) {
-		debugger;
 		let step0 = 6;
 		let step1 = 8;
-		
+
 		if (count <= step1) {
 			this.tabIndex = 0;
 			return false;
@@ -313,15 +324,16 @@ export class DeathCorrectionComponent implements OnInit {
 			canEdit: true,
 			canDelete: true,
 			canSubmit: null,
-			serviceDetail: this.fb.group({
-				code: null,
-				name: null,
-				gujName: null,
-				feesOnScrutiny: null
-			}),
+			// serviceDetail: this.fb.group({
+			// 	code: null,
+			// 	name: null,
+			// 	gujcbName: null,
+			// 	feesOnScrutiny: null
+			// }),
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
 			attachments: []
 		});
+
 	}
 
 
@@ -329,16 +341,16 @@ export class DeathCorrectionComponent implements OnInit {
 	 * Method is used to get file status.
 	 * @param fieldIdentifier - file identifier.
 	 */
-	getFileObjectContained(fieldIdentifier: string) {
-		let found: boolean = false;
-		for (let i = 0; i < this.uploadFileArray.length; i++) {
-			if (this.uploadFileArray[i].fieldIdentifier == fieldIdentifier) {
-				found = true;
-				break;
-			}
-		}
-		return found;
-	}
+	// getFileObjectContained(fieldIdentifier: string) {
+	// 	let found: boolean = false;
+	// 	for (let i = 0; i < this.uploadFileArray.length; i++) {
+	// 		if (this.uploadFileArray[i].fieldIdentifier == fieldIdentifier) {
+	// 			found = true;
+	// 			break;
+	// 		}
+	// 	}
+	// 	return found;
+	// }
 
 	/**
 	 * Method is used to create file object.
@@ -353,28 +365,44 @@ export class DeathCorrectionComponent implements OnInit {
 	 * This method use to get output event of tab change
 	 * @param evt - Tab index
 	 */
-	onTabChange(evt:number) {
+	onTabChange(evt: number) {
 		this.tabIndex = evt;
 	}
 
-	
+
     /**
 	 * Method is create required document array
 	 */
-    public documentList(res, uploadFilesArray: Array<any>) {
-        res.serviceDetail.serviceUploadDocuments.forEach(file => {
-            if (file.isActive && file.requiredOnCitizenPortal) {
-                uploadFilesArray.push(file);
-            }
-        });
-        // _.forEach(form.get('serviceDetail').get('serviceUploadDocuments').value, (value) => {
-        //     if (value.isActive && value.requiredOnCitizenPortal) {
-        //         uploadFilesArray.push({
-        //             'labelName': value.documentLabelEn,
-        //             'fieldIdentifier': value.fieldIdentifier,
-        //             'documentIdentifier': value.documentIdentifier
-        //         })
-        //     }
-        // });
-    }
+	// public documentList(res, uploadFilesArray: Array<any>) {
+	//     res.serviceDetail.serviceUploadDocuments.forEach(file => {
+	//         if (file.isActive && file.requiredOnCitizenPortal) {
+	//             uploadFilesArray.push(file);
+	//         }
+	//     });
+	//     // _.forEach(form.get('serviceDetail').get('serviceUploadDocuments').value, (value) => {
+	//     //     if (value.isActive && value.requiredOnCitizenPortal) {
+	//     //         uploadFilesArray.push({
+	//     //             'labelName': value.documentLabelEn,
+	//     //             'fieldIdentifier': value.fieldIdentifier,
+	//     //             'documentIdentifier': value.documentIdentifier
+	//     //         })
+	//     //     }
+	//     // });
+	// }
+
+	/**
+	* Method is create required document array
+	*/
+	requiredDocumentList() {
+		this.uploadFileArray = [];
+		_.forEach(this.deathCorrectionForm.get('serviceDetail').get('serviceUploadDocuments').value, (value) => {
+			if (value.mandatory && value.isActive && value.requiredOnCitizenPortal) {
+				this.uploadFileArray.push({
+					'labelName': value.documentLabelEn,
+					'fieldIdentifier': value.fieldIdentifier,
+					'documentIdentifier': value.documentIdentifier
+				})
+			}
+		});
+	}
 }
