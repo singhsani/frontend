@@ -59,6 +59,7 @@ export class AddressComponent implements OnInit, OnChanges {
 			this.isBuildinAreaReq = false;
 			this.addressFormGroup.get('buildingName').clearValidators();
 			this.addressFormGroup.get('area').clearValidators();
+			this.addressFormGroup.get('buildingName').setValidators([ValidationService.buildingNameValidator]);
 		}
 
 		/* After perform set or remove validator action this will update value and validity */
@@ -80,7 +81,7 @@ export class AddressComponent implements OnInit, OnChanges {
 			uniqueId: null,
 			version: null,
 			addressType: null,
-			buildingName: [null, [Validators.maxLength(60)]],
+			buildingName: [null, [ValidationService.buildingNameValidator,Validators.maxLength(60)]],
 			streetName: [null, Validators.maxLength(60)],
 			landmark: [null, Validators.maxLength(100)],
 			area: [null, Validators.maxLength(60)],

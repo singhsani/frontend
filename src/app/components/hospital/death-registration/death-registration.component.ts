@@ -427,7 +427,8 @@ export class DeathRegistrationComponent implements OnInit {
 				name: null,
 				gujName: null
 			}),
-			deceasedOtherEducation: null,
+			otherEducation:null,
+			// deceasedOtherEducation: null,
 			occupation: this.fb.group({
 				id: null,
 				code: [null],

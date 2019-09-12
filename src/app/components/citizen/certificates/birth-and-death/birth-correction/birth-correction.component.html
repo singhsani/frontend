@@ -171,15 +171,18 @@
                         {{'note' | translate:translateKey}} : {{'file_size_less_than_5_mb' | translate:translateKey}}
                     </div>
 
-                    <div class="row">
-                        <div class="col-md-4" *ngFor="let doc of uploadFileArray">
-                            <div>
-                                <label>{{translateService.getCurrentLanguage()=='en'? doc.documentLabelEn : doc.documentLabelGuj
-                                    }} <span *ngIf="doc.mandatory">*</span></label>
-                                <file-upload [form]="birthCorrectionForm" [uploadModel]="doc"></file-upload>
-                            </div>
+                    <!-- dynamic documents -->
+                <div class="row">
+                    <ng-container
+                        *ngFor="let doc of birthCorrectionForm.get('serviceDetail').get('serviceUploadDocuments').value">
+                        <div class="col-md-4"
+                            *ngIf="doc.requiredOnCitizenPortal && doc.isActive && showButtons">
+                            <label>{{TranslateService.getCurrentLanguage()=='en'? doc.documentLabelEn : doc.documentLabelGuj }}
+                                <span *ngIf="doc.mandatory">*</span></label>
+                            <file-upload [form]="birthCorrectionForm" [uploadModel]="doc"></file-upload>
                         </div>
-                    </div>
+                    </ng-container>
+                </div>
 
                     <app-action-bar [uploadFiles]="uploadFileArray" [form]="birthCorrectionForm" [stepInfo]="{step: 'final', next: 2, back: 0}"
                         (tabIndex)="onTabChange($event)" (handleErrors)="handleErrorsOnSubmit($event) "></app-action-bar>
