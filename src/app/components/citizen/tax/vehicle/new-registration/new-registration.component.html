@@ -256,7 +256,7 @@
 				</ng-template>
 				<div class="row">
 					<div class="col-md-4" *ngFor="let doc of attachmentList">
-						<div *ngIf="doc.requiredOnCitizenPortal && doc.isActive">
+						<div *ngIf="doc.requiredOnCitizenPortal && doc.isActive && showButton">
 							<label>{{doc.documentLabelEn}}
 								<span class="text-danger" *ngIf="doc.mandatory">*</span>
 							</label>

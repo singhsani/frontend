@@ -52,7 +52,7 @@ export class NewRegistrationComponent implements OnInit {
   taxAmountArray: any = [];
   totalVehicleTaxAmt: number = 0;
   attachmentList: any = [];
-  showButtons: boolean = false;
+  showButton: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -185,7 +185,6 @@ export class NewRegistrationComponent implements OnInit {
         _.forEach(res, (element) => {
           element['serviceFormId'] = taxFormId;
         });
-
         this.attachmentList = _.cloneDeep(res);
       }
     });
@@ -211,8 +210,10 @@ export class NewRegistrationComponent implements OnInit {
   getVehicleData(id: number) {
     this.formService.getFormData(id).subscribe(res => {
       this.formService.getFormData(id).subscribe(res => {
+
         this.vehicleRegistrationForm.patchValue(res);
-  
+        this.showButton = true;
+
         if (!this.vehicleRegistrationForm.get('canEdit').value) {
           this.vehicleRegistrationForm.disable();
         }
