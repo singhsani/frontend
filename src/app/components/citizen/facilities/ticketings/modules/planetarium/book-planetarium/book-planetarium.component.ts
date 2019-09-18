@@ -1,3 +1,4 @@
+import { FormsActionsService } from 'src/app/core/services/citizen/data-services/forms-actions.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as moment from 'moment';
@@ -30,7 +31,7 @@ export class BookPlanetariumComponent implements OnInit {
 
   // Loading Ticketing Configurations
   ticketingConstants = TicketingConstants;
-  ticketingUtils: TicketingUtils = new TicketingUtils();
+  ticketingUtils: TicketingUtils;
   planetariumVisitingRates: any;
   totalVisitorLimit: number = 5;
   seatAvailable: boolean = true;
@@ -64,9 +65,11 @@ export class BookPlanetariumComponent implements OnInit {
     private router: Router,
     private toster: ToastrService,
     public validationError: ValidationService,
-    public pipe: TranslatePipe
+    public pipe: TranslatePipe,
+    protected formService: FormsActionsService
   ) {
     this.ticketingService.resourceType = 'planetarium';
+    this.ticketingUtils = new TicketingUtils(formService, toster);
   }
 
   ngOnInit() {

@@ -298,5 +298,13 @@ export class FormsActionsService {
 		return this.http.get(`api/professional/receipt/search/${num}`);
 	}
 
+	saveTaxPaymentDetails(data){
+		return this.http.post(`api/professional/taxPayment`, data);
+	}
+
+	printProfReceipt(refNumber) {
+		this.requestURL = `api/professional/receipt/printReceipt/${refNumber}`;
+		return this.http.get(this.requestURL, 'printReceipt');
+	}
 
 }

@@ -1,15 +1,13 @@
-import { ValidationService } from './../../../shared/services/validation.service';
 import { environment } from './../../../../environments/environment';
-import { Component, OnInit, Inject, ViewChild } from '@angular/core';
-import { MatDialogRef, MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
-import { FormGroup, FormBuilder, FormControl, Validators, Form } from '@angular/forms';
+import { Component, OnInit} from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { ToastrService } from 'ngx-toastr';
 import { CommonService } from './../../../shared/services/common.service';
 import { FormsActionsService } from './../../../core/services/citizen/data-services/forms-actions.service';
 
 import * as _ from 'lodash';
+import { SessionStorageService } from 'angular-web-storage';
 
 
 @Component({
@@ -34,11 +32,11 @@ export class CommonPaybleComponent implements OnInit {
   duesDetailsArr: any = [];
 
   constructor(
-    private dialog: MatDialog,
     private formService: FormsActionsService,
     private fb: FormBuilder,
     private toaster: ToastrService,
     private commonService: CommonService,
+    private session: SessionStorageService
   ) {
     this.getPayableServicesList();
     this.createPayementControls();
@@ -89,12 +87,18 @@ export class CommonPaybleComponent implements OnInit {
     }
 
     this.formService.paymentGatewayUrl(obj).subscribe(res => {
-      window.open(res.data, "_self");
+      if (res) {
+        this.session.set('paymentData', JSON.stringify(obj));
+        window.open(res.data, "_self");
+      } else {
+        this.toaster.warning('something went wrong!');
+      }
+
     });
 
   }
 
-  get f(){
+  get f() {
     return this.paymentsForm.controls;
   }
 
