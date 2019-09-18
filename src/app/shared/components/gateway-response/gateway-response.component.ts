@@ -26,7 +26,9 @@ export class GatewayResponseComponent implements OnInit {
 		private router: Router,
 		private toastr: ToastrService,
 		private sessionStore: SessionStorageService
-	) { this.dispData = JSON.parse(this.sessionStore.get('paymentData')); }
+	) {
+		this.dispData = JSON.parse(this.sessionStore.get('paymentData'));
+	}
 
 	ngOnInit() {
 
@@ -37,20 +39,19 @@ export class GatewayResponseComponent implements OnInit {
 				this.router.navigate([ManageRoutes.getFullRoute('CITIZENDASHBOARD')]);
 			}
 		});
-
 	}
 
 	gatewayResponse(token) {
 		this.formService.getPaymentResponse(token).subscribe(res => {
 			this.responseObj = res.data;
-			
+
 			if (res.success) {
-			
+
 				if (this.responseObj.txn_msg == 'failure') {
 					this.redirectToHome();
 				} else {
 					this.paymentStatus = _.upperCase(this.responseObj.txn_msg);
-					this.postSessionData(this.dispData);
+					this.postSessionData(this.dispData, this.responseObj);
 				}
 				this.clearSession();
 			}
@@ -66,7 +67,7 @@ export class GatewayResponseComponent implements OnInit {
 	 * Post data for post payment 
 	 * @param data : json
 	 */
-	postSessionData(data) {
+	postSessionData(data, responseObj?) {
 		let payData = {
 			id: null,
 			uniqueId: null,
@@ -79,39 +80,62 @@ export class GatewayResponseComponent implements OnInit {
 			}),
 			transactionId: data.transactionId,
 			paymentStatus: this.paymentStatus,
-			payableServiceType: data.payableServiceType
+			payableServiceType: data.payableServiceType,
+			amount: responseObj ? responseObj.txn_amt : 0
 		}
 
-		this.formService.createPayment(payData).subscribe(payResp => {
-			const payRespData = payResp.data.responseData;
+		if (data.payableServiceType == "PROFESSIONAL_TAX") {
+			this.formService.saveTaxPaymentDetails(payData).subscribe(res => {
+				if (res && res.data) {
+					this.formService.printProfReceipt(res.data.refNumber).subscribe(data => {
 
-			if (payRespData.fileStatus == "PAYMENT_RECEIVED") {
-				
-				this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(payRespData.serviceDetail.code);
-				this.formService.submitFormData(payRespData.serviceFormId).subscribe(res => {
-					if (res) {
+						let sectionToPrint: any = document.getElementById('sectionToPrint');
+						sectionToPrint.innerHTML = data;
+
 						setTimeout(() => {
-							this.redirectToMyApplication(data.myApplicationUrl, payRespData.refNumber, payData.resourceType, payRespData.payableServiceType);
-						}, 10000);
+							var onPrintFinished = function (printed) {
+								this.redirectToHome();
+							}
+							onPrintFinished(window.print());
+						}, 0);
 
-						this.interVal();
-					}
-				});
-			}
-			// if (payRespData.status == "DEPOSIT_REQUIRED") { //for booking module
+					});
 
-			else {
-				setTimeout(() => {
-					this.redirectToMyApplication(data.myApplicationUrl, payRespData.refNumber, payData.resourceType, payRespData.payableServiceType);
-				}, 10000);
-
-				this.interVal();
-			}
-
-		},
-			err => {
-				this.toastr.error('Internal server error');
+				}
 			});
+		} else {
+			this.formService.createPayment(payData).subscribe(payResp => {
+				const payRespData = payResp.data.responseData;
+
+				if (payRespData.fileStatus == "PAYMENT_RECEIVED") {
+
+					this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(payRespData.serviceDetail.code);
+					this.formService.submitFormData(payRespData.serviceFormId).subscribe(res => {
+						if (res) {
+							setTimeout(() => {
+								this.redirectToMyApplication(data.myApplicationUrl, payRespData.refNumber, payData.resourceType, payRespData.payableServiceType);
+							}, 10000);
+
+							this.interVal();
+						}
+					});
+				}
+				// if (payRespData.status == "DEPOSIT_REQUIRED") { //for booking module
+
+				else {
+					setTimeout(() => {
+						this.redirectToMyApplication(data.myApplicationUrl, payRespData.refNumber, payData.resourceType, payRespData.payableServiceType);
+					}, 10000);
+
+					this.interVal();
+				}
+
+			},
+				err => {
+					this.toastr.error('Internal server error');
+				});
+		}
+
 	}
 
 
@@ -124,15 +148,32 @@ export class GatewayResponseComponent implements OnInit {
 		} else {
 			this.router.navigateByUrl(myApplicationUrl);
 		}
+		clearInterval(this.interval);
 	}
 
 	redirectToHome() {
-		setTimeout(() => {
-			this.router.navigate([ManageRoutes.getFullRoute('CITIZENMYAPPS')]);
-		}, 10000);
+		if (this.dispData.payableServiceType == "PROFESSIONAL_TAX") {
+			setTimeout(() => {
+				this.router.navigate([ManageRoutes.getFullRoute('CITIZENMYTRANSACTIONS')]);
+			}, 10000);
+		} else {
+			setTimeout(() => {
+				this.router.navigate([ManageRoutes.getFullRoute('CITIZENMYAPPS')]);
+			}, 10000);
+		}
 
 		this.interVal();
 	}
+
+	redirectToMyApps() {
+		if (this.dispData.payableServiceType == "PROFESSIONAL_TAX") {
+			this.router.navigate([ManageRoutes.getFullRoute('CITIZENMYTRANSACTIONS')]);
+		} else {
+			this.router.navigate([ManageRoutes.getFullRoute('CITIZENMYAPPS')]);
+		}
+		clearInterval(this.interval);
+	}
+
 	/**
 	 * method is used to clear session data.
 	 */
@@ -146,7 +187,7 @@ export class GatewayResponseComponent implements OnInit {
 		/**
 		 * setting time interval.
 		 */
-		setInterval(() => {
+		this.interval = setInterval(() => {
 			this.dispTime = this.dispTime - 1
 		}, 1000)
 

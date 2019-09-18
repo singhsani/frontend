@@ -1,3 +1,4 @@
+import { FormsActionsService } from 'src/app/core/services/citizen/data-services/forms-actions.service';
 import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 import { ToastrService } from 'ngx-toastr';
@@ -30,7 +31,7 @@ export class BookAtithigruhComponent implements OnInit {
 
 	tabIndex: number = 0;
 	bookingConstants = BookingConstants;
-	bookingUtils: BookingUtils = new BookingUtils();
+	bookingUtils: BookingUtils;
 
 	guideLineFlag: boolean = true;
 	showSearchForm: boolean = false;
@@ -73,8 +74,10 @@ export class BookAtithigruhComponent implements OnInit {
 		private bookingService: BookingService,
 		private commonService: CommonService,
 		private modalService: BsModalService,
-		private router: Router
+		private router: Router,
+		protected formService: FormsActionsService,
 	) {
+		this.bookingUtils = new BookingUtils(formService, toaster);
 		this.bookingService.resourceType = this.bookingConstants.ATITHIGRUH_RESOURCE_TYPE;
 	}
 
