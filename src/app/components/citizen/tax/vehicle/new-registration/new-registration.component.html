@@ -392,7 +392,7 @@
 
 			<div class="row">
 				<div class="col-md-12 text-right">
-					<button mat-raised-button color="success" (click)="onVehicleTaxSubmit()">{{'submit'
+					<button mat-raised-button color="success" [disabled]="!isSubmitBtnVisible" (click)="onVehicleTaxSubmit()">{{'submit'
 						| translate: actionBarKey}}</button>
 				</div>
 			</div>

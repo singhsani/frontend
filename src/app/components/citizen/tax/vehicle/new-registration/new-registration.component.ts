@@ -348,6 +348,7 @@ export class NewRegistrationComponent implements OnInit {
       this.commonService.openAlert("Warning", "Enter all the required information", "warning");
       return;
     }
+    this.isSubmitBtnVisible = false;
 
     this.paymentForm.get('bankName').setValue(this.paymentForm.get('bank').get('code').value);
     this.paymentForm.get('accountNo').setValue(this.paymentForm.get('bankAccountNo').value);
@@ -359,6 +360,9 @@ export class NewRegistrationComponent implements OnInit {
       this.toastr.success('Vehicle Registration Successful');
       this.modalRef.hide()
       this.printReceipt(res);
+      this.isSubmitBtnVisible = true;
+    },err=>{
+      this.isSubmitBtnVisible = true;
     });
   }
 

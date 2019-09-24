@@ -512,7 +512,7 @@ const ROUTEPREFIX = {
 
     /** start - citizen inner-tax module */
     'PROPERTYMODULE': 'property',
-    'WATERMODULE': 'water',
+    'WATERMODULE': 'water-supply',
     /** end - citizen inner-tax module */
 
     'PROFESSIONALMODULE': 'professional',
