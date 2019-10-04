@@ -835,14 +835,16 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
 
 /* This is use for printing receipt in div start */
 #sectionToPrint{visibility:hidden; height:10px; overflow: auto;}
+
 @media print {
-@page {margin: 0 !important;}
-body * {visibility: hidden;}
+@page {margin: 0 !important; padding:0 !important;}
+.example-container.borderOne, .mainMenu, .mat-toolbar, .titleBar, mat-card {display: none !important;}
 #matSidenav {display: none !important; visibility: hidden !important;}
 .mat-drawer-content {margin-left: 0 !important;}
-#sectionToPrint, #sectionToPrint * {visibility: visible;}
-#sectionToPrint {position: fixed; top: 20px; left: 0; width: 100%; height: auto !important;}
+#sectionToPrint, #sectionToPrint {visibility: visible;}
+#sectionToPrint {position: static; width: 100%; height: auto !important; margin-top:-50px; padding: 0;}
 #sectionToPrint td, #sectionToPrint th {padding: 5px; font-size: 15px;}
+#sectionToPrint li, #sectionToPrint tr {page-break-before:always;page-break-inside:avoid; page-break-after:always}
 } 
 /* This is use for printing receipt in div end */
 
