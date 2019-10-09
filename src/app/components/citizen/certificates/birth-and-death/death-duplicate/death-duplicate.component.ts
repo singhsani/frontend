@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { MatHorizontalStepper, MatStepLabel } from '@angular/material';
+// import { MatHorizontalStepper, MatStepLabel } from '@angular/material';
 import { Location } from '@angular/common';
 import { CommonService } from '../../../../../shared/services/common.service';
 import { ManageRoutes } from './../../../../../config/routes-conf';
@@ -17,15 +17,15 @@ import * as moment from 'moment';
 
 export class DeathDuplicateComponent implements OnInit {
 
-	/**
-	 * get element from html having id MatHorizontalStepper
-	 */
-    @ViewChild(MatHorizontalStepper) stepper: MatHorizontalStepper;
+	// /**
+	//  * get element from html having id MatHorizontalStepper
+	//  */
+    // @ViewChild(MatHorizontalStepper) stepper: MatHorizontalStepper;
 
-	/**
-	 * get element from html having id MatStepLabel
-	 */
-    @ViewChild(MatStepLabel) steplable: MatStepLabel;
+	// /**
+	//  * get element from html having id MatStepLabel
+	//  */
+    // @ViewChild(MatStepLabel) steplable: MatStepLabel;
 
 	/**
 	 * Routing configuration
@@ -126,6 +126,7 @@ export class DeathDuplicateComponent implements OnInit {
 	 * @param data - original json.
 	 */
     createDeathDuplicateRecord(data) {
+        
         this.formService.createFormData().subscribe(res => {
 
             this.deathDuplicateForm.patchValue(res);
@@ -166,7 +167,6 @@ export class DeathDuplicateComponent implements OnInit {
     handleErrorsOnSubmit(count) {
         let step1 = 6;
         if (count <= step1) {
-            this.stepper.selectedIndex = 0;
             return false;
         }
     }
@@ -176,7 +176,7 @@ export class DeathDuplicateComponent implements OnInit {
 	 */
     getLookupData() {
         this.formService.getDataFromLookups().subscribe(res => {
-            console.log(res);
+            
             this.DuplicateCopyMode = res.DUPLICATE_COPY_MODE;
             this.ISYESNO = res.YES_NO;
         });
@@ -226,13 +226,6 @@ export class DeathDuplicateComponent implements OnInit {
 	 */
     deathRegCalculator(event) {
         this.deathDuplicateForm.get('deathRegDate').setValue(moment(event.value).format("YYYY-MM-DD"));
-    }
-
-	/**
-	 * Method is used to reset form its a output event from action bar.
-	 */
-    stepReset() {
-        this.stepper.reset();
     }
 
 	/**

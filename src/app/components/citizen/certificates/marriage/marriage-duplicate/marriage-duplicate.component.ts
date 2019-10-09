@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MatHorizontalStepper, MatStep, MatStepLabel, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { MatStepLabel, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { ManageRoutes } from './../../../../../config/routes-conf';
 
 import { ValidationService } from '../../../../../shared/services/validation.service';
@@ -19,9 +19,6 @@ import { Location } from '@angular/common';
 	styleUrls: ['./marriage-duplicate.component.scss']
 })
 export class MarriageDuplicateComponent implements OnInit {
-
-	@ViewChild(MatHorizontalStepper) stepper: MatHorizontalStepper;
-	@ViewChild(MatStepLabel) steplable: MatStepLabel;
 
 	/**
 	 * get element having id as MatPaginator from view.
@@ -101,6 +98,8 @@ export class MarriageDuplicateComponent implements OnInit {
 	isVisibeDuplicateForm: boolean = true;
 	DUPLICATE_COPY_MODE: Array<any> = [];
 	YES_NO: Array<any> = [];
+	MARITAL_STATUS: Array<any> = [];
+	RELIGION: Array<any> = [];
 
     /**
      * @param fb - Declare FormBuilder property.
@@ -182,16 +181,58 @@ export class MarriageDuplicateComponent implements OnInit {
 			deptFileStatus: null,
 			serviceCode: "HEL-DUPMR",
 			marriageRegNumber: null,
-			marriageDate: ['', Validators.required],
+			marriageDate: [''],
 			marriageRegDate: null,
 			marriageRegYear: null,
-			groomName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
-			brideName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
+			groomName: ['', [ValidationService.nameValidator, Validators.maxLength(50)]],
+			brideName: ['', [ValidationService.nameValidator, Validators.maxLength(50)]],
 
 			fieldView: "ALL",
 			fieldList: null,
 			applicantName: null,
 			applicantNameGuj: null,
+		// id: null,
+		// 	uniqueId: null,
+		// 	version:null,
+		// 	serviceFormId:null,
+		// 	createdDate:null,
+		// 	updatedDate:null,
+		// 	serviceType:null,
+			// fileStatus:null,
+			// fileStatusName:null,
+			// deptFileStatus:null,
+			// serviceName:null,
+			// fileNumber:null,
+			// pid:null,
+			// outwardNo:null,
+			// loiNumber:null,
+			// firstName:null,
+			// lastName:" "Jha"",
+			// middleName:" null",
+			// contactNo:" "7875689111"",
+			// mobileNo:" "7875689111"",
+			// email:" "aashish".jha@nascentinfo.com",
+			// aadhaarNo:" null",
+			// agree:" false",
+			// paymentStatus:" null",
+			// canEdit:" true",
+			// canDelete:" true",
+			// canSubmit:" true",
+		
+			// serviceCode:" "HEL"-DUPMR",
+			// fieldView:" "ALL"",
+			// fieldList:" null",
+			// applicantName:" "aashish" Jha",
+			// applicantNameGuj:" null",
+			// marriageRegNumber:" null",
+			// marriageDate:" null",
+			// marriageRegDate:" null",
+			// marriageRegYear:" null",
+			// groomName:" null",
+			// brideName:" null",
+			// duplicateCopyMode:" {},"
+			// duplicateCopies:" {},"
+			// totalCopies:" null"
 		});
 	}
 
@@ -252,6 +293,8 @@ export class MarriageDuplicateComponent implements OnInit {
 		this.formService.getDataFromLookups().subscribe(res => {
 			this.DUPLICATE_COPY_MODE = res.DUPLICATE_COPY_MODE;
 			this.YES_NO = res.YES_NO;
+			this.RELIGION = res.RELIGION;
+			this.MARITAL_STATUS = res.MARITAL_STATUS;
 		});
 	}
 

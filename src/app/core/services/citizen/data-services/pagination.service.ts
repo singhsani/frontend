@@ -36,11 +36,11 @@ export class PaginationService {
 	getSearchDataWithPagination(filterData): Observable<manageData> {
 		switch (this.apiType) {
 			case "duplicateBirthReg": {
-				this.requestURL = `api/form/${this.apiType}/search?childName=${filterData.name}&birthDate=${filterData.date}&page=${this.pageIndex}&limit=${this.pageSize}`;
+				this.requestURL = `api/form/${this.apiType}/searchFromNewgen`;
 				break;
 			}
 			case "duplicateDeathReg": {
-				this.requestURL = `api/form/${this.apiType}/search?deathRegNumber=${filterData.regNumber}&deathDate=${filterData.date}&page=${this.pageIndex}&limit=${this.pageSize}`;
+				this.requestURL = `api/form/${this.apiType}/searchFromNewgen`;
 				break;
 			}
 			case "NRCBirth": {
@@ -56,7 +56,7 @@ export class PaginationService {
 				break;
 			}
 		}
-		return this.http.get(this.requestURL);
+		return this.http.post(this.requestURL,filterData);
 
 		// if (this.apiType == 'duplicateBirthReg') {
 		// 	this.requestURL = `api/form/${this.apiType}/search?childName=${filterData.name}&birthDate=${filterData.date}&page=${this.pageIndex}&limit=${this.pageSize}`;

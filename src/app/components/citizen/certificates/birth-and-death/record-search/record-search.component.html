@@ -5,36 +5,47 @@
 		<form [formGroup]="searchForm" autocomplete="off" ngNativeValidate>
 			<div class="row">
 				<mat-form-field class="col-md-4">
-					<input matInput trim type="text" formControlName="regNumber" placeholder="{{'reg_number' | translate: translateKey}}">
+					<input matInput trim type="text" formControlName="regNumber"
+						placeholder="{{'reg_number' | translate: translateKey}}">
 				</mat-form-field>
 
 				<div formGroupName="regYear" class="col-md-4 ngSelect">
-					<ng-select placeholder="{{'reg_year' | translate: translateKey}}" name="relation" formControlName="code">
+					<ng-select placeholder="{{'reg_year' | translate: translateKey}}" name="relation"
+						formControlName="code">
 						<ng-option *ngFor="let regyear of RegYear" [value]="regyear.code">{{regyear.name}}</ng-option>
 					</ng-select>
 				</div>
-				
+
 				<mat-form-field class="col-md-4">
-					<input matInput [matDatepicker]="picker" [max]="maxDate" formControlName="date" (dateChange)="onDateChange($event.value)"
-					 placeholder="{{deathFromName ? 'death_date' : 'birth_date' | translate: translateKey}}" (focus)="picker.open()">
+					<input matInput [matDatepicker]="picker" [max]="maxDate" formControlName="date"
+						(dateChange)="onDateChange($event.value)"
+						placeholder="{{deathFromName ? 'death_date' : 'birth_date' | translate: translateKey}}"
+						(focus)="picker.open()">
 					<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
 					<mat-datepicker touchUi="true" #picker></mat-datepicker>
 				</mat-form-field>
 
 				<mat-form-field class="col-md-4">
-					<input matInput type="text" formControlName="fatherName" appValidationFields validationFieldsType="onlyNameWithOutSpace" placeholder="{{'father_name' | translate: translateKey}}">
+					<input matInput type="text" formControlName="fatherName" appValidationFields
+						validationFieldsType="onlyNameWithOutSpace"
+						placeholder="{{'father_name' | translate: translateKey}}">
 				</mat-form-field>
 
 				<mat-form-field class="col-md-4">
-					<input matInput type="text" formControlName="name" appValidationFields validationFieldsType="onlyNameWithOutSpace" placeholder="{{deathFromName ? 'deceased_name' : 'child_name' | translate: translateKey}}">
+					<input matInput type="text" formControlName="name" appValidationFields
+						validationFieldsType="onlyNameWithOutSpace"
+						placeholder="{{deathFromName ? 'deceased_name' : 'child_name' | translate: translateKey}}">
 				</mat-form-field>
 
 				<mat-form-field class="col-md-4">
-					<input matInput type="text" formControlName="motherName" appValidationFields validationFieldsType="onlyNameWithOutSpace" placeholder="{{'mother_name' | translate: translateKey}}">
+					<input matInput type="text" formControlName="motherName" appValidationFields
+						validationFieldsType="onlyNameWithOutSpace"
+						placeholder="{{'mother_name' | translate: translateKey}}">
 				</mat-form-field>
 
 				<div class="col-md-12 text-right">
-				<button mat-raised-button color="primary" (click)="getDetails(searchForm.value)">{{'get_certificate_detail' | translate: translateKey}}</button>
+					<button mat-raised-button color="primary"
+						(click)="getDetails(searchForm.value)">{{'get_certificate_detail' | translate: translateKey}}</button>
 				</div>
 
 			</div>
@@ -50,53 +61,62 @@
 				No record(s) found!
 			</div>
 		</div>
-	
-		<table mat-table #table [dataSource]="dataSource" class="example-table" matSort matSortActive="created" matSortDisableClear
-		 matSortDirection="asc">
-	
+
+		<table mat-table #table [dataSource]="dataSource" class="example-table" matSort matSortActive="created"
+			matSortDisableClear matSortDirection="asc">
+
 			<ng-container matColumnDef="id">
 				<th mat-header-cell *matHeaderCellDef>#</th>
-				<td mat-cell *matCellDef="let row; let i = index;">{{ paginator.pageIndex==0?i+1:((paginator.pageIndex+1)*10)+(i+1) }}</td>
+				<td mat-cell *matCellDef="let row;let i = index">
+					{{ (paginator.pageSize * (paginator.pageIndex) + i) + 1 }}</td>
 			</ng-container>
 
 			<ng-container matColumnDef="seq">
 				<th mat-header-cell *matHeaderCellDef></th>
 				<td mat-cell *matCellDef="let row;let i = index;">
-					<mat-checkbox [checked]="selected === i" (change)="onChkBoxClick($event,row);selected = i"></mat-checkbox>
+					<mat-checkbox [checked]="selected === i" (change)="onChkBoxClick($event,row);selected = i">
+					</mat-checkbox>
 				</td>
 			</ng-container>
 
-			<ng-container matColumnDef="applicantName">
-				<th mat-header-cell *matHeaderCellDef>Applicant Name</th>
-				<td mat-cell *matCellDef="let row">{{ row.applicantName }}</td>
+			<ng-container matColumnDef="name">
+				<th mat-header-cell *matHeaderCellDef>Name</th>
+				<td mat-cell *matCellDef="let row">{{deathFromName?row.deceasedName : row.childName }}</td>
 			</ng-container>
-	
-			<ng-container matColumnDef="fileNumber">
-				<th mat-header-cell *matHeaderCellDef>File Number</th>
-				<td mat-cell *matCellDef="let row">{{ row.fileNumber }}</td>
+
+			<ng-container matColumnDef="date">
+				<th mat-header-cell *matHeaderCellDef>Date</th>
+				<td mat-cell *matCellDef="let row">{{deathFromName ? row.deathDate : row.birthDate }}</td>
 			</ng-container>
-			
-			<ng-container matColumnDef="serviceType">
-				<th mat-header-cell *matHeaderCellDef>Service Name</th>
-				<td mat-cell *matCellDef="let row">{{ row.serviceDetail.name }}</td>
+
+			<ng-container matColumnDef="fathersName">
+				<th mat-header-cell *matHeaderCellDef>Father Name</th>
+				<td mat-cell *matCellDef="let row">{{row.fathersName}}</td>
 			</ng-container>
-	
+
+			<ng-container matColumnDef="mothersName">
+				<th mat-header-cell *matHeaderCellDef>Mother Name</th>
+				<td mat-cell *matCellDef="let row">{{row.mothersName}}</td>
+			</ng-container>
+
 			<ng-container matColumnDef="action">
 				<th mat-header-cell *matHeaderCellDef>Action</th>
 				<td mat-cell *matCellDef="let row">
-					<button *ngIf="rowData.id == row.id" mat-icon-button color="primary" (click)="redirectToDuplicate(row)">
+					<button *ngIf="rowData.id == row.id" mat-icon-button color="primary"
+						(click)="redirectToDuplicate(row)">
 						Duplicate Certificate
 					</button>
 				</td>
 			</ng-container>
-	
+
 			<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
 			<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 		</table>
-	
-		<mat-paginator [length]="resultsLength" [pageSize]="pageSize">
-			
-		</mat-paginator>
+
+		<!-- <mat-paginator [length]="resultsLength" [pageSize]="pageSize"> -->
+		<mat-paginator #paginator [length]="length" [pageIndex]="pageIndex" [pageSize]="pageSize"
+			[pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+
 	</div>
 	<!-- Table end-->
 </div>

@@ -187,7 +187,7 @@ export class StillBirthComponent implements OnInit {
 			//step 1 controls
 			birthPlace: this.fb.group({
 				id: null,
-				code: [null, [Validators.required]],
+				code: ['HOSPITAL', [Validators.required]],
 				name: null
 			}),
 			otherPlace: null,

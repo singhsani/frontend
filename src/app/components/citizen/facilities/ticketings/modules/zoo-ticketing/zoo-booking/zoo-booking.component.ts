@@ -9,6 +9,7 @@ import * as moment from 'moment';
 import { Router } from '@angular/router';
 import { TranslatePipe } from 'src/app/shared/modules/translate/translate.pipe';
 import { ToastrService } from 'ngx-toastr';
+import { FormsActionsService } from 'src/app/core/services/citizen/data-services/forms-actions.service';
 
 @Component({
   selector: 'app-zoo-booking',
@@ -20,7 +21,7 @@ export class ZooBookingComponent implements OnInit {
 
   // Loading Ticketing Configurations
   ticketingConstants = TicketingConstants;
-  ticketingUtils: TicketingUtils = new TicketingUtils();
+  ticketingUtils: TicketingUtils;
 
   /**
    * language translate key.
@@ -174,9 +175,10 @@ export class ZooBookingComponent implements OnInit {
     private commonService: CommonService,
     private router: Router,
     public pipe: TranslatePipe,
-    private toster: ToastrService
+    private toster: ToastrService,
+    protected formService: FormsActionsService
   ) {
-
+    this.ticketingUtils = new TicketingUtils(formService,toster);
     this.ticketingService.resourceType = 'zoo';
   }
 

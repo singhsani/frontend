@@ -72,7 +72,7 @@ export class BirthCorrectionComponent implements OnInit {
 
 	stepLable1: string = 'child_details';
 	stepLable2: string = 'upload_documents';
-	
+
 
 	/**
 	 * File upload validation array.
@@ -82,7 +82,7 @@ export class BirthCorrectionComponent implements OnInit {
 	// 	{ labelName: 'Kyc Document of Mother', fieldIdentifier: '1.2' },
 	// 	{ labelName: 'Kyc Document of Father', fieldIdentifier: '1.3' },
 	// ]
-	uploadFileArray : Array<any> = [];
+	uploadFileArray: Array<any> = [];
 
 
 	/**
@@ -118,14 +118,14 @@ export class BirthCorrectionComponent implements OnInit {
 		private location: Location,
 		private commonService: CommonService,
 		private formService: FormsActionsService,
-		public TranslateService : TranslateService
+		public TranslateService: TranslateService
 	) { }
 
 	/**
 	 * Method initializes first.
 	 */
 	ngOnInit() {
-		
+
 
 		this.route.paramMap.subscribe(param => {
 			this.appId = Number(param.get('id'));
@@ -141,7 +141,7 @@ export class BirthCorrectionComponent implements OnInit {
 			 * get look up data.
 			 */
 			this.getLookupData();
-			
+
 		});
 
 		if (this.appId) {
@@ -190,8 +190,8 @@ export class BirthCorrectionComponent implements OnInit {
 			let event = res.typeOfCorrection.code;
 
 			if (event === 'NAME_INSERTION') {
-					this.allowChildNameInsertion = true;
-					this.allowChildNameCorrection = false;
+				this.allowChildNameInsertion = true;
+				this.allowChildNameCorrection = false;
 			} else if (event === 'ONLY_CORRECTION') {
 				this.allowChildNameInsertion = false;
 				this.allowChildNameCorrection = true;
@@ -199,14 +199,23 @@ export class BirthCorrectionComponent implements OnInit {
 		});
 	}
 
-	
+
 	/**
 	 * Method is used to cread record.
 	 * @param data - original json data.
 	 */
 	createBirthCorrectionData(data) {
 		this.formService.createFormData().subscribe(res => {
+			
 			this.birthCorrectionForm.patchValue(res);
+			
+			let newgnData = JSON.parse(data);
+			let prod_array = [];
+			for (let i = 0; i < newgnData.length; i += 1) {
+				prod_array.push(newgnData[i]);
+			}
+
+			this.birthCorrectionForm.patchValue(prod_array[0]);
 			// this.config.documentList(res, this.uploadFileArray);
 
 			res.serviceDetail.serviceUploadDocuments.forEach(app => {
@@ -218,12 +227,25 @@ export class BirthCorrectionComponent implements OnInit {
 			let cururl = this.location.path().replace('false', this.appId.toString());
 			this.location.go(cururl);
 			this.getLookupData();
-			this.setValue(data);
+			// this.setValue(data);
 			this.showcorrectionForm = true;
 			this.showApplicationSearch = false;
 			this.showButtons = true;
 			this.changeCorrection(this.regStatusForm.get('typeOfCorrection').get('code').value);
 		})
+	}
+
+
+	/**
+	 * This method use for displaying string data in json 
+	 */
+	listOfData(prods) {
+		let newgnData = JSON.parse(prods);
+		let prod_array = [];
+		for (let i = 0; i < newgnData.length; i += 1) {
+			prod_array.push(newgnData[i]);
+		}
+		return prod_array;
 	}
 
 	/**
@@ -294,7 +316,7 @@ export class BirthCorrectionComponent implements OnInit {
 		this.birthCorrectionForm.get('motherFirstNameGuj').setValue(data.motherFirstNameGuj);
 		this.birthCorrectionForm.get('motherMiddleNameGuj').setValue(data.motherMiddleNameGuj);
 		this.birthCorrectionForm.get('motherLastNameGuj').setValue(data.motherLastNameGuj);
-		this.birthCorrectionForm.get('refNumber').setValue(this.regStatusForm.get('applicationNumber').value)
+		this.birthCorrectionForm.get('refNumber').setValue(this.regStatusForm.get('registrationNumber').value)
 		this.birthCorrectionForm.get('typeOfCorrection').get('code').setValue(this.regStatusForm.get('typeOfCorrection').get('code').value);
 
 		/**
@@ -324,7 +346,7 @@ export class BirthCorrectionComponent implements OnInit {
 			typeOfCorrection: this.fb.group({
 				code: [null, [Validators.required]]
 			}),
-			applicationNumber: [null, [Validators.required]],
+			registrationNumber: [null, [Validators.required]],
 		});
 	}
 
@@ -350,7 +372,7 @@ export class BirthCorrectionComponent implements OnInit {
 
 			//step - 1 (13)
 			childName: null,
-			childNameGuj : null,
+			childNameGuj: null,
 			fatherFirstName: null,
 			fatherMiddleName: null,
 			fatherLastName: null,
@@ -369,13 +391,13 @@ export class BirthCorrectionComponent implements OnInit {
 
 			refNumber: null,
 
-			typeOfCorrection: this.fb.group({
-				code: [null]
-			}),
+			// typeOfCorrection: this.fb.group({
+			// 	code: [null]
+			// }),
 
-			fieldView: "ALL",
-			fieldList: null,
-		
+			// fieldView: "ALL",
+			// fieldList: null,
+
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
 
 			attachments: [],
@@ -414,7 +436,7 @@ export class BirthCorrectionComponent implements OnInit {
 		}
 		return this.uploadModel;
 	}
-	
+
 
 	/**
 	* Method is create required document array
