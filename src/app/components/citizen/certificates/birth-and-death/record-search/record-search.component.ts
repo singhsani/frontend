@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, Input, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { MatPaginator, MatSort, MatTableDataSource, PageEvent } from '@angular/material';
 import { merge, of as observableOf } from 'rxjs';
 import { catchError, map, startWith, switchMap } from 'rxjs/operators';
 import { PaginationService } from '../../../../../core/services/citizen/data-services/pagination.service';
@@ -36,7 +36,26 @@ export class RecordSearchComponent implements OnInit {
 	 * get element having id as MatSort from view.
 	 */
 	@ViewChild(MatSort) sort: MatSort;
-
+	/**
+	 * display table column.
+	 */
+	displayedColumns: any = [
+		'seq',
+		'id',
+		'name',
+		'date',
+		'fathersName',
+		'mothersName',
+		'action'
+	];
+	/**
+	 * data source useful to display data.
+	 */
+	dataSource = new MatTableDataSource();
+	pageEvent: PageEvent;
+	pageIndex: number;
+	pageSize: number;
+	length: number;
 	/**
 	 * search form.
 	 */
@@ -63,18 +82,6 @@ export class RecordSearchComponent implements OnInit {
 	selected = -1;
 
 	/**
-	 * display table column.
-	 */
-	displayedColumns: any = [
-		'seq',
-		'id',
-		'applicantName',
-		'fileNumber',
-		'serviceType',
-		'action'
-	];
-
-	/**
 	 * Registration year static look up.
 	 */
 	RegYear: Array<any> = [
@@ -92,20 +99,11 @@ export class RecordSearchComponent implements OnInit {
 
 	];
 
-	/**
-	 * data source useful to display data.
-	 */
-	dataSource = new MatTableDataSource();
 
 	/**
 	 * length of result in paginator.
 	 */
 	resultsLength: number = 0;
-
-	/**
-	 * total paze size.
-	 */
-	pageSize: number = 20;
 
 	/**
 	 * flag to load result from api.
@@ -125,7 +123,8 @@ export class RecordSearchComponent implements OnInit {
 		private formService: FormsActionsService,
 		private paginationService: PaginationService,
 		private commonService: CommonService,
-	) { }
+	) {
+	}
 
 	/**
 	 * Method initializes first.
@@ -137,6 +136,8 @@ export class RecordSearchComponent implements OnInit {
 			this.deathFromName = true
 		}
 		//this.getLookUpdata();
+		this.dataSource.paginator = this.paginator;
+		this.dataSource.sort = this.sort;
 
 	}
 
@@ -157,10 +158,10 @@ export class RecordSearchComponent implements OnInit {
 			regYear: this.fb.group({
 				code: null
 			}),
-			date: moment().format("YYYY-MM-DD"),
-			fatherName: null,
+			date: moment().format('YYYY-MM-DD'),
 			name: null,
-			motherName: null,
+			fatherName: null,
+			motherName: null
 		})
 	}
 
@@ -184,14 +185,15 @@ export class RecordSearchComponent implements OnInit {
 	 * This method use to get all the citizen data with pagination.
 	 */
 	getAllData() {
+
+		this.paginator.pageSize = 5;
+		this.paginator.pageIndex = 0;
 		merge(this.sort.sortChange, this.paginator.page)
 			.pipe(
 				startWith({}),
 				switchMap(() => {
 					this.isLoadingResults = true;
 					this.paginationService.apiType = this.apiType;
-					this.paginationService.pageIndex = (this.paginator.pageIndex + 1);
-					this.paginationService.pageSize = this.pageSize;
 					return this.paginationService!.getSearchDataWithPagination(this.searchForm.value);//NOSONAR
 				}),
 				map(data => {
@@ -207,9 +209,21 @@ export class RecordSearchComponent implements OnInit {
 				if (!data.length) {
 					this.showAlert();
 				} else {
-					this.dataSource.data = data;
+					this.dataSource.data = this.listOfData(data);
 				}
 			});
+	}
+
+	/**
+	 * This method use for displaying string data in json 
+	 */
+	listOfData(prods) {
+		let newgnData = JSON.parse(prods);
+		let prod_array = [];
+		for (let i = 0; i < newgnData.length; i += 1) {
+			prod_array.push(newgnData[i]);
+		}
+		return prod_array;
 	}
 
 	/**

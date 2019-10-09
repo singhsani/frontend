@@ -32,9 +32,9 @@ export class FormsActionsService {
 	 * Method is used to get status after filter using registration number.
 	 * @param filterData - filter data.
 	 */
-	getRegistrationStatus(filterData){
-		this.requestURL = `api/form/${this.apiType}/search?applicationNumber=${filterData.applicationNumber}&correctionType=${filterData.typeOfCorrection.code}`;
-		return this.http.get(this.requestURL);
+	getRegistrationStatus(filterData) {
+		this.requestURL = `api/form/${this.apiType}/searchFromNewgen`;
+		return this.http.post(this.requestURL, filterData);
 	}
 
 	/**
@@ -47,7 +47,7 @@ export class FormsActionsService {
 		return this.http.post(this.requestURL, resourceData);
 	}
 
-	
+
 	/**
 	 * This method is used to get all payable service list.
 	 */
@@ -60,7 +60,7 @@ export class FormsActionsService {
 	 * This method is used to perform all payable service actions.
 	 */
 	paymentServiceGet() {
-		
+
 		this.requestURL = `public/guest/${this.apiType}`;
 
 		return this.http.get(this.requestURL);
@@ -72,7 +72,7 @@ export class FormsActionsService {
 	 * @param reqData - payment dialog form data
 	 */
 	paymentServicePost(reqData) {
-		
+
 		this.requestURL = `api/servicePayment/${this.apiType}`;
 
 		return this.http.post(this.requestURL, reqData);
@@ -127,19 +127,19 @@ export class FormsActionsService {
      * This method is use to generate print view
      * @param appId - citizen app id
      */
-    printView(appId) {
+	printView(appId) {
 
-        this.requestURL = `api/form/${this.apiType}/printView/${appId}`;
+		this.requestURL = `api/form/${this.apiType}/printView/${appId}`;
 
-        return this.http.get(this.requestURL, 'printReceipt');
-    }
+		return this.http.get(this.requestURL, 'printReceipt');
+	}
 
 	/**
 	 * This method is use to display JSON format.
 	 * @param appId - citizen app id
 	 */
-	viewJson(appId){
-		
+	viewJson(appId) {
+
 		let requestURL = `api/form/${this.apiType}/json/${appId}`;
 		return this.http.get(requestURL);
 	}
@@ -181,7 +181,7 @@ export class FormsActionsService {
 		return this.http.post('api/user/update', formData);
 	}
 
-	createTokenforServicePayment(payData:any){
+	createTokenforServicePayment(payData: any) {
 
 		this.requestURL = `public/payment/generateTokenUrl`;
 
@@ -198,12 +198,12 @@ export class FormsActionsService {
 		return this.http.post(this.requestURL, paymentData);
 		//return this.http.post('api/servicePayment/pay', paymentData);
 	}
-	
-	 /**
-	 * This method is used to creat payments for payable services
-	 * @param paymentData -pass payment data here.
-	 */
-	createLOIPayment(paymentData:any) {
+
+	/**
+	* This method is used to creat payments for payable services
+	* @param paymentData -pass payment data here.
+	*/
+	createLOIPayment(paymentData: any) {
 		// {{HOST}}/api/booking/swimming/postFixedPayment
 		let requestURL = `api/booking/swimming/postFixedPayment`;
 
@@ -264,6 +264,7 @@ export class FormsActionsService {
 	 * @param stateId - state Id
 	 */
 	getPaymentResponse(token) {
+		
 		return this.http.get(`public/payment/getTransactionDetails?rqst_token=${token}`, this.getCommonHeaders());
 	}
 
@@ -298,7 +299,7 @@ export class FormsActionsService {
 		return this.http.get(`api/professional/receipt/search/${num}`);
 	}
 
-	saveTaxPaymentDetails(data){
+	saveTaxPaymentDetails(data) {
 		return this.http.post(`api/professional/taxPayment`, data);
 	}
 

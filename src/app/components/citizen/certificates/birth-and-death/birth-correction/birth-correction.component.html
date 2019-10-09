@@ -7,9 +7,9 @@
             <div class="row">
 
                 <mat-form-field class="col-md-4">
-                    <input matInput maxlength="50" placeholder="{{'registration_number' | translate:translateKey}}" formControlName="applicationNumber"
+                    <input matInput maxlength="50" placeholder="{{'registration_number' | translate:translateKey}}" formControlName="registrationNumber"
                         required>
-                    <control-messages [control]="regStatusForm.get('applicationNumber')"></control-messages>
+                    <control-messages [control]="regStatusForm.get('registrationNumber')"></control-messages>
                 </mat-form-field>
 
                 <div formGroupName="typeOfCorrection" class="col-md-6 ngSelect">

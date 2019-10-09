@@ -207,7 +207,7 @@ export class BirthRegistrationComponent implements OnInit {
 			//step 1(6)
 			birthPlace: this.fb.group({
 				id: 1,
-				code: [null, [Validators.required]],
+				code: ['HOSPITAL', [Validators.required]],
 				name: null
 			}),
 			otherPlace: [null, [Validators.maxLength(500)]],
