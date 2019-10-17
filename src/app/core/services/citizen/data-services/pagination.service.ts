@@ -56,7 +56,8 @@ export class PaginationService {
 				break;
 			}
 		}
-		return this.http.post(this.requestURL,filterData);
+		return this.http.get(this.requestURL);
+		// its get api but when newgen api is come its recode as a post with 'filter data body' add
 
 		// if (this.apiType == 'duplicateBirthReg') {
 		// 	this.requestURL = `api/form/${this.apiType}/search?childName=${filterData.name}&birthDate=${filterData.date}&page=${this.pageIndex}&limit=${this.pageSize}`;
