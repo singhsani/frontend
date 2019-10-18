@@ -838,13 +838,14 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
 
 @media print {
 @page {margin: 0 !important; padding:0 !important;}
-.example-container.borderOne, .mainMenu, .mat-toolbar, .titleBar, mat-card {display: none !important;}
+.example-container.borderOne, .mainMenu, .mat-toolbar, .titleBar, mat-card, .mat-elevation-z8.borderOne {display: none !important;}
 #matSidenav {display: none !important; visibility: hidden !important;}
 .mat-drawer-content {margin-left: 0 !important;}
 #sectionToPrint, #sectionToPrint {visibility: visible;}
 #sectionToPrint {position: static; width: 100%; height: auto !important; margin-top:-50px; padding: 0;}
 #sectionToPrint td, #sectionToPrint th {padding: 5px; font-size: 15px;}
 #sectionToPrint li, #sectionToPrint tr {page-break-before:always;page-break-inside:avoid; page-break-after:always}
+::-webkit-scrollbar {width: 0; height: 0;}
 } 
 /* This is use for printing receipt in div end */
 

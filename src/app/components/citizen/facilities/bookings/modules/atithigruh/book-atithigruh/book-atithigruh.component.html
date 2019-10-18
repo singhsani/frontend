@@ -397,7 +397,7 @@
                         </mat-form-field>
 
                         <mat-form-field class="col-md-6">
-                            <input matInput type="text" maxlength="11" formControlName="ifscCode" placeholder="{{'ifsc_code' | translate: stadiumTranslateKey}}"
+                            <input matInput type="text" upperCase maxlength="11" formControlName="ifscCode" placeholder="{{'ifsc_code' | translate: stadiumTranslateKey}}"
                                 required>
                             <control-messages [control]="atithigruhForm.get('ifscCode')"></control-messages>
                         </mat-form-field>

@@ -282,7 +282,7 @@
             <h2>
               {{'organization_address' | translate:translateKey}}
             </h2>
-            <app-address #address [requiredFeilds]="true"
+            <app-address #orgAddress [requiredFeilds]="true"
               [addressFormGroup]="bookPermissionApplicationForm.get('organizationAddress')"></app-address>
 
 
@@ -337,12 +337,13 @@
 
             </div>
           </div>
-
+          <mat-checkbox class="col-md-12 mt-2" formControlName="officeResidentialAddressSame"
+            (change)="onSameAddressChange($event)">{{'same_address' | translate: translateKey}}</mat-checkbox>
           <div>
             <h2>
               {{'applicant_address' | translate:translateKey}}
             </h2>
-            <app-address #address [requiredFeilds]="true"
+            <app-address #applicantAddress [requiredFeilds]="true"
               [addressFormGroup]="bookPermissionApplicationForm.get('applicantAddress')"></app-address>
           </div>
 
@@ -384,14 +385,14 @@
             </mat-form-field>
 
             <mat-form-field class="col-md-6">
-              <input matInput OnlyNumber maxlength="20" minlength="20" formControlName="accountNo"
+              <input matInput OnlyNumber maxlength="18" minlength="9" formControlName="accountNo"
                 placeholder="{{'accont_no' | translate: translateKey}}" required>
               <control-messages [control]="bookPermissionApplicationForm.get('accountNo')"></control-messages>
             </mat-form-field>
 
             <mat-form-field class="col-md-6">
               <input matInput type="text" maxlength="11" formControlName="ifscCode"
-                placeholder="{{'ifsc_code' | translate: translateKey}}" required>
+                placeholder="{{'ifsc_code' | translate: translateKey}}" upperCase required>
               <control-messages [control]="bookPermissionApplicationForm.get('ifscCode')"></control-messages>
             </mat-form-field>
           </div>
@@ -409,7 +410,7 @@
           </div>
 
           <div class="col-md-6">
-            <label labelPosition="after">{{'vehicle_details' | translate:translateKey}}
+            <label labelPosition="after">{{'vehicle_details' | translate:translateKey}} *
             </label>
             <booking-file-upload (uploaded)="isFileUploaded = $event" [form]="bookPermissionApplicationForm"
               [uploadModel]="{fieldIdentifier:'2', labelName:'vehicle_details', formPart:'1.2', refNumber:

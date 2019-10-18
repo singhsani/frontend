@@ -82,6 +82,8 @@ export class ComponentConfig {
             maxFileSizeInMB: [data.maxFileSizeInMB ? data.maxFileSizeInMB : 5],
             requiredOnAdminPortal: [data.requiredOnAdminPortal],
             requiredOnCitizenPortal: [data.requiredOnCitizenPortal],
+            serviceFormId:[data.serviceFormId],
+            dmsEnabled:[data.dmsEnabled]
             // version: [data.version ? data.version : null]
         });
     }

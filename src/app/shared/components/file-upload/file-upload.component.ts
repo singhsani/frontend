@@ -28,6 +28,7 @@ export class FileUploadComponent implements OnInit {
 	canUpload: boolean;
 	id: any;
 	type: any;
+	docIndex: any;
 
 	color = 'primary';
 	mode = 'determinate';
@@ -41,7 +42,7 @@ export class FileUploadComponent implements OnInit {
 	attachments: any[];
 
 	/**
-	 * 
+	 *
 	 * @param uploadFileService - for common upload file service
 	 * @param commonService - common service for alerts
 	 */
@@ -59,7 +60,7 @@ export class FileUploadComponent implements OnInit {
 
 	ngOnInit() {
 		this.attachments = (this.form.get('attachments') && this.form.get('attachments').value) ? this.form.get('attachments').value : [];
-		
+
 		this.disableOrEnableButton();
 		this.fromAdmin = this.commonService.fromAdmin();
 
@@ -69,16 +70,16 @@ export class FileUploadComponent implements OnInit {
 	}
 
 	/**
-	 * This method is use for select the file 
+	 * This method is use for select the file
 	 * @param event - get selected file event
 	 */
 	selectFile(event) {
-		if(event){
+		if (event) {
 			this.selectedFiles = event.target.files;
 			let fileType = this.selectedFiles[0].type;
 			this.fileName = this.selectedFiles[0].name;
 			this.canUpload = true;
-	
+
 			if (fileType === 'image/png' || fileType === 'image/jpg' || fileType === 'image/jpeg' || fileType === 'image/gif') {
 				let reader = new FileReader();
 				reader.onload = (e: any) => {
@@ -132,7 +133,6 @@ export class FileUploadComponent implements OnInit {
 				});
 			}
 		}*/
-
 		if (this.uploadModel.serviceFormId) { //for coomon file upload
 
 			if (!this.selectedFiles) {
@@ -144,9 +144,9 @@ export class FileUploadComponent implements OnInit {
 				if (this.selectedFiles[0].size > size) {
 					this.fileName = ''
 					this.canUpload = false;
-					this.commonService.openAlert("Warning", `File Size should be less than ${this.uploadModel.maxFileSizeInMB ? this.uploadModel.maxFileSizeInMB : 5 } MB`, "warning");
+					this.commonService.openAlert("Warning", `File Size should be less than ${this.uploadModel.maxFileSizeInMB ? this.uploadModel.maxFileSizeInMB : 5} MB`, "warning");
 					return;
-				} else if (this.selectedFiles[0].size <= 0){
+				} else if (this.selectedFiles[0].size <= 0) {
 					this.fileName = ''
 					this.canUpload = false;
 					this.commonService.openAlert("Warning", `File must have some contents and size should not be 0 MB `, "warning");
@@ -154,12 +154,12 @@ export class FileUploadComponent implements OnInit {
 				} else if (!fileTypes.includes(this.selectedFiles[0].type)) {
 					this.fileName = ''
 					this.canUpload = false;
-					this.commonService.openAlert("Warning",`File Type "${this.selectedFiles[0].type}" not valid, please select pdf/jpg/jpeg`, 'warning');
+					this.commonService.openAlert("Warning", `File Type "${this.selectedFiles[0].type}" not valid, please select pdf/jpg/jpeg`, 'warning');
 				} else {
 					let formData = new FormData();
 
 					formData.append('fieldIdentifier', this.uploadModel.fieldIdentifier.toString());
-					formData.append('labelName', this.uploadModel.labelName ? this.uploadModel.labelName: this.uploadModel.documentLabelEn);
+					formData.append('labelName', this.uploadModel.labelName ? this.uploadModel.labelName : this.uploadModel.documentLabelEn);
 					formData.append('formPart', this.uploadModel.formPart.toString());
 					formData.append('variableName', this.uploadModel.variableName ? this.uploadModel.variableName : this.uploadModel.documentIdentifier);
 					formData.append('serviceFormId', this.uploadModel.serviceFormId.toString());
@@ -169,17 +169,34 @@ export class FileUploadComponent implements OnInit {
 
 					formData.append('file', this.currentFileUpload);
 
-					this.uploadFileService.processFileToServer(formData, setProgressBar => {
-						this.progress.percentage = setProgressBar;
-					}, successResponse => {
-						this.tostr.success(this.uploadModel.labelName ? this.uploadModel.labelName : this.uploadModel.documentLabelEn + " successfully uploaded", "File Uploaded");
-						this.canUpload = true;
-						this.id = successResponse.data.id;
-						this.type = successResponse.data.mimeType;
-						this.currentFileUpload = undefined;
-						this.selectedFiles = undefined;
-						this.fileInput.nativeElement.value = "";
-					});
+					if(this.uploadModel.dmsEnabled){
+						this.uploadFileService.processFileToDMSServer(formData, setProgressBar => {
+							this.progress.percentage = setProgressBar;
+						}, successResponse => {
+							this.tostr.success(this.uploadModel.labelName ? this.uploadModel.labelName : this.uploadModel.documentLabelEn + " successfully uploaded", "File Uploaded");
+							this.canUpload = true;
+							this.id = successResponse.data.id;
+							this.type = successResponse.data.mimeType;
+							this.docIndex = successResponse.data.docIndex;
+							this.currentFileUpload = undefined;
+							this.selectedFiles = undefined;
+							this.fileInput.nativeElement.value = "";
+						});
+					}else{
+						this.uploadFileService.processFileToServer(formData, setProgressBar => {
+							this.progress.percentage = setProgressBar;
+						}, successResponse => {
+							this.tostr.success(this.uploadModel.labelName ? this.uploadModel.labelName : this.uploadModel.documentLabelEn + " successfully uploaded", "File Uploaded");
+							this.canUpload = true;
+							this.id = successResponse.data.id;
+							this.type = successResponse.data.mimeType;
+							this.docIndex = successResponse.data.docIndex;
+							this.currentFileUpload = undefined;
+							this.selectedFiles = undefined;
+							this.fileInput.nativeElement.value = "";
+						});
+					}
+
 				}
 			}
 		} else {
@@ -212,19 +229,46 @@ export class FileUploadComponent implements OnInit {
 					this.currentFileUpload = this.selectedFiles.item(0);
 
 					formData.append('file', this.currentFileUpload);
-
-					this.uploadFileService.processFileToServer(formData, setProgressBar => {
-						this.progress.percentage = setProgressBar;
-					}, successResponse => {
-						this.tostr.success(this.TranslateService.getCurrentLanguage() == 'en' ? this.uploadModel.documentLabelEn : this.uploadModel.documentLabelGuj + " successfully uploaded", "File Uploaded");
-						// this.commonService.successAlert("File Uploaded", this.TranslateService.getCurrentLanguage() == 'en' ? this.uploadModel.documentLabelEn : this.uploadModel.documentLabelGuj + " successfully uploaded", "success");
-						this.canUpload = true;
-						this.id = successResponse.data.id;
-						this.type = successResponse.data.mimeType;
-						this.currentFileUpload = undefined;
-						this.selectedFiles = undefined;
-						this.fileInput.nativeElement.value = "";
-					});
+					if(this.uploadModel.dmsEnabled){
+						this.uploadFileService.processFileToDMSServer(formData, setProgressBar => {
+							this.progress.percentage = setProgressBar;
+						}, successResponse => {
+							this.tostr.success(this.uploadModel.labelName ? this.uploadModel.labelName : this.uploadModel.documentLabelEn + " successfully uploaded", "File Uploaded");
+							this.canUpload = true;
+							this.id = successResponse.data.id;
+							this.type = successResponse.data.mimeType;
+							this.docIndex = successResponse.data.docIndex;
+							this.currentFileUpload = undefined;
+							this.selectedFiles = undefined;
+							this.fileInput.nativeElement.value = "";
+						});
+					}else{
+						this.uploadFileService.processFileToServer(formData, setProgressBar => {
+							this.progress.percentage = setProgressBar;
+						}, successResponse => {
+							this.tostr.success(this.uploadModel.labelName ? this.uploadModel.labelName : this.uploadModel.documentLabelEn + " successfully uploaded", "File Uploaded");
+							this.canUpload = true;
+							this.id = successResponse.data.id;
+							this.type = successResponse.data.mimeType;
+							this.docIndex = successResponse.data.docIndex;
+							this.currentFileUpload = undefined;
+							this.selectedFiles = undefined;
+							this.fileInput.nativeElement.value = "";
+						});
+					}
+					// this.uploadFileService.processFileToServer(formData, setProgressBar => {
+					// 	this.progress.percentage = setProgressBar;
+					// }, successResponse => {
+					// 	this.tostr.success(this.TranslateService.getCurrentLanguage() == 'en' ? this.uploadModel.documentLabelEn : this.uploadModel.documentLabelGuj + " successfully uploaded", "File Uploaded");
+					// 	// this.commonService.successAlert("File Uploaded", this.TranslateService.getCurrentLanguage() == 'en' ? this.uploadModel.documentLabelEn : this.uploadModel.documentLabelGuj + " successfully uploaded", "success");
+					// 	this.canUpload = true;
+					// 	this.id = successResponse.data.id;
+					// 	this.type = successResponse.data.mimeType;
+					// 	this.docIndex = successResponse.data.docIndex;
+					// 	this.currentFileUpload = undefined;
+					// 	this.selectedFiles = undefined;
+					// 	this.fileInput.nativeElement.value = "";
+					// });
 				}
 			}
 		}
@@ -243,6 +287,7 @@ export class FileUploadComponent implements OnInit {
 					this.canUpload = true;
 					this.id = this.attachments[i].id;
 					this.type = this.attachments[i].mimeType;
+					this.docIndex = this.attachments[i].docIndex;
 					return;
 				}
 			}
@@ -253,21 +298,81 @@ export class FileUploadComponent implements OnInit {
 
 	/**
 	 * Method is used to view or download the file
+	 * @param obj - selected file data
 	 */
-	view() {
-		if (this.uploadModel.serviceFormId) { //for common file upload
-			this.uploadFileService.getFileFromServer(this.uploadModel.serviceFormId.toString(), this.id, this.type).subscribe(respData => {
-				this.downLoadFile(respData, this.type);
-			}, error => {
-
-			});
+	view(obj) {
+		// console.log(this.uploadModel);
+debugger;
+		if (this.uploadModel.dmsEnabled) {
+			if (obj && this.uploadModel.serviceFormId) {
+				this.uploadFileService.getBase64StringURL(this.uploadModel.serviceFormId.toString(), obj.id, obj.docIndex).subscribe(res => {
+					this.viewBase64File(res.data);
+				});
+			} else {
+				if(!this.docIndex){
+					this.commonService.openAlert("Warning", `Please save the application first`, "warning");
+					return;
+				}
+				this.uploadFileService.getBase64StringURL((this.form.get('serviceFormId') && this.form.get('serviceFormId').value) ? this.form.get('serviceFormId').value.toString() :this.uploadModel.serviceFormId.toString(), this.id, this.docIndex).subscribe(res => {
+					this.viewBase64File(res.data);
+				});
+			}
 		} else {
-			this.uploadFileService.getFileFromServer(this.form.get('serviceFormId').value.toString(), this.id, this.type).subscribe(respData => {
-				this.downLoadFile(respData, this.type);
-			}, error => {
+			if (this.uploadModel.serviceFormId) { //for common file upload
+				this.uploadFileService.getFileFromServer(this.uploadModel.serviceFormId.toString(), this.id, this.type).subscribe(respData => {
+					this.downLoadFile(respData, this.type);
+				}, error => {
 
-			});
+				});
+			} else {
+				this.uploadFileService.getFileFromServer((this.form.get('serviceFormId') && this.form.get('serviceFormId').value) ? this.form.get('serviceFormId').value.toString() :this.uploadModel.serviceFormId.toString(), this.id, this.type).subscribe(respData => {
+					this.downLoadFile(respData, this.type);
+				}, error => {
+
+				});
+			}
 		}
+
+
+		// if (this.uploadModel.serviceFormId) { //for common file upload
+		// 	this.uploadFileService.getFileFromServer(this.uploadModel.serviceFormId.toString(), this.id, this.type).subscribe(respData => {
+		// 		this.downLoadFile(respData, this.type);
+		// 	}, error => {
+
+		// 	});
+		// } else {
+		// 	this.uploadFileService.getFileFromServer(this.form.get('serviceFormId').value.toString(), this.id, this.type).subscribe(respData => {
+		// 		this.downLoadFile(respData, this.type);
+		// 	}, error => {
+
+		// 	});
+		// }
+	}
+
+	/**
+	 * This method is used to view base 64 file came from server
+	 * @param url - base 64 url
+	 */
+	viewBase64File(url) {
+
+		/** This code is used to download the file */
+		// let a = document.createElement('a')
+		// a.href = url
+		// a.download = url.split('/').pop()
+		// document.body.appendChild(a)
+		// a.click()
+		// document.body.removeChild(a);
+
+		/** This code is used to view the file */
+		var iframe = "<iframe allowfullscreen border='0' style='margin:-8px' width='100%' height='100%' src='" + url + "'></iframe>"
+		var x = window.open();
+		if (!x || x.closed || typeof x.closed == 'undefined') {
+			this.commonService.openAlert('Pop-up!', 'Please disable your Pop-up blocker and try again.', 'warning');
+			return false;
+		}
+		x.document.open();
+		x.document.write(iframe);
+		x.document.close();
 	}
 
 	/**
@@ -276,9 +381,9 @@ export class FileUploadComponent implements OnInit {
 	 * @param type - type of the document.
 	 */
 	downLoadFile(data: any, type: string) {
-		var blob = new Blob([data], { type: type.toString() });
-		var url = window.URL.createObjectURL(blob);
-		var pwa = window.open(url);
+		let blob = new Blob([data], { type: type.toString() });
+		let url = window.URL.createObjectURL(blob);
+		let pwa = window.open(url);
 		if (!pwa || pwa.closed || typeof pwa.closed == 'undefined') {
 			this.commonService.openAlert('Pop-up!', 'Please disable your Pop-up blocker and try again.', 'warning');
 		}
