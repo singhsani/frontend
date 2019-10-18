@@ -80,6 +80,7 @@ export class BookTheaterComponent implements OnInit {
 	 */
     startMinDate: Date = moment(new Date()).add(1, 'day').toDate();
     endMinDate: Date = moment(new Date()).add(1, 'day').toDate();
+    maxEndDate:any;
 
     /**
        * ngx-bootstrap models.
@@ -126,6 +127,15 @@ export class BookTheaterComponent implements OnInit {
             this.endMinDate = data;
             return;
         })
+    }
+
+    /**
+     * This method is used to set endDate 30 days after the selected start date 
+     * @param date - selected start date
+     */
+    onDateChange(date){
+        let futureMonth = moment(date).add(30, 'day');
+        this.maxEndDate = moment(futureMonth).format("YYYY-MM-DD");
     }
 
 	/**
@@ -179,7 +189,7 @@ export class BookTheaterComponent implements OnInit {
              */
             organizationName: [null, [Validators.required, Validators.maxLength(50)]],
             organizationNumber: [null, [Validators.required]],
-            organizationEmail: [null, [Validators.required]],
+            organizationEmail: [null, [Validators.required, ValidationService.emailValidator]],
             organizationAddress: this.fb.group(this.addressComp.addressControls()),
 			/**
 			 * Bank Accoount Details
@@ -187,8 +197,8 @@ export class BookTheaterComponent implements OnInit {
             bankName: this.fb.group({
                 code: [null, [Validators.required]]
             }),
-            accountHolderName: [null, [Validators.required, Validators.maxLength(50)]],
-            accountNo: [null, [Validators.required, Validators.minLength(6), Validators.maxLength(20)]],
+            accountHolderName: [null, [Validators.required, Validators.maxLength(50), Validators.minLength(2)]],
+			accountNo: [null, [Validators.required, Validators.maxLength(18), Validators.minLength(9)]],
             ifscCode: [null, [Validators.required, ValidationService.ifscCodeValidator]],
 			/**
 			 * Booking Details

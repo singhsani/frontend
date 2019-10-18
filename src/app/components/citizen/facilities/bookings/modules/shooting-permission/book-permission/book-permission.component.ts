@@ -320,7 +320,7 @@ export class BookPermissionComponent implements OnInit {
       shootingPurpose: [null],
       bookingDate: [null],
 
-      accountHolderName: [null],
+      accountHolderName: [null, [Validators.required, Validators.maxLength(50), Validators.minLength(2)]],
       accountNo: [null, [Validators.maxLength(18), Validators.minLength(9)]],
       bankName: this._fb.group({
         code: [null, [Validators.required]],
@@ -355,14 +355,15 @@ export class BookPermissionComponent implements OnInit {
         if (resp.data.status == this.bookingConstants.SUBMITTED) {
           this.commonService.commonAlert("Shooting Permission Booking", "Permission Booked Successfully", "success", "Print Acknowledgement Receipt", false, '', pA => {
               this.bookingService.printAcknowledgementReceipt(resp.data.refNumber).subscribe(acknowledgementHTML => {
-                  let sectionToPrint: any = document.getElementById('sectionToPrint');
+                let sectionToPrint: any = document.getElementById('sectionToPrint');
                   sectionToPrint.innerHTML = acknowledgementHTML;
                   setTimeout(() => {
                       window.print();
-                  },0);
-                  setTimeout(() => {
-                    this.router.navigate([this.bookingConstants.MY_BOOKINGS_URL]);
-                },500);
+                      this.router.navigate([this.bookingConstants.MY_BOOKINGS_URL]);
+                  },300);
+                //   setTimeout(() => {
+                //     this.router.navigate([this.bookingConstants.MY_BOOKINGS_URL]);
+                // },500);
               }, err => {
                   this.commonService.openAlert("Error", err.error[0].message, "warning")
               })

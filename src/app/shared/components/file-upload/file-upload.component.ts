@@ -301,8 +301,6 @@ export class FileUploadComponent implements OnInit {
 	 * @param obj - selected file data
 	 */
 	view(obj) {
-		// console.log(this.uploadModel);
-debugger;
 		if (this.uploadModel.dmsEnabled) {
 			if (obj && this.uploadModel.serviceFormId) {
 				this.uploadFileService.getBase64StringURL(this.uploadModel.serviceFormId.toString(), obj.id, obj.docIndex).subscribe(res => {

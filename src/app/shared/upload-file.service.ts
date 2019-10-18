@@ -17,7 +17,7 @@ export class UploadFileService {
 		private httpService: HttpService
 	) {
 		this.uploadFileUrl = 'api/attachment/upload';
-		this.uploadDMSFileUrl = 'api/attachment/uploadForDMS'
+		this.uploadDMSFileUrl = 'api/attachment/uploadForDMS';
 	}
 
 	processFileToServer(formData: FormData, setProgress?: any, successResponse?: any) {
