@@ -36,7 +36,7 @@
                             {{'choose_start_date'| translate: translateKey}}
                         </mat-label>
                         <!-- matDatepickerFilter]="myFilter" -->
-                        <input appDate matInput [min]="startMinDate" [matDatepicker]="theaterBookingfromPicker" formControlName="startDate" placeholder="DD/MM/YYYY">
+                        <input appDate matInput (dateChange)="onDateChange($event.value)" [min]="startMinDate" [matDatepicker]="theaterBookingfromPicker" formControlName="startDate" placeholder="DD/MM/YYYY">
                         <mat-datepicker-toggle matSuffix [for]="theaterBookingfromPicker"></mat-datepicker-toggle>
                         <mat-datepicker #theaterBookingfromPicker touchUi="true"></mat-datepicker>
                         <div align="end" class="default-show-hint mat-hint mat-right">{{bookingUtils.DATE_HINT_MSG}}</div>
@@ -48,7 +48,7 @@
                         <mat-label>
                             {{'choose_end_date'| translate: translateKey}}
                         </mat-label>
-                        <input appDate matInput [min]="endMinDate" [matDatepicker]="theaterBookingtoPicker" formControlName="endDate" placeholder="DD/MM/YYYY">
+                        <input appDate matInput [min]="endMinDate" [max]="maxEndDate" [matDatepicker]="theaterBookingtoPicker" formControlName="endDate" placeholder="DD/MM/YYYY">
                         <mat-datepicker-toggle matSuffix [for]="theaterBookingtoPicker"></mat-datepicker-toggle>
                         <mat-datepicker #theaterBookingtoPicker touchUi="true"></mat-datepicker>
                         <div align="end" class="default-show-hint mat-hint mat-right">{{bookingUtils.DATE_HINT_MSG}}</div>
@@ -302,7 +302,7 @@
                         </mat-form-field>
 
                         <mat-form-field class="col-md-6">
-                            <input matInput OnlyNumber maxlength="20" minlength="6" formControlName="accountNo" placeholder="{{'account_no' | translate: translateKey}}"
+                            <input matInput OnlyNumber maxlength="18" minlength="9" formControlName="accountNo" placeholder="{{'account_no' | translate: translateKey}}"
                                 required>
                             <control-messages [control]="theaterBookingForm.get('accountNo')"></control-messages>
                         </mat-form-field>

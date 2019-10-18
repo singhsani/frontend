@@ -10,6 +10,7 @@ import { CommonService } from 'src/app/shared/services/common.service';
 import { ToastrService } from 'ngx-toastr';
 import { BookingService } from '../../../shared-booking/services/booking-service.service';
 import { FormsActionsService } from 'src/app/core/services/citizen/data-services/forms-actions.service';
+import { ValidationService } from 'src/app/shared/services/validation.service';
 
 @Component({
     selector: 'app-book-stadium',
@@ -83,6 +84,7 @@ export class BookStadiumComponent implements OnInit {
 
     startMinDate: Date = moment(new Date()).add(1, 'day').toDate();
     endMinDate: Date = moment(new Date()).add(1, 'day').toDate();
+    maxEndDate:any;
 
 
     constructor(private bookingService: BookingService,
@@ -121,6 +123,15 @@ export class BookStadiumComponent implements OnInit {
         })
     }
 
+    /**
+     * This method is used to set endDate 3 months after the selected start date 
+     * @param date - selected start date
+     */
+    onDateChange(date){
+        let futureMonth = moment(date).add(3, 'month');
+        this.maxEndDate = moment(futureMonth).format("YYYY-MM-DD");
+    }
+
 
     /**
        * Method is used to create town hall search form.
@@ -139,8 +150,8 @@ export class BookStadiumComponent implements OnInit {
 
     createStadiumApplicationForm() {
         this.stadiumApplicationForm = this._fb.group({
-            accountHolderName: null,
-            accountNo: null,
+            accountHolderName: [null, [Validators.required, Validators.maxLength(50), Validators.minLength(2)]],
+			accountNo: [null, [Validators.required, Validators.maxLength(18), Validators.minLength(9)]],
             applicantAddress: this._fb.group(this.addressComp.addressControls()),
             applicantMobile: null,
             confirmMobile: null,
@@ -163,7 +174,7 @@ export class BookStadiumComponent implements OnInit {
             emailId: null,
             confirmEmailId: null,
             id: 3,
-            ifscCode: null,
+            ifscCode: [null, [Validators.required, ValidationService.ifscCodeValidator]],
             refNumber: null,
             resourceCode: null,
             resourceType: null,
