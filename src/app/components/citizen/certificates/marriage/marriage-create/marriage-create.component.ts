@@ -1311,7 +1311,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
                 return false;
             }
             else if (count <= step8) {
-debugger;
+
                 if (this.marriageFormGroup.get('isGroomVisa').value == true && (this.marriageFormGroup.get('isBrideVisa').value == true)) {
                     this.tabIndex = 9;
                 }
@@ -1324,7 +1324,7 @@ debugger;
                 return false;
             }
             else if (count == 67 || count <= step11) {
-                debugger;
+                
                 this.checkReligion();
 
                 if (this.marriageFormGroup.get('isGroomVisa').value == true && (this.marriageFormGroup.get('isBrideVisa').value == true)) {
@@ -1338,7 +1338,7 @@ debugger;
                 }
             }
             else {
-                debugger;
+               
                 if (this.marriageFormGroup.get('isGroomVisa').value == true && (this.marriageFormGroup.get('isBrideVisa').value == true)) {
                     this.tabIndex = 10;
                 }

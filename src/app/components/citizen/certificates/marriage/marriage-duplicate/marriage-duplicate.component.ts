@@ -12,6 +12,7 @@ import { PaginationService } from '../../../../../core/services/citizen/data-ser
 import { CertificateConfig } from '../../certificate-config';
 import { CommonService } from '../../../../../shared/services/common.service';
 import { Location } from '@angular/common';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
 	selector: 'app-marriage-duplicate',
@@ -113,8 +114,9 @@ export class MarriageDuplicateComponent implements OnInit {
 		private route: ActivatedRoute,
 		private paginationService: PaginationService,
 		private formService: FormsActionsService,
-		private commonService: CommonService
-	) {
+		private commonService: CommonService,
+		private toster: ToastrService
+		) {
 		this.config = new CertificateConfig(this.paginationService);
 	}
 
@@ -354,6 +356,12 @@ export class MarriageDuplicateComponent implements OnInit {
 				this.resultsLength = data.totalRecords
 				this.dataSource.data = data.data;
 			}
+			else{
+				this.toster.warning('No Record Found');
+			}
+		},
+		err => {
+			this.toster.error(err.error[0].code);
 		});
 		// merge(this.sort.sortChange, this.paginator.page)
 		// 	.pipe(
