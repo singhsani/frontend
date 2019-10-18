@@ -112,7 +112,7 @@ export class TownHallBookComponent implements OnInit {
 	showSearchForm: boolean = false;
 	showPaymentReciept: boolean = false;
 	isLoadingResults: boolean = false;
-	
+
 	constructor(
 		private fb: FormBuilder,
 		private commonService: CommonService,
@@ -150,8 +150,9 @@ export class TownHallBookComponent implements OnInit {
 			this.searchTownHallForm.controls.endDate.reset();
 			this.endMinDate = data;
 			return;
-		})
+		});
 	}
+
 
 	loadGuideLine() {
 		this.bookingService.loadGuideLine().subscribe(resp => {
@@ -197,8 +198,8 @@ export class TownHallBookComponent implements OnInit {
 			applicantName: [null, [Validators.required]],
 			applicantMobile: [null, [Validators.required]],
 			confirmMobile: [null, [Validators.required]],
-			emailID: [null, [Validators.required, Validators.email]],
-			confirmEmailID: [null, [Validators.required, Validators.email]],
+			emailID: [null, [Validators.required, ValidationService.emailValidator]],
+			confirmEmailID: [null, [Validators.required, ValidationService.emailValidator]],
 			relationshipWithOrg: [null, [Validators.required]],
 			applicantAddress: this.fb.group(this.addressComp.addressControls()),
 			/**
@@ -207,8 +208,8 @@ export class TownHallBookComponent implements OnInit {
 			bankName: this.fb.group({
 				code: [null, [Validators.required]]
 			}),
-			accountHolderName: [null, [Validators.required]],
-			accountNo: [null, [Validators.required]],
+			accountHolderName: [null, [Validators.required, Validators.maxLength(50), Validators.minLength(2)]],
+			accountNo: [null, [Validators.required, Validators.maxLength(18), Validators.minLength(9)]],
 			ifscCode: [null, [Validators.required, ValidationService.ifscCodeValidator]],
 			/**
 			 * Booking Details
@@ -236,8 +237,8 @@ export class TownHallBookComponent implements OnInit {
 			bookingPurposeMaster: this.fb.group({
 				code: [null, [Validators.required]],
 				name: null
-			}),
-		})
+			})
+		});
 	}
 
 	/**
@@ -284,7 +285,7 @@ export class TownHallBookComponent implements OnInit {
 			this.bookingService.getAllSlots(filterData).subscribe(resp => {
 				this.filteredReponse = resp;
 				let temp = resp.data.scheduleList;
-				if(temp){
+				if (temp) {
 					this.Dates = temp.sort((a, b) => {
 						if ((new Date(a.key).getTime()) >= (new Date(b.key).getTime())) {
 							return 1
@@ -292,6 +293,7 @@ export class TownHallBookComponent implements OnInit {
 							return -1
 						}
 					});
+
 				} else {
 					this.commonService.openAlertFormSaveValidation('Warning!', "Schedule List Not Found", 'warning');
 				}

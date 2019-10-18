@@ -10,17 +10,41 @@ import { SessionStorageService } from 'angular-web-storage';
 export class UploadFileService {
 
 	uploadFileUrl: string;
+	uploadDMSFileUrl:string;
 	progress: { percentage: number } = { percentage: 0 }
 
 	constructor(
 		private httpService: HttpService
 	) {
 		this.uploadFileUrl = 'api/attachment/upload';
+		this.uploadDMSFileUrl = 'api/attachment/uploadForDMS'
 	}
 
 	processFileToServer(formData: FormData, setProgress?: any, successResponse?: any) {
 
 		this.httpService.uploadFilePost(this.uploadFileUrl, formData).subscribe(event => {
+			switch (event.type) {
+				case HttpEventType.Sent:
+					break;
+				case HttpEventType.ResponseHeader:
+					break;
+				case HttpEventType.UploadProgress:
+					return setProgress(Math.round(100 * event.loaded / event.total));
+				case HttpEventType.Response:
+					return successResponse(event.body);
+			}
+		});
+	}
+
+	/**
+	 * This method is used to upload file on DMS Server
+	 * @param formData 
+	 * @param setProgress 
+	 * @param successResponse 
+	 */
+	processFileToDMSServer(formData: FormData, setProgress?: any, successResponse?: any) {
+
+		this.httpService.uploadFilePost(this.uploadDMSFileUrl, formData).subscribe(event => {
 			switch (event.type) {
 				case HttpEventType.Sent:
 					break;
@@ -43,6 +67,17 @@ export class UploadFileService {
 	getFileFromServer(serviceFormId, fileId, type) {
 		let getFileUrl = 'api/attachment/' + serviceFormId + '/getFile/' + fileId;
 		return this.httpService.getUploadedFile(getFileUrl, type);
+	}
+
+	/**
+	 * get the clicked file url from the server
+	 * @param serviceFormId - service form id.
+	 * @param fileId - file id
+	 * @param docIndex - doc index
+	 */
+	getBase64StringURL(serviceFormId, fileId, docIndex) {
+		let getFileUrl = `api/attachment/${serviceFormId}/getFileDMS/${fileId}/${docIndex}`;
+		return this.httpService.get(getFileUrl);
 	}
 
 	/**
@@ -74,4 +109,5 @@ export class UploadFileService {
 		let getFileUrl = 'api/attachment/booking/' + referenceNo + '/getFile/' + fileId + '/delete';
 		return this.httpService.deleteUploadedFile(getFileUrl);
 	}
+
 }

@@ -435,6 +435,9 @@ export class BookAtithigruhComponent implements OnInit {
 				});
 				return;
 			} else {
+				let ifscCode = this.atithigruhForm.get('ifscCode').value;
+				this.atithigruhForm.get('ifscCode').setValue(ifscCode.toUpperCase());
+
 				this.bookingService.submitAdvanceBooking(this.atithigruhForm.value).subscribe(resp => {
 					this.commonService.commonAlert("Stadium Booking", "Atithigruh Booked Successfully", "success", "Print Acknowledgement Receipt", false, '', pA => {
 						let sectionToPrint: any = document.getElementById('sectionToPrint');

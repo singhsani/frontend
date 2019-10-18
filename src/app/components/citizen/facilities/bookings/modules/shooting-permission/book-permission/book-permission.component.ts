@@ -24,7 +24,8 @@ export class BookPermissionComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild("confirmationModel") confirmationModel: TemplateRef<any>;
   @ViewChild("receiptModel") receiptModel: TemplateRef<any>;
-  @ViewChild('address') addressComp: any;
+  @ViewChild('orgAddress') orgAddress: any;
+  @ViewChild('applicantAddress') applicantAddress: any;
   @ViewChild('fileInput') fileInput: any;
 
   /**
@@ -114,7 +115,34 @@ export class BookPermissionComponent implements OnInit {
     this.createPermissionApplicationForm();
     this.getLookUpData();
     this.getResourceList();
+
+    		/**
+		     * Update Permanent Address If 'officeResidentialAddressSame' is checked.
+		     */
+		this.bookPermissionApplicationForm.controls.organizationAddress.valueChanges.subscribe(data => {
+			if (this.bookPermissionApplicationForm.get('officeResidentialAddressSame').value) {
+				this.onSameAddressChange({ checked: true });
+				return;
+			}
+		});
   }
+
+/**
+ * This method is used to patch organization address to applicant address
+ * @param event - checkbox event
+ */
+	onSameAddressChange(event) {
+		let id = this.bookPermissionApplicationForm.get('applicantAddress.id').value;
+		if (event.checked) {
+			this.bookPermissionApplicationForm.get('applicantAddress').patchValue(this.bookPermissionApplicationForm.get('organizationAddress').value);
+			if (this.bookPermissionApplicationForm.get('organizationAddress').get('country').value) {
+				this.applicantAddress.getStateLists(this.bookPermissionApplicationForm.get('organizationAddress').get('country').value);
+			}
+		} else {
+			this.bookPermissionApplicationForm.get('applicantAddress').reset();
+		}
+		this.bookPermissionApplicationForm.get('applicantAddress.id').setValue(id);
+	}
 
   /**
    * Getting lookup data for Permission booking.
@@ -277,8 +305,9 @@ export class BookPermissionComponent implements OnInit {
       bookingFrom: [null],
       bookingTo: [null],
       remarks: [null],
-      organizationAddress: this._fb.group(this.addressComp.addressControls()),
-      applicantAddress: this._fb.group(this.addressComp.addressControls()),
+      organizationAddress: this._fb.group(this.orgAddress.addressControls()),
+      applicantAddress: this._fb.group(this.applicantAddress.addressControls()),
+      officeResidentialAddressSame:null,
       orgName: [null],
       orgContactNo: [null],
       confirmMobile: [null],
@@ -292,7 +321,7 @@ export class BookPermissionComponent implements OnInit {
       bookingDate: [null],
 
       accountHolderName: [null],
-      accountNo: [null],
+      accountNo: [null, [Validators.maxLength(18), Validators.minLength(9)]],
       bankName: this._fb.group({
         code: [null, [Validators.required]],
         name: null
@@ -330,8 +359,10 @@ export class BookPermissionComponent implements OnInit {
                   sectionToPrint.innerHTML = acknowledgementHTML;
                   setTimeout(() => {
                       window.print();
-                      this.router.navigate([this.bookingConstants.MY_BOOKINGS_URL]);
-                  });
+                  },0);
+                  setTimeout(() => {
+                    this.router.navigate([this.bookingConstants.MY_BOOKINGS_URL]);
+                },500);
               }, err => {
                   this.commonService.openAlert("Error", err.error[0].message, "warning")
               })

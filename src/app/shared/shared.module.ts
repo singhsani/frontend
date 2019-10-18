@@ -27,6 +27,7 @@ import { GujInputTargetDirective } from './directives/guj-input-target.directive
 import { InputTrimDirective } from './directives/input-trim.directive';
 import { AlphaNumericDirective } from './directives/alpha-numeric.directive';
 import { ReloadDirective } from './directives/reload.directive';
+import { NgxUpperCaseDirectiveModule } from 'ngx-upper-case-directive';
 
 /* import directives end*/
 
@@ -80,8 +81,7 @@ const COMPONENTS = [
 	GujVideoComponent,
 	BaseChartComponent,
 	TermsConditionsComponent,
-	DialogContentComponent
-
+	DialogContentComponent,
 ]
 
 @NgModule({
@@ -100,6 +100,8 @@ const COMPONENTS = [
 		ModalModule.forRoot(),
 		NgxMaskModule.forRoot(),
 		ReactiveFormsModule,
+	    NgxUpperCaseDirectiveModule
+
 
 	],
 	exports: [
@@ -108,7 +110,7 @@ const COMPONENTS = [
 		NgSelectModule,
 		ModalModule,
 		ChartsModule,
-
+		NgxUpperCaseDirectiveModule,
 		...COMPONENTS
 	],
 	providers: [

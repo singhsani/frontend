@@ -1,7 +1,7 @@
 <app-title-bar [title]="'screen_title' | translate: translateKey">
-	<!-- <button class="pull-right" mat-stroked-button type="button" (click)="patchValue()">
+	<button class="pull-right" mat-stroked-button type="button" (click)="patchValue()">
 		Patch Value
-	</button> -->
+	</button>
 </app-title-bar>
 
 <mat-card class="formClass cardBorder">
@@ -1531,6 +1531,7 @@
 							<input matInput type="text" required formControlName="applicantRelationOther"
 								placeholder="{{'other_relation' | translate:translateKey }}" appValidationFields
 								[validationFieldsType]="'onlyNameWithOutSpace'">
+							<control-messages [control]="marriageFormGroup.get('applicantRelationOther')"></control-messages>
 						</mat-form-field>
 
 						<!-- gujrati -->
@@ -1586,7 +1587,8 @@
 						<div *ngIf="doc.requiredOnCitizenPortal && doc.isActive && showButtons">
 							<label>{{translateService.getCurrentLanguage()=='en'? doc.documentLabelEn : doc.documentLabelGuj }}
 								<span *ngIf="doc.mandatory && (doc.dependentFieldName == null)">*</span>
-								<span *ngIf="doc.mandatory && (doc.dependentFieldName == 'HINDU') && (marriageFormGroup.controls.groomReligion.get('code').value != 'HINDU') && (marriageFormGroup.controls.brideReligion.get('code').value != 'HINDU') && (marriageFormGroup.controls.groomReligion.get('code').value != null)">*</span>
+								<span
+									*ngIf="doc.mandatory && (doc.dependentFieldName == 'HINDU') && (marriageFormGroup.controls.groomReligion.get('code').value != 'HINDU') && (marriageFormGroup.controls.brideReligion.get('code').value != 'HINDU') && (marriageFormGroup.controls.groomReligion.get('code').value != null)">*</span>
 							</label>
 							<file-upload [form]="marriageFormGroup" [uploadModel]="doc"></file-upload>
 						</div>
