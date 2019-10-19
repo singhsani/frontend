@@ -306,14 +306,14 @@ export class SwimmingPoolComponent implements OnInit {
       }),
       applicantAddress: this.fb.group(this.addressComp.addressControls()),
 
-      accountHolderName: [null, Validators.required],
-      accountNo: [null, Validators.required],
+      accountHolderName: [null,  [Validators.required, Validators.maxLength(50), Validators.minLength(2)]],
+      accountNo: [null, [Validators.required, Validators.maxLength(18), Validators.minLength(9)]],
       bankName: this.fb.group({
         code: [null, Validators.required],
         name: null,
         gujName: null
       }),
-      ifscCode: [null, Validators.required],
+      ifscCode: [null, [Validators.required, ValidationService.ifscCodeValidator]],
       scheduleList: null,
       attachments: [],
       fileStatus: null,

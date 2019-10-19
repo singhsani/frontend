@@ -321,7 +321,7 @@ export class BookPermissionComponent implements OnInit {
       bookingDate: [null],
 
       accountHolderName: [null, [Validators.required, Validators.maxLength(50), Validators.minLength(2)]],
-      accountNo: [null, [Validators.maxLength(18), Validators.minLength(9)]],
+      accountNo: [null, [Validators.required, Validators.maxLength(18), Validators.minLength(9)]],
       bankName: this._fb.group({
         code: [null, [Validators.required]],
         name: null
