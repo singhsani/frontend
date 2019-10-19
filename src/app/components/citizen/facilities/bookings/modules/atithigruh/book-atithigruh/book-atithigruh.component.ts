@@ -107,8 +107,8 @@ export class BookAtithigruhComponent implements OnInit {
 			/**
 			 * Applicant Details
 			 */
-			accountHolderName: [null, Validators.required],
-			accountNo: [null, Validators.required],
+			accountHolderName: [null, [Validators.required, Validators.maxLength(50), Validators.minLength(2)]],
+			accountNo: [null, [Validators.required, Validators.maxLength(18), Validators.minLength(9)]],
 			applicantAddress: this.fb.group(this.addressComp.addressControls()),
 			applicantMobileNo: [null, Validators.required],
 			confirmMobile: [null, Validators.required],

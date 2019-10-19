@@ -378,7 +378,7 @@
             </div>
 
             <mat-form-field class="col-md-6">
-              <input matInput type="text" maxlength="20" appValidationFields
+              <input matInput type="text" minlength="2" maxlength="50" appValidationFields
                 [validationFieldsType]="'onlyNameWithSpace'" formControlName="accountHolderName"
                 placeholder="{{'account_holder_name' | translate: translateKey}}" required>
               <control-messages [control]="bookPermissionApplicationForm.get('accountHolderName')"></control-messages>

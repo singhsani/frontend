@@ -384,14 +384,14 @@
                         </div>
 
                         <mat-form-field class="col-md-6">
-                            <input matInput type="text" maxlength="50" appValidationFields [validationFieldsType]="'onlyNameWithSpace'"
+                            <input matInput type="text" minlength="2" maxlength="50" appValidationFields [validationFieldsType]="'onlyNameWithSpace'"
                                 formControlName="accountHolderName" placeholder="{{'account_holder_name' | translate: stadiumTranslateKey}}"
                                 required>
                             <control-messages [control]="atithigruhForm.get('accountHolderName')"></control-messages>
                         </mat-form-field>
 
                         <mat-form-field class="col-md-6">
-                            <input matInput OnlyNumber maxlength="20" minlength="6" formControlName="accountNo"
+                            <input matInput OnlyNumber maxlength="18" minlength="9" formControlName="accountNo"
                                 placeholder="{{'account_no' | translate: stadiumTranslateKey}}" required>
                             <control-messages [control]="atithigruhForm.get('accountNo')"></control-messages>
                         </mat-form-field>
