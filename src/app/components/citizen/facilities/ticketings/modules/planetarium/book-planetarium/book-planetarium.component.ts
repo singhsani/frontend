@@ -471,7 +471,7 @@ export class BookPlanetariumComponent implements OnInit {
                 setTimeout(() => {
                   window.print();
                   this.router.navigate([this.ticketingConstants.MY_TICKETINGS_URL]);
-                });
+                },300);
               }, err => {
                 this.commonService.openAlert("Error", err.error[0].message, "warning")
               })
@@ -525,7 +525,7 @@ export class BookPlanetariumComponent implements OnInit {
                 setTimeout(() => {
                   window.print();
                   this.router.navigate([this.ticketingConstants.MY_TICKETINGS_URL]);
-                });
+                },300);
               }, err => {
                 this.commonService.openAlert("Error", err.error[0].message, "warning")
               })

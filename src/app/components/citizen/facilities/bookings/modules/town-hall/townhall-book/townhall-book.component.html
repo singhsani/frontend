@@ -526,7 +526,7 @@
                         </mat-form-field>
 
                         <mat-form-field class="col-md-6">
-                            <input matInput type="text" upperCase maxlength="11" formControlName="ifscCode" placeholder="{{'ifsc_code' | translate: translateKey}}"
+                            <input matInput type="text" upperCase appAlphaNumeric maxlength="11" formControlName="ifscCode" placeholder="{{'ifsc_code' | translate: translateKey}}"
                                 required>
                             <control-messages [control]="townHallApplicationForm.get('ifscCode')"></control-messages>
                         </mat-form-field>
