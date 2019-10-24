@@ -273,7 +273,7 @@ export class BookStadiumComponent implements OnInit {
                             setTimeout(() => {
                                 window.print();
                                 this.router.navigate([this.bookingConstants.MY_BOOKINGS_URL]);
-                            });
+                            },300);
                         }, err => {
                             this.commonService.openAlert("Error", err.error[0].message, "warning")
                         })

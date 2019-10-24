@@ -253,9 +253,9 @@ export class ZooBookingComponent implements OnInit {
       bankName: this.fb.group({
         code: [null],
       }),
-      accountHolderName: [null],
-      accountNo: [null],
-      ifscCode: [null],
+      accountHolderName:[null, [Validators.maxLength(50), Validators.minLength(2)]],
+      accountNo: [null, [Validators.maxLength(18), Validators.minLength(9)]],
+      ifscCode: [null, [ValidationService.ifscCodeValidator]],
       termsCondition: [true],
       agree: [true],
     });
@@ -308,6 +308,9 @@ export class ZooBookingComponent implements OnInit {
           this.ticketingUtils.redirectToPayment(err, this.commonService, this.ticketingService, this.ticketBookingForm, this.router);
           // return;
           // });
+        }
+        else{
+          this.commonService.openAlert("Error", err.error[0].message, "warning")
         }
       });
   }

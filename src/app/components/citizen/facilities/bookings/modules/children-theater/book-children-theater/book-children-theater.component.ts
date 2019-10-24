@@ -159,13 +159,13 @@ export class BookChildrenTheaterComponent implements OnInit {
             relationshipWithOrg: [null, [Validators.required, Validators.maxLength(20)]],
 
             //step 3
-            accountHolderName: [null, [Validators.required, Validators.maxLength(50)]],
-            accountNo: [null, [Validators.required, Validators.maxLength(20)]],
+            accountHolderName: [null, [Validators.required, Validators.maxLength(50), Validators.minLength(2)]],
+            accountNo: [null, [Validators.required, Validators.maxLength(18), Validators.minLength(9)]],
             bankName: this._fb.group({
                 code: [null, [Validators.required]],
                 name: null
             }),
-            ifscCode: [null, [Validators.required, ValidationService.ifscCodeValidator, Validators.maxLength(11), Validators.minLength(11)]],
+            ifscCode: [null, [Validators.required, ValidationService.ifscCodeValidator]],
             agree: [null, [Validators.required]],
             termsCondition: [null, [Validators.required]],
 
@@ -224,7 +224,7 @@ export class BookChildrenTheaterComponent implements OnInit {
                             setTimeout(() => {
                                 window.print();
                                 this.router.navigate([this.bookingConstants.MY_BOOKINGS_URL]);
-                            });
+                            },300);
                         }, err => {
                             this.commonService.openAlert("Error", err.error[0].message, "warning")
                         })

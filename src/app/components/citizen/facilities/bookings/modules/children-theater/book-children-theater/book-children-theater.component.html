@@ -385,19 +385,19 @@
                         </div>
 
                         <mat-form-field class="col-md-6">
-                            <input matInput type="text" maxlength="50" appValidationFields [validationFieldsType]="'onlyNameWithSpace'" formControlName="accountHolderName"
+                            <input matInput type="text"  minlength="2" maxlength="50" appValidationFields [validationFieldsType]="'onlyNameWithSpace'" formControlName="accountHolderName"
                                 placeholder="{{'account_holder_name' | translate: translateKey}}" required>
                             <control-messages [control]="childrenTheaterApplicationForm.get('accountHolderName')"></control-messages>
                         </mat-form-field>
 
                         <mat-form-field class="col-md-6">
-                            <input matInput OnlyNumber maxlength="20" minlength="6" formControlName="accountNo" placeholder="{{'account_no' | translate: translateKey}}"
+                            <input matInput OnlyNumber maxlength="18" minlength="9" formControlName="accountNo" placeholder="{{'account_no' | translate: translateKey}}"
                                 required>
                             <control-messages [control]="childrenTheaterApplicationForm.get('accountNo')"></control-messages>
                         </mat-form-field>
 
                         <mat-form-field class="col-md-6">
-                            <input matInput type="text" maxlength="11"  upperCase minlength="11" formControlName="ifscCode" placeholder="{{'ifsc_code' | translate: translateKey}}"
+                            <input matInput type="text" maxlength="11" upperCase appAlphaNumeric formControlName="ifscCode" placeholder="{{'ifsc_code' | translate: translateKey}}"
                                 required>
                             <control-messages [control]="childrenTheaterApplicationForm.get('ifscCode')"></control-messages>
                         </mat-form-field> 

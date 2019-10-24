@@ -36,6 +36,7 @@ export class BookPlanetariumComponent implements OnInit {
   totalVisitorLimit: number = 5;
   seatAvailable: boolean = true;
   isFileUploaded: boolean = false;
+  
   /**
    * Lookups & Data
    */
@@ -269,7 +270,7 @@ export class BookPlanetariumComponent implements OnInit {
         name: null,
         code: [null, Validators.required]
       }),
-      rate: null,
+      rate: [null],
       amount: null,
 
       showStartTime: null,
@@ -300,10 +301,10 @@ export class BookPlanetariumComponent implements OnInit {
       middleName: null,
       lastName: [null, [Validators.required, ValidationService.nameValidator]],
 
-      accountHolderName: null,
-      accountNo: null,
+      accountHolderName: [null, [ Validators.maxLength(50), Validators.minLength(2)]],
+      accountNo: [null, [ Validators.maxLength(18), Validators.minLength(9)]],
       bankName: null,
-      ifscCode: null,
+      ifscCode:[null, [ ValidationService.ifscCodeValidator]],
       attachments: [],
 
       scheduleList: [],
@@ -471,7 +472,7 @@ export class BookPlanetariumComponent implements OnInit {
                 setTimeout(() => {
                   window.print();
                   this.router.navigate([this.ticketingConstants.MY_TICKETINGS_URL]);
-                });
+                },300);
               }, err => {
                 this.commonService.openAlert("Error", err.error[0].message, "warning")
               })
@@ -525,7 +526,7 @@ export class BookPlanetariumComponent implements OnInit {
                 setTimeout(() => {
                   window.print();
                   this.router.navigate([this.ticketingConstants.MY_TICKETINGS_URL]);
-                });
+                },300);
               }, err => {
                 this.commonService.openAlert("Error", err.error[0].message, "warning")
               })

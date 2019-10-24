@@ -391,7 +391,7 @@
             </mat-form-field>
 
             <mat-form-field class="col-md-6">
-              <input matInput type="text" maxlength="11" formControlName="ifscCode"
+              <input matInput type="text" maxlength="11"  upperCase appAlphaNumeric formControlName="ifscCode"
                 placeholder="{{'ifsc_code' | translate: translateKey}}" upperCase required>
               <control-messages [control]="bookPermissionApplicationForm.get('ifscCode')"></control-messages>
             </mat-form-field>

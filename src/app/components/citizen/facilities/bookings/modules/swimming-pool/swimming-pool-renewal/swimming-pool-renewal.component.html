@@ -239,7 +239,7 @@
           </mat-form-field>
 
           <mat-form-field class="col-md-6">
-            <input matInput type="text" maxlength="11" formControlName="ifscCode"
+            <input matInput type="text" maxlength="11" upperCase appAlphaNumeric formControlName="ifscCode"
               placeholder="{{'ifsc_code' | translate: translateKey}}" required>
             <control-messages [control]="swimmimgPoolRenewalForm.get('ifscCode')"></control-messages>
           </mat-form-field>
