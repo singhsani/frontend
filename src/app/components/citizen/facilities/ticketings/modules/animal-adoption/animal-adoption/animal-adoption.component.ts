@@ -7,6 +7,7 @@ import { CommonService } from 'src/app/shared/services/common.service';
 import { Router } from '@angular/router';
 import { TicketingConstants } from '../../../config/ticketing-config';
 import { ToastrService } from 'ngx-toastr';
+import { ValidationService } from 'src/app/shared/services/validation.service';
 
 @Component({
   selector: 'app-animal-adoption',
@@ -111,10 +112,10 @@ export class AnimalAdoptionComponent implements OnInit {
       resourceType: null,
       payableServiceType: null,
       resourceCode: null,
-      accountHolderName: null,
-      accountNo: null,
+      accountHolderName:[null, [ Validators.maxLength(50), Validators.minLength(2)]],
+      accountNo:[null, [ Validators.maxLength(18), Validators.minLength(9)]],
       bankName: null,
-      ifscCode: null,
+      ifscCode:[null, [ ValidationService.ifscCodeValidator]],
       scheduleList: null,
       attachments: null,
       adoptionRequestDate: moment().format('YYYY-MM-DD'),

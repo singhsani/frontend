@@ -111,8 +111,8 @@
                             </mat-form-field>
 
                             <mat-form-field class="col-md-4">
-                                <input matInput OnlyNumber placeholder="{{ 'rate'| translate:translateKey}}"
-                                    formControlName="rate" disabled>
+                                <input matInput placeholder="{{ 'rate'| translate:translateKey}}"
+                                    formControlName="rate" readonly>
                             </mat-form-field>
 
                             <mat-form-field class="col-md-4">
@@ -172,7 +172,7 @@
                     </div>
 
                     <mat-form-field class="col-md-4">
-                        <input matInput minlength="4" maxlength="4" formControlName="idNumber"
+                        <input matInput minlength="4" maxlength="4" OnlyNumber formControlName="idNumber"
                             placeholder="{{'id_number' | translate: translateKey}}">
                         <control-messages [control]="ticketBookingForm.get('idNumber')"></control-messages>
                         <mat-hint class="mt-3 font-weight-bold fsLarge">
