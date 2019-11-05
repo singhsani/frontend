@@ -22,7 +22,7 @@
                 <div class="row mt-3 mb-3">
 
                     <div formGroupName="showCategory" class="col-md-4 ngSelect">
-                        <ng-select placeholder="{{'show_category'| translate: translateKey}}"
+                        <ng-select placeholder="{{'show_category'| translate: translateKey}} *"
                             (change)="setValidationForSpecialShow($event);savePlanetariumTickets()"
                             formControlName="code">
                             <ng-option *ngFor="let cat of PLANETARIUM_SHOW_CATEGORY" [value]="cat.code">
@@ -34,7 +34,7 @@
                     </div>
 
                     <div formGroupName="resourceCodeLK" class="col-md-4 ngSelect">
-                        <ng-select placeholder="{{'resource_name'| translate: translateKey}}" formControlName="code"
+                        <ng-select placeholder="{{'resource_name'| translate: translateKey}} *" formControlName="code"
                             required (change)="ticketBookingForm.get('visitingDate').reset()">
                             <ng-option *ngFor="let cat of resourceName" [value]="cat.code">
                                 {{ cat.name }}
@@ -46,7 +46,7 @@
 
                     <mat-form-field class="col-md-4">
                         <mat-label>{{'visiting_date'| translate: translateKey}}</mat-label>
-                        <input matInput [max]="maxDate" [min]="minDate" [matDatepicker]="datePicker"
+                        <input matInput [max]="maxDate" required [min]="minDate" [matDatepicker]="datePicker"
                             formControlName="visitingDate" placeholder="DD/MM/YYYY"
                             (dateChange)="changeDateFormat($event);getPlanetariumShowTimeSlot($event);savePlanetariumTickets()">
                         <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
@@ -60,7 +60,7 @@
                     <div formGroupName="planetariumShowTiming"
                         [hidden]="ticketBookingForm.get('showCategory').get('code').value == 'PLANETARIUM_SPECIAL_SHOW'"
                         class="col-md-4 ngSelect">
-                        <ng-select placeholder="{{'planetarium_shows_timing'| translate: translateKey}}"
+                        <ng-select placeholder="{{'planetarium_shows_timing'| translate: translateKey}} *"
                             formControlName="code" (change)="setShiftType()">
                             <ng-option *ngFor="let cat of PLANETARIUM_SHOWS_TIMING" [value]="cat.code">
                                 {{ cat.name }}
@@ -73,7 +73,7 @@
                     <div formGroupName="specialShowLanguage"
                         [hidden]="ticketBookingForm.get('showCategory').get('code').value != 'PLANETARIUM_SPECIAL_SHOW'"
                         class="col-md-4 ngSelect">
-                        <ng-select placeholder="{{'planetarium_shows_language'| translate: translateKey}}"
+                        <ng-select placeholder="{{'planetarium_shows_language'| translate: translateKey}} *"
                             formControlName="code" (change)="setShiftType();getPlanetariumShowAvailability()">
                             <ng-option *ngFor="let cat of PLANETARIUM_SPECIAL_SHOWS_LAG" [value]="cat.code">
                                 {{ cat.name }}
@@ -91,7 +91,7 @@
 
                             <div formGroupName="visitors" class="col-md-4 ngSelect"
                                 *ngIf="ticketBookingForm.get('showCategory').get('code').value != 'PLANETARIUM_SPECIAL_SHOW'">
-                                <ng-select placeholder="{{'visitors'| translate: translateKey}}" formControlName="code"
+                                <ng-select OnlyNumber placeholder="{{'visitors'| translate: translateKey}} *" formControlName="code"
                                     (change)="setVisitors();computeTotalAndVisitors()">
                                     <ng-option *ngFor="let num of PLANETARIUM_VISITOR" [value]="num.code">
                                         {{ num.name }}
@@ -103,16 +103,16 @@
 
                             <mat-form-field class="col-md-4"
                                 *ngIf="ticketBookingForm.get('showCategory').get('code').value == 'PLANETARIUM_SPECIAL_SHOW'">
-                                <input matInput OnlyNumber formControlName="totalVisitor" [max]="totalVisitorLimit"
+                                <input matInput OnlyNumber formControlName="totalVisitor" maxlength="3" [max]="totalVisitorLimit"
                                     placeholder="{{'selected_seats' | translate: translateKey}}"
-                                    (change)="computeTotalAndVisitors()">
+                                    (change)="computeTotalAndVisitors()" required>
                                 <control-messages [control]="ticketBookingForm.get('totalVisitor')">
                                 </control-messages>
                             </mat-form-field>
 
                             <mat-form-field class="col-md-4">
-                                <input matInput placeholder="{{ 'rate'| translate:translateKey}}"
-                                    formControlName="rate" readonly>
+                                <input matInput OnlyNumber placeholder="{{ 'rate'| translate:translateKey}}"
+                                    formControlName="rate">
                             </mat-form-field>
 
                             <mat-form-field class="col-md-4">
@@ -135,7 +135,7 @@
                         <label>{{'applicant_details' | translate: translateKey}}</label>
                     </div>
                     <mat-form-field class="col-md-4">
-                        <input matInput maxlength="50" formControlName="firstName"
+                        <input matInput maxlength="50" required formControlName="firstName"
                             placeholder="{{'first_name' | translate: translateKey}}" appValidationFields
                             [validationFieldsType]="'onlyNameWithOutSpace'">
                         <control-messages [control]="ticketBookingForm.get('firstName')"></control-messages>
@@ -149,9 +149,9 @@
                     </mat-form-field>
 
                     <mat-form-field class="col-md-4">
-                        <input matInput maxlength="50" formControlName="lastName"
+                        <input matInput maxlength="50" required formControlName="lastName"
                             placeholder="{{'last_name' | translate: translateKey}}" appValidationFields
-                            [validationFieldsType]="'onlyNameWithOutSpace'">
+                            [validationFieldsType]="'onlyNameWithOutSpace'" required>
                         <control-messages [control]="ticketBookingForm.get('lastName')"></control-messages>
                     </mat-form-field>
 
@@ -162,7 +162,7 @@
                     </mat-form-field>
 
                     <div formGroupName="idType" class="col-md-4 ngSelect">
-                        <ng-select placeholder="{{'id_type'| translate: translateKey}}" formControlName="code">
+                        <ng-select placeholder="{{'id_type'| translate: translateKey}} *" formControlName="code">
                             <ng-option *ngFor="let idType of idTypes" [value]="idType.code">
                                 {{ idType.name }}
                             </ng-option>
@@ -172,8 +172,8 @@
                     </div>
 
                     <mat-form-field class="col-md-4">
-                        <input matInput minlength="4" maxlength="4" OnlyNumber formControlName="idNumber"
-                            placeholder="{{'id_number' | translate: translateKey}}">
+                        <input matInput minlength="4" appAlphaNumeric maxlength="4" formControlName="idNumber"
+                            placeholder="{{'id_number' | translate: translateKey}} *">
                         <control-messages [control]="ticketBookingForm.get('idNumber')"></control-messages>
                         <mat-hint class="mt-3 font-weight-bold fsLarge">
                             ({{'last_4_digit_of_ID'| translate: translateKey}})</mat-hint>
@@ -198,7 +198,7 @@
                     <mat-form-field class="col-md-4">
                         <input matInput maxlength="25" appValidationFields [validationFieldsType]="'onlyNameWithSpace'"
                             type="text" formControlName="schoolName"
-                            placeholder="{{'school_name' | translate: translateKey}}">
+                            placeholder="{{'school_name' | translate: translateKey}}" required>
                         <control-messages [control]="ticketBookingForm.get('schoolName')"></control-messages>
                     </mat-form-field>
 
@@ -209,8 +209,8 @@
                     </mat-form-field>
 
                     <mat-form-field class="col-md-4">
-                        <input matInput type="email" formControlName="schoolEmailId"
-                            placeholder="{{'school_email_id' | translate: translateKey}}">
+                        <input matInput type="text" formControlName="schoolEmailId"
+                            placeholder="{{'school_email_id' | translate: translateKey}}" required>
                         <control-messages [control]="ticketBookingForm.get('schoolEmailId')"></control-messages>
                     </mat-form-field>
 
@@ -218,8 +218,7 @@
                         {{'attchaments' | translate:translateKey}}
                     </h2> -->
                     <div class="col-md-6">
-                        <label labelPosition="after">{{'permission_orders_if_applicable' | translate:translateKey}}
-                        </label>
+                        <label labelPosition="after">{{'permission_orders_if_applicable' | translate:translateKey}} *</label>
                         <ticketing-file-upload (uploaded)="isFileUploaded = $event" [form]="ticketBookingForm"
                             [uploadModel]="{fieldIdentifier:'1', labelName:'previous_permission_orders_if_applicable', formPart:'1.1', refNumber:
                             ticketBookingForm.get('refNumber').value, variableName: 'permission_orders'}">

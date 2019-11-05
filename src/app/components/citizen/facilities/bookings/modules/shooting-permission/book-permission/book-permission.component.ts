@@ -84,7 +84,7 @@ export class BookPermissionComponent implements OnInit {
   /**
    * LookUps Constants
    */
-  BANKS: Array<any> = [];
+  // BANKS: Array<any> = [];
   PURPOSES: Array<any> = [];
   CANCELLATION_TYPE: Array<any> = [];
 
@@ -149,7 +149,7 @@ export class BookPermissionComponent implements OnInit {
    */
   getLookUpData() {
     this.bookingService.getDataFromLookups().subscribe(resp => {
-      this.BANKS = resp.BANK;
+      // this.BANKS = resp.BANK;
       this.CANCELLATION_TYPE = resp.CANCELLATION_TYPE;
       this.PURPOSES = resp.PURPOSE;
     });
@@ -320,13 +320,13 @@ export class BookPermissionComponent implements OnInit {
       shootingPurpose: [null],
       bookingDate: [null],
 
-      accountHolderName: [null, [Validators.required, Validators.maxLength(50), Validators.minLength(2)]],
-      accountNo: [null, [Validators.required, Validators.maxLength(18), Validators.minLength(9)]],
-      bankName: this._fb.group({
-        code: [null, [Validators.required]],
-        name: null
-      }),
-      ifscCode: [null, [Validators.required, ValidationService.ifscCodeValidator]],
+      // accountHolderName: [null, [Validators.required, Validators.maxLength(50), Validators.minLength(2)]],
+      // accountNo: [null, [Validators.required, Validators.maxLength(18), Validators.minLength(9)]],
+      // bankName: this._fb.group({
+      //   code: [null, [Validators.required]],
+      //   name: null
+      // }),
+      // ifscCode: [null, [Validators.required, ValidationService.ifscCodeValidator]],
       attachment: [null]
     });
   }

@@ -50,7 +50,7 @@ export class BookAtithigruhComponent implements OnInit {
 	ATITHIGRUH: Array<any> = [];
 	BOOKING_TYPE: Array<any> = []
 	PURPOSE: Array<any> = []
-	BankOptions: Array<any> = [];
+	// BankOptions: Array<any> = [];
 	selectedShift: Array<any> = [];
 	filteredReponse: any;
 	Dates: Array<any> = [];
@@ -107,8 +107,8 @@ export class BookAtithigruhComponent implements OnInit {
 			/**
 			 * Applicant Details
 			 */
-			accountHolderName: [null, [Validators.required, Validators.maxLength(50), Validators.minLength(2)]],
-			accountNo: [null, [Validators.required, Validators.maxLength(18), Validators.minLength(9)]],
+			// accountHolderName: [null, [Validators.required, Validators.maxLength(50), Validators.minLength(2)]],
+			// accountNo: [null, [Validators.required, Validators.maxLength(18), Validators.minLength(9)]],
 			applicantAddress: this.fb.group(this.addressComp.addressControls()),
 			applicantMobileNo: [null, Validators.required],
 			confirmMobile: [null, Validators.required],
@@ -120,10 +120,10 @@ export class BookAtithigruhComponent implements OnInit {
 			/**
 			 * Bank Accoount Details
 			 */
-			bankName: this.fb.group({
-				code: [null, Validators.required]
-			}),
-			ifscCode: [null, [Validators.required, ValidationService.ifscCodeValidator]],
+			// bankName: this.fb.group({
+			// 	code: [null, Validators.required]
+			// }),
+			// ifscCode: [null, [Validators.required, ValidationService.ifscCodeValidator]],
 
 			/**
 			 * Booking Details
@@ -196,7 +196,7 @@ export class BookAtithigruhComponent implements OnInit {
 		this.bookingService.getDataFromLookups().subscribe(resp => {
 			this.BOOKING_TYPE = resp.DRAW_TYPE;
 			this.PURPOSE = resp.PURPOSE;
-			this.BankOptions = resp.BANK;
+			// this.BankOptions = resp.BANK;
 		});
 	}
 

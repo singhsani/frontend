@@ -53,8 +53,8 @@
 
                 <div class="row mt-3 mb-3">
                     <div class="col-md-4 ngSelect">
-                        <ng-select placeholder="{{'booking_type'| translate: translateKey}}" formControlName="bookingType"
-                            (change)="onBookingTypeChange($event)">
+                        <ng-select placeholder="{{'booking_type'| translate: translateKey}}"
+                            formControlName="bookingType" (change)="onBookingTypeChange($event)">
                             <ng-option *ngFor="let bt of BOOKING_TYPE" [value]="bt.code">
                                 {{ bt.name }}
                             </ng-option>
@@ -84,22 +84,26 @@
                     <ng-container *ngIf="bookingForRegular">
                         <mat-form-field class="col-md-4">
                             <mat-label>{{'booking_date'| translate: translateKey}}</mat-label>
-                            <input appDate matInput [min]="startMinDate" [max]="endMinDate" [matDatepicker]="townHallBookingfromPicker"
-                                formControlName="bookingFrom" (dateChange)="onDateChange('bookingFrom', $event.value)">
+                            <input appDate matInput [min]="startMinDate" [max]="endMinDate"
+                                [matDatepicker]="townHallBookingfromPicker" formControlName="bookingFrom"
+                                (dateChange)="onDateChange('bookingFrom', $event.value)">
                             <mat-datepicker-toggle matSuffix [for]="townHallBookingfromPicker"></mat-datepicker-toggle>
                             <mat-datepicker #townHallBookingfromPicker touchUi="true"></mat-datepicker>
-                            <div align="end" class="default-show-hint mat-hint mat-right">{{bookingUtils.DATE_HINT_MSG}}</div>
+                            <div align="end" class="default-show-hint mat-hint mat-right">{{bookingUtils.DATE_HINT_MSG}}
+                            </div>
                             <control-messages [control]="BookingTypeForm.get('bookingFrom')">
                             </control-messages>
                         </mat-form-field>
 
                         <mat-form-field class="col-md-4">
                             <mat-label>{{'choose_end_date'| translate: translateKey}}</mat-label>
-                            <input appDate matInput [min]="toStartDate" [max]="endMinDate" [matDatepicker]="townHallBookingtoPicker"
-                                formControlName="bookingTo" (dateChange)="onDateChange('bookingTo', $event.value)">
+                            <input appDate matInput [min]="toStartDate" [max]="endMinDate"
+                                [matDatepicker]="townHallBookingtoPicker" formControlName="bookingTo"
+                                (dateChange)="onDateChange('bookingTo', $event.value)">
                             <mat-datepicker-toggle matSuffix [for]="townHallBookingtoPicker"></mat-datepicker-toggle>
                             <mat-datepicker #townHallBookingtoPicker touchUi="true"></mat-datepicker>
-                            <div align="end" class="default-show-hint mat-hint mat-right">{{bookingUtils.DATE_HINT_MSG}}</div>
+                            <div align="end" class="default-show-hint mat-hint mat-right">{{bookingUtils.DATE_HINT_MSG}}
+                            </div>
                             <control-messages [control]="BookingTypeForm.get('bookingTo')">
                             </control-messages>
                         </mat-form-field>
@@ -108,11 +112,13 @@
                     <ng-container *ngIf="!bookingForRegular">
                         <mat-form-field class="col-md-4">
                             <mat-label>{{'booking_date'| translate: translateKey}}</mat-label>
-                            <input appDate matInput [min]="toStartBookDate" [max]="toEndBookDate" [matDatepicker]="townHallBookingtoPicker"
-                                formControlName="bookingFrom" (dateChange)="onDateChange('bookingFrom', $event.value)">
+                            <input appDate matInput [min]="toStartBookDate" [max]="toEndBookDate"
+                                [matDatepicker]="townHallBookingtoPicker" formControlName="bookingFrom"
+                                (dateChange)="onDateChange('bookingFrom', $event.value)">
                             <mat-datepicker-toggle matSuffix [for]="townHallBookingtoPicker"></mat-datepicker-toggle>
                             <mat-datepicker #townHallBookingtoPicker touchUi="true"></mat-datepicker>
-                            <div align="end" class="default-show-hint mat-hint mat-right">{{bookingUtils.DATE_HINT_MSG}}</div>
+                            <div align="end" class="default-show-hint mat-hint mat-right">{{bookingUtils.DATE_HINT_MSG}}
+                            </div>
                             <control-messages [control]="BookingTypeForm.get('bookingFrom')">
                             </control-messages>
                         </mat-form-field>
@@ -146,21 +152,25 @@
                         </mat-panel-title>
                     </mat-expansion-panel-header>
                     <div>
-                        <mat-checkbox [checked]="!bookingUtils.checkedAllinMonth(month, Dates)" [disabled]="bookingUtils.checkAllDisabledInmonth(month,Dates)"
-                            labelPosition="after" (change)="selectedShift = bookingUtils.selectAllShiftsInMonth($event.checked, month, Dates, selectedShift, i)">
+                        <mat-checkbox [checked]="!bookingUtils.checkedAllinMonth(month, Dates)"
+                            [disabled]="bookingUtils.checkAllDisabledInmonth(month,Dates)" labelPosition="after"
+                            (change)="selectedShift = bookingUtils.selectAllShiftsInMonth($event.checked, month, Dates, selectedShift, i)">
                             {{'select_all_shift_in'| translate: stadiumTranslateKey}} {{month.monthName}}
                         </mat-checkbox>
                     </div>
 
                     <div class="row">
-                        <div *ngFor="let date of bookingUtils.filterAcc(month.id, Dates)" class="col-6 col-md-3 col-lg-2 mb-1 p-1">
+                        <div *ngFor="let date of bookingUtils.filterAcc(month.id, Dates)"
+                            class="col-6 col-md-3 col-lg-2 mb-1 p-1">
                             <div class="dateBox rounded border">
                                 <strong>
                                     {{bookingUtils.returnProperDate(date.key)}}
                                 </strong>
                                 <div class="dateCon">
-                                    <mat-checkbox (change)="selectedShift = bookingUtils.selectShift(shift, $event.checked, selectedShift)"
-                                        *ngFor="let shift of date.slotList; let i = index" [disabled]="shift.slotStatus == bookingConstants.BOOKED || shift.slotStatus == bookingConstants.TEMPORARY_BLOCKED"
+                                    <mat-checkbox
+                                        (change)="selectedShift = bookingUtils.selectShift(shift, $event.checked, selectedShift)"
+                                        *ngFor="let shift of date.slotList; let i = index"
+                                        [disabled]="shift.slotStatus == bookingConstants.BOOKED || shift.slotStatus == bookingConstants.TEMPORARY_BLOCKED"
                                         [checked]="shift.slotStatus != bookingConstants.AVAILABLE">
                                         &nbsp;{{shift.slotStatus == bookingConstants.CHECKED ?
                                         bookingConstants.AVAILABLE : (shift.slotStatus == 'TEMPORARY_BLOCKED' ?
@@ -176,7 +186,8 @@
             <div class="fotButtonBar">
                 <div class="col-sm-12 col-md-12 text-right">
                     <button mat-raised-button data-toggle="modal" (click)="shortlistShifts(confirmationModel)"
-                        data-target="#confirmShortlistModel" type="button" [disabled]="selectedShift.length == 0" color="primary">
+                        data-target="#confirmShortlistModel" type="button" [disabled]="selectedShift.length == 0"
+                        color="primary">
                         <mat-icon>check_circle_outline</mat-icon>
                         {{'shortlist'| translate: stadiumTranslateKey}}
                     </button>
@@ -194,7 +205,8 @@
         <h4 class="modal-title" id="exampleModalLabel">
             {{'list_selected_slot'| translate: stadiumTranslateKey}}
         </h4>
-        <button title="Close" data-dismiss="modal" class="mat-icon-button" aria-label="Close" (click)="confirmRef.hide()">
+        <button title="Close" data-dismiss="modal" class="mat-icon-button" aria-label="Close"
+            (click)="confirmRef.hide()">
             <mat-icon>close</mat-icon>
         </button>
     </div>
@@ -221,7 +233,8 @@
                         </td>
                         <!-- <td>{{shifts.occupancy}}</td> -->
                         <td>
-                            <button mat-icon-button title="{{'remove_slot'| translate: translateKey}}" [disabled]="selectedShift.length == 1"
+                            <button mat-icon-button title="{{'remove_slot'| translate: translateKey}}"
+                                [disabled]="selectedShift.length == 1"
                                 (click)="selectedShift = bookingUtils.removeSelectedShift(shifts,selectedShift,  i)">
                                 <mat-icon color="warn">delete</mat-icon>
                             </button>
@@ -277,7 +290,8 @@
         </div>
         <div class="fotButtonBar">
             <div class="col-sm-12 col-md-12 text-right">
-                <button type="button" mat-raised-button color="primary" data-dismiss="modal" (click)="isBookingFormHidden = false; showPaymentReciept = false;">
+                <button type="button" mat-raised-button color="primary" data-dismiss="modal"
+                    (click)="isBookingFormHidden = false; showPaymentReciept = false;">
                     {{'proceed_for_appication'| translate: stadiumTranslateKey}}
                     <mat-icon>navigate_next</mat-icon>
                 </button>
@@ -304,9 +318,9 @@
 
                     <div class="row">
                         <mat-form-field class="col-md-4">
-                            <input matInput maxlength="50" appValidationFields [validationFieldsType]="'onlyNameWithSpace'"
-                                type="text" formControlName="applicantName" placeholder="{{'applicant_name' | translate: stadiumTranslateKey}}"
-                                required>
+                            <input matInput maxlength="50" appValidationFields
+                                [validationFieldsType]="'onlyNameWithSpace'" type="text" formControlName="applicantName"
+                                placeholder="{{'applicant_name' | translate: stadiumTranslateKey}}" required>
                             <control-messages [control]="atithigruhForm.get('applicantName')"></control-messages>
                         </mat-form-field>
 
@@ -322,24 +336,26 @@
                                     placeholder="{{'confirm_mobile' | translate: stadiumTranslateKey}}" required>
                                 <control-messages [control]="atithigruhForm.get('confirmMobile')"></control-messages>
                             </mat-form-field>
-                            <mat-error *ngIf="!bookingUtils.matcher(atithigruhForm, 'applicantMobileNo', 'confirmMobile') && atithigruhForm.get('applicantMobileNo').touched && atithigruhForm.get('confirmMobile').touched">
+                            <mat-error
+                                *ngIf="!bookingUtils.matcher(atithigruhForm, 'applicantMobileNo', 'confirmMobile') && atithigruhForm.get('applicantMobileNo').touched && atithigruhForm.get('confirmMobile').touched">
                                 {{bookingConstants.MOB_NO_MIS_MATCH_MESSAGE}}
                             </mat-error>
                         </div>
 
                         <mat-form-field class="col-md-6">
-                            <input matInput type="email" formControlName="applicantEmailID" placeholder="{{'applicant_email' | translate: stadiumTranslateKey}}"
-                                required>
+                            <input matInput type="email" formControlName="applicantEmailID"
+                                placeholder="{{'applicant_email' | translate: stadiumTranslateKey}}" required>
                             <control-messages [control]="atithigruhForm.get('applicantEmailID')"></control-messages>
                         </mat-form-field>
 
                         <div class="col-md-6">
                             <mat-form-field>
-                                <input matInput type="email" formControlName="confirmEmailID" placeholder="{{'confirm_email' | translate: stadiumTranslateKey}}"
-                                    required>
+                                <input matInput type="email" formControlName="confirmEmailID"
+                                    placeholder="{{'confirm_email' | translate: stadiumTranslateKey}}" required>
                                 <control-messages [control]="atithigruhForm.get('confirmEmailID')"></control-messages>
                             </mat-form-field>
-                            <mat-error *ngIf="!bookingUtils.matcher(atithigruhForm, 'applicantEmailID', 'confirmEmailID') && atithigruhForm.get('applicantEmailID').touched && atithigruhForm.get('confirmEmailID').touched">
+                            <mat-error
+                                *ngIf="!bookingUtils.matcher(atithigruhForm, 'applicantEmailID', 'confirmEmailID') && atithigruhForm.get('applicantEmailID').touched && atithigruhForm.get('confirmEmailID').touched">
                                 {{bookingConstants.EMAIL_MIS_MATCH_MESSAGE}}
                             </mat-error>
                         </div>
@@ -350,12 +366,14 @@
                         <h2>
                             {{'applicantAddress' | translate:stadiumTranslateKey}}
                         </h2>
-                        <app-address #address [requiredFeilds]="true" [addressFormGroup]="atithigruhForm.get('applicantAddress')"></app-address>
+                        <app-address #address [requiredFeilds]="true"
+                            [addressFormGroup]="atithigruhForm.get('applicantAddress')"></app-address>
                     </div>
 
                     <div class="row mt-4 fotButtonBar float-right">
                         <div class="col-sm-12 col-md-12 justify-content-between d-flex">
-                            <button class="float-right" mat-raised-button type="button" color="primary" (click)="tabIndex= tabIndex +1;">
+                            <button class="float-right" mat-raised-button type="button" color="primary"
+                                (click)="tabIndex= tabIndex +1;">
                                 {{'next'| translate:stadiumTranslateKey}}
                                 <mat-icon>navigate_next</mat-icon>
                             </button>
@@ -373,35 +391,7 @@
                         {{'bank_details' | translate:stadiumTranslateKey}}
                     </h2>
 
-                    <div class="row">
-                        <div formGroupName="bankName" class="col-md-6 ngSelect">
-                            <ng-select placeholder="{{'bank_name' | translate:stadiumTranslateKey}} *" formControlName="code">
-                                <ng-option *ngFor="let bank of BankOptions" [value]="bank.code">
-                                    {{bank.name}}
-                                </ng-option>
-                            </ng-select>
-                            <control-messages [control]="atithigruhForm.get('bankName.code')"></control-messages>
-                        </div>
-
-                        <mat-form-field class="col-md-6">
-                            <input matInput type="text" minlength="2" maxlength="50" appValidationFields [validationFieldsType]="'onlyNameWithSpace'"
-                                formControlName="accountHolderName" placeholder="{{'account_holder_name' | translate: stadiumTranslateKey}}"
-                                required>
-                            <control-messages [control]="atithigruhForm.get('accountHolderName')"></control-messages>
-                        </mat-form-field>
-
-                        <mat-form-field class="col-md-6">
-                            <input matInput OnlyNumber maxlength="18" minlength="9" formControlName="accountNo"
-                                placeholder="{{'account_no' | translate: stadiumTranslateKey}}" required>
-                            <control-messages [control]="atithigruhForm.get('accountNo')"></control-messages>
-                        </mat-form-field>
-
-                        <mat-form-field class="col-md-6">
-                            <input matInput type="text" upperCase appAlphaNumeric maxlength="11" formControlName="ifscCode" placeholder="{{'ifsc_code' | translate: stadiumTranslateKey}}"
-                                required>
-                            <control-messages [control]="atithigruhForm.get('ifscCode')"></control-messages>
-                        </mat-form-field>
-                    </div>
+                    <bank-details [form]="atithigruhForm"></bank-details>
 
                     <div class="row">
                         <h2>

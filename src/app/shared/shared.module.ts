@@ -52,6 +52,7 @@ import { GuidelinesComponent } from './components/guidelines/guidelines.componen
 import { GujVideoComponent } from './components/guj-video/guj-video.component';
 import { BaseChartComponent } from './components/base-chart/base-chart.component';
 import { TermsConditionsComponent, DialogContentComponent } from './components/terms-conditions/terms-conditions.component';
+import { BankDetailsComponent } from './components/bank-details/bank-details.component';
 /* import pipes end*/
 
 const COMPONENTS = [
@@ -82,11 +83,12 @@ const COMPONENTS = [
 	BaseChartComponent,
 	TermsConditionsComponent,
 	DialogContentComponent,
+	BankDetailsComponent
 ]
 
 @NgModule({
 	declarations: [
-		...COMPONENTS,
+		...COMPONENTS
 
 	],
 	imports: [

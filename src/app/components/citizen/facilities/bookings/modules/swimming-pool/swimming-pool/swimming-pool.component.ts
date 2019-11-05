@@ -59,7 +59,7 @@ export class SwimmingPoolComponent implements OnInit {
   BATCH_DURATION: Array<any> = [];
   BLOOD_GROUP: Array<any> = [];
   APPLICANT_PROOF: Array<any> = [];
-  BANK: Array<any> = [];
+  // BANK: Array<any> = [];
   session: any;
   durationisReadOnly:boolean= false;
   /**
@@ -106,7 +106,7 @@ export class SwimmingPoolComponent implements OnInit {
       this.BATCH_DURATION = resp.BATCH_DURATION;
       this.BLOOD_GROUP = resp.BLOOD_GROUP;
       this.APPLICANT_PROOF = resp.APPLICANT_PROOF;
-      this.BANK = resp.BANK;
+      // this.BANK = resp.BANK;
     },
       err => {
         this.toastr.error("Server Error");
@@ -306,14 +306,14 @@ export class SwimmingPoolComponent implements OnInit {
       }),
       applicantAddress: this.fb.group(this.addressComp.addressControls()),
 
-      accountHolderName: [null,  [Validators.required, Validators.maxLength(50), Validators.minLength(2)]],
-      accountNo: [null, [Validators.required, Validators.maxLength(18), Validators.minLength(9)]],
-      bankName: this.fb.group({
-        code: [null, Validators.required],
-        name: null,
-        gujName: null
-      }),
-      ifscCode: [null, [Validators.required, ValidationService.ifscCodeValidator]],
+      // accountHolderName: [null,  [Validators.required, Validators.maxLength(50), Validators.minLength(2)]],
+      // accountNo: [null, [Validators.required, Validators.maxLength(18), Validators.minLength(9)]],
+      // bankName: this.fb.group({
+      //   code: [null, Validators.required],
+      //   name: null,
+      //   gujName: null
+      // }),
+      // ifscCode: [null, [Validators.required, ValidationService.ifscCodeValidator]],
       scheduleList: null,
       attachments: [],
       fileStatus: null,

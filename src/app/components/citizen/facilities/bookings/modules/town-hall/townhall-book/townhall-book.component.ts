@@ -58,7 +58,7 @@ export class TownHallBookComponent implements OnInit {
 	townHalls: Array<any> = [];
 	purposes: Array<any> = [];
 	selectedShift: Array<any> = [];
-	BankOptions: Array<any> = [];
+	// BankOptions: Array<any> = [];
 
 	paymentObject: any;
 
@@ -87,6 +87,7 @@ export class TownHallBookComponent implements OnInit {
 	 * Available Dates for Shortlist.
 	 */
 	Dates: Array<any> = [];
+	endMaxDate:any = new Date();
 
 	/**
 	 * Bank Lookups
@@ -205,12 +206,12 @@ export class TownHallBookComponent implements OnInit {
 			/**
 			 * Bank Accoount Details
 			 */
-			bankName: this.fb.group({
-				code: [null, [Validators.required]]
-			}),
-			accountHolderName: [null, [Validators.required, Validators.maxLength(50), Validators.minLength(2)]],
-			accountNo: [null, [Validators.required, Validators.maxLength(18), Validators.minLength(9)]],
-			ifscCode: [null, [Validators.required, ValidationService.ifscCodeValidator]],
+			// bankName: this.fb.group({
+			// 	code: [null, [Validators.required]]
+			// }),
+			// accountHolderName: [null, [Validators.required, Validators.maxLength(50), Validators.minLength(2)]],
+			// accountNo: [null, [Validators.required, Validators.maxLength(18), Validators.minLength(9)]],
+			// ifscCode: [null, [Validators.required, ValidationService.ifscCodeValidator]],
 			/**
 			 * Booking Details
 			 */
@@ -242,6 +243,15 @@ export class TownHallBookComponent implements OnInit {
 	}
 
 	/**
+	 * This method use for set the date in form controls
+	 * @param date get the selected date value
+	 */
+	onDateChange(date) {
+        let futureMonth = moment(date).add(3, 'month');
+        this.endMaxDate = moment(futureMonth).format("YYYY-MM-DD");
+	}
+
+	/**
 	 * Method is used to get all townhall resources list.
 	 */
 	getTownHallResourceList() {
@@ -260,7 +270,7 @@ export class TownHallBookComponent implements OnInit {
 	bookingLookups() {
 		this.bookingService.getDataFromLookups().subscribe(resp => {
 			this.purposes = resp.PURPOSE;
-			this.BankOptions = resp.BANK;
+			// this.BankOptions = resp.BANK;
 		});
 	}
 
