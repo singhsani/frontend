@@ -57,7 +57,7 @@ export class BookChildrenTheaterComponent implements OnInit {
     Dates: Array<any> = [];
     CHILDREN_THEATERS: Array<any> = [];
     CATEGORIES: Array<any> = [];
-    BANKS: Array<any> = [];
+    // BANKS: Array<any> = [];
     availableStots: Array<any> = []
     tabIndex: number = 0;
 
@@ -66,6 +66,8 @@ export class BookChildrenTheaterComponent implements OnInit {
      */
     startMinDate: Date = moment(new Date()).add(1, 'day').toDate();
     endMinDate: Date = moment(new Date()).add(1, 'day').toDate();
+    endMaxDate:any = new Date();;
+
 
     /**
      * ngx-bootstrap models.
@@ -112,11 +114,20 @@ export class BookChildrenTheaterComponent implements OnInit {
        */
     getLookUpData() {
         this.bookingService.getDataFromLookups().subscribe(resp => {
-            this.BANKS = resp.BANK;
+            // this.BANKS = resp.BANK;
             // this.CANCELLATION_TYPE = resp.CANCELLATION_TYPE;
             this.CATEGORIES = resp.PURPOSE;
         });
     }
+
+    /**
+	 * This method use for set the date in form controls
+	 * @param date get the selected date value
+	 */
+	onDateChange(date) {
+        let futureMonth = moment(date).add(3, 'month');
+        this.endMaxDate = moment(futureMonth).format("YYYY-MM-DD");
+	}
 
     /**
      * Get All Resource List Of Stadium.
@@ -154,18 +165,18 @@ export class BookChildrenTheaterComponent implements OnInit {
             applicantName: [null, [Validators.required, Validators.maxLength(50)]],
             applicantMobile: [null, [Validators.required, Validators.maxLength(10), Validators.minLength(10)]],
             confirmMobile: [null, [Validators.required, Validators.maxLength(10), Validators.minLength(10)]],
-            emailId: [null, [Validators.required, Validators.maxLength(20)]],
-            confirmEmailId: [null, [Validators.required, Validators.maxLength(20)]],
+            emailId: [null, [Validators.required, ValidationService.emailValidator , Validators.maxLength(20)]],
+            confirmEmailId: [null, [Validators.required, ValidationService.emailValidator , Validators.maxLength(20)]],
             relationshipWithOrg: [null, [Validators.required, Validators.maxLength(20)]],
 
             //step 3
-            accountHolderName: [null, [Validators.required, Validators.maxLength(50), Validators.minLength(2)]],
-            accountNo: [null, [Validators.required, Validators.maxLength(18), Validators.minLength(9)]],
-            bankName: this._fb.group({
-                code: [null, [Validators.required]],
-                name: null
-            }),
-            ifscCode: [null, [Validators.required, ValidationService.ifscCodeValidator]],
+            // accountHolderName: [null, [Validators.required, Validators.maxLength(50)]],
+            // accountNo: [null, [Validators.required, Validators.maxLength(20)]],
+            // bankName: this._fb.group({
+            //     code: [null, [Validators.required]],
+            //     name: null
+            // }),
+            // ifscCode: [null, [Validators.required, ValidationService.ifscCodeValidator, Validators.maxLength(11), Validators.minLength(11)]],
             agree: [null, [Validators.required]],
             termsCondition: [null, [Validators.required]],
 
@@ -224,7 +235,7 @@ export class BookChildrenTheaterComponent implements OnInit {
                             setTimeout(() => {
                                 window.print();
                                 this.router.navigate([this.bookingConstants.MY_BOOKINGS_URL]);
-                            },300);
+                            });
                         }, err => {
                             this.commonService.openAlert("Error", err.error[0].message, "warning")
                         })

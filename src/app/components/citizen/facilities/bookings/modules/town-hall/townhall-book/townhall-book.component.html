@@ -65,7 +65,7 @@
 
                     <mat-form-field class="col-md-6">
                         <mat-label>{{'choose_start_date'| translate: translateKey}}</mat-label>
-                        <input appDate matInput [min]="startMinDate" [matDatepicker]="townHallBookingfromPicker" formControlName="startDate" placeholder="DD/MM/YYYY">
+                        <input appDate matInput [min]="startMinDate" (dateChange)="onDateChange($event.value)" [matDatepicker]="townHallBookingfromPicker" formControlName="startDate" placeholder="DD/MM/YYYY">
                         <mat-datepicker-toggle matSuffix [for]="townHallBookingfromPicker"></mat-datepicker-toggle>
                         <mat-datepicker #townHallBookingfromPicker touchUi="true"></mat-datepicker>
                         <div align="end" class="default-show-hint mat-hint mat-right">{{bookingUtils.DATE_HINT_MSG}}</div>
@@ -75,7 +75,7 @@
 
                     <mat-form-field class="col-md-6">
                         <mat-label>{{'choose_end_date'| translate: translateKey}}</mat-label>
-                        <input appDate matInput [min]="endMinDate" [matDatepicker]="townHallBookingtoPicker" formControlName="endDate" placeholder="DD/MM/YYYY">
+                        <input appDate matInput [min]="endMinDate" [max]="endMaxDate" [matDatepicker]="townHallBookingtoPicker" formControlName="endDate" placeholder="DD/MM/YYYY">
                         <mat-datepicker-toggle matSuffix [for]="townHallBookingtoPicker"></mat-datepicker-toggle>
                         <mat-datepicker #townHallBookingtoPicker touchUi="true"></mat-datepicker>
                         <div align="end" class="default-show-hint mat-hint mat-right">{{bookingUtils.DATE_HINT_MSG}}</div>
@@ -503,34 +503,7 @@
                         {{'bank_details' | translate:translateKey}}
                     </h2>
 
-                    <div class="row">
-                        <div formGroupName="bankName" class="col-md-6 ngSelect">
-                            <ng-select placeholder="{{'bank_name' | translate:translateKey}} *" formControlName="code">
-                                <ng-option *ngFor="let bank of BankOptions" [value]="bank.code">
-                                    {{bank.name}}
-                                </ng-option>
-                            </ng-select>
-                            <control-messages [control]="townHallApplicationForm.get('bankName').get('code')"></control-messages>
-                        </div>
-
-                        <mat-form-field class="col-md-6">
-                            <input matInput type="text" minlength="2" maxlength="50" appValidationFields [validationFieldsType]="'onlyNameWithSpace'" formControlName="accountHolderName"
-                                placeholder="{{'account_holder_name' | translate: translateKey}}" required>
-                            <control-messages [control]="townHallApplicationForm.get('accountHolderName')"></control-messages>
-                        </mat-form-field>
-
-                        <mat-form-field class="col-md-6">
-                            <input matInput OnlyNumber maxlength="18" minlength="9" formControlName="accountNo" placeholder="{{'accont_no' | translate: translateKey}}"
-                                required>
-                            <control-messages [control]="townHallApplicationForm.get('accountNo')"></control-messages>
-                        </mat-form-field>
-
-                        <mat-form-field class="col-md-6">
-                            <input matInput type="text" upperCase appAlphaNumeric maxlength="11" formControlName="ifscCode" placeholder="{{'ifsc_code' | translate: translateKey}}"
-                                required>
-                            <control-messages [control]="townHallApplicationForm.get('ifscCode')"></control-messages>
-                        </mat-form-field>
-                    </div>
+                    <bank-details [form]="townHallApplicationForm"></bank-details>
 
                     <h2>
                         {{'booking_details' | translate:translateKey}}

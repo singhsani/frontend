@@ -36,7 +36,6 @@ export class BookPlanetariumComponent implements OnInit {
   totalVisitorLimit: number = 5;
   seatAvailable: boolean = true;
   isFileUploaded: boolean = false;
-  
   /**
    * Lookups & Data
    */
@@ -205,7 +204,7 @@ export class BookPlanetariumComponent implements OnInit {
   computeTotalAndVisitors() {
 
     this.getPlanetariumShowAvailability();
-    const f = this.ticketBookingForm.value;
+    const f = this.ticketBookingForm.getRawValue();
     if (this.ticketBookingForm.get('totalVisitor').valid) {
       this.totalAmount = Number(f.totalVisitor) * (Number(f.rate));
 
@@ -270,7 +269,7 @@ export class BookPlanetariumComponent implements OnInit {
         name: null,
         code: [null, Validators.required]
       }),
-      rate: [null],
+      rate: [{ value: null, disabled: true }],
       amount: null,
 
       showStartTime: null,
@@ -278,7 +277,7 @@ export class BookPlanetariumComponent implements OnInit {
 
       schoolName: null,
       schoolMobileNumber: null,
-      schoolEmailId: [null, [ValidationService.emailValidator]],
+      schoolEmailId: [null, [Validators.required,ValidationService.emailValidator]],
 
       shiftType: null,
       specialShow: null,
@@ -301,10 +300,10 @@ export class BookPlanetariumComponent implements OnInit {
       middleName: null,
       lastName: [null, [Validators.required, ValidationService.nameValidator]],
 
-      accountHolderName: [null, [ Validators.maxLength(50), Validators.minLength(2)]],
-      accountNo: [null, [ Validators.maxLength(18), Validators.minLength(9)]],
+      accountHolderName: null,
+      accountNo: null,
       bankName: null,
-      ifscCode:[null, [ ValidationService.ifscCodeValidator]],
+      ifscCode: null,
       attachments: [],
 
       scheduleList: [],
@@ -346,7 +345,7 @@ export class BookPlanetariumComponent implements OnInit {
     this.ticketBookingForm.get('showCategory').get('code').setValue(event);
     if (event == 'PLANETARIUM_SPECIAL_SHOW') {
       this.ticketBookingForm.get('schoolName').setValidators([Validators.required]);
-      this.ticketBookingForm.get('schoolEmailId').setValidators([Validators.required]);
+      this.ticketBookingForm.get('schoolEmailId').setValidators([Validators.required,ValidationService.emailValidator]);
       this.ticketBookingForm.get('specialShowLanguage.code').setValidators(Validators.required);
       this.ticketBookingForm.get('totalVisitor').setValidators([Validators.required, Validators.max(156)]);
 
@@ -375,7 +374,7 @@ export class BookPlanetariumComponent implements OnInit {
       this.ticketBookingForm.get('visitors.code').setValidators([Validators.required]);
       this.ticketBookingForm.get('planetariumShowTiming.code').setValidators([Validators.required]);
       this.ticketBookingForm.get('idType.code').setValidators([Validators.required]);
-      this.ticketBookingForm.get('idNumber').setValidators([Validators.required]);
+      this.ticketBookingForm.get('idNumber').setValidators([Validators.required, Validators.maxLength(4), Validators.minLength(4)]);
 
       this.ticketBookingForm.get('schoolName').clearValidators();
       this.ticketBookingForm.get('schoolEmailId').clearValidators();
@@ -472,7 +471,7 @@ export class BookPlanetariumComponent implements OnInit {
                 setTimeout(() => {
                   window.print();
                   this.router.navigate([this.ticketingConstants.MY_TICKETINGS_URL]);
-                },300);
+                });
               }, err => {
                 this.commonService.openAlert("Error", err.error[0].message, "warning")
               })
@@ -526,7 +525,7 @@ export class BookPlanetariumComponent implements OnInit {
                 setTimeout(() => {
                   window.print();
                   this.router.navigate([this.ticketingConstants.MY_TICKETINGS_URL]);
-                },300);
+                });
               }, err => {
                 this.commonService.openAlert("Error", err.error[0].message, "warning")
               })

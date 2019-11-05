@@ -284,35 +284,9 @@
                         {{'bank_details' | translate:translateKey}}
                     </h2>
 
+                    <bank-details [form]="theaterBookingForm"></bank-details>
+
                     <div class="row">
-
-                        <div formGroupName="bankName" class="col-md-6 ngSelect">
-                            <ng-select placeholder="{{'bank_name' | translate:translateKey}} *" formControlName="code">
-                                <ng-option *ngFor="let bank of BANKS" [value]="bank.code">
-                                    {{bank.name}}
-                                </ng-option>
-                            </ng-select>
-                            <control-messages [control]="theaterBookingForm.get('bankName').get('code')"></control-messages>
-                        </div>
-
-                        <mat-form-field class="col-md-6">
-                            <input matInput type="text" minlength="2" maxlength="50" appValidationFields [validationFieldsType]="'onlyNameWithSpace'" formControlName="accountHolderName"
-                                placeholder="{{'account_holder_name' | translate: translateKey}}" required>
-                            <control-messages [control]="theaterBookingForm.get('accountHolderName')"></control-messages>
-                        </mat-form-field>
-
-                        <mat-form-field class="col-md-6">
-                            <input matInput OnlyNumber maxlength="18" minlength="9" formControlName="accountNo" placeholder="{{'account_no' | translate: translateKey}}"
-                                required>
-                            <control-messages [control]="theaterBookingForm.get('accountNo')"></control-messages>
-                        </mat-form-field>
-
-                        <mat-form-field class="col-md-6">
-                            <input matInput type="text" maxlength="11" upperCase appAlphaNumeric formControlName="ifscCode" placeholder="{{'ifsc_code' | translate: translateKey}}"
-                                required>
-                            <control-messages [control]="theaterBookingForm.get('ifscCode')"></control-messages>
-                        </mat-form-field>
-
                         <h2>
                             {{'terms_and_conditions' | translate:translateKey }}
                         </h2>

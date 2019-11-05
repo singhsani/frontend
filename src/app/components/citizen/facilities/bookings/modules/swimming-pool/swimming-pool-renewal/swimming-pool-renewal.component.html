@@ -214,47 +214,8 @@
           <h2>
             {{'bank_details	' | translate:translateKey}}
           </h2>
-          <div formGroupName="bankName" class="col-md-6 ngSelect">
-            <ng-select placeholder="{{'bank_name' | translate:translateKey}}*" formControlName="code">
-              <ng-option *ngFor="let bank of BANK" [value]="bank.code">
-                {{bank.name}}
-              </ng-option>
-            </ng-select>
-            <control-messages [control]="swimmimgPoolRenewalForm.get('bankName').get('code')">
-            </control-messages>
-          </div>
-
-          <mat-form-field class="col-md-6">
-            <input matInput type="text" minlength="2" maxlength="50" appValidationFields [validationFieldsType]="'onlyNameWithSpace'"
-              formControlName="accountHolderName" placeholder="{{'account_holder_name' | translate: translateKey}}"
-              required>
-            <control-messages [control]="swimmimgPoolRenewalForm.get('accountHolderName')">
-            </control-messages>
-          </mat-form-field>
-
-          <mat-form-field class="col-md-6">
-            <input matInput OnlyNumber maxlength="18" minlength="9" formControlName="accountNo"
-              placeholder="{{'account_no' | translate: translateKey}}" required>
-            <control-messages [control]="swimmimgPoolRenewalForm.get('accountNo')"></control-messages>
-          </mat-form-field>
-
-          <mat-form-field class="col-md-6">
-            <input matInput type="text" maxlength="11" upperCase appAlphaNumeric formControlName="ifscCode"
-              placeholder="{{'ifsc_code' | translate: translateKey}}" required>
-            <control-messages [control]="swimmimgPoolRenewalForm.get('ifscCode')"></control-messages>
-          </mat-form-field>
-
-          <!-- <h2>
-                          {{'terms_and_conditions' | translate:translateKey }}
-                      </h2>
-                      <div class="pl-2">
-                          <mat-checkbox class="d-block" labelPosition="after" formControlName="agree">
-                              {{'i_agree_with_above_bank_details_are_correct' | translate:translateKey}} </mat-checkbox>
-                          <mat-checkbox class="d-block" labelPosition="after" formControlName="termsCondition">
-                              {{'i_have_read_and_agree_with_terms_and_conditions' | translate:translateKey}} </mat-checkbox>
-                      </div> -->
         </div>
-
+        <bank-details [form]="swimmimgPoolRenewalForm"></bank-details>
 
         <!-- <div class="row" *ngIf="swimmimgPoolRenewalForm.get('swimmingPoolName').get('code').value">
 

@@ -76,7 +76,7 @@ export class BookStadiumComponent implements OnInit {
     /**
      * LookUps Constants
      */
-    BANKS: Array<any> = [];
+    // BANKS: Array<any> = [];
     PURPOSES: Array<any> = [];
     CANCELLATION_TYPE: Array<any> = [];
 
@@ -150,17 +150,17 @@ export class BookStadiumComponent implements OnInit {
 
     createStadiumApplicationForm() {
         this.stadiumApplicationForm = this._fb.group({
-            accountHolderName: [null, [Validators.required, Validators.maxLength(50), Validators.minLength(2)]],
-			accountNo: [null, [Validators.required, Validators.maxLength(18), Validators.minLength(9)]],
+            // accountHolderName: [null, [Validators.required, Validators.maxLength(50), Validators.minLength(2)]],
+			// accountNo: [null, [Validators.required, Validators.maxLength(18), Validators.minLength(9)]],
             applicantAddress: this._fb.group(this.addressComp.addressControls()),
             applicantMobile: null,
             confirmMobile: null,
             applicantName: null,
             attachment: null,
-            bankName: this._fb.group({
-                code: [null, [Validators.required]],
-                name: null
-            }),
+            // bankName: this._fb.group({
+            //     code: [null, [Validators.required]],
+            //     name: null
+            // }),
             bookingDate: null,
             bookingFrom: null,
             bookingPurposeMaster: this._fb.group({
@@ -174,7 +174,7 @@ export class BookStadiumComponent implements OnInit {
 			emailId: [null, [Validators.required, ValidationService.emailValidator]],
 			confirmEmailId: [null, [Validators.required, ValidationService.emailValidator]],
             id: 3,
-            ifscCode: [null, [Validators.required, ValidationService.ifscCodeValidator]],
+            // ifscCode: [null, [Validators.required, ValidationService.ifscCodeValidator]],
             refNumber: null,
             resourceCode: null,
             resourceType: null,
@@ -192,7 +192,7 @@ export class BookStadiumComponent implements OnInit {
      */
     getLookUpData() {
         this.bookingService.getDataFromLookups().subscribe(resp => {
-            this.BANKS = resp.BANK;
+            // this.BANKS = resp.BANK;
             this.CANCELLATION_TYPE = resp.CANCELLATION_TYPE;
             this.PURPOSES = resp.PURPOSE;
         });

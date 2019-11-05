@@ -211,7 +211,7 @@
 						</div>
 
 						<mat-form-field class="col-md-4">
-							<input matInput maxlength="10" formControlName="applicantIDProofNumber"
+							<input matInput maxlength="12" formControlName="applicantIDProofNumber"
 								placeholder="{{'id_proof_no' | translate: translateKey}}" required appAlphaNumeric>
 							<control-messages [control]="swimmimgPoolBookingForm.get('applicantIDProofNumber')">
 							</control-messages>
@@ -259,41 +259,12 @@
 					<ng-template mat-tab-label>
 						<div>{{'attachment' | translate: translateKey}}</div>
 					</ng-template>
-					<div class="row">
+					<!-- <div class="row"> -->
 
 						<h2>
 							{{'bank_details	' | translate:translateKey}}
 						</h2>
-						<div formGroupName="bankName" class="col-md-6 ngSelect">
-							<ng-select placeholder="{{'bank_name' | translate:translateKey}}*" formControlName="code">
-								<ng-option *ngFor="let bank of BANK" [value]="bank.code">
-									{{bank.name}}
-								</ng-option>
-							</ng-select>
-							<control-messages [control]="swimmimgPoolBookingForm.get('bankName').get('code')">
-							</control-messages>
-						</div>
-
-						<mat-form-field class="col-md-6">
-							<input matInput type="text" minlength="2" maxlength="50" appValidationFields
-								[validationFieldsType]="'onlyNameWithSpace'" formControlName="accountHolderName"
-								placeholder="{{'account_holder_name' | translate: translateKey}}" required>
-							<control-messages [control]="swimmimgPoolBookingForm.get('accountHolderName')">
-							</control-messages>
-						</mat-form-field>
-
-						<mat-form-field class="col-md-6">
-							<input matInput OnlyNumber maxlength="18" minlength="9" formControlName="accountNo"
-								placeholder="{{'account_no' | translate: translateKey}}" required>
-							<control-messages [control]="swimmimgPoolBookingForm.get('accountNo')"></control-messages>
-						</mat-form-field>
-
-						<mat-form-field class="col-md-6">
-							<input matInput type="text" maxlength="11" upperCase appAlphaNumeric formControlName="ifscCode"
-								placeholder="{{'ifsc_code' | translate: translateKey}}" required>
-							<control-messages [control]="swimmimgPoolBookingForm.get('ifscCode')"></control-messages>
-						</mat-form-field>
-
+						<bank-details [form]="swimmimgPoolBookingForm"></bank-details>
 						<!-- <h2>
                             {{'terms_and_conditions' | translate:translateKey }}
                         </h2>
@@ -303,7 +274,7 @@
                             <mat-checkbox class="d-block" labelPosition="after" formControlName="termsCondition">
                                 {{'i_have_read_and_agree_with_terms_and_conditions' | translate:translateKey}} </mat-checkbox>
                         </div> -->
-					</div>
+					<!-- </div> -->
 
 
 					<div class="row" *ngIf="swimmimgPoolBookingForm.get('swimmingPoolName').get('code').value">

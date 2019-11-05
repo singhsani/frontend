@@ -366,36 +366,7 @@
             {{'bank_details' | translate:translateKey}}
           </h2>
 
-          <div class="row">
-            <div formGroupName="bankName" class="col-md-6 ngSelect">
-              <ng-select placeholder="{{'bank_name' | translate:translateKey}} *" formControlName="code">
-                <ng-option *ngFor="let bank of BANKS" [value]="bank.code">
-                  {{bank.name}}
-                </ng-option>
-              </ng-select>
-              <control-messages [control]="bookPermissionApplicationForm.get('bankName').get('code')">
-              </control-messages>
-            </div>
-
-            <mat-form-field class="col-md-6">
-              <input matInput type="text" minlength="2" maxlength="50" appValidationFields
-                [validationFieldsType]="'onlyNameWithSpace'" formControlName="accountHolderName"
-                placeholder="{{'account_holder_name' | translate: translateKey}}" required>
-              <control-messages [control]="bookPermissionApplicationForm.get('accountHolderName')"></control-messages>
-            </mat-form-field>
-
-            <mat-form-field class="col-md-6">
-              <input matInput OnlyNumber maxlength="18" minlength="9" formControlName="accountNo"
-                placeholder="{{'accont_no' | translate: translateKey}}" required>
-              <control-messages [control]="bookPermissionApplicationForm.get('accountNo')"></control-messages>
-            </mat-form-field>
-
-            <mat-form-field class="col-md-6">
-              <input matInput type="text" maxlength="11"  upperCase appAlphaNumeric formControlName="ifscCode"
-                placeholder="{{'ifsc_code' | translate: translateKey}}" upperCase required>
-              <control-messages [control]="bookPermissionApplicationForm.get('ifscCode')"></control-messages>
-            </mat-form-field>
-          </div>
+          <bank-details [form]="bookPermissionApplicationForm"></bank-details>
 
           <h2>
             {{'attchaments' | translate:translateKey}}

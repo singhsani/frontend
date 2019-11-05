@@ -58,7 +58,7 @@ export class BookTheaterComponent implements OnInit {
     availableStots: Array<any> = [];
     selectedShift: Array<any> = [];
     Dates: Array<any> = [];
-    BANKS: Array<any> = [];
+    // BANKS: Array<any> = [];
 
 
 	/**
@@ -175,7 +175,7 @@ export class BookTheaterComponent implements OnInit {
     getLookUps() {
         this.bookingService.getDataFromLookups().subscribe((respData) => {
             this.CATEGORIES = respData.PURPOSE;
-            this.BANKS = respData.BANK;
+            // this.BANKS = respData.BANK;
         });
     }
 
@@ -194,12 +194,12 @@ export class BookTheaterComponent implements OnInit {
 			/**
 			 * Bank Accoount Details
 			 */
-            bankName: this.fb.group({
-                code: [null, [Validators.required]]
-            }),
-            accountHolderName: [null, [Validators.required, Validators.maxLength(50), Validators.minLength(2)]],
-			accountNo: [null, [Validators.required, Validators.maxLength(18), Validators.minLength(9)]],
-            ifscCode: [null, [Validators.required, ValidationService.ifscCodeValidator]],
+            // bankName: this.fb.group({
+            //     code: [null, [Validators.required]]
+            // }),
+            // accountHolderName: [null, [Validators.required, Validators.maxLength(50), Validators.minLength(2)]],
+			// accountNo: [null, [Validators.required, Validators.maxLength(18), Validators.minLength(9)]],
+            // ifscCode: [null, [Validators.required, ValidationService.ifscCodeValidator]],
 			/**
 			 * Booking Details
 			 */
