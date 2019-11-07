@@ -838,7 +838,7 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
 
 @media print {
 @page {margin: 0 !important; padding:0 !important;}
-.example-container.borderOne, .mainMenu, .mat-toolbar, .titleBar, mat-card, .mat-elevation-z8.borderOne {display: none !important;}
+.example-container.borderOne, .mainMenu, .mat-toolbar, .titleBar, mat-card, .mat-elevation-z8.borderOne, .hideOnPrint {display: none !important;}
 #matSidenav {display: none !important; visibility: hidden !important;}
 .mat-drawer-content {margin-left: 0 !important;}
 #sectionToPrint, #sectionToPrint {visibility: visible;}

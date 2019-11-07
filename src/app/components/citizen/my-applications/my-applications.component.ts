@@ -14,6 +14,8 @@ import { CommonService } from '../../../shared/services/common.service';
 import { ManageRoutes } from '../../../config/routes-conf';
 import * as moment from 'moment'
 import { CitizenConfig } from '../citizen-config';
+import { ToastrService } from 'ngx-toastr';
+import { environment } from '../../../../environments/environment';
 
 @Component({
 	selector: 'app-my-applications',
@@ -62,7 +64,8 @@ export class MyApplicationsComponent implements OnInit {
 		private paginationService: PaginationService,
 		private router: Router,
 		private commonService: CommonService,
-		private modalService: BsModalService
+		private modalService: BsModalService,
+		private toastr: ToastrService
 	) { }
 
 	ngOnInit() {
@@ -358,5 +361,78 @@ export class MyApplicationsComponent implements OnInit {
 		return `<b>Remarks :</b> ${this.rejectRemarks} <br> <b>Reason :</b> ${this.reason}`;
 	}
 
+	/**
+	 * This method is used to redirect on payment.
+	 * @param id citizen api code
+	 * @param id - citizen id 
+	 */
+	redirectToPayment(apiCode: string, id: number) {
+		// let redirectUrl = ManageRoutes.getFullRoute(apiCode);
+		// this.router.navigate([redirectUrl, id, apiCode]);
+
+		this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);
+		this.formService.submitFormData(id).subscribe(
+			res => {
+				this.toastr.success("No payment option");
+				this.router.navigateByUrl(ManageRoutes.getFullRoute("CITIZENMYAPPS"));
+			},
+			err => {
+				let retUrl: string = '/citizen/my-applications';
+				let retAfterPayment :string = environment.returnUrl;
+				
+				if (err.status === 402) {
+					// let moduleWithAppointment = this.form.getRawValue().serviceDetail.appointmentRequired;
+					// if (moduleWithAppointment) {
+					// 	retUrl = `/citizen/appointmant/schedule-appointment/slot-booking/` + this.form.getRawValue().serviceFormId + `/` + this.form.getRawValue().serviceDetail.code;
+					// }
+
+					let payData = this.commonService.storePaymentInfo(err.error.data, retUrl,retAfterPayment);
+					let html =
+						`
+					<div class="text-center">
+						<h2>Total Fee Pay</h2>
+						<div class="payAmount">
+							<i class="fa fa-inr" aria-hidden="true">` + payData.amount + `</i>
+						</div>
+						<p>Rupees in words</p>
+					</div>
+					`
+
+					this.commonService.commonAlert('Payment Details', '', 'info', 'Make Payment!', false, html, cb => {
+						// window.location.href = environment.adminUrl + `payment-gateway?retUrl=${payData.retUrl}&retPath=${payData.retPath}`;
+
+						this.formService.createTokenforServicePayment(payData).subscribe(resp => {
+
+							window.open(resp.data, "_self");
+
+						}, err => {
+							this.toastr.error(err.error.message);
+						})
+
+					}, rj => {
+						let errHtml = `			
+							<div class="alert alert-danger">
+								Please Complete Payment, Otherwise the application will be considered as in-complete
+							</div>`
+						this.commonService.commonAlert("Application Incomplete", "", 'warning', 'Make Payment!', false, errHtml, ccb => {
+							// window.location.href = environment.adminUrl + `payment-gateway?retUrl=${payData.retUrl}&retPath=${payData.retPath}`;
+							this.formService.createTokenforServicePayment(payData).subscribe(resp => {
+								window.open(resp.data, "_self");
+							}, err => {
+								this.toastr.error(err.error.message);
+							})
+
+						}, arj => {
+							//this.toastr.success(`${this.form.getRawValue().serviceDetail.name} information successfully submit`);
+						})
+						return;
+					});
+					return;
+				} else {
+					this.commonService.openAlert("Error", "Error Occured for final submit : " + err.error[0].message, "warning")
+				}
+			});
+			
+	}
 
 }

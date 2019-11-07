@@ -179,9 +179,9 @@
 				<!-- table -->
 				<div class="row">
 					<div class="col-md-10">
-						<h2 *ngIf="animalPondNewForm.get('relationshipId').value.code == 'PROPRIETOR'">{{ 'if_apl_is_in_properitership'|
+						<h2 *ngIf="animalPondNewForm.get('relationshipId').value.code != 'PROPRIETOR'">{{ 'if_apl_is_in_properitership'|
 							translate:translateKey}}</h2>
-						<h2 *ngIf="animalPondNewForm.get('relationshipId').value.code != 'PROPRIETOR'">{{ 'if_apl_is_in_partnership' |
+						<h2 *ngIf="animalPondNewForm.get('relationshipId').value.code === 'PROPRIETOR'">{{ 'if_apl_is_in_partnership' |
 							translate:translateKey}}</h2>
 					</div>
 					<div class="col-md-2 pt-3 text-right">

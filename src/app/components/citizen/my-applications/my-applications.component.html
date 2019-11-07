@@ -131,6 +131,12 @@
                         {{'reschedule_appointment' | translate:translateKey}}
                     </button>
 
+                    <!-- Note : 'PAYMENT' fileStatus means payment is pandding -->
+                    <button mat-menu-item *ngIf="(row.fileStatus === 'PAYMENT')" color="primary" (click)="redirectToPayment(row.serviceDetail.code, row.serviceFormId)">
+                        <mat-icon class="m-1" title="{{'attach_money' | translate:translateKey}}">edit</mat-icon>
+                        {{'payment' | translate:translateKey}}
+                    </button>
+
                 </mat-menu>
             </mat-cell>
         </ng-container>

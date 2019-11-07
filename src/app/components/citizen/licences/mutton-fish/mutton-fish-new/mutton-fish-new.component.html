@@ -96,7 +96,7 @@
 						placeholder="{{'holder_telephone_no' | translate:translateKey}}">
 				</mat-form-field>
 				<mat-form-field class="col-md-4">
-					<input matInput OnlyNumber maxlength="11" required formControlName="holderMobileNo"
+					<input matInput OnlyNumber maxlength="10" required formControlName="holderMobileNo"
 						placeholder="{{'holder_mobile_no' | translate:translateKey}}">
 				</mat-form-field>
 				<mat-form-field class="col-md-4">
@@ -249,7 +249,7 @@
 									<div *ngIf="!item.isEditMode">{{item.get('mobileNo').value}} &nbsp;
 									</div>
 									<mat-form-field *ngIf="item.isEditMode">
-										<input matInput maxlength="11" OnlyNumber formControlName="mobileNo"
+										<input matInput maxlength="10" OnlyNumber formControlName="mobileNo"
 											placeholder="{{'mobile_no' | translate:translateKey}}">
 										<control-messages [control]="item.get('mobileNo')">
 										</control-messages>

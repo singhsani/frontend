@@ -182,7 +182,7 @@ export class MuttonFishNewComponent implements OnInit {
 			temporaryAddress: this.fb.group(this.permanantAddressEstablishment.addressControls()),
 
 			holderTelephoneNo: [null, [Validators.maxLength(12), Validators.minLength(10)]],
-			holderMobileNo: [null, [Validators.required, Validators.maxLength(11), Validators.minLength(10)]],
+			holderMobileNo: [null, [Validators.required, Validators.maxLength(10), Validators.minLength(10)]],
 			holderFaxNo: [null, [Validators.maxLength(12)]],
 			holderAadharNo: [null, [Validators.required, Validators.maxLength(12)]],
 			holderPanNo: [null, [Validators.required, Validators.maxLength(10)]],
@@ -219,7 +219,7 @@ export class MuttonFishNewComponent implements OnInit {
 			id: data.id ? data.id : null,
 			name: [data.name ? data.name : null, [Validators.required, Validators.maxLength(100)]],
 			address: [data.address ? data.address : null, [Validators.required, Validators.maxLength(200)]],
-			mobileNo: [data.mobileNo ? data.mobileNo : null, [Validators.maxLength(11), Validators.minLength(10)]],
+			mobileNo: [data.mobileNo ? data.mobileNo : null, [Validators.maxLength(10), Validators.minLength(10)]],
 			personType: "MF_PERSON"
 		})
 	}

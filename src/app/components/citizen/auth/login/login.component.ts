@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
 	isValidFlag: boolean = false;
 	loading: boolean = false;
 	manageRoutes: any = ManageRoutes;
-
+	userNameId = new Date().getTime();
 	/**
 	 * Constructor to declare defualt propeties of class
 	 * @param appService - Declare App Service property.
@@ -46,7 +46,6 @@ export class LoginComponent implements OnInit {
 	 */
 	ngOnInit() {
 		let accessToken = this.session.get("access_token");
-
         /**
 		 * If Access Token is valid then redirect to Home Component.
 		 */
