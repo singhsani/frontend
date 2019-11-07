@@ -62,7 +62,7 @@ export class BookPermissionComponent implements OnInit {
   /*
    * Datepicker with max validation
    */
-  maxOneMonth: any;
+  maxEndDate: any;
   disablefutureDate = moment(new Date()).add(1, 'day').toISOString();
 
   /**
@@ -177,7 +177,19 @@ export class BookPermissionComponent implements OnInit {
       startDate: [moment(new Date()).add(1, 'day').format('YYYY-MM-DD'), Validators.required],
       endDate: [null, Validators.required]
     });
-    this.maxOneMonth = moment(new Date()).add(moment.duration(1, 'M')).format('YYYY-MM-DD');
+    this.maxEndDate = moment(new Date()).add(moment.duration(1, 'M')).format('YYYY-MM-DD');
+
+    let futureMonth = new Date(new Date().getFullYear()+"-12-31");
+    this.maxEndDate = moment(futureMonth).format("YYYY-MM-DD");
+  }
+
+  /**
+   * 
+   * @param date 
+   */
+  onDateChange(date){
+    let futureMonth = new Date(date.getFullYear()+"-12-31");
+    this.maxEndDate = moment(futureMonth).format("YYYY-MM-DD");
   }
 
   /**
