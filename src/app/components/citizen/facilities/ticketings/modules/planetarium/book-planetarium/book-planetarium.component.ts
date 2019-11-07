@@ -264,20 +264,20 @@ export class BookPlanetariumComponent implements OnInit {
         code: null
       }),
       seatNo: null,
-      totalVisitor: [null, [Validators.max(156)]],
+      totalVisitor: [null],
       visitors: this._fb.group({
         name: null,
         code: [null, Validators.required]
       }),
       rate: [{ value: null, disabled: true }],
-      amount: null,
+      amount: [{ value: null, disabled: true }],
 
       showStartTime: null,
       showEndTime: null,
 
       schoolName: null,
       schoolMobileNumber: null,
-      schoolEmailId: [null, [Validators.required,ValidationService.emailValidator]],
+      schoolEmailId: [null],
 
       shiftType: null,
       specialShow: null,
@@ -347,7 +347,7 @@ export class BookPlanetariumComponent implements OnInit {
       this.ticketBookingForm.get('schoolName').setValidators([Validators.required]);
       this.ticketBookingForm.get('schoolEmailId').setValidators([Validators.required,ValidationService.emailValidator]);
       this.ticketBookingForm.get('specialShowLanguage.code').setValidators(Validators.required);
-      this.ticketBookingForm.get('totalVisitor').setValidators([Validators.required, Validators.max(156)]);
+      // this.ticketBookingForm.get('totalVisitor').setValidators([Validators.required, Validators.max(156)]);
 
       this.ticketBookingForm.get('firstName').clearValidators();
       this.ticketBookingForm.get('lastName').clearValidators();
@@ -416,7 +416,7 @@ export class BookPlanetariumComponent implements OnInit {
       && this.ticketBookingForm.get('resourceCodeLK').get('code').value
       && this.ticketBookingForm.get('showCategory').get('code').value == 'PLANETARIUM_SPECIAL_SHOW') {
       this.ticketBookingForm.get('resourceCode').setValue(this.ticketBookingForm.get('resourceCodeLK').get('code').value);
-      this.ticketingService.saveDraftTickets(this.ticketBookingForm.value, this.ticketBookingForm.get('resourceCodeLK').get('code').value).subscribe(
+      this.ticketingService.saveDraftTickets(this.ticketBookingForm.getRawValue(), this.ticketBookingForm.get('resourceCodeLK').get('code').value).subscribe(
         res => {
           this.ticketBookingForm.get('refNumber').setValue(res.refNumber);
         },
@@ -461,7 +461,7 @@ export class BookPlanetariumComponent implements OnInit {
       }
       else {
         this.isLoadingResults = true;
-        this.ticketingService.specialShowTicketsBooking(this.ticketBookingForm.value, this.ticketBookingForm.get('resourceCodeLK').get('code').value).subscribe(
+        this.ticketingService.specialShowTicketsBooking(this.ticketBookingForm.getRawValue(), this.ticketBookingForm.get('resourceCodeLK').get('code').value).subscribe(
           res => {
             // if (resp.data.status == this.bookingConstants.SUBMITTED) {
             this.commonService.commonAlert("Booking", "Planetarium Booking Request", "success", "Print Acknowledgement Receipt", false, '', pA => {
@@ -514,7 +514,7 @@ export class BookPlanetariumComponent implements OnInit {
     }
     else {
       this.isLoadingResults = true;
-      this.ticketingService.bookPlanetariumTickets(this.ticketBookingForm.value, this.ticketBookingForm.get('resourceCodeLK').get('code').value).subscribe(
+      this.ticketingService.bookPlanetariumTickets(this.ticketBookingForm.getRawValue(), this.ticketBookingForm.get('resourceCodeLK').get('code').value).subscribe(
         res => {
           // if (resp.data.status == this.bookingConstants.SUBMITTED) {
           this.commonService.commonAlert("Booking", "Planetarium Booked Successfully", "success", "Print Acknowledgement Receipt", false, '', pA => {

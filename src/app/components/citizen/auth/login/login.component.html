@@ -6,7 +6,7 @@
 
         <mat-form-field class="iconMat">
             <mat-icon matPrefix>face</mat-icon>
-            <input matInput type="text" placeholder="Email / Mobile" formControlName="username" required>
+            <input matInput type="text" [id]="userNameId" placeholder="Email / Mobile" formControlName="username" required>
             <mat-error *ngIf="isValidFlag">Username is Required</mat-error>
             <mat-error *ngIf="!isValidFlag && (loginForm.get('username').invalid && (loginForm.get('username').dirty || loginForm.get('username').touched))">Username is Required</mat-error>
         </mat-form-field>

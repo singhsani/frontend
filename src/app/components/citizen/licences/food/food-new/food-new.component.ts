@@ -53,7 +53,7 @@ export class FoodNewComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private formService: FormsActionsService
-    ) { }
+  ) { }
 
 	/**
 	 * This method call initially required methods.
@@ -206,7 +206,7 @@ export class FoodNewComponent implements OnInit {
         code: [null, Validators.required]
       }),
       firmCity: [null, Validators.required],
-      firmPincode: [null, [ Validators.required,Validators.maxLength(6), Validators.minLength(6)]],
+      firmPincode: [null, [Validators.required, Validators.maxLength(6), Validators.minLength(6)]],
       mobileNo: [null, [Validators.maxLength(10)]],
       firmLandLineNo: [null, [Validators.maxLength(10)]],
       firmEmailId: [null, [Validators.required, ValidationService.emailValidator]],
@@ -240,6 +240,33 @@ export class FoodNewComponent implements OnInit {
       // attachments: ['']
       /* Step 4 controls end */
     });
+  }
+
+
+  setValidatonForbusinessCategorie() {
+
+    if (this.foodLicNewForm.get('regLicType').get('code').value === 'FOOD_REG_LIC_MULTIPLE' && this.foodLicNewForm.get('businessTurnOver').get('code').value === 'LESS_THAN_12LK' && this.foodLicNewForm.get('businessType').get('code').value === 'FOOD_MANUFACTURER_PROCESSOR_BUSINESSTYPE') {
+      this.foodLicNewForm.get('businessCategories').setValidators(Validators.required);
+      this.foodLicNewForm.get('businessCategories').markAsTouched();
+      this.foodLicNewForm.get('singleBusinessCategorie').clearValidators();
+    }
+    if (this.foodLicNewForm.get('regLicType').get('code').value === 'FOOD_REG_LIC_SINGLE' && this.foodLicNewForm.get('businessTurnOver').get('code').value === 'LESS_THAN_12LK' && this.foodLicNewForm.get('businessType').get('code').value === 'FOOD_MANUFACTURER_PROCESSOR_BUSINESSTYPE') {
+      this.foodLicNewForm.get('singleBusinessCategorie').setValidators(Validators.required);
+      this.foodLicNewForm.get('singleBusinessCategorie').markAsTouched();
+      this.foodLicNewForm.get('businessCategories').clearValidators();
+    }
+    if (this.foodLicNewForm.get('regLicType').get('code').value === 'FOOD_REG_LIC_MULTIPLE' && this.foodLicNewForm.get('businessTurnOver').get('code').value === 'LESS_THAN_12LK' && this.foodLicNewForm.get('businessType').get('code').value === 'FOOD_OTHER') {
+      this.foodLicNewForm.get('businessCategories').setValidators(Validators.required);
+      this.foodLicNewForm.get('businessCategories').markAsTouched();
+      this.foodLicNewForm.get('singleBusinessCategorie').clearValidators();
+    }
+    if (this.foodLicNewForm.get('regLicType').get('code').value === 'FOOD_REG_LIC_SINGLE' && this.foodLicNewForm.get('businessTurnOver').get('code').value === 'LESS_THAN_12LK' && this.foodLicNewForm.get('businessType').get('code').value === 'FOOD_OTHER') {
+      this.foodLicNewForm.get('singleBusinessCategorie').setValidators(Validators.required);
+      this.foodLicNewForm.get('singleBusinessCategorie').markAsTouched();
+      this.foodLicNewForm.get('businessCategories').clearValidators();
+    }
+    this.foodLicNewForm.get('singleBusinessCategorie').updateValueAndValidity();
+    this.foodLicNewForm.get('businessCategories').updateValueAndValidity();
   }
 
   /**
