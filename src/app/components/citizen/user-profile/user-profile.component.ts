@@ -162,7 +162,9 @@ export class UserProfileComponent implements OnInit {
 	 * @param name - state name
 	 */
 	getCityLists(state) {
-		this.cityListArray = this.stateListArray.find(obj => obj.name === state).cities;
+	
+		let city = this.stateListArray.find(obj => obj.name === state).cities;
+		this.cityListArray = _.orderBy(city, ['name'],['asc']);
 	}
 
 	/**
