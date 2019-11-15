@@ -14,14 +14,22 @@ import { CommonService } from './shared/services/common.service';
  */
 export class AppComponent {
 
+	isRoutingChange:boolean = false;
+	isLoading:boolean = false;
+
 	constructor(private router: Router, private commonService: CommonService) {
 
 		this.router.events
 			.subscribe((event) => {
 				if (event instanceof NavigationStart) {
+					this.isRoutingChange = true;
+					this.isLoading = true;
+
 					this.commonService.loading.next({ loading: true });
 				}
 				else if (event instanceof NavigationEnd || event instanceof NavigationCancel) {
+					this.isRoutingChange = false;
+					this.isLoading = false;
 					this.commonService.loading.next({ loading: false });
 				}
 			});
