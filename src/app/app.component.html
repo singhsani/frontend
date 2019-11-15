@@ -1,1 +1,4 @@
+<div class="loadingDiv" *ngIf="isRoutingChange" [style.display]="isLoading ? 'block': 'none'"></div>
+<div class="loadingDiv" *ngIf="!isRoutingChange" [style.display]="((commonService.isLoading | async) == false) ? 'none': 'block'"></div>
+
 <router-outlet></router-outlet>
