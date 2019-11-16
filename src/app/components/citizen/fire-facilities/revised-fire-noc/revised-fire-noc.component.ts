@@ -259,12 +259,14 @@ export class RevisedFireNOCComponent implements OnInit {
 			serviceCode: 'FS-REVISED',
 
 			/* Step 1 controls start */
-			provisionalNocNumber: [null],
-			oldReferenceNumber: [null],
-			finalFireNocNumber: [null],
+			// provisionalNocNumber: [null],
+			provisionalNocNumber: [{ value: null, disabled: true }],
+			finalFireNocNumber: [{ value: null, disabled: true }],
+			oldReferenceNumber: [{ value: null, disabled: true }],
+			// finalFireNocNumber: [null],
 			applicantName: [null, [Validators.required, Validators.maxLength(100)]],
 			applicantNameGuj: [null, [Validators.required, Validators.maxLength(300)]],
-			applicationDate: [null],
+			applicationDate: [{ value: null, disabled: true }],
 			officeContactNo: [null, [Validators.required, Validators.maxLength(this.fireFacilityConfig.contactNumberLength)]],
 			onsitePersonMobileNo: [null, [Validators.required, Validators.maxLength(this.fireFacilityConfig.mobileNumber_maxLength), Validators.minLength(this.fireFacilityConfig.mobileNumber_minLength)]],
 			applicantPermanentAddress: [null, [Validators.required, Validators.maxLength(150)]],
@@ -356,10 +358,9 @@ export class RevisedFireNOCComponent implements OnInit {
 			overgroundWaterTankVolume: [null, [Validators.required, Validators.maxLength(8)]],
 			overgroundWatertankMapApproved: [null, Validators.required],
 
-
-
 			/* Step 6 controls start*/
-			attachments: []
+			attachments: [],
+			fileStatus:null
 			/* Step 6 controls end */
 		});
 	}

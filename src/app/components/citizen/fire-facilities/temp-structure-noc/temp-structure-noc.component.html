@@ -13,6 +13,9 @@
 					<mat-form-field class="col-md-4" *ngIf="tempStructureNocForm.get('oldReferenceNumber').value">
 						<input matInput readonly placeholder="{{'old_refrance_number' | translate:translateKey}}" formControlName="oldReferenceNumber">
 					</mat-form-field>
+					<mat-form-field class="col-md-4">
+						<input matInput readonly placeholder="{{'application_date' | translate:translateKey}}" formControlName="applicationDate">
+					</mat-form-field>
 				</div>
 
 				<div class="row">

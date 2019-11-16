@@ -20,28 +20,31 @@
 				</ng-template>
 
 				<div class="row">
-					<mat-form-field class="col-md-4">
+					<mat-form-field class="col-md-4"  *ngIf="finalFireNocForm.get('provisionalNocNumber').value != 'null'">
 						<input matInput readonly placeholder="{{'provisional_noc_number' | translate:translateKey}}" formControlName="provisionalNocNumber">
 					</mat-form-field>
-					<mat-form-field class="col-md-4">
+					<mat-form-field class="col-md-4" *ngIf="finalFireNocForm.get('finalFireNocNumber').value != 'null'">
 						<input matInput readonly placeholder="{{'final_fire_noc_number' | translate:translateKey}}" formControlName="finalFireNocNumber">
 					</mat-form-field>
 					<mat-form-field class="col-md-4" *ngIf="finalFireNocForm.get('oldReferenceNumber').value">
 						<input matInput readonly placeholder="{{'old_refrance_number' | translate:translateKey}}" formControlName="oldReferenceNumber">
+					</mat-form-field>
+					<mat-form-field class="col-md-4">
+						<input matInput readonly placeholder="{{'application_date' | translate:translateKey}}" formControlName="applicationDate">
 					</mat-form-field>
 				</div>
 				<div class="row">
 
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" readonly appValidationFields validationFieldsType='onlyNameWithSpace' required
-						 maxlength="100" placeholder="{{'applicant_Name' | translate:translateKey}}" formControlName="applicantName"
+						 maxlength="100" placeholder="{{'applicant_name' | translate:translateKey}}" formControlName="applicantName"
 						 appGujInputSource targetElement="applicantNameGuj" [form]="finalFireNocForm">
 						<control-messages [control]="finalFireNocForm.get('applicantName')"></control-messages>
 					</mat-form-field>
 					<!-- gujarati -->
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" readonly maxlength="300" required formControlName="applicantNameGuj"
-						 appGujInputTarget [form]="finalFireNocForm" placeholder="{{ 'applicant_Name' | translate:translateKey:'gu' }}">
+						 appGujInputTarget [form]="finalFireNocForm" placeholder="{{ 'applicant_name' | translate:translateKey:'gu' }}">
 						<control-messages [control]="finalFireNocForm.get('applicantNameGuj')"></control-messages>
 					</mat-form-field>
 					<!-- gujarati -->
