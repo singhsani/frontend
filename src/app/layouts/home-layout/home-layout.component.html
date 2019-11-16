@@ -54,7 +54,7 @@
     </div>
 
     <div class="container clearfix">
-        <!-- <div class="loadingDiv" [style.display]="((commonService.isLoading | async) == false) ? 'none': 'block'"></div> -->
+        <div class="loadingDiv" [style.display]="((commonService.isLoading | async) == false) ? 'none': 'block'"></div>
 
         <router-outlet (activate)="activateTab()"></router-outlet>
     </div>
