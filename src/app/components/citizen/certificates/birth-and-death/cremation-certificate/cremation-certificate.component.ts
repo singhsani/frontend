@@ -9,6 +9,7 @@ import { TranslateService } from '../../../../../shared/modules/translate/transl
 import { CertificateConfig } from '../../certificate-config';
 import * as _ from 'lodash';
 import * as moment from 'moment';
+import { Observable } from 'rxjs';
 
 @Component({
 	selector: 'app-cremation-certificate',
@@ -46,6 +47,13 @@ export class CremationCertificateComponent implements OnInit {
 	* Using Common Configuration
 	*/
 	config: CertificateConfig = new CertificateConfig();
+
+	/**
+	 * Regarding Form Save
+	 */
+
+	isFormSaved: boolean = false;
+
 	constructor(
 		private fb: FormBuilder,
 		private route: ActivatedRoute,
@@ -65,6 +73,16 @@ export class CremationCertificateComponent implements OnInit {
 		this.getLookupData();
 		this.cremationCertFormControls();
 
+	}
+
+	/**
+	 * Method is used to ensure form saved or not on user navigation.
+	*/
+	canDeactivate(): Observable<boolean> | boolean {
+		if (!this.isFormSaved && this.cremationForm.touched) {
+			return confirm(this.config.CONFIRM_UNSAVE_SAVE_MESSAGE);
+		}
+		return true;
 	}
 
 	/**
@@ -106,6 +124,17 @@ export class CremationCertificateComponent implements OnInit {
 			});
 			this.requiredDocumentList();
 			this.showButtons = true;
+
+						/**
+			 * form change subscriber
+			 */
+			this.cremationForm.valueChanges.subscribe((changeINForm) => {
+				if (this.cremationForm.get('canEdit').value) {
+					this.isFormSaved = false;
+					return;
+				}
+			});
+
 		});
 	}
 	/**

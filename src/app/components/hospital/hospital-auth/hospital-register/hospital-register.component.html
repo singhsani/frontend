@@ -10,7 +10,7 @@
 
 			<mat-form-field class="col-md-6 iconMat">
 				<mat-icon matPrefix>face</mat-icon>
-				<input matInput type="text" placeholder="HospitalName" formControlName="hospitalName" required>
+				<input matInput type="text" placeholder="Hospital Name" appAlphaNumeric maxlength="100" formControlName="hospitalName" required>
 				<control-messages [control]="regForm.get('hospitalName')"></control-messages>
 			</mat-form-field>
 			
@@ -26,13 +26,13 @@
 
 			<mat-form-field class="col-md-12 iconMat">
 				<mat-icon matPrefix>location_on</mat-icon>
-				<input matInput type="text" placeholder="Address Line 1" formControlName="addressLine1" required>
+				<input matInput type="text" appAlphaNumeric maxlength="60" placeholder="Address Line 1" formControlName="addressLine1" required>
 				<control-messages [control]="regForm.get('addressLine1')"></control-messages>
 			</mat-form-field>
 
 			<mat-form-field class="col-md-12 iconMat">
 				<mat-icon matPrefix>location_on</mat-icon>
-				<input matInput type="text" placeholder="Address Line 2" formControlName="addressLine2" required>
+				<input matInput type="text" appAlphaNumeric maxlength="60" placeholder="Address Line 2" formControlName="addressLine2" required>
 				<control-messages [control]="regForm.get('addressLine2')"></control-messages>
 			</mat-form-field>
 
@@ -70,21 +70,21 @@
 			</mat-card>
 			<mat-form-field class="col-md-6 iconMat">
 				<mat-icon matPrefix>face</mat-icon>
-				<input matInput type="text" placeholder="Firstname" appValidationFields validationFieldsType="onlyNameWithOutSpace" formControlName="firstName"
+				<input matInput type="text" maxlength="60" placeholder="First Name" appValidationFields validationFieldsType="onlyNameWithOutSpace" formControlName="firstName"
 				 required>
 				<control-messages [control]="regForm.get('userDetail').get('firstName')"></control-messages>
 			</mat-form-field>
 
 			<mat-form-field class="col-md-6 iconMat">
 				<mat-icon matPrefix>face</mat-icon>
-				<input matInput type="text" placeholder="Lastname" appValidationFields validationFieldsType="onlyNameWithOutSpace" formControlName="lastName"
+				<input matInput type="text"  maxlength="60" placeholder="Last Name" appValidationFields validationFieldsType="onlyNameWithOutSpace" formControlName="lastName"
 				 required>
 				<control-messages [control]="regForm.get('userDetail').get('lastName')"></control-messages>
 			</mat-form-field>
 
 			<mat-form-field class="col-md-6 iconMat">
 				<mat-icon matPrefix>mail_outline</mat-icon>
-				<input matInput type="email" placeholder="Email" formControlName="email" required>
+				<input matInput type="email" placeholder="Email" maxlength="60" formControlName="email" required>
 				<control-messages [control]="regForm.get('userDetail').get('email')"></control-messages>
 			</mat-form-field>
 
@@ -96,12 +96,12 @@
 
 			<mat-form-field class="col-md-6 iconMat">
 				<mat-icon matPrefix>lock_outline</mat-icon>
-				<input matInput type="password" placeholder="Password" formControlName="password" required>
+				<input matInput type="password" placeholder="Password" maxlength="60" formControlName="password" required>
 			</mat-form-field>
 
 			<mat-form-field class="col-md-6 iconMat">
 				<mat-icon matPrefix>lock_outline</mat-icon>
-				<input matInput type="password" placeholder="Confirm Password" formControlName="confirmPassword" required>
+				<input matInput type="password" placeholder="Confirm Password" maxlength="60" formControlName="confirmPassword" required>
 			</mat-form-field>
 
 			<div class="col-md-6 offset-md-6">
