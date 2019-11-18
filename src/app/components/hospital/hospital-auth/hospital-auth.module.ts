@@ -9,6 +9,8 @@ import { SharedModule } from '../../../shared/shared.module';
 import { HosLoginLayoutComponent } from '../../../layouts/hos-login-layout/hos-login-layout.component';
 import { HospitalLoginComponent } from './hospital-login/hospital-login.component';
 import { HospitalRegisterComponent } from './hospital-register/hospital-register.component';
+import { HospitalForgotPasswordComponent } from './hospital-forgot-password/hospital-forgot-password.component';
+import { HospitalResetPasswordComponent } from './hospital-reset-password/hospital-reset-password.component';
 
 const routes: Routes = [
 	{
@@ -16,7 +18,10 @@ const routes: Routes = [
 		children: [
 			{ path: '', redirectTo: 'login', pathMatch: 'full' },
 			{ path: 'login', component: HospitalLoginComponent },
-			{ path: 'register', component: HospitalRegisterComponent }
+			{ path: 'register', component: HospitalRegisterComponent },
+			{ path: 'forgot-password', component: HospitalForgotPasswordComponent },
+			{ path: 'reset-password', component: HospitalResetPasswordComponent }
+
 		]
 	}
 ];
@@ -33,7 +38,9 @@ const routes: Routes = [
 	declarations: [
 		HosLoginLayoutComponent,
 		HospitalLoginComponent,
-		HospitalRegisterComponent
+		HospitalRegisterComponent,
+		HospitalForgotPasswordComponent,
+		HospitalResetPasswordComponent
 	]
 })
 export class HospitalAuthModule { }

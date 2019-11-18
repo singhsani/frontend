@@ -97,6 +97,7 @@ export class HospitalRegisterComponent implements OnInit {
 
 		this.appService.registerUser(formVals.getRawValue()).subscribe(
 			res => {
+				this.toster.success("We have sent a authentication link on your email");
 				this.router.navigate(['hospital/auth/login']);
 			},
 			err => {

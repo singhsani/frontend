@@ -285,7 +285,7 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput maxlength="5" required OnlyNumber placeholder="{{'building_height' | translate:translateKey}}"
+						<input matInput maxlength="5" required appNumeric placeholder="{{'building_height' | translate:translateKey}}"
 						 formControlName="buildingHeight">
 						<control-messages [control]="provisionalNocForm.get('buildingHeight')"></control-messages>
 					</mat-form-field>
@@ -308,7 +308,7 @@
 						<control-messages [control]="provisionalNocForm.get('upperBasement')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput required OnlyNumber maxlength="3" type="tel" formControlName="basementArea" placeholder="{{'basement_area' | translate:translateKey }}">
+						<input matInput required appNumeric maxlength="3" type="tel" formControlName="basementArea" placeholder="{{'basement_area' | translate:translateKey }}">
 						<control-messages [control]="provisionalNocForm.get('basementArea')"></control-messages>
 					</mat-form-field>
 					<div class="col-md-4 radioBtnError">
@@ -341,11 +341,11 @@
 						<control-messages [control]="provisionalNocForm.get('ventilationProvisionDetail')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput required OnlyNumber maxlength="4" type="tel" formControlName="plotArea" placeholder="{{'plot_area' | translate:translateKey }}">
+						<input matInput required  appNumeric maxlength="4" type="tel" formControlName="plotArea" placeholder="{{'plot_area' | translate:translateKey }}">
 						<control-messages [control]="provisionalNocForm.get('plotArea')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput required OnlyNumber maxlength="4" type="tel" formControlName="constructionArea" placeholder="{{'construction_area' | translate:translateKey }}">
+						<input matInput required appNumeric maxlength="4" type="tel" formControlName="constructionArea" placeholder="{{'construction_area' | translate:translateKey }}">
 						<control-messages [control]="provisionalNocForm.get('constructionArea')"></control-messages>
 					</mat-form-field>
 

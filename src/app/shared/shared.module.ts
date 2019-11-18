@@ -53,9 +53,11 @@ import { GujVideoComponent } from './components/guj-video/guj-video.component';
 import { BaseChartComponent } from './components/base-chart/base-chart.component';
 import { TermsConditionsComponent, DialogContentComponent } from './components/terms-conditions/terms-conditions.component';
 import { BankDetailsComponent } from './components/bank-details/bank-details.component';
+import { NumericDirective } from './directives/numeric.directive';
 /* import pipes end*/
 
 const COMPONENTS = [
+	NumericDirective,
 	OnlyNumberDirective,
 	PreventSpaceDirective,
 	InrPipe,
@@ -88,7 +90,8 @@ const COMPONENTS = [
 
 @NgModule({
 	declarations: [
-		...COMPONENTS
+		...COMPONENTS,
+		
 
 	],
 	imports: [

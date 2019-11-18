@@ -307,7 +307,7 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput maxlength="5" type="tel" required OnlyNumber placeholder="{{'building_height' | translate:translateKey}}"
+						<input matInput maxlength="5" type="tel" required appNumeric placeholder="{{'building_height' | translate:translateKey}}"
 						 formControlName="buildingHeight">
 						<control-messages [control]="revisedFireNocForm.get('buildingHeight')"></control-messages>
 					</mat-form-field>
@@ -333,7 +333,7 @@
 						<control-messages [control]="revisedFireNocForm.get('upperBasement')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput required OnlyNumber maxlength="3" type="tel" formControlName="basementArea" placeholder="{{'basement_area' | translate:translateKey }}">
+						<input matInput required appNumeric maxlength="3" type="tel" formControlName="basementArea" placeholder="{{'basement_area' | translate:translateKey }}">
 						<control-messages [control]="revisedFireNocForm.get('basementArea')"></control-messages>
 					</mat-form-field>
 					<div class="col-md-4 radioBtnError">
@@ -366,11 +366,11 @@
 						<control-messages [control]="revisedFireNocForm.get('ventilationProvisionDetail')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput required OnlyNumber maxlength="4" type="tel" formControlName="plotArea" placeholder="{{'plot_area' | translate:translateKey }}">
+						<input matInput required appNumeric maxlength="4" type="tel" formControlName="plotArea" placeholder="{{'plot_area' | translate:translateKey }}">
 						<control-messages [control]="revisedFireNocForm.get('plotArea')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput required OnlyNumber maxlength="4" type="tel" formControlName="constructionArea" placeholder="{{'construction_area' | translate:translateKey }}">
+						<input matInput required appNumeric maxlength="4" type="tel" formControlName="constructionArea" placeholder="{{'construction_area' | translate:translateKey }}">
 						<control-messages [control]="revisedFireNocForm.get('constructionArea')"></control-messages>
 					</mat-form-field>
 
@@ -479,23 +479,23 @@
 						<control-messages [control]="revisedFireNocForm.get('undergroundWaterTankCapacity')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput required OnlyNumber maxlength="8" type="tel" formControlName="undergroundWaterTankLength"
+						<input matInput required appNumeric maxlength="8" type="tel" formControlName="undergroundWaterTankLength"
 						 placeholder="{{'underground_water_tank_length' | translate:translateKey }}">
 						<control-messages [control]="revisedFireNocForm.get('undergroundWaterTankLength')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput required OnlyNumber maxlength="8" type="tel" formControlName="undergroundWaterTankBreadth"
+						<input matInput required appNumeric maxlength="8" type="tel" formControlName="undergroundWaterTankBreadth"
 						 placeholder="{{'underground_water_tank_breadth' | translate:translateKey }}">
 						<control-messages [control]="revisedFireNocForm.get('undergroundWaterTankBreadth')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput required OnlyNumber maxlength="8" type="tel" formControlName="undergroundWaterTankHeight"
+						<input matInput required appNumeric maxlength="8" type="tel" formControlName="undergroundWaterTankHeight"
 						 placeholder="{{'underground_water_tank_height' | translate:translateKey }}">
 						<control-messages [control]="revisedFireNocForm.get('undergroundWaterTankHeight')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput required OnlyNumber maxlength="8" type="tel" formControlName="undergroundWaterTankVolume"
+						<input matInput required appNumeric maxlength="8" type="tel" formControlName="undergroundWaterTankVolume"
 						 placeholder="{{'underground_water_tank_volume_LBH_in_M³' | translate:translateKey }}">
 						<control-messages [control]="revisedFireNocForm.get('undergroundWaterTankVolume')"></control-messages>
 					</mat-form-field>

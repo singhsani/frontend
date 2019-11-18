@@ -2,7 +2,7 @@
 </app-title-bar>
 
 <mat-card class="formClass cardBorder">
-    <form [formGroup]="cremationForm" autocomplete="off" ngNativeValidate>
+    <form [formGroup]="cremationForm" autocomplete="off" ngNativeValidate appReload [isFormSaved]="isFormSaved">
         <mat-tab-group mat-stretch-tabs [(selectedIndex)]="tabIndex" class="stepperNav" dynamicHeight="true">
 
             <!-- first step start-->
@@ -84,7 +84,7 @@
 
                 </div>
 
-                <app-action-bar [form]="cremationForm" [stepInfo]="{step: 'step1', next: 1, back: 0}"
+                <app-action-bar [form]="cremationForm"  (saveEvent)="isFormSaved = $event?.isSaved" [stepInfo]="{step: 'step1', next: 1, back: 0}"
                     (handleErrors)="handleErrorsOnSubmit($event)" (tabIndex)="onTabChange($event)"></app-action-bar>
 
             </mat-tab>
@@ -121,7 +121,7 @@
 
                 </div>
 
-                <app-action-bar [form]="cremationForm" [stepInfo]="{step: 'step2', next: 2, back: 0}"
+                <app-action-bar [form]="cremationForm"  (saveEvent)="isFormSaved = $event?.isSaved" [stepInfo]="{step: 'step2', next: 2, back: 0}"
                     (handleErrors)="handleErrorsOnSubmit($event)" (tabIndex)="onTabChange($event)"></app-action-bar>
 
             </mat-tab>
@@ -166,7 +166,7 @@
                     </ng-container>
                 </div>
 
-                <app-action-bar [form]="cremationForm" [stepInfo]="{step: 'final', next: 2, back: 1}"
+                <app-action-bar [form]="cremationForm" (saveEvent)="isFormSaved = $event?.isSaved" [stepInfo]="{step: 'final', next: 2, back: 1}"
                     [uploadFiles]="uploadFileArray" (handleErrors)="handleErrorsOnSubmit($event)"
                     (tabIndex)="onTabChange($event)"></app-action-bar>
             </mat-tab>

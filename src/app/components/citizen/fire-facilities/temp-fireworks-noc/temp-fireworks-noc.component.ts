@@ -28,7 +28,9 @@ export class TempFireworksNocComponent implements OnInit {
 
 	//Lookups Array
 	FS_WIRING_TYPE: Array<any> = [];
-
+//	startMinDate = moment(new Date()).format('YYYY-MM-DD');
+	endMinDate = moment(new Date()).format('YYYY-MM-DD');
+	fromDate = moment(new Date()).format('YYYY-MM-DD');
 	/**
      * @param fb - Declare FormBuilder property.
      * @param validationError - Declare validation service property
@@ -176,7 +178,7 @@ export class TempFireworksNocComponent implements OnInit {
 			mobileNo: [null, [Validators.required, Validators.maxLength(this.fireFacilityConfig.mobileNumber_maxLength), Validators.minLength(this.fireFacilityConfig.mobileNumber_minLength)]],
 			email: [null, [Validators.required, Validators.maxLength(50)]],
 			oldReferenceNumber: [null, [Validators.maxLength(10)]],//not now
-			applicationDate: [null],//not now
+			applicationDate: [null, [Validators.required]],//not now
 
 			/* Step 2 controls start */
 			applicationThroughPolice: [false, [Validators.required]],//true/false
