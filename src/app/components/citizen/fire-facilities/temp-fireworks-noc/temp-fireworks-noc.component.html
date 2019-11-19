@@ -42,7 +42,7 @@
 						<control-messages [control]="tempFireworksNocForm.get('email')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<mat-label>{{'application_date *'| translate: translateKey}}</mat-label>
+						<mat-label>{{'application_date'| translate: translateKey}} *</mat-label>
 						<input appDate matInput [max]="endMinDate"
 						[matDatepicker]="townHallBookingfromPicker" (dateChange)="dateFormate($event.value,'applicationDate');" formControlName="applicationDate">
 						<mat-datepicker-toggle matSuffix [for]="townHallBookingfromPicker"></mat-datepicker-toggle>

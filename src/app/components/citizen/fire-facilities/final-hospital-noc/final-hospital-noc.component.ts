@@ -13,6 +13,7 @@ import { FireFacilitiesService } from '../common/services/fire-facilities.servic
 import { Location } from '@angular/common';
 import { MatDialog, MatDialogConfig } from "@angular/material";
 import { DialogFormComponent } from '../common/components/dialog-form/dialog-form.component';
+import * as moment from 'moment';
 
 @Component({
 	selector: 'app-final-hospital-noc',
@@ -27,7 +28,7 @@ export class FinalHospitalNocComponent implements OnInit {
 	formId: number;
 	apiCode: string;
 	fireFacilityConfig: FireFacilityConfig = new FireFacilityConfig();
-
+	endDate = moment(new Date()).format('YYYY-MM-DD');
 	// required attachment array
 	uploadFilesArray: Array<any> = [];
 	otherRiskNote: boolean = false;
@@ -271,7 +272,7 @@ export class FinalHospitalNocComponent implements OnInit {
 			/* Step 1 controls start */
 			provisionalNocNumber: [null],
 			hospitalNocNumber: [null],
-			applicationDate: [null],
+			applicationDate: [{value:true, disabled:true}, [Validators.required]],
 			oldReferenceNumber: [null],
 			applicantName: [null, [Validators.required, Validators.maxLength(100)]],
 			applicantNameGuj: [null, [Validators.required, Validators.maxLength(300)]],

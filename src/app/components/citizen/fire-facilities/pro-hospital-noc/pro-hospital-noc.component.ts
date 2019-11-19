@@ -13,6 +13,7 @@ import { ToastrService } from 'ngx-toastr';
 import { FireFacilitiesService } from '../common/services/fire-facilities.service';
 import { MatDialog, MatDialogConfig } from "@angular/material";
 import { DialogFormComponent } from '../common/components/dialog-form/dialog-form.component';
+import * as moment from 'moment';
 
 @Component({
 	selector: 'app-pro-hospital-noc',
@@ -28,6 +29,7 @@ export class ProHospitalNocComponent implements OnInit {
 	apiCode: string;
 	fireFacilityConfig: FireFacilityConfig = new FireFacilityConfig();
 
+	endDate = moment(new Date()).format('YYYY-MM-DD');
 	// required attachment array
 	uploadFilesArray: Array<any> = [];
 	otherRiskNote: boolean = false;
@@ -183,7 +185,7 @@ export class ProHospitalNocComponent implements OnInit {
 			serviceCode: 'FS-PROVI-HOSPITAL',
 			/* Step 1 controls start */
 			provisionalNocNumber: [null],
-			applicationDate: [null],
+			applicationDate: [null, [Validators.required]],
 			oldReferenceNumber: [null],
 			applicantName: [null, [Validators.required, Validators.maxLength(100)]],
 			applicantNameGuj: [null, [Validators.required, Validators.maxLength(300)]],
@@ -191,7 +193,7 @@ export class ProHospitalNocComponent implements OnInit {
 			officeContactNo: [null, [Validators.required, Validators.maxLength(this.fireFacilityConfig.contactNumberLength)]],
 			onsitePersonMobileNo: [null, [Validators.required, Validators.maxLength(this.fireFacilityConfig.mobileNumber_maxLength), Validators.minLength(this.fireFacilityConfig.mobileNumber_minLength)]],
 			workOfficeEmailId: [null, [Validators.required, Validators.maxLength(50)]],
-
+			
 			medicalRegistrationNumber: [null, [Validators.required, Validators.maxLength(10)]],
 			doctorName: [null, [Validators.required, Validators.maxLength(100)]],
 			doctorNameGuj: [null, [Validators.required, Validators.maxLength(300)]],

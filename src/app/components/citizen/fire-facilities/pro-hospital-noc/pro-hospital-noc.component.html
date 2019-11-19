@@ -35,14 +35,14 @@
 
 					<mat-form-field class="col-md-4">
 						<!-- <span matPrefix>+91 &nbsp;</span> -->
-						<input matInput OnlyNumber placeholder="{{'applicant_mobile' | translate:translateKey}}" type="tel" [maxlength]="fireFacilityConfig.contactNumberLength"
+						<input matInput OnlyNumber placeholder="{{'applicant_mobile' | translate:translateKey}}" type="tel" [maxlength]="10"
 						 formControlName="contactNo" required>
 						<control-messages [control]="provisionalHospitalNocForm.get('contactNo')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<!-- <span matPrefix>+91 &nbsp;</span> -->
-						<input matInput OnlyNumber placeholder="{{'office_contact_no' | translate:translateKey}}" type="tel" [maxlength]="fireFacilityConfig.contactNumberLength"
+						<input matInput OnlyNumber placeholder="{{'office_contact_no' | translate:translateKey}}" type="tel" [maxlength]="10"
 						 formControlName="officeContactNo" required>
 						<control-messages [control]="provisionalHospitalNocForm.get('officeContactNo')"></control-messages>
 					</mat-form-field>
@@ -58,6 +58,17 @@
 						<input matInput appPreventSpace placeholder="{{'office_email_id' | translate:translateKey}}" type="email"
 						 formControlName="workOfficeEmailId" required maxlength="50">
 						<control-messages [control]="provisionalHospitalNocForm.get('workOfficeEmailId')"></control-messages>
+					</mat-form-field>
+					<mat-form-field class="col-md-4">
+						<mat-label>{{'application_date'| translate: translateKey}} *</mat-label>
+						<input appDate matInput [max]="endDate"
+						[matDatepicker]="townHallBookingfromPicker2" (dateChange)="dateFormate($event.value,'applicationDate');" formControlName="applicationDate">
+						<mat-datepicker-toggle matSuffix [for]="townHallBookingfromPicker2"></mat-datepicker-toggle>
+						<mat-datepicker #townHallBookingfromPicker2 touchUi="true"></mat-datepicker>
+						<div align="end" class="default-show-hint mat-hint mat-right">{{fireFacilityConfig.DATE_HINT_MSG}}
+						</div>
+						<control-messages [control]="provisionalHospitalNocForm.get('applicationDate')">
+						</control-messages>
 					</mat-form-field>
 				</div>
 				<app-action-bar [form]="provisionalHospitalNocForm" (tabIndex)="fireFacilityConfig.onFormTabChange($event)"
@@ -529,17 +540,17 @@
 					<div>{{'building_detail' | translate: translateKey}}</div>
 				</ng-template>
 				<div class="row">
-					<mat-form-field class="col-md-4">
+					<mat-form-field class="col-md-3">
 						<input matInput required OnlyNumber maxlength="4" type="tel" formControlName="noOfHospitalStaff" placeholder="{{'no_of_hospital_staff' | translate:translateKey }}">
 						<control-messages [control]="provisionalHospitalNocForm.get('noOfHospitalStaff')"></control-messages>
 					</mat-form-field>
 
-					<mat-form-field class="col-md-4">
+					<mat-form-field class="col-md-3">
 						<input matInput required OnlyNumber maxlength="4" type="tel" formControlName="noOfSecurityStaff" placeholder="{{'no_of_security_staff' | translate:translateKey }}">
 						<control-messages [control]="provisionalHospitalNocForm.get('noOfSecurityStaff')"></control-messages>
 					</mat-form-field>
 
-					<mat-form-field class="col-md-4">
+					<mat-form-field class="col-md-6">
 						<input matInput type="text" maxlength="150" required formControlName="gasCylinderNOCDetail" placeholder="{{ 'gas_cylinder_noc_detail' | translate:translateKey }}">
 						<control-messages [control]="provisionalHospitalNocForm.get('gasCylinderNOCDetail')"></control-messages>
 					</mat-form-field>
@@ -770,7 +781,7 @@
 						<control-messages [control]="provisionalHospitalNocForm.get('nabhOwnership')"></control-messages>
 					</mat-form-field>
 
-					<mat-form-field class="col-md-4">
+					<mat-form-field class="col-md-6">
 						<input matInput type="text" required formControlName="lastThreeYearFireIncidents" placeholder="{{'last_three_year_fire_incidents' | translate: translateKey }} "
 						 maxlength="50">
 						<control-messages [control]="provisionalHospitalNocForm.get('lastThreeYearFireIncidents')"></control-messages>

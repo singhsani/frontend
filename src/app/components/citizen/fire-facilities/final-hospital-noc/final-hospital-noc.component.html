@@ -72,6 +72,19 @@
 						 formControlName="workOfficeEmailId" required maxlength="50">
 						<control-messages [control]="finalHospitalNocForm.get('workOfficeEmailId')"></control-messages>
 					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<mat-label>{{'application_date'| translate: translateKey}} *</mat-label>
+						<input appDate matInput [max]="endDate"
+						[matDatepicker]="townHallBookingfromPicker3" (dateChange)="dateFormate($event.value,'applicationDate');" formControlName="applicationDate">
+						<mat-datepicker-toggle matSuffix [for]="townHallBookingfromPicker3"></mat-datepicker-toggle>
+						<mat-datepicker #townHallBookingfromPicker3 touchUi="true"></mat-datepicker>
+						<div align="end" class="default-show-hint mat-hint mat-right">{{fireFacilityConfig.DATE_HINT_MSG}}
+						</div>
+						<control-messages [control]="finalHospitalNocForm.get('applicationDate')">
+						</control-messages>
+					</mat-form-field>
+
 				</div>
 				<app-action-bar [form]="finalHospitalNocForm" (tabIndex)="fireFacilityConfig.onFormTabChange($event)"
 				 (handleOnSaveAndNext)="handleOnSaveAndNext($event)" [stepInfo]="{step: 'step1', next: 1, back: 0}"></app-action-bar>
@@ -543,17 +556,17 @@
 					<div>{{'building_detail' | translate: translateKey}}</div>
 				</ng-template>
 				<div class="row">
-					<mat-form-field class="col-md-4">
+					<mat-form-field class="col-md-3">
 						<input matInput required OnlyNumber maxlength="4" type="tel" formControlName="noOfHospitalStaff" placeholder="{{'no_of_hospital_staff' | translate:translateKey }}">
 						<control-messages [control]="finalHospitalNocForm.get('noOfHospitalStaff')"></control-messages>
 					</mat-form-field>
 
-					<mat-form-field class="col-md-4">
+					<mat-form-field class="col-md-3">
 						<input matInput required OnlyNumber maxlength="4" type="tel" formControlName="noOfSecurityStaff" placeholder="{{'no_of_security_staff' | translate:translateKey }}">
 						<control-messages [control]="finalHospitalNocForm.get('noOfSecurityStaff')"></control-messages>
 					</mat-form-field>
 
-					<mat-form-field class="col-md-4">
+					<mat-form-field class="col-md-6">
 						<input matInput type="text" maxlength="150" required formControlName="gasCylinderNOCDetail" placeholder="{{ 'gas_cylinder_noc_detail' | translate:translateKey}}">
 						<control-messages [control]="finalHospitalNocForm.get('gasCylinderNOCDetail')"></control-messages>
 					</mat-form-field>
