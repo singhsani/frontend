@@ -184,8 +184,8 @@ export class TempStructureNocComponent implements OnInit {
 			applicantNameGuj: [null, [Validators.required, Validators.maxLength(300)]],
 			mobileNo: [null, [Validators.required, Validators.maxLength(this.fireFacilityConfig.mobileNumber_maxLength), Validators.minLength(this.fireFacilityConfig.mobileNumber_minLength)]],
 			email: [null, [Validators.required, Validators.maxLength(50)]],
-			oldReferenceNumber: [null],
-			applicationDate: [null],//not now
+			oldReferenceNumber: [{ value: null, disabled: true }],
+			applicationDate: [{ value: null, disabled: true }],//not now
 			officeContactNo: [null, [Validators.required, Validators.maxLength(this.fireFacilityConfig.contactNumberLength)]],
 			onsitePersonMobileNo: [null, [Validators.required, Validators.maxLength(this.fireFacilityConfig.mobileNumber_maxLength), Validators.minLength(this.fireFacilityConfig.mobileNumber_minLength)]],
 			officeEmailId: [null, [Validators.required, Validators.maxLength(50)]],
@@ -254,7 +254,8 @@ export class TempStructureNocComponent implements OnInit {
 			}),
 
 			/* Step 5 controls start*/
-			attachments: []
+			attachments: [],
+			fileStatus:null
 			/* Step 5 controls end */
 		});
 	}

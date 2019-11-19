@@ -173,12 +173,12 @@ export class ProvisionalNocComponent implements OnInit {
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
 			serviceCode: 'FS-PROVI',
 			/* Step 1 controls start */
-			provisionalNocNumber: [null],
-			applicationDate: [null],
-			oldReferenceNumber: [null],
+			provisionalNocNumber: [{ value: null, disabled: true }],
+			applicationDate: [{ value: null, disabled: true }],
+			oldReferenceNumber: [{ value: null, disabled: true }],
 			applicantName: [null, [Validators.required, Validators.maxLength(100)]],
 			applicantNameGuj: [null, [Validators.required, Validators.maxLength(300)]],
-			contactNo: [null, [Validators.required, Validators.maxLength(this.fireFacilityConfig.contactNumberLength)]],
+			contactNo: [null, [Validators.required, Validators.maxLength(this.fireFacilityConfig.mobileNumber_maxLength)]],
 			officeContactNo: [null, [Validators.required, Validators.maxLength(this.fireFacilityConfig.contactNumberLength)]],
 			onsitePersonMobileNo: [null, [Validators.required, Validators.maxLength(this.fireFacilityConfig.mobileNumber_maxLength), Validators.minLength(this.fireFacilityConfig.mobileNumber_minLength)]],
 			applicantPermanentAddress: [null, [Validators.required, Validators.maxLength(300)]],
@@ -266,8 +266,9 @@ export class ProvisionalNocComponent implements OnInit {
 			overgroundWaterTankVolume: [null, [Validators.required, Validators.maxLength(8)]],
 			overgroundWatertankMapApproved: [null, Validators.required],
 			/* Step 6 controls start*/
-			attachments: []
+			attachments: [],
 			/* Step 6 controls end */
+			fileStatus:null
 		});
 	}
 

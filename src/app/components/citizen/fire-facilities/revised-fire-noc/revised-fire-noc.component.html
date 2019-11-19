@@ -22,28 +22,31 @@
 				</ng-template>
 
 				<div class="row">
-					<mat-form-field class="col-md-4">
+					<mat-form-field class="col-md-4" *ngIf="revisedFireNocForm.get('provisionalNocNumber').value != 'null'">
 						<input matInput readonly placeholder="{{'provisional_noc_number' | translate:translateKey}}" formControlName="provisionalNocNumber">
 					</mat-form-field>
 					<mat-form-field class="col-md-4" *ngIf="revisedFireNocForm.get('finalFireNocNumber').value">
 						<input matInput readonly placeholder="{{'final_noc_number' | translate:translateKey}}" formControlName="finalFireNocNumber">
 					</mat-form-field>
 					<mat-form-field class="col-md-4" *ngIf="revisedFireNocForm.get('oldReferenceNumber').value">
-						<input matInput readonly placeholder="{{'old_refrance_number' | translate:translateKey}}" formControlName="oldReferenceNumber">
+						<input matInput readonly placeholder="{{'old_reference_number' | translate:translateKey}}" formControlName="oldReferenceNumber">
+					</mat-form-field>
+					<mat-form-field class="col-md-4">
+						<input matInput readonly placeholder="{{'application_date' | translate:translateKey}}" formControlName="applicationDate">
 					</mat-form-field>
 				</div>
 				<div class="row">
 
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace' required maxlength="100"
-						 placeholder="{{'applicant_Name' | translate:translateKey}}" formControlName="applicantName" appGujInputSource
+						 placeholder="{{'applicant_name' | translate:translateKey}}" formControlName="applicantName" appGujInputSource
 						 targetElement="applicantNameGuj" [form]="revisedFireNocForm">
 						<control-messages [control]="revisedFireNocForm.get('applicantName')"></control-messages>
 					</mat-form-field>
 					<!-- gujarati -->
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" maxlength="300" required formControlName="applicantNameGuj" appGujInputTarget [form]="revisedFireNocForm"
-						 placeholder="{{ 'applicant_Name' | translate:translateKey:'gu' }}">
+						 placeholder="{{ 'applicant_name' | translate:translateKey:'gu' }}">
 						<control-messages [control]="revisedFireNocForm.get('applicantNameGuj')"></control-messages>
 					</mat-form-field>
 					<!-- gujarati -->
