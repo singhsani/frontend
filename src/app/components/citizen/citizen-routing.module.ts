@@ -15,6 +15,7 @@ import { PayableServicesComponent } from './payable-services/payable-services.co
 import { GujPocComponent } from './guj-poc/guj-poc.component';
 import { GatewayResponseComponent } from './../../shared/components/gateway-response/gateway-response.component';
 import { CommonPaybleComponent } from './common-payble/common-payble.component';
+import { CcavenuePaymentPageComponent } from 'src/app/shared/components/ccavenue-payment-page/ccavenue-payment-page.component';
 
 /* Import citizen components other than auth end */
 
@@ -42,7 +43,9 @@ const routes: Routes = [
 			{ path: 'tax', loadChildren: './tax/tax.module#TaxModule', canLoad: [AuthGuard] },
 			{ path: 'appointmant', loadChildren: './appointment/appointment.module#AppointmentModule', canLoad: [AuthGuard] },
 			{ path: 'gujPOC', component: GujPocComponent, canActivate: [AuthGuard] },
-			{ path: 'affordable-housing', loadChildren: './affordable-housing/affordable-housing.module#AffordableHousingModule', canLoad: [AuthGuard] }
+			{ path: 'affordable-housing', loadChildren: './affordable-housing/affordable-housing.module#AffordableHousingModule', canLoad: [AuthGuard] },
+			{ path: 'make-payment', component: CcavenuePaymentPageComponent, canActivate: [AuthGuard] }
+
 		]
 	},
 	{ path: 'auth', loadChildren: './auth/auth.module#AuthModule' }
