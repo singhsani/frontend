@@ -30,6 +30,9 @@ export class NavratriNocComponent implements OnInit {
 	//Lookups Array
 	// FS_AREA_ZONE: Array<any> = [];
 
+	//	startMinDate = moment(new Date()).format('YYYY-MM-DD');
+	endMinDate = moment(new Date()).format('YYYY-MM-DD');
+	endLetterDate = moment(new Date()).format('YYYY-MM-DD');
 	/**
      * @param fb - Declare FormBuilder property.
      * @param validationError - Declare validation service property
@@ -248,6 +251,7 @@ export class NavratriNocComponent implements OnInit {
 			applicantNameGuj: [null, [Validators.required, Validators.maxLength(300)]],
 			contactNo: [null, [Validators.required, Validators.maxLength(this.fireFacilityConfig.contactNumberLength)]],
 			email: [null, [Validators.required, Validators.maxLength(50)]],
+			applicationDate: [null, [Validators.required]],
 
 			/* Step 2 controls start */
 			applicationThroughPolice: [null, [Validators.required, Validators.maxLength(10)]],

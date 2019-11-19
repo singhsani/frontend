@@ -31,7 +31,7 @@
 
 					<mat-form-field class="col-md-4">
 						<!-- <span matPrefix>+91 &nbsp;</span> -->
-						<input matInput OnlyNumber placeholder="{{'applicant_mobile' | translate:translateKey}}" type="tel" [maxlength]="fireFacilityConfig.contactNumberLength"
+						<input matInput OnlyNumber placeholder="{{'applicant_mobile' | translate:translateKey}}" type="tel" [maxlength]="10"
 						 formControlName="contactNo" required>
 						<control-messages [control]="navaratriNocForm.get('contactNo')"></control-messages>
 					</mat-form-field>
@@ -41,7 +41,18 @@
 						 formControlName="email" required maxlength="50">
 						<control-messages [control]="navaratriNocForm.get('email')"></control-messages>
 					</mat-form-field>
-
+					
+					<mat-form-field class="col-md-4">
+						<mat-label>{{'application_date'| translate: translateKey}} *</mat-label>
+						<input appDate matInput [max]="endMinDate"
+						[matDatepicker]="townHallBookingfromPicker1" (dateChange)="dateFormate($event.value,'applicationDate');" formControlName="applicationDate">
+						<mat-datepicker-toggle matSuffix [for]="townHallBookingfromPicker1"></mat-datepicker-toggle>
+						<mat-datepicker #townHallBookingfromPicker1 touchUi="true"></mat-datepicker>
+						<div align="end" class="default-show-hint mat-hint mat-right">{{fireFacilityConfig.DATE_HINT_MSG}}
+						</div>
+						<control-messages [control]="navaratriNocForm.get('applicationDate')">
+						</control-messages>
+					</mat-form-field>
 
 
 				</div>
@@ -70,13 +81,13 @@
 					</div>
 
 					<mat-form-field class="col-md-4" *ngIf="navaratriNocForm.get('applicationThroughPolice').value">
-						<input matInput type="text" appAlphaNumeric formControlName="policeCommisionerLetterNo" placeholder="{{'police_commisioner_letter_no' | translate: translateKey }} *"
+						<input matInput type="text" OnlyNumber formControlName="policeCommisionerLetterNo" placeholder="{{'police_commisioner_letter_no' | translate: translateKey }} *"
 						 maxlength="20">
 						<control-messages [control]="navaratriNocForm.get('policeCommisionerLetterNo')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4" *ngIf="navaratriNocForm.get('applicationThroughPolice').value">
-						<input matInput [matDatepicker]="picker3" formControlName="policeCommisionerLetterDate" placeholder="{{'police_commisioner_letter_date' | translate:translateKey }}"
+						<input matInput [matDatepicker]="picker3" [max]="endLetterDate" formControlName="policeCommisionerLetterDate" placeholder="{{'police_commisioner_letter_date' | translate:translateKey }}"
 						 required (dateChange)="dateFormate($event.value,'policeCommisionerLetterDate')">
 						<mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
 						<mat-datepicker #picker3 touchUi="true"></mat-datepicker>
@@ -284,32 +295,27 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput required OnlyNumber type="tel" formControlName="shamiyanaLength" placeholder="{{'shamiyana_length' | translate: translateKey }} "
+						<input matInput required appNumeric type="tel" formControlName="shamiyanaLength" placeholder="{{'shamiyana_length' | translate: translateKey }} "
 						 maxlength="5">
 						<control-messages [control]="navaratriNocForm.get('shamiyanaLength')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput required OnlyNumber type="tel" formControlName="shamiyanaWidth" placeholder="{{'shamiyana_width' | translate: translateKey }} "
+						<input matInput required appNumeric type="tel" formControlName="shamiyanaWidth" placeholder="{{'shamiyana_width' | translate: translateKey }} "
 						 maxlength="5">
 						<control-messages [control]="navaratriNocForm.get('shamiyanaWidth')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput required OnlyNumber type="tel" formControlName="archGateHeight" placeholder="{{'arch_gate_height' | translate: translateKey }} "
+						<input matInput required appNumeric type="tel" formControlName="archGateHeight" placeholder="{{'arch_gate_height' | translate: translateKey }} "
 						 maxlength="5">
 						<control-messages [control]="navaratriNocForm.get('archGateHeight')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput required OnlyNumber type="tel" formControlName="archGateWidth" placeholder="{{'arch_gate_width' | translate: translateKey }} "
+						<input matInput required appNumeric type="tel" formControlName="archGateWidth" placeholder="{{'arch_gate_width' | translate: translateKey }} "
 						 maxlength="5">
 						<control-messages [control]="navaratriNocForm.get('archGateWidth')"></control-messages>
-					</mat-form-field>
-
-					<mat-form-field class="col-md-4">
-						<input matInput required OnlyNumber maxlength="2" type="tel" formControlName="noOfExits" placeholder="{{'no_of_eExits' | translate:translateKey }}">
-						<control-messages [control]="navaratriNocForm.get('noOfExits')"></control-messages>
 					</mat-form-field>
 
 					<div class="col-md-4 radioBtnError">
@@ -389,6 +395,11 @@
 						</mat-radio-group>
 						<control-messages [control]="navaratriNocForm.get('weatherExitShownInMap')"></control-messages>
 					</div>
+					
+					<mat-form-field class="col-md-4">
+						<input matInput required OnlyNumber maxlength="2" type="tel" formControlName="noOfExits" placeholder="{{'no_of_eExits' | translate:translateKey }}">
+						<control-messages [control]="navaratriNocForm.get('noOfExits')"></control-messages>
+					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<textarea matInput rows="2" cols="50" required maxlength="150" placeholder="{{'food_stall_detail' | translate:translateKey}}"
