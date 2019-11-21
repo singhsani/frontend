@@ -52,7 +52,7 @@
 					<!-- gujarati -->
 
 					<mat-form-field class="col-md-4">
-						<input matInput formControlName="applicationDate" readonly placeholder="{{ 'application_Date' | translate:translateKey }}">
+						<input matInput formControlName="applicationDate" value="{{revisedFireNocForm.get('applicationDate').value | date:'dd/MM/yyyy'}}" readonly placeholder="{{ 'application_Date' | translate:translateKey }}">
 						<div align="end" class="default-show-hint mat-hint mat-right">{{fireFacilityConfig.DATE_HINT_MSG}}</div>
 					</mat-form-field>
 

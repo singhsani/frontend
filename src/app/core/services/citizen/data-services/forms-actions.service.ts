@@ -196,6 +196,12 @@ export class FormsActionsService {
 		return this.http.get(this.requestURL);
 	}
 
+	ccAvenuetransactionPage(payData: any, url) {
+		this.requestURL = url;
+		return this.http.post(this.requestURL, payData);
+	}
+
+	
 
 	/**
 	 * This method is used to creat payments for payable services
