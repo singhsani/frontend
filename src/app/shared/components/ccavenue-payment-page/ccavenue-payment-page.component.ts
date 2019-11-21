@@ -26,17 +26,28 @@ export class CcavenuePaymentPageComponent implements OnInit {
   }
 
   getTransactionDetail(data) {
-    // this.formService.ccAvenuetransactionPage(obj, data.url).subscribe(res=>{
-    // });
-    $.post(data.url,
-      {
-        access_code: data.access_code,
-        encRequest: data.encRequest
-      },
-      function (data, status) {
-        console.log(data);
-        console.log(status);
-      });
+
+    let form = $(document.createElement('form'));
+    $(form).attr("action", data.url);
+    $(form).attr("method", "POST");
+
+    let input = $("<input>")
+      .attr("type", "hidden")
+      .attr("name", "access_code")
+      .val(data.access_code);
+
+    let input2 = $("<input>")
+      .attr("type", "hidden")
+      .attr("name", "encRequest")
+      .val(data.encRequest);
+
+    $(form).append($(input));
+    $(form).append($(input2));
+
+    form.appendTo(document.body)
+
+    $(form).submit();
+
   }
 
 
