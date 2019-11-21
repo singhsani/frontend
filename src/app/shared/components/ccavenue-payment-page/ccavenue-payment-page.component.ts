@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsActionsService } from 'src/app/core/services/citizen/data-services/forms-actions.service';
+declare var $: any;
 
 @Component({
   selector: 'app-ccavenue-payment-page',
@@ -18,12 +19,26 @@ export class CcavenuePaymentPageComponent implements OnInit {
 
   ccAvenueMakePayment() {
     this.formService.ccAvenueMakePayment().subscribe(res => {
-      let ccAvenuePage = document.getElementById('ccAvenuePage');
-        ccAvenuePage.innerHTML = res.data;
-    },err=>{
-      let ccAvenuePage = document.getElementById('ccAvenuePage');
-        ccAvenuePage.innerHTML = err.error.text;
+      this.getTransactionDetail(res.data);
+    }, err => {
+
     });
   }
+
+  getTransactionDetail(data) {
+    // this.formService.ccAvenuetransactionPage(obj, data.url).subscribe(res=>{
+    // });
+    $.post(data.url,
+      {
+        access_code: data.access_code,
+        encRequest: data.encRequest
+      },
+      function (data, status) {
+        console.log(data);
+        console.log(status);
+      });
+  }
+
+
 
 }

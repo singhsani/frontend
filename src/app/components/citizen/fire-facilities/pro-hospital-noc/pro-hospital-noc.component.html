@@ -62,7 +62,7 @@
 					<mat-form-field class="col-md-4">
 						<mat-label>{{'application_date'| translate: translateKey}} *</mat-label>
 						<input appDate matInput [max]="endDate"
-						[matDatepicker]="townHallBookingfromPicker2" (dateChange)="dateFormate($event.value,'applicationDate');" formControlName="applicationDate">
+						[matDatepicker]="townHallBookingfromPicker2" formControlName="applicationDate">
 						<mat-datepicker-toggle matSuffix [for]="townHallBookingfromPicker2"></mat-datepicker-toggle>
 						<mat-datepicker #townHallBookingfromPicker2 touchUi="true"></mat-datepicker>
 						<div align="end" class="default-show-hint mat-hint mat-right">{{fireFacilityConfig.DATE_HINT_MSG}}

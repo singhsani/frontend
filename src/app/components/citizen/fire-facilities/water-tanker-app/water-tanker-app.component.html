@@ -4,7 +4,58 @@
 
 		<mat-tab-group [(selectedIndex)]="fireFacilityConfig.currentTabIndex" dynamicHeight="true" mat-stretch-tabs class="stepperNav">
 
-			<!-- step 1 Starts -->
+				<!-- step 1 Starts -->
+				<mat-tab>
+					<ng-template mat-tab-label>
+						<div>{{'applicant_detail' | translate:translateKey}}</div>
+					</ng-template>
+	
+					<div class="row">
+						<mat-form-field class="col-md-6">
+							<input matInput appValidationFields [validationFieldsType]="'onlyNameWithSpace'" required maxlength="100"
+							 placeholder="{{'applicant_name' | translate:translateKey}}" formControlName="applicantName" appGujInputSource
+							 targetElement="applicantNameGuj" [form]="waterTankerAppForm">
+							<control-messages [control]="waterTankerAppForm.get('applicantName')"></control-messages>
+						</mat-form-field>
+	
+						<mat-form-field class="col-md-6">
+							<input matInput type="text" maxlength="300" required formControlName="applicantNameGuj" appGujInputTarget [form]="waterTankerAppForm"
+							 placeholder="{{ 'applicant_name_guj' | translate:translateKey:'gu' }}">
+							<control-messages [control]="waterTankerAppForm.get('applicantNameGuj')"></control-messages>
+						</mat-form-field>
+	
+						<mat-form-field class="col-md-4">
+							<!-- <span matPrefix>+91 &nbsp;</span> -->
+							<input matInput OnlyNumber placeholder="{{'mobile_no' | translate:translateKey}}" type="tel" [maxlength]="fireFacilityConfig.mobileNumber_maxLength"
+							 [minlength]="fireFacilityConfig.mobileNumber_minLength" formControlName="mobileNo" required>
+							<control-messages [control]="waterTankerAppForm.get('mobileNo')"></control-messages>
+						</mat-form-field>
+	
+						<mat-form-field class="col-md-8">
+							<input matInput appPreventSpace placeholder="{{'email_id' | translate:translateKey}}" type="email"
+							 formControlName="email" required maxlength="50">
+							<control-messages [control]="waterTankerAppForm.get('email')"></control-messages>
+						</mat-form-field>
+						<mat-form-field class="col-md-4">
+							<mat-label>{{'application_date'| translate: translateKey}} *</mat-label>
+							<input appDate matInput
+							[matDatepicker]="townHallBookingfromPicker" formControlName="applicationDate">
+							<mat-datepicker-toggle matSuffix [for]="townHallBookingfromPicker"></mat-datepicker-toggle>
+							<mat-datepicker #townHallBookingfromPicker touchUi="true"></mat-datepicker>
+							<div align="end" class="default-show-hint mat-hint mat-right">{{fireFacilityConfig.DATE_HINT_MSG}}
+							</div>
+							<control-messages [control]="waterTankerAppForm.get('applicationDate')">
+							</control-messages>
+						</mat-form-field>
+						
+		
+					</div>
+					<app-action-bar [form]="waterTankerAppForm" (tabIndex)="fireFacilityConfig.onFormTabChange($event)"
+					 (handleOnSaveAndNext)="handleOnSaveAndNext($event)" [stepInfo]="{step: 'step1', next: 1, back: 0}"></app-action-bar>
+				</mat-tab>
+				<!-- step 1 Ends -->
+
+			<!-- step 2 Starts -->
 			<mat-tab>
 				<ng-template mat-tab-label>
 					<div>{{'form_detail' | translate:translateKey}}</div>
@@ -115,10 +166,10 @@
 					</mat-form-field>
 				</div>
 				<app-action-bar [form]="waterTankerAppForm" [uploadFiles]="uploadFilesArray" (tabIndex)="fireFacilityConfig.onFormTabChange($event)"
-				 [stepInfo]="{step: 'final', next: 1, back: 0}"  (handleOnSaveAndNext)="handleOnSaveAndNext($event)" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
+				 [stepInfo]="{step: 'final', next: 0, back: 0}"  (handleOnSaveAndNext)="handleOnSaveAndNext($event)" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
 
 			</mat-tab>
-			<!-- step 1 Ends -->
+			<!-- step 2 Ends -->
 		</mat-tab-group>
 	</form>
 

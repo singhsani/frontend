@@ -188,6 +188,11 @@ export class WaterTankerAppComponent implements OnInit {
 	*/
 	waterTankerAppFormControls() {
 		this.waterTankerAppForm = this.fb.group({
+			applicantName: [null, [Validators.required, Validators.maxLength(100)]],
+			applicantNameGuj: [null, [Validators.required, Validators.maxLength(300)]],
+			mobileNo: [null, [Validators.required, Validators.maxLength(this.fireFacilityConfig.mobileNumber_maxLength), Validators.minLength(this.fireFacilityConfig.mobileNumber_minLength)]],
+			email: [null, [Validators.required, Validators.maxLength(50)]],
+			applicationDate: [null, [Validators.required]],//not now
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
 			serviceCode: 'FS-WATER',
 			/* Step 1 controls start */
