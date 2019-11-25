@@ -182,11 +182,11 @@
 						</app-basic-details>
 					</div>
 
-					<app-action-bar (tabIndex)="onTabChange($event)" (handleErrors)="handleErrorsOnSubmit($event)"
+					<app-action-bar [paymentGateway]="paymentGateway" (tabIndex)="onTabChange($event)" (handleErrors)="handleErrorsOnSubmit($event)"
 						[form]="marriageDuplicateForm" [stepInfo]="{step: 'final', next: 1, back: 0}"></app-action-bar>
 
 				</mat-tab>
-
+				<select-payment-gateway #paymentGateway></select-payment-gateway>
 			</mat-tab-group>
 		</form>
 	</mat-card>

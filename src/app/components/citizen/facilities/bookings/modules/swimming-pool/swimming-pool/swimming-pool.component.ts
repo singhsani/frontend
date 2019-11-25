@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CommonService } from 'src/app/shared/services/common.service';
@@ -19,7 +19,9 @@ import { ComponentConfig } from 'src/app/components/component-config';
 })
 export class SwimmingPoolComponent implements OnInit {
 
+  @ViewChild("paymentGateway") paymentGateway: TemplateRef<any>;
   @ViewChild('address') addressComp: any;
+  
   public config = new ComponentConfig;
 
   swimmimgPoolBookingForm: FormGroup;
@@ -415,7 +417,8 @@ export class SwimmingPoolComponent implements OnInit {
 
           }, (err) => {
             if (err.status == 402) {
-              this.bookingUtils.redirectToPayment(err, this.commonService, this.bookingService, this.swimmimgPoolBookingForm, this.router, 'citizen/bookings/swimming-pool/swimmingPool');
+              // this.bookingUtils.redirectToPayment(err, this.commonService, this.bookingService, this.swimmimgPoolBookingForm, this.router, 'citizen/bookings/swimming-pool/swimmingPool');
+              this.bookingUtils.redirectToCCAvenuePayment(err, this.commonService, this.bookingService, this.paymentGateway ,this.swimmimgPoolBookingForm, this.router);
               return;
 
               // submit and print call

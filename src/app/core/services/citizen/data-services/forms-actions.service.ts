@@ -191,9 +191,9 @@ export class FormsActionsService {
 	/**
 	 * this method is used to get the ccavenue payment page
 	 */
-	ccAvenueMakePayment() {
+	ccAvenueMakePayment(payData) {
 		this.requestURL = `public/ccpayment/getPaymentPage`;
-		return this.http.get(this.requestURL);
+		return this.http.post(this.requestURL, payData);
 	}
 
 	/**
@@ -274,6 +274,14 @@ export class FormsActionsService {
 	getPaymentResponse(token) {
 
 		return this.http.get(`public/payment/getTransactionDetails?rqst_token=${token}`, this.getCommonHeaders());
+	}
+
+	/**
+	 * This method is use get transaction details from ccavenue
+	 * @param token - token
+	 */
+	getCCAvenuePaymentResponse(token) {
+		return this.http.get(`public/ccpayment/getCCAvenueTransactionDetails?order_id=${token}`, this.getCommonHeaders());
 	}
 
 	/**

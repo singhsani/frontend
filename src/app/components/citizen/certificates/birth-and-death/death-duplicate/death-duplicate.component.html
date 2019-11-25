@@ -42,10 +42,11 @@
                         </mat-form-field>
 
                     </div>
-                    <app-action-bar [isstepper]="false" [form]="deathDuplicateForm"
+                    <app-action-bar [paymentGateway]="paymentGateway" [isstepper]="false" [form]="deathDuplicateForm"
                         [stepInfo]="{step: 'final', next: 0, back: 0}" (handleErrors)="handleErrorsOnSubmit($event)">
                     </app-action-bar>
                 </mat-tab>
+                <select-payment-gateway #paymentGateway></select-payment-gateway>
             </mat-tab-group>
         </form>
     </mat-card>

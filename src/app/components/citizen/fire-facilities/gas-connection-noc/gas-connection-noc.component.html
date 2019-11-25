@@ -206,13 +206,13 @@
 					</ng-container>
 				</div>
 
-				<app-action-bar [uploadFiles]="uploadFilesArray" [form]="gasConnectionForm" (tabIndex)="fireFacilityConfig.onFormTabChange($event) "
+				<app-action-bar [paymentGateway]="paymentGateway" [uploadFiles]="uploadFilesArray" [form]="gasConnectionForm" (tabIndex)="fireFacilityConfig.onFormTabChange($event) "
 				 (handleErrors)="handleErrorsOnSubmit($event)" [stepInfo]="{step: 'final', next: 3, back: 1}"></app-action-bar>
 
 			</mat-tab>
 			<!-- step 3 Ends -->
 
 		</mat-tab-group>
-
+		<select-payment-gateway #paymentGateway></select-payment-gateway>
 	</form>
 </mat-card>

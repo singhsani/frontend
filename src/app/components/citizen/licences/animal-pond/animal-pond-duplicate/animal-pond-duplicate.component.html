@@ -109,12 +109,12 @@
           <control-messages [control]="animalPondDuplicateForm.get('holderPanNo')"></control-messages>
         </mat-form-field>
 
-        <app-action-bar [uploadFiles]="uploadFileArray" [form]="animalPondDuplicateForm" (handleErrors)="handleErrorsOnSubmit($event)"
+        <app-action-bar [paymentGateway]="paymentGateway" [uploadFiles]="uploadFileArray" [form]="animalPondDuplicateForm" (handleErrors)="handleErrorsOnSubmit($event)"
           (tabIndex)="onTabChange($event) " [stepInfo]="{step: 'final', next:0, back:0} "></app-action-bar>
 
       </mat-tab>
       <!-- step 1 Ends -->
-
+      <select-payment-gateway #paymentGateway></select-payment-gateway>
     </mat-tab-group>
   </form>
   <!-- {{ animalPondDuplicateForm.value | json }} -->

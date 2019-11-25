@@ -54,7 +54,7 @@ import { BaseChartComponent } from './components/base-chart/base-chart.component
 import { TermsConditionsComponent, DialogContentComponent } from './components/terms-conditions/terms-conditions.component';
 import { BankDetailsComponent } from './components/bank-details/bank-details.component';
 import { NumericDirective } from './directives/numeric.directive';
-import { CcavenuePaymentPageComponent } from './components/ccavenue-payment-page/ccavenue-payment-page.component';
+import { SelectPaymentGatewayComponent } from './components/select-payment-gateway/select-payment-gateway.component';
 /* import pipes end*/
 
 const COMPONENTS = [
@@ -87,14 +87,12 @@ const COMPONENTS = [
 	TermsConditionsComponent,
 	DialogContentComponent,
 	BankDetailsComponent,
-	CcavenuePaymentPageComponent
+	SelectPaymentGatewayComponent
 ]
 
 @NgModule({
 	declarations: [
 		...COMPONENTS,
-		
-
 	],
 	imports: [
 		CommonModule,

@@ -184,10 +184,11 @@
                     </ng-container>
                 </div>
 
-                    <app-action-bar [uploadFiles]="uploadFileArray" [form]="birthCorrectionForm" [stepInfo]="{step: 'final', next: 2, back: 0}"
+                    <app-action-bar [paymentGateway]="paymentGateway" [uploadFiles]="uploadFileArray" [form]="birthCorrectionForm" [stepInfo]="{step: 'final', next: 2, back: 0}"
                         (tabIndex)="onTabChange($event)" (handleErrors)="handleErrorsOnSubmit($event) "></app-action-bar>
 
                 </mat-tab>
+                <select-payment-gateway #paymentGateway></select-payment-gateway>
             </mat-tab-group>
 
         </form>

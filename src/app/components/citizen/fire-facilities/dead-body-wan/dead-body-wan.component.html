@@ -149,12 +149,12 @@
 					</mat-form-field>
 				</div>
 
-				<app-action-bar [form]="deadBodyWanForm" (tabIndex)="fireFacilityConfig.onFormTabChange($event)" (handleErrors)="handleErrorsOnSubmit($event)"
+				<app-action-bar [paymentGateway]="paymentGateway" [form]="deadBodyWanForm" (tabIndex)="fireFacilityConfig.onFormTabChange($event)" (handleErrors)="handleErrorsOnSubmit($event)"
 				 [isstepper]="false" [stepInfo]="{step: 'final', next: 1, back: 0}"></app-action-bar>
 
 			</mat-tab>
 			<!-- step 1 Ends -->
-
+			<select-payment-gateway #paymentGateway></select-payment-gateway>
 
 		</mat-tab-group>
 	</form>

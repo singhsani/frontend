@@ -428,13 +428,13 @@
 					</div>
 				</div>
 
-				<app-action-bar [uploadFiles]="uploadFilesArray" [form]="animalPondRenewForm"
+				<app-action-bar [paymentGateway]="paymentGateway" [uploadFiles]="uploadFilesArray" [form]="animalPondRenewForm"
 					(handleErrors)="handleErrorsOnSubmit($event)" (tabIndex)="onTabChange($event) "
 					[stepInfo]="{step: 'final', next:4, back:2} "></app-action-bar>
 
 			</mat-tab>
 			<!-- step Attachment Ends -->
-
+			<select-payment-gateway #paymentGateway></select-payment-gateway>
 		</mat-tab-group>
 	</form>
 </mat-card>

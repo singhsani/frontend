@@ -814,12 +814,12 @@
 					</ng-container>
 				</div>
 
-				<app-action-bar [uploadFiles]="uploadFilesArray" [form]="provisionalHospitalNocForm" (tabIndex)="fireFacilityConfig.onFormTabChange($event) "
+				<app-action-bar [paymentGateway]="paymentGateway" [uploadFiles]="uploadFilesArray" [form]="provisionalHospitalNocForm" (tabIndex)="fireFacilityConfig.onFormTabChange($event) "
 				 (handleOnSaveAndNext)="handleOnSaveAndNext($event)" (handleErrors)="handleErrorsOnSubmit($event)" [stepInfo]="{step: 'final', next:6, back:5} "></app-action-bar>
 
 			</mat-tab>
 			<!-- step Attachment Ends -->
-
+			<select-payment-gateway #paymentGateway></select-payment-gateway>
 		</mat-tab-group>
 	</form>
 	<!-- <pre>{{ provisionalHospitalNocForm.get('serviceDetail').get('serviceUploadDocuments').value | json }}</pre> -->

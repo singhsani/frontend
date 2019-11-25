@@ -140,13 +140,13 @@
                     </div> -->
 
 
-                <app-action-bar [form]="deathCorrectionForm" [isstepper]="false"
+                <app-action-bar [paymentGateway]="paymentGateway" [form]="deathCorrectionForm" [isstepper]="false"
                     [stepInfo]="{step: 'final', next: 2, back: 1}" [uploadFiles]="uploadFileArray" [isstepper]="false"
                     (handleErrors)="handleErrorsOnSubmit($event)" (tabIndex)="onTabChange($event)"></app-action-bar>
                 <!-- <app-action-bar [uploadFiles]="uploadFileArray" [form]="deathCorrectionForm" [step]="'final'" 
                     (stepReset)="stepReset()" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar> -->
             </mat-tab>
-
+            <select-payment-gateway #paymentGateway></select-payment-gateway>
         </mat-tab-group>
     </form>
 </mat-card>

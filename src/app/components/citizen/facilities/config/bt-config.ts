@@ -76,16 +76,12 @@ export class BTConfig extends CitizenConfig {
                 </div>
                 `
         commonService.commonAlert('Payment Details', '', 'info', 'Make Payment!', false, html, cb => {
-            // window.location.href = environment.adminUrl + `payment-gateway?retUrl=${payData.payData.retUrl}&retPath=${payData.payData.retPath}`;
 
             this.formService.createTokenforServicePayment(payData).subscribe(resp => {
-
                 window.open(resp.data, "_self");
-
             }, err => {
                 this.toastr.error(err.error.message);
             })
-
         }, rj => {
             let errHtml = `
 						<div class="alert alert-danger">
@@ -114,6 +110,65 @@ export class BTConfig extends CitizenConfig {
             return;
         });
     }
+
+    redirectToCCAvenuePayment(err: any, commonService: CommonService, btService: BookingService | TicketingsService, paymentGateway, form?: FormGroup, router?: Router, applicationrouter?: any) {
+
+        let redirectURLAfterPayment = (btService instanceof TicketingsService) ? BTConstants.MY_TICKETINGS_URL : BTConstants.MY_BOOKINGS_URL
+
+        let payData = this.storePaymentInfo(err.error.data, redirectURLAfterPayment, btService.resourceType);
+
+        let html =
+            `
+                <div class="text-center">
+                    <h2>Total Fee Pay</h2>
+                    <div class="payAmount">
+                        <i class="fa fa-inr" aria-hidden="true">` + payData.amount + `</i>
+                    </div>
+                    <p>Rupees in words</p>
+                </div>
+                `
+        commonService.commonAlert('Payment Details', '', 'info', 'Make Payment!', false, html, cb => {
+
+            paymentGateway.setPaymentDetails(payData, form, router, applicationrouter, redirectURLAfterPayment);
+            paymentGateway.openModel();
+
+
+            // this.formService.createTokenforServicePayment(payData).subscribe(resp => {
+
+            //     window.open(resp.data, "_self");
+
+            // }, err => {
+            //     this.toastr.error(err.error.message);
+            // })
+
+        }, rj => {
+            // let errHtml = `
+			// 			<div class="alert alert-danger">
+			// 				Please Complete Payment, Otherwise the application will be considered as in-complete
+			// 			</div>`
+            // commonService.commonAlert("Application Incomplete", "", 'warning', 'Make Payment!', false, errHtml, ccb => {
+            //     this.formService.createTokenforServicePayment(payData).subscribe(resp => {
+            //         window.open(resp.data, "_self");
+            //     }, err => {
+            //         this.toastr.error(err.error.message);
+            //     })
+            // }, arj => {
+            //     if (form && router) {
+            //         if (applicationrouter) {
+            //             form.disable();
+            //             router.navigate([applicationrouter]);
+            //         }
+            //         else {
+            //             form.disable();
+            //             router.navigate([redirectURLAfterPayment]);
+            //         }
+            //     }
+
+            // });
+            // return;
+        });
+    }
+
 
     /**
      * Method is used to perform payment and after storing data to localhost redirects to payment gateway.

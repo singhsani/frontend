@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectorRef, TemplateRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatPaginator, MatTableDataSource } from '@angular/material';
 import { ToastrService } from 'ngx-toastr';
@@ -34,7 +34,7 @@ export interface BookingDetails {
 })
 export class TownHallBookComponent implements OnInit {
 
-
+	@ViewChild("paymentGateway") paymentGateway: TemplateRef<any>;
 	@ViewChild('address') addressComp: any;
 	@ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -398,24 +398,9 @@ export class TownHallBookComponent implements OnInit {
 			}, (err) => {
 				this.isLoadingResults = false;
 				if (err.status == 402) {
-					this.bookingUtils.redirectToPayment(err, this.commonService, this.bookingService, this.townHallApplicationForm, this.router);
+					this.bookingUtils.redirectToCCAvenuePayment(err, this.commonService, this.bookingService, this.paymentGateway ,this.townHallApplicationForm, this.router);
+					// this.bookingUtils.redirectToPayment(err, this.commonService, this.bookingService, this.townHallApplicationForm, this.router);
 					return;
-					// let payData = this.bookingService.proceedForPayment(err.error.data);
-					// this.commonService.commonAlert('Payment Details', '', 'info', 'Make Payment!', false, payData.html, cb => {
-					// 	window.location.href = environment.adminUrl + `payment-gateway?retUrl=${payData.payData.retUrl}&retPath=${payData.payData.retPath}`;
-					// }, rj => {
-					// 	let errHtml = `			
-					// 	<div class="alert alert-danger">
-					// 		Please Complete Payment, Otherwise the application will be considered as in-complete
-					// 	</div>`
-					// 	this.commonService.commonAlert("Application Incomplete", "", 'warning', 'Make Payment!', false, errHtml, ccb => {
-					// 		window.location.href = environment.adminUrl + `payment-gateway?retUrl=${payData.payData.retUrl}&retPath=${payData.payData.retPath}`;
-					// 	}, arj => {
-					// 		this.townHallApplicationForm.disable();
-					// 		this.router.navigate([this.bookingConstants.MY_BOOKINGS_URL]);
-					// 	});
-					// 	return;
-					// });
 				} else if (err.error[0].code == this.bookingConstants.INVALID_BOOKING_STATUS) {
 					this.commonService.openAlert("Invalid Booking Status", err.error[0].message, "warning", "", cb => {
 						this.router.navigate([this.bookingConstants.MY_BOOKINGS_URL])
