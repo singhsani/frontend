@@ -24,6 +24,8 @@ import { environment } from '../../../../environments/environment';
 })
 export class MyApplicationsComponent implements OnInit {
 
+	@ViewChild("paymentGateway") paymentGateway: any;
+
 	/**
 	 * displayColumns are used for display the columns in material table.
 	 */
@@ -381,11 +383,6 @@ export class MyApplicationsComponent implements OnInit {
 				let retAfterPayment :string = environment.returnUrl;
 				
 				if (err.status === 402) {
-					// let moduleWithAppointment = this.form.getRawValue().serviceDetail.appointmentRequired;
-					// if (moduleWithAppointment) {
-					// 	retUrl = `/citizen/appointmant/schedule-appointment/slot-booking/` + this.form.getRawValue().serviceFormId + `/` + this.form.getRawValue().serviceDetail.code;
-					// }
-
 					let payData = this.commonService.storePaymentInfo(err.error.data, retUrl,retAfterPayment);
 					let html =
 						`
@@ -399,33 +396,30 @@ export class MyApplicationsComponent implements OnInit {
 					`
 
 					this.commonService.commonAlert('Payment Details', '', 'info', 'Make Payment!', false, html, cb => {
-						// window.location.href = environment.adminUrl + `payment-gateway?retUrl=${payData.retUrl}&retPath=${payData.retPath}`;
-
-						this.formService.createTokenforServicePayment(payData).subscribe(resp => {
-
-							window.open(resp.data, "_self");
-
-						}, err => {
-							this.toastr.error(err.error.message);
-						})
+						// this.formService.createTokenforServicePayment(payData).subscribe(resp => {
+						// 	window.open(resp.data, "_self");
+						// }, err => {
+						// 	this.toastr.error(err.error.message);
+						// })
+						this.paymentGateway.setPaymentDetailsFromActionBar(payData);
+						this.paymentGateway.openModel();
 
 					}, rj => {
-						let errHtml = `			
-							<div class="alert alert-danger">
-								Please Complete Payment, Otherwise the application will be considered as in-complete
-							</div>`
-						this.commonService.commonAlert("Application Incomplete", "", 'warning', 'Make Payment!', false, errHtml, ccb => {
-							// window.location.href = environment.adminUrl + `payment-gateway?retUrl=${payData.retUrl}&retPath=${payData.retPath}`;
-							this.formService.createTokenforServicePayment(payData).subscribe(resp => {
-								window.open(resp.data, "_self");
-							}, err => {
-								this.toastr.error(err.error.message);
-							})
+						// let errHtml = `			
+						// 	<div class="alert alert-danger">
+						// 		Please Complete Payment, Otherwise the application will be considered as in-complete
+						// 	</div>`
+						// this.commonService.commonAlert("Application Incomplete", "", 'warning', 'Make Payment!', false, errHtml, ccb => {
+						// 	this.formService.createTokenforServicePayment(payData).subscribe(resp => {
+						// 		window.open(resp.data, "_self");
+						// 	}, err => {
+						// 		this.toastr.error(err.error.message);
+						// 	})
 
-						}, arj => {
-							//this.toastr.success(`${this.form.getRawValue().serviceDetail.name} information successfully submit`);
-						})
-						return;
+						// }, arj => {
+
+						// })
+						// return;
 					});
 					return;
 				} else {

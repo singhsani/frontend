@@ -183,12 +183,12 @@
 					</ng-container>
 				</div>
 
-				<app-action-bar [form]="noRecordDeathForm" [stepInfo]="{step: 'final', next: 3, back: 2}"
+				<app-action-bar [paymentGateway]="paymentGateway" [form]="noRecordDeathForm" [stepInfo]="{step: 'final', next: 3, back: 2}"
 					[uploadFiles]="uploadFilesArray" (handleErrors)="handleErrorsOnSubmit($event)"
 					(tabIndex)="onTabChange($event)"></app-action-bar>
 			</mat-tab>
 			<!-- final step end-->
-
+			<select-payment-gateway #paymentGateway></select-payment-gateway>
 		</mat-tab-group>
 	</form>
 </mat-card>

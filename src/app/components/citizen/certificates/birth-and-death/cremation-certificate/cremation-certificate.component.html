@@ -166,12 +166,12 @@
                     </ng-container>
                 </div>
 
-                <app-action-bar [form]="cremationForm" (saveEvent)="isFormSaved = $event?.isSaved" [stepInfo]="{step: 'final', next: 2, back: 1}"
+                <app-action-bar [paymentGateway]="paymentGateway" [form]="cremationForm" (saveEvent)="isFormSaved = $event?.isSaved" [stepInfo]="{step: 'final', next: 2, back: 1}"
                     [uploadFiles]="uploadFileArray" (handleErrors)="handleErrorsOnSubmit($event)"
                     (tabIndex)="onTabChange($event)"></app-action-bar>
             </mat-tab>
             <!-- final step end-->
-
+            <select-payment-gateway #paymentGateway></select-payment-gateway>
         </mat-tab-group>
     </form>
 </mat-card>

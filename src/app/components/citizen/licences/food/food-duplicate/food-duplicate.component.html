@@ -215,11 +215,11 @@
           </div>
         </div>
 
-        <app-action-bar [form]="foodDuplicateForm" (handleErrors)="handleErrorsOnSubmit($event)"
+        <app-action-bar [paymentGateway]="paymentGateway" [form]="foodDuplicateForm" (handleErrors)="handleErrorsOnSubmit($event)"
           (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'final', next:4, back:0} "></app-action-bar>
       </mat-tab>
       <!-- step 2 Ends -->
-
+      <select-payment-gateway #paymentGateway></select-payment-gateway>
     </mat-tab-group>
   </form>
   <!-- {{ foodDuplicateForm.value | json }} -->

@@ -215,11 +215,11 @@
           </div>
         </div>
 
-        <app-action-bar [form]="foodRenewForm" (handleErrors)="handleErrorsOnSubmit($event)"
+        <app-action-bar [paymentGateway]="paymentGateway" [form]="foodRenewForm" (handleErrors)="handleErrorsOnSubmit($event)"
           (tabIndex)="onTabChange($event)" [stepInfo]="{step: 'final', next:4, back:0} "></app-action-bar>
       </mat-tab>
       <!-- step 2 Ends -->
-
+      <select-payment-gateway #paymentGateway></select-payment-gateway>
     </mat-tab-group>
   </form>
   <!-- {{ foodRenewForm.value | json }} -->

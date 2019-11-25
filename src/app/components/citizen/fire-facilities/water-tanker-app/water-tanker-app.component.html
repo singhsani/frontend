@@ -165,10 +165,11 @@
 						<control-messages [control]="waterTankerAppForm.get('totalAmount')"></control-messages>
 					</mat-form-field>
 				</div>
-				<app-action-bar [form]="waterTankerAppForm" [uploadFiles]="uploadFilesArray" (tabIndex)="fireFacilityConfig.onFormTabChange($event)"
+				<app-action-bar [paymentGateway]="paymentGateway" [form]="waterTankerAppForm" [uploadFiles]="uploadFilesArray" (tabIndex)="fireFacilityConfig.onFormTabChange($event)"
 				 [stepInfo]="{step: 'final', next: 0, back: 0}"  (handleOnSaveAndNext)="handleOnSaveAndNext($event)" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
 
 			</mat-tab>
+			<select-payment-gateway #paymentGateway></select-payment-gateway>
 			<!-- step 2 Ends -->
 		</mat-tab-group>
 	</form>

@@ -994,13 +994,13 @@
 
 				</div>
 
-				<app-action-bar [uploadFiles]="uploadFilesArray" [form]="shopLicRenewalForm"
+				<app-action-bar [paymentGateway]="paymentGateway" [uploadFiles]="uploadFilesArray" [form]="shopLicRenewalForm"
 					(handleErrors)="handleErrorsOnSubmit($event) " (tabIndex)="licenseConfiguration.onFormTabChange($event) "
 					[stepInfo]="{step: 'final', next:7, back: 5} "></app-action-bar>
 
 			</mat-tab>
 			<!-- step Attachment Ends -->
-
+			<select-payment-gateway #paymentGateway></select-payment-gateway>
 		</mat-tab-group>
 	</form>
 </mat-card>

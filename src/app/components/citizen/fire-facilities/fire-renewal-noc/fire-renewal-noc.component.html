@@ -286,13 +286,13 @@
 					</ng-container>
 				</div>
 
-				<app-action-bar [uploadFiles]="uploadFilesArray" [form]="renewalFireNocForm" (tabIndex)="fireFacilityConfig.onFormTabChange($event) "
+				<app-action-bar [paymentGateway]="paymentGateway" [uploadFiles]="uploadFilesArray" [form]="renewalFireNocForm" (tabIndex)="fireFacilityConfig.onFormTabChange($event) "
 				 (handleOnSaveAndNext)="handleOnSaveAndNext($event)" (handleErrors)="handleErrorsOnSubmit($event)" [stepInfo]="{step: 'final', next: 3, back: 3}"></app-action-bar>
 
 			</mat-tab>
 			<!-- step Attachment Ends -->
 		</mat-tab-group>
-
+		<select-payment-gateway #paymentGateway></select-payment-gateway>
 	</mat-card>
 
 </form>

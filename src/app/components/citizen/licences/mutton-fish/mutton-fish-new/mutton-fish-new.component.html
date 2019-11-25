@@ -303,14 +303,14 @@
 					</ng-container>
 				</div>
 
-				<app-action-bar [uploadFiles]="uploadFileArray" [form]="muttonFishNewForm"
+				<app-action-bar [paymentGateway]="paymentGateway" [uploadFiles]="uploadFileArray" [form]="muttonFishNewForm"
 					(handleErrors)="handleErrorsOnSubmit($event)"
 					(tabIndex)="licenseConfiguration.onFormTabChange($event) "
 					[stepInfo]="{step: 'final', next:3, back:1} "></app-action-bar>
 
 			</mat-tab>
 			<!-- step Attachment Ends -->
-
+			<select-payment-gateway #paymentGateway></select-payment-gateway>
 		</mat-tab-group>
 	</form>
 	<!-- {{ muttonFishNewForm.value | json }} -->

@@ -1,5 +1,5 @@
 <!-- Payment Success-->
-<div class="container text-center" *ngIf="responseObj.txn_msg == 'success'">
+<div class="container text-center" *ngIf="responseObj.order_status == 'Success'">
 	<div>
 		<h1>
 			<mat-icon class="checkIcon successicon">check_circle_outline</mat-icon>
@@ -7,11 +7,11 @@
 			<span class="successmsg">Payment Sucessful ! </span>
 		</h1>
 		<h4 class="mt-4" style="font-weight: 600;">
-			Thank you! Your payment of Rs. {{responseObj.txn_amt}} has been received.
+			Thank you! Your payment of Rs. {{responseObj.mer_amount}} has been received.
 		</h4>
 
 		<h6 class="mt-4">
-			Order ID: {{responseObj.tpsl_rfnd_id}} | Transaction ID: {{responseObj.tpsl_txn_id}}
+			Order ID: {{responseObj.order_id}} | Transaction ID: {{responseObj.bank_ref_no}}
 		</h6>
 	</div>
 
@@ -20,18 +20,18 @@
 		<mat-card class="cardDetail">
 			<div class="row">
 				<div class="col mb-2">
-					Amount Paid : &#8377; &nbsp;{{responseObj.txn_amt}}
+					Amount Paid : &#8377; &nbsp;{{responseObj.mer_amount}}
 				</div>
 				<div class="col">
-					Reference Number : &nbsp;{{responseObj.clnt_txn_ref}}
+					Reference Number : &nbsp;{{responseObj.bank_ref_no}}
 				</div>
 			</div>
 			<div class="row">
 				<div class="col mb-2">
-					Balance Amount : &#8377; &nbsp;{{responseObj.bal_amt}}
+					Balance Amount : &#8377; &nbsp;{{responseObj.mer_amount}}
 				</div>
 				<div class="col">
-					Transaction Date : &nbsp;{{responseObj.tpsl_txn_time}}
+					Transaction Date : &nbsp;{{responseObj.trans_date}}
 				</div>
 			</div>
 		</mat-card>
@@ -47,7 +47,7 @@
 </div>
 
 <!-- Payment failed-->
-<div class="conatiner text-center" *ngIf="responseObj.txn_msg == 'failure'">
+<div class="conatiner text-center" *ngIf="responseObj.order_status == 'Failure' || responseObj.order_status == 'Aborted'">
 	<mat-icon class="failedIcon">error</mat-icon>
 	<h1 class="errorMessage">Your payment failed</h1>
 	<h4>Please try after some time</h4>

@@ -133,7 +133,8 @@
 
                     <!-- Note : 'PAYMENT' fileStatus means payment is pandding -->
                     <button mat-menu-item *ngIf="(row.fileStatus === 'PAYMENT')" color="primary" (click)="redirectToPayment(row.serviceDetail.code, row.serviceFormId)">
-                        <mat-icon class="m-1" title="{{'attach_money' | translate:translateKey}}">edit</mat-icon>
+                        <!-- <mat-icon class="m-1" title="{{'attach_money' | translate:translateKey}}">&#8377;</mat-icon> -->
+                        <i class="fa fa-inr m-1" title="{{'attach_money' | translate:translateKey}}" aria-hidden="true"></i>
                         {{'payment' | translate:translateKey}}
                     </button>
 
@@ -148,6 +149,8 @@
     <mat-paginator showFirstLastButtons [hidden]="resultsLength==0" [pageSizeOptions]="[5, 10, 25, 100]" [length]="resultsLength">
     </mat-paginator>
 </div>
+
+<select-payment-gateway #paymentGateway></select-payment-gateway>
 
 <!-- The Modal -->
 <ng-template #template>

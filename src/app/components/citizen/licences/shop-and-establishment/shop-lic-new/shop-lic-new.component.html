@@ -1126,14 +1126,14 @@
 
 				</div>
 
-				<app-action-bar [uploadFiles]="uploadFilesArray" [form]="shopLicNewForm"
+				<app-action-bar [uploadFiles]="uploadFilesArray" [paymentGateway]="paymentGateway" [form]="shopLicNewForm"
 					(handleErrors)="handleErrorsOnSubmit($event) "
 					(tabIndex)="licenseConfiguration.onFormTabChange($event) "
 					[stepInfo]="{step: 'final', next:7, back: 5} "></app-action-bar>
 
 			</mat-tab>
 			<!-- step Attachment Ends -->
-
+			<select-payment-gateway #paymentGateway></select-payment-gateway>
 		</mat-tab-group>
 	</form>
 	<!-- {{ shopLicNewForm.value | json }} -->

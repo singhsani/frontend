@@ -30,7 +30,10 @@
                     <control-messages [control]="birthDuplicateForm.get('totalCopies')"></control-messages>
                 </mat-form-field>
             </div>
-            <app-action-bar [isstepper]="false" [form]="birthDuplicateForm" [stepInfo]="{step: 'final', next: 0, back: 0}"></app-action-bar>
+            <app-action-bar [isstepper]="false" [form]="birthDuplicateForm" [paymentGateway]="paymentGateway" [stepInfo]="{step: 'final', next: 0, back: 0}"></app-action-bar>
         </form>
+        <select-payment-gateway #paymentGateway></select-payment-gateway>
     </mat-card>
+
+
 </div>

@@ -18,7 +18,8 @@ import { FormsActionsService } from 'src/app/core/services/citizen/data-services
     styleUrls: ['./book-theater.component.scss']
 })
 export class BookTheaterComponent implements OnInit {
-
+    
+    @ViewChild("paymentGateway") paymentGateway: TemplateRef<any>;
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild(MatSort) sort: MatSort;
     @ViewChild("confirmationModel") confirmationModel: TemplateRef<any>;
@@ -341,7 +342,8 @@ export class BookTheaterComponent implements OnInit {
             this.bookingService.commonBookSlot(this.theaterBookingForm.value).subscribe(resp => {
             }, (err) => {
                 if (err.status == 402) {
-                    this.bookingUtils.redirectToPayment(err, this.commonService, this.bookingService, this.theaterBookingForm, this.router);
+                    // this.bookingUtils.redirectToPayment(err, this.commonService, this.bookingService, this.theaterBookingForm, this.router);
+                    this.bookingUtils.redirectToCCAvenuePayment(err, this.commonService, this.bookingService, this.paymentGateway ,this.theaterBookingForm, this.router);
                     return;
                 } else if (err.error[0].code == this.bookingConstants.INVALID_BOOKING_STATUS) {
                     this.commonService.openAlert("Invalid Booking Status", err.error[0].message, "warning", "", cb => {

@@ -181,11 +181,11 @@
                     </div> -->
 
 
-                <app-action-bar [form]="noRecordBirthForm" [stepInfo]="{step: 'final', next: 2, back: 1}"
+                <app-action-bar [paymentGateway]="paymentGateway" [form]="noRecordBirthForm" [stepInfo]="{step: 'final', next: 2, back: 1}"
                     [uploadFiles]="uploadFilesArray" (handleErrors)="handleErrorsOnSubmit($event)"
                     (tabIndex)="onTabChange($event)"></app-action-bar>
             </mat-tab>
-
+            <select-payment-gateway #paymentGateway></select-payment-gateway>
             <!-- final step end-->
         </mat-tab-group>
 

@@ -1,5 +1,5 @@
 import { environment } from './../../../../environments/environment';
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit, ViewChild} from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { ToastrService } from 'ngx-toastr';
@@ -17,6 +17,8 @@ import { SessionStorageService } from 'angular-web-storage';
 })
 export class CommonPaybleComponent implements OnInit {
 
+  @ViewChild("paymentGateway") paymentGateway: any;
+  
   translateKey: string = "addTransctionScreen";
 
   paymentsForm: FormGroup;
@@ -86,15 +88,20 @@ export class CommonPaybleComponent implements OnInit {
       returnUrl: environment.returnUrl
     }
 
-    this.formService.paymentGatewayUrl(obj).subscribe(res => {
-      if (res) {
-        this.session.set('paymentData', JSON.stringify(obj));
-        window.open(res.data, "_self");
-      } else {
-        this.toaster.warning('something went wrong!');
-      }
+    this.session.set('paymentData', JSON.stringify(obj));
 
-    });
+    this.paymentGateway.setPaymentDetailsFromActionBar(obj);
+    this.paymentGateway.openModel();
+    
+    // this.formService.paymentGatewayUrl(obj).subscribe(res => {
+    //   if (res) {
+    //     this.session.set('paymentData', JSON.stringify(obj));
+    //     window.open(res.data, "_self");
+    //   } else {
+    //     this.toaster.warning('something went wrong!');
+    //   }
+
+    // });
 
   }
 

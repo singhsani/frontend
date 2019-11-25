@@ -120,10 +120,10 @@
 					</ng-container>
 				</div>
 
-				<app-action-bar [uploadFiles]="uploadFilesArray" [form]="fireCertificateForm" (tabIndex)="fireFacilityConfig.onFormTabChange($event)"
+				<app-action-bar [paymentGateway]="paymentGateway" [uploadFiles]="uploadFilesArray" [form]="fireCertificateForm" (tabIndex)="fireFacilityConfig.onFormTabChange($event)"
 				 (handleErrors)="handleErrorsOnSubmit($event)" [isstepper]="false" [stepInfo]="{step: 'final', next: 1, back: 0}"></app-action-bar>
 			</mat-tab>
-
+			<select-payment-gateway #paymentGateway></select-payment-gateway>
 		</mat-tab-group>
 	</form>
 </mat-card>

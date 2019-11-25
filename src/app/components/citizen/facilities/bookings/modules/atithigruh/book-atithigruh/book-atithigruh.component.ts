@@ -23,9 +23,11 @@ export class BookAtithigruhComponent implements OnInit {
 	translateKey: string = "atithigruhScreen";
 	stadiumTranslateKey: string = "citizenStadiumScreen";
 
+	
 	@ViewChild(MatPaginator) paginator: MatPaginator;
 	@ViewChild(MatSort) sort: MatSort;
-
+	
+	@ViewChild("paymentGateway") paymentGateway: TemplateRef<any>;
 	@ViewChild("confirmationModel") confirmationModel: TemplateRef<any>;
 	@ViewChild('address') addressComp: any;
 
@@ -423,7 +425,8 @@ export class BookAtithigruhComponent implements OnInit {
 				this.bookingService.commonBookSlot(this.atithigruhForm.value).subscribe(resp => {
 				}, (err) => {
 					if (err.status == 402) {
-						this.bookingUtils.redirectToPayment(err, this.commonService, this.bookingService, this.atithigruhForm, this.router);
+						// this.bookingUtils.redirectToPayment(err, this.commonService, this.bookingService,this.atithigruhForm, this.router);
+						this.bookingUtils.redirectToCCAvenuePayment(err, this.commonService, this.bookingService, this.paymentGateway ,this.atithigruhForm, this.router);
 						return;
 					} else if (err.error[0].code == this.bookingConstants.INVALID_BOOKING_STATUS) {
 						this.commonService.openAlert("Invalid Booking Status", err.error[0].message, "warning", "", cb => {

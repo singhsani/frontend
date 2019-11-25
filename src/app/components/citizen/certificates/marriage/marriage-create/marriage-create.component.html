@@ -1650,12 +1650,12 @@
 					</div> -->
 				<!-- </div>  -->
 
-				<app-action-bar [uploadFiles]="uploadFilesArray" [form]="marriageFormGroup"
+				<app-action-bar [paymentGateway]="paymentGateway" [uploadFiles]="uploadFilesArray" [form]="marriageFormGroup"
 					(tabIndex)="onTabChange($event)" [stepInfo]="{step: 'final', next: 9, back: 9}"
 					(handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
 			</mat-tab>
 			<!-- End nine step -->
-
+			<select-payment-gateway #paymentGateway></select-payment-gateway>
 		</mat-tab-group>
 	</form>
 	<!-- End  form -->

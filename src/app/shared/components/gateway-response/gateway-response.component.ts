@@ -33,8 +33,9 @@ export class GatewayResponseComponent implements OnInit {
 	ngOnInit() {
 
 		this.route.queryParams.subscribe(param => {
-			if (param && param.rqst_token) {
-				this.gatewayResponse(param.rqst_token);
+			// if (param && param.rqst_token) {
+			if (param && param.order_id) {
+				this.gatewayResponse(param.order_id);
 			} else {
 				this.router.navigate([ManageRoutes.getFullRoute('CITIZENDASHBOARD')]);
 			}
@@ -42,16 +43,17 @@ export class GatewayResponseComponent implements OnInit {
 	}
 
 	gatewayResponse(token) {
-		this.formService.getPaymentResponse(token).subscribe(res => {
+		// this.formService.getPaymentResponse(token).subscribe(res => {
+		this.formService.getCCAvenuePaymentResponse(token).subscribe(res => {
 			this.responseObj = res.data;
 
 			if (res.success) {
 
-				if (this.responseObj.txn_msg == 'failure') {
-					this.redirectToHome();
-				} else {
-					this.paymentStatus = _.upperCase(this.responseObj.txn_msg);
+				if (this.responseObj.order_status == 'Success') {
+					this.paymentStatus = _.upperCase(this.responseObj.order_status);
 					this.postSessionData(this.dispData, this.responseObj);
+				} else {
+					this.redirectToHome();
 				}
 				this.clearSession();
 			}
@@ -81,7 +83,7 @@ export class GatewayResponseComponent implements OnInit {
 			transactionId: data.transactionId,
 			paymentStatus: this.paymentStatus,
 			payableServiceType: data.payableServiceType,
-			amount: responseObj ? responseObj.txn_amt : 0
+			amount: responseObj ? responseObj.mer_amount : 0
 		}
 
 		if (data.payableServiceType == "PROFESSIONAL_TAX") {
@@ -93,7 +95,7 @@ export class GatewayResponseComponent implements OnInit {
 						sectionToPrint.innerHTML = data;
 
 						setTimeout(() => {
-							var onPrintFinished = function (printed) {
+							var onPrintFinished = (printed)=> {
 								this.redirectToHome();
 							}
 							onPrintFinished(window.print());
