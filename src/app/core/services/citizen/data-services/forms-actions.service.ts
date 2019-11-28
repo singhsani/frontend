@@ -208,6 +208,16 @@ export class FormsActionsService {
 	}
 
 	/**
+	 * This method is used to get billdesk page
+	 * @param paymentData -pass payment data here.
+	 */
+	getBillDeskPage(paymentData) {
+		this.requestURL = `public/billdeskpayment/getPage`;
+		return this.http.post(this.requestURL, paymentData);
+	}
+
+
+	/**
 	* This method is used to creat payments for payable services
 	* @param paymentData -pass payment data here.
 	*/
@@ -282,6 +292,22 @@ export class FormsActionsService {
 	 */
 	getCCAvenuePaymentResponse(token) {
 		return this.http.get(`public/ccpayment/getCCAvenueTransactionDetails?order_id=${token}`, this.getCommonHeaders());
+	}
+
+	/**
+	 * This method is use get transaction details from ccavenue
+	 * @param msg - msg
+	 */
+	sendBillDeskPaymentResponse(msg) {
+		return this.http.get(`public/billdeskpayment/responseFromBillDesk?msg=${msg}`, this.getCommonHeaders());
+	}
+
+	/**
+	 * This method is use get transaction details from billdesk
+	 * @param txtRefNo - transaction reference no
+	 */
+	getBillDeskTransactionDetails(txtRefNo) {
+		return this.http.get(`public/billdeskpayment/getBillDeskTransactionDetails?txtRefNo=${txtRefNo}`, this.getCommonHeaders());
 	}
 
 	/**

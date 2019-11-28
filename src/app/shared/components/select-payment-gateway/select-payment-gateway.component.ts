@@ -39,15 +39,24 @@ export class SelectPaymentGatewayComponent implements OnInit {
   }
 
   ngOnInit() {
+    /**
+     * this method is used to create form controls for payment gateway form
+     */
     this.paymentGatewayForm = this.fb.group({
       paymentGateway: ['CC_AVENUE', Validators.required]
     });
   }
 
+  /**
+   * This method is used to open model from different different modules
+   */
   openModel() {
     this.confirmRef = this.modalService.show(this.confirmationModel, Object.assign({ keyboard: false }, {backdrop : 'static'}, { ignoreBackdropClick: false }, { class: 'gray .modal-md' }));
   }
 
+  /**
+   * This method is used to set the data passed from different different modules
+   */
   setPaymentDetails(payData, form, router, applicationrouter, redirectURLAfterPayment) {
     this.payData = payData;
     this.form = form;
@@ -56,10 +65,16 @@ export class SelectPaymentGatewayComponent implements OnInit {
     this.redirectURLAfterPayment = redirectURLAfterPayment;
   }
 
+  /**
+   * This method is used to set the data passed from different different citizen service modules
+   */
   setPaymentDetailsFromActionBar(payData){
     this.payData = payData;
   }
 
+  /**
+   * This method is used to hide the modal and redirect to my application page
+   */
   onCancel() {
 
     this.confirmRef.hide();
@@ -76,17 +91,21 @@ export class SelectPaymentGatewayComponent implements OnInit {
     // return;
   }
 
-
+/**
+ * This method is used to make payment according to user payment gateway selection
+ */
   makePayment(){
     let option = this.paymentGatewayForm.get('paymentGateway').value;
     if(option == 'CC_AVENUE'){
         this.ccAvenueMakePayment();
+    }else{
+      this.getBillDeskPage();
     }
-    // else{
-
-    // }
   }
 
+  /**
+   * This method is used to call ccavenue make payment
+   */
   ccAvenueMakePayment() {
     this.formService.ccAvenueMakePayment(this.payData).subscribe(res => {
       this.getTransactionDetail(res.data);
@@ -95,6 +114,24 @@ export class SelectPaymentGatewayComponent implements OnInit {
     });
   }
 
+  getBillDeskPage(){
+
+    let obj = {
+      frontRedirectURL : this.payData.returnUrl,
+      customerID : this.payData.refNumber,
+      txtadditionalInfo2 : this.payData.payableServiceType,
+      txtAmount : this.payData.amount,
+    };
+
+    this.formService.getBillDeskPage(obj).subscribe(res =>{
+      window.open(res.data.url, "_self");
+    });
+  }
+
+  /**
+   * This method is used to get the cc avenue page url and redirect to there page 
+   * @param data 
+   */
   getTransactionDetail(data) {
 
     let form = $(document.createElement('form'));
