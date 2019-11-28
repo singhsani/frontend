@@ -31,15 +31,24 @@ export class GatewayResponseComponent implements OnInit {
 	}
 
 	ngOnInit() {
-
 		this.route.queryParams.subscribe(param => {
 			// if (param && param.rqst_token) {
 			if (param && param.order_id) {
 				this.gatewayResponse(param.order_id);
+			} else if (param && param.txtRefNo) {
+				this.billdesk(param.txtRefNo);
 			} else {
 				this.router.navigate([ManageRoutes.getFullRoute('CITIZENDASHBOARD')]);
 			}
 		});
+	}
+
+	billdesk(txtRefNo){
+		if(txtRefNo != 'NA'){
+			this.formService.getBillDeskTransactionDetails(txtRefNo).subscribe(res =>{
+			
+			});
+		}
 	}
 
 	gatewayResponse(token) {
@@ -95,7 +104,7 @@ export class GatewayResponseComponent implements OnInit {
 						sectionToPrint.innerHTML = data;
 
 						setTimeout(() => {
-							var onPrintFinished = (printed)=> {
+							var onPrintFinished = (printed) => {
 								this.redirectToHome();
 							}
 							onPrintFinished(window.print());
