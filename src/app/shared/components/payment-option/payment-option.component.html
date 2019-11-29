@@ -34,13 +34,13 @@
       </mat-form-field>
 
       <mat-form-field class="col-md-4">
-        <input matInput OnlyNumber maxlength="10" placeholder="Check/DD Number" formControlName="chequeNo" required>
+        <input matInput OnlyNumber maxlength="10" placeholder="Cheque/DD Number" formControlName="chequeNo" required>
         <control-messages [control]="form.controls.chequeNo"></control-messages>
       </mat-form-field>
 
       <mat-form-field class="col-md-4">
         <input matInput autocomplete="off" appDate [max]="maxDate" required formControlName="chequeDate"
-          [matDatepicker]="picker" (dateChange)="onDateChange('chequeDate', $event.value)" placeholder="Check/DD Date (DD/MM/YYYY)">
+          [matDatepicker]="picker" (dateChange)="onDateChange('chequeDate', $event.value)" placeholder="Cheque/DD Date (DD/MM/YYYY)">
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker touchUi="true" #picker></mat-datepicker>
         <control-messages [control]="form.controls.chequeDate"></control-messages>

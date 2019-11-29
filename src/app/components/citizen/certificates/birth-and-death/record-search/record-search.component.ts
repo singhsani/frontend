@@ -40,8 +40,9 @@ export class RecordSearchComponent implements OnInit {
 	 * display table column.
 	 */
 	displayedColumns: any = [
-		'seq',
 		'id',
+		'seq',
+		'certificateno',
 		'name',
 		'date',
 		'fathersName',
@@ -95,7 +96,9 @@ export class RecordSearchComponent implements OnInit {
 		{ id: "2015", code: 2015, name: "2015" },
 		{ id: "2016", code: 2016, name: "2016" },
 		{ id: "2017", code: 2017, name: "2017" },
-		{ id: "2018", code: 2018, name: "2018" }
+		{ id: "2018", code: 2018, name: "2018" },
+		{ id: "2019", code: 2019, name: "2019" },
+		{ id: "2020", code: 2020, name: "2020" }
 
 	];
 
@@ -109,7 +112,6 @@ export class RecordSearchComponent implements OnInit {
 	 * flag to load result from api.
 	 */
 	isLoadingResults: boolean = false;
-
 
 	/**
 	 * constructor.
@@ -130,10 +132,12 @@ export class RecordSearchComponent implements OnInit {
 	 * Method initializes first.
 	 */
 	ngOnInit() {
-
-		this.searchFormControls();
 		if (this.apiType == 'duplicateDeathReg' || this.apiType == 'NRCDeath') {
-			this.deathFromName = true
+			this.deathFromName = true;
+			this.searchFormDeathControls();
+		} else {
+			this.deathFromName = false;
+			this.searchFormBirthControls();
 		}
 		//this.getLookUpdata();
 		this.dataSource.paginator = this.paginator;
@@ -152,14 +156,35 @@ export class RecordSearchComponent implements OnInit {
 	/**
 	 * Method use for create form controls
 	 */
-	searchFormControls() {
+	searchFormBirthControls() {
 		this.searchForm = this.fb.group({
-			regNumber: null,
-			regYear: this.fb.group({
-				code: null
-			}),
-			date: moment().format('YYYY-MM-DD'),
-			name: null,
+			birthRegNumber: null,
+			birthRegYear: null,
+			birthDate: null,
+			childName: null,
+			fatherName: null,
+			motherName: null
+			// regNumber: null,
+			// regYear: this.fb.group({
+			// 	code: null
+			// }),
+			// date: moment().format('YYYY-MM-DD'),
+			// name: null,
+			// fatherName: null,
+			// motherName: null
+		})
+	}
+
+
+	/**
+ * Method use for create form controls
+ */
+	searchFormDeathControls() {
+		this.searchForm = this.fb.group({
+			deathRegNumber: null,
+			deathRegYear: null,
+			deathDate: null,
+			deceasedName: null,
 			fatherName: null,
 			motherName: null
 		})
@@ -192,7 +217,7 @@ export class RecordSearchComponent implements OnInit {
 			.pipe(
 				startWith({}),
 				switchMap(() => {
-					this.isLoadingResults = true;
+					// this.isLoadingResults = true;
 					this.paginationService.apiType = this.apiType;
 					return this.paginationService!.getSearchDataWithPagination(this.searchForm.value);//NOSONAR
 				}),

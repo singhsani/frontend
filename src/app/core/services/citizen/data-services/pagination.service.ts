@@ -44,19 +44,19 @@ export class PaginationService {
 				break;
 			}
 			case "NRCBirth": {
-				this.requestURL = `api/form/${this.apiType}/search?childName=${filterData.name}&fatherName=${filterData.fatherName}&motherName=${filterData.motherName}&birthDate=${filterData.date}&regNumber=${filterData.regNumber}&page=${this.pageIndex}&limit=${this.pageSize}`;
+				this.requestURL = `api/form/${this.apiType}/searchFromNewgen`;
 				break;
 			}
 			case "NRCDeath": {
-				this.requestURL = `api/form/${this.apiType}/search?deceasedName=${filterData.name}&fatherHusbandName=${filterData.fatherName}&regNumber=${filterData.regNumber}&page=${this.pageIndex}&limit=${this.pageSize}`;
+				this.requestURL = `api/form/${this.apiType}/searchFromNewgen`;
 				break;
 			}
 			case "duplicateMarriageReg": {
-				this.requestURL = `api/form/${this.apiType}/search?marriageDate=${filterData.marriageDate}&groomName=${filterData.groomName}&brideName=${filterData.brideName}&page=${this.pageIndex}&limit=${this.pageSize}`;
+				this.requestURL = `api/form/${this.apiType}/searchFromNewgen`;
 				break;
 			}
 		}
-		return this.http.get(this.requestURL);
+		return this.http.post(this.requestURL,filterData);
 		// its get api but when newgen api is come its recode as a post with 'filter data body' add
 
 		// if (this.apiType == 'duplicateBirthReg') {

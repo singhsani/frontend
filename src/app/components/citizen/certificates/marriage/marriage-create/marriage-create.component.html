@@ -1578,8 +1578,7 @@
 				</ng-template>
 
 				<div class="alert alert-warning">
-					{{'note' | translate:translateKey}}
-					:{{'submit_hard_copy_at_saradar_market' | translate:translateKey}}
+					{{'note' | translate:translateKey}} : {{'submit_hard_copy_at_saradar_market' | translate:translateKey}}
 				</div>
 				<div class="row">
 					<div class="col-md-4"
@@ -1587,8 +1586,7 @@
 						<div *ngIf="doc.requiredOnCitizenPortal && doc.isActive && showButtons">
 							<label>{{translateService.getCurrentLanguage()=='en'? doc.documentLabelEn : doc.documentLabelGuj }}
 								<span *ngIf="doc.mandatory && (doc.dependentFieldName == null)">*</span>
-								<span
-									*ngIf="doc.mandatory && (doc.dependentFieldName == 'HINDU') && (marriageFormGroup.controls.groomReligion.get('code').value != 'HINDU') && (marriageFormGroup.controls.brideReligion.get('code').value != 'HINDU') && (marriageFormGroup.controls.groomReligion.get('code').value != null)">*</span>
+								<span *ngIf="doc.mandatory && (doc.dependentFieldName == 'HINDU') && (marriageFormGroup.get('groomReligion').get('code').value != 'HINDU') && (marriageFormGroup.get('brideReligion').get('code').value != 'HINDU') && (marriageFormGroup.get('groomReligion').get('code').value != null)">*</span>
 							</label>
 							<file-upload [form]="marriageFormGroup" [uploadModel]="doc"></file-upload>
 						</div>

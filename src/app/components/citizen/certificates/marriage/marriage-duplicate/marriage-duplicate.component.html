@@ -37,19 +37,19 @@
 				<mat-form-field class="col-4">
 					<input matInput OnlyNumber [OnlyYear]="true" minlength="4" maxlength="4" type="text"
 						formControlName="marriageRegYear"
-						placeholder="{{ 'marriage_reg_year' | translate:translateKey }}" required>
+						placeholder="{{ 'marriage_reg_year' | translate:translateKey }}">
 					<control-messages [control]="marriageSearchForm.get('marriageRegYear')"></control-messages>
 				</mat-form-field>
 
 				<mat-form-field class="col-4">
 					<input matInput appValidationFields validationFieldsType="onlyNameWithSpace" type="text"
-						formControlName="groomName" placeholder="{{ 'groom_name' | translate:translateKey }}" required>
+						formControlName="groomName" placeholder="{{ 'groom_name' | translate:translateKey }}">
 					<control-messages [control]="marriageSearchForm.get('groomName')"></control-messages>
 				</mat-form-field>
 
 				<mat-form-field class="col-4">
 					<input matInput appValidationFields validationFieldsType="onlyNameWithSpace" type="text"
-						formControlName="brideName" placeholder="{{ 'bride_name' | translate:translateKey }}" required>
+						formControlName="brideName" placeholder="{{ 'bride_name' | translate:translateKey }}">
 					<control-messages [control]="marriageSearchForm.get('brideName')"></control-messages>
 				</mat-form-field>
 

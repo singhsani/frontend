@@ -106,7 +106,7 @@ export class NewRegistrationComponent implements OnInit {
       code: null,
       fieldView: null,
       fieldList: null,
-      vehicleNo: null,
+      vehicleNo: [null,Validators.required],
       vehicleType: this.fb.group({
         code: [null, Validators.required],
         name: null
@@ -116,7 +116,7 @@ export class NewRegistrationComponent implements OnInit {
       registrationNo: "GJ-06-",
       vehicleBasicValue: null,
       makeModel: null,
-      dealerName: null,
+      dealerName: [null, Validators.required],
       purchaseDate: [null, Validators.required],
       // purchasingType: this.fb.group({
       // 	code: [null, Validators.required],

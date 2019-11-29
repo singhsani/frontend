@@ -151,9 +151,9 @@ export class MarriageDuplicateComponent implements OnInit {
 			marriageRegNumber: null,
 			marriageDate: ['', Validators.required],
 			marriageRegDate: null,
-			marriageRegYear: ['', [Validators.required, Validators.max(this.maxYear), Validators.min(this.maxYear - 100)]],
-			groomName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
-			brideName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]]
+			marriageRegYear: ['', [Validators.max(this.maxYear), Validators.min(this.maxYear - 100)]],
+			groomName: ['', [ValidationService.nameValidator, Validators.maxLength(50)]],
+			brideName: ['', [ValidationService.nameValidator, Validators.maxLength(50)]]
 		});
 	}
 
@@ -242,7 +242,7 @@ export class MarriageDuplicateComponent implements OnInit {
 	 * Method is used to create death record after search data found.
 	 * @param data - original json.
 	 */
-	createDuplicateBirthRecord(data) {
+	createDuplicateMRRecord(data) {
 		this.formService.createFormData().subscribe(res => {
 			this.marriageDuplicateForm.patchValue(res);
 			this.updateDuplicateRecordValue(data);
@@ -396,7 +396,7 @@ export class MarriageDuplicateComponent implements OnInit {
 	 */
 	redirectToDuplicate(data) {
 		this.getLookupData();
-		this.createDuplicateBirthRecord(data);
+		this.createDuplicateMRRecord(data);
 		this.showSearchForm = false;
 		this.isVisibeDuplicateForm = false;
 	}
