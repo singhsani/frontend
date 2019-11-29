@@ -36,21 +36,50 @@ export class GatewayResponseComponent implements OnInit {
 			if (param && param.order_id) {
 				this.gatewayResponse(param.order_id);
 			} else if (param && param.txtRefNo) {
-				this.billdesk(param.txtRefNo);
+				this.getBillDeskTransactionDetails(param.txtRefNo);
 			} else {
 				this.router.navigate([ManageRoutes.getFullRoute('CITIZENDASHBOARD')]);
 			}
 		});
 	}
 
-	billdesk(txtRefNo){
-		if(txtRefNo != 'NA'){
-			this.formService.getBillDeskTransactionDetails(txtRefNo).subscribe(res =>{
-			
+	/**
+	 * This method is used to get billDesk transation details
+	 * @param txtRefNo - transaction reference number
+	 */
+	getBillDeskTransactionDetails(txtRefNo) {
+		if (txtRefNo != 'NA') {
+			this.formService.getBillDeskTransactionDetails(txtRefNo).subscribe(res => {
+				this.responseObj = res.data;
+
+				if (res.success) {
+
+					if (this.responseObj.authStatus == '0300') {
+
+						this.responseObj.mer_amount = this.responseObj.txnAmount;
+						this.responseObj.order_id = this.responseObj.customerID;
+						this.responseObj.bank_ref_no = this.responseObj.txnReferenceNo;
+						this.responseObj.trans_date = this.responseObj.txnDate
+
+						this.paymentStatus = _.upperCase(this.responseObj.authStatus);
+						this.postSessionData(this.dispData, 'BILLDESK', this.responseObj);
+					} else {
+						this.redirectToHome();
+					}
+					this.clearSession();
+				}
+				else {
+					this.toastr.error('Transaction failed');
+					this.redirectToHome();
+				}
 			});
 		}
 	}
 
+	/**
+	 * This method is used to get cc avenue transation details
+	 * @param token - token from api
+	 */
 	gatewayResponse(token) {
 		// this.formService.getPaymentResponse(token).subscribe(res => {
 		this.formService.getCCAvenuePaymentResponse(token).subscribe(res => {
@@ -60,7 +89,7 @@ export class GatewayResponseComponent implements OnInit {
 
 				if (this.responseObj.order_status == 'Success') {
 					this.paymentStatus = _.upperCase(this.responseObj.order_status);
-					this.postSessionData(this.dispData, this.responseObj);
+					this.postSessionData(this.dispData, 'CCAVENUE', this.responseObj);
 				} else {
 					this.redirectToHome();
 				}
@@ -77,13 +106,15 @@ export class GatewayResponseComponent implements OnInit {
 	/**
 	 * Post data for post payment 
 	 * @param data : json
+	 * @param payGateway: selected payment gateway
+	 * @param responseObj: transaction details
 	 */
-	postSessionData(data, responseObj?) {
+	postSessionData(data, payGateway, responseObj?) {
 		let payData = {
 			id: null,
 			uniqueId: null,
 			version: null,
-			refNumber: data.refNumber ? data.refNumber : null,
+			refNumber:data.refNumber ? data.refNumber : null,
 			resourceType: data.resourceType ? data.resourceType : null,
 			response: JSON.stringify({
 				data: "paid",
@@ -93,6 +124,13 @@ export class GatewayResponseComponent implements OnInit {
 			paymentStatus: this.paymentStatus,
 			payableServiceType: data.payableServiceType,
 			amount: responseObj ? responseObj.mer_amount : 0
+		}
+		
+		if (payGateway == 'BILLDESK') {
+			payData.refNumber = data.txnReferenceNo;
+			payData.transactionId =  data.txnReferenceNo;
+			payData.payableServiceType = data.additionalInfo2;
+			payData.amount =  data.txnAmount;
 		}
 
 		if (data.payableServiceType == "PROFESSIONAL_TAX") {
@@ -132,7 +170,6 @@ export class GatewayResponseComponent implements OnInit {
 					});
 				}
 				// if (payRespData.status == "DEPOSIT_REQUIRED") { //for booking module
-
 				else {
 					setTimeout(() => {
 						this.redirectToMyApplication(data.myApplicationUrl, payRespData.refNumber, payData.resourceType, payRespData.payableServiceType);
@@ -140,13 +177,11 @@ export class GatewayResponseComponent implements OnInit {
 
 					this.interVal();
 				}
-
 			},
 				err => {
 					this.toastr.error('Internal server error');
 				});
 		}
-
 	}
 
 

@@ -150,6 +150,7 @@
                         <input #catRef matInput [maxlength]="row.max" OnlyNumber
                           placeholder="{{row.placeHolder | translate:translateKey}}"
                           [formControlName]="row.formControlName" (change)="computeTotalAndVisitors()">
+                          <control-messages [control]="ticketBookingForm.get(row.formControlName)"></control-messages>
                       </mat-form-field>
                   </div>
                 </td>
@@ -311,7 +312,7 @@
 
 
       </mat-card> -->
-
+      <select-payment-gateway #paymentGateway></select-payment-gateway>
       <!-- bank details ends here -->
 
     </form>

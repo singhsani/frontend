@@ -1,5 +1,5 @@
 <!-- Payment Success-->
-<div class="container text-center" *ngIf="responseObj.order_status == 'Success'">
+<div class="container text-center" *ngIf="responseObj.order_status == 'Success' || responseObj.authStatus == '0300' ">
 	<div>
 		<h1>
 			<mat-icon class="checkIcon successicon">check_circle_outline</mat-icon>
@@ -47,7 +47,7 @@
 </div>
 
 <!-- Payment failed-->
-<div class="conatiner text-center" *ngIf="responseObj.order_status == 'Failure' || responseObj.order_status == 'Aborted'">
+<div class="conatiner text-center" *ngIf="(responseObj.order_status == 'Failure' || responseObj.order_status == 'Aborted')  || (responseObj.hasOwnProperty('authStatus') && responseObj.authStatus != '0300')">
 	<mat-icon class="failedIcon">error</mat-icon>
 	<h1 class="errorMessage">Your payment failed</h1>
 	<h4>Please try after some time</h4>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { MatTableDataSource } from '@angular/material';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ValidationService } from 'src/app/shared/services/validation.service';
@@ -19,6 +19,7 @@ import { FormsActionsService } from 'src/app/core/services/citizen/data-services
 })
 export class ZooBookingComponent implements OnInit {
 
+  @ViewChild("paymentGateway") paymentGateway: TemplateRef<any>;
   // Loading Ticketing Configurations
   ticketingConstants = TicketingConstants;
   ticketingUtils: TicketingUtils;
@@ -114,7 +115,7 @@ export class ZooBookingComponent implements OnInit {
       formGroupName: 'children',
       formControlName: 'totalChild',
       placeHolder: this.pipe.transform("number_of_children", this.translateKey),
-      max: 4,
+      max: 3,
       priceField: 'CHILD'
     },
     {
@@ -122,7 +123,7 @@ export class ZooBookingComponent implements OnInit {
       formGroupName: 'adults',
       formControlName: 'totalAdult',
       placeHolder: this.pipe.transform("number_of_adults", this.translateKey),
-      max: 4,
+      max: 3,
       priceField: 'ADULT'
     },
     {
@@ -246,10 +247,10 @@ export class ZooBookingComponent implements OnInit {
       }),
       idNumber: [null, [Validators.required, Validators.maxLength(4), Validators.minLength(4)]],
       visitingDate: [moment().format('YYYY-MM-DD'), Validators.required],
-      totalChild: [0],
-      totalAdult: [0],
-      totalCamera: [0],
-      totalVideoCamera: [0],
+      totalChild: [0, Validators.max(100)],
+      totalAdult: [0, Validators.max(100)],
+      totalCamera: [0, Validators.max(100)],
+      totalVideoCamera: [0, Validators.max(100)],
       bankName: this.fb.group({
         code: [null],
       }),
@@ -305,7 +306,9 @@ export class ZooBookingComponent implements OnInit {
           // this.ticketingService.getTotalAmount(err.error.data.refNumber).subscribe(data => {
           // console.log(data);
           // this.ticketBookingForm.get('totalAmount').setValue(err.error.data.TOTAL);
-          this.ticketingUtils.redirectToPayment(err, this.commonService, this.ticketingService, this.ticketBookingForm, this.router);
+          // this.ticketingUtils.redirectToPayment(err, this.commonService, this.ticketingService, this.ticketBookingForm, this.router);
+             this.ticketingUtils.redirectToCCAvenuePayment(err, this.commonService, this.ticketingService, this.paymentGateway ,this.ticketBookingForm, this.router);
+         
           // return;
           // });
         }
