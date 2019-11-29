@@ -1,5 +1,5 @@
 import { FormsActionsService } from 'src/app/core/services/citizen/data-services/forms-actions.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as moment from 'moment';
 import { TicketingsService } from '../../../shared-ticketing/services/ticketings.service';
@@ -18,6 +18,8 @@ import { TranslatePipe } from 'src/app/shared/modules/translate/translate.pipe';
 })
 export class BookPlanetariumComponent implements OnInit {
 
+  @ViewChild("paymentGateway") paymentGateway: TemplateRef<any>;
+  
   translateKey: string = 'planetariumScreen';
 
   ticketBookingForm: FormGroup;
@@ -539,7 +541,8 @@ export class BookPlanetariumComponent implements OnInit {
           if (err.status === 402) {
 
             this.ticketBookingForm.get('refNumber').setValue(err.error.data.refNumber);
-            this.ticketingUtils.redirectToPayment(err, this.commonService, this.ticketingService, this.ticketBookingForm, this.router);
+            // this.ticketingUtils.redirectToPayment(err, this.commonService, this.ticketingService, this.ticketBookingForm, this.router);
+            this.ticketingUtils.redirectToCCAvenuePayment(err, this.commonService, this.ticketingService, this.paymentGateway ,this.ticketBookingForm, this.router);
           }
           else {
             this.commonService.openAlert("Error", err.error[0].message, "warning")

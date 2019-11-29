@@ -144,8 +144,8 @@ export class BirthDuplicateComponent implements OnInit {
 	 * @param data - original json.
 	 */
 	updateDuplicateRecordValue(data) {
-		this.birthDuplicateForm.get('birthDate').setValue(data.childs[0].birthDate);
-		this.birthDuplicateForm.get('childName').setValue(data.childs[0].childName);
+		this.birthDuplicateForm.get('birthDate').setValue(data.birthDate);
+		this.birthDuplicateForm.get('childName').setValue(data.childName);
 	}
 
 	/**
