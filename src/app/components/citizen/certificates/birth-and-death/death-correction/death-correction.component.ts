@@ -209,7 +209,7 @@ export class DeathCorrectionComponent implements OnInit {
 		this.deathCorrectionForm.get('deceasedMiddleNameGuj').setValue(data.deceasedMiddleNameGuj);
 		this.deathCorrectionForm.get('fatherOrHusbandName').setValue(data.fatherOrHusbandName);
 		this.deathCorrectionForm.get('motherName').setValue(data.motherName);
-		this.deathCorrectionForm.get('refNumber').setValue(this.regStatusForm.get('applicationNumber').value);
+		this.deathCorrectionForm.get('refNumber').setValue(this.regStatusForm.get('registrationNumber').value);
 		this.deathCorrectionForm.get('typeOfCorrection').get('code').setValue(this.regStatusForm.get('typeOfCorrection').get('code').value);
 	}
 
@@ -259,7 +259,7 @@ export class DeathCorrectionComponent implements OnInit {
 			typeOfCorrection: this.fb.group({
 				code: [null, Validators.required]
 			}),
-			applicationNumber: [null, [Validators.required]],
+			registrationNumber: [null, [Validators.required]],
 		});
 	}
 
