@@ -546,7 +546,7 @@
                     </div>
                     
                     <div formGroupName="motherMarriageAge" class="col-md-4 ngSelect">
-                        <ng-select placeholder="{{'mother_age_at_time_of_marriage' | translate:translateKey}} *" formControlName="code">
+                        <ng-select OnlyNumber placeholder="{{'mother_age_at_time_of_marriage' | translate:translateKey}} *" formControlName="code">
                             <ng-option matTooltip="{{maamt.name}}" *ngFor="let maamt of MOTHER_MARRIAGE_AGE" [value]="maamt.code">
                                 {{maamt.name}}
                             </ng-option>
@@ -556,7 +556,7 @@
                     </div>
                     
                     <div formGroupName="motherDeliveryAge" class="col-md-4 ngSelect">
-                        <ng-select placeholder="{{'mother_age_at_time_of_said_delivery' | translate:translateKey}} *" formControlName="code">
+                        <ng-select OnlyNumber placeholder="{{'mother_age_at_time_of_said_delivery' | translate:translateKey}} *" formControlName="code">
                             <ng-option matTooltip="{{maasd.name}}" *ngFor="let maasd of MOTHER_DELIVERY_AGE" [value]="maasd.code">
                                 {{maasd.name}}
                             </ng-option>

@@ -68,7 +68,6 @@ export class DeathRegistrationComponent implements OnInit {
 	MaritalStatusData: Array<any> = [];
 	IMMEDIATE_COD_Data: Array<any> = [];
 	DEATH_REPORT_CORONER_Data: Array<any> = [];
-
 	/**
 	 * step labels
 	 */
@@ -736,5 +735,9 @@ export class DeathRegistrationComponent implements OnInit {
 	 */
 	dateFormat(date, controlType: string) {
 		this.deathCertificateForm.get(controlType).setValue(moment(date).format("YYYY-MM-DD"));
+
+		if(controlType == 'treatmentDurationFrom'){
+			this.minTreatmentDate = moment(date).format("YYYY-MM-DD");
+		}	
 	}
 }

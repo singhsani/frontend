@@ -324,7 +324,7 @@
 					</mat-form-field>
 
 					<mat-form-field  class="col-md-4" *ngIf="deathCertificateForm.get('medicalTreatment').get('code').value && deathCertificateForm.get('medicalTreatment').get('code').value !='NO_MED_HELP_ATT' ">
-						<input matInput [min]="deathCertificateForm.get('birthDate').value" [max]="maxTreatmentDate"  required [matDatepicker]="treatFromDatepicker" formControlName="treatmentDurationFrom" (dateChange)="dateFormat($event.value,'treatmentDurationFrom')"
+						<input matInput appDate [min]="deathCertificateForm.get('birthDate').value" [max]="maxTreatmentDate"  required [matDatepicker]="treatFromDatepicker" formControlName="treatmentDurationFrom" (dateChange)="dateFormat($event.value,'treatmentDurationFrom')"
 						 placeholder="{{ 'treatment_DurationFrom' | translate:translateKey }}">
 						<mat-datepicker-toggle matSuffix [for]="treatFromDatepicker"></mat-datepicker-toggle>
 						<mat-datepicker touchUi="true" #treatFromDatepicker></mat-datepicker>
@@ -333,7 +333,7 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4" *ngIf="deathCertificateForm.get('medicalTreatment').get('code').value && deathCertificateForm.get('medicalTreatment').get('code').value !='NO_MED_HELP_ATT' ">
-						<input matInput [min]="deathCertificateForm.get('birthDate').value" [max]="maxTreatmentDate" required [matDatepicker]="treatToDatePicker" formControlName="treatmentDurationTo" (dateChange)="dateFormat($event.value,'treatmentDurationTo')"
+						<input matInput appDate [min]="minTreatmentDate" [max]="maxTreatmentDate" required [matDatepicker]="treatToDatePicker" formControlName="treatmentDurationTo" (dateChange)="dateFormat($event.value,'treatmentDurationTo')"
 						 placeholder="{{ 'treatment_DurationTo' | translate:translateKey }}">
 						<mat-datepicker-toggle matSuffix [for]="treatToDatePicker"></mat-datepicker-toggle>
 						<mat-datepicker touchUi="true" #treatToDatePicker></mat-datepicker>
