@@ -22,7 +22,7 @@ export class MyBookingComponent implements OnInit {
 	@ViewChild(MatPaginator) paginator: MatPaginator;
 	@ViewChild(MatSort) sort: MatSort;
 	@ViewChild("templateResponseModel") templateResponseModel: TemplateRef<any>;
-
+	@ViewChild("paymentGateway") paymentGateway: any;
 	/**
 	 * Cancel Booking Language Translation key.
 	 */
@@ -342,7 +342,8 @@ export class MyBookingComponent implements OnInit {
 			if (err.status = 402) {
 				this.isLoadingResults = false;
 				if (err.status == 402) {
-					this.bookingUtils.redirectToPayment(err, this.commonService, this.bookingService);
+					// this.bookingUtils.redirectToPayment(err, this.commonService, this.bookingService);
+					this.bookingUtils.redirectToCCAvenuePayment(err, this.commonService, this.bookingService, this.paymentGateway);
 				}
 			} else if (err.error[0].code == this.bookingConstant.INVALID_BOOKING_STATUS) {
 				this.commonService.openAlert("Invalid Booking Status", err.error[0].message, "warning", "")

@@ -25,6 +25,7 @@ import { TicketingConstants, TicketingUtils } from '../../config/ticketing-confi
 
 export class MyTicketingsComponent implements OnInit {
 
+  @ViewChild("paymentGateway") paymentGateway: any;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild("templateResponseModel") templateResponseModel: TemplateRef<any>;
@@ -376,7 +377,9 @@ export class MyTicketingsComponent implements OnInit {
       if (err.status = 402) {
         this.isLoadingResults = false;
         if (err.status == 402) {
-          this.ticketingUtils.redirectToPayment(err, this.commonService, this.ticketingService);
+          // this.ticketingUtils.redirectToPayment(err, this.commonService, this.ticketingService);
+          this.bookingUtils.redirectToCCAvenuePayment(err, this.commonService, this.ticketingService, this.paymentGateway);
+       
         }
       } else if (err.error[0].code === this.ticketingConstants.INVALID_BOOKING_STATUS) {
         this.commonService.openAlert("Invalid Booking Status", err.error[0].message, "warning", "")
