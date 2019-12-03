@@ -3,9 +3,12 @@ import { HttpService } from '../../../../shared/services/http.service';
 import { Observable } from 'rxjs/Observable';
 import { SessionStorageService } from 'angular-web-storage';
 import { HttpEventType } from '@angular/common/http';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable()
 export class FormsActionsService {
+	public NBCtoDuplicateBirth: BehaviorSubject<any> = new BehaviorSubject('');
+	public NDCtoDuplicateDeath: BehaviorSubject<any> = new BehaviorSubject('');
 
 	requestURL: string;
 	apiType: string;
@@ -350,4 +353,36 @@ export class FormsActionsService {
 		return this.http.get(this.requestURL, 'printReceipt');
 	}
 
+	redirectToDuplicateBirth(data: string) {
+		setTimeout(() => {
+			this.NBCtoDuplicateBirth.next(data);
+		}
+			, 1000);
+	}
+
+	// public NBCtoDuplicateBirth: BehaviorSubject<string> = new BehaviorSubject('');
+	/**
+	 * This method get value 
+	 */
+	getNBCtoDuplicateBirth(): Observable<any> {
+		return this.NBCtoDuplicateBirth.asObservable();
+	}
+	/**
+	 * This method set value
+	 */
+	setNBCtoDuplicateBirth(data: any) {
+		this.NBCtoDuplicateBirth.next(data);
+	}
+    /**
+	 * This method get value 
+	 */
+	getNDCtoDuplicateDeath(): Observable<any> {
+		return this.NDCtoDuplicateDeath.asObservable();
+	}
+	/**
+	 * This method set value
+	 */
+	setNDCtoDuplicateDeath(data: any) {
+		this.NDCtoDuplicateDeath.next(data);
+	}
 }

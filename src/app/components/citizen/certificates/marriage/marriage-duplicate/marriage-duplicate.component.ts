@@ -180,7 +180,7 @@ export class MarriageDuplicateComponent implements OnInit {
 			}),
 			totalCopies: [null, Validators.required],
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
-			deptFileStatus: null,
+			// deptFileStatus: null,
 			serviceCode: "HEL-DUPMR",
 			marriageRegNumber: null,
 			marriageDate: [''],

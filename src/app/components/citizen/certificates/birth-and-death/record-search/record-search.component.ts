@@ -99,9 +99,7 @@ export class RecordSearchComponent implements OnInit {
 		{ id: "2018", code: 2018, name: "2018" },
 		{ id: "2019", code: 2019, name: "2019" },
 		{ id: "2020", code: 2020, name: "2020" }
-
 	];
-
 
 	/**
 	 * length of result in paginator.
@@ -267,7 +265,9 @@ export class RecordSearchComponent implements OnInit {
 		}
 
 		this.commonService.confirmAlert('No record found!', `Do you want to create ${type} certificate`, 'warning', '', confirm => {
-			this.searchResult.emit(false);
+			// this.searchResult.emit(false);
+			//redirect to new resigstration form
+			this.redirectToNRCForm(false);
 		});
 	}
 
@@ -288,7 +288,14 @@ export class RecordSearchComponent implements OnInit {
 	 * This method use for redirect to duplicate form
 	 * @param data - Row data
 	 */
-	redirectToDuplicate(data) {
+	redirectToDuplicate(data:any) {
+		this.searchResult.emit(data);
+	}
+
+	/**
+	 * This method for popup button event
+	 */
+	redirectToNRCForm(data:any){
 		this.searchResult.emit(data);
 	}
 

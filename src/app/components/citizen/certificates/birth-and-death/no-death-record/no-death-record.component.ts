@@ -262,9 +262,20 @@ export class NoDeathRecordComponent implements OnInit {
 	 * @param event - Output event
 	 */
 	showNRCForm(event) {
-		this.isVisibeNRCForm = event;
-		if (!this.isVisibeNRCForm) {
+		let tabledataValue = event;
+		if (tabledataValue != false) {
 
+			this.formService.apiType = ManageRoutes.getApiTypeFromApiCode('HEL-DUPDR');
+			this.formService.createFormData().subscribe(res => {
+				//set value for get in duplicate birth (other component) component by BehaviorSubject
+				this.formService.setNDCtoDuplicateDeath(event);
+				let redirectUrl = ManageRoutes.getFullRoute('HEL-DUPDR');
+				this.router.navigate([redirectUrl, res.serviceFormId, 'HEL-DUPDR']);
+			});
+
+		}
+		else {
+			this.isVisibeNRCForm = false;
 			this.formService.createFormData().subscribe(res => {
 				this.appId = res.serviceFormId;
 				let url = this.location.path().replace('false', this.appId.toString());
@@ -276,7 +287,6 @@ export class NoDeathRecordComponent implements OnInit {
 				this.requiredDocumentList();
 				this.showButtons = true;
 			});
-
 			this.showSearchForm = false;
 		}
 	}
