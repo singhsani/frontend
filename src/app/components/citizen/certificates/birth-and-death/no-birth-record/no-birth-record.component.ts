@@ -48,6 +48,7 @@ export class NoBirthRecordComponent implements OnInit {
 	stepLable2: string = "birth_blace_address_detail";
 	stepLable3: string = "applicant_detail";
 	stepLable4: string = "upload_documents";
+
 	/**
 	 * Using Common Configuration
 	*/
@@ -268,8 +269,19 @@ export class NoBirthRecordComponent implements OnInit {
 	 * @param event - Output event
 	 */
 	showNRCForm(event) {
-		this.isVisibeNRCForm = event;
-		if (!this.isVisibeNRCForm) {
+		let tabledataValue = event;
+		if (tabledataValue != false) {
+
+			this.formService.apiType = ManageRoutes.getApiTypeFromApiCode('HEL-DUPBR');
+			this.formService.createFormData().subscribe(res => {
+				//set value for get in duplicate birth (other component) component by BehaviorSubject
+				this.formService.setNBCtoDuplicateBirth(event);
+				let redirectUrl = ManageRoutes.getFullRoute('HEL-DUPBR');
+				this.router.navigate([redirectUrl, res.serviceFormId, 'HEL-DUPBR']);
+			});
+		}
+		else {
+			this.isVisibeNRCForm = false;
 			this.formService.createFormData().subscribe(res => {
 				this.appId = res.serviceFormId;
 				let url = this.location.path().replace('false', this.appId.toString());
@@ -281,7 +293,6 @@ export class NoBirthRecordComponent implements OnInit {
 				this.requiredDocumentList();
 				this.showButtons = true;
 			});
-
 			this.showSearchForm = false;
 		}
 	}
@@ -294,4 +305,5 @@ export class NoBirthRecordComponent implements OnInit {
 		this.tabIndex = evt;
 	}
 
+	
 }

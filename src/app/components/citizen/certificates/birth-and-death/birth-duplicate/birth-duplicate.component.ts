@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
@@ -76,6 +76,7 @@ export class BirthDuplicateComponent implements OnInit {
 	 * language translate key
 	 */
 	translateKey: string = 'BirthDuplicateScreen';
+	public NBCtoDuplicateBirth: any;
 
 	/**
 	 * Constructor
@@ -90,6 +91,7 @@ export class BirthDuplicateComponent implements OnInit {
 	constructor(
 		private commonService: CommonService,
 		private fb: FormBuilder,
+		private router: Router,
 		private location: Location,
 		private route: ActivatedRoute,
 		private formService: FormsActionsService
@@ -99,7 +101,6 @@ export class BirthDuplicateComponent implements OnInit {
 	 * Method initializes first.
 	 */
 	ngOnInit() {
-
 		this.route.paramMap.subscribe(param => {
 			this.appId = Number(param.get('id'));
 			this.apiCode = param.get('apiCode');
@@ -108,9 +109,9 @@ export class BirthDuplicateComponent implements OnInit {
 
 		this.birthDuplicateFormControls();
 
-
 		if (this.appId) {
 			this.isVisibeDuplicateForm = false;
+			this.formService.getNBCtoDuplicateBirth().subscribe(data => this.NBCtoDuplicateBirth = data);
 			this.getBirthDuplicateData();
 			this.getLookupData();
 		} else {
@@ -154,7 +155,11 @@ export class BirthDuplicateComponent implements OnInit {
 	getBirthDuplicateData() {
 		this.formService.getFormData(this.appId).subscribe(res => {
 			this.birthDuplicateForm.patchValue(res);
-		});
+			this.birthDuplicateForm.patchValue(this.NBCtoDuplicateBirth);
+			this.birthDuplicateForm.get('birthRegNumber').setValue(this.NBCtoDuplicateBirth.certificateno)
+			// this.birthDuplicateForm.get('childName').setValue(this.NBCtoDuplicateBirth.childName);
+		},err => {});
+		
 	}
 
 	/**
@@ -236,6 +241,13 @@ export class BirthDuplicateComponent implements OnInit {
 			this.createDuplicateBirthRecord(event);
 			this.isVisibeDuplicateForm = false;
 			this.showSearchForm = false;
+		}
+		else{
+			this.formService.apiType = ManageRoutes.getApiTypeFromApiCode('HEL-NRCBR');
+			this.formService.createFormData().subscribe(res => {
+				let redirectUrl = ManageRoutes.getFullRoute('HEL-NRCBR');
+				this.router.navigate([redirectUrl, res.serviceFormId, 'HEL-NRCBR']);
+			});
 		}
 	}
 }

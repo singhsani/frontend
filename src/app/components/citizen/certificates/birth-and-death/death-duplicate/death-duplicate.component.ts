@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 // import { MatHorizontalStepper, MatStepLabel } from '@angular/material';
 import { Location } from '@angular/common';
 import { CommonService } from '../../../../../shared/services/common.service';
@@ -81,7 +81,7 @@ export class DeathDuplicateComponent implements OnInit {
 	 * Duplicate copy mode lookup.
 	 */
     DuplicateCopyMode: Array<any> = [];
-
+    public NDCtoDuplicateDeath: any;
 	/**
 	 * constructor
 	 * @param location 
@@ -96,6 +96,7 @@ export class DeathDuplicateComponent implements OnInit {
         private location: Location,
         private commonService: CommonService,
         private fb: FormBuilder,
+        private router: Router,
         private route: ActivatedRoute,
         private formService: FormsActionsService
     ) { }
@@ -114,6 +115,7 @@ export class DeathDuplicateComponent implements OnInit {
 
         if (this.appId) {
             this.isVisibeDuplicateForm = false;
+            this.formService.getNDCtoDuplicateDeath().subscribe(data => this.NDCtoDuplicateDeath = data)
             this.getDeathDuplicateData();
             this.getLookupData();
         } else {
@@ -157,7 +159,10 @@ export class DeathDuplicateComponent implements OnInit {
     getDeathDuplicateData() {
         this.formService.getFormData(this.appId).subscribe(res => {
             this.deathDuplicateForm.patchValue(res);
-        });
+            this.deathDuplicateForm.patchValue(this.NDCtoDuplicateDeath);
+            this.deathDuplicateForm.get('deathRegNumber').setValue(this.NDCtoDuplicateDeath.certificateno)
+        },
+        err => {});
     }
 
 	/**
@@ -239,5 +244,12 @@ export class DeathDuplicateComponent implements OnInit {
             this.isVisibeDuplicateForm = false;
             this.showSearchForm = false;
         }
+        else{
+			this.formService.apiType = ManageRoutes.getApiTypeFromApiCode('HEL-NRCDR');
+			this.formService.createFormData().subscribe(res => {
+				let redirectUrl = ManageRoutes.getFullRoute('HEL-NRCDR');
+				this.router.navigate([redirectUrl, res.serviceFormId, 'HEL-NRCDR']);
+			});
+		}
     }
 }
