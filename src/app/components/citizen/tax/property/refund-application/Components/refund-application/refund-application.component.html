@@ -1,0 +1,13 @@
+<mat-card class="cardH1">
+    <h1>Application for Refund against vacancy</h1>
+</mat-card>
+
+<div>
+    <div *ngIf="isShowForm">
+        <app-refund-application-form></app-refund-application-form>
+    </div>
+    <div *ngIf="isShowApproval">
+        <app-refund-application-approval></app-refund-application-approval>
+    </div>
+</div>
+<br>

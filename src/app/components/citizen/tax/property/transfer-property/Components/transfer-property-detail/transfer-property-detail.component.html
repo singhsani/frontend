@@ -1,0 +1,35 @@
+<mat-card class="col-md-12">
+  <div class="row">
+    <div class="col-md-6">
+      <h5>Detail</h5>
+    </div>
+    <div class="col-md-6 text-right">
+      <button mat-raised-button class="ml-3" color="primary" type="button" (click)="cancelForm()">
+        <mat-icon>skip_previous</mat-icon> Back
+      </button>
+    </div>
+    <hr class="margin-top-10">
+  </div>
+  <mat-horizontal-stepper #stepper>
+    <mat-step>
+      <ng-template matStepLabel>Property Info</ng-template>
+      <app-property-info></app-property-info>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Owner</ng-template>
+      <app-property-owner></app-property-owner>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Document Reference</ng-template>
+      <app-document-reference></app-document-reference>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Document Check List</ng-template>
+      <app-document-check-list></app-document-check-list>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Approval</ng-template>
+      <app-property-transfer-approval></app-property-transfer-approval>
+    </mat-step>
+  </mat-horizontal-stepper>
+</mat-card>

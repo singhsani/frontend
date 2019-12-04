@@ -1,0 +1,300 @@
+<form #form="ngForm" (ngSubmit)="onSubmit(form)">
+    <mat-card>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="section-title">
+                    <h4> Detail</h4>
+                    <mat-divider></mat-divider>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <mat-form-field class="full-width-input">
+                    <mat-label>Application No</mat-label>
+                    <input trim="blur" matInput required name="applicationNumber" 
+                        #ApplicationNumber="ngModel" [(ngModel)]="addressModel.applicationNumber">
+                    <mat-error *ngIf="ApplicationNumber.invalid">*Application No is required.</mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="ngSelect">
+                    <ng-select required placeholder="Reason for Property Creation *" [items]="subReasonPropertyCreationList" 
+                        bindValue="itemId" bindLabel="itemName" name="subReasonForCreationItemId"
+                        [(ngModel)]="addressModel.subReasonForCreationItemId" #SubReasonForCreationItem="ngModel"
+                        [ngClass]="{'ng-invalid ng-touched':  form.submitted && SubReasonForCreationItem.invalid}">
+                    </ng-select>
+                    <div *ngIf="(form.submitted && SubReasonForCreationItem.invalid)  || (SubReasonForCreationItem.invalid && SubReasonForCreationItem.touched)">
+                        <mat-error *ngIf="SubReasonForCreationItem.errors.required">*Reason for Property Creation is required.</mat-error>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <mat-form-field class="full-width-input">
+                    <mat-label>Property No</mat-label>
+                    <input trim="blur" matInput name="propertyNo" [(ngModel)]="addressModel.propertyNo" disabled>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <mat-form-field class="full-width-input">
+                    <mat-label>Reference Property No</mat-label>
+                    <input trim="blur" matInput name="referencePropertyNo"
+                        minlength="12" #ReferencePropertyNo="ngModel"
+                        [(ngModel)]="addressModel.referencePropertyNo" maxlength="255" mask-property-no>
+                    <mat-error *ngIf="ReferencePropertyNo.invalid">*Invalid Reference Property No.</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field class="full-width-input">
+                    <mat-label>Serial No</mat-label>
+                    <input trim="blur" matInput number-only name="serialNo" [(ngModel)]="addressModel.serialNo"
+                        #SerialNo="ngModel" maxlength="255">
+                </mat-form-field>
+            </div>
+            <div class="col-md-2">
+                <div class="button-row text-right">
+                    <button mat-raised-button type="button" color="primary" (click)="onSearchSRNo()">
+                        <mat-icon>search</mat-icon> Search SR No
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="ngSelect" *ngIf="wardZoneLevel.length>=1">
+                    <ng-select required [placeholder]="!wardZoneLevel[0]?'': wardZoneLevel[0].levelName + ' *'"
+                        [items]="wardZoneLevel1List" bindValue="parentWardzoneId" bindLabel="wardzoneName"
+                        name="level1Id" [(ngModel)]="addressModel.level1Id" #Level1Id="ngModel"
+                        (ngModelChange)="onChangedWardZone($event,2)"
+                        [ngClass]="{'ng-invalid ng-touched':  form.submitted && Level1Id.invalid}">
+                    </ng-select>
+                    <div *ngIf="(form.submitted && Level1Id.invalid)  || (Level1Id.invalid && Level1Id.touched)">
+                        <mat-error *ngIf="Level1Id.errors.required">
+                            *{{!wardZoneLevel[0]?'': wardZoneLevel[0].levelName}} is
+                            required.</mat-error>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-6">
+                <div class="ngSelect" *ngIf="wardZoneLevel.length>=2">
+                    <ng-select required [placeholder]="!wardZoneLevel[1]?'': wardZoneLevel[1].levelName + ' *'"
+                        [items]="wardZoneLevel2List" bindValue="wardzoneId" bindLabel="wardzoneName" name="Level2Id"
+                        [(ngModel)]="addressModel.level2Id" #Level2Id="ngModel"
+                        (ngModelChange)="onChangedWardZone($event,3)"
+                        [ngClass]="{'ng-invalid ng-touched':  form.submitted && Level2Id.invalid}">
+                    </ng-select>
+                    <div *ngIf="(form.submitted && Level2Id.invalid)  || (Level2Id.invalid && Level2Id.touched)">
+                        <mat-error *ngIf="Level2Id.errors.required">
+                            *{{!wardZoneLevel[1]?'': wardZoneLevel[1].levelName}} is
+                            required.</mat-error>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="ngSelect" *ngIf="wardZoneLevel.length>=3">
+                    <ng-select [placeholder]="!wardZoneLevel[2]?'': wardZoneLevel[2].levelName"
+                        [items]="wardZoneLevel3List" bindValue="wardzoneId" bindLabel="wardzoneName" name="level3Id"
+                        [(ngModel)]="addressModel.level3Id" (ngModelChange)="onChangedWardZone($event,4)">
+                    </ng-select>
+                </div>
+
+            </div>
+            <div class="col-md-6">
+                <div class="ngSelect" *ngIf="wardZoneLevel.length>=4">
+                    <ng-select [placeholder]="!wardZoneLevel[3]?'': wardZoneLevel[3].levelName"
+                        [items]="wardZoneLevel4List" bindValue="wardzoneId" bindLabel="wardzoneName" name="level4Id"
+                        [(ngModel)]="addressModel.level4Id">
+                    </ng-select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <mat-form-field class="full-width-input">
+                    <mat-label>GIS Reference No</mat-label>
+                    <input trim="blur" matInput number-only name="gisRefNo" [(ngModel)]="addressModel.gisRefNo"
+                        maxlength="255">
+                </mat-form-field>
+            </div>
+        </div>
+    </mat-card>
+    <mat-card class="mt-4">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="section-title">
+                    <h4>Property Address</h4>
+                    <mat-divider></mat-divider>
+                </div>
+            </div>
+        </div>
+        <div class="row" *ngIf="!isValidForm">
+            <div class="col-md-12">
+                <div class="alert alert-danger">*Please fill at least one of the fields of Property Address.<br>
+                    i.e. House No. or Building Name or Society Name or Street Name or Landmark or Area Name.</div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <mat-form-field class="full-width-input">
+                    <mat-label>FP No</mat-label>
+                    <input trim="blur" trim="blur" matInput (input)="onChangeAddress()" name="fpNo"
+                        [(ngModel)]="addressModel.propertyAddressDTO.fpNo" maxlength="10">
+                </mat-form-field>
+            </div>
+            <div class="col-md-6">
+                <mat-form-field class="full-width-input">
+                    <mat-label>Plot Part No</mat-label>
+                    <input trim="blur" trim="blur" matInput (input)="onChangeAddress()" name="plotPartNo"
+                        [(ngModel)]="addressModel.propertyAddressDTO.plotPartNo" maxlength="10">
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <mat-form-field class="full-width-input">
+                    <mat-label>TP No</mat-label>
+                    <input trim="blur" matInput (input)="onChangeAddress()" name="tpNo"
+                        [(ngModel)]="addressModel.propertyAddressDTO.tpNo" maxlength="10">
+                </mat-form-field>
+            </div>
+            <div class="col-md-6">
+                <mat-form-field class="full-width-input">
+                    <mat-label>Survey No</mat-label>
+                    <input trim="blur" matInput (input)="onChangeAddress()" name="serveyNo"
+                        [(ngModel)]="addressModel.propertyAddressDTO.serveyNo" maxlength="10">
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <mat-form-field class="full-width-input">
+                    <input trim="blur" matInput (input)="onChangeAddress()" name="houseNo"
+                        [(ngModel)]="addressModel.propertyAddressDTO.houseNo" placeholder="House / Flat No"
+                        maxlength="10">
+                </mat-form-field>
+            </div>
+            <div class="col-md-6">
+                <mat-form-field class="full-width-input">
+                    <input trim="blur" matInput (input)="onChangeAddress()" name="buildingName"
+                        [(ngModel)]="addressModel.propertyAddressDTO.buildingName" placeholder="Building Name"
+                        maxlength="50">
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <mat-form-field class="full-width-input">
+                    <input trim="blur" matInput (input)="onChangeAddress()" name="societyName"
+                        [(ngModel)]="addressModel.propertyAddressDTO.societyName" placeholder="Society Name"
+                        maxlength="50">
+                </mat-form-field>
+            </div>
+            <div class="col-md-6">
+                <mat-form-field class="full-width-input">
+                    <input trim="blur" matInput (input)="onChangeAddress()" name="streetName"
+                        [(ngModel)]="addressModel.propertyAddressDTO.streetName" placeholder="Name of Street / Road"
+                        maxlength="50">
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <mat-form-field class="full-width-input">
+                    <input trim="blur" matInput (input)="onChangeAddress()" name="landMark"
+                        [(ngModel)]="addressModel.propertyAddressDTO.landMark" placeholder="Land Mark" maxlength="50">
+                </mat-form-field>
+            </div>
+            <div class="col-md-6">
+                <mat-form-field class="full-width-input">
+                    <input trim="blur" matInput (input)="onChangeAddress()" name="areaName" placeholder="Area Name"
+                        [(ngModel)]="addressModel.propertyAddressDTO.areaName" maxlength="50">
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <mat-form-field class="full-width-input">
+                    <mat-label>State</mat-label>
+                    <input matInput name="state" [(ngModel)]="addressModel.propertyAddressDTO.state" disabled>
+                </mat-form-field>
+            </div>
+            <div class="col-md-6">
+                <mat-form-field class="full-width-input">
+                    <mat-label>District</mat-label>
+                    <input matInput name="district" [(ngModel)]="addressModel.propertyAddressDTO.district" disabled>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <mat-form-field class="full-width-input">
+                    <mat-label>City</mat-label>
+                    <input matInput name="city" [(ngModel)]="addressModel.propertyAddressDTO.city" disabled>
+                </mat-form-field>
+            </div>
+            <div class="col-md-6">
+                <mat-form-field class="full-width-input">
+                    <input type="text" trim="blur" matInput number-only [allowDecimals]="false" [onlyTwoDecimal]="false"
+                        (input)="onChangeAddress()" name="pincode" [(ngModel)]="addressModel.propertyAddressDTO.pincode"
+                        placeholder="Pin Code" #Pincode="ngModel" maxlength="6" minlength="6">
+                </mat-form-field>
+                <mat-error *ngIf="Pincode.invalid">*Pin Code is invalid.</mat-error>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="full-width-input">
+                    <mat-checkbox name="postalAddressCheckBox"
+                        [(ngModel)]="addressModel.propertyAddressDTO.isPostalAddressDiff" (change)="changePostalAddressCheckBox()">Postal
+                        Address is different than Property Address</mat-checkbox>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <mat-form-field class="full-width-input">
+                    <textarea matInput name="propertyAddress" #PropertyAddress="ngModel" placeholder="Property Address"
+                        [(ngModel)]="addressModel.propertyAddressDTO.propertyAddress" maxlength="500" readonly
+                        rows="5"></textarea>
+                    <mat-error
+                        *ngIf="addressModel.propertyAddressDTO.postalAddress!=null && addressModel.propertyAddressDTO.postalAddress.length>500">
+                        Property Address max 500 characters allowed.</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-md-6">
+                <mat-form-field class="full-width-input">
+                    <textarea matInput name="postalAddress" #PostalAddressDiff="ngModel" placeholder="Postal Address"
+                        [(ngModel)]="addressModel.propertyAddressDTO.postalAddress"
+                        [required]="addressModel.propertyAddressDTO.isPostalAddressDiff"
+                        [readonly]="!addressModel.propertyAddressDTO.isPostalAddressDiff" rows="5" maxlength="500"
+                        (input)="checkIsPostalAddressEmpty(PostalAddressDiff)"></textarea>
+                    <mat-error *ngIf="PostalAddressDiff.invalid || PostalAddressDiff.touched">
+                        Postal Address is required.</mat-error>
+                    <mat-error
+                        *ngIf="addressModel.propertyAddressDTO.postalAddress!=null && addressModel.propertyAddressDTO.postalAddress.length>500">
+                        Postal Address max 500 characters allowed.</mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+    </mat-card>
+    <div class="row text-right mt-3">
+        <div class="col-md-12">
+            <button mat-raised-button color="primary" type="submit">
+                Next<mat-icon>skip_next</mat-icon>
+            </button>
+        </div>
+    </div>
+</form>

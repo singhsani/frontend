@@ -1,0 +1,20 @@
+<mat-card class="cardH1">
+    <h1>Application for Extract of Property</h1>
+  </mat-card>
+<div>
+    <!-- Search Component Start -->
+    <div *ngIf="!isShowForm">
+        <app-extract-property-search></app-extract-property-search>
+    </div>
+    <!-- Form Component Start -->
+    <div *ngIf="isShowForm">
+        <app-payment></app-payment>
+    </div>
+    <!-- Form Component End -->
+    <!-- Table Component Start -->
+    <div [hidden]="!isShowTable">
+        <app-extract-property-table></app-extract-property-table>
+    </div>
+    <!-- Table Component End -->
+</div>
+<br>

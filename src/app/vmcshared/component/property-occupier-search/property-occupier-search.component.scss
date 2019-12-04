@@ -1,0 +1,29 @@
+  .width100{
+    width: 100%;
+  }
+
+  .margin-top-20{
+    margin-top: 20px;
+  }
+
+  .example-container {
+    max-height: 500px;
+    overflow: auto;
+    position: relative;
+  }
+
+  table.custome-table th,
+  table.custome-table td{
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-bottom-color: rgba(0,0,0,.12);
+  padding: 5px;
+  }
+
+  td.mat-cell, td.mat-footer-cell, th.mat-header-cell{
+    min-width: 100px;
+  }
+
+  .mat-column-propertyNo {
+    width: 160px !important;
+  }

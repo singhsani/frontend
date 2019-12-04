@@ -1,0 +1,64 @@
+<mat-card class="cardH1 mat-card">
+  <div class="row ">
+    <div class="col-md-6 ">
+      <h1 class="">Create Formula</h1>
+    </div>
+  </div>
+</mat-card>
+<mat-card>
+  <div class="row">
+    <div class="col-md-4" [hidden]=!isProperty>
+      <mat-card>
+        <h4> <label>Property Functions</label></h4>
+        <hr class="mb-1">
+        <div class="formula-list">
+          <div class="formula-name" *ngFor="let item of propertyOperatorList" (dblclick)="onClickFomula(item.formulaCode,item)">
+            <span>{{item.formulaName}}</span>
+          </div>
+        </div>
+      </mat-card>
+    </div>
+    <div class="col-md-4" [hidden]=!isWater >
+      <mat-card>
+        <h4> <label>Water Functions</label></h4>
+        <hr class="mb-1">
+        <div class="formula-list">
+          <div class="formula-name" *ngFor="let item of waterOperatorList" (dblclick)="onClickFomula(item.formulaCode,item)">
+            <span>{{item.formulaName}}</span>
+          </div>
+        </div>
+      </mat-card>
+    </div>
+    <div class="col-md-4">
+      <mat-card>
+        <h4> <label>Operators</label></h4>
+        <hr class="mb-1">
+        <div class="formula-list">
+          <div class="formula-name" *ngFor="let item of operatorList" (dblclick)="onClickFomula(item.itemOtherValue,item)">
+            <span>{{item.itemName}}</span>
+          </div>
+        </div>
+      </mat-card>
+    </div>
+  </div>
+  <div class="row mt-3">
+    <div class="col-md-12">
+      <mat-form-field class="full-width-input">
+        <textarea matInput placeholder="Formula" name="formula" [(ngModel)]="formula"></textarea>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row mt-3">
+    <div class="col-md-12 text-right">
+      <button mat-raised-button color="primary" type="button" (click)="onCreate()">
+        <mat-icon>explicit</mat-icon> Select
+      </button>
+      <button mat-raised-button class="ml-3" type="button" color="warn" (click)="onClear()">
+        <mat-icon>clear_all</mat-icon> Clear
+      </button>
+      <button mat-raised-button class="ml-3" color="primary" type="button" (click)="onBack()">
+        <mat-icon>skip_previous</mat-icon> Back
+      </button>
+    </div>
+  </div>
+</mat-card>

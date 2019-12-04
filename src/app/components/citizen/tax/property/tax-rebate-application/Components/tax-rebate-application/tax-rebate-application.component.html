@@ -1,0 +1,16 @@
+<mat-card class="cardH1">
+    <h1>Application for Tax Rebate</h1>
+  </mat-card>
+<div>
+    <div *ngIf="!isShowForm">
+        <app-tax-rebate-application-search></app-tax-rebate-application-search>
+    </div>
+    
+    <div *ngIf="isShowForm">
+        <app-detail></app-detail>
+    </div>
+    <div [hidden]="!isShowTable">
+        <app-tax-rebate-application-table></app-tax-rebate-application-table>
+    </div>
+</div>
+<br>

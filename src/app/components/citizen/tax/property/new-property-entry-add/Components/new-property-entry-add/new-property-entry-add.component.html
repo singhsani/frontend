@@ -1,0 +1,38 @@
+<div [hidden]="isShowForm">
+
+<mat-card class="cardH1 mat-card">
+  <div class="row ">
+    <div class="col-md-6 ">
+        <h1 class="">Property Entry</h1>
+    </div>
+    <div class="col-md-6 text-right">
+    </div>
+  </div>
+</mat-card>
+<mat-horizontal-stepper #stepper (selectionChange)="stepChanged($event, stepper);">
+  <mat-step>
+    <ng-template matStepLabel>Address Detail</ng-template>
+    <app-address-detail></app-address-detail>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Owner Detail</ng-template>
+    <app-owner-detail></app-owner-detail>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Occupier Detail</ng-template>
+    <app-occupier-detail></app-occupier-detail>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Unit Detail</ng-template>
+    <app-unit-detail></app-unit-detail>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Approval</ng-template>
+    <app-approval-property-entry></app-approval-property-entry>
+  </mat-step>
+</mat-horizontal-stepper>
+</div>
+<div *ngIf="isShowForm">
+    <app-property-search></app-property-search>
+ </div>
+<br>
