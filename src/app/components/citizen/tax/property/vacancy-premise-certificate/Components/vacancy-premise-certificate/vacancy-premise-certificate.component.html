@@ -1,0 +1,20 @@
+<mat-card class="cardH1">
+    <h1>Vacancy Premise Application</h1>
+  </mat-card>
+<div>
+    <!-- Search Component Start -->
+    <div *ngIf="!isShowForm">
+        <app-vacancy-premise-certificate-search></app-vacancy-premise-certificate-search>
+    </div>
+    <!-- Form Component Start -->
+    <div *ngIf="isShowForm">
+        <app-bank-detail></app-bank-detail>
+    </div>
+    <!-- Form Component End -->
+    <!-- Table Component Start -->
+    <div [hidden]="!isShowTable">
+        <app-vacancy-premise-certificate-table></app-vacancy-premise-certificate-table>
+    </div>
+    <!-- Table Component End -->
+</div>
+<br>

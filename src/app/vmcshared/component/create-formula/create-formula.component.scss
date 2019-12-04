@@ -1,0 +1,27 @@
+a{
+   
+    width: 100%;
+    cursor: pointer;
+}
+
+a:hover{
+    color: #fff !important;
+    background-color: #673ab7;
+}
+
+.formula-name{
+    padding: 5px ;
+    cursor: pointer;
+}
+.formula-name:hover{
+    color: #fff !important;
+    background-color: #673ab7;
+}
+.selected{
+    color: #fff !important;
+background-color: darkgreen;
+}
+.formula-list{
+    height: 200px;
+    overflow: auto;
+}

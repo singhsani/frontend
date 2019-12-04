@@ -1,0 +1,36 @@
+
+ 
+  .width100{
+    width: 100%;
+  }
+
+  .margin-top-20{
+    margin-top: 20px;
+  }
+
+  .example-container {
+    max-height: 500px;
+    overflow: auto;
+    position: relative;
+  }
+
+  table.custome-table th,
+  table.custome-table td{
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-bottom-color: rgba(0,0,0,.12);
+  padding: 5px;
+  }
+
+  .outstandig-detail>li{
+    list-style: none;
+  }
+  .outstandig-detail>li h4{
+    padding: 10px;
+    padding-left: 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  }
+
+  td.mat-cell, td.mat-footer-cell, th.mat-header-cell{
+    min-width: 100px;
+  }

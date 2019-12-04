@@ -1,0 +1,13 @@
+<mat-card>
+    <form #documentCheckListForm="ngForm" (ngSubmit)="onSubmit(documentCheckListForm)">
+        <h1>Upload Button</h1>
+        <div class="button-row text-right mt-3">
+            <button mat-raised-button class="ml-3" color="primary" type="button" (click)="onBack()">
+                <mat-icon>skip_previous</mat-icon>Back
+            </button>
+            <button mat-raised-button class="ml-3" color="primary" type="submit">
+                <mat-icon>save</mat-icon>Submit
+            </button>
+        </div>
+    </form>
+</mat-card>

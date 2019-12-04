@@ -1,0 +1,91 @@
+<div class="mt-4">
+  <div class="example-container mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8 width100">
+      <ng-container matColumnDef="select">
+        <th mat-header-cell *matHeaderCellDef>Select </th>
+        <td mat-cell *matCellDef="let element">
+          <mat-radio-group [(ngModel)]="selectedItem" (change)="onChangeSelect($event)">
+            <mat-radio-button [value]="element"></mat-radio-button>
+          </mat-radio-group>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="propertyNo">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Property No </th>
+        <td mat-cell *matCellDef="let element"> {{element.propertyNo}} </td>
+      </ng-container>
+      <ng-container matColumnDef="propertyAddress">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Address </th>
+        <td mat-cell *matCellDef="let element"> {{element.propertyAddress.propertyAddress}} </td>
+      </ng-container>
+      <ng-container matColumnDef="ownerName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Owner Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.ownerName}} </td>
+      </ng-container>
+      <ng-container matColumnDef="occupierName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Occupier Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.occupierName}} </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+</div>
+<mat-card class="col-md-12 mt-3" *ngIf="isShowDetail">
+    <form #formDetail="ngForm" (ngSubmit)="onEnterClick(formDetail)">
+  <div class="row margin-top-20">
+    <div class="col-md-2">
+      <mat-form-field class="full-width-input">
+        <input matInput disabled placeholder="Outstanding Tax Amount" name="outstandingAmount" [(ngModel)]="outstandingDetailModel.outstandingAmount">
+      </mat-form-field>
+    </div>
+    <div class="col-md-2">
+      <button class="ml-3" mat-raised-button color="accent" type="button" (click)="onOutstandingDetailCLick()">
+        <mat-icon>details</mat-icon> {{detailOutstandingButtonText}}
+      </button>
+    </div>
+    <div class="col-md-2">
+        <mat-form-field class="full-width-input">
+          <input matInput trim="blur" required placeholder="Application No" maxlength="20" #ApplicationNo="ngModel" name="applicationNo" [(ngModel)]="outstandingDetailModel.applicationNo">
+          <mat-error *ngIf="ApplicationNo.invalid">*Application No is required.</mat-error>
+        </mat-form-field>
+      </div>
+    <div class="col-md-6 text-right">
+      <button class="ml-3" mat-raised-button color="primary" type="submit">
+        <mat-icon>add_circle_outline</mat-icon> Enter Transfer Detail
+      </button>
+    </div>
+  </div>
+</form>
+  <mat-card *ngIf="isShowOutstandingDetail">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="section-title">
+          <h4>Outstanding Detail</h4>
+          <mat-divider></mat-divider>
+        </div>
+      </div>
+      <div class="col-md-12" *ngFor="let outstandingDetail of outstandingDetailModel.occupierOutstandingDetails">
+        <ul class="outstandig-detail">
+          <li>
+            <h4>{{selectedItem.propertyNo}}-{{outstandingDetail.occupierCode}}-{{outstandingDetail.occupierName}}-{{outstandingDetail.outstandingAmount}}</h4>
+            <table class="custome-table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of outstandingDetail.taxRateWiseOutstandingDetails">
+                  <td>{{item.name}}</td>
+                  <td>{{item.outstandingAmount}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </mat-card>
+</mat-card>

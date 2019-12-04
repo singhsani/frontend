@@ -1,0 +1,30 @@
+<mat-card class="cardH1">
+    <h1>Application for Transfer of Ownership</h1>
+</mat-card>
+<div [hidden]="isShowForm">
+        <app-application-transfer-ownership-form></app-application-transfer-ownership-form>
+</div>
+<div *ngIf="isShowWaterBillDetail">
+    <app-water-bill-detail></app-water-bill-detail>
+</div>
+
+<div *ngIf="isShowWaterTaxDetail">
+    <app-water-tax-detail></app-water-tax-detail>
+</div>
+
+<div *ngIf="isShowPropertyDetail">
+    <app-property-detail></app-property-detail>
+</div>
+
+<div *ngIf="isShowPropertyBillDetail">
+    <app-property-bill-detail></app-property-bill-detail>
+</div>
+
+<div *ngIf="isShowPropertyTaxDetail">
+    <app-property-tax-detail></app-property-tax-detail>
+</div>
+
+<div *ngIf="isShowApproval">
+        <app-application-transfer-ownership-approval></app-application-transfer-ownership-approval>
+    </div>
+<br>

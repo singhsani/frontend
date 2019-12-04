@@ -1,0 +1,52 @@
+.overlay {
+    opacity: .7;
+    filter: alpha(opacity=40);
+    pointer-events: none;
+}
+
+.highlight{
+    background: #673ab7; /* green */
+  }
+  .highlight .mat-button.mat-primary, .mat-icon-button.mat-primary, .mat-stroked-button.mat-primary
+  {
+    color: #FFFFFF;
+  }
+  .highlight .mat-cell
+  {
+    color: #FFFFFF;
+  }
+
+  .margin-top-20
+  {
+    margin-top: 20px;
+  }
+  .margin-top-40
+  {
+    margin-top: 40px;
+  }
+  .panel-title
+  {
+    font-size: 20px;
+    
+  }
+
+  /deep/ .mat-expansion-panel-content
+  {
+    font: inherit !important;
+    color: inherit !important;
+  }
+
+  .mat-checkbox
+  {
+    line-height: 36px;
+    font-size: 15px;
+  }
+  .mat-checkbox-inner-container
+  {
+    height: 25px;
+    width: 25px;
+  }
+
+  .mat-checkbox-layout .mat-checkbox-label {
+    line-height: 36px;
+}

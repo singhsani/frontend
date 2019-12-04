@@ -1,0 +1,175 @@
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { Constants } from 'src/app/vmcshared/Constants';
+import { CommonService } from 'src/app/vmcshared/Services/common-service';
+import { VacancyPremiseCertificateDataSharingService } from '../../Services/vacancy-premise-certificate-data-sharing.service';
+import { VacancyPremiseCertificateService } from '../../Services/vacancy-premise-certificate.service';
+import { AlertService } from 'src/app/vmcshared/Services/alert.service';
+import { downloadFile } from 'src/app/vmcshared/downloadFile';
+import { Subscription } from 'rxjs';
+import * as moment from 'moment';
+import { PaymentDataSharingService } from 'src/app/vmcshared/component/payment/payment-data-sharing.service';
+
+@Component({
+  selector: 'app-bank-detail',
+  templateUrl: './bank-detail.component.html',
+  styleUrls: ['./bank-detail.component.scss']
+})
+
+export class BankDetailComponent implements OnInit, OnDestroy {
+
+  model: any = {};
+  modelForCliear: any = {};
+  bankList = [];
+  branchList = [];
+  actionOnList = [];
+  isShaved: boolean = false;
+  isApprovedorDecline: boolean = false;
+  minDate: Date = new Date();
+  vacancyToMinDate: Date = new Date();
+  isBankDetailRequired: boolean = false;
+  modelSubscription: Subscription;
+  constructor(
+    private vacancyPremiseCertificateDataSharingService: VacancyPremiseCertificateDataSharingService,
+    private paymentDataSharingService: PaymentDataSharingService,
+    private commonService: CommonService,
+    private vacancyPremiseCertificateService: VacancyPremiseCertificateService,
+    private alertService: AlertService) {
+
+  }
+
+  ngOnInit() {
+    this.model = {};
+    this.modelForCliear = {};
+    this.model.vacancyFrom = new Date();
+    this.vacancyToMinDate = new Date(moment(new Date()).add("days", 1).toString());
+    this.modelSubscription = this.vacancyPremiseCertificateDataSharingService.observableDataModel.subscribe(data => {
+      if (data) {
+        this.model = Object.assign({}, data);
+        this.modelForCliear = Object.assign({}, data);
+        this.model.vacancyFrom = new Date();
+        //this.model.vacancyTo = new Date();
+      }
+    });
+    this.getLookups();
+    this.getBankList();
+  }
+
+  ngOnDestroy() {
+    this.vacancyPremiseCertificateDataSharingService.updatedDataModel(null);
+    this.modelSubscription.unsubscribe();
+  }
+
+  getLookups() {
+    let lookupcode = `lookup_codes=${Constants.LookupCodes.Action_on_Vacancy_Amount}`;
+    this.commonService.getLookupValuesAccordingToScreen(lookupcode).subscribe(data => {
+      this.actionOnList = Object.assign([], data).filter(f => f.lookupCode.includes(Constants.LookupCodes.Action_on_Vacancy_Amount))[0].items;
+      var obj = this.actionOnList.filter(f => f.itemCode == Constants.ItemCodes.Adjust_in_next_bill)[0];
+      this.model.actionOnVacancyAmountLookupId = obj.itemId;
+
+    });
+  }
+
+  onChangeVacancyFrom(event) {
+    this.vacancyToMinDate = new Date(moment(new Date(this.model.vacancyFrom)).add("days", 1).toString());
+  }
+
+  onActionOnVacancy(val) {
+    this.isBankDetailRequired = false;
+    if (val) {
+      var obj = this.actionOnList.filter(f => f.itemId == val)[0];
+      if (obj.itemCode == Constants.ItemCodes.Refund) {
+        this.isBankDetailRequired = true;
+      }
+    }
+  }
+
+  onChangeBank(val) {
+    this.branchList = [];
+    this.model.branchIdhId = null;
+    if (val)
+      this.getBranchlist(val);
+  }
+
+  getBankList() {
+    this.vacancyPremiseCertificateService.getBankList().subscribe(
+      (data) => {
+        if (data.status === 200) {
+          this.bankList = data.body.data;
+        }
+      },
+      (error) => {
+        this.commonService.callErrorResponse(error);
+      }
+    )
+  }
+
+  getBranchlist(val) {
+    this.vacancyPremiseCertificateService.getBranchList(val).subscribe(
+      (data) => {
+        if (data.status === 200) {
+          this.branchList = data.body.data;
+        }
+      },
+      (error) => {
+        this.commonService.callErrorResponse(error);
+      }
+    )
+  }
+
+  cancelForm() {
+    this.vacancyPremiseCertificateDataSharingService.updatedIsShowForm(false);
+  }
+
+  onSubmit(formDetail: NgForm) {
+    if (formDetail.form.valid) {
+      this.model.totalOutstanding = 0;
+      this.model.propertyServiceApplicationId = 1; // TODO
+      this.model.vacancyFrom = this.commonService.getPayloadDate(this.model.vacancyFrom);
+      this.model.vacancyTo = this.commonService.getPayloadDate(this.model.vacancyTo);
+      this.vacancyPremiseCertificateService.save(this.model).subscribe(
+        (data) => {
+          this.isShaved = true;
+          this.model.vacancyPremiseCertficateId =  data.body.data.vacancyPremiseCertficateId;
+          this.alertService.success(data.body.message);
+          this.paymentDataSharingService.updatedDataModelFileDownload(data.body.data.responseDTOList);
+        },
+        (error) => {
+          this.commonService.callErrorResponse(error);
+        })
+    }
+  }
+
+  onDecline() {
+    this.vacancyPremiseCertificateService.reject({ vacancyPremiseCertficateId: this.model.vacancyPremiseCertficateId }).subscribe(
+      (data) => {
+        this.isApprovedorDecline = true;
+        // this.onClear();
+        //downloadFile(data, "reject-" + Date.now() + ".pdf", 'application/pdf');
+        this.alertService.success(data.body.message);
+        this.paymentDataSharingService.updatedDataModelFileDownload([]);
+      },
+      (error) => {
+        this.commonService.callErrorResponse(error);
+      });
+  }
+  onApproved() {
+    this.vacancyPremiseCertificateService.approve({ vacancyPremiseCertficateId: this.model.vacancyPremiseCertficateId }).subscribe(
+      (data) => {
+        this.isApprovedorDecline = true;
+        // this.onClear();
+       //downloadFile(data, "approve-" + Date.now() + ".pdf", 'application/pdf');
+       this.alertService.success(data.body.message);
+       this.paymentDataSharingService.updatedDataModelFileDownload(data.body.data);
+      },
+      (error) => {
+        this.commonService.callErrorResponse(error);
+      });
+  }
+
+  onClear() {
+    this.model = this.modelForCliear;
+    this.model.vacancyFrom = new Date();
+  }
+
+}

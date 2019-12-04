@@ -1,0 +1,151 @@
+<mat-card class="col-md-12 mt-3">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="section-title">
+        <h4>Payment Detail</h4>
+      </div>
+    </div>
+    <div class="col-md-6 text-right">
+      <button mat-raised-button class="ml-3" color="primary" type="button" (click)="cancelForm()">
+        <mat-icon>skip_previous</mat-icon> Back
+      </button>
+    </div>
+    <hr class="margin-top-10">
+  </div>
+  <div class="row">
+    <div class="col-md-2 ">
+      <mat-card>Total Amount : <b>{{model.totalAmount}}</b></mat-card>
+    </div>
+  </div>
+  <div class="row" [ngClass]="{'overlay': isHideGenerateButton }">
+    <div class="col-md-12 mt-3">
+      <form #formDetail="ngForm" (ngSubmit)="onSubmit(formDetail)">
+        <div class="row">
+          <div class="col-md-12">
+            <mat-radio-group name="paymentModeLookupId" [(ngModel)]="paymentModel.paymentDetail.paymentModeLookupId">
+              <mat-radio-button (change)="onChangePaymentMode($event)" *ngFor="let item of paymentModeList"
+                [value]="item.itemId">
+                {{item.itemName}}
+              </mat-radio-button>
+            </mat-radio-group>
+            <hr>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6" *ngIf="paymentMode==paymentModeItemCode.Payment_Mode_Cheque">
+            <mat-form-field class="full-width-input">
+              <input trim="blur" matInput required placeholder="Cheque Number" name="chequeNumber"
+                [(ngModel)]="paymentModel.paymentDetail.instrumentNo" #InstrumentNo="ngModel" number-only
+                [allowDecimals]="false" minlength="6" maxlength="6">
+              <mat-error *ngIf="InstrumentNo.invalid">*Cheque Number is invalid.</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-md-6" *ngIf="paymentMode==paymentModeItemCode.Payment_Mode_Cheque">
+            <mat-form-field class="full-width-input">
+              <input matInput [max]="instrumentDateMax" [min]="instrumentDateMin" required
+                [matDatepicker]="InstrumentDate" placeholder="Cheque Date" name="instrumentDate" #CD="ngModel"
+                [(ngModel)]="paymentModel.paymentDetail.instrumentDate" mask-date>
+              <mat-datepicker-toggle matSuffix [for]="InstrumentDate"></mat-datepicker-toggle>
+              <mat-datepicker #InstrumentDate disabled="false"></mat-datepicker>
+              <mat-error *ngIf="CD.invalid">*Cheque Date is required.</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-md-6" *ngIf="paymentMode==paymentModeItemCode.Payment_Mode_Demand_Draft">
+            <mat-form-field class="full-width-input">
+              <input trim="blur" matInput required placeholder="DD Number" name="bankId"
+                [(ngModel)]="paymentModel.paymentDetail.instrumentNo" #InstrumentNo="ngModel" number-only
+                [allowDecimals]="false" minlength="6" maxlength="6">
+              <mat-error *ngIf="InstrumentNo.invalid">*DD Number is invalid.</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-md-6" *ngIf="paymentMode==paymentModeItemCode.Payment_Mode_Demand_Draft">
+            <mat-form-field class="full-width-input">
+              <input matInput required [max]="instrumentDateMax" [min]="instrumentDateMin"
+                [matDatepicker]="InstrumentDate" placeholder="DD Date" name="instrumentDate" #CD="ngModel"
+                [(ngModel)]="paymentModel.paymentDetail.instrumentDate" mask-date>
+              <mat-datepicker-toggle matSuffix [for]="InstrumentDate"></mat-datepicker-toggle>
+              <mat-datepicker #InstrumentDate disabled="false"></mat-datepicker>
+              <mat-error *ngIf="CD.invalid">*DD Date is required.</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-md-6"
+            *ngIf="paymentMode==paymentModeItemCode.Payment_Mode_Credit_Debit_Card || paymentMode==paymentModeItemCode.Payment_Mode_Direct_Bank">
+            <mat-form-field class="full-width-input">
+              <input matInput required placeholder="Transaction Number" name="bankId"
+                [(ngModel)]="paymentModel.paymentDetail.instrumentNo" #InstrumentNo="ngModel" maxlength="50"
+                letter-digits-only>
+              <mat-error *ngIf="InstrumentNo.invalid">*Transaction Number is required.</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6"
+            *ngIf="paymentMode==paymentModeItemCode.Payment_Mode_Cheque || paymentMode==paymentModeItemCode.Payment_Mode_Demand_Draft">
+            <div class="ngSelect">
+              <ng-select required placeholder="Bank Name *" [items]="bankList" bindValue="bankId" bindLabel="name"
+                name="bankId" [(ngModel)]="paymentModel.paymentDetail.bankId" #BankId="ngModel"
+                (ngModelChange)="onChangeBank($event)"
+                [ngClass]="{'ng-invalid ng-touched':  formDetail.submitted && BankId.invalid}">
+              </ng-select>
+              <div *ngIf="(formDetail.submitted && BankId.invalid)  || (BankId.invalid && BankId.touched)">
+                <mat-error *ngIf="BankId.errors.required">*Bank Name is required.</mat-error>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6"
+            *ngIf="paymentMode==paymentModeItemCode.Payment_Mode_Cheque || paymentMode==paymentModeItemCode.Payment_Mode_Demand_Draft">
+            <div class="ngSelect">
+              <ng-select required placeholder="Branch Name *" [items]="branchList" bindValue="branchId" bindLabel="name"
+                name="branchId" [(ngModel)]="paymentModel.paymentDetail.branchId" #BranchId="ngModel"
+                [ngClass]="{'ng-invalid ng-touched':  formDetail.submitted && BranchId.invalid}">
+              </ng-select>
+              <div *ngIf="(formDetail.submitted && BranchId.invalid)  || (BranchId.invalid && BranchId.touched)">
+                <mat-error *ngIf="BranchId.errors.required">*Branch Name is required.</mat-error>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6"
+            *ngIf="paymentMode==paymentModeItemCode.Payment_Mode_Cheque || paymentMode==paymentModeItemCode.Payment_Mode_Demand_Draft">
+            <mat-form-field class="full-width-input">
+              <input matInput required placeholder="Account Number" name="accountNumber"
+                [(ngModel)]="paymentModel.paymentDetail.accountNumber" #AccountNumber="ngModel" maxlength="30"
+                number-only [allowDecimals]="false">
+              <mat-error *ngIf="AccountNumber.invalid">*Account Number is required.</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-md-6">
+          </div>
+        </div>
+        <div class="row" *ngIf="!isHideGenerateButton">
+          <div class="col-md-12 text-right">
+            <button class="ml-3" mat-raised-button color="primary" type="submit">
+              <mat-icon>cloud_download</mat-icon> Generate
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</mat-card>
+
+<mat-card class="mt-3" *ngIf="modelFileDownload.length>0">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="section-title">
+        <h4>Downloads</h4>
+        <mat-divider></mat-divider>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <button mat-stroked-button class="ml-3" type="button" color="primary" *ngFor="let item of modelFileDownload"
+        (click)="downloadFile(item)">
+        <mat-icon>arrow_downward</mat-icon>{{item.displayName}}
+      </button>
+    </div>
+  </div>
+</mat-card>

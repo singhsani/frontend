@@ -1,0 +1,31 @@
+<mat-card class="cardH1">
+    <h1>Application for Disconnection</h1>
+</mat-card>
+<div [hidden]="isShowForm">
+    <app-application-disconnection-form></app-application-disconnection-form>
+</div>
+<div *ngIf="isShowWaterBillDetail">
+    <app-water-bill-detail></app-water-bill-detail>
+</div>
+
+<div *ngIf="isShowWaterTaxDetail">
+    <app-water-tax-detail></app-water-tax-detail>
+</div>
+
+<div *ngIf="isShowPropertyDetail">
+    <app-property-detail></app-property-detail>
+</div>
+
+<div *ngIf="isShowPropertyBillDetail">
+    <app-property-bill-detail></app-property-bill-detail>
+</div>
+
+<div *ngIf="isShowPropertyTaxDetail">
+    <app-property-tax-detail></app-property-tax-detail>
+</div>
+
+<div *ngIf="isShowApproval">
+    <app-application-disconnection-approval></app-application-disconnection-approval>
+</div>
+
+<br>

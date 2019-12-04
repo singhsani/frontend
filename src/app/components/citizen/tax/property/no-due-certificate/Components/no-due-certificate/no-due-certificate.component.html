@@ -1,0 +1,20 @@
+<mat-card class="cardH1">
+    <h1>Application for No Due Certificate/Payment Certificate</h1>
+  </mat-card>
+<div>
+    <!-- Search Component Start -->
+    <div *ngIf="!isShowForm">
+        <app-no-due-certificate-search></app-no-due-certificate-search>
+    </div>
+    <!-- Form Component Start -->
+    <div *ngIf="isShowForm">
+            <app-payment></app-payment>
+    </div>
+    <!-- Form Component End -->
+    <!-- Table Component Start -->
+    <div [hidden]="!isShowTable">
+        <app-no-due-certificate-table></app-no-due-certificate-table>
+    </div>
+    <!-- Table Component End -->
+</div>
+<br>
