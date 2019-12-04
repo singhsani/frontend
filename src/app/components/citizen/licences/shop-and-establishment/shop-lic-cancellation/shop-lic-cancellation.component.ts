@@ -32,7 +32,7 @@ export class ShopLicCancellationComponent implements OnInit {
 	// serach api variable
 	serachLicenceObj = {
 		isDisplayCancelLicenceForm: <boolean>false,
-		searchLicenceNumber: <string>""
+		searchLicenceNumber:""
 	}
 
 	/**

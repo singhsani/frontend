@@ -48,7 +48,7 @@ export class ShopLicModificationComponent implements OnInit {
 	// serach api variable
 	serachLicenceObj = {
 		isDisplayRenewLicenceForm: <boolean>false,
-		searchLicenceNumber: <string>""
+		searchLicenceNumber:""
 	}
 
 	/**
@@ -173,16 +173,16 @@ export class ShopLicModificationComponent implements OnInit {
 				(<FormArray>this.shopLicModificationForm.get('employerFamilyList')).push(this.createArray(app));
 			});
 			(<FormArray>this.shopLicModificationForm.get('occupancyList')).controls = [];
-			searchData.occupancyList.forEach(app => {
-				app.id = null;
-				app.serviceFormId = null;
-				(<FormArray>this.shopLicModificationForm.get('occupancyList')).push(this.createArray(app));
+			searchData.occupancyList.forEach(occupancy => {
+				occupancy.id = null;
+				occupancy.serviceFormId = null;
+				(<FormArray>this.shopLicModificationForm.get('occupancyList')).push(this.createArray(occupancy));
 			});
 			(<FormArray>this.shopLicModificationForm.get('partnerList')).controls = [];
-			searchData.partnerList.forEach(app => {
-				app.id = null;
-				app.serviceFormId = null;
-				(<FormArray>this.shopLicModificationForm.get('partnerList')).push(this.createArray(app));
+			searchData.partnerList.forEach(partnerList => {
+				partnerList.id = null;
+				partnerList.serviceFormId = null;
+				(<FormArray>this.shopLicModificationForm.get('partnerList')).push(this.createArray(partnerList));
 			});
 			/* searchData.employeeList.forEach(app => {
 				(<FormArray>this.shopLicModificationForm.get('employeeList')).push(this.createArray(app));
@@ -207,11 +207,11 @@ export class ShopLicModificationComponent implements OnInit {
 		this.formService.getFormData(this.formId).subscribe(res => {
 			this.shopLicModificationForm.patchValue(res);
 			this.licenseConfiguration.isAttachmentButtonsVisible = true;
-			res.employerFamilyList.forEach(app => {
-				(<FormArray>this.shopLicModificationForm.get('employerFamilyList')).push(this.createArray(app));
+			res.employerFamilyList.forEach(familyapp => {
+				(<FormArray>this.shopLicModificationForm.get('employerFamilyList')).push(this.createArray(familyapp));
 			});
-			res.occupancyList.forEach(app => {
-				(<FormArray>this.shopLicModificationForm.get('occupancyList')).push(this.createArray(app));
+			res.occupancyList.forEach(occupancy => {
+				(<FormArray>this.shopLicModificationForm.get('occupancyList')).push(this.createArray(occupancy));
 			});
 			res.partnerList.forEach(app => {
 				(<FormArray>this.shopLicModificationForm.get('partnerList')).push(this.createArray(app));
@@ -761,21 +761,21 @@ export class ShopLicModificationComponent implements OnInit {
 	 */
 	checkDynamicTableValidate(): void {
 		try {
-			this.addItem("PARTNER").controls.forEach(element => {
-				if (element.invalid) {
-					element.isEditMode = true;
+			this.addItem("PARTNER").controls.forEach(ele => {
+				if (ele.invalid) {
+					ele.isEditMode = true;
 				}
 			});
 
-			this.addItem("EMPLOYER_FAMILY").controls.forEach(element => {
-				if (element.invalid) {
-					element.isEditMode = true;
+			this.addItem("EMPLOYER_FAMILY").controls.forEach(familyEle => {
+				if (familyEle.invalid) {
+					familyEle.isEditMode = true;
 				}
 			});
 
-			this.addItem("OCCUPANCY").controls.forEach(element => {
-				if (element.invalid) {
-					element.isEditMode = true;
+			this.addItem("OCCUPANCY").controls.forEach(occupancyele => {
+				if (occupancyele.invalid) {
+					occupancyele.isEditMode = true;
 				}
 			});
 		} catch (error) {

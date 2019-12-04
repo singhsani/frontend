@@ -93,8 +93,8 @@ export class PaymentResponsePageComponent implements OnInit {
 
     //swimming pool module is LOI case module, this method is take payment first than submit form to newgan
     if(data.resourceType == "swimming"){
-      this.formService.createLOIPayment(payData).subscribe(payResp => {
-        const payRespData = payResp.data.responseData;
+      this.formService.createLOIPayment(payData).subscribe(loiResp => {
+        const payRespData = loiResp.data.responseData;
         
           setTimeout(() => {
             this.redirectToMyApplication(data.myApplicationUrl, payRespData.refNumber, payData.resourceType, payRespData.payableServiceType);

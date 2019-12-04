@@ -209,9 +209,8 @@ export class ZooBookingComponent implements OnInit {
 	  * Get Zoo Visiting Rates from api.
 	*/
   getZooVisitingRates() {
-    this.ticketingService.getZooVisitingRates().subscribe((respData) => {
-      console.log(respData);
-      this.zooVisitingRates = respData.data;
+    this.ticketingService.getZooVisitingRates().subscribe((respRates) => {
+      this.zooVisitingRates = respRates.data;
     });
   }
 

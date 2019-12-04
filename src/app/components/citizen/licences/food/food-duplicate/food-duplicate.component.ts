@@ -45,8 +45,8 @@ export class FoodDuplicateComponent implements OnInit {
 
 	// serach api variable
 	serachLicenceObj = {
-		isDisplayDuplicateLicenceForm: <boolean>false,
-		searchLicenceNumber: <string>""
+		isDisplayDuplicateLicenceForm:<boolean>false,
+		searchLicenceNumber:""
 	}
 
 	/**

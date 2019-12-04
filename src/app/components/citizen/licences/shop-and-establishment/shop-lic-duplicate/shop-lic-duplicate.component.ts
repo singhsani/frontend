@@ -32,7 +32,7 @@ export class ShopLicDuplicateComponent implements OnInit {
 	// serach api variable
 	serachLicenceObj = {
 		isDisplayDuplicateLicenceForm: <boolean>false,
-		searchLicenceNumber: <string>""
+		searchLicenceNumber:""
 	}
 
 	/**

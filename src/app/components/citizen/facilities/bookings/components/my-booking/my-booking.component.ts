@@ -339,12 +339,12 @@ export class MyBookingComponent implements OnInit {
 	paymentRequest(element) {
 		this.bookingService.getTransactionDetails(element.refNumber).subscribe(transactionData => {
 		}, err => {
-			if (err.status = 402) {
+			if (err.status == 402) {
 				this.isLoadingResults = false;
-				if (err.status == 402) {
+				// if (err.status == 402) {
 					// this.bookingUtils.redirectToPayment(err, this.commonService, this.bookingService);
 					this.bookingUtils.redirectToCCAvenuePayment(err, this.commonService, this.bookingService, this.paymentGateway);
-				}
+				// }
 			} else if (err.error[0].code == this.bookingConstant.INVALID_BOOKING_STATUS) {
 				this.commonService.openAlert("Invalid Booking Status", err.error[0].message, "warning", "")
 			} else {

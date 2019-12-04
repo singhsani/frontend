@@ -924,11 +924,11 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
     */
     changeFieldReset() {
         // nri witness fields
-        if (this.marriageFormGroup.get('isGroomVisa').value == true) {
+        if (this.marriageFormGroup.get('isGroomVisa').value) {
             this.nriWitenessFields('groom');
             this.changeReflection('groom');
         }
-        if (this.marriageFormGroup.get('isBrideVisa').value == true) {
+        if (this.marriageFormGroup.get('isBrideVisa').value) {
             this.nriWitenessFields('bride');
             this.changeReflection('bride');
         }
@@ -979,7 +979,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
         this.marriageFormGroup.get(`nri${getName}Address`).reset();
         this.marriageFormGroup.get(`nri${getName}ParentsAddress`).reset();
 
-        if (this.marriageFormGroup.get(`is${getName}Visa`).value == true) {
+        if (this.marriageFormGroup.get(`is${getName}Visa`).value) {
 
             this.marriageFormGroup.get(`${person}PassportNumber`).setValidators([Validators.required, Validators.maxLength(9)]);
             this.marriageFormGroup.get(`${person}CountryName`).setValidators(Validators.required);
@@ -1055,7 +1055,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
         let getName = this.capitalizeFirstLetter(person);
         this.marriageFormGroup.get(`nri${getName}Address`).reset();
 
-        if (this.marriageFormGroup.get(`is${getName}Visa`).value == true) {
+        if (this.marriageFormGroup.get(`is${getName}Visa`).value) {
 
             this.marriageFormGroup.get(`${person}NriFirstWitnessFirstName`).setValidators([Validators.required, Validators.maxLength(50)]);
             this.marriageFormGroup.get(`${person}NriFirstWitnessLastName`).setValidators([Validators.required, Validators.maxLength(50)]);
@@ -1297,12 +1297,12 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
                 this.tabIndex = 6;
                 return false;
             }
-            else if ((count >= 121 && count <= 138) && (this.marriageFormGroup.get('isGroomVisa').value == true)) {
+            else if ((count >= 121 && count <= 138) && (this.marriageFormGroup.get('isGroomVisa').value)) {
                 this.tabIndex = 7;
                 return false;
             }
-            else if ((count >= 139 && count <= 156) && (this.marriageFormGroup.get('isBrideVisa').value == true)) {
-                if (this.marriageFormGroup.get('isGroomVisa').value == false) {
+            else if ((count >= 139 && count <= 156) && (this.marriageFormGroup.get('isBrideVisa').value)) {
+                if (!this.marriageFormGroup.get('isGroomVisa').value) {
                     this.tabIndex = 7;
                 }
                 else {
@@ -1312,10 +1312,10 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
             }
             else if (count <= step8) {
 
-                if (this.marriageFormGroup.get('isGroomVisa').value == true && (this.marriageFormGroup.get('isBrideVisa').value == true)) {
+                if (this.marriageFormGroup.get('isGroomVisa').value && (this.marriageFormGroup.get('isBrideVisa').value)) {
                     this.tabIndex = 9;
                 }
-                else if (this.marriageFormGroup.get('isGroomVisa').value == true || (this.marriageFormGroup.get('isBrideVisa').value == true)) {
+                else if (this.marriageFormGroup.get('isGroomVisa').value || (this.marriageFormGroup.get('isBrideVisa').value)) {
                     this.tabIndex = 8;
                 }
                 else {
@@ -1327,10 +1327,10 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
                 
                 this.checkReligion();
 
-                if (this.marriageFormGroup.get('isGroomVisa').value == true && (this.marriageFormGroup.get('isBrideVisa').value == true)) {
+                if (this.marriageFormGroup.get('isGroomVisa').value && (this.marriageFormGroup.get('isBrideVisa').value)) {
                     this.tabIndex = 10;
                 }
-                else if (this.marriageFormGroup.get('isGroomVisa').value == true || (this.marriageFormGroup.get('isBrideVisa').value == true)) {
+                else if (this.marriageFormGroup.get('isGroomVisa').value || (this.marriageFormGroup.get('isBrideVisa').value)) {
                     this.tabIndex = 9;
                 }
                 else {
@@ -1339,10 +1339,10 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
             }
             else {
                
-                if (this.marriageFormGroup.get('isGroomVisa').value == true && (this.marriageFormGroup.get('isBrideVisa').value == true)) {
+                if (this.marriageFormGroup.get('isGroomVisa').value && (this.marriageFormGroup.get('isBrideVisa').value)) {
                     this.tabIndex = 10;
                 }
-                else if (this.marriageFormGroup.get('isGroomVisa').value == true || (this.marriageFormGroup.get('isBrideVisa').value == true)) {
+                else if (this.marriageFormGroup.get('isGroomVisa').value || (this.marriageFormGroup.get('isBrideVisa').value)) {
                     this.tabIndex = 9;
                 }
                 else {

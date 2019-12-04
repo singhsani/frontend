@@ -45,7 +45,7 @@ export class MuttonFishDuplicateComponent implements OnInit {
 	// serach api variable
 	serachLicenceObj = {
 		isDisplayDuplicateLicenceForm: <boolean>false,
-		searchLicenceNumber: <string>""
+		searchLicenceNumber:""
 	}
 
 	/**

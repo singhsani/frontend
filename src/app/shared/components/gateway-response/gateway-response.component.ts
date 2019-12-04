@@ -145,7 +145,7 @@ export class GatewayResponseComponent implements OnInit {
 							var onPrintFinished = (printed) => {
 								this.redirectToHome();
 							}
-							onPrintFinished(window.print());
+							onPrintFinished(window.print()); //NOSONAR
 						}, 0);
 
 					});

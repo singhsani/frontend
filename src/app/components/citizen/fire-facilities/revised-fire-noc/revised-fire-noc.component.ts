@@ -42,7 +42,7 @@ export class RevisedFireNOCComponent implements OnInit {
 	// serach api variable
 	serachLicenceObj = {
 		isDisplayRenewLicenceForm: <boolean>false,
-		searchLicenceNumber: <string>""
+		searchLicenceNumber:""
 	}
 
 	/**

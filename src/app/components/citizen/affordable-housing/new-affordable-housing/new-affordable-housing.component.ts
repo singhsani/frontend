@@ -231,14 +231,6 @@ export class NewAffordableHousingComponent implements OnInit {
 				})
 				break;
 			case 'ownHouseDetail':
-				formGroupData = this.fb.group({
-					name: [null, [Validators.required, Validators.maxLength(200)]],
-					flatNo: [null, [Validators.required, Validators.maxLength(200)]],
-					street: [null, [Validators.required, Validators.maxLength(200)]],
-					city: [null, [Validators.required, Validators.maxLength(200)]],
-					district: [null, [Validators.required, Validators.maxLength(200)]]
-				})
-				break;
 			case 'ownLandPlotDetail':
 				formGroupData = this.fb.group({
 					name: [null, [Validators.required, Validators.maxLength(200)]],
@@ -248,6 +240,14 @@ export class NewAffordableHousingComponent implements OnInit {
 					district: [null, [Validators.required, Validators.maxLength(200)]]
 				})
 				break;
+				// formGroupData = this.fb.group({
+				// 	name: [null, [Validators.required, Validators.maxLength(200)]],
+				// 	flatNo: [null, [Validators.required, Validators.maxLength(200)]],
+				// 	street: [null, [Validators.required, Validators.maxLength(200)]],
+				// 	city: [null, [Validators.required, Validators.maxLength(200)]],
+				// 	district: [null, [Validators.required, Validators.maxLength(200)]]
+				// })
+				// break;
 
 			default:
 				break;
@@ -289,10 +289,10 @@ export class NewAffordableHousingComponent implements OnInit {
 		switch (key) {
 			case 'familyMemberList':
 				this.getFormsArray('familyMemberList').push(this.createFormGroup("familyMemberList", {}));
-				var newlyadded = this.getFormsArray('familyMemberList').controls;
-				if (newlyadded.length) {
-					this.editRecord((newlyadded[newlyadded.length - 1]));
-					(<any>newlyadded[newlyadded.length - 1]).newRecordAdded = true;
+				var memberadded = this.getFormsArray('familyMemberList').controls;
+				if (memberadded.length) {
+					this.editRecord((memberadded[memberadded.length - 1]));
+					(<any>memberadded[memberadded.length - 1]).newRecordAdded = true;
 				}
 				break;
 			case 'placeOfChoice':
@@ -304,10 +304,10 @@ export class NewAffordableHousingComponent implements OnInit {
 				break;
 			case 'ownHouseDetail':
 				this.getFormsArray('ownHouseDetail').push(this.createFormGroup("ownHouseDetail", {}));
-				var newlyadded = this.getFormsArray('ownHouseDetail').controls;
-				if (newlyadded.length) {
-					this.editRecord((newlyadded[newlyadded.length - 1]));
-					(<any>newlyadded[newlyadded.length - 1]).newRecordAdded = true;
+				var houseAdd = this.getFormsArray('ownHouseDetail').controls;
+				if (houseAdd.length) {
+					this.editRecord((houseAdd[houseAdd.length - 1]));
+					(<any>houseAdd[houseAdd.length - 1]).newRecordAdded = true;
 				}
 				break;
 			case 'ownLandPlotDetail':

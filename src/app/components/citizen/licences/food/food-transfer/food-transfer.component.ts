@@ -46,7 +46,7 @@ export class FoodTransferComponent implements OnInit {
   // serach api variable
   serachLicenceObj = {
     isDisplayTransferLicenceForm: <boolean>false,
-    searchLicenceNumber: <string>""
+    searchLicenceNumber:""
   }
 
 	/**

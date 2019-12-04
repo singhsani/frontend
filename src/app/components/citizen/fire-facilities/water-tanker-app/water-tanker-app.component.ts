@@ -150,13 +150,13 @@ export class WaterTankerAppComponent implements OnInit {
 				})
 			}
 		} else {
-			if (fields) {
-				fields.get('mandatory').setValue(false);
-				var indewx = this.uploadFilesArray.findIndex((data) => data.documentIdentifier === dependedKey)
-				if (indewx != -1) {
-					this.uploadFilesArray.splice(indewx, 1);
-				}
+
+			fields.get('mandatory').setValue(false);
+			var indewx = this.uploadFilesArray.findIndex((data) => data.documentIdentifier === dependedKey)
+			if (indewx != -1) {
+				this.uploadFilesArray.splice(indewx, 1);
 			}
+
 		}
 
 	}

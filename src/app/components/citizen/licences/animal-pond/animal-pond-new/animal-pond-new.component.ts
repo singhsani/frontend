@@ -136,7 +136,7 @@ export class AnimalPondNewComponent implements OnInit {
 				// deflate add one array in relationship grid
 				if ((<FormArray>res.relationshipList).length == 0) {
 					this.addItem('relationshipList').push(this.createArray());
-					let newlyadded = <any>this.addItem('relationshipList').controls;
+					let newlyadded = this.addItem('relationshipList').controls;
 					if (newlyadded.length) {
 						this.editRecord((newlyadded[newlyadded.length - 1]));
 						(newlyadded[newlyadded.length - 1]).newRecordAdded = true;
@@ -334,8 +334,8 @@ export class AnimalPondNewComponent implements OnInit {
 		let animalGrid = <FormArray>this.animalPondNewForm.get('animalDetails');
 
 		if (animalGrid.length) {
-			animalGrid.controls.forEach(element => {
-				let count = element.get('animalCount').value;
+			animalGrid.controls.forEach(ele => {
+				let count = ele.get('animalCount').value;
 				if (count && !isNaN(parseInt(count))) {
 					totalAnimal += parseInt(count);
 				}
@@ -377,7 +377,7 @@ export class AnimalPondNewComponent implements OnInit {
 			}
 			this.addItem('relationshipList').push(this.createArray());
 			// this.animalPondNewForm.get('relationshipList').setValidators([Validators.required]);
-			let newlyadded = <any>this.addItem('relationshipList').controls;
+			let newlyadded = this.addItem('relationshipList').controls;
 			if (newlyadded.length) {
 				// (newlyadded[newlyadded.length - 1]).isEditMode = true;
 				this.editRecord((newlyadded[newlyadded.length - 1]));
@@ -401,7 +401,7 @@ export class AnimalPondNewComponent implements OnInit {
 
 				if ((<FormArray>this.animalPondNewForm.get('relationshipList')).length == 0) {
 					this.addItem('relationshipList').push(this.createArray());
-					let newlyadded = <any>this.addItem('relationshipList').controls;
+					let newlyadded = this.addItem('relationshipList').controls;
 					if (newlyadded.length) {
 						this.editRecord((newlyadded[newlyadded.length - 1]));
 						(newlyadded[newlyadded.length - 1]).newRecordAdded = true;
@@ -578,15 +578,15 @@ export class AnimalPondNewComponent implements OnInit {
 	 */
 	checkDynamicTableValidate(): void {
 		try {
-			this.addItem("animalDetails").controls.forEach(element => {
-				if (element.invalid) {
-					element.isEditMode = true;
+			this.addItem("animalDetails").controls.forEach(animalele => {
+				if (animalele.invalid) {
+					animalele.isEditMode = true;
 				}
 			});
 
-			this.addItem("relationshipList").controls.forEach(element => {
-				if (element.invalid) {
-					element.isEditMode = true;
+			this.addItem("relationshipList").controls.forEach(listele => {
+				if (listele.invalid) {
+					listele.isEditMode = true;
 				}
 			});
 		} catch (error) {

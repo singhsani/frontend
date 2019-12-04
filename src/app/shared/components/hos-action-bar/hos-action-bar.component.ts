@@ -210,8 +210,8 @@ export class HosActionBarComponent implements OnInit, OnChanges {
 										</div>`
 									this.commonService.commonAlert("Application Incomplete", "", 'warning', 'Make Payment!', false, errHtml, ccb => {
 										// window.location.href = environment.adminUrl + `payment-gateway?retUrl=${payData.retUrl}&retPath=${payData.retPath}`;
-										this.formService.createTokenforServicePayment(payData).subscribe(resp => {
-											window.open(resp.data, "_self");
+										this.formService.createTokenforServicePayment(payData).subscribe(respData => {
+											window.open(respData.data, "_self");
 										}, err => {
 											this.toastr.error(err.error.message);
 										})
