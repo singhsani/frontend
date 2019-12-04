@@ -31,7 +31,7 @@ export class FireRenewalNocComponent implements OnInit {
 	// serach api variable
 	searchRenewalFireNOCObj = {
 		isDisplayRenewFireNOCForm: <boolean>false,
-		searchRenewalFireNOCNumber: <string>""
+		searchRenewalFireNOCNumber:""
 	}
 
 	/**

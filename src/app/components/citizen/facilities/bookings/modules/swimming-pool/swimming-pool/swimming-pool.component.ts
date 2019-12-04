@@ -157,7 +157,7 @@ export class SwimmingPoolComponent implements OnInit {
         })
     }
     else {
-
+      this.toastr.error("Server Error");
     }
 
   }

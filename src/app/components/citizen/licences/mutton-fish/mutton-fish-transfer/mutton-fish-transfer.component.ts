@@ -44,7 +44,7 @@ export class MuttonFishTransferComponent implements OnInit {
 	// serach api variable
 	serachLicenceObj = {
 		isDisplayRenewLicenceForm: <boolean>false,
-		searchLicenceNumber: <string>""
+		searchLicenceNumber:""
 	}
 
 	/**
@@ -191,7 +191,7 @@ export class MuttonFishTransferComponent implements OnInit {
 				// deflate add one array in relationship grid
 				if ((<FormArray>res.relationshipList).length == 0) {
 					this.addItem().push(this.createArray());
-					let newlyadded = <any>this.addItem().controls;
+					let newlyadded = this.addItem().controls;
 					if (newlyadded.length) {
 						this.editRecord((newlyadded[newlyadded.length - 1]));
 						(newlyadded[newlyadded.length - 1]).newRecordAdded = true;
@@ -361,7 +361,7 @@ export class MuttonFishTransferComponent implements OnInit {
 			}
 			this.addItem().push(this.createArray());
 			// this.muttonFishTransferForm.get('relationshipList').setValidators([Validators.required]);
-			let newlyadded = <any>this.addItem().controls;
+			let newlyadded = this.addItem().controls;
 			if (newlyadded.length) {
 				// (newlyadded[newlyadded.length - 1]).isEditMode = true;
 				this.editRecord((newlyadded[newlyadded.length - 1]));

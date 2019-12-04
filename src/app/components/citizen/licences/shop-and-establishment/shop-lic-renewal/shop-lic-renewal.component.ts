@@ -48,7 +48,7 @@ export class ShopLicRenewalComponent implements OnInit {
 	// serach api variable
 	serachLicenceObj = {
 		isDisplayRenewLicenceForm: <boolean>false,
-		searchLicenceNumber: <string>""
+		searchLicenceNumber:""
 	}
 
 	/**
@@ -167,16 +167,16 @@ export class ShopLicRenewalComponent implements OnInit {
 			this.licenseConfiguration.isAttachmentButtonsVisible = true;
 
 			(<FormArray>this.shopLicRenewalForm.get('employerFamilyList')).controls = [];
-			searchData.employerFamilyList.forEach(app => {
-				app.id = null;
-				app.serviceFormId = null;
-				(<FormArray>this.shopLicRenewalForm.get('employerFamilyList')).push(this.createArray(app));
+			searchData.employerFamilyList.forEach(familyList => {
+				familyList.id = null;
+				familyList.serviceFormId = null;
+				(<FormArray>this.shopLicRenewalForm.get('employerFamilyList')).push(this.createArray(familyList));
 			});
 			(<FormArray>this.shopLicRenewalForm.get('occupancyList')).controls = [];
-			searchData.occupancyList.forEach(app => {
-				app.id = null;
-				app.serviceFormId = null;
-				(<FormArray>this.shopLicRenewalForm.get('occupancyList')).push(this.createArray(app));
+			searchData.occupancyList.forEach(occupancyList => {
+				occupancyList.id = null;
+				occupancyList.serviceFormId = null;
+				(<FormArray>this.shopLicRenewalForm.get('occupancyList')).push(this.createArray(occupancyList));
 			});
 			(<FormArray>this.shopLicRenewalForm.get('partnerList')).controls = [];
 			searchData.partnerList.forEach(app => {
@@ -228,14 +228,14 @@ export class ShopLicRenewalComponent implements OnInit {
 		this.formService.getFormData(this.formId).subscribe(res => {
 			this.shopLicRenewalForm.patchValue(res);
 			this.licenseConfiguration.isAttachmentButtonsVisible = true;
-			res.employerFamilyList.forEach(app => {
-				(<FormArray>this.shopLicRenewalForm.get('employerFamilyList')).push(this.createArray(app));
+			res.employerFamilyList.forEach(familyList => {
+				(<FormArray>this.shopLicRenewalForm.get('employerFamilyList')).push(this.createArray(familyList));
 			});
-			res.occupancyList.forEach(app => {
-				(<FormArray>this.shopLicRenewalForm.get('occupancyList')).push(this.createArray(app));
+			res.occupancyList.forEach(occupancy => {
+				(<FormArray>this.shopLicRenewalForm.get('occupancyList')).push(this.createArray(occupancy));
 			});
-			res.partnerList.forEach(app => {
-				(<FormArray>this.shopLicRenewalForm.get('partnerList')).push(this.createArray(app));
+			res.partnerList.forEach(partner => {
+				(<FormArray>this.shopLicRenewalForm.get('partnerList')).push(this.createArray(partner));
 			});
 			/* res.employeeList.forEach(app => {
 				(<FormArray>this.shopLicRenewalForm.get('employeeList')).push(this.createArray(app));

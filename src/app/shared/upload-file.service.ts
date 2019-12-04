@@ -44,16 +44,16 @@ export class UploadFileService {
 	 */
 	processFileToDMSServer(formData: FormData, setProgress?: any, successResponse?: any) {
 
-		this.httpService.uploadFilePost(this.uploadDMSFileUrl, formData).subscribe(event => {
-			switch (event.type) {
+		this.httpService.uploadFilePost(this.uploadDMSFileUrl, formData).subscribe(postEvent => {
+			switch (postEvent.type) {
 				case HttpEventType.Sent:
 					break;
 				case HttpEventType.ResponseHeader:
 					break;
 				case HttpEventType.UploadProgress:
-					return setProgress(Math.round(100 * event.loaded / event.total));
+					return setProgress(Math.round(100 * postEvent.loaded / postEvent.total));
 				case HttpEventType.Response:
-					return successResponse(event.body);
+					return successResponse(postEvent.body);
 			}
 		});
 	}

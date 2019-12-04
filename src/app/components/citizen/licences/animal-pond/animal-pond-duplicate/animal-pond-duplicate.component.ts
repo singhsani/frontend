@@ -40,7 +40,7 @@ export class AnimalPondDuplicateComponent implements OnInit {
 	// serach api variable
 	serachLicenceObj = {
 		isDisplayDuplicateLicenceForm: <boolean>false,
-		searchLicenceNumber: <string>""
+		searchLicenceNumber:""
 	}
 
 	/**

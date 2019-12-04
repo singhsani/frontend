@@ -40,7 +40,7 @@ export class AnimalPondCancellationComponent implements OnInit {
 	// serach api variable
 	serachLicenceObj = {
 		isDisplayCancellationLicenceForm: <boolean>false,
-		searchLicenceNumber: <string>""
+		searchLicenceNumber:""
 	}
 
 	/**

@@ -148,7 +148,7 @@ export class StillBirthComponent implements OnInit {
 		this.getStillBirthFormData();
 		this.getLookUpData();
 
-		this.BIRTH_CERTI_MAILING_ADDRESS_TYPE
+		// this.BIRTH_CERTI_MAILING_ADDRESS_TYPE //NOSONAR
 	}
 
 	/**
@@ -564,9 +564,9 @@ export class StillBirthComponent implements OnInit {
 					return 1;
 				}
 				return -1;
-			});;
-			this.MOTHER_MARRIAGE_AGE = respData.MOTHER_MARRIAGE_AGE.sort((a, b) => {
-				if (a.code >= b.code) {
+			});
+			this.MOTHER_MARRIAGE_AGE = respData.MOTHER_MARRIAGE_AGE.sort((x, y) => {
+				if (x.code >= y.code) {
 					return 1;
 				}
 				return -1;

@@ -232,12 +232,12 @@ export class FileUploadComponent implements OnInit {
 					if(this.uploadModel.dmsEnabled){
 						this.uploadFileService.processFileToDMSServer(formData, setProgressBar => {
 							this.progress.percentage = setProgressBar;
-						}, successResponse => {
+						}, successres => {
 							this.tostr.success(this.uploadModel.labelName ? this.uploadModel.labelName : this.uploadModel.documentLabelEn + " successfully uploaded", "File Uploaded");
 							this.canUpload = true;
-							this.id = successResponse.data.id;
-							this.type = successResponse.data.mimeType;
-							this.docIndex = successResponse.data.docIndex;
+							this.id = successres.data.id;
+							this.type = successres.data.mimeType;
+							this.docIndex = successres.data.docIndex;
 							this.currentFileUpload = undefined;
 							this.selectedFiles = undefined;
 							this.fileInput.nativeElement.value = "";

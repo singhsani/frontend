@@ -689,21 +689,21 @@ export class ShopLicNewComponent implements OnInit {
 	 */
 	checkDynamicTableValidate(): void {
 		try {
-			this.addItem("PARTNER").controls.forEach(element => {
-				if (element.invalid) {
-					element.isEditMode = true;
+			this.addItem("PARTNER").controls.forEach(ele => {
+				if (ele.invalid) {
+					ele.isEditMode = true;
 				}
 			});
 
-			this.addItem("EMPLOYER_FAMILY").controls.forEach(element => {
-				if (element.invalid) {
-					element.isEditMode = true;
+			this.addItem("EMPLOYER_FAMILY").controls.forEach(familyEle => {
+				if (familyEle.invalid) {
+					familyEle.isEditMode = true;
 				}
 			});
 
-			this.addItem("OCCUPANCY").controls.forEach(element => {
-				if (element.invalid) {
-					element.isEditMode = true;
+			this.addItem("OCCUPANCY").controls.forEach(occupancy => {
+				if (occupancy.invalid) {
+					occupancy.isEditMode = true;
 				}
 			});
 		} catch (error) {

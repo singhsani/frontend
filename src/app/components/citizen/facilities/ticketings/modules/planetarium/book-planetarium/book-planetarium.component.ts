@@ -19,7 +19,7 @@ import { TranslatePipe } from 'src/app/shared/modules/translate/translate.pipe';
 export class BookPlanetariumComponent implements OnInit {
 
   @ViewChild("paymentGateway") paymentGateway: TemplateRef<any>;
-  
+
   translateKey: string = 'planetariumScreen';
 
   ticketBookingForm: FormGroup;
@@ -84,15 +84,15 @@ export class BookPlanetariumComponent implements OnInit {
 	* Get all booking category list from api.
 	*/
   getLookUps() {
-    this.ticketingService.getDataFromLookups().subscribe((respData) => {
-      this.BANKS = respData.BANK;
-      this.idTypes = respData.IDTYPE;
-      this.CANCELLATION_TYPE = respData.CANCELLATION_TYPE;
-      this.PLANETARIUM_SHOWS_TIMING = respData.PLANETARIUM_SHOWS_TIMING;
-      this.PLANETARIUM_SPECIAL_SHOWS_LAG = respData.PLANETARIUM_SPECIAL_SHOWS_LANGUAGE;
-      this.PLANETARIUM_SHOW_CATEGORY = respData.PLANETARIUM_SHOW_CATEGORY;
-      this.PLANETARIUM_VISITOR = respData.PLANETARIUM_VISITOR;
-      this.PURPOSE = respData.PURPOSE;
+    this.ticketingService.getDataFromLookups().subscribe((respLookUp) => {
+      this.BANKS = respLookUp.BANK;
+      this.idTypes = respLookUp.IDTYPE;
+      this.CANCELLATION_TYPE = respLookUp.CANCELLATION_TYPE;
+      this.PLANETARIUM_SHOWS_TIMING = respLookUp.PLANETARIUM_SHOWS_TIMING;
+      this.PLANETARIUM_SPECIAL_SHOWS_LAG = respLookUp.PLANETARIUM_SPECIAL_SHOWS_LANGUAGE;
+      this.PLANETARIUM_SHOW_CATEGORY = respLookUp.PLANETARIUM_SHOW_CATEGORY;
+      this.PLANETARIUM_VISITOR = respLookUp.PLANETARIUM_VISITOR;
+      this.PURPOSE = respLookUp.PURPOSE;
     }, err => {
       this.toster.error("Server Error");
     });
@@ -102,8 +102,8 @@ export class BookPlanetariumComponent implements OnInit {
    * get form data
    */
   getListData() {
-    this.ticketingService.getListData().subscribe(res => {
-      this.resourceName = res.data;
+    this.ticketingService.getListData().subscribe(resList => {
+      this.resourceName = resList.data;
     },
       err => {
         this.toster.error("Server Error");
@@ -111,14 +111,7 @@ export class BookPlanetariumComponent implements OnInit {
 
     //visitor rate chart
     if (this.ticketBookingForm.get('showCategory').get('code').value == 'PLANETARIUM_GENERAL_SHOW') {
-      this.ticketingService.getZooVisitingRates().subscribe((respData) => {
-        this.planetariumVisitingRates = respData.data;
-        this.ticketBookingForm.get('rate').setValue(this.planetariumVisitingRates.visitorCharge);
-        this.totalVisitorLimit = this.planetariumVisitingRates.totalOccupancy;
-      },
-        err => {
-          this.commonService.openAlert("Error", err.error[0].message, "warning");
-        });
+      this.visitorRateChartCall();
     }
     // this.ticketingService.getFormData();
   }
@@ -177,8 +170,8 @@ export class BookPlanetariumComponent implements OnInit {
         this.ticketBookingForm.get('specialShowLanguage').get('code').value,
         this.ticketBookingForm.get('visitingDate').value,
         this.ticketBookingForm.get('totalVisitor').value).subscribe(
-          (respData) => {
-            this.seatAvailable = respData.data.seatAvailable;
+          (respSwiftData) => {
+            this.seatAvailable = respSwiftData.data.seatAvailable;
             // this.commonService.successAlert('success', 'Available', 'success');
             if (this.seatAvailable) {
               this.toster.success(this.ticketBookingForm.get('totalVisitor').value + ' ' + this.ticketingConstants.AVAILABLE_SEATS);
@@ -222,8 +215,8 @@ export class BookPlanetariumComponent implements OnInit {
   getPlanetariumShowTimeSlot(e) {
     let showDate = moment(e.value).format('YYYY-MM-DD');
     if (!this.ticketBookingForm.get('visitingDate').invalid) {
-      this.ticketingService.getPlanetariumShowTimeSlot(showDate, this.ticketBookingForm.get('resourceCodeLK').get('code').value).subscribe((respData) => {
-        // let planetariumVisitingSlot = respData.data;
+      this.ticketingService.getPlanetariumShowTimeSlot(showDate, this.ticketBookingForm.get('resourceCodeLK').get('code').value).subscribe((respTimeSlotData) => {
+        // let planetariumVisitingSlot = respTimeSlotData.data;
         // this.ticketBookingForm.get('rate').setValue(this.planetariumVisitingSlot.visitorCharge)
       },
         err => {
@@ -347,7 +340,7 @@ export class BookPlanetariumComponent implements OnInit {
     this.ticketBookingForm.get('showCategory').get('code').setValue(event);
     if (event == 'PLANETARIUM_SPECIAL_SHOW') {
       this.ticketBookingForm.get('schoolName').setValidators([Validators.required]);
-      this.ticketBookingForm.get('schoolEmailId').setValidators([Validators.required,ValidationService.emailValidator]);
+      this.ticketBookingForm.get('schoolEmailId').setValidators([Validators.required, ValidationService.emailValidator]);
       this.ticketBookingForm.get('specialShowLanguage.code').setValidators(Validators.required);
       // this.ticketBookingForm.get('totalVisitor').setValidators([Validators.required, Validators.max(156)]);
 
@@ -359,15 +352,7 @@ export class BookPlanetariumComponent implements OnInit {
       this.ticketBookingForm.get('idNumber').clearValidators();
 
       //visitor rate chart
-      this.ticketingService.getZooVisitingRates().subscribe(
-        (respData) => {
-          this.planetariumVisitingRates = respData.data;
-          this.ticketBookingForm.get('rate').setValue(this.planetariumVisitingRates.specialShowVisitorCharge);
-          this.totalVisitorLimit = this.planetariumVisitingRates.totalOccupancy;
-        },
-        err => {
-          this.commonService.openAlert("Error", err.error[0].message, "warning");
-        });
+      this.visitorRateChartCall();
 
     }
     else if (event == 'PLANETARIUM_GENERAL_SHOW') {
@@ -383,14 +368,7 @@ export class BookPlanetariumComponent implements OnInit {
       this.ticketBookingForm.get('specialShowLanguage.code').clearValidators();
       this.ticketBookingForm.get('totalVisitor').clearValidators();
       //visitor rate chart
-      this.ticketingService.getZooVisitingRates().subscribe((respData) => {
-        this.planetariumVisitingRates = respData.data;
-        this.ticketBookingForm.get('rate').setValue(this.planetariumVisitingRates.visitorCharge);
-        this.totalVisitorLimit = this.planetariumVisitingRates.totalOccupancy;
-      },
-        err => {
-          this.commonService.openAlert("Error", err.error[0].message, "warning");
-        });
+      this.visitorRateChartCall();
     }
     else {
       this.ticketBookingForm.reset();
@@ -411,6 +389,21 @@ export class BookPlanetariumComponent implements OnInit {
   }
 
   /**
+   * This method for get rate chart data
+   */
+  visitorRateChartCall() {
+    //visitor rate chart
+    this.ticketingService.getZooVisitingRates().subscribe((respRates) => {
+      this.planetariumVisitingRates = respRates.data;
+      this.ticketBookingForm.get('rate').setValue(this.planetariumVisitingRates.visitorCharge);
+      this.totalVisitorLimit = this.planetariumVisitingRates.totalOccupancy;
+    },
+      err => {
+        this.commonService.openAlert("Error", err.error[0].message, "warning");
+      });
+  }
+
+  /**
    * Save form data
    */
   savePlanetariumTickets() {
@@ -419,8 +412,8 @@ export class BookPlanetariumComponent implements OnInit {
       && this.ticketBookingForm.get('showCategory').get('code').value == 'PLANETARIUM_SPECIAL_SHOW') {
       this.ticketBookingForm.get('resourceCode').setValue(this.ticketBookingForm.get('resourceCodeLK').get('code').value);
       this.ticketingService.saveDraftTickets(this.ticketBookingForm.getRawValue(), this.ticketBookingForm.get('resourceCodeLK').get('code').value).subscribe(
-        res => {
-          this.ticketBookingForm.get('refNumber').setValue(res.refNumber);
+        resp => {
+          this.ticketBookingForm.get('refNumber').setValue(resp.refNumber);
         },
         err => {
           this.commonService.openAlertFormSaveValidation('Warning!', err.error, 'warning');
@@ -464,10 +457,10 @@ export class BookPlanetariumComponent implements OnInit {
       else {
         this.isLoadingResults = true;
         this.ticketingService.specialShowTicketsBooking(this.ticketBookingForm.getRawValue(), this.ticketBookingForm.get('resourceCodeLK').get('code').value).subscribe(
-          res => {
-            // if (resp.data.status == this.bookingConstants.SUBMITTED) {
+          resData => {
+            // if (resData.data.status == this.bookingConstants.SUBMITTED) {
             this.commonService.commonAlert("Booking", "Planetarium Booking Request", "success", "Print Acknowledgement Receipt", false, '', pA => {
-              this.ticketingService.printAcknowledgementReceipt(res.data.refNumber).subscribe(acknowledgementHTML => {
+              this.ticketingService.printAcknowledgementReceipt(resData.data.refNumber).subscribe(acknowledgementHTML => {
                 let sectionToPrint: any = document.getElementById('sectionToPrint');
                 sectionToPrint.innerHTML = acknowledgementHTML;
                 setTimeout(() => {
@@ -517,10 +510,10 @@ export class BookPlanetariumComponent implements OnInit {
     else {
       this.isLoadingResults = true;
       this.ticketingService.bookPlanetariumTickets(this.ticketBookingForm.getRawValue(), this.ticketBookingForm.get('resourceCodeLK').get('code').value).subscribe(
-        res => {
+        respData => {
           // if (resp.data.status == this.bookingConstants.SUBMITTED) {
           this.commonService.commonAlert("Booking", "Planetarium Booked Successfully", "success", "Print Acknowledgement Receipt", false, '', pA => {
-            this.ticketingService.printAcknowledgementReceipt(res.data.refNumber).subscribe(
+            this.ticketingService.printAcknowledgementReceipt(respData.data.refNumber).subscribe(
               acknowledgementHTML => {
                 let sectionToPrint: any = document.getElementById('sectionToPrint');
                 sectionToPrint.innerHTML = acknowledgementHTML;
@@ -542,7 +535,7 @@ export class BookPlanetariumComponent implements OnInit {
 
             this.ticketBookingForm.get('refNumber').setValue(err.error.data.refNumber);
             // this.ticketingUtils.redirectToPayment(err, this.commonService, this.ticketingService, this.ticketBookingForm, this.router);
-            this.ticketingUtils.redirectToCCAvenuePayment(err, this.commonService, this.ticketingService, this.paymentGateway ,this.ticketBookingForm, this.router);
+            this.ticketingUtils.redirectToCCAvenuePayment(err, this.commonService, this.ticketingService, this.paymentGateway, this.ticketBookingForm, this.router);
           }
           else {
             this.commonService.openAlert("Error", err.error[0].message, "warning")

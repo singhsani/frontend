@@ -374,7 +374,7 @@ export class MyTicketingsComponent implements OnInit {
   paymentRequest(element) {
     this.ticketingService.getTransactionDetails(element.refNumber).subscribe(transactionData => {
     }, err => {
-      if (err.status = 402) {
+      if (err.status == 402) {
         this.isLoadingResults = false;
         if (err.status == 402) {
           // this.ticketingUtils.redirectToPayment(err, this.commonService, this.ticketingService);

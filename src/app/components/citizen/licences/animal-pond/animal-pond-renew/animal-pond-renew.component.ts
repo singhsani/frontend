@@ -48,7 +48,7 @@ export class AnimalPondRenewComponent implements OnInit {
 	// serach api variable
 	serachLicenceObj = {
 		isDisplayRenewLicenceForm: <boolean>false,
-		searchLicenceNumber: <string>""
+		searchLicenceNumber:""
 	}
 
 	/**
@@ -257,7 +257,7 @@ export class AnimalPondRenewComponent implements OnInit {
 				// deflate add one array in relationship grid
 				if ((<FormArray>res.relationshipList).length == 0) {
 					this.addItem('relationshipList').push(this.createArray());
-					let newlyadded = <any>this.addItem('relationshipList').controls;
+					let newlyadded = this.addItem('relationshipList').controls;
 					if (newlyadded.length) {
 						this.editRecord((newlyadded[newlyadded.length - 1]));
 						(newlyadded[newlyadded.length - 1]).newRecordAdded = true;
@@ -445,8 +445,8 @@ export class AnimalPondRenewComponent implements OnInit {
 		let animalGrid = <FormArray>this.animalPondRenewForm.get('animalDetails');
 
 		if (animalGrid.length) {
-			animalGrid.controls.forEach(element => {
-				let count = element.get('animalCount').value;
+			animalGrid.controls.forEach(elementGrid => {
+				let count = elementGrid.get('animalCount').value;
 				if (count && !isNaN(parseInt(count))) {
 					totalAnimal += parseInt(count);
 				}
@@ -488,7 +488,7 @@ export class AnimalPondRenewComponent implements OnInit {
 			}
 			this.addItem('relationshipList').push(this.createArray());
 			// this.animalPondRenewForm.get('relationshipList').setValidators([Validators.required]);
-			let newlyadded = <any>this.addItem('relationshipList').controls;
+			let newlyadded = this.addItem('relationshipList').controls;
 			if (newlyadded.length) {
 				// (newlyadded[newlyadded.length - 1]).isEditMode = true;
 				this.editRecord((newlyadded[newlyadded.length - 1]));
@@ -611,8 +611,8 @@ export class AnimalPondRenewComponent implements OnInit {
 
 		let animalGrid = <FormArray>this.animalPondRenewForm.get('animalDetails');
 
-		animalGrid.controls.forEach(element => {
-			let findRecord = animalData.find((obj: any) => obj.code == element.get('animalType').get('code').value)
+		animalGrid.controls.forEach(animalele => {
+			let findRecord = animalData.find((obj: any) => obj.code == animalele.get('animalType').get('code').value)
 			if (findRecord) {
 				findRecord.selected = true;
 			}
@@ -676,9 +676,9 @@ export class AnimalPondRenewComponent implements OnInit {
 	checkDynamicTableValidate(): void {
 
 		try {
-			this.addItem("animalDetails").controls.forEach(element => {
-				if (element.invalid) {
-					element.isEditMode = true;
+			this.addItem("animalDetails").controls.forEach(animalelement => {
+				if (animalelement.invalid) {
+					animalelement.isEditMode = true;
 				}
 			});
 

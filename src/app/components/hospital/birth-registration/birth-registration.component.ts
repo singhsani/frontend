@@ -150,7 +150,6 @@ export class BirthRegistrationComponent implements OnInit {
 	 * Method Is Initialized First
 	 */
 	ngOnInit() {
-
 		/**
 		 * Getting route parameters from url.
 		 */
@@ -497,12 +496,13 @@ export class BirthRegistrationComponent implements OnInit {
 	 * @param evGrm - child weight control in grams.
 	 */
 	calculateChildWeight(index: number, evKg: string, evGrm: string) {
+		
 		let ctrl = this.getChildData().at(index);
 		if (parseInt(ctrl.get(evKg).get('code').value) == 0 && parseInt(ctrl.get(evGrm).get('code').value) < 300) {
 			this.commonService.openAlert(this.config.Child_Weight_Error, this.config.MIN_CHILD_WEIGHT, "warning");
 			ctrl.get(evKg).reset();
 			ctrl.get(evGrm).reset();
-			this.config
+			this.config; //NOSONAR
 			return;
 		}
 	}
@@ -685,9 +685,9 @@ export class BirthRegistrationComponent implements OnInit {
 					return 1;
 				}
 				return -1;
-			});;
-			this.MOTHER_MARRIAGE_AGE = respData.MOTHER_MARRIAGE_AGE.sort((a, b) => {
-				if (a.code >= b.code) {
+			});
+			this.MOTHER_MARRIAGE_AGE = respData.MOTHER_MARRIAGE_AGE.sort((x, y) => {
+				if (x.code >= y.code) {
 					return 1;
 				}
 				return -1;

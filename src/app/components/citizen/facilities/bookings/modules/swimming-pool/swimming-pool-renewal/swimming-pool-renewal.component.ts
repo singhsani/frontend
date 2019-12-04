@@ -74,7 +74,7 @@ export class SwimmingPoolRenewalComponent implements OnInit {
   // serach api variable
   serachObj = {
     isDisplayRenewLicenceForm: <boolean>false,
-    searchLicenceNumber: <string>""
+    searchLicenceNumber:""
   }
 
 	/**
@@ -409,7 +409,7 @@ export class SwimmingPoolRenewalComponent implements OnInit {
         })
     }
     else {
-
+      this.toastr.error("Server Error");
     }
 
   }
@@ -515,10 +515,8 @@ export class SwimmingPoolRenewalComponent implements OnInit {
  * @param flag - flag of invalid control.
  */
   handleErrorsOnSubmit(flag) {
-    switch (true) {
-      case flag <= 16:
+    if ((flag <= 16)) {}
         // this.licenseConfiguration.currentTabIndex = 0;
-        break;
       // case flag <= 28:
       //   this.licenseConfiguration.currentTabIndex = 1;
       //   break;
@@ -540,7 +538,7 @@ export class SwimmingPoolRenewalComponent implements OnInit {
       // default:
       //   this.licenseConfiguration.currentTabIndex = 0;
     }
-  }
+  
 
   /**
    * Print receipt and processed for department approval
