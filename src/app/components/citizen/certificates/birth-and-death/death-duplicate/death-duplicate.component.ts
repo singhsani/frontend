@@ -81,7 +81,8 @@ export class DeathDuplicateComponent implements OnInit {
 	 * Duplicate copy mode lookup.
 	 */
     DuplicateCopyMode: Array<any> = [];
-    public NDCtoDuplicateDeath: any;
+    public NDCtoDuplicateDeath: any = {};
+	tempObj: any = {};
 	/**
 	 * constructor
 	 * @param location 
@@ -125,32 +126,33 @@ export class DeathDuplicateComponent implements OnInit {
 
 	/**
 	 * Method is used to create death record after application found.
-	 * @param data - original json.
 	 */
-    createDeathDuplicateRecord(data) {
+    createDeathDuplicateRecord() {
         
         this.formService.createFormData().subscribe(res => {
 
             this.deathDuplicateForm.patchValue(res);
-
-            this.updateDuplicateRecordValue(data);
 
             this.appId = res.serviceFormId;
 
             let cururl = this.location.path().replace('false', this.appId.toString());
 
             this.location.go(cururl);
+
+            if (Object.keys(this.tempObj).length) {
+				this.deathDuplicateForm.patchValue(this.tempObj);
+				this.deathDuplicateForm.get('deathRegNumber').setValue(this.tempObj.certificateno);
+				this.newgnDateconvert('deathDate', this.tempObj.deathdate);
+			}
+			if (Object.keys(this.NDCtoDuplicateDeath).length) {
+				this.deathDuplicateForm.patchValue(this.NDCtoDuplicateDeath);
+				this.deathDuplicateForm.get('deathRegNumber').setValue(this.NDCtoDuplicateDeath.certificateno);
+				this.newgnDateconvert('deathDate', this.NDCtoDuplicateDeath.deathdate);
+			}
+
         }, err => {
             this.commonService.openAlert("Warning", "Something Went Wrong", "warning");
         });
-    }
-
-	/**
-	 * Method is used to update duplicate form data with original json.
-	 * @param data - original json.
-	 */
-    updateDuplicateRecordValue(data) {
-        this.deathDuplicateForm.get('deathDate').setValue(data.deathDate);
     }
 
 	/**
@@ -159,11 +161,33 @@ export class DeathDuplicateComponent implements OnInit {
     getDeathDuplicateData() {
         this.formService.getFormData(this.appId).subscribe(res => {
             this.deathDuplicateForm.patchValue(res);
-            this.deathDuplicateForm.patchValue(this.NDCtoDuplicateDeath);
-            this.deathDuplicateForm.get('deathRegNumber').setValue(this.NDCtoDuplicateDeath.certificateno)
+
+            if (Object.keys(this.tempObj).length) {
+				this.deathDuplicateForm.patchValue(this.tempObj);
+				this.deathDuplicateForm.get('deathRegNumber').setValue(this.tempObj.certificateno);
+				this.newgnDateconvert('deathDate', this.tempObj.deathdate);
+			}
+			if (Object.keys(this.NDCtoDuplicateDeath).length) {
+				this.deathDuplicateForm.patchValue(this.NDCtoDuplicateDeath);
+				this.deathDuplicateForm.get('deathRegNumber').setValue(this.NDCtoDuplicateDeath.certificateno);
+				this.newgnDateconvert('deathDate', this.NDCtoDuplicateDeath.deathdate);
+			}
+
         },
         err => {});
     }
+
+
+	/**
+	 * This method for convert newgn response date to yyyy-mm-dd formate
+	 */
+	newgnDateconvert(controlName: any, date) {
+		let dateString = date;
+		let dateParts = dateString.split("-");
+		let dateObject = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
+
+		this.deathDuplicateForm.get(controlName).setValue(moment(dateObject).format("YYYY-MM-DD"));
+	}
 
 	/**
 	 * Method is used to handle error/validation on submit
@@ -181,7 +205,6 @@ export class DeathDuplicateComponent implements OnInit {
 	 */
     getLookupData() {
         this.formService.getDataFromLookups().subscribe(res => {
-            
             this.DuplicateCopyMode = res.DUPLICATE_COPY_MODE;
             this.ISYESNO = res.YES_NO;
         });
@@ -217,32 +240,27 @@ export class DeathDuplicateComponent implements OnInit {
     }
 
 	/**
-	 * Method is used to calculate death date.
-	 * @param event - date event.
-	 */
-    deathDateCalculator(event) {
-        this.deathDuplicateForm.get('deathDate').setValue(moment(event.value).format("YYYY-MM-DD"));
-        this.minDeathDate = event.value;
-    }
-
-	/**
-	 * Method is used to calculate death Registration date.
-	 * @param event - date event.
-	 */
-    deathRegCalculator(event) {
-        this.deathDuplicateForm.get('deathRegDate').setValue(moment(event.value).format("YYYY-MM-DD"));
-    }
-
-	/**
 	 * method is outpu event from search record.
 	 * @param event - returned event.
 	 */
     showDuplicateForm(event) {
         if (event) {
             this.getLookupData();
-            this.createDeathDuplicateRecord(event);
+            this.tempObj = event;
+            this.createDeathDuplicateRecord();
             this.isVisibeDuplicateForm = false;
             this.showSearchForm = false;
+
+            if (Object.keys(this.tempObj).length) {
+				this.deathDuplicateForm.patchValue(this.tempObj);
+				this.deathDuplicateForm.get('deathRegNumber').setValue(this.tempObj.certificateno);
+				this.newgnDateconvert('deathDate', this.tempObj.deathdate);
+			}
+			if (Object.keys(this.NDCtoDuplicateDeath).length) {
+				this.deathDuplicateForm.patchValue(this.NDCtoDuplicateDeath);
+				this.deathDuplicateForm.get('deathRegNumber').setValue(this.NDCtoDuplicateDeath.certificateno);
+				this.newgnDateconvert('deathDate', this.NDCtoDuplicateDeath.deathdate);
+			}
         }
         else{
 			this.formService.apiType = ManageRoutes.getApiTypeFromApiCode('HEL-NRCDR');

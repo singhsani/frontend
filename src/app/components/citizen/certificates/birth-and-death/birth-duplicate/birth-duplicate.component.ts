@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
@@ -76,7 +76,8 @@ export class BirthDuplicateComponent implements OnInit {
 	 * language translate key
 	 */
 	translateKey: string = 'BirthDuplicateScreen';
-	public NBCtoDuplicateBirth: any;
+	public NBCtoDuplicateBirth: any = {};
+	tempObj: any = {};
 
 	/**
 	 * Constructor
@@ -94,8 +95,11 @@ export class BirthDuplicateComponent implements OnInit {
 		private router: Router,
 		private location: Location,
 		private route: ActivatedRoute,
-		private formService: FormsActionsService
-	) { }
+		private formService: FormsActionsService,
+		private CD: ChangeDetectorRef,
+	) {
+
+	}
 
 	/**
 	 * Method initializes first.
@@ -106,12 +110,11 @@ export class BirthDuplicateComponent implements OnInit {
 			this.apiCode = param.get('apiCode');
 			this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
 		});
-
 		this.birthDuplicateFormControls();
 
 		if (this.appId) {
 			this.isVisibeDuplicateForm = false;
-			this.formService.getNBCtoDuplicateBirth().subscribe(data => this.NBCtoDuplicateBirth = data);
+			this.formService.getNBCtoDuplicateBirth().subscribe(data => { this.NBCtoDuplicateBirth = data });
 			this.getBirthDuplicateData();
 			this.getLookupData();
 		} else {
@@ -121,33 +124,33 @@ export class BirthDuplicateComponent implements OnInit {
 
 	/**
 	 * Method is used to create death record after search data found.
-	 * @param data - original json.
 	 */
-	createDuplicateBirthRecord(data) {
+	createDuplicateBirthRecord() {
 		this.formService.createFormData().subscribe(res => {
 
 			this.birthDuplicateForm.patchValue(res);
 
-			this.updateDuplicateRecordValue(data);
-
 			this.appId = res.serviceFormId;
 
 			let cururl = this.location.path().replace('false', this.appId.toString());
-
 			this.location.go(cururl);
+
+			if (Object.keys(this.tempObj).length) {
+				this.birthDuplicateForm.patchValue(this.tempObj);
+				this.birthDuplicateForm.get('birthRegNumber').setValue(this.tempObj.certificateno);
+				this.newgnDateconvert('birthDate', this.tempObj.birthDate);
+			}
+			if (Object.keys(this.NBCtoDuplicateBirth).length) {
+				this.birthDuplicateForm.patchValue(this.NBCtoDuplicateBirth);
+				this.birthDuplicateForm.get('birthRegNumber').setValue(this.NBCtoDuplicateBirth.certificateno);
+				this.newgnDateconvert('birthDate', this.NBCtoDuplicateBirth.birthDate);
+			}
+
 		}, err => {
 			this.commonService.openAlert("Warning", "Something Went Wrong", "warning");
 		});
 	}
 
-	/**
-	 * Method is used to update duplicate form data with original json.
-	 * @param data - original json.
-	 */
-	updateDuplicateRecordValue(data) {
-		this.birthDuplicateForm.get('birthDate').setValue(data.birthDate);
-		this.birthDuplicateForm.get('childName').setValue(data.childName);
-	}
 
 	/**
 	 * Method is used to get duplicate birth data.
@@ -155,11 +158,62 @@ export class BirthDuplicateComponent implements OnInit {
 	getBirthDuplicateData() {
 		this.formService.getFormData(this.appId).subscribe(res => {
 			this.birthDuplicateForm.patchValue(res);
-			this.birthDuplicateForm.patchValue(this.NBCtoDuplicateBirth);
-			this.birthDuplicateForm.get('birthRegNumber').setValue(this.NBCtoDuplicateBirth.certificateno)
-			// this.birthDuplicateForm.get('childName').setValue(this.NBCtoDuplicateBirth.childName);
-		},err => {});
-		
+			if (Object.keys(this.NBCtoDuplicateBirth).length) {
+				this.birthDuplicateForm.patchValue(this.NBCtoDuplicateBirth);
+				this.birthDuplicateForm.get('birthRegNumber').setValue(this.NBCtoDuplicateBirth.certificateno);
+				this.newgnDateconvert('birthDate', this.NBCtoDuplicateBirth.birthDate);
+			}
+			if (Object.keys(this.tempObj).length) {
+				this.birthDuplicateForm.patchValue(this.tempObj);
+				this.birthDuplicateForm.get('birthRegNumber').setValue(this.tempObj.certificateno);
+				this.newgnDateconvert('birthDate', this.tempObj.birthDate);
+			}
+		}, err => { });
+	}
+
+	/**
+	 * This method for convert newgn response date to yyyy-mm-dd formate
+	 */
+	newgnDateconvert(controlName: any, date) {
+		let dateString = date;
+		let dateParts = dateString.split("-");
+		let dateObject = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
+
+		this.birthDuplicateForm.get(controlName).setValue(moment(dateObject).format("YYYY-MM-DD"));
+	}
+
+	/**
+	 * show duplicate birth certificate form.
+	 * @param event - data or false.
+	 */
+	showDuplicateForm(event) {
+		if (event) {
+			this.createDuplicateBirthRecord();
+			this.tempObj = event;
+			this.getLookupData();
+
+			this.isVisibeDuplicateForm = false;
+			this.showSearchForm = false;
+			// this.formService.getNBCtoDuplicateBirth().subscribe(data => { this.NBCtoDuplicateBirth = data });
+
+			if (Object.keys(this.tempObj).length) {
+				this.birthDuplicateForm.patchValue(this.tempObj);
+				this.birthDuplicateForm.get('birthRegNumber').setValue(this.tempObj.certificateno);
+				this.newgnDateconvert('birthDate', this.tempObj.birthDate);
+			}
+			if (Object.keys(this.NBCtoDuplicateBirth).length) {
+				this.birthDuplicateForm.patchValue(this.NBCtoDuplicateBirth);
+				this.birthDuplicateForm.get('birthRegNumber').setValue(this.NBCtoDuplicateBirth.certificateno);
+				this.newgnDateconvert('birthDate', this.NBCtoDuplicateBirth.birthDate);
+			}
+		}
+		else {
+			this.formService.apiType = ManageRoutes.getApiTypeFromApiCode('HEL-NRCBR');
+			this.formService.createFormData().subscribe(res => {
+				let redirectUrl = ManageRoutes.getFullRoute('HEL-NRCBR');
+				this.router.navigate([redirectUrl, res.serviceFormId, 'HEL-NRCBR']);
+			});
+		}
 	}
 
 	/**
@@ -191,7 +245,7 @@ export class BirthDuplicateComponent implements OnInit {
 		this.birthDuplicateForm = this.fb.group({
 			birthRegNumber: [null],
 			birthRegYear: [null],
-			birthDate: [null],
+			birthDate: [moment(new Date()).format("YYYY-MM-DD")],
 			birthRegDate: [null],
 			childName: [null],
 			duplicateCopies: this.fb.group({
@@ -214,40 +268,4 @@ export class BirthDuplicateComponent implements OnInit {
 		});
 	}
 
-	/**
-	 * Method is used to calculate birth date.
-	 * @param event - date event.
-	 */
-	birthDateCalculator(event) {
-		this.birthDuplicateForm.get('birthDate').setValue(moment(event.value).format("YYYY-MM-DD"));
-		this.minBirthDate = event.value;
-	}
-
-	/**
-	 * Method is used to calculate birth Registration date.
-	 * @param event - date event.
-	 */
-	birthRegCalculator(event) {
-		this.birthDuplicateForm.get('birthRegDate').setValue(moment(event.value).format("YYYY-MM-DD"));
-	}
-
-	/**
-	 * show duplicate birth certificate form.
-	 * @param event - data or false.
-	 */
-	showDuplicateForm(event) {
-		if (event) {
-			this.getLookupData();
-			this.createDuplicateBirthRecord(event);
-			this.isVisibeDuplicateForm = false;
-			this.showSearchForm = false;
-		}
-		else{
-			this.formService.apiType = ManageRoutes.getApiTypeFromApiCode('HEL-NRCBR');
-			this.formService.createFormData().subscribe(res => {
-				let redirectUrl = ManageRoutes.getFullRoute('HEL-NRCBR');
-				this.router.navigate([redirectUrl, res.serviceFormId, 'HEL-NRCBR']);
-			});
-		}
-	}
 }
