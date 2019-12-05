@@ -52,7 +52,7 @@
 			<div class="row" *ngIf="deathFromName">
 				<mat-form-field class="col-md-4">
 					<input matInput trim type="text" formControlName="deathRegNumber"
-						placeholder="{{'reg_number_for_death' | translate: translateKey}}">
+						placeholder="{{'reg_number' | translate: translateKey}}">
 				</mat-form-field>
 
 				<div class="col-md-4 ngSelect">
@@ -64,7 +64,7 @@
 				<mat-form-field class="col-md-4">
 					<input matInput [matDatepicker]="picker" [max]="maxDate" formControlName="deathDate"
 						(dateChange)="onDateChange($event.value)"
-						placeholder="{{deathFromName ? 'death_date' : 'birth_date' | translate: translateKey}}"
+						placeholder="{{ 'death_date' | translate: translateKey}}"
 						(focus)="picker.open()">
 					<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
 					<mat-datepicker touchUi="true" #picker></mat-datepicker>
@@ -73,7 +73,7 @@
 				<mat-form-field class="col-md-4">
 					<input matInput type="text" formControlName="deceasedName" appValidationFields
 						validationFieldsType="onlyNameWithOutSpace"
-						placeholder="{{deathFromName ? 'deceased_name' : 'child_name' | translate: translateKey}}">
+						placeholder="{{ 'deceased_name'  | translate: translateKey}}">
 				</mat-form-field>
 
 				<mat-form-field class="col-md-4">
