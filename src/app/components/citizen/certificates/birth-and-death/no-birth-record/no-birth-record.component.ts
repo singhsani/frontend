@@ -270,7 +270,7 @@ export class NoBirthRecordComponent implements OnInit {
 	 */
 	showNRCForm(event) {
 		let tabledataValue = event;
-		if (tabledataValue != false) {
+		if (tabledataValue != false) { //NOSONAR
 
 			this.formService.apiType = ManageRoutes.getApiTypeFromApiCode('HEL-DUPBR');
 			this.formService.createFormData().subscribe(res => {

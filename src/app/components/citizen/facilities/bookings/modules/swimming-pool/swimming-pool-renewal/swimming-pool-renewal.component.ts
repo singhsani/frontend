@@ -515,7 +515,9 @@ export class SwimmingPoolRenewalComponent implements OnInit {
  * @param flag - flag of invalid control.
  */
   handleErrorsOnSubmit(flag) {
-    if ((flag <= 16)) {}
+    if ((flag <= 16)) {
+      this.tabIndex = 0;
+    }
         // this.licenseConfiguration.currentTabIndex = 0;
       // case flag <= 28:
       //   this.licenseConfiguration.currentTabIndex = 1;

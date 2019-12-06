@@ -270,7 +270,7 @@ export class AnimalPondTransferComponent implements OnInit {
 				// deflate add one array in animal grid
 				if ((<FormArray>res.animalDetails).length == 0) {
 					this.addItem('animalDetails').push(this.createAnimalArray());
-					let newlyadded = <any>this.addItem('animalDetails').controls;
+					let newlyadded = this.addItem('animalDetails').controls;
 					if (newlyadded.length) {
 						this.editRecord((newlyadded[newlyadded.length - 1]));
 						(newlyadded[newlyadded.length - 1]).newRecordAdded = true;
@@ -530,7 +530,7 @@ export class AnimalPondTransferComponent implements OnInit {
 			}
 			this.addItem('animalDetails').push(this.createAnimalArray());
 			// this.animalPondTransferForm.get('relationshipList').setValidators([Validators.required]);
-			let newlyadded = <any>this.addItem('animalDetails').controls;
+			let newlyadded = this.addItem('animalDetails').controls;
 			if (newlyadded.length) {
 				this.editRecord((newlyadded[newlyadded.length - 1]));
 				(newlyadded[newlyadded.length - 1]).newRecordAdded = true;
