@@ -245,12 +245,12 @@ export class FileUploadComponent implements OnInit {
 					}else{
 						this.uploadFileService.processFileToServer(formData, setProgressBar => {
 							this.progress.percentage = setProgressBar;
-						}, successResponse => {
+						}, response => {
 							this.tostr.success(this.uploadModel.labelName ? this.uploadModel.labelName : this.uploadModel.documentLabelEn + " successfully uploaded", "File Uploaded");
 							this.canUpload = true;
-							this.id = successResponse.data.id;
-							this.type = successResponse.data.mimeType;
-							this.docIndex = successResponse.data.docIndex;
+							this.id = response.data.id;
+							this.type = response.data.mimeType;
+							this.docIndex = response.data.docIndex;
 							this.currentFileUpload = undefined;
 							this.selectedFiles = undefined;
 							this.fileInput.nativeElement.value = "";

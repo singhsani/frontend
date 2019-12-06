@@ -263,7 +263,7 @@ export class NoDeathRecordComponent implements OnInit {
 	 */
 	showNRCForm(event) {
 		let tabledataValue = event;
-		if (tabledataValue != false) {
+		if (tabledataValue != false) { //NOSONAR
 
 			this.formService.apiType = ManageRoutes.getApiTypeFromApiCode('HEL-DUPDR');
 			this.formService.createFormData().subscribe(res => {

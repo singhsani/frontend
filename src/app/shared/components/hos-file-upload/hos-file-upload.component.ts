@@ -243,13 +243,13 @@ export class HosFileUploadComponent implements OnInit {
 					} else {
 						this.uploadFileService.processFileToServer(formData, setProgressBar => {
 							this.progress.percentage = setProgressBar;
-						}, successResponse => {
+						}, response => {
 							this.tostr.success(this.TranslateService.getCurrentLanguage() == 'en' ? this.uploadModel.documentLabelEn : this.uploadModel.documentLabelGuj + " successfully uploaded", "File Uploaded");
 							// this.commonService.successAlert("File Uploaded", this.TranslateService.getCurrentLanguage() == 'en' ? this.uploadModel.documentLabelEn : this.uploadModel.documentLabelGuj + " successfully uploaded", "success");
 							this.canUpload = true;
-							this.id = successResponse.data.id;
-							this.type = successResponse.data.mimeType;
-							this.docIndex = successResponse.data.docIndex;
+							this.id = response.data.id;
+							this.type = response.data.mimeType;
+							this.docIndex = response.data.docIndex;
 							this.currentFileUpload = undefined;
 							this.selectedFiles = undefined;
 							this.fileInput.nativeElement.value = "";

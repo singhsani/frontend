@@ -514,15 +514,15 @@ export class BookPlanetariumComponent implements OnInit {
           // if (resp.data.status == this.bookingConstants.SUBMITTED) {
           this.commonService.commonAlert("Booking", "Planetarium Booked Successfully", "success", "Print Acknowledgement Receipt", false, '', pA => {
             this.ticketingService.printAcknowledgementReceipt(respData.data.refNumber).subscribe(
-              acknowledgementHTML => {
+              acknowledgement => {
                 let sectionToPrint: any = document.getElementById('sectionToPrint');
-                sectionToPrint.innerHTML = acknowledgementHTML;
+                sectionToPrint.innerHTML = acknowledgement;
                 setTimeout(() => {
                   window.print();
                   this.router.navigate([this.ticketingConstants.MY_TICKETINGS_URL]);
                 });
-              }, err => {
-                this.commonService.openAlert("Error", err.error[0].message, "warning")
+              }, resErr => {
+                this.commonService.openAlert("Error", resErr.error[0].message, "warning")
               })
           }, rA => {
             this.router.navigate([this.ticketingConstants.MY_TICKETINGS_URL]);
