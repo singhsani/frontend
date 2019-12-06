@@ -1,84 +1,101 @@
-	<app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
+<app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
 
-	<mat-card [hidden]="serachLicenceObj.isDisplayCancelLicenceForm" class="mt-4 formClass">
-		<mat-form-field class="col-md-10">
-			<input matInput required placeholder="{{'search_by_application_no' | translate:translateKey}}" [(ngModel)]="serachLicenceObj.searchLicenceNumber">
-		</mat-form-field>
-		<button class="col-md-2" [disabled]="!serachLicenceObj.searchLicenceNumber" mat-raised-button color="primary" (click)="searchLicence()">{{'search' | translate:translateKey}}</button>
-	</mat-card>
+<mat-card [hidden]="serachLicenceObj.isDisplayCancelLicenceForm" class="mt-4 formClass">
+	<mat-form-field class="col-md-10">
+		<input matInput required placeholder="{{'search_by_application_no' | translate:translateKey}}"
+			[(ngModel)]="serachLicenceObj.searchLicenceNumber">
+	</mat-form-field>
+	<button class="col-md-2" [disabled]="!serachLicenceObj.searchLicenceNumber" mat-raised-button color="primary"
+		(click)="searchLicence()">{{'search' | translate:translateKey}}</button>
+</mat-card>
 
-	<mat-card [hidden]="!serachLicenceObj.isDisplayCancelLicenceForm" class="formClass cardBorder">
-		<form [formGroup]="shopCancellationForm">
-			<mat-tab-group [(selectedIndex)]="licenseConfiguration.currentTabIndex" dynamicHeight="true" mat-stretch-tabs class="stepperNav">
+<mat-card [hidden]="!serachLicenceObj.isDisplayCancelLicenceForm" class="formClass cardBorder">
+	<form [formGroup]="shopCancellationForm">
+		<mat-tab-group [(selectedIndex)]="licenseConfiguration.currentTabIndex" dynamicHeight="true" mat-stretch-tabs
+			class="stepperNav">
 
-				<!-- step 1 Starts -->
-				<mat-tab>
-					<ng-template mat-tab-label>
-						<div>{{'establishment_details' | translate:translateKey}}</div>
-					</ng-template>
+			<!-- step 1 Starts -->
+			<mat-tab>
+				<ng-template mat-tab-label>
+					<div>{{'establishment_details' | translate:translateKey}}</div>
+				</ng-template>
 
-					<div class="row">
-						<mat-form-field class="col-md-4">
-							<input matInput readonly required placeholder="{{'license_no' | translate:translateKey}}" formControlName="refNumber">
-							<control-messages [control]="shopCancellationForm.get('refNumber')"></control-messages>
-						</mat-form-field>
-						<mat-form-field class="col-md-4">
-							<input matInput readonly placeholder="{{'issue_date' | translate:translateKey}}" formControlName="licenseIssueDate">
-							<control-messages [control]="shopCancellationForm.get('licenseIssueDate')"></control-messages>
-						</mat-form-field>
-					</div>
-					<div class="row">
-						<mat-form-field class="col-md-4">
-							<input matInput required maxlength="150" placeholder="{{'name_of_establishment_if_any' | translate:translateKey}}" formControlName="establishmentName">
-							<control-messages [control]="shopCancellationForm.get('establishmentName')"></control-messages>
-						</mat-form-field>
-						<!-- appGujInputSource targetElement="establishmentNameGuj" [form]="shopCancellationForm" -->
-						<!-- gujarati -->
-						<!-- <mat-form-field class="col-md-6">
+				<div class="row">
+					<mat-form-field class="col-md-4">
+						<input matInput readonly required placeholder="{{'license_no' | translate:translateKey}}"
+							formControlName="refNumber">
+						<control-messages [control]="shopCancellationForm.get('refNumber')"></control-messages>
+					</mat-form-field>
+					<mat-form-field class="col-md-4">
+						<input matInput readonly placeholder="{{'issue_date' | translate:translateKey}}"
+							formControlName="licenseIssueDate">
+						<control-messages [control]="shopCancellationForm.get('licenseIssueDate')"></control-messages>
+					</mat-form-field>
+				</div>
+				<div class="row">
+					<mat-form-field class="col-md-4">
+						<input matInput required maxlength="150"
+							placeholder="{{'name_of_establishment_if_any' | translate:translateKey}}"
+							formControlName="establishmentName">
+						<control-messages [control]="shopCancellationForm.get('establishmentName')"></control-messages>
+					</mat-form-field>
+					<!-- appGujInputSource targetElement="establishmentNameGuj" [form]="shopCancellationForm" -->
+					<!-- gujarati -->
+					<!-- <mat-form-field class="col-md-6">
 							<input matInput type="text" required formControlName="establishmentNameGuj" appGujInputTarget [form]="shopCancellationForm"
 							 placeholder="{{ 'name_of_establishment_if_any' | translate:translateKey:'gu' }}">
 							<control-messages [control]="shopCancellationForm.get('establishmentNameGuj')"></control-messages>
 						</mat-form-field> -->
-						<!-- /gujarati -->
+					<!-- /gujarati -->
+					<div class="col-md-12">
+						<h5>{{'postal_address_of_establishment' | translate:translateKey}}</h5>
+					</div>
+					<div class="col-md-12 p-0">
+						<app-address #postalAddressEstablishment
+							[addressFormGroup]="shopCancellationForm.get('postalAddress')"></app-address>
+					</div>
 
-						<div class="col-md-12">{{'postal_address_of_establishment' | translate:translateKey}}
-							<app-address #postalAddressEstablishment [addressFormGroup]="shopCancellationForm.get('postalAddress')"></app-address>
-						</div>
+					<div class="col-md-4 ngSelect" formGroupName="wardNo">
+						<ng-select placeholder="{{'ward_no' | translate:translateKey}} *" formControlName="code"
+							required>
+							<ng-option *ngFor="let no of wardNo" [value]="no.code">{{no.name}}</ng-option>
+						</ng-select>
+						<control-messages [control]="shopCancellationForm.get('wardNo').get('code')"></control-messages>
+					</div>
 
-						<div class="col-md-4 ngSelect" formGroupName="wardNo">
-							<ng-select placeholder="{{'ward_no' | translate:translateKey}} *" formControlName="code" required>
-								<ng-option *ngFor="let no of wardNo" [value]="no.code">{{no.name}}</ng-option>
-							</ng-select>
-							<control-messages [control]="shopCancellationForm.get('wardNo').get('code')"></control-messages>
-						</div>
-
-						<mat-form-field class="col-md-4">
-							<input matInput required maxlength="100" placeholder="{{'name_of_employer' | translate:translateKey}}" formControlName="nameOfEmployer">
-							<control-messages [control]="shopCancellationForm.get('nameOfEmployer')"></control-messages>
-						</mat-form-field>
-						<!-- appGujInputSource targetElement="nameOfEmployerGuj" [form]="shopCancellationForm" -->
-						<!-- gujarati -->
-						<!-- <mat-form-field class="col-md-6">
+					<mat-form-field class="col-md-4">
+						<input matInput required maxlength="100"
+							placeholder="{{'name_of_employer' | translate:translateKey}}"
+							formControlName="nameOfEmployer">
+						<control-messages [control]="shopCancellationForm.get('nameOfEmployer')"></control-messages>
+					</mat-form-field>
+					<!-- appGujInputSource targetElement="nameOfEmployerGuj" [form]="shopCancellationForm" -->
+					<!-- gujarati -->
+					<!-- <mat-form-field class="col-md-6">
 							<input matInput type="text" required formControlName="nameOfEmployerGuj" appGujInputTarget [form]="shopCancellationForm" placeholder="{{ 'name_of_employer' | translate:translateKey:'gu' }}">
 							<control-messages [control]="shopCancellationForm.get('nameOfEmployerGuj')"></control-messages>
 						</mat-form-field> -->
 
-						<mat-form-field class="col-md-4">
-							<input matInput required maxlength="13" minlength="13" appAlphaNumeric placeholder="{{'business_property_tax_no' | translate:translateKey}}" formControlName="propertyTaxNo">
-							<control-messages [control]="shopCancellationForm.get('propertyTaxNo')"></control-messages>
-						</mat-form-field>
+					<mat-form-field class="col-md-4">
+						<input matInput required maxlength="13" minlength="13" appAlphaNumeric
+							placeholder="{{'business_property_tax_no' | translate:translateKey}}"
+							formControlName="propertyTaxNo">
+						<control-messages [control]="shopCancellationForm.get('propertyTaxNo')"></control-messages>
+					</mat-form-field>
 
-						<mat-form-field class="col-md-4">
-							<input matInput required maxlength="100" type="textarea" placeholder="{{'remark' | translate:translateKey}}" formControlName="remark">
-							<control-messages [control]="shopCancellationForm.get('remark')"></control-messages>
-						</mat-form-field>
-					</div>
+					<mat-form-field class="col-md-4">
+						<input matInput required maxlength="100" type="textarea"
+							placeholder="{{'remark' | translate:translateKey}}" formControlName="remark">
+						<control-messages [control]="shopCancellationForm.get('remark')"></control-messages>
+					</mat-form-field>
+				</div>
 
-					<app-action-bar [uploadFiles]="uploadFileArray" [paymentGateway]="paymentGateway" [form]="shopCancellationForm" [stepInfo]="{step: 'final', next: 1, back: 0}"
-					 (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
-				</mat-tab>
-				<!-- step 1 Ends -->
-				<select-payment-gateway #paymentGateway></select-payment-gateway>
-			</mat-tab-group>
-		</form>
-	</mat-card>
+				<app-action-bar [uploadFiles]="uploadFileArray" [paymentGateway]="paymentGateway"
+					[form]="shopCancellationForm" [stepInfo]="{step: 'final', next: 1, back: 0}"
+					(handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
+			</mat-tab>
+			<!-- step 1 Ends -->
+			<select-payment-gateway #paymentGateway></select-payment-gateway>
+		</mat-tab-group>
+	</form>
+</mat-card>
