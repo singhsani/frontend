@@ -264,8 +264,9 @@ export class ShopLicNewComponent implements OnInit {
 			attachments: [''],
 			agree:[false]
 			/*  */
-
 		});
+		this.addMorePerson('EMPLOYER_FAMILY');
+		this.addMorePerson('OCCUPANCY');
 	}
 
 

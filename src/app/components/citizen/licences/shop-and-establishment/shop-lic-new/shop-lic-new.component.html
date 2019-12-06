@@ -81,7 +81,7 @@
 
 					<mat-form-field class="col-md-4"
 						*ngIf="shopLicNewForm.get('applicantVimaAmountPaid').value.code == 'YES'">
-						<input matInput appAlphaNumeric maxlength="20"
+						<input [required]="shopLicNewForm.get('applicantVimaAmountPaid').value.code == 'YES'" matInput appAlphaNumeric maxlength="20"
 							placeholder="{{'number' | translate:translateKey}}" formControlName="number">
 						<control-messages [control]="shopLicNewForm.get('number')"></control-messages>
 					</mat-form-field>

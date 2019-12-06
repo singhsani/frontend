@@ -696,9 +696,9 @@
 				</div>
 
 
-				<app-hos-action-bar [stepInfo]="{step: 'final', next: 5, back: 3}" (saveEvent)="isFormSaved = $event?.isSaved" (tabIndex)="onTabChange($event)"
+				<app-hos-action-bar [paymentGateway]="paymentGateway" [stepInfo]="{step: 'final', next: 5, back: 3}" (saveEvent)="isFormSaved = $event?.isSaved" (tabIndex)="onTabChange($event)"
 				 [uploadFiles]="uploadFileArray" [form]="deathCertificateForm" [step]="'final'" (handleErrors)="handleErrorsOnSubmit($event)"></app-hos-action-bar>
-
+				 <select-payment-gateway #paymentGateway></select-payment-gateway>
 			</mat-tab>
 			<!-- Tab 5 Ends -->
 		</mat-tab-group>
