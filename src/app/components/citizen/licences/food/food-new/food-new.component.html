@@ -68,11 +68,11 @@
             <control-messages [control]="foodLicNewForm.get('mobileNo')"></control-messages>
           </mat-form-field>
           <mat-form-field class="col-md-4">
-            <input matInput OnlyNumber maxlength="10" formControlName="firmLandLineNo" placeholder="{{'tel_no' | translate:translateKey}}">
+            <input matInput OnlyNumber maxlength="10" required formControlName="firmLandLineNo" placeholder="{{'tel_no' | translate:translateKey}}">
             <control-messages [control]="foodLicNewForm.get('firmLandLineNo')"></control-messages>
           </mat-form-field>
           <mat-form-field class="col-md-4">
-            <input matInput appPreventSpace placeholder="{{'email' | translate:translateKey}}" type="email"
+            <input matInput required appPreventSpace placeholder="{{'email' | translate:translateKey}}" type="email"
               formControlName="firmEmailId">
             <control-messages [control]="foodLicNewForm.get('firmEmailId')"></control-messages>
           </mat-form-field>

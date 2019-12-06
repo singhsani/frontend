@@ -39,7 +39,7 @@
 
 
 					<h2>{{'postal_address_of_establishment' | translate:translateKey}}</h2>
-					<app-address #postalAddressEstablishment [addressFormGroup]="shopLicNewForm.get('postalAddress')">
+					<app-address #postalAddressEstablishment [requiredFeilds]="true" [addressFormGroup]="shopLicNewForm.get('postalAddress')">
 					</app-address>
 
 
@@ -1121,16 +1121,17 @@
 								<file-upload [form]="shopLicNewForm" [uploadModel]="doc"></file-upload>
 							</div>
 						</ng-container>
-
+					
+						<mat-checkbox class="d-block ml-4" labelPosition="after" formControlName="agree">{{'i_agree' | translate:translateKey}} </mat-checkbox>
+					
 					</ng-container>
-
 				</div>
 
 				<app-action-bar [uploadFiles]="uploadFilesArray" [paymentGateway]="paymentGateway" [form]="shopLicNewForm"
 					(handleErrors)="handleErrorsOnSubmit($event) "
 					(tabIndex)="licenseConfiguration.onFormTabChange($event) "
 					[stepInfo]="{step: 'final', next:7, back: 5} "></app-action-bar>
-
+					
 			</mat-tab>
 			<!-- step Attachment Ends -->
 			<select-payment-gateway #paymentGateway></select-payment-gateway>

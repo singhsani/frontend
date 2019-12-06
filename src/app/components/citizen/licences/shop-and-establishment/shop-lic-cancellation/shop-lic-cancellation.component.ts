@@ -139,6 +139,11 @@ export class ShopLicCancellationComponent implements OnInit {
 	 */
 	enableFielList() {
 		this.shopCancellationForm.get('remark').enable();
+		this.shopCancellationForm.get('establishmentName').enable();
+		this.shopCancellationForm.get('wardNo').enable();
+		this.shopCancellationForm.get('nameOfEmployer').enable();
+		this.shopCancellationForm.get('propertyTaxNo').enable();
+		
 	}
 
 	/**

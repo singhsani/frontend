@@ -261,7 +261,8 @@ export class ShopLicNewComponent implements OnInit {
 			//enterHolidayGuj: null,
 
 			/*  */
-			attachments: ['']
+			attachments: [''],
+			agree:[false]
 			/*  */
 
 		});

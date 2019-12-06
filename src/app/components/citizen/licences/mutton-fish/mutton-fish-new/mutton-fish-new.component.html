@@ -80,14 +80,12 @@
 
 				<div class="row">
 					<h2>{{'permanat_address' | translate:translateKey}}</h2>
-					<app-address [isDisplayGujFields]="true" #permanantAddressEstablishment
-						[requiredFeilds]="true"
+					<app-address [isDisplayGujFields]="true" #permanantAddressEstablishment [requiredFeilds]="true"
 						[addressFormGroup]="muttonFishNewForm.get('permanantAddress')"></app-address>
 				</div>
 				<div class="row">
 					<h2>{{'temp_address' | translate:translateKey}}</h2>
-					<app-address [isDisplayGujFields]="true" #temporaryAddressEstablishment
-						[requiredFeilds]="true"
+					<app-address [isDisplayGujFields]="true" #temporaryAddressEstablishment [requiredFeilds]="true"
 						[addressFormGroup]="muttonFishNewForm.get('temporaryAddress')"></app-address>
 				</div>
 
@@ -108,8 +106,9 @@
 						placeholder="{{'holder_aadhar_no' | translate:translateKey}}">
 				</mat-form-field>
 				<mat-form-field class="col-md-4">
-					<input matInput appAlphaNumeric maxlength="10" required formControlName="holderPanNo"
+					<input matInput appAlphaNumeric maxlength="10" upperCase required formControlName="holderPanNo"
 						placeholder="{{'holder_pan_no' | translate:translateKey}}">
+					<control-messages [control]="muttonFishNewForm.get('holderPanNo')"></control-messages>
 				</mat-form-field>
 
 				<app-action-bar [form]="muttonFishNewForm" (tabIndex)="licenseConfiguration.onFormTabChange($event)"
@@ -147,8 +146,7 @@
 				</div>
 				<div class="row">
 					<h2>{{'business_shop_address' | translate:translateKey}}</h2>
-					<app-address #temporaryAddressEstablishment
-						[requiredFeilds]="true"
+					<app-address #temporaryAddressEstablishment [requiredFeilds]="true"
 						[addressFormGroup]="muttonFishNewForm.get('businessAddress')"></app-address>
 				</div>
 
@@ -303,8 +301,8 @@
 					</ng-container>
 				</div>
 
-				<app-action-bar [paymentGateway]="paymentGateway" [uploadFiles]="uploadFileArray" [form]="muttonFishNewForm"
-					(handleErrors)="handleErrorsOnSubmit($event)"
+				<app-action-bar [paymentGateway]="paymentGateway" [uploadFiles]="uploadFileArray"
+					[form]="muttonFishNewForm" (handleErrors)="handleErrorsOnSubmit($event)"
 					(tabIndex)="licenseConfiguration.onFormTabChange($event) "
 					[stepInfo]="{step: 'final', next:3, back:1} "></app-action-bar>
 
