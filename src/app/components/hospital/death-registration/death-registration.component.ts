@@ -223,7 +223,8 @@ export class DeathRegistrationComponent implements OnInit {
 				}
 			}
 			else{
-				this.removeMandatoryAttachment(["POLICE_INQUEST", "PM_REPORT","AFFIDAVIT_HEALTH_OFFICER_ORDER", "ORDER_EXECUTIVE_MAGISTRATE"]);
+				/** all attachment mandatory bydefault  */
+				// this.removeMandatoryAttachment(["POLICE_INQUEST", "PM_REPORT","AFFIDAVIT_HEALTH_OFFICER_ORDER", "ORDER_EXECUTIVE_MAGISTRATE"]);
 			}
 
 			this.showButtons = true;

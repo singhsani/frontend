@@ -220,9 +220,9 @@ export class BirthRegistrationComponent implements OnInit {
 			childs: this.fb.array([this.createChildArray({
 				birthDate: null,
 				birthTime: new Date().getTime(),
-				certificateNumber :null,
+				certificateNumber: null,
 				childName: null,
-				childNameGuj : null,
+				childNameGuj: null,
 				id: null,
 				sex: {
 					code: null
@@ -317,7 +317,7 @@ export class BirthRegistrationComponent implements OnInit {
 			totalGirlChildsBeforePregnancy: null,
 			totalChildsBeforePregnancy: null,
 			pregnancyDuration: ['', [Validators.required, ValidationService.pregnancyDurationValidation]],
-			
+
 
 
 			//step 4(3)
@@ -350,7 +350,7 @@ export class BirthRegistrationComponent implements OnInit {
 				name: null
 			}),
 			parentPermanentAddress: this.fb.group(this.addressComp.addressControls()),
-			
+
 
 			//step 5
 			attachments: [null],
@@ -496,7 +496,7 @@ export class BirthRegistrationComponent implements OnInit {
 	 * @param evGrm - child weight control in grams.
 	 */
 	calculateChildWeight(index: number, evKg: string, evGrm: string) {
-		
+
 		let ctrl = this.getChildData().at(index);
 		if (parseInt(ctrl.get(evKg).get('code').value) == 0 && parseInt(ctrl.get(evGrm).get('code').value) < 300) {
 			this.commonService.openAlert(this.config.Child_Weight_Error, this.config.MIN_CHILD_WEIGHT, "warning");
@@ -524,6 +524,7 @@ export class BirthRegistrationComponent implements OnInit {
 	 * @param event - date event.
 	 */
 	delayCalculator(event, i: number) {
+		debugger;
 		this.getChildData().at(i).get('birthDate').setValue(moment(event.value).format("YYYY-MM-DD"));
 		//delay period calculation on the basis of first child birth date.
 		let now = moment(new Date());
@@ -879,8 +880,8 @@ export class BirthRegistrationComponent implements OnInit {
 		});
 	}
 
-	changeInCityLimits(ev : any){
-		if(ev.value == 'YES'){
+	changeInCityLimits(ev: any) {
+		if (ev.value == 'YES') {
 			this.birthCertificateForm.get('wardNo').get('code').setValidators([Validators.required])
 			this.birthCertificateForm.get('wardNo').get('code').updateValueAndValidity()
 		} else {
@@ -897,6 +898,221 @@ export class BirthRegistrationComponent implements OnInit {
 	onTabChange(evt) {
 		this.tabIndex = evt;
 	}
+
+	    /**
+     * Method is used for testing only
+     */
+    patchValue() {
+		this.birthCertificateForm.patchValue(this.dummyJSON);
+    }
+
+	dummyJSON:any = {
+		"birthPlace": {
+		  "id": 1,
+		  "code": "HOSPITAL",
+		  "name": "Hospital"
+		},
+		"otherPlace": null,
+		"isOrphan": {
+		  "id": null,
+		  "code": "NO",
+		  "name": "No"
+		},
+		"noOfChilds": 1,
+		"childs": [
+		  {
+			"birthDate": "2019-05-01",
+			"birthTime": "00:00:00",
+			"certificateNumber": "5bb987e93cb547138ebbd3f5395c67a9",
+			"childName": "fsfdsdf",
+			"childNameGuj": "ફ્સ્ફ્દ્સ્દ્ફ",
+			"id": 8,
+			"sex": {
+			  "code": "MALE"
+			},
+			"uniqueId": null,
+			"version": null,
+			"weightGram": {
+			  "code": "200"
+			},
+			"weightKg": {
+			  "code": "2"
+			}
+		  }
+		],
+		"fatherFirstName": "dsafsdf",
+		"fatherMiddleName": null,
+		"fatherLastName": "fsdfsdf",
+		"fatherFirstNameGuj": "દ્સફ્સ્દ્ફ",
+		"fatherMiddleNameGuj": null,
+		"fatherLastNameGuj": "ફ્સ્દ્ફ્સ્દ્ફ",
+		"fatherEducation": {
+		  "id": null,
+		  "code": "GRADUATE_OR_MORE",
+		  "name": "Graduate or More",
+		  "gujName": "સ્નાતક અથવા વધુ"
+		},
+		"fatherOtherEducation": null,
+		"fatherOccupations": {
+		  "id": null,
+		  "code": "ADMINISTRATIVE",
+		  "name": "Administrative Executive and Managerial workers",
+		  "gujName": "વહીવટી, વહીવટી અને સંચાલકીય કામદારો"
+		},
+		"fatherAadharNumber": "234234234234",
+		"motherFirstName": "sdfsdfdsf",
+		"motherMiddleName": null,
+		"motherLastName": "sdfsdfsdf",
+		"motherFirstNameGuj": "સ્દ્ફ્સ્દ્ફ્દ્સ્ફ",
+		"motherMiddleNameGuj": null,
+		"motherLastNameGuj": "સ્દ્ફ્સ્દ્ફ્સ્દ્ફ",
+		"motherEducation": {
+		  "id": null,
+		  "code": "GRADUATE_OR_MORE",
+		  "name": "Graduate or More",
+		  "gujName": "સ્નાતક અથવા વધુ"
+		},
+		"motherOtherEducation": null,
+		"motherOccupations": {
+		  "id": null,
+		  "code": "ADMINISTRATIVE",
+		  "name": "Administrative Executive and Managerial workers",
+		  "gujName": "વહીવટી, વહીવટી અને સંચાલકીય કામદારો"
+		},
+		"motherAadharNumber": "234234234234",
+		"motherPrevRegNumber": "5",
+		"mamtaRegNumber": 4234,
+		"petaKendraNumber": {
+		  "id": null,
+		  "code": "AKOTA_URBAN_FW_CENTER",
+		  "name": "Akota Urban F.W. Center",
+		  "gujName": "અકોટા શહેરી એફ. ડબલ્યુ. કેન્દ્ર"
+		},
+		"motherMarriageAge": {
+		  "id": null,
+		  "code": "21",
+		  "name": "21",
+		  "gujName": "21"
+		},
+		"motherDeliveryAge": {
+		  "id": null,
+		  "code": "14",
+		  "name": "14",
+		  "gujName": "14"
+		},
+		"deliveryTreatment": {
+		  "id": null,
+		  "code": "GOV_INSTITUTE",
+		  "name": "Govt. Institutes"
+		},
+		"deliveryType": {
+		  "id": null,
+		  "code": "NORMAL_BIRTH",
+		  "name": "Normal Birth"
+		},
+		"totalBoyChildsBeforePregnancy": 2,
+		"totalGirlChildsBeforePregnancy": 1,
+		"totalChildsBeforePregnancy": 3,
+		"pregnancyDuration": 28,
+		"familyReligion": {
+		  "id": null,
+		  "code": "MUSLIM",
+		  "name": null
+		},
+		"familyReligionOther": null,
+		"parentDeliveryAddress": {
+		  "addressType": "BR_DELIVERY_ADDRESS",
+		  "buildingName": "gfhgfh",
+		  "streetName": "gfh",
+		  "landmark": "gfhgfhgfh",
+		  "area": "gfhgfh",
+		  "state": "GUJARAT",
+		  "district": null,
+		  "city": "Vadodara",
+		  "country": "INDIA",
+		  "pincode": "455435",
+		  "buildingNameGuj": "ગ્ફ્હ્ગ્ફ્હ",
+		  "streetNameGuj": "ગ્ફ્હ",
+		  "landmarkGuj": "ગ્ફ્હ્ગ્ફ્હ્ગ્ફ્હ",
+		  "areaGuj": "ગ્ફ્હ્ગ્ફ્હ",
+		  "stateGuj": "ગુજરાત",
+		  "districtGuj": null,
+		  "cityGuj": "વડોદરા",
+		  "countryGuj": "ભારત"
+		},
+		"isPermanentPresentAddressSame": {
+		  "id": null,
+		  "code": "YES",
+		  "name": null
+		},
+		"withinCityLimits": {
+		  "id": null,
+		  "code": "YES",
+		  "name": null
+		},
+		"wardNo": {
+		  "id": null,
+		  "code": "WARD_3",
+		  "name": null
+		},
+		"birthCertiMailingAddressType": {
+		  "id": null,
+		  "code": "RESIDENCE_ADDRESS",
+		  "name": null
+		},
+		"parentPermanentAddress": {
+		  "version": 0,
+		  "addressType": "BR_PARENT_PERMANENT",
+		  "buildingName": "gfhgfh",
+		  "streetName": "gfh",
+		  "landmark": "gfhgfhgfh",
+		  "area": "gfhgfh",
+		  "state": "GUJARAT",
+		  "district": null,
+		  "city": "Vadodara",
+		  "country": "INDIA",
+		  "pincode": "455435",
+		  "buildingNameGuj": "ગ્ફ્હ્ગ્ફ્હ",
+		  "streetNameGuj": "ગ્ફ્હ",
+		  "landmarkGuj": "ગ્ફ્હ્ગ્ફ્હ્ગ્ફ્હ",
+		  "areaGuj": "ગ્ફ્હ્ગ્ફ્હ",
+		  "stateGuj": "ગુજરાત",
+		  "districtGuj": null,
+		  "cityGuj": "વડોદરા",
+		  "countryGuj": "ભારત"
+		},
+		"attachments": [],
+		"delayPeriod": 94,
+		"totalAliveChild": 1,
+		"apiType": "birthReg",
+		"version": 3,
+		"serviceType": "BIRTH_REGISTRATION",
+		"fileStatus": "DRAFT",
+		"serviceName": null,
+		"fileNumber": null,
+		"pid": null,
+		"outwardNo": null,
+		"agree": false,
+		"paymentStatus": null,
+		"canEdit": true,
+		"canDelete": true,
+		"canSubmit": true,
+		"firstName": "vijay",
+		"middleName": null,
+		"lastName": "parmar",
+		"contactNo": "7878282806",
+		"email": "wijay10789@gmail.com",
+		"aadhaarNo": null,
+		"serviceDetail": {
+		  "code": "HEL-BR",
+		  "name": "Birth Registration",
+		  "gujName": "જન્મ નોંધણી",
+		  "feesOnScrutiny": false,
+		  "appointmentRequired": false,
+		  "serviceUploadDocuments": []
+		}
+	  };
+
 }
 
 

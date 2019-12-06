@@ -25,7 +25,7 @@ export class HosActionBarComponent implements OnInit, OnChanges {
 	commonForm: FormGroup;
 	@Input() uploadFiles: any;
 	@Input() stepInfo: any;
-
+	@Input('paymentGateway') paymentGateway: any;
 
 	isSaveBtnDisabled: boolean = false;
 	isSubmitBtnDisabled: boolean = false;
@@ -196,36 +196,42 @@ export class HosActionBarComponent implements OnInit, OnChanges {
 									</div>
 								`
 								this.commonService.commonAlert('Payment Details', '', 'info', 'Make Payment!', false, html, cb => {
+								
+									this.paymentGateway.setPaymentDetailsFromActionBar(payData);
+									this.paymentGateway.openModel();
+									
 									// window.location.href = environment.adminUrl + `payment-gateway?retUrl=${payData.retUrl}&retPath=${payData.retPath}`;
-									this.formService.createTokenforServicePayment(payData).subscribe(resp => {
-										window.open(resp.data, "_self");
-									}, err => {
-										this.toastr.error(err.error.message);
-									})
+									// this.formService.createTokenforServicePayment(payData).subscribe(resp => {
+									// 	window.open(resp.data, "_self");
+									// }, err => {
+									// 	this.toastr.error(err.error.message);
+									// })
+
+									
 
 								}, rj => {
-									let errHtml = `			
-										<div class="alert alert-danger">
-											Please Complete Payment, Otherwise the application will be considered as in-complete
-										</div>`
-									this.commonService.commonAlert("Application Incomplete", "", 'warning', 'Make Payment!', false, errHtml, ccb => {
-										// window.location.href = environment.adminUrl + `payment-gateway?retUrl=${payData.retUrl}&retPath=${payData.retPath}`;
-										this.formService.createTokenforServicePayment(payData).subscribe(respData => {
-											window.open(respData.data, "_self");
-										}, err => {
-											this.toastr.error(err.error.message);
-										})
+									// let errHtml = `			
+									// 	<div class="alert alert-danger">
+									// 		Please Complete Payment, Otherwise the application will be considered as in-complete
+									// 	</div>`
+									// this.commonService.commonAlert("Application Incomplete", "", 'warning', 'Make Payment!', false, errHtml, ccb => {
+									// 	// window.location.href = environment.adminUrl + `payment-gateway?retUrl=${payData.retUrl}&retPath=${payData.retPath}`;
+									// 	this.formService.createTokenforServicePayment(payData).subscribe(respData => {
+									// 		window.open(respData.data, "_self");
+									// 	}, err => {
+									// 		this.toastr.error(err.error.message);
+									// 	})
 
-									}, arj => {
-										this.form.get('canEdit').setValue(false);
-										//this.toastr.success(`${this.form.getRawValue().serviceDetail.name} information successfully submit`);
-										this.isSubmitBtnDisabled = false;
-										this.isBtnsDisabled = false;
-										this.form.disable();
-										this.saveEvent.emit({ isSaved: true });
-										return;
-									})
-									return;
+									// }, arj => {
+									// 	this.form.get('canEdit').setValue(false);
+									// 	//this.toastr.success(`${this.form.getRawValue().serviceDetail.name} information successfully submit`);
+									// 	this.isSubmitBtnDisabled = false;
+									// 	this.isBtnsDisabled = false;
+									// 	this.form.disable();
+									// 	this.saveEvent.emit({ isSaved: true });
+									// 	return;
+									// })
+									// return;
 								});
 								return;
 							}
