@@ -1,6 +1,7 @@
 import { ComponentConfig } from "../component-config";
 import { FormGroup, Validators } from "@angular/forms";
 import * as _ from 'lodash';
+import * as moment from 'moment';
 
 
 export class HospitalConfig extends ComponentConfig {
@@ -159,6 +160,14 @@ export class HospitalConfig extends ComponentConfig {
                 "name": "No",
                 "gujName": "ના"
             },
+            "deathTime": "11:11",
+            "maritalStatus":  {code: "UNMARRIED", name: "UnMarried"},
+            "treatmentDurationFrom": moment(new Date()).format("YYYY-MM-DD"),
+            "treatmentDurationTo": moment(new Date()).format("YYYY-MM-DD"),
+            "reportedToCoronor": {code: "YES", name: "Yes", gujName: "હા"},
+            "immediateCOD1": {code: "H0456", name: "H0456-Stenosis of lacrimal punctum"},
+            "withinCityLimits": {code: "YES", name: "Yes"},
+            "wardNo": {code: "WARD_1", name: "Ward 1"},
             "smokingSince": 0.0,
             "tobaccoSince": 0.0,
             "sopariPanmasalaSince": 0.0,

@@ -676,7 +676,7 @@
                     <app-hos-action-bar [paymentGateway]="paymentGateway" [stepInfo]="{step: 'final', next: 5, back: 3}" (saveEvent)="isFormSaved = $event?.isSaved" (tabIndex)="onTabChange($event)"
                         [form]="birthCertificateForm" [uploadFiles]="uploadFileArray" (handleErrors)="handleErrorsOnSubmit($event)"></app-hos-action-bar>
                 </div>
-                <select-payment-gateway #paymentGateway></select-payment-gateway>
+                <select-payment-gateway [redirectTo]="'HOSPITAL'" #paymentGateway></select-payment-gateway>
             </mat-tab>
         </mat-tab-group>
     </form>

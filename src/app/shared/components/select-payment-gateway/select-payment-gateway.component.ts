@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef, Input } from '@angular/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 import { CommonService } from '../../services/common.service';
 import { FormsActionsService } from 'src/app/core/services/citizen/data-services/forms-actions.service';
@@ -16,6 +16,7 @@ export class SelectPaymentGatewayComponent implements OnInit {
 
   confirmRef: BsModalRef;
   @ViewChild("confirmationModel") confirmationModel: TemplateRef<any>;
+  @Input('redirectTo') redirectTo : any;
 
   payData: any;
   form: any;
@@ -76,19 +77,12 @@ export class SelectPaymentGatewayComponent implements OnInit {
    * This method is used to hide the modal and redirect to my application page
    */
   onCancel() {
-
     this.confirmRef.hide();
-
-    // let errHtml = `
-    // <div class="alert alert-danger">
-    //   Please Complete Payment, Otherwise the application will be considered as in-complete
-    // </div>`
-    // this.commonService.commonAlert("Application Incomplete", "", 'warning', 'Make Payment!', false, errHtml, ccb => {
-    //   this.makePayment();
-    // }, arj => {
-      this.router.navigate(['citizen/my-applications']);
-    // });
-    // return;
+    if(this.redirectTo == 'HOSPITAL'){
+        this.router.navigate(['hospital/my-applications']);
+      }else{
+        this.router.navigate(['citizen/my-applications']);
+      }
   }
 
 /**
@@ -151,7 +145,7 @@ export class SelectPaymentGatewayComponent implements OnInit {
     $(form).append($(input));
     $(form).append($(input2));
 
-    form.appendTo(document.body)
+    form.appendTo(document.body);
 
     $(form).submit();
 

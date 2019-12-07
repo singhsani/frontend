@@ -1,7 +1,7 @@
 <app-hos-title-bar [title]="'screen_title' | translate: translateKey">
-	<!-- <button class="pull-right" mat-stroked-button type="button" (click)="deathCertificateForm.patchValue(config.getDeathDummyJSON())">
+	<button class="pull-right" mat-stroked-button type="button" (click)="deathCertificateForm.patchValue(config.getDeathDummyJSON())">
 			Patch Value
-		</button> -->
+		</button>
 </app-hos-title-bar>
 
 <div *ngIf="isGuideLineActive">
@@ -698,7 +698,7 @@
 
 				<app-hos-action-bar [paymentGateway]="paymentGateway" [stepInfo]="{step: 'final', next: 5, back: 3}" (saveEvent)="isFormSaved = $event?.isSaved" (tabIndex)="onTabChange($event)"
 				 [uploadFiles]="uploadFileArray" [form]="deathCertificateForm" [step]="'final'" (handleErrors)="handleErrorsOnSubmit($event)"></app-hos-action-bar>
-				 <select-payment-gateway #paymentGateway></select-payment-gateway>
+				 <select-payment-gateway [redirectTo]="'HOSPITAL'" #paymentGateway></select-payment-gateway>
 			</mat-tab>
 			<!-- Tab 5 Ends -->
 		</mat-tab-group>

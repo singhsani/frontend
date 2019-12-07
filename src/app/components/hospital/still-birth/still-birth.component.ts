@@ -205,6 +205,7 @@ export class StillBirthComponent implements OnInit {
 				sex: {
 					code: null
 				},
+				certificateNumber: null,
 				prematureInfantReason: null,
 				uniqueId: null,
 				version: null,
@@ -398,6 +399,7 @@ export class StillBirthComponent implements OnInit {
 				prematureInfantReason: null,
 				uniqueId: null,
 				version: null,
+				certificateNumber: null,
 				weightGram: this.fb.group({
 					code: null
 				}),
@@ -427,6 +429,7 @@ export class StillBirthComponent implements OnInit {
 			prematureInfantReason: child.prematureInfantReason,
 			uniqueId: child.uniqueId,
 			version: child.version,
+			certificateNumber: child.certificateNumber,
 			weightGram: this.fb.group({
 				code: [child.weightGram.code, [Validators.required]]
 			}),
@@ -767,4 +770,197 @@ export class StillBirthComponent implements OnInit {
 			this.showChildAddButton = false
 		}
 	}
+
+	patchValue(){
+		this.stillBirthCertificateForm.patchValue(this.aaaa());
+	}
+
+	aaaa(){
+		
+		return {
+			"birthPlace": {
+			  "id": null,
+			  "code": "HOSPITAL",
+			  "name": "Hospital"
+			},
+			"otherPlace": null,
+			"isOrphan": {
+			  "id": null,
+			  "code": null,
+			  "name": null
+			},
+			"fatherFirstName": "sdfsdfsdf",
+			"fatherMiddleName": null,
+			"fatherLastName": "sdfsdfsdf",
+			"fatherFirstNameGuj": "સ્દ્ફ્સ્દ્ફ્સ્દ્ફ",
+			"fatherMiddleNameGuj": null,
+			"fatherLastNameGuj": "સ્દ્ફ્સ્દ્ફ્સ્દ્ફ",
+			"fatherEducation": {
+			  "id": null,
+			  "code": "GRADUATE_OR_MORE",
+			  "name": "Graduate or More",
+			  "gujName": "સ્નાતક અથવા વધુ"
+			},
+			"fatherOtherEducation": null,
+			"fatherOccupations": {
+			  "id": null,
+			  "code": "ADMINISTRATIVE",
+			  "name": "Administrative Executive and Managerial workers",
+			  "gujName": "વહીવટી, વહીવટી અને સંચાલકીય કામદારો"
+			},
+			"fatherAadharNumber": null,
+			"motherFirstName": "sdfsdfsd",
+			"motherMiddleName": null,
+			"motherLastName": "sdfsdfsdf",
+			"motherFirstNameGuj": "સ્દ્ફ્સ્દ્ફ્સ્દ",
+			"motherMiddleNameGuj": null,
+			"motherLastNameGuj": "સ્દ્ફ્સ્દ્ફ્સ્દ્ફ",
+			"motherEducation": {
+			  "id": null,
+			  "code": "GRADUATE_OR_MORE",
+			  "name": "Graduate or More",
+			  "gujName": "સ્નાતક અથવા વધુ"
+			},
+			"motherOtherEducation": null,
+			"motherOccupations": {
+			  "id": null,
+			  "code": "ADMINISTRATIVE",
+			  "name": "Administrative Executive and Managerial workers",
+			  "gujName": "વહીવટી, વહીવટી અને સંચાલકીય કામદારો"
+			},
+			"motherAadharNumber": null,
+			"motherPrevRegNumber": null,
+			"mamtaRegNumber": null,
+			"petaKendraNumber": {
+			  "id": null,
+			  "code": "BARODA_ROTARY_CLUB_SERVICE_CENTER",
+			  "name": "Baroda Rotary Club Service Center",
+			  "gujName": "બરોડા રોટરી ક્લબ સર્વિસ સેન્ટર"
+			},
+			"motherMarriageAge": {
+			  "id": null,
+			  "code": "13",
+			  "name": "13",
+			  "gujName": "13"
+			},
+			"motherDeliveryAge": {
+			  "id": null,
+			  "code": "13",
+			  "name": "13",
+			  "gujName": "13"
+			},
+			"deliveryTreatment": {
+			  "code": "PVT_INSTITUTE"
+			},
+			"deliveryType": {
+			  "code": "CAESAREAN_BIRTH"
+			},
+			"delayPeriod": 1,
+			"pregnancyDuration": 33,
+			"parentDeliveryAddress": {
+			  "id": 47,
+			  "uniqueId": null,
+			  "version": 0,
+			  "addressType": "SB_DELIVERY_ADDRESS",
+			  "buildingName": null,
+			  "streetName": null,
+			  "landmark": null,
+			  "area": null,
+			  "state": "GUJARAT",
+			  "district": null,
+			  "city": "Vadodara",
+			  "country": "INDIA",
+			  "pincode": "333333",
+			  "buildingNameGuj": null,
+			  "streetNameGuj": null,
+			  "landmarkGuj": null,
+			  "areaGuj": null,
+			  "stateGuj": "ગુજરાત",
+			  "districtGuj": null,
+			  "cityGuj": "વડોદરા",
+			  "countryGuj": "ભારત"
+			},
+			"isPermanentPresentAddressSame": {
+			  "code": "YES"
+			},
+			"withinCityLimits": {
+			  "id": null,
+			  "code": "YES",
+			  "name": null
+			},
+			"wardNo": {
+			  "id": null,
+			  "code": "WARD_2",
+			  "name": null
+			},
+			"parentPermanentAddress": {
+			  "id": 47,
+			  "uniqueId": null,
+			  "version": 0,
+			  "addressType": "SB_PARENT_PERMANENT",
+			  "buildingName": null,
+			  "streetName": null,
+			  "landmark": null,
+			  "area": null,
+			  "state": "GUJARAT",
+			  "district": null,
+			  "city": "Vadodara",
+			  "country": "INDIA",
+			  "pincode": "333333",
+			  "buildingNameGuj": null,
+			  "streetNameGuj": null,
+			  "landmarkGuj": null,
+			  "areaGuj": null,
+			  "stateGuj": "ગુજરાત",
+			  "districtGuj": null,
+			  "cityGuj": "વડોદરા",
+			  "countryGuj": "ભારત"
+			},
+			"familyReligion": {
+			  "code": "HINDU"
+			},
+			"familyReligionOther": null,
+			"relationWithApplicant": {
+			  "code": null
+			},
+			"attachments": [],
+			"applicantHospitalName": null,
+			"apiType": "stillBirthReg",
+			"id": 3,
+			"uniqueId": "2019-12-07-HEL-SB-JENE3APZ",
+			"version": 2,
+			"serviceFormId": 38,
+			"createdDate": "2019-12-07 15:58:39",
+			"updatedDate": "2019-12-07 16:12:04",
+			"serviceType": "STILL_BIRTH_REGISTRATION",
+			"fileStatus": "DRAFT",
+			"serviceName": null,
+			"fileNumber": null,
+			"pid": null,
+			"outwardNo": null,
+			"agree": false,
+			"paymentStatus": null,
+			"canEdit": true,
+			"canDelete": true,
+			"canSubmit": true,
+			"firstName": "vokFDSF",
+			"middleName": null,
+			"lastName": "cfsdf",
+			"contactNo": "7878282806",
+			"email": "wijay10789@gmail.com",
+			"aadhaarNo": null,
+			"serviceDetail": {
+			  "code": "HEL-SB",
+			  "name": "Still Birth",
+			  "gujName": "Still Birth",
+			  "feesOnScrutiny": false,
+			  "appointmentRequired": false,
+			  "serviceUploadDocuments": []
+			}
+		  }
+	}
+
+
+	
+	
 }
