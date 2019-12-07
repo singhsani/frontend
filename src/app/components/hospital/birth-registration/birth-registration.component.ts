@@ -906,38 +906,10 @@ export class BirthRegistrationComponent implements OnInit {
     }
 
 	dummyJSON:any = {
-		// "noOfChilds": 1,
-		// "childs": [
-		//   {
-		// 	"birthDate": "2019-08-01",
-		// 	"birthTime": "11:22:00",
-		// 	"certificateNumber": (this.birthCertificateForm) ? this.birthCertificateForm.get('childs')['certificateNumber'].value : null,
-		// 	"childName": "fgdg",
-		// 	"childNameGuj": "ફ્ગ્દ્ગ",
-		// 	"id": (this.birthCertificateForm) ?  this.birthCertificateForm.get('childs')['id'].value : null,
-		// 	"sex": {
-		// 	  "code": "MALE"
-		// 	},
-		// 	"uniqueId": null,
-		// 	"version": null,
-		// 	"weightGram": {
-		// 	  "code": "200"
-		// 	},
-		// 	"weightKg": {
-		// 	  "code": "1"
-		// 	}
-		//   }
-		// ],
 		"birthPlace": {
 		  "id": 1,
 		  "code": "HOSPITAL",
 		  "name": "Hospital"
-		},
-		"otherPlace": null,
-		"isOrphan": {
-		  "id": null,
-		  "code": "NO",
-		  "name": "No"
 		},
 		"fatherFirstName": "dddddddddddd",
 		"fatherMiddleName": null,
