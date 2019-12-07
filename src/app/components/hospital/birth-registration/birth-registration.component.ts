@@ -524,7 +524,6 @@ export class BirthRegistrationComponent implements OnInit {
 	 * @param event - date event.
 	 */
 	delayCalculator(event, i: number) {
-		debugger;
 		this.getChildData().at(i).get('birthDate').setValue(moment(event.value).format("YYYY-MM-DD"));
 		//delay period calculation on the basis of first child birth date.
 		let now = moment(new Date());
@@ -907,6 +906,28 @@ export class BirthRegistrationComponent implements OnInit {
     }
 
 	dummyJSON:any = {
+		// "noOfChilds": 1,
+		// "childs": [
+		//   {
+		// 	"birthDate": "2019-08-01",
+		// 	"birthTime": "11:22:00",
+		// 	"certificateNumber": (this.birthCertificateForm) ? this.birthCertificateForm.get('childs')['certificateNumber'].value : null,
+		// 	"childName": "fgdg",
+		// 	"childNameGuj": "ફ્ગ્દ્ગ",
+		// 	"id": (this.birthCertificateForm) ?  this.birthCertificateForm.get('childs')['id'].value : null,
+		// 	"sex": {
+		// 	  "code": "MALE"
+		// 	},
+		// 	"uniqueId": null,
+		// 	"version": null,
+		// 	"weightGram": {
+		// 	  "code": "200"
+		// 	},
+		// 	"weightKg": {
+		// 	  "code": "1"
+		// 	}
+		//   }
+		// ],
 		"birthPlace": {
 		  "id": 1,
 		  "code": "HOSPITAL",
@@ -918,34 +939,12 @@ export class BirthRegistrationComponent implements OnInit {
 		  "code": "NO",
 		  "name": "No"
 		},
-		"noOfChilds": 1,
-		"childs": [
-		  {
-			"birthDate": "2019-05-01",
-			"birthTime": "00:00:00",
-			"certificateNumber": "5bb987e93cb547138ebbd3f5395c67a9",
-			"childName": "fsfdsdf",
-			"childNameGuj": "ફ્સ્ફ્દ્સ્દ્ફ",
-			"id": 8,
-			"sex": {
-			  "code": "MALE"
-			},
-			"uniqueId": null,
-			"version": null,
-			"weightGram": {
-			  "code": "200"
-			},
-			"weightKg": {
-			  "code": "2"
-			}
-		  }
-		],
-		"fatherFirstName": "dsafsdf",
+		"fatherFirstName": "dddddddddddd",
 		"fatherMiddleName": null,
-		"fatherLastName": "fsdfsdf",
-		"fatherFirstNameGuj": "દ્સફ્સ્દ્ફ",
+		"fatherLastName": "asdasdsad",
+		"fatherFirstNameGuj": "દ્દ્દ્દ્દ્દ્દ્દ્દ્દ્દ્દ",
 		"fatherMiddleNameGuj": null,
-		"fatherLastNameGuj": "ફ્સ્દ્ફ્સ્દ્ફ",
+		"fatherLastNameGuj": "અસ્દસ્દ્સદ",
 		"fatherEducation": {
 		  "id": null,
 		  "code": "GRADUATE_OR_MORE",
@@ -959,18 +958,18 @@ export class BirthRegistrationComponent implements OnInit {
 		  "name": "Administrative Executive and Managerial workers",
 		  "gujName": "વહીવટી, વહીવટી અને સંચાલકીય કામદારો"
 		},
-		"fatherAadharNumber": "234234234234",
-		"motherFirstName": "sdfsdfdsf",
+		"fatherAadharNumber": null,
+		"motherFirstName": "sadsada",
 		"motherMiddleName": null,
-		"motherLastName": "sdfsdfsdf",
-		"motherFirstNameGuj": "સ્દ્ફ્સ્દ્ફ્દ્સ્ફ",
+		"motherLastName": "sadsadasd",
+		"motherFirstNameGuj": "સદ્સદ",
 		"motherMiddleNameGuj": null,
-		"motherLastNameGuj": "સ્દ્ફ્સ્દ્ફ્સ્દ્ફ",
+		"motherLastNameGuj": "સદ્સદસ્દ",
 		"motherEducation": {
 		  "id": null,
-		  "code": "GRADUATE_OR_MORE",
-		  "name": "Graduate or More",
-		  "gujName": "સ્નાતક અથવા વધુ"
+		  "code": "12_TO_GRADUATE",
+		  "name": "More than Std. 12 but less than Graduate",
+		  "gujName": "ધોરણ 12 થી વધુ પરંતુ સ્નાતક કરતા ઓછી"
 		},
 		"motherOtherEducation": null,
 		"motherOccupations": {
@@ -979,9 +978,9 @@ export class BirthRegistrationComponent implements OnInit {
 		  "name": "Administrative Executive and Managerial workers",
 		  "gujName": "વહીવટી, વહીવટી અને સંચાલકીય કામદારો"
 		},
-		"motherAadharNumber": "234234234234",
-		"motherPrevRegNumber": "5",
-		"mamtaRegNumber": 4234,
+		"motherAadharNumber": null,
+		"motherPrevRegNumber": null,
+		"mamtaRegNumber": 3222,
 		"petaKendraNumber": {
 		  "id": null,
 		  "code": "AKOTA_URBAN_FW_CENTER",
@@ -990,51 +989,54 @@ export class BirthRegistrationComponent implements OnInit {
 		},
 		"motherMarriageAge": {
 		  "id": null,
-		  "code": "21",
-		  "name": "21",
-		  "gujName": "21"
+		  "code": "12",
+		  "name": "12",
+		  "gujName": "12"
 		},
 		"motherDeliveryAge": {
 		  "id": null,
-		  "code": "14",
-		  "name": "14",
-		  "gujName": "14"
+		  "code": "12",
+		  "name": "12",
+		  "gujName": "12"
 		},
 		"deliveryTreatment": {
 		  "id": null,
-		  "code": "GOV_INSTITUTE",
-		  "name": "Govt. Institutes"
+		  "code": "PVT_INSTITUTE",
+		  "name": "Private or Non Govt. Institutes"
 		},
 		"deliveryType": {
 		  "id": null,
-		  "code": "NORMAL_BIRTH",
-		  "name": "Normal Birth"
+		  "code": "CAESAREAN_BIRTH",
+		  "name": "Caesarean Birth"
 		},
-		"totalBoyChildsBeforePregnancy": 2,
+		"totalBoyChildsBeforePregnancy": 1,
 		"totalGirlChildsBeforePregnancy": 1,
-		"totalChildsBeforePregnancy": 3,
-		"pregnancyDuration": 28,
+		"totalChildsBeforePregnancy": 2,
+		"pregnancyDuration": 33,
 		"familyReligion": {
 		  "id": null,
-		  "code": "MUSLIM",
+		  "code": "HINDU",
 		  "name": null
 		},
 		"familyReligionOther": null,
 		"parentDeliveryAddress": {
+		  "id": 14,
+		  "uniqueId": null,
+		  "version": 0,
 		  "addressType": "BR_DELIVERY_ADDRESS",
-		  "buildingName": "gfhgfh",
-		  "streetName": "gfh",
-		  "landmark": "gfhgfhgfh",
-		  "area": "gfhgfh",
+		  "buildingName": null,
+		  "streetName": null,
+		  "landmark": null,
+		  "area": null,
 		  "state": "GUJARAT",
 		  "district": null,
 		  "city": "Vadodara",
 		  "country": "INDIA",
-		  "pincode": "455435",
-		  "buildingNameGuj": "ગ્ફ્હ્ગ્ફ્હ",
-		  "streetNameGuj": "ગ્ફ્હ",
-		  "landmarkGuj": "ગ્ફ્હ્ગ્ફ્હ્ગ્ફ્હ",
-		  "areaGuj": "ગ્ફ્હ્ગ્ફ્હ",
+		  "pincode": "111111",
+		  "buildingNameGuj": null,
+		  "streetNameGuj": null,
+		  "landmarkGuj": null,
+		  "areaGuj": null,
 		  "stateGuj": "ગુજરાત",
 		  "districtGuj": null,
 		  "cityGuj": "વડોદરા",
@@ -1052,7 +1054,7 @@ export class BirthRegistrationComponent implements OnInit {
 		},
 		"wardNo": {
 		  "id": null,
-		  "code": "WARD_3",
+		  "code": "WARD_2",
 		  "name": null
 		},
 		"birthCertiMailingAddressType": {
@@ -1061,32 +1063,32 @@ export class BirthRegistrationComponent implements OnInit {
 		  "name": null
 		},
 		"parentPermanentAddress": {
+		  "id": 14,
+		  "uniqueId": null,
 		  "version": 0,
 		  "addressType": "BR_PARENT_PERMANENT",
-		  "buildingName": "gfhgfh",
-		  "streetName": "gfh",
-		  "landmark": "gfhgfhgfh",
-		  "area": "gfhgfh",
+		  "buildingName": null,
+		  "streetName": null,
+		  "landmark": null,
+		  "area": null,
 		  "state": "GUJARAT",
 		  "district": null,
 		  "city": "Vadodara",
 		  "country": "INDIA",
-		  "pincode": "455435",
-		  "buildingNameGuj": "ગ્ફ્હ્ગ્ફ્હ",
-		  "streetNameGuj": "ગ્ફ્હ",
-		  "landmarkGuj": "ગ્ફ્હ્ગ્ફ્હ્ગ્ફ્હ",
-		  "areaGuj": "ગ્ફ્હ્ગ્ફ્હ",
+		  "pincode": "111111",
+		  "buildingNameGuj": null,
+		  "streetNameGuj": null,
+		  "landmarkGuj": null,
+		  "areaGuj": null,
 		  "stateGuj": "ગુજરાત",
 		  "districtGuj": null,
 		  "cityGuj": "વડોદરા",
 		  "countryGuj": "ભારત"
 		},
 		"attachments": [],
-		"delayPeriod": 94,
+		"delayPeriod": 186,
 		"totalAliveChild": 1,
 		"apiType": "birthReg",
-		"version": 3,
-		"serviceType": "BIRTH_REGISTRATION",
 		"fileStatus": "DRAFT",
 		"serviceName": null,
 		"fileNumber": null,
@@ -1097,9 +1099,9 @@ export class BirthRegistrationComponent implements OnInit {
 		"canEdit": true,
 		"canDelete": true,
 		"canSubmit": true,
-		"firstName": "vijay",
+		"firstName": "vokFDSF",
 		"middleName": null,
-		"lastName": "parmar",
+		"lastName": "cfsdf",
 		"contactNo": "7878282806",
 		"email": "wijay10789@gmail.com",
 		"aadhaarNo": null,
