@@ -1,4 +1,8 @@
-<app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
+<app-title-bar [title]="'screen_title' | translate: translateKey">
+	<button class="pull-right" mat-stroked-button type="button" (click)="patchValue()">
+		Patch Value
+	</button>
+</app-title-bar>
 
 <mat-card class="formClass cardBorder">
 	<form [formGroup]="gasConnectionForm">

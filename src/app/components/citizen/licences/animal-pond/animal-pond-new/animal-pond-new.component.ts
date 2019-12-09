@@ -603,4 +603,139 @@ export class AnimalPondNewComponent implements OnInit {
 		this.tabIndex = evt;
 	}
 
+	patchValue(){
+		this.animalPondNewForm.patchValue(this.dummyJSON);
+	}
+
+	dummyJSON:any= {
+
+		"personType": {
+		  "code": "MR"
+		},
+		"holderFirstName": "sdfsdf",
+		"holderMiddleName": "sdfsdfsdf",
+		"holderLastName": "dsfsdfsdf",
+		"holderFirstNameGuj": "સ્દ્ફ્સ્દ્ફ",
+		"holderMiddleNameGuj": "સ્દ્ફ્સ્દ્ફ્સ્દ્ફ",
+		"holderLastNameGuj": "દ્સ્ફ્સ્દ્ફ્સ્દ્ફ",
+		"permanantAddress": {
+		  "addressType": "APL_PERMANENT_ADDRESS",
+		  "buildingName": "sdfsdf",
+		  "streetName": "sdfsdfsdf",
+		  "landmark": "sdfsdfsdf",
+		  "area": "dsfsdfsdfsdf",
+		  "state": "GUJARAT",
+		  "district": null,
+		  "city": "Vadodara",
+		  "country": "INDIA",
+		  "pincode": "242342",
+		  "buildingNameGuj": "સ્દ્ફ્સ્દ્ફ",
+		  "streetNameGuj": "સ્દ્ફ્સ્દ્ફ્સ્દ્ફ",
+		  "landmarkGuj": "સ્દ્ફ્સ્દ્ફ્સ્દ્ફ",
+		  "areaGuj": "દ્સ્ફ્સ્દ્ફ્સ્દ્ફ્સ્દ્ફ",
+		  "stateGuj": "ગુજરાત",
+		  "districtGuj": null,
+		  "cityGuj": "વડોદરા",
+		  "countryGuj": "ભારત"
+		},
+		"temporaryAddress": {
+		  "addressType": "APL_TEMPORARY_ADDRESS",
+		  "buildingName": "dsf",
+		  "streetName": "sdfsdfdsf",
+		  "landmark": "fsdfsdfsdfsdf",
+		  "area": "sdfsdfsd",
+		  "state": "GUJARAT",
+		  "district": null,
+		  "city": "Vadodara",
+		  "country": "INDIA",
+		  "pincode": "234234",
+		  "buildingNameGuj": "દ્સ્ફ",
+		  "streetNameGuj": "સ્દ્ફ્સ્દ્ફ્દ્સ્ફ",
+		  "landmarkGuj": "ફ્સ્દ્ફ્સ્દ્ફ્સ્દ્ફ્સ્દ્ફ",
+		  "areaGuj": "સ્દ્ફ્સ્દ્ફ્સ્દ",
+		  "stateGuj": "ગુજરાત",
+		  "districtGuj": null,
+		  "cityGuj": "વડોદરા",
+		  "countryGuj": "ભારત"
+		},
+		"holderTelephoneNo": "4354354354",
+		"holderMobileNo": "4354354354",
+		"holderFaxNo": null,
+		"holderAadharNo": "435443543543",
+		"holderPanNo": "ABCDE1234T",
+		"zoneNo": {
+		  "code": "NORTH_ZONE"
+		},
+		"wardNo": {
+		  "code": "WARD_7"
+		},
+		"blockNo": {
+		  "code": "BLOCK_9"
+		},
+		"businessAddress": {
+		  "addressType": "APL_BUSINESS_ADDRESS",
+		  "buildingName": "dfgfdg",
+		  "streetName": "fdgfd",
+		  "landmark": "fdgfdg",
+		  "area": "fdgfdgfdg",
+		  "state": "GUJARAT",
+		  "district": null,
+		  "city": "Vadodara",
+		  "country": "INDIA",
+		  "pincode": "435435",
+		  "buildingNameGuj": "દ્ફ્ગ્ફ્દ્ગ",
+		  "streetNameGuj": "ફ્દ્ગ્ફ્દ",
+		  "landmarkGuj": "ફ્દ્ગ્ફ્દ્ગ",
+		  "areaGuj": "ફ્દ્ગ્ફ્દ્ગ્ફ્દ્ગ",
+		  "stateGuj": "ગુજરાત",
+		  "districtGuj": null,
+		  "cityGuj": "વડોદરા",
+		  "countryGuj": "ભારત"
+		},
+		"extraDetailsOfBusiness": "fdgfdgfdgfdgfdg",
+		"relationshipId": {
+		  "code": "PROPRIETOR"
+		},
+		"statusOfBusinessId": {
+		  "code": "PARTNERSHIPFIRM"
+		},
+		"relationshipList": [
+		  {
+			"name": "sfdfsdfsdfsd",
+			"address": "fsdfsdfsd",
+			"mobileNo": "2423423423",
+			"personType": "APL_PERSON"
+		  }
+		],
+		"animalDetails": [
+		  {
+			"animalType": {
+			  "code": "COW"
+			},
+			"animalCount": "11"
+		  }
+		],
+		"totalAnimal": 11,
+		"licenseIssueDate": null,
+		"licenseRenewalDate": null,
+		"loinumber": null,
+		"serviceType": "APL_LICENCE",
+		"fileStatus": "DRAFT",
+		"serviceName": null,
+		"fileNumber": null,
+		"pid": null,
+		"outwardNo": null,
+		"agree": false,
+		"paymentStatus": null,
+		"canEdit": true,
+		"canDelete": true,
+		"canSubmit": true,
+		"serviceDetail": {
+		  "code": "APL-LIC",
+		  "name": "Pond License",
+		  "gujName": "Pond License",
+		  "feesOnScrutiny": false,
+		  "appointmentRequired": false
+		}
+	  };
 }

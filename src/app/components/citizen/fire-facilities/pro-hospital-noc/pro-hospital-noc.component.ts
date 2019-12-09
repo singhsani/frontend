@@ -484,5 +484,141 @@ export class ProHospitalNocComponent implements OnInit {
 	handleOnSaveAndNext(res) {
 		this.requiredDocumentList();
 	}
+
+	patchValue(){
+		this.provisionalHospitalNocForm.patchValue(this.dummyJSON);
+		this.dummyJSON.hospitalOTDetails.forEach(app => {
+			(<FormArray>this.provisionalHospitalNocForm.get('hospitalOTDetails')).push(this.createOTDetailArray(app));
+		});
+	}
+
+	dummyJSON:any = {
+		"provisionalNocNumber": null,
+		"oldReferenceNumber": null,
+		"officeContactNo": "2222222222",
+		"onsitePersonMobileNo": "2222222222",
+		"workOfficeEmailId": "a@a.com",
+		"medicalRegistrationNumber": "sdfsdfsdfs",
+		"doctorName": "dsfsdfs",
+		"doctorNameGuj": "દ્સ્ફ્સ્દ્ફ્સ",
+		"hospitalName": "dfsdfsdfsdff",
+		"hospitalNameGuj": "દ્ફ્સ્દ્ફ્સ્દ્ફ્સ્દ્ફ્ફ",
+		"hospitalAddress": "sdfdsfdsfsdfdsf",
+		"hospitalAddressGuj": "સ્દ્ફ્દ્સ્ફ્દ્સ્ફ્સ્દ્ફ્દ્સ્ફ",
+		"ownerName": "sdfsdfsdf",
+		"ownerNameGuj": "સ્દ્ફ્સ્દ્ફ્સ્દ્ફ",
+		"ownerMobileNo": "2342342342",
+		"ownerAddress": "sdfsdfsdfsdfds",
+		"ownerAddressGuj": "સ્દ્ફ્સ્દ્ફ્સ્દ્ફ્સ્દ્ફ્દ્સ",
+		"fpNo": "54535435",
+		"rsNo": "43543543",
+		"tikaNo": "43543543",
+		"tpNo": "45435435",
+		"buildingLocation": "ghfghgfhgfh",
+		"blockNo": '111',
+		"opNo": "43543543",
+		"citySurveyNo": "43543543",
+		"hospitalType": "fdgfdgfdg",
+		"numberOfBed": 435,
+		"numberOfOT": 1,
+		"hospitalOTDetails": [
+		  {
+			"id": 1,
+			"otFacilities": "fdgfdgfdg",
+			"areaInSquareMeterLength": 54354,
+			"areaInSquareMeterBreadth": 54354,
+			"areaInSquareMeter": 54354
+		  }
+		],
+		"exerciseSection": 534,
+		"xraySection": 435,
+		"laboratoryDepartment": "435435435",
+		"otherInvestigation": "435435435",
+		"storeDetails": "435435",
+		"kitchenDetails": "435435",
+		"drawingWithScale": true,
+		"drawingProvided": true,
+		"multipleTowers": true,
+		"buildingHeight": 435435424,
+		"floorArea": 435,
+		"gateDetailing": "ggffdggdfg",
+		"rampLiftStairDetails": "fdgdfg",
+		"liftDetails": "dggfdgfg",
+		"noOfBasement": 34543,
+		"lowerBasement": 435,
+		"upperBasement": 435,
+		"totalBuildingFloor": 435,
+		"basementArea": 435,
+		"noOfTowers": 435,
+		"noOfVentilation": 435,
+		"ventilationProvision": true,
+		"plotArea": 43543,
+		"constructedArea": 54354,
+		"noOfApproachedRoad": 345,
+		"architectRegistrationNumber": "345435345",
+		"architectName": "fdgdfg",
+		"architectNameGuj": "ફ્દ્ગ્દ્ફ્ગ",
+		"architectFirmName": "dfgdfgdfgfdg",
+		"architectFirmNameGuj": "દ્ફ્ગ્દ્ફ્ગ્દ્ફ્ગ્ફ્દ્ગ",
+		"architectFirmNumber": "35435435",
+		"architectContactNo": "435435435435",
+		"noOfHospitalStaff": 12,
+		"noOfSecurityStaff": 22,
+		"otherRisks": [
+		  "OXYGEN"
+		],
+		"otherRiskDetail": null,
+		"gasCylinderNOCDetail": "sdfsdfsdf",
+		"anyStoreProvision": true,
+		"stairCase": {
+		  "code": "EXTERNAL"
+		},
+		"trainedFiremanStaffKept": true,
+		"exitGateDetail": "sdfsdf",
+		"otherBusinessDetail": {
+		  "code": "MEDICAL_STORE"
+		},
+		"riskSegregation": "sdfsdf",
+		"anyEvacuationPlan": true,
+		"evacuationDrillPerformed": true,
+		"firefightingSystemAvailability": true,
+		"yardHydrant": "sdfsdf",
+		"raiserAvailability": true,
+		"noOfRaiser": "111",
+		"smokeDetector": true,
+		"sprinkler": "111",
+		"fireAlarmAttachedWith": {code: "SPRINKLER", name: "Sprinkler", gujName: "છંટકાવ કરનાર"},
+		"autoExhaustSystem": "aaddd",
+		"electricalSafety": "dsfsdfsdfsdf",
+		"evacuationSignBoard": "sdfsdfsdf",
+		"refugeArea": "sdfsdfsdf",
+		"travelDistance": 2434,
+		"overHeadWaterTankCapacity": 34234,
+		"undergroundWaterTankCapacity": 34234,
+		"alarmSystemTimeLimit": 234,
+		"highestFloodLevel": 3424,
+		"parkingDetail": "sfsdfsdf",
+		"riskAnalysisSurveyDetail": "fsdfsdfsdf",
+		"nabhOwnership": "sdfsdf",
+		"lastThreeYearFireIncidents": "fdgfdgfdgfdg",
+		"servingSince": "33",
+		"fileStatus": "DRAFT",
+		"serviceName": null,
+		"fileNumber": null,
+		"pid": null,
+		"outwardNo": null,
+		"agree": false,
+		"paymentStatus": null,
+		"canEdit": true,
+		"canDelete": true,
+		"canSubmit": true,
+		"serviceDetail": {
+		  "code": "FS-PROVI-HOSPITAL",
+		  "name": "Provisional NOC For Hospital",
+		  "gujName": "હોસ્પિટલ માટે અનિવાર્ય એનઓસી",
+		  "feesOnScrutiny": false,
+		  "appointmentRequired": false
+		}
+	  };
 }
 

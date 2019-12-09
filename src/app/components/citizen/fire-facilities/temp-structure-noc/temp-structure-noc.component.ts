@@ -332,5 +332,93 @@ export class TempStructureNocComponent implements OnInit {
 		});
 	}
 
+	patchValue(){
+		this.tempStructureNocForm.patchValue(this.dummyJSON);
+	}
+
+	dummyJSON:any = {
+ 
+		"oldReferenceNumber": null,
+	  
+		"officeContactNo": "111111111111",
+		"onsitePersonMobileNo": "2222222222",
+		"officeEmailId": "a@a.com",
+		"fromDate": "2019-12-01",
+		"toDate": "2020-09-30",
+		"fromTime": "01:06:00",
+		"toTime": "06:25:00",
+		"forProgram": "sfsdfsdfsdfsdffsdfsdf",
+		"forProgramGuj": "સ્ફ્સ્દ્ફ્સ્દ્ફ્સ્દ્ફ્સ્દ્ફ્ફ્સ્દ્ફ્સ્દ્ફ",
+		"venue": "aaaaaaaaaaa",
+		"policeCommisionerLetterDate": "2019-12-01",
+		"policeCommisionerLetterNo": "2342342342",
+		"landOwnerConsentIncluded": true,
+		"landOwnerConsentDescription": "sdfsdfsdfsdfsdf",
+		"organizeName": "sdfsdfsdfsdf",
+		"organizeNameGuj": "સ્દ્ફ્સ્દ્ફ્સ્દ્ફ્સ્દ્ફ",
+		"organizerAddress": "sdfsdfsdfsdf",
+		"organizerAddressGuj": "સ્દ્ફ્સ્દ્ફ્સ્દ્ફ્સ્દ્ફ",
+		"organizerContactNo": "111111111111",
+		"temporaryStructureAddress": "sdfsdfsdfsdfsdsdfsdf",
+		"temporaryStructureAddressGuj": "સ્દ્ફ્સ્દ્ફ્સ્દ્ફ્સ્દ્ફ્સ્દ્સ્દ્ફ્સ્દ્ફ",
+		"fpNo": "23423423",
+		"rsNo": "23423423",
+		"tikaNo": "23432423",
+		"buildingLocation": "dgdfgdfgdfgfdg",
+		"tpNo": "234324",
+		"blockNo": "235423",
+		"structurePurpose": "fdgdfgfdg",
+		"opNo": "24323",
+		"noOfGatheringPersons": 234,
+		"noOfExits": 432,
+		"layoutPlanIncluded": true,
+		"requiredNOCForArea": "fdgdfg",
+		"hazardousPerformanceDetail": "sdfsdfsdfsdfsd",
+		"shamiyanaLength": "24",
+		"shamiyanaWidth": "43",
+		"archGateHeight": "34",
+		"archGateWidth": "34",
+		"approachedWayToVenue": "fsdgfgdfg",
+		"internalRoadWidth": "234",
+		"noOfFirefightingEquipment": "42",
+		"refillingCertificateAttached": true,
+		"stageHeight": "234",
+		"stageWidth": "234",
+		"usageOfInflammable": "fsdgffg",
+		"securityArrangement": true,
+		"parkingArrangement": true,
+		"exitNoSmokingSignboard": true,
+		"preciseProgramPlaceHFL": "234",
+		"lightningArresterArrangement": true,
+		"standbyFireEngineDemanded": true,
+		"sittingArrangement": {
+		  "code": "FIXED_SITTING"
+		},
+		"wiringType": {
+		  "code": "OPEN"
+		},
+		"communicationArrangementType": {
+		  "code": "WALKY_TALKY"
+		},
+		"attachments": [],
+		"fileStatus": "DRAFT",
+		"serviceName": null,
+		"fileNumber": null,
+		"pid": null,
+		"outwardNo": null,
+		"agree": false,
+		"paymentStatus": null,
+		"canEdit": true,
+		"canDelete": true,
+		"canSubmit": true,
+		"serviceDetail": {
+		  "code": "FS-TEMPSTRUCT",
+		  "name": "Temporary Structure NOC",
+		  "gujName": "કામચલાઉ માળખું એન.ઓ.સી.",
+		  "feesOnScrutiny": false,
+		  "appointmentRequired": false
+		}
+	  };
+
 }
 

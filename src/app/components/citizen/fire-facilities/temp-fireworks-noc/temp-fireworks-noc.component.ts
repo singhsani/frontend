@@ -251,5 +251,47 @@ export class TempFireworksNocComponent implements OnInit {
 	handleOnSaveAndNext(res) {
 		this.requiredDocumentList();
 	}
+
+	patchValue(){
+		this.tempFireworksNocForm.patchValue(this.dummyJSON);
+	}
+
+	dummyJSON:any = {
+		"oldReferenceNumber": null,
+		"applicationThroughPolice": true,
+		"temporaryShopAddress": "aaaaaaaaaaaaaaa",
+		"fromDate": moment(new Date()).format("YYYY-MM-DD"),
+		"toDate": moment(new Date()).format("YYYY-MM-DD"),
+		"noOfShops": "4",
+		"shopInVMCBoundry": true,
+		"shopInOpenSpace": "sdfsdf",
+		"ownerIsVMC": true,
+		"ownerConsentLetterIncluded": true,
+		"consentLetterDate": moment(new Date()).format("YYYY-MM-DD"),
+		"propertyNo": "sdfsdfsdf",
+		"layoutPlanIncluded": true,
+		"weatherExitShownInMap": true,
+		"noOfExits": "3",
+		"usageOfInflammable": "sdfdsfsdf",
+		"securityArrangement": true,
+		"parkingArrangement": true,
+		"exitNoSmokingSignboardProvision": true,
+		"standbyFireEngineDemanded": true,
+		"lastYearLicenceReceived": true,
+		"vmcFeeReceiptNo": "dfsdfsdfsdfs",
+		"wiringType": {
+		  "code": "OPEN"
+		},
+		"fileStatus": "DRAFT",
+		"serviceName": null,
+		"fileNumber": null,
+		"pid": null,
+		"outwardNo": null,
+		"agree": false,
+		"paymentStatus": null,
+		"canEdit": true,
+		"canDelete": true,
+		"canSubmit": true
+	  };
 }
 

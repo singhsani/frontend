@@ -346,5 +346,68 @@ export class NavratriNocComponent implements OnInit {
 		this.requiredDocumentList();
 	}
 
+	patchValue(){
+		this.navaratriNocForm.patchValue(this.dummyJSON);
+	}
+
+	dummyJSON:any={
+
+		"applicationThroughPolice": true,
+		"policeCommisionerLetterNo": "42342342342342342343",
+		"policeCommisionerLetterDate": moment(new Date()).format("YYYY-MM-DD"),
+		"organizeName": "gdfgfdgfdgdf",
+		"organizeNameGuj": "ગ્દ્ફ્ગ્ફ્દ્ગ્ફ્દ્ગ્દ્ફ",
+		"organizerAddress": "gfdgfdfdggfdgfdg",
+		"organizerAddressGuj": "ગ્ફ્દ્ગ્ફ્દ્ફ્દ્ગ્ગ્ફ્દ્ગ્ફ્દ્ગ",
+		"organizerMobileNo": "2435435435",
+		"responsiblePersonMobileNo": "4354354354",
+		"garbaPlaceAddress": "sdfsdfsdffsdsdfsdf",
+		"garbaPlaceAddressGuj": "સ્દ્ફ્સ્દ્ફ્સ્દ્ફ્ફ્સ્દ્સ્દ્ફ્સ્દ્ફ",
+		"fromDate": moment(new Date()).format("YYYY-MM-DD"),
+		"toDate": moment(new Date()).format("YYYY-MM-DD"),
+		"landOwnerConsentIncluded": true,
+		"garbaInVMCRange": true,
+		"landOwnerIsVMC": true,
+		"vmcFeeReceiptNo": "fsdgfdgdfgfdg",
+		"consentLetterDate": moment(new Date()).format("YYYY-MM-DD"),
+		"hazardousPerformanceDetail": "sdfsdfsdfsdfsdfsdfdsfsdf",
+		"noOfGatheringPersons": "234",
+		"eventArea": "234",
+		"sittingArea": "23423",
+		"stageArea": "23423",
+		"performanceArea": "42342",
+		"totalArea": "32423",
+		"shamiyanaLength": "32423",
+		"shamiyanaWidth": "23423",
+		"archGateHeight": "23423",
+		"archGateWidth": "32423",
+		"layoutPlanIncluded": true,
+		"noOfExits": "23",
+		"securityArrangement": true,
+		"parkingArrangement": true,
+		"trainedFiremanStaffKept": true,
+		"funFairPlanned": true,
+		"weatherExitShownInMap": true,
+		"foodStallDetail": "234",
+		"highTensionLineOverGround": true,
+		"fireSafetyActionWithProof": "fdgdfgfdgfdg",
+		"fileStatus": "DRAFT",
+		"serviceName": null,
+		"fileNumber": null,
+		"pid": null,
+		"outwardNo": null,
+		"agree": false,
+		"paymentStatus": null,
+		"canEdit": true,
+		"canDelete": true,
+		"canSubmit": true,
+		"serviceDetail": {
+		  "code": "FS-NAV",
+		  "name": "Navratri NOC Application",
+		  "gujName": "નવરાત્રી એનઓસી અરજી",
+		  "feesOnScrutiny": false,
+		  "appointmentRequired": false
+		}
+	  };
 }
 

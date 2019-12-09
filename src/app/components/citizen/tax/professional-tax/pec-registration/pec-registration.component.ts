@@ -657,4 +657,121 @@ export class PecRegistrationComponent implements OnInit {
 		this.pecRegForm.get('residentialAddress.id').setValue(id);
 	}
 
+	patchValue(){
+		this.pecRegForm.patchValue(this.dummyJSON);
+	}
+
+	dummyJSON:any={
+		"code": null,
+		"fieldView": null,
+		"fieldList": null,
+		"creditAmount": 0,
+		"totalTaxAmount": 0,
+		"lastPaid": null,
+		"timeInterval": null,
+		"demands": null,
+		"defaultDemandGenerated": false,
+		"status": "ACTIVE",
+		"pecNo": null,
+		"prcNo": null,
+		"registrationDate": "2019-12-09",
+		"applicantFullNameGuj": null,
+		"applicantFullName": "ggfgdfgdfgfdgfdg",
+		"gender": {
+		  "code": "MALE",
+		  "name": null
+		},
+		"establishmentName": "fdgfdgdfg",
+		"contactNo": "4353543543",
+		"email": null,
+		"ward": {
+		  "code": "WARD_1",
+		  "name": null
+		},
+		"applicantDob": "1970-01-01",
+		"rcDate": null,
+		"commencementDate": "2019-12-01",
+		"vatNo": null,
+		"aadharNo": null,
+		"officeAddress": {
+		  "addressType": "PF_PEC_OFFICE_ADDRESS",
+		  "buildingName": "dfgdfgfdg",
+		  "streetName": null,
+		  "landmark": null,
+		  "area": "fdgdfgfdg",
+		  "state": "GUJARAT",
+		  "district": null,
+		  "city": "Vadodara",
+		  "country": "INDIA",
+		  "pincode": "435345",
+		  "buildingNameGuj": "દ્ફ્ગ્દ્ફ્ગ્ફ્દ્ગ",
+		  "streetNameGuj": null,
+		  "landmarkGuj": null,
+		  "areaGuj": "ફ્દ્ગ્દ્ફ્ગ્ફ્દ્ગ",
+		  "stateGuj": null,
+		  "districtGuj": null,
+		  "cityGuj": null,
+		  "countryGuj": null
+		},
+		"residentialAddress": {
+		  "addressType": "PF_PEC_RESIDENTIAL_ADDRESS",
+		  "buildingName": "dfgdfgfdg",
+		  "streetName": null,
+		  "landmark": null,
+		  "area": "fdgdfgfdg",
+		  "state": "GUJARAT",
+		  "district": null,
+		  "city": "Vadodara",
+		  "country": "INDIA",
+		  "pincode": "435345",
+		  "buildingNameGuj": "દ્ફ્ગ્દ્ફ્ગ્ફ્દ્ગ",
+		  "streetNameGuj": null,
+		  "landmarkGuj": null,
+		  "areaGuj": "ફ્દ્ગ્દ્ફ્ગ્ફ્દ્ગ",
+		  "stateGuj": null,
+		  "districtGuj": null,
+		  "cityGuj": null,
+		  "countryGuj": null
+		},
+		"bankAccountNo": "44353454354353454354",
+		"bank": {
+		  "code": "ALLAHABAD_BANK",
+		  "name": null
+		},
+		"branchName": "dfgfgfdgfdgfdgdg",
+		"pancardNo": "ABCDE1234F",
+		"centralSalesTax": null,
+		"shopAndLicenseNo": "sdfsdfsdfsdf",
+		"gujaratSalesTax": null,
+		"professionalTax": null,
+		"companyRegNo": "sdfsdfsdf",
+		"gstNo": "29ABCDE1234F2Z5",
+		"censusNo": [
+		  {
+			"census": "1111"
+		  }
+		],
+		"entry": {
+		  "code": "ENTRY_002",
+		  "name": null
+		},
+		"subEntry": {
+		  "code": "002_A",
+		  "name": null
+		},
+		"constitution": {
+		  "code": "INDIVIDUAL",
+		  "name": null
+		},
+		"professionConstitution": {
+		  "code": "INSURANCE_AGENT",
+		  "name": null
+		},
+		"applicableRate": 2000,
+		"otherProfession": null,
+		"attachments": [],
+		"formStatus": "SUBMITTED",
+		"officeResidentialAddressSame": true
+	  };
+
 }
