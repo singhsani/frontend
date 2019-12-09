@@ -106,7 +106,7 @@ export class NewRegistrationComponent implements OnInit {
       code: null,
       fieldView: null,
       fieldList: null,
-      vehicleNo: [null,Validators.required],
+      vehicleNo: [null, Validators.required],
       vehicleType: this.fb.group({
         code: [null, Validators.required],
         name: null
@@ -217,7 +217,7 @@ export class NewRegistrationComponent implements OnInit {
         if (!this.vehicleRegistrationForm.get('canEdit').value) {
           this.vehicleRegistrationForm.disable();
         }
-  
+
         // if vehicle receipt present then format the receipt date
         if (res.vehicleReceipts && res.vehicleReceipts.length > 0) {
           _.forEach(res.vehicleReceipts, (value, key) => {
@@ -361,7 +361,7 @@ export class NewRegistrationComponent implements OnInit {
       this.modalRef.hide()
       this.printReceipt(res);
       this.isSubmitBtnVisible = true;
-    },err=>{
+    }, err => {
       this.isSubmitBtnVisible = true;
     });
   }
@@ -486,15 +486,15 @@ export class NewRegistrationComponent implements OnInit {
       return;
     }
     else if (event.index === 2 && this.vehicleRegistrationForm.get('canEdit').value) {
-    	this.vehicleServise.calculateTax(this.vehicleRegistrationForm.getRawValue()).subscribe(res => {
+      this.vehicleServise.calculateTax(this.vehicleRegistrationForm.getRawValue()).subscribe(res => {
 
-    		this.vehicleRegistrationForm.patchValue({
+        this.vehicleRegistrationForm.patchValue({
           tokenFess: res.amountFields.vehicleTokenFee,
-					dishonorCharges: res.amountFields.dishonorCharges ? res.amountFields.dishonorCharges : 0,
-					vehicleApplicableRate: res.vehicleApplicableRate,
-					totalPayable: res.amountFields.vehicleBasicValue
-    		});
-    	});
+          dishonorCharges: res.amountFields.dishonorCharges ? res.amountFields.dishonorCharges : 0,
+          vehicleApplicableRate: res.vehicleApplicableRate,
+          totalPayable: res.amountFields.vehicleBasicValue
+        });
+      });
     }
   }
 
@@ -533,6 +533,75 @@ export class NewRegistrationComponent implements OnInit {
     }
   }
 
+  patchValue() {
+    this.vehicleRegistrationForm.patchValue(this.dummyJSON);
+  }
 
+  dummyJSON: any = {
+    "code": null,
+    "fieldView": null,
+    "fieldList": null,
+    "vehicleNo": "234324",
+    "vehicleType": {
+      "code": "TWO_WHEELERS",
+      "name": null
+    },
+    "engineNo": "dsfsdfsdf",
+    "chasisNo": "sdfdsfsdfsd",
+    "registrationNo": "GJ-01-1234",
+    "vehicleBasicValue": "423543",
+    "makeModel": "sdfsdf",
+    "dealerName": "sdfsdfsdf",
+    "purchaseDate": "2019-12-01",
+    "purchasingType": "OLD_RATE",
+    "refNumber": "2019-12-09U9JAX",
+    "tokenNo": null,
+    "firstName": "sdfsdfsdf",
+    "middleName": null,
+    "lastName": "sdfsdfsdf",
+    "applicantAadhaarNo": null,
+    "mobileNo": "2342342342",
+    "aadhaarNo": "111111111111",
+    "email": "a@a.com",
+    "address": {
+      "addressType": "VEHICLE_ADDRESS",
+      "buildingName": "sdfsdf",
+      "streetName": "dsfsdfsdf",
+      "landmark": "sdfsdf",
+      "area": "sdfsdf",
+      "state": "GUJARAT",
+      "district": null,
+      "city": "Vadodara",
+      "country": "INDIA",
+      "pincode": "423423",
+      "buildingNameGuj": "સ્દ્ફ્સ્દ્ફ",
+      "streetNameGuj": "દ્સ્ફ્સ્દ્ફ્સ્દ્ફ",
+      "landmarkGuj": "સ્દ્ફ્સ્દ્ફ",
+      "areaGuj": "સ્દ્ફ્સ્દ્ફ",
+      "stateGuj": "ગુજરાત",
+      "districtGuj": null,
+      "cityGuj": "વડોદરા",
+      "countryGuj": "ભારત"
+    },
+    "billingPeriod": {
+      "code": "2018_19",
+      "name": null
+    },
+    "ward": {
+      "code": "WARD_2",
+      "name": null
+    },
+    "vehicleTax": 0,
+    "paid": false,
+    "vehicleReceipts": null,
+    "canEdit": true,
+    "canDelete": false,
+    "canSubmit": true,
+    "tokenFees": 100,
+    "dishonorCharges": 0,
+    "vehicleApplicableRate": 1.25,
+    "totalPayable": 5294.2875,
+    "formStatus": "SUBMITTED"
+  };
 
 }

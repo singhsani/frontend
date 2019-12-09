@@ -208,8 +208,45 @@ export class EleConnectionNocComponent implements OnInit {
 			else {
 				console.log("else condition");
 			}
-
 		}
 	}
+
+	patchValue(){
+		this.electricConnectionForm.patchValue(this.dummyJSON);
+	}
+
+	dummyJSON:any = {
+ 
+		"electricityConnectionNo": "1111111111111",
+		"connectionHolderName": "zxfdsafsdfsdfsd",
+		"connectionHolderNameGuj": "ઝ્ક્ષ્ફ્દ્સફ્સ્દ્ફ્સ્દ્ફ્સ્દ",
+		"connectionHolderAddress": "fsdfsdfsdfsdf",
+		"connectionHolderAddressGuj": "ફ્સ્દ્ફ્સ્દ્ફ્સ્દ્ફ્સ્દ્ફ",
+		"incidentDate": moment(new Date()).format("YYYY-MM-DD"),
+		"propertyNo": "234234234234",
+		"firePlaceAddress": "sdffsdfsdf",
+		"subject": "sdfsdf",
+		"firePlaceType": {
+		  "code": "RESIDENTIAL"
+		},
+		"fireLossAmount": "34234234",
+		"fileStatus": "DRAFT",
+		"serviceName": null,
+		"fileNumber": null,
+		"pid": null,
+		"outwardNo": null,
+		"agree": false,
+		"paymentStatus": null,
+		"canEdit": true,
+		"canDelete": true,
+		"canSubmit": true,
+		"serviceDetail": {
+		  "code": "FS-ELE",
+		  "name": "NOC for Electric Connection",
+		  "gujName": "ઇલેક્ટ્રીક કનેક્શન માટે એનઓસી",
+		  "feesOnScrutiny": false,
+		  "appointmentRequired": false
+		}
+	  };
 
 }

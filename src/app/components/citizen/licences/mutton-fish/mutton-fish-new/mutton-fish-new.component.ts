@@ -391,7 +391,134 @@ export class MuttonFishNewComponent implements OnInit {
 		} catch (error) {
 			console.error(error.message);
 		}
-
 	}
+
+	patchValue(){
+		this.muttonFishNewForm.patchValue(this.dummyJSON);
+	}
+
+	dummyJSON:any = {
+		"licenseIssueDate": null,
+		"licenseRenewalDate": null,
+		"loinumber": null,
+		"licenseType": {
+		  "code": "MEAT"
+		},
+		"personType": {
+		  "code": "MR"
+		},
+		"holderFirstName": "sadfsdf",
+		"holderMiddleName": "dsfsdfsdf",
+		"holderLastName": "sdfdsfsdf",
+		"holderFirstNameGuj": "સદ્ફ્સ્દ્ફ",
+		"holderMiddleNameGuj": "દ્સ્ફ્સ્દ્ફ્સ્દ્ફ",
+		"holderLastNameGuj": "સ્દ્ફ્દ્સ્ફ્સ્દ્ફ",
+		"permanantAddress": {
+		  "addressType": "MF_PERMANENT_ADDRESS",
+		  "buildingName": "dsfsdf",
+		  "streetName": "sdfsdfsdf",
+		  "landmark": "sdfdsfdsf",
+		  "area": "sdfsdfsdf",
+		  "state": "GUJARAT",
+		  "district": null,
+		  "city": "Vadodara",
+		  "country": "INDIA",
+		  "pincode": "234234",
+		  "buildingNameGuj": "દ્સ્ફ્સ્દ્ફ",
+		  "streetNameGuj": "સ્દ્ફ્સ્દ્ફ્સ્દ્ફ",
+		  "landmarkGuj": "સ્દ્ફ્દ્સ્ફ્દ્સ્ફ",
+		  "areaGuj": "સ્દ્ફ્સ્દ્ફ્સ્દ્ફ",
+		  "stateGuj": "ગુજરાત",
+		  "districtGuj": null,
+		  "cityGuj": "વડોદરા",
+		  "countryGuj": "ભારત"
+		},
+		"temporaryAddress": {
+		  "addressType": "MF_TEMPORARY_ADDRESS",
+		  "buildingName": "fsdfsdfsdf",
+		  "streetName": "sdfdsfsd",
+		  "landmark": "dsfsdfsd",
+		  "area": "dsfsdfsdf",
+		  "state": "GUJARAT",
+		  "district": null,
+		  "city": "Vadodara",
+		  "country": "INDIA",
+		  "pincode": "234243",
+		  "buildingNameGuj": "ફ્સ્દ્ફ્સ્દ્ફ્સ્દ્ફ",
+		  "streetNameGuj": "સ્દ્ફ્દ્સ્ફ્સ્દ",
+		  "landmarkGuj": "દ્સ્ફ્સ્દ્ફ્સ્દ",
+		  "areaGuj": "દ્સ્ફ્સ્દ્ફ્સ્દ્ફ",
+		  "stateGuj": "ગુજરાત",
+		  "districtGuj": null,
+		  "cityGuj": "વડોદરા",
+		  "countryGuj": "ભારત"
+		},
+		"holderTelephoneNo": "435345345435",
+		"holderMobileNo": "4235435435",
+		"holderFaxNo": "435435435435",
+		"holderAadharNo": "435435435435",
+		"holderPanNo": "ABCDE1234T",
+		"zoneNo": {
+		  "code": "NORTH_ZONE"
+		},
+		"wardNo": {
+		  "code": "WARD_7"
+		},
+		"blockNo": {
+		  "code": "BLOCK_9"
+		},
+		"businessAddress": {
+		  "addressType": "MF_BUSINESS_ADDRESS",
+		  "buildingName": "sdfsdfsdf",
+		  "streetName": "sdfsdfsdf",
+		  "landmark": null,
+		  "area": "sdfsdfsd",
+		  "state": "GUJARAT",
+		  "district": null,
+		  "city": "Vadodara",
+		  "country": "INDIA",
+		  "pincode": "234234",
+		  "buildingNameGuj": "સ્દ્ફ્સ્દ્ફ્સ્દ્ફ",
+		  "streetNameGuj": "સ્દ્ફ્સ્દ્ફ્સ્દ્ફ",
+		  "landmarkGuj": null,
+		  "areaGuj": "સ્દ્ફ્સ્દ્ફ્સ્દ",
+		  "stateGuj": "ગુજરાત",
+		  "districtGuj": null,
+		  "cityGuj": "વડોદરા",
+		  "countryGuj": "ભારત"
+		},
+		"extraDetailsOfBusiness": "agfdgfdgfdg",
+		"relationshipId": {
+		  "code": "PROPRIETOR"
+		},
+		"statusOfBusinessId": {
+		  "code": "PARTNERSHIPFIRM"
+		},
+		"relationshipList": [
+		  {
+			"name": "gfdg",
+			"address": "fdgfdgfdg",
+			"mobileNo": "4545435435",
+			"personType": "MF_PERSON"
+		  }
+		],
+		"fileStatus": "DRAFT",
+		"serviceName": null,
+		"fileNumber": null,
+		"pid": null,
+		"outwardNo": null,
+		"agree": false,
+		"paymentStatus": null,
+		"canEdit": true,
+		"canDelete": true,
+		"canSubmit": true,
+		"serviceDetail": {
+		  "code": "MF-LIC",
+		  "name": "Meat And Fish shop license",
+		  "gujName": "મીટ એન્ડ ફિશ શોપ લાઇસન્સ",
+		  "feesOnScrutiny": true,
+		  "appointmentRequired": false
+		}
+	  };
 }
 

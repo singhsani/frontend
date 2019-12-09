@@ -308,4 +308,77 @@ export class FoodNewComponent implements OnInit {
     this.tabIndex = evt;
   }
 
+  patchValue(){
+    this.foodLicNewForm.patchValue(this.dummyJSON);
+  }
+
+  dummyJSON:any={
+    "apiType": "foodLicence",
+    "serviceCode": "FL",
+    "fieldView": "ALL",
+    "fieldList": null,
+    "holderName": "fdgfdgfdg",
+    "holderAddress": "fdgfdg",
+    "firmName": "gfdg",
+    "firmAddress": "fdgfdgfdgfdg",
+    "firmZone": {
+      "code": "NORTH_ZONE"
+    },
+    "firmAdministrativeWard": {
+      "code": "WARD_7"
+    },
+    "firmCity": "Vadodara",
+    "firmPincode": "234543",
+    "mobileNo": "4354354354",
+    "firmLandLineNo": "4354353454",
+    "firmEmailId": "a@a.com",
+    "businessType": {
+      "code": "FOOD_MANUFACTURER_PROCESSOR_BUSINESSTYPE"
+    },
+    "regLicType": {
+      "code": "FOOD_REG_LIC_MULTIPLE"
+    },
+    "businessCategories": [
+      {
+        "code": "MT12L_DAIRY_UNITS_501_TO_10000",
+        "name": "Dairy Units -- 501 to 10000 LPD of milk / 2.5 MT to 500 MT of milk solids per annum",
+        "gujName": "ડેરી એકમો - દૂધની 501 થી 10000 એલપીડી / 2.5 એમટીથી 500 એમટી દૂધ સોલિડ્સ વાર્ષિક ધોરણે"
+      }
+    ],
+    "singleBusinessCategorie": null,
+    "businessTurnOver": {
+      "code": "GREATER_THAN_12LK"
+    },
+    "regOrLic": "License",
+    "licenceForNoOfYear": {
+      "code": "1"
+    },
+    "feesType": {
+      "code": null
+    },
+    "totalFeesAmount": null,
+    "paymentMode": {
+      "code": "NET_BANKING"
+    },
+    "loinumber": null,
+    "fileStatus": "DRAFT",
+    "serviceName": null,
+    "fileNumber": null,
+    "pid": null,
+    "outwardNo": null,
+    "agree": false,
+    "paymentStatus": null,
+    "canEdit": true,
+    "canDelete": true,
+    "canSubmit": true,
+    "serviceDetail": {
+      "code": "FL",
+      "name": "Food Licensing & Registration",
+      "gujName": "ફૂડ લાઇસન્સિંગ અને નોંધણી ",
+      "feesOnScrutiny": false,
+      "appointmentRequired": false,
+      "serviceUploadDocuments": []
+    }
+  };
+
 }

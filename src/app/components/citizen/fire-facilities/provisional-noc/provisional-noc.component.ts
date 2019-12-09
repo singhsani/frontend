@@ -344,6 +344,122 @@ export class ProvisionalNocComponent implements OnInit {
 		} catch (e) {
 
 		}
-
 	}
+
+	patchValue(){
+		this.provisionalNocForm.patchValue(this.dummyJSON);
+	}
+
+	dummyJSON:any={
+		"provisionalNocNumber": null,
+		"oldReferenceNumber": null,
+		"officeContactNo": "111111111111",
+		"onsitePersonMobileNo": "2222222222",
+		"applicantPermanentAddress": "dfsdfsdfsdfsdf",
+		"applicantPermanentAddressGuj": "દ્ફ્સ્દ્ફ્સ્દ્ફ્સ્દ્ફ્સ્દ્ફસ્દ્ફ્સ્દ્ફ્સ્દ્ફ્દ્સ",
+		"officeEmailId": "a@a.com",
+		"appliedForId": {
+		  "code": "FS_HIGH_RISE"
+		},
+		"usageTypeId": {
+		  "code": "FS_RESIDENTIAL"
+		},
+		"subjectTo": "dfsdfsdfsdf",
+		"purposeOfBuildingUse": [
+		  {
+			"code": "MALL_MULTIPLEX",
+			"name": "Mall Multiplex",
+			"gujName": "મોલ મલ્ટિપ્લેક્સ"
+		  }
+		],
+		"otherPurposeRemark": null,
+		"architectRegistrationNumber": "324234324324324",
+		"architectName": "sdfsdfsdf",
+		"architectNameGuj": "સ્દ્ફ્સ્દ્ફ્સ્દ્ફ",
+		"architectFirmName": "sdfsdfsdfsdfsdf",
+		"architectFirmNameGuj": "સ્દ્ફ્સ્દ્ફ્સ્દ્ફ્સ્દ્ફ્સ્દ્ફ",
+		"architectPermanentAddress": "dfsdfsdfsdfsdfdsfdsf",
+		"architectPermanentAddressGuj": "દ્ફ્સ્દ્ફ્સ્દ્ફ્સ્દ્ફ્સ્દ્ફ્દ્સ્ફ્દ્સ્ફ",
+		"architectContactNo": "342342342342",
+		"siteAddress": "gfdsgdfgfdgfdg",
+		"siteAddressGuj": "ગ્ફ્દ્સ્ગ્દ્ફ્ગ્ફ્દ્ગ્ફ્દ્ગ",
+		"fireVendorType": {
+		  "code": "CLASS_A"
+		},
+		"fireVendorRegistrationNumber": "345435435435435",
+		"fireVendorName": "fdgdfgfdgfdgfdgfdg",
+		"fireVendorNameGuj": "ફ્દ્ગ્દ્ફ્ગ્ફ્દ્ગ્ફ્દ્ગ્ફ્દ્ગ્ફ્દ્ગ",
+		"fireVendorAddress": "dfgfdgfdgfdgfdgfdg",
+		"fireVendorOfficeAddress": "fdgfdgfdgfgfgfdgfgfgfgfg",
+		"fpNo": "43543534",
+		"rsNo": "43534543",
+		"tikaNo": "43543543",
+		"townPlanningNo": "43543543",
+		"buildingLocation": "fdgfdgfdgfdg",
+		"blockNo": "234",
+		"opNo": "23423423",
+		"citySurveyNo": "42342342",
+		"buildingHeight": 234,
+		"totalBuildingFloor": 234,
+		"noOfBasement": 1,
+		"lowerBasement": 34,
+		"upperBasement": 43,
+		"basementArea": 454,
+		"multipleTowers": true,
+		"noOfTowers": 423,
+		"noOfApproachedRoad": 423,
+		"noOfVentilation": 423,
+		"ventilationProvisionDetail": "435",
+		"plotArea": 45,
+		"constructionArea": 45,
+		"drawingProvided": true,
+		"siteAddressWithBuildingName": "dfgfdgfdg",
+		"siteAddressWithBuildingNameGuj": "દ્ફ્ગ્ફ્દ્ગ્ફ્દ્ગ",
+		"otherInformation": "fdgfdgfdgfdg",
+		"gaslineInUnderground": true,
+		"undergroundCabling": true,
+		"ongcLineInUnderground": true,
+		"areaZone": {
+		  "code": "COMMERCIAL_ZONE"
+		},
+		"previouslyNocTaken": {
+		  "code": "FS_YES"
+		},
+		"undergroundWaterTankLength": "435",
+		"undergroundWaterTankBreadth": "45",
+		"undergroundWaterTankHeight": "54435",
+		"undergroundWaterTankCapacity": "435",
+		"undergroundWaterTankVolume": "435",
+		"undergroundWatertankMapApproved": true,
+		"overgroundWaterTankLength": "435",
+		"overgroundWaterTankBreadth": "54",
+		"overgroundWaterTankHeight": "55",
+		"overgroundWaterTankCapacity": "5345",
+		"overgroundWaterTankVolume": "435",
+		"overgroundWatertankMapApproved": true,
+		"attachments": [],
+		"fileStatus": "DRAFT",
+		"serviceType": "FS_PROVISIONAL_NOC",
+		"serviceName": null,
+		"fileNumber": null,
+		"pid": null,
+		"outwardNo": null,
+		"agree": false,
+		"paymentStatus": null,
+		"canEdit": true,
+		"canDelete": true,
+		"canSubmit": true,
+		"firstName": "SHAN",
+		"middleName": null,
+		"lastName": "SANGEWAR",
+		"aadhaarNo": null,
+		"email": "shantanu.sangewar@nascentinfo.com",
+		"serviceDetail": {
+		  "code": "FS-PROVI",
+		  "name": "Provisional Fire NOC",
+		  "gujName": "કામચલાઉ અંતિમ એનઓસી",
+		  "feesOnScrutiny": false,
+		  "appointmentRequired": false
+		}
+	  };
 }

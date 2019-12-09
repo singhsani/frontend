@@ -217,8 +217,49 @@ export class GasConnectionNocComponent implements OnInit {
 			else {
 				console.log("else condition");
 			}
-
 		}
 	}
+
+	patchValue() {
+		this.gasConnectionForm.patchValue(this.dummyJSON);
+	}
+
+	dummyJSON: any = {
+	
+		"gasConnectionNo": "sdfdfsdfsdf",
+		"connectionHolderName": "sdfsdfsdf",
+		"connectionHolderNameGuj": "સ્દ્ફ્સ્દ્ફ્સ્દ્ફ",
+		"incidentDate": moment(new Date()).format("YYYY-MM-DD"),
+		"connectionPurpose": {
+			"code": "RESIDENTIAL"
+		},
+		"shopNo": null,
+		"propertyNo": "324234234234234",
+		"firePlaceType": {
+			"code": "HOUSE"
+		},
+		"subject": "dfsd",
+		"firePlaceAddress": "fsdgdfgdfgdfgfdg",
+		"firePlaceAddressGuj": "ફ્સ્દ્ગ્દ્ફ્ગ્દ્ફ્ગ્દ્ફ્ગ્ફ્દ્ગ",
+		"fireLossAmount": 24343434,
+		"highRiseFireNOCTaken": true,
+		"fileStatus": "DRAFT",
+		"serviceName": null,
+		"fileNumber": null,
+		"pid": null,
+		"outwardNo": null,
+		"agree": false,
+		"paymentStatus": null,
+		"canEdit": true,
+		"canDelete": true,
+		"canSubmit": true,
+		"serviceDetail": {
+			"code": "FS-GAS",
+			"name": "NOC for Gas Connection",
+			"gujName": "ગેસ કનેક્શન માટે એનઓસી",
+			"feesOnScrutiny": false,
+			"appointmentRequired": false
+		}
+	};
 
 }
