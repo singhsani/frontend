@@ -13,7 +13,7 @@
                 </mat-form-field>
 
                 <div formGroupName="typeOfCorrection" class="col-md-6 ngSelect">
-                    <ng-select placeholder="{{'type_of_correction' | translate:translateKey}}*" formControlName="code">
+                    <ng-select placeholder="{{'type_of_correction' | translate:translateKey}}*" formControlName="code" >
                         <ng-option *ngFor="let type of TypeOfCorrection" [value]="type.code">
                             {{type.name}}
                         </ng-option>
