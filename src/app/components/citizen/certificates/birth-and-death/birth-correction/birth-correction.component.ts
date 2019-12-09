@@ -187,8 +187,9 @@ export class BirthCorrectionComponent implements OnInit {
 			});
 			this.requiredDocumentList();
 			this.showButtons = true;
-			let event = res.typeOfCorrection.code;
-
+			// let event = res.typeOfCorrection.code;
+			// this.changeCorrection(this.birthCorrectionForm.get('typeOfCorrection').get('code').value);
+			let event = this.birthCorrectionForm.get('typeOfCorrection').get('code').value;
 			if (event === 'NAME_INSERTION') {
 				this.allowChildNameInsertion = true;
 				this.allowChildNameCorrection = false;
@@ -206,9 +207,9 @@ export class BirthCorrectionComponent implements OnInit {
 	 */
 	createBirthCorrectionData(data) {
 		this.formService.createFormData().subscribe(res => {
-			
+
 			this.birthCorrectionForm.patchValue(res);
-			
+
 			let newgnData = JSON.parse(data);
 			let prod_array = [];
 			for (let i = 0; i < newgnData.length; i += 1) {
@@ -232,6 +233,14 @@ export class BirthCorrectionComponent implements OnInit {
 			this.showApplicationSearch = false;
 			this.showButtons = true;
 			this.changeCorrection(this.regStatusForm.get('typeOfCorrection').get('code').value);
+			this.birthCorrectionForm.get('refNumber').setValue(this.regStatusForm.get('registrationNumber').value)
+		    this.birthCorrectionForm.get('typeOfCorrection').get('code').setValue(this.regStatusForm.get('typeOfCorrection').get('code').value);
+			/**
+		    * save data
+		    */
+			this.formService.saveFormData(this.birthCorrectionForm.value).subscribe(res => {
+				this.birthCorrectionForm.patchValue(res);
+			})
 		})
 	}
 
@@ -272,6 +281,11 @@ export class BirthCorrectionComponent implements OnInit {
 	}
 
 
+
+	valueSet() {
+
+	}
+
 	/**
 	 * call API to get registration data and status.
 	 */
@@ -300,8 +314,8 @@ export class BirthCorrectionComponent implements OnInit {
 	 * @param data - original json.
 	 */
 	setValue(data) {
-		this.birthCorrectionForm.get('fieldView').setValue(data.fieldView);
-		this.birthCorrectionForm.get('fieldList').setValue(data.fieldList);
+		// this.birthCorrectionForm.get('fieldView').setValue(data.fieldView);
+		// this.birthCorrectionForm.get('fieldList').setValue(data.fieldList);
 		this.birthCorrectionForm.get('childName').setValue(data.childName);
 		this.birthCorrectionForm.get('childNameGuj').setValue(data.childNameGuj);
 		this.birthCorrectionForm.get('fatherFirstName').setValue(data.fatherFirstName);
@@ -391,9 +405,9 @@ export class BirthCorrectionComponent implements OnInit {
 
 			refNumber: null,
 
-			// typeOfCorrection: this.fb.group({
-			// 	code: [null]
-			// }),
+			typeOfCorrection: this.fb.group({
+				code: [null]
+			}),
 
 			// fieldView: "ALL",
 			// fieldList: null,
