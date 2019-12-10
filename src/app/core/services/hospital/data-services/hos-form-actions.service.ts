@@ -189,4 +189,21 @@ export class HosFormActionsService {
 		return this.http.get(this.requestURL, 'printReceipt');
 	}
 
+		/**
+	 * this method is used to get the ccavenue payment page
+	 */
+	ccAvenueMakePayment(payData) {
+		this.requestURL = `public/ccpayment/getPaymentPage`;
+		return this.http.post(this.requestURL, payData);
+	}
+
+		/**
+	 * This method is used to get billdesk page
+	 * @param paymentData -pass payment data here.
+	 */
+	getBillDeskPage(paymentData) {
+		this.requestURL = `public/billdeskpayment/getPage`;
+		return this.http.post(this.requestURL, paymentData);
+	}
+
 }
