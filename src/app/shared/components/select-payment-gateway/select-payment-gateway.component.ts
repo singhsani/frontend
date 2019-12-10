@@ -5,6 +5,7 @@ import { FormsActionsService } from 'src/app/core/services/citizen/data-services
 import { ToastrService } from 'ngx-toastr';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { HosFormActionsService } from 'src/app/core/services/hospital/data-services/hos-form-actions.service';
 declare var $: any;
 
 @Component({
@@ -16,7 +17,7 @@ export class SelectPaymentGatewayComponent implements OnInit {
 
   confirmRef: BsModalRef;
   @ViewChild("confirmationModel") confirmationModel: TemplateRef<any>;
-  @Input('redirectTo') redirectTo : any;
+  @Input('applicationType') applicationType: any;
 
   payData: any;
   form: any;
@@ -24,18 +25,18 @@ export class SelectPaymentGatewayComponent implements OnInit {
   applicationrouter: any;
   redirectURLAfterPayment: any;
 
-  paymentGatewayForm:FormGroup;
+  paymentGatewayForm: FormGroup;
 
-  paymentGatewayArr:any = [
-    {name: 'CC Avenue', code:'CC_AVENUE'},
-    {name: 'BillDesk', code:'BILLDESK'},
+  paymentGatewayArr: any = [
+    { name: 'CC Avenue', code: 'CC_AVENUE' },
+    { name: 'BillDesk', code: 'BILLDESK' },
   ];
 
   constructor(
     private modalService: BsModalService,
     private commonService: CommonService, private formService: FormsActionsService,
     private toastr: ToastrService, private fb: FormBuilder,
-    private router:Router) {
+    private router: Router, private hosFormActionsService: HosFormActionsService) {
 
   }
 
@@ -52,7 +53,7 @@ export class SelectPaymentGatewayComponent implements OnInit {
    * This method is used to open model from different different modules
    */
   openModel() {
-    this.confirmRef = this.modalService.show(this.confirmationModel, Object.assign({ keyboard: false }, {backdrop : 'static'}, { ignoreBackdropClick: false }, { class: 'gray .modal-md' }));
+    this.confirmRef = this.modalService.show(this.confirmationModel, Object.assign({ keyboard: false }, { backdrop: 'static' }, { ignoreBackdropClick: false }, { class: 'gray .modal-md' }));
   }
 
   /**
@@ -69,7 +70,7 @@ export class SelectPaymentGatewayComponent implements OnInit {
   /**
    * This method is used to set the data passed from different different citizen service modules
    */
-  setPaymentDetailsFromActionBar(payData){
+  setPaymentDetailsFromActionBar(payData) {
     this.payData = payData;
   }
 
@@ -78,21 +79,21 @@ export class SelectPaymentGatewayComponent implements OnInit {
    */
   onCancel() {
     this.confirmRef.hide();
-    if(this.redirectTo == 'HOSPITAL'){
-        this.router.navigate(['hospital/my-applications']);
-      }else{
-        this.router.navigate(['citizen/my-applications']);
-      }
+    if (this.applicationType == 'HOSPITAL') {
+      this.router.navigate(['hospital/my-applications']);
+    } else {
+      this.router.navigate(['citizen/my-applications']);
+    }
   }
 
-/**
- * This method is used to make payment according to user payment gateway selection
- */
-  makePayment(){
+  /**
+   * This method is used to make payment according to user payment gateway selection
+   */
+  makePayment() {
     let option = this.paymentGatewayForm.get('paymentGateway').value;
-    if(option == 'CC_AVENUE'){
-        this.ccAvenueMakePayment();
-    }else{
+    if (option == 'CC_AVENUE') {
+      this.ccAvenueMakePayment();
+    } else {
       this.getBillDeskPage();
     }
   }
@@ -101,25 +102,38 @@ export class SelectPaymentGatewayComponent implements OnInit {
    * This method is used to call ccavenue make payment
    */
   ccAvenueMakePayment() {
-    this.formService.ccAvenueMakePayment(this.payData).subscribe(res => {
-      this.getTransactionDetail(res.data);
-    }, err => {
+    if (this.applicationType == 'HOSPITAL') {
+      this.hosFormActionsService.ccAvenueMakePayment(this.payData).subscribe(res => {
+        this.getTransactionDetail(res.data);
+      });
+    } else {
+      this.formService.ccAvenueMakePayment(this.payData).subscribe(res => {
+        this.getTransactionDetail(res.data);
+      });
+    }
 
-    });
   }
 
-  getBillDeskPage(){
+  getBillDeskPage() {
 
     let obj = {
-      frontRedirectURL : this.payData.returnUrl,
-      customerID : this.payData.refNumber,
-      txtadditionalInfo2 : this.payData.payableServiceType,
-      txtAmount : this.payData.amount,
+      frontRedirectURL: this.payData.returnUrl,
+      customerID: this.payData.refNumber,
+      txtadditionalInfo2: this.payData.payableServiceType,
+      txtAmount: this.payData.amount,
     };
 
-    this.formService.getBillDeskPage(obj).subscribe(res =>{
-      window.open(res.data.url, "_self");
-    });
+    if (this.applicationType == 'HOSPITAL') {
+      this.hosFormActionsService.getBillDeskPage(obj).subscribe(res => {
+        window.open(res.data.url, "_self");
+      });
+    } else {
+      this.formService.getBillDeskPage(obj).subscribe(res => {
+        window.open(res.data.url, "_self");
+      });
+    }
+
+
   }
 
   /**
