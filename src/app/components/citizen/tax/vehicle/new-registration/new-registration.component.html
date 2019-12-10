@@ -82,7 +82,7 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput autocomplete="off" appDate [matDatepicker]="picker" [max]="maxDate"
+						<input matInput autocomplete="off" appDate [matDatepicker]="picker" [min]="minDate" [max]="maxDate"
 							formControlName="purchaseDate" (dateChange)="onDateChange($event.value)"
 							placeholder="{{'purchase_date' | translate: translateKey}} (DD/MM/YYYY)" required>
 						<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -118,18 +118,18 @@
 				<div class="row stepperMinHeight">
 
 					<mat-form-field class="col-md-4">
-						<input matInput autocomplete="off" maxlength="100" type="text" formControlName="firstName"
+						<input appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" matInput autocomplete="off" maxlength="100" type="text" formControlName="firstName"
 							placeholder="{{'first_name' | translate: translateKey}}" required>
 						<control-messages [control]="vehicleRegistrationForm.get('firstName')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput autocomplete="off" maxlength="100" type="text" formControlName="middleName"
+						<input appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" matInput autocomplete="off" maxlength="100" type="text" formControlName="middleName"
 							placeholder="{{'middle_name' | translate: translateKey}}">
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput autocomplete="off" maxlength="100" type="text" formControlName="lastName"
+						<input appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" matInput autocomplete="off" maxlength="100" type="text" formControlName="lastName"
 							placeholder="{{'last_name' | translate: translateKey}}" required>
 						<control-messages [control]="vehicleRegistrationForm.get('lastName')"></control-messages>
 					</mat-form-field>
@@ -268,8 +268,7 @@
 					</div>
 				</div>
 
-				<!-- This div is used to print the receipt when form is submit -->
-				<div class="row" id="sectionToPrint"> </div>
+			
 
 				<div class="fotButtonBar clearfix">
 					<div class="col-sm-12 col-md-12">
@@ -403,3 +402,6 @@
 		</form>
 	</div>
 </ng-template>
+
+	<!-- This div is used to print the receipt when form is submit -->
+	<div class="row" id="sectionToPrint"> </div>
