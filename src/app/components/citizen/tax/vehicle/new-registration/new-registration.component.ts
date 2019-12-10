@@ -34,6 +34,7 @@ export class NewRegistrationComponent implements OnInit {
   stepLable4: string = "cheque_return_details";
 
   maxDate: Date = new Date();
+  minDate: any = moment().subtract(6, 'months').format('YYYY-MM-DD');
   vehicleRegistrationForm: FormGroup;
   paymentForm: FormGroup;
   // purchasingTypeArray: any = [{ code: 'OLD_RATE', name: 'Old Rate' }, { code: 'NEW_RATE', name: 'New Rate' }];
@@ -122,7 +123,7 @@ export class NewRegistrationComponent implements OnInit {
       // 	code: [null, Validators.required],
       // 	name: null
       // }),
-      purchasingType: [null, Validators.required],
+      purchasingType: ["NEW_RATE", Validators.required],
       refNumber: null,
       tokenNo: null,
       firstName: [null, Validators.required],
@@ -357,9 +358,9 @@ export class NewRegistrationComponent implements OnInit {
     this.paymentForm.get('instrumentNumber').setValue(this.paymentForm.get('chequeNo').value);
 
     this.vehicleServise.saveVehicleTaxFormData(this.paymentForm.value).subscribe(res => {
-      this.toastr.success('Vehicle Registration Successful');
-      this.modalRef.hide()
       this.printReceipt(res);
+      this.modalRef.hide();
+      this.toastr.success('Vehicle Registration Successful');
       this.isSubmitBtnVisible = true;
     }, err => {
       this.isSubmitBtnVisible = true;
@@ -460,15 +461,13 @@ export class NewRegistrationComponent implements OnInit {
 	 * @param id - vehicle id
 	 */
   printReceipt(id: number) {
-    this.vehicleServise.printReceipt(id).subscribe(
-      res => {
+    this.vehicleServise.printReceipt(id).subscribe(res => {
         let sectionToPrint: any = document.getElementById('sectionToPrint');
         sectionToPrint.innerHTML = res;
         setTimeout(() => {
           window.print();
-        });
-        // this.makePaymentBtn = true;
-        // this.router.navigate(['/admin/vehicle']);
+          this.router.navigate(['/citizen/my-applications']);
+        }, 300);
       },
       err => {
         this.toastr.error(err.error[0].message);
@@ -546,15 +545,14 @@ export class NewRegistrationComponent implements OnInit {
       "code": "TWO_WHEELERS",
       "name": null
     },
-    "engineNo": "dsfsdfsdf",
-    "chasisNo": "sdfdsfsdfsd",
+    "engineNo": new Date().getTime(),
+    "chasisNo": new Date().getTime(),
     "registrationNo": "GJ-01-1234",
     "vehicleBasicValue": "423543",
     "makeModel": "sdfsdf",
     "dealerName": "sdfsdfsdf",
     "purchaseDate": "2019-12-01",
-    "purchasingType": "OLD_RATE",
-    "refNumber": "2019-12-09U9JAX",
+    "purchasingType": "NEW_RATE",
     "tokenNo": null,
     "firstName": "sdfsdfsdf",
     "middleName": null,
@@ -591,9 +589,6 @@ export class NewRegistrationComponent implements OnInit {
       "code": "WARD_2",
       "name": null
     },
-    "vehicleTax": 0,
-    "paid": false,
-    "vehicleReceipts": null,
     "canEdit": true,
     "canDelete": false,
     "canSubmit": true,
@@ -601,7 +596,6 @@ export class NewRegistrationComponent implements OnInit {
     "dishonorCharges": 0,
     "vehicleApplicableRate": 1.25,
     "totalPayable": 5294.2875,
-    "formStatus": "SUBMITTED"
   };
 
 }
