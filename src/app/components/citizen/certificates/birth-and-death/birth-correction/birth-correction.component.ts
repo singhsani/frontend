@@ -265,8 +265,8 @@ export class BirthCorrectionComponent implements OnInit {
 
 		if (event === 'NAME_INSERTION') {
 			if (this.birthCorrectionForm.get('childName').value != "") {
-				this.allowChildNameInsertion = false;
-				this.allowChildNameCorrection = true;
+				this.allowChildNameInsertion = true;
+				this.allowChildNameCorrection = false;
 			} else {
 				this.allowChildNameInsertion = true
 			}
@@ -278,12 +278,6 @@ export class BirthCorrectionComponent implements OnInit {
 				this.allowChildNameCorrection = true
 			}
 		}
-	}
-
-
-
-	valueSet() {
-
 	}
 
 	/**
@@ -305,6 +299,11 @@ export class BirthCorrectionComponent implements OnInit {
 			} else if (err.error[0].code == 'INVALID_REQUEST') {
 				this.commonService.openAlert("Invalid Request", "Request Not Valid", "warning");
 				return;
+			}
+			else{
+				if (err.error && err.error.length) {
+					this.commonService.openAlert("Warning", err.error[0].message, "warning");
+				}
 			}
 		});
 	}
