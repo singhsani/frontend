@@ -321,7 +321,7 @@
 						<table class="table table-striped responsiveTableRow">
 							<thead>
 								<tr class="mo-d-none">
-									<th>#</th>
+									<th>Sr.No</th>
 									<th>{{'name' | translate:translateKey}}</th>
 									<th>{{'address' | translate:translateKey}}</th>
 									<th>{{'relationship' | translate:translateKey}}</th>
@@ -525,7 +525,7 @@
 						<table class="table table-striped responsiveTableRow">
 							<thead>
 								<tr class="mo-d-none">
-									<th>#</th>
+									<th>Sr.No</th>
 									<th>{{'name' | translate:translateKey}}</th>
 									<th>{{'address' | translate:translateKey}}</th>
 									<th>{{'relationship' | translate:translateKey}}</th>
@@ -742,7 +742,7 @@
 								<!-- table-inputW100p idNubmer responsiveTables -->
 								<thead>
 									<tr class="mo-d-none">
-										<th>#</th>
+										<th>Sr.No</th>
 										<th>{{'name' | translate:translateKey}}</th>
 										<th>{{'address' | translate:translateKey}}</th>
 										<th>{{'relationship' | translate:translateKey}}</th>
@@ -1126,12 +1126,11 @@
 								<file-upload [form]="shopLicNewForm" [uploadModel]="doc"></file-upload>
 							</div>
 						</ng-container>
-					
-						<mat-checkbox class="d-block ml-4" labelPosition="after" formControlName="agree">{{'i_agree' | translate:translateKey}} </mat-checkbox>
-					
 					</ng-container>
 				</div>
-
+				<div class="row" *ngIf="shopLicNewForm.get('typeOfOrganisation').value.code">
+					<mat-checkbox class="d-block ml-4" labelPosition="after" formControlName="agree">{{'i_agree' | translate:translateKey}} </mat-checkbox>
+				</div>
 				<app-action-bar [uploadFiles]="uploadFilesArray" [paymentGateway]="paymentGateway" [form]="shopLicNewForm"
 					(handleErrors)="handleErrorsOnSubmit($event) "
 					(tabIndex)="licenseConfiguration.onFormTabChange($event) "

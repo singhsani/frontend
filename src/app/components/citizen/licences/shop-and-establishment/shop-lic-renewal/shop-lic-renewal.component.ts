@@ -403,7 +403,8 @@ export class ShopLicRenewalComponent implements OnInit {
 			//enterHolidayGuj: null,
 			licenseIssueDate: null,
 			/*  */
-			attachments: ['']
+			attachments: [''],
+			agree:[false]
 			/*  */
 		});
 	}

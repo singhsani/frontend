@@ -989,11 +989,11 @@
 								<file-upload [form]="shopLicRenewalForm" [uploadModel]="doc"></file-upload>
 							</div>
 						</ng-container>
-
 					</ng-container>
-
 				</div>
-
+				<div class="row" *ngIf="shopLicRenewalForm.get('typeOfOrganisation').value.code"> 
+					<mat-checkbox class="d-block ml-4" labelPosition="after" formControlName="agree">{{'i_agree' | translate:translateKey}} </mat-checkbox>
+				</div>
 				<app-action-bar [paymentGateway]="paymentGateway" [uploadFiles]="uploadFilesArray" [form]="shopLicRenewalForm"
 					(handleErrors)="handleErrorsOnSubmit($event) " (tabIndex)="licenseConfiguration.onFormTabChange($event) "
 					[stepInfo]="{step: 'final', next:7, back: 5} "></app-action-bar>

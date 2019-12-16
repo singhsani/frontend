@@ -280,7 +280,7 @@
 										<div *ngIf="!item.isEditMode">{{item.get('mobileNo').value}} &nbsp;
 										</div>
 										<mat-form-field *ngIf="item.isEditMode">
-											<input matInput maxlength="11" OnlyNumber formControlName="mobileNo"
+											<input matInput maxlength="11" OnlyNumber required formControlName="mobileNo"
 												placeholder="{{'mobile_no' | translate:translateKey}}">
 											<control-messages [control]="item.get('mobileNo')">
 											</control-messages>

@@ -151,7 +151,7 @@
 				</div>
 				<div class="row">
 					<h2>{{'business_shop_address' | translate:translateKey}}</h2>
-					<app-address #temporaryAddressEstablishment [requiredFeilds]="true"
+					<app-address [isDisplayGujFields]="true" #temporaryAddressEstablishment [requiredFeilds]="true"
 						[addressFormGroup]="muttonFishNewForm.get('businessAddress')"></app-address>
 				</div>
 
