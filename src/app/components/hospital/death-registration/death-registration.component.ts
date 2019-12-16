@@ -23,8 +23,6 @@ export class DeathRegistrationComponent implements OnInit {
 	@ViewChild('stepper') stepper: MatStepper;
 	@ViewChild('address') addressComp: any;
 
-
-
 	requiredFeild: boolean;;
 	/**
 	   * file upload related declaration
@@ -414,8 +412,8 @@ export class DeathRegistrationComponent implements OnInit {
 			spouseMiddleNameGuj: null,
 			spouseLastName: null,
 			spouseLastNameGuj: null,
-
-			fatherOrHusbandName: ['', [ValidationService.nameValidator]],
+			motherNameGuj:[null, [Validators.required]],
+			// fatherOrHusbandName: ['', [ValidationService.nameValidator]],
 			motherName: ['', [ValidationService.nameValidator]],
 			religion: this.fb.group({
 				code: [null]

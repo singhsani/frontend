@@ -22,7 +22,7 @@ import { debug } from 'util';
 
 
 @Injectable({
-	providedIn:	'root'
+	providedIn: 'root'
 })
 export class TokenInterceptor implements HttpInterceptor {
 
@@ -43,7 +43,7 @@ export class TokenInterceptor implements HttpInterceptor {
      */
 	intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-	
+
 
 		this.requests.push(req);
 		this.commonService.isLoading.next(true);
@@ -62,11 +62,11 @@ export class TokenInterceptor implements HttpInterceptor {
 						observer.error(err);
 
 						if (err instanceof HttpErrorResponse) {
-							
+
 							switch (err.status) {
 								case 0:
 									let userType = this.commonService.getUserType();
-									if(userType){
+									if (userType) {
 										if (userType == 'HOSPITAL') {
 											this.hosAppService.logout();
 										} else {
@@ -83,6 +83,7 @@ export class TokenInterceptor implements HttpInterceptor {
 									// });
 									break;
 								case 400:
+									this.commonService.openAlert('Error', err.error[0].message ? err.error[0].message : 'Bad Request', 'error');
 									break;
 								case 401:
 									this.toaster.error(err.error.message ? err.error.message : err.error.error);
@@ -107,10 +108,10 @@ export class TokenInterceptor implements HttpInterceptor {
 									// for professional Tax
 									if (typeof err.error === 'string')
 										this.commonService.openAlert('Error', JSON.parse(err.error)[0].message, 'error');
-									else if(err.error)
+									else if (err.error)
 										this.commonService.openAlert('Error', err.error[0].message, 'error');
 									else
-										this.commonService.openAlert('Error', "Internal Server Error" , 'error');
+										this.commonService.openAlert('Error', "Internal Server Error", 'error');
 									break;
 								case 601:// form save as draft error handling
 									this.commonService.openAlertFormSaveValidation('Warning!', err.error, 'warning');
