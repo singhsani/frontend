@@ -301,10 +301,10 @@ export class NewRegistrationComponent implements OnInit {
       if (data.status) {
         this.vehicleServise.saveFormData(this.vehicleRegistrationForm.getRawValue()).subscribe(res => {
           this.toastr.success('Vehicle Registration Successful');
-          this.showVehicleTaxDetails(this.modalTemplate);
-          this.getVehicleTaxForPayment(res.id);
-          // this.makePaymentObj = res;
-          // this.processPayment(res);
+          this.router.navigate(['/citizen/my-applications']);
+          // this.showVehicleTaxDetails(this.modalTemplate);
+          // this.getVehicleTaxForPayment(res.id);
+          // this.onVehicleTaxSubmit();
         });
       } else {
         this.commonService.openAlert("File Upload", `Please upload file for "${data.fileName}"`, "warning");
@@ -351,11 +351,11 @@ export class NewRegistrationComponent implements OnInit {
     }
     this.isSubmitBtnVisible = false;
 
-    this.paymentForm.get('bankName').setValue(this.paymentForm.get('bank').get('code').value);
-    this.paymentForm.get('accountNo').setValue(this.paymentForm.get('bankAccountNo').value);
-    this.paymentForm.get('amountPaid').setValue(this.totalVehicleTaxAmt);
-    this.paymentForm.get('instrumentDate').setValue(this.paymentForm.get('chequeDate').value);
-    this.paymentForm.get('instrumentNumber').setValue(this.paymentForm.get('chequeNo').value);
+      // this.paymentForm.get('bankName').setValue(this.paymentForm.get('bank').get('code').value);
+      // this.paymentForm.get('accountNo').setValue(this.paymentForm.get('bankAccountNo').value);
+      // this.paymentForm.get('amountPaid').setValue(this.totalVehicleTaxAmt);
+      // this.paymentForm.get('instrumentDate').setValue(this.paymentForm.get('chequeDate').value);
+      // this.paymentForm.get('instrumentNumber').setValue(this.paymentForm.get('chequeNo').value);
 
     this.vehicleServise.saveVehicleTaxFormData(this.paymentForm.value).subscribe(res => {
       this.printReceipt(res);
