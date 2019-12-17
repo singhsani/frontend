@@ -13,6 +13,7 @@ import * as moment from 'moment';
 import * as _ from 'lodash';
 import { FormsActionsService } from '../../../../../core/services/citizen/data-services/forms-actions.service';
 import { ProfessionalTaxService } from '../../../../../core/services/citizen/data-services/professional-tax.service';
+import { PftConfig } from '../../professional-tax/pftConfig';
 
 @Component({
   selector: 'app-new-registration',
@@ -54,6 +55,7 @@ export class NewRegistrationComponent implements OnInit {
   totalVehicleTaxAmt: number = 0;
   attachmentList: any = [];
   showButton: boolean = false;
+  public config: PftConfig;
 
   constructor(
     private fb: FormBuilder,
@@ -68,6 +70,7 @@ export class NewRegistrationComponent implements OnInit {
   ) {
     this.formService.apiType = 'vehicle';
     this.vehicleServise.apiType = 'vehicle';
+    this.config = new PftConfig();
   }
 
   ngOnInit() {
@@ -144,8 +147,6 @@ export class NewRegistrationComponent implements OnInit {
         code: [null, Validators.required],
         name: null
       }),
-      vehicleTax: null,
-      // paymentMode: "Cash",
       paid: false,
       vehicleReceipts: [],
       canEdit: true,
@@ -156,7 +157,10 @@ export class NewRegistrationComponent implements OnInit {
       vehicleApplicableRate: [{ value: 0, disabled: true }],
       totalPayable: [{ value: 0, disabled: true }],
       attachments: [],
-      formStatus: null
+      formStatus: null,
+      dealerEmail: ['', [ValidationService.emailValidator]],
+			dealerMobileNo: null,
+			vehicleTax: [{ value: 0, disabled: true }],
     });
 
     this.vehicleRegistrationForm.patchValue({
@@ -290,9 +294,27 @@ export class NewRegistrationComponent implements OnInit {
   onSubmit() {
 
     if (this.vehicleRegistrationForm.invalid) {
-      this.markFormGroupTouched(this.vehicleRegistrationForm);
-      this.commonService.openAlert("Warning", "Enter all the required information", "warning");
-      return;
+      let count = this.config.getAllErrors(this.vehicleRegistrationForm);
+			this.commonService.openAlert("Warning", this.config.ALL_FEILD_REQUIRED_MESSAGE, "warning", "", cb => {
+
+				switch (true) {
+					case (count <= 12):
+						this.tabIndex = 0;
+						break;
+					case (count <= 26):
+						this.tabIndex = 1;
+						break;
+					case (count <= 33):
+						this.tabIndex = 2;
+						break;
+					default:
+						this.tabIndex = 0;
+				}
+			});
+			return;
+      // this.markFormGroupTouched(this.vehicleRegistrationForm);
+      // this.commonService.openAlert("Warning", "Enter all the required information", "warning");
+      // return;
     }
 
     this.vehicleRegistrationForm.get('formStatus').setValue('SUBMITTED');
@@ -488,11 +510,17 @@ export class NewRegistrationComponent implements OnInit {
       this.vehicleServise.calculateTax(this.vehicleRegistrationForm.getRawValue()).subscribe(res => {
 
         this.vehicleRegistrationForm.patchValue({
-          tokenFess: res.amountFields.vehicleTokenFee,
-          dishonorCharges: res.amountFields.dishonorCharges ? res.amountFields.dishonorCharges : 0,
-          vehicleApplicableRate: res.vehicleApplicableRate,
-          totalPayable: res.amountFields.vehicleBasicValue
-        });
+					tokenFess: res.amountFields.vehicleTokenFee,
+					dishonorCharges: res.amountFields.dishonorCharges ? res.amountFields.dishonorCharges : 0,
+					vehicleApplicableRate: res.vehicleApplicableRate,
+					// totalPayable: res.amountFields.vehicleBasicValue,
+					vehicleTax: res.amountFields.vehicleTax
+				});
+
+				let totalPayable = res.amountFields.adminFee + res.amountFields.interest +
+				res.amountFields.penalty + res.amountFields.vehicleBasicValue + res.amountFields.vehicleTokenFee;
+				
+				this.vehicleRegistrationForm.get('totalPayable').setValue(totalPayable);
       });
     }
   }

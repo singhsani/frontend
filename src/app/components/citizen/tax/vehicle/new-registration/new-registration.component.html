@@ -45,7 +45,7 @@
 					</div>
 
 					<mat-form-field class="col-md-4 ">
-						<input matInput autocomplete="off" maxlength="50" type="text" formControlName="chasisNo"
+						<input matInput autocomplete="off" maxlength="20" type="text" formControlName="chasisNo"
 							placeholder="{{'chasis_no' | translate: translateKey}}" required>
 						<control-messages [control]="vehicleRegistrationForm.get('chasisNo')"></control-messages>
 					</mat-form-field>
@@ -82,6 +82,20 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
+						<input matInput autocomplete="off" maxlength="100" appPreventSpace
+							placeholder="{{'dealer_email' | translate:translateKey}}" type="email"
+							formControlName="dealerEmail">
+						<control-messages [control]="vehicleRegistrationForm.get('dealerEmail')"></control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<span matPrefix>+91 &nbsp;</span>
+						<input matInput autocomplete="off" type="tel" OnlyNumber formControlName="dealerMobileNo"
+							minlength="10" maxlength="10"
+							placeholder="{{'dealer_mobile_no' | translate: translateKey}}">
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
 						<input matInput autocomplete="off" appDate [matDatepicker]="picker" [min]="minDate" [max]="maxDate"
 							formControlName="purchaseDate" (dateChange)="onDateChange($event.value)"
 							placeholder="{{'purchase_date' | translate: translateKey}} (DD/MM/YYYY)" required>
@@ -91,14 +105,14 @@
 						<!-- <div align="end" class="default-show-hint mat-hint mat-right">{{config.DATE_HINT_MSG}}</div> -->
 					</mat-form-field>
 
-					<div class="col-md-4 ngSelect">
+					<!-- <div class="col-md-4 ngSelect">
 						<ng-select placeholder="{{'purchasing_type' | translate: translateKey}} *"
 							formControlName="purchasingType">
 							<ng-option *ngFor="let purchaseType of purchasingTypeArray" [value]="purchaseType.code">
 								{{purchaseType.name}}</ng-option>
 						</ng-select>
 						<control-messages [control]="vehicleRegistrationForm.get('purchasingType')"></control-messages>
-					</div>
+					</div> -->
 				</div>
 
 				<div class="fotButtonBar clearfix">
@@ -200,9 +214,16 @@
 					<mat-form-field class="col-md-4">
 						<input type="text" matInput autocomplete="off" maxlength="50" OnlyNumber
 							formControlName="vehicleApplicableRate"
-							placeholder="{{'applicable_tax_(%)' | translate: translateKey }}" required>
+							placeholder="{{'applicable_tax' | translate: translateKey }}" required>
 						<control-messages [control]="vehicleRegistrationForm.get('vehicleApplicableRate')">
 						</control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<input type="text" matInput autocomplete="off" maxlength="50" OnlyNumber
+							formControlName="vehicleTax"
+							placeholder="{{'applicable_rate_(%)' | translate: translateKey }}" required>
+						<control-messages [control]="vehicleRegistrationForm.get('vehicleTax')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
