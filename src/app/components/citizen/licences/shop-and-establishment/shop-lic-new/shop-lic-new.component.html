@@ -44,7 +44,8 @@
 
 
 					<h2>{{'postal_address_of_establishment' | translate:translateKey}}</h2>
-					<app-address #postalAddressEstablishment [requiredFeilds]="true" [addressFormGroup]="shopLicNewForm.get('postalAddress')">
+					<app-address #postalAddressEstablishment [requiredFeilds]="true"
+						[addressFormGroup]="shopLicNewForm.get('postalAddress')">
 					</app-address>
 
 
@@ -86,8 +87,9 @@
 
 					<mat-form-field class="col-md-4"
 						*ngIf="shopLicNewForm.get('applicantVimaAmountPaid').value.code == 'YES'">
-						<input [required]="shopLicNewForm.get('applicantVimaAmountPaid').value.code == 'YES'" matInput appAlphaNumeric maxlength="20"
-							placeholder="{{'number' | translate:translateKey}}" formControlName="number">
+						<input [required]="shopLicNewForm.get('applicantVimaAmountPaid').value.code == 'YES'" matInput
+							appAlphaNumeric maxlength="20" placeholder="{{'number' | translate:translateKey}}"
+							formControlName="number">
 						<control-messages [control]="shopLicNewForm.get('number')"></control-messages>
 					</mat-form-field>
 				</div>
@@ -135,7 +137,7 @@
 						<input matInput type="text" required maxlength="100"
 							placeholder="{{'name_of_employer' | translate:translateKey}}"
 							formControlName="nameOfEmployer" appGujInputSource targetElement="nameOfEmployerGuj"
-							[form]="shopLicNewForm">
+							[form]="shopLicNewForm" appValidationFields [validationFieldsType]="'onlyNameWithSpace'">
 						<control-messages [control]="shopLicNewForm.get('nameOfEmployer')"></control-messages>
 					</mat-form-field>
 
@@ -168,7 +170,7 @@
 					<mat-form-field class="col-md-6">
 						<input matInput type="text" required maxlength="60"
 							placeholder="{{'name_of_manager' | translate:translateKey}}"
-							formControlName="nameOfManager">
+							formControlName="nameOfManager" appValidationFields [validationFieldsType]="'onlyNameWithSpace'">
 						<control-messages [control]="shopLicNewForm.get('nameOfManager')"></control-messages>
 					</mat-form-field>
 
@@ -344,7 +346,8 @@
 										<p *ngIf="!item.isEditMode">{{item.get('name').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
 											<input matInput appValidationFields
-												[validationFieldsType]="'onlyNameWithSpace'" formControlName="name">
+												[validationFieldsType]="'onlyNameWithSpace'" formControlName="name"
+												required>
 											<control-messages [control]="item.get('name')"></control-messages>
 										</mat-form-field>
 									</td>
@@ -353,7 +356,7 @@
 										<div class="d-md-none">{{'address' | translate:translateKey}}</div>
 										<p *ngIf="!item.isEditMode">{{item.get('address').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
-											<input matInput formControlName="address">
+											<input matInput formControlName="address" required>
 											<control-messages [control]="item.get('address')"></control-messages>
 										</mat-form-field>
 									</td>
@@ -365,7 +368,7 @@
 												{{getSelectedDataFromLookUps(SHOP_LIC_EMPLOYER_FAMILY_PERSON_RELATIONSHIP,item.get('relationship').value.code)?.name}}
 											</p>
 											<div class="ngSelect" *ngIf="item.isEditMode">
-												<ng-select formControlName="code">
+												<ng-select formControlName="code" required>
 													<ng-option
 														*ngFor="let emp_family_relationship of SHOP_LIC_EMPLOYER_FAMILY_PERSON_RELATIONSHIP"
 														[value]="emp_family_relationship.code">
@@ -379,7 +382,7 @@
 
 									<td>
 										<div class="d-md-none">{{'gender' | translate:translateKey}}</div>
-										<div class="ngSelect" formGroupName="gender">
+										<div class="ngSelect" formGroupName="gender" required>
 											<p class="width80" *ngIf="!item.isEditMode">
 												{{getSelectedDataFromLookUps(gender,item.get('gender').value.code)?.name}}
 											</p>
@@ -399,7 +402,7 @@
 										<div class="mobileCon adjustError">
 											<p class="width50" *ngIf="!item.isEditMode">{{item.get('age').value}}</p>
 											<mat-form-field *ngIf="item.isEditMode">
-												<input matInput maxlength="2" OnlyNumber formControlName="age">
+												<input matInput maxlength="2" OnlyNumber formControlName="age" required>
 												<control-messages [control]="item.get('age')"></control-messages>
 											</mat-form-field>
 										</div>
@@ -1129,13 +1132,14 @@
 					</ng-container>
 				</div>
 				<div class="row" *ngIf="shopLicNewForm.get('typeOfOrganisation').value.code">
-					<mat-checkbox class="d-block ml-4" labelPosition="after" formControlName="agree">{{'i_agree' | translate:translateKey}} </mat-checkbox>
+					<mat-checkbox class="d-block ml-4" labelPosition="after" formControlName="agree">
+						{{'i_agree' | translate:translateKey}} </mat-checkbox>
 				</div>
-				<app-action-bar [uploadFiles]="uploadFilesArray" [paymentGateway]="paymentGateway" [form]="shopLicNewForm"
-					(handleErrors)="handleErrorsOnSubmit($event) "
+				<app-action-bar [uploadFiles]="uploadFilesArray" [paymentGateway]="paymentGateway"
+					[form]="shopLicNewForm" (handleErrors)="handleErrorsOnSubmit($event) "
 					(tabIndex)="licenseConfiguration.onFormTabChange($event) "
 					[stepInfo]="{step: 'final', next:7, back: 5} "></app-action-bar>
-					
+
 			</mat-tab>
 			<!-- step Attachment Ends -->
 			<select-payment-gateway #paymentGateway></select-payment-gateway>
