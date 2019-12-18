@@ -78,7 +78,7 @@
                 <div class="mobile-label1">:</div>
                 <div class="row-inside">
                     <mat-chip-list>
-                        <span class="{{getFileStatusClass(row.fileStatusName)}}"
+                        <span class="{{getFileStatusClass(row.fileStatus)}}"
                             selected="true">{{config.getProperErrorMessage(row.fileStatusName)}}</span>
                     </mat-chip-list>
                 </div>
@@ -133,6 +133,15 @@
                         <mat-icon title="{{'json_format'| translate : translateKey }}">center_focus_weak</mat-icon>
                         {{'json_format'| translate : translateKey }}
                     </button>
+
+                    <!-- Note : 'PAYMENT' fileStatus means payment is pandding -->
+                    <button mat-menu-item *ngIf="(row.fileStatus === 'PAYMENT')" color="primary"
+                        (click)="redirectToPayment(row.serviceDetail.code, row.serviceFormId)">
+                        <mat-icon class="m-1" title="{{'attach_money' | translate:translateKey}}">&#8377;</mat-icon>
+                        <!-- <i class="fa fa-inr m-1" title="{{'attach_money' | translate:translateKey}}"
+                            aria-hidden="true"></i> -->
+                        {{'payment' | translate:translateKey}}
+                    </button>
                 </mat-menu>
 
             </mat-cell>
@@ -147,6 +156,7 @@
     </mat-paginator>
 </div>
 
+<select-payment-gateway [applicationType]="'HOSPITAL'" #paymentGateway></select-payment-gateway>
 
 <!-- Json Modal start -->
 <ng-template #template>

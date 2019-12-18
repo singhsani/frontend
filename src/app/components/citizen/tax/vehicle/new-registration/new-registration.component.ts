@@ -205,6 +205,9 @@ export class NewRegistrationComponent implements OnInit {
       this.purchasingTypeArray = res.PURCHASING_TYPE;
       this.billingPeriodArray = res.BILLING_PERIOD;
       // this.wardNoArray = res.WARD_NO;
+      _.forEach(this.vehicleTypeArray, (key) => {
+				key.name = _.replace(key.name, /&/g, "and");
+			});
     });
   }
 
