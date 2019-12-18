@@ -12,6 +12,8 @@ import { CommonService } from '../../../shared/services/common.service';
 import { HosPaginationService } from '../../../core/services/hospital/data-services/hos-pagination.service';
 import { HosFormActionsService } from '../../../core/services/hospital/data-services/hos-form-actions.service';
 import { HospitalConfig } from '../hospital-config';
+import { ToastrService } from 'ngx-toastr';
+import { environment } from '../../../../environments/environment';
 
 @Component({
 	selector: 'app-hos-my-applications',
@@ -19,6 +21,8 @@ import { HospitalConfig } from '../hospital-config';
 	styleUrls: ['./hos-my-applications.component.scss']
 })
 export class HosMyApplicationsComponent implements OnInit {
+
+	@ViewChild("paymentGateway") paymentGateway: any;
 
 	displayedColumns: any = [
 		'id',
@@ -53,7 +57,8 @@ export class HosMyApplicationsComponent implements OnInit {
 		private paginationService: HosPaginationService,
 		private router: Router,
 		private commonService: CommonService,
-		private modalService: BsModalService
+		private modalService: BsModalService,
+		private toastr: ToastrService
 	) { }
 
 	ngOnInit() {
@@ -255,7 +260,71 @@ export class HosMyApplicationsComponent implements OnInit {
 				//this.commonService.successAlert('Error!', err.error[0].message, 'error');
 			}
 		);
+	}
 
+		/**
+	 * This method is used to redirect on payment.
+	 * @param id citizen api code
+	 * @param id - citizen id 
+	 */
+	redirectToPayment(apiCode: string, id: number) {
+		// let redirectUrl = ManageRoutes.getFullRoute(apiCode);
+		// this.router.navigate([redirectUrl, id, apiCode]);
+
+		this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);
+		this.formService.submitFormData(id).subscribe(
+			res => {
+				this.toastr.success("No payment option");
+				this.router.navigateByUrl(ManageRoutes.getFullRoute("HOSPITALMYAPPS"));
+			},
+			err => {
+				let retUrl: string = '/hospital/my-applications';
+				let retAfterPayment :string = environment.returnhosUrl;
+				
+				if (err.status === 402) {
+					let payData = this.commonService.storePaymentInfo(err.error.data, retUrl,retAfterPayment);
+					let html =
+						`
+					<div class="text-center">
+						<h2>Total Fee Pay</h2>
+						<div class="payAmount">
+							<i class="fa fa-inr" aria-hidden="true">` + payData.amount + `</i>
+						</div>
+						<p>Rupees in words</p>
+					</div>
+					`
+
+					this.commonService.commonAlert('Payment Details', '', 'info', 'Make Payment!', false, html, cb => {
+						// this.formService.createTokenforServicePayment(payData).subscribe(resp => {
+						// 	window.open(resp.data, "_self");
+						// }, err => {
+						// 	this.toastr.error(err.error.message);
+						// })
+						this.paymentGateway.setPaymentDetailsFromActionBar(payData);
+						this.paymentGateway.openModel();
+
+					}, rj => {
+						// let errHtml = `			
+						// 	<div class="alert alert-danger">
+						// 		Please Complete Payment, Otherwise the application will be considered as in-complete
+						// 	</div>`
+						// this.commonService.commonAlert("Application Incomplete", "", 'warning', 'Make Payment!', false, errHtml, ccb => {
+						// 	this.formService.createTokenforServicePayment(payData).subscribe(resp => {
+						// 		window.open(resp.data, "_self");
+						// 	}, err => {
+						// 		this.toastr.error(err.error.message);
+						// 	})
+
+						// }, arj => {
+
+						// })
+						// return;
+					});
+					return;
+				} else {
+					this.commonService.openAlert("Error", "Error Occured for final submit : " + err.error[0].message, "warning")
+				}
+			});
 	}
 
 

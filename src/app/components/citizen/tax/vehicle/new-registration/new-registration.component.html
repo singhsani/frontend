@@ -35,6 +35,16 @@
 						<control-messages [control]="vehicleRegistrationForm.get('engineNo')"></control-messages>
 					</mat-form-field>
 
+					<!-- <mat-form-field class="col-md-4" formGroupName="vehicleType">
+							<mat-select placeholder="Vehicle Type" formControlName="code" required>
+								<mat-option *ngFor="let vehicleType of vehicleTypeArray" [value]="vehicleType.code">
+									{{vehicleType.name}}
+								</mat-option>
+							</mat-select>
+							<control-messages [control]="vehicleRegistrationForm.get('vehicleType').get('code')">
+							</control-messages>
+						</mat-form-field> -->
+
 					<div class="col-md-4 ngSelect" formGroupName="vehicleType">
 						<ng-select placeholder="{{'vehicle_type' | translate: translateKey}} *" formControlName="code">
 							<ng-option *ngFor="let vehicleType of vehicleTypeArray" [value]="vehicleType.code">
@@ -96,8 +106,8 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput autocomplete="off" appDate [matDatepicker]="picker" [min]="minDate" [max]="maxDate"
-							formControlName="purchaseDate" (dateChange)="onDateChange($event.value)"
+						<input matInput autocomplete="off" appDate [matDatepicker]="picker"
+							[max]="maxDate" formControlName="purchaseDate" (dateChange)="onDateChange($event.value)"
 							placeholder="{{'purchase_date' | translate: translateKey}} (DD/MM/YYYY)" required>
 						<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
 						<mat-datepicker touchUi="true" #picker></mat-datepicker>
@@ -132,18 +142,21 @@
 				<div class="row stepperMinHeight">
 
 					<mat-form-field class="col-md-4">
-						<input appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" matInput autocomplete="off" maxlength="100" type="text" formControlName="firstName"
+						<input appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" matInput
+							autocomplete="off" maxlength="100" type="text" formControlName="firstName"
 							placeholder="{{'first_name' | translate: translateKey}}" required>
 						<control-messages [control]="vehicleRegistrationForm.get('firstName')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" matInput autocomplete="off" maxlength="100" type="text" formControlName="middleName"
+						<input appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" matInput
+							autocomplete="off" maxlength="100" type="text" formControlName="middleName"
 							placeholder="{{'middle_name' | translate: translateKey}}">
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" matInput autocomplete="off" maxlength="100" type="text" formControlName="lastName"
+						<input appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" matInput
+							autocomplete="off" maxlength="100" type="text" formControlName="lastName"
 							placeholder="{{'last_name' | translate: translateKey}}" required>
 						<control-messages [control]="vehicleRegistrationForm.get('lastName')"></control-messages>
 					</mat-form-field>
@@ -289,7 +302,7 @@
 					</div>
 				</div>
 
-			
+
 
 				<div class="fotButtonBar clearfix">
 					<div class="col-sm-12 col-md-12">
@@ -424,5 +437,5 @@
 	</div>
 </ng-template>
 
-	<!-- This div is used to print the receipt when form is submit -->
-	<div class="row" id="sectionToPrint"> </div>
+<!-- This div is used to print the receipt when form is submit -->
+<div class="row" id="sectionToPrint"> </div>
