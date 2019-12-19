@@ -28,6 +28,8 @@ export class ServiceCharge {
     asonDate: Date;
     totalAmountOriginal: number;
     occupierId: number;
+    outstandingAmount: number;
+    taxRateWiseOutstandingDetails: TaxRateWiseOutstandingDetails;
 }
 
 export class PaymentModel {
@@ -47,4 +49,11 @@ export class PaymentDetail {
     instrumentNo: string;
     payeeName: string;
     paymentModeLookupId: number;
+}
+
+export class TaxRateWiseOutstandingDetails {
+    taxRateId: number;
+    name: string;
+    nameLocal: string;
+    outstandingAmount: number
 }

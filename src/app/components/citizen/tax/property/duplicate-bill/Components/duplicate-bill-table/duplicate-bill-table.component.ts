@@ -32,6 +32,7 @@ export class DuplicateBillTableComponent implements OnInit {
   isSearchByPropertyNo: boolean = false;
   billTypeList = [];
   @ViewChild(MatSort) sort: MatSort;
+  totalCount: any = 0;
 
   constructor(
     private duplicateBillDataSharingService: DuplicateBillDataSharingService,
@@ -88,6 +89,7 @@ export class DuplicateBillTableComponent implements OnInit {
           else {
             this.dataSource = new MatTableDataSource(data.body);
             this.dataSource.sort = this.sort;
+            this.totalCount = this.dataSource.data.length;
           }
         }
       },

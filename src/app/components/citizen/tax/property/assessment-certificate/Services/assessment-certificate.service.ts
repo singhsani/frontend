@@ -57,4 +57,9 @@ export class AssessmentCertificateService {
       { observe: 'response' })
       .pipe(map((response: any) => response))
   }
+  getOutsatndingDetail(occupierId: number) {
+    return this.http.get(`${Constants.assessmentModuleApiUrl}active/occupier/outsatndingDetails?occupierId=${occupierId}`,
+      { observe: 'response' })
+      .pipe(map((response: any) => response))
+  }
 }

@@ -5,6 +5,7 @@ import { HttpModule, Headers, Http } from '@angular/http';
 import { map } from 'rxjs/operators';
 import { HttpHeaders } from '@angular/common/http';
 import { AlertService } from './alert.service';
+import { Router } from '@angular/router';
 
 @Injectable({
     providedIn: 'root'
@@ -38,7 +39,8 @@ export class CommonService {
 
     constructor(
         private http: HttpClient,
-        private alertService: AlertService
+        private alertService: AlertService,
+        private router: Router
     ) { }
 
     getLookupValues() {
@@ -193,4 +195,14 @@ export class CommonService {
         var obj = JSON.parse(decodedString);
         return obj;
       }
+    
+    dueToOutstandingMessage(pNo) {
+        this.alertService.warning('Due to outstanding application can not proceed. Click ok button to make payment.',' ');
+        var subConfirm = this.alertService.getConfirm().subscribe(isConfirm => {
+        if (isConfirm) {
+            this.router.navigateByUrl('/property/transaction/collection?pNo='+pNo);
+        }
+        subConfirm.unsubscribe();
+        });
+    }
 }

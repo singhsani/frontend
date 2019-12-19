@@ -32,10 +32,60 @@
     </div>
   </div>
 </div>
-<div class="row mt-3" *ngIf="isShowPayMode">
-  <div class="col-md-12 text-right">
-    <button class="ml-3" mat-raised-button color="primary" type="submit" (click)="onEnterClick()">
-      <mat-icon>payment</mat-icon> Apply
-    </button>
+<div class="row margin-top-20">
+  <div class="col-md-2">
+    <mat-card>Total Count : <b>{{totalCount}}</b></mat-card>
   </div>
 </div>
+<mat-card class="col-md-12 mt-3" *ngIf="isShowPayMode">
+  <form #formDetail="ngForm" (ngSubmit)="onEnterClick()">
+    <div class="row margin-top-20">
+      <div class="col-md-2">
+        <mat-form-field class="full-width-input">
+          <input matInput disabled placeholder="Outstanding Tax Amount" name="outstandingAmount" [(ngModel)]="dataMoodel.outstandingAmount">
+        </mat-form-field>
+      </div>
+      <div class="col-md-2">
+        <button class="ml-3" mat-raised-button color="accent" type="button" (click)="onOutstandingDetailCLick()">
+          <mat-icon>details</mat-icon> {{detailOutstandingButtonText}}
+        </button>
+      </div>
+      <div class="col-md-8 text-right">
+          <button class="ml-3" mat-raised-button color="primary" type="submit">
+            <mat-icon>payment</mat-icon> Apply
+          </button>
+        </div>
+    </div>
+  </form>
+
+  <mat-card *ngIf="isShowOutstandingDetail">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="section-title">
+            <h4>Outstanding Detail</h4>
+            <mat-divider></mat-divider>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <table class="custome-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of dataMoodel.taxRateWiseOutstandingDetails">
+                <td>{{item.name}}</td>
+                <td>{{item.outstandingAmount}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </mat-card>
+
+</mat-card>
+
+
+

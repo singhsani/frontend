@@ -183,7 +183,7 @@ export class AddressDetailComponent implements OnInit, OnDestroy {
       address2 = address2 + `TP No: ${this.addressModel.propertyAddressDTO.tpNo}, `;
     }
     if (this.addressModel.propertyAddressDTO.serveyNo) {
-      address2 = address2 + `Survey No: ${this.addressModel.propertyAddressDTO.serveyNo}, `;
+      address2 = address2 + `Revenue Survey No: ${this.addressModel.propertyAddressDTO.serveyNo}, `;
     }
     fullAddress = fullAddress + address1;
     if (address2 != '') {

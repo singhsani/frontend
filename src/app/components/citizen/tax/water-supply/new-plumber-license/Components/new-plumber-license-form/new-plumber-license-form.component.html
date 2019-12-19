@@ -1,56 +1,55 @@
-<mat-card>
-    <div class="row">
-        <!-- <div class="col-md-6">
-            <mat-form-field class="full-width-input">
-                <input readonly matInput name="applicationNumber" placeholder="Application No"
-                    [(ngModel)]="applicationModel.applicationNumber">
-            </mat-form-field>
+<form #formDetail="ngForm" (ngSubmit)="saveDetail(formDetail)">
+    <mat-card>
+        <div class="row">
+            <!-- <div class="col-md-6">
+                <mat-form-field class="full-width-input">
+                    <input readonly matInput name="applicationNumber" placeholder="Application No"
+                        [(ngModel)]="applicationModel.applicationNumber">
+                </mat-form-field>
+            </div> -->
+
+            <div class="col-md-6">
+                <mat-form-field class="full-width-input">
+                <input matInput trim="blur" required placeholder="Application No" maxlength="20" #ApplicationNo="ngModel" name="applicationNumber" [(ngModel)]="applicationModel.applicationNumber">
+                <mat-error *ngIf="ApplicationNo.invalid">*Application No is required.</mat-error>
+                </mat-form-field>
+            </div>
+
+            <!-- <div class="col-md-6">
+                <mat-form-field class="full-width-input">
+                    <input readonly matInput placeholder="Applicant Name" name="applicantName"
+                        [(ngModel)]="applicationModel.applicantName">
+                </mat-form-field>
+            </div> -->
+        </div>
+        <!-- <div class="row">
+            <div class="col-md-6">
+                <mat-form-field class="full-width-input">
+                    <input readonly matInput placeholder="Applicant's Mobile Number" name="mobileNumber"
+                        [(ngModel)]="applicationModel.mobileNumber">
+                </mat-form-field>
+            </div>
+            <div class="col-md-6">
+                <mat-form-field class="full-width-input">
+                    <input readonly matInput placeholder="Applicant's Aadhaar Number" name="aadharNumber"
+                        [(ngModel)]="applicationModel.aadharNumber">
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <mat-form-field class="full-width-input">
+                    <input readonly matInput placeholder="Applicant's Email Id" name="emailID"
+                        [(ngModel)]="applicationModel.emailID">
+                </mat-form-field>
+            </div>
+            <div class="col-md-6">
+                <mat-checkbox (change)="onClickIsApplicationisConnectionOwner($event)">Is Applicant is Connection Owner
+                </mat-checkbox>
+            </div>
         </div> -->
-
-        <div class="col-md-6">
-            <mat-form-field class="full-width-input">
-              <input matInput trim="blur" required placeholder="Application No" maxlength="20" #ApplicationNo="ngModel" name="applicationNumber" [(ngModel)]="applicationModel.applicationNumber">
-              <mat-error *ngIf="ApplicationNo.invalid">*Application No is required.</mat-error>
-            </mat-form-field>
-        </div>
-
-        <!-- <div class="col-md-6">
-            <mat-form-field class="full-width-input">
-                <input readonly matInput placeholder="Applicant Name" name="applicantName"
-                    [(ngModel)]="applicationModel.applicantName">
-            </mat-form-field>
-        </div> -->
-    </div>
-    <!-- <div class="row">
-        <div class="col-md-6">
-            <mat-form-field class="full-width-input">
-                <input readonly matInput placeholder="Applicant's Mobile Number" name="mobileNumber"
-                    [(ngModel)]="applicationModel.mobileNumber">
-            </mat-form-field>
-        </div>
-        <div class="col-md-6">
-            <mat-form-field class="full-width-input">
-                <input readonly matInput placeholder="Applicant's Aadhaar Number" name="aadharNumber"
-                    [(ngModel)]="applicationModel.aadharNumber">
-            </mat-form-field>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6">
-            <mat-form-field class="full-width-input">
-                <input readonly matInput placeholder="Applicant's Email Id" name="emailID"
-                    [(ngModel)]="applicationModel.emailID">
-            </mat-form-field>
-        </div>
-        <div class="col-md-6">
-            <mat-checkbox (change)="onClickIsApplicationisConnectionOwner($event)">Is Applicant is Connection Owner
-            </mat-checkbox>
-        </div>
-    </div> -->
-</mat-card>
-<mat-card class="col-md-12 mt-3">
-
-    <form #formDetail="ngForm" (ngSubmit)="saveDetail(formDetail)">
+    </mat-card>
+    <mat-card class="col-md-12 mt-3">
         <div class="row">
             <div class="col-md-6">
                 <mat-form-field class="full-width-input">
@@ -198,5 +197,5 @@
                 <mat-icon>clear_all</mat-icon> Clear
             </button>
         </div>
-    </form>
-</mat-card>
+    </mat-card>
+</form>

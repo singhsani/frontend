@@ -3,11 +3,12 @@ import { ExtractPropertyDataSharingService } from '../../Services/extract-proper
 import { ExtractPropertyService } from '../../Services/extract-property.service';
 import { AlertService } from 'src/app/vmcshared/Services/alert.service';
 import { Subscription } from 'rxjs';
-import { SearchModel, ServiceCharge } from '../../Models/extract-property.model';
+import { SearchModel, ServiceCharge, TaxRateWiseOutstandingDetails } from '../../Models/extract-property.model';
 import { NgForm } from '@angular/forms';
 import { MatTableDataSource, MatSort } from '@angular/material';
 import { PaymentDataSharingService } from 'src/app/vmcshared/component/payment/payment-data-sharing.service';
 import { Constants } from 'src/app/vmcshared/Constants';
+import { CommonService } from 'src/app/vmcshared/Services/common-service';
 
 
 @Component({
@@ -27,13 +28,16 @@ export class ExtractPropertyTableComponent implements OnInit {
   isShowDetail = false;
   detailButtonText = "Show Detail";
   isSearchByPropertyNo: boolean = false;
-
+  totalCount: any = 0;
   @ViewChild(MatSort) sort: MatSort;
+  detailOutstandingButtonText = "Show Detail";
+  isShowOutstandingDetail: boolean = false;
 
   constructor(private extractPropertyDataSharingService: ExtractPropertyDataSharingService,
     private extractPropertyService: ExtractPropertyService,
     private paymentDataSharingService: PaymentDataSharingService,
-    private alertService: AlertService) { }
+    private alertService: AlertService,
+    private commonService:CommonService) { }
 
   ngOnInit() {
     this.extractPropertyDataSharingService.observableIsSearchByPropertyNo.subscribe((data) => {
@@ -71,19 +75,9 @@ export class ExtractPropertyTableComponent implements OnInit {
             }
           }
           else {
-            if (!this.isSearchByPropertyNo || (this.isSearchByPropertyNo && this.dataSource.length == 0)) {
-              this.dataSource = new MatTableDataSource(data.body);
-            }
-            else {
-              const oldData = this.dataSource.data;
-              const oldDataObj = oldData.filter(row => row.propertyNo == data.body[0].propertyNo);
-              if (oldDataObj.length == 0) {
-                oldData.push(data.body[0]);
-                this.dataSource = new MatTableDataSource(oldData);
-                //this.dataSource = oldData;
-              }
-            }
+            this.dataSource = new MatTableDataSource(data.body);
             this.dataSource.sort = this.sort;
+            this.totalCount = this.dataSource.data.length;
           }
         }
       },
@@ -102,23 +96,29 @@ export class ExtractPropertyTableComponent implements OnInit {
           this.serviceCharge.occupierId = this.selectedItem.propertyOccupierId;
           this.serviceCharge.asonDate = new Date();
           this.isShowPayMode = true;
+          this.getOutstandingDetails(this.selectedItem.propertyOccupierId);
         }
         else {
           this.isShowPayMode = false;
         }
       },
       (error) => {
-        if (error.status === 400) {
-          this.isShowPayMode = false;
-          var errorMessage = '';
-          error.error[0].propertyList.forEach(element => {
-            errorMessage = errorMessage + element + "</br>";
-          });
-          this.alertService.error(errorMessage);
+        this.commonService.callErrorResponse(error);
+      });
+  }
+
+  private getOutstandingDetails(propertyOccupierId:number) {
+    this.extractPropertyService.getOutsatndingDetail(propertyOccupierId).subscribe(
+      (data) => {
+        if (data.status === 200) {
+          if(data.body) {
+            this.serviceCharge.outstandingAmount = data.body.outstandingAmount;
+            this.serviceCharge.taxRateWiseOutstandingDetails = data.body.taxRateWiseOutstandingDetails;
+          }
         }
-        else {
-          this.alertService.error(error.error.message);
-        }
+      },
+      (error) => {
+        this.commonService.callErrorResponse(error);
       });
   }
 
@@ -134,14 +134,23 @@ export class ExtractPropertyTableComponent implements OnInit {
   }
   onEnterClick(formDetail: NgForm) {
     if (formDetail.form.valid) {
-      if (this.serviceCharge.noofCopies > 0) {
+      if (this.serviceCharge.outstandingAmount > 0) {
+        this.commonService.dueToOutstandingMessage(this.selectedItem.propertyNo);
+      } else if (this.serviceCharge.noofCopies > 0) {
         this.paymentDataSharingService.updatedPamentFromOption(Constants.Payment_From_Option.Extract_Property);
         this.paymentDataSharingService.updatedDataModel(this.serviceCharge);
         this.extractPropertyDataSharingService.updatedIsShowForm(true);
-      }
-      else {
+      } else {
         this.alertService.error('No. of Copies should be greater than zero.');
       }
+    }
+  }
+
+  onOutstandingDetailCLick() {
+    this.isShowOutstandingDetail = !this.isShowOutstandingDetail;
+    this.detailOutstandingButtonText = "Show Detail";
+    if (this.isShowOutstandingDetail) {
+      this.detailOutstandingButtonText = "Hide Detail";
     }
   }
 }
