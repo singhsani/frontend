@@ -195,14 +195,23 @@
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="ngSelect">
-                    <ng-select required placeholder="Class of Location *" [items]="landClassList" bindValue="locationFactorId"
-                        bindLabel="locationName" name="locationFactorMstId"
-                        [(ngModel)]="propertyModel.locationFactorMstId" #LandClass="ngModel"
-                        [ngClass]="{'ng-invalid ng-touched':  form.submitted && LandClass.invalid}">
-                    </ng-select>
-                    <div *ngIf="(form.submitted && LandClass.invalid)  || (LandClass.invalid && LandClass.touched)">
-                        <mat-error *ngIf="LandClass.errors.required">*Class of Location is required.</mat-error>
+                <div class="row">
+                    <div class="col-md-10">
+                        <div class="ngSelect">
+                            <ng-select required placeholder="Class of Location *" [items]="landClassList" bindValue="locationFactorId"
+                                bindLabel="locationName" name="locationFactorMstId"
+                                [(ngModel)]="propertyModel.locationFactorMstId" #LandClass="ngModel"
+                                [ngClass]="{'ng-invalid ng-touched':  form.submitted && LandClass.invalid}">
+                            </ng-select>
+                            <div *ngIf="(form.submitted && LandClass.invalid)  || (LandClass.invalid && LandClass.touched)">
+                                <mat-error *ngIf="LandClass.errors.required">*Class of Location is required.</mat-error>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2" style="padding-top: 15px;">
+                        <a title="help" href="assets/files/Wardwise_Area_Details.pdf" target="_blank">
+                                <i class="material-icons">help</i>
+                        </a>
                     </div>
                 </div>
             </div>

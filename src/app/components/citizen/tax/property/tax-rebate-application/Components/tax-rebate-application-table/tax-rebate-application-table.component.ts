@@ -25,7 +25,7 @@ export class TaxRebateApplicationTableComponent implements OnInit {
   isShowDetail = false;
   detailButtonText = "Show Detail";
   isSearchByPropertyNo: boolean = false;
-
+  totalCount: any = 0;
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(private taxRebateApplicationDataSharingService: TaxRebateApplicationDataSharingService,
@@ -68,18 +68,9 @@ export class TaxRebateApplicationTableComponent implements OnInit {
             }
           }
           else {
-            if (!this.isSearchByPropertyNo || (this.isSearchByPropertyNo && this.dataSource.length == 0)) {
-              this.dataSource = new MatTableDataSource(data.body);
-            }
-            else {
-              const oldData = this.dataSource.data;
-              const oldDataObj = oldData.filter(row => row.propertyNo == data.body[0].propertyNo);
-              if (oldDataObj.length == 0) {
-                oldData.push(data.body[0]);
-                this.dataSource = new MatTableDataSource(oldData);
-              }
-            }
+            this.dataSource = new MatTableDataSource(data.body);
             this.dataSource.sort = this.sort;
+            this.totalCount = this.dataSource.data.length;
           }
         }
       },

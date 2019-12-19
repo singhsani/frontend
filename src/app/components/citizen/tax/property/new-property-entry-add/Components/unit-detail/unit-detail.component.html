@@ -275,6 +275,25 @@
                     </div>
                     <div class="row">
                         <div class="col-md-6">
+                            <mat-form-field class="full-width-input">
+                                <input trim="blur" matInput name="completionNo"
+                                    [(ngModel)]="unitDetailModel.completionNo"
+                                    placeholder='Completion No'>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-6">
+                            <mat-form-field class="full-width-input">
+                                <input matInput 
+                                    [matDatepicker]="CompletionDate" #CompDate="ngModel"
+                                    [(ngModel)]="unitDetailModel.completionDate"
+                                    placeholder="Completion Date" name="completionDate" mask-date>
+                                <mat-datepicker-toggle matSuffix [for]="CompletionDate"></mat-datepicker-toggle>
+                                <mat-datepicker #CompletionDate disabled="false"></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
                             <div class="ngSelect">
                                 <ng-select placeholder="Drainage Connection" [items]="drainageConnections"
                                     bindValue="itemId" bindLabel="itemName" name="hasDrainageConnection"

@@ -37,9 +37,11 @@ export class PropertyInfoComponent implements OnInit {
     this.getLookups();
     this.subscription = this.transferPropertyDataSharingService.observableDataModel.subscribe((data) => {
       if (data) {
+        console.log(data)
         this.selectedDataModel = data;
         this.generateApplication();
         this.getCarpetArea();
+        this.getFloorItems();
       }
     })
   }
@@ -48,11 +50,12 @@ export class PropertyInfoComponent implements OnInit {
   }
 
   getLookups() {
-    let lookupcode = `lookup_codes=${Constants.LookupCodes.Transfer_Type}&lookup_codes=${Constants.LookupCodes.Transfer_SubType}&lookup_codes=${Constants.LookupCodes.Floor_No}`;
+    //&lookup_codes=${Constants.LookupCodes.Floor_No}
+    let lookupcode = `lookup_codes=${Constants.LookupCodes.Transfer_Type}&lookup_codes=${Constants.LookupCodes.Transfer_SubType}`;
     this.commonService.getLookupValuesAccordingToScreen(lookupcode).subscribe(data => {
       this.transferTypeList = Object.assign([], data).filter(f => f.lookupCode.includes(Constants.LookupCodes.Transfer_Type))[0].items;
       this.transferSubTypeList = Object.assign([], data).filter(f => f.lookupCode.includes(Constants.LookupCodes.Transfer_SubType))[0].items;
-      this.transferFloorList = Object.assign([], data).filter(f => f.lookupCode.includes(Constants.LookupCodes.Floor_No))[0].items;
+      //this.transferFloorList = Object.assign([], data).filter(f => f.lookupCode.includes(Constants.LookupCodes.Floor_No))[0].items;
     });
   }
   generateApplication() {
@@ -63,17 +66,7 @@ export class PropertyInfoComponent implements OnInit {
         }
       },
       (error) => {
-        if (error.status === 400) {
-          var errorMessage = '';
-          error.error[0].propertyList.forEach(element => {
-            errorMessage = errorMessage + element + "</br>";
-          });
-          this.alertService.error(errorMessage);
-        }
-        else {
-          this.alertService.error(error.error.message);
-        }
-
+        this.commonService.callErrorResponse(error);
         this.transferPropertyDataSharingService.updatedIsShowForm(false);
 
       });
@@ -87,16 +80,19 @@ export class PropertyInfoComponent implements OnInit {
         }
       },
       (error) => {
-        if (error.status === 400) {
-          var errorMessage = '';
-          error.error[0].propertyList.forEach(element => {
-            errorMessage = errorMessage + element + "</br>";
-          });
-          this.alertService.error(errorMessage);
+        this.commonService.callErrorResponse(error);
+      });
+  }
+
+  getFloorItems() {
+    this.transferPropertyService.getFloors(this.selectedDataModel.propertyNo).subscribe(
+      (data) => {
+        if (data.status === 200) {
+          this.transferFloorList = data.body;
         }
-        else {
-          this.alertService.error(error.error.message);
-        }
+      },
+      (error) => {
+        this.commonService.callErrorResponse(error);
       });
   }
 
@@ -109,16 +105,7 @@ export class PropertyInfoComponent implements OnInit {
         }
       },
       (error) => {
-        if (error.status === 400) {
-          var errorMessage = '';
-          error.error[0].propertyList.forEach(element => {
-            errorMessage = errorMessage + element + "</br>";
-          });
-          this.alertService.error(errorMessage);
-        }
-        else {
-          this.alertService.error(error.error.message);
-        }
+        this.commonService.callErrorResponse(error);
       });
   }
   onNext(formDetail: NgForm) {
@@ -133,16 +120,7 @@ export class PropertyInfoComponent implements OnInit {
           }
         },
         (error) => {
-          if (error.status === 400) {
-            var errorMessage = '';
-            error.error[0].propertyList.forEach(element => {
-              errorMessage = errorMessage + element + "</br>";
-            });
-            this.alertService.error(errorMessage);
-          }
-          else {
-            this.alertService.error(error.error.message);
-          }
+          this.commonService.callErrorResponse(error);
         });
     }
   }

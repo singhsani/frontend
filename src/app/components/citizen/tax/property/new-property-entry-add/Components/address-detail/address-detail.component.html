@@ -167,11 +167,20 @@
                         [(ngModel)]="addressModel.propertyAddressDTO.tpNo" maxlength="10">
                 </mat-form-field>
             </div>
+        </div>
+        <div class="row">
             <div class="col-md-6">
                 <mat-form-field class="full-width-input">
-                    <mat-label>Survey No</mat-label>
+                    <mat-label>Revenue Survey No</mat-label>
                     <input trim="blur" matInput (input)="onChangeAddress()" name="serveyNo"
                         [(ngModel)]="addressModel.propertyAddressDTO.serveyNo" maxlength="10">
+                </mat-form-field>
+            </div>
+            <div class="col-md-6">
+                <mat-form-field class="full-width-input">
+                    <mat-label>City Census number</mat-label>
+                    <input trim="blur" matInput (input)="onChangeAddress()" name="cityCensusNo"
+                        [(ngModel)]="addressModel.propertyAddressDTO.cityCensusNo" maxlength="10">
                 </mat-form-field>
             </div>
         </div>

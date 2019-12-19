@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { SearchModel, OutstandingDetailModel, OccupierOutstandingDetails, TaxRateWiseOutstandingDetails } from '../../Models/transfer-property.model';
 import { NgForm } from '@angular/forms';
 import { MatTableDataSource, MatSort } from '@angular/material';
+import { CommonService } from 'src/app/vmcshared/Services/common-service';
 
 
 @Component({
@@ -27,10 +28,11 @@ export class TransferPropertyTableComponent implements OnInit {
   outstandingDetailModel = new OutstandingDetailModel();
 
   @ViewChild(MatSort) sort: MatSort;
-
+  totalCount: any = 0;
   constructor(private transferPropertyDataSharingService: TransferPropertyDataSharingService,
     private transferPropertyService: TransferPropertyService,
-    private alertService: AlertService) { }
+    private alertService: AlertService,
+    private commonService: CommonService) { }
 
   ngOnInit() {
     this.transferPropertyDataSharingService.observableIsSearchByPropertyNo.subscribe((data) => {
@@ -67,18 +69,9 @@ export class TransferPropertyTableComponent implements OnInit {
             }
           }
           else {
-            if (!this.isSearchByPropertyNo || (this.isSearchByPropertyNo && this.dataSource.length == 0)) {
-              this.dataSource = new MatTableDataSource(data.body);
-            }
-            else {
-              const oldData = this.dataSource.data;
-              const oldDataObj = oldData.filter(row => row.propertyNo == data.body[0].propertyNo);
-              if (oldDataObj.length == 0) {
-                oldData.push(data.body[0]);
-                this.dataSource = new MatTableDataSource(oldData);
-              }
-            }
+            this.dataSource = new MatTableDataSource(data.body);
             this.dataSource.sort = this.sort;
+            this.totalCount = this.dataSource.data.length;
           }
         }
       },
@@ -139,7 +132,8 @@ export class TransferPropertyTableComponent implements OnInit {
       this.transferPropertyDataSharingService.updatedDataModel(this.selectedItem);
     }
     else {
-      this.alertService.error('Outstanding amount should be zero');
+      //this.alertService.error('Outstanding amount should be zero');
+      this.commonService.dueToOutstandingMessage(this.selectedItem.propertyNo)
     }
   }
 }

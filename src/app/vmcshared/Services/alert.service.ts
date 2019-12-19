@@ -69,6 +69,13 @@ export class AlertService {
             imageUrl: this.imageUrls('warning'),
             imageClass: 'doneIcon',
             confirmButtonText: 'OK'
+        }).then((result) => {
+            if (result.value) {
+                this.isConfirm.next(true);
+            }
+            else {
+                this.isConfirm.next(false);
+            }
         })
     }
 

@@ -26,8 +26,10 @@ export class VacancyPremiseCertificateTableComponent implements OnInit {
   isShowDetail = false;
   detailButtonText = "Show Detail";
   isSearchByPropertyNo: boolean = false;
-
+  totalCount: any = 0;
   @ViewChild(MatSort) sort: MatSort;
+  detailOutstandingButtonText = "Show Detail";
+  isShowOutstandingDetail: boolean = false;
 
   constructor(private vacancyPremiseCertificateDataSharingService: VacancyPremiseCertificateDataSharingService,
     private vacancyPremiseCertificateService: VacancyPremiseCertificateService,
@@ -71,6 +73,7 @@ export class VacancyPremiseCertificateTableComponent implements OnInit {
           else {
             this.dataSource = new MatTableDataSource(data.body);
             this.dataSource.sort = this.sort;
+            this.totalCount = this.dataSource.data.length;
           }
         }
       },
@@ -80,26 +83,42 @@ export class VacancyPremiseCertificateTableComponent implements OnInit {
   }
 
   onChangeSelect(event) {
+    this.getOutstandingDetails(this.selectedItem.propertyOccupierId);
     this.isShowPayMode = true;
   }
 
-  onEnterClick() {
-    this.vacancyPremiseCertificateService.getOutsatndingDetails(this.selectedItem.propertyOccupierId).subscribe(
+  private getOutstandingDetails(propertyOccupierId:number) {
+    this.vacancyPremiseCertificateService.getOutsatndingDetails(propertyOccupierId).subscribe(
       (data) => {
         if (data.status === 200) {
-          if(data.body.outstandingAmount > 0) {
-            this.alertService.error('You have outstanding amount of '+data.body.outstandingAmount+'.Please clear your due first after that to apply certification');
-          } else {
-            this.dataMoodel = Object.assign(this.dataMoodel,this.selectedItem)
-            this.dataMoodel.totalOutstanding = data.body.outstandingAmount;
-            this.dataMoodel.occupierId = this.selectedItem.propertyOccupierId;
-            this.vacancyPremiseCertificateDataSharingService.updatedDataModel(this.dataMoodel);
-            this.vacancyPremiseCertificateDataSharingService.updatedIsShowForm(true);
+          if(data.body) {
+            this.dataMoodel.outstandingAmount = data.body.outstandingAmount;
+            this.dataMoodel.taxRateWiseOutstandingDetails = data.body.taxRateWiseOutstandingDetails;
+            this.dataMoodel.totalOutstanding = data.body.outstandingAmount
           }
         }
       },
       (error) => {
         this.commonService.callErrorResponse(error);
       });
+  }
+
+  onEnterClick() {
+    if(this.dataMoodel.outstandingAmount != 0) {
+      this.commonService.dueToOutstandingMessage(this.selectedItem.propertyNo);
+    } else {
+      this.dataMoodel = Object.assign(this.dataMoodel,this.selectedItem);
+      this.dataMoodel.occupierId = this.selectedItem.propertyOccupierId;
+      this.vacancyPremiseCertificateDataSharingService.updatedDataModel(this.dataMoodel);
+      this.vacancyPremiseCertificateDataSharingService.updatedIsShowForm(true);
+    }
+  }
+
+  onOutstandingDetailCLick() {
+    this.isShowOutstandingDetail = !this.isShowOutstandingDetail;
+    this.detailOutstandingButtonText = "Show Detail";
+    if (this.isShowOutstandingDetail) {
+      this.detailOutstandingButtonText = "Hide Detail";
+    }
   }
 }

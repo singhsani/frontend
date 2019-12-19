@@ -39,6 +39,7 @@ export class PropertyAddressDTO {
   propertyAddress: string;
   propertyAddressId: number;
   serveyNo: string;
+  cityCensusNo: string;
   societyName: string;
   streetName: string;
   tpNo: string;
@@ -112,6 +113,8 @@ export class UnitDetailModel {
   locationNameGuj: string;
   occupancyCertificateDate: Date;
   occupancyCertificateNo: string;
+  completionDate: Date;
+  completionNo: string;
   occupancyFactorMstId: number;
   occupierId: number;
   occypancyFactorMstType: string;

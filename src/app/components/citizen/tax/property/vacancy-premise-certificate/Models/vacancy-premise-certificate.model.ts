@@ -25,4 +25,13 @@ export class DataModel {
     vacancyFrom: Date;
     vacancyPremiseCertficateId: number;
     vacancyTo: Date;
+    outstandingAmount: number;
+    taxRateWiseOutstandingDetails: TaxRateWiseOutstandingDetails;
+}
+
+export class TaxRateWiseOutstandingDetails {
+    taxRateId: number;
+    name: string;
+    nameLocal: string;
+    outstandingAmount: number
 }

@@ -8,6 +8,7 @@ import { NgForm } from '@angular/forms';
 import { MatSort, MatTableDataSource } from '@angular/material';
 import { PaymentDataSharingService } from 'src/app/vmcshared/component/payment/payment-data-sharing.service';
 import { Constants } from 'src/app/vmcshared/Constants';
+import { CommonService } from 'src/app/vmcshared/Services/common-service';
 
 
 @Component({
@@ -30,13 +31,14 @@ export class NoDueCertificateTableComponent implements OnInit {
   isShowOutstandingDetail: boolean = false;
   outstandingDetailModel = new OutstandingDetailModel();
   isSearchByPropertyNo: boolean = false;
-
+  totalCount: any = 0;
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(
     private noDueCertificateDataSharingService: NoDueCertificateDataSharingService,
     private noDueCertificateService: NoDueCertificateService,
     private paymentDataSharingService: PaymentDataSharingService,
+    private commonService:CommonService,
     private alertService: AlertService) { }
 
   ngOnInit() {
@@ -78,18 +80,9 @@ export class NoDueCertificateTableComponent implements OnInit {
             }
           }
           else {
-            if (!this.isSearchByPropertyNo || (this.isSearchByPropertyNo && this.dataSource.length == 0)) {
-              this.dataSource = new MatTableDataSource(data.body);
-            }
-            else {
-              const oldData = this.dataSource.data;
-              const oldDataObj = oldData.filter(row => row.propertyNo == data.body[0].propertyNo);
-              if (oldDataObj.length == 0) {
-                oldData.push(data.body[0]);
-                this.dataSource = new MatTableDataSource(oldData);
-              }
-            }
+            this.dataSource = new MatTableDataSource(data.body);
             this.dataSource.sort = this.sort;
+            this.totalCount = this.dataSource.data.length;
           }
         }
       },
@@ -176,26 +169,16 @@ export class NoDueCertificateTableComponent implements OnInit {
 
   onEnterClick(formDetail: NgForm) {
     if (formDetail.form.valid) {
-      if (this.serviceCharge.noofCopies > 0 && this.outstandingDetailModel.outstandingAmount == 0) {
+      if (this.outstandingDetailModel.outstandingAmount != 0) {
+        this.commonService.dueToOutstandingMessage(this.selectedItem.propertyNo);
+      } else if (this.serviceCharge.noofCopies < 1) {
+        this.alertService.error('No. of Copies should be greater than zero.');
+      } else {
         this.serviceCharge.outstandingTax = this.outstandingDetailModel.outstandingAmount;
         this.paymentDataSharingService.updatedPamentFromOption(Constants.Payment_From_Option.No_Due_Certificate);
         this.paymentDataSharingService.updatedDataModel(this.serviceCharge);
         this.noDueCertificateDataSharingService.updatedIsShowForm(true);
-      }
-      else {
-        var errorMessage = '';
-        if (this.serviceCharge.noofCopies < 1) {
-          errorMessage = "No. of Copies should be greater than zero."
-        }
-        if (this.outstandingDetailModel.outstandingAmount != 0) {
-          errorMessage = "Outstanding amount should be zero."
-        }
-        if (this.serviceCharge.noofCopies < 1 && this.outstandingDetailModel.outstandingAmount != 0) {
-          errorMessage = "No. of Copies should be greater than zero. And outstanding amount should be zero."
-        }
-
-        this.alertService.error(errorMessage);
-      }
+      } 
     }
   }
 }

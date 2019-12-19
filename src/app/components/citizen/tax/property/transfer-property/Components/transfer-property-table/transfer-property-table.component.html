@@ -31,6 +31,12 @@
     </table>
   </div>
 </div>
+<div class="row margin-top-20">
+  <div class="col-md-2">
+    <mat-card>Total Count : <b>{{totalCount}}</b></mat-card>
+  </div>
+</div>
+
 <mat-card class="col-md-12 mt-3" *ngIf="isShowDetail">
     <form #formDetail="ngForm" (ngSubmit)="onEnterClick(formDetail)">
   <div class="row margin-top-20">

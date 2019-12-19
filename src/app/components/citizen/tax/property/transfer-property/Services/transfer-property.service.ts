@@ -64,6 +64,12 @@ export class TransferPropertyService {
       .pipe(map((response: any) => response))
   }
 
+  getFloors(propertyNo: string) {
+    return this.http.get(`${Constants.assessmentModuleApiUrl}active/get/transferPropertyFloors?propertyNo=${propertyNo}&lookup_code=${Constants.LookupCodes.Floor_No}`, 
+      { observe: 'response' })
+      .pipe(map((response: any) => response))
+  }
+
   searchOwnerByPropertyNo(propertyNo: string) {
     return this.http.get(`${Constants.assessmentModuleApiUrl}active/owner/search?propertyNo=${propertyNo}`,
       { observe: 'response' })

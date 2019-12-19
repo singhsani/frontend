@@ -2,11 +2,11 @@ import { Directive, ElementRef, OnDestroy, HostListener } from '@angular/core';
 import * as textMask from 'vanilla-text-mask/dist/vanillaTextMask.js';
 
 @Directive({
-  selector: '[mask-property-no]'
+  selector: '[mask-property-no-with-occuiper-code]'
 })
-export class MaskPropertyNoDirective implements OnDestroy {
+export class MaskPropertyNoWithOccuiperCodeDirective {
   
-  mask = [/\d/, /\d/, '-', /\d/, /\d/, '-', /\d/, /\d/, /\d/ , /\d/, /\d/, /\d/]; // ##-##-######
+  mask = [/\d/, /\d/, '-', /\d/, /\d/, '-', /\d/, /\d/, /\d/ , /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/]; // ##-##-######-###
   maskedInputController;
   
   private specialKeys: Array<string> = ['Backspace', 'Tab', 'End', 'Home'];
@@ -32,21 +32,12 @@ export class MaskPropertyNoDirective implements OnDestroy {
     if (this.specialKeys.indexOf(event.key) !== -1) {
       return;
     }
-    this.element.nativeElement.focus();
     let current: string = this.element.nativeElement.value;
     let next: string = current.concat(event.key);
     if (next && String(next).length > 17 ) {
       event.preventDefault(); 
     }
   }
-
-  /*
-  @HostListener('click', ['$event'])
-  click(event: KeyboardEvent) {
-    let l = this.element.nativeElement.value.length;
-    this.element.nativeElement.setSelectionRange(l,l);
-    this.element.nativeElement.focus()
-  }*/
 
 }
 

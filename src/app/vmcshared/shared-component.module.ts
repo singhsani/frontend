@@ -18,6 +18,7 @@ import { APP_DATE_FORMATS, CustomeDateAdapter } from './custome-date-adapter';
 import { MaskDateDirective } from './Directives/mask-date.directive';
 import { MaskCensusNoDirective } from './Directives/mask-censusNo.directive';
 import { MaskPropertyNoDirective } from './Directives/mask-propertyNo.directive';
+import { MaskPropertyNoWithOccuiperCodeDirective } from './Directives/mask-propertyNoWithOccupierCode.directive';
 import { DigitsOnlyDirective } from './Directives/digitsOnlyDirective';
 import { PropertyOccupierSearchComponent } from './component/property-occupier-search/property-occupier-search.component';
 
@@ -39,6 +40,7 @@ import { PropertyOccupierSearchComponent } from './component/property-occupier-s
     TrimDirective,
     MaskCensusNoDirective,
     MaskPropertyNoDirective,
+    MaskPropertyNoWithOccuiperCodeDirective,
     PaymentComponent,
     ResponseDownloadListComponent,
     CreateFormulaComponent,
@@ -61,7 +63,8 @@ import { PropertyOccupierSearchComponent } from './component/property-occupier-s
     TrimDirective,
     MaskDateDirective,
     MaskCensusNoDirective,
-    MaskPropertyNoDirective
+    MaskPropertyNoDirective,
+    MaskPropertyNoWithOccuiperCodeDirective
   ],
   providers: [
    // { provide: MAT_DATE_LOCALE, useValue: 'en' }, //you can change useValue

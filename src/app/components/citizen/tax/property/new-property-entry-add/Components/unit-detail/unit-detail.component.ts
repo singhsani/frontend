@@ -273,6 +273,8 @@ export class UnitDetailComponent implements OnInit {
       this.unitDetailModel.buildingPermissionDate = this.commonService.getPayloadDate(this.unitDetailModel.buildingPermissionDate);
       this.unitDetailModel.occupancyCertificateDate = this.commonService.getPayloadDate(this.unitDetailModel.occupancyCertificateDate);
       this.unitDetailModel.tikaDate = this.commonService.getPayloadDate(this.unitDetailModel.tikaDate);
+      if (this.unitDetailModel.completionDate)
+        this.unitDetailModel.completionDate = this.commonService.getPayloadDate(this.unitDetailModel.completionDate);
       this.newNewPropertyEntryAddService.saveUnit(this.unitDetailModel).subscribe(
         (data) => {
           if (data.status === 200) {
