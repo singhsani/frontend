@@ -36,19 +36,7 @@ export class AddressComponent implements OnInit, OnChanges {
 	}
 
 	ngOnChanges() {
-		if (this.requiredFeilds) {
-			this.addressFormGroup.get('state').setValidators([Validators.required]);
-			this.addressFormGroup.get('buildingName').setValidators([ValidationService.buildingNameValidator]);
-			this.addressFormGroup.get('city').setValidators([Validators.required]);
-			this.addressFormGroup.get('country').setValidators([Validators.required]);
-			this.addressFormGroup.get('pincode').setValidators([Validators.required, Validators.minLength(6), Validators.maxLength(6)]);
-		} else {
-			this.addressFormGroup.get('state').clearValidators();
-			this.addressFormGroup.get('city').clearValidators();
-			this.addressFormGroup.get('country').clearValidators();
-			this.addressFormGroup.get('pincode').clearValidators();
-		}
-
+		
 		/*If in your module need buildname & area require then pass module name from component in Input property */
 		if (this.formType == 'PFT') {
 			this.isBuildinAreaReq = true;
@@ -60,6 +48,21 @@ export class AddressComponent implements OnInit, OnChanges {
 			this.addressFormGroup.get('buildingName').clearValidators();
 			this.addressFormGroup.get('area').clearValidators();
 			this.addressFormGroup.get('buildingName').setValidators([ValidationService.buildingNameValidator]);
+		}
+
+		if (this.requiredFeilds) {
+			this.isBuildinAreaReq = true;
+			this.addressFormGroup.get('state').setValidators([Validators.required]);
+			this.addressFormGroup.get('area').setValidators([Validators.required]);
+			this.addressFormGroup.get('buildingName').setValidators([Validators.required, ValidationService.buildingNameValidator]);
+			this.addressFormGroup.get('city').setValidators([Validators.required]);
+			this.addressFormGroup.get('country').setValidators([Validators.required]);
+			this.addressFormGroup.get('pincode').setValidators([Validators.required, Validators.minLength(6), Validators.maxLength(6)]);
+		} else {
+			this.addressFormGroup.get('state').clearValidators();
+			this.addressFormGroup.get('city').clearValidators();
+			this.addressFormGroup.get('country').clearValidators();
+			this.addressFormGroup.get('pincode').clearValidators();
 		}
 
 		/* After perform set or remove validator action this will update value and validity */
