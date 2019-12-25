@@ -159,7 +159,7 @@ export class NewRegistrationComponent implements OnInit {
       attachments: [],
       formStatus: null,
       dealerEmail: ['', [ValidationService.emailValidator]],
-			dealerMobileNo: null,
+			dealerMobileNo: [null, Validators.required],
 			vehicleTax: [{ value: 0, disabled: true }],
     });
 
@@ -513,11 +513,11 @@ export class NewRegistrationComponent implements OnInit {
       this.vehicleServise.calculateTax(this.vehicleRegistrationForm.getRawValue()).subscribe(res => {
 
         this.vehicleRegistrationForm.patchValue({
-					tokenFess: res.amountFields.vehicleTokenFee,
+          tokenFess: res.amountFields.vehicleTokenFee,
 					dishonorCharges: res.amountFields.dishonorCharges ? res.amountFields.dishonorCharges : 0,
-					vehicleApplicableRate: res.vehicleApplicableRate,
+					vehicleApplicableRate: res.amountFields.vehicleBasicValue,
 					// totalPayable: res.amountFields.vehicleBasicValue,
-					vehicleTax: res.amountFields.vehicleTax
+					vehicleTax: res.vehicleApplicableRate
 				});
 
 				let totalPayable = res.amountFields.adminFee + res.amountFields.interest +

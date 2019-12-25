@@ -4,13 +4,12 @@
 	</button>
 </app-title-bar>
 
-<mat-card class="formClass cardBorder">
+<mat-card class="formClass cardBorder createMarriageReg">
 
 	<!--Start  form  -->
 	<form [formGroup]="marriageFormGroup">
 
-		<mat-tab-group mat-stretch-tabs [(selectedIndex)]="tabIndex" class="stepperNav" dynamicHeight='true'
-			mat-stretch-tabs>
+		<mat-tab-group mat-stretch-tabs [(selectedIndex)]="tabIndex" class="stepperNav" dynamicHeight='true'>
 
 			<!-- First step -->
 			<mat-tab>
@@ -41,7 +40,7 @@
 
 				<div class="row">
 					<h2>{{ 'place_of_marriage' | translate:translateKey }}:</h2>
-					<app-address #address [isDisplayGujFields]="true"
+					<app-address [requiredFeilds]="true" #address [isDisplayGujFields]="true"
 						[addressFormGroup]="marriageFormGroup.get('marriagePlace')"></app-address>
 				</div>
 
@@ -231,7 +230,7 @@
 					<!-- this is inside isNriMarrige true or false -->
 					<div *ngIf="marriageFormGroup.get('isGroomVisa').value  == true">
 						<mat-form-field class="col-md-4">
-							<input matInput OnlyNumber maxlength="9" minlength="9" type="tel"
+							<input matInput maxlength="9" minlength="9" type="tel"
 								formControlName="groomPassportNumber" required
 								placeholder="{{'passport_number' | translate:translateKey }}">
 							<control-messages [control]="marriageFormGroup.get('groomPassportNumber')">
@@ -239,7 +238,7 @@
 						</mat-form-field>
 
 						<mat-form-field class="col-md-4">
-							<input matInput type="text" maxlength="50" formControlName="groomCountryName"
+							<input matInput type="text" maxlength="50" required formControlName="groomCountryName"
 								appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'"
 								placeholder="{{ 'foreign_country' | translate:translateKey }}">
 							<control-messages [control]="marriageFormGroup.get('groomCountryName')"></control-messages>
@@ -307,7 +306,7 @@
 						</mat-form-field>
 
 						<mat-form-field class="col-md-4">
-							<textarea matInput rows="3" cols="50" maxlength="500" formControlName="nriGroomAddress"
+							<textarea matInput required rows="3" cols="50" maxlength="500" formControlName="nriGroomAddress"
 								placeholder="{{ 'foreign_address' | translate:translateKey }}"> </textarea>
 							<control-messages [control]="marriageFormGroup.get('nriGroomAddress')"></control-messages>
 						</mat-form-field>
@@ -328,7 +327,7 @@
 						</mat-form-field>
 
 						<mat-form-field class="col-md-4">
-							<textarea matInput rows="3" cols="50" maxlength="500" formControlName="groomCompanyAddress"
+							<textarea matInput rows="3" cols="50" required maxlength="500" formControlName="groomCompanyAddress"
 								placeholder="{{ 'company_address' | translate:translateKey }}"> </textarea>
 							<control-messages [control]="marriageFormGroup.get('groomCompanyAddress')">
 							</control-messages>
@@ -340,8 +339,8 @@
 
 				<div class="row" [hidden]="marriageFormGroup.get('isGroomVisa').value == true">
 					<h2>{{'address' | translate:translateKey }}:</h2>
-					<app-address #address [requiredFeilds]="!marriageFormGroup.get('isGroomVisa').value"
-						[addressFormGroup]="marriageFormGroup.get('groomAddress')"></app-address>
+					<!-- <app-address #address [requiredFeilds]="!marriageFormGroup.get('isGroomVisa').value"
+						[addressFormGroup]="marriageFormGroup.get('groomAddress')"></app-address> -->
 				</div>
 
 				<app-action-bar [uploadFiles]="uploadFilesArray" [form]="marriageFormGroup"
@@ -495,7 +494,7 @@
 
 					<div *ngIf="marriageFormGroup.get('isBrideVisa').value == true">
 						<mat-form-field class="col-md-4">
-							<input matInput required OnlyNumber maxlength="9" minlength="9" type="tel"
+							<input matInput required maxlength="9" minlength="9" type="tel"
 								formControlName="bridePassportNumber"
 								placeholder="{{'passport_number' | translate:translateKey }}">
 							<control-messages [control]="marriageFormGroup.get('bridePassportNumber')">
@@ -696,7 +695,7 @@
 				<!-- For NIR Marrige -->
 				<div class="row" *ngIf="marriageFormGroup.get('isNriMarriage').value == true">
 					<mat-form-field class="col-md-4">
-						<textarea matInput rows="3" cols="50" maxlength="500" formControlName="nriGroomParentsAddress"
+						<textarea matInput [required]="marriageFormGroup.get('isNriMarriage').value == true" rows="3" cols="50" maxlength="500" formControlName="nriGroomParentsAddress"
 							placeholder="{{ 'foreign_address' | translate:translateKey }}"> </textarea>
 						<control-messages [control]="marriageFormGroup.get('nriGroomParentsAddress')">
 						</control-messages>
@@ -1518,12 +1517,12 @@
 					<div class="row">
 						<div class="col-md-4 ngSelect" formGroupName="applicantRelation">
 							<ng-select formControlName="code"
-								placeholder="{{ 'applicant_relation' | translate:translateKey }}"
+								placeholder="{{ 'applicant_relation' | translate:translateKey }} *"
 								(change)="onChange($event,applicantrelationArray,'applicantrelationGuj');changeReset('applicantRelationOther')">
 								<ng-option *ngFor="let relation of applicantrelationArray" [value]="relation.code">
 									{{relation.name}}</ng-option>
 							</ng-select>
-							<control-messages [control]="marriageFormGroup.get('applicantRelation')"></control-messages>
+							<control-messages [control]="marriageFormGroup.get('applicantRelation').get('code')"></control-messages>
 						</div>
 
 						<mat-form-field class="col-md-4"
