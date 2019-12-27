@@ -709,7 +709,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
                 res.serviceDetail.serviceUploadDocuments.forEach(app => {
                     (<FormArray>this.marriageFormGroup.get('serviceDetail').get('serviceUploadDocuments')).push(this.config.createDocumentsGrp(app));
                 });
-                debugger;
+
                 this.requiredDocumentList();
 
                 // for address
