@@ -915,7 +915,7 @@
 					</mat-form-field>
 
 					<h2>{{'address' | translate:translateKey }}:</h2>
-					<app-address #address [addressFormGroup]="marriageFormGroup.get('priestAddress')"></app-address>
+					<app-address [requiredFeilds]="true" #address [addressFormGroup]="marriageFormGroup.get('priestAddress')"></app-address>
 
 					<div class="col-md-4" formGroupName='isPriestParResAddressSame'>
 						<mat-checkbox type="checkbox" [checked]="addObject.checkedPar3"
@@ -925,7 +925,7 @@
 				</div>
 
 				<h2> {{'residence_address' | translate:translateKey }}:</h2>
-				<app-address #address [addressFormGroup]="marriageFormGroup.get('priestAddressResidence')">
+				<app-address #address [requiredFeilds]="true" [addressFormGroup]="marriageFormGroup.get('priestAddressResidence')">
 				</app-address>
 
 				<app-action-bar [uploadFiles]="uploadFilesArray" [form]="marriageFormGroup"

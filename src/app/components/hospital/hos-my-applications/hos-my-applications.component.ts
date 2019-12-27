@@ -246,10 +246,9 @@ export class HosMyApplicationsComponent implements OnInit {
  * @param id citizen id
  */
 	printView(apiCode: string, apiName: string, id: number) {
-
+	
 		this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);
-		this.formService.printView(id).subscribe(
-			htmlResponse => {
+		this.formService.printView(id).subscribe(htmlResponse => {
 				let sectionToPrint: any = document.getElementById('sectionToPrint');
 				sectionToPrint.innerHTML = htmlResponse;
 				setTimeout(() => {
