@@ -87,16 +87,17 @@
 
                 <div class="row">
                     <mat-form-field class="col-md-6">
-                        <input required matInput appValidationFields [validationFieldsType]="'onlyNameWithSpace'"
+                        <input required matInput appValidationFields [form]="deathCorrectionForm" appGujInputSource
+                        targetElement="motherNameGuj" [validationFieldsType]="'onlyNameWithSpace'"
                             maxlength="20" placeholder="{{'mother_name' | translate:translateKey}}" name="motherName"
                             formControlName="motherName">
                         <control-messages [control]="deathCorrectionForm.get('motherName')"></control-messages>
                     </mat-form-field>
                     <mat-form-field class="col-md-6">
-                        <input required matInput appValidationFields [validationFieldsType]="'onlyNameWithSpace'"
-                            maxlength="20" placeholder="{{'husband_or_father_name' | translate:translateKey}}"
-                            formControlName="fatherOrHusbandName">
-                        <control-messages [control]="deathCorrectionForm.get('fatherOrHusbandName')"></control-messages>
+                        <input required matInput appGujInputTarget [form]="deathCorrectionForm"
+                            maxlength="40" placeholder="{{'mother_name' | translate:translateKey:'gu'}}"
+                            formControlName="motherNameGuj">
+                        <control-messages [control]="deathCorrectionForm.get('motherNameGuj')"></control-messages>
                     </mat-form-field>
                 </div>
                 <app-action-bar [uploadFiles]="uploadFileArray" [form]="deathCorrectionForm"

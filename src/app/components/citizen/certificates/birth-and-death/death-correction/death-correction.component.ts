@@ -199,16 +199,26 @@ export class DeathCorrectionComponent implements OnInit {
 	 * @param data - original json data.
 	 */
 	setValue(data) {
-		this.deathCorrectionForm.get('fieldView').setValue(data.fieldView);
-		this.deathCorrectionForm.get('fieldList').setValue(data.fieldList);
-		this.deathCorrectionForm.get('deceasedMiddleName').setValue(data.deceasedMiddleName);
-		this.deathCorrectionForm.get('deceasedLastName').setValue(data.deceasedLastName);
-		this.deathCorrectionForm.get('deceasedFirstName').setValue(data.deceasedFirstName);
-		this.deathCorrectionForm.get('deceasedFirstNameGuj').setValue(data.deceasedFirstNameGuj);
-		this.deathCorrectionForm.get('deceasedLastNameGuj').setValue(data.deceasedLastNameGuj);
-		this.deathCorrectionForm.get('deceasedMiddleNameGuj').setValue(data.deceasedMiddleNameGuj);
-		this.deathCorrectionForm.get('fatherOrHusbandName').setValue(data.fatherOrHusbandName);
-		this.deathCorrectionForm.get('motherName').setValue(data.motherName);
+
+		let newgnData = JSON.parse(data);
+			let prod_array = [];
+			for (let i = 0; i < newgnData.length; i += 1) {
+				prod_array.push(newgnData[i]);
+			}
+
+			this.deathCorrectionForm.patchValue(prod_array[0]);
+
+		// this.deathCorrectionForm.get('fieldView').setValue(data.fieldView);
+		// this.deathCorrectionForm.get('fieldList').setValue(data.fieldList);
+		// this.deathCorrectionForm.get('deceasedMiddleName').setValue(data[0].deceasedMiddleName);
+		// this.deathCorrectionForm.get('deceasedLastName').setValue(data.deceasedLastName);
+		// this.deathCorrectionForm.get('deceasedFirstName').setValue(data.deceasedFirstName);
+		// this.deathCorrectionForm.get('deceasedFirstNameGuj').setValue(data.deceasedFirstNameGuj);
+		// this.deathCorrectionForm.get('deceasedLastNameGuj').setValue(data.deceasedLastNameGuj);
+		// this.deathCorrectionForm.get('deceasedMiddleNameGuj').setValue(data.deceasedMiddleNameGuj);
+		// // this.deathCorrectionForm.get('fatherOrHusbandName').setValue(data.fatherOrHusbandName);
+		// this.deathCorrectionForm.get('motherName').setValue(data.motherName);
+		// this.deathCorrectionForm.get('motherNameGuj').setValue(data.motherNameGuj);
 		this.deathCorrectionForm.get('refNumber').setValue(this.regStatusForm.get('registrationNumber').value);
 		this.deathCorrectionForm.get('typeOfCorrection').get('code').setValue(this.regStatusForm.get('typeOfCorrection').get('code').value);
 	}
@@ -296,7 +306,8 @@ export class DeathCorrectionComponent implements OnInit {
 
 			//step 2(family details - 2)
 			motherName: null,
-			fatherOrHusbandName: null,
+			motherNameGuj:null,
+			// fatherOrHusbandName: null,
 
 			refNumber: null,
 			registrationNumber: null,
