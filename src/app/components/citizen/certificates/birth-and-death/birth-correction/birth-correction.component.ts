@@ -8,6 +8,7 @@ import { FormsActionsService } from '../../../../../core/services/citizen/data-s
 import { TranslateService } from '../../../../../shared/modules/translate/translate.service';
 import * as _ from 'lodash';
 import { CertificateConfig } from '../../certificate-config';
+import * as moment from 'moment';
 
 @Component({
 	selector: 'app-birth-correction',
@@ -210,13 +211,6 @@ export class BirthCorrectionComponent implements OnInit {
 
 			this.birthCorrectionForm.patchValue(res);
 
-			let newgnData = JSON.parse(data);
-			let prod_array = [];
-			for (let i = 0; i < newgnData.length; i += 1) {
-				prod_array.push(newgnData[i]);
-			}
-
-			this.birthCorrectionForm.patchValue(prod_array[0]);
 			// this.config.documentList(res, this.uploadFileArray);
 
 			res.serviceDetail.serviceUploadDocuments.forEach(app => {
@@ -228,19 +222,19 @@ export class BirthCorrectionComponent implements OnInit {
 			let cururl = this.location.path().replace('false', this.appId.toString());
 			this.location.go(cururl);
 			this.getLookupData();
-			// this.setValue(data);
+			this.setValue(data);
 			this.showcorrectionForm = true;
 			this.showApplicationSearch = false;
 			this.showButtons = true;
 			this.changeCorrection(this.regStatusForm.get('typeOfCorrection').get('code').value);
-			this.birthCorrectionForm.get('refNumber').setValue(this.regStatusForm.get('registrationNumber').value)
-		    this.birthCorrectionForm.get('typeOfCorrection').get('code').setValue(this.regStatusForm.get('typeOfCorrection').get('code').value);
+			// this.birthCorrectionForm.get('refNumber').setValue(this.regStatusForm.get('registrationNumber').value)
+			// this.birthCorrectionForm.get('typeOfCorrection').get('code').setValue(this.regStatusForm.get('typeOfCorrection').get('code').value);
 			/**
 		    * save data
 		    */
-			this.formService.saveFormData(this.birthCorrectionForm.value).subscribe(res => {
-				this.birthCorrectionForm.patchValue(res);
-			})
+			// this.formService.saveFormData(this.birthCorrectionForm.value).subscribe(res => {
+			// 	this.birthCorrectionForm.patchValue(res);
+			// })
 		})
 	}
 
@@ -248,14 +242,14 @@ export class BirthCorrectionComponent implements OnInit {
 	/**
 	 * This method use for displaying string data in json 
 	 */
-	listOfData(prods) {
-		let newgnData = JSON.parse(prods);
-		let prod_array = [];
-		for (let i = 0; i < newgnData.length; i += 1) {
-			prod_array.push(newgnData[i]);
-		}
-		return prod_array;
-	}
+	// listOfData(prods) {
+	// 	let newgnData = JSON.parse(prods);
+	// 	let prod_array = [];
+	// 	for (let i = 0; i < newgnData.length; i += 1) {
+	// 		prod_array.push(newgnData[i]);
+	// 	}
+	// 	return prod_array;
+	// }
 
 	/**
 	 * Method is used to decide insertion/correction form on get.
@@ -300,7 +294,7 @@ export class BirthCorrectionComponent implements OnInit {
 				this.commonService.openAlert("Invalid Request", "Request Not Valid", "warning");
 				return;
 			}
-			else{
+			else {
 				if (err.error && err.error.length) {
 					this.commonService.openAlert("Warning", err.error[0].message, "warning");
 				}
@@ -313,24 +307,34 @@ export class BirthCorrectionComponent implements OnInit {
 	 * @param data - original json.
 	 */
 	setValue(data) {
+
+		let newgnData = JSON.parse(data);
+		let prod_array = [];
+		for (let i = 0; i < newgnData.length; i += 1) {
+			prod_array.push(newgnData[i]);
+		}
+
+		this.birthCorrectionForm.patchValue(prod_array[0]);
 		// this.birthCorrectionForm.get('fieldView').setValue(data.fieldView);
 		// this.birthCorrectionForm.get('fieldList').setValue(data.fieldList);
-		this.birthCorrectionForm.get('childName').setValue(data.childName);
-		this.birthCorrectionForm.get('childNameGuj').setValue(data.childNameGuj);
-		this.birthCorrectionForm.get('fatherFirstName').setValue(data.fatherFirstName);
-		this.birthCorrectionForm.get('fatherMiddleName').setValue(data.fatherMiddleName);
-		this.birthCorrectionForm.get('fatherLastName').setValue(data.fatherLastName);
-		this.birthCorrectionForm.get('fatherFirstNameGuj').setValue(data.fatherFirstNameGuj);
-		this.birthCorrectionForm.get('fatherMiddleNameGuj').setValue(data.fatherMiddleNameGuj);
-		this.birthCorrectionForm.get('fatherLastNameGuj').setValue(data.fatherLastNameGuj);
-		this.birthCorrectionForm.get('motherFirstName').setValue(data.motherFirstName);
-		this.birthCorrectionForm.get('motherMiddleName').setValue(data.motherMiddleName);
-		this.birthCorrectionForm.get('motherLastName').setValue(data.motherLastName);
-		this.birthCorrectionForm.get('motherFirstNameGuj').setValue(data.motherFirstNameGuj);
-		this.birthCorrectionForm.get('motherMiddleNameGuj').setValue(data.motherMiddleNameGuj);
-		this.birthCorrectionForm.get('motherLastNameGuj').setValue(data.motherLastNameGuj);
+		// this.birthCorrectionForm.get('childName').setValue(data.childName);
+		// this.birthCorrectionForm.get('childNameGuj').setValue(data.childNameGuj);
+		// this.birthCorrectionForm.get('fatherFirstName').setValue(data.fatherFirstName);
+		// this.birthCorrectionForm.get('fatherMiddleName').setValue(data.fatherMiddleName);
+		// this.birthCorrectionForm.get('fatherLastName').setValue(data.fatherLastName);
+		// this.birthCorrectionForm.get('fatherFirstNameGuj').setValue(data.fatherFirstNameGuj);
+		// this.birthCorrectionForm.get('fatherMiddleNameGuj').setValue(data.fatherMiddleNameGuj);
+		// this.birthCorrectionForm.get('fatherLastNameGuj').setValue(data.fatherLastNameGuj);
+		// this.birthCorrectionForm.get('motherFirstName').setValue(data.motherFirstName);
+		// this.birthCorrectionForm.get('motherMiddleName').setValue(data.motherMiddleName);
+		// this.birthCorrectionForm.get('motherLastName').setValue(data.motherLastName);
+		// this.birthCorrectionForm.get('motherFirstNameGuj').setValue(data.motherFirstNameGuj);
+		// this.birthCorrectionForm.get('motherMiddleNameGuj').setValue(data.motherMiddleNameGuj);
+		// this.birthCorrectionForm.get('motherLastNameGuj').setValue(data.motherLastNameGuj);
 		this.birthCorrectionForm.get('refNumber').setValue(this.regStatusForm.get('registrationNumber').value)
 		this.birthCorrectionForm.get('typeOfCorrection').get('code').setValue(this.regStatusForm.get('typeOfCorrection').get('code').value);
+		this.newgnDateconvert('birthDate', this.birthCorrectionForm.get('birthDate').value);
+		this.newgnDateconvert('registrationDate', this.birthCorrectionForm.get('registrationDate').value);
 
 		/**
 		 * save data
@@ -341,6 +345,16 @@ export class BirthCorrectionComponent implements OnInit {
 		})
 	}
 
+	/**
+		* This method for convert newgn response date to yyyy-mm-dd formate
+		*/
+	newgnDateconvert(controlName: any, date) {
+		let dateString = date;
+		let dateParts = dateString.split("-");
+		let dateObject = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
+
+		this.birthCorrectionForm.get(controlName).setValue(moment(dateObject).format("YYYY-MM-DD"));
+	}
 
 	/**
 	 * This method is use for get lookup data
@@ -407,6 +421,8 @@ export class BirthCorrectionComponent implements OnInit {
 			typeOfCorrection: this.fb.group({
 				code: [null]
 			}),
+			birthDate: null,
+			registrationDate: null,
 
 			// fieldView: "ALL",
 			// fieldList: null,
