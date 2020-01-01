@@ -267,14 +267,14 @@
 
           <div class="row">
             <mat-form-field class="col-md-4">
-              <input matInput maxlength="50" appValidationFields [validationFieldsType]="'onlyNameWithSpace'"
+              <input matInput maxlength="50"
                 type="text" formControlName="orgName" placeholder="{{'organization_name' | translate: translateKey}}"
                 required>
               <control-messages [control]="bookPermissionApplicationForm.get('orgName')"></control-messages>
             </mat-form-field>
 
             <mat-form-field class="col-md-4">
-              <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="orgContactNo"
+              <input matInput OnlyNumber minlength="10" maxlength="11" formControlName="orgContactNo"
                 placeholder="{{'org_contact_no' | translate: translateKey}}" required>
               <control-messages [control]="bookPermissionApplicationForm.get('orgContactNo')"></control-messages>
             </mat-form-field>

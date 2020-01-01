@@ -36,6 +36,8 @@ export class TownHallBookComponent implements OnInit {
 
 	@ViewChild("paymentGateway") paymentGateway: TemplateRef<any>;
 	@ViewChild('address') addressComp: any;
+	@ViewChild('appAddress') appAddressComp: any;
+	
 	@ViewChild(MatPaginator) paginator: MatPaginator;
 
 	bookingConstants = BookingConstants;
@@ -202,7 +204,7 @@ export class TownHallBookComponent implements OnInit {
 			emailID: [null, [Validators.required, ValidationService.emailValidator]],
 			confirmEmailID: [null, [Validators.required, ValidationService.emailValidator]],
 			relationshipWithOrg: [null, [Validators.required]],
-			applicantAddress: this.fb.group(this.addressComp.addressControls()),
+			applicantAddress: this.fb.group(this.appAddressComp.addressControls()),
 			/**
 			 * Bank Accoount Details
 			 */
@@ -350,6 +352,8 @@ export class TownHallBookComponent implements OnInit {
 			this.bookingService.shortListBookings(shortListData).subscribe(resp => {
 				this.showSearchForm = false;
 				this.townHallApplicationForm.patchValue(resp.data);
+				this.addressComp.getCountryLists();
+				this.appAddressComp.getCountryLists();
 				if (resp.data.status == this.bookingConstants.DRAFT) {
 					this.bookingService.searchPayment(resp.data.refNumber).subscribe(payResp => {
 						this.paymentObject = payResp.data;

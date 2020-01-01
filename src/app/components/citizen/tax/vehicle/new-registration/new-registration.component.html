@@ -89,6 +89,7 @@
 					<mat-form-field class="col-md-4">
 						<input matInput autocomplete="off" maxlength="200" type="text" formControlName="dealerName"
 							placeholder="{{'dealer_name' | translate: translateKey}}" required>
+							<control-messages [control]="vehicleRegistrationForm.get('dealerName')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
@@ -102,6 +103,7 @@
 						<span matPrefix>+91 &nbsp;</span>
 						<input required matInput autocomplete="off" type="tel" OnlyNumber formControlName="dealerMobileNo"
 							minlength="10" maxlength="10" placeholder="{{'dealer_mobile_no' | translate: translateKey}}">
+							<control-messages [control]="vehicleRegistrationForm.get('dealerMobileNo')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">

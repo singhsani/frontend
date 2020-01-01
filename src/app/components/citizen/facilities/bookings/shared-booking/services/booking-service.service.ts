@@ -187,6 +187,13 @@ export class BookingService {
     return this.http.get(this.requestURL);
   }
 
+	/**
+	 * This method is use to get lookup data respective to api type
+	 */
+  getBankNames() {
+    this.requestURL = `api/bankMaster/get/active/all`;
+    return this.http.get(this.requestURL);
+  }
 
 	/**
 	 * Method is used to get all booked list from api

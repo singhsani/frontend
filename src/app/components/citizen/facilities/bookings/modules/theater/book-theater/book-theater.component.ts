@@ -286,6 +286,7 @@ export class BookTheaterComponent implements OnInit {
                 if (resp.success) {
                     this.showTheaterSearchForm = false;
                     this.theaterBookingForm.patchValue(resp.data);
+                    this.addressComp.getCountryLists();
                     if (resp.data.status == this.bookingConstants.DRAFT) {
                         this.bookingService.searchPayment(resp.data.refNumber).subscribe(payResp => {
                             this.paymentObject = payResp.data;

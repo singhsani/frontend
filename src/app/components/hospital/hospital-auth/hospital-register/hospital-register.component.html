@@ -26,13 +26,13 @@
 
 			<mat-form-field class="col-md-12 iconMat">
 				<mat-icon matPrefix>location_on</mat-icon>
-				<input matInput type="text" appAlphaNumeric maxlength="60" placeholder="Address Line 1" formControlName="addressLine1" required>
+				<input matInput type="text" maxlength="60" placeholder="Address Line 1" formControlName="addressLine1" required>
 				<control-messages [control]="regForm.get('addressLine1')"></control-messages>
 			</mat-form-field>
 
 			<mat-form-field class="col-md-12 iconMat">
 				<mat-icon matPrefix>location_on</mat-icon>
-				<input matInput type="text" appAlphaNumeric maxlength="60" placeholder="Address Line 2" formControlName="addressLine2" required>
+				<input matInput type="text" maxlength="60" placeholder="Address Line 2" formControlName="addressLine2" required>
 				<control-messages [control]="regForm.get('addressLine2')"></control-messages>
 			</mat-form-field>
 
