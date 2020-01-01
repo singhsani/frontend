@@ -379,13 +379,13 @@
 
                     <div class="row">
                         <mat-form-field class="col-md-4">
-                            <input matInput maxlength="25" appValidationFields [validationFieldsType]="'onlyNameWithSpace'" type="text" formControlName="organizationName"
+                            <input matInput maxlength="25" type="text" formControlName="organizationName"
                                 placeholder="{{'oraganization_name' | translate: translateKey}}" required>
                             <control-messages [control]="townHallApplicationForm.get('organizationName')"></control-messages>
                         </mat-form-field>
 
                         <mat-form-field class="col-md-4">
-                            <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="orgTelephoneNo" placeholder="{{'orgTelephone_no' | translate: translateKey}}"
+                            <input matInput OnlyNumber minlength="10" maxlength="11" formControlName="orgTelephoneNo" placeholder="{{'orgTelephone_no' | translate: translateKey}}"
                                 required>
                             <control-messages [control]="townHallApplicationForm.get('orgTelephoneNo')"></control-messages>
                         </mat-form-field>
@@ -476,7 +476,7 @@
                         <h2>
                             {{'applicantAddress' | translate:translateKey}}
                         </h2>
-                        <app-address #address [requiredFeilds]="true" [addressFormGroup]="townHallApplicationForm.get('applicantAddress')"></app-address>
+                        <app-address #appAddress [requiredFeilds]="true" [addressFormGroup]="townHallApplicationForm.get('applicantAddress')"></app-address>
                     </div>
 
                     <div class="row mt-4 fotButtonBar">

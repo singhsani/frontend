@@ -314,6 +314,7 @@ export class BookChildrenTheaterComponent implements OnInit {
             this.bookingService.shortListBookings(shortListData).subscribe(resp => {
                 this.showChildrenTheaterSearchForm = false;
                 this.childrenTheaterApplicationForm.patchValue(resp.data);
+                this.addressComp.getCountryLists();
                 if (resp.data.status == this.bookingConstants.DRAFT) {
                     this.bookingService.searchPayment(resp.data.refNumber).subscribe(payResp => {
                         this.paymentObject = payResp.data;

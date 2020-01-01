@@ -40,8 +40,8 @@ export class BankDetailsComponent implements OnInit {
 	* Method is used to get all bank lookups
 	*/
   bookingLookups() {
-    this.bookingService.getDataFromLookups().subscribe(resp => {
-      this.BankOptions = resp.BANK;
+    this.bookingService.getBankNames().subscribe(resp => {
+      this.BankOptions = resp.data;
     });
   }
 

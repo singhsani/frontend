@@ -93,7 +93,7 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input [required]="requiredFeild" matInput readonly [max]="maxBirthDate"
+						<input [required]="requiredFeild" matInput appDate [max]="maxBirthDate"
 							[matDatepicker]="pickerDeath"
 							(dateChange)="birthFormatChanger($event);deathCertificateForm.get('deathDate').reset()"
 							placeholder="{{'date_of_birth' | translate:translateKey}}" formControlName="birthDate">
@@ -103,8 +103,7 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input [required]="requiredFeild" matInput readonly (click)="pickerBirth.open()"
-							(focus)="pickerBirth.open()" [max]="maxDeathDate"
+						<input [required]="requiredFeild" matInput appDate [max]="maxDeathDate"
 							[min]="deathCertificateForm.get('birthDate').value" [matDatepicker]="pickerBirth"
 							(dateChange)="deathFormatChanger($event);delayCalculator($event)"
 							placeholder="{{'date_of_death' | translate:translateKey}}" formControlName="deathDate">
@@ -363,7 +362,7 @@
 						</control-messages>
 					</mat-form-field>
 
-					<div class="col-md-4 ngSelect" formGroupName="medicalTreatment">
+					<div class="col-md-5 ngSelect" formGroupName="medicalTreatment">
 						<ng-select
 							(change)="config.gujNameFinder($event,deathCertificateForm,'medicalTreatment',MedicalTreatmentOptions);changeMedicalTreatment($event)"
 							placeholder="{{'medical_treatment' | translate:translateKey}} {{requiredFeild?'*':''}}"
@@ -372,9 +371,11 @@
 								{{mto.name}}
 							</ng-option>
 						</ng-select>
+						<control-messages [control]="deathCertificateForm.get('medicalTreatment').get('code')">
+						</control-messages>
 					</div>
 
-					<mat-form-field formGroupName="medicalTreatment" class="col-md-4">
+					<mat-form-field formGroupName="medicalTreatment" class="col-md-5">
 						<input [required]="requiredFeild" readonly
 							[disabled]="!deathCertificateForm.get('canEdit').value" matInput
 							placeholder="{{'medical_treatment' | translate:translateKey:'gu'}}"

@@ -239,13 +239,15 @@ export class BookAtithigruhComponent implements OnInit {
 			this.BookingTypeForm.get('bookingFrom').setValidators(Validators.required);
 			this.BookingTypeForm.get('bookingTo').setValidators(Validators.required);
 		} else if (event === 'Advance booking') {
-			if (this.formatAMPM(new Date) > '02:00 pm') {
-				this.toStartBookDate = moment(new Date()).add(1, 'day').add(120, 'days').endOf('day').format('YYYY-MM-DD');
-				this.toEndBookDate = moment(new Date()).add(1, 'day').add(120, 'days').endOf('day').format('YYYY-MM-DD');
-			} else {
-				this.toStartBookDate = moment(new Date()).add(120, 'days').endOf('day').format('YYYY-MM-DD');
-				this.toEndBookDate = moment(new Date()).add(120, 'days').endOf('day').format('YYYY-MM-DD');
-			}
+			// if (this.formatAMPM(new Date) > '02:00 pm') {
+			// 	this.toStartBookDate = moment(new Date()).add(1, 'day').add(120, 'days').endOf('day').format('YYYY-MM-DD');
+			// 	this.toEndBookDate = moment(new Date()).add(1, 'day').add(120, 'days').endOf('day').format('YYYY-MM-DD');
+			// } else {
+			// 	this.toStartBookDate = moment(new Date()).add(120, 'days').endOf('day').format('YYYY-MM-DD');
+			// 	this.toEndBookDate = moment(new Date()).add(120, 'days').endOf('day').format('YYYY-MM-DD');
+			// }
+			this.toStartBookDate = moment(new Date()).format("YYYY-MM-DD");
+			this.toEndBookDate = "";
 			this.bookingForRegular = false;
 			// this.BookingTypeForm.get('bookingFrom').clearValidators();
 			this.BookingTypeForm.get('bookingTo').clearValidators();
@@ -380,6 +382,7 @@ export class BookAtithigruhComponent implements OnInit {
 
 				this.showSearchForm = false;
 				this.atithigruhForm.patchValue(resp.data);
+				this.addressComp.getCountryLists();
 				if (resp.data.status == this.bookingConstants.DRAFT) {
 					this.bookingService.searchPayment(resp.data.refNumber).subscribe(payResp => {
 						this.paymentObject = payResp.data;

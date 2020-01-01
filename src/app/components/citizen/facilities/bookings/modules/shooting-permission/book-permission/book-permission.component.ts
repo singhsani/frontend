@@ -414,6 +414,8 @@ export class BookPermissionComponent implements OnInit {
       this.bookingService.shortListBookings(shortListData).subscribe(resp => {
         this.showPermissionSearchForm = false;
         this.bookPermissionApplicationForm.patchValue(resp.data);
+        this.orgAddress.getCountryLists();
+        this.applicantAddress.getCountryLists();
         if (resp.data.status == this.bookingConstants.DRAFT) {
           this.bookingService.searchPayment(resp.data.refNumber).subscribe(payResp => {
             this.paymentObject = payResp.data;
