@@ -452,7 +452,7 @@ export class DeathRegistrationComponent implements OnInit {
 				gujName: null
 			}),
 			medicalReason: this.fb.group({
-				code: [null]
+				code: ["YES"]
 			}),
 			treatmentDurationFrom: null,
 			treatmentDurationTo: null,
@@ -460,7 +460,7 @@ export class DeathRegistrationComponent implements OnInit {
 
 			reportedToCoronor: this.fb.group({
 				id: null,
-				code: [null, Validators.required],
+				code: ["NO", Validators.required],
 				name: null
 			}),
 			immediateCOD1: this.fb.group({

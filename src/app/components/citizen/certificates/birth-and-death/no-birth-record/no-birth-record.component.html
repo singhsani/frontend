@@ -11,7 +11,11 @@
 
         <mat-tab-group mat-stretch-tabs [(selectedIndex)]="tabIndex" class="stepperNav" dynamicHeight="true">
             <!-- first step start-->
-            <mat-tab [label]="stepLable1 | translate: translateKey">
+            <mat-tab class="customMatTabLabel">
+                <ng-template mat-tab-label>
+					<div class="pl-3">{{ stepLable1 | translate: translateKey}}</div>
+                </ng-template>
+                
                 <div class="row">
 
                     <mat-form-field class="col-md-4">
