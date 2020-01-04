@@ -206,7 +206,7 @@ export class BirthRegistrationComponent implements OnInit {
 			//step 1(6)
 			birthPlace: this.fb.group({
 				id: 1,
-				code: ['HOSPITAL', [Validators.required]],
+				code: [null, [Validators.required]],
 				name: null
 			}),
 			otherPlace: [null, [Validators.maxLength(500)]],
@@ -358,6 +358,14 @@ export class BirthRegistrationComponent implements OnInit {
 			totalAliveChild: [null, [Validators.required, Validators.maxLength(2)]],
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode)
 		});
+	}
+
+	changeBirthPlace(event){
+		if(event == 'HOSPITAL'){
+			this.uploadFileArray.find(d => d.documentIdentifier == "HEALTH_WORKER_REPORT").mandatory = false;
+		}else{
+			this.uploadFileArray.find(d => d.documentIdentifier == "HEALTH_WORKER_REPORT").mandatory = true;
+		}
 	}
 
 	/**

@@ -145,6 +145,7 @@ export class AddressComponent implements OnInit, OnChanges {
 
 		this.countryService.countriesData.subscribe(data => {
 			this.countryListArray = _.cloneDeep(data);
+			this.countryListArray = _.orderBy(this.countryListArray, ['name'],['asc']);
 			setTimeout(() => {
 				if (this.editMode && this.addressFormGroup.get('country').value) {
 					this.getStateLists(this.addressFormGroup.get('country').value);
@@ -161,7 +162,7 @@ export class AddressComponent implements OnInit, OnChanges {
 	getStateLists(country) {
 
 		this.stateListArray = this.countryListArray.find(con => con.name === country).states;
-
+		this.stateListArray = _.orderBy(this.stateListArray, ['name'],['asc']);
 		if (this.editMode && this.addressFormGroup.get('state').value) {
 			this.getCityLists(this.addressFormGroup.get('state').value);
 		}
@@ -174,6 +175,7 @@ export class AddressComponent implements OnInit, OnChanges {
 	 */
 	getCityLists(state) {
 		this.cityListArray = this.stateListArray.find(obj => obj.name === state).cities;
+		this.cityListArray = _.orderBy(this.cityListArray, ['name'],['asc']);
 	}
 
 	/**

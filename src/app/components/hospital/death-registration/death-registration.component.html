@@ -145,10 +145,8 @@
 				</div>
 
 
-
-				<div class="row"
-					*ngIf="deathCertificateForm.get('maritalStatus').get('code').value=='MARRIED' || deathCertificateForm.get('maritalStatus').get('code').value=='MARRIED_SEPERATE'">
-
+				<!-- *ngIf="deathCertificateForm.get('maritalStatus').get('code').value=='MARRIED' || deathCertificateForm.get('maritalStatus').get('code').value=='MARRIED_SEPERATE'" -->
+				<div class="row">
 					<mat-form-field class="col-md-4">
 						<input matInput appValidationFields [form]="deathCertificateForm" appGujInputSource
 							targetElement="spouseFirstNameGuj" [validationFieldsType]="'onlyNameWithOutSpace'"
@@ -299,7 +297,7 @@
 
 					<div class="col-md-6" formGroupName="gender">
 						<div class="radioBtnError">
-							<mat-label>{{'gender' | translate:translateKey}} {{requiredFeild?'*':''}}</mat-label>
+							<mat-label>{{'gender' | translate:translateKey}} *</mat-label>
 							<mat-radio-group formControlName="code"
 								(change)="deathCertificateForm.get('gender').get('code').value != 'FEMALE'?deathCertificateForm.get('femaleDeathReason').reset() : ''">
 								<!-- (change)="config.changeHandler($event.value, 'FEMALE', deathCertificateForm,'femaleDeathReason')" -->
@@ -344,7 +342,7 @@
 					<div class="col-md-4 ngSelect" formGroupName="deathPlace">
 						<ng-select
 							(change)="config.changeHandler($event, 'OTHER_PLACE',deathCertificateForm, 'otherPlace')"
-							placeholder="{{'place_of_death' | translate:translateKey}} {{requiredFeild?'*':''}}"
+							placeholder="{{'place_of_death' | translate:translateKey}} *"
 							formControlName="code">
 							<ng-option *ngFor="let deathplace of deathPlaces" [value]="deathplace.code">
 								{{deathplace.name}}
@@ -356,7 +354,7 @@
 
 					<mat-form-field *ngIf="deathCertificateForm.get('deathPlace').get('code').value == 'OTHER_PLACE'"
 						class="col-md-4">
-						<input maxlength="500" [required]="requiredFeild" matInput
+						<input maxlength="500" appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" [required]="requiredFeild" matInput
 							placeholder="{{'other_death_place' | translate:translateKey}}" formControlName="otherPlace">
 						<control-messages [control]="deathCertificateForm.get('otherPlace')">
 						</control-messages>
@@ -709,7 +707,7 @@
 						<mat-form-field
 							*ngIf="deathCertificateForm.get('applicantRelation').get('code').value == 'OTHER_RELATIONSHIP'"
 							class="col-md-6">
-							<input required matInput placeholder="{{'other_relation' | translate:translateKey}}"
+							<input required matInput maxlength="20" placeholder="{{'other_relation' | translate:translateKey}}"
 								formControlName="relationOther">
 							<control-messages [control]="deathCertificateForm.get('relationOther')"></control-messages>
 						</mat-form-field>
