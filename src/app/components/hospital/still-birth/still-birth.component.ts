@@ -193,7 +193,7 @@ export class StillBirthComponent implements OnInit {
 			otherPlace: null,
 			isOrphan: this.fb.group({
 				id: null,
-				code: [null, Validators.required],
+				code: ["NO", Validators.required],
 				name: null
 			}),
 			childs: this.fb.array([this.createChildArray({
@@ -203,7 +203,7 @@ export class StillBirthComponent implements OnInit {
 				childNameGuj: null,
 				id: null,
 				sex: {
-					code: null
+					code: "MALE"
 				},
 				certificateNumber: null,
 				prematureInfantReason: null,
@@ -271,7 +271,7 @@ export class StillBirthComponent implements OnInit {
 			}),
 			motherAadharNumber: [null, [Validators.minLength(12), Validators.maxLength(12), ValidationService.aadharValidation]],
 			motherPrevRegNumber: [null, [Validators.maxLength(20)]],
-			mamtaRegNumber: [null, [Validators.maxLength(4)]],
+			mamtaRegNumber: [null, [Validators.required,Validators.maxLength(4)]],
 			petaKendraNumber: this.fb.group({
 				id: null,
 				code: [null, [Validators.required]],
@@ -394,7 +394,7 @@ export class StillBirthComponent implements OnInit {
 				childNameGuj: null,
 				id: null,
 				sex: this.fb.group({
-					code: null
+					code: "MALE"
 				}),
 				prematureInfantReason: null,
 				uniqueId: null,
@@ -424,7 +424,7 @@ export class StillBirthComponent implements OnInit {
 			childNameGuj: child.childNameGuj,
 			id: child.id,
 			sex: this.fb.group({
-				code: [child.sex.code, [Validators.required]]
+				code: [(Object.keys(child.sex).length > 0) ? child.sex.code : "MALE", [Validators.required]]
 			}),
 			prematureInfantReason: child.prematureInfantReason,
 			uniqueId: child.uniqueId,

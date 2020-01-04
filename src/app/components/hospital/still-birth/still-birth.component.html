@@ -497,7 +497,7 @@
                     </mat-form-field>
 
                     <mat-form-field class="col-md-4">
-                        <input matInput maxlength="4" OnlyNumber
+                        <input required matInput maxlength="4" OnlyNumber
                             placeholder="{{'e_Mamta_RegNumber' | translate:translateKey}}"
                             formControlName="mamtaRegNumber">
                         <control-messages [control]="stillBirthCertificateForm.get('mamtaRegNumber')">
@@ -614,7 +614,7 @@
                 </ng-template>
                 <div class="row">
                     <div formGroupName="familyReligion" class="col-md-4 ngSelect">
-                        <ng-select (change)="changeFamilyReligion($event)" placeholder="{{'religion' | translate:translateKey}}" formControlName="code"
+                        <ng-select (change)="changeFamilyReligion($event)" placeholder="{{'religion' | translate:translateKey}} *" formControlName="code"
                             required>
                             <ng-option *ngFor="let relegion of Religion" [value]="relegion.code">
                                 {{relegion.name}}

@@ -310,25 +310,25 @@ export class DeathRegistrationComponent implements OnInit {
 		if (event === "YES") {
 			this.requiredFeild = false
 			this.deathCertificateForm.get('unknownDescription').setValidators([Validators.required]);
-			this.deathCertificateForm.get('gender').get('code').clearValidators();
+			// this.deathCertificateForm.get('gender').get('code').clearValidators();
 			this.deathCertificateForm.get('religion').get('code').clearValidators()
 			this.deathCertificateForm.get('maritalStatus').get('code').clearValidators();
-			this.deathCertificateForm.get('education').get('code').clearValidators()
-			this.deathCertificateForm.get('occupation').get('code').clearValidators()
-			this.deathCertificateForm.get('deathPlace').get('code').clearValidators()
-			this.deathCertificateForm.get('medicalTreatment').get('code').clearValidators()
-			this.deathCertificateForm.get('medicalReason').get('code').clearValidators()
+			this.deathCertificateForm.get('education').get('code').clearValidators();
+			this.deathCertificateForm.get('occupation').get('code').clearValidators();
+			// this.deathCertificateForm.get('deathPlace').get('code').clearValidators();
+			this.deathCertificateForm.get('medicalTreatment').get('code').clearValidators();
+			this.deathCertificateForm.get('medicalReason').get('code').clearValidators();
 		} else if (event === "NO") {
 			this.requiredFeild = true;
 			this.deathCertificateForm.get('unknownDescription').reset();
 			this.deathCertificateForm.get('unknownDescription').clearValidators();
-			this.deathCertificateForm.get('gender').get('code').setValidators([Validators.required]);
-			this.deathCertificateForm.get('religion').get('code').setValidators([Validators.required])
-			this.deathCertificateForm.get('education').get('code').setValidators([Validators.required])
-			this.deathCertificateForm.get('occupation').get('code').setValidators([Validators.required])
-			this.deathCertificateForm.get('deathPlace').get('code').setValidators([Validators.required])
-			this.deathCertificateForm.get('medicalTreatment').get('code').setValidators([Validators.required])
-			this.deathCertificateForm.get('medicalReason').get('code').setValidators([Validators.required])
+			// this.deathCertificateForm.get('gender').get('code').setValidators([Validators.required]);
+			this.deathCertificateForm.get('religion').get('code').setValidators([Validators.required]);
+			this.deathCertificateForm.get('education').get('code').setValidators([Validators.required]);
+			this.deathCertificateForm.get('occupation').get('code').setValidators([Validators.required]);
+			// this.deathCertificateForm.get('deathPlace').get('code').setValidators([Validators.required]);
+			this.deathCertificateForm.get('medicalTreatment').get('code').setValidators([Validators.required]);
+			this.deathCertificateForm.get('medicalReason').get('code').setValidators([Validators.required]);
 			if (Number(this.getDelayPeriod()) > this.config.daysInThisYear()) {
 				this.mandatoryAttachment(["ORDER_EXECUTIVE_MAGISTRATE"]);
 				this.removeMandatoryAttachment(["AFFIDAVIT_HEALTH_OFFICER_ORDER"]);
@@ -346,12 +346,12 @@ export class DeathRegistrationComponent implements OnInit {
 	 */
 	upDateValidation(event: string) {
 		this.deathCertificateForm.get('unknownDescription').updateValueAndValidity();
-		this.deathCertificateForm.get('gender').get('code').updateValueAndValidity();
+		// this.deathCertificateForm.get('gender').get('code').updateValueAndValidity();
 		this.deathCertificateForm.get('maritalStatus').get('code').updateValueAndValidity();
 		this.deathCertificateForm.get('religion').get('code').updateValueAndValidity();
 		this.deathCertificateForm.get('education').get('code').updateValueAndValidity();
 		this.deathCertificateForm.get('occupation').get('code').updateValueAndValidity();
-		this.deathCertificateForm.get('deathPlace').get('code').updateValueAndValidity();
+		// this.deathCertificateForm.get('deathPlace').get('code').updateValueAndValidity();
 		this.deathCertificateForm.get('medicalTreatment').get('code').updateValueAndValidity();
 		this.deathCertificateForm.get('medicalReason').get('code').updateValueAndValidity();
 		if (event == "YES") {
@@ -394,7 +394,7 @@ export class DeathRegistrationComponent implements OnInit {
 			deceasedMiddleNameGuj: [''],
 			deceasedLastNameGuj: [''],
 			gender: this.fb.group({
-				code: [null],
+				code: [null, [Validators.required]],
 			}),
 			deathDate: [null],
 			birthDate: [null],
@@ -406,13 +406,13 @@ export class DeathRegistrationComponent implements OnInit {
 				gujName: null
 			}),
 
-			spouseFirstName: null,
-			spouseFirstNameGuj: null,
-			spouseMiddleName: null,
-			spouseMiddleNameGuj: null,
-			spouseLastName: null,
-			spouseLastNameGuj: null,
-			motherNameGuj:[null, [Validators.required]],
+			spouseFirstName: [null,[Validators.required]],
+			spouseFirstNameGuj: [null,[Validators.required]],
+			spouseMiddleName: [null],
+			spouseMiddleNameGuj: [null],
+			spouseLastName: [null,[Validators.required]],
+			spouseLastNameGuj: [null,[Validators.required]],
+			motherNameGuj:[null],
 			// fatherOrHusbandName: ['', [ValidationService.nameValidator]],
 			motherName: ['', [ValidationService.nameValidator]],
 			religion: this.fb.group({
@@ -441,7 +441,7 @@ export class DeathRegistrationComponent implements OnInit {
 
 			//step 2(8)
 			deathPlace: this.fb.group({
-				code: [null],
+				code: [null,[Validators.required]],
 				name: null
 			}),
 			otherPlace: [null, [Validators.maxLength(500)]],
@@ -692,20 +692,20 @@ export class DeathRegistrationComponent implements OnInit {
 	 * reset all spouse controlls
 	 */
 	resetSpouseCntrl(event: string) {
-		let spouseDetails: Array<any> = ['spouseFirstName', 'spouseFirstNameGuj', 'spouseLastName', 'spouseLastNameGuj', 'spouseMiddleName', 'spouseMiddleNameGuj']
-		if (event != "MARRIED" && event != "MARRIED_SEPERATE") {
-			spouseDetails.forEach(d => {
-				this.deathCertificateForm.get(d).reset();
-				this.deathCertificateForm.get(d).clearValidators();
-				this.deathCertificateForm.get(d).updateValueAndValidity();
-			});
-		} else {
-			spouseDetails.forEach(d => {
-				if (!['spouseMiddleName', 'spouseMiddleNameGuj'].includes(d))
-					this.deathCertificateForm.get(d).setValidators([Validators.required]);
-				this.deathCertificateForm.get(d).updateValueAndValidity();
-			});
-		}
+		// let spouseDetails: Array<any> = ['spouseFirstName', 'spouseFirstNameGuj', 'spouseLastName', 'spouseLastNameGuj', 'spouseMiddleName', 'spouseMiddleNameGuj']
+		// if (event != "MARRIED" && event != "MARRIED_SEPERATE") {
+		// 	spouseDetails.forEach(d => {
+		// 		this.deathCertificateForm.get(d).reset();
+		// 		this.deathCertificateForm.get(d).clearValidators();
+		// 		this.deathCertificateForm.get(d).updateValueAndValidity();
+		// 	});
+		// } else {
+		// 	spouseDetails.forEach(d => {
+		// 		if (!['spouseMiddleName', 'spouseMiddleNameGuj'].includes(d))
+		// 			this.deathCertificateForm.get(d).setValidators([Validators.required]);
+		// 		this.deathCertificateForm.get(d).updateValueAndValidity();
+		// 	});
+		// }
 	}
 
 	/**
