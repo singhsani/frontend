@@ -17,7 +17,7 @@
 				<div class="row">
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" formControlName="deceasedName"
-							placeholder="{{'deceased_name' | translate: translateKey}}" appAlphaNumeric maxlength="60" required>
+							placeholder="{{'deceased_name' | translate: translateKey}}" appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" maxlength="60" required>
 						<control-messages [control]="noRecordDeathForm.get('deceasedName')"></control-messages>
 					</mat-form-field>
 
@@ -64,7 +64,7 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput type="tel" OnlyNumber formControlName="age"
+						<input matInput type="tel" maxlength="3" OnlyNumber formControlName="age"
 							placeholder="{{'age' | translate: translateKey}}" required>
 						<control-messages [control]="noRecordDeathForm.get('age')"></control-messages>
 					</mat-form-field>

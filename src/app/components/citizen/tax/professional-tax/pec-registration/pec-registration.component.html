@@ -43,7 +43,7 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput autocomplete="off" appValidationFields [validationFieldsType]="'onlyNameWithSpace'" maxlength="100" formControlName="applicantFullName"
+						<input matInput autocomplete="off" maxlength="100" formControlName="applicantFullName"
 						 type="text" placeholder="{{'applicant_full_name' | translate: translateKey}}" required>
 						<control-messages [control]="pecRegForm.get('applicantFullName')"></control-messages>
 					</mat-form-field>
@@ -57,7 +57,7 @@
 					</div>
 
 					<mat-form-field class="col-md-4">
-						<input matInput appValidationFields [validationFieldsType]="'onlyNameWithSpace'" autocomplete="off" maxlength="100" type="text"
+						<input matInput autocomplete="off" maxlength="100" type="text"
 						 formControlName="establishmentName" placeholder="{{'establishment_name' | translate: translateKey}}" required>
 						<control-messages [control]="pecRegForm.get('establishmentName')"></control-messages>
 					</mat-form-field>
@@ -91,7 +91,7 @@
 					</div>
 
 					<mat-form-field class="col-md-4">
-						<input matInput autocomplete="off" appDate formControlName="applicantDob" [max]="maxDate" [matDatepicker]="dobpicker" (dateChange)="onDateChange('applicantDob', $event.value)"
+						<input matInput autocomplete="off" appDate formControlName="applicantDob" [max]="dobMaxDate" [matDatepicker]="dobpicker" (dateChange)="onDateChange('applicantDob', $event.value)"
 						 placeholder="{{'applicant_dob' | translate: translateKey}}" required>
 						<mat-datepicker-toggle matSuffix [for]="dobpicker"></mat-datepicker-toggle>
 						<mat-datepicker touchUi="true" #dobpicker></mat-datepicker>
@@ -205,7 +205,7 @@
 					<!-- This section is for adding multiple census number-->
 					<div class="width100p" formArrayName="censusNo">
 						<mat-form-field class="col-md-4" *ngFor="let item of pecRegForm.get('censusNo')['controls']; let i = index;" [formGroupName]="i">
-							<input matInput OnlyNumber autocomplete="off" maxlength="20" formControlName="census" type="text" placeholder="{{'census_no' | translate: translateKey}}"
+							<input matInput appMaskCensusNumber autocomplete="off" maxlength="21" formControlName="census" type="text" placeholder="{{'census_no' | translate: translateKey}}"
 							 required>
 							<button *ngIf="pecRegForm.get('censusNo')['controls'].length > 1 && isDeleteBtnShow" title="Remove Census" class="deleteBtn pull-right text-right"
 							 type="button" mat-icon-button color="warn" (click)="removeCensus(i)">
