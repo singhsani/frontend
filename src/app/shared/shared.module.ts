@@ -55,6 +55,7 @@ import { TermsConditionsComponent, DialogContentComponent } from './components/t
 import { BankDetailsComponent } from './components/bank-details/bank-details.component';
 import { NumericDirective } from './directives/numeric.directive';
 import { SelectPaymentGatewayComponent } from './components/select-payment-gateway/select-payment-gateway.component';
+import { MaskCensusNumberDirective } from './directives/mask-census-number.directive';
 /* import pipes end*/
 
 const COMPONENTS = [
@@ -87,12 +88,13 @@ const COMPONENTS = [
 	TermsConditionsComponent,
 	DialogContentComponent,
 	BankDetailsComponent,
-	SelectPaymentGatewayComponent
+	SelectPaymentGatewayComponent,
+	MaskCensusNumberDirective
 ]
 
 @NgModule({
 	declarations: [
-		...COMPONENTS,
+		...COMPONENTS
 	],
 	imports: [
 		CommonModule,

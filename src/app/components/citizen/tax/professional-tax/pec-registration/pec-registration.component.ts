@@ -48,6 +48,7 @@ export class PecRegistrationComponent implements OnInit {
 	apiCode: string = '';
 	showButtons: boolean = false;
 
+	dobMaxDate = moment(new Date()).subtract("18", "years").format("YYYY-MM-DD") ;
 	maxDate: Date = new Date();
 	maxCommDate = moment().subtract(1, 'months').endOf('month').format('YYYY-MM-DD');// maxt Date for commencement
 	pecRegForm: FormGroup;
