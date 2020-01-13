@@ -10,7 +10,7 @@
 
 			<mat-form-field class="col-md-6 iconMat">
 				<mat-icon matPrefix>face</mat-icon>
-				<input matInput type="text" placeholder="Hospital Name" appAlphaNumeric maxlength="100" formControlName="hospitalName" required>
+				<input matInput type="text" placeholder="Hospital Name" appValidationFields [validationFieldsType]="'alphanumericWithSpace'" maxlength="100" formControlName="hospitalName" required>
 				<control-messages [control]="regForm.get('hospitalName')"></control-messages>
 			</mat-form-field>
 			
