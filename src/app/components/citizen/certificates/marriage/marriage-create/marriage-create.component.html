@@ -339,8 +339,8 @@
 
 				<div class="row" [hidden]="marriageFormGroup.get('isGroomVisa').value == true">
 					<h2>{{'address' | translate:translateKey }}:</h2>
-					<!-- <app-address #address [requiredFeilds]="!marriageFormGroup.get('isGroomVisa').value"
-						[addressFormGroup]="marriageFormGroup.get('groomAddress')"></app-address> -->
+					<app-address #address [requiredFeilds]="!marriageFormGroup.get('isGroomVisa').value"
+						[addressFormGroup]="marriageFormGroup.get('groomAddress')"></app-address>
 				</div>
 
 				<app-action-bar [uploadFiles]="uploadFilesArray" [form]="marriageFormGroup"
