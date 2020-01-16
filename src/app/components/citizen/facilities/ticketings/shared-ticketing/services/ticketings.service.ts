@@ -130,6 +130,15 @@ export class TicketingsService {
   }
 
   /**
+  * Method Is used to cerfitrcaate
+  * @param refNumber - reference number
+  */
+  printCertificate(ids: any) {
+  this.requestURL = `api/${this.moduleName}/${this.resourceType}/printAdoptionCertificate?Id=${ids}`;
+  return this.http.get(this.requestURL, 'printReceipt');
+    }
+
+  /**
   * Method Is used to print zoo visiting tickets after successful payment
   * @param refNumber - reference number
   */

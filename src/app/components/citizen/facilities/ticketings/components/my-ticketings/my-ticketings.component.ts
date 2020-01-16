@@ -57,6 +57,7 @@ export class MyTicketingsComponent implements OnInit {
   modalResRef: BsModalRef;
   modalJsonRef: BsModalRef;
   JSONdata: any;
+  rejectedMessage : any;
 
 	/**
 	 * Lookups & arrays.
@@ -135,13 +136,14 @@ export class MyTicketingsComponent implements OnInit {
     this.CancelRequestList = [];
     this.refNumber = refNumber;
     this.cancellationType = null;
-    this.CancelSlotList = scheduleList.sort((a, b) => {
-      if ((new Date(a.bookingDate).getTime()) <= (new Date(b.bookingDate).getTime())) {
-        return 1;
-      } else {
-        return -1;
-      }
-    });
+    // this.CancelSlotList = scheduleList.sort((a, b) => {
+    //   if ((new Date(a.bookingDate).getTime()) <= (new Date(b.bookingDate).getTime())) {
+    //     return 1;
+    //   } else {
+    //     return -1;
+    //   }
+    // });
+    this.rejectedMessage = scheduleList.rejectMessage;
     this.modalReqRef = this.modalService.show(template, Object.assign({ ignoreBackdropClick: true }, { class: 'gray modal-lg customWidth' }));
   }
 
@@ -360,6 +362,23 @@ export class MyTicketingsComponent implements OnInit {
 	 */
   printReceipt(element, serviceType: string) {
     this.ticketingService.printTicketingReceipt(element.refNumber, serviceType).subscribe(response => {
+      let sectionToPrint: any = document.getElementById('sectionToPrint');
+      sectionToPrint.innerHTML = response;
+      setTimeout(() => {
+        window.print();
+      });
+
+    }, err => {
+      this.commonService.openAlert('Error', err.message, 'warning');
+    });
+  }
+
+  /**
+	 * Method is used to print certifacte.
+	 * @param element - json object for receipt.
+	 */
+  printcertifacte(element) {
+    this.ticketingService.printCertificate(element.id).subscribe(response => {
       let sectionToPrint: any = document.getElementById('sectionToPrint');
       sectionToPrint.innerHTML = response;
       setTimeout(() => {

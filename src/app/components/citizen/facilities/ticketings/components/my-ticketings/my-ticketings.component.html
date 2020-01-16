@@ -63,7 +63,7 @@
 				<div class="mobile-label">{{'date_of_booking' | translate:translateKey}}</div>
 				<div class="mobile-label1">:</div>
 				<div class="row-inside">
-					{{bookingUtils.returnProperDate(element.bookingDate)}}
+					{{bookingUtils.returnProperDate(element.adoptionRequestDate)}}
 				</div>
 			</mat-cell>
 		</ng-container>
@@ -97,13 +97,20 @@
 							{{'make_payment' | translate:translateKey}}
 						</button>
 
+						<button *ngIf="element.status == ticketingConstants.BOOKED" mat-menu-item color="primary" (click)="printcertifacte(element)">
+							<mat-icon title="Make Payment" color="primary">print</mat-icon>
+							Certificate
+						</button>
+
+
+
 						<button *ngIf="element.status != ticketingConstants.PAYMENT_REQUIRED" mat-menu-item color="primary" (click)="printReceipt(element, element.payableServiceType)">
 							<mat-icon title="Print Receipt" color="primary">print</mat-icon>
 							{{'receipt_reprint' | translate:translateKey}}
 						</button>
 
 
-						<button *ngIf="element.status != ticketingConstants.PAYMENT_REQUIRED" mat-menu-item data-toggle="modal" color="primary" (click)="openModal(templateRequestModel, element.scheduleList, element.refNumber);">
+						<button *ngIf="element.status == ticketingConstants.REJECTED" mat-menu-item data-toggle="modal" color="primary" (click)="openModal(templateRequestModel, element, element.refNumber);">
 							<mat-icon title="View Booking Details" color="primary">details</mat-icon>
 							{{'details' | translate:translateKey}}
 						</button>
@@ -133,7 +140,7 @@
 <ng-template #templateRequestModel>
 
 	<div class="modal-header customthead">
-		<h4 class="modal-title pull-left">{{'list_slots' | translate:translateKey}}</h4>
+		<h4 class="modal-title pull-left">Message</h4>
 		<div>
 			<button title="Close" class=" mat-icon-button" aria-label="Close" (click)="modalReqRef.hide()">
 				<mat-icon>close</mat-icon>
@@ -142,56 +149,12 @@
 	</div>
 
 	<div class="modal-body scrollModel">
-
-		<table class="table table-bordered">
-			<thead class="customthead">
-				<tr>
-					<th scope="col"> {{'s_no' | translate:translateKey}} </th>
-					<th scope="col">{{'booking_no' | translate:translateKey}}</th>
-					<th scope="col">{{'slot_or_shift_no' | translate:translateKey}}</th>
-					<th scope="col"> {{'date_of_programme' | translate:translateKey}}</th>
-					<th scope="col"> {{'day_of_programme' | translate:translateKey}}</th>
-					<th scope="col"> {{'start_time' | translate:translateKey}}</th>
-					<th scope="col">{{'end_time' | translate:translateKey}}</th>
-					<th scope="col">{{'shift' | translate:translateKey}}</th>
-					<th scope="col">{{'booking_status' | translate:translateKey}}</th>
-					<th scope="col" class="text-center">
-						{{'actions' | translate:translateKey}}
-						<mat-checkbox labelPosition="after" [disabled]="getAllDisabled() || bookingService.resourceType == 'childrenTheater'" [checked]="getAllSelected()"
-						 (change)="chooseAllForCancel($event.checked)">
-							{{'select_all' | translate:translateKey}}
-						</mat-checkbox>
-					</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr *ngFor="let shifts of CancelSlotList; let i = index;">
-					<th scope="row">{{i+1}}</th>
-					<td>{{shifts.bookingNo?shifts.bookingNo: 'NA' }}</td>
-					<td>{{bookingUtils.returnProperDate(shifts.bookingDate)}}</td>
-					<td>{{bookingUtils.getDay(shifts.bookingDate)}}</td>
-					<td>{{shifts.startTime}}</td>
-					<td>{{shifts.endTime}}</td>
-					<td>{{shifts.shiftType == 'NONE' ? 'NA' : shifts.shiftType}}</td>
-					<td>{{bookingUtils.getProperErrorMessage(shifts.status)}}</td>
-					<td>
-						<mat-checkbox [disabled]="(shifts.status == ticketingConstants.CANCELLATION_REQUEST || shifts.status == ticketingConstants.CANCELLATION_APPROVED || bookingService.resourceType == 'childrenTheater')"
-						 [checked]="getSelected(shifts.bookingNo) || (shifts.status == ticketingConstants.CANCELLATION_REQUEST || shifts.status == ticketingConstants.CANCELLATION_APPROVED)"
-						 (change)="chooseForCancel(shifts, $event.checked)">
-						</mat-checkbox>
-					</td>
-				</tr>
-			</tbody>
-		</table>
+ 
+		 {{rejectedMessage}}
+		
 	</div>
 
-	<div class="modal-footer customthead">
-		<button color="white" [disabled]="CancelRequestList.length == 0" title="{{'cancel_request' | translate:translateKey}}" mat-stroked-button
-		 (click)="RequestCancel()">
-			<mat-icon>check_circle_outline</mat-icon>
-			{{'cancel_request' | translate:translateKey}}
-		</button>
-	</div>
+	
 
 </ng-template>
 
