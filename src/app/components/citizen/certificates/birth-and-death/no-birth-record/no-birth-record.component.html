@@ -20,21 +20,21 @@
 
                     <mat-form-field class="col-md-4">
                         <input matInput type="text" appAlphaNumeric maxlength="60" formControlName="childName"  appValidationFields
-                            validationFieldsType="onlyNameWithOutSpace"
+                            validationFieldsType="onlyNameWithSpace"
                             placeholder="{{'child_name' | translate: translateKey}}" required>
                         <control-messages [control]="noRecordBirthForm.get('childName')"></control-messages>
                     </mat-form-field>
 
                     <mat-form-field class="col-md-4">
                         <input matInput type="text" appAlphaNumeric maxlength="60" formControlName="fatherName" appValidationFields
-                            validationFieldsType="onlyNameWithOutSpace"
+                            validationFieldsType="onlyNameWithSpace"
                             placeholder="{{'father_name' | translate: translateKey}}" required>
                         <control-messages [control]="noRecordBirthForm.get('fatherName')"></control-messages>
                     </mat-form-field>
 
                     <mat-form-field class="col-md-4">
                         <input matInput type="text" appAlphaNumeric maxlength="60" formControlName="motherName" appValidationFields
-                            validationFieldsType="onlyNameWithOutSpace"
+                            validationFieldsType="onlyNameWithSpace"
                             placeholder="{{'mother_name' | translate: translateKey}}" required>
                         <control-messages [control]="noRecordBirthForm.get('motherName')"></control-messages>
                     </mat-form-field>
