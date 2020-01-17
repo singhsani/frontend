@@ -10,15 +10,18 @@
 
 			<mat-form-field class="col-md-6 iconMat">
 				<mat-icon matPrefix>face</mat-icon>
-				<input matInput type="text" placeholder="Hospital Name" appValidationFields [validationFieldsType]="'alphanumericWithSpace'" maxlength="100" formControlName="hospitalName" required>
+				<input matInput type="text" placeholder="Hospital Name" appValidationFields
+					[validationFieldsType]="'alphanumericWithSpace'" maxlength="100" formControlName="hospitalName"
+					required>
 				<control-messages [control]="regForm.get('hospitalName')"></control-messages>
 			</mat-form-field>
-			
+
 			<div class="col-md-6">
 				<div class="iconMat2 ngSelect" formGroupName="hospitalType">
 					<mat-icon matPrefix>face</mat-icon>
 					<ng-select placeholder="Hospital Type *" formControlName="code">
-						<ng-option *ngFor="let hosType of arrHospitalType" [value]="hosType.code">{{hosType.name}}</ng-option>
+						<ng-option *ngFor="let hosType of arrHospitalType" [value]="hosType.code">{{hosType.name}}
+						</ng-option>
 					</ng-select>
 					<control-messages [control]="regForm.get('hospitalType').get('code')"></control-messages>
 				</div>
@@ -26,13 +29,15 @@
 
 			<mat-form-field class="col-md-12 iconMat">
 				<mat-icon matPrefix>location_on</mat-icon>
-				<input matInput type="text" maxlength="60" placeholder="Address Line 1" formControlName="addressLine1" required>
+				<input matInput type="text" maxlength="60" placeholder="Address Line 1" formControlName="addressLine1"
+					required>
 				<control-messages [control]="regForm.get('addressLine1')"></control-messages>
 			</mat-form-field>
 
 			<mat-form-field class="col-md-12 iconMat">
 				<mat-icon matPrefix>location_on</mat-icon>
-				<input matInput type="text" maxlength="60" placeholder="Address Line 2" formControlName="addressLine2" required>
+				<input matInput type="text" maxlength="60" placeholder="Address Line 2" formControlName="addressLine2"
+					required>
 				<control-messages [control]="regForm.get('addressLine2')"></control-messages>
 			</mat-form-field>
 
@@ -45,7 +50,7 @@
 				<mat-icon matPrefix>location_city</mat-icon>
 				<input matInput type="text" placeholder="State" formControlName="state" required>
 			</mat-form-field>
-			
+
 			<mat-form-field class="col-md-4 iconMat">
 				<mat-icon matPrefix>place</mat-icon>
 				<input matInput type="text" placeholder="Country" formControlName="country" required>
@@ -61,47 +66,51 @@
 					</mat-radio-group>
 				</div>
 			</div> -->
-			
+
 		</div>
-		
+
 		<div class="row mt-2" formGroupName="userDetail">
 			<mat-card class="col-md-12 cardH2">
 				<h2>Contact person details</h2>
 			</mat-card>
 			<mat-form-field class="col-md-6 iconMat">
 				<mat-icon matPrefix>face</mat-icon>
-				<input matInput type="text" maxlength="60" placeholder="First Name" appValidationFields validationFieldsType="onlyNameWithOutSpace" formControlName="firstName"
-				 required>
+				<input matInput type="text" maxlength="60" placeholder="First Name" appValidationFields
+					validationFieldsType="onlyNameWithOutSpace" formControlName="firstName" required>
 				<control-messages [control]="regForm.get('userDetail').get('firstName')"></control-messages>
 			</mat-form-field>
 
 			<mat-form-field class="col-md-6 iconMat">
 				<mat-icon matPrefix>face</mat-icon>
-				<input matInput type="text"  maxlength="60" placeholder="Last Name" appValidationFields validationFieldsType="onlyNameWithOutSpace" formControlName="lastName"
-				 required>
+				<input matInput type="text" maxlength="60" placeholder="Last Name" appValidationFields
+					validationFieldsType="onlyNameWithOutSpace" formControlName="lastName" required>
 				<control-messages [control]="regForm.get('userDetail').get('lastName')"></control-messages>
 			</mat-form-field>
 
 			<mat-form-field class="col-md-6 iconMat">
 				<mat-icon matPrefix>mail_outline</mat-icon>
-				<input matInput type="email" placeholder="Email" maxlength="60" formControlName="email" required>
+				<input matInput type="email" autocomplete="off" placeholder="Email" maxlength="60"
+					formControlName="email" required>
 				<control-messages [control]="regForm.get('userDetail').get('email')"></control-messages>
 			</mat-form-field>
 
 			<mat-form-field class="col-md-6 iconMat">
 				<mat-icon matPrefix>phone_android</mat-icon>
-				<input matInput type="tel" placeholder="Mobile Number" formControlName="cellNo" minlength="10" maxlength="10" required>
+				<input matInput type="tel" autocomplete="off" placeholder="Mobile Number" formControlName="cellNo"
+					minlength="10" maxlength="10" required>
 				<control-messages [control]="regForm.get('userDetail').get('cellNo')"></control-messages>
 			</mat-form-field>
 
 			<mat-form-field class="col-md-6 iconMat">
 				<mat-icon matPrefix>lock_outline</mat-icon>
-				<input matInput type="password" placeholder="Password" maxlength="60" formControlName="password" required>
+				<input matInput type="password" autocomplete="off" placeholder="Password" maxlength="60"
+					formControlName="password" required>
 			</mat-form-field>
 
 			<mat-form-field class="col-md-6 iconMat">
 				<mat-icon matPrefix>lock_outline</mat-icon>
-				<input matInput type="password" placeholder="Confirm Password" maxlength="60" formControlName="confirmPassword" required>
+				<input matInput type="password" autocomplete="off" placeholder="Confirm Password" maxlength="60"
+					formControlName="confirmPassword" required>
 			</mat-form-field>
 
 			<div class="col-md-6 offset-md-6">
@@ -109,7 +118,6 @@
 			</div>
 
 		</div>
-
 
 		<div class="text-center mt-4">
 			<button type="submit" mat-raised-button color="primary" [disabled]="regForm.invalid" class="width150">

@@ -2,6 +2,7 @@ import { ValidationService } from './../../../../shared/services/validation.serv
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validator, Validators } from '@angular/forms';
+import { CommonService } from '../../../../shared/services/common.service';
 
 import { HosAppService } from './../../../../core/services/hospital/app-services/hos-app.service';
 import { ManageRoutes } from '../../../../config/routes-conf';
@@ -29,7 +30,8 @@ export class HospitalRegisterComponent implements OnInit {
 		private router: Router,
 		private fb: FormBuilder,
 		private appService: HosAppService,
-		private toster: ToastrService
+		private toster: ToastrService,
+		private commonService: CommonService
 	) {
 
 	}
@@ -57,8 +59,8 @@ export class HospitalRegisterComponent implements OnInit {
 			city: [{ value: 'Vadodara', disabled: true }, Validators.required],
 			state: [{ value: 'Gujarat', disabled: true }, Validators.required],
 			country: [{ value: 'India', disabled: true }, Validators.required],
-			
-			
+
+
 		}, { validator: this.matchingPasswords('password', 'confirmPassword') });
 
 		this.appService.getHosUserLookups().subscribe(
@@ -97,12 +99,14 @@ export class HospitalRegisterComponent implements OnInit {
 
 		this.appService.registerUser(formVals.getRawValue()).subscribe(
 			res => {
-				this.toster.success("We have sent a authentication link on your email");
-				this.router.navigate(['hospital/auth/login']);
-			},
-			err => {
-				this.toster.error(err.error[0].code);
-			});
-	}
+				// this.toster.success("Your application for hospital registration is submitted to Vadodara Municipal Corporation Health Department. For more update you can check your registered mail ID. Thank you for the Registration");
+				this.commonService.openAlert("Success", "Your application for hospital registration is submitted to Vadodara Municipal Corporation Health Department. For more update you can check your registered mail ID. Thank you for the Registration", "success");
+				this.regForm.reset();
+				// this.router.navigate(['hospital/auth/login']);
+			}
+			// err => {
+			// 	this.toster.error(err.error[0].code);
+			// });
+		)}
 
 }

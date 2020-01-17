@@ -87,10 +87,12 @@ export class TokenInterceptor implements HttpInterceptor {
 								// 	break;
 								case 401:
 									this.toaster.error(err.error.message ? err.error.message : err.error.error);
-									if (this.commonService.getUserType() === 'HOSPITAL') {
-										this.hosAppService.logout();
-									} else {
-										this.appService.logout();
+									if (this.commonService.getUserType()) {
+										if (this.commonService.getUserType() === 'HOSPITAL') {
+											this.hosAppService.logout();
+										} else {
+											this.appService.logout();
+										}
 									}
 									// this.commonService.openAlert('Warning!', err.error.message ? err.error.message : err.error.error, 'warning', '', cb => {
 									// 	if (this.commonService.getUserType() === 'HOSPITAL') {
