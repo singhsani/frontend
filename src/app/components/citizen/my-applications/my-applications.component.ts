@@ -208,11 +208,17 @@ export class MyApplicationsComponent implements OnInit {
 		this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);
 		this.formService.printView(id).subscribe(
 			htmlResponse => {
-				let sectionToPrint: any = document.getElementById('sectionToPrint');
-				sectionToPrint.innerHTML = htmlResponse;
+				// let sectionToPrint: any = document.getElementById('sectionToPrint');
+				// sectionToPrint.innerHTML = htmlResponse;
+				// setTimeout(() => {
+				// 	window.print();
+				// });
+				let printWindow: any = window.open();
 				setTimeout(() => {
-					window.print();
-				});
+					printWindow.document.body.innerHTML = htmlResponse;
+					printWindow.print();
+					printWindow.close();
+				}, 100);
 			},
 			err => {
 				//this.commonService.successAlert('Error!', err.error[0].message, 'error');
@@ -359,7 +365,7 @@ export class MyApplicationsComponent implements OnInit {
 			return false;
 	}
 
-	getInnerHTML(){
+	getInnerHTML() {
 		return `<b>Remarks :</b> ${this.rejectRemarks} <br> <b>Reason :</b> ${this.reason}`;
 	}
 
@@ -380,10 +386,10 @@ export class MyApplicationsComponent implements OnInit {
 			},
 			err => {
 				let retUrl: string = '/citizen/my-applications';
-				let retAfterPayment :string = environment.returnUrl;
-				
+				let retAfterPayment: string = environment.returnUrl;
+
 				if (err.status === 402) {
-					let payData = this.commonService.storePaymentInfo(err.error.data, retUrl,retAfterPayment);
+					let payData = this.commonService.storePaymentInfo(err.error.data, retUrl, retAfterPayment);
 					let html =
 						`
 					<div class="text-center">
@@ -426,7 +432,7 @@ export class MyApplicationsComponent implements OnInit {
 					this.commonService.openAlert("Error", "Error Occured for final submit : " + err.error[0].message, "warning")
 				}
 			});
-			
+
 	}
 
 }
