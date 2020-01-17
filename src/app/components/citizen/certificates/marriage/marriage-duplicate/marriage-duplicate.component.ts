@@ -352,7 +352,7 @@ export class MarriageDuplicateComponent implements OnInit {
 		this.paginator.pageSize = 5;
 		this.paginator.pageIndex = 0;
 		this.config.getAllData(this.sort, this.paginator, this.pageSize, this.marriageSearchForm.get('apiType').value, this.marriageSearchForm).subscribe((data: any) => {
-			if (data.data.length) {
+			if (data.length > 0 && data.data.length) {
 				this.resultsLength = data.totalRecords
 				this.dataSource.data = data.data;
 			}
