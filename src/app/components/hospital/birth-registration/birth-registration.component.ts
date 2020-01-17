@@ -489,13 +489,45 @@ export class BirthRegistrationComponent implements OnInit {
 	 * Update birth place regarding changes.
 	 * @param val - birth place type.
 	 */
-	changeInBirthPlace(val: string) {
-		if (val == 'HOME') {
-			this.uploadFileArray.find(f => f.documentIdentifier == 'AAYAS_REPORT_OR_DOCTOR_CERTIFICATE').mandatory = true;
-		} else {
-			this.uploadFileArray.find(f => f.documentIdentifier == 'AAYAS_REPORT_OR_DOCTOR_CERTIFICATE').mandatory = false;
+	changeInBirthPlace(val?: string) {
+		// if (val == 'HOME') {
+		// 	this.uploadFileArray.find(f => f.documentIdentifier == 'AAYAS_REPORT_OR_DOCTOR_CERTIFICATE').mandatory = true;
+		// } else {
+		// 	this.uploadFileArray.find(f => f.documentIdentifier == 'AAYAS_REPORT_OR_DOCTOR_CERTIFICATE').mandatory = false;
+		// }
+		let birthPlaceChange = this.birthCertificateForm.controls.birthPlace.get("code").value;
+
+		if (!_.isEmpty(birthPlaceChange)) {
+			if (birthPlaceChange != 'OTHER_PLACE') {
+				this.uploadFileArray.find(d => d.documentIdentifier == "AAYAS_REPORT_OR_DOCTOR_CERTIFICATE").mandatory = false;
+			} else if (birthPlaceChange == 'OTHER_PLACE') {
+				this.uploadFileArray.find(d => d.documentIdentifier == "AAYAS_REPORT_OR_DOCTOR_CERTIFICATE").mandatory = true;
+			}
+		}
+		else {
+			this.config.requiredDocumentList(this.birthCertificateForm, this.uploadFileArray);
+		}
+
+	}
+
+	/**
+    * Method is create required document array
+    */
+   requiredDocumentList() {
+
+	let birthPlaceChange = this.birthCertificateForm.controls.birthPlace.get("code").value;
+
+	if (!_.isEmpty(birthPlaceChange)) {
+		if (birthPlaceChange != 'OTHER_PLACE') {
+			this.uploadFileArray.find(d => d.documentIdentifier == "AAYAS_REPORT_OR_DOCTOR_CERTIFICATE").mandatory = false;
+		} else if (birthPlaceChange == 'OTHER_PLACE') {
+			this.uploadFileArray.find(d => d.documentIdentifier == "AAYAS_REPORT_OR_DOCTOR_CERTIFICATE").mandatory = true;
 		}
 	}
+	else {
+		this.config.requiredDocumentList(this.birthCertificateForm, this.uploadFileArray);
+	}
+}
 
 	/**
 	 * Method Is used to get proper child weight.

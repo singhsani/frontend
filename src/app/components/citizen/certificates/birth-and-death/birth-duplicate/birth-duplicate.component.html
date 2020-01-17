@@ -17,7 +17,7 @@
                     </mat-radio-group>
                 </div>
                 <mat-form-field formGroupName="duplicateCopyMode" class="col-md-4">
-                    <mat-select placeholder="{{'duplicate_copy_mode' | translate:translateKey}}" formControlName="code">
+                    <mat-select placeholder="{{'duplicate_copy_mode' | translate:translateKey}} *" formControlName="code">
                         <mat-option *ngFor="let duplicatemode of DuplicateCopyMode" [value]="duplicatemode.code">
                             {{duplicatemode.name}}
                         </mat-option>
@@ -25,7 +25,7 @@
                     <control-messages [control]="birthDuplicateForm.get('duplicateCopyMode').get('code')"></control-messages>
                 </mat-form-field>
                 <mat-form-field class="col-md-4">
-                    <input matInput maxlength="2" type="number" [min]="0" OnlyNumber placeholder="{{'total_copies' | translate:translateKey}}"
+                    <input matInput maxlength="2" type="number" [min]="0" OnlyNumber placeholder="{{'total_copies' | translate:translateKey}} *"
                         formControlName="totalCopies">
                     <control-messages [control]="birthDuplicateForm.get('totalCopies')"></control-messages>
                 </mat-form-field>

@@ -23,7 +23,7 @@
                 <div class="row">
 
                     <div formGroupName="birthPlace" class="col-md-4 ngSelect">
-                        <ng-select (change)="config.changeHandler($event, 'OTHER_PLACE', birthCertificateForm, 'otherPlace');changeBirthPlace($event)" placeholder="{{'birth_place' | translate:translateKey}} *"
+                        <ng-select (change)="config.changeHandler($event, 'OTHER_PLACE', birthCertificateForm, 'otherPlace');changeBirthPlace($event);requiredDocumentList()" placeholder="{{'birth_place' | translate:translateKey}} *"
                             formControlName="code">
                             <ng-option *ngFor="let birthplace of BirthPlaces" [value]="birthplace.code">
                                 {{birthplace.name}}</ng-option>
