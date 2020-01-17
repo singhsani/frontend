@@ -249,11 +249,17 @@ export class HosMyApplicationsComponent implements OnInit {
 	
 		this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);
 		this.formService.printView(id).subscribe(htmlResponse => {
-				let sectionToPrint: any = document.getElementById('sectionToPrint');
-				sectionToPrint.innerHTML = htmlResponse;
+				// let sectionToPrint: any = document.getElementById('sectionToPrint');
+				// sectionToPrint.innerHTML = htmlResponse;
+				// setTimeout(() => {
+				// 	window.print();
+				// });
+				let printWindow: any = window.open();
 				setTimeout(() => {
-					window.print();
-				});
+					printWindow.document.body.innerHTML = htmlResponse;
+					printWindow.print();
+					printWindow.close();
+				}, 100);
 			},
 			err => {
 				//this.commonService.successAlert('Error!', err.error[0].message, 'error');
