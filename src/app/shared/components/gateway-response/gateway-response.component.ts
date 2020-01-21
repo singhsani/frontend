@@ -19,6 +19,7 @@ export class GatewayResponseComponent implements OnInit {
 	interval: any;
 	paymentStatus: any;
 	dispData: any;
+	isSearchanble:string="";
 
 	constructor(
 		private formService: FormsActionsService,
@@ -34,7 +35,7 @@ export class GatewayResponseComponent implements OnInit {
 		this.route.queryParams.subscribe(param => {
 			// if (param && param.rqst_token) {
 			if (param && param.order_id) {
-				this.gatewayResponse(param.order_id);
+				this.gatewayResponse(param.order_id, param.searchable);
 			} else if (param && param.txtRefNo) {
 				this.getBillDeskTransactionDetails(param.txtRefNo);
 			} else {
@@ -80,13 +81,19 @@ export class GatewayResponseComponent implements OnInit {
 	 * This method is used to get cc avenue transation details
 	 * @param token - token from api
 	 */
-	gatewayResponse(token) {
+	gatewayResponse(token, isSearchanble) {
 		// this.formService.getPaymentResponse(token).subscribe(res => {
+		this.isSearchanble = isSearchanble;
+		if (isSearchanble == "true") {
+			this.dispData.serviceType = this.dispData.payableServiceType;
+			this.formService.apiType = 'servicePayment';
+			this.formService.paymentServicePost(this.dispData).subscribe(respData => {
+			});
+		}
+
 		this.formService.getCCAvenuePaymentResponse(token).subscribe(res => {
 			this.responseObj = res.data;
-
 			if (res.success) {
-
 				if (this.responseObj.order_status == 'Success') {
 					this.paymentStatus = _.upperCase(this.responseObj.order_status);
 					this.postSessionData(this.dispData, 'CCAVENUE', this.responseObj);
@@ -99,8 +106,8 @@ export class GatewayResponseComponent implements OnInit {
 				this.toastr.error('Transaction failed');
 				this.redirectToHome();
 			}
-
 		});
+
 	}
 
 	/**
@@ -114,7 +121,7 @@ export class GatewayResponseComponent implements OnInit {
 			id: null,
 			uniqueId: null,
 			version: null,
-			refNumber:data.refNumber ? data.refNumber : null,
+			refNumber: data.refNumber ? data.refNumber : null,
 			resourceType: data.resourceType ? data.resourceType : null,
 			response: JSON.stringify({
 				data: "paid",
@@ -125,12 +132,12 @@ export class GatewayResponseComponent implements OnInit {
 			payableServiceType: data.payableServiceType,
 			amount: responseObj ? responseObj.mer_amount : 0
 		}
-		
+
 		if (payGateway == 'BILLDESK') {
 			payData.refNumber = data.txnReferenceNo;
-			payData.transactionId =  data.txnReferenceNo;
+			payData.transactionId = data.txnReferenceNo;
 			payData.payableServiceType = data.additionalInfo2;
-			payData.amount =  data.txnAmount;
+			payData.amount = data.txnAmount;
 		}
 
 		if (data.payableServiceType == "PROFESSIONAL_TAX") {
@@ -149,38 +156,47 @@ export class GatewayResponseComponent implements OnInit {
 						}, 0);
 
 					});
-
 				}
 			});
 		} else {
-			this.formService.createPayment(payData).subscribe(payResp => {
-				const payRespData = payResp.data.responseData;
+			if (this.isSearchanble == "true") {
+				setTimeout(() => {
+					this.redirectToMyApplication('/citizen/my-applications', this.dispData.refNumber, payData.resourceType, this.dispData.payableServiceType);
+				}, 10000);
 
-				if (payRespData.fileStatus == "PAYMENT_RECEIVED") {
+				this.interVal();
+			}else{
+				this.formService.createPayment(payData).subscribe(payResp => {
+					const payRespData = payResp.data.responseData;
+	
+					if (payRespData.fileStatus == "PAYMENT_RECEIVED") {
+	
+						this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(payRespData.serviceDetail.code);
+						this.formService.submitFormData(payRespData.serviceFormId).subscribe(res => {
+							if (res) {
+								setTimeout(() => {
+									this.redirectToMyApplication(data.myApplicationUrl, payRespData.refNumber, payData.resourceType, payRespData.payableServiceType);
+								}, 10000);
+	
+								this.interVal();
+							}
+						});
+					}
+					// if (payRespData.status == "DEPOSIT_REQUIRED") { //for booking module
+					else {
+						setTimeout(() => {
+							this.redirectToMyApplication(data.myApplicationUrl, payRespData.refNumber, payData.resourceType, payRespData.payableServiceType);
+						}, 10000);
+	
+						this.interVal();
+					}
+				},
+					err => {
+						this.toastr.error('Internal server error');
+					});	
+			}
 
-					this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(payRespData.serviceDetail.code);
-					this.formService.submitFormData(payRespData.serviceFormId).subscribe(res => {
-						if (res) {
-							setTimeout(() => {
-								this.redirectToMyApplication(data.myApplicationUrl, payRespData.refNumber, payData.resourceType, payRespData.payableServiceType);
-							}, 10000);
-
-							this.interVal();
-						}
-					});
-				}
-				// if (payRespData.status == "DEPOSIT_REQUIRED") { //for booking module
-				else {
-					setTimeout(() => {
-						this.redirectToMyApplication(data.myApplicationUrl, payRespData.refNumber, payData.resourceType, payRespData.payableServiceType);
-					}, 10000);
-
-					this.interVal();
-				}
-			},
-				err => {
-					this.toastr.error('Internal server error');
-				});
+		
 		}
 	}
 

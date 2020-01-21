@@ -1,9 +1,9 @@
 import { Component, OnInit, Inject, ViewChild } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSort } from '@angular/material';
 import { MatTableDataSource, MatPaginator } from '@angular/material';
-import {FormControl} from '@angular/forms';
-import { Observable ,  merge ,  of as observableOf } from 'rxjs';
-import { catchError ,  map ,  startWith ,  switchMap } from 'rxjs/operators';
+import { FormControl } from '@angular/forms';
+import { Observable, merge, of as observableOf } from 'rxjs';
+import { catchError, map, startWith, switchMap } from 'rxjs/operators';
 import { PaginationService } from '../../../core/services/citizen/data-services/pagination.service';
 
 @Component({
@@ -16,22 +16,24 @@ export class TransactionsComponent implements OnInit {
 	translateKey: string = "addTransctionScreen";
 
 	@ViewChild(MatPaginator) paginator: MatPaginator;
-
-	displayedColumns: string[] = ['id', 'chalanNumber', 'amount', 'paymentDate', 'payableServices', 'transactionId', 'paymentStatus','detailsButton'];
+	@ViewChild(MatSort) sort: MatSort;
+	
+	displayedColumns: string[] = ['id', 'chalanNumber', 'amount', 'paymentDate', 'payableServices', 'transactionId', 'paymentStatus', 'detailsButton'];
 	myControl: FormControl = new FormControl();
 	resultsLength: number = 0;
-	pageSize: number = 10;
+	pageSize: number = 5;
 	isLoadingResults: boolean = true;
 	isRateLimitReached: boolean = false;
 	dataSource = new MatTableDataSource();
 	filteredOptions: Observable<any[]>;
 
 	constructor(private dialog: MatDialog,
-		private paginationService: PaginationService){
+		private paginationService: PaginationService) {
 	}
 
 	ngOnInit() {
-
+		// If the user changes the sort order, reset back to the first page.
+		this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
 		this.getAllPaymentsList();
 
 	}
@@ -41,7 +43,7 @@ export class TransactionsComponent implements OnInit {
 	 * @param transaction - pass transaction object.
 	 */
 	openDailog(transaction): void {
-    this.dialog.open(TransactionDataDialog, {
+		this.dialog.open(TransactionDataDialog, {
 			width: '400px',
 			data: {
 				tData: transaction
@@ -54,13 +56,16 @@ export class TransactionsComponent implements OnInit {
 	 * Get All Payments List For Citizen.
 	 */
 	getAllPaymentsList() {
-		merge(this.paginator.page)
+		this.paginator.pageSize = 5;
+		this.paginator.pageIndex = 0;
+
+		merge(this.sort.sortChange, this.paginator.page)
 			.pipe(
 				startWith({}),
 				switchMap(() => {
 					this.isLoadingResults = true;
 					this.paginationService.pageIndex = (this.paginator.pageIndex + 1);
-					this.paginationService.pageSize = this.pageSize;
+					this.paginationService.pageSize = this.paginator.pageSize;
 					return this.paginationService!.getAllPaymentsData();// NOSONAR
 				}),
 				map(data => {
@@ -102,14 +107,14 @@ export class TransactionsComponent implements OnInit {
     Chalan Number: {{tData.chalanNumber}}
   </li>
   <li>
-    Payment Date: {{tData.paymentDate}}
+    Payment Date: {{tData.paymentDate | date:'dd/MM/yyyy hh:mm:ss a'}}
   </li>
   <li>
     Status: {{tData.paymentStatus}}
   </li>
 </ol>
 
-	<div mat-dialog-actions class="pull-right">
+	<div mat-dialog-actions align="center">
 		<button mat-raised-button color="primary" (click)="onNoClick()" cdkFocusInitial>Ok</button>
 	</div>
   `
