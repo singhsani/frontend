@@ -20,7 +20,7 @@
 
 			<mat-form-field class="iconMat col-md-6">
 				<mat-icon matPrefix>mail_outline</mat-icon>
-				<input matInput type="email" placeholder="Email" formControlName="email" required maxlength="50">
+				<input matInput type="email" placeholder="Email" appPreventSpace formControlName="email" required maxlength="50">
 				<control-messages [control]="regForm.get('email')"></control-messages>
 			</mat-form-field>
 
