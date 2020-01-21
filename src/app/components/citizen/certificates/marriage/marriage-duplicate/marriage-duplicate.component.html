@@ -1,9 +1,8 @@
-
 <app-title-bar [title]="'screen_title' | translate: translateKey">
 </app-title-bar>
 
 <!-- Search From Starts from here -->
-<div *ngIf="showSearchForm">
+<div *ngIf="showSearchForm" >
 	<mat-card class="cardBorder">
 		<form [formGroup]="marriageSearchForm" (ngSubmit)="getApplicationDetails()" autocomplete="off">
 
@@ -68,56 +67,67 @@
 	<!-- Search Form Ends Here -->
 
 	<!-- Table start-->
-	<div class="example-container mat-elevation-z8" [hidden]="resultsLength == 0">
+	<div class="pl-1 pr-1 mt-4">
+		<div class="example-container mat-elevation-z8" [hidden]="resultsLength == 0">
 
-		<table mat-table #table [dataSource]="dataSource" matSort matSortActive="created" matSortDisableClear
-			matSortDirection="asc">
+			<table mat-table #table [dataSource]="dataSource" matSort matSortActive="created" matSortDisableClear
+				matSortDirection="asc">
 
-			<ng-container matColumnDef="id">
-				<th mat-header-cell *matHeaderCellDef>#</th>
-				<td mat-cell *matCellDef="let row; let i = index;">{{ paginator.pageIndex==0?i+1:((paginator.pageIndex+1)*10)+(i+1)
+				<ng-container matColumnDef="id">
+					<th mat-header-cell *matHeaderCellDef>#</th>
+					<td mat-cell *matCellDef="let row; let i = index;">{{ paginator.pageIndex==0?i+1:((paginator.pageIndex+1)*10)+(i+1)
 					}}</td>
-			</ng-container>
+				</ng-container>
 
-			<ng-container matColumnDef="seq">
+				<!-- <ng-container matColumnDef="seq">
 				<th mat-header-cell *matHeaderCellDef></th>
 				<td mat-cell *matCellDef="let row;let i = index;">
 					<mat-checkbox [checked]="selected === i" (change)="onChkBoxClick($event,row);selected = i">
 					</mat-checkbox>
 				</td>
-			</ng-container>
+			</ng-container> -->
 
-			<ng-container matColumnDef="applicantName">
-				<th mat-header-cell *matHeaderCellDef>{{'applicant_name'| translate: translateKey}}</th>
-				<td mat-cell *matCellDef="let row">{{ row.applicantName }}</td>
-			</ng-container>
+				<ng-container matColumnDef="marriageRegNo">
+					<th mat-header-cell *matHeaderCellDef>{{'marriage_reg_number'| translate: translateKey}}</th>
+					<td mat-cell *matCellDef="let row">{{ row.marriageRegNo }}</td>
+				</ng-container>
 
-			<ng-container matColumnDef="fileNumber">
-				<th mat-header-cell *matHeaderCellDef>{{'file_number'| translate: translateKey}}</th>
-				<td mat-cell *matCellDef="let row">{{ row.fileNumber }}</td>
-			</ng-container>
+				<ng-container matColumnDef="marriageRegDate">
+					<th mat-header-cell *matHeaderCellDef>{{'marriage_reg_date'| translate: translateKey}}</th>
+					<td mat-cell *matCellDef="let row">{{ row.marriageRegDate }}</td>
+				</ng-container>
 
-			<ng-container matColumnDef="serviceType">
-				<th mat-header-cell *matHeaderCellDef>{{'service_name'| translate: translateKey}}</th>
-				<td mat-cell *matCellDef="let row">{{ row.serviceDetail.name }}</td>
-			</ng-container>
+				<ng-container matColumnDef="marriageDate">
+					<th mat-header-cell *matHeaderCellDef>{{'date_of_marriage'| translate: translateKey}}</th>
+					<td mat-cell *matCellDef="let row">{{ row.marriageDate }}</td>
+				</ng-container>
 
-			<ng-container matColumnDef="action">
-				<th mat-header-cell *matHeaderCellDef>{{'action'| translate: translateKey}}</th>
-				<td mat-cell *matCellDef="let row">
-					<button *ngIf="rowData.id == row.id" mat-icon-button color="primary"
-						(click)="redirectToDuplicate(row)">
-						{{'duplicate_certificate'| translate: translateKey}}
-					</button>
-				</td>
-			</ng-container>
+				<ng-container matColumnDef="groomName">
+					<th mat-header-cell *matHeaderCellDef>{{'groom_name'| translate: translateKey}}</th>
+					<td mat-cell *matCellDef="let row">{{ row.groomName }}</td>
+				</ng-container>
 
-			<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-			<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-		</table>
+				<ng-container matColumnDef="brideName">
+					<th mat-header-cell *matHeaderCellDef>{{'bride_name'| translate: translateKey}}</th>
+					<td mat-cell *matCellDef="let row">{{ row.brideName }}</td>
+				</ng-container>
 
-		<mat-paginator showFirstLastButtons [hidden]="resultsLength==0" [pageSizeOptions]="[5, 10, 25, 100]"
-			[length]="resultsLength"></mat-paginator>
+				<ng-container matColumnDef="action">
+					<th mat-header-cell *matHeaderCellDef>{{'action'| translate: translateKey}}</th>
+					<td mat-cell *matCellDef="let row">
+						<button mat-icon-button color="primary" (click)="redirectToDuplicate(row)">
+							{{'duplicate_certificate'| translate: translateKey}}
+						</button>
+					</td>
+				</ng-container>
+
+				<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+				<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+			</table>
+
+			<mat-paginator showFirstLastButtons [hidden]="resultsLength==0" [pageSizeOptions]="[5, 10, 25, 100]"
+				[length]="resultsLength"></mat-paginator>
+		</div>
 	</div>
 </div>
 
@@ -182,8 +192,9 @@
 						</app-basic-details>
 					</div>
 
-					<app-action-bar [paymentGateway]="paymentGateway" (tabIndex)="onTabChange($event)" (handleErrors)="handleErrorsOnSubmit($event)"
-						[form]="marriageDuplicateForm" [stepInfo]="{step: 'final', next: 1, back: 0}"></app-action-bar>
+					<app-action-bar [paymentGateway]="paymentGateway" (tabIndex)="onTabChange($event)"
+						(handleErrors)="handleErrorsOnSubmit($event)" [form]="marriageDuplicateForm"
+						[stepInfo]="{step: 'final', next: 1, back: 0}"></app-action-bar>
 
 				</mat-tab>
 				<select-payment-gateway #paymentGateway></select-payment-gateway>

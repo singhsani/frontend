@@ -44,3 +44,8 @@ table {
     text-align: center;
     padding-top: 110px;
 }
+.mat-table {
+    overflow: auto;
+    max-height: 500px;
+  }
+  

@@ -61,10 +61,12 @@ export class MarriageDuplicateComponent implements OnInit {
 	 */
 	displayedColumns: any = [
 		'id',
-		'seq',
-		'applicantName',
-		'fileNumber',
-		'serviceType',
+		// 'seq',
+		'marriageRegNo',
+		'marriageRegDate',
+		'groomName',
+		'brideName',
+		'marriageDate',
 		'action'
 	];
 
@@ -116,7 +118,7 @@ export class MarriageDuplicateComponent implements OnInit {
 		private formService: FormsActionsService,
 		private commonService: CommonService,
 		private toster: ToastrService
-		) {
+	) {
 		this.config = new CertificateConfig(this.paginationService);
 	}
 
@@ -193,13 +195,13 @@ export class MarriageDuplicateComponent implements OnInit {
 			fieldList: null,
 			applicantName: null,
 			applicantNameGuj: null,
-		// id: null,
-		// 	uniqueId: null,
-		// 	version:null,
-		// 	serviceFormId:null,
-		// 	createdDate:null,
-		// 	updatedDate:null,
-		// 	serviceType:null,
+			// id: null,
+			// 	uniqueId: null,
+			// 	version:null,
+			// 	serviceFormId:null,
+			// 	createdDate:null,
+			// 	updatedDate:null,
+			// 	serviceType:null,
 			// fileStatus:null,
 			// fileStatusName:null,
 			// deptFileStatus:null,
@@ -220,7 +222,7 @@ export class MarriageDuplicateComponent implements OnInit {
 			// canEdit:" true",
 			// canDelete:" true",
 			// canSubmit:" true",
-		
+
 			// serviceCode:" "HEL"-DUPMR",
 			// fieldView:" "ALL"",
 			// fieldList:" null",
@@ -351,18 +353,23 @@ export class MarriageDuplicateComponent implements OnInit {
 	getAllData() {
 		this.paginator.pageSize = 5;
 		this.paginator.pageIndex = 0;
-		this.config.getAllData(this.sort, this.paginator, this.pageSize, this.marriageSearchForm.get('apiType').value, this.marriageSearchForm).subscribe((data: any) => {
-			if (data.length > 0 && data.data.length) {
-				this.resultsLength = data.totalRecords
-				this.dataSource.data = data.data;
+		this.config.getAllData(this.sort, this.paginator, this.pageSize, this.marriageSearchForm.get('apiType').value, this.marriageSearchForm).subscribe((res: any) => {
+			if (res.data != null ) {
+
+				let newgnData = JSON.parse(res.data);
+				let prod_array = [];
+				for (let i = 0; i < newgnData.length; i += 1) {
+					prod_array.push(newgnData[i]);
+				}
+				this.dataSource.data = prod_array;
+
+				this.resultsLength = prod_array.length;
 			}
-			else{
+			else {
 				this.toster.warning('No Record Found');
 			}
-		},
-		err => {
-			this.toster.error(err.error[0].code);
-		});
+		},err => {
+				this.toster.error(err);	});
 		// merge(this.sort.sortChange, this.paginator.page)
 		// 	.pipe(
 		// 		startWith({}),
