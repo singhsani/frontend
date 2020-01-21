@@ -846,6 +846,8 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
 #sectionToPrint td, #sectionToPrint th {padding: 5px; font-size: 15px;}
 #sectionToPrint li, #sectionToPrint tr {page-break-before:always;page-break-inside:avoid; page-break-after:always}
 ::-webkit-scrollbar {width: 0; height: 0;}
+*{-webkit-print-color-adjust: exact; color-adjust: exact;}
+
 } 
 /* This is use for printing receipt in div end */
 

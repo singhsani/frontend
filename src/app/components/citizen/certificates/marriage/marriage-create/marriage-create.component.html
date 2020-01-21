@@ -4,7 +4,12 @@
 	</button>
 </app-title-bar>
 
-<mat-card class="formClass cardBorder createMarriageReg">
+
+<div *ngIf="isGuideLineActive">
+    <app-guidelines [isGuileLineActive]="isGuideLineActive" [moreListMsg]="moreListMsg" [listMessage]="listMessage" [message]="message" (hideGuideLine) = "$event?isGuideLineActive = false : isGuideLineActive = true" ></app-guidelines>
+</div>
+
+<mat-card class="formClass cardBorder createMarriageReg" [hidden]="isGuideLineActive">
 
 	<!--Start  form  -->
 	<form [formGroup]="marriageFormGroup">

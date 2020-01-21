@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
-import {  ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { ManageRoutes } from './../../../../../config/routes-conf';
 
 import { ValidationService } from '../../../../../shared/services/validation.service';
@@ -48,14 +48,15 @@ export class ShopLicModificationComponent implements OnInit {
 	// serach api variable
 	serachLicenceObj = {
 		isDisplayRenewLicenceForm: <boolean>false,
-		searchLicenceNumber:""
+		searchLicenceNumber: ""
 	}
 
 	/**
 	 * This method for serach licence using licence number.
 	 */
 	searchLicence() {
-		this.shopAndEstablishmentService.searchLicence(this.serachLicenceObj.searchLicenceNumber).subscribe(
+		let obj = { refNumber: this.serachLicenceObj.searchLicenceNumber };
+		this.shopAndEstablishmentService.searchLicenceFromNewgen(obj).subscribe(
 			(res: any) => {
 				if (res.success) {
 					this.serachLicenceObj.isDisplayRenewLicenceForm = true;
@@ -157,7 +158,7 @@ export class ShopLicModificationComponent implements OnInit {
 				// renewal: res.renewal,
 				// adminCharges: res.adminCharges,
 				// netAmount: res.netAmount,
-				licenseIssueDate: res.licenseIssueDate,
+				// licenseIssueDate: res.licenseIssueDate,
 				// licenseRenewalDate: res.licenseRenewalDate,
 				// loinumber: res.loinumber,
 				attachments: [],
@@ -368,7 +369,7 @@ export class ShopLicModificationComponent implements OnInit {
 			totalUnidentifiedEmployerFamily: null,
 			totalFamilyMembers: null,
 			/* Step 3 controls end */
-			
+
 			/* Step 4 controls start */
 
 			occupancyList: this.fb.array([]),
@@ -379,7 +380,7 @@ export class ShopLicModificationComponent implements OnInit {
 			totalUnidentifiedOccupancy: null,
 			totalOccupancy: null,
 			/* Step 4 controls end */
-			
+
 			/* Step 5 controls start */
 			typeOfOrganisation: this.fb.group({
 				code: [null, Validators.required]
@@ -412,7 +413,7 @@ export class ShopLicModificationComponent implements OnInit {
 			// nameOfManagerGuj: null,
 			// residentialAddressOfManagerGuj: null,
 			//enterHolidayGuj: null,
-			
+
 			/*  */
 			attachments: ['']
 			/*  */
@@ -723,10 +724,10 @@ export class ShopLicModificationComponent implements OnInit {
 		}
 	}
 
-	 /**
-     * This method required for final form submition.
-     * @param flag - flag of invalid control.
-     */
+	/**
+	* This method required for final form submition.
+	* @param flag - flag of invalid control.
+	*/
 	handleErrorsOnSubmit(flag) {
 		switch (true) {
 			case flag <= 23:

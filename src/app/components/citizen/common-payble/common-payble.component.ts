@@ -80,12 +80,17 @@ export class CommonPaybleComponent implements OnInit {
       return;
     }
 
+    let serviceType = this.paymentsForm.get('payableServices').get('code').value;
+
+    let filterObj = _.filter(this.PayableServices, { 'code' : serviceType })[0];
+   
     let obj = {
       payableServiceType: payData.payableServices.code,
       refNumber: payData.refNumber,
       amount: payData.amount,
       paymentMode: payData.payMode.code,
-      returnUrl: environment.returnUrl
+      returnUrl: environment.returnUrl,
+      searchable: filterObj.searchable
     }
 
     this.session.set('paymentData', JSON.stringify(obj));

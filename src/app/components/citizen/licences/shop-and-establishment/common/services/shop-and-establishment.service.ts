@@ -34,4 +34,8 @@ export class ShopAndEstablishmentService {
 	searchLicence(licenceNumber) {
     	return this.http.get(`api/form/shopLicense/search/${licenceNumber}`);
 	}
+
+	searchLicenceFromNewgen(licenceNumber) {
+    	return this.http.post(`api/form/shopLicense/searchFromNewgen`,licenceNumber);
+	}
 }

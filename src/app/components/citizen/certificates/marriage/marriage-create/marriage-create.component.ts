@@ -24,6 +24,8 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
     //Mandatory attachments Array
     public uploadFilesArray: Array<any> = [];
 
+    isGuideLineActive: boolean;
+
     public dummyJSON = {
         "apiType": "marriageReg",
         "serviceCode": "HEL-MR",
@@ -31,24 +33,24 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
         "applicantEmail": "",
         "marriageDate": "2018-11-27",
         "marriagePlace": {
-          "addressType": "MARRIAGE_PLACE",
-          "buildingName": "quwat-e-islam masjid",
-          "streetName": "",
-          "landmark": "",
-          "area": "ladwada",
-          "state": "GUJARAT",
-          "district": null,
-          "city": "VADODARA",
-          "country": "INDIA",
-          "pincode": "390006",
-          "buildingNameGuj": "ક્વાત-એ-ઇસ્લામ મસ્જિદ",
-          "streetNameGuj": "",
-          "landmarkGuj": "",
-          "areaGuj": "લાડવાડા",
-          "stateGuj": "ગુજરાત",
-          "districtGuj": null,
-          "cityGuj": "વડોદરા",
-          "countryGuj": "ભારત"
+            "addressType": "MARRIAGE_PLACE",
+            "buildingName": "quwat-e-islam masjid",
+            "streetName": "",
+            "landmark": "",
+            "area": "ladwada",
+            "state": "GUJARAT",
+            "district": null,
+            "city": "VADODARA",
+            "country": "INDIA",
+            "pincode": "390006",
+            "buildingNameGuj": "ક્વાત-એ-ઇસ્લામ મસ્જિદ",
+            "streetNameGuj": "",
+            "landmarkGuj": "",
+            "areaGuj": "લાડવાડા",
+            "stateGuj": "ગુજરાત",
+            "districtGuj": null,
+            "cityGuj": "વડોદરા",
+            "countryGuj": "ભારત"
         },
         "isNriMarriage": false,
         "groomFirstName": "mohammad fahad",
@@ -57,34 +59,34 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
         "groomBirthDate": "1993-11-27",
         "groomAge": 25,
         "groomReligion": {
-          "code": "MUSLIM",
-          "gujName": "મુસ્લિમ",
-          "name": "Muslim"
+            "code": "MUSLIM",
+            "gujName": "મુસ્લિમ",
+            "name": "Muslim"
         },
         "groomAadharNumber": null,
         "marriageTimeGroomStatus": {
-          "code": "UNMARRIED"
+            "code": "UNMARRIED"
         },
         "aliveWives": null,
         "groomAddress": {
-          "addressType": "GROOM_ADDRESS",
-          "buildingName": "rajpura pole",
-          "streetName": "",
-          "landmark": "opp nazar baug",
-          "area": "mandvi",
-          "state": "GUJARAT",
-          "district": null,
-          "city": "",
-          "country": "INDIA",
-          "pincode": "390001",
-          "buildingNameGuj": "રાજપુરા પોલ",
-          "streetNameGuj": "",
-          "landmarkGuj": "સામે નઝર બાગ",
-          "areaGuj": "માંડવી",
-          "stateGuj": "ગુજરાત",
-          "districtGuj": null,
-          "cityGuj": "વડોદરા",
-          "countryGuj": "ભારત"
+            "addressType": "GROOM_ADDRESS",
+            "buildingName": "rajpura pole",
+            "streetName": "",
+            "landmark": "opp nazar baug",
+            "area": "mandvi",
+            "state": "GUJARAT",
+            "district": null,
+            "city": "",
+            "country": "INDIA",
+            "pincode": "390001",
+            "buildingNameGuj": "રાજપુરા પોલ",
+            "streetNameGuj": "",
+            "landmarkGuj": "સામે નઝર બાગ",
+            "areaGuj": "માંડવી",
+            "stateGuj": "ગુજરાત",
+            "districtGuj": null,
+            "cityGuj": "વડોદરા",
+            "countryGuj": "ભારત"
         },
         "brideFirstName": "aashiyanabanu",
         "brideMiddleName": "abdulrashid",
@@ -92,33 +94,33 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
         "brideBirthDate": "1993-11-27",
         "brideAge": 25,
         "brideReligion": {
-          "code": "MUSLIM",
-          "gujName": "મુસ્લિમ",
-          "name": "Muslim"
+            "code": "MUSLIM",
+            "gujName": "મુસ્લિમ",
+            "name": "Muslim"
         },
         "brideAadharNumber": null,
         "marriageTimeBrideStatus": {
-          "code": "UNMARRIED"
+            "code": "UNMARRIED"
         },
         "brideAddress": {
-          "addressType": "BRIDE_ADDRESS",
-          "buildingName": "alkasva apartment patel faliya no-2",
-          "streetName": "",
-          "landmark": "",
-          "area": "yakutpura",
-          "state": "GUJARAT",
-          "district": null,
-          "city": "Vadodara",
-          "country": "INDIA",
-          "pincode": "390001",
-          "buildingNameGuj": "અલ્કસ્વ અપર્ત્મેંત પતેલ ફલિય નો૨",
-          "streetNameGuj": "",
-          "landmarkGuj": "",
-          "areaGuj": "",
-          "stateGuj": "ગુજરાત",
-          "districtGuj": null,
-          "cityGuj": "વડોદરા",
-          "countryGuj": "ભારત"
+            "addressType": "BRIDE_ADDRESS",
+            "buildingName": "alkasva apartment patel faliya no-2",
+            "streetName": "",
+            "landmark": "",
+            "area": "yakutpura",
+            "state": "GUJARAT",
+            "district": null,
+            "city": "Vadodara",
+            "country": "INDIA",
+            "pincode": "390001",
+            "buildingNameGuj": "અલ્કસ્વ અપર્ત્મેંત પતેલ ફલિય નો૨",
+            "streetNameGuj": "",
+            "landmarkGuj": "",
+            "areaGuj": "",
+            "stateGuj": "ગુજરાત",
+            "districtGuj": null,
+            "cityGuj": "વડોદરા",
+            "countryGuj": "ભારત"
         },
         "groomParentsFirstName": "latafat husein",
         "groomParentsMiddleName": "gulam mohammad",
@@ -126,47 +128,47 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
         "groomParentsBirthDate": "1968-01-13",
         "groomParentsAadharNumber": null,
         "groomParentsAddress": {
-          "addressType": "GROOM_PARENTS_ADDRESS",
-          "buildingName": "rajpura pole",
-          "streetName": "",
-          "landmark": "opp nazar baug",
-          "area": "mandvi",
-          "state": "GUJARAT",
-          "district": null,
-          "city": "Vadodara",
-          "country": "INDIA",
-          "pincode": "390001",
-          "buildingNameGuj": "રજ્પુર પોલે",
-          "streetNameGuj": "",
-          "landmarkGuj": "ઓપ્પ નઝર બૌગ",
-          "areaGuj": "મંદ્વિ",
-          "stateGuj": "ગુજરાત",
-          "districtGuj": null,
-          "cityGuj": "વડોદરા",
-          "countryGuj": "ભારત"
+            "addressType": "GROOM_PARENTS_ADDRESS",
+            "buildingName": "rajpura pole",
+            "streetName": "",
+            "landmark": "opp nazar baug",
+            "area": "mandvi",
+            "state": "GUJARAT",
+            "district": null,
+            "city": "Vadodara",
+            "country": "INDIA",
+            "pincode": "390001",
+            "buildingNameGuj": "રજ્પુર પોલે",
+            "streetNameGuj": "",
+            "landmarkGuj": "ઓપ્પ નઝર બૌગ",
+            "areaGuj": "મંદ્વિ",
+            "stateGuj": "ગુજરાત",
+            "districtGuj": null,
+            "cityGuj": "વડોદરા",
+            "countryGuj": "ભારત"
         },
         "groomParentsAddressResidence": {
-          "addressType": "GROOM_PARENTS_ADDRESS_RESIDENCE",
-          "buildingName": "rajpura pole",
-          "streetName": "",
-          "landmark": "opp nazar baug",
-          "area": "mandvi",
-          "state": "GUJARAT",
-          "district": null,
-          "city": "Vadodara",
-          "country": "INDIA",
-          "pincode": "390001",
-          "buildingNameGuj": "રજ્પુર પોલે",
-          "streetNameGuj": "",
-          "landmarkGuj": "ઓપ્પ નઝર બૌગ",
-          "areaGuj": "મંદ્વિ",
-          "stateGuj": "ગુજરાત",
-          "districtGuj": null,
-          "cityGuj": "વડોદરા",
-          "countryGuj": "ભારત"
+            "addressType": "GROOM_PARENTS_ADDRESS_RESIDENCE",
+            "buildingName": "rajpura pole",
+            "streetName": "",
+            "landmark": "opp nazar baug",
+            "area": "mandvi",
+            "state": "GUJARAT",
+            "district": null,
+            "city": "Vadodara",
+            "country": "INDIA",
+            "pincode": "390001",
+            "buildingNameGuj": "રજ્પુર પોલે",
+            "streetNameGuj": "",
+            "landmarkGuj": "ઓપ્પ નઝર બૌગ",
+            "areaGuj": "મંદ્વિ",
+            "stateGuj": "ગુજરાત",
+            "districtGuj": null,
+            "cityGuj": "વડોદરા",
+            "countryGuj": "ભારત"
         },
         "isGroomParResAddressSame": {
-          "code": "YES"
+            "code": "YES"
         },
         "brideParentsFirstName": "abdulrashid",
         "brideParentsMiddleName": "abdulsatta",
@@ -174,47 +176,47 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
         "brideParentsBirthDate": "1967-01-13",
         "brideParentsAadharNumber": null,
         "brideParentsAddress": {
-          "addressType": "BRIDE_PARENTS_ADDRESS",
-          "buildingName": "alkasva apartment patel faliya no-2",
-          "streetName": "",
-          "landmark": "",
-          "area": "yakutpura",
-          "state": "GUJARAT",
-          "district": null,
-          "city": "Vadodara",
-          "country": "INDIA",
-          "pincode": "390001",
-          "buildingNameGuj": "",
-          "streetNameGuj": "",
-          "landmarkGuj": "",
-          "areaGuj": "",
-          "stateGuj": "ગુજરાત",
-          "districtGuj": null,
-          "cityGuj": "વડોદરા",
-          "countryGuj": "ભારત"
+            "addressType": "BRIDE_PARENTS_ADDRESS",
+            "buildingName": "alkasva apartment patel faliya no-2",
+            "streetName": "",
+            "landmark": "",
+            "area": "yakutpura",
+            "state": "GUJARAT",
+            "district": null,
+            "city": "Vadodara",
+            "country": "INDIA",
+            "pincode": "390001",
+            "buildingNameGuj": "",
+            "streetNameGuj": "",
+            "landmarkGuj": "",
+            "areaGuj": "",
+            "stateGuj": "ગુજરાત",
+            "districtGuj": null,
+            "cityGuj": "વડોદરા",
+            "countryGuj": "ભારત"
         },
         "brideParentsAddressResidence": {
-          "addressType": "BRIDE_PARENTS_ADDRESS_RESIDENCE",
-          "buildingName": "alkasva apartment patel faliya no-2",
-          "streetName": "",
-          "landmark": "",
-          "area": "yakutpura",
-          "state": "GUJARAT",
-          "district": null,
-          "city": "Vadodara",
-          "country": "INDIA",
-          "pincode": "390001",
-          "buildingNameGuj": "",
-          "streetNameGuj": "",
-          "landmarkGuj": "",
-          "areaGuj": "",
-          "stateGuj": "ગુજરાત",
-          "districtGuj": null,
-          "cityGuj": "વડોદરા",
-          "countryGuj": "ભારત"
+            "addressType": "BRIDE_PARENTS_ADDRESS_RESIDENCE",
+            "buildingName": "alkasva apartment patel faliya no-2",
+            "streetName": "",
+            "landmark": "",
+            "area": "yakutpura",
+            "state": "GUJARAT",
+            "district": null,
+            "city": "Vadodara",
+            "country": "INDIA",
+            "pincode": "390001",
+            "buildingNameGuj": "",
+            "streetNameGuj": "",
+            "landmarkGuj": "",
+            "areaGuj": "",
+            "stateGuj": "ગુજરાત",
+            "districtGuj": null,
+            "cityGuj": "વડોદરા",
+            "countryGuj": "ભારત"
         },
         "isBrideParResAddressSame": {
-          "code": "YES"
+            "code": "YES"
         },
         "priestFirstName": "sethwala mohammad",
         "priestMiddleName": "",
@@ -222,47 +224,47 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
         "priestBirthDate": "1972-01-13",
         "priestAddressAadharNumber": null,
         "priestAddress": {
-          "addressType": "PRIEST_ADDRESS",
-          "buildingName": "khatri pole",
-          "streetName": "",
-          "landmark": "",
-          "area": "wadi",
-          "state": "GUJARAT",
-          "district": null,
-          "city": "Vadodara",
-          "country": "INDIA",
-          "pincode": "400457",
-          "buildingNameGuj": "ખત્રી ધ્રુવ",
-          "streetNameGuj": "",
-          "landmarkGuj": "",
-          "areaGuj": "વાડી",
-          "stateGuj": "ગુજરાત",
-          "districtGuj": null,
-          "cityGuj": "વડોદરા",
-          "countryGuj": "ભારત"
+            "addressType": "PRIEST_ADDRESS",
+            "buildingName": "khatri pole",
+            "streetName": "",
+            "landmark": "",
+            "area": "wadi",
+            "state": "GUJARAT",
+            "district": null,
+            "city": "Vadodara",
+            "country": "INDIA",
+            "pincode": "400457",
+            "buildingNameGuj": "ખત્રી ધ્રુવ",
+            "streetNameGuj": "",
+            "landmarkGuj": "",
+            "areaGuj": "વાડી",
+            "stateGuj": "ગુજરાત",
+            "districtGuj": null,
+            "cityGuj": "વડોદરા",
+            "countryGuj": "ભારત"
         },
         "priestAddressResidence": {
-          "addressType": "PRIEST_ADDRESS_RESIDENCE",
-          "buildingName": "khatri pole",
-          "streetName": "",
-          "landmark": "",
-          "area": "wadi",
-          "state": "GUJARAT",
-          "district": null,
-          "city": "Vadodara",
-          "country": "INDIA",
-          "pincode": "400457",
-          "buildingNameGuj": "ખત્રી ધ્રુવ",
-          "streetNameGuj": "",
-          "landmarkGuj": "",
-          "areaGuj": "વાડી",
-          "stateGuj": "ગુજરાત",
-          "districtGuj": null,
-          "cityGuj": "વડોદરા",
-          "countryGuj": "ભારત"
+            "addressType": "PRIEST_ADDRESS_RESIDENCE",
+            "buildingName": "khatri pole",
+            "streetName": "",
+            "landmark": "",
+            "area": "wadi",
+            "state": "GUJARAT",
+            "district": null,
+            "city": "Vadodara",
+            "country": "INDIA",
+            "pincode": "400457",
+            "buildingNameGuj": "ખત્રી ધ્રુવ",
+            "streetNameGuj": "",
+            "landmarkGuj": "",
+            "areaGuj": "વાડી",
+            "stateGuj": "ગુજરાત",
+            "districtGuj": null,
+            "cityGuj": "વડોદરા",
+            "countryGuj": "ભારત"
         },
         "isPriestParResAddressSame": {
-          "code": "YES"
+            "code": "YES"
         },
         "firstWitnessFirstName": "mohamadfesal",
         "firstWitnessMiddleName": "mohamadhanif",
@@ -270,24 +272,24 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
         "firstWitnessBirthDate": "1988-01-13",
         "firstWitnessAadharNumber": null,
         "firstWitnessAddress": {
-          "addressType": "FIRST_WITNESS_ADDRESS",
-          "buildingName": "badshah manzil",
-          "streetName": "",
-          "landmark": "",
-          "area": "mogalwada",
-          "state": "GUJARAT",
-          "district": null,
-          "city": "Vadodara",
-          "country": "INDIA",
-          "pincode": "390017",
-          "buildingNameGuj": "બાદશાહ મંઝીલ",
-          "streetNameGuj": "",
-          "landmarkGuj": "",
-          "areaGuj": "મોગલવાડા",
-          "stateGuj": "ગુજરાત",
-          "districtGuj": null,
-          "cityGuj": "વડોદરા",
-          "countryGuj": "ભારત"
+            "addressType": "FIRST_WITNESS_ADDRESS",
+            "buildingName": "badshah manzil",
+            "streetName": "",
+            "landmark": "",
+            "area": "mogalwada",
+            "state": "GUJARAT",
+            "district": null,
+            "city": "Vadodara",
+            "country": "INDIA",
+            "pincode": "390017",
+            "buildingNameGuj": "બાદશાહ મંઝીલ",
+            "streetNameGuj": "",
+            "landmarkGuj": "",
+            "areaGuj": "મોગલવાડા",
+            "stateGuj": "ગુજરાત",
+            "districtGuj": null,
+            "cityGuj": "વડોદરા",
+            "countryGuj": "ભારત"
         },
         "secondWitnessFirstName": "munirbanu",
         "secondWitnessMiddleName": "latafathusein",
@@ -295,31 +297,31 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
         "secondWitnessBirthDate": "1971-01-13",
         "secondWitnessAadharNumber": null,
         "secondWitnessAddress": {
-          "addressType": "SECOND_WITNESS_ADDRESS",
-          "buildingName": "rajpura pole",
-          "streetName": "",
-          "landmark": "opp nazar baug",
-          "area": "mandvi",
-          "state": "GUJARAT",
-          "district": null,
-          "city": "",
-          "country": "INDIA",
-          "pincode": "390001",
-          "buildingNameGuj": "રાજપુરા પોલ",
-          "streetNameGuj": "",
-          "landmarkGuj": "સામે નઝર બાગ",
-          "areaGuj": "માંડવી",
-          "stateGuj": "ગુજરાત",
-          "districtGuj": null,
-          "cityGuj": "વડોદરા",
-          "countryGuj": "ભારત"
+            "addressType": "SECOND_WITNESS_ADDRESS",
+            "buildingName": "rajpura pole",
+            "streetName": "",
+            "landmark": "opp nazar baug",
+            "area": "mandvi",
+            "state": "GUJARAT",
+            "district": null,
+            "city": "",
+            "country": "INDIA",
+            "pincode": "390001",
+            "buildingNameGuj": "રાજપુરા પોલ",
+            "streetNameGuj": "",
+            "landmarkGuj": "સામે નઝર બાગ",
+            "areaGuj": "માંડવી",
+            "stateGuj": "ગુજરાત",
+            "districtGuj": null,
+            "cityGuj": "વડોદરા",
+            "countryGuj": "ભારત"
         },
         "applicantRelation": {
-          "code": "SELF"
+            "code": "SELF"
         },
         "applicantRelationOther": null,
         "uniqueIdProofLable": {
-          "code": "ELECTION_CARD_NUMBER"
+            "code": "ELECTION_CARD_NUMBER"
         },
         "uniqueIdProof": "765rthdgdfy7547y6",
         "attachments": [],
@@ -427,7 +429,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
         "aadhaarNo": null,
         "contactNo": "9673475273",
         "email": "shantanu.sangewar@nascentinfo.com",
-      };
+    };
 
     translateKey: string = 'marriageRegScreen';
     marriageFormGroup: FormGroup;
@@ -479,6 +481,33 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
      */
     config: CertificateConfig = new CertificateConfig();
 
+    listMessage: Array<string> = [
+        "BIRTH CERTIFICATE OR SCHOOL LEAVING CERTIFICATE OF BRIDEGROOM AND BRIDE.",
+        "RESIDENT PROOF OF BRIDEGROOM AND BRIDE i.e VALID DRIVING LICENCE/ADHAR CARD/VALID PASSPORT/RATION CARD/ELECTION CARD.",
+        "RESIDENT PROOF OF PRIEST i.e VALID DRIVING LICENCE/ADHAR CARD/VALID PASSPORT/RATION CARD/ELECTION CARD.",
+        "RESIDENT PROOF OF TWO LOCAL WITNESSES i.e VALID DRIVING LICENCE/ADHAR CARD/VALID PASSPORT/RATION CARD/ELECTION CARD",
+        "INVITATION CARD/ AFFIDAVIT (MARRIAGE PLACE AND DATE MUST BE MENTIONED ) AND WEDDING PHOTO",
+        "FORM TO BE FILLED IN DUPLICATE WITH BLACK PEN OR TYPE ONLY",
+        "AGREEMENT STAMPS OF RS.200/- (100+100 EACH)",
+        "VALID DIVORCE PAPER / DEATH CERTIFICATE IF APPLICABLE",
+        "BRIDEGROOM , BRIDE AND TWO LOCAL WITNESSES MUST BE PRESENT IN PERSON AT MARRIAGE REGISTRATION OFFICE DURING WORKING HOURS I.E 10.30 AM TO 3.00 P.M (2.00 P.M TO 2.30 P.M LUNCH HOURS )",
+        "TIME TO COLLECT CERTIFICATES : 11.00 AM TO 4.00 P.M (2.00 P.M TO 2.30 PM LUNCH HOURS )",
+        "ALL DOCUMENTS MUST BE ATTESTED BY GAZETTED OFFICE OR BY NOTARY PUBLIC.",
+        "PL. NOTE THAT MARRIAGE MUST BE SOLEMNISED IN VADODARA CITY LIMIT."
+    ];
+
+    moreListMsg: Array<string> = [
+        "VALID PASSPORT",
+        "VALID DRIVING LICENCE OR ADDRESS PROOF",
+        "SOCIAL SECURITY CARD/ NATIONAL INSURANCE CARD/ NATIONAL HEALTH CARD OR AS THE CASE MAY BE",
+        "EMPLOYERS I.D. PROOF / SALARY SLIP OR ANY OTHER DOCUMENT FOR EMPLOYMENT.",
+        "RESIDENT PROOF OF TWO NRI WITNESSES .( PL.NOTE THAT ONLY PROOF IS REQUIRED)",
+        "RESIDENT PROOF OF TWO LOCAL WITNESSES."
+    ];
+
+    message: string = `Welcome to Vadodara Municipal Corporation's Virtual Civic Center, which is simple and convenient way for citizens to access various services from anywhere at anytime.
+    The services of Virtual Civic Center can be accessed without paying any additional charge.`;
+
     /**
      * @param fb - Declare FormBuilder property.
      * @param validationError - Declare validation service property
@@ -517,6 +546,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
             this.router.navigate([ManageRoutes.getFullRoute('CITIZENDASHBOARD')]);
         }
         else {
+            this.isGuideLineActive = true;
             //Form Controls 
             this.marriageFormControls();
             //Get form data
@@ -1181,7 +1211,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
 	 * Method is create required document array
 	 */
     requiredDocumentList() {
-    
+
         this.uploadFilesArray = [];
         let groomreligionChange = this.marriageFormGroup.controls.groomReligion.get("code").value;
         let bridereligionChange = this.marriageFormGroup.controls.brideReligion.get("code").value;
@@ -1191,7 +1221,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
             _.forEach(this.marriageFormGroup.get('serviceDetail').get('serviceUploadDocuments').value, (value) => {
 
                 if (bridereligionChange != 'HINDU' && bridereligionChange == groomreligionChange) {
-                    
+
                     if (value.mandatory && value.isActive && value.requiredOnCitizenPortal) {
                         this.uploadFilesArray.push({
                             'labelName': value.documentLabelEn,
@@ -1200,7 +1230,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
                         })
                     }
                 } else if (bridereligionChange == 'HINDU' && bridereligionChange == groomreligionChange) {
-                    
+
                     if (value.dependentFieldName == null && value.mandatory && value.isActive && value.requiredOnCitizenPortal) {
                         this.uploadFilesArray.push({
                             'labelName': value.documentLabelEn,
@@ -1212,7 +1242,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
 
             });
         }
-        else{
+        else {
             this.config.requiredDocumentList(this.marriageFormGroup, this.uploadFilesArray);
         }
     }
@@ -1384,7 +1414,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
                 return false;
             }
             else if (count == 67 || count <= step11) {
-                
+
                 this.checkReligion();
 
                 if (this.marriageFormGroup.get('isGroomVisa').value && (this.marriageFormGroup.get('isBrideVisa').value)) {
@@ -1398,7 +1428,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
                 }
             }
             else {
-               
+
                 if (this.marriageFormGroup.get('isGroomVisa').value && (this.marriageFormGroup.get('isBrideVisa').value)) {
                     this.tabIndex = 10;
                 }

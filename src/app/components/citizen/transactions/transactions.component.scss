@@ -23,7 +23,8 @@ table { width: 100%; }
     
     .mat-cell {font-size:13px; color:#000; padding-left: 5px; padding-right: 5px;}
     .mat-header-cell {font-size:14px; color:#000; padding-left: 5px; padding-right: 5px;}
-    .mat-column-id {max-width: 50px; padding: 0 0 0 20px;}
+    .mat-column-id {max-width: 70px; padding: 0 0 0 20px;}
+    .mat-column-amount {max-width: 100px;}
     .mat-column-fileNumber {min-width: 220px;}
     // .mat-column-applicantName {width: 250px;}
     // .mat-column-applicantName {width: 250px;}
@@ -89,10 +90,10 @@ table { width: 100%; }
     min-width: 300px;
   }
   
-  .mat-table {
-    overflow: auto;
-    max-height: 500px;
-  }
+//   .mat-table {
+//     overflow: auto;
+//     max-height: 500px;
+//   }
   
   .mobile-label, .mobile-label1 {
     display: none;
