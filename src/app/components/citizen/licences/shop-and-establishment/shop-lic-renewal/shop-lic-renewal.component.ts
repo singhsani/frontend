@@ -12,6 +12,7 @@ import { CommonService } from '../../.././../../shared/services/common.service';
 import { TranslateService } from '../../../../../shared/modules/translate/translate.service';
 import * as _ from 'lodash';
 import { LicenseConfiguration } from '../../license-configuration';
+import * as moment from 'moment';
 
 @Component({
 	selector: 'app-shop-lic-renewal',
@@ -55,7 +56,8 @@ export class ShopLicRenewalComponent implements OnInit {
 	 * This method for serach licence using licence number.
 	 */
 	searchLicence() {
-		this.shopAndEstablishmentService.searchLicence(this.serachLicenceObj.searchLicenceNumber).subscribe(
+		let obj = { refNumber: this.serachLicenceObj.searchLicenceNumber };
+		this.shopAndEstablishmentService.searchLicenceFromNewgen(obj).subscribe(
 			(res: any) => {
 				if (res.success) {
 					this.serachLicenceObj.isDisplayRenewLicenceForm = true;
@@ -142,7 +144,7 @@ export class ShopLicRenewalComponent implements OnInit {
 				fileNumber: res.fileNumber,
 				pid: res.pid,
 				outwardNo: res.outwardNo,
-				agree: res.agree,
+				// agree: res.agree,
 
 				paymentStatus: res.paymentStatus,
 				canEdit: res.canEdit,
@@ -157,7 +159,7 @@ export class ShopLicRenewalComponent implements OnInit {
 				// renewal: res.renewal,
 				// adminCharges: res.adminCharges,
 				// netAmount: res.netAmount,
-				licenseIssueDate: res.licenseIssueDate,
+				// licenseIssueDate: res.licenseIssueDate,
 				// licenseRenewalDate: res.licenseRenewalDate,
 				// loinumber: res.loinumber,
 				attachments: [],
@@ -404,7 +406,7 @@ export class ShopLicRenewalComponent implements OnInit {
 			licenseIssueDate: null,
 			/*  */
 			attachments: [''],
-			agree:[false]
+			// agree:[false]
 			/*  */
 		});
 	}
@@ -580,9 +582,9 @@ export class ShopLicRenewalComponent implements OnInit {
 
 
 	/**
- * This method required for final form submition.
- * @param flag - flag of invalid control.
- */
+     * This method required for final form submition.
+     * @param flag - flag of invalid control.
+    */
 	handleErrorsOnSubmit(flag) {
 		switch (true) {
 			case flag <= 16:
@@ -622,5 +624,15 @@ export class ShopLicRenewalComponent implements OnInit {
 			this.shopLicRenewalForm.get(formControlName).clearValidators();
 		}
 		this.shopLicRenewalForm.get(formControlName).updateValueAndValidity();
+	}
+
+
+	/**
+	 * This method is change date format.
+	 * @param date : selected date
+	 * @param controlType : form control name
+	 */
+	dateFormat(date, controlType: string) {
+		this.shopLicRenewalForm.get(controlType).setValue(moment(date).format("YYYY-MM-DD"));
 	}
 }

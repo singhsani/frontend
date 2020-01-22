@@ -10,6 +10,7 @@ import * as _ from 'lodash';
 import { CommonService } from '../../.././../../shared/services/common.service';
 import { Location } from '@angular/common';
 import { LicenseConfiguration } from '../../license-configuration';
+import * as moment from 'moment';
 
 @Component({
 	selector: 'app-shop-lic-cancellation',
@@ -32,15 +33,15 @@ export class ShopLicCancellationComponent implements OnInit {
 	// serach api variable
 	serachLicenceObj = {
 		isDisplayCancelLicenceForm: <boolean>false,
-		searchLicenceNumber:""
+		searchLicenceNumber: ""
 	}
 
 	/**
 	 * This method for serach licence using licence number.
 	 */
 	searchLicence() {
-
-		this.shopAndEstablishmentService.searchLicence(this.serachLicenceObj.searchLicenceNumber).subscribe(
+		let obj = { refNumber: this.serachLicenceObj.searchLicenceNumber };
+		this.shopAndEstablishmentService.searchLicenceFromNewgen(obj).subscribe(
 			(res: any) => {
 				if (res.success) {
 					this.serachLicenceObj.isDisplayCancelLicenceForm = true;
@@ -113,7 +114,7 @@ export class ShopLicCancellationComponent implements OnInit {
 		this.shopCancellationForm = this.fb.group({
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
 			serviceCode: 'SHOP-CAN',
-			refNumber:[null],
+			refNumber: [null],
 			/* Step 1 controls start */
 			establishmentName: [null, [Validators.required, Validators.maxLength(150)]],
 			// establishmentNameGuj: [null, Validators.required],
@@ -143,7 +144,7 @@ export class ShopLicCancellationComponent implements OnInit {
 		this.shopCancellationForm.get('wardNo').enable();
 		this.shopCancellationForm.get('nameOfEmployer').enable();
 		this.shopCancellationForm.get('propertyTaxNo').enable();
-		
+
 	}
 
 	/**
@@ -162,7 +163,7 @@ export class ShopLicCancellationComponent implements OnInit {
 				uniqueId: res.uniqueId,
 				version: res.version,
 				serviceFormId: res.serviceFormId,
-				refNumber:this.serachLicenceObj.searchLicenceNumber,
+				refNumber: this.serachLicenceObj.searchLicenceNumber,
 				createdDate: res.createdDate,
 				updatedDate: res.createdDate,
 				serviceType: res.serviceType,
@@ -171,7 +172,7 @@ export class ShopLicCancellationComponent implements OnInit {
 				fileNumber: res.fileNumber,
 				pid: res.pid,
 				outwardNo: res.outwardNo,
-				agree: res.agree,
+				// agree: res.agree,
 
 				// paymentStatus: res.paymentStatus,
 				canEdit: res.canEdit,
@@ -179,7 +180,7 @@ export class ShopLicCancellationComponent implements OnInit {
 				canSubmit: res.canSubmit,
 				serviceCode: res.serviceCode,
 				// applicationNo: res.applicationNo,
-				licenseIssueDate: res.licenseIssueDate,
+				// licenseIssueDate: res.licenseIssueDate,
 				// licenseRenewalDate: res.licenseRenewalDate,
 				// loinumber: res.loinumber,
 				attachments: [],
@@ -224,6 +225,13 @@ export class ShopLicCancellationComponent implements OnInit {
 		});
 	}
 
-
+	/**
+		 * This method is change date format.
+		 * @param date : selected date
+		 * @param controlType : form control name
+		 */
+	dateFormat(date, controlType: string) {
+		this.shopCancellationForm.get(controlType).setValue(moment(date).format("YYYY-MM-DD"));
+	}
 
 }
