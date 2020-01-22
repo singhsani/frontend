@@ -441,7 +441,9 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
 
     // Lookups array list
     religionArray: any = [];
-    maritalstatusArray: any = [];
+    // maritalstatusArray: any = [];
+    maritalGroomStatusArray: any = [];
+    maritalBrideStatusArray: any = [];
     applicantrelationArray: any = [];
     identityproofArray: any = [];
 
@@ -849,11 +851,11 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
                 }
 
                 if (!_.isUndefined(res.marriageTimeGroomStatus.code)) {
-                    this.onChange(res.marriageTimeGroomStatus.code, this.maritalstatusArray, 'maritalstatusGujgroom')
+                    this.onChange(res.marriageTimeGroomStatus.code, this.maritalGroomStatusArray, 'maritalstatusGujgroom')
                 }
 
                 if (!_.isUndefined(res.marriageTimeGroomStatus.code)) {
-                    this.onChange(res.marriageTimeGroomStatus.code, this.maritalstatusArray, 'maritalstatusGujbride')
+                    this.onChange(res.marriageTimeGroomStatus.code, this.maritalBrideStatusArray, 'maritalstatusGujbride')
                 }
 
                 if (!_.isUndefined(res.applicantRelation.code)) {
@@ -865,6 +867,11 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
 
                 if (!this.marriageFormGroup.controls.canEdit.value) {
                     this.marriageFormGroup.disable();
+                }
+
+                let groomVisa = this.marriageFormGroup.get("isGroomVisa").value;
+                if (groomVisa == null) {
+                    this.marriageFormGroup.get("isGroomVisa").setValue(false);
                 }
 
             },
@@ -887,15 +894,39 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
     getLookupsData() {
         this.formService.getDataFromLookups().subscribe(res => {
             this.religionArray = res.RELIGION;
-            this.maritalstatusArray = res.MARITAL_STATUS;
+            this.maritalGroomStatusArray = res.MARITAL_STATUS;
+
             this.applicantrelationArray = res.MARRIAGE_APPLICANT_RELATION;
             this.identityproofArray = res.MARRIAGE_ID_PROOFS;
+
+
+            // console.log(this.maritalGroomStatusArray);
+            // //
+            // // // let widower = this.findValueoflookup(this.maritalGroomStatusArray, "WIDOW");
+            // let indexofWidower = _.findIndex(this.maritalGroomStatusArray, function (ogromm) { return ogromm.code == 'WIDOW'; });
+            // console.log(indexofWidower);
+            // this.maritalGroomStatusArray.splice(indexofWidower,1);
+
+            // this.maritalBrideStatusArray = res.MARITAL_STATUS;
+            // console.log(this.maritalBrideStatusArray);
+            // // // let widow = this.findValueoflookup(this.maritalBrideStatusArray, "WIDOWER");
+            // let indexofwidow = _.findIndex(this.maritalBrideStatusArray, function (obride) { return obride.code == 'WIDOWER'; });
+            // this.maritalBrideStatusArray.splice(indexofwidow,1);
+
+            // console.log(this.maritalBrideStatusArray);
+            // console.log(this.maritalGroomStatusArray);
+
         },
             err => {
                 this.toster.error(err.error.error_description);
             });
     }
 
+    // findValueoflookup(lookupArray: Array<any>, resCode: string) {
+    //     return _.result(_.find(lookupArray, function (obj) {
+    //         return obj.code === resCode;
+    //     }), 'code');
+    // }
     /**
      * This method is change date formate.
      * @param date : Input date(any format).
@@ -1207,31 +1238,35 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
         this[varName] = '';
     }
 
+    listOfDependentAtt: any = [];
 	/**
 	 * Method is create required document array
 	 */
     requiredDocumentList() {
 
         this.uploadFilesArray = [];
-        let groomreligionChange = this.marriageFormGroup.controls.groomReligion.get("code").value;
-        let bridereligionChange = this.marriageFormGroup.controls.brideReligion.get("code").value;
 
-        if (!_.isEmpty(groomreligionChange) && !_.isEmpty(bridereligionChange)) {
+        let organizationCategory = this.marriageFormGroup.get('groomReligion').value.code;
+        let groomVisa = this.marriageFormGroup.get("isGroomVisa").value;
+        let brideVisa = this.marriageFormGroup.get('isBrideVisa').value;
+        this.listOfDependentAtt = [];
+        this.listOfDependentAtt.push(organizationCategory);
+        this.listOfDependentAtt.push(groomVisa);
+        this.listOfDependentAtt.push(brideVisa);
 
+        if (organizationCategory && groomVisa && brideVisa) {
             _.forEach(this.marriageFormGroup.get('serviceDetail').get('serviceUploadDocuments').value, (value) => {
 
-                if (bridereligionChange != 'HINDU' && bridereligionChange == groomreligionChange) {
-
+                if (value.dependentFieldName == null && value.mandatory && value.isActive && value.requiredOnCitizenPortal) {
+                    this.uploadFilesArray.push({
+                        'labelName': value.documentLabelEn,
+                        'fieldIdentifier': value.fieldIdentifier,
+                        'documentIdentifier': value.documentIdentifier
+                    })
+                }
+                if (value.dependentFieldName) {
+                    let listofFields = value.dependentFieldName;
                     if (value.mandatory && value.isActive && value.requiredOnCitizenPortal) {
-                        this.uploadFilesArray.push({
-                            'labelName': value.documentLabelEn,
-                            'fieldIdentifier': value.fieldIdentifier,
-                            'documentIdentifier': value.documentIdentifier
-                        })
-                    }
-                } else if (bridereligionChange == 'HINDU' && bridereligionChange == groomreligionChange) {
-
-                    if (value.dependentFieldName == null && value.mandatory && value.isActive && value.requiredOnCitizenPortal) {
                         this.uploadFilesArray.push({
                             'labelName': value.documentLabelEn,
                             'fieldIdentifier': value.fieldIdentifier,
@@ -1242,9 +1277,77 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
 
             });
         }
-        else {
-            this.config.requiredDocumentList(this.marriageFormGroup, this.uploadFilesArray);
-        }
+        // let groomreligionChange = this.marriageFormGroup.controls.groomReligion.get("code").value;
+        // let bridereligionChange = this.marriageFormGroup.controls.brideReligion.get("code").value;
+
+        // let groomVisa = this.marriageFormGroup.get("isGroomVisa").value;
+        // if (groomVisa == null) {
+        //     this.marriageFormGroup.get("isGroomVisa").setValue(false);
+        // }
+        // let brideVisa = this.marriageFormGroup.get('isBrideVisa').value;
+        // if (brideVisa == null) {
+        //     this.marriageFormGroup.get("isBrideVisa").setValue(false);
+        // }
+        // debugger;
+        // if (!_.isEmpty(groomreligionChange) && !_.isEmpty(bridereligionChange)) {
+
+        //     _.forEach(this.marriageFormGroup.get('serviceDetail').get('serviceUploadDocuments').value, (value) => {
+
+        //         if (value.mandatory && value.isActive && value.requiredOnCitizenPortal) {
+        //             this.uploadFilesArray.push({
+        //                 'labelName': value.documentLabelEn,
+        //                 'fieldIdentifier': value.fieldIdentifier,
+        //                 'documentIdentifier': value.documentIdentifier
+        //             })
+        //             if (value.dependentFieldName == 'HINDU') {
+        //                 let indexone = _.findIndex(this.uploadFilesArray, function (indexfind) { return indexfind.dependentFieldName == 'HINDU'; });
+        //                 console.log(indexone);
+        //                 this.uploadFilesArray.splice(indexone, 1);
+        //                 console.log(this.uploadFilesArray);
+        //             }
+
+        //             // if (bridereligionChange != 'HINDU' && groomreligionChange != 'HINDU') {
+        //             //     if (value.dependentFieldName != null) {
+        //             //         this.uploadFilesArray.push({
+        //             //             'labelName': value.documentLabelEn,
+        //             //             'fieldIdentifier': value.fieldIdentifier,
+        //             //             'documentIdentifier': value.documentIdentifier
+        //             //         })
+        //             //     }
+        //             // } else if (bridereligionChange == 'HINDU' && groomreligionChange == 'HINDU') {
+
+        //             //     if (value.dependentFieldName == null) {
+        //             //         this.uploadFilesArray.push({
+        //             //             'labelName': value.documentLabelEn,
+        //             //             'fieldIdentifier': value.fieldIdentifier,
+        //             //             'documentIdentifier': value.documentIdentifier
+        //             //         })
+        //             //     }
+        //             // }
+
+        //             // if (groomVisa && value.dependentFieldName == 'isGroomVisa') {
+        //             //     debugger;
+        //             //     if (value.mandatory && value.isActive && value.requiredOnCitizenPortal) {
+        //             //         this.uploadFilesArray.push({
+        //             //             'labelName': value.documentLabelEn,
+        //             //             'fieldIdentifier': value.fieldIdentifier,
+        //             //             'documentIdentifier': value.documentIdentifier
+        //             //         })
+        //             //     }
+        //             // }
+
+        //         }
+
+        //     });
+        // }
+        // else {
+        //     this.config.requiredDocumentList(this.marriageFormGroup, this.uploadFilesArray);
+        // }
+    }
+
+
+    onChangeVisaStatus() {
+        this.requiredDocumentList();
     }
 
     /**

@@ -6,7 +6,9 @@
 
 
 <div *ngIf="isGuideLineActive">
-    <app-guidelines [isGuileLineActive]="isGuideLineActive" [moreListMsg]="moreListMsg" [listMessage]="listMessage" [message]="message" (hideGuideLine) = "$event?isGuideLineActive = false : isGuideLineActive = true" ></app-guidelines>
+	<app-guidelines [isGuileLineActive]="isGuideLineActive" [moreListMsg]="moreListMsg" [listMessage]="listMessage"
+		[message]="message" (hideGuideLine)="$event?isGuideLineActive = false : isGuideLineActive = true">
+	</app-guidelines>
 </div>
 
 <mat-card class="formClass cardBorder createMarriageReg" [hidden]="isGuideLineActive">
@@ -143,8 +145,8 @@
 						<div class="radioBtnError">
 							<mat-label> {{'marital_status' | translate:translateKey }}*</mat-label>
 							<mat-radio-group formControlName="code" required
-								(change)="onChange($event.value,maritalstatusArray,'maritalstatusGujgroom');changeReset('aliveWives')">
-								<span *ngFor="let status of maritalstatusArray">
+								(change)="onChange($event.value,maritalGroomStatusArray,'maritalstatusGujgroom');changeReset('aliveWives')">
+								<span *ngFor="let status of maritalGroomStatusArray">
 									<span *ngIf="status.name == 'Married'">
 										<mat-radio-button
 											*ngIf="marriageFormGroup.get('groomReligion').get('code').value === 'MUSLIM'"
@@ -214,7 +216,7 @@
 						<div class="radioBtnError">
 							<mat-label>{{'is_visa' | translate:translateKey }}</mat-label>
 							<mat-radio-group formControlName="isGroomVisa"
-								(change)="nriWitenessFields('groom');changeReflection('groom');changeReset('nriGroomAddress');changeReset('nriGroomParentsAddress');resetAddress('groomAddress','GROOM_ADDRESS')"
+								(change)="nriWitenessFields('groom');changeReflection('groom');onChangeVisaStatus();changeReset('nriGroomAddress');changeReset('nriGroomParentsAddress');resetAddress('groomAddress','GROOM_ADDRESS')"
 								required>
 								<mat-radio-button [value]="true">
 									Yes
@@ -235,9 +237,8 @@
 					<!-- this is inside isNriMarrige true or false -->
 					<div *ngIf="marriageFormGroup.get('isGroomVisa').value  == true">
 						<mat-form-field class="col-md-4">
-							<input matInput maxlength="9" minlength="9" type="tel"
-								formControlName="groomPassportNumber" required
-								placeholder="{{'passport_number' | translate:translateKey }}">
+							<input matInput maxlength="9" minlength="9" type="tel" formControlName="groomPassportNumber"
+								required placeholder="{{'passport_number' | translate:translateKey }}">
 							<control-messages [control]="marriageFormGroup.get('groomPassportNumber')">
 							</control-messages>
 						</mat-form-field>
@@ -311,7 +312,8 @@
 						</mat-form-field>
 
 						<mat-form-field class="col-md-4">
-							<textarea matInput required rows="3" cols="50" maxlength="500" formControlName="nriGroomAddress"
+							<textarea matInput required rows="3" cols="50" maxlength="500"
+								formControlName="nriGroomAddress"
 								placeholder="{{ 'foreign_address' | translate:translateKey }}"> </textarea>
 							<control-messages [control]="marriageFormGroup.get('nriGroomAddress')"></control-messages>
 						</mat-form-field>
@@ -332,7 +334,8 @@
 						</mat-form-field>
 
 						<mat-form-field class="col-md-4">
-							<textarea matInput rows="3" cols="50" required maxlength="500" formControlName="groomCompanyAddress"
+							<textarea matInput rows="3" cols="50" required maxlength="500"
+								formControlName="groomCompanyAddress"
 								placeholder="{{ 'company_address' | translate:translateKey }}"> </textarea>
 							<control-messages [control]="marriageFormGroup.get('groomCompanyAddress')">
 							</control-messages>
@@ -447,8 +450,8 @@
 						<div class="radioBtnError">
 							<mat-label>{{'marital_status' | translate:translateKey }}*</mat-label>
 							<mat-radio-group formControlName="code" required
-								(change)="onChange($event.value,maritalstatusArray,'maritalstatusGujbride')">
-								<span *ngFor="let status of maritalstatusArray">
+								(change)="onChange($event.value,maritalBrideStatusArray,'maritalstatusGujbride')">
+								<span *ngFor="let status of maritalBrideStatusArray">
 									<mat-radio-button *ngIf="status.name != 'Married'" [value]="status.code">
 										{{status.name}}
 									</mat-radio-button>
@@ -485,7 +488,7 @@
 					<div class="col-md-4">
 						<mat-label>{{'is_visa' | translate:translateKey }}</mat-label>
 						<mat-radio-group formControlName="isBrideVisa"
-							(change)="nriWitenessFields('bride');changeReflection('bride');changeReset('nriBrideAddress');changeReset('nriBrideParentsAddress');resetAddress('brideAddress','BRIDE_ADDRESS')"
+							(change)="nriWitenessFields('bride');changeReflection('bride');onChangeVisaStatus();changeReset('nriBrideAddress');changeReset('nriBrideParentsAddress');resetAddress('brideAddress','BRIDE_ADDRESS')"
 							required>
 							<mat-radio-button [value]="true">
 								Yes
@@ -700,7 +703,8 @@
 				<!-- For NIR Marrige -->
 				<div class="row" *ngIf="marriageFormGroup.get('isNriMarriage').value == true">
 					<mat-form-field class="col-md-4">
-						<textarea matInput [required]="marriageFormGroup.get('isNriMarriage').value == true" rows="3" cols="50" maxlength="500" formControlName="nriGroomParentsAddress"
+						<textarea matInput [required]="marriageFormGroup.get('isNriMarriage').value == true" rows="3"
+							cols="50" maxlength="500" formControlName="nriGroomParentsAddress"
 							placeholder="{{ 'foreign_address' | translate:translateKey }}"> </textarea>
 						<control-messages [control]="marriageFormGroup.get('nriGroomParentsAddress')">
 						</control-messages>
@@ -920,7 +924,8 @@
 					</mat-form-field>
 
 					<h2>{{'address' | translate:translateKey }}:</h2>
-					<app-address [requiredFeilds]="true" #address [addressFormGroup]="marriageFormGroup.get('priestAddress')"></app-address>
+					<app-address [requiredFeilds]="true" #address
+						[addressFormGroup]="marriageFormGroup.get('priestAddress')"></app-address>
 
 					<div class="col-md-4" formGroupName='isPriestParResAddressSame'>
 						<mat-checkbox type="checkbox" [checked]="addObject.checkedPar3"
@@ -930,7 +935,8 @@
 				</div>
 
 				<h2> {{'residence_address' | translate:translateKey }}:</h2>
-				<app-address #address [requiredFeilds]="true" [addressFormGroup]="marriageFormGroup.get('priestAddressResidence')">
+				<app-address #address [requiredFeilds]="true"
+					[addressFormGroup]="marriageFormGroup.get('priestAddressResidence')">
 				</app-address>
 
 				<app-action-bar [uploadFiles]="uploadFilesArray" [form]="marriageFormGroup"
@@ -1527,7 +1533,8 @@
 								<ng-option *ngFor="let relation of applicantrelationArray" [value]="relation.code">
 									{{relation.name}}</ng-option>
 							</ng-select>
-							<control-messages [control]="marriageFormGroup.get('applicantRelation').get('code')"></control-messages>
+							<control-messages [control]="marriageFormGroup.get('applicantRelation').get('code')">
+							</control-messages>
 						</div>
 
 						<mat-form-field class="col-md-4"
@@ -1535,7 +1542,8 @@
 							<input matInput type="text" required formControlName="applicantRelationOther"
 								placeholder="{{'other_relation' | translate:translateKey }}" appValidationFields
 								[validationFieldsType]="'onlyNameWithOutSpace'">
-							<control-messages [control]="marriageFormGroup.get('applicantRelationOther')"></control-messages>
+							<control-messages [control]="marriageFormGroup.get('applicantRelationOther')">
+							</control-messages>
 						</mat-form-field>
 
 						<!-- gujrati -->
@@ -1582,19 +1590,23 @@
 				</ng-template>
 
 				<div class="alert alert-warning">
-					{{'note' | translate:translateKey}} : {{'submit_hard_copy_at_saradar_market' | translate:translateKey}}
+					{{'note' | translate:translateKey}} :
+					{{'submit_hard_copy_at_saradar_market' | translate:translateKey}}
 				</div>
 				<div class="row">
-					<div class="col-md-4"
-						*ngFor="let doc of marriageFormGroup.get('serviceDetail').get('serviceUploadDocuments').value">
-						<div *ngIf="doc.requiredOnCitizenPortal && doc.isActive && showButtons">
+					<ng-container
+						*ngFor="let doc of marriageFormGroup.get('serviceDetail').get('serviceUploadDocuments').value  | filterAttachmentMR:listOfDependentAtt">
+						<!-- marriageFormGroup.get('groomReligion').value:marriageFormGroup.get('isGroomVisa').value:marriageFormGroup.get('isBrideVisa').value -->
+						<div class="col-md-4" *ngIf="doc.requiredOnCitizenPortal && doc.isActive && showButtons">
 							<label>{{translateService.getCurrentLanguage()=='en'? doc.documentLabelEn : doc.documentLabelGuj }}
-								<span *ngIf="doc.mandatory && (doc.dependentFieldName == null)">*</span>
-								<span *ngIf="doc.mandatory && (doc.dependentFieldName == 'HINDU') && (marriageFormGroup.get('groomReligion').get('code').value != 'HINDU') && (marriageFormGroup.get('brideReligion').get('code').value != 'HINDU') && (marriageFormGroup.get('groomReligion').get('code').value != null)">*</span>
+								<span *ngIf="doc.mandatory">*</span>
+								<!-- <span
+									*ngIf="doc.mandatory && (doc.dependentFieldName == 'HINDU') && (marriageFormGroup.get('groomReligion').get('code').value != 'HINDU') && (marriageFormGroup.get('brideReligion').get('code').value != 'HINDU') && (marriageFormGroup.get('groomReligion').get('code').value != null)">*
+								</span> -->
 							</label>
 							<file-upload [form]="marriageFormGroup" [uploadModel]="doc"></file-upload>
 						</div>
-					</div>
+					</ng-container>
 				</div>
 
 				<!-- <div class="row">
@@ -1652,9 +1664,10 @@
 					</div> -->
 				<!-- </div>  -->
 
-				<app-action-bar [paymentGateway]="paymentGateway" [uploadFiles]="uploadFilesArray" [form]="marriageFormGroup"
-					(tabIndex)="onTabChange($event)" [stepInfo]="{step: 'final', next: 9, back: 9}"
-					(handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
+				<app-action-bar [paymentGateway]="paymentGateway" [uploadFiles]="uploadFilesArray"
+					[form]="marriageFormGroup" (tabIndex)="onTabChange($event)"
+					[stepInfo]="{step: 'final', next: 9, back: 9}" (handleErrors)="handleErrorsOnSubmit($event)">
+				</app-action-bar>
 			</mat-tab>
 			<!-- End nine step -->
 			<select-payment-gateway #paymentGateway></select-payment-gateway>

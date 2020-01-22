@@ -13,6 +13,7 @@ import { ManageRoutes } from './../../../../config/routes-conf';
 import { MarriageCreateComponent } from './marriage-create/marriage-create.component';
 import { MarriageDuplicateComponent } from './marriage-duplicate/marriage-duplicate.component';
 /* Import marriage certificate components end */
+import { FilterAttachmentMRPipe } from './filter-attachment-MR.pipe';
 
 const routes: Routes = [
 	{ path: '', component: MarriageCreateComponent },
@@ -32,6 +33,7 @@ const routes: Routes = [
 	declarations: [
 		MarriageCreateComponent,
 		MarriageDuplicateComponent,
+		FilterAttachmentMRPipe
 	]
 })
 export class MarriageModule { }
