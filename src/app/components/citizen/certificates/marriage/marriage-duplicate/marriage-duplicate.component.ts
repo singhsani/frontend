@@ -185,11 +185,11 @@ export class MarriageDuplicateComponent implements OnInit {
 			// deptFileStatus: null,
 			serviceCode: "HEL-DUPMR",
 			marriageRegNumber: null,
-			marriageDate: [''],
+			marriageDate: null,
 			marriageRegDate: null,
 			marriageRegYear: null,
-			groomName: ['', [ValidationService.nameValidator, Validators.maxLength(50)]],
-			brideName: ['', [ValidationService.nameValidator, Validators.maxLength(50)]],
+			groomName: null,
+			brideName: null,
 
 			fieldView: "ALL",
 			fieldList: null,
@@ -255,19 +255,33 @@ export class MarriageDuplicateComponent implements OnInit {
 			this.commonService.openAlert("Warning", "Something Went Wrong", "warning");
 		});
 	}
-
+	
 	/**
 	 * Method is used to update duplicate form data with original json.
 	 * @param data - original json.
 	 */
 	updateDuplicateRecordValue(data) {
-		this.marriageDuplicateForm.get("marriageRegNumber").setValue(data.fileNumber)
-		this.marriageDuplicateForm.get("marriageDate").setValue(data.marriageDate)
-		this.marriageDuplicateForm.get("marriageRegDate").setValue(data.marriageRegDate)
-		this.marriageDuplicateForm.get("marriageRegYear").setValue(data.marriageRegYear)
-		this.marriageDuplicateForm.get("groomName").setValue(data.groomFirstName + " " + data.groomMiddleName + " " + data.groomLastName)
-		this.marriageDuplicateForm.get("brideName").setValue(data.brideFirstName + " " + data.brideMiddleName + " " + data.brideLastName)
+		debugger;
+		this.marriageDuplicateForm.get("marriageRegNumber").setValue(data.marriageRegNo);
+		this.newgnDateconvert('marriageDate',data.marriageDate);
+		// this.marriageDuplicateForm.get("marriageDate").setValue(data.marriageDate);
+		this.newgnDateconvert('marriageRegDate', data.marriageRegDate);
+		// this.marriageDuplicateForm.get("marriageRegDate").setValue(data.marriageRegDate);
+		this.marriageDuplicateForm.get("marriageRegYear").setValue(data.marriageRegYear);
+		this.marriageDuplicateForm.get("groomName").setValue(data.groomName);
+		this.marriageDuplicateForm.get("brideName").setValue(data.brideName);
 	}
+
+	  /**
+		* This method for convert newgn response date to yyyy-mm-dd formate
+		*/
+		newgnDateconvert(controlName: any, date) {
+			let dateString = date;
+			let dateParts = dateString.split("-");
+			let dateObject = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
+	
+			this.marriageDuplicateForm.get(controlName).setValue(moment(dateObject).format("YYYY-MM-DD"));
+		}
 
 	/**
 	 * Method is used to get marriage duplicate form data.
@@ -354,7 +368,7 @@ export class MarriageDuplicateComponent implements OnInit {
 		this.paginator.pageSize = 5;
 		this.paginator.pageIndex = 0;
 		this.config.getAllData(this.sort, this.paginator, this.pageSize, this.marriageSearchForm.get('apiType').value, this.marriageSearchForm).subscribe((res: any) => {
-			if (res.data != null ) {
+			if (res.data != null) {
 
 				let newgnData = JSON.parse(res.data);
 				let prod_array = [];
@@ -368,8 +382,9 @@ export class MarriageDuplicateComponent implements OnInit {
 			else {
 				this.toster.warning('No Record Found');
 			}
-		},err => {
-				this.toster.error(err);	});
+		}, err => {
+			this.toster.error(err);
+		});
 		// merge(this.sort.sortChange, this.paginator.page)
 		// 	.pipe(
 		// 		startWith({}),

@@ -2,7 +2,7 @@
 </app-title-bar>
 
 <!-- Search From Starts from here -->
-<div *ngIf="showSearchForm" >
+<div *ngIf="showSearchForm">
 	<mat-card class="cardBorder">
 		<form [formGroup]="marriageSearchForm" (ngSubmit)="getApplicationDetails()" autocomplete="off">
 
@@ -15,21 +15,23 @@
 				</mat-form-field>
 
 				<mat-form-field class="col-4">
-					<input matInput [max]="disablefutureDate" [matDatepicker]="picker1" formControlName="marriageDate"
-						(dateChange)="dateFormate($event.value,'marriageDate')"
+					<input matInput appDate [max]="disablefutureDate" [matDatepicker]="picker1"
+						formControlName="marriageDate" (dateChange)="dateFormate($event.value,'marriageDate')"
 						placeholder="{{ 'date_of_marriage' | translate:translateKey }}" required>
 					<mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-					<mat-datepicker #picker1></mat-datepicker>
+					<mat-datepicker #picker1 touchUi="true" touchUi="true"></mat-datepicker>
+					<div align="end" class="default-show-hint mat-hint mat-right">{{config.DATE_HINT_MSG}}</div>
 					<control-messages [control]="marriageSearchForm.get('marriageDate')"></control-messages>
 				</mat-form-field>
 
 				<mat-form-field class="col-4">
-					<input matInput [min]="marriageSearchForm.get('marriageDate').value" [max]="disablefutureDate"
+					<input matInput appDate [min]="marriageSearchForm.get('marriageDate').value" [max]="disablefutureDate"
 						[matDatepicker]="marriageRegDatepicker" formControlName="marriageRegDate"
 						(dateChange)="dateFormate($event.value,'marriageRegDate')"
 						placeholder="{{ 'marriage_reg_date' | translate:translateKey }}">
 					<mat-datepicker-toggle matSuffix [for]="marriageRegDatepicker"></mat-datepicker-toggle>
-					<mat-datepicker #marriageRegDatepicker></mat-datepicker>
+					<mat-datepicker #marriageRegDatepicker touchUi="true" touchUi="true"></mat-datepicker>
+					<div align="end" class="default-show-hint mat-hint mat-right">{{config.DATE_HINT_MSG}}</div>
 					<control-messages [control]="marriageSearchForm.get('marriageRegDate')"></control-messages>
 				</mat-form-field>
 
