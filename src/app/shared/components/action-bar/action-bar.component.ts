@@ -134,11 +134,11 @@ export class ActionBarComponent implements OnInit, OnChanges {
 
 		if (this.form.valid) {
 			
-			if((this.form.get('apiType').value == "shopLicense" || this.form.get('apiType').value == 'shopRenwalLic') && !this.form.get('agree').value){
-				this.commonService.openAlert("Field Error", "Please agree condition of form", 'warning');
-				this.isSubmitBtnDisabled = false;
-				return;
-			}
+			// if((this.form.get('apiType').value == "shopLicense" || this.form.get('apiType').value == 'shopRenwalLic') && !this.form.get('agree').value){
+			// 	this.commonService.openAlert("Field Error", "Please agree condition of form", 'warning');
+			// 	this.isSubmitBtnDisabled = false;
+			// 	return;
+			// }
 
 			this.mandatoryFileCheck().then(data => {
 				if (data.status) {

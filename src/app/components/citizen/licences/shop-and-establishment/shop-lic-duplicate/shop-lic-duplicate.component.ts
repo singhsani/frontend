@@ -9,6 +9,7 @@ import { FormsActionsService } from '../../../../../core/services/citizen/data-s
 import { CommonService } from '../../.././../../shared/services/common.service';
 import { Location } from '@angular/common';
 import { LicenseConfiguration } from '../../license-configuration';
+import * as moment from 'moment';
 
 @Component({
 	selector: 'app-shop-lic-duplicate',
@@ -40,7 +41,8 @@ export class ShopLicDuplicateComponent implements OnInit {
 	 */
 	searchLicence() {
 
-		this.shopAndEstablishmentService.searchLicence(this.serachLicenceObj.searchLicenceNumber).subscribe(
+		let obj = { refNumber: this.serachLicenceObj.searchLicenceNumber };
+		this.shopAndEstablishmentService.searchLicenceFromNewgen(obj).subscribe(
 			(res: any) => {
 				if (res.success) {
 					this.serachLicenceObj.isDisplayDuplicateLicenceForm = true;
@@ -167,14 +169,14 @@ export class ShopLicDuplicateComponent implements OnInit {
 				fileNumber: res.fileNumber,
 				pid: res.pid,
 				outwardNo: res.outwardNo,
-				agree: res.agree,
+				// agree: res.agree,
 
 				// paymentStatus: res.paymentStatus,
 				canEdit: res.canEdit,
 				canDelete: res.canDelete,
 				canSubmit: res.canSubmit,
 				serviceCode: res.serviceCode,
-				licenseIssueDate: res.licenseIssueDate,
+				// licenseIssueDate: res.licenseIssueDate,
 				// licenseRenewalDate: res.licenseRenewalDate,
 				// loinumber: res.loinumber,
 			});
@@ -216,4 +218,14 @@ export class ShopLicDuplicateComponent implements OnInit {
 			this.wardNo = res.SHOP_LIC_WARD_NO;
 		});
 	}
+
+
+	/**
+		 * This method is change date format.
+		 * @param date : selected date
+		 * @param controlType : form control name
+		 */
+		dateFormat(date, controlType: string) {
+			this.shopLicDuplicateForm.get(controlType).setValue(moment(date).format("YYYY-MM-DD"));
+		}
 }
