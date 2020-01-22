@@ -133,7 +133,7 @@ export class ActionBarComponent implements OnInit, OnChanges {
 
 
 		if (this.form.valid) {
-			
+
 			// if((this.form.get('apiType').value == "shopLicense" || this.form.get('apiType').value == 'shopRenwalLic') && !this.form.get('agree').value){
 			// 	this.commonService.openAlert("Field Error", "Please agree condition of form", 'warning');
 			// 	this.isSubmitBtnDisabled = false;
@@ -198,6 +198,12 @@ export class ActionBarComponent implements OnInit, OnChanges {
 											// })
 
 										}, rj => {
+												this.form.get('canEdit').setValue(false);
+												this.isSubmitBtnDisabled = false;
+												this.isBtnsDisabled = false;
+												this.form.disable();
+												return;
+
 											// let errHtml = `			
 											// 	<div class="alert alert-danger">
 											// 		Please Complete Payment, Otherwise the application will be considered as in-complete
