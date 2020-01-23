@@ -895,7 +895,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
         this.formService.getDataFromLookups().subscribe(res => {
             this.religionArray = res.RELIGION;
             this.maritalGroomStatusArray = res.MARITAL_STATUS;
-
+            this.maritalBrideStatusArray = res.MARITAL_STATUS;
             this.applicantrelationArray = res.MARRIAGE_APPLICANT_RELATION;
             this.identityproofArray = res.MARRIAGE_ID_PROOFS;
 
