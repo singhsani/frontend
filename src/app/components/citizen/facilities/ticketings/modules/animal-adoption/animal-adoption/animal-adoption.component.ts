@@ -69,7 +69,7 @@ export class AnimalAdoptionComponent implements OnInit {
     this.animalAdoptionForm.valueChanges.subscribe( v => {
       // console.log(this.animalAdoptionForm);
     });
-   this.profileData();
+   //this.profileData();
   }
 
   /**
