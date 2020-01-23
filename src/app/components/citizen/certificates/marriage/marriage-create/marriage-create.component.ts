@@ -24,7 +24,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
     //Mandatory attachments Array
     public uploadFilesArray: Array<any> = [];
 
-    isGuideLineActive: boolean;
+    isGuideLineActive: boolean = false;
 
     public dummyJSON = {
         "apiType": "marriageReg",
@@ -442,8 +442,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
     // Lookups array list
     religionArray: any = [];
     // maritalstatusArray: any = [];
-    maritalGroomStatusArray: any = [];
-    maritalBrideStatusArray: any = [];
+    maritalStatusArray: any = [];
     applicantrelationArray: any = [];
     identityproofArray: any = [];
 
@@ -851,11 +850,11 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
                 }
 
                 if (!_.isUndefined(res.marriageTimeGroomStatus.code)) {
-                    this.onChange(res.marriageTimeGroomStatus.code, this.maritalGroomStatusArray, 'maritalstatusGujgroom')
+                    this.onChange(res.marriageTimeGroomStatus.code, this.maritalStatusArray, 'maritalstatusGujgroom')
                 }
 
                 if (!_.isUndefined(res.marriageTimeGroomStatus.code)) {
-                    this.onChange(res.marriageTimeGroomStatus.code, this.maritalBrideStatusArray, 'maritalstatusGujbride')
+                    this.onChange(res.marriageTimeGroomStatus.code, this.maritalStatusArray, 'maritalstatusGujbride')
                 }
 
                 if (!_.isUndefined(res.applicantRelation.code)) {
@@ -894,27 +893,9 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
     getLookupsData() {
         this.formService.getDataFromLookups().subscribe(res => {
             this.religionArray = res.RELIGION;
-            this.maritalGroomStatusArray = res.MARITAL_STATUS;
-            this.maritalBrideStatusArray = res.MARITAL_STATUS;
+            this.maritalStatusArray = res.MARITAL_STATUS;
             this.applicantrelationArray = res.MARRIAGE_APPLICANT_RELATION;
             this.identityproofArray = res.MARRIAGE_ID_PROOFS;
-
-
-            // console.log(this.maritalGroomStatusArray);
-            // //
-            // // // let widower = this.findValueoflookup(this.maritalGroomStatusArray, "WIDOW");
-            // let indexofWidower = _.findIndex(this.maritalGroomStatusArray, function (ogromm) { return ogromm.code == 'WIDOW'; });
-            // console.log(indexofWidower);
-            // this.maritalGroomStatusArray.splice(indexofWidower,1);
-
-            // this.maritalBrideStatusArray = res.MARITAL_STATUS;
-            // console.log(this.maritalBrideStatusArray);
-            // // // let widow = this.findValueoflookup(this.maritalBrideStatusArray, "WIDOWER");
-            // let indexofwidow = _.findIndex(this.maritalBrideStatusArray, function (obride) { return obride.code == 'WIDOWER'; });
-            // this.maritalBrideStatusArray.splice(indexofwidow,1);
-
-            // console.log(this.maritalBrideStatusArray);
-            // console.log(this.maritalGroomStatusArray);
 
         },
             err => {
