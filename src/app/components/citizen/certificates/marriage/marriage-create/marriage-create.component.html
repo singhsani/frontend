@@ -145,16 +145,17 @@
 						<div class="radioBtnError">
 							<mat-label> {{'marital_status' | translate:translateKey }}*</mat-label>
 							<mat-radio-group formControlName="code" required
-								(change)="onChange($event.value,maritalGroomStatusArray,'maritalstatusGujgroom');changeReset('aliveWives')">
-								<span *ngFor="let status of maritalGroomStatusArray">
-									<span *ngIf="status.name == 'Married'">
+								(change)="onChange($event.value,maritalStatusArray,'maritalstatusGujgroom');changeReset('aliveWives')">
+								<span *ngFor="let status of maritalStatusArray">
+									<span *ngIf="status.code == 'MARRIED' && status.code != 'WIDOW'">
 										<mat-radio-button
 											*ngIf="marriageFormGroup.get('groomReligion').get('code').value === 'MUSLIM'"
 											[value]="status.code">
 											{{status.name}}
 										</mat-radio-button>
 									</span>
-									<mat-radio-button *ngIf="status.name != 'Married'" [value]="status.code">
+									<mat-radio-button *ngIf="status.code != 'MARRIED'  && status.code != 'WIDOW'"
+										[value]="status.code">
 										{{status.name}}
 									</mat-radio-button>
 								</span>
@@ -286,14 +287,14 @@
 
 						<mat-form-field class="col-md-4">
 							<input matInput type="text" maxlength="50" formControlName="groomEligibility"
-								appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'"
+								appValidationFields [validationFieldsType]="'onlyNameWithSpace'"
 								placeholder="{{ 'eligibility' | translate:translateKey }}">
 							<control-messages [control]="marriageFormGroup.get('groomEligibility')"></control-messages>
 						</mat-form-field>
 
 						<mat-form-field class="col-md-4">
 							<input matInput type="text" maxlength="50" formControlName="groomDesignation"
-								appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'"
+								appValidationFields [validationFieldsType]="'onlyNameWithSpace'"
 								placeholder="{{ 'designation' | translate:translateKey }}">
 							<control-messages [control]="marriageFormGroup.get('groomDesignation')"></control-messages>
 						</mat-form-field>
@@ -450,9 +451,10 @@
 						<div class="radioBtnError">
 							<mat-label>{{'marital_status' | translate:translateKey }}*</mat-label>
 							<mat-radio-group formControlName="code" required
-								(change)="onChange($event.value,maritalBrideStatusArray,'maritalstatusGujbride')">
-								<span *ngFor="let status of maritalBrideStatusArray">
-									<mat-radio-button *ngIf="status.name != 'Married'" [value]="status.code">
+								(change)="onChange($event.value,maritalStatusArray,'maritalstatusGujbride')">
+								<span *ngFor="let status of maritalStatusArray">
+									<mat-radio-button *ngIf="status.code != 'MARRIED' && status.code != 'WIDOWER'"
+										[value]="status.code">
 										{{status.name}}
 									</mat-radio-button>
 								</span>
@@ -552,14 +554,14 @@
 
 						<mat-form-field class="col-md-4">
 							<input matInput type="text" maxlength="50" formControlName="brideEligibility"
-								appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'"
+								appValidationFields [validationFieldsType]="'onlyNameWithSpace'"
 								placeholder="{{ 'eligibility' | translate:translateKey }}" required>
 							<control-messages [control]="marriageFormGroup.get('brideEligibility')"></control-messages>
 						</mat-form-field>
 
 						<mat-form-field class="col-md-4">
 							<input matInput type="text" maxlength="50" formControlName="brideDesignation"
-								appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'"
+								appValidationFields [validationFieldsType]="'onlyNameWithSpace'"
 								placeholder="{{ 'designation' | translate:translateKey }}" required>
 							<control-messages [control]="marriageFormGroup.get('brideDesignation')"></control-messages>
 						</mat-form-field>
