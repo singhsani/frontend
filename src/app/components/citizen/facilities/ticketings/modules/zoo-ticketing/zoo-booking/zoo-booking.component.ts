@@ -192,7 +192,7 @@ export class ZooBookingComponent implements OnInit {
     this.ticketBookingFormControls();
     this.getLookUps();
     this.getZooVisitingRates();
-    this.profileData();
+    //this.profileData();
   }
 
   /**
