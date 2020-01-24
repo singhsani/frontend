@@ -128,14 +128,14 @@
 				<div class="row">
 					<mat-form-field class="col-md-4">
 						<input matInput maxlength="20" appAlphaNumeric
-							placeholder="{{'professional_tax_PEC_no' | translate:translateKey}}"
+							placeholder="{{'professional_tax_PEC_no' | translate:translateKey}} *"
 							formControlName="professionalTaxPECNo">
 						<control-messages [control]="shopLicRenewalForm.get('professionalTaxPECNo')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<input matInput maxlength="20" appAlphaNumeric
-							placeholder="{{'PRC_no' | translate:translateKey}}" formControlName="prcNo">
+							placeholder="{{'PRC_no' | translate:translateKey}} *" formControlName="prcNo">
 						<control-messages [control]="shopLicRenewalForm.get('prcNo')"></control-messages>
 					</mat-form-field>
 				</div>

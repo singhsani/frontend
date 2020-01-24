@@ -50,7 +50,11 @@
 
 				<!-- gujarati -->
 				<div class="row">
-					<mat-form-field class="col-md-4">
+					<!-- <mat-form-field class="col-md-2">
+						<input matInput type="text" maxlength="90"	appGujInputTarget [form]="animalPondNewForm"
+							placeholder="{{ 'person_type' | translate:translateKey:'gu' }}">
+					</mat-form-field> -->
+					<mat-form-field class="col-md-2">
 						<input matInput type="text" maxlength="90" required formControlName="holderFirstNameGuj"
 							appGujInputTarget [form]="animalPondNewForm"
 							placeholder="{{ 'holder_firstname' | translate:translateKey:'gu' }}">
@@ -73,14 +77,12 @@
 
 				<div class="row">
 					<h2>{{'permanat_address' | translate:translateKey}}</h2>
-					<app-address [isDisplayGujFields]="true" #permanantAddressEstablishment
-						[requiredFeilds]="true"
+					<app-address [isDisplayGujFields]="true" #permanantAddressEstablishment [requiredFeilds]="true"
 						[addressFormGroup]="animalPondNewForm.get('permanantAddress')"></app-address>
 				</div>
 				<div class="row">
 					<h2>{{'temp_address' | translate:translateKey}}</h2>
-					<app-address [isDisplayGujFields]="true" #permanantAddressEstablishment
-						[requiredFeilds]="true"
+					<app-address [isDisplayGujFields]="true" #permanantAddressEstablishment [requiredFeilds]="true"
 						[addressFormGroup]="animalPondNewForm.get('temporaryAddress')"></app-address>
 				</div>
 
@@ -145,8 +147,7 @@
 				</div>
 				<div class="row">
 					<h2>{{'business_address' | translate:translateKey}}</h2>
-					<app-address [isDisplayGujFields]="true" #temporaryAddressEstablishment
-						[requiredFeilds]="true"
+					<app-address [isDisplayGujFields]="true" #temporaryAddressEstablishment [requiredFeilds]="true"
 						[addressFormGroup]="animalPondNewForm.get('businessAddress')"></app-address>
 				</div>
 
@@ -161,7 +162,7 @@
 					</mat-form-field>
 					<div class="col-md-4 ngSelect" formGroupName="relationshipId">
 						<ng-select placeholder="{{'relationship_id' | translate:translateKey}} *" formControlName="code"
-						(change)="onChangeRelationWithOrg()">
+							(change)="onChangeRelationWithOrg()">
 							<ng-option *ngFor="let id of MF_RELATIONSHIP_OF_APPLICANT" [value]="id.code">{{id.name}}
 							</ng-option>
 						</ng-select>
@@ -202,7 +203,7 @@
 						<table class="table table-striped mb-0 responsiveTableRow">
 							<thead>
 								<tr class="mo-d-none">
-									<th *ngIf="animalPondNewForm.get('canEdit').value">#</th>
+									<th *ngIf="animalPondNewForm.get('canEdit').value">SR No.</th>
 									<th>{{'name' | translate:translateKey}}</th>
 									<th>{{'address' | translate:translateKey}}</th>
 									<th>{{'mobile_no' | translate:translateKey}}</th>
@@ -224,7 +225,8 @@
 										<div *ngIf="!item.isEditMode">{{item.get('name').value}}</div>
 										<mat-form-field *ngIf="item.isEditMode">
 											<input matInput maxlength="100" appValidationFields
-												[validationFieldsType]="'onlyNameWithSpace'" formControlName="name" placeholder="{{'name' | translate:translateKey}}" required>
+												[validationFieldsType]="'onlyNameWithSpace'" formControlName="name"
+												placeholder="{{'name' | translate:translateKey}}" required>
 											<control-messages [control]="item.get('name')"></control-messages>
 										</mat-form-field>
 									</td>
@@ -233,7 +235,8 @@
 										<!-- <div class="d-md-none">{{'address' | translate:translateKey}}</div> -->
 										<div *ngIf="!item.isEditMode">{{item.get('address').value}}</div>
 										<mat-form-field *ngIf="item.isEditMode">
-											<input matInput maxlength="150" formControlName="address" placeholder="{{'address' | translate:translateKey}}" required>
+											<input matInput maxlength="150" formControlName="address"
+												placeholder="{{'address' | translate:translateKey}}" required>
 											<control-messages [control]="item.get('address')">
 											</control-messages>
 										</mat-form-field>
@@ -244,7 +247,8 @@
 										<div *ngIf="!item.isEditMode">{{item.get('mobileNo').value}} &nbsp;
 										</div>
 										<mat-form-field *ngIf="item.isEditMode">
-											<input matInput maxlength="10" OnlyNumber formControlName="mobileNo" placeholder="{{'mobile_no' | translate:translateKey}}" required>
+											<input matInput maxlength="10" OnlyNumber formControlName="mobileNo"
+												placeholder="{{'mobile_no' | translate:translateKey}}" required>
 											<control-messages [control]="item.get('mobileNo')">
 											</control-messages>
 										</mat-form-field>
@@ -315,7 +319,7 @@
 						<table class="table table-striped mb-0 responsiveTableRow">
 							<thead>
 								<tr class="mo-d-none">
-									<th>#</th>
+									<th>SR No.</th>
 									<th>{{'animal_type' | translate:translateKey}}</th>
 									<th>{{'animal_count' | translate:translateKey}}</th>
 									<th colspan="2" *ngIf="animalPondNewForm.get('canEdit').value"></th>
@@ -419,9 +423,9 @@
 					</div>
 				</div>
 
-				<app-action-bar [paymentGateway]="paymentGateway" [uploadFiles]="uploadFilesArray" [form]="animalPondNewForm"
-					(handleErrors)="handleErrorsOnSubmit($event)" (tabIndex)="onTabChange($event) "
-					[stepInfo]="{step: 'final', next:4, back:2} "></app-action-bar>
+				<app-action-bar [paymentGateway]="paymentGateway" [uploadFiles]="uploadFilesArray"
+					[form]="animalPondNewForm" (handleErrors)="handleErrorsOnSubmit($event)"
+					(tabIndex)="onTabChange($event) " [stepInfo]="{step: 'final', next:4, back:2} "></app-action-bar>
 
 			</mat-tab>
 			<!-- step Attachment Ends -->

@@ -796,6 +796,10 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
         this.formService.getFormData(id).subscribe(
             res => {
 
+                // res.serviceDetail.serviceUploadDocuments = res.serviceDetail.serviceUploadDocuments.sort((a, b) => {
+                //     return Number(a.fieldIdentifier) - Number(b.fieldIdentifier);
+                //   });
+
                 res.serviceDetail.serviceUploadDocuments.forEach(app => {
                     (<FormArray>this.marriageFormGroup.get('serviceDetail').get('serviceUploadDocuments')).push(this.config.createDocumentsGrp(app));
                 });
@@ -1093,9 +1097,9 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
             this.marriageFormGroup.get(`${person}Designation`).setValidators([Validators.required, Validators.maxLength(50)]);
             this.marriageFormGroup.get(`${person}PhoneNumber`).setValidators([Validators.required, Validators.maxLength(10)]);
             this.marriageFormGroup.get(`${person}Email`).setValidators([Validators.required, Validators.maxLength(50), ValidationService.emailValidator]);
-            this.marriageFormGroup.get(`${person}CompanyName`).setValidators([Validators.required, Validators.maxLength(100)]);
-            this.marriageFormGroup.get(`${person}CompanyAddress`).setValidators([Validators.required, Validators.maxLength(500)]);
-            this.marriageFormGroup.get(`${person}CompanyPhoneNumber`).setValidators([Validators.required, Validators.maxLength(10)]);
+            this.marriageFormGroup.get(`${person}CompanyName`).setValidators([Validators.maxLength(100)]);
+            this.marriageFormGroup.get(`${person}CompanyAddress`).setValidators([Validators.maxLength(500)]);
+            this.marriageFormGroup.get(`${person}CompanyPhoneNumber`).setValidators([Validators.maxLength(10)]);
 
             this.marriageFormGroup.get(`nri${getName}Address`).setValidators(Validators.required);
             this.marriageFormGroup.get(`nri${getName}ParentsAddress`).setValidators(Validators.required);
@@ -1234,7 +1238,8 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
         this.listOfDependentAtt.push(organizationCategory);
         this.listOfDependentAtt.push(groomVisa);
         this.listOfDependentAtt.push(brideVisa);
-
+        // let sortedArray:any = this.marriageFormGroup.get('serviceDetail').get('serviceUploadDocuments').value;
+        // this.marriageFormGroup.get('serviceDetail').get('serviceUploadDocuments'). = sortedArray;
         if (organizationCategory && groomVisa && brideVisa) {
             _.forEach(this.marriageFormGroup.get('serviceDetail').get('serviceUploadDocuments').value, (value) => {
 
