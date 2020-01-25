@@ -205,8 +205,8 @@ export class BirthRegistrationComponent implements OnInit {
 
 			//step 1(6)
 			birthPlace: this.fb.group({
-				id: 1,
-				code: [null, [Validators.required]],
+				id: null,
+				code: ['HOSPITAL', [Validators.required]],
 				name: null
 			}),
 			otherPlace: [null, [Validators.maxLength(500)]],
@@ -283,7 +283,7 @@ export class BirthRegistrationComponent implements OnInit {
 
 			motherAadharNumber: [null, [Validators.minLength(12), Validators.maxLength(12), ValidationService.aadharValidation]],
 			motherPrevRegNumber: [null, [Validators.maxLength(20)]],
-			mamtaRegNumber: [null, [Validators.required, Validators.maxLength(4)]],
+			mamtaRegNumber: [null, [Validators.maxLength(4)]],
 			petaKendraNumber: this.fb.group({
 				id: null,
 				code: null,
@@ -498,11 +498,12 @@ export class BirthRegistrationComponent implements OnInit {
 		let birthPlaceChange = this.birthCertificateForm.controls.birthPlace.get("code").value;
 
 		if (!_.isEmpty(birthPlaceChange)) {
-			if (birthPlaceChange != 'OTHER_PLACE') {
-				this.uploadFileArray.find(d => d.documentIdentifier == "AAYAS_REPORT_OR_DOCTOR_CERTIFICATE").mandatory = false;
-			} else if (birthPlaceChange == 'OTHER_PLACE') {
-				this.uploadFileArray.find(d => d.documentIdentifier == "AAYAS_REPORT_OR_DOCTOR_CERTIFICATE").mandatory = true;
-			}
+			this.requiredDocumentList();
+			// if (birthPlaceChange != 'OTHER_PLACE') {
+			// 	this.uploadFileArray.find(d => d.documentIdentifier == "AAYAS_REPORT_OR_DOCTOR_CERTIFICATE").mandatory = false;
+			// } else if (birthPlaceChange == 'OTHER_PLACE') {
+			// 	this.uploadFileArray.find(d => d.documentIdentifier == "AAYAS_REPORT_OR_DOCTOR_CERTIFICATE").mandatory = true;
+			// }
 		}
 		else {
 			this.config.requiredDocumentList(this.birthCertificateForm, this.uploadFileArray);
@@ -518,10 +519,23 @@ export class BirthRegistrationComponent implements OnInit {
 	let birthPlaceChange = this.birthCertificateForm.controls.birthPlace.get("code").value;
 
 	if (!_.isEmpty(birthPlaceChange)) {
-		if (birthPlaceChange != 'OTHER_PLACE') {
-			this.uploadFileArray.find(d => d.documentIdentifier == "AAYAS_REPORT_OR_DOCTOR_CERTIFICATE").mandatory = false;
-		} else if (birthPlaceChange == 'OTHER_PLACE') {
-			this.uploadFileArray.find(d => d.documentIdentifier == "AAYAS_REPORT_OR_DOCTOR_CERTIFICATE").mandatory = true;
+		if (birthPlaceChange != 'HOSPITAL') {
+			this.uploadFileArray.find(d => d.documentIdentifier == "RESIDENT_PROOF").mandatory = true;
+			this.uploadFileArray.find(d => d.documentIdentifier == "DOCTOR_CERTIFICATE").mandatory = true;
+			this.uploadFileArray.find(d => d.documentIdentifier == "DOCTOR_ID_PROOF").mandatory = true;
+			this.uploadFileArray.find(d => d.documentIdentifier == "AFFIDAVIT_HEALTH_OFFICER_ORDER").mandatory = false;
+			this.uploadFileArray.find(d => d.documentIdentifier == "ORDER_EXECUTIVE_MAGISTRATE").mandatory = false;
+			// this.uploadFileArray.find(d => d.documentIdentifier == "AAYAS_REPORT_OR_DOCTOR_CERTIFICATE").mandatory = true;
+			this.uploadFileArray.find(d => d.documentIdentifier == "HEALTH_WORKER_REPORT").mandatory = true;
+		} else if (birthPlaceChange == 'HOSPITAL') {
+			this.uploadFileArray.find(d => d.documentIdentifier == "RESIDENT_PROOF").mandatory = true;
+
+			this.uploadFileArray.find(d => d.documentIdentifier == "DOCTOR_CERTIFICATE").mandatory = false;
+			this.uploadFileArray.find(d => d.documentIdentifier == "DOCTOR_ID_PROOF").mandatory = false;
+			this.uploadFileArray.find(d => d.documentIdentifier == "AFFIDAVIT_HEALTH_OFFICER_ORDER").mandatory = false;
+			this.uploadFileArray.find(d => d.documentIdentifier == "ORDER_EXECUTIVE_MAGISTRATE").mandatory = false;
+			// this.uploadFileArray.find(d => d.documentIdentifier == "AAYAS_REPORT_OR_DOCTOR_CERTIFICATE").mandatory = true;
+			this.uploadFileArray.find(d => d.documentIdentifier == "HEALTH_WORKER_REPORT").mandatory = false;
 		}
 	}
 	else {

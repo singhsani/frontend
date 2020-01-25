@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, Validator } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatStepper } from '@angular/material/stepper'
 import { ValidationService } from '../../../shared/services/validation.service';
@@ -738,5 +738,14 @@ export class DeathRegistrationComponent implements OnInit {
 		if(controlType == 'treatmentDurationFrom'){
 			this.minTreatmentDate = moment(date).format("YYYY-MM-DD");
 		}	
+	}
+
+	wardNoChange(){
+		if(this.deathCertificateForm.get('withinCityLimits').get('code').value=='YES'){
+			this.deathCertificateForm.get('wardNo').get('code').setValidators(Validators.required);
+		}
+		else{
+			this.deathCertificateForm.get('wardNo').get('code').clearValidators();
+		}
 	}
 }

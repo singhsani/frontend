@@ -645,7 +645,7 @@
 					<div class="col-md-4 radioBtnError" formGroupName="withinCityLimits">
 						<mat-label>{{'Within_City_Limits' | translate:translateKey}} *</mat-label>
 						<mat-radio-group formControlName="code"
-							(change)="deathCertificateForm.get('wardNo').get('code').reset()">
+							(change)="deathCertificateForm.get('wardNo').get('code').reset();wardNoChange()">
 							<mat-radio-button class="example-radio-button" *ngFor="let opt of ISYESNO"
 								[value]="opt.code">
 								{{opt.name}}
@@ -657,8 +657,7 @@
 
 					<div formGroupName="wardNo" class="col-md-4 ngSelect"
 						*ngIf="deathCertificateForm.get('withinCityLimits').get('code').value=='YES'">
-						<ng-select placeholder="{{'ward_No' | translate:translateKey}} *" formControlName="code"
-							required>
+						<ng-select placeholder="{{'ward_No' | translate:translateKey}} *" formControlName="code">
 							<ng-option *ngFor="let wardObj of wardNoData" [value]="wardObj.code">
 								{{wardObj.name}}
 							</ng-option>

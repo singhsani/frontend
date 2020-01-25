@@ -521,6 +521,7 @@ export class StillBirthComponent implements OnInit {
 				this.stillBirthCertificateForm.get('parentPermanentAddress').enable();
 			}
 
+			this.requiredDocumentList();
 			this.showButtons = true;
 			if (!this.stillBirthCertificateForm.controls.canEdit.value) {
 				this.stillBirthCertificateForm.disable();
@@ -770,6 +771,30 @@ export class StillBirthComponent implements OnInit {
 			this.showChildAddButton = false
 		}
 	}
+
+		/**
+    * Method is create required document array
+    */
+   requiredDocumentList() {
+
+	let birthPlaceChange = this.stillBirthCertificateForm.controls.birthPlace.get("code").value;
+
+	if (!_.isEmpty(birthPlaceChange)) {
+		// if (birthPlaceChange != 'HOSPITAL') {
+			// this.uploadFileArray.find(d => d.documentIdentifier == "RESIDENT_PROOF").mandatory = true;
+			// this.uploadFileArray.find(d => d.documentIdentifier == "DOCTOR_CERTIFICATE").mandatory = true;
+			// this.uploadFileArray.find(d => d.documentIdentifier == "DOCTOR_ID_PROOF").mandatory = true;
+		// } else if (birthPlaceChange == 'HOSPITAL') {
+			this.uploadFileArray.find(d => d.documentIdentifier == "RESIDENT_PROOF").mandatory = true;
+			this.uploadFileArray.find(d => d.documentIdentifier == "DOCTOR_CERTIFICATE").mandatory = false;
+			this.uploadFileArray.find(d => d.documentIdentifier == "DOCTOR_ID_PROOF").mandatory = false;
+		// }
+	}
+	else {
+		this.config.requiredDocumentList(this.stillBirthCertificateForm, this.uploadFileArray);
+	}
+}
+
 
 	patchValue(){
 		this.stillBirthCertificateForm.patchValue(this.aaaa());
