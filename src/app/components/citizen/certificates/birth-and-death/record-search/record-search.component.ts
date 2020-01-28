@@ -41,12 +41,19 @@ export class RecordSearchComponent implements OnInit {
 	 */
 	displayedColumns: any = [
 		'id',
-		'seq',
 		'certificateno',
 		'name',
 		'date',
 		'fathersName',
 		'mothersName',
+		'action'
+	];
+
+	displayedColumnsDeath: any = [
+		'id',
+		'certificateno',
+		'name',
+		'date',
 		'action'
 	];
 	/**
