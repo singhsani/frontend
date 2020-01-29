@@ -18,6 +18,7 @@ import { BirthCorrectionComponent } from './birth-correction/birth-correction.co
 import { DeathCorrectionComponent } from './death-correction/death-correction.component';
 import { RecordSearchComponent } from './record-search/record-search.component';
 import { Routes, RouterModule } from '@angular/router';
+import { DeathRegistrationComponent } from './death-registration/death-registration.component';
 /* Import birth and death certificate components start */
 
 const routes: Routes = [
@@ -29,6 +30,7 @@ const routes: Routes = [
 	{ path: 'duplicateDeathReg/:id/:apiCode', component: DeathDuplicateComponent },
 	{ path: 'birthCorrectionReg/:id/:apiCode', component: BirthCorrectionComponent },
 	{ path: 'deathCorrectionReg/:id/:apiCode', component: DeathCorrectionComponent },
+	{ path: 'deathReg/:id/:apiCode', component: DeathRegistrationComponent },
 ];
 
 @NgModule({
@@ -49,6 +51,7 @@ const routes: Routes = [
 		BirthCorrectionComponent,
 		DeathCorrectionComponent,
 		RecordSearchComponent,
+		DeathRegistrationComponent,
 	]
 })
 export class BirthAndDeathModule { }

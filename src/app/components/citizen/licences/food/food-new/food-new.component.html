@@ -117,8 +117,8 @@
 
           <!-- when business turnover is less than 12 LK and select registration type  and business type is selected-->
           <!-- Multiple MANUFACTURER LESS_THAN_12LK -->
-          <div class="col-md-12 ngSelect" *ngIf="foodLicNewForm.get('regLicType').get('code').value === 'FOOD_REG_LIC_MULTIPLE' && foodLicNewForm.get('businessTurnOver').get('code').value === 'LESS_THAN_12LK' && foodLicNewForm.get('businessType').get('code').value === 'FOOD_MANUFACTURER_PROCESSOR_BUSINESSTYPE'">
-            <ng-select [items]="FOOD_MANUFACTURER_PROCESSOR_BUSINESSTYPE_LT12L" bindLabel="name" formControlName="businessCategories"
+          <div class="col-md-12 ngSelect ngSelectPlaceholder" *ngIf="foodLicNewForm.get('regLicType').get('code').value === 'FOOD_REG_LIC_MULTIPLE' && foodLicNewForm.get('businessTurnOver').get('code').value === 'LESS_THAN_12LK' && foodLicNewForm.get('businessType').get('code').value === 'FOOD_MANUFACTURER_PROCESSOR_BUSINESSTYPE'">
+            <ng-select class="" [items]="FOOD_MANUFACTURER_PROCESSOR_BUSINESSTYPE_LT12L" bindLabel="name" formControlName="businessCategories"
               [multiple]="true" (change)="foodLicNewForm.get('singleBusinessCategorie').reset()" placeholder="{{'business_categories' | translate:translateKey}} *">
             </ng-select>
             <control-messages [control]="foodLicNewForm.get('businessCategories')"></control-messages>
@@ -131,7 +131,7 @@
             <control-messages [control]="foodLicNewForm.get('singleBusinessCategorie')"></control-messages>
           </div>
           <!-- MULTIPLE FOOD_OTHER LESS_THAN_12LK -->
-          <div class="col-md-12 ngSelect" *ngIf="foodLicNewForm.get('regLicType').get('code').value === 'FOOD_REG_LIC_MULTIPLE' && foodLicNewForm.get('businessTurnOver').get('code').value === 'LESS_THAN_12LK' && foodLicNewForm.get('businessType').get('code').value === 'FOOD_OTHER' ">
+          <div class="col-md-12 ngSelect ngSelectPlaceholder" *ngIf="foodLicNewForm.get('regLicType').get('code').value === 'FOOD_REG_LIC_MULTIPLE' && foodLicNewForm.get('businessTurnOver').get('code').value === 'LESS_THAN_12LK' && foodLicNewForm.get('businessType').get('code').value === 'FOOD_OTHER' ">
             <ng-select [items]="FOOD_OTHERS_BUSINESSTYPE_LT12L" bindLabel="name" formControlName="businessCategories"
               [multiple]="true" (change)="foodLicNewForm.get('singleBusinessCategorie').reset()" placeholder="{{'business_categories' | translate:translateKey}} *">
             </ng-select>
@@ -147,7 +147,7 @@
 
           <!-- when business turnover is more than 12 LK and select registration type  and business type is selected-->
           <!-- MULTIPLE MANUFACTURER GREATER_THAN_12LK -->
-          <div class="col-md-12 ngSelect" *ngIf="foodLicNewForm.get('regLicType').get('code').value === 'FOOD_REG_LIC_MULTIPLE' && foodLicNewForm.get('businessTurnOver').get('code').value === 'GREATER_THAN_12LK' && foodLicNewForm.get('businessType').get('code').value === 'FOOD_MANUFACTURER_PROCESSOR_BUSINESSTYPE'">
+          <div class="col-md-12 ngSelect ngSelectPlaceholder" *ngIf="foodLicNewForm.get('regLicType').get('code').value === 'FOOD_REG_LIC_MULTIPLE' && foodLicNewForm.get('businessTurnOver').get('code').value === 'GREATER_THAN_12LK' && foodLicNewForm.get('businessType').get('code').value === 'FOOD_MANUFACTURER_PROCESSOR_BUSINESSTYPE'">
             <ng-select [items]="FOOD_MANUFACTURER_PROCESSOR_BUSINESSTYPE_MT12L" bindLabel="name" formControlName="businessCategories"
               [multiple]="true" (change)="foodLicNewForm.get('singleBusinessCategorie').reset()" placeholder="{{'business_categories' | translate:translateKey}} *">
             </ng-select>
@@ -161,7 +161,7 @@
             <control-messages [control]="foodLicNewForm.get('singleBusinessCategorie')"></control-messages>
           </div>
           <!-- MULTIPLE FOOD_OTHER GREATER_THAN_12LK  -->
-          <div class="col-md-12 ngSelect" *ngIf="foodLicNewForm.get('regLicType').get('code').value === 'FOOD_REG_LIC_MULTIPLE' && foodLicNewForm.get('businessTurnOver').get('code').value === 'GREATER_THAN_12LK' && foodLicNewForm.get('businessType').get('code').value === 'FOOD_OTHER' ">
+          <div class="col-md-12 ngSelect ngSelectPlaceholder" *ngIf="foodLicNewForm.get('regLicType').get('code').value === 'FOOD_REG_LIC_MULTIPLE' && foodLicNewForm.get('businessTurnOver').get('code').value === 'GREATER_THAN_12LK' && foodLicNewForm.get('businessType').get('code').value === 'FOOD_OTHER' ">
             <ng-select [items]="FOOD_OTHERS_BUSINESSTYPE_MT12L" bindLabel="name" formControlName="businessCategories"
               [multiple]="true" (change)="foodLicNewForm.get('singleBusinessCategorie').reset()" placeholder="{{'business_categories' | translate:translateKey}} *">
             </ng-select>
