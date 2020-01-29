@@ -116,8 +116,13 @@ export class MyApplicationsComponent implements OnInit {
 	 * @param id - citizen id 
 	 */
 	redirectToEdit(apiCode: string, id: number) {
-		let redirectUrl = ManageRoutes.getFullRoute(apiCode);
-		this.router.navigate([redirectUrl, id, apiCode]);
+		if (apiCode == 'HEL-DR') {
+			this.router.navigate(['citizen/certificates/birth-death/deathReg', id, apiCode]);
+
+		} else {
+			let redirectUrl = ManageRoutes.getFullRoute(apiCode);
+			this.router.navigate([redirectUrl, id, apiCode]);
+		}
 	}
 
 	/**

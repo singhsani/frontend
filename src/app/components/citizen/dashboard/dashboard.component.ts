@@ -210,6 +210,15 @@ export class DashboardComponent implements OnInit {
 	createRecord(apiCode: string) {
 
 		switch (apiCode) {
+			case 'HEL-DR':
+				
+				this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);
+				this.formService.createFormData().subscribe(res => {
+					let redirectUrl = ManageRoutes.getFullRoute(apiCode);
+					this.router.navigate(['citizen/certificates/birth-death/deathReg', res.serviceFormId, apiCode]);
+					// this.router.navigate([redirectUrl, , apiCode]);
+				});				
+				break;
 			case 'HEL-BCR':
 			case 'HEL-DCR':
 			case 'HEL-NRCBR':
