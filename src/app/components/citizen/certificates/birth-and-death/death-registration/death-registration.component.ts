@@ -545,9 +545,6 @@ export class DeathRegistrationComponent implements OnInit {
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
 		});
 
-		this.deathCertificateForm.controls['deathTimeGuj'].disable();
-		this.deathCertificateForm.controls['deathDateGuj'].disable();
-
 	}
 
 	/**

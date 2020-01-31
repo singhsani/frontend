@@ -120,6 +120,8 @@ export class HospitalConfig extends ComponentConfig {
                 "gujName": "પુરૂષ"
             },
             "deathDate": "2018-12-12",
+            "deathTimeGuj": "૧૧ઃ૧૧",
+            "deathDateGuj": "૧૨/૧૨/૨૦૧૮",
             "birthDate": "2018-12-03",
             "fatherOrHusbandName": "sasasas",
             "motherName": "asasa",
@@ -160,7 +162,7 @@ export class HospitalConfig extends ComponentConfig {
                 "name": "No",
                 "gujName": "ના"
             },
-            "deathTime": "11:11",
+            "deathTime": "11:11:00",
             "maritalStatus":  {code: "UNMARRIED", name: "UnMarried"},
             "treatmentDurationFrom": moment(new Date()).format("YYYY-MM-DD"),
             "treatmentDurationTo": moment(new Date()).format("YYYY-MM-DD"),

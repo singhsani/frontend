@@ -543,9 +543,6 @@ export class DeathRegistrationComponent implements OnInit {
 		});
 
 		this.deathCertificateForm.get('deathPlace').get('code').setValue('HOSPITAL');
-		this.deathCertificateForm.controls['deathTimeGuj'].disable();
-		this.deathCertificateForm.controls['deathDateGuj'].disable();
-
 	}
 
 	/**
