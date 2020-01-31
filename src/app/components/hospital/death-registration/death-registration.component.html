@@ -144,17 +144,16 @@
 					</div>
 
 					<mat-form-field class="col-md-4">
-						<input [required]="requiredFeild" matInput appGujInputTarget [form]="deathCertificateForm"
-						appValidationFields	
+						<input  matInput appGujInputTarget [form]="deathCertificateForm" readonly	
 							placeholder="{{'date_of_death' | translate:translateKey:'gu'}}" formControlName="deathDateGuj">
 						<control-messages [control]="deathCertificateForm.get('deathDateGuj')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 					<input class="clock-input" [form]="deathCertificateForm" appGujInputTarget 
-					placeholder="{{'birth_time' | translate:translateKey : 'gu'}}" matInput type="text" atp-time-picker theme="dark"
+					placeholder="{{'time_of_death' | translate:translateKey : 'gu'}}" matInput type="text" atp-time-picker theme="dark"
 						formControlName="deathTimeGuj" 
-							required />		
+							readonly />		
 						<control-messages [control]="deathCertificateForm.get('deathTimeGuj')"></control-messages>
 					</mat-form-field>
 

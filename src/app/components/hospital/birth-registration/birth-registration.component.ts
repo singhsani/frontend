@@ -851,8 +851,8 @@ export class BirthRegistrationComponent implements OnInit {
 		return this.fb.group({
 			birthDate: [child.birthDate, Validators.required],
 			birthTime: [child.birthTime, Validators.required],
-			birthDateGuj: [child.birthDateGuj, Validators.required],
-			birthTimeGuj: [child.birthTimeGuj, Validators.required],
+			birthDateGuj: [child.birthDateGuj],
+			birthTimeGuj: [child.birthTimeGuj],
 			certificateNumber: child.certificateNumber,
 			childName: [child.childName, [ValidationService.nameValidator]],
 			childNameGuj: child.childNameGuj,

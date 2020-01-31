@@ -118,17 +118,15 @@
                         </mat-form-field>
 
                         <mat-form-field class="col-md-4">
-                            <input [required]="requiredFeild" matInput appGujInputTarget [form]="birthCertificateForm"
-                            appValidationFields	
+                            <input  readonly matInput appGujInputTarget [form]="birthCertificateForm"	
                                 placeholder="{{'birth_date' | translate:translateKey:'gu'}}" formControlName="birthDateGuj">
-                            <control-messages [control]="birthCertificateForm.get('childs')['controls'][i].get('birthDateGuj')"></control-messages>
                         </mat-form-field>
     
                         <mat-form-field class="col-md-4">
                         <input class="clock-input" [form]="birthCertificateForm" appGujInputTarget 
                         placeholder="{{'birth_time' | translate:translateKey:'gu'}}" matInput type="text" atp-time-picker theme="dark"
                             formControlName="birthTimeGuj" 
-                                required />		
+                                readonly />		
                             <control-messages [control]="birthCertificateForm.get('childs')['controls'][i].get('birthTimeGuj')"></control-messages>
                         </mat-form-field>
 
