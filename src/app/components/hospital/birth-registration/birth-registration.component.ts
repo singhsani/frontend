@@ -14,6 +14,8 @@ import { ToastrService } from 'ngx-toastr';
 import { HospitalConfig } from '../hospital-config';
 import { Observable } from 'rxjs';
 import { TranslateService } from '../../../shared/modules/translate/translate.service';
+declare var pramukhIME;
+declare var PramukhIndic;
 
 @Component({
 	selector: 'app-birth-registration-app',
@@ -193,6 +195,9 @@ export class BirthRegistrationComponent implements OnInit {
 		amazingTimePicker.afterClose().subscribe(time => {
 			if (time.length == 5) {
 				this.getChildData().at(i).get('birthTime').setValue(time + ":00");
+				pramukhIME.addKeyboard(PramukhIndic, 'gujarati');
+				var convetedTIme = pramukhIME.convert(time + ":00");
+				this.getChildData().at(i).get('birthTimeGuj').setValue(convetedTIme);
 			}
 		});
 	}
@@ -358,6 +363,8 @@ export class BirthRegistrationComponent implements OnInit {
 			totalAliveChild: [null, [Validators.required, Validators.maxLength(2)]],
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode)
 		});
+
+	
 	}
 
 	changeBirthPlace(event){
@@ -821,7 +828,9 @@ export class BirthRegistrationComponent implements OnInit {
 		if (!child) {
 			child = {
 				birthDate: null,
+				birthDateGuj: null,
 				birthTime: null,
+				birthTimeGuj : null,
 				certificateNumber: null,
 				childName: null,
 				childNameGuj: null,
@@ -842,6 +851,8 @@ export class BirthRegistrationComponent implements OnInit {
 		return this.fb.group({
 			birthDate: [child.birthDate, Validators.required],
 			birthTime: [child.birthTime, Validators.required],
+			birthDateGuj: [child.birthDateGuj, Validators.required],
+			birthTimeGuj: [child.birthTimeGuj, Validators.required],
 			certificateNumber: child.certificateNumber,
 			childName: [child.childName, [ValidationService.nameValidator]],
 			childNameGuj: child.childNameGuj,

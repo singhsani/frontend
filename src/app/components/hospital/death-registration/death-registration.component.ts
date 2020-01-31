@@ -12,6 +12,8 @@ import { HospitalConfig } from '../hospital-config';
 import { Observable } from 'rxjs';
 import { TranslateService } from '../../../shared/modules/translate/translate.service';
 import { AmazingTimePickerService } from 'amazing-time-picker';
+declare var pramukhIME;
+declare var PramukhIndic;
 
 @Component({
 	selector: 'app-death-registration',
@@ -397,8 +399,10 @@ export class DeathRegistrationComponent implements OnInit {
 				code: [null, [Validators.required]],
 			}),
 			deathDate: [null],
+			deathDateGuj : [null],
 			birthDate: [null],
 			deathTime: [null, [Validators.required]],
+			deathTimeGuj:[null],
 			maritalStatus: this.fb.group({
 				id: null,
 				code: [null, [Validators.required]],
@@ -538,6 +542,10 @@ export class DeathRegistrationComponent implements OnInit {
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
 		});
 
+		this.deathCertificateForm.get('deathPlace').get('code').setValue('HOSPITAL');
+		this.deathCertificateForm.controls['deathTimeGuj'].disable();
+		this.deathCertificateForm.controls['deathDateGuj'].disable();
+
 	}
 
 	/**
@@ -672,6 +680,9 @@ export class DeathRegistrationComponent implements OnInit {
 		amazingTimePicker.afterClose().subscribe(time => {
 			if (time.length == 5) {
 				this.deathCertificateForm.get(controlName).setValue(time + ":00");
+				pramukhIME.addKeyboard(PramukhIndic, 'gujarati');
+				var convetedTIme = pramukhIME.convert(time + ":00");
+				this.deathCertificateForm.get('deathTimeGuj').setValue(convetedTIme);
 			}
 		});
 	}

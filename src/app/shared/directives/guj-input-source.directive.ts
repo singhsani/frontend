@@ -21,4 +21,11 @@ export class GujInputSourceDirective {
 		pramukhIME.addKeyboard(PramukhIndic, 'gujarati');
 		this.fg.get(this.targetId).setValue(pramukhIME.convert(sourceEnValue));
 	}
+
+	@HostListener('dateChange')
+	private changeDate() {
+		let sourceEnValue = this.inputElement.value;
+		pramukhIME.addKeyboard(PramukhIndic, 'gujarati');
+		this.fg.get(this.targetId).setValue(pramukhIME.convert(sourceEnValue));
+	}
 }
