@@ -103,7 +103,7 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input [required]="requiredFeild" matInput appDate [max]="maxDeathDate"
+						<input matInput [required]="requiredFeild" [form]="deathCertificateForm" appGujInputSource targetElement="deathDateGuj"   appDate [max]="maxDeathDate" 
 							[min]="deathCertificateForm.get('birthDate').value" [matDatepicker]="pickerBirth"
 							(dateChange)="deathFormatChanger($event);delayCalculator($event)"
 							placeholder="{{'date_of_death' | translate:translateKey}}" formControlName="deathDate">
@@ -116,9 +116,10 @@
 					<div class="col-md-4 pl-0 ml-0">
 						<mat-form-field class="col-md-10">
 							<mat-label>{{'time_of_death' | translate:translateKey}}</mat-label>
-							<input class="clock-input" (blur)="changeTimeFormat($event.target.value, 'deathTime')"
+							<input class="clock-input" [form]="deathCertificateForm" appGujInputSource targetElement="deathTimeGuj"  (blur)="changeTimeFormat($event.target.value, 'deathTime')"
 								placeholder="HH:MM" matInput type="time" atp-time-picker theme="dark"
-								formControlName="deathTime" required />
+								formControlName="deathTime" 
+								 required />
 							<control-messages [control]="deathCertificateForm.get('deathTime')"></control-messages>
 						</mat-form-field>
 						<button class="clock-button" [disabled]="!deathCertificateForm?.get('canEdit')?.value"
@@ -130,7 +131,7 @@
 
 				<div class="row">
 
-					<div formGroupName="maritalStatus" class="col-md-6 ngSelect">
+					<div formGroupName="maritalStatus" class="col-md-4 ngSelect">
 						<ng-select placeholder="{{'marital_Status' | translate:translateKey}} {{requiredFeild?'*':''}}"
 							formControlName="code" (change)="resetSpouseCntrl($event)">
 							<ng-option *ngFor="let maritalStatusObj of MaritalStatusData"
@@ -141,6 +142,21 @@
 						<control-messages [control]="deathCertificateForm.get('maritalStatus').get('code')">
 						</control-messages>
 					</div>
+
+					<mat-form-field class="col-md-4">
+						<input [required]="requiredFeild" matInput appGujInputTarget [form]="deathCertificateForm"
+						appValidationFields	
+							placeholder="{{'date_of_death' | translate:translateKey:'gu'}}" formControlName="deathDateGuj">
+						<control-messages [control]="deathCertificateForm.get('deathDateGuj')"></control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+					<input class="clock-input" [form]="deathCertificateForm" appGujInputTarget 
+					placeholder="{{'birth_time' | translate:translateKey : 'gu'}}" matInput type="text" atp-time-picker theme="dark"
+						formControlName="deathTimeGuj" 
+							required />		
+						<control-messages [control]="deathCertificateForm.get('deathTimeGuj')"></control-messages>
+					</mat-form-field>
 
 				</div>
 
