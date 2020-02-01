@@ -56,7 +56,7 @@
           </div>
           <mat-form-field class="col-md-4">
             <input matInput formControlName="firmCity" appValidationFields validationFieldsType='onlyNameWithOutSpace'
-              placeholder="{{'firm_city' | translate:translateKey}}" required>
+              placeholder="{{'firm_city' | translate:translateKey}}" maxlength="10" required>
             <control-messages [control]="foodLicNewForm.get('firmCity')"></control-messages>
           </mat-form-field>
         </div>
