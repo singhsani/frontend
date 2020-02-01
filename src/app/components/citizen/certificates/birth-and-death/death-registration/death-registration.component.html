@@ -95,7 +95,7 @@
 					<mat-form-field class="col-md-4">
 						<input [required]="requiredFeild" matInput appDate [max]="maxBirthDate"
 							[matDatepicker]="pickerDeath"
-							(dateChange)="birthFormatChanger($event);deathCertificateForm.get('deathDate').reset()"
+							(dateChange)="birthFormatChanger($event);deathCertificateForm.get('deathDate').reset();deathCertificateForm.get('deathDateGuj').reset()"
 							placeholder="{{'date_of_birth' | translate:translateKey}}" formControlName="birthDate">
 						<mat-datepicker-toggle matSuffix [for]="pickerDeath"></mat-datepicker-toggle>
 						<mat-datepicker #pickerDeath touchUi="true"></mat-datepicker>
