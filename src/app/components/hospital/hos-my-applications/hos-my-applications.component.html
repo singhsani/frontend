@@ -115,8 +115,8 @@
                         <mat-icon title="{{'applicant_preview'| translate : translateKey }}">remove_red_eye</mat-icon>
                         {{'applicant_preview'| translate : translateKey }}
                     </button>
-                    <!-- *ngIf="row.fileStatus == 'PAYMENT_RECEIVED'" -->
-                    <button mat-menu-item  color="primary"
+                    
+                    <button *ngIf="row.canReceiptPrint" mat-menu-item  color="primary"
                         (click)="printReceipt(row.serviceDetail.code, row.serviceDetail.name, row.serviceFormId)">
                         <mat-icon title="{{'print_receipt'| translate : translateKey }}">print</mat-icon>
                         {{'print_receipt'| translate : translateKey }}
