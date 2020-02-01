@@ -678,7 +678,7 @@ export class DeathRegistrationComponent implements OnInit {
 			if (time.length == 5) {
 				this.deathCertificateForm.get(controlName).setValue(time + ":00");
 				pramukhIME.addKeyboard(PramukhIndic, 'gujarati');
-				var convetedTIme = pramukhIME.convert(time + ":00");
+				var convetedTIme = pramukhIME.convert(time);
 				this.deathCertificateForm.get('deathTimeGuj').setValue(convetedTIme);
 			}
 		});

@@ -196,7 +196,7 @@ export class BirthRegistrationComponent implements OnInit {
 			if (time.length == 5) {
 				this.getChildData().at(i).get('birthTime').setValue(time + ":00");
 				pramukhIME.addKeyboard(PramukhIndic, 'gujarati');
-				var convetedTIme = pramukhIME.convert(time + ":00");
+				var convetedTIme = pramukhIME.convert(time);
 				this.getChildData().at(i).get('birthTimeGuj').setValue(convetedTIme);
 			}
 		});
