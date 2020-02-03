@@ -262,8 +262,8 @@ export class FoodRenewComponent implements OnInit {
 			firmAdministrativeWard: this.fb.group({
 				code: [null, Validators.required]
 			}),
-			firmCity: [null, Validators.required],
-			firmPincode: [null, [Validators.maxLength(6), Validators.minLength(6)]],
+			firmCity: [null, [Validators.required, Validators.maxLength(10)]],
+			firmPincode: [null, [Validators.required, Validators.maxLength(6), Validators.minLength(6)]],
 			mobileNo: [null, [Validators.maxLength(10)]],
 			firmLandLineNo: [null, [Validators.maxLength(10)]],
 			firmEmailId: [null, [Validators.required, ValidationService.emailValidator]],

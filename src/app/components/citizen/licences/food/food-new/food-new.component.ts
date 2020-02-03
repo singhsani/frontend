@@ -205,7 +205,7 @@ export class FoodNewComponent implements OnInit {
       firmAdministrativeWard: this.fb.group({
         code: [null, Validators.required]
       }),
-      firmCity: [null, Validators.required],
+      firmCity: [null, [Validators.required , Validators.maxLength(10)]],
       firmPincode: [null, [Validators.required, Validators.maxLength(6), Validators.minLength(6)]],
       mobileNo: [null, [Validators.maxLength(10)]],
       firmLandLineNo: [null, [Validators.required,Validators.maxLength(10)]],
