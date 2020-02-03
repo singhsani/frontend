@@ -171,6 +171,7 @@ export class MuttonFishNewComponent implements OnInit {
 			personType: this.fb.group({
 				code: [null, [Validators.required]]
 			}),
+      personTypeGuj : [null, [Validators.required]],
 			holderFirstName: [null, [Validators.required, Validators.maxLength(30), ValidationService.nameValidator]],
 			holderMiddleName: [null, [Validators.required, Validators.maxLength(30), ValidationService.nameValidator]],
 			holderLastName: [null, [Validators.required, Validators.maxLength(30), ValidationService.nameValidator]],
@@ -392,6 +393,26 @@ export class MuttonFishNewComponent implements OnInit {
 			console.error(error.message);
 		}
 	}
+
+
+  /**
+   * Gujarati Look Up Converter.
+   * @param selectedValue - selected value from dropdown
+   * @param controlName - control name of form
+   * @param lookupName - passed lookup array
+   */
+  getGujNameFromLookup(selectedValue: string, controlName: string, lookupName: Array<any>) {
+
+    if (lookupName && lookupName.length) {
+        let dataObj = lookupName.find((obj) => obj.code === selectedValue);
+        if (dataObj && dataObj.gujName) {
+          this.muttonFishNewForm.get(controlName).setValue(dataObj.gujName);
+        } else {
+          this.muttonFishNewForm.get(controlName).setValue('');
+        }
+      }
+
+  }
 
 	patchValue(){
 		this.muttonFishNewForm.patchValue(this.dummyJSON);
