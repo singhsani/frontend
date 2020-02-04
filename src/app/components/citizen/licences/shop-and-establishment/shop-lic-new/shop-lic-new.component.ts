@@ -397,7 +397,7 @@ export class ShopLicNewComponent implements OnInit {
 			}
 		}
 		else {
-			this.commonService.openAlert("Warning", "You can add new recode after save existing recode.", "warning");
+			this.commonService.openAlert("Warning", "You can add new record after save existing record.", "warning");
 		}
 	}
 
