@@ -64,24 +64,36 @@
           </mat-form-field>
 
 					<mat-form-field class="col-md-2">
-						<input matInput type="text" maxlength="90" required formControlName="holderFirstNameGuj"
-							appGujInputTarget [form]="muttonFishNewForm" appValidationFields
-							validationFieldsType='onlyNameWithOutSpace'
-							placeholder="{{ 'holder_firstname' | translate:translateKey:'gu' }}">
+            <input matInput type="text" maxlength="90" required formControlName="holderFirstNameGuj"
+                   appGujInputTarget [form]="muttonFishNewForm"
+                   placeholder="{{ 'holder_firstname' | translate:translateKey:'gu' }}">
+						<!--<input matInput type="text" maxlength="90" required formControlName="holderFirstNameGuj"-->
+							<!--appGujInputTarget [form]="muttonFishNewForm" appValidationFields-->
+							<!--validationFieldsType='onlyNameWithOutSpace'-->
+							<!--placeholder="{{ 'holder_firstname' | translate:translateKey:'gu' }}">-->
 						<control-messages [control]="muttonFishNewForm.get('holderFirstNameGuj')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" required maxlength="90"
-							placeholder="{{'holder_middlename' | translate:translateKey:'gu'}}"
-							formControlName="holderMiddleNameGuj" appGujInputTarget [form]="muttonFishNewForm"
-							appValidationFields validationFieldsType='onlyNameWithOutSpace'>
+            <input matInput type="text" required maxlength="90"
+                   placeholder="{{'holder_middlename' | translate:translateKey:'gu'}}"
+                   formControlName="holderMiddleNameGuj" appGujInputTarget [form]="muttonFishNewForm"
+            >
+						<!--<input matInput type="text" required maxlength="90"-->
+							<!--placeholder="{{'holder_middlename' | translate:translateKey:'gu'}}"-->
+							<!--formControlName="holderMiddleNameGuj" appGujInputTarget [form]="muttonFishNewForm"-->
+							<!--appValidationFields validationFieldsType='onlyNameWithOutSpace'>-->
 						<control-messages [control]="muttonFishNewForm.get('holderMiddleNameGuj')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" required maxlength="90"
-							placeholder="{{'holder_lastname' | translate:translateKey:'gu'}}"
-							formControlName="holderLastNameGuj" appGujInputTarget [form]="muttonFishNewForm"
-							appValidationFields validationFieldsType='onlyNameWithOutSpace'>
+            <input matInput type="text" required maxlength="90"
+                   placeholder="{{'holder_lastname' | translate:translateKey:'gu'}}"
+                   formControlName="holderLastNameGuj" appGujInputTarget [form]="muttonFishNewForm"
+            >
+
+						<!--<input matInput type="text" required maxlength="90"-->
+							<!--placeholder="{{'holder_lastname' | translate:translateKey:'gu'}}"-->
+							<!--formControlName="holderLastNameGuj" appGujInputTarget [form]="muttonFishNewForm"-->
+							<!--appValidationFields validationFieldsType='onlyNameWithOutSpace'>-->
 						<control-messages [control]="muttonFishNewForm.get('holderLastNameGuj')"></control-messages>
 					</mat-form-field>
 				</div>
