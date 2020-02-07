@@ -107,6 +107,7 @@ export class MuttonFishNewComponent implements OnInit {
 					(<FormArray>this.muttonFishNewForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.licenseConfiguration.createDocumentsGrp(app));
 				});
 				this.uploadFileArray = this.licenseConfiguration.requiredDocumentListMeetFish(this.muttonFishNewForm);
+        this.muttonFishNewForm.get('personTypeGuj').setValue(res.personType.gujName);
 			} catch (error) {
 				console.log(error.message)
 			}
