@@ -23,7 +23,7 @@ export class ZooBookingComponent implements OnInit {
   // Loading Ticketing Configurations
   ticketingConstants = TicketingConstants;
   ticketingUtils: TicketingUtils;
-
+  isVisibleIdNumber = true;
   /**
    * language translate key.
   */
@@ -188,6 +188,7 @@ export class ZooBookingComponent implements OnInit {
     // Initialise ticket pricing and timing tables
     this.dataSourceForPricing.data = this.pricing;
     this.dataSourceForTiming.data = this.timing;
+    this.isVisibleIdNumber = true;
 
     this.ticketBookingFormControls();
     this.getLookUps();
@@ -319,6 +320,13 @@ export class ZooBookingComponent implements OnInit {
     this.numberOfVisitors = 0;
     this.subTotal = 0;
     this.totalAmount = 0;
+  }
+
+  CheckType(idCode){
+    this.isVisibleIdNumber = true;
+    if(idCode === 'AADHARCARD'){
+      this.isVisibleIdNumber = false;
+    }
   }
 
 }
