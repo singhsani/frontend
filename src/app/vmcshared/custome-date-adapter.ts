@@ -27,8 +27,6 @@ export class CustomeDateAdapter extends NativeDateAdapter {
        
     }
     format(date: Date, displayFormat: string): string {
-        console.log('b', date);
-        console.log('c', displayFormat);
         if (displayFormat == "input") {
             let day = date.getDate();
             let month = date.getMonth() + 1;
