@@ -29,10 +29,11 @@ export class HospitalDashboardComponent implements OnInit {
 
 	public pieChartColors = [
 		{
-			backgroundColor: ['rgba(255,0,0,0.3)', 'rgba(0,255,0,0.3)', 'rgba(0,0,255,0.3)', 'red', 'yellow', 'green', 'black', 'gray', 'orange'],
+			backgroundColor: ['rgba(255,0,0,0.3)', 'rgba(0,255,0,0.3)', 'rgba(0,0,255,0.3)', 'green', 'yellow', 'red', 'black', 'gray', 'orange'],
 		},
 	]
 	public pieChartLabels : Array<string> [];
+	public pieChartLabelValue : Array<string> [];
 	public pieChartType = 'pie';
 	// public pieChartData = [120, 150, 180, 90, 20];
 	
@@ -55,6 +56,7 @@ export class HospitalDashboardComponent implements OnInit {
 		this.formService.getChartData().subscribe(res => {
 			this.chartData = res.data.chart;
 			this.pieChartLabels = res.data.label;
+			this.pieChartLabelValue = res.data.valueTitle;
 			this.showChart = true;
 		})
 	}

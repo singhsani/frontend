@@ -45,7 +45,7 @@
             </div>
         </div>
         <div class="row col-md-12 justify-content-center">
-            <div *ngFor="let legend of pieChartLabels; let i = index" class="mr-3 i-flex">
+            <div *ngFor="let legend of pieChartLabelValue; let i = index" class="mr-3 i-flex">
                 <div class="circle" [ngStyle]="{'backgroundColor' : pieChartColors[0].backgroundColor[i]}"> </div>
                 <p class="font-weight-bold pl-1">{{legend}}</p>
             </div>
