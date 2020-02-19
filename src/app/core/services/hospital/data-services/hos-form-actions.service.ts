@@ -140,6 +140,23 @@ export class HosFormActionsService {
 		return this.http.get('api/user/profile');
 	}
 
+
+	/**
+	 * This method is used to get user profile data
+	 */
+	getUserProfileHospal() {
+
+		return this.http.get('api/user/hospital/profile');
+	}
+
+	/**
+	 * This method is used to update Hospital profile
+	 */
+	updateHospitalInfo(hospitalData) {
+		this.requestURL = `api/user/hospital/update`;
+		return this.http.post(this.requestURL, hospitalData);
+	}
+
 	/**
 	 * This method is use for get user services
 	 */
