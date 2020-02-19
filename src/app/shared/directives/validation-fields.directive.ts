@@ -96,6 +96,29 @@ export class ValidationFieldsDirective {
           }
           break;
 
+      case "appAddressAllowed":
+        // if ([8, 9, 13, 27, 46].indexOf(e.keyCode) !== -1) {
+        //   return;
+        // }
+        if ([8, 9, 13, 27, 46].indexOf(e.keyCode) !== -1 ||
+          // Allow: Ctrl+A
+          (e.keyCode === 65 && (e.ctrlKey || e.metaKey)) ||
+          // Allow: Ctrl+C
+          (e.keyCode === 67 && (e.ctrlKey || e.metaKey)) ||
+          // Allow: Ctrl+V
+          (e.keyCode === 86 && (e.ctrlKey || e.metaKey)) ||
+          // Allow: Ctrl+X
+          (e.keyCode === 88 && (e.ctrlKey || e.metaKey)) ||
+          // Allow: home, end, left, right
+          (e.keyCode >= 35 && e.keyCode <= 39)) {
+          // let it happen, don't do anything
+          return;
+        }
+        if (e.keyCode != 189 && e.keyCode != 32 && e.keyCode != 188 && (e.keyCode < 65 || e.keyCode > 96) && (e.keyCode < 48 || e.keyCode > 57)) {
+          e.preventDefault();
+        }
+        break;
+
       case "onlyPancard":
         // if ([8, 9, 13, 27, 46].indexOf(e.keyCode) !== -1) {
         //   return;
@@ -150,10 +173,15 @@ export class ValidationFieldsDirective {
         case "alphanumericWithSpace":
           this.el.nativeElement.value = this.el.nativeElement.value.replace(/[^0-9a-zA-Z\s]/g, '');
           event.preventDefault();
-          break
+          break;
+
+        case "appAddressAllowed":
+          this.el.nativeElement.value = this.el.nativeElement.value.replace(/[^#.0-9a-zA-Z\s,-]+$/g, '')
+          event.preventDefault();
+          break;
 
         case "onlyPancard":
-          this.el.nativeElement.value = this.el.nativeElement.value.replace(/^([0-9]){3}([a-zA-Z]){1}/g, '');
+          this.el.nativeElement.value = this.el.nativeElement.value.replace(/[^[A-Z]{5}\d{4}[A-Z]{1}$]/g, '');
           event.preventDefault();
           break;
 

@@ -43,7 +43,7 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput autocomplete="off" maxlength="100" formControlName="applicantFullName"
+						<input matInput autocomplete="off" appValidationFields validationFieldsType="onlyNameWithSpace" maxlength="100" formControlName="applicantFullName"
 						 type="text" placeholder="{{'applicant_full_name' | translate: translateKey}}" required>
 						<control-messages [control]="pecRegForm.get('applicantFullName')"></control-messages>
 					</mat-form-field>
@@ -57,7 +57,7 @@
 					</div>
 
 					<mat-form-field class="col-md-4">
-						<input matInput autocomplete="off" maxlength="100" type="text"
+						<input matInput  appValidationFields validationFieldsType="onlyNameWithSpace" autocomplete="off" maxlength="100" type="text"
 						 formControlName="establishmentName" placeholder="{{'establishment_name' | translate: translateKey}}" required>
 						<control-messages [control]="pecRegForm.get('establishmentName')"></control-messages>
 					</mat-form-field>
@@ -155,7 +155,7 @@
 					</div>
 
 					<mat-form-field class="col-md-4">
-						<input matInput autocomplete="off" maxlength="100" formControlName="branchName" type="text" placeholder="{{'branch_name' | translate: translateKey}}"
+						<input matInput appValidationFields validationFieldsType="onlyNameWithSpace" autocomplete="off" maxlength="100" formControlName="branchName" type="text" placeholder="{{'branch_name' | translate: translateKey}}"
 						 required>
 						<control-messages [control]="pecRegForm.get('branchName')"></control-messages>
 					</mat-form-field>
