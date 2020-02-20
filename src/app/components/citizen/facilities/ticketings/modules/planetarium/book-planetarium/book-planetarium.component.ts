@@ -27,6 +27,7 @@ export class BookPlanetariumComponent implements OnInit {
   totalAmount: number;
   numberOfVisitors: number;
   isLoadingResults: boolean = false;
+  isVisibleIdNumber = false;
 
   minDate = moment(new Date()).add(0, 'day').toISOString();
   maxDate = moment(new Date()).add(30, 'day').toISOString();
@@ -541,6 +542,14 @@ export class BookPlanetariumComponent implements OnInit {
             this.commonService.openAlert("Error", err.error[0].message, "warning")
           }
         });
+    }
+
+  }
+
+  CheckType(idCode){
+    this.isVisibleIdNumber = false;
+    if(idCode === 'AADHARCARD'){
+      this.isVisibleIdNumber = true;
     }
 
   }
