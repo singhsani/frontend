@@ -10,9 +10,9 @@
         </div>
         <div class="row">
             <div class="col-md-6">
-                <mat-form-field class="full-width-input">
+                <mat-form-field class="full-width-input" hidden>
                     <mat-label>Application No</mat-label>
-                    <input trim="blur" matInput required name="applicationNumber" 
+                    <input trim="blur" matInput  name="applicationNumber" 
                         #ApplicationNumber="ngModel" [(ngModel)]="addressModel.applicationNumber">
                     <mat-error *ngIf="ApplicationNumber.invalid">*Application No is required.</mat-error>
                 </mat-form-field>
