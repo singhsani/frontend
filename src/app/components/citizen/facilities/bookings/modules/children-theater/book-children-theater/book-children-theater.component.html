@@ -260,7 +260,7 @@
 
                     <div class="row">
                         <mat-form-field class="col-md-6">
-                            <input matInput maxlength="50" type="text" formControlName="organizationName" placeholder="{{'organization_name' | translate: translateKey}}"
+                            <input matInput appValidationFields [validationFieldsType]="'onlyNameWithSpace'" maxlength="50" type="text" formControlName="organizationName" placeholder="{{'organization_name' | translate: translateKey}}"
                                 required>
                             <control-messages [control]="childrenTheaterApplicationForm.get('organizationName')"></control-messages>
                         </mat-form-field>
@@ -309,13 +309,13 @@
                                 placeholder="{{'applicant_name' | translate: translateKey}}" required>
                             <control-messages [control]="childrenTheaterApplicationForm.get('applicantName')"></control-messages>
                         </mat-form-field>
-                    
+
                         <mat-form-field class="col-md-4">
                             <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="applicantMobile" placeholder="{{'applicant_mobile' | translate: translateKey}}"
                                 required>
                             <control-messages [control]="childrenTheaterApplicationForm.get('applicantMobile')"></control-messages>
                         </mat-form-field>
-                    
+
                         <div class="col-md-4">
                             <mat-form-field>
                                 <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="confirmMobile" placeholder="{{'confirm_mobile' | translate: translateKey}}"
@@ -326,12 +326,12 @@
                                 {{bookingConstants.MOB_NO_MIS_MATCH_MESSAGE}}
                             </mat-error>
                         </div>
-                    
+
                         <mat-form-field class="col-md-4">
                             <input matInput type="email" maxlength="30" formControlName="emailId" placeholder="{{'applicant_email' | translate: translateKey}}" required>
                             <control-messages [control]="childrenTheaterApplicationForm.get('emailId')"></control-messages>
                         </mat-form-field>
-                    
+
                         <div class="col-md-4">
                             <mat-form-field>
                                 <input matInput type="email" maxlength="30" formControlName="confirmEmailId" placeholder="{{'confirm_email' | translate: translateKey}}"
@@ -342,7 +342,7 @@
                                 {{bookingConstants.EMAIL_MIS_MATCH_MESSAGE}}
                             </mat-error>
                         </div>
-                    
+
                         <mat-form-field class="col-md-4">
                             <input matInput type="text" maxlength="20" appValidationFields [validationFieldsType]="'onlyNameWithSpace'" formControlName="relationshipWithOrg"
                                 placeholder="{{'relationship_with_org' | translate: translateKey}}" required>
@@ -376,7 +376,7 @@
 
                     <bank-details [form]="childrenTheaterApplicationForm"></bank-details>
 
-                    <div class="row"> 
+                    <div class="row">
                         <div class="col-md-6">
                             <label labelPosition="after">{{'school_or_institute_letter' | translate:translateKey}}
                             </label>
