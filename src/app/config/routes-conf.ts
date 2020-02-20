@@ -200,6 +200,10 @@ const ROUTEMAIN = {
         'main': 'waterPipeLineConnection',
         'type': 'waterPipeLineConnection'
     },
+    'HEL-DRNG-PIPELINE': {
+        'main': 'drainagePipeLineConnection',
+        'type': 'drainagePipeLineConnection'
+    },
     'WTR-DISCON': {
         'main': 'disconnection',
         'type': 'disconnection'
@@ -698,9 +702,9 @@ const ROUTESLIST = {
     'HEL-WTR-PIPELINE': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TAXMODULE + '/' + ROUTEPREFIX.WATERDRINAGE + '/' + ROUTEMAIN["HEL-WTR-PIPELINE"].main
     },
-    // 'HEL-WTR-PIPELINE': {
-    //     'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TAXMODULE + '/' + ROUTEPREFIX.WATERMODULE + '/' + ROUTEMAIN["HEL-WTR-PIPELINE"].main
-    // },
+    'HEL-DRNG-PIPELINE': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TAXMODULE + '/' + ROUTEPREFIX.WATERDRINAGE + '/' + ROUTEMAIN["HEL-DRNG-PIPELINE"].main
+    },
     'WTR-DISCON': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TAXMODULE + '/' + ROUTEPREFIX.WATERMODULE + '/' + ROUTEMAIN["WTR-DISCON"].main
     },

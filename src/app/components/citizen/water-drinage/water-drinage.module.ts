@@ -7,13 +7,14 @@ import { SharedModule } from '../../../shared/shared.module';
 import { CoreModule } from '../../../core/core.module';
 import { WaterPipelineConnection } from './water-pipeline/water-pipeline-connection';
 import { FilterAttachmentMRPipe } from '../certificates/marriage/filter-attachment-MR.pipe';
+import { DrainagePipelineConnectionComponent } from './drainage-pipeline-connection/drainage-pipeline-connection.component';
 
 
 /* Import all shared, core and routing module end */
 
 const routes: Routes = [
 	{ path: 'waterPipeLineConnection/:id/:apiCode', component: WaterPipelineConnection },
-	//{ path: 'duplicateMarriageReg/:id/:apiCode', component: MarriageDuplicateComponent },
+	{ path: 'drainagePipeLineConnection/:id/:apiCode', component: DrainagePipelineConnectionComponent },
 ];
 
 @NgModule({
@@ -27,7 +28,8 @@ const routes: Routes = [
   ],
   declarations: [
     WaterPipelineConnection,
-    FilterAttachmentMRPipe
+    FilterAttachmentMRPipe,
+    DrainagePipelineConnectionComponent
   ]
 })
 export class WaterDrinageModule { }
