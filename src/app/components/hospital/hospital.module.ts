@@ -18,6 +18,7 @@ import { DeathRegistrationComponent } from './death-registration/death-registrat
 import { StillBirthComponent } from './still-birth/still-birth.component';
 import { HosMyApplicationsComponent } from './hos-my-applications/hos-my-applications.component';
 import { BirthCorrectionComponent } from './birth-correction/birth-correction.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 /* Import hospital components end */
 
@@ -38,7 +39,8 @@ import { BirthCorrectionComponent } from './birth-correction/birth-correction.co
 		DeathRegistrationComponent,
 		StillBirthComponent,
 		HosMyApplicationsComponent,
-		BirthCorrectionComponent
+		BirthCorrectionComponent,
+		UserProfileComponent
 	]
 })
 export class HospitalModule { }

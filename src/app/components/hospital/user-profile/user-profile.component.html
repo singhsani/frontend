@@ -1,0 +1,71 @@
+
+<div class="row profilePage">
+
+	<div class="col-md-12">
+
+		<form [formGroup]="userProfileForm" (ngSubmit)="onSubmitProfile(userProfileForm)" autocomplete="off" ngNativeValidate
+		 novalidate>
+			<div class="row">
+
+				<div class="col-md-12">
+					<h2>HOSPITAL DETAILS</h2>
+				</div>
+
+				<mat-form-field class="col-md-6">
+					<input matInput type="text" formControlName="uniqueId" hidden>
+					<input matInput type="text" appValidationFields  placeholder="Hospital Name"
+					 formControlName="hospitalName" required>
+					<control-messages [control]="userProfileForm.get('hospitalName')"></control-messages>
+				</mat-form-field>
+
+				<div class="col-md-6">
+					<div class="ngSelect" formGroupName="hospitalType">
+						<ng-select placeholder="Hospital Type *" formControlName="code">
+							<ng-option *ngFor="let hosType of arrHospitalType" [value]="hosType.code">{{hosType.name}}
+							</ng-option>
+						</ng-select>
+						<control-messages [control]="userProfileForm.get('hospitalType').get('code')"></control-messages>
+					</div>
+				</div>
+
+				<mat-form-field class="col-md-6">
+					<input matInput type="text" appValidationFields  placeholder="Address Line1"
+					 formControlName="addressLine1" required>
+					<control-messages [control]="userProfileForm.get('addressLine1')"></control-messages>
+				</mat-form-field>
+
+				<mat-form-field class="col-md-6">
+					<input matInput type="text" appValidationFields  placeholder="Address Line2"
+					 formControlName="addressLine2">
+					<control-messages [control]="userProfileForm.get('addressLine2')"></control-messages>
+				</mat-form-field>
+
+				<div formGroupName="userDetail">
+				<div class="col-md-12">
+					<h2>CONTACT PERSON DETAILS</h2>
+				</div>
+
+				<mat-form-field class="col-md-6">
+					<input matInput type="text" formControlName="firstName" placeholder="First Name">
+					<control-messages [control]="userProfileForm.get('userDetail').get('firstName')"></control-messages>
+				</mat-form-field>
+
+				<mat-form-field class="col-md-6">
+					<input matInput type="text" formControlName="lastName" placeholder="Last Name">
+					<control-messages [control]="userProfileForm.get('userDetail').get('lastName')"></control-messages>
+				</mat-form-field>
+
+			</div>
+
+				<button color="primary" type="submit" mat-raised-button [disabled]="userProfileForm.invalid" class="updateProfileBtn">
+					Update Profile
+				</button>
+
+			
+		</div>
+			
+		</form>
+
+	</div>
+
+</div>
