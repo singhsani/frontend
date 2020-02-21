@@ -396,7 +396,8 @@ export class BookPlanetariumComponent implements OnInit {
     //visitor rate chart
     this.ticketingService.getZooVisitingRates().subscribe((respRates) => {
       this.planetariumVisitingRates = respRates.data;
-      this.ticketBookingForm.get('rate').setValue(this.planetariumVisitingRates.visitorCharge);
+      // this.ticketBookingForm.get('rate').setValue(this.planetariumVisitingRates.visitorCharge);
+      this.ticketBookingForm.get('rate').setValue(this.planetariumVisitingRates.specialShowVisitorCharge);
       this.totalVisitorLimit = this.planetariumVisitingRates.totalOccupancy;
     },
       err => {
