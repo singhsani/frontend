@@ -13,6 +13,6 @@ export class AnimalPondService {
 	constructor(private http: HttpService) {}
 
 	searchLicence(licenceNumber) {
-    	return this.http.get(`api/form/APLicense/search/${licenceNumber}`);
+    	return this.http.post(`api/form/APLicense/searchFromNewgen`,licenceNumber);
 	}
 }

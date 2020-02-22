@@ -22,9 +22,21 @@
 						<input matInput readonly required placeholder="{{'license_no' | translate:translateKey}}" formControlName="refNumber">
 						<control-messages [control]="animalPondCancellationForm.get('refNumber')"></control-messages>
 					</mat-form-field>
-					<mat-form-field class="col-md-4">
+					<!-- <mat-form-field class="col-md-4">
 						<input matInput readonly placeholder="{{'issue_date' | translate:translateKey}}" formControlName="licenseIssueDate">
 						<control-messages [control]="animalPondCancellationForm.get('licenseIssueDate')"></control-messages>
+          </mat-form-field> -->
+          <mat-form-field class="col-md-4">
+						<input matInput  disabled readonly autocomplete="off" appDate
+							[matDatepicker]="DateOflicenseIssueDate" formControlName="licenseIssueDate"
+							(dateChange)="dateFormat($event.value,'licenseIssueDate')"
+							placeholder="{{ 'issue_date' | translate:translateKey }}">
+						<mat-datepicker-toggle matSuffix [for]="DateOflicenseIssueDate"></mat-datepicker-toggle>
+						<mat-datepicker touchUi="true" #DateOflicenseIssueDate></mat-datepicker>
+						<div align="end" class="default-show-hint mat-hint mat-right">
+							{{licenseConfiguration.DATE_HINT_MSG}}</div>
+						<control-messages [control]="animalPondCancellationForm.get('licenseIssueDate')">
+						</control-messages>
 					</mat-form-field>
 				</div>
 

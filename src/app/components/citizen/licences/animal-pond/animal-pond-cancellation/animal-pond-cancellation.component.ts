@@ -10,6 +10,7 @@ import { ValidationService } from '../../../../../shared/services/validation.ser
 import { FormsActionsService } from '../../../../../core/services/citizen/data-services/forms-actions.service';
 import { Location } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
+import { LicenseConfiguration } from '../../license-configuration';
 
 @Component({
   selector: 'app-animal-pond-cancellation',
@@ -22,6 +23,7 @@ export class AnimalPondCancellationComponent implements OnInit {
 
 	animalPondCancellationForm: FormGroup;
 	translateKey: string = 'animalPondCancellationScreen';
+	licenseConfiguration: LicenseConfiguration = new LicenseConfiguration();
 
 	formId: number;
 	apiCode: string;
@@ -47,7 +49,8 @@ export class AnimalPondCancellationComponent implements OnInit {
 	 * This method for serach licence using licence number.
 	 */
 	searchLicence() {
-		this.AnimalPondService.searchLicence(this.serachLicenceObj.searchLicenceNumber).subscribe(
+		let obj = { refNumber: this.serachLicenceObj.searchLicenceNumber };
+		this.AnimalPondService.searchLicence(obj).subscribe(
 			(res: any) => {
 				if (res.success) {
 					this.serachLicenceObj.isDisplayCancellationLicenceForm = true;
@@ -147,7 +150,7 @@ export class AnimalPondCancellationComponent implements OnInit {
 				// renewal: res.renewal,
 				// adminCharges: res.adminCharges,
 				// netAmount: res.netAmount,
-				licenseIssueDate: res.licenseIssueDate,
+				// licenseIssueDate: res.licenseIssueDate,
 				// licenseRenewalDate: res.licenseRenewalDate,
 				// loinumber: res.loinumber,
 				attachments: []
