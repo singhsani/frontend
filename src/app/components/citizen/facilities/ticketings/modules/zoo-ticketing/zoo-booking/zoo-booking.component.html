@@ -205,24 +205,29 @@
               <control-messages [control]="ticketBookingForm.get('idType').get('code')">
               </control-messages>
             </div>
-            <mat-form-field class="col-md-6">
-              <div *ngIf="isVisibleIdNumber; then ifContent else elseContent"></div>
-              <ng-template #ifContent>
-                <input matInput formControlName="idNumber" appAlphaNumeric minlength="4" maxlength="4"
+            <mat-form-field class="col-md-6" *ngIf="isVisibleIdNumber">
+                <input matInput formControlName="idNumber" class="aadharcard"  OnlyNumber minlength="4" maxlength="4"
                        placeholder="{{'id_number' | translate: translateKey}}" required>
                 <control-messages [control]="ticketBookingForm.get('idNumber')"></control-messages>
                 <mat-hint class="mt-3 font-weight-bold fsLarge">
                   ({{'last_4_digit_of_ID'| translate: translateKey}})</mat-hint>
-              </ng-template>
-              <ng-template #elseContent>
-                <input matInput formControlName="idNumber" OnlyNumber minlength="4" maxlength="4"
-                       placeholder="{{'id_number' | translate: translateKey}}" required>
-                <control-messages [control]="ticketBookingForm.get('idNumber')"></control-messages>
-                <mat-hint class="mt-3 font-weight-bold fsLarge">
-                  ({{'last_4_digit_of_ID'| translate: translateKey}})</mat-hint>
-
-              </ng-template>
+             </mat-form-field>
+            <mat-form-field class="col-md-6" *ngIf="isPanCardVisibleIdNumber">
+              <input matInput formControlName="idNumber" class="pancard"  appValidationFields validationFieldsType="onlyPancard"  minlength="4" maxlength="4"
+                     placeholder="{{'id_number' | translate: translateKey}}" required>
+              <control-messages [control]="ticketBookingForm.get('idNumber')"></control-messages>
+              <mat-hint class="mt-3 font-weight-bold fsLarge">
+                ({{'last_4_digit_of_ID'| translate: translateKey}})</mat-hint>
             </mat-form-field>
+            <mat-form-field class="col-md-6" *ngIf="!isVisibleIdNumber && !isPanCardVisibleIdNumber">
+              <input matInput formControlName="idNumber" class="others"  appAlphaNumeric minlength="4" maxlength="4"
+                     placeholder="{{'id_number' | translate: translateKey}}" required>
+              <control-messages [control]="ticketBookingForm.get('idNumber')"></control-messages>
+              <mat-hint class="mt-3 font-weight-bold fsLarge">
+                ({{'last_4_digit_of_ID'| translate: translateKey}})</mat-hint>
+            </mat-form-field>
+
+
           </div>
           <!-- Contact Details ends here-->
 
