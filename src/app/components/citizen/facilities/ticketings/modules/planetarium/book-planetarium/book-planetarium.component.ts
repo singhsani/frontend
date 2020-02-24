@@ -27,6 +27,7 @@ export class BookPlanetariumComponent implements OnInit {
   totalAmount: number;
   numberOfVisitors: number;
   isLoadingResults: boolean = false;
+  isVisibleIdNumber = false;
 
   minDate = moment(new Date()).add(0, 'day').toISOString();
   maxDate = moment(new Date()).add(30, 'day').toISOString();
@@ -395,7 +396,8 @@ export class BookPlanetariumComponent implements OnInit {
     //visitor rate chart
     this.ticketingService.getZooVisitingRates().subscribe((respRates) => {
       this.planetariumVisitingRates = respRates.data;
-      this.ticketBookingForm.get('rate').setValue(this.planetariumVisitingRates.visitorCharge);
+      // this.ticketBookingForm.get('rate').setValue(this.planetariumVisitingRates.visitorCharge);
+      this.ticketBookingForm.get('rate').setValue(this.planetariumVisitingRates.specialShowVisitorCharge);
       this.totalVisitorLimit = this.planetariumVisitingRates.totalOccupancy;
     },
       err => {
@@ -541,6 +543,14 @@ export class BookPlanetariumComponent implements OnInit {
             this.commonService.openAlert("Error", err.error[0].message, "warning")
           }
         });
+    }
+
+  }
+
+  CheckType(idCode){
+    this.isVisibleIdNumber = false;
+    if(idCode === 'AADHARCARD'){
+      this.isVisibleIdNumber = true;
     }
 
   }
