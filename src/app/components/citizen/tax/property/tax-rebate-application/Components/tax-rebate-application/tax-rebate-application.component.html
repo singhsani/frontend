@@ -1,6 +1,7 @@
-<mat-card class="cardH1">
-    <h1>Application for Tax Rebate</h1>
-  </mat-card>
+<app-title-bar [title]="'Application for Tax Rebate'"></app-title-bar>
+    <!-- <mat-card class="cardH1">
+        <h1>Application for Tax Rebate</h1>
+    </mat-card> -->
 <div>
     <div *ngIf="!isShowForm">
         <app-tax-rebate-application-search></app-tax-rebate-application-search>
