@@ -157,6 +157,7 @@ export class AnimalPondTransferComponent implements OnInit {
 			maxFileSizeInMB: [data.maxFileSizeInMB ? data.maxFileSizeInMB : 5],
 			requiredOnAdminPortal: [data.requiredOnAdminPortal],
 			requiredOnCitizenPortal: [data.requiredOnCitizenPortal],
+			dmsEnabled:[data.dmsEnabled]
 			// version: [data.version ? data.version : null]
 		});
 	}
