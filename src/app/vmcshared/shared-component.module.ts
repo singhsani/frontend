@@ -21,6 +21,7 @@ import { MaskPropertyNoDirective } from './Directives/mask-propertyNo.directive'
 import { MaskPropertyNoWithOccuiperCodeDirective } from './Directives/mask-propertyNoWithOccupierCode.directive';
 import { DigitsOnlyDirective } from './Directives/digitsOnlyDirective';
 import { PropertyOccupierSearchComponent } from './component/property-occupier-search/property-occupier-search.component';
+import { VmcTitleBarComponent } from './component/title-bar/title-bar.component';
 
 @NgModule({
   imports: [
@@ -45,6 +46,7 @@ import { PropertyOccupierSearchComponent } from './component/property-occupier-s
     ResponseDownloadListComponent,
     CreateFormulaComponent,
     PropertySearchComponent,
+    VmcTitleBarComponent,
     PropertyOccupierSearchComponent
   ],
   exports: [
@@ -54,6 +56,7 @@ import { PropertyOccupierSearchComponent } from './component/property-occupier-s
     ResponseDownloadListComponent,
     CreateFormulaComponent,
     PropertySearchComponent,
+    VmcTitleBarComponent,
     PropertyOccupierSearchComponent,
     CommonModule,
     NumberOnlyDirective,
