@@ -1,23 +1,46 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 
 /* Import all shared, core and routing module start */
 import { CoreModule } from '../../core/core.module';
 import { SharedModule } from '../../shared/shared.module';
+import { HospitalAuthModule } from './hospital-auth/hospital-auth.module';
 import { HospitalRoutingModule } from './hospital-routing.module';
 /* Import all shared, core and routing module end */
 
 /* Import hospital components start */
-import { DashboardComponent } from './dashboard/dashboard.component';
+import { HospitalDashboardComponent } from './dashboard/dashboard.component';
+import { HospitalLayoutComponent } from '../../layouts/hospital-layout/hospital-layout.component';
+import { BirthRegistrationComponent } from './birth-registration/birth-registration.component';
+import { DeathRegistrationComponent } from './death-registration/death-registration.component';
+import { StillBirthComponent } from './still-birth/still-birth.component';
+import { HosMyApplicationsComponent } from './hos-my-applications/hos-my-applications.component';
+import { BirthCorrectionComponent } from './birth-correction/birth-correction.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+
 /* Import hospital components end */
 
 @NgModule({
 	imports: [
 		CommonModule,
-		HospitalRoutingModule,
+		FormsModule,
+		ReactiveFormsModule,
 		SharedModule,
-		CoreModule
+		CoreModule,
+		HospitalAuthModule,
+		HospitalRoutingModule,
 	],
-	declarations: [DashboardComponent]
+	declarations: [
+		HospitalDashboardComponent,
+		HospitalLayoutComponent,
+		BirthRegistrationComponent,
+		DeathRegistrationComponent,
+		StillBirthComponent,
+		HosMyApplicationsComponent,
+		BirthCorrectionComponent,
+		UserProfileComponent
+	]
 })
 export class HospitalModule { }

@@ -1,42 +1,63 @@
-<div class="example-container col-md-6 col-md-offset-3" style="margin-top: 40px;">
-	<div class="header">
-		<div class="heading">Sign UP</div>
+<mat-card class="borderRadius10 signUp">
+	<div class="headingBox">Register
+		<span>Sign up by entering the information below</span>
 	</div>
-	<mat-card>
-		<mat-card-content>
-			<form [formGroup]="regForm" (ngSubmit)="onSignUp(regForm.value)" autocomplete="off" ngNativeValidate> 
-				
-				<mat-form-field class="example-full-width" style="width:100%">
-					<input matInput type="text" placeholder="Firstname" formControlName="firstName" required>
-				</mat-form-field>
+	<form [formGroup]="regForm" (ngSubmit)="onSignUp(regForm.value)" autocomplete="off" novalidate>
+		<div class="row">
+			<mat-form-field class="iconMat col-md-6">
+				<mat-icon matPrefix>face</mat-icon>
+				<input matInput type="text" placeholder="Firstname" appValidationFields validationFieldsType="onlyNameWithOutSpace" formControlName="firstName"
+				 required #firstname="matInput" maxlength="50">
+				<control-messages [control]="regForm.get('firstName')"></control-messages>
+			</mat-form-field>
 
-				<mat-form-field class="example-full-width" style="width:100%">
-					<input matInput type="text" placeholder="Lastname" formControlName="lastName" required>
-				</mat-form-field>
+			<mat-form-field class="iconMat col-md-6">
+				<mat-icon matPrefix>face</mat-icon>
+				<input matInput type="text" placeholder="Lastname" appValidationFields validationFieldsType="onlyNameWithOutSpace" formControlName="lastName"
+				 required maxlength="50">
+				<control-messages [control]="regForm.get('lastName')"></control-messages>
+			</mat-form-field>
 
-				<mat-form-field class="example-full-width" style="width:100%">
-					<input matInput type="email" placeholder="Email" formControlName="email" required>
-				</mat-form-field>
+			<mat-form-field class="iconMat col-md-6">
+				<mat-icon matPrefix>mail_outline</mat-icon>
+				<input matInput type="email" placeholder="Email" appPreventSpace formControlName="email" required maxlength="50">
+				<control-messages [control]="regForm.get('email')"></control-messages>
+			</mat-form-field>
 
-				<mat-form-field class="example-full-width" style="width:100%">
-					<input matInput type="number" placeholder="Cell Number" formControlName="cellNo" required>
-				</mat-form-field>
+			<mat-form-field class="iconMat col-md-6">
+				<mat-icon matPrefix>phone_android</mat-icon>
+				<input matInput type="tel" OnlyNumber placeholder="Mobile Number" formControlName="cellNo" minlength="10" maxlength="10" required>
+				<control-messages [control]="regForm.get('cellNo')"></control-messages>
+			</mat-form-field>
 
-				<mat-form-field class="example-full-width" style="width:100%">
-					<input matInput type="password" placeholder="Password" formControlName="password" required>
-				</mat-form-field>
+			<mat-form-field class="iconMat col-md-6">
+				<mat-icon matPrefix>lock_outline</mat-icon>
+				<input matInput type="password" placeholder="Password" formControlName="password" required maxlength="50">
+				<control-messages [control]="regForm.get('password')"></control-messages>
+			</mat-form-field>
 
-				<mat-form-field class="example-full-width" style="width:100%">
-					<input matInput type="password" placeholder="Password" formControlName="confirmPassword" required>
-				</mat-form-field>
+			<mat-form-field class="iconMat col-md-6">
+				<mat-icon matPrefix>lock_outline</mat-icon>
+				<input matInput type="password" placeholder="Confirm Password" formControlName="confirmPassword" required maxlength="50">
+				<control-messages [control]="regForm.get('confirmPassword')"></control-messages>
+			</mat-form-field>
 
-				<button type="submit" mat-raised-button color="primary" [disabled]="regForm.invalid" style="width:100%">
-					Sign Up
-				</button>
-				<p class="text-center" style="margin-top: 10px;">Already have an account
-					<a routerLink="../login">Log In</a>
-				</p>
-			</form>
-		</mat-card-content>
-	</mat-card>
-</div>
+			<div class="col-md-6 offset-md-6">
+				<mat-error *ngIf="regForm.errors && regForm.errors['mismatchedPasswords']">Password not match</mat-error>
+			</div>
+		</div>
+
+		<div class="text-center pt-1">
+			<button type="submit" mat-raised-button color="primary" [disabled]="regForm.invalid" class="width150">
+				Sign up
+			</button>
+		</div>
+		<div class="text-center pt-2">
+			Already have an account ?
+			<a routerLink="/{{manageRoutes.getFullRoute('CITIZENAUTHLOGIN')}}">
+				<strong>Login</strong>
+			</a> here.
+		</div>
+	</form>
+
+</mat-card>

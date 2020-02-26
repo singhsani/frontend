@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormGroup, FormBuilder, Validators, Form } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { AppService } from '../../../../core/services/citizen/app-services/app.service';
+import { ManageRoutes } from '../../../../config/routes-conf';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
 	selector: 'app-userverification',
@@ -15,38 +17,44 @@ export class UserVerificationComponent implements OnInit {
 
 	/**
 	 * Constructor to declare defualt propeties of class.
-	 * @param _appService - Declare App Service property.
-	 * @param _route - Declare App ActivatedRoute property.
-	 * @param _router - Declare Routing Property.
+	 * @param appService - Declare App Service property.
+	 * @param route - Declare App ActivatedRoute property.
+	 * @param router - Declare Routing Property.
 	*/
 	constructor(
-		private _appService: AppService,
-		private _route: ActivatedRoute,
-		private _router: Router, private fb: FormBuilder
-	) { }
+		private appService: AppService,
+		private route: ActivatedRoute,
+		private router: Router,
+		private fb: FormBuilder,
+		private toster: ToastrService
+	) {
+
+	}
 
 	/**
 	 * Initialize page content.
 	 */
 	ngOnInit() {
-		
+
 
 		this.verifyForm = this.fb.group({
 			uniqueId: '',
-			code: ''
+			code: ['', Validators.required]
 		});
 
 		//  get the values from queryparams
-		this._route.queryParams.subscribe(params => {
+		this.route.queryParams.subscribe(params => {
 
 			this.verifyForm.get('uniqueId').setValue(params['uniqueId']);
 
 			// if code value is exist then disabled field otherwise allow user to enter manually
 			if (params['code'] != null && params['code'] != "" && params['code'] != undefined && params['code'] != 'undefined' && params['code'] != 'null') {
+
 				this.verifyForm.get('code').setValue(params['code']);
 				this.verifyForm.get('code').disable();
 			} else {
-				this.verifyForm.get('code').setValue("");
+				this.verifyForm.get('code').setValue('');
+				this.verifyForm.get('code').enable();
 			}
 
 		});
@@ -58,26 +66,13 @@ export class UserVerificationComponent implements OnInit {
 	verifyUser(formVals: FormGroup) {
 
 		if ((!this.verifyForm.get('uniqueId').value) || (!this.verifyForm.get('code').value)) {
-			this.showAlert("Link is not valid try again")
+			this.toster.warning("Link is not valid try again");
 		} else {
-			this._appService.verifyUser(formVals).subscribe(
+			this.appService.verifyUser(formVals.getRawValue()).subscribe(
 				res => {
-
-					this.showAlert("Successfully Authenticated");
-					/**
-					 * Redirect to Reset Password Content
-					 */
-					this._router.navigate(['/login']);
+					this.toster.success("Successfully Authenticated");
+					this.router.navigate([ManageRoutes.getFullRoute('CITIZENAUTHLOGIN')]);
 				});
 		}
 	}
-
-	/**
-	 * Method is used to show alert for different situation.
-	 * @param message - message is to be passed to alert.
-	 */
-	showAlert(message: string) {
-		alert(message);
-	}
-
 }

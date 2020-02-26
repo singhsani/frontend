@@ -1,0 +1,432 @@
+<app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
+
+<!-- GuideLine Div-->
+<div *ngIf="guideLineFlag">
+    <mat-card class="cardBox">
+        <div class="pageTitle">{{'online_atithigruh_bookings'| translate: translateKey}}</div>
+        <mat-card-content class="p-4">
+            <p class="pb-2">{{head_lines }}</p>
+
+            <h2>{{'rules_and_regulations' | translate: stadiumTranslateKey}}</h2>
+            <ol class="olList">
+                <li>
+                    All parties/organizers have to observe the VMC Rules(
+                    <a href="javascript:void(0)" class="stretched-link" (click)="loadGuideLine()">
+                        Mahatma Gandhi Nagar Gruh, Sir Sayaji Rao Nagar Gruh,Pandit Dindayal Upadhyay Nagar,Deepak Open
+                        Air theater
+                    </a>)
+                </li>
+                <li>
+                    The shift time includes the entry and exit time it is required to vocate the atithigruh or or before
+                    the session end time beyond
+                    which overtime will be charged.
+                </li>
+                <li>
+                    Production of all necessary permission is mandatory for applicant before commencement of programe.
+                </li>
+                <li>
+                    Deduction as per the rules will be made in the event of cancellation.
+                </li>
+            </ol>
+        </mat-card-content>
+    </mat-card>
+    <div class="fotButtonBar">
+        <div class="col-sm-12 col-md-12 text-right">
+            <button mat-raised-button (click)="guideLineFlag = false;showSearchForm = true" color="primary">
+                <mat-icon>thumb_up_alt</mat-icon>
+                {{'proceed'| translate: stadiumTranslateKey}}
+            </button>
+        </div>
+    </div>
+</div>
+<!-- GuideLine Div End-->
+
+<!-- Search Form-->
+<div *ngIf="showSearchForm">
+    <mat-card class="formClass cardBorder">
+
+        <div class="pageTitle">{{'online_atithigruh'| translate: translateKey}}</div>
+
+        <div class="p-15">
+
+            <form [formGroup]="BookingTypeForm" (ngSubmit)="searchBooking()" autocomplete="off" ngNativeValidate>
+
+                <div class="row mt-3 mb-3">
+                    <div class="col-md-4 ngSelect">
+                        <ng-select placeholder="{{'booking_type'| translate: translateKey}}"
+                            formControlName="bookingType" (change)="onBookingTypeChange($event)">
+                            <ng-option *ngFor="let bt of BOOKING_TYPE" [value]="bt.code">
+                                {{ bt.name }}
+                            </ng-option>
+                        </ng-select>
+                        <control-messages [control]="BookingTypeForm.get('bookingType')"></control-messages>
+                    </div>
+
+                    <div class="col-md-4 ngSelect" formGroupName="atithiGruhName">
+                        <ng-select placeholder="{{'atithiguh'| translate: translateKey}}" formControlName="code">
+                            <ng-option *ngFor="let at of ATITHIGRUH" [value]="at.code">
+                                {{ at.name }}
+                            </ng-option>
+                        </ng-select>
+                        <control-messages [control]="BookingTypeForm.get('atithiGruhName.code')"></control-messages>
+                    </div>
+
+                    <div formGroupName="bookingPurposeMaster" class="col-md-4 ngSelect">
+                        <ng-select placeholder="{{'purpose'| translate: translateKey}}" formControlName="code">
+                            <ng-option *ngFor="let purpose of PURPOSE" [value]="purpose.code">
+                                {{ purpose.name }}
+                            </ng-option>
+                        </ng-select>
+                        <control-messages [control]="BookingTypeForm.get('bookingPurposeMaster').get('code')">
+                        </control-messages>
+                    </div>
+
+                    <ng-container *ngIf="bookingForRegular">
+                        <mat-form-field class="col-md-4">
+                            <mat-label>{{'booking_date'| translate: translateKey}}</mat-label>
+                            <input appDate matInput [min]="startMinDate" [max]="endMinDate"
+                                [matDatepicker]="townHallBookingfromPicker" formControlName="bookingFrom"
+                                (dateChange)="onDateChange('bookingFrom', $event.value)">
+                            <mat-datepicker-toggle matSuffix [for]="townHallBookingfromPicker"></mat-datepicker-toggle>
+                            <mat-datepicker #townHallBookingfromPicker touchUi="true"></mat-datepicker>
+                            <div align="end" class="default-show-hint mat-hint mat-right">{{bookingUtils.DATE_HINT_MSG}}
+                            </div>
+                            <control-messages [control]="BookingTypeForm.get('bookingFrom')">
+                            </control-messages>
+                        </mat-form-field>
+
+                        <mat-form-field class="col-md-4">
+                            <mat-label>{{'choose_end_date'| translate: translateKey}}</mat-label>
+                            <input appDate matInput [min]="toStartDate" [max]="endMinDate"
+                                [matDatepicker]="townHallBookingtoPicker" formControlName="bookingTo"
+                                (dateChange)="onDateChange('bookingTo', $event.value)">
+                            <mat-datepicker-toggle matSuffix [for]="townHallBookingtoPicker"></mat-datepicker-toggle>
+                            <mat-datepicker #townHallBookingtoPicker touchUi="true"></mat-datepicker>
+                            <div align="end" class="default-show-hint mat-hint mat-right">{{bookingUtils.DATE_HINT_MSG}}
+                            </div>
+                            <control-messages [control]="BookingTypeForm.get('bookingTo')">
+                            </control-messages>
+                        </mat-form-field>
+                    </ng-container>
+
+                    <ng-container *ngIf="!bookingForRegular">
+                        <mat-form-field class="col-md-4">
+                            <mat-label>{{'booking_date'| translate: translateKey}}</mat-label>
+                            <input appDate matInput [min]="toStartBookDate" [max]="toEndBookDate"
+                                [matDatepicker]="townHallBookingtoPicker" formControlName="bookingFrom"
+                                (dateChange)="onDateChange('bookingFrom', $event.value)">
+                            <mat-datepicker-toggle matSuffix [for]="townHallBookingtoPicker"></mat-datepicker-toggle>
+                            <mat-datepicker #townHallBookingtoPicker touchUi="true"></mat-datepicker>
+                            <div align="end" class="default-show-hint mat-hint mat-right">{{bookingUtils.DATE_HINT_MSG}}
+                            </div>
+                            <control-messages [control]="BookingTypeForm.get('bookingFrom')">
+                            </control-messages>
+                        </mat-form-field>
+                    </ng-container>
+
+                    <div class="col pr-3 mt-4">
+                        <div class="text-right">
+                            <button mat-raised-button color="primary" type="submit">
+                                <mat-icon>search</mat-icon>
+                                {{bookingForRegular ? 'search' : 'check_fees' | translate: translateKey}}
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+
+            </form>
+        </div>
+    </mat-card>
+    <!-- Search Form End-->
+
+    <!-- Slot Table-->
+    <mat-card *ngIf="Dates.length>0" class="mt-4">
+        <mat-card class="formClass cardBorder">
+            <div class="pageTitle">{{'list_of_atithigruh'| translate: translateKey}}</div>
+            <mat-accordion *ngFor="let month of bookingUtils.filterMonths(Dates); let i = index;">
+                <mat-expansion-panel [expanded]="i === 0">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            {{month.monthName}}
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div>
+                        <mat-checkbox [checked]="!bookingUtils.checkedAllinMonth(month, Dates)"
+                            [disabled]="bookingUtils.checkAllDisabledInmonth(month,Dates)" labelPosition="after"
+                            (change)="selectedShift = bookingUtils.selectAllShiftsInMonth($event.checked, month, Dates, selectedShift, i)">
+                            {{'select_all_shift_in'| translate: stadiumTranslateKey}} {{month.monthName}}
+                        </mat-checkbox>
+                    </div>
+
+                    <div class="row">
+                        <div *ngFor="let date of bookingUtils.filterAcc(month.id, Dates)"
+                            class="col-6 col-md-3 col-lg-2 mb-1 p-1">
+                            <div class="dateBox rounded border">
+                                <strong>
+                                    {{bookingUtils.returnProperDate(date.key)}}
+                                </strong>
+                                <div class="dateCon">
+                                    <mat-checkbox
+                                        (change)="selectedShift = bookingUtils.selectShift(shift, $event.checked, selectedShift)"
+                                        *ngFor="let shift of date.slotList; let i = index"
+                                        [disabled]="shift.slotStatus == bookingConstants.BOOKED || shift.slotStatus == bookingConstants.TEMPORARY_BLOCKED"
+                                        [checked]="shift.slotStatus != bookingConstants.AVAILABLE">
+                                        &nbsp;{{shift.slotStatus == bookingConstants.CHECKED ?
+                                        bookingConstants.AVAILABLE : (shift.slotStatus == 'TEMPORARY_BLOCKED' ?
+                                        'Temporary Blocked' : shift.slotStatus) }}
+                                    </mat-checkbox>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </mat-expansion-panel>
+            </mat-accordion>
+
+            <div class="fotButtonBar">
+                <div class="col-sm-12 col-md-12 text-right">
+                    <button mat-raised-button data-toggle="modal" (click)="shortlistShifts(confirmationModel)"
+                        data-target="#confirmShortlistModel" type="button" [disabled]="selectedShift.length == 0"
+                        color="primary">
+                        <mat-icon>check_circle_outline</mat-icon>
+                        {{'shortlist'| translate: stadiumTranslateKey}}
+                    </button>
+                </div>
+            </div>
+
+        </mat-card>
+    </mat-card>
+</div>
+<!-- Slot Table end-->
+
+<!-- Selected slots disaplay modal-->
+<ng-template #confirmationModel>
+    <div class="modal-header customthead">
+        <h4 class="modal-title" id="exampleModalLabel">
+            {{'list_selected_slot'| translate: stadiumTranslateKey}}
+        </h4>
+        <button title="Close" data-dismiss="modal" class="mat-icon-button" aria-label="Close"
+            (click)="confirmRef.hide()">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+    <div class="modal-body scrollModel">
+        <div class="table-responsive">
+            <table class="table">
+                <thead class="customthead">
+                    <tr>
+                        <th scope="col" width="56">{{'s_no'| translate: stadiumTranslateKey}}</th>
+                        <th scope="col">{{'date_of_programme'| translate: translateKey}}</th>
+                        <!-- <th scope="col">{{'end_date'| translate: translateKey}}</th> -->
+                        <th scope="col">{{'slot_status'| translate: stadiumTranslateKey}}</th>
+                        <!-- <th scope="col">{{'occupancy'| translate: translateKey}}</th> -->
+                        <th scope="col" width="65">{{'action'| translate: stadiumTranslateKey}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let shifts of selectedShift; let i = index;">
+                        <th scope="row">{{i+1}}</th>
+                        <td>{{bookingUtils.returnProperDate(shifts.start)}}</td>
+                        <!-- <td>{{bookingUtils.returnProperDate(shifts.end)}}</td> -->
+                        <td>{{shifts.slotStatus == bookingConstants.CHECKED ? bookingConstants.AVAILABLE :
+                            shifts.slotStatus}}
+                        </td>
+                        <!-- <td>{{shifts.occupancy}}</td> -->
+                        <td>
+                            <button mat-icon-button title="{{'remove_slot'| translate: translateKey}}"
+                                [disabled]="selectedShift.length == 1"
+                                (click)="selectedShift = bookingUtils.removeSelectedShift(shifts,selectedShift,  i)">
+                                <mat-icon color="warn">delete</mat-icon>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" mat-raised-button color="primary" data-dismiss="modal" (click)="confirmRef.hide()">
+            <mat-icon>cancel</mat-icon>
+            {{'cancel'| translate: stadiumTranslateKey}}
+        </button>
+        <button type="button" mat-raised-button color="primary" data-dismiss="modal" (click)="confirmShortlist()">
+            <mat-icon>check_circle_outline</mat-icon>
+            {{'confirm_and_continue'| translate: stadiumTranslateKey}}
+        </button>
+    </div>
+
+</ng-template>
+<!--Selected slots disaplay modal -->
+
+<!-- This block is for payment details and selected slots-->
+<div *ngIf="showPaymentReciept">
+
+    <mat-card class="formClass cardBorder">
+        <div class="pageTitle">
+            {{'atithigruh_booking_details'| translate: translateKey}}
+        </div>
+        <div class="p-3 table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">{{'booking_date'| translate: stadiumTranslateKey}}</th>
+                        <th scope="col">{{'rent_amount'| translate: stadiumTranslateKey}}</th>
+                        <th scope="col">Administration Charges</th>
+                        <th scope="col">{{'deposit_amount'| translate: stadiumTranslateKey}}</th>
+                        <th scope="col">{{'GST'| translate: stadiumTranslateKey}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td scope="col">{{bookingUtils.returnProperDate(paymentObject.bookingDate)}}</td>
+                        <td scope="col">{{paymentObject.RENT_FEES}}</td>
+                        <td scope="col">{{paymentObject.ADMINISTRATION_CHARGES}}</td>
+                        <td scope="col">{{paymentObject.DEPOSIT_FEES}}</td>
+                        <td scope="col">{{paymentObject.GST}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="fotButtonBar">
+            <div class="col-sm-12 col-md-12 text-right">
+                <button type="button" mat-raised-button color="primary" data-dismiss="modal"
+                    (click)="isBookingFormHidden = false; showPaymentReciept = false;">
+                    {{'proceed_for_appication'| translate: stadiumTranslateKey}}
+                    <mat-icon>navigate_next</mat-icon>
+                </button>
+            </div>
+        </div>
+    </mat-card>
+</div>
+<!-- This block is for payment details and selected slots end-->
+
+<!-- Booking slot start-->
+<div [hidden]="isBookingFormHidden">
+    <mat-card class="formClass cardBorder">
+        <form [formGroup]="atithigruhForm" (ngSubmit)="submit()">
+
+            <mat-tab-group mat-stretch-tabs dynamicHeight="true" [(selectedIndex)]="tabIndex" class="stepperNav">
+
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <div>{{'applicant_details' | translate:stadiumTranslateKey}}</div>
+                    </ng-template>
+                    <h2>
+                        {{'applicant_details' | translate:stadiumTranslateKey}}
+                    </h2>
+
+                    <div class="row">
+                        <mat-form-field class="col-md-4">
+                            <input matInput maxlength="50" appValidationFields
+                                [validationFieldsType]="'onlyNameWithSpace'" type="text" formControlName="applicantName"
+                                placeholder="{{'applicant_name' | translate: stadiumTranslateKey}}" required>
+                            <control-messages [control]="atithigruhForm.get('applicantName')"></control-messages>
+                        </mat-form-field>
+
+                        <mat-form-field class="col-md-4">
+                            <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="applicantMobileNo"
+                                placeholder="{{'applicant_mobile' | translate: stadiumTranslateKey}}" required>
+                            <control-messages [control]="atithigruhForm.get('applicantMobileNo')"></control-messages>
+                        </mat-form-field>
+
+                        <div class="col-md-4">
+                            <mat-form-field>
+                                <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="confirmMobile"
+                                    placeholder="{{'confirm_mobile' | translate: stadiumTranslateKey}}" required>
+                                <control-messages [control]="atithigruhForm.get('confirmMobile')"></control-messages>
+                            </mat-form-field>
+                            <mat-error
+                                *ngIf="!bookingUtils.matcher(atithigruhForm, 'applicantMobileNo', 'confirmMobile') && atithigruhForm.get('applicantMobileNo').touched && atithigruhForm.get('confirmMobile').touched">
+                                {{bookingConstants.MOB_NO_MIS_MATCH_MESSAGE}}
+                            </mat-error>
+                        </div>
+
+                        <mat-form-field class="col-md-6">
+                            <input matInput type="email" formControlName="applicantEmailID"
+                                placeholder="{{'applicant_email' | translate: stadiumTranslateKey}}" required>
+                            <control-messages [control]="atithigruhForm.get('applicantEmailID')"></control-messages>
+                        </mat-form-field>
+
+                        <div class="col-md-6">
+                            <mat-form-field>
+                                <input matInput type="email" formControlName="confirmEmailID"
+                                    placeholder="{{'confirm_email' | translate: stadiumTranslateKey}}" required>
+                                <control-messages [control]="atithigruhForm.get('confirmEmailID')"></control-messages>
+                            </mat-form-field>
+                            <mat-error
+                                *ngIf="!bookingUtils.matcher(atithigruhForm, 'applicantEmailID', 'confirmEmailID') && atithigruhForm.get('applicantEmailID').touched && atithigruhForm.get('confirmEmailID').touched">
+                                {{bookingConstants.EMAIL_MIS_MATCH_MESSAGE}}
+                            </mat-error>
+                        </div>
+
+                    </div>
+
+                    <div>
+                        <h2>
+                            {{'applicantAddress' | translate:stadiumTranslateKey}}
+                        </h2>
+                        <app-address #address [requiredFeilds]="true"
+                            [addressFormGroup]="atithigruhForm.get('applicantAddress')"></app-address>
+                    </div>
+
+                    <div class="row mt-4 fotButtonBar float-right">
+                        <div class="col-sm-12 col-md-12 justify-content-between d-flex">
+                            <button class="float-right" mat-raised-button type="button" color="primary"
+                                (click)="tabIndex= tabIndex +1;">
+                                {{'next'| translate:stadiumTranslateKey}}
+                                <mat-icon>navigate_next</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+
+                </mat-tab>
+
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <div>{{'bank_details' | translate:stadiumTranslateKey}}</div>
+                    </ng-template>
+
+                    <h2>
+                        {{'bank_details' | translate:stadiumTranslateKey}}
+                    </h2>
+
+                    <bank-details [form]="atithigruhForm"></bank-details>
+
+                    <div class="row">
+                        <h2>
+                            {{'terms_and_conditions' | translate:stadiumTranslateKey }}
+                        </h2>
+                        <div class="pl-2 ml-3">
+                            <mat-checkbox class="d-block" labelPosition="after" formControlName="agree">
+                                {{'i_agree_with_above_bank_details_are_correct' | translate:stadiumTranslateKey}}
+                            </mat-checkbox>
+                            <mat-checkbox class="d-block" labelPosition="after" formControlName="termsCondition">
+                                {{'i_have_read_and_agree_with_terms_and_conditions' | translate:stadiumTranslateKey}}
+                            </mat-checkbox>
+                        </div>
+                    </div>
+
+                    <div class="row mt-4 fotButtonBar">
+                        <div class="col-sm-12 col-md-12 justify-content-between d-flex">
+                            <button type="button" color="primary" mat-raised-button (click)="tabIndex= tabIndex -1; ">
+                                <mat-icon>navigate_before</mat-icon>
+                                {{'back' | translate:stadiumTranslateKey}}
+                            </button>
+                            <button mat-raised-button color="primary" type="submit">
+                                <mat-icon>check_circle_outline</mat-icon>
+                                {{bookingForRegular ? 'confirm_and_pay' : 'submit_application' | translate: translateKey}}
+                            </button>
+                        </div>
+                    </div>
+                </mat-tab>
+            </mat-tab-group>
+        </form>
+    </mat-card>
+</div>
+<!-- Booking slot end-->
+
+<select-payment-gateway #paymentGateway></select-payment-gateway>
+
+<!-- this div is used for printing the receipt -->
+<div id="sectionToPrint"></div>

@@ -1,0 +1,54 @@
+<mat-card>
+  <div class="row">
+    <div class="col-md-6">
+      <h5>Property Detail</h5>
+    </div>
+    <div class="col-md-6 text-right">
+      <button mat-raised-button color="primary" type="button" (click)="cancelForm()">
+        <mat-icon>skip_previous</mat-icon> Back
+      </button>
+    </div>
+    <hr >
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <table mat-table [dataSource]="dataSource" >
+        <ng-container matColumnDef="propertyNo">
+          <th mat-header-cell *matHeaderCellDef>Property No </th>
+          <td mat-cell *matCellDef="let element"> {{element.propertyNo}} </td>
+        </ng-container>
+        <ng-container matColumnDef="ownerName">
+          <th mat-header-cell *matHeaderCellDef>Owner Name</th>
+          <td mat-cell *matCellDef="let element"> {{element.ownerName}} </td>
+        </ng-container>
+        <ng-container matColumnDef="occupierName">
+          <th mat-header-cell *matHeaderCellDef> Occupier Name</th>
+          <td mat-cell *matCellDef="let element"> {{element.occupierName}} </td>
+        </ng-container>
+        <ng-container matColumnDef="dueAmount">
+          <th mat-header-cell *matHeaderCellDef> Due Amount</th>
+          <td mat-cell *matCellDef="let element"> {{element.dueAmount}} </td>
+        </ng-container>
+        <ng-container matColumnDef="rebateAmount">
+          <th mat-header-cell *matHeaderCellDef> Rebate Amount</th>
+          <td mat-cell *matCellDef="let element"> {{element.rebateAmount}} </td>
+        </ng-container>
+        <ng-container matColumnDef="payableAmount">
+          <th mat-header-cell *matHeaderCellDef> Payable Amount</th>
+          <td mat-cell *matCellDef="let element"> {{element.payableAmount}} </td>
+        </ng-container>
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef>
+          </th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-button title="Detail" class="btn-width-auto" color="accent" type="button" (click)="onDetailClick(element)">
+              <mat-icon>details</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+  </div>
+</mat-card>

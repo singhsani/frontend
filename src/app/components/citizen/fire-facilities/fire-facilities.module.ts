@@ -1,0 +1,54 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+/* Import all shared, core and routing module start */
+import { SharedModule } from '../../../shared/shared.module';
+import { CoreModule } from '../../../core/core.module';
+import { FireFacilitiesRoutingModule } from './fire-facilities-routing.module';
+import { ProvisionalNocComponent } from './provisional-noc/provisional-noc.component';
+import { FinalFireNocComponent } from './final-fire-noc/final-fire-noc.component';
+import { FireRenewalNocComponent } from './fire-renewal-noc/fire-renewal-noc.component';
+import { WaterTankerAppComponent } from './water-tanker-app/water-tanker-app.component';
+import { TempStructureNocComponent } from './temp-structure-noc/temp-structure-noc.component';
+import { TempFireworksNocComponent } from './temp-fireworks-noc/temp-fireworks-noc.component';
+import { GasConnectionNocComponent } from './gas-connection-noc/gas-connection-noc.component';
+import { EleConnectionNocComponent } from './ele-connection-noc/ele-connection-noc.component';
+import { NavratriNocComponent } from './navratri-noc/navratri-noc.component';
+import { RevisedFireNOCComponent } from './revised-fire-noc/revised-fire-noc.component';
+import { DeadBodyWanComponent } from './dead-body-wan/dead-body-wan.component';
+import { ProHospitalNocComponent } from './pro-hospital-noc/pro-hospital-noc.component';
+import { FinalHospitalNocComponent } from './final-hospital-noc/final-hospital-noc.component';
+import { FireCertificateComponent } from './fire-certificate/fire-certificate.component';
+import { DialogFormComponent } from './common/components/dialog-form/dialog-form.component';
+/* Import all shared, core and routing module end */
+
+@NgModule({
+	imports: [
+		CommonModule,
+		SharedModule,
+		CoreModule,
+		FormsModule,
+		ReactiveFormsModule,
+		FireFacilitiesRoutingModule
+	],
+	declarations: [
+		ProvisionalNocComponent, 
+		FinalFireNocComponent, 
+		FireRenewalNocComponent, 
+		WaterTankerAppComponent,
+		TempStructureNocComponent, 
+		TempFireworksNocComponent, 
+		GasConnectionNocComponent, 
+		EleConnectionNocComponent, 
+		NavratriNocComponent,  
+		RevisedFireNOCComponent, 
+		DeadBodyWanComponent,
+		ProHospitalNocComponent,
+		FinalHospitalNocComponent,
+		FireCertificateComponent,
+		DialogFormComponent
+	],
+	entryComponents: [DialogFormComponent]
+})
+export class FireFacilitiesModule { }

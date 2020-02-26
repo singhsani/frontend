@@ -1,9 +1,12 @@
+import { ToastrService } from 'ngx-toastr';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { FormGroup, FormBuilder, Validators, Form } from '@angular/forms';
-import { SessionStorageService, SessionStorage } from 'angular-web-storage';
+import { Router, ActivatedRoute } from '@angular/router';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { SessionStorageService } from 'angular-web-storage';
 
+import { ValidationService } from './../../../../shared/services/validation.service';
 import { AppService } from '../../../../core/services/citizen/app-services/app.service';
+import { ManageRoutes } from '../../../../config/routes-conf';
 
 @Component({
 	selector: 'app-forgot-password',
@@ -13,23 +16,29 @@ import { AppService } from '../../../../core/services/citizen/app-services/app.s
 export class ForgotPasswordComponent implements OnInit {
 
 	forgotPassForm: FormGroup;
+	manageRoutes: any = ManageRoutes;
 
 	/**
 	 * 
-	 * @param _appService - Declare App Service property.
+	 * @param appService - Declare App Service property.
 	 * @param fb - Declare formbuilder property.
 	 * @param router - Declare Routing Property.
 	 */
-	constructor(private fb: FormBuilder,
-				private _router: Router, private _appService: AppService
-	) { }
+	constructor( 
+		private fb: FormBuilder,
+		private toaster: ToastrService,
+		private route: ActivatedRoute,
+		private router: Router, 
+		private appService: AppService
+	) {
 
+	}
 
 	ngOnInit() {
 		this.forgotPassForm = this.fb.group({
-			email: '',
-			cellNo: '',
-			userType: 'CZ'
+			email: [null, [Validators.required, ValidationService.emailValidator]],
+			//cellNo: '',
+			userType: 'CITIZEN'
 		});
 	}
 
@@ -39,12 +48,14 @@ export class ForgotPasswordComponent implements OnInit {
 	*/
 	onForgotPassword(formVals: FormGroup) {
 
-		this._appService.forgotPassword(formVals).subscribe(
+		this.appService.forgotPassword(formVals).subscribe(
 			res => {
 				/**
 				 * Redirect to reset password
 				 */
-				this._router.navigate(['../reset-password'], { queryParams: { uniqueId: res.data.uniqueId, code: res.data.cellOtp } });
+				this.router.navigate([ManageRoutes.getFullRoute('CITIZENAUTHRESETPASS')], { queryParams: { uniqueId: res.data.uniqueId, code: res.data.cellOtp } });
+			}, err => {
+				this.toaster.error(err.error[0].code);
 			});
 	}
 

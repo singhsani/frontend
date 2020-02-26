@@ -1,0 +1,53 @@
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { map } from 'rxjs/operators';
+import { Constants } from 'src/app/vmcshared/Constants';
+import { RefundApplicationModule } from '../refund-application.module';
+
+@Injectable()
+export class RefundApplicationService {
+
+  constructor(private http: HttpClient) { }
+
+  searchOccupierByPropertyNumber(data: any) {
+    return this.http.post(`${Constants.assessmentModuleApiUrl}active/searchoccupierbypropertynumber`, data,
+      { observe: 'response' })
+      .pipe(map((response: any) => response))
+  }
+
+  getVacancyPremiseApplicationInfo(certificateNumber: any, propertyOccupierId: any) {
+    return this.http.get(`${Constants.assessmentModuleApiUrl}vacancypremisecertificate/getvacancypremiseapplicationinfo?certificateNumber=${certificateNumber}&propertyOccupierId=${propertyOccupierId}`,
+      { observe: 'response' })
+      .pipe(map((response: any) => response))
+  }
+
+  save(data: any) {
+    return this.http.post(`${Constants.assessmentModuleApiUrl}refundagainstvacancy/save`, data,
+      { observe: 'response' })
+      .pipe(map((response: any) => response))
+  }
+
+  // generateRefundReceipt(refundAgainstVacancyId: any) {
+  //   return this.http.post(`${Constants.assessmentModuleApiUrl}refundagainstvacancy/generaterefundreceipt?refundAgainstVacancyId=${refundAgainstVacancyId}`,
+  //   { responseType: "arraybuffer" })
+  //     .pipe(map((response: any) => response))
+  // }
+
+  approve(data: any) {
+    return this.http.post(`${Constants.assessmentModuleApiUrl}refundagainstvacancy/approve`, data,
+      { observe: 'response' })
+      .pipe(map((response: any) => response))
+  }
+
+  reject(data: any) {
+    return this.http.post(`${Constants.assessmentModuleApiUrl}refundagainstvacancy/reject`, data,
+    { responseType: "arraybuffer" })
+      .pipe(map((response: any) => response))
+  }
+
+  downloadFile(url: any) {
+    return this.http.get(`${Constants.serverApiIp}${url}`,
+      { responseType: "arraybuffer" })
+      .pipe(map((response: any) => response))
+  }
+}

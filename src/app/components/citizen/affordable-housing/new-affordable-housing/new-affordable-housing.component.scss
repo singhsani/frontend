@@ -1,0 +1,9 @@
+.accept-terms {
+    ::ng-deep .mat-checkbox-layout {
+      white-space: normal !important;
+      ::ng-deep .mat-checkbox-inner-container{
+          margin: 6px 8px auto 0px;
+      }
+    }
+  }
+  

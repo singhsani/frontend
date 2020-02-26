@@ -1,0 +1,33 @@
+<div class ="row" [formGroup]="basicFormGroup">
+    <mat-form-field class="col-md-4" [hidden]="!basicFormGroup.get('firstName').value">
+        <input maxlength="50" matInput readonly appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{'first_name' | translate:translateKey}}" formControlName="firstName" required>
+        <control-messages [control]="basicFormGroup.get('firstName')"></control-messages>
+    </mat-form-field>
+
+    <mat-form-field class="col-md-4" [hidden]="!basicFormGroup.get('middleName').value">
+        <input maxlength="50" matInput readonly appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{'middle_name' | translate:translateKey}}" formControlName="middleName">
+        <control-messages [control]="basicFormGroup.get('middleName')"></control-messages>
+    </mat-form-field>
+    
+    <mat-form-field class="col-md-4" [hidden]="!basicFormGroup.get('lastName').value">
+        <input maxlength="50" matInput  readonly placeholder="{{'last_name' | translate:translateKey}}" formControlName="lastName" required>
+        <control-messages [control]="basicFormGroup.get('lastName')"></control-messages>
+    </mat-form-field>
+
+    <mat-form-field class="col-md-4" [hidden]="!basicFormGroup.get('aadhaarNo').value">
+        <input matInput readonly OnlyNumber maxlength="12" minlength="12" placeholder="{{'aadhar_number' | translate:translateKey}}" formControlName="aadhaarNo">
+        <control-messages [control]="basicFormGroup.get('aadhaarNo')"></control-messages>
+    </mat-form-field>
+
+    <mat-form-field class="col-md-4" [hidden]="!basicFormGroup.get('contactNo').value">
+        <span matPrefix>+91 &nbsp;</span>
+        <input matInput readonly OnlyNumber placeholder="{{'applicant_mobile' | translate:translateKey}}" type="tel" maxlength="10" minlength="10"
+        formControlName="contactNo" required>
+        <control-messages [control]="basicFormGroup.get('contactNo')"></control-messages>
+    </mat-form-field>
+
+    <mat-form-field class="col-md-4" [hidden]="!basicFormGroup.get('email').value">
+        <input matInput readonly appPreventSpace placeholder="{{'applicant_email' | translate:translateKey}}" type="email" formControlName="email" required>
+        <control-messages [control]="basicFormGroup.get('email')"></control-messages>
+    </mat-form-field>
+</div>

@@ -1,0 +1,437 @@
+<app-title-bar [title]="'screen_title' | translate: translateKey">
+	<button class="pull-right" mat-stroked-button type="button" (click)="patchValue()">
+		Patch Value
+	</button>
+</app-title-bar>
+<mat-card class="formClass cardBorder">
+	<form [formGroup]="animalPondNewForm">
+
+		<mat-tab-group [(selectedIndex)]="tabIndex" dynamicHeight="true" mat-stretch-tabs class="stepperNav">
+
+			<!-- step 1 Starts -->
+			<mat-tab>
+				<ng-template mat-tab-label>
+					<div>{{'license_holder_detail' | translate:translateKey}}</div>
+				</ng-template>
+
+				<div class="row">
+					<div class="col-md-2 ngSelect" formGroupName="personType">
+						<ng-select placeholder="{{'person_type' | translate:translateKey}} *" formControlName="code">
+							<ng-option *ngFor="let type of PERSON_TYPE" [value]="type.code">{{type.name}}</ng-option>
+						</ng-select>
+						<control-messages [control]="animalPondNewForm.get('personType').get('code')">
+						</control-messages>
+					</div>
+					<mat-form-field class="col-md-2">
+						<input matInput type="text" required maxlength="30" appValidationFields
+							validationFieldsType='onlyNameWithOutSpace'
+							placeholder="{{'holder_firstname' | translate:translateKey}}"
+							formControlName="holderFirstName" appGujInputSource targetElement="holderFirstNameGuj"
+							[form]="animalPondNewForm">
+						<control-messages [control]="animalPondNewForm.get('holderFirstName')"></control-messages>
+					</mat-form-field>
+					<mat-form-field class="col-md-4">
+						<input matInput type="text" required maxlength="30" appValidationFields
+							validationFieldsType='onlyNameWithOutSpace'
+							placeholder="{{'holder_middlename' | translate:translateKey}}"
+							formControlName="holderMiddleName" appGujInputSource targetElement="holderMiddleNameGuj"
+							[form]="animalPondNewForm">
+						<control-messages [control]="animalPondNewForm.get('holderMiddleName')"></control-messages>
+					</mat-form-field>
+					<mat-form-field class="col-md-4">
+						<input matInput type="text" required maxlength="30" appValidationFields
+							validationFieldsType='onlyNameWithOutSpace'
+							placeholder="{{'holder_lastname' | translate:translateKey}}"
+							formControlName="holderLastName" appGujInputSource targetElement="holderLastNameGuj"
+							[form]="animalPondNewForm">
+						<control-messages [control]="animalPondNewForm.get('holderLastName')"></control-messages>
+					</mat-form-field>
+				</div>
+
+				<!-- gujarati -->
+				<div class="row">
+					<!-- <mat-form-field class="col-md-2">
+						<input matInput type="text" maxlength="90"	appGujInputTarget [form]="animalPondNewForm"
+							placeholder="{{ 'person_type' | translate:translateKey:'gu' }}">
+					</mat-form-field> -->
+					<mat-form-field class="col-md-2">
+						<input matInput type="text" maxlength="90" required formControlName="holderFirstNameGuj"
+							appGujInputTarget [form]="animalPondNewForm"
+							placeholder="{{ 'holder_firstname' | translate:translateKey:'gu' }}">
+						<control-messages [control]="animalPondNewForm.get('holderFirstNameGuj')"></control-messages>
+					</mat-form-field>
+					<mat-form-field class="col-md-4">
+						<input matInput type="text" required maxlength="90"
+							placeholder="{{'holder_middlename' | translate:translateKey:'gu'}}"
+							formControlName="holderMiddleNameGuj" appGujInputTarget [form]="animalPondNewForm">
+						<control-messages [control]="animalPondNewForm.get('holderMiddleNameGuj')"></control-messages>
+					</mat-form-field>
+					<mat-form-field class="col-md-4">
+						<input matInput type="text" required maxlength="90"
+							placeholder="{{'holder_lastname' | translate:translateKey:'gu'}}"
+							formControlName="holderLastNameGuj" appGujInputTarget [form]="animalPondNewForm">
+						<control-messages [control]="animalPondNewForm.get('holderLastNameGuj')"></control-messages>
+					</mat-form-field>
+				</div>
+				<!-- /gujarati -->
+
+				<div class="row">
+					<h2>{{'permanat_address' | translate:translateKey}}</h2>
+					<app-address [isDisplayGujFields]="true" #permanantAddressEstablishment [requiredFeilds]="true"
+						[addressFormGroup]="animalPondNewForm.get('permanantAddress')"></app-address>
+				</div>
+				<div class="row">
+					<h2>{{'temp_address' | translate:translateKey}}</h2>
+					<app-address [isDisplayGujFields]="true" #permanantAddressEstablishment [requiredFeilds]="true"
+						[addressFormGroup]="animalPondNewForm.get('temporaryAddress')"></app-address>
+				</div>
+
+				<mat-form-field class="col-md-4">
+					<input matInput OnlyNumber maxlength="10" formControlName="holderTelephoneNo"
+						placeholder="{{'holder_telephone_no' | translate:translateKey}}">
+					<control-messages [control]="animalPondNewForm.get('holderTelephoneNo')"></control-messages>
+				</mat-form-field>
+				<mat-form-field class="col-md-4">
+					<input matInput OnlyNumber required maxlength="10" formControlName="holderMobileNo"
+						placeholder="{{'holder_mobile_no' | translate:translateKey}}">
+					<control-messages [control]="animalPondNewForm.get('holderMobileNo')"></control-messages>
+				</mat-form-field>
+				<mat-form-field class="col-md-4">
+					<input matInput OnlyNumber maxlength="12" formControlName="holderFaxNo"
+						placeholder="{{'holder_fax_no' | translate:translateKey}}">
+					<control-messages [control]="animalPondNewForm.get('holderFaxNo')"></control-messages>
+				</mat-form-field>
+				<mat-form-field class="col-md-4">
+					<input matInput OnlyNumber maxlength="12" required formControlName="holderAadharNo"
+						placeholder="{{'holder_aadhar_no' | translate:translateKey}}">
+					<control-messages [control]="animalPondNewForm.get('holderAadharNo')"></control-messages>
+				</mat-form-field>
+				<mat-form-field class="col-md-4">
+					<input matInput upperCase appAlphaNumeric maxlength="10" required formControlName="holderPanNo"
+						placeholder="{{'holder_pan_no' | translate:translateKey}}">
+					<control-messages [control]="animalPondNewForm.get('holderPanNo')"></control-messages>
+				</mat-form-field>
+
+				<app-action-bar [form]="animalPondNewForm" (tabIndex)="onTabChange($event)"
+					[stepInfo]="{step: 'step1', next: 1, back: 0}"></app-action-bar>
+			</mat-tab>
+			<!-- step 1 Ends -->
+
+			<!-- step 2 Starts -->
+			<mat-tab>
+				<ng-template mat-tab-label>
+					<div>{{'business_detail' | translate:translateKey}}</div>
+				</ng-template>
+				<div class="row">
+					<div class="col-md-4 ngSelect" formGroupName="zoneNo">
+						<ng-select placeholder="{{'business_under_zone' | translate:translateKey}} *"
+							formControlName="code"
+							(change)="onChangeZone($event);animalPondNewForm.get('wardNo').reset();animalPondNewForm.get('blockNo').reset()">
+							<ng-option *ngFor="let zone of FIRM_ZONE" [value]="zone.code">{{zone.name}}</ng-option>
+						</ng-select>
+						<control-messages [control]="animalPondNewForm.get('zoneNo').get('code')"></control-messages>
+					</div>
+					<div class="col-md-4 ngSelect" formGroupName="wardNo">
+						<ng-select placeholder="{{'ward_no' | translate:translateKey}} *" formControlName="code"
+							(change)="onChangeWard($event);animalPondNewForm.get('blockNo').reset()">
+							<ng-option *ngFor="let ward of WARD" [value]="ward.code">{{ward.name}}</ng-option>
+						</ng-select>
+						<control-messages [control]="animalPondNewForm.get('wardNo').get('code')"></control-messages>
+					</div>
+					<div class="col-md-4 ngSelect" formGroupName="blockNo">
+						<ng-select placeholder="{{'block_no' | translate:translateKey}} *" formControlName="code">
+							<ng-option *ngFor="let block of BLOCK" [value]="block.code">{{block.name}}</ng-option>
+						</ng-select>
+						<control-messages [control]="animalPondNewForm.get('blockNo').get('code')"></control-messages>
+					</div>
+				</div>
+				<div class="row">
+					<h2>{{'business_address' | translate:translateKey}}</h2>
+					<app-address [isDisplayGujFields]="true" #temporaryAddressEstablishment [requiredFeilds]="true"
+						[addressFormGroup]="animalPondNewForm.get('businessAddress')"></app-address>
+				</div>
+
+				<div class="row">
+					<!-- <h2>{{'category_label' | translate:translateKey}}</h2> -->
+					<mat-form-field class="col-md-4">
+						<input matInput type="text" required maxlength="500"
+							placeholder="{{'extra_details_of_business' | translate:translateKey}}"
+							formControlName="extraDetailsOfBusiness">
+						<control-messages [control]="animalPondNewForm.get('extraDetailsOfBusiness')">
+						</control-messages>
+					</mat-form-field>
+					<div class="col-md-4 ngSelect" formGroupName="relationshipId">
+						<ng-select placeholder="{{'relationship_id' | translate:translateKey}} *" formControlName="code"
+							(change)="onChangeRelationWithOrg()">
+							<ng-option *ngFor="let id of MF_RELATIONSHIP_OF_APPLICANT" [value]="id.code">{{id.name}}
+							</ng-option>
+						</ng-select>
+						<control-messages [control]="animalPondNewForm.get('relationshipId').get('code')">
+						</control-messages>
+					</div>
+
+					<div class="col-md-4 ngSelect" formGroupName="statusOfBusinessId">
+						<ng-select placeholder="{{'business_status_id' | translate:translateKey}} *"
+							formControlName="code">
+							<ng-option *ngFor="let statusId of MF_STATUS_OF_BUSINESS" [value]="statusId.code">
+								{{statusId.name}}</ng-option>
+						</ng-select>
+						<control-messages [control]="animalPondNewForm.get('statusOfBusinessId').get('code')">
+						</control-messages>
+					</div>
+				</div>
+
+				<!-- table -->
+				<div class="row">
+					<div class="col-md-10">
+						<h2 *ngIf="animalPondNewForm.get('relationshipId').value.code != 'PROPRIETOR'">{{ 'if_apl_is_in_properitership'|
+							translate:translateKey}}</h2>
+						<h2 *ngIf="animalPondNewForm.get('relationshipId').value.code === 'PROPRIETOR'">{{ 'if_apl_is_in_partnership' |
+							translate:translateKey}}</h2>
+					</div>
+					<div class="col-md-2 pt-3 text-right">
+						<button type="button"
+							[disabled]="animalPondNewForm.get('relationshipId').value.code ? animalPondNewForm.get('relationshipId').value.code=='PROPRIETOR' ? !(animalPondNewForm.get('relationshipList')['controls'].length < 1) : !(animalPondNewForm.get('relationshipList')['controls'].length < 10) : true"
+							matTooltip="{{'add_more' | translate:translateKey}}" mat-raised-button color="primary"
+							(click)="addMorePerson('APL_PERSON')">{{'add'|
+							translate:translateKey}}</button>
+					</div>
+				</div>
+
+				<div *ngIf="animalPondNewForm.get('relationshipList')['controls'].length">
+					<div>
+						<table class="table table-striped mb-0 responsiveTableRow">
+							<thead>
+								<tr class="mo-d-none">
+									<th *ngIf="animalPondNewForm.get('canEdit').value">SR No.</th>
+									<th>{{'name' | translate:translateKey}}</th>
+									<th>{{'address' | translate:translateKey}}</th>
+									<th>{{'mobile_no' | translate:translateKey}}</th>
+									<th *ngIf="animalPondNewForm.get('canEdit').value"></th>
+								</tr>
+							</thead>
+
+							<tbody formArrayName="relationshipList">
+								<tr *ngFor="let item of animalPondNewForm.get('relationshipList')['controls']; let indx = index;"
+									[formGroupName]="indx">
+
+									<td>
+										<div class="d-md-none">#</div>
+										{{indx+1}}
+									</td>
+
+									<td>
+										<!-- <div class="d-md-none">{{'name' | translate:translateKey}}</div> -->
+										<div *ngIf="!item.isEditMode">{{item.get('name').value}}</div>
+										<mat-form-field *ngIf="item.isEditMode">
+											<input matInput maxlength="100" appValidationFields
+												[validationFieldsType]="'onlyNameWithSpace'" formControlName="name"
+												placeholder="{{'name' | translate:translateKey}}" required>
+											<control-messages [control]="item.get('name')"></control-messages>
+										</mat-form-field>
+									</td>
+
+									<td>
+										<!-- <div class="d-md-none">{{'address' | translate:translateKey}}</div> -->
+										<div *ngIf="!item.isEditMode">{{item.get('address').value}}</div>
+										<mat-form-field *ngIf="item.isEditMode">
+											<input matInput maxlength="150" formControlName="address"
+												placeholder="{{'address' | translate:translateKey}}" required>
+											<control-messages [control]="item.get('address')">
+											</control-messages>
+										</mat-form-field>
+									</td>
+
+									<td>
+										<!-- <div class="d-md-none">{{'mobile_no' | translate:translateKey}}</div> -->
+										<div *ngIf="!item.isEditMode">{{item.get('mobileNo').value}} &nbsp;
+										</div>
+										<mat-form-field *ngIf="item.isEditMode">
+											<input matInput maxlength="10" OnlyNumber formControlName="mobileNo"
+												placeholder="{{'mobile_no' | translate:translateKey}}" required>
+											<control-messages [control]="item.get('mobileNo')">
+											</control-messages>
+										</mat-form-field>
+									</td>
+									<td>
+										<span *ngIf="animalPondNewForm.get('canEdit').value" class="float-left">
+											<button mat-icon-button color="primary" *ngIf="!item.isEditMode"
+												(click)="editRecord(item)">
+												<mat-icon title="Edit">edit</mat-icon>
+											</button>
+											<button type="submit" [disabled]="item.invalid" *ngIf="item.isEditMode"
+												(click)="saveRecord(item)" mat-icon-button color="primary">
+												<mat-icon title="save">save</mat-icon>
+											</button>
+										</span>
+										<span *ngIf="animalPondNewForm.get('canEdit').value">
+											<button mat-icon-button color="warn" *ngIf="!item.isEditMode"
+												(click)="deleteRecord(indx,'relationshipList')">
+												<mat-icon title="Delete">delete</mat-icon>
+											</button>
+											<button mat-icon-button color="warn" *ngIf="item.isEditMode"
+												(click)="cancelRecord(item,indx,'relationshipList')">
+												<mat-icon title="Delete">cancel</mat-icon>
+											</button>
+										</span>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<!-- end table -->
+				<app-action-bar [form]="animalPondNewForm" (tabIndex)="onTabChange($event)"
+					[stepInfo]="{step: 'step2', next: 2, back: 0}"></app-action-bar>
+			</mat-tab>
+			<!-- step 2 Ends -->
+
+			<!-- step 3 start -->
+			<mat-tab>
+				<ng-template mat-tab-label>
+					<div>{{'insert_animal_detail' | translate:translateKey}}</div>
+				</ng-template>
+
+				<!-- table -->
+				<!-- <div class="row justify-content-between">
+					<div class="col-md-10"> </div>
+					<div class="col-md-2 pt-3 text-right">
+						<button type="button" (click)="addMoreAnimal()" [disabled]="animalPondNewForm.get('animalDetails')['controls'].length >= ANIMAL_TYPE.length"
+						 matTooltip="{{'add_more' | translate:translateKey}}" mat-raised-button color="primary">{{'add'|
+							translate:translateKey}}</button>
+					</div>
+				</div> -->
+
+				<div class="row  pb-3">
+					<div class="col-md-10">
+						<h2>{{ 'insert_animal_detail' | translate:translateKey}}</h2>
+					</div>
+					<div class="col-md-2 pt-3" style="text-align: right;">
+						<button type="button" (click)="addMoreAnimal()"
+							[disabled]="animalPondNewForm.get('animalDetails')['controls'].length >= ANIMAL_TYPE.length"
+							matTooltip="{{'add_more' | translate:translateKey}}" mat-raised-button color="primary">{{'add'|
+							   translate:translateKey}}</button>
+					</div>
+				</div>
+
+				<div *ngIf="animalPondNewForm.get('animalDetails')['controls'].length">
+					<div class="table-responsive">
+						<table class="table table-striped mb-0 responsiveTableRow">
+							<thead>
+								<tr class="mo-d-none">
+									<th>SR No.</th>
+									<th>{{'animal_type' | translate:translateKey}}</th>
+									<th>{{'animal_count' | translate:translateKey}}</th>
+									<th colspan="2" *ngIf="animalPondNewForm.get('canEdit').value"></th>
+								</tr>
+							</thead>
+
+							<tbody formArrayName="animalDetails">
+								<tr *ngFor="let item of animalPondNewForm.get('animalDetails')['controls']; let indx = index;"
+									[formGroupName]="indx">
+
+									<td>
+										<div class="d-md-none">#</div>
+										{{indx+1}}
+									</td>
+
+									<td>
+										<!-- <div class="d-md-none">{{'animal_type' | translate:translateKey}}</div> -->
+										<div *ngIf="!item.isEditMode">
+											{{getSelectedDataFromLookUps(ANIMAL_TYPE,item.get('animalType').get('code').value)?.name}}
+										</div>
+										<div class="ngSelect maxWidthAuto" *ngIf="item.isEditMode"
+											formGroupName="animalType">
+											<ng-select placeholder="{{'animal_type' | translate:translateKey}} *"
+												formControlName="code" (ngModelChange)="getSelectedAnimal()" required>
+												<ng-container *ngFor="let type of ANIMAL_TYPE">
+													<ng-option *ngIf="!type.selected" [value]="type.code">{{type.name}}
+													</ng-option>
+												</ng-container>
+											</ng-select>
+											<control-messages [control]="item.get('animalType').get('code')">
+											</control-messages>
+										</div>
+									</td>
+
+									<td>
+										<!-- <div class="d-md-none">{{'animal_count' | translate:translateKey}}</div> -->
+										<div *ngIf="!item.isEditMode">{{item.get('animalCount').value}}</div>
+										<mat-form-field *ngIf="item.isEditMode">
+											<input matInput maxlength="3" OnlyNumber
+												placeholder="{{'animal_count' | translate:translateKey}} *"
+												formControlName="animalCount">
+											<control-messages [control]="item.get('animalCount')"></control-messages>
+										</mat-form-field>
+									</td>
+									<td style="width: 40px;" *ngIf="animalPondNewForm.get('canEdit').value">
+
+										<button mat-icon-button color="primary" *ngIf="!item.isEditMode"
+											(click)="editRecord(item)">
+											<mat-icon title="Edit">edit</mat-icon>
+										</button>
+										<button type="submit" [disabled]="item.invalid" *ngIf="item.isEditMode"
+											(click)="saveRecord(item)" mat-icon-button color="primary">
+											<mat-icon title="save">save</mat-icon>
+										</button>
+									</td>
+									<td style="width: 40px;" *ngIf="animalPondNewForm.get('canEdit').value">
+										<button mat-icon-button color="warn" *ngIf="!item.isEditMode"
+											(click)="deleteRecord(indx,'animalDetails')">
+											<mat-icon title="Delete">delete</mat-icon>
+										</button>
+										<button mat-icon-button color="warn" *ngIf="item.isEditMode"
+											(click)="cancelRecord(item,indx,'animalDetails')">
+											<mat-icon title="Delete">cancel</mat-icon>
+										</button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="col-md-12 text-right pt-4">
+					<strong> {{'total_animal' | translate:translateKey}} : {{getTotalAnimal()}}</strong>
+				</div>
+				<!-- <div class="row">
+						<div class="col-md-2">
+							<mat-form-field>
+								<input matInput maxlength="3" readonly placeholder="{{'total_animal' | translate:translateKey}}" OnlyNumber
+								 value="{{getTotalAnimal()}}" formControlName="totalAnimal"> </mat-form-field>
+						</div>
+					</div> -->
+				<!-- end table -->
+				<app-action-bar [form]="animalPondNewForm" (tabIndex)="onTabChange($event)"
+					[stepInfo]="{step: 'step3', next: 3, back: 1}"></app-action-bar>
+			</mat-tab>
+			<!-- step 3 end -->
+
+			<!-- step 4 Attachment Starts -->
+			<mat-tab>
+				<ng-template mat-tab-label>
+					<div>{{'attachment' | translate: translateKey}}</div>
+				</ng-template>
+
+				<div class="row">
+					<div class="col-md-4"
+						*ngFor="let doc of animalPondNewForm.get('serviceDetail').get('serviceUploadDocuments').value">
+						<div *ngIf="doc.requiredOnCitizenPortal && doc.isActive && showButtons">
+							<label>{{TranslateService.getCurrentLanguage()=='en'? doc.documentLabelEn : doc.documentLabelGuj }}
+								<span *ngIf="doc.mandatory">*</span></label>
+							<file-upload [form]="animalPondNewForm" [uploadModel]="doc"></file-upload>
+						</div>
+					</div>
+				</div>
+
+				<app-action-bar [paymentGateway]="paymentGateway" [uploadFiles]="uploadFilesArray"
+					[form]="animalPondNewForm" (handleErrors)="handleErrorsOnSubmit($event)"
+					(tabIndex)="onTabChange($event) " [stepInfo]="{step: 'final', next:4, back:2} "></app-action-bar>
+
+			</mat-tab>
+			<!-- step Attachment Ends -->
+			<select-payment-gateway #paymentGateway></select-payment-gateway>
+		</mat-tab-group>
+	</form>
+
+	<!-- {{ animalPondNewForm.value | json }} -->
+</mat-card>

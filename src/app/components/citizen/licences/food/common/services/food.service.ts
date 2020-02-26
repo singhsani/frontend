@@ -1,0 +1,22 @@
+import { Injectable } from '@angular/core';
+import { HttpService } from '../../../../../../shared/services/http.service';
+
+@Injectable({
+	providedIn: 'root'
+})
+export class FoodService {
+	requestURL: string;
+
+	/**
+	 * Constructor to declare defualt propeties of class.
+	 * @param http - Declare Http Service property.
+	 */
+	constructor(private http: HttpService) { }
+
+
+	searchLicence(licenceNumber) {
+		// 	this.requestURL = `api/form/foodLicence/search`;
+		//   	return this.http.post(this.requestURL,licenceNumber);
+		return this.http.get(`api/form/foodLicence/search/${licenceNumber}`);
+	}
+}

@@ -1,0 +1,91 @@
+<mat-card>
+    <div class="row">
+        <div class="col-md-12">
+            <table mat-table #table [dataSource]="dataSource">
+                <ng-container matColumnDef="documentTypeLookupName">
+                    <th mat-header-cell *matHeaderCellDef> Document Type </th>
+                    <td mat-cell *matCellDef="let row">
+                        <label *ngIf="!row.editing">{{row.currentData.documentTypeLookupName}}</label>
+                        <div class="ngSelect" *ngIf="row.editing">
+                            <ng-select required placeholder="Document Type *" [items]="documentTypeList"
+                                bindValue="itemId" bindLabel="itemName"
+                                [formControl]="row.validator.controls['documentTypeLookupId']"
+                                [(ngModel)]="row.currentData.documentTypeLookupId">
+                            </ng-select>
+                            <mat-error
+                                *ngIf="row.validator.controls['documentTypeLookupId'].invalid && row.validator.controls['documentTypeLookupId'].touched">
+                                *Document Type is required.</mat-error>
+                        </div>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="documentNo">
+                    <th mat-header-cell *matHeaderCellDef> Document No</th>
+                    <td mat-cell *matCellDef="let row">
+                        <label *ngIf="!row.editing">{{row.currentData.documentNo}}</label>
+                        <mat-form-field *ngIf="row.editing">
+                            <input trim="blur" type="text" maxlength="50" required matInput
+                                [formControl]="row.validator.controls['documentNo']" placeholder="Document No"
+                                [(ngModel)]="row.currentData.documentNo">
+                            <mat-error
+                                *ngIf="row.validator.controls['documentNo'].invalid && row.validator.controls['documentNo'].touched">
+                                *Document No is required.</mat-error>
+                        </mat-form-field>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="documentDate">
+                    <th mat-header-cell *matHeaderCellDef> Document Date </th>
+                    <td mat-cell *matCellDef="let row">
+                        <label *ngIf="!row.editing">{{row.currentData.documentDate | date: dateFormat}}</label>
+                        <mat-form-field *ngIf="row.editing" class="full-width-input">
+                            <input required matInput [max]="maxDate" [matDatepicker]="DocumentDate"
+                                [formControl]="row.validator.controls['documentDate']"
+                                [(ngModel)]="row.currentData.documentDate" placeholder="Document Date"
+                                name="documentDate" length="10" mask-date>
+                            <mat-datepicker-toggle matSuffix [for]="DocumentDate"></mat-datepicker-toggle>
+                            <mat-datepicker #DocumentDate disabled="false"></mat-datepicker>
+                            <mat-error
+                                *ngIf="row.validator.controls['documentDate'].invalid && row.validator.controls['documentDate'].touched">
+                                *Document Date is invalid.</mat-error>
+                        </mat-form-field>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="actionsColumn">
+                    <th mat-header-cell *matHeaderCellDef>
+                        <button mat-raised-button color="primary" type="button" (click)="dataSource.createNew()"
+                            class="float-left">
+                            <mat-icon>add_circle_outline</mat-icon> Add New
+                        </button>
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                        <button *ngIf="!row.editing" type="button" mat-icon-button color="primary" focusable="false"
+                            (click)="row.startEdit()">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                        <button *ngIf="row.editing" type="button" mat-icon-button color="primary" focusable="false"
+                            (click)="save(row)">
+                            <mat-icon>check</mat-icon>
+                        </button>
+                        <button *ngIf="row.editing" type="button" mat-icon-button color="warn" focusable="false"
+                            (click)="row.cancelOrDelete()">
+                            <mat-icon>clear</mat-icon>
+                        </button>
+                        <button mat-button *ngIf="!row.editing" title="Delete" class="btn-width-auto" color="warn"
+                            (click)="deleteDocument(row)">
+                            <mat-icon>delete_forever</mat-icon>
+                        </button>
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+        </div>
+    </div>
+    <div class="button-row text-right mt-3">
+        <button mat-raised-button class="ml-3" color="primary" type="button" (click)="onBack()">
+            <mat-icon>skip_previous</mat-icon>Back
+        </button>
+        <button mat-raised-button class="ml-3" color="primary" type="button" (click)="onNext()">
+            Next<mat-icon>skip_next</mat-icon>
+        </button>
+    </div>
+</mat-card>

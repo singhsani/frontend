@@ -1,0 +1,52 @@
+<div [formGroup]="form" class="row">
+
+  <div class="col-md-4 ngSelect">
+    <ng-select placeholder="Payment Mode *" formControlName="paymentMode" (change)="onPayModeChange()">
+      <ng-option *ngFor="let payMode of payModeArray" [value]="payMode.code">
+        {{payMode.name}}
+      </ng-option>
+    </ng-select>
+    <control-messages [control]="form.controls.paymentMode"></control-messages>
+  </div>
+
+  <!-- If paymentMode is cheque-->
+  <div class="col-md-12" *ngIf="form.get('paymentMode').value == 'CHEQUE'">
+    <mat-card class="cardH1">
+      <h1>DD Banker Details</h1>
+    </mat-card>
+    <div class="row">
+
+      <div class="col-md-4 ngSelect" formGroupName="bank">
+        <ng-select placeholder="Bank Name *" formControlName="code">
+          <ng-option *ngFor="let bankObj of bankNameArray" [value]="bankObj.code">{{bankObj.name}}</ng-option>
+        </ng-select>
+        <control-messages [control]="form.controls.bank.controls.code"></control-messages>
+      </div>
+
+      <mat-form-field class="col-md-4">
+        <input matInput placeholder="Branch Name" formControlName="branchName" required>
+        <control-messages [control]="form.controls.branchName"></control-messages>
+      </mat-form-field>
+
+      <mat-form-field class="col-md-4">
+        <input matInput placeholder="Account Number" formControlName="bankAccountNo" required>
+        <control-messages [control]="form.controls.bankAccountNo"></control-messages>
+      </mat-form-field>
+
+      <mat-form-field class="col-md-4">
+        <input matInput OnlyNumber maxlength="10" placeholder="Cheque/DD Number" formControlName="chequeNo" required>
+        <control-messages [control]="form.controls.chequeNo"></control-messages>
+      </mat-form-field>
+
+      <mat-form-field class="col-md-4">
+        <input matInput autocomplete="off" appDate [max]="maxDate" required formControlName="chequeDate"
+          [matDatepicker]="picker" (dateChange)="onDateChange('chequeDate', $event.value)" placeholder="Cheque/DD Date (DD/MM/YYYY)">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker touchUi="true" #picker></mat-datepicker>
+        <control-messages [control]="form.controls.chequeDate"></control-messages>
+      </mat-form-field>
+
+    </div>
+  </div>
+
+</div>

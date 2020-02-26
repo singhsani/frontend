@@ -1,0 +1,298 @@
+<app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
+
+
+
+<mat-card [hidden]="searchRenewalFireNOCObj.isDisplayRenewFireNOCForm" class="mt-4 formClass">
+	<mat-form-field class="col-md-10">
+		<input matInput required placeholder="{{'search_by_application_no' | translate:translateKey}}" [(ngModel)]="searchRenewalFireNOCObj.searchRenewalFireNOCNumber">
+	</mat-form-field>
+	<button class="col-md-2" [disabled]="!searchRenewalFireNOCObj.searchRenewalFireNOCNumber" mat-raised-button color="primary"
+	 (click)="searchRenewalFireNOC()">{{'search'
+		| translate:translateKey}}</button>
+</mat-card>
+
+
+<form [formGroup]="renewalFireNocForm" [hidden]="!searchRenewalFireNOCObj.isDisplayRenewFireNOCForm">
+
+	<mat-card class="formClass cardBorder">
+
+		<mat-tab-group [(selectedIndex)]="fireFacilityConfig.currentTabIndex" dynamicHeight="true" mat-stretch-tabs class="stepperNav">
+
+			<!-- step 1 Starts -->
+			<mat-tab>
+				<ng-template mat-tab-label>
+					<div>{{'applicant_detail' | translate:translateKey}}</div>
+				</ng-template>
+
+				<div class="row">
+					<mat-form-field class="col-md-4">
+						<input matInput readonly placeholder="{{'final_noc_number' | translate:translateKey}}" formControlName="finalFireNocNumber"
+						 required>
+					</mat-form-field>
+					<mat-form-field class="col-md-4" *ngIf="renewalFireNocForm.get('oldReferenceNumber').value">
+						<input matInput readonly placeholder="{{'old_refrance_number' | translate:translateKey}}" formControlName="oldReferenceNumber">
+					</mat-form-field>
+				</div>
+				<div class="row">
+
+					<mat-form-field class="col-md-4">
+						<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace' required maxlength="100"
+						 placeholder="{{'applicant_Name' | translate:translateKey}}" formControlName="applicantName" appGujInputSource
+						 targetElement="applicantNameGuj" [form]="renewalFireNocForm">
+						<control-messages [control]="renewalFireNocForm.get('applicantName')"></control-messages>
+					</mat-form-field>
+					<!-- gujarati -->
+					<mat-form-field class="col-md-4">
+						<input matInput type="text" maxlength="300" required formControlName="applicantNameGuj" appGujInputTarget [form]="renewalFireNocForm"
+						 placeholder="{{ 'applicant_Name' | translate:translateKey:'gu' }}">
+						<control-messages [control]="renewalFireNocForm.get('applicantNameGuj')"></control-messages>
+					</mat-form-field>
+					<!-- gujarati -->
+
+					<mat-form-field class="col-md-4">
+						<input matInput formControlName="applicationDate" readonly placeholder="{{ 'application_Date' | translate:translateKey }}">
+						<div align="end" class="default-show-hint mat-hint mat-right">{{fireFacilityConfig.DATE_HINT_MSG}}</div>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<!-- <span matPrefix>+91 &nbsp;</span> -->
+						<input matInput OnlyNumber placeholder="{{'applicant_contactNo' | translate:translateKey}}" type="tel"
+						 [maxlength]="fireFacilityConfig.contactNumberLength" formControlName="contactNo" required>
+						<control-messages [control]="renewalFireNocForm.get('contactNo')"></control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<!-- <span matPrefix>+91 &nbsp;</span> -->
+						<input matInput OnlyNumber placeholder="{{'office_contact_no' | translate:translateKey}}" type="tel" [maxlength]="fireFacilityConfig.contactNumberLength"
+						 formControlName="officeContactNo" required>
+						<control-messages [control]="renewalFireNocForm.get('officeContactNo')"></control-messages>
+					</mat-form-field>
+
+
+					<mat-form-field class="col-md-4">
+						<!-- <span matPrefix>+91 &nbsp;</span> -->
+						<input matInput OnlyNumber placeholder="{{'onsite_person_mobile_no' | translate:translateKey}}" type="tel"
+						 [maxlength]="fireFacilityConfig.mobileNumber_maxLength" [minlength]="fireFacilityConfig.mobileNumber_minLength"
+						 formControlName="onsitePersonMobileNo" required>
+						<control-messages [control]="renewalFireNocForm.get('onsitePersonMobileNo')"></control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<textarea matInput rows="3" cols="50" required maxlength="150" placeholder="{{'applicant_permanent_address' | translate:translateKey}}"
+						 formControlName="applicantPermanentAddress" appGujInputSource targetElement="applicantPermanentAddressGuj"
+						 [form]="renewalFireNocForm"></textarea>
+						<control-messages [control]="renewalFireNocForm.get('applicantPermanentAddress')"></control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<textarea matInput rows="3" cols="50" maxlength="450" type="text" required formControlName="applicantPermanentAddressGuj"
+						 appGujInputTarget [form]="renewalFireNocForm" placeholder="{{ 'applicant_permanent_address' | translate:translateKey:'gu' }}"></textarea>
+						<control-messages [control]="renewalFireNocForm.get('applicantPermanentAddressGuj')"></control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<input matInput appPreventSpace placeholder="{{'office_email_id' | translate:translateKey}}" type="email"
+						 formControlName="officeEmailId" required maxlength="50">
+						<control-messages [control]="renewalFireNocForm.get('officeEmailId')"></control-messages>
+					</mat-form-field>
+				</div>
+				<app-action-bar [form]="renewalFireNocForm" (tabIndex)="fireFacilityConfig.onFormTabChange($event)"
+				 (handleOnSaveAndNext)="handleOnSaveAndNext($event)" [stepInfo]="{step: 'step1', next: 1, back: 0}"></app-action-bar>
+			</mat-tab>
+			<!-- step 1 Ends -->
+
+
+
+			<!-- step 2 Starts -->
+			<mat-tab>
+				<ng-template mat-tab-label>
+					<div>{{'architect_detail' | translate:translateKey}}</div>
+				</ng-template>
+				<div class="row">
+
+					<mat-form-field class="col-md-4">
+						<input matInput type="text" appAlphaNumeric formControlName="architectRegistrationNumber" placeholder="{{'architect_regi_no' | translate: translateKey }} *"
+						 maxlength="15">
+						<control-messages [control]="renewalFireNocForm.get('architectRegistrationNumber')"></control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<input matInput required appAlphaNumeric maxlength="15" type="text" formControlName="fireVendorRegistrationNumber"
+						 placeholder="{{'fire_vendor_registration_no' | translate:translateKey }}">
+						<control-messages [control]="renewalFireNocForm.get('fireVendorRegistrationNumber')"></control-messages>
+					</mat-form-field>
+
+				</div>
+				<div class="row">
+					<mat-form-field class="col-md-4">
+						<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace' required maxlength="100"
+						 placeholder="{{'architect_name' | translate:translateKey}}" formControlName="architectName" appGujInputSource
+						 targetElement="architectNameGuj" [form]="renewalFireNocForm">
+						<control-messages [control]="renewalFireNocForm.get('architectName')"></control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace' required maxlength="50"
+						 placeholder="{{'architect_firm_name' | translate:translateKey}}" formControlName="architectFirmName"
+						 appGujInputSource targetElement="architectFirmNameGuj" [form]="renewalFireNocForm">
+						<control-messages [control]="renewalFireNocForm.get('architectFirmName')"></control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<textarea matInput rows="3" cols="50" required maxlength="300" placeholder="{{'architect_permanent_address' | translate:translateKey}}"
+						 formControlName="architectPermanentAddress" appGujInputSource targetElement="architectPermanentAddressGuj"
+						 [form]="renewalFireNocForm"></textarea>
+						<control-messages [control]="renewalFireNocForm.get('architectPermanentAddress')"></control-messages>
+					</mat-form-field>
+
+					<!-- gujarati -->
+					<mat-form-field class="col-md-4">
+						<input matInput type="text" maxlength="300" required formControlName="architectNameGuj" appGujInputTarget [form]="renewalFireNocForm"
+						 placeholder="{{ 'architect_name' | translate:translateKey:'gu' }}">
+						<control-messages [control]="renewalFireNocForm.get('architectNameGuj')"></control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<input matInput type="text" maxlength="150" required formControlName="architectFirmNameGuj" appGujInputTarget
+						 [form]="renewalFireNocForm" placeholder="{{ 'architect_firm_name' | translate:translateKey:'gu' }}">
+						<control-messages [control]="renewalFireNocForm.get('architectFirmNameGuj')"></control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<textarea matInput rows="3" cols="50" maxlength="900" type="text" required formControlName="architectPermanentAddressGuj"
+						 appGujInputTarget [form]="renewalFireNocForm" placeholder="{{ 'architect_permanent_address' | translate:translateKey:'gu' }}"></textarea>
+						<control-messages [control]="renewalFireNocForm.get('architectPermanentAddressGuj')"></control-messages>
+					</mat-form-field>
+					<!-- /gujarati -->
+				</div>
+				<div class="row">
+
+					<mat-form-field class="col-md-4">
+						<input matInput required OnlyNumber [maxlength]="fireFacilityConfig.contactNumberLength" type="tel"
+						 formControlName="architectContactNo" placeholder="{{'architect_contact_number' | translate:translateKey }}*">
+						<control-messages [control]="renewalFireNocForm.get('architectContactNo')"></control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<textarea matInput rows="3" cols="50" type="text" required maxlength="300" placeholder="{{'site_address' | translate:translateKey}}"
+						 formControlName="siteAddress" appGujInputSource targetElement="siteAddressGuj" [form]="renewalFireNocForm"></textarea>
+						<control-messages [control]="renewalFireNocForm.get('siteAddress')"></control-messages>
+					</mat-form-field>
+					<!-- gujarati -->
+					<mat-form-field class="col-md-4">
+						<textarea matInput rows="3" cols="50" maxlength="900" required formControlName="siteAddressGuj" appGujInputTarget
+						 [form]="renewalFireNocForm" placeholder="{{ 'site_address' | translate:translateKey:'gu' }}"></textarea>
+						<control-messages [control]="renewalFireNocForm.get('siteAddressGuj')"></control-messages>
+					</mat-form-field>
+					<!-- /gujarati -->
+
+
+
+
+					<mat-form-field class="col-md-4">
+						<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace' required maxlength="150"
+						 placeholder="{{'fire_vendor_name' | translate:translateKey}}" formControlName="fireVendorName" appGujInputSource
+						 targetElement="fireVendorNameGuj" [form]="renewalFireNocForm">
+						<control-messages [control]="renewalFireNocForm.get('fireVendorName')"></control-messages>
+					</mat-form-field>
+
+
+					<mat-form-field class="col-md-4">
+						<input matInput type="text" maxlength="450" required formControlName="fireVendorNameGuj" appGujInputTarget [form]="renewalFireNocForm"
+						 placeholder="{{ 'fire_vendor_name' | translate:translateKey:'gu' }}">
+						<control-messages [control]="renewalFireNocForm.get('fireVendorNameGuj')"></control-messages>
+					</mat-form-field>
+
+
+				</div>
+
+				<app-action-bar [form]="renewalFireNocForm" (tabIndex)="fireFacilityConfig.onFormTabChange($event)"
+				 (handleOnSaveAndNext)="handleOnSaveAndNext($event)" [stepInfo]="{step: 'step2', next: 2, back: 0}"></app-action-bar>
+			</mat-tab>
+			<!-- step 2 Ends -->
+
+			<!-- step 3 Starts -->
+			<mat-tab>
+				<ng-template mat-tab-label>
+					<div>{{'location_details' | translate:translateKey}}</div>
+				</ng-template>
+				<div class="row">
+					<mat-form-field class="col-md-4">
+						<input matInput maxlength="8" required placeholder="{{'final_plot_no' | translate:translateKey}}" formControlName="fpNo">
+						<control-messages [control]="renewalFireNocForm.get('fpNo')"></control-messages>
+					</mat-form-field>
+					<mat-form-field class="col-md-4">
+						<input matInput maxlength="8" required placeholder="{{'revenue_survey_no' | translate:translateKey}}"
+						 formControlName="rsNo">
+						<control-messages [control]="renewalFireNocForm.get('rsNo')"></control-messages>
+					</mat-form-field>
+					<mat-form-field class="col-md-4">
+						<input matInput maxlength="8" required placeholder="{{'tika_no' | translate:translateKey}}" formControlName="tikaNo">
+						<control-messages [control]="renewalFireNocForm.get('tikaNo')"></control-messages>
+					</mat-form-field>
+					<mat-form-field class="col-md-4">
+						<input matInput maxlength="8" required placeholder="{{'town_planning_no' | translate:translateKey}}"
+						 formControlName="townPlanningNo">
+						<control-messages [control]="renewalFireNocForm.get('townPlanningNo')"></control-messages>
+					</mat-form-field>
+					<mat-form-field class="col-md-4">
+						<input matInput maxlength="50" required placeholder="{{'building_location' | translate:translateKey}}"
+						 formControlName="buildingLocation">
+						<control-messages [control]="renewalFireNocForm.get('buildingLocation')"></control-messages>
+					</mat-form-field>
+					<mat-form-field class="col-md-4">
+						<input matInput maxlength="8" placeholder="{{'block_no' | translate:translateKey}}" formControlName="blockNo">
+						<control-messages [control]="renewalFireNocForm.get('blockNo')"></control-messages>
+					</mat-form-field>
+					<mat-form-field class="col-md-4">
+						<input matInput maxlength="8" required placeholder="{{'O_P_no' | translate:translateKey}}" formControlName="opNo">
+						<control-messages [control]="renewalFireNocForm.get('opNo')"></control-messages>
+					</mat-form-field>
+					<mat-form-field class="col-md-4">
+						<input matInput maxlength="8" required placeholder="{{'city_servay_no' | translate:translateKey}}"
+						 formControlName="citySurveyNo">
+						<control-messages [control]="renewalFireNocForm.get('citySurveyNo')"></control-messages>
+					</mat-form-field>
+				</div>
+
+				<div class="row">
+					<mat-form-field class="col-md-4">
+						<input matInput formControlName="finalNOCIssueDate" placeholder="{{ 'final_noc_issue_date' | translate:translateKey }}">
+						<div align="end" class="default-show-hint mat-hint mat-right">{{fireFacilityConfig.DATE_HINT_MSG}}</div>
+					</mat-form-field>
+					<mat-form-field class="col-md-4">
+						<input matInput formControlName="nextRenewalDate" placeholder="{{ 'next_renewal_date' | translate:translateKey }}">
+						<div align="end" class="default-show-hint mat-hint mat-right">{{fireFacilityConfig.DATE_HINT_MSG}}</div>
+					</mat-form-field>
+				</div>
+
+				<app-action-bar [form]="renewalFireNocForm" (tabIndex)="fireFacilityConfig.onFormTabChange($event)"
+				 (handleOnSaveAndNext)="handleOnSaveAndNext($event)" [stepInfo]="{step: 'step3', next: 3, back: 1}"></app-action-bar>
+			</mat-tab>
+			<!-- step 3 Ends -->
+
+
+			<!-- step  Attachment Starts -->
+			<mat-tab>
+				<ng-template mat-tab-label>
+					<div>{{'attachment' | translate: translateKey}}</div>
+				</ng-template>
+				<div class="row">
+					<ng-container *ngFor="let doc of renewalFireNocForm.get('serviceDetail').get('serviceUploadDocuments').value">
+						<div class="col-md-4" *ngIf="doc.requiredOnCitizenPortal && doc.isActive && fireFacilityConfig.isAttachmentButtonsVisible">
+							<label>{{TranslateService.getCurrentLanguage()=='en'? doc.documentLabelEn : doc.documentLabelGuj }} <span *ngIf="doc.mandatory">*</span></label>
+							<file-upload [form]="renewalFireNocForm" [uploadModel]="doc"></file-upload>
+						</div>
+					</ng-container>
+				</div>
+
+				<app-action-bar [paymentGateway]="paymentGateway" [uploadFiles]="uploadFilesArray" [form]="renewalFireNocForm" (tabIndex)="fireFacilityConfig.onFormTabChange($event) "
+				 (handleOnSaveAndNext)="handleOnSaveAndNext($event)" (handleErrors)="handleErrorsOnSubmit($event)" [stepInfo]="{step: 'final', next: 3, back: 3}"></app-action-bar>
+
+			</mat-tab>
+			<!-- step Attachment Ends -->
+		</mat-tab-group>
+		<select-payment-gateway #paymentGateway></select-payment-gateway>
+	</mat-card>
+
+</form>

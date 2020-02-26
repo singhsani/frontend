@@ -1,0 +1,198 @@
+<app-title-bar [title]="'screen_title' | translate: translateKey"> </app-title-bar>
+
+<record-search *ngIf="showSearchForm" [apiType]="manageRoutes.getApiTypeFromApiCode(this.apiCode)"
+    (searchResult)="showNRCForm($event)">
+</record-search>
+
+<mat-card [hidden]="isVisibeNRCForm" class="formClass cardBorder">
+    <!--Start  form  -->
+
+    <form [formGroup]="noRecordBirthForm" autocomplete="off" ngNativeValidate>
+
+        <mat-tab-group mat-stretch-tabs [(selectedIndex)]="tabIndex" class="stepperNav" dynamicHeight="true">
+            <!-- first step start-->
+            <mat-tab class="customMatTabLabel">
+                <ng-template mat-tab-label>
+					<div class="pl-3">{{ stepLable1 | translate: translateKey}}</div>
+                </ng-template>
+                
+                <div class="row">
+
+                    <mat-form-field class="col-md-4">
+                        <input matInput type="text" appAlphaNumeric maxlength="60" formControlName="childName"  appValidationFields
+                            validationFieldsType="onlyNameWithSpace"
+                            placeholder="{{'child_name' | translate: translateKey}}" required>
+                        <control-messages [control]="noRecordBirthForm.get('childName')"></control-messages>
+                    </mat-form-field>
+
+                    <mat-form-field class="col-md-4">
+                        <input matInput type="text" appAlphaNumeric maxlength="60" formControlName="fatherName" appValidationFields
+                            validationFieldsType="onlyNameWithSpace"
+                            placeholder="{{'father_name' | translate: translateKey}}" required>
+                        <control-messages [control]="noRecordBirthForm.get('fatherName')"></control-messages>
+                    </mat-form-field>
+
+                    <mat-form-field class="col-md-4">
+                        <input matInput type="text" appAlphaNumeric maxlength="60" formControlName="motherName" appValidationFields
+                            validationFieldsType="onlyNameWithSpace"
+                            placeholder="{{'mother_name' | translate: translateKey}}" required>
+                        <control-messages [control]="noRecordBirthForm.get('motherName')"></control-messages>
+                    </mat-form-field>
+
+                    <div formGroupName="gender" class="col-md-4 radioBtnError">
+                        <mat-label>{{'gender' | translate: translateKey}} *</mat-label>
+                        <mat-radio-group formControlName="code">
+                            <mat-radio-button [value]="gender.code" *ngFor="let gender of genderArray">{{gender.name}}
+                            </mat-radio-button>
+                        </mat-radio-group>
+                        <control-messages [control]="noRecordBirthForm.get('gender').get('code')"></control-messages>
+                    </div>
+
+                    <div formGroupName="birthPlace" class="col-md-4 radioBtnError">
+                        <mat-label>{{'place_of_birth' | translate: translateKey}} *</mat-label>
+                        <mat-radio-group formControlName="code" (change)="birthPlaceChange($event)">
+                            <mat-radio-button [value]="place.code" *ngFor="let place of placeArray">{{place.name}}
+                            </mat-radio-button>
+                        </mat-radio-group>
+                        <control-messages [control]="noRecordBirthForm.get('birthPlace').get('code')">
+                        </control-messages>
+                    </div>
+
+                    <mat-form-field class="col-md-4"
+                        *ngIf="noRecordBirthForm.get('birthPlace').get('code').value == 'OTHER_PLACE'">
+                        <input matInput type="text" formControlName="birthPlaceDetail"
+                            placeholder="{{'birth_place_detail' | translate: translateKey}}" required>
+                        <control-messages [control]="noRecordBirthForm.get('birthPlaceDetail')"></control-messages>
+                    </mat-form-field>
+
+                    <mat-form-field class="col-md-4">
+                        <input matInput [matDatepicker]="picker" [max]="maxDate" formControlName="birthDate"
+                            (dateChange)="onDateChange($event.value)"
+                            placeholder="{{'date_of_birth' | translate: translateKey}} (DD/MM/YYYY)" required>
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker touchUi="true" #picker></mat-datepicker>
+                        <control-messages [control]="noRecordBirthForm.get('birthDate')"></control-messages>
+                    </mat-form-field>
+                </div>
+
+                <app-action-bar [uploadFiles]="uploadFilesArray" [form]="noRecordBirthForm"
+                    [stepInfo]="{step: 'step1', next: 1, back: 0}" (handleErrors)="handleErrorsOnSubmit($event)"
+                    (tabIndex)="onTabChange($event)"></app-action-bar>
+
+            </mat-tab>
+            <!-- end first step -->
+
+            <!-- second step start-->
+            <mat-tab [label]="stepLable2 | translate: translateKey">
+
+                <div class="row">
+                    <h2>{{'address' | translate: translateKey}}</h2>
+                    <app-address #address [requiredFeilds]="true"
+                        [addressFormGroup]="noRecordBirthForm.get('birthPlaceAddress')"></app-address>
+                </div>
+
+                <app-action-bar [uploadFiles]="uploadFilesArray" [form]="noRecordBirthForm"
+                    [stepInfo]="{step: 'step2', next: 2, back: 0}" (handleErrors)="handleErrorsOnSubmit($event)"
+                    (tabIndex)="onTabChange($event)"></app-action-bar>
+
+            </mat-tab>
+            <!-- second step end-->
+
+            <!-- third step start-->
+            <mat-tab [label]="stepLable3 | translate: translateKey">
+
+                <div class="row">
+
+                    <h2>{{'basic_detail' | translate: translateKey}}</h2>
+                    <app-basic-details [basicFormGroup]="noRecordBirthForm"></app-basic-details>
+
+                    <div formGroupName="applicantRelation" class="col-md-6 ngSelect">
+                        <ng-select placeholder="{{'relation_with_applicant' | translate: translateKey}} *"
+                            name="relation" formControlName="code" (change)="applicantRelChange($event)">
+                            <ng-option *ngFor="let relation of relationshipArray" [value]="relation.code">
+                                {{relation.name}}</ng-option>
+                        </ng-select>
+                        <control-messages [control]="noRecordBirthForm.get('applicantRelation').get('code')">
+                        </control-messages>
+                    </div>
+
+                    <mat-form-field class="col-md-6"
+                        *ngIf="noRecordBirthForm.get('applicantRelation').get('code').value == 'OTHER_RELATIONSHIP'">
+                        <input matInput type="text" formControlName="applicantRelationDetail"
+                            placeholder="{{'applicant_relation_detail' | translate: translateKey}}" required>
+                        <control-messages [control]="noRecordBirthForm.get('applicantRelationDetail')">
+                        </control-messages>
+                    </mat-form-field>
+
+                    <div class="col-md-12 mt-4 radioBtnError" formGroupName="reasonDetail">
+                        <mat-label>{{'reason_for_no_record' | translate: translateKey}} *</mat-label>
+                        <mat-radio-group formControlName="code">
+                            <mat-radio-button [value]="reason.code" *ngFor="let reason of reasonArray">{{reason.name}}
+                            </mat-radio-button>
+                        </mat-radio-group>
+                        <control-messages [control]="noRecordBirthForm.get('reasonDetail').get('code')">
+                        </control-messages>
+                    </div>
+
+                </div>
+
+                <app-action-bar [form]="noRecordBirthForm" [stepInfo]="{step: 'step3', next: 3, back: 1}"
+                    (handleErrors)="handleErrorsOnSubmit($event)" (tabIndex)="onTabChange($event)"></app-action-bar>
+
+            </mat-tab>
+            <!-- third step end-->
+
+            <!-- final step start-->
+            <mat-tab [label]="stepLable4 | translate: translateKey">
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="alert alert-warning">
+                            Note : Submit Hard Copy At Madhyawarti School
+                        </div>
+
+                        <div class="alert alert-warning">
+                            Note : File Size Less Than 5mb
+                        </div>
+                    </div>
+                </div>
+     <!-- dynamic documents -->
+                <div class="row">
+                    <ng-container
+                        *ngFor="let doc of noRecordBirthForm.get('serviceDetail').get('serviceUploadDocuments').value">
+                        <div class="col-md-4"
+                            *ngIf="doc.requiredOnCitizenPortal && doc.isActive && showButtons">
+                            <label>{{TranslateService.getCurrentLanguage()=='en'? doc.documentLabelEn : doc.documentLabelGuj }}
+                                <span *ngIf="doc.mandatory">*</span></label>
+                            <file-upload [form]="noRecordBirthForm" [uploadModel]="doc"></file-upload>
+                        </div>
+                    </ng-container>
+                </div>
+
+                <!-- <div *ngIf="showButtons" class="col-md-4">
+                        <label>Date Of Birth {{!getFileObjectContained('1.1')?'': '*'}} </label>
+                        <file-upload [form]="noRecordBirthForm" [uploadModel]="setDataValue(1.1,'Date Of Birth','1.1','NRCBirthCertificate')"></file-upload>
+                    </div>
+
+                    <div *ngIf="showButtons" class="col-md-4">
+                        <label>Place Of Birth{{!getFileObjectContained('1.2')?'': '*'}} </label>
+                        <file-upload [form]="noRecordBirthForm" [uploadModel]="setDataValue(1.2,'Place Of Birth','2.1','NRCBirthCertificate')"></file-upload>
+                    </div>
+
+                    <div *ngIf="showButtons" class="col-md-4">
+                        <label>Applicant ID Proof{{!getFileObjectContained('1.3')?'': '*'}} </label>
+                        <file-upload [form]="noRecordBirthForm" [uploadModel]="setDataValue(1.3,'Applicant Id','3.1','NRCBirthCertificate')"></file-upload>
+                    </div> -->
+
+
+                <app-action-bar [paymentGateway]="paymentGateway" [form]="noRecordBirthForm" [stepInfo]="{step: 'final', next: 3, back: 2}"
+                    [uploadFiles]="uploadFilesArray" (handleErrors)="handleErrorsOnSubmit($event)"
+                    (tabIndex)="onTabChange($event)"></app-action-bar>
+            </mat-tab>
+            <select-payment-gateway #paymentGateway></select-payment-gateway>
+            <!-- final step end-->
+        </mat-tab-group>
+
+    </form>
+
+</mat-card>

@@ -1,0 +1,79 @@
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { AnimalPondDuplicateComponent } from './animal-pond-duplicate.component';
+import { TitleBarComponent } from '../../../../../shared/components/title-bar/title-bar.component';
+import { ControlMessagesComponent } from '../../../../../shared/components/control-messages/control-messages.component';
+import { AddressComponent } from '../../../../../shared/components/address/address.component';
+import { ValidationFieldsDirective } from '../../../../../shared/directives/validation-fields.directive';
+import { GujInputSourceDirective } from '../../../../../shared/directives/guj-input-source.directive';
+import { GujInputTargetDirective } from '../../../../../shared/directives/guj-input-target.directive';
+import { ActionBarComponent } from '../../../../../shared/components/action-bar/action-bar.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TranslateModule } from '../../../../../shared/modules/translate/translate.module';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { MaterialModule } from '../../../../../shared/modules/material/material.module';
+import { RouterTestingModule } from '@angular/router/testing';
+import { ToastrModule, ToastrService } from 'ngx-toastr';
+import { ValidationService } from '../../../../../shared/services/validation.service';
+import { CommonService } from '../../../../../shared/services/common.service';
+import { HttpService } from '../../../../../shared/services/http.service';
+import { FormsActionsService } from '../../../../../core/services/citizen/data-services/forms-actions.service';
+import { SessionStorageService } from 'angular-web-storage';
+
+describe('AnimalPondDuplicateComponent', () => {
+  let component: AnimalPondDuplicateComponent;
+  let fixture: ComponentFixture<AnimalPondDuplicateComponent>;
+
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        AnimalPondDuplicateComponent,
+        TitleBarComponent,
+        ControlMessagesComponent,
+        AddressComponent,
+        ValidationFieldsDirective,
+        GujInputSourceDirective,
+        GujInputTargetDirective,
+        ActionBarComponent
+      ],
+      imports: [
+        HttpClientTestingModule,
+        BrowserAnimationsModule,
+        FormsModule,
+        ReactiveFormsModule,
+        TranslateModule,
+        NgSelectModule,
+        MaterialModule,
+        RouterTestingModule,
+        ToastrModule.forRoot({
+          timeOut: 5000,
+          positionClass: 'toast-top-right',
+          preventDuplicates: true,
+          progressBar: true,
+          closeButton: true
+        })
+      ],
+      providers: [
+        ValidationService,
+        CommonService,
+        HttpService,
+        FormsActionsService,
+        SessionStorageService,
+        ToastrService
+      ]
+    })
+      .compileComponents();
+  }));
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(AnimalPondDuplicateComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});

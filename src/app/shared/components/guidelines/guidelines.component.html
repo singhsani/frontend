@@ -1,0 +1,77 @@
+<div>
+	<mat-card class="cardBox">
+		
+		<div class="pageTitle" *ngIf="moreListMsg else defaultMsg">{{'welcome_to_vmc_online_citizen_portal'| translate: translateKey}}</div>
+
+		<ng-template #defaultMsg>
+			<div class="pageTitle">{{'welcome_to_vmc_hospital_portal'| translate: translateKey}}</div>
+		</ng-template>
+
+
+		<!-- <app-guj-video></app-guj-video> -->
+		<div class="float-right">
+			<button class="btn btn-warning mr-2" type="button" data-toggle="modal" data-target="#gujModal">
+				{{'how_do_you_type_in_gujrati'| translate: translateKey}}
+			</button>
+		</div>
+		<mat-card-content class="p-4">
+			<p class="pb-2">{{message}}</p>
+			<h2 *ngIf="moreListMsg else otherMsg">{{'documents_to_be_submitt_for_marriage_registration' | translate: translateKey}}</h2>
+			<ng-template #otherMsg>
+				<h2>{{'mandatory_fields' | translate: translateKey}}</h2>
+			</ng-template>
+			
+			<ol class="olList">
+				<li *ngFor="let li of listMessage"> {{li}}</li>
+			</ol>
+
+			<div *ngIf="moreListMsg">
+				<h2>{{'documents_to_be_submitt_for_marriage_registration_when_bridegroom_or_bride_is_nri'| translate: translateKey}}</h2>
+				<ol class="olList">
+					<li *ngFor="let msg of moreListMsg"> {{msg}}</li>
+				</ol>
+				<h5>For more details about marriage registration documents <a [href]="vmcLink" target="_blank">click here</a></h5>
+			</div>
+		</mat-card-content>
+	</mat-card>
+
+	<div class="fotButtonBar">
+		<div class="col-sm-12 col-md-12 text-right">
+			<button mat-raised-button color="primary" type="button" (click)="hideGuideLine.emit(true)">
+				<mat-icon>thumb_up_alt</mat-icon>
+				{{'proceed'| translate: translateKey}}
+			</button>
+		</div>
+	</div>
+</div>
+
+<div class="modal" id="gujModal">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+
+			<!-- Modal Header -->
+			<div class="modal-header">
+				<h4 class="modal-title">
+					{{'gujarati_typing_confused'| translate: translateKey}}
+				</h4>
+			</div>
+
+			<!-- Modal body -->
+			<div class="modal-body">
+				<div class="embed-responsive embed-responsive-16by9 m-1 row">
+					<video class="embed-responsive-item col-md-12" controls>
+						<source src="assets/videos/Gujarati_Demo.mp4" type="video/mp4">
+						<source src="assets/videos/Gujarati_Demo.ogv" type="video/ogg">
+					</video>
+				</div>
+			</div>
+
+			<!-- Modal footer -->
+			<div class="modal-footer">
+				<button type="button" class="btn btn-danger"
+					data-dismiss="modal">{{'close'| translate: translateKey}}</button>
+			</div>
+
+		</div>
+	</div>
+</div>

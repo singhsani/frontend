@@ -3,19 +3,27 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Vmc</title>
+    <title>VMC</title>
     <base href="/">
-
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <!-- import material design icons -->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet"> -->
+    <!--[if lte IE 10]>
+    <div id="ie-toolbar"><div>You're using an unsupported version of Internet Explorer. Please
+    <a href="http://windows.microsoft.com/en-us/internet-explorer/products/ie/home" target="_blank">upgrade your browser</a> for the best user experience on our site. Thank you.</div></div>
+    <![endif]-->
+
+    <script src="assets/js/pramukhime.js"></script>
+    <script src="assets/js/pramukhindic.js"></script>
+    <!-- <script src="node_modules/chart.js/src/chart.js"></script> -->
+    <style>.lds-ring{display:inline-block;position:absolute; top: 50%; left: 50%; margin-left: -32px; margin-top: -32px; width:64px;height:64px}.lds-ring div{box-sizing:border-box;display:block;position:absolute;width:51px;height:51px;margin:6px;border:6px solid #673ab7;border-radius:50%;animation:lds-ring 1.2s cubic-bezier(.5,0,.5,1) infinite;border-color:#673ab7 transparent transparent}.lds-ring div:nth-child(1){animation-delay:-.45s}.lds-ring div:nth-child(2){animation-delay:-.3s}.lds-ring div:nth-child(3){animation-delay:-.15s}@keyframes lds-ring{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}</style>
 </head>
 
 <body>
-    <app-root>Loading</app-root>
+    <app-root>
+        <!-- Loading... -->
+        <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+    </app-root>
 </body>
-
-
-
 </html>

@@ -1,3 +1,155 @@
-<p>
-	dashboard works!
-</p>
+<div class="welCome">
+    <h1>Welcome to VMC Online Hospital Portal</h1>
+    <p>Welcome to Vadodara Municipal Corporation's Virtual Civic Center, which is simple and convenient way for citizens
+        to access various services from anywhere at anytime.
+        <br> The services of Virtual Civic Center can be accessed without paying any additional charge.</p>
+</div>
+
+<h2>
+    <mat-icon>dashboard</mat-icon>{{'birth_and_death' | translate:translateKey}}
+</h2>
+
+<div class="moduleList">
+    <!-- <mat-tab-group> -->
+    <div *ngFor="let module of userServicesList">
+        <!-- <ng-template mat-tab-label>
+                <mat-icon class="example-tab-icon">thumb_up</mat-icon> 
+                <span class="moduleIcon"></span>
+                <div class="moduleName">{{ module.name }}</div>
+                <div>{{ module.gujName }}</div>
+                <span class="count">Services</span>
+            </ng-template> -->
+
+        <div class="row ml_15" *ngIf="showChart">
+            <div class="col-md-3" *ngFor="let service of module.services;">
+                <div class="row col-md-12 chartHeight ">
+                    <app-base-chart *ngIf="!getFiltered(service.code)" [pieChartColors]="pieChartColors" [pieChartLabels]="pieChartLabels" [pieChartType]="pieChartType"
+                        [chartData]="getPieChartData(service.code)" class="w-100">
+                    </app-base-chart>
+
+                    <div *ngIf="getFiltered(service.code)" class="w-100 chartHeight  text-center font-weight-bold">
+                        <!-- <div class="w-50">
+                            <mat-icon color="primary">error</mat-icon>
+                        </div> -->
+                        <p class="mt20">
+                            No Application Found
+                        </p>
+                    </div>
+                </div>
+                <div class="row col-md-12 servicesList mt-2 justify-content-center">
+                    <p class="font-weight-bold">{{service.name}}</p>
+                    <button matTooltip="{{service.name}}" mat-stroked-button color="primary" (click)="createRecord(service.code)">
+                        {{'add_new_record' | translate:translateKey}}
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="row col-md-12 justify-content-center">
+            <div *ngFor="let legend of pieChartLabelValue; let i = index" class="mr-3 i-flex">
+                <div class="circle" [ngStyle]="{'backgroundColor' : pieChartColors[0].backgroundColor[i]}"> </div>
+                <p class="font-weight-bold pl-1">{{legend}}</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- </mat-tab-group> -->
+</div>
+
+<!-- 
+<div class="container pt-4">
+
+    <mat-card class="themeBox">
+        <div class="row ">
+            <h2 class="h2">
+                <mat-icon>search</mat-icon>
+                <span>Search Application</span>
+            </h2>
+            <div class="col-md-4">
+                <div class="iconMat3">
+                    <mat-icon matPrefix>dashboard</mat-icon>
+                    <ng-select placeholder="Services">
+                        <ng-option *ngFor="let service of services" [value]="service.code">{{service.name}}</ng-option>
+                    </ng-select>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <mat-form-field class="iconMat">
+                    <mat-icon matPrefix>description</mat-icon>
+                    <input matInput placeholder="Enter Application Number" value="">
+                </mat-form-field>
+            </div>
+            <div class="col">
+                <button mat-raised-button color="primary" class="w-100">Search</button>
+            </div>
+        </div>
+    </mat-card>
+
+
+    <mat-card class="themeBox servicesList">
+        <div class="row ">
+            <h2 class="h2">
+                <mat-icon>dashboard</mat-icon>
+                <span>Services</span>
+            </h2>
+            <a href="#" class="col" *ngFor="let module of userServicesList">
+                <span class="{{getIconClass(module.code)}}"><img src="{{getIconImg(module.code)}}" alt=""></span>
+                <div>{{module.name}}<br>{{module.gujName}}</div>
+            </a>
+            <div class="col" *ngFor="let module of userServicesList">
+                <img src="{{getIconImg(module.code)}}" alt=""><br> {{module.name +' / '+ module.gujName}}</div> 
+        </div>
+    </mat-card>
+
+    <mat-accordion *ngFor="let module of userServicesList">
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    {{module.name +' / '+ module.gujName}}
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <div class="row">
+                <div class="col-md-4 pt-4 pb-1 text-center bg-light" *ngFor="let service of module.services;"> 
+                <div class="col-12 col-sm-6 col-md-6 col-lg-4 pb-4 text-center dashboardList" *ngFor="let service of module.services;">
+                    <mat-card>
+                        <mat-icon>account_circle</mat-icon>
+                        <mat-card-title innerHTML="{{ service.name +' / '+ service.gujName }}"></mat-card-title>
+                        <mat-card-actions>
+                            <button mat-raised-button color="primary" (click)="createRecord(service.code)">
+                                    <mat-icon>input</mat-icon> New Application
+                                </button>
+                        </mat-card-actions>
+                    </mat-card>
+                </div>
+            </div>
+
+        </mat-expansion-panel>
+    </mat-accordion>
+</div> 
+<<div class="container pt-4">
+
+    <mat-accordion *ngFor="let module of userServicesList">
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    {{module.name +' / '+ module.gujName}}
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <div class="row">
+                <div class="col-md-4 pt-4 pb-1 text-center bg-light" *ngFor="let service of module.services;">
+                    <mat-card>
+                        <mat-icon>account_circle</mat-icon>
+                        <mat-card-title innerHTML="{{ service.name +' / '+ service.gujName }}"></mat-card-title>
+                        <mat-card-actions>
+                            <button mat-raised-button color="primary" (click)="createRecord(service.code)">
+                                <mat-icon>input</mat-icon> New Application
+                            </button>
+                        </mat-card-actions>
+                    </mat-card>
+                </div>
+            </div>
+
+        </mat-expansion-panel>
+    </mat-accordion>
+</div> -->

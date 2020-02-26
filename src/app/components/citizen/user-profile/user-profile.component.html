@@ -1,0 +1,286 @@
+<app-title-bar title="My Profile"></app-title-bar>
+<div class="row profilePage">
+
+	<div class="col-md-3">
+		<div class="userInfo">
+			<div class="userPhoto">
+				<div class="pic">
+					<img [src]="userProfileForm.get('profilePic').value ?
+								userProfileForm.get('profilePic').value : 'assets/images/no-image.jpg'" />
+					<br />
+					<button class="edtBtn" mat-mini-fab type="button" (click)="imgFileInput.click()">
+						<mat-icon>edit</mat-icon>
+					</button>
+					<input #profilePicfileInput hidden type="file" #imgFileInput (change)="uploadProfilePic($event)" accept="image/*" />
+
+				</div>
+				<span>{{firstLastName}}</span>
+			</div>
+			<p>
+				{{userProfileForm.get('email').value}}
+				<br> +91-{{userProfileForm.get('cellNo').value}}
+			</p>
+		</div>
+	</div>
+
+
+	<div class="col-md-9">
+
+
+		<form [formGroup]="userProfileForm" (ngSubmit)="onSubmitProfile(userProfileForm)" autocomplete="off" ngNativeValidate
+		 novalidate>
+			<div class="row">
+
+				<div class="col-md-12">
+					<h2>Personal Detail</h2>
+				</div>
+
+				<mat-form-field class="col-md-4">
+					<input matInput type="text" appValidationFields validationFieldsType="onlyNameWithOutSpace" placeholder="Firstname"
+					 formControlName="firstName" required>
+					<control-messages [control]="userProfileForm.get('firstName')"></control-messages>
+				</mat-form-field>
+
+				<mat-form-field class="col-md-4">
+					<input matInput type="text" appValidationFields validationFieldsType="onlyNameWithOutSpace" placeholder="Middle Name"
+					 formControlName="middleName">
+					<control-messages [control]="userProfileForm.get('middleName')"></control-messages>
+				</mat-form-field>
+
+				<mat-form-field class="col-md-4">
+					<input matInput type="text" appValidationFields validationFieldsType="onlyNameWithOutSpace" placeholder="Lastname"
+					 formControlName="lastName" required>
+					<control-messages [control]="userProfileForm.get('lastName')"></control-messages>
+				</mat-form-field>
+
+				<div class="col-md-4">
+					<div>
+						<ng-select formControlName="gender" placeholder="Gender *">
+							<ng-option value="male">Male</ng-option>
+							<ng-option value="female">Female</ng-option>
+						</ng-select>
+					</div>
+				</div>
+
+				<mat-form-field class="col-md-4">
+					<input matInput [max]="disablefutureDate" [matDatepicker]="dobPicker" formControlName="birthDate" (dateChange)="dateFormat($event.value,'birthDate');"
+					 placeholder="Date of birth" required (click)="dobPicker.open()" (focus)="dobPicker.open()" readonly>
+					<mat-datepicker-toggle matSuffix [for]="dobPicker"></mat-datepicker-toggle>
+					<mat-datepicker #dobPicker touchUi="true"></mat-datepicker>
+					<div align="end" class="default-show-hint mat-hint mat-right">{{config.DATE_HINT_MSG}}</div>
+					<control-messages [control]="userProfileForm.get('birthDate')"></control-messages>
+				</mat-form-field>
+
+				<div class="col-md-12">
+					<h2>Address</h2>
+				</div>
+
+				<mat-form-field class="col-md-4">
+					<input matInput type="text" formControlName="buildingName" placeholder="building_name">
+					<control-messages [control]="userProfileForm.get('buildingName')"></control-messages>
+				</mat-form-field>
+
+				<mat-form-field class="col-md-4">
+					<input matInput type="text" formControlName="streetName" placeholder="street_name">
+					<control-messages [control]="userProfileForm.get('streetName')"></control-messages>
+				</mat-form-field>
+
+				<mat-form-field class="col-md-4">
+					<input matInput type="text" formControlName="landmark" placeholder="landmark">
+					<control-messages [control]="userProfileForm.get('landmark')"></control-messages>
+				</mat-form-field>
+
+				<mat-form-field class="col-md-4">
+					<input matInput type="text" formControlName="area" placeholder="area">
+					<control-messages [control]="userProfileForm.get('area')"></control-messages>
+				</mat-form-field>
+
+
+				<div class="col-md-4 ngSelect">
+					<ng-select placeholder="Country *" formControlName="country" required (change)="onCountryChange($event)">
+						<ng-option *ngFor="let country of countryListArray" [value]="country.name">{{country.name}}</ng-option>
+					</ng-select>
+					<control-messages [control]="userProfileForm.get('country')"></control-messages>
+				</div>
+
+				<div class="col-md-4 ngSelect">
+					<ng-select placeholder="State *" formControlName="state" required (change)="onStateChange($event)">
+						<ng-option *ngFor="let state of stateListArray" [value]="state.name">{{state.name}}</ng-option>
+					</ng-select>
+					<control-messages [control]="userProfileForm.get('state')"></control-messages>
+				</div>
+
+				<mat-form-field class="col-md-4">
+					<input matInput appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" formControlName="district"
+					 placeholder="district">
+					<control-messages [control]="userProfileForm.get('district')"></control-messages>
+				</mat-form-field>
+
+				<div class="col-md-4 ngSelect">
+					<ng-select placeholder="City *" formControlName="city" required>
+						<ng-option *ngFor="let city of cityListArray" [value]="city.name">{{city.name}}</ng-option>
+					</ng-select>
+					<control-messages [control]="userProfileForm.get('city')"></control-messages>
+				</div>
+
+				<mat-form-field class="col-md-4">
+					<input matInput type="tel" OnlyNumber formControlName="pincode" placeholder="pincode" minlength="6" maxlength="6">
+					<control-messages [control]="userProfileForm.get('pincode')"></control-messages>
+				</mat-form-field>
+
+				<!-- <mat-form-field class="col-md-4">
+								<input matInput type="email" placeholder="Email" formControlName="email" required readonly>
+								<control-messages [control]="userProfileForm.get('email')"></control-messages>
+							</mat-form-field>
+			
+							<mat-form-field class="col-md-4">
+								<input matInput type="tel" OnlyNumber placeholder="Cell Number" formControlName="cellNo" minlength="10" maxlength="10" required
+								 readonly>
+							</mat-form-field> 
+			
+							<div class="col-md-4">
+								<img [src]="userProfileForm.get('profilePic').value ?
+								userProfileForm.get('profilePic').value : 'assets/images/no-image.png'" style="width: 100px;height: 100px;border-radius: 100%;"
+								/>
+								<br/>
+								<button type="button" md-button (click)="imgFileInput.click()">Change photo</button>
+								<input #profilePicfileInput hidden type="file" #imgFileInput (change)="uploadProfilePic($event)" accept="image/*" />
+							</div>-->
+
+
+				<button type="submit" mat-raised-button [disabled]="userProfileForm.invalid" class="updateProfileBtn">
+					Update Profile
+				</button>
+
+			</div>
+		</form>
+
+
+		<!-- <a mat-raised-button color="primary" class="saveProfileBtn">Save Profile</a> -->
+
+	</div>
+
+</div>
+
+
+<!-- <app-title-bar [title]="'Profile'"></app-title-bar> -->
+
+<!-- <mat-card class="mb-4 ">
+
+		<form [formGroup]="userProfileForm" (ngSubmit)="onSubmitProfile(userProfileForm)" autocomplete="off" ngNativeValidate novalidate>
+			<div class="row">
+				<mat-form-field class="col-md-4">
+					<input matInput type="text" appValidationFields validationFieldsType="onlyNameWithOutSpace" placeholder="Firstname" formControlName="firstName"
+					 required>
+					<control-messages [control]="userProfileForm.get('firstName')"></control-messages>
+				</mat-form-field>
+
+				<mat-form-field class="col-md-4">
+					<input matInput type="text" appValidationFields validationFieldsType="onlyNameWithOutSpace" placeholder="Middle Name" formControlName="middleName">
+					<control-messages [control]="userProfileForm.get('middleName')"></control-messages>
+				</mat-form-field>
+
+				<mat-form-field class="col-md-4">
+					<input matInput type="text" appValidationFields validationFieldsType="onlyNameWithOutSpace" placeholder="Lastname" formControlName="lastName"
+					 required>
+					<control-messages [control]="userProfileForm.get('lastName')"></control-messages>
+				</mat-form-field>
+
+				<div class="col-md-4">
+					<div>
+						<ng-select formControlName="gender" placeholder="Gender *">
+							<ng-option value="male">Male</ng-option>
+							<ng-option value="female">Female</ng-option>
+						</ng-select>
+					</div>
+				</div>
+
+				<mat-form-field class="col-4">
+					<input matInput [max]="disablefutureDate" [matDatepicker]="dobPicker" formControlName="birthDate" (dateChange)="dateFormat($event.value,'birthDate');"
+					 placeholder="Date of birth" required (click)="dobPicker.open()" (focus)="dobPicker.open()" readonly>
+					<mat-datepicker-toggle matSuffix [for]="dobPicker"></mat-datepicker-toggle>
+					<mat-datepicker #dobPicker touchUi="true"></mat-datepicker>
+					<control-messages [control]="userProfileForm.get('birthDate')"></control-messages>
+				</mat-form-field>
+
+
+				<mat-form-field class="col-md-4">
+					<input matInput type="text" formControlName="buildingName" placeholder="building_name">
+					<control-messages [control]="userProfileForm.get('buildingName')"></control-messages>
+				</mat-form-field>
+
+				<mat-form-field class="col-md-4">
+					<input matInput type="text" formControlName="streetName" placeholder="street_name">
+					<control-messages [control]="userProfileForm.get('streetName')"></control-messages>
+				</mat-form-field>
+
+				<mat-form-field class="col-md-4">
+					<input matInput type="text" formControlName="landmark" placeholder="landmark">
+					<control-messages [control]="userProfileForm.get('landmark')"></control-messages>
+				</mat-form-field>
+
+				<mat-form-field class="col-md-4">
+					<input matInput type="text" formControlName="area" placeholder="area">
+					<control-messages [control]="userProfileForm.get('area')"></control-messages>
+				</mat-form-field>
+
+
+				<div class="col-md-4 ngSelect">
+					<ng-select placeholder="Country *" formControlName="country" required (change)="onCountryChange($event)">
+						<ng-option *ngFor="let country of countryListArray" [value]="country.name">{{country.name}}</ng-option>
+					</ng-select>
+					<control-messages [control]="userProfileForm.get('country')"></control-messages>
+				</div>
+
+				<div class="col-md-4 ngSelect">
+					<ng-select placeholder="State *" formControlName="state" required (change)="onStateChange($event)">
+						<ng-option *ngFor="let state of stateListArray" [value]="state.name">{{state.name}}</ng-option>
+					</ng-select>
+					<control-messages [control]="userProfileForm.get('state')"></control-messages>
+				</div>
+
+				<mat-form-field class="col-md-4">
+					<input matInput appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" formControlName="district" placeholder="district">
+					<control-messages [control]="userProfileForm.get('district')"></control-messages>
+				</mat-form-field>
+
+				<div class="col-md-4 ngSelect">
+					<ng-select placeholder="City *" formControlName="city" required>
+						<ng-option *ngFor="let city of cityListArray" [value]="city.name">{{city.name}}</ng-option>
+					</ng-select>
+					<control-messages [control]="userProfileForm.get('city')"></control-messages>
+				</div>
+
+				<mat-form-field class="col-md-4">
+					<input matInput type="tel" OnlyNumber formControlName="pincode" placeholder="pincode" minlength="6" maxlength="6">
+					<control-messages [control]="userProfileForm.get('pincode')"></control-messages>
+				</mat-form-field>
+
+				<mat-form-field class="col-md-4">
+					<input matInput type="email" placeholder="Email" formControlName="email" required readonly>
+					<control-messages [control]="userProfileForm.get('email')"></control-messages>
+				</mat-form-field>
+
+				<mat-form-field class="col-md-4">
+					<input matInput type="tel" OnlyNumber placeholder="Cell Number" formControlName="cellNo" minlength="10" maxlength="10" required
+					 readonly>
+				</mat-form-field>
+
+				<div class="col-md-4">
+					<img [src]="userProfileForm.get('profilePic').value ?
+					userProfileForm.get('profilePic').value : 'assets/images/no-image.png'" style="width: 100px;height: 100px;border-radius: 100%;"
+					/>
+					<br/>
+					<button type="button" md-button (click)="imgFileInput.click()">Change photo</button>
+					<input #profilePicfileInput hidden type="file" #imgFileInput (change)="uploadProfilePic($event)" accept="image/*" />
+				</div>
+
+				<div class="text-center">
+					<button type="submit" mat-raised-button color="primary" [disabled]="userProfileForm.invalid">
+						Update Profile
+					</button>
+				</div>
+			</div>
+		</form>
+
+	</mat-card> -->

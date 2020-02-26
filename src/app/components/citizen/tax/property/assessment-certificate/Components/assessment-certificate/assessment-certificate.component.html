@@ -1,0 +1,21 @@
+<app-title-bar [title]="'Application for Assessment Certificate'"></app-title-bar>
+<!-- <mat-card class="cardH1">
+    <h1>Application for Assessment Certificate</h1>
+</mat-card> -->
+<div>
+    <!-- Search Component Start -->
+    <div *ngIf="!isShowForm">
+        <app-assessment-certificate-search></app-assessment-certificate-search>
+    </div>
+    <!-- Form Component Start -->
+    <div *ngIf="isShowForm">
+        <app-payment></app-payment>
+    </div>
+    <!-- Form Component End -->
+    <!-- Table Component Start -->
+    <div [hidden]="!isShowTable">
+        <app-assessment-certificate-table></app-assessment-certificate-table>
+    </div>
+    <!-- Table Component End -->
+</div>
+<br>

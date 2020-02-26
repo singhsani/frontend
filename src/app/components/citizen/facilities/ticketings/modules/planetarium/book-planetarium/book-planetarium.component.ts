@@ -1,0 +1,558 @@
+import { FormsActionsService } from 'src/app/core/services/citizen/data-services/forms-actions.service';
+import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import * as moment from 'moment';
+import { TicketingsService } from '../../../shared-ticketing/services/ticketings.service';
+import { TicketingConstants, TicketingUtils } from '../../../config/ticketing-config';
+import { CommonService } from 'src/app/shared/services/common.service';
+import { Router } from '@angular/router';
+import { ValidationService } from '../../../../../../../shared/services/validation.service';
+import { ToastrService } from 'ngx-toastr';
+import { TranslatePipe } from 'src/app/shared/modules/translate/translate.pipe';
+
+@Component({
+  selector: 'app-book-planetarium',
+  templateUrl: './book-planetarium.component.html',
+  styleUrls: ['./book-planetarium.component.scss'],
+  providers: [TranslatePipe]
+})
+export class BookPlanetariumComponent implements OnInit {
+
+  @ViewChild("paymentGateway") paymentGateway: TemplateRef<any>;
+
+  translateKey: string = 'planetariumScreen';
+
+  ticketBookingForm: FormGroup;
+  subTotal: number;
+  totalAmount: number;
+  numberOfVisitors: number;
+  isLoadingResults: boolean = false;
+  isVisibleIdNumber = false;
+
+  minDate = moment(new Date()).add(0, 'day').toISOString();
+  maxDate = moment(new Date()).add(30, 'day').toISOString();
+
+  // Loading Ticketing Configurations
+  ticketingConstants = TicketingConstants;
+  ticketingUtils: TicketingUtils;
+  planetariumVisitingRates: any;
+  totalVisitorLimit: number = 5;
+  seatAvailable: boolean = true;
+  isFileUploaded: boolean = false;
+  /**
+   * Lookups & Data
+   */
+  BANKS: Array<any> = [];
+  idTypes: Array<any> = [];
+  CANCELLATION_TYPE: Array<any> = [];
+  PLANETARIUM_SHOWS_TIMING: Array<any> = [];
+  PLANETARIUM_SPECIAL_SHOWS_LAG: Array<any> = [];
+  PLANETARIUM_SHOW_CATEGORY: Array<any> = [];
+  PLANETARIUM_VISITOR: Array<any> = [];
+  PURPOSE: Array<any> = [];
+  resourceName: Array<any> = [];
+  DateFormate: string = 'Hint: DD/MM/YYYY';
+  // generalShow:boolean = true;
+  // specialShow:boolean = true;
+
+  /**
+   * @param fb - Declare FormBuilder property.
+   * @param ticketingService - Declare Ticketing Service
+   * @param commonService - Declare sweet alert.
+   * @param router - Declare Routing Property.
+  */
+  constructor(
+    private _fb: FormBuilder,
+    public ticketingService: TicketingsService,
+    private commonService: CommonService,
+    private router: Router,
+    private toster: ToastrService,
+    public validationError: ValidationService,
+    public pipe: TranslatePipe,
+    protected formService: FormsActionsService
+  ) {
+    this.ticketingService.resourceType = 'planetarium';
+    this.ticketingUtils = new TicketingUtils(formService, toster);
+  }
+
+  ngOnInit() {
+    this.createTicketBookingForm();
+    this.getLookUps();
+    this.getListData();
+    this.profileData();
+  }
+  /**
+	* Get all booking category list from api.
+	*/
+  getLookUps() {
+    this.ticketingService.getDataFromLookups().subscribe((respLookUp) => {
+      this.BANKS = respLookUp.BANK;
+      this.idTypes = respLookUp.IDTYPE;
+      this.CANCELLATION_TYPE = respLookUp.CANCELLATION_TYPE;
+      this.PLANETARIUM_SHOWS_TIMING = respLookUp.PLANETARIUM_SHOWS_TIMING;
+      this.PLANETARIUM_SPECIAL_SHOWS_LAG = respLookUp.PLANETARIUM_SPECIAL_SHOWS_LANGUAGE;
+      this.PLANETARIUM_SHOW_CATEGORY = respLookUp.PLANETARIUM_SHOW_CATEGORY;
+      this.PLANETARIUM_VISITOR = respLookUp.PLANETARIUM_VISITOR;
+      this.PURPOSE = respLookUp.PURPOSE;
+    }, err => {
+      this.toster.error("Server Error");
+    });
+  }
+
+  /**
+   * get form data
+   */
+  getListData() {
+    this.ticketingService.getListData().subscribe(resList => {
+      this.resourceName = resList.data;
+    },
+      err => {
+        this.toster.error("Server Error");
+      });
+
+    //visitor rate chart
+    if (this.ticketBookingForm.get('showCategory').get('code').value == 'PLANETARIUM_GENERAL_SHOW') {
+      this.visitorRateChartCall();
+    }
+    // this.ticketingService.getFormData();
+  }
+
+  /**
+   * Show applicant data(login user)
+   */
+  profileData() {
+    this.ticketingService.getUserProfile().subscribe(res => {
+      this.ticketBookingForm.get('firstName').setValue(res.data.firstName);
+      this.ticketBookingForm.get('lastName').setValue(res.data.lastName);
+      this.ticketBookingForm.get('applicantMobile').setValue(res.data.cellNo);
+
+    },
+      err => {
+        this.toster.error("Server Error");
+      });
+  }
+
+  /** 
+   * Change Date format
+   */
+  changeDateFormat(e) {
+    this.ticketBookingForm.get('visitingDate').setValue(moment(e.value).format('YYYY-MM-DD'));
+  }
+
+  /**
+   * set ShiftType as per planetarium_shows_timing
+   */
+  setShiftType() {
+    if (this.ticketBookingForm.get('showCategory').get('code').value != 'PLANETARIUM_SPECIAL_SHOW') {
+
+      let type = this.ticketBookingForm.get('planetariumShowTiming').get('code').value;
+      this.ticketBookingForm.get('shiftType').setValue(type);
+    }
+  }
+
+  /**
+   * set visitors as per lookup selection
+   */
+  setVisitors() {
+    if ((this.ticketBookingForm.get('visitors').get('code').value) != null) {
+      let visitors = Number(this.ticketBookingForm.get('visitors').get('code').value);
+      this.ticketBookingForm.get('totalVisitor').setValue(visitors);
+    }
+  }
+  /**
+   * this method for check seats availability 
+   */
+  getPlanetariumShowAvailability() {
+
+    if (this.ticketBookingForm.get('totalVisitor').value && this.ticketBookingForm.get('specialShowLanguage').get('code').value) {
+
+      this.ticketingService.getPlanetariumShowAvailability(
+        this.ticketBookingForm.get('resourceCodeLK').get('code').value,
+        this.ticketBookingForm.get('specialShowLanguage').get('code').value,
+        this.ticketBookingForm.get('visitingDate').value,
+        this.ticketBookingForm.get('totalVisitor').value).subscribe(
+          (respSwiftData) => {
+            this.seatAvailable = respSwiftData.data.seatAvailable;
+            // this.commonService.successAlert('success', 'Available', 'success');
+            if (this.seatAvailable) {
+              this.toster.success(this.ticketBookingForm.get('totalVisitor').value + ' ' + this.ticketingConstants.AVAILABLE_SEATS);
+            }
+            else {
+              this.toster.error(this.ticketBookingForm.get('totalVisitor').value + ' ' + this.ticketingConstants.NOT_AVAILABLE);
+            }
+
+          },
+          err => {
+            this.commonService.openAlert("Error", err.error[0].message, "warning");
+          });
+    }
+    else {
+      this.ticketBookingForm.controls['totalVisitor'].markAsTouched();
+      // this.markFormGroupTouched(this.ticketBookingForm);
+      // this.toster.error(this.ticketingConstants.ALL_FEILD_REQUIRED_MESSAGE);
+    }
+
+  }
+
+  /**
+   *  Will Compute total amount 
+   */
+  computeTotalAndVisitors() {
+
+    this.getPlanetariumShowAvailability();
+    const f = this.ticketBookingForm.getRawValue();
+    if (this.ticketBookingForm.get('totalVisitor').valid) {
+      this.totalAmount = Number(f.totalVisitor) * (Number(f.rate));
+
+      this.ticketBookingForm.get('amount').setValue(this.totalAmount);
+
+    }
+  }
+
+
+  /**
+    * Get Show timming slots.
+   */
+  getPlanetariumShowTimeSlot(e) {
+    let showDate = moment(e.value).format('YYYY-MM-DD');
+    if (!this.ticketBookingForm.get('visitingDate').invalid) {
+      this.ticketingService.getPlanetariumShowTimeSlot(showDate, this.ticketBookingForm.get('resourceCodeLK').get('code').value).subscribe((respTimeSlotData) => {
+        // let planetariumVisitingSlot = respTimeSlotData.data;
+        // this.ticketBookingForm.get('rate').setValue(this.planetariumVisitingSlot.visitorCharge)
+      },
+        err => {
+          this.toster.error("Server Error");
+        });
+    }
+
+  }
+
+  /**
+   * Create form controls.
+   */
+  createTicketBookingForm() {
+    this.ticketBookingForm = this._fb.group({
+      id: null,
+      uniqueId: null,
+      version: null,
+      cancelledDate: null,
+      bookingDate: [moment(new Date()).format('YYYY-MM-DD')],
+      status: null,
+      refNumber: null,
+      resourceType: null,
+      payableServiceType: null,
+      resourceCode: 'SARDAR_PATEL_PLANETARIUM',
+      resourceCodeLK: this._fb.group({
+        name: null,
+        code: ['SARDAR_PATEL_PLANETARIUM', [Validators.required]]
+      }),
+      visitingDate: [moment().format('YYYY-MM-DD'), [Validators.required]],
+      showCategory: this._fb.group({
+        name: [null, [Validators.required]],
+        code: ['PLANETARIUM_GENERAL_SHOW', [Validators.required]]
+      }),
+      planetariumShowTiming: this._fb.group({
+        name: null,
+        code: [null, Validators.required]
+      }),
+      specialShowLanguage: this._fb.group({
+        name: null,
+        code: null
+      }),
+      seatNo: null,
+      totalVisitor: [null],
+      visitors: this._fb.group({
+        name: null,
+        code: [null, Validators.required]
+      }),
+      rate: [{ value: null, disabled: true }],
+      amount: [{ value: null, disabled: true }],
+
+      showStartTime: null,
+      showEndTime: null,
+
+      schoolName: null,
+      schoolMobileNumber: null,
+      schoolEmailId: [null],
+
+      shiftType: null,
+      specialShow: null,
+
+      idType: this._fb.group({
+        name: null,
+        code: [null, Validators.required]
+      }),
+      // idNumber: [null, [Validators.required, Validators.maxLength(4), Validators.minLength(4)]],
+      idNumber: [null, [Validators.required, Validators.maxLength(4), Validators.minLength(4)]],
+      applicantName: null,
+      applicantMobile: [null, [Validators.required]],
+      applicantEmailID: [null, [ValidationService.emailValidator]],
+      paymentMode: this._fb.group({
+        name: null,
+        code: null
+      }),
+
+      firstName: [null, [Validators.required, ValidationService.nameValidator]],
+      middleName: null,
+      lastName: [null, [Validators.required, ValidationService.nameValidator]],
+
+      accountHolderName: null,
+      accountNo: null,
+      bankName: null,
+      ifscCode: null,
+      attachments: [],
+
+      scheduleList: [],
+      // {
+      //   id: null,
+      //   uniqueId: null,
+      //   version: null,
+      //   cancellationType: null,
+      //   cancelledDate: null,
+      //   status: "PAYMENT_REQUIRED",
+      //   shiftType: "GUJARATI",
+      //   bookingDate: "2019-06-06",
+      //   startTime: "04:01:00",
+      //   endTime: "04:30:00",
+      //   bookingNo: null
+      // }],
+      bookingPurposeMaster: this._fb.group({
+        name: null,
+        code: null
+      }),
+      termsCondition: [null, [Validators.required]],
+      agree: null,
+      attachment: null
+    })
+  }
+
+  /**
+   * This method for set and remove validation as per show selection
+   * @param event 
+   */
+  setValidationForSpecialShow(event) {
+    this.ticketBookingForm.reset();
+    // set default value
+    this.ticketBookingForm.get('resourceCodeLK').get('code').setValue('SARDAR_PATEL_PLANETARIUM');
+    this.ticketBookingForm.get('resourceCode').setValue('SARDAR_PATEL_PLANETARIUM');
+    this.ticketBookingForm.get('visitingDate').setValue(moment().format('YYYY-MM-DD'));
+    this.ticketBookingForm.get('bookingDate').setValue(moment(new Date()).format('YYYY-MM-DD'));
+
+    this.ticketBookingForm.get('showCategory').get('code').setValue(event);
+    if (event == 'PLANETARIUM_SPECIAL_SHOW') {
+      this.ticketBookingForm.get('schoolName').setValidators([Validators.required]);
+      this.ticketBookingForm.get('schoolEmailId').setValidators([Validators.required, ValidationService.emailValidator]);
+      this.ticketBookingForm.get('specialShowLanguage.code').setValidators(Validators.required);
+      // this.ticketBookingForm.get('totalVisitor').setValidators([Validators.required, Validators.max(156)]);
+
+      this.ticketBookingForm.get('firstName').clearValidators();
+      this.ticketBookingForm.get('lastName').clearValidators();
+      this.ticketBookingForm.get('visitors.code').clearValidators();
+      this.ticketBookingForm.get('planetariumShowTiming.code').clearValidators();
+      this.ticketBookingForm.get('idType.code').clearValidators();
+      this.ticketBookingForm.get('idNumber').clearValidators();
+
+      //visitor rate chart
+      this.visitorRateChartCall();
+
+    }
+    else if (event == 'PLANETARIUM_GENERAL_SHOW') {
+      this.ticketBookingForm.get('firstName').setValidators([Validators.required]);
+      this.ticketBookingForm.get('lastName').setValidators([Validators.required]);
+      this.ticketBookingForm.get('visitors.code').setValidators([Validators.required]);
+      this.ticketBookingForm.get('planetariumShowTiming.code').setValidators([Validators.required]);
+      this.ticketBookingForm.get('idType.code').setValidators([Validators.required]);
+      this.ticketBookingForm.get('idNumber').setValidators([Validators.required, Validators.maxLength(4), Validators.minLength(4)]);
+
+      this.ticketBookingForm.get('schoolName').clearValidators();
+      this.ticketBookingForm.get('schoolEmailId').clearValidators();
+      this.ticketBookingForm.get('specialShowLanguage.code').clearValidators();
+      this.ticketBookingForm.get('totalVisitor').clearValidators();
+      //visitor rate chart
+      this.visitorRateChartCall();
+    }
+    else {
+      this.ticketBookingForm.reset();
+    }
+    /* After perform set or remove validator action this will update value and validity */
+    this.ticketBookingForm.get('firstName').updateValueAndValidity();
+    this.ticketBookingForm.get('lastName').updateValueAndValidity();
+    this.ticketBookingForm.get('visitors.code').updateValueAndValidity();
+    this.ticketBookingForm.get('planetariumShowTiming.code').updateValueAndValidity();
+    this.ticketBookingForm.get('idType.code').updateValueAndValidity();
+    this.ticketBookingForm.get('idNumber').updateValueAndValidity();
+
+    this.ticketBookingForm.get('schoolName').updateValueAndValidity();
+    this.ticketBookingForm.get('schoolEmailId').updateValueAndValidity();
+    this.ticketBookingForm.get('specialShowLanguage.code').updateValueAndValidity();
+    this.ticketBookingForm.get('totalVisitor').updateValueAndValidity();
+
+  }
+
+  /**
+   * This method for get rate chart data
+   */
+  visitorRateChartCall() {
+    //visitor rate chart
+    this.ticketingService.getZooVisitingRates().subscribe((respRates) => {
+      this.planetariumVisitingRates = respRates.data;
+      // this.ticketBookingForm.get('rate').setValue(this.planetariumVisitingRates.visitorCharge);
+      this.ticketBookingForm.get('rate').setValue(this.planetariumVisitingRates.specialShowVisitorCharge);
+      this.totalVisitorLimit = this.planetariumVisitingRates.totalOccupancy;
+    },
+      err => {
+        this.commonService.openAlert("Error", err.error[0].message, "warning");
+      });
+  }
+
+  /**
+   * Save form data
+   */
+  savePlanetariumTickets() {
+    if (this.ticketBookingForm.get('visitingDate').value
+      && this.ticketBookingForm.get('resourceCodeLK').get('code').value
+      && this.ticketBookingForm.get('showCategory').get('code').value == 'PLANETARIUM_SPECIAL_SHOW') {
+      this.ticketBookingForm.get('resourceCode').setValue(this.ticketBookingForm.get('resourceCodeLK').get('code').value);
+      this.ticketingService.saveDraftTickets(this.ticketBookingForm.getRawValue(), this.ticketBookingForm.get('resourceCodeLK').get('code').value).subscribe(
+        resp => {
+          this.ticketBookingForm.get('refNumber').setValue(resp.refNumber);
+        },
+        err => {
+          this.commonService.openAlertFormSaveValidation('Warning!', err.error, 'warning');
+        });
+    }
+  }
+
+  /**
+     * Marks all controls in a form group as touched
+     * @param formGroup - The form group to touch
+     */
+  markFormGroupTouched(formGroup: FormGroup) {
+    (<any>Object).values(formGroup.controls).forEach(control => {
+      control.markAsTouched();
+
+      if (control.controls) {
+        this.markFormGroupTouched(control);
+      }
+    });
+  }
+
+
+  /**
+   * This method submit for varify application at department
+   */
+  submitForVarification() {
+
+    if (this.ticketBookingForm.get('specialShowLanguage').get('code').value == null
+      && this.ticketBookingForm.get('schoolName').value == null
+      && this.ticketBookingForm.get('schoolEmailId').value == null
+      && this.ticketBookingForm.get('totalVisitor').value == null) {
+
+      this.commonService.openAlert("Feild Error", this.ticketingConstants.ALL_FEILD_REQUIRED_MESSAGE, 'warning');
+      this.markFormGroupTouched(this.ticketBookingForm);
+    }
+    else if (this.ticketBookingForm.get('termsCondition').value) {
+      if (!this.isFileUploaded) {
+        this.commonService.openAlert(this.ticketingConstants.FEILD_ERROR_TITLE, 'Attachment Required!', 'warning')
+        return;
+      }
+      else {
+        this.isLoadingResults = true;
+        this.ticketingService.specialShowTicketsBooking(this.ticketBookingForm.getRawValue(), this.ticketBookingForm.get('resourceCodeLK').get('code').value).subscribe(
+          resData => {
+            // if (resData.data.status == this.bookingConstants.SUBMITTED) {
+            this.commonService.commonAlert("Booking", "Planetarium Booking Request", "success", "Print Acknowledgement Receipt", false, '', pA => {
+              this.ticketingService.printAcknowledgementReceipt(resData.data.refNumber).subscribe(acknowledgementHTML => {
+                let sectionToPrint: any = document.getElementById('sectionToPrint');
+                sectionToPrint.innerHTML = acknowledgementHTML;
+                setTimeout(() => {
+                  window.print();
+                  this.router.navigate([this.ticketingConstants.MY_TICKETINGS_URL]);
+                });
+              }, err => {
+                this.commonService.openAlert("Error", err.error[0].message, "warning")
+              })
+            }, rA => {
+              this.router.navigate([this.ticketingConstants.MY_TICKETINGS_URL]);
+            })
+            // }
+            this.isLoadingResults = false;
+          },
+          err => {
+            this.isLoadingResults = false;
+            this.commonService.openAlertFormSaveValidation('Warning!', err.error, 'warning');
+          });
+      }
+
+    }
+    else {
+      this.commonService.openAlert('Feild Error', this.ticketingConstants.TERMS_AND_CONDITION_MESSAGE, 'warning');
+      this.markFormGroupTouched(this.ticketBookingForm);
+    }
+  }
+
+  /**
+   * redirect to Payment 
+   */
+  redirecToPayment() {
+    if (this.ticketBookingForm.get('visitors').get('code').value == null
+      && this.ticketBookingForm.get('idType').get('code').value == null
+      && this.ticketBookingForm.get('idNumber').value == null
+      && this.ticketBookingForm.get('firstName').value == null
+      && this.ticketBookingForm.get('lastName').value == null
+      && this.ticketBookingForm.get('planetariumShowTiming').get('code').value == null) {
+      this.commonService.openAlert("Feild Error", this.ticketingConstants.ALL_FEILD_REQUIRED_MESSAGE, 'warning');
+      this.markFormGroupTouched(this.ticketBookingForm);
+    }
+    else if (!this.ticketBookingForm.get('termsCondition').value) {//for general show
+      this.isLoadingResults = false;
+      this.commonService.openAlert('Feild Error', this.ticketingConstants.TERMS_AND_CONDITION_MESSAGE, 'warning');
+      this.markFormGroupTouched(this.ticketBookingForm);
+    }
+    else {
+      this.isLoadingResults = true;
+      this.ticketingService.bookPlanetariumTickets(this.ticketBookingForm.getRawValue(), this.ticketBookingForm.get('resourceCodeLK').get('code').value).subscribe(
+        respData => {
+          // if (resp.data.status == this.bookingConstants.SUBMITTED) {
+          this.commonService.commonAlert("Booking", "Planetarium Booked Successfully", "success", "Print Acknowledgement Receipt", false, '', pA => {
+            this.ticketingService.printAcknowledgementReceipt(respData.data.refNumber).subscribe(
+              acknowledgement => {
+                let sectionToPrint: any = document.getElementById('sectionToPrint');
+                sectionToPrint.innerHTML = acknowledgement;
+                setTimeout(() => {
+                  window.print();
+                  this.router.navigate([this.ticketingConstants.MY_TICKETINGS_URL]);
+                });
+              }, resErr => {
+                this.commonService.openAlert("Error", resErr.error[0].message, "warning")
+              })
+          }, rA => {
+            this.router.navigate([this.ticketingConstants.MY_TICKETINGS_URL]);
+          })
+          // }
+          this.isLoadingResults = false;
+        },
+        err => {
+          if (err.status === 402) {
+
+            this.ticketBookingForm.get('refNumber').setValue(err.error.data.refNumber);
+            // this.ticketingUtils.redirectToPayment(err, this.commonService, this.ticketingService, this.ticketBookingForm, this.router);
+            this.ticketingUtils.redirectToCCAvenuePayment(err, this.commonService, this.ticketingService, this.paymentGateway, this.ticketBookingForm, this.router);
+          }
+          else {
+            this.commonService.openAlert("Error", err.error[0].message, "warning")
+          }
+        });
+    }
+
+  }
+
+  CheckType(idCode){
+    this.isVisibleIdNumber = false;
+    if(idCode === 'AADHARCARD'){
+      this.isVisibleIdNumber = true;
+    }
+
+  }
+
+}

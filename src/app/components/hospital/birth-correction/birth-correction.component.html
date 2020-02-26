@@ -1,0 +1,91 @@
+<app-hos-title-bar [title]="'screen_title' | translate: translateKey">
+	<!-- <button class="pull-right" mat-stroked-button type="button" (click)="birthCertificateForm.patchValue(config.getBirthDummyJSON())">
+        Patch Value
+    </button> -->
+</app-hos-title-bar>
+ 
+<div class="container">
+	<mat-card *ngIf="showApplicationSearch" class="formClass cardBorder">
+		<div class="pageTitle">{{'search_child_record'| translate: translateKey}}</div>
+
+		<div class="p-15">
+			<form [formGroup]="regStatusForm" (ngSubmit)="getRegistrationNumberStatus()" autocomplete="off">
+				<div class="row">
+					<mat-form-field class="col-md-4">
+						<input matInput maxlength="50" placeholder="{{'registration_number' | translate:translateKey}}" formControlName="applicationNumber"
+						 required>
+						<control-messages [control]="regStatusForm.get('applicationNumber')"></control-messages>
+					</mat-form-field>
+
+					<div formGroupName="typeOfCorrection" class="col-md-4 ngSelect">
+						<ng-select placeholder="{{'type_of_correction' | translate:translateKey}}*" formControlName="code">
+							<ng-option *ngFor="let type of TypeOfCorrection" [value]="type.code">
+								{{type.name}}
+							</ng-option>
+						</ng-select>
+						<control-messages [control]="regStatusForm.get('typeOfCorrection').get('code')"></control-messages>
+					</div>
+					<div class="col-md-4">
+						<button mat-stroked-button color="primary" class="w-100 mt-2" type="submit">
+							{{'search' | translate:translateKey}}
+						</button>
+					</div>
+
+				</div>
+			</form>
+		</div>
+	</mat-card>
+
+	<mat-card class="formClass cardBorder mt-2" [hidden]="!showcorrectionForm">
+		<form [formGroup]="birthCorrectionForm" autocomplete="off">
+			<mat-tab-group mat-stretch-tabs class="stepperNav" dynamicHeight="true" [(selectedIndex)]="tabIndex">
+				<mat-tab [label]="stepLable1 | translate: translateKey">
+
+					<h2>{{'child_name_insertion' | translate:translateKey}}</h2>
+					<div class="row">
+						<mat-form-field class="col-md-4">
+							<input required matInput [form]="birthCorrectionForm" maxlength="50" appGujInputSource targetElement="childNameGuj" appValidationFields
+							 [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{'child_name' | translate:translateKey}}" formControlName="childName">
+							<control-messages [control]="birthCorrectionForm.get('childName')"></control-messages>
+						</mat-form-field>
+
+						<mat-form-field class="col-md-4">
+							<input required matInput maxlength="150" appPreventSpace appGujInputTarget [form]="birthCorrectionForm" placeholder="{{'child_name' | translate:translateKey:'gu'}}"
+							 formControlName="childNameGuj">
+							<control-messages [control]="birthCorrectionForm.get('childNameGuj')"></control-messages>
+						</mat-form-field>
+					</div>
+
+					<app-hos-action-bar [uploadFiles]="uploadFileArray" [form]="birthCorrectionForm" [stepInfo]="{step: 'step1', next: 1, back: 0}"
+					 (tabIndex)="onTabChange($event)" (handleErrors)="handleErrorsOnSubmit($event) "></app-hos-action-bar>
+
+				</mat-tab>
+				<mat-tab [label]="stepLable2 | translate: translateKey">
+					<h2>{{'upload_mandetory_documents' | translate:translateKey}}</h2>
+
+					<div class="alert15 alert alert-warning ">
+						{{'note' | translate:translateKey}} :{{'submit_hard_copy_at_madhyawarti_school' | translate:translateKey}}
+					</div>
+
+					<div class="alert15 alert alert-warning ">
+						{{'note' | translate:translateKey}} : {{'file_size_less_than_5_mb' | translate:translateKey}}
+					</div>
+
+					<div class="row">
+						<div class="col-md-4" *ngFor="let doc of uploadFileArray">
+							<!-- <div> -->
+							<label>{{translateService.getCurrentLanguage()=='en'? doc.documentLabelEn : doc.documentLabelGuj }} <span *ngIf="doc.mandatory">*</span></label>
+							<app-hos-file-upload [form]="birthCorrectionForm" [uploadModel]="doc"></app-hos-file-upload>
+							<!-- </div> -->
+						</div>
+					</div>
+
+					<app-hos-action-bar [paymentGateway]="paymentGateway" [uploadFiles]="uploadFileArray" [form]="birthCorrectionForm" [stepInfo]="{step: 'final', next: 0, back: 0}"
+					 (tabIndex)="onTabChange($event)" (handleErrors)="handleErrorsOnSubmit($event) "></app-hos-action-bar>
+					 <select-payment-gateway [applicationType]="'HOSPITAL'" #paymentGateway></select-payment-gateway>
+				</mat-tab>
+			</mat-tab-group>
+
+		</form>
+	</mat-card>
+</div>

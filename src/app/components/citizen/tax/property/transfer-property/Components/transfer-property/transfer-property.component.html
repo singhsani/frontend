@@ -1,0 +1,21 @@
+<app-title-bar [title]="'Application for Transfer of Property'"></app-title-bar>
+    <!-- <mat-card class="cardH1">
+        <h1>Application for Transfer of Property</h1>
+  </mat-card> -->
+<div>
+    <!-- Search Component Start -->
+    <div *ngIf="!isShowForm">
+        <app-transfer-property-search></app-transfer-property-search>
+    </div>
+    <!-- Form Component Start -->
+    <div *ngIf="isShowForm">
+        <app-transfer-property-detail></app-transfer-property-detail>
+    </div>
+    <!-- Form Component End -->
+    <!-- Table Component Start -->
+    <div [hidden]="!isShowTable">
+        <app-transfer-property-table></app-transfer-property-table>
+    </div>
+    <!-- Table Component End -->
+</div>
+<br>

@@ -1,0 +1,83 @@
+<mat-card>
+    <form #formPropertyNo="ngForm" (ngSubmit)="onSearchByPropertyNo(formPropertyNo)">
+        <div class="row">
+            <div class="col-md-6">
+                <mat-form-field class="full-width-input">
+                    <input matInput trim="blur" required maxlength="30" placeholder="Property No" name="propertyNo"
+                        [(ngModel)]="propertyNo" #PropertyNo="ngModel" mask-property-no-with-occuiper-code>
+                    <mat-error *ngIf="PropertyNo.invalid">*Property No is required.</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-md-6">
+                <button mat-raised-button color="primary" type="submit"> Go </button>
+            </div>
+        </div>
+    </form>
+    <div class="row">
+        <div class="col-md-6">
+            <mat-form-field class="full-width-input">
+                <input disabled matInput placeholder="Census No" name="censusNo" [(ngModel)]="occupierModel.censusNo">
+            </mat-form-field>
+        </div>
+        <div class="col-md-6">
+            <mat-form-field class="full-width-input">
+                <input disabled matInput placeholder="Owner Name" name="ownerName" [(ngModel)]="occupierModel.ownerName">
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <mat-form-field class="full-width-input">
+                <textarea disabled matInput placeholder="Address" name="propertyAddress" [(ngModel)]="occupierModel.propertyAddress.propertyAddress"></textarea>
+            </mat-form-field>
+        </div>
+    </div>
+    <form #formVacancyCertificateNo="ngForm" (ngSubmit)="onSearchByVacancyCertificateNo(formVacancyCertificateNo)">
+        <div class="row">
+            <div class="col-md-6">
+                <mat-form-field class="full-width-input">
+                    <input matInput number-only trim="blur" required maxlength="30" placeholder="Vacancy Application Number" name="vacancyCertificateNo"
+                        [(ngModel)]="vacancyCertificateNo" #VacancyCertificateNo="ngModel" (change)="onChangeVacancyCertificateNo()"
+                        pattern="[0-9]*">
+                    <mat-error *ngIf="VacancyCertificateNo.invalid">*Vacancy Application Number is required.</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-md-6">
+                <button [disabled]="!isdisabledSearchButton" mat-raised-button color="primary" type="submit"> Go
+                </button>
+            </div>
+        </div>
+    </form>
+    <div class="row">
+        <div class="col-md-6">
+            <mat-form-field class="full-width-input">
+                <input disabled matInput placeholder="Total Outstanding" name="totalOutstanding" 
+                [(ngModel)]="vacancyPremiseCertficateModel.totalOutstanding" readonly>
+            </mat-form-field>
+        </div>
+        <div class="col-md-6">
+            <mat-form-field class="full-width-input">
+                <input matInput trim="blur" number-only maxlength="10" placeholder="Amount to Refund" name="refundAmount"
+                    [(ngModel)]="vacancyPremiseCertficateModel.refundAmount" readonly>
+            </mat-form-field>
+        </div>
+    </div>
+    <form #formRefundAgaintsApplication="ngForm" (ngSubmit)="onSave(formRefundAgaintsApplication)">
+        <div class="row">
+            <div class="col-md-6"> 
+                    <mat-form-field class="full-width-input">
+                            <input matInput trim="blur" required placeholder="Application No" maxlength="20" #ApplicationNo="ngModel" name="applicationNo" [(ngModel)]="applicationNo">
+                            <mat-error *ngIf="ApplicationNo.invalid">*Application No is required.</mat-error>
+                    </mat-form-field>
+            </div>
+        </div>
+        <div class="button-row text-right">
+            <button [disabled]="!isdisabledSaveButton" mat-raised-button color="primary" type="submit">
+                <mat-icon>save</mat-icon> Save
+            </button>
+            <button mat-raised-button class="ml-3" type="button" color="warn" (click)="onClear()">
+                <mat-icon>clear_all</mat-icon> Clear
+            </button>
+        </div>
+    </form>
+</mat-card>

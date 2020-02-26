@@ -1,0 +1,442 @@
+<app-title-bar [title]="'new_registration' | translate: translateKey">
+	<!-- <form class="searchBox">
+		<mat-form-field>
+			<input matInput autocomplete="off" trim="blur" appAlphaNumeric maxlength="20" #engineNoTextBox #searchInput="matInput"
+			 type="text" placeholder="{{'engine_no' | translate: translateKey}}">
+			<button mat-button matSuffix mat-icon-button (click)="checkDataFromEngineNo(engineNoTextBox.value)">
+				<mat-icon>search</mat-icon>
+			</button>
+		</mat-form-field>
+
+		<button mat-raised-button type="button" class="editBtn" *ngIf="isEditBtnVisible" color="primary" (click)="editVehicleTaxForm()">
+			<mat-icon>edit</mat-icon>{{'edit' | translate:actionBarKey}}
+		</button>
+	</form> -->
+	<button class="pull-right" mat-stroked-button type="button" (click)="patchValue()">
+		Patch Value
+	</button>
+</app-title-bar>
+
+<mat-card class="formClass cardBorder">
+	<!--Start  form  -->
+	<form [formGroup]="vehicleRegistrationForm">
+
+		<mat-tab-group mat-stretch-tabs class="stepperNav" (selectedTabChange)="calculateTax($event)"
+			[(selectedIndex)]="tabIndex" dynamicHeight="true">
+
+			<!-- first step start-->
+			<mat-tab [label]="stepLable1 | translate: translateKey">
+
+				<div class="row stepperMinHeight">
+
+					<mat-form-field class="col-md-4">
+						<input matInput autocomplete="off" appAlphaNumeric type="text" maxlength="20"
+							formControlName="engineNo" placeholder="{{'engine_no' | translate: translateKey}}" required>
+						<control-messages [control]="vehicleRegistrationForm.get('engineNo')"></control-messages>
+					</mat-form-field>
+
+					<!-- <mat-form-field class="col-md-4" formGroupName="vehicleType">
+							<mat-select placeholder="Vehicle Type" formControlName="code" required>
+								<mat-option *ngFor="let vehicleType of vehicleTypeArray" [value]="vehicleType.code">
+									{{vehicleType.name}}
+								</mat-option>
+							</mat-select>
+							<control-messages [control]="vehicleRegistrationForm.get('vehicleType').get('code')">
+							</control-messages>
+						</mat-form-field> -->
+
+					<div class="col-md-4 ngSelect" formGroupName="vehicleType">
+						<ng-select placeholder="{{'vehicle_type' | translate: translateKey}} *" formControlName="code">
+							<ng-option *ngFor="let vehicleType of vehicleTypeArray" [value]="vehicleType.code">
+								{{vehicleType.name}}</ng-option>
+						</ng-select>
+						<control-messages [control]="vehicleRegistrationForm.get('vehicleType').get('code')">
+						</control-messages>
+					</div>
+
+					<mat-form-field class="col-md-4 ">
+						<input matInput autocomplete="off" maxlength="20" type="text" formControlName="chasisNo"
+							placeholder="{{'chasis_no' | translate: translateKey}}" required>
+						<control-messages [control]="vehicleRegistrationForm.get('chasisNo')"></control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<input matInput autocomplete="off" type="text" maxlength="50" formControlName="vehicleNo"
+							placeholder="{{'vehicle_no' | translate: translateKey}}" required>
+						<control-messages [control]="vehicleRegistrationForm.get('vehicleNo')"></control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<input matInput autocomplete="off" type="text" maxlength="50" formControlName="registrationNo"
+							placeholder="{{'registration_no' | translate: translateKey}}" required>
+						<control-messages [control]="vehicleRegistrationForm.get('registrationNo')"></control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<input matInput autocomplete="off" type="text" maxlength="50" OnlyNumber
+							formControlName="vehicleBasicValue"
+							placeholder="{{'basic_value' | translate: translateKey}}" required>
+						<control-messages [control]="vehicleRegistrationForm.get('vehicleBasicValue')">
+						</control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<input matInput autocomplete="off" type="text" maxlength="100" formControlName="makeModel"
+							placeholder="{{'make_model' | translate: translateKey}}" required>
+						<control-messages [control]="vehicleRegistrationForm.get('makeModel')"></control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<input matInput autocomplete="off" maxlength="200" type="text" formControlName="dealerName"
+							placeholder="{{'dealer_name' | translate: translateKey}}" required>
+							<control-messages [control]="vehicleRegistrationForm.get('dealerName')"></control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<input matInput autocomplete="off" maxlength="100" appPreventSpace
+							placeholder="{{'dealer_email' | translate:translateKey}}" type="email"
+							formControlName="dealerEmail">
+						<control-messages [control]="vehicleRegistrationForm.get('dealerEmail')"></control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<span matPrefix>+91 &nbsp;</span>
+						<input required matInput autocomplete="off" type="tel" OnlyNumber formControlName="dealerMobileNo"
+							minlength="10" maxlength="10" placeholder="{{'dealer_mobile_no' | translate: translateKey}}">
+							<control-messages [control]="vehicleRegistrationForm.get('dealerMobileNo')"></control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<input matInput autocomplete="off" appDate [matDatepicker]="picker"
+							[max]="maxDate" formControlName="purchaseDate" (dateChange)="onDateChange($event.value)"
+							placeholder="{{'purchase_date' | translate: translateKey}} (DD/MM/YYYY)" required>
+						<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+						<mat-datepicker touchUi="true" #picker></mat-datepicker>
+						<control-messages [control]="vehicleRegistrationForm.get('purchaseDate')"></control-messages>
+						<!-- <div align="end" class="default-show-hint mat-hint mat-right">{{config.DATE_HINT_MSG}}</div> -->
+					</mat-form-field>
+
+					<!-- <div class="col-md-4 ngSelect">
+						<ng-select placeholder="{{'purchasing_type' | translate: translateKey}} *"
+							formControlName="purchasingType">
+							<ng-option *ngFor="let purchaseType of purchasingTypeArray" [value]="purchaseType.code">
+								{{purchaseType.name}}</ng-option>
+						</ng-select>
+						<control-messages [control]="vehicleRegistrationForm.get('purchasingType')"></control-messages>
+					</div> -->
+				</div>
+
+				<div class="fotButtonBar clearfix">
+					<div class="col-sm-12 col-md-12">
+						<button class="pull-right" mat-raised-button color="primary" (click)="tabIndex = 1">{{'save_and_next' | translate:
+							actionBarKey}}</button>
+						<!-- <button type="button" mat-raised-button color="warn" (click)="resetForm()">{{'clear' | translate: actionBarKey}}</button> -->
+					</div>
+				</div>
+
+			</mat-tab>
+			<!-- end first step -->
+
+			<!-- second step start-->
+			<mat-tab [label]="stepLable2 | translate: translateKey">
+
+				<div class="row stepperMinHeight">
+
+					<mat-form-field class="col-md-4">
+						<input appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" matInput
+							autocomplete="off" maxlength="100" type="text" formControlName="firstName"
+							placeholder="{{'first_name' | translate: translateKey}}" required>
+						<control-messages [control]="vehicleRegistrationForm.get('firstName')"></control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<input appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" matInput
+							autocomplete="off" maxlength="100" type="text" formControlName="middleName"
+							placeholder="{{'middle_name' | translate: translateKey}}">
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<input appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" matInput
+							autocomplete="off" maxlength="100" type="text" formControlName="lastName"
+							placeholder="{{'last_name' | translate: translateKey}}" required>
+						<control-messages [control]="vehicleRegistrationForm.get('lastName')"></control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<input matInput autocomplete="off" type="text" OnlyNumber minlength="12" maxlength="12"
+							formControlName="aadhaarNo" placeholder="{{'aadhaar_no' | translate: translateKey}}">
+						<control-messages [control]="vehicleRegistrationForm.get('aadhaarNo')"></control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<span matPrefix>+91 &nbsp;</span>
+						<input matInput autocomplete="off" type="tel" OnlyNumber formControlName="mobileNo"
+							minlength="10" maxlength="10" placeholder="{{'mobile_no' | translate: translateKey}}"
+							required>
+						<control-messages [control]="vehicleRegistrationForm.get('mobileNo')"></control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<input matInput autocomplete="off" maxlength="100" appPreventSpace
+							placeholder="{{'email' | translate:translateKey}}" type="email" formControlName="email">
+						<control-messages [control]="vehicleRegistrationForm.get('email')"></control-messages>
+					</mat-form-field>
+
+					<h2>{{'office_address' | translate: translateKey}}</h2>
+					<app-address #address [requiredFeilds]="true"
+						[addressFormGroup]="vehicleRegistrationForm.get('address')"></app-address>
+
+				</div>
+
+				<div class="fotButtonBar clearfix">
+					<div class="col-sm-12 col-md-12">
+						<button type="button" class="liteBorder pull-left" mat-raised-button (click)="tabIndex = 0">{{'back' |
+							translate: actionBarKey}}</button>
+						<button mat-raised-button class="pull-right" color="primary" (click)="tabIndex = 2">{{'save_and_next' | translate:
+							actionBarKey}}</button>
+						<!-- <button type="button" mat-raised-button color="warn" (click)="resetForm()">{{'clear' | translate: actionBarKey}}</button> -->
+					</div>
+				</div>
+
+			</mat-tab>
+			<!-- second step end-->
+
+			<!-- third step start-->
+			<mat-tab [label]="stepLable3 | translate: translateKey">
+
+				<div class="row stepperMinHeight">
+
+					<div class="col-md-4 ngSelect" formGroupName="billingPeriod">
+						<ng-select placeholder="{{'billing_period' | translate: translateKey}} *"
+							formControlName="code">
+							<ng-option *ngFor="let billingPeriod of billingPeriodArray" [value]="billingPeriod.code">
+								{{billingPeriod.name}}</ng-option>
+						</ng-select>
+						<control-messages [control]="vehicleRegistrationForm.get('billingPeriod').get('code')">
+						</control-messages>
+					</div>
+
+					<div class="col-md-4 ngSelect" formGroupName="ward">
+						<ng-select placeholder="{{'ward_no' | translate: translateKey}} *" formControlName="code">
+							<ng-option *ngFor="let wardNo of wardNoArray" [value]="wardNo.code">{{wardNo.name}}
+							</ng-option>
+						</ng-select>
+						<control-messages [control]="vehicleRegistrationForm.get('ward').get('code')">
+						</control-messages>
+					</div>
+
+					<mat-form-field class="col-md-4">
+						<input type="text" matInput autocomplete="off" maxlength="50" OnlyNumber
+							formControlName="vehicleApplicableRate"
+							placeholder="{{'applicable_tax' | translate: translateKey }}" required>
+						<control-messages [control]="vehicleRegistrationForm.get('vehicleApplicableRate')">
+						</control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<input type="text" matInput autocomplete="off" maxlength="50" OnlyNumber
+							formControlName="vehicleTax"
+							placeholder="{{'applicable_rate_(%)' | translate: translateKey }}" required>
+						<control-messages [control]="vehicleRegistrationForm.get('vehicleTax')"></control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<input type="text" matInput autocomplete="off" maxlength="5" OnlyNumber
+							formControlName="tokenFees" placeholder="{{'token_fees' | translate: translateKey }}"
+							required>
+						<control-messages [control]="vehicleRegistrationForm.get('tokenFees')"></control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<input type="text" matInput autocomplete="off" maxlength="10" OnlyNumber
+							formControlName="dishonorCharges"
+							placeholder="{{'dishonor_charges' | translate: translateKey }}">
+						<control-messages [control]="vehicleRegistrationForm.get('dishonorCharges')"></control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<input type="text" matInput autocomplete="off" maxlength="50" OnlyNumber
+							formControlName="totalPayable" placeholder="{{'total_payble' | translate: translateKey }}"
+							required>
+						<control-messages [control]="vehicleRegistrationForm.get('totalPayable')"></control-messages>
+					</mat-form-field>
+
+					<!-- <mat-form-field class="col-md-4">
+							<input type="text" matInput autocomplete="off" maxlength="50" OnlyNumber formControlName="vehicleTax"
+							 placeholder="{{'vehicle_tax' | translate: translateKey }}" required>
+							<control-messages [control]="vehicleRegistrationForm.get('vehicleTax')"></control-messages>
+						</mat-form-field> -->
+
+					<div class="pl-0 col-md-12">
+						<!-- <payment-option [form]="vehicleRegistrationForm"></payment-option> -->
+					</div>
+				</div>
+
+				<div class="fotButtonBar clearfix">
+					<div class="col-sm-12 col-md-12">
+						<button type="button" class="liteBorder pull-left" mat-raised-button (click)="tabIndex = 1">{{'back' |
+							translate: actionBarKey}}</button>
+						<button mat-raised-button class="pull-right" color="primary" (click)="tabIndex = 3">{{'save_and_next' | translate:
+								actionBarKey}}</button>
+						<!-- <button [disabled]="!isSubmitBtnVisible" mat-raised-button class="pull-right" color="success" (click)="onSubmit()">{{'submit'
+							| translate:
+							actionBarKey}}</button> -->
+						<!-- <button type="button" mat-raised-button color="warn" (click)="resetForm()">{{'clear' | translate: actionBarKey}}</button> -->
+					</div>
+				</div>
+				<!-- <button *ngIf="makePaymentBtn" mat-raised-button color="success" (click)="processPayment()">{{'process_payment' |
+						translate: actionBarKey}}</button> -->
+			</mat-tab>
+
+			<mat-tab>
+				<ng-template mat-tab-label>
+					<div>{{'attachment' | translate: translateKey}}</div>
+				</ng-template>
+				<div class="row">
+					<div class="col-md-4" *ngFor="let doc of attachmentList">
+						<div *ngIf="doc.requiredOnCitizenPortal && doc.isActive && showButton">
+							<label>{{doc.documentLabelEn}}
+								<span class="text-danger" *ngIf="doc.mandatory">*</span>
+							</label>
+							<file-upload [form]="vehicleRegistrationForm" [uploadModel]="doc"></file-upload>
+						</div>
+					</div>
+				</div>
+
+
+
+				<div class="fotButtonBar clearfix">
+					<div class="col-sm-12 col-md-12">
+						<button class="liteBorder pull-left" type="button" mat-raised-button
+							(click)="tabIndex = 2">{{'back' | translate:actionBarKey}}</button>
+						<!-- <button *ngIf="isDeleteBtnShow" class="pull-right" mat-raised-button color="success" (click)="onSubmit()">{{'submit' | translate:actionBarKey}}</button> -->
+						<button [disabled]="!isSubmitBtnVisible" mat-raised-button class="pull-right" color="success"
+							(click)="onSubmit()">{{'submit' | translate: actionBarKey}}</button>
+					</div>
+				</div>
+
+			</mat-tab>
+			<!-- third step end-->
+
+			<!-- If check dishonored then display the check details-->
+			<!-- fourth step start-->
+			<!-- <mat-step [label]="stepLable4 | translate: translateKey">
+					<mat-accordion>
+						<mat-expansion-panel>
+							<mat-expansion-panel-header>
+								<mat-panel-title>
+									Cheque Return Details
+								</mat-panel-title>
+							</mat-expansion-panel-header>
+							<div class="row form-group">
+								<div class="col-md-2">
+									Cheque No:
+								</div>
+								<div class="col-md-10">
+									43523
+								</div>
+							</div>
+							<div class="row form-group">
+								<div class="col-md-2">
+									Cheque Date:
+								</div>
+								<div class="col-md-10">
+									20/02/2018
+								</div>
+							</div>
+							<div class="row form-group">
+								<div class="col-md-2">
+									Bank Name:
+								</div>
+								<div class="col-md-10">
+									HDFC Bank
+								</div>
+							</div>
+							<div class="row form-group">
+								<div class="col-md-2">
+									Receipt No:
+								</div>
+								<div class="col-md-10">
+									1234567890
+								</div>
+							</div>
+							<div class="row form-group">
+								<div class="col-md-2">
+									Receipt Date:
+								</div>
+								<div class="col-md-10">
+									20/02/2018
+								</div>row mt-4
+							</div>row mt-4
+							<div class="row form-grow mt-4roup">
+								<div class="col-mdrow mt-4-2">
+									Cheque Amount:
+								</div>
+								<div class="col-md-10">
+									4,30,200.00
+								</div>
+							</div>
+						</mat-expansion-panel>
+					</mat-accordion>
+
+				</mat-step> -->
+			<!-- fourth step end-->
+
+		</mat-tab-group>
+	</form>
+</mat-card>
+
+<ng-template #template>
+	<div class="modal-header">
+		<h4 class="modal-title pull-left">Receipt & Payment Form</h4>
+		<button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+			<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+	<div class="modal-body">
+		<form [formGroup]="paymentForm">
+			<div class="p-15 pt-4 table-responsive">
+				<table class="table">
+					<thead>
+						<tr>
+							<th>Display Name</th>
+							<th>Amount</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr *ngFor="let obj of taxAmountArray">
+							<td>{{obj.displayName}}</td>
+							<td>{{obj.amount}}</td>
+						</tr>
+						<tr *ngIf="taxAmountArray.length != 0" class="bgEEE">
+							<td>
+								<b>Total</b>
+							</td>
+							<td>
+								{{totalVehicleTaxAmt | number:'.1-2'}}
+							</td>
+						</tr>
+						<tr *ngIf="taxAmountArray.length == 0">
+							<td colspan="2" class="noRecord">
+								<h5 class="text-center">No record found !</h5>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div id="printReceipt"></div>
+			<payment-option [form]="paymentForm"></payment-option>
+
+			<div class="row">
+				<div class="col-md-12 text-right">
+					<button mat-raised-button color="success" [disabled]="!isSubmitBtnVisible"
+						(click)="onVehicleTaxSubmit()">{{'submit'
+						| translate: actionBarKey}}</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</ng-template>
+
+<!-- This div is used to print the receipt when form is submit -->
+<div class="row" id="sectionToPrint"> </div>

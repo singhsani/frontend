@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { FormGroup, FormBuilder, Validators, Form } from '@angular/forms';
-import { SessionStorageService, SessionStorage } from 'angular-web-storage';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { SessionStorageService } from 'angular-web-storage';
 
 import * as _ from 'lodash';
 
 import { AppService } from '../../../../core/services/citizen/app-services/app.service';
+import { ToastrService } from 'ngx-toastr';
+import { ManageRoutes } from '../../../../config/routes-conf';
 
 @Component({
 	selector: 'app-login',
@@ -20,18 +22,22 @@ import { AppService } from '../../../../core/services/citizen/app-services/app.s
 export class LoginComponent implements OnInit {
 
 	loginForm: FormGroup;
-	
+	isValidFlag: boolean = false;
+	loading: boolean = false;
+	manageRoutes: any = ManageRoutes;
+	userNameId = new Date().getTime();
 	/**
 	 * Constructor to declare defualt propeties of class
-	 * @param _appService - Declare App Service property.
-	 * @param _session - Declare session property
-	 * @param _router - Declare routing property.
+	 * @param appService - Declare App Service property.
+	 * @param session - Declare session property
+	 * @param router - Declare routing property.
 	 * @param fb - Declare formbuilder property.
 	 */
-	constructor(
-		private _appService: AppService,
-		private _session: SessionStorageService,
-		private _router: Router, private fb: FormBuilder
+	constructor(private appService: AppService,
+		private session: SessionStorageService,
+		private router: Router,
+		private fb: FormBuilder,
+		private toster: ToastrService
 	) { }
 
 
@@ -39,34 +45,50 @@ export class LoginComponent implements OnInit {
 	 * This method is use for perform initialize time actions.
 	 */
 	ngOnInit() {
-		let accessToken = this._session.get("access_token");
-
+		let accessToken = this.session.get("access_token");
         /**
 		 * If Access Token is valid then redirect to Home Component.
 		 */
 		if (accessToken) {
-			this._router.navigate(['../../citizen']);
+			this.router.navigate([ManageRoutes.getFullRoute('CITIZENDASHBOARD')]);
 		}
 
 		this.loginForm = this.fb.group({
-			username: '',
-			password: ''
+			username: [null, Validators.required],
+			password: [null, Validators.required]
 		});
+
 	}
 
 	/**
 	 * This method is use for get User Authenticated Token from oAuth2 API.
 	 * @param formVals - login form values property.
 	 */
-	onLoginSubmit(formVals: FormGroup) {
+	onLoginSubmit(formVals) {
 
-		this._appService.obtainAccessToken(formVals).subscribe(
-			res => {
-				/**
-				 * Save Access Token.
-				 */
-				this.saveToken(res);
-			});
+		if (formVals.username) {
+			formVals.username = _.trim(formVals.username);
+		}
+
+		this.isValidFlag = false;
+
+		if (this.loginForm.valid) {
+			this.loading = true;
+			this.appService.obtainAccessToken(formVals).subscribe(
+				res => {
+					this.loading = false;
+					this.saveToken(res);
+				},
+				err => {
+					this.loading = false;
+					if (err.error.error_description)
+						this.toster.error(err.error.error_description);
+				}
+			);
+		} else {
+			this.isValidFlag = true;
+		}
+
 	}
 
 	/**
@@ -74,8 +96,8 @@ export class LoginComponent implements OnInit {
 	 * @param token - User Authenticated Token.
 	 */
 	saveToken(token) {
-		this._session.set('access_token', { 'token': token.access_token, now: +new Date }, token.expires_in, 's');
-		this._router.navigate(['../../citizen']);
+		this.session.set('access_token', { 'token': token.access_token, now: +new Date, 'userType': token.userType }, token.expires_in, 's');
+		this.router.navigate([ManageRoutes.getFullRoute('CITIZENDASHBOARD')]);
 	}
 
 }

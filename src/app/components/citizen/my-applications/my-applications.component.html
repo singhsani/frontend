@@ -1,0 +1,211 @@
+<div class="noApplication" *ngIf="resultsLength==0 && !isLoadingResults">
+    <img src="assets/icons/no-application-found.png" alt="">
+    <br> {{'no_application' | translate:translateKey}}
+    <span class="noActi">{{'no_activity' | translate:translateKey}}</span>
+    <a mat-raised-button class="mat-primary" routerLink="../dashboard">{{'create_application' | translate:translateKey}}</a>
+</div>
+<!-- <app-title-bar [title]="'screen_title' | translate:'MyApplicationScreen'"></app-title-bar> -->
+<div class="example-container mat-elevation-z8 borderOne" [hidden]="resultsLength==0">
+
+    <table mat-table [dataSource]="dataSource" class="myApplication" matSort matSortActive="created" matSortDisableClear matSortDirection="asc">
+
+        <ng-container matColumnDef="id">
+            <mat-header-cell *matHeaderCellDef>Sr.No</mat-header-cell>
+            <mat-cell *matCellDef="let row; let i = index;" class="fullWidth">
+                <div class="mobile-label">{{'s_no' | translate:translateKey}}</div>
+                <div class="mobile-label1">:</div>
+                <div class="row-inside"> {{(paginator.pageIndex * paginator.pageSize) + (i+1)}} </div>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="applicantName">
+            <mat-header-cell *matHeaderCellDef>{{'applicant_name' | translate:translateKey}}</mat-header-cell>
+            <mat-cell *matCellDef="let row" class="fullWidth">
+                <div class="mobile-label">{{'applicant_name' | translate:translateKey}}</div>
+                <div class="mobile-label1">:</div>
+                <div class="row-inside"> {{ row.applicantName }}</div>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="fileNumber">
+            <mat-header-cell *matHeaderCellDef>{{'application_number' | translate:translateKey}}</mat-header-cell>
+            <mat-cell *matCellDef="let row" class="fullWidth">
+                <div class="mobile-label">{{'application_number' | translate:translateKey}}</div>
+                <div class="mobile-label1">:</div>
+                <div class="row-inside"> {{ row.fileNumber ? row.fileNumber : row.uniqueId }}</div>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="dateOfApplication">
+            <mat-header-cell *matHeaderCellDef>{{'date_of_application' | translate:translateKey}}</mat-header-cell>
+            <mat-cell *matCellDef="let row" class="fullWidth">
+                <div class="mobile-label">{{'date_of_application' | translate:translateKey}}</div>
+                <div class="mobile-label1">:</div>
+                <div class="row-inside"> {{getProperDate(row.createdDate)}} </div>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="departmentName">
+            <mat-header-cell *matHeaderCellDef>{{'department_name' | translate:translateKey}}</mat-header-cell>
+            <mat-cell *matCellDef="let row" class="fullWidth">
+                <div class="mobile-label">{{'department_name' | translate:translateKey}}</div>
+                <div class="mobile-label1">:</div>
+                <div class="row-inside"> {{row.serviceDetail.name}} </div>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="serviceType">
+            <mat-header-cell *matHeaderCellDef>{{'service_name' | translate:translateKey}}</mat-header-cell>
+            <mat-cell *matCellDef="let row" class="fullWidth">
+                <div class="mobile-label">{{'service_name' | translate:translateKey}}</div>
+                <div class="mobile-label1">:</div>
+                <div class="row-inside">{{ row.serviceDetail.name }}</div>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="fileStatus">
+            <mat-header-cell *matHeaderCellDef>{{'file_status' | translate:translateKey}}</mat-header-cell>
+            <mat-cell *matCellDef="let row" class="fullWidth">
+                <div class="mobile-label">{{'file_status' | translate:translateKey}}</div>
+                <div class="mobile-label1">:</div>
+                <div class="row-inside">
+                    <mat-chip-list>
+                        <span class="{{getFileStatusClass(row.fileStatus)}}" selected="true">{{ row.fileStatusName}}</span>
+                    </mat-chip-list>
+                </div>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+            <mat-header-cell *matHeaderCellDef>{{'action' | translate:translateKey}}</mat-header-cell>
+            <mat-cell *matCellDef="let row">
+                <div class="mobile-label">{{'action' | translate:translateKey}}</div>
+                <div class="mobile-label1" *ngIf="isMoreBtnVisible(row)">:</div>
+                <button *ngIf="isMoreBtnVisible(row)" class="actionBtn" mat-button [matMenuTriggerFor]="menu">
+                    <mat-icon>more_vert</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu">
+
+                    <button mat-menu-item *ngIf="isEditOptDisplay(row)" color="primary" (click)="redirectToEdit(row.serviceDetail.code, row.serviceFormId)">
+                        <mat-icon class="m-1" title="{{'edit_application' | translate:translateKey}}">edit</mat-icon>
+                        {{'edit_application' | translate:translateKey}}
+                    </button>
+
+                    <button mat-menu-item *ngIf="isRejectNoteOptDisplay(row)" color="primary" (click)="openModal(rejectTemplate);remarksDisplay(row)">
+                        <mat-icon class="m-1" title="Why Rejected?">help_outline</mat-icon>
+                        Why Rejected
+                    </button>
+                    
+                    <button mat-menu-item *ngIf="isDeleteOptDisplay(row)" color="primary" (click)="deleteRecord(row.serviceDetail.code, row.serviceFormId)">
+                        <mat-icon class="m-1" title="{{'delete_application' | translate:translateKey}}">delete</mat-icon>
+                        {{'delete_application' | translate:translateKey}}
+                    </button>
+                    <!-- <button class="btn btn-default" mwlConfirmationPopover [popoverTitle]="Delete" [popoverMessage]="Are you sure?" placement="left" (confirm)="deleteRecord(row.serviceDetail.code, row.serviceFormId)" (cancel)="">
+                                                                    <mat-icon title="Delete">delete</mat-icon>
+                                                                </button> -->
+                    <!-- <button mat-icon-button [disabled]="!row.canSubmit" [style.color]="'#4CAF50'" (click)="submitRecord(row.serviceDetail.code, row.serviceDetail.name, row.serviceFormId)">
+                                                                    <mat-icon title="Submit">done_all</mat-icon>
+                                                                </button> -->
+                    <button mat-menu-item *ngIf="isPreviewOptDisplay(row)" color="primary" (click)="redirectToEdit(row.serviceDetail.code, row.serviceFormId)">
+                        <mat-icon class="m-1" title="{{'preview_application' | translate:translateKey}}">remove_red_eye</mat-icon>
+                        {{'preview_application' | translate:translateKey}}
+                    </button>
+                    
+                    <button mat-menu-item *ngIf="row.fileStatus == 'PAYMENT_RECEIVED' || (row.fileStatus == 'SUBMITTED' && row.serviceDetail.code != 'HEL-DR')"   color="primary" (click)="printReceipt(row.serviceDetail.code, row.serviceDetail.name, row.serviceFormId)">
+                        <mat-icon class="m-1" title="{{'print_receipt' | translate:translateKey}}">print</mat-icon>
+                        {{'print_receipt' | translate:translateKey}}
+                    </button>
+                    
+                    <button mat-menu-item *ngIf="isPrintViewDisplay(row)" color="primary" (click)="printView(row.serviceDetail.code, row.serviceDetail.name, row.serviceFormId)">
+                        <mat-icon class="m-1" title="{{'print_view' | translate:translateKey}}">pageview</mat-icon>
+                        {{'print_view' | translate:translateKey}}
+                    </button>
+                    
+                    <button mat-menu-item *ngIf="isAppJsonOptDisplay(row)" color="primary" (click)="openModal(template);jsonDisplay(row.serviceDetail.code, row.serviceDetail.name, row.serviceFormId)">
+                        <mat-icon class="m-1" title="{{'application_json' | translate:translateKey}}">center_focus_weak</mat-icon>
+                        {{'application_json' | translate:translateKey}}
+                    </button>
+
+                    <button (click)="redirectAppointment(row.serviceDetail.code, row.serviceFormId)" mat-menu-item color="primary" *ngIf="((row.fileStatus === 'PAYMENT_RECEIVED' || row.fileStatus === 'SUBMITTED') && row.serviceDetail.appointmentRequired == true)">
+                        <mat-icon class="m-1" title="{{'reschedule_appointment' | translate:translateKey}}">schedule</mat-icon>
+                        {{'reschedule_appointment' | translate:translateKey}}
+                    </button>
+
+                    <!-- Note : 'PAYMENT' fileStatus means payment is pandding -->
+                    <button mat-menu-item *ngIf="(row.fileStatus === 'PAYMENT')" color="primary" (click)="redirectToPayment(row.serviceDetail.code, row.serviceFormId)">
+                        <!-- <mat-icon class="m-1" title="{{'attach_money' | translate:translateKey}}">&#8377;</mat-icon> -->
+                        <i class="fa fa-inr m-1" title="{{'attach_money' | translate:translateKey}}" aria-hidden="true"></i>
+                        {{'payment' | translate:translateKey}}
+                    </button>
+
+                </mat-menu>
+            </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </table>
+
+    <mat-paginator showFirstLastButtons [hidden]="resultsLength==0" [pageSizeOptions]="[5, 10, 25, 100]" [length]="resultsLength">
+    </mat-paginator>
+</div>
+
+<select-payment-gateway #paymentGateway></select-payment-gateway>
+
+<!-- The Modal -->
+<ng-template #template>
+    <div class="modal-header">
+        <div class="col-9">
+            <h5 class="modal-title pull-left">{{'application_json' | translate:translateKey}}</h5>
+        </div>
+        <div class="col-1">
+            <button class="pull-left mat-icon-button" (click)="copyText(copytext)">
+                <mat-icon title="{{'copy_clipboard' | translate:translateKey}}">content_copy</mat-icon>
+            </button>
+        </div>
+        <div class="col-1">
+            <button title="{{'close' | translate:translateKey}}" class=" mat-icon-button" aria-label="Close" (click)="modalRef.hide()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </div>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-12">
+                <textarea type="text" readonly class="text-left textjson" value="{{JSONdata}}" #copytext> 
+                    </textarea>
+            </div>
+        </div>
+        <!-- <pre class="text-left" #copytext style="color: #9cdcfe;background: #212529;overflow: hidden">{{JSONdata}}</pre> -->
+    </div>
+</ng-template>
+
+<!-- This modal is use for displaying application reject note-->
+<ng-template #rejectTemplate>
+    <div class="modal-header">
+        <div class="col-9">
+            <h5 class="modal-title pull-left">Remarks</h5>
+        </div>
+        <div class="col-1">
+            <button class="pull-left mat-icon-button" (click)="copyText(copytext)">
+                <mat-icon title="{{'copy_clipboard' | translate:translateKey}}">content_copy</mat-icon>
+            </button>
+        </div>
+        <div class="col-1">
+            <button title="{{'close' | translate:translateKey}}" class=" mat-icon-button" aria-label="Close" (click)="modalRef.hide()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </div>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-12">
+                <div type="text" readonly class="text-left remarks" [innerHtml]="getInnerHTML()" #copytext> 
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+<!-- this div is used for printing the receipt -->
+<div id="sectionToPrint"></div>

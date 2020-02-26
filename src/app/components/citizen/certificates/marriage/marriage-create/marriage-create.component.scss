@@ -1,0 +1,26 @@
+// .mat-step-header{
+//     $root: &;
+//     --s-stepper-bullet: 2rem;
+//     --s-stepper-bullet-half: calc( var(--s-stepper-bullet) / 2);
+//     --step-transition: background .5s, color .5s; 
+//     --step-content: '✔︎';
+//     --step-color: hsl(0, 0%, 70%);
+//     --step-bar-bg: var(--c-accent);
+//     --step-bullet-bg: var(--step-bar-bg);
+//     --step-bullet-color: white;
+//     counter-reset: current-step;
+// }
+.mat-error {
+    bottom: -15px;
+    left: 0;
+    font-size: 11px;
+}
+
+.imageSize {
+    width: 100px;
+    height: 100px;
+}
+
+.formClass {
+    margin-bottom: 0 !important;
+}

@@ -1,0 +1,53 @@
+<record-search *ngIf="showSearchForm" [apiType]="manageRoutes.getApiTypeFromApiCode(this.apiCode)"
+    (searchResult)="showDuplicateForm($event)">
+</record-search>
+
+<div [hidden]="isVisibeDuplicateForm">
+
+    <app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
+
+    <mat-card class="formClass cardBorder">
+
+        <form [formGroup]="deathDuplicateForm" autocomplete="off" ngNativeValidate>
+            <mat-tab-group mat-stretch-tabs class="stepperNav" dynamicHeight="true">
+                <mat-tab [label]="'screen_title' | translate: translateKey">
+
+                    <div class="row">
+                        <div class="col-md-4 p-5" formGroupName="duplicateCopies">
+                            <mat-label>{{'duplicate_copies' | translate:translateKey}}</mat-label>
+                            <mat-radio-group formControlName="code">
+                                <mat-radio-button *ngFor="let yesNo of ISYESNO" [value]="yesNo.code">
+                                    {{yesNo.name}}
+                                </mat-radio-button>
+                                <control-messages [control]="deathDuplicateForm.get('duplicateCopies').get('code')">
+                                </control-messages>
+                            </mat-radio-group>
+                        </div>
+
+                        <div class="col-md-4 p-5" formGroupName="duplicateCopyMode">
+                            <ng-select formControlName="code"
+                                placeholder="{{ 'duplicate_copy_mode' | translate:translateKey }}*">
+                                <ng-option *ngFor="let duplicatemode of DuplicateCopyMode" [value]="duplicatemode.code">
+                                    {{duplicatemode.name}}
+                                </ng-option>
+                            </ng-select>
+                            <control-messages [control]="deathDuplicateForm.get('duplicateCopyMode').get('code')">
+                            </control-messages>
+                        </div>
+
+                        <mat-form-field class="col-md-4 p-5">
+                            <input matInput maxlength="2" type="number" [min]="0" OnlyNumber
+                                placeholder="{{'total_copies' | translate:translateKey}}" formControlName="totalCopies">
+                            <control-messages [control]="deathDuplicateForm.get('totalCopies')"></control-messages>
+                        </mat-form-field>
+
+                    </div>
+                    <app-action-bar [paymentGateway]="paymentGateway" [isstepper]="false" [form]="deathDuplicateForm"
+                        [stepInfo]="{step: 'final', next: 0, back: 0}" (handleErrors)="handleErrorsOnSubmit($event)">
+                    </app-action-bar>
+                </mat-tab>
+                <select-payment-gateway #paymentGateway></select-payment-gateway>
+            </mat-tab-group>
+        </form>
+    </mat-card>
+</div>

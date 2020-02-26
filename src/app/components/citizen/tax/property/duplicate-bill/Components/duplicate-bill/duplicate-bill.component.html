@@ -1,0 +1,21 @@
+<app-title-bar [title]="'Application for Duplicate Bill'"></app-title-bar>
+    <!-- <mat-card class="cardH1">
+        <h1>Application for Duplicate Bill</h1>
+    </mat-card> -->
+<div>
+    <!-- Search Component Start -->
+    <div *ngIf="!isShowForm">
+        <app-duplicate-bill-search></app-duplicate-bill-search>
+    </div>
+    <!-- Form Component Start -->
+    <div *ngIf="isShowForm">
+        <app-payment></app-payment>
+    </div>
+    <!-- Form Component End -->
+    <!-- Table Component Start -->
+    <div [hidden]="!isShowTable">
+        <app-duplicate-bill-table></app-duplicate-bill-table>
+    </div>
+    <!-- Table Component End -->
+</div>
+<br>

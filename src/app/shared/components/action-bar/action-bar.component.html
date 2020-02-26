@@ -1,0 +1,42 @@
+<div *ngIf="isstepper" class="row mt-4 fotButtonBar">
+	<div class="col-sm-12 col-md-12">
+		<div class="pull-left">
+			<button class="liteBorder" type="button" *ngIf="stepInfo.step != 'step1'" mat-raised-button (click)="nextOrPrevious('back')">{{'back' | translate:translateKey}}</button>
+			<button type="button" *ngIf="!form.get('canEdit').value && stepInfo.step !== 'final'" mat-raised-button (click)="nextOrPrevious('next')">{{'next' | translate:translateKey}}</button>
+
+			<!-- <button type="button" mat-raised-button (click)="cancelForm()">Cancel</button> -->
+		</div>
+
+		<div class="pull-right">
+
+			<button type="button" mat-raised-button color="primary" [disabled]="isSubmitBtnDisabled" *ngIf="form.get('canEdit').value"
+			 (click)="saveAsDraft()">{{(stepInfo.step == 'final' ? 'save' : 'save_and_next') | translate:translateKey}}</button>
+
+			<ng-container *ngIf="stepInfo.step == 'final' && !form.get('serviceDetail').get('appointmentRequired').value">
+				<button type="button" mat-raised-button color="primary" [disabled]="isSubmitBtnDisabled" *ngIf="form.get('canEdit').value"
+				 (click)="onSubmit()">{{'submit' | translate:translateKey}}</button>
+			</ng-container>
+
+			<ng-container *ngIf="stepInfo.step == 'final' && form.get('serviceDetail').get('appointmentRequired').value">
+				<button type="button" mat-raised-button color="primary" [disabled]="isSubmitBtnDisabled" *ngIf="form.get('canEdit').value"
+				 (click)="payAndScheduleAppointment()">{{'pay_and_schedule_appointment' | translate:translateKey}}</button>
+			</ng-container>
+		</div>
+
+	</div>
+</div>
+
+<div *ngIf="!isstepper" class="row mt-4 fotButtonBar">
+	<div class="col-sm-12 col-md-12">
+		<!-- <div class="pull-left">
+			<button type="button" mat-raised-button (click)="cancelForm()">Cancel</button>
+		</div> -->
+		<div class="pull-right">
+			<button type="button" mat-raised-button color="primary" [disabled]="isSubmitBtnDisabled" *ngIf="form.get('canEdit').value"
+			 (click)="saveAsDraft()">{{(stepInfo.step == 'final' ? 'save' : 'save_and_next') | translate:translateKey}}</button>
+
+			<button type="button" mat-raised-button color="primary" [disabled]="isSubmitBtnDisabled" *ngIf="form.get('canEdit').value"
+			 (click)="onSubmit()">{{'submit' | translate:translateKey}}</button>
+		</div>
+	</div>
+</div>

@@ -9,13 +9,22 @@ import { SignUpComponent } from './sign-up/sign-up.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 /* Import auth components end */
 
+import { LoginThroughAdminComponent } from './login-through-admin/login-through-admin.component';
+import { LoginLayoutComponent } from './../../../layouts/login-layout/login-layout.component';
+
 const routes: Routes = [
-	{ path: '', redirectTo: 'citizen/auth/login', pathMatch: 'full' },
-	{ path: 'citizen/auth/login', component: LoginComponent },
-	{ path: 'citizen/auth/signup', component: SignUpComponent },
-	{ path: 'citizen/auth/user-verify', component: UserVerificationComponent },
-	{ path: 'citizen/auth/forgot-password', component: ForgotPasswordComponent },
-	{ path: 'citizen/auth/reset-password', component: ResetPasswordComponent },
+	{
+		path: 'auth', component: LoginLayoutComponent,
+		children: [
+			{ path: '', redirectTo: 'login', pathMatch: 'full' },
+			{ path: 'login', component: LoginComponent },
+			{ path: 'signup', component: SignUpComponent },
+			{ path: 'user-verify', component: UserVerificationComponent },
+			{ path: 'forgot-password', component: ForgotPasswordComponent },
+			{ path: 'reset-password', component: ResetPasswordComponent },
+			{ path: 'login-through-admin', component: LoginThroughAdminComponent },
+		]
+	}
 ];
 
 @NgModule({

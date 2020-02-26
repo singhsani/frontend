@@ -1,11 +1,12 @@
 import { TestBed, inject } from '@angular/core/testing';
 
 import { CommonService } from './common.service';
+import { SessionStorageService } from 'angular-web-storage';
 
-describe('CommonService', () => {
+ describe('Shared Services : CommonService', () => {
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-			providers: [CommonService]
+			providers: [CommonService, SessionStorageService]
 		});
 	});
 

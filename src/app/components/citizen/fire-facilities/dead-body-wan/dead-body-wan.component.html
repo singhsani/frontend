@@ -1,0 +1,161 @@
+<app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
+
+<mat-card class="formClass cardBorder">
+	<form [formGroup]="deadBodyWanForm">
+		<mat-tab-group [(selectedIndex)]="fireFacilityConfig.currentTabIndex" dynamicHeight="true" mat-stretch-tabs class="stepperNav">
+
+			<!-- step 1 Starts -->
+			<mat-tab>
+				<ng-template mat-tab-label>
+					<div>{{'applicant_detail' | translate:translateKey}}</div>
+				</ng-template>
+
+				<div class="row">
+					<mat-form-field class="col-md-4" *ngIf="deadBodyWanForm.get('oldReferenceNumber').value">
+						<input matInput readonly placeholder="{{'old_refrance_number' | translate:translateKey}}" formControlName="oldReferenceNumber">
+					</mat-form-field>
+				</div>
+
+				<div class="row">
+
+					<mat-form-field class="col-md-4">
+						<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace' required maxlength="100"
+						 placeholder="{{'applicant_Name' | translate:translateKey}}" formControlName="applicantName">
+						<control-messages [control]="deadBodyWanForm.get('applicantName')"></control-messages>
+					</mat-form-field>
+
+
+					<mat-form-field class="col-md-4">
+						<input matInput [min]="disablePastDate" [matDatepicker]="DateOfapplicationDate" formControlName="applicationDate"
+						 (dateChange)="dateFormat($event.value,'applicationDate')" placeholder="{{ 'application_date' | translate:translateKey }}">
+						<mat-datepicker-toggle matSuffix [for]="DateOfapplicationDate"></mat-datepicker-toggle>
+						<mat-datepicker touchUi="true" #DateOfapplicationDate></mat-datepicker>
+						<div align="end" class="default-show-hint mat-hint mat-right">{{fireFacilityConfig.DATE_HINT_MSG}}</div>
+						<control-messages [control]="deadBodyWanForm.get('applicationDate')"></control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<textarea matInput rows="3" cols="50" required maxlength="300" placeholder="{{'applicant_address' | translate:translateKey}}"
+						 formControlName="applicantAddress"></textarea>
+						<control-messages [control]="deadBodyWanForm.get('applicantAddress')"></control-messages>
+					</mat-form-field>
+
+					<div class="col-md-4 pl-0 ml-0">
+						<mat-form-field class="col-md-10">
+							<mat-label>{{'vehicle_requirement_time' | translate:translateKey}}</mat-label>
+							<input (blur)="changeTimeFormat($event.target.value, 'vehicleRequirementTime')" placeholder="HH:MM" matInput
+							 type="time" atp-time-picker theme="dark" formControlName="vehicleRequirementTime" required />
+							<control-messages [control]="deadBodyWanForm.get('vehicleRequirementTime')"></control-messages>
+						</mat-form-field>
+						<button class="ml-0 pl-0" [disabled]="!deadBodyWanForm?.get('canEdit')?.value" mat-icon-button type="button"
+						 (click)="openTimePicker('vehicleRequirementTime')">
+							<mat-icon matTooltip="Select Time" color="primary">alarm</mat-icon>
+						</button>
+					</div>
+
+					<mat-form-field class="col-md-4">
+						<!-- <span matPrefix>+91 &nbsp;</span> -->
+						<input matInput OnlyNumber placeholder="{{'mobile_No' | translate:translateKey}}" type="tel" [maxlength]="fireFacilityConfig.mobileNumber_maxLength"
+						 [minlength]="fireFacilityConfig.mobileNumber_minLength" formControlName="mobileNo" required>
+						<control-messages [control]="deadBodyWanForm.get('mobileNo')"></control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace' required maxlength="150"
+						 placeholder="{{'dead_person_name' | translate:translateKey}}" formControlName="deadPersonName">
+						<control-messages [control]="deadBodyWanForm.get('deadPersonName')"></control-messages>
+					</mat-form-field>
+
+				</div>
+
+				<div class="row">
+					<mat-form-field class="col-md-4">
+						<input matInput type="text" required maxlength="300" placeholder="{{'from_place' | translate:translateKey}}"
+						 formControlName="fromPlace">
+						<control-messages [control]="deadBodyWanForm.get('fromPlace')"></control-messages>
+					</mat-form-field>
+					<mat-form-field class="col-md-4">
+						<input matInput type="text" required maxlength="150" placeholder="{{'to_place' | translate:translateKey}}"
+						 formControlName="toPlace">
+						<control-messages [control]="deadBodyWanForm.get('toPlace')"></control-messages>
+					</mat-form-field>
+				</div>
+
+				<div class="row">
+					<mat-form-field class="col-md-4">
+						<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace' required maxlength="150"
+						 placeholder="{{'name_of_driver' | translate:translateKey}}" formControlName="nameOfDriver">
+						<control-messages [control]="deadBodyWanForm.get('nameOfDriver')"></control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace' required maxlength="150"
+						 placeholder="{{'name_of_attender' | translate:translateKey}}" formControlName="nameOfAttender">
+						<control-messages [control]="deadBodyWanForm.get('nameOfAttender')"></control-messages>
+					</mat-form-field>
+
+					<div class="col-md-4 radioBtnError">
+						<mat-label>{{'within_vmc_boundary' | translate:translateKey }} *</mat-label>
+						<mat-radio-group formControlName="withinVMCBoundary" required>
+							<mat-radio-button [value]="true">
+								{{'Yes' | translate:translateKey }}
+							</mat-radio-button>
+							<mat-radio-button [value]="false">
+								{{'No' | translate:translateKey }}
+							</mat-radio-button>
+						</mat-radio-group>
+						<control-messages [control]="deadBodyWanForm.get('withinVMCBoundary')"></control-messages>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-4 pl-0 ml-0">
+						<mat-form-field class="col-md-10">
+							<mat-label>{{'departure_time' | translate:translateKey}}</mat-label>
+							<input (blur)="changeTimeFormat($event.target.value, 'departureTime')" placeholder="HH:MM" matInput type="time"
+							 atp-time-picker theme="dark" formControlName="departureTime" required />
+							<control-messages [control]="deadBodyWanForm.get('departureTime')"></control-messages>
+						</mat-form-field>
+						<button class="ml-0 pl-0" [disabled]="!deadBodyWanForm?.get('canEdit')?.value" mat-icon-button type="button"
+						 (click)="openTimePicker('departureTime')">
+							<mat-icon matTooltip="Select Time" color="primary">alarm</mat-icon>
+						</button>
+					</div>
+					<div class="col-md-4 pl-0 ml-0">
+						<mat-form-field class="col-md-10">
+							<mat-label>{{'arrival_time' | translate:translateKey}}</mat-label>
+							<input (blur)="changeTimeFormat($event.target.value, 'arrivalTime')" placeholder="HH:MM" matInput type="time"
+							 atp-time-picker theme="dark" formControlName="arrivalTime" required />
+							<control-messages [control]="deadBodyWanForm.get('arrivalTime')"></control-messages>
+						</mat-form-field>
+						<button class="ml-0 pl-0" [disabled]="!deadBodyWanForm?.get('canEdit')?.value" mat-icon-button type="button"
+						 (click)="openTimePicker('arrivalTime')">
+							<mat-icon matTooltip="Select Time" color="primary">alarm</mat-icon>
+						</button>
+					</div>
+				</div>
+
+				<div class="row">
+					<mat-form-field class="col-md-4">
+						<input matInput OnlyNumber placeholder="{{'concession_detail' | translate:translateKey}}" type="tel" maxlength="3"
+						 formControlName="concessionDetail">
+						<control-messages [control]="deadBodyWanForm.get('concessionDetail')"></control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<input matInput type="text" required maxlength="150" placeholder="{{'name_of_operator' | translate:translateKey}}"
+						 formControlName="nameOfOperator">
+						<control-messages [control]="deadBodyWanForm.get('nameOfOperator')"></control-messages>
+					</mat-form-field>
+				</div>
+
+				<app-action-bar [paymentGateway]="paymentGateway" [form]="deadBodyWanForm" (tabIndex)="fireFacilityConfig.onFormTabChange($event)" (handleErrors)="handleErrorsOnSubmit($event)"
+				 [isstepper]="false" [stepInfo]="{step: 'final', next: 1, back: 0}"></app-action-bar>
+
+			</mat-tab>
+			<!-- step 1 Ends -->
+			<select-payment-gateway #paymentGateway></select-payment-gateway>
+
+		</mat-tab-group>
+	</form>
+</mat-card>

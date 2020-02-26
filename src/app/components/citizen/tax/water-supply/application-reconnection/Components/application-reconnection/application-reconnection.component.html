@@ -1,0 +1,31 @@
+<app-title-bar [title]="'Application for Reconnection'"></app-title-bar>
+<!-- <mat-card class="cardH1">
+    <h1>Application for Reconnection</h1>
+</mat-card> -->
+<div [hidden]="isShowForm">
+   <app-application-reconnection-form></app-application-reconnection-form>
+</div>
+
+<div *ngIf="isShowWaterBillDetail">
+    <app-water-bill-detail></app-water-bill-detail>
+</div>
+
+<div *ngIf="isShowWaterTaxDetail">
+    <app-water-tax-detail></app-water-tax-detail>
+</div>
+
+<div *ngIf="isShowPropertyDetail">
+    <app-property-detail></app-property-detail>
+</div>
+
+<div *ngIf="isShowPropertyBillDetail">
+    <app-property-bill-detail></app-property-bill-detail>
+</div>
+
+<div *ngIf="isShowPropertyTaxDetail">
+    <app-property-tax-detail></app-property-tax-detail>
+</div>
+<div *ngIf="isShowApproval">
+    <app-application-disconnection-approval></app-application-disconnection-approval>
+</div>
+<br>

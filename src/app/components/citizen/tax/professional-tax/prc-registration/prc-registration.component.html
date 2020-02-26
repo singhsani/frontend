@@ -1,0 +1,259 @@
+<app-title-bar [title]="'screen_title' | translate: translateKey">
+    <form class="searchBox">
+
+        <mat-form-field>
+            <input matInput autocomplete="off" class="capitalCase" trim="blur" appAlphaNumeric maxlength="12" #ecrcNoTextBox #searchInput="matInput" type="text"
+                placeholder="{{'pec_no' | translate: pecTranslateKey}}">
+            <button mat-button matSuffix mat-icon-button (click)="searchEmpRegByECRCNo($event,ecrcNoTextBox.value)">
+                <mat-icon>search</mat-icon>
+            </button>
+        </mat-form-field>
+
+        <!-- <button mat-raised-button type="button" class="editBtn" [hidden]="!prcRegForm.get('pecNo').value" color="primary" (click)="editPRCDetail()">
+            <mat-icon>edit</mat-icon>{{'edit' | translate:translateKey}}</button> -->
+    </form>
+</app-title-bar>
+
+<mat-card class="formClass cardBorder">
+    <!--Start  form  -->
+    <mat-tab-group mat-stretch-tabs class="stepperNav" [(selectedIndex)]="tabIndex" dynamicHeight="true">
+
+        <!-- first step start-->
+        <mat-tab [label]="stepLable1 | translate: translateKey">
+
+            <form [formGroup]="prcRegForm">
+                <div class="row stepperMinHeight">
+
+                    <mat-form-field class="col-md-4">
+                        <input matInput autocomplete="off" maxlength="100" formControlName="pecNo" type="text" placeholder="{{'pec_no' | translate: pecTranslateKey}}">
+                    </mat-form-field>
+
+                    <!-- <mat-form-field class="col-md-4">
+                        <input matInput autocomplete="off" maxlength="100" formControlName="prcNo" type="text" placeholder="{{'prc_no' | translate: translateKey}}">
+                    </mat-form-field> -->
+
+                    <mat-form-field class="col-md-4">
+                        <input matInput autocomplete="off" appDate formControlName="registrationDate" [max]="maxDate" [matDatepicker]="picker" (dateChange)="onDateChange('registrationDate', $event.value)"
+                            placeholder="{{'registration_date' | translate: pecTranslateKey}}" required>
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker touchUi="true" #picker></mat-datepicker>
+                        <div align="end" class="default-show-hint mat-hint mat-right">{{config.DATE_HINT_MSG}}</div>
+                    </mat-form-field>
+
+                    <mat-form-field class="col-md-4">
+                        <input matInput autocomplete="off" maxlength="100" formControlName="applicantFullName" type="text" placeholder="{{'applicant_full_name' | translate: pecTranslateKey}}"
+                            required>
+                    </mat-form-field>
+
+                    <div class="col-md-4 radioBtnError" formGroupName="gender">
+                        <mat-label>{{'gender' | translate: pecTranslateKey}} *</mat-label>
+                        <mat-radio-group class="example-radio-group" formControlName="code">
+                            <mat-radio-button [value]="gender.code" *ngFor="let gender of genderArray">{{gender.name}}</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+
+                    <mat-form-field class="col-md-4">
+                        <input matInput autocomplete="off" maxlength="100" type="text" formControlName="establishmentName" placeholder="{{'establishment_name' | translate: pecTranslateKey}}"
+                            required>
+                    </mat-form-field>
+
+                    <mat-form-field class="col-md-4">
+                        <span matPrefix>+91 &nbsp;</span>
+                        <input matInput OnlyNumber placeholder="{{'contact_no' | translate:pecTranslateKey}}" type="tel" maxlength="10" minlength="10"
+                            formControlName="contactNo" required>
+                    </mat-form-field>
+
+                    <mat-form-field class="col-md-4">
+                        <input matInput autocomplete="off" maxlength="100" placeholder="{{'email' | translate:pecTranslateKey}}" type="email" formControlName="email">
+                    </mat-form-field>
+
+                    <mat-form-field class="col-md-4">
+                        <input matInput autocomplete="off" appDate [min]="prcRegForm.get('commencementDate').value" [max]="maxDate" formControlName="rcDate"
+                            [matDatepicker]="rcpicker" (dateChange)="onDateChange('rcDate', $event.value)" placeholder="{{'rc_date' | translate: pecTranslateKey}}"
+                            required>
+                        <mat-datepicker-toggle matSuffix [for]="rcpicker"></mat-datepicker-toggle>
+                        <mat-datepicker touchUi="true" #rcpicker></mat-datepicker>
+                        <div align="end" class="default-show-hint mat-hint mat-right">{{config.DATE_HINT_MSG}}</div>
+                        <control-messages [control]="prcRegForm.get('rcDate')"></control-messages>
+                    </mat-form-field>
+
+                    <div class="col-md-4 ngSelect" formGroupName="ward">
+                        <ng-select placeholder="{{'ward_no' | translate: pecTranslateKey}}" formControlName="code">
+                            <ng-option *ngFor="let ward of wardNoArray" [value]="ward.code">{{ward.name}}</ng-option>
+                        </ng-select>
+                    </div>
+
+                    <mat-form-field class="col-md-4">
+                        <input matInput autocomplete="off" appDate formControlName="applicantDob" [max]="maxDate" [matDatepicker]="dobpicker" (dateChange)="onDateChange('applicantDob', $event.value)"
+                            placeholder="{{'applicant_dob' | translate: pecTranslateKey}}">
+                        <mat-datepicker-toggle matSuffix [for]="dobpicker"></mat-datepicker-toggle>
+                        <mat-datepicker touchUi="true" #dobpicker></mat-datepicker>
+                        <div align="end" class="default-show-hint mat-hint mat-right">{{config.DATE_HINT_MSG}}</div>
+                    </mat-form-field>
+
+                    <mat-form-field class="col-md-4">
+                        <input matInput autocomplete="off" appDate formControlName="commencementDate" [max]="maxDate" [matDatepicker]="docpicker"
+                            (dateChange)="onDateChange('commencementDate', $event.value)" placeholder="{{'date_of_commencement' | translate: pecTranslateKey}}">
+                        <mat-datepicker-toggle matSuffix [for]="docpicker"></mat-datepicker-toggle>
+                        <mat-datepicker touchUi="true" #docpicker></mat-datepicker>
+                        <div align="end" class="default-show-hint mat-hint mat-right">{{config.DATE_HINT_MSG}}</div>
+                    </mat-form-field>
+
+                    <mat-form-field class="col-md-4">
+                        <input matInput autocomplete="off" type="text" maxlength="50" formControlName="vatNo" placeholder="{{'vat_no' | translate: pecTranslateKey}}">
+                        <control-messages [control]="prcRegForm.get('vatNo')"></control-messages>
+                    </mat-form-field>
+
+                    <mat-form-field class="col-md-4">
+                        <input matInput autocomplete="off" type="text" formControlName="aadharNo" OnlyNumber minlength="12" maxlength="12" placeholder="{{'aadhaar_no' | translate: pecTranslateKey}}">
+                        <control-messages [control]="prcRegForm.get('aadharNo')"></control-messages>
+                    </mat-form-field>
+
+                    <div class="ngSelect col-md-4" formGroupName="professionConstitution">
+                        <ng-select placeholder="{{'profession' | translate: pecTranslateKey}}" formControlName="code">
+                            <ng-option *ngFor="let profession of professionArray" [value]="profession.code">{{profession.name}}</ng-option>
+                        </ng-select>
+                    </div>
+
+                    <div class="ngSelect col-md-4" formGroupName="constitution">
+                        <ng-select placeholder="{{'constitution' | translate: pecTranslateKey}}" formControlName="code">
+                            <ng-option *ngFor="let constitution of constitutionArray" [value]="constitution.code">{{constitution.name}}</ng-option>
+                        </ng-select>
+                    </div>
+
+                    <h2>{{'office_address' | translate: pecTranslateKey}}</h2>
+                    <app-address #officeAddr [requiredFeilds]="true" [addressFormGroup]="prcRegForm.get('officeAddress')"></app-address>
+
+                    <h2>{{'residential_address' | translate: pecTranslateKey}}</h2>
+                    <app-address #resAddr [requiredFeilds]="true" [addressFormGroup]="prcRegForm.get('residentialAddress')"></app-address>
+
+                </div>
+
+                <div class="fotButtonBar margin140px clearfix">
+                    <div class="col-sm-12 col-md-12">
+                        <button mat-raised-button type="button" class="pull-right" color="primary" (click)="tabIndex = 1">{{'next' | translate:actionBarKey}}</button>
+                    </div>
+                </div>
+
+            </form>
+        </mat-tab>
+
+        <!-- end first step -->
+
+        <!-- second step start-->
+        <mat-tab [label]="stepLable2 | translate: translateKey">
+            <div class="row stepperMinHeight">
+                <div class="col">
+                    <button *ngIf="!isPRCExist" mat-raised-button color="primary" (click)="openEmpModal(template)">
+                        <mat-icon matPrefix>add</mat-icon>Add Employee Details
+                    </button>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>YEAR</th>
+                                    <th>MONTH</th>
+                                    <th>TOTAL EMPLOYEES</th>
+                                    <th>ACTION</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngIf="empDetailsListArray.length == 0">
+                                    <td colspan="5" class="noRecord">
+                                        <h5 class="text-center">No record found !</h5>
+                                    </td>
+                                </tr>
+                                <tr *ngFor="let emp of empDetailsListArray; let i = index">
+                                    <td>{{i+1}}</td>
+                                    <td>{{emp.year}}</td>
+                                    <td>{{emp.month | titlecase}}</td>
+                                    <td>{{emp.totEmpCount}}</td>
+                                    <td class="p-0">
+                                        <button mat-icon-button color="primary" (click)="editEmpModal(template, emp)">
+                                            <mat-icon title="Edit">edit</mat-icon>
+                                        </button>
+                                        <button *ngIf="!isPRCExist" mat-icon-button color="warn" (click)="deleteRecord(i)">
+                                            <mat-icon title="Delete">delete</mat-icon>
+                                        </button>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="fotButtonBar clearfix">
+                <div class="col-sm-12 col-md-12">
+                    <button mat-raised-button class="liteBorder pull-left" type="button" (click)="tabIndex = 0">{{'back' | translate:actionBarKey}}</button>
+                    <button mat-raised-button class="pull-right" color="success" *ngIf="!isPRCExist" (click)="onSubmit()">{{'submit' | translate:actionBarKey}}</button>
+                </div>
+            </div>
+        </mat-tab>
+        <!-- second step end-->
+    </mat-tab-group>
+</mat-card>
+
+<!-- Employee detail modal -->
+<ng-template #template>
+
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Employees Detail</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    <div class="modal-body">
+
+        <mat-card class="height80px">
+            <div class="row">
+                <div class="col-md-6">
+                    <ng-select [disabled]="isEmpEditable" placeholder="{{'year' | translate: translateKey}} *" [(ngModel)]="empDetailYear" (change)="empYearChange($event)">
+                        <ng-option *ngFor="let year of yearArray" [value]="year">{{year}}</ng-option>
+                    </ng-select>
+                </div>
+
+                <div class="col-md-6">
+                    <ng-select [disabled]="isEmpEditable" placeholder="{{'month' | translate: translateKey}} *" [(ngModel)]="empDetailMonth">
+                        <ng-option *ngFor="let month of monthArray | slice:monthIdx:currentMonthIdx " [value]="month">{{month | titlecase}}</ng-option>
+                    </ng-select>
+                </div>
+            </div>
+        </mat-card>
+
+        <mat-card>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>SUB ENTRY DESCRIPTION</th>
+                        <th>NO. OF EMPLOYEE</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let emp of employeeSlabArr; let i=index;">
+                        <td>{{i+1}}</td>
+                        <td>{{emp.name}}</td>
+                        <td>
+                            <input OnlyNumber type="text" maxlength="8" [(ngModel)]="emp.empCount" (keyup)="employeeCount()">
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td class="text-right">
+                            <b>Total Employee</b>
+                        </td>
+                        <td>{{totalEmployees}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </mat-card>
+    </div>
+    <div class="modal-footer">
+        <button type="button" mat-raised-button color="warn" (click)="modalRef.hide()">{{'close' | translate:actionBarKey}}</button>
+        <button mat-raised-button color="success" [disabled]="!(empDetailMonth && empDetailYear)" (click)="onSubmitEmpDetails()">{{'save' | translate:actionBarKey}}</button>
+    </div>
+</ng-template>

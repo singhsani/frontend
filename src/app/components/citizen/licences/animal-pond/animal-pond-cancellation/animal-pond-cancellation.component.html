@@ -1,0 +1,132 @@
+<app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
+
+<mat-card [hidden]="serachLicenceObj.isDisplayCancellationLicenceForm" class="mt-4 formClass">
+  <mat-form-field class="col-md-10">
+    <input matInput required placeholder="{{'search_by_application_no' | translate:translateKey}}" [(ngModel)]="serachLicenceObj.searchLicenceNumber">
+  </mat-form-field>
+  <button class="col-md-2" [disabled]="!serachLicenceObj.searchLicenceNumber" mat-raised-button color="primary" (click)="searchLicence()">{{'search' | translate:translateKey}}</button>
+</mat-card>
+
+<mat-card [hidden]="!serachLicenceObj.isDisplayCancellationLicenceForm" class="formClass cardBorder">
+  <form [formGroup]="animalPondCancellationForm">
+    <mat-tab-group [(selectedIndex)]="tabIndex" dynamicHeight="true" mat-stretch-tabs class="stepperNav">
+
+      <!-- step 1 Starts -->
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <div>{{'license_holder_detail' | translate:translateKey}}</div>
+        </ng-template>
+
+        <div class="row">
+					<mat-form-field class="col-md-4">
+						<input matInput readonly required placeholder="{{'license_no' | translate:translateKey}}" formControlName="refNumber">
+						<control-messages [control]="animalPondCancellationForm.get('refNumber')"></control-messages>
+					</mat-form-field>
+					<!-- <mat-form-field class="col-md-4">
+						<input matInput readonly placeholder="{{'issue_date' | translate:translateKey}}" formControlName="licenseIssueDate">
+						<control-messages [control]="animalPondCancellationForm.get('licenseIssueDate')"></control-messages>
+          </mat-form-field> -->
+          <mat-form-field class="col-md-4">
+						<input matInput  disabled readonly autocomplete="off" appDate
+							[matDatepicker]="DateOflicenseIssueDate" formControlName="licenseIssueDate"
+							(dateChange)="dateFormat($event.value,'licenseIssueDate')"
+							placeholder="{{ 'issue_date' | translate:translateKey }}">
+						<mat-datepicker-toggle matSuffix [for]="DateOflicenseIssueDate"></mat-datepicker-toggle>
+						<mat-datepicker touchUi="true" #DateOflicenseIssueDate></mat-datepicker>
+						<div align="end" class="default-show-hint mat-hint mat-right">
+							{{licenseConfiguration.DATE_HINT_MSG}}</div>
+						<control-messages [control]="animalPondCancellationForm.get('licenseIssueDate')">
+						</control-messages>
+					</mat-form-field>
+				</div>
+
+        <div class="row">
+          <div class="col-md-2 ngSelect" formGroupName="personType">
+            <ng-select placeholder="{{'person_type' | translate:translateKey}} *" formControlName="code">
+              <ng-option *ngFor="let type of PERSON_TYPE" [value]="type.code">{{type.name}}</ng-option>
+            </ng-select>
+            <control-messages [control]="animalPondCancellationForm.get('personType').get('code')"></control-messages>
+          </div>
+          <mat-form-field class="col-md-2">
+            <input matInput type="text" required maxlength="30" appValidationFields validationFieldsType='onlyNameWithOutSpace'
+              placeholder="{{'holder_firstname' | translate:translateKey}}" formControlName="holderFirstName"
+              appGujInputSource targetElement="holderFirstNameGuj" [form]="animalPondCancellationForm">
+            <control-messages [control]="animalPondCancellationForm.get('holderFirstName')"></control-messages>
+          </mat-form-field>
+          <mat-form-field class="col-md-4">
+            <input matInput type="text" required maxlength="30" appValidationFields validationFieldsType='onlyNameWithOutSpace'
+              placeholder="{{'holder_middlename' | translate:translateKey}}" formControlName="holderMiddleName"
+              appGujInputSource targetElement="holderMiddleNameGuj" [form]="animalPondCancellationForm">
+            <control-messages [control]="animalPondCancellationForm.get('holderMiddleName')"></control-messages>
+          </mat-form-field>
+          <mat-form-field class="col-md-4">
+            <input matInput type="text" required maxlength="30" appValidationFields validationFieldsType='onlyNameWithOutSpace'
+              placeholder="{{'holder_lastname' | translate:translateKey}}" formControlName="holderLastName"
+              appGujInputSource targetElement="holderLastNameGuj" [form]="animalPondCancellationForm">
+            <control-messages [control]="animalPondCancellationForm.get('holderLastName')"></control-messages>
+          </mat-form-field>
+        </div>
+
+        <!-- gujarati -->
+        <div class="row">
+          <mat-form-field class="col-md-4">
+            <input matInput type="text" maxlength="90" required formControlName="holderFirstNameGuj" appGujInputTarget
+              [form]="animalPondCancellationForm" placeholder="{{ 'holder_firstname' | translate:translateKey:'gu' }}">
+            <control-messages [control]="animalPondCancellationForm.get('holderFirstNameGuj')"></control-messages>
+          </mat-form-field>
+          <mat-form-field class="col-md-4">
+            <input matInput type="text" required maxlength="90" placeholder="{{'holder_middlename' | translate:translateKey}}"
+              formControlName="holderMiddleNameGuj" appGujInputTarget [form]="animalPondCancellationForm">
+            <control-messages [control]="animalPondCancellationForm.get('holderMiddleNameGuj')"></control-messages>
+          </mat-form-field>
+          <mat-form-field class="col-md-4">
+            <input matInput type="text" required maxlength="90" placeholder="{{'holder_lastname' | translate:translateKey}}"
+              formControlName="holderLastNameGuj" appGujInputTarget [form]="animalPondCancellationForm">
+            <control-messages [control]="animalPondCancellationForm.get('holderLastNameGuj')"></control-messages>
+          </mat-form-field>
+        </div>
+        <!-- /gujarati -->
+
+        <div class="row">
+          <h2>{{'permanat_address' | translate:translateKey}}</h2>
+          <app-address [isDisplayGujFields]="true" #permanantAddressEstablishment [requiredFeilds]="true"
+            [addressFormGroup]="animalPondCancellationForm.get('permanantAddress')"></app-address>
+        </div>
+        <div class="row">
+          <h2>{{'temp_address' | translate:translateKey}}</h2>
+          <app-address [isDisplayGujFields]="true" #permanantAddressEstablishment [requiredFeilds]="true"
+            [addressFormGroup]="animalPondCancellationForm.get('temporaryAddress')"></app-address>
+        </div>
+
+        <mat-form-field class="col-md-4">
+          <input matInput OnlyNumber maxlength="10" formControlName="holderTelephoneNo" placeholder="{{'holder_telephone_no' | translate:translateKey}}">
+        </mat-form-field>
+        <mat-form-field class="col-md-4">
+          <input matInput OnlyNumber maxlength="10" formControlName="holderMobileNo" placeholder="{{'holder_mobile_no' | translate:translateKey}}">
+        </mat-form-field>
+        <mat-form-field class="col-md-4">
+          <input matInput OnlyNumber maxlength="12" formControlName="holderFaxNo" placeholder="{{'holder_fax_no' | translate:translateKey}}">
+        </mat-form-field>
+        <mat-form-field class="col-md-4">
+          <input matInput OnlyNumber maxlength="12" formControlName="holderAadharNo" placeholder="{{'holder_aadhar_no' | translate:translateKey}}">
+        </mat-form-field>
+        <mat-form-field class="col-md-4">
+          <input matInput appAlphaNumeric maxlength="10" formControlName="holderPanNo" placeholder="{{'holder_pan_no' | translate:translateKey}}">
+        </mat-form-field>
+
+        <mat-form-field class="col-md-4">
+          <input matInput type="text" required maxlength="200" placeholder="{{'license_cancelation_reason' | translate:translateKey}}"
+            formControlName="cancellationReason">
+          <control-messages [control]="animalPondCancellationForm.get('cancellationReason')"></control-messages>
+        </mat-form-field>
+
+        <app-action-bar [paymentGateway]="paymentGateway" [uploadFiles]="uploadFileArray" [form]="animalPondCancellationForm" (handleErrors)="handleErrorsOnSubmit($event)"
+          (tabIndex)="onTabChange($event) " [stepInfo]="{step: 'final', next:0, back:0} "></app-action-bar>
+
+      </mat-tab>
+      <!-- step 1 Ends -->
+      <select-payment-gateway #paymentGateway></select-payment-gateway>
+    </mat-tab-group>
+  </form>
+  <!-- {{ animalPondCancellationForm.value | json }} -->
+</mat-card>

@@ -1,0 +1,108 @@
+<mat-card>
+    <form #propertyInfoForm="ngForm" (ngSubmit)="onNext(propertyInfoForm)">
+        <div class="row">
+            <div class="col-md-6">
+                <mat-form-field class="full-width-input">
+                    <input matInput disabled name="applicatioNo" [(ngModel)]="applicationModel.applicationNo"
+                        placeholder="Applicatio No">
+                </mat-form-field>
+            </div>
+            <div class="col-md-6">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <mat-form-field class="full-width-input">
+                    <input matInput disabled name="propertyNo" [(ngModel)]="applicationModel.propertyNo"
+                        placeholder="Property No">
+                </mat-form-field>
+            </div>
+            <div class="col-md-6">
+                <mat-form-field class="full-width-input">
+                    <input matInput disabled name="oldPropertyNo" [(ngModel)]="applicationModel.oldPropertyNo"
+                        placeholder="Old Property No">
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="ngSelect">
+                    <ng-select required placeholder="Transfer Type *" [items]="transferTypeList" bindValue="itemId"
+                        bindLabel="itemName" name="transferTypeLookupId"
+                        [(ngModel)]="applicationModel.transferTypeLookupId" #TransferTypeLookupId="ngModel"
+                        [ngClass]="{'ng-invalid ng-touched':  propertyInfoForm.submitted && TransferTypeLookupId.invalid}">
+                    </ng-select>
+                    <div
+                        *ngIf="(propertyInfoForm.submitted && TransferTypeLookupId.invalid)  || (TransferTypeLookupId.invalid && TransferTypeLookupId.touched)">
+                        <mat-error *ngIf="TransferTypeLookupId.errors.required">*Transfer Type is required.</mat-error>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-6">
+                <div class="ngSelect">
+                    <ng-select required placeholder="Transfer Sub-Type *" [items]="transferSubTypeList"
+                        bindValue="itemId" bindLabel="itemName" name="transferSubTypeLookupId"
+                        [(ngModel)]="applicationModel.transferSubTypeLookupId" #TransferSubTypeLookupId="ngModel"
+                        [ngClass]="{'ng-invalid ng-touched':  propertyInfoForm.submitted && TransferSubTypeLookupId.invalid}">
+                    </ng-select>
+                    <div
+                        *ngIf="(propertyInfoForm.submitted && TransferSubTypeLookupId.invalid)  || (TransferSubTypeLookupId.invalid && TransferSubTypeLookupId.touched)">
+                        <mat-error *ngIf="TransferSubTypeLookupId.errors.required">*Transfer Sub-Type is required.
+                        </mat-error>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <mat-form-field class="full-width-input">
+                    <input matInput required [max]="actualTransferDateMaxDate" [matDatepicker]="ActualTransferDate"
+                        placeholder="Actual Transfer Date" #ATD="ngModel" name="actualTransferDate"
+                        [(ngModel)]="applicationModel.actualTransferDate" length="10" mask-date>
+                    <mat-datepicker-toggle matSuffix [for]="ActualTransferDate"></mat-datepicker-toggle>
+                    <mat-datepicker #ActualTransferDate disabled="false"></mat-datepicker>
+                    <mat-error *ngIf="ATD.invalid">*Actual Transfer Date is invalid.</mat-error>
+                </mat-form-field>
+
+            </div>
+            <div class="col-md-6">
+                <mat-form-field class="full-width-input">
+                    <input matInput number-only required maxlength="20" #TransferArea="ngModel" name="transferArea"
+                        [(ngModel)]="applicationModel.transferArea" placeholder="Transfer Area"
+                        (input)="checkIsValidTransferArea($event,TransferArea)">
+                    <mat-error *ngIf="TransferArea.invalid && isValidTransferArea">*Transfer Area is required.
+                    </mat-error>
+                    <mat-error *ngIf="!isValidTransferArea">*Transfer Area should not be greater than Carpet Area.
+                    </mat-error>
+
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <mat-form-field class="full-width-input">
+                    <mat-select placeholder="Transfer Floor" required multiple #FloorNoLookupIds="ngModel"
+                        name="floorNoLookupIds" [(ngModel)]="applicationModel.floorNoLookupIds">
+                        <mat-option *ngFor="let item of transferFloorList" [value]="item.itemId">
+                            {{item.itemName}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="FloorNoLookupIds.invalid">*Floor No is required.</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-md-6">
+                <mat-form-field class="full-width-input">
+                    <input matInput disabled name="carpetArea" [(ngModel)]="applicationModel.carpetArea"
+                        placeholder="Carpet Area">
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="button-row text-right mt-3">
+            <button mat-raised-button color="primary" type="submit">
+                Next<mat-icon>skip_next</mat-icon>
+            </button>
+        </div>
+    </form>
+</mat-card>

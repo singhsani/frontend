@@ -6,25 +6,47 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../shared/shared.module';
 import { CoreModule } from '../../core/core.module';
 import { CitizenRoutingModule } from './citizen-routing.module';
+import { AuthModule } from './auth/auth.module';
 /* Import all shared, core and routing module end */
 
 /* Import citizen components start */
+import { HomeLayoutComponent } from '../../layouts/home-layout/home-layout.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { BirthCertiAppComponent } from './birth-certi-app/birth-certi-app.component';
+import { MyResourceComponent } from './my-resource/my-resource.component';
+import { TransactionsComponent, TransactionDataDialog } from './transactions/transactions.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { MyApplicationsComponent } from './my-applications/my-applications.component';
+import { GujPocComponent } from './guj-poc/guj-poc.component';
+import { PayableServicesComponent } from './payable-services/payable-services.component';
+import { CommonPaybleComponent } from './common-payble/common-payble.component';
 /* Import citizen components end */
+
 
 @NgModule({
 	imports: [
 		CommonModule,
-		CitizenRoutingModule,
 		SharedModule,
 		CoreModule,
 		FormsModule,
-		ReactiveFormsModule
+		ReactiveFormsModule,
+		AuthModule,
+		CitizenRoutingModule
+	],
+	entryComponents: [
+		TransactionDataDialog
 	],
 	declarations: [
+		HomeLayoutComponent,
 		DashboardComponent,
-		BirthCertiAppComponent
+		MyResourceComponent,
+		TransactionsComponent,
+		TransactionDataDialog,
+		UserProfileComponent,
+		MyApplicationsComponent,
+		GujPocComponent,
+		PayableServicesComponent,
+		CommonPaybleComponent,
+		
 	]
 })
 export class CitizenModule { }

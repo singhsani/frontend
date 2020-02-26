@@ -1,0 +1,9 @@
+.customDataTable {
+    td{vertical-align: middle;}
+    p{margin-bottom: 0px}
+  }
+
+
+/deep/ .adjustError .mat-error{
+  white-space: nowrap;
+}

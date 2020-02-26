@@ -1,0 +1,443 @@
+import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
+import { Router } from '@angular/router';
+
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
+
+import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { Observable, merge, of as observableOf } from 'rxjs';
+import { catchError, map, startWith, switchMap } from 'rxjs/operators';
+
+import { PaginationService } from '../../../core/services/citizen/data-services/pagination.service';
+import { FormsActionsService } from '../../../core/services/citizen/data-services/forms-actions.service';
+import { CommonService } from '../../../shared/services/common.service';
+import { ManageRoutes } from '../../../config/routes-conf';
+import * as moment from 'moment'
+import { CitizenConfig } from '../citizen-config';
+import { ToastrService } from 'ngx-toastr';
+import { environment } from '../../../../environments/environment';
+
+@Component({
+	selector: 'app-my-applications',
+	templateUrl: './my-applications.component.html',
+	styleUrls: ['./my-applications.component.scss']
+})
+export class MyApplicationsComponent implements OnInit {
+
+	@ViewChild("paymentGateway") paymentGateway: any;
+
+	/**
+	 * displayColumns are used for display the columns in material table.
+	 */
+	displayedColumns: any = [
+		'id',
+		'applicantName',
+		'fileNumber',
+		'dateOfApplication',
+		'departmentName',
+		'serviceType',
+		'fileStatus',
+		'action'
+	];
+
+	/**
+	 * Used for material table data population and pagination.
+	 */
+	dataSource = new MatTableDataSource();
+	resultsLength: number = 0;
+	pageSize: number = 5;
+	isLoadingResults: boolean = true;
+	translateKey: string = "myApplicationScreen";
+
+	appType: string = 'myApps';
+
+	modalRef: BsModalRef;
+	JSONdata: any;
+	rejectRemarks: string = '';
+	reason: string = '';
+
+	config: CitizenConfig = new CitizenConfig();
+
+	@ViewChild(MatPaginator) paginator: MatPaginator;
+	@ViewChild(MatSort) sort: MatSort;
+
+	constructor(
+		private formService: FormsActionsService,
+		private paginationService: PaginationService,
+		private router: Router,
+		private commonService: CommonService,
+		private modalService: BsModalService,
+		private toastr: ToastrService
+	) { }
+
+	ngOnInit() {
+		// If the user changes the sort order, reset back to the first page.
+		this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
+
+		this.getAllData();
+	}
+
+	/**
+	 * This method use to get all the citizen data with pagination.
+	 */
+	getAllData() {
+		this.paginator.pageSize = 5;
+		this.paginator.pageIndex = 0;
+
+		merge(this.sort.sortChange, this.paginator.page)
+			.pipe(
+				startWith({}),
+				switchMap(() => {
+					this.isLoadingResults = true;
+					this.paginationService.apiType = this.appType;
+					this.paginationService.pageIndex = (this.paginator.pageIndex + 1);
+					this.paginationService.pageSize = this.paginator.pageSize;
+					return this.paginationService!.getAllData();// NOSONAR
+				}),
+				map(data => {
+					this.isLoadingResults = false;
+					this.resultsLength = data.totalRecords;
+					return data.data;
+				}),
+				catchError(() => {
+					this.isLoadingResults = false;
+					return observableOf([]);
+				})
+			).subscribe(data => {
+				this.isLoadingResults = false;
+				this.dataSource.data = data;
+			}
+			);
+	}
+
+	/**
+	 * This method is used to redirect on citizen form.
+	 * @param id citizen api code
+	 * @param id - citizen id 
+	 */
+	redirectToEdit(apiCode: string, id: number) {
+		if (apiCode == 'HEL-DR') {
+			this.router.navigate(['citizen/certificates/birth-death/deathReg', id, apiCode]);
+
+		} else {
+			let redirectUrl = ManageRoutes.getFullRoute(apiCode);
+			this.router.navigate([redirectUrl, id, apiCode]);
+		}
+	}
+
+	/**
+	 * This method use to delete citizen record.
+	 * @param id citizen api code
+	 * @param id citizen id
+	 */
+	deleteRecord(apiCode: string, id: number) {
+
+		this.commonService.deleteAlert('Are you sure?', "You won't be able to revert this!", 'warning', '', performDelete => {
+			this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);
+			this.formService.deleteFormData(id).subscribe(
+				res => {
+					this.commonService.successAlert('Deleted!', '', 'success');
+					this.getAllData();
+				},
+				err => {
+					this.commonService.successAlert('Error!', err.error[0].message, 'error');
+				}
+			);
+		});
+
+	}
+
+	/**
+	* This method is used to redirect on appointment form.
+	*/
+	redirectAppointment(apiCode: string, id: number) {
+		let redirectUrl = ManageRoutes.getFullRoute('SLOTBOOKING');
+		this.router.navigate([redirectUrl, id, apiCode]);
+	}
+
+	/**
+	 * This method use to delete citizen record.
+	 * @param id citizen api code
+	 * @param id citizen api name
+	 * @param id citizen id
+	 */
+	submitRecord(apiCode: string, apiName: string, id: number) {
+
+		this.commonService.submitAlert('Are you sure?', "You won't be able to revert this!", 'warning', '', performDelete => {
+			this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);
+			this.formService.submitFormData(id).subscribe(
+				res => {
+					this.commonService.successAlert('Submited!', '', 'success');
+					this.getAllData();
+				},
+				err => {
+					//this.commonService.successAlert('Error!', err.error[0].message, 'error');
+				}
+			);
+		});
+
+	}
+
+	/**
+	 * This method use to application print receipt.
+	 * @param id citizen api code
+	 * @param id citizen api name
+	 * @param id citizen id
+	 */
+	printReceipt(apiCode: string, apiName: string, id: number) {
+
+		this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);
+		this.formService.printReceipt(id).subscribe(
+			receiptResponse => {
+				let sectionToPrintReceipt: any = document.getElementById('sectionToPrint');
+				sectionToPrintReceipt.innerHTML = receiptResponse;
+				setTimeout(() => {
+					window.print();
+				});
+			},
+			err => {
+				this.commonService.openAlert('Error!', err.error[0].message, 'error');
+			}
+		);
+	}
+
+
+	/**
+     * This method use to application print view.
+     * @param id citizen api code
+     * @param id citizen api name
+     * @param id citizen id
+     */
+	printView(apiCode: string, apiName: string, id: number) {
+
+		this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);
+		this.formService.printView(id).subscribe(
+			htmlResponse => {
+				// let sectionToPrint: any = document.getElementById('sectionToPrint');
+				// sectionToPrint.innerHTML = htmlResponse;
+				// setTimeout(() => {
+				// 	window.print();
+				// });
+				let printWindow: any = window.open();
+				setTimeout(() => {
+					printWindow.document.body.innerHTML = htmlResponse;
+					printWindow.print();
+					printWindow.close();
+				}, 100);
+			},
+			err => {
+				//this.commonService.successAlert('Error!', err.error[0].message, 'error');
+			}
+		);
+	}
+
+
+	/**
+	 * This method is use to show JOSN format.
+	 */
+	jsonDisplay(apiCode: string, apiName: string, id: number) {
+		this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);
+		this.formService.viewJson(id).subscribe(
+			res => {
+				this.JSONdata = JSON.stringify(res, null, 4);
+			},
+			err => {
+				this.commonService.successAlert('Error!', err.error[0].message, 'error');
+			}
+		);
+
+	}
+
+	/**
+	 * This method is use to show reject remarks.
+	 */
+	remarksDisplay(data) {
+		this.rejectRemarks = data.remarks;
+		this.reason = data.reason;
+	}
+
+	/**
+	 * This method is use for copy text.
+	 */
+	copyText(copytext: any) {
+		copytext.select();
+		document.execCommand('copy');
+	}
+
+	/**
+	 * This method is use to get respective class name based on application status.
+	 * @param filestatus - Application Status
+	 */
+	getFileStatusClass(filestatus: string) {
+		switch (filestatus) {
+			case 'DRAFT':
+				return 'badge draft text-label';
+			case 'SUBMITTED':
+				return 'badge submited text-label';
+			case 'PAYMENT':
+				return 'badge rejected text-label';
+			case 'REJECTED':
+				return 'badge rejected text-label';
+			default:
+				return 'badge file text-label'
+		}
+	}
+
+	/**
+	 * This method is use for open modal.
+	 */
+	openModal(template: TemplateRef<any>) {
+		this.modalRef = this.modalService.show(template);
+	}
+
+	getProperDate(date: string): string {
+		if (date) return moment(date).format("DD/MM/YYYY");
+		return null;
+	}
+
+	/**
+	 * This method is use for display more button
+	 * @param row - Table row oject
+	 */
+	isMoreBtnVisible(row) {
+		if (!row.remarks && (row.serviceType === 'PEC_REG' || row.serviceType === 'PRC_REG'))
+			return false;
+		else
+			return true;
+	}
+
+	/**
+	 * This method is use for edit option
+	 * @param row - Table row oject
+	 */
+	isEditOptDisplay(row) {
+		if (row.serviceType === 'PEC_REG' && row.serviceType === 'PRC_REG')
+			return false;
+		else if (row.canEdit || row.fileStatus === 'QUERIED')
+			return true;
+	}
+
+	/**
+	 * This method is use for delete option
+	 * @param row - Table row oject
+	 */
+	isDeleteOptDisplay(row) {
+		if (row.canDelete)
+			return true;
+	}
+
+	/**
+	 * This method is use for preview option
+	 * @param row - Table row oject
+	 */
+	isPreviewOptDisplay(row) {
+		if (row.serviceType === 'PEC_REG' || row.serviceType === 'PRC_REG')
+			return false;
+		else if (!row.canEdit)
+			return true;
+	}
+
+	/**
+	 * This method is use for print view option
+	 * @param row - Table row oject
+	 */
+	isPrintViewDisplay(row) {
+		if (row.serviceType === 'PEC_REG' || row.serviceType === 'PRC_REG')
+			return false;
+		else if (row.fileStatus != 'DRAFT')
+			return true;
+	}
+
+	/**
+	 * This method is use for application json option
+	 * @param row - Table row oject
+	 */
+	isAppJsonOptDisplay(row) {
+		if (row.serviceType === 'PEC_REG' || row.serviceType === 'PRC_REG')
+			return false;
+		else
+			return true;
+	}
+
+	/**
+	 * This method is use for application json option
+	 * @param row - Table row oject
+	 */
+	isRejectNoteOptDisplay(row) {
+		if (row.remarks)
+			return true;
+		else
+			return false;
+	}
+
+	getInnerHTML() {
+		return `<b>Remarks :</b> ${this.rejectRemarks} <br> <b>Reason :</b> ${this.reason}`;
+	}
+
+	/**
+	 * This method is used to redirect on payment.
+	 * @param id citizen api code
+	 * @param id - citizen id 
+	 */
+	redirectToPayment(apiCode: string, id: number) {
+		// let redirectUrl = ManageRoutes.getFullRoute(apiCode);
+		// this.router.navigate([redirectUrl, id, apiCode]);
+
+		this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);
+		this.formService.submitFormData(id).subscribe(
+			res => {
+				this.toastr.success("No payment option");
+				this.router.navigateByUrl(ManageRoutes.getFullRoute("CITIZENMYAPPS"));
+			},
+			err => {
+				let retUrl: string = '/citizen/my-applications';
+				let retAfterPayment: string = environment.returnUrl;
+
+				if (err.status === 402) {
+					let payData = this.commonService.storePaymentInfo(err.error.data, retUrl, retAfterPayment);
+					let html =
+						`
+					<div class="text-center">
+						<h2>Total Fee Pay</h2>
+						<div class="payAmount">
+							<i class="fa fa-inr" aria-hidden="true">` + payData.amount + `</i>
+						</div>
+						<p>Rupees in words</p>
+					</div>
+					`
+
+					this.commonService.commonAlert('Payment Details', '', 'info', 'Make Payment!', false, html, cb => {
+						// this.formService.createTokenforServicePayment(payData).subscribe(resp => {
+						// 	window.open(resp.data, "_self");
+						// }, err => {
+						// 	this.toastr.error(err.error.message);
+						// })
+						this.paymentGateway.setPaymentDetailsFromActionBar(payData);
+						this.paymentGateway.openModel();
+
+					}, rj => {
+						// let errHtml = `			
+						// 	<div class="alert alert-danger">
+						// 		Please Complete Payment, Otherwise the application will be considered as in-complete
+						// 	</div>`
+						// this.commonService.commonAlert("Application Incomplete", "", 'warning', 'Make Payment!', false, errHtml, ccb => {
+						// 	this.formService.createTokenforServicePayment(payData).subscribe(resp => {
+						// 		window.open(resp.data, "_self");
+						// 	}, err => {
+						// 		this.toastr.error(err.error.message);
+						// 	})
+
+						// }, arj => {
+
+						// })
+						// return;
+					});
+					return;
+				} else {
+					this.commonService.openAlert("Error", "Error Occured for final submit : " + err.error[0].message, "warning")
+				}
+			});
+
+	}
+
+}

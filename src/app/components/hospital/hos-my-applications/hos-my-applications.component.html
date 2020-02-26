@@ -1,0 +1,192 @@
+<div class="noApplication" *ngIf="resultsLength==0 && !isLoadingResults">
+    <img src="assets/icons/no-application-found.png" alt="">
+    <br> {{'no_application_found'| translate : translateKey }}
+    <span class="noActi">{{'no_activity_found'| translate : translateKey }}</span>
+    <a mat-raised-button class="mat-primary"
+        routerLink="../dashboard">{{'create_applications'| translate : translateKey }}</a>
+</div>
+
+<div class="mat-elevation-z8 borderOne" [hidden]="resultsLength==0">
+    <!-- <div class="example-loading-shade" *ngIf="isLoadingResults">
+        <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+    </div> -->
+
+    <mat-table [dataSource]="dataSource" class="myApplication" matSort matSortActive="created" matSortDisableClear
+        matSortDirection="asc">
+
+        <ng-container matColumnDef="id">
+            <mat-header-cell *matHeaderCellDef>Sr No.</mat-header-cell>
+            <mat-cell *matCellDef="let row; let i = index;" class="fullWidth">
+                <div class="mobile-label">{{'s_no'| translate : translateKey }}</div>
+                <div class="mobile-label1">:</div>
+                <div class="row-inside"> {{(paginator.pageIndex * paginator.pageSize) + (i+1)}} </div>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="applicantName">
+            <mat-header-cell *matHeaderCellDef>{{'applicant_name'| translate : translateKey }}</mat-header-cell>
+            <mat-cell *matCellDef="let row" class="fullWidth">
+                <div class="mobile-label">{{'applicant_name'| translate : translateKey }}</div>
+                <div class="mobile-label1">:</div>
+                <div class="row-inside"> {{ row.applicantName }}</div>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="fileNumber">
+            <mat-header-cell *matHeaderCellDef>{{'file_number'| translate : translateKey }}</mat-header-cell>
+            <mat-cell *matCellDef="let row" class="fullWidth">
+                <div class="mobile-label">{{'file_number'| translate : translateKey }} </div>
+                <div class="mobile-label1">:</div>
+                <div class="row-inside"> {{ row.fileNumber ? row.fileNumber : row.uniqueId }}</div>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="dateOfApplication">
+            <mat-header-cell *matHeaderCellDef>{{'date_of_application'| translate : translateKey }}</mat-header-cell>
+            <mat-cell *matCellDef="let row" class="fullWidth">
+                <div class="mobile-label">{{'date_of_application'| translate : translateKey }}</div>
+                <div class="mobile-label1">:</div>
+                <div class="row-inside"> {{row.createdDate | date : 'dd/MM/yyyy'}} </div>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="departmentName">
+            <mat-header-cell *matHeaderCellDef>{{'department_name'| translate : translateKey }}</mat-header-cell>
+            <mat-cell *matCellDef="let row" class="fullWidth">
+                <div class="mobile-label">{{'department_name'| translate : translateKey }}</div>
+                <div class="mobile-label1">:</div>
+                <!-- <div class="row-inside"> {{row.serviceDetail.name}} </div> -->
+                <div class="row-inside" [innerHtml]="row.serviceDetail.name"></div>
+            </mat-cell>
+        </ng-container>
+
+
+        <ng-container matColumnDef="serviceType">
+            <mat-header-cell *matHeaderCellDef>{{'service_name'| translate : translateKey }}</mat-header-cell>
+            <mat-cell *matCellDef="let row" class="fullWidth">
+                <div class="mobile-label">{{'service_name'| translate : translateKey }}</div>
+                <div class="mobile-label1">:</div>
+                <!-- <div class="row-inside">{{ row.serviceDetail.name }}</div> -->
+                <div class="row-inside" [innerHtml]="row.serviceDetail.name"></div>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="fileStatus">
+            <mat-header-cell *matHeaderCellDef>{{'file_status'| translate : translateKey }}</mat-header-cell>
+            <mat-cell *matCellDef="let row" class="fullWidth">
+                <div class="mobile-label">{{'file_status'| translate : translateKey }}</div>
+                <div class="mobile-label1">:</div>
+                <div class="row-inside">
+                    <mat-chip-list>
+                        <span class="{{getFileStatusClass(row.fileStatus)}}"
+                            selected="true">{{config.getProperErrorMessage(row.fileStatusName)}}</span>
+                    </mat-chip-list>
+                </div>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+            <mat-header-cell *matHeaderCellDef>{{'action'| translate : translateKey }}</mat-header-cell>
+            <mat-cell *matCellDef="let row" class="fullWidth">
+                <div class="mobile-label">{{'action'| translate : translateKey }}</div>
+                <div class="mobile-label1">:</div>
+                <button mat-button class="actionBtn" [matMenuTriggerFor]="menu">
+                    <mat-icon>more_vert</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu">
+                    <button mat-menu-item *ngIf="row.canEdit" color="primary"
+                        (click)="redirectToEdit(row.serviceDetail.code, row.serviceFormId)">
+                        <mat-icon title="{{'edit'| translate : translateKey }}">edit</mat-icon>
+                        {{'edit'| translate : translateKey }}
+                    </button>
+                    <button mat-menu-item *ngIf="row.canDelete" color="primary"
+                        (click)="deleteRecord(row.serviceDetail.code, row.serviceFormId)">
+                        <mat-icon title="{{'delete'| translate : translateKey }}">delete</mat-icon>
+                        {{'delete'| translate : translateKey }}
+                    </button>
+                    <!-- <button class="btn btn-default" mwlConfirmationPopover [popoverTitle]="Delete" [popoverMessage]="Are you sure?" placement="left" (confirm)="deleteRecord(row.serviceDetail.code, row.serviceFormId)" (cancel)="">
+                        <mat-icon title="Delete">delete</mat-icon>
+                    </button> -->
+                    <!-- <button mat-icon-button [disabled]="!row.canSubmit" [style.color]="'#4CAF50'" (click)="submitRecord(row.serviceDetail.code, row.serviceDetail.name, row.serviceFormId)">
+                        <mat-icon title="Submit">done_all</mat-icon>
+                    </button> -->
+                    <button mat-menu-item *ngIf="!row.canEdit" color="primary"
+                        (click)="redirectToEdit(row.serviceDetail.code, row.serviceFormId)">
+                        <mat-icon title="{{'applicant_preview'| translate : translateKey }}">remove_red_eye</mat-icon>
+                        {{'applicant_preview'| translate : translateKey }}
+                    </button>
+                    
+                    <button *ngIf="row.canReceiptPrint" mat-menu-item  color="primary"
+                        (click)="printReceipt(row.serviceDetail.code, row.serviceDetail.name, row.serviceFormId)">
+                        <mat-icon title="{{'print_receipt'| translate : translateKey }}">print</mat-icon>
+                        {{'print_receipt'| translate : translateKey }}
+                    </button>
+
+                    <button *ngIf="row.fileStatus != 'DRAFT'" mat-menu-item color="primary"
+                        (click)="printView(row.serviceDetail.code, row.serviceDetail.name, row.serviceFormId)">
+                        <mat-icon title="{{'print_view'| translate : translateKey }}">pageview</mat-icon>
+                        {{'print_view'| translate : translateKey }}
+                    </button>
+
+                    <button mat-menu-item data-toggle="modal" color="primary"
+                        (click)="openModal(template);jsonDisplay(row.serviceDetail.code, row.serviceDetail.name, row.serviceFormId)">
+                        <mat-icon title="{{'json_format'| translate : translateKey }}">center_focus_weak</mat-icon>
+                        {{'json_format'| translate : translateKey }}
+                    </button>
+
+                    <!-- Note : 'PAYMENT' fileStatus means payment is pandding -->
+                    <button mat-menu-item *ngIf="(row.fileStatus === 'PAYMENT')" color="primary"
+                        (click)="redirectToPayment(row.serviceDetail.code, row.serviceFormId)">
+                        <mat-icon class="m-1" title="{{'attach_money' | translate:translateKey}}">&#8377;</mat-icon>
+                        <!-- <i class="fa fa-inr m-1" title="{{'attach_money' | translate:translateKey}}"
+                            aria-hidden="true"></i> -->
+                        {{'payment' | translate:translateKey}}
+                    </button>
+                </mat-menu>
+
+            </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+
+    <mat-paginator showFirstLastButtons [hidden]="resultsLength==0" [pageSizeOptions]="[5, 10, 25, 100]"
+        [length]="resultsLength">
+    </mat-paginator>
+</div>
+
+<select-payment-gateway [applicationType]="'HOSPITAL'" #paymentGateway></select-payment-gateway>
+
+<!-- Json Modal start -->
+<ng-template #template>
+    <div class="modal-header">
+        <div class="col-9">
+            <h5 class="modal-title pull-left">{{'applicant_json'| translate : translateKey }}</h5>
+        </div>
+        <div class="col-2">
+            <button class="pull-left mat-icon-button" (click)="copyText(copytext)">
+                <mat-icon title="Copy to Clipboard">content_copy</mat-icon>
+            </button>
+        </div>
+        <div class="col-1">
+            <button title="{{'close'| translate : translateKey }}" class=" mat-icon-button" aria-label="Close"
+                (click)="modalRef.hide()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </div>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-12">
+                <textarea type="text" readonly class="text-left textjson" value="{{JSONdata}}" #copytext>
+                    </textarea>
+            </div>
+        </div>
+        <!-- <pre class="text-left" #copytext style="color: #9cdcfe;background: #212529;overflow: hidden">{{JSONdata}}</pre> -->
+    </div>
+</ng-template>
+<!-- Json Modal end -->
+
+<!-- this div is used for printing the receipt -->
+<div id="sectionToPrint"></div>

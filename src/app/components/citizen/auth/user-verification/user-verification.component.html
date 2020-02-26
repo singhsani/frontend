@@ -1,20 +1,18 @@
 
-<div class="example-container col-md-6 col-md-offset-3" style="margin-top: 40px;">
-	<div class="header">
-		<div class="heading">Verification</div>
-	</div>
-	<mat-card>
-		<mat-card-content>
-			<form name="user-verify-form" [formGroup]="verifyForm" (ngSubmit)="verifyUser(verifyForm.value)" autocomplete="off" ngNativeValidate>
+			<mat-card class="borderRadius10">
+				<div class="headingBox">Register
+					<span>Sign up by entering the information below</span>
+				</div>
+				<form name="user-verify-form" [formGroup]="verifyForm" (ngSubmit)="verifyUser(verifyForm)" autocomplete="off" ngNativeValidate>
 
-				<mat-form-field class="example-full-width" style="width:100%">
-					<input matInput type="text" placeholder="Enter OTP" formControlName="code" required>
-				</mat-form-field>
-
-				<button type="submit" mat-raised-button color="primary" [disabled]="verifyForm.invalid" style="width:100%">
-					Submit
-				</button>
-			</form>
-		</mat-card-content>
-	</mat-card>
-</div>
+					<mat-form-field class="example-full-width">
+						<input matInput type="text" placeholder="Enter OTP" formControlName="code"
+						 required>
+					</mat-form-field>
+					<div class="text-center">
+					<button type="submit" mat-raised-button color="primary" [disabled]="verifyForm.invalid">
+						Submit
+					</button>
+				</div>
+				</form>
+			</mat-card>

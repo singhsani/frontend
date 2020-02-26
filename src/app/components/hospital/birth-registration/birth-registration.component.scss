@@ -1,0 +1,18 @@
+// used to provide padding
+.padaddbtn{
+    padding-right: 15px;
+}
+//used to hide 'vertical-align:middle' and apply 'vertical-align:inherit'
+.v-inherit{
+    vertical-align: inherit !important;
+}
+.clock-button{
+   position: absolute; top: -6px; right: 0;
+}
+
+.clock-input {padding-right: 39px;}
+.csBlock{
+        border: 2px solid gray;
+        margin: 15px;
+}
+

@@ -1,13 +1,13 @@
+import { ManageRoutes } from './../../../../config/routes-conf';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Http, Response, Headers, RequestOptions } from '@angular/http';
-import { SessionStorageService, SessionStorage } from 'angular-web-storage';
+import { SessionStorageService } from 'angular-web-storage';
 
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/map';
+import { Observable } from 'rxjs';
 
-import { Configuration } from "../../../constants/app.constants";// common constant
+
+import 'url-search-params-polyfill';
+
 import { HttpService } from '../../../../shared/services/http.service';
 
 @Injectable()
@@ -19,36 +19,34 @@ export class AppService {
 
 	/**
 	 * Constructor to declare defualt propeties of class.
-	 * @param _router - Declare Router property.
+	 * @param router - Declare Router property.
 	 * @param session - Declare Session Storage Module property.
-	 * @param _conf - Declare Constant property.
-	 * @param _http - Declare Http Service property.
+	 * @param http - Declare Http Service property.
 	 */
-	constructor(
-		private _router: Router,
-		public session: SessionStorageService,
-		private _conf: Configuration,
-		private _http: HttpService, private _session: SessionStorageService
-	) { }
+	constructor(private router: Router,
+		private session: SessionStorageService,
+		private http: HttpService) {
+
+	}
 
 	/**
 	 * This method will get User Authentication Token and Save to the Session Storage.
 	 * @param loginData - User Information Data
 	 */
 	obtainAccessToken(loginData) {
-		
+
 		let params = new URLSearchParams();
 		params.append('username', loginData.username);
 		params.append('password', loginData.password);
 		params.append('grant_type', 'password');
-		params.append('userType', 'CZ');
+		params.append('userType', 'CITIZEN');
 
 		let headers = {
 			'Content-type': 'application/x-www-form-urlencoded',
 			'Authorization': 'Basic dmlzaGFsOnNlY3JldA=='
 		};
 
-		return this._http.post('authorize', params.toString(), headers);
+		return this.http.post('authorize', params.toString(), headers);
 	}
 
 	/**
@@ -57,34 +55,8 @@ export class AppService {
 	 */
 	registerUser(registerData) {
 
-		let headers = {
-			'Content-type': 'application/json'
-		};
-
-		return this._http.post('public/user/citizen/register', registerData, headers);
+		return this.http.post('public/user/citizen/register', registerData, this.getCommonHeaders());
 	}
-
-	/**
-	 * This method is use for check User token is set or not.
-	 * It will return True if Token is set otherwise, it will return false.
-	 */
-	checkCredentials() {
-		if (this.session.get('access_token')) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	/**
-	 * This method is use for perform user logout service.
-	 */
-	logout() {
-		
-		this.session.remove('access_token');
-		this._router.navigate(['/citizen/auth/login']);
-	}
-
 
     /**
 	 * This method is used to perform user forget password operation.
@@ -92,11 +64,7 @@ export class AppService {
 	 */
 	forgotPassword(forgotPwdData) {
 
-		let headers = {
-			'Content-type': 'application/json'
-		};
-
-		return this._http.post('public/user/forgetPassword', forgotPwdData, headers);
+		return this.http.post('public/user/forgetPassword', forgotPwdData, this.getCommonHeaders());
 	}
 
 	/**
@@ -105,11 +73,7 @@ export class AppService {
 	 */
 	resetPassword(resetPasswordData) {
 
-		let headers = {
-			'Content-type': 'application/json'
-		};
-
-		return this._http.post('public/user/resetPassword', resetPasswordData, headers);
+		return this.http.post('public/user/resetPassword', resetPasswordData, this.getCommonHeaders());
 	}
 
 	/**
@@ -117,11 +81,37 @@ export class AppService {
 	 */
 	verifyUser(verifyUserData) {
 
+		return this.http.post('public/user/verifyAccount/', verifyUserData, this.getCommonHeaders());
+	}
+
+
+	/**
+ * This method will return True or False based on User Login or Not.
+ */
+	isLoggedIn() {
+		if (this.session.get('access_token')) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/**
+	 * This method is use for call user logout service.
+	 */
+	logout() {
+		this.session.remove('access_token');
+		this.router.navigate([ManageRoutes.getFullRoute('CITIZENAUTHLOGIN')]);
+	}
+
+	/**
+	 * This method use to return headers to all api
+	 */
+	getCommonHeaders() {
+
 		let headers = {
 			'Content-type': 'application/json'
 		};
-
-		return this._http.post('public/user/verifyAccount/', verifyUserData ,headers);
-
+		return headers;
 	}
 }

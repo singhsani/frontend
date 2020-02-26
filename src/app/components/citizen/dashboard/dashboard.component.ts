@@ -1,18 +1,12 @@
+import { PaginationService } from './../../../core/services/citizen/data-services/pagination.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
-
-import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
-import { Observable } from 'rxjs/Observable';
-import { merge } from 'rxjs/observable/merge';
-import { of as observableOf } from 'rxjs/observable/of';
-import { catchError } from 'rxjs/operators/catchError';
-import { map } from 'rxjs/operators/map';
-import { startWith } from 'rxjs/operators/startWith';
-import { switchMap } from 'rxjs/operators/switchMap';
-
-import { PaginationService } from '../../../core/services/citizen/data-services/pagination.service';
+import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { FormsActionsService } from '../../../core/services/citizen/data-services/forms-actions.service';
+
+import { ManageRoutes } from '../../../config/routes-conf';
+import { ToastrService } from 'ngx-toastr';
+import * as _ from 'lodash';
 
 @Component({
 	selector: 'app-dashboard',
@@ -21,101 +15,308 @@ import { FormsActionsService } from '../../../core/services/citizen/data-service
 })
 export class DashboardComponent implements OnInit {
 
-	displayedColumns = [
-		'id',
-		'applicantName',
-		'fileNumber',
-		'fileStatus',
-		'serviceType',
-		'action'
+	userServicesList: any;
+	manageRoutes: any = ManageRoutes;
+	services: any = [];
+	isRecentApp: boolean = false;
+	recentApp: any;
+	bookingsAndTicketings: any = [
+		{
+			"id": 1,
+			"uniqueId": null,
+			"version": null,
+			"code": "BOOKINGMODULE",
+			"fieldView": "ALL",
+			"fieldList": null,
+			"name": "Booking Facilities",
+			"gujName": "Booking Facilities",
+			"services": [
+
+				{
+					"code": "MYBOOKING",
+					"fieldView": "ALL",
+					"name": "My Bookings",
+					"gujName": "My Bookings",
+					"appointmentRequired": false,
+					"active": true
+				},
+
+				{
+					"code": "TOWNHALLBOOK",
+					"fieldView": "ALL",
+					"name": "Townhall",
+					"gujName": "ટાઉનહોલ",
+					"appointmentRequired": false,
+					"active": true
+				},
+				{
+					"code": "THEATERBOOK",
+					"fieldView": "ALL",
+					"name": "Amphi Theater",
+					"gujName": "એમ્ફી થિયેટર",
+					"appointmentRequired": false,
+					"active": true
+				},
+				// {
+				// 	"code": "GUESTHOUSELIST",
+				// 	"fieldView": "ALL",
+				// 	"name": "Guest House",
+				// 	"gujName": "અતિથિગૃહ",
+				// 	"appointmentRequired": false,
+				// 	"active": true
+				// },
+				{
+					"code": "STADIUMBOOK",
+					"fieldView": "ALL",
+					"name": "Stadium",
+					"gujName": "સ્ટેડિયમ",
+					"appointmentRequired": false,
+					"active": true
+				},
+				{
+					"code": "ATITHIGRUHBOOK",
+					"fieldView": "ALL",
+					"name": "Atithigruh",
+					"gujName": "અતિથિગ્રહ",
+					"appointmentRequired": false,
+					"active": true
+				},
+				{
+					"code": "CHILDRENTHEATERBOOK",
+					"fieldView": "ALL",
+					"name": "Children Theater",
+					"gujName": "બાળકો થિયેટર",
+					"appointmentRequired": false,
+					"active": true
+				},
+				{
+					"code": "BOOKPERMISSION",
+					"fieldView": "ALL",
+					"name": "Shooting Permission",
+					"gujName": "પરવાનગી",
+					"appointmentRequired": false,
+					"active": true
+				},
+				{
+					"code": "SWIMMINGPOOL",
+					"fieldView": "ALL",
+					"name": "Swimming Pool",
+					"gujName": "સ્નાનાગાર",
+					"appointmentRequired": false,
+					"active": true
+				},
+				{
+					"code": "SWIMMINGPOOLRENEWAL",
+					"fieldView": "ALL",
+					"name": "Swimming Pool Renewal",
+					"gujName": "સ્નાનાગાર",
+					"appointmentRequired": false,
+					"active": true
+				}
+			]
+		},
+		{
+			"id": 2,
+			"uniqueId": null,
+			"version": null,
+			"code": "TICKETINGSMODULE",
+			"fieldView": "ALL",
+			"fieldList": null,
+			"name": "Ticketing Facilities",
+			"gujName": "Ticketing Facilities",
+			"services": [
+				{
+					"code": "MYTICKETINGS",
+					"fieldView": "ALL",
+					"name": "My Ticketings",
+					"gujName": "મારી ટિકિટિંગ્સ",
+					"appointmentRequired": false,
+					"active": true
+				},
+				{
+					"code": "ZOO-DASHBOARD",
+					"fieldView": "ALL",
+					"name": "Zoo",
+					"gujName": "પ્રાણી સંગ્રહાલય",
+					"appointmentRequired": false,
+					"active": true
+        },
+				{
+					"code": "PLANETARIUMBOOK",
+					"fieldView": "ALL",
+					"name": "Planetarium",
+					"gujName": "પ્લાનેટેરિયમ",
+					"appointmentRequired": false,
+					"active": true
+				}
+			]
+		},
+		// {
+		// 	"id": 3,
+		// 	"uniqueId": null,
+		// 	"version": null,
+		// 	"code": "BOOKINGMODULE",
+		// 	"fieldView": "ALL",
+		// 	"fieldList": null,
+		// 	"name": "My Bookings",
+		// 	"gujName": "My Bookings",
+		// 	"services": [
+		// 		{
+		// 			"code": "CANCELBOOKING",
+		// 			"fieldView": "ALL",
+		// 			"name": "My Bookings",
+		// 			"gujName": "My Bookings",
+		// 			"appointmentRequired": false,
+		// 			"active": true
+		// 		}
+		// 	]
+		// }
 	];
 
-	dataSource = new MatTableDataSource();
-
-	resultsLength = 0;
-	pageSize = 20;
-	isLoadingResults = true;
-	isRateLimitReached = false;
-
-	appType = 'myApps';
-
-	@ViewChild(MatPaginator) paginator: MatPaginator;
-	@ViewChild(MatSort) sort: MatSort;
-
+	/**
+	 * Constructor to declare defualt propeties of class
+	 * @param formService - Declare form service property
+	 * @param paginationService - Declare pagination service property
+	 * @param router - Declare router property
+	 */
 	constructor(
-		private http: HttpClient, private formService: FormsActionsService,
-		private paginationService: PaginationService, private _router: Router
-	) { }
+		private router: Router,
+		private formService: FormsActionsService,
+		private toastr: ToastrService,
+		private paginationService: PaginationService,
+	) {
+		this.getAllServices();
+	}
 
 	ngOnInit() {
-
-		// If the user changes the sort order, reset back to the first page.
-		this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
-
-		this.getAllData();
-
-	}
-
-	/**
-	 * This method use to get all the citizen data with pagination
-	 */
-	getAllData() {
-		merge(this.sort.sortChange, this.paginator.page)
-			.pipe(
-				startWith({}),
-				switchMap(() => {
-					this.isLoadingResults = true;
-					this.paginationService.apiType = this.appType;
-					this.paginationService.pageIndex = (this.paginator.pageIndex + 1);
-					this.paginationService.pageSize = this.pageSize;
-					return this.paginationService!.getAllData();
-				}),
-				map(data => {
-					this.isLoadingResults = false;
-					this.isRateLimitReached = false;
-					this.resultsLength = data.totalRecords;
-					return data.data;
-				}),
-				catchError(() => {
-					this.isLoadingResults = false;
-					this.isRateLimitReached = true;
-					return observableOf([]);
-				})
-			).subscribe(data => {
-				this.dataSource.data = data;
+		this.paginationService.apiType = 'myApps';
+		this.paginationService.pageIndex = 1;
+		this.paginationService.pageSize = 2;
+		this.paginationService.getAllData().subscribe(data => {
+			if (data.totalRecords > 0) {
+				this.isRecentApp = true;
+				this.recentApp = data.data;
+			} else {
+				this.isRecentApp = false;
+				this.recentApp = [];
 			}
-			);
-	}
+		});
 
-	/**
-	 * This method is used to redirect on citizen form
-	 * @param id - citizen id 
-	 */
-	redirectToEdit(id) {
-
-		this._router.navigate(['/citizen/birthcert', id]);
 	}
 
 	/**
 	 * This method is use to create new record for citizen
 	 */
-	createRecord() {
-		this.formService.apiType = 'birthCert';
-		this.formService.createFormData().subscribe(res => {
-			this.getAllData();
-		});
+	createRecord(apiCode: string) {
+
+		switch (apiCode) {
+			case 'HEL-DR':
+				
+				this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);
+				this.formService.createFormData().subscribe(res => {
+					let redirectUrl = ManageRoutes.getFullRoute(apiCode);
+					this.router.navigate(['citizen/certificates/birth-death/deathReg', res.serviceFormId, apiCode]);
+					// this.router.navigate([redirectUrl, , apiCode]);
+				});				
+				break;
+			case 'HEL-BCR':
+			case 'HEL-DCR':
+			case 'HEL-NRCBR':
+			case 'HEL-NRCDR':
+			case 'HEL-DUPBR':
+			case 'HEL-DUPDR':
+			case 'HEL-DUPMR':
+			case 'SHOP-REN':
+			case 'SHOP-TRAF':
+			case 'SHOP-CAN':
+			case 'SHOP-DUP':
+			case 'MF-REN':
+			case 'MF-TRA':
+			case 'MF-DUP':
+			case 'MF-CAN':
+			case 'APL-REN':
+			case 'APL-TRA':
+			case 'APL-CAN':
+			case 'APL-DUP':
+			case 'FL-REN':
+			case 'FL-MODIFY':
+			case 'FL-DUP':
+			case 'FS-FINAL':
+			case 'FS-REVISED':
+			case 'FS-REN':
+			case 'FS-FINAL-HOSPITAL':
+				this.router.navigate([ManageRoutes.getFullRoute(apiCode), false, apiCode]);
+				break;
+			case 'PRC_REG':
+			case 'PRO-ASS':
+			case 'PRO-EXT':
+			case 'PRO-TRAN':
+			case 'PRO-DUP':
+			case 'PRO-NDU':
+			case 'PRO-VAC':
+			case 'PRO-ASSCER':
+			case 'PRO-REFUND':
+			case 'PRO-TAX-REBATE':
+			case 'WTR-NEW':
+			case 'WTR-DISCON':
+			case 'WTR-TRXF-OWN':
+			case 'WTR-CHNG-USG':
+			case 'WTR-RECON':
+			case 'WTR-PLUMB-LIC':
+			case 'WTR-RNW-PLUMB-LIC':
+				this.router.navigate([ManageRoutes.getFullRoute(apiCode)]);
+				break;
+			default:
+				if (ManageRoutes.getApiTypeFromApiCode(apiCode)) {
+					this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);
+					this.formService.createFormData().subscribe(res => {
+						let redirectUrl = ManageRoutes.getFullRoute(apiCode);
+						this.router.navigate([redirectUrl, res.serviceFormId, apiCode]);
+					});
+				} else {
+					// todo
+					this.toastr.error("Invalid API Code");
+				}
+				break;
+		}
+
 	}
 
-	/**
-	 * This method use to delete citizen record
-	 * @param id citizen id
-	 */
-	deleteRecord(id) {
+	getAllServices() {
+		this.formService.getUserServices().subscribe(
+			res => {
+				this.userServicesList = res.modules;
+				_.forEach(res.modules, (value, key) => {
+					_.forEach(value.services, (value1, key1) => {
+						this.services.push(value1);
+					});
+				});
+			},
+			err => {
+				console.log(err);
+			}
+		);
+	}
 
-		this.formService.apiType = 'birthCert';
-		this.formService.deleteFormData(id).subscribe(res => {
-			this.getAllData();
-		});
+	getIconImg(moduleCode: string) {
+		switch (moduleCode) {
+			case 'SHOP-ESTAB':
+				return { card: 'yelloCard', icon: 'assets/icons/shop-estab.png' };
+			case 'BIRTH-DEATH':
+				return { card: 'redCard', icon: 'assets/icons/birth-death.png' };
+			case 'FIRE':
+				return { card: 'greenCard', icon: 'assets/icons/fire.png' };
+			case 'MUTTON-FISH-POND':
+				return { card: 'kyeBlueCard', icon: 'assets/icons/mutton-fish-pond.png' };
+			case 'PROPERTY-TAX':
+				return { card: 'grayCard', icon: 'assets/icons/property-tax.png' };
+			default:
+				break;
+		}
+	}
+
+	newAffordableHousing() {
+		this.router.navigate(["citizen/affordable-housing/new"]);
 	}
 
 }

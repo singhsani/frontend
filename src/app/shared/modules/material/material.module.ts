@@ -1,103 +1,87 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-/**
- * Import Material Design Button, Card, Input Module functions.
- */
-import { MatButtonModule, MatToolbarModule, MatCardModule, MatInputModule, MatSelectModule, MatRadioModule, MatDialogModule } from '@angular/material';
-
-/**
- * Import Material Design SideBar Navigation Module functions.
- */
+import { MatButtonModule } from '@angular/material/button';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatCardModule } from '@angular/material/card';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatSidenavModule } from '@angular/material/sidenav';
-
-/**
- * Import Material Design List Module functions.
- */
 import { MatListModule } from '@angular/material/list';
-
-/**MatRadioModule
- * Import Material Design Icon Module functions.
- */
 import { MatIconModule } from '@angular/material/icon';
-
-/**
- * Import Material Design Chips Module functions.
- */
 import { MatChipsModule } from '@angular/material/chips';
-
-/**
- * Import Material Design Tabs Module functions.
- */
 import { MatTabsModule } from '@angular/material/tabs';
-
-/**
- * Import Material Design Checkbox Module functions.
- */
 import { MatCheckboxModule } from '@angular/material/checkbox';
-
-/**
- * Import Material Design Grid List Module functions.
- */
-import { MatGridListModule } from '@angular/material/grid-list';
-
-/**
- * Import Material Design Snack Bar Module functions.
- */
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-
 import { MatPaginatorModule } from '@angular/material/paginator';
-
 import { MatTableModule } from '@angular/material/table';
-
 import { MatSortModule } from '@angular/material/sort';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatExpansionModule } from '@angular/material/expansion';
+
+import { MAT_DATE_FORMATS } from '@angular/material';
+import { AppDateAdapter, APP_DATE_FORMATS } from './date.adapter';
+import { DateAdapter } from '@angular/material';
+import { DateDirective } from './date.directive';
+
+
+const COMPONENTS = [
+	MatButtonModule,
+	MatToolbarModule,
+	MatSidenavModule,
+	MatListModule,
+	MatIconModule,
+	MatChipsModule,
+	MatCardModule,
+	MatInputModule,
+	MatTabsModule,
+	MatCheckboxModule,
+	MatGridListModule,
+	MatSnackBarModule,
+	MatSelectModule,
+	MatProgressSpinnerModule,
+	MatPaginatorModule,
+	MatTableModule,
+	MatSortModule,
+	MatRadioModule,
+	MatDialogModule,
+	MatDatepickerModule,
+	MatNativeDateModule,
+	MatMenuModule,
+	MatProgressBarModule,
+	MatStepperModule,
+	MatTooltipModule,
+	MatExpansionModule,
+	
+];
 
 @NgModule({
 	imports: [
 		CommonModule,
-		MatButtonModule,
-		MatToolbarModule,
-		MatSidenavModule,
-		MatListModule,
-		MatIconModule,
-		MatChipsModule,
-		MatCardModule,
-		MatInputModule,
-		MatTabsModule,
-		MatCheckboxModule,
-		MatGridListModule,
-		MatSnackBarModule,
-		MatSelectModule,
-		MatProgressSpinnerModule,
-		MatPaginatorModule,
-		MatTableModule,
-		MatSortModule,
-		MatRadioModule,
-		MatDialogModule
+		...COMPONENTS
 	],
 	exports: [
-		MatButtonModule,
-		MatToolbarModule,
-		MatSidenavModule,
-		MatListModule,
-		MatIconModule,
-		MatChipsModule,
-		MatCardModule,
-		MatInputModule,
-		MatTabsModule,
-		MatCheckboxModule,
-		MatGridListModule,
-		MatSnackBarModule,
-		MatSelectModule,
-		MatProgressSpinnerModule,
-		MatPaginatorModule,
-		MatTableModule,
-		MatSortModule,
-		MatRadioModule,
-		MatDialogModule
+		DateDirective,
+		...COMPONENTS
 	],
+	providers: [
+		{
+			provide: DateAdapter, useClass: AppDateAdapter
+		},
+		{
+			provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS
+		}
+	],
+	declarations: [DateDirective]
 })
 
 export class MaterialModule { }

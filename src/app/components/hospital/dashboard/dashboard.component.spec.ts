@@ -1,20 +1,28 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from "@angular/router/testing";
 
-import { DashboardComponent } from './dashboard.component';
+import { HospitalDashboardComponent } from './dashboard.component';
+import { SharedModule } from '../../../shared/shared.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HosFormActionsService } from '../../../core/services/hospital/data-services/hos-form-actions.service';
+import { SessionStorageService } from 'angular-web-storage';
+import { ToastrService, ToastrModule } from 'ngx-toastr';
 
-describe('DashboardComponent', () => {
-	let component: DashboardComponent;
-	let fixture: ComponentFixture<DashboardComponent>;
+describe('Hospital Module : HospitalDashboardComponent', () => {
+	let component: HospitalDashboardComponent;
+	let fixture: ComponentFixture<HospitalDashboardComponent>;
 
 	beforeEach(async(() => {
 		TestBed.configureTestingModule({
-			declarations: [DashboardComponent]
+			imports: [SharedModule, RouterTestingModule, ToastrModule.forRoot(),  BrowserAnimationsModule],
+			declarations: [HospitalDashboardComponent],
+			providers: [HosFormActionsService, SessionStorageService, ToastrService]
 		})
 			.compileComponents();
 	}));
 
 	beforeEach(() => {
-		fixture = TestBed.createComponent(DashboardComponent);
+		fixture = TestBed.createComponent(HospitalDashboardComponent);
 		component = fixture.componentInstance;
 		fixture.detectChanges();
 	});

@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormGroup, FormBuilder, Validators, Form } from '@angular/forms';
-import { SessionStorageService, SessionStorage } from 'angular-web-storage';
+import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
+import { SessionStorageService } from 'angular-web-storage';
 
 import { AppService } from '../../../../core/services/citizen/app-services/app.service';
+import { ManageRoutes } from '../../../../config/routes-conf';
 
 @Component({
 	selector: 'app-reset-password',
@@ -12,22 +13,21 @@ import { AppService } from '../../../../core/services/citizen/app-services/app.s
 })
 export class ResetPasswordComponent implements OnInit {
 
-	showWarning: boolean = false;
-
 	resetPassForm: FormGroup;
 
 	/**
 	 * Constructor to declare defualt propeties of class.
-	 * @param _appService - Declare App Service property.
-	 * @param _route - Declare App ActivatedRoute property.
+	 * @param appService - Declare App Service property.
+	 * @param route - Declare App ActivatedRoute property.
 	 * @param router - Declare Routing Property.
 	 * @param session - Declare Session Storage Module property.
 	*/
 	constructor(
-		private _appService: AppService, private fb: FormBuilder,
-		private _route: ActivatedRoute,
-		private _router: Router, public session: SessionStorageService
-	) {
+		private appService: AppService,
+		private fb: FormBuilder,
+		private route: ActivatedRoute,
+		private router: Router,
+		private session: SessionStorageService) {
 
 	}
 
@@ -37,14 +37,14 @@ export class ResetPasswordComponent implements OnInit {
 	ngOnInit() {
 
 		this.resetPassForm = this.fb.group({
-			code: '',
-			password: '',
-			confirmPassword: '',
+			code: ['', Validators.required],
+			password: [null, Validators.required],
+			confirmPassword: [null, Validators.required],
 			uniqueId: ''
-		});
+		}, { validator: this.matchingPasswords('password', 'confirmPassword') });
 
 		//  get the values from queryparams
-		this._route.queryParams.subscribe(params => {
+		this.route.queryParams.subscribe(params => {
 
 			this.resetPassForm.get('uniqueId').setValue(params['uniqueId'] === null ? (this.session.get('user_info') && this.session.get('user_info').uniqueId) : params['uniqueId']);
 
@@ -54,28 +54,46 @@ export class ResetPasswordComponent implements OnInit {
 				this.resetPassForm.get('code').disable();
 			} else {
 				this.resetPassForm.get('code').setValue("");
+				this.resetPassForm.get('code').enable();
 			}
 
 		});
 
 	}
 
-	
+	/**
+	 * This method used to compare passwords
+	 * @param passwordKey - Password
+	 * @param confirmPasswordKey - Confirm Password
+	 */
+	matchingPasswords(passwordKey: string, confirmPasswordKey: string) {
+		return (group: FormGroup): { [key: string]: any } => {
+			let password = group.controls[passwordKey];
+			let confirmPassword = group.controls[confirmPasswordKey];
+
+			if (confirmPassword.value) {
+				if (password.value !== confirmPassword.value) {
+					this.resetPassForm.get('confirmPassword').setErrors({ mismatchedPasswords: true });
+					return {
+						mismatchedPasswords: true
+					};
+				} else {
+					this.resetPassForm.get('confirmPassword').setErrors(null);
+				}
+			}
+		}
+	}
+
+
 	/**
 	 * This method is used to reset user password
 	 * @param formVals - login form values property.
 	 */
 	onResetPassword(formVals: FormGroup) {
 
-		if (this.resetPassForm.get('password').value !== this.resetPassForm.get('confirmPassword').value) {
-			this.showWarning = true;
-		} else {
-
-			this._appService.resetPassword(formVals).subscribe(
-				res => {
-
-					this._router.navigate(['../login']);
-				});
-		}
+		this.appService.resetPassword(formVals.getRawValue()).subscribe(
+			res => {
+				this.router.navigate([ManageRoutes.getFullRoute('CITIZENAUTHLOGIN')]);
+		});
 	}
 }

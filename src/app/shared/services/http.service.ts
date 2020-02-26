@@ -1,18 +1,22 @@
 import { Injectable } from '@angular/core';
-import { Headers, Response, RequestOptions } from '@angular/http';
-import { HttpClient, HttpHeaders } from "@angular/common/http";
 
-/**
- * Import required angular Observable functions.
- */
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/observable/throw';
+import {
+	HttpClient,
+	HttpErrorResponse,
+	HttpEvent,
+	HttpHandler,
+	HttpInterceptor,
+	HttpRequest,
+	HttpHeaders
+} from '@angular/common/http';
 
-import * as _ from 'lodash';
+import { environment } from './../../../environments/environment';
+import { SessionStorageService } from 'angular-web-storage';
 
-import { Configuration } from "../../core/constants/app.constants";
+import { Observable ,  Subject } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
+import { ManageRoutes } from '../../config/routes-conf';
 
 /**
  * This class is use for perform all common http requests.
@@ -20,84 +24,146 @@ import { Configuration } from "../../core/constants/app.constants";
 @Injectable()
 export class HttpService {
 
-	/**
-	 * The URL set in this Variable with API Server address.
-	 */
-	private actionUrl: string;
+	constructor(private httpClient: HttpClient,
+		private tostr: ToastrService,
+		private router : Router,
+		private session: SessionStorageService) {
+	}
 
 	/**
-	 * The Headers - Which is/are sent with request.
-	 */
-	private headers: Headers;
+  	* Request options.
+ 	* @param headerOptions
+  	* @returns {RequestOptionsArgs}
+  	*/
+	private requestOptions(headerOptions?: any): any {
+		let options = {};
 
-	/**
-	 * The Options - Other options sent with request.
-	 */
-	private options: RequestOptions;
+		if (headerOptions == null) {
 
-	/**
-	 * The commonHeaders - Declare common headers for all http requests.
-	 */
-	private commonHeaders: any;
+			// if token is present then set the headers with auth token
+			if (this.session.get("access_token")) {
+				options = {
+					headers: new HttpHeaders({
+						"Authorization": "Bearer " + this.session.get("access_token").token,
+						"Content-Type": "application/json"
+					})
+				}
+			} else {
+				if (!this.session.get("access_token")) {
+					this.tostr.error("Session Expired Please Login Again!");
+					this.router.navigate([ManageRoutes.getFullRoute('CITIZENAUTHLOGIN')]);
+					return;
+				}
+			}
 
-	/**
-	 * Constructor to declare defualt propeties of class.
-	 * @param _http - Declare common Http service property.
-	 * @param _conf - Declare configuration variable property.
-	 */
-	constructor(
-		public _httpClient: HttpClient,
-		private _conf: Configuration
-	) {
-
-		this.actionUrl = _conf.ServerWithApiUrl;
-
-		/**
-		 * Example - To set Predefined Common Header for All Requests.
-		 */
+		} else if(headerOptions == 'printReceipt'){
+			options = {
+				headers: new HttpHeaders({
+					"Authorization": "Bearer " + this.session.get("access_token").token,
+					"Content-Type": "application/json"
+				}), responseType: 'text'
+			}
+		} else {
+			options = {
+				headers: new HttpHeaders(headerOptions)
+			}
+		}
+		return options;
 	}
 
 	/**
 	 * This method is use for send GET http Request to API.
-	 * @param requestURI - Additional request URL.
-	 * @param headers  - Header(s) which will pass with particular request.
+	 * @param url - Additional request URL.
+	 * @param body - params.
+	 * @param options  - Header(s) which will pass with particular request.
 	 */
-	get(requestURI: string, headers: any): Observable<any> {
+	get(url: string, options?: any): Observable<any> {
 
-		let combineHeaders = _.merge(this.commonHeaders, headers);
+		return this.httpClient.get(this.getFullUrl(url), this.requestOptions(options))
+	}
 
-		const options = { headers: new HttpHeaders(combineHeaders) };
+	/**
+	 * This method is use for send POST http Request to API.
+	 * @param url - Additional request URL.
+	 * @param body - POST method parameters
+	 * @param options - Header(s) which will pass with particular request.
+	 */
+	post(url: string, body: any, options?: any): Observable<any> {
 
-		return this._httpClient.get(this.actionUrl + requestURI, options);
+		return this.httpClient.post(this.getFullUrl(url), body, this.requestOptions(options))
+	}
+
+	/**
+   * Performs a request with `put` http method.
+   * @param url
+   * @param body
+   * @param options
+   * @returns {Observable<>}
+   */
+	put(url: string, body: any, options?: any): Observable<any> {
+
+		return this.httpClient.put(this.getFullUrl(url), body, this.requestOptions(options))
 
 	}
 
 	/**
 	 * This method is use for send POST http Request to API.
-	 * @param requestURI - Additional request URL.
-	 * @param data - POST method parameters
-	 * @param headers - Header(s) which will pass with particular request.
+	 * @param url - Additional request URL.
+	 * @param options - Header(s) which will pass with particular request.
 	 */
-	post(requestURI: string, data: any, headers: any): Observable<any> {
+	delete(url: string, options?: any): Observable<any> {
 
-		let combineHeaders = _.merge(this.commonHeaders, headers);
+		return this.httpClient.delete(this.getFullUrl(url), this.requestOptions(options))
 
-		const options = { headers: new HttpHeaders(combineHeaders) };
-
-		return this._httpClient.post(this.actionUrl + requestURI, data, options);
 	}
 
 	/**
-	 * This method is use for send POST http Request to API.
-	 * @param requestURI - Additional request URL.
-	 * @param headers - Header(s) which will pass with particular request.
+	 * This method is use for send POST form data to API.
+	 * @param url - Additional request URL.
+	 * @param body - POST method parameters
+	 * @param options - Header(s) which will pass with particular request.
 	 */
-	delete(requestURI: string, headers: any): Observable<any> {
-
-		let combineHeaders = _.merge(this.commonHeaders, headers);
-
-		const options = { headers: new HttpHeaders(combineHeaders) };
-
-		return this._httpClient.delete(this.actionUrl + requestURI, options);
+	postFormData(url: string, formData: any, options?: any): Observable<any> {
+		return this.uploadFilePost(url,formData,options).map(data=>data.body);
 	}
+
+	/**
+	 * This method is use for send POST http Request to API for upload file.
+	 * @param url - Additional request URL.
+	 * @param body - POST method parameters
+	 * @param options - Header(s) which will pass with particular request.
+	 */
+	uploadFilePost(url: string, body: any, options?: any): Observable<any> {
+
+		const req = new HttpRequest('POST', this.getFullUrl(url), body, {
+			reportProgress: true,
+			headers: new HttpHeaders().set("Authorization", "Bearer " + this.session.get("access_token").token)
+		});
+
+		return this.httpClient.request(req);
+	}
+
+	getUploadedFile(url:string,type?:string){
+		let headers = new HttpHeaders().append("Authorization", "Bearer " + this.session.get("access_token").token)
+		return this.httpClient.get(this.getFullUrl(url), {responseType: 'arraybuffer',headers:headers});
+	}
+
+	deleteUploadedFile(url:string){
+		const req = new HttpRequest('DELETE', this.getFullUrl(url), {
+			reportProgress: true,
+			headers: new HttpHeaders().set("Authorization", "Bearer " + this.session.get("access_token").token)
+		});
+		return this.httpClient.request(req);
+	}
+
+	/**
+ 	* Build API url.
+ 	* @param url
+ 	* @returns {string}
+ 	*/
+	private getFullUrl(url: string): string {
+		return environment.envAPIServer + url;
+	}
+	
+
 }

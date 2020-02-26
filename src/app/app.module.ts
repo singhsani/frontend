@@ -1,58 +1,53 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
 import { LayoutModule } from '@angular/cdk/layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AppRoutingModule } from './app-routing.module'; // route module
-
-/* import all modules start */
-
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // angular animation module
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularWebStorageModule } from 'angular-web-storage';
+import { ChartsModule } from 'ng2-charts';
 
-/* import all modules end */
 
-/* Import child modules start */
-
-import { AuthModule } from './components/citizen/auth/auth.module';
-import { CitizenModule } from './components/citizen/citizen.module';
 import { HospitalModule } from './components/hospital/hospital.module';
-import { SharedModule } from './shared/shared.module'; // shared design module
+import { CitizenModule } from './components/citizen/citizen.module';
+import { SharedModule } from './shared/shared.module';
 import { CoreModule } from './core/core.module';
-/* Import child modules end */
+import { ToastrModule } from 'ngx-toastr';
+import { AppRoutingModule } from './app-routing.module';
+import { AmazingTimePickerModule } from 'amazing-time-picker';
 
-/* import all component start */
-
-import { AppComponent } from './app.component'; // main app component
-import { HomeLayoutComponent } from './layouts/home-layout/home-layout.component';
-import { LoginLayoutComponent } from './layouts/login-layout/login-layout.component';
-/* import all component end */
-
+import { AppComponent } from './app.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 @NgModule({
 	declarations: [
 		AppComponent,
-		HomeLayoutComponent,
-		LoginLayoutComponent,
+		PageNotFoundComponent
 	],
 	imports: [
-		AuthModule,
+		HospitalModule,
 		CitizenModule,
-		BrowserModule,
-		BrowserAnimationsModule,
-		HttpModule,
-		HttpClientModule,
-		LayoutModule,
-		AppRoutingModule,
-		FormsModule,
-		ReactiveFormsModule,
 		SharedModule,
 		CoreModule,
-		AngularWebStorageModule
+		BrowserModule,
+		BrowserAnimationsModule,
+		HttpClientModule,
+		LayoutModule,
+		FormsModule,
+		ReactiveFormsModule,
+		AngularWebStorageModule,
+		ToastrModule.forRoot({
+			timeOut: 5000,
+			positionClass: 'toast-top-right',
+			preventDuplicates: true,
+			progressBar: true,
+			closeButton: true
+		}),
+		AppRoutingModule,
+		AmazingTimePickerModule,
+		ChartsModule
 	],
-	exports: [ ],
-	providers: [ ],
+	exports: [],
 	bootstrap: [AppComponent]
 })
 export class AppModule { }

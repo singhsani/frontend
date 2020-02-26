@@ -1,0 +1,76 @@
+
+	<!-- <app-title-bar [title]="'site_title' | translate:translateKey"></app-title-bar> -->
+
+
+	<mat-card class="mb-4">
+
+		<form name="resource-form" [formGroup]="resourceForm" (ngSubmit)="onResourceSubmit(resourceForm.value)" autocomplete="off"
+		 ngNativeValidate>
+
+			<div class="row">
+				<mat-form-field class="col-md-4">
+					<input matInput type="text" placeholder="resourceName" name="resourceName" formControlName="resourceName" required>
+				</mat-form-field>
+
+				<mat-form-field class="col-md-4">
+					<input matInput type="text" placeholder="resourceId" name="resourceId" formControlName="resourceId" required>
+				</mat-form-field>
+
+				<mat-form-field class="col-md-4">
+					<mat-select placeholder="Resource Type" formControlName="resourceType">
+						<mat-option value="COMMERCIAL">COMMERCIAL</mat-option>
+						<mat-option value="RESIDENTIAL">RESIDENTIAL</mat-option>
+					</mat-select>
+				</mat-form-field>
+
+				<div class="col-md-4">
+				<button mat-raised-button color="primary">
+					<mat-icon>input</mat-icon> Add Resource
+				</button>
+			</div>
+			</div>
+		</form>
+
+	</mat-card>
+
+
+
+
+		<div class="example-container mat-elevation-z8 mb-4">
+			<div class="example-loading-shade" *ngIf="isLoadingResults || isRateLimitReached">
+				<mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+				<div class="example-rate-limit-reached" *ngIf="isRateLimitReached">
+					Something went wrong!
+				</div>
+			</div>
+
+			<mat-table #table [dataSource]="dataSource" class="example-table" matSort matSortActive="created" matSortDisableClear matSortDirection="asc">
+
+				<ng-container matColumnDef="id">
+					<mat-header-cell *matHeaderCellDef>#</mat-header-cell>
+					<mat-cell *matCellDef="let row">{{ row.id }}</mat-cell>
+				</ng-container>
+
+				<ng-container matColumnDef="resourceName">
+					<mat-header-cell *matHeaderCellDef>Resource Name</mat-header-cell>
+					<mat-cell *matCellDef="let row">{{ row.resourceName }}</mat-cell>
+				</ng-container>
+
+				<ng-container matColumnDef="resourceId">
+					<mat-header-cell *matHeaderCellDef>Resource Id</mat-header-cell>
+					<mat-cell *matCellDef="let row">{{ row.resourceId }}</mat-cell>
+				</ng-container>
+
+				<ng-container matColumnDef="resourceType">
+					<mat-header-cell *matHeaderCellDef>Resource Type</mat-header-cell>
+					<mat-cell *matCellDef="let row">{{ row.resourceType }}</mat-cell>
+				</ng-container>
+
+				<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+				<mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+			</mat-table>
+
+			<mat-paginator [length]="resultsLength" [pageSize]="pageSize">
+			</mat-paginator>
+		</div>
+	
