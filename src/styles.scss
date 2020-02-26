@@ -1049,3 +1049,13 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
 .ngSelectPlaceholder .ng-placeholder{top:15px;}
 
 
+.noDigit {
+  .mat-input-element {padding-left: 28px !important;}
+  .mat-form-field-label-wrapper {left: 28px;
+    -webkit-transition: all 0.2s linear; -moz-transition: all 0.2s linear; -o-transition: all 0.2s linear; -ms-transition: all 0.2s linear; transition: all 0.2s linear;}
+  &.mat-form-field-should-float {
+    .mat-form-field-label-wrapper {left: 0;}
+  }
+  .mat-form-field-prefix {position: absolute; top: 17px; left: 0;}
+}
+
