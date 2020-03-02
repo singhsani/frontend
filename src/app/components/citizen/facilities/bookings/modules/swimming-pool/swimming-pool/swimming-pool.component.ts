@@ -32,7 +32,7 @@ export class SwimmingPoolComponent implements OnInit {
   formId: number;
   apiCode: string;
   public tabIndex: number = 0;
-  disableDate = new Date(moment().format('YYYY-MM-DD'));
+  disableDate = new Date(moment().subtract(1, 'd').format('YYYY-MM-DD'));
   isFileUploaded1: boolean = false;
   isFileUploaded2: boolean = false;
   isFileUploaded3: boolean = false;
@@ -166,12 +166,12 @@ export class SwimmingPoolComponent implements OnInit {
    * Method for hide duration field
    */
   changeBatchDuration(event){
-    if(event == 'LEARNER'){
-      this.swimmimgPoolBookingForm.get('batchDuration').get('code').setValue('MONTHLY');
-      this.durationisReadOnly = true;
-    }else{
-      this.durationisReadOnly = false;
-    }
+    // if(event == 'LEARNER'){
+    //   this.swimmimgPoolBookingForm.get('batchDuration').get('code').setValue('MONTHLY');
+    //   this.durationisReadOnly = true;
+    // }else{
+    //   this.durationisReadOnly = false;
+    // }
 
   }
 
