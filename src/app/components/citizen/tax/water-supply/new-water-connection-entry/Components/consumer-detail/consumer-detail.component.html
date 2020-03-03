@@ -8,11 +8,11 @@
             </div> -->
 
             <div class="col-md-6">
-                <mat-form-field class="full-width-input">
-                  <input matInput trim="blur" required placeholder="Application No" maxlength="20" #ApplicationNo="ngModel" name="applicationNumber" [(ngModel)]="applicationModel.applicationNumber">
-                  <mat-error *ngIf="ApplicationNo.invalid">*Application No is required.</mat-error>
+                <mat-form-field class="full-width-input" hidden>
+                  <input matInput trim="blur"  placeholder="Application No" maxlength="20" #ApplicationNo="ngModel" name="applicationNumber" [(ngModel)]="applicationModel.applicationNumber">
+                  <!-- <mat-error *ngIf="ApplicationNo.invalid">*Application No is required.</mat-error> -->
                 </mat-form-field>
-            </div>
+            </div>            
             <!-- <div class="col-md-6">
                 <mat-form-field class="full-width-input">
                     <input readonly matInput placeholder="Applicant Name" name="applicantName"  [(ngModel)]="applicationModel.applicantName">

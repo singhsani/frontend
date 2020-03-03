@@ -127,10 +127,11 @@ export class GatewayResponseComponent implements OnInit {
 				data: "paid",
 				status: true
 			}),
-			transactionId: data.transactionId,
+			transactionId: responseObj.bank_ref_no,
 			paymentStatus: this.paymentStatus,
 			payableServiceType: data.payableServiceType,
-			amount: responseObj ? responseObj.mer_amount : 0
+			amount: responseObj ? responseObj.mer_amount : 0,
+			payGateway : payGateway
 		}
 
 		if (payGateway == 'BILLDESK') {

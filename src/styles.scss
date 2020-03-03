@@ -1049,3 +1049,26 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
 .ngSelectPlaceholder .ng-placeholder{top:15px;}
 
 
+.noDigit {
+  .mat-input-element {padding-left: 28px !important;}
+  .mat-form-field-label-wrapper {left: 28px;
+    -webkit-transition: all 0.2s linear; -moz-transition: all 0.2s linear; -o-transition: all 0.2s linear; -ms-transition: all 0.2s linear; transition: all 0.2s linear;}
+  &.mat-form-field-should-float {
+    .mat-form-field-label-wrapper {left: 0;}
+  }
+  .mat-form-field-prefix {position: absolute; top: 17px; left: 0;}
+}
+
+ .stepperToTab {
+  &{border: 1px solid #e1e1e1; border-radius: 5px;}
+  .mat-horizontal-content-container {padding: 0;}
+  .mat-horizontal-stepper-header-container {margin-bottom: 0; background: #f1f1f1; border: 0;}
+  .mat-horizontal-stepper-header {
+    height: 45px !important;}
+  .mat-step-icon, .mat-step-icon-not-touched {display: none;}
+  .mat-stepper-horizontal-line {border-top-width:0}
+  .mat-step-label.mat-step-label-active {color: #666;}
+  .mat-step-label.mat-step-label-active.mat-step-label-selected {color: #673ab7;}
+  .mat-step-label-active.mat-step-label-selected::after {height: 2px; }
+
+}

@@ -196,6 +196,14 @@ const ROUTEMAIN = {
         'main': 'newWaterConnectionEntry',
         'type': 'newWaterConnectionEntry'
     },
+    'HEL-WTR-PIPELINE': {
+        'main': 'waterPipeLineConnection',
+        'type': 'waterPipeLineConnection'
+    },
+    'HEL-DRNG-PIPELINE': {
+        'main': 'drainagePipeLineConnection',
+        'type': 'drainagePipeLineConnection'
+    },
     'WTR-DISCON': {
         'main': 'disconnection',
         'type': 'disconnection'
@@ -491,6 +499,8 @@ const ROUTEPREFIX = {
 
     'CERTIFICATESMODULE': 'certificates',
 
+    
+
     /** start - citizen innner-booking modules routes configuretion */
     'BIRTHANDDEATHMODULE': 'birth-death',
     'MARRIAGEMODULE': 'marriage',
@@ -513,6 +523,7 @@ const ROUTEPREFIX = {
     /** start - citizen inner-tax module */
     'PROPERTYMODULE': 'property',
     'WATERMODULE': 'water-supply',
+    'WATERDRINAGE': 'water-drinage',
     /** end - citizen inner-tax module */
 
     'PROFESSIONALMODULE': 'professional',
@@ -687,6 +698,12 @@ const ROUTESLIST = {
     /*Water routes starts */
     'WTR-NEW': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TAXMODULE + '/' + ROUTEPREFIX.WATERMODULE + '/' + ROUTEMAIN["WTR-NEW"].main
+    },
+    'HEL-WTR-PIPELINE': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TAXMODULE + '/' + ROUTEPREFIX.WATERDRINAGE + '/' + ROUTEMAIN["HEL-WTR-PIPELINE"].main
+    },
+    'HEL-DRNG-PIPELINE': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TAXMODULE + '/' + ROUTEPREFIX.WATERDRINAGE + '/' + ROUTEMAIN["HEL-DRNG-PIPELINE"].main
     },
     'WTR-DISCON': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TAXMODULE + '/' + ROUTEPREFIX.WATERMODULE + '/' + ROUTEMAIN["WTR-DISCON"].main

@@ -11,6 +11,7 @@ import { Location } from '@angular/common';
 import { CommonService } from '../../.././../../shared/services/common.service';
 import * as _ from 'lodash';
 import { TranslateService } from '../../../../../shared/modules/translate/translate.service';
+import { LicenseConfiguration } from '../../license-configuration';
 
 @Component({
 	selector: 'app-animal-pond-transfer',
@@ -23,7 +24,7 @@ export class AnimalPondTransferComponent implements OnInit {
 
 	animalPondTransferForm: FormGroup;
 	translateKey: string = 'animalPondTransferScreen';
-
+	licenseConfiguration: LicenseConfiguration = new LicenseConfiguration();
 	formId: number;
 	apiCode: string;
 	tabIndex: number = 0;
@@ -48,15 +49,18 @@ export class AnimalPondTransferComponent implements OnInit {
 	// serach api variable
 	serachLicenceObj = {
 		isDisplayTransferLicenceForm: <boolean>false,
-		searchLicenceNumber:""
+		searchLicenceNumber: ""
 	}
 
 	/**
 	 * This method for serach licence using licence number.
 	 */
 	searchLicence() {
-		this.animalPondService.searchLicence(this.serachLicenceObj.searchLicenceNumber).subscribe(
+		let obj = { refNumber: this.serachLicenceObj.searchLicenceNumber };
+		this.animalPondService.searchLicence(obj).subscribe(
 			(res: any) => {
+				console.log("res", res)
+				console.log("licenseIssueDate", res.data.licenseIssueDate)
 				if (res.success) {
 					this.serachLicenceObj.isDisplayTransferLicenceForm = true;
 					this.createRecordPatchSerachData(res.data);
@@ -153,6 +157,7 @@ export class AnimalPondTransferComponent implements OnInit {
 			maxFileSizeInMB: [data.maxFileSizeInMB ? data.maxFileSizeInMB : 5],
 			requiredOnAdminPortal: [data.requiredOnAdminPortal],
 			requiredOnCitizenPortal: [data.requiredOnCitizenPortal],
+			dmsEnabled:[data.dmsEnabled]
 			// version: [data.version ? data.version : null]
 		});
 	}
@@ -207,7 +212,7 @@ export class AnimalPondTransferComponent implements OnInit {
 				// renewal: res.renewal,
 				// adminCharges: res.adminCharges,
 				// netAmount: res.netAmount,
-				licenseIssueDate: res.licenseIssueDate,
+				// licenseIssueDate: res.licenseIssueDate,
 				// licenseRenewalDate: res.licenseRenewalDate,
 				// loinumber: res.loinumber,
 				attachments: [],
@@ -253,7 +258,7 @@ export class AnimalPondTransferComponent implements OnInit {
 				this.showButtons = true;
 				this.onChangeZone(this.animalPondTransferForm.get('zoneNo').value.code);
 				this.onChangeWard(this.animalPondTransferForm.get('wardNo').value.code);
-				
+
 				// deflate add one array in relationship grid
 				if ((<FormArray>res.relationshipList).length == 0) {
 					this.addItem('relationshipList').push(this.createArray());

@@ -11,6 +11,7 @@ import { Location } from '@angular/common';
 import { CommonService } from '../../.././../../shared/services/common.service';
 import * as _ from 'lodash';
 import { TranslateService } from '../../../../../shared/modules/translate/translate.service';
+import { LicenseConfiguration } from '../../license-configuration';
 
 @Component({
 	selector: 'app-animal-pond-renew',
@@ -23,7 +24,8 @@ export class AnimalPondRenewComponent implements OnInit {
 
 	animalPondRenewForm: FormGroup;
 	translateKey: string = 'animalPondRenewScreen';
-
+	licenseConfiguration: LicenseConfiguration = new LicenseConfiguration();
+	
 	formId: number;
 	apiCode: string;
 	tabIndex: number = 0;
@@ -48,14 +50,15 @@ export class AnimalPondRenewComponent implements OnInit {
 	// serach api variable
 	serachLicenceObj = {
 		isDisplayRenewLicenceForm: <boolean>false,
-		searchLicenceNumber:""
+		searchLicenceNumber: ""
 	}
 
 	/**
 	 * This method for serach licence using licence number.
 	 */
 	searchLicence() {
-		this.animalPondService.searchLicence(this.serachLicenceObj.searchLicenceNumber).subscribe(
+		let obj = { refNumber: this.serachLicenceObj.searchLicenceNumber };
+		this.animalPondService.searchLicence(obj).subscribe(
 			(res: any) => {
 				if (res.success) {
 					this.serachLicenceObj.isDisplayRenewLicenceForm = true;
@@ -152,6 +155,7 @@ export class AnimalPondRenewComponent implements OnInit {
 			maxFileSizeInMB: [data.maxFileSizeInMB ? data.maxFileSizeInMB : 5],
 			requiredOnAdminPortal: [data.requiredOnAdminPortal],
 			requiredOnCitizenPortal: [data.requiredOnCitizenPortal],
+			dmsEnabled:[data.dmsEnabled]
 			// version: [data.version ? data.version : null]
 		});
 	}
@@ -174,6 +178,8 @@ export class AnimalPondRenewComponent implements OnInit {
 		this.getLookupData();
 		this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
 		this.formService.createFormData().subscribe(res => {
+			console.log("res", res)
+			console.log("licenseIssueDate", res.licenseIssueDate)
 
 			this.formId = res.serviceFormId;
 			this.animalPondRenewForm.patchValue(searchData);
@@ -206,7 +212,7 @@ export class AnimalPondRenewComponent implements OnInit {
 				// renewal: res.renewal,
 				// adminCharges: res.adminCharges,
 				// netAmount: res.netAmount,
-				licenseIssueDate: res.licenseIssueDate,
+				// licenseIssueDate: res.licenseIssueDate,
 				// licenseRenewalDate: res.licenseRenewalDate,
 				// loinumber: res.loinumber,
 				attachments: [],

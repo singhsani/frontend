@@ -32,6 +32,7 @@ export class TokenInterceptor implements HttpInterceptor {
 		private toaster: ToastrService,
 		private commonService: CommonService,
 		private appService: AppService,
+		private session: SessionStorageService,
 		private hosAppService: HosAppService) {
 
 	}
@@ -48,8 +49,26 @@ export class TokenInterceptor implements HttpInterceptor {
 		this.requests.push(req);
 		this.commonService.isLoading.next(true);
 
+		var isCustomHeader: boolean = false;
+		/* If headers not present then set the authorisation headers for elegant request */
+		if (req.headers instanceof HttpHeaders) {
+			if (req.headers.keys().length == 0) {
+				if (this.session.get("access_token")) {
+					var authReq = req.clone({
+						headers: new HttpHeaders({
+							"Authorization": "Bearer " + this.session.get("access_token").token,
+							"Content-Type": "application/json"
+						})
+					});
+				}
+				isCustomHeader = true;
+			} else {
+				isCustomHeader = false;
+			}
+		}
+
 		return Observable.create(observer => {
-			const subscription = next.handle(req)
+			const subscription = next.handle(isCustomHeader ? authReq : req)
 				.subscribe(
 					event => {
 						if (event instanceof HttpResponse) {

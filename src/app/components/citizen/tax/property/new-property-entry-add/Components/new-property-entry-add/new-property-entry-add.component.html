@@ -1,6 +1,8 @@
+
+<app-title-bar [title]="'Property Entry'"></app-title-bar>
 <div [hidden]="isShowForm">
 
-<mat-card class="cardH1 mat-card">
+<!-- <mat-card class="cardH1 mat-card">
   <div class="row ">
     <div class="col-md-6 ">
         <h1 class="">Property Entry</h1>
@@ -8,8 +10,8 @@
     <div class="col-md-6 text-right">
     </div>
   </div>
-</mat-card>
-<mat-horizontal-stepper #stepper (selectionChange)="stepChanged($event, stepper);">
+</mat-card> -->
+<mat-horizontal-stepper #stepper (selectionChange)="stepChanged($event, stepper);" class="stepperToTab">
   <mat-step>
     <ng-template matStepLabel>Address Detail</ng-template>
     <app-address-detail></app-address-detail>

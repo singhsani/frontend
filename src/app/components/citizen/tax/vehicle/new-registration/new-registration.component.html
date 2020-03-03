@@ -99,7 +99,7 @@
 						<control-messages [control]="vehicleRegistrationForm.get('dealerEmail')"></control-messages>
 					</mat-form-field>
 
-					<mat-form-field class="col-md-4">
+					<mat-form-field class="col-md-4 noDigit">
 						<span matPrefix>+91 &nbsp;</span>
 						<input required matInput autocomplete="off" type="tel" OnlyNumber formControlName="dealerMobileNo"
 							minlength="10" maxlength="10" placeholder="{{'dealer_mobile_no' | translate: translateKey}}">
@@ -128,7 +128,7 @@
 
 				<div class="fotButtonBar clearfix">
 					<div class="col-sm-12 col-md-12">
-						<button class="pull-right" mat-raised-button color="primary" (click)="tabIndex = 1">{{'next' | translate:
+						<button class="pull-right" mat-raised-button color="primary" (click)="tabIndex = 1">{{'save_and_next' | translate:
 							actionBarKey}}</button>
 						<!-- <button type="button" mat-raised-button color="warn" (click)="resetForm()">{{'clear' | translate: actionBarKey}}</button> -->
 					</div>
@@ -168,7 +168,7 @@
 						<control-messages [control]="vehicleRegistrationForm.get('aadhaarNo')"></control-messages>
 					</mat-form-field>
 
-					<mat-form-field class="col-md-4">
+					<mat-form-field class="col-md-4 noDigit">
 						<span matPrefix>+91 &nbsp;</span>
 						<input matInput autocomplete="off" type="tel" OnlyNumber formControlName="mobileNo"
 							minlength="10" maxlength="10" placeholder="{{'mobile_no' | translate: translateKey}}"
@@ -192,7 +192,7 @@
 					<div class="col-sm-12 col-md-12">
 						<button type="button" class="liteBorder pull-left" mat-raised-button (click)="tabIndex = 0">{{'back' |
 							translate: actionBarKey}}</button>
-						<button mat-raised-button class="pull-right" color="primary" (click)="tabIndex = 2">{{'next' | translate:
+						<button mat-raised-button class="pull-right" color="primary" (click)="tabIndex = 2">{{'save_and_next' | translate:
 							actionBarKey}}</button>
 						<!-- <button type="button" mat-raised-button color="warn" (click)="resetForm()">{{'clear' | translate: actionBarKey}}</button> -->
 					</div>
@@ -276,7 +276,7 @@
 					<div class="col-sm-12 col-md-12">
 						<button type="button" class="liteBorder pull-left" mat-raised-button (click)="tabIndex = 1">{{'back' |
 							translate: actionBarKey}}</button>
-						<button mat-raised-button class="pull-right" color="primary" (click)="tabIndex = 3">{{'next' | translate:
+						<button mat-raised-button class="pull-right" color="primary" (click)="tabIndex = 3">{{'save_and_next' | translate:
 								actionBarKey}}</button>
 						<!-- <button [disabled]="!isSubmitBtnVisible" mat-raised-button class="pull-right" color="success" (click)="onSubmit()">{{'submit'
 							| translate:
