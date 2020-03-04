@@ -5,6 +5,8 @@ import { NewWaterConnectionEntryDataSharingService } from '../../Services/new-wa
 import { PropertyAddressModel, PropertyModel } from '../../Models/new-water-connection-entry.model';
 import { Subscription } from 'rxjs';
 import { AlertService } from 'src/app/vmcshared/Services/alert.service';
+import { ManageRoutes } from 'src/app/config/routes-conf';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-property-detail',
@@ -20,7 +22,7 @@ export class PropertyDetailComponent implements OnInit {
   connectionDtlId: number;
   isShowSubmitButton: boolean = false;
   constructor(private newNewWaterConnectionEntryDataSharingService: NewWaterConnectionEntryDataSharingService,
-    private alertService: AlertService,
+    private alertService: AlertService,private router: Router,
     private newNewWaterConnectionEntryService: NewWaterConnectionEntryService) {
   }
 
@@ -174,7 +176,8 @@ export class PropertyDetailComponent implements OnInit {
         if (data.status === 200) {
           this.alertService.success(data.body.message);
           this.newNewWaterConnectionEntryDataSharingService.updateDataSourceIsShowDocument(true);
-          this.newNewWaterConnectionEntryDataSharingService.updateDataSourceMoveStepper(2);
+          //this.newNewWaterConnectionEntryDataSharingService.updateDataSourceMoveStepper(2);
+          this.router.navigateByUrl(ManageRoutes.getFullRoute('CITIZENDASHBOARD'));
         }
       },
       (error) => {
