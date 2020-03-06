@@ -13,7 +13,12 @@ export class MuttonFishService {
   constructor(private http: HttpService) {
 
   }
+  // searchLicence(licenceNumber) {
+  //   return this.http.get(`api/form/MFLicense/search/${licenceNumber}`);
+  // }
   searchLicence(licenceNumber) {
-    return this.http.get(`api/form/MFLicense/search/${licenceNumber}`);
-  }
+    return this.http.post(`api/form/MFLicense/searchFromNewgen`,licenceNumber);
+}
+
+
 }
