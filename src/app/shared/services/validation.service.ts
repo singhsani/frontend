@@ -40,6 +40,7 @@ export class ValidationService {
             invalidemployeeage: 'Age must be >13 year',
             invalidIfscCode: 'IFSC Code is not valid',
             invalidPan: 'Enter valid PAN number e.g. ABCDE1234T',
+            invalidPanLastFour: 'Enter valid PAN number e.g. 234T',
             invalidGstin: 'The GSTIN is invalid, Please enter a valid GSTIN e.g. 29ABCDE1234F2Z5',
             invalidpetaKendraNumber: 'Should contains only alpha-numeric and numeric value',
             invalidAmount: 'Amount should be in digit and Only two digit allowed after decimal',
@@ -243,4 +244,15 @@ export class ValidationService {
 		}
 	}
 
+  // Last 4 Digit pan number validation
+  static panValidatorforlastfour(control: FormControl) {
+    if (control.value) {
+      const matches = control.value.match(/^[0-9]{3}[a-zA-Z]{1}/);
+      return matches ? null : { 'invalidPanLastFour': true };
+    } else {
+      return null;
+    }
+  }
+
 }
+

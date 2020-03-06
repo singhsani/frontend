@@ -213,7 +213,7 @@
                   ({{'last_4_digit_of_ID'| translate: translateKey}})</mat-hint>
              </mat-form-field>
             <mat-form-field class="col-md-6" *ngIf="isPanCardVisibleIdNumber">
-              <input matInput formControlName="idNumber" class="pancard"  appValidationFields validationFieldsType="onlyPancard"  minlength="4" maxlength="4"
+              <input matInput formControlName="idNumber" class="pancard" minlength="4" maxlength="4"
                      placeholder="{{'id_number' | translate: translateKey}}" required>
               <control-messages [control]="ticketBookingForm.get('idNumber')"></control-messages>
               <mat-hint class="mt-3 font-weight-bold fsLarge">
