@@ -40,8 +40,8 @@
   <form #formDetail="ngForm" (ngSubmit)="onEnterClick(formDetail)">
     <div class="row margin-top-20">
       <div class="col-md-2">
-        <mat-form-field class="full-width-input">
-          <input matInput trim="blur" required placeholder="Application No" maxlength="20" #ApplicationNo="ngModel" name="applicationNo" [(ngModel)]="serviceCharge.applicationNo">
+        <mat-form-field class="full-width-input" hidden>
+          <input matInput trim="blur" placeholder="Application No" maxlength="20" #ApplicationNo="ngModel" name="applicationNo" [(ngModel)]="serviceCharge.applicationNo">
           <mat-error *ngIf="ApplicationNo.invalid">*Application No is required.</mat-error>
         </mat-form-field>
       </div>
