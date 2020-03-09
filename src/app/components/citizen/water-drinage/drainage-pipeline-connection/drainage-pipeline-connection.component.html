@@ -34,20 +34,27 @@
 						<control-messages [control]="drainagePipeliConnectionForm.get('societyName')"></control-messages>
 					</mat-form-field>
 
-					<div class="col-md-6 ngSelect" formGroupName="drainagePipelineZone">
-						<ng-select placeholder="{{'water-pipeline-zone' | translate:translateKey}} *" formControlName="code"
-							(change)="onChangeZone($event);drainagePipeliConnectionForm.get('drainagePipelineWard').reset()">
-							<ng-option *ngFor="let zone of City_ZONE" [value]="zone.code">{{zone.name}}</ng-option>
-						</ng-select>
-						<control-messages [control]="drainagePipeliConnectionForm.get('drainagePipelineZone').get('code')">
-						</control-messages>
+					<div class="col-md-6 ngSelect"  formGroupName="drainagePipelineZone">
+						<div *ngIf="wardZoneLevel.length>=1">
+							<ng-select required placeholder="{{'water-pipeline-zone' | translate:translateKey}} *"
+								formControlName="code"
+								(change)="onChangedWardZone($event,2)">
+								<ng-option *ngFor="let zone of wardZoneLevel1List" [value]="zone.parentWardzoneId">{{zone.wardzoneName}}</ng-option>
+							</ng-select>
+							<control-messages [control]="drainagePipeliConnectionForm.get('drainagePipelineZone').get('code')">
+							</control-messages>
+						</div>
 					</div>
 					<div class="col-md-6 ngSelect" formGroupName="drainagePipelineWard">
-						<ng-select placeholder="{{'water-pipeline-ward' | translate:translateKey}} *" formControlName="code">
-							<ng-option *ngFor="let ward of WARD" [value]="ward.code">{{ward.name}}</ng-option>
-						</ng-select>
-						<control-messages [control]="drainagePipeliConnectionForm.get('drainagePipelineWard').get('code')">
-						</control-messages>
+						<div *ngIf="wardZoneLevel.length>=2">
+							<ng-select required placeholder="{{'water-pipeline-ward' | translate:translateKey}} *"
+								formControlName="code"
+								(change)="onChangedWardZone($event,3)">
+								<ng-option *ngFor="let zone of wardZoneLevel2List" [value]="zone.parentWardzoneId">{{zone.wardzoneName}}</ng-option>
+							</ng-select>
+							<control-messages [control]="drainagePipeliConnectionForm.get('drainagePipelineWard').get('code')">
+							</control-messages>
+						</div>
 					</div>
 				</div>
 
@@ -266,6 +273,7 @@
 					<mat-form-field class="col-md-4">
 						<input matInput required maxlength="10" formControlName="workExecutionToAmount"
 							placeholder="{{'work-execution-to-amount' | translate:translateKey}}">
+						<mat-error *ngIf="drainagePipeliConnectionForm.get('workExecutionToAmount').touched && waterPipeliConnectionForm.errors && waterPipeliConnectionForm.errors['range']">Please enter Work Execution To Amount Greater than Work Execution From Amount</mat-error>
 						<control-messages [control]="drainagePipeliConnectionForm.get('workExecutionToAmount')">
 						</control-messages>
 					</mat-form-field>

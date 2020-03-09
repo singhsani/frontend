@@ -8,6 +8,7 @@ import { CoreModule } from '../../../core/core.module';
 import { WaterPipelineConnection } from './water-pipeline/water-pipeline-connection';
 import { FilterAttachmentMRPipe } from '../certificates/marriage/filter-attachment-MR.pipe';
 import { DrainagePipelineConnectionComponent } from './drainage-pipeline-connection/drainage-pipeline-connection.component';
+import { TaxRebateApplicationService } from '../tax/property/tax-rebate-application/Services/tax-rebate-application.service';
 
 
 /* Import all shared, core and routing module end */
@@ -25,6 +26,9 @@ const routes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forChild(routes)
+  ],
+  providers:[
+    TaxRebateApplicationService
   ],
   declarations: [
     WaterPipelineConnection,

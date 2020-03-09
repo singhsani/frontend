@@ -1,6 +1,6 @@
 
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormArray, ValidatorFn } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ValidationService } from 'src/app/shared/services/validation.service';
 import { FormsActionsService } from 'src/app/core/services/citizen/data-services/forms-actions.service';
@@ -9,6 +9,9 @@ import * as _ from 'lodash';
 import * as moment from 'moment';
 import { WaterDrinageConfig } from '../water-drinage-config';
 import { TranslateService } from 'src/app/shared/modules/translate/translate.service';
+import { PropertySearchService } from '../../../../vmcshared/component/property-search/property-search.service';
+import { TaxRebateApplicationService } from '../../tax/property/tax-rebate-application/Services/tax-rebate-application.service';
+import { Constants } from '../../../../vmcshared/Constants';
 
 @Component({
   selector: 'water-pipeline-connection',
@@ -47,6 +50,13 @@ export class WaterPipelineConnection implements OnInit {
   config: WaterDrinageConfig = new WaterDrinageConfig();
 
   disablefutureDate = new Date(moment().format('YYYY-MM-DD'));
+
+  wardZoneLevel = [];
+  wardZoneLevel1List = [];
+  wardZoneLevel2List = [];
+  wardZoneLevel3List = [];
+  wardZoneLevel4List = [];
+
   /**
    * @param fb - Declare FormBuilder property.
    * @param validationError - Declare validation service property
@@ -59,7 +69,8 @@ export class WaterPipelineConnection implements OnInit {
     public translateService: TranslateService,
     private router: Router,
     private route: ActivatedRoute,
-    private formService: FormsActionsService
+    private formService: FormsActionsService,
+    private taxRebateApplicationService: TaxRebateApplicationService,
   ) { }
 
 	/**
@@ -75,6 +86,7 @@ export class WaterPipelineConnection implements OnInit {
       this.router.navigate([ManageRoutes.getFullRoute('CITIZENDASHBOARD')]);
     }
     else {
+      this.getWardZoneLevel();
       this.getLookupData();
       this.getAnimalPondLicNewData();
       this.waterPipeliConnectionFormControls();
@@ -205,6 +217,8 @@ export class WaterPipelineConnection implements OnInit {
       waterPipelineWard: this.fb.group({
         code: [null, Validators.required]
       }),
+      // waterPipelineZone: [null, [Validators.required]],
+      // waterPipelineWard: [null, [Validators.required]],
       firmCity: [null, [Validators.required, Validators.maxLength(10)]],
       tpNo: [null],
       fpNo: [null],
@@ -237,7 +251,7 @@ export class WaterPipelineConnection implements OnInit {
       /* Step 4 controls start*/
       // attachments: ['']
       /* Step 4 controls end */
-    });
+    }, { validator: this.myAwesomeRangeValidator });
   }
 
   getFormData(id: number) {
@@ -416,5 +430,95 @@ export class WaterPipelineConnection implements OnInit {
     // "registrationValidity":new Date(),
     // "buildingPermissionDate":new Date(),
   };
+
+  /**
+   * 
+   * Work execution from amount and work execution to amount validation.
+   * 
+   */
+  myAwesomeRangeValidator: ValidatorFn = (fg: FormGroup) => {
+    const start = Number(fg.get('workExecutionFromAmount').value);
+    const end = Number(fg.get('workExecutionToAmount').value);
+    // return start != 0 && end != 0 && start < end
+    //   ? null
+    //   : { range: true };
+    if(start != 0 && end != 0) {
+      if(start < end) {
+        return null;
+      } else {
+        fg.get('workExecutionToAmount').setErrors({ range: true });
+        return { range: true }
+      }
+    }
+  };
+
+
+  getWardZoneLevel() {
+    this.taxRebateApplicationService.getWardZoneLevel().subscribe(
+      (data) => {
+        if (data.status === 200 && data.body.length) {
+          this.wardZoneLevel = data.body;
+          console.log('wardZoneLevel', this.wardZoneLevel);
+          this.wardZoneLevel.sort((a, b) => a.levelOrderSequence - b.levelOrderSequence);
+          this.getWardZoneFirstLevel();
+        }
+      },
+      (error) => {
+        console.log('error', error);
+      }
+    )
+  }
+
+  getWardZoneFirstLevel() {
+    this.taxRebateApplicationService.getWardZoneFirstLevel(1, Constants.ModuleKey.Property_Tax).subscribe(
+      (data) => {
+        if (data.status === 200 && data.body.length) {
+          this.wardZoneLevel1List = data.body;
+        }
+      },
+      (error) => {
+        console.log('error', error);
+      })
+  }
+
+  onChangedWardZone(value, level) {
+    if (level == 2) {
+      this.waterPipeliConnectionForm.controls.waterPipelineWard.setValue({code: ''});
+      this.wardZoneLevel2List = [];
+      this.wardZoneLevel3List = [];
+      this.wardZoneLevel4List = [];
+    }
+    else if (level == 3) {
+      this.wardZoneLevel3List = [];
+      this.wardZoneLevel4List = [];
+    }
+    else if (level == 4) {
+      this.wardZoneLevel4List = [];
+    }
+    if (value)
+      this.getWardZone(value, level)
+  }
+
+  getWardZone(parentId, level) {
+    var postData = {};
+    postData = { parentId: parentId };
+    this.taxRebateApplicationService.getWardZone(postData).subscribe(
+      (data) => {
+        if (data.status === 200 && data.body.length) {
+          if (level == 2) {
+            this.wardZoneLevel2List = data.body;
+          }
+          else if (level == 3) {
+            this.wardZoneLevel3List = data.body;
+          }
+          else if (level == 4) {
+            this.wardZoneLevel4List = data.body;
+          }
+        }
+      },
+      (error) => {
+        console.log('error', error);
+      })
+  }
 
 }
