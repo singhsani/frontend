@@ -29,25 +29,25 @@
 						<control-messages [control]="waterPipeliConnectionForm.get('societyName')"></control-messages>
 					</mat-form-field>
 
-					<div class="col-md-6 ngSelect"  formGroupName="waterPipelineZone">
+					<div class="col-md-6 ngSelect">
 						<div *ngIf="wardZoneLevel.length>=1">
 							<ng-select required placeholder="{{'water-pipeline-zone' | translate:translateKey}} *"
-								formControlName="code"
+								formControlName="waterPipelineZoneId"
 								(change)="onChangedWardZone($event,2)">
 								<ng-option *ngFor="let zone of wardZoneLevel1List" [value]="zone.parentWardzoneId">{{zone.wardzoneName}}</ng-option>
 							</ng-select>
-							<control-messages [control]="waterPipeliConnectionForm.get('waterPipelineZone').get('code')">
+							<control-messages [control]="waterPipeliConnectionForm.get('waterPipelineZoneId')">
 							</control-messages>
 						</div>
 					</div>
-					<div class="col-md-6 ngSelect" formGroupName="waterPipelineWard">
+					<div class="col-md-6 ngSelect">
 						<div *ngIf="wardZoneLevel.length>=2">
 							<ng-select required placeholder="{{'water-pipeline-ward' | translate:translateKey}} *"
-								formControlName="code"
+								formControlName="waterPipelineWardId"
 								(change)="onChangedWardZone($event,3)">
-								<ng-option *ngFor="let zone of wardZoneLevel2List" [value]="zone.parentWardzoneId">{{zone.wardzoneName}}</ng-option>
+								<ng-option *ngFor="let zone of wardZoneLevel2List" [value]="zone.wardzoneId">{{zone.wardzoneName}}</ng-option>
 							</ng-select>
-							<control-messages [control]="waterPipeliConnectionForm.get('waterPipelineWard').get('code')">
+							<control-messages [control]="waterPipeliConnectionForm.get('waterPipelineWardId')">
 							</control-messages>
 						</div>
 					</div>
