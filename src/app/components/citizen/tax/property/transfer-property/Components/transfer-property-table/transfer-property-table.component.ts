@@ -120,9 +120,9 @@ export class TransferPropertyTableComponent implements OnInit {
 
 
   onEnterClick() {
-    if(!this.outstandingDetailModel.applicationNo) {
-      return;
-    }
+    // if(!this.outstandingDetailModel.applicationNo) {
+    //   return;
+    // }
     if (this.outstandingDetailModel.outstandingAmount == 0) {
       this.selectedItem.outstandingAmount = this.outstandingDetailModel.outstandingAmount;
       this.selectedItem.applicationNo = this.outstandingDetailModel.applicationNo;
