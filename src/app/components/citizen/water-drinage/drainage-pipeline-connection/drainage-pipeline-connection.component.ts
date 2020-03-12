@@ -96,12 +96,14 @@ export class DrainagePipelineConnectionComponent implements OnInit {
       propertyAddress: [null, [Validators.required, Validators.maxLength(200)]],
       contractorAddress: [null, [Validators.required, Validators.maxLength(200)]],
       mobileNo: [null, [Validators.maxLength(10)]],
-      drainagePipelineZone: this.fb.group({
-        code: [null, Validators.required]
-      }),
-      drainagePipelineWard: this.fb.group({
-        code: [null, Validators.required]
-      }),
+      // drainagePipelineZone: this.fb.group({
+      //   code: [null, Validators.required]
+      // }),
+      // drainagePipelineWard: this.fb.group({
+      //   code: [null, Validators.required]
+      // }),
+      drainagePipelineZoneId: [null, [Validators.required]],
+      drainagePipelineWardId: [null, [Validators.required]],
       firmCity: [null, [Validators.required, Validators.maxLength(10)]],
       tpNo: [null],
       fpNo: [null],
@@ -139,11 +141,11 @@ export class DrainagePipelineConnectionComponent implements OnInit {
    * this pethod is used to set upload documents.
    */
   getFormData(id: number) {
-    debugger;
     this.formService.getFormData(id).subscribe(res => {
-      debugger;
+      if(res.drainagePipelineWardId) {
+        this.getWardZone(res.drainagePipelineZoneId, 2);
+      }
       res.serviceDetail.serviceUploadDocuments.forEach(app => {
-        debugger;
         (<FormArray>this.drainagePipeliConnectionForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.config.createDocumentsGrp(app));
       });
       this.requiredDocumentList();
@@ -300,7 +302,6 @@ export class DrainagePipelineConnectionComponent implements OnInit {
 
 
   myAwesomeRangeValidator: ValidatorFn = (fg: FormGroup) => {
-    debugger;
     const start = Number(fg.get('workExecutionFromAmount').value);
     const end = Number(fg.get('workExecutionToAmount').value);
     // return start != 0 && end != 0 && start < end
@@ -346,7 +347,7 @@ export class DrainagePipelineConnectionComponent implements OnInit {
 
   onChangedWardZone(value, level) {
     if (level == 2) {
-      this.drainagePipeliConnectionForm.controls.drainagePipelineWard.setValue({code: ''});
+      //this.drainagePipeliConnectionForm.controls.drainagePipelineWard.setValue({code: ''});
       this.wardZoneLevel2List = [];
       this.wardZoneLevel3List = [];
       this.wardZoneLevel4List = [];

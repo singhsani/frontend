@@ -211,14 +211,14 @@ export class WaterPipelineConnection implements OnInit {
       propertyAddress: [null, [Validators.required, Validators.maxLength(200)]],
       contractorAddress: [null, [Validators.required, Validators.maxLength(200)]],
       mobileNo: [null, [Validators.maxLength(10)]],
-      waterPipelineZone: this.fb.group({
-        code: [null, Validators.required]
-      }),
-      waterPipelineWard: this.fb.group({
-        code: [null, Validators.required]
-      }),
-      // waterPipelineZone: [null, [Validators.required]],
-      // waterPipelineWard: [null, [Validators.required]],
+      // waterPipelineZone: this.fb.group({
+      //   code: [null, Validators.required]
+      // }),
+      // waterPipelineWard: this.fb.group({
+      //   code: [null, Validators.required]
+      // }),
+      waterPipelineZoneId: [null, [Validators.required]],
+      waterPipelineWardId: [null, [Validators.required]],
       firmCity: [null, [Validators.required, Validators.maxLength(10)]],
       tpNo: [null],
       fpNo: [null],
@@ -256,6 +256,9 @@ export class WaterPipelineConnection implements OnInit {
 
   getFormData(id: number) {
     this.formService.getFormData(id).subscribe(res => {
+      if(res.waterPipelineWardId) {
+        this.getWardZone(res.waterPipelineZoneId, 2);
+      }
       res.serviceDetail.serviceUploadDocuments.forEach(app => {
         (<FormArray>this.waterPipeliConnectionForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.config.createDocumentsGrp(app));
       });
@@ -483,7 +486,7 @@ export class WaterPipelineConnection implements OnInit {
 
   onChangedWardZone(value, level) {
     if (level == 2) {
-      this.waterPipeliConnectionForm.controls.waterPipelineWard.setValue({code: ''});
+      //this.waterPipeliConnectionForm.controls.waterPipelineWard.setValue();
       this.wardZoneLevel2List = [];
       this.wardZoneLevel3List = [];
       this.wardZoneLevel4List = [];
