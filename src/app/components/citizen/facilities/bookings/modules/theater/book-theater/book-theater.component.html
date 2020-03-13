@@ -235,7 +235,8 @@
 
                     <div class="row">
                         <mat-form-field class="col-md-4">
-                            <input matInput maxlength="50" type="text" formControlName="organizationName"
+                            <input matInput appValidationFields
+                                   [validationFieldsType]="'onlyNameWithSpace'" maxlength="50" type="text" formControlName="organizationName"
                                 placeholder="{{'organization_name' | translate: translateKey}}" required>
                             <control-messages [control]="theaterBookingForm.get('organizationName')"></control-messages>
                         </mat-form-field>
@@ -304,7 +305,7 @@
                                 <mat-icon>navigate_before</mat-icon>
                                 {{'back' | translate:translateKey}}
                             </button>
-                            <button mat-raised-button color="primary" type="submit">
+                            <button mat-raised-button [disabled]="!theaterBookingForm.valid" color="primary" type="submit">
                                 <mat-icon>check_circle_outline</mat-icon>
                                 {{'submit_application'| translate: translateKey}}
                             </button>
