@@ -10,7 +10,7 @@
     </div>
     <hr class="margin-top-10">
   </div>
-  <mat-horizontal-stepper #stepper>
+  <mat-horizontal-stepper #stepper class="stepperToTab">
     <mat-step>
       <ng-template matStepLabel>Property Info</ng-template>
       <app-property-info></app-property-info>
@@ -27,9 +27,9 @@
       <ng-template matStepLabel>Document Check List</ng-template>
       <app-document-check-list></app-document-check-list>
     </mat-step>
-    <mat-step>
+    <!-- <mat-step>
       <ng-template matStepLabel>Approval</ng-template>
       <app-property-transfer-approval></app-property-transfer-approval>
-    </mat-step>
+    </mat-step> -->
   </mat-horizontal-stepper>
 </mat-card>
