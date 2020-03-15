@@ -13,6 +13,7 @@ const routes: Routes = [
 	{ path: 'propertyTaxRebate', loadChildren: './tax-rebate-application/tax-rebate-application.module#TaxRebateApplicationModule' },
 	{ path: 'refundAgainstVacancy', loadChildren: './refund-application/refund-application.module#RefundApplicationModule' },
 	{ path: 'propertyAssessment', loadChildren: './new-property-entry-add/new-property-entry-add.module#NewPropertyEntryAddModule' },
+	{ path: 'revaluation', loadChildren: './revaluation/revaluation.module#RevaluationModule' },
 
 ];
 

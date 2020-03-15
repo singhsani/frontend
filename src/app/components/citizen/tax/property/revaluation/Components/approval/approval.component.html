@@ -1,0 +1,13 @@
+<mat-card>
+    <div class="button-row text-center mt-3"  *ngIf="!isApproveOrDecline">
+        <button mat-raised-button class="ml-3" color="primary" type="button" (click)="onBack()">
+            <mat-icon>skip_previous</mat-icon>Back
+        </button>
+        <button mat-raised-button class="ml-3" color="warn" type="button" (click)="onDecline()">
+            <mat-icon>cancel_presentation</mat-icon>Decline
+        </button>
+        <button mat-raised-button class="ml-3" color="primary" type="button" (click)="onApproved()">
+            <mat-icon>approval</mat-icon>Approve Now
+        </button>
+    </div>
+</mat-card>

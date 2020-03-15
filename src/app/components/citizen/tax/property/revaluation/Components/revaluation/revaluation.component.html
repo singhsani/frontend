@@ -1,0 +1,21 @@
+<app-title-bar [title]="'Revaluation'"></app-title-bar>
+<!-- <mat-card class="cardH1">
+    <h1>Revaluation</h1>
+  </mat-card> -->
+<div>
+    <!-- Search Component Start -->
+    <div *ngIf="!isShowForm">
+        <app-revaluation-search></app-revaluation-search>
+    </div>
+    <!-- Form Component Start -->
+    <div *ngIf="isShowForm">
+        <app-revaluation-detail></app-revaluation-detail>
+    </div>
+    <!-- Form Component End -->
+    <!-- Table Component Start -->
+    <div [hidden]="!isShowTable">
+        <app-revaluation-table></app-revaluation-table>
+    </div>
+    <!-- Table Component End -->
+</div>
+<br>
