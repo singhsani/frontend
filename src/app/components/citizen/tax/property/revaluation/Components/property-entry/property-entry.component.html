@@ -1,0 +1,112 @@
+<mat-card>
+    <form #propertyInfoForm="ngForm" (ngSubmit)="onNext(propertyInfoForm)">
+        <div class="row">
+            <div class="col-md-6">
+                <mat-form-field class="full-width-input">
+                    <input matInput disabled name="propertyNo" [(ngModel)]="selectedDataModel.propertyNo"
+                        placeholder="Property No">
+                </mat-form-field>
+            </div>
+            <div class="col-md-6">
+                <mat-form-field class="full-width-input">
+                    <input matInput disabled name="ownerName" [(ngModel)]="selectedDataModel.ownerName"
+                        placeholder="Owner Name">
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <mat-form-field class="full-width-input">
+                    <input matInput disabled name="address"
+                        [(ngModel)]="selectedDataModel.propertyAddress.propertyAddress" placeholder="Address">
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="ngSelect">
+                    <ng-select required placeholder="Property Type *" [items]="propertyTypeList"
+                        bindValue="propertyTypeId" bindLabel="propertyType" name="propertyTypeMstId"
+                        [(ngModel)]="model.propertyTypeMstId" #PropertyTypeMstId="ngModel"
+                        (ngModelChange)="onChangedPropertyType($event,1)"
+                        [ngClass]="{'ng-invalid ng-touched':  propertyInfoForm.submitted && PropertyTypeMstId.invalid}">
+                    </ng-select>
+                    <div
+                        *ngIf="(propertyInfoForm.submitted && PropertyTypeMstId.invalid)  || (PropertyTypeMstId.invalid && PropertyTypeMstId.touched)">
+                        <mat-error *ngIf="PropertyTypeMstId.errors.required">*Property Type is required.</mat-error>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="ngSelect">
+                    <ng-select required placeholder="Property Sub-Type *" [items]="propertySubTypeList"
+                        bindValue="subPropertyTypeId" bindLabel="subPropertyType" name="subPropertyTypeMstId"
+                        [(ngModel)]="model.subPropertyTypeMstId" #PropertySubType="ngModel"
+                        [ngClass]="{'ng-invalid ng-touched':  propertyInfoForm.submitted && PropertySubType.invalid}">
+                    </ng-select>
+                    <div
+                        *ngIf="(propertyInfoForm.submitted && PropertySubType.invalid)  || (PropertySubType.invalid && PropertySubType.touched)">
+                        <mat-error *ngIf="PropertySubType.errors.required">*Property Sub-Type is required.</mat-error>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="ngSelect">
+                    <ng-select required placeholder="With in Water Zone *" [items]="waterZoneList" bindValue="itemId"
+                        bindLabel="itemName" name="waterZoneLookupId" [(ngModel)]="model.waterZoneLookupId"
+                        #WaterZone="ngModel"
+                        [ngClass]="{'ng-invalid ng-touched':  propertyInfoForm.submitted && WaterZone.invalid}">
+                    </ng-select>
+                    <div
+                        *ngIf="(propertyInfoForm.submitted && WaterZone.invalid)  || (WaterZone.invalid && WaterZone.touched)">
+                        <mat-error *ngIf="WaterZone.errors.required">*With in Water Zone is required.</mat-error>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="ngSelect">
+                    <ng-select required placeholder="Is Building High Rise? *" [items]="highLowRiseList"
+                        bindValue="itemId" bindLabel="itemName" name="highRiseLowRiseLookupId"
+                        [(ngModel)]="model.highRiseLowRiseLookupId" #BuildingHighRises="ngModel"
+                        [ngClass]="{'ng-invalid ng-touched':  propertyInfoForm.submitted && BuildingHighRises.invalid}">
+                    </ng-select>
+                    <div
+                        *ngIf="(propertyInfoForm.submitted && BuildingHighRises.invalid)  || (BuildingHighRises.invalid && BuildingHighRises.touched)">
+                        <mat-error *ngIf="BuildingHighRises.errors.required">*Is Building High Rise? is required.
+                        </mat-error>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-10">
+                        <div class="ngSelect">
+                            <ng-select required placeholder="Class of Location *" [items]="landClassList" bindValue="locationFactorId"
+                                bindLabel="locationName" name="locationFactorMstId" [(ngModel)]="model.locationFactorMstId"
+                                #LandClass="ngModel"
+                                [ngClass]="{'ng-invalid ng-touched':  propertyInfoForm.submitted && LandClass.invalid}">
+                            </ng-select>
+                            <div
+                                *ngIf="(propertyInfoForm.submitted && LandClass.invalid)  || (LandClass.invalid && LandClass.touched)">
+                                <mat-error *ngIf="LandClass.errors.required">*Class of Location is required.</mat-error>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2" style="padding-top: 15px;">
+                        <a title="help" href="assets/files/Wardwise_Area_Details.pdf" target="_blank">
+                                <i class="material-icons">help</i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="button-row text-right mt-3">
+            <button mat-raised-button color="primary" type="submit">
+                Next<mat-icon>skip_next</mat-icon>
+            </button>
+        </div>
+    </form>
+</mat-card>

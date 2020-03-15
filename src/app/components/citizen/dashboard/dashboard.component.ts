@@ -208,7 +208,6 @@ export class DashboardComponent implements OnInit {
 	 * This method is use to create new record for citizen
 	 */
 	createRecord(apiCode: string) {
-
 		switch (apiCode) {
 			case 'HEL-DR':
 				
@@ -257,6 +256,7 @@ export class DashboardComponent implements OnInit {
 			case 'PRO-ASSCER':
 			case 'PRO-REFUND':
 			case 'PRO-TAX-REBATE':
+			case 'PRO-REVALUATION':
 			case 'WTR-NEW':
 			case 'WTR-DISCON':
 			case 'WTR-TRXF-OWN':

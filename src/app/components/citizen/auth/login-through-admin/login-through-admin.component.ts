@@ -89,6 +89,7 @@ export class LoginThroughAdminComponent implements OnInit {
 			case 'PRO-ASSCER':
 			case 'PRO-REFUND':
 			case 'PRO-TAX-REBATE':
+			case 'PRO-REVALUATION':
 			case 'WTR-NEW':
 			case 'WTR-DISCON':
 			case 'WTR-TRXF-OWN':
