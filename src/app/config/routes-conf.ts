@@ -185,6 +185,10 @@ const ROUTEMAIN = {
         'main': 'propertyTaxRebate',
         'type': 'propertyTaxRebate'
     },
+    'PRO-REVALUATION': {
+        'main': 'revaluation',
+        'type': 'revaluation'
+    },
     'PRO-VAC': {
         'main': 'vacantPremisesCertificate',
         'type': 'vacantPremisesCertificate'
@@ -692,6 +696,9 @@ const ROUTESLIST = {
     },
     'PRO-TAX-REBATE': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TAXMODULE + '/' + ROUTEPREFIX.PROPERTYMODULE + '/' + ROUTEMAIN["PRO-TAX-REBATE"].main
+    },
+    'PRO-REVALUATION': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TAXMODULE + '/' + ROUTEPREFIX.PROPERTYMODULE + '/' + ROUTEMAIN["PRO-REVALUATION"].main
     },
     /*Property routes end */
 
