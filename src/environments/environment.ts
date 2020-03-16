@@ -6,8 +6,8 @@
 export const environment = {
 	production: false,
 	envName: 'dev',
-	envAPIServer: '/VMC/',
-	// envAPIServer: 'http://192.168.10.107:8080/VMC/',
+	 envAPIServer: '/VMC/',
+ 	// envAPIServer: 'http://192.168.10.107:8080/VMC/',
 	// envAPIServer: 'http://192.168.10.202:8080/VMC/',
 	// envAPIServer: '/VMC/',
 
