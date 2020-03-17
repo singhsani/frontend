@@ -267,7 +267,7 @@
 
           <div class="row">
             <mat-form-field class="col-md-4">
-              <input matInput maxlength="50"
+              <input matInput maxlength="50" appValidationFields  [validationFieldsType]="'onlyNameWithSpace'"
                 type="text" formControlName="orgName" placeholder="{{'organization_name' | translate: translateKey}}"
                 required>
               <control-messages [control]="bookPermissionApplicationForm.get('orgName')"></control-messages>
