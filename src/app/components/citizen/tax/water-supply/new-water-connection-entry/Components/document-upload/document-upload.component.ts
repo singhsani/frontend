@@ -36,6 +36,10 @@ export class DocumentUploadComponent implements OnInit {
     })
   }
 
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
+
     getFormDataDocuments(id : any) {
       this.newNewWaterConnectionDocs = [];
       this.newNewWaterConnectionEntryService.getNewWaterConnectionUpload(id).subscribe(
