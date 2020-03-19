@@ -27,7 +27,7 @@ export class FileUploadComponentWaterTax implements OnInit {
 	progress: { percentage: number } = { percentage: 0 }
 	fileData: any;
 	canUpload: boolean = true;
-	isUploaded : boolean = true;
+	isUploaded: boolean = true;
 	id: any;
 	type: any;
 	docIndex: any;
@@ -61,7 +61,7 @@ export class FileUploadComponentWaterTax implements OnInit {
 	 */
 
 	ngOnInit() {
-		
+
 		this.attachments = this.form && this.form ? this.form : [];
 
 		this.disableOrEnableButton();
@@ -69,7 +69,7 @@ export class FileUploadComponentWaterTax implements OnInit {
 
 		if (this.attachments && this.attachments.length > 0) {
 			this.getFile = this.form.find(data => data.fieldIdentifier.toString() === this.uploadModel.fieldIdentifier.toString())
-			debugger;
+
 		}
 	}
 
@@ -99,54 +99,54 @@ export class FileUploadComponentWaterTax implements OnInit {
 	 * This method is use for upload attachments on server using API
 	 */
 	upload() {
-			if (!this.selectedFiles) {
-				this.commonService.openAlert("Warning", "Please Select File to Upload", "warning");
+		if (!this.selectedFiles) {
+			this.commonService.openAlert("Warning", "Please Select File to Upload", "warning");
+		} else {
+
+			if (this.selectedFiles[0].size > Math.floor(this.uploadModel.maxFileSizeInMB * 1000000)) {
+				this.fileName = ''
+				this.canUpload = false;
+				this.fileInput.nativeElement.value = "";
+				this.commonService.openAlert("Warning", "File Size should be less than " + this.uploadModel.maxFileSizeInMB + " MB", "warning");
+				return;
+			} else if (this.selectedFiles[0].size <= 0) {
+				this.fileName = ''
+				this.canUpload = false;
+				this.fileInput.nativeElement.value = "";
+				this.commonService.openAlert("Warning", `File must have some contents and size should not be 0 MB `, "warning");
+				return;
 			} else {
+				let formData = new FormData();
 
-				if (this.selectedFiles[0].size > Math.floor(this.uploadModel.maxFileSizeInMB * 1000000)) {
-					this.fileName = ''
-					this.canUpload = false;
-					this.fileInput.nativeElement.value = "";
-					this.commonService.openAlert("Warning", "File Size should be less than " + this.uploadModel.maxFileSizeInMB + " MB", "warning");
-					return;
-				} else if (this.selectedFiles[0].size <= 0) {
-					this.fileName = ''
-					this.canUpload = false;
-					this.fileInput.nativeElement.value = "";
-					this.commonService.openAlert("Warning", `File must have some contents and size should not be 0 MB `, "warning");
-					return;
-				} else {
-					let formData = new FormData();
+				formData.append('fieldIdentifier', this.uploadModel.fieldIdentifier.toString());
+				formData.append('labelName', this.uploadModel.documentLabelEn);
+				formData.append('formPart', this.uploadModel.formPart);
+				formData.append('variableName', this.uploadModel.documentIdentifier);
+				formData.append('serviceFormId', this.uploadModel.id.toString());
 
-					formData.append('fieldIdentifier', this.uploadModel.fieldIdentifier.toString());
-					formData.append('labelName', this.uploadModel.documentLabelEn);
-					formData.append('formPart', this.uploadModel.formPart);
-					formData.append('variableName', this.uploadModel.documentIdentifier);
-					formData.append('serviceFormId', this.uploadModel.id.toString());
+				this.progress.percentage = 0;
+				this.currentFileUpload = this.selectedFiles.item(0);
 
-					this.progress.percentage = 0;
-					this.currentFileUpload = this.selectedFiles.item(0);
-
-					formData.append('file', this.currentFileUpload);
-					if(this.uploadModel.dmsEnabled){
-						this.uploadFileService.processFileToDMSServer(formData, setProgressBar => {
-							this.progress.percentage = setProgressBar;
-						}, successres => {
-							debugger
-							this.tostr.success(this.uploadModel.labelName ? this.uploadModel.labelName : this.uploadModel.documentLabelEn + " successfully uploaded", "File Uploaded");
-							this.canUpload = true;
-							this.isUploaded = false;
-							this.id = successres.data.id;
-							this.type = successres.data.mimeType;
-							this.docIndex = successres.data.docIndex;
-							this.currentFileUpload = undefined;
-							this.selectedFiles = undefined;
-							this.fileInput.nativeElement.value = "";
-						});
-					}
+				formData.append('file', this.currentFileUpload);
+				if (this.uploadModel.dmsEnabled) {
+					this.uploadFileService.processFileToDMSServer(formData, setProgressBar => {
+						this.progress.percentage = setProgressBar;
+					}, successres => {
+						debugger
+						this.tostr.success(this.uploadModel.labelName ? this.uploadModel.labelName : this.uploadModel.documentLabelEn + " successfully uploaded", "File Uploaded");
+						this.canUpload = true;
+						this.isUploaded = false;
+						this.id = successres.data.id;
+						this.type = successres.data.mimeType;
+						this.docIndex = successres.data.docIndex;
+						this.currentFileUpload = undefined;
+						this.selectedFiles = undefined;
+						this.fileInput.nativeElement.value = "";
+					});
 				}
 			}
-		
+		}
+
 
 	}
 
@@ -176,22 +176,13 @@ export class FileUploadComponentWaterTax implements OnInit {
 	 * @param obj - selected file data
 	 */
 	view(obj) {
-		if (this.uploadModel.dmsEnabled) {
-			if (obj && this.uploadModel.id) {
-				debugger;
-				this.uploadFileService.getBase64StringURL(this.uploadModel.id.toString(), obj.id, obj.docIndex).subscribe(res => {
-					this.viewBase64File(res.data);
-				});
-			} else {
-				if(!this.docIndex){
-					this.commonService.openAlert("Warning", `Please save the application first`, "warning");
-					return;
-				}
-				this.uploadFileService.getBase64StringURL((this.uploadModel.id && this.uploadModel.id) ? this.uploadModel.id.toString() :this.uploadModel.id.toString(), this.id, this.docIndex).subscribe(res => {
-					this.viewBase64File(res.data);
-				});
-			}
-		} 
+		if (!this.docIndex) {
+			this.commonService.openAlert("Warning", `Please save the application first`, "warning");
+			return;
+		}
+		this.uploadFileService.getBase64StringURL((this.uploadModel.id && this.uploadModel.id) ? this.uploadModel.id.toString() : this.uploadModel.id.toString(), this.id, this.docIndex).subscribe(res => {
+			this.viewBase64File(res.data);
+		});
 	}
 
 	/**
