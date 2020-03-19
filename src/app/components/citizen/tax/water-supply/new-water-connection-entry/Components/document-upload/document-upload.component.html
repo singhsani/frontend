@@ -1,0 +1,16 @@
+<mat-card class="mt-4">
+<ng-container *ngFor="let doc of newNewWaterConnectionDocs">
+<div class="col-md-4">
+	<label>{{doc.documentLabelEn}}<span *ngIf="doc.mandatory">*</span>							</label>
+	<file-upload-water-tax [form]="newNewWaterConnectionDocs" [uploadModel]="doc"></file-upload-water-tax>
+</div>
+</ng-container>
+<div class="button-row text-right mt-3">
+	<!-- <button  mat-raised-button class="ml-3"color="primary" type="button" (click)="onBackClick()">
+		<mat-icon>skip_previous</mat-icon>Back
+	</button> -->
+	<button mat-raised-button class="ml-3" color="primary" type="button" (click)="finalSubmit()">
+		<mat-icon>save</mat-icon>Save & Submit
+	</button>
+</div>
+</mat-card>

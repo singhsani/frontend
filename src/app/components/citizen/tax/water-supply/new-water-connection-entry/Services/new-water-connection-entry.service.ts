@@ -98,11 +98,20 @@ export class NewWaterConnectionEntryService {
       .pipe(map((response: any) => response))
   }
 
+  getNewWaterConnectionUpload(connectionDtlId: any) {
+    return this.http.post(`${Constants.baseApiWaterUrl}new/connection/getDocumentList?connectionDtlId=${connectionDtlId}`,
+      { observe: 'response' })
+      .pipe(map((response: any) => response))
+  }
+
+
+
   getNewWaterConnectionDocuments(connectionDtlId: any) {
     return this.http.post(`${Constants.baseApiWaterUrl}new/connection/getNewWaterConnectionDocuments?connectionDtlId=${connectionDtlId}`, null,
       { observe: 'response' })
       .pipe(map((response: any) => response))
   }
+  
 
 
   downloadFile(url: any) {
