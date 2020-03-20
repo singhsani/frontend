@@ -195,6 +195,15 @@ const ROUTEMAIN = {
     },
     /*Property routes end */
 
+    /*Affordable Housing end */
+
+    'AFFORD-NEW': {
+        'main': 'new',
+        'type': 'new'
+    },
+
+    /*Affordable Housing routes end */
+
     /*Water routes starts */
     'WTR-NEW': {
         'main': 'newWaterConnectionEntry',
@@ -503,6 +512,8 @@ const ROUTEPREFIX = {
 
     'CERTIFICATESMODULE': 'certificates',
 
+    'AFFORDABLEMODULE':'affordable-housing',
+
     
 
     /** start - citizen innner-booking modules routes configuretion */
@@ -701,6 +712,15 @@ const ROUTESLIST = {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TAXMODULE + '/' + ROUTEPREFIX.PROPERTYMODULE + '/' + ROUTEMAIN["PRO-REVALUATION"].main
     },
     /*Property routes end */
+
+    /*Affordable Housing routes Start */
+
+    'AFFORD-NEW': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.AFFORDABLEMODULE + '/' + ROUTEMAIN["AFFORD-NEW"].main
+    },
+    /*Affordable Housing routes end */
+
+    
 
     /*Water routes starts */
     'WTR-NEW': {
