@@ -9,6 +9,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NewWaterConnectionEntryService } from './Services/new-water-connection-entry.service';
 import { NewWaterConnectionEntryDataSharingService } from './Services/new-water-connection-entry-data-sharing.service';
 import { SharedComponentModule } from 'src/app/vmcshared/shared-component.module';
+import { DocumentUploadComponent } from './Components/document-upload/document-upload.component';
 
 const routes: Routes = [
   { path: '', component: NewWaterConnectionEntryComponent }
@@ -26,7 +27,8 @@ const routes: Routes = [
     NewWaterConnectionEntryComponent,
     ConsumerDetailComponent,
     PropertyDetailComponent,
-    PropertyApprovalComponent
+    PropertyApprovalComponent,
+    DocumentUploadComponent
   ],
   providers: [
     

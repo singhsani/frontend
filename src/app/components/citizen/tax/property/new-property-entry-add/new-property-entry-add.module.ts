@@ -11,6 +11,7 @@ import { OccupierDetailComponent } from './Components/occupier-detail/occupier-d
 import { UnitDetailComponent } from './Components/unit-detail/unit-detail.component';
 import { ApprovalComponent } from './Components/approval/approval.component';
 import { SharedComponentModule } from 'src/app/vmcshared/shared-component.module';
+import { PropertyDocumentUploadAddComponent } from './Components/property-document-upload-add/property-document-upload-add.component';
 const routes: Routes = [
   { path: '', component: NewPropertyEntryAddComponent }
 ]
@@ -29,7 +30,8 @@ const routes: Routes = [
     OwnerDetailComponent,
     OccupierDetailComponent,
     UnitDetailComponent,
-    ApprovalComponent
+    ApprovalComponent,
+    PropertyDocumentUploadAddComponent
   ],
   providers: [
 

@@ -22,6 +22,9 @@ import { MaskPropertyNoWithOccuiperCodeDirective } from './Directives/mask-prope
 import { DigitsOnlyDirective } from './Directives/digitsOnlyDirective';
 import { PropertyOccupierSearchComponent } from './component/property-occupier-search/property-occupier-search.component';
 import { VmcTitleBarComponent } from './component/title-bar/title-bar.component';
+import { FileUploadComponentWaterTax } from './component/file-upload/file-upload.component';
+
+
 
 @NgModule({
   imports: [
@@ -47,7 +50,8 @@ import { VmcTitleBarComponent } from './component/title-bar/title-bar.component'
     CreateFormulaComponent,
     PropertySearchComponent,
     VmcTitleBarComponent,
-    PropertyOccupierSearchComponent
+    PropertyOccupierSearchComponent,
+    FileUploadComponentWaterTax
   ],
   exports: [
     MaterialsComponentModule,
@@ -58,6 +62,7 @@ import { VmcTitleBarComponent } from './component/title-bar/title-bar.component'
     PropertySearchComponent,
     VmcTitleBarComponent,
     PropertyOccupierSearchComponent,
+    FileUploadComponentWaterTax,
     CommonModule,
     NumberOnlyDirective,
     LetterOnlyDirective,

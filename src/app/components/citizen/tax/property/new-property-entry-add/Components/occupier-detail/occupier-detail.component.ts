@@ -150,6 +150,13 @@ export class OccupierDetailComponent implements OnInit {
     this.newNewPropertyEntryAddDataSharingService.updateDataSourceMoveStepper(3);
   }
 
+  moveToDocumentsTab() {
+    this.checkOccupierExist();
+      if (this.isOccupierExist && this.isUnitDetailEntered) {
+        this.newNewPropertyEntryAddDataSharingService.updateDataSourceMoveStepper(4);
+      }
+    }
+
   delete(item) {
     this.alertService.confirm();
     var subConfirm = this.alertService.getConfirm().subscribe(isConfirm => {
