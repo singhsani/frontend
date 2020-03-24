@@ -190,8 +190,10 @@ export class BookTheaterComponent implements OnInit {
              */
             organizationName: [null, [Validators.required, Validators.maxLength(50)]],
             organizationNumber: [null, [Validators.required]],
+            confirmMobile: [null, Validators.required],
             organizationEmail: [null, [Validators.required, ValidationService.emailValidator]],
             organizationAddress: this.fb.group(this.addressComp.addressControls()),
+          confirmEmailID: [null, [Validators.required, ValidationService.emailValidator]],
 			/**
 			 * Bank Accoount Details
 			 */
