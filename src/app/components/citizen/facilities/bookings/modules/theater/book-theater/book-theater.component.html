@@ -247,11 +247,36 @@
                             <control-messages [control]="theaterBookingForm.get('organizationNumber')"></control-messages>
                         </mat-form-field>
 
+                      <div class="col-md-4">
+                        <mat-form-field>
+                          <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="confirmMobile"
+                                 placeholder="{{'Confirm Mobile' | translate: translateKey}}" required>
+                          <control-messages [control]="theaterBookingForm.get('organizationNumber')"></control-messages>
+                        </mat-form-field>
+                        <mat-error
+                          *ngIf="!bookingUtils.matcher(theaterBookingForm, 'organizationNumber', 'confirmMobile') && theaterBookingForm.get('organizationNumber').touched && theaterBookingForm.get('confirmMobile').touched">
+                          {{bookingConstants.MOB_NO_MIS_MATCH_MESSAGE}}
+                        </mat-error>
+                      </div>
+
                         <mat-form-field class="col-md-4">
                             <input matInput type="email" maxlength="50" formControlName="organizationEmail" placeholder="{{'organization_email' | translate: translateKey}}"
                                 required>
                             <control-messages [control]="theaterBookingForm.get('organizationEmail')"></control-messages>
                         </mat-form-field>
+
+                      <div class="col-md-4">
+                        <mat-form-field>
+                          <input matInput type="email" formControlName="confirmEmailID"
+                                 placeholder="{{'Confirm Email' | translate: translateKey}}" required>
+                          <control-messages [control]="theaterBookingForm.get('confirmEmailID')"></control-messages>
+                        </mat-form-field>
+                        <mat-error
+                          *ngIf="!bookingUtils.matcher(theaterBookingForm, 'organizationEmail', 'confirmEmailID') && theaterBookingForm.get('organizationEmail').touched && theaterBookingForm.get('confirmEmailID').touched">
+                          {{bookingConstants.EMAIL_MIS_MATCH_MESSAGE}}
+                        </mat-error>
+                      </div>
+
 
                     </div>
 
