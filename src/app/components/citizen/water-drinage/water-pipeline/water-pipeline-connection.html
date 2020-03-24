@@ -285,6 +285,20 @@
 						<!-- <control-messages [control]="waterPipeliConnectionForm.get('registrationValidity')">
 						</control-messages> -->
 					</mat-form-field>
+
+					<mat-form-field [hidden]="true">
+						<input matInput formControlName="workOrderNo" >
+					</mat-form-field>
+					<mat-form-field [hidden]="true">
+						<input matInput formControlName="workOrderDate" >
+					</mat-form-field>
+					<mat-form-field [hidden]="true">
+						<input matInput formControlName="estimateAmount" >
+					</mat-form-field>
+					<mat-form-field [hidden]="true">
+						<input matInput formControlName="connectionStatus" >
+					</mat-form-field>
+					
 				</div>
 				<app-action-bar [form]="waterPipeliConnectionForm" (tabIndex)="onTabChange($event)"
 					[stepInfo]="{step: 'step3', next: 3, back: 1}" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>

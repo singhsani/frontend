@@ -219,7 +219,7 @@ export class WaterPipelineConnection implements OnInit {
       // }),
       waterPipelineZoneId: [null, [Validators.required]],
       waterPipelineWardId: [null, [Validators.required]],
-      firmCity: [null, [Validators.required, Validators.maxLength(10)]],
+      //firmCity: [null, [Validators.required, Validators.maxLength(10)]],
       tpNo: [null],
       fpNo: [null],
       revenueSurveyNo: [null],
@@ -246,6 +246,10 @@ export class WaterPipelineConnection implements OnInit {
       paymentMode: this.fb.group({
         code: [null]
       }),
+      workOrderNo: [null],
+      workOrderDate: [null],
+      estimateAmount: [0],
+      connectionStatus: [null]
       // loinumber: [null]
 
       /* Step 4 controls start*/

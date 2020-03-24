@@ -246,6 +246,9 @@ export class DashboardComponent implements OnInit {
 			case 'FS-FINAL-HOSPITAL':
 				this.router.navigate([ManageRoutes.getFullRoute(apiCode), false, apiCode]);
 				break;
+			case 'HEL-WTRPIP-WRK-COMPL':
+				this.router.navigate([ManageRoutes.getFullRoute(apiCode), apiCode]);
+				break;
 			case 'PRC_REG':
 			case 'PRO-ASS':
 			case 'PRO-EXT':
