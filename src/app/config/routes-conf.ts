@@ -209,8 +209,8 @@ const ROUTEMAIN = {
         'type': 'drainagePipeLineConnection'
     },
     'HEL-WTRPIP-WRK-COMPL': {
-        'main': 'waterPipelineWorkCompletion',
-        'type': 'waterPipelineWorkCompletion'
+        'main': 'wtrPipeConnWorkCompletion',
+        'type': 'wtrPipeConnWorkCompletion'
     },
     'WTR-DISCON': {
         'main': 'disconnection',

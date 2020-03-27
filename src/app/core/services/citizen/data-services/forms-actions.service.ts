@@ -386,8 +386,8 @@ export class FormsActionsService {
 		this.NDCtoDuplicateDeath.next(data);
 	}
 
-	getWaterPipelineConnectionStatusAndOthersList(ward: any, schemeName: any, workOrderNo: any, workorderDate: any) {
-		return  this.http.get(`api/form/wtrPipeConnWorkCompletion/searchWaterPipelineApplications?ward=${ward}&schemeName=${schemeName}&workOrderNo=${workOrderNo}&workOrderDate=${workorderDate}`)
+	getWaterPipelineConnectionStatusAndOthersList(workOrderNo: any, applicationNo: any) {
+		return  this.http.get(`api/form/wtrPipeConnWorkCompletion/searchWaterPipelineApplications?workOrderNo=${workOrderNo}&applicationNo=${applicationNo}`)
 	}
 
 	getWtrPipAppsByWaterPipelineConnection(waterPipelineConnectionId: any) {

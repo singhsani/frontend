@@ -11,6 +11,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ManageRoutes } from '../../../../config/routes-conf';
 import { WaterDrinageConfig } from '../water-drinage-config';
 import * as _ from 'lodash';
+import { TranslateService } from '../../../../shared/modules/translate/translate.service';
 
 
 @Component({
@@ -24,6 +25,7 @@ export class WaterPipelineWorkCompletionComponent implements OnInit {
   wardZoneLevel = [];
   wardZoneLevel1List = [];
   apiCode: string;
+  translateKey: string = 'waterPipelineWorkCompletionScreen';
   
 
   disablefutureDate = new Date(moment().format('YYYY-MM-DD'));
@@ -54,13 +56,13 @@ export class WaterPipelineWorkCompletionComponent implements OnInit {
     private commonService: CommonService,
     private router: Router,
     private route: ActivatedRoute,
+    public translateService: TranslateService
   ) {}
 
   ngOnInit() {
-    debugger;
     this.route.paramMap.subscribe(param => {
-      //this.apiCode = param.get('apiCode');
-      this.formActionsService.apiType = 'wtrPipeConnWorkCompletion';
+      this.apiCode = param.get('apiCode');
+      this.formActionsService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
     });
     this.waterPipelineWorkCompletionControls();
     this.waterPipelineWorkCompletionSearchControls();
@@ -69,69 +71,30 @@ export class WaterPipelineWorkCompletionComponent implements OnInit {
 
   waterPipelineWorkCompletionSearchControls() {
     this.waterPipelineWorkCompletionSearchForm = this.fb.group({
-      workCompletionWard: [''],
-      workCompletionSchemeName: [''],
       workCompletionWorkOrderNo: [''],
-      workCompletionDate: ['']
+      applicationNo: ['']
     });
   }
 
   waterPipelineWorkCompletionControls() {
     this.waterPipelineWorkCompletionForm = this.fb.group({
-      tpiName: [''],
-      connectionApplyFor: ['BOTH', Validators.required],
-      attachments: [],
-      waterPipeLineConnectionDTO: this.fb.group({
-        serviceCode: 'HEL-WTR-PIPELINE',
-      /* Step 1 controls start */
-      fieldView: [null],
-      fieldList: [null],
-      schemeName: [null, [Validators.required, Validators.maxLength(200)]],
-      landmark: [null],
-      societyName: [null, [Validators.required, Validators.maxLength(150)]],
-      propertyAddress: [null, [Validators.required, Validators.maxLength(200)]],
-      contractorAddress: [null, [Validators.required, Validators.maxLength(200)]],
-      mobileNo: [null, [Validators.maxLength(10)]],
-      // waterPipelineZone: this.fb.group({
-      //   code: [null, Validators.required]
-      // }),
-      // waterPipelineWard: this.fb.group({
-      //   code: [null, Validators.required]
-      // }),
-      waterPipelineZoneId: [null, [Validators.required]],
-      waterPipelineWardId: [null, [Validators.required]],
-      //firmCity: [null, [Validators.required, Validators.maxLength(10)]],
+      apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
+      serviceCode: 'HEL-WTRPIP-WRK-COMPL',
+      waterPipeLineConnectionId: [null],
+      schemeName: [null],
+      waterPipelineWardId: [null],
       tpNo: [null],
       fpNo: [null],
       revenueSurveyNo: [null],
       citySurveyNo: [null],
-      buildingPermissionNo: [null],
-      buildingPermissionDate: [null],
-      developerFullName: [null, [Validators.required, Validators.maxLength(200)]],
-      developerAddress: [null, [Validators.required, Validators.maxLength(200)]],
-      developerMobileNo: [null, [Validators.maxLength(10)]],
-      developerEmailId: [null],
-      reraRegNo: [null, [Validators.required]],
-
-      contractorFullName: [null, [Validators.required, Validators.maxLength(200)]],
-      contractorMobileNo: [null, [Validators.maxLength(10)]],
-      contractorEmailId: [null],
-      registrationNumber: [null, [Validators.required]],
-      registrationDate: [null, Validators.required],
-      registrationClass: [null, Validators.required],
-      workExecutionFromAmount: [null, [Validators.required]],
-      workExecutionToAmount: [null, [Validators.required]],
-      registrationValidity: [null],
-      reraRegistrationDate: [null, Validators.required],
-      attachments: [],
-      paymentMode: this.fb.group({
-        code: [null]
-      }),
       workOrderNo: [null],
       workOrderDate: [null],
-      estimateAmount: [0],
-      connectionStatus: [null]
-      })
+      developerFullName: [null],
+      contractorFullName: [null],
+      contractorAddress: [null],
+      tpiName: ['', Validators.required],
+      connectionApplyFor: ['BOTH', Validators.required],
+      attachments: [],
     });
   }
 
@@ -164,7 +127,6 @@ export class WaterPipelineWorkCompletionComponent implements OnInit {
   }
 
   oneRowSelected(row, currentlySelected) {
-    debugger;
     this.selectedRowId = row.id;
     if(this.selectedIdArr.length > 0 && this.selectedIdArr.indexOf(row.id) > -1) {
       this.selectedIdArr = [];
@@ -175,47 +137,6 @@ export class WaterPipelineWorkCompletionComponent implements OnInit {
       this.selectedIdArr.push(row.id);
       this.isFromShow = false;
       this.waterPipelineConnection = row;
-      this.formActionsService.getWtrPipAppsByWaterPipelineConnection(row.id).subscribe(
-        res => {
-          console.log(res);
-          if(res.data) {
-            //get api call
-            this.formActionsService.getFormData(row.serviceFormId).subscribe(
-              res => {
-                this.waterPipelineWorkCompletionForm.patchValue(res);
-                res.serviceDetail.serviceUploadDocuments.forEach(app => {
-                  (<FormArray>this.waterPipelineWorkCompletionForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.config.createDocumentsGrp(app));
-                });
-                this.requiredDocumentList();
-              }, error => {
-                if (error.error && error.error.length) {
-                  this.commonService.openAlert("Warning", error.error[0].message, "warning");
-                }
-              }
-            );
-          } else {
-            debugger;
-            //create api call.
-            this.formActionsService.createFormData().subscribe(res => {
-              this.waterPipelineWorkCompletionForm.patchValue(res);
-              let rowJson = {waterPipeLineConnectionDTO: row};
-              this.waterPipelineWorkCompletionForm.patchValue(rowJson);
-              res.serviceDetail.serviceUploadDocuments.forEach(app => {
-                (<FormArray>this.waterPipelineWorkCompletionForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.config.createDocumentsGrp(app));
-              });
-              this.requiredDocumentList();
-            }, error=> {
-              if (error.error && error.error.length) {
-                this.commonService.openAlert("Warning", error.error[0].message, "warning");
-              }
-            })
-          }
-        }, error => {
-          if (error.error && error.error.length) {
-            this.commonService.openAlert("Warning", error.error[0].message, "warning");
-          }
-        }
-      );
       //this.waterPipelineWorkCompletionForm.patchValue(row);
       // console.log('form control value befor set');
       // console.log(this.waterPipelineWorkCompletionForm.value);
@@ -243,21 +164,66 @@ export class WaterPipelineWorkCompletionComponent implements OnInit {
   }
 
   searchInWtrPipeline(form: any) {
-    debugger;
     console.log(form);
-    let date : any = this.getStringDate(form.controls['workCompletionDate'].value);
     this.formActionsService.getWaterPipelineConnectionStatusAndOthersList(
-      form.controls['workCompletionWard'].value, 
-      form.controls['workCompletionSchemeName'].value,
       form.controls['workCompletionWorkOrderNo'].value,
-      date
+      form.controls['applicationNo'].value
     ).subscribe(res => {
-      console.log('res is');
-      console.log(res);
-      this.dataSource = res.data;
-    }, error => {
-      console.log('err');
-      console.log(error);
+      if(res.data) {
+        this.isFromShow = false;
+        this.formActionsService.getWtrPipAppsByWaterPipelineConnection(res.data.id).subscribe(res1 => {
+          if(res1.data) {
+            //get api call
+            this.formActionsService.getFormData(res.data.serviceFormId).subscribe(
+              res2 => {
+                this.waterPipelineWorkCompletionForm.patchValue(res2);
+                res2.serviceDetail.serviceUploadDocuments.forEach(app => {
+                  (<FormArray>this.waterPipelineWorkCompletionForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.config.createDocumentsGrp(app));
+                });
+                this.requiredDocumentList();
+              }, error => {
+                if (error.error && error.error.length) {
+                  this.commonService.openAlert("Warning", error.error[0].message, "warning");
+                }
+              }
+            );
+          } else {
+            // create api call
+            this.formActionsService.createFormData().subscribe(res3 => {
+              this.waterPipelineWorkCompletionForm.patchValue(res3);
+              let rowJson = {
+                schemeName: res.data.schemeName,
+                waterPipelineWardId: res.data.waterPipelineWardId,
+                waterPipeLineConnectionId: res.data.id,
+                tpNo: res.data.tpNo,
+                fpNo: res.data.fpNo,
+                revenueSurveyNo: res.data.revenueSurveyNo,
+                citySurveyNo: res.data.citySurveyNo,
+                workOrderNo: res.data.workOrderNo,
+                workOrderDate: res.data.workOrderDate,
+                developerFullName: res.data.developerFullName,
+                contractorFullName: res.data.contractorFullName,
+                contractorAddress: res.data.contractorAddress
+              };
+              this.waterPipelineWorkCompletionForm.patchValue(rowJson);
+              res3.serviceDetail.serviceUploadDocuments.forEach(app => {
+                (<FormArray>this.waterPipelineWorkCompletionForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.config.createDocumentsGrp(app));
+              });
+              this.requiredDocumentList();
+            }, error => {
+              if (error.error && error.error.length) {
+                this.commonService.openAlert("Warning", error.error[0].message, "warning");
+              }
+            });
+          }
+        }, error => {
+          if (error.error && error.error.length) {
+            this.commonService.openAlert("Warning", error.error[0].message, "warning");
+          }
+        });
+      } else {
+        this.commonService.openAlert("Warning", "No data found", "warning");
+      }
     });
   }
 

@@ -2,30 +2,19 @@
   water-pipeline-work-completion works!
 </p> -->
 
-<h4>Application for Water Pipeline Work Completion</h4>
+<app-title-bar [title]="'screen_title' | translate: translateKey">
+</app-title-bar>
 
-<h4>Search/View</h4>
+<h4>{{'search-view' | translate:translateKey}}</h4>
+
 <form [formGroup]="waterPipelineWorkCompletionSearchForm">
   <div class="row">
-    <div class="col-lg-2 ngSelect">
-      <ng-select placeholder="ward" formControlName="workCompletionWard">
-        <ng-option *ngFor="let zone of wardZoneLevel1List" [value]="zone.parentWardzoneId">{{zone.wardzoneName}}</ng-option>
-      </ng-select>
-    </div>
-  
     <mat-form-field class="col-lg-3">
-      <input matInput type="text" formControlName="workCompletionSchemeName" appValidationFields validationFieldsType='alphanumericWithSpace' placeholder="Scheme Name">
+      <input matInput formControlName="workCompletionWorkOrderNo" placeholder="{{'work-order-no' | translate:translateKey}}">
     </mat-form-field>
-  
+
     <mat-form-field class="col-lg-3">
-      <input matInput OnlyNumber formControlName="workCompletionWorkOrderNo" placeholder="Work Order no.">
-    </mat-form-field>
-  
-    <mat-form-field class="col-lg-2">
-      <input  matInput appDate [max]="disablefutureDate" [matDatepicker]="picker1"
-                placeholder="Work Order Date" formControlName="workCompletionDate">
-              <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-              <mat-datepicker #picker1 touchUi="true"></mat-datepicker>
+      <input matInput type="text"  formControlName="applicationNo" placeholder="{{'application-no' | translate:translateKey}}">
     </mat-form-field>
 
     <div class="col-lg-2">
@@ -34,239 +23,104 @@
   </div>
 </form>
 
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  <!-- <div>Parth form here.</div>  [ngClass]="{'d-none': isFromShow}" -->
+  <div class="container" [ngClass]="{'d-none': isFromShow}">
+    <mat-card class="cardBorder">
+      <form [formGroup]="waterPipelineWorkCompletionForm">
+        <div class="row">
+          <mat-form-field class="col-md-3">
+            <input matInput type="text" readonly required maxlength="300" appValidationFields
+              validationFieldsType='onlyNameWithSpace'
+              placeholder="{{'scheme-name' | translate:translateKey}}" formControlName="schemeName">
+          </mat-form-field>
 
-  <ng-container matColumnDef="id">
-    <th mat-header-cell *matHeaderCellDef>Selection</th>
-    <td mat-cell *matCellDef="let element">
-      <mat-checkbox (click)="$event.stopPropagation()"
-      (change)="$event ? selection.toggle(element) : null;oneRowSelected(element, selectedRowId == element.id)"
-      [checked]="selectedRowId == element.id">
-      </mat-checkbox>
-    </td>
-  </ng-container>
+          <mat-form-field [hidden]="true">
+            <input matInput formControlName="waterPipelineWardId" >
+          </mat-form-field>
 
-  <!-- Position Column -->
-  <ng-container matColumnDef="workOrderNo">
-    <th mat-header-cell *matHeaderCellDef> workOrderNo </th>
-    <td mat-cell *matCellDef="let element"> {{element.workOrderNo}} </td>
-  </ng-container>
+          <mat-form-field [hidden]="true">
+            <input matInput formControlName="waterPipeLineConnectionId" >
+          </mat-form-field>
 
-  <!-- Name Column -->
-  <ng-container matColumnDef="developerFullName">
-    <th mat-header-cell *matHeaderCellDef> developerFullName </th>
-    <td mat-cell *matCellDef="let element"> {{element.developerFullName}} </td>
-  </ng-container>
+          <mat-form-field class="col-md-3">
+            <input matInput type="tel" readonly  formControlName="tpNo" placeholder="{{'tp-no' | translate:translateKey}}" minlength="6" maxlength="6">
+          </mat-form-field>
 
-  <!-- Weight Column -->
-  <ng-container matColumnDef="contractorFullName">
-    <th mat-header-cell *matHeaderCellDef> contractorFullName </th>
-    <td mat-cell *matCellDef="let element"> {{element.contractorFullName}} </td>
-  </ng-container>
-
-  <!-- Symbol Column -->
-  <ng-container matColumnDef="workOrderDate">
-    <th mat-header-cell *matHeaderCellDef> workOrderDate </th>
-    <td mat-cell *matCellDef="let element"> {{element.workOrderDate}} </td>
-  </ng-container>
-
-  <ng-container matColumnDef="estimateAmount">
-    <th mat-header-cell *matHeaderCellDef> estimateAmount </th>
-    <td mat-cell *matCellDef="let element"> {{element.estimateAmount}} </td>
-  </ng-container>
-
-  <ng-container matColumnDef="workOrderValidTill">
-    <th mat-header-cell *matHeaderCellDef> workOrderValidTill </th>
-    <td mat-cell *matCellDef="let element"> {{element.workOrderValidTill}} </td>
-  </ng-container>
-
-  <ng-container matColumnDef="connectionStatus">
-    <th mat-header-cell *matHeaderCellDef> connectionStatus </th>
-    <td mat-cell *matCellDef="let element"> {{element.connectionStatus}} </td>
-  </ng-container>
-
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-</table>
-
-  <!-- <div>Parth form here.</div> -->
-  <form [formGroup]="waterPipelineWorkCompletionForm" [ngClass]="{'d-none': isFromShow}">
-    <div class="row">
-    <div formGroupName="waterPipeLineConnectionDTO" novalidate>
-        <mat-form-field class="col-md-3">
-          <input matInput type="text" readonly required maxlength="300" appValidationFields
-            validationFieldsType='onlyNameWithSpace'
-            placeholder="schemeName" formControlName="schemeName">
-        </mat-form-field>
-
-        <mat-form-field class="col-md-3" [hidden]="true">
-          <input matInput type="text" disabled required maxlength="150"
-            placeholder="societyName" formControlName="societyName">
-        </mat-form-field>
-
-        <mat-form-field [hidden]="true">
-          <input matInput formControlName="waterPipelineZoneId" >
-        </mat-form-field>
-
-        <mat-form-field [hidden]="true">
-          <input matInput formControlName="waterPipelineWardId" >
-        </mat-form-field>
-
-        <mat-form-field class="col-md-6" [hidden]="true">
-          <textarea matInput rows="3" cols="50" maxlength="500" formControlName="landmark"> </textarea>
-        </mat-form-field>
-
-        <mat-form-field class="col-md-6" [hidden]="true">
-          <textarea matInput rows="3" cols="50" maxlength="200" formControlName="propertyAddress"> </textarea>
-        </mat-form-field>
-
-        <mat-form-field class="col-md-3">
-          <input matInput type="tel" readonly  formControlName="tpNo" placeholder="tpNO" minlength="6" maxlength="6">
-        </mat-form-field>
-
-        <mat-form-field class="col-md-3">
-          <input matInput readonly  maxlength="10" formControlName="fpNo" placeholder="fpNO">
-        </mat-form-field>
-
-        <mat-form-field class="col-md-3">
-          <input matInput OnlyNumber maxlength="10" readonly placeholder="revenueSurveyNo" formControlName="revenueSurveyNo">
-        </mat-form-field>
-
-        <mat-form-field class="col-md-3">
-          <input matInput  appPreventSpace
-            placeholder="citySurveyNo" type="text"
-            formControlName="citySurveyNo" readonly>
-        </mat-form-field>
-
-        <mat-form-field class="col-md-4" [hidden]="true">
-          <input matInput  appPreventSpace
-            placeholder="building-permission-no" type="text"
-            formControlName="buildingPermissionNo">
-        </mat-form-field>
-
-        <mat-form-field class="col-md-4"  [hidden]="true">
-          <input  matInput formControlName="buildingPermissionDate">
-        </mat-form-field>
-
-        <mat-form-field class="col-md-3">
-          <input matInput type="text" required maxlength="300" appValidationFields
-            validationFieldsType='onlyNameWithSpace'
-            placeholder="developer-full-name" readonly
-            formControlName="developerFullName">
-        </mat-form-field>
-
-        <mat-form-field class="col-md-6" [hidden]="true">
-          <textarea matInput rows="1" cols="50" maxlength="200" formControlName="developerAddress"
-            placeholder="developer-address" required> </textarea>
-        </mat-form-field>
-
-        <mat-form-field class="col-md-4" [hidden]="true">
-          <input matInput OnlyNumber required maxlength="10" formControlName="developerMobileNo">
-        </mat-form-field>
-
-        <mat-form-field class="col-md-4" [hidden]="true">
-          <input matInput  appPreventSpace type="email"
-            formControlName="developerEmailId" >
-        </mat-form-field>
-
-        <mat-form-field class="col-md-4" [hidden]="true">
-          <input matInput required maxlength="10" formControlName="reraRegNo">
-        </mat-form-field>
-
-        <mat-form-field class="col-md-4" [hidden]="true">
-          <input matInput formControlName="reraRegistrationDate">
-        </mat-form-field>
-
-        <mat-form-field class="col-md-3">
-          <input matInput type="text" required maxlength="300" appValidationFields
-            validationFieldsType='onlyNameWithSpace'
-            placeholder="contractor-full-name" readonly
-            formControlName="contractorFullName">
-        </mat-form-field>
-
-        <mat-form-field class="col-md-3">
-          <textarea matInput rows="1" cols="50" maxlength="200" formControlName="contractorAddress"
-            placeholder="contractor-address" required readonly> </textarea>
-        </mat-form-field>
-
-        <mat-form-field class="col-md-4" [hidden]="true">
-          <input matInput OnlyNumber required maxlength="10" formControlName="contractorMobileNo"
-            placeholder="contractor-mobile-no">
-        </mat-form-field>
-
-        <mat-form-field class="col-md-4" [hidden]="true">
-          <input matInput  appPreventSpace
-            placeholder="contractor-email-id" type="email"
-            formControlName="contractorEmailId" >
-        </mat-form-field>
-
-        <mat-form-field class="col-md-4" [hidden]="true">
-          <input matInput required maxlength="10" formControlName="registrationNumber"
-            placeholder="registration-number">
-        </mat-form-field>
-
-        <mat-form-field class="col-md-4" [hidden]="true">
-          <input required matInput formControlName="registrationDate">
-        </mat-form-field>
-
-        <mat-form-field class="col-md-4" [hidden]="true">
-          <input matInput required maxlength="10" formControlName="registrationClass"
-            placeholder="registration-class">
-        </mat-form-field>
-
-        <mat-form-field class="col-md-4" [hidden]="true">
-          <input matInput required maxlength="10" formControlName="workExecutionFromAmount"
-            placeholder="work-execution-from-amount">
-        </mat-form-field>
-
-        <mat-form-field class="col-md-4" [hidden]="true">
-          <input matInput required maxlength="10" formControlName="workExecutionToAmount"
-            placeholder="work-execution-to-amount">
-        </mat-form-field>
-
-        <mat-form-field class="col-md-4" [hidden]="true">
-          <input matInput formControlName="registrationValidity">
-        </mat-form-field>
-
-        <mat-form-field class="col-md-3">
-          <input matInput type="text" placeholder="workorderno" readonly formControlName="workOrderNo" >
-        </mat-form-field>
-        <mat-form-field class="col-md-3">
-          <input matInput type="text" placeholder="workorderdate" readonly formControlName="workOrderDate" >
-        </mat-form-field>
-        <mat-form-field [hidden]="true">
-          <input matInput formControlName="estimateAmount" >
-        </mat-form-field>
-        <mat-form-field [hidden]="true">
-          <input matInput formControlName="connectionStatus" >
-        </mat-form-field>
-        
-      </div>
-      <hr>
-      <mat-form-field class="col-md-3">
-        <input matInput type="text" placeholder="tpiName" formControlName="tpiName" >
-      </mat-form-field>
-      <div class="col-md-3 ngSelect">
-        <ng-select placeholder="connectionApplyFor" formControlName="connectionApplyFor">
-          <ng-option value="COMPLETION_CERTIFICATE">COMPLETION_CERTIFICATE</ng-option>
-          <ng-option value="FLOW_TEST">FLOW_TEST</ng-option>
-          <ng-option value="BOTH">BOTH</ng-option>
-        </ng-select>
-        <control-messages [control]="waterPipelineWorkCompletionForm.get('connectionApplyFor')"></control-messages>
-      </div>
-
-      <!-- <div class="row">
-        <ng-container
-          *ngFor="let doc of waterPipelineWorkCompletionForm.get('serviceDetail').get('serviceUploadDocuments').value">
-          <div class="col-md-4" *ngIf="doc.requiredOnCitizenPortal && doc.isActive && showButtons">
-            <label>{{translateService.getCurrentLanguage()=='en'? doc.documentLabelEn : doc.documentLabelGuj }}<span *ngIf="doc.mandatory">*</span>							</label>
-            <file-upload [form]="waterPipelineWorkCompletionForm" [uploadModel]="doc"></file-upload>
-          </div>
-        </ng-container>
-      </div> -->
-    </div>
+          <mat-form-field class="col-md-3">
+            <input matInput readonly  maxlength="10" formControlName="fpNo" placeholder="{{'fp-no' | translate:translateKey}}">
+          </mat-form-field>
   
-    <!-- <app-action-bar [stepInfo]="{step: 'final', next: 0, back: 0}" (tabIndex)="onTabChange($event)"
-    [form]="waterPipelineWorkCompletionForm" >
-  </app-action-bar> -->
-  </form>
+          <mat-form-field class="col-md-3">
+            <input matInput OnlyNumber maxlength="10" readonly placeholder="{{'revenue-survey-no' | translate:translateKey}}" formControlName="revenueSurveyNo">
+          </mat-form-field>
+  
+          <mat-form-field class="col-md-3">
+            <input matInput  appPreventSpace
+              placeholder="{{'city-survey-no' | translate:translateKey}}" type="text"
+              formControlName="citySurveyNo" readonly>
+          </mat-form-field>
+
+          <mat-form-field class="col-md-3">
+            <input matInput type="text" placeholder="{{'work-order-no' | translate:translateKey}}" readonly formControlName="workOrderNo" >
+          </mat-form-field>
+
+          <mat-form-field class="col-md-3">
+            <input matInput type="text" placeholder="{{'work-order-date' | translate:translateKey}}" readonly formControlName="workOrderDate" >
+          </mat-form-field>
+
+          <mat-form-field class="col-md-3">
+            <input matInput type="text" required maxlength="300" appValidationFields
+              validationFieldsType='onlyNameWithSpace'
+              placeholder="{{'applicant-name' | translate:translateKey}}" readonly
+              formControlName="developerFullName">
+          </mat-form-field>
+
+          <mat-form-field class="col-md-3">
+            <input matInput type="text" required maxlength="300" appValidationFields
+              validationFieldsType='onlyNameWithSpace'
+              placeholder="{{'contractor-name' | translate:translateKey}}" readonly
+              formControlName="contractorFullName">
+          </mat-form-field>
+
+          <mat-form-field class="col-md-3">
+            <textarea matInput rows="1" cols="50" maxlength="200" formControlName="contractorAddress"
+              placeholder="{{'address' | translate:translateKey}}" required readonly> </textarea>
+          </mat-form-field>
+
+          <mat-form-field class="col-md-3">
+            <input matInput type="text" placeholder="{{'name-of-tpi' | translate:translateKey}}" formControlName="tpiName" >
+            <control-messages [control]="waterPipelineWorkCompletionForm.get('tpiName')"></control-messages>
+          </mat-form-field>
+
+          <div class="col-md-3 ngSelect">
+            <ng-select placeholder="{{'apply-for' | translate:translateKey}}" formControlName="connectionApplyFor">
+              <ng-option value="COMPLETION_CERTIFICATE">COMPLETION_CERTIFICATE</ng-option>
+              <ng-option value="FLOW_TEST">FLOW_TEST</ng-option>
+              <ng-option value="BOTH">BOTH</ng-option>
+            </ng-select>
+            <control-messages [control]="waterPipelineWorkCompletionForm.get('connectionApplyFor')"></control-messages>
+          </div>
+
+          <div class="row">
+            <ng-template mat-tab-label>
+              <div>upload</div>
+            </ng-template>
+
+            <div class="row" id="parth1" *ngIf="!isFromShow">
+              <ng-container
+                *ngFor="let doc of waterPipelineWorkCompletionForm.get('serviceDetail').get('serviceUploadDocuments').value">
+                <div class="col-md-4" *ngIf="doc.requiredOnCitizenPortal && doc.isActive">
+                  <label>{{translateService.getCurrentLanguage()=='en'? doc.documentLabelEn : doc.documentLabelGuj }}<span *ngIf="doc.mandatory">*</span>							</label>
+                  <file-upload [form]="waterPipelineWorkCompletionForm" [uploadModel]="doc"></file-upload>
+                </div>
+              </ng-container>
+            </div>
+            
+          </div>
+
+        </div>
+        <app-action-bar [paymentGateway]="paymentGateway" [uploadFiles]="uploadFilesArray" [isstepper]="false" [stepInfo]="{step: 'final', next: 0, back: 0}" [form]="waterPipelineWorkCompletionForm" ></app-action-bar>
+        <select-payment-gateway #paymentGateway></select-payment-gateway>
+      </form>
+    </mat-card>
+  </div>

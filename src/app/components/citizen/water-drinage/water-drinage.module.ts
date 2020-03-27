@@ -17,7 +17,7 @@ import { WaterPipelineWorkCompletionComponent } from './water-pipeline-work-comp
 const routes: Routes = [
 	{ path: 'waterPipeLineConnection/:id/:apiCode', component: WaterPipelineConnection },
   { path: 'drainagePipeLineConnection/:id/:apiCode', component: DrainagePipelineConnectionComponent },
-  { path: 'waterPipelineWorkCompletion/:apiCode', component: WaterPipelineWorkCompletionComponent}
+  { path: 'wtrPipeConnWorkCompletion/:apiCode', component: WaterPipelineWorkCompletionComponent}
 ];
 
 @NgModule({
