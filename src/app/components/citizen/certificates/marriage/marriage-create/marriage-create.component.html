@@ -1114,7 +1114,7 @@
 					</mat-form-field>
 
 					<h2>{{'address' | translate:translateKey }}:</h2>
-					<app-address [requiredFeilds]="true" #address [addressFormGroup]="marriageFormGroup.get('secondWitnessAddress')">
+					<app-address [requiredFeilds]="true"  #address [addressFormGroup]="marriageFormGroup.get('secondWitnessAddress')">
 					</app-address>
 
 				</div>
@@ -1194,7 +1194,7 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<textarea matInput rows="3" cols="50" maxlength="1500"
+						<textarea matInput rows="2" cols="50" maxlength="500"
 							formControlName="groomNriFirstWitnessAddressGuj" appGujInputTarget
 							[form]="marriageFormGroup"
 							placeholder="{{ 'address' | translate:translateKey:'gu' }}"></textarea>
