@@ -1,0 +1,22 @@
+	<div class="row">
+		<!-- Upload new file/Image-->
+		<label class="custom-file-upload" *ngIf="isUploaded">
+			<input #fileInput type="file" accept="image/jpg,image/jpeg,.pdf" (change)="selectFile($event)" />
+
+			<span class="attachment">
+				<!-- <i class="fa fa-plus-square"></i> -->
+				<mat-icon>add</mat-icon>
+			</span>
+			<span class="badge badge-primary ml-1">Attach File</span>
+		</label>
+		<!-- Uploaded file/image name-->
+		<label class="custom-file-upload" *ngIf="!isUploaded">
+			<span class="badge badge-info" title="{{fileName}}" (click)="view(getFile)">{{fileName}}</span>
+			<!-- <span class="badge badge-info" title="{{getFile.realFileName}}"  (click)="view(getFile)">{{getFile.realFileName}}</span> -->
+			<mat-progress-bar *ngIf="currentFileUpload" mode="determinate" value="{{progress.percentage}}"></mat-progress-bar>
+		</label>
+		<!-- delete button -->
+		<button title="Delete File"  type="button" mat-icon-button color="warn" (click)="deleteFile()" class="closeAttachFile" *ngIf="!isUploaded">
+			<mat-icon>delete</mat-icon>
+		</button>
+	</div>

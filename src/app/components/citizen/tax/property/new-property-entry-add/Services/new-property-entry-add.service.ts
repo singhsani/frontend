@@ -33,6 +33,12 @@ export class NewPropertyEntryAddService {
       .pipe(map((response: any) => response))
   }
 
+  getPropertyAddUpload(propertyBasicId: any) {
+    return this.http.post(`${Constants.assessmentModuleApiUrl}basic/getDocumentList?propertyBasicId=${propertyBasicId}`,
+      { observe: 'response' })
+      .pipe(map((response: any) => response))
+  }
+
   saveOwner(data: any) {
     return this.http.post(`${Constants.assessmentModuleApiUrl}owner/save`, data,
       { observe: 'response' })
@@ -183,4 +189,5 @@ export class NewPropertyEntryAddService {
       { observe: 'response' })
       .pipe(map((response: any) => response))
   }
+
 }
