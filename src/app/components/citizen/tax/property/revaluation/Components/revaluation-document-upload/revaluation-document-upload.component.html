@@ -1,0 +1,18 @@
+<mat-card>
+  <div class="row">
+  <ng-container *ngFor="let doc of revaluationDocumentUploadDocs">
+    <div class="col-md-4">
+      <label>{{doc.documentLabelEn}}<span *ngIf="doc.mandatory">*</span></label>
+      <file-upload-water-tax [form]="revaluationDocumentUploadDocs" [uploadModel]="doc"></file-upload-water-tax>
+    </div>
+    </ng-container>
+  </div>
+  
+    
+    <div class="button-row text-right mt-3">
+        <button mat-raised-button class="ml-3" color="primary" type="submit">
+            <mat-icon>save</mat-icon>Submit
+        </button>
+    </div>
+
+</mat-card> 

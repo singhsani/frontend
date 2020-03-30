@@ -14,6 +14,7 @@ import { DocumentReferenceComponent } from './Components/document-reference/docu
 import { DocumentCheckListComponent } from './Components/document-check-list/document-check-list.component';
 import { PropertyTransferApprovalComponent } from './Components/property-transfer-approval/property-transfer-approval.component';
 import { SharedComponentModule } from 'src/app/vmcshared/shared-component.module';
+import { TransferDocumentUploadComponent } from './Components/transfer-document-upload/transfer-document-upload.component';
 
 
 
@@ -38,7 +39,8 @@ const routes: Routes = [
     PropertyInfoComponent,
     PropertyTransferApprovalComponent,
     DocumentReferenceComponent,
-    DocumentCheckListComponent
+    DocumentCheckListComponent,
+    TransferDocumentUploadComponent
     
   ],
   providers: [

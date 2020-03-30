@@ -33,13 +33,24 @@ export class VacancyPremiseCertificateService {
       { observe: 'response' })
       .pipe(map((response: any) => response))
   }
-
+  
+  getvacancyPremiseDocUpload(id: any) {
+    return this.http.post(`${Constants.assessmentModuleApiUrl}vacancypremisecertificate/getDocumentList?vacancyPremiseCertficateId=${id}`,
+      { observe: 'response' })
+      .pipe(map((response: any) => response))
+  }
+  
   save(data: any) {
     return this.http.post(`${Constants.assessmentModuleApiUrl}vacancypremisecertificate/save`, data,
       { observe: 'response' })
       .pipe(map((response: any) => response))
   }
-
+  
+  approveDept(data: any) {
+    return this.http.post(`${Constants.assessmentModuleApiUrl}vacancypremisecertificate/submitNewgen?vacancyPremiseCertficateId=${data}`,
+    { observe: 'response' })
+      .pipe(map((response: any) => response))
+  }
   approve(data: any) {
     return this.http.post(`${Constants.assessmentModuleApiUrl}vacancypremisecertificate/approve`, data,
     { observe: 'response' })
