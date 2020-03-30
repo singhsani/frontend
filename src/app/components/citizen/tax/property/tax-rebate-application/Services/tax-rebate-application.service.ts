@@ -40,6 +40,19 @@ export class TaxRebateApplicationService {
       .pipe(map((response: any) => response))
   }
 
+  gettaxrabitDocUpload(id: any) {
+    return this.http.post(`${Constants.assessmentModuleApiUrl}taxrebate/application/getDocumentList?taxRebateApplicationId=${id}`, null,
+      { observe: 'response' })
+      .pipe(map((response: any) => response))
+  }
+
+  
+  approveDept(data: any) {
+    return this.http.post(`${Constants.assessmentModuleApiUrl}taxrebate/application/submitNewgen`, data,
+    { observe: 'response' })
+      .pipe(map((response: any) => response))
+  }
+
   approveOrReject(data: any) {
     return this.http.post(`${Constants.assessmentModuleApiUrl}taxrebate/application/callback`, data,
     { observe: 'response' })

@@ -12,6 +12,11 @@
     </div>
     <hr class="margin-top-10">
   </div>
+
+
+  <mat-horizontal-stepper #stepper class="stepperToTab">
+    <mat-step>
+      <ng-template matStepLabel>Property Information</ng-template>
   <div class="row" [ngClass]="{'overlay': isShaved }">
     <div class="col-md-12 mt-3">
       <form #formDetail="ngForm" (ngSubmit)="onSubmit(formDetail)">
@@ -64,14 +69,39 @@
         <div class="row" *ngIf="!isShaved">
           <div class="col-md-12 text-right">
             <button class="ml-3" mat-raised-button color="primary" type="submit">
-              <mat-icon>save</mat-icon> Submit
+              <mat-icon>save</mat-icon> Save & Next
             </button>
           </div>
         </div>
       </form>
     </div>
   </div>
-  <div class="row" *ngIf="isShaved && !isApprovedorDecline">
+</mat-step>
+<mat-step>
+  <ng-template matStepLabel>Attachment</ng-template>
+  <mat-card>
+    <div class="row">
+    <ng-container *ngFor="let doc of taxrebateDocumentUploadDocs">
+      <div class="col-md-4">
+        <label>{{doc.documentLabelEn}}<span *ngIf="doc.mandatory">*</span></label>
+        <file-upload-water-tax [form]="taxrebateDocumentUploadDocs" [uploadModel]="doc"></file-upload-water-tax>
+      </div>
+      </ng-container>
+    </div>
+    
+      
+      <div class="button-row text-right mt-3">
+          <button mat-raised-button class="ml-3" color="primary" (click)="onSubmitApproved()" type="button">
+              <mat-icon>save</mat-icon>Submit
+          </button>
+      </div>
+  
+  </mat-card> 
+</mat-step>
+      
+    
+  </mat-horizontal-stepper>
+  <!-- <div class="row" *ngIf="isShaved && !isApprovedorDecline">
     <div class="col-md-12 text-right">
       <button mat-raised-button class="ml-3" color="warn" type="button" (click)="onDecline()">
         <mat-icon>cancel_presentation</mat-icon>Decline
@@ -80,5 +110,5 @@
         <mat-icon>approval</mat-icon>Approve
       </button>
     </div>
-  </div>
+  </div> -->
 </mat-card>

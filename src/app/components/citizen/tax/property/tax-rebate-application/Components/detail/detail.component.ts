@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { TaxRebateApplicationDataSharingService } from '../../Services/tax-rebate-application-data-sharing.service';
 import { TaxRebateApplicationService } from '../../Services/tax-rebate-application.service';
 import { AlertService } from 'src/app/vmcshared/Services/alert.service';
 import { downloadFile } from 'src/app/vmcshared/downloadFile';
+import { MatStepper } from '@angular/material';
 
 @Component({
   selector: 'app-detail',
@@ -12,12 +13,15 @@ import { downloadFile } from 'src/app/vmcshared/downloadFile';
 })
 
 export class DetailComponent implements OnInit {
-
+  @ViewChild('stepper') stepper: MatStepper;
   model: any = {};
   rebateTypeList = [];
   financialYear = [];
   isShaved: boolean = false;
   isApprovedorDecline: boolean = false;
+
+  taxrebateDocumentUploadDocs : Array<any> = [];
+
   constructor(
     private taxRebateApplicationDataSharingService: TaxRebateApplicationDataSharingService,
     private taxRebateApplicationService: TaxRebateApplicationService,
@@ -74,7 +78,9 @@ export class DetailComponent implements OnInit {
         (data) => {
           this.isShaved = true;
           this.model.taxRebateApplicationId = data.body.data;
-          this.alertService.success(data.body.message);
+          //this.alertService.success(data.body.message);
+          this.stepper.selectedIndex = 1;
+          this.getFormDataDocuments(this.model.taxRebateApplicationId);
         },
         (error) => {
           if (error.status === 400) {
@@ -89,6 +95,39 @@ export class DetailComponent implements OnInit {
           }
         })
     }
+  }
+
+  getFormDataDocuments(id : any) {
+    this.taxrebateDocumentUploadDocs = [];
+    this.taxRebateApplicationService.gettaxrabitDocUpload(id).subscribe(
+      (data) => {
+        data.forEach(app => {
+          this.taxrebateDocumentUploadDocs.push(app);
+        });
+        
+      },
+      (error) => {
+        
+      });
+  }
+
+  onSubmitApproved() {
+    this.taxRebateApplicationService.approveDept({ taxRebateApplicationId: this.model.taxRebateApplicationId }).subscribe(
+      (data) => {
+        this.alertService.success(data.body.message);
+      },
+      (error) => {
+        if (error.status === 400) {
+          var errorMessage = '';
+          error.error[0].propertyList.forEach(element => {
+            errorMessage = errorMessage + element + "</br>";
+          });
+          this.alertService.error(errorMessage);
+        }
+        else {
+          this.alertService.error(error.error.message);
+        }
+      })
   }
 
   onDecline() {

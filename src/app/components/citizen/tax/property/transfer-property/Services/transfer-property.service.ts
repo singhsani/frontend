@@ -22,6 +22,12 @@ export class TransferPropertyService {
       .pipe(map((response: any) => response))
   }
 
+  gettranferPropertyUpload(id: any) {
+    return this.http.post(`${Constants.assessmentModuleApiUrl}transfer/getDocumentList?propertyTransferId=${id}`, null,
+      { observe: 'response' })
+      .pipe(map((response: any) => response))
+  }
+
   getWardZone(data: any) {
     return this.http.post(`${Constants.baseApiUrl}wardzoneMst/search`, data,
       { observe: 'response' })
