@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { DataModel, ConnectionsModel, ApplicationModel, ConnectionDetail } from '../../Models/application-change-usage.model';
 import { ApplicationChangeUsageService } from '../../Services/application-change-usage.service';
 import { NgForm } from '@angular/forms';
@@ -6,6 +6,7 @@ import { ApplicationChangeUsageDataSharingService } from '../../Services/applica
 import { CommonService } from 'src/app/vmcshared/Services/common-service';
 import { AlertService } from 'src/app/vmcshared/Services/alert.service';
 import { Constants } from 'src/app/vmcshared/Constants';
+import { MatStepper } from '@angular/material';
 
 @Component({
     selector: 'app-application-change-usage-form',
@@ -22,6 +23,9 @@ export class ApplicationChangeUsageFormComponent implements OnInit {
     applicationModel: ApplicationModel;
     isShowSaveButton: boolean = false;
 
+    @ViewChild('stepper') stepper: MatStepper;
+    changeOfUsageDocumentUploadDocs : Array<any> = [];
+    changeOfUsageId : any;
     outstandingDetail: any = {};
 
     constructor(public commonService: CommonService,
@@ -132,6 +136,9 @@ export class ApplicationChangeUsageFormComponent implements OnInit {
                     if (data.status === 200) {
                         this.alertService.success(data.body.message);
                         this.dataModel.changeOfUsageId = data.body.data;
+                        this.changeOfUsageId = data.body.data;
+                        this.stepper.selectedIndex = 1;
+                        this.getFormDataDocuments(this.dataModel.changeOfUsageId);
                         this.applicationChangeUsageDataSharingService.setApprovalModel(this.dataModel);
 
                         this.dataModel = new DataModel();
@@ -139,7 +146,7 @@ export class ApplicationChangeUsageFormComponent implements OnInit {
                         this.connectionsModel.connectionDetail = new ConnectionDetail();
                         this.connectioNo = null;
                         this.isShowSaveButton = false;
-                        this.applicationChangeUsageDataSharingService.setIsShowApproval(true);
+                        //this.applicationChangeUsageDataSharingService.setIsShowApproval(true);
                     }
                 },
                 (error) => {
@@ -156,7 +163,33 @@ export class ApplicationChangeUsageFormComponent implements OnInit {
                 });
         }
     }
+    onSubmitApproved() {
 
+        this.applicationChangeUsageService.submitNewgen(this.changeOfUsageId).subscribe(
+            (data) => {
+
+                this.alertService.success(data.message);
+                this.applicationChangeUsageDataSharingService.setIsShowApproval(true);
+
+            },
+            (error) => {
+                this.alertService.error(error.error.message);
+            });
+
+    }
+    getFormDataDocuments(id : any) {
+        this.changeOfUsageDocumentUploadDocs = [];
+        this.applicationChangeUsageService.getchangeOfUsageIdDocUpload(id).subscribe(
+          (data) => {
+            data.forEach(app => {
+              this.changeOfUsageDocumentUploadDocs.push(app);
+            });
+            
+          },
+          (error) => {
+            
+          });
+      }
 
     onWaterDetailClick() {
         this.applicationChangeUsageDataSharingService.setWaterBillDetail(this.outstandingDetail.waterOutstandingDTO.billWiseOutstandings);

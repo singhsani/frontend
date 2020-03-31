@@ -1,4 +1,6 @@
-
+<mat-horizontal-stepper #stepper class="stepperToTab">
+    <mat-step>
+      <ng-template matStepLabel>Detail</ng-template>
     <mat-card>
         <div class="row">
             <!-- <div class="col-md-6">
@@ -88,8 +90,33 @@
         <form #form="ngForm" (ngSubmit)="save(form)">
             <div class="button-row text-right p-4" *ngIf="isShowSaveButton">
                 <button class="ml-3" mat-raised-button color="primary" type="submit">
-                    <mat-icon>save</mat-icon> Save
+                    <mat-icon>save</mat-icon> Save & Next
                 </button>
             </div>
         </form>
     </mat-card>
+</mat-step>
+<mat-step>
+  <ng-template matStepLabel>Attachment</ng-template>
+  <mat-card>
+    <div class="row">
+    <ng-container *ngFor="let doc of reconnectionDocumentUploadDocs">
+      <div class="col-md-4">
+        <label>{{doc.documentLabelEn}}<span *ngIf="doc.mandatory">*</span></label>
+        <file-upload-water-tax [form]="reconnectionDocumentUploadDocs" [uploadModel]="doc"></file-upload-water-tax>
+      </div>
+      </ng-container>
+    </div>
+    
+      
+      <div class="button-row text-right mt-3">
+          <button mat-raised-button class="ml-3" color="primary" (click)="onSubmitApproved()" type="button">
+              <mat-icon>save</mat-icon>Submit
+          </button>
+      </div>
+  
+  </mat-card> 
+</mat-step>
+      
+    
+  </mat-horizontal-stepper>

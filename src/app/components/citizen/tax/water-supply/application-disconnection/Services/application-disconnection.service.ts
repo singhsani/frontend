@@ -15,6 +15,18 @@ export class ApplicationDisconnectionService {
       .pipe(map((response: any) => response))
   }
 
+  getDisconnectionDocUpload(id: any) {
+    return this.http.post(`${Constants.baseApiWaterUrl}disconnection/getDocumentList?disconncetionId=${id}`,
+      { observe: 'response' })
+      .pipe(map((response: any) => response))
+  }
+
+  submitNewgen(id: any) {
+    return this.http.post(`${Constants.baseApiWaterUrl}disconnection/submitNewgen?disconncetionId=${id}`,
+      { observe: 'response' })
+      .pipe(map((response: any) => response))
+  }
+
   save(data: any) {
     return this.http.post(`${Constants.baseApiWaterUrl}disconnection/save`, data,
       { observe: 'response' })

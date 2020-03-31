@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { DataModel, ConnectionsModel, ApplicationModel, ConnectionDetail } from '../../Models/application-reconnection.model';
 import { ApplicationReconnectionService } from '../../Services/application-reconnection.service';
 import { NgForm } from '@angular/forms';
 import { ApplicationReconnectionDataSharingService } from '../../Services/application-reconnection-data-sharing.service';
 import { AlertService } from 'src/app/vmcshared/Services/alert.service';
+import { MatStepper } from '@angular/material';
 
 @Component({
     selector: 'app-application-reconnection-form',
@@ -11,7 +12,10 @@ import { AlertService } from 'src/app/vmcshared/Services/alert.service';
 })
 
 export class ApplicationReconnectionFormComponent implements OnInit {
-
+    
+    @ViewChild('stepper') stepper: MatStepper;
+    reconnectionDocumentUploadDocs : Array<any> = [];
+    reconnectionId : any;
     connectioNo: string;
     dataModel: DataModel
     connectionsModel: ConnectionsModel;
@@ -78,7 +82,33 @@ export class ApplicationReconnectionFormComponent implements OnInit {
             }
         }
     }
+    getFormDataDocuments(id : any) {
+        this.reconnectionDocumentUploadDocs = [];
+        this.applicationReconnectionService.getreconnectionDocUpload(id).subscribe(
+          (data) => {
+            data.forEach(app => {
+              this.reconnectionDocumentUploadDocs.push(app);
+            });
+            
+          },
+          (error) => {
+            
+          });
+      }
+      onSubmitApproved() {
 
+        this.applicationReconnectionService.submitNewgen(this.reconnectionId).subscribe(
+            (data) => {
+
+                this.alertService.success(data.message);
+                this.applicationReconnectionDataSharingService.setIsShowApproval(true);
+
+            },
+            (error) => {
+                this.alertService.error(error.error.message);
+            });
+
+    }
     save(formDetail: NgForm) {
         if (formDetail.form.valid) {
             this.dataModel.applicationNumber = this.applicationModel.applicationNumber;
@@ -88,13 +118,16 @@ export class ApplicationReconnectionFormComponent implements OnInit {
                     if (data.status === 200) {
                         this.alertService.success(data.body.message);
                         this.dataModel.reconnectionId = data.body.data;
+                        this.reconnectionId = data.body.data;
+                        this.stepper.selectedIndex = 1;
+                        this.getFormDataDocuments(this.dataModel.reconnectionId);
                         this.applicationReconnectionDataSharingService.setApprovalModel(this.dataModel);
                         this.dataModel = new DataModel();
                         this.connectionsModel = new ConnectionsModel();
                         this.connectionsModel.connectionDetail = new ConnectionDetail();
                         this.connectioNo = null;
                         this.isShowSaveButton = false;
-                        this.applicationReconnectionDataSharingService.setIsShowApproval(true);
+                        //this.applicationReconnectionDataSharingService.setIsShowApproval(true);
                     }
                 },
                 (error) => {
