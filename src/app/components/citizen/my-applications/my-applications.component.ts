@@ -56,6 +56,10 @@ export class MyApplicationsComponent implements OnInit {
 	rejectRemarks: string = '';
 	reason: string = '';
 
+  queryrraiseRemarks: string = '';
+  queryrraisereason: string = '';
+
+
 	config: CitizenConfig = new CitizenConfig();
 
 	@ViewChild(MatPaginator) paginator: MatPaginator;
@@ -113,7 +117,7 @@ export class MyApplicationsComponent implements OnInit {
 	/**
 	 * This method is used to redirect on citizen form.
 	 * @param id citizen api code
-	 * @param id - citizen id 
+	 * @param id - citizen id
 	 */
 	redirectToEdit(apiCode: string, id: number) {
 		if (apiCode == 'HEL-DR') {
@@ -377,7 +381,7 @@ export class MyApplicationsComponent implements OnInit {
 	/**
 	 * This method is used to redirect on payment.
 	 * @param id citizen api code
-	 * @param id - citizen id 
+	 * @param id - citizen id
 	 */
 	redirectToPayment(apiCode: string, id: number) {
 		// let redirectUrl = ManageRoutes.getFullRoute(apiCode);
@@ -416,7 +420,7 @@ export class MyApplicationsComponent implements OnInit {
 						this.paymentGateway.openModel();
 
 					}, rj => {
-						// let errHtml = `			
+						// let errHtml = `
 						// 	<div class="alert alert-danger">
 						// 		Please Complete Payment, Otherwise the application will be considered as in-complete
 						// 	</div>`
@@ -439,5 +443,27 @@ export class MyApplicationsComponent implements OnInit {
 			});
 
 	}
+
+
+
+  /**
+   * This method is use to show For Query Raise remarks.
+   */
+  remarksDisplayForQueryRaise(data) {
+    //this.queryrraiseRemarks = data.remarks;
+    this.queryrraiseRemarks = 'Remark here';
+   // this.queryrraisereason = data.reason;
+    this.queryrraisereason = 'Remark reason here';
+  }
+
+
+
+  getInnerHTMLForRemark() {
+    return `<b>Remarks :</b> ${this.queryrraiseRemarks} <br> <b>Reason :</b> ${this.queryrraisereason}`;
+  }
+
+  isQueryRaiseDisplay(row) {
+      return true;
+  }
 
 }
