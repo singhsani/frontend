@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { DataModel, ConnectionsModel, ApplicationModel, ConnectionDetail } from '../../Models/application-transfer-ownership.model';
 import { CommonService } from 'src/app/vmcshared/Services/common-service';
 import { ApplicationTransferOwnershipService } from '../../Services/application-transfer-ownership.service';
@@ -6,6 +6,7 @@ import { Constants } from 'src/app/vmcshared/Constants';
 import { NgForm } from '@angular/forms';
 import { ApplicationTransferOwnershipDataSharingService } from '../../Services/application-transfer-ownership-data-sharing.service';
 import { AlertService } from 'src/app/vmcshared/Services/alert.service';
+import { MatStepper } from '@angular/material';
 
 @Component({
     selector: 'app-application-transfer-ownership-form',
@@ -14,12 +15,15 @@ import { AlertService } from 'src/app/vmcshared/Services/alert.service';
 
 export class ApplicationTransferOwnershipFormComponent implements OnInit {
 
+    @ViewChild('stepper') stepper: MatStepper;
+    applictionTrasferOwnDocumentUploadDocs: Array<any> = [];
     reasonList = [];
     connectioNo: string;
     dataModel: DataModel
     connectionsModel: ConnectionsModel;
     applicationModel: ApplicationModel;
     isShowSaveButton: boolean = false;
+    transferOfOwnershipId: any;
 
     outstandingDetail: any = {};
 
@@ -104,13 +108,16 @@ export class ApplicationTransferOwnershipFormComponent implements OnInit {
                     if (data.status === 200) {
                         this.alertService.success(data.body.message);
                         this.dataModel.transferOfOwnershipId = data.body.data;
+                        this.transferOfOwnershipId = data.body.data;
+                        this.stepper.selectedIndex = 1;
+                        this.getFormDataDocuments(this.dataModel.transferOfOwnershipId);
                         this.applicationTransferOwnershipDataSharingService.setApprovalModel(this.dataModel);
                         this.dataModel = new DataModel();
                         this.connectionsModel = new ConnectionsModel();
                         this.connectionsModel.connectionDetail = new ConnectionDetail();
                         this.connectioNo = null;
                         this.isShowSaveButton = false;
-                        this.applicationTransferOwnershipDataSharingService.setIsShowApproval(true);
+                        //this.applicationTransferOwnershipDataSharingService.setIsShowApproval(true);
                     }
                 },
                 (error) => {
@@ -127,6 +134,35 @@ export class ApplicationTransferOwnershipFormComponent implements OnInit {
                 });
         }
     }
+    onSubmitApproved() {
+
+        this.applicationTransferOwnershipService.submitNewgen(this.transferOfOwnershipId).subscribe(
+            (data) => {
+
+                this.alertService.success(data.message);
+                this.applicationTransferOwnershipDataSharingService.setIsShowApproval(true);
+
+            },
+            (error) => {
+                this.alertService.error(error.error.message);
+            });
+
+    }
+    getFormDataDocuments(id: any) {
+        this.applictionTrasferOwnDocumentUploadDocs = [];
+        this.applicationTransferOwnershipService.getTransferDocUpload(id).subscribe(
+            (data) => {
+                data.forEach(app => {
+                    this.applictionTrasferOwnDocumentUploadDocs.push(app);
+                });
+
+            },
+            (error) => {
+
+            });
+    }
+
+
     onWaterDetailClick() {
         this.applicationTransferOwnershipDataSharingService.setWaterBillDetail(this.outstandingDetail.waterOutstandingDTO.billWiseOutstandings);
         this.applicationTransferOwnershipDataSharingService.setIsShowWaterBillDetail(true);

@@ -16,6 +16,20 @@ export class ApplicationTransferOwnershipService {
       .pipe(map((response: any) => response))
   }
 
+  
+  getTransferDocUpload(transferOfOwnershipId: any) {
+    return this.http.post(`${Constants.baseApiWaterUrl}transferOfOwnership/getDocumentList?transferOfOwnershipId=${transferOfOwnershipId}`,
+      { observe: 'response' })
+      .pipe(map((response: any) => response))
+  }
+
+  submitNewgen(transferOfOwnershipId: any) {
+    return this.http.post(`${Constants.baseApiWaterUrl}transferOfOwnership/submitNewgen?transferOfOwnershipId=${transferOfOwnershipId}`,
+      { observe: 'response' })
+      .pipe(map((response: any) => response))
+  }
+
+  
   save(data: any) {
     return this.http.post(`${Constants.baseApiWaterUrl}transferOfOwnership/save`, data,
       { observe: 'response' })

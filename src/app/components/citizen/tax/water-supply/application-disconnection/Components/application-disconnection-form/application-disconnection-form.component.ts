@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ApplicationDisconnectionService } from '../../Services/application-disconnection.service';
 import { CommonService } from 'src/app/vmcshared/Services/common-service';
 import { ConnectionsModel, DataModel, ConnectionDetail, MeterDetail, ApplicationModel } from '../../Models/application-disconnection.model';
@@ -6,6 +6,7 @@ import { Constants } from 'src/app/vmcshared/Constants';
 import { NgForm } from '@angular/forms';
 import { ApplicationDisconnectionDataSharingService } from '../../Services/application-disconnection-data-sharing.service';
 import { AlertService } from 'src/app/vmcshared/Services/alert.service';
+import { MatStepper } from '@angular/material';
 
 @Component({
     selector: 'app-application-disconnection-form',
@@ -13,7 +14,8 @@ import { AlertService } from 'src/app/vmcshared/Services/alert.service';
 })
 
 export class ApplicationDisconnectionFormComponent implements OnInit {
-
+    @ViewChild('stepper') stepper: MatStepper;
+    applictionDisconnectionDocumentUploadDocs : Array<any> = [];
     reasonList = [];
     disconnectionTypeList = [];
     connectioNo: string;
@@ -22,6 +24,7 @@ export class ApplicationDisconnectionFormComponent implements OnInit {
     applicationModel: ApplicationModel;
     isShowSaveButton: boolean = false;
     outstandingDetail: any = {};
+    disconncetionId : any ;
 
     constructor(private commonService: CommonService,
         private alertService: AlertService,
@@ -95,6 +98,34 @@ export class ApplicationDisconnectionFormComponent implements OnInit {
         }
     }
 
+    getFormDataDocuments(id : any) {
+        this.applictionDisconnectionDocumentUploadDocs = [];
+        this.applicationDisconnectionService.getDisconnectionDocUpload(id).subscribe(
+          (data) => {
+            data.forEach(app => {
+              this.applictionDisconnectionDocumentUploadDocs.push(app);
+            });
+            
+          },
+          (error) => {
+            
+          });
+      }
+
+onSubmitApproved(){
+         
+    this.applicationDisconnectionService.submitNewgen(this.disconncetionId).subscribe(
+        (data) => {
+          
+            this.alertService.success(data.message);
+            this.applicationDisconnectionDataSharingService.setIsShowApproval(true);
+          
+        },
+        (error) => {
+          this.alertService.error(error.error.message);
+        });
+     
+      }  
     save(formDetail: NgForm) {
         if (formDetail.form.valid) {
             this.dataModel.applicationNumber = this.applicationModel.applicationNumber;
@@ -105,6 +136,9 @@ export class ApplicationDisconnectionFormComponent implements OnInit {
                     if (data.status === 200) {
                         this.alertService.success(data.body.message);
                         this.dataModel.disconncetionId = data.body.data;
+                        this.stepper.selectedIndex = 1;
+                        this.disconncetionId = data.body.data;
+                        this.getFormDataDocuments(this.dataModel.disconncetionId);
                         this.applicationDisconnectionDataSharingService.setApprovalModel(this.dataModel);
                         this.dataModel = new DataModel();
                         this.connectionsModel = new ConnectionsModel();
@@ -112,7 +146,7 @@ export class ApplicationDisconnectionFormComponent implements OnInit {
                         this.connectionsModel.meterDetail = new MeterDetail();
                         this.connectioNo = null;
                         this.isShowSaveButton = false;
-                        this.applicationDisconnectionDataSharingService.setIsShowApproval(true);
+                        //this.applicationDisconnectionDataSharingService.setIsShowApproval(true);
                     }
                 },
                 (error) => {
@@ -129,7 +163,7 @@ export class ApplicationDisconnectionFormComponent implements OnInit {
                 });
         }
     }
-
+    
     onWaterDetailClick() {
         this.applicationDisconnectionDataSharingService.setWaterBillDetail(this.outstandingDetail.waterOutstandingDTO.billWiseOutstandings);
         this.applicationDisconnectionDataSharingService.setIsShowWaterBillDetail(true);

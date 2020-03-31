@@ -33,6 +33,17 @@ export class ApplicationChangeUsageService {
       .pipe(map((response: any) => response))
   }
 
+  getchangeOfUsageIdDocUpload(changeOfUsageId: any) {
+    return this.http.post(`${Constants.baseApiWaterUrl}changeOfUsage/getDocumentList?changeOfUsageId=${changeOfUsageId}`,
+      { observe: 'response' })
+      .pipe(map((response: any) => response))
+  }
+
+  submitNewgen(changeOfUsageId: any) {
+    return this.http.post(`${Constants.baseApiWaterUrl}changeOfUsage/submit?changeOfUsageId=${changeOfUsageId}`,
+      { observe: 'response' })
+      .pipe(map((response: any) => response))
+  }
   
   getChangeOfUsageDocuments(changeOfUsageId: any) {
     return this.http.post(`${Constants.baseApiWaterUrl}changeOfUsage/getChangeOfUsageDocuments?changeOfUsageId=${changeOfUsageId}`, null,
