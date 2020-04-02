@@ -90,11 +90,6 @@
                    Remark
                   </button>
 
-                  <button mat-menu-item  *ngIf="isDownloadLOI(row)"  color="primary" (click)="getLoi(row)">
-                    <mat-icon class="m-1" title="Download LOI">cloud_download</mat-icon>
-                   Download
-                  </button>
-
                     <button mat-menu-item *ngIf="isEditOptDisplay(row)" color="primary" (click)="redirectToEdit(row.serviceDetail.code, row.serviceFormId)">
                         <mat-icon class="m-1" title="{{'edit_application' | translate:translateKey}}">edit</mat-icon>
                         {{'edit_application' | translate:translateKey}}

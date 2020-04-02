@@ -56,8 +56,8 @@ export class MyApplicationsComponent implements OnInit {
 	rejectRemarks: string = '';
 	reason: string = '';
 
-	queryrraiseRemarks: string = '';
-	queryrraisereason: string = '';
+  queryrraiseRemarks: string = '';
+  queryrraisereason: string = '';
 
 
 	config: CitizenConfig = new CitizenConfig();
