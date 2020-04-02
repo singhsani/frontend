@@ -247,6 +247,7 @@ export class DashboardComponent implements OnInit {
 				this.router.navigate([ManageRoutes.getFullRoute(apiCode), false, apiCode]);
 				break;
 			case 'HEL-WTRPIP-WRK-COMPL':
+			case 'HEL-DRNGPIP-WRK-COMPL':
 				this.router.navigate([ManageRoutes.getFullRoute(apiCode), apiCode]);
 				break;
 			case 'PRC_REG':

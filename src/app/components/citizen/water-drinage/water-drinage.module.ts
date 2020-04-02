@@ -10,6 +10,7 @@ import { FilterAttachmentMRPipe } from '../certificates/marriage/filter-attachme
 import { DrainagePipelineConnectionComponent } from './drainage-pipeline-connection/drainage-pipeline-connection.component';
 import { TaxRebateApplicationService } from '../tax/property/tax-rebate-application/Services/tax-rebate-application.service';
 import { WaterPipelineWorkCompletionComponent } from './water-pipeline-work-completion/water-pipeline-work-completion.component';
+import { DrainagePipelineWorkCompletionComponent } from './drainage-pipeline-work-completion/drainage-pipeline-work-completion.component';
 
 
 /* Import all shared, core and routing module end */
@@ -17,7 +18,8 @@ import { WaterPipelineWorkCompletionComponent } from './water-pipeline-work-comp
 const routes: Routes = [
 	{ path: 'waterPipeLineConnection/:id/:apiCode', component: WaterPipelineConnection },
   { path: 'drainagePipeLineConnection/:id/:apiCode', component: DrainagePipelineConnectionComponent },
-  { path: 'wtrPipeConnWorkCompletion/:apiCode', component: WaterPipelineWorkCompletionComponent}
+  { path: 'wtrPipeConnWorkCompletion/:apiCode', component: WaterPipelineWorkCompletionComponent},
+  { path: 'drngPipeConnWorkCompletion/:apiCode', component: DrainagePipelineWorkCompletionComponent}
 ];
 
 @NgModule({
@@ -36,7 +38,8 @@ const routes: Routes = [
     WaterPipelineConnection,
     FilterAttachmentMRPipe,
     DrainagePipelineConnectionComponent,
-    WaterPipelineWorkCompletionComponent
+    WaterPipelineWorkCompletionComponent,
+    DrainagePipelineWorkCompletionComponent
   ]
 })
 export class WaterDrinageModule { }
