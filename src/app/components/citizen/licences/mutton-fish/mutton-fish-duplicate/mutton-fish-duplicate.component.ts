@@ -52,7 +52,8 @@ export class MuttonFishDuplicateComponent implements OnInit {
 	 * This method for serach licence using licence number.
 	 */
 	searchLicence() {
-		this.MuttonFishService.searchLicence(this.serachLicenceObj.searchLicenceNumber).subscribe(
+    let obj = { refNumber: this.serachLicenceObj.searchLicenceNumber };
+		this.MuttonFishService.searchLicence(obj).subscribe(
 			(res: any) => {
 				if (res.success) {
 					this.serachLicenceObj.isDisplayDuplicateLicenceForm = true;
