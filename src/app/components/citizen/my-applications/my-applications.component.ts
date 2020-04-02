@@ -446,24 +446,35 @@ export class MyApplicationsComponent implements OnInit {
 
 
 
-  /**
-   * This method is use to show For Query Raise remarks.
-   */
-  remarksDisplayForQueryRaise(data) {
-    //this.queryrraiseRemarks = data.remarks;
-    this.queryrraiseRemarks = 'Remark here';
-   // this.queryrraisereason = data.reason;
-    this.queryrraisereason = 'Remark reason here';
-  }
+	/**
+	 * This method is use to show For Query Raise remarks.
+	 */
+	remarksDisplayForQueryRaise(data) {
+		//this.queryrraiseRemarks = data.remarks;
+		this.queryrraiseRemarks = 'Remark here';
+		// this.queryrraisereason = data.reason;
+		this.queryrraisereason = 'Remark reason here';
+	}
 
 
 
-  getInnerHTMLForRemark() {
-    return `<b>Remarks :</b> ${this.queryrraiseRemarks} <br> <b>Reason :</b> ${this.queryrraisereason}`;
-  }
+	getInnerHTMLForRemark() {
+		return `<b>Remarks :</b> ${this.queryrraiseRemarks} <br> <b>Reason :</b> ${this.queryrraisereason}`;
+	}
 
-  isQueryRaiseDisplay(row) {
-      return true;
-  }
+	isQueryRaiseDisplay(row) {
+		return true;
+	}
+
+	isDownloadLOI(row) {
+		// if (row.fileStatus != 'DRAFT') {
+		// 	return true;
+		// }
+		return true;
+	}
+
+	getLoi(row) {
+		console.log("Download LOI", row);
+	}
 
 }

@@ -140,7 +140,7 @@ export class DashboardComponent implements OnInit {
 					"gujName": "પ્રાણી સંગ્રહાલય",
 					"appointmentRequired": false,
 					"active": true
-        },
+				},
 				{
 					"code": "PLANETARIUMBOOK",
 					"fieldView": "ALL",
@@ -208,15 +208,16 @@ export class DashboardComponent implements OnInit {
 	 * This method is use to create new record for citizen
 	 */
 	createRecord(apiCode: string) {
+		console.log("apiCode", apiCode);
 		switch (apiCode) {
 			case 'HEL-DR':
-				
+
 				this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);
 				this.formService.createFormData().subscribe(res => {
 					let redirectUrl = ManageRoutes.getFullRoute(apiCode);
 					this.router.navigate(['citizen/certificates/birth-death/deathReg', res.serviceFormId, apiCode]);
 					// this.router.navigate([redirectUrl, , apiCode]);
-				});				
+				});
 				break;
 			case 'HEL-BCR':
 			case 'HEL-DCR':
@@ -267,6 +268,7 @@ export class DashboardComponent implements OnInit {
 			case 'WTR-RECON':
 			case 'WTR-PLUMB-LIC':
 			case 'WTR-RNW-PLUMB-LIC':
+			case 'AFFORD-NEW':
 				this.router.navigate([ManageRoutes.getFullRoute(apiCode)]);
 				break;
 			default:
@@ -288,6 +290,7 @@ export class DashboardComponent implements OnInit {
 	getAllServices() {
 		this.formService.getUserServices().subscribe(
 			res => {
+				console.log("res", res);
 				this.userServicesList = res.modules;
 				_.forEach(res.modules, (value, key) => {
 					_.forEach(value.services, (value1, key1) => {
@@ -300,7 +303,6 @@ export class DashboardComponent implements OnInit {
 			}
 		);
 	}
-
 	getIconImg(moduleCode: string) {
 		switch (moduleCode) {
 			case 'SHOP-ESTAB':
@@ -317,9 +319,4 @@ export class DashboardComponent implements OnInit {
 				break;
 		}
 	}
-
-	newAffordableHousing() {
-		this.router.navigate(["citizen/affordable-housing/new"]);
-	}
-
 }
