@@ -217,6 +217,10 @@ const ROUTEMAIN = {
         'main': 'drainagePipeLineConnection',
         'type': 'drainagePipeLineConnection'
     },
+    'HEL-WTRPIP-WRK-COMPL': {
+        'main': 'wtrPipeConnWorkCompletion',
+        'type': 'wtrPipeConnWorkCompletion'
+    },
     'WTR-DISCON': {
         'main': 'disconnection',
         'type': 'disconnection'
@@ -731,6 +735,9 @@ const ROUTESLIST = {
     },
     'HEL-DRNG-PIPELINE': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TAXMODULE + '/' + ROUTEPREFIX.WATERDRINAGE + '/' + ROUTEMAIN["HEL-DRNG-PIPELINE"].main
+    },
+    'HEL-WTRPIP-WRK-COMPL': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TAXMODULE + '/' + ROUTEPREFIX.WATERDRINAGE + '/' + ROUTEMAIN["HEL-WTRPIP-WRK-COMPL"].main
     },
     'WTR-DISCON': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TAXMODULE + '/' + ROUTEPREFIX.WATERMODULE + '/' + ROUTEMAIN["WTR-DISCON"].main

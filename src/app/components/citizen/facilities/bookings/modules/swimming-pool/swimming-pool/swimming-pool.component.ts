@@ -29,6 +29,9 @@ export class SwimmingPoolComponent implements OnInit {
   showDowlLoadFileTab: boolean = false;
   showSwimmingPoolForm: boolean = true;
 
+  isVisibleIdNumber = false;
+  isPanCardVisibleIdNumber = false;
+
   formId: number;
   apiCode: string;
   public tabIndex: number = 0;
@@ -466,6 +469,31 @@ export class SwimmingPoolComponent implements OnInit {
         });
 
       return;
+    }
+
+  }
+
+  CheckType(idCode){
+
+    this.isVisibleIdNumber = false;
+    this.isPanCardVisibleIdNumber = false;
+    if(idCode === 'AADHAAR_CARD'){
+      this.isVisibleIdNumber = true;
+      this.isPanCardVisibleIdNumber = false;
+      this.swimmimgPoolBookingForm.controls['applicantIDProofNumber'].setValue('');
+      this.swimmimgPoolBookingForm.controls['applicantIDProofNumber'].setValidators([Validators.required]);
+      this.swimmimgPoolBookingForm.controls['applicantIDProofNumber'].updateValueAndValidity();
+    }else if(idCode === 'PAN_CARD'){
+      this.isPanCardVisibleIdNumber = true;
+      this.isVisibleIdNumber = false;
+      this.swimmimgPoolBookingForm.controls['applicantIDProofNumber'].setValidators([Validators.required, ValidationService.panValidator]);
+      this.swimmimgPoolBookingForm.controls['applicantIDProofNumber'].updateValueAndValidity();
+    }else {
+      this.isVisibleIdNumber = false;
+      this.isPanCardVisibleIdNumber = false;
+      this.swimmimgPoolBookingForm.controls['applicantIDProofNumber'].setValue('');
+      this.swimmimgPoolBookingForm.controls['applicantIDProofNumber'].setValidators([Validators.required]);
+      this.swimmimgPoolBookingForm.controls['applicantIDProofNumber'].updateValueAndValidity();
     }
 
   }

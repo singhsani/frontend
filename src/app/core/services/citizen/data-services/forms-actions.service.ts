@@ -385,4 +385,12 @@ export class FormsActionsService {
 	setNDCtoDuplicateDeath(data: any) {
 		this.NDCtoDuplicateDeath.next(data);
 	}
+
+	getWaterPipelineConnectionStatusAndOthersList(workOrderNo: any, applicationNo: any) {
+		return  this.http.get(`api/form/wtrPipeConnWorkCompletion/searchWaterPipelineApplications?workOrderNo=${workOrderNo}&applicationNo=${applicationNo}`)
+	}
+
+	getWtrPipAppsByWaterPipelineConnection(waterPipelineConnectionId: any) {
+		return this.http.get(`api/form/wtrPipeConnWorkCompletion/getWtrPipAppsByWaterPipelineConnection?waterPipelineConnectionId=${waterPipelineConnectionId}`);
+	}
 }

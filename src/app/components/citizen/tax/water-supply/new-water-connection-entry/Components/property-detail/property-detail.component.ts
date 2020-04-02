@@ -147,10 +147,11 @@ export class PropertyDetailComponent implements OnInit {
           if (data.status === 200) {
             this.alertService.success(data.body.message);
             this.isShowSubmitButton = true;
+            this.newNewWaterConnectionEntryDataSharingService.updateDataSourceMoveStepper(2);
           }
-          if(isSubmit) {
-            this.finalSubmit();
-          }
+          // if(isSubmit) {
+          //   this.finalSubmit();
+          // }
         },
         (error) => {
           if (error.status === 400) {
@@ -170,30 +171,30 @@ export class PropertyDetailComponent implements OnInit {
     this.savePropertyAddress1(formDetails,true);
   }
 
-  finalSubmit() {
-    this.newNewWaterConnectionEntryService.submit(this.connectionDtlId).subscribe(
-      (data) => {
-        if (data.status === 200) {
-          this.alertService.success(data.body.message);
-          this.newNewWaterConnectionEntryDataSharingService.updateDataSourceIsShowDocument(true);
-          //this.newNewWaterConnectionEntryDataSharingService.updateDataSourceMoveStepper(2);
-          this.router.navigateByUrl(ManageRoutes.getFullRoute('CITIZENDASHBOARD'));
-        }
-      },
-      (error) => {
-        if (error.status === 400) {
-          var errorMessage = '';
-          error.error[0].propertyList.forEach(element => {
-            errorMessage = errorMessage + element + "</br>";
-          });
-          this.alertService.error(errorMessage);
-        }
-        else {
-          this.alertService.error(error.error.message);
-        }
-      });
+  // finalSubmit() {
+  //   this.newNewWaterConnectionEntryService.submit(this.connectionDtlId).subscribe(
+  //     (data) => {
+  //       if (data.status === 200) {
+  //         this.alertService.success(data.body.message);
+  //         this.newNewWaterConnectionEntryDataSharingService.updateDataSourceIsShowDocument(true);
+  //         //this.newNewWaterConnectionEntryDataSharingService.updateDataSourceMoveStepper(2);
+  //         this.router.navigateByUrl(ManageRoutes.getFullRoute('CITIZENDASHBOARD'));
+  //       }
+  //     },
+  //     (error) => {
+  //       if (error.status === 400) {
+  //         var errorMessage = '';
+  //         error.error[0].propertyList.forEach(element => {
+  //           errorMessage = errorMessage + element + "</br>";
+  //         });
+  //         this.alertService.error(errorMessage);
+  //       }
+  //       else {
+  //         this.alertService.error(error.error.message);
+  //       }
+  //     });
 
-  }
+  // }
 
 
   onBackClick(){

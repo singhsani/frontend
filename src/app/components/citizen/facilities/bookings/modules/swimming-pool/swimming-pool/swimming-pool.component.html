@@ -199,8 +199,8 @@
 							</control-messages>
 						</mat-form-field>
 
-						<div class="col-md-4 ngSelect" formGroupName="applicantIDProof">
-							<ng-select placeholder="{{'id_proof' | translate:translateKey}} *" formControlName="code"
+						<div class="col-md-4 ngSelect" formGroupName="applicantIDProof" >
+							<ng-select placeholder="{{'id_proof' | translate:translateKey}} *" formControlName="code" (change)="CheckType($event)"
 								required>
 								<ng-option *ngFor="let proof of APPLICANT_PROOF" [value]="proof.code">
 									{{proof.name}}
@@ -210,9 +210,24 @@
 							</control-messages>
 						</div>
 
-						<mat-form-field class="col-md-4">
-							<input matInput maxlength="12" formControlName="applicantIDProofNumber"
-								placeholder="{{'id_proof_no' | translate: translateKey}}" required appAlphaNumeric>
+						<mat-form-field class="col-md-4" *ngIf="isVisibleIdNumber">
+							<input matInput maxlength="12"  class="aadharcard"  formControlName="applicantIDProofNumber"
+								placeholder="{{'id_proof_no' | translate: translateKey}}" required OnlyNumber>
+							<control-messages [control]="swimmimgPoolBookingForm.get('applicantIDProofNumber')">
+							</control-messages>
+						</mat-form-field>
+
+
+            <mat-form-field class="col-md-4" *ngIf="isPanCardVisibleIdNumber">
+							<input matInput maxlength="12" class="pancard" formControlName="applicantIDProofNumber"
+                     placeholder="{{'id_proof_no' | translate: translateKey}}" required >
+							<control-messages [control]="swimmimgPoolBookingForm.get('applicantIDProofNumber')">
+							</control-messages>
+						</mat-form-field>
+
+            	<mat-form-field class="col-md-4" *ngIf="!isVisibleIdNumber && !isPanCardVisibleIdNumber">
+							<input matInput maxlength="12" class="others" formControlName="applicantIDProofNumber"
+                     placeholder="{{'id_proof_no' | translate: translateKey}}" required appAlphaNumeric>
 							<control-messages [control]="swimmimgPoolBookingForm.get('applicantIDProofNumber')">
 							</control-messages>
 						</mat-form-field>
@@ -350,21 +365,21 @@
 
 <!-- gujrati fields -->
 <!-- <div class="row" *ngIf="isDisplayGujFields">
-							
+
 							<mat-form-field class="col-md-4">
 								<input matInput type="text" placeholder="{{'building_name' | translate: translateKey:'gu' }}" maxlength="180" formControlName="buildingNameGuj" appGujInputTarget [form]="applicantDetail">
 								<control-messages [control]="swimmimgPoolBookingForm.get('applicantAddress').get('buildingNameGuj')"></control-messages>
 							</mat-form-field>
-							
+
 							<mat-form-field class="col-md-4">
 								<input matInput type="text" formControlName="streetNameGuj" placeholder="{{'street_name' | translate: translateKey:'gu' }}" maxlength="180" appGujInputTarget [form]="applicantDetail">
 								<control-messages [control]="swimmimgPoolBookingForm.get('applicantAddress').get('streetNameGuj')"></control-messages>
 							</mat-form-field>
-							
+
 							<mat-form-field class="col-md-4">
 								<input matInput type="text" formControlName="landmarkGuj" placeholder="{{'landmark' | translate: translateKey:'gu' }}" maxlength="300" appGujInputTarget [form]="applicantDetail">
 								<control-messages [control]="swimmimgPoolBookingForm.get('applicantAddress').get('landmarkGuj')"></control-messages>
 							</mat-form-field>
-							
+
 						</div> -->
 <!-- gujrati fields -->

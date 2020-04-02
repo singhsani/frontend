@@ -15,6 +15,18 @@ export class ApplicationReconnectionService {
       .pipe(map((response: any) => response))
   }
 
+  getreconnectionDocUpload(reconnectionId: any) {
+    return this.http.post(`${Constants.baseApiWaterUrl}reconnection/getDocumentList?reconnectionId=${reconnectionId}`,
+      { observe: 'response' })
+      .pipe(map((response: any) => response))
+  }
+
+  submitNewgen(reconnectionId: any) {
+    return this.http.post(`${Constants.baseApiWaterUrl}reconnection/submitNewgen?reconnectionId=${reconnectionId}`,
+      { observe: 'response' })
+      .pipe(map((response: any) => response))
+  }
+
   save(data: any) {
     return this.http.post(`${Constants.baseApiWaterUrl}reconnection/save`, data,
       { observe: 'response' })

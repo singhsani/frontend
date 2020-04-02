@@ -1023,7 +1023,7 @@
 					</mat-form-field>
 
 					<h2>{{'address' | translate:translateKey }}:</h2>
-					<app-address #address [addressFormGroup]="marriageFormGroup.get('firstWitnessAddress')">
+					<app-address [requiredFeilds]="true" #address [addressFormGroup]="marriageFormGroup.get('firstWitnessAddress')">
 					</app-address>
 
 				</div>
@@ -1114,7 +1114,7 @@
 					</mat-form-field>
 
 					<h2>{{'address' | translate:translateKey }}:</h2>
-					<app-address #address [addressFormGroup]="marriageFormGroup.get('secondWitnessAddress')">
+					<app-address [requiredFeilds]="true"  #address [addressFormGroup]="marriageFormGroup.get('secondWitnessAddress')">
 					</app-address>
 
 				</div>
@@ -1194,7 +1194,7 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<textarea matInput rows="3" cols="50" maxlength="1500"
+						<textarea matInput rows="2" cols="50" maxlength="500"
 							formControlName="groomNriFirstWitnessAddressGuj" appGujInputTarget
 							[form]="marriageFormGroup"
 							placeholder="{{ 'address' | translate:translateKey:'gu' }}"></textarea>
@@ -1315,7 +1315,7 @@
 			<!-- if NIR bride  -->
 			<mat-tab *ngIf="marriageFormGroup.get('isBrideVisa').value == true">
 				<ng-template mat-tab-label>
-					<div>{{'detail_of_bride_nir_witness' | translate: translateKey}}</div>
+					<div class="leftpadding">{{'detail_of_bride_nir_witness' | translate: translateKey}}</div>
 				</ng-template>
 
 				<h2>{{'first_nri_witness' | translate:translateKey }}:</h2>

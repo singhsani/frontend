@@ -103,10 +103,12 @@ export class HospitalRegisterComponent implements OnInit {
 				this.commonService.openAlert("Success", "Your application for hospital registration is submitted to Vadodara Municipal Corporation Health Department. For more update you can check your registered mail ID. Thank you for the Registration", "success");
 				this.regForm.reset();
 				// this.router.navigate(['hospital/auth/login']);
-			}
-			// err => {
-			// 	this.toster.error(err.error[0].code);
-			// });
+			},
+			error => {
+                if (error.error && error.error.length) {
+                  this.commonService.openAlert("Warning", error.error[0].message, "warning");
+                }
+            }
 		)}
 
 }

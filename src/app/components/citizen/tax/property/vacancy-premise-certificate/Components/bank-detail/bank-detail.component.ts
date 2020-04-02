@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Constants } from 'src/app/vmcshared/Constants';
 import { CommonService } from 'src/app/vmcshared/Services/common-service';
@@ -9,6 +9,7 @@ import { downloadFile } from 'src/app/vmcshared/downloadFile';
 import { Subscription } from 'rxjs';
 import * as moment from 'moment';
 import { PaymentDataSharingService } from 'src/app/vmcshared/component/payment/payment-data-sharing.service';
+import { MatStepper } from '@angular/material';
 
 @Component({
   selector: 'app-bank-detail',
@@ -17,7 +18,8 @@ import { PaymentDataSharingService } from 'src/app/vmcshared/component/payment/p
 })
 
 export class BankDetailComponent implements OnInit, OnDestroy {
-
+  @ViewChild('stepper') stepper: MatStepper;
+  vacancyPremiseCertficateDocumentUploadDocs : Array<any> = [];
   model: any = {};
   modelForCliear: any = {};
   bankList = [];
@@ -131,14 +133,31 @@ export class BankDetailComponent implements OnInit, OnDestroy {
         (data) => {
           this.isShaved = true;
           this.model.vacancyPremiseCertficateId =  data.body.data.vacancyPremiseCertficateId;
-          this.alertService.success(data.body.message);
-          this.paymentDataSharingService.updatedDataModelFileDownload(data.body.data.responseDTOList);
+          this.stepper.selectedIndex = 1;
+          //this.alertService.success(data.body.message);
+          this.getFormDataDocuments(this.model.vacancyPremiseCertficateId);
+          //this.paymentDataSharingService.updatedDataModelFileDownload(data.body.data.responseDTOList);
         },
         (error) => {
           this.commonService.callErrorResponse(error);
         })
     }
   }
+
+  getFormDataDocuments(id : any) {
+    this.vacancyPremiseCertficateDocumentUploadDocs = [];
+    this.vacancyPremiseCertificateService.getvacancyPremiseDocUpload(id).subscribe(
+      (data) => {
+        data.forEach(app => {
+          this.vacancyPremiseCertficateDocumentUploadDocs.push(app);
+        });
+        
+      },
+      (error) => {
+        
+      });
+  }
+
 
   onDecline() {
     this.vacancyPremiseCertificateService.reject({ vacancyPremiseCertficateId: this.model.vacancyPremiseCertficateId }).subscribe(
@@ -153,6 +172,23 @@ export class BankDetailComponent implements OnInit, OnDestroy {
         this.commonService.callErrorResponse(error);
       });
   }
+  
+
+  onSubmitApproved() {
+    this.vacancyPremiseCertificateService.approveDept(this.model.vacancyPremiseCertficateId).subscribe(
+      (data) => {
+        this.isApprovedorDecline = true;
+        // this.onClear();
+       //downloadFile(data, "approve-" + Date.now() + ".pdf", 'application/pdf');
+       this.alertService.success(data.message);
+       this.paymentDataSharingService.updatedDataModelFileDownload(data.body.data);
+      },
+      (error) => {
+        this.commonService.callErrorResponse(error);
+      });
+  }
+  
+  
   onApproved() {
     this.vacancyPremiseCertificateService.approve({ vacancyPremiseCertficateId: this.model.vacancyPremiseCertficateId }).subscribe(
       (data) => {

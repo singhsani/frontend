@@ -13,6 +13,7 @@ import { PropertyEntryComponent } from './Components/property-entry/property-ent
 import { UnitDetailComponent } from './Components/unit-detail/unit-detail.component';
 import { ApprovalComponent } from './Components/approval/approval.component';
 import { SharedComponentModule } from 'src/app/vmcshared/shared-component.module';
+import { RevaluationDocumentUploadComponent } from './Components/revaluation-document-upload/revaluation-document-upload.component';
 
 
 
@@ -36,7 +37,8 @@ const routes: Routes = [
     OccupierDetailComponent,
     PropertyEntryComponent,
     ApprovalComponent,
-    UnitDetailComponent
+    UnitDetailComponent,
+    RevaluationDocumentUploadComponent
     
   ],
   providers: [

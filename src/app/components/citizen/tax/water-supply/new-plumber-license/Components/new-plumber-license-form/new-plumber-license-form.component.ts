@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { PlumberLicenseModel, ApplicationModel } from '../../Models/new-plumber-license.model';
 import { CommonService } from 'src/app/vmcshared/Services/common-service';
@@ -6,6 +6,7 @@ import { NewPlumberLicenseService } from '../../Services/new-plumber-license.ser
 import { Constants } from 'src/app/vmcshared/Constants';
 import { AlertService } from 'src/app/vmcshared/Services/alert.service';
 import { NewPlumberLicenseDataSharingService } from '../../Services/new-plumber-license-data-sharing.service';
+import { MatStepper } from '@angular/material';
 
 
 @Component({
@@ -18,6 +19,10 @@ export class NewPlumberLicenseFormComponent implements OnInit {
     model: PlumberLicenseModel;
     applicationModel: ApplicationModel;
 
+    @ViewChild('stepper') stepper: MatStepper;
+    plumberLicenseDocumentUploadDocs : Array<any> = [];
+    plumberLicenseId : any;
+    
     licenseForList = [];
     educationalQualificationList = [];
     minDate = new Date();
@@ -131,10 +136,13 @@ export class NewPlumberLicenseFormComponent implements OnInit {
                     if (data.status === 200) {
                         this.alertService.success(data.body.message);
                         this.model.plumberLicenseId = data.body.data;
+                        this.plumberLicenseId = data.body.data;
+                        this.stepper.selectedIndex = 1;
+                        this.getFormDataDocuments(this.model.plumberLicenseId);
                         this.newPlumberLicenseDataSharingService.setApprovalModel(this.model);
                         this.model = new PlumberLicenseModel();
                         this.newPlumberLicenseDataSharingService.setIsShowForm(false);
-                        this.newPlumberLicenseDataSharingService.setIsShowApproval(true);
+                        //this.newPlumberLicenseDataSharingService.setIsShowApproval(true);
                     }
                 },
                 (error) => {
@@ -151,4 +159,32 @@ export class NewPlumberLicenseFormComponent implements OnInit {
                 });
         }
     }
+    getFormDataDocuments(id : any) {
+        this.plumberLicenseDocumentUploadDocs = [];
+        this.newPlumberLicenseService.plumberLicenseDocUpload(id).subscribe(
+          (data) => {
+            data.forEach(app => {
+              this.plumberLicenseDocumentUploadDocs.push(app);
+            });
+            
+          },
+          (error) => {
+            
+          });
+      }
+    onSubmitApproved() {
+
+        this.newPlumberLicenseService.submitNewgen(this.plumberLicenseId).subscribe(
+            (data) => {
+
+                this.alertService.success(data.message);
+                this.newPlumberLicenseDataSharingService.setIsShowApproval(true);
+
+            },
+            (error) => {
+                this.alertService.error(error.error.message);
+            });
+
+    }
 }
+

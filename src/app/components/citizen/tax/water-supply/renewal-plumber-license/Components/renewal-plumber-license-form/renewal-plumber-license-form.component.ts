@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ApplicationModel, PlumberLicenseModel } from '../../Models/renewal-plumber-license.model';
 import { RenewalPlumberLicenseService } from '../../Services/renewal-plumber-license.service';
@@ -6,6 +6,7 @@ import { Constants } from 'src/app/vmcshared/Constants';
 import { RenewalPlumberLicenseDataSharingService } from '../../Services/new-plumber-license-data-sharing.service';
 import { AlertService } from 'src/app/vmcshared/Services/alert.service';
 import { CommonService } from 'src/app/vmcshared/Services/common-service';
+import { MatStepper } from '@angular/material';
 
 
 @Component({
@@ -14,6 +15,10 @@ import { CommonService } from 'src/app/vmcshared/Services/common-service';
 })
 
 export class RenewalPlumberLicenseFormComponent implements OnInit {
+    
+    @ViewChild('stepper') stepper: MatStepper;
+    plumbeRenewalLicenseDocumentUploadDocs : Array<any> = [];
+    plumberLicenseId : any;
     errorMessage = Constants.errorMessage;
     dateFormat = Constants.DateFormat.DDMMYYYY;
     plumberLicenseModel: PlumberLicenseModel;
@@ -58,6 +63,33 @@ export class RenewalPlumberLicenseFormComponent implements OnInit {
                 });
         }
     }
+    getFormDataDocuments(id : any) {
+        this.plumbeRenewalLicenseDocumentUploadDocs = [];
+        this.renewalPlumberLicenseService.plumberLicenseDocUpload(id).subscribe(
+          (data) => {
+            data.forEach(app => {
+              this.plumbeRenewalLicenseDocumentUploadDocs.push(app);
+            });
+            
+          },
+          (error) => {
+            
+          });
+      }
+    onSubmitApproved() {
+
+        this.renewalPlumberLicenseService.submitNewgen(this.plumberLicenseId).subscribe(
+            (data) => {
+
+                this.alertService.success(data.message);
+                this.renewalPlumberLicenseDataSharingService.setIsShowApproval(true);
+
+            },
+            (error) => {
+                this.alertService.error(error.error.message);
+            });
+
+    }
 
     saveDetail(formDetail: NgForm) {
         if (formDetail.form.valid) {
@@ -76,13 +108,16 @@ export class RenewalPlumberLicenseFormComponent implements OnInit {
                     if (data.status === 200) {
                         this.alertService.success(data.body.message);
                         this.plumberLicenseModel.plumberLicenseId = data.body.data;
+                        this.plumberLicenseId = data.body.data;
+                        this.stepper.selectedIndex = 1;
+                        this.getFormDataDocuments(this.plumberLicenseModel.plumberLicenseId);
                         this.renewalPlumberLicenseDataSharingService.setApprovalModel(this.plumberLicenseModel);
 
                         this.plumberLicenseModel = new PlumberLicenseModel();
                         this.licenseNo = null;
                         this.isShowSaveButton = false;
                         this.renewalPlumberLicenseDataSharingService.setIsShowForm(false);
-                        this.renewalPlumberLicenseDataSharingService.setIsShowApproval(true);
+                        //this.renewalPlumberLicenseDataSharingService.setIsShowApproval(true);
                     }
                 },
                 (error) => {

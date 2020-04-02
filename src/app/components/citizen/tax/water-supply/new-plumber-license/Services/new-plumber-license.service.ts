@@ -14,7 +14,17 @@ export class NewPlumberLicenseService {
       { observe: 'response' })
       .pipe(map((response: any) => response))
   }
+  plumberLicenseDocUpload(plumberLicenseId: any) {
+    return this.http.post(`${Constants.baseApiWaterUrl}version/plumber/getDocumentList?plumberLicenseId=${plumberLicenseId}`,
+      { observe: 'response' })
+      .pipe(map((response: any) => response))
+  }
 
+  submitNewgen(plumberLicenseId: any) {
+    return this.http.post(`${Constants.baseApiWaterUrl}version/plumber/submitNewgen?plumberLicenseId=${plumberLicenseId}`,
+      { observe: 'response' })
+      .pipe(map((response: any) => response))
+  }
   
   getPlumberLicenseDocuments(plumberLicenseVersionId: any) {
     return this.http.post(`${Constants.baseApiWaterUrl}version/plumber/getPlumberLicenseDocuments?plumberLicenseVersionId=${plumberLicenseVersionId}`, null,
