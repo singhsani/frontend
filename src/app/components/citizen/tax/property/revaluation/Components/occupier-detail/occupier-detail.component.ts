@@ -231,25 +231,7 @@ export class OccupierDetailComponent implements OnInit {
   onSubmit() {
     this.checkOccupierExist();
     if (this.isOccupierExist && this.isUnitDetailEntered) {
-      this.revaluationService.submit(this.selectedDataModel.revaluationId).subscribe(
-        (data) => {
-          if (data.status === 200) {
-            this.alertService.success(data.body.message);
-            this.revaluationDataSharingService.updateDataSourceMoveStepper(3);
-          }
-        },
-        (error) => {
-          if (error.status === 400) {
-            var errorMessage = '';
-            error.error[0].propertyList.forEach(element => {
-              errorMessage = errorMessage + element + "</br>";
-            });
-            this.alertService.error(errorMessage);
-          }
-          else {
-            this.alertService.error(error.error.message);
-          }
-        })
+      this.revaluationDataSharingService.updateDataSourceMoveStepper(3);   
     }
   }
   onBack() {

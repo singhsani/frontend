@@ -93,6 +93,12 @@ export class RevaluationService {
       .pipe(map((response: any) => response))
   }
 
+  
+  getrevaluationDocUpload(revaluationId: any) {
+    return this.http.post(`${Constants.assessmentModuleApiUrl}revaluation/getDocumentList?revaluationId=${revaluationId}`,
+      { observe: 'response' })
+      .pipe(map((response: any) => response))
+  }
   getUsageList(data: any) {
     return this.http.post(`${Constants.baseApiUrl}usage/propertyUsages`, null,
       { observe: 'response' })
