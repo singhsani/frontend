@@ -10,6 +10,7 @@ import { ValidationService } from '../../../../../shared/services/validation.ser
 import { FormsActionsService } from '../../../../../core/services/citizen/data-services/forms-actions.service';
 import { Location } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
+import * as moment from 'moment';
 
 @Component({
 	selector: 'app-mutton-fish-cancellation',
@@ -152,7 +153,7 @@ export class MuttonFishCancellationComponent implements OnInit {
 				// renewal: res.renewal,
 				// adminCharges: res.adminCharges,
 				// netAmount: res.netAmount,
-				licenseIssueDate: res.licenseIssueDate,
+				//licenseIssueDate: res.licenseIssueDate,
 				// licenseRenewalDate: res.licenseRenewalDate,
 				// loinumber: res.loinumber,
 				attachments: []
@@ -293,4 +294,15 @@ export class MuttonFishCancellationComponent implements OnInit {
 
 		}
 	}
+
+
+  /**
+   * This method is change date format.
+   * @param date : selected date
+   * @param controlType : form control name
+   */
+  dateFormat(date, controlType: string) {
+    this.muttonFishCancellationForm.get(controlType).setValue(moment(date).format("YYYY-MM-DD"));
+  }
+
 }

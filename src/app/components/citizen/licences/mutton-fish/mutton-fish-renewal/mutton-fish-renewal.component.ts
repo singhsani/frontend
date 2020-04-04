@@ -11,6 +11,7 @@ import { FormsActionsService } from '../../../../../core/services/citizen/data-s
 import { Location } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '../../../../../shared/modules/translate/translate.service';
+import * as moment from 'moment';
 
 @Component({
 	selector: 'app-mutton-fish-renewal',
@@ -59,6 +60,7 @@ export class MuttonFishRenewalComponent implements OnInit {
 			(res: any) => {
 				if (res.success) {
 					this.serachLicenceObj.isDisplayRenewLicenceForm = true;
+
 					this.createRecordPatchSerachData(res.data);
 				} else {
 					this.serachLicenceObj.isDisplayRenewLicenceForm = false;
@@ -153,7 +155,7 @@ export class MuttonFishRenewalComponent implements OnInit {
 				// renewal: res.renewal,
 				// adminCharges: res.adminCharges,
 				// netAmount: res.netAmount,
-				licenseIssueDate: res.licenseIssueDate,
+				//licenseIssueDate: res.licenseIssueDate,
 				// licenseRenewalDate: res.licenseRenewalDate,
 				// loinumber: res.loinumber,
 				attachments: []
@@ -497,4 +499,15 @@ export class MuttonFishRenewalComponent implements OnInit {
 		}
 
 	}
+
+
+
+  /**
+   * This method is change date format.
+   * @param date : selected date
+   * @param controlType : form control name
+   */
+  dateFormat(date, controlType: string) {
+    this.muttonFishRenewalForm.get(controlType).setValue(moment(date).format("YYYY-MM-DD"));
+  }
 }
