@@ -82,6 +82,7 @@ export class RenewalPlumberLicenseFormComponent implements OnInit {
             (data) => {
 
                 this.alertService.success(data.message);
+                this.renewalPlumberLicenseDataSharingService.setIsShowForm(false);
                 this.renewalPlumberLicenseDataSharingService.setIsShowApproval(true);
 
             },
@@ -116,7 +117,7 @@ export class RenewalPlumberLicenseFormComponent implements OnInit {
                         this.plumberLicenseModel = new PlumberLicenseModel();
                         this.licenseNo = null;
                         this.isShowSaveButton = false;
-                        this.renewalPlumberLicenseDataSharingService.setIsShowForm(false);
+                        //this.renewalPlumberLicenseDataSharingService.setIsShowForm(false);
                         //this.renewalPlumberLicenseDataSharingService.setIsShowApproval(true);
                     }
                 },

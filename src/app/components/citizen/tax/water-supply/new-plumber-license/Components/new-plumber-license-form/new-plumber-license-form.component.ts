@@ -141,7 +141,7 @@ export class NewPlumberLicenseFormComponent implements OnInit {
                         this.getFormDataDocuments(this.model.plumberLicenseId);
                         this.newPlumberLicenseDataSharingService.setApprovalModel(this.model);
                         this.model = new PlumberLicenseModel();
-                        this.newPlumberLicenseDataSharingService.setIsShowForm(false);
+                        //this.newPlumberLicenseDataSharingService.setIsShowForm(false);
                         //this.newPlumberLicenseDataSharingService.setIsShowApproval(true);
                     }
                 },
@@ -178,6 +178,7 @@ export class NewPlumberLicenseFormComponent implements OnInit {
             (data) => {
 
                 this.alertService.success(data.message);
+                this.newPlumberLicenseDataSharingService.setIsShowForm(false);
                 this.newPlumberLicenseDataSharingService.setIsShowApproval(true);
 
             },
