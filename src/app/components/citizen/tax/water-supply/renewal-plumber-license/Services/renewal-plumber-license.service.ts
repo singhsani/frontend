@@ -28,7 +28,7 @@ export class RenewalPlumberLicenseService {
   }
 
   submitNewgen(plumberLicenseId: any) {
-    return this.http.post(`${Constants.baseApiWaterUrl}version/plumber/submitNewgen?plumberLicenseId=${plumberLicenseId}`,
+    return this.http.post(`${Constants.baseApiWaterUrl}version/plumber/renew/submitNewgen?plumberLicenseId=${plumberLicenseId}`,
       { observe: 'response' })
       .pipe(map((response: any) => response))
   }
