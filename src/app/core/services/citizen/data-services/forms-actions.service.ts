@@ -393,4 +393,12 @@ export class FormsActionsService {
 	getWtrPipAppsByWaterPipelineConnection(waterPipelineConnectionId: any) {
 		return this.http.get(`api/form/wtrPipeConnWorkCompletion/getWtrPipAppsByWaterPipelineConnection?waterPipelineConnectionId=${waterPipelineConnectionId}`);
 	}
+
+	getDrainagePipelineConnectionStatusAndOthersList(workOrderNo: any, applicationNo: any) {
+		return  this.http.get(`api/form/drngPipeConnWorkCompletion/searchDrainagePipelineApplications?workOrderNo=${workOrderNo}&applicationNo=${applicationNo}`)
+	}
+
+	getDrngPipAppsByDrainagePipelineConnection(drainagePipelineConnectionId: any) {
+		return this.http.get(`api/form/drngPipeConnWorkCompletion/getDrngPipAppsByDrainagePipelineConnection?drainagePipelineConnectionId=${drainagePipelineConnectionId}`);
+	}
 }
