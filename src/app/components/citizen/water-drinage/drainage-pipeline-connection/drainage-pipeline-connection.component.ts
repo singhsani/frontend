@@ -104,7 +104,7 @@ export class DrainagePipelineConnectionComponent implements OnInit {
       // }),
       drainagePipelineZoneId: [null, [Validators.required]],
       drainagePipelineWardId: [null, [Validators.required]],
-      firmCity: [null, [Validators.required, Validators.maxLength(10)]],
+      //firmCity: [null, [Validators.required, Validators.maxLength(10)]],
       tpNo: [null],
       fpNo: [null],
       revenueSurveyNo: [null],
@@ -130,7 +130,11 @@ export class DrainagePipelineConnectionComponent implements OnInit {
       attachments: [],
       paymentMode: this.fb.group({
         code: [null]
-      })
+      }),
+      workOrderNo: [null],
+      workOrderDate: [null],
+      estimateAmount: [0],
+      connectionStatus: [null]
     }, { validator: this.myAwesomeRangeValidator });
   }
 

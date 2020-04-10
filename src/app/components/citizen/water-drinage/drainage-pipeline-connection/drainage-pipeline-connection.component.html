@@ -273,7 +273,7 @@
 					<mat-form-field class="col-md-4">
 						<input matInput required maxlength="10" formControlName="workExecutionToAmount"
 							placeholder="{{'work-execution-to-amount' | translate:translateKey}}">
-						<mat-error *ngIf="drainagePipeliConnectionForm.get('workExecutionToAmount').touched && waterPipeliConnectionForm.errors && waterPipeliConnectionForm.errors['range']">Please enter Work Execution To Amount Greater than Work Execution From Amount</mat-error>
+						<mat-error *ngIf="drainagePipeliConnectionForm.get('workExecutionToAmount').touched && drainagePipeliConnectionForm.errors && drainagePipeliConnectionForm.errors['range']">Please enter Work Execution To Amount Greater than Work Execution From Amount</mat-error>
 						<control-messages [control]="drainagePipeliConnectionForm.get('workExecutionToAmount')">
 						</control-messages>
 					</mat-form-field>
@@ -289,6 +289,20 @@
 						<!-- <control-messages [control]="drainagePipeliConnectionForm.get('registrationValidity')">
 						</control-messages> -->
 					</mat-form-field>
+
+					<mat-form-field [hidden]="true">
+						<input matInput formControlName="workOrderNo" >
+					</mat-form-field>
+					<mat-form-field [hidden]="true">
+						<input matInput formControlName="workOrderDate" >
+					</mat-form-field>
+					<mat-form-field [hidden]="true">
+						<input matInput formControlName="estimateAmount" >
+					</mat-form-field>
+					<mat-form-field [hidden]="true">
+						<input matInput formControlName="connectionStatus" >
+					</mat-form-field>
+					
 				</div>
 				<app-action-bar [form]="drainagePipeliConnectionForm" (tabIndex)="onTabChange($event)"
 					[stepInfo]="{step: 'step3', next: 3, back: 1}" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
