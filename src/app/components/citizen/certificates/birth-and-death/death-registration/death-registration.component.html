@@ -103,7 +103,7 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput readonly [form]="deathCertificateForm" appGujInputSource targetElement="deathDateGuj"   appDate [max]="maxDeathDate" 
+						<input matInput  [form]="deathCertificateForm" appGujInputSource targetElement="deathDateGuj"   appDate [max]="maxDeathDate"
 							[min]="deathCertificateForm.get('birthDate').value" [matDatepicker]="pickerBirth"
 							(dateChange)="deathFormatChanger($event);delayCalculator($event)"
 							placeholder="{{'date_of_death' | translate:translateKey}}" formControlName="deathDate">
