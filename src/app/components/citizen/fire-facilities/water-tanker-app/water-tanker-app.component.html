@@ -142,28 +142,40 @@
 						 placeholder="{{'required_time' | translate:translateKey}}">
 						<control-messages [control]="waterTankerAppForm.get('firmCity')"></control-messages>
 					</mat-form-field> -->
+
+          <mat-form-field class="col-md-4">
+            <input matInput type="tel" OnlyNumber required formControlName="totalTankRequired" placeholder="{{'total_tank' | translate: translateKey }}"
+                   minlength="1" maxlength="1" (change)="calculateTotalAmount()">
+            <control-messages [control]="waterTankerAppForm.get('totalTankRequired')"></control-messages>
+          </mat-form-field>
+
+          <mat-form-field class="col-md-4">
+            <input matInput type="tel" readonly OnlyNumber required formControlName="totalAmount" placeholder="{{'total_amount' | translate: translateKey }}"
+                   maxlength="4">
+            <control-messages [control]="waterTankerAppForm.get('totalAmount')"></control-messages>
+          </mat-form-field>
 				</div>
 
 				<div class="row">
-					<mat-form-field class="col-md-4">
-						<input matInput type="tel" OnlyNumber required formControlName="totalTankRequired" placeholder="{{'total_tank' | translate: translateKey }}"
-						 minlength="1" maxlength="1" (change)="calculateTotalAmount()">
-						<control-messages [control]="waterTankerAppForm.get('totalTankRequired')"></control-messages>
-					</mat-form-field>
+					<!--<mat-form-field class="col-md-4">-->
+						<!--<input matInput type="tel" OnlyNumber required formControlName="totalTankRequired" placeholder="{{'total_tank' | translate: translateKey }}"-->
+						 <!--minlength="1" maxlength="1" (change)="calculateTotalAmount()">-->
+						<!--<control-messages [control]="waterTankerAppForm.get('totalTankRequired')"></control-messages>-->
+					<!--</mat-form-field>-->
 					<!-- <h2>{{'tank_delivery_address_with_contact' | translate:translateKey}}</h2>
 					<app-address [isDisplayGujFields]="true" #permanantAddressEstablishment [requiredFeilds]="waterTankerAppForm.get('permanantAddress').value"
 					 [addressFormGroup]="waterTankerAppForm.get('permanantAddress')"></app-address> -->
-					<mat-form-field class="col-md-4">
+					<mat-form-field class="col-md-6">
 						<textarea matInput rows="3" cols="50" maxlength="500" formControlName="tankDeliveryAddress" placeholder="{{ 'tank_delivery_address' | translate:translateKey }}"
 						 required> </textarea>
 						<control-messages [control]="waterTankerAppForm.get('tankDeliveryAddress')"></control-messages>
 					</mat-form-field>
 
-					<mat-form-field class="col-md-4">
-						<input matInput type="tel" readonly OnlyNumber required formControlName="totalAmount" placeholder="{{'total_amount' | translate: translateKey }}"
-						 maxlength="4">
-						<control-messages [control]="waterTankerAppForm.get('totalAmount')"></control-messages>
-					</mat-form-field>
+					<!--<mat-form-field class="col-md-4">-->
+						<!--<input matInput type="tel" readonly OnlyNumber required formControlName="totalAmount" placeholder="{{'total_amount' | translate: translateKey }}"-->
+						 <!--maxlength="4">-->
+						<!--<control-messages [control]="waterTankerAppForm.get('totalAmount')"></control-messages>-->
+					<!--</mat-form-field>-->
 				</div>
 				<app-action-bar [paymentGateway]="paymentGateway" [form]="waterTankerAppForm" [uploadFiles]="uploadFilesArray" (tabIndex)="fireFacilityConfig.onFormTabChange($event)"
 				 [stepInfo]="{step: 'final', next: 0, back: 0}"  (handleOnSaveAndNext)="handleOnSaveAndNext($event)" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
