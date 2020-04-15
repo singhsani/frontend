@@ -35,7 +35,7 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<textarea matInput rows="3" cols="50" required maxlength="300" placeholder="{{'applicant_address' | translate:translateKey}}"
+						<textarea matInput rows="1" cols="50" required maxlength="300" placeholder="{{'applicant_address' | translate:translateKey}}"
 						 formControlName="applicantAddress"></textarea>
 						<control-messages [control]="deadBodyWanForm.get('applicantAddress')"></control-messages>
 					</mat-form-field>
@@ -79,14 +79,15 @@
 						 formControlName="toPlace">
 						<control-messages [control]="deadBodyWanForm.get('toPlace')"></control-messages>
 					</mat-form-field>
-				</div>
-
-				<div class="row">
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace' required maxlength="150"
 						 placeholder="{{'name_of_driver' | translate:translateKey}}" formControlName="nameOfDriver">
 						<control-messages [control]="deadBodyWanForm.get('nameOfDriver')"></control-messages>
 					</mat-form-field>
+				</div>
+
+				<div class="row">
+					
 
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace' required maxlength="150"
@@ -138,7 +139,7 @@
 				<div class="row">
 					<mat-form-field class="col-md-4">
 						<input matInput OnlyNumber placeholder="{{'concession_detail' | translate:translateKey}}" type="tel" maxlength="3"
-						 formControlName="concessionDetail">
+						 formControlName="concessionDetail" required>
 						<control-messages [control]="deadBodyWanForm.get('concessionDetail')"></control-messages>
 					</mat-form-field>
 
