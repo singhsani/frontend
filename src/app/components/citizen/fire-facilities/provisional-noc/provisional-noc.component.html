@@ -31,7 +31,7 @@
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace' required maxlength="100"
 						 placeholder="{{'applicant_name' | translate:translateKey}}" formControlName="applicantName" appGujInputSource
-						 targetElement="applicantNameGuj" [form]="provisionalNocForm">
+						 targetElement="applicantNameGuj" [form]="provisionalNocForm" style="padding-bottom:10px;">
 						<control-messages [control]="provisionalNocForm.get('applicantName')"></control-messages>
 					</mat-form-field>
 					<!-- gujarati -->
@@ -45,7 +45,7 @@
 					<mat-form-field class="col-md-4">
 						<!-- <span matPrefix>+91 &nbsp;</span> -->
 						<input matInput OnlyNumber placeholder="{{'applicant_mobile' | translate:translateKey}}" type="tel" [maxlength]="fireFacilityConfig.contactNumberLength"
-						 formControlName="contactNo" required>
+						 formControlName="contactNo" required  style="padding-bottom:10px;">
 						<control-messages [control]="provisionalNocForm.get('contactNo')"></control-messages>
 					</mat-form-field>
 
@@ -64,21 +64,21 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<textarea matInput rows="3" cols="50" required maxlength="300" placeholder="{{'applicant_permanent_address' | translate:translateKey}}"
+						<textarea matInput rows="1" cols="50" required maxlength="300" placeholder="{{'applicant_permanent_address' | translate:translateKey}}"
 						 formControlName="applicantPermanentAddress" appGujInputSource targetElement="applicantPermanentAddressGuj"
 						 [form]="provisionalNocForm"></textarea>
 						<control-messages [control]="provisionalNocForm.get('applicantPermanentAddress')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<textarea matInput rows="3" cols="50" maxlength="900" type="text" required formControlName="applicantPermanentAddressGuj"
+						<textarea matInput rows="1" cols="50" maxlength="900" type="text" required formControlName="applicantPermanentAddressGuj"
 						 appGujInputTarget [form]="provisionalNocForm" placeholder="{{ 'applicant_permanent_address' | translate:translateKey:'gu' }}"></textarea>
 						<control-messages [control]="provisionalNocForm.get('applicantPermanentAddressGuj')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<input matInput appPreventSpace placeholder="{{'office_email_id' | translate:translateKey}}" type="email"
-						 formControlName="officeEmailId" required maxlength="50">
+						 formControlName="officeEmailId" required maxlength="50" style="padding-bottom: 10px;">
 						<control-messages [control]="provisionalNocForm.get('officeEmailId')"></control-messages>
 					</mat-form-field>
 				</div>
@@ -162,7 +162,7 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<textarea matInput rows="3" cols="50" required maxlength="300" placeholder="{{'architect_permanent_address' | translate:translateKey}}"
+						<textarea matInput rows="1" cols="50" required maxlength="300" placeholder="{{'architect_permanent_address' | translate:translateKey}}"
 						 formControlName="architectPermanentAddress" appGujInputSource targetElement="architectPermanentAddressGuj"
 						 [form]="provisionalNocForm"></textarea>
 						<control-messages [control]="provisionalNocForm.get('architectPermanentAddress')"></control-messages>
@@ -182,7 +182,7 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<textarea matInput rows="3" cols="50" maxlength="900" type="text" required formControlName="architectPermanentAddressGuj"
+						<textarea matInput rows="1" cols="50" maxlength="900" type="text" required formControlName="architectPermanentAddressGuj"
 						 appGujInputTarget [form]="provisionalNocForm" placeholder="{{ 'architect_permanent_address' | translate:translateKey:'gu' }}"></textarea>
 						<control-messages [control]="provisionalNocForm.get('architectPermanentAddressGuj')"></control-messages>
 					</mat-form-field>
@@ -192,18 +192,18 @@
 
 					<mat-form-field class="col-md-4">
 						<input matInput required OnlyNumber [maxlength]="fireFacilityConfig.contactNumberLength" type="tel"
-						 formControlName="architectContactNo" placeholder="{{'architect_contact_number' | translate:translateKey }}">
+						 formControlName="architectContactNo" placeholder="{{'architect_contact_number' | translate:translateKey }}" style="padding-bottom: 10px;">
 						<control-messages [control]="provisionalNocForm.get('architectContactNo')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<textarea matInput rows="3" cols="50" type="text" required maxlength="300" placeholder="{{'site_address' | translate:translateKey}}"
-						 formControlName="siteAddress" appGujInputSource targetElement="siteAddressGuj" [form]="provisionalNocForm"></textarea>
+						<textarea matInput rows="1" cols="50" type="text" required maxlength="300" placeholder="{{'site_address' | translate:translateKey}}"
+						 formControlName="siteAddress" appGujInputSource targetElement="siteAddressGuj" [form]="provisionalNocForm" style="padding-bottom: 10px;"></textarea>
 						<control-messages [control]="provisionalNocForm.get('siteAddress')"></control-messages>
 					</mat-form-field>
 					<!-- gujarati -->
 					<mat-form-field class="col-md-4">
-						<textarea matInput rows="3" cols="50" maxlength="900" required formControlName="siteAddressGuj" appGujInputTarget
+						<textarea matInput rows="1" cols="50" maxlength="900" required formControlName="siteAddressGuj" appGujInputTarget
 						 [form]="provisionalNocForm" placeholder="{{ 'site_address' | translate:translateKey:'gu' }}"></textarea>
 						<control-messages [control]="provisionalNocForm.get('siteAddressGuj')"></control-messages>
 					</mat-form-field>
@@ -234,13 +234,13 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<textarea matInput rows="3" cols="50" type="text" required maxlength="900" placeholder="{{'fire_vendor_address' | translate:translateKey}}"
-						 formControlName="fireVendorAddress"></textarea>
+						<textarea matInput rows="1" cols="50" type="text" required maxlength="900" placeholder="{{'fire_vendor_address' | translate:translateKey}}"
+						 formControlName="fireVendorAddress" style="padding-bottom: 10px;"></textarea>
 						<control-messages [control]="provisionalNocForm.get('fireVendorAddress')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<textarea matInput rows="3" cols="50" type="text" required maxlength="300" placeholder="{{'fire_vendor_office_address' | translate:translateKey}}"
-						 formControlName="fireVendorOfficeAddress"></textarea>
+						<textarea matInput rows="1" cols="50" type="text" required maxlength="300" placeholder="{{'fire_vendor_office_address' | translate:translateKey}}"
+						 formControlName="fireVendorOfficeAddress" style="padding-bottom: 10px;"></textarea>
 						<control-messages [control]="provisionalNocForm.get('fireVendorOfficeAddress')"></control-messages>
 					</mat-form-field>
 				</div>
@@ -373,22 +373,22 @@
 				</div>
 				<div class="row">
 					<mat-form-field class="col-md-4">
-						<textarea matInput rows="3" cols="50" type="text" required maxlength="200" placeholder="{{'site_address_with_building_name' | translate:translateKey}}"
+						<textarea matInput rows="1" cols="50" type="text" required maxlength="200" placeholder="{{'site_address_with_building_name' | translate:translateKey}}"
 						 formControlName="siteAddressWithBuildingName" appGujInputSource targetElement="siteAddressWithBuildingNameGuj"
-						 [form]="provisionalNocForm"></textarea>
+						 [form]="provisionalNocForm" style="padding-bottom: 10px;"></textarea>
 						<control-messages [control]="provisionalNocForm.get('siteAddressWithBuildingName')"></control-messages>
 					</mat-form-field>
 					<!-- gujarati -->
 					<mat-form-field class="col-md-4">
-						<textarea matInput rows="3" cols="50" maxlength="600" required formControlName="siteAddressWithBuildingNameGuj"
+						<textarea matInput rows="1" cols="50" maxlength="600" required formControlName="siteAddressWithBuildingNameGuj"
 						 appGujInputTarget [form]="provisionalNocForm" placeholder="{{ 'site_address_with_building_name' | translate:translateKey:'gu' }}"></textarea>
 						<control-messages [control]="provisionalNocForm.get('siteAddressWithBuildingNameGuj')"></control-messages>
 					</mat-form-field>
 					<!-- /gujarati -->
 
 					<mat-form-field class="col-md-4">
-						<textarea matInput rows="3" cols="50" required maxlength="200" placeholder="{{'other_information' | translate:translateKey}}"
-						 formControlName="otherInformation"></textarea>
+						<textarea matInput rows="1" cols="50" required maxlength="200" placeholder="{{'other_information' | translate:translateKey}}"
+						 formControlName="otherInformation" style="padding-bottom: 10px;"></textarea>
 						<control-messages [control]="provisionalNocForm.get('otherInformation')"></control-messages>
 					</mat-form-field>
 				</div>
