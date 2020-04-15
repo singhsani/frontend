@@ -71,14 +71,14 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<textarea matInput rows="3" cols="50" required maxlength="300" placeholder="{{'applicant_permanent_address' | translate:translateKey}}"
+						<textarea matInput  cols="50" required maxlength="300" placeholder="{{'applicant_permanent_address' | translate:translateKey}}"
 						 formControlName="applicantPermanentAddress" appGujInputSource targetElement="applicantPermanentAddressGuj"
 						 [form]="finalFireNocForm"></textarea>
 						<control-messages [control]="finalFireNocForm.get('applicantPermanentAddress')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<textarea matInput rows="3" cols="50" maxlength="900" type="text" required formControlName="applicantPermanentAddressGuj"
+						<textarea matInput cols="50" maxlength="900" type="text" required formControlName="applicantPermanentAddressGuj"
 						 appGujInputTarget [form]="finalFireNocForm" placeholder="{{ 'applicant_permanent_address' | translate:translateKey:'gu' }}"></textarea>
 						<control-messages [control]="finalFireNocForm.get('applicantPermanentAddressGuj')"></control-messages>
 					</mat-form-field>
@@ -169,7 +169,7 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<textarea matInput rows="3" cols="50" required maxlength="300" placeholder="{{'architect_permanent_address' | translate:translateKey}}"
+						<textarea matInput  cols="50" required maxlength="300" placeholder="{{'architect_permanent_address' | translate:translateKey}}"
 						 formControlName="architectPermanentAddress" appGujInputSource targetElement="architectPermanentAddressGuj"
 						 [form]="finalFireNocForm"></textarea>
 						<control-messages [control]="finalFireNocForm.get('architectPermanentAddress')"></control-messages>
@@ -189,7 +189,7 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<textarea matInput rows="3" cols="50" maxlength="900" type="text" required formControlName="architectPermanentAddressGuj"
+						<textarea matInput  cols="50" maxlength="900" type="text" required formControlName="architectPermanentAddressGuj"
 						 appGujInputTarget [form]="finalFireNocForm" placeholder="{{ 'architect_permanent_address' | translate:translateKey:'gu' }}"></textarea>
 						<control-messages [control]="finalFireNocForm.get('architectPermanentAddressGuj')"></control-messages>
 					</mat-form-field>
@@ -204,13 +204,13 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<textarea matInput rows="3" cols="50" type="text" required maxlength="300" placeholder="{{'site_address' | translate:translateKey}}"
+						<textarea matInput  cols="50" type="text" required maxlength="300" placeholder="{{'site_address' | translate:translateKey}}"
 						 formControlName="siteAddress" appGujInputSource targetElement="siteAddressGuj" [form]="finalFireNocForm"></textarea>
 						<control-messages [control]="finalFireNocForm.get('siteAddress')"></control-messages>
 					</mat-form-field>
 					<!-- gujarati -->
 					<mat-form-field class="col-md-4">
-						<textarea matInput rows="3" cols="50" maxlength="900" required formControlName="siteAddressGuj" appGujInputTarget
+						<textarea matInput  cols="50" maxlength="900" required formControlName="siteAddressGuj" appGujInputTarget
 						 [form]="finalFireNocForm" placeholder="{{ 'site_address' | translate:translateKey:'gu' }}"></textarea>
 						<control-messages [control]="finalFireNocForm.get('siteAddressGuj')"></control-messages>
 					</mat-form-field>
@@ -241,12 +241,12 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<textarea matInput rows="3" cols="50" type="text" required maxlength="900" placeholder="{{'fire_vendor_address' | translate:translateKey}}"
+						<textarea matInput  cols="50" type="text" required maxlength="900" placeholder="{{'fire_vendor_address' | translate:translateKey}}"
 						 formControlName="fireVendorAddress"></textarea>
 						<control-messages [control]="finalFireNocForm.get('fireVendorAddress')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<textarea matInput rows="3" cols="50" type="text" required maxlength="300" placeholder="{{'fire_vendor_office_address' | translate:translateKey}}"
+						<textarea matInput  cols="50" type="text" required maxlength="300" placeholder="{{'fire_vendor_office_address' | translate:translateKey}}"
 						 formControlName="fireVendorOfficeAddress"></textarea>
 						<control-messages [control]="finalFireNocForm.get('fireVendorOfficeAddress')"></control-messages>
 					</mat-form-field>
@@ -380,21 +380,21 @@
 				</div>
 				<div class="row">
 					<mat-form-field class="col-md-4">
-						<textarea matInput rows="3" cols="50" type="text" required maxlength="200" placeholder="{{'site_address_with_building_name' | translate:translateKey}}"
+						<textarea matInput  cols="50" type="text" required maxlength="200" placeholder="{{'site_address_with_building_name' | translate:translateKey}}"
 						 formControlName="siteAddressWithBuildingName" appGujInputSource targetElement="siteAddressWithBuildingNameGuj"
 						 [form]="finalFireNocForm"></textarea>
 						<control-messages [control]="finalFireNocForm.get('siteAddressWithBuildingName')"></control-messages>
 					</mat-form-field>
 					<!-- gujarati -->
 					<mat-form-field class="col-md-4">
-						<textarea matInput rows="3" cols="50" maxlength="600" required formControlName="siteAddressWithBuildingNameGuj"
+						<textarea matInput  cols="50" maxlength="600" required formControlName="siteAddressWithBuildingNameGuj"
 						 appGujInputTarget [form]="finalFireNocForm" placeholder="{{ 'site_address_with_building_name' | translate:translateKey:'gu' }}"></textarea>
 						<control-messages [control]="finalFireNocForm.get('siteAddressWithBuildingNameGuj')"></control-messages>
 					</mat-form-field>
 					<!-- /gujarati -->
 
 					<mat-form-field class="col-md-4">
-						<textarea matInput rows="3" cols="50" required maxlength="200" placeholder="{{'other_information' | translate:translateKey}}"
+						<textarea matInput  cols="50" required maxlength="200" placeholder="{{'other_information' | translate:translateKey}}"
 						 formControlName="otherInformation"></textarea>
 						<control-messages [control]="finalFireNocForm.get('otherInformation')"></control-messages>
 					</mat-form-field>
