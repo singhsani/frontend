@@ -91,40 +91,63 @@
 						<input matInput required maxlength="10" type="tel" formControlName="medicalRegistrationNumber" placeholder="{{'medical_registration_number' | translate:translateKey }}">
 						<control-messages [control]="provisionalHospitalNocForm.get('medicalRegistrationNumber')"></control-messages>
 					</mat-form-field>
-					<mat-form-field class="col-md-4">
+					<mat-form-field class="col-md-6">
 						<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace' required maxlength="100"
 						 placeholder="{{'doctor_name' | translate:translateKey}}" formControlName="doctorName" appGujInputSource
 						 targetElement="doctorNameGuj" [form]="provisionalHospitalNocForm">
 						<control-messages [control]="provisionalHospitalNocForm.get('doctorName')"></control-messages>
 					</mat-form-field>
 
-					<mat-form-field class="col-md-4">
+
+          <mat-form-field class="col-md-6">
+            <input matInput type="text" maxlength="300" required formControlName="doctorNameGuj" appGujInputTarget [form]="provisionalHospitalNocForm"
+                   placeholder="{{ 'doctor_name' | translate:translateKey:'gu' }}">
+            <control-messages [control]="provisionalHospitalNocForm.get('doctorNameGuj')"></control-messages>
+          </mat-form-field>
+
+
+          <mat-form-field class="col-md-6">
 						<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace' required maxlength="50"
 						 placeholder="{{'hospital_name' | translate:translateKey}}" formControlName="hospitalName" appGujInputSource
 						 targetElement="hospitalNameGuj" [form]="provisionalHospitalNocForm">
 						<control-messages [control]="provisionalHospitalNocForm.get('hospitalName')"></control-messages>
 					</mat-form-field>
 
-					<mat-form-field class="col-md-4">
-						<textarea matInput rows="3" cols="50" required maxlength="300" placeholder="{{'hospital_address' | translate:translateKey}}"
-						 formControlName="hospitalAddress" appGujInputSource targetElement="hospitalAddressGuj" [form]="provisionalHospitalNocForm"></textarea>
-						<control-messages [control]="provisionalHospitalNocForm.get('hospitalAddress')"></control-messages>
-					</mat-form-field>
+          <mat-form-field class="col-md-6">
+            <input matInput type="text" maxlength="150" required formControlName="hospitalNameGuj" appGujInputTarget [form]="provisionalHospitalNocForm"
+                   placeholder="{{ 'hospital_name' | translate:translateKey:'gu' }}">
+            <control-messages [control]="provisionalHospitalNocForm.get('hospitalNameGuj')"></control-messages>
+          </mat-form-field>
+
+
+					<!--<mat-form-field class="col-md-4">-->
+						<!--<textarea matInput rows="3" cols="50" required maxlength="300" placeholder="{{'hospital_address' | translate:translateKey}}"-->
+						 <!--formControlName="hospitalAddress" appGujInputSource targetElement="hospitalAddressGuj" [form]="provisionalHospitalNocForm"></textarea>-->
+						<!--<control-messages [control]="provisionalHospitalNocForm.get('hospitalAddress')"></control-messages>-->
+					<!--</mat-form-field>-->
 
 					<!-- gujarati -->
-					<mat-form-field class="col-md-4">
-						<input matInput type="text" maxlength="300" required formControlName="doctorNameGuj" appGujInputTarget [form]="provisionalHospitalNocForm"
-						 placeholder="{{ 'doctor_name' | translate:translateKey:'gu' }}">
-						<control-messages [control]="provisionalHospitalNocForm.get('doctorNameGuj')"></control-messages>
-					</mat-form-field>
+					<!--<mat-form-field class="col-md-4">-->
+						<!--<input matInput type="text" maxlength="300" required formControlName="doctorNameGuj" appGujInputTarget [form]="provisionalHospitalNocForm"-->
+						 <!--placeholder="{{ 'doctor_name' | translate:translateKey:'gu' }}">-->
+						<!--<control-messages [control]="provisionalHospitalNocForm.get('doctorNameGuj')"></control-messages>-->
+					<!--</mat-form-field>-->
 
-					<mat-form-field class="col-md-4">
-						<input matInput type="text" maxlength="150" required formControlName="hospitalNameGuj" appGujInputTarget [form]="provisionalHospitalNocForm"
-						 placeholder="{{ 'hospital_name' | translate:translateKey:'gu' }}">
-						<control-messages [control]="provisionalHospitalNocForm.get('hospitalNameGuj')"></control-messages>
-					</mat-form-field>
 
-					<mat-form-field class="col-md-4">
+					<!--<mat-form-field class="col-md-4">-->
+						<!--<input matInput type="text" maxlength="150" required formControlName="hospitalNameGuj" appGujInputTarget [form]="provisionalHospitalNocForm"-->
+						 <!--placeholder="{{ 'hospital_name' | translate:translateKey:'gu' }}">-->
+						<!--<control-messages [control]="provisionalHospitalNocForm.get('hospitalNameGuj')"></control-messages>-->
+					<!--</mat-form-field>-->
+
+
+          <mat-form-field class="col-md-6">
+						<textarea matInput rows="3" cols="50" required maxlength="300" placeholder="{{'hospital_address' | translate:translateKey}}"
+                      formControlName="hospitalAddress" appGujInputSource targetElement="hospitalAddressGuj" [form]="provisionalHospitalNocForm"></textarea>
+            <control-messages [control]="provisionalHospitalNocForm.get('hospitalAddress')"></control-messages>
+          </mat-form-field>
+
+					<mat-form-field class="col-md-6">
 						<textarea matInput rows="3" cols="50" maxlength="900" type="text" required formControlName="hospitalAddressGuj"
 						 appGujInputTarget [form]="provisionalHospitalNocForm" placeholder="{{ 'hospital_address' | translate:translateKey:'gu' }}"></textarea>
 						<control-messages [control]="provisionalHospitalNocForm.get('hospitalAddressGuj')"></control-messages>
@@ -138,11 +161,17 @@
 						<control-messages [control]="provisionalHospitalNocForm.get('ownerName')"></control-messages>
 					</mat-form-field>
 
-					<mat-form-field class="col-md-4">
-						<textarea matInput rows="3" cols="50" required maxlength="300" placeholder="{{'owner_address' | translate:translateKey}}"
-						 formControlName="ownerAddress" appGujInputSource targetElement="ownerAddressGuj" [form]="provisionalHospitalNocForm"></textarea>
-						<control-messages [control]="provisionalHospitalNocForm.get('ownerAddress')"></control-messages>
-					</mat-form-field>
+          <mat-form-field class="col-md-4">
+            <input matInput type="text" maxlength="300" required formControlName="ownerNameGuj" appGujInputTarget [form]="provisionalHospitalNocForm"
+                   placeholder="{{ 'owner_name' | translate:translateKey:'gu' }}">
+            <control-messages [control]="provisionalHospitalNocForm.get('ownerNameGuj')"></control-messages>
+          </mat-form-field>
+
+					<!--<mat-form-field class="col-md-4">-->
+						<!--<textarea matInput rows="3" cols="50" required maxlength="300" placeholder="{{'owner_address' | translate:translateKey}}"-->
+						 <!--formControlName="ownerAddress" appGujInputSource targetElement="ownerAddressGuj" [form]="provisionalHospitalNocForm"></textarea>-->
+						<!--<control-messages [control]="provisionalHospitalNocForm.get('ownerAddress')"></control-messages>-->
+					<!--</mat-form-field>-->
 
 					<mat-form-field class="col-md-4">
 						<!-- <span matPrefix>+91 &nbsp;</span> -->
@@ -151,13 +180,20 @@
 						<control-messages [control]="provisionalHospitalNocForm.get('ownerMobileNo')"></control-messages>
 					</mat-form-field>
 					<!-- gujrati  -->
-					<mat-form-field class="col-md-4">
-						<input matInput type="text" maxlength="300" required formControlName="ownerNameGuj" appGujInputTarget [form]="provisionalHospitalNocForm"
-						 placeholder="{{ 'owner_name' | translate:translateKey:'gu' }}">
-						<control-messages [control]="provisionalHospitalNocForm.get('ownerNameGuj')"></control-messages>
-					</mat-form-field>
+					<!--<mat-form-field class="col-md-4">-->
+						<!--<input matInput type="text" maxlength="300" required formControlName="ownerNameGuj" appGujInputTarget [form]="provisionalHospitalNocForm"-->
+						 <!--placeholder="{{ 'owner_name' | translate:translateKey:'gu' }}">-->
+						<!--<control-messages [control]="provisionalHospitalNocForm.get('ownerNameGuj')"></control-messages>-->
+					<!--</mat-form-field>-->
 
-					<mat-form-field class="col-md-4">
+
+          <mat-form-field class="col-md-6">
+						<textarea matInput rows="3" cols="50" required maxlength="300" placeholder="{{'owner_address' | translate:translateKey}}"
+                      formControlName="ownerAddress" appGujInputSource targetElement="ownerAddressGuj" [form]="provisionalHospitalNocForm"></textarea>
+            <control-messages [control]="provisionalHospitalNocForm.get('ownerAddress')"></control-messages>
+          </mat-form-field>
+
+					<mat-form-field class="col-md-6">
 						<textarea matInput rows="3" cols="50" required maxlength="900" type="text" required formControlName="ownerAddressGuj"
 						 appGujInputTarget [form]="provisionalHospitalNocForm" placeholder="{{ 'owner_address' | translate:translateKey:'gu' }}"></textarea>
 						<control-messages [control]="provisionalHospitalNocForm.get('ownerAddressGuj')"></control-messages>
@@ -170,6 +206,14 @@
 				 (handleOnSaveAndNext)="handleOnSaveAndNext($event)" [stepInfo]="{step: 'step2', next: 2, back: 0}"></app-action-bar>
 			</mat-tab>
 			<!-- step 2 Ends -->
+￼Hospital Address is RequiredHospital Address *
+￼Hospital Address Guj is Requiredહોસ્પિટલ સરનામું *
+￼Name of the Administrator / Owner *
+￼Owner Address is RequiredAdministrator / owner's address *
+￼Owner Mobile No is RequiredAdministrator / owner's mobile no. *
+￼સંચાલક / માલિકનું નામ *
+￼સંચાલક / માલિકનું સરનામું *
+￼Back￼Save and Next
 
 			<!-- step 3 Starts -->
 			<mat-tab>
