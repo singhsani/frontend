@@ -23,7 +23,7 @@ export class TransferPropertyService {
   }
 
   gettranferPropertyUpload(id: any) {
-    return this.http.post(`${Constants.assessmentModuleApiUrl}transfer/getDocumentList?propertyTransferId=${id}`, null,
+    return this.http.post(`${Constants.assessmentModuleApiUrl}transfer/getDocumentList?propertyTransferId=${id}`,
       { observe: 'response' })
       .pipe(map((response: any) => response))
   }
