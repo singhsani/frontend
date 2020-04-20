@@ -155,6 +155,10 @@
 					<input matInput appAlphaNumeric maxlength="10" required formControlName="holderPanNo"
 						placeholder="{{'holder_pan_no' | translate:translateKey}}">
 				</mat-form-field>
+				<mat-form-field class="col-md-4">
+					<input matInput required maxlength="2" OnlyNumber placeholder="{{'no_of_copies' | translate:translateKey}}" formControlName="noOfCopies">
+					<control-messages [control]="muttonFishDuplicateForm.get('noOfCopies')"></control-messages>
+				  </mat-form-field>
 
 				<app-action-bar [paymentGateway]="paymentGateway" [uploadFiles]="uploadFileArray" [form]="muttonFishDuplicateForm"
 					(handleErrors)="handleErrorsOnSubmit($event)"
