@@ -172,6 +172,7 @@ export class MuttonFishDuplicateComponent implements OnInit {
 		//All form fields is in disable mode ,this is not valid form.
 		//when submit this form, at least one field is in enable mode. 
 		this.muttonFishDuplicateForm.get('serviceCode').enable();
+		this.muttonFishDuplicateForm.get('noOfCopies').enable();
 	}
 
 	/**
@@ -266,6 +267,7 @@ export class MuttonFishDuplicateComponent implements OnInit {
 			licenseIssueDate: [null],
 			licenseDuplicatealDate: [null],
 			loinumber: [null],
+			noOfCopies: [1, [Validators.required]],
 
 			/* Step 4 controls start*/
 			attachments: []

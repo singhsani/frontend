@@ -173,7 +173,7 @@ export class PropertyOwnerComponent implements OnInit {
       this.alertService.error('Please enter at least one new owner detail.');
     }
     else {
-      this.transferPropertyDataSharingService.updateDataSourceMoveStepper(3);
+      this.transferPropertyDataSharingService.updateDataSourceMoveStepper(2);
     }
 
   }

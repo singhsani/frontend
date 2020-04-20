@@ -171,6 +171,7 @@ export class AnimalPondDuplicateComponent implements OnInit {
 	 */
 	enableFielList() {
 		this.animalPondDuplicateForm.get('temporaryAddress').enable();
+		this.animalPondDuplicateForm.get('noOfCopies').enable();
 	}
 
 	/**
@@ -231,7 +232,7 @@ export class AnimalPondDuplicateComponent implements OnInit {
 			licenseIssueDate: [null],
 			licenseDuplicatealDate: [null],
 			loinumber: [null],
-
+			noOfCopies: [1, [Validators.required]],
 			/* Step 4 controls start*/
 			attachments: []
 			/* Step 4 controls end */
