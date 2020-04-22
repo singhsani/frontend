@@ -41,7 +41,7 @@ export class TaxRebateApplicationService {
   }
 
   gettaxrabitDocUpload(id: any) {
-    return this.http.post(`${Constants.assessmentModuleApiUrl}taxrebate/application/getDocumentList?taxRebateApplicationId=${id}`, null,
+    return this.http.post(`${Constants.assessmentModuleApiUrl}taxrebate/application/getDocumentList?taxRebateApplicationId=${id}`,
       { observe: 'response' })
       .pipe(map((response: any) => response))
   }
