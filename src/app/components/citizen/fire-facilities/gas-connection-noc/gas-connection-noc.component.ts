@@ -112,7 +112,7 @@ export class GasConnectionNocComponent implements OnInit {
 			connectionPurpose: this.fb.group({
 				code: [null, Validators.required]
 			}),
-			shopNo: [null, [Validators.maxLength(12)]],
+			shopNo: [null, [Validators.required, Validators.maxLength(12)]],
 			propertyNo: [null, [Validators.required, Validators.maxLength(15)]],
 
 			firePlaceType: this.fb.group({

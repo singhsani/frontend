@@ -146,7 +146,7 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4" *ngIf="gasConnectionForm.get('connectionPurpose').get('code').value=='COMMERCIAL'">
-						<input matInput appAlphaNumeric placeholder="{{'shop_No' | translate:translateKey}}" type="tel" maxlength="12"
+						<input matInput appAlphaNumeric placeholder="{{'shop_No' | translate:translateKey}} *" type="tel" maxlength="12"
 						 formControlName="shopNo">
 						<control-messages [control]="gasConnectionForm.get('shopNo')"></control-messages>
 					</mat-form-field>
@@ -160,7 +160,8 @@
 					</mat-form-field>
 					<!-- gujarati -->
 					<mat-form-field class="col-md-4">
-						<textarea matInput rows="3" cols="50" maxlength="900" required formControlName="firePlaceAddressGuj"
+						<textarea matInput rows="3" cols="50" maxlength="900" required formControlName="firePl					</mat-form-field>
+aceAddressGuj"
 						 appGujInputTarget [form]="gasConnectionForm" placeholder="{{ 'fire_Place_Address' | translate:translateKey:'gu' }}"></textarea>
 						<control-messages [control]="gasConnectionForm.get('firePlaceAddressGuj')"></control-messages>
 					</mat-form-field>
