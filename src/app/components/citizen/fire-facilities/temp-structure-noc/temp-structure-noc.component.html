@@ -20,7 +20,11 @@
 						<input matInput readonly placeholder="{{'old_reference_number' | translate:translateKey}}" formControlName="oldReferenceNumber">
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput readonly placeholder="{{'application_date' | translate:translateKey}}" formControlName="applicationDate">
+            <input appDate matInput placeholder="{{'application_date' | translate:translateKey}}"
+                   [matDatepicker]="townHallBookingfromPicker3" formControlName="applicationDate">
+            <mat-datepicker-toggle matSuffix [for]="townHallBookingfromPicker3"></mat-datepicker-toggle>
+            <mat-datepicker #townHallBookingfromPicker3 touchUi="true"></mat-datepicker>
+						<!--<input matInput readonly placeholder="{{'application_date' | translate:translateKey}}" formControlName="applicationDate">-->
 					</mat-form-field>
 				</div>
 
