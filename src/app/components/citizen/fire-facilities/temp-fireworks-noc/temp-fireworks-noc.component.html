@@ -112,7 +112,7 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput required OnlyNumber maxlength="10" type="tel" formControlName="noOfShops" placeholder="{{'no_of_shops' | translate:translateKey }}">
+						<input matInput required OnlyNumber maxlength="3" type="tel" formControlName="noOfShops" placeholder="{{'no_of_shops' | translate:translateKey }}">
 						<control-messages [control]="tempFireworksNocForm.get('noOfShops')"></control-messages>
 					</mat-form-field>
 
@@ -132,7 +132,7 @@
 					</div>
 
 					<mat-form-field class="col-md-4">
-						<input matInput placeholder="{{'shop_in_open_space' | translate:translateKey}}" formControlName="shopInOpenSpace"
+						<input matInput placeholder="{{'shop_in_open_space' | translate:translateKey}} *" formControlName="shopInOpenSpace"
 						 maxlength="150">
 						<control-messages [control]="tempFireworksNocForm.get('shopInOpenSpace')"></control-messages>
 					</mat-form-field>
@@ -179,7 +179,7 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" appAlphaNumeric formControlName="propertyNo" placeholder="{{'property_no' | translate: translateKey }} *"
+						<input matInput type="text" appAlphaNumeric formControlName="propertyNo" placeholder="{{'Property Tax No' | translate: translateKey }} *"
 						 maxlength="15">
 						<control-messages [control]="tempFireworksNocForm.get('propertyNo')"></control-messages>
 					</mat-form-field>
