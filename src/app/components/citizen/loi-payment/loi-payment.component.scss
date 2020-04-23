@@ -1,0 +1,26 @@
+.example-container {
+    height: 400px;
+    overflow: auto;
+  }
+  
+  table {
+    width: 100%;
+  }
+  
+  .mat-form-field {
+    font-size: 14px;
+    width: 100%;
+  }
+  
+  td,
+  th {
+    text-align: center !important;
+  }
+  
+  .in-active-cls {
+    opacity: 0.3;
+  }
+  
+  .mat-column-select {
+    overflow: initial;
+  }

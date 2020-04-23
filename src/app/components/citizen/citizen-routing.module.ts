@@ -15,6 +15,7 @@ import { PayableServicesComponent } from './payable-services/payable-services.co
 import { GujPocComponent } from './guj-poc/guj-poc.component';
 import { GatewayResponseComponent } from './../../shared/components/gateway-response/gateway-response.component';
 import { CommonPaybleComponent } from './common-payble/common-payble.component';
+import { LoiPaymentComponent } from './loi-payment/loi-payment.component';
 
 /* Import citizen components other than auth end */
 
@@ -32,7 +33,8 @@ const routes: Routes = [
 			{ path: 'payment-gateway-response', component: PaymentResponsePageComponent, canActivate: [AuthGuard] },
 			{ path: 'payable-services', component: CommonPaybleComponent, canActivate: [AuthGuard] },
 			{ path: 'payment-response', component: GatewayResponseComponent, canActivate: [AuthGuard] },
-
+			{ path: 'loi-payments/:id', component: LoiPaymentComponent, canActivate: [AuthGuard] },
+			
 			{ path: 'certificates', loadChildren: './certificates/certificates.module#CertificatesModule', canLoad: [AuthGuard] },
 			{ path: 'bookings', loadChildren: './facilities/bookings/bookings.module#BookingsModule', canLoad: [AuthGuard] },
 			{ path: 'ticketings', loadChildren: './facilities/ticketings/ticketings.module#TicketingsModule', canLoad: [AuthGuard] },

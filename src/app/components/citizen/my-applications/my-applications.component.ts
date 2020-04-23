@@ -108,6 +108,7 @@ export class MyApplicationsComponent implements OnInit {
 					return observableOf([]);
 				})
 			).subscribe(data => {
+				console.log('data',data);
 				this.isLoadingResults = false;
 				this.dataSource.data = data;
 			}
@@ -475,6 +476,9 @@ export class MyApplicationsComponent implements OnInit {
 
 	getLoi(row) {
 		console.log("Download LOI", row);
+	}
+	loiPayments(row){
+		this.router.navigate(['/citizen/loi-payments', row.uniqueId]);
 	}
 
 }
