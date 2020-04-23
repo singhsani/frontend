@@ -401,4 +401,7 @@ export class FormsActionsService {
 	getDrngPipAppsByDrainagePipelineConnection(drainagePipelineConnectionId: any) {
 		return this.http.get(`api/form/drngPipeConnWorkCompletion/getDrngPipAppsByDrainagePipelineConnection?drainagePipelineConnectionId=${drainagePipelineConnectionId}`);
 	}
+	getLoiPaymentDetails(appId) {
+		return this.http.get(`api/loidetail/list?appId=${appId}`);
+	}
 }

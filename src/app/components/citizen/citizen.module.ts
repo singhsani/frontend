@@ -19,6 +19,7 @@ import { MyApplicationsComponent } from './my-applications/my-applications.compo
 import { GujPocComponent } from './guj-poc/guj-poc.component';
 import { PayableServicesComponent } from './payable-services/payable-services.component';
 import { CommonPaybleComponent } from './common-payble/common-payble.component';
+import { LoiPaymentComponent } from './loi-payment/loi-payment.component';
 /* Import citizen components end */
 
 
@@ -46,6 +47,7 @@ import { CommonPaybleComponent } from './common-payble/common-payble.component';
 		GujPocComponent,
 		PayableServicesComponent,
 		CommonPaybleComponent,
+		LoiPaymentComponent
 		
 	]
 })

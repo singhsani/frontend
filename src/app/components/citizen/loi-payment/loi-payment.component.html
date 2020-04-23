@@ -1,0 +1,127 @@
+<app-title-bar [title]="'LOI Payments' | translate: translateKey">
+    <!-- <button class="pull-right" mat-stroked-button type="button" (click)="patchValue()">
+		Patch Value
+	</button> -->
+</app-title-bar>
+
+<mat-card class="formClass cardBorder">
+    <mat-tab-group [(selectedIndex)]="config.currentTabIndex" dynamicHeight="true" mat-stretch-tabs class="stepperNav">
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <div>{{'LOI Details' | translate:translateKey}}</div>
+            </ng-template>
+            <br>
+            <br>
+
+            <div class="row">
+                <mat-label class="col-md-6" style="padding-left: 50px">Application NO : {{applicationNumber}}
+                </mat-label>
+                <!-- <mat-label class="col-md-6">LOI Due Date : {{applicationNumber}}</mat-label> -->
+                <mat-label class="col-md-6">LOI Due Date : </mat-label>
+            </div>
+            <br>
+            <br>
+            <!-- <div class="row">
+					<mat-form-field class="col-md-6">
+						<input matInput type="text" required maxlength="300" appValidationFields
+							validationFieldsType='onlyNameWithSpace'
+							placeholder="{{'scheme-name' | translate:translateKey}}" formControlName="applicationNo">
+					</mat-form-field>
+                    </div> -->
+
+            <!-- <div class="p-15">
+                <div class="pl-1 pr-1 mt-4">
+                    <div class="example-container mat-elevation-z8">
+                        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+                            <ng-container matColumnDef="select">
+                                <th mat-header-cell *matHeaderCellDef>
+                                </th>
+                                <td mat-cell *matCellDef="let row">
+                                    <mat-checkbox (click)="$event.stopPropagation()"
+                                        (change)="$event ? selection.toggle(row) : null"
+                                        [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)">
+                                    </mat-checkbox>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="loiNumber">
+                                <th mat-header-cell *matHeaderCellDef> Loi Number. </th>
+                                <td mat-cell *matCellDef="let element"> {{element.loiNumber}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="amount">
+                                <th mat-header-cell *matHeaderCellDef> Amount </th>
+                                <td mat-cell *matCellDef="let element"> {{element.amount}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="action">
+                                <th mat-header-cell *matHeaderCellDef> Action </th>
+                                <td mat-cell *matCellDef="let element">
+                                    <button>Make Payment</button>
+                                </td>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+                                (click)="selection.toggle(row)">
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div> -->
+
+            <div class="p-15">
+                <div class="pl-1 pr-1 mt-4">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Select</th>
+                                <th>Loi Number</th>
+                                <th>Amount</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of loiDetails">
+                                <th>
+                                    <input type="radio" name="radAnswer" value='{{item.loiNumber}}'
+                                        (change)="onItemChange($event)">
+                                </th>
+                                <td>{{ item.loiNumber }}</td>
+                                <td>{{ item.amount }}</td>
+                                <td>
+                                    <button mat-raised-button color="primary" (click)="makePayment()">Make
+                                        Payment</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="p-15" *ngIf='ShowTable'>
+                <div class="pl-1 pr-1 mt-4">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Sr No.</th>
+                                <th>Charge Name</th>
+                                <th>Amount</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of filterData; let i = index">
+                                <th>{{i+1}}</th>
+                                <td>{{ item.feeName }}</td>
+                                <td>{{ item.amount }}</td>
+                            </tr>
+                            <td></td>
+                            <td>Total</td>
+                            <td>{{ sum }}</td>
+                            <tr>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </mat-tab>
+        <!-- step 1 Ends -->
+    </mat-tab-group>
+</mat-card>
