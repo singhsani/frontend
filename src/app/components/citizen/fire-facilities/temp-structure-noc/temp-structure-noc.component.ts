@@ -32,7 +32,10 @@ export class TempStructureNocComponent implements OnInit {
 	//Lookups Array
 	FS_COMMUNICATION_ARRANGEMENT: Array<any> = [];
 	FS_SITTING_ARRANGEMENT: Array<any> = [];
-	FS_WIRING_TYPE: Array<any> = [];
+	FS_WIRING_TYPE: Array<any> = []
+
+
+  maxDate = new Date();
 
 	/**
      * @param fb - Declare FormBuilder property.
@@ -183,12 +186,12 @@ export class TempStructureNocComponent implements OnInit {
 			applicantName: [null, [Validators.required, Validators.maxLength(100)]],
 			applicantNameGuj: [null, [Validators.required, Validators.maxLength(300)]],
 			mobileNo: [null, [Validators.required, Validators.maxLength(this.fireFacilityConfig.mobileNumber_maxLength), Validators.minLength(this.fireFacilityConfig.mobileNumber_minLength)]],
-			email: [null, [Validators.required, Validators.maxLength(50)]],
+			email: [null, [Validators.required, Validators.email, Validators.maxLength(50)]],
 			oldReferenceNumber: [{ value: null, disabled: true }],
 			applicationDate: [{ value: null, disabled: true }],//not now
 			officeContactNo: [null, [Validators.required, Validators.maxLength(this.fireFacilityConfig.contactNumberLength)]],
 			onsitePersonMobileNo: [null, [Validators.required, Validators.maxLength(this.fireFacilityConfig.mobileNumber_maxLength), Validators.minLength(this.fireFacilityConfig.mobileNumber_minLength)]],
-			officeEmailId: [null, [Validators.required, Validators.maxLength(50)]],
+			officeEmailId: [null, [Validators.required, Validators.email, Validators.maxLength(50)]],
 
 			/* Step 2 controls start */
 			fromDate: [null, [Validators.required, Validators.maxLength(10)]],
