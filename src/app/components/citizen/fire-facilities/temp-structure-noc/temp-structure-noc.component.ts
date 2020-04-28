@@ -32,7 +32,7 @@ export class TempStructureNocComponent implements OnInit {
 	//Lookups Array
 	FS_COMMUNICATION_ARRANGEMENT: Array<any> = [];
 	FS_SITTING_ARRANGEMENT: Array<any> = [];
-	FS_WIRING_TYPE: Array<any> = []
+	FS_WIRING_TYPE: Array<any> = [];
 
 
   maxDate = new Date();
