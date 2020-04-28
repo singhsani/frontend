@@ -161,7 +161,7 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput [matDatepicker]="picker3" formControlName="policeCommisionerLetterDate" placeholder="{{'police_commisioner_letter_date' | translate:translateKey }}"
+						<input matInput [matDatepicker]="picker3" [max]="maxDate" formControlName="policeCommisionerLetterDate" placeholder="{{'police_commisioner_letter_date' | translate:translateKey }}"
 						 required (dateChange)="dateFormate($event.value,'policeCommisionerLetterDate')">
 						<mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
 						<mat-datepicker #picker3 touchUi="true"></mat-datepicker>
@@ -178,7 +178,7 @@
 										Yes
 									</mat-radio-button>
 									<mat-radio-button [value]="false">
-										{{'no_txt' | translate:translateKey }}
+										{{'No' | translate:translateKey }}
 									</mat-radio-button>
 								</mat-radio-group>
 								<control-messages [control]="tempStructureNocForm.get('landOwnerConsentIncluded')"></control-messages>
@@ -295,7 +295,7 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput required OnlyNumber maxlength="3" type="tel" formControlName="noOfExits" placeholder="{{'no_of_eExits' | translate:translateKey }}">
+						<input matInput required OnlyNumber maxlength="3" type="tel" formControlName="noOfExits" placeholder="{{'no_of_exits' | translate:translateKey }}">
 						<control-messages [control]="tempStructureNocForm.get('noOfExits')"></control-messages>
 					</mat-form-field>
 
@@ -306,7 +306,7 @@
 								Yes
 							</mat-radio-button>
 							<mat-radio-button [value]="false">
-								{{'no_txt' | translate:translateKey }}
+								{{'No' | translate:translateKey }}
 							</mat-radio-button>
 						</mat-radio-group>
 						<control-messages [control]="tempStructureNocForm.get('layoutPlanIncluded')"></control-messages>
@@ -379,7 +379,7 @@
 								Yes
 							</mat-radio-button>
 							<mat-radio-button [value]="false">
-								{{'no_txt' | translate:translateKey }}
+								{{'No' | translate:translateKey }}
 							</mat-radio-button>
 						</mat-radio-group>
 						<control-messages [control]="tempStructureNocForm.get('refillingCertificateAttached')"></control-messages>
@@ -407,7 +407,7 @@
 								Yes
 							</mat-radio-button>
 							<mat-radio-button [value]="false">
-								{{'no_txt' | translate:translateKey }}
+								{{'No' | translate:translateKey }}
 							</mat-radio-button>
 						</mat-radio-group>
 						<control-messages [control]="tempStructureNocForm.get('securityArrangement')"></control-messages>
@@ -420,7 +420,7 @@
 								Yes
 							</mat-radio-button>
 							<mat-radio-button [value]="false">
-								{{'no_txt' | translate:translateKey }}
+								{{'No' | translate:translateKey }}
 							</mat-radio-button>
 						</mat-radio-group>
 						<control-messages [control]="tempStructureNocForm.get('parkingArrangement')"></control-messages>
@@ -433,7 +433,7 @@
 								Yes
 							</mat-radio-button>
 							<mat-radio-button [value]="false">
-								{{'no_txt' | translate:translateKey }}
+								{{'No' | translate:translateKey }}
 							</mat-radio-button>
 						</mat-radio-group>
 						<control-messages [control]="tempStructureNocForm.get('exitNoSmokingSignboard')"></control-messages>
@@ -452,7 +452,7 @@
 								Yes
 							</mat-radio-button>
 							<mat-radio-button [value]="false">
-								{{'no_txt' | translate:translateKey }}
+								{{'No' | translate:translateKey }}
 							</mat-radio-button>
 						</mat-radio-group>
 						<control-messages [control]="tempStructureNocForm.get('lightningArresterArrangement')"></control-messages>
@@ -465,7 +465,7 @@
 								Yes
 							</mat-radio-button>
 							<mat-radio-button [value]="false">
-								{{'no_txt' | translate:translateKey }}
+								{{'No' | translate:translateKey }}
 							</mat-radio-button>
 						</mat-radio-group>
 						<control-messages [control]="tempStructureNocForm.get('standbyFireEngineDemanded')"></control-messages>
