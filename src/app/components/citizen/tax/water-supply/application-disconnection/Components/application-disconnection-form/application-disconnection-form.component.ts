@@ -130,7 +130,9 @@ onSubmitApproved(){
         if (formDetail.form.valid) {
             this.dataModel.applicationNumber = this.applicationModel.applicationNumber;
             this.dataModel.connectionDtlId = this.connectionsModel.connectionDetail.connectionDtlId;
-            this.dataModel.meterDetailId = this.connectionsModel.meterDetail.meterDetailId;
+            if(this.connectionsModel.meterDetail) {
+                this.dataModel.meterDetailId = this.connectionsModel.meterDetail.meterDetailId;
+            }
             this.applicationDisconnectionService.save(this.dataModel).subscribe(
                 (data) => {
                     if (data.status === 200) {
