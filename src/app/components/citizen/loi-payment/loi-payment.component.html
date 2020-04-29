@@ -86,7 +86,7 @@
                                 <td>{{ item.loiNumber }}</td>
                                 <td>{{ item.amount }}</td>
                                 <td>
-                                    <button mat-raised-button color="primary" (click)="makePayment()">Make
+                                    <button mat-raised-button color="primary" (click)="makePayment(item.loiNumber)">Make
                                         Payment</button>
                                 </td>
                             </tr>
@@ -103,7 +103,6 @@
                                 <th>Sr No.</th>
                                 <th>Charge Name</th>
                                 <th>Amount</th>
-
                             </tr>
                         </thead>
                         <tbody>
@@ -124,4 +123,5 @@
         </mat-tab>
         <!-- step 1 Ends -->
     </mat-tab-group>
+    <select-payment-gateway #paymentGateway></select-payment-gateway>
 </mat-card>

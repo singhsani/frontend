@@ -116,6 +116,18 @@ export class FormsActionsService {
 	}
 
 	/**
+	 * This method is use to submit citizen form data to department
+	 * @param appId - citizen app id
+	 */
+	submitFormDataForLOI(appId, lOiNumber) {
+
+		this.requestURL = `api/form/${this.apiType}/submit/${appId}/${lOiNumber}`;
+
+		return this.http.post(this.requestURL, {});
+	}
+
+
+	/**
 	 * This method is use to generate print receipt
 	 * @param appId - citizen app id
 	 */
@@ -204,6 +216,7 @@ export class FormsActionsService {
 	 * @param paymentData -pass payment data here.
 	 */
 	createPayment(paymentData) {
+		console.log('paymentData in forms-action.service', paymentData);
 		this.requestURL = `public/postPayment`;
 
 		return this.http.post(this.requestURL, paymentData);
@@ -387,7 +400,7 @@ export class FormsActionsService {
 	}
 
 	getWaterPipelineConnectionStatusAndOthersList(workOrderNo: any, applicationNo: any) {
-		return  this.http.get(`api/form/wtrPipeConnWorkCompletion/searchWaterPipelineApplications?workOrderNo=${workOrderNo}&applicationNo=${applicationNo}`)
+		return this.http.get(`api/form/wtrPipeConnWorkCompletion/searchWaterPipelineApplications?workOrderNo=${workOrderNo}&applicationNo=${applicationNo}`)
 	}
 
 	getWtrPipAppsByWaterPipelineConnection(waterPipelineConnectionId: any) {
@@ -395,7 +408,7 @@ export class FormsActionsService {
 	}
 
 	getDrainagePipelineConnectionStatusAndOthersList(workOrderNo: any, applicationNo: any) {
-		return  this.http.get(`api/form/drngPipeConnWorkCompletion/searchDrainagePipelineApplications?workOrderNo=${workOrderNo}&applicationNo=${applicationNo}`)
+		return this.http.get(`api/form/drngPipeConnWorkCompletion/searchDrainagePipelineApplications?workOrderNo=${workOrderNo}&applicationNo=${applicationNo}`)
 	}
 
 	getDrngPipAppsByDrainagePipelineConnection(drainagePipelineConnectionId: any) {

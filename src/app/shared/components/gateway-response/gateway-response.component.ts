@@ -19,7 +19,7 @@ export class GatewayResponseComponent implements OnInit {
 	interval: any;
 	paymentStatus: any;
 	dispData: any;
-	isSearchanble:string="";
+	isSearchanble: string = "";
 
 	constructor(
 		private formService: FormsActionsService,
@@ -29,9 +29,14 @@ export class GatewayResponseComponent implements OnInit {
 		private sessionStore: SessionStorageService
 	) {
 		this.dispData = JSON.parse(this.sessionStore.get('paymentData'));
+		console.log('this.dispData', this.dispData);
 	}
 
 	ngOnInit() {
+		let loi = this.sessionStore.get('lioNumber');
+
+		console.log('LoiNumber in gateway-response', loi);
+
 		this.route.queryParams.subscribe(param => {
 			// if (param && param.rqst_token) {
 			if (param && param.order_id) {
@@ -121,6 +126,7 @@ export class GatewayResponseComponent implements OnInit {
 			id: null,
 			uniqueId: null,
 			version: null,
+			loiNumber: this.sessionStore.get('lioNumber'),
 			refNumber: data.refNumber ? data.refNumber : null,
 			resourceType: data.resourceType ? data.resourceType : null,
 			response: JSON.stringify({
@@ -131,7 +137,7 @@ export class GatewayResponseComponent implements OnInit {
 			paymentStatus: this.paymentStatus,
 			payableServiceType: data.payableServiceType,
 			amount: responseObj ? responseObj.mer_amount : 0,
-			payGateway : payGateway
+			payGateway: payGateway
 		}
 
 		if (payGateway == 'BILLDESK') {
@@ -166,19 +172,19 @@ export class GatewayResponseComponent implements OnInit {
 				}, 10000);
 
 				this.interVal();
-			}else{
+			} else {
 				this.formService.createPayment(payData).subscribe(payResp => {
 					const payRespData = payResp.data.responseData;
-	
+
 					if (payRespData.fileStatus == "PAYMENT_RECEIVED") {
-	
+
 						this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(payRespData.serviceDetail.code);
 						this.formService.submitFormData(payRespData.serviceFormId).subscribe(res => {
 							if (res) {
 								setTimeout(() => {
 									this.redirectToMyApplication(data.myApplicationUrl, payRespData.refNumber, payData.resourceType, payRespData.payableServiceType);
 								}, 10000);
-	
+
 								this.interVal();
 							}
 						});
@@ -188,16 +194,16 @@ export class GatewayResponseComponent implements OnInit {
 						setTimeout(() => {
 							this.redirectToMyApplication(data.myApplicationUrl, payRespData.refNumber, payData.resourceType, payRespData.payableServiceType);
 						}, 10000);
-	
+
 						this.interVal();
 					}
 				},
 					err => {
 						this.toastr.error('Internal server error');
-					});	
+					});
 			}
 
-		
+
 		}
 	}
 

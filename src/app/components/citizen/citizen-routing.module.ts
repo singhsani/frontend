@@ -33,7 +33,7 @@ const routes: Routes = [
 			{ path: 'payment-gateway-response', component: PaymentResponsePageComponent, canActivate: [AuthGuard] },
 			{ path: 'payable-services', component: CommonPaybleComponent, canActivate: [AuthGuard] },
 			{ path: 'payment-response', component: GatewayResponseComponent, canActivate: [AuthGuard] },
-			{ path: 'loi-payments/:id', component: LoiPaymentComponent, canActivate: [AuthGuard] },
+			{ path: 'loi-payments/:uniqueId/:id/:code', component: LoiPaymentComponent, canActivate: [AuthGuard] },
 			
 			{ path: 'certificates', loadChildren: './certificates/certificates.module#CertificatesModule', canLoad: [AuthGuard] },
 			{ path: 'bookings', loadChildren: './facilities/bookings/bookings.module#BookingsModule', canLoad: [AuthGuard] },

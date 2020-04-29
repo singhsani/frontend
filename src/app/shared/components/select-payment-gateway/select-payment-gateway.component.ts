@@ -71,6 +71,7 @@ export class SelectPaymentGatewayComponent implements OnInit {
    * This method is used to set the data passed from different different citizen service modules
    */
   setPaymentDetailsFromActionBar(payData) {
+    console.log("payData", payData);
     this.payData = payData;
   }
 

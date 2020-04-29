@@ -230,11 +230,12 @@ export class CommonService {
 		})
 	}
 
-	storePaymentInfo(paymentData:any, myApplicationUrl:any,retAfterPayment:any): any {
+	storePaymentInfo(paymentData: any, myApplicationUrl: any, retAfterPayment: any): any {
 		let payData = {
 			id: null,
 			uniqueId: null,
 			version: null,
+			loiNumber: null,
 			response: JSON.stringify({
 				data: "paid",
 				status: true

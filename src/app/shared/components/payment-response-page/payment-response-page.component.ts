@@ -46,7 +46,8 @@ export class PaymentResponsePageComponent implements OnInit {
   ngOnInit() {
 
     if (this.dispData) {
-      this.route.queryParams.subscribe(resp => { 
+      this.route.queryParams.subscribe(resp => {
+        console.log("resp in payment-response", resp);
         if (resp.status) {
           this.paymentStatus = resp.status;
         }
@@ -77,10 +78,12 @@ export class PaymentResponsePageComponent implements OnInit {
    * @param data 
    */
   locateTotargetPage(data) {
+
     let payData = {
       id: null,
       uniqueId: null,
       version: null,
+      loiNumber: null,
       refNumber: data.refNumber ? data.refNumber : null,
       resourceType: data.resourceType ? data.resourceType : null,
       response: JSON.stringify({
@@ -92,26 +95,26 @@ export class PaymentResponsePageComponent implements OnInit {
     }
 
     //swimming pool module is LOI case module, this method is take payment first than submit form to newgan
-    if(data.resourceType == "swimming"){
+    if (data.resourceType == "swimming") {
       this.formService.createLOIPayment(payData).subscribe(loiResp => {
         const payRespData = loiResp.data.responseData;
-        
-          setTimeout(() => {
-            this.redirectToMyApplication(data.myApplicationUrl, payRespData.refNumber, payData.resourceType, payRespData.payableServiceType);
-          }, 10000);
-  
-          /**
-           * increase time to 10 secs.
-           */
-          this.interVal();
-        });
+
+        setTimeout(() => {
+          this.redirectToMyApplication(data.myApplicationUrl, payRespData.refNumber, payData.resourceType, payRespData.payableServiceType);
+        }, 10000);
+
+        /**
+         * increase time to 10 secs.
+         */
+        this.interVal();
+      });
     }
-    else{
-    /**
-     * call api to get details after success payment.
-     */
-    this.formService.createPayment(payData).subscribe(payResp => {
-      const payRespData = payResp.data.responseData;
+    else {
+      /**
+       * call api to get details after success payment.
+       */
+      this.formService.createPayment(payData).subscribe(payResp => {
+        const payRespData = payResp.data.responseData;
         setTimeout(() => {
           this.redirectToMyApplication(data.myApplicationUrl, payRespData.refNumber, payData.resourceType, payRespData.payableServiceType);
         }, 10000);
@@ -127,8 +130,8 @@ export class PaymentResponsePageComponent implements OnInit {
   /**
    * method is used to redirect to my application page.
    */
-  redirectToMyApplication(myApplicationUrl,refNumber = undefined, resourceType = undefined, serviceType = undefined) {
-    if(refNumber && resourceType && serviceType){
+  redirectToMyApplication(myApplicationUrl, refNumber = undefined, resourceType = undefined, serviceType = undefined) {
+    if (refNumber && resourceType && serviceType) {
       this.router.navigateByUrl(myApplicationUrl + `?refNumber=${refNumber}&resourceType=${resourceType}&serviceType=${serviceType}`);
     } else {
       this.router.navigateByUrl(myApplicationUrl);

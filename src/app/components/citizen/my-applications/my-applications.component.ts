@@ -56,8 +56,8 @@ export class MyApplicationsComponent implements OnInit {
 	rejectRemarks: string = '';
 	reason: string = '';
 
-  queryrraiseRemarks: string = '';
-  queryrraisereason: string = '';
+	queryrraiseRemarks: string = '';
+	queryrraisereason: string = '';
 
 
 	config: CitizenConfig = new CitizenConfig();
@@ -108,7 +108,6 @@ export class MyApplicationsComponent implements OnInit {
 					return observableOf([]);
 				})
 			).subscribe(data => {
-				console.log('data',data);
 				this.isLoadingResults = false;
 				this.dataSource.data = data;
 			}
@@ -478,7 +477,7 @@ export class MyApplicationsComponent implements OnInit {
 		console.log("Download LOI", row);
 	}
 	loiPayments(row){
-		this.router.navigate(['/citizen/loi-payments', row.uniqueId]);
+		this.router.navigate(['/citizen/loi-payments', row.uniqueId, row.id, row.serviceDetail.code]);
 	}
 
 }

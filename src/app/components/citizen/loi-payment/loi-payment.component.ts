@@ -11,6 +11,7 @@ import { CitizenConfig } from '../citizen-config';
 import { ToastrService } from 'ngx-toastr';
 import { environment } from '../../../../environments/environment';
 import { SelectionModel } from '@angular/cdk/collections';
+import { SessionStorageService } from 'angular-web-storage';
 
 export interface PeriodicElement {
 	loiNumber: string;
@@ -37,10 +38,15 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class LoiPaymentComponent implements OnInit {
 
+	@ViewChild("paymentGateway") paymentGateway: any;
+
 
 	loiPaymentForm: FormGroup;
 	applicationNumber;
-	appId: string;
+	uniqueId: string;
+	id: number;
+	code: string;
+
 	translateKey: string = 'LOI Payments';
 	config: CitizenConfig = new CitizenConfig();
 	loiDetails: any = [];
@@ -60,22 +66,21 @@ export class LoiPaymentComponent implements OnInit {
 
 	constructor(
 		private formService: FormsActionsService,
-		private fb: FormBuilder,
+		private fb: FormBuilder, private session: SessionStorageService,
 		// private paginationService: PaginationService,
-		// private router: Router,
+		private router: Router,
 		private commonService: CommonService,
 		// private modalService: BsModalService,
-		private toaster: ToastrService,
+		private toastr: ToastrService,
 		private route: ActivatedRoute,
 	) {
 
 		this.route.paramMap.subscribe(param => {
-			this.appId = param.get('id');
+			console.log('param', param);
+			this.uniqueId = param.get('uniqueId');
+			this.id = Number(param.get('id'));
+			this.code = param.get('code');
 		});
-
-		// setTimeout(() => {
-
-		// }, 3000);
 	}
 
 	ngOnInit() {
@@ -83,19 +88,14 @@ export class LoiPaymentComponent implements OnInit {
 	}
 
 	getLoiDetaiol() {
-		this.formService.getLoiPaymentDetails(this.appId).subscribe(res => {
+		this.formService.getLoiPaymentDetails(this.uniqueId).subscribe(res => {
 			if (res.data.length > 0) {
 				this.applicationNumber = res.data[0].applicationId;
-				res.data.forEach(element => {
-					this.dataSource.data.push({
-						'amount': element.amount,
-						'loiNumber': element.loiNumber,
-						'action': 'tryrtytr'
-					})
-				});
-				console.log(' this.dataSource Details', this.dataSource.data);
 				this.loiDetails = res.data;
-				console.log('Res OF LOI Payment Details', res);
+
+				console.log('**********', this.loiDetails.filter((obj, pos, arr) => {
+					return arr.map(mapObj => mapObj["value"]).indexOf(obj["value"]) === pos;
+				}));
 			}
 		}
 			, err => {
@@ -132,7 +132,51 @@ export class LoiPaymentComponent implements OnInit {
 		console.log('sum', this.sum);
 
 	}
-	makePayment() {
+	makePayment(loiNumber: any) {
+		console.log('make Payment', loiNumber);
+		this.redirectToPayment(this.code, this.id, loiNumber);
+	}
+
+	redirectToPayment(apiCode: string, id: number, loiNumber) {
+		this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);
+		this.formService.submitFormDataForLOI(id, loiNumber).subscribe(
+			res => {
+				this.toastr.success("No payment option");
+				this.router.navigateByUrl(ManageRoutes.getFullRoute("CITIZENMYAPPS"));
+			},
+			err => {
+				let retUrl: string = '/citizen/my-applications';
+				let retAfterPayment: string = environment.returnUrl;
+
+				if (err.status === 402) {
+					let payData = this.commonService.storePaymentInfo(err.error.data, retUrl, retAfterPayment);
+					payData.loiNumber = loiNumber;
+					this.session.set('lioNumber', loiNumber);
+					let html =
+						`
+					<div class="text-center">
+						<h2>Total LOI Payment</h2>
+						<div class="payAmount">
+							<i class="fa fa-inr" aria-hidden="true">` + payData.amount + `</i>
+						</div>
+						<p>Rupees in words</p>
+					</div>
+					`
+
+					this.commonService.commonAlert('Payment Details', '', 'info', 'Make Payment!', false, html, cb => {
+						this.paymentGateway.setPaymentDetailsFromActionBar(payData);
+						this.paymentGateway.openModel();
+
+					}, rj => {
+					});
+					return;
+				} else {
+					this.commonService.openAlert("Error", "Error Occured for final submit : " + err.error[0].message, "warning")
+				}
+			});
 
 	}
+
+
+
 }
