@@ -189,7 +189,7 @@ export class TempStructureNocComponent implements OnInit {
 			email: [null, [Validators.required, Validators.email, Validators.maxLength(50)]],
 			oldReferenceNumber: [{ value: null, disabled: true }],
 			applicationDate: [{ value: null, disabled: true }],//not now
-			officeContactNo: [null, [Validators.required, Validators.maxLength(this.fireFacilityConfig.contactNumberLength)]],
+			officeContactNo: [null, [Validators.required, Validators.maxLength(this.fireFacilityConfig.mobileNumber_maxLength)]],
 			onsitePersonMobileNo: [null, [Validators.required, Validators.maxLength(this.fireFacilityConfig.mobileNumber_maxLength), Validators.minLength(this.fireFacilityConfig.mobileNumber_minLength)]],
 			officeEmailId: [null, [Validators.required, Validators.email, Validators.maxLength(50)]],
 
