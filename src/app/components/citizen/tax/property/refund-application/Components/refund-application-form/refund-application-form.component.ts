@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { RefundApplicationService } from '../../Services/refund-application.service';
 import { AlertService } from 'src/app/vmcshared/Services/alert.service';
@@ -6,6 +6,7 @@ import { OccupierModel, PropertyAddress, VacancyPremiseCertficateModel } from '.
 import { downloadFile } from 'src/app/vmcshared/downloadFile';
 import { RefundApplicationDataSharingService } from '../../Services/refund-application-data-sharing.service';
 import { CommonService } from 'src/app/vmcshared/Services/common-service';
+import { MatStepper } from '@angular/material';
 
 @Component({
     selector: 'app-refund-application-form',
@@ -13,7 +14,9 @@ import { CommonService } from 'src/app/vmcshared/Services/common-service';
 })
 
 export class RefundApplicationFormComponent implements OnInit {
-
+    @ViewChild('stepper') stepper: MatStepper;
+    refundApplicationDocumentUploadDocs : Array<any> = [];
+    refundAgainstVacancyId : any ;
     applicationModel: any = {};
     propertyNo: string;
     vacancyCertificateNo: string;
@@ -94,11 +97,14 @@ export class RefundApplicationFormComponent implements OnInit {
                 (data) => {
                     if (data.status === 200) {
                         dataToPost.refundAgainstVacancyId = data.body.data.refundAgainstVacancyId;
+                        this.refundAgainstVacancyId = data.body.data.refundAgainstVacancyId;
                         dataToPost.responseDTOList = data.body.data.responseDTOList;
                         this.refundApplicationDataSharingService.setRefundModel(dataToPost);
                         //this.generateRefundReceipt(data.body.data.fileUrl);
-                        this.refundApplicationDataSharingService.setIsShowForm(false);
-                        this.refundApplicationDataSharingService.setIsShowApproval(true);
+                       // this.refundApplicationDataSharingService.setIsShowForm(false);
+                       // this.refundApplicationDataSharingService.setIsShowApproval(true);
+                        this.stepper.selectedIndex = 1;
+                        this.getFormDataDocuments(dataToPost.refundAgainstVacancyId);
                     }
                 },
                 (error) => {
@@ -106,7 +112,40 @@ export class RefundApplicationFormComponent implements OnInit {
                 });
         }
     }
-
+    getFormDataDocuments(id : any) {
+        this.refundApplicationDocumentUploadDocs = [];
+        this.refundApplicationService.gettaxrabitDocUpload(id).subscribe(
+          (data) => {
+            data.forEach(app => {
+              this.refundApplicationDocumentUploadDocs.push(app);
+            });
+            
+          },
+          (error) => {
+            
+          });
+      }
+    
+      onSubmitApproved() {
+        this.refundApplicationService.approveDept({ refundAgainstVacancyId: this.refundAgainstVacancyId }).subscribe(
+          (data) => {
+            this.alertService.success(data.body.message);
+            this.refundApplicationDataSharingService.setIsShowForm(false);
+            this.refundApplicationDataSharingService.setIsShowApproval(true);
+          },
+          (error) => {
+            if (error.status === 400) {
+              var errorMessage = '';
+              error.error[0].propertyList.forEach(element => {
+                errorMessage = errorMessage + element + "</br>";
+              });
+              this.alertService.error(errorMessage);
+            }
+            else {
+              this.alertService.error(error.error.message);
+            }
+          })
+      }
     generateRefundReceipt(url) {
         this.refundApplicationService.downloadFile(url).subscribe(
             (data) => {

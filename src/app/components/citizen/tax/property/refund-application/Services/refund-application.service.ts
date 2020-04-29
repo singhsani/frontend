@@ -27,6 +27,19 @@ export class RefundApplicationService {
       .pipe(map((response: any) => response))
   }
 
+  gettaxrabitDocUpload(id: any) {
+    return this.http.post(`${Constants.assessmentModuleApiUrl}refundagainstvacancy/getDocumentList?refundAgainstVacancyId=${id}`,
+      { observe: 'response' })
+      .pipe(map((response: any) => response))
+  }
+
+  
+  approveDept(data: any) {
+    return this.http.post(`${Constants.assessmentModuleApiUrl}refundagainstvacancy/submitNewgen`, data,
+    { observe: 'response' })
+      .pipe(map((response: any) => response))
+  }
+
   // generateRefundReceipt(refundAgainstVacancyId: any) {
   //   return this.http.post(`${Constants.assessmentModuleApiUrl}refundagainstvacancy/generaterefundreceipt?refundAgainstVacancyId=${refundAgainstVacancyId}`,
   //   { responseType: "arraybuffer" })
