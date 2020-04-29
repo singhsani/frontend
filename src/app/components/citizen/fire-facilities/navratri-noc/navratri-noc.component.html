@@ -85,7 +85,7 @@
 					</div>
 
 					<mat-form-field class="col-md-4" *ngIf="navaratriNocForm.get('applicationThroughPolice').value">
-						<input matInput type="text" appValidationFields [validationFieldsType]="'onlyNameWithSpace'" formControlName="policeCommisionerLetterNo" placeholder="{{'police_commisioner_letter_no' | translate: translateKey }} *"
+						<input matInput type="text"   appValidationFields [validationFieldsType]="'alphanumericWithSpace'" formControlName="policeCommisionerLetterNo" placeholder="{{'police_commisioner_letter_no' | translate: translateKey }} *"
 						 maxlength="20">
 						<control-messages [control]="navaratriNocForm.get('policeCommisionerLetterNo')"></control-messages>
 					</mat-form-field>
