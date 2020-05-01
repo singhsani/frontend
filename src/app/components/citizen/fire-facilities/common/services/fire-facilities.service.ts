@@ -22,7 +22,8 @@ export class FireFacilitiesService {
 		//const formData = new FormData();
 		//formData.append('provisionalNo', provisionalNo);
     let obj = { refNumber: provisionalNo };
-		return this.http.postFormData(`api/form/finalFireNoc/searchByProvisionalNumber`, obj);
+    return this.http.postFormData(`api/form/finalFireNoc/searchFromNewgen`, obj);
+		//return this.http.postFormData(`api/form/finalFireNoc/searchByProvisionalNumber`, obj);
 	}
 
 	/**
@@ -52,8 +53,11 @@ export class FireFacilitiesService {
 	searchFinalHospitalNOC(provisionalNo:any) {
 		//const formData = new FormData();
 		//formData.append('provisionalNo', provisionalNo);
+
     let obj = { refNumber: provisionalNo };
-		return this.http.postFormData(`api/form/finalHospitalNoc/searchByProvisionalNumber`, obj);
+    return this.http.postFormData(`api/form/finalHospitalNoc/searchFromNewgen`, obj);
+
+		//return this.http.postFormData(`api/form/finalHospitalNoc/searchByProvisionalNumber`, obj);
 	}
 
 	/**
