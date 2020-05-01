@@ -13,23 +13,6 @@ import { environment } from '../../../../environments/environment';
 import { SelectionModel } from '@angular/cdk/collections';
 import { SessionStorageService } from 'angular-web-storage';
 
-export interface PeriodicElement {
-	loiNumber: string;
-	amount: number;
-	action: string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-
-	// { amount: 100, loiNumber: 'MKT-LOI-000000007', action: 'tryrtytr' },
-	// { amount: 7, loiNumber: 'Nitrogen', action: '' },
-	// { amount: 8, loiNumber: 'Oxygen', action: 15.9994 },
-	// { amount: 9, loiNumber: 'Fluorine', action: 18.9984 },
-	// { amount: 10, loiNumber: 'Neon', action: 20.1797 },
-];
-
-
-
 
 @Component({
 	selector: 'loi-payment',
@@ -40,43 +23,30 @@ export class LoiPaymentComponent implements OnInit {
 
 	@ViewChild("paymentGateway") paymentGateway: any;
 
-
 	loiPaymentForm: FormGroup;
 	applicationNumber;
 	uniqueId: string;
 	id: number;
 	code: string;
-
 	translateKey: string = 'LOI Payments';
 	config: CitizenConfig = new CitizenConfig();
 	loiDetails: any = [];
-
-	// displayedColumns: string[] = ['select', 'loiNumber', 'amount', 'action'];
-	// dataSource = new MatTableDataSource();
-	// selection = new SelectionModel<any>(true, []);
-	selectedArray = [];
-
-	displayedColumns: string[] = ['select', 'loiNumber', 'amount', 'action'];
-	dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
-	selection = new SelectionModel<PeriodicElement>(true, []);
 	ShowTable = false;
 	filterData: any;
-	sum: any;
+	sum = 0;
+	loiRecords: any = [];
 
 
 	constructor(
 		private formService: FormsActionsService,
-		private fb: FormBuilder, private session: SessionStorageService,
-		// private paginationService: PaginationService,
+		private session: SessionStorageService,
 		private router: Router,
 		private commonService: CommonService,
-		// private modalService: BsModalService,
 		private toastr: ToastrService,
 		private route: ActivatedRoute,
 	) {
 
 		this.route.paramMap.subscribe(param => {
-			console.log('param', param);
 			this.uniqueId = param.get('uniqueId');
 			this.id = Number(param.get('id'));
 			this.code = param.get('code');
@@ -92,10 +62,9 @@ export class LoiPaymentComponent implements OnInit {
 			if (res.data.length > 0) {
 				this.applicationNumber = res.data[0].applicationId;
 				this.loiDetails = res.data;
-
-				console.log('**********', this.loiDetails.filter((obj, pos, arr) => {
-					return arr.map(mapObj => mapObj["value"]).indexOf(obj["value"]) === pos;
-				}));
+				this.loiRecords = this.loiDetails.filter((obj, pos, arr) => {
+					return arr.map(mapObj => mapObj["loiNumber"]).indexOf(obj["loiNumber"]) === pos;
+				})
 			}
 		}
 			, err => {
@@ -104,36 +73,21 @@ export class LoiPaymentComponent implements OnInit {
 		);
 	}
 
-	// isAllSelected() {
-	// 	const numSelected = this.selection.selected.length;
-	// 	const numRows = this.dataSource.data.length;
-	// 	return numSelected === numRows;
-	// }
-
-	/**
-	 * For Checkbox in Mat-Table
-	 */
-	// checkboxLabel(row?: any): string {
-	// 	if (!row) {
-	// 		return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
-	// 	}
-	// 	return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
-	// }
-	// masterToggle() {
-	// 	this.isAllSelected() ?
-	// 		this.selection.clear() :
-	// 		this.dataSource.data.forEach(row => this.selection.select(row));
-	// }
 	onItemChange(event) {
 		this.filterData = [];
 		this.ShowTable = true;
-		this.filterData = this.loiDetails.filter(element => element.loiNumber === event.target.defaultValue);
-		this.sum = this.filterData[0].amount;
-		console.log('sum', this.sum);
+		this.sum = 0;
+		let data = this.loiDetails.filter(element => element.loiNumber === event.target.defaultValue);
+		this.filterData = data.reduce((r, { charges }) => {
+			charges.forEach(o => r.push({ ...o }));
+			return r;
+		}, []);
+		this.filterData.forEach(element => {
+			this.sum += Number(element.amount)
+		});
 
 	}
 	makePayment(loiNumber: any) {
-		console.log('make Payment', loiNumber);
 		this.redirectToPayment(this.code, this.id, loiNumber);
 	}
 
@@ -174,9 +128,5 @@ export class LoiPaymentComponent implements OnInit {
 					this.commonService.openAlert("Error", "Error Occured for final submit : " + err.error[0].message, "warning")
 				}
 			});
-
 	}
-
-
-
 }

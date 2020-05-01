@@ -33,10 +33,7 @@ export class GatewayResponseComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		let loi = this.sessionStore.get('lioNumber');
-
-		console.log('LoiNumber in gateway-response', loi);
-
+		
 		this.route.queryParams.subscribe(param => {
 			// if (param && param.rqst_token) {
 			if (param && param.order_id) {
