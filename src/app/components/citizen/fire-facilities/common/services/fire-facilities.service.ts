@@ -19,9 +19,10 @@ export class FireFacilitiesService {
 	 * @param provisionalNo - provisional noc number 
 	 */
 	searchByProvisionalNumber(provisionalNo:any) {
-		const formData = new FormData();
-		formData.append('provisionalNo', provisionalNo);
-		return this.http.postFormData(`api/form/finalFireNoc/searchByProvisionalNumber`, formData);
+		//const formData = new FormData();
+		//formData.append('provisionalNo', provisionalNo);
+    let obj = { refNumber: provisionalNo };
+		return this.http.postFormData(`api/form/finalFireNoc/searchByProvisionalNumber`, obj);
 	}
 
 	/**
@@ -49,9 +50,10 @@ export class FireFacilitiesService {
 	 * @param provisionalNo - provisional hospital noc number 
 	 */
 	searchFinalHospitalNOC(provisionalNo:any) {
-		const formData = new FormData();
-		formData.append('provisionalNo', provisionalNo);
-		return this.http.postFormData(`api/form/finalHospitalNoc/searchByProvisionalNumber`, formData);
+		//const formData = new FormData();
+		//formData.append('provisionalNo', provisionalNo);
+    let obj = { refNumber: provisionalNo };
+		return this.http.postFormData(`api/form/finalHospitalNoc/searchByProvisionalNumber`, obj);
 	}
 
 	/**
