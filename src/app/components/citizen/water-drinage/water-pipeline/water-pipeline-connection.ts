@@ -219,6 +219,7 @@ export class WaterPipelineConnection implements OnInit {
       // }),
       waterPipelineZoneId: [null, [Validators.required]],
       waterPipelineWardId: [null, [Validators.required]],
+      pinCode: [null, Validators.required],
       //firmCity: [null, [Validators.required, Validators.maxLength(10)]],
       tpNo: [null],
       fpNo: [null],

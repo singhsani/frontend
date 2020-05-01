@@ -104,6 +104,7 @@ export class DrainagePipelineConnectionComponent implements OnInit {
       // }),
       drainagePipelineZoneId: [null, [Validators.required]],
       drainagePipelineWardId: [null, [Validators.required]],
+      pinCode: [null, Validators.required],
       //firmCity: [null, [Validators.required, Validators.maxLength(10)]],
       tpNo: [null],
       fpNo: [null],

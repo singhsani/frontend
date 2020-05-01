@@ -76,6 +76,10 @@
 
 				<div class="row">
 					<mat-form-field class="col-md-4">
+						<input matInput OnlyNumber formControlName="pinCode"
+						placeholder="{{'pin-code' | translate:translateKey}}" minlength="6" maxlength="6">
+					</mat-form-field>
+					<mat-form-field class="col-md-4">
 						<input matInput type="tel"  formControlName="tpNo"
 							placeholder="{{'tp-no' | translate: translateKey }} " minlength="6" maxlength="6">
 						<!-- <control-messages [control]="waterPipeliConnectionForm.get('tpNo')"></control-messages> -->

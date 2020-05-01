@@ -106,7 +106,7 @@
               <div>upload</div>
             </ng-template>
 
-            <div class="row" id="parth1" *ngIf="!isFromShow">
+            <div class="row" *ngIf="!isFromShow">
               <ng-container
                 *ngFor="let doc of waterPipelineWorkCompletionForm.get('serviceDetail').get('serviceUploadDocuments').value">
                 <div class="col-md-4" *ngIf="doc.requiredOnCitizenPortal && doc.isActive">
