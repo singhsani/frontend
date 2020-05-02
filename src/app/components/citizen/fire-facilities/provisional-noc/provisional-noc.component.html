@@ -113,7 +113,7 @@
 						<control-messages [control]="provisionalNocForm.get('usageTypeId').get('code')"></control-messages>
 					</div>
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" required maxlength="200" placeholder="{{'subject_to' | translate:translateKey}}"
+						<input matInput appValidationFields [validationFieldsType]="'alphanumericWithSpace'" type="text" required maxlength="200" placeholder="{{'subject_to' | translate:translateKey}}"
 						 formControlName="subjectTo">
 						<control-messages [control]="provisionalNocForm.get('subjectTo')"></control-messages>
 					</mat-form-field>
