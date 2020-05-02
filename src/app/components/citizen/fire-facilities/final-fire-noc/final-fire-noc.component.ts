@@ -228,6 +228,7 @@ export class FinalFireNocComponent implements OnInit {
 				serviceCode: res.serviceCode,
 				applicationNo: res.applicationNo,
 				finalFireNocNumber: res.finalFireNocNumber,
+        applicationDate : res.applicationDate,
 
 				// periodFrom: res.periodFrom,
 				// periodTo: res.periodTo,

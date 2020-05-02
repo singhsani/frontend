@@ -222,6 +222,7 @@ export class FinalHospitalNocComponent implements OnInit {
 				pid: res.pid,
 				outwardNo: res.outwardNo,
 				agree: res.agree,
+        applicationDate : res.applicationDate,
 
 				paymentStatus: res.paymentStatus,
 				canEdit: res.canEdit,
