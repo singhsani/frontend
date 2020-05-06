@@ -20,7 +20,7 @@ export class TempStructureNocComponent implements OnInit {
 	@ViewChild('permanantAddressEstablishment') permanantAddressEstablishment: any;
 
 	tempStructureNocForm: FormGroup;
-	translateKey: string = 'temporaryStuctureFireNocScreen';
+	translateKey: string = 'temporaryStructureFireNocScreen';
 
 	formId: number;
 	apiCode: string;

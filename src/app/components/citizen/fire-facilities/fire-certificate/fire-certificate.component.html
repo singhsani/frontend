@@ -41,7 +41,7 @@
 
 					<mat-form-field class="col-md-4">
 						<input matInput [max]="disablefutureDate" [matDatepicker]="DateOfincidentDate" formControlName="incidentDate"
-						 (dateChange)="dateFormat($event.value,'incidentDate')" placeholder="{{ 'incident_Date' | translate:translateKey }}">
+						 (dateChange)="dateFormat($event.value,'incidentDate')" placeholder="{{ 'incident_Date' | translate:translateKey }} *">
 						<mat-datepicker-toggle matSuffix [for]="DateOfincidentDate"></mat-datepicker-toggle>
 						<mat-datepicker touchUi="true" #DateOfincidentDate></mat-datepicker>
 						<div align="end" class="default-show-hint mat-hint mat-right">{{fireFacilityConfig.DATE_HINT_MSG}}</div>

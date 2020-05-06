@@ -117,7 +117,7 @@ export class FireCertificateComponent implements OnInit {
       connectionHolderAddressGuj: [null, [Validators.required, Validators.maxLength(1500)]],
       propertyNo: [null, [Validators.required, Validators.maxLength(15)]],
       firePlaceType: this.fb.group({
-        code: [null]
+        code: [null, [Validators.required]]
       }),
       fireLossAmount: [null, [Validators.required, Validators.maxLength(50)]],
       attachments: []

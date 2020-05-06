@@ -11,19 +11,19 @@
 			<!-- step 1 Starts -->
 			<mat-tab>
 				<ng-template mat-tab-label>
-					<div>{{'applicant_detail' | translate:translateKey}}</div>
+					<div>{{'applicant_detail' | translate: translateKey}}</div>
 				</ng-template>
 
 				<div class="row">
 					<mat-form-field class="col-md-4" *ngIf="provisionalNocForm.get('fileStatus').value != 'DRAFT'">
-						<input matInput readonly placeholder="{{'provisional_noc_number' | translate:translateKey}}" formControlName="provisionalNocNumber">
+						<input matInput readonly placeholder="{{'provisional_noc_number' | translate: translateKey}}" formControlName="provisionalNocNumber">
 					</mat-form-field>
 					<mat-form-field class="col-md-4" *ngIf="provisionalNocForm.get('oldReferenceNumber').value">
-						<input matInput readonly placeholder="{{'old_reference_number' | translate:translateKey}}" formControlName="oldReferenceNumber">
+						<input matInput readonly placeholder="{{'old_reference_number' | translate: translateKey}}" formControlName="oldReferenceNumber">
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
 						<!--<input matInput readonly placeholder="{{'application_date' | translate:translateKey}}" formControlName="applicationDate">-->
-            <input appDate matInput placeholder="{{'application_date' | translate:translateKey}}"
+            <input appDate matInput placeholder="{{'application_Date' | translate: translateKey}}"
                    [matDatepicker]="townHallBookingfromPicker3" formControlName="applicationDate">
             <mat-datepicker-toggle matSuffix [for]="townHallBookingfromPicker3"></mat-datepicker-toggle>
             <mat-datepicker #townHallBookingfromPicker3 touchUi="true"></mat-datepicker>
@@ -36,14 +36,14 @@
 
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace' required maxlength="100"
-						 placeholder="{{'applicant_name' | translate:translateKey}}" formControlName="applicantName" appGujInputSource
+						 placeholder="{{'applicant_Name' | translate:translateKey}}" formControlName="applicantName" appGujInputSource
 						 targetElement="applicantNameGuj" [form]="provisionalNocForm" style="padding-bottom:10px;">
 						<control-messages [control]="provisionalNocForm.get('applicantName')"></control-messages>
 					</mat-form-field>
 					<!-- gujarati -->
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" maxlength="300" required formControlName="applicantNameGuj" appGujInputTarget [form]="provisionalNocForm"
-						 placeholder="{{ 'applicant_name' | translate:translateKey:'gu' }}">
+						 placeholder="{{ 'applicant_Name' | translate:translateKey:'gu' }}">
 						<control-messages [control]="provisionalNocForm.get('applicantNameGuj')"></control-messages>
 					</mat-form-field>
 					<!-- gujarati -->
@@ -216,7 +216,7 @@
 					<!-- /gujarati -->
 
 					<div class="col-md-4 ngSelect" formGroupName="fireVendorType">
-						<ng-select placeholder="{{'fire_vendor_type' | translate:translateKey}} " formControlName="code">
+						<ng-select placeholder="{{'fire_vendor_type' | translate:translateKey}} *" formControlName="code">
 							<ng-option *ngFor="let type of FS_FIRE_VENDOR_TYPE" [value]="type.code">{{type.name}}</ng-option>
 						</ng-select>
 						<control-messages [control]="provisionalNocForm.get('fireVendorType').get('code')"></control-messages>
@@ -350,11 +350,7 @@
 						<input matInput required OnlyNumber maxlength="3" type="tel" formControlName="noOfVentilation" placeholder="{{'no_of_ventilation' | translate:translateKey }}">
 						<control-messages [control]="provisionalNocForm.get('noOfVentilation')"></control-messages>
 					</mat-form-field>
-					<mat-form-field class="col-md-4">
-						<input matInput maxlength="20" required appAlphaNumeric placeholder="{{'ventilation_provision_detail' | translate:translateKey}}"
-						 formControlName="ventilationProvisionDetail">
-						<control-messages [control]="provisionalNocForm.get('ventilationProvisionDetail')"></control-messages>
-					</mat-form-field>
+
 					<mat-form-field class="col-md-4">
 						<input matInput required  appNumeric maxlength="4" type="tel" formControlName="plotArea" placeholder="{{'plot_area' | translate:translateKey }}">
 						<control-messages [control]="provisionalNocForm.get('plotArea')"></control-messages>
@@ -376,6 +372,11 @@
 						</mat-radio-group>
 						<control-messages [control]="provisionalNocForm.get('drawingProvided')"></control-messages>
 					</div>
+          <mat-form-field class="col-md-5">
+            <input matInput maxlength="5" required appAlphaNumeric placeholder="{{'ventilation_provision_detail' | translate:translateKey}}"
+                   formControlName="ventilationProvisionDetail">
+            <control-messages [control]="provisionalNocForm.get('ventilationProvisionDetail')"></control-messages>
+          </mat-form-field>
 				</div>
 				<div class="row">
 					<mat-form-field class="col-md-4">
