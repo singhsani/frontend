@@ -11,19 +11,19 @@
 			<!-- step 1 Starts -->
 			<mat-tab>
 				<ng-template mat-tab-label>
-					<div>{{'applicant_detail' | translate:translateKey}}</div>
+					<div>{{'applicant_detail' | translate: translateKey}}</div>
 				</ng-template>
 
 				<div class="row">
 					<mat-form-field class="col-md-4" *ngIf="provisionalNocForm.get('fileStatus').value != 'DRAFT'">
-						<input matInput readonly placeholder="{{'provisional_noc_number' | translate:translateKey}}" formControlName="provisionalNocNumber">
+						<input matInput readonly placeholder="{{'provisional_noc_number' | translate: translateKey}}" formControlName="provisionalNocNumber">
 					</mat-form-field>
 					<mat-form-field class="col-md-4" *ngIf="provisionalNocForm.get('oldReferenceNumber').value">
-						<input matInput readonly placeholder="{{'old_reference_number' | translate:translateKey}}" formControlName="oldReferenceNumber">
+						<input matInput readonly placeholder="{{'old_reference_number' | translate: translateKey}}" formControlName="oldReferenceNumber">
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
 						<!--<input matInput readonly placeholder="{{'application_date' | translate:translateKey}}" formControlName="applicationDate">-->
-            <input appDate matInput placeholder="{{'application_date' | translate:translateKey}}"
+            <input appDate matInput placeholder="{{'application_Date' | translate: translateKey}}"
                    [matDatepicker]="townHallBookingfromPicker3" formControlName="applicationDate">
             <mat-datepicker-toggle matSuffix [for]="townHallBookingfromPicker3"></mat-datepicker-toggle>
             <mat-datepicker #townHallBookingfromPicker3 touchUi="true"></mat-datepicker>
@@ -36,14 +36,14 @@
 
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace' required maxlength="100"
-						 placeholder="{{'applicant_name' | translate:translateKey}}" formControlName="applicantName" appGujInputSource
+						 placeholder="{{'applicant_Name' | translate:translateKey}}" formControlName="applicantName" appGujInputSource
 						 targetElement="applicantNameGuj" [form]="provisionalNocForm" style="padding-bottom:10px;">
 						<control-messages [control]="provisionalNocForm.get('applicantName')"></control-messages>
 					</mat-form-field>
 					<!-- gujarati -->
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" maxlength="300" required formControlName="applicantNameGuj" appGujInputTarget [form]="provisionalNocForm"
-						 placeholder="{{ 'applicant_name' | translate:translateKey:'gu' }}">
+						 placeholder="{{ 'applicant_Name' | translate:translateKey:'gu' }}">
 						<control-messages [control]="provisionalNocForm.get('applicantNameGuj')"></control-messages>
 					</mat-form-field>
 					<!-- gujarati -->
