@@ -273,15 +273,15 @@ export class ProHospitalNocComponent implements OnInit {
 			anyEvacuationPlan: [null, [Validators.required, Validators.maxLength(10)]],//true false
 			evacuationDrillPerformed: [null, [Validators.required, Validators.maxLength(10)]],//true false
 			firefightingSystemAvailability: [null, [Validators.required, Validators.maxLength(10)]],//true false
-			yardHydrant: [null, [Validators.maxLength(100)]],
-			raiserAvailability: [null, [Validators.maxLength(10)]],//true false
-			noOfRaiser: [null, [Validators.maxLength(5)]],
+			yardHydrant: [null, [Validators.required, Validators.maxLength(100)]],
+			raiserAvailability: [null, [Validators.required, Validators.maxLength(10)]],//true false
+			noOfRaiser: [null, [Validators.required, Validators.maxLength(5)]],
 			smokeDetector: [null, [Validators.maxLength(10)]],//true false
-			sprinkler: [null, [Validators.maxLength(50)]],
+			sprinkler: [null, [Validators.required, Validators.maxLength(50)]],
 			fireAlarmAttachedWith: this.fb.group({
-				code: [null]
+				code: [null, [Validators.required]]
 			}),
-			autoExhaustSystem: [null, [Validators.maxLength(50)]],
+			autoExhaustSystem: [null, [Validators.required, Validators.maxLength(50)]],
 			electricalSafety: [null, [Validators.required, Validators.maxLength(50)]],
 			evacuationSignBoard: [null, [Validators.required, Validators.maxLength(50)]],
 			refugeArea: [null, [Validators.required, Validators.maxLength(50)]],
