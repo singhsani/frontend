@@ -171,7 +171,7 @@
 
 					<div class="col-md-4">
 						<div class="row">
-							<div class="col-md-12 radioBtnError">
+							<div class="radioBtnError">
 								<mat-label>{{'land_owner_consent_included' | translate:translateKey }} *</mat-label>
 								<mat-radio-group formControlName="landOwnerConsentIncluded" required (change)="dependentAttachment($event.value,'LAND_OWNER_CONCERN_LETTER')">
 									<mat-radio-button [value]="true">
@@ -295,7 +295,7 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput required OnlyNumber maxlength="3" type="tel" formControlName="noOfExits" placeholder="{{'no_of_exits' | translate:translateKey }}">
+						<input matInput required OnlyNumber maxlength="3" type="tel" formControlName="noOfExits" placeholder="{{'no_of_eExits' | translate:translateKey }}">
 						<control-messages [control]="tempStructureNocForm.get('noOfExits')"></control-messages>
 					</mat-form-field>
 
