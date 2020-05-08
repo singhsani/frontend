@@ -658,20 +658,20 @@
 						<control-messages [control]="provisionalHospitalNocForm.get('anyEvacuationPlan')"></control-messages>
 					</div>
 
-					<div class="col-md-4 ngSelect" formGroupName="stairCase">
+					<div class="col-md-3 ngSelect" formGroupName="stairCase">
 						<ng-select placeholder="{{'stair_case' | translate:translateKey}} *" formControlName="code">
 							<ng-option *ngFor="let type of FS_STAIR_CASE" [value]="type.code">{{type.name}}</ng-option>
 						</ng-select>
 						<control-messages [control]="provisionalHospitalNocForm.get('stairCase').get('code')"></control-messages>
 					</div>
 
-					<mat-form-field class="col-md-4">
+					<mat-form-field class="col-md-3">
 						<input matInput type="text" formControlName="exitGateDetail" placeholder="{{'exit_gate_detail' | translate: translateKey }} *"
 						 maxlength="50">
 						<control-messages [control]="provisionalHospitalNocForm.get('exitGateDetail')"></control-messages>
 					</mat-form-field>
 
-					<div class="col-md-4 ngSelect" formGroupName="otherBusinessDetail">
+					<div class="col-md-6 ngSelect" formGroupName="otherBusinessDetail">
 						<ng-select placeholder="{{'other_business_detail' | translate:translateKey}} *" formControlName="code">
 							<ng-option *ngFor="let type of FS_OTHER_BUSINESS_DETAIL" [value]="type.code">{{type.name}}</ng-option>
 						</ng-select>
