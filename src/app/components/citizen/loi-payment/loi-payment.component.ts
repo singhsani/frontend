@@ -22,7 +22,6 @@ import { SessionStorageService } from 'angular-web-storage';
 export class LoiPaymentComponent implements OnInit {
 
 	@ViewChild("paymentGateway") paymentGateway: any;
-
 	loiPaymentForm: FormGroup;
 	applicationNumber;
 	uniqueId: string;
@@ -35,7 +34,6 @@ export class LoiPaymentComponent implements OnInit {
 	filterData: any;
 	sum = 0;
 	loiRecords: any = [];
-
 
 	constructor(
 		private formService: FormsActionsService,
@@ -116,7 +114,6 @@ export class LoiPaymentComponent implements OnInit {
 						<p>Rupees in words</p>
 					</div>
 					`
-
 					this.commonService.commonAlert('Payment Details', '', 'info', 'Make Payment!', false, html, cb => {
 						this.paymentGateway.setPaymentDetailsFromActionBar(payData);
 						this.paymentGateway.openModel();

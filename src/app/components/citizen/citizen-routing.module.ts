@@ -34,7 +34,6 @@ const routes: Routes = [
 			{ path: 'payable-services', component: CommonPaybleComponent, canActivate: [AuthGuard] },
 			{ path: 'payment-response', component: GatewayResponseComponent, canActivate: [AuthGuard] },
 			{ path: 'loi-payments/:uniqueId/:id/:code', component: LoiPaymentComponent, canActivate: [AuthGuard] },
-			
 			{ path: 'certificates', loadChildren: './certificates/certificates.module#CertificatesModule', canLoad: [AuthGuard] },
 			{ path: 'bookings', loadChildren: './facilities/bookings/bookings.module#BookingsModule', canLoad: [AuthGuard] },
 			{ path: 'ticketings', loadChildren: './facilities/ticketings/ticketings.module#TicketingsModule', canLoad: [AuthGuard] },
