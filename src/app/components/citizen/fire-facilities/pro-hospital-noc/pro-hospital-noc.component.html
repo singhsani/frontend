@@ -658,20 +658,20 @@
 						<control-messages [control]="provisionalHospitalNocForm.get('anyEvacuationPlan')"></control-messages>
 					</div>
 
-					<div class="col-md-4 ngSelect" formGroupName="stairCase">
+					<div class="col-md-3 ngSelect" formGroupName="stairCase">
 						<ng-select placeholder="{{'stair_case' | translate:translateKey}} *" formControlName="code">
 							<ng-option *ngFor="let type of FS_STAIR_CASE" [value]="type.code">{{type.name}}</ng-option>
 						</ng-select>
 						<control-messages [control]="provisionalHospitalNocForm.get('stairCase').get('code')"></control-messages>
 					</div>
 
-					<mat-form-field class="col-md-4">
-						<input matInput type="text" formControlName="exitGateDetail" placeholder="{{'exit_gate_detail' | translate: translateKey }} "
+					<mat-form-field class="col-md-3">
+						<input matInput type="text" formControlName="exitGateDetail" placeholder="{{'exit_gate_detail' | translate: translateKey }} *"
 						 maxlength="50">
 						<control-messages [control]="provisionalHospitalNocForm.get('exitGateDetail')"></control-messages>
 					</mat-form-field>
 
-					<div class="col-md-4 ngSelect" formGroupName="otherBusinessDetail">
+					<div class="col-md-6 ngSelect" formGroupName="otherBusinessDetail">
 						<ng-select placeholder="{{'other_business_detail' | translate:translateKey}} *" formControlName="code">
 							<ng-option *ngFor="let type of FS_OTHER_BUSINESS_DETAIL" [value]="type.code">{{type.name}}</ng-option>
 						</ng-select>
@@ -679,7 +679,7 @@
 					</div>
 
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" formControlName="riskSegregation" placeholder="{{'risk_segregation' | translate: translateKey }} "
+						<input matInput type="text" formControlName="riskSegregation" placeholder="{{'risk_segregation' | translate: translateKey }} *"
 						 maxlength="50">
 						<control-messages [control]="provisionalHospitalNocForm.get('riskSegregation')"></control-messages>
 					</mat-form-field>
@@ -711,8 +711,8 @@
 					</div>
 
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" formControlName="yardHydrant" placeholder="{{'yard_hydrant' | translate: translateKey }} "
-						 maxlength="50">
+						<input matInput type="text" formControlName="yardHydrant" placeholder="{{'yard_hydrant' | translate: translateKey }} *"
+						 maxlength="100">
 						<control-messages [control]="provisionalHospitalNocForm.get('yardHydrant')"></control-messages>
 					</mat-form-field>
 
@@ -730,7 +730,7 @@
 					</div>
 
 					<mat-form-field class="col-md-4">
-						<input matInput OnlyNumber maxlength="4" type="tel" formControlName="noOfRaiser" placeholder="{{'no_of_raiser' | translate:translateKey }}">
+						<input matInput OnlyNumber maxlength="4" type="tel" formControlName="noOfRaiser" placeholder="{{'no_of_raiser' | translate:translateKey }} *">
 						<control-messages [control]="provisionalHospitalNocForm.get('noOfRaiser')"></control-messages>
 					</mat-form-field>
 
@@ -748,20 +748,20 @@
 					</div>
 
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" formControlName="sprinkler" placeholder="{{'sprinkler' | translate: translateKey }} "
+						<input matInput type="text" formControlName="sprinkler" placeholder="{{'sprinkler' | translate: translateKey }} *"
 						 maxlength="50">
 						<control-messages [control]="provisionalHospitalNocForm.get('sprinkler')"></control-messages>
 					</mat-form-field>
 
 					<div class="col-md-4 ngSelect" formGroupName="fireAlarmAttachedWith">
-						<ng-select placeholder="{{'fire_alarm_attached_with' | translate:translateKey}} " formControlName="code">
+						<ng-select placeholder="{{'fire_alarm_attached_with' | translate:translateKey}} *" formControlName="code">
 							<ng-option *ngFor="let type of FS_FIRE_ALARM_ATTACHED_WTIH" [value]="type.code">{{type.name}}</ng-option>
 						</ng-select>
 						<control-messages [control]="provisionalHospitalNocForm.get('fireAlarmAttachedWith').get('code')"></control-messages>
 					</div>
 
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" formControlName="autoExhaustSystem" placeholder="{{'auto_exhaust_system' | translate: translateKey }} "
+						<input matInput type="text" formControlName="autoExhaustSystem" placeholder="{{'auto_exhaust_system' | translate: translateKey }} *"
 						 maxlength="50">
 						<control-messages [control]="provisionalHospitalNocForm.get('autoExhaustSystem')"></control-messages>
 					</mat-form-field>
