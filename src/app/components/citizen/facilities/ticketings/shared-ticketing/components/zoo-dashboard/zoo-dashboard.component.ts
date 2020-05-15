@@ -18,7 +18,7 @@ export class ZooDashboardComponent implements OnInit {
     {
       'code': 'ZOOBOOK',
       'fieldView': 'ALL',
-      'name': 'Zoo',
+      'name': 'Zoo Ticket',
       'gujName': 'પ્રાણી સંગ્રહાલય',
       'appointmentRequired': false,
       'active': true

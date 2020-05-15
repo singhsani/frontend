@@ -209,6 +209,15 @@ export class ZooBookingComponent implements OnInit {
   }
 
   /**
+	  * disble thursday for vistior date.
+	*/
+  disableThursday(d: Date) {
+    if(d.getDay() != 4) {
+      return d;
+    }
+  }
+
+  /**
 	  * Get Zoo Visiting Rates from api.
 	*/
   getZooVisitingRates() {
