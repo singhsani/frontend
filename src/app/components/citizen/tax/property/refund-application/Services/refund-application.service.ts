@@ -35,7 +35,7 @@ export class RefundApplicationService {
 
   
   approveDept(data: any) {
-    return this.http.post(`${Constants.assessmentModuleApiUrl}refundagainstvacancy/submitNewgen`, data,
+    return this.http.post(`${Constants.assessmentModuleApiUrl}refundagainstvacancy/submitNewgen?refundAgainstVacancyId=${data}`,
     { observe: 'response' })
       .pipe(map((response: any) => response))
   }
