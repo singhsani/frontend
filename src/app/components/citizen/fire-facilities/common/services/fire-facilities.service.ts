@@ -36,7 +36,7 @@ export class FireFacilitiesService {
 		// return this.http.postFormData(`api/form/revisedFireNoc/searchByNocNumber`, formData);
 
 		let obj = { refNumber: nocNo };
-		return this.http.postFormData(`api/form/finalFireNoc/searchFromNewgen`, obj);
+		return this.http.postFormData(`api/form/revisedFireNoc/searchFromNewgen`, obj);
 	}
 
 	/**
@@ -48,7 +48,7 @@ export class FireFacilitiesService {
 		// formData.append('finalNocNo', finalNocNo);
 		// return this.http.postFormData(`api/form/renewalFireNoc/searchByFinalNocNumber`, formData);
 		let obj = { refNumber: finalNocNo };
-		return this.http.postFormData(`api/form/revisedFireNoc/searchFromNewgen`, obj);
+		return this.http.postFormData(`api/form/renewalFireNoc/searchFromNewgen`, obj);
 	}
 
 	/**
