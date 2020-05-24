@@ -7,6 +7,8 @@ import { downloadFile } from 'src/app/vmcshared/downloadFile';
 import { RefundApplicationDataSharingService } from '../../Services/refund-application-data-sharing.service';
 import { CommonService } from 'src/app/vmcshared/Services/common-service';
 import { MatStepper } from '@angular/material';
+import { ManageRoutes } from 'src/app/config/routes-conf';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-refund-application-form',
@@ -31,6 +33,7 @@ export class RefundApplicationFormComponent implements OnInit {
     constructor(private refundApplicationService: RefundApplicationService,
         private alertService: AlertService,
         private commonService : CommonService,
+        private router: Router,
         private refundApplicationDataSharingService: RefundApplicationDataSharingService) { }
 
     ngOnInit() {
@@ -127,11 +130,12 @@ export class RefundApplicationFormComponent implements OnInit {
       }
     
       onSubmitApproved() {
-        this.refundApplicationService.approveDept({ refundAgainstVacancyId: this.refundAgainstVacancyId }).subscribe(
+        this.refundApplicationService.approveDept(this.refundAgainstVacancyId).subscribe(
           (data) => {
-            this.alertService.success(data.body.message);
-            this.refundApplicationDataSharingService.setIsShowForm(false);
-            this.refundApplicationDataSharingService.setIsShowApproval(true);
+            this.alertService.success(data.message);
+            this.router.navigateByUrl('/citizen/my-applications');
+           // this.refundApplicationDataSharingService.setIsShowForm(false);
+           // this.refundApplicationDataSharingService.setIsShowApproval(true);
           },
           (error) => {
             if (error.status === 400) {

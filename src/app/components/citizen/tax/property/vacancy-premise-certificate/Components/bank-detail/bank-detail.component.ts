@@ -10,6 +10,7 @@ import { Subscription } from 'rxjs';
 import * as moment from 'moment';
 import { PaymentDataSharingService } from 'src/app/vmcshared/component/payment/payment-data-sharing.service';
 import { MatStepper } from '@angular/material';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-bank-detail',
@@ -35,6 +36,7 @@ export class BankDetailComponent implements OnInit, OnDestroy {
     private vacancyPremiseCertificateDataSharingService: VacancyPremiseCertificateDataSharingService,
     private paymentDataSharingService: PaymentDataSharingService,
     private commonService: CommonService,
+    private router: Router,
     private vacancyPremiseCertificateService: VacancyPremiseCertificateService,
     private alertService: AlertService) {
 
@@ -181,6 +183,7 @@ export class BankDetailComponent implements OnInit, OnDestroy {
         // this.onClear();
        //downloadFile(data, "approve-" + Date.now() + ".pdf", 'application/pdf');
        this.alertService.success(data.message);
+       this.router.navigateByUrl('/citizen/my-applications');
        this.paymentDataSharingService.updatedDataModelFileDownload(data.body.data);
       },
       (error) => {
