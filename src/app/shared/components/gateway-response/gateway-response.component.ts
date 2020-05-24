@@ -37,7 +37,9 @@ export class GatewayResponseComponent implements OnInit {
 		this.route.queryParams.subscribe(param => {
 			// if (param && param.rqst_token) {
 			if (param && param.order_id) {
-				this.gatewayResponse(param.order_id, param.searchable);
+				
+				var token = param.order_id+'&order_status='+param.order_status;
+				this.gatewayResponse(token, param.searchable);
 			} else if (param && param.txtRefNo) {
 				this.getBillDeskTransactionDetails(param.txtRefNo);
 			} else {
@@ -96,6 +98,7 @@ export class GatewayResponseComponent implements OnInit {
 		this.formService.getCCAvenuePaymentResponse(token).subscribe(res => {
 			this.responseObj = res.data;
 			if (res.success) {
+				this.responseObj = this.responseObj[this.responseObj.length - 1];
 				if (this.responseObj.order_status == 'Success') {
 					this.paymentStatus = _.upperCase(this.responseObj.order_status);
 					this.postSessionData(this.dispData, 'CCAVENUE', this.responseObj);
