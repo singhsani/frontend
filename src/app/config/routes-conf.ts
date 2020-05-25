@@ -225,6 +225,26 @@ const ROUTEMAIN = {
         'main': 'drngPipeConnWorkCompletion',
         'type': 'drngPipeConnWorkCompletion'
     },
+    'HEL-WTR-DRAINAGE-CONNECTION' : {
+        'main': 'newDrainageConnection',
+        'type': 'newDrainageConnection' 
+    },
+
+    
+    'HEL-WTR-DRAINAGE-DISCONNECTION': {
+        'main': 'drainageDisconnection',
+        'type': 'drainageDisconnection'
+    },
+    'HEL-WTR-DRAINAGE-RECONNECTION': {
+        'main': 'drainageReconnection',
+        'type': 'drainageReconnection'
+    },
+    'HEL-WTR-DRAINAGE-TRANS-CONNECTION' : {
+        'main': 'drainageTransferConnection',
+        'type': 'drainageTransferConnection' 
+    },
+
+
     'WTR-DISCON': {
         'main': 'disconnection',
         'type': 'disconnection'
@@ -745,6 +765,18 @@ const ROUTESLIST = {
     },
     'HEL-DRNGPIP-WRK-COMPL': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TAXMODULE + '/' + ROUTEPREFIX.WATERDRINAGE + '/' + ROUTEMAIN["HEL-DRNGPIP-WRK-COMPL"].main
+    },
+    'HEL-WTR-DRAINAGE-DISCONNECTION': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TAXMODULE + '/' + ROUTEPREFIX.WATERDRINAGE + '/' + ROUTEMAIN["HEL-WTR-DRAINAGE-DISCONNECTION"].main
+    },
+    'HEL-WTR-DRAINAGE-RECONNECTION': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TAXMODULE + '/' + ROUTEPREFIX.WATERDRINAGE + '/' + ROUTEMAIN["HEL-WTR-DRAINAGE-RECONNECTION"].main
+    },
+    'HEL-WTR-DRAINAGE-TRANS-CONNECTION': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TAXMODULE + '/' + ROUTEPREFIX.WATERDRINAGE + '/' + ROUTEMAIN["HEL-WTR-DRAINAGE-TRANS-CONNECTION"].main
+    },
+    'HEL-WTR-DRAINAGE-CONNECTION': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TAXMODULE + '/' + ROUTEPREFIX.WATERDRINAGE + '/' + ROUTEMAIN["HEL-WTR-DRAINAGE-CONNECTION"].main
     },
     'WTR-DISCON': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TAXMODULE + '/' + ROUTEPREFIX.WATERMODULE + '/' + ROUTEMAIN["WTR-DISCON"].main
