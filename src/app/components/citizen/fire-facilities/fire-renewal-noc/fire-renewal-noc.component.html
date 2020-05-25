@@ -60,7 +60,7 @@
 
 					<mat-form-field class="col-md-4">
 						<!-- <span matPrefix>+91 &nbsp;</span> -->
-						<input matInput OnlyNumber placeholder="{{'applicant_contactNo' | translate:translateKey}}" type="tel"
+						<input matInput OnlyNumber placeholder="{{'applicant_mobile' | translate:translateKey}}" type="tel"
 						 [maxlength]="fireFacilityConfig.contactNumberLength" formControlName="contactNo" required>
 						<control-messages [control]="renewalFireNocForm.get('contactNo')"></control-messages>
 					</mat-form-field>
@@ -102,6 +102,7 @@
 				</div>
 				<app-action-bar [form]="renewalFireNocForm" (tabIndex)="fireFacilityConfig.onFormTabChange($event)"
 				 (handleOnSaveAndNext)="handleOnSaveAndNext($event)" [stepInfo]="{step: 'step1', next: 1, back: 0}"></app-action-bar>
+				 
 			</mat-tab>
 			<!-- step 1 Ends -->
 

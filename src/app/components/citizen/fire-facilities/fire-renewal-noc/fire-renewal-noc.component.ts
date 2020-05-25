@@ -150,8 +150,8 @@ export class FireRenewalNocComponent implements OnInit {
 				this.renewalFireNocForm.patchValue(res);
 				this.fireFacilityConfig.isAttachmentButtonsVisible = true;
 
-				this.renewalFireNocForm.disable();
-				this.renewalFireNocForm.get('apiType').enable();
+				//this.renewalFireNocForm.disable();
+			//	this.renewalFireNocForm.get('apiType').enable();
 
 				res.serviceDetail.serviceUploadDocuments.forEach(app => {
 					(<FormArray>this.renewalFireNocForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.fireFacilityConfig.createDocumentsGrp(app));
@@ -180,6 +180,7 @@ export class FireRenewalNocComponent implements OnInit {
      */
 	createRecordPatchSerachData(searchData: any) {
 		this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
+		
 		this.formService.createFormData().subscribe(res => {
 
 			this.formId = res.serviceFormId;
@@ -207,6 +208,8 @@ export class FireRenewalNocComponent implements OnInit {
 				canSubmit: res.canSubmit,
 				serviceCode: res.serviceCode,
 				applicationNo: res.applicationNo,
+				applicationDate: res.applicationDate,
+				contactNo:res.mobileNo,
 
 				// periodFrom: res.periodFrom,
 				// periodTo: res.periodTo,
@@ -225,8 +228,8 @@ export class FireRenewalNocComponent implements OnInit {
 
 
 
-			this.renewalFireNocForm.disable();
-			this.renewalFireNocForm.get('apiType').enable();
+		//	this.renewalFireNocForm.disable();
+		//	this.renewalFireNocForm.get('apiType').enable();
 
 			res.serviceDetail.serviceUploadDocuments.forEach(app => {
 				app.id = null;
