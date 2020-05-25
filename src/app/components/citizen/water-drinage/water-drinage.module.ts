@@ -11,6 +11,10 @@ import { DrainagePipelineConnectionComponent } from './drainage-pipeline-connect
 import { TaxRebateApplicationService } from '../tax/property/tax-rebate-application/Services/tax-rebate-application.service';
 import { WaterPipelineWorkCompletionComponent } from './water-pipeline-work-completion/water-pipeline-work-completion.component';
 import { DrainagePipelineWorkCompletionComponent } from './drainage-pipeline-work-completion/drainage-pipeline-work-completion.component';
+import { NewDrainageConnectionComponent } from './new-drainage-connection/new-drainage-connection.component';
+import { DrainageDisconnectionComponent } from './drainage-disconnection/drainage-disconnection.component';
+import { DrainageReconnectionComponent } from './drainage-reconnection/drainage-reconnection.component';
+import { DrainageTransferConnectionComponent } from './drainage-transfer-connection/drainage-transfer-connection.component';
 
 
 /* Import all shared, core and routing module end */
@@ -19,7 +23,11 @@ const routes: Routes = [
 	{ path: 'waterPipeLineConnection/:id/:apiCode', component: WaterPipelineConnection },
   { path: 'drainagePipeLineConnection/:id/:apiCode', component: DrainagePipelineConnectionComponent },
   { path: 'wtrPipeConnWorkCompletion/:apiCode', component: WaterPipelineWorkCompletionComponent},
-  { path: 'drngPipeConnWorkCompletion/:apiCode', component: DrainagePipelineWorkCompletionComponent}
+  { path: 'drngPipeConnWorkCompletion/:apiCode', component: DrainagePipelineWorkCompletionComponent},
+  { path: 'newDrainageConnection/:id/:apiCode', component: DrainagePipelineConnectionComponent },
+  { path: 'drainageDisconnection/:apiCode', component: DrainageDisconnectionComponent},
+  { path: 'drainageReconnection/:apiCode', component: DrainageReconnectionComponent},
+  { path: 'drainageTransferConnection/:apiCode', component: DrainageTransferConnectionComponent},
 ];
 
 @NgModule({
@@ -39,7 +47,11 @@ const routes: Routes = [
     FilterAttachmentMRPipe,
     DrainagePipelineConnectionComponent,
     WaterPipelineWorkCompletionComponent,
-    DrainagePipelineWorkCompletionComponent
+    DrainagePipelineWorkCompletionComponent,
+    NewDrainageConnectionComponent,
+    DrainageDisconnectionComponent,
+    DrainageReconnectionComponent,
+    DrainageTransferConnectionComponent
   ]
 })
 export class WaterDrinageModule { }
