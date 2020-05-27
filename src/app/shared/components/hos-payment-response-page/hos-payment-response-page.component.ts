@@ -51,7 +51,8 @@ export class HosPaymentResponsePageComponent implements OnInit {
 			// 	this.router.navigate([ManageRoutes.getFullRoute('HOSPITALDASHBOARD')]);
 			// }
 			if (param && param.order_id) {
-				this.gatewayResponse(param.order_id);
+				var token = param.order_id+'&order_status='+param.order_status;
+				this.gatewayResponse(token);
 			} else if (param && param.txtRefNo) {
 				this.getBillDeskTransactionDetails(param.txtRefNo);
 			} else {
@@ -117,7 +118,7 @@ export class HosPaymentResponsePageComponent implements OnInit {
 			this.responseObj = res.data;
 
 			if (res.success) {
-
+				this.responseObj = this.responseObj[this.responseObj.length - 1];
 				if (this.responseObj.order_status == 'Success') {
 					this.paymentStatus = _.upperCase(this.responseObj.order_status);
 					this.postSessionData(this.dispData, 'CCAVENUE', this.responseObj);
