@@ -20,7 +20,7 @@ export class DrainageTransferConnectionComponent implements OnInit {
   
   drainageTransferconnectionForm: FormGroup;
   translateKey: string = 'drainageTransferConnection';
-  licenseConfiguration: LicenseConfiguration = new LicenseConfiguration();
+  licenseConfiguration: LicenseConfiguration = new LicenseConfiguration(); 
 
   formId: number;
   apiCode: string;

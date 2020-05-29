@@ -17,7 +17,7 @@ import { FormsActionsService } from '../../../../core/services/citizen/data-serv
 })
 export class DrainageDisconnectionComponent implements OnInit {
 
-  drainageDisconnectionForm: FormGroup;
+  drainageDisconnectionForm: FormGroup; 
   translateKey: string = 'drainageDisconnection';
   licenseConfiguration: LicenseConfiguration = new LicenseConfiguration();
 

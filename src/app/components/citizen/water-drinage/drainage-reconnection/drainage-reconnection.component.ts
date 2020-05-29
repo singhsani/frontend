@@ -81,7 +81,7 @@ export class DrainageReconnectionComponent implements OnInit {
      * @param flag - flag of invalid control.
      */
 	handleErrorsOnSubmit(flag) {
-		let step0 = 7;
+		let step0 = 3;
 		let step1 = 6;
 
 		switch (true) {
