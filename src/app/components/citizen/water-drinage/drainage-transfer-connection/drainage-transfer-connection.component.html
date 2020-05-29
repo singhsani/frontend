@@ -1,2 +1,123 @@
 <app-title-bar [title]="'screen_title' | translate: translateKey">
 </app-title-bar>
+<mat-card class="formClass cardBorder">
+	<form [formGroup]="drainageTransferconnectionForm">
+		<mat-tab-group [(selectedIndex)]="licenseConfiguration.currentTabIndex" dynamicHeight="true" mat-stretch-tabs
+			class="stepperNav">
+
+			<!-- step 1 Starts -->
+			<mat-tab>
+				<ng-template mat-tab-label>
+					<div>{{'drainage_transferconnection' | translate:translateKey}}</div>
+				</ng-template>
+
+				<div class="row">
+					<mat-form-field class="col-md-4">
+						<input matInput type="text"  maxlength="30" placeholder="{{'connection_no' | translate:translateKey}}"
+							formControlName="connectionNo" >
+						<control-messages [control]="drainageTransferconnectionForm.get('connectionNo')"></control-messages>
+					</mat-form-field>
+
+					<button mat-raised-button color="primary" type="button" (click)="searchByConnectionNo()"> Go </button>
+
+					<mat-form-field class="col-md-5">
+						<input matInput type="text" readonly placeholder="{{'owner_name' | translate:translateKey}}"
+							formControlName="ownerName" >
+						<control-messages [control]="drainageTransferconnectionForm.get('ownerName')"></control-messages>
+					</mat-form-field>
+					
+				</div>
+
+			
+				<div class="row">
+					<mat-form-field class="col-md-10">
+						<input matInput type="text" readonly placeholder="{{'address' | translate:translateKey}}"
+							formControlName="address" >
+						<control-messages [control]="drainageTransferconnectionForm.get('address')"></control-messages>
+					</mat-form-field>
+				</div>
+				
+				
+
+				<div class="row">
+					<mat-form-field class="col-md-5">
+						<input matInput type="text"  maxlength="30" placeholder="{{'property_dues' | translate:translateKey}}"
+							formControlName="propertyDues" >
+						<control-messages [control]="drainageTransferconnectionForm.get('propertyDues')"></control-messages>
+					</mat-form-field>
+
+				
+
+					<mat-form-field class="col-md-5">
+						<input matInput type="text" readonly placeholder="{{'water_dues' | translate:translateKey}}"
+							formControlName="waterDues" >
+						<control-messages [control]="drainageTransferconnectionForm.get('waterDues')"></control-messages>
+					</mat-form-field>
+				</div>
+
+				<div class="row">
+					<mat-form-field class="col-md-5">
+						<input matInput type="text"  maxlength="30" placeholder="{{'new_owner_name' | translate:translateKey}}"
+							formControlName="newOwnerName" required>
+						<control-messages [control]="drainageTransferconnectionForm.get('newOwnerName')"></control-messages>
+					</mat-form-field>
+
+				
+
+					<mat-form-field class="col-md-5">
+						<input matInput type="text" readonly placeholder="{{'mobile_no' | translate:translateKey}}"
+							formControlName="mobileNo" required>
+						<control-messages [control]="drainageTransferconnectionForm.get('mobileNo')"></control-messages>
+					</mat-form-field>
+				</div>
+
+				<div class="row">
+					<mat-form-field class="col-md-5">
+						<input matInput type="text"  maxlength="30" placeholder="{{'aadhaar_no' | translate:translateKey}}"
+							formControlName="aadhaarNo"  required>
+						<control-messages [control]="drainageTransferconnectionForm.get('aadhaarNo')"></control-messages>
+					</mat-form-field>
+
+					<div class="col-md-5 ngSelect" formGroupName="reasonList">
+						<ng-select placeholder="{{'reason_for_transfer' | translate:translateKey}} *" formControlName="reasonForTransferId">
+							<ng-option *ngFor="let type of REASON_TYPE" [value]="type.reasonForTransferId">{{type.name}}
+							</ng-option>
+						</ng-select>
+						<control-messages [control]="drainageTransferconnectionForm.get('reasonList').get('reasonForTransferId')">
+						</control-messages>
+					</div>
+				</div>
+
+				<app-action-bar [form]="drainageTransferconnectionForm" (tabIndex)="licenseConfiguration.onFormTabChange($event)"
+					[stepInfo]="{step: 'step1', next: 1, back: 0}"></app-action-bar>
+
+			</mat-tab>
+			<!-- step 1 Ends -->
+
+			<!-- step 4 Attachment Starts -->
+			<mat-tab>
+				<ng-template mat-tab-label>
+					<div>{{'attachment' | translate: translateKey}}</div>
+				</ng-template>
+				<div class="row">
+					<!-- <ng-container
+						*ngFor="let doc of drainageTransferconnectionForm.get('serviceDetail').get('serviceUploadDocuments').value | filterAttachmentMF:drainageTransferconnectionForm.get('statusOfBusinessId').value.code">
+						<div class="col-md-4"
+							*ngIf="doc.requiredOnCitizenPortal && doc.isActive && licenseConfiguration.isAttachmentButtonsVisible">
+							<label>{{TranslateService.getCurrentLanguage()=='en'? doc.documentLabelEn : doc.documentLabelGuj }}
+								<span *ngIf="doc.mandatory">*</span></label>
+							<file-upload [form]="drainageTransferconnectionForm" [uploadModel]="doc"></file-upload>
+						</div>
+					</ng-container> -->
+				</div>
+
+				<app-action-bar [paymentGateway]="paymentGateway" [uploadFiles]="uploadFileArray"
+					[form]="drainageTransferconnectionForm" (handleErrors)="handleErrorsOnSubmit($event)"
+					(tabIndex)="licenseConfiguration.onFormTabChange($event) "
+					[stepInfo]="{step: 'final', next:2, back:0} "></app-action-bar>
+
+			</mat-tab>
+		
+		</mat-tab-group>
+	</form>
+</mat-card>

@@ -1,2 +1,72 @@
 <app-title-bar [title]="'screen_title' | translate: translateKey">
 </app-title-bar>
+<mat-card class="formClass cardBorder">
+	<form [formGroup]="drainageReconnectionForm">
+		<mat-tab-group [(selectedIndex)]="licenseConfiguration.currentTabIndex" dynamicHeight="true" mat-stretch-tabs
+			class="stepperNav">
+
+			<!-- step 1 Starts -->
+			<mat-tab>
+				<ng-template mat-tab-label>
+					<div>{{'drainage_reconnection' | translate:translateKey}}</div>
+				</ng-template>
+
+				<div class="row">
+					<mat-form-field class="col-md-4">
+						<input matInput type="text"  maxlength="30" placeholder="{{'connection_no' | translate:translateKey}}"
+							formControlName="connectionNo" >
+						<control-messages [control]="drainageReconnectionForm.get('connectionNo')"></control-messages>
+					</mat-form-field>
+
+					<button mat-raised-button color="primary" type="button" (click)="searchByConnectionNo()"> Go </button>
+
+					<mat-form-field class="col-md-5">
+						<input matInput type="text" readonly placeholder="{{'owner_name' | translate:translateKey}}"
+							formControlName="ownerName" >
+						<control-messages [control]="drainageReconnectionForm.get('ownerName')"></control-messages>
+					</mat-form-field>
+					
+				</div>
+
+			
+				<div class="row">
+					<mat-form-field class="col-md-10">
+						<input matInput type="text" readonly placeholder="{{'address' | translate:translateKey}}"
+							formControlName="address" >
+						<control-messages [control]="drainageReconnectionForm.get('address')"></control-messages>
+					</mat-form-field>
+				</div>
+				
+			<app-action-bar [form]="drainageReconnectionForm" (tabIndex)="licenseConfiguration.onFormTabChange($event)"
+					[stepInfo]="{step: 'step1', next: 1, back: 0}"></app-action-bar>
+
+			</mat-tab>
+			<!-- step 1 Ends -->
+
+			<!-- step 4 Attachment Starts -->
+			<mat-tab>
+				<ng-template mat-tab-label>
+					<div>{{'attachment' | translate: translateKey}}</div>
+				</ng-template>
+				<div class="row">
+					<!-- <ng-container
+						*ngFor="let doc of drainageReconnectionForm.get('serviceDetail').get('serviceUploadDocuments').value | filterAttachmentMF:drainageReconnectionForm.get('statusOfBusinessId').value.code">
+						<div class="col-md-4"
+							*ngIf="doc.requiredOnCitizenPortal && doc.isActive && licenseConfiguration.isAttachmentButtonsVisible">
+							<label>{{TranslateService.getCurrentLanguage()=='en'? doc.documentLabelEn : doc.documentLabelGuj }}
+								<span *ngIf="doc.mandatory">*</span></label>
+							<file-upload [form]="drainageReconnectionForm" [uploadModel]="doc"></file-upload>
+						</div>
+					</ng-container> -->
+				</div>
+
+				<app-action-bar [paymentGateway]="paymentGateway" [uploadFiles]="uploadFileArray"
+					[form]="drainageReconnectionForm" (handleErrors)="handleErrorsOnSubmit($event)"
+					(tabIndex)="licenseConfiguration.onFormTabChange($event) "
+					[stepInfo]="{step: 'final', next:2, back:0} "></app-action-bar>
+
+			</mat-tab>
+		
+		</mat-tab-group>
+	</form>
+</mat-card>
