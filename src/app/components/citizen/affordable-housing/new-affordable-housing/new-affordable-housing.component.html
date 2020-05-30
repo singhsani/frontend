@@ -12,18 +12,18 @@
 
 				<div class="row">
 
-					<div class="col-md-4 ngSelect" formGroupName="appliedFor">
-						<ng-select placeholder="{{'appliedFor' | translate: translateKey}} *" formControlName="code">
-							<ng-option *ngFor="let appliedFor of appliedForData" [value]="appliedFor.code">
+					<div class="col-md-4 ngSelect" >
+						<ng-select placeholder="{{'appliedFor' | translate: translateKey}} *" formControlName="schemeId">
+							<ng-option *ngFor="let appliedFor of appliedForData" [value]="appliedFor.id">
 								{{appliedFor.name}}</ng-option>
 						</ng-select>
-						<control-messages [control]="affordableHousingForm.get('appliedFor').get('code')">
+						<control-messages [control]="affordableHousingForm.get('schemeId')">
 						</control-messages>
 					</div>
 
 					<div class="col-md-4 ngSelect" formGroupName="category">
 						<ng-select placeholder="{{'category' | translate: translateKey}} *" formControlName="code">
-							<ng-option *ngFor="let category of categoriesData" [value]="category.code">
+							<ng-option *ngFor="let category of MF_CATEGORY_TYPE" [value]="category.code">
 								{{category.name}}
 							</ng-option>
 						</ng-select>
@@ -41,8 +41,8 @@
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace'
 							required maxlength="100" placeholder="{{'father_Name' | translate:translateKey}}"
-							formControlName="fatherName">
-						<control-messages [control]="affordableHousingForm.get('fatherName')"></control-messages>
+							formControlName="applicantFatherName">
+						<control-messages [control]="affordableHousingForm.get('applicantFatherName')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
@@ -83,7 +83,7 @@
 				<div class="row">
 					<h2>{{'applicant_correspondence_address' | translate: translateKey}}</h2>
 					<app-address #applicantCorrespondenceAddr [requiredFeilds]="true"
-						[addressFormGroup]="affordableHousingForm.get('applicantCorrespondenceAddress')">
+						[addressFormGroup]="affordableHousingForm.get('correspondanceAddress')">
 					</app-address>
 				</div>
 

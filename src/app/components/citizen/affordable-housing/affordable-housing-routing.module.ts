@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { NewAffordableHousingComponent } from './new-affordable-housing/new-affordable-housing.component';
 const routes: Routes = [
-  { path: '', redirectTo: 'new', pathMatch: 'full' },
-  { path: 'new', component: NewAffordableHousingComponent },
+  { path: '', redirectTo: 'afhForm', pathMatch: 'full' },
+  { path: 'afhForm/:id/:apiCode', component: NewAffordableHousingComponent }
 ];
 
 @NgModule({
