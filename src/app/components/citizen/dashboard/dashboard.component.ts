@@ -272,9 +272,6 @@ export class DashboardComponent implements OnInit {
 			case 'WTR-RECON':
 			case 'WTR-PLUMB-LIC':
 			case 'WTR-RNW-PLUMB-LIC':
-			case 'AFFORD-NEW':
-				this.router.navigate([ManageRoutes.getFullRoute(apiCode)]);
-				break;
 			default:
 				if (ManageRoutes.getApiTypeFromApiCode(apiCode)) {
 					this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);

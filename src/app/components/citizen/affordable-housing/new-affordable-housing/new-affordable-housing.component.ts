@@ -4,6 +4,12 @@ import * as moment from 'moment';
 import { CitizenConfig } from '../../citizen-config';
 import { ValidationService } from '../../../../shared/services/validation.service';
 import { CommonService } from '../../../../shared/services/common.service';
+import { FormsActionsService } from 'src/app/core/services/citizen/data-services/forms-actions.service';
+import { Router, ActivatedRoute } from '@angular/router';
+import { ManageRoutes } from 'src/app/config/routes-conf';
+import { ToastrService } from 'ngx-toastr';
+import { AffodableService } from '../services/AffordableService';
+
 
 @Component({
 	selector: 'app-new-affordable-housing',
@@ -20,64 +26,120 @@ export class NewAffordableHousingComponent implements OnInit {
 	actionBarKey: string = 'adminActionBar';
 	tabIndex: number = 0;
 
-	appliedForData = [
-		{ "code": "BSUP", "name": "BSUP (Basic Services for Urban Poor)" },
-		{ "code": "RAY", "name": "RAY (Rajiv Awas Yojna)" },
-		{ "code": "MGY", "name": "MGY (Mukhyamantri Gruh Yojana)" },
-		{ "code": "PMAY", "name": "PMAY (Pradhan Mantri Awas Yojana)" },
-		{ "code": "ISSR", "name": "ISSR" }
-	];
+	appliedForData = [];
 
-	categoriesData = [
-		{ "code": "SC", "name": "SC" },
-		{ "code": "ST", "name": "ST" },
-		{ "code": "Baxi_Panch", "name": "Baxi Panch" },
-		{ "code": "Blind", "name": "Blind/Handicapped" },
-		{ "code": "Defence", "name": "Defence" },
-		{ "code": "General", "name": "General" }
-	];
+	
 
 	bankNameArray = [{ "id": 1, "code": "ALLAHABAD_BANK", "name": "Allahabad Bank" }, { "id": 3, "code": "BANK_OF_BARODA", "name": "Bank of Baroda" }, { "id": 4, "code": "BANK_OF_MAHARASHTRA", "name": "Bank of Maharashtra" }, { "id": 5, "code": "CANARA_BANK", "name": "Canara Bank" }, { "id": 6, "code": "BANK_OF_INDIA", "name": "Bank of India" }, { "id": 7, "code": "CENTRAL_BANK_OF_INDIA", "name": "Central Bank of India" }, { "id": 8, "code": "CORPORATION_BANK", "name": "Corporation India" }, { "id": 9, "code": "DENA_BANK", "name": "Dena India" }, { "id": 10, "code": "INDIAN_BANK", "name": "Indian India" }, { "id": 11, "code": "INDIAN_OVERSEAS_BANK", "name": "Indian Overseas India" }, { "id": 12, "code": "ORIENTAL_BANK_OF_COMMERCE", "name": "Oriental Bank of Commerce" }, { "id": 13, "code": "PUNJAB_NATIONAL_BANK", "name": "Punjab National Bank" }, { "id": 14, "code": "SYNDICATE_BANK", "name": "Syndicate Bank" }, { "id": 15, "code": "UNION_BANK_OF_INDIA", "name": "Union Bank of India" }, { "id": 16, "code": "UNITED_BANK_OF_INDIA", "name": "United Bank of India" }, { "id": 17, "code": "PUNJAB_AND_SIND_BANK", "name": "Punjab & Sind Bank" }, { "id": 18, "code": "UCO_BANK", "name": "UCO Bank" }, { "id": 19, "code": "VIJAYA_BANK", "name": "Vijaya Bank" }, { "id": 20, "code": "AXIS_BANK_LIMITED_BANK", "name": "Axis Bank Limited" }, { "id": 21, "code": "BANDHAN_BANK_LIMITED_BANK", "name": "Bandhan Bank Limited" }, { "id": 22, "code": "CATHOLIC_SYRIAN_BANK_LIMITED_BANK", "name": "Catholic Syrian Bank Limited" }, { "id": 23, "code": "CITY_UNION_BANK_LIMITED_BANK", "name": "City Union Bank Limited" }, { "id": 24, "code": "DCB_UNION_BANK_LIMITED_BANK", "name": "DCB Bank Limited" }, { "id": 25, "code": "DHANLAXMI_BANK_LIMITED_BANK", "name": "Dhanlaxmi Union Bank Limited" }, { "id": 26, "code": "FEDERAL_BANK_LIMITED_BANK", "name": "Federal Union Bank Limited" }, { "id": 27, "code": "HDFC_BANK_LIMITED_BANK", "name": "HDFC Bank Limited" }, { "id": 28, "code": "ICICI_BANK_LIMITED_BANK", "name": "ICICI Bank Limited" }, { "id": 29, "code": "KARUR_VYSYA_BANK_LIMITED", "name": "Karur Vysya Bank Limited" }, { "id": 30, "code": "JAMMU_AND_KASHMIR_BANK_LIMITED", "name": "Jammu & Kashmir Bank Limited" }, { "id": 31, "code": "KARNATAKA_BANK_LIMITED", "name": "Karnataka Bank Limited" }, { "id": 32, "code": "KOTAK_MAHINDRA_BANK_LIMITED", "name": "Kotak Mahindra Bank Limited" }, { "id": 33, "code": "LAKSHMI_VILAS_BANK_LIMITED", "name": "Lakshmi Vilas Bank Limited" }, { "id": 34, "code": "NAINITAL_BANK_LIMITED", "name": "Nainital Bank Limited" }, { "id": 35, "code": "R_B_L_BANK_LIMITED", "name": "RBL Bank Limited" }, { "id": 36, "code": "SOUTH_INDIAN_BANK_LIMITED", "name": "South Indian Bank Limited" }, { "id": 37, "code": "TAMILNAD_MERCANTILE_BANK_LIMITED", "name": "Tamilnad Mercantile Bank Limited" }, { "id": 38, "code": "YES_BANK_LIMITED", "name": "YES Bank Limited" }]
 
+	formId: number;
 	appId: number;
 	apiCode: string;
 	maxDate: Date = new Date();
 
 	public affordableHousingConfiguration: CitizenConfig = new CitizenConfig();
+	MF_CATEGORY_TYPE: Array<any> = [];
+	
+	LOOKUP: any;
 
-
-	constructor(private fb: FormBuilder, private commonService: CommonService) { }
+	constructor(
+		private route: ActivatedRoute,
+		private fb: FormBuilder, 
+		public validationError: ValidationService,
+        private formService: FormsActionsService,
+        private router: Router,
+		private commonService: CommonService,
+		private toster: ToastrService,
+		private affodableService : AffodableService) { }
 
 	ngOnInit() {
-		this.affordableHousingFormControls();
+
+		this.route.paramMap.subscribe(param => {
+            this.formId = Number(param.get('id'));
+            this.apiCode = param.get('apiCode');
+            this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
+        },
+            err => {
+                this.toster.error(err.error.error_description);
+            });
+			this.getLookupData();
+			this.getLookupDataApplyFor();
+        if (!this.formId) {
+            this.router.navigate([ManageRoutes.getFullRoute('CITIZENDASHBOARD')]);
+        }
+        else {
+			this.getMuttonFishLicNewData();
+			this.affordableHousingFormControls();
 		// create default one place of choice
 		this.addRecordFormArray('placeOfChoice')
+			
+        }
+		
 	}
+
+	/**
+	 * Method is used to get form data
+	 */
+	getMuttonFishLicNewData() {
+		this.formService.getFormData(this.formId).subscribe(res => {
+			try {
+				this.affordableHousingForm.patchValue(res);
+				
+				
+				
+				// res.serviceDetail.serviceUploadDocuments.forEach(app => {
+				// 	(<FormArray>this.affordableHousingForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.licenseConfiguration.createDocumentsGrp(app));
+				// });
+				//this.uploadFileArray = this.licenseConfiguration.requiredDocumentListMeetFish(this.muttonFishNewForm);
+        
+			} catch (error) {
+				console.log(error.message)
+			}
+		});
+	}
+
+	/**
+	* Method is used to get lookup data
+	*/
+	getLookupData() {
+		this.formService.getDataFromLookups().subscribe(res => {
+			this.LOOKUP = res;
+			this.MF_CATEGORY_TYPE = res.AH_CATEGORY;
+			
+		});
+	}
+
+	getLookupDataApplyFor() {
+		this.affodableService.getApplydata().subscribe(res => {
+			
+			this.appliedForData = res;
+			
+		});
+	}
+
+	
 
 	/**
 	 * define all gas connection form controls
 	 */
 	affordableHousingFormControls() {
 		this.affordableHousingForm = this.fb.group({
-			apiType: null,
-			serviceCode: null,
+			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
+			serviceCode: 'AFFORD-NEW',
 
 			/* Step 1 controls start */
-			appliedFor: this.fb.group({
-				code: [null, [Validators.required]],
-				name: null,
-			}),
+			schemeId: [null, [Validators.required, Validators.maxLength(100)]],
 			category: this.fb.group({
 				code: [null, [Validators.required]],
 				name: null,
 			}),
 			applicantName: [null, [Validators.required, Validators.maxLength(100)]],
-			fatherName: [null, [Validators.required, Validators.maxLength(100)]],
+			applicantFatherName: [null, [Validators.required, Validators.maxLength(100)]],
 			applicantDob: [null, [Validators.required]],
 			contactNo: [null, [Validators.maxLength(15)]],
 			mobile: [null, [Validators.required, Validators.maxLength(10)]],
 			email: [null, [ValidationService.emailValidator, Validators.maxLength(50)]],
-			applicantCorrespondenceAddress: this.fb.group(this.applicantCorrespondenceAddrComponent.addressControls()),
+			correspondanceAddress: this.fb.group(this.applicantCorrespondenceAddrComponent.addressControls()),
 			/* Step 1 controls end */
 
 			/* Step 2 controls start */
