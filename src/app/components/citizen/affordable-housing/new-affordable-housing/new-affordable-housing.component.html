@@ -13,11 +13,20 @@
 				<div class="row">
 
 					<div class="col-md-4 ngSelect" >
-						<ng-select placeholder="{{'appliedFor' | translate: translateKey}} *" formControlName="schemeId">
+						<ng-select placeholder="{{'appliedFor' | translate: translateKey}} *" formControlName="schemeId" (change)="schemeChange($event)">
 							<ng-option *ngFor="let appliedFor of appliedForData" [value]="appliedFor.id">
 								{{appliedFor.name}}</ng-option>
 						</ng-select>
 						<control-messages [control]="affordableHousingForm.get('schemeId')">
+						</control-messages>
+					</div>
+
+					<div class="col-md-4 ngSelect" >
+						<ng-select placeholder="{{'project' | translate: translateKey}} *" formControlName="projectId" >
+							<ng-option *ngFor="let project of projectData" [value]="project.id">
+								{{project.projectName}}</ng-option>
+						</ng-select>
+						<control-messages [control]="affordableHousingForm.get('projectId')">
 						</control-messages>
 					</div>
 
@@ -31,6 +40,7 @@
 						</control-messages>
 					</div>
 
+					
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace'
 							required maxlength="100" placeholder="{{'applicant_Name' | translate:translateKey}}"
@@ -46,28 +56,28 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput autocomplete="off" appDate formControlName="applicantDob" [max]="maxDate"
-							[matDatepicker]="dobpicker" (dateChange)="onDateChange('applicantDob', $event.value)"
+						<input matInput autocomplete="off" appDate formControlName="dateOfBirth" [max]="maxDate"
+							[matDatepicker]="dobpicker" (dateChange)="onDateChange('dateOfBirth', $event.value)"
 							placeholder="{{'applicant_dob' | translate: translateKey}}" required>
 						<mat-datepicker-toggle matSuffix [for]="dobpicker"></mat-datepicker-toggle>
 						<mat-datepicker touchUi="true" #dobpicker></mat-datepicker>
 						<div align="end" class="default-show-hint mat-hint mat-right">
 							{{affordableHousingConfiguration.DATE_HINT_MSG}}</div>
-						<control-messages [control]="affordableHousingForm.get('applicantDob')"></control-messages>
+						<control-messages [control]="affordableHousingForm.get('dateOfBirth')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<span matPrefix>+91 &nbsp;</span>
 						<input matInput OnlyNumber placeholder="{{'contact_no' | translate:translateKey}}" type="tel"
-							maxlength="15" formControlName="contactNo">
-						<control-messages [control]="affordableHousingForm.get('contactNo')"></control-messages>
+							maxlength="15" formControlName="telephoneNumber">
+						<control-messages [control]="affordableHousingForm.get('telephoneNumber')"></control-messages>
 					</mat-form-field>
 
 
 					<mat-form-field class="col-md-4">
 						<input matInput OnlyNumber placeholder="{{'mobile_no' | translate:translateKey}}" type="tel"
-							maxlength="10" formControlName="mobile" required>
-						<control-messages [control]="affordableHousingForm.get('mobile')"></control-messages>
+							maxlength="10" formControlName="mobileNumber" required>
+						<control-messages [control]="affordableHousingForm.get('mobileNumber')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
@@ -86,7 +96,7 @@
 						[addressFormGroup]="affordableHousingForm.get('correspondanceAddress')">
 					</app-address>
 				</div>
-
+				
 				<app-action-bar [form]="affordableHousingForm" (tabIndex)="onTabChange($event)"
 					[stepInfo]="{step: 'step1', next: 1, back: 0}"></app-action-bar>
 
@@ -102,24 +112,24 @@
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" required maxlength="100"
 							placeholder="{{'applicant_Occupation' | translate:translateKey}}"
-							formControlName="applicantOccupation">
-						<control-messages [control]="affordableHousingForm.get('applicantOccupation')">
+							formControlName="occupation">
+						<control-messages [control]="affordableHousingForm.get('occupation')">
 						</control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" required maxlength="100"
 							placeholder="{{'organisation_Name' | translate:translateKey}}"
-							formControlName="organisationName">
-						<control-messages [control]="affordableHousingForm.get('organisationName')">
+							formControlName="organizationName">
+						<control-messages [control]="affordableHousingForm.get('organizationName')">
 						</control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" required maxlength="100"
 							placeholder="{{'designation_Held' | translate:translateKey}}"
-							formControlName="designationHeld">
-						<control-messages [control]="affordableHousingForm.get('designationHeld')">
+							formControlName="occupationDesignation">
+						<control-messages [control]="affordableHousingForm.get('occupationDesignation')">
 						</control-messages>
 					</mat-form-field>
 				</div>
@@ -129,29 +139,29 @@
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" appAlphaNumeric maxlength="50"
 							placeholder="{{'drivingLicense' | translate:translateKey}}"
-							formControlName="drivingLicense">
-						<control-messages [control]="affordableHousingForm.get('drivingLicense')">
+							formControlName="drivingLicenseNumber">
+						<control-messages [control]="affordableHousingForm.get('drivingLicenseNumber')">
 						</control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" appAlphaNumeric maxlength="25"
-							placeholder="{{'voterID' | translate:translateKey}}" formControlName="voterID">
-						<control-messages [control]="affordableHousingForm.get('voterID')"></control-messages>
+							placeholder="{{'voterID' | translate:translateKey}}" formControlName="voterIdNumber">
+						<control-messages [control]="affordableHousingForm.get('voterIdNumber')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" appAlphaNumeric required maxlength="20"
-							placeholder="{{'aadharID' | translate:translateKey}}" formControlName="aadharID">
-						<control-messages [control]="affordableHousingForm.get('aadharID')"></control-messages>
+							placeholder="{{'aadharID' | translate:translateKey}}" formControlName="aadharCardNumber">
+						<control-messages [control]="affordableHousingForm.get('aadharCardNumber')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" appAlphaNumeric required maxlength="20"
-							placeholder="{{'panNo' | translate:translateKey}}" formControlName="panNo">
-						<control-messages [control]="affordableHousingForm.get('panNo')"></control-messages>
+							placeholder="{{'panNo' | translate:translateKey}}" formControlName="panCardNumber">
+						<control-messages [control]="affordableHousingForm.get('panCardNumber')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" appAlphaNumeric maxlength="50"
-							placeholder="{{'rationCardNo' | translate:translateKey}}" formControlName="rationCardNo">
-						<control-messages [control]="affordableHousingForm.get('rationCardNo')"></control-messages>
+							placeholder="{{'rationCardNo' | translate:translateKey}}" formControlName="rationCardNumber">
+						<control-messages [control]="affordableHousingForm.get('rationCardNumber')"></control-messages>
 					</mat-form-field>
 				</div>
 				<div class="row">
@@ -176,9 +186,9 @@
 				<div class="row stepperMinHeight">
 					<mat-form-field class="col-md-4">
 						<input matInput autocomplete="off" maxlength="50" appAlphaNumeric
-							formControlName="bankAccountNo" type="text"
+							formControlName="bankAccountNumber" type="text"
 							placeholder="{{'bank_account_no' | translate: translateKey}}" required>
-						<control-messages [control]="affordableHousingForm.get('bankAccountNo')"></control-messages>
+						<control-messages [control]="affordableHousingForm.get('bankAccountNumber')"></control-messages>
 					</mat-form-field>
 
 					<div class="col-md-4 ngSelect" formGroupName="bank">
@@ -191,21 +201,21 @@
 					</div>
 
 					<mat-form-field class="col-md-4">
-						<input matInput autocomplete="off" maxlength="200" formControlName="branchName" type="text"
+						<input matInput autocomplete="off" maxlength="200" formControlName="bankBranch" type="text"
 							placeholder="{{'branch_name' | translate: translateKey}}" required>
-						<control-messages [control]="affordableHousingForm.get('branchName')"></control-messages>
+						<control-messages [control]="affordableHousingForm.get('bankBranch')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput autocomplete="off" maxlength="20" appAlphaNumeric formControlName="IFSCCode"
+						<input matInput autocomplete="off" maxlength="20" appAlphaNumeric formControlName="bankIFSC"
 							type="tel" placeholder="{{'IFSCCode' | translate: translateKey}}" required>
-						<control-messages [control]="affordableHousingForm.get('IFSCCode')"></control-messages>
+						<control-messages [control]="affordableHousingForm.get('bankIFSC')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput autocomplete="off" maxlength="25" appAlphaNumeric formControlName="MICRCode"
+						<input matInput autocomplete="off" maxlength="25" appAlphaNumeric formControlName="bankMicrCode"
 							type="tel" placeholder="{{'MICRCode' | translate: translateKey}}" required>
-						<control-messages [control]="affordableHousingForm.get('MICRCode')"></control-messages>
+						<control-messages [control]="affordableHousingForm.get('bankMicrCode')"></control-messages>
 					</mat-form-field>
 
 				</div>
@@ -226,15 +236,15 @@
 
 					<mat-form-field class="col-md-4">
 						<input matInput OnlyNumber placeholder="{{'annualIncome' | translate:translateKey}}" type="tel"
-							maxlength="10" formControlName="annualIncome" required>
-						<control-messages [control]="affordableHousingForm.get('annualIncome')"></control-messages>
+							maxlength="10" formControlName="aggregateAnnualIncomeAmount" required>
+						<control-messages [control]="affordableHousingForm.get('aggregateAnnualIncomeAmount')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<input matInput autocomplete="off" maxlength="200"
 							placeholder="{{'annualIncomeWords' | translate:translateKey}}" type="text"
-							formControlName="annualIncomeWords" required>
-						<control-messages [control]="affordableHousingForm.get('annualIncomeWords')">
+							formControlName="aggregateAnnualIncomeAmountInWords" required>
+						<control-messages [control]="affordableHousingForm.get('aggregateAnnualIncomeAmountInWords')">
 						</control-messages>
 					</mat-form-field>
 
@@ -275,11 +285,11 @@
 					<div class="col-md-2 pt-3" style="text-align: right;">
 						<button type="button" *ngIf="affordableHousingForm.get('canEdit').value"
 							matTooltip="{{'add_more' | translate:translateKey}}" mat-raised-button color="primary"
-							(click)="addRecordFormArray('familyMemberList')">{{'add'| translate:translateKey}}</button>
+							(click)="addRecordFormArray('familyMembers')">{{'add'| translate:translateKey}}</button>
 					</div>
 				</div>
 
-				<div *ngIf="affordableHousingForm.get('familyMemberList')['controls'].length">
+				<div *ngIf="affordableHousingForm.get('familyMembers')['controls'].length">
 					<div>
 						<table class="table table-striped responsiveTableRow">
 							<thead>
@@ -292,8 +302,8 @@
 									</th>
 								</tr>
 							</thead>
-							<tbody formArrayName="familyMemberList">
-								<tr *ngFor="let item of affordableHousingForm.get('familyMemberList')['controls']; let indx = index;"
+							<tbody formArrayName="familyMembers">
+								<tr *ngFor="let item of affordableHousingForm.get('familyMembers')['controls']; let indx = index;"
 									[formGroupName]="indx">
 
 									<td>
@@ -313,21 +323,21 @@
 
 									<td>
 										<div class="d-md-none">{{'age' | translate:translateKey}}</div>
-										<p class="width60" *ngIf="!item.isEditMode">{{item.get('age').value}}</p>
+										<p class="width60" *ngIf="!item.isEditMode">{{item.get('memberAge').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
-											<input matInput maxlength="2" OnlyNumber formControlName="age">
-											<control-messages [control]="item.get('age')"></control-messages>
+											<input matInput maxlength="2" OnlyNumber formControlName="memberAge">
+											<control-messages [control]="item.get('memberAge')"></control-messages>
 										</mat-form-field>
 									</td>
 
 									<td>
 										<div class="d-md-none">{{'relationship' | translate:translateKey}}</div>
-										<p *ngIf="!item.isEditMode">{{item.get('relationship').value}}</p>
+										<p *ngIf="!item.isEditMode">{{item.get('relationshipWithApplicant').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
 											<input matInput appValidationFields
 												[validationFieldsType]="'onlyNameWithSpace'"
-												formControlName="relationship">
-											<control-messages [control]="item.get('relationship')">
+												formControlName="relationshipWithApplicant">
+											<control-messages [control]="item.get('relationshipWithApplicant')">
 											</control-messages>
 										</mat-form-field>
 									</td>
@@ -345,11 +355,11 @@
 									</td>
 									<td style="width: 40px;" *ngIf="affordableHousingForm.get('canEdit').value">
 										<button mat-icon-button color="warn" *ngIf="!item.isEditMode"
-											(click)="deleteFormArrayRecord('familyMemberList',indx)">
+											(click)="deleteFormArrayRecord('familyMembers',indx)">
 											<mat-icon title="Delete">delete</mat-icon>
 										</button>
 										<button mat-icon-button color="warn" *ngIf="item.isEditMode"
-											(click)="cancelRecord('familyMemberList',item,indx)">
+											(click)="cancelRecord('familyMembers',item,indx)">
 											<mat-icon title="Cancel">cancel</mat-icon>
 										</button>
 									</td>

@@ -18,4 +18,8 @@ export class AffodableService {
    return this.http.get(`api/afhForm/schemeMaster/getAll`);
    }
 
+   getProject(shemeId) {
+    return this.http.get(`api/afhForm/projectMaster/fetchBySchemeId/`+shemeId);
+}
+
 }

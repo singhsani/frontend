@@ -198,8 +198,8 @@ const ROUTEMAIN = {
     /*Affordable Housing end */
 
     'AFFORD-NEW': {
-        'main': 'new',
-        'type': 'new'
+        'main': 'afhForm',
+        'type': 'afhForm'
     },
 
     /*Affordable Housing routes end */
