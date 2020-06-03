@@ -27,6 +27,7 @@ export class NewAffordableHousingComponent implements OnInit {
 	tabIndex: number = 0;
 
 	appliedForData = [];
+	projectData = [];
 
 	
 
@@ -117,7 +118,20 @@ export class NewAffordableHousingComponent implements OnInit {
 		});
 	}
 
-	
+
+
+	/**
+	 * This method for serach project by shcmeid .
+	 */
+	schemeChange(shcmeid) {
+		
+		this.affodableService.getProject(shcmeid).subscribe(
+			(res: any) => {
+				this.projectData = res; 
+			}, (err: any) => {
+				
+			})
+	}
 
 	/**
 	 * define all gas connection form controls
@@ -129,45 +143,46 @@ export class NewAffordableHousingComponent implements OnInit {
 
 			/* Step 1 controls start */
 			schemeId: [null, [Validators.required, Validators.maxLength(100)]],
+			projectId : [null, [Validators.required, Validators.maxLength(100)]],
 			category: this.fb.group({
 				code: [null, [Validators.required]],
 				name: null,
 			}),
 			applicantName: [null, [Validators.required, Validators.maxLength(100)]],
 			applicantFatherName: [null, [Validators.required, Validators.maxLength(100)]],
-			applicantDob: [null, [Validators.required]],
-			contactNo: [null, [Validators.maxLength(15)]],
-			mobile: [null, [Validators.required, Validators.maxLength(10)]],
+			dateOfBirth: [null, [Validators.required]],
+			telephoneNumber: [null, [Validators.maxLength(15)]],
+			mobileNumber: [null, [Validators.required, Validators.maxLength(10)]],
 			email: [null, [ValidationService.emailValidator, Validators.maxLength(50)]],
 			correspondanceAddress: this.fb.group(this.applicantCorrespondenceAddrComponent.addressControls()),
 			/* Step 1 controls end */
 
 			/* Step 2 controls start */
-			applicantOccupation: [null, [Validators.required, Validators.maxLength(100)]],
-			organisationName: [null, [Validators.required, Validators.maxLength(100)]],
-			designationHeld: [null, [Validators.required, Validators.maxLength(100)]],
-			drivingLicense: [null, [Validators.maxLength(50)]],
-			voterID: [null, [Validators.maxLength(25)]],
-			aadharID: [null, [Validators.required, Validators.maxLength(20)]],
-			panNo: [null, [Validators.required, Validators.maxLength(20)]],
-			rationCardNo: [null, [Validators.maxLength(50)]],
+			occupation: [null, [Validators.required, Validators.maxLength(100)]],
+			organizationName: [null, [Validators.required, Validators.maxLength(100)]],
+			occupationDesignation: [null, [Validators.required, Validators.maxLength(100)]],
+			drivingLicenseNumber: [null, [Validators.maxLength(50)]],
+			voterIdNumber: [null, [Validators.maxLength(25)]],
+			aadharCardNumber: [null, [Validators.required, Validators.maxLength(20)]],
+			panCardNumber: [null, [Validators.required, Validators.maxLength(20)]],
+			rationCardNumber: [null, [Validators.maxLength(50)]],
 			occupationAddress: this.fb.group(this.occupationAddrComponent.addressControls()),
 			/* Step 2 controls end */
 
 			/* Step 3 controls start */
-			bankAccountNo: [null, [Validators.required, Validators.maxLength(50)]],
+			bankAccountNumber: [null, [Validators.required, Validators.maxLength(50)]],
 			bank: this.fb.group({
 				code: [null, Validators.required], name: null,
 			}),
-			branchName: [null, [Validators.required, Validators.maxLength(200)]],
-			IFSCCode: [null, [Validators.required, Validators.maxLength(20)]],
-			MICRCode: [null, [Validators.required, Validators.maxLength(25)]],
+			bankBranch: [null, [Validators.required, Validators.maxLength(200)]],
+			bankIFSC: [null, [Validators.required, Validators.maxLength(20)]],
+			bankMicrCode: [null, [Validators.required, Validators.maxLength(25)]],
 			/* Step 3 controls end */
 
 			/* Step 4 controls start */
-			annualIncome: [null, [Validators.required, Validators.maxLength(10)]],
-			annualIncomeWords: [null, [Validators.required, Validators.maxLength(200)]],
-			familyMemberList: this.fb.array([]),
+			aggregateAnnualIncomeAmount: [null, [Validators.required, Validators.maxLength(10)]],
+			aggregateAnnualIncomeAmountInWords: [null, [Validators.required, Validators.maxLength(200)]],
+			familyMembers: this.fb.array([]),
 			placeOfChoice: this.fb.array([]),
 			canEdit: [true],
 			/* Step 4 controls end */
@@ -279,12 +294,12 @@ export class NewAffordableHousingComponent implements OnInit {
 
 		let formGroupData: FormGroup;
 		switch (key) {
-			case 'familyMemberList':
+			case 'familyMembers':
 				formGroupData = this.fb.group({
 					id: data.id ? data.id : null,
 					name: [data.name ? data.name : null, [Validators.required, Validators.maxLength(100)]],
-					relationship: [data.relationship ? data.relationship : null, [Validators.required, Validators.maxLength(100)]],
-					age: [data.age ? data.age : null, [Validators.required]]
+					relationshipWithApplicant: [data.relationshipWithApplicant ? data.relationshipWithApplicant : null, [Validators.required, Validators.maxLength(100)]],
+					memberAge: [data.memberAge ? data.memberAge : null, [Validators.required]]
 				})
 				break;
 			case 'placeOfChoice':
@@ -324,8 +339,8 @@ export class NewAffordableHousingComponent implements OnInit {
 	getFormsArray(key: string): FormArray {
 		let formArrayData: FormArray;
 		switch (key) {
-			case 'familyMemberList':
-				formArrayData = this.affordableHousingForm.get('familyMemberList') as FormArray;
+			case 'familyMembers':
+				formArrayData = this.affordableHousingForm.get('familyMembers') as FormArray;
 				break;
 			case 'placeOfChoice':
 				formArrayData = this.affordableHousingForm.get('placeOfChoice') as FormArray;
@@ -349,9 +364,9 @@ export class NewAffordableHousingComponent implements OnInit {
 	 */
 	addRecordFormArray(key: string): void {
 		switch (key) {
-			case 'familyMemberList':
-				this.getFormsArray('familyMemberList').push(this.createFormGroup("familyMemberList", {}));
-				var memberadded = this.getFormsArray('familyMemberList').controls;
+			case 'familyMembers':
+				this.getFormsArray('familyMembers').push(this.createFormGroup("familyMembers", {}));
+				var memberadded = this.getFormsArray('familyMembers').controls;
 				if (memberadded.length) {
 					this.editRecord((memberadded[memberadded.length - 1]));
 					(<any>memberadded[memberadded.length - 1]).newRecordAdded = true;
@@ -395,8 +410,8 @@ export class NewAffordableHousingComponent implements OnInit {
 
 	deleteFormArrayRecord(key: string, idx: number) {
 		switch (key) {
-			case 'familyMemberList':
-				this.getFormsArray('familyMemberList').removeAt(idx);
+			case 'familyMembers':
+				this.getFormsArray('familyMembers').removeAt(idx);
 				break;
 			case 'placeOfChoice':
 				this.getFormsArray('placeOfChoice').removeAt(idx);
