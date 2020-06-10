@@ -1,5 +1,5 @@
 import { FireFacilityConfig } from './../config/FireFacilityConfig';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit , ChangeDetectorRef} from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ManageRoutes } from '../../../../config/routes-conf';
@@ -40,7 +40,8 @@ export class GasConnectionNocComponent implements OnInit {
 		private route: ActivatedRoute,
 		private formService: FormsActionsService,
 		public TranslateService: TranslateService,
-		private fireFacilitiesService: FireFacilitiesService
+		private fireFacilitiesService: FireFacilitiesService,
+		private CD: ChangeDetectorRef,
 	) { }
 
 	ngOnInit() {
@@ -112,7 +113,7 @@ export class GasConnectionNocComponent implements OnInit {
 			connectionPurpose: this.fb.group({
 				code: [null, Validators.required]
 			}),
-			shopNo: [null, [Validators.required, Validators.maxLength(12)]],
+			shopNo: [null,  Validators.maxLength(12)],
 			propertyNo: [null, [Validators.required, Validators.maxLength(15)]],
 
 			firePlaceType: this.fb.group({
@@ -181,12 +182,16 @@ export class GasConnectionNocComponent implements OnInit {
 	}
 
 	onChangeConnectionPurpose(event) {
-		if (event || event == "COMMERCIAL") {
-			this.gasConnectionForm.get('shopNo').reset()
+		
+		if ( event == "COMMERCIAL") {
+			this.gasConnectionForm.get('shopNo').reset();
+			this.gasConnectionForm.get('shopNo').setValidators([Validators.required, Validators.maxLength(12)]);
 		} else {
-			this.gasConnectionForm.get('propertyNo').reset();
-			this.gasConnectionForm.get('shopNo').reset()
+			//this.gasConnectionForm.get('propertyNo').reset();
+			this.gasConnectionForm.get('shopNo').reset();
+			this.gasConnectionForm.get('shopNo').clearValidators();
 		}
+		this.CD.detectChanges();
 	}
 
 
