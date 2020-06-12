@@ -1,3 +1,203 @@
-<p>
-  new-drainage-connection works!
-</p>
+<app-title-bar [title]="'screen_title' | translate: translateKey">
+</app-title-bar>
+
+<mat-card class="formClass cardBorder">
+	<form [formGroup]="newDrainageConnectionForm">
+
+		<mat-tab-group [(selectedIndex)]="tabIndex" dynamicHeight="true" mat-stretch-tabs class="stepperNav">
+
+			<!-- step 1 Starts -->
+			<mat-tab>
+				<ng-template mat-tab-label>
+					<div>{{'consumer-details' | translate:translateKey}}</div>
+				</ng-template>
+
+				<mat-card class="mt-4">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="section-title">
+								<h4>Consumer Detail</h4>
+								<mat-divider></mat-divider>
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<mat-form-field class="col-md-6">
+							<input matInput type="text" required maxlength="300"
+								placeholder="{{'drainage_connection_no' | translate:translateKey}}"
+								formControlName="drainageConnectionNo">
+						</mat-form-field>
+						<mat-form-field class="col-md-6">
+							<input matInput type="text" maxlength="300"
+								placeholder="{{'old_drainage_connection_no' | translate:translateKey}}"
+								formControlName="oldDrainageConnectionNo">
+						</mat-form-field>
+					</div>
+
+
+					<div class="row">
+						<mat-form-field class="col-md-6">
+							<input matInput type="text" maxlength="300"
+								placeholder="{{'within_limit_out_of_limit' | translate:translateKey}}"
+								formControlName="withinLimitOutOfLimit">
+						</mat-form-field>
+						<div class="col-md-6 ngSelect">
+							<div *ngIf="wardZoneLevel.length>=1">
+								<ng-select required
+									placeholder="{{'drainage-connection-zone' | translate:translateKey}} *"
+									formControlName="drainageConnectionZoneId" (change)="onChangedWardZone($event,2)">
+									<ng-option *ngFor="let zone of wardZoneLevel1List" [value]="zone.parentWardzoneId">
+										{{zone.wardzoneName}}</ng-option>
+								</ng-select>
+								<control-messages [control]="newDrainageConnectionForm.get('drainageConnectionZoneId')">
+								</control-messages>
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-md-6 ngSelect">
+							<div *ngIf="wardZoneLevel.length>=2">
+								<ng-select required
+									placeholder="{{'drainage_connection_ward' | translate:translateKey}} *"
+									formControlName="drainageConnectionWardId" (change)="onChangedWardZone($event,3)">
+									<ng-option *ngFor="let zone of wardZoneLevel2List" [value]="zone.wardzoneId">
+										{{zone.wardzoneName}}</ng-option>
+								</ng-select>
+								<control-messages [control]="newDrainageConnectionForm.get('drainageConnectionWardId')">
+								</control-messages>
+							</div>
+						</div>
+						<div class="col-md-6 ngSelect">
+							<div *ngIf="wardZoneLevel.length>=3">
+								<ng-select required
+									placeholder="{{'drainage_connection_block' | translate:translateKey}} *"
+									formControlName="drainageConnectionBlockId" (change)="onChangedWardZone($event,4)">
+									<ng-option *ngFor="let zone of wardZoneLevel3List" [value]="zone.wardzoneId">
+										{{zone.wardzoneName}}</ng-option>
+								</ng-select>
+								<control-messages
+									[control]="newDrainageConnectionForm.get('drainageConnectionBlockId')">
+								</control-messages>
+							</div>
+						</div>
+
+					</div>
+
+					<div class="row">
+						<mat-form-field class="col-md-6">
+							<input matInput type="text" maxlength="300"
+								placeholder="{{'census_no' | translate:translateKey}}" formControlName="censusNo">
+						</mat-form-field>
+						<mat-form-field class="col-md-6">
+							<input matInput type="text" required maxlength="300"
+								placeholder="{{'connection_owner_name' | translate:translateKey}}"
+								formControlName="connectionOwnerName">
+							<control-messages [control]="newDrainageConnectionForm.get('connectionOwnerName')">
+							</control-messages>
+						</mat-form-field>
+					</div>
+
+					<div class="row">
+						<mat-form-field class="col-md-6">
+							<input matInput OnlyNumber required maxlength="10" formControlName="mobileNo"
+								placeholder="{{'mobile_no' | translate:translateKey}}">
+							<control-messages [control]="newDrainageConnectionForm.get('mobileNo')">
+							</control-messages>
+						</mat-form-field>
+						<mat-form-field class="col-md-6">
+							<input matInput appPreventSpace placeholder="{{'email_id' | translate:translateKey}}"
+								type="email" formControlName="emailId">
+						</mat-form-field>
+					</div>
+
+					<!-- <div class="row">
+					<mat-form-field class="col-md-12">
+						<input matInput type="text" placeholder="{{'permanent_address' | translate:translateKey}}"
+							formControlName="permanentAddress" >
+					</mat-form-field>
+				</div>
+
+				<div class="row">
+					<mat-form-field class="col-md-12">
+						<input matInput type="text" placeholder="{{'correspondense_address' | translate:translateKey}}"
+							formControlName="correspondenseAddress" >
+					</mat-form-field>
+				</div>
+
+				<div class="row">
+					<mat-form-field class="col-md-4">
+						<input matInput OnlyNumber formControlName="pinCode"
+						placeholder="{{'pin-code' | translate:translateKey}}" minlength="6" maxlength="6">
+					</mat-form-field>
+				</div> -->
+				</mat-card>
+				<mat-card class="mt-4">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="section-title">
+								<h4>Connection Detail</h4>
+								<mat-divider></mat-divider>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-6 ngSelect">
+						<!-- <div *ngIf="connectionUsageList.length>0"> -->
+						<ng-select required placeholder="{{'connection_usage' | translate:translateKey}} *"
+							formControlName="connectionUsage" (change)="onChangedConnectionUsage($event)">
+							<ng-option *ngFor="let connectionUsage of connectionUsageList"
+								[value]="connectionUsage.usageId">{{connectionUsage.usageName}}</ng-option>
+						</ng-select>
+						<control-messages [control]="newDrainageConnectionForm.get('connectionUsage')">
+						</control-messages>
+						<!-- </div> -->
+					</div>
+
+					<div class="col-md-6 ngSelect">
+						<ng-select required placeholder="{{'connection_subusage' | translate:translateKey}} *"
+							formControlName="connectionSubUsage">
+							<ng-option *ngFor="let connectionSubUsage of connectionSubUsageList"
+								[value]="connectionSubUsage.subUsageId">{{connectionSubUsage.subUsage}}</ng-option>
+						</ng-select>
+						<control-messages [control]="newDrainageConnectionForm.get('connectionSubUsage')">
+						</control-messages>
+					</div>
+					<div class="col-md-6 ngSelect">
+						<ng-select required placeholder="{{'plumber_name' | translate:translateKey}} *"
+							formControlName="plumber">
+							<ng-option *ngFor="let plumber of plumberList" [value]="plumber.nameOfApplicant">
+								{{plumber.nameOfApplicant}}</ng-option>
+						</ng-select>
+						<control-messages [control]="newDrainageConnectionForm.get('plumber')">
+						</control-messages>
+					</div>
+				</mat-card>
+				<app-action-bar [form]="newDrainageConnectionForm" (tabIndex)="onTabChange($event)"
+					[stepInfo]="{step: 'step1', next: 1, back: 0}" (handleErrors)="handleErrorsOnSubmit($event)">
+				</app-action-bar>
+
+			</mat-tab>
+			<!-- step 1 Ends -->
+
+			<!-- step 2 Starts -->
+			<mat-tab>
+				<ng-template mat-tab-label>
+					<div>{{'property-details' | translate:translateKey}}</div>
+				</ng-template>
+
+
+
+				<app-action-bar [form]="newDrainageConnectionForm" (tabIndex)="onTabChange($event)"
+					[stepInfo]="{step: 'step2', next: 2, back: 0}" (handleErrors)="handleErrorsOnSubmit($event)">
+				</app-action-bar>
+
+			</mat-tab>
+			<!-- step 2 Ends -->
+
+
+		</mat-tab-group>
+	</form>
+
+</mat-card>
