@@ -15,6 +15,8 @@ import { NewDrainageConnectionComponent } from './new-drainage-connection/new-dr
 import { DrainageDisconnectionComponent } from './drainage-disconnection/drainage-disconnection.component';
 import { DrainageReconnectionComponent } from './drainage-reconnection/drainage-reconnection.component';
 import { DrainageTransferConnectionComponent } from './drainage-transfer-connection/drainage-transfer-connection.component';
+import { NewWaterConnectionEntryService } from '../tax/water-supply/new-water-connection-entry/Services/new-water-connection-entry.service';
+import { AlertService } from 'src/app/vmcshared/Services/alert.service';
 
 
 /* Import all shared, core and routing module end */
@@ -40,7 +42,9 @@ const routes: Routes = [
     RouterModule.forChild(routes)
   ],
   providers:[
-    TaxRebateApplicationService
+    TaxRebateApplicationService,
+    NewWaterConnectionEntryService,
+    AlertService
   ],
   declarations: [
     WaterPipelineConnection,
@@ -51,7 +55,7 @@ const routes: Routes = [
     NewDrainageConnectionComponent,
     DrainageDisconnectionComponent,
     DrainageReconnectionComponent,
-    DrainageTransferConnectionComponent
+    DrainageTransferConnectionComponent,
   ]
 })
 export class WaterDrinageModule { }
