@@ -19,8 +19,10 @@
 						<control-messages [control]="drainageDisconnectionForm.get('connectionNo')"></control-messages>
 					</mat-form-field>
 
-					<button mat-raised-button color="primary" type="button" (click)="searchByConnectionNo()"> Go </button>
-
+					<div class="col-md-1">
+						<button class="mat-button_cust" mat-raised-button color="primary" type="button" (click)="searchByConnectionNo()"> Go </button>
+					</div>
+					
 					<mat-form-field class="col-md-5">
 						<input matInput type="text" readonly placeholder="{{'owner_name' | translate:translateKey}}"
 							formControlName="ownerName" >
