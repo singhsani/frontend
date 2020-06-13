@@ -26,7 +26,7 @@ const routes: Routes = [
   { path: 'drainagePipeLineConnection/:id/:apiCode', component: DrainagePipelineConnectionComponent },
   { path: 'wtrPipeConnWorkCompletion/:apiCode', component: WaterPipelineWorkCompletionComponent},
   { path: 'drngPipeConnWorkCompletion/:apiCode', component: DrainagePipelineWorkCompletionComponent},
-  { path: 'newDrainageConnection/:id/:apiCode', component: DrainagePipelineConnectionComponent },
+  { path: 'newDrainageConnection/:id/:apiCode', component : NewDrainageConnectionComponent },
   { path: 'drainageDisconnection/:apiCode', component: DrainageDisconnectionComponent},
   { path: 'drainageReconnection/:apiCode', component: DrainageReconnectionComponent},
   { path: 'drainageTransferConnection/:apiCode', component: DrainageTransferConnectionComponent},

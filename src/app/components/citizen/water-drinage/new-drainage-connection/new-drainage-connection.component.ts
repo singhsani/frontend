@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { ValidationService } from 'src/app/shared/services/validation.service';
 import { TranslateService } from 'src/app/shared/modules/translate/translate.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -9,7 +9,10 @@ import { Constants } from 'src/app/vmcshared/Constants';
 import { ManageRoutes } from 'src/app/config/routes-conf';
 import { AlertService } from 'src/app/vmcshared/Services/alert.service';
 import { NewWaterConnectionEntryService } from '../../tax/water-supply/new-water-connection-entry/Services/new-water-connection-entry.service';
+import { WaterDrinageConfig} from '../water-drinage-config';
+import * as _ from 'lodash';
 
+ 
 @Component({
   selector: 'app-new-drainage-connection',
   templateUrl: './new-drainage-connection.component.html',
@@ -25,6 +28,7 @@ export class NewDrainageConnectionComponent implements OnInit {
 
   tabIndex: number = 0;
 
+  uploadFilesArray: Array<any> = [];
   wardZoneLevel = [];
   wardZoneLevel1List = [];
   wardZoneLevel2List = [];
@@ -33,6 +37,9 @@ export class NewDrainageConnectionComponent implements OnInit {
 
   connectionUsageList = [];
   connectionSubUsageList = [];
+
+  config: WaterDrinageConfig = new WaterDrinageConfig();
+  public showButtons: boolean = true;
 
 
   plumberList: any = [];
@@ -57,10 +64,17 @@ export class NewDrainageConnectionComponent implements OnInit {
       this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
     });
 
-    this.newDrainageConnectionFormControls();
-    this.getWardZoneLevel();
-    this.getUsageList();
-    this.getPlumberList();
+    if (!this.formId) {
+      this.router.navigate([ManageRoutes.getFullRoute('CITIZENDASHBOARD')]);
+    }else{
+      this.newDrainageConnectionFormControls();
+      this.getWardZoneLevel();
+      this.getUsageList();
+      this.getPlumberList();
+      this.getFormData(this.formId);
+    }
+
+  
   }
 
   onTabChange(evt) {
@@ -90,6 +104,34 @@ export class NewDrainageConnectionComponent implements OnInit {
     }
   }
 
+  getFormData(id: number) {
+    this.formService.getFormData(id).subscribe(res => {
+      console.log("Get form data", res);
+      if(res.waterDrainageWardId) {
+        this.getWardZone(res.waterDrainageZoneId, 2);
+      }
+      res.serviceDetail.serviceUploadDocuments.forEach(app => {
+        (<FormArray>this.newDrainageConnectionForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.config.createDocumentsGrp(app));
+      });
+      this.requiredDocumentList();
+    })
+  }
+  requiredDocumentList() {
+    this.uploadFilesArray = [];
+    _.forEach(this.newDrainageConnectionForm.get('serviceDetail').get('serviceUploadDocuments').value, (value) => {
+      if (value.mandatory && value.isActive && value.requiredOnCitizenPortal) {
+        this.uploadFilesArray.push({
+          'labelName': value.documentLabelEn,
+          'fieldIdentifier': value.fieldIdentifier,
+          'documentIdentifier': value.documentIdentifier
+        })
+      }
+    });
+    console.log("uploadFileArray", this.uploadFilesArray);
+    //check for attachment is mandatory
+    //	this.dependentAttachment(this.waterPipeliConnectionForm.get('undergroundWatertankMapApproved').value, 'UNDERGROUND_WATER_TANK_MAP');
+    //this.dependentAttachment(this.waterPipeliConnectionForm.get('overgroundWatertankMapApproved').value, 'OVERHEAD_WATER_TANK_MAP');
+  }
 
   newDrainageConnectionFormControls() {
     this.newDrainageConnectionForm = this.fb.group({

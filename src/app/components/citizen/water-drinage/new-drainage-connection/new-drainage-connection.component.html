@@ -196,6 +196,33 @@
 			</mat-tab>
 			<!-- step 2 Ends -->
 
+			<!-- step 3 Ends -->
+			<mat-tab>
+				<ng-template mat-tab-label>
+					<div>{{'upload' | translate: translateKey}}</div>
+				</ng-template>
+				<!-- <div class="alert alert-warning">
+								{{'note' | translate:translateKey}} :
+								{{'submit_hard_copy_at_saradar_market' | translate:translateKey}}
+							</div> -->
+				<div class="row">
+					<!-- fieldIdentifier -->
+					<ng-container
+						*ngFor="let doc of newDrainageConnectionForm.get('serviceDetail').get('serviceUploadDocuments').value">
+						<div class="col-md-4" *ngIf="doc.requiredOnCitizenPortal && doc.isActive">
+							<label>{{translateService.getCurrentLanguage()=='en'? doc.documentLabelEn : doc.documentLabelGuj }}<span
+									*ngIf="doc.mandatory">*</span> </label>
+							<file-upload [form]="newDrainageConnectionForm" [uploadModel]="doc"></file-upload>
+						</div>
+					</ng-container>
+				</div>
+				<app-action-bar [uploadFiles]="uploadFilesArray"
+					[form]="newDrainageConnectionForm" (tabIndex)="onTabChange($event)"
+					[stepInfo]="{step: 'final', next: 3, back: 3}" (handleErrors)="handleErrorsOnSubmit($event)">
+				</app-action-bar>
+			</mat-tab>
+			<!-- Tab 3 End -->
+
 
 		</mat-tab-group>
 	</form>
