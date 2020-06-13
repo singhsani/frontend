@@ -139,7 +139,7 @@ export class NewAffordableHousingComponent implements OnInit {
 	affordableHousingFormControls() {
 		this.affordableHousingForm = this.fb.group({
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
-			serviceCode: 'AFFORD-NEW',
+			serviceCode: 'AFFORD-HOUSE',
 
 			/* Step 1 controls start */
 			schemeId: [null, [Validators.required, Validators.maxLength(100)]],

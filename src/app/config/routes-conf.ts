@@ -197,7 +197,7 @@ const ROUTEMAIN = {
 
     /*Affordable Housing end */
 
-    'AFFORD-NEW': {
+    'AFFORD-HOUSE': {
         'main': 'afhForm',
         'type': 'afhForm'
     },
@@ -743,8 +743,8 @@ const ROUTESLIST = {
 
     /*Affordable Housing routes Start */
 
-    'AFFORD-NEW': {
-        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.AFFORDABLEMODULE + '/' + ROUTEMAIN["AFFORD-NEW"].main
+    'AFFORD-HOUSE': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.AFFORDABLEMODULE + '/' + ROUTEMAIN["AFFORD-HOUSE"].main
     },
     /*Affordable Housing routes end */
 
