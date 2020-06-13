@@ -174,9 +174,9 @@
 						</control-messages>
 					</div>
 				</mat-card>
+				
 				<app-action-bar [form]="newDrainageConnectionForm" (tabIndex)="onTabChange($event)"
-					[stepInfo]="{step: 'step1', next: 1, back: 0}" (handleErrors)="handleErrorsOnSubmit($event)">
-				</app-action-bar>
+					[stepInfo]="{step: 'step1', next: 1, back: 0}" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
 
 			</mat-tab>
 			<!-- step 1 Ends -->
