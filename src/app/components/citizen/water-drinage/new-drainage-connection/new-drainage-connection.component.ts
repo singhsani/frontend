@@ -23,6 +23,7 @@ export class NewDrainageConnectionComponent implements OnInit {
   formId: number;
   apiCode: string;
 
+  
   newDrainageConnectionForm: FormGroup;
   translateKey: string = 'newDrainageConnectionKey';
 
@@ -70,6 +71,7 @@ export class NewDrainageConnectionComponent implements OnInit {
       this.newDrainageConnectionFormControls();
       this.getWardZoneLevel();
       this.getUsageList();
+      this.getDrainageConnectionNewData();
       this.getPlumberList();
       this.getFormData(this.formId);
     }
@@ -81,6 +83,20 @@ export class NewDrainageConnectionComponent implements OnInit {
     this.tabIndex = evt;
   }
 
+  /**
+   * this method is used to get drainage pipeline connection data
+   * 
+   */
+  getDrainageConnectionNewData() {
+    this.formService.getFormData(this.formId).subscribe(res => {
+      try {
+        this.newDrainageConnectionForm.patchValue(res);
+        this.showButtons = true;
+      } catch (error) {
+        console.log(error.message)
+      }
+    });
+  }
   handleErrorsOnSubmit(flag) {
     console.log("flag", flag);
     let step0 = 11;
