@@ -11,6 +11,7 @@ import { AlertService } from 'src/app/vmcshared/Services/alert.service';
 import { NewWaterConnectionEntryService } from '../../tax/water-supply/new-water-connection-entry/Services/new-water-connection-entry.service';
 import { WaterDrinageConfig} from '../water-drinage-config';
 import * as _ from 'lodash';
+import { CommonService } from 'src/app/vmcshared/Services/common-service';
 
  
 @Component({
@@ -41,9 +42,10 @@ export class NewDrainageConnectionComponent implements OnInit {
 
   config: WaterDrinageConfig = new WaterDrinageConfig();
   public showButtons: boolean = true;
-
+  ispostalAddressDiff  : boolean = false; 
 
   plumberList: any = [];
+  limitList = [];
 
   constructor(
     private fb: FormBuilder,
@@ -54,7 +56,8 @@ export class NewDrainageConnectionComponent implements OnInit {
     private formService: FormsActionsService,
     private taxRebateApplicationService: TaxRebateApplicationService,
     private newWaterConnectionEntryService: NewWaterConnectionEntryService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private commonService: CommonService,
   ) { }
 
   ngOnInit() {
@@ -75,7 +78,12 @@ export class NewDrainageConnectionComponent implements OnInit {
       this.getPlumberList();
       this.getFormData(this.formId);
     }
-
+    let lookupcode = `lookup_codes=${Constants.LookupCodes.Water_Within_Limit}&lookup_codes=${Constants.LookupCodes.Connection_Type}`
+    this.commonService.getLookupValuesAccordingToScreen(lookupcode).subscribe(data => {
+     
+      this.limitList = Object.assign([], data).filter(f => f.lookupCode.includes(Constants.LookupCodes.Water_Within_Limit))[0].items;
+      
+    });
   
   }
 
@@ -118,6 +126,20 @@ export class NewDrainageConnectionComponent implements OnInit {
       }
 
     }
+  }
+
+  getPropertyAddressDetail() {
+    
+    this.newWaterConnectionEntryService.getPropertyAddress(this.newDrainageConnectionForm.get('propertyNo').value).subscribe(
+      (data) => {
+        if (data.status === 200) {
+          this.getPropertyValues(data.body.propertyBasic.propertyAddressDTO);
+          //this.model.address = data.body.propertyBasic.propertyAddressDTO.propertyAddress;
+        }
+      },
+      (error) => {
+        this.alertService.error(error.error.message);
+      });
   }
 
   getFormData(id: number) {
@@ -167,8 +189,87 @@ export class NewDrainageConnectionComponent implements OnInit {
 
       connectionUsage: [null, [Validators.required]],
       connectionSubUsage: [null, [Validators.required]],
-      plumber: [null, [Validators.required]]
+      plumber: [null, [Validators.required]],
+      propertyNo: [null, [Validators.required]],
+      primaryProperty: [null, [Validators.required]],
+      fpNo: [null, [Validators.required]],
+      plotPartNo: [null, [Validators.required]],
+      tpNo: [null, [Validators.required]],
+      serveyNo: [null, [Validators.required]],
+      houseNo: [null, [Validators.required]],
+      buildingName: [null, [Validators.required]],
+      societyName: [null, [Validators.required]],
+      streetName: [null, [Validators.required]],
+      pincode: [null, [Validators.required]],
+      postalAddress: [null, [Validators.required]],
+      postalAddressDiff: [null, [Validators.required]],
     }, {});
+  }
+
+  getPropertyValues(data : any){
+    this.newDrainageConnectionForm.get('fpNo').setValue(data.fpNo);
+    this.newDrainageConnectionForm.get('plotPartNo').setValue(data.plotPartNo);
+    this.newDrainageConnectionForm.get('tpNo').setValue(data.tpNo);
+    this.newDrainageConnectionForm.get('serveyNo').setValue(data.serveyNo);
+    this.newDrainageConnectionForm.get('houseNo').setValue(data.houseNo);
+    this.newDrainageConnectionForm.get('buildingName').setValue(data.buildingName);
+    this.newDrainageConnectionForm.get('societyName').setValue(data.societyName);
+    this.newDrainageConnectionForm.get('streetName').setValue(data.streetName);
+    this.newDrainageConnectionForm.get('pincode').setValue(data.pincode);
+    this.newDrainageConnectionForm.get('postalAddress').setValue(data.postalAddress);
+    this.newDrainageConnectionForm.get('postalAddressDiff').setValue(data.postalAddress);
+  }
+
+  onChangeAddress() {
+    var fullAddress = "";
+    if (this.newDrainageConnectionForm.get('houseNo').value) {
+      fullAddress = fullAddress + this.newDrainageConnectionForm.get('houseNo').value +',';
+    }
+    if (this.newDrainageConnectionForm.get('buildingName').value) {
+      fullAddress = fullAddress + this.newDrainageConnectionForm.get('buildingName').value + ',';
+    }
+    if (this.newDrainageConnectionForm.get('societyName').value) {
+      fullAddress = fullAddress + this.newDrainageConnectionForm.get('societyName').value +',';
+    }
+    if (this.newDrainageConnectionForm.get('streetName').value) {
+      fullAddress = fullAddress + this.newDrainageConnectionForm.get('streetName').value + ',';
+    }
+    if (this.newDrainageConnectionForm.get('pincode').value) {
+      fullAddress = fullAddress + this.newDrainageConnectionForm.get('pincode').value +',';
+    }
+    
+
+    var address2 = "";
+    if (this.newDrainageConnectionForm.get('fpNo').value) {
+      address2 = address2 + 'FP No: '+this.newDrainageConnectionForm.get('fpNo').value +',';
+    }
+    if (this.newDrainageConnectionForm.get('plotPartNo').value) {
+      address2 = address2 + 'Plot Part No: '+this.newDrainageConnectionForm.get('plotPartNo').value + ',';
+    }
+    if (this.newDrainageConnectionForm.get('tpNo').value) {
+      address2 = address2 + 'TP No: '+this.newDrainageConnectionForm.get('tpNo').value + ',';
+    }
+    if (this.newDrainageConnectionForm.get('serveyNo').value) {
+      address2 = address2 + 'Survey No: '+this.newDrainageConnectionForm.get('serveyNo').value +',';
+    }
+    fullAddress = fullAddress;
+    if (address2 != '') {
+      fullAddress =  address2 + '\n' + fullAddress;
+    }
+    if (fullAddress != '' && address2 != '')
+      fullAddress = fullAddress.substring(0, fullAddress.length - 2);
+    
+      this.newDrainageConnectionForm.get('postalAddress').setValue(fullAddress);
+      this.newDrainageConnectionForm.get('postalAddressDiff').setValue(fullAddress);
+    
+  }
+
+  eventCheck(event){
+    if(event.checked){
+      this.ispostalAddressDiff = true;
+    }else{
+      this.ispostalAddressDiff = false;
+    }
   }
 
   getWardZoneLevel() {
