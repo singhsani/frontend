@@ -174,9 +174,10 @@
 						</control-messages>
 					</div>
 				</mat-card>
-				
+
 				<app-action-bar [form]="newDrainageConnectionForm" (tabIndex)="onTabChange($event)"
-					[stepInfo]="{step: 'step1', next: 1, back: 0}" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
+					[stepInfo]="{step: 'step1', next: 1, back: 0}" (handleErrors)="handleErrorsOnSubmit($event)">
+				</app-action-bar>
 
 			</mat-tab>
 			<!-- step 1 Ends -->
@@ -187,6 +188,121 @@
 					<div>{{'property-details' | translate:translateKey}}</div>
 				</ng-template>
 
+
+
+				<div class="row">
+					<div class="col-md-4">
+						<mat-form-field>
+							<input matInput appPreventSpace
+								placeholder="{{'Property Number on which connection required' | translate:translateKey}}"
+								type="text" formControlName="propertyNo">
+						</mat-form-field>
+					</div>
+					<div class="col-md-4 ngSelect">
+
+						<ng-select required placeholder="{{'Primary Property ' | translate:translateKey}} "
+							formControlName="primaryProperty">
+							<ng-option [value]=true>
+								YES</ng-option>
+							<ng-option [value]=false>
+								NO</ng-option>
+						</ng-select>
+						<control-messages [control]="newDrainageConnectionForm.get('primaryProperty')">
+						</control-messages>
+					</div>
+					<div class="col-md-4">
+						<button mat-raised-button color="primary" (click)="getPropertyAddressDetail();" type="button">
+							<mat-icon >add_circle_outline</mat-icon> Add
+						</button>
+					</div>
+				</div>
+
+				<div class="row">
+					<mat-form-field class="col-md-6">
+						<input matInput OnlyNumber (input)="onChangeAddress()" required maxlength="10" formControlName="fpNo"
+							placeholder="{{'FP No' | translate:translateKey}}">
+						<control-messages [control]="newDrainageConnectionForm.get('fpNo')">
+						</control-messages>
+					</mat-form-field>
+					<mat-form-field class="col-md-6">
+						<input matInput appPreventSpace placeholder="{{'Plot Part No' | translate:translateKey}}"
+							type="text" (input)="onChangeAddress()" formControlName="plotPartNo">
+							<control-messages [control]="newDrainageConnectionForm.get('plotPartNo')">
+							</control-messages>
+					</mat-form-field>
+				</div>
+
+				<div class="row">
+					<mat-form-field class="col-md-6">
+						<input matInput OnlyNumber required maxlength="10" formControlName="tpNo" (input)="onChangeAddress()"
+							placeholder="{{'TP No' | translate:translateKey}}">
+						<control-messages [control]="newDrainageConnectionForm.get('tpNo')">
+						</control-messages>
+					</mat-form-field>
+					<mat-form-field class="col-md-6">
+						<input matInput appPreventSpace placeholder="{{'Servey No' | translate:translateKey}}"
+							type="text" (input)="onChangeAddress()" formControlName="serveyNo">
+							<control-messages [control]="newDrainageConnectionForm.get('serveyNo')">
+							</control-messages>
+					</mat-form-field>
+				</div>
+
+				<div class="row">
+					<mat-form-field class="col-md-6">
+						<input matInput OnlyNumber required maxlength="10" (input)="onChangeAddress()" formControlName="houseNo"
+							placeholder="{{'House No / Flat No' | translate:translateKey}}">
+						<control-messages [control]="newDrainageConnectionForm.get('houseNo')">
+						</control-messages>
+					</mat-form-field>
+					<mat-form-field class="col-md-6">
+						<input matInput appPreventSpace placeholder="{{'Building Name' | translate:translateKey}}"
+							type="text" (input)="onChangeAddress()" formControlName="buildingName">
+							<control-messages [control]="newDrainageConnectionForm.get('buildingName')">
+							</control-messages>
+					</mat-form-field>
+				</div>
+
+				<div class="row">
+					<mat-form-field class="col-md-6">
+						<input matInput  required maxlength="10" formControlName="societyName" (input)="onChangeAddress()"
+							placeholder="{{'Society Name' | translate:translateKey}}">
+						<control-messages [control]="newDrainageConnectionForm.get('societyName')">
+						</control-messages>
+					</mat-form-field>
+					<mat-form-field class="col-md-6">
+						<input matInput appPreventSpace placeholder="{{'Name of Street / Road' | translate:translateKey}}"
+							type="text" formControlName="streetName" (input)="onChangeAddress()" >
+							<control-messages [control]="newDrainageConnectionForm.get('streetName')">
+							</control-messages>
+					</mat-form-field>
+				</div>
+
+				<div class="row">
+					<mat-form-field class="col-md-6">
+						<input matInput OnlyNumber required maxlength="10" formControlName="pincode" (input)="onChangeAddress()"
+							placeholder="{{'Pin code' | translate:translateKey}}">
+						<control-messages [control]="newDrainageConnectionForm.get('pincode')">
+						</control-messages>
+					</mat-form-field>
+					
+						<div class="col-md-6">
+							<mat-checkbox (change)="eventCheck($event)" class="example-margin" name="postalAddressDiff" >Postal
+								Address is different than Property Address</mat-checkbox>
+						</div>
+					
+				</div>
+				<div class="row">
+					<mat-form-field class="col-md-6">
+						<textarea matInput OnlyNumber required maxlength="10" formControlName="postalAddress"
+							placeholder="{{'Property Address' | translate:translateKey}}"></textarea>
+						
+					</mat-form-field>
+					<mat-form-field *ngIf="ispostalAddressDiff" class="col-md-6">
+						<textarea matInput appPreventSpace placeholder="{{'Postal Address' | translate:translateKey}}"
+							type="text" formControlName="postalAddressDiff"></textarea>
+							
+					</mat-form-field>
+				</div>
 
 
 				<app-action-bar [form]="newDrainageConnectionForm" (tabIndex)="onTabChange($event)"
@@ -216,9 +332,9 @@
 						</div>
 					</ng-container>
 				</div>
-				<app-action-bar [uploadFiles]="uploadFilesArray"
-					[form]="newDrainageConnectionForm" (tabIndex)="onTabChange($event)"
-					[stepInfo]="{step: 'final', next: 3, back: 3}" (handleErrors)="handleErrorsOnSubmit($event)">
+				<app-action-bar [uploadFiles]="uploadFilesArray" [form]="newDrainageConnectionForm"
+					(tabIndex)="onTabChange($event)" [stepInfo]="{step: 'final', next: 3, back: 3}"
+					(handleErrors)="handleErrorsOnSubmit($event)">
 				</app-action-bar>
 			</mat-tab>
 			<!-- Tab 3 End -->
