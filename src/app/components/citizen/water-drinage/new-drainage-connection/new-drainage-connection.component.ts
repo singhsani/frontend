@@ -46,6 +46,7 @@ export class NewDrainageConnectionComponent implements OnInit {
 
   plumberList: any = [];
   limitList = [];
+  isOutofLimit: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -82,11 +83,22 @@ export class NewDrainageConnectionComponent implements OnInit {
     this.commonService.getLookupValuesAccordingToScreen(lookupcode).subscribe(data => {
      
       this.limitList = Object.assign([], data).filter(f => f.lookupCode.includes(Constants.LookupCodes.Water_Within_Limit))[0].items;
-      
+     
     });
   
   }
 
+  onChangedLimit(val) {
+    if (val) {
+      var objLimit = this.limitList.filter(f => f.itemId == val)[0];
+      if (objLimit.itemCode == Constants.ItemCodes.Out_of_Limit) {
+        this.isOutofLimit = true;
+      }
+      else {
+        this.isOutofLimit = false;
+      }
+    }
+  }
   onTabChange(evt) {
     this.tabIndex = evt;
   }
@@ -106,9 +118,10 @@ export class NewDrainageConnectionComponent implements OnInit {
     });
   }
   handleErrorsOnSubmit(flag) {
+    
     console.log("flag", flag);
     let step0 = 11;
-    let step1 = 15;
+    let step1 = 26;
 
     if (flag != null) {
       //Check validation for step by step
@@ -181,8 +194,8 @@ export class NewDrainageConnectionComponent implements OnInit {
       connectionOwnerName: [null, [Validators.required]],
       mobileNo: [null, [Validators.maxLength(10)]],
       emailId: [null],
-      //TODO Ask to nikulbhai about about withinLimit code
-      withinLimitOutOfLimit: [null],
+      
+      limit: [null],
       drainageConnectionZoneId: [null, [Validators.required]],
       drainageConnectionWardId: [null, [Validators.required]],
       drainageConnectionBlockId: [null, [Validators.required]],
@@ -201,8 +214,9 @@ export class NewDrainageConnectionComponent implements OnInit {
       societyName: [null, [Validators.required]],
       streetName: [null, [Validators.required]],
       pincode: [null, [Validators.required]],
-      postalAddress: [null, [Validators.required]],
-      postalAddressDiff: [null, [Validators.required]],
+      postalAddress: [null],
+      postalAddressDiff: [null],
+      propertyAddress: [null],
     }, {});
   }
 
@@ -217,7 +231,8 @@ export class NewDrainageConnectionComponent implements OnInit {
     this.newDrainageConnectionForm.get('streetName').setValue(data.streetName);
     this.newDrainageConnectionForm.get('pincode').setValue(data.pincode);
     this.newDrainageConnectionForm.get('postalAddress').setValue(data.postalAddress);
-    this.newDrainageConnectionForm.get('postalAddressDiff').setValue(data.postalAddress);
+    this.newDrainageConnectionForm.get('propertyAddress').setValue(data.postalAddress);
+    this.ispostalAddressDiff = true;
   }
 
   onChangeAddress() {
@@ -260,7 +275,7 @@ export class NewDrainageConnectionComponent implements OnInit {
       fullAddress = fullAddress.substring(0, fullAddress.length - 2);
     
       this.newDrainageConnectionForm.get('postalAddress').setValue(fullAddress);
-      this.newDrainageConnectionForm.get('postalAddressDiff').setValue(fullAddress);
+      this.newDrainageConnectionForm.get('propertyAddress').setValue(fullAddress);
     
   }
 
