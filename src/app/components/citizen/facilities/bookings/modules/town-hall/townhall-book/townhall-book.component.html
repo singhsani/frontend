@@ -353,7 +353,7 @@
 
         <div class="fotButtonBar">
             <div class="col-sm-12 col-md-12 text-right">
-                <button mat-raised-button type="button" color="primary" (click)="showPaymentReciept = false;showApplicationForm = true;">
+                <button mat-raised-button type="button" color="primary" (click)="showPaymentReciept = false;showApplicationForm = true;getUserProfile();">
                     {{'proceed_for_application' | translate: translateKey}}
                     <mat-icon>navigate_next</mat-icon>
                 </button>

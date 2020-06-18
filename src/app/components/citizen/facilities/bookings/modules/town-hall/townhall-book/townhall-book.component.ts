@@ -37,7 +37,7 @@ export class TownHallBookComponent implements OnInit {
 	@ViewChild("paymentGateway") paymentGateway: TemplateRef<any>;
 	@ViewChild('address') addressComp: any;
 	@ViewChild('appAddress') appAddressComp: any;
-	
+
 	@ViewChild(MatPaginator) paginator: MatPaginator;
 
 	bookingConstants = BookingConstants;
@@ -451,4 +451,20 @@ export class TownHallBookComponent implements OnInit {
 			return false;
 		}
 	}
+  /**
+   * Get user data
+   */
+  getUserProfile() {
+    this.bookingService.getUserProfile().subscribe(resp => {
+        this.townHallApplicationForm.get('applicantName').setValue(resp.data.firstName + ' ' + resp.data.lastName);
+        this.townHallApplicationForm.get('emailID').setValue(resp.data.email);
+        this.townHallApplicationForm.get('applicantMobile').setValue(resp.data.cellNo);
+      },
+      err => {
+        this.toster.error("Server Error");
+      });
+    this.townHallApplicationForm.get('applicantAddress').get('country').setValue('INDIA');
+    this.townHallApplicationForm.get('applicantAddress').get('state').setValue('GUJARAT');
+    this.townHallApplicationForm.get('applicantAddress').get('city').setValue('Vadodara');
+  }
 }
