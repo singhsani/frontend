@@ -41,7 +41,7 @@
 				</div>
 				
 				
-
+<!-- 
 				<div class="row">
 					<mat-form-field class="col-md-5">
 						<input matInput type="text"  maxlength="30" placeholder="{{'property_dues' | translate:translateKey}}"
@@ -56,24 +56,24 @@
 							formControlName="waterDues" >
 						<control-messages [control]="drainageDisconnectionForm.get('waterDues')"></control-messages>
 					</mat-form-field>
-				</div>
+				</div> -->
 
 				<div class="row">
-					<div class="col-md-5 ngSelect" formGroupName="reasonList">
-						<ng-select placeholder="{{'reason_for_disconnection' | translate:translateKey}} *" formControlName="reasonForDisconnectionId">
-							<ng-option *ngFor="let type of REASON_TYPE" [value]="type.reasonForDisconnectionId">{{type.name}}
+					<div class="col-md-5 ngSelect">
+						<ng-select placeholder="{{'reason_for_disconnection' | translate:translateKey}} *" formControlName="reasonForDisconnection">
+							<ng-option *ngFor="let reasonForDisconnection of reasonList" [value]="reasonForDisconnection.itemId">{{reasonForDisconnection.itemName}}
 							</ng-option>
 						</ng-select>
-						<control-messages [control]="drainageDisconnectionForm.get('reasonList').get('reasonForDisconnectionId')">
+						<control-messages [control]="drainageDisconnectionForm.get('reasonForDisconnection')">
 						</control-messages>
 					</div>
 
-					<div class="col-md-5 ngSelect" formGroupName="disconnectionTypeList">
-						<ng-select placeholder="{{'disconnection_type' | translate:translateKey}} *" formControlName="disconnectionTypeId">
-							<ng-option *ngFor="let type of DISCONNECTION_TYPE" [value]="type.disconnectionTypeId">{{type.name}}
+					<div class="col-md-5 ngSelect">
+						<ng-select placeholder="{{'disconnection_type' | translate:translateKey}} *" formControlName="waterDisconnectionType">
+							<ng-option *ngFor="let waterDisconnectionType of disconnectionTypeList" [value]="waterDisconnectionType.itemId">{{waterDisconnectionType.itemName}}
 							</ng-option>
 						</ng-select>
-						<control-messages [control]="drainageDisconnectionForm.get('disconnectionTypeList').get('disconnectionTypeId')">
+						<control-messages [control]="drainageDisconnectionForm.get('waterDisconnectionType')">
 						</control-messages>
 					</div>
 					
@@ -91,18 +91,17 @@
 					<div>{{'attachment' | translate: translateKey}}</div>
 				</ng-template>
 				<div class="row">
-					<!-- <ng-container
-						*ngFor="let doc of drainageDisconnectionForm.get('serviceDetail').get('serviceUploadDocuments').value | filterAttachmentMF:drainageDisconnectionForm.get('statusOfBusinessId').value.code">
-						<div class="col-md-4"
-							*ngIf="doc.requiredOnCitizenPortal && doc.isActive && licenseConfiguration.isAttachmentButtonsVisible">
-							<label>{{TranslateService.getCurrentLanguage()=='en'? doc.documentLabelEn : doc.documentLabelGuj }}
-								<span *ngIf="doc.mandatory">*</span></label>
+					<ng-container
+						*ngFor="let doc of drainageDisconnectionForm.get('serviceDetail').get('serviceUploadDocuments').value">
+						<div class="col-md-4" *ngIf="doc.requiredOnCitizenPortal && doc.isActive">
+							<label>{{translateService.getCurrentLanguage()=='en'? doc.documentLabelEn : doc.documentLabelGuj }}<span
+									*ngIf="doc.mandatory">*</span> </label>
 							<file-upload [form]="drainageDisconnectionForm" [uploadModel]="doc"></file-upload>
 						</div>
-					</ng-container> -->
+					</ng-container>
 				</div>
 
-				<app-action-bar [paymentGateway]="paymentGateway" [uploadFiles]="uploadFileArray"
+				<app-action-bar [paymentGateway]="paymentGateway" [uploadFiles]="uploadFilesArray"
 					[form]="drainageDisconnectionForm" (handleErrors)="handleErrorsOnSubmit($event)"
 					(tabIndex)="licenseConfiguration.onFormTabChange($event) "
 					[stepInfo]="{step: 'final', next:2, back:0} "></app-action-bar>

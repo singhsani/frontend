@@ -17,6 +17,7 @@ import { DrainageReconnectionComponent } from './drainage-reconnection/drainage-
 import { DrainageTransferConnectionComponent } from './drainage-transfer-connection/drainage-transfer-connection.component';
 import { NewWaterConnectionEntryService } from '../tax/water-supply/new-water-connection-entry/Services/new-water-connection-entry.service';
 import { AlertService } from 'src/app/vmcshared/Services/alert.service';
+import { DrainageService } from './service/drainage.service';
 
 
 /* Import all shared, core and routing module end */
@@ -27,7 +28,7 @@ const routes: Routes = [
   { path: 'wtrPipeConnWorkCompletion/:apiCode', component: WaterPipelineWorkCompletionComponent},
   { path: 'drngPipeConnWorkCompletion/:apiCode', component: DrainagePipelineWorkCompletionComponent},
   { path: 'newDrainageConnection/:id/:apiCode', component : NewDrainageConnectionComponent },
-  { path: 'drainageDisconnection/:apiCode', component: DrainageDisconnectionComponent},
+  { path: 'drainageDisconnection/:id/:apiCode', component: DrainageDisconnectionComponent},
   { path: 'drainageReconnection/:apiCode', component: DrainageReconnectionComponent},
   { path: 'drainageTransferConnection/:apiCode', component: DrainageTransferConnectionComponent},
 ];
@@ -44,7 +45,9 @@ const routes: Routes = [
   providers:[
     TaxRebateApplicationService,
     NewWaterConnectionEntryService,
-    AlertService
+    AlertService,
+    DrainageService
+    
   ],
   declarations: [
     WaterPipelineConnection,
