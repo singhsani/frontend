@@ -24,7 +24,7 @@
 
 					<div class="row">
 						<mat-form-field class="col-md-6">
-							<input matInput type="text" required maxlength="300"
+							<input readonly matInput type="text" maxlength="300"
 								placeholder="{{'drainage_connection_no' | translate:translateKey}}"
 								formControlName="drainageConnectionNo">
 						</mat-form-field>
@@ -39,7 +39,7 @@
 					<div class="row">
 						<div class="col-md-6 ngSelect">
 								<ng-select required
-									placeholder="{{'within_limit_out_of_limit' | translate:translateKey}} *"
+									placeholder="{{'within_limit_out_of_limit' | translate:translateKey}}"
 									formControlName="limit" (change)="onChangedLimit($event)">
 									<ng-option *ngFor="let limits of limitList" [value]="limits.itemId">
 										{{limits.itemName}}</ng-option>
@@ -48,12 +48,12 @@
 						<div *ngIf="!isOutofLimit" class="col-md-6 ngSelect">
 							<div *ngIf="wardZoneLevel.length>=1">
 								<ng-select required
-									placeholder="{{'drainage-connection-zone' | translate:translateKey}} *"
-									formControlName="drainageConnectionZoneId" (change)="onChangedWardZone($event,2)">
+									placeholder="{{'drainage-connection-zone' | translate:translateKey}}"
+									formControlName="waterDrainageZoneId" (change)="onChangedWardZone($event,2)">
 									<ng-option *ngFor="let zone of wardZoneLevel1List" [value]="zone.parentWardzoneId">
 										{{zone.wardzoneName}}</ng-option>
 								</ng-select>
-								<control-messages [control]="newDrainageConnectionForm.get('drainageConnectionZoneId')">
+								<control-messages [control]="newDrainageConnectionForm.get('waterDrainageZoneId')">
 								</control-messages>
 							</div>
 						</div>
@@ -63,12 +63,12 @@
 						<div class="col-md-6 ngSelect">
 							<div *ngIf="wardZoneLevel.length>=2">
 								<ng-select required
-									placeholder="{{'drainage_connection_ward' | translate:translateKey}} *"
-									formControlName="drainageConnectionWardId" (change)="onChangedWardZone($event,3)">
+									placeholder="{{'drainage_connection_ward' | translate:translateKey}}"
+									formControlName="waterDrainageWardId" (change)="onChangedWardZone($event,3)">
 									<ng-option *ngFor="let zone of wardZoneLevel2List" [value]="zone.wardzoneId">
 										{{zone.wardzoneName}}</ng-option>
 								</ng-select>
-								<control-messages [control]="newDrainageConnectionForm.get('drainageConnectionWardId')">
+								<control-messages [control]="newDrainageConnectionForm.get('waterDrainageWardId')">
 								</control-messages>
 							</div>
 						</div>
@@ -76,12 +76,12 @@
 							<div *ngIf="wardZoneLevel.length>=3">
 								<ng-select required
 									placeholder="{{'drainage_connection_block' | translate:translateKey}} *"
-									formControlName="drainageConnectionBlockId" (change)="onChangedWardZone($event,4)">
+									formControlName="waterDrainageBlockId" (change)="onChangedWardZone($event,4)">
 									<ng-option *ngFor="let zone of wardZoneLevel3List" [value]="zone.wardzoneId">
 										{{zone.wardzoneName}}</ng-option>
 								</ng-select>
 								<control-messages
-									[control]="newDrainageConnectionForm.get('drainageConnectionBlockId')">
+									[control]="newDrainageConnectionForm.get('waterDrainageBlockId')">
 								</control-messages>
 							</div>
 						</div>
@@ -90,14 +90,16 @@
 
 					<div class="row">
 						<mat-form-field class="col-md-6">
-							<input matInput type="text" maxlength="300"
-								placeholder="{{'census_no' | translate:translateKey}}" formControlName="censusNo">
+							<input matInput OnlyNumber required maxlength="12" formControlName="aadharNo"
+								placeholder="{{'aadhar_no' | translate:translateKey}}">
+							<control-messages [control]="newDrainageConnectionForm.get('aadharNo')">
+							</control-messages>
 						</mat-form-field>
 						<mat-form-field class="col-md-6">
 							<input matInput type="text" required maxlength="300"
 								placeholder="{{'connection_owner_name' | translate:translateKey}}"
-								formControlName="connectionOwnerName">
-							<control-messages [control]="newDrainageConnectionForm.get('connectionOwnerName')">
+								formControlName="ownerName">
+							<control-messages [control]="newDrainageConnectionForm.get('ownerName')">
 							</control-messages>
 						</mat-form-field>
 					</div>
@@ -111,7 +113,7 @@
 						</mat-form-field>
 						<mat-form-field class="col-md-6">
 							<input matInput appPreventSpace placeholder="{{'email_id' | translate:translateKey}}"
-								type="email" formControlName="emailId">
+								type="email" formControlName="ownerEmailId">
 						</mat-form-field>
 					</div>
 
@@ -126,37 +128,73 @@
 							</div>
 						</div>
 					</div>
-
-					<div class="col-md-6 ngSelect">
-						<!-- <div *ngIf="connectionUsageList.length>0"> -->
-						<ng-select required placeholder="{{'connection_usage' | translate:translateKey}} *"
-							formControlName="connectionUsage" (change)="onChangedConnectionUsage($event)">
-							<ng-option *ngFor="let connectionUsage of connectionUsageList"
-								[value]="connectionUsage.usageId">{{connectionUsage.usageName}}</ng-option>
-						</ng-select>
-						<control-messages [control]="newDrainageConnectionForm.get('connectionUsage')">
-						</control-messages>
-						<!-- </div> -->
+					<div class="row">
+						<div class="col-md-6 ngSelect">
+							<!-- <div *ngIf="connectionUsageList.length>0"> -->
+							<ng-select required placeholder="{{'connection_usage' | translate:translateKey}} *"
+								formControlName="connectionUsage" (change)="onChangedConnectionUsage($event)">
+								<ng-option *ngFor="let connectionUsage of connectionUsageList"
+									[value]="connectionUsage.usageId">{{connectionUsage.usageName}}</ng-option>
+							</ng-select>
+							<control-messages [control]="newDrainageConnectionForm.get('connectionUsage')">
+							</control-messages>
+							<!-- </div> -->
+						</div>
+	
+						<div class="col-md-6 ngSelect">
+							<ng-select required placeholder="{{'connection_subusage' | translate:translateKey}} *"
+								formControlName="connectionSubUsage">
+								<ng-option *ngFor="let connectionSubUsage of connectionSubUsageList"
+									[value]="connectionSubUsage.subUsageId">{{connectionSubUsage.subUsage}}</ng-option>
+							</ng-select>
+							<control-messages [control]="newDrainageConnectionForm.get('connectionSubUsage')">
+							</control-messages>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6 ngSelect">
+							<ng-select required placeholder="{{'plumber_name' | translate:translateKey}} *"
+								formControlName="plumberId">                                    
+								<ng-option *ngFor="let plumber of plumberList" [value]="plumber.plumberLicenseId">
+									{{plumber.nameOfApplicant}}</ng-option>
+							</ng-select>
+							<control-messages [control]="newDrainageConnectionForm.get('plumberId')">
+							</control-messages>
+						</div>
+						<mat-form-field class="col-md-6">
+							<input matInput type="text"
+								placeholder="{{'electricity_connection_no' | translate:translateKey}}"
+								formControlName="electricityConnectionNo">
+						</mat-form-field>
 					</div>
 
-					<div class="col-md-6 ngSelect">
-						<ng-select required placeholder="{{'connection_subusage' | translate:translateKey}} *"
-							formControlName="connectionSubUsage">
-							<ng-option *ngFor="let connectionSubUsage of connectionSubUsageList"
-								[value]="connectionSubUsage.subUsageId">{{connectionSubUsage.subUsage}}</ng-option>
-						</ng-select>
-						<control-messages [control]="newDrainageConnectionForm.get('connectionSubUsage')">
-						</control-messages>
+					<div class="row">
+						<mat-form-field class="col-md-6">
+							<input matInput type="text"
+								placeholder="{{'gas_connection_no' | translate:translateKey}}"
+								formControlName="gasConnectionNo">
+						</mat-form-field>
+						<mat-form-field class="col-md-6">
+							<input matInput type="text"
+								placeholder="{{'building_permission_no' | translate:translateKey}}"
+								formControlName="buildingPermissionNo">
+						</mat-form-field>
+
 					</div>
-					<div class="col-md-6 ngSelect">
-						<ng-select required placeholder="{{'plumber_name' | translate:translateKey}} *"
-							formControlName="plumber">
-							<ng-option *ngFor="let plumber of plumberList" [value]="plumber.nameOfApplicant">
-								{{plumber.nameOfApplicant}}</ng-option>
-						</ng-select>
-						<control-messages [control]="newDrainageConnectionForm.get('plumber')">
-						</control-messages>
+
+					<div class="row">
+						<mat-form-field class="col-md-6">
+							<input matInput type="text"
+								placeholder="{{'completion_certificate_no' | translate:translateKey}}"
+								formControlName="completionCertificateNo">
+						</mat-form-field>
+						<mat-form-field class="col-md-6">
+							<input matInput type="text"
+								placeholder="{{'occupancy_certificate_no' | translate:translateKey}}"
+								formControlName="occupancyCertificateNo">
+						</mat-form-field>
 					</div>
+
 				</mat-card>
 
 				<app-action-bar [form]="newDrainageConnectionForm" (tabIndex)="onTabChange($event)"
