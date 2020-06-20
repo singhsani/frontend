@@ -161,6 +161,12 @@ export class NewDrainageConnectionComponent implements OnInit {
       if(res.waterDrainageWardId) {
         this.getWardZone(res.waterDrainageZoneId, 2);
       }
+      if(res.waterDrainageBlockId){
+        this.getWardZone(res.waterDrainageWardId,3);
+      }
+      if(res.connectionUsage){
+        this.getSubUsageList(res.connectionUsage)
+      }
       res.serviceDetail.serviceUploadDocuments.forEach(app => {
         (<FormArray>this.newDrainageConnectionForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.config.createDocumentsGrp(app));
       });
@@ -188,21 +194,28 @@ export class NewDrainageConnectionComponent implements OnInit {
     this.newDrainageConnectionForm = this.fb.group({
       apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
       /* Step 1 controls start */
-      drainageConnectionNo: [null, [Validators.required]],
+      drainageConnectionNo: [null],
       oldDrainageConnectionNo: [null],
-      censusNo: [null],
-      connectionOwnerName: [null, [Validators.required]],
+      aadharNo: [null, [Validators.maxLength(12)]],
+      ownerName: [null, [Validators.required]],
       mobileNo: [null, [Validators.maxLength(10)]],
-      emailId: [null],
+      ownerEmailId: [null],
       
       limit: [null],
-      drainageConnectionZoneId: [null, [Validators.required]],
-      drainageConnectionWardId: [null, [Validators.required]],
-      drainageConnectionBlockId: [null, [Validators.required]],
+      waterDrainageZoneId: [null, [Validators.required]],
+      waterDrainageWardId: [null, [Validators.required]],
+      waterDrainageBlockId: [null, [Validators.required]],
+
+      electricityConnectionNo : [null],
+      gasConnectionNo : [null],
+      buildingPermissionNo : [null],
+      completionCertificateNo : [null],
+      occupancyCertificateNo : [null],
+
 
       connectionUsage: [null, [Validators.required]],
       connectionSubUsage: [null, [Validators.required]],
-      plumber: [null, [Validators.required]],
+      plumberId: [null, [Validators.required]],
       propertyNo: [null, [Validators.required]],
       primaryProperty: [null, [Validators.required]],
       fpNo: [null, [Validators.required]],
@@ -306,8 +319,9 @@ export class NewDrainageConnectionComponent implements OnInit {
   getWardZoneFirstLevel() {
     this.taxRebateApplicationService.getWardZoneFirstLevel(1, Constants.ModuleKey.Property_Tax).subscribe(
       (data) => {
-        if (data.status === 200 && data.body.length) {
+       if (data.status === 200 && data.body.length) {
           this.wardZoneLevel1List = data.body;
+          
         }
       },
       (error) => {
@@ -336,7 +350,7 @@ export class NewDrainageConnectionComponent implements OnInit {
   getPlumberList() {
     this.newWaterConnectionEntryService.getPlumberList({ licenseFor: Constants.ItemCodes.License_Water, activeOnly: true }).subscribe(
       (data) => {
-        if (data.status === 200 && data.body.length) {
+       if (data.status === 200 && data.body.length) {
           this.plumberList = data.body;
           console.log("plumber list", this.plumberList)
           //TODO Ask to nikulbhai about filter plumber list
@@ -358,7 +372,7 @@ export class NewDrainageConnectionComponent implements OnInit {
     postData = { parentId: parentId };
     this.taxRebateApplicationService.getWardZone(postData).subscribe(
       (data) => {
-        if (data.status === 200 && data.body.length) {
+       if (data.status === 200 && data.body.length) {
           if (level == 2) {
             this.wardZoneLevel2List = data.body;
           }
