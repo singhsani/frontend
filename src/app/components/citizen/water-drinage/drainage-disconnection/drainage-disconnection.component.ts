@@ -13,6 +13,7 @@ import { DrainageService } from '../service/drainage.service';
 import { Constants } from 'src/app/vmcshared/Constants';
 import * as _ from 'lodash';
 import { WaterDrinageConfig} from '../water-drinage-config';
+import { AlertService } from 'src/app/vmcshared/Services/alert.service';
 
 @Component({
 	selector: 'app-drainage-disconnection',
@@ -44,7 +45,8 @@ export class DrainageDisconnectionComponent implements OnInit {
 		private formService: FormsActionsService,
 		private toastrService: ToastrService,
 		public translateService: TranslateService,
-		public drainageService: DrainageService
+		public drainageService: DrainageService,
+		private alertService: AlertService
 
 	) { }
 
@@ -57,6 +59,7 @@ export class DrainageDisconnectionComponent implements OnInit {
 			this.formId = Number(param.get('id'));
 			this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
 		});
+
 		if (!this.formId) {
 			this.router.navigate([ManageRoutes.getFullRoute('CITIZENDASHBOARD')]);
 		  }else{
@@ -71,7 +74,6 @@ export class DrainageDisconnectionComponent implements OnInit {
 	getFormData(id: number) {
 		this.formService.getFormData(id).subscribe(res => {
 		  this.drainageDisconnectionForm.patchValue(res);
-		  console.log("Get form data", res);
 		  res.serviceDetail.serviceUploadDocuments.forEach(app => {
 			(<FormArray>this.drainageDisconnectionForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.config.createDocumentsGrp(app));
 		  });
@@ -104,11 +106,11 @@ export class DrainageDisconnectionComponent implements OnInit {
 		this.drainageDisconnectionForm = this.fb.group({
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
 			serviceCode: 'HEL-WTR-DRAINAGE-DISCONNECTION',
-			connectionNo: [null],
+			drainageConnectionNo: [null],
 			ownerName: [null],
 			address: [null],
 			reasonForDisconnection: [null, [Validators.required]],
-			waterDisconnectionType: [null, [Validators.required]],
+			drainageDisconnectionType: [null, [Validators.required]],
 			// reasonList: this.fb.group({
 			// 	reasonForDisconnectionId: [null, [Validators.required]]
 			// }),
@@ -124,10 +126,16 @@ export class DrainageDisconnectionComponent implements OnInit {
 	}
 
 	searchByConnectionNo() {
-		const connectionNo = this.drainageDisconnectionForm.get('connectionNo').value;
+		const connectionNo = this.drainageDisconnectionForm.get('drainageConnectionNo').value;
 		this.drainageService.searchByDrainageConnectionId(connectionNo).subscribe( data => {
-			this.drainageDisconnectionForm.get('ownerName').setValue(data['ownerName']);
-			this.drainageDisconnectionForm.get('address').setValue(data['address'])
+
+			if (data['id']) {
+				this.drainageDisconnectionForm.get('ownerName').setValue(data['ownerName']);
+				this.drainageDisconnectionForm.get('address').setValue(data['address']);
+			} else {
+				this.alertService.info('No Data Found!');
+			}
+			
 		}, error => {
 			console.log('error', error);
 		})
@@ -139,7 +147,8 @@ export class DrainageDisconnectionComponent implements OnInit {
         this.commonService.getLookupValuesAccordingToScreen(lookupcode).subscribe(data => {
             this.reasonList = Object.assign([], data).filter(f => f.lookupCode.includes(Constants.LookupCodes.Reason_for_Disconnection))[0].items;
 			this.disconnectionTypeList = Object.assign([], data).filter(f => f.lookupCode.includes(Constants.LookupCodes.Disconnection_Type))[0].items;
-        });
+		});
+		
     }
 
 	/**
