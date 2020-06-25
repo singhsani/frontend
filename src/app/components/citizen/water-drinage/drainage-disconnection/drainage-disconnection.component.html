@@ -9,14 +9,14 @@
 			<!-- step 1 Starts -->
 			<mat-tab>
 				<ng-template mat-tab-label>
-					<div>{{'drainage_disconnection' | translate:translateKey}}</div>
+					<div>{{'consumer-details' | translate:translateKey}}</div>
 				</ng-template>
 
 				<div class="row">
 					<mat-form-field class="col-md-4">
-						<input matInput type="text"  maxlength="30" placeholder="{{'connection_no' | translate:translateKey}}"
-							formControlName="connectionNo" >
-						<control-messages [control]="drainageDisconnectionForm.get('connectionNo')"></control-messages>
+						<input matInput type="text"  maxlength="30" placeholder="{{'drainage_connection_no' | translate:translateKey}}"
+							formControlName="drainageConnectionNo" >
+						<control-messages [control]="drainageDisconnectionForm.get('drainageConnectionNo')"></control-messages>
 					</mat-form-field>
 
 					<div class="col-md-1">
@@ -24,7 +24,7 @@
 					</div>
 					
 					<mat-form-field class="col-md-5">
-						<input matInput type="text" readonly placeholder="{{'owner_name' | translate:translateKey}}"
+						<input matInput type="text" readonly placeholder="{{'connection_owner_name' | translate:translateKey}}"
 							formControlName="ownerName" >
 						<control-messages [control]="drainageDisconnectionForm.get('ownerName')"></control-messages>
 					</mat-form-field>
@@ -69,11 +69,11 @@
 					</div>
 
 					<div class="col-md-5 ngSelect">
-						<ng-select placeholder="{{'disconnection_type' | translate:translateKey}} *" formControlName="waterDisconnectionType">
-							<ng-option *ngFor="let waterDisconnectionType of disconnectionTypeList" [value]="waterDisconnectionType.itemId">{{waterDisconnectionType.itemName}}
+						<ng-select placeholder="{{'disconnection_type' | translate:translateKey}} *" formControlName="drainageDisconnectionType">
+							<ng-option *ngFor="let type of disconnectionTypeList" [value]="type.itemId">{{type.itemName}}
 							</ng-option>
 						</ng-select>
-						<control-messages [control]="drainageDisconnectionForm.get('waterDisconnectionType')">
+						<control-messages [control]="drainageDisconnectionForm.get('drainageDisconnectionType')">
 						</control-messages>
 					</div>
 					
@@ -88,7 +88,7 @@
 			<!-- step 4 Attachment Starts -->
 			<mat-tab>
 				<ng-template mat-tab-label>
-					<div>{{'attachment' | translate: translateKey}}</div>
+					<div>{{'upload' | translate: translateKey}}</div>
 				</ng-template>
 				<div class="row">
 					<ng-container
