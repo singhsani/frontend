@@ -22,4 +22,11 @@ export class AffodableService {
     return this.http.get(`api/afhForm/projectMaster/fetchBySchemeId/`+shemeId);
 }
 
+/**
+	 * This method use for get all document
+	 */
+	getAllDocuments() {
+		return this.http.get('api/afhForm/doc/list');
+	}
+
 }

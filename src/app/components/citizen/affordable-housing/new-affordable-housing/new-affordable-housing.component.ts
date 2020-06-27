@@ -9,7 +9,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ManageRoutes } from 'src/app/config/routes-conf';
 import { ToastrService } from 'ngx-toastr';
 import { AffodableService } from '../services/AffordableService';
-
+import * as _ from 'lodash';
 
 @Component({
 	selector: 'app-new-affordable-housing',
@@ -26,6 +26,7 @@ export class NewAffordableHousingComponent implements OnInit {
 	actionBarKey: string = 'adminActionBar';
 	tabIndex: number = 0;
 
+	attachmentList: any = [];
 	appliedForData = [];
 	projectData = [];
 
@@ -65,6 +66,7 @@ export class NewAffordableHousingComponent implements OnInit {
             });
 			this.getLookupData();
 			this.getLookupDataApplyFor();
+			this.getAllDocumentLists();
         if (!this.formId) {
             this.router.navigate([ManageRoutes.getFullRoute('CITIZENDASHBOARD')]);
         }
@@ -140,6 +142,7 @@ export class NewAffordableHousingComponent implements OnInit {
 		this.affordableHousingForm = this.fb.group({
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
 			serviceCode: 'AFFORD-HOUSE',
+			serviceFormId: null,
 
 			/* Step 1 controls start */
 			schemeId: [null, [Validators.required, Validators.maxLength(100)]],
@@ -159,47 +162,48 @@ export class NewAffordableHousingComponent implements OnInit {
 
 			/* Step 2 controls start */
 			occupation: [null, [Validators.required, Validators.maxLength(100)]],
-			organizationName: [null, [Validators.required, Validators.maxLength(100)]],
-			occupationDesignation: [null, [Validators.required, Validators.maxLength(100)]],
-			drivingLicenseNumber: [null, [Validators.maxLength(50)]],
-			voterIdNumber: [null, [Validators.maxLength(25)]],
+		    organizationName: [null, [Validators.required, Validators.maxLength(100)]],
+		    occupationDesignation: [null, [Validators.required, Validators.maxLength(100)]],
+		    drivingLicenseNumber: [null, [Validators.maxLength(50)]],
+		    voterIdNumber: [null, [Validators.maxLength(25)]],
 			aadharCardNumber: [null, [Validators.required, Validators.maxLength(20)]],
 			panCardNumber: [null, [Validators.required, Validators.maxLength(20)]],
 			rationCardNumber: [null, [Validators.maxLength(50)]],
 			occupationAddress: this.fb.group(this.occupationAddrComponent.addressControls()),
-			/* Step 2 controls end */
+			// /* Step 2 controls end */
 
-			/* Step 3 controls start */
+			// /* Step 3 controls start */
 			bankAccountNumber: [null, [Validators.required, Validators.maxLength(50)]],
 			bank: this.fb.group({
-				code: [null, Validators.required], name: null,
+				code: [null, [Validators.required]],
+				name: null,
 			}),
-			bankBranch: [null, [Validators.required, Validators.maxLength(200)]],
-			bankIFSC: [null, [Validators.required, Validators.maxLength(20)]],
+		    bankBranch: [null, [Validators.required, Validators.maxLength(200)]],
+		    bankIFSC: [null, [Validators.required, Validators.maxLength(20)]],
 			bankMicrCode: [null, [Validators.required, Validators.maxLength(25)]],
-			/* Step 3 controls end */
+			// /* Step 3 controls end */
 
-			/* Step 4 controls start */
+			// /* Step 4 controls start */
 			aggregateAnnualIncomeAmount: [null, [Validators.required, Validators.maxLength(10)]],
 			aggregateAnnualIncomeAmountInWords: [null, [Validators.required, Validators.maxLength(200)]],
 			familyMembers: this.fb.array([]),
 			placeOfChoice: this.fb.array([]),
-			canEdit: [true],
-			/* Step 4 controls end */
+		    canEdit: [true],
+			// /* Step 4 controls end */
 
-			/* Step 5 controls start */
-			ownHouseDetail: this.fb.array([]),
-			/* Step 5 controls end */
+			// /* Step 5 controls start */
+			 ownHouseDetail: this.fb.array([]),
+			// /* Step 5 controls end */
 
-			/* Step 5 controls start */
-			ownLandPlotDetail: this.fb.array([]),
-			/* Step 5 controls end */
+			// /* Step 5 controls start */
+			 ownLandPlotDetail: this.fb.array([]),
+			// /* Step 5 controls end */
 
-			/* Step 6 controls start */
+			// /* Step 6 controls start */
 			nomineeName: [null, [Validators.required, Validators.maxLength(100)]],
-			relationWithApplicant: [null, [Validators.required, Validators.maxLength(100)]],
-			nomineeAddress: this.fb.group(this.nomineeAddrComponent.addressControls()),
-			Accept: [false, [Validators.required]]
+			nomineeApplicantRelationShip: [null, [Validators.required, Validators.maxLength(100)]],
+			 nomineeAddress: this.fb.group(this.nomineeAddrComponent.addressControls()),
+			 licenseAgreed: [true],
 			/* Step 6 controls end */
 		});
 	}
@@ -284,6 +288,14 @@ export class NewAffordableHousingComponent implements OnInit {
 		}
 	}
 
+	/**
+	 * This method is use for get all the checklist
+	 */
+	getAllDocumentLists() {
+		this.affodableService.getAllDocuments().subscribe(res => {
+			this.attachmentList = _.cloneDeep(res);
+		});
+	}
 
 	/**
 	 * this methode is used for create form group
@@ -304,7 +316,7 @@ export class NewAffordableHousingComponent implements OnInit {
 				break;
 			case 'placeOfChoice':
 				formGroupData = this.fb.group({
-					place: [null, [Validators.required, Validators.maxLength(200)]]
+					name: [null, [Validators.required, Validators.maxLength(200)]]
 				})
 				break;
 			case 'ownHouseDetail':
@@ -314,17 +326,19 @@ export class NewAffordableHousingComponent implements OnInit {
 					flatNo: [null, [Validators.required, Validators.maxLength(200)]],
 					street: [null, [Validators.required, Validators.maxLength(200)]],
 					city: [null, [Validators.required, Validators.maxLength(200)]],
-					district: [null, [Validators.required, Validators.maxLength(200)]]
+					district: [null, [Validators.required, Validators.maxLength(200)]],
+					pincode: [null, [Validators.required, Validators.maxLength(200)]]
 				})
 				break;
-				// formGroupData = this.fb.group({
-				// 	name: [null, [Validators.required, Validators.maxLength(200)]],
-				// 	flatNo: [null, [Validators.required, Validators.maxLength(200)]],
-				// 	street: [null, [Validators.required, Validators.maxLength(200)]],
-				// 	city: [null, [Validators.required, Validators.maxLength(200)]],
-				// 	district: [null, [Validators.required, Validators.maxLength(200)]]
-				// })
-				// break;
+			// case 'ownLandPlotDetail':
+			// 	formGroupData = this.fb.group({
+			// 		name: [null, [Validators.required, Validators.maxLength(200)]],
+			// 		flatNo: [null, [Validators.required, Validators.maxLength(200)]],
+			// 		street: [null, [Validators.required, Validators.maxLength(200)]],
+			// 		city: [null, [Validators.required, Validators.maxLength(200)]],
+			// 		district: [null, [Validators.required, Validators.maxLength(200)]]
+			// 	})
+			// 	break;
 
 			default:
 				break;
@@ -366,10 +380,10 @@ export class NewAffordableHousingComponent implements OnInit {
 		switch (key) {
 			case 'familyMembers':
 				this.getFormsArray('familyMembers').push(this.createFormGroup("familyMembers", {}));
-				var memberadded = this.getFormsArray('familyMembers').controls;
-				if (memberadded.length) {
-					this.editRecord((memberadded[memberadded.length - 1]));
-					(<any>memberadded[memberadded.length - 1]).newRecordAdded = true;
+				let newlyadded = this.getFormsArray('familyMembers').controls;
+				if (newlyadded.length) {
+					this.editRecord((newlyadded[newlyadded.length - 1]));
+					(<any>newlyadded[newlyadded.length - 1]).newRecordAdded = true;
 				}
 				break;
 			case 'placeOfChoice':
@@ -381,19 +395,19 @@ export class NewAffordableHousingComponent implements OnInit {
 				break;
 			case 'ownHouseDetail':
 				this.getFormsArray('ownHouseDetail').push(this.createFormGroup("ownHouseDetail", {}));
-				var houseAdd = this.getFormsArray('ownHouseDetail').controls;
-				if (houseAdd.length) {
-					this.editRecord((houseAdd[houseAdd.length - 1]));
-					(<any>houseAdd[houseAdd.length - 1]).newRecordAdded = true;
+				let newlyadded11 = this.getFormsArray('ownHouseDetail').controls;
+				if (newlyadded11.length) {
+					this.editRecord((newlyadded11[newlyadded11.length - 1]));
+					(<any>newlyadded11[newlyadded11.length - 1]).newRecordAdded = true;
 				}
 				break;
 			case 'ownLandPlotDetail':
 				this.createFormGroup("placeOfChoice", {})
 				this.getFormsArray('ownLandPlotDetail').push(this.createFormGroup("ownLandPlotDetail", {}));
-				var newlyadded = this.getFormsArray('ownLandPlotDetail').controls;
-				if (newlyadded.length) {
-					this.editRecord((newlyadded[newlyadded.length - 1]));
-					(<any>newlyadded[newlyadded.length - 1]).newRecordAdded = true;
+				var newlyadded22 = this.getFormsArray('ownLandPlotDetail').controls;
+				if (newlyadded22.length) {
+					this.editRecord((newlyadded22[newlyadded22.length - 1]));
+					(<any>newlyadded22[newlyadded22.length - 1]).newRecordAdded = true;
 				}
 				break;
 
