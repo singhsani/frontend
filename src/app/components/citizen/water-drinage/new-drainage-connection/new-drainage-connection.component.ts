@@ -13,6 +13,7 @@ import { WaterDrinageConfig} from '../water-drinage-config';
 import * as _ from 'lodash';
 import { CommonService } from 'src/app/vmcshared/Services/common-service';
 
+
  
 @Component({
   selector: 'app-new-drainage-connection',
@@ -47,6 +48,12 @@ export class NewDrainageConnectionComponent implements OnInit {
   plumberList: any = [];
   limitList = [];
   isOutofLimit: boolean = false;
+  displayedColumns = ['propertyNo', 'ownerName', 'address', "actions"];
+  dataSource = [];
+  isShowPropertyGrid = false;
+  waterDrainageConnPropertyDetailsDTOList = [];
+  isprimaryProperty : boolean = false;
+  propertyaryy = [];
 
   constructor(
     private fb: FormBuilder,
@@ -112,6 +119,11 @@ export class NewDrainageConnectionComponent implements OnInit {
       try {
         this.newDrainageConnectionForm.patchValue(res);
         this.showButtons = true;
+        this.dataSource = res.waterDrainageConnPropertyDetailsDTOList;
+       
+       if(this.dataSource.length != 0) {
+        this.isShowPropertyGrid = true; 
+      }
       } catch (error) {
         console.log(error.message)
       }
@@ -141,20 +153,80 @@ export class NewDrainageConnectionComponent implements OnInit {
     }
   }
 
+  deleteProperty(data){
+
+    this.dataSource = this.waterDrainageConnPropertyDetailsDTOList;
+   
+    const index = this.dataSource.indexOf(data.propertyNo);
+    this.dataSource.splice(index, 1);
+
+    if(this.dataSource.length == 0) {
+      this.isShowPropertyGrid = false;
+      this.waterDrainageConnPropertyDetailsDTOList=[];
+      this.isprimaryProperty = false;
+    }
+
+  }
   getPropertyAddressDetail() {
     
     this.newWaterConnectionEntryService.getPropertyAddress(this.newDrainageConnectionForm.get('propertyNo').value).subscribe(
       (data) => {
         if (data.status === 200) {
+          if(this.newDrainageConnectionForm.get('primaryProperty').value != this.isprimaryProperty){
+            this.isprimaryProperty = true;
           this.getPropertyValues(data.body.propertyBasic.propertyAddressDTO);
-          //this.model.address = data.body.propertyBasic.propertyAddressDTO.propertyAddress;
+          
+          let temojb = { 'propertyNo' :  data.body.propertyBasic.propertyNo ,
+          'ownerName' :  data.body.propertyOwners[0].firstName , 
+           'address' :data.body.propertyBasic.propertyAddressDTO.propertyAddress }
+          this.waterDrainageConnPropertyDetailsDTOList.push(temojb);
+          
+          let propertyObj = {'primaryProperty': this.newDrainageConnectionForm.get('primaryProperty').value , 'propertyNo':this.newDrainageConnectionForm.get('propertyNo').value};
+          this.propertyaryy.push(propertyObj);
+          
+          this.dataSource = [];
+          
+          this.dataSource = this.waterDrainageConnPropertyDetailsDTOList;
+          this.dataSource = this.dataSource.slice();
+          this.isShowPropertyGrid = true;
+          
+          this.getFormsArray().push(this.createFormGroup("waterDrainageConnPropertyDetailsDTOList", {}));
+          
+          this.newDrainageConnectionForm.get('waterDrainageConnPropertyDetailsDTOList').setValue(this.propertyaryy);
+          
+          if(this.newDrainageConnectionForm.get('primaryProperty').value){
+            this.newDrainageConnectionForm.get('primaryProperty').setValue(this.newDrainageConnectionForm.get('primaryProperty').value);
+            this.newDrainageConnectionForm.get('propertyNo').setValue(this.newDrainageConnectionForm.get('propertyNo').value)
+          }else{
+            this.newDrainageConnectionForm.get('primaryProperty').reset();
+            this.newDrainageConnectionForm.get('propertyNo').reset();
+            
+          }
+        
+        if(this.dataSource.length == 0) {
+          this.isShowPropertyGrid = false;
         }
+      
+        }else{
+          this.alertService.info("you can add only one primary property");
+        }
+      }
       },
       (error) => {
         this.alertService.error(error.error.message);
       });
   }
 
+  createFormGroup(key: string, data: any): FormGroup {
+
+		let formGroupData: FormGroup;
+			
+     formGroupData = this.fb.group({
+      propertyNo: [null],
+      primaryProperty : [null]
+    })
+    return formGroupData;
+      }
   getFormData(id: number) {
     this.formService.getFormData(id).subscribe(res => {
       console.log("Get form data", res);
@@ -230,6 +302,7 @@ export class NewDrainageConnectionComponent implements OnInit {
       postalAddress: [null],
       postalAddressDiff: [null],
       propertyAddress: [null],
+      waterDrainageConnPropertyDetailsDTOList: this.fb.array([]),
     }, {});
   }
 
@@ -366,6 +439,15 @@ export class NewDrainageConnectionComponent implements OnInit {
         this.alertService.error(error.error.message);
       })
   }
+
+  getFormsArray(): FormArray {
+		let formArrayData: FormArray;
+	
+				formArrayData = this.newDrainageConnectionForm.get('waterDrainageConnPropertyDetailsDTOList') as FormArray;
+				
+	
+		return formArrayData;
+	}
 
   getWardZone(parentId, level) {
     var postData = {};

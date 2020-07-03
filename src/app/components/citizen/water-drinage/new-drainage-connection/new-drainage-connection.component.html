@@ -238,7 +238,40 @@
 						</button>
 					</div>
 				</div>
-
+				<mat-card class="mt-4" *ngIf="isShowPropertyGrid">
+					<mat-table class="table-margin-bottom" #table [dataSource]="dataSource">
+						<ng-container matColumnDef="propertyNo">
+							<mat-header-cell *matHeaderCellDef> Property No </mat-header-cell>
+							<mat-cell *matCellDef="let row">
+								<label>{{row.propertyNo}}</label>
+							</mat-cell>
+						</ng-container>
+						<ng-container matColumnDef="ownerName">
+							<mat-header-cell *matHeaderCellDef> Owner Name </mat-header-cell>
+							<mat-cell *matCellDef="let row">
+								<label>{{row.ownerName}}</label>
+							</mat-cell>
+						</ng-container>
+						<ng-container matColumnDef="address">
+							<mat-header-cell *matHeaderCellDef> Address </mat-header-cell>
+							<mat-cell *matCellDef="let row">
+								<label>{{row.address}}</label>
+							</mat-cell>
+						</ng-container>
+						<ng-container matColumnDef="actions">
+							<mat-header-cell *matHeaderCellDef>
+							</mat-header-cell>
+							<mat-cell *matCellDef="let row">
+								<button mat-icon-button color="warn" focusable="false" (click)="deleteProperty(row)">
+									<mat-icon>clear</mat-icon>
+								</button>
+							</mat-cell>
+						</ng-container>
+				
+						<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+						<mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+					</mat-table>
+				</mat-card>
 				<div class="row">
 					<mat-form-field class="col-md-6">
 						<input matInput OnlyNumber (input)="onChangeAddress()" required maxlength="10" formControlName="fpNo"
