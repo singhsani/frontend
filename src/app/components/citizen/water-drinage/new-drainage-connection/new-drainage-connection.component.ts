@@ -80,6 +80,8 @@ export class NewDrainageConnectionComponent implements OnInit {
       this.router.navigate([ManageRoutes.getFullRoute('CITIZENDASHBOARD')]);
     }else{
       this.newDrainageConnectionFormControls();
+      this.getFormsArray();
+      //this.newDrainageConnectionForm.get('waterDrainageConnPropertyDetailsDTOList').setValue(null);
       this.getWardZoneLevel();
       this.getUsageList();
       this.getDrainageConnectionNewData();
@@ -120,7 +122,7 @@ export class NewDrainageConnectionComponent implements OnInit {
         this.newDrainageConnectionForm.patchValue(res);
         this.showButtons = true;
         this.dataSource = res.waterDrainageConnPropertyDetailsDTOList;
-       
+        
        if(this.dataSource.length != 0) {
         this.isShowPropertyGrid = true; 
       }
@@ -153,17 +155,15 @@ export class NewDrainageConnectionComponent implements OnInit {
     }
   }
 
-  deleteProperty(data){
+  deleteProperty(index: number){
 
-    this.dataSource = this.waterDrainageConnPropertyDetailsDTOList;
-   
-    const index = this.dataSource.indexOf(data.propertyNo);
     this.dataSource.splice(index, 1);
+    this.dataSource = this.dataSource.slice();
 
     if(this.dataSource.length == 0) {
       this.isShowPropertyGrid = false;
       this.waterDrainageConnPropertyDetailsDTOList=[];
-      this.isprimaryProperty = false;
+      
     }
 
   }
