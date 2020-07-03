@@ -261,8 +261,8 @@
 						<ng-container matColumnDef="actions">
 							<mat-header-cell *matHeaderCellDef>
 							</mat-header-cell>
-							<mat-cell *matCellDef="let row">
-								<button mat-icon-button color="warn" focusable="false" (click)="deleteProperty(row)">
+							<mat-cell *matCellDef="let row;let i = index;">
+								<button mat-icon-button color="warn" focusable="false" (click)="deleteProperty(i)">
 									<mat-icon>clear</mat-icon>
 								</button>
 							</mat-cell>
