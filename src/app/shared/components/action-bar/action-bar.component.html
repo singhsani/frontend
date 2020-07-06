@@ -14,7 +14,7 @@
 
 			<ng-container *ngIf="stepInfo.step == 'final' && !form.get('serviceDetail').get('appointmentRequired').value">
 				<button type="button" mat-raised-button color="primary" [disabled]="isSubmitBtnDisabled" *ngIf="form.get('canEdit').value"
-				 (click)="onSubmit()">{{'submit' | translate:translateKey}}</button>
+				 (click)="getUserDetailsAndSubmit()">{{'submit' | translate:translateKey}}</button>
 			</ng-container>
 
 			<ng-container *ngIf="stepInfo.step == 'final' && form.get('serviceDetail').get('appointmentRequired').value">
@@ -36,7 +36,7 @@
 			 (click)="saveAsDraft()">{{(stepInfo.step == 'final' ? 'save' : 'save_and_next') | translate:translateKey}}</button>
 
 			<button type="button" mat-raised-button color="primary" [disabled]="isSubmitBtnDisabled" *ngIf="form.get('canEdit').value"
-			 (click)="onSubmit()">{{'submit' | translate:translateKey}}</button>
+			 (click)="getUserDetailsAndSubmit()">{{'submit' | translate:translateKey}}</button>
 		</div>
 	</div>
 </div>

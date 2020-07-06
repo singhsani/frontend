@@ -56,6 +56,7 @@ import { BankDetailsComponent } from './components/bank-details/bank-details.com
 import { NumericDirective } from './directives/numeric.directive';
 import { SelectPaymentGatewayComponent } from './components/select-payment-gateway/select-payment-gateway.component';
 import { MaskCensusNumberDirective } from './directives/mask-census-number.directive';
+import { ApplicantDetailsComponent } from './components/applicant-details/applicant-details.component';
 /* import pipes end*/
 
 const COMPONENTS = [
@@ -89,7 +90,8 @@ const COMPONENTS = [
 	DialogContentComponent,
 	BankDetailsComponent,
 	SelectPaymentGatewayComponent,
-	MaskCensusNumberDirective
+	MaskCensusNumberDirective,
+	ApplicantDetailsComponent
 ]
 
 @NgModule({
@@ -132,7 +134,7 @@ const COMPONENTS = [
 		HosHttpService,
 		CountryService
 	],
-	entryComponents: [DialogContentComponent],
+	entryComponents: [DialogContentComponent,ApplicantDetailsComponent],
 
 })
 export class SharedModule { }

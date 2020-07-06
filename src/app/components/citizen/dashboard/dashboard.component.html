@@ -73,11 +73,11 @@
     </mat-tab-group>
 </div>
 
-<h2>
+<h2 *ngIf="!commonService.isGuestUser()">
     <mat-icon>description</mat-icon>Recent Application
 </h2>
 
-<ul class="recentList" *ngIf="isRecentApp">
+<ul  class="recentList" *ngIf="isRecentApp && !commonService.isGuestUser()">
     <li *ngFor="let application of recentApp">
         <div>{{ application.applicantName?application.applicantName:'N/A' }}</div>
         <div class="recenText">{{ application.serviceDetail.name }} | Application / Registration Number : {{
@@ -86,7 +86,7 @@
     </li>
 </ul>
 
-<div class="noApplication" *ngIf="!isRecentApp">
+<div class="noApplication" *ngIf="!isRecentApp  && !commonService.isGuestUser()">
     <img src="assets/icons/no-application-found.png" alt=""><br>
     No Application Found
     <span class="noActi">It seems, No activity happend yet</span>

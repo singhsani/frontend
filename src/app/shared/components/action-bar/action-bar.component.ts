@@ -10,6 +10,8 @@ import { FormsActionsService } from './../../../core/services/citizen/data-servi
 import { ToastrService } from 'ngx-toastr';
 import { SessionStorageService } from 'angular-web-storage';
 import { environment } from '../../../../environments/environment';
+import { MatDialogConfig, MatDialog } from '@angular/material';
+import { ApplicantDetailsComponent } from '../applicant-details/applicant-details.component';
 
 @Component({
 	selector: 'app-action-bar',
@@ -36,13 +38,17 @@ export class ActionBarComponent implements OnInit, OnChanges {
 	isSubmitBtnDisabled: boolean = false;
 	isBtnsDisabled: boolean = true;
 
+	public applicantName: string
+	public mobileNo: string;
+
 	constructor(
 		private formService: FormsActionsService,
 		private sessionStore: SessionStorageService,
 		private router: Router, private fb: FormBuilder,
 		private toastr: ToastrService,
 		private session: SessionStorageService,
-		private commonService: CommonService) {
+		private commonService: CommonService,
+		private dialog: MatDialog) {
 	}
 
 	/**
@@ -120,6 +126,23 @@ export class ActionBarComponent implements OnInit, OnChanges {
 				this.onSaveError(err);
 			}
 		);
+
+	}
+
+	getUserDetailsAndSubmit() {
+		if (this.commonService.isGuestUser()) {
+			this.openDialogBox().subscribe(details => {
+				this.applicantName = details.applicantName;
+				this.mobileNo = details.cellNo;
+				this.form.addControl('applicantName', new FormControl('', Validators.required));
+				this.form.get('applicantName').setValue(this.applicantName);
+				this.form.get('mobileNo').setValue(this.mobileNo);
+				this.onSubmit()
+			})
+
+		} else {
+			this.onSubmit();
+		}
 	}
 
 	/**
@@ -198,11 +221,11 @@ export class ActionBarComponent implements OnInit, OnChanges {
 											// })
 
 										}, rj => {
-												this.form.get('canEdit').setValue(false);
-												this.isSubmitBtnDisabled = false;
-												this.isBtnsDisabled = false;
-												this.form.disable();
-												return;
+											this.form.get('canEdit').setValue(false);
+											this.isSubmitBtnDisabled = false;
+											this.isBtnsDisabled = false;
+											this.form.disable();
+											return;
 
 											// let errHtml = `			
 											// 	<div class="alert alert-danger">
@@ -376,6 +399,19 @@ export class ActionBarComponent implements OnInit, OnChanges {
 				control.markAsTouched();
 			});
 		}
+	}
+
+	openDialogBox() {
+		const dialogConfig = new MatDialogConfig();
+
+		dialogConfig.disableClose = true;
+		dialogConfig.autoFocus = true;
+		dialogConfig.data = {};
+
+		const dialogRef = this.dialog.open(ApplicantDetailsComponent, dialogConfig);
+
+		return dialogRef.afterClosed()
+
 	}
 
 

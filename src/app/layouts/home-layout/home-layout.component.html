@@ -18,7 +18,8 @@
                 <!-- <button class="btn btn-warning mr-2" data-toggle="modal" data-target="#gujModal">
                     How to type in Gujarati?
                 </button> -->
-                <button mat-icon-button [matMenuTriggerFor]="menu" class="userName">
+                <button mat-icon-button *ngIf="commonService.isGuestUser()" (click)="onLogout()">Login</button>
+                <button mat-icon-button *ngIf="!commonService.isGuestUser()" [matMenuTriggerFor]="menu" class="userName">
                     <!-- <mat-icon>face</mat-icon>
                     {{profileObj.firstName + ' ' + profileObj.lastName}} -->
                     <img [src]="profileObj.profilePic ? profileObj.profilePic : 'assets/images/no-image.jpg'" />

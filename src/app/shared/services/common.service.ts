@@ -273,4 +273,8 @@ export class CommonService {
 		});
 	}
 
+	isGuestUser(){
+		return this.session.get("isGuestLogin");
+	}
+
 }
