@@ -11,10 +11,18 @@
 			</mat-form-field>
 
 			<mat-form-field class="iconMat col-md-6">
-				<mat-icon matPrefix>face</mat-icon>
 				<input matInput OnlyNumber required maxlength="10" placeholder="Cell No"  formControlName="cellNo"
 				 required>
 				<control-messages [control]="applicantDetailsForm.get('cellNo')"></control-messages>
+			</mat-form-field>
+			
+		</div>
+
+		<div class="row">
+			<mat-form-field class="iconMat col-md-6">
+				<input matInput type="email" placeholder="Email"  formControlName="email"
+				 #firstname="matInput">
+				<control-messages [control]="applicantDetailsForm.get('email')"></control-messages>
 			</mat-form-field>
 			
 		</div>

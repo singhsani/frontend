@@ -40,7 +40,7 @@ export class ActionBarComponent implements OnInit, OnChanges {
 
 	public applicantName: string
 	public mobileNo: string;
-
+	public email: string;
 	constructor(
 		private formService: FormsActionsService,
 		private sessionStore: SessionStorageService,
@@ -130,13 +130,15 @@ export class ActionBarComponent implements OnInit, OnChanges {
 	}
 
 	getUserDetailsAndSubmit() {
-		if (this.commonService.isGuestUser()) {
+		if (this.form.valid && this.commonService.isGuestUser()) {
 			this.openDialogBox().subscribe(details => {
 				this.applicantName = details.applicantName;
 				this.mobileNo = details.cellNo;
+				this.email = details.email
 				this.form.addControl('applicantName', new FormControl('', Validators.required));
 				this.form.get('applicantName').setValue(this.applicantName);
 				this.form.get('mobileNo').setValue(this.mobileNo);
+				this.form.get('email').setValue(this.email)
 				this.onSubmit()
 			})
 
