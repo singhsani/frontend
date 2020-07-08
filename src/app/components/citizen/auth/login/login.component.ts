@@ -60,11 +60,30 @@ export class LoginComponent implements OnInit {
 
 	}
 
+	guestUser() {
+		const guestLoginData = { username: "cs_guest@guest.com", password: 123123 };
+		this.guestLogin(guestLoginData);
+	}
+
+	guestLogin(guestLoginData) {
+		this.appService.obtainAccessToken(guestLoginData).subscribe(
+			res => {
+				this.session.set('isGuestLogin', true);
+				this.saveToken(res);
+			},
+			err => {
+				if (err.error.error_description)
+					this.toster.error(err.error.error_description);
+			}
+		);
+	}
+
 	/**
 	 * This method is use for get User Authenticated Token from oAuth2 API.
 	 * @param formVals - login form values property.
 	 */
 	onLoginSubmit(formVals) {
+
 
 		if (formVals.username) {
 			formVals.username = _.trim(formVals.username);
@@ -76,6 +95,7 @@ export class LoginComponent implements OnInit {
 			this.loading = true;
 			this.appService.obtainAccessToken(formVals).subscribe(
 				res => {
+					this.session.set('isGuestLogin', false);
 					this.loading = false;
 					this.saveToken(res);
 				},
@@ -97,6 +117,7 @@ export class LoginComponent implements OnInit {
 	 */
 	saveToken(token) {
 		this.session.set('access_token', { 'token': token.access_token, now: +new Date, 'userType': token.userType }, token.expires_in, 's');
+
 		this.router.navigate([ManageRoutes.getFullRoute('CITIZENDASHBOARD')]);
 	}
 

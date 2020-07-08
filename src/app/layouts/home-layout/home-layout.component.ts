@@ -103,6 +103,21 @@ export class HomeLayoutComponent implements OnInit {
 		});
 
 		this.countryService.countriesData.subscribe(data => { });
+
+		if(this.commonService.isGuestUser()){
+			this.links = [
+				{
+					'linkName': 'Dashboard',
+					'linkCode': 'CITIZENDASHBOARD',
+					'icon': 'apps'
+				},
+				{
+					'linkName': 'Payable Services',
+					'linkCode': 'CITIZENPAYABLESERVICES',
+					'icon': '&#x20B9;'
+				}
+			];
+		}
 	}
 
 	onLogout() {

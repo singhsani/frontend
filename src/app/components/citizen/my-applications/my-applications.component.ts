@@ -69,7 +69,7 @@ export class MyApplicationsComponent implements OnInit {
 		private formService: FormsActionsService,
 		private paginationService: PaginationService,
 		private router: Router,
-		private commonService: CommonService,
+		public commonService: CommonService,
 		private modalService: BsModalService,
 		private toastr: ToastrService
 	) { }

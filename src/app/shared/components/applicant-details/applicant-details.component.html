@@ -1,0 +1,37 @@
+<h2 mat-dialog-title>{{formTitle}}</h2>
+
+
+<mat-dialog-content [formGroup]="applicantDetailsForm">
+		<div class="row">
+			<mat-form-field class="iconMat col-md-6">
+				<mat-icon matPrefix>face</mat-icon>
+				<input matInput type="text" placeholder="Applicant Name"  formControlName="applicantName"
+				 required #firstname="matInput">
+				<control-messages [control]="applicantDetailsForm.get('applicantName')"></control-messages>
+			</mat-form-field>
+
+			<mat-form-field class="iconMat col-md-6">
+				<input matInput OnlyNumber required maxlength="10" placeholder="Cell No"  formControlName="cellNo"
+				 required>
+				<control-messages [control]="applicantDetailsForm.get('cellNo')"></control-messages>
+			</mat-form-field>
+			
+		</div>
+
+		<div class="row">
+			<mat-form-field class="iconMat col-md-6">
+				<input matInput type="email" placeholder="Email"  formControlName="email"
+				 #firstname="matInput">
+				<control-messages [control]="applicantDetailsForm.get('email')"></control-messages>
+			</mat-form-field>
+			
+		</div>
+
+</mat-dialog-content>
+
+
+<mat-dialog-actions>
+	<button class="mat-raised-button mat-primary" [disabled]="!applicantDetailsForm.valid" (click)="save()">
+	  Save
+	</button>
+</mat-dialog-actions>

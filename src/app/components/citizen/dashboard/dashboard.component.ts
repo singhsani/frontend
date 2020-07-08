@@ -7,6 +7,7 @@ import { FormsActionsService } from '../../../core/services/citizen/data-service
 import { ManageRoutes } from '../../../config/routes-conf';
 import { ToastrService } from 'ngx-toastr';
 import * as _ from 'lodash';
+import { CommonService } from 'src/app/shared/services/common.service';
 
 @Component({
 	selector: 'app-dashboard',
@@ -184,6 +185,7 @@ export class DashboardComponent implements OnInit {
 		private formService: FormsActionsService,
 		private toastr: ToastrService,
 		private paginationService: PaginationService,
+		public commonService : CommonService
 	) {
 		this.getAllServices();
 	}

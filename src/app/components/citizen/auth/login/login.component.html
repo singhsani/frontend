@@ -22,11 +22,16 @@
             <a routerLink="/{{manageRoutes.getFullRoute('CITIZENAUTHFORGOTPASS')}}" class="forPass">Forgot Password ?</a>
         </div>
 
+        <div class="text-right">
+            <a (click)="guestUser()" class="forGuest">Guest Login</a>
+        </div>
+
         <div class="text-center">
             <button mat-raised-button type="submit" class="mat-primary width150">Login &nbsp;
                 <img *ngIf="loading" [class.disabled]="loading" src="assets/images/loader.gif" />
             </button>
         </div>
+
 
         <div class="text-center pt-2">
             <p>OR</p>
