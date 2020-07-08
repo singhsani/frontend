@@ -168,7 +168,7 @@ export class NewDrainageConnectionComponent implements OnInit {
 
   }
   getPropertyAddressDetail() {
-    
+    if(this.newDrainageConnectionForm.get('primaryProperty').value)
     this.newWaterConnectionEntryService.getPropertyAddress(this.newDrainageConnectionForm.get('propertyNo').value).subscribe(
       (data) => {
         if (data.status === 200) {
@@ -176,7 +176,7 @@ export class NewDrainageConnectionComponent implements OnInit {
             this.isprimaryProperty = true;
           this.getPropertyValues(data.body.propertyBasic.propertyAddressDTO);
           
-          let temojb = { 'propertyNo' :  data.body.propertyBasic.propertyNo ,
+          let temojb = { 'propertyNo' :  this.newDrainageConnectionForm.get('propertyNo').value ,
           'ownerName' :  data.body.propertyOwners[0].firstName , 
            'address' :data.body.propertyBasic.propertyAddressDTO.propertyAddress }
           this.waterDrainageConnPropertyDetailsDTOList.push(temojb);
@@ -272,7 +272,7 @@ export class NewDrainageConnectionComponent implements OnInit {
       ownerName: [null, [Validators.required]],
       mobileNo: [null, [Validators.maxLength(10)]],
       ownerEmailId: [null],
-      
+  
       limit: [null],
       waterDrainageZoneId: [null, [Validators.required]],
       waterDrainageWardId: [null, [Validators.required]],
@@ -290,15 +290,15 @@ export class NewDrainageConnectionComponent implements OnInit {
       plumberId: [null, [Validators.required]],
       propertyNo: [null, [Validators.required]],
       primaryProperty: [null, [Validators.required]],
-      fpNo: [null, [Validators.required]],
-      plotPartNo: [null, [Validators.required]],
-      tpNo: [null, [Validators.required]],
-      serveyNo: [null, [Validators.required]],
-      houseNo: [null, [Validators.required]],
+      fpNo: [null ],
+      plotPartNo: [null ],
+      tpNo: [null ],
+      serveyNo: [null ],
+      houseNo: [null ],
       buildingName: [null, [Validators.required]],
-      societyName: [null, [Validators.required]],
-      streetName: [null, [Validators.required]],
-      pincode: [null, [Validators.required]],
+      societyName: [null],
+      streetName: [null, ],
+      pincode: [null, [Validators.maxLength(6)]],
       postalAddress: [null],
       postalAddressDiff: [null],
       propertyAddress: [null],

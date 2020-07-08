@@ -90,7 +90,7 @@
 
 					<div class="row">
 						<mat-form-field class="col-md-6">
-							<input matInput OnlyNumber required maxlength="12" formControlName="aadharNo"
+							<input matInput OnlyNumber maxlength="12" formControlName="aadharNo"
 								placeholder="{{'aadhar_no' | translate:translateKey}}">
 							<control-messages [control]="newDrainageConnectionForm.get('aadharNo')">
 							</control-messages>
@@ -274,7 +274,7 @@
 				</mat-card>
 				<div class="row">
 					<mat-form-field class="col-md-6">
-						<input matInput OnlyNumber (input)="onChangeAddress()" required maxlength="10" formControlName="fpNo"
+						<input matInput OnlyNumber (input)="onChangeAddress()"  maxlength="10" formControlName="fpNo"
 							placeholder="{{'fP_No' | translate:translateKey}}">
 						<control-messages [control]="newDrainageConnectionForm.get('fpNo')">
 						</control-messages>
@@ -289,7 +289,7 @@
 
 				<div class="row">
 					<mat-form-field class="col-md-6">
-						<input matInput OnlyNumber required maxlength="10" formControlName="tpNo" (input)="onChangeAddress()"
+						<input matInput OnlyNumber  maxlength="10" formControlName="tpNo" (input)="onChangeAddress()"
 							placeholder="{{'tP_No' | translate:translateKey}}">
 						<control-messages [control]="newDrainageConnectionForm.get('tpNo')">
 						</control-messages>
@@ -304,13 +304,13 @@
 
 				<div class="row">
 					<mat-form-field class="col-md-6">
-						<input matInput OnlyNumber required maxlength="10" (input)="onChangeAddress()" formControlName="houseNo"
+						<input matInput OnlyNumber  maxlength="10" (input)="onChangeAddress()" formControlName="houseNo"
 							placeholder="{{'house_No_Flat_No' | translate:translateKey}}">
 						<control-messages [control]="newDrainageConnectionForm.get('houseNo')">
 						</control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-6">
-						<input matInput appPreventSpace placeholder="{{'building_Name' | translate:translateKey}}"
+						<input matInput appPreventSpace  placeholder="{{'building_Name' | translate:translateKey}}"
 							type="text" (input)="onChangeAddress()" formControlName="buildingName">
 							<control-messages [control]="newDrainageConnectionForm.get('buildingName')">
 							</control-messages>
@@ -319,13 +319,13 @@
 
 				<div class="row">
 					<mat-form-field class="col-md-6">
-						<input matInput  required maxlength="10" formControlName="societyName" (input)="onChangeAddress()"
+						<input matInput  formControlName="societyName" (input)="onChangeAddress()"
 							placeholder="{{'society_Name' | translate:translateKey}}">
 						<control-messages [control]="newDrainageConnectionForm.get('societyName')">
 						</control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-6">
-						<input matInput appPreventSpace placeholder="{{'Name_of_Street_Road' | translate:translateKey}}"
+						<input matInput required placeholder="{{'Name_of_Street_Road' | translate:translateKey}}"
 							type="text" formControlName="streetName" (input)="onChangeAddress()" >
 							<control-messages [control]="newDrainageConnectionForm.get('streetName')">
 							</control-messages>
@@ -334,7 +334,7 @@
 
 				<div class="row">
 					<mat-form-field class="col-md-6">
-						<input matInput OnlyNumber required maxlength="10" formControlName="pincode" (input)="onChangeAddress()"
+						<input matInput OnlyNumber required maxlength="6" formControlName="pincode" (input)="onChangeAddress()"
 							placeholder="{{'pin_code' | translate:translateKey}}">
 						<control-messages [control]="newDrainageConnectionForm.get('pincode')">
 						</control-messages>
