@@ -64,12 +64,28 @@ export class DrainageDisconnectionComponent implements OnInit {
 			this.router.navigate([ManageRoutes.getFullRoute('CITIZENDASHBOARD')]);
 		  }else{
 			this.drainageDisconnectionControls();
+			this.getDrainagedisConnectionNewData();
 			this.getLookups();
 			this.getFormData(this.formId);
 		  }
 	
 
 	}
+
+	/**
+   * this method is used to get drainage pipeline connection data
+   * 
+   */
+  getDrainagedisConnectionNewData() {
+    this.formService.getFormData(this.formId).subscribe(res => {
+      try {
+        this.drainageDisconnectionForm.patchValue(res);
+        
+      } catch (error) {
+        console.log(error.message)
+      }
+    });
+  }
 
 	getFormData(id: number) {
 		this.formService.getFormData(id).subscribe(res => {
@@ -120,7 +136,7 @@ export class DrainageDisconnectionComponent implements OnInit {
 
 
 			/* Step 2 controls start*/
-			attachments: []
+			
 			/* Step 2 controls end */
 		});
 	}
