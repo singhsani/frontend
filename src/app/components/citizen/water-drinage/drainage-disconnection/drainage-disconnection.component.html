@@ -101,10 +101,10 @@
 					</ng-container>
 				</div>
 
-				<app-action-bar [paymentGateway]="paymentGateway" [uploadFiles]="uploadFilesArray"
-					[form]="drainageDisconnectionForm" (handleErrors)="handleErrorsOnSubmit($event)"
-					(tabIndex)="licenseConfiguration.onFormTabChange($event) "
-					[stepInfo]="{step: 'final', next:2, back:0} "></app-action-bar>
+					<app-action-bar [uploadFiles]="uploadFilesArray" [form]="drainageDisconnectionForm"
+					(tabIndex)="onTabChange($event)" [stepInfo]="{step: 'final', next: 2, back: 0}"
+					(handleErrors)="handleErrorsOnSubmit($event)">
+				</app-action-bar>
 
 			</mat-tab>
 		
