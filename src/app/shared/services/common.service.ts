@@ -9,6 +9,7 @@ import { SessionStorageService } from 'angular-web-storage';
 import swal from 'sweetalert2';
 import * as _ from 'lodash';
 import * as moment from 'moment';
+import { MatDialogConfig } from '@angular/material';
 
 
 @Injectable({
@@ -275,6 +276,14 @@ export class CommonService {
 
 	isGuestUser(){
 		return this.session.get("isGuestLogin");
+	}
+
+	getApplicantDialogConfig():MatDialogConfig{
+		const dialogConfig = new MatDialogConfig();
+		dialogConfig.disableClose = true;
+		dialogConfig.autoFocus = true;
+		dialogConfig.data = {};
+		return dialogConfig;
 	}
 
 }

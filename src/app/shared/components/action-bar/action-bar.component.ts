@@ -132,20 +132,18 @@ export class ActionBarComponent implements OnInit, OnChanges {
 	getUserDetailsAndSubmit() {
 		if (this.form.valid && this.commonService.isGuestUser()) {
 			this.openDialogBox().subscribe(details => {
-				this.applicantName = details.applicantName;
-				this.mobileNo = details.cellNo;
-				this.email = details.email
-				this.form.addControl('applicantName', new FormControl('', Validators.required));
-				this.form.get('applicantName').setValue(this.applicantName);
-				this.form.get('mobileNo').setValue(this.mobileNo);
-				this.form.get('email').setValue(this.email)
-				this.onSubmit()
+				if(details){
+					this.setUserData(details)
+					this.onSubmit()
+				}
+			
 			})
 
 		} else {
 			this.onSubmit();
 		}
 	}
+
 
 	/**
 	 * This method is use for submit form using API
@@ -188,7 +186,12 @@ export class ActionBarComponent implements OnInit, OnChanges {
 									this.isSubmitBtnDisabled = false;
 									this.isBtnsDisabled = false;
 									this.form.disable();
-									this.router.navigateByUrl(ManageRoutes.getFullRoute("CITIZENMYAPPS"));
+									if(this.commonService.isGuestUser()){
+										this.router.navigateByUrl(ManageRoutes.getFullRoute("CITIZENDASHBOARD"));
+									}else{
+										this.router.navigateByUrl(ManageRoutes.getFullRoute("CITIZENMYAPPS"));
+									}
+									
 								},
 								err => {
 									this.isSubmitBtnDisabled = false;
@@ -414,6 +417,40 @@ export class ActionBarComponent implements OnInit, OnChanges {
 
 		return dialogRef.afterClosed()
 
+	}
+
+	setUserData(details){
+		this.applicantName = details.applicantName;
+		this.mobileNo = details.cellNo;
+		this.email = details.email
+		this.form.addControl('applicantName', new FormControl('', Validators.required));
+		this.form.get('applicantName').setValue(this.applicantName);
+		if(this.form.get('mobileNo')){
+			this.form.get('mobileNo').setValue(this.mobileNo);
+		}else if(this.form.get('contactNo')){
+			this.form.get('contactNo').setValue(this.mobileNo);
+		}else{
+			this.form.addControl('mobileNo', new FormControl('', Validators.required));
+			this.form.get('mobileNo').setValue(this.mobileNo);
+		}
+		
+		this.form.get('email').setValue(this.email)
+	}
+
+	getUserDetailsAndPayAndScheduleMeeting() {
+		console.log("Action Bar Component")
+		if (this.form.valid && this.commonService.isGuestUser()) {
+			this.openDialogBox().subscribe(details => {
+				if(details){
+					this.setUserData(details);
+					this.payAndScheduleAppointment();
+				}
+			
+			})
+
+		} else {
+			this.payAndScheduleAppointment();
+		}
 	}
 
 

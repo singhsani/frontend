@@ -48,6 +48,10 @@ export class ApplicantDetailsComponent implements OnInit, OnChanges {
 	save() {
 		this.dialogRef.close(this.applicantDetailsForm.value);
 	}
+
+	cancel(){
+		this.dialogRef.close(null);
+	}
 	
 
 }

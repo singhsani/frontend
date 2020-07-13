@@ -1,6 +1,6 @@
 import { FormsActionsService } from '../../../../../core/services/citizen/data-services/forms-actions.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
@@ -12,6 +12,8 @@ import { ProfessionalTaxService } from '../../../../../core/services/citizen/dat
 
 import * as moment from 'moment';
 import * as _ from 'lodash';
+import { MatDialog } from '@angular/material';
+import { ApplicantDetailsComponent } from 'src/app/shared/components/applicant-details/applicant-details.component';
 
 @Component({
 	selector: 'app-pec-registration',
@@ -62,7 +64,8 @@ export class PecRegistrationComponent implements OnInit {
 		private toastr: ToastrService,
 		private formService: FormsActionsService,
 		private profeService: ProfessionalTaxService,
-		private commonService: CommonService
+		private commonService: CommonService,
+		private dialog: MatDialog
 	) {
 
 		this.profeService.apiType = "pecForm";
@@ -311,6 +314,29 @@ export class PecRegistrationComponent implements OnInit {
 	 */
 	onDateChange(fieldName, date) {
 		this.pecRegForm.get(fieldName).setValue(moment(date).format("YYYY-MM-DD"));
+	}
+
+	/**
+	 * This method use for set applicant details on submit
+	 */
+	getUserDetailsAndSubmit(){
+		if(this.pecRegForm.valid){
+			const dialogConfig = this.commonService.getApplicantDialogConfig();
+			const dialogRef = this.dialog.open(ApplicantDetailsComponent, dialogConfig);
+		    dialogRef.afterClosed().subscribe(details => {
+				if(details){
+					// this.pecRegForm.addControl('applicantName', new FormControl('', Validators.required));
+					this.pecRegForm.get('applicantFullName').setValue(details.applicantName);
+					this.pecRegForm.get('contactNo').setValue(details.cellNo);
+					this.pecRegForm.get('email').setValue(details.email)
+					this.onSubmit()
+				}
+			
+			})
+
+		}else{
+			this.onSubmit();
+		}
 	}
 
 	/**
