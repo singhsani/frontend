@@ -252,7 +252,7 @@ export class DashboardComponent implements OnInit {
 			case 'HEL-WTRPIP-WRK-COMPL':
 			case 'HEL-DRNGPIP-WRK-COMPL':
 			// case 'HEL-WTR-DRAINAGE-DISCONNECTION':
-			case 'HEL-WTR-DRAINAGE-RECONNECTION':
+			//case 'HEL-WTR-DRAINAGE-RECONNECTION':
 			case 'HEL-WTR-DRAINAGE-TRANS-CONNECTION':
 				this.router.navigate([ManageRoutes.getFullRoute(apiCode), apiCode]);
 				break;

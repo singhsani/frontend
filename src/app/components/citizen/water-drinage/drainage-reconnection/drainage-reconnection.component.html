@@ -14,8 +14,8 @@
 				<div class="row">
 					<mat-form-field class="col-md-4">
 						<input matInput type="text"  maxlength="30" placeholder="{{'connection_no' | translate:translateKey}}"
-							formControlName="connectionNo" >
-						<control-messages [control]="drainageReconnectionForm.get('connectionNo')"></control-messages>
+							formControlName="drainageConnectionNo" >
+						<control-messages [control]="drainageReconnectionForm.get('drainageConnectionNo')"></control-messages>
 					</mat-form-field>
 
 					<div class="col-md-1">
@@ -48,24 +48,23 @@
 			<!-- step 4 Attachment Starts -->
 			<mat-tab>
 				<ng-template mat-tab-label>
-					<div>{{'attachment' | translate: translateKey}}</div>
+					<div>{{'upload' | translate: translateKey}}</div>
 				</ng-template>
 				<div class="row">
-					<!-- <ng-container
-						*ngFor="let doc of drainageReconnectionForm.get('serviceDetail').get('serviceUploadDocuments').value | filterAttachmentMF:drainageReconnectionForm.get('statusOfBusinessId').value.code">
-						<div class="col-md-4"
-							*ngIf="doc.requiredOnCitizenPortal && doc.isActive && licenseConfiguration.isAttachmentButtonsVisible">
-							<label>{{TranslateService.getCurrentLanguage()=='en'? doc.documentLabelEn : doc.documentLabelGuj }}
-								<span *ngIf="doc.mandatory">*</span></label>
+					<ng-container
+						*ngFor="let doc of drainageReconnectionForm.get('serviceDetail').get('serviceUploadDocuments').value">
+						<div class="col-md-4" *ngIf="doc.requiredOnCitizenPortal && doc.isActive">
+							<label>{{translateService.getCurrentLanguage()=='en'? doc.documentLabelEn : doc.documentLabelGuj }}<span
+									*ngIf="doc.mandatory">*</span> </label>
 							<file-upload [form]="drainageReconnectionForm" [uploadModel]="doc"></file-upload>
 						</div>
-					</ng-container> -->
+					</ng-container>
 				</div>
 
-				<app-action-bar [paymentGateway]="paymentGateway" [uploadFiles]="uploadFileArray"
-					[form]="drainageReconnectionForm" (handleErrors)="handleErrorsOnSubmit($event)"
-					(tabIndex)="licenseConfiguration.onFormTabChange($event) "
-					[stepInfo]="{step: 'final', next:2, back:0} "></app-action-bar>
+					<app-action-bar [uploadFiles]="uploadFilesArray" [form]="drainageReconnectionForm"
+					(tabIndex)="onTabChange($event)" [stepInfo]="{step: 'final', next: 2, back: 0}"
+					(handleErrors)="handleErrorsOnSubmit($event)">
+				</app-action-bar>
 
 			</mat-tab>
 		

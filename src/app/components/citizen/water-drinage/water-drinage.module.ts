@@ -29,7 +29,7 @@ const routes: Routes = [
   { path: 'drngPipeConnWorkCompletion/:apiCode', component: DrainagePipelineWorkCompletionComponent},
   { path: 'newDrainageConnection/:id/:apiCode', component : NewDrainageConnectionComponent },
   { path: 'drainageDisconnection/:id/:apiCode', component: DrainageDisconnectionComponent},
-  { path: 'drainageReconnection/:apiCode', component: DrainageReconnectionComponent},
+  { path: 'drainageReconnection/:id/:apiCode', component: DrainageReconnectionComponent},
   { path: 'drainageTransferConnection/:apiCode', component: DrainageTransferConnectionComponent},
 ];
 
