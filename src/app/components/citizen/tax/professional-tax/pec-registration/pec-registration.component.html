@@ -306,7 +306,7 @@
 				<div class="fotButtonBar clearfix">
 					<div class="col-sm-12 col-md-12">
 						<button class="liteBorder pull-left" type="button" mat-raised-button (click)="tabIndex = 3">{{'back' | translate:actionBarKey}}</button>
-						<button *ngIf="isDeleteBtnShow" class="pull-right" mat-raised-button color="success" (click)="onSubmit()">{{'submit' | translate:actionBarKey}}</button>
+						<button *ngIf="isDeleteBtnShow" class="pull-right" mat-raised-button color="success" (click)="getUserDetailsAndSubmit()">{{'submit' | translate:actionBarKey}}</button>
 					</div>
 				</div>
 

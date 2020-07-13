@@ -19,7 +19,7 @@
 
 			<ng-container *ngIf="stepInfo.step == 'final' && form.get('serviceDetail').get('appointmentRequired').value">
 				<button type="button" mat-raised-button color="primary" [disabled]="isSubmitBtnDisabled" *ngIf="form.get('canEdit').value"
-				 (click)="payAndScheduleAppointment()">{{'pay_and_schedule_appointment' | translate:translateKey}}</button>
+				 (click)="getUserDetailsAndPayAndScheduleMeeting()">{{'pay_and_schedule_appointment' | translate:translateKey}}</button>
 			</ng-container>
 		</div>
 
