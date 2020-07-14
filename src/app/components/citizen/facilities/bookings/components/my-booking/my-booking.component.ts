@@ -22,6 +22,7 @@ export class MyBookingComponent implements OnInit {
 	@ViewChild(MatPaginator) paginator: MatPaginator;
 	@ViewChild(MatSort) sort: MatSort;
 	@ViewChild("templateResponseModel") templateResponseModel: TemplateRef<any>;
+	@ViewChild("templateResponseModelRefundDetails") templateResponseModelRefundDetails: TemplateRef<any>;
 	@ViewChild("paymentGateway") paymentGateway: any;
 	/**
 	 * Cancel Booking Language Translation key.
@@ -221,13 +222,15 @@ export class MyBookingComponent implements OnInit {
 
 			this.commonService.confirmAlert('Are you sure to cancel?', "You won't be able to revert this!", 'warning', '', performDelete => {
 				this.modalReqRef.hide();
-				this.bookingService.cancelTownHall(object).subscribe(res => {
-					this.CancelResponseList = res.data.detail;
-					this.getAllBooking();
-					this.modalResRef = this.modalService.show(this.templateResponseModel, Object.assign({ ignoreBackdropClick: true }, { class: 'gray modal-lg customWidth' }))
-				}, err => {
-					this.toster.error(err.error.message);
-				});
+				this.refundBankDetails(this.templateResponseModelRefundDetails);
+// 				this.bookingService.cancelTownHall(object).subscribe(res => {
+// 					this.CancelResponseList = res.data.detail;
+// 					this.getAllBooking();
+// 					this.modalResRef = this.modalService.show(this.templateResponseModel, Object.assign({ ignoreBackdropClick: true }, { class: 'gray modal-lg customWidth' }))
+// 					console.log("yes");
+// 				}, err => {
+// 					this.toster.error(err.error.message);
+// 				});
 			});
 
 		} else {
@@ -277,7 +280,7 @@ export class MyBookingComponent implements OnInit {
 	}
 
 	/**
-	 * Used to get difference 
+	 * Used to get difference
 	 * @param date- date
 	 */
 	diffr(date) {
@@ -381,5 +384,17 @@ export class MyBookingComponent implements OnInit {
 	copyText(copytext: any) {
 		copytext.select();
 		document.execCommand('copy');
+	}
+	/*
+	 * This method is used for SHOW Refund Bank Details.
+	 */
+	refundBankDetails(template: TemplateRef<any>){
+    this.modalResRef = this.modalService.show(template);
+	}
+	/*
+	 * For update
+	 */
+	onSubmit(){
+	  console.log("Yes Here....")
 	}
 }

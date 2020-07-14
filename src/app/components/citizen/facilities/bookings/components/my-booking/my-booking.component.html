@@ -285,12 +285,61 @@
 	<div class="modal-body">
 		<div class="row">
 			<div class="col-12">
-				<textarea type="text" readonly class="text-left textjson" value="{{JSONdata}}" #copytext> 
+				<textarea type="text" readonly class="text-left textjson" value="{{JSONdata}}" #copytext>
                     </textarea>
 			</div>
 		</div>
 		<!-- <pre class="text-left" #copytext style="color: #9cdcfe;background: #212529;overflow: hidden">{{JSONdata}}</pre> -->
 	</div>
+</ng-template>
+<!-- refund bank details -->
+<ng-template #templateResponseModelRefundDetails>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Refund Bank Details</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalResRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="refundBankDetailsForm" (ngSubmit)="onSubmit()" autocomplete="off" ngNativeValidate>
+    <table class="example-full-width" cellspacing="0">
+      <tr>
+        <td><mat-form-field class="example-full-width">
+          <mat-label>Booking Number</mat-label>
+          <input matInput>
+        </mat-form-field></td>
+      </tr>
+      <tr>
+        <td><mat-form-field class="example-full-width">
+          <mat-label>Name</mat-label>
+          <input matInput>
+        </mat-form-field></td>
+      </tr>
+      <tr>
+        <td><mat-form-field class="example-full-width">
+          <mat-label>Bank Name</mat-label>
+          <input matInput>
+        </mat-form-field></td>
+      </tr>
+      <tr>
+        <td><mat-form-field class="example-full-width">
+          <mat-label>Account Number</mat-label>
+          <input matInput>
+        </mat-form-field></td>
+      </tr>
+      <tr>
+        <td><mat-form-field class="example-full-width">
+          <mat-label>IFSC Code</mat-label>
+          <input matInput>
+        </mat-form-field></td>
+      </tr>
+    </table>
+    <div class="col-md-4">
+      <button mat-stroked-button color="primary" class="w-100 mt-2" type="submit"> submit
+      </button>
+    </div>
+    </form>
+  </div>
 </ng-template>
 <select-payment-gateway #paymentGateway></select-payment-gateway>
 <!-- this div is used for printing the receipt -->
