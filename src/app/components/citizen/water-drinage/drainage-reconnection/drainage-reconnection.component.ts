@@ -22,7 +22,7 @@ import { AlertService } from 'src/app/vmcshared/Services/alert.service';
 export class DrainageReconnectionComponent implements OnInit {
 
   drainageReconnectionForm: FormGroup;
-  translateKey: string = 'drainageReconnection';
+  translateKey: string = 'drainage_reconnection';
   licenseConfiguration: LicenseConfiguration = new LicenseConfiguration();
 
   formId: number;
