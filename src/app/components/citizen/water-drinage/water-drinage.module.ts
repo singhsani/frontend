@@ -30,7 +30,7 @@ const routes: Routes = [
   { path: 'newDrainageConnection/:id/:apiCode', component : NewDrainageConnectionComponent },
   { path: 'drainageDisconnection/:id/:apiCode', component: DrainageDisconnectionComponent},
   { path: 'drainageReconnection/:id/:apiCode', component: DrainageReconnectionComponent},
-  { path: 'drainageTransferConnection/:apiCode', component: DrainageTransferConnectionComponent},
+  { path: 'drainageTransferConnection/:id/:apiCode', component: DrainageTransferConnectionComponent},
 ];
 
 @NgModule({
