@@ -66,6 +66,7 @@ export class LoginComponent implements OnInit {
 	}
 
 	guestLogin(guestLoginData) {
+		this.session.remove('fromAdmin');
 		this.appService.obtainAccessToken(guestLoginData).subscribe(
 			res => {
 				this.session.set('isGuestLogin', true);
@@ -84,7 +85,7 @@ export class LoginComponent implements OnInit {
 	 */
 	onLoginSubmit(formVals) {
 
-
+		this.session.remove('fromAdmin');
 		if (formVals.username) {
 			formVals.username = _.trim(formVals.username);
 		}

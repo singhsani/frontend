@@ -1,7 +1,7 @@
 <div class="example-container">
 
-    <mat-toolbar color="primary" class="example-toolbar">
-        <mat-toolbar-row class="dasHeader">
+    <mat-toolbar *ngIf="!commonService.fromAdmin()" color="primary" class="example-toolbar">
+        <mat-toolbar-row  class="dasHeader">
             <div class="float-left">
                 <!-- <button mat-icon-button (click)="isExpanded=!isExpanded; openSideNav();">
                     <mat-icon>menu</mat-icon>
