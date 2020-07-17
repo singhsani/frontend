@@ -126,7 +126,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
         "groomParentsMiddleName": "gulam mohammad",
         "groomParentsLastName": "memon",
         "groomParentsBirthDate": "1968-01-13",
-        "groomParentsAadharNumber": null,
+        "groomParentsAadharNumber": '111111111111',
         "groomParentsAddress": {
             "addressType": "GROOM_PARENTS_ADDRESS",
             "buildingName": "rajpura pole",
@@ -222,7 +222,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
         "priestMiddleName": "",
         "priestLastName": "salman",
         "priestBirthDate": "1972-01-13",
-        "priestAddressAadharNumber": null,
+        "priestAadharNumber": '098765432112',
         "priestAddress": {
             "addressType": "PRIEST_ADDRESS",
             "buildingName": "khatri pole",
@@ -270,7 +270,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
         "firstWitnessMiddleName": "mohamadhanif",
         "firstWitnessLastName": "memon",
         "firstWitnessBirthDate": "1988-01-13",
-        "firstWitnessAadharNumber": null,
+        "firstWitnessAadharNumber": '123456789012',
         "firstWitnessAddress": {
             "addressType": "FIRST_WITNESS_ADDRESS",
             "buildingName": "badshah manzil",
@@ -639,7 +639,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
             priestMiddleName: ['', [ValidationService.nameValidator, Validators.maxLength(50)]],
             priestLastName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
             priestBirthDate: [null, Validators.required],
-            priestAddressAadharNumber: ['', Validators.maxLength(12)],
+            priestAadharNumber: ['', Validators.maxLength(12)],
             priestAddress: this.fb.group(this.addrComponent.addressControls()),
             priestAddressResidence: this.fb.group(this.addrComponent.addressControls()),
             isPriestParResAddressSame: this.fb.group({
