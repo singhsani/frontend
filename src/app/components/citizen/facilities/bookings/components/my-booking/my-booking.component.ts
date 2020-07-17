@@ -31,6 +31,7 @@ export class MyBookingComponent implements OnInit {
 
 	searchBookingsForm: FormGroup;
 	bookingList = new MatTableDataSource();
+	refundBankDetailsForm: FormGroup;
 
 	/**
 	 * Common for all bookings
@@ -103,6 +104,8 @@ export class MyBookingComponent implements OnInit {
 			refNumber: null
 		});
 		this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
+
+		this.refundBankDetailsFormController();
 
 		/**
 	 * Used to initiate print hook after successfull payment
@@ -222,7 +225,7 @@ export class MyBookingComponent implements OnInit {
 
 			this.commonService.confirmAlert('Are you sure to cancel?', "You won't be able to revert this!", 'warning', '', performDelete => {
 				this.modalReqRef.hide();
-				this.refundBankDetails(this.templateResponseModelRefundDetails);
+				this.refundBankDetails(this.templateResponseModelRefundDetails, this.refNumber);
 // 				this.bookingService.cancelTownHall(object).subscribe(res => {
 // 					this.CancelResponseList = res.data.detail;
 // 					this.getAllBooking();
@@ -388,13 +391,25 @@ export class MyBookingComponent implements OnInit {
 	/*
 	 * This method is used for SHOW Refund Bank Details.
 	 */
-	refundBankDetails(template: TemplateRef<any>){
-    this.modalResRef = this.modalService.show(template);
+	refundBankDetails(template: TemplateRef<any>, refNumber: string){
+	  this.refNumber = refNumber;
+	  this.setPropertyValues();
+	  this.modalResRef = this.modalService.show(template);
 	}
 	/*
 	 * For update
 	 */
-	onSubmit(){
+	submitRefundBankDetails(){
 	  console.log("Yes Here....")
 	}
+
+	refundBankDetailsFormController(){
+	  this.refundBankDetailsForm = this.fb.group({
+                refNumber: [{ value: '', disabled: true }, Validators.required]
+            });
+	}
+
+	setPropertyValues(){
+      this.refundBankDetailsForm.get('refNumber').setValue(this.refNumber);
+    }
 }
