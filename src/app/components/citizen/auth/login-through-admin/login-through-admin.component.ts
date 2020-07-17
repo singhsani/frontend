@@ -27,13 +27,18 @@ export class LoginThroughAdminComponent implements OnInit {
 
 	ngOnInit() {
 		this.route.queryParams.subscribe(param => {
-
+			
 			if (param) {
 				this.accessToken = param['authToken'];
 				this.apiCode = param['apiCode'];
 				if (this.accessToken && this.apiCode) {
 					this.saveToken(this.apiCode);
 
+				} else if(this.accessToken){
+					this.session.set('access_token', { 'token': this.accessToken, now: +new Date }, 999999, 's');
+					this.session.set('fromAdmin', 'fromAdmin', 999999, 's');
+					this.session.set('isGuestLogin', true);
+					this.router.navigate([ManageRoutes.getFullRoute('CITIZENDASHBOARD')]);
 				} else {
 					this.commonService.openAlert('Error', 'Access Token Not Available', 'warning');
 				}
