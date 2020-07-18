@@ -65,6 +65,8 @@ export class MyBookingComponent implements OnInit {
 	refNumber: string = null;
 	cancellationType: string = null;
 
+	bankLists: Array<any> = [];
+
 	/**
 	 * pagination instance variables.
 	 */
@@ -394,22 +396,47 @@ export class MyBookingComponent implements OnInit {
 	refundBankDetails(template: TemplateRef<any>, refNumber: string){
 	  this.refNumber = refNumber;
 	  this.setPropertyValues();
+	  this.bookingLookups();
 	  this.modalResRef = this.modalService.show(template);
 	}
 	/*
-	 * For update
+	 * For update Townhall Refund
 	 */
 	submitRefundBankDetails(){
 	  console.log("Yes Here....")
 	}
 
+  /*
+   * form controller for refund detail bank.
+   */
 	refundBankDetailsFormController(){
 	  this.refundBankDetailsForm = this.fb.group({
-                refNumber: [{ value: '', disabled: true }, Validators.required]
+                refNumber: [{ value: '', disabled: true }, Validators.required],
+                ifscCode: ['', Validators.required],
+                accountNumber : ['', Validators.required],
+                applicantName : ['', Validators.required],
+                bank :['', Validators.required]
             });
 	}
-
+  /*
+   * set value in form for Townhall Refund
+   */
 	setPropertyValues(){
       this.refundBankDetailsForm.get('refNumber').setValue(this.refNumber);
+      //debugger;
+      this.bookingService.searchByRefNumber(this.refNumber).subscribe(resp => {
+        this.refundBankDetailsForm.get('ifscCode').setValue(resp['data']['ifscCode']);
+        this.refundBankDetailsForm.get('accountNumber').setValue(resp['data']['accountNo']);
+        this.refundBankDetailsForm.get('applicantName').setValue(resp['data']['accountHolderName']);
+      })
     }
+
+    /**
+    	 * Method is used to get all lookups for Townhall Refund
+    	 */
+    	bookingLookups() {
+    		this.bookingService.getDataFromLookups().subscribe(resp => {
+    			this.bankLists = resp.BANK;
+    		});
+    	}
 }

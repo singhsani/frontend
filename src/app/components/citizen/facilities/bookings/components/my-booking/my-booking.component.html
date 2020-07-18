@@ -329,35 +329,33 @@
       </div>
       <div class="row">
         <mat-form-field class="col-md-12">
-          <input matInput maxlength="50" appValidationFields [validationFieldsType]="'onlyNameWithSpace'" type="text"
-                 placeholder="{{'applicant_name' | translate: translateKey}}" required>
+          <input matInput maxlength="50" type="text"
+                 placeholder="{{'applicant_name' | translate: translateKey}}" required
+                 formControlName="applicantName">
+          <control-messages [control]="refundBankDetailsForm.get('applicantName')"></control-messages>
         </mat-form-field>
       </div>
       <div class="row">
         <div class="col-md-12 ngSelect">
-          <ng-select placeholder="{{'bank name' | translate:translateKey}}"
-                     >
-            <!--<ng-option *ngFor="let resource of resources" [value]="resource.type">
-              {{ resource.name }}
-            </ng-option>-->
-            <ng-option>Bank</ng-option>
+          <ng-select placeholder="Bank *" formControlName="bank">
+            <ng-option *ngFor="let bank of bankLists" [value]="bank.name">{{ bank.name }}</ng-option>
+            <control-messages [control]="refundBankDetailsForm.get('bank')"></control-messages>
           </ng-select>
-          <!--<control-messages [control]="refundBankDetailsForm.get('resourceType')">
-          </control-messages>-->
         </div>
       </div>
       <div class="row">
         <mat-form-field class="col-md-12">
           <input matInput maxlength="50" type="text"
-                 placeholder="{{'account_number' | translate: translateKey}}" required>
+                 placeholder="{{'account_number' | translate: translateKey}}" required
+                 formControlName="accountNumber">
+          <control-messages [control]="refundBankDetailsForm.get('accountNumber')"></control-messages>
         </mat-form-field>
       </div>
       <div class="row">
         <mat-form-field class="col-md-12">
-          <input matInput maxlength="50"  type="text"
-
-                 placeholder="{{'ifsc_code' | translate: translateKey}}" required>
-
+          <input matInput maxlength="50"  type="text" placeholder="{{'ifsc_code' | translate: translateKey}}" required
+                 formControlName="ifscCode">
+          <control-messages [control]="refundBankDetailsForm.get('ifscCode')"></control-messages>
         </mat-form-field>
       </div>
       <div class="row">
