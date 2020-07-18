@@ -32,6 +32,15 @@ export class HosFormActionsService {
 	}
 
 	/**
+	 * Method is used to get status after filter using registration number from newgen.
+	 * @param filterData - filter data.
+	 */
+	getRegistrationStatusFromNewgen(filterData) {
+		this.requestURL = `api/form/${this.apiType}/searchFromNewgen`;
+		return this.http.post(this.requestURL, filterData);
+	}
+
+	/**
 	 * This method is use to create new citizen app
 	 */
 	createFormData() {

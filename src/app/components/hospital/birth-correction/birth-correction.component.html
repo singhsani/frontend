@@ -6,15 +6,15 @@
  
 <div class="container">
 	<mat-card *ngIf="showApplicationSearch" class="formClass cardBorder">
-		<div class="pageTitle">{{'search_child_record'| translate: translateKey}}</div>
+		<div class="pageTitle">{{'Search Child Record'| translate: translateKey}}</div>
 
 		<div class="p-15">
 			<form [formGroup]="regStatusForm" (ngSubmit)="getRegistrationNumberStatus()" autocomplete="off">
 				<div class="row">
 					<mat-form-field class="col-md-4">
-						<input matInput maxlength="50" placeholder="{{'registration_number' | translate:translateKey}}" formControlName="applicationNumber"
+						<input matInput maxlength="50" placeholder="{{'registration_number' | translate:translateKey}}" formControlName="registrationNumber"
 						 required>
-						<control-messages [control]="regStatusForm.get('applicationNumber')"></control-messages>
+						<control-messages [control]="regStatusForm.get('registrationNumber')"></control-messages>
 					</mat-form-field>
 
 					<div formGroupName="typeOfCorrection" class="col-md-4 ngSelect">
@@ -26,7 +26,7 @@
 						<control-messages [control]="regStatusForm.get('typeOfCorrection').get('code')"></control-messages>
 					</div>
 					<div class="col-md-4">
-						<button mat-stroked-button color="primary" class="w-100 mt-2" type="submit">
+						<button [disabled]="!regStatusForm.valid" mat-stroked-button color="primary" class="w-100 mt-2" type="submit">
 							{{'search' | translate:translateKey}}
 						</button>
 					</div>
@@ -41,7 +41,7 @@
 			<mat-tab-group mat-stretch-tabs class="stepperNav" dynamicHeight="true" [(selectedIndex)]="tabIndex">
 				<mat-tab [label]="stepLable1 | translate: translateKey">
 
-					<h2>{{'child_name_insertion' | translate:translateKey}}</h2>
+					<!-- <h2>{{'child_details' | translate:translateKey}}</h2> -->
 					<div class="row">
 						<mat-form-field class="col-md-4">
 							<input required matInput [form]="birthCorrectionForm" maxlength="50" appGujInputSource targetElement="childNameGuj" appValidationFields
@@ -61,7 +61,7 @@
 
 				</mat-tab>
 				<mat-tab [label]="stepLable2 | translate: translateKey">
-					<h2>{{'upload_mandetory_documents' | translate:translateKey}}</h2>
+					<h2>{{'Upload Mandetory Documents' | translate:translateKey}}</h2>
 
 					<div class="alert15 alert alert-warning ">
 						{{'note' | translate:translateKey}} :{{'submit_hard_copy_at_madhyawarti_school' | translate:translateKey}}
@@ -71,14 +71,20 @@
 						{{'note' | translate:translateKey}} : {{'file_size_less_than_5_mb' | translate:translateKey}}
 					</div>
 
+
 					<div class="row">
-						<div class="col-md-4" *ngFor="let doc of uploadFileArray">
-							<!-- <div> -->
-							<label>{{translateService.getCurrentLanguage()=='en'? doc.documentLabelEn : doc.documentLabelGuj }} <span *ngIf="doc.mandatory">*</span></label>
-							<app-hos-file-upload [form]="birthCorrectionForm" [uploadModel]="doc"></app-hos-file-upload>
-							<!-- </div> -->
-						</div>
+						<ng-container
+							*ngFor="let doc of birthCorrectionForm.get('serviceDetail').get('serviceUploadDocuments').value">
+							<div class="col-md-4"
+								*ngIf="doc.requiredOnCitizenPortal && doc.isActive && showButtons">
+								<label>{{TranslateService.getCurrentLanguage()=='en'? doc.documentLabelEn : doc.documentLabelGuj }}
+									<span *ngIf="doc.mandatory">*</span></label>
+								<app-hos-file-upload [form]="birthCorrectionForm" [uploadModel]="doc"></app-hos-file-upload>
+							</div>
+						</ng-container>
 					</div>
+
+					
 
 					<app-hos-action-bar [paymentGateway]="paymentGateway" [uploadFiles]="uploadFileArray" [form]="birthCorrectionForm" [stepInfo]="{step: 'final', next: 0, back: 0}"
 					 (tabIndex)="onTabChange($event)" (handleErrors)="handleErrorsOnSubmit($event) "></app-hos-action-bar>
