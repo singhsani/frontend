@@ -50,11 +50,11 @@ export class UserVerificationComponent implements OnInit {
 			// if code value is exist then disabled field otherwise allow user to enter manually
 			if (params['code'] != null && params['code'] != "" && params['code'] != undefined && params['code'] != 'undefined' && params['code'] != 'null') {
 
-				this.verifyForm.get('code').setValue(params['code']);
-				this.verifyForm.get('code').disable();
+				//this.verifyForm.get('code').setValue(params['code']);
+				//this.verifyForm.get('code').disable();
 			} else {
-				this.verifyForm.get('code').setValue('');
-				this.verifyForm.get('code').enable();
+				//this.verifyForm.get('code').setValue('');
+				//this.verifyForm.get('code').enable();
 			}
 
 		});
@@ -65,14 +65,12 @@ export class UserVerificationComponent implements OnInit {
 	 */
 	verifyUser(formVals: FormGroup) {
 
-		if ((!this.verifyForm.get('uniqueId').value) || (!this.verifyForm.get('code').value)) {
-			this.toster.warning("Link is not valid try again");
-		} else {
+
 			this.appService.verifyUser(formVals.getRawValue()).subscribe(
 				res => {
 					this.toster.success("Successfully Authenticated");
 					this.router.navigate([ManageRoutes.getFullRoute('CITIZENAUTHLOGIN')]);
 				});
-		}
+		
 	}
 }
