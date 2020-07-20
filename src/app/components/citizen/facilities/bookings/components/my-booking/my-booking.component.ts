@@ -24,6 +24,7 @@ export class MyBookingComponent implements OnInit {
 	@ViewChild("templateResponseModel") templateResponseModel: TemplateRef<any>;
 	@ViewChild("templateResponseModelRefundDetails") templateResponseModelRefundDetails: TemplateRef<any>;
 	@ViewChild("paymentGateway") paymentGateway: any;
+	@ViewChild('closebutton') closebutton;
 	/**
 	 * Cancel Booking Language Translation key.
 	 */
@@ -64,8 +65,11 @@ export class MyBookingComponent implements OnInit {
 
 	refNumber: string = null;
 	cancellationType: string = null;
-
+  ifscCode: string = null;
 	bankLists: Array<any> = [];
+	accountNo : string = null;
+	accountHolderName : string = null;
+	bankName : string = null;
 
 	/**
 	 * pagination instance variables.
@@ -218,26 +222,11 @@ export class MyBookingComponent implements OnInit {
 	 */
 	RequestCancel() {
 		if (this.CancelRequestList.length && this.refNumber) {
-
-			let object = {
-				refNumber: this.refNumber,
-				appointments: this.CancelRequestList,
-				cancellationType: this.bookingConstant.BY_CITIZEN
-			}
-
 			this.commonService.confirmAlert('Are you sure to cancel?', "You won't be able to revert this!", 'warning', '', performDelete => {
 				this.modalReqRef.hide();
+				// show model of refund bank details
 				this.refundBankDetails(this.templateResponseModelRefundDetails, this.refNumber);
-// 				this.bookingService.cancelTownHall(object).subscribe(res => {
-// 					this.CancelResponseList = res.data.detail;
-// 					this.getAllBooking();
-// 					this.modalResRef = this.modalService.show(this.templateResponseModel, Object.assign({ ignoreBackdropClick: true }, { class: 'gray modal-lg customWidth' }))
-// 					console.log("yes");
-// 				}, err => {
-// 					this.toster.error(err.error.message);
-// 				});
 			});
-
 		} else {
 			this.toster.error("Please Select Slots");
 		}
@@ -400,10 +389,28 @@ export class MyBookingComponent implements OnInit {
 	  this.modalResRef = this.modalService.show(template);
 	}
 	/*
-	 * For update Townhall Refund
+	 * For update Townhall Refund with cancel status
 	 */
 	submitRefundBankDetails(){
-	  console.log("Yes Here....")
+	  console.log("Yes Here....");
+	  let object = {
+        refNumber: this.refNumber,
+        appointments: this.CancelRequestList,
+        cancellationType: this.bookingConstant.BY_CITIZEN,
+        ifscCode : this.refundBankDetailsForm.value.ifscCode,
+        accountNo : this.refundBankDetailsForm.value.accountNumber,
+        accountHolderName : this.refundBankDetailsForm.value.applicantName,
+        //bankName : this.refundBankDetailsForm.value.bank
+
+    }
+    this.bookingService.cancelTownHall(object).subscribe(res => {
+      this.CancelResponseList = res.data.detail;
+      this.getAllBooking();
+      //this.modalResRef = this.modalService.show(this.templateResponseModel, Object.assign({ ignoreBackdropClick: true }, { class: 'gray modal-lg customWidth' }))
+      this.modalResRef.hide();
+    }, err => {
+      this.toster.error(err.error.message);
+    });
 	}
 
   /*
@@ -423,7 +430,6 @@ export class MyBookingComponent implements OnInit {
    */
 	setPropertyValues(){
       this.refundBankDetailsForm.get('refNumber').setValue(this.refNumber);
-      //debugger;
       this.bookingService.searchByRefNumber(this.refNumber).subscribe(resp => {
         this.refundBankDetailsForm.get('ifscCode').setValue(resp['data']['ifscCode']);
         this.refundBankDetailsForm.get('accountNumber').setValue(resp['data']['accountNo']);
