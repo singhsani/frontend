@@ -17,6 +17,7 @@ import { MatInput } from '@angular/material/input';
 })
 export class SignUpComponent implements OnInit {
 
+	issingupbtn : boolean = false;
 	regForm: FormGroup;
 	manageRoutes: any = ManageRoutes;
 
@@ -101,15 +102,17 @@ export class SignUpComponent implements OnInit {
 		if (formVals.email) {
 			formVals.email = _.trim(formVals.email);
 		}
-
+		this.issingupbtn = true;
 		this.appService.registerUser(formVals).subscribe(
 			res => {
+
 				this.toster.success("We have sent a authentication link on your email");
 				this.router.navigate([ManageRoutes.getFullRoute('CITIZENAUTHVERIFY')],
 					{ queryParams: { uniqueId: res.data.uniqueId, code: res.data.cellOtp } });
 			},
 			err => {
 				if (err.error[0])
+				this.issingupbtn = false;
 					this.toster.error(err.error[0].code);
 			}
 		);
