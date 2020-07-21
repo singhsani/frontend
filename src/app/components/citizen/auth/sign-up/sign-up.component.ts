@@ -9,6 +9,7 @@ import { ToastrService } from 'ngx-toastr';
 
 import * as _ from 'lodash';
 import { MatInput } from '@angular/material/input';
+import { CommonService } from 'src/app/shared/services/common.service';
 
 @Component({
 	selector: 'app-sign-up',
@@ -20,6 +21,7 @@ export class SignUpComponent implements OnInit {
 	issingupbtn : boolean = false;
 	regForm: FormGroup;
 	manageRoutes: any = ManageRoutes;
+	loading: boolean = false;
 
 	@ViewChild('firstname') nameInput: MatInput;
 
@@ -34,6 +36,7 @@ export class SignUpComponent implements OnInit {
 		private router: Router,
 		private fb: FormBuilder,
 		private appService: AppService,
+		private commonService: CommonService,
 		private toster: ToastrService
 	) { }
 
@@ -102,20 +105,28 @@ export class SignUpComponent implements OnInit {
 		if (formVals.email) {
 			formVals.email = _.trim(formVals.email);
 		}
-		this.issingupbtn = true;
+		
+		if (this.regForm.valid) {
+			this.loading = true;
+			this.issingupbtn = true;
 		this.appService.registerUser(formVals).subscribe(
 			res => {
-
-				this.toster.success("We have sent a authentication link on your email");
+				this.loading = false;
+				this.commonService.successAlert("Success", "We have sent a authentication link on your email", "success");
+				//this.toster.success("We have sent a authentication link on your email");
 				this.router.navigate([ManageRoutes.getFullRoute('CITIZENAUTHVERIFY')],
 					{ queryParams: { uniqueId: res.data.uniqueId, code: res.data.cellOtp } });
 			},
 			err => {
+				this.loading = false;
 				if (err.error[0])
 				this.issingupbtn = false;
 					this.toster.error(err.error[0].code);
 			}
 		);
+	} else {
+		//this.issingupbtn = true;
+	}
 	}
 
 }
