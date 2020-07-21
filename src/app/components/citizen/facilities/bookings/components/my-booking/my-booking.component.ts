@@ -392,25 +392,29 @@ export class MyBookingComponent implements OnInit {
 	 * For update Townhall Refund with cancel status
 	 */
 	submitRefundBankDetails(){
-	  console.log("Yes Here....");
+	if(this.refundBankDetailsForm.valid){
 	  let object = {
-        refNumber: this.refNumber,
-        appointments: this.CancelRequestList,
-        cancellationType: this.bookingConstant.BY_CITIZEN,
-        ifscCode : this.refundBankDetailsForm.value.ifscCode,
-        accountNo : this.refundBankDetailsForm.value.accountNumber,
-        accountHolderName : this.refundBankDetailsForm.value.applicantName,
-        //bankName : this.refundBankDetailsForm.value.bank
+            refNumber: this.refNumber,
+            appointments: this.CancelRequestList,
+            cancellationType: this.bookingConstant.BY_CITIZEN,
+            ifscCode : this.refundBankDetailsForm.value.ifscCode,
+            accountNo : this.refundBankDetailsForm.value.accountNumber,
+            accountHolderName : this.refundBankDetailsForm.value.applicantName,
+            //bankName : this.refundBankDetailsForm.value.bank
 
-    }
-    this.bookingService.cancelTownHall(object).subscribe(res => {
-      this.CancelResponseList = res.data.detail;
-      this.getAllBooking();
-      //this.modalResRef = this.modalService.show(this.templateResponseModel, Object.assign({ ignoreBackdropClick: true }, { class: 'gray modal-lg customWidth' }))
-      this.modalResRef.hide();
-    }, err => {
-      this.toster.error(err.error.message);
-    });
+        }
+        this.bookingService.cancelTownHall(object).subscribe(res => {
+          this.CancelResponseList = res.data.detail;
+          this.getAllBooking();
+          //this.modalResRef = this.modalService.show(this.templateResponseModel, Object.assign({ ignoreBackdropClick: true }, { class: 'gray modal-lg customWidth' }))
+          this.modalResRef.hide();
+          this.commonService.successAlert("Success", "SuccessFully Cancel", "success");
+        }, err => {
+          this.toster.error(err.error.message);
+        });
+	}else{
+	  this.commonService.openAlert('Field Error', this.bookingConstant.ALL_FEILD_REQUIRED_MESSAGE, 'warning');
+	}
 	}
 
   /*
