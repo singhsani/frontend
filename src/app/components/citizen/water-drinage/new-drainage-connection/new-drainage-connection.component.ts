@@ -270,7 +270,7 @@ export class NewDrainageConnectionComponent implements OnInit {
       oldDrainageConnectionNo: [null],
       aadharNo: [null, [Validators.maxLength(12)]],
       ownerName: [null, [Validators.required]],
-      mobileNo: [null, [Validators.maxLength(10)]],
+      ownerMobileNo: [null, [Validators.maxLength(10)]],
       ownerEmailId: [null],
   
       limit: [null],
@@ -301,7 +301,7 @@ export class NewDrainageConnectionComponent implements OnInit {
       pincode: [null, [Validators.maxLength(6)]],
       postalAddress: [null],
       postalAddressDiff: [null],
-      propertyAddress: [null],
+      correspondenceAddress: [null],
       waterDrainageConnPropertyDetailsDTOList: this.fb.array([]),
     }, {});
   }
@@ -317,7 +317,7 @@ export class NewDrainageConnectionComponent implements OnInit {
     this.newDrainageConnectionForm.get('streetName').setValue(data.streetName);
     this.newDrainageConnectionForm.get('pincode').setValue(data.pincode);
     this.newDrainageConnectionForm.get('postalAddress').setValue(data.postalAddress);
-    this.newDrainageConnectionForm.get('propertyAddress').setValue(data.postalAddress);
+    this.newDrainageConnectionForm.get('correspondenceAddress').setValue(data.postalAddress);
     this.ispostalAddressDiff = true;
   }
 
@@ -361,7 +361,7 @@ export class NewDrainageConnectionComponent implements OnInit {
       fullAddress = fullAddress.substring(0, fullAddress.length - 2);
     
       this.newDrainageConnectionForm.get('postalAddress').setValue(fullAddress);
-      this.newDrainageConnectionForm.get('propertyAddress').setValue(fullAddress);
+      this.newDrainageConnectionForm.get('correspondenceAddress').setValue(fullAddress);
     
   }
 
