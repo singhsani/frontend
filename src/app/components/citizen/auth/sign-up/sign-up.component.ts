@@ -112,7 +112,7 @@ export class SignUpComponent implements OnInit {
 		this.appService.registerUser(formVals).subscribe(
 			res => {
 				this.loading = false;
-				this.commonService.successAlert("Success", "We have sent a authentication link on your email", "success");
+				this.commonService.successAlert("Success", "For OTP and link update you can check your registered mail ID and Mobile number. Thank you for the Registration.", "success");
 				//this.toster.success("We have sent a authentication link on your email");
 				this.router.navigate([ManageRoutes.getFullRoute('CITIZENAUTHVERIFY')],
 					{ queryParams: { uniqueId: res.data.uniqueId, code: res.data.cellOtp } });
