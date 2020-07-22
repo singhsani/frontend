@@ -127,7 +127,7 @@ export class BookingService {
 
   // Part Should be common in future
 	/**
-	 * This method is use for get date wise slots for particular resource 
+	 * This method is use for get date wise slots for particular resource
 	 * @param resourceName - string
 	 * @param startdate - YYYY-MM-DD
 	 * @param enddate - YYYY-MM-DD
@@ -206,7 +206,7 @@ export class BookingService {
   }
 
 	/**
-	 * Method is used to shortlist bands. 
+	 * Method is used to shortlist bands.
 	 * @param startDate - date of band booking.
 	 * @param startTime - start time
 	 * @param endTime - end time
@@ -247,7 +247,7 @@ export class BookingService {
 
 	/**
 	 * This methos for display json on myBooking list
-	 * @param refNumber 
+	 * @param refNumber
 	 */
   displayJson(refNumber: any) {
     this.requestURL = `api/${this.moduleName}/${this.resourceType}/json/${refNumber}`;
@@ -332,6 +332,14 @@ export class BookingService {
      printSwimmingReceipt(refNumber:any, type: string) {
       this.requestURL = `api/${this.moduleName}/${this.resourceType}/printSwimmingReceipt?refNumber=${refNumber}&serviceType=${type}`;
       return this.http.get(this.requestURL, 'printReceipt');
-    }  
+    }
+
+   /*
+    * search by refNumber
+    */
+    searchByRefNumber(refNumber:any){
+        this.requestURL = `api/${this.moduleName}/${this.resourceType}/search/${refNumber}`;
+        return this.http.get(this.requestURL);
+    }
 
 }
