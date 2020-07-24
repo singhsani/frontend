@@ -75,6 +75,7 @@ export class FileUploadComponent implements OnInit {
 	 */
 	selectFile(event) {
 		if (event) {
+			
 			this.selectedFiles = event.target.files;
 			let fileType = this.selectedFiles[0].type;
 			this.fileName = this.selectedFiles[0].name;
@@ -88,6 +89,20 @@ export class FileUploadComponent implements OnInit {
 				reader.readAsDataURL(event.target.files[0]);
 			}
 			this.upload();
+		}
+
+	}
+
+
+	/**
+	 * This method is use for testing
+	 * @param event - get selected file event
+	 */
+
+	allUplaod(event){
+		for(let doc of this.form.get('serviceDetail').get('serviceUploadDocuments').value){
+			this.uploadModel = doc;
+			this.selectFile(event);
 		}
 
 	}

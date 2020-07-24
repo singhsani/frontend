@@ -57,6 +57,8 @@ import { NumericDirective } from './directives/numeric.directive';
 import { SelectPaymentGatewayComponent } from './components/select-payment-gateway/select-payment-gateway.component';
 import { MaskCensusNumberDirective } from './directives/mask-census-number.directive';
 import { ApplicantDetailsComponent } from './components/applicant-details/applicant-details.component';
+import { OfflinePaymentComponent } from './components/offline-payment/offline-payment.component';
+import { OfflinePaymentService } from './services/offlinePayment.service';
 /* import pipes end*/
 
 const COMPONENTS = [
@@ -91,7 +93,9 @@ const COMPONENTS = [
 	BankDetailsComponent,
 	SelectPaymentGatewayComponent,
 	MaskCensusNumberDirective,
-	ApplicantDetailsComponent
+	ApplicantDetailsComponent,
+	OfflinePaymentComponent
+	
 ]
 
 @NgModule({
@@ -132,9 +136,10 @@ const COMPONENTS = [
 			multi: true,
 		},
 		HosHttpService,
-		CountryService
+		CountryService,
+		OfflinePaymentService
 	],
-	entryComponents: [DialogContentComponent,ApplicantDetailsComponent],
+	entryComponents: [DialogContentComponent,ApplicantDetailsComponent, OfflinePaymentComponent],
 
 })
 export class SharedModule { }
