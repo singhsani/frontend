@@ -175,7 +175,7 @@
 				</div>
 				<div class="row">
 					<h2>{{'business_address' | translate:translateKey}}</h2>
-					<app-address #temporaryAddressEstablishment
+					<app-address #temporaryAddressEstablishment [isDisplayGujFields]="true"
 						[requiredFeilds]="true"
 						[addressFormGroup]="animalPondRenewForm.get('businessAddress')"></app-address>
 				</div>
