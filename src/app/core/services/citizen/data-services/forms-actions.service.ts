@@ -417,4 +417,9 @@ export class FormsActionsService {
 	getLoiPaymentDetails(appId) {
 		return this.http.get(`api/loidetail/list?appId=${appId}`);
 	}
+
+	saveOfflinePayment(serviceId,paymentData) {
+		this.requestURL = `api/form/${this.apiType}/offlinePayment/${serviceId}`;
+		return this.http.post(this.requestURL, paymentData);
+	}
 }
