@@ -50,8 +50,8 @@
 
 					<mat-form-field class="col-md-4">
 						<!-- <span matPrefix>+91 &nbsp;</span> -->
-						<input matInput OnlyNumber placeholder="{{'applicant_mobile' | translate:translateKey}}" type="tel" [maxlength]="fireFacilityConfig.contactNumberLength"
-						 formControlName="contactNo" required  style="padding-bottom:10px;">
+						<input matInput OnlyNumber placeholder="{{'applicant_mobile' | translate:translateKey}}" 
+						 formControlName="contactNo" required maxlength="10" minlength="10" style="padding-bottom:10px;">
 						<control-messages [control]="provisionalNocForm.get('contactNo')"></control-messages>
 					</mat-form-field>
 
@@ -63,8 +63,8 @@
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
 						<!-- <span matPrefix>+91 &nbsp;</span> -->
-						<input matInput OnlyNumber placeholder="{{'onsite_person_mobile_no' | translate:translateKey}}" type="tel"
-						 [maxlength]="fireFacilityConfig.mobileNumber_maxLength" [minlength]="fireFacilityConfig.mobileNumber_minLength"
+						<input matInput required OnlyNumber placeholder="{{'onsite_person_mobile_no' | translate:translateKey}}" 
+						maxlength="10" minlength="10"
 						 formControlName="onsitePersonMobileNo" required>
 						<control-messages [control]="provisionalNocForm.get('onsitePersonMobileNo')"></control-messages>
 					</mat-form-field>
@@ -119,7 +119,7 @@
 						<control-messages [control]="provisionalNocForm.get('usageTypeId').get('code')"></control-messages>
 					</div>
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" required maxlength="200" placeholder="{{'subject_to' | translate:translateKey}}"
+						<input matInput type="text" appAlphaNumeric required maxlength="200" placeholder="{{'subject_to' | translate:translateKey}}"
 						 formControlName="subjectTo">
 						<control-messages [control]="provisionalNocForm.get('subjectTo')"></control-messages>
 					</mat-form-field>

@@ -120,6 +120,9 @@ export class FireCertificateComponent implements OnInit {
         code: [null, [Validators.required]]
       }),
       fireLossAmount: [null, [Validators.required, Validators.maxLength(50)]],
+      contactNo : [null, [Validators.required, Validators.maxLength(10)]],
+      mobileNo : [null, [Validators.required, Validators.maxLength(10)]],
+      email : [null, [Validators.required, Validators.maxLength(50)]],
       attachments: []
     });
   }

@@ -100,6 +100,27 @@
 						<input matInput type="text" maxlength="50" required formControlName="fireLossAmount" placeholder="{{ 'fire_loss_amount' | translate:translateKey }}">
 						<control-messages [control]="fireCertificateForm.get('fireLossAmount')"></control-messages>
 					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						
+						<input matInput OnlyNumber placeholder="Contact No" 
+						 formControlName="contactNo" required maxlength="10" minlength="10" style="padding-bottom:10px;">
+						<control-messages [control]="fireCertificateForm.get('contactNo')"></control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						
+						<input matInput OnlyNumber placeholder="Mobile No" 
+						 formControlName="mobileNo" required maxlength="10" minlength="10" style="padding-bottom:10px;">
+						<control-messages [control]="fireCertificateForm.get('mobileNo')"></control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<input matInput appPreventSpace placeholder="Email Id" type="email"
+						 formControlName="email" required maxlength="50">
+						<control-messages [control]="fireCertificateForm.get('email')"></control-messages>
+					</mat-form-field>
+
 				</div>
 
 				<app-action-bar [form]="fireCertificateForm" (tabIndex)="fireFacilityConfig.onFormTabChange($event)" [stepInfo]="{step: 'step0', next: 1, back: 0}"></app-action-bar>
