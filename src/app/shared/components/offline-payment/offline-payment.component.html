@@ -1,7 +1,7 @@
 <div class="container">
 
 	
-	<mat-dialog-content [formGroup]="paymentsForm">
+	<mat-dialog-content  *ngIf="paymentsForm" [formGroup]="paymentsForm">
 
 		<div class="text-center">
 			<h2>Total Fee Pay</h2>
@@ -13,7 +13,8 @@
 	
 		
 		<div class="col-md-12" *ngIf="payModes">
-			<ng-select (change)="changePayMode($event)" placeholder="Select Pay Mode"  formControlName="paymentMode">
+			<ng-select (change)="changePayMode($event)" placeholder="Select Pay Mode" [ngModelOptions]="{standalone: true}"
+			  [(ngModel)]="paymentModeSelect">
 				<ng-option *ngFor="let payMode of payModes" [value]="payMode.code">
 					{{payMode.name}}
 				</ng-option>

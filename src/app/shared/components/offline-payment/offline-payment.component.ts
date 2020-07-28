@@ -29,6 +29,8 @@ export class OfflinePaymentComponent implements OnInit, OnChanges {
 
 	paymentsForm: FormGroup;
 
+	paymentModeSelect : String = "CASH";
+
 	constructor(
 		private session: SessionStorageService,
 		private offlinePaymentService: OfflinePaymentService,
@@ -66,7 +68,7 @@ export class OfflinePaymentComponent implements OnInit, OnChanges {
 		});
 
 		this.paymentsForm.get("amount").setValue(this.payData.amount);
-
+		this.paymentsForm.get('paymentMode').setValue(this.paymentModeSelect);
 	}
 
 	ngOnChanges() {
@@ -74,18 +76,54 @@ export class OfflinePaymentComponent implements OnInit, OnChanges {
 	}
 
 	changePayMode() {
-		if (this.paymentsForm.get('paymentMode').value == 'DD_BANKER_CHEQUE' ||
-			this.paymentsForm.get('paymentMode').value == 'CHEQUE') {
-			this.paymentsForm.get("bankName").setValidators([Validators.required]);
-			this.paymentsForm.get("branchName").setValidators([Validators.required]);
-			this.paymentsForm.get("chequeNumber").setValidators([Validators.required])
-			this.paymentsForm.get("chequeDate").setValidators([Validators.required])
-			this.paymentsForm.get("accountNumber").setValidators([Validators.required]);
-			this.paymentsForm.get("accountHolderName").setValidators([Validators.required]);
-		} else if (this.paymentsForm.get('paymentMode').value == 'POS') {
+	
+		if (this.paymentModeSelect == 'DD_BANKER_CHEQUE' ||
+		this.paymentModeSelect == 'CHEQUE') {
 			
-			this.paymentsForm.get("posTransactionId").setValidators([Validators.required]);
-		} 
+		this.paymentsForm = this.fb.group({
+			amount: [null, [Validators.required]],
+			paymentMode: [null, [Validators.required]],
+			bankName: [null,[Validators.required]],
+			branchName: [null,[Validators.required]],
+			chequeNumber: [null,[Validators.required]],
+			chequeDate: [null,[Validators.required]],
+			posTransactionId: [null],
+			accountNumber: [null,[Validators.required]],
+			accountHolderName: [null,[Validators.required]],
+			remarks: [null]
+		});
+
+		} else if (this.paymentModeSelect == 'POS') {
+			this.paymentsForm = this.fb.group({
+				amount: [null, [Validators.required]],
+				paymentMode: [null, [Validators.required]],
+				bankName: [null],
+				branchName: [null],
+				chequeNumber: [null],
+				chequeDate: [null],
+				posTransactionId: [null,[Validators.required]],
+				accountNumber: [null],
+				accountHolderName: [null],
+				remarks: [null]
+			});
+		} else if (this.paymentModeSelect == 'CASH'){
+			
+			this.paymentsForm = this.fb.group({
+				amount: [null, [Validators.required]],
+				paymentMode: [null, [Validators.required]],
+				bankName: [null],
+				branchName: [null],
+				chequeNumber: [null],
+				chequeDate: [null],
+				posTransactionId: [null],
+				accountNumber: [null],
+				accountHolderName: [null],
+				remarks: [null]
+			});
+		}
+
+		this.paymentsForm.get("amount").setValue(this.payData.amount);
+		this.paymentsForm.get('paymentMode').setValue(this.paymentModeSelect);
 	}
 
 	commonValidators() {

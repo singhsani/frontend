@@ -41,7 +41,8 @@
     </nav> -->
     <div class="clearfix" *ngIf="showMenu">
 
-        <mat-tab-group (focusChange)="navigateToRoute($event)" mat-stretch-tabs [selectedIndex]="tabIndex" class="mainMenu">
+        <mat-tab-group (focusChange)="navigateToRoute($event)" mat-stretch-tabs [selectedIndex]="tabIndex" [ngClass]="{'iframeMainMenu': fromAdmin,
+        'mainMenu': !fromAdmin }">
             <mat-tab *ngFor="let link of links; let i=index">
                 <ng-template mat-tab-label>
                     <a (click)="navigateToRouteByIndex(i)">

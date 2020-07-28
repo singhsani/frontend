@@ -150,6 +150,7 @@ export class ActionBarComponent implements OnInit, OnChanges {
 	 * This method is use for submit form using API
 	 */
 	onSubmit() {
+	
 		this.isSubmitBtnDisabled = true;
 		var count = 1;
 		this.markFormGroupTouched(this.form);
@@ -221,9 +222,9 @@ export class ActionBarComponent implements OnInit, OnChanges {
 										}
 
 										let payData = this.commonService.storePaymentInfo(err.error.data, retUrl, retAfterPayment);
-
+                                        
 										if (this.commonService.fromAdmin()) {
-											this.openOfflinePaymentComponent(payData);
+											this.openOfflinePaymentComponent(payData,retUrl);
 										} else {
 
 											let html =
@@ -478,7 +479,7 @@ export class ActionBarComponent implements OnInit, OnChanges {
 	}
 
 
-	openOfflinePaymentComponent(payData) {
+	openOfflinePaymentComponent(payData,retUrl) {
 		const dialogConfig = new MatDialogConfig();
 		const data = { payData: payData }
 		dialogConfig.disableClose = true;
@@ -490,20 +491,37 @@ export class ActionBarComponent implements OnInit, OnChanges {
 		dialogRef.afterClosed().subscribe(offlinePayData => {
 			if (offlinePayData) {
 				offlinePayData.refNumber = this.form.get("uniqueId").value;
-				this.formService.saveOfflinePayment(this.form.get('serviceFormId').value, offlinePayData).subscribe(resData => {
-					console.log(resData);
+				offlinePayData.response = payData.response;
+				offlinePayData.paymentStatus = "SUCCESS",
+				offlinePayData.transactionId =  payData.transactionId,
+				offlinePayData.payableServiceType = payData.serviceCode,
+				offlinePayData.amount = payData.amount;
+				offlinePayData.payGateway = "OFFLINE"
+
+
+				this.formService.createPayment(offlinePayData).subscribe(resData => {
+					if(resData.paymentStatus = "Paid"){
+						this.router.navigateByUrl(retUrl);
+					}
 				}, error => {
-					console.log("Error in saving offline payment", error);
+					this.openErrorAlert(error);
 				})
 			}
 		}, error => {
-
-			// this.commonService.openAlert("Error", "Error Occured for final submit : " + err.error[0].message, "warning")
-			console.log("Error in offline payment", error);
+			this.openErrorAlert(error);
 		})
 
 
 
+	}
+
+	openErrorAlert(error){
+		if(error & error.error[0]){
+			this.commonService.openAlert("Error", "Error Occured for final submit : "
+					 + error.error[0].message, "warning");
+		}else{
+			this.commonService.openAlert("Error", "Something went wrong","warning");
+		}
 	}
 
 }

@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 
-import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { MatPaginator, MatSort, MatTableDataSource, MatDialogConfig, MatDialog } from '@angular/material';
 import { Observable, merge, of as observableOf } from 'rxjs';
 import { catchError, map, startWith, switchMap } from 'rxjs/operators';
 
@@ -16,6 +16,7 @@ import * as moment from 'moment'
 import { CitizenConfig } from '../citizen-config';
 import { ToastrService } from 'ngx-toastr';
 import { environment } from '../../../../environments/environment';
+import { OfflinePaymentComponent } from 'src/app/shared/components/offline-payment/offline-payment.component';
 
 @Component({
 	selector: 'app-my-applications',
@@ -71,7 +72,8 @@ export class MyApplicationsComponent implements OnInit {
 		private router: Router,
 		public commonService: CommonService,
 		private modalService: BsModalService,
-		private toastr: ToastrService
+		private toastr: ToastrService,
+		private dialog: MatDialog
 	) { }
 
 	ngOnInit() {
@@ -409,34 +411,39 @@ export class MyApplicationsComponent implements OnInit {
 						<p>Rupees in words</p>
 					</div>
 					`
+					if (this.commonService.fromAdmin()) {
+						this.openOfflinePaymentComponent(payData,retUrl);
+					} else {
+						this.commonService.commonAlert('Payment Details', '', 'info', 'Make Payment!', false, html, cb => {
+							// this.formService.createTokenforServicePayment(payData).subscribe(resp => {
+							// 	window.open(resp.data, "_self");
+							// }, err => {
+							// 	this.toastr.error(err.error.message);
+							// })
+							this.paymentGateway.setPaymentDetailsFromActionBar(payData);
+							this.paymentGateway.openModel();
+	
+						}, rj => {
+							// let errHtml = `
+							// 	<div class="alert alert-danger">
+							// 		Please Complete Payment, Otherwise the application will be considered as in-complete
+							// 	</div>`
+							// this.commonService.commonAlert("Application Incomplete", "", 'warning', 'Make Payment!', false, errHtml, ccb => {
+							// 	this.formService.createTokenforServicePayment(payData).subscribe(resp => {
+							// 		window.open(resp.data, "_self");
+							// 	}, err => {
+							// 		this.toastr.error(err.error.message);
+							// 	})
+	
+							// }, arj => {
+	
+							// })
+							// return;
+						});
+						return;
+					}
 
-					this.commonService.commonAlert('Payment Details', '', 'info', 'Make Payment!', false, html, cb => {
-						// this.formService.createTokenforServicePayment(payData).subscribe(resp => {
-						// 	window.open(resp.data, "_self");
-						// }, err => {
-						// 	this.toastr.error(err.error.message);
-						// })
-						this.paymentGateway.setPaymentDetailsFromActionBar(payData);
-						this.paymentGateway.openModel();
-
-					}, rj => {
-						// let errHtml = `
-						// 	<div class="alert alert-danger">
-						// 		Please Complete Payment, Otherwise the application will be considered as in-complete
-						// 	</div>`
-						// this.commonService.commonAlert("Application Incomplete", "", 'warning', 'Make Payment!', false, errHtml, ccb => {
-						// 	this.formService.createTokenforServicePayment(payData).subscribe(resp => {
-						// 		window.open(resp.data, "_self");
-						// 	}, err => {
-						// 		this.toastr.error(err.error.message);
-						// 	})
-
-						// }, arj => {
-
-						// })
-						// return;
-					});
-					return;
+					
 				} else {
 					this.commonService.openAlert("Error", "Error Occured for final submit : " + err.error[0].message, "warning")
 				}
@@ -478,6 +485,52 @@ export class MyApplicationsComponent implements OnInit {
 	}
 	loiPayments(row){
 		this.router.navigate(['/citizen/loi-payments', row.uniqueId, row.id, row.serviceDetail.code]);
+	}
+
+	openOfflinePaymentComponent(payData,retUrl) {
+		const dialogConfig = new MatDialogConfig();
+		const data = { payData: payData }
+		dialogConfig.disableClose = true;
+		dialogConfig.autoFocus = true;
+		dialogConfig.data = data;
+		dialogConfig.width = "60%"
+		const dialogRef = this.dialog.open(OfflinePaymentComponent, dialogConfig);
+
+		dialogRef.afterClosed().subscribe(offlinePayData => {
+			if (offlinePayData) {
+				offlinePayData.refNumber = payData.refNumber;
+				offlinePayData.response = payData.response;
+				offlinePayData.paymentStatus = "SUCCESS",
+				offlinePayData.transactionId =  payData.transactionId,
+				offlinePayData.payableServiceType = payData.serviceCode,
+				offlinePayData.amount = payData.amount;
+				offlinePayData.payGateway = "OFFLINE"
+
+
+				this.formService.createPayment(offlinePayData).subscribe(resData => {
+					if(resData.paymentStatus = "Paid"){
+						this.router.navigateByUrl(retUrl);
+					}
+					this.getAllData()
+				}, error => {
+					this.openErrorAlert(error);
+				})
+			}
+		}, error => {
+			this.openErrorAlert(error);
+		})
+
+
+
+	}
+
+	openErrorAlert(error){
+		if(error & error.error[0]){
+			this.commonService.openAlert("Error", "Error Occured for final submit : "
+					 + error.error[0].message, "warning");
+		}else{
+			this.commonService.openAlert("Error", "Something went wrong","warning");
+		}
 	}
 
 }

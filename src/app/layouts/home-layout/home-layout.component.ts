@@ -118,6 +118,33 @@ export class HomeLayoutComponent implements OnInit {
 				}
 			];
 		}
+
+		if(this.commonService.fromAdmin()){
+
+			this.links = [
+				{
+					'linkName': 'Dashboard',
+					'linkCode': 'CITIZENDASHBOARD',
+					'icon': 'apps'
+				},
+				{
+					'linkName': 'My Applications',
+					'linkCode': 'CITIZENMYAPPS',
+					'icon': 'description'
+				},
+				{
+					'linkName': 'Payable Services',
+					'linkCode': 'CITIZENPAYABLESERVICES',
+					'icon': '&#x20B9;'
+				},
+				{
+					'linkName': 'Transactions',
+					'linkCode': 'CITIZENMYTRANSACTIONS',
+					'icon': 'low_priority'
+				}
+			];
+
+		}
 	}
 
 	onLogout() {
