@@ -417,4 +417,8 @@ export class FormsActionsService {
 	getLoiPaymentDetails(appId) {
 		return this.http.get(`api/loidetail/list?appId=${appId}`);
 	}
+	saveCustomCallApi(apiName: any, noofCopies: any, asonDate: any, occupierId: any) {
+		this.requestURL = `api/form/${this.apiType}/${apiName}?noofCopies=${noofCopies}&asonDate=${asonDate}&occupierId=${occupierId}`;
+		return this.http.post(this.requestURL, {});
+	}
 }

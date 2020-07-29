@@ -23,6 +23,7 @@ import { DigitsOnlyDirective } from './Directives/digitsOnlyDirective';
 import { PropertyOccupierSearchComponent } from './component/property-occupier-search/property-occupier-search.component';
 import { VmcTitleBarComponent } from './component/title-bar/title-bar.component';
 import { FileUploadComponentWaterTax } from './component/file-upload/file-upload.component';
+import { SelectPaymentGatewayPropertyComponent } from './component/select-payment-gateway-property/select-payment-gateway-property.component';
 
 
 
@@ -51,7 +52,8 @@ import { FileUploadComponentWaterTax } from './component/file-upload/file-upload
     PropertySearchComponent,
     VmcTitleBarComponent,
     PropertyOccupierSearchComponent,
-    FileUploadComponentWaterTax
+    FileUploadComponentWaterTax,
+    SelectPaymentGatewayPropertyComponent
   ],
   exports: [
     MaterialsComponentModule,
@@ -63,6 +65,7 @@ import { FileUploadComponentWaterTax } from './component/file-upload/file-upload
     VmcTitleBarComponent,
     PropertyOccupierSearchComponent,
     FileUploadComponentWaterTax,
+    SelectPaymentGatewayPropertyComponent,
     CommonModule,
     NumberOnlyDirective,
     LetterOnlyDirective,
