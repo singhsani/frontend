@@ -5,10 +5,10 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { CommonService } from './../../../shared/services/common.service';
 import { FormsActionsService } from './../../../core/services/citizen/data-services/forms-actions.service';
-
-import * as _ from 'lodash';
+import * as _ from 'lodash'; 
 import { SessionStorageService } from 'angular-web-storage';
-
+import { MyApplicationsComponent} from '../my-applications/my-applications.component'
+import { error } from 'protractor';
 
 @Component({
   selector: 'app-common-payble',
@@ -25,13 +25,15 @@ export class CommonPaybleComponent implements OnInit {
   PayableServices: Object[];
   currPaySerData: any;
   isRecordExists: boolean = false;
-  isECRCSearch: boolean = false;
+  isECRCSearch: boolean = false;  
   payModeArr: Array<any> = [
     { name: 'Net Banking', code: 'NETBANKING' }, { name: 'Debit / Credit Card banking', code: 'CARDBANKING' }
   ];
   placeholder: string = 'Reference Number';
   responseData: any;
   duesDetailsArr: any = [];
+
+  inputData : any
 
   constructor(
     private formService: FormsActionsService,
@@ -83,13 +85,15 @@ export class CommonPaybleComponent implements OnInit {
     let serviceType = this.paymentsForm.get('payableServices').get('code').value;
 
     let filterObj = _.filter(this.PayableServices, { 'code' : serviceType })[0];
-   
+
+    let retUrl: string = '/citizen/payable-services';
+
     let obj = {
       payableServiceType: payData.payableServices.code,
       refNumber: payData.refNumber,
       amount: payData.amount,
       paymentMode: payData.payMode.code,
-      returnUrl: environment.returnUrl,
+      returnUrl: retUrl,
       searchable: filterObj.searchable
     }
 
@@ -243,6 +247,31 @@ export class CommonPaybleComponent implements OnInit {
         control.markAsTouched();
       });
     }
+  }
+
+  getCitizenForm(){
+    if (this.paymentsForm.invalid) {
+      this.markFormGroupTouched(this.paymentsForm);
+      this.commonService.openAlert("Warning", "Enter all the required information", "warning");
+      return;
+    }
+
+    let serviceType = this.paymentsForm.get('payableServices').get('code').value;
+    let refNumber = this.paymentsForm.get('refNumber').value;
+
+    this.formService.apiType = 'appsByRef';
+
+    let resData = {
+      refNumber: refNumber,
+      serviceType: serviceType
+    }
+
+    this.formService.getCitizenForm(resData).subscribe(data => {
+      this.inputData = data.data;
+      console.log('input data',this.inputData);
+    },error => {
+      console.log(error)
+    })
   }
 
 }

@@ -422,4 +422,9 @@ export class FormsActionsService {
 		this.requestURL = `api/form/${this.apiType}/offlinePayment/${serviceId}`;
 		return this.http.post(this.requestURL, paymentData);
 	}
+
+	getCitizenForm(reqData){	
+		this.requestURL = `api/user/${this.apiType}`;
+		return this.http.post(this.requestURL, reqData);
+	}
 }
