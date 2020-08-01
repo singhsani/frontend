@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit, ViewChild, TemplateRef, Input, OnChanges } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
@@ -17,15 +17,19 @@ import { CitizenConfig } from '../citizen-config';
 import { ToastrService } from 'ngx-toastr';
 import { environment } from '../../../../environments/environment';
 import { OfflinePaymentComponent } from 'src/app/shared/components/offline-payment/offline-payment.component';
+import { Location } from '@angular/common';
 
 @Component({
 	selector: 'app-my-applications',
 	templateUrl: './my-applications.component.html',
 	styleUrls: ['./my-applications.component.scss']
 })
-export class MyApplicationsComponent implements OnInit {
+export class MyApplicationsComponent implements OnInit,OnChanges {
 
 	@ViewChild("paymentGateway") paymentGateway: any;
+
+	@Input() inputData : any;
+	@Input() fromOtherModule = false;
 
 	/**
 	 * displayColumns are used for display the columns in material table.
@@ -73,13 +77,35 @@ export class MyApplicationsComponent implements OnInit {
 		public commonService: CommonService,
 		private modalService: BsModalService,
 		private toastr: ToastrService,
-		private dialog: MatDialog
-	) { }
+		private dialog: MatDialog,
+		private route: ActivatedRoute,
+		private location: Location
+	) { 
+
+
+
+	}
 
 	ngOnInit() {
 		// If the user changes the sort order, reset back to the first page.
 		this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
 
+		this.getAllData();
+
+		/**
+        * Used to initiate print hook after successfull payment
+        */
+		this.route.queryParams.subscribe(d => {
+			if (d.apiCode && d.id) {
+				this.printReceipt(d.apiCode, '', d.id);
+				setTimeout(() => {
+					this.location.go(this.router.url.split('?')[0]);
+				}, 3000);
+			}
+		})
+	}
+
+	ngOnChanges(){
 		this.getAllData();
 	}
 
@@ -87,33 +113,44 @@ export class MyApplicationsComponent implements OnInit {
 	 * This method use to get all the citizen data with pagination.
 	 */
 	getAllData() {
-		this.paginator.pageSize = 5;
-		this.paginator.pageIndex = 0;
-
-		merge(this.sort.sortChange, this.paginator.page)
-			.pipe(
-				startWith({}),
-				switchMap(() => {
-					this.isLoadingResults = true;
-					this.paginationService.apiType = this.appType;
-					this.paginationService.pageIndex = (this.paginator.pageIndex + 1);
-					this.paginationService.pageSize = this.paginator.pageSize;
-					return this.paginationService!.getAllData();// NOSONAR
-				}),
-				map(data => {
-					this.isLoadingResults = false;
-					this.resultsLength = data.totalRecords;
-					return data.data;
-				}),
-				catchError(() => {
-					this.isLoadingResults = false;
-					return observableOf([]);
-				})
-			).subscribe(data => {
+		if (this.fromOtherModule) {
+			this.dataSource.data = [];
+			if(this.inputData){
+				this.dataSource.data = this.inputData;
+				this.resultsLength = this.inputData.length ;
 				this.isLoadingResults = false;
-				this.dataSource.data = data;
 			}
-			);
+			
+		} else {
+			this.paginator.pageSize = 5;
+			this.paginator.pageIndex = 0;
+
+			merge(this.sort.sortChange, this.paginator.page)
+				.pipe(
+					startWith({}),
+					switchMap(() => {
+						this.isLoadingResults = true;
+						this.paginationService.apiType = this.appType;
+						this.paginationService.pageIndex = (this.paginator.pageIndex + 1);
+						this.paginationService.pageSize = this.paginator.pageSize;
+						return this.paginationService!.getAllData();// NOSONAR
+					}),
+					map(data => {
+						this.isLoadingResults = false;
+						this.resultsLength = data.totalRecords;
+						return data.data;
+					}),
+					catchError(() => {
+						this.isLoadingResults = false;
+						return observableOf([]);
+					})
+				).subscribe(data => {
+					this.isLoadingResults = false;
+					this.dataSource.data = data;
+				}
+				);
+		}
+		
 	}
 
 	/**
@@ -396,8 +433,11 @@ export class MyApplicationsComponent implements OnInit {
 				this.router.navigateByUrl(ManageRoutes.getFullRoute("CITIZENMYAPPS"));
 			},
 			err => {
-				let retUrl: string = '/citizen/my-applications';
+				let retUrl: string = '/citizen/my-applications?apiCode='+ apiCode + '&id=' + id  ;
 				let retAfterPayment: string = environment.returnUrl;
+			    if(this.fromOtherModule){
+					retUrl = '/citizen/payable-services?apiCode='+ apiCode + '&id=' + id;
+				}
 
 				if (err.status === 402) {
 					let payData = this.commonService.storePaymentInfo(err.error.data, retUrl, retAfterPayment);

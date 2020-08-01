@@ -5,10 +5,13 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { CommonService } from './../../../shared/services/common.service';
 import { FormsActionsService } from './../../../core/services/citizen/data-services/forms-actions.service';
-
-import * as _ from 'lodash';
+import * as _ from 'lodash'; 
 import { SessionStorageService } from 'angular-web-storage';
-
+import { MyApplicationsComponent} from '../my-applications/my-applications.component'
+import { error } from 'protractor';
+import { Location } from '@angular/common';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ManageRoutes } from 'src/app/config/routes-conf';
 
 @Component({
   selector: 'app-common-payble',
@@ -25,7 +28,7 @@ export class CommonPaybleComponent implements OnInit {
   PayableServices: Object[];
   currPaySerData: any;
   isRecordExists: boolean = false;
-  isECRCSearch: boolean = false;
+  isECRCSearch: boolean = false;  
   payModeArr: Array<any> = [
     { name: 'Net Banking', code: 'NETBANKING' }, { name: 'Debit / Credit Card banking', code: 'CARDBANKING' }
   ];
@@ -33,18 +36,32 @@ export class CommonPaybleComponent implements OnInit {
   responseData: any;
   duesDetailsArr: any = [];
 
+  inputData : any
+
   constructor(
     private formService: FormsActionsService,
     private fb: FormBuilder,
     private toaster: ToastrService,
     private commonService: CommonService,
-    private session: SessionStorageService
+    private session: SessionStorageService,
+    private route: ActivatedRoute,
+    private location: Location,
+    private router: Router
   ) {
     this.getPayableServicesList();
     this.createPayementControls();
   }
 
   ngOnInit() {
+
+    this.route.queryParams.subscribe(d => {
+      if (d.apiCode && d.id) {
+        this.printReceipt(d.apiCode, '', d.id);
+        setTimeout(() => {
+          this.location.go(this.router.url.split('?')[0]);
+        }, 3000);
+      }
+    })
 
   }
 
@@ -83,13 +100,15 @@ export class CommonPaybleComponent implements OnInit {
     let serviceType = this.paymentsForm.get('payableServices').get('code').value;
 
     let filterObj = _.filter(this.PayableServices, { 'code' : serviceType })[0];
-   
+
+    let retUrl: string = '/citizen/payable-services';
+
     let obj = {
       payableServiceType: payData.payableServices.code,
       refNumber: payData.refNumber,
       amount: payData.amount,
       paymentMode: payData.payMode.code,
-      returnUrl: environment.returnUrl,
+      returnUrl: retUrl,
       searchable: filterObj.searchable
     }
 
@@ -244,5 +263,56 @@ export class CommonPaybleComponent implements OnInit {
       });
     }
   }
+
+  getCitizenForm(){
+    if (this.paymentsForm.invalid) {
+      this.markFormGroupTouched(this.paymentsForm);
+      this.commonService.openAlert("Warning", "Enter all the required information", "warning");
+      return;
+    }
+
+    let serviceType = this.paymentsForm.get('payableServices').get('code').value;
+    let refNumber = this.paymentsForm.get('refNumber').value;
+
+    this.formService.apiType = 'appsByRef';
+
+    let resData = {
+      refNumber: refNumber,
+      serviceType: serviceType
+    }
+
+    this.formService.getCitizenForm(resData).subscribe(data => {
+      this.inputData = data.data;
+      console.log('input data',this.inputData);
+    },error => {
+      console.log(error)
+    })
+  }
+
+  /**
+	 * This method use to application print receipt.
+	 * @param id citizen api code
+	 * @param id citizen api name
+	 * @param id citizen id
+	 */
+	printReceipt(apiCode: string, apiName: string, id: number) {
+
+		this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);
+		this.formService.printReceipt(id).subscribe(
+			receiptResponse => {
+        let sectionToPrintReceipt: any = document.getElementById('sectionToPrint');
+        let test = document.getElementById('loader')
+        debugger
+				sectionToPrintReceipt.innerHTML = receiptResponse;
+				setTimeout(() => {
+					window.print();
+				});
+			},
+			err => {
+				this.commonService.openAlert('Error!', err.error[0].message, 'error');
+			}
+		);
+	}
+
 
 }
