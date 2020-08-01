@@ -214,11 +214,12 @@ export class ActionBarComponent implements OnInit, OnChanges {
 									let retAfterPayment: string = environment.returnUrl;
 
 									if (err.status === 402) {
-										
-										
 										let moduleWithAppointment = this.form.getRawValue().serviceDetail.appointmentRequired;
+										const data = err.error.data;
 										if (moduleWithAppointment) {
-											retUrl = `/citizen/appointmant/schedule-appointment/slot-booking/` + this.form.getRawValue().serviceFormId + `/` + this.form.getRawValue().serviceDetail.code;
+											retUrl = `/citizen/appointmant/schedule-appointment/slot-booking/` + this.form.getRawValue().serviceFormId + `/` + this.form.getRawValue().serviceDetail.code + '?apiCode='+ data.serviceCode + '&id=' + data.serviceFormId;
+										} else {
+											retUrl = retUrl + '?apiCode='+ data.serviceCode + '&id=' + data.serviceFormId;
 										}
 
 										let payData = this.commonService.storePaymentInfo(err.error.data, retUrl, retAfterPayment);
@@ -500,8 +501,14 @@ export class ActionBarComponent implements OnInit, OnChanges {
 
 
 				this.formService.createPayment(offlinePayData).subscribe(resData => {
+					const payRespData = resData.data.responseData;
 					if(resData.paymentStatus = "Paid"){
-						this.router.navigateByUrl(retUrl);
+						this.formService.submitFormData(payRespData.serviceFormId).subscribe(res => {
+							if (res) {
+								this.router.navigateByUrl(retUrl);
+							}
+						});
+						
 					}
 				}, error => {
 					this.openErrorAlert(error);

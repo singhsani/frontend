@@ -116,6 +116,8 @@ export class MyApplicationsComponent implements OnInit,OnChanges {
 		if (this.fromOtherModule) {
 			this.dataSource.data = [];
 			if(this.inputData){
+				this.paginator.pageSize = 1;
+				this.paginator.pageIndex = 0;
 				this.dataSource.data = this.inputData;
 				this.resultsLength = this.inputData.length ;
 				this.isLoadingResults = false;
@@ -548,8 +550,14 @@ export class MyApplicationsComponent implements OnInit,OnChanges {
 
 
 				this.formService.createPayment(offlinePayData).subscribe(resData => {
+					const payRespData = resData.data.responseData;
 					if(resData.paymentStatus = "Paid"){
-						this.router.navigateByUrl(retUrl);
+						this.formService.submitFormData(payRespData.serviceFormId).subscribe(res => {
+							if (res) {
+								this.router.navigateByUrl(retUrl);
+							}
+						});
+						
 					}
 					this.getAllData()
 				}, error => {
