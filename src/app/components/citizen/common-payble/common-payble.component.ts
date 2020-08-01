@@ -9,6 +9,9 @@ import * as _ from 'lodash';
 import { SessionStorageService } from 'angular-web-storage';
 import { MyApplicationsComponent} from '../my-applications/my-applications.component'
 import { error } from 'protractor';
+import { Location } from '@angular/common';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ManageRoutes } from 'src/app/config/routes-conf';
 
 @Component({
   selector: 'app-common-payble',
@@ -40,13 +43,25 @@ export class CommonPaybleComponent implements OnInit {
     private fb: FormBuilder,
     private toaster: ToastrService,
     private commonService: CommonService,
-    private session: SessionStorageService
+    private session: SessionStorageService,
+    private route: ActivatedRoute,
+    private location: Location,
+    private router: Router
   ) {
     this.getPayableServicesList();
     this.createPayementControls();
   }
 
   ngOnInit() {
+
+    this.route.queryParams.subscribe(d => {
+      if (d.apiCode && d.id) {
+        this.printReceipt(d.apiCode, '', d.id);
+        setTimeout(() => {
+          this.location.go(this.router.url.split('?')[0]);
+        }, 3000);
+      }
+    })
 
   }
 
@@ -273,5 +288,31 @@ export class CommonPaybleComponent implements OnInit {
       console.log(error)
     })
   }
+
+  /**
+	 * This method use to application print receipt.
+	 * @param id citizen api code
+	 * @param id citizen api name
+	 * @param id citizen id
+	 */
+	printReceipt(apiCode: string, apiName: string, id: number) {
+
+		this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);
+		this.formService.printReceipt(id).subscribe(
+			receiptResponse => {
+        let sectionToPrintReceipt: any = document.getElementById('sectionToPrint');
+        let test = document.getElementById('loader')
+        debugger
+				sectionToPrintReceipt.innerHTML = receiptResponse;
+				setTimeout(() => {
+					window.print();
+				});
+			},
+			err => {
+				this.commonService.openAlert('Error!', err.error[0].message, 'error');
+			}
+		);
+	}
+
 
 }

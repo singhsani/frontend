@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, TemplateRef, Input, OnChanges } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
@@ -17,6 +17,7 @@ import { CitizenConfig } from '../citizen-config';
 import { ToastrService } from 'ngx-toastr';
 import { environment } from '../../../../environments/environment';
 import { OfflinePaymentComponent } from 'src/app/shared/components/offline-payment/offline-payment.component';
+import { Location } from '@angular/common';
 
 @Component({
 	selector: 'app-my-applications',
@@ -76,14 +77,32 @@ export class MyApplicationsComponent implements OnInit,OnChanges {
 		public commonService: CommonService,
 		private modalService: BsModalService,
 		private toastr: ToastrService,
-		private dialog: MatDialog
-	) { }
+		private dialog: MatDialog,
+		private route: ActivatedRoute,
+		private location: Location
+	) { 
+
+
+
+	}
 
 	ngOnInit() {
 		// If the user changes the sort order, reset back to the first page.
 		this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
 
 		this.getAllData();
+
+		/**
+        * Used to initiate print hook after successfull payment
+        */
+		this.route.queryParams.subscribe(d => {
+			if (d.apiCode && d.id) {
+				this.printReceipt(d.apiCode, '', d.id);
+				setTimeout(() => {
+					this.location.go(this.router.url.split('?')[0]);
+				}, 3000);
+			}
+		})
 	}
 
 	ngOnChanges(){
@@ -414,10 +433,10 @@ export class MyApplicationsComponent implements OnInit,OnChanges {
 				this.router.navigateByUrl(ManageRoutes.getFullRoute("CITIZENMYAPPS"));
 			},
 			err => {
-				let retUrl: string = '/citizen/my-applications';
+				let retUrl: string = '/citizen/my-applications?apiCode='+ apiCode + '&id=' + id  ;
 				let retAfterPayment: string = environment.returnUrl;
 			    if(this.fromOtherModule){
-					retUrl = '/citizen/payable-services'
+					retUrl = '/citizen/payable-services?apiCode='+ apiCode + '&id=' + id;
 				}
 
 				if (err.status === 402) {
