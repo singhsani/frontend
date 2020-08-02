@@ -417,6 +417,16 @@ export class FormsActionsService {
 	getLoiPaymentDetails(appId) {
 		return this.http.get(`api/loidetail/list?appId=${appId}`);
 	}
+
+	saveOfflinePayment(serviceId,paymentData) {
+		this.requestURL = `api/form/${this.apiType}/offlinePayment/${serviceId}`;
+		return this.http.post(this.requestURL, paymentData);
+	}
+
+	getCitizenForm(reqData){
+		this.requestURL = `api/user/${this.apiType}`;
+		return this.http.post(this.requestURL, reqData);
+	}
 	saveCustomCallApi(apiName: any, noofCopies: any, asonDate: any, occupierId: any) {
 		this.requestURL = `api/form/${this.apiType}/${apiName}?noofCopies=${noofCopies}&asonDate=${asonDate}&occupierId=${occupierId}`;
 		return this.http.post(this.requestURL, {});

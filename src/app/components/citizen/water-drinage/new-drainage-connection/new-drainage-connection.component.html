@@ -106,9 +106,9 @@
 
 					<div class="row">
 						<mat-form-field class="col-md-6">
-							<input matInput OnlyNumber required maxlength="10" formControlName="mobileNo"
+							<input matInput OnlyNumber required maxlength="10" formControlName="ownerMobileNo"
 								placeholder="{{'mobile_no' | translate:translateKey}}">
-							<control-messages [control]="newDrainageConnectionForm.get('mobileNo')">
+							<control-messages [control]="newDrainageConnectionForm.get('ownerMobileNo')">
 							</control-messages>
 						</mat-form-field>
 						<mat-form-field class="col-md-6">
@@ -348,10 +348,10 @@
 				</div>
 				<div class="row">
 					<mat-form-field class="col-md-6">
-						<!-- <textarea matInput   maxlength="10" formControlName="propertyAddress"
+						<!-- <textarea matInput   maxlength="10" formControlName="correspondenceAddress"
 							placeholder="{{'Property Address' | translate:translateKey}}"></textarea> -->
 							<textarea matInput  placeholder="{{'property_Address' | translate:translateKey}}"
-							type="text" formControlName="propertyAddress"></textarea>
+							type="text" formControlName="correspondenceAddress"></textarea>
 						
 					</mat-form-field>
 					<mat-form-field *ngIf="ispostalAddressDiff" class="col-md-6">

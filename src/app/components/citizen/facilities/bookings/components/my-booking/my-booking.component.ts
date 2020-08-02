@@ -22,7 +22,9 @@ export class MyBookingComponent implements OnInit {
 	@ViewChild(MatPaginator) paginator: MatPaginator;
 	@ViewChild(MatSort) sort: MatSort;
 	@ViewChild("templateResponseModel") templateResponseModel: TemplateRef<any>;
+	@ViewChild("templateResponseModelRefundDetails") templateResponseModelRefundDetails: TemplateRef<any>;
 	@ViewChild("paymentGateway") paymentGateway: any;
+	@ViewChild('closebutton') closebutton;
 	/**
 	 * Cancel Booking Language Translation key.
 	 */
@@ -30,6 +32,7 @@ export class MyBookingComponent implements OnInit {
 
 	searchBookingsForm: FormGroup;
 	bookingList = new MatTableDataSource();
+	refundBankDetailsForm: FormGroup;
 
 	/**
 	 * Common for all bookings
@@ -62,6 +65,11 @@ export class MyBookingComponent implements OnInit {
 
 	refNumber: string = null;
 	cancellationType: string = null;
+  ifscCode: string = null;
+	bankLists: Array<any> = [];
+	accountNo : string = null;
+	accountHolderName : string = null;
+	bankName : string = null;
 
 	/**
 	 * pagination instance variables.
@@ -102,6 +110,8 @@ export class MyBookingComponent implements OnInit {
 			refNumber: null
 		});
 		this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
+
+		this.refundBankDetailsFormController();
 
 		/**
 	 * Used to initiate print hook after successfull payment
@@ -212,24 +222,11 @@ export class MyBookingComponent implements OnInit {
 	 */
 	RequestCancel() {
 		if (this.CancelRequestList.length && this.refNumber) {
-
-			let object = {
-				refNumber: this.refNumber,
-				appointments: this.CancelRequestList,
-				cancellationType: this.bookingConstant.BY_CITIZEN
-			}
-
 			this.commonService.confirmAlert('Are you sure to cancel?', "You won't be able to revert this!", 'warning', '', performDelete => {
 				this.modalReqRef.hide();
-				this.bookingService.cancelTownHall(object).subscribe(res => {
-					this.CancelResponseList = res.data.detail;
-					this.getAllBooking();
-					this.modalResRef = this.modalService.show(this.templateResponseModel, Object.assign({ ignoreBackdropClick: true }, { class: 'gray modal-lg customWidth' }))
-				}, err => {
-					this.toster.error(err.error.message);
-				});
+				// show model of refund bank details
+				this.refundBankDetails(this.templateResponseModelRefundDetails, this.refNumber);
 			});
-
 		} else {
 			this.toster.error("Please Select Slots");
 		}
@@ -277,7 +274,7 @@ export class MyBookingComponent implements OnInit {
 	}
 
 	/**
-	 * Used to get difference 
+	 * Used to get difference
 	 * @param date- date
 	 */
 	diffr(date) {
@@ -382,4 +379,74 @@ export class MyBookingComponent implements OnInit {
 		copytext.select();
 		document.execCommand('copy');
 	}
+	/*
+	 * This method is used for SHOW Refund Bank Details.
+	 */
+	refundBankDetails(template: TemplateRef<any>, refNumber: string){
+	  this.refNumber = refNumber;
+	  this.setPropertyValues();
+	  this.bookingLookups();
+	  this.modalResRef = this.modalService.show(template);
+	}
+	/*
+	 * For update Townhall Refund with cancel status
+	 */
+	submitRefundBankDetails(){
+	if(this.refundBankDetailsForm.valid){
+	  let object = {
+            refNumber: this.refNumber,
+            appointments: this.CancelRequestList,
+            cancellationType: this.bookingConstant.BY_CITIZEN,
+            ifscCode : this.refundBankDetailsForm.value.ifscCode,
+            accountNo : this.refundBankDetailsForm.value.accountNumber,
+            accountHolderName : this.refundBankDetailsForm.value.applicantName,
+            //bankName : this.refundBankDetailsForm.value.bank
+
+        }
+        this.bookingService.cancelTownHall(object).subscribe(res => {
+          this.CancelResponseList = res.data.detail;
+          this.getAllBooking();
+          //this.modalResRef = this.modalService.show(this.templateResponseModel, Object.assign({ ignoreBackdropClick: true }, { class: 'gray modal-lg customWidth' }))
+          this.modalResRef.hide();
+          this.commonService.successAlert("Success", "SuccessFully Cancel", "success");
+        }, err => {
+          this.toster.error(err.error.message);
+        });
+	}else{
+	  this.commonService.openAlert('Field Error', this.bookingConstant.ALL_FEILD_REQUIRED_MESSAGE, 'warning');
+	}
+	}
+
+  /*
+   * form controller for refund detail bank.
+   */
+	refundBankDetailsFormController(){
+	  this.refundBankDetailsForm = this.fb.group({
+                refNumber: [{ value: '', disabled: true }, Validators.required],
+                ifscCode: ['', Validators.required],
+                accountNumber : ['', Validators.required],
+                applicantName : ['', Validators.required],
+                bank :['', Validators.required]
+            });
+	}
+  /*
+   * set value in form for Townhall Refund
+   */
+	setPropertyValues(){
+      this.refundBankDetailsForm.get('refNumber').setValue(this.refNumber);
+      this.bookingService.searchByRefNumber(this.refNumber).subscribe(resp => {
+        this.refundBankDetailsForm.get('ifscCode').setValue(resp['data']['ifscCode']);
+        this.refundBankDetailsForm.get('accountNumber').setValue(resp['data']['accountNo']);
+        this.refundBankDetailsForm.get('applicantName').setValue(resp['data']['accountHolderName']);
+      })
+    }
+
+    /**
+    	 * Method is used to get all lookups for Townhall Refund
+    	 */
+    	bookingLookups() {
+    		this.bookingService.getDataFromLookups().subscribe(resp => {
+    			this.bankLists = resp.BANK;
+    		});
+    	}
 }

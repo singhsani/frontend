@@ -15,7 +15,8 @@ import { AppService } from '../../../../core/services/citizen/app-services/app.s
 export class HospitalForgotPasswordComponent implements OnInit {
 
 	forgotPassForm: FormGroup;
-
+	loading: boolean = false;
+	issingupbtn : boolean = false;
 	/**
 	 * 
 	 * @param appService - Declare App Service property.
@@ -46,13 +47,21 @@ export class HospitalForgotPasswordComponent implements OnInit {
 	*/
 	onForgotPassword(formVals: FormGroup) {
 
+		if (this.forgotPassForm.valid) {
+			this.loading = true;
+			this.issingupbtn = true;
+		}
 		this.appService.forgotPassword(formVals).subscribe(
 			res => {
 				/**
 				 * Redirect to reset password
 				 */
+				this.loading = false;
+				this.issingupbtn = false;
 				this.router.navigate(['/hospital/auth/reset-password'], { queryParams: { uniqueId: res.data.uniqueId, code: res.data.cellOtp } });
 			}, err => {
+				this.loading = false;
+				this.issingupbtn = false;
 				this.toaster.error(err.error[0].code);
 			});
 	}

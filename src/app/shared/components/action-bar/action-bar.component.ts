@@ -12,6 +12,7 @@ import { SessionStorageService } from 'angular-web-storage';
 import { environment } from '../../../../environments/environment';
 import { MatDialogConfig, MatDialog } from '@angular/material';
 import { ApplicantDetailsComponent } from '../applicant-details/applicant-details.component';
+import { OfflinePaymentComponent } from '../offline-payment/offline-payment.component';
 
 @Component({
 	selector: 'app-action-bar',
@@ -132,11 +133,11 @@ export class ActionBarComponent implements OnInit, OnChanges {
 	getUserDetailsAndSubmit() {
 		if (this.form.valid && this.commonService.isGuestUser()) {
 			this.openDialogBox().subscribe(details => {
-				if(details){
+				if (details) {
 					this.setUserData(details)
 					this.onSubmit()
 				}
-			
+
 			})
 
 		} else {
@@ -149,10 +150,24 @@ export class ActionBarComponent implements OnInit, OnChanges {
 	 * This method is use for submit form using API
 	 */
 	onSubmit() {
+	
 		this.isSubmitBtnDisabled = true;
 		var count = 1;
 		this.markFormGroupTouched(this.form);
+		
 
+		if (this.commonService.fromAdmin() || this.commonService.isGuestUser()) {
+			// TODO save contact number in java
+			for (const field in this.form.controls) { // 'field' is a string
+				if (!this.form.get(field).valid) {
+					console.log(field);
+				}; // 'control' is a FormControl  
+
+			}
+			if(!this.form.get("contactNo").valid){
+				this.form.get("contactNo").setValue("1234567890");
+			}
+		}
 
 
 		if (this.form.valid) {
@@ -186,12 +201,12 @@ export class ActionBarComponent implements OnInit, OnChanges {
 									this.isSubmitBtnDisabled = false;
 									this.isBtnsDisabled = false;
 									this.form.disable();
-									if(this.commonService.isGuestUser()){
+									if (this.commonService.isGuestUser()) {
 										this.router.navigateByUrl(ManageRoutes.getFullRoute("CITIZENDASHBOARD"));
-									}else{
+									} else {
 										this.router.navigateByUrl(ManageRoutes.getFullRoute("CITIZENMYAPPS"));
 									}
-									
+
 								},
 								err => {
 									this.isSubmitBtnDisabled = false;
@@ -200,13 +215,21 @@ export class ActionBarComponent implements OnInit, OnChanges {
 
 									if (err.status === 402) {
 										let moduleWithAppointment = this.form.getRawValue().serviceDetail.appointmentRequired;
+										const data = err.error.data;
 										if (moduleWithAppointment) {
-											retUrl = `/citizen/appointmant/schedule-appointment/slot-booking/` + this.form.getRawValue().serviceFormId + `/` + this.form.getRawValue().serviceDetail.code;
+											retUrl = `/citizen/appointmant/schedule-appointment/slot-booking/` + this.form.getRawValue().serviceFormId + `/` + this.form.getRawValue().serviceDetail.code + '?apiCode='+ data.serviceCode + '&id=' + data.serviceFormId;
+										} else {
+											retUrl = retUrl + '?apiCode='+ data.serviceCode + '&id=' + data.serviceFormId;
 										}
 
 										let payData = this.commonService.storePaymentInfo(err.error.data, retUrl, retAfterPayment);
-										let html =
-											`
+                                        
+										if (this.commonService.fromAdmin()) {
+											this.openOfflinePaymentComponent(payData,retUrl);
+										} else {
+
+											let html =
+												`
 										<div class="text-center">
 											<h2>Total Fee Pay</h2>
 											<div class="payAmount">
@@ -216,42 +239,45 @@ export class ActionBarComponent implements OnInit, OnChanges {
 										</div>
 										`
 
-										this.commonService.commonAlert('Payment Details', '', 'info', 'Make Payment!', false, html, cb => {
-											this.paymentGateway.setPaymentDetailsFromActionBar(payData);
-											this.paymentGateway.openModel();
-											// this.formService.createTokenforServicePayment(payData).subscribe(resp => {
-											// 	window.open(resp.data, "_self");
-											// }, err => {
-											// 	this.toastr.error(err.error.message);
-											// })
+											this.commonService.commonAlert('Payment Details', '', 'info', 'Make Payment!', false, html, cb => {
+												this.paymentGateway.setPaymentDetailsFromActionBar(payData);
+												this.paymentGateway.openModel();
+												// this.formService.createTokenforServicePayment(payData).subscribe(resp => {
+												// 	window.open(resp.data, "_self");
+												// }, err => {
+												// 	this.toastr.error(err.error.message);
+												// })
 
-										}, rj => {
-											this.form.get('canEdit').setValue(false);
-											this.isSubmitBtnDisabled = false;
-											this.isBtnsDisabled = false;
-											this.form.disable();
+											}, rj => {
+												this.form.get('canEdit').setValue(false);
+												this.isSubmitBtnDisabled = false;
+												this.isBtnsDisabled = false;
+												this.form.disable();
+												return;
+
+												// let errHtml = `			
+												// 	<div class="alert alert-danger">
+												// 		Please Complete Payment, Otherwise the application will be considered as in-complete
+												// 	</div>`
+												// this.commonService.commonAlert("Application Incomplete", "", 'warning', 'Make Payment!', false, errHtml, ccb => {
+												// 	this.formService.createTokenforServicePayment(payData).subscribe(resp => {
+												// 		window.open(resp.data, "_self");
+												// 	}, err => {
+												// 		this.toastr.error(err.error.message);
+												// 	})
+
+												// }, arj => {
+												// 	this.form.get('canEdit').setValue(false);
+												// 	this.isSubmitBtnDisabled = false;
+												// 	this.isBtnsDisabled = false;
+												// 	this.form.disable();
+												// })
+												// return;
+											});
 											return;
 
-											// let errHtml = `			
-											// 	<div class="alert alert-danger">
-											// 		Please Complete Payment, Otherwise the application will be considered as in-complete
-											// 	</div>`
-											// this.commonService.commonAlert("Application Incomplete", "", 'warning', 'Make Payment!', false, errHtml, ccb => {
-											// 	this.formService.createTokenforServicePayment(payData).subscribe(resp => {
-											// 		window.open(resp.data, "_self");
-											// 	}, err => {
-											// 		this.toastr.error(err.error.message);
-											// 	})
+										}
 
-											// }, arj => {
-											// 	this.form.get('canEdit').setValue(false);
-											// 	this.isSubmitBtnDisabled = false;
-											// 	this.isBtnsDisabled = false;
-											// 	this.form.disable();
-											// })
-											// return;
-										});
-										return;
 									} else {
 										this.commonService.openAlert("Error", "Error Occured for final submit : " + err.error[0].message, "warning")
 									}
@@ -419,21 +445,21 @@ export class ActionBarComponent implements OnInit, OnChanges {
 
 	}
 
-	setUserData(details){
+	setUserData(details) {
 		this.applicantName = details.applicantName;
 		this.mobileNo = details.cellNo;
 		this.email = details.email
 		this.form.addControl('applicantName', new FormControl('', Validators.required));
 		this.form.get('applicantName').setValue(this.applicantName);
-		if(this.form.get('mobileNo')){
+		if (this.form.get('mobileNo')) {
 			this.form.get('mobileNo').setValue(this.mobileNo);
-		}else if(this.form.get('contactNo')){
+		} else if (this.form.get('contactNo')) {
 			this.form.get('contactNo').setValue(this.mobileNo);
-		}else{
+		} else {
 			this.form.addControl('mobileNo', new FormControl('', Validators.required));
 			this.form.get('mobileNo').setValue(this.mobileNo);
 		}
-		
+
 		this.form.get('email').setValue(this.email)
 	}
 
@@ -441,11 +467,11 @@ export class ActionBarComponent implements OnInit, OnChanges {
 		console.log("Action Bar Component")
 		if (this.form.valid && this.commonService.isGuestUser()) {
 			this.openDialogBox().subscribe(details => {
-				if(details){
+				if (details) {
 					this.setUserData(details);
 					this.payAndScheduleAppointment();
 				}
-			
+
 			})
 
 		} else {
@@ -453,5 +479,56 @@ export class ActionBarComponent implements OnInit, OnChanges {
 		}
 	}
 
+
+	openOfflinePaymentComponent(payData,retUrl) {
+		const dialogConfig = new MatDialogConfig();
+		const data = { payData: payData }
+		dialogConfig.disableClose = true;
+		dialogConfig.autoFocus = true;
+		dialogConfig.data = data;
+		dialogConfig.width = "60%"
+		const dialogRef = this.dialog.open(OfflinePaymentComponent, dialogConfig);
+
+		dialogRef.afterClosed().subscribe(offlinePayData => {
+			if (offlinePayData) {
+				offlinePayData.refNumber = this.form.get("uniqueId").value;
+				offlinePayData.response = payData.response;
+				offlinePayData.paymentStatus = "SUCCESS",
+				offlinePayData.transactionId =  payData.transactionId,
+				offlinePayData.payableServiceType = payData.serviceCode,
+				offlinePayData.amount = payData.amount;
+				offlinePayData.payGateway = "OFFLINE"
+
+
+				this.formService.createPayment(offlinePayData).subscribe(resData => {
+					const payRespData = resData.data.responseData;
+					if(resData.paymentStatus = "Paid"){
+						this.formService.submitFormData(payRespData.serviceFormId).subscribe(res => {
+							if (res) {
+								this.router.navigateByUrl(retUrl);
+							}
+						});
+						
+					}
+				}, error => {
+					this.openErrorAlert(error);
+				})
+			}
+		}, error => {
+			this.openErrorAlert(error);
+		})
+
+
+
+	}
+
+	openErrorAlert(error){
+		if(error & error.error[0]){
+			this.commonService.openAlert("Error", "Error Occured for final submit : "
+					 + error.error[0].message, "warning");
+		}else{
+			this.commonService.openAlert("Error", "Something went wrong","warning");
+		}
+	}
 
 }

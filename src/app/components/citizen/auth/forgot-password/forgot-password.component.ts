@@ -7,6 +7,7 @@ import { SessionStorageService } from 'angular-web-storage';
 import { ValidationService } from './../../../../shared/services/validation.service';
 import { AppService } from '../../../../core/services/citizen/app-services/app.service';
 import { ManageRoutes } from '../../../../config/routes-conf';
+import { CommonService } from 'src/app/shared/services/common.service';
 
 @Component({
 	selector: 'app-forgot-password',
@@ -16,7 +17,10 @@ import { ManageRoutes } from '../../../../config/routes-conf';
 export class ForgotPasswordComponent implements OnInit {
 
 	forgotPassForm: FormGroup;
+	isValidFlag: boolean = false;
+	loading: boolean = false;
 	manageRoutes: any = ManageRoutes;
+	issingupbtn : boolean = false;
 
 	/**
 	 * 
@@ -29,6 +33,7 @@ export class ForgotPasswordComponent implements OnInit {
 		private toaster: ToastrService,
 		private route: ActivatedRoute,
 		private router: Router, 
+		private commonService: CommonService,
 		private appService: AppService
 	) {
 
@@ -48,15 +53,26 @@ export class ForgotPasswordComponent implements OnInit {
 	*/
 	onForgotPassword(formVals: FormGroup) {
 
+		
+		if (this.forgotPassForm.valid) {
+			this.loading = true;
+			this.issingupbtn = true;
 		this.appService.forgotPassword(formVals).subscribe(
 			res => {
+				this.loading = false;
 				/**
 				 * Redirect to reset password
 				 */
+				this.commonService.successAlert("Success", "For OTP and reset link update you can check your registered mail ID and Mobile number. Thank you.", "success");
 				this.router.navigate([ManageRoutes.getFullRoute('CITIZENAUTHRESETPASS')], { queryParams: { uniqueId: res.data.uniqueId, code: res.data.cellOtp } });
 			}, err => {
+				this.loading = false;
+				this.issingupbtn = false;
 				this.toaster.error(err.error[0].code);
-			});
+			})
+		} else {
+			this.isValidFlag = true;
+		};
 	}
 
 }

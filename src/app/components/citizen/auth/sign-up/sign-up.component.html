@@ -48,8 +48,9 @@
 		</div>
 
 		<div class="text-center pt-1">
-			<button type="submit" mat-raised-button color="primary" [disabled]="issingupbtn"[disabled]="regForm.invalid" class="width150">
-				Sign up
+			<button type="submit" mat-raised-button color="primary" [disabled]="issingupbtn" [disabled]="regForm.invalid" class="width150">
+				Sign up  &nbsp;
+                <img *ngIf="loading" [class.disabled]="loading" src="assets/images/loader.gif" />
 			</button>
 		</div>
 		<div class="text-center pt-2">

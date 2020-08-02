@@ -20,6 +20,9 @@ export class HospitalRegisterComponent implements OnInit {
 	manageRoutes: any = ManageRoutes;
 	arrHospitalType: any;
 
+	issingupbtn : boolean = false;
+	loading: boolean = false;
+
 	/**
 	 * Constructor to declare defualt propeties of class
 	 * @param appService - Declare App Service property.
@@ -97,14 +100,22 @@ export class HospitalRegisterComponent implements OnInit {
 	 */
 	onSignUp(formVals: FormGroup) {
 
+		if (this.regForm.valid) {
+			this.loading = true;
+			this.issingupbtn = true;
+		}
 		this.appService.registerUser(formVals.getRawValue()).subscribe(
 			res => {
+				this.loading = false;
+				this.issingupbtn = false;
 				// this.toster.success("Your application for hospital registration is submitted to Vadodara Municipal Corporation Health Department. For more update you can check your registered mail ID. Thank you for the Registration");
 				this.commonService.openAlert("Success", "Your application for hospital registration is submitted to Vadodara Municipal Corporation Health Department. For more update you can check your registered mail ID. Thank you for the Registration", "success");
 				this.regForm.reset();
 				// this.router.navigate(['hospital/auth/login']);
 			},
 			error => {
+				this.loading = false;
+				this.issingupbtn = false;
                 if (error.error && error.error.length) {
                   this.commonService.openAlert("Warning", error.error[0].message, "warning");
                 }

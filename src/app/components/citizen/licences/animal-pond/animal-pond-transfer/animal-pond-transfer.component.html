@@ -173,8 +173,8 @@
 					</div>
 				</div>
 				<div class="row">
-					<h2>{{'business_address' | translate:translateKey}}</h2>
-					<app-address #temporaryAddressEstablishment [requiredFeilds]="true"
+					 <h2>{{'business_address' | translate:translateKey}}</h2>
+					<app-address [isDisplayGujFields]="true" #temporaryAddressEstablishment [requiredFeilds]="true"
 						[addressFormGroup]="animalPondTransferForm.get('businessAddress')"></app-address>
 				</div>
 
