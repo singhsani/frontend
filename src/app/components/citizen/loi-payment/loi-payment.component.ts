@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, RoutesRecognized } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormArray, ValidatorFn } from '@angular/forms';
-import { MatTableDataSource, MatPaginator } from '@angular/material';
+import { MatTableDataSource, MatPaginator, MatDialogConfig, MatDialog } from '@angular/material';
 
 import { FormsActionsService } from '../../../core/services/citizen/data-services/forms-actions.service';
 import { CommonService } from '../../../shared/services/common.service';
@@ -12,6 +12,7 @@ import { ToastrService } from 'ngx-toastr';
 import { environment } from '../../../../environments/environment';
 import { SelectionModel } from '@angular/cdk/collections';
 import { SessionStorageService } from 'angular-web-storage';
+import { OfflinePaymentComponent } from 'src/app/shared/components/offline-payment/offline-payment.component';
 
 
 @Component({
@@ -34,6 +35,7 @@ export class LoiPaymentComponent implements OnInit {
 	filterData: any;
 	sum = 0;
 	loiRecords: any = [];
+	returnUrl : String = '';
 
 	constructor(
 		private formService: FormsActionsService,
@@ -42,12 +44,20 @@ export class LoiPaymentComponent implements OnInit {
 		private commonService: CommonService,
 		private toastr: ToastrService,
 		private route: ActivatedRoute,
+		private dialog: MatDialog,
 	) {
 
 		this.route.paramMap.subscribe(param => {
 			this.uniqueId = param.get('uniqueId');
 			this.id = Number(param.get('id'));
 			this.code = param.get('code');
+		});
+
+		this.router.events
+		.filter(e => e instanceof RoutesRecognized)
+		.pairwise()
+		.subscribe((event: any[]) => {
+		  this.returnUrl = event[0].urlAfterRedirects;
 		});
 	}
 
@@ -97,7 +107,10 @@ export class LoiPaymentComponent implements OnInit {
 				this.router.navigateByUrl(ManageRoutes.getFullRoute("CITIZENMYAPPS"));
 			},
 			err => {
-				let retUrl: string = '/citizen/my-applications';
+				let retUrl = 'citizen/my-applications';
+				if(this.returnUrl && this.returnUrl != ""){
+					retUrl = this.returnUrl + '?apiCode='+ apiCode + '&id=' + id;
+				}
 				let retAfterPayment: string = environment.returnUrl;
 
 				if (err.status === 402) {
@@ -114,16 +127,73 @@ export class LoiPaymentComponent implements OnInit {
 						<p>Rupees in words</p>
 					</div>
 					`
-					this.commonService.commonAlert('Payment Details', '', 'info', 'Make Payment!', false, html, cb => {
-						this.paymentGateway.setPaymentDetailsFromActionBar(payData);
-						this.paymentGateway.openModel();
-
-					}, rj => {
-					});
-					return;
+					if (this.commonService.fromAdmin()) {
+						this.openOfflinePaymentComponent(payData,retUrl);
+					} else {
+						this.commonService.commonAlert('Payment Details', '', 'info', 'Make Payment!', false, html, cb => {
+							this.paymentGateway.setPaymentDetailsFromActionBar(payData);
+							this.paymentGateway.openModel();
+	
+						}, rj => {
+						});
+						return;
+					}
+					
 				} else {
 					this.commonService.openAlert("Error", "Error Occured for final submit : " + err.error[0].message, "warning")
 				}
 			});
+	}
+
+
+	openOfflinePaymentComponent(payData,retUrl) {
+		const dialogConfig = new MatDialogConfig();
+		const data = { payData: payData }
+		dialogConfig.disableClose = true;
+		dialogConfig.autoFocus = true;
+		dialogConfig.data = data;
+		dialogConfig.width = "60%"
+		const dialogRef = this.dialog.open(OfflinePaymentComponent, dialogConfig);
+
+		dialogRef.afterClosed().subscribe(offlinePayData => {
+			if (offlinePayData) {
+				offlinePayData.refNumber = payData.refNumber;
+				offlinePayData.response = payData.response;
+				offlinePayData.paymentStatus = "SUCCESS",
+				offlinePayData.transactionId =  payData.transactionId,
+				offlinePayData.payableServiceType = payData.serviceCode,
+				offlinePayData.amount = payData.amount;
+				offlinePayData.payGateway = "OFFLINE"
+
+
+				this.formService.createPayment(offlinePayData).subscribe(resData => {
+					const payRespData = resData.data.responseData;
+					if(resData.paymentStatus = "Paid"){
+						this.formService.submitFormData(payRespData.serviceFormId).subscribe(res => {
+							if (res) {
+								this.router.navigateByUrl(retUrl);
+							}
+						});
+						
+					}
+				}, error => {
+					this.openErrorAlert(error);
+				})
+			}
+		}, error => {
+			this.openErrorAlert(error);
+		})
+
+
+
+	}
+
+	openErrorAlert(error){
+		if(error & error.error[0]){
+			this.commonService.openAlert("Error", "Error Occured for final submit : "
+					 + error.error[0].message, "warning");
+		}else{
+			this.commonService.openAlert("Error", "Something went wrong","warning");
+		}
 	}
 }

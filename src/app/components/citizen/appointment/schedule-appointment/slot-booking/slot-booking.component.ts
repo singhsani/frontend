@@ -11,6 +11,7 @@ import * as _ from 'lodash';
 import { AppointmentServices } from '../../appointment.service';
 import { FormsActionsService } from '../../../../../core/services/citizen/data-services/forms-actions.service';
 import { AppointmentConfig } from '../../appointment-config';
+import { Location } from '@angular/common';
 
 
 
@@ -80,6 +81,7 @@ export class SlotBookingComponent implements OnInit {
 		private router: Router,
 		private modalService: BsModalService,
 		private commonService: CommonService,
+		private location: Location
 		// private formService: FormsActionsService
 	) {
 		this.controlName();
@@ -106,6 +108,18 @@ export class SlotBookingComponent implements OnInit {
 			this.getResources();
 			this.appointmentList();
 		}
+
+		/**
+        * Used to initiate print hook after successfull payment
+        */
+	   this.route.queryParams.subscribe(d => {
+		if (d.apiCode && d.id) {
+			this.printReceipt(d.apiCode, '', d.id);
+			setTimeout(() => {
+				this.location.go(this.router.url.split('?')[0]);
+			}, 3000);
+		}
+	})
 	}
 
 	/**
@@ -326,4 +340,28 @@ export class SlotBookingComponent implements OnInit {
 	properTime(time: string) {
 		return moment(time).format("hh:mm A");
 	}
+
+	/**
+	 * This method use to application print receipt.
+	 * @param id citizen api code
+	 * @param id citizen api name
+	 * @param id citizen id
+	 */
+	printReceipt(apiCode: string, apiName: string, id: number) {
+
+		this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);
+		this.formService.printReceipt(id).subscribe(
+			receiptResponse => {
+				let sectionToPrintReceipt: any = document.getElementById('sectionToPrint');
+				sectionToPrintReceipt.innerHTML = receiptResponse;
+				setTimeout(() => {
+					window.print();
+				});
+			},
+			err => {
+				this.commonService.openAlert('Error!', err.error[0].message, 'error');
+			}
+		);
+	}
+
 }
