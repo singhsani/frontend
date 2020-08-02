@@ -423,8 +423,12 @@ export class FormsActionsService {
 		return this.http.post(this.requestURL, paymentData);
 	}
 
-	getCitizenForm(reqData){	
+	getCitizenForm(reqData){
 		this.requestURL = `api/user/${this.apiType}`;
 		return this.http.post(this.requestURL, reqData);
+	}
+	saveCustomCallApi(apiName: any, noofCopies: any, asonDate: any, occupierId: any) {
+		this.requestURL = `api/form/${this.apiType}/${apiName}?noofCopies=${noofCopies}&asonDate=${asonDate}&occupierId=${occupierId}`;
+		return this.http.post(this.requestURL, {});
 	}
 }

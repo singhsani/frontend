@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { ExtractPropertyDataSharingService } from '../../Services/extract-property-data-sharing.service';
 import { ExtractPropertyService } from '../../Services/extract-property.service';
 import { AlertService } from 'src/app/vmcshared/Services/alert.service';
@@ -9,12 +9,19 @@ import { MatTableDataSource, MatSort } from '@angular/material';
 import { PaymentDataSharingService } from 'src/app/vmcshared/component/payment/payment-data-sharing.service';
 import { Constants } from 'src/app/vmcshared/Constants';
 import { CommonService } from 'src/app/vmcshared/Services/common-service';
-
+import { FormsActionsService } from 'src/app/core/services/citizen/data-services/forms-actions.service';
+import {CommonService as CommonNascentService} from '../../../../../../../shared/services/common.service';
+import { ManageRoutes } from 'src/app/config/routes-conf';
+import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
+import { SelectPaymentGatewayPropertyComponent } from 'src/app/vmcshared/component/select-payment-gateway-property/select-payment-gateway-property.component';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-extract-property-table',
   templateUrl: './extract-property-table.component.html',
-  styleUrls: ['./extract-property-table.component.scss']
+  styleUrls: ['./extract-property-table.component.scss'],
+  providers:[DatePipe]
 })
 export class ExtractPropertyTableComponent implements OnInit {
 
@@ -32,14 +39,21 @@ export class ExtractPropertyTableComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   detailOutstandingButtonText = "Show Detail";
   isShowOutstandingDetail: boolean = false;
+  @ViewChild('paymentGateway') public paymentGateway: SelectPaymentGatewayPropertyComponent;
 
   constructor(private extractPropertyDataSharingService: ExtractPropertyDataSharingService,
     private extractPropertyService: ExtractPropertyService,
     private paymentDataSharingService: PaymentDataSharingService,
     private alertService: AlertService,
-    private commonService:CommonService) { }
+    private commonService:CommonService,
+    private formService: FormsActionsService,
+    private commonNascentService: CommonNascentService,
+    private router: Router,
+    private datePipe: DatePipe
+    ) { }
 
   ngOnInit() {
+    this.formService.apiType = 'extractOfProperty';
     this.extractPropertyDataSharingService.observableIsSearchByPropertyNo.subscribe((data) => {
       this.isSearchByPropertyNo = data;
     })
@@ -137,9 +151,52 @@ export class ExtractPropertyTableComponent implements OnInit {
       if (this.serviceCharge.outstandingAmount > 0) {
         this.commonService.dueToOutstandingMessage(this.selectedItem.propertyNo);
       } else if (this.serviceCharge.noofCopies > 0) {
-        this.paymentDataSharingService.updatedPamentFromOption(Constants.Payment_From_Option.Extract_Property);
-        this.paymentDataSharingService.updatedDataModel(this.serviceCharge);
-        this.extractPropertyDataSharingService.updatedIsShowForm(true);
+        // this.paymentDataSharingService.updatedPamentFromOption(Constants.Payment_From_Option.Extract_Property);
+        // this.paymentDataSharingService.updatedDataModel(this.serviceCharge);
+        // this.extractPropertyDataSharingService.updatedIsShowForm(true);
+        let formdata = formDetail.form.value;
+        let date = this.datePipe.transform(formdata.asonDate, 'yyyy-MM-dd')
+        //call save api befor submit
+        this.formService.saveCustomCallApi('saveExtractOfProperty',formdata.noofCopies, date, this.serviceCharge.occupierId).subscribe(res=> {
+          console.log('res in save is');
+          console.log(res);
+          let data = res;
+          this.formService.submitFormData(res.data.serviceFormId).subscribe(res => {
+            console.log('in res is:');
+            console.log(res);
+            if(this.commonNascentService.isGuestUser()){
+              this.router.navigateByUrl(ManageRoutes.getFullRoute("CITIZENDASHBOARD"));
+            }else{
+              this.router.navigateByUrl(ManageRoutes.getFullRoute("CITIZENMYAPPS"));
+            }
+          }, err => {
+            let retUrl: string = '/citizen/my-applications';
+            let retAfterPayment: string = environment.returnUrl;
+            if (err.status === 402) {
+              let payData = this.commonNascentService.storePaymentInfo(err.error.data, retUrl, retAfterPayment);
+              let html =
+                `
+              <div class="text-center">
+                <h2>Total Fee Pay</h2>
+                <div class="payAmount">
+                  <i class="fa fa-inr" aria-hidden="true">` + payData.amount + `</i>
+                </div>
+                <p>Rupees in words</p>
+              </div>
+              `
+              this.commonNascentService.commonAlert('Payment Details', '', 'info', 'Make Payment!', false, html, cb => {
+                this.paymentGateway.setPaymentDetailsFromActionBar(payData);
+                this.paymentGateway.openModel();
+              }, rj => {
+                return;
+              });
+            } else {
+              this.commonNascentService.openAlert("Error", "Error Occured for final submit : " + err.error[0].message, "warning")
+            }
+          });
+        }, error => {
+          this.alertService.error(error);
+        });
       } else {
         this.alertService.error('No. of Copies should be greater than zero.');
       }
