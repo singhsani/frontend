@@ -2,6 +2,17 @@
 
   <form [formGroup]="paymentsForm" autocomplete="off" ngNativeValidate novalidate>
     <div class="row">
+
+      <div formGroupName="module" class="col-md-4 ngSelect">
+        <ng-select placeholder="Select Service Module *" formControlName="code" (change)="setPayableServices($event)">
+          <ng-option *ngFor="let module of userServicesList" [value]="module.code">
+            {{module.name}}
+          </ng-option>
+        </ng-select>
+        <control-messages [control]="paymentsForm.get('module.code')"></control-messages>
+      </div>
+
+
       <div formGroupName="payableServices" class="col-md-4 ngSelect">
         <ng-select placeholder="Select Payable Service *" formControlName="code" (change)="showHideSearchable($event)">
           <ng-option *ngFor="let payservice of PayableServices" [value]="payservice.code">
