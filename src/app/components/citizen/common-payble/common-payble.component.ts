@@ -28,7 +28,8 @@ export class CommonPaybleComponent implements OnInit {
   PayableServices: Object[];
   currPaySerData: any;
   isRecordExists: boolean = false;
-  isECRCSearch: boolean = false;  
+  isECRCSearch: boolean = false;
+  userServicesList = [];  
   payModeArr: Array<any> = [
     { name: 'Net Banking', code: 'NETBANKING' }, { name: 'Debit / Credit Card banking', code: 'CARDBANKING' }
   ];
@@ -63,6 +64,8 @@ export class CommonPaybleComponent implements OnInit {
       }
     })
 
+    this.getAllServices();
+
   }
 
 	/**
@@ -73,6 +76,9 @@ export class CommonPaybleComponent implements OnInit {
       refNumber: [null, Validators.required],
       amount: 0,
       payableServices: this.fb.group({
+        code: [null, Validators.required]
+      }),
+      module: this.fb.group({
         code: [null, Validators.required]
       }),
       payMode: this.fb.group({
@@ -312,7 +318,27 @@ export class CommonPaybleComponent implements OnInit {
 				this.commonService.openAlert('Error!', err.error[0].message, 'error');
 			}
 		);
-	}
+  }
+  
+  getAllServices(){
+		this.formService.getUserServices().subscribe(
+			res => {
+				this.userServicesList = res.modules;
+			},
+			err => {
+				
+			}
+		);
+  }
+  
+
+  setPayableServices(code) {
+    const filteredModules = this.userServicesList.filter( module => module.code === code);
+    if(filteredModules.length > 0){
+      this.PayableServices = filteredModules[0].services;
+      this.paymentsForm.get('payableServices').get('code').setValue(null);
+    }
+  }
 
 
 }
