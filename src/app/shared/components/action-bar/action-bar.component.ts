@@ -225,7 +225,7 @@ export class ActionBarComponent implements OnInit, OnChanges {
 										let payData = this.commonService.storePaymentInfo(err.error.data, retUrl, retAfterPayment);
                                         
 										if (this.commonService.fromAdmin()) {
-											this.openOfflinePaymentComponent(payData,retUrl);
+											this.openOfflinePaymentComponent(payData,retUrl,data.serviceCode,data.serviceFormId);
 										} else {
 
 											let html =
@@ -480,7 +480,7 @@ export class ActionBarComponent implements OnInit, OnChanges {
 	}
 
 
-	openOfflinePaymentComponent(payData,retUrl) {
+	openOfflinePaymentComponent(payData,retUrl,apiCode,id) {
 		const dialogConfig = new MatDialogConfig();
 		const data = { payData: payData }
 		dialogConfig.disableClose = true;
@@ -505,10 +505,9 @@ export class ActionBarComponent implements OnInit, OnChanges {
 					if(resData.paymentStatus = "Paid"){
 						this.formService.submitFormData(payRespData.serviceFormId).subscribe(res => {
 							if (res) {
-								this.router.navigateByUrl(retUrl);
+								this.router.navigate([ retUrl.split('?')[0] ], { queryParams: { apiCode: apiCode, id: id } });
 							}
-						});
-						
+						});						
 					}
 				}, error => {
 					this.openErrorAlert(error);
