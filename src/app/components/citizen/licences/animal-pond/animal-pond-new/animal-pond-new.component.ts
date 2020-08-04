@@ -165,6 +165,8 @@ export class AnimalPondNewComponent implements OnInit {
 				this.requiredDocumentList();
 				// selected animal filter
 				this.getSelectedAnimal();
+				
+				this.animalPondNewForm.get('personTypeGuj').setValue(res.personType.gujName);
 			} catch (error) {
 				console.log(error.message)
 			}
@@ -223,6 +225,25 @@ export class AnimalPondNewComponent implements OnInit {
 	}
 
 	/**
+   * Gujarati Look Up Converter.
+   * @param selectedValue - selected value from dropdown
+   * @param controlName - control name of form
+   * @param lookupName - passed lookup array
+   */
+  getGujNameFromLookup(selectedValue: string, controlName: string, lookupName: Array<any>) {
+
+    if (lookupName && lookupName.length) {
+        let dataObj = lookupName.find((obj) => obj.code === selectedValue);
+        if (dataObj && dataObj.gujName) {
+          this.animalPondNewForm.get(controlName).setValue(dataObj.gujName);
+        } else {
+          this.animalPondNewForm.get(controlName).setValue('');
+        }
+      }
+
+	}
+	
+	/**
 	* Method is used to set form controls
 	* 'Guj' control is consider as a Gujarati fields
 	*/
@@ -234,6 +255,7 @@ export class AnimalPondNewComponent implements OnInit {
 			personType: this.fb.group({
 				code: [null, Validators.required]
 			}),
+			personTypeGuj : [null, [Validators.required]],
 			holderFirstName: [null, [Validators.required, Validators.maxLength(30)]],
 			holderMiddleName: [null, [Validators.required, Validators.maxLength(30)]],
 			holderLastName: [null, [Validators.required, Validators.maxLength(30)]],
