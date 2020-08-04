@@ -238,7 +238,7 @@ export class MyApplicationsComponent implements OnInit,OnChanges {
 				sectionToPrintReceipt.innerHTML = receiptResponse;
 				setTimeout(() => {
 					window.print();
-				});
+				},300);
 			},
 			err => {
 				this.commonService.openAlert('Error!', err.error[0].message, 'error');
