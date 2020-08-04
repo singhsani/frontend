@@ -307,12 +307,11 @@ export class CommonPaybleComponent implements OnInit {
 		this.formService.printReceipt(id).subscribe(
 			receiptResponse => {
         let sectionToPrintReceipt: any = document.getElementById('sectionToPrint');
-        let test = document.getElementById('loader')
-        debugger
+        debugger;
 				sectionToPrintReceipt.innerHTML = receiptResponse;
 				setTimeout(() => {
 					window.print();
-				});
+				},400);
 			},
 			err => {
 				this.commonService.openAlert('Error!', err.error[0].message, 'error');
