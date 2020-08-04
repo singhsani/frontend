@@ -99,7 +99,7 @@ export class FileUploadComponent implements OnInit {
 	 * @param event - get selected file event
 	 */
 
-	allUplaod(event){
+	all(event){
 		for(let doc of this.form.get('serviceDetail').get('serviceUploadDocuments').value){
 			this.uploadModel = doc;
 			this.selectFile(event);

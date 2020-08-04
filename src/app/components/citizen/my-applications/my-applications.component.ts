@@ -454,7 +454,7 @@ export class MyApplicationsComponent implements OnInit,OnChanges {
 					</div>
 					`
 					if (this.commonService.fromAdmin()) {
-						this.openOfflinePaymentComponent(payData,retUrl);
+						this.openOfflinePaymentComponent(payData,retUrl,apiCode,id);
 					} else {
 						this.commonService.commonAlert('Payment Details', '', 'info', 'Make Payment!', false, html, cb => {
 							// this.formService.createTokenforServicePayment(payData).subscribe(resp => {
@@ -529,7 +529,7 @@ export class MyApplicationsComponent implements OnInit,OnChanges {
 		this.router.navigate(['/citizen/loi-payments', row.uniqueId, row.id, row.serviceDetail.code]);
 	}
 
-	openOfflinePaymentComponent(payData,retUrl) {
+	openOfflinePaymentComponent(payData,retUrl,apiCode,id) {
 		const dialogConfig = new MatDialogConfig();
 		const data = { payData: payData }
 		dialogConfig.disableClose = true;
@@ -537,6 +537,7 @@ export class MyApplicationsComponent implements OnInit,OnChanges {
 		dialogConfig.data = data;
 		dialogConfig.width = "60%"
 		const dialogRef = this.dialog.open(OfflinePaymentComponent, dialogConfig);
+
 
 		dialogRef.afterClosed().subscribe(offlinePayData => {
 			if (offlinePayData) {
@@ -554,7 +555,7 @@ export class MyApplicationsComponent implements OnInit,OnChanges {
 					if(resData.paymentStatus = "Paid"){
 						this.formService.submitFormData(payRespData.serviceFormId).subscribe(res => {
 							if (res) {
-								this.router.navigateByUrl(retUrl);
+								this.router.navigate([ retUrl.split('?')[0] ], { queryParams: { apiCode: apiCode, id: id } });
 							}
 						});
 						
