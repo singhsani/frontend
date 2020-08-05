@@ -262,7 +262,7 @@ export class ShopLicNewComponent implements OnInit {
 
 			/*  */
 			attachments: [''],
-			agree:[false]
+			agree:[false, Validators.required]
 			/*  */
 		});
 		this.addMorePerson('EMPLOYER_FAMILY');
@@ -658,6 +658,7 @@ export class ShopLicNewComponent implements OnInit {
      * @param flag - flag of invalid control.
      */
 	handleErrorsOnSubmit(flag) {
+		
 		switch (true) {
 			case flag <= 21:
 				this.licenseConfiguration.currentTabIndex = 0;
@@ -679,6 +680,10 @@ export class ShopLicNewComponent implements OnInit {
 				break;
 			case flag <= 62:
 				this.licenseConfiguration.currentTabIndex = 6;
+				break;
+				case flag <= 63:
+				this.licenseConfiguration.currentTabIndex = 7;
+				this.commonService.openAlert('Feild Error', 'Should be agree with given details', 'warning');
 				break;
 			default:
 				this.licenseConfiguration.currentTabIndex = 0;
