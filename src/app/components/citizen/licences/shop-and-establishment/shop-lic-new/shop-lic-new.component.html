@@ -74,14 +74,15 @@
 					</div>
 
 					<mat-form-field class="col-md-4">
-						<input matInput OnlyNumber maxlength="12"
+						<input matInput OnlyNumber required maxlength="12"
 							placeholder="{{'aadhar_number' | translate:translateKey}}" formControlName="aadharNumber">
 					</mat-form-field>
 
 					<div class="col-md-4 ngSelect" formGroupName="applicantVimaAmountPaid">
-						<ng-select placeholder="{{'vima_amount' | translate:translateKey}}" formControlName="code"
-							(change)="shopLicNewForm.get('number').reset();setValidationReq('number')">
+						<ng-select placeholder="{{'vima_amount' | translate:translateKey}} *" formControlName="code"
+							(change)="shopLicNewForm.get('number').reset();setValidationReq('number')" required>
 							<ng-option *ngFor="let yes_no of YES_NO" [value]="yes_no.code">{{yes_no.name}}</ng-option>
+							<control-messages [control]="shopLicNewForm.get('applicantVimaAmountPaid')"></control-messages>
 						</ng-select>
 					</div>
 
