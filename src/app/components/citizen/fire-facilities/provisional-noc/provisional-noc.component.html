@@ -37,7 +37,7 @@
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace' required maxlength="100"
 						 placeholder="{{'applicant_Name' | translate:translateKey}}" formControlName="applicantName" appGujInputSource
-						 targetElement="applicantNameGuj" [form]="provisionalNocForm" style="padding-bottom:10px;">
+						 targetElement="applicantNameGuj" [form]="provisionalNocForm">
 						<control-messages [control]="provisionalNocForm.get('applicantName')"></control-messages>
 					</mat-form-field>
 					<!-- gujarati -->
@@ -51,7 +51,7 @@
 					<mat-form-field class="col-md-4">
 						<!-- <span matPrefix>+91 &nbsp;</span> -->
 						<input matInput OnlyNumber placeholder="{{'applicant_mobile' | translate:translateKey}}" 
-						 formControlName="contactNo" required maxlength="10" minlength="10" style="padding-bottom:10px;">
+						 formControlName="contactNo" required maxlength="10" minlength="10">
 						<control-messages [control]="provisionalNocForm.get('contactNo')"></control-messages>
 					</mat-form-field>
 

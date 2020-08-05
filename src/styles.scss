@@ -836,6 +836,9 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
 /* This is use for printing receipt in div start */
 #sectionToPrint{visibility:hidden; height:10px; overflow: auto;}
 
+input.gujInputCls {margin-bottom: -8px;}
+textarea.gujInputCls {margin-bottom: 0;}
+
 @media print {
 @page {margin: 0 !important; padding:0 !important;}
 .example-container.borderOne, .mainMenu, .mat-toolbar, .titleBar, mat-card, .mat-elevation-z8.borderOne, .hideOnPrint, .overlay-container,.mat-menu-panel {display: none !important;}
@@ -880,6 +883,7 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
 }
 
 .ng-dropdown-panel.ng-select-top{ bottom: initial !important;}
+.ng-dropdown-panel .ng-dropdown-panel-items {max-height: 150px !important;}
 
 .table-responsive {max-height: 400px;}
  .table thead th {border-bottom: 1px solid #dee2e6; font-size: 12px;}
