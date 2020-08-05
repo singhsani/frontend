@@ -15,14 +15,18 @@
 				</ng-template>
 
 				<div class="row">
-					<div class="col-md-2 ngSelect" formGroupName="personType">
+					<div class="col-md-4 ngSelect" formGroupName="personType">
 						<ng-select placeholder="{{'person_type' | translate:translateKey}} *" formControlName="code" (change)="getGujNameFromLookup($event,'personTypeGuj',PERSON_TYPE)">
 							<ng-option *ngFor="let type of PERSON_TYPE" [value]="type.code">{{type.name}}</ng-option>
 						</ng-select>
 						<control-messages [control]="animalPondNewForm.get('personType').get('code')">
 						</control-messages>
 					</div>
-					<mat-form-field class="col-md-2">
+					<mat-form-field class="col-md-4">
+						<input [readonly]="true" matInput type="text"  formControlName="personTypeGuj" placeholder="{{'person_type' | translate: translateKey:'gu' }}" maxlength="180" required>
+					  </mat-form-field>
+					  <div class="col-md-4"></div>
+					<mat-form-field class="col-md-4">
 						<input matInput type="text" required maxlength="30" appValidationFields
 							validationFieldsType='onlyNameWithOutSpace'
 							placeholder="{{'holder_firstname' | translate:translateKey}}"
@@ -50,10 +54,7 @@
 
 				<!-- gujarati -->
 				<div class="row">
-					<mat-form-field class="col-md-2">
-						<input [readonly]="true" matInput type="text"  formControlName="personTypeGuj" placeholder="{{'person_type' | translate: translateKey:'gu' }}" maxlength="180" required>
-					  </mat-form-field>
-					<mat-form-field class="col-md-2">
+					<mat-form-field class="col-md-4">
 						<input matInput type="text" maxlength="90" required formControlName="holderFirstNameGuj"
 							appGujInputTarget [form]="animalPondNewForm"
 							placeholder="{{ 'holder_firstname' | translate:translateKey:'gu' }}">

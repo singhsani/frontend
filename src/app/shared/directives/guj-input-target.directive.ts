@@ -20,7 +20,7 @@ export class GujInputTargetDirective {
 
 	ngOnInit(){
 		this.inputElement.style.fontFamily = 'Shruti';
-    this.inputElement.style.marginTop = '-8px';
+	    this.inputElement.style.marginBottom = '-8px';
 	}
 
 	@HostListener('change')
