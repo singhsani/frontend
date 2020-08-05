@@ -1132,8 +1132,9 @@
 					</ng-container>
 				</div>
 				<div class="row" *ngIf="shopLicNewForm.get('typeOfOrganisation').value.code">
-					<mat-checkbox class="d-block ml-4" labelPosition="after" formControlName="agree">
+					<mat-checkbox class="d-block ml-4" required labelPosition="after" formControlName="agree">
 						{{'i_agree' | translate:translateKey}} </mat-checkbox>
+						<control-messages [control]="shopLicNewForm.get('agree')"></control-messages>
 				</div>
 				<app-action-bar [uploadFiles]="uploadFilesArray" [paymentGateway]="paymentGateway"
 					[form]="shopLicNewForm" (handleErrors)="handleErrorsOnSubmit($event) "
