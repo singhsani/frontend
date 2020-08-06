@@ -1004,9 +1004,11 @@
 						</ng-container>
 					</ng-container>
 				</div>
-				<!-- <div class="row" > 
-					<mat-checkbox class="d-block ml-4" labelPosition="after" formControlName="agree">{{'i_agree' | translate:translateKey}} </mat-checkbox>
-				</div> -->
+				 <div class="row" > 
+					<mat-checkbox class="d-block ml-4" required labelPosition="after" formControlName="agree">
+						{{'i_agree' | translate:translateKey}} </mat-checkbox>
+						<control-messages [control]="shopLicRenewalForm.get('agree')"></control-messages>
+				</div> 
 				<app-action-bar [paymentGateway]="paymentGateway" [uploadFiles]="uploadFilesArray" [form]="shopLicRenewalForm"
 					(handleErrors)="handleErrorsOnSubmit($event) " (tabIndex)="licenseConfiguration.onFormTabChange($event) "
 					[stepInfo]="{step: 'final', next:7, back: 5} "></app-action-bar>
