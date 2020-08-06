@@ -912,37 +912,37 @@ export class ShopLicNewComponent implements OnInit {
 		}
 	  };
 
-	  updateServiceUploadDocument(event){
-		let array =  (<FormArray>this.shopLicNewForm.get('serviceDetail').get('serviceUploadDocuments')) ;
-		for(let i = array.length-1; i >= 0; i--) {
-            array.removeAt(i)
-        }
-		
+	updateServiceUploadDocument(event) {
+		let array = (<FormArray>this.shopLicNewForm.get('serviceDetail').get('serviceUploadDocuments'));
+		for (let i = array.length - 1; i >= 0; i--) {
+			array.removeAt(i)
+		}
+
 		switch (event) {
-            case 'SHOP_LIC_COMPANY':
+			case 'SHOP_LIC_COMPANY':
 			case 'SHOP_LIC_TRUST':
 			case 'SHOP_LIC_PARTNERSHIP':
 			case 'SHOP_LIC_BOARD':
 				const localUploadArray = [...this.serverUploadFilesArray]
-				for(let file of localUploadArray){
-					if(file['documentIdentifier'] === 'PARTNERSHIP_DEED'){
-					    file['mandatory'] = false;	
+				for (let file of localUploadArray) {
+					if (file['documentIdentifier'] === 'PARTNERSHIP_DEED') {
+						file['mandatory'] = false;
 					}
 					(<FormArray>this.shopLicNewForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.licenseConfiguration.createDocumentsGrp(file));
 				}
 				break;
 			default:
-				for(let file of this.serverUploadFilesArray){
-					if(file['documentIdentifier'] === 'PARTNERSHIP_DEED'){
-					    file['mandatory'] = true;
+				for (let file of this.serverUploadFilesArray) {
+					if (file['documentIdentifier'] === 'PARTNERSHIP_DEED') {
+						file['mandatory'] = true;
 					}
 					(<FormArray>this.shopLicNewForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.licenseConfiguration.createDocumentsGrp(file));
 				}
-				break;	
+				break;
 		}
 
 
-		
-	  }
+
+	}
 
 }
