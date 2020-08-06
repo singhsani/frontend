@@ -25,6 +25,7 @@ export class LoiPaymentComponent implements OnInit {
 	@ViewChild("paymentGateway") paymentGateway: any;
 	loiPaymentForm: FormGroup;
 	applicationNumber;
+	loiDate : any;
 	uniqueId: string;
 	id: number;
 	code: string;
@@ -69,6 +70,7 @@ export class LoiPaymentComponent implements OnInit {
 		this.formService.getLoiPaymentDetails(this.uniqueId).subscribe(res => {
 			if (res.data.length > 0) {
 				this.applicationNumber = res.data[0].applicationId;
+				this.loiDate = res.data[0].loiDate;
 				this.loiDetails = res.data;
 				this.loiRecords = this.loiDetails.filter((obj, pos, arr) => {
 					return arr.map(mapObj => mapObj["loiNumber"]).indexOf(obj["loiNumber"]) === pos;
