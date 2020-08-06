@@ -46,6 +46,10 @@ export class ShopLicNewComponent implements OnInit {
 	// required attachment array
 	public uploadFilesArray: Array<any> = [];
 
+	// attachment array from the server ;
+
+	public serverUploadFilesArray : Array<any> = [];
+
     /**
      * @param fb - Declare FormBuilder property.
      * @param validationError - Declare validation service property
@@ -111,6 +115,7 @@ export class ShopLicNewComponent implements OnInit {
 				this.getSubCategoryDropdownData(this.shopLicNewForm.get('categoryOfBusiness').value.code);
 
 
+                this.serverUploadFilesArray = res.serviceDetail.serviceUploadDocuments;
 				res.serviceDetail.serviceUploadDocuments.forEach(app => {
 					(<FormArray>this.shopLicNewForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.licenseConfiguration.createDocumentsGrp(app));
 				});
@@ -278,7 +283,6 @@ export class ShopLicNewComponent implements OnInit {
 		let organizationCategory = this.shopLicNewForm.get('typeOfOrganisation').value.code;
 		if (organizationCategory) {
 			_.forEach(this.shopLicNewForm.get('serviceDetail').get('serviceUploadDocuments').value, (value) => {
-
 
 				if (value.dependentFieldName == null && value.mandatory && value.isActive && value.requiredOnCitizenPortal) {
 					this.uploadFilesArray.push({
@@ -592,6 +596,7 @@ export class ShopLicNewComponent implements OnInit {
 	onChangeTypeOfOrganization(event) {
 
 		try {
+			this.updateServiceUploadDocument(event);
 			(<FormArray>this.shopLicNewForm.get('partnerList')).controls = [];
 			this.shopLicNewForm.get('partnerList').setValue([]);
 			this.shopLicNewForm.get('attachments').setValue([]);
@@ -906,5 +911,38 @@ export class ShopLicNewComponent implements OnInit {
 		  "appointmentRequired": false
 		}
 	  };
+
+	  updateServiceUploadDocument(event){
+		let array =  (<FormArray>this.shopLicNewForm.get('serviceDetail').get('serviceUploadDocuments')) ;
+		for(let i = array.length-1; i >= 0; i--) {
+            array.removeAt(i)
+        }
+		
+		switch (event) {
+            case 'SHOP_LIC_COMPANY':
+			case 'SHOP_LIC_TRUST':
+			case 'SHOP_LIC_PARTNERSHIP':
+			case 'SHOP_LIC_BOARD':
+				const localUploadArray = [...this.serverUploadFilesArray]
+				for(let file of localUploadArray){
+					if(file['documentIdentifier'] === 'PARTNERSHIP_DEED'){
+					    file['mandatory'] = false;	
+					}
+					(<FormArray>this.shopLicNewForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.licenseConfiguration.createDocumentsGrp(file));
+				}
+				break;
+			default:
+				for(let file of this.serverUploadFilesArray){
+					if(file['documentIdentifier'] === 'PARTNERSHIP_DEED'){
+					    file['mandatory'] = true;
+					}
+					(<FormArray>this.shopLicNewForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.licenseConfiguration.createDocumentsGrp(file));
+				}
+				break;	
+		}
+
+
+		
+	  }
 
 }
