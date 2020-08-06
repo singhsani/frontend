@@ -221,6 +221,7 @@ export class ShopLicRenewalComponent implements OnInit {
 		this.shopLicRenewalForm.get('totalWomenEmployee').enable();
 		this.shopLicRenewalForm.get('totalUnidentified').enable();
 		this.shopLicRenewalForm.get('totalEmployee').enable();
+		this.shopLicRenewalForm.get('agree').enable();
 	}
 
 	/**
@@ -406,7 +407,7 @@ export class ShopLicRenewalComponent implements OnInit {
 			licenseIssueDate: null,
 			/*  */
 			attachments: [''],
-			// agree:[false]
+			 agree:[false , Validators.required]
 			/*  */
 		});
 	}
@@ -586,6 +587,7 @@ export class ShopLicRenewalComponent implements OnInit {
      * @param flag - flag of invalid control.
     */
 	handleErrorsOnSubmit(flag) {
+		
 		switch (true) {
 			case flag <= 16:
 				this.licenseConfiguration.currentTabIndex = 0;
@@ -608,6 +610,10 @@ export class ShopLicRenewalComponent implements OnInit {
 			case flag <= 61:
 				this.licenseConfiguration.currentTabIndex = 6;
 				break;
+			case flag <= 65:
+				this.licenseConfiguration.currentTabIndex = 7;
+				this.commonService.openAlert('Feild Error', 'Should be agree with given details', 'warning');
+				break;	
 			default:
 				this.licenseConfiguration.currentTabIndex = 0;
 		}
