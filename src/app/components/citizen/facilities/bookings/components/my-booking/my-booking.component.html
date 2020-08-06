@@ -135,7 +135,7 @@
                     color="primary" (click)="openModal(templateRequestModel, element.scheduleList, element.refNumber);">
               <mat-icon title="View Booking Details" color="primary">cancel</mat-icon>
               <!--{{'details' | translate:translateKey}}-->
-              cancel booking
+              Cancel Booking
             </button>
           </div>
 
@@ -312,7 +312,7 @@
 <!-- refund bank details -->
 <ng-template #templateResponseModelRefundDetails>
   <div class="modal-header">
-    <h4 class="modal-title pull-left">Refund Bank Details</h4>
+    <h4 class="modal-title pull-left">{{'refund_bank_details' | translate:translateKey}}</h4>
     <button type="button" class="close pull-right" aria-label="Close" (click)="modalResRef.hide()">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -330,15 +330,15 @@
       <div class="row">
         <mat-form-field class="col-md-12">
           <input matInput maxlength="50" type="text"
-                 placeholder="{{'applicant_name' | translate: translateKey}}" required
-                 formControlName="applicantName">
-          <control-messages [control]="refundBankDetailsForm.get('applicantName')"></control-messages>
+                 placeholder="{{'account_holder_name' | translate: translateKey}}" required
+                 formControlName="accountHolderName">
+          <control-messages [control]="refundBankDetailsForm.get('accountHolderName')"></control-messages>
         </mat-form-field>
       </div>
       <div class="row">
         <div class="col-md-12 ngSelect">
-          <ng-select placeholder="Bank *" formControlName="bank">
-            <ng-option *ngFor="let bank of bankLists" [value]="bank.name">{{ bank.name }}</ng-option>
+          <ng-select placeholder="{{'bank_name' | translate: translateKey}}" formControlName="bank">
+            <ng-option *ngFor="let bank of bankLists" [value]="bank.code">{{ bank.name }}</ng-option>
             <control-messages [control]="refundBankDetailsForm.get('bank')"></control-messages>
           </ng-select>
         </div>
@@ -346,7 +346,7 @@
       <div class="row">
         <mat-form-field class="col-md-12">
           <input matInput maxlength="50" type="text"
-                 placeholder="{{'account_number' | translate: translateKey}}" required
+                 placeholder="{{'account_no' | translate: translateKey}}" required
                  formControlName="accountNumber">
           <control-messages [control]="refundBankDetailsForm.get('accountNumber')"></control-messages>
         </mat-form-field>
@@ -358,10 +358,10 @@
           <control-messages [control]="refundBankDetailsForm.get('ifscCode')"></control-messages>
         </mat-form-field>
       </div>
-      <div class="row">
+      <div class="row col-md-12">
         <button mat-raised-button color="primary" type="submit">
           <mat-icon>check_circle_outline</mat-icon>
-          {{'Refund Request'| translate: translateKey}}
+          {{'refund_request'| translate: translateKey}}
         </button>
       </div>
     </form>
