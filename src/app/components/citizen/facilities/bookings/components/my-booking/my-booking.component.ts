@@ -399,10 +399,10 @@ export class MyBookingComponent implements OnInit {
             cancellationType: this.bookingConstant.BY_CITIZEN,
             ifscCode : this.refundBankDetailsForm.value.ifscCode,
             accountNo : this.refundBankDetailsForm.value.accountNumber,
-            accountHolderName : this.refundBankDetailsForm.value.applicantName,
-            //bankName : this.refundBankDetailsForm.value.bank
-
+            accountHolderName : this.refundBankDetailsForm.value.accountHolderName,
+            bankCode : this.refundBankDetailsForm.value.bank
         }
+        console.log(object);
         this.bookingService.cancelTownHall(object).subscribe(res => {
           this.CancelResponseList = res.data.detail;
           this.getAllBooking();
@@ -425,7 +425,7 @@ export class MyBookingComponent implements OnInit {
                 refNumber: [{ value: '', disabled: true }, Validators.required],
                 ifscCode: ['', Validators.required],
                 accountNumber : ['', Validators.required],
-                applicantName : ['', Validators.required],
+                accountHolderName : ['', Validators.required],
                 bank :['', Validators.required]
             });
 	}
@@ -437,7 +437,7 @@ export class MyBookingComponent implements OnInit {
       this.bookingService.searchByRefNumber(this.refNumber).subscribe(resp => {
         this.refundBankDetailsForm.get('ifscCode').setValue(resp['data']['ifscCode']);
         this.refundBankDetailsForm.get('accountNumber').setValue(resp['data']['accountNo']);
-        this.refundBankDetailsForm.get('applicantName').setValue(resp['data']['accountHolderName']);
+        this.refundBankDetailsForm.get('accountHolderName').setValue(resp['data']['accountHolderName']);
       })
     }
 
