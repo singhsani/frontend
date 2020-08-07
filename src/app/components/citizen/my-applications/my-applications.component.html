@@ -88,13 +88,13 @@
                     <mat-icon>more_vert</mat-icon>
                 </button>
                 <mat-menu #menu="matMenu">
-                    <button mat-menu-item *ngIf="isQueryRaiseDisplay(row)" color="primary"
+                    <!-- <button mat-menu-item *ngIf="isQueryRaiseDisplay(row)" color="primary"
                         (click)="openModal(queryRaiseTemplate);remarksDisplayForQueryRaise(row)">
                         <mat-icon class="m-1" title="Remark">help_outline</mat-icon>
                         Remark
-                    </button>
+                    </button> -->
 
-                    <button mat-menu-item *ngIf="isDownloadLOI(row)" color="primary" (click)="getLoi(row)">
+                    <button mat-menu-item *ngIf="isDownloadDisplay(row)" color="primary" (click)="getLoi(row)">
                         <mat-icon class="m-1" title="Download">cloud_download</mat-icon>
                         Download
                     </button>
@@ -105,11 +105,11 @@
                         {{'edit_application' | translate:translateKey}}
                     </button>
 
-                    <button mat-menu-item *ngIf="isRejectNoteOptDisplay(row)" color="primary"
+                    <!-- <button mat-menu-item *ngIf="isRejectNoteOptDisplay(row)" color="primary"
                         (click)="openModal(rejectTemplate);remarksDisplay(row)">
                         <mat-icon class="m-1" title="Why Rejected?">help_outline</mat-icon>
                         Why Rejected
-                    </button>
+                    </button> -->
 
                     <button mat-menu-item *ngIf="isDeleteOptDisplay(row)" color="primary"
                         (click)="deleteRecord(row.serviceDetail.code, row.serviceFormId)">
@@ -129,9 +129,9 @@
                         </mat-icon>
                         {{'preview_application' | translate:translateKey}}
                     </button>
-
+                    <!-- (row.fileStatus == 'SUBMITTED' && -->
                     <button mat-menu-item
-                        *ngIf="row.fileStatus == 'PAYMENT_RECEIVED' || (row.fileStatus == 'SUBMITTED' && row.serviceDetail.code != 'HEL-DR')"
+                        *ngIf="(row.fileStatus == 'PAYMENT_RECEIVED' || row.serviceDetail.code != 'HEL-DR')"
                         color="primary"
                         (click)="printReceipt(row.serviceDetail.code, row.serviceDetail.name, row.serviceFormId)">
                         <mat-icon class="m-1" title="{{'print_receipt' | translate:translateKey}}">print</mat-icon>

@@ -296,10 +296,10 @@ export class MyApplicationsComponent implements OnInit,OnChanges {
 	/**
 	 * This method is use to show reject remarks.
 	 */
-	remarksDisplay(data) {
-		this.rejectRemarks = data.remarks;
-		this.reason = data.reason;
-	}
+	// remarksDisplay(data) {
+	// 	this.rejectRemarks = data.remarks;
+	// 	this.reason = data.reason;
+	// }
 
 	/**
 	 * This method is use for copy text.
@@ -393,6 +393,10 @@ export class MyApplicationsComponent implements OnInit,OnChanges {
 			return true;
 	}
 
+	isDownloadDisplay(row){
+		if(row.fileStatus =='SCRUTINY')
+		return true;
+	}
 	/**
 	 * This method is use for application json option
 	 * @param row - Table row oject
