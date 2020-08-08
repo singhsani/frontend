@@ -309,7 +309,7 @@
 
 				<div class="row  pb-3">
 					<div class="col-md-10">
-						<h2>{{ 'employer_family_table_label' | translate:translateKey}}</h2>
+						<h2 class="pl-0">{{ 'employer_family_table_label' | translate:translateKey}}</h2>
 					</div>
 					<div class="col-md-2 pt-3" style="text-align: right;">
 						<button type="button" *ngIf="shopLicNewForm.get('canEdit').value"
@@ -460,12 +460,12 @@
 								<th>{{'total_person' | translate:translateKey}}</th>
 								<td>{{calulateNumberOfPerson('employerFamilyList','totalFamilyMembers','total')}}</td>
 							</tr>
-							<tr>
-								<!-- <th>{{'total_person' | translate:translateKey}}</th>
-								<td>{{calulateNumberOfPerson('employerFamilyList','totalFamilyMembers','total')}}</td> -->
+								<!-- <tr>
+							<th>{{'total_person' | translate:translateKey}}</th>
+								<td>{{calulateNumberOfPerson('employerFamilyList','totalFamilyMembers','total')}}</td>
 								<th></th>
 								<td></td>
-							</tr>
+							</tr>-->
 						</tbody>
 					</table>
 					<!-- <div>
@@ -514,7 +514,7 @@
 
 				<div class="row pb-3">
 					<div class="col-md-10">
-						<h2>{{'occupying_position_of_management_table_label' | translate: translateKey }}</h2>
+						<h2 class="pl-0">{{'occupying_position_of_management_table_label' | translate: translateKey }}</h2>
 					</div>
 					<div class="col-md-2 pt-3" style="text-align: right;">
 						<button type="button" *ngIf="shopLicNewForm.get('canEdit').value"
@@ -727,8 +727,8 @@
 					</div>
 
 					<div class="row">
-						<div class="col-md-10">
-							<h2>{{'details_of_partner_label' | translate: translateKey}}</h2>
+						<div class="col-md-10"> 
+							<h2 class="pl-0">{{'details_of_partner_label' | translate: translateKey}}</h2>
 						</div>
 						<div class="col-md-2 pt-3" style="text-align: right;">
 							<button *ngIf="shopLicNewForm.get('canEdit').value"
@@ -891,12 +891,12 @@
 									<th>{{'total_person' | translate:translateKey}}</th>
 									<td>{{calulateNumberOfPerson('partnerList','totalPartner','total')}}</td>
 								</tr>
-								<tr>
-									<!-- <th>{{'total_person' | translate:translateKey}}</th>
-									<td>{{calulateNumberOfPerson('partnerList','totalPartner','total')}}</td> -->
+								<!--<tr>
+									 <th>{{'total_person' | translate:translateKey}}</th>
+									<td>{{calulateNumberOfPerson('partnerList','totalPartner','total')}}</td> 
 									<th></th>
 									<td></td>
-								</tr>
+								</tr>-->
 							</tbody>
 						</table>
 
