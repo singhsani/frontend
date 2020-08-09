@@ -104,6 +104,9 @@
 					<app-address [isDisplayGujFields]="true" #permanantAddressEstablishment [requiredFeilds]="true"
 						[addressFormGroup]="muttonFishNewForm.get('permanantAddress')"></app-address>
 				</div>
+				<div class="col-md-4" formGroupName="isSameAsPermanantAddress">
+					<mat-checkbox class="col-md-12 mt-2" [checked]="muttonFishNewForm.get('isSameAsPermanantAddress').get('code').value == 'YES'? true : false" (change)="onSameAddressChange($event)">{{'Temporary Address Is Same As Permanant Address ?' | translate: translateKey}}</mat-checkbox>
+				</div>
 				<div class="row">
 					<h2>{{'temp_address' | translate:translateKey}}</h2>
 					<app-address [isDisplayGujFields]="true" #temporaryAddressEstablishment [requiredFeilds]="true"
