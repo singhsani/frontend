@@ -107,7 +107,12 @@ export class MuttonFishNewComponent implements OnInit {
 					(<FormArray>this.muttonFishNewForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.licenseConfiguration.createDocumentsGrp(app));
 				});
 				this.uploadFileArray = this.licenseConfiguration.requiredDocumentListMeetFish(this.muttonFishNewForm);
-        this.muttonFishNewForm.get('personTypeGuj').setValue(res.personType.gujName);
+				this.muttonFishNewForm.get('personTypeGuj').setValue(res.personType.gujName);
+				this.muttonFishNewForm.controls.permanantAddress.valueChanges.subscribe(data => {
+					if (this.muttonFishNewForm.get('isSameAsPermanantAddress').get('code').value == "YES") {
+						this.onSameAddressChange({ checked: true });
+					}
+				});
 			} catch (error) {
 				console.log(error.message)
 			}
@@ -206,7 +211,10 @@ export class MuttonFishNewComponent implements OnInit {
 			/* Step 2 controls end */
 
 			/* Step 3 controls start*/
-			attachments: []
+			attachments: [],
+			isSameAsPermanantAddress: this.fb.group({
+				code: null
+			}),
 			/* Step 3 controls end */
 		});
 	}
@@ -235,6 +243,21 @@ export class MuttonFishNewComponent implements OnInit {
 		return returnArray;
 	}
 
+	onSameAddressChange(event) {
+		
+		if (event.checked) {
+			
+			this.muttonFishNewForm.get('temporaryAddress').patchValue(this.muttonFishNewForm.get('permanantAddress').value);
+			this.muttonFishNewForm.get('temporaryAddress.addressType').setValue('MF_TEMPORARY_ADDRESS');
+			this.muttonFishNewForm.get('isSameAsPermanantAddress').get('code').setValue("YES");
+		} else {
+			this.muttonFishNewForm.get('temporaryAddress').reset();
+			this.muttonFishNewForm.get('isSameAsPermanantAddress').get('code').setValue("NO");
+		}
+	
+	}
+
+	
 	/**
 	 * Method is used when user click for add person
 	 */

@@ -9,6 +9,7 @@ import { FormsActionsService } from '../../../../../core/services/citizen/data-s
 import { ToastrService } from 'ngx-toastr';
 import * as _ from 'lodash';
 import { TranslateService } from '../../../../../shared/modules/translate/translate.service';
+import { LicenseConfiguration } from '../../license-configuration';
 
 @Component({
 	selector: 'app-animal-pond-new',
@@ -30,6 +31,8 @@ export class AnimalPondNewComponent implements OnInit {
 	uploadModel: any = {};
 	public showButtons: boolean = false;
 
+	licenseConfiguration: LicenseConfiguration = new LicenseConfiguration();
+
 	//Lookups Array
 	MF_RELATIONSHIP_OF_APPLICANT: Array<any> = [];
 	MF_STATUS_OF_BUSINESS: Array<any> = [];
@@ -42,6 +45,8 @@ export class AnimalPondNewComponent implements OnInit {
 
 	// required attachment array
 	public uploadFilesArray: Array<any> = [];
+
+	public serverUploadFilesArray : Array<any> = [];
 
     /**
      * @param fb - Declare FormBuilder property.
@@ -121,6 +126,19 @@ export class AnimalPondNewComponent implements OnInit {
 		});
 	}
 
+	onSameAddressChange(event) {
+		
+		if (event.checked) {
+			
+			this.animalPondNewForm.get('temporaryAddress').patchValue(this.animalPondNewForm.get('permanantAddress').value);
+			this.animalPondNewForm.get('temporaryAddress.addressType').setValue('APL_TEMPORARY_ADDRESS');
+			this.animalPondNewForm.get('isSameAsPermanantAddress').get('code').setValue("YES");
+		} else {
+			this.animalPondNewForm.get('temporaryAddress').reset();
+			this.animalPondNewForm.get('isSameAsPermanantAddress').get('code').setValue("NO");
+		}
+	
+	}
 
 	/**
 	 * Method is used to get form data
@@ -158,7 +176,7 @@ export class AnimalPondNewComponent implements OnInit {
 				res.animalDetails.forEach(app => {
 					(<FormArray>this.animalPondNewForm.get('animalDetails')).push(this.createAnimalArray(app));
 				});
-
+				this.serverUploadFilesArray = res.serviceDetail.serviceUploadDocuments;
 				res.serviceDetail.serviceUploadDocuments.forEach(app => {
 					(<FormArray>this.animalPondNewForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.createDocumentsGrp(app));
 				});
@@ -167,6 +185,11 @@ export class AnimalPondNewComponent implements OnInit {
 				this.getSelectedAnimal();
 				
 				this.animalPondNewForm.get('personTypeGuj').setValue(res.personType.gujName);
+				this.animalPondNewForm.controls.permanantAddress.valueChanges.subscribe(data => {
+					if (this.animalPondNewForm.get('isSameAsPermanantAddress').get('code').value == "YES") {
+						this.onSameAddressChange({ checked: true });
+					}
+				});
 			} catch (error) {
 				console.log(error.message)
 			}
@@ -190,6 +213,39 @@ export class AnimalPondNewComponent implements OnInit {
 			this.onChangeZone(this.animalPondNewForm.get('zoneNo').value.code);
 			this.onChangeWard(this.animalPondNewForm.get('wardNo').value.code);
 		});
+	}
+
+	updateServiceUploadDocument(event) {
+		
+		let array = (<FormArray>this.animalPondNewForm.get('serviceDetail').get('serviceUploadDocuments'));
+		for (let i = array.length - 1; i >= 0; i--) {
+			array.removeAt(i)
+		}
+
+		switch (event) {
+			
+			case 'RENT':
+				const localUploadArray = [...this.serverUploadFilesArray]
+				for (let file of localUploadArray) {
+					if (file['documentIdentifier'] === 'RENT_AGREEMENT') {
+						file['mandatory'] = true;
+						
+					}
+					(<FormArray>this.animalPondNewForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.licenseConfiguration.createDocumentsGrp(file));
+				}
+				break;
+			default:
+				for (let file of this.serverUploadFilesArray) {
+					if (file['documentIdentifier'] === 'RENT_AGREEMENT') {
+						file['mandatory'] = false;
+					}
+					(<FormArray>this.animalPondNewForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.licenseConfiguration.createDocumentsGrp(file));
+				}
+				break;
+		}
+
+
+
 	}
 
 	/**
@@ -284,6 +340,9 @@ export class AnimalPondNewComponent implements OnInit {
 			}),
 			statusOfBusinessId: this.fb.group({
 				code: [null, Validators.required]
+			}),
+			isSameAsPermanantAddress: this.fb.group({
+				code: null
 			}),
 			relationshipList: this.fb.array([
 				// 0: {
