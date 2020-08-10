@@ -128,6 +128,7 @@
 				<mat-form-field class="col-md-4">
 					<input matInput OnlyNumber maxlength="12" required formControlName="holderAadharNo"
 						placeholder="{{'holder_aadhar_no' | translate:translateKey}}">
+						<control-messages [control]="muttonFishNewForm.get('holderAadharNo')"></control-messages>
 				</mat-form-field>
 				<mat-form-field class="col-md-4">
 					<input matInput appAlphaNumeric maxlength="10" upperCase required formControlName="holderPanNo"
