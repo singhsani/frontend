@@ -186,7 +186,7 @@ export class MuttonFishNewComponent implements OnInit {
 			holderTelephoneNo: [null, [Validators.maxLength(12), Validators.minLength(10)]],
 			holderMobileNo: [null, [Validators.required, Validators.maxLength(10), Validators.minLength(10)]],
 			holderFaxNo: [null, [Validators.maxLength(12)]],
-			holderAadharNo: [null, [Validators.required, Validators.maxLength(12)]],
+			holderAadharNo: [null, [Validators.required, ValidationService.aadharValidation, Validators.maxLength(12)]],
 			holderPanNo: [null, [Validators.required, ValidationService.panValidator , Validators.maxLength(10)]],
 			/* Step 1 controls end */
 
