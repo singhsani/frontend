@@ -30,6 +30,8 @@ export class GasConnectionNocComponent implements OnInit {
 	//Lookups Array
 	FS_CONNECTION_PURPOSE: Array<any> = [];
 	FS_FIRE_PLACE: Array<any> = [];
+	FS_SUBJECT: Array<any> = [];
+	wardNo: Array<any> = [];
 
 	// required attachment array
 	uploadFilesArray: Array<any> = [];
@@ -85,6 +87,8 @@ export class GasConnectionNocComponent implements OnInit {
 		this.formService.getDataFromLookups().subscribe(res => {
 			this.FS_CONNECTION_PURPOSE = res.FS_CONNECTION_PURPOSE;
 			this.FS_FIRE_PLACE = res.FS_FIRE_PLACE;
+			this.FS_SUBJECT = res.FS_SUBJECT;
+			this.wardNo = res.FS_WARD_NO;
 		});
 	}
 	/**
@@ -119,7 +123,12 @@ export class GasConnectionNocComponent implements OnInit {
 			firePlaceType: this.fb.group({
 				code: [null, Validators.required]
 			}),
-			subject: [null, [Validators.required, Validators.maxLength(300)]],
+			subject: this.fb.group({
+				code: [null, Validators.required]
+			}),
+			wardNo: this.fb.group({
+				code: [null, Validators.required]
+			}),
 			firePlaceAddress: [null, [Validators.required, Validators.maxLength(300)]],
 			firePlaceAddressGuj: [null, [Validators.required, Validators.maxLength(900)]],
 			fireLossAmount: [null, [Validators.required, Validators.maxLength(10)]],

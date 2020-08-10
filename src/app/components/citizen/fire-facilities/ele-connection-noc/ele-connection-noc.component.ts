@@ -32,6 +32,7 @@ export class EleConnectionNocComponent implements OnInit {
 	//Lookups Array
 	FS_CONNECTION_PURPOSE: Array<any> = [];
 	FS_FIRE_PLACE_TYPE: Array<any> = [];
+	FS_SUBJECT: Array<any> = [];
 
 	// required attachment array
 	uploadFilesArray: Array<any> = [];
@@ -86,6 +87,7 @@ export class EleConnectionNocComponent implements OnInit {
 		this.formService.getDataFromLookups().subscribe(res => {
 			this.FS_CONNECTION_PURPOSE = res.FS_CONNECTION_PURPOSE;
 			this.FS_FIRE_PLACE_TYPE = res.FS_FIRE_PLACE_TYPE;
+			this.FS_SUBJECT = res.FS_SUBJECT;
 		});
 	}
 
@@ -114,7 +116,10 @@ export class EleConnectionNocComponent implements OnInit {
 			incidentDate: [null, Validators.required],
 			propertyNo: [null, [Validators.required, Validators.maxLength(15)]],
 			firePlaceAddress: [null, [Validators.required, Validators.maxLength(300)]],
-			subject: [null, [Validators.required, Validators.maxLength(300)]],
+			
+			subject: this.fb.group({
+				code: [null, Validators.required]
+			}),
 			firePlaceType: this.fb.group({
 				code: [null, Validators.required]
 			}),

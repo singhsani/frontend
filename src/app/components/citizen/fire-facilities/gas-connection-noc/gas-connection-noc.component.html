@@ -122,11 +122,12 @@
 						<control-messages [control]="gasConnectionForm.get('firePlaceType').get('code')"></control-messages>
 					</div>
 
-					<mat-form-field class="col-md-4">
-						<textarea matInput rows="3" cols="50" required maxlength="300" placeholder="{{'subject' | translate:translateKey}}"
-						 formControlName="subject"></textarea>
-						<control-messages [control]="gasConnectionForm.get('subject')"></control-messages>
-					</mat-form-field>
+					<div class="col-md-4 ngSelect" formGroupName="subject">
+						<ng-select required placeholder="{{'subject' | translate:translateKey}} *" formControlName="code">
+							<ng-option *ngFor="let fire_sub of FS_SUBJECT" [value]="fire_sub.code">{{fire_sub.name}}</ng-option>
+						</ng-select>
+						<control-messages [control]="gasConnectionForm.get('subject').get('code')"></control-messages>
+					</div>
 
 				</div>
 				<div class="row">
@@ -187,6 +188,14 @@
 						 formControlName="fireLossAmount" required>
 						<control-messages [control]="gasConnectionForm.get('fireLossAmount')"></control-messages>
 					</mat-form-field>
+
+					<div class="col-md-4 ngSelect" formGroupName="wardNo">
+						<ng-select placeholder="{{'ward_no' | translate:translateKey}} *" formControlName="code"
+							required>
+							<ng-option *ngFor="let no of wardNo" [value]="no.code">{{no.name}}</ng-option>
+						</ng-select>
+						<control-messages [control]="gasConnectionForm.get('wardNo').get('code')"></control-messages>
+					</div>
 
 				</div>
 				<app-action-bar [form]="gasConnectionForm" (tabIndex)="fireFacilityConfig.onFormTabChange($event)" [stepInfo]="{step: 'step2', next: 2, back: 0}"></app-action-bar>

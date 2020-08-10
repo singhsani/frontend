@@ -139,11 +139,12 @@
 						<control-messages [control]="electricConnectionForm.get('firePlaceType').get('code')"></control-messages>
 					</div>
 
-					<mat-form-field class="col-md-4">
-						<textarea matInput rows="3" cols="50" required maxlength="300" placeholder="{{'subject' | translate:translateKey}}"
-						 formControlName="subject"></textarea>
-						<control-messages [control]="electricConnectionForm.get('subject')"></control-messages>
-					</mat-form-field>
+					<div class="col-md-4 ngSelect" formGroupName="subject">
+						<ng-select required placeholder="{{'subject' | translate:translateKey}} *" formControlName="code">
+							<ng-option *ngFor="let fire_sub of FS_SUBJECT" [value]="fire_sub.code">{{fire_sub.name}}</ng-option>
+						</ng-select>
+						<control-messages [control]="electricConnectionForm.get('subject').get('code')"></control-messages>
+					</div>
 
 					<mat-form-field class="col-md-4">
 						<textarea matInput rows="3" cols="50" required maxlength="300" placeholder="{{'fire_place_address' | translate:translateKey}}"
