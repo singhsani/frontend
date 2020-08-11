@@ -404,7 +404,7 @@ export class BirthRegistrationComponent implements OnInit {
 					// if (!this.config.getFileObjectContained(this.uploadFileArray, '1.8')) {
 					// 	this.uploadFileArray.push(this.config.fileObjectCreater('Court Order', '1.8'));
 					// }
-				} else if (Number(res.delayPeriod) < this.config.daysInThisYear() && Number(res.delayPeriod) > this.config.daysInThisMonth()) {
+				} else if (Number(res.delayPeriod) <= this.config.daysInThisYear() && Number(res.delayPeriod) > 30) {
 					this.uploadFileArray.find(d => d.documentIdentifier == "ORDER_EXECUTIVE_MAGISTRATE").mandatory = false;
 					this.uploadFileArray.find(d => d.documentIdentifier == "AFFIDAVIT_HEALTH_OFFICER_ORDER").mandatory = true;
 
@@ -596,8 +596,16 @@ export class BirthRegistrationComponent implements OnInit {
 				this.resetOtherChildDates();
 				this.maxBirthDate = moment(new Date(Number(currentDelayDate.split('-')[0]), Number(currentDelayDate.split('-')[1]) - 1, Number(currentDelayDate.split('-')[2]))).add(+1, 'days').toDate();
 				this.minBirthDate = moment(new Date(Number(currentDelayDate.split('-')[0]), Number(currentDelayDate.split('-')[1]) - 1, Number(currentDelayDate.split('-')[2]))).add(-1, 'days').toDate();
-				this.delayAlert(this.birthCertificateForm.get('delayPeriod').value);
+				this.delayAlert(this.birthCertificateForm.get('delayPeriod').value,i);
+			} else {
+				let currentDelayDate1 = this.getChildData().at(i).get('birthDate').value;
+				console.log("date",this.getChildData().at(i).get('birthDate').value)
+			    let diff1 = moment.duration(now.diff(new Date(Number(currentDelayDate1.split('-')[0]), Number(currentDelayDate1.split('-')[1]) - 1, Number(currentDelayDate1.split('-')[2]))));
+			    let delay1 = (diff1.days() + diff1.years() * 365 + diff1.months() * 30);
+			
+				this.delayAlert(delay1,i);
 			}
+			
 		} else {
 			this.resetOtherChildDates();
 		}
@@ -641,12 +649,12 @@ export class BirthRegistrationComponent implements OnInit {
 	 * Method is used to provide alert on delay registration.
 	 * @param delay - delay period.
 	 */
-	delayAlert(delay: number) {
-		if (delay > this.config.MIN_BIRTH_DATE_VALIDATION && delay < this.config.daysInThisMonth()) {
+	delayAlert(delay: number,i : number) {
+		if (delay > this.config.MIN_BIRTH_DATE_VALIDATION && delay <= 30) {
 			this.commonService.openAlert(this.config.DELAYED_REGISTRATION_TITLE, "", "warning", this.config.LESS_30_AND_MORE_21_MESSAGE);
 			return;
 		}
-		else if (delay > this.config.daysInThisMonth() && delay < this.config.daysInThisYear()) {
+		else if (delay > 30 && delay <= this.config.daysInThisYear()) {
 			this.uploadFileArray.find(d => d.documentIdentifier == "AFFIDAVIT_HEALTH_OFFICER_ORDER").mandatory = true;
 			this.uploadFileArray.find(d => d.documentIdentifier == "ORDER_EXECUTIVE_MAGISTRATE").mandatory = false;
 
@@ -658,7 +666,14 @@ export class BirthRegistrationComponent implements OnInit {
 			// 		this.uploadFileArray.push(this.config.fileObjectCreater('Affidavit Or Health Order', '1.7'));
 			// 	}
 			// }
-			this.commonService.openAlert(this.config.DELAYED_REGISTRATION_TITLE, "", "warning", this.config.LESS_YEAR_AND_MORE_30_MESSAGE);
+			if(i == 0){
+				this.commonService.openAlert(this.config.DELAYED_REGISTRATION_TITLE, "", "warning", this.config.LESS_YEAR_AND_MORE_30_MESSAGE);
+			}else {
+				this.getChildData().at(i).get('birthDate').setValue(null);
+				this.commonService.openAlert(this.config.DELAYED_REGISTRATION_TITLE, "", "warning", this.config.ONLY_ONE_CHILD_REG_WITH_DELAYED);
+
+			}
+			
 			return;
 		} else if (delay > this.config.daysInThisYear()) {
 			this.uploadFileArray.find(d => d.documentIdentifier == "ORDER_EXECUTIVE_MAGISTRATE").mandatory = true;
@@ -671,6 +686,7 @@ export class BirthRegistrationComponent implements OnInit {
 			// 		this.uploadFileArray.push(this.config.fileObjectCreater('Court Order', '1.8'));
 			// 	}
 			// }
+			this.getChildData().at(i).get('birthDate').setValue(null);
 			this.commonService.openAlert(this.config.DELAYED_REGISTRATION_TITLE, "", "warning", this.config.MORE_THAN_YEAR_MESSAGE);
 			return;
 		}
@@ -960,6 +976,12 @@ export class BirthRegistrationComponent implements OnInit {
 	 * @param evt - Tab index
 	 */
 	onTabChange(evt) {
+		if(this.birthCertificateForm.get('delayPeriod').value > 30){
+			this.uploadFileArray.find(d => d.documentIdentifier == "AFFIDAVIT_HEALTH_OFFICER_ORDER").mandatory = true;
+			this.uploadFileArray.find(d => d.documentIdentifier == "ORDER_EXECUTIVE_MAGISTRATE").mandatory = false;
+		}else if( this.birthCertificateForm.get('delayPeriod').value <= 30){
+			this.uploadFileArray.find(d => d.documentIdentifier == "AFFIDAVIT_HEALTH_OFFICER_ORDER").mandatory = false;
+		}
 		this.tabIndex = evt;
 	}
 
@@ -968,7 +990,23 @@ export class BirthRegistrationComponent implements OnInit {
      */
     patchValue() {
 		this.birthCertificateForm.patchValue(this.dummyJSON);
-    }
+	}
+	
+
+	downloadAffidavitForm(){
+		this.formService.getBirthAffidavit().subscribe(
+			htmlResponse => {
+				let sectionToPrint: any = document.getElementById('sectionToPrint');
+				sectionToPrint.innerHTML = htmlResponse;
+				setTimeout(() => {
+					window.print();
+				});
+			},
+			err => {
+				this.commonService.successAlert('Error!', err.error[0].message, 'error');
+			}
+		);
+	}
 
 	dummyJSON:any = {
 		"birthPlace": {
@@ -1061,19 +1099,19 @@ export class BirthRegistrationComponent implements OnInit {
 		  "uniqueId": null,
 		  "version": 0,
 		  "addressType": "BR_DELIVERY_ADDRESS",
-		  "buildingName": null,
+		  "buildingName": "32",
 		  "streetName": null,
 		  "landmark": null,
-		  "area": null,
+		  "area": "Karelibag",
 		  "state": "GUJARAT",
 		  "district": null,
 		  "city": "Vadodara",
 		  "country": "INDIA",
 		  "pincode": "111111",
-		  "buildingNameGuj": null,
+		  "buildingNameGuj": "૩૨",
 		  "streetNameGuj": null,
 		  "landmarkGuj": null,
-		  "areaGuj": null,
+		  "areaGuj": "ગુજરાત",
 		  "stateGuj": "ગુજરાત",
 		  "districtGuj": null,
 		  "cityGuj": "વડોદરા",
@@ -1107,7 +1145,7 @@ export class BirthRegistrationComponent implements OnInit {
 		  "buildingName": null,
 		  "streetName": null,
 		  "landmark": null,
-		  "area": null,
+		  "area": "Karelibag",
 		  "state": "GUJARAT",
 		  "district": null,
 		  "city": "Vadodara",
@@ -1116,7 +1154,7 @@ export class BirthRegistrationComponent implements OnInit {
 		  "buildingNameGuj": null,
 		  "streetNameGuj": null,
 		  "landmarkGuj": null,
-		  "areaGuj": null,
+		  "areaGuj": "ગુજરાત",
 		  "stateGuj": "ગુજરાત",
 		  "districtGuj": null,
 		  "cityGuj": "વડોદરા",

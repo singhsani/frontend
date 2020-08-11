@@ -12,6 +12,7 @@ export class HospitalConfig extends ComponentConfig {
     public MORE_THAN_YEAR_MESSAGE: string;
     public Child_Weight_Error: string;
     public MIN_CHILD_WEIGHT: string;
+    public ONLY_ONE_CHILD_REG_WITH_DELAYED : string;
 
     constructor(private certType?: string) {
         super();
@@ -19,17 +20,17 @@ export class HospitalConfig extends ComponentConfig {
             this.DELAYED_REGISTRATION_TITLE = `Delayed ${this.certType.charAt(0).toUpperCase() + this.certType.slice(1)} Registration`;
 
             this.LESS_30_AND_MORE_21_MESSAGE = `<p>It will considered as delayed ${this.certType} registration because
-             registration date is more than 21 days and there will be extra Fee of Rs. 2 plus departmental charges as delayed fee.`;
+             registration date is more than 21 days and there will be extra Fee of Rs. 20=00 plus departmental charges as delayed fee.`;
 
             this.LESS_YEAR_AND_MORE_30_MESSAGE = `<p>It will considered as delayed ${this.certType} registration because
-             registration date is more than 30 days so Rs. 5=00 plus departmental charges as delayed fee and
-             extra attachment (Affidavit Or health Order) 
-             on Rs. 20/- Stamp paper. Registration needs to be approved by Registrar of Birth, VMC.`;
+             registration date is more than 30 days so Rs. 50=00 plus departmental charges as delayed fee and
+             extra attachment Affidavit Or health Order. 
+             on Rs. 50/- Stamp paper. Registration needs to be approved by Registrar of Birth, VMC.`;
 
-            this.MORE_THAN_YEAR_MESSAGE = `<p>It will considered as delayed ${this.certType} registration because
-             registration date is more than 1 year and there will be extra attachment (Court Order) as well as fees.`;
+            this.MORE_THAN_YEAR_MESSAGE = `<p>Fresh registration is not allowed from here, You must apply as an NRC.`;
             this.Child_Weight_Error = "Child Weight Error";
             this.MIN_CHILD_WEIGHT = "Child weight should be in between 0.300 to 10 kg";
+            this.ONLY_ONE_CHILD_REG_WITH_DELAYED = "At a time you can register only one child as delayed registration. (For more than 30 days delaye)"
 
         }
     }

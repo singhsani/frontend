@@ -232,4 +232,9 @@ export class HosFormActionsService {
 		return this.http.post(this.requestURL, paymentData);
 	}
 
+	getBirthAffidavit(){
+		this.requestURL = 'api/form/birthReg/getAffidavit';
+		return this.http.get(this.requestURL,'printReceipt');
+	}
+
 }
