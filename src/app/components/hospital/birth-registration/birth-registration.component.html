@@ -178,6 +178,10 @@
                             <control-messages [control]="birthCertificateForm.get('childs')['controls'][i].get('sex').get('code')">
                             </control-messages>
                         </div>
+                        <div class="col-md-4" *ngIf="birthCertificateForm.get('delayPeriod').value > 30">
+                            <button type="button" mat-raised-button color="primary"
+                            (click)="downloadAffidavitForm()">Download Affidavit Form</button>
+                        </div>
                     </div>
                 </div>
                 <app-hos-action-bar [stepInfo]="{step: 'step1', next: 1, back: 0}" (saveEvent)="isFormSaved = $event?.isSaved" (tabIndex)="onTabChange($event)"
@@ -693,3 +697,4 @@
         </mat-tab-group>
     </form>
 </mat-card>
+<div id="sectionToPrint"></div>
