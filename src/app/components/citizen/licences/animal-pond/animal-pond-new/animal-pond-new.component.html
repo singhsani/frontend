@@ -341,14 +341,14 @@
 									<td>
 										<!-- <div class="d-md-none">{{'animal_type' | translate:translateKey}}</div> -->
 										<div *ngIf="!item.isEditMode">
-											{{getSelectedDataFromLookUps(ANIMAL_TYPE,item.get('animalType').get('code').value)?.name}}
+											{{getSelectedDataFromLookUps(ANIMAL_TYPE,item.get('animalType').get('code').value)?.name}} ({{getSelectedDataFromLookUps(ANIMAL_TYPE,item.get('animalType').get('code').value)?.gujName}})
 										</div>
 										<div class="ngSelect maxWidthAuto" *ngIf="item.isEditMode"
 											formGroupName="animalType">
 											<ng-select placeholder="{{'animal_type' | translate:translateKey}} *"
 												formControlName="code" (ngModelChange)="getSelectedAnimal()" required>
 												<ng-container *ngFor="let type of ANIMAL_TYPE">
-													<ng-option *ngIf="!type.selected" [value]="type.code">{{type.name}}
+													<ng-option *ngIf="!type.selected" [value]="type.code">{{type.name}} ( {{type.gujName}} )
 													</ng-option>
 												</ng-container>
 											</ng-select>
