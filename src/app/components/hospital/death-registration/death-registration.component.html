@@ -398,7 +398,7 @@
 					<mat-form-field class="col-md-4"
 						*ngIf="deathCertificateForm.get('medicalTreatment').get('code').value && deathCertificateForm.get('medicalTreatment').get('code').value !='NO_MED_HELP_ATT' ">
 						<input matInput appDate [min]="deathCertificateForm.get('birthDate').value"
-							[max]="maxTreatmentDate" required [matDatepicker]="treatFromDatepicker"
+							[max]="deathCertificateForm.get('deathDate').value" required [matDatepicker]="treatFromDatepicker"
 							formControlName="treatmentDurationFrom"
 							(dateChange)="dateFormat($event.value,'treatmentDurationFrom')"
 							placeholder="{{ 'treatment_DurationFrom' | translate:translateKey }}">
