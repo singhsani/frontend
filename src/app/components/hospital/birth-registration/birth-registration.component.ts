@@ -755,7 +755,7 @@ export class BirthRegistrationComponent implements OnInit {
 			this.Religion = respData.RELIGION;
 			this.ISYESNO = respData.YES_NO;
 			this.wardNoData = respData.WARD;
-			this.CHILD_WEIGHT_GM = respData.CHILD_WEIGHT_GM;
+			this.CHILD_WEIGHT_GM = respData.CHILD_WEIGHT_GM.sort((a,b)=> Number(a.name) < Number(b.name) ? -1 : Number(a.name) > Number(b.name) ? 1 : 0 );
 			this.URBAN_PRIMARY_HEALTH_CENTER = respData.URBAN_PRIMARY_HEALTH_CENTER;
 			this.MOTHER_DELIVERY_AGE = respData.MOTHER_DELIVERY_AGE.sort((a, b) => {
 				if (a.code >= b.code) {
@@ -1161,7 +1161,7 @@ export class BirthRegistrationComponent implements OnInit {
 		  "countryGuj": "ભારત"
 		},
 		"attachments": [],
-		"delayPeriod": 186,
+		"delayPeriod": 1,
 		"totalAliveChild": 1,
 		"apiType": "birthReg",
 		"fileStatus": "DRAFT",

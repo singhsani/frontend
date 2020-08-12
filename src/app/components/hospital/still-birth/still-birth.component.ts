@@ -561,7 +561,7 @@ export class StillBirthComponent implements OnInit {
 			this.ISYESNO = respData.YES_NO;
 			this.wardNoData = respData.WARD;
 			this.IMMEDIATE_COD_Data = respData.IMMEDIATE_COD;
-			this.CHILD_WEIGHT_GM = respData.CHILD_WEIGHT_GM;
+			this.CHILD_WEIGHT_GM = respData.CHILD_WEIGHT_GM.sort((a,b)=> Number(a.name) < Number(b.name) ? -1 : Number(a.name) > Number(b.name) ? 1 : 0 );
 			this.URBAN_PRIMARY_HEALTH_CENTER = respData.URBAN_PRIMARY_HEALTH_CENTER;
 			this.MOTHER_DELIVERY_AGE = respData.MOTHER_DELIVERY_AGE.sort((a, b) => {
 				if (a.code >= b.code) {

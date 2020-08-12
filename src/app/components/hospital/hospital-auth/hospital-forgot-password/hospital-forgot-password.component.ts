@@ -37,7 +37,7 @@ export class HospitalForgotPasswordComponent implements OnInit {
 		this.forgotPassForm = this.fb.group({
 			email: [null, [Validators.required, ValidationService.emailValidator]],
 			//cellNo: '',
-			userType: 'CITIZEN'
+			userType: 'HOSPITAL'
 		});
 	}
 
