@@ -289,7 +289,7 @@ export class MuttonFishNewComponent implements OnInit {
 			}
 		}
 		else {
-			this.commonService.openAlert("Warning", "You can add new recode after save existing recode.", "warning");
+			this.commonService.openAlert("Warning", "You can add new row after save existing row.", "warning");
 		}
 	}
 
