@@ -46,14 +46,14 @@ export class UserProfileComponent implements OnInit {
 
 		this.userProfileForm = this.fb.group({
 			uniqueId: '',
-			hospitalName: [null, [Validators.required, ValidationService.nameValidator]],
+			hospitalName: [null, [Validators.required]],
 			hospitalType: this.fb.group({
 				id: 1,
 				code: [null, [Validators.required]],
 				name: null
 			}),
-			addressLine1: [null, [ValidationService.nameValidator]],
-			addressLine2: [null, [Validators.required, ValidationService.nameValidator]],
+			addressLine1: [null, [Validators.required]],
+			addressLine2: [null],
 			userDetail: this.fb.group({
 				uniqueId : '',
 				firstName: [null, [Validators.required, ValidationService.nameValidator]],
