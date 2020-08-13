@@ -36,7 +36,7 @@
 
 					<mat-form-field *ngIf="deathCertificateForm.get('unknownCategory').get('code').value ==='YES'"
 						class="col-md-12">
-						<textarea required matInput maxlength="100" type="text"
+						<textarea required matInput maxlength="500" type="text"
 							placeholder="{{'unknown_death_description' | translate:translateKey}}"
 							formControlName="unknownDescription"></textarea>
 						<control-messages [control]="deathCertificateForm.get('unknownDescription')"></control-messages>
@@ -53,7 +53,7 @@
 					<mat-form-field class="col-md-4">
 						<input matInput appValidationFields [form]="deathCertificateForm" appGujInputSource
 							targetElement="deceasedMiddleNameGuj" [validationFieldsType]="'onlyNameWithOutSpace'"
-							maxlength="20" placeholder="{{'middle_name' | translate:translateKey}}"
+							maxlength="50" placeholder="{{'middle_name' | translate:translateKey}}"
 							formControlName="deceasedMiddleName">
 						<control-messages [control]="deathCertificateForm.get('deceasedMiddleName')"></control-messages>
 					</mat-form-field>
@@ -61,7 +61,7 @@
 					<mat-form-field class="col-md-4">
 						<input matInput appValidationFields [form]="deathCertificateForm" appGujInputSource
 							targetElement="deceasedLastNameGuj" [validationFieldsType]="'onlyNameWithOutSpace'"
-							maxlength="20" placeholder="{{'last_name' | translate:translateKey}}"
+							maxlength="150" placeholder="{{'last_name' | translate:translateKey}}"
 							formControlName="deceasedLastName" [required]="requiredFeild">
 						<control-messages [control]="deathCertificateForm.get('deceasedLastName')"></control-messages>
 					</mat-form-field>
@@ -75,7 +75,7 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" appGujInputTarget [form]="deathCertificateForm" maxlength="20"
+						<input matInput type="text" appGujInputTarget [form]="deathCertificateForm" maxlength="150"
 							placeholder="{{'middle_name' | translate:translateKey:'gu'}}"
 							formControlName="deceasedMiddleNameGuj">
 						<control-messages [control]="deathCertificateForm.get('deceasedMiddleNameGuj')">
@@ -85,7 +85,7 @@
 
 					<mat-form-field class="col-md-4">
 						<input [required]="requiredFeild" matInput type="text" appGujInputTarget
-							[form]="deathCertificateForm" maxlength="20"
+							[form]="deathCertificateForm" maxlength="150"
 							placeholder="{{'last_name' | translate:translateKey:'gu'}}"
 							formControlName="deceasedLastNameGuj">
 						<control-messages [control]="deathCertificateForm.get('deceasedLastNameGuj')">
@@ -173,7 +173,7 @@
 					<mat-form-field class="col-md-4">
 						<input matInput appValidationFields [form]="deathCertificateForm" appGujInputSource
 							targetElement="spouseMiddleNameGuj" [validationFieldsType]="'onlyNameWithOutSpace'"
-							maxlength="20" placeholder="{{'spouse_MiddleName' | translate:translateKey}}"
+							maxlength="50" placeholder="{{'spouse_MiddleName' | translate:translateKey}}"
 							formControlName="spouseMiddleName">
 						<control-messages [control]="deathCertificateForm.get('spouseMiddleName')"></control-messages>
 					</mat-form-field>
@@ -181,7 +181,7 @@
 					<mat-form-field class="col-md-4">
 						<input matInput appValidationFields [form]="deathCertificateForm" appGujInputSource
 							targetElement="spouseLastNameGuj" [validationFieldsType]="'onlyNameWithOutSpace'"
-							maxlength="20" placeholder="{{'spouse_LastName' | translate:translateKey}}"
+							maxlength="50" placeholder="{{'spouse_LastName' | translate:translateKey}}"
 							formControlName="spouseLastName" [required]="requiredFeild">
 						<control-messages [control]="deathCertificateForm.get('spouseLastName')"></control-messages>
 					</mat-form-field>
@@ -196,7 +196,7 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" appGujInputTarget [form]="deathCertificateForm" maxlength="20"
+						<input matInput type="text" appGujInputTarget [form]="deathCertificateForm" maxlength="150"
 							placeholder="{{'spouse_MiddleName' | translate:translateKey:'gu'}}"
 							formControlName="spouseMiddleNameGuj">
 						<control-messages [control]="deathCertificateForm.get('spouseMiddleNameGuj')">
@@ -205,7 +205,7 @@
 
 					<mat-form-field class="col-md-4">
 						<input [required]="requiredFeild" matInput type="text" appGujInputTarget
-							[form]="deathCertificateForm" maxlength="20"
+							[form]="deathCertificateForm" maxlength="150"
 							placeholder="{{'spouse_LastName' | translate:translateKey:'gu'}}"
 							formControlName="spouseLastNameGuj">
 						<control-messages [control]="deathCertificateForm.get('spouseLastNameGuj')">
@@ -217,7 +217,7 @@
 				<div class="row">
 					<mat-form-field class="col-md-6">
 						<input [required]="requiredFeild" matInput appValidationFields
-							[validationFieldsType]="'onlyNameWithSpace'" maxlength="20"
+							[validationFieldsType]="'onlyNameWithSpace'" maxlength="50"
 							placeholder="{{'mother_name' | translate:translateKey}}" [form]="deathCertificateForm"
 							appGujInputSource targetElement="motherNameGuj" name="motherName"
 							formControlName="motherName">
@@ -225,7 +225,7 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-6">
-						<input matInput maxlength="60" appGujInputTarget
+						<input matInput maxlength="150" appGujInputTarget
 							[form]="deathCertificateForm" placeholder="{{'mother_name' | translate:translateKey:'gu'}}"
 							formControlName="motherNameGuj" [required]="requiredFeild">
 						<control-messages [control]="deathCertificateForm.get('motherNameGuj')">
