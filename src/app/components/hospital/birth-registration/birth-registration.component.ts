@@ -171,6 +171,8 @@ export class BirthRegistrationComponent implements OnInit {
 			this.createBirthCertForm();
 			this.getBirthCertData();
 		}
+
+		this.onChanges();
 	}
 
 	/**
@@ -321,6 +323,9 @@ export class BirthRegistrationComponent implements OnInit {
 			totalBoyChildsBeforePregnancy: null,
 			totalGirlChildsBeforePregnancy: null,
 			totalChildsBeforePregnancy: null,
+			totalBoyChilds: null,
+			totalGirlChilds: null,
+			totalChilds: null,
 			pregnancyDuration: ['', [Validators.required, ValidationService.pregnancyDurationValidation]],
 
 
@@ -696,6 +701,26 @@ export class BirthRegistrationComponent implements OnInit {
 	 * Method is used to calculate total child.
 	 */
 	totalChildCalculate() {
+		let totalGirlChilds = this.birthCertificateForm.get('totalGirlChilds').value;
+		let totalBoyChilds = this.birthCertificateForm.get('totalBoyChilds').value;
+		const childsData = this.getChildData().value;
+		if (totalGirlChilds && totalBoyChilds) {
+			this.birthCertificateForm.get('totalChilds').setValue(parseInt(totalGirlChilds) + parseInt(totalBoyChilds))
+		} else {
+			this.birthCertificateForm.get('totalChilds').setValue(childsData.length);
+		}
+
+		if (childsData) {
+			let boyChilds = childsData.filter(data => data.sex.code == 'MALE').length;
+			let girlChilds = childsData.filter(data => data.sex.code == 'FEMALE').length;
+			if (totalBoyChilds) {
+				this.birthCertificateForm.get('totalBoyChildsBeforePregnancy').setValue(totalBoyChilds - boyChilds);
+			}
+			if (totalGirlChilds) {
+				this.birthCertificateForm.get('totalGirlChildsBeforePregnancy').setValue(totalGirlChilds - girlChilds);
+			}
+		}
+
 		let girlChild = this.birthCertificateForm.get('totalGirlChildsBeforePregnancy').value;
 		let boyChild = this.birthCertificateForm.get('totalBoyChildsBeforePregnancy').value;
 		if (girlChild && boyChild) {
@@ -703,8 +728,10 @@ export class BirthRegistrationComponent implements OnInit {
 		} else {
 			this.birthCertificateForm.get('totalChildsBeforePregnancy').setValue(null);
 		}
-	}
 
+		this.setTotalChildAlive();
+	}
+s
 	/**
 	 * Method is used to handle error/validation on submit
 	 * @param count - count of invalid control.
@@ -1011,6 +1038,12 @@ export class BirthRegistrationComponent implements OnInit {
 			}
 		);
 	}
+
+	onChanges(): void {
+		this.birthCertificateForm.get('childs').valueChanges.subscribe(val => {
+		   this.totalChildCalculate();
+		});
+	  }
 
 	dummyJSON:any = {
 		"birthPlace": {
