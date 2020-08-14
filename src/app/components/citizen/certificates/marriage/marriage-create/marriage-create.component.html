@@ -229,6 +229,16 @@
 							<control-messages [control]="marriageFormGroup.get('isGroomVisa')"></control-messages>
 						</div>
 					</div>
+
+					<div class="col-md-4" *ngIf="marriageFormGroup.get('isNriMarriage').value == true">
+							<div *ngIf="marriageFormGroup.get('isGroomVisa').value  == true">
+						<mat-form-field >
+							<input matInput type="text" maxlength="50" required formControlName="groomNriStatus" placeholder="{{ 'groomNriStatus' | translate:translateKey }}">
+							<control-messages [control]="marriageFormGroup.get('groomNriStatus')"></control-messages>
+						</mat-form-field>
+						</div>
+					</div>
+
 				</div>
 				<!-- / NIR Marrige -->
 
@@ -500,7 +510,17 @@
 						<control-messages [control]="marriageFormGroup.get('isBrideVisa')"></control-messages>
 					</div>
 
+					<div class="col-md-4" *ngIf="marriageFormGroup.get('isNriMarriage').value == true">
+							<div *ngIf="marriageFormGroup.get('isBrideVisa').value  == true">
+						<mat-form-field >
+							<input matInput type="text" maxlength="50" required formControlName="brideNriStatus" placeholder="{{ 'brideNriStatus' | translate:translateKey }}">
+							<control-messages [control]="marriageFormGroup.get('brideNriStatus')"></control-messages>
+						</mat-form-field>
+						</div>
+					</div>
+
 					<div *ngIf="marriageFormGroup.get('isBrideVisa').value == true">
+
 						<mat-form-field class="col-md-4">
 							<input matInput required maxlength="9" minlength="9" type="tel"
 								formControlName="bridePassportNumber"

@@ -354,6 +354,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
         "groomVisaTo": null,
         "groomSocialSecurityNumber": null,
         "groomEligibility": null,
+        "groomNriStatus":null,
         "groomDesignation": null,
         "groomPhoneNumber": null,
         "groomEmail": null,
@@ -363,6 +364,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
         "groomCompanyAddress": null,
         "isBrideVisa": false,
         "bridePassportNumber": null,
+        "brideNriStatus":null,
         "brideCountryName": "",
         "brideVisaNumber": null,
         "brideVisaFrom": null,
@@ -705,7 +707,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
 
             // for NRI groom
             isGroomVisa: null,
-
+            groomNriStatus : ['', [Validators.maxLength(50)]],
             groomPassportNumber: [null, [Validators.maxLength(9)]],
             groomCountryName: [''],
             groomVisaNumber: ['', [Validators.maxLength(9)]],
@@ -723,7 +725,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
 
             // for NRI bride
             isBrideVisa: [false],
-
+            brideNriStatus : ['', [Validators.maxLength(50)]],
             bridePassportNumber: ['', [Validators.maxLength(9)]],
             brideCountryName: [''],
             brideVisaNumber: ['', [Validators.maxLength(9)]],
@@ -1449,7 +1451,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
         let step7 = 62;
         let step8 = 65;
         let step11 = 140;
-
+        debugger;
         if (flag != null) {
             //Check validation for step by step
             let count = flag;
