@@ -115,7 +115,55 @@
 						<input matInput required OnlyNumber maxlength="3" type="tel" formControlName="noOfShops" placeholder="{{'no_of_shops' | translate:translateKey }}">
 						<control-messages [control]="tempFireworksNocForm.get('noOfShops')"></control-messages>
 					</mat-form-field>
+					
+						<div class="col-md-10">
+							<h2>{{'shop_details' | translate: translateKey }}</h2>
+						</div>
+						<div class="col-md-2 pt-2" style="text-align: right;">
+							<button  (click)="openDialog()" type="button"
+							 mat-raised-button color="primary" data-toggle="modal">
+								{{'add_shop_detail' | translate:translateKey}}
+							</button>
+						</div>
 
+						<div class="col-md-12" *ngIf="tempFireworksNocForm.get('shopDetails')['controls'].length >= 1">
+							<!-- <h2 class="col-md-11 float-left">{{'o_t_occupational_therapy ' | translate:translateKey}} {{i+1}}</h2> -->
+	
+							<div class="table-responsive" formArrayName="shopDetails">
+								<table class="table">
+									<thead>
+										<tr>
+											<th scope="col" width="56">{{'s_no'| translate: translateKey}}</th>
+											<th scope="col">{{'shop_No'| translate: translateKey}}</th>
+											<th scope="col">{{'shop_Name'| translate: translateKey}}</th>
+											<th scope="col" *ngIf="tempFireworksNocForm.get('canEdit').value">{{'action'| translate: translateKey}}</th>
+											<th scope="col" *ngIf="tempFireworksNocForm.get('canEdit').value">{{'action'| translate: translateKey}}</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr *ngFor="let item of tempFireworksNocForm.get('shopDetails')['controls']; let i = index;"
+										 [formGroupName]="i">
+											<th scope="row">{{i+1}}</th>
+											<td>{{item.get('shopNo').value}}</td>
+											<td>{{item.get('shopName').value}}</td>
+											
+											<td *ngIf="tempFireworksNocForm.get('canEdit').value">
+												<button type="button" mat-icon-button (click)="editOT(i,item)">
+													<mat-icon matTooltip="Edit" class="m-1" color="primary">edit</mat-icon>
+												</button>
+											</td>
+											<td *ngIf="tempFireworksNocForm.get('canEdit').value">
+												<button type="button" mat-icon-button (click)="deleteOT(item.value, i)" class="m-1">
+													<mat-icon matTooltip="Delete" color="warn">delete</mat-icon>
+												</button>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+	
+					
 					<div class="col-md-4">
 							<div class="radioBtnError">
 								<mat-label>{{'shop_in_vmcboundry' | translate:translateKey }} *</mat-label>

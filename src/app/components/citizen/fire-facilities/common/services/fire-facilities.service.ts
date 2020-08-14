@@ -76,6 +76,16 @@ export class FireFacilitiesService {
 	}
 
 	/**
+	 * This method for delete array details
+	 * @param objId - Array item id
+	 */
+	deleteArrayDataTempFire(id:any, objId:any) {
+		// api/form/provisionalHospitalNoc/hospitalOTDetail/{id}/delete/{hospitalOTDetailId}
+		this.requestURL = `api/form/${this.apiType}/shopDetail/` + id + `/delete/` + objId;
+		return this.http.delete(this.requestURL);
+	}
+
+	/**
 	 * @param propertyTaxNo - serach by propertyTaxNo
 	 * return this.http.postFormData(`api/property/getOutstanding`, formData);
 	 */

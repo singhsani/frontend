@@ -21,6 +21,7 @@ import { ProHospitalNocComponent } from './pro-hospital-noc/pro-hospital-noc.com
 import { FinalHospitalNocComponent } from './final-hospital-noc/final-hospital-noc.component';
 import { FireCertificateComponent } from './fire-certificate/fire-certificate.component';
 import { DialogFormComponent } from './common/components/dialog-form/dialog-form.component';
+import { DialogFormComponentTempFire } from './common/components/dialog-form-tempFire/dialog-form.component';
 /* Import all shared, core and routing module end */
 
 @NgModule({
@@ -47,8 +48,9 @@ import { DialogFormComponent } from './common/components/dialog-form/dialog-form
 		ProHospitalNocComponent,
 		FinalHospitalNocComponent,
 		FireCertificateComponent,
-		DialogFormComponent
+		DialogFormComponent,
+		DialogFormComponentTempFire
 	],
-	entryComponents: [DialogFormComponent]
+	entryComponents: [DialogFormComponent,DialogFormComponentTempFire]
 })
 export class FireFacilitiesModule { }

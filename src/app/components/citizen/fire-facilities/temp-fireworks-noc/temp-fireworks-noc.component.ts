@@ -8,6 +8,12 @@ import { FormsActionsService } from '../../../../core/services/citizen/data-serv
 import * as _ from 'lodash';
 import { TranslateService } from '../../../../shared/modules/translate/translate.service';
 import * as moment from 'moment';
+import { ToastrService } from 'ngx-toastr';
+import { MatDialog, MatDialogConfig } from '@angular/material';
+import { CommonService } from 'src/app/shared/services/common.service';
+import { DialogFormComponentTempFire } from '../common/components/dialog-form-tempFire/dialog-form.component';
+import { FireFacilitiesService } from '../common/services/fire-facilities.service';
+
 
 @Component({
 	selector: 'app-temp-fireworks-noc',
@@ -42,7 +48,11 @@ export class TempFireworksNocComponent implements OnInit {
 		private router: Router,
 		private route: ActivatedRoute,
 		private formService: FormsActionsService,
-		public TranslateService: TranslateService
+		public TranslateService: TranslateService,
+		private commonService: CommonService,
+		private toastrService: ToastrService,
+		private fireFacilitiesService: FireFacilitiesService,
+		private dialog: MatDialog
 	) { }
 
 	/**
@@ -118,6 +128,50 @@ export class TempFireworksNocComponent implements OnInit {
 
 	}
 
+
+	openDialog() {
+		let returnArray = this.tempFireworksNocForm.get('shopDetails') as FormArray;
+		if (returnArray.length >= 15) {
+			this.commonService.openAlert("Warning", "Maximum Limit " + 15 + " .", "warning");
+		} else if (this.tempFireworksNocForm.get('canEdit').value) {
+			const dialogConfig = new MatDialogConfig();
+
+			dialogConfig.disableClose = true;
+			dialogConfig.autoFocus = true;
+			dialogConfig.data = {};
+
+			const dialogRef = this.dialog.open(DialogFormComponentTempFire, dialogConfig);
+
+			dialogRef.afterClosed().subscribe(
+				data => {
+					if (data) {
+						returnArray.push(this.createOTDetailArray(data));
+						this.tempFireworksNocForm.get('noOfShops').setValue(returnArray.length)
+					}
+
+				}
+			);
+		}
+		else {
+			this.commonService.openAlert("Warning", "OT Detail is already added", "warning");
+		}
+	}
+
+	/**
+	 * Method is used to return array
+	 * @param data : person data array 
+	 */
+	createOTDetailArray(data?: any) {
+		return this.fb.group({
+			// serviceFormId: this.formId,
+			id: data.id ? data.id : null,
+			shopNo: [data.shopNo ? data.shopNo : null, [Validators.maxLength(150)]],
+			shopName: [data.shopName ? data.shopName : null, [Validators.maxLength(5)]],
+		
+		
+		})
+
+	}
     /**
      * This method is change date formate.
      * @param date : Input date(any format).
@@ -143,6 +197,10 @@ export class TempFireworksNocComponent implements OnInit {
 				if (!applicantNameGujFields.value) {
 					applicantNameGujFields.setValue(this.TranslateService.getEngToGujTranslation(applicantNameValue))
 				}
+
+				res.shopDetails.forEach(app => {
+					(<FormArray>this.tempFireworksNocForm.get('shopDetails')).push(this.createOTDetailArray(app));
+				});
 
 				res.serviceDetail.serviceUploadDocuments.forEach(app => {
 					(<FormArray>this.tempFireworksNocForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.fireFacilityConfig.createDocumentsGrp(app));
@@ -197,7 +255,7 @@ export class TempFireworksNocComponent implements OnInit {
 			weatherExitShownInMap: [null, [Validators.required]],//true/false
 			noOfExits: [null, [Validators.required, Validators.maxLength(3)]],
 			usageOfInflammable: [null, [Validators.required, Validators.maxLength(500)]],
-
+			shopDetails: this.fb.array([]),
 			/* Step 3 controls start */
 			securityArrangement: [null, [Validators.required]],//true/false
 			parkingArrangement: [null, [Validators.required]],//true/false
@@ -241,6 +299,69 @@ export class TempFireworksNocComponent implements OnInit {
 			}
 
 		}
+	}
+
+	/**
+	 * This methos for edit OT data
+	 * @param arrayId : OT index
+	 * @param otdata : object data
+	 */
+	editOT(arrayId: any, otdata: any) {
+		let id = otdata.controls.id.value;
+		let shopNo = otdata.controls.shopNo.value;
+		let shopName = otdata.controls.shopName.value;
+		
+
+		const dialogConfig = new MatDialogConfig();
+
+		dialogConfig.disableClose = true;
+		dialogConfig.autoFocus = true;
+
+		dialogConfig.data = {
+			id, shopNo, shopName
+		}
+
+		const dialogRef = this.dialog.open(DialogFormComponentTempFire,
+			dialogConfig);
+
+		dialogRef.afterClosed().subscribe(
+			val => {
+				if (val) {
+					let returnArray = this.tempFireworksNocForm.get('shopDetails') as FormArray;
+					returnArray.controls[arrayId].setValue(val);
+				}
+			}
+		);
+	}
+
+	/**
+	 * Method is used to delete OT information from shopDetails array.
+	 * @param OTData - OT data.
+	 * @param index - index of shopDetails array
+	 */
+	deleteOT(OTData: any, index: number) {
+		let returnArray = this.tempFireworksNocForm.get('shopDetails') as FormArray;
+		// this.addItem(persontype).controls.splice(index, 1);
+		this.commonService.deleteAlert('Are you sure?', "You won't be able to revert this!", 'warning', '', performDelete => {
+			if (this.tempFireworksNocForm.get('noOfShops').value >= 1) {
+				if (OTData.id == null) {
+					returnArray.removeAt(index);
+					this.tempFireworksNocForm.get('noOfShops').setValue(this.tempFireworksNocForm.get('noOfShops').value - 1);
+					this.toastrService.success('OT details has been removed.')
+				} else {
+					//call api get response than delete
+					this.fireFacilitiesService.deleteArrayDataTempFire(this.tempFireworksNocForm.get('id').value, OTData.id).subscribe(respData => {
+						if (respData.success) {
+							returnArray.removeAt(index);
+							this.tempFireworksNocForm.get('noOfShops').setValue(returnArray.length);
+							this.toastrService.success('OT details has been removed.')
+						}
+					})
+				}
+
+			}
+		}
+		);
 	}
 
 
