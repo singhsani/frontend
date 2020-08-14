@@ -667,7 +667,7 @@ export class BirthRegistrationComponent implements OnInit {
 			// 	}
 			// }
 			if(i == 0){
-				this.commonService.openAlert(this.config.DELAYED_REGISTRATION_TITLE, "", "warning", this.config.LESS_YEAR_AND_MORE_30_MESSAGE);
+				this.commonService.openAlert(this.config.DELAYED_REGISTRATION_TITLE, "", "warning", this.config.LESS_YEAR_AND_MORE_30_MESSAGE_BIRTH);
 			}else {
 				this.getChildData().at(i).get('birthDate').setValue(null);
 				this.commonService.openAlert(this.config.DELAYED_REGISTRATION_TITLE, "", "warning", this.config.ONLY_ONE_CHILD_REG_WITH_DELAYED);
@@ -687,7 +687,7 @@ export class BirthRegistrationComponent implements OnInit {
 			// 	}
 			// }
 			this.getChildData().at(i).get('birthDate').setValue(null);
-			this.commonService.openAlert(this.config.DELAYED_REGISTRATION_TITLE, "", "warning", this.config.MORE_THAN_YEAR_MESSAGE);
+			this.commonService.openAlert(this.config.DELAYED_REGISTRATION_TITLE, "", "warning", this.config.MORE_THAN_YEAR_MESSAGE_BIRTH);
 			return;
 		}
 	}
@@ -926,10 +926,14 @@ export class BirthRegistrationComponent implements OnInit {
 	 * Mehtod is used to set total alive child and populated automatically.
 	 */
 	setTotalChildAlive() {
-		this.birthCertificateForm.get('totalAliveChild').setValue(this.birthCertificateForm.get('noOfChilds').value);
+		let totalAliveChilderen = this.birthCertificateForm.get('totalChildsBeforePregnancy').value
+		if (!totalAliveChilderen) {
+			totalAliveChilderen = 0
+		}
+		this.birthCertificateForm.get('totalAliveChild').setValue(totalAliveChilderen + this.birthCertificateForm.get('noOfChilds').value);
 	}
 
-	/**
+	/**2ac
 	 * Method is used to delete child information from child array.
 	 * @param childData - child data.
 	 * @param index - index of child array
