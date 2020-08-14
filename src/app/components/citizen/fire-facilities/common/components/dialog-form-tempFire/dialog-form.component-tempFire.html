@@ -1,0 +1,27 @@
+<h2 mat-dialog-title>{{formTitle}}</h2>
+
+
+<mat-dialog-content [formGroup]="form">
+  <div class="row">
+    <mat-form-field class="col-md-12">
+      <input matInput placeholder="{{'shop_No'| translate: translateKey}}" maxlength="150" formControlName="shopNo"
+        required>
+      <control-messages [control]="form.get('shopNo')"></control-messages>
+    </mat-form-field>
+    <mat-form-field class="col-md-12">
+      <input matInput placeholder="{{'shop_Name'| translate: translateKey}}" maxlength="5" 
+        formControlName="shopName" required>
+      <control-messages [control]="form.get('shopName')"></control-messages>
+    </mat-form-field>
+    
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button class="mat-raised-button mat-primary" [disabled]="!form.valid" (click)="save()">
+    Save
+  </button>
+  <button class="mat-raised-button" (click)="close()">
+    Close
+  </button>
+</mat-dialog-actions>
