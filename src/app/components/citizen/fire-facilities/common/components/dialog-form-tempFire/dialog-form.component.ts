@@ -22,8 +22,8 @@ export class DialogFormComponentTempFire implements OnInit {
 
     this.form = fb.group({
       id: [id ? id : null],
-      shopNo: [shopNo ? shopNo : null, [Validators.required, Validators.maxLength(150)]],
-      shopName: [shopName ? shopName : null, [Validators.required, Validators.maxLength(5)]],
+      shopNo: [shopNo ? shopNo : null, [Validators.required, Validators.maxLength(50)]],
+      shopName: [shopName ? shopName : null, [Validators.required, Validators.maxLength(50)]],
       });
   }
 
