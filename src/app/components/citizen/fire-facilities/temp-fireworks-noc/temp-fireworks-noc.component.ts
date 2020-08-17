@@ -64,6 +64,7 @@ export class TempFireworksNocComponent implements OnInit {
 			this.formId = Number(param.get('id'));
 			this.apiCode = param.get('apiCode');
 			this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
+			this.fireFacilitiesService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
 		});
 		this.getLookupData();
 		if (!this.formId) {
@@ -165,8 +166,8 @@ export class TempFireworksNocComponent implements OnInit {
 		return this.fb.group({
 			// serviceFormId: this.formId,
 			id: data.id ? data.id : null,
-			shopNo: [data.shopNo ? data.shopNo : null, [Validators.maxLength(150)]],
-			shopName: [data.shopName ? data.shopName : null, [Validators.maxLength(5)]],
+			shopNo: [data.shopNo ? data.shopNo : null, [Validators.maxLength(50)]],
+			shopName: [data.shopName ? data.shopName : null, [Validators.maxLength(50)]],
 		
 		
 		})
@@ -347,14 +348,14 @@ export class TempFireworksNocComponent implements OnInit {
 				if (OTData.id == null) {
 					returnArray.removeAt(index);
 					this.tempFireworksNocForm.get('noOfShops').setValue(this.tempFireworksNocForm.get('noOfShops').value - 1);
-					this.toastrService.success('OT details has been removed.')
+					this.toastrService.success('Shop details has been removed.')
 				} else {
 					//call api get response than delete
 					this.fireFacilitiesService.deleteArrayDataTempFire(this.tempFireworksNocForm.get('id').value, OTData.id).subscribe(respData => {
 						if (respData.success) {
 							returnArray.removeAt(index);
 							this.tempFireworksNocForm.get('noOfShops').setValue(returnArray.length);
-							this.toastrService.success('OT details has been removed.')
+							this.toastrService.success('Shop Details has been removed.')
 						}
 					})
 				}
