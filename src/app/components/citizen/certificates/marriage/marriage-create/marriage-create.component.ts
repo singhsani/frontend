@@ -1230,6 +1230,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
 	 * Method is create required document array
 	 */
     requiredDocumentList() {
+        
 
         this.uploadFilesArray = [];
 
@@ -1264,6 +1265,29 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
                 }
 
             });
+        } else {
+            _.forEach(this.marriageFormGroup.get('serviceDetail').get('serviceUploadDocuments').value, (value) => {
+
+                if (value.dependentFieldName == null && value.mandatory && value.isActive && value.requiredOnCitizenPortal) {
+                    this.uploadFilesArray.push({
+                        'labelName': value.documentLabelEn,
+                        'fieldIdentifier': value.fieldIdentifier,
+                        'documentIdentifier': value.documentIdentifier
+                    })
+                }
+                if (value.dependentFieldName) {
+                    let listofFields = value.dependentFieldName;
+                    if (value.mandatory && value.isActive && value.requiredOnCitizenPortal) {
+                        this.uploadFilesArray.push({
+                            'labelName': value.documentLabelEn,
+                            'fieldIdentifier': value.fieldIdentifier,
+                            'documentIdentifier': value.documentIdentifier
+                        })
+                    }
+                }
+
+            });
+
         }
         // let groomreligionChange = this.marriageFormGroup.controls.groomReligion.get("code").value;
         // let bridereligionChange = this.marriageFormGroup.controls.brideReligion.get("code").value;
@@ -1276,7 +1300,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
         // if (brideVisa == null) {
         //     this.marriageFormGroup.get("isBrideVisa").setValue(false);
         // }
-        // debugger;
+        // ;
         // if (!_.isEmpty(groomreligionChange) && !_.isEmpty(bridereligionChange)) {
 
         //     _.forEach(this.marriageFormGroup.get('serviceDetail').get('serviceUploadDocuments').value, (value) => {
@@ -1314,7 +1338,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
         //             // }
 
         //             // if (groomVisa && value.dependentFieldName == 'isGroomVisa') {
-        //             //     debugger;
+        //             //     ;
         //             //     if (value.mandatory && value.isActive && value.requiredOnCitizenPortal) {
         //             //         this.uploadFilesArray.push({
         //             //             'labelName': value.documentLabelEn,

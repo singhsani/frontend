@@ -457,23 +457,23 @@
 
                     <mat-form-field class="col-md-4">
                         <input required maxlength="1" (change)="totalChildCalculate()" OnlyNumber matInput placeholder="{{'total_boy_child' | translate:translateKey}}"
-                            formControlName="totalBoyChildsBeforePregnancy" required>
-                        <control-messages [control]="birthCertificateForm.get('totalBoyChildsBeforePregnancy')">
+                            formControlName="totalBoyChilds" required>
+                        <control-messages [control]="birthCertificateForm.get('totalBoyChilds')">
                         </control-messages>
 
                     </mat-form-field>
 
                     <mat-form-field class="col-md-4">
                         <input required maxlength="1" (change)="totalChildCalculate()" OnlyNumber matInput placeholder="{{'total_girl_child' | translate:translateKey}}"
-                            formControlName="totalGirlChildsBeforePregnancy" required>
-                        <control-messages [control]="birthCertificateForm.get('totalGirlChildsBeforePregnancy')">
+                            formControlName="totalGirlChilds" required>
+                        <control-messages [control]="birthCertificateForm.get('totalGirlChilds')">
                         </control-messages>
                     </mat-form-field>
 
                     <mat-form-field class="col-md-4">
-                        <input readonly maxlength="1" OnlyNumber matInput placeholder="{{'total_child_before_pregnancy' | translate:translateKey}}"
-                            formControlName="totalChildsBeforePregnancy">
-                        <control-messages [control]="birthCertificateForm.get('totalChildsBeforePregnancy')">
+                        <input readonly maxlength="1" OnlyNumber matInput placeholder="{{'total_childs' | translate:translateKey}}"
+                            formControlName="totalChilds">
+                        <control-messages [control]="birthCertificateForm.get('totalChilds')">
                         </control-messages>
                     </mat-form-field>
 
