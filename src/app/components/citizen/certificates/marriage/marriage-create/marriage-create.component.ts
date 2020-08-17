@@ -1057,7 +1057,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
         this.marriageFormGroup.get('groomParentsAddressResidence').get('addressType').setValue('GROOM_PARENTS_ADDRESS_RESIDENCE');
         this.marriageFormGroup.get('brideParentsAddress').get('addressType').setValue('BRIDE_PARENTS_ADDRESS');
         this.marriageFormGroup.get('brideParentsAddressResidence').get('addressType').setValue('GROOM_PARENTS_ADDRESS_RESIDENCE');
-
+        this.requiredDocumentList()
     }
 
     /**
@@ -1239,21 +1239,19 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
         this.listOfDependentAtt.push(organizationCategory);
         this.listOfDependentAtt.push(groomVisa);
         this.listOfDependentAtt.push(brideVisa);
-        // let sortedArray:any = this.marriageFormGroup.get('serviceDetail').get('serviceUploadDocuments').value;
-        // this.marriageFormGroup.get('serviceDetail').get('serviceUploadDocuments'). = sortedArray;
-        if (organizationCategory && groomVisa && brideVisa) {
-            _.forEach(this.marriageFormGroup.get('serviceDetail').get('serviceUploadDocuments').value, (value) => {
+        _.forEach(this.marriageFormGroup.get('serviceDetail').get('serviceUploadDocuments').value, (value) => {
 
-                if (value.dependentFieldName == null && value.mandatory && value.isActive && value.requiredOnCitizenPortal) {
-                    this.uploadFilesArray.push({
-                        'labelName': value.documentLabelEn,
-                        'fieldIdentifier': value.fieldIdentifier,
-                        'documentIdentifier': value.documentIdentifier
-                    })
-                }
-                if (value.dependentFieldName) {
-                    let listofFields = value.dependentFieldName;
-                    if (value.mandatory && value.isActive && value.requiredOnCitizenPortal) {
+            if (value.dependentFieldName == null && value.mandatory && value.isActive && value.requiredOnCitizenPortal) {
+                this.uploadFilesArray.push({
+                    'labelName': value.documentLabelEn,
+                    'fieldIdentifier': value.fieldIdentifier,
+                    'documentIdentifier': value.documentIdentifier
+                })
+            }
+            if (value.dependentFieldName) {
+                let listofFields = value.dependentFieldName;
+                if (this.listOfDependentAtt[0] == 'HINDU') {
+                    if (listofFields.includes('HINDU')) {
                         this.uploadFilesArray.push({
                             'labelName': value.documentLabelEn,
                             'fieldIdentifier': value.fieldIdentifier,
@@ -1261,32 +1259,26 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
                         })
                     }
                 }
-
-            });
-        } else {
-            _.forEach(this.marriageFormGroup.get('serviceDetail').get('serviceUploadDocuments').value, (value) => {
-
-                if (value.dependentFieldName == null && value.mandatory && value.isActive && value.requiredOnCitizenPortal) {
+                if (this.listOfDependentAtt[2] == true && listofFields.includes('isBrideVisa')) {
                     this.uploadFilesArray.push({
                         'labelName': value.documentLabelEn,
                         'fieldIdentifier': value.fieldIdentifier,
                         'documentIdentifier': value.documentIdentifier
                     })
                 }
-                if (value.dependentFieldName) {
-                    let listofFields = value.dependentFieldName;
-                    if (value.mandatory && value.isActive && value.requiredOnCitizenPortal) {
-                        this.uploadFilesArray.push({
-                            'labelName': value.documentLabelEn,
-                            'fieldIdentifier': value.fieldIdentifier,
-                            'documentIdentifier': value.documentIdentifier
-                        })
-                    }
+                if (this.listOfDependentAtt[1] == true && listofFields.includes('isGroomVisa')) {
+                    this.uploadFilesArray.push({
+                        'labelName': value.documentLabelEn,
+                        'fieldIdentifier': value.fieldIdentifier,
+                        'documentIdentifier': value.documentIdentifier
+                    })
                 }
 
-            });
+            }
 
-        }
+        });
+
+        
         // let groomreligionChange = this.marriageFormGroup.controls.groomReligion.get("code").value;
         // let bridereligionChange = this.marriageFormGroup.controls.brideReligion.get("code").value;
 
