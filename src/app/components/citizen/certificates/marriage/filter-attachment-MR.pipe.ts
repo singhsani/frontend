@@ -16,7 +16,7 @@ export class FilterAttachmentMRPipe implements PipeTransform {
 
 				else {
 					let dependentFieldArray = value.dependentFieldName;
-					if(category[0] != 'HINDU'){
+					if(category[0] == 'HINDU'){
 						if (dependentFieldArray.includes('HINDU')) {
 							documentFilesArray.push(value);
 						}
