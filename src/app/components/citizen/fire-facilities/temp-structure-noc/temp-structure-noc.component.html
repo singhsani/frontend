@@ -103,7 +103,7 @@
 
 					<mat-form-field class="col-md-6">
 						<input matInput [matDatepicker]="picker2" formControlName="toDate" placeholder="{{'to_date' | translate:translateKey }}"
-						 required (dateChange)="dateFormate($event.value,'toDate')">
+						[min]="tempStructureNocForm.get('fromDate').value" [max]="disablefutureDate" required (dateChange)="dateFormate($event.value,'toDate')">
 						<mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
 						<mat-datepicker #picker2 touchUi="true"></mat-datepicker>
 						<div align="end" class="default-show-hint mat-hint mat-right">{{fireFacilityConfig.DATE_HINT_MSG}}</div>

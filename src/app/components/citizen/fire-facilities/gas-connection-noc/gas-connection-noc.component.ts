@@ -88,7 +88,7 @@ export class GasConnectionNocComponent implements OnInit {
 			this.FS_CONNECTION_PURPOSE = res.FS_CONNECTION_PURPOSE;
 			this.FS_FIRE_PLACE = res.FS_FIRE_PLACE;
 			this.FS_SUBJECT = res.FS_SUBJECT;
-			this.wardNo = res.FS_WARD_NO;
+			this.wardNo = res.WARD;
 		});
 	}
 	/**
