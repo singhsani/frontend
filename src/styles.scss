@@ -62,7 +62,7 @@ h1 { font-size: 30px; margin-bottom: 10px; }
 
 .heading { position: relative; }
 .heading::after { content: ''; background: $primaryGradient; position: absolute; left: -24px; top: 0; width: 5px; height: 100%; }
-   
+
 
 // Login
 .mainBg { background: url(assets/images/login-main-bg.jpg) no-repeat center 0; width: 100%; height: 100%; background-size: cover; overflow-y: auto;  display: table; vertical-align: middle; }
@@ -173,7 +173,7 @@ h1 { font-size: 30px; margin-bottom: 10px; }
 .redCard {box-shadow: 0 4px 20px 0 rgba(0,0,0,.14), 0 7px 10px -5px rgba(233,30,99,.4); background: linear-gradient(60deg,#ec407a,#d81b60);}
 .greenCard {box-shadow: 0 4px 20px 0 rgba(0,0,0,.14), 0 7px 10px -5px rgba(76,175,80,.4); background: linear-gradient(60deg,#66bb6a,#43a047);}
 .kyeBlueCard {box-shadow: 0 4px 20px 0 rgba(0,0,0,.14), 0 7px 10px -5px rgba(0,188,212,.4); background: linear-gradient(60deg,#26c6da,#00acc1);}
-.grayCard {box-shadow: 0 4px 20px 0 rgba(0,0,0,.14), 0 7px 10px -5px rgba(120,144,156,.4); 
+.grayCard {box-shadow: 0 4px 20px 0 rgba(0,0,0,.14), 0 7px 10px -5px rgba(120,144,156,.4);
     background: linear-gradient(60deg,#90A4AE,#78909C);}
 
 
@@ -249,7 +249,7 @@ h1 { font-size: 30px; margin-bottom: 10px; }
 .mat-step-label-active.mat-step-label-selected::after { content: ""; position: absolute; bottom: 0; left: 0; width: 100%; height: 3px; background: $primaryGradient; }
 .mat-step-icon-not-touched {margin-right: 0 !important;}
 
-.firstCell { 
+.firstCell {
     .mat-header-row, .mat-row {border: 0; padding: 0 15px;}
     .mat-header-row > .mat-header-cell:first-child, .mat-row > .mat-cell:first-child {flex: inherit;  width: 35px; padding-left: 0;}
 }
@@ -294,7 +294,7 @@ h1 { font-size: 30px; margin-bottom: 10px; }
 }
 
 .closeAttachFile {width: 36px !important; height: 36px !important; line-height: 36px !important; border-radius:0 !important; margin-left: -36px !important;
-    .mat-icon {font-size: 20px; border-radius:50%; 
+    .mat-icon {font-size: 20px; border-radius:50%;
         &:hover {background: #fff !important;}
     }
 }
@@ -434,7 +434,7 @@ mat-footer-row, mat-header-row, mat-row, td.mat-cell, td.mat-footer-cell, th.mat
         }
     }
     }
-    
+
     .toast-container {
         .toast {box-shadow: none; padding: 10px 15px 10px 50px; background-size: 20px;
         &:hover {box-shadow: none;}
@@ -481,11 +481,11 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
 
 .titleBar {background: #f1f1f1; position: absolute; top: 49px; left: 0; width: 100%; padding: 6px 0;  z-index: 2;
     .container {padding: 0; margin: 0 auto; max-width: 1200px;}
-    .backArrow {min-width: 36px !important; float: left; border-radius:50%; padding: 0; 
+    .backArrow {min-width: 36px !important; float: left; border-radius:50%; padding: 0;
         .mat-icon {color: rgb(68, 55, 55);}
     }
     h1 {color: #666; font-size: 16px; margin: 0; padding: 8px 0 0 15px; float: left;}
-    .breadcrumbNav {list-style-type: none; margin: 0; 
+    .breadcrumbNav {list-style-type: none; margin: 0;
         li {float: left; color: #808080; font-size: 15px; margin-right: 15px; padding-right: 2px; line-height: 34px; position: relative;
             a {color: #808080; min-width: 70px;
                 span {font-size: 15px;}
@@ -498,7 +498,7 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
             }
             &:last-child { line-height: 36px;}
             &:last-of-type:after { content: none;}
-           
+
         }
     }
 }
@@ -529,7 +529,7 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
     .moduleIcon {width: 65px; height: 65px; line-height: 65px; background: #d1c4e9; border-radius:50%; display: inline-block;
         img {width: 40px;}
     }
-    
+
     .mat-tab-label:nth-child(1), .mat-tab-label:nth-child(6)  {
         .moduleIcon{background-color: #ed5d7b;}
     }
@@ -565,7 +565,7 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
     // .col-md-3, .col-sm-4 {padding-bottom: 18px;}
     .colBtn {padding:9px 15px;} /* width: 25%; float: left;*/
     .mat-primary {color: #423c51; font-size: 15px; font-weight: 400; border-radius: 3px; border:1px solid #b2b2b2; display: block; width: 100%; text-overflow: ellipsis;
-        overflow: hidden; 
+        overflow: hidden;
         &:hover {background: $colorBlue; border-color: $colorBlue; color: #fff;}
     }
 }
@@ -644,9 +644,9 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
 }
 
 /*** Stepper Pages ***/
-.stepperNav { 
+.stepperNav {
     .mat-tab-header {margin-bottom: 20px;}
-       
+
     .stepperMinHeight {min-height: 300px; align-content: start;}
     // .mat-tab-body {min-height: 400px; padding-bottom:70px !important;
     //     app-action-bar {width: 100%; position: absolute; bottom: 0; left: 0;}
@@ -661,7 +661,7 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
     // .mat-icon {font-size: 22px; float: left; margin-right: 13px;}
     .mat-tab-label-active {color:$colorBlue; font-weight: 500;}
    // .mat-tab-label-content {white-space: normal; padding: 0 10px;}
- 
+
 }
 
 .fotButtonBar {background: #f2f2f2; padding: 25px 0 10px; margin-top: 140px !important;}
@@ -717,7 +717,7 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
     .container {margin-top: 65px;}
     .mainBg {display: block; vertical-align:inherit;}
     .verticalAlign {display: block; vertical-align:inherit; padding-top: 0;}
-    
+
     .header {position: static; padding:15px 5px 70px;
         ul { margin:0; padding: 4px 0 0 0;}
         .logo {margin-left: 0 !important; padding-right: 0 !important;}
@@ -726,7 +726,7 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
        .logo {margin-left:0px !important; text-align: left;}
        .logoText { font-size: 12px;}
     }
-     
+
     .moduleList {
         .mat-tab-label-container {overflow-x: auto; padding-bottom: 5px;}
         .mat-tab-header-pagination {display: none !important;}
@@ -742,7 +742,7 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
             }
         }
     }
-     
+
 }
 
 // *********  shop-lic-new  **********
@@ -752,7 +752,7 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
     .mobileLabel {display: none;}
 }
 
-@media (max-width: 767px) { 
+@media (max-width: 767px) {
     .userName span.ng-star-inserted {display: none;}
 
     .container {margin-top: 70px;}
@@ -761,7 +761,7 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
     .recentList  {padding: 8px 15px;}
 
     .profilePage .updateProfileBtn {position: static; width: 100%;}
-    .stepperNav .mat-raised-button {padding: 0 20px !important; min-width: initial; line-height: 30px !important;} 
+    .stepperNav .mat-raised-button {padding: 0 20px !important; min-width: initial; line-height: 30px !important;}
 
     .mainMenu {
         .linkName {display: none;}
@@ -774,8 +774,8 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
             padding: 0 !important;
             margin: 0 !important;
         }
-    }  
-    
+    }
+
     .responsiveTables {
         thead {display: none;}
         td {width: 100% !important; display: flex; align-items: stretch; text-align: left !important; align-items: center; padding: 0 10px;}
@@ -787,7 +787,7 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
     //  .table-inputW100p .mat-form-field-infix {width: auto !important;}
     .pageTitle {font-size: 17px; padding: 7px 20px;}
     .olList {padding-left: 15px;}
-    
+
 }
 
 /*** for reduce the width and height of datepicker ***/
@@ -851,7 +851,7 @@ textarea.gujInputCls {margin-bottom: 0;}
 ::-webkit-scrollbar {width: 0; height: 0;}
 *{-webkit-print-color-adjust: exact; color-adjust: exact;}
 
-} 
+}
 /* This is use for printing receipt in div end */
 
 .vertline{
@@ -910,16 +910,16 @@ textarea.gujInputCls {margin-bottom: 0;}
 /* style for date format hint*/
 .default-show-hint { font-size: 11px;  display: block; position: absolute; bottom: -16px; right: -18px; }
 
- // Select Dropdown //  
+ // Select Dropdown //
 //  .mat-tab-body-wrapper {overflow: visible !important;}
 //  .mat-tab-body-content {overflow: visible !important;}
 //  .mat-tab-group.mat-tab-group-dynamic-height .mat-tab-body.mat-tab-body-active {overflow: visible !important;}
 
 
 // Part 2 Start ------------------------------------------------
-.responsiveTableRow {    
+.responsiveTableRow {
     .ngSelect { min-width: 160px; max-width: 160px;}
-    .ng-select div {text-overflow: ellipsis; overflow: hidden;}
+    .ng-select div {text-overflow: ellipsis; /* overflow: hidden; */}
     thead tr > th:first-child, tbody tr > td:first-child {padding-left: 10px; }
       td{vertical-align: middle;}
       p{margin-bottom: 0px}
@@ -965,9 +965,13 @@ textarea.gujInputCls {margin-bottom: 0;}
 }
 
 
+  .mat-dialog-content {max-height: 100vh;}
+  .mat-dialog-actions {margin-bottom:0;}
+
+
 // Start Icons ----------------------------------
 .moduleList .moduleIcon { background-repeat: no-repeat !important; background-position: center !important; border: 1px solid #673ab7;}
-.moduleList .mat-tab-label-active .moduleIcon.ng-star-inserted {background-repeat: no-repeat !important; background-position: center !important; border-color:#fff;}
+.moduleListcancellationAlertFormcancellationAlertForm .mat-tab-label-active .moduleIcon.ng-star-inserted {background-repeat: no-repeat !important; background-position: center !important; border-color:#fff;}
 .BOOKINGMODULE  {background:url('assets/icons/booking-facilities.svg') !important;}
 .moduleList .mat-tab-label-active .BOOKINGMODULE  {background:url('assets/icons/booking-facilities-h.svg') !important;}
 
@@ -1035,7 +1039,7 @@ textarea.gujInputCls {margin-bottom: 0;}
      color: #292828 !important;
 }
 
-.mat-form-field-invalid .mat-icon, 
+.mat-form-field-invalid .mat-icon,
 .mat-form-field-invalid .mat-datepicker-toggle-default-icon,
 .mat-form-field.mat-form-field-invalid .mat-form-field-label,
 .ng-select.ng-invalid.ng-touched .ng-placeholder, .ng-select.ng-invalid.ng-touched .ng-arrow-wrapper .ng-arrow {
@@ -1047,7 +1051,7 @@ textarea.gujInputCls {margin-bottom: 0;}
 
  .createMarriageReg .mat-tab-label{
     width: 200px;
-}   
+}
 
 @-moz-document url-prefix() {
     .stepperNav .mat-tab-label{
@@ -1087,11 +1091,11 @@ textarea.gujInputCls {margin-bottom: 0;}
 
 .iframeTitleBar {background: #f1f1f1; position: absolute; top: 0px; left: 0; width: 100%; padding: 6px 0;  z-index: 2;
     .container {padding: 0; margin: 0 auto; max-width: 1200px;}
-    .backArrow {min-width: 36px !important; float: left; border-radius:50%; padding: 0; 
+    .backArrow {min-width: 36px !important; float: left; border-radius:50%; padding: 0;
         .mat-icon {color: rgb(68, 55, 55);}
     }
     h1 {color: #666; font-size: 16px; margin: 0; padding: 8px 0 0 15px; float: left;}
-    .breadcrumbNav {list-style-type: none; margin: 0; 
+    .breadcrumbNav {list-style-type: none; margin: 0;
         li {float: left; color: #808080; font-size: 15px; margin-right: 15px; padding-right: 2px; line-height: 34px; position: relative;
             a {color: #808080; min-width: 70px;
                 span {font-size: 15px;}
@@ -1104,7 +1108,7 @@ textarea.gujInputCls {margin-bottom: 0;}
             }
             &:last-child { line-height: 36px;}
             &:last-of-type:after { content: none;}
-           
+
         }
     }
 }
