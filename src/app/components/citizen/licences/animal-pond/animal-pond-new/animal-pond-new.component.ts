@@ -688,6 +688,12 @@ export class AnimalPondNewComponent implements OnInit {
 		this.animalPondNewForm.patchValue(this.dummyJSON);
 	}
 
+	onCardChange(event,cardName){
+		if(event.target.value === ""){
+			this.animalPondNewForm.get(cardName).setValue(null);
+		}
+	}
+
 	dummyJSON:any= {
 
 		"personType": {

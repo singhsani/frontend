@@ -111,7 +111,7 @@
 				</mat-form-field>
 				<mat-form-field class="col-md-4">
 					<input matInput upperCase appAlphaNumeric maxlength="10" required formControlName="holderPanNo"
-						placeholder="{{'holder_pan_no' | translate:translateKey}}">
+						placeholder="{{'holder_pan_no' | translate:translateKey}}"  (change)="onCardChange($event,'holderPanNo')">
 					<control-messages [control]="animalPondNewForm.get('holderPanNo')"></control-messages>
 				</mat-form-field>
 
