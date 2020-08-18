@@ -358,7 +358,7 @@ export class MyApplicationsComponent implements OnInit,OnChanges {
 	isEditOptDisplay(row) {
 		if (row.serviceType === 'PEC_REG' && row.serviceType === 'PRC_REG')
 			return false;
-		else if (row.canEdit || row.fileStatus === 'QUERIED')
+		else if (row.canEdit || row.fileStatus === 'QUERIED' || row.fileStatus === 'QUERY_RAISED')
 			return true;
 	}
 
