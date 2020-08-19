@@ -438,6 +438,12 @@ export class MuttonFishNewComponent implements OnInit {
 
   }
 
+  onCardChange(event,cardName){
+	if(event.target.value === "" || this.muttonFishNewForm.get(cardName).invalid){
+		this.muttonFishNewForm.get(cardName).setValue(null);
+	}
+}
+
 	patchValue(){
 		this.muttonFishNewForm.patchValue(this.dummyJSON);
 	}

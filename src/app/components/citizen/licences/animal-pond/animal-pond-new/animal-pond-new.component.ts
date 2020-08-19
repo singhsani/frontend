@@ -689,7 +689,7 @@ export class AnimalPondNewComponent implements OnInit {
 	}
 
 	onCardChange(event,cardName){
-		if(event.target.value === ""){
+		if(event.target.value === "" ||  this.animalPondNewForm.get(cardName).invalid){
 			this.animalPondNewForm.get(cardName).setValue(null);
 		}
 	}
