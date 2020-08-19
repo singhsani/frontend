@@ -161,6 +161,7 @@ export class MyApplicationsComponent implements OnInit,OnChanges {
 	 * @param id - citizen id
 	 */
 	redirectToEdit(apiCode: string, id: number) {
+		
 		if (apiCode == 'HEL-DR') {
 			this.router.navigate(['citizen/certificates/birth-death/deathReg', id, apiCode]);
 
@@ -503,20 +504,25 @@ export class MyApplicationsComponent implements OnInit,OnChanges {
 	 * This method is use to show For Query Raise remarks.
 	 */
 	remarksDisplayForQueryRaise(data) {
-		//this.queryrraiseRemarks = data.remarks;
-		this.queryrraiseRemarks = 'Remark here';
+		this.queryrraiseRemarks = data.remarks;
+		//this.queryrraiseRemarks = 'Remark here';
 		// this.queryrraisereason = data.reason;
-		this.queryrraisereason = 'Remark reason here';
+		//this.queryrraisereason = 'Remark reason here';
 	}
 
 
 
 	getInnerHTMLForRemark() {
-		return `<b>Remarks :</b> ${this.queryrraiseRemarks} <br> <b>Reason :</b> ${this.queryrraisereason}`;
+		return `<b>Remarks :</b> ${this.queryrraiseRemarks}`;
 	}
 
 	isQueryRaiseDisplay(row) {
-		return true;
+		if(row.fileStatus === 'QUERY_RAISED'){
+			return true;
+		}else{
+			return false;
+		}
+		
 	}
 
 	isDownloadLOI(row) {

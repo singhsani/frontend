@@ -88,11 +88,11 @@
                     <mat-icon>more_vert</mat-icon>
                 </button>
                 <mat-menu #menu="matMenu">
-                    <!-- <button mat-menu-item *ngIf="isQueryRaiseDisplay(row)" color="primary"
+                     <button mat-menu-item *ngIf="isQueryRaiseDisplay(row)" color="primary"
                         (click)="openModal(queryRaiseTemplate);remarksDisplayForQueryRaise(row)">
                         <mat-icon class="m-1" title="Remark">help_outline</mat-icon>
                         Remark
-                    </button> -->
+                    </button> 
 
                     <button mat-menu-item *ngIf="(isDownloadLOI(row) && isDownloadDisplay(row))" color="primary" (click)="getLoi(row)">
                         <mat-icon class="m-1" title="Download">cloud_download</mat-icon>
