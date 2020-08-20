@@ -25,7 +25,7 @@ export class HospitalConfig extends ComponentConfig {
              registration date is more than 21 days and there will be extra Fee of Rs. 20=00 plus departmental charges as delayed fee.`;
 
             this.LESS_YEAR_AND_MORE_30_MESSAGE = `<p>It will considered as delayed ${this.certType} registration because
-             registration date is more than 30 days so Rs. 50=00 plus departmental charges as delayed.`;
+             registration date is more than 30 days so Rs. 5=00 plus departmental charges as delayed.`;
 
              this.LESS_YEAR_AND_MORE_30_MESSAGE_BIRTH = `<p>It will considered as delayed ${this.certType} registration because
              registration date is more than 30 days so Rs. 50=00 plus departmental charges as delayed fee and
