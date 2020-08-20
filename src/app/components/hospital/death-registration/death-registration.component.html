@@ -45,7 +45,7 @@
 					<mat-form-field class="col-md-4">
 						<input matInput appValidationFields [form]="deathCertificateForm" appGujInputSource
 							targetElement="deceasedFirstNameGuj" [validationFieldsType]="'onlyNameWithOutSpace'"
-							maxlength="200" placeholder="{{'first_name' | translate:translateKey}}"
+							maxlength="50" placeholder="{{'first_name' | translate:translateKey}}"
 							formControlName="deceasedFirstName" [required]="requiredFeild">
 						<control-messages [control]="deathCertificateForm.get('deceasedFirstName')"></control-messages>
 					</mat-form-field>
@@ -61,13 +61,13 @@
 					<mat-form-field class="col-md-4">
 						<input matInput appValidationFields [form]="deathCertificateForm" appGujInputSource
 							targetElement="deceasedLastNameGuj" [validationFieldsType]="'onlyNameWithOutSpace'"
-							maxlength="150" placeholder="{{'last_name' | translate:translateKey}}"
+							maxlength="50" placeholder="{{'last_name' | translate:translateKey}}"
 							formControlName="deceasedLastName" [required]="requiredFeild">
 						<control-messages [control]="deathCertificateForm.get('deceasedLastName')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input [required]="requiredFeild" matInput maxlength="600" appGujInputTarget
+						<input [required]="requiredFeild" matInput maxlength="150" appGujInputTarget
 							[form]="deathCertificateForm" placeholder="{{'first_name' | translate:translateKey:'gu'}}"
 							formControlName="deceasedFirstNameGuj">
 						<control-messages [control]="deathCertificateForm.get('deceasedFirstNameGuj')">
@@ -277,7 +277,7 @@
 						*ngIf="deathCertificateForm.get('education').get('code').value == 'NOT_STATED'">
 						<mat-form-field>
 							<input matInput placeholder="{{'not_stated_education' | translate:translateKey}}"
-								formControlName="otherEducation" [required]="requiredFeild">
+								formControlName="otherEducation" maxlength="50" [required]="requiredFeild">
 						</mat-form-field>
 					</div>
 
