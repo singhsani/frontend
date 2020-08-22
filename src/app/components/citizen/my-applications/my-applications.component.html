@@ -131,7 +131,7 @@
                     </button>
                     <!-- (row.fileStatus == 'SUBMITTED' && -->
                     <button mat-menu-item
-                        *ngIf="(row.fileStatus == 'PAYMENT_RECEIVED' || row.serviceDetail.code != 'HEL-DR')"
+                        *ngIf="(isPrintReceipt(row))"
                         color="primary"
                         (click)="printReceipt(row.serviceDetail.code, row.serviceDetail.name, row.serviceFormId)">
                         <mat-icon class="m-1" title="{{'print_receipt' | translate:translateKey}}">print</mat-icon>

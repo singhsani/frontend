@@ -394,6 +394,11 @@ export class MyApplicationsComponent implements OnInit,OnChanges {
 			return true;
 	}
 
+	isPrintReceipt(row){
+		if(row.fileStatus=='PAYMENT_RECEIVED' || row.fileStatus=='APPROVED')
+		return true;
+	}
+
 	isDownloadDisplay(row){
 		if(row.fileStatus =='SCRUTINY')
 		return true;
