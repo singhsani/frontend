@@ -274,6 +274,7 @@ export class DashboardComponent implements OnInit {
 			case 'WTR-RECON':
 			case 'WTR-PLUMB-LIC':
 			case 'WTR-RNW-PLUMB-LIC':
+			case 'PRO-TAX-TRAS-HISTORY':
 				this.router.navigate([ManageRoutes.getFullRoute(apiCode)]);
 				break;
 			default:
@@ -297,6 +298,7 @@ export class DashboardComponent implements OnInit {
 			res => {
 				console.log("res", res);
 				this.userServicesList = res.modules;
+				
 				_.forEach(res.modules, (value, key) => {
 					_.forEach(value.services, (value1, key1) => {
 						this.services.push(value1);

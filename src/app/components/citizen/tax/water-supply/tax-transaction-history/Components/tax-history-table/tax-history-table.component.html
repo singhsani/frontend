@@ -1,0 +1,143 @@
+<mat-card class="mt-4">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="section-title">
+        <h4>Bill Detail</h4>
+        <mat-divider></mat-divider>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <table mat-table [dataSource]="dataSource1" class="width100">
+        <ng-container matColumnDef="date">
+          <th mat-header-cell *matHeaderCellDef>Date </th>
+          <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+        </ng-container>
+        <ng-container matColumnDef="financialYearName">
+          <th mat-header-cell *matHeaderCellDef> Financial Year </th>
+          <td mat-cell *matCellDef="let element"> {{element.financialYearName}} </td>
+        </ng-container>
+        <ng-container matColumnDef="billType">
+          <th mat-header-cell *matHeaderCellDef> Bill Type</th>
+          <td mat-cell *matCellDef="let element"> {{element.billType}} </td>
+        </ng-container>
+        <ng-container matColumnDef="billNo">
+          <th mat-header-cell *matHeaderCellDef> Bill No </th>
+          <td mat-cell *matCellDef="let element"> {{element.billNo}} </td>
+        </ng-container>
+        <ng-container matColumnDef="billDate">
+          <th mat-header-cell *matHeaderCellDef> Bill Date </th>
+          <td mat-cell *matCellDef="let element"> {{element.billDate}} </td>
+        </ng-container>
+        <ng-container matColumnDef="occupierName">
+          <th mat-header-cell *matHeaderCellDef> Name of Tax Payer </th>
+          <td mat-cell *matCellDef="let element"> {{element.occupierName}} </td>
+        </ng-container>
+        <ng-container matColumnDef="billAmt">
+          <th mat-header-cell *matHeaderCellDef> Bill Amount</th>
+          <td mat-cell *matCellDef="let element"> {{element.billAmt}} </td>
+        </ng-container>
+        <ng-container matColumnDef="paidAmt">
+          <th mat-header-cell *matHeaderCellDef> Paid Amount </th>
+          <td mat-cell *matCellDef="let element"> {{element.paidAmt}} </td>
+        </ng-container>
+        <ng-container matColumnDef="outstandingAmt">
+          <th mat-header-cell *matHeaderCellDef> Outstanding Amount </th>
+          <td mat-cell *matCellDef="let element"> {{element.outstandingAmt}} </td>
+        </ng-container>
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef>Action</th>
+          <td mat-cell *matCellDef="let element">
+            <button class="ml-3" mat-raised-button color="accent" type="button" (click)="onDetailClick(element)">
+              <mat-icon>details</mat-icon> Detail
+            </button>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
+      </table>
+
+      <div *ngIf="!isFoundBillDetail" class="noRecord">
+        <h5 class="text-center">No data found !</h5>
+      </div>
+    </div>
+  </div>
+</mat-card>
+<mat-card class="mt-4">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="section-title">
+        <h4>Reciept Detail</h4>
+        <mat-divider></mat-divider>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <table mat-table [dataSource]="dataSource2" class="width100">
+        <ng-container matColumnDef="date">
+          <th mat-header-cell *matHeaderCellDef>Date </th>
+          <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+        </ng-container>
+        <ng-container matColumnDef="receiptType">
+          <th mat-header-cell *matHeaderCellDef> Receipt Type </th>
+          <td mat-cell *matCellDef="let element"> {{element.receiptType}} </td>
+        </ng-container>
+        <ng-container matColumnDef="receiptNo">
+          <th mat-header-cell *matHeaderCellDef> Receipt No</th>
+          <td mat-cell *matCellDef="let element"> {{element.receiptNo}} </td>
+        </ng-container>
+        <ng-container matColumnDef="receiptDate">
+          <th mat-header-cell *matHeaderCellDef>Receipt Date </th>
+          <td mat-cell *matCellDef="let element"> {{element.receiptDate}} </td>
+        </ng-container>
+        <ng-container matColumnDef="payerName">
+          <th mat-header-cell *matHeaderCellDef>Paid By </th>
+          <td mat-cell *matCellDef="let element"> {{element.payerName}} </td>
+        </ng-container>
+        <ng-container matColumnDef="paidAmt">
+          <th mat-header-cell *matHeaderCellDef> Amount Paid </th>
+          <td mat-cell *matCellDef="let element"> {{element.paidAmt}} </td>
+        </ng-container>
+        <ng-container matColumnDef="rebateAmt">
+          <th mat-header-cell *matHeaderCellDef> Rebate Amount </th>
+          <td mat-cell *matCellDef="let element"> {{element.rebateAmt}} </td>
+        </ng-container>
+        <ng-container matColumnDef="advanceAmt">
+            <th mat-header-cell *matHeaderCellDef> Advance Amount </th>
+            <td mat-cell *matCellDef="let element"> {{element.advanceAmt}} </td>
+          </ng-container>
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef>Action</th>
+          <td mat-cell *matCellDef="let element">
+            <button class="ml-3" mat-raised-button color="accent" type="button" (click)="onDetailClick(element)">
+              <mat-icon>details</mat-icon> Detail
+            </button>
+            <button mat-button class="btn-width-auto ml-2" title="Download Receipt" color="primary" type="button" 
+                  (click)="onDownloaReceipt(element.receiptId)">
+                <mat-icon>print</mat-icon>
+            </button>
+            <!--<button mat-button class="btn-width-auto ml-2" title="Delete Receipt" color="warn" type="button"
+                  (click)="deleteReceipt(element.receiptId)">
+                <mat-icon>delete</mat-icon>
+            </button> -->
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+      </table>
+      <div *ngIf="!isFoundRecieptDetail" class="noRecord">
+        <h5 class="text-center">No data found !</h5>
+      </div>
+    </div>
+  </div>
+</mat-card>
+
+<div class="row mt-3" style="display:none;">
+  <div class="col-md-12 text-right">
+    <button mat-raised-button color="primary" type="button" (click)="onPrint()">
+      <mat-icon>print</mat-icon> Print
+    </button>
+  </div>
+</div>

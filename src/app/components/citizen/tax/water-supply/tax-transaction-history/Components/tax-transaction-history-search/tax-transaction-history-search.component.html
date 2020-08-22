@@ -1,0 +1,56 @@
+<mat-card class="mt-4">
+  <form #formDetail="ngForm" (ngSubmit)="search(formDetail)">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="ngSelect">
+          <ng-select required placeholder="Transaction Type *" [items]="transactionTypeList" bindValue="itemId"
+            bindLabel="itemName" name="transactionTypeId" [(ngModel)]="searchModel.transactionTypeId"
+            #TransactionTypeId="ngModel"
+            [ngClass]="{'ng-invalid ng-touched':  formDetail.submitted && TransactionTypeId.invalid}">
+          </ng-select>
+          <div
+            *ngIf="(formDetail.submitted && TransactionTypeId.invalid)  || (TransactionTypeId.invalid && TransactionTypeId.touched)">
+            <mat-error *ngIf="TransactionTypeId.errors.required">*Transaction Type is required.</mat-error>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <mat-form-field class="full-width-input">
+          <input required trim="blur" matInput name="propertyNo" placeholder="Property No"
+            [(ngModel)]="searchModel.propertyNo" maxlength="30" #PropertyNo="ngModel">
+          <mat-error *ngIf="PropertyNo.invalid">*Property No is required.</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-md-6">
+        <button class="ml-3" mat-raised-button color="primary" type="submit">
+          Go
+        </button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <mat-form-field class="full-width-input">
+          <input disabled matInput placeholder="Census No" name="censusNo" [(ngModel)]="viewModel.censusNo">
+        </mat-form-field>
+      </div>
+      <div class="col-md-6">
+        <mat-form-field class="full-width-input">
+          <input disabled matInput placeholder="Name of Tax Payer" name="taxPayerName"
+            [(ngModel)]="viewModel.taxPayerName">
+        </mat-form-field>
+      </div>
+
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <mat-form-field class="full-width-input">
+          <textarea disabled matInput placeholder="Address" name="address" [(ngModel)]="viewModel.address"></textarea>
+        </mat-form-field>
+      </div>
+    </div>
+  </form>
+</mat-card>

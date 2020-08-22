@@ -13,6 +13,7 @@ const routes: Routes = [
   { path: "vehicle", loadChildren: './vehicle/vehicle.module#VehicleModule', canLoad: [AuthGuard] },
   { path: "water-supply", loadChildren: './water-supply/water-supply.module#WaterSupplyModule', canLoad: [AuthGuard] },
   { path: 'water-drinage', loadChildren: '../water-drinage/water-drinage.module#WaterDrinageModule', canLoad: [AuthGuard] },
+  { path: 'tax-transaction', loadChildren: './water-supply/tax-transaction-history/tax-transaction-history.module#TaxTransactionHistoryModule', canLoad: [AuthGuard] },
 ];
 
 
