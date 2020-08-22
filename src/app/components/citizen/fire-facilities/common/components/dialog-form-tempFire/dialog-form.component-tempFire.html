@@ -4,12 +4,12 @@
 <mat-dialog-content [formGroup]="form">
   <div class="row">
     <mat-form-field class="col-md-12">
-      <input matInput placeholder="{{'shop_No'| translate: translateKey}}" maxlength="50" formControlName="shopNo"
+      <input matInput placeholder="Shop No" maxlength="50" formControlName="shopNo"
         required>
       <control-messages [control]="form.get('shopNo')"></control-messages>
     </mat-form-field>
     <mat-form-field class="col-md-12">
-      <input matInput placeholder="{{'shop_Name'| translate: translateKey}}" maxlength="50" 
+      <input matInput placeholder="Shop Name" maxlength="50" 
         formControlName="shopName" required>
       <control-messages [control]="form.get('shopName')"></control-messages>
     </mat-form-field>
