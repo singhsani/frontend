@@ -495,7 +495,11 @@ const ROUTEMAIN = {
     'VEHICLE': {
         'main': 'new-registration',
         'type': 'vehicle'
-    }
+    },
+    'PRO-TAX-TRAS-HISTORY': {
+        'main': 'tax-transaction',
+        'type': 'tax-transaction'
+    },
 
 }
 
@@ -996,6 +1000,9 @@ const ROUTESLIST = {
     'HOSPITALMYAPPS': {
         'full': ROUTEPREFIX.HOSPITALMODULE + '/' + ROUTEMAIN.HOSPITALMYAPPS.main
     },
+    'PRO-TAX-TRAS-HISTORY' : {
+        'full' : ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TAXMODULE + '/' + ROUTEMAIN["PRO-TAX-TRAS-HISTORY"].main
+    }
 }
 
 

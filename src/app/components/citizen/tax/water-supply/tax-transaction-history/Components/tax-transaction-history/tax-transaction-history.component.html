@@ -1,0 +1,23 @@
+<app-title-bar [title]="'Tax Transaction History'"></app-title-bar>
+
+
+
+<mat-card class="formClass cardBorder">
+    <mat-card class="cardH1">
+        <h1>Tax Transaction History</h1>
+    </mat-card>
+    <div id="printArea">
+        <div *ngIf="!isShowDetail">
+            <app-tax-transaction-history-search></app-tax-transaction-history-search>
+        </div>
+        <div *ngIf="isShowDetail">
+            <app-detail></app-detail>
+        </div>
+        <div [hidden]="!isShowHistoryTable">
+            <app-tax-history-table></app-tax-history-table>
+        </div>
+        <div [hidden]="!isShowTransactionTable">
+            <app-transaction-history-table></app-transaction-history-table>
+        </div>
+    </div>
+</mat-card>
