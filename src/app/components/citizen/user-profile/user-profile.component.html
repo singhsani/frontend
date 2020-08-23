@@ -76,22 +76,23 @@
 				</div>
 
 				<mat-form-field class="col-md-4">
-					<input matInput type="text" formControlName="buildingName" placeholder="building_name">
+					<input matInput type="text" formControlName="buildingName" required
+					placeholder="Building Name">
 					<control-messages [control]="userProfileForm.get('buildingName')"></control-messages>
 				</mat-form-field>
 
 				<mat-form-field class="col-md-4">
-					<input matInput type="text" formControlName="streetName" placeholder="street_name">
+					<input matInput type="text" formControlName="streetName" placeholder="Street Name">
 					<control-messages [control]="userProfileForm.get('streetName')"></control-messages>
 				</mat-form-field>
 
 				<mat-form-field class="col-md-4">
-					<input matInput type="text" formControlName="landmark" placeholder="landmark">
+					<input matInput type="text" formControlName="landmark" placeholder="Landmark">
 					<control-messages [control]="userProfileForm.get('landmark')"></control-messages>
 				</mat-form-field>
 
 				<mat-form-field class="col-md-4">
-					<input matInput type="text" formControlName="area" placeholder="area">
+					<input matInput type="text" formControlName="area" required placeholder="Area">
 					<control-messages [control]="userProfileForm.get('area')"></control-messages>
 				</mat-form-field>
 
@@ -111,8 +112,8 @@
 				</div>
 
 				<mat-form-field class="col-md-4">
-					<input matInput appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" formControlName="district"
-					 placeholder="district">
+					<input matInput appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'" 
+					formControlName="district" required placeholder="District">
 					<control-messages [control]="userProfileForm.get('district')"></control-messages>
 				</mat-form-field>
 
@@ -124,7 +125,8 @@
 				</div>
 
 				<mat-form-field class="col-md-4">
-					<input matInput type="tel" OnlyNumber formControlName="pincode" placeholder="pincode" minlength="6" maxlength="6">
+					<input matInput type="tel" OnlyNumber formControlName="pincode" required
+					placeholder="Pincode" minlength="6" maxlength="6">
 					<control-messages [control]="userProfileForm.get('pincode')"></control-messages>
 				</mat-form-field>
 
