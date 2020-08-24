@@ -36,18 +36,25 @@
 
 					<mat-form-field class="col-md-4">
 						<!-- <span matPrefix>+91 &nbsp;</span> -->
-						<input matInput OnlyNumber placeholder="{{'mobile_no' | translate:translateKey}}" type="tel" [maxlength]="fireFacilityConfig.mobileNumber_maxLength"
+						<input matInput OnlyNumber placeholder="{{'mobile_no' | translate:translateKey}}" (change)="onMobileChange($event,'mobileNo')" 
+						type="tel" [maxlength]="fireFacilityConfig.mobileNumber_maxLength"
 						 [minlength]="fireFacilityConfig.mobileNumber_minLength" formControlName="mobileNo" required>
 						<control-messages [control]="tempFireworksNocForm.get('mobileNo')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-8">
-						<input matInput appPreventSpace placeholder="{{'email_id' | translate:translateKey}}" type="email"
-						 formControlName="email" required maxlength="50">
+						<input matInput appPreventSpace placeholder="{{'email_id' | translate:translateKey}}" 
+						(change)="onEmailChange($event,'email')" type="email" formControlName="email"  required maxlength="50">
 						<control-messages [control]="tempFireworksNocForm.get('email')"></control-messages>
 					</mat-form-field>
+					
 					<mat-form-field class="col-md-4">
-						<mat-label>{{'application_date'| translate: translateKey}} *</mat-label>
+						<input appDate matInput placeholder="{{'application_Date' | translate:translateKey}}"
+						[matDatepicker]="townHallBookingfromPicker3" formControlName="applicationDate">
+				 <mat-datepicker-toggle matSuffix [for]="townHallBookingfromPicker3"></mat-datepicker-toggle>
+				 <mat-datepicker #townHallBookingfromPicker3 touchUi="true"></mat-datepicker>
+
+				 <!-- 	<mat-label>{{'application_date'| translate: translateKey}} *</mat-label>
 						<input appDate matInput [max]="endMinDate"
 						[matDatepicker]="townHallBookingfromPicker" (dateChange)="dateFormate($event.value,'applicationDate');" formControlName="applicationDate">
 						<mat-datepicker-toggle matSuffix [for]="townHallBookingfromPicker"></mat-datepicker-toggle>
@@ -55,7 +62,8 @@
 						<div align="end" class="default-show-hint mat-hint mat-right">{{fireFacilityConfig.DATE_HINT_MSG}}
 						</div>
 						<control-messages [control]="tempFireworksNocForm.get('applicationDate')">
-						</control-messages>
+						</control-messages> -->
+				
 					</mat-form-field>
 					
 	
@@ -216,10 +224,10 @@
 								<control-messages [control]="tempFireworksNocForm.get('ownerConsentLetterIncluded')"></control-messages>
 							</div>
 					</div>
-
-					<mat-form-field class="col-md-4">
-						<input matInput [matDatepicker]="picker3" formControlName="consentLetterDate" placeholder="{{'consent_letter_date' | translate:translateKey }}"
-						 required (dateChange)="dateFormate($event.value,'consentLetterDate')">
+					<mat-form-field class="col-md-4" >
+						<input  matInput [matDatepicker]="picker3" formControlName="consentLetterDate" 
+						placeholder="{{'consent_letter_date' | translate:translateKey }}"						 
+						required (dateChange)="dateFormate($event.value,'consentLetterDate')">
 						<mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
 						<mat-datepicker #picker3 touchUi="true"></mat-datepicker>
 						<div align="end" class="default-show-hint mat-hint mat-right">{{fireFacilityConfig.DATE_HINT_MSG}}</div>
