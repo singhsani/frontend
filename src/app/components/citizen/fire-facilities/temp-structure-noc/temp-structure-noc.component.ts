@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { TranslateService } from '../../../../shared/modules/translate/translate.service';
 import * as moment from 'moment';
 import { AmazingTimePickerService } from 'amazing-time-picker';
+import { CommonService } from 'src/app/shared/services/common.service';
 
 @Component({
 	selector: 'app-temp-structure-noc',
@@ -34,8 +35,9 @@ export class TempStructureNocComponent implements OnInit {
 	FS_SITTING_ARRANGEMENT: Array<any> = [];
 	FS_WIRING_TYPE: Array<any> = [];
 
+	fromDate = moment(new Date()).format('YYYY-MM-DD');
 
-  maxDate = new Date();
+	  maxDate = new Date();
 
 	/**
      * @param fb - Declare FormBuilder property.
@@ -48,6 +50,7 @@ export class TempStructureNocComponent implements OnInit {
 		private validationService: ValidationService,
 		private router: Router,
 		private route: ActivatedRoute,
+		private commonService: CommonService,
 		private formService: FormsActionsService,
 		public TranslateService: TranslateService,
 		private atp: AmazingTimePickerService
@@ -262,8 +265,18 @@ export class TempStructureNocComponent implements OnInit {
 			/* Step 5 controls end */
 		});
 	}
-
-
+	onMobileChange(event, mobileNoValidation){
+		if(event.target.value === "" ||  this.tempStructureNocForm.get(mobileNoValidation).invalid){
+			this.tempStructureNocForm.get(mobileNoValidation).setValue(null);
+			this.commonService.openAlert("Warning","Please fill the field mobile number","warning");
+		}
+	}
+	onEmailChange(event, emailValidation){
+		if(event.target.value === "" ||  this.tempStructureNocForm.get(emailValidation).invalid){
+			this.tempStructureNocForm.get(emailValidation).setValue(null);
+			this.commonService.openAlert("Warning","Please fill the field Email Id","warning");
+		}
+	}
 	/**
 	 * This method required for final form submition.
 	 * @param flag - flag of invalid control.
@@ -346,8 +359,8 @@ export class TempStructureNocComponent implements OnInit {
 		"officeContactNo": "111111111111",
 		"onsitePersonMobileNo": "2222222222",
 		"officeEmailId": "a@a.com",
-		"fromDate": "2019-12-01",
-		"toDate": "2020-09-30",
+		"fromDate": moment(new Date()).format("YYYY-MM-DD"),
+		"toDate": moment(new Date()).format("YYYY-MM-DD"),
 		"fromTime": "01:06:00",
 		"toTime": "06:25:00",
 		"forProgram": "sfsdfsdfsdfsdffsdfsdf",
