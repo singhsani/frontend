@@ -1,7 +1,7 @@
-<mat-card class="mt-4">
+<mat-card class="mt-0 pt-0">
   <form #formDetail="ngForm" (ngSubmit)="search(formDetail)">
     <div class="row">
-      <div class="col-md-6">
+      <div class="col-md-5">
         <div class="ngSelect">
           <ng-select required placeholder="Transaction Type *" [items]="transactionTypeList" bindValue="itemId"
             bindLabel="itemName" name="transactionTypeId" [(ngModel)]="searchModel.transactionTypeId"
@@ -13,24 +13,22 @@
             <mat-error *ngIf="TransactionTypeId.errors.required">*Transaction Type is required.</mat-error>
           </div>
         </div>
-      </div>
-      <div class="col-md-6">
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-6">
+      </div>  
+      <div class="col-md-5">
         <mat-form-field class="full-width-input">
           <input required trim="blur" matInput name="propertyNo" placeholder="Property No"
             [(ngModel)]="searchModel.propertyNo" maxlength="30" #PropertyNo="ngModel">
           <mat-error *ngIf="PropertyNo.invalid">*Property No is required.</mat-error>
         </mat-form-field>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-2">
         <button class="ml-3" mat-raised-button color="primary" type="submit">
           Go
         </button>
       </div>
     </div>
+
+
     <div class="row">
       <div class="col-md-6">
         <mat-form-field class="full-width-input">
