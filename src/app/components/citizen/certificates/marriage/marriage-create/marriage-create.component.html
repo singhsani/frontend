@@ -1555,15 +1555,6 @@
 							</control-messages>
 						</div>
 
-						<mat-form-field class="col-md-4"
-							*ngIf="marriageFormGroup.get('applicantRelation').get('code').value === 'MR_OTHER_APPLICANT_RELATION'">
-							<input matInput type="text" required formControlName="applicantRelationOther"
-								placeholder="{{'other_relation' | translate:translateKey }}" appValidationFields
-								[validationFieldsType]="'onlyNameWithOutSpace'">
-							<control-messages [control]="marriageFormGroup.get('applicantRelationOther')">
-							</control-messages>
-						</mat-form-field>
-
 						<!-- gujrati -->
 						<mat-form-field class="col-md-4">
 							<input matInput readonly
@@ -1571,6 +1562,14 @@
 								[value]="applicantrelationGuj">
 						</mat-form-field>
 						<!-- /gujarati -->
+						<mat-form-field class="col-md-4"
+							*ngIf="marriageFormGroup.get('applicantRelation').get('code').value === 'MR_OTHER_APPLICANT_RELATION'">
+							<input matInput type="text" required formControlName="applicantRelationOther"
+								placeholder="{{'other_relation' | translate:translateKey }}" appValidationFields
+								[validationFieldsType]="'onlyNameWithOutSpace'">
+							<control-messages [control]="marriageFormGroup.get('applicantRelationOther')">
+							</control-messages>
+						</mat-form-field>								
 					</div>
 
 					<!-- <div class="row">
