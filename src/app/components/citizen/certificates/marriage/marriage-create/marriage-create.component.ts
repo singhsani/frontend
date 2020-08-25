@@ -1360,6 +1360,13 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
         this.requiredDocumentList();
     }
 
+    onChangeWitnessNameValidation(event,firstNameWitness){
+		if(event.target.value === "" ||  this.marriageFormGroup.get(firstNameWitness).invalid){
+            this.marriageFormGroup.get(firstNameWitness).setValue(null);
+            this.commonService.openAlert("Warning","Please fill all the field correctly","warning");
+		}
+	}
+
     /**
      * This method is check religion is same or not.
      */
