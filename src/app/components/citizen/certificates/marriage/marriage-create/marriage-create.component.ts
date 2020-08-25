@@ -784,6 +784,8 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
             brideNriSecondWitnessAddress: [null, Validators.maxLength(500)],
             brideNriSecondWitnessAddressGuj: [null, Validators.maxLength(1500)],
             brideNriSecondWitnessBirthDate: [null],
+            groomDays : [null, Validators.max(120)],
+            brideDays : [null, Validators.max(120)]
 
         });
 
@@ -954,6 +956,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
                     this.groomdays = mday.diff(bday.add(this.groomage, 'years'), 'days', false);
 
                     this.marriageFormGroup.get("groomAge").setValue(this.groomage);
+                    this.marriageFormGroup.get("groomDays").setValue(this.groomdays);
                 }
 
                 if (this.marriageFormGroup.get("brideBirthDate").value) {
@@ -962,12 +965,15 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
                     this.bridedays = mday.diff(bday.add(this.brideage, 'years'), 'days', false);
 
                     this.marriageFormGroup.get("brideAge").setValue(this.brideage);
+                    this.marriageFormGroup.get("brideDays").setValue(this.bridedays);
                 }
             } else {
                 this.touchedField('marriageDate');
                 this.commonService.openAlert("Warning", "Please select Date of Marriage", "warning");
                 this.marriageFormGroup.get("groomAge").setValue(null);
                 this.marriageFormGroup.get("brideAge").setValue(null);
+                this.marriageFormGroup.get("groomDays").setValue(null);
+                this.marriageFormGroup.get("brideDays").setValue(null);
                 this.groomage = null;
                 this.groomdays = null;
                 this.brideage = null;

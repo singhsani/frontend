@@ -235,9 +235,10 @@ export class TempFireworksNocComponent implements OnInit {
 			applicantName: [null, [Validators.required, Validators.maxLength(100)]],
 			applicantNameGuj: [null, [Validators.required, Validators.maxLength(300)]],
 			mobileNo: [null, [Validators.required, Validators.maxLength(this.fireFacilityConfig.mobileNumber_maxLength), Validators.minLength(this.fireFacilityConfig.mobileNumber_minLength)]],
-			email: [null, [Validators.required, Validators.maxLength(50)]],
+			email: [null, [Validators.email, Validators.required, Validators.maxLength(50)]],
 			oldReferenceNumber: [null, [Validators.maxLength(10)]],//not now
-			applicationDate: [null, [Validators.required]],//not now
+			applicationDate: [{ value: null, disabled: true }],
+			// applicationDate: [null, [Validators.required]],//not now
 
 			/* Step 2 controls start */
 			applicationThroughPolice: [false, [Validators.required]],//true/false
@@ -365,7 +366,19 @@ export class TempFireworksNocComponent implements OnInit {
 		);
 	}
 
+	onMobileChange(event, mobileNoValidation){
+		if(event.target.value === "" ||  this.tempFireworksNocForm.get(mobileNoValidation).invalid){
+			this.tempFireworksNocForm.get(mobileNoValidation).setValue(null);
+			this.commonService.openAlert("Warning","Please fill the field Mobile Number","warning");
+		}
+	}
 
+	onEmailChange(event, emailValidation){
+		if(event.target.value === "" ||  this.tempFireworksNocForm.get(emailValidation).invalid){
+			this.tempFireworksNocForm.get(emailValidation).setValue(null);
+			this.commonService.openAlert("Warning","Please fill the field Email Id","warning");
+		}
+	}
 	/**
 	 * This method is handle depended documents on save event
 	 * @param res - form response after save event

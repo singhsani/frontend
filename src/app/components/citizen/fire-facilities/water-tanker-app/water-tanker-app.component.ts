@@ -87,6 +87,13 @@ export class WaterTankerAppComponent implements OnInit {
 				this.waterTankerAppForm.patchValue(res);
 
 				this.fireFacilityConfig.isAttachmentButtonsVisible = true;
+				
+				let applicantNameGujFields = this.waterTankerAppForm.get('applicantNameGuj');
+				let applicantNameValue = this.waterTankerAppForm.get('applicantName').value;
+				if (!applicantNameGujFields.value) {
+					applicantNameGujFields.setValue(this.TranslateService.getEngToGujTranslation(applicantNameValue))
+				}
+			
 				res.serviceDetail.serviceUploadDocuments.forEach(app => {
 					(<FormArray>this.waterTankerAppForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.fireFacilityConfig.createDocumentsGrp(app));
 				});
@@ -97,7 +104,7 @@ export class WaterTankerAppComponent implements OnInit {
 			}
 		});
 	}
-
+	
 	/**
 	* Method is used to get lookup data
 	*/

@@ -46,13 +46,13 @@
 					<mat-form-field class="col-md-4">
 						<!-- <span matPrefix>+91 &nbsp;</span> -->
 						<input matInput OnlyNumber placeholder="{{'mobile_no' | translate:translateKey}}" type="tel" [maxlength]="fireFacilityConfig.mobileNumber_maxLength"
-						 [minlength]="fireFacilityConfig.mobileNumber_minLength" formControlName="mobileNo" required>
+						(change)="onMobileChange($event,'mobileNo')"  [minlength]="fireFacilityConfig.mobileNumber_minLength" formControlName="mobileNo" required>
 						<control-messages [control]="tempStructureNocForm.get('mobileNo')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-8">
 						<input matInput appPreventSpace placeholder="{{'email_id' | translate:translateKey}}" type="email"
-						 formControlName="email" required maxlength="50">
+						(change)="onEmailChange($event,'email')" formControlName="email" required maxlength="50">
 						<control-messages [control]="tempStructureNocForm.get('email')"></control-messages>
 					</mat-form-field>
 
@@ -93,8 +93,8 @@
 
 				<div class="row">
 					<mat-form-field class="col-md-6">
-						<input matInput [matDatepicker]="picker1" formControlName="fromDate" placeholder="{{'from_date' | translate:translateKey }}"
-						 required (dateChange)="dateFormate($event.value,'fromDate')">
+						<input appDate matInput [matDatepicker]="picker1" formControlName="fromDate" placeholder="{{'from_date' | translate:translateKey }}"
+						 required  [min]="fromDate" (dateChange)="dateFormate($event.value,'fromDate'); tempStructureNocForm.get('toDate').reset()">
 						<mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
 						<mat-datepicker #picker1 touchUi="true"></mat-datepicker>
 						<div align="end" class="default-show-hint mat-hint mat-right">{{fireFacilityConfig.DATE_HINT_MSG}}</div>
@@ -102,8 +102,8 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-6">
-						<input matInput [matDatepicker]="picker2" formControlName="toDate" placeholder="{{'to_date' | translate:translateKey }}"
-						[min]="tempStructureNocForm.get('fromDate').value" [max]="disablefutureDate" required (dateChange)="dateFormate($event.value,'toDate')">
+						<input appDate matInput [matDatepicker]="picker2" [min]="tempStructureNocForm.get('fromDate').value" formControlName="toDate"
+						 placeholder="{{'to_date' | translate:translateKey }}" required (dateChange)="dateFormate($event.value,'toDate')">
 						<mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
 						<mat-datepicker #picker2 touchUi="true"></mat-datepicker>
 						<div align="end" class="default-show-hint mat-hint mat-right">{{fireFacilityConfig.DATE_HINT_MSG}}</div>
