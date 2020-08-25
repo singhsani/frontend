@@ -323,9 +323,9 @@ export class BirthRegistrationComponent implements OnInit {
 			totalBoyChildsBeforePregnancy: null,
 			totalGirlChildsBeforePregnancy: null,
 			totalChildsBeforePregnancy: null,
-			totalBoyChilds: null,
-			totalGirlChilds: null,
-			totalChilds: null,
+			totalBoyChilds: [null, Validators.required],
+			totalGirlChilds: [null, Validators.required],
+			totalChilds: [null, Validators.required],
 			pregnancyDuration: ['', [Validators.required, ValidationService.pregnancyDurationValidation]],
 
 
@@ -390,6 +390,8 @@ export class BirthRegistrationComponent implements OnInit {
 			} else {
 				this.isGuideLineActive = true;
 			}
+
+
 			this.birthCertificateForm.patchValue(res);
 
 			//this.attachments = res.attachments;
@@ -492,6 +494,8 @@ export class BirthRegistrationComponent implements OnInit {
 					return;
 				}
 			});
+
+
 		});
 	}
 
@@ -701,32 +705,28 @@ export class BirthRegistrationComponent implements OnInit {
 	 * Method is used to calculate total child.
 	 */
 	totalChildCalculate() {
-		let totalGirlChilds = this.birthCertificateForm.get('totalGirlChilds').value;
-		let totalBoyChilds = this.birthCertificateForm.get('totalBoyChilds').value;
+		let totalGirlChilds = parseInt(this.birthCertificateForm.get('totalGirlChilds').value); 
+		let totalBoyChilds = parseInt(this.birthCertificateForm.get('totalBoyChilds').value);
 		const childsData = this.getChildData().value;
-		if (totalGirlChilds && totalBoyChilds) {
-			this.birthCertificateForm.get('totalChilds').setValue(parseInt(totalGirlChilds) + parseInt(totalBoyChilds))
+		let boyChilds = childsData.filter(data => data.sex.code == 'MALE').length;
+		let girlChilds = childsData.filter(data => data.sex.code == 'FEMALE').length;
+		
+		if (totalGirlChilds >= 0  && totalBoyChilds >= 0) {
+			if(totalBoyChilds < boyChilds){
+				this.commonService.openAlert("Child Details Error", "Total male child should be greater than or equal to born boy childs", "warning");
+				this.birthCertificateForm.get('totalBoyChilds').setValue(null);
+				return;
+			}
+			
+			if(totalGirlChilds < girlChilds){
+				this.commonService.openAlert("Child Details Error", "Total female child should be greater than or equal to born girl childs", "warning");
+				this.birthCertificateForm.get('totalGirlChilds').setValue(null);
+				return;
+			}
+
+			this.birthCertificateForm.get('totalChilds').setValue(totalGirlChilds + totalBoyChilds)
 		} else {
 			this.birthCertificateForm.get('totalChilds').setValue(childsData.length);
-		}
-
-		if (childsData) {
-			let boyChilds = childsData.filter(data => data.sex.code == 'MALE').length;
-			let girlChilds = childsData.filter(data => data.sex.code == 'FEMALE').length;
-			if (totalBoyChilds) {
-				this.birthCertificateForm.get('totalBoyChildsBeforePregnancy').setValue(totalBoyChilds - boyChilds);
-			}
-			if (totalGirlChilds) {
-				this.birthCertificateForm.get('totalGirlChildsBeforePregnancy').setValue(totalGirlChilds - girlChilds);
-			}
-		}
-
-		let girlChild = this.birthCertificateForm.get('totalGirlChildsBeforePregnancy').value;
-		let boyChild = this.birthCertificateForm.get('totalBoyChildsBeforePregnancy').value;
-		if (girlChild && boyChild) {
-			this.birthCertificateForm.get('totalChildsBeforePregnancy').setValue(parseInt(girlChild) + parseInt(boyChild))
-		} else {
-			this.birthCertificateForm.get('totalChildsBeforePregnancy').setValue(null);
 		}
 
 		this.setTotalChildAlive();
@@ -953,11 +953,11 @@ s
 	 * Mehtod is used to set total alive child and populated automatically.
 	 */
 	setTotalChildAlive() {
-		let totalAliveChilderen = this.birthCertificateForm.get('totalChildsBeforePregnancy').value
+		let totalAliveChilderen = this.birthCertificateForm.get('totalChilds').value
 		if (!totalAliveChilderen) {
 			totalAliveChilderen = 0
 		}
-		this.birthCertificateForm.get('totalAliveChild').setValue(totalAliveChilderen + this.birthCertificateForm.get('noOfChilds').value);
+		this.birthCertificateForm.get('totalAliveChild').setValue(totalAliveChilderen);
 	}
 
 	/**2ac
@@ -1043,7 +1043,8 @@ s
 		this.birthCertificateForm.get('childs').valueChanges.subscribe(val => {
 		   this.totalChildCalculate();
 		});
-	  }
+	}
+	
 
 	dummyJSON:any = {
 		"birthPlace": {
