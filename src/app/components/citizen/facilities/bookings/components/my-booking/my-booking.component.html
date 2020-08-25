@@ -134,8 +134,7 @@
             <button *ngIf="element.status != bookingConstant.PAYMENT_REQUIRED" mat-menu-item data-toggle="modal"
                     color="primary" (click)="openModal(templateRequestModel, element.scheduleList, element.refNumber);">
               <mat-icon title="View Booking Details" color="primary">cancel</mat-icon>
-              <!--{{'details' | translate:translateKey}}-->
-              Cancel Booking
+              {{'cancel_booking' | translate:translateKey}}
             </button>
           </div>
 

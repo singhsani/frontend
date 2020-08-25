@@ -158,7 +158,7 @@ export class MyBookingComponent implements OnInit {
 	chooseForCancel(shift: any, checked) {
 		if (checked) {
 			let data = this.CancelRequestList.find(b => b == shift.bookingNo)
-			if (!data && (shift.status == this.bookingConstant.DEPOSIT_REQUIRED || shift.status == this.bookingConstant.BOOKED)) {
+			if (!data && (shift.status == this.bookingConstant.DEPOSIT_REQUIRED || shift.status == this.bookingConstant.BOOKED || shift.status == this.bookingConstant.PPL_REQUIRED)) {
 				this.CancelRequestList.push(shift.bookingNo);
 			}
 		} else {
