@@ -146,18 +146,6 @@
 						<div>{{'duplicate_copy_details' | translate: translateKey}}</div>
 					</ng-template>
 
-					<div class="row pb-3">
-						<div class="col-md-4" formGroupName="duplicateCopies">
-							<mat-label>{{'duplicate_copies' | translate:translateKey}}</mat-label>
-							<mat-radio-group formControlName="code">
-								<mat-radio-button *ngFor="let yesNo of YES_NO" [value]="yesNo.code">
-									{{yesNo.name}}
-								</mat-radio-button>
-								<control-messages [control]="marriageDuplicateForm.get('duplicateCopies').get('code')">
-								</control-messages>
-							</mat-radio-group>
-						</div>
-					</div>
 					<div class="row">
 						<mat-form-field formGroupName="duplicateCopyMode" class="col-md-4">
 							<mat-select placeholder="{{'duplicate_copy_mode' | translate:translateKey}}"
