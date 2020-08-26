@@ -588,6 +588,14 @@ export class DeathRegistrationComponent implements OnInit {
 		});
 	}
 
+
+	onChangeNameValidation(event,nameValidate){
+		if(event.target.value === "" ||  this.deathCertificateForm.get(nameValidate).invalid){
+			this.deathCertificateForm.get(nameValidate).setValue(null);
+			this.commonService.openAlert('warning',"Please fill the field "+nameValidate+" correctly",'warning');
+		}
+	}
+
 	/**
 	 * This method used to submit deceased data completely with valiation.
 	 */

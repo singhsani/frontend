@@ -379,7 +379,13 @@ export class BirthCorrectionComponent implements OnInit {
 				registrationNumber: [null, [Validators.required]],
 			});
 		}
-	
+		
+		onChangeNameValidation(event,nameValidate){
+			if(event.target.value === "" ||  this.birthCorrectionForm.get(nameValidate).invalid){
+				this.birthCorrectionForm.get(nameValidate).setValue(null);
+				this.commonService.openAlert('warning',"Please fill the field "+nameValidate+" correctly",'warning');
+			}
+		}
 	
 		/**
 		 * Method is used to handle error/validation on submit

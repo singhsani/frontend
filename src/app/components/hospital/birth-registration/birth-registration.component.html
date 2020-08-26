@@ -112,7 +112,7 @@
                             <input matInput maxlength="50" [form]="birthCertificateForm.get('childs')['controls'][i]"
                              appGujInputSource targetElement="childNameGuj" appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'"
                              placeholder="{{'child_name' | translate:translateKey}}"
-                                name="childName" formControlName="childName">
+                             (change)="onChangeNameValidation($event,'childName')"   name="childName" formControlName="childName">
                             <control-messages [control]="birthCertificateForm.get('childs')['controls'][i].get('childName')">
                             </control-messages>
                         </mat-form-field>
@@ -198,14 +198,14 @@
                     <mat-form-field class="col-md-4">
                         <input matInput maxlength="200" [form]="birthCertificateForm" appGujInputSource targetElement="fatherFirstNameGuj" appValidationFields
                             [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{'first_name' | translate:translateKey}}"
-                            formControlName="fatherFirstName" required>
+                            (change)="onChangeNameValidation($event,'fatherFirstName')"  formControlName="fatherFirstName" required>
                         <control-messages [control]="birthCertificateForm.get('fatherFirstName')"></control-messages>
                     </mat-form-field>
 
                     <mat-form-field class="col-md-4">
                         <input matInput maxlength="50" appValidationFields [form]="birthCertificateForm" appGujInputSource targetElement="fatherMiddleNameGuj"
                             [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{'middle_name' | translate:translateKey}}"
-                            formControlName="fatherMiddleName">
+                            (change)="onChangeNameValidation($event,'fatherMiddleName')"  formControlName="fatherMiddleName">
                         <control-messages [control]="birthCertificateForm.get('fatherMiddleName')"></control-messages>
                     </mat-form-field>
 
@@ -213,18 +213,20 @@
                     <mat-form-field class="col-md-4">
                         <input matInput maxlength="50" appValidationFields [form]="birthCertificateForm" appGujInputSource targetElement="fatherLastNameGuj"
                             [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{'last_name' | translate:translateKey}}"
-                            formControlName="fatherLastName" required>
+                            (change)="onChangeNameValidation($event,'fatherLastName')"   formControlName="fatherLastName" required>
                         <control-messages [control]="birthCertificateForm.get('fatherLastName')"></control-messages>
                     </mat-form-field>
 
                     <mat-form-field class="col-md-4">
-                        <input matInput maxlength="600" appPreventSpace appGujInputTarget [form]="birthCertificateForm" placeholder="{{'first_name' | translate:translateKey:'gu'}}"
+                        <input matInput maxlength="600" appPreventSpace appGujInputTarget [form]="birthCertificateForm" 
+                        placeholder="{{'first_name' | translate:translateKey:'gu'}}"
                             formControlName="fatherFirstNameGuj" required>
                         <control-messages [control]="birthCertificateForm.get('fatherFirstNameGuj')"></control-messages>
                     </mat-form-field>
 
                     <mat-form-field class="col-md-4">
-                        <input matInput maxlength="150" appPreventSpace appGujInputTarget [form]="birthCertificateForm" placeholder="{{'middle_name' | translate:translateKey:'gu'}}"
+                        <input matInput maxlength="150" appPreventSpace appGujInputTarget [form]="birthCertificateForm" 
+                        placeholder="{{'middle_name' | translate:translateKey:'gu'}}"
                             formControlName="fatherMiddleNameGuj">
                         <control-messages [control]="birthCertificateForm.get('fatherMiddleNameGuj')">
                         </control-messages>
@@ -232,7 +234,8 @@
 
 
                     <mat-form-field class="col-md-4">
-                        <input matInput maxlength="150" appPreventSpace appGujInputTarget [form]="birthCertificateForm" placeholder="{{'last_name' | translate:translateKey:'gu'}}"
+                        <input matInput maxlength="150" appPreventSpace appGujInputTarget [form]="birthCertificateForm" 
+                        placeholder="{{'last_name' | translate:translateKey:'gu'}}"
                             formControlName="fatherLastNameGuj" required>
                         <control-messages [control]="birthCertificateForm.get('fatherLastNameGuj')"></control-messages>
                     </mat-form-field>
@@ -296,39 +299,42 @@
                     <mat-form-field class="col-md-4">
                         <input matInput maxlength="200" appValidationFields [form]="birthCertificateForm" appGujInputSource targetElement="motherFirstNameGuj"
                             [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{'first_name' | translate:translateKey}}"
-                            formControlName="motherFirstName" required>
+                            (change)="onChangeNameValidation($event,'motherFirstName')"   formControlName="motherFirstName" required>
                         <control-messages [control]="birthCertificateForm.get('motherFirstName')"></control-messages>
                     </mat-form-field>
 
                     <mat-form-field class="col-md-4">
                         <input matInput maxlength="50" appValidationFields [form]="birthCertificateForm" appGujInputSource targetElement="motherMiddleNameGuj"
                             [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{'middle_name' | translate:translateKey}}"
-                            formControlName="motherMiddleName">
+                            (change)="onChangeNameValidation($event,'motherMiddleName')"   formControlName="motherMiddleName">
                         <control-messages [control]="birthCertificateForm.get('motherMiddleName')"></control-messages>
                     </mat-form-field>
 
                     <mat-form-field class="col-md-4">
                         <input matInput maxlength="50" appValidationFields [form]="birthCertificateForm" appGujInputSource targetElement="motherLastNameGuj"
                             [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{'last_name' | translate:translateKey}}"
-                            formControlName="motherLastName" required>
+                            (change)="onChangeNameValidation($event,'motherLastName')"    formControlName="motherLastName" required>
                         <control-messages [control]="birthCertificateForm.get('motherLastName')"></control-messages>
                     </mat-form-field>
 
                     <mat-form-field class="col-md-4">
-                        <input matInput maxlength="600" appPreventSpace appGujInputTarget [form]="birthCertificateForm" placeholder="{{'first_name'| translate:translateKey:'gu'}}"
+                        <input matInput maxlength="600" appPreventSpace appGujInputTarget [form]="birthCertificateForm" 
+                        placeholder="{{'first_name'| translate:translateKey:'gu'}}"
                             formControlName="motherFirstNameGuj" required>
                         <control-messages [control]="birthCertificateForm.get('motherFirstNameGuj')"></control-messages>
                     </mat-form-field>
 
                     <mat-form-field class="col-md-4">
-                        <input matInput maxlength="150" appPreventSpace appGujInputTarget [form]="birthCertificateForm" placeholder="{{'middle_name' | translate:translateKey:'gu'}}"
+                        <input matInput maxlength="150" appPreventSpace appGujInputTarget [form]="birthCertificateForm" 
+                        placeholder="{{'middle_name' | translate:translateKey:'gu'}}"
                             formControlName="motherMiddleNameGuj">
                         <control-messages [control]="birthCertificateForm.get('motherMiddleNameGuj')">
                         </control-messages>
                     </mat-form-field>
 
                     <mat-form-field class="col-md-4">
-                        <input matInput maxlength="150" appPreventSpace appGujInputTarget [form]="birthCertificateForm" placeholder="{{'last_name' | translate:translateKey:'gu'}}"
+                        <input matInput maxlength="150" appPreventSpace appGujInputTarget [form]="birthCertificateForm" 
+                        placeholder="{{'last_name' | translate:translateKey:'gu'}}"
                             formControlName="motherLastNameGuj" required>
                         <control-messages [control]="birthCertificateForm.get('motherLastNameGuj')"></control-messages>
                     </mat-form-field>

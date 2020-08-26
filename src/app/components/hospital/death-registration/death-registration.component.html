@@ -45,7 +45,8 @@
 					<mat-form-field class="col-md-4">
 						<input matInput appValidationFields [form]="deathCertificateForm" appGujInputSource
 							targetElement="deceasedFirstNameGuj" [validationFieldsType]="'onlyNameWithOutSpace'"
-							maxlength="50" placeholder="{{'first_name' | translate:translateKey}}"
+							maxlength="50" placeholder="{{'first_name' | translate:translateKey}}" 
+							(change)="onChangeNameValidation($event,'deceasedFirstName')"
 							formControlName="deceasedFirstName" [required]="requiredFeild">
 						<control-messages [control]="deathCertificateForm.get('deceasedFirstName')"></control-messages>
 					</mat-form-field>
@@ -54,6 +55,7 @@
 						<input matInput appValidationFields [form]="deathCertificateForm" appGujInputSource
 							targetElement="deceasedMiddleNameGuj" [validationFieldsType]="'onlyNameWithOutSpace'"
 							maxlength="50" placeholder="{{'middle_name' | translate:translateKey}}"
+							(change)="onChangeNameValidation($event,'deceasedMiddleName')"
 							formControlName="deceasedMiddleName">
 						<control-messages [control]="deathCertificateForm.get('deceasedMiddleName')"></control-messages>
 					</mat-form-field>
@@ -62,12 +64,13 @@
 						<input matInput appValidationFields [form]="deathCertificateForm" appGujInputSource
 							targetElement="deceasedLastNameGuj" [validationFieldsType]="'onlyNameWithOutSpace'"
 							maxlength="50" placeholder="{{'last_name' | translate:translateKey}}"
+							(change)="onChangeNameValidation($event,'deceasedLastName')"
 							formControlName="deceasedLastName" [required]="requiredFeild">
 						<control-messages [control]="deathCertificateForm.get('deceasedLastName')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input [required]="requiredFeild" matInput maxlength="150" appGujInputTarget
+						<input [required]="requiredFeild" matInput maxlength="150" appGujInputTarget 
 							[form]="deathCertificateForm" placeholder="{{'first_name' | translate:translateKey:'gu'}}"
 							formControlName="deceasedFirstNameGuj">
 						<control-messages [control]="deathCertificateForm.get('deceasedFirstNameGuj')">
@@ -166,6 +169,7 @@
 						<input matInput appValidationFields [form]="deathCertificateForm" appGujInputSource
 							targetElement="spouseFirstNameGuj" [validationFieldsType]="'onlyNameWithOutSpace'"
 							maxlength="200" placeholder="{{'spouse_FirstName' | translate:translateKey}}"
+							(change)="onChangeNameValidation($event,'spouseFirstName')"
 							formControlName="spouseFirstName" [required]="requiredFeild">
 						<control-messages [control]="deathCertificateForm.get('spouseFirstName')"></control-messages>
 					</mat-form-field>
@@ -174,6 +178,7 @@
 						<input matInput appValidationFields [form]="deathCertificateForm" appGujInputSource
 							targetElement="spouseMiddleNameGuj" [validationFieldsType]="'onlyNameWithOutSpace'"
 							maxlength="50" placeholder="{{'spouse_MiddleName' | translate:translateKey}}"
+							(change)="onChangeNameValidation($event,'spouseMiddleName')"
 							formControlName="spouseMiddleName">
 						<control-messages [control]="deathCertificateForm.get('spouseMiddleName')"></control-messages>
 					</mat-form-field>
@@ -182,6 +187,7 @@
 						<input matInput appValidationFields [form]="deathCertificateForm" appGujInputSource
 							targetElement="spouseLastNameGuj" [validationFieldsType]="'onlyNameWithOutSpace'"
 							maxlength="50" placeholder="{{'spouse_LastName' | translate:translateKey}}"
+							(change)="onChangeNameValidation($event,'spouseLastName')"
 							formControlName="spouseLastName" [required]="requiredFeild">
 						<control-messages [control]="deathCertificateForm.get('spouseLastName')"></control-messages>
 					</mat-form-field>
@@ -218,7 +224,8 @@
 					<mat-form-field class="col-md-6">
 						<input [required]="requiredFeild" matInput appValidationFields
 							[validationFieldsType]="'onlyNameWithSpace'" maxlength="50"
-							placeholder="{{'mother_name' | translate:translateKey}}" [form]="deathCertificateForm"
+							placeholder="{{'mother_name' | translate:translateKey}}" 
+							(change)="onChangeNameValidation($event,'motherName')" [form]="deathCertificateForm"
 							appGujInputSource targetElement="motherNameGuj" name="motherName"
 							formControlName="motherName">
 						<control-messages [control]="deathCertificateForm.get('motherName')"></control-messages>

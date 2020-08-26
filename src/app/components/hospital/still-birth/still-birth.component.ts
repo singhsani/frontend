@@ -752,6 +752,12 @@ export class StillBirthComponent implements OnInit {
 		return this.uploadModel;
 	}
 
+	onChangeNameValidation(event,nameValidate){
+		if(event.target.value === "" ||  this.stillBirthCertificateForm.get(nameValidate).invalid){
+			this.stillBirthCertificateForm.get(nameValidate).setValue(null);
+			this.commonService.openAlert('warning',"Please fill the field "+nameValidate+" correctly",'warning');
+		}
+	}
 	/**
 	 * This method use to get output event of tab change
 	 * @param evt - Tab index

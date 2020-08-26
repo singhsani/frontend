@@ -45,7 +45,8 @@
 					<div class="row">
 						<mat-form-field class="col-md-4">
 							<input required matInput [form]="birthCorrectionForm" maxlength="50" appGujInputSource targetElement="childNameGuj" appValidationFields
-							 [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{'child_name' | translate:translateKey}}" formControlName="childName">
+							 [validationFieldsType]="'onlyNameWithOutSpace'" placeholder="{{'child_name' | translate:translateKey}}" 
+							 (change)="onChangeNameValidation($event,'childName')" formControlName="childName">
 							<control-messages [control]="birthCorrectionForm.get('childName')"></control-messages>
 						</mat-form-field>
 
