@@ -165,11 +165,11 @@ export class MarriageDuplicateComponent implements OnInit {
 	marriageDuplicateControls() {
 		this.marriageDuplicateForm = this.fb.group({
 			//step1
-			duplicateCopies: this.fb.group({
-				code: [null, [Validators.required]],
-				id: null,
-				name: null,
-			}),
+			// duplicateCopies: this.fb.group({
+			// 	code: [null, [Validators.required]],
+			// 	id: null,
+			// 	name: null,
+			// }),
 			duplicateCopyMode: this.fb.group({
 				code: [null, [Validators.required]],
 				gujName: null,
