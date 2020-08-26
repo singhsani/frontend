@@ -731,7 +731,14 @@ export class BirthRegistrationComponent implements OnInit {
 
 		this.setTotalChildAlive();
 	}
-s
+
+	onChangeNameValidation(event,nameValidate){
+		if(event.target.value === "" ||  this.birthCertificateForm.get(nameValidate).invalid){
+			this.birthCertificateForm.get(nameValidate).setValue(null);
+			this.commonService.openAlert('warning',"Please fill the field "+nameValidate+" correctly",'warning');
+		}
+	}
+
 	/**
 	 * Method is used to handle error/validation on submit
 	 * @param count - count of invalid control.
