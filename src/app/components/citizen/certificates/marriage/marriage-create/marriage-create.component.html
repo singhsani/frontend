@@ -360,7 +360,7 @@
 						[addressFormGroup]="marriageFormGroup.get('groomAddress')"></app-address>
 				</div>
 
-				<app-action-bar [uploadFiles]="uploadFilesArray" [form]="marriageFormGroup"
+				<app-action-bar [uploadFiles]="uploadFilesArray" [form]="marriageFormGroup"	
 					(tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step1', next: 1, back: 0}"></app-action-bar>
 			</mat-tab>
 			<!-- End First step -->
@@ -972,7 +972,8 @@
 				<div class="row">
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" maxlength="50" formControlName="firstWitnessFirstName"
-							placeholder="{{'first_name' | translate:translateKey }}" required appValidationFields
+							placeholder="{{'first_name' | translate:translateKey }}" 
+							(change)="onChangeWitnessNameValidation($event,'firstWitnessFirstName')" required appValidationFields
 							[validationFieldsType]="'onlyNameWithSpace'" appGujInputSource
 							targetElement="firstWitnessFirstNameGuj" [form]="marriageFormGroup">
 						<control-messages [control]="marriageFormGroup.get('firstWitnessFirstName')"></control-messages>
@@ -989,7 +990,8 @@
 
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" maxlength="50" formControlName="firstWitnessLastName"
-							placeholder="{{'last_name' | translate:translateKey }}" required appValidationFields
+							placeholder="{{'last_name' | translate:translateKey }}" 
+							(change)="onChangeWitnessNameValidation($event,'firstWitnessLastName')" required appValidationFields
 							[validationFieldsType]="'onlyNameWithSpace'" appGujInputSource
 							targetElement="firstWitnessLastNameGuj" [form]="marriageFormGroup">
 						<control-messages [control]="marriageFormGroup.get('firstWitnessLastName')"></control-messages>
