@@ -59,6 +59,7 @@ import { MaskCensusNumberDirective } from './directives/mask-census-number.direc
 import { ApplicantDetailsComponent } from './components/applicant-details/applicant-details.component';
 import { OfflinePaymentComponent } from './components/offline-payment/offline-payment.component';
 import { OfflinePaymentService } from './services/offlinePayment.service';
+import { PaymentNewService } from './services/paymentNew.service'
 /* import pipes end*/
 
 const COMPONENTS = [
@@ -137,7 +138,8 @@ const COMPONENTS = [
 		},
 		HosHttpService,
 		CountryService,
-		OfflinePaymentService
+		OfflinePaymentService,
+		PaymentNewService
 	],
 	entryComponents: [DialogContentComponent,ApplicantDetailsComponent, OfflinePaymentComponent],
 
