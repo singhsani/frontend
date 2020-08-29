@@ -232,7 +232,7 @@ export class NoDueCertificateTableComponent implements OnInit {
             if (err.status === 402) {
               const errData = err.error.data;
               retUrl = retUrl + '?apiCode='+ errData.serviceCode + '&id=' + errData.serviceFormId;
-              let payData = this.commonNascentService.storePaymentInfo(err.error.data, retUrl, retAfterPayment);
+              let payData = this.commonNascentService.storePaymentInfo(errData, retUrl, retAfterPayment);
               
               let html =
                 `

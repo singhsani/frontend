@@ -373,7 +373,8 @@ export class MyApplicationsComponent implements OnInit,OnChanges {
 	 * @param row - Table row oject
 	 */
 	isEditOptDisplay(row) {
-		if (row.serviceType === 'PEC_REG' && row.serviceType === 'PRC_REG')
+		if (row.serviceType === 'PEC_REG' && row.serviceType === 'PRC_REG' || row.serviceType === 
+		'NO_DUE_CERTIFICATE')
 			return false;
 		else if (row.canEdit || row.fileStatus === 'QUERIED' || row.fileStatus === 'QUERY_RAISED')
 			return true;
@@ -393,7 +394,8 @@ export class MyApplicationsComponent implements OnInit,OnChanges {
 	 * @param row - Table row oject
 	 */
 	isPreviewOptDisplay(row) {
-		if (row.serviceType === 'PEC_REG' || row.serviceType === 'PRC_REG')
+		if (row.serviceType === 'PEC_REG' || row.serviceType === 'PRC_REG'  || row.serviceType === 
+		'NO_DUE_CERTIFICATE')
 			return false;
 		else if (!row.canEdit)
 			return true;
@@ -404,7 +406,8 @@ export class MyApplicationsComponent implements OnInit,OnChanges {
 	 * @param row - Table row oject
 	 */
 	isPrintViewDisplay(row) {
-		if (row.serviceType === 'PEC_REG' || row.serviceType === 'PRC_REG')
+		if (row.serviceType === 'PEC_REG' || row.serviceType === 'PRC_REG' || row.serviceType === 
+		'NO_DUE_CERTIFICATE')
 			return false;
 		else if (row.fileStatus != 'DRAFT')
 			return true;
