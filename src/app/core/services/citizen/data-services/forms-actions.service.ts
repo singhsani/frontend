@@ -109,7 +109,6 @@ export class FormsActionsService {
 	 * @param appId - citizen app id
 	 */
 	submitFormData(appId) {
-
 		this.requestURL = `api/form/${this.apiType}/submit/${appId}`;
 
 		return this.http.post(this.requestURL, {});
@@ -429,6 +428,11 @@ export class FormsActionsService {
 	}
 	saveCustomCallApi(apiName: any, noofCopies: any, asonDate: any, occupierId: any) {
 		this.requestURL = `api/form/${this.apiType}/${apiName}?noofCopies=${noofCopies}&asonDate=${asonDate}&occupierId=${occupierId}`;
+		return this.http.post(this.requestURL, {});
+	}
+
+	saveNoDueCertificate(apiName: any, noofCopies: any, asonDate: any, occupierId: any,propertyBasicId: any) {
+		this.requestURL = `api/form/${this.apiType}/${apiName}?noofCopies=${noofCopies}&asonDate=${asonDate}&occupierId=${occupierId}&propertyBasicId=${propertyBasicId}`;
 		return this.http.post(this.requestURL, {});
 	}
 }

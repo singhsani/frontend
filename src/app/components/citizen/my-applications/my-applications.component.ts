@@ -5,7 +5,7 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 
 import { MatPaginator, MatSort, MatTableDataSource, MatDialogConfig, MatDialog } from '@angular/material';
-import { Observable, merge, of as observableOf } from 'rxjs';
+import { Observable, merge, of as observableOf, from } from 'rxjs';
 import { catchError, map, startWith, switchMap } from 'rxjs/operators';
 
 import { PaginationService } from '../../../core/services/citizen/data-services/pagination.service';
@@ -18,7 +18,9 @@ import { ToastrService } from 'ngx-toastr';
 import { environment } from '../../../../environments/environment';
 import { OfflinePaymentComponent } from 'src/app/shared/components/offline-payment/offline-payment.component';
 import { Location } from '@angular/common';
-
+import { downloadFile } from 'src/app/vmcshared/downloadFile';
+import { PaymentService} from 'src/app/vmcshared/component/payment/payment.service'
+import { PaymentNewService } from 'src/app/shared/services/paymentNew.service';
 @Component({
 	selector: 'app-my-applications',
 	templateUrl: './my-applications.component.html',
@@ -79,7 +81,8 @@ export class MyApplicationsComponent implements OnInit,OnChanges {
 		private toastr: ToastrService,
 		private dialog: MatDialog,
 		private route: ActivatedRoute,
-		private location: Location
+		private location: Location,
+		private paymentService : PaymentService
 	) { 
 
 
@@ -247,6 +250,19 @@ export class MyApplicationsComponent implements OnInit,OnChanges {
 		);
 	}
 
+	printCertificate(applicationNum) {
+		const url = "/property/noduecertificate/printNodueCertificate?applicationNo=" + applicationNum;
+
+		this.paymentService.downloadFile(url).subscribe(
+			(data) => {
+				downloadFile(data, "certificate" + "-" + Date.now() + ".pdf", 'application/pdf');
+			},
+			(error) => {
+				console.error(error.error.message);
+			})
+
+	}
+
 
 	/**
      * This method use to application print view.
@@ -357,7 +373,8 @@ export class MyApplicationsComponent implements OnInit,OnChanges {
 	 * @param row - Table row oject
 	 */
 	isEditOptDisplay(row) {
-		if (row.serviceType === 'PEC_REG' && row.serviceType === 'PRC_REG')
+		if (row.serviceType === 'PEC_REG' && row.serviceType === 'PRC_REG' || row.serviceType === 
+		'NO_DUE_CERTIFICATE')
 			return false;
 		else if (row.canEdit || row.fileStatus === 'QUERIED' || row.fileStatus === 'QUERY_RAISED')
 			return true;
@@ -377,7 +394,8 @@ export class MyApplicationsComponent implements OnInit,OnChanges {
 	 * @param row - Table row oject
 	 */
 	isPreviewOptDisplay(row) {
-		if (row.serviceType === 'PEC_REG' || row.serviceType === 'PRC_REG')
+		if (row.serviceType === 'PEC_REG' || row.serviceType === 'PRC_REG'  || row.serviceType === 
+		'NO_DUE_CERTIFICATE')
 			return false;
 		else if (!row.canEdit)
 			return true;
@@ -388,7 +406,8 @@ export class MyApplicationsComponent implements OnInit,OnChanges {
 	 * @param row - Table row oject
 	 */
 	isPrintViewDisplay(row) {
-		if (row.serviceType === 'PEC_REG' || row.serviceType === 'PRC_REG')
+		if (row.serviceType === 'PEC_REG' || row.serviceType === 'PRC_REG' || row.serviceType === 
+		'NO_DUE_CERTIFICATE')
 			return false;
 		else if (row.fileStatus != 'DRAFT')
 			return true;
