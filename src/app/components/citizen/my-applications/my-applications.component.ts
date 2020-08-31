@@ -374,7 +374,7 @@ export class MyApplicationsComponent implements OnInit,OnChanges {
 	 */
 	isEditOptDisplay(row) {
 		if (row.serviceType === 'PEC_REG' && row.serviceType === 'PRC_REG' || row.serviceType === 
-		'NO_DUE_CERTIFICATE')
+		'NO_DUE_CERTIFICATE' || row.serviceType === 'ASSESSMENT_CERTIFICATE')
 			return false;
 		else if (row.canEdit || row.fileStatus === 'QUERIED' || row.fileStatus === 'QUERY_RAISED')
 			return true;
@@ -395,7 +395,7 @@ export class MyApplicationsComponent implements OnInit,OnChanges {
 	 */
 	isPreviewOptDisplay(row) {
 		if (row.serviceType === 'PEC_REG' || row.serviceType === 'PRC_REG'  || row.serviceType === 
-		'NO_DUE_CERTIFICATE')
+		'NO_DUE_CERTIFICATE' || row.serviceType === 'ASSESSMENT_CERTIFICATE' )
 			return false;
 		else if (!row.canEdit)
 			return true;
@@ -407,7 +407,7 @@ export class MyApplicationsComponent implements OnInit,OnChanges {
 	 */
 	isPrintViewDisplay(row) {
 		if (row.serviceType === 'PEC_REG' || row.serviceType === 'PRC_REG' || row.serviceType === 
-		'NO_DUE_CERTIFICATE')
+		'NO_DUE_CERTIFICATE' || row.serviceType === 'ASSESSMENT_CERTIFICATE')
 			return false;
 		else if (row.fileStatus != 'DRAFT')
 			return true;
