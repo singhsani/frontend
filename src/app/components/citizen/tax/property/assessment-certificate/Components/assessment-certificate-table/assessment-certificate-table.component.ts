@@ -7,14 +7,23 @@ import { SearchModel, ServiceCharge } from '../../Models/assessment-certificate.
 import { NgForm } from '@angular/forms';
 import { MatSort, MatTableDataSource } from '@angular/material';
 import { PaymentDataSharingService } from 'src/app/vmcshared/component/payment/payment-data-sharing.service';
-import { Constants } from 'src/app/vmcshared/Constants';
 import { CommonService } from 'src/app/vmcshared/Services/common-service';
+import { DatePipe } from '@angular/common';
+import { SelectPaymentGatewayPropertyComponent } from 'src/app/vmcshared/component/select-payment-gateway-property/select-payment-gateway-property.component';
+import { FormsActionsService } from 'src/app/core/services/citizen/data-services/forms-actions.service';
+import { Router } from '@angular/router';
+import {CommonService as CommonNascentService} from '../../../../../../../shared/services/common.service';
+import { ManageRoutes } from 'src/app/config/routes-conf';
+import { environment } from 'src/environments/environment';
+import { PaymentNewService } from 'src/app/shared/services/paymentNew.service';
 
 
 @Component({
   selector: 'app-assessment-certificate-table',
   templateUrl: './assessment-certificate-table.component.html',
-  styleUrls: ['./assessment-certificate-table.component.scss']
+  styleUrls: ['./assessment-certificate-table.component.scss'],
+  providers:[DatePipe]
+
 })
 export class AssessmentCertificateTableComponent implements OnInit {
 
@@ -33,14 +42,22 @@ export class AssessmentCertificateTableComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   detailOutstandingButtonText = "Show Detail";
   isShowOutstandingDetail: boolean = false;
+  @ViewChild('paymentGateway') public paymentGateway: SelectPaymentGatewayPropertyComponent;
 
   constructor(private assessmentCertificateDataSharingService: AssessmentCertificateDataSharingService,
     private assessmentCertificateService: AssessmentCertificateService,
     private paymentDataSharingService: PaymentDataSharingService,
     private alertService: AlertService,
-    private commonService:CommonService) { }
+    private commonService:CommonService,
+    private formService: FormsActionsService,
+    private datePipe: DatePipe,
+    private router: Router,
+    private commonNascentService: CommonNascentService,
+    private paymentService : PaymentNewService
+  ) { }
 
   ngOnInit() {
+    this.formService.apiType = 'assessmentCertificate';
     this.assessmentCertificateDataSharingService.observableIsSearchByPropertyNo.subscribe((data) => {
       this.isSearchByPropertyNo = data;
     })
@@ -139,9 +156,57 @@ export class AssessmentCertificateTableComponent implements OnInit {
       if (this.serviceCharge.outstandingAmount > 0) {
         this.commonService.dueToOutstandingMessage(this.selectedItem.propertyNo);
       } else if (this.serviceCharge.noofCopies > 0) {
-        this.paymentDataSharingService.updatedPamentFromOption(Constants.Payment_From_Option.Assessment_Certificate);
-        this.paymentDataSharingService.updatedDataModel(this.serviceCharge);
-        this.assessmentCertificateDataSharingService.updatedIsShowForm(true);
+        let formdata = formDetail.form.value;
+        let date = this.datePipe.transform(new Date(), 'yyyy-MM-dd')
+        //call save api befor submit
+        console.log("selected item", this.selectedItem);
+        
+        this.formService.saveNoDueCertificate('saveAssessmentCertificate',formdata.noofCopies, date, this.serviceCharge.occupierId,this.selectedItem.propertyBasicId).subscribe(res=> {
+          console.log('res in save is');
+          console.log(res);
+          let data = res;
+          this.formService.submitFormData(res.data.serviceFormId).subscribe(res => {
+            console.log('in res is:');
+            console.log(res);
+            if(this.paymentService.isGuestUser()){
+              this.router.navigateByUrl(ManageRoutes.getFullRoute("CITIZENDASHBOARD"));
+            }else{
+              this.router.navigateByUrl(ManageRoutes.getFullRoute("CITIZENMYAPPS"));
+            }
+          }, err => {
+            let retUrl: string = '/citizen/my-applications';
+            let retAfterPayment: string = environment.returnUrl;
+            if (err.status === 402) {
+              const errData = err.error.data;
+              retUrl = retUrl + '?apiCode='+ errData.serviceCode + '&id=' + errData.serviceFormId;
+              let payData = this.commonNascentService.storePaymentInfo(err.error.data, retUrl, retAfterPayment);
+              
+              let html =
+                `
+              <div class="text-center">
+                <h2>Total Fee Pay</h2>
+                <div class="payAmount">
+                  <i class="fa fa-inr" aria-hidden="true">` + payData.amount + `</i>
+                </div>
+                <p>Rupees in words</p>
+              </div>
+              `
+              this.commonNascentService.commonAlert('Payment Details', '', 'info', 'Make Payment!', false, html, cb => {
+                this.paymentGateway.setPaymentDetailsFromActionBar(payData);
+                this.paymentGateway.openModel();
+              }, rj => {
+                return;
+              });
+            } else {
+              this.commonNascentService.openAlert("Error", "Error Occured for final submit : " + err.error[0].message, "warning")
+            }
+          });
+        }, error => {
+          this.alertService.error(error);
+        });
+        // this.paymentDataSharingService.updatedPamentFromOption(Constants.Payment_From_Option.Assessment_Certificate);
+        // this.paymentDataSharingService.updatedDataModel(this.serviceCharge);
+        // this.assessmentCertificateDataSharingService.updatedIsShowForm(true);
       } else {
         this.alertService.error('No. of Copies should be greater than zero.');
       }
