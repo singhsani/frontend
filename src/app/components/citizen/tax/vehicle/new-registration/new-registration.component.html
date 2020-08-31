@@ -190,7 +190,7 @@
 
 				<div class="fotButtonBar clearfix">
 					<div class="col-sm-12 col-md-12">
-						<button type="button" class="liteBorder pull-left" mat-raised-button (click)="tabIndex = 0">{{'back' |
+						<button type="button" class="pull-left" color="primary" mat-raised-button (click)="tabIndex = 0">{{'back' |
 							translate: actionBarKey}}</button>
 						<button mat-raised-button class="pull-right" color="primary" (click)="tabIndex = 2">{{'save_and_next' | translate:
 							actionBarKey}}</button>
@@ -274,7 +274,7 @@
 
 				<div class="fotButtonBar clearfix">
 					<div class="col-sm-12 col-md-12">
-						<button type="button" class="liteBorder pull-left" mat-raised-button (click)="tabIndex = 1">{{'back' |
+						<button type="button" class="pull-left" mat-raised-button color="primary" (click)="tabIndex = 1">{{'back' |
 							translate: actionBarKey}}</button>
 						<button mat-raised-button class="pull-right" color="primary" (click)="tabIndex = 3">{{'save_and_next' | translate:
 								actionBarKey}}</button>
@@ -307,7 +307,7 @@
 
 				<div class="fotButtonBar clearfix">
 					<div class="col-sm-12 col-md-12">
-						<button class="liteBorder pull-left" type="button" mat-raised-button
+						<button class="pull-left" color="primary" type="button" mat-raised-button
 							(click)="tabIndex = 2">{{'back' | translate:actionBarKey}}</button>
 						<!-- <button *ngIf="isDeleteBtnShow" class="pull-right" mat-raised-button color="success" (click)="onSubmit()">{{'submit' | translate:actionBarKey}}</button> -->
 						<button [disabled]="!isSubmitBtnVisible" mat-raised-button class="pull-right" color="success"
