@@ -195,6 +195,7 @@ export class TownHallBookComponent implements OnInit {
 			orgTelephoneNo: [null, [Validators.required]],
 			organizationPresidentName: [null, [Validators.required]],
 			organizationAddress: this.fb.group(this.addressComp.addressControls()),
+			gstNo :[null, [Validators.required]],
 			/**
 			 * Applicant Details
 			 */
