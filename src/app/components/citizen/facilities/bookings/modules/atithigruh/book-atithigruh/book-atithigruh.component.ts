@@ -46,8 +46,8 @@ export class BookAtithigruhComponent implements OnInit {
 	endMinDate = moment(new Date()).add(1, 'day').add(4, 'months').endOf('day').format('YYYY-MM-DD');
 	toStartDate: Date;
 
-	toStartBookDate = moment(new Date()).add(120, 'days').endOf('day').format('YYYY-MM-DD');
-	toEndBookDate = moment(new Date()).add(120, 'days').endOf('day').format('YYYY-MM-DD');
+	toStartBookDate;
+	toEndBookDate ;
 
 	ATITHIGRUH: Array<any> = [];
 	BOOKING_TYPE: Array<any> = []
@@ -246,7 +246,7 @@ export class BookAtithigruhComponent implements OnInit {
 			// 	this.toStartBookDate = moment(new Date()).add(120, 'days').endOf('day').format('YYYY-MM-DD');
 			// 	this.toEndBookDate = moment(new Date()).add(120, 'days').endOf('day').format('YYYY-MM-DD');
 			// }
-			this.toStartBookDate = moment(new Date()).format("YYYY-MM-DD");
+			this.toStartBookDate = moment(new Date()).add(120, 'days').endOf('day').format('YYYY-MM-DD');
 			this.toEndBookDate = "";
 			this.bookingForRegular = false;
 			// this.BookingTypeForm.get('bookingFrom').clearValidators();
