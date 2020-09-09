@@ -445,7 +445,7 @@ export class BookAtithigruhComponent implements OnInit {
 				this.atithigruhForm.get('ifscCode').setValue(ifscCode.toUpperCase());
 
 				this.bookingService.submitAdvanceBooking(this.atithigruhForm.value).subscribe(resp => {
-					this.commonService.commonAlert("Stadium Booking", "Atithigruh Booked Successfully", "success", "Print Acknowledgement Receipt", false, '', pA => {
+					this.commonService.commonAlert("Atithigruh Booking", "Atithigruh Booked Successfully", "success", "Print Acknowledgement Receipt", false, '', pA => {
 						let sectionToPrint: any = document.getElementById('sectionToPrint');
 						sectionToPrint.innerHTML = resp;
 						setTimeout(() => {
