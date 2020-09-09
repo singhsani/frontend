@@ -310,7 +310,7 @@
 						<button class="pull-left" color="primary" type="button" mat-raised-button
 							(click)="tabIndex = 2">{{'back' | translate:actionBarKey}}</button>
 						<!-- <button *ngIf="isDeleteBtnShow" class="pull-right" mat-raised-button color="success" (click)="onSubmit()">{{'submit' | translate:actionBarKey}}</button> -->
-						<button [disabled]="!isSubmitBtnVisible" mat-raised-button class="pull-right" color="success"
+						<button [disabled]="vehicleRegistrationForm.get('canSubmit').value == false"  mat-raised-button class="pull-right" color="success"
 							(click)="onSubmit()">{{'submit' | translate: actionBarKey}}</button>
 					</div>
 				</div>
