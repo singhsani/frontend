@@ -109,7 +109,7 @@
               {{'make_payment' | translate:translateKey}}
             </button>
 
-            <button *ngIf="element.status != bookingConstant.PAYMENT_REQUIRED" mat-menu-item color="primary"
+            <button *ngIf="showRecieptReprint(element)" mat-menu-item color="primary"
                     (click)="printReceipt(element, element.payableServiceType)">
               <mat-icon title="Print Receipt" color="primary">print</mat-icon>
               {{'receipt_reprint' | translate:translateKey}}
@@ -131,7 +131,7 @@
               {{'police_performance_license' | translate:translateKey}}
             </button>
 
-            <button *ngIf="element.status != bookingConstant.PAYMENT_REQUIRED && element.status != bookingConstant.CANCELLATION_REQUEST" mat-menu-item data-toggle="modal"
+            <button *ngIf="showCancelBtn(element)" mat-menu-item data-toggle="modal"
                     color="primary" (click)="openModal(templateRequestModel, element.scheduleList, element.refNumber);">
               <mat-icon title="View Booking Details" color="primary">cancel</mat-icon>
               {{'cancel_booking' | translate:translateKey}}
