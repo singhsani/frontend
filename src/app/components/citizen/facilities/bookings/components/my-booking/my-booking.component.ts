@@ -448,5 +448,28 @@ export class MyBookingComponent implements OnInit {
     		this.bookingService.getDataFromLookups().subscribe(resp => {
     			this.bankLists = resp.BANK;
     		});
-    	}
+		}
+		
+	showRecieptReprint(element){
+		if(element.status === this.bookingConstant.PAYMENT_REQUIRED
+			|| element.status === this.bookingConstant.CANCELLED 
+			|| element.status === this.bookingConstant.WAITINGLIST ){
+			return false;
+		}
+		
+		return true;
+		
+	}	
+
+	showCancelBtn(element){
+        // element.status != bookingConstant.PAYMENT_REQUIRED && element.status != bookingConstant.CANCELLATION_REQUEST
+        if(element.status === this.bookingConstant.PAYMENT_REQUIRED
+			|| element.status === this.bookingConstant.CANCELLED 
+            || element.status === this.bookingConstant.WAITINGLIST 
+            || element.status === this.bookingConstant.CANCELLATION_REQUEST){
+			return false;
+        }
+        
+        return true;
+    }
 }
