@@ -89,7 +89,7 @@ export class ValidationService {
             return null;
         }
     }
-
+//
     // Email validation
     static emailValidator(control: FormControl) {
         if (control.value) {
@@ -99,6 +99,18 @@ export class ValidationService {
             return null;
         }
     }
+
+
+    // Gst No validation
+    static gstNoValidator(control: FormControl) {
+        if (control.value) {
+            const matches = control.value.match(/^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/);
+            return matches ? null : { 'invalidGstNo': true };
+        } else {
+            return null;
+        }
+    }
+
 
     // Groom age
     static groomAgeValidator(control: FormControl) {
