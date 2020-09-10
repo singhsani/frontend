@@ -186,7 +186,7 @@ export class TownHallBookComponent implements OnInit {
 	 * Method is used to create townhall booking application form.
 	 */
 	createTownHallBookingApplicationForm() {
-
+		console.log("hello");
 		this.townHallApplicationForm = this.fb.group({
 			/**
 			 * Organization Details
