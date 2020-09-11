@@ -352,8 +352,8 @@
       </div>
       <div class="row">
         <mat-form-field class="col-md-12">
-          <input matInput maxlength="50"  type="text" placeholder="{{'ifsc_code' | translate: translateKey}}" required
-                 formControlName="ifscCode">
+          <input matInput maxlength="11"  type="text" placeholder="{{'ifsc_code' | translate: translateKey}}" required
+         formControlName="ifscCode">
           <control-messages [control]="refundBankDetailsForm.get('ifscCode')"></control-messages>
         </mat-form-field>
       </div>

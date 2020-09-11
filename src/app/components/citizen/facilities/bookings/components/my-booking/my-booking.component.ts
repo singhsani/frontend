@@ -12,6 +12,7 @@ import { BookingConstants, BookingUtils } from '../../config/booking-config';
 import { BookingService } from '../../shared-booking/services/booking-service.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { ValidationService } from 'src/app/shared/services/validation.service';
 
 @Component({
 	selector: 'app-my-booking',
@@ -423,9 +424,9 @@ export class MyBookingComponent implements OnInit {
 	refundBankDetailsFormController(){
 	  this.refundBankDetailsForm = this.fb.group({
                 refNumber: [{ value: '', disabled: true }, Validators.required],
-                ifscCode: ['', Validators.required],
-                accountNumber : ['', Validators.required],
-                accountHolderName : ['', Validators.required],
+                ifscCode: ['', Validators.required, ValidationService.ifscCodeValidator],
+                accountNumber : ['', Validators.required, ValidationService.accountNoValidation],
+                accountHolderName : ['', Validators.required, ValidationService.accountNolderNameValidation],
                 bank :['', Validators.required]
             });
 	}
