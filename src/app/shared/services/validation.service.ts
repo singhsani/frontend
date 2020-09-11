@@ -97,8 +97,6 @@ export class ValidationService {
             return matches ? null : { 'invalidEmail': true };
         } else {
             return null;
-
-            console.log("hello");
         }
     }
 
