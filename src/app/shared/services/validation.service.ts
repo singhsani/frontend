@@ -45,7 +45,7 @@ export class ValidationService {
             invalidpetaKendraNumber: 'Should contains only alpha-numeric and numeric value',
             invalidAmount: 'Amount should be in digit and Only two digit allowed after decimal',
             motherMarriageTimeAge: 'Mothers age at marriage time should not be less then 12 Years',
-
+            invalidGstNo:'Invalid GST No',
         }
 
         return config[validatorName];
