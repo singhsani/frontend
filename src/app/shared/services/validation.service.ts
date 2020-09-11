@@ -46,6 +46,7 @@ export class ValidationService {
             invalidAmount: 'Amount should be in digit and Only two digit allowed after decimal',
             motherMarriageTimeAge: 'Mothers age at marriage time should not be less then 12 Years',
             invalidGstNo:'Invalid GST No',
+            invalidAccountNo:'Invalid Account No',
         }
 
         return config[validatorName];
@@ -265,6 +266,28 @@ export class ValidationService {
       return null;
     }
   }
+
+  static accountNoValidation(control: FormControl) {
+    if (control.value) {
+      const matches = control.value.match(/^-?(0|[1-9]\d*)?$/);
+      return matches ? null : { 'invalidAccountNo': true };
+    } else {
+      return null;
+    }
+  }
+
+
+
+  static accountNolderNameValidation(control: FormControl) {
+    if (control.value) {
+      const matches = control.value.match(/^\\p{L}+[\\p{L}\\p{Z}\\p{P}]{0,}/);
+      return matches ? null : { 'invalidAccountNo': true };
+    } else {
+      return null;
+    }
+  }
+
+
 
 }
 
