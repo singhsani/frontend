@@ -47,6 +47,7 @@ export class ValidationService {
             motherMarriageTimeAge: 'Mothers age at marriage time should not be less then 12 Years',
             invalidGstNo:'Invalid GST No',
             invalidAccountNo:'Invalid Account No',
+            invalidAcHolderName: 'Invalid Name',
         }
 
         return config[validatorName];
@@ -281,7 +282,7 @@ export class ValidationService {
   static accountNolderNameValidation(control: FormControl) {
     if (control.value) {
       const matches = control.value.match(/^\\p{L}+[\\p{L}\\p{Z}\\p{P}]{0,}/);
-      return matches ? null : { 'invalidAccountNo': true };
+      return matches ? null : { 'invalidAcHolderName': true };
     } else {
       return null;
     }

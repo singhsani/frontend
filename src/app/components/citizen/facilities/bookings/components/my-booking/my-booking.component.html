@@ -329,7 +329,7 @@
       <div class="row">
         <mat-form-field class="col-md-12">
           <input matInput maxlength="50" type="text"
-                 placeholder="{{'account_holder_name' | translate: translateKey}}" required
+                 placeholder="{{'account_holder_name' | translate: translateKey}}" required appValidationFields [validationFieldsType]="'onlyNameWithSpace'"
                  formControlName="accountHolderName">
           <control-messages [control]="refundBankDetailsForm.get('accountHolderName')"></control-messages>
         </mat-form-field>
@@ -344,7 +344,7 @@
       </div>
       <div class="row">
         <mat-form-field class="col-md-12">
-          <input matInput maxlength="50" type="text"
+          <input matInput OnlyNumber maxlength="18" minlength="9" type="text" 
                  placeholder="{{'account_no' | translate: translateKey}}" required
                  formControlName="accountNumber">
           <control-messages [control]="refundBankDetailsForm.get('accountNumber')"></control-messages>
