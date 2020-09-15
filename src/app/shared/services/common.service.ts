@@ -66,6 +66,10 @@ export class CommonService {
 
 		var html1 = '<div class="row small setHeight">';
 
+		if( typeof message === 'string' ) {
+			message = JSON.parse(message);
+		}
+
 		_.forEach(message, (value, key) => {
 			html1 += '<div class="col-md-12 alert alert-danger" role="alert" *ngFor="let errorType of message">';
 			html1 += value.property + " - " + value.message + " / " + value.gujMessage;
