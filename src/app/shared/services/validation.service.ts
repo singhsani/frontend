@@ -45,7 +45,7 @@ export class ValidationService {
             invalidpetaKendraNumber: 'Should contains only alpha-numeric and numeric value',
             invalidAmount: 'Amount should be in digit and Only two digit allowed after decimal',
             motherMarriageTimeAge: 'Mothers age at marriage time should not be less then 12 Years',
-            invalidGstNo:'Invalid GST No',
+            invalidGstNo:'Please enter a valid GSTIN e.g. 29ABCDE1234F2Z5',
             invalidAccountNo:'Invalid Account No',
             invalidAcHolderName: 'Invalid Name',
         }
@@ -107,7 +107,7 @@ export class ValidationService {
     static gstNoValidator(control: FormControl) {
         if (control.value) {
             const matches = control.value.match(/^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/);
-            return matches ? null : { 'invalidGstNo': true };
+            return matches ? null : { 'invalidGstNo' : true };
         } else {
             return null;
         }
