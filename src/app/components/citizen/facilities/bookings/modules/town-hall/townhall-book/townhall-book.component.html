@@ -118,7 +118,8 @@
                     </div>
 
                     <div formGroupName="purpose" class="col-md-6 ngSelect">
-                        <ng-select placeholder="{{'purpose_of_booking'| translate: translateKey}}" formControlName="code">
+                        <ng-select placeholder="{{'purpose_of_booking'| translate: translateKey}}" formControlName="code"
+                        (change)="onChangePurposeOfBooking($event)">
                             <ng-option *ngFor="let purpose of purposes" [value]="purpose.code">
                                 {{ purpose.name }}
                             </ng-option>
@@ -466,6 +467,12 @@
                           <control-messages [control]="townHallApplicationForm.get('gstNo')"></control-messages>
                         </mat-form-field>
 
+                        <mat-form-field class="col-md-4" *ngIf="show">
+                            <input matInput maxlength="100" formControlName="programmeName"
+                            appValidationFields [validationFieldsType]="'onlyNameWithSpace'" type="text"
+                                   placeholder="{{'programme_name' | translate: translateKey}}" required>
+                            <control-messages [control]="townHallApplicationForm.get('programmeName')"></control-messages>   
+                        </mat-form-field>
                     </div>
 
                     <div>
