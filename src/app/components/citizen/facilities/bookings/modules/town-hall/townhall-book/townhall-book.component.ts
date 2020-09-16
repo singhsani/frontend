@@ -115,6 +115,7 @@ export class TownHallBookComponent implements OnInit {
 	showSearchForm: boolean = false;
 	showPaymentReciept: boolean = false;
 	isLoadingResults: boolean = false;
+	show:boolean = false;
 
 	constructor(
 		private fb: FormBuilder,
@@ -197,6 +198,7 @@ export class TownHallBookComponent implements OnInit {
 			organizationPresidentName: [null, [Validators.required]],
 			organizationAddress: this.fb.group(this.addressComp.addressControls()),
 			gstNo :[null,ValidationService.gstNoValidator],
+			programmeName : [null, Validators.required],
 			/**
 			 * Applicant Details
 			 */
@@ -378,6 +380,15 @@ export class TownHallBookComponent implements OnInit {
 		}
 	}
 
+	onChangePurposeOfBooking(event){
+   
+		if(event=='NATAK' || event=='MAGIC_SHOW'){
+		  this.show=true;
+		}else{
+		  this.show = false;
+		}
+	
+	  }
 	/**
 	 * Method is used to submit townhall application form.
 	 */

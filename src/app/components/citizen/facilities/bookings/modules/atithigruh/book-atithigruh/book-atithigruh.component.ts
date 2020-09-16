@@ -42,12 +42,14 @@ export class BookAtithigruhComponent implements OnInit {
 	isLoadingResults: boolean = false;
 	head_lines: string;
 
-	startMinDate: Date = moment(new Date()).add(1, 'day').toDate();
-	endMinDate = moment(new Date()).add(3, 'day').toDate();
+	startMinDate: Date = moment(new Date()).add(3, 'day').toDate();
+	endMinDate = moment(new Date()).add(119, 'day').toDate();
 	toStartDate: Date;
 
 	toStartBookDate;
 	toEndBookDate ;
+
+	inputReadonly = true;
 
 	ATITHIGRUH: Array<any> = [];
 	BOOKING_TYPE: Array<any> = []
@@ -235,37 +237,43 @@ export class BookAtithigruhComponent implements OnInit {
 		this.BookingTypeForm.get('bookingTo').reset();
 
 		if (event === "Regular booking") {
+			this.BookingTypeForm.get('bookingFrom').enable();
 			this.bookingForRegular = true;
 			this.BookingTypeForm.get('bookingFrom').setValidators(Validators.required);
 			this.BookingTypeForm.get('bookingTo').setValidators(Validators.required);
 		} else if (event === 'Advance booking') {
-			// if (this.formatAMPM(new Date) > '02:00 pm') {
-			// 	this.toStartBookDate = moment(new Date()).add(1, 'day').add(120, 'days').endOf('day').format('YYYY-MM-DD');
-			// 	this.toEndBookDate = moment(new Date()).add(1, 'day').add(120, 'days').endOf('day').format('YYYY-MM-DD');
-			// } else {
-			// 	this.toStartBookDate = moment(new Date()).add(120, 'days').endOf('day').format('YYYY-MM-DD');
-			// 	this.toEndBookDate = moment(new Date()).add(120, 'days').endOf('day').format('YYYY-MM-DD');
-			// }
-			this.toStartBookDate = moment(new Date()).add(120, 'days').endOf('day').format('YYYY-MM-DD');
-			this.toEndBookDate = "";
+			
+			 if (this.formatAMPM()) {
+				//dable
+				this.toaster.warning('Booking Not available after 2 PM ');
+				this.BookingTypeForm.get('bookingFrom').disable();
+			 } else {
+				this.BookingTypeForm.get('bookingFrom').enable();
+				this.toStartBookDate = moment(new Date()).add(120, 'days').endOf('day').format('YYYY-MM-DD');
+				this.toEndBookDate = moment(new Date()).add(120, 'days').endOf('day').format('YYYY-MM-DD');
+			 }
+			//this.toStartBookDate = moment(new Date()).add(120, 'days').endOf('day').format('YYYY-MM-DD');
+			//this.toEndBookDate = "";
 			this.bookingForRegular = false;
-			// this.BookingTypeForm.get('bookingFrom').clearValidators();
+			this.BookingTypeForm.get('bookingFrom').setValidators(Validators.required);
+			//this.BookingTypeForm.get('bookingFrom').clearValidators();
 			this.BookingTypeForm.get('bookingTo').clearValidators();
 		}
 
 		// this.BookingTypeForm.get('bookingFrom').updateValueAndValidity();
 		this.BookingTypeForm.get('bookingTo').updateValueAndValidity();
+		this.BookingTypeForm.get('bookingFrom').updateValueAndValidity();
 	}
 
-	formatAMPM(date) {
-		var hours = date.getHours();
-		var minutes = date.getMinutes();
-		var ampm = hours >= 12 ? 'pm' : 'am';
-		hours = hours % 12;
-		hours = hours ? hours : 12; // the hour '0' should be '12'
-		minutes = minutes < 10 ? '0' + minutes : minutes;
-		var strTime = hours + ':' + minutes + ' ' + ampm;
-		return strTime;
+	formatAMPM() {
+		var now = moment();
+		debugger;
+		var hourToCheck = (now.day() !== 0)?14:0;
+		var dateToCheck = now.hour(hourToCheck).minute(0);
+		
+		return moment().isAfter(dateToCheck);
+		
+		
 	}
 
 
