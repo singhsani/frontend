@@ -1,3 +1,42 @@
+@import "src/assets/scss//variables";
+
+
+table { width: 100%; }
+
+.customthead{
+    background-color: #673ab7;
+    color: white;
+}
+
+.mat-error{
+    margin-top: -10px;
+    font-size: 11px
+}
+
+.mat-paginator-sticky {
+  bottom: 0px;
+  position: sticky;
+  z-index: 10;
+}
+
+.scrollModel{
+    overflow-y:auto;
+    max-height: 500px;
+}
+
+.fsLarge{
+    font-size: large;
+}.modal-md {
+    max-width: 400;
+}
+
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+
 .fotButtonBar{
     background: #f2f2f2;
     padding: 25px 0 10px;
