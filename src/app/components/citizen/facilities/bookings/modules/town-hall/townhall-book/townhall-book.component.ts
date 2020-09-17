@@ -198,7 +198,7 @@ export class TownHallBookComponent implements OnInit {
 			organizationPresidentName: [null, [Validators.required]],
 			organizationAddress: this.fb.group(this.addressComp.addressControls()),
 			gstNo :[null,ValidationService.gstNoValidator],
-			programmeName : [null, Validators.required],
+			programmeName : [null],
 			/**
 			 * Applicant Details
 			 */
@@ -382,8 +382,9 @@ export class TownHallBookComponent implements OnInit {
 
 	onChangePurposeOfBooking(event){
    
-		if(event=='NATAK' || event=='MAGIC_SHOW'){
+		if(event=='NATAK'){
 		  this.show=true;
+		  this.townHallApplicationForm.get('programmeName').setValidators([Validators.required]);
 		}else{
 		  this.show = false;
 		}
