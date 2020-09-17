@@ -190,10 +190,12 @@
                                 </strong>
                                 <div class="dateCon">
                                     <mat-checkbox (change)="selectedShift = bookingUtils.selectShift(shift, $event.checked, selectedShift)" *ngFor="let shift of date.slotList; let i = index"
-                                        [disabled]="shift.slotStatus == bookingConstants.BOOKED || shift.slotStatus == bookingConstants.TEMPORARY_BLOCKED"
-                                        [checked]="shift.slotStatus != 'AVAILABLE'">
-                                        {{'shift'| translate: translateKey}}&nbsp;{{shift.shiftType}}
-                                    </mat-checkbox>
+                                    [disabled]="shift.slotStatus == bookingConstants.BOOKED || shift.slotStatus == bookingConstants.RESERVED || shift.slotStatus == bookingConstants.TEMPORARY_BLOCKED"
+                                    [checked]="shift.slotStatus != bookingConstants.AVAILABLE && shift.slotStatus != bookingConstants.HOLIDAY && shift.slotStatus != bookingConstants.FESTIVAL">
+                                    {{'shift'| translate: translateKey | uppercase}}&nbsp;{{shift.shiftType}}
+
+                                </mat-checkbox>
+
                                 </div>
                             </div>
                         </div>
