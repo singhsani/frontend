@@ -472,7 +472,7 @@
                         <mat-form-field class="col-md-4" *ngIf="show">
                             <input matInput maxlength="100" formControlName="programmeName"
                             appValidationFields [validationFieldsType]="'onlyNameWithSpace'" type="text"
-                                   placeholder="{{'programme_name' | translate: translateKey}}" required>
+                                   placeholder="{{'programme_name' | translate: translateKey}} *">
                             <control-messages [control]="townHallApplicationForm.get('programmeName')"></control-messages>   
                         </mat-form-field>
                     </div>
