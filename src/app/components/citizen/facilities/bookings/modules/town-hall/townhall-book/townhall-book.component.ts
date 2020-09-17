@@ -76,12 +76,16 @@ export class TownHallBookComponent implements OnInit {
 	/**
 	 * Minimum start date.
 	 */
-	startMinDate = moment(new Date()).add(1, 'day').toISOString();
-
+	//startMinDate = moment(new Date()).add(1, 'day').toISOString();
+	startMinDate: Date = moment(new Date()).add(7, 'day').toDate();
 	/**
 	 * Minimum end date.
 	 */
-	endMinDate = moment(new Date()).add(1, 'day').toISOString();
+	//endMinDate = moment(new Date()).add(1, 'day').toISOString();
+	endMinDate = moment(new Date()).add(179, 'day').toDate();
+	toStartDate: Date;
+
+
 
 	filteredReponse: any;
 
@@ -152,9 +156,11 @@ export class TownHallBookComponent implements OnInit {
 		 */
 		this.searchTownHallForm.controls.startDate.valueChanges.subscribe(data => {
 			this.searchTownHallForm.controls.endDate.reset();
-			this.endMinDate = data;
+		//	this.endMinDate = data;
+			this.toStartDate = data;
 			return;
 		});
+
 	}
 
 
@@ -251,7 +257,7 @@ export class TownHallBookComponent implements OnInit {
 	/**
 	 * This method use for set the date in form controls
 	 * @param date get the selected date value
-	 */
+	//  */
 	onDateChange(date) {
         let futureMonth = moment(date).add(3, 'month');
         this.endMaxDate = moment(futureMonth).format("YYYY-MM-DD");

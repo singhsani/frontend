@@ -130,7 +130,7 @@
 
                     <mat-form-field class="col-md-6">
                         <mat-label>{{'choose_start_date'| translate: translateKey}}</mat-label>
-                        <input appDate matInput [min]="startMinDate" (dateChange)="onDateChange($event.value)" [matDatepicker]="townHallBookingfromPicker" formControlName="startDate" placeholder="DD/MM/YYYY">
+                        <input appDate matInput [min]="startMinDate" [max]="endMinDate" (dateChange)="onDateChange($event.value)" [matDatepicker]="townHallBookingfromPicker" formControlName="startDate" placeholder="DD/MM/YYYY">
                         <mat-datepicker-toggle matSuffix [for]="townHallBookingfromPicker"></mat-datepicker-toggle>
                         <mat-datepicker #townHallBookingfromPicker touchUi="true"></mat-datepicker>
                         <div align="end" class="default-show-hint mat-hint mat-right">{{bookingUtils.DATE_HINT_MSG}}</div>
@@ -140,7 +140,7 @@
 
                     <mat-form-field class="col-md-6">
                         <mat-label>{{'choose_end_date'| translate: translateKey}}</mat-label>
-                        <input appDate matInput [min]="endMinDate" [max]="endMaxDate" [matDatepicker]="townHallBookingtoPicker" formControlName="endDate" placeholder="DD/MM/YYYY">
+                        <input appDate matInput  [min]="startMinDate" [max]="endMinDate" [matDatepicker]="townHallBookingtoPicker" formControlName="endDate" placeholder="DD/MM/YYYY">
                         <mat-datepicker-toggle matSuffix [for]="townHallBookingtoPicker"></mat-datepicker-toggle>
                         <mat-datepicker #townHallBookingtoPicker touchUi="true"></mat-datepicker>
                         <div align="end" class="default-show-hint mat-hint mat-right">{{bookingUtils.DATE_HINT_MSG}}</div>
