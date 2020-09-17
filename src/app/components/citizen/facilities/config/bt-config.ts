@@ -40,6 +40,9 @@ export class BTConstants {
     static MY_TICKETINGS_URL = 'citizen/ticketings/my-ticketings';
     static INVALID_BOOKING_STATUS = 'INVALID_BOOKING_STATUS';
     static WAITINGLIST = 'WAITINGLIST';   
+    static RESERVED = 'RESERVED';
+    static HOLIDAY = 'HOLIDAY';
+    static FESTIVAL = 'FESTIVAL';
 }
 
 export class BTConfig extends CitizenConfig {
