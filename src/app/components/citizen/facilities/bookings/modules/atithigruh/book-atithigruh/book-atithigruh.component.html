@@ -254,8 +254,8 @@
                                     <mat-checkbox
                                         (change)="selectedShift = bookingUtils.selectShift(shift, $event.checked, selectedShift)"
                                         *ngFor="let shift of date.slotList; let i = index"
-                                        [disabled]="shift.slotStatus == bookingConstants.BOOKED || shift.slotStatus == bookingConstants.TEMPORARY_BLOCKED"
-                                        [checked]="shift.slotStatus != bookingConstants.AVAILABLE">
+                                        [disabled]="shift.slotStatus == bookingConstants.BOOKED || shift.slotStatus == bookingConstants.RESERVED || shift.slotStatus == bookingConstants.TEMPORARY_BLOCKED"
+                                        [checked]="shift.slotStatus != bookingConstants.AVAILABLE && shift.slotStatus != bookingConstants.HOLIDAY && shift.slotStatus != bookingConstants.FESTIVAL">
                                         &nbsp;{{shift.slotStatus == bookingConstants.CHECKED ?
                                         bookingConstants.AVAILABLE : (shift.slotStatus == 'TEMPORARY_BLOCKED' ?
                                         'Temporary Blocked' : shift.slotStatus) }}
