@@ -285,6 +285,11 @@ export class BookAtithigruhComponent implements OnInit {
 	 * This method is use for search atithigruh availability
 	 */
 	searchBooking() {
+		
+		if(this.BookingTypeForm.get('bookingFrom').value == null){
+			this.toaster.warning(this.bookingUtils.ALL_FEILD_REQUIRED_MESSAGE);
+			return;
+		}
 
 		if (this.BookingTypeForm.valid) {
 			/**
