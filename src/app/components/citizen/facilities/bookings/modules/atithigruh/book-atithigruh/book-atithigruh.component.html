@@ -375,7 +375,7 @@
         <div class="fotButtonBar">
             <div class="col-sm-12 col-md-12 text-right">
                 <button type="button" mat-raised-button color="primary" data-dismiss="modal"
-                    (click)="isBookingFormHidden = false; showPaymentReciept = false;">
+                    (click)="isBookingFormHidden = false; showPaymentReciept = false;setDefaultValue()">
                     {{'Proceed For Application' | translate: stadiumTranslateKey}}
                     <mat-icon>navigate_next</mat-icon>
                 </button>
@@ -404,17 +404,17 @@
                         <mat-form-field class="col-md-4">
                             <input matInput maxlength="50" appValidationFields
                                 [validationFieldsType]="'onlyNameWithSpace'" type="text" formControlName="applicantName"
-                                placeholder="{{'applicant_name' | translate: stadiumTranslateKey}}" required>
+                                placeholder="{{'applicant_name' | translate: stadiumTranslateKey}}">
                             <control-messages [control]="atithigruhForm.get('applicantName')"></control-messages>
                         </mat-form-field>
 
                         <mat-form-field class="col-md-4">
-                            <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="applicantMobileNo"
-                                placeholder="{{'applicant_mobile' | translate: stadiumTranslateKey}}" required>
+                            <input matInput OnlyNumber  minlength="10" maxlength="10" formControlName="applicantMobileNo"
+                                placeholder="{{'applicant_mobile' | translate: stadiumTranslateKey}}">
                             <control-messages [control]="atithigruhForm.get('applicantMobileNo')"></control-messages>
                         </mat-form-field>
 
-                        <div class="col-md-4">
+                        <!-- <div class="col-md-4">
                             <mat-form-field>
                                 <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="confirmMobile"
                                     placeholder="{{'confirm_mobile' | translate: stadiumTranslateKey}}" required>
@@ -424,15 +424,15 @@
                                 *ngIf="!bookingUtils.matcher(atithigruhForm, 'applicantMobileNo', 'confirmMobile') && atithigruhForm.get('applicantMobileNo').touched && atithigruhForm.get('confirmMobile').touched">
                                 {{bookingConstants.MOB_NO_MIS_MATCH_MESSAGE}}
                             </mat-error>
-                        </div>
+                        </div> -->
 
-                        <mat-form-field class="col-md-6">
-                            <input matInput type="email" formControlName="applicantEmailID"
-                                placeholder="{{'applicant_email' | translate: stadiumTranslateKey}}" required>
+                        <mat-form-field class="col-md-4">
+                            <input matInput type="email" disabled formControlName="applicantEmailID"
+                                placeholder="{{'applicant_email' | translate: stadiumTranslateKey}}">
                             <control-messages [control]="atithigruhForm.get('applicantEmailID')"></control-messages>
                         </mat-form-field>
 
-                        <div class="col-md-6">
+                        <!-- <div class="col-md-6">
                             <mat-form-field>
                                 <input matInput type="email" formControlName="confirmEmailID"
                                     placeholder="{{'confirm_email' | translate: stadiumTranslateKey}}" required>
@@ -442,7 +442,7 @@
                                 *ngIf="!bookingUtils.matcher(atithigruhForm, 'applicantEmailID', 'confirmEmailID') && atithigruhForm.get('applicantEmailID').touched && atithigruhForm.get('confirmEmailID').touched">
                                 {{bookingConstants.EMAIL_MIS_MATCH_MESSAGE}}
                             </mat-error>
-                        </div>
+                        </div> -->
 
                     </div>
 

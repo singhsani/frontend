@@ -71,6 +71,7 @@ export class BookAtithigruhComponent implements OnInit {
 	bookedPageSize: number = 5;
 	confirmRef: BsModalRef;
 	displayedColumns: Array<string> = ['id', 'shiftType', 'bookingDate', 'startTime', 'endTime', 'rent', 'electricCharges', 'administrationCharges', 'showTax', 'subTotal', 'gstAmount', 'total'];
+	profileObj : any;
 
 	constructor(
 		private fb: FormBuilder,
@@ -96,6 +97,7 @@ export class BookAtithigruhComponent implements OnInit {
 		this.createAtithigruhForm();
 		this.bookingLookups();
 		this.getAtithigruhLists();
+		this.getUserProfile();
 
 		this.BookingTypeForm.controls.bookingFrom.valueChanges.subscribe(data => {
 			this.BookingTypeForm.controls.bookingTo.reset();
@@ -114,12 +116,12 @@ export class BookAtithigruhComponent implements OnInit {
 			// accountHolderName: [null, [Validators.required, Validators.maxLength(50), Validators.minLength(2)]],
 			// accountNo: [null, [Validators.required, Validators.maxLength(18), Validators.minLength(9)]],
 			applicantAddress: this.fb.group(this.addressComp.addressControls()),
-			applicantMobileNo: [null, Validators.required],
-			confirmMobile: [null, Validators.required],
-			applicantName: [null, Validators.required],
+			applicantMobileNo: [{value: '', disabled: true}, Validators.required],
+			// confirmMobile: [null, Validators.required],
+			applicantName: [{value: '', disabled: true}, Validators.required],
 			
-			applicantEmailID: [null, [Validators.required, ValidationService.emailValidator]],
-			confirmEmailID: [null, [Validators.required, ValidationService.emailValidator]],
+			applicantEmailID:[{value: '', disabled: true}, Validators.required],
+			// confirmEmailID: [null, [Validators.required, ValidationService.emailValidator]],
 
 			/**
 			 * Bank Accoount Details
@@ -426,11 +428,7 @@ export class BookAtithigruhComponent implements OnInit {
 			this.commonService.openAlert("Field Error", this.bookingConstants.ALL_FEILD_REQUIRED_MESSAGE, 'warning')
 			return;
 		}
-		else if (!this.bookingUtils.matcher(this.atithigruhForm, 'applicantEmailID', 'confirmEmailID') || !this.bookingUtils.matcher(this.atithigruhForm, 'applicantMobileNo', 'confirmMobile')) {
-			this.handleErrorsOnSubmit(7);
-			this.commonService.openAlert("Field Error", !this.bookingUtils.matcher(this.atithigruhForm, 'applicantEmailID', 'confirmEmailID') ? this.bookingConstants.EMAIL_MIS_MATCH_MESSAGE : this.bookingConstants.MOB_NO_MIS_MATCH_MESSAGE, 'warning')
-			return;
-		} else if (!this.atithigruhForm.get('agree').value) {
+		else if (!this.atithigruhForm.get('agree').value) {
 			this.commonService.openAlert("Field Error", this.bookingConstants.AGREE_MESSAGE, 'warning')
 			return;
 		} else if (!this.atithigruhForm.get('termsCondition').value) {
@@ -504,6 +502,21 @@ export class BookAtithigruhComponent implements OnInit {
 			this.tabIndex = 2;
 			return false;
 		}
+	}
+
+	/**
+	 * This method use to get the profile data using api
+	 */
+	getUserProfile() {
+		this.formService.getUserProfile().subscribe(res => {
+			this.profileObj = res.data;
+		});
+	}
+
+	setDefaultValue(){  
+		this.atithigruhForm.get('applicantName').setValue(this.profileObj.firstName);
+		this.atithigruhForm.get('applicantEmailID').setValue(this.profileObj.email);
+		this.atithigruhForm.get('applicantMobileNo').setValue(this.profileObj.cellNo);
 	}
 
 }
