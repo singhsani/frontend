@@ -116,6 +116,8 @@
             </button>
 
             <!-- Recepit Re-print Call -->
+            <!-- TODO We'll changes AS PER REQUIREMENT-->
+            <div *ngIf="element.resourceType != (bookingConstant.TOWNHALL_RESOURCE_TYPE | uppercase)">
             <button
               *ngIf="element.resourceType == (bookingConstant.TOWNHALL_RESOURCE_TYPE | uppercase) && element.status != bookingConstant.DEPOSIT_REQUIRED && element.status != bookingConstant.PPL_REQUIRED && element.status != bookingConstant.PAYMENT_REQUIRED && element.status != bookingConstant.CANCELLATION_REQUEST"
               mat-menu-item color="primary"
@@ -123,6 +125,7 @@
               <mat-icon title="Print Receipt" color="primary">print</mat-icon>
               {{'deposit_receipt' | translate:translateKey}}
             </button>
+            </div>
 
             <button
               *ngIf="element.status == bookingConstant.PPL_REQUIRED && element.status != bookingConstant.CANCELLATION_REQUEST && element.status != bookingConstant.PAYMENT_REQUIRED"
@@ -351,7 +354,7 @@
       </div>
       <div class="row">
         <mat-form-field class="col-md-12">
-          <input matInput OnlyNumber maxlength="18" minlength="9" type="text" 
+          <input matInput OnlyNumber maxlength="18" minlength="9" type="text"
                  placeholder="{{'account_no' | translate: translateKey}}" required
                  formControlName="accountNumber">
           <control-messages [control]="refundBankDetailsForm.get('accountNumber')"></control-messages>
