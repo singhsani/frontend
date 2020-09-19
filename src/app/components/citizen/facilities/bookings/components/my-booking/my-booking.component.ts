@@ -471,5 +471,32 @@ export class MyBookingComponent implements OnInit {
         }
         
         return true;
-    }
+	}
+	
+	showCancelAdvanceBooking(element){
+		if(element.resourceType === 'ATITHIGRUH' 
+		&& element.bookingType === 'Advance booking'
+		&& element.status === this.bookingConstant.PAYMENT_REQUIRED){
+			return true;
+  
+		}
+  
+		return false;
+  
+	}
+  
+	cancelAdvanceBooking(element) {
+
+		this.commonService.submitAlert('Are you sure?', "You won't be able to revert this!", 'warning', '', performDelete => {
+			this.bookingService.cancelAdvanceBookingIfPymentNotDone(element.refNumber).subscribe(
+				res => {
+				  this.toster.success('Booking has been Cancelled');
+				  this.getAllBooking();
+				},
+				err => {
+				  this.commonService.successAlert('Error!', err.error[0].message, 'error');
+				}
+			  );
+		});
+	}
 }

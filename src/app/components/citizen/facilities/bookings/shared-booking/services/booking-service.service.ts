@@ -342,4 +342,13 @@ export class BookingService {
         return this.http.get(this.requestURL);
     }
 
+  /**
+ * Method is used to cancel advance booking if payment is not done.
+ * @param refNumber - Reference Number
+ */
+  cancelAdvanceBookingIfPymentNotDone(refNumber: string) {
+    this.requestURL = `api/booking/${this.resourceType}/cancelAdvanceApplication?refNumber=${refNumber}`;
+    return this.http.get(this.requestURL);
+  }
+
 }

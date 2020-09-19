@@ -136,6 +136,13 @@
               <mat-icon title="View Booking Details" color="primary">cancel</mat-icon>
               {{'cancel_booking' | translate:translateKey}}
             </button>
+
+            <!-- Make Cancelation Call for Advance booking-->
+            <button *ngIf="showCancelAdvanceBooking(element)" mat-menu-item color="primary" (click)="cancelAdvanceBooking(element)">
+              <mat-icon title="Print Receipt" color="primary">payment</mat-icon>
+              {{'cancel_advance_booking' | translate:translateKey}}
+            </button>
+
           </div>
 
           <button mat-menu-item color="primary" (click)="openJSONModal(template);jsonDisplay(element)">
