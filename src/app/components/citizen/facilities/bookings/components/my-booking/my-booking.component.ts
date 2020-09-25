@@ -402,7 +402,7 @@ export class MyBookingComponent implements OnInit {
             ifscCode : this.refundBankDetailsForm.value.ifscCode,
             accountNo : this.refundBankDetailsForm.value.accountNumber,
             accountHolderName : this.refundBankDetailsForm.value.accountHolderName,
-            bankCode : this.refundBankDetailsForm.value.bank
+            bankCode : this.refundBankDetailsForm.value.bank.code 
         }
         console.log(object);
         this.bookingService.cancelTownHall(object).subscribe(res => {
@@ -425,10 +425,13 @@ export class MyBookingComponent implements OnInit {
 	refundBankDetailsFormController(){
 	  this.refundBankDetailsForm = this.fb.group({
                 refNumber: [{ value: '', disabled: true }, Validators.required],
-                ifscCode: ['', Validators.required, ValidationService.ifscCodeValidator],
-                accountNumber : ['', Validators.required, ValidationService.accountNoValidation],
-                accountHolderName : ['', Validators.required, ValidationService.nameValidator],
-                bank :['', Validators.required]
+                ifscCode: ['', Validators.required],
+                accountNumber : ['', Validators.required],
+                accountHolderName : ['', Validators.required],
+                bank :this.fb.group({
+									code: [null],
+									name: [null]
+								})
             });
 	}
   /*
@@ -440,7 +443,8 @@ export class MyBookingComponent implements OnInit {
         this.refundBankDetailsForm.get('ifscCode').setValue(resp['data']['ifscCode']);
         this.refundBankDetailsForm.get('accountNumber').setValue(resp['data']['accountNo']);
         this.refundBankDetailsForm.get('accountHolderName').setValue(resp['data']['accountHolderName']);
-      })
+				this.refundBankDetailsForm.get('bank').get('code').setValue(resp['data']['bankName']['code']);
+			})
     }
 
     /**
