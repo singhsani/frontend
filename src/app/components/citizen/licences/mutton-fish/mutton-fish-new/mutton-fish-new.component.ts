@@ -34,21 +34,27 @@ export class MuttonFishNewComponent implements OnInit {
 	PERSON_TYPE: Array<any> = [];
 	FIRM_ZONE: Array<any> = [];
 	WARD: Array<any> = [];
-	BLOCK: Array<any> = [];
 	LOOKUP: any;
-
+	BUSINESS_ADDRESS_TYPE = [
+		{ code: 'OWNERSHIP', name: 'Ownership' },
+		{ code: 'PARTNERSHIP', name: 'Partnership' },
+		{ code: 'TENANT', name: 'Tenant' }
+	];
+	isLandDetailsAllow: boolean = false;
+	isPartnershipDeedAllow: boolean = false;
+	isPoliceVerificationAllow: boolean = false;
 	// required attachment array
 	public uploadFileArray: Array<any> = [];
 
 
-    /**
-     * @param fb - Declare FormBuilder property.
-     * @param validationError - Declare validation service property
-     * @param formService - Declare form service property 
-     * @param uploadFileService - Declare upload file service property.
-     * @param commonService - Declare sweet alert.
+	/**
+	 * @param fb - Declare FormBuilder property.
+	 * @param validationError - Declare validation service property
+	 * @param formService - Declare form service property 
+	 * @param uploadFileService - Declare upload file service property.
+	 * @param commonService - Declare sweet alert.
 	 * @param toastrService - Show massage with timer.
-     */
+	 */
 	constructor(
 		private fb: FormBuilder,
 		private validationService: ValidationService,
@@ -89,7 +95,7 @@ export class MuttonFishNewComponent implements OnInit {
 				this.muttonFishNewForm.patchValue(res);
 				this.licenseConfiguration.isAttachmentButtonsVisible = true;
 				this.onChangeZone(this.muttonFishNewForm.get('zoneNo').value.code);
-				this.onChangeWard(this.muttonFishNewForm.get('wardNo').value.code);
+				//this.onChangeWard(this.muttonFishNewForm.get('wardNo').value.code);
 
 				// deflate add one array in relationship grid
 				if ((<FormArray>res.relationshipList).length == 0) {
@@ -132,7 +138,7 @@ export class MuttonFishNewComponent implements OnInit {
 			this.FIRM_ZONE = res.FIRM_ZONE;
 
 			this.onChangeZone(this.muttonFishNewForm.get('zoneNo').value.code);
-			this.onChangeWard(this.muttonFishNewForm.get('wardNo').value.code);
+			//this.onChangeWard(this.muttonFishNewForm.get('wardNo').value.code);
 		});
 	}
 
@@ -147,16 +153,28 @@ export class MuttonFishNewComponent implements OnInit {
 		}
 	}
 
+	onChangeBusinessAddresstype(event) {
+
+		if (event == 'Ownership') {
+			this.isLandDetailsAllow = true;
+		} else if (event == 'Partneship') {
+			this.isPartnershipDeedAllow = true;
+		} else {
+			this.isPoliceVerificationAllow = true;
+		}
+	}
+
 	/**
 	 * Method is used for get block as per zone selection
 	 * @param event : selected ward code
+	 * @param formType : form vontrol name
 	 */
-	onChangeWard(event) {
-		this.BLOCK = [];
-		if (event && this.LOOKUP && this.LOOKUP.hasOwnProperty(event)) {
-			this.BLOCK = this.LOOKUP[event];
-		}
-	}
+//	onChangeWard(event) {
+//		this.BLOCK = [];
+//		if (event && this.LOOKUP && this.LOOKUP.hasOwnProperty(event)) {
+//			this.BLOCK = this.LOOKUP[event];
+//		}
+//	}
 
 	/**
 	* Method is used to set form controls
@@ -177,7 +195,7 @@ export class MuttonFishNewComponent implements OnInit {
 			personType: this.fb.group({
 				code: [null, [Validators.required]]
 			}),
-      personTypeGuj : [null, [Validators.required]],
+			personTypeGuj: [null, [Validators.required]],
 			holderFirstName: [null, [Validators.required, Validators.maxLength(30), ValidationService.nameValidator]],
 			holderMiddleName: [null, [Validators.required, Validators.maxLength(30), ValidationService.nameValidator]],
 			holderLastName: [null, [Validators.required, Validators.maxLength(30), ValidationService.nameValidator]],
@@ -192,15 +210,15 @@ export class MuttonFishNewComponent implements OnInit {
 			holderMobileNo: [null, [Validators.required, Validators.maxLength(10), Validators.minLength(10)]],
 			holderFaxNo: [null, [Validators.maxLength(12)]],
 			holderAadharNo: [null, [Validators.required, ValidationService.aadharValidation, Validators.maxLength(12)]],
-			holderPanNo: [null, [Validators.required, ValidationService.panValidator , Validators.maxLength(10)]],
+			holderPanNo: [null, [Validators.required, ValidationService.panValidator, Validators.maxLength(10)]],
 			/* Step 1 controls end */
 
 			/* Step 2 controls start */
 			zoneNo: this.fb.group({ code: [null, Validators.required] }),
 			wardNo: this.fb.group({ code: [null, Validators.required] }),
-			blockNo: this.fb.group({ code: [null, Validators.required] }),
+			businessAddressType: this.fb.group({ code: [null, Validators.required] }),
 			businessAddress: this.fb.group(this.permanantAddressEstablishment.addressControls()),
-			extraDetailsOfBusiness: [null, [Validators.maxLength(500)]],
+			// extraDetailsOfBusiness: [null, [Validators.maxLength(500)]],
 			relationshipId: this.fb.group({
 				code: [null, Validators.required]
 			}),
@@ -244,9 +262,9 @@ export class MuttonFishNewComponent implements OnInit {
 	}
 
 	onSameAddressChange(event) {
-		
+
 		if (event.checked) {
-			
+
 			this.muttonFishNewForm.get('temporaryAddress').patchValue(this.muttonFishNewForm.get('permanantAddress').value);
 			this.muttonFishNewForm.get('temporaryAddress.addressType').setValue('MF_TEMPORARY_ADDRESS');
 			this.muttonFishNewForm.get('isSameAsPermanantAddress').get('code').setValue("YES");
@@ -254,10 +272,10 @@ export class MuttonFishNewComponent implements OnInit {
 			this.muttonFishNewForm.get('temporaryAddress').reset();
 			this.muttonFishNewForm.get('isSameAsPermanantAddress').get('code').setValue("NO");
 		}
-	
+
 	}
 
-	
+
 	/**
 	 * Method is used when user click for add person
 	 */
@@ -359,7 +377,7 @@ export class MuttonFishNewComponent implements OnInit {
 		}
 	}
 
-	
+
 	/**
 	*  Method is used cancel editable dataview.
 	* @param row: table row index
@@ -380,24 +398,24 @@ export class MuttonFishNewComponent implements OnInit {
 		}
 	}
 
-    /**
-     * This method required for final form submition.
-     * @param flag - flag of invalid control.
-     */
+	/**
+	 * This method required for final form submition.
+	 * @param flag - flag of invalid control.
+	 */
 	handleErrorsOnSubmit(flag) {
 		let step0 = 21;
 		let step1 = 29;
 
 		switch (true) {
 			case flag <= step0:
-			this.licenseConfiguration.currentTabIndex = 0;
+				this.licenseConfiguration.currentTabIndex = 0;
 				break;
 			case flag <= step1:
-			this.licenseConfiguration.currentTabIndex = 1;
+				this.licenseConfiguration.currentTabIndex = 1;
 				break;
-			
+
 			default:
-			this.licenseConfiguration.currentTabIndex = 0;
+				this.licenseConfiguration.currentTabIndex = 0;
 
 		}
 		this.checkDynamicTableValidate();
@@ -419,44 +437,44 @@ export class MuttonFishNewComponent implements OnInit {
 	}
 
 
-  /**
-   * Gujarati Look Up Converter.
-   * @param selectedValue - selected value from dropdown
-   * @param controlName - control name of form
-   * @param lookupName - passed lookup array
-   */
-  getGujNameFromLookup(selectedValue: string, controlName: string, lookupName: Array<any>) {
+	/**
+	 * Gujarati Look Up Converter.
+	 * @param selectedValue - selected value from dropdown
+	 * @param controlName - control name of form
+	 * @param lookupName - passed lookup array
+	 */
+	getGujNameFromLookup(selectedValue: string, controlName: string, lookupName: Array<any>) {
 
-    if (lookupName && lookupName.length) {
-        let dataObj = lookupName.find((obj) => obj.code === selectedValue);
-        if (dataObj && dataObj.gujName) {
-          this.muttonFishNewForm.get(controlName).setValue(dataObj.gujName);
-        } else {
-          this.muttonFishNewForm.get(controlName).setValue('');
-        }
-      }
+		if (lookupName && lookupName.length) {
+			let dataObj = lookupName.find((obj) => obj.code === selectedValue);
+			if (dataObj && dataObj.gujName) {
+				this.muttonFishNewForm.get(controlName).setValue(dataObj.gujName);
+			} else {
+				this.muttonFishNewForm.get(controlName).setValue('');
+			}
+		}
 
-  }
-
-  onCardChange(event,cardName){
-	if(event.target.value === "" || this.muttonFishNewForm.get(cardName).invalid){
-		this.muttonFishNewForm.get(cardName).setValue(null);
 	}
-}
 
-	patchValue(){
+	onCardChange(event, cardName) {
+		if (event.target.value === "" || this.muttonFishNewForm.get(cardName).invalid) {
+			this.muttonFishNewForm.get(cardName).setValue(null);
+		}
+	}
+
+	patchValue() {
 		this.muttonFishNewForm.patchValue(this.dummyJSON);
 	}
 
-	dummyJSON:any = {
+	dummyJSON: any = {
 		"licenseIssueDate": null,
 		"licenseRenewalDate": null,
 		"loinumber": null,
 		"licenseType": {
-		  "code": "MEAT"
+			"code": "MEAT"
 		},
 		"personType": {
-		  "code": "MR"
+			"code": "MR"
 		},
 		"holderFirstName": "sadfsdf",
 		"holderMiddleName": "dsfsdfsdf",
@@ -465,44 +483,44 @@ export class MuttonFishNewComponent implements OnInit {
 		"holderMiddleNameGuj": "દ્સ્ફ્સ્દ્ફ્સ્દ્ફ",
 		"holderLastNameGuj": "સ્દ્ફ્દ્સ્ફ્સ્દ્ફ",
 		"permanantAddress": {
-		  "addressType": "MF_PERMANENT_ADDRESS",
-		  "buildingName": "dsfsdf",
-		  "streetName": "sdfsdfsdf",
-		  "landmark": "sdfdsfdsf",
-		  "area": "sdfsdfsdf",
-		  "state": "GUJARAT",
-		  "district": null,
-		  "city": "Vadodara",
-		  "country": "INDIA",
-		  "pincode": "234234",
-		  "buildingNameGuj": "દ્સ્ફ્સ્દ્ફ",
-		  "streetNameGuj": "સ્દ્ફ્સ્દ્ફ્સ્દ્ફ",
-		  "landmarkGuj": "સ્દ્ફ્દ્સ્ફ્દ્સ્ફ",
-		  "areaGuj": "સ્દ્ફ્સ્દ્ફ્સ્દ્ફ",
-		  "stateGuj": "ગુજરાત",
-		  "districtGuj": null,
-		  "cityGuj": "વડોદરા",
-		  "countryGuj": "ભારત"
+			"addressType": "MF_PERMANENT_ADDRESS",
+			"buildingName": "dsfsdf",
+			"streetName": "sdfsdfsdf",
+			"landmark": "sdfdsfdsf",
+			"area": "sdfsdfsdf",
+			"state": "GUJARAT",
+			"district": null,
+			"city": "Vadodara",
+			"country": "INDIA",
+			"pincode": "234234",
+			"buildingNameGuj": "દ્સ્ફ્સ્દ્ફ",
+			"streetNameGuj": "સ્દ્ફ્સ્દ્ફ્સ્દ્ફ",
+			"landmarkGuj": "સ્દ્ફ્દ્સ્ફ્દ્સ્ફ",
+			"areaGuj": "સ્દ્ફ્સ્દ્ફ્સ્દ્ફ",
+			"stateGuj": "ગુજરાત",
+			"districtGuj": null,
+			"cityGuj": "વડોદરા",
+			"countryGuj": "ભારત"
 		},
 		"temporaryAddress": {
-		  "addressType": "MF_TEMPORARY_ADDRESS",
-		  "buildingName": "fsdfsdfsdf",
-		  "streetName": "sdfdsfsd",
-		  "landmark": "dsfsdfsd",
-		  "area": "dsfsdfsdf",
-		  "state": "GUJARAT",
-		  "district": null,
-		  "city": "Vadodara",
-		  "country": "INDIA",
-		  "pincode": "234243",
-		  "buildingNameGuj": "ફ્સ્દ્ફ્સ્દ્ફ્સ્દ્ફ",
-		  "streetNameGuj": "સ્દ્ફ્દ્સ્ફ્સ્દ",
-		  "landmarkGuj": "દ્સ્ફ્સ્દ્ફ્સ્દ",
-		  "areaGuj": "દ્સ્ફ્સ્દ્ફ્સ્દ્ફ",
-		  "stateGuj": "ગુજરાત",
-		  "districtGuj": null,
-		  "cityGuj": "વડોદરા",
-		  "countryGuj": "ભારત"
+			"addressType": "MF_TEMPORARY_ADDRESS",
+			"buildingName": "fsdfsdfsdf",
+			"streetName": "sdfdsfsd",
+			"landmark": "dsfsdfsd",
+			"area": "dsfsdfsdf",
+			"state": "GUJARAT",
+			"district": null,
+			"city": "Vadodara",
+			"country": "INDIA",
+			"pincode": "234243",
+			"buildingNameGuj": "ફ્સ્દ્ફ્સ્દ્ફ્સ્દ્ફ",
+			"streetNameGuj": "સ્દ્ફ્દ્સ્ફ્સ્દ",
+			"landmarkGuj": "દ્સ્ફ્સ્દ્ફ્સ્દ",
+			"areaGuj": "દ્સ્ફ્સ્દ્ફ્સ્દ્ફ",
+			"stateGuj": "ગુજરાત",
+			"districtGuj": null,
+			"cityGuj": "વડોદરા",
+			"countryGuj": "ભારત"
 		},
 		"holderTelephoneNo": "435345345435",
 		"holderMobileNo": "4235435435",
@@ -510,48 +528,45 @@ export class MuttonFishNewComponent implements OnInit {
 		"holderAadharNo": "435435435435",
 		"holderPanNo": "ABCDE1234T",
 		"zoneNo": {
-		  "code": "NORTH_ZONE"
+			"code": "NORTH_ZONE"
 		},
 		"wardNo": {
-		  "code": "WARD_7"
-		},
-		"blockNo": {
-		  "code": "BLOCK_9"
+			"code": "WARD_7"
 		},
 		"businessAddress": {
-		  "addressType": "MF_BUSINESS_ADDRESS",
-		  "buildingName": "sdfsdfsdf",
-		  "streetName": "sdfsdfsdf",
-		  "landmark": null,
-		  "area": "sdfsdfsd",
-		  "state": "GUJARAT",
-		  "district": null,
-		  "city": "Vadodara",
-		  "country": "INDIA",
-		  "pincode": "234234",
-		  "buildingNameGuj": "સ્દ્ફ્સ્દ્ફ્સ્દ્ફ",
-		  "streetNameGuj": "સ્દ્ફ્સ્દ્ફ્સ્દ્ફ",
-		  "landmarkGuj": null,
-		  "areaGuj": "સ્દ્ફ્સ્દ્ફ્સ્દ",
-		  "stateGuj": "ગુજરાત",
-		  "districtGuj": null,
-		  "cityGuj": "વડોદરા",
-		  "countryGuj": "ભારત"
+			"addressType": "MF_BUSINESS_ADDRESS",
+			"buildingName": "sdfsdfsdf",
+			"streetName": "sdfsdfsdf",
+			"landmark": null,
+			"area": "sdfsdfsd",
+			"state": "GUJARAT",
+			"district": null,
+			"city": "Vadodara",
+			"country": "INDIA",
+			"pincode": "234234",
+			"buildingNameGuj": "સ્દ્ફ્સ્દ્ફ્સ્દ્ફ",
+			"streetNameGuj": "સ્દ્ફ્સ્દ્ફ્સ્દ્ફ",
+			"landmarkGuj": null,
+			"areaGuj": "સ્દ્ફ્સ્દ્ફ્સ્દ",
+			"stateGuj": "ગુજરાત",
+			"districtGuj": null,
+			"cityGuj": "વડોદરા",
+			"countryGuj": "ભારત"
 		},
 		"extraDetailsOfBusiness": "agfdgfdgfdg",
 		"relationshipId": {
-		  "code": "PROPRIETOR"
+			"code": "PROPRIETOR"
 		},
 		"statusOfBusinessId": {
-		  "code": "PARTNERSHIPFIRM"
+			"code": "PARTNERSHIPFIRM"
 		},
 		"relationshipList": [
-		  {
-			"name": "gfdg",
-			"address": "fdgfdgfdg",
-			"mobileNo": "4545435435",
-			"personType": "MF_PERSON"
-		  }
+			{
+				"name": "gfdg",
+				"address": "fdgfdgfdg",
+				"mobileNo": "4545435435",
+				"personType": "MF_PERSON"
+			}
 		],
 		"fileStatus": "DRAFT",
 		"serviceName": null,
@@ -564,12 +579,12 @@ export class MuttonFishNewComponent implements OnInit {
 		"canDelete": true,
 		"canSubmit": true,
 		"serviceDetail": {
-		  "code": "MF-LIC",
-		  "name": "Meat And Fish shop license",
-		  "gujName": "મીટ એન્ડ ફિશ શોપ લાઇસન્સ",
-		  "feesOnScrutiny": true,
-		  "appointmentRequired": false
+			"code": "MF-LIC",
+			"name": "Meat And Fish shop license",
+			"gujName": "મીટ એન્ડ ફિશ શોપ લાઇસન્સ",
+			"feesOnScrutiny": true,
+			"appointmentRequired": false
 		}
-	  };
+	};
 }
 
