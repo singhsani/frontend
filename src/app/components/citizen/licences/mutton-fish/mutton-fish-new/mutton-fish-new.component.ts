@@ -44,8 +44,9 @@ export class MuttonFishNewComponent implements OnInit {
 	isPartnershipDeedAllow: boolean = false;
 	isPoliceVerificationAllow: boolean = false;
 	// required attachment array
-	public uploadFileArray: Array<any> = [];
 
+	public uploadFileArray: Array<any> = [];
+	public serverUploadFilesArray: Array<any> = [];
 
 	/**
 	 * @param fb - Declare FormBuilder property.
@@ -109,10 +110,14 @@ export class MuttonFishNewComponent implements OnInit {
 				res.relationshipList.forEach(app => {
 					(<FormArray>this.muttonFishNewForm.get('relationshipList')).push(this.createArray(app));
 				});
+
 				res.serviceDetail.serviceUploadDocuments.forEach(app => {
 					(<FormArray>this.muttonFishNewForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.licenseConfiguration.createDocumentsGrp(app));
 				});
-				this.uploadFileArray = this.licenseConfiguration.requiredDocumentListMeetFish(this.muttonFishNewForm);
+
+				this.serverUploadFilesArray = res.serviceDetail.serviceUploadDocuments;
+				this.uploadFileArray = res.serviceDetail.serviceUploadDocuments;
+				//this.uploadFileArray = this.licenseConfiguration.requiredDocumentListMeetFish(this.muttonFishNewForm);
 				this.muttonFishNewForm.get('personTypeGuj').setValue(res.personType.gujName);
 				this.muttonFishNewForm.controls.permanantAddress.valueChanges.subscribe(data => {
 					if (this.muttonFishNewForm.get('isSameAsPermanantAddress').get('code').value == "YES") {
@@ -153,14 +158,40 @@ export class MuttonFishNewComponent implements OnInit {
 		}
 	}
 
+	 
 	onChangeBusinessAddresstype(event) {
-
-		if (event == 'Ownership') {
-			this.isLandDetailsAllow = true;
-		} else if (event == 'Partneship') {
-			this.isPartnershipDeedAllow = true;
+		// let array = (<FormArray>this.muttonFishNewForm.get('serviceDetail').get('serviceUploadDocuments'));
+		const localUploadArray = this.commonService.clone((<FormArray>this.muttonFishNewForm.get('serviceDetail').get('serviceUploadDocuments')).value);
+		// let array = (<FormArray>this.muttonFishNewForm.get('serviceDetail').get('serviceUploadDocuments'));
+		this.uploadFileArray = [];
+		
+		if (event == 'OWNERSHIP') {
+			for (let file of localUploadArray) {
+				if ((file['documentIdentifier'] == 'PARTNERSHIP_DEED') || (file['documentIdentifier'] == 'POLICE_VERIFICATION')) {
+					file['mandatory'] = false;
+				}
+				this.uploadFileArray.push(file);
+				console.log(file)
+			
+			}
+		} else if (event == 'PARTNERSHIP') {
+			for (let file of localUploadArray) {
+				if ((file['documentIdentifier'] == 'POLICE_VERIFICATION')) {
+					file['mandatory'] = false;
+				}
+				this.uploadFileArray.push(file);
+				
+			}
+		} else if (event == 'TENANT') {
+			for (let file of localUploadArray) {
+				if ((file['documentIdentifier'] == 'PARTNERSHIP_DEED')) {
+					file['mandatory'] = false;
+				}
+				this.uploadFileArray.push(file);
+				
+			}
 		} else {
-			this.isPoliceVerificationAllow = true;
+			return this.serverUploadFilesArray;
 		}
 	}
 
@@ -169,12 +200,12 @@ export class MuttonFishNewComponent implements OnInit {
 	 * @param event : selected ward code
 	 * @param formType : form vontrol name
 	 */
-//	onChangeWard(event) {
-//		this.BLOCK = [];
-//		if (event && this.LOOKUP && this.LOOKUP.hasOwnProperty(event)) {
-//			this.BLOCK = this.LOOKUP[event];
-//		}
-//	}
+	//	onChangeWard(event) {
+	//		this.BLOCK = [];
+	//		if (event && this.LOOKUP && this.LOOKUP.hasOwnProperty(event)) {
+	//			this.BLOCK = this.LOOKUP[event];
+	//		}
+	//	}
 
 	/**
 	* Method is used to set form controls
