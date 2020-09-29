@@ -1,7 +1,7 @@
 <app-title-bar [title]="'screen_title' | translate: translateKey">
-	<button class="pull-right" mat-stroked-button type="button" (click)="patchValue()">
+	<!-- <button class="pull-right" mat-stroked-button type="button" (click)="patchValue()">
 		Patch Value
-	</button>
+	</button> -->
 </app-title-bar>
 
 <mat-card class="formClass cardBorder">
@@ -325,11 +325,11 @@
 				</ng-template>
 				<div class="row">
 					<ng-container
-						*ngFor="let doc of muttonFishNewForm.get('serviceDetail').get('serviceUploadDocuments').value | filterAttachmentMF:muttonFishNewForm.get('statusOfBusinessId').value.code">
+						*ngFor="let doc of uploadFileArray | filterAttachmentMF:muttonFishNewForm.get('statusOfBusinessId').value.code">
 						<div class="col-md-4"
 							*ngIf="doc.requiredOnCitizenPortal && doc.isActive && licenseConfiguration.isAttachmentButtonsVisible">
 							<label>{{TranslateService.getCurrentLanguage()=='en'? doc.documentLabelEn : doc.documentLabelGuj }}
-								<span *ngIf="doc.mandatory">*</span></label>
+								<span *ngIf="doc.mandatory" class="mandatory">*</span></label>
 							<file-upload [form]="muttonFishNewForm" [uploadModel]="doc"></file-upload>
 						</div>
 					</ng-container>
