@@ -18,6 +18,7 @@ export class AddressComponent implements OnInit, OnChanges {
 	@Input() requiredFeilds: boolean;
 	@Input() isDisplayGujFields: boolean = false;
 	@Input() formType: string = null;
+	@Input() requiredNotPincode : boolean;
 
 	translateKey: string = 'addressScreen';
 	countryListArray: any = [];
@@ -65,6 +66,24 @@ export class AddressComponent implements OnInit, OnChanges {
 			this.addressFormGroup.get('pincode').clearValidators();
 		}
 
+		if (this.requiredNotPincode) {
+			this.isBuildinAreaReq = true;
+			this.addressFormGroup.get('state').setValidators([Validators.required]);
+			this.addressFormGroup.get('area').setValidators([Validators.required]);
+			this.addressFormGroup.get('buildingName').setValidators([Validators.required, ValidationService.buildingNameValidator]);
+			this.addressFormGroup.get('city').setValidators([Validators.required]);
+			this.addressFormGroup.get('country').setValidators([Validators.required]);
+			this.addressFormGroup.get('pincode').clearValidators;
+		} else {
+			this.isBuildinAreaReq = true;
+			this.addressFormGroup.get('state').setValidators([Validators.required]);
+			this.addressFormGroup.get('area').setValidators([Validators.required]);
+			this.addressFormGroup.get('buildingName').setValidators([Validators.required, ValidationService.buildingNameValidator]);
+			this.addressFormGroup.get('city').setValidators([Validators.required]);
+			this.addressFormGroup.get('country').setValidators([Validators.required]);
+			this.addressFormGroup.get('pincode').setValidators([Validators.required, Validators.minLength(6), Validators.maxLength(6)]);
+
+		}
 		/* After perform set or remove validator action this will update value and validity */
 		this.addressFormGroup.get('buildingName').updateValueAndValidity();
 		this.addressFormGroup.get('area').updateValueAndValidity();
