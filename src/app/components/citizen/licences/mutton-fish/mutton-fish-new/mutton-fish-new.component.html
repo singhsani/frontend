@@ -102,7 +102,7 @@
 				<div class="row">
 					<h2>{{'permanat_address' | translate:translateKey}}</h2>
 					<app-address [isDisplayGujFields]="true" #permanantAddressEstablishment [requiredNotPincode]="true"
-					[addressFormGroup]="muttonFishNewForm.get('permanantAddress')">
+						[addressFormGroup]="muttonFishNewForm.get('permanantAddress')">
 					</app-address>
 				</div>
 				<div class="col-md-4" formGroupName="isSameAsPermanantAddress">
@@ -113,7 +113,7 @@
 				</div>
 				<div class="row">
 					<h2>{{'temp_address' | translate:translateKey}}</h2>
-					<app-address [isDisplayGujFields]="true" #temporaryAddressEstablishment [requiredFeilds]="true"
+					<app-address [isDisplayGujFields]="true" #temporaryAddressEstablishment [requiredNotPincode]="true"
 						[addressFormGroup]="muttonFishNewForm.get('temporaryAddress')"></app-address>
 				</div>
 
@@ -171,16 +171,27 @@
 				<div class="row">
 					<h2>{{'business_shop_address' | translate:translateKey}}</h2>
 
-					<div class="col-md-4 ngSelect" formGroupName="businessAddressType">
-
-						<ng-select placeholder="{{'business_address_type' | translate:translateKey}} *"
-							formControlName="code" (change)="onChangeBusinessAddresstype($event);">
-							<ng-option *ngFor="let add of BUSINESS_ADDRESS_TYPE" [value]="add.code">{{add.name}}</ng-option>
+					<div class="col-md-4 ngSelect" formGroupName="statusOfBusinessId">
+						<ng-select placeholder="{{'business_address_type' | translate:translateKey}} *" 
+						formControlName="code" (change)="onChangeStatusOfBusiness($event)">
+							<ng-option *ngFor="let statusId of MEATFISH_STATUS_OF_BUSINESS" [value]="statusId.code">
+								{{statusId.name}}</ng-option>
 						</ng-select>
-						<control-messages [control]="muttonFishNewForm.get('businessAddressType').get('code')">	</control-messages>
+						<control-messages [control]="muttonFishNewForm.get('statusOfBusinessId').get('code')">
+						</control-messages>
 					</div>
 
-					<app-address [isDisplayGujFields]="true" #temporaryAddressEstablishment [requiredFeilds]="true"
+					<!-- <div class="col-md-4 ngSelect" formGroupName="businessAddressType">
+						<ng-select  placeholder="{{'business_address_type' | translate:translateKey}} *"
+							formControlName="code" (change)="onChangeBusinessAddresstype($event);">
+							<ng-option *ngFor="let add of BUSINESS_ADDRESS_TYPE" [value]="add.code">{{add.name}}
+							</ng-option>
+						</ng-select>
+						<control-messages [control]="muttonFishNewForm.get('businessAddressType').get('code')">
+						</control-messages>
+					</div> -->
+
+					<app-address [isDisplayGujFields]="true" #temporaryAddressEstablishment [requiredNotPincode]="true"
 						[addressFormGroup]="muttonFishNewForm.get('businessAddress')"></app-address>
 				</div>
 
@@ -204,15 +215,15 @@
 						</control-messages>
 					</div>
 
-					<div class="col-md-6 ngSelect" formGroupName="statusOfBusinessId">
+					<!-- <div class="col-md-6 ngSelect" formGroupName="statusOfBusinessId">
 						<ng-select (change)="onChangeStatusOfBusiness()"
 							placeholder="{{'business_status_id' | translate:translateKey}} *" formControlName="code">
-							<ng-option *ngFor="let statusId of MF_STATUS_OF_BUSINESS" [value]="statusId.code">
+							<ng-option *ngFor="let statusId of MEATFISH_STATUS_OF_BUSINESS" [value]="statusId.code">
 								{{statusId.name}}</ng-option>
 						</ng-select>
 						<control-messages [control]="muttonFishNewForm.get('statusOfBusinessId').get('code')">
 						</control-messages>
-					</div>
+					</div> -->
 				</div>
 
 				<!-- table -->
@@ -324,8 +335,9 @@
 					<div>{{'attachment' | translate: translateKey}}</div>
 				</ng-template>
 				<div class="row">
+					<!-- | filterAttachmentMF:muttonFishNewForm.get('statusOfBusinessId').value.code"  "&& licenseConfiguration.isAttachmentButtonsVisible"-->
 					<ng-container
-						*ngFor="let doc of uploadFileArray | filterAttachmentMF:muttonFishNewForm.get('statusOfBusinessId').value.code">
+						*ngFor="let doc of uploadFileArray ">
 						<div class="col-md-4"
 							*ngIf="doc.requiredOnCitizenPortal && doc.isActive && licenseConfiguration.isAttachmentButtonsVisible">
 							<label>{{TranslateService.getCurrentLanguage()=='en'? doc.documentLabelEn : doc.documentLabelGuj }}
