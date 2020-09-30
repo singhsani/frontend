@@ -30,23 +30,19 @@ export class MuttonFishNewComponent implements OnInit {
 	//Lookups Array
 	MF_LICENSE_TYPE: Array<any> = [];
 	MF_RELATIONSHIP_OF_APPLICANT: Array<any> = [];
-	MF_STATUS_OF_BUSINESS: Array<any> = [];
+	MEATFISH_STATUS_OF_BUSINESS: Array<any> = [];
 	PERSON_TYPE: Array<any> = [];
 	FIRM_ZONE: Array<any> = [];
 	WARD: Array<any> = [];
 	LOOKUP: any;
-	BUSINESS_ADDRESS_TYPE = [
-		{ code: 'OWNERSHIP', name: 'Ownership' },
-		{ code: 'PARTNERSHIP', name: 'Partnership' },
-		{ code: 'TENANT', name: 'Tenant' }
-	];
+	
 	isLandDetailsAllow: boolean = false;
 	isPartnershipDeedAllow: boolean = false;
 	isPoliceVerificationAllow: boolean = false;
 	// required attachment array
 
 	public uploadFileArray: Array<any> = [];
-	public serverUploadFilesArray: Array<any> = [];
+	//public serverUploadFilesArray: Array<any> = [];
 
 	/**
 	 * @param fb - Declare FormBuilder property.
@@ -115,7 +111,7 @@ export class MuttonFishNewComponent implements OnInit {
 					(<FormArray>this.muttonFishNewForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.licenseConfiguration.createDocumentsGrp(app));
 				});
 
-				this.serverUploadFilesArray = res.serviceDetail.serviceUploadDocuments;
+				//this.serverUploadFilesArray = res.serviceDetail.serviceUploadDocuments;
 				this.uploadFileArray = res.serviceDetail.serviceUploadDocuments;
 				//this.uploadFileArray = this.licenseConfiguration.requiredDocumentListMeetFish(this.muttonFishNewForm);
 				this.muttonFishNewForm.get('personTypeGuj').setValue(res.personType.gujName);
@@ -138,7 +134,7 @@ export class MuttonFishNewComponent implements OnInit {
 			this.LOOKUP = res;
 			this.MF_LICENSE_TYPE = res.MF_LICENSE_TYPE;
 			this.MF_RELATIONSHIP_OF_APPLICANT = res.MF_RELATIONSHIP_OF_APPLICANT;
-			this.MF_STATUS_OF_BUSINESS = res.MF_STATUS_OF_BUSINESS;
+			this.MEATFISH_STATUS_OF_BUSINESS = res.MEATFISH_STATUS_OF_BUSINESS;
 			this.PERSON_TYPE = res.PERSON_TYPE;
 			this.FIRM_ZONE = res.FIRM_ZONE;
 
@@ -157,15 +153,14 @@ export class MuttonFishNewComponent implements OnInit {
 			this.WARD = this.LOOKUP[event];
 		}
 	}
-
 	 
-	onChangeBusinessAddresstype(event) {
+	onChangeStatusOfBusiness(event) {
 		// let array = (<FormArray>this.muttonFishNewForm.get('serviceDetail').get('serviceUploadDocuments'));
 		const localUploadArray = this.commonService.clone((<FormArray>this.muttonFishNewForm.get('serviceDetail').get('serviceUploadDocuments')).value);
 		// let array = (<FormArray>this.muttonFishNewForm.get('serviceDetail').get('serviceUploadDocuments'));
 		this.uploadFileArray = [];
 		
-		if (event == 'OWNERSHIP') {
+		if (event == 'PROPRIETORSHIPFIRM') {
 			for (let file of localUploadArray) {
 				if ((file['documentIdentifier'] == 'PARTNERSHIP_DEED') || (file['documentIdentifier'] == 'POLICE_VERIFICATION')) {
 					file['mandatory'] = false;
@@ -174,24 +169,24 @@ export class MuttonFishNewComponent implements OnInit {
 				console.log(file)
 			
 			}
-		} else if (event == 'PARTNERSHIP') {
+		} else if (event == 'PARTNERSHIPFIRM') {
 			for (let file of localUploadArray) {
 				if ((file['documentIdentifier'] == 'POLICE_VERIFICATION')) {
 					file['mandatory'] = false;
 				}
-				this.uploadFileArray.push(file);
 				
+				this.uploadFileArray.push(file);
 			}
 		} else if (event == 'TENANT') {
 			for (let file of localUploadArray) {
 				if ((file['documentIdentifier'] == 'PARTNERSHIP_DEED')) {
 					file['mandatory'] = false;
 				}
-				this.uploadFileArray.push(file);
 				
+				this.uploadFileArray.push(file);
 			}
 		} else {
-			return this.serverUploadFilesArray;
+			return this.uploadFileArray;
 		}
 	}
 
@@ -247,7 +242,7 @@ export class MuttonFishNewComponent implements OnInit {
 			/* Step 2 controls start */
 			zoneNo: this.fb.group({ code: [null, Validators.required] }),
 			wardNo: this.fb.group({ code: [null, Validators.required] }),
-			businessAddressType: this.fb.group({ code: [null, Validators.required] }),
+			//businessAddressType: this.fb.group({ code: [null, Validators.required] }),
 			businessAddress: this.fb.group(this.permanantAddressEstablishment.addressControls()),
 			// extraDetailsOfBusiness: [null, [Validators.maxLength(500)]],
 			relationshipId: this.fb.group({
@@ -366,9 +361,9 @@ export class MuttonFishNewComponent implements OnInit {
 	/**
 	 * Method is use for change dynamic file attachment 
 	 */
-	onChangeStatusOfBusiness() {
-		this.uploadFileArray = this.licenseConfiguration.requiredDocumentListMeetFish(this.muttonFishNewForm);
-	}
+	// onChangeStatusOfBusiness() {
+	// 	this.uploadFileArray = this.licenseConfiguration.requiredDocumentListMeetFish(this.muttonFishNewForm);
+	// }
 
 	/**
 	*  Method is used check table is in edit mode
@@ -436,7 +431,6 @@ export class MuttonFishNewComponent implements OnInit {
 	handleErrorsOnSubmit(flag) {
 		let step0 = 21;
 		let step1 = 29;
-
 		switch (true) {
 			case flag <= step0:
 				this.licenseConfiguration.currentTabIndex = 0;
@@ -588,9 +582,9 @@ export class MuttonFishNewComponent implements OnInit {
 		"relationshipId": {
 			"code": "PROPRIETOR"
 		},
-		"statusOfBusinessId": {
-			"code": "PARTNERSHIPFIRM"
-		},
+		// "statusOfBusinessId": {
+		// 	"code": "PARTNERSHIPFIRM"
+		// },
 		"relationshipList": [
 			{
 				"name": "gfdg",
