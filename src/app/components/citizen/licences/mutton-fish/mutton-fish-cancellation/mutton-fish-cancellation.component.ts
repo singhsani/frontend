@@ -31,7 +31,7 @@ export class MuttonFishCancellationComponent implements OnInit {
 	//Lookups Array
 	MF_LICENSE_TYPE: Array<any> = [];
 	MF_RELATIONSHIP_OF_APPLICANT: Array<any> = [];
-	MF_STATUS_OF_BUSINESS: Array<any> = [];
+	MEATFISH_STATUS_OF_BUSINESS: Array<any> = [];
 	PERSON_TYPE: Array<any> = [];
 	FIRM_ZONE: Array<any> = [];
 	WARD: Array<any> = [];
@@ -197,7 +197,7 @@ export class MuttonFishCancellationComponent implements OnInit {
 			this.LOOKUP = res;
 			this.MF_LICENSE_TYPE = res.MF_LICENSE_TYPE;
 			this.MF_RELATIONSHIP_OF_APPLICANT = res.MF_RELATIONSHIP_OF_APPLICANT;
-			this.MF_STATUS_OF_BUSINESS = res.MF_STATUS_OF_BUSINESS;
+			this.MEATFISH_STATUS_OF_BUSINESS = res.MEATFISH_STATUS_OF_BUSINESS;
 			this.PERSON_TYPE = res.PERSON_TYPE;
 			this.FIRM_ZONE = res.FIRM_ZONE;
 		});
