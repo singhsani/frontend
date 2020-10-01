@@ -12,6 +12,7 @@ import { Location } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '../../../../../shared/modules/translate/translate.service';
 import * as moment from 'moment';
+import { Console } from 'console';
 
 @Component({
 	selector: 'app-mutton-fish-renewal',
@@ -36,7 +37,7 @@ export class MuttonFishRenewalComponent implements OnInit {
 	PERSON_TYPE: Array<any> = [];
 	FIRM_ZONE: Array<any> = [];
 	WARD: Array<any> = [];
-	BLOCK: Array<any> = [];
+	//BLOCK: Array<any> = [];
 	LOOKUP: any;
 	businessCategory: Array<any> = [];
 	businessSubCategory: Array<any> = [];
