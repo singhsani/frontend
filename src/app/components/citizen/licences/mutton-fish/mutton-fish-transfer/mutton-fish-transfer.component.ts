@@ -32,7 +32,7 @@ export class MuttonFishTransferComponent implements OnInit {
 	//Lookups Array
 	MF_LICENSE_TYPE: Array<any> = [];
 	MF_RELATIONSHIP_OF_APPLICANT: Array<any> = [];
-	MF_STATUS_OF_BUSINESS: Array<any> = [];
+	MEATFISH_STATUS_OF_BUSINESS: Array<any> = [];
 	PERSON_TYPE: Array<any> = [];
 	FIRM_ZONE: Array<any> = [];
 	WARD: Array<any> = [];
@@ -172,7 +172,8 @@ export class MuttonFishTransferComponent implements OnInit {
 			res.serviceDetail.serviceUploadDocuments.forEach(app => {
 				(<FormArray>this.muttonFishTransferForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.licenseConfiguration.createDocumentsGrp(app));
 			});
-			this.uploadFileArray = this.licenseConfiguration.requiredDocumentListMeetFish(this.muttonFishTransferForm);
+			this.uploadFileArray = res.serviceDetail.serviceUploadDocuments;
+			//this.uploadFileArray = this.licenseConfiguration.requiredDocumentListMeetFish(this.muttonFishTransferForm);
 
 			let currentUrl = this.location.path().replace('false', this.formId.toString());
 			this.location.go(currentUrl);
@@ -189,7 +190,7 @@ export class MuttonFishTransferComponent implements OnInit {
 				this.muttonFishTransferForm.patchValue(res);
 				this.licenseConfiguration.isAttachmentButtonsVisible = true;
 				this.onChangeZone(this.muttonFishTransferForm.get('zoneNo').value.code);
-				this.onChangeWard(this.muttonFishTransferForm.get('wardNo').value.code);
+			//	this.onChangeWard(this.muttonFishTransferForm.get('wardNo').value.code);
 				// deflate add one array in relationship grid
 				if ((<FormArray>res.relationshipList).length == 0) {
 					this.addItem().push(this.createArray());
@@ -206,7 +207,8 @@ export class MuttonFishTransferComponent implements OnInit {
 				res.serviceDetail.serviceUploadDocuments.forEach(app => {
 					(<FormArray>this.muttonFishTransferForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.licenseConfiguration.createDocumentsGrp(app));
 				});
-				this.uploadFileArray = this.licenseConfiguration.requiredDocumentListMeetFish(this.muttonFishTransferForm);
+				this.uploadFileArray = res.serviceDetail.serviceUploadDocuments;
+				//this.uploadFileArray = this.licenseConfiguration.requiredDocumentListMeetFish(this.muttonFishTransferForm);
 			} catch (error) {
 				console.log(error.message)
 			}
@@ -221,12 +223,12 @@ export class MuttonFishTransferComponent implements OnInit {
 			this.LOOKUP = res;
 			this.MF_LICENSE_TYPE = res.MF_LICENSE_TYPE;
 			this.MF_RELATIONSHIP_OF_APPLICANT = res.MF_RELATIONSHIP_OF_APPLICANT;
-			this.MF_STATUS_OF_BUSINESS = res.MF_STATUS_OF_BUSINESS;
+			this.MEATFISH_STATUS_OF_BUSINESS = res.MEATFISH_STATUS_OF_BUSINESS;
 			this.PERSON_TYPE = res.PERSON_TYPE;
 			this.FIRM_ZONE = res.FIRM_ZONE;
 
 			this.onChangeZone(this.muttonFishTransferForm.get('zoneNo').value.code);
-			this.onChangeWard(this.muttonFishTransferForm.get('wardNo').value.code);
+			//this.onChangeWard(this.muttonFishTransferForm.get('wardNo').value.code);
 		});
 	}
 
@@ -245,10 +247,46 @@ export class MuttonFishTransferComponent implements OnInit {
 	 * Method is used for get block as per zone selection
 	 * @param event : selected ward code
 	 */
-	onChangeWard(event) {
-		this.BLOCK = [];
-		if (event && this.LOOKUP.hasOwnProperty(event)) {
-			this.BLOCK = this.LOOKUP[event];
+	// onChangeWard(event) {
+	// 	this.BLOCK = [];
+	// 	if (event && this.LOOKUP.hasOwnProperty(event)) {
+	// 		this.BLOCK = this.LOOKUP[event];
+	// 	}
+	// }
+	
+	onChangeStatusOfBusiness(event) {
+		// let array = (<FormArray>this.muttonFishNewForm.get('serviceDetail').get('serviceUploadDocuments'));
+		const localUploadArray = this.commonService.clone((<FormArray>this.muttonFishTransferForm.get('serviceDetail').get('serviceUploadDocuments')).value);
+		// let array = (<FormArray>this.muttonFishNewForm.get('serviceDetail').get('serviceUploadDocuments'));
+		this.uploadFileArray = [];
+		
+		if (event == 'PROPRIETORSHIPFIRM') {
+			for (let file of localUploadArray) {
+				if ((file['documentIdentifier'] == 'PARTNERSHIP_DEED') || (file['documentIdentifier'] == 'POLICE_VERIFICATION')) {
+					file['mandatory'] = false;
+				}
+				this.uploadFileArray.push(file);
+				console.log(file)
+			
+			}
+		} else if (event == 'PARTNERSHIPFIRM') {
+			for (let file of localUploadArray) {
+				if ((file['documentIdentifier'] == 'POLICE_VERIFICATION')) {
+					file['mandatory'] = false;
+				}
+				
+				this.uploadFileArray.push(file);
+			}
+		} else if (event == 'TENANT') {
+			for (let file of localUploadArray) {
+				if ((file['documentIdentifier'] == 'PARTNERSHIP_DEED')) {
+					file['mandatory'] = false;
+				}
+				
+				this.uploadFileArray.push(file);
+			}
+		} else {
+			return this.uploadFileArray;
 		}
 	}
 
@@ -288,9 +326,9 @@ export class MuttonFishTransferComponent implements OnInit {
 			/* Step 2 controls start */
 			zoneNo: this.fb.group({ code: [null, Validators.required] }),
 			wardNo: this.fb.group({ code: [null, Validators.required] }),
-			blockNo: this.fb.group({ code: [null, Validators.required] }),
+		//	blockNo: this.fb.group({ code: [null, Validators.required] }),
 			businessAddress: this.fb.group(this.permanantAddressEstablishment.addressControls()),
-			extraDetailsOfBusiness: [null, [Validators.maxLength(500)]],
+		//	extraDetailsOfBusiness: [null, [Validators.maxLength(500)]],
 			relationshipId: this.fb.group({
 				code: [null, Validators.required]
 			}),
@@ -390,9 +428,9 @@ export class MuttonFishTransferComponent implements OnInit {
 	/**
  * Method is use for change dynamic file attachment 
  */
-	onChangeStatusOfBusiness() {
-		this.uploadFileArray = this.licenseConfiguration.requiredDocumentListMeetFish(this.muttonFishTransferForm);
-	}
+	// onChangeStatusOfBusiness() {
+	// 	this.uploadFileArray = this.licenseConfiguration.requiredDocumentListMeetFish(this.muttonFishTransferForm);
+	// }
 
 	/**
 	*  Method is used check table is in edit mode
