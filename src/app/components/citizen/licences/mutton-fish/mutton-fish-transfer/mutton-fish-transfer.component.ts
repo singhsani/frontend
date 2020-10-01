@@ -41,7 +41,7 @@ export class MuttonFishTransferComponent implements OnInit {
 
 	// required attachment array
 	public uploadFileArray: Array<any> = [];
-
+	public mandatoryUploadFileArray: Array<any> = [];
 	// serach api variable
 	serachLicenceObj = {
 		isDisplayRenewLicenceForm: <boolean>false,
@@ -172,7 +172,8 @@ export class MuttonFishTransferComponent implements OnInit {
 			res.serviceDetail.serviceUploadDocuments.forEach(app => {
 				(<FormArray>this.muttonFishTransferForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.licenseConfiguration.createDocumentsGrp(app));
 			});
-			this.uploadFileArray = res.serviceDetail.serviceUploadDocuments;
+			this.onChangeStatusOfBusiness(searchData.statusOfBusinessId.code)
+			//this.uploadFileArray = res.serviceDetail.serviceUploadDocuments;
 			//this.uploadFileArray = this.licenseConfiguration.requiredDocumentListMeetFish(this.muttonFishTransferForm);
 
 			let currentUrl = this.location.path().replace('false', this.formId.toString());
@@ -191,6 +192,11 @@ export class MuttonFishTransferComponent implements OnInit {
 				this.licenseConfiguration.isAttachmentButtonsVisible = true;
 				this.onChangeZone(this.muttonFishTransferForm.get('zoneNo').value.code);
 			//	this.onChangeWard(this.muttonFishTransferForm.get('wardNo').value.code);
+			if (this.muttonFishTransferForm.get('statusOfBusinessId').value.code) {
+				this.onChangeStatusOfBusiness(this.muttonFishTransferForm.get('statusOfBusinessId').value.code)
+			} else {
+				this.uploadFileArray = res.serviceDetail.serviceUploadDocuments;
+			}
 				// deflate add one array in relationship grid
 				if ((<FormArray>res.relationshipList).length == 0) {
 					this.addItem().push(this.createArray());
@@ -259,22 +265,26 @@ export class MuttonFishTransferComponent implements OnInit {
 		const localUploadArray = this.commonService.clone((<FormArray>this.muttonFishTransferForm.get('serviceDetail').get('serviceUploadDocuments')).value);
 		// let array = (<FormArray>this.muttonFishNewForm.get('serviceDetail').get('serviceUploadDocuments'));
 		this.uploadFileArray = [];
-		
+		this.mandatoryUploadFileArray = [];
+
 		if (event == 'PROPRIETORSHIPFIRM') {
 			for (let file of localUploadArray) {
 				if ((file['documentIdentifier'] == 'PARTNERSHIP_DEED') || (file['documentIdentifier'] == 'POLICE_VERIFICATION')) {
 					file['mandatory'] = false;
 				}
+				if (file['mandatory'] == true) {
+					this.mandatoryUploadFileArray.push(file);
+				}
 				this.uploadFileArray.push(file);
-				console.log(file)
-			
 			}
 		} else if (event == 'PARTNERSHIPFIRM') {
 			for (let file of localUploadArray) {
 				if ((file['documentIdentifier'] == 'POLICE_VERIFICATION')) {
 					file['mandatory'] = false;
 				}
-				
+				if (file['mandatory'] == true) {
+					this.mandatoryUploadFileArray.push(file);
+				}
 				this.uploadFileArray.push(file);
 			}
 		} else if (event == 'TENANT') {
@@ -282,7 +292,9 @@ export class MuttonFishTransferComponent implements OnInit {
 				if ((file['documentIdentifier'] == 'PARTNERSHIP_DEED')) {
 					file['mandatory'] = false;
 				}
-				
+				if (file['mandatory'] == true) {
+					this.mandatoryUploadFileArray.push(file);
+				}
 				this.uploadFileArray.push(file);
 			}
 		} else {

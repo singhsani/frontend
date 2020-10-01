@@ -347,7 +347,7 @@
 					</ng-container>
 				</div>
 
-				<app-action-bar [paymentGateway]="paymentGateway" [uploadFiles]="uploadFileArray"
+				<app-action-bar [paymentGateway]="paymentGateway" [uploadFiles]="mandatoryUploadFileArray"
 					[form]="muttonFishNewForm" (handleErrors)="handleErrorsOnSubmit($event)"
 					(tabIndex)="licenseConfiguration.onFormTabChange($event) "
 					[stepInfo]="{step: 'final', next:3, back:1} "></app-action-bar>

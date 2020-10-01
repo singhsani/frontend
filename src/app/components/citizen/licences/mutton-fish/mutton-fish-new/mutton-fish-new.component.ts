@@ -35,14 +35,15 @@ export class MuttonFishNewComponent implements OnInit {
 	FIRM_ZONE: Array<any> = [];
 	WARD: Array<any> = [];
 	LOOKUP: any;
-	
+
 	isLandDetailsAllow: boolean = false;
 	isPartnershipDeedAllow: boolean = false;
 	isPoliceVerificationAllow: boolean = false;
 	// required attachment array
 
 	public uploadFileArray: Array<any> = [];
-	//public serverUploadFilesArray: Array<any> = [];
+	public mandatoryUploadFileArray: Array<any> = [];
+	public serverUploadFilesArray: Array<any> = [];
 
 	/**
 	 * @param fb - Declare FormBuilder property.
@@ -78,6 +79,7 @@ export class MuttonFishNewComponent implements OnInit {
 			this.router.navigate([ManageRoutes.getFullRoute('CITIZENDASHBOARD')]);
 		}
 		else {
+
 			this.getMuttonFishLicNewData();
 			this.muttonFishNewFormControls();
 		}
@@ -86,6 +88,7 @@ export class MuttonFishNewComponent implements OnInit {
 	/**
 	 * Method is used to get form data
 	 */
+
 	getMuttonFishLicNewData() {
 		this.formService.getFormData(this.formId).subscribe(res => {
 			try {
@@ -93,7 +96,12 @@ export class MuttonFishNewComponent implements OnInit {
 				this.licenseConfiguration.isAttachmentButtonsVisible = true;
 				this.onChangeZone(this.muttonFishNewForm.get('zoneNo').value.code);
 				//this.onChangeWard(this.muttonFishNewForm.get('wardNo').value.code);
-
+				//this.onChangeStatusOfBusiness(this.muttonFishNewForm.get('statusOfBusinessId').value.code);
+				if (this.muttonFishNewForm.get('statusOfBusinessId').value.code) {
+					this.onChangeStatusOfBusiness(this.muttonFishNewForm.get('statusOfBusinessId').value.code)
+				} else {
+					this.uploadFileArray = res.serviceDetail.serviceUploadDocuments;
+				}
 				// deflate add one array in relationship grid
 				if ((<FormArray>res.relationshipList).length == 0) {
 					this.addItem().push(this.createArray());
@@ -113,6 +121,7 @@ export class MuttonFishNewComponent implements OnInit {
 
 				//this.serverUploadFilesArray = res.serviceDetail.serviceUploadDocuments;
 				this.uploadFileArray = res.serviceDetail.serviceUploadDocuments;
+				
 				//this.uploadFileArray = this.licenseConfiguration.requiredDocumentListMeetFish(this.muttonFishNewForm);
 				this.muttonFishNewForm.get('personTypeGuj').setValue(res.personType.gujName);
 				this.muttonFishNewForm.controls.permanantAddress.valueChanges.subscribe(data => {
@@ -153,28 +162,36 @@ export class MuttonFishNewComponent implements OnInit {
 			this.WARD = this.LOOKUP[event];
 		}
 	}
-	 
+
 	onChangeStatusOfBusiness(event) {
 		// let array = (<FormArray>this.muttonFishNewForm.get('serviceDetail').get('serviceUploadDocuments'));
 		const localUploadArray = this.commonService.clone((<FormArray>this.muttonFishNewForm.get('serviceDetail').get('serviceUploadDocuments')).value);
 		// let array = (<FormArray>this.muttonFishNewForm.get('serviceDetail').get('serviceUploadDocuments'));
 		this.uploadFileArray = [];
-		
+		this.mandatoryUploadFileArray = [];
+
 		if (event == 'PROPRIETORSHIPFIRM') {
 			for (let file of localUploadArray) {
 				if ((file['documentIdentifier'] == 'PARTNERSHIP_DEED') || (file['documentIdentifier'] == 'POLICE_VERIFICATION')) {
 					file['mandatory'] = false;
 				}
+
+				if (file['mandatory'] == true) {
+					this.mandatoryUploadFileArray.push(file);
+				}
+
 				this.uploadFileArray.push(file);
-				console.log(file)
-			
 			}
 		} else if (event == 'PARTNERSHIPFIRM') {
 			for (let file of localUploadArray) {
 				if ((file['documentIdentifier'] == 'POLICE_VERIFICATION')) {
 					file['mandatory'] = false;
 				}
-				
+
+				if (file['mandatory'] == true) {
+					this.mandatoryUploadFileArray.push(file);
+				}
+
 				this.uploadFileArray.push(file);
 			}
 		} else if (event == 'TENANT') {
@@ -182,7 +199,11 @@ export class MuttonFishNewComponent implements OnInit {
 				if ((file['documentIdentifier'] == 'PARTNERSHIP_DEED')) {
 					file['mandatory'] = false;
 				}
-				
+
+				if (file['mandatory'] == true) {
+					this.mandatoryUploadFileArray.push(file);
+				}
+
 				this.uploadFileArray.push(file);
 			}
 		} else {
