@@ -3,10 +3,12 @@ import { Router } from "@angular/router";
 import { Location } from '@angular/common';
 
 import { ManageRoutes } from './../../../config/routes-conf';
+import { CommonService } from 'src/app/shared/services/common.service';
 
 @Component({
 	selector: 'app-title-bar',
-	template: `<div class="titleBar">
+	template: `<div [ngClass]="{'iframeTitleBar': fromAdmin,
+	          'titleBar': !fromAdmin }">
 					<div class="container clearfix position-relative">
 					<ul class="breadcrumbNav clearfix">
 						<li>
@@ -32,12 +34,17 @@ export class VmcTitleBarComponent implements OnInit {
 
 	@Input() title: string;
 
+	fromAdmin : boolean = false;
+
+
 	constructor(
 		private router: Router,
-		private location: Location
+		private location: Location,
+		private commonService : CommonService
 	) { }
 
 	ngOnInit() {
+		this.fromAdmin = this.commonService.fromAdmin();
 	}
 
 	/**
