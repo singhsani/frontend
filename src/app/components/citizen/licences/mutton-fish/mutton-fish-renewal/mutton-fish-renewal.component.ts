@@ -109,7 +109,7 @@ export class MuttonFishRenewalComponent implements OnInit {
 		this.getLookupData();
 		this.muttonFishRenewalFormControls();
 
-		debugger
+		
 		if (!this.formId) {
 			this.serachLicenceObj.isDisplayRenewLicenceForm = false;
 		}
@@ -204,7 +204,7 @@ export class MuttonFishRenewalComponent implements OnInit {
 	 * Method is used to get form data
 	 */
 	getMuttonFishLicNewData() {
-		debugger
+		
 		this.formService.getFormData(this.formId).subscribe(res => {
 			try {
 				this.muttonFishRenewalForm.patchValue(res);
@@ -283,7 +283,7 @@ export class MuttonFishRenewalComponent implements OnInit {
 	// }
 
 	onChangeStatusOfBusiness(event) {
-		debugger
+		
 		// let array = (<FormArray>this.muttonFishNewForm.get('serviceDetail').get('serviceUploadDocuments'));
 		const localUploadArray = this.commonService.clone((<FormArray>this.muttonFishRenewalForm.get('serviceDetail').get('serviceUploadDocuments')).value);
 		// let array = (<FormArray>this.muttonFishNewForm.get('serviceDetail').get('serviceUploadDocuments'));
