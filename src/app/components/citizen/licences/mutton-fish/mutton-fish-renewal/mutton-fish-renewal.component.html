@@ -190,7 +190,7 @@
 				<div class="row">
 					<h2>{{'business_shop_address' | translate:translateKey}}</h2>
 
-					<div class="col-md-4 ngSelect" formGroupName="statusOfBusinessId">
+					<!-- <div class="col-md-4 ngSelect" formGroupName="statusOfBusinessId">
 						<ng-select placeholder="{{'business_address_type' | translate:translateKey}} *" 
 						formControlName="code" (change)="onChangeStatusOfBusiness($event)">
 							<ng-option *ngFor="let statusId of MEATFISH_STATUS_OF_BUSINESS" [value]="statusId.code">
@@ -198,7 +198,7 @@
 						</ng-select>
 						<control-messages [control]="muttonFishNewForm.get('statusOfBusinessId').get('code')">
 						</control-messages>
-					</div>
+					</div> -->
 
 					<app-address #temporaryAddressEstablishment [requiredNotPincode]="true"
 						[addressFormGroup]="muttonFishRenewalForm.get('businessAddress')"></app-address>

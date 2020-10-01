@@ -36,7 +36,7 @@ export class MuttonFishTransferComponent implements OnInit {
 	PERSON_TYPE: Array<any> = [];
 	FIRM_ZONE: Array<any> = [];
 	WARD: Array<any> = [];
-	BLOCK: Array<any> = [];
+	//BLOCK: Array<any> = [];
 	LOOKUP: any;
 
 	// required attachment array
