@@ -111,26 +111,26 @@
 					</mat-form-field>
 					<!-- time picker -->
 					<div class="col-md-6 pl-0 ml-0">
-						<mat-form-field class="col-md-10">
+						<mat-form-field class="col-md-12">
 							<mat-label>{{'from_time' | translate:translateKey}}</mat-label>
 							<input (blur)="changeTimeFormat($event.target.value, 'fromTime')" placeholder="HH:MM" matInput type="time"
 							 atp-time-picker theme="dark" formControlName="fromTime" required />
 							<control-messages [control]="tempStructureNocForm.get('fromTime')"></control-messages>
 						</mat-form-field>
-						<button class="ml-0 pl-0" [disabled]="!tempStructureNocForm?.controls?.canEdit?.value" mat-icon-button type="button"
+						<button class="ml-0 pl-0 timeBut" [disabled]="!tempStructureNocForm?.controls?.canEdit?.value" mat-icon-button type="button"
 						 (click)="openTimePicker('fromTime')">
 							<mat-icon matTooltip="Select Time" color="primary">alarm</mat-icon>
 						</button>
 					</div>
 
 					<div class="col-md-6 pl-0 ml-0">
-						<mat-form-field class="col-md-10">
+						<mat-form-field class="col-md-12">
 							<mat-label>{{'to_time' | translate:translateKey}}</mat-label>
 							<input (blur)="changeTimeFormat($event.target.value, 'toTime')" placeholder="HH:MM" matInput type="time"
 							 atp-time-picker theme="dark" formControlName="toTime" required />
 							<control-messages [control]="tempStructureNocForm.get('toTime')"></control-messages>
 						</mat-form-field>
-						<button class="ml-0 pl-0" [disabled]="!tempStructureNocForm?.controls?.canEdit?.value" mat-icon-button type="button"
+						<button class="ml-0 pl-0 timeBut" [disabled]="!tempStructureNocForm?.controls?.canEdit?.value" mat-icon-button type="button"
 						 (click)="openTimePicker('toTime')">
 							<mat-icon matTooltip="Select Time" color="primary">alarm</mat-icon>
 						</button>
