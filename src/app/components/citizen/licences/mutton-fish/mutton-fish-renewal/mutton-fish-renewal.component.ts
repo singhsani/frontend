@@ -44,19 +44,19 @@ export class MuttonFishRenewalComponent implements OnInit {
 
 	// required attachment array
 	public uploadFileArray: Array<any> = [];
-
+	public mandatoryUploadFileArray: Array<any> = [];
 
 	// serach api variable
 	serachLicenceObj = {
 		isDisplayRenewLicenceForm: <boolean>false,
-		searchLicenceNumber:""
+		searchLicenceNumber: ""
 	}
 
 	/**
 	 * This method for serach licence using licence number.
 	 */
 	searchLicence() {
-    let obj = { refNumber: this.serachLicenceObj.searchLicenceNumber };
+		let obj = { refNumber: this.serachLicenceObj.searchLicenceNumber };
 		this.MuttonFishService.searchLicence(obj).subscribe(
 			(res: any) => {
 				if (res.success) {
@@ -74,14 +74,15 @@ export class MuttonFishRenewalComponent implements OnInit {
 			})
 	}
 
-    /**
-     * @param fb - Declare FormBuilder property.
-     * @param validationError - Declare validation service property
-     * @param formService - Declare form service property 
-     * @param uploadFileService - Declare upload file service property.
-     * @param commonService - Declare sweet alert.
+
+	/**
+	 * @param fb - Declare FormBuilder property.
+	 * @param validationError - Declare validation service property
+	 * @param formService - Declare form service property 
+	 * @param uploadFileService - Declare upload file service property.
+	 * @param commonService - Declare sweet alert.
 	 * @param toastrService - Show massage with timer.
-     */
+	 */
 	constructor(
 		private fb: FormBuilder,
 		private validationService: ValidationService,
@@ -108,6 +109,7 @@ export class MuttonFishRenewalComponent implements OnInit {
 		this.getLookupData();
 		this.muttonFishRenewalFormControls();
 
+		debugger
 		if (!this.formId) {
 			this.serachLicenceObj.isDisplayRenewLicenceForm = false;
 		}
@@ -118,9 +120,9 @@ export class MuttonFishRenewalComponent implements OnInit {
 	}
 
 	/**
-     * This method is use to create new record for citizen.
-     * @param searchData: exciting licence number data
-     */
+	 * This method is use to create new record for citizen.
+	 * @param searchData: exciting licence number data
+	 */
 	createRecordPatchSerachData(searchData: any) {
 		this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
 		this.formService.createFormData().subscribe(res => {
@@ -174,8 +176,8 @@ export class MuttonFishRenewalComponent implements OnInit {
 			res.serviceDetail.serviceUploadDocuments.forEach(app => {
 				(<FormArray>this.muttonFishRenewalForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.licenseConfiguration.createDocumentsGrp(app));
 			});
-			
-			this.uploadFileArray = res.serviceDetail.serviceUploadDocuments;
+
+			this.onChangeStatusOfBusiness(searchData.statusOfBusinessId.code)
 			//this.uploadFileArray = this.licenseConfiguration.requiredDocumentListMeetFish(this.muttonFishRenewalForm);
 			/* searchData.employeeList.forEach(app => {
 				(<FormArray>this.muttonFishRenewalForm.get('employeeList')).push(this.createArray(app));
@@ -202,13 +204,18 @@ export class MuttonFishRenewalComponent implements OnInit {
 	 * Method is used to get form data
 	 */
 	getMuttonFishLicNewData() {
+		debugger
 		this.formService.getFormData(this.formId).subscribe(res => {
 			try {
 				this.muttonFishRenewalForm.patchValue(res);
 				this.licenseConfiguration.isAttachmentButtonsVisible = true;
 				this.onChangeZone(this.muttonFishRenewalForm.get('zoneNo').value.code);
-			//	this.onChangeWard(this.muttonFishRenewalForm.get('wardNo').value.code);
-
+				//	this.onChangeWard(this.muttonFishRenewalForm.get('wardNo').value.code);
+				if (this.muttonFishRenewalForm.get('statusOfBusinessId').value.code) {
+					this.onChangeStatusOfBusiness(this.muttonFishRenewalForm.get('statusOfBusinessId').value.code)
+				} else {
+					this.uploadFileArray = res.serviceDetail.serviceUploadDocuments;
+				}
 				// deflate add one array in relationship grid
 				if ((<FormArray>res.relationshipList).length == 0) {
 					this.addItem().push(this.createArray());
@@ -228,7 +235,7 @@ export class MuttonFishRenewalComponent implements OnInit {
 				res.serviceDetail.serviceUploadDocuments.forEach(app => {
 					(<FormArray>this.muttonFishRenewalForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.licenseConfiguration.createDocumentsGrp(app));
 				});
-				this.uploadFileArray = res.serviceDetail.serviceUploadDocuments;
+
 				//this.uploadFileArray = this.licenseConfiguration.requiredDocumentListMeetFish(this.muttonFishRenewalForm);
 
 			} catch (error) {
@@ -276,26 +283,31 @@ export class MuttonFishRenewalComponent implements OnInit {
 	// }
 
 	onChangeStatusOfBusiness(event) {
+		debugger
 		// let array = (<FormArray>this.muttonFishNewForm.get('serviceDetail').get('serviceUploadDocuments'));
 		const localUploadArray = this.commonService.clone((<FormArray>this.muttonFishRenewalForm.get('serviceDetail').get('serviceUploadDocuments')).value);
 		// let array = (<FormArray>this.muttonFishNewForm.get('serviceDetail').get('serviceUploadDocuments'));
 		this.uploadFileArray = [];
-		
+		this.mandatoryUploadFileArray = [];
+
 		if (event == 'PROPRIETORSHIPFIRM') {
 			for (let file of localUploadArray) {
 				if ((file['documentIdentifier'] == 'PARTNERSHIP_DEED') || (file['documentIdentifier'] == 'POLICE_VERIFICATION')) {
 					file['mandatory'] = false;
 				}
+				if (file['mandatory'] == true) {
+					this.mandatoryUploadFileArray.push(file);
+				}
 				this.uploadFileArray.push(file);
-				console.log(file)
-			
 			}
 		} else if (event == 'PARTNERSHIPFIRM') {
 			for (let file of localUploadArray) {
 				if ((file['documentIdentifier'] == 'POLICE_VERIFICATION')) {
 					file['mandatory'] = false;
 				}
-				
+				if (file['mandatory'] == true) {
+					this.mandatoryUploadFileArray.push(file);
+				}
 				this.uploadFileArray.push(file);
 			}
 		} else if (event == 'TENANT') {
@@ -303,7 +315,9 @@ export class MuttonFishRenewalComponent implements OnInit {
 				if ((file['documentIdentifier'] == 'PARTNERSHIP_DEED')) {
 					file['mandatory'] = false;
 				}
-				
+				if (file['mandatory'] == true) {
+					this.mandatoryUploadFileArray.push(file);
+				}
 				this.uploadFileArray.push(file);
 			}
 		} else {
@@ -384,7 +398,7 @@ export class MuttonFishRenewalComponent implements OnInit {
 			id: data.id ? data.id : null,
 			name: [data.name ? data.name : null, [Validators.required, Validators.maxLength(100)]],
 			address: [data.address ? data.address : null, [Validators.required, Validators.maxLength(200)]],
-			mobileNo: [data.mobileNo ? data.mobileNo : null, [Validators.required,Validators.maxLength(11), Validators.minLength(10)]],
+			mobileNo: [data.mobileNo ? data.mobileNo : null, [Validators.required, Validators.maxLength(11), Validators.minLength(10)]],
 			personType: "MF_PERSON"
 		})
 
@@ -502,10 +516,10 @@ export class MuttonFishRenewalComponent implements OnInit {
 		}
 	}
 
-    /**
-     * This method required for final form submition.
-     * @param flag - flag of invalid control.
-     */
+	/**
+	 * This method required for final form submition.
+	 * @param flag - flag of invalid control.
+	 */
 	handleErrorsOnSubmit(flag) {
 		let step0 = 16;
 		let step1 = 28;
@@ -542,12 +556,12 @@ export class MuttonFishRenewalComponent implements OnInit {
 
 
 
-  /**
-   * This method is change date format.
-   * @param date : selected date
-   * @param controlType : form control name
-   */
-  dateFormat(date, controlType: string) {
-    this.muttonFishRenewalForm.get(controlType).setValue(moment(date).format("YYYY-MM-DD"));
-  }
+	/**
+	 * This method is change date format.
+	 * @param date : selected date
+	 * @param controlType : form control name
+	 */
+	dateFormat(date, controlType: string) {
+		this.muttonFishRenewalForm.get(controlType).setValue(moment(date).format("YYYY-MM-DD"));
+	}
 }
