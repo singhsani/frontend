@@ -59,7 +59,8 @@ import { MaskCensusNumberDirective } from './directives/mask-census-number.direc
 import { ApplicantDetailsComponent } from './components/applicant-details/applicant-details.component';
 import { OfflinePaymentComponent } from './components/offline-payment/offline-payment.component';
 import { OfflinePaymentService } from './services/offlinePayment.service';
-import { PaymentNewService } from './services/paymentNew.service'
+import { PaymentNewService } from './services/paymentNew.service';
+import { BankDetailsBookingComponent } from './components/bank-details-booking/bank-details-booking.component'
 /* import pipes end*/
 
 const COMPONENTS = [
@@ -95,13 +96,15 @@ const COMPONENTS = [
 	SelectPaymentGatewayComponent,
 	MaskCensusNumberDirective,
 	ApplicantDetailsComponent,
-	OfflinePaymentComponent
+	OfflinePaymentComponent,
+	BankDetailsBookingComponent
 	
 ]
 
 @NgModule({
 	declarations: [
-		...COMPONENTS
+		...COMPONENTS,
+		BankDetailsBookingComponent
 	],
 	imports: [
 		CommonModule,
