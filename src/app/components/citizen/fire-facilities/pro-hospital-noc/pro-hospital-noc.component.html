@@ -148,7 +148,7 @@
           </mat-form-field>
 
 					<mat-form-field class="col-md-6">
-						<textarea matInput rows="3" cols="50" maxlength="900" type="text" required formControlName="hospitalAddressGuj"
+						<textarea matInput rows="3" cols="50" maxlength="900" class="lineHeight20" type="text" required formControlName="hospitalAddressGuj"
 						 appGujInputTarget [form]="provisionalHospitalNocForm" placeholder="{{ 'hospital_address' | translate:translateKey:'gu' }}"></textarea>
 						<control-messages [control]="provisionalHospitalNocForm.get('hospitalAddressGuj')"></control-messages>
 					</mat-form-field>
@@ -194,7 +194,7 @@
           </mat-form-field>
 
 					<mat-form-field class="col-md-6">
-						<textarea matInput rows="3" cols="50" required maxlength="900" type="text" required formControlName="ownerAddressGuj"
+						<textarea matInput rows="3" cols="50" class="lineHeight20" required maxlength="900" type="text" required formControlName="ownerAddressGuj"
 						 appGujInputTarget [form]="provisionalHospitalNocForm" placeholder="{{ 'owner_address' | translate:translateKey:'gu' }}"></textarea>
 						<control-messages [control]="provisionalHospitalNocForm.get('ownerAddressGuj')"></control-messages>
 					</mat-form-field>

@@ -206,7 +206,7 @@
           </mat-form-field>
 
 					<mat-form-field class="col-md-6">
-						<textarea matInput rows="2" cols="50" required maxlength="200" placeholder="{{'organizer_address' | translate:translateKey}}"
+						<textarea matInput rows="3" cols="50" required maxlength="200" placeholder="{{'organizer_address' | translate:translateKey}}"
 						 formControlName="organizerAddress" appGujInputSource targetElement="organizerAddressGuj" [form]="tempStructureNocForm"></textarea>
 						<control-messages [control]="tempStructureNocForm.get('organizerAddress')"></control-messages>
 					</mat-form-field>
@@ -214,25 +214,25 @@
 
 
 					<mat-form-field class="col-md-6">
-						<textarea matInput type="text" rows="2" cols="50" maxlength="600" required formControlName="organizerAddressGuj"
+						<textarea matInput type="text" rows="3" class="lineHeight20" cols="50" maxlength="600" required formControlName="organizerAddressGuj"
 						 appGujInputTarget [form]="tempStructureNocForm" placeholder="{{ 'organizer_address' | translate:translateKey:'gu' }}"></textarea>
 						<control-messages [control]="tempStructureNocForm.get('organizerAddressGuj')"></control-messages>
 					</mat-form-field>
 
 
 					<mat-form-field class="col-md-6">
-						<textarea matInput rows="2" cols="50" required maxlength="500" placeholder="{{'temporary_structure_address' | translate:translateKey}}"
+						<textarea matInput rows="3" cols="50" required maxlength="500" placeholder="{{'temporary_structure_address' | translate:translateKey}}"
 						 formControlName="temporaryStructureAddress" appGujInputSource targetElement="temporaryStructureAddressGuj"
 						 [form]="tempStructureNocForm"></textarea>
 						<control-messages [control]="tempStructureNocForm.get('temporaryStructureAddress')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-6">
-						<textarea matInput type="text" rows="2" cols="50" maxlength="1500" required formControlName="temporaryStructureAddressGuj"
+						<textarea matInput type="text" rows="3" class="lineHeight20" cols="50" maxlength="1500" required formControlName="temporaryStructureAddressGuj"
 						 appGujInputTarget [form]="tempStructureNocForm" placeholder="{{ 'temporary_structure_address' | translate:translateKey:'gu' }}"></textarea>
 						<control-messages [control]="tempStructureNocForm.get('temporaryStructureAddressGuj')"></control-messages>
 					</mat-form-field>
 
-          <mat-form-field class="col-md-4">
+          <mat-form-field class="col-md-6">
             <!-- <span matPrefix>+91 &nbsp;</span> -->
             <input matInput OnlyNumber placeholder="{{'organizer_contact_no' | translate:translateKey}}" type="tel"
                    [maxlength]="fireFacilityConfig.contactNumberLength" formControlName="organizerContactNo">
@@ -330,9 +330,9 @@
 				</ng-template>
 				<div class="row">
 
-					<mat-form-field class="col-md-4">
-						<textarea matInput type="text" rows="2" cols="200" maxlength="1500" required formControlName="hazardousPerformanceDetail"
-						 placeholder="{{ 'hazardous_performance_detail' | translate:translateKey }}"></textarea>
+					<mat-form-field class="col-md-8">
+						<input matInput type="text" maxlength="1500" required formControlName="hazardousPerformanceDetail"
+						 placeholder="{{ 'hazardous_performance_detail' | translate:translateKey }}">
 						<control-messages [control]="tempStructureNocForm.get('hazardousPerformanceDetail')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
@@ -355,9 +355,9 @@
 						 maxlength="5">
 						<control-messages [control]="tempStructureNocForm.get('archGateWidth')"></control-messages>
 					</mat-form-field>
-					<mat-form-field class="col-md-4">
-						<textarea matInput type="text" rows="2" cols="50" maxlength="200" required formControlName="approachedWayToVenue"
-						 placeholder="{{ 'approached_way_to_venue' | translate:translateKey }}"></textarea>
+					<mat-form-field class="col-md-8">
+						<input matInput type="text" maxlength="200" required formControlName="approachedWayToVenue"
+						 placeholder="{{ 'approached_way_to_venue' | translate:translateKey }}">
 						<control-messages [control]="tempStructureNocForm.get('approachedWayToVenue')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
@@ -394,9 +394,9 @@
 						 maxlength="5">
 						<control-messages [control]="tempStructureNocForm.get('stageWidth')"></control-messages>
 					</mat-form-field>
-					<mat-form-field class="col-md-4">
-						<textarea matInput rows="2" cols="50" required maxlength="500" placeholder="{{'usage_of_in_flammable' | translate:translateKey}}"
-						 formControlName="usageOfInflammable"></textarea>
+					<mat-form-field class="col-md-8">
+						<input matInput required maxlength="500" placeholder="{{'usage_of_in_flammable' | translate:translateKey}}"
+						 formControlName="usageOfInflammable">
 						<control-messages [control]="tempStructureNocForm.get('usageOfInflammable')"></control-messages>
 					</mat-form-field>
 
