@@ -154,14 +154,14 @@
 				</div>
 
 				<div class="row">
-					<mat-form-field class="col-md-4">
+					<mat-form-field class="col-md-6">
 						<textarea matInput rows="3" cols="50" required maxlength="300" placeholder="{{'fire_Place_Address' | translate:translateKey}}"
 						 formControlName="firePlaceAddress" appGujInputSource targetElement="firePlaceAddressGuj" [form]="gasConnectionForm"></textarea>
 						<control-messages [control]="gasConnectionForm.get('firePlaceAddress')"></control-messages>
 					</mat-form-field>
 					<!-- gujarati -->
-					<mat-form-field class="col-md-4">
-						<textarea matInput rows="3" cols="50" maxlength="900" required formControlName="firePlaceAddressGuj"
+					<mat-form-field class="col-md-6">
+						<textarea matInput rows="3" cols="50" class="lineHeight20" maxlength="900" required formControlName="firePlaceAddressGuj"
 						 appGujInputTarget [form]="gasConnectionForm" placeholder="{{ 'fire_Place_Address' | translate:translateKey:'gu' }}"></textarea>
 						<control-messages [control]="gasConnectionForm.get('firePlaceAddressGuj')"></control-messages>
 					</mat-form-field>
