@@ -165,13 +165,13 @@
 						<control-messages [control]="navaratriNocForm.get('garbaPlaceAddress')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-6">
-						<textarea matInput rows="3" cols="50"  class="lineHeight20" maxlength="100" required formControlName="garbaPlaceAddressGuj"
+						<textarea matInput rows="3" cols="50"  class="lineHeight20" maxlength="200" required formControlName="garbaPlaceAddressGuj"
 						 appGujInputTarget [form]="navaratriNocForm" placeholder="{{ 'garba_place_address' | translate:translateKey:'gu' }}"></textarea>
 						<control-messages [control]="navaratriNocForm.get('garbaPlaceAddressGuj')"></control-messages>
 					</mat-form-field>
-
+					
 					<mat-form-field class="col-md-4">
-						<input matInput [matDatepicker]="picker1" formControlName="fromDate" placeholder="{{'from_date' | translate:translateKey }}"
+						<input appDate matInput [matDatepicker]="picker1" formControlName="fromDate" placeholder="{{'from_date' | translate:translateKey }}"
 						 required (dateChange)="dateFormate($event.value,'fromDate')">
 						<mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
 						<mat-datepicker #picker1 touchUi="true"></mat-datepicker>
@@ -180,7 +180,7 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput [matDatepicker]="picker2" formControlName="toDate" placeholder="{{'to_date' | translate:translateKey }}"
+						<input appDate matInput [matDatepicker]="picker2" formControlName="toDate" placeholder="{{'to_date' | translate:translateKey }}"
 						 required (dateChange)="dateFormate($event.value,'toDate')">
 						<mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
 						<mat-datepicker #picker2 touchUi="true"></mat-datepicker>
