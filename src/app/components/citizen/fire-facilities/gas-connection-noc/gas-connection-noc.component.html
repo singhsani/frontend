@@ -38,7 +38,8 @@
 
 
 					<mat-form-field class="col-md-4">
-						<input matInput [max]="disablefutureDate" [matDatepicker]="DateOfapplicationDate" formControlName="applicationDate"
+						<input appDate matInput [max]="disablefutureDate" disabled
+						[matDatepicker]="DateOfapplicationDate" formControlName="applicationDate"
 						 (dateChange)="dateFormat($event.value,'applicationDate')" placeholder="{{ 'application_Date' | translate:translateKey }}">
 						<mat-datepicker-toggle matSuffix [for]="DateOfapplicationDate"></mat-datepicker-toggle>
 						<mat-datepicker touchUi="true" #DateOfapplicationDate></mat-datepicker>
