@@ -166,8 +166,8 @@ export class NewAffordableHousingComponent implements OnInit {
 		    occupationDesignation: [null, [Validators.required, Validators.maxLength(100)]],
 		    drivingLicenseNumber: [null, [Validators.maxLength(50)]],
 		    voterIdNumber: [null, [Validators.maxLength(25)]],
-			aadharCardNumber: [null, [Validators.required, Validators.maxLength(20)]],
-			panCardNumber: [null, [Validators.required, Validators.maxLength(20)]],
+			aadharCardNumber: [null, [Validators.required, Validators.maxLength(12), Validators.minLength(12)]],
+			panCardNumber: [null, [Validators.required, ValidationService.panValidator , Validators.maxLength(10)]],
 			rationCardNumber: [null, [Validators.maxLength(50)]],
 			occupationAddress: this.fb.group(this.occupationAddrComponent.addressControls()),
 			// /* Step 2 controls end */
