@@ -144,15 +144,23 @@
 								<control-messages [control]="affordableHousingForm.get('voterIdNumber')"></control-messages>
 							</mat-form-field>
 							<mat-form-field class="col-md-4">
+									<input matInput OnlyNumber maxlength="12" required formControlName="aadharCardNumber"
+										placeholder="{{'aadharID' | translate:translateKey}}">
+									<control-messages [control]="affordableHousingForm.get('aadharCardNumber')"></control-messages>
+								</mat-form-field>
+
+							<!-- <mat-form-field class="col-md-4">
 								<input matInput type="text" appAlphaNumeric required maxlength="20" placeholder="{{'aadharID' | translate:translateKey}}"
 								 formControlName="aadharCardNumber">
 								<control-messages [control]="affordableHousingForm.get('aadharCardNumber')"></control-messages>
-							</mat-form-field>
+							</mat-form-field> -->
+
 							<mat-form-field class="col-md-4">
-								<input matInput type="text" appAlphaNumeric required maxlength="20" placeholder="{{'panNo' | translate:translateKey}}"
-								 formControlName="panCardNumber">
-								<control-messages [control]="affordableHousingForm.get('panCardNumber')"></control-messages>
-							</mat-form-field>
+									<input matInput upperCase appAlphaNumeric maxlength="10" required formControlName="panCardNumber"
+										placeholder="{{'panNo' | translate:translateKey}}"  (change)="onCardChange($event,'panCardNumber')">
+									<control-messages [control]="affordableHousingForm.get('panCardNumber')"></control-messages>
+								</mat-form-field>
+
 							<mat-form-field class="col-md-4">
 								<input matInput type="text" appAlphaNumeric maxlength="50" placeholder="{{'rationCardNo' | translate:translateKey}}"
 								 formControlName="rationCardNumber">

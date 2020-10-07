@@ -186,12 +186,12 @@
 						</div>
 					</div>
 
-					<mat-form-field class="col-md-8">
+					<mat-form-field class="col-md-8" *ngIf="tempStructureNocForm.get('landOwnerConsentIncluded').value">
 						<textarea matInput rows="1" cols="50" required maxlength="200" placeholder="{{'land_owner_consent_description' | translate:translateKey}}"
 						 formControlName="landOwnerConsentDescription"></textarea>
 						<control-messages [control]="tempStructureNocForm.get('landOwnerConsentDescription')"></control-messages>
 					</mat-form-field>
-
+					<div class="col-md-12"></div>
 					<mat-form-field class="col-md-6">
 						<input matInput appValidationFields [validationFieldsType]="'onlyNameWithSpace'" required maxlength="100"
 						 placeholder="{{'organize_name' | translate:translateKey}}" formControlName="organizeName" appGujInputSource
