@@ -173,14 +173,14 @@ export class NewAffordableHousingComponent implements OnInit {
 			// /* Step 2 controls end */
 
 			// /* Step 3 controls start */
-			bankAccountNumber: [null, [Validators.required, Validators.maxLength(50)]],
+			bankAccountNumber: [null, [Validators.required, Validators.minLength(9), Validators.maxLength(18)]],
 			bank: this.fb.group({
 				code: [null, [Validators.required]],
 				name: null,
 			}),
-		    bankBranch: [null, [Validators.required, Validators.maxLength(200)]],
-		    bankIFSC: [null, [Validators.required, Validators.maxLength(20)]],
-			bankMicrCode: [null, [Validators.required, Validators.maxLength(25)]],
+		    bankBranch: [null, [Validators.required, Validators.maxLength(100)]],
+		    bankIFSC: [null, [Validators.required, ValidationService.ifscCodeValidator, Validators.maxLength(11)]],
+			bankMicrCode: [null, [Validators.required, Validators.maxLength(9)]],
 			// /* Step 3 controls end */
 
 			// /* Step 4 controls start */

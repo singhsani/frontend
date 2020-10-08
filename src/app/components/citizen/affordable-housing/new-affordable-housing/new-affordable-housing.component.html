@@ -188,7 +188,7 @@
 	
 						<div class="row stepperMinHeight">
 							<mat-form-field class="col-md-4">
-								<input matInput autocomplete="off" maxlength="50" appAlphaNumeric formControlName="bankAccountNumber" type="text"
+								<input matInput autocomplete="off" minlength="9" maxlength="18" OnlyNumber formControlName="bankAccountNumber" type="text"
 								 placeholder="{{'bank_account_no' | translate: translateKey}}" required>
 								<control-messages [control]="affordableHousingForm.get('bankAccountNumber')"></control-messages>
 							</mat-form-field>
@@ -212,19 +212,19 @@
 							</div> -->
 	
 							<mat-form-field class="col-md-4">
-								<input matInput autocomplete="off" maxlength="200" formControlName="bankBranch" type="text" placeholder="{{'branch_name' | translate: translateKey}}"
+								<input matInput autocomplete="off" maxlength="100" formControlName="bankBranch" type="text" placeholder="{{'branch_name' | translate: translateKey}}"
 								 required>
 								<control-messages [control]="affordableHousingForm.get('bankBranch')"></control-messages>
 							</mat-form-field>
 	
 							<mat-form-field class="col-md-4">
-								<input matInput autocomplete="off" maxlength="20" appAlphaNumeric formControlName="bankIFSC" type="tel"
+								<input matInput autocomplete="off" appAlphaNumeric upperCase maxlength="11" formControlName="bankIFSC" type="tel"
 								 placeholder="{{'IFSCCode' | translate: translateKey}}" required>
 								<control-messages [control]="affordableHousingForm.get('bankIFSC')"></control-messages>
 							</mat-form-field>
 	
 							<mat-form-field class="col-md-4">
-								<input matInput autocomplete="off" maxlength="25" appAlphaNumeric formControlName="bankMicrCode" type="tel"
+								<input matInput  autocomplete="off" minlength="9" maxlength="9" OnlyNumber formControlName="bankMicrCode" type="tel"
 								 placeholder="{{'MICRCode' | translate: translateKey}}" required>
 								<control-messages [control]="affordableHousingForm.get('bankMicrCode')"></control-messages>
 							</mat-form-field>
@@ -253,7 +253,7 @@
 							</mat-form-field>
 	
 							<mat-form-field class="col-md-4">
-								<input matInput autocomplete="off" maxlength="200" placeholder="{{'annualIncomeWords' | translate:translateKey}}"
+								<input matInput autocomplete="off" maxlength="200" appValidationFields validationFieldsType='onlyNameWithSpace' placeholder="{{'annualIncomeWords' | translate:translateKey}}"
 								 type="text" formControlName="aggregateAnnualIncomeAmountInWords" required>
 								<control-messages [control]="affordableHousingForm.get('aggregateAnnualIncomeAmountInWords')">
 								</control-messages>
