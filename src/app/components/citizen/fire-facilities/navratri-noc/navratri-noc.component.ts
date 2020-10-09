@@ -251,7 +251,7 @@ export class NavratriNocComponent implements OnInit {
 			applicantNameGuj: [null, [Validators.required, Validators.maxLength(300)]],
 			contactNo: [null, [Validators.required, Validators.maxLength(this.fireFacilityConfig.contactNumberLength)]],
 			email: [null, [Validators.required, Validators.maxLength(50)]],
-			applicationDate: [null, [Validators.required]],
+			applicationDate: [{ value: null, disabled: true }],
 
 			/* Step 2 controls start */
 			applicationThroughPolice: [null, [Validators.required, Validators.maxLength(10)]],

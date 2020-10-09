@@ -27,7 +27,7 @@
 						<control-messages [control]="navaratriNocForm.get('applicantName')"></control-messages>
 					</mat-form-field>
 
-					<mat-form-field class="col-md-4">
+					<mat-form-field class="col-md-6">
 						<input matInput type="text" maxlength="300" required formControlName="applicantNameGuj" appGujInputTarget [form]="navaratriNocForm"
 						 placeholder="{{ 'applicant_name' | translate:translateKey:'gu' }}">
 						<control-messages [control]="navaratriNocForm.get('applicantNameGuj')"></control-messages>
@@ -49,13 +49,13 @@
 					<mat-form-field class="col-md-4">
 						<mat-label>{{'application_date'| translate: translateKey}} *</mat-label>
 						<input appDate matInput [max]="endMinDate"
-						[matDatepicker]="townHallBookingfromPicker1" (dateChange)="dateFormate($event.value,'applicationDate');" formControlName="applicationDate">
+						[matDatepicker]="townHallBookingfromPicker1" formControlName="applicationDate">
 						<mat-datepicker-toggle matSuffix [for]="townHallBookingfromPicker1"></mat-datepicker-toggle>
 						<mat-datepicker #townHallBookingfromPicker1 touchUi="true"></mat-datepicker>
-						<div align="end" class="default-show-hint mat-hint mat-right">{{fireFacilityConfig.DATE_HINT_MSG}}
+						<!-- <div align="end" class="default-show-hint mat-hint mat-right">{{fireFacilityConfig.DATE_HINT_MSG}}
 						</div>
 						<control-messages [control]="navaratriNocForm.get('applicationDate')">
-						</control-messages>
+						</control-messages> -->
 					</mat-form-field>
 
 

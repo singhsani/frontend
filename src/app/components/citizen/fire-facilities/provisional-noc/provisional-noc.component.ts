@@ -183,7 +183,7 @@ export class ProvisionalNocComponent implements OnInit {
 			onsitePersonMobileNo: [null, [Validators.maxLength(10)]],
 			applicantPermanentAddress: [null, [Validators.required, Validators.maxLength(300)]],
 			applicantPermanentAddressGuj: [null, [Validators.required, Validators.maxLength(900)]],
-			officeEmailId: [null, [Validators.required, Validators.maxLength(50)]],
+			officeEmailId: [null, [ValidationService.emailValidator, Validators.maxLength(50)]],
 
 			/* Step 2 controls start */
 			appliedForId: this.fb.group({
