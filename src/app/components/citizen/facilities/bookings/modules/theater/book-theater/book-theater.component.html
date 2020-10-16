@@ -57,7 +57,7 @@
                     </mat-form-field>
 
                 </div>
-                
+
                 <div class="row fotButtonBar">
                     <div class="col-sm-12 col-md-12 text-right">
                         <button mat-raised-button color="primary" type="submit">
@@ -100,7 +100,7 @@
                                         &nbsp;{{shift.slotStatus == bookingConstants.CHECKED ? bookingConstants.AVAILABLE : shift.slotStatus }}
                                     </mat-checkbox>
                                 </div>
- 
+
                             </div>
                         </div>
                     </div>
@@ -188,7 +188,7 @@
                         <th scope="col">{{'booking_date'| translate: translateKey}}</th>
                         <th scope="col">{{'rent_amount'| translate: translateKey}}</th>
                         <th scope="col">{{'deposit_amount'| translate: translateKey}}</th>
-                        <th scope="col">{{'GST'| translate: translateKey}}</th>
+<!--                        <th scope="col">{{'GST'| translate: translateKey}}</th>-->
                     </tr>
                 </thead>
                 <tbody>
@@ -196,7 +196,7 @@
                         <td scope="col">{{bookingUtils.returnProperDate(paymentObject.BOOKING_DATE)}}</td>
                         <td scope="col">{{paymentObject.RENT_FEES}}</td>
                         <td scope="col">{{paymentObject.DEPOSIT_FEES}}</td>
-                        <td scope="col">{{paymentObject.GST}}</td>
+<!--                        <td scope="col">{{paymentObject.GST}}</td>-->
                     </tr>
                 </tbody>
             </table>
@@ -313,7 +313,7 @@
 
                     <!-- <bank-details [form]="theaterBookingForm"></bank-details> -->
                     <app-bank-details-booking [form]="theaterBookingForm"></app-bank-details-booking>
-                
+
 
                     <div class="row">
                         <h2>
