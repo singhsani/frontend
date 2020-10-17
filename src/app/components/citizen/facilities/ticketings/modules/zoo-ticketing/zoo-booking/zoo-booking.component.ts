@@ -291,7 +291,7 @@ export class ZooBookingComponent implements OnInit {
   computeTotalAndVisitors() {
     const f = this.ticketBookingForm.value;
     this.numberOfVisitors = Number(f.totalChild) + Number(f.totalAdult);
-    this.totalAmount = (Number(f.totalChild) * 5) + (Number(f.totalAdult) * 20) + (Number(f.totalCamera) * 50) + (Number(f.totalVideoCamera) * 100);
+    this.totalAmount = (Number(f.totalChild) * 10) + (Number(f.totalAdult) * 20) + (Number(f.totalCamera) * 100) + (Number(f.totalVideoCamera) * 150);
 
     this.ticketBookingForm.get('amount').setValue(this.totalAmount);
     this.ticketBookingForm.get('totalAmount').setValue(this.totalAmount);
