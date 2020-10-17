@@ -43,7 +43,6 @@ export class BTConstants {
     static RESERVED = 'RESERVED';
     static HOLIDAY = 'HOLIDAY';
     static FESTIVAL = 'FESTIVAL';
-    static WAITINGLIST = 'WAITINGLIST';
     static ATITHIGURH_DEPOSIT = 'ATITHIGURH_DEPOSIT'   
 }
 
