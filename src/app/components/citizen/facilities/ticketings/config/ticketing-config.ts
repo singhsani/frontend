@@ -13,7 +13,8 @@ export class TicketingConstants extends BTConstants {
   static SELECT_RESOURCE_MESSAGE = 'Should be select resource first';
   static AVAILABLE_SEATS = 'Seats are available';
   static NOT_AVAILABLE = 'Seats are not available';
-  static ALL_FEILD_REQUIRED_MESSAGE = "Select required feild"
+  static ALL_FEILD_REQUIRED_MESSAGE = "Select required feild";
+  static PAYMENT_REQUIRED = "PAYMENT_REQUIRED";
   // static MY_TICKETINGS_URL = 'ticketings/dashboard'
 
 }
