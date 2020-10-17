@@ -505,4 +505,14 @@ export class MyBookingComponent implements OnInit {
 			  );
 		});
 	}
+
+	showAtithiDepositReceiptBtn(element){
+        if(element.resourceType == 'ATITHIGRUH' 
+        && element.status == this.bookingConstant.BOOKED)
+         {
+             return true;
+         }else{
+             return false;
+         }
+    }
 }
