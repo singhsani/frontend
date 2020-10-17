@@ -93,7 +93,7 @@
 					<mat-icon>more_vert</mat-icon>
 				</button>
 				<mat-menu #menu="matMenu">
-					<button mat-menu-item color="primary" (click)="printAcknowledge(element.refNumber)">
+					<button *ngIf="element.resourceType == 'ZOO_ANIMAL_ADOPTION'" mat-menu-item color="primary" (click)="printAcknowledge(element.refNumber)">
 						<mat-icon title="Print Receipt" color="primary">print</mat-icon>
 						{{'acknowledgement_reprint' | translate:translateKey}}
 					</button>
