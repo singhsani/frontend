@@ -121,12 +121,20 @@
             <div *ngIf="element.resourceType!= (bookingConstant.TOWNHALL_RESOURCE_TYPE | uppercase)">
             <button
               *ngIf="element.resourceType == (bookingConstant.TOWNHALL_RESOURCE_TYPE | uppercase) && element.status != bookingConstant.DEPOSIT_REQUIRED && element.status != bookingConstant.PPL_REQUIRED && element.status != bookingConstant.PAYMENT_REQUIRED && element.status != bookingConstant.CANCELLATION_REQUEST"
-              mat-menu-item color="primary"
-              (click)="printReceipt(element, bookingConstant.TOWNHALL_DEPOSIT)">
+              mat-menu-item color="primary" (click)="printReceipt(element, bookingConstant.TOWNHALL_DEPOSIT)">
               <mat-icon title="Print Receipt" color="primary">print</mat-icon>
               {{'deposit_receipt' | translate:translateKey}}
             </button>
             </div>
+
+              <!-- Recepit Re-print For Atithi Deposit -->
+            <!-- TODO Merge Townhall and Atithi deposit code and make it common-->
+            
+            <button *ngIf="showAtithiDepositReceiptBtn(element)" mat-menu-item color="primary"
+              (click)="printReceipt(element, bookingConstant.ATITHIGURH_DEPOSIT)">
+              <mat-icon title="Print Receipt" color="primary">print</mat-icon>
+              {{'deposit_receipt' | translate:translateKey}}
+            </button>
 
             <button
               *ngIf="element.status == bookingConstant.PPL_REQUIRED && element.status != bookingConstant.CANCELLATION_REQUEST && element.status != bookingConstant.PAYMENT_REQUIRED"
