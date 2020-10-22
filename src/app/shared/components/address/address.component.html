@@ -65,7 +65,7 @@
 			</ng-select>
 			<control-messages [control]="addressFormGroup.get('city')"></control-messages>
 		</div>
-		
+
 		<div class="col-md-4 ngSelect">
 			<ng-select placeholder="{{'state' | translate: translateKey }} {{requiredFeilds?'*':''}}"
 				formControlName="state" required
@@ -120,10 +120,10 @@
 
 	</div>
 	<!-- gujrati fields -->
-	<mat-form-field class="col-md-6">
-		<input [readonly]="true" matInput type="text" formControlName="countryGuj"
-			placeholder="{{'country' | translate: translateKey:'gu' }} {{requiredFeilds?'*':''}}" maxlength="180">
-		<control-messages [control]="addressFormGroup.get('countryGuj')"></control-messages>
-	</mat-form-field>
+<!--	<mat-form-field class="col-md-6">-->
+<!--		<input [readonly]="true" matInput type="text" formControlName="countryGuj"-->
+<!--			placeholder="{{'country' | translate: translateKey:'gu' }} {{requiredFeilds?'*':''}}" maxlength="180">-->
+<!--		<control-messages [control]="addressFormGroup.get('countryGuj')"></control-messages>-->
+<!--	</mat-form-field>-->
 	<!-- gujrati fields -->
 </div>
