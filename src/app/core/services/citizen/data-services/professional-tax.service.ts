@@ -43,6 +43,14 @@ export class ProfessionalTaxService {
     return this.http.post(this.requestURL, formData);
   }
 
+  /**
+	 * This method is use for check isExistPropertyNo or not 
+	 * @param propertyNo - entered propertNo
+	 */
+	isExistPropertyNoCheck(propertyNo) {
+		return this.http.get(`api/property/professional/getByPropertyNo?censusNo=${propertyNo}`);
+	}
+
 	/**
 	 * This method is used to update PRC Form if rc date change in existing PRC Form
 	 * @param prcNumber - reference number

@@ -204,8 +204,17 @@
 
 					<!-- This section is for adding multiple census number-->
 					<div class="width100p" formArrayName="censusNo">
-						<mat-form-field class="col-md-4" *ngFor="let item of pecRegForm.get('censusNo')['controls']; let i = index;" [formGroupName]="i">
-							<input matInput appMaskCensusNumber autocomplete="off" maxlength="21" formControlName="census" type="text" placeholder="{{'census_no' | translate: translateKey}}"
+						<div class="row" *ngFor="let item of pecRegForm.get('censusNo')['controls']; let i = index;" [formGroupName]="i">
+						<div class="col-md-3">
+								<mat-form-field>
+									<mat-select (selectionChange)="selectCensusOrPropertyNo($event);"  placeholder="{{'census_no' | translate: translateKey}}">
+										<mat-option  value="CensusNo">Census No</mat-option>
+										<mat-option value="PropertyNo">Property No</mat-option>
+									</mat-select>
+								</mat-form-field>
+						</div>
+						<mat-form-field class="col-md-3" *ngIf="isCensusNo">
+							<input matInput autocomplete="off" appMaskCensusNumber maxlength="21" formControlName="census" type="text" (focusout)="isExistPropertyNo($event.target.value,i)"
 							 required>
 							<button *ngIf="pecRegForm.get('censusNo')['controls'].length > 1 && isDeleteBtnShow" title="Remove Census" class="deleteBtn pull-right text-right"
 							 type="button" mat-icon-button color="warn" (click)="removeCensus(i)">
@@ -213,6 +222,16 @@
 							</button>
 							<control-messages [control]="pecRegForm.get('censusNo')['controls'][i].get('census')"></control-messages>
 						</mat-form-field>
+						<mat-form-field class="col-md-3" *ngIf="!isCensusNo">
+							<input matInput autocomplete="off" appMaskPropertNumber maxlength="21" formControlName="census" type="text" (focusout)="isExistPropertyNo($event.target.value,i)"
+							 required>
+							<button *ngIf="pecRegForm.get('censusNo')['controls'].length > 1 && isDeleteBtnShow" title="Remove Census" class="deleteBtn pull-right text-right"
+							 type="button" mat-icon-button color="warn" (click)="removeCensus(i)">
+								<i class="fa fa-times"></i>
+							</button>
+							<control-messages [control]="pecRegForm.get('censusNo')['controls'][i].get('census')"></control-messages>
+						</mat-form-field>
+					</div>
 
 						<div class="col-md-12 pt-3" *ngIf="isDeleteBtnShow">
 							<button type="button" mat-raised-button color="primary" (click)="addMoreCenus()" title="{{'add_more_census' | translate:'translateKey'}}">

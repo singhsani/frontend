@@ -2,14 +2,15 @@ import { Directive, OnDestroy, HostListener, ElementRef } from '@angular/core';
 import * as textMask from 'vanilla-text-mask/dist/vanillaTextMask.js';
 
 @Directive({
-  selector: '[appMaskCensusNumber]'
+  selector: '[appMaskPropertNumber]'
 })
-export class MaskCensusNumberDirective {
+export class MaskPropertyNumberDirective implements OnDestroy {
 
   // mask = [/\d/, /\d/, '-', /\d/, /\d/, '-', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/];
-  mask = [/\d/, /\d/, '-', /\d/, /\d/, '-', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/];
+  mask = [/\d/, /\d/, '-', /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/];
+  // ##-##-###-###-###-###
   maskedInputController;
-
+  
   private specialKeys: Array<string> = ['Backspace', 'Tab', 'End', 'Home'];
 
   constructor(private element: ElementRef) {
@@ -19,7 +20,7 @@ export class MaskCensusNumberDirective {
       guide: false,
       placeholderChar: '_',
       keepCharPositions: true,
-      showMask: true
+      showMask:true
     });
   }
 
@@ -29,14 +30,14 @@ export class MaskCensusNumberDirective {
 
   @HostListener('keydown', ['$event'])
   onKeyDown(event: KeyboardEvent) {
-
+    
     if (this.specialKeys.indexOf(event.key) !== -1) {
       return;
     }
     let current: string = this.element.nativeElement.value;
     let next: string = current.concat(event.key);
-    // if (next && String(next).length > 17) {
-    //   event.preventDefault();
+    // if (next && String(next).length > 17 ) {
+    //   event.preventDefault(); 
     // }
   }
 

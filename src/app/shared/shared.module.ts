@@ -56,6 +56,7 @@ import { BankDetailsComponent } from './components/bank-details/bank-details.com
 import { NumericDirective } from './directives/numeric.directive';
 import { SelectPaymentGatewayComponent } from './components/select-payment-gateway/select-payment-gateway.component';
 import { MaskCensusNumberDirective } from './directives/mask-census-number.directive';
+import { MaskPropertyNumberDirective } from './directives/mask-property-number.directive';
 import { ApplicantDetailsComponent } from './components/applicant-details/applicant-details.component';
 import { OfflinePaymentComponent } from './components/offline-payment/offline-payment.component';
 import { OfflinePaymentService } from './services/offlinePayment.service';
@@ -95,6 +96,7 @@ const COMPONENTS = [
 	BankDetailsComponent,
 	SelectPaymentGatewayComponent,
 	MaskCensusNumberDirective,
+	MaskPropertyNumberDirective,
 	ApplicantDetailsComponent,
 	OfflinePaymentComponent,
 	BankDetailsBookingComponent

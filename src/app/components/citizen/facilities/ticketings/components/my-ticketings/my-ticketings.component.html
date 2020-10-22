@@ -84,12 +84,19 @@
 			<mat-cell *matCellDef="let element;">
 				<div class="mobile-label">{{'actions' | translate:translateKey}}</div>
 				<div class="mobile-label1">:</div>
-				<button *ngIf="(element.status != ticketingConstants.DRAFT) && (element.status != ticketingConstants.EXPIRED) && (element.status != ticketingConstants.SUBMITTED)"
+
+				
+				
+				
+				<button *ngIf="(element.status != ticketingConstants.DRAFT) && (element.status != ticketingConstants.EXPIRED)"
 				 mat-button [matMenuTriggerFor]="menu">
 					<mat-icon>more_vert</mat-icon>
 				</button>
 				<mat-menu #menu="matMenu">
-
+					<button *ngIf="element.resourceType == 'ZOO_ANIMAL_ADOPTION'" mat-menu-item color="primary" (click)="printAcknowledge(element.refNumber)">
+						<mat-icon title="Print Receipt" color="primary">print</mat-icon>
+						{{'acknowledgement_reprint' | translate:translateKey}}
+					</button>
 					<div *ngIf="(element.status != ticketingConstants.SUBMITTED)">
 
 						<button *ngIf="element.status == ticketingConstants.PAYMENT_REQUIRED" mat-menu-item color="primary" (click)="paymentRequest(element)">
@@ -97,7 +104,7 @@
 							{{'make_payment' | translate:translateKey}}
 						</button>
 
-						<button *ngIf="element.status == ticketingConstants.BOOKED" mat-menu-item color="primary" (click)="printcertifacte(element)">
+						<button *ngIf="element.status == ticketingConstants.BOOKED && element.resourceType != 'ZOO_TICKETING'" mat-menu-item color="primary" (click)="printcertifacte(element)">
 							<mat-icon title="Certificate" color="primary">print</mat-icon>
 							Certificate
 						</button>

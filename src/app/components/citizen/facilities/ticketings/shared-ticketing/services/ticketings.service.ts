@@ -210,5 +210,6 @@ export class TicketingsService {
 
 		return this.http.post(requestURL, paymentData);
 
-	}
+  }
+  
 }

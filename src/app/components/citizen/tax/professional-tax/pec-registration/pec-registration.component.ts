@@ -14,6 +14,7 @@ import * as moment from 'moment';
 import * as _ from 'lodash';
 import { MatDialog } from '@angular/material';
 import { ApplicantDetailsComponent } from 'src/app/shared/components/applicant-details/applicant-details.component';
+import { AlertService } from 'src/app/vmcshared/Services/alert.service';
 
 @Component({
 	selector: 'app-pec-registration',
@@ -57,6 +58,9 @@ export class PecRegistrationComponent implements OnInit {
 	isDeleteBtnShow: boolean = true;
 	isQryParamExist: boolean = false;
 
+	isCensusNo : boolean = true;
+	selectedCensusNo : any = "CensusNo";
+
 	constructor(
 		private fb: FormBuilder,
 		private router: Router,
@@ -64,6 +68,7 @@ export class PecRegistrationComponent implements OnInit {
 		private toastr: ToastrService,
 		private formService: FormsActionsService,
 		private profeService: ProfessionalTaxService,
+		private alertService : AlertService,
 		private commonService: CommonService,
 		private dialog: MatDialog
 	) {
@@ -246,11 +251,48 @@ export class PecRegistrationComponent implements OnInit {
 		});
 	}
 
+	/** this method is use for set seleted input filed for Census or property number */
+	selectCensusOrPropertyNo(value) {
+		if (value.value == 'CensusNo') {
+			this.isCensusNo = true;
+		} else {
+			this.isCensusNo = false;
+		}
+	}
+
+	/**
+	 * This method is use for check isExistPropertyNo or not 
+	 * @param propertyNo -entered property code
+	*/
+	isExistPropertyNo(propertyNo?: any, index?: any) {
+		if (propertyNo)
+			this.profeService.isExistPropertyNoCheck(propertyNo).subscribe(res => {
+				if (res.list) {
+					this.alertService.confirm(res.data[0]);
+					var subConfirm = this.alertService.getConfirm().subscribe(isConfirm => {
+						if (!isConfirm) {
+							this.removeCensus(index);
+						}
+						subConfirm.unsubscribe();
+					});
+				}
+			}, (err) => {
+				if (err.error[0])
+					this.commonService.openAlert("Error", err.error[0].message, "warning");
+				this.removeCensus(index);
+			});
+	}
+
 	/**
 	 * This method use to add more census number
 	 */
 	addMoreCenus() {
+		this.isCensusNo = true;
 		let isValid = true;
+		if(this.pecRegForm.get('censusNo')['controls'].length == 5){
+			this.toastr.warning('maximum 5 census number allow');
+			return ;
+		}
 		for (let i = 0; i < this.pecRegForm.get('censusNo')['controls'].length; i++) {
 			if (this.pecRegForm.get('censusNo')['controls'][i].invalid) {
 				isValid = false;

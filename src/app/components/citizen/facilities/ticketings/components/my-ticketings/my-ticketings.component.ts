@@ -416,4 +416,20 @@ export class MyTicketingsComponent implements OnInit {
     copytext.select();
     document.execCommand('copy');
   }
+
+  printAcknowledge(refNumber:string){
+      this.ticketingService.printAcknowledgementReceipt(refNumber).subscribe(response => {
+      let sectionToPrint: any = document.getElementById('sectionToPrint');
+      sectionToPrint.innerHTML = response;
+      setTimeout(() => {
+        window.print();
+      });
+
+    }, err => {
+      this.commonService.openAlert('Error', err.message, 'warning');
+    });
+
+
+
+  }
 }
