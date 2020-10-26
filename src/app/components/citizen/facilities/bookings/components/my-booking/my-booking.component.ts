@@ -34,6 +34,8 @@ export class MyBookingComponent implements OnInit {
 	searchBookingsForm: FormGroup;
 	bookingList = new MatTableDataSource();
 	refundBankDetailsForm: FormGroup;
+	isAmphiCancellation : boolean = false;
+	element : any;
 
 	/**
 	 * Common for all bookings
@@ -139,10 +141,11 @@ export class MyBookingComponent implements OnInit {
 	/**
 	 * This method is use for open modal.
 	 */
-	openModal(template: TemplateRef<any>, scheduleList, refNumber) {
+	openModal(template: TemplateRef<any>, scheduleList, refNumber,element) {
 		this.CancelRequestList = [];
 		this.refNumber = refNumber;
 		this.cancellationType = null;
+		this.element = element;
 		this.CancelSlotList = scheduleList.sort((a, b) => {
 			if ((new Date(a.bookingDate).getTime()) <= (new Date(b.bookingDate).getTime())) {
 				return 1;
@@ -151,6 +154,10 @@ export class MyBookingComponent implements OnInit {
 			}
 		});
 		this.modalReqRef = this.modalService.show(template, Object.assign({ ignoreBackdropClick: true }, { class: 'gray modal-lg customWidth' }));
+		if (element.resourceType == "AMPHI_THEATER") {
+			this.allCancelForAmphi();
+			this.isAmphiCancellation = true;
+		}
 	}
 
 	/**
@@ -170,6 +177,8 @@ export class MyBookingComponent implements OnInit {
 				this.CancelRequestList.splice(data, 1);
 			}
 		}
+
+		this.getAllSelected();
 	}
 
 	/**
@@ -187,14 +196,50 @@ export class MyBookingComponent implements OnInit {
 	 * Method is used to get all selected list and mark it as checked
 	 */
 	getAllSelected(): boolean {
-		return (this.CancelRequestList.length ==
-			this.CancelSlotList.filter(shift => shift.status == this.bookingConstant.DEPOSIT_REQUIRED ||
-				shift.status == this.bookingConstant.SUBMITTED ||
-				shift.status == this.bookingConstant.PAYMENT_REQUIRED ||
-				shift.status == this.bookingConstant.BOOKED).length) ||
-			(this.CancelSlotList.filter(shift => shift.status == this.bookingConstant.CANCELLATION_REQUEST ||
-				shift.status == this.bookingConstant.CANCELLATION_APPROVED).length == this.CancelSlotList.length);
+
+		if (this.CancelRequestList.length == 0) {
+            return false;
+        }else{
+
+             // If all shift are in Cancellation process. (So the shift status is either 
+            // CANCELLATION_APPROVED or CANCELLATION_REQUEST)
+           
+            if (this.isAllSlotInCancellation(this.CancelSlotList)) {
+                return true;
+            } else if (this.isAllSlotsAreSlectedByUser(this.CancelRequestList)){
+                return true;
+            } else {
+                return false;
+            }
+ 
+
+
+		}
+
+		// return (this.CancelRequestList.length ==
+		// 	this.CancelSlotList.filter(shift => shift.status == this.bookingConstant.DEPOSIT_REQUIRED ||
+		// 		shift.status == this.bookingConstant.SUBMITTED ||
+		// 		shift.status == this.bookingConstant.PAYMENT_REQUIRED ||
+		// 		shift.status == this.bookingConstant.BOOKED).length) ||
+		// 	(this.CancelSlotList.filter(shift => shift.status == this.bookingConstant.CANCELLATION_REQUEST ||
+		// 		shift.status == this.bookingConstant.CANCELLATION_APPROVED).length == this.CancelSlotList.length);
 	}
+
+
+
+	isAllSlotsAreSlectedByUser(cancelRequestList):boolean{
+        return cancelRequestList.length ==
+                this.CancelSlotList.filter(shift => shift.status == this.bookingConstant.DEPOSIT_REQUIRED ||
+                    shift.status == this.bookingConstant.BOOKED || 
+                    shift.status == this.bookingConstant.PPL_REQUIRED).length;
+    }
+
+
+    isAllSlotInCancellation(cancellationList): boolean {
+        return (cancellationList.filter(shift => shift.status == this.bookingConstant.CANCELLATION_REQUEST ||
+            shift.status == this.bookingConstant.CANCELLATION_APPROVED).length == this.CancelSlotList.length)
+
+    }
 
 	/**
 	 * Method is used to get all disabled shifts.
@@ -242,6 +287,7 @@ export class MyBookingComponent implements OnInit {
 
 		this.paginator.pageSize = 5;
 		this.paginator.pageIndex = 0
+		this.isAmphiCancellation = false;
 
 		if (this.searchBookingsForm.valid) {
 			merge(this.sort.sortChange, this.paginator.page)
@@ -426,7 +472,7 @@ export class MyBookingComponent implements OnInit {
 	refundBankDetailsFormController(){
 	  this.refundBankDetailsForm = this.fb.group({
                 refNumber: [{ value: '', disabled: true }, Validators.required],
-                ifscCode: ['', Validators.required],
+                ifscCode: ['', [Validators.required, ValidationService.ifscCodeValidator]],
                 accountNumber : ['', Validators.required],
                 accountHolderName : ['', Validators.required],
                 bank :this.fb.group({
@@ -522,5 +568,10 @@ export class MyBookingComponent implements OnInit {
          }else{
              return false;
          }
-    }
+	}
+	
+// This method  select all for cancle from AmphiTheater
+	allCancelForAmphi(){
+		this.chooseAllForCancel(true);
+   }
 }
