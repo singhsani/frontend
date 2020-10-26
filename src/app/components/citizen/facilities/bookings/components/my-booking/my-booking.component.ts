@@ -46,7 +46,7 @@ export class MyBookingComponent implements OnInit {
 	 * 'start', 'end',
 	 */
 	displayedColumns: Array<string> = ['id', 'refNumber', 'bookingDate', 'status', 'action'];
-	
+
 
 	/**
 	 * ngx-bootstrap models.
@@ -72,6 +72,7 @@ export class MyBookingComponent implements OnInit {
 	accountNo : string = null;
 	accountHolderName : string = null;
 	bankName : string = null;
+	slotBookingList = [];
 
 	/**
 	 * pagination instance variables.
@@ -402,7 +403,7 @@ export class MyBookingComponent implements OnInit {
             ifscCode : this.refundBankDetailsForm.value.ifscCode,
             accountNo : this.refundBankDetailsForm.value.accountNumber,
             accountHolderName : this.refundBankDetailsForm.value.accountHolderName,
-            bankCode : this.refundBankDetailsForm.value.bank.code 
+            bankCode : this.refundBankDetailsForm.value.bank.code
         }
         console.log(object);
         this.bookingService.cancelTownHall(object).subscribe(res => {
@@ -431,19 +432,25 @@ export class MyBookingComponent implements OnInit {
                 bank :this.fb.group({
 									code: [null],
 									name: [null]
-								})
+								}),
+								slotBookingNo : ['']
             });
 	}
   /*
    * set value in form for Townhall Refund
    */
 	setPropertyValues(){
-      this.refundBankDetailsForm.get('refNumber').setValue(this.refNumber);
+	    this.refundBankDetailsForm.get('refNumber').setValue(this.refNumber);
       this.bookingService.searchByRefNumber(this.refNumber).subscribe(resp => {
         this.refundBankDetailsForm.get('ifscCode').setValue(resp['data']['ifscCode']);
         this.refundBankDetailsForm.get('accountNumber').setValue(resp['data']['accountNo']);
         this.refundBankDetailsForm.get('accountHolderName').setValue(resp['data']['accountHolderName']);
 				this.refundBankDetailsForm.get('bank').get('code').setValue(resp['data']['bankName']['code']);
+				var arrData = resp['data']['scheduleList'];
+				arrData.forEach(arrData =>{
+				  this.slotBookingList.push(arrData.bookingNo);
+				});
+				this.refundBankDetailsForm.get('slotBookingNo').setValue(this.slotBookingList.toString());
 			})
     }
 
@@ -455,42 +462,43 @@ export class MyBookingComponent implements OnInit {
     			this.bankLists = resp.BANK;
     		});
 		}
-		
+
 	showRecieptReprint(element){
 		if(element.status === this.bookingConstant.PAYMENT_REQUIRED
-			|| element.status === this.bookingConstant.CANCELLED 
+			|| element.status === this.bookingConstant.CANCELLED
 			|| element.status === this.bookingConstant.WAITINGLIST ){
 			return false;
 		}
-		
+
 		return true;
-		
-	}	
+
+	}
 
 	showCancelBtn(element){
+	    this.slotBookingList.pop();
         // element.status != bookingConstant.PAYMENT_REQUIRED && element.status != bookingConstant.CANCELLATION_REQUEST
         if(element.status === this.bookingConstant.PAYMENT_REQUIRED
-			|| element.status === this.bookingConstant.CANCELLED 
-            || element.status === this.bookingConstant.WAITINGLIST 
+			|| element.status === this.bookingConstant.CANCELLED
+            || element.status === this.bookingConstant.WAITINGLIST
             || element.status === this.bookingConstant.CANCELLATION_REQUEST){
 			return false;
         }
-        
+
         return true;
 	}
-	
+
 	showCancelAdvanceBooking(element){
-		if(element.resourceType === 'ATITHIGRUH' 
+		if(element.resourceType === 'ATITHIGRUH'
 		&& element.bookingType === 'Advance booking'
 		&& element.status === this.bookingConstant.PAYMENT_REQUIRED){
 			return true;
-  
+
 		}
-  
+
 		return false;
-  
+
 	}
-  
+
 	cancelAdvanceBooking(element) {
 
 		this.commonService.submitAlert('Are you sure?', "You won't be able to revert this!", 'warning', '', performDelete => {
@@ -507,7 +515,7 @@ export class MyBookingComponent implements OnInit {
 	}
 
 	showAtithiDepositReceiptBtn(element){
-        if(element.resourceType == 'ATITHIGRUH' 
+        if(element.resourceType == 'ATITHIGRUH'
         && element.status == this.bookingConstant.BOOKED)
          {
              return true;
