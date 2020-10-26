@@ -144,7 +144,7 @@
             </button>
 
             <button *ngIf="showCancelBtn(element)" mat-menu-item data-toggle="modal"
-                    color="primary" (click)="openModal(templateRequestModel, element.scheduleList, element.refNumber);">
+                    color="primary" (click)="openModal(templateRequestModel, element.scheduleList, element.refNumber,element);">
               <mat-icon title="View Booking Details" color="primary">cancel</mat-icon>
               {{'cancel_booking' | translate:translateKey}}
             </button>
@@ -205,7 +205,7 @@
         <th scope="col" class="text-center">
           {{'actions' | translate:translateKey}}
           <mat-checkbox labelPosition="after"
-                        [disabled]="getAllDisabled() || bookingService.resourceType == 'childrenTheater'"
+                        [disabled]="getAllDisabled() || bookingService.resourceType == 'childrenTheater'||isAmphiCancellation"
                         [checked]="getAllSelected()"
                         (change)="chooseAllForCancel($event.checked)">
             {{'select_all' | translate:translateKey}}
@@ -225,7 +225,7 @@
         <td>{{bookingUtils.getProperErrorMessage(shifts.status)}}</td>
         <td>
           <mat-checkbox
-            [disabled]="(shifts.status == bookingConstant.CANCELLATION_REQUEST || shifts.status == bookingConstant.CANCELLATION_APPROVED || bookingService.resourceType == 'childrenTheater')"
+            [disabled]="(shifts.status == bookingConstant.CANCELLATION_REQUEST || shifts.status == bookingConstant.CANCELLATION_APPROVED || bookingService.resourceType == 'childrenTheater'||isAmphiCancellation)"
             [checked]="getSelected(shifts.bookingNo) || (shifts.status == bookingConstant.CANCELLATION_REQUEST || shifts.status == bookingConstant.CANCELLATION_APPROVED)"
             (change)="chooseForCancel(shifts, $event.checked)">
           </mat-checkbox>
@@ -371,7 +371,7 @@
       </div>
       <div class="row">
         <mat-form-field class="col-md-12">
-          <input matInput maxlength="11"  type="text" placeholder="{{'ifsc_code' | translate: translateKey}}" required
+          <input matInput  maxlength="11"  type="text" appAlphaNumeric upperCase placeholder="{{'ifsc_code' | translate: translateKey}}" required
          formControlName="ifscCode">
           <control-messages [control]="refundBankDetailsForm.get('ifscCode')"></control-messages>
         </mat-form-field>
