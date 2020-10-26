@@ -129,7 +129,7 @@
 
               <!-- Recepit Re-print For Atithi Deposit -->
             <!-- TODO Merge Townhall and Atithi deposit code and make it common-->
-            
+
             <button *ngIf="showAtithiDepositReceiptBtn(element)" mat-menu-item color="primary"
               (click)="printReceipt(element, bookingConstant.ATITHIGURH_DEPOSIT)">
               <mat-icon title="Print Receipt" color="primary">print</mat-icon>
@@ -375,6 +375,15 @@
          formControlName="ifscCode">
           <control-messages [control]="refundBankDetailsForm.get('ifscCode')"></control-messages>
         </mat-form-field>
+      </div>
+      <div class="row">
+      <mat-form-field class="col-md-12">
+        <textarea matInput  type="text" readonly
+               placeholder="{{'slot_numbers' | translate: translateKey}}"
+               trim="blur" formControlName="slotBookingNo">
+        <control-messages [control]="refundBankDetailsForm.get('slotBookingNo')"></control-messages>
+        </textarea>
+      </mat-form-field>
       </div>
       <div class="row col-md-12">
         <button mat-raised-button color="primary" type="submit">
