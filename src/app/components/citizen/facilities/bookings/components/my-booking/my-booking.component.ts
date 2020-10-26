@@ -562,8 +562,7 @@ export class MyBookingComponent implements OnInit {
          }
 	}
 	
-
-
+// This method  select all for cancle from AmphiTheater
 	allCancelForAmphi(){
 		this.chooseAllForCancel(true);
    }
