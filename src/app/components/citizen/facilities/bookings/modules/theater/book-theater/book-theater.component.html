@@ -4,6 +4,116 @@
 <app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
 <!-- Theater Booking Title Bar Ends -->
 
+<div *ngIf="guideLineFlag">
+  <mat-card class="cardBox">
+
+    <!-- <mat-card-title class="alert alert-info text-center mb-0 font-weight-bold">
+{{'online_townhall_bookings'| translate: translateKey}}
+</mat-card-title> -->
+
+    <div class="pageTitle">{{'online_amphi_theater_bookings'| translate: translateKey}}</div>
+    <mat-card-content class="p-4">
+      <img _ngcontent-c1="" alt="Vadodara Municipal Corporation" src="assets/images/vmc-logo.png" class="center">
+      <h2>{{'અગત્યની સુચનાઓ'| translate: translateKey}}</h2>
+      <ol class="olList">
+        <li>
+          <h4>એમ્ફિ થિયેટર જે આકારમાં ગોળાકાર છે, જેની સીપની ક્ષમતા 500 ની છે.</h4>
+        </li>
+        <li>
+          <h4>ક્લાસિકલ ડાન્સ અથવા વોકલ કોન્સર્ટ, સ્ટ્રીટ પ્લે લેક્ચર્સ, વગેરે જેવી નાની સાંસ્કૃતિક પ્રવૃત્તિઓનું આયોજન કરવા માટેનું આ એક આદર્શ સ્થળ છે.</h4>
+        </li>
+        <li>
+          <h4>એમ્ફી થિયેટરનો સમય: - સાંજે 6:00 થી 11: 00.</h4>
+        </li>
+        <!--                    <h4>ઉપરોક્ત સૂચનાનો ચૂસ્તપણે અમલ કરવાનો રહેશે અન્યથા કાર્યક્રમ બંધ કરવાની ફરજ પડશે.</h4>-->
+      </ol>
+      <h5><b>એમ્ફી થિયેટર બુકિંગ માટે દરો:</b></h5>
+      <div class=" table-responsive">
+        <table class="table table-bordered" style="width:100%">
+          <thead class="thead-light">
+          <tr>
+            <th scope="col">પ્રકાર</th>
+            <th scope="col">ભાડુ</th>
+            <th scope="col">થાપણ</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td> &nbsp; </td>
+            <td> &nbsp; </td>
+            <td> &nbsp; </td>
+          </tr>
+          <tr>
+            <td scope="row">શાળા માટે</td>
+            <td>દરરોજ રૂ .600 / -</td>
+            <td>દિવસ દીઠ રૂ .1500 / - (પ્રોગ્રામની તારીખે સાંજે 5:30 વાગ્યે સ્થાન પર રજૂ કરવા)</td>
+          </tr>
+          <tr>
+            <td>સંસ્થા માટે</td>
+            <td>દરરોજ રૂ .1500 / -</td>
+            <td>દિવસ દીઠ રૂ .1500 / - (પ્રોગ્રામની તારીખે સાંજે 5:30 વાગ્યે સ્થાન પર રજૂ કરવા)</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </mat-card-content>
+
+    <mat-card-content class="p-4">
+      <h3>{{'Important instructions'| translate: translateKey}}</h3>
+      <ol class="olList">
+        <li>
+          <h5>The Amphi Theater which is round in shape with a stepped seating capacity of 500.</h5>
+        </li>
+        <li>
+          <h5>This is an ideal place to organize small cultural activities like classical dance or vocal concert, Street play lectures, etc.</h5>
+        </li>
+        <li>
+          <h5>Timings of the Amphi Theater: - 6:00 pm to 11:00 pm.</h5>
+        </li>
+        <!--                    <h5>The above instruction must be strictly enforced otherwise the program will be forced to close.</h5>-->
+      </ol>
+      <h5><b>Rates for Booking Amphi Theater:</b></h5>
+      <div class=" table-responsive">
+        <table class="table table-bordered" style="width:100%">
+          <thead class="thead-light">
+          <tr>
+            <th scope="col">Type</th>
+            <th scope="col">Rent</th>
+            <th scope="col">Deposit</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td> &nbsp; </td>
+            <td> &nbsp; </td>
+            <td> &nbsp; </td>
+          </tr>
+          <tr>
+            <td scope="row">For School</td>
+            <td>Rs.600/- per day</td>
+            <td>Rs.1500/- per day (To be Submitted at Location by 5:30 PM on the program date)</td>
+          </tr>
+          <tr>
+            <td>For Organization</td>
+            <td>Rs.1500/-per day</td>
+            <td>Rs.1500/-per day (To be Submitted at Location by 5:30 PM on the program date)</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </mat-card-content>
+
+    <div class="fotButtonBar">
+      <div class="col-sm-12 col-md-12 text-right">
+        <button mat-raised-button (click)="guideLineFlag = false; showTheaterSearchForm = true; " color="primary">
+          <mat-icon>thumb_up_alt</mat-icon>
+          {{'proceed'| translate: translateKey}}
+        </button>
+      </div>
+    </div>
+  </mat-card>
+</div>
+
 <!-- HTML for Theater booking Search Form Starts -->
 <div *ngIf="showTheaterSearchForm">
     <mat-card class="formClass cardBorder">
