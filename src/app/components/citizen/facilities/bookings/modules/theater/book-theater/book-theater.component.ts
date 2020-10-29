@@ -18,7 +18,7 @@ import { FormsActionsService } from 'src/app/core/services/citizen/data-services
     styleUrls: ['./book-theater.component.scss']
 })
 export class BookTheaterComponent implements OnInit {
-    
+
     @ViewChild("paymentGateway") paymentGateway: TemplateRef<any>;
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild(MatSort) sort: MatSort;
@@ -38,7 +38,8 @@ export class BookTheaterComponent implements OnInit {
     showBookingInfo: boolean = false;
     showShortListData: boolean = false;
     showPaymentReciept: boolean = false;
-    showTheaterSearchForm: boolean = true;
+    showTheaterSearchForm: boolean = false;
+    guideLineFlag: boolean = true;
 
 	/**
 	 * Translation Key.
@@ -131,7 +132,7 @@ export class BookTheaterComponent implements OnInit {
     }
 
     /**
-     * This method is used to set endDate 30 days after the selected start date 
+     * This method is used to set endDate 30 days after the selected start date
      * @param date - selected start date
      */
     onDateChange(date){
@@ -140,7 +141,7 @@ export class BookTheaterComponent implements OnInit {
     }
 
 	/**
-	 * Create theater search f 
+	 * Create theater search f
 	 */
     createSearchTheaterForm() {
         this.searchTheaterForm = this.fb.group({
