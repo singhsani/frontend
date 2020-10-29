@@ -8,7 +8,9 @@ import { TicketingsService } from "../ticketings/shared-ticketing/services/ticke
 import { SessionStorageService } from "angular-web-storage";
 import { FormsActionsService } from "src/app/core/services/citizen/data-services/forms-actions.service";
 import { ToastrService } from "ngx-toastr";
+import { ToWords } from 'to-words';
 
+const toWords = new ToWords();
 
 export class BTConstants {
     static DRAFT = "DRAFT";
@@ -69,7 +71,8 @@ export class BTConfig extends CitizenConfig {
         let redirectURLAfterPayment = (btService instanceof TicketingsService) ? BTConstants.MY_TICKETINGS_URL : BTConstants.MY_BOOKINGS_URL
 
         let payData = this.storePaymentInfo(err.error.data, redirectURLAfterPayment, btService.resourceType);
-
+       
+        let words = toWords.convert(payData.amount);
         let html =
             `
                 <div class="text-center">
@@ -78,6 +81,7 @@ export class BTConfig extends CitizenConfig {
                         <i class="fa fa-inr" aria-hidden="true">` + payData.amount + `</i>
                     </div>
                     <p>Rupees in words</p>
+                    <i class="fa fa-inr" aria-hidden="true">` + words + `</i>
                 </div>
                 `
         commonService.commonAlert('Payment Details', '', 'info', 'Make Payment!', false, html, cb => {
@@ -122,6 +126,7 @@ export class BTConfig extends CitizenConfig {
 
         let payData = this.storePaymentInfo(err.error.data, redirectURLAfterPayment, btService.resourceType);
 
+        let words = toWords.convert(payData.amount);
         let html =
             `
                 <div class="text-center">
@@ -130,6 +135,7 @@ export class BTConfig extends CitizenConfig {
                         <i class="fa fa-inr" aria-hidden="true">` + payData.amount + `</i>
                     </div>
                     <p>Rupees in words</p>
+                    <i class="fa fa-inr" aria-hidden="true">` + words + `</i>
                 </div>
                 `
         commonService.commonAlert('Payment Details', '', 'info', 'Make Payment!', false, html, cb => {

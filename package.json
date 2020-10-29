@@ -47,6 +47,7 @@
     "rxjs-compat": "^6.1.0",
     "rxjs-tslint": "^0.1.4",
     "sweetalert2": "^7.18.0",
+    "to-words": "^2.2.3",
     "url-search-params-polyfill": "^3.0.0",
     "uuid": "^3.2.1",
     "vanilla-text-mask": "^5.1.1",
