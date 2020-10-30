@@ -125,6 +125,10 @@ export class MyTicketingsComponent implements OnInit {
         setTimeout(() => {
           this.location.go(this.router.url.split('?')[0]);
         }, 3000);
+        setTimeout(() => {
+          this.sendMailAndSMS({ refNumber: d.refNumber }, d.serviceType);
+        }, 1000);
+
       }
     })
   }
@@ -372,6 +376,18 @@ export class MyTicketingsComponent implements OnInit {
       this.commonService.openAlert('Error', err.message, 'warning');
     });
   }
+
+  sendMailAndSMS(element, serviceType: string) {
+    this.ticketingService.sendMailAndSMS(element.refNumber, serviceType).subscribe(response => {
+     this.ticketingService = response.data
+     setTimeout(() => {
+      console.log(" ");
+    },1000);
+    }, err => {
+      this.commonService.openAlert('Error', err.message, 'warning');
+    });
+  }
+
 
   /**
 	 * Method is used to print certifacte.
