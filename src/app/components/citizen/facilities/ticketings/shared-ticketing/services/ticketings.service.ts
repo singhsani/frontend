@@ -147,6 +147,11 @@ export class TicketingsService {
     return this.http.get(this.requestURL, 'printReceipt');
   }
 
+  sendMailAndSMS(refNumber: string, serviceType: string) {
+    this.requestURL = `api/${this.moduleName}/zoo/sendMailAndSendSMS/${refNumber}/${serviceType}`;
+    return this.http.get(this.requestURL, 'printReceipt');
+  }
+
   /**
 	 * This method is used to get all Ticketing Data with pagination using API
 	*/
