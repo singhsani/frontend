@@ -432,4 +432,9 @@ export class MyTicketingsComponent implements OnInit {
 
 
   }
+
+  loiPayments(row){
+		this.router.navigate(['/citizen/loi-payments', row.refNumber, row.id, row.resourceCode]);
+  }
+  
 }

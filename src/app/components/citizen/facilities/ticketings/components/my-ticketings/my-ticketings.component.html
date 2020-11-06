@@ -116,6 +116,11 @@
 							{{'receipt_reprint' | translate:translateKey}}
 						</button>
 
+						<button mat-menu-item *ngIf="(element.status === 'SCRUTINY')" color="primary"
+                        (click)="loiPayments(element)">
+                        <mat-icon title="Make Payment" color="primary">print</mat-icon>
+							{{'make_payment' | translate:translateKey}}
+                    	</button>
 
 						<button *ngIf="element.status == ticketingConstants.REJECTED" mat-menu-item data-toggle="modal" color="primary" (click)="openModal(templateRequestModel, element, element.refNumber);">
 							<mat-icon title="View Booking Details" color="primary">details</mat-icon>

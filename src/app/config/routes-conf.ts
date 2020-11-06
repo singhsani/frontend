@@ -461,6 +461,11 @@ const ROUTEMAIN = {
         'main': 'book',
         'type': ''
     },
+    'SARDAR_PATEL_PLANETARIUM': {
+        'main': 'book',
+        'type': ''
+    },
+    
 
     /* hospital routing configuration start*/
     'HOSPITALDASHBOARD': {
