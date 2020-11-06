@@ -13,6 +13,7 @@ const routes: Routes = [
   { path: 'animal-pond', loadChildren: './animal-pond/animal-pond.module#AnimalPondModule', canLoad: [AuthGuard] },
   { path: 'mutton-fish', loadChildren: './mutton-fish/mutton-fish.module#MuttonFishModule', canLoad: [AuthGuard] },
   { path: 'shop-esta', loadChildren: './shop-and-establishment/shop-and-establishment.module#ShopAndEstablishmentModule', canLoad: [AuthGuard] },
+  { path: 'shop-esta-act', loadChildren: './shop-and-establishmentAct/shop-and-establishmentAct.module#ShopAndEstablishmentActModule', canLoad: [AuthGuard] },
   { path: 'food', loadChildren: './food/food.module#FoodModule', canLoad: [AuthGuard] },
 ];
 

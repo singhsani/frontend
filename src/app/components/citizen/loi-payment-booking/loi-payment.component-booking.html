@@ -1,0 +1,82 @@
+<app-title-bar [title]="'LOI Payments' | translate: translateKey">
+</app-title-bar>
+
+
+<mat-card class="formClass cardBorder">
+    <mat-tab-group [(selectedIndex)]="config.currentTabIndex" dynamicHeight="true" mat-stretch-tabs class="stepperNav">
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <div>{{'LOI Details' | translate:translateKey}}</div>
+            </ng-template>
+            <br>
+            <br>
+            <div class="row">
+                <mat-label class="col-md-6" style="padding-left: 50px">Application NO : {{applicationNumber}}
+                </mat-label>
+                <mat-label class="col-md-6">LOI Due Date : {{loiDate}}</mat-label>
+            </div>
+            <br>
+
+            <br>
+
+            <div class="p-15">
+                <div class="pl-1 pr-1 mt-4">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Select</th>
+                                <th>Loi Number</th>
+                                <th>Amount</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of loiRecords">
+                                <th>
+                                    <input type="radio" name="radAnswer" value='{{item.loiNumber}}'
+                                        (change)="onItemChange($event)">
+                                </th>
+                                <td>{{ item.loiNumber }}</td>
+                                <td>{{ item.totalAmount }}</td>
+                                <td>
+                                    <button mat-raised-button color="primary" (click)="makePayment(item.loiNumber)">Payment</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            
+            <div class="p-15" *ngIf='ShowTable'>
+                <div class="pl-1 pr-1 mt-4">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Sr No.</th>
+                                <th>Charge Name</th>
+                                <th>Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of filterData; let i = index">
+                                <th>{{i+1}}</th>
+                                <td>{{ item.feeName }}</td>
+                                <td>{{ item.amount }}</td>
+                            </tr>
+                            <td></td>
+                            <th>Total</th>
+                            <th>{{ sum }}</th>
+                            <tr>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </mat-tab>
+        <!-- step 1 Ends -->
+    </mat-tab-group>
+
+    <select-payment-gateway #paymentGateway></select-payment-gateway>
+
+</mat-card>

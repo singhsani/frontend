@@ -463,7 +463,7 @@ const ROUTEMAIN = {
     },
     'SARDAR_PATEL_PLANETARIUM': {
         'main': 'book',
-        'type': ''
+        'type': 'planetrium'
     },
     
 
@@ -565,7 +565,7 @@ const ROUTEPREFIX = {
     /** start - citizen innner-licences modules routes configuretion */
     'ANIMALPONDMODULE': 'animal-pond',
     'MUTTONFISHMODULE': 'mutton-fish',
-    'SHOPANDESTAMODULE': 'shop-esta',
+    'SHOPANDESTAMODULE': 'shop-esta-act',
     'FOODMODULE': 'food',
     /** end - citizen innner-licences modules routes configuretion */
 

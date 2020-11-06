@@ -20,6 +20,9 @@ import { GujPocComponent } from './guj-poc/guj-poc.component';
 import { PayableServicesComponent } from './payable-services/payable-services.component';
 import { CommonPaybleComponent } from './common-payble/common-payble.component';
 import { LoiPaymentComponent } from './loi-payment/loi-payment.component';
+import { LoiPaymentComponentBooking } from './loi-payment-booking/loi-payment.component-booking';
+import { SharedTicketingModule } from './facilities/ticketings/shared-ticketing/shared-ticketing.module';
+
 /* Import citizen components end */
 
 
@@ -27,6 +30,7 @@ import { LoiPaymentComponent } from './loi-payment/loi-payment.component';
 	imports: [
 		CommonModule,
 		SharedModule,
+		SharedTicketingModule,
 		CoreModule,
 		FormsModule,
 		ReactiveFormsModule,
@@ -47,7 +51,8 @@ import { LoiPaymentComponent } from './loi-payment/loi-payment.component';
 		GujPocComponent,
 		PayableServicesComponent,
 		CommonPaybleComponent,
-		LoiPaymentComponent
+		LoiPaymentComponent,
+		LoiPaymentComponentBooking
 		
 	]
 })
