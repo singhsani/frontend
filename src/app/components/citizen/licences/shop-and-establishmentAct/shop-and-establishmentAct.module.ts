@@ -1,0 +1,40 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Routes, RouterModule } from '@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+/* Import all shared, core and routing module start */
+import { ManageRoutes } from '../../../../config/routes-conf';
+import { SharedModule } from '../../../../shared/shared.module';
+import { CoreModule } from '../../../../core/core.module';
+
+import { ShopLicNewComponent } from './shop-lic-new/shop-lic-new.component';
+
+
+
+
+import { ShopAndEstablishmentService } from './common/services/shop-and-establishment.service';
+import { FilterAttachmentPipe } from './common/pipes/filter-attachment.pipe';
+/* Import all shared, core and routing module end */
+
+const routes: Routes = [
+  { path: '', redirectTo: 'shopLicense', pathMatch: 'full' },
+  { path: 'shopLicense/:id/:apiCode', component: ShopLicNewComponent }
+];
+
+@NgModule({
+  imports: [
+    CommonModule,
+    SharedModule,
+    CoreModule,
+    FormsModule,
+    ReactiveFormsModule,
+    RouterModule.forChild(routes)
+  ],
+  declarations: [
+    ShopLicNewComponent,
+    FilterAttachmentPipe],
+
+  providers: [ShopAndEstablishmentService]
+})
+export class ShopAndEstablishmentActModule { }
