@@ -116,7 +116,7 @@
           <mat-form-field class="col-md-6 col-sm-6 col-xs-4">
             <mat-label>{{'visiting_date'| translate: translateKey}}</mat-label>
             <input matInput [min]="startMinDate" [matDatepickerFilter]="disableThursday" [matDatepicker]="zooTicketDatePicker" (dateChange)="changeDateFormat($event)" formControlName="visitingDate"
-              placeholder="DD/MM/YYYY">
+              placeholder="DD/MM/YYYY" required>
             <mat-datepicker-toggle matSuffix [for]="zooTicketDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #zooTicketDatePicker touchUi="true"></mat-datepicker>
             <control-messages [control]="ticketBookingForm.get('visitingDate')">
