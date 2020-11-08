@@ -96,6 +96,11 @@ const ROUTEMAIN = {
         'main': 'shopLicense',
         'type': 'shopLicense'
     },
+    'SHOP-ESTABLISHMENT-LIC-NEW': {
+        'main': 'shopLicense',
+        'type': 'shopLicense'
+    },
+    
     'SHOP-CAN': {
         'main': 'shopLicenseCancellation',
         'type': 'shopLicenseCancellation'
@@ -662,6 +667,9 @@ const ROUTESLIST = {
     },
     'SHOP-LIC': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.LICENCEMODULE + '/' + ROUTEPREFIX.SHOPANDESTAMODULE + '/' + ROUTEMAIN["SHOP-LIC"].main
+    },
+    'SHOP-ESTABLISHMENT-LIC-NEW': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.LICENCEMODULE + '/' + ROUTEPREFIX.SHOPANDESTAMODULE + '/' + ROUTEMAIN["SHOP-ESTABLISHMENT-LIC-NEW"].main
     },
     'SHOP-CAN': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.LICENCEMODULE + '/' + ROUTEPREFIX.SHOPANDESTAMODULE + '/' + ROUTEMAIN["SHOP-CAN"].main

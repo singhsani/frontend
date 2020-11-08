@@ -29,6 +29,8 @@ export class ShopLicNewComponent implements OnInit {
 	formId: number;
 	apiCode: string;
 
+	isGuideLineActive: boolean = false;
+
 	disablefutureDate = new Date(moment().format('YYYY-MM-DD'));
 
 	//Lookup Array
@@ -85,6 +87,7 @@ export class ShopLicNewComponent implements OnInit {
 			this.router.navigate([ManageRoutes.getFullRoute('CITIZENDASHBOARD')]);
 		}
 		else {
+			this.isGuideLineActive = true;
 			this.getShopLicNewData();
 			this.getLookupData();
 			this.shopLicNewFormControls();
@@ -153,7 +156,7 @@ export class ShopLicNewComponent implements OnInit {
 	shopLicNewFormControls() {
 		this.shopLicNewForm = this.fb.group({
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
-			serviceCode: 'SHOP-LIC',
+			serviceCode: 'SHOP-ESTABLISHMENT-LIC-NEW',
 			periodFrom: null,
 			periodTo: null,
 			newRegistration: null,
@@ -323,7 +326,7 @@ export class ShopLicNewComponent implements OnInit {
 			email: [data.email ? data.email : null],
 			aadhaarNo: [data.aadhaarNo ? data.aadhaarNo : null], */
 			address: [data.address ? data.address : null, [Validators.required, Validators.maxLength(150)]],
-			serviceCode: "SHOP-LIC",
+			serviceCode: "SHOP-ESTABLISHMENT-LIC-NEW",
 			relationship: this.fb.group({
 				//code: [data.relationship ? (data.relationship.code ? data.relationship.code : null) : null]//
 				code: [data.relationship ? (data.relationship.code ? data.relationship.code : null) : null, [Validators.required]],
@@ -819,7 +822,7 @@ export class ShopLicNewComponent implements OnInit {
 			
 			"name": "sdfsdf",
 			"address": "sdfsdfsdf",
-			"serviceCode": "SHOP-LIC",
+			"serviceCode": "SHOP-ESTABLISHMENT-LIC-NEW",
 			"relationship": {
 			  "code": "SHOP_LIC_PARTNER"
 			},
@@ -841,7 +844,7 @@ export class ShopLicNewComponent implements OnInit {
 		   
 			"name": "fdsfsd",
 			"address": "fdsfsdf",
-			"serviceCode": "SHOP-LIC",
+			"serviceCode": "SHOP-ESTABLISHMENT-LIC-NEW",
 			"relationship": {
 			  "code": "SHOP_LIC_EMPLOYEES_RESIDENT"
 			},
@@ -866,7 +869,7 @@ export class ShopLicNewComponent implements OnInit {
 			
 			"name": "dsfsdfsdf",
 			"address": "sdfsdfsdf",
-			"serviceCode": "SHOP-LIC",
+			"serviceCode": "SHOP-ESTABLISHMENT-LIC-NEW",
 			"relationship": {
 			  "code": "SHOP_LIC_COMPANY"
 			},
@@ -909,7 +912,7 @@ export class ShopLicNewComponent implements OnInit {
 		"contactNo": "9673475273",
 		"email": "shantanu.sangewar@nascentinfo.com",
 		"serviceDetail": {
-		  "code": "SHOP-LIC",
+		  "code": "SHOP-ESTABLISHMENT-LIC-NEW",
 		  "name": "Issue of New License",
 		  "gujName": "નવા લાયસન્સનો ઇશ્યૂ",
 		  "feesOnScrutiny": true,

@@ -100,7 +100,7 @@ describe('ShopLicNewComponent', () => {
   it('Shop new licence should be valid', async () => {
     component.shopLicNewForm.patchValue({
       apiType: "shopLicense",
-      serviceCode: "SHOP-LIC",
+      serviceCode: "SHOP-ESTABLISHMENT-LIC-NEW",
       establishmentName: "krishna",
       establishmentNameGuj: "ક્રિશ્ન",
       postalAddress: {
@@ -179,7 +179,7 @@ describe('ShopLicNewComponent', () => {
         id: 158,
         name: "employee",
         address: "address",
-        serviceCode: "SHOP-LIC",
+        serviceCode: "SHOP-ESTABLISHMENT-LIC-NEW",
         relationship: {
           code: "SHOP_LIC_PARTNER"
         },
@@ -200,7 +200,7 @@ describe('ShopLicNewComponent', () => {
         id: 157,
         name: "person occupying name",
         address: "address",
-        serviceCode: "SHOP-LIC",
+        serviceCode: "SHOP-ESTABLISHMENT-LIC-NEW",
         relationship: {
           code: "SHOP_LIC_EMPLOYEES_RESIDENT"
         },
@@ -224,7 +224,7 @@ describe('ShopLicNewComponent', () => {
         id: 156,
         name: "partner",
         address: "partner address",
-        serviceCode: "SHOP-LIC",
+        serviceCode: "SHOP-ESTABLISHMENT-LIC-NEW",
         relationship: {
           code: "SHO_LIC_CEO"
         },
@@ -271,7 +271,7 @@ describe('ShopLicNewComponent', () => {
       contactNo: null,
       email: null,
       serviceDetail: {
-        code: "SHOP-LIC",
+        code: "SHOP-ESTABLISHMENT-LIC-NEW",
         name: "Issue of New License",
         gujName: "નવા લાયસન્સનો ઇશ્યૂ",
         feesOnScrutiny: true
