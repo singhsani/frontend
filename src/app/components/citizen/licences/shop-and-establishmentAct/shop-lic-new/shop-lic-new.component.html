@@ -4,7 +4,13 @@
 	</button>
 </app-title-bar>
 
-<mat-card class="formClass cardBorder">
+<div *ngIf="isGuideLineActive">
+	<app-guidelines [isGuileLineActive]="isGuideLineActive" [moreListMsg]="moreListMsg" [listMessage]="listMessage"
+		[message]="message" (hideGuideLine)="$event?isGuideLineActive = false : isGuideLineActive = true">
+	</app-guidelines>
+</div>
+
+<mat-card class="formClass cardBorder" [hidden]="isGuideLineActive">
 	<form [formGroup]="shopLicNewForm">
 		<mat-tab-group [(selectedIndex)]="licenseConfiguration.currentTabIndex" dynamicHeight="true" mat-stretch-tabs
 			class="stepperNav">
