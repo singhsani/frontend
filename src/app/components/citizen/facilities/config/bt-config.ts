@@ -12,7 +12,7 @@ import { ToastrService } from "ngx-toastr";
 
 // const toWords = new ToWords();
 
-let toWords ;
+//let toWords ;
 
 export class BTConstants {
     static DRAFT = "DRAFT";
@@ -74,7 +74,8 @@ export class BTConfig extends CitizenConfig {
 
         let payData = this.storePaymentInfo(err.error.data, redirectURLAfterPayment, btService.resourceType);
        
-        let words = toWords.convert(payData.amount);
+        let words = '';
+        //toWords.convert(payData.amount);
         let html =
             `
                 <div class="text-center">
@@ -128,7 +129,8 @@ export class BTConfig extends CitizenConfig {
 
         let payData = this.storePaymentInfo(err.error.data, redirectURLAfterPayment, btService.resourceType);
 
-        let words = toWords.convert(payData.amount);
+        let words = '';
+        //toWords.convert(payData.amount);
         let html =
             `
                 <div class="text-center">
