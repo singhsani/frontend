@@ -12,7 +12,7 @@ import { ToastrService } from "ngx-toastr";
 
 // const toWords = new ToWords();
 
-let towards ;
+let toWords ;
 
 export class BTConstants {
     static DRAFT = "DRAFT";
