@@ -8,9 +8,11 @@ import { TicketingsService } from "../ticketings/shared-ticketing/services/ticke
 import { SessionStorageService } from "angular-web-storage";
 import { FormsActionsService } from "src/app/core/services/citizen/data-services/forms-actions.service";
 import { ToastrService } from "ngx-toastr";
-import { ToWords } from 'to-words';
+// import { ToWords } from 'to-words';
 
-const toWords = new ToWords();
+// const toWords = new ToWords();
+
+let towards ;
 
 export class BTConstants {
     static DRAFT = "DRAFT";
