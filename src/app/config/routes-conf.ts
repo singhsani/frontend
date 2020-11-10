@@ -97,8 +97,8 @@ const ROUTEMAIN = {
         'type': 'shopLicense'
     },
     'SHOP-ESTABLISHMENT-LIC-NEW': {
-        'main': 'shopLicense',
-        'type': 'shopLicense'
+        'main': 'shop',
+        'type': 'shop'
     },
     
     'SHOP-CAN': {

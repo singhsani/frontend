@@ -169,7 +169,13 @@ export class ActionBarComponent implements OnInit, OnChanges {
 			}
 		}
 
+		for (const field in this.form.controls) { // 'field' is a string
+		if (!this.form.get(field).valid) {
+			console.log(field);
+			}; // 'control' is a FormControl  
 
+		}
+		
 		if (this.form.valid) {
 
 			// if((this.form.get('apiType').value == "shopLicense" || this.form.get('apiType').value == 'shopRenwalLic') && !this.form.get('agree').value){
@@ -177,6 +183,8 @@ export class ActionBarComponent implements OnInit, OnChanges {
 			// 	this.isSubmitBtnDisabled = false;
 			// 	return;
 			// }
+
+			
 
 			this.mandatoryFileCheck().then(data => {
 				if (data.status) {

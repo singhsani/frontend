@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ManageRoutes } from './../../../../../config/routes-conf';
@@ -41,6 +41,8 @@ export class ShopLicNewComponent implements OnInit {
 	SHOP_LIC_TYPE_OF_ORGANIZATION: Array<any> = [];
 	YES_NO: Array<any> = [];
 	businessCategory: Array<any> = [];
+	businessNature: Array<any> = [];
+	
 	businessSubCategory: Array<any> = [];
 	wardNo: Array<any> = [];
 	SHOP_LIC_HOLIDAY: Array<any> = [];
@@ -64,6 +66,7 @@ export class ShopLicNewComponent implements OnInit {
 	constructor(
 		private fb: FormBuilder,
 		private validationService: ValidationService,
+		private CD: ChangeDetectorRef,
 		private router: Router,
 		private route: ActivatedRoute,
 		private formService: FormsActionsService,
@@ -87,6 +90,7 @@ export class ShopLicNewComponent implements OnInit {
 			this.router.navigate([ManageRoutes.getFullRoute('CITIZENDASHBOARD')]);
 		}
 		else {
+			
 			this.isGuideLineActive = true;
 			this.getShopLicNewData();
 			this.getLookupData();
@@ -98,26 +102,27 @@ export class ShopLicNewComponent implements OnInit {
 	 * Method is used to get form data
 	 */
 	getShopLicNewData() {
+		
 		this.formService.getFormData(this.formId).subscribe(res => {
 			try {
 				this.shopLicNewForm.patchValue(res);
 				this.licenseConfiguration.isAttachmentButtonsVisible = true;
-				res.employerFamilyList.forEach(app => {
-					(<FormArray>this.shopLicNewForm.get('employerFamilyList')).push(this.createArray(app));
+				res.shopPersonList.forEach(app => {
+					(<FormArray>this.shopLicNewForm.get('shopPersonList')).push(this.createArray(app));
 				});
-				res.occupancyList.forEach(app => {
-					(<FormArray>this.shopLicNewForm.get('occupancyList')).push(this.createArray(app));
+				res.workerCounts.forEach(app => {
+					(<FormArray>this.shopLicNewForm.get('workerCounts')).push(this.createArrayWorkOut(app));
 				});
-				res.partnerList.forEach(app => {
-					(<FormArray>this.shopLicNewForm.get('partnerList')).push(this.createArray(app));
-				});
+				// res.partnerList.forEach(app => {
+				// 	(<FormArray>this.shopLicNewForm.get('partnerList')).push(this.createArray(app));
+				// });
 				/* res.employeeList.forEach(app => {
 					(<FormArray>this.shopLicNewForm.get('employeeList')).push(this.createArray(app));
 				}); */
-				this.getCategoryDropdownData(this.shopLicNewForm.get('noOfHumanWorking').value.code);
-				this.getSubCategoryDropdownData(this.shopLicNewForm.get('categoryOfBusiness').value.code);
+				
+				this.getSubCategoryDropdownData(this.shopLicNewForm.get('establishmentCategory').value.code);
 
-
+				
                 this.serverUploadFilesArray = res.serviceDetail.serviceUploadDocuments;
 				res.serviceDetail.serviceUploadDocuments.forEach(app => {
 					(<FormArray>this.shopLicNewForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.licenseConfiguration.createDocumentsGrp(app));
@@ -136,12 +141,14 @@ export class ShopLicNewComponent implements OnInit {
 	*/
 	getLookupData() {
 		this.formService.getDataFromLookups().subscribe(res => {
+			
 			this.SHOP_LIC_EMPLOYER_FAMILY_PERSON_RELATIONSHIP = res.SHOP_LIC_EMPLOYER_FAMILY_PERSON_RELATIONSHIP;
 			this.SHOP_LIC_OCCUPANCY_PERSON_RELATIONSHIP = res.SHOP_LIC_OCCUPANCY_PERSON_RELATIONSHIP;
 			this.SHOP_LIC_PARTNER_PERSON_RELATIONSHIP = res.SHOP_LIC_PARTNER_PERSON_RELATIONSHIP;
 
-			this.SHOP_LIC_TYPE_OF_ORGANIZATION = res.SHOP_LIC_TYPE_OF_ORGANIZATION;
-
+			this.SHOP_LIC_TYPE_OF_ORGANIZATION = res.SHOP_ESTABLISHMENT_ORGANIZATION_TYPE;
+			this.businessCategory = res.SHOP_ESTABLISHMENT_CATEGORY;
+			this.businessNature = res.SHOP_NATURE_OF_BUSINESS;
 			this.YES_NO = res.YES_NO;
 			this.wardNo = res.SHOP_LIC_WARD_NO;
 			this.gender = res.GENDER;
@@ -165,40 +172,24 @@ export class ShopLicNewComponent implements OnInit {
 			netAmount: null,
 			/* Step 1 controls start */
 			establishmentName: [null, [Validators.required, Validators.maxLength(150)]],//count=4
-			establishmentNameGuj: [null, [Validators.required, Validators.maxLength(450)]],
 			postalAddress: this.fb.group(this.postalAddressEstablishment.addressControls()),
-			noOfHumanWorking: this.fb.group({
-				code: [null, Validators.required],
-				name: null,
-			}),
-			assessmentDoneByVMC: this.fb.group({
-				code: [null, Validators.required],
-				name: null,
-			}),
-			propertyTaxNo: [null, [Validators.required, Validators.maxLength(13), Validators.minLength(13)]],
-			wardNo: this.fb.group({
-				code: [null, Validators.required],
-				name: null,
-			}),
-			aadharNumber: ['', Validators.maxLength(12)],
-			professionalTaxPECNo: ['', Validators.maxLength(20)],
-			prcNo: ['', Validators.maxLength(20)],
-			applicantVimaAmountPaid: this.fb.group({
-				code: null,
-				name: null,
-			}),
+			
+			
 			number: null,
-			situationOfOffice: [null, [Validators.required, Validators.maxLength(100)]],
+			otherAddresses: [null, [Validators.required, Validators.maxLength(100)]],
 			/* Step 1 controls end */
 
 			/* Step 2 controls start */
 			nameOfEmployer: [null, [Validators.required, Validators.maxLength(100)]],
-			nameOfEmployerGuj: [null, [Validators.required, Validators.maxLength(300)]],
+			situationOfEstablishment: [null, [Validators.maxLength(100)]],
+			employerDesignation: [null, [Validators.required, Validators.maxLength(100)]],
+			employerMobileNumber: [null, [Validators.required, Validators.maxLength(100)]],
+			employerEmailId: [null, [Validators.required, Validators.maxLength(100)]],
 			residentialAddressOfEmployer: [null, [Validators.required, Validators.maxLength(500)]],
-			residentialAddressOfEmployerGuj: [null, [Validators.required, Validators.maxLength(1500)]],
-			nameOfManager: [null, [Validators.required, Validators.maxLength(60)]],
-			residentialAddressOfManager: [null, [Validators.required, Validators.maxLength(500)]],
-			categoryOfBusiness: this.fb.group({
+			
+			//nameOfManager: [null, [Validators.required, Validators.maxLength(60)]],
+			//residentialAddressOfManager: [null, [Validators.maxLength(500)]],
+			establishmentCategory: this.fb.group({
 				code: [null, Validators.required],
 				name: null,
 			}),
@@ -206,67 +197,36 @@ export class ShopLicNewComponent implements OnInit {
 				code: [null, Validators.required],
 				name: null,
 			}),
-			nameOfBusiness: [null, [Validators.required, Validators.maxLength(200)]],
-			nameOfBusinessGuj: [null, [Validators.required, Validators.maxLength(600)]],
-			commencementOfBusinessDate: [null, Validators.required],
-			enterHoliday: this.fb.group({
-				code: [null, Validators.required]
+			natureOfBusiness: this.fb.group({
+				code: [null, Validators.required],
+				name: null,
 			}),
+			commencementOfBusinessDate: [null, Validators.required],
+			
 			/* Step 2 controls end */
 
 
 			/* Step 3 controls start */
-			employerFamilyList: this.fb.array([]),
+			shopPersonList: this.fb.array([]),
 
-			totalAdultEmployerFamily: null,
-			totalYoungEmployerFamily: null,
-			totalManEmployerFamily: null,
-			totalWomenEmployerFamily: null,
-			totalUnidentifiedEmployerFamily: null,
-			totalFamilyMembers: null,
 			/* Step 3 controls end */
 
 
 			/* Step 4 controls start */
-			occupancyList: this.fb.array([]),
-			totalAdultOccupancy: null,
-			totalYoungOccupancy: null,
-			totalManOccupancy: null,
-			totalWomenOccupancy: null,
-			totalUnidentifiedOccupancy: null,
-			totalOccupancy: null,
+			workerCounts: this.fb.array([]),
+			
 			/* Step 4 controls end */
 
 
 			/* Step 5 controls start */
-			typeOfOrganisation: this.fb.group({
+			organizationType: this.fb.group({
 				code: [null, Validators.required]
 			}),
-			partnerList: this.fb.array([]),
+			
 
-			totalAdultPartner: null,
-			totalYoungPartner: null,
-			totalManPartner: null,
-			totalWomenPartner: null,
-			totalUnidentifiedPartner: null,
-			totalPartner: null,
+			
 
 			/* Step 5 controls end */
-
-			/* Step 6 controls start */
-			//employeeList: this.fb.array([]),
-			totalAdultEmployee: [null, Validators.required],
-			totalYoungEmployee: [null, Validators.required],
-			totalManEmployee: [null, Validators.required],
-			totalWomenEmployee: [null, Validators.required],
-			totalUnidentified: null,
-			totalEmployee: [null, Validators.required],
-			/* Step 6 controls end */
-
-			// situationOfOfficeGuj: null,
-			// nameOfManagerGuj: null,
-			// residentialAddressOfManagerGuj: null,
-			//enterHolidayGuj: null,
 
 			/*  */
 			attachments: [''],
@@ -282,8 +242,9 @@ export class ShopLicNewComponent implements OnInit {
 	 * Method is create required document array
 	 */
 	requiredDocumentList() {
+		
 		this.uploadFilesArray = [];
-		let organizationCategory = this.shopLicNewForm.get('typeOfOrganisation').value.code;
+		let organizationCategory = this.shopLicNewForm.get('organizationType').value.code;
 		if (organizationCategory) {
 			_.forEach(this.shopLicNewForm.get('serviceDetail').get('serviceUploadDocuments').value, (value) => {
 
@@ -311,33 +272,35 @@ export class ShopLicNewComponent implements OnInit {
 	}
 
 
+	createArrayWorkOut(data?: any): FormGroup {
+		return this.fb.group({
+			id: data.id ? data.id : null,
+			noOfMen: [data.noOfMen ? data.noOfMen : null, [Validators.required]],
+			noOfWomen: [data.noOfWomen ? data.noOfWomen : null, [Validators.required]],
+			workerType: [data.relationship ? data.relationship : null, [Validators.required, Validators.maxLength(100)]],
+			total: [data.total ? data.total : null, [Validators.required]],			
+		})
+
+	}
+
 	/**
 	 * Method is used to return array
 	 * @param data : person data array 
 	 * @param persontype : person array type 
 	 */
 	createArray(data?: any): FormGroup {
-
 		return this.fb.group({
-			serviceFormId: this.formId,
 			id: data.id ? data.id : null,
 			name: [data.name ? data.name : null, [Validators.required, Validators.maxLength(100)]],
-			/* contactNo: [data.contactNo ? data.contactNo : null],
-			email: [data.email ? data.email : null],
-			aadhaarNo: [data.aadhaarNo ? data.aadhaarNo : null], */
 			address: [data.address ? data.address : null, [Validators.required, Validators.maxLength(150)]],
-			serviceCode: "SHOP-ESTABLISHMENT-LIC-NEW",
-			relationship: this.fb.group({
-				//code: [data.relationship ? (data.relationship.code ? data.relationship.code : null) : null]//
-				code: [data.relationship ? (data.relationship.code ? data.relationship.code : null) : null, [Validators.required]],
-			}),
+			relationship: [data.relationship ? data.relationship : null, [Validators.required, Validators.maxLength(100)]],
 			gender: this.fb.group({
 				//code: [data.gender ? (data.gender.code ? data.gender.code : null) : null]
 				code: [data.gender ? (data.gender.code ? data.gender.code : null) : null, [Validators.required]],
 			}),
-			age: [data.age ? data.age : null, [Validators.required, ValidationService.employeeAgeValidate]],
+			mobileNo: [data.mobileNo ? data.mobileNo : null, [Validators.required]],
 			// employee: [data.employee ? data.employee : null],
-			personType: [data.personType ? data.personType : null]
+			emailId: [data.emailId ? data.emailId : null, [Validators.required]],
 		})
 
 	}
@@ -350,14 +313,12 @@ export class ShopLicNewComponent implements OnInit {
 		let returnArray: any;
 		switch (persontype) {
 			case 'EMPLOYER_FAMILY':
-				returnArray = this.shopLicNewForm.get('employerFamilyList') as FormArray;
+				returnArray = this.shopLicNewForm.get('shopPersonList') as FormArray;
 				break;
 			case 'OCCUPANCY':
-				returnArray = this.shopLicNewForm.get('occupancyList') as FormArray;
+				returnArray = this.shopLicNewForm.get('workerCounts') as FormArray;
 				break;
-			case 'PARTNER':
-				returnArray = this.shopLicNewForm.get('partnerList') as FormArray;
-				break;
+			
 			/* case 'EMPLOYEES':
 				returnArray= this.shopLicNewForm.get('employeeList') as FormArray;
 			break; */
@@ -383,20 +344,29 @@ export class ShopLicNewComponent implements OnInit {
 				return false;
 			}
 			if (persontype === "PARTNER") {
-				if (this.shopLicNewForm.get('typeOfOrganisation').value.code === 'SHOP_LIC_SELF_OWNERSHIP' && this.addItem(persontype).controls.length >= 1) {
+				if (this.shopLicNewForm.get('organizationType').value.code === 'SHOP_LIC_SELF_OWNERSHIP' && this.addItem(persontype).controls.length >= 1) {
 					this.toastrService.warning("You can add only one partner becouse you are self ownership");
 					return false;
 				}
-				if (this.shopLicNewForm.get('typeOfOrganisation').value.code != 'SHOP_LIC_SELF_OWNERSHIP' && this.addItem(persontype).controls.length >= 10) {
+				if (this.shopLicNewForm.get('organizationType').value.code != 'SHOP_LIC_SELF_OWNERSHIP' && this.addItem(persontype).controls.length >= 10) {
 					this.toastrService.warning("Parners not allowed more than 10");
 					return false;
 				}
 			}
-
-			this.addItem(persontype).push(this.createArray({
-				personType: persontype
-			}));
-			// this.shopLicNewForm.get('employerFamilyList').setValidators([Validators.required]);
+			
+			if(persontype === "OCCUPANCY"){
+				this.addItem(persontype).push(this.createArrayWorkOut({
+					personType: persontype
+				}));
+			}else{
+				this.addItem(persontype).push(this.createArray({
+					personType: persontype
+				}));
+			}
+			
+			this.shopLicNewForm.get('workerCounts').clearValidators();
+			 this.shopLicNewForm.get('shopPersonList').clearValidators();
+			 this.CD.detectChanges();
 			let newlyadded = this.addItem(persontype).controls;
 			if (newlyadded.length) {
 				this.editRecord((newlyadded[newlyadded.length - 1]));
@@ -546,15 +516,7 @@ export class ShopLicNewComponent implements OnInit {
 		return lookups.find((obj: any) => obj.code === code);
 	}
 
-	/**
-	* Method is used when get business category dropdown data
-	* @event is value is "YES" , "NO" and null
-	*/
-	getCategoryDropdownData(event) {
-		this.shopAndEstablishmentService.getCategoryByFilter(event).subscribe(res => {
-			this.businessCategory = res;
-		})
-	}
+	
 	/**
 	* Method is used when get business sub category dropdown data
 	* @event is value fro category dropdown
@@ -571,9 +533,9 @@ export class ShopLicNewComponent implements OnInit {
 	*/
 	onChangeNoOfHumanWorking(event) {
 		try {
-			this.shopLicNewForm.get('categoryOfBusiness').reset();
+			this.shopLicNewForm.get('establishmentCategory').reset();
 			this.shopLicNewForm.get('subCategoryOfBusiness').reset();
-			this.getCategoryDropdownData(event);
+			
 		} catch (error) {
 			console.log(error.message)
 		}
@@ -600,8 +562,8 @@ export class ShopLicNewComponent implements OnInit {
 
 		try {
 			this.updateServiceUploadDocument(event);
-			(<FormArray>this.shopLicNewForm.get('partnerList')).controls = [];
-			this.shopLicNewForm.get('partnerList').setValue([]);
+			
+			
 			this.shopLicNewForm.get('attachments').setValue([]);
 			if (event == "SHOP_LIC_SELF_OWNERSHIP") {
 				// remove all controll becose if dropdown value is "SHOP_LIC_SELF_OWNERSHIP" then user add only one record.
@@ -618,7 +580,7 @@ export class ShopLicNewComponent implements OnInit {
 						this.shopLicNewForm.get('attachments').setValue(setNewAttachData);
 					}
 					break;
-				case 'SHOP_LIC_PARTNERSHIP':
+				case 'PARTNERSHIP':
 				case 'SHOP_LIC_CO_OPERATIVE_SOCIETY':
 					if (categoryAttachment && categoryAttachment.length) {
 						let setNewAttachData = categoryAttachment.filter(attachObj => attachObj.labelName != "OrganizationRentalAgreement" && attachObj.labelName != "SaleOrPurchaseDeed");
@@ -796,18 +758,18 @@ export class ShopLicNewComponent implements OnInit {
 		  "name": "Yes"
 		},
 		"number": '1111111111',
-		"situationOfOffice": "fsdfsdfsdfsdf",
+		"otherAddresses": "fsdfsdfsdfsdf",
 		"nameOfEmployer": "sdfsdfsdfsdf",
 		"nameOfEmployerGuj": "સ્દ્ફ્સ્દ્ફ્સ્દ્ફ્સ્દ્ફ",
 		"residentialAddressOfEmployer": "dsfdsfsdf",
 		"residentialAddressOfEmployerGuj": "દ્સ્ફ્દ્સ્ફ્સ્દ્ફ",
 		"nameOfManager": "dsfsdfdsf",
 		"residentialAddressOfManager": "dfdsfsdf",
-		"categoryOfBusiness": {
+		"establishmentCategory": {
 		  "code": "COMMERCIAL_ESTABLISHMENT_MORE_THEN_TEN",
 		  "name": "Commercial Establishment employing Ten or More Employees"
 		},
-		"subCategoryOfBusiness": {
+		"subestablishmentCategory": {
 		  "code": "SHOP_LIC_B_OFFICES_OTHERS",
 		  "name": "Offices Others"
 		},
@@ -817,7 +779,7 @@ export class ShopLicNewComponent implements OnInit {
 		"enterHoliday": {
 		  "code": "SHOP_LIC_MONDAY"
 		},
-		"employerFamilyList": [
+		"shopPersonList": [
 		  {
 			
 			"name": "sdfsdf",
@@ -861,7 +823,7 @@ export class ShopLicNewComponent implements OnInit {
 		"totalWomenOccupancy": 0,
 		"totalUnidentifiedOccupancy": 0,
 		"totalOccupancy": 1,
-		"typeOfOrganisation": {
+		"organizationType": {
 		  "code": "SHOP_LIC_SELF_OWNERSHIP"
 		},
 		"partnerList": [
@@ -925,11 +887,11 @@ export class ShopLicNewComponent implements OnInit {
 		for (let i = array.length - 1; i >= 0; i--) {
 			array.removeAt(i)
 		}
-
+		
 		switch (event) {
 			case 'SHOP_LIC_COMPANY':
 			case 'SHOP_LIC_TRUST':
-			case 'SHOP_LIC_PARTNERSHIP':
+			case 'PARTNERSHIP':
 			case 'SHOP_LIC_BOARD':
 				const localUploadArray = [...this.serverUploadFilesArray]
 				for (let file of localUploadArray) {

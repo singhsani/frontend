@@ -18,8 +18,8 @@ import { FilterAttachmentPipe } from './common/pipes/filter-attachment.pipe';
 /* Import all shared, core and routing module end */
 
 const routes: Routes = [
-  { path: '', redirectTo: 'shopLicense', pathMatch: 'full' },
-  { path: 'shopLicense/:id/:apiCode', component: ShopLicNewComponent }
+  { path: '', redirectTo: 'shop', pathMatch: 'full' },
+  { path: 'shop/:id/:apiCode', component: ShopLicNewComponent }
 ];
 
 @NgModule({
