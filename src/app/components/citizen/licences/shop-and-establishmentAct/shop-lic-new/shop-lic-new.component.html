@@ -5,9 +5,21 @@
 </app-title-bar>
 
 <div *ngIf="isGuideLineActive">
-	<app-guidelines [isGuileLineActive]="isGuideLineActive" [moreListMsg]="moreListMsg" [listMessage]="listMessage"
-		[message]="message" (hideGuideLine)="$event?isGuideLineActive = false : isGuideLineActive = true">
-	</app-guidelines>
+	<mat-radio-group class="example-radio-group" (change)="changeRegiType($event)">
+		<mat-radio-button class="example-radio-button" *ngFor="let season of regiTyep" [value]="season">
+		  {{season}}
+		</mat-radio-button>
+	  </mat-radio-group>
+
+	  <div class="fotButtonBar">
+		<div class="col-sm-12 col-md-12 text-right">
+			<button [disabled]="isDisabledBtn"  mat-raised-button color="primary" type="button" (click)="hideGuideLine(false)">
+				<mat-icon>thumb_up_alt</mat-icon>
+				{{'proceed'| translate: translateKey}}
+			</button>
+		</div>
+	</div>
+	
 </div>
 
 <mat-card class="formClass cardBorder" [hidden]="isGuideLineActive">
@@ -25,13 +37,17 @@
 					<mat-form-field class="col-md-4">
 						<input matInput required maxlength="150"
 							placeholder="{{'name_of_establishment_if_any' | translate:translateKey}}"
-							formControlName="establishmentName" appGujInputSource targetElement="establishmentNameGuj"
+							formControlName="establishmentName" appGujInputSource 
 							[form]="shopLicNewForm">
 						<control-messages [control]="shopLicNewForm.get('establishmentName')"></control-messages>
 					</mat-form-field>
 
-					
-
+					<mat-form-field *ngIf="isIntimation" class="col-md-4">
+						<input matInput  maxlength="150"
+							placeholder="{{'Previous Registration Number' | translate:translateKey}}"
+							formControlName="previousRegistrationNo" appGujInputSource 
+							[form]="shopLicNewForm">
+					</mat-form-field>
 
 					<h2>{{'postal_address_of_establishment' | translate:translateKey}}</h2>
 					<app-address #postalAddressEstablishment [requiredFeilds]="true"
@@ -82,14 +98,6 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-6">
-						<input matInput type="text"  maxlength="100"
-							placeholder="{{'Situation Of Establishment' | translate:translateKey}}"
-							formControlName="situationOfEstablishment" appGujInputSource 
-							[form]="shopLicNewForm" appValidationFields [validationFieldsType]="'onlyNameWithSpace'">
-						<control-messages [control]="shopLicNewForm.get('situationOfEstablishment')"></control-messages>
-					</mat-form-field>
-
-					<mat-form-field class="col-md-6">
 						<input matInput type="text" required maxlength="100"
 							placeholder="Employer Designation"
 							formControlName="employerDesignation" appGujInputSource 
@@ -100,7 +108,7 @@
 					
 
 					<mat-form-field class="col-md-6">
-						<input matInput type="text" required maxlength="500"
+						<input matInput OnlyNumber type="text" required maxlength="10"
 							placeholder="Employer MobileNumber"
 							formControlName="employerMobileNumber" appGujInputSource
 							 [form]="shopLicNewForm">
@@ -112,7 +120,7 @@
 						<input matInput type="text" required maxlength="100"
 							placeholder="Employer EmailId"
 							formControlName="employerEmailId" appGujInputSource 
-							[form]="shopLicNewForm" appValidationFields [validationFieldsType]="'onlyNameWithSpace'">
+							[form]="shopLicNewForm" appValidationFields >
 						<control-messages [control]="shopLicNewForm.get('employerEmailId')"></control-messages>
 					</mat-form-field>
 					
@@ -247,11 +255,11 @@
 
 									<td>
 										<div class="d-md-none">{{'gender' | translate:translateKey}}</div>
-										<div class="ngSelect" formGroupName="gender" required>
+										<div class="ngSelect" formGroupName="gender" required style="min-width:100px">
 											<p class="width80" *ngIf="!item.isEditMode">
 												{{getSelectedDataFromLookUps(gender,item.get('gender').value.code)?.name}}
 											</p>
-											<div class="ngSelect" *ngIf="item.isEditMode">
+											<div class="ngSelect" *ngIf="item.isEditMode"  style="min-width:100px">
 												<ng-select *ngIf="item.isEditMode" formControlName="code">
 													<ng-option *ngFor="let gender of gender" [value]="gender.code">
 														{{gender.name}}</ng-option>
@@ -333,7 +341,7 @@
 						<button type="button" *ngIf="shopLicNewForm.get('canEdit').value"
 							[disabled]="!(shopLicNewForm.get('workerCounts')['controls'].length < 2)"
 							matTooltip="Add More Person Occuping" mat-raised-button color="primary"
-							(click)="addMorePerson('OCCUPANCY')">{{'add' | translate: translateKey}}</button>
+							(click)="addMorePersonwork('OCCUPANCY')">{{'add' | translate: translateKey}}</button>
 					</div>
 				</div>
 
@@ -361,7 +369,7 @@
 										<div class="d-md-none">{{'noOfMen' | translate:translateKey}}</div>
 										<p *ngIf="!item.isEditMode">{{item.get('noOfMen').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
-											<input matInput 
+											<input onlyNumber matInput (change)="calculateWorkers(indx);"
 												 formControlName="noOfMen">
 											<control-messages [control]="item.get('noOfMen')"></control-messages>
 										</mat-form-field>
@@ -371,7 +379,8 @@
 										<div class="d-md-none">{{'noOfWomen' | translate:translateKey}}</div>
 										<p *ngIf="!item.isEditMode">{{item.get('noOfWomen').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
-											<input matInput formControlName="noOfWomen">
+											<input onlyNumber matInput (change)="calculateWorkers(indx);"
+											formControlName="noOfWomen">
 											<control-messages *ngIf="item.isEditMode" [control]="item.get('noOfWomen')">
 											</control-messages>
 										</mat-form-field>
@@ -380,18 +389,21 @@
 									<td>
 										<div class="d-md-none">{{'workerType' | translate:translateKey}}</div>
 										<p *ngIf="!item.isEditMode">{{item.get('workerType').value}}</p>
-										<mat-form-field *ngIf="item.isEditMode">
-											<input matInput formControlName="workerType">
-											<control-messages *ngIf="item.isEditMode" [control]="item.get('workerType')">
+										<div class="ngSelect" *ngIf="item.isEditMode"  style="min-width:100px">
+											<ng-select *ngIf="item.isEditMode" formControlName="workerType">
+												<ng-option *ngFor="let gender of workerType" [value]="gender.code">
+													{{gender.name}}</ng-option>
+											</ng-select>
+											<control-messages [control]="item.get('workerType')">
 											</control-messages>
-										</mat-form-field>
+										</div>
 									</td>
 
 									<td>
 										<div class="d-md-none">{{'total' | translate:translateKey}}</div>
 										<p *ngIf="!item.isEditMode">{{item.get('total').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
-											<input matInput formControlName="total">
+											<input onlyNumber matInput formControlName="total">
 											<control-messages *ngIf="item.isEditMode" [control]="item.get('total')">
 											</control-messages>
 										</mat-form-field>
@@ -456,20 +468,6 @@
 							</control-messages>
 						</div>
 					</div>
-
-					<div class="row">
-						<div class="col-md-10"> 
-							<h2 class="pl-0">{{'details_of_partner_label' | translate: translateKey}}</h2>
-						</div>
-						<div class="col-md-2 pt-3" style="text-align: right;">
-							<button *ngIf="shopLicNewForm.get('canEdit').value"
-								type="button" matTooltip="{{'add_more' | translate: translateKey}}" mat-raised-button
-								color="primary" (click)="addMorePerson('PARTNER')">
-								{{'add' | translate: translateKey }}
-							</button>
-						</div>
-					</div>
-
 					
 				</div>
 

@@ -31,10 +31,21 @@ export class ShopLicNewComponent implements OnInit {
 
 	isGuideLineActive: boolean = false;
 
+	isIntimation : boolean = false;
+
+	isDisabledBtn : boolean = true;
+
+	regiTyep: string[] = ['CERTIFICATION', 'INTIMATION'];
+
 	disablefutureDate = new Date(moment().format('YYYY-MM-DD'));
 
 	//Lookup Array
 	gender: Array<any> = [];
+
+	workerType :Array<any> = [{
+		code : 'WORKERS',
+		name : 'Workers',
+	}];
 	SHOP_LIC_EMPLOYER_FAMILY_PERSON_RELATIONSHIP: Array<any> = [];
 	SHOP_LIC_OCCUPANCY_PERSON_RELATIONSHIP: Array<any> = [];
 	SHOP_LIC_PARTNER_PERSON_RELATIONSHIP: Array<any> = [];
@@ -97,6 +108,30 @@ export class ShopLicNewComponent implements OnInit {
 			this.shopLicNewFormControls();
 		}
 	}
+
+	calculateWorkers(indx){
+		let men =Number(this.shopLicNewForm.get('workerCounts')['controls'][indx].get('noOfMen').value);
+		let woman =Number(this.shopLicNewForm.get('workerCounts')['controls'][indx].get('noOfWomen').value);
+		let total = men + woman;
+		this.shopLicNewForm.get('workerCounts')['controls'][indx].get('total').setValue(total);
+		}
+
+	hideGuideLine(flag : boolean){
+		if(this.shopLicNewForm.get('organizationType').value != null){
+			this.isGuideLineActive = flag;	
+		}
+	}
+
+	changeRegiType(event) {
+		this.isDisabledBtn = false;
+		this.shopLicNewForm.get('registrationType').setValue(event.value);
+		if(event.value == 'CERTIFICATION'){
+			this.isIntimation = false;
+		}else{
+			this.isIntimation = true;
+		}
+		
+	  }
 
 	/**
 	 * Method is used to get form data
@@ -163,14 +198,16 @@ export class ShopLicNewComponent implements OnInit {
 	shopLicNewFormControls() {
 		this.shopLicNewForm = this.fb.group({
 			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
-			serviceCode: 'SHOP-ESTABLISHMENT-LIC-NEW',
+			serviceCode: 'SHOP-ESTAB-LIC-NEW',
 			periodFrom: null,
 			periodTo: null,
 			newRegistration: null,
+			registrationType : null,
 			renewal: null,
 			adminCharges: null,
 			netAmount: null,
 			/* Step 1 controls start */
+			previousRegistrationNo :  [null, [Validators.maxLength(150)]],//count=4
 			establishmentName: [null, [Validators.required, Validators.maxLength(150)]],//count=4
 			postalAddress: this.fb.group(this.postalAddressEstablishment.addressControls()),
 			
@@ -181,10 +218,11 @@ export class ShopLicNewComponent implements OnInit {
 
 			/* Step 2 controls start */
 			nameOfEmployer: [null, [Validators.required, Validators.maxLength(100)]],
-			situationOfEstablishment: [null, [Validators.maxLength(100)]],
+			
 			employerDesignation: [null, [Validators.required, Validators.maxLength(100)]],
 			employerMobileNumber: [null, [Validators.required, Validators.maxLength(100)]],
-			employerEmailId: [null, [Validators.required, Validators.maxLength(100)]],
+			//employerEmailId: [null, [Validators.required, Validators.maxLength(100)]],
+			employerEmailId: [null, [Validators.required, ValidationService.emailValidator]],
 			residentialAddressOfEmployer: [null, [Validators.required, Validators.maxLength(500)]],
 			
 			//nameOfManager: [null, [Validators.required, Validators.maxLength(60)]],
@@ -233,8 +271,8 @@ export class ShopLicNewComponent implements OnInit {
 			agree:[false, Validators.required]
 			/*  */
 		});
-		this.addMorePerson('EMPLOYER_FAMILY');
-		this.addMorePerson('OCCUPANCY');
+		//this.addMorePerson('EMPLOYER_FAMILY');
+		//this.addMorePerson('OCCUPANCY');
 	}
 
 
@@ -277,7 +315,7 @@ export class ShopLicNewComponent implements OnInit {
 			id: data.id ? data.id : null,
 			noOfMen: [data.noOfMen ? data.noOfMen : null, [Validators.required]],
 			noOfWomen: [data.noOfWomen ? data.noOfWomen : null, [Validators.required]],
-			workerType: [data.relationship ? data.relationship : null, [Validators.required, Validators.maxLength(100)]],
+			workerType: [data.workerType ? data.workerType : null, [Validators.required]],
 			total: [data.total ? data.total : null, [Validators.required]],			
 		})
 
@@ -331,28 +369,16 @@ export class ShopLicNewComponent implements OnInit {
 	 * Method is used when user click for add person
 	 * @param persontype : person array type
 	 */
-	addMorePerson(persontype: string) {
 
+	addMorePersonwork(persontype: string){
 		let isEditAnotherRow = this.isTableInEditMode(persontype);
 		if (!isEditAnotherRow) {
-			if (persontype === "EMPLOYER_FAMILY" && this.addItem(persontype).controls.length >= 5) {
-				this.toastrService.warning("Employer family not allowed more than 5");
-				return false;
-			}
+			
 			if (persontype === "OCCUPANCY" && this.addItem(persontype).controls.length >= 2) {
 				this.toastrService.warning("Occuping Person not allowed more than 2");
 				return false;
 			}
-			if (persontype === "PARTNER") {
-				if (this.shopLicNewForm.get('organizationType').value.code === 'SHOP_LIC_SELF_OWNERSHIP' && this.addItem(persontype).controls.length >= 1) {
-					this.toastrService.warning("You can add only one partner becouse you are self ownership");
-					return false;
-				}
-				if (this.shopLicNewForm.get('organizationType').value.code != 'SHOP_LIC_SELF_OWNERSHIP' && this.addItem(persontype).controls.length >= 10) {
-					this.toastrService.warning("Parners not allowed more than 10");
-					return false;
-				}
-			}
+			
 			
 			if(persontype === "OCCUPANCY"){
 				this.addItem(persontype).push(this.createArrayWorkOut({
@@ -365,6 +391,43 @@ export class ShopLicNewComponent implements OnInit {
 			}
 			
 			this.shopLicNewForm.get('workerCounts').clearValidators();
+			
+			 this.CD.detectChanges();
+			let newlyadded = this.addItem(persontype).controls;
+			if (newlyadded.length) {
+				this.editRecord((newlyadded[newlyadded.length - 1]));
+				(newlyadded[newlyadded.length - 1]).newRecordAdded = true;
+			}
+		}
+		else {
+			this.commonService.openAlert("Warning", "You can add new record after save existing record.", "warning");
+		}
+	}
+	addMorePerson(persontype: string) {
+
+		let isEditAnotherRow = this.isTableInEditMode(persontype);
+		if (!isEditAnotherRow) {
+			if (persontype === "EMPLOYER_FAMILY" && this.addItem(persontype).controls.length >= 5) {
+				this.toastrService.warning("Employer family not allowed more than 5");
+				return false;
+			}
+			
+			if (persontype === "PARTNER") {
+				if (this.shopLicNewForm.get('organizationType').value.code === 'SHOP_LIC_SELF_OWNERSHIP' && this.addItem(persontype).controls.length >= 1) {
+					this.toastrService.warning("You can add only one partner becouse you are self ownership");
+					return false;
+				}
+				if (this.shopLicNewForm.get('organizationType').value.code != 'SHOP_LIC_SELF_OWNERSHIP' && this.addItem(persontype).controls.length >= 10) {
+					this.toastrService.warning("Parners not allowed more than 10");
+					return false;
+				}
+			}
+			
+				this.addItem(persontype).push(this.createArray({
+					personType: persontype
+				}));
+				
+			
 			 this.shopLicNewForm.get('shopPersonList').clearValidators();
 			 this.CD.detectChanges();
 			let newlyadded = this.addItem(persontype).controls;
@@ -567,7 +630,7 @@ export class ShopLicNewComponent implements OnInit {
 			this.shopLicNewForm.get('attachments').setValue([]);
 			if (event == "SHOP_LIC_SELF_OWNERSHIP") {
 				// remove all controll becose if dropdown value is "SHOP_LIC_SELF_OWNERSHIP" then user add only one record.
-				this.addMorePerson('PARTNER');
+				//this.addMorePerson('PARTNER');
 			}
 			this.requiredDocumentList();
 			/*let categoryAttachment = this.shopLicNewForm.get('attachments').value;
@@ -784,7 +847,7 @@ export class ShopLicNewComponent implements OnInit {
 			
 			"name": "sdfsdf",
 			"address": "sdfsdfsdf",
-			"serviceCode": "SHOP-ESTABLISHMENT-LIC-NEW",
+			"serviceCode": "SHOP-ESTAB-LIC-NEW",
 			"relationship": {
 			  "code": "SHOP_LIC_PARTNER"
 			},
@@ -806,7 +869,7 @@ export class ShopLicNewComponent implements OnInit {
 		   
 			"name": "fdsfsd",
 			"address": "fdsfsdf",
-			"serviceCode": "SHOP-ESTABLISHMENT-LIC-NEW",
+			"serviceCode": "SHOP-ESTAB-LIC-NEW",
 			"relationship": {
 			  "code": "SHOP_LIC_EMPLOYEES_RESIDENT"
 			},
@@ -831,7 +894,7 @@ export class ShopLicNewComponent implements OnInit {
 			
 			"name": "dsfsdfsdf",
 			"address": "sdfsdfsdf",
-			"serviceCode": "SHOP-ESTABLISHMENT-LIC-NEW",
+			"serviceCode": "SHOP-ESTAB-LIC-NEW",
 			"relationship": {
 			  "code": "SHOP_LIC_COMPANY"
 			},
@@ -874,7 +937,7 @@ export class ShopLicNewComponent implements OnInit {
 		"contactNo": "9673475273",
 		"email": "shantanu.sangewar@nascentinfo.com",
 		"serviceDetail": {
-		  "code": "SHOP-ESTABLISHMENT-LIC-NEW",
+		  "code": "SHOP-ESTAB-LIC-NEW",
 		  "name": "Issue of New License",
 		  "gujName": "નવા લાયસન્સનો ઇશ્યૂ",
 		  "feesOnScrutiny": true,

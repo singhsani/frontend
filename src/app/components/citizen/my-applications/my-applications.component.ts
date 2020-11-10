@@ -414,8 +414,15 @@ export class MyApplicationsComponent implements OnInit,OnChanges {
 	}
 
 	isPrintReceipt(row){
+		if(row.fileStatus=='SUBMITTED' || row.serviceType=='SHOP_ESTAB_APPLICATION')
+		{
+			return true;
+		}
 		if(row.fileStatus=='PAYMENT_RECEIVED' || row.fileStatus=='APPROVED')
-		return true;
+		{
+			return true;
+		}
+		
 	}
 
 	isDownloadDisplay(row){
