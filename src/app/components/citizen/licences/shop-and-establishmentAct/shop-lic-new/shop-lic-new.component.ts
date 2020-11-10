@@ -221,7 +221,6 @@ export class ShopLicNewComponent implements OnInit {
 			
 			employerDesignation: [null, [Validators.required, Validators.maxLength(100)]],
 			employerMobileNumber: [null, [Validators.required, Validators.maxLength(100)]],
-			//employerEmailId: [null, [Validators.required, Validators.maxLength(100)]],
 			employerEmailId: [null, [Validators.required, ValidationService.emailValidator]],
 			residentialAddressOfEmployer: [null, [Validators.required, Validators.maxLength(500)]],
 			
@@ -338,7 +337,8 @@ export class ShopLicNewComponent implements OnInit {
 			}),
 			mobileNo: [data.mobileNo ? data.mobileNo : null, [Validators.required]],
 			// employee: [data.employee ? data.employee : null],
-			emailId: [data.emailId ? data.emailId : null, [Validators.required]],
+			emailId:  [null, [Validators.required, ValidationService.emailValidator]],
+			// [data.emailId ? data.emailId :
 		})
 
 	}

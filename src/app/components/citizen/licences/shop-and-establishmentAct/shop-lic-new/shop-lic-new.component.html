@@ -35,12 +35,13 @@
 
 				<div class="row">
 					<mat-form-field class="col-md-4">
-						<input matInput required maxlength="150"
+						<input matInput required  maxlength="150"
 							placeholder="{{'name_of_establishment_if_any' | translate:translateKey}}"
-							formControlName="establishmentName" appGujInputSource 
+							formControlName="establishmentName" appGujInputSource
 							[form]="shopLicNewForm">
 						<control-messages [control]="shopLicNewForm.get('establishmentName')"></control-messages>
 					</mat-form-field>
+
 
 					<mat-form-field *ngIf="isIntimation" class="col-md-4">
 						<input matInput  maxlength="150"
@@ -62,8 +63,8 @@
 					<h2>{{'situation_label'| translate:translateKey}}</h2>
 
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" required maxlength="100" formControlName="otherAddresses"
-							placeholder="{{'situation_of_establishment' | translate:translateKey}}">
+						<textarea matInput type="text" required maxlength="100" formControlName="otherAddresses"
+							placeholder="{{'situation_of_establishment' | translate:translateKey}}"></textarea>
 						<control-messages [control]="shopLicNewForm.get('otherAddresses')"></control-messages>
 					</mat-form-field>
 				</div>
