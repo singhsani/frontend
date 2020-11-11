@@ -12,6 +12,8 @@ import { ShopAndEstablishmentService } from './../common/services/shop-and-estab
 import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '../../../../../shared/modules/translate/translate.service';
 import { LicenseConfiguration } from '../../license-configuration';
+import { TaxRebateApplicationService } from '../../../tax/property/tax-rebate-application/Services/tax-rebate-application.service';
+import { Constants } from 'src/app/vmcshared/Constants';
 
 @Component({
 	selector: 'app-shop-lic-new',
@@ -29,13 +31,31 @@ export class ShopLicNewComponent implements OnInit {
 	formId: number;
 	apiCode: string;
 
+	wardZoneLevel = [];
+  	wardZoneLevel1List = [];
+  	wardZoneLevel2List = [];
+  	wardZoneLevel3List = [];
+  	wardZoneLevel4List = [];
+
 	isGuideLineActive: boolean = false;
+
+	isPatners : boolean = false;
 
 	isIntimation : boolean = false;
 
 	isDisabledBtn : boolean = true;
 
-	regiTyep: string[] = ['CERTIFICATION', 'INTIMATION'];
+	//regiTyep: string[] = ['CERTIFICATION', 'INTIMATION'];
+	regiTyep :Array<any> = [{
+				code : 'INTIMATION',
+				name : 'less than or equal to 10',
+			},
+			{
+				code : 'CERTIFICATION',
+				name : 'more than 10',
+			},
+
+	];
 
 	disablefutureDate = new Date(moment().format('YYYY-MM-DD'));
 
@@ -84,7 +104,9 @@ export class ShopLicNewComponent implements OnInit {
 		private commonService: CommonService,
 		private shopAndEstablishmentService: ShopAndEstablishmentService,
 		private toastrService: ToastrService,
-		public TranslateService: TranslateService
+		public TranslateService: TranslateService,
+		private taxRebateApplicationService: TaxRebateApplicationService,
+
 	) { }
 
 	/**
@@ -106,6 +128,9 @@ export class ShopLicNewComponent implements OnInit {
 			this.getShopLicNewData();
 			this.getLookupData();
 			this.shopLicNewFormControls();
+
+			this.getWardZoneLevel();
+      
 		}
 	}
 
@@ -121,17 +146,6 @@ export class ShopLicNewComponent implements OnInit {
 			this.isGuideLineActive = flag;	
 		}
 	}
-
-	changeRegiType(event) {
-		this.isDisabledBtn = false;
-		this.shopLicNewForm.get('registrationType').setValue(event.value);
-		if(event.value == 'CERTIFICATION'){
-			this.isIntimation = false;
-		}else{
-			this.isIntimation = true;
-		}
-		
-	  }
 
 	/**
 	 * Method is used to get form data
@@ -211,6 +225,9 @@ export class ShopLicNewComponent implements OnInit {
 			establishmentName: [null, [Validators.required, Validators.maxLength(150)]],//count=4
 			postalAddress: this.fb.group(this.postalAddressEstablishment.addressControls()),
 			
+			waterDrainageZoneId: [null],
+      		waterDrainageWardId: [null],
+     		waterDrainageBlockId: [null],
 			
 			number: null,
 			otherAddresses: [null, [Validators.required, Validators.maxLength(100)]],
@@ -260,7 +277,8 @@ export class ShopLicNewComponent implements OnInit {
 				code: [null, Validators.required]
 			}),
 			
-
+			
+			shopPatnerList: this.fb.array([]),
 			
 
 			/* Step 5 controls end */
@@ -331,6 +349,7 @@ export class ShopLicNewComponent implements OnInit {
 			name: [data.name ? data.name : null, [Validators.required, Validators.maxLength(100)]],
 			address: [data.address ? data.address : null, [Validators.required, Validators.maxLength(150)]],
 			relationship: [data.relationship ? data.relationship : null, [Validators.required, Validators.maxLength(100)]],
+			designation: [data.designation ? data.designation : null, [Validators.required, Validators.maxLength(100)]],
 			gender: this.fb.group({
 				//code: [data.gender ? (data.gender.code ? data.gender.code : null) : null]
 				code: [data.gender ? (data.gender.code ? data.gender.code : null) : null, [Validators.required]],
@@ -342,6 +361,90 @@ export class ShopLicNewComponent implements OnInit {
 		})
 
 	}
+
+	createArrayPatner(data?: any): FormGroup {
+		return this.fb.group({
+			id: data.id ? data.id : null,
+			name: [data.name ? data.name : null, [Validators.required, Validators.maxLength(100)]],
+			address: [data.address ? data.address : null, [Validators.required, Validators.maxLength(150)]],
+			designation: [data.designation ? data.designation : null, [Validators.required, Validators.maxLength(100)]],
+			mobileNo: [data.mobileNo ? data.mobileNo : null, [Validators.required]],
+			// employee: [data.employee ? data.employee : null],
+			emailId:  [null, [Validators.required, ValidationService.emailValidator]],
+			// [data.emailId ? data.emailId :
+		})
+
+	}
+
+
+	getWardZoneLevel() {
+		this.taxRebateApplicationService.getWardZoneLevel().subscribe(
+		  (data) => {
+			if (data.status === 200 && data.body.length) {
+			  this.wardZoneLevel = data.body;
+			  console.log('wardZoneLevel', this.wardZoneLevel);
+			  this.wardZoneLevel.sort((a, b) => a.levelOrderSequence - b.levelOrderSequence);
+			  this.getWardZoneFirstLevel();
+			}
+		  },
+		  (error) => {
+			console.log('error', error);
+		  }
+		)
+	  }
+	
+	  getWardZoneFirstLevel() {
+		this.taxRebateApplicationService.getWardZoneFirstLevel(1, Constants.ModuleKey.Property_Tax).subscribe(
+		  (data) => {
+		   if (data.status === 200 && data.body.length) {
+			  this.wardZoneLevel1List = data.body;
+			  
+			}
+		  },
+		  (error) => {
+			console.log('error', error);
+		  })
+	  }
+	
+	  onChangedWardZone(value, level) {
+		if (level == 2) {
+		  //this.waterPipeliConnectionForm.controls.waterPipelineWard.setValue();
+		  this.wardZoneLevel2List = [];
+		  this.wardZoneLevel3List = [];
+		  this.wardZoneLevel4List = [];
+		}
+		else if (level == 3) {
+		  this.wardZoneLevel3List = [];
+		  this.wardZoneLevel4List = [];
+		}
+		else if (level == 4) {
+		  this.wardZoneLevel4List = [];
+		}
+		if (value)
+		  this.getWardZone(value, level)
+	  }
+
+	  getWardZone(parentId, level) {
+		var postData = {};
+		postData = { parentId: parentId };
+		this.taxRebateApplicationService.getWardZone(postData).subscribe(
+		  (data) => {
+		   if (data.status === 200 && data.body.length) {
+			  if (level == 2) {
+				this.wardZoneLevel2List = data.body;
+			  }
+			  else if (level == 3) {
+				this.wardZoneLevel3List = data.body;
+			  }
+			  else if (level == 4) {
+				this.wardZoneLevel4List = data.body;
+			  }
+			}
+		  },
+		  (error) => {
+			console.log('error', error);
+		  })
+	  }
 
 	/**
 	 * Method is used to add array in form
@@ -356,13 +459,40 @@ export class ShopLicNewComponent implements OnInit {
 			case 'OCCUPANCY':
 				returnArray = this.shopLicNewForm.get('workerCounts') as FormArray;
 				break;
-			
-			/* case 'EMPLOYEES':
-				returnArray= this.shopLicNewForm.get('employeeList') as FormArray;
-			break; */
+			case 'PATNERS':
+				returnArray= this.shopLicNewForm.get('shopPatnerList') as FormArray;
+			break;
 
 		}
 		return returnArray;
+	}
+
+
+	addMorePersonPataner(persontype: string){
+		
+		let isEditAnotherRow = this.isTableInEditMode(persontype);
+		if (!isEditAnotherRow) {
+			
+			if (persontype === "PATNERS" && this.addItem(persontype).controls.length >= 2) {
+				this.toastrService.warning("Occuping Person not allowed more than 2");
+				return false;
+			}
+			
+			if(persontype === "PATNERS"){
+				this.addItem(persontype).push(this.createArrayPatner({
+					personType: persontype
+				}));
+			}
+			
+			let newlyadded = this.addItem(persontype).controls;
+			if (newlyadded.length) {
+				this.editRecord((newlyadded[newlyadded.length - 1]));
+				(newlyadded[newlyadded.length - 1]).newRecordAdded = true;
+			}
+		}
+		else {
+			this.commonService.openAlert("Warning", "You can add new record after save existing record.", "warning");
+		}
 	}
 
 	/**
@@ -403,6 +533,8 @@ export class ShopLicNewComponent implements OnInit {
 			this.commonService.openAlert("Warning", "You can add new record after save existing record.", "warning");
 		}
 	}
+
+
 	addMorePerson(persontype: string) {
 
 		let isEditAnotherRow = this.isTableInEditMode(persontype);
@@ -595,14 +727,15 @@ export class ShopLicNewComponent implements OnInit {
 	* @event is value of NoOfHumanWorking dropdown
 	*/
 	onChangeNoOfHumanWorking(event) {
-		try {
-			this.shopLicNewForm.get('establishmentCategory').reset();
-			this.shopLicNewForm.get('subCategoryOfBusiness').reset();
-			
-		} catch (error) {
-			console.log(error.message)
+		this.isDisabledBtn = false;
+		this.shopLicNewForm.get('registrationType').setValue(event);
+		if(event == 'CERTIFICATION'){
+			this.isIntimation = false;
+		}else{
+			this.isIntimation = true;
 		}
-	}
+		
+	  }
 
 	/**
 	* Method is used when change data of NoOfHumanWorking dropdown
@@ -625,45 +758,19 @@ export class ShopLicNewComponent implements OnInit {
 
 		try {
 			this.updateServiceUploadDocument(event);
-			
+			this.isPatners= false;
 			
 			this.shopLicNewForm.get('attachments').setValue([]);
 			if (event == "SHOP_LIC_SELF_OWNERSHIP") {
 				// remove all controll becose if dropdown value is "SHOP_LIC_SELF_OWNERSHIP" then user add only one record.
 				//this.addMorePerson('PARTNER');
 			}
+			if (event == "PARTNERSHIP") {
+				this.isPatners = true;
+				//this.addMorePersonPataner('PATNERS');
+			}
 			this.requiredDocumentList();
-			/*let categoryAttachment = this.shopLicNewForm.get('attachments').value;
-			switch (event) {
-				case 'SHOP_LIC_SELF_OWNERSHIP':
-					// remove all controll becose if dropdown value is "SHOP_LIC_SELF_OWNERSHIP" then user add only one record.
-					this.addMorePerson('PARTNER');
-					if (categoryAttachment && categoryAttachment.length) {
-						let setNewAttachData = categoryAttachment.filter(attachObj => attachObj.labelName != "PhotoofLicenseHolder" && attachObj.labelName != "OrganizationalOwnershipAgreementCopy");
-						this.shopLicNewForm.get('attachments').setValue(setNewAttachData);
-					}
-					break;
-				case 'PARTNERSHIP':
-				case 'SHOP_LIC_CO_OPERATIVE_SOCIETY':
-					if (categoryAttachment && categoryAttachment.length) {
-						let setNewAttachData = categoryAttachment.filter(attachObj => attachObj.labelName != "OrganizationRentalAgreement" && attachObj.labelName != "SaleOrPurchaseDeed");
-						this.shopLicNewForm.get('attachments').setValue(setNewAttachData);
-					}
-					break;
-				case 'SHOP_LIC_COMPANY':
-					if (categoryAttachment && categoryAttachment.length) {
-						let setNewAttachData = categoryAttachment.filter(attachObj => attachObj.labelName != "OrganizationRentalAgreement" && attachObj.labelName != 'ListOfDirectors' && attachObj.labelName != "Prescribedcertificate" && attachObj.labelName != 'SaleOrPurchaseDeed' && attachObj.labelName != 'DeedPagesPartners');
-						this.shopLicNewForm.get('attachments').setValue(setNewAttachData);
-					}
-					break;
-				case 'SHOP_LIC_TRUST':
-				case 'SHOP_LIC_BOARD':
-					if (categoryAttachment && categoryAttachment.length) {
-						let setNewAttachData = categoryAttachment.filter(attachObj => attachObj.labelName != "Prescribedcertificate" && attachObj.labelName != "ChairmanMember" && attachObj.labelName != 'RegiAddressProof');
-						this.shopLicNewForm.get('attachments').setValue(setNewAttachData);
-					}
-					break;
-			}*/
+			
 		} catch (error) {
 			console.log(error.message)
 		}
@@ -729,7 +836,7 @@ export class ShopLicNewComponent implements OnInit {
 	 */
 	checkDynamicTableValidate(): void {
 		try {
-			this.addItem("PARTNER").controls.forEach(ele => {
+			this.addItem("PATNERS").controls.forEach(ele => {
 				if (ele.invalid) {
 					ele.isEditMode = true;
 				}

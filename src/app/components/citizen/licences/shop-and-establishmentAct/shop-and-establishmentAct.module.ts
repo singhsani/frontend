@@ -15,6 +15,7 @@ import { ShopLicNewComponent } from './shop-lic-new/shop-lic-new.component';
 
 import { ShopAndEstablishmentService } from './common/services/shop-and-establishment.service';
 import { FilterAttachmentPipe } from './common/pipes/filter-attachment.pipe';
+import { TaxRebateApplicationService } from '../../tax/property/tax-rebate-application/Services/tax-rebate-application.service';
 /* Import all shared, core and routing module end */
 
 const routes: Routes = [
@@ -35,6 +36,6 @@ const routes: Routes = [
     ShopLicNewComponent,
     FilterAttachmentPipe],
 
-  providers: [ShopAndEstablishmentService]
+  providers: [ShopAndEstablishmentService,TaxRebateApplicationService]
 })
 export class ShopAndEstablishmentActModule { }
