@@ -162,16 +162,13 @@ export class ShopLicNewComponent implements OnInit {
 				res.workerCounts.forEach(app => {
 					(<FormArray>this.shopLicNewForm.get('workerCounts')).push(this.createArrayWorkOut(app));
 				});
-				// res.partnerList.forEach(app => {
-				// 	(<FormArray>this.shopLicNewForm.get('partnerList')).push(this.createArray(app));
-				// });
-				/* res.employeeList.forEach(app => {
-					(<FormArray>this.shopLicNewForm.get('employeeList')).push(this.createArray(app));
-				}); */
+				res.shopPartnerList.forEach(app => {
+					(<FormArray>this.shopLicNewForm.get('shopPartnerList')).push(this.createArrayPatner(app));
+					this.isPatners  = true;
+				});
 				
 				this.getSubCategoryDropdownData(this.shopLicNewForm.get('establishmentCategory').value.code);
 
-				
                 this.serverUploadFilesArray = res.serviceDetail.serviceUploadDocuments;
 				res.serviceDetail.serviceUploadDocuments.forEach(app => {
 					(<FormArray>this.shopLicNewForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.licenseConfiguration.createDocumentsGrp(app));
@@ -221,7 +218,7 @@ export class ShopLicNewComponent implements OnInit {
 			adminCharges: null,
 			netAmount: null,
 			/* Step 1 controls start */
-			previousRegistrationNo :  [null, [Validators.maxLength(150)]],//count=4
+			//previousRegistrationNo :  [null, [Validators.maxLength(150)]],//count=4
 			establishmentName: [null, [Validators.required, Validators.maxLength(150)]],//count=4
 			postalAddress: this.fb.group(this.postalAddressEstablishment.addressControls()),
 			
@@ -278,7 +275,7 @@ export class ShopLicNewComponent implements OnInit {
 			}),
 			
 			
-			shopPatnerList: this.fb.array([]),
+			shopPartnerList: this.fb.array([]),
 			
 
 			/* Step 5 controls end */
@@ -460,7 +457,7 @@ export class ShopLicNewComponent implements OnInit {
 				returnArray = this.shopLicNewForm.get('workerCounts') as FormArray;
 				break;
 			case 'PATNERS':
-				returnArray= this.shopLicNewForm.get('shopPatnerList') as FormArray;
+				returnArray= this.shopLicNewForm.get('shopPartnerList') as FormArray;
 			break;
 
 		}

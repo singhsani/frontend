@@ -45,12 +45,12 @@
 					</mat-form-field>
 
 
-					<mat-form-field *ngIf="isIntimation" class="col-md-4">
+					<!-- <mat-form-field *ngIf="isIntimation" class="col-md-4">
 						<input matInput  maxlength="150"
 							placeholder="{{'Previous Registration Number' | translate:translateKey}}"
 							formControlName="previousRegistrationNo" appGujInputSource 
 							[form]="shopLicNewForm">
-					</mat-form-field>
+					</mat-form-field> -->
 
 					<h2>{{'postal_address_of_establishment' | translate:translateKey}}</h2>
 					<app-address #postalAddressEstablishment [requiredFeilds]="true"
@@ -537,13 +537,13 @@
 					</div>
 					<div class="col-md-2 pt-3" style="text-align: right;">
 						<button type="button"
-							[disabled]="!(shopLicNewForm.get('shopPatnerList')['controls'].length < 5)"
+							[disabled]="!(shopLicNewForm.get('shopPartnerList')['controls'].length < 5)"
 							matTooltip="{{'add_more' | translate:translateKey}}" mat-raised-button color="primary"
 							(click)="addMorePersonPataner('PATNERS')">{{'add'| translate:translateKey}}</button>
 					</div>
 				</div>
 				<div *ngIf="isPatners">
-				<div *ngIf="shopLicNewForm.get('shopPatnerList')['controls'].length">
+				<div *ngIf="shopLicNewForm.get('shopPartnerList')['controls'].length">
 					<div>
 						<table class="table table-striped responsiveTableRow">
 							<thead>
@@ -557,8 +557,8 @@
 									<th *ngIf="shopLicNewForm.get('canEdit').value"></th>
 								</tr>
 							</thead>
-							<tbody formArrayName="shopPatnerList">
-								<tr *ngFor="let item of shopLicNewForm.get('shopPatnerList')['controls']; let indx = index;"
+							<tbody formArrayName="shopPartnerList">
+								<tr *ngFor="let item of shopLicNewForm.get('shopPartnerList')['controls']; let indx = index;"
 									[formGroupName]="indx">
 
 									<td>
