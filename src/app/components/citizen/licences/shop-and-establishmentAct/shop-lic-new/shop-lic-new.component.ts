@@ -130,6 +130,7 @@ export class ShopLicNewComponent implements OnInit {
 			this.shopLicNewFormControls();
 
 			this.getWardZoneLevel();
+			
       
 		}
 	}
@@ -174,6 +175,8 @@ export class ShopLicNewComponent implements OnInit {
 					(<FormArray>this.shopLicNewForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.licenseConfiguration.createDocumentsGrp(app));
 				});
 				this.requiredDocumentList();
+				// if(res.serviceDetail)
+				// //this.isGuideLineActive = false;
 
 
 			} catch (error) {
@@ -282,7 +285,7 @@ export class ShopLicNewComponent implements OnInit {
 
 			/*  */
 			attachments: [''],
-			agree:[false, Validators.required]
+			agree:[false]
 			/*  */
 		});
 		//this.addMorePerson('EMPLOYER_FAMILY');
