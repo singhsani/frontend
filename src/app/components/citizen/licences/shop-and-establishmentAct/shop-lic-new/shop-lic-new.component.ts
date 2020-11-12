@@ -875,179 +875,219 @@ export class ShopLicNewComponent implements OnInit {
 
 	dummyJSON:any= {
   
-		"periodFrom": null,
-		"periodTo": null,
-		"newRegistration": null,
-		"renewal": null,
-		"adminCharges": null,
-		"netAmount": null,
-		"establishmentName": "dsfsdfsdfdsf",
-		"establishmentNameGuj": "દ્સ્ફ્સ્દ્ફ્સ્દ્ફ્દ્સ્ફ",
-		"postalAddress": {
-		  
-		  "addressType": "SHOP_LIC_POSTAL_ADDRESS",
-		  "buildingName": "sdfsdf",
-		  "streetName": "sfdsf",
-		  "landmark": "dsfdsf",
-		  "area": "dsfsdf",
-		  "state": "GUJARAT",
-		  "district": null,
-		  "city": "Vadodara",
-		  "country": "INDIA",
-		  "pincode": "234234",
-		  "buildingNameGuj": "સ્દ્ફ્સ્દ્ફ",
-		  "streetNameGuj": "સ્ફ્દ્સ્ફ",
-		  "landmarkGuj": "દ્સ્ફ્દ્સ્ફ",
-		  "areaGuj": "દ્સ્ફ્સ્દ્ફ",
-		  "stateGuj": "ગુજરાત",
-		  "districtGuj": null,
-		  "cityGuj": "વડોદરા",
-		  "countryGuj": "ભારત"
-		},
-		"noOfHumanWorking": {
-		  "code": "YES",
-		  "name": "Yes"
-		},
-		"assessmentDoneByVMC": {
-		  "code": "YES",
-		  "name": "Yes"
-		},
-		"propertyTaxNo": "4543543543543",
-		"wardNo": {
-		  "code": "CITY",
-		  "name": "City"
-		},
-		"aadharNumber": null,
-		"professionalTaxPECNo": "",
-		"prcNo": null,
-		"applicantVimaAmountPaid": {
-		  "code": "YES",
-		  "name": "Yes"
-		},
-		"number": '1111111111',
-		"otherAddresses": "fsdfsdfsdfsdf",
-		"nameOfEmployer": "sdfsdfsdfsdf",
-		"nameOfEmployerGuj": "સ્દ્ફ્સ્દ્ફ્સ્દ્ફ્સ્દ્ફ",
-		"residentialAddressOfEmployer": "dsfdsfsdf",
-		"residentialAddressOfEmployerGuj": "દ્સ્ફ્દ્સ્ફ્સ્દ્ફ",
-		"nameOfManager": "dsfsdfdsf",
-		"residentialAddressOfManager": "dfdsfsdf",
-		"establishmentCategory": {
-		  "code": "COMMERCIAL_ESTABLISHMENT_MORE_THEN_TEN",
-		  "name": "Commercial Establishment employing Ten or More Employees"
-		},
-		"subestablishmentCategory": {
-		  "code": "SHOP_LIC_B_OFFICES_OTHERS",
-		  "name": "Offices Others"
-		},
-		"nameOfBusiness": "sfddsfdsfsdfsdf",
-		"nameOfBusinessGuj": "સ્ફ્દ્દ્સ્ફ્દ્સ્ફ્સ્દ્ફ્સ્દ્ફ",
-		"commencementOfBusinessDate": "2019-12-01",
-		"enterHoliday": {
-		  "code": "SHOP_LIC_MONDAY"
-		},
-		"shopPersonList": [
-		  {
-			
-			"name": "sdfsdf",
-			"address": "sdfsdfsdf",
-			"serviceCode": "SHOP-ESTAB-LIC-NEW",
-			"relationship": {
-			  "code": "SHOP_LIC_PARTNER"
-			},
-			"gender": {
-			  "code": "MALE"
-			},
-			"age": 33,
-			"personType": "EMPLOYER_FAMILY"
-		  }
-		],
-		"totalAdultEmployerFamily": 1,
-		"totalYoungEmployerFamily": 0,
-		"totalManEmployerFamily": 1,
-		"totalWomenEmployerFamily": 0,
-		"totalUnidentifiedEmployerFamily": 0,
-		"totalFamilyMembers": 1,
-		"occupancyList": [
-		  {
-		   
-			"name": "fdsfsd",
-			"address": "fdsfsdf",
-			"serviceCode": "SHOP-ESTAB-LIC-NEW",
-			"relationship": {
-			  "code": "SHOP_LIC_EMPLOYEES_RESIDENT"
-			},
-			"gender": {
-			  "code": "MALE"
-			},
-			"age": 23,
-			"personType": "OCCUPANCY"
-		  }
-		],
-		"totalAdultOccupancy": 1,
-		"totalYoungOccupancy": 0,
-		"totalManOccupancy": 1,
-		"totalWomenOccupancy": 0,
-		"totalUnidentifiedOccupancy": 0,
-		"totalOccupancy": 1,
-		"organizationType": {
-		  "code": "SHOP_LIC_SELF_OWNERSHIP"
-		},
-		"partnerList": [
-		  {
-			
-			"name": "dsfsdfsdf",
-			"address": "sdfsdfsdf",
-			"serviceCode": "SHOP-ESTAB-LIC-NEW",
-			"relationship": {
-			  "code": "SHOP_LIC_COMPANY"
-			},
-			"gender": {
-			  "code": "MALE"
-			},
-			"age": 33,
-			"personType": "PARTNER"
-		  }
-		],
-		"totalAdultPartner": 1,
-		"totalYoungPartner": 0,
-		"totalManPartner": 1,
-		"totalWomenPartner": null,
-		"totalUnidentifiedPartner": 0,
-		"totalPartner": 1,
-		"totalAdultEmployee": "1",
-		"totalYoungEmployee": "1",
-		"totalManEmployee": "1",
-		"totalWomenEmployee": "1",
-		"totalUnidentified": null,
-		"totalEmployee": 4,
-		"attachments": [],
-		"agree": false,
-	   
-		
-		"fileStatus": "DRAFT",
-		"serviceName": null,
-		"fileNumber": null,
-		"pid": null,
-		"outwardNo": null,
-		"paymentStatus": null,
-		"canEdit": true,
-		"canDelete": true,
-		"canSubmit": true,
-		"firstName": "SHAN",
-		"middleName": null,
-		"lastName": "SANGEWAR",
-		"aadhaarNo": null,
-		"contactNo": "9673475273",
-		"email": "shantanu.sangewar@nascentinfo.com",
-		"serviceDetail": {
-		  "code": "SHOP-ESTAB-LIC-NEW",
-		  "name": "Issue of New License",
-		  "gujName": "નવા લાયસન્સનો ઇશ્યૂ",
-		  "feesOnScrutiny": true,
-		  "appointmentRequired": false
-		}
-	  };
+        "periodFrom": null,
+        "periodTo": null,
+        "newRegistration": null,
+        "renewal": null,
+        "adminCharges": null,
+        "netAmount": null,
+        "establishmentName": "dsfsdfsdfdsf",
+        "establishmentNameGuj": "દ્સ્ફ્સ્દ્ફ્સ્દ્ફ્દ્સ્ફ",
+        "postalAddress": {
+          
+          "addressType": "SHOP_LIC_POSTAL_ADDRESS",
+          "buildingName": "sdfsdf",
+          "streetName": "sfdsf",
+          "landmark": "dsfdsf",
+          "area": "dsfsdf",
+          "state": "GUJARAT",
+          "district": null,
+          "city": "Vadodara",
+          "country": "INDIA",
+          "pincode": "234234",
+          "buildingNameGuj": "સ્દ્ફ્સ્દ્ફ",
+          "streetNameGuj": "સ્ફ્દ્સ્ફ",
+          "landmarkGuj": "દ્સ્ફ્દ્સ્ફ",
+          "areaGuj": "દ્સ્ફ્સ્દ્ફ",
+          "stateGuj": "ગુજરાત",
+          "districtGuj": null,
+          "cityGuj": "વડોદરા",
+          "countryGuj": "ભારત"
+        },
+        "noOfHumanWorking": {
+          "code": "YES",
+          "name": "Yes"
+        },
+        "assessmentDoneByVMC": {
+          "code": "YES",
+          "name": "Yes"
+        },
+        "propertyTaxNo": "4543543543543",
+        "wardNo": {
+          "code": "CITY",
+          "name": "City"
+        },
+        "aadharNumber": null,
+        "professionalTaxPECNo": "",
+        "prcNo": null,
+        "applicantVimaAmountPaid": {
+          "code": "YES",
+          "name": "Yes"
+        },
+        "number": '1111111111',
+        "otherAddresses": "fsdfsdfsdfsdf",
+        "nameOfEmployer": "sdfsdfsdfsdf",
+        "nameOfEmployerGuj": "સ્દ્ફ્સ્દ્ફ્સ્દ્ફ્સ્દ્ફ",
+        "residentialAddressOfEmployer": "dsfdsfsdf",
+        "residentialAddressOfEmployerGuj": "દ્સ્ફ્દ્સ્ફ્સ્દ્ફ",
+        "employerDesignation": "baroda",
+        "employerMobileNumber": "1212121212",
+        "employerEmailId": "abe@a.com",
+        "nameOfManager": "dsfsdfdsf",
+        "residentialAddressOfManager": "dfdsfsdf",
+        "establishmentCategory": {
+          "code": "COMMERCIAL_ESTABLISHMENT_MORE_THEN_TEN",
+          "name": "Commercial Establishment employing Ten or More Employees"
+        },
+        "natureOfBusiness":{
+            "code": "Public",
+            "name": "Nature Of Business Public or Private"
+        },
+        "subCategoryOfBusiness":
+        {
+            "code": "Other",
+            "name": "Sub Category Of Business"
+        },
+        "subestablishmentCategory": {
+          "code": "SHOP_LIC_B_OFFICES_OTHERS",
+          "name": "Offices Others"
+        },
+        "nameOfBusiness": "sfddsfdsfsdfsdf",
+        "nameOfBusinessGuj": "સ્ફ્દ્દ્સ્ફ્દ્સ્ફ્સ્દ્ફ્સ્દ્ફ",
+        "commencementOfBusinessDate": "2019-12-01",
+        "enterHoliday": {
+          "code": "SHOP_LIC_MONDAY"
+        },
+        
+        "shopPersonList": [
+          {
+            
+            "name": "sdfsdf",
+            "address": "sdfsdfsdf",
+            "serviceCode": "SHOP-ESTAB-LIC-NEW",
+            "designation": "HEAD",
+            "mobileNo": "1234567890",
+            "emailId": "abee@d.com",
+            "relationship": "SHOP_LIC_PARTNER",
+            
+            "gender": {
+              "code": "MALE"
+            },
+            "age": 33,
+            "personType": "EMPLOYER_FAMILY"
+          }
+        ],
+        "totalAdultEmployerFamily": 1,
+        "totalYoungEmployerFamily": 0,
+        "totalManEmployerFamily": 1,
+        "totalWomenEmployerFamily": 0,
+        "totalUnidentifiedEmployerFamily": 0,
+        "totalFamilyMembers": 1,
+        "occupancyList": [
+          {
+           
+            "name": "fdsfsd",
+            "address": "fdsfsdf",
+            "serviceCode": "SHOP-ESTAB-LIC-NEW",
+            "relationship": 
+            {
+              "code": "SHOP_LIC_EMPLOYEES_RESIDENT",
+            },
+            "gender": {
+              "code": "MALE"
+            },
+            "age": 23,
+            "personType": "OCCUPANCY"
+          }
+        ],
+        "totalAdultOccupancy": 1,
+        "totalYoungOccupancy": 0,
+        "totalManOccupancy": 1,
+        "totalWomenOccupancy": 0,
+        "totalUnidentifiedOccupancy": 0,
+        "totalOccupancy": 1,
+        "organizationType": {
+          "code": "SHOP_LIC_SELF_OWNERSHIP"
+        },
+        "workerCounts":[
+            {
+            "noOfMen": "12",
+            "noOfWomen":"12",
+            "workerType":"Worker",
+            "total": "24"
+
+            }
+
+        ],
+        "shopPartnerList":[
+            {
+                "name": "nikul",
+                "address": "mehsana",
+                "designation": "HEAD",
+                "mobileNo": "1234567890",
+                "emailId": "abe@a.com",
+
+            }
+
+        ],
+        "partnerList": [
+          {
+            
+            "name": "dsfsdfsdf",
+            "address": "sdfsdfsdf",
+            "serviceCode": "SHOP-ESTAB-LIC-NEW",
+            "relationship": {
+              "code": "SHOP_LIC_COMPANY"
+            },
+            "gender": {
+              "code": "MALE"
+            },
+            
+            "age": 33,
+            "personType": "PARTNER"
+          }
+        ],
+        "totalAdultPartner": 1,
+        "totalYoungPartner": 0,
+        "totalManPartner": 1,
+        "totalWomenPartner": null,
+        "totalUnidentifiedPartner": 0,
+        "totalPartner": 1,
+        "totalAdultEmployee": "1",
+        "totalYoungEmployee": "1",
+        "totalManEmployee": "1",
+        "totalWomenEmployee": "1",
+        "totalUnidentified": null,
+        "totalEmployee": 4,
+        "attachments": [],
+        "agree": false,
+       
+        
+        "fileStatus": "DRAFT",
+        "serviceName": null,
+        "fileNumber": null,
+        "pid": null,
+        "outwardNo": null,
+        "paymentStatus": null,
+        "canEdit": true,
+        "canDelete": true,
+        "canSubmit": true,
+        "firstName": "SHAN",
+        "middleName": null,
+        "lastName": "SANGEWAR",
+        "aadhaarNo": null,
+        "contactNo": "9673475273",
+        "email": "shantanu.sangewar@nascentinfo.com",
+        "serviceDetail": {
+          "code": "SHOP-ESTAB-LIC-NEW",
+          "name": "Issue of New License",
+          "gujName": "નવા લાયસન્સનો ઇશ્યૂ",
+          "feesOnScrutiny": true,
+          "appointmentRequired": false
+        }
+      };
+
+
 
 	updateServiceUploadDocument(event) {
 		let array = (<FormArray>this.shopLicNewForm.get('serviceDetail').get('serviceUploadDocuments'));
