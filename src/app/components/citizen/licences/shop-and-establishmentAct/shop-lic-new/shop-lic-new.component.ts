@@ -225,9 +225,13 @@ export class ShopLicNewComponent implements OnInit {
 			establishmentName: [null, [Validators.required, Validators.maxLength(150)]],//count=4
 			postalAddress: this.fb.group(this.postalAddressEstablishment.addressControls()),
 			
-			waterDrainageZoneId: [null, [Validators.required, ValidationService.emailValidator]],
-      		waterDrainageWardId: [null, [Validators.required, ValidationService.emailValidator]],
-     		waterDrainageBlockId: [null, [Validators.required, ValidationService.emailValidator]],
+			zone: [null, [Validators.required]],
+      		ward: [null, [Validators.required]],
+			block: [null, [Validators.required]],
+			 
+			waterDrainageZoneId: [null],
+      		waterDrainageWardId: [null],
+     		waterDrainageBlockId: [null],
 			
 			number: null,
 			otherAddresses: [null, [Validators.required, Validators.maxLength(100)]],
@@ -290,6 +294,16 @@ export class ShopLicNewComponent implements OnInit {
 		});
 		//this.addMorePerson('EMPLOYER_FAMILY');
 		//this.addMorePerson('OCCUPANCY');
+
+		this.shopLicNewForm.get('zone').valueChanges.subscribe(data => {
+			this.shopLicNewForm.get('waterDrainageZoneId').setValue(data);
+		});
+		this.shopLicNewForm.get('ward').valueChanges.subscribe(data => {
+			this.shopLicNewForm.get('waterDrainageWardId').setValue(data);
+		});
+		this.shopLicNewForm.get('block').valueChanges.subscribe(data => {
+			this.shopLicNewForm.get('waterDrainageBlockId').setValue(data);
+		});
 	}
 
 
