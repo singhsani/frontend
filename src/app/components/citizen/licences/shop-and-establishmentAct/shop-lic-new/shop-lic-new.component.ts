@@ -225,9 +225,9 @@ export class ShopLicNewComponent implements OnInit {
 			establishmentName: [null, [Validators.required, Validators.maxLength(150)]],//count=4
 			postalAddress: this.fb.group(this.postalAddressEstablishment.addressControls()),
 			
-			waterDrainageZoneId: [null],
-      		waterDrainageWardId: [null],
-     		waterDrainageBlockId: [null],
+			waterDrainageZoneId: [null, [Validators.required, ValidationService.emailValidator]],
+      		waterDrainageWardId: [null, [Validators.required, ValidationService.emailValidator]],
+     		waterDrainageBlockId: [null, [Validators.required, ValidationService.emailValidator]],
 			
 			number: null,
 			otherAddresses: [null, [Validators.required, Validators.maxLength(100)]],
