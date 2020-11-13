@@ -527,8 +527,9 @@ export class ShopLicNewComponent implements OnInit {
 	}
 
 	/**
-	 * Method is used when user click for add person
-	 * @param persontype : person array typeks_shop_document
+	 * Method is used to add array in form
+	 * @param persontype : person array type
+	 */
 	addMorePersonwork(persontype: string) {
 		let isEditAnotherRow = this.isTableInEditMode(persontype);
 		if (!isEditAnotherRow) {
@@ -572,22 +573,25 @@ export class ShopLicNewComponent implements OnInit {
 				this.toastrService.warning("Employer family not allowed more than 5");
 				return false;
 			}
-
+			
 			if (persontype === "PARTNER") {
 				if (this.shopLicNewForm.get('organizationType').value.code === 'SHOP_LIC_SELF_OWNERSHIP' && this.addItem(persontype).controls.length >= 1) {
 					this.toastrService.warning("You can add only one partner becouse you are self ownership");
 					return false;
-				}partnership_and_coopsoc_checklist
+				}
+				if (this.shopLicNewForm.get('organizationType').value.code != 'SHOP_LIC_SELF_OWNERSHIP' && this.addItem(persontype).controls.length >= 10) {
+					this.toastrService.warning("Parners not allowed more than 10");
+					return false;
 				}
 			}
-
-			this.addItem(persontype).push(this.createArray({
-				personType: persontype
-			}));
-
-
-			this.shopLicNewForm.get('shopPersonList').clearValidators();
-			this.CD.detectChanges();
+			
+				this.addItem(persontype).push(this.createArray({
+					personType: persontype
+				}));
+				
+			
+			 this.shopLicNewForm.get('shopPersonList').clearValidators();
+			 this.CD.detectChanges();
 			let newlyadded = this.addItem(persontype).controls;
 			if (newlyadded.length) {
 				this.editRecord((newlyadded[newlyadded.length - 1]));
