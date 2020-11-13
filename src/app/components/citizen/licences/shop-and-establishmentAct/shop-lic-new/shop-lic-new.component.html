@@ -64,11 +64,11 @@
 						<div *ngIf="wardZoneLevel.length>=1">
 							<ng-select 
 								placeholder="Zone"
-								formControlName="waterDrainageZoneId" (change)="onChangedWardZone($event,2)">
+								formControlName="zone" (change)="onChangedWardZone($event,2)">
 								<ng-option *ngFor="let zone of wardZoneLevel1List" [value]="zone.parentWardzoneId">
 									{{zone.wardzoneName}}</ng-option>
 							</ng-select>
-							<control-messages [control]="shopLicNewForm.get('waterDrainageZoneId')">
+							<control-messages [control]="shopLicNewForm.get('zone')">
 							</control-messages>
 						</div>
 					</div>
@@ -76,11 +76,11 @@
 						<div *ngIf="wardZoneLevel.length>=2">
 							<ng-select 
 								placeholder="Ward"
-								formControlName="waterDrainageWardId" (change)="onChangedWardZone($event,3)">
+								formControlName="ward" (change)="onChangedWardZone($event,3)">
 								<ng-option *ngFor="let zone of wardZoneLevel2List" [value]="zone.wardzoneId">
 									{{zone.wardzoneName}}</ng-option>
 							</ng-select>
-							<control-messages [control]="shopLicNewForm.get('waterDrainageWardId')">
+							<control-messages [control]="shopLicNewForm.get('ward')">
 							</control-messages>
 						</div>
 					</div>
@@ -88,12 +88,12 @@
 						<div *ngIf="wardZoneLevel.length>=3">
 							<ng-select 
 								placeholder="Block"
-								formControlName="waterDrainageBlockId" (change)="onChangedWardZone($event,4)">
+								formControlName="block" (change)="onChangedWardZone($event,4)">
 								<ng-option *ngFor="let zone of wardZoneLevel3List" [value]="zone.wardzoneId">
 									{{zone.wardzoneName}}</ng-option>
 							</ng-select>
 							<control-messages
-								[control]="shopLicNewForm.get('waterDrainageBlockId')">
+								[control]="shopLicNewForm.get('block')">
 							</control-messages>
 						</div>
 					</div>
@@ -678,12 +678,7 @@
 						<h2 *ngIf="shopLicNewForm.get('organizationType').get('code').value ==='SHOP_LIC_COMPANY' ">
 							{{'company_checklist' | translate: translateKey}}
 						</h2>
-
-						<h2
-							*ngIf="shopLicNewForm.get( 'organizationType').get('code').value ==='SHOP_LIC_TRUST' || shopLicNewForm.get( 'organizationType').get('code').value==='SHOP_LIC_BOARD' ">
-							{{'trust_and_board_checklist' | translate: translateKey}}
-						</h2>
-
+						form
 						<ng-container
 							*ngFor="let doc of shopLicNewForm.get('serviceDetail').get('serviceUploadDocuments').value  | filterAttachment:shopLicNewForm.get('organizationType').value.code">
 							<div class="col-md-4"
