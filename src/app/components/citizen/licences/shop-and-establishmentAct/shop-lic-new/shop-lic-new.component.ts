@@ -240,15 +240,11 @@ export class ShopLicNewComponent implements OnInit {
 			//previousRegistrationNo :  [null, [Validators.maxLength(150)]],//count=4
 			establishmentName: [null, [Validators.required, Validators.maxLength(150)]],//count=4
 			postalAddress: this.fb.group(this.postalAddressEstablishment.addressControls()),
-<<<<<<< 6dfbdb7ce63c130059ddcd35012262e05772eaa2
 			
 			zone: [null, [Validators.required]],
       		ward: [null, [Validators.required]],
 			block: [null, [Validators.required]],
 			 
-=======
-
->>>>>>> added ownership type and logic for mendatory docs
 			waterDrainageZoneId: [null],
 			waterDrainageWardId: [null],
 			waterDrainageBlockId: [null],
@@ -532,9 +528,7 @@ export class ShopLicNewComponent implements OnInit {
 
 	/**
 	 * Method is used when user click for add person
-	 * @param persontype : person array type
-	 */
-
+	 * @param persontype : person array typeks_shop_document
 	addMorePersonwork(persontype: string) {
 		let isEditAnotherRow = this.isTableInEditMode(persontype);
 		if (!isEditAnotherRow) {
@@ -583,10 +577,7 @@ export class ShopLicNewComponent implements OnInit {
 				if (this.shopLicNewForm.get('organizationType').value.code === 'SHOP_LIC_SELF_OWNERSHIP' && this.addItem(persontype).controls.length >= 1) {
 					this.toastrService.warning("You can add only one partner becouse you are self ownership");
 					return false;
-				}
-				if (this.shopLicNewForm.get('organizationType').value.code != 'SHOP_LIC_SELF_OWNERSHIP' && this.addItem(persontype).controls.length >= 10) {
-					this.toastrService.warning("Parners not allowed more than 10");
-					return false;
+				}partnership_and_coopsoc_checklist
 				}
 			}
 
