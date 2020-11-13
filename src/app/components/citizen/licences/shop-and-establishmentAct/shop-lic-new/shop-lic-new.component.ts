@@ -32,28 +32,28 @@ export class ShopLicNewComponent implements OnInit {
 	apiCode: string;
 
 	wardZoneLevel = [];
-  	wardZoneLevel1List = [];
-  	wardZoneLevel2List = [];
-  	wardZoneLevel3List = [];
-  	wardZoneLevel4List = [];
+	wardZoneLevel1List = [];
+	wardZoneLevel2List = [];
+	wardZoneLevel3List = [];
+	wardZoneLevel4List = [];
 
 	isGuideLineActive: boolean = false;
 
-	isPatners : boolean = false;
+	isPatners: boolean = false;
 
-	isIntimation : boolean = false;
+	isIntimation: boolean = false;
 
-	isDisabledBtn : boolean = true;
+	isDisabledBtn: boolean = true;
 
 	//regiTyep: string[] = ['CERTIFICATION', 'INTIMATION'];
-	regiTyep :Array<any> = [{
-				code : 'INTIMATION',
-				name : 'less than or equal to 10',
-			},
-			{
-				code : 'CERTIFICATION',
-				name : 'more than 10',
-			},
+	regiTyep: Array<any> = [{
+		code: 'INTIMATION',
+		name: 'less than or equal to 10',
+	},
+	{
+		code: 'CERTIFICATION',
+		name: 'more than 10',
+	},
 
 	];
 
@@ -62,9 +62,9 @@ export class ShopLicNewComponent implements OnInit {
 	//Lookup Array
 	gender: Array<any> = [];
 
-	workerType :Array<any> = [{
-		code : 'WORKERS',
-		name : 'Workers',
+	workerType: Array<any> = [{
+		code: 'WORKERS',
+		name: 'Workers',
 	}];
 	SHOP_LIC_EMPLOYER_FAMILY_PERSON_RELATIONSHIP: Array<any> = [];
 	SHOP_LIC_OCCUPANCY_PERSON_RELATIONSHIP: Array<any> = [];
@@ -73,17 +73,29 @@ export class ShopLicNewComponent implements OnInit {
 	YES_NO: Array<any> = [];
 	businessCategory: Array<any> = [];
 	businessNature: Array<any> = [];
-	
+
 	businessSubCategory: Array<any> = [];
 	wardNo: Array<any> = [];
 	SHOP_LIC_HOLIDAY: Array<any> = [];
+	ownershipTypeList: Array<any> = [
+		{
+			code: 'OWN',
+			name: 'Own'
+		},
+		{
+			code: 'RENTED',
+			name: 'Rented'
+		}
+	]
+
+	displayDocs = [];
 
 	// required attachment array
 	public uploadFilesArray: Array<any> = [];
 
 	// attachment array from the server ;
 
-	public serverUploadFilesArray : Array<any> = [];
+	public serverUploadFilesArray: Array<any> = [];
 
     /**
      * @param fb - Declare FormBuilder property.
@@ -123,28 +135,32 @@ export class ShopLicNewComponent implements OnInit {
 			this.router.navigate([ManageRoutes.getFullRoute('CITIZENDASHBOARD')]);
 		}
 		else {
-			
+
 			this.isGuideLineActive = true;
 			this.getShopLicNewData();
 			this.getLookupData();
 			this.shopLicNewFormControls();
 
 			this.getWardZoneLevel();
+			if(this.shopLicNewForm.get('ownershipType').value){
+				this.updateServiceUploadDocument(this.shopLicNewForm.get('ownershipType').value)
+			}
 			
-      
+
+
 		}
 	}
 
-	calculateWorkers(indx){
-		let men =Number(this.shopLicNewForm.get('workerCounts')['controls'][indx].get('noOfMen').value);
-		let woman =Number(this.shopLicNewForm.get('workerCounts')['controls'][indx].get('noOfWomen').value);
+	calculateWorkers(indx) {
+		let men = Number(this.shopLicNewForm.get('workerCounts')['controls'][indx].get('noOfMen').value);
+		let woman = Number(this.shopLicNewForm.get('workerCounts')['controls'][indx].get('noOfWomen').value);
 		let total = men + woman;
 		this.shopLicNewForm.get('workerCounts')['controls'][indx].get('total').setValue(total);
-		}
+	}
 
-	hideGuideLine(flag : boolean){
-		if(this.shopLicNewForm.get('organizationType').value != null){
-			this.isGuideLineActive = flag;	
+	hideGuideLine(flag: boolean) {
+		if (this.shopLicNewForm.get('organizationType').value != null) {
+			this.isGuideLineActive = flag;
 		}
 	}
 
@@ -152,7 +168,7 @@ export class ShopLicNewComponent implements OnInit {
 	 * Method is used to get form data
 	 */
 	getShopLicNewData() {
-		
+
 		this.formService.getFormData(this.formId).subscribe(res => {
 			try {
 				this.shopLicNewForm.patchValue(res);
@@ -165,12 +181,12 @@ export class ShopLicNewComponent implements OnInit {
 				});
 				res.shopPartnerList.forEach(app => {
 					(<FormArray>this.shopLicNewForm.get('shopPartnerList')).push(this.createArrayPatner(app));
-					this.isPatners  = true;
+					this.isPatners = true;
 				});
-				
+
 				this.getSubCategoryDropdownData(this.shopLicNewForm.get('establishmentCategory').value.code);
 
-                this.serverUploadFilesArray = res.serviceDetail.serviceUploadDocuments;
+				this.serverUploadFilesArray = res.serviceDetail.serviceUploadDocuments;
 				res.serviceDetail.serviceUploadDocuments.forEach(app => {
 					(<FormArray>this.shopLicNewForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.licenseConfiguration.createDocumentsGrp(app));
 				});
@@ -190,7 +206,7 @@ export class ShopLicNewComponent implements OnInit {
 	*/
 	getLookupData() {
 		this.formService.getDataFromLookups().subscribe(res => {
-			
+
 			this.SHOP_LIC_EMPLOYER_FAMILY_PERSON_RELATIONSHIP = res.SHOP_LIC_EMPLOYER_FAMILY_PERSON_RELATIONSHIP;
 			this.SHOP_LIC_OCCUPANCY_PERSON_RELATIONSHIP = res.SHOP_LIC_OCCUPANCY_PERSON_RELATIONSHIP;
 			this.SHOP_LIC_PARTNER_PERSON_RELATIONSHIP = res.SHOP_LIC_PARTNER_PERSON_RELATIONSHIP;
@@ -216,7 +232,7 @@ export class ShopLicNewComponent implements OnInit {
 			periodFrom: null,
 			periodTo: null,
 			newRegistration: null,
-			registrationType : null,
+			registrationType: null,
 			renewal: null,
 			adminCharges: null,
 			netAmount: null,
@@ -224,27 +240,32 @@ export class ShopLicNewComponent implements OnInit {
 			//previousRegistrationNo :  [null, [Validators.maxLength(150)]],//count=4
 			establishmentName: [null, [Validators.required, Validators.maxLength(150)]],//count=4
 			postalAddress: this.fb.group(this.postalAddressEstablishment.addressControls()),
+<<<<<<< 6dfbdb7ce63c130059ddcd35012262e05772eaa2
 			
 			zone: [null, [Validators.required]],
       		ward: [null, [Validators.required]],
 			block: [null, [Validators.required]],
 			 
+=======
+
+>>>>>>> added ownership type and logic for mendatory docs
 			waterDrainageZoneId: [null],
-      		waterDrainageWardId: [null],
-     		waterDrainageBlockId: [null],
-			
+			waterDrainageWardId: [null],
+			waterDrainageBlockId: [null],
+			ownershipType: [null, [Validators.required]],
+
 			number: null,
 			otherAddresses: [null, [Validators.required, Validators.maxLength(100)]],
 			/* Step 1 controls end */
 
 			/* Step 2 controls start */
 			nameOfEmployer: [null, [Validators.required, Validators.maxLength(100)]],
-			
+
 			employerDesignation: [null, [Validators.required, Validators.maxLength(100)]],
 			employerMobileNumber: [null, [Validators.required, Validators.maxLength(100)]],
 			employerEmailId: [null, [Validators.required, ValidationService.emailValidator]],
 			residentialAddressOfEmployer: [null, [Validators.required, Validators.maxLength(500)]],
-			
+
 			//nameOfManager: [null, [Validators.required, Validators.maxLength(60)]],
 			//residentialAddressOfManager: [null, [Validators.maxLength(500)]],
 			establishmentCategory: this.fb.group({
@@ -260,7 +281,7 @@ export class ShopLicNewComponent implements OnInit {
 				name: null,
 			}),
 			commencementOfBusinessDate: [null, Validators.required],
-			
+
 			/* Step 2 controls end */
 
 
@@ -272,7 +293,7 @@ export class ShopLicNewComponent implements OnInit {
 
 			/* Step 4 controls start */
 			workerCounts: this.fb.array([]),
-			
+
 			/* Step 4 controls end */
 
 
@@ -280,16 +301,16 @@ export class ShopLicNewComponent implements OnInit {
 			organizationType: this.fb.group({
 				code: [null, Validators.required]
 			}),
-			
-			
+
+
 			shopPartnerList: this.fb.array([]),
-			
+
 
 			/* Step 5 controls end */
 
 			/*  */
 			attachments: [''],
-			agree:[false]
+			agree: [false,Validators.required]
 			/*  */
 		});
 		//this.addMorePerson('EMPLOYER_FAMILY');
@@ -311,33 +332,33 @@ export class ShopLicNewComponent implements OnInit {
 	 * Method is create required document array
 	 */
 	requiredDocumentList() {
-		
 		this.uploadFilesArray = [];
-		let organizationCategory = this.shopLicNewForm.get('organizationType').value.code;
-		if (organizationCategory) {
-			_.forEach(this.shopLicNewForm.get('serviceDetail').get('serviceUploadDocuments').value, (value) => {
+		// this.uploadFilesArray = [];
+		// let organizationCategory = this.shopLicNewForm.get('organizationType').value.code;
+		// if (organizationCategory) {
+		// 	_.forEach(this.shopLicNewForm.get('serviceDetail').get('serviceUploadDocuments').value, (value) => {
 
-				if (value.dependentFieldName == null && value.mandatory && value.isActive && value.requiredOnCitizenPortal) {
-					this.uploadFilesArray.push({
-						'labelName': value.documentLabelEn,
-						'fieldIdentifier': value.fieldIdentifier,
-						'documentIdentifier': value.documentIdentifier
-					})
-				}
+		// 		if (value.dependentFieldName == null && value.mandatory && value.isActive && value.requiredOnCitizenPortal) {
+		// 			this.uploadFilesArray.push({
+		// 				'labelName': value.documentLabelEn,
+		// 				'fieldIdentifier': value.fieldIdentifier,
+		// 				'documentIdentifier': value.documentIdentifier
+		// 			})
+		// 		}
 
-				if (value.dependentFieldName) {
-					let dependentFieldArray = value.dependentFieldName.split(",");
-					if (dependentFieldArray.includes(organizationCategory) && value.mandatory && value.isActive && value.requiredOnCitizenPortal) {
-						this.uploadFilesArray.push({
-							'labelName': value.documentLabelEn,
-							'fieldIdentifier': value.fieldIdentifier,
-							'documentIdentifier': value.documentIdentifier
-						})
-					}
-				}
+		// 		if (value.dependentFieldName) {
+		// 			let dependentFieldArray = value.dependentFieldName.split(",");
+		// 			if (dependentFieldArray.includes(organizationCategory) && value.mandatory && value.isActive && value.requiredOnCitizenPortal) {
+		// 				this.uploadFilesArray.push({
+		// 					'labelName': value.documentLabelEn,
+		// 					'fieldIdentifier': value.fieldIdentifier,
+		// 					'documentIdentifier': value.documentIdentifier
+		// 				})
+		// 			}
+		// 		}
 
-			});
-		}
+		// 	});
+		// }
 	}
 
 
@@ -347,7 +368,7 @@ export class ShopLicNewComponent implements OnInit {
 			noOfMen: [data.noOfMen ? data.noOfMen : null, [Validators.required]],
 			noOfWomen: [data.noOfWomen ? data.noOfWomen : null, [Validators.required]],
 			workerType: [data.workerType ? data.workerType : null, [Validators.required]],
-			total: [data.total ? data.total : null, [Validators.required]],			
+			total: [data.total ? data.total : null, [Validators.required]],
 		})
 
 	}
@@ -370,7 +391,7 @@ export class ShopLicNewComponent implements OnInit {
 			}),
 			mobileNo: [data.mobileNo ? data.mobileNo : null, [Validators.required]],
 			// employee: [data.employee ? data.employee : null],
-			emailId:  [null, [Validators.required, ValidationService.emailValidator]],
+			emailId: [null, [Validators.required, ValidationService.emailValidator]],
 			// [data.emailId ? data.emailId :
 		})
 
@@ -384,7 +405,7 @@ export class ShopLicNewComponent implements OnInit {
 			designation: [data.designation ? data.designation : null, [Validators.required, Validators.maxLength(100)]],
 			mobileNo: [data.mobileNo ? data.mobileNo : null, [Validators.required]],
 			// employee: [data.employee ? data.employee : null],
-			emailId:  [null, [Validators.required, ValidationService.emailValidator]],
+			emailId: [null, [Validators.required, ValidationService.emailValidator]],
 			// [data.emailId ? data.emailId :
 		})
 
@@ -393,72 +414,72 @@ export class ShopLicNewComponent implements OnInit {
 
 	getWardZoneLevel() {
 		this.taxRebateApplicationService.getWardZoneLevel().subscribe(
-		  (data) => {
-			if (data.status === 200 && data.body.length) {
-			  this.wardZoneLevel = data.body;
-			  console.log('wardZoneLevel', this.wardZoneLevel);
-			  this.wardZoneLevel.sort((a, b) => a.levelOrderSequence - b.levelOrderSequence);
-			  this.getWardZoneFirstLevel();
+			(data) => {
+				if (data.status === 200 && data.body.length) {
+					this.wardZoneLevel = data.body;
+					console.log('wardZoneLevel', this.wardZoneLevel);
+					this.wardZoneLevel.sort((a, b) => a.levelOrderSequence - b.levelOrderSequence);
+					this.getWardZoneFirstLevel();
+				}
+			},
+			(error) => {
+				console.log('error', error);
 			}
-		  },
-		  (error) => {
-			console.log('error', error);
-		  }
 		)
-	  }
-	
-	  getWardZoneFirstLevel() {
+	}
+
+	getWardZoneFirstLevel() {
 		this.taxRebateApplicationService.getWardZoneFirstLevel(1, Constants.ModuleKey.Property_Tax).subscribe(
-		  (data) => {
-		   if (data.status === 200 && data.body.length) {
-			  this.wardZoneLevel1List = data.body;
-			  
-			}
-		  },
-		  (error) => {
-			console.log('error', error);
-		  })
-	  }
-	
-	  onChangedWardZone(value, level) {
+			(data) => {
+				if (data.status === 200 && data.body.length) {
+					this.wardZoneLevel1List = data.body;
+
+				}
+			},
+			(error) => {
+				console.log('error', error);
+			})
+	}
+
+	onChangedWardZone(value, level) {
 		if (level == 2) {
-		  //this.waterPipeliConnectionForm.controls.waterPipelineWard.setValue();
-		  this.wardZoneLevel2List = [];
-		  this.wardZoneLevel3List = [];
-		  this.wardZoneLevel4List = [];
+			//this.waterPipeliConnectionForm.controls.waterPipelineWard.setValue();
+			this.wardZoneLevel2List = [];
+			this.wardZoneLevel3List = [];
+			this.wardZoneLevel4List = [];
 		}
 		else if (level == 3) {
-		  this.wardZoneLevel3List = [];
-		  this.wardZoneLevel4List = [];
+			this.wardZoneLevel3List = [];
+			this.wardZoneLevel4List = [];
 		}
 		else if (level == 4) {
-		  this.wardZoneLevel4List = [];
+			this.wardZoneLevel4List = [];
 		}
 		if (value)
-		  this.getWardZone(value, level)
-	  }
+			this.getWardZone(value, level)
+	}
 
-	  getWardZone(parentId, level) {
+	getWardZone(parentId, level) {
 		var postData = {};
 		postData = { parentId: parentId };
 		this.taxRebateApplicationService.getWardZone(postData).subscribe(
-		  (data) => {
-		   if (data.status === 200 && data.body.length) {
-			  if (level == 2) {
-				this.wardZoneLevel2List = data.body;
-			  }
-			  else if (level == 3) {
-				this.wardZoneLevel3List = data.body;
-			  }
-			  else if (level == 4) {
-				this.wardZoneLevel4List = data.body;
-			  }
-			}
-		  },
-		  (error) => {
-			console.log('error', error);
-		  })
-	  }
+			(data) => {
+				if (data.status === 200 && data.body.length) {
+					if (level == 2) {
+						this.wardZoneLevel2List = data.body;
+					}
+					else if (level == 3) {
+						this.wardZoneLevel3List = data.body;
+					}
+					else if (level == 4) {
+						this.wardZoneLevel4List = data.body;
+					}
+				}
+			},
+			(error) => {
+				console.log('error', error);
+			})
+	}
 
 	/**
 	 * Method is used to add array in form
@@ -474,30 +495,30 @@ export class ShopLicNewComponent implements OnInit {
 				returnArray = this.shopLicNewForm.get('workerCounts') as FormArray;
 				break;
 			case 'PATNERS':
-				returnArray= this.shopLicNewForm.get('shopPartnerList') as FormArray;
-			break;
+				returnArray = this.shopLicNewForm.get('shopPartnerList') as FormArray;
+				break;
 
 		}
 		return returnArray;
 	}
 
 
-	addMorePersonPataner(persontype: string){
-		
+	addMorePersonPataner(persontype: string) {
+
 		let isEditAnotherRow = this.isTableInEditMode(persontype);
 		if (!isEditAnotherRow) {
-			
+
 			if (persontype === "PATNERS" && this.addItem(persontype).controls.length >= 2) {
 				this.toastrService.warning("Occuping Person not allowed more than 2");
 				return false;
 			}
-			
-			if(persontype === "PATNERS"){
+
+			if (persontype === "PATNERS") {
 				this.addItem(persontype).push(this.createArrayPatner({
 					personType: persontype
 				}));
 			}
-			
+
 			let newlyadded = this.addItem(persontype).controls;
 			if (newlyadded.length) {
 				this.editRecord((newlyadded[newlyadded.length - 1]));
@@ -514,29 +535,29 @@ export class ShopLicNewComponent implements OnInit {
 	 * @param persontype : person array type
 	 */
 
-	addMorePersonwork(persontype: string){
+	addMorePersonwork(persontype: string) {
 		let isEditAnotherRow = this.isTableInEditMode(persontype);
 		if (!isEditAnotherRow) {
-			
+
 			if (persontype === "OCCUPANCY" && this.addItem(persontype).controls.length >= 2) {
 				this.toastrService.warning("Occuping Person not allowed more than 2");
 				return false;
 			}
-			
-			
-			if(persontype === "OCCUPANCY"){
+
+
+			if (persontype === "OCCUPANCY") {
 				this.addItem(persontype).push(this.createArrayWorkOut({
 					personType: persontype
 				}));
-			}else{
+			} else {
 				this.addItem(persontype).push(this.createArray({
 					personType: persontype
 				}));
 			}
-			
+
 			this.shopLicNewForm.get('workerCounts').clearValidators();
-			
-			 this.CD.detectChanges();
+
+			this.CD.detectChanges();
 			let newlyadded = this.addItem(persontype).controls;
 			if (newlyadded.length) {
 				this.editRecord((newlyadded[newlyadded.length - 1]));
@@ -557,7 +578,7 @@ export class ShopLicNewComponent implements OnInit {
 				this.toastrService.warning("Employer family not allowed more than 5");
 				return false;
 			}
-			
+
 			if (persontype === "PARTNER") {
 				if (this.shopLicNewForm.get('organizationType').value.code === 'SHOP_LIC_SELF_OWNERSHIP' && this.addItem(persontype).controls.length >= 1) {
 					this.toastrService.warning("You can add only one partner becouse you are self ownership");
@@ -568,14 +589,14 @@ export class ShopLicNewComponent implements OnInit {
 					return false;
 				}
 			}
-			
-				this.addItem(persontype).push(this.createArray({
-					personType: persontype
-				}));
-				
-			
-			 this.shopLicNewForm.get('shopPersonList').clearValidators();
-			 this.CD.detectChanges();
+
+			this.addItem(persontype).push(this.createArray({
+				personType: persontype
+			}));
+
+
+			this.shopLicNewForm.get('shopPersonList').clearValidators();
+			this.CD.detectChanges();
 			let newlyadded = this.addItem(persontype).controls;
 			if (newlyadded.length) {
 				this.editRecord((newlyadded[newlyadded.length - 1]));
@@ -725,7 +746,7 @@ export class ShopLicNewComponent implements OnInit {
 		return lookups.find((obj: any) => obj.code === code);
 	}
 
-	
+
 	/**
 	* Method is used when get business sub category dropdown data
 	* @event is value fro category dropdown
@@ -741,15 +762,16 @@ export class ShopLicNewComponent implements OnInit {
 	* @event is value of NoOfHumanWorking dropdown
 	*/
 	onChangeNoOfHumanWorking(event) {
+		// debugger
 		this.isDisabledBtn = false;
 		this.shopLicNewForm.get('registrationType').setValue(event);
-		if(event == 'CERTIFICATION'){
+		if (event == 'CERTIFICATION') {
 			this.isIntimation = false;
-		}else{
+		} else {
 			this.isIntimation = true;
 		}
-		
-	  }
+
+	}
 
 	/**
 	* Method is used when change data of NoOfHumanWorking dropdown
@@ -770,24 +792,24 @@ export class ShopLicNewComponent implements OnInit {
 	*/
 	onChangeTypeOfOrganization(event) {
 
-		try {
-			this.updateServiceUploadDocument(event);
-			this.isPatners= false;
-			
-			this.shopLicNewForm.get('attachments').setValue([]);
-			if (event == "SHOP_LIC_SELF_OWNERSHIP") {
-				// remove all controll becose if dropdown value is "SHOP_LIC_SELF_OWNERSHIP" then user add only one record.
-				//this.addMorePerson('PARTNER');
-			}
-			if (event == "PARTNERSHIP") {
-				this.isPatners = true;
-				//this.addMorePersonPataner('PATNERS');
-			}
-			this.requiredDocumentList();
-			
-		} catch (error) {
-			console.log(error.message)
-		}
+		// try {
+		// 	this.updateServiceUploadDocument(event);
+		// 	this.isPatners = false;
+
+		// 	this.shopLicNewForm.get('attachments').setValue([]);
+		// 	if (event == "SHOP_LIC_SELF_OWNERSHIP") {
+		// 		// remove all controll becose if dropdown value is "SHOP_LIC_SELF_OWNERSHIP" then user add only one record.
+		// 		//this.addMorePerson('PARTNER');
+		// 	}
+		// 	if (event == "PARTNERSHIP") {
+		// 		this.isPatners = true;
+		// 		//this.addMorePersonPataner('PATNERS');
+		// 	}
+		// 	this.requiredDocumentList();
+
+		// } catch (error) {
+		// 	console.log(error.message)
+		// }
 
 	}
 
@@ -812,7 +834,7 @@ export class ShopLicNewComponent implements OnInit {
      * @param flag - flag of invalid control.
      */
 	handleErrorsOnSubmit(flag) {
-		
+
 		switch (true) {
 			case flag <= 21:
 				this.licenseConfiguration.currentTabIndex = 0;
@@ -835,7 +857,7 @@ export class ShopLicNewComponent implements OnInit {
 			case flag <= 62:
 				this.licenseConfiguration.currentTabIndex = 6;
 				break;
-				case flag <= 63:
+			case flag <= 63:
 				this.licenseConfiguration.currentTabIndex = 7;
 				this.commonService.openAlert('Feild Error', 'Should be agree with given details', 'warning');
 				break;
@@ -886,256 +908,389 @@ export class ShopLicNewComponent implements OnInit {
 		this.shopLicNewForm.get(formControlName).updateValueAndValidity();
 	}
 
-	patchValue(){
+	patchValue() {
 		this.shopLicNewForm.patchValue(this.dummyJSON);
 	}
 
-	dummyJSON:any= {
-  
-        "periodFrom": null,
-        "periodTo": null,
-        "newRegistration": null,
-        "renewal": null,
-        "adminCharges": null,
-        "netAmount": null,
-        "establishmentName": "dsfsdfsdfdsf",
-        "establishmentNameGuj": "દ્સ્ફ્સ્દ્ફ્સ્દ્ફ્દ્સ્ફ",
-        "postalAddress": {
-          
-          "addressType": "SHOP_LIC_POSTAL_ADDRESS",
-          "buildingName": "sdfsdf",
-          "streetName": "sfdsf",
-          "landmark": "dsfdsf",
-          "area": "dsfsdf",
-          "state": "GUJARAT",
-          "district": null,
-          "city": "Vadodara",
-          "country": "INDIA",
-          "pincode": "234234",
-          "buildingNameGuj": "સ્દ્ફ્સ્દ્ફ",
-          "streetNameGuj": "સ્ફ્દ્સ્ફ",
-          "landmarkGuj": "દ્સ્ફ્દ્સ્ફ",
-          "areaGuj": "દ્સ્ફ્સ્દ્ફ",
-          "stateGuj": "ગુજરાત",
-          "districtGuj": null,
-          "cityGuj": "વડોદરા",
-          "countryGuj": "ભારત"
-        },
-        "noOfHumanWorking": {
-          "code": "YES",
-          "name": "Yes"
-        },
-        "assessmentDoneByVMC": {
-          "code": "YES",
-          "name": "Yes"
-        },
-        "propertyTaxNo": "4543543543543",
-        "wardNo": {
-          "code": "CITY",
-          "name": "City"
-        },
-        "aadharNumber": null,
-        "professionalTaxPECNo": "",
-        "prcNo": null,
-        "applicantVimaAmountPaid": {
-          "code": "YES",
-          "name": "Yes"
-        },
-        "number": '1111111111',
-        "otherAddresses": "fsdfsdfsdfsdf",
-        "nameOfEmployer": "sdfsdfsdfsdf",
-        "nameOfEmployerGuj": "સ્દ્ફ્સ્દ્ફ્સ્દ્ફ્સ્દ્ફ",
-        "residentialAddressOfEmployer": "dsfdsfsdf",
-        "residentialAddressOfEmployerGuj": "દ્સ્ફ્દ્સ્ફ્સ્દ્ફ",
-        "employerDesignation": "baroda",
-        "employerMobileNumber": "1212121212",
-        "employerEmailId": "abe@a.com",
-        "nameOfManager": "dsfsdfdsf",
-        "residentialAddressOfManager": "dfdsfsdf",
-        "establishmentCategory": {
-          "code": "COMMERCIAL_ESTABLISHMENT_MORE_THEN_TEN",
-          "name": "Commercial Establishment employing Ten or More Employees"
-        },
-        "natureOfBusiness":{
-            "code": "Public",
-            "name": "Nature Of Business Public or Private"
-        },
-        "subCategoryOfBusiness":
-        {
-            "code": "Other",
-            "name": "Sub Category Of Business"
-        },
-        "subestablishmentCategory": {
-          "code": "SHOP_LIC_B_OFFICES_OTHERS",
-          "name": "Offices Others"
-        },
-        "nameOfBusiness": "sfddsfdsfsdfsdf",
-        "nameOfBusinessGuj": "સ્ફ્દ્દ્સ્ફ્દ્સ્ફ્સ્દ્ફ્સ્દ્ફ",
-        "commencementOfBusinessDate": "2019-12-01",
-        "enterHoliday": {
-          "code": "SHOP_LIC_MONDAY"
-        },
-        
-        "shopPersonList": [
-          {
-            
-            "name": "sdfsdf",
-            "address": "sdfsdfsdf",
-            "serviceCode": "SHOP-ESTAB-LIC-NEW",
-            "designation": "HEAD",
-            "mobileNo": "1234567890",
-            "emailId": "abee@d.com",
-            "relationship": "SHOP_LIC_PARTNER",
-            
-            "gender": {
-              "code": "MALE"
-            },
-            "age": 33,
-            "personType": "EMPLOYER_FAMILY"
-          }
-        ],
-        "totalAdultEmployerFamily": 1,
-        "totalYoungEmployerFamily": 0,
-        "totalManEmployerFamily": 1,
-        "totalWomenEmployerFamily": 0,
-        "totalUnidentifiedEmployerFamily": 0,
-        "totalFamilyMembers": 1,
-        "occupancyList": [
-          {
-           
-            "name": "fdsfsd",
-            "address": "fdsfsdf",
-            "serviceCode": "SHOP-ESTAB-LIC-NEW",
-            "relationship": 
-            {
-              "code": "SHOP_LIC_EMPLOYEES_RESIDENT",
-            },
-            "gender": {
-              "code": "MALE"
-            },
-            "age": 23,
-            "personType": "OCCUPANCY"
-          }
-        ],
-        "totalAdultOccupancy": 1,
-        "totalYoungOccupancy": 0,
-        "totalManOccupancy": 1,
-        "totalWomenOccupancy": 0,
-        "totalUnidentifiedOccupancy": 0,
-        "totalOccupancy": 1,
-        "organizationType": {
-          "code": "SHOP_LIC_SELF_OWNERSHIP"
-        },
-        "workerCounts":[
-            {
-            "noOfMen": "12",
-            "noOfWomen":"12",
-            "workerType":"Worker",
-            "total": "24"
+	dummyJSON: any = {
 
-            }
+		"periodFrom": null,
+		"periodTo": null,
+		"newRegistration": null,
+		"renewal": null,
+		"adminCharges": null,
+		"netAmount": null,
+		"establishmentName": "dsfsdfsdfdsf",
+		"establishmentNameGuj": "દ્સ્ફ્સ્દ્ફ્સ્દ્ફ્દ્સ્ફ",
+		"postalAddress": {
 
-        ],
-        "shopPartnerList":[
-            {
-                "name": "nikul",
-                "address": "mehsana",
-                "designation": "HEAD",
-                "mobileNo": "1234567890",
-                "emailId": "abe@a.com",
+			"addressType": "SHOP_LIC_POSTAL_ADDRESS",
+			"buildingName": "sdfsdf",
+			"streetName": "sfdsf",
+			"landmark": "dsfdsf",
+			"area": "dsfsdf",
+			"state": "GUJARAT",
+			"district": null,
+			"city": "Vadodara",
+			"country": "INDIA",
+			"pincode": "234234",
+			"buildingNameGuj": "સ્દ્ફ્સ્દ્ફ",
+			"streetNameGuj": "સ્ફ્દ્સ્ફ",
+			"landmarkGuj": "દ્સ્ફ્દ્સ્ફ",
+			"areaGuj": "દ્સ્ફ્સ્દ્ફ",
+			"stateGuj": "ગુજરાત",
+			"districtGuj": null,
+			"cityGuj": "વડોદરા",
+			"countryGuj": "ભારત"
+		},
+		"noOfHumanWorking": {
+			"code": "YES",
+			"name": "Yes"
+		},
+		"assessmentDoneByVMC": {
+			"code": "YES",
+			"name": "Yes"
+		},
+		"propertyTaxNo": "4543543543543",
+		"wardNo": {
+			"code": "CITY",
+			"name": "City"
+		},
+		"aadharNumber": null,
+		"professionalTaxPECNo": "",
+		"prcNo": null,
+		"applicantVimaAmountPaid": {
+			"code": "YES",
+			"name": "Yes"
+		},
+		"number": '1111111111',
+		"otherAddresses": "fsdfsdfsdfsdf",
+		"nameOfEmployer": "sdfsdfsdfsdf",
+		"nameOfEmployerGuj": "સ્દ્ફ્સ્દ્ફ્સ્દ્ફ્સ્દ્ફ",
+		"residentialAddressOfEmployer": "dsfdsfsdf",
+		"residentialAddressOfEmployerGuj": "દ્સ્ફ્દ્સ્ફ્સ્દ્ફ",
+		"employerDesignation": "baroda",
+		"employerMobileNumber": "1212121212",
+		"employerEmailId": "abe@a.com",
+		"nameOfManager": "dsfsdfdsf",
+		"residentialAddressOfManager": "dfdsfsdf",
+		"establishmentCategory": {
+			"code": "COMMERCIAL_ESTABLISHMENT_MORE_THEN_TEN",
+			"name": "Commercial Establishment employing Ten or More Employees"
+		},
+		"natureOfBusiness": {
+			"code": "Public",
+			"name": "Nature Of Business Public or Private"
+		},
+		"subCategoryOfBusiness":
+		{
+			"code": "Other",
+			"name": "Sub Category Of Business"
+		},
+		"subestablishmentCategory": {
+			"code": "SHOP_LIC_B_OFFICES_OTHERS",
+			"name": "Offices Others"
+		},
+		"nameOfBusiness": "sfddsfdsfsdfsdf",
+		"nameOfBusinessGuj": "સ્ફ્દ્દ્સ્ફ્દ્સ્ફ્સ્દ્ફ્સ્દ્ફ",
+		"commencementOfBusinessDate": "2019-12-01",
+		"enterHoliday": {
+			"code": "SHOP_LIC_MONDAY"
+		},
 
-            }
+		"shopPersonList": [
+			{
 
-        ],
-        "partnerList": [
-          {
-            
-            "name": "dsfsdfsdf",
-            "address": "sdfsdfsdf",
-            "serviceCode": "SHOP-ESTAB-LIC-NEW",
-            "relationship": {
-              "code": "SHOP_LIC_COMPANY"
-            },
-            "gender": {
-              "code": "MALE"
-            },
-            
-            "age": 33,
-            "personType": "PARTNER"
-          }
-        ],
-        "totalAdultPartner": 1,
-        "totalYoungPartner": 0,
-        "totalManPartner": 1,
-        "totalWomenPartner": null,
-        "totalUnidentifiedPartner": 0,
-        "totalPartner": 1,
-        "totalAdultEmployee": "1",
-        "totalYoungEmployee": "1",
-        "totalManEmployee": "1",
-        "totalWomenEmployee": "1",
-        "totalUnidentified": null,
-        "totalEmployee": 4,
-        "attachments": [],
-        "agree": false,
-       
-        
-        "fileStatus": "DRAFT",
-        "serviceName": null,
-        "fileNumber": null,
-        "pid": null,
-        "outwardNo": null,
-        "paymentStatus": null,
-        "canEdit": true,
-        "canDelete": true,
-        "canSubmit": true,
-        "firstName": "SHAN",
-        "middleName": null,
-        "lastName": "SANGEWAR",
-        "aadhaarNo": null,
-        "contactNo": "9673475273",
-        "email": "shantanu.sangewar@nascentinfo.com",
-        "serviceDetail": {
-          "code": "SHOP-ESTAB-LIC-NEW",
-          "name": "Issue of New License",
-          "gujName": "નવા લાયસન્સનો ઇશ્યૂ",
-          "feesOnScrutiny": true,
-          "appointmentRequired": false
-        }
-      };
+				"name": "sdfsdf",
+				"address": "sdfsdfsdf",
+				"serviceCode": "SHOP-ESTAB-LIC-NEW",
+				"designation": "HEAD",
+				"mobileNo": "1234567890",
+				"emailId": "abee@d.com",
+				"relationship": "SHOP_LIC_PARTNER",
+
+				"gender": {
+					"code": "MALE"
+				},
+				"age": 33,
+				"personType": "EMPLOYER_FAMILY"
+			}
+		],
+		"totalAdultEmployerFamily": 1,
+		"totalYoungEmployerFamily": 0,
+		"totalManEmployerFamily": 1,
+		"totalWomenEmployerFamily": 0,
+		"totalUnidentifiedEmployerFamily": 0,
+		"totalFamilyMembers": 1,
+		"occupancyList": [
+			{
+
+				"name": "fdsfsd",
+				"address": "fdsfsdf",
+				"serviceCode": "SHOP-ESTAB-LIC-NEW",
+				"relationship":
+				{
+					"code": "SHOP_LIC_EMPLOYEES_RESIDENT",
+				},
+				"gender": {
+					"code": "MALE"
+				},
+				"age": 23,
+				"personType": "OCCUPANCY"
+			}
+		],
+		"totalAdultOccupancy": 1,
+		"totalYoungOccupancy": 0,
+		"totalManOccupancy": 1,
+		"totalWomenOccupancy": 0,
+		"totalUnidentifiedOccupancy": 0,
+		"totalOccupancy": 1,
+		"organizationType": {
+			"code": "SHOP_LIC_SELF_OWNERSHIP"
+		},
+		"workerCounts": [
+			{
+				"noOfMen": "12",
+				"noOfWomen": "12",
+				"workerType": "Worker",
+				"total": "24"
+
+			}
+
+		],
+		"shopPartnerList": [
+			{
+				"name": "nikul",
+				"address": "mehsana",
+				"designation": "HEAD",
+				"mobileNo": "1234567890",
+				"emailId": "abe@a.com",
+
+			}
+
+		],
+		"partnerList": [
+			{
+
+				"name": "dsfsdfsdf",
+				"address": "sdfsdfsdf",
+				"serviceCode": "SHOP-ESTAB-LIC-NEW",
+				"relationship": {
+					"code": "SHOP_LIC_COMPANY"
+				},
+				"gender": {
+					"code": "MALE"
+				},
+
+				"age": 33,
+				"personType": "PARTNER"
+			}
+		],
+		"totalAdultPartner": 1,
+		"totalYoungPartner": 0,
+		"totalManPartner": 1,
+		"totalWomenPartner": null,
+		"totalUnidentifiedPartner": 0,
+		"totalPartner": 1,
+		"totalAdultEmployee": "1",
+		"totalYoungEmployee": "1",
+		"totalManEmployee": "1",
+		"totalWomenEmployee": "1",
+		"totalUnidentified": null,
+		"totalEmployee": 4,
+		"attachments": [],
+		"agree": false,
 
 
+		"fileStatus": "DRAFT",
+		"serviceName": null,
+		"fileNumber": null,
+		"pid": null,
+		"outwardNo": null,
+		"paymentStatus": null,
+		"canEdit": true,
+		"canDelete": true,
+		"canSubmit": true,
+		"firstName": "SHAN",
+		"middleName": null,
+		"lastName": "SANGEWAR",
+		"aadhaarNo": null,
+		"contactNo": "9673475273",
+		"email": "shantanu.sangewar@nascentinfo.com",
+		"serviceDetail": {
+			"code": "SHOP-ESTAB-LIC-NEW",
+			"name": "Issue of New License",
+			"gujName": "નવા લાયસન્સનો ઇશ્યૂ",
+			"feesOnScrutiny": true,
+			"appointmentRequired": false
+		}
+	};
 
-	updateServiceUploadDocument(event) {
+
+
+	updateServiceUploadDocument(ownershipType) {
 		let array = (<FormArray>this.shopLicNewForm.get('serviceDetail').get('serviceUploadDocuments'));
 		for (let i = array.length - 1; i >= 0; i--) {
 			array.removeAt(i)
 		}
-		
-		switch (event) {
-			case 'SHOP_LIC_COMPANY':
-			case 'SHOP_LIC_TRUST':
-			case 'PARTNERSHIP':
-			case 'SHOP_LIC_BOARD':
-				const localUploadArray = [...this.serverUploadFilesArray]
-				for (let file of localUploadArray) {
-					if (file['documentIdentifier'] === 'PARTNERSHIP_DEED') {
-						file['mandatory'] = false;
-					}
-					(<FormArray>this.shopLicNewForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.licenseConfiguration.createDocumentsGrp(file));
+
+
+
+		const documentCodeList = this.filterDocumentList(ownershipType);
+
+		const localUploadArray = [...this.serverUploadFilesArray];
+
+		this.displayDocs = [];
+
+		this.uploadFilesArray = [];
+
+		for (let file of localUploadArray) {
+			if (this.checkFileNeedToAddInDocumentList(file, documentCodeList)) {
+				debugger
+				file['mandatory'] = this.isFileMandatory(file, documentCodeList);
+				this.displayDocs.push(file);
+				debugger
+				if (file['mandatory']) {
+					this.uploadFilesArray.push({
+						'labelName': file.documentLabelEn,
+						'fieldIdentifier': file.fieldIdentifier,
+						'documentIdentifier': file.documentIdentifier,
+						'mandatory' : file.mandatory
+					})
 				}
-				break;
-			default:
-				for (let file of this.serverUploadFilesArray) {
-					if (file['documentIdentifier'] === 'PARTNERSHIP_DEED') {
-						file['mandatory'] = true;
-					}
-					(<FormArray>this.shopLicNewForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.licenseConfiguration.createDocumentsGrp(file));
-				}
-				break;
+
+			} else {
+				file['mandatory'] = false;
+			}
 		}
 
+		// switch (event) {
+		// 	case 'SHOP_LIC_COMPANY':
+		// 	case 'SHOP_LIC_TRUST':
+		// 	case 'PARTNERSHIP':
+		// 	case 'SHOP_LIC_BOARD':
+		// 		const localUploadArray = [...this.serverUploadFilesArray]
+		// 		for (let file of localUploadArray) {
+		// 			if (file['documentIdentifier'] === 'PARTNERSHIP_DEED') {
+		// 				file['mandatory'] = false;
+		// 			}
+		// 			(<FormArray>this.shopLicNewForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.licenseConfiguration.createDocumentsGrp(file));
+		// 		}
+		// 		break;
+		// 	default:
+		// 		for (let file of this.serverUploadFilesArray) {
+		// 			if (file['documentIdentifier'] === 'PARTNERSHIP_DEED') {
+		// 				file['mandatory'] = true;
+		// 			}
+		// 			(<FormArray>this.shopLicNewForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.licenseConfiguration.createDocumentsGrp(file));
+		// 		}
+		// 		break;
+		// }
 
+
+
+	}
+
+   
+	checkFileNeedToAddInDocumentList(file,documentCodeList){
+      if(documentCodeList.filter( obj => obj.documentIdentifier == file.documentIdentifier).length > 0){
+		  return true;
+	  } else {
+		  return false;
+	  }
+
+	}
+
+	isFileMandatory(file,documentCodeList){
+		return documentCodeList.filter( obj => obj.documentIdentifier == file.documentIdentifier)[0].mandatory
+	}
+	
+
+	ownershipChange(ownershipType) {
+		this.shopLicNewForm.get('ownershipType').setValue(ownershipType);
+		this.updateServiceUploadDocument(ownershipType)
+	}
+
+	/**
+	 * This method return upload document list based on registration type and ownership type.
+	 * @param ownershipType 
+	 */
+	filterDocumentList(ownershipType) {
+
+
+		if (this.isIntimation) {
+
+			return [
+				{
+					documentIdentifier: 'EMPLOYER_ID_PROOF',
+					mandatory: true
+				},
+				{
+					documentIdentifier: 'ESTABLISHMENT_PHOTO',
+					mandatory: true
+				}
+			];
+
+
+		} else {
+			// Certificate type
+
+			if (ownershipType == "OWN") {
+
+				return[
+					{
+						documentIdentifier: 'EMPLOYER_ID_PROOF',
+						mandatory: true
+					},
+					{
+						documentIdentifier: 'ESTABLISHMENT_PHOTO',
+						mandatory: true
+					},
+					{
+						documentIdentifier: 'LICENSE_COPY',
+						mandatory: true
+					},
+					{
+						documentIdentifier: 'OWN_PREMISES_PROOF',
+						mandatory: true
+					}
+				];
+
+			} else if (ownershipType == "RENTED") {
+
+				return[
+					{
+						documentIdentifier: 'EMPLOYER_ID_PROOF',
+						mandatory: true
+					},
+					{
+						documentIdentifier: 'ESTABLISHMENT_PHOTO',
+						mandatory: true
+					},
+					{
+						documentIdentifier: 'LICENSE_COPY',
+						mandatory: true
+					},
+					{
+						documentIdentifier: 'RENTED_PREMISES_PROOF',
+						mandatory: true
+					},
+					{
+						documentIdentifier: 'RENTED_PREMISES_OWNER_PROOF',
+						mandatory: true
+					},
+					{
+						documentIdentifier: 'RENTED_PREMISES_NOC_FOR_OWN_BY_FAMILY_MEMBER',
+						mandatory: false
+					}
+				];
+
+
+			} else {
+				return [];
+			}
+
+		}
 
 	}
 
