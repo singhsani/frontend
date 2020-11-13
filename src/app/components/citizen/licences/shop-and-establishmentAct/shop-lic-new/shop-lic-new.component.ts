@@ -787,24 +787,24 @@ export class ShopLicNewComponent implements OnInit {
 	*/
 	onChangeTypeOfOrganization(event) {
 
-		// try {
-		// 	this.updateServiceUploadDocument(event);
-		// 	this.isPatners = false;
+		try {
+			this.updateServiceUploadDocument(event);
+			this.isPatners = false;
 
-		// 	this.shopLicNewForm.get('attachments').setValue([]);
-		// 	if (event == "SHOP_LIC_SELF_OWNERSHIP") {
-		// 		// remove all controll becose if dropdown value is "SHOP_LIC_SELF_OWNERSHIP" then user add only one record.
-		// 		//this.addMorePerson('PARTNER');
-		// 	}
-		// 	if (event == "PARTNERSHIP") {
-		// 		this.isPatners = true;
-		// 		//this.addMorePersonPataner('PATNERS');
-		// 	}
-		// 	this.requiredDocumentList();
+			this.shopLicNewForm.get('attachments').setValue([]);
+			if (event == "SHOP_LIC_SELF_OWNERSHIP") {
+				// remove all controll becose if dropdown value is "SHOP_LIC_SELF_OWNERSHIP" then user add only one record.
+				//this.addMorePerson('PARTNER');
+			}
+			if (event == "PARTNERSHIP") {
+				this.isPatners = true;
+				//this.addMorePersonPataner('PATNERS');
+			}
+			this.requiredDocumentList();
 
-		// } catch (error) {
-		// 	console.log(error.message)
-		// }
+		} catch (error) {
+			console.log(error.message)
+		}
 
 	}
 
