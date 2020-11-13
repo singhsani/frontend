@@ -97,6 +97,18 @@
 							</control-messages>
 						</div>
 					</div>
+					<div class="col-md-4 ngSelect">
+						<div>
+							<ng-select placeholder="Select Ownership Type*" (change)="ownershipChange($event)">
+								<ng-option *ngFor="let ownershipType of ownershipTypeList" [value]="ownershipType.code">{{ownershipType.name}}</ng-option>
+							</ng-select>
+							<!-- <control-messages [control]="shopL	icNewForm.get('ownershipType')"> -->
+							<!-- </control-messages> -->
+						</div>
+					</div>
+
+
+				
 				</div>
 
 				
@@ -659,28 +671,12 @@
 				</ng-template>
 
 				<div class="row">
-
-					<h2 *ngIf="!shopLicNewForm.get('organizationType').value.code">{{'category_wise_attachment' | translate:
-						translateKey}}
+				
+					<h2 *ngIf="!shopLicNewForm.get('ownershipType').value">
+						Please Select Ownership Type
 					</h2>
-					<ng-container *ngIf="shopLicNewForm.get('organizationType').value.code">
-
-						<h2
-							*ngIf="shopLicNewForm.get('organizationType').get('code').value === 'SHOP_LIC_SELF_OWNERSHIP'">
-							{{'owner_checklist' | translate: translateKey}}
-						</h2>
-
-						<h2
-							*ngIf="shopLicNewForm.get('organizationType').get('code').value === 'SHOP_LIC_PARTNERSHIP' || shopLicNewForm.get('organizationType').get('code').value === 'SHOP_LIC_CO_OPERATIVE_SOCIETY' ">
-							{{'partnership_and_coopsoc_checklist' | translate: translateKey}}
-						</h2>
-
-						<h2 *ngIf="shopLicNewForm.get('organizationType').get('code').value ==='SHOP_LIC_COMPANY' ">
-							{{'company_checklist' | translate: translateKey}}
-						</h2>
-						form
-						<ng-container
-							*ngFor="let doc of shopLicNewForm.get('serviceDetail').get('serviceUploadDocuments').value  | filterAttachment:shopLicNewForm.get('organizationType').value.code">
+					<ng-container *ngIf="shopLicNewForm.get('ownershipType').value">
+						<ng-container *ngFor="let doc of displayDocs">
 							<div class="col-md-4"
 								*ngIf="doc.requiredOnCitizenPortal && doc.isActive && licenseConfiguration.isAttachmentButtonsVisible">
 								<label>{{TranslateService.getCurrentLanguage()=='en'? doc.documentLabelEn : doc.documentLabelGuj }}
