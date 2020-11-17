@@ -434,7 +434,7 @@ export class MyApplicationsComponent implements OnInit,OnChanges {
 	 * @param row - Table row oject
 	 */
 	isAppJsonOptDisplay(row) {
-		if (row.serviceType === 'PEC_REG' || row.serviceType === 'PRC_REG')
+		if (row.serviceType === 'PEC_REG' || row.serviceType === 'PRC_REG' || row.serviceType === 'SHOP_ESTAB_APPLICATION')
 			return false;
 		else
 			return true;
