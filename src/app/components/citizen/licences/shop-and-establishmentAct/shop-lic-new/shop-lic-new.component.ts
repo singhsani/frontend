@@ -56,6 +56,7 @@ export class ShopLicNewComponent implements OnInit {
 	},
 
 	];
+	registrationType;
 
 	disablefutureDate = new Date(moment().format('YYYY-MM-DD'));
 
@@ -183,6 +184,8 @@ export class ShopLicNewComponent implements OnInit {
 					(<FormArray>this.shopLicNewForm.get('shopPartnerList')).push(this.createArrayPatner(app));
 					this.isPatners = true;
 				});
+
+				this.onChangeNoOfHumanWorking(res.registrationType);
 
 				this.getSubCategoryDropdownData(this.shopLicNewForm.get('establishmentCategory').value.code);
 
@@ -760,6 +763,8 @@ export class ShopLicNewComponent implements OnInit {
 		// debugger
 		this.isDisabledBtn = false;
 		this.shopLicNewForm.get('registrationType').setValue(event);
+		this.registrationType = event;
+		console.log(this.registrationType);
 		if (event == 'CERTIFICATION') {
 			this.isIntimation = false;
 		} else {
