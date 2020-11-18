@@ -63,7 +63,7 @@
 					<div class="col-md-4 ngSelect">
 						<div *ngIf="wardZoneLevel.length>=1">
 							<ng-select 
-								placeholder="Zone"
+								placeholder="Zone*"
 								formControlName="zone" (change)="onChangedWardZone($event,2)">
 								<ng-option *ngFor="let zone of wardZoneLevel1List" [value]="zone.parentWardzoneId">
 									{{zone.wardzoneName}}</ng-option>
@@ -75,7 +75,7 @@
 					<div class="col-md-4 ngSelect">
 						<div *ngIf="wardZoneLevel.length>=2">
 							<ng-select 
-								placeholder="Ward"
+								placeholder="Ward*"
 								formControlName="ward" (change)="onChangedWardZone($event,3)">
 								<ng-option *ngFor="let zone of wardZoneLevel2List" [value]="zone.wardzoneId">
 									{{zone.wardzoneName}}</ng-option>
@@ -87,7 +87,7 @@
 					<div class="col-md-4 ngSelect">
 						<div *ngIf="wardZoneLevel.length>=3">
 							<ng-select 
-								placeholder="Block"
+								placeholder="Block*"
 								formControlName="block" (change)="onChangedWardZone($event,4)">
 								<ng-option *ngFor="let zone of wardZoneLevel3List" [value]="zone.wardzoneId">
 									{{zone.wardzoneName}}</ng-option>
