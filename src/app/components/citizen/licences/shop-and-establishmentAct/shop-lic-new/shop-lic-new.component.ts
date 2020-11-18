@@ -245,9 +245,9 @@ export class ShopLicNewComponent implements OnInit {
       		ward: [null, [Validators.required]],
 			block: [null, [Validators.required]],
 			 
-			waterDrainageZoneId: [null],
-			waterDrainageWardId: [null],
-			waterDrainageBlockId: [null],
+			waterDrainageZoneId: [null, [Validators.required]],
+			waterDrainageWardId: [null, [Validators.required]],
+			waterDrainageBlockId: [null, [Validators.required]],
 			ownershipType: [null, [Validators.required]],
 
 			number: null,
