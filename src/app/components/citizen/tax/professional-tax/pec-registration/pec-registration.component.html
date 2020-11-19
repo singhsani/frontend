@@ -207,14 +207,14 @@
 						<div class="row" *ngFor="let item of pecRegForm.get('censusNo')['controls']; let i = index;" [formGroupName]="i">
 						<div class="col-md-3">
 								<mat-form-field>
-									<mat-select (selectionChange)="selectCensusOrPropertyNo($event);"  placeholder="{{'census_no' | translate: translateKey}}">
+									<mat-select style="margin-top: 15px !important;" (selectionChange)="selectCensusOrPropertyNo($event);"  placeholder="{{'census_no' | translate: translateKey}}">
 										<mat-option  value="CensusNo">Census No</mat-option>
 										<mat-option value="PropertyNo">Property No</mat-option>
 									</mat-select>
 								</mat-form-field>
 						</div>
 						<mat-form-field class="col-md-3" *ngIf="isCensusNo">
-							<input matInput autocomplete="off" appMaskCensusNumber maxlength="21" formControlName="census" type="text" (focusout)="isExistPropertyNo($event.target.value,i)"
+							<input style="margin-top: 15px !important;" matInput autocomplete="off" appMaskCensusNumber maxlength="21" formControlName="census" type="text" (focusout)="isExistPropertyNo($event.target.value,i)"
 							 required>
 							<button *ngIf="pecRegForm.get('censusNo')['controls'].length > 1 && isDeleteBtnShow" title="Remove Census" class="deleteBtn pull-right text-right"
 							 type="button" mat-icon-button color="warn" (click)="removeCensus(i)">
@@ -223,7 +223,7 @@
 							<control-messages [control]="pecRegForm.get('censusNo')['controls'][i].get('census')"></control-messages>
 						</mat-form-field>
 						<mat-form-field class="col-md-3" *ngIf="!isCensusNo">
-							<input matInput autocomplete="off" appMaskPropertNumber maxlength="21" formControlName="census" type="text" (focusout)="isExistPropertyNo($event.target.value,i)"
+							<input style="margin-top: 15px !important;" matInput autocomplete="off" appMaskPropertNumber maxlength="21" formControlName="census" type="text" (focusout)="isExistPropertyNo($event.target.value,i)"
 							 required>
 							<button *ngIf="pecRegForm.get('censusNo')['controls'].length > 1 && isDeleteBtnShow" title="Remove Census" class="deleteBtn pull-right text-right"
 							 type="button" mat-icon-button color="warn" (click)="removeCensus(i)">
