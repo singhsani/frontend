@@ -99,7 +99,7 @@
 					</div>
 					<div class="col-md-4 ngSelect">
 						<div>
-							<ng-select placeholder="Select Ownership Type*" (change)="ownershipChange($event)">
+							<ng-select formControlName="ownershipType" placeholder="Select Ownership Type*" (change)="ownershipChange($event)">
 								<ng-option *ngFor="let ownershipType of ownershipTypeList" [value]="ownershipType.code">{{ownershipType.name}}</ng-option>
 							</ng-select>
 							<!-- <control-messages [control]="shopL	icNewForm.get('ownershipType')"> -->
@@ -381,7 +381,7 @@
 												<mat-icon title="Delete">delete</mat-icon>
 											</button>
 											<button mat-icon-button color="warn" *ngIf="item.isEditMode"
-												(click)="cancelRecord(item,indx)">
+												(click)="cancelRecordWithPersonType(item,indx,'EMPLOYER_FAMILY')">
 												<mat-icon title="Cancel">cancel</mat-icon>
 											</button>
 										</span>
@@ -498,7 +498,7 @@
 												<mat-icon title="Delete">delete</mat-icon>
 											</button>
 											<button mat-icon-button color="warn" *ngIf="item.isEditMode"
-												(click)="cancelRecord(item,indx)">
+												(click)="cancelRecordWithPersonType(item,indx,'OCCUPANCY')">
 												<mat-icon title="Cancel">cancel</mat-icon>
 											</button>
 										</span>
@@ -639,11 +639,11 @@
 										</span>
 										<span *ngIf="shopLicNewForm.get('canEdit').value">
 											<button mat-icon-button color="warn" *ngIf="!item.isEditMode"
-												(click)="deleteRecord('EMPLOYER_FAMILY',indx)">
+												(click)="deleteRecord('PATNERS',indx)">
 												<mat-icon title="Delete">delete</mat-icon>
 											</button>
 											<button mat-icon-button color="warn" *ngIf="item.isEditMode"
-												(click)="cancelRecord(item,indx)">
+												(click)="cancelRecordWithPersonType(item,indx,'PATNERS')">
 												<mat-icon title="Cancel">cancel</mat-icon>
 											</button>
 										</span>
