@@ -481,12 +481,12 @@ export class ShopLicNewComponent implements OnInit {
 	}
 
 	/**
-	 * Method is used to add array in form
-	 * @param persontype : person array type
+	 * Method is used to get array from form
+	 * @param type : person array type
 	 */
-	addItem(persontype: string) {
+	getArrayByType(type: string) {
 		let returnArray: any;
-		switch (persontype) {
+		switch (type) {
 			case 'EMPLOYER_FAMILY':
 				returnArray = this.shopLicNewForm.get('shopPersonList') as FormArray;
 				break;
@@ -507,18 +507,18 @@ export class ShopLicNewComponent implements OnInit {
 		let isEditAnotherRow = this.isTableInEditMode(persontype);
 		if (!isEditAnotherRow) {
 
-			if (persontype === "PATNERS" && this.addItem(persontype).controls.length >= 2) {
+			if (persontype === "PATNERS" && this.getArrayByType(persontype).controls.length >= 2) {
 				this.toastrService.warning("Occuping Person not allowed more than 2");
 				return false;
 			}
 
 			if (persontype === "PATNERS") {
-				this.addItem(persontype).push(this.createArrayPatner({
+				this.getArrayByType(persontype).push(this.createArrayPatner({
 					personType: persontype
 				}));
 			}
 
-			let newlyadded = this.addItem(persontype).controls;
+			let newlyadded = this.getArrayByType(persontype).controls;
 			if (newlyadded.length) {
 				this.editRecord((newlyadded[newlyadded.length - 1]));
 				(newlyadded[newlyadded.length - 1]).newRecordAdded = true;
@@ -537,18 +537,18 @@ export class ShopLicNewComponent implements OnInit {
 		let isEditAnotherRow = this.isTableInEditMode(persontype);
 		if (!isEditAnotherRow) {
 
-			if (persontype === "OCCUPANCY" && this.addItem(persontype).controls.length >= 2) {
+			if (persontype === "OCCUPANCY" && this.getArrayByType(persontype).controls.length >= 2) {
 				this.toastrService.warning("Occuping Person not allowed more than 2");
 				return false;
 			}
 
 
 			if (persontype === "OCCUPANCY") {
-				this.addItem(persontype).push(this.createArrayWorkOut({
+				this.getArrayByType(persontype).push(this.createArrayWorkOut({
 					personType: persontype
 				}));
 			} else {
-				this.addItem(persontype).push(this.createArray({
+				this.getArrayByType(persontype).push(this.createArray({
 					personType: persontype
 				}));
 			}
@@ -556,7 +556,7 @@ export class ShopLicNewComponent implements OnInit {
 			this.shopLicNewForm.get('workerCounts').clearValidators();
 
 			this.CD.detectChanges();
-			let newlyadded = this.addItem(persontype).controls;
+			let newlyadded = this.getArrayByType(persontype).controls;
 			if (newlyadded.length) {
 				this.editRecord((newlyadded[newlyadded.length - 1]));
 				(newlyadded[newlyadded.length - 1]).newRecordAdded = true;
@@ -572,30 +572,30 @@ export class ShopLicNewComponent implements OnInit {
 
 		let isEditAnotherRow = this.isTableInEditMode(persontype);
 		if (!isEditAnotherRow) {
-			if (persontype === "EMPLOYER_FAMILY" && this.addItem(persontype).controls.length >= 5) {
+			if (persontype === "EMPLOYER_FAMILY" && this.getArrayByType(persontype).controls.length >= 5) {
 				this.toastrService.warning("Employer family not allowed more than 5");
 				return false;
 			}
 			
 			if (persontype === "PARTNER") {
-				if (this.shopLicNewForm.get('organizationType').value.code === 'SHOP_LIC_SELF_OWNERSHIP' && this.addItem(persontype).controls.length >= 1) {
+				if (this.shopLicNewForm.get('organizationType').value.code === 'SHOP_LIC_SELF_OWNERSHIP' && this.getArrayByType(persontype).controls.length >= 1) {
 					this.toastrService.warning("You can add only one partner becouse you are self ownership");
 					return false;
 				}
-				if (this.shopLicNewForm.get('organizationType').value.code != 'SHOP_LIC_SELF_OWNERSHIP' && this.addItem(persontype).controls.length >= 10) {
+				if (this.shopLicNewForm.get('organizationType').value.code != 'SHOP_LIC_SELF_OWNERSHIP' && this.getArrayByType(persontype).controls.length >= 10) {
 					this.toastrService.warning("Parners not allowed more than 10");
 					return false;
 				}
 			}
 			
-				this.addItem(persontype).push(this.createArray({
+				this.getArrayByType(persontype).push(this.createArray({
 					personType: persontype
 				}));
 				
 			
 			 this.shopLicNewForm.get('shopPersonList').clearValidators();
 			 this.CD.detectChanges();
-			let newlyadded = this.addItem(persontype).controls;
+			let newlyadded = this.getArrayByType(persontype).controls;
 			if (newlyadded.length) {
 				this.editRecord((newlyadded[newlyadded.length - 1]));
 				(newlyadded[newlyadded.length - 1]).newRecordAdded = true;
@@ -681,7 +681,7 @@ export class ShopLicNewComponent implements OnInit {
 	*  Method is used check table is in edit mode
 	*/
 	isTableInEditMode(persontype: string) {
-		return this.addItem(persontype).controls.find((obj: any) => obj.isEditMode === true);
+		return this.getArrayByType(persontype).controls.find((obj: any) => obj.isEditMode === true);
 	}
 
 	/**
@@ -698,7 +698,7 @@ export class ShopLicNewComponent implements OnInit {
 	*/
 	deleteRecord(persontype: string, index: any) {
 		this.commonService.confirmAlert('Are you sure?', "", 'info', '', performDelete => {
-			this.addItem(persontype).removeAt(index);
+			this.getArrayByType(persontype).removeAt(index);
 			this.toastrService.success("Succesfully deleted", "Deleted");
 		});
 	}
@@ -719,9 +719,10 @@ export class ShopLicNewComponent implements OnInit {
 	* @param row: table row id
 	*/
 	cancelRecord(row: any, index: number) {
+		debugger
 		try {
 			if (row.newRecordAdded) {
-				this.addItem(row.get('personType').value).removeAt(index);
+				this.getArrayByType(row.get('personType').value).removeAt(index);
 			} else {
 				if (row.deepCopyInEditMode) {
 					row.patchValue(row.deepCopyInEditMode);
@@ -793,7 +794,7 @@ export class ShopLicNewComponent implements OnInit {
 	onChangeTypeOfOrganization(event) {
 
 		try {
-			this.updateServiceUploadDocument(event);
+			// this.updateServiceUploadDocument(event);
 			this.isPatners = false;
 
 			this.shopLicNewForm.get('attachments').setValue([]);
@@ -805,7 +806,7 @@ export class ShopLicNewComponent implements OnInit {
 				this.isPatners = true;
 				//this.addMorePersonPataner('PATNERS');
 			}
-			this.requiredDocumentList();
+			// this.requiredDocumentList();
 
 		} catch (error) {
 			console.log(error.message)
@@ -872,19 +873,19 @@ export class ShopLicNewComponent implements OnInit {
 	 */
 	checkDynamicTableValidate(): void {
 		try {
-			this.addItem("PATNERS").controls.forEach(ele => {
+			this.getArrayByType("PATNERS").controls.forEach(ele => {
 				if (ele.invalid) {
 					ele.isEditMode = true;
 				}
 			});
 
-			this.addItem("EMPLOYER_FAMILY").controls.forEach(familyEle => {
+			this.getArrayByType("EMPLOYER_FAMILY").controls.forEach(familyEle => {
 				if (familyEle.invalid) {
 					familyEle.isEditMode = true;
 				}
 			});
 
-			this.addItem("OCCUPANCY").controls.forEach(occupancy => {
+			this.getArrayByType("OCCUPANCY").controls.forEach(occupancy => {
 				if (occupancy.invalid) {
 					occupancy.isEditMode = true;
 				}
@@ -1146,10 +1147,9 @@ export class ShopLicNewComponent implements OnInit {
 
 		for (let file of localUploadArray) {
 			if (this.checkFileNeedToAddInDocumentList(file, documentCodeList)) {
-				debugger
 				file['mandatory'] = this.isFileMandatory(file, documentCodeList);
 				this.displayDocs.push(file);
-				debugger
+				
 				if (file['mandatory']) {
 					this.uploadFilesArray.push({
 						'labelName': file.documentLabelEn,
@@ -1293,5 +1293,28 @@ export class ShopLicNewComponent implements OnInit {
 		}
 
 	}
+
+	/**
+	*  Method is used cancel editable dataview.
+	* @param row: table row id
+	*/
+	cancelRecordWithPersonType(row: any, index: number,personType : string) {
+		
+		try {
+			if (row.newRecordAdded) {
+				console.log('array',this.getArrayByType(personType))
+				this.getArrayByType(personType).removeAt(index);
+			} else {
+				if (row.deepCopyInEditMode) {
+					row.patchValue(row.deepCopyInEditMode);
+				}
+				row.isEditMode = false;
+				row.newRecordAdded = false;
+			}
+		} catch (error) {
+
+		}
+	}
+
 
 }
