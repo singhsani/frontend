@@ -27,9 +27,9 @@
           </ng-container>
 
           <ng-container matColumnDef="annualBoardingExpenses">
-            <mat-header-cell *matHeaderCellDef>{{'annual_boarding_expense' | translate:translateKey}}</mat-header-cell>
+            <mat-header-cell *matHeaderCellDef>{{'annual_medical_expense' | translate:translateKey}}</mat-header-cell>
             <mat-cell *matCellDef="let row; let i = index;" class="fullWidth">
-              <div class="mobile-label">{{'annual_boarding_expense' | translate:translateKey}}</div>
+              <div class="mobile-label">{{'annual_medical_expense' | translate:translateKey}}</div>
               <div class="mobile-label1">:</div>
               <div class="row-inside"> {{row?.annualBoardingExpenses}} </div>
             </mat-cell>
@@ -154,8 +154,8 @@
         </mat-form-field>
 
         <mat-form-field class="col-md-6">
-          <textarea matInput type="text" formControlName="adoptersAddress"
-            placeholder="{{'adopter_organisation_address' | translate: translateKey}}" required></textarea>
+          <input matInput type="text" formControlName="adoptersAddress"
+            placeholder="{{'adopter_organisation_address' | translate: translateKey}}" required>
           <control-messages [control]="animalAdoptionForm.get('adoptersAddress')"></control-messages>
         </mat-form-field>
 
@@ -183,7 +183,7 @@
 
         <mat-form-field class="col-md-6">
           <input matInput type="number" [(ngModel)]="selectedAnimalAnnualBoardingExpenses"
-            [ngModelOptions]="{standalone: true}" placeholder="{{'annual_boarding_expense' | translate: translateKey}}"
+            [ngModelOptions]="{standalone: true}" placeholder="{{'annual_medical_expense' | translate: translateKey}}"
             readonly required>
         </mat-form-field>
 
