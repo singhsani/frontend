@@ -213,7 +213,7 @@
 					<div class="col-md-4">
 							<div class="radioBtnError">
 								<mat-label>{{'owner_consent_letter_included' | translate:translateKey }} *</mat-label>
-								<mat-radio-group formControlName="ownerConsentLetterIncluded" required>
+								<mat-radio-group (change)="depensLetterDate($event)" formControlName="ownerConsentLetterIncluded" required>
 									<mat-radio-button [value]="true" (change)="dependentAttachment($event.value,'CONSENT_LETTER')">
 										{{'yes_txt' | translate:translateKey }}
 									</mat-radio-button>
@@ -224,7 +224,7 @@
 								<control-messages [control]="tempFireworksNocForm.get('ownerConsentLetterIncluded')"></control-messages>
 							</div>
 					</div>
-					<mat-form-field class="col-md-4" >
+					<mat-form-field *ngIf="isConsentLatterDate" class="col-md-4" >
 						<input  matInput [matDatepicker]="picker3" formControlName="consentLetterDate" 
 						placeholder="{{'consent_letter_date' | translate:translateKey }}"						 
 						required (dateChange)="dateFormate($event.value,'consentLetterDate')">

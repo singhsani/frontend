@@ -1,5 +1,5 @@
 import { FireFacilityConfig } from './../config/FireFacilityConfig';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray, Validator } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ManageRoutes } from '../../../../config/routes-conf';
@@ -30,6 +30,7 @@ export class TempFireworksNocComponent implements OnInit {
 
 	// required attachment array
 	uploadFilesArray: Array<any> = [];
+	isConsentLatterDate = true;
 	fireFacilityConfig: FireFacilityConfig = new FireFacilityConfig();
 
 	//Lookups Array
@@ -52,7 +53,8 @@ export class TempFireworksNocComponent implements OnInit {
 		private commonService: CommonService,
 		private toastrService: ToastrService,
 		private fireFacilitiesService: FireFacilitiesService,
-		private dialog: MatDialog
+		private dialog: MatDialog,
+		private CD: ChangeDetectorRef,
 	) { }
 
 	/**
@@ -104,7 +106,7 @@ export class TempFireworksNocComponent implements OnInit {
 	 * @param dependedKey 
 	 */
 	dependentAttachment(eventValue: any, dependedKey: string) {
-
+		
 		var control = (<FormArray>this.tempFireworksNocForm.get('serviceDetail').get('serviceUploadDocuments')).controls
 		var fields = control.find((data) => data.get('documentIdentifier').value === dependedKey);
 
@@ -129,6 +131,18 @@ export class TempFireworksNocComponent implements OnInit {
 
 	}
 
+	depensLetterDate(eventValue){
+
+		if(eventValue.value){
+			this.isConsentLatterDate = true;
+			this.tempFireworksNocForm.get('consentLetterDate').setValidators(Validators.required);
+		}else{
+			this.isConsentLatterDate = false;
+			this.tempFireworksNocForm.get('consentLetterDate').clearValidators();
+		}
+		this.tempFireworksNocForm.get('consentLetterDate').updateValueAndValidity();
+		this.CD.detectChanges();
+	}
 
 	openDialog() {
 		let returnArray = this.tempFireworksNocForm.get('shopDetails') as FormArray;
