@@ -55,14 +55,14 @@
 
 					<mat-form-field class="col-md-4">
 						<!-- <span matPrefix>+91 &nbsp;</span> -->
-						<input matInput OnlyNumber placeholder="{{'applicant_mobile' | translate:translateKey}}" type="tel" [maxlength]="fireFacilityConfig.contactNumberLength"
+						<input matInput OnlyNumber placeholder="{{'applicant_mobile' | translate:translateKey}}" type="tel" maxlength="10"
 						 formControlName="contactNo" required>
 						<control-messages [control]="finalFireNocForm.get('contactNo')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<!-- <span matPrefix>+91 &nbsp;</span> -->
-						<input matInput OnlyNumber placeholder="{{'office_contact_no' | translate:translateKey}}" type="tel" [maxlength]="fireFacilityConfig.contactNumberLength"
+						<input matInput OnlyNumber placeholder="{{'office_contact_no' | translate:translateKey}}" type="tel" maxlength="10"
 						 formControlName="officeContactNo" required>
 						<control-messages [control]="finalFireNocForm.get('officeContactNo')"></control-messages>
 					</mat-form-field>
