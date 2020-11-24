@@ -15,6 +15,8 @@ import { SessionStorageService } from 'angular-web-storage';
 import { OfflinePaymentComponent } from 'src/app/shared/components/offline-payment/offline-payment.component';
 import { TicketingsService } from '../facilities/ticketings/shared-ticketing/services/ticketings.service';
 import { TicketingConstants, TicketingUtils } from '../facilities/ticketings/config/ticketing-config';
+import { BookingService } from '../facilities/bookings/shared-booking/services/booking-service.service';
+import { BookingConstants } from '../facilities/bookings/config/booking-config';
 
 
 @Component({
@@ -30,6 +32,7 @@ export class LoiPaymentComponentBooking implements OnInit {
 	loiDate : any;
 	uniqueId: string;
 	id: number;
+	resourceTypes: any;
 	code: string;
 	translateKey: string = 'LOI Payments';
 	config: CitizenConfig = new CitizenConfig();
@@ -44,11 +47,15 @@ export class LoiPaymentComponentBooking implements OnInit {
 
 	ticketingConstants = TicketingConstants;
 
+	bookingConstant = BookingConstants;
+	
+
 	constructor(
 		private formService: FormsActionsService,
 		private session: SessionStorageService,
 		private router: Router,
 		private commonService: CommonService,
+		public bookingService: BookingService,
 		private toastr: ToastrService,
 		private route: ActivatedRoute,
 		private dialog: MatDialog,
@@ -59,6 +66,7 @@ export class LoiPaymentComponentBooking implements OnInit {
 			this.uniqueId = param.get('uniqueId');
 			this.id = Number(param.get('id'));
 			this.code = param.get('code');
+			this.resourceTypes = param.get('id');
 		});
 
 		this.router.events
@@ -105,9 +113,40 @@ export class LoiPaymentComponentBooking implements OnInit {
 
 	}
 	makePayment(loiNumber: any) {
-		this.ticketingService.resourceType = 'planetarium';
-		this.paymentRequest(this.uniqueId);
+		
+		if(this.resourceTypes=='CHILDREN_THEATER'){
+			this.bookingService.resourceType = 'childrenTheater';
+			this.paymentRequestBooking(this.uniqueId);
+		}if(this.resourceTypes=='SHOOTING_PERMISSION'){
+			this.bookingService.resourceType = 'shootingPermission';
+			this.paymentRequestBooking(this.uniqueId);
+		}
+		if(this.resourceTypes=='STADIUM'){
+			this.bookingService.resourceType = 'stadium';
+			this.paymentRequestBooking(this.uniqueId);
+		}
+		if(this.resourceTypes == 'PLANETARIUM_TICKETING'){
+			this.ticketingService.resourceType = 'planetarium';
+			this.paymentRequest(this.uniqueId);
+		}
+		
+	}
 
+	paymentRequestBooking(element) {
+		this.bookingService.getTransactionDetails(element).subscribe(transactionData => {
+		}, err => {
+			if (err.status == 402) {
+				
+				// if (err.status == 402) {
+					// this.bookingUtils.redirectToPayment(err, this.commonService, this.bookingService);
+					this.bookingUtils.redirectToCCAvenuePayment(err, this.commonService, this.bookingService, this.paymentGateway);
+				// }
+			} else if (err.error[0].code == this.bookingConstant.INVALID_BOOKING_STATUS) {
+				this.commonService.openAlert("Invalid Booking Status", err.error[0].message, "warning", "")
+			} else {
+				this.commonService.openAlertFormSaveValidation('Warning!', err.error, 'warning');
+			}
+		})
 	}
 
     paymentRequest(element) {
