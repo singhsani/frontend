@@ -1,7 +1,6 @@
 <!-- My Bookings Title Bar -->
 <app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
 
-
 <!-- Search Bookings By providing filter details -->
 <mat-card class="mb-4">
   <form [formGroup]="searchBookingsForm" (ngSubmit)="getAllBooking()" autocomplete="off" ngNativeValidate>
@@ -109,6 +108,12 @@
               <mat-icon title="Print Receipt" color="primary">print</mat-icon>
               {{'make_payment' | translate:translateKey}}
             </button>
+
+            <button mat-menu-item *ngIf="(element.status === 'SCRUTINY')" color="primary"
+                        (click)="loiPayments(element)">
+                        <mat-icon title="Make Payment" color="primary">print</mat-icon>
+							{{'make_payment' | translate:translateKey}}
+                    	</button>
 
             <button *ngIf="showRecieptReprint(element)" mat-menu-item color="primary"
                     (click)="printReceipt(element, element.payableServiceType)">
