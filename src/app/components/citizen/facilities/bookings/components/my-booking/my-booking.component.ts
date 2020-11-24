@@ -132,6 +132,10 @@ export class MyBookingComponent implements OnInit {
 		})
 	}
 
+	loiPayments(row){
+		this.router.navigate(['/citizen/loi-payments-booking', row.refNumber, row.resourceType, row.resourceCode]);
+  }
+
 	getAllLookUP() {
 		this.bookingService.getDataFromLookups().subscribe(lookUpResp => {
 			this.CANCELLATION_TYPE_LOOKUP = lookUpResp.CANCELLATION_TYPE

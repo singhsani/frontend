@@ -450,7 +450,7 @@ export class MyTicketingsComponent implements OnInit {
   }
 
   loiPayments(row){
-		this.router.navigate(['/citizen/loi-payments-booking', row.refNumber, row.id, row.resourceCode]);
+		this.router.navigate(['/citizen/loi-payments-booking', row.refNumber, row.resourceType, row.resourceCode]);
   }
   
 }
