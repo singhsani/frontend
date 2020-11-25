@@ -143,9 +143,6 @@ export class ShopLicNewComponent implements OnInit {
 			this.shopLicNewFormControls();
 
 			this.getWardZoneLevel();
-			if(this.shopLicNewForm.get('ownershipType').value){
-				this.updateServiceUploadDocument(this.shopLicNewForm.get('ownershipType').value)
-			}
 			
 
 
@@ -194,6 +191,10 @@ export class ShopLicNewComponent implements OnInit {
 					(<FormArray>this.shopLicNewForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.licenseConfiguration.createDocumentsGrp(app));
 				});
 				this.requiredDocumentList();
+
+				if (this.shopLicNewForm.get('ownershipType').value) {
+					this.updateServiceUploadDocument(this.shopLicNewForm.get('ownershipType').value)
+				}
 				// if(res.serviceDetail)
 				// //this.isGuideLineActive = false;
 
@@ -1216,6 +1217,7 @@ export class ShopLicNewComponent implements OnInit {
 	 * @param ownershipType 
 	 */
 	filterDocumentList(ownershipType) {
+		debugger
 
 
 		if (this.isIntimation) {
