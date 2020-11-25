@@ -720,7 +720,7 @@ export class ShopLicNewComponent implements OnInit {
 	* @param row: table row id
 	*/
 	cancelRecord(row: any, index: number) {
-		debugger
+		
 		try {
 			if (row.newRecordAdded) {
 				this.getArrayByType(row.get('personType').value).removeAt(index);
@@ -762,7 +762,7 @@ export class ShopLicNewComponent implements OnInit {
 	* @event is value of NoOfHumanWorking dropdown
 	*/
 	onChangeNoOfHumanWorking(event) {
-		// debugger
+		// 
 		this.isDisabledBtn = false;
 		this.shopLicNewForm.get('registrationType').setValue(event);
 		this.registrationType = event;
@@ -1217,9 +1217,7 @@ export class ShopLicNewComponent implements OnInit {
 	 * @param ownershipType 
 	 */
 	filterDocumentList(ownershipType) {
-		debugger
-
-
+		
 		if (this.isIntimation) {
 
 			return [
