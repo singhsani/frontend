@@ -143,9 +143,6 @@ export class ShopLicNewComponent implements OnInit {
 			this.shopLicNewFormControls();
 
 			this.getWardZoneLevel();
-			if(this.shopLicNewForm.get('ownershipType').value){
-				this.updateServiceUploadDocument(this.shopLicNewForm.get('ownershipType').value)
-			}
 			
 
 
@@ -194,6 +191,10 @@ export class ShopLicNewComponent implements OnInit {
 					(<FormArray>this.shopLicNewForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.licenseConfiguration.createDocumentsGrp(app));
 				});
 				this.requiredDocumentList();
+
+				if (this.shopLicNewForm.get('ownershipType').value) {
+					this.updateServiceUploadDocument(this.shopLicNewForm.get('ownershipType').value)
+				}
 				// if(res.serviceDetail)
 				// //this.isGuideLineActive = false;
 
@@ -719,7 +720,7 @@ export class ShopLicNewComponent implements OnInit {
 	* @param row: table row id
 	*/
 	cancelRecord(row: any, index: number) {
-		debugger
+		
 		try {
 			if (row.newRecordAdded) {
 				this.getArrayByType(row.get('personType').value).removeAt(index);
@@ -761,7 +762,7 @@ export class ShopLicNewComponent implements OnInit {
 	* @event is value of NoOfHumanWorking dropdown
 	*/
 	onChangeNoOfHumanWorking(event) {
-		// debugger
+		// 
 		this.isDisabledBtn = false;
 		this.shopLicNewForm.get('registrationType').setValue(event);
 		this.registrationType = event;
@@ -1216,8 +1217,7 @@ export class ShopLicNewComponent implements OnInit {
 	 * @param ownershipType 
 	 */
 	filterDocumentList(ownershipType) {
-
-
+		
 		if (this.isIntimation) {
 
 			return [
