@@ -48,11 +48,11 @@ export class ShopLicNewComponent implements OnInit {
 	//regiTyep: string[] = ['CERTIFICATION', 'INTIMATION'];
 	regiTyep: Array<any> = [{
 		code: 'INTIMATION',
-		name: 'less than or equal to 10',
+		name: 'Intimation (Less than 10 employees)',
 	},
 	{
 		code: 'CERTIFICATION',
-		name: 'more than 10',
+		name: 'Registration (10 or More than 10 employees)',
 	},
 
 	];
@@ -263,7 +263,9 @@ export class ShopLicNewComponent implements OnInit {
 
 			employerDesignation: [null, [Validators.required, Validators.maxLength(100)]],
 			employerMobileNumber: [null, [Validators.required, Validators.maxLength(100)]],
-			employerEmailId: [null, [Validators.required, ValidationService.emailValidator]],
+			alternateMobileNumber:[null,[Validators.required,Validators.maxLength(10)]],
+			landlineNumber:null,
+			employerEmailId: null,
 			residentialAddressOfEmployer: [null, [Validators.required, Validators.maxLength(500)]],
 
 			//nameOfManager: [null, [Validators.required, Validators.maxLength(60)]],

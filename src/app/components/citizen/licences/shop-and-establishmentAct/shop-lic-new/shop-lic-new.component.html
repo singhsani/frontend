@@ -106,17 +106,9 @@
 							<!-- </control-messages> -->
 						</div>
 					</div>
-
-
-				
 				</div>
 
 				
-					
-
-				
-
-			
 				<div class="row">
 
 					<h2>{{'situation_label'| translate:translateKey}}</h2>
@@ -169,7 +161,7 @@
 
 					<mat-form-field class="col-md-6">
 						<input matInput OnlyNumber type="text" required maxlength="10"
-							placeholder="Employer MobileNumber"
+							placeholder="Employer Mobile Number"
 							formControlName="employerMobileNumber" appGujInputSource
 							 [form]="shopLicNewForm">
 						<control-messages [control]="shopLicNewForm.get('employerMobileNumber')">
@@ -177,14 +169,30 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-6">
-						<input matInput type="text" required maxlength="100"
-							placeholder="Employer EmailId"
+						<input matInput type="text" 
+							placeholder="Employer Email-Id"
 							formControlName="employerEmailId" appGujInputSource 
 							[form]="shopLicNewForm" appValidationFields >
 						<control-messages [control]="shopLicNewForm.get('employerEmailId')"></control-messages>
 					</mat-form-field>
 					
-		
+					<mat-form-field class="col-md-6">
+						 <input matInput type="text" maxlength="10"
+							placeholder="Alternate mobile number"
+							formControlName="alternateMobileNumber" appGujInputSource
+							[form]="shopLicNewForm"/>
+						<control-messages [control]="shopLicNewForm.get('alternateMobileNumber')">
+						</control-messages>	 
+					</mat-form-field> 
+
+					<mat-form-field class="col-md-6">
+						<input matInput type="text" maxlength="15"
+						placeholder="Landline number"
+						formControlName="landlineNumber" appGujInputSource
+						[form]="shopLicNewForm"/>
+						<control-messages [control]="shopLicNewForm.get('landlineNumber')">
+						</control-messages>
+					</mat-form-field>
 
 					<h2>{{'category_label' | translate:translateKey}}</h2>
 
