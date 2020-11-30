@@ -254,6 +254,9 @@ export class ShopLicNewComponent implements OnInit {
 			waterDrainageBlockId: [null],
 			ownershipType: [null, [Validators.required]],
 
+			pecNumber:null,
+			prcNumber:null,
+			censusOrPropertyNumber:null,
 			number: null,
 			otherAddresses: [null, [Validators.required, Validators.maxLength(100)]],
 			/* Step 1 controls end */
