@@ -10,6 +10,7 @@ import { FireFacilitiesService } from '../common/services/fire-facilities.servic
 import { Location } from '@angular/common';
 import * as _ from 'lodash';
 import { TranslateService } from '../../../../shared/modules/translate/translate.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
 	selector: 'app-final-fire-noc',
@@ -53,11 +54,12 @@ export class FinalFireNocComponent implements OnInit {
 	searchLicence() {
 		this.FireFacilitiesService.searchByProvisionalNumber(this.serachLicenceObj.searchLicenceNumber).subscribe(
 			(res: any) => {
-
-				if (res.success) {
+				
+				if (res.success && res.list) {
 					this.serachLicenceObj.isDisplayRenewLicenceForm = true;
 					this.createRecordPatchSerachData(res.data);
 				} else {
+					this.toaster.warning('No record Found');
 					this.serachLicenceObj.isDisplayRenewLicenceForm = false;
 				}
 			}, (err: any) => {
@@ -86,7 +88,8 @@ export class FinalFireNocComponent implements OnInit {
 		private commonService: CommonService,
 		private FireFacilitiesService: FireFacilitiesService,
 		private location: Location,
-		public TranslateService: TranslateService
+		public TranslateService: TranslateService,
+		private toaster: ToastrService,
 	) { }
 
 	/**
