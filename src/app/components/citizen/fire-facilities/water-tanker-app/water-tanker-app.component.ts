@@ -9,6 +9,7 @@ import * as moment from 'moment';
 import * as _ from 'lodash';
 import { FireFacilitiesService } from '../common/services/fire-facilities.service';
 import { TranslateService } from '../../../../shared/modules/translate/translate.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
 	selector: 'app-water-tanker-app',
@@ -53,7 +54,8 @@ export class WaterTankerAppComponent implements OnInit {
 		private route: ActivatedRoute,
 		private formService: FormsActionsService,
 		public TranslateService: TranslateService,
-		public fireFacilitiesService: FireFacilitiesService
+		public fireFacilitiesService: FireFacilitiesService,
+		private toaster: ToastrService,
 
 	) { }
 
@@ -265,7 +267,19 @@ export class WaterTankerAppComponent implements OnInit {
 		if (this.waterTankerAppForm.get('totalTankRequired').value && this.waterTankerAppForm.controls.requiredOnFloor.get('code')) {
 			this.fireFacilitiesService.getWaterTankersFee(this.waterTankerAppForm.value).subscribe(
 				res => {
-					this.waterTankerAppForm.patchValue(res);
+					if(res.totalTanks != 9){
+						let maxTank = 9;
+						let tempTank = maxTank - res.totalTanks;
+						if(tempTank < Number(this.waterTankerAppForm.get('totalTankRequired').value)){
+							this.toaster.warning('Water Tanker limit is fixed for 9. No booking is Aceptable');
+							this.waterTankerAppForm.get('totalTankRequired').reset();
+						}else{
+							this.waterTankerAppForm.patchValue(res);
+						}
+					}else{
+						this.waterTankerAppForm.patchValue(res);
+					}
+					
 				},
 				err => {
 					console.log(err.message)
