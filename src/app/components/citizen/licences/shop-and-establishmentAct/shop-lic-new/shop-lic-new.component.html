@@ -39,8 +39,7 @@
 					<mat-form-field class="col-md-4">
 						<input matInput required  maxlength="150"
 							placeholder="Name of establishment"
-							formControlName="establishmentName" appGujInputSource
-							[form]="shopLicNewForm">
+							formControlName="establishmentName" >
 						<control-messages [control]="shopLicNewForm.get('establishmentName')"></control-messages>
 					</mat-form-field>
 
@@ -48,8 +47,7 @@
 					<!-- <mat-form-field *ngIf="isIntimation" class="col-md-4">
 						<input matInput  maxlength="150"
 							placeholder="{{'Previous Registration Number' | translate:translateKey}}"
-							formControlName="previousRegistrationNo" appGujInputSource 
-							[form]="shopLicNewForm">
+							formControlName="previousRegistrationNo" >
 					</mat-form-field> -->
 
 					<h2>{{'postal_address_of_establishment' | translate:translateKey}}</h2>
@@ -106,6 +104,33 @@
 							<!-- </control-messages> -->
 						</div>
 					</div>
+
+					<mat-form-field class="col-md-4">
+						<input matInput type="text"
+							maxlength="12"
+							appAlphaNumeric
+							placeholder="PEC number"
+							formControlName="pecNumber"/>
+							<control-messages [control]="shopLicNewForm.get('pecNumber')">
+						</control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<input matInput type="text"
+							maxlength="12"
+							appAlphaNumeric
+							placeholder="PRC number"
+							formControlName="prcNumber"/>
+						<control-messages [control]="shopLicNewForm.get('prcNumber')"></control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<input matInput type="text"
+							maxlength="16"
+							placeholder="Census Number/Property Number"
+							formControlName="censusOrPropertyNumber"/>
+						<control-messages [control]="shopLicNewForm.get('censusOrPropertyNumber')"></control-messages>
+					</mat-form-field>
 				</div>
 
 				
@@ -135,16 +160,16 @@
 					<mat-form-field class="col-md-6">
 						<input matInput type="text" required maxlength="100"
 							placeholder="{{'name_of_employer' | translate:translateKey}}"
-							formControlName="nameOfEmployer" appGujInputSource targetElement="nameOfEmployerGuj"
-							[form]="shopLicNewForm" appValidationFields [validationFieldsType]="'onlyNameWithSpace'">
+							formControlName="nameOfEmployer"  targetElement="nameOfEmployerGuj"
+							appValidationFields [validationFieldsType]="'onlyNameWithSpace'">
 						<control-messages [control]="shopLicNewForm.get('nameOfEmployer')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-6">
 						<input matInput type="text" required maxlength="500"
 							placeholder="{{'residential_address_of_employer' | translate:translateKey}}"
-							formControlName="residentialAddressOfEmployer" appGujInputSource
-							 [form]="shopLicNewForm">
+							formControlName="residentialAddressOfEmployer" 
+							>
 						<control-messages [control]="shopLicNewForm.get('residentialAddressOfEmployer')">
 						</control-messages>
 					</mat-form-field>
@@ -152,8 +177,7 @@
 					<mat-form-field class="col-md-6">
 						<input matInput type="text" required maxlength="100"
 							placeholder="Employer Designation"
-							formControlName="employerDesignation" appGujInputSource 
-							[form]="shopLicNewForm" appValidationFields [validationFieldsType]="'onlyNameWithSpace'">
+							formControlName="employerDesignation"  appValidationFields [validationFieldsType]="'onlyNameWithSpace'">
 						<control-messages [control]="shopLicNewForm.get('employerDesignation')"></control-messages>
 					</mat-form-field>
 
@@ -162,8 +186,7 @@
 					<mat-form-field class="col-md-6">
 						<input matInput OnlyNumber type="text" required maxlength="10"
 							placeholder="Employer Mobile Number"
-							formControlName="employerMobileNumber" appGujInputSource
-							 [form]="shopLicNewForm">
+							formControlName="employerMobileNumber" >
 						<control-messages [control]="shopLicNewForm.get('employerMobileNumber')">
 						</control-messages>
 					</mat-form-field>
@@ -171,28 +194,27 @@
 					<mat-form-field class="col-md-6">
 						<input matInput type="text" 
 							placeholder="Employer Email-Id"
-							formControlName="employerEmailId" appGujInputSource 
-							[form]="shopLicNewForm" appValidationFields >
+							formControlName="employerEmailId"  appValidationFields >
 						<control-messages [control]="shopLicNewForm.get('employerEmailId')"></control-messages>
 					</mat-form-field>
 					
 					<mat-form-field class="col-md-6">
-						 <input matInput type="text" maxlength="10"
+						 <input matInput OnlyNumber type="text" maxlength="10"
 							placeholder="Alternate mobile number"
-							formControlName="alternateMobileNumber" appGujInputSource
-							[form]="shopLicNewForm"/>
+							formControlName="alternateMobileNumber" />
 						<control-messages [control]="shopLicNewForm.get('alternateMobileNumber')">
 						</control-messages>	 
 					</mat-form-field> 
 
 					<mat-form-field class="col-md-6">
-						<input matInput type="text" maxlength="15"
+						<input matInput OnlyNumber type="text" maxlength="15"
 						placeholder="Landline number"
-						formControlName="landlineNumber" appGujInputSource
-						[form]="shopLicNewForm"/>
+						formControlName="landlineNumber" />
 						<control-messages [control]="shopLicNewForm.get('landlineNumber')">
 						</control-messages>
 					</mat-form-field>
+
+					
 
 					<h2>{{'category_label' | translate:translateKey}}</h2>
 
