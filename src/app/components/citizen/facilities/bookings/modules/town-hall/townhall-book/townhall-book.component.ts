@@ -82,7 +82,7 @@ export class TownHallBookComponent implements OnInit {
 	 * Minimum end date.
 	 */
 	//endMinDate = moment(new Date()).add(1, 'day').toISOString();
-	endMinDate = moment(new Date()).add(179, 'day').toDate();
+	endMaxDate = moment(new Date()).add(179, 'day').toDate();
 	toStartDate: Date;
 
 
@@ -93,7 +93,8 @@ export class TownHallBookComponent implements OnInit {
 	 * Available Dates for Shortlist.
 	 */
 	Dates: Array<any> = [];
-	endMaxDate:any = new Date();
+	//endMaxDate:any = new Date();
+	endMinDate :any = new Date;
 
 	/**
 	 * Bank Lookups
@@ -155,9 +156,9 @@ export class TownHallBookComponent implements OnInit {
 		 * Subscribe start date changes
 		 */
 		this.searchTownHallForm.controls.startDate.valueChanges.subscribe(data => {
-			this.searchTownHallForm.controls.endDate.reset();
-		//	this.endMinDate = data;
-			this.toStartDate = data;
+			  this.searchTownHallForm.controls.endDate.reset();
+			  this.endMinDate = data;
+			  this.toStartDate = data;
 			return;
 		});
 
@@ -260,7 +261,7 @@ export class TownHallBookComponent implements OnInit {
 	//  */
 	onDateChange(date) {
         let futureMonth = moment(date).add(3, 'month');
-        this.endMaxDate = moment(futureMonth).format("YYYY-MM-DD");
+      //  this.endMaxDate = moment(futureMonth).format("YYYY-MM-DD");
 	}
 
 	/**
