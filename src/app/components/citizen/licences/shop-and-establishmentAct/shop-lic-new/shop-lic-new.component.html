@@ -228,13 +228,13 @@
 						</control-messages>
 					</div>
 
-					<div class="col-md-6 ngSelect" formGroupName="subCategoryOfBusiness">
+					<div class="col-md-6 ngSelect" formGroupName="businessSubCategory">
 						<ng-select placeholder="{{'sub_category_of_business' | translate:translateKey}} *"
 							formControlName="code">
-							<ng-option *ngFor="let sub_category of businessSubCategory" [value]="sub_category.code">
+							<ng-option *ngFor="let sub_category of businessSubCategoryList" [value]="sub_category.code">
 								{{sub_category.name}}</ng-option>
 						</ng-select>
-						<control-messages [control]="shopLicNewForm.get('subCategoryOfBusiness').get('code')">
+						<control-messages [control]="shopLicNewForm.get('businessSubCategory').get('code')">
 						</control-messages>
 					</div>
 				</div>

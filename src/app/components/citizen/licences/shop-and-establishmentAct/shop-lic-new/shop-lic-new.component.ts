@@ -75,7 +75,7 @@ export class ShopLicNewComponent implements OnInit {
 	businessCategory: Array<any> = [];
 	businessNature: Array<any> = [];
 
-	businessSubCategory: Array<any> = [];
+	businessSubCategoryList: Array<any> = [];
 	wardNo: Array<any> = [];
 	SHOP_LIC_HOLIDAY: Array<any> = [];
 	ownershipTypeList: Array<any> = [
@@ -277,7 +277,7 @@ export class ShopLicNewComponent implements OnInit {
 				code: [null, Validators.required],
 				name: null,
 			}),
-			subCategoryOfBusiness: this.fb.group({
+			businessSubCategory: this.fb.group({
 				code: [null, Validators.required],
 				name: null,
 			}),
@@ -765,7 +765,7 @@ export class ShopLicNewComponent implements OnInit {
 	*/
 	getSubCategoryDropdownData(event) {
 		this.shopAndEstablishmentService.getSubCategory(event).subscribe(res => {
-			this.businessSubCategory = res;
+			this.businessSubCategoryList = res;
 		})
 	}
 
@@ -793,7 +793,7 @@ export class ShopLicNewComponent implements OnInit {
 	*/
 	onChangeCategorySelect(event) {
 		try {
-			this.shopLicNewForm.get('subCategoryOfBusiness').reset();
+			this.shopLicNewForm.get('businessSubCategory').reset();
 			this.getSubCategoryDropdownData(event);
 		} catch (error) {
 			console.log(error.message)
