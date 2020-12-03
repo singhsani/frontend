@@ -335,13 +335,20 @@
 									
 									<td>
 										<div class="d-md-none">{{'relationship' | translate:translateKey}}</div>
-										<p *ngIf="!item.isEditMode">{{item.get('relationship').value}}</p>
-										<mat-form-field *ngIf="item.isEditMode">
-											<input matInput appValidationFields
-												[validationFieldsType]="'onlyNameWithSpace'" formControlName="relationship"
-												required>
-											<control-messages [control]="item.get('relationship')"></control-messages>
-										</mat-form-field>
+										<div class="ngSelect" required style="min-width:100px" formGroupName="relationshipType">
+											<p class="width80" *ngIf="!item.isEditMode">
+												 {{getSelectedDataFromLookUps(relationshipTypeList,item.get('relationshipType').value.code)?.name}} 
+											</p>
+											<div class="col-md-6 ngSelect" *ngIf="item.isEditMode">
+												<ng-select *ngIf="item.isEditMode" placeholder="{{'relationship_type' | translate:translateKey}} *"
+													formControlName="code">
+													<ng-option *ngFor="let relation of relationshipTypeList" [value]="relation.code">
+														{{relation.name}}</ng-option>
+												</ng-select>
+												<control-messages [control]="item.get('relationshipType').get('code')">
+												</control-messages>
+											</div>
+										</div>
 									</td>
 
 									<td>

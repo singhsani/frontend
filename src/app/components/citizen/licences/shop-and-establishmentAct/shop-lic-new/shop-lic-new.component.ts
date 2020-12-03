@@ -71,6 +71,8 @@ export class ShopLicNewComponent implements OnInit {
 	SHOP_LIC_OCCUPANCY_PERSON_RELATIONSHIP: Array<any> = [];
 	SHOP_LIC_PARTNER_PERSON_RELATIONSHIP: Array<any> = [];
 	SHOP_LIC_TYPE_OF_ORGANIZATION: Array<any> = [];
+	relationshipTypeList:Array<any>=[];
+
 	YES_NO: Array<any> = [];
 	businessCategory: Array<any> = [];
 	businessNature: Array<any> = [];
@@ -209,12 +211,13 @@ export class ShopLicNewComponent implements OnInit {
 	* Method is used to get lookup data
 	*/
 	getLookupData() {
+		
 		this.formService.getDataFromLookups().subscribe(res => {
-
+			debugger
 			this.SHOP_LIC_EMPLOYER_FAMILY_PERSON_RELATIONSHIP = res.SHOP_LIC_EMPLOYER_FAMILY_PERSON_RELATIONSHIP;
 			this.SHOP_LIC_OCCUPANCY_PERSON_RELATIONSHIP = res.SHOP_LIC_OCCUPANCY_PERSON_RELATIONSHIP;
 			this.SHOP_LIC_PARTNER_PERSON_RELATIONSHIP = res.SHOP_LIC_PARTNER_PERSON_RELATIONSHIP;
-
+			this.relationshipTypeList = res.SHOP_ESTABLISHMENT_RELATIONSHIP_TYPE;
 			this.SHOP_LIC_TYPE_OF_ORGANIZATION = res.SHOP_ESTABLISHMENT_ORGANIZATION_TYPE;
 			this.businessCategory = res.SHOP_ESTABLISHMENT_CATEGORY;
 			this.businessNature = res.SHOP_NATURE_OF_BUSINESS;
@@ -266,7 +269,7 @@ export class ShopLicNewComponent implements OnInit {
 
 			employerDesignation: [null, [Validators.required, Validators.maxLength(100)]],
 			employerMobileNumber: [null, [Validators.required, Validators.maxLength(100)]],
-			alternateMobileNumber:[null,[Validators.required,Validators.maxLength(10)]],
+			alternateMobileNumber:null,
 			landlineNumber:null,
 			employerEmailId: null,
 			residentialAddressOfEmployer: [null, [Validators.required, Validators.maxLength(500)]],
@@ -315,7 +318,7 @@ export class ShopLicNewComponent implements OnInit {
 
 			/*  */
 			attachments: [''],
-			agree: [false,Validators.required]
+			agree: [false,Validators.required],
 			/*  */
 		});
 		//this.addMorePerson('EMPLOYER_FAMILY');
@@ -388,11 +391,14 @@ export class ShopLicNewComponent implements OnInit {
 			id: data.id ? data.id : null,
 			name: [data.name ? data.name : null, [Validators.required, Validators.maxLength(100)]],
 			address: [data.address ? data.address : null, [Validators.required, Validators.maxLength(150)]],
-			relationship: [data.relationship ? data.relationship : null, [Validators.required, Validators.maxLength(100)]],
+			// relationship: [data.relationship ? data.relationship : null, [Validators.required, Validators.maxLength(100)]],
 			designation: [data.designation ? data.designation : null, [Validators.required, Validators.maxLength(100)]],
 			gender: this.fb.group({
 				//code: [data.gender ? (data.gender.code ? data.gender.code : null) : null]
 				code: [data.gender ? (data.gender.code ? data.gender.code : null) : null, [Validators.required]],
+			}),
+			relationshipType:this.fb.group({
+				code:[data.relationshipType ? (data.relationshipType.code ? data.relationshipType.code : null) :  null,[Validators.required]]
 			}),
 			mobileNo: [data.mobileNo ? data.mobileNo : null, [Validators.required]],
 			// employee: [data.employee ? data.employee : null],
