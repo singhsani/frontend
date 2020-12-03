@@ -21,158 +21,159 @@ export class DashboardComponent implements OnInit {
 	services: any = [];
 	isRecentApp: boolean = false;
 	recentApp: any;
-	bookingsAndTicketings: any = [
-		{
-			"id": 1,
-			"uniqueId": null,
-			"version": null,
-			"code": "BOOKINGMODULE",
-			"fieldView": "ALL",
-			"fieldList": null,
-			"name": "Booking Facilities",
-			"gujName": "Booking Facilities",
-			"services": [
+	bookingsAndTicketings = [];
+	// bookingsAndTicketings: any = [
+	// 	{
+	// 		"id": 1,
+	// 		"uniqueId": null,
+	// 		"version": null,
+	// 		"code": "BOOKINGMODULE",
+	// 		"fieldView": "ALL",
+	// 		"fieldList": null,
+	// 		"name": "Booking Facilities",
+	// 		"gujName": "Booking Facilities",
+	// 		"services": [
 
-				{
-					"code": "MYBOOKING",
-					"fieldView": "ALL",
-					"name": "My Bookings",
-					"gujName": "My Bookings",
-					"appointmentRequired": false,
-					"active": true
-				},
+	// 			{
+	// 				"code": "MYBOOKING",
+	// 				"fieldView": "ALL",
+	// 				"name": "My Bookings",
+	// 				"gujName": "My Bookings",
+	// 				"appointmentRequired": false,
+	// 				"active": true
+	// 			},
 
-				{
-					"code": "TOWNHALLBOOK",
-					"fieldView": "ALL",
-					"name": "Townhall",
-					"gujName": "ટાઉનહોલ",
-					"appointmentRequired": false,
-					"active": true
-				},
-				{
-					"code": "THEATERBOOK",
-					"fieldView": "ALL",
-					"name": "Amphi Theater",
-					"gujName": "એમ્ફી થિયેટર",
-					"appointmentRequired": false,
-					"active": true
-				},
-				// {
-				// 	"code": "GUESTHOUSELIST",
-				// 	"fieldView": "ALL",
-				// 	"name": "Guest House",
-				// 	"gujName": "અતિથિગૃહ",
-				// 	"appointmentRequired": false,
-				// 	"active": true
-				// },
-				{
-					"code": "STADIUMBOOK",
-					"fieldView": "ALL",
-					"name": "Stadium",
-					"gujName": "સ્ટેડિયમ",
-					"appointmentRequired": false,
-					"active": true
-				},
-				{
-					"code": "ATITHIGRUHBOOK",
-					"fieldView": "ALL",
-					"name": "Atithigruh",
-					"gujName": "અતિથિગ્રહ",
-					"appointmentRequired": false,
-					"active": true
-				},
-				{
-					"code": "CHILDRENTHEATERBOOK",
-					"fieldView": "ALL",
-					"name": "Children Theater",
-					"gujName": "બાળકો થિયેટર",
-					"appointmentRequired": false,
-					"active": true
-				},
-				{
-					"code": "BOOKPERMISSION",
-					"fieldView": "ALL",
-					"name": "Shooting Permission",
-					"gujName": "પરવાનગી",
-					"appointmentRequired": false,
-					"active": true
-				},
-				{
-					"code": "SWIMMINGPOOL",
-					"fieldView": "ALL",
-					"name": "Swimming Pool",
-					"gujName": "સ્નાનાગાર",
-					"appointmentRequired": false,
-					"active": true
-				},
-				{
-					"code": "SWIMMINGPOOLRENEWAL",
-					"fieldView": "ALL",
-					"name": "Swimming Pool Renewal",
-					"gujName": "સ્નાનાગાર",
-					"appointmentRequired": false,
-					"active": true
-				}
-			]
-		},
-		{
-			"id": 2,
-			"uniqueId": null,
-			"version": null,
-			"code": "TICKETINGSMODULE",
-			"fieldView": "ALL",
-			"fieldList": null,
-			"name": "Ticketing Facilities",
-			"gujName": "Ticketing Facilities",
-			"services": [
-				{
-					"code": "MYTICKETINGS",
-					"fieldView": "ALL",
-					"name": "My Ticketings",
-					"gujName": "મારી ટિકિટિંગ્સ",
-					"appointmentRequired": false,
-					"active": true
-				},
-				{
-					"code": "ZOO-DASHBOARD",
-					"fieldView": "ALL",
-					"name": "Zoo",
-					"gujName": "પ્રાણી સંગ્રહાલય",
-					"appointmentRequired": false,
-					"active": true
-				},
-				{
-					"code": "PLANETARIUMBOOK",
-					"fieldView": "ALL",
-					"name": "Planetarium",
-					"gujName": "પ્લાનેટેરિયમ",
-					"appointmentRequired": false,
-					"active": true
-				}
-			]
-		},
-		// {
-		// 	"id": 3,
-		// 	"uniqueId": null,
-		// 	"version": null,
-		// 	"code": "BOOKINGMODULE",
-		// 	"fieldView": "ALL",
-		// 	"fieldList": null,
-		// 	"name": "My Bookings",
-		// 	"gujName": "My Bookings",
-		// 	"services": [
-		// 		{
-		// 			"code": "CANCELBOOKING",
-		// 			"fieldView": "ALL",
-		// 			"name": "My Bookings",
-		// 			"gujName": "My Bookings",
-		// 			"appointmentRequired": false,
-		// 			"active": true
-		// 		}
-		// 	]
-		// }
-	];
+	// 			{
+	// 				"code": "TOWNHALLBOOK",
+	// 				"fieldView": "ALL",
+	// 				"name": "Townhall",
+	// 				"gujName": "ટાઉનહોલ",
+	// 				"appointmentRequired": false,
+	// 				"active": true
+	// 			},
+	// 			{
+	// 				"code": "THEATERBOOK",
+	// 				"fieldView": "ALL",
+	// 				"name": "Amphi Theater",
+	// 				"gujName": "એમ્ફી થિયેટર",
+	// 				"appointmentRequired": false,
+	// 				"active": true
+	// 			},
+	// 			// {
+	// 			// 	"code": "GUESTHOUSELIST",
+	// 			// 	"fieldView": "ALL",
+	// 			// 	"name": "Guest House",
+	// 			// 	"gujName": "અતિથિગૃહ",
+	// 			// 	"appointmentRequired": false,
+	// 			// 	"active": true
+	// 			// },
+	// 			{
+	// 				"code": "STADIUMBOOK",
+	// 				"fieldView": "ALL",
+	// 				"name": "Stadium",
+	// 				"gujName": "સ્ટેડિયમ",
+	// 				"appointmentRequired": false,
+	// 				"active": true
+	// 			},
+	// 			{
+	// 				"code": "ATITHIGRUHBOOK",
+	// 				"fieldView": "ALL",
+	// 				"name": "Atithigruh",
+	// 				"gujName": "અતિથિગ્રહ",
+	// 				"appointmentRequired": false,
+	// 				"active": true
+	// 			},
+	// 			{
+	// 				"code": "CHILDRENTHEATERBOOK",
+	// 				"fieldView": "ALL",
+	// 				"name": "Children Theater",
+	// 				"gujName": "બાળકો થિયેટર",
+	// 				"appointmentRequired": false,
+	// 				"active": true
+	// 			},
+	// 			{
+	// 				"code": "BOOKPERMISSION",
+	// 				"fieldView": "ALL",
+	// 				"name": "Shooting Permission",
+	// 				"gujName": "પરવાનગી",
+	// 				"appointmentRequired": false,
+	// 				"active": true
+	// 			},
+	// 			{
+	// 				"code": "SWIMMINGPOOL",
+	// 				"fieldView": "ALL",
+	// 				"name": "Swimming Pool",
+	// 				"gujName": "સ્નાનાગાર",
+	// 				"appointmentRequired": false,
+	// 				"active": true
+	// 			},
+	// 			{
+	// 				"code": "SWIMMINGPOOLRENEWAL",
+	// 				"fieldView": "ALL",
+	// 				"name": "Swimming Pool Renewal",
+	// 				"gujName": "સ્નાનાગાર",
+	// 				"appointmentRequired": false,
+	// 				"active": true
+	// 			}
+	// 		]
+	// 	},
+	// 	{
+	// 		"id": 2,
+	// 		"uniqueId": null,
+	// 		"version": null,
+	// 		"code": "TICKETINGSMODULE",
+	// 		"fieldView": "ALL",
+	// 		"fieldList": null,
+	// 		"name": "Ticketing Facilities",
+	// 		"gujName": "Ticketing Facilities",
+	// 		"services": [
+	// 			{
+	// 				"code": "MYTICKETINGS",
+	// 				"fieldView": "ALL",
+	// 				"name": "My Ticketings",
+	// 				"gujName": "મારી ટિકિટિંગ્સ",
+	// 				"appointmentRequired": false,
+	// 				"active": true
+	// 			},
+	// 			{
+	// 				"code": "ZOO-DASHBOARD",
+	// 				"fieldView": "ALL",
+	// 				"name": "Zoo",
+	// 				"gujName": "પ્રાણી સંગ્રહાલય",
+	// 				"appointmentRequired": false,
+	// 				"active": true
+	// 			},
+	// 			{
+	// 				"code": "PLANETARIUMBOOK",
+	// 				"fieldView": "ALL",
+	// 				"name": "Planetarium",
+	// 				"gujName": "પ્લાનેટેરિયમ",
+	// 				"appointmentRequired": false,
+	// 				"active": true
+	// 			}
+	// 		]
+	// 	},
+	// 	// {
+	// 	// 	"id": 3,
+	// 	// 	"uniqueId": null,
+	// 	// 	"version": null,
+	// 	// 	"code": "BOOKINGMODULE",
+	// 	// 	"fieldView": "ALL",
+	// 	// 	"fieldList": null,
+	// 	// 	"name": "My Bookings",
+	// 	// 	"gujName": "My Bookings",
+	// 	// 	"services": [
+	// 	// 		{
+	// 	// 			"code": "CANCELBOOKING",
+	// 	// 			"fieldView": "ALL",
+	// 	// 			"name": "My Bookings",
+	// 	// 			"gujName": "My Bookings",
+	// 	// 			"appointmentRequired": false,
+	// 	// 			"active": true
+	// 	// 		}
+	// 	// 	]
+	// 	// }
+	// ];
 
 	/**
 	 * Constructor to declare defualt propeties of class
