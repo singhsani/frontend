@@ -213,7 +213,6 @@ export class ShopLicNewComponent implements OnInit {
 	getLookupData() {
 		
 		this.formService.getDataFromLookups().subscribe(res => {
-			debugger
 			this.SHOP_LIC_EMPLOYER_FAMILY_PERSON_RELATIONSHIP = res.SHOP_LIC_EMPLOYER_FAMILY_PERSON_RELATIONSHIP;
 			this.SHOP_LIC_OCCUPANCY_PERSON_RELATIONSHIP = res.SHOP_LIC_OCCUPANCY_PERSON_RELATIONSHIP;
 			this.SHOP_LIC_PARTNER_PERSON_RELATIONSHIP = res.SHOP_LIC_PARTNER_PERSON_RELATIONSHIP;
@@ -268,8 +267,8 @@ export class ShopLicNewComponent implements OnInit {
 			nameOfEmployer: [null, [Validators.required, Validators.maxLength(100)]],
 
 			employerDesignation: [null, [Validators.required, Validators.maxLength(100)]],
-			employerMobileNumber: [null, [Validators.required, Validators.maxLength(100)]],
-			alternateMobileNumber:null,
+			employerMobileNumber: [null, [ValidationService.mobileNumberValidation]],
+			alternateMobileNumber:[null, [ValidationService.mobileNumberValidation]],
 			landlineNumber:null,
 			employerEmailId: null,
 			residentialAddressOfEmployer: [null, [Validators.required, Validators.maxLength(500)]],
@@ -401,9 +400,7 @@ export class ShopLicNewComponent implements OnInit {
 				code:[data.relationshipType ? (data.relationshipType.code ? data.relationshipType.code : null) :  null,[Validators.required]]
 			}),
 			mobileNo: [data.mobileNo ? data.mobileNo : null, [Validators.required]],
-			// employee: [data.employee ? data.employee : null],
-			emailId: [null, [Validators.required, ValidationService.emailValidator]],
-			// [data.emailId ? data.emailId :
+			emailId: [data.emailId ? data.emailId : null, [Validators.required, ValidationService.emailValidator]],
 		})
 
 	}
@@ -1238,16 +1235,7 @@ export class ShopLicNewComponent implements OnInit {
 		
 		if (this.isIntimation) {
 
-			return [
-				{
-					documentIdentifier: 'EMPLOYER_ID_PROOF',
-					mandatory: true
-				},
-				{
-					documentIdentifier: 'ESTABLISHMENT_PHOTO',
-					mandatory: true
-				}
-			];
+			return this.commonUploadDocument();
 
 
 		} else {
@@ -1255,15 +1243,8 @@ export class ShopLicNewComponent implements OnInit {
 
 			if (ownershipType == "OWN") {
 
-				return[
-					{
-						documentIdentifier: 'EMPLOYER_ID_PROOF',
-						mandatory: true
-					},
-					{
-						documentIdentifier: 'ESTABLISHMENT_PHOTO',
-						mandatory: true
-					},
+
+				let docArray = [
 					{
 						documentIdentifier: 'LICENSE_COPY',
 						mandatory: true
@@ -1274,17 +1255,11 @@ export class ShopLicNewComponent implements OnInit {
 					}
 				];
 
+				return docArray.concat(this.commonUploadDocument());
+
 			} else if (ownershipType == "RENTED") {
 
-				return[
-					{
-						documentIdentifier: 'EMPLOYER_ID_PROOF',
-						mandatory: true
-					},
-					{
-						documentIdentifier: 'ESTABLISHMENT_PHOTO',
-						mandatory: true
-					},
+				let docArray = [
 					{
 						documentIdentifier: 'LICENSE_COPY',
 						mandatory: true
@@ -1303,6 +1278,8 @@ export class ShopLicNewComponent implements OnInit {
 					}
 				];
 
+				return docArray.concat(this.commonUploadDocument());
+
 
 			} else {
 				return [];
@@ -1310,6 +1287,36 @@ export class ShopLicNewComponent implements OnInit {
 
 		}
 
+	}
+
+
+	commonUploadDocument(){
+		return [
+			{
+				documentIdentifier: 'EMPLOYER_ID_PROOF',
+				mandatory: true
+			},
+			{
+				documentIdentifier: 'ESTABLISHMENT_PHOTO',
+				mandatory: true
+			},
+			{
+				documentIdentifier: 'SHOP_AADHAR_CARD',
+				mandatory: false
+			},
+			{
+				documentIdentifier: 'SHOP_PAN_CARD',
+				mandatory: false
+			},
+			{
+				documentIdentifier: 'SOCIETY_NOC',
+				mandatory: false
+			},
+			{
+				documentIdentifier: 'OTHER_DOC',
+				mandatory: false
+			}
+		];
 	}
 
 	/**
@@ -1333,6 +1340,4 @@ export class ShopLicNewComponent implements OnInit {
 
 		}
 	}
-
-
 }
