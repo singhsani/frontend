@@ -265,8 +265,8 @@ export class ShopLicNewComponent implements OnInit {
 			nameOfEmployer: [null, [Validators.required, Validators.maxLength(100)]],
 
 			employerDesignation: [null, [Validators.required, Validators.maxLength(100)]],
-			employerMobileNumber: [null, [Validators.required, Validators.maxLength(100)]],
-			alternateMobileNumber:[null,[Validators.required,Validators.maxLength(10)]],
+			employerMobileNumber: [null, [ValidationService.mobileNumberValidation]],
+			alternateMobileNumber:[null, [ValidationService.mobileNumberValidation]],
 			landlineNumber:null,
 			employerEmailId: null,
 			residentialAddressOfEmployer: [null, [Validators.required, Validators.maxLength(500)]],
@@ -395,9 +395,7 @@ export class ShopLicNewComponent implements OnInit {
 				code: [data.gender ? (data.gender.code ? data.gender.code : null) : null, [Validators.required]],
 			}),
 			mobileNo: [data.mobileNo ? data.mobileNo : null, [Validators.required]],
-			// employee: [data.employee ? data.employee : null],
-			emailId: [null, [Validators.required, ValidationService.emailValidator]],
-			// [data.emailId ? data.emailId :
+			emailId: [data.emailId ? data.emailId : null, [Validators.required, ValidationService.emailValidator]],
 		})
 
 	}
@@ -1327,6 +1325,4 @@ export class ShopLicNewComponent implements OnInit {
 
 		}
 	}
-
-
 }
