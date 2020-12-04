@@ -28,7 +28,7 @@ export class ShopAndEstablishmentService {
 	 * @code is "" , null , without param then category filter with all category data
 	 */
 	getSubCategory(code) {
-    	return this.http.get(`api/form/shop/sub-category/filter/${code}`);
+    	return this.http.get(`api/form/shop/sub-business-category/filter/${code}`);
 	}
 
 	searchLicence(licenceNumber) {

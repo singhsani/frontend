@@ -158,7 +158,7 @@ export class MyBookingComponent implements OnInit {
 			}
 		});
 		this.modalReqRef = this.modalService.show(template, Object.assign({ ignoreBackdropClick: true }, { class: 'gray modal-lg customWidth' }));
-		if (element.resourceType == "AMPHI_THEATER") {
+		if (element.resourceType == "AMPHI_THEATER"|| element.resourceType == "TOWNHALL") {
 			this.allCancelForAmphi();
 			this.isAmphiCancellation = true;
 		}
