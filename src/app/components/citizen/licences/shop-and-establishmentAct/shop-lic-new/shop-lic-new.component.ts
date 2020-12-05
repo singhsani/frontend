@@ -200,6 +200,28 @@ export class ShopLicNewComponent implements OnInit {
 				// if(res.serviceDetail)
 				// //this.isGuideLineActive = false;
 
+				if(this.shopLicNewForm.get('waterDrainageZoneId')){
+					this.shopLicNewForm.get('zone').setValue(res.waterDrainageZoneName);
+				}
+
+				if(this.shopLicNewForm.get('waterDrainageWardId')){
+					this.shopLicNewForm.get('ward').setValue(res.waterDrainageWardName);
+				}
+
+				if(this.shopLicNewForm.get('waterDrainageBlockId')){
+					this.shopLicNewForm.get('block').setValue(res.waterDrainageZoneName);
+				}
+
+				console.log("")
+				// this.shopLicNewForm.get('waterDrainageZoneId').valueChanges.subscribe(data => {
+				// 	this.shopLicNewForm.get('zone').setValue(data);
+				// });
+				// this.shopLicNewForm.get('ward').valueChanges.subscribe(data => {
+				// 	this.shopLicNewForm.get('waterDrainageWardId').setValue(data);
+				// });
+				// this.shopLicNewForm.get('block').valueChanges.subscribe(data => {
+				// 	this.shopLicNewForm.get('waterDrainageBlockId').setValue(data);
+				// });
 
 			} catch (error) {
 				console.log(error.message)
