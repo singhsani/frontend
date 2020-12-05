@@ -36,6 +36,7 @@ export class MyBookingComponent implements OnInit {
 	refundBankDetailsForm: FormGroup;
 	isAmphiCancellation : boolean = false;
 	element : any;
+	isBookingNoSlotNo = false;
 
 	/**
 	 * Common for all bookings
@@ -146,6 +147,12 @@ export class MyBookingComponent implements OnInit {
 	 * This method is use for open modal.
 	 */
 	openModal(template: TemplateRef<any>, scheduleList, refNumber,element) {
+	  // We have changed AS PER REQUIREMENT ONLY FOR AMPHITHEATER FROM BA TEAM(Prashant).
+    if(this.bookingService.resourceType =='amphiTheater'){
+        this.isBookingNoSlotNo = true;
+    }else{
+        this.isBookingNoSlotNo = false;
+    }
 		this.CancelRequestList = [];
 		this.refNumber = refNumber;
 		this.cancellationType = null;
@@ -205,9 +212,9 @@ export class MyBookingComponent implements OnInit {
             return false;
         }else{
 
-             // If all shift are in Cancellation process. (So the shift status is either 
+             // If all shift are in Cancellation process. (So the shift status is either
             // CANCELLATION_APPROVED or CANCELLATION_REQUEST)
-           
+
             if (this.isAllSlotInCancellation(this.CancelSlotList)) {
                 return true;
             } else if (this.isAllSlotsAreSlectedByUser(this.CancelRequestList)){
@@ -215,7 +222,7 @@ export class MyBookingComponent implements OnInit {
             } else {
                 return false;
             }
- 
+
 
 
 		}
@@ -234,7 +241,7 @@ export class MyBookingComponent implements OnInit {
 	isAllSlotsAreSlectedByUser(cancelRequestList):boolean{
         return cancelRequestList.length ==
                 this.CancelSlotList.filter(shift => shift.status == this.bookingConstant.DEPOSIT_REQUIRED ||
-                    shift.status == this.bookingConstant.BOOKED || 
+                    shift.status == this.bookingConstant.BOOKED ||
                     shift.status == this.bookingConstant.PPL_REQUIRED).length;
     }
 
@@ -573,7 +580,7 @@ export class MyBookingComponent implements OnInit {
              return false;
          }
 	}
-	
+
 // This method  select all for cancle from AmphiTheater
 	allCancelForAmphi(){
 		this.chooseAllForCancel(true);

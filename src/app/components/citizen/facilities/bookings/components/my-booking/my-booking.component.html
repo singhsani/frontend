@@ -200,7 +200,12 @@
       <thead class="customthead">
       <tr>
         <th scope="col"> {{'s_no' | translate:translateKey}}</th>
-        <th scope="col">{{'slot_or_shift_no' | translate:translateKey}}</th>
+        <th *ngIf="!isBookingNoSlotNo" scope="col">
+          {{'slot_or_shift_no' | translate:translateKey}}
+        </th>
+        <th *ngIf="isBookingNoSlotNo" scope="col">
+          {{'booking_number' | translate:translateKey}}
+        </th>
         <th scope="col"> {{'date_of_programme' | translate:translateKey}}</th>
         <th scope="col"> {{'day_of_programme' | translate:translateKey}}</th>
         <th scope="col"> {{'start_time' | translate:translateKey}}</th>
@@ -221,7 +226,12 @@
       <tbody>
       <tr *ngFor="let shifts of CancelSlotList; let i = index;">
         <th scope="row">{{i+1}}</th>
-        <td>{{shifts.bookingNo?shifts.bookingNo: 'NA' }}</td>
+        <td *ngIf="!isBookingNoSlotNo">
+          {{shifts.bookingNo?shifts.bookingNo : 'NA'}}
+        </td>
+        <td *ngIf="isBookingNoSlotNo">
+          {{refNumber}}
+        </td>
         <td>{{bookingUtils.returnProperDate(shifts.bookingDate)}}</td>
         <td>{{bookingUtils.getDay(shifts.bookingDate)}}</td>
         <td>{{shifts.startTime}}</td>
