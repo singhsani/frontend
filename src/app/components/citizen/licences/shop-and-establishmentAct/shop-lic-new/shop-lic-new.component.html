@@ -75,8 +75,8 @@
 							<ng-select 
 								placeholder="Ward*"
 								formControlName="ward" (change)="onChangedWardZone($event,3)">
-								<ng-option *ngFor="let zone of wardZoneLevel2List" [value]="zone.wardzoneId">
-									{{zone.wardzoneName}}</ng-option>
+								<ng-option *ngFor="let ward of wardZoneLevel2List" [value]="ward.wardzoneId">
+									{{ward.wardzoneName}}</ng-option>
 							</ng-select>
 							<control-messages [control]="shopLicNewForm.get('ward')">
 							</control-messages>
@@ -87,7 +87,7 @@
 							<ng-select 
 								placeholder="Block*"
 								formControlName="block" (change)="onChangedWardZone($event,4)">
-								<ng-option *ngFor="let zone of wardZoneLevel3List" [value]="zone.wardzoneId">
+								<ng-option *ngFor="let block of wardZoneLevel3List" [value]="block.wardzoneId">
 									{{zone.wardzoneName}}</ng-option>
 							</ng-select>
 							<control-messages
@@ -184,7 +184,7 @@
 					
 
 					<mat-form-field class="col-md-6">
-						<input matInput OnlyNumber type="text" required maxlength="10"
+						<input matInput OnlyNumber type="text" required maxlength="10" minlength="10"
 							placeholder="Employer Mobile Number"
 							formControlName="employerMobileNumber" >
 						<control-messages [control]="shopLicNewForm.get('employerMobileNumber')">
@@ -199,7 +199,7 @@
 					</mat-form-field>
 					
 					<mat-form-field class="col-md-6">
-						 <input matInput OnlyNumber type="text" maxlength="10"
+						 <input matInput OnlyNumber type="text" maxlength="10" minlength="10"
 							placeholder="Alternate mobile number"
 							formControlName="alternateMobileNumber" />
 						<control-messages [control]="shopLicNewForm.get('alternateMobileNumber')">
@@ -340,7 +340,7 @@
 												 {{getSelectedDataFromLookUps(relationshipTypeList,item.get('relationshipType').value.code)?.name}} 
 											</p>
 											<div class="col-md-6 ngSelect" *ngIf="item.isEditMode">
-												<ng-select *ngIf="item.isEditMode" placeholder="{{'relationship_type' | translate:translateKey}} *"
+												<ng-select *ngIf="item.isEditMode" placeholder="{{'Relationship Type' | translate:translateKey}}"
 													formControlName="code">
 													<ng-option *ngFor="let relation of relationshipTypeList" [value]="relation.code">
 														{{relation.name}}</ng-option>
@@ -384,7 +384,7 @@
 										<div class="mobileCon adjustError">
 											<p class="width50" *ngIf="!item.isEditMode">{{item.get('mobileNo').value}}</p>
 											<mat-form-field *ngIf="item.isEditMode">
-												<input matInput maxlength="10" OnlyNumber formControlName="mobileNo" required>
+												<input matInput maxlength="10" minlength="10" OnlyNumber formControlName="mobileNo" required>
 												<control-messages [control]="item.get('mobileNo')"></control-messages>
 											</mat-form-field>
 										</div>
