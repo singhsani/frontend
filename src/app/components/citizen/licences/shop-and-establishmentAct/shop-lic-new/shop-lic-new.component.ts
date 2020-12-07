@@ -212,17 +212,7 @@ export class ShopLicNewComponent implements OnInit {
 					this.shopLicNewForm.get('block').setValue(res.waterDrainageZoneName);
 				}
 
-				console.log("")
-				// this.shopLicNewForm.get('waterDrainageZoneId').valueChanges.subscribe(data => {
-				// 	this.shopLicNewForm.get('zone').setValue(data);
-				// });
-				// this.shopLicNewForm.get('ward').valueChanges.subscribe(data => {
-				// 	this.shopLicNewForm.get('waterDrainageWardId').setValue(data);
-				// });
-				// this.shopLicNewForm.get('block').valueChanges.subscribe(data => {
-				// 	this.shopLicNewForm.get('waterDrainageBlockId').setValue(data);
-				// });
-
+				
 			} catch (error) {
 				console.log(error.message)
 			}
