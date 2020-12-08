@@ -10,6 +10,7 @@ import { SessionStorageService } from 'angular-web-storage';
 export class UploadFileService {
 
 	uploadFileUrl: string;
+	uploadDMSFileUrlBooking:string;
 	uploadDMSFileUrl:string;
 	progress: { percentage: number } = { percentage: 0 }
 
@@ -18,6 +19,7 @@ export class UploadFileService {
 	) {
 		this.uploadFileUrl = 'api/attachment/upload';
 		this.uploadDMSFileUrl = 'api/attachment/uploadForDMS';
+		this.uploadDMSFileUrlBooking = 'api/attachment/booking/uploadForDMS';
 	}
 
 	processFileToServer(formData: FormData, setProgress?: any, successResponse?: any) {
@@ -32,6 +34,28 @@ export class UploadFileService {
 					return setProgress(Math.round(100 * event.loaded / event.total));
 				case HttpEventType.Response:
 					return successResponse(event.body);
+			}
+		});
+	}
+
+	    /**
+	 * This method is used to upload file on DMS Server
+	 * @param formData 
+	 * @param setProgress 
+	 * @param successResponse 
+	 */
+	processFileToDMSServerBooking(formData: FormData, setProgress?: any, successResponse?: any) {
+
+		this.httpService.uploadFilePost(this.uploadDMSFileUrlBooking, formData).subscribe(postEvent => {
+			switch (postEvent.type) {
+				case HttpEventType.Sent:
+					break;
+				case HttpEventType.ResponseHeader:
+					break;
+				case HttpEventType.UploadProgress:
+					return setProgress(Math.round(100 * postEvent.loaded / postEvent.total));
+				case HttpEventType.Response:
+					return successResponse(postEvent.body);
 			}
 		});
 	}
