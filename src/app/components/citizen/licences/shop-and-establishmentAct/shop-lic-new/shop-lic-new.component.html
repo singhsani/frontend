@@ -62,11 +62,11 @@
 						<div *ngIf="wardZoneLevel.length>=1">
 							<ng-select 
 								placeholder="Zone*"
-								formControlName="zone" (change)="onChangedWardZone($event,2)">
+								formControlName="waterDrainageZoneId" (change)="onChangedWardZone($event,2)">
 								<ng-option *ngFor="let zone of wardZoneLevel1List" [value]="zone.parentWardzoneId">
 									{{zone.wardzoneName}}</ng-option>
 							</ng-select>
-							<control-messages [control]="shopLicNewForm.get('zone')">
+							<control-messages [control]="shopLicNewForm.get('waterDrainageZoneId')">
 							</control-messages>
 						</div>
 					</div>
@@ -74,11 +74,11 @@
 						<div *ngIf="wardZoneLevel.length>=2">
 							<ng-select 
 								placeholder="Ward*"
-								formControlName="ward" (change)="onChangedWardZone($event,3)">
-								<ng-option *ngFor="let zone of wardZoneLevel2List" [value]="zone.wardzoneId">
-									{{zone.wardzoneName}}</ng-option>
+								formControlName="waterDrainageWardId" (change)="onChangedWardZone($event,3)">
+								<ng-option *ngFor="let ward of wardZoneLevel2List" [value]="ward.wardzoneId">
+									{{ward.wardzoneName}}</ng-option>
 							</ng-select>
-							<control-messages [control]="shopLicNewForm.get('ward')">
+							<control-messages [control]="shopLicNewForm.get('waterDrainageWardId')">
 							</control-messages>
 						</div>
 					</div>
@@ -86,12 +86,12 @@
 						<div *ngIf="wardZoneLevel.length>=3">
 							<ng-select 
 								placeholder="Block*"
-								formControlName="block" (change)="onChangedWardZone($event,4)">
-								<ng-option *ngFor="let zone of wardZoneLevel3List" [value]="zone.wardzoneId">
-									{{zone.wardzoneName}}</ng-option>
+								formControlName="waterDrainageBlockId" (change)="onChangedWardZone($event,4)">
+								<ng-option *ngFor="let block of wardZoneLevel3List" [value]="block.wardzoneId">
+									{{block.wardzoneName}}</ng-option>
 							</ng-select>
 							<control-messages
-								[control]="shopLicNewForm.get('block')">
+								[control]="shopLicNewForm.get('waterDrainageBlockId')">
 							</control-messages>
 						</div>
 					</div>
@@ -184,7 +184,7 @@
 					
 
 					<mat-form-field class="col-md-6">
-						<input matInput OnlyNumber type="text" required maxlength="10"
+						<input matInput OnlyNumber type="text" required maxlength="10" minlength="10"
 							placeholder="Employer Mobile Number"
 							formControlName="employerMobileNumber" >
 						<control-messages [control]="shopLicNewForm.get('employerMobileNumber')">
@@ -199,7 +199,7 @@
 					</mat-form-field>
 					
 					<mat-form-field class="col-md-6">
-						 <input matInput OnlyNumber type="text" maxlength="10"
+						 <input matInput OnlyNumber type="text" maxlength="10" minlength="10"
 							placeholder="Alternate mobile number"
 							formControlName="alternateMobileNumber" />
 						<control-messages [control]="shopLicNewForm.get('alternateMobileNumber')">
@@ -340,7 +340,7 @@
 												 {{getSelectedDataFromLookUps(relationshipTypeList,item.get('relationshipType').value.code)?.name}} 
 											</p>
 											<div class="col-md-6 ngSelect" *ngIf="item.isEditMode">
-												<ng-select *ngIf="item.isEditMode" placeholder="{{'relationship_type' | translate:translateKey}} *"
+												<ng-select *ngIf="item.isEditMode" placeholder="{{'Relationship Type' | translate:translateKey}}"
 													formControlName="code">
 													<ng-option *ngFor="let relation of relationshipTypeList" [value]="relation.code">
 														{{relation.name}}</ng-option>
@@ -384,7 +384,7 @@
 										<div class="mobileCon adjustError">
 											<p class="width50" *ngIf="!item.isEditMode">{{item.get('mobileNo').value}}</p>
 											<mat-form-field *ngIf="item.isEditMode">
-												<input matInput maxlength="10" OnlyNumber formControlName="mobileNo" required>
+												<input matInput maxlength="10" minlength="10" OnlyNumber formControlName="mobileNo" required>
 												<control-messages [control]="item.get('mobileNo')"></control-messages>
 											</mat-form-field>
 										</div>
@@ -495,19 +495,39 @@
 										</mat-form-field>
 									</td>
 
-									<td>
+									<!-- <td>
 										<div class="d-md-none">{{'workerType' | translate:translateKey}}</div>
 										<p *ngIf="!item.isEditMode">{{item.get('workerType').value}}</p>
 										<div class="ngSelect" *ngIf="item.isEditMode"  style="min-width:100px">
 											<ng-select *ngIf="item.isEditMode" formControlName="workerType">
-												<ng-option *ngFor="let gender of workerType" [value]="gender.code">
+												<ng-option *ngFor="let gender of workerTypeList" [value]="gender.code">
 													{{gender.name}}</ng-option>
 											</ng-select>
 											<control-messages [control]="item.get('workerType')">
 											</control-messages>
 										</div>
-									</td>
+									</td>  
+									   -->
 
+								<td>
+										<div class="d-md-none">{{'workerType' | translate:translateKey}}</div>
+										<div class="ngSelect" required style="min-width:100px" formGroupName="workersType">
+										 <!-- <p *ngIf="!item.isEditMode">{{item.get('workersType').value}}</p>  -->
+										  <p class="width80" *ngIf="!item.isEditMode">
+											{{getSelectedDataFromLookUps(workerTypeList,item.get('workersType').value.code)?.name}} 
+									   	</p> 
+											<div col-md-6 class="ngSelect" *ngIf="item.isEditMode" >
+												<ng-select *ngIf="item.isEditMode" formControlName="code">
+													<ng-option *ngFor="let gender of workerTypeList" [value]="gender.code">
+													{{gender.name}}</ng-option>
+												</ng-select>
+												<control-messages [control]="item.get('workersType').get('code')">
+												</control-messages>
+											</div>
+										</div>
+									</td>  
+
+									
 									<td>
 										<div class="d-md-none">{{'total' | translate:translateKey}}</div>
 										<p *ngIf="!item.isEditMode">{{item.get('total').value}}</p>
