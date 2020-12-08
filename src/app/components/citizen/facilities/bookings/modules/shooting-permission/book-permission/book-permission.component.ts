@@ -339,7 +339,8 @@ export class BookPermissionComponent implements OnInit {
       //   name: null
       // }),
       // ifscCode: [null, [Validators.required, ValidationService.ifscCodeValidator]],
-      attachment: [null]
+      attachment: [null],
+      bookingFormId : null
     });
   }
 

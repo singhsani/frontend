@@ -197,6 +197,7 @@ export class BookChildrenTheaterComponent implements OnInit {
             resourceType: null,
             payableServiceType: null,
             resourceCode: null,
+            bookingFormId :null
         })
 
     }
