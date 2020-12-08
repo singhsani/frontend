@@ -67,11 +67,13 @@ export class ShopLicNewComponent implements OnInit {
 		code: 'WORKERS',
 		name: 'Workers',
 	}];
+
 	SHOP_LIC_EMPLOYER_FAMILY_PERSON_RELATIONSHIP: Array<any> = [];
 	SHOP_LIC_OCCUPANCY_PERSON_RELATIONSHIP: Array<any> = [];
 	SHOP_LIC_PARTNER_PERSON_RELATIONSHIP: Array<any> = [];
 	SHOP_LIC_TYPE_OF_ORGANIZATION: Array<any> = [];
 	relationshipTypeList:Array<any>=[];
+	workerTypeList:Array<any>=[];
 
 	YES_NO: Array<any> = [];
 	businessCategory: Array<any> = [];
@@ -209,7 +211,18 @@ export class ShopLicNewComponent implements OnInit {
 				}
 
 				if(this.shopLicNewForm.get('waterDrainageBlockId')){
-					this.shopLicNewForm.get('block').setValue(res.waterDrainageZoneName);
+					this.shopLicNewForm.get('block').setValue(res.waterDrainageBlockName);
+				}
+
+				if(this.shopLicNewForm.get('workerType')){
+					this.shopLicNewForm.get('workerType').setValue(res.workerType);
+				}
+
+				if (res.waterDrainageWardId) {
+					this.getWardZone(res.waterDrainageZoneId, 2);
+				}
+				if (res.waterDrainageBlockId) {
+					this.getWardZone(res.waterDrainageWardId, 3);
 				}
 
 				
@@ -223,12 +236,13 @@ export class ShopLicNewComponent implements OnInit {
 	* Method is used to get lookup data
 	*/
 	getLookupData() {
-		
+	
 		this.formService.getDataFromLookups().subscribe(res => {
 			this.SHOP_LIC_EMPLOYER_FAMILY_PERSON_RELATIONSHIP = res.SHOP_LIC_EMPLOYER_FAMILY_PERSON_RELATIONSHIP;
 			this.SHOP_LIC_OCCUPANCY_PERSON_RELATIONSHIP = res.SHOP_LIC_OCCUPANCY_PERSON_RELATIONSHIP;
 			this.SHOP_LIC_PARTNER_PERSON_RELATIONSHIP = res.SHOP_LIC_PARTNER_PERSON_RELATIONSHIP;
 			this.relationshipTypeList = res.SHOP_ESTABLISHMENT_RELATIONSHIP_TYPE;
+			this.workerTypeList = res.SHOP_ESTABLISHMENT_WORKERS_TYPE;
 			this.SHOP_LIC_TYPE_OF_ORGANIZATION = res.SHOP_ESTABLISHMENT_ORGANIZATION_TYPE;
 			this.businessCategory = res.SHOP_ESTABLISHMENT_CATEGORY;
 			this.businessNature = res.SHOP_NATURE_OF_BUSINESS;
@@ -259,9 +273,9 @@ export class ShopLicNewComponent implements OnInit {
 			establishmentName: [null, [Validators.required, Validators.maxLength(150)]],//count=4
 			postalAddress: this.fb.group(this.postalAddressEstablishment.addressControls()),
 			
-			zone: [null, [Validators.required]],
-      		ward: [null, [Validators.required]],
-			block: [null, [Validators.required]],
+			zone: [null],
+      		ward: [null],
+			block: [null],
 			 
 			waterDrainageZoneId: [null],
 			waterDrainageWardId: [null],
@@ -335,15 +349,18 @@ export class ShopLicNewComponent implements OnInit {
 		//this.addMorePerson('EMPLOYER_FAMILY');
 		//this.addMorePerson('OCCUPANCY');
 
-		this.shopLicNewForm.get('zone').valueChanges.subscribe(data => {
-			this.shopLicNewForm.get('waterDrainageZoneId').setValue(data);
-		});
-		this.shopLicNewForm.get('ward').valueChanges.subscribe(data => {
-			this.shopLicNewForm.get('waterDrainageWardId').setValue(data);
-		});
-		this.shopLicNewForm.get('block').valueChanges.subscribe(data => {
-			this.shopLicNewForm.get('waterDrainageBlockId').setValue(data);
-		});
+		// this.shopLicNewForm.get('zone').valueChanges.subscribe(data => {
+		// 	console.log(this.wardZoneLevel1List)
+		// 	// this.shopLicNewForm.get('waterDrainageZoneId').setValue(data);
+		// });
+		// this.shopLicNewForm.get('ward').valueChanges.subscribe(data => {
+		// 	this.shopLicNewForm.get('waterDrainageWardId').setValue(data);
+		// });
+		// this.shopLicNewForm.get('block').valueChanges.subscribe(data => {
+		// 	this.shopLicNewForm.get('waterDrainageBlockId').setValue(data);
+		// });
+
+		
 	}
 
 
@@ -386,7 +403,10 @@ export class ShopLicNewComponent implements OnInit {
 			id: data.id ? data.id : null,
 			noOfMen: [data.noOfMen ? data.noOfMen : null, [Validators.required]],
 			noOfWomen: [data.noOfWomen ? data.noOfWomen : null, [Validators.required]],
-			workerType: [data.workerType ? data.workerType : null, [Validators.required]],
+			//workerType: [data.workerType ? data.workerType : null, [Validators.required]],
+			workersType:this.fb.group({
+				code:[data.workersType ? (data.workersType.code ? data.workersType.code : null) :null]
+			}),
 			total: [data.total ? data.total : null, [Validators.required]],
 		})
 
@@ -411,6 +431,7 @@ export class ShopLicNewComponent implements OnInit {
 			relationshipType:this.fb.group({
 				code:[data.relationshipType ? (data.relationshipType.code ? data.relationshipType.code : null) :  null,[Validators.required]]
 			}),
+			
 			mobileNo: [data.mobileNo ? data.mobileNo : null, [Validators.required]],
 			emailId: [data.emailId ? data.emailId : null, [Validators.required, ValidationService.emailValidator]],
 		})
