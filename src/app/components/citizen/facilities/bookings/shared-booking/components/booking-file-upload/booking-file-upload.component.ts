@@ -115,6 +115,22 @@ export class BookingFileUploadComponent implements OnInit {
                 this.progress.percentage = 0;
                 this.currentFileUpload = this.selectedFiles.item(0);
                 formData.append('file', this.currentFileUpload);
+                if(this.uploadModel.dmsUpload){
+                    formData.append('serviceFormId', this.uploadModel.bookingFormId);
+                    this.uploadFileService.processFileToDMSServerBooking(formData, setProgressBar => {
+                        this.progress.percentage = setProgressBar;
+                    }, successResponse => {
+                        this.tostr.success(this.uploadModel.labelName + " successfully uploaded", "File Uploaded");
+                        this.canUpload = true;
+                        this.id = successResponse.data.id;
+                        this.type = successResponse.data.mimeType;
+                        this.currentFileUpload = undefined;
+                        this.selectedFiles = undefined;
+                        this.fileInput.nativeElement.value = "";
+                        this.uploaded.emit(true);
+                    });
+                }else{
+                
                 this.uploadFileService.processFileToServer(formData, setProgressBar => {
                     this.progress.percentage = setProgressBar;
                 }, successResponse => {
@@ -129,6 +145,7 @@ export class BookingFileUploadComponent implements OnInit {
                 });
 
             }
+        }
         }
     }
 

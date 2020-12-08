@@ -380,8 +380,8 @@
                         <div class="col-md-6">
                             <label labelPosition="after">{{'school_or_institute_letter' | translate:translateKey}}
                             </label>
-                            <booking-file-upload (uploaded)="isFileUploaded = $event" [form]="childrenTheaterApplicationForm" [uploadModel]="{fieldIdentifier:'1', labelName:'school_or_institute_letter', formPart:'1.1', refNumber:
-                                                                         childrenTheaterApplicationForm.get('refNumber').value, variableName: 'school_letter'}">
+                            <booking-file-upload (uploaded)="isFileUploaded = $event" [form]="childrenTheaterApplicationForm" [uploadModel]="{dmsUpload:true,fieldIdentifier:'1', labelName:'school_or_institute_letter', formPart:'1.1', refNumber:
+                                                                         childrenTheaterApplicationForm.get('refNumber').value, bookingFormId : childrenTheaterApplicationForm.get('bookingFormId').value, variableName: 'school_letter'}">
                             </booking-file-upload>
                         </div>
 
