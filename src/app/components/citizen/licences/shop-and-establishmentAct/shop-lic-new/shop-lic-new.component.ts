@@ -14,6 +14,7 @@ import { TranslateService } from '../../../../../shared/modules/translate/transl
 import { LicenseConfiguration } from '../../license-configuration';
 import { TaxRebateApplicationService } from '../../../tax/property/tax-rebate-application/Services/tax-rebate-application.service';
 import { Constants } from 'src/app/vmcshared/Constants';
+import { ProfessionalTaxService } from 'src/app/core/services/citizen/data-services/professional-tax.service';
 
 @Component({
 	selector: 'app-shop-lic-new',
@@ -123,6 +124,7 @@ export class ShopLicNewComponent implements OnInit {
 		private toastrService: ToastrService,
 		public TranslateService: TranslateService,
 		private taxRebateApplicationService: TaxRebateApplicationService,
+		private professionalTaxService : ProfessionalTaxService
 
 	) { }
 
@@ -1373,4 +1375,40 @@ export class ShopLicNewComponent implements OnInit {
 
 		}
 	}
+
+	validatePecPrcNumber(formControl : FormControl){
+		  console.log("Pec/Prc ", formControl);
+		  if(formControl.value == ""){
+			  return true;
+		  } else {
+			  this.professionalTaxService.getSearchDetails(formControl.value,true).subscribe(res => {
+                  if(!res.data){
+					  formControl.setValue("");
+					  this.commonService.openAlert("Error", "Please enter valid EC/RC number", "error");
+				  }
+			  }, error => {
+				  formControl.setValue("");
+				  console.error("error",error);
+			  })
+		  }
+	}
+
+	validatePecPropertyNumber(formControl : FormControl){
+		
+		if(formControl.value == ""){
+			return true;
+		} else {
+			this.professionalTaxService.isExistPropertyNoCheck(formControl.value).subscribe(res => {
+				return true;
+			}, error => {
+				formControl.setValue("");
+				if (error.error[0]){
+					this.commonService.openAlert("error", error.error[0].message, "error");
+				} else {
+					this.commonService.openAlert("Error", "Property/Census No Not found", "error");
+				}
+					
+			})
+		}
+  }
 }

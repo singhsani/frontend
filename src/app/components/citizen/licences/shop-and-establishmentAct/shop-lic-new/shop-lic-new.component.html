@@ -110,7 +110,8 @@
 							maxlength="12"
 							appAlphaNumeric
 							placeholder="PEC number"
-							formControlName="pecNumber"/>
+							formControlName="pecNumber"
+							(blur)="validatePecPrcNumber(shopLicNewForm.get('pecNumber'))"/>
 							<control-messages [control]="shopLicNewForm.get('pecNumber')">
 						</control-messages>
 					</mat-form-field>
@@ -120,7 +121,8 @@
 							maxlength="12"
 							appAlphaNumeric
 							placeholder="PRC number"
-							formControlName="prcNumber"/>
+							formControlName="prcNumber"
+							(blur)="validatePecPrcNumber(shopLicNewForm.get('prcNumber'))"/>
 						<control-messages [control]="shopLicNewForm.get('prcNumber')"></control-messages>
 					</mat-form-field>
 
@@ -128,7 +130,8 @@
 						<input matInput type="text"
 							maxlength="16"
 							placeholder="Census Number/Property Number"
-							formControlName="censusOrPropertyNumber"/>
+							formControlName="censusOrPropertyNumber"
+							(blur)="validatePecPropertyNumber(shopLicNewForm.get('censusOrPropertyNumber'))"/>
 						<control-messages [control]="shopLicNewForm.get('censusOrPropertyNumber')"></control-messages>
 					</mat-form-field>
 				</div>
