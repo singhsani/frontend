@@ -446,8 +446,9 @@ export class ShopLicNewComponent implements OnInit {
 			designation: [data.designation ? data.designation : null, [Validators.required, Validators.maxLength(100)]],
 			mobileNo: [data.mobileNo ? data.mobileNo : null, [Validators.required]],
 			// employee: [data.employee ? data.employee : null],
-			emailId: [null, [Validators.required, ValidationService.emailValidator]],
+			//emailId: [null, [Validators.required, ValidationService.emailValidator]],
 			// [data.emailId ? data.emailId :
+			emailId: [data.emailId ? data.emailId : null, [Validators.required, ValidationService.emailValidator]]
 		})
 
 	}
