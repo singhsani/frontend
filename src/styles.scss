@@ -1135,3 +1135,10 @@ textarea.gujInputCls {margin-bottom: 0;}
 
 .SHOP-ESTAB-NEW {background:url('assets/icons/shop-and-establishment-license.svg') !important;}
 .moduleList .mat-tab-label-active .SHOP-ESTAB-NEW {background:url('assets/icons/shop-and-establishment-license-h.svg') !important;}
+
+.selectCategoryDropdown  .ng-option {
+    line-height: normal !important;
+    min-height: auto !important;
+     padding: 8px 16px !important;
+    white-space: normal !important;
+}
