@@ -666,7 +666,7 @@
 										<div class="mobileCon adjustError">
 											<p class="width50" *ngIf="!item.isEditMode">{{item.get('mobileNo').value}}</p>
 											<mat-form-field *ngIf="item.isEditMode">
-												<input matInput maxlength="10" OnlyNumber formControlName="mobileNo" required>
+												<input matInput minlength="10" maxlength="10" OnlyNumber formControlName="mobileNo" required>
 												<control-messages [control]="item.get('mobileNo')"></control-messages>
 											</mat-form-field>
 										</div>
