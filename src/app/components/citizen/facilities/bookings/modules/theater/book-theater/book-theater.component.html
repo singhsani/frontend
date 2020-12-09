@@ -107,7 +107,7 @@
       <div class="col-sm-12 col-md-12 text-right">
         <button mat-raised-button (click)="guideLineFlag = false; showTheaterSearchForm = true; " color="primary">
           <mat-icon>thumb_up_alt</mat-icon>
-          {{'proceed'| translate: translateKey}}
+          {{'proceed_for_appication'| translate: translateKey}}
         </button>
       </div>
     </div>
@@ -353,7 +353,7 @@
                         </mat-form-field>
 
                         <mat-form-field class="col-md-4">
-                            <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="organizationNumber" placeholder="{{'organization_number' | translate: translateKey}}"
+                            <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="organizationNumber" placeholder="{{'mobile_number' | translate: translateKey}}"
                                 required>
                             <control-messages [control]="theaterBookingForm.get('organizationNumber')"></control-messages>
                         </mat-form-field>
