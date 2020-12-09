@@ -260,7 +260,7 @@
 						<control-messages [control]="pecRegForm.get('entry').get('code')"></control-messages>
 					</div>
 
-					<div class="col-md-4 ngSelect" formGroupName="subEntry">
+					<div class="col-md-4 ngSelect selectCategoryDropdown" formGroupName="subEntry">
 						<ng-select placeholder="{{'sub_entry_no' | translate: translateKey}} *" [items]="subEntryNoArray" bindLabel="name" bindValue="code"
 						 formControlName="code" title="{{findSubEntryName()}}" (change)="onSubEntryChange($event)">
 							<ng-template ng-option-tmp let-item="item">
@@ -270,7 +270,7 @@
 						<control-messages [control]="pecRegForm.get('subEntry').get('code')"></control-messages>
 					</div>
 
-					<div class="col-md-4 ngSelect" formGroupName="professionConstitution">
+					<div class="col-md-4 ngSelect selectCategoryDropdown" formGroupName="professionConstitution">
 						<ng-select placeholder="{{'profession' | translate: translateKey}} *" [items]="professionArray" bindLabel="name" bindValue="code"
 						 formControlName="code" title="{{findProfConstitution()}}">
 							<ng-template ng-option-tmp let-item="item">

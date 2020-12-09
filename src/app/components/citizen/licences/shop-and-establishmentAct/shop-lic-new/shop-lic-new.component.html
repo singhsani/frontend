@@ -110,7 +110,8 @@
 							maxlength="12"
 							appAlphaNumeric
 							placeholder="PEC number"
-							formControlName="pecNumber"/>
+							formControlName="pecNumber"
+							(blur)="validatePecPrcNumber(shopLicNewForm.get('pecNumber'))"/>
 							<control-messages [control]="shopLicNewForm.get('pecNumber')">
 						</control-messages>
 					</mat-form-field>
@@ -120,7 +121,8 @@
 							maxlength="12"
 							appAlphaNumeric
 							placeholder="PRC number"
-							formControlName="prcNumber"/>
+							formControlName="prcNumber"
+							(blur)="validatePecPrcNumber(shopLicNewForm.get('prcNumber'))"/>
 						<control-messages [control]="shopLicNewForm.get('prcNumber')"></control-messages>
 					</mat-form-field>
 
@@ -128,7 +130,8 @@
 						<input matInput type="text"
 							maxlength="16"
 							placeholder="Census Number/Property Number"
-							formControlName="censusOrPropertyNumber"/>
+							formControlName="censusOrPropertyNumber"
+							(blur)="validatePecPropertyNumber(shopLicNewForm.get('censusOrPropertyNumber'))"/>
 						<control-messages [control]="shopLicNewForm.get('censusOrPropertyNumber')"></control-messages>
 					</mat-form-field>
 				</div>
@@ -666,7 +669,7 @@
 										<div class="mobileCon adjustError">
 											<p class="width50" *ngIf="!item.isEditMode">{{item.get('mobileNo').value}}</p>
 											<mat-form-field *ngIf="item.isEditMode">
-												<input matInput maxlength="10" OnlyNumber formControlName="mobileNo" required>
+												<input matInput minlength="10" maxlength="10" OnlyNumber formControlName="mobileNo" required>
 												<control-messages [control]="item.get('mobileNo')"></control-messages>
 											</mat-form-field>
 										</div>
