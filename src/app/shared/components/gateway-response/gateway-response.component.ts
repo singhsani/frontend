@@ -20,6 +20,7 @@ export class GatewayResponseComponent implements OnInit {
 	paymentStatus: any;
 	dispData: any;
 	isSearchanble: string = "";
+	resourceType: String;
 
 	constructor(
 		private formService: FormsActionsService,
@@ -33,12 +34,12 @@ export class GatewayResponseComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		
+
 		this.route.queryParams.subscribe(param => {
 			// if (param && param.rqst_token) {
 			if (param && param.order_id) {
-				
-				var token = param.order_id+'&order_status='+param.order_status;
+
+				var token = param.order_id + '&order_status=' + param.order_status;
 				this.gatewayResponse(token, param.searchable);
 			} else if (param && param.txtRefNo) {
 				this.getBillDeskTransactionDetails(param.txtRefNo);
@@ -122,6 +123,8 @@ export class GatewayResponseComponent implements OnInit {
 	 * @param responseObj: transaction details
 	 */
 	postSessionData(data, payGateway, responseObj?) {
+		this.resourceType = data.resourceType;
+		//	debugger;
 		let payData = {
 			id: null,
 			uniqueId: null,
@@ -175,12 +178,18 @@ export class GatewayResponseComponent implements OnInit {
 			} else {
 				this.formService.createPayment(payData).subscribe(payResp => {
 					const payRespData = payResp.data.responseData;
-
+					
+					//	This method is used to send sms ater booking payment for Amphi Theater as
+					//  discussed with B A team.It can be applied for all by removing 
+					//   if condition
+					if (payRespData.payableServiceType == "AMPHI_FEES") {
+						this.sendSms(this.dispData.refNumber);
+					}
 					if (payRespData.fileStatus == "PAYMENT_RECEIVED") {
-
 						this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(payRespData.serviceDetail.code);
 						this.formService.submitFormData(payRespData.serviceFormId).subscribe(res => {
 							if (res) {
+
 								setTimeout(() => {
 									this.redirectToMyApplication(data.myApplicationUrl, payRespData.refNumber, payData.resourceType, payRespData.payableServiceType);
 								}, 10000);
@@ -261,6 +270,19 @@ export class GatewayResponseComponent implements OnInit {
 		}, 1000)
 
 	}
-
+	/**
+	 * This method is used to send  sms after completion of booking payment
+	 * @param refNumber 
+	 */
+	sendSms(refNumber: any) {
+		if (refNumber) {
+			this.formService.sendSms(refNumber, this.resourceType).subscribe(resp => {
+			}, err => {
+				this.toastr.error("Something went wrong");
+			})
+		} else {
+			this.toastr.error("Invalid request");
+		}
+	}
 }
 
