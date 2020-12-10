@@ -124,7 +124,6 @@ export class GatewayResponseComponent implements OnInit {
 	 */
 	postSessionData(data, payGateway, responseObj?) {
 		this.resourceType = data.resourceType;
-		//	debugger;
 		let payData = {
 			id: null,
 			uniqueId: null,
