@@ -12,6 +12,8 @@ export class FormsActionsService {
 
 	requestURL: string;
 	apiType: string;
+	resourceType: string;
+
 
 	/**
 	 * Constructor to declare defualt propeties of class.
@@ -435,4 +437,14 @@ export class FormsActionsService {
 		this.requestURL = `api/form/${this.apiType}/${apiName}?noofCopies=${noofCopies}&asonDate=${asonDate}&occupierId=${occupierId}&propertyBasicId=${propertyBasicId}`;
 		return this.http.post(this.requestURL, {});
 	}
+	
+    /**
+     * This method is used to send sms after completion of booking payment.
+     * @param refNumber 
+     */
+    sendSms(refNumber:any,resourceType:any){
+		this.requestURL = `api/booking/${resourceType}/sendSms?refNumber=${refNumber}`;
+		return this.http.get(this.requestURL);
+	  }
+
 }
