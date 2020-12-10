@@ -14,6 +14,7 @@ import { TranslateService } from '../../../../../shared/modules/translate/transl
 import { LicenseConfiguration } from '../../license-configuration';
 import { TaxRebateApplicationService } from '../../../tax/property/tax-rebate-application/Services/tax-rebate-application.service';
 import { Constants } from 'src/app/vmcshared/Constants';
+import { ProfessionalTaxService } from 'src/app/core/services/citizen/data-services/professional-tax.service';
 
 @Component({
 	selector: 'app-shop-lic-new',
@@ -123,6 +124,7 @@ export class ShopLicNewComponent implements OnInit {
 		private toastrService: ToastrService,
 		public TranslateService: TranslateService,
 		private taxRebateApplicationService: TaxRebateApplicationService,
+		private professionalTaxService : ProfessionalTaxService
 
 	) { }
 
@@ -343,7 +345,7 @@ export class ShopLicNewComponent implements OnInit {
 
 			/*  */
 			attachments: [''],
-			agree: [false,Validators.required],
+			agree: [false,Validators.requiredTrue],
 			/*  */
 		});
 		//this.addMorePerson('EMPLOYER_FAMILY');
@@ -446,8 +448,9 @@ export class ShopLicNewComponent implements OnInit {
 			designation: [data.designation ? data.designation : null, [Validators.required, Validators.maxLength(100)]],
 			mobileNo: [data.mobileNo ? data.mobileNo : null, [Validators.required]],
 			// employee: [data.employee ? data.employee : null],
-			emailId: [null, [Validators.required, ValidationService.emailValidator]],
+			//emailId: [null, [Validators.required, ValidationService.emailValidator]],
 			// [data.emailId ? data.emailId :
+			emailId: [data.emailId ? data.emailId : null, [Validators.required, ValidationService.emailValidator]]
 		})
 
 	}
@@ -893,7 +896,8 @@ export class ShopLicNewComponent implements OnInit {
 				this.licenseConfiguration.currentTabIndex = 1;
 				break;
 			case flag <= 40:
-				this.licenseConfiguration.currentTabIndex = 2;
+				this.licenseConfiguration.currentTabIndex = 5;
+				this.commonService.openAlert('Feild Error', 'Should be agree with given details', 'warning');
 				break;
 			case flag <= 47:
 				this.licenseConfiguration.currentTabIndex = 3;
@@ -909,7 +913,7 @@ export class ShopLicNewComponent implements OnInit {
 				break;
 			case flag <= 63:
 				this.licenseConfiguration.currentTabIndex = 7;
-				this.commonService.openAlert('Feild Error', 'Should be agree with given details', 'warning');
+				
 				break;
 			default:
 				this.licenseConfiguration.currentTabIndex = 0;
@@ -1373,4 +1377,41 @@ export class ShopLicNewComponent implements OnInit {
 
 		}
 	}
+
+	validatePecPrcNumber(formControl : FormControl){
+		  console.log("Pec/Prc ", formControl);
+		  
+		  if(!formControl.value || formControl.value == ""){
+			  return true;
+		  } else {
+			  this.professionalTaxService.getSearchDetails(formControl.value,true).subscribe(res => {
+                  if(!res.data){
+					  formControl.setValue("");
+					  this.commonService.openAlert("Error", "Please enter valid EC/RC number", "error");
+				  }
+			  }, error => {
+				  formControl.setValue("");
+				  console.error("error",error);
+			  })
+		  }
+	}
+
+	validatePecPropertyNumber(formControl : FormControl){
+		
+		if(!formControl.value || formControl.value == ""){
+			return true;
+		} else {
+			this.professionalTaxService.isExistPropertyNoCheck(formControl.value).subscribe(res => {
+				return true;
+			}, error => {
+				formControl.setValue("");
+				if (error.error[0]){
+					this.commonService.openAlert("error", error.error[0].message, "error");
+				} else {
+					this.commonService.openAlert("Error", "Property/Census No Not found", "error");
+				}
+					
+			})
+		}
+  }
 }
