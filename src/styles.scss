@@ -711,6 +711,11 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
 .mat-table td.mat-cell, .mat-table td.mat-footer-cell, .mat-table th.mat-header-cell {font-size: 13px;}
 
 
+.tableLayout {table-layout: fixed;}
+.tableLayout .ngSelect {min-width: inherit !important;}
+.tableLayout td, .tableLayout th {word-break: break-all;}
+
+.selectSort .ng-dropdown-panel {max-width: 150px !important;}
 
 
 // Responsive CSS Part 1 ------------------------------------------------
