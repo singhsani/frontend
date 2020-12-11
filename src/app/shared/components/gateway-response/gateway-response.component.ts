@@ -178,11 +178,13 @@ export class GatewayResponseComponent implements OnInit {
 				this.formService.createPayment(payData).subscribe(payResp => {
 					const payRespData = payResp.data.responseData;
 					
-					//	This method is used to send sms ater booking payment for Amphi Theater as
-					//  discussed with B A team.It can be applied for all by removing 
-					//   if condition
+					//	This methods are used to send SMS and Email ater booking payment for Amphi Theater as
+					//  discussed with B A team.It can be applied for all module letter.
 					if (payRespData.payableServiceType == "AMPHI_FEES") {
+						// For SMS
 						this.sendSms(this.dispData.refNumber);
+						// For Email
+						this.sendMail(this.dispData.refNumber);
 					}
 					if (payRespData.fileStatus == "PAYMENT_RECEIVED") {
 						this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(payRespData.serviceDetail.code);
@@ -276,6 +278,21 @@ export class GatewayResponseComponent implements OnInit {
 	sendSms(refNumber: any) {
 		if (refNumber) {
 			this.formService.sendSms(refNumber, this.resourceType).subscribe(resp => {
+			}, err => {
+				this.toastr.error("Something went wrong");
+			})
+		} else {
+			this.toastr.error("Invalid request");
+		}
+	}
+
+	/**
+		   * Method is used to send mail on submit
+		   * @param refNumber 
+		   */
+	sendMail(refNumber: any) {
+		if (refNumber) {
+			this.formService.sendMail(refNumber,this.resourceType).subscribe(resp => {
 			}, err => {
 				this.toastr.error("Something went wrong");
 			})

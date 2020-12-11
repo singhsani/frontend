@@ -447,4 +447,15 @@ export class FormsActionsService {
 		return this.http.get(this.requestURL);
 	  }
 
+    /**
+     * This method is used to send Mail after completion of payment to user
+     * @param refNumber 
+     */
+    sendMail(refNumber:any,resourceType:any){
+		this.requestURL = `api/booking/${resourceType}/sendMail?refNumber=${refNumber}`;
+		return this.http.get(this.requestURL);
+  
+	  }
+
+
 }
