@@ -71,7 +71,7 @@
 						</div>
 					</div>
 					<div class="col-md-4 ngSelect">
-						<div *ngIf="wardZoneLevel.length>=2">
+						<div *ngIf="wardZoneLevel.length>=2" class="selectSort">
 							<ng-select 
 								placeholder="Ward*"
 								formControlName="waterDrainageWardId" (change)="onChangedWardZone($event,3)">
@@ -295,18 +295,18 @@
 
 				<div *ngIf="shopLicNewForm.get('shopPersonList')['controls'].length">
 					<div>
-						<table class="table table-striped responsiveTableRow">
+						<table class="table table-striped responsiveTableRow tableLayout">
 							<thead>
 								<tr class="mo-d-none">
 									
-									<th>{{'Name' | translate:translateKey}}</th>
+									<th width="150" >{{'Name' | translate:translateKey}}</th>
 									<th>{{'Address' | translate:translateKey}}</th>
-									<th>{{'relationship' | translate:translateKey}}</th>
-									<th>{{'Designation / Status' | translate:translateKey}}</th>
-									<th >{{'gender' | translate:translateKey}}</th>
-									<th >{{'mobileNo' | translate:translateKey}}</th>
-									<th >{{'emailId' | translate:translateKey}}</th>
-									<th *ngIf="shopLicNewForm.get('canEdit').value"></th>
+									<th width="140">{{'relationship' | translate:translateKey}}</th>
+									<th width="140">{{'Designation / Status' | translate:translateKey}}</th>
+									<th width="130">{{'gender' | translate:translateKey}}</th>
+									<th width="110">{{'mobileNo' | translate:translateKey}}</th>
+									<th width="150">{{'emailId' | translate:translateKey}}</th>
+									<th width="60" *ngIf="shopLicNewForm.get('canEdit').value"></th>
 								</tr>
 							</thead>
 							<tbody formArrayName="shopPersonList">
@@ -339,10 +339,10 @@
 									<td>
 										<div class="d-md-none">{{'relationship' | translate:translateKey}}</div>
 										<div class="ngSelect" required style="min-width:100px" formGroupName="relationshipType">
-											<p class="width80" *ngIf="!item.isEditMode">
+											<p *ngIf="!item.isEditMode">
 												 {{getSelectedDataFromLookUps(relationshipTypeList,item.get('relationshipType').value.code)?.name}} 
 											</p>
-											<div class="col-md-6 ngSelect" *ngIf="item.isEditMode">
+											<div class="ngSelect" *ngIf="item.isEditMode">
 												<ng-select *ngIf="item.isEditMode" placeholder="{{'Relationship Type' | translate:translateKey}}"
 													formControlName="code">
 													<ng-option *ngFor="let relation of relationshipTypeList" [value]="relation.code">
@@ -385,7 +385,7 @@
 									<td>
 										<div class="d-md-none">{{'mobileNo' | translate:translateKey}}</div>
 										<div class="mobileCon adjustError">
-											<p class="width50" *ngIf="!item.isEditMode">{{item.get('mobileNo').value}}</p>
+											<p *ngIf="!item.isEditMode">{{item.get('mobileNo').value}}</p>
 											<mat-form-field *ngIf="item.isEditMode">
 												<input matInput maxlength="10" minlength="10" OnlyNumber formControlName="mobileNo" required>
 												<control-messages [control]="item.get('mobileNo')"></control-messages>
@@ -396,7 +396,7 @@
 									<td>
 										<div class="d-md-none">{{'emailId' | translate:translateKey}}</div>
 										<div class="mobileCon adjustError">
-											<p class="width50" *ngIf="!item.isEditMode">{{item.get('emailId').value}}</p>
+											<p *ngIf="!item.isEditMode">{{item.get('emailId').value}}</p>
 											<mat-form-field *ngIf="item.isEditMode">
 												<input matInput maxlength="50"  formControlName="emailId" required>
 												<control-messages [control]="item.get('emailId')"></control-messages>
