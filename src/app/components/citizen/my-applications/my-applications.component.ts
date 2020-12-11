@@ -395,7 +395,7 @@ export class MyApplicationsComponent implements OnInit,OnChanges {
 	 */
 	isPreviewOptDisplay(row) {
 		if (row.serviceType === 'PEC_REG' || row.serviceType === 'PRC_REG'  || row.serviceType === 
-		'NO_DUE_CERTIFICATE' || row.serviceType === 'ASSESSMENT_CERTIFICATE' )
+		'NO_DUE_CERTIFICATE' || row.serviceType === 'ASSESSMENT_CERTIFICATE' || row.fileStatus == 'APPROVED')
 			return false;
 		else if (!row.canEdit)
 			return true;
