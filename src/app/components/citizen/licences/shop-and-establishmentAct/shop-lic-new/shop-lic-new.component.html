@@ -514,17 +514,17 @@
 
 								<td>
 										<div class="d-md-none">{{'workerType' | translate:translateKey}}</div>
-										<div class="ngSelect" required style="min-width:100px" formGroupName="workersType">
+										<div class="ngSelect" required style="min-width:100px" >
 										 <!-- <p *ngIf="!item.isEditMode">{{item.get('workersType').value}}</p>  -->
 										  <p class="width80" *ngIf="!item.isEditMode">
-											{{getSelectedDataFromLookUps(workerTypeList,item.get('workersType').value.code)?.name}} 
+											{{getSelectedDataFromLookUps(workerTypeList,item.get('workersType').value)?.name}} 
 									   	</p> 
 											<div col-md-6 class="ngSelect" *ngIf="item.isEditMode" >
-												<ng-select *ngIf="item.isEditMode" formControlName="code">
+												<ng-select *ngIf="item.isEditMode" formControlName="workersType">
 													<ng-option *ngFor="let gender of workerTypeList" [value]="gender.code">
 													{{gender.name}}</ng-option>
 												</ng-select>
-												<control-messages [control]="item.get('workersType').get('code')">
+												<control-messages [control]="item.get('workersType')">
 												</control-messages>
 											</div>
 										</div>
