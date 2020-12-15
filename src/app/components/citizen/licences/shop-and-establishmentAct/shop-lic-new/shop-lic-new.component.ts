@@ -406,9 +406,7 @@ export class ShopLicNewComponent implements OnInit {
 			noOfMen: [data.noOfMen ? data.noOfMen : null, [Validators.required]],
 			noOfWomen: [data.noOfWomen ? data.noOfWomen : null, [Validators.required]],
 			//workerType: [data.workerType ? data.workerType : null, [Validators.required]],
-			workersType:this.fb.group({
-				code:[data.workersType ? (data.workersType.code ? data.workersType.code : null) :null]
-			}),
+			workersType: [data.workersType, [Validators.required]],
 			total: [data.total ? data.total : null, [Validators.required]],
 		})
 
