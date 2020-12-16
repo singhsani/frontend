@@ -287,6 +287,8 @@ export class ShopLicNewComponent implements OnInit {
 			pecNumber:null,
 			prcNumber:null,
 			censusOrPropertyNumber:null,
+			oldRegistrationNumber: null,
+			oldRegistrationDate: null,
 			number: null,
 			otherAddresses: [null, [Validators.required, Validators.maxLength(100)]],
 			/* Step 1 controls end */
