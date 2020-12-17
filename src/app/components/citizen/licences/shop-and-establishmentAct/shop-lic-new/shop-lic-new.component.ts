@@ -405,11 +405,11 @@ export class ShopLicNewComponent implements OnInit {
 	createArrayWorkOut(data?: any): FormGroup {
 		return this.fb.group({
 			id: data.id ? data.id : null,
-			noOfMen: [data.noOfMen ? data.noOfMen : null, [Validators.required]],
-			noOfWomen: [data.noOfWomen ? data.noOfWomen : null, [Validators.required]],
+			noOfMen: [data.noOfMen ? data.noOfMen : null],
+			noOfWomen: [data.noOfWomen ? data.noOfWomen : null],
 			//workerType: [data.workerType ? data.workerType : null, [Validators.required]],
-			workersType: [data.workersType, [Validators.required]],
-			total: [data.total ? data.total : null, [Validators.required]],
+			workersType: [data.workersType],
+			total: [data.total ? data.total : null],
 		})
 
 	}
