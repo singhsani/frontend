@@ -511,13 +511,11 @@ export class MyBookingComponent implements OnInit {
 			})
     }
 
-    /**
-    	 * Method is used to get all lookups for Townhall Refund
-    	 */
+    /* This Method for Bank List. */
     	bookingLookups() {
-    		this.bookingService.getDataFromLookups().subscribe(resp => {
-    			this.bankLists = resp.BANK;
-    		});
+    		this.bookingService.getBankNames().subscribe(resp => {
+                    this.bankLists = resp.data;
+        });
 		}
 
 	showRecieptReprint(element){
