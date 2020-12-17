@@ -134,7 +134,30 @@
 							(blur)="validatePecPropertyNumber(shopLicNewForm.get('censusOrPropertyNumber'))"/>
 						<control-messages [control]="shopLicNewForm.get('censusOrPropertyNumber')"></control-messages>
 					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<input matInput 
+							appAlphaNumeric
+							maxlength="50"
+							placeholder="Old Registration Number"
+							formControlName="oldRegistrationNumber" />
+						<control-messages [control]="shopLicNewForm.get('oldRegistrationNumber')"></control-messages>
+					</mat-form-field>
+	
+					<mat-form-field class="col-md-4">
+						<input matInput [max]="disablefutureDate" autocomplete="off" appDate
+								[matDatepicker]="oldRegistrationDate" formControlName="oldRegistrationDate"
+								(dateChange)="dateFormat($event.value,'oldRegistrationDate')"
+								placeholder="Old Registration Date">
+							<mat-datepicker-toggle matSuffix [for]="oldRegistrationDate"></mat-datepicker-toggle>
+							<mat-datepicker touchUi="true" #oldRegistrationDate></mat-datepicker>
+							<div align="end" class="default-show-hint mat-hint mat-right">
+								{{licenseConfiguration.DATE_HINT_MSG}}</div>
+							<control-messages [control]="shopLicNewForm.get('oldRegistrationDate')">
+							</control-messages>
+					</mat-form-field>
 				</div>
+				
 
 				
 				<div class="row">
