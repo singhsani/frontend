@@ -17,4 +17,8 @@ export class ShopAndEstablishmentTransferService {
 	getLatestApplicationsByIntimationNumber(intimationNumber) {
     	return this.http.get(`api/form/shop-transfer/getLatestApplicationsByIntimationNumber?intimationNumber=` + intimationNumber);
 	}
+
+	getLatestApplicationByCertificationNumber(certificationNumber){
+		return this.http.get(`api/form/shop-transfer/getLatestApplicationByCertificationNumber?certificationNumber=`+ certificationNumber);
+	}
 }

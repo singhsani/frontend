@@ -192,7 +192,22 @@ export class ShopLicTransferComponent implements OnInit {
 			})
 			return;
 		} else if (this.registrationType == "CERTIFICATION") {
-
+			this.shopAndEstablishmentTransferService.getLatestApplicationByCertificationNumber(this.certificateNumber).subscribe(res =>{
+				console.log('Res',res)
+				this.setFormDataFromLatestApplication(res)
+				if(this.shopLicTransferForm.get('organizationType').value != null){
+					this.isGuideLineActive = flag;
+				}
+				return;
+			},err => {
+				console.log("Error",err);
+				if(err && err.error[0]){
+					this.alertService.error(err.error[0].code)
+				}else{
+					this.alertService.error("Error in fetching data")
+				}
+				return;
+			})
 			return;
 		} else {
 			this.alertService.error("Please Select Certificate Type")
