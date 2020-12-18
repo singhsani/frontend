@@ -15,7 +15,8 @@ import { LicenseConfiguration } from '../../license-configuration';
 import { TaxRebateApplicationService } from '../../../tax/property/tax-rebate-application/Services/tax-rebate-application.service';
 import { Constants } from 'src/app/vmcshared/Constants';
 import { ProfessionalTaxService } from 'src/app/core/services/citizen/data-services/professional-tax.service';
-
+import { AlertService } from 'src/app/vmcshared/Services/alert.service';
+import { ShopAndEstablishmentTransferService } from '../common/services/shop-and-establishment-transfer.service';
 @Component({
   selector: 'app-shop-lic-transfer',
   templateUrl: './shop-lic-transfer.component.html',
@@ -96,6 +97,8 @@ export class ShopLicTransferComponent implements OnInit {
 
 	displayDocs = [];
 
+	certificateNumber = '';
+
 	// required attachment array
 	public uploadFilesArray: Array<any> = [];
 
@@ -124,7 +127,9 @@ export class ShopLicTransferComponent implements OnInit {
 		private toastrService: ToastrService,
 		public TranslateService: TranslateService,
 		private taxRebateApplicationService: TaxRebateApplicationService,
-		private professionalTaxService : ProfessionalTaxService
+		private professionalTaxService : ProfessionalTaxService,
+		private alertService: AlertService,
+		private shopAndEstablishmentTransferService : ShopAndEstablishmentTransferService
 
 	) { }
 
@@ -163,9 +168,86 @@ export class ShopLicTransferComponent implements OnInit {
 	}
 
 	hideGuideLine(flag: boolean) {
-		if (this.shopLicTransferForm.get('organizationType').value != null) {
-			this.isGuideLineActive = flag;
+		
+		console.log("Regis ", this.registrationType);
+
+		if (this.registrationType == "INTIMATION") {
+
+			this.shopAndEstablishmentTransferService.getLatestApplicationsByIntimationNumber(this.certificateNumber).subscribe(res => {
+				console.log('Res', res)
+				this.setFormDataFromLatestApplication(res)
+				if (this.shopLicTransferForm.get('organizationType').value != null) {
+					this.isGuideLineActive = flag;
+				}
+				return;
+			}, err => {
+				console.error("Error ", err);
+				if (err && err.error[0]) {
+					this.alertService.error(err.error[0].code)
+				} else {
+					this.alertService.error("Error in fetching data")
+				}
+
+				return;
+			})
+			return;
+		} else if (this.registrationType == "CERTIFICATION") {
+
+			return;
+		} else {
+			this.alertService.error("Please Select Certificate Type")
+			return;
 		}
+		
+		
+
+	}
+
+	setFormDataFromLatestApplication(res){
+        this.shopLicTransferForm.patchValue({
+			aadhaarNo: res.aadhaarNo,
+			alternateMobileNumber : res.alternateMobileNumber,
+			businessSubCategory : res.businessSubCategory,
+			censusOrPropertyNumber : res.censusOrPropertyNumber,
+			commencementOfBusinessDate : res.commencementOfBusinessDate,
+			contactNo : res.contactNo,
+			email : res.email,
+			employerDesignation : res.employerDesignation,
+			employerMobileNumber : res.employerMobileNumber,
+			employerEmailId : res.employerEmailId,
+			establishmentCategory : res.establishmentCategory,
+			establishmentName : res.establishmentName,
+			nameOfEmployer : res.nameOfEmployer,
+			natureOfBusiness : res.natureOfBusiness,
+			organizationType : res.organizationType,
+			otherAddresses : res.otherAddresses,
+			ownershipType : res.ownershipType,
+			pecNumber : res.pecNumber,
+			postalAddress : res.postalAddress,
+			prcNumber : res.prcNumber,
+			previousRegistrationNo : res.previousRegistrationNo,
+			registrationType : res.registrationType,
+			residentialAddressOfEmployer : res.residentialAddressOfEmployer,
+			shopPersonList : res.shopPersonList,
+			shopPartnerList : res.shopPartnerList,
+			waterDrainageBlockId : res.waterDrainageBlockId,
+			waterDrainageBlockName : res.waterDrainageBlockName,
+			waterDrainageWardId : res.waterDrainageWardId,
+			waterDrainageWardName : res.waterDrainageWardName,
+			waterDrainageZoneId : res.waterDrainageZoneId,
+			waterDrainageZoneName : res.waterDrainageZoneName,
+			workerCounts : res.workerCounts
+
+		 });
+
+		this.formService.saveFormData(this.shopLicTransferForm.getRawValue()).subscribe(saveResp => {
+			this.shopLicTransferForm.patchValue(saveResp);
+			this.setDropdownAndListDataFromRes(saveResp);
+		},
+		err => {
+			console.error(err)
+		})
+		 
 	}
 
 	/**
@@ -176,7 +258,17 @@ export class ShopLicTransferComponent implements OnInit {
 		this.formService.getFormData(this.formId).subscribe(res => {
 			try {
 				this.shopLicTransferForm.patchValue(res);
-				this.licenseConfiguration.isAttachmentButtonsVisible = true;
+				this.setDropdownAndListDataFromRes(res);
+
+				
+			} catch (error) {
+				console.log(error.message)
+			}
+		});
+	}
+
+	setDropdownAndListDataFromRes(res){
+		this.licenseConfiguration.isAttachmentButtonsVisible = true;
 				res.shopPersonList.forEach(app => {
 					(<FormArray>this.shopLicTransferForm.get('shopPersonList')).push(this.createArray(app));
 				});
@@ -226,12 +318,6 @@ export class ShopLicTransferComponent implements OnInit {
 				if (res.waterDrainageBlockId) {
 					this.getWardZone(res.waterDrainageWardId, 3);
 				}
-
-				
-			} catch (error) {
-				console.log(error.message)
-			}
-		});
 	}
 
 	/**
@@ -270,7 +356,7 @@ export class ShopLicTransferComponent implements OnInit {
 			renewal: null,
 			adminCharges: null,
       netAmount: null,
-      certificateNumber: [null, [Validators.required, Validators.maxLength(10)]],
+    //   certificateNumber: [null],
 			/* Step 1 controls start */
 			//previousRegistrationNo :  [null, [Validators.maxLength(150)]],//count=4
 			establishmentName: [null, [Validators.required, Validators.maxLength(150)]],//count=4
