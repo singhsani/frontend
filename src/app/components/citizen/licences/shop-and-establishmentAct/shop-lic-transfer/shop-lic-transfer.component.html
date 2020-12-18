@@ -4,21 +4,22 @@
 
 <div *ngIf="isGuideLineActive">
 	<div class="row">
-	  <div class="col-md-4 ngSelect">
-		<ng-select placeholder="Working in organization Number of humans*"
-			 (change)="onChangeNoOfHumanWorking($event)" [(ngModel)]="registrationType">
-			<ng-option *ngFor="let yes_no of regiTyep" [value]="yes_no.code">{{yes_no.name}}</ng-option>
-		</ng-select>
-    </div>
-
-    <mat-form-field class="col-md-4">
-      <input matInput type="text" AlphaNumeric formControlName="certificateNumber" 
-      maxlength="10" placeholder="{{'certificate_number' | translate: translateKey}}">
-
-      <control-messages [control]="shopLicTransferForm.get('certificateNumber')"></control-messages>
-    </mat-form-field>
-    
-  </div>
+		<div class="col-md-4 ngSelect">
+			<ng-select placeholder="Working in organization Number of humans*" (change)="onChangeNoOfHumanWorking($event)"
+				[(ngModel)]="registrationType">
+				<ng-option *ngFor="let yes_no of regiTyep" [value]="yes_no.code">{{yes_no.name}}</ng-option>
+			</ng-select>
+		</div>
+	
+		<mat-form-field class="col-md-4">
+		<!-- <div class="col-md-4"> -->
+			<input matInput type="text" AlphaNumeric [(ngModel)]="certificateNumber"
+				placeholder="{{'certificate_number' | translate: translateKey}}">
+		<!-- </div> -->
+		<!-- <control-messages [control]="shopLicTransferForm.get('certificateNumber')"></control-messages> -->
+		</mat-form-field>
+	
+	</div>
 
 	  <div class="fotButtonBar">
 		<div class="col-sm-12 col-md-12 text-right">
