@@ -243,19 +243,24 @@ export class ShopLicTransferComponent implements OnInit {
 			previousRegistrationNo : res.previousRegistrationNo,
 			registrationType : res.registrationType,
 			residentialAddressOfEmployer : res.residentialAddressOfEmployer,
-			shopPersonList : res.shopPersonList,
-			shopPartnerList : res.shopPartnerList,
+			// shopPersonList : res.shopPersonList,
+			// shopPartnerList : res.shopPartnerList,
 			waterDrainageBlockId : res.waterDrainageBlockId,
 			waterDrainageBlockName : res.waterDrainageBlockName,
 			waterDrainageWardId : res.waterDrainageWardId,
 			waterDrainageWardName : res.waterDrainageWardName,
 			waterDrainageZoneId : res.waterDrainageZoneId,
 			waterDrainageZoneName : res.waterDrainageZoneName,
-			workerCounts : res.workerCounts
+			// workerCounts : res.workerCounts
 
 		 });
+		 
+		let formObj = this.shopLicTransferForm.getRawValue();
+		formObj['shopPersonList'] = res.shopPersonList;
+		formObj['shopPartnerList'] = res.shopPartnerList;
+		formObj['workerCounts'] = res.workerCounts;
 
-		this.formService.saveFormData(this.shopLicTransferForm.getRawValue()).subscribe(saveResp => {
+		this.formService.saveFormData(formObj).subscribe(saveResp => {
 			this.shopLicTransferForm.patchValue(saveResp);
 			this.setDropdownAndListDataFromRes(saveResp);
 		},
