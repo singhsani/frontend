@@ -530,11 +530,9 @@ export class ActionBarComponent implements OnInit, OnChanges {
 	}
 
 	openErrorAlert(error){
-		if(error & error.error[0]) {
+		if(error && error.error[0]) {
 			this.commonService.openAlert("Error", "Error Occured for final submit : "
 					 + error.error[0].message, "warning");
-		} else if (error && error[0]) {
-			this.commonService.openAlert("Error", error[0].message, "warning");
 		} else {
 			this.commonService.openAlert("Error", "Something went wrong","warning");
 		}
