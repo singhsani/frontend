@@ -100,7 +100,10 @@ const ROUTEMAIN = {
         'main': 'shop',
         'type': 'shop'
     },
-    
+    'SHOP-ESTAB-TRANSFER': {
+        'main': 'shop-transfer',
+        'type': 'shop-transfer'
+    },
     'SHOP-CAN': {
         'main': 'shopLicenseCancellation',
         'type': 'shopLicenseCancellation'
@@ -670,6 +673,9 @@ const ROUTESLIST = {
     },
     'SHOP-ESTAB-LIC-NEW': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.LICENCEMODULE + '/' + ROUTEPREFIX.SHOPANDESTAMODULE + '/' + ROUTEMAIN["SHOP-ESTAB-LIC-NEW"].main
+    },
+    'SHOP-ESTAB-TRANSFER': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.LICENCEMODULE + '/' + ROUTEPREFIX.SHOPANDESTAMODULE + '/' + ROUTEMAIN["SHOP-ESTAB-TRANSFER"].main
     },
     'SHOP-CAN': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.LICENCEMODULE + '/' + ROUTEPREFIX.SHOPANDESTAMODULE + '/' + ROUTEMAIN["SHOP-CAN"].main
