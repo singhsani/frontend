@@ -351,4 +351,25 @@ export class BookingService {
     return this.http.get(this.requestURL);
   }
 
+  /**
+     * This method is used to send sms after completion of  payment
+     * @param refNumber 
+     * @param eventType 
+     */
+    sendSms(refNumber:any,eventType:any){
+      this.requestURL = `api/booking/${this.resourceType}/sendSms?refNumber=${refNumber}&eventType=${eventType}`;
+      return this.http.get(this.requestURL);
+    }
+
+/**
+     * This method is used to send Mail after completion of payment to user
+     * @param refNumber 
+     * @param eventType 
+     */
+    sendMail(refNumber: any,eventType: any){
+      this.requestURL = `api/booking/${this.resourceType}/sendMail?refNumber=${refNumber}&eventType=${eventType}`;
+      return this.http.get(this.requestURL);
+
+    }
+
 }

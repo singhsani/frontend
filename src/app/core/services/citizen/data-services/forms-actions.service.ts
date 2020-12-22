@@ -442,8 +442,8 @@ export class FormsActionsService {
      * This method is used to send sms after completion of booking payment.
      * @param refNumber 
      */
-    sendSms(refNumber:any,resourceType:any){
-		this.requestURL = `api/booking/${resourceType}/sendSms?refNumber=${refNumber}`;
+    sendSms(refNumber:any,resourceType:any,eventType:any){
+		this.requestURL = `api/booking/${resourceType}/sendSms?refNumber=${refNumber}&eventType=${eventType}`;
 		return this.http.get(this.requestURL);
 	  }
 
@@ -451,8 +451,8 @@ export class FormsActionsService {
      * This method is used to send Mail after completion of payment to user
      * @param refNumber 
      */
-    sendMail(refNumber:any,resourceType:any){
-		this.requestURL = `api/booking/${resourceType}/sendMail?refNumber=${refNumber}`;
+    sendMail(refNumber:any,resourceType:any,eventType:any){
+		this.requestURL = `api/booking/${resourceType}/sendMail?refNumber=${refNumber}&eventType=${eventType}`;
 		return this.http.get(this.requestURL);
   
 	  }
