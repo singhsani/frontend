@@ -14,6 +14,7 @@ import { TranslateService } from '../../../../../shared/modules/translate/transl
 import { LicenseConfiguration } from '../../license-configuration';
 import { TaxRebateApplicationService } from '../../../tax/property/tax-rebate-application/Services/tax-rebate-application.service';
 import { Constants } from 'src/app/vmcshared/Constants';
+import { AlertService } from 'src/app/vmcshared/Services/alert.service';
 import { ProfessionalTaxService } from 'src/app/core/services/citizen/data-services/professional-tax.service';
 
 @Component({
@@ -124,7 +125,8 @@ export class ShopLicNewComponent implements OnInit {
 		private toastrService: ToastrService,
 		public TranslateService: TranslateService,
 		private taxRebateApplicationService: TaxRebateApplicationService,
-		private professionalTaxService : ProfessionalTaxService
+		private professionalTaxService : ProfessionalTaxService,
+		private alertService: AlertService,
 
 	) { }
 
@@ -163,8 +165,23 @@ export class ShopLicNewComponent implements OnInit {
 	}
 
 	hideGuideLine(flag: boolean) {
-		if (this.shopLicNewForm.get('organizationType').value != null) {
-			this.isGuideLineActive = flag;
+		if(this.registrationType == "INTIMATION"){
+			if (this.shopLicNewForm.get('organizationType').value != null) {
+				this.isGuideLineActive = flag;
+			}else{
+				this.alertService.error("Error in fetching data")
+			}
+		}
+		else if(this.registrationType == "CERTIFICATION"){
+			if (this.shopLicNewForm.get('organizationType').value != null) {
+				this.isGuideLineActive = flag;
+			}else{
+				this.alertService.error("Error in fetching data")
+			}
+		}
+		else{
+			this.alertService.error("Please Select Certificate Type")
+			return;
 		}
 	}
 
@@ -814,7 +831,11 @@ export class ShopLicNewComponent implements OnInit {
 	*/
 	onChangeNoOfHumanWorking(event) {
 		// 
-		this.isDisabledBtn = false;
+		if (event)
+			this.isDisabledBtn = false;
+		else
+			this.isDisabledBtn = true;
+
 		this.shopLicNewForm.get('registrationType').setValue(event);
 		this.registrationType = event;
 		console.log(this.registrationType);

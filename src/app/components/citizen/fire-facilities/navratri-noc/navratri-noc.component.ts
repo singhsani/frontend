@@ -33,6 +33,7 @@ export class NavratriNocComponent implements OnInit {
 	//	startMinDate = moment(new Date()).format('YYYY-MM-DD');
 	endMinDate = moment(new Date()).format('YYYY-MM-DD');
 	endLetterDate = moment(new Date()).format('YYYY-MM-DD');
+	toMinDate :any = new Date;
 	/**
      * @param fb - Declare FormBuilder property.
      * @param validationError - Declare validation service property
@@ -66,6 +67,17 @@ export class NavratriNocComponent implements OnInit {
 			this.getnavratriNocLicNewData();
 			this.navaratriNocFormControls();
 		}
+
+
+		/**
+		 * Subscribe start date changes
+		 */
+		this.navaratriNocForm.controls.fromDate.valueChanges.subscribe(data => {
+			this.navaratriNocForm.controls.toDate.reset();
+			this.toMinDate = data;
+			//this.toStartDate = data;
+		  return;
+	  });     
 	}
 
 	/**

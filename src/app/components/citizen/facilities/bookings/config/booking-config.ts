@@ -18,6 +18,9 @@ export class BookingConstants extends BTConstants {
     static ATITHIGRUH_RESOURCE_TYPE ="atithigruh";
     static SHOOTING_PERMISSION_PLACE = "shootingPermission";
     static BOOKINGS_FILE_UPLOAD_URL = 'api/attachment/booking/upload';
+    static SUBMIT ="SUBMIT";
+    static CANCEL ="CANCEL";
+
 }
 
 /**
