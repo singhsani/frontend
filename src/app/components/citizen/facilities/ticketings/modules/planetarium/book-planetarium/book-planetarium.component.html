@@ -14,6 +14,7 @@
     </div>
 </div> -->
 <!-- HTML for planetarium hall booking -->
+
 <div>
     <mat-card class="formClass cardBorder">
         <div class="pageTitle">{{'book_your_ticket' | translate: translateKey}}</div>
@@ -46,7 +47,7 @@
 
                     <mat-form-field class="col-md-4">
                         <mat-label>{{'visiting_date'| translate: translateKey}}</mat-label>
-                        <input matInput [max]="maxDate" required [min]="minDate" [matDatepicker]="datePicker"
+                        <input matInput [max]="maxDate" required [min]="minDate" [matDatepicker]="datePicker" [matDatepickerFilter]="disableThursday"
                             formControlName="visitingDate" placeholder="DD/MM/YYYY"
                             (dateChange)="changeDateFormat($event);getPlanetariumShowTimeSlot($event);savePlanetariumTickets()">
                         <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
