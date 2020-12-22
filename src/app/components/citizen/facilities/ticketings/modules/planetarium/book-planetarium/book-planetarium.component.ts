@@ -28,6 +28,7 @@ export class BookPlanetariumComponent implements OnInit {
   numberOfVisitors: number;
   isLoadingResults: boolean = false;
   isVisibleIdNumber = false;
+  isPanCardVisibleIdNumber = false;
 
   minDate = moment(new Date()).add(0, 'day').toISOString();
   maxDate = moment(new Date()).add(30, 'day').toISOString();
@@ -97,6 +98,39 @@ export class BookPlanetariumComponent implements OnInit {
     }, err => {
       this.toster.error("Server Error");
     });
+  }
+
+  /**
+	  * disble thursday for vistior date.
+	*/
+  disableThursday(d: Date) {
+    if(d.getDay() != 4) {
+      return d;
+    }
+  }
+
+  CheckType(idCode){
+    this.isVisibleIdNumber = false;
+    this.isPanCardVisibleIdNumber = false;
+    if(idCode === 'AADHARCARD'){
+      this.isVisibleIdNumber = true;
+      this.isPanCardVisibleIdNumber = false;
+      this.ticketBookingForm.controls['idNumber'].setValue('');
+      this.ticketBookingForm.controls['idNumber'].setValidators([Validators.required]);
+      this.ticketBookingForm.controls['idNumber'].updateValueAndValidity();
+    }else if(idCode === 'PANCARD'){
+      this.isPanCardVisibleIdNumber = true;
+      this.isVisibleIdNumber = false;
+      this.ticketBookingForm.controls['idNumber'].setValidators([Validators.required, ValidationService.panValidatorforlastfour]);
+      this.ticketBookingForm.controls['idNumber'].updateValueAndValidity();
+    }else if(idCode === 'VOTINGCARD' || idCode === 'PASSPORT'){
+      this.isVisibleIdNumber = false;
+      this.isPanCardVisibleIdNumber = false;
+      this.ticketBookingForm.controls['idNumber'].setValue('');
+      this.ticketBookingForm.controls['idNumber'].setValidators([Validators.required]);
+      this.ticketBookingForm.controls['idNumber'].updateValueAndValidity();
+    }
+
   }
 
   /**
@@ -543,14 +577,6 @@ export class BookPlanetariumComponent implements OnInit {
             this.commonService.openAlert("Error", err.error[0].message, "warning")
           }
         });
-    }
-
-  }
-
-  CheckType(idCode){
-    this.isVisibleIdNumber = false;
-    if(idCode === 'AADHARCARD'){
-      this.isVisibleIdNumber = true;
     }
 
   }
