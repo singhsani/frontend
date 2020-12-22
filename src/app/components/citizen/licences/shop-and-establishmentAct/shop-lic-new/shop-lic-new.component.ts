@@ -814,7 +814,11 @@ export class ShopLicNewComponent implements OnInit {
 	*/
 	onChangeNoOfHumanWorking(event) {
 		// 
-		this.isDisabledBtn = false;
+		if (event)
+			this.isDisabledBtn = false;
+		else
+			this.isDisabledBtn = true;
+
 		this.shopLicNewForm.get('registrationType').setValue(event);
 		this.registrationType = event;
 		console.log(this.registrationType);
