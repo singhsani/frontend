@@ -468,7 +468,16 @@ export class MyBookingComponent implements OnInit {
           this.getAllBooking();
           //this.modalResRef = this.modalService.show(this.templateResponseModel, Object.assign({ ignoreBackdropClick: true }, { class: 'gray modal-lg customWidth' }))
           this.modalResRef.hide();
-          this.commonService.successAlert("Success", "SuccessFully Cancel", "success");
+		  this.commonService.successAlert("Success", "SuccessFully Cancel", "success");
+
+          if(this.bookingService.resourceType =='amphiTheater'){
+           //This method is used to send SMS during cancellation request of booking
+		  this.sendSms(this.refNumber,this.bookingConstant.CANCEL);
+		  
+		  //This method is used to send Email during cancellation request of booking
+		  this.sendMail(this.refNumber,this.bookingConstant.CANCEL);
+		  }
+		 
         }, err => {
           this.toster.error(err.error.message);
         });
@@ -583,4 +592,39 @@ export class MyBookingComponent implements OnInit {
 	allCancelForAmphi(){
 		this.chooseAllForCancel(true);
    }
+
+	/**
+		* Method is used to send sms on submit
+		* @param refNumber
+		* @param eventType
+		*/
+	sendSms(refNumber: any, eventType: any) {
+		if (refNumber) {
+			this.bookingService.sendSms(refNumber, eventType).subscribe(resp => {
+			}, err => {
+				this.toster.error("Something went wrong");
+			})
+		} else {
+			this.toster.error("Invalid request");
+		}
+	}
+
+	/**
+	   * Method is used to send mail on submit
+	   * @param refNumber 
+	   * @param eventType 
+	   */
+	sendMail(refNumber: any, eventType: any) {
+		if (refNumber) {
+			this.bookingService.sendMail(refNumber, eventType).subscribe(resp => {
+			}, err => {
+				this.toster.error("Something went wrong");
+			})
+		} else {
+			this.toster.error("Invalid request");
+		}
+}
+
+
+
 }
