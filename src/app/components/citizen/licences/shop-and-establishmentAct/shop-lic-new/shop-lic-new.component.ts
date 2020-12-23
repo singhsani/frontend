@@ -916,7 +916,7 @@ export class ShopLicNewComponent implements OnInit {
 			case flag <= 33:
 				this.licenseConfiguration.currentTabIndex = 1;
 				break;
-			case flag <= 40:
+			case flag <= 42:
 				this.licenseConfiguration.currentTabIndex = 5;
 				this.commonService.openAlert('Feild Error', 'Should be agree with given details', 'warning');
 				break;
