@@ -465,6 +465,8 @@ mat-footer-row, mat-header-row, mat-row, td.mat-cell, td.mat-footer-cell, th.mat
     bottom: auto; margin-top: -18px !important; min-height: 18px;}
 .radioBtnError .mat-error { position: relative !important; top: -4px !important; left: 0;font-size: 11px;}
 
+.matErrorTwoLine .mat-error {bottom: auto; top: 27px; word-break: break-word;}
+
 .mat-horizontal-content-container{
     min-height: 300px;
     max-height:auto;
