@@ -269,7 +269,6 @@ export class BookAtithigruhComponent implements OnInit {
 
 	formatAMPM() {
 		var now = moment();
-		debugger;
 		var hourToCheck = (now.day() !== 0)?14:0;
 		var dateToCheck = now.hour(hourToCheck).minute(0);
 		

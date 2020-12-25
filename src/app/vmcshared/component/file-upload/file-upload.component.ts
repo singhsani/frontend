@@ -132,7 +132,6 @@ export class FileUploadComponentWaterTax implements OnInit {
 					this.uploadFileService.processFileToDMSServer(formData, setProgressBar => {
 						this.progress.percentage = setProgressBar;
 					}, successres => {
-						debugger
 						this.tostr.success(this.uploadModel.labelName ? this.uploadModel.labelName : this.uploadModel.documentLabelEn + " successfully uploaded", "File Uploaded");
 						this.canUpload = true;
 						this.isUploaded = false;
