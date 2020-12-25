@@ -160,7 +160,7 @@ export class GatewayResponseComponent implements OnInit {
 		if (data.payableServiceType == "PROFESSIONAL_TAX") {
 			this.formService.saveTaxPaymentDetails(payData).subscribe(res => {
 				if (res && res.data) {
-					this.formService.printProfReceipt(res.data.refNumber).subscribe(data => {
+					this.formService.printProfReceipt(res.data.responseData.refNumber).subscribe(data => {
 
 						let sectionToPrint: any = document.getElementById('sectionToPrint');
 						sectionToPrint.innerHTML = data;

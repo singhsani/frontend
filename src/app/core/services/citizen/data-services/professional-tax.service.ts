@@ -135,4 +135,7 @@ export class ProfessionalTaxService {
     return this.http.get('api/pecForm/doc/list');
   }
 
+  saveReceiptDetails(formData) {
+		return this.http.post(`api/professional/receipt/save`, formData);
+	}
 }

@@ -261,7 +261,6 @@ export class MarriageDuplicateComponent implements OnInit {
 	 * @param data - original json.
 	 */
 	updateDuplicateRecordValue(data) {
-		debugger;
 		this.marriageDuplicateForm.get("marriageRegNumber").setValue(data.marriageRegNo);
 		this.newgnDateconvert('marriageDate',data.marriageDate);
 		// this.marriageDuplicateForm.get("marriageDate").setValue(data.marriageDate);
