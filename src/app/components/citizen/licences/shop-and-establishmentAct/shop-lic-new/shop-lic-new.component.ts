@@ -302,9 +302,9 @@ export class ShopLicNewComponent implements OnInit {
       		ward: [null],
 			block: [null],
 			 
-			waterDrainageZoneId: [null],
-			waterDrainageWardId: [null],
-			waterDrainageBlockId: [null],
+			waterDrainageZoneId: [null,Validators.required],
+			waterDrainageWardId: [null,Validators.required],
+			waterDrainageBlockId: [null,Validators.required],
 			ownershipType: [null, [Validators.required]],
 
 			pecNumber:null,
