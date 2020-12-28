@@ -14,6 +14,7 @@ import { TranslateService } from '../../../../../shared/modules/translate/transl
 import { LicenseConfiguration } from '../../license-configuration';
 import { TaxRebateApplicationService } from '../../../tax/property/tax-rebate-application/Services/tax-rebate-application.service';
 import { Constants } from 'src/app/vmcshared/Constants';
+import { AlertService } from 'src/app/vmcshared/Services/alert.service';
 import { ProfessionalTaxService } from 'src/app/core/services/citizen/data-services/professional-tax.service';
 
 @Component({
@@ -103,6 +104,10 @@ export class ShopLicNewComponent implements OnInit {
 
 	public serverUploadFilesArray: Array<any> = [];
 
+	// Map for the formcontrol to tabIndex id;
+
+	public formControlNameToTabIndex = new Map();
+
     /**
      * @param fb - Declare FormBuilder property.
      * @param validationError - Declare validation service property
@@ -124,7 +129,8 @@ export class ShopLicNewComponent implements OnInit {
 		private toastrService: ToastrService,
 		public TranslateService: TranslateService,
 		private taxRebateApplicationService: TaxRebateApplicationService,
-		private professionalTaxService : ProfessionalTaxService
+		private professionalTaxService : ProfessionalTaxService,
+		private alertService: AlertService,
 
 	) { }
 
@@ -137,6 +143,8 @@ export class ShopLicNewComponent implements OnInit {
 			this.apiCode = param.get('apiCode');
 			this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
 		});
+
+		this.setFormControlToTabIndexMap();
 
 		if (!this.formId) {
 			this.router.navigate([ManageRoutes.getFullRoute('CITIZENDASHBOARD')]);
@@ -163,8 +171,23 @@ export class ShopLicNewComponent implements OnInit {
 	}
 
 	hideGuideLine(flag: boolean) {
-		if (this.shopLicNewForm.get('organizationType').value != null) {
-			this.isGuideLineActive = flag;
+		if(this.registrationType == "INTIMATION"){
+			if (this.shopLicNewForm.get('organizationType').value != null) {
+				this.isGuideLineActive = flag;
+			}else{
+				this.alertService.error("Error in fetching data")
+			}
+		}
+		else if(this.registrationType == "CERTIFICATION"){
+			if (this.shopLicNewForm.get('organizationType').value != null) {
+				this.isGuideLineActive = flag;
+			}else{
+				this.alertService.error("Error in fetching data")
+			}
+		}
+		else{
+			this.alertService.error("Please Select Certificate Type")
+			return;
 		}
 	}
 
@@ -279,9 +302,9 @@ export class ShopLicNewComponent implements OnInit {
       		ward: [null],
 			block: [null],
 			 
-			waterDrainageZoneId: [null],
-			waterDrainageWardId: [null],
-			waterDrainageBlockId: [null],
+			waterDrainageZoneId: [null,Validators.required],
+			waterDrainageWardId: [null,Validators.required],
+			waterDrainageBlockId: [null,Validators.required],
 			ownershipType: [null, [Validators.required]],
 
 			pecNumber:null,
@@ -814,7 +837,11 @@ export class ShopLicNewComponent implements OnInit {
 	*/
 	onChangeNoOfHumanWorking(event) {
 		// 
-		this.isDisabledBtn = false;
+		if (event)
+			this.isDisabledBtn = false;
+		else
+			this.isDisabledBtn = true;
+
 		this.shopLicNewForm.get('registrationType').setValue(event);
 		this.registrationType = event;
 		console.log(this.registrationType);
@@ -886,39 +913,25 @@ export class ShopLicNewComponent implements OnInit {
      * This method required for final form submition.
      * @param flag - flag of invalid control.
      */
-	handleErrorsOnSubmit(flag) {
+	handleErrorsOnSubmit(key) {
 
-		switch (true) {
-			case flag <= 21:
-				this.licenseConfiguration.currentTabIndex = 0;
-				break;
-			case flag <= 33:
-				this.licenseConfiguration.currentTabIndex = 1;
-				break;
-			case flag <= 40:
-				this.licenseConfiguration.currentTabIndex = 5;
+		const index = this.formControlNameToTabIndex.get(key)
+		
+		if(index == 5) {
+			this.licenseConfiguration.currentTabIndex = 5;
 				this.commonService.openAlert('Feild Error', 'Should be agree with given details', 'warning');
-				break;
-			case flag <= 47:
-				this.licenseConfiguration.currentTabIndex = 3;
-				break;
-			case flag <= 55:
-				this.licenseConfiguration.currentTabIndex = 4;
-				break;
-			case flag <= 61:
-				this.licenseConfiguration.currentTabIndex = 5;
-				break;
-			case flag <= 62:
-				this.licenseConfiguration.currentTabIndex = 6;
-				break;
-			case flag <= 63:
-				this.licenseConfiguration.currentTabIndex = 7;
-				
-				break;
-			default:
-				this.licenseConfiguration.currentTabIndex = 0;
+				this.checkDynamicTableValidate();
+				return;
+		} else if (index) {
+			this.licenseConfiguration.currentTabIndex = index;
+			this.checkDynamicTableValidate();
+			return
+		} else {
+			this.licenseConfiguration.currentTabIndex = 0;
+			this.checkDynamicTableValidate();
+			return
 		}
-		this.checkDynamicTableValidate();
+
 	}
 
 	/**
@@ -1413,5 +1426,27 @@ export class ShopLicNewComponent implements OnInit {
 					
 			})
 		}
+  }
+
+
+  setFormControlToTabIndexMap(){
+	  this.formControlNameToTabIndex.set('establishmentName',0)
+	  this.formControlNameToTabIndex.set('ownershipType',0)
+	  this.formControlNameToTabIndex.set('otherAddresses',0)
+
+	  this.formControlNameToTabIndex.set('nameOfEmployer',1)
+	  this.formControlNameToTabIndex.set('employerDesignation',1)
+	  this.formControlNameToTabIndex.set('employerMobileNumber',1)
+	  this.formControlNameToTabIndex.set('alternateMobileNumber',1)
+	  this.formControlNameToTabIndex.set('residentialAddressOfEmployer',1)
+	  this.formControlNameToTabIndex.set('establishmentCategory',1)
+	  this.formControlNameToTabIndex.set('businessSubCategory',1)
+	  this.formControlNameToTabIndex.set('natureOfBusiness',1)
+	  this.formControlNameToTabIndex.set('commencementOfBusinessDate',1)
+
+	  this.formControlNameToTabIndex.set('organizationType',4)
+
+	  this.formControlNameToTabIndex.set('agree',5)
+
   }
 }

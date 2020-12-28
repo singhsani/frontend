@@ -1480,7 +1480,6 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
         let step7 = 62;
         let step8 = 65;
         let step11 = 140;
-        debugger;
         if (flag != null) {
             //Check validation for step by step
             let count = flag;

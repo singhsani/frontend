@@ -226,7 +226,7 @@
         <thead>
           <tr>
             <th scope="col">{{'booking_date'| translate: translateKey}}</th>
-            <th scope="col">{{'rent_amount'| translate: translateKey}}</th>
+            <th scope="col">{{'rate_amount'| translate: translateKey}}</th>
             <!-- <th scope="col">{{'deposit_amount'| translate: translateKey}}</th>
             <th scope="col">{{'GST'| translate: translateKey}}</th> -->
           </tr>
@@ -375,7 +375,7 @@
             <label labelPosition="after">{{'previous_permission_orders_if_applicable' | translate:translateKey}}
             </label>
             <booking-file-upload (uploaded)="isFileUploaded = $event" [form]="bookPermissionApplicationForm"
-              [uploadModel]="{dmsUpload:true,fieldIdentifier:'1', labelName:'previous_permission_orders_if_applicable', formPart:'1.1', refNumber:
+              [uploadModel]="{dmsUpload:true,fieldIdentifier:'1', labelName:'Previous Permission Orders if Applicable', formPart:'1.1', refNumber:
                 bookPermissionApplicationForm.get('refNumber').value, bookingFormId : bookPermissionApplicationForm.get('bookingFormId').value, variableName: 'permission_orders'}">
             </booking-file-upload>
           </div>
@@ -384,7 +384,7 @@
             <label labelPosition="after">{{'vehicle_details' | translate:translateKey}} *
             </label>
             <booking-file-upload (uploaded)="isFileUploaded = $event" [form]="bookPermissionApplicationForm"
-              [uploadModel]="{dmsUpload:true,fieldIdentifier:'2', labelName:'vehicle_details', formPart:'1.2', refNumber:
+              [uploadModel]="{dmsUpload:true,fieldIdentifier:'2', labelName:'Vehicle Details', formPart:'1.2', refNumber:
                 bookPermissionApplicationForm.get('refNumber').value, bookingFormId : bookPermissionApplicationForm.get('bookingFormId').value, variableName: 'vehicle_details'}">
             </booking-file-upload>
           </div>

@@ -318,6 +318,15 @@ export class ActionBarComponent implements OnInit, OnChanges {
 							}
 						}
 					}
+
+					if(this.form.get('apiType').value == 'shop' || 
+					this.form.get('apiType').value == 'shop-transfer' ) {
+						this.handleErrors.emit(key);
+						break;
+					}
+
+
+					
 					this.handleErrors.emit(count);
 					break;
 				}

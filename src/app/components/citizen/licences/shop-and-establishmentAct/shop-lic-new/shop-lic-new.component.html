@@ -7,7 +7,7 @@
 <div *ngIf="isGuideLineActive">
 	
 	  <div class="col-md-4 ngSelect">
-		<ng-select placeholder="Working in organization Number of humans*"
+		<ng-select placeholder="Number of humans Working in Organization*" required
 			 (change)="onChangeNoOfHumanWorking($event)" [(ngModel)]="registrationType">
 			<ng-option *ngFor="let yes_no of regiTyep" [value]="yes_no.code">{{yes_no.name}}</ng-option>
 		</ng-select>
@@ -345,7 +345,7 @@
 											<input matInput appValidationFields
 												[validationFieldsType]="'onlyNameWithSpace'" formControlName="name"
 												required>
-											<control-messages [control]="item.get('name')"></control-messages>
+											<control-messages class="matErrorTwoLine" [control]="item.get('name')"></control-messages>
 										</mat-form-field>
 									</td>
 
@@ -384,7 +384,7 @@
 											<input matInput appValidationFields
 												[validationFieldsType]="'onlyNameWithSpace'" formControlName="designation"
 												required>
-											<control-messages [control]="item.get('designation')"></control-messages>
+											<control-messages class="matErrorTwoLine" [control]="item.get('designation')"></control-messages>
 										</mat-form-field>
 									</td>
 
@@ -407,18 +407,23 @@
 
 									<td>
 										<div class="d-md-none">{{'mobileNo' | translate:translateKey}}</div>
-										<div class="mobileCon adjustError">
+										<div class="mobileCon">
 											<p *ngIf="!item.isEditMode">{{item.get('mobileNo').value}}</p>
 											<mat-form-field *ngIf="item.isEditMode">
+<<<<<<< HEAD
 												<input matInput maxlength="10" minlength="10" OnlyNumber formControlName="mobileNo" >
 												<control-messages [control]="item.get('mobileNo')"></control-messages>
+=======
+												<input matInput maxlength="10" minlength="10" OnlyNumber formControlName="mobileNo" required>
+												<control-messages class="matErrorTwoLine" [control]="item.get('mobileNo')"></control-messages>
+>>>>>>> 4d29d968a9c4a730d03e36110101f385b93609a6
 											</mat-form-field>
 										</div>
 									</td>
 
 									<td>
 										<div class="d-md-none">{{'emailId' | translate:translateKey}}</div>
-										<div class="mobileCon adjustError">
+										<div class="mobileCon">
 											<p *ngIf="!item.isEditMode">{{item.get('emailId').value}}</p>
 											<mat-form-field *ngIf="item.isEditMode">
 												<input matInput maxlength="50"  formControlName="emailId" >

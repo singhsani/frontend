@@ -140,9 +140,9 @@ export class FormsActionsService {
 	}
 
 	/**
-     * This method is use to generate print view
-     * @param appId - citizen app id
-     */
+	 * This method is use to generate print view
+	 * @param appId - citizen app id
+	 */
 	printView(appId) {
 
 		this.requestURL = `api/form/${this.apiType}/printView/${appId}`;
@@ -359,7 +359,7 @@ export class FormsActionsService {
 	}
 
 	saveTaxPaymentDetails(data) {
-		return this.http.post(`api/professional/taxPayment`, data);
+				return this.http.post(`api/professional/taxPayment`, data);
 	}
 
 	printProfReceipt(refNumber) {
@@ -387,7 +387,7 @@ export class FormsActionsService {
 	setNBCtoDuplicateBirth(data: any) {
 		this.NBCtoDuplicateBirth.next(data);
 	}
-    /**
+	/**
 	 * This method get value 
 	 */
 	getNDCtoDuplicateDeath(): Observable<any> {
@@ -419,12 +419,12 @@ export class FormsActionsService {
 		return this.http.get(`api/loidetail/list?appId=${appId}`);
 	}
 
-	saveOfflinePayment(serviceId,paymentData) {
+	saveOfflinePayment(serviceId, paymentData) {
 		this.requestURL = `api/form/${this.apiType}/offlinePayment/${serviceId}`;
 		return this.http.post(this.requestURL, paymentData);
 	}
 
-	getCitizenForm(reqData){
+	getCitizenForm(reqData) {
 		this.requestURL = `api/user/${this.apiType}`;
 		return this.http.post(this.requestURL, reqData);
 	}
@@ -433,29 +433,29 @@ export class FormsActionsService {
 		return this.http.post(this.requestURL, {});
 	}
 
-	saveNoDueCertificate(apiName: any, noofCopies: any, asonDate: any, occupierId: any,propertyBasicId: any) {
+	saveNoDueCertificate(apiName: any, noofCopies: any, asonDate: any, occupierId: any, propertyBasicId: any) {
 		this.requestURL = `api/form/${this.apiType}/${apiName}?noofCopies=${noofCopies}&asonDate=${asonDate}&occupierId=${occupierId}&propertyBasicId=${propertyBasicId}`;
 		return this.http.post(this.requestURL, {});
 	}
-	
-    /**
-     * This method is used to send sms after completion of booking payment.
-     * @param refNumber 
-     */
-    sendSms(refNumber:any,resourceType:any){
-		this.requestURL = `api/booking/${resourceType}/sendSms?refNumber=${refNumber}`;
-		return this.http.get(this.requestURL);
-	  }
 
-    /**
-     * This method is used to send Mail after completion of payment to user
-     * @param refNumber 
-     */
-    sendMail(refNumber:any,resourceType:any){
-		this.requestURL = `api/booking/${resourceType}/sendMail?refNumber=${refNumber}`;
+	/**
+	 * This method is used to send sms after completion of booking payment.
+	 * @param refNumber 
+	 */
+	sendSms(refNumber: any, resourceType: any, eventType: any) {
+		this.requestURL = `api/booking/${resourceType}/sendSms?refNumber=${refNumber}&eventType=${eventType}`;
 		return this.http.get(this.requestURL);
-  
-	  }
+	}
+
+	/**
+	 * This method is used to send Mail after completion of payment to user
+	 * @param refNumber 
+	 */
+	sendMail(refNumber: any, resourceType: any, eventType: any) {
+		this.requestURL = `api/booking/${resourceType}/sendMail?refNumber=${refNumber}&eventType=${eventType}`;
+		return this.http.get(this.requestURL);
+
+	}
 
 
 }

@@ -6,6 +6,8 @@ import * as _ from 'lodash';
 import { ManageRoutes } from './../../../config/routes-conf';
 import { FormsActionsService } from './../../../core/services/citizen/data-services/forms-actions.service';
 import { SessionStorageService } from 'angular-web-storage';
+import { BookingConstants, BookingUtils } from 'src/app/components/citizen/facilities/bookings/config/booking-config';
+
 
 @Component({
 	selector: 'app-gateway-response',
@@ -21,6 +23,12 @@ export class GatewayResponseComponent implements OnInit {
 	dispData: any;
 	isSearchanble: string = "";
 	resourceType: String;
+
+	/**
+	 * Common for all bookings
+	 */
+	bookingConstant = BookingConstants;
+	bookingUtils: BookingUtils = new BookingUtils();
 
 	constructor(
 		private formService: FormsActionsService,
@@ -152,7 +160,7 @@ export class GatewayResponseComponent implements OnInit {
 		if (data.payableServiceType == "PROFESSIONAL_TAX") {
 			this.formService.saveTaxPaymentDetails(payData).subscribe(res => {
 				if (res && res.data) {
-					this.formService.printProfReceipt(res.data.refNumber).subscribe(data => {
+					this.formService.printProfReceipt(res.data.responseData.refNumber).subscribe(data => {
 
 						let sectionToPrint: any = document.getElementById('sectionToPrint');
 						sectionToPrint.innerHTML = data;
@@ -182,9 +190,9 @@ export class GatewayResponseComponent implements OnInit {
 					//  discussed with B A team.It can be applied for all module letter.
 					if (payRespData.payableServiceType == "AMPHI_FEES") {
 						// For SMS
-						this.sendSms(this.dispData.refNumber);
+						this.sendSms(this.dispData.refNumber,this.bookingConstant.SUBMIT);
 						// For Email
-						this.sendMail(this.dispData.refNumber);
+						this.sendMail(this.dispData.refNumber,this.bookingConstant.SUBMIT);
 					}
 					if (payRespData.fileStatus == "PAYMENT_RECEIVED") {
 						this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(payRespData.serviceDetail.code);
@@ -275,9 +283,9 @@ export class GatewayResponseComponent implements OnInit {
 	 * This method is used to send  sms after completion of booking payment
 	 * @param refNumber 
 	 */
-	sendSms(refNumber: any) {
+	sendSms(refNumber: any,eventType: any) {
 		if (refNumber) {
-			this.formService.sendSms(refNumber, this.resourceType).subscribe(resp => {
+			this.formService.sendSms(refNumber, this.resourceType,eventType).subscribe(resp => {
 			}, err => {
 				this.toastr.error("Something went wrong");
 			})
@@ -290,9 +298,9 @@ export class GatewayResponseComponent implements OnInit {
 		   * Method is used to send mail on submit
 		   * @param refNumber 
 		   */
-	sendMail(refNumber: any) {
+	sendMail(refNumber: any,eventType: any) {
 		if (refNumber) {
-			this.formService.sendMail(refNumber,this.resourceType).subscribe(resp => {
+			this.formService.sendMail(refNumber,this.resourceType,eventType).subscribe(resp => {
 			}, err => {
 				this.toastr.error("Something went wrong");
 			})

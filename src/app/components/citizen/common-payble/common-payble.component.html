@@ -23,20 +23,26 @@
       </div>
 
       <!-- This is input for other services search-->
-      <mat-form-field class="col-md-4" *ngIf="f.payableServices.get('code').value !== 'PROFESSIONAL_TAX'">
+      <mat-form-field class="col-md-4" *ngIf="f.payableServices.get('code').value !== 'PAY_PROF_TAX'">
         <input matInput placeholder="{{placeholder}}" formControlName="refNumber" required>
         <control-messages [control]="paymentsForm.get('refNumber')"></control-messages>
       </mat-form-field>
 
       <!-- This is input for professional tax search-->
-      <mat-form-field class="col-md-4" *ngIf="f.payableServices.get('code').value === 'PROFESSIONAL_TAX'">
+      <mat-form-field class="col-md-4" *ngIf="f.payableServices.get('code').value === 'PAY_PROF_TAX'">
         <input matInput appAlphaNumeric maxlength="12" placeholder="{{placeholder}}" formControlName="refNumber"
           required>
         <control-messages [control]="paymentsForm.get('refNumber')"></control-messages>
       </mat-form-field>
 
       <div class="col-md-4 pt-2">
-        <button mat-raised-button color="accent" (click)="getCitizenForm()">
+        <button mat-raised-button color="accent" *ngIf="f.payableServices.get('code').value !== 'PAY_PROF_TAX'"
+          (click)="getCitizenForm()">
+          <mat-icon>search</mat-icon>
+          Search
+        </button>
+        <button mat-raised-button color="accent" *ngIf="f.payableServices.get('code').value === 'PAY_PROF_TAX'"
+          (click)="getAmountData()">
           <mat-icon>search</mat-icon>
           Search
         </button>
@@ -69,7 +75,98 @@
       </div>
     </div>
 
+    <div class="row mt-4" *ngIf="isRecordExists">
+      <ng-container *ngIf="isECRCSearch">
+        <div class="table-responsive">
+          <table class="table" style="border: 1px solid #dee2e6;">
+            <thead>
+              <tr>
+                <th class="pl-4">S.No.</th>
+                <th>REG. NO.</th>
+                <th>MONTH</th>
+                <th>YEAR</th>
+                <th>PROF. TAX</th>
+                <th>INTEREST</th>
+                <th>PENALTY</th>
+                <th>COMP. FEE</th>
+                <th>TOTAL FEE</th>
+                <th>CREDIT AMT</th>
+                <th>FIN. YEAR</th>
+                <th>DUE DATE</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngIf="duesDetailsArr.length == 0">
+                <td colspan="12" class="noRecord">
+                  <h5 class="text-center">No record found !</h5>
+                </td>
+              </tr>
+              <ng-container *ngFor="let dues of duesDetailsArr;let i=index">
+                <tr>
+                  <td width="50" [class.pl-4]="!dues.children">
+                    <mat-icon class="pull-left arrowCls" (click)="toggleRow(dues)" *ngIf="dues.children && dues.children.length > 0">
+                      <span *ngIf="!dues.hidden">chevron_right</span>
+                      <span *ngIf="dues.hidden">expand_more</span>
+                    </mat-icon>{{i+1}}
+                  </td>
+                  <td>{{responseData.ecrcNo}}</td>
+                  <td>{{dues.month}}</td>
+                  <td>{{dues.financialYear}}</td>
+                  <td>{{dues.remainingProfessionalTax}}</td>
+                  <td>{{dues.interest}}</td>
+                  <td>{{dues.penaltyFee}}</td>
+                  <td>{{dues.compFee}}</td>
+                  <td>{{dues.remainingProfessionalTax + dues.interest + dues.penaltyFee }}</td>
+                  <td>{{dues.creditAmount ? dues.creditAmount: 0}}</td>
+                  <td>{{dues.financialYearSlab}}</td>
+                  <td>{{dues.dueDate ? (dues.dueDate | date: 'dd/MM/yyyy'): '-'}}</td>
+                </tr>
+                <ng-container *ngIf="dues.children && dues.children.length > 0">
+                  <tr *ngFor="let child of dues.children" class="bgEEE" [hidden]="!dues.hidden">
+                    <td></td>
+                    <td>{{responseData.ecrcNo}}</td>
+                    <td>{{child.month}}</td>
+                    <td>{{child.financialYear}}</td>
+                    <td>{{child.professionalTax}}</td>
+                    <td>{{child.interest}}</td>
+                    <td>{{child.penaltyFee}}</td>
+                    <td>{{child.compFee}}</td>
+                    <td>{{child.professionalTax + child.interest + child.penaltyFee }}</td>
+                    <td>{{child.creditAmount ? child.creditAmount: 0}}</td>
+                    <td>{{child.financialYearSlab}}</td>
+                    <td>{{child.dueDate ? (child.dueDate | date: 'dd/MM/yyyy'): '-'}}</td>
+                  </tr>
+                </ng-container>
+              </ng-container>
+            </tbody>
+          </table>
+        </div>
+      </ng-container>
 
+      <div class="row mt-4">
+        <div class="col-md-12">
+          <label class="col-md-6 font16 font-weight-bold">Amount Payable :</label>
+          <span class="font16" style="color: #ff0000;">{{paymentsForm.get('amount').value}}</span>
+        </div>
+
+        <!-- <div class="col-md-12" formGroupName="payMode">
+          <label class="col-md-3 font16 font-weight-bold">Payment Mode :</label>
+          <span style="display: inline-block">
+            <mat-radio-group class="example-radio-group" formControlName="code">
+              <mat-radio-button [value]="mode.code" *ngFor="let mode of payModeArr">{{mode.name}}</mat-radio-button>
+            </mat-radio-group>
+          </span>
+        </div> -->
+
+      </div>
+
+      <div class="col-md-6 pt-3 mt-4" style="margin-left: 92px;">
+        <button mat-raised-button class="paymentButton" color="primary" type="submit" (click)="makePayment(paymentsForm.value)">
+          Proceed for Payment
+        </button>
+      </div>
+
+    </div>
 
   </form>
   <select-payment-gateway #paymentGateway></select-payment-gateway>
