@@ -256,6 +256,9 @@ export class DashboardComponent implements OnInit {
 			//case 'HEL-WTR-DRAINAGE-TRANS-CONNECTION':
 				this.router.navigate([ManageRoutes.getFullRoute(apiCode), apiCode]);
 				break;
+			case 'PAY_PROF_TAX':
+				this.router.navigate([ManageRoutes.getFullRoute(apiCode)],{ queryParams: { code: 'PROFESSIONAL' }});
+				break;		
 			case 'PRC_REG':
 			case 'PRO-ASS':
 			case 'PRO-EXT':

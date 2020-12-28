@@ -45,6 +45,7 @@ export class CommonPaybleComponent implements OnInit {
   duesDetailsArr: any = [];
 
   inputData: any
+  selected : any ;
 
   constructor(
     private formService: FormsActionsService,
@@ -62,13 +63,16 @@ export class CommonPaybleComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    
     this.route.queryParams.subscribe(d => {
       if (d.apiCode && d.id) {
         this.printReceipt(d.apiCode, '', d.id);
         setTimeout(() => {
           this.location.go(this.router.url.split('?')[0]);
         }, 3000);
+      }
+      if(d.code){
+        this.selected = d.code ;
       }
     })
 
@@ -366,6 +370,9 @@ export class CommonPaybleComponent implements OnInit {
     this.formService.getUserServices().subscribe(
       res => {
         this.userServicesList = res.modules;
+        if(this.selected=='PROFESSIONAL'){
+          this.paymentsForm.get('module').get('code').setValue(this.selected);  
+        }
       },
       err => {
 
