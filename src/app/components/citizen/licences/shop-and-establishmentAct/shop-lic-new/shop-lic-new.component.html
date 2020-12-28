@@ -410,13 +410,8 @@
 										<div class="mobileCon">
 											<p *ngIf="!item.isEditMode">{{item.get('mobileNo').value}}</p>
 											<mat-form-field *ngIf="item.isEditMode">
-<<<<<<< HEAD
 												<input matInput maxlength="10" minlength="10" OnlyNumber formControlName="mobileNo" >
 												<control-messages [control]="item.get('mobileNo')"></control-messages>
-=======
-												<input matInput maxlength="10" minlength="10" OnlyNumber formControlName="mobileNo" required>
-												<control-messages class="matErrorTwoLine" [control]="item.get('mobileNo')"></control-messages>
->>>>>>> 4d29d968a9c4a730d03e36110101f385b93609a6
 											</mat-form-field>
 										</div>
 									</td>
