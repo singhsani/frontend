@@ -306,7 +306,7 @@ export class BookPlanetariumComponent implements OnInit {
       showEndTime: null,
 
       schoolName: null,
-      schoolMobileNumber: null,
+      schoolMobileNumber: [null, Validators.required],
       schoolEmailId: [null],
 
       shiftType: null,
