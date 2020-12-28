@@ -166,13 +166,13 @@ export class GatewayResponseComponent implements OnInit {
 						sectionToPrint.innerHTML = data;
 
 						setTimeout(() => {
-							var onPrintFinished = (printed) => {
-								this.redirectToHome();
+							var onPrintFinished = (printed) => {	
 							}
 							onPrintFinished(window.print()); //NOSONAR
-						}, 0);
+						}, 3000);
 
 					});
+					this.redirectToHome();
 				}
 			});
 		} else {
@@ -185,14 +185,14 @@ export class GatewayResponseComponent implements OnInit {
 			} else {
 				this.formService.createPayment(payData).subscribe(payResp => {
 					const payRespData = payResp.data.responseData;
-					
+
 					//	This methods are used to send SMS and Email ater booking payment for Amphi Theater as
 					//  discussed with B A team.It can be applied for all module letter.
 					if (payRespData.payableServiceType == "AMPHI_FEES") {
 						// For SMS
-						this.sendSms(this.dispData.refNumber,this.bookingConstant.SUBMIT);
+						this.sendSms(this.dispData.refNumber, this.bookingConstant.SUBMIT);
 						// For Email
-						this.sendMail(this.dispData.refNumber,this.bookingConstant.SUBMIT);
+						this.sendMail(this.dispData.refNumber, this.bookingConstant.SUBMIT);
 					}
 					if (payRespData.fileStatus == "PAYMENT_RECEIVED") {
 						this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(payRespData.serviceDetail.code);
@@ -283,9 +283,9 @@ export class GatewayResponseComponent implements OnInit {
 	 * This method is used to send  sms after completion of booking payment
 	 * @param refNumber 
 	 */
-	sendSms(refNumber: any,eventType: any) {
+	sendSms(refNumber: any, eventType: any) {
 		if (refNumber) {
-			this.formService.sendSms(refNumber, this.resourceType,eventType).subscribe(resp => {
+			this.formService.sendSms(refNumber, this.resourceType, eventType).subscribe(resp => {
 			}, err => {
 				this.toastr.error("Something went wrong");
 			})
@@ -298,9 +298,9 @@ export class GatewayResponseComponent implements OnInit {
 		   * Method is used to send mail on submit
 		   * @param refNumber 
 		   */
-	sendMail(refNumber: any,eventType: any) {
+	sendMail(refNumber: any, eventType: any) {
 		if (refNumber) {
-			this.formService.sendMail(refNumber,this.resourceType,eventType).subscribe(resp => {
+			this.formService.sendMail(refNumber, this.resourceType, eventType).subscribe(resp => {
 			}, err => {
 				this.toastr.error("Something went wrong");
 			})
