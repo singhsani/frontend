@@ -38,7 +38,7 @@
 				<div class="row">
 					<mat-form-field class="col-md-4">
 						<input matInput required  maxlength="150"
-							placeholder="Name of establishment"
+							placeholder="Name of Establishment"
 							formControlName="establishmentName" >
 						<control-messages [control]="shopLicNewForm.get('establishmentName')"></control-messages>
 					</mat-form-field>
@@ -410,7 +410,7 @@
 										<div class="mobileCon adjustError">
 											<p *ngIf="!item.isEditMode">{{item.get('mobileNo').value}}</p>
 											<mat-form-field *ngIf="item.isEditMode">
-												<input matInput maxlength="10" minlength="10" OnlyNumber formControlName="mobileNo" required>
+												<input matInput maxlength="10" minlength="10" OnlyNumber formControlName="mobileNo" >
 												<control-messages [control]="item.get('mobileNo')"></control-messages>
 											</mat-form-field>
 										</div>
@@ -421,7 +421,7 @@
 										<div class="mobileCon adjustError">
 											<p *ngIf="!item.isEditMode">{{item.get('emailId').value}}</p>
 											<mat-form-field *ngIf="item.isEditMode">
-												<input matInput maxlength="50"  formControlName="emailId" required>
+												<input matInput maxlength="50"  formControlName="emailId" >
 												<control-messages [control]="item.get('emailId')"></control-messages>
 											</mat-form-field>
 										</div>
@@ -763,7 +763,7 @@
 							<div class="col-md-4"
 								*ngIf="doc.requiredOnCitizenPortal && doc.isActive && licenseConfiguration.isAttachmentButtonsVisible">
 								<label>{{TranslateService.getCurrentLanguage()=='en'? doc.documentLabelEn : doc.documentLabelGuj }}
-									<span *ngIf="doc.mandatory">*</span></label>
+									<span *ngIf="doc.mandatory" class="mandatory">*</span></label>
 								<file-upload [form]="shopLicNewForm" [uploadModel]="doc"></file-upload>
 							</div>
 						</ng-container>
