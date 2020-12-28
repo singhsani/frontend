@@ -1597,7 +1597,7 @@
 				</div>
 
 				<app-action-bar [uploadFiles]="uploadFilesArray" [form]="marriageFormGroup"
-					(tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step10', next: 10, back: 8}"></app-action-bar>
+					(tabIndex)="onTabChange($event)" [stepInfo]="{step: 'step10', next: 10, back: 6}"></app-action-bar>
 
 			</mat-tab>
 			<!-- End applicant step -->
@@ -1686,7 +1686,7 @@
 
 				<app-action-bar [paymentGateway]="paymentGateway" [uploadFiles]="uploadFilesArray"
 					[form]="marriageFormGroup" (tabIndex)="onTabChange($event)"
-					[stepInfo]="{step: 'final', next: 9, back: 9}" (handleErrors)="handleErrorsOnSubmit($event)">
+					[stepInfo]="{step: 'final', next: 9, back: 7}" (handleErrors)="handleErrorsOnSubmit($event)">
 				</app-action-bar>
 			</mat-tab>
 			<!-- End nine step -->
