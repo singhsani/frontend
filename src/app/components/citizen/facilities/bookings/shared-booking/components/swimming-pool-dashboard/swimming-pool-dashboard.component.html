@@ -1,0 +1,19 @@
+<app-title-bar [title]="'SwimmingPool services' | translate: translateKey"></app-title-bar>
+<div class="moduleList">
+
+          <div class="SwimmingPoolServicesList row">
+              <div class="colBtn col-md-3" *ngFor="let service of modules;" matTooltip="{{ service.name }}">
+                  <button mat-stroked-button routerLinkActive="activated-services-button" *ngIf="service.active" color="primary" routerLink="/{{manageRoutes.getFullRoute(service.code)}}">
+                      {{ service.name }}
+                  </button>
+                  <button mat-stroked-button *ngIf="!service.active" color="primary">
+                      {{ service.name }}  
+                  </button>
+              </div>
+          </div>
+          <div class="activated-service">
+            <!-- <router-outlet></router-outlet> -->
+          </div>
+</div>
+
+
