@@ -267,7 +267,8 @@
 
 				<div class="row">
 					<div class="col-md-6 ngSelect" formGroupName="natureOfBusiness">
-						<ng-select placeholder="Nature Of Business"
+						<ng-select 
+							placeholder="{{'nature_of_business' | translate:translateKey}} *"
 							formControlName="code" >
 							<ng-option *ngFor="let category of businessNature" [value]="category.code">
 								{{category.name}}</ng-option>
