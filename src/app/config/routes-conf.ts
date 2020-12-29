@@ -387,13 +387,18 @@ const ROUTEMAIN = {
         'main': 'bookPermission',
         'type': ''
     },
+    
     'SWIMMINGPOOL': {
         'main': 'swimmingPool',
-        'type': 'swimmingPool'
+        'type': ''
     },
+    // 'SWIMMINGPOOLRENEWAL': {
+    //     'main': 'swimmingPoolRenewal',
+    //     'type': 'swimmingPoolRenewal'
+    // },
     'SWIMMINGPOOLRENEWAL': {
         'main': 'swimmingPoolRenewal',
-        'type': 'swimmingPoolRenewal'
+        'type': ''
     },
     'THEATER': {
         'main': 'theater',
@@ -551,6 +556,9 @@ const ROUTEPREFIX = {
     'ZOODASHBOARD': 'zoo-dashboard',
     'ANIMALADOPTIONMODULE': 'adoption',
     'PLANETARIUMMODULE': 'planetarium',
+    'SWIMMINGPOOLDASHBOARD': 'swimming-pool-dashboard',
+    'SWIMMINGPOOLMODULE': 'swimming-pool',
+    'SWIMMINGPOOLRENEWALMODULE': 'swimmingPoolRenewal',
     /** end - citizen innner-booking modules routes configuretion */
 
     /** end - citizen booking module routes configuretion */
@@ -897,10 +905,10 @@ const ROUTESLIST = {
     },
     //SWIMMING POOL
     'SWIMMINGPOOL': {
-        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.BOOKINGMODULE + '/' + ROUTEPREFIX.SWIMMINGMODULE + '/' + ROUTEMAIN.SWIMMINGPOOL.main
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.BOOKINGMODULE + '/' + ROUTEPREFIX.SWIMMINGPOOLMODULE + '/' + ROUTEMAIN['SWIMMINGPOOL'].main
     },
     'SWIMMINGPOOLRENEWAL': {
-        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.BOOKINGMODULE + '/' + ROUTEPREFIX.SWIMMINGMODULE + '/' + ROUTEMAIN.SWIMMINGPOOLRENEWAL.main
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.BOOKINGMODULE + '/' + ROUTEPREFIX.SWIMMINGPOOLMODULE + '/' + ROUTEMAIN.SWIMMINGPOOLRENEWAL.main
     },
     //AMPHI-THEATER
     'THEATERLIST': {
@@ -927,7 +935,10 @@ const ROUTESLIST = {
     'SLOTBOOKING': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.APPOINTMENT + '/' + ROUTEPREFIX.SCHEDULEAPPOINTMENT + '/' + ROUTEMAIN["SLOTBOOKING"].main
     },
-
+    //SWIMMING POOL
+    'SWIMMINGPOOLDASHBOARD': {
+    'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.BOOKINGMODULE + '/' + ROUTEPREFIX.SWIMMINGPOOLDASHBOARD 
+},
 
     /**
      * Ticketing Routing Start

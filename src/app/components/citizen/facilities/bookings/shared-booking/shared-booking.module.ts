@@ -5,12 +5,15 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { CoreModule } from 'src/app/core/core.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BookingService } from './services/booking-service.service';
+import { SwimmingPoolDashboardComponent } from './components/swimming-pool-dashboard/swimming-pool-dashboard.component';
+import { RouterModule } from '@angular/router';
 
 const MODULES = [
   SharedModule,
   CoreModule,
   FormsModule,
-  ReactiveFormsModule
+  ReactiveFormsModule,
+  RouterModule
 ]
 
 @NgModule({
@@ -18,7 +21,7 @@ const MODULES = [
     CommonModule,
     ...MODULES
   ],
-  declarations: [BookingFileUploadComponent],
+  declarations: [BookingFileUploadComponent, SwimmingPoolDashboardComponent],
   exports: [
     BookingFileUploadComponent,
   ...MODULES],
