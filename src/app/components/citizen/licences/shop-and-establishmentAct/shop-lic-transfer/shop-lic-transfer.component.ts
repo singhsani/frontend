@@ -255,6 +255,7 @@ export class ShopLicTransferComponent implements OnInit {
 			waterDrainageWardName : res.waterDrainageWardName,
 			waterDrainageZoneId : res.waterDrainageZoneId,
 			waterDrainageZoneName : res.waterDrainageZoneName,
+			
 			// workerCounts : res.workerCounts
 
 		 });
@@ -263,7 +264,9 @@ export class ShopLicTransferComponent implements OnInit {
 		formObj['shopPersonList'] = res.shopPersonList;
 		formObj['shopPartnerList'] = res.shopPartnerList;
 		formObj['workerCounts'] = res.workerCounts;
-
+		// Intimation or certificate number.
+		formObj['transferCertificateNumber'] =  this.certificateNumber
+		
 		this.formService.saveFormData(formObj).subscribe(saveResp => {
 			this.shopLicTransferForm.patchValue(saveResp);
 			this.setDropdownAndListDataFromRes(saveResp);
@@ -458,6 +461,7 @@ export class ShopLicTransferComponent implements OnInit {
 			attachments: [''],
 			agree: [false,Validators.requiredTrue],
 			/*  */
+			transferCertificateNumber : [null,Validators.required],
 		});
 		//this.addMorePerson('EMPLOYER_FAMILY');
 		//this.addMorePerson('OCCUPANCY');

@@ -1,7 +1,4 @@
 <app-title-bar [title]="'screen_title' | translate: translateKey">
-	<button class="pull-right" mat-stroked-button type="button" (click)="patchValue()">
-		Patch Value
-	</button>
 </app-title-bar>
 
 <div *ngIf="isGuideLineActive">
@@ -38,7 +35,7 @@
 				<div class="row">
 					<mat-form-field class="col-md-4">
 						<input matInput required  maxlength="150"
-							placeholder="Name of establishment"
+							placeholder="Name of Establishment"
 							formControlName="establishmentName" >
 						<control-messages [control]="shopLicNewForm.get('establishmentName')"></control-messages>
 					</mat-form-field>
@@ -410,8 +407,8 @@
 										<div class="mobileCon">
 											<p *ngIf="!item.isEditMode">{{item.get('mobileNo').value}}</p>
 											<mat-form-field *ngIf="item.isEditMode">
-												<input matInput maxlength="10" minlength="10" OnlyNumber formControlName="mobileNo" required>
-												<control-messages class="matErrorTwoLine" [control]="item.get('mobileNo')"></control-messages>
+												<input matInput maxlength="10" minlength="10" OnlyNumber formControlName="mobileNo" >
+												<control-messages [control]="item.get('mobileNo')"></control-messages>
 											</mat-form-field>
 										</div>
 									</td>
@@ -421,8 +418,8 @@
 										<div class="mobileCon">
 											<p *ngIf="!item.isEditMode">{{item.get('emailId').value}}</p>
 											<mat-form-field *ngIf="item.isEditMode">
-												<input matInput maxlength="50"  formControlName="emailId" required>
-												<control-messages class="matErrorTwoLine" [control]="item.get('emailId')"></control-messages>
+												<input matInput maxlength="50"  formControlName="emailId" >
+												<control-messages [control]="item.get('emailId')"></control-messages>
 											</mat-form-field>
 										</div>
 									</td>
@@ -763,7 +760,7 @@
 							<div class="col-md-4"
 								*ngIf="doc.requiredOnCitizenPortal && doc.isActive && licenseConfiguration.isAttachmentButtonsVisible">
 								<label>{{TranslateService.getCurrentLanguage()=='en'? doc.documentLabelEn : doc.documentLabelGuj }}
-									<span *ngIf="doc.mandatory">*</span></label>
+									<span *ngIf="doc.mandatory" class="mandatory">*</span></label>
 								<file-upload [form]="shopLicNewForm" [uploadModel]="doc"></file-upload>
 							</div>
 						</ng-container>

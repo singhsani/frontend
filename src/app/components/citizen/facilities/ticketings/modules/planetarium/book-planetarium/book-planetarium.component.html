@@ -198,7 +198,7 @@
                 </div>
                 <!-- special Show fields -->
                 <div class="row pt-4"
-                    *ngIf="ticketBookingForm.get('showCategory').get('code').value == 'PLANETARIUM_SPECIAL_SHOW' && seatAvailable == true">
+                    *ngIf="ticketBookingForm.get('showCategory').get('code').value == 'PLANETARIUM_SPECIAL_SHOW'">
 
                     <div class="col-md-12">
                         <label>{{'school_details_or_group_details' | translate: translateKey}}</label>
@@ -213,7 +213,7 @@
 
                     <mat-form-field class="col-md-4">
                         <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="schoolMobileNumber"
-                            placeholder="{{'school_mobile_number' | translate: translateKey}}">
+                            placeholder="{{'school_mobile_number' | translate: translateKey}} *">
                         <control-messages [control]="ticketBookingForm.get('schoolMobileNumber')"></control-messages>
                     </mat-form-field>
 
