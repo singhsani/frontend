@@ -371,7 +371,10 @@ export class CommonPaybleComponent implements OnInit {
       res => {
         this.userServicesList = res.modules;
         if(this.selected=='PROFESSIONAL'){
-          this.paymentsForm.get('module').get('code').setValue(this.selected);  
+          this.paymentsForm.get('module').get('code').setValue(this.selected);
+          this.setPayableServices('PROFESSIONAL')  
+          this.paymentsForm.get('payableServices').get('code').setValue('PAY_PROF_TAX');
+          this.showHideSearchable('PAY_PROF_TAX');
         }
       },
       err => {
