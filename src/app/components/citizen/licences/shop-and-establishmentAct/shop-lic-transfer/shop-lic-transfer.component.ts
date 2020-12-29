@@ -543,8 +543,8 @@ export class ShopLicTransferComponent implements OnInit {
 				code:[data.relationshipType ? (data.relationshipType.code ? data.relationshipType.code : null) :  null,[Validators.required]]
 			}),
 			
-			mobileNo: [data.mobileNo ? data.mobileNo : null, [Validators.required]],
-			emailId: [data.emailId ? data.emailId : null, [Validators.required, ValidationService.emailValidator]],
+			mobileNo: [data.mobileNo ? data.mobileNo : null],
+			emailId: [data.emailId ? data.emailId : null, [ValidationService.emailValidator]],
 		})
 
 	}
