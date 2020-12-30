@@ -8,9 +8,10 @@ import { TicketingsService } from "../ticketings/shared-ticketing/services/ticke
 import { SessionStorageService } from "angular-web-storage";
 import { FormsActionsService } from "src/app/core/services/citizen/data-services/forms-actions.service";
 import { ToastrService } from "ngx-toastr";
-// import { ToWords } from 'to-words';
+
 
 // const toWords = new ToWords();
+let toWords = require('to-words');
 
 //let toWords ;
 
@@ -74,7 +75,7 @@ export class BTConfig extends CitizenConfig {
 
         let payData = this.storePaymentInfo(err.error.data, redirectURLAfterPayment, btService.resourceType);
        
-        let words = '';
+        let words = toWords(payData.amount);
         //toWords.convert(payData.amount);
         let html =
             `
@@ -129,8 +130,10 @@ export class BTConfig extends CitizenConfig {
 
         let payData = this.storePaymentInfo(err.error.data, redirectURLAfterPayment, btService.resourceType);
 
-        let words = '';
+        //let words = '';
         //toWords.convert(payData.amount);
+       let words = toWords(payData.amount);
+
         let html =
             `
                 <div class="text-center">
@@ -246,5 +249,7 @@ export class BTConfig extends CitizenConfig {
 
         return !disableDateList.includes(day);
     }
+
+
 
 }
