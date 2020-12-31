@@ -435,7 +435,8 @@ export class BookAtithigruhComponent implements OnInit {
 			return;
 		} else {
 			if (this.bookingForRegular) {
-				this.bookingService.commonBookSlot(this.atithigruhForm.value).subscribe(resp => {
+				
+				this.bookingService.commonBookSlot(this.atithigruhForm.getRawValue()).subscribe(resp => {
 				}, (err) => {
 					if (err.status == 402) {
 						// this.bookingUtils.redirectToPayment(err, this.commonService, this.bookingService,this.atithigruhForm, this.router);
@@ -451,10 +452,11 @@ export class BookAtithigruhComponent implements OnInit {
 				});
 				return;
 			} else {
+				
 				let ifscCode = this.atithigruhForm.get('ifscCode').value;
 				this.atithigruhForm.get('ifscCode').setValue(ifscCode.toUpperCase());
 
-				this.bookingService.submitAdvanceBooking(this.atithigruhForm.value).subscribe(resp => {
+				this.bookingService.submitAdvanceBooking(this.atithigruhForm.getRawValue()).subscribe(resp => {
 					this.commonService.commonAlert("Atithigruh Booking", "Atithigruh Booked Successfully", "success", "Print Acknowledgement Receipt", false, '', pA => {
 						let sectionToPrint: any = document.getElementById('sectionToPrint');
 						sectionToPrint.innerHTML = resp;
