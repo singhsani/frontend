@@ -541,6 +541,9 @@ export class ShopLicNewComponent implements OnInit {
 				if (data.status === 200 && data.body.length) {
 					if (level == 2) {
 						this.wardZoneLevel2List = data.body;
+						this.wardZoneLevel2List.sort((a, b) => {
+							return a.shortCode - b.shortCode;
+						});						
 					}
 					else if (level == 3) {
 						this.wardZoneLevel3List = data.body;

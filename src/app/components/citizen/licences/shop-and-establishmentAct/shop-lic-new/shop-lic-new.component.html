@@ -68,7 +68,7 @@
 						</div>
 					</div>
 					<div class="col-md-4 ngSelect">
-						<div *ngIf="wardZoneLevel.length>=2" class="selectSort">
+						<div *ngIf="wardZoneLevel.length>=2">
 							<ng-select 
 								placeholder="Ward*"
 								formControlName="waterDrainageWardId" (change)="onChangedWardZone($event,3)">
