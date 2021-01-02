@@ -59,6 +59,7 @@ export class FileUploadComponent implements OnInit {
 	 */
 
 	ngOnInit() {
+	
 		this.attachments = (this.form.get('attachments') && this.form.get('attachments').value) ? this.form.get('attachments').value : [];
 
 		this.disableOrEnableButton();
@@ -74,21 +75,30 @@ export class FileUploadComponent implements OnInit {
 	 * @param event - get selected file event
 	 */
 	selectFile(event) {
+		debugger
 		if (event) {
 			
 			this.selectedFiles = event.target.files;
 			let fileType = this.selectedFiles[0].type;
 			this.fileName = this.selectedFiles[0].name;
 			this.canUpload = true;
-
-			if (fileType === 'image/png' || fileType === 'image/jpg' || fileType === 'image/jpeg' || fileType === 'image/gif') {
+			debugger;
+			if (fileType === 'image/png' || fileType === 'image/jpg' || fileType === 'image/jpeg' || fileType === 'image/gif' || fileType === 'application/pdf') {
 				let reader = new FileReader();
 				reader.onload = (e: any) => {
 					this.priviewImage = e.target.result;
 				}
 				reader.readAsDataURL(event.target.files[0]);
+				
+				this.upload();
+			} else {
+				this.canUpload = false;
+				this.fileName = '';
+				this.getFile = '';
+				this.priviewImage = '';
+				this.commonService.openAlert("Warning", "Uploaded file is not a valid format. Only JPG, PNG, GIF and PDF", "warning");
 			}
-			this.upload();
+			
 		}
 
 	}
