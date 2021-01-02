@@ -232,7 +232,7 @@
         </div>
         <div class="fotButtonBar">
             <div class="col-sm-12 col-md-12 text-right">
-                <button type="button" mat-raised-button color="primary" data-dismiss="modal" (click)="showChildrenTheaterApplicationForm = true; this.showPaymentReciept = false;">
+                <button type="button" mat-raised-button color="primary" data-dismiss="modal" (click)="showChildrenTheaterApplicationForm = true; this.showPaymentReciept = false;getUserProfile()">
                     {{'proceed_for_application'| translate: translateKey}}
                     <mat-icon>navigate_next</mat-icon>
                 </button>
@@ -379,7 +379,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <label labelPosition="after">{{'school_or_institute_letter' | translate:translateKey}}
-                            </label>
+                                <span class="mandatory">*</span></label>
                             <booking-file-upload (uploaded)="isFileUploaded = $event" [form]="childrenTheaterApplicationForm" [uploadModel]="{dmsUpload:true,fieldIdentifier:'1', labelName:'school_or_institute_letter', formPart:'1.1', refNumber:
                                                                          childrenTheaterApplicationForm.get('refNumber').value, bookingFormId : childrenTheaterApplicationForm.get('bookingFormId').value, variableName: 'school_letter'}">
                             </booking-file-upload>

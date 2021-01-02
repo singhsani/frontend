@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef, TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, TemplateRef, ViewChild, ɵConsole } from '@angular/core';
 import { BookingConstants, BookingUtils } from '../../../config/booking-config';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import * as moment from 'moment';
@@ -350,4 +350,23 @@ export class BookChildrenTheaterComponent implements OnInit {
             return false;
         }
     }
+
+
+  /**
+   * Get user data
+   */
+  getUserProfile() {
+    this.bookingService.getUserProfile().subscribe(resp => {
+        console.log(resp);
+        this.childrenTheaterApplicationForm.get('applicantName').setValue(resp.data.firstName + ' ' + resp.data.lastName);
+        this.childrenTheaterApplicationForm.get('emailId').setValue(resp.data.email);
+        this.childrenTheaterApplicationForm.get('applicantMobile').setValue(resp.data.cellNo);
+        this.childrenTheaterApplicationForm.get('confirmEmailId').setValue(resp.data.email);
+        this.childrenTheaterApplicationForm.get('confirmMobile').setValue(resp.data.cellNo);      
+    },
+      err => {
+        this.toster.error("Server Error");
+      });
+  }
+
 }
