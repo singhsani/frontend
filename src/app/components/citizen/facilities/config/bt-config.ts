@@ -10,6 +10,7 @@ import { FormsActionsService } from "src/app/core/services/citizen/data-services
 import { ToastrService } from "ngx-toastr";
 
 
+
 // const toWords = new ToWords();
 let toWords = require('to-words');
 
@@ -133,6 +134,7 @@ export class BTConfig extends CitizenConfig {
         //let words = '';
         //toWords.convert(payData.amount);
        let words = toWords(payData.amount);
+        
 
         let html =
             `
@@ -142,7 +144,7 @@ export class BTConfig extends CitizenConfig {
                         <i class="fa fa-inr" aria-hidden="true">` + payData.amount + `</i>
                     </div>
                     <p>Rupees in words</p>
-                    <i class="fa fa-inr" aria-hidden="true">` + words + `</i>
+                    ` + words + `
                 </div>
                 `
         commonService.commonAlert('Payment Details', '', 'info', 'Make Payment!', false, html, cb => {
