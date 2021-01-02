@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef, TemplateRef, ViewChild, ɵConsole } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, TemplateRef, ViewChild } from '@angular/core';
 import { BookingConstants, BookingUtils } from '../../../config/booking-config';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import * as moment from 'moment';
