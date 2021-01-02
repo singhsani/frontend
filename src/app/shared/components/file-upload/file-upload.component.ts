@@ -75,14 +75,12 @@ export class FileUploadComponent implements OnInit {
 	 * @param event - get selected file event
 	 */
 	selectFile(event) {
-		debugger
 		if (event) {
 			
 			this.selectedFiles = event.target.files;
 			let fileType = this.selectedFiles[0].type;
 			this.fileName = this.selectedFiles[0].name;
 			this.canUpload = true;
-			debugger;
 			if (fileType === 'image/png' || fileType === 'image/jpg' || fileType === 'image/jpeg' || fileType === 'image/gif' || fileType === 'application/pdf') {
 				let reader = new FileReader();
 				reader.onload = (e: any) => {
