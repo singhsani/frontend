@@ -350,4 +350,23 @@ export class BookChildrenTheaterComponent implements OnInit {
             return false;
         }
     }
+
+
+  /**
+   * Get user data
+   */
+  getUserProfile() {
+    this.bookingService.getUserProfile().subscribe(resp => {
+        console.log(resp);
+        this.childrenTheaterApplicationForm.get('applicantName').setValue(resp.data.firstName + ' ' + resp.data.lastName);
+        this.childrenTheaterApplicationForm.get('emailId').setValue(resp.data.email);
+        this.childrenTheaterApplicationForm.get('applicantMobile').setValue(resp.data.cellNo);
+        this.childrenTheaterApplicationForm.get('confirmEmailId').setValue(resp.data.email);
+        this.childrenTheaterApplicationForm.get('confirmMobile').setValue(resp.data.cellNo);      
+    },
+      err => {
+        this.toster.error("Server Error");
+      });
+  }
+
 }

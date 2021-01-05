@@ -452,6 +452,14 @@
                         </h2>
                         <app-address #address [requiredFeilds]="true"
                             [addressFormGroup]="atithigruhForm.get('applicantAddress')"></app-address>
+                       
+                           
+                        <mat-form-field class="col-md-4">
+                            <input matInput maxlength="15" formControlName="gstNo"
+                            placeholder="{{'GSTIN_Number' | translate: translateKey}}">
+                            <control-messages [control]="atithigruhForm.get('gstNo')"></control-messages>
+                        </mat-form-field> 
+
                     </div>
 
                     <!--<div class="row mt-4 fotButtonBar float-right">-->

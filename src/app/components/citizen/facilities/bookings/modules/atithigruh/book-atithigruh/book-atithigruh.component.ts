@@ -121,6 +121,8 @@ export class BookAtithigruhComponent implements OnInit {
 			applicantName: [{value: '', disabled: true}, Validators.required],
 			
 			applicantEmailID:[{value: '', disabled: true}, Validators.required],
+
+			gstNo:[null,ValidationService.gstNoValidator],
 			// confirmEmailID: [null, [Validators.required, ValidationService.emailValidator]],
 
 			/**
@@ -421,6 +423,7 @@ export class BookAtithigruhComponent implements OnInit {
 	 * This method is use to search submit booking details
 	 */
 	submit(): void {
+		
 		let errCount = this.bookingUtils.getAllErrors(this.atithigruhForm);
 		if (this.atithigruhForm.invalid) {
 			this.handleErrorsOnSubmit(errCount);

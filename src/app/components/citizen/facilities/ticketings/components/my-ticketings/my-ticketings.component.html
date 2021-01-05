@@ -107,7 +107,7 @@
 							{{'make_payment' | translate:translateKey}}
 						</button>
 
-						<button *ngIf="element.status == ticketingConstants.BOOKED && element.resourceType != 'ZOO_TICKETING'" mat-menu-item color="primary" (click)="printcertifacte(element)">
+						<button *ngIf="element.status == ticketingConstants.BOOKED && element.resourceType != 'ZOO_TICKETING' && element.resourceType != 'PLANETARIUM_TICKETING'" mat-menu-item color="primary" (click)="printcertifacte(element)">
 							<mat-icon title="Certificate" color="primary">print</mat-icon>
 							Certificate
 						</button>
