@@ -49,7 +49,9 @@ export class BTConstants {
     static RESERVED = 'RESERVED';
     static HOLIDAY = 'HOLIDAY';
     static FESTIVAL = 'FESTIVAL';
-    static ATITHIGURH_DEPOSIT = 'ATITHIGURH_DEPOSIT'   
+    static ATITHIGURH_DEPOSIT = 'ATITHIGURH_DEPOSIT';  
+    static SCRUTINY = 'SCRUTINY'; 
+    static SHOOTING_PERMISSION = 'SHOOTING_PERMISSION';
 }
 
 export class BTConfig extends CitizenConfig {
