@@ -76,8 +76,8 @@ export class BTConfig extends CitizenConfig {
 
         let payData = this.storePaymentInfo(err.error.data, redirectURLAfterPayment, btService.resourceType);
        
-        let words = " "
-       // let words = toWords(payData.amount);
+        //let words = " "
+       let words = toWords(payData.amount);
         //toWords.convert(payData.amount);
         let html =
             `
@@ -132,9 +132,9 @@ export class BTConfig extends CitizenConfig {
 
         let payData = this.storePaymentInfo(err.error.data, redirectURLAfterPayment, btService.resourceType);
 
-        let words = '';
+       // let words = '';
         //toWords.convert(payData.amount);
-       //let words = toWords(payData.amount);
+       let words = toWords(payData.amount);
         
 
         let html =
