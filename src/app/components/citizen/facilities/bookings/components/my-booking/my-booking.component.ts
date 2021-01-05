@@ -530,7 +530,9 @@ export class MyBookingComponent implements OnInit {
 	showRecieptReprint(element){
 		if(element.status === this.bookingConstant.PAYMENT_REQUIRED
 			|| element.status === this.bookingConstant.CANCELLED
-			|| element.status === this.bookingConstant.WAITINGLIST ){
+			|| element.status === this.bookingConstant.WAITINGLIST
+			|| element.status === this.bookingConstant.SCRUTINY
+			|| element.status === this.bookingConstant.REJECTED){
 			return false;
 		}
 
@@ -544,7 +546,8 @@ export class MyBookingComponent implements OnInit {
         if(element.status === this.bookingConstant.PAYMENT_REQUIRED
 			|| element.status === this.bookingConstant.CANCELLED
             || element.status === this.bookingConstant.WAITINGLIST
-            || element.status === this.bookingConstant.CANCELLATION_REQUEST){
+			|| element.status === this.bookingConstant.CANCELLATION_REQUEST
+			|| element.resourceType === this.bookingConstant.SHOOTING_PERMISSION){
 			return false;
         }
 

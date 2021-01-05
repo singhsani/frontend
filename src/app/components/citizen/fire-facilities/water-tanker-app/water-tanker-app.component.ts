@@ -37,6 +37,7 @@ export class WaterTankerAppComponent implements OnInit {
 	LOOKUP: any;
 
 	disablepastDate = new Date(moment().format('YYYY-MM-DD'));
+	appDate = moment(new Date()).add('day').toISOString();
 
 	// required attachment array
 	uploadFilesArray: Array<any> = [];
