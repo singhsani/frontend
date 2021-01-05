@@ -166,7 +166,7 @@ export class BookChildrenTheaterComponent implements OnInit {
             applicantMobile: [null, [Validators.required, Validators.maxLength(10), Validators.minLength(10)]],
             confirmMobile: [null, [Validators.required, Validators.maxLength(10), Validators.minLength(10)]],
             emailId: [null, [Validators.required, ValidationService.emailValidator , Validators.maxLength(50)]],
-            confirmEmailId: [null, [Validators.required, ValidationService.emailValidator , Validators.maxLength(20)]],
+            confirmEmailId: [null, [Validators.required, ValidationService.emailValidator , Validators.maxLength(50)]],
             relationshipWithOrg: [null, [Validators.required, Validators.maxLength(20)]],
 
             //step 3
