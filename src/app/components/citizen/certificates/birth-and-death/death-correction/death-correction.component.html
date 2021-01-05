@@ -3,7 +3,13 @@
     <form [formGroup]="regStatusForm" (ngSubmit)="getRegistrationNumberStatus()" autocomplete="off">
 
         <div class="row">
-            <div formGroupName="typeOfCorrection" class="col-md-4 ngSelect">
+            <mat-form-field class="col-md-4">
+                <input matInput maxlength="25" placeholder="{{'registration_number' | translate:translateKey}}"
+                    formControlName="registrationNumber" required>
+                <control-messages [control]="regStatusForm.get('registrationNumber')"></control-messages>
+            </mat-form-field>
+
+            <div formGroupName="typeOfCorrection" class="col-md-6 ngSelect">
                 <ng-select placeholder="{{'type_of_correction' | translate:translateKey}}" formControlName="code">
                     <ng-option *ngFor="let type of TypeOfCorrection" [value]="type.code">
                         {{type.name}}
@@ -12,16 +18,18 @@
                 <control-messages [control]="regStatusForm.get('typeOfCorrection').get('code')"></control-messages>
             </div>
 
-            <mat-form-field class="col-md-6">
-                <input matInput maxlength="25" placeholder="{{'registration_number' | translate:translateKey}}"
-                    formControlName="registrationNumber" required>
-                <control-messages [control]="regStatusForm.get('registrationNumber')"></control-messages>
-            </mat-form-field>
-
             <div class="col-md-2 text-right">
+                <button [disabled]="!regStatusForm.valid" mat-stroked-button color="primary" class="w-100 mt-2" type="submit">
+                    {{'search' | translate:translateKey}}
+                </button>
+            </div>
+
+         
+
+            <!-- <div class="col-md-2 text-right">
                 <button *ngIf="regStatusForm.valid" mat-raised-button color="primary" type="submit">{{'search' | translate:
                         translateKey}}</button>
-            </div>
+            </div> -->
         </div>
     </form>
 </mat-card>
