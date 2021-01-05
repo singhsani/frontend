@@ -80,7 +80,7 @@ export class BTConfig extends CitizenConfig {
         if(payData.amount>0){
              words = toWords(payData.amount);
         }else{
-             words = " ";
+             words = " "
         }
         //toWords.convert(payData.amount);
         let html =
@@ -138,11 +138,10 @@ export class BTConfig extends CitizenConfig {
 
         let words = '';
         //toWords.convert(payData.amount);
-        if(payData.amount){
+        if(payData.amount>0){
              words = toWords(payData.amount);
-        }
-        else{
-            words='';
+        }else{
+            words =  " "
         }
 
         let html =
