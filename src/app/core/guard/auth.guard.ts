@@ -42,7 +42,7 @@ export class AuthGuard implements CanActivate, CanLoad {
 		if (this.appService.isLoggedIn()) {
 			return true;
 		} else {
-			this.toaster.error('Session has been expired');
+			//this.toaster.error('Session has been expired');
 			this.router.navigate([ManageRoutes.getFullRoute('CITIZENAUTHLOGIN')]);
 			return false;
 		}
