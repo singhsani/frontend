@@ -6,6 +6,7 @@ import { SharedBookingModule } from '../../shared-booking/shared-booking.module'
 import { SwimmingPoolRoutingModule } from './swimming-pool-routing.module';
 import { SwimmingPoolComponent } from './swimming-pool/swimming-pool.component';
 import { SwimmingPoolRenewalComponent } from './swimming-pool-renewal/swimming-pool-renewal.component';
+import { AppSwimmingPoolService } from './swimming-pool.service';
 /* Import all shared, core and routing module end */
 
 @NgModule({
@@ -14,6 +15,9 @@ import { SwimmingPoolRenewalComponent } from './swimming-pool-renewal/swimming-p
 		SharedBookingModule,
 		SwimmingPoolRoutingModule
 	],
-	declarations: [SwimmingPoolComponent, SwimmingPoolRenewalComponent]
+	declarations: [SwimmingPoolComponent, SwimmingPoolRenewalComponent],
+	providers: [
+		AppSwimmingPoolService
+	]
 })
 export class SwimmingPoolModule { }

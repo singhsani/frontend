@@ -11,6 +11,7 @@ import { TranslateService } from 'src/app/shared/modules/translate/translate.ser
 import { BookingService } from '../../../shared-booking/services/booking-service.service';
 import { BookingConstants, BookingUtils } from '../../../config/booking-config';
 import { ComponentConfig } from 'src/app/components/component-config';
+import { AppSwimmingPoolService } from '../swimming-pool.service';
 
 @Component({
   selector: 'app-swimming-pool',
@@ -84,6 +85,7 @@ export class SwimmingPoolComponent implements OnInit {
     private toastr: ToastrService,
     public translateService: TranslateService,
     private router: Router,
+    private swimmingPoolService: AppSwimmingPoolService
   ) { 
     this.bookingUtils = new BookingUtils(formService, toastr);
     this.bookingService.resourceType = 'swimming'; }
@@ -411,58 +413,26 @@ export class SwimmingPoolComponent implements OnInit {
     }
     else {
       // save call
-      this.bookingService.saveDraftform(this.swimmimgPoolBookingForm.value, this.swimmimgPoolBookingForm.get('swimmingPoolName').get('code').value).subscribe(
+      this.swimmingPoolService.submitData(this.swimmimgPoolBookingForm.value, this.swimmimgPoolBookingForm.get('swimmingPoolName').get('code').value).subscribe(
         res => {
-          this.swimmimgPoolBookingForm.get('refNumber').setValue(res.refNumber);
-          this.swimmimgPoolBookingForm.patchValue(res);
-          // payment call
-          this.bookingService.getTransactionDetails(this.swimmimgPoolBookingForm.get('refNumber').value).subscribe(rep => {
+          // this.swimmimgPoolBookingForm.get('refNumber').setValue(res.refNumber);
+          // this.swimmimgPoolBookingForm.patchValue(res);
+          // // payment call
+          // this.bookingService.getTransactionDetails(this.swimmimgPoolBookingForm.get('refNumber').value).subscribe(rep => {
 
-          }, (err) => {
-            if (err.status == 402) {
-              // this.bookingUtils.redirectToPayment(err, this.commonService, this.bookingService, this.swimmimgPoolBookingForm, this.router, 'citizen/bookings/swimming-pool/swimmingPool');
-              this.bookingUtils.redirectToCCAvenuePayment(err, this.commonService, this.bookingService, this.paymentGateway ,this.swimmimgPoolBookingForm, this.router);
-              return;
-
-              // submit and print call
-              // this.bookingService.submitFormData(this.swimmimgPoolBookingForm.value).subscribe(resp => {
-
-              //   if (resp.data.status == this.bookingConstants.SUBMITTED) {
-              //     this.commonService.commonAlert("Swimming Pool", "Booked Successfully", "success", "Print Receipt", false, '', pA => {
-              //       this.bookingService.printReceipt(resp.data.refNumber, 'SWIMMING_POOL_FEES').subscribe(printHTML => {
-              //         let sectionToPrint: any = document.getElementById('sectionToPrint');
-              //         sectionToPrint.innerHTML = printHTML;
-              //         setTimeout(() => {
-              //           window.print();
-              //           this.router.navigate([this.bookingConstants.MY_BOOKINGS_URL]);
-              //         });
-              //       }, err => {
-              //         this.commonService.openAlert("Error", err.error[0].message, "warning")
-              //       })
-              //     }, rA => {
-              //       this.router.navigate([this.bookingConstants.MY_BOOKINGS_URL]);
-              //     })
-              //   }
-
-              // }, (err) => {
-              //   if (err.error[0].code == this.bookingConstants.INVALID_BOOKING_STATUS) {
-              //     this.commonService.openAlert("Invalid Booking Status", err.error[0].message, "warning", "", cb => {
-              //       this.router.navigate([this.bookingConstants.MY_BOOKINGS_URL])
-              //     })
-              //   } else {
-              //     this.commonService.openAlertFormSaveValidation('Warning!', err.error, 'warning');
-              //   }
-              // })
-
-            } else if (err.error[0].code == this.bookingConstants.INVALID_BOOKING_STATUS) {
-              this.commonService.openAlert("Invalid Booking Status", err.error[0].message, "warning", "", cb => {
-                this.router.navigate([this.bookingConstants.MY_BOOKINGS_URL]);
-              })
-            } else {
-              this.commonService.openAlertFormSaveValidation('Warning!', err.error, 'warning');
-            }
-          })
-
+          // }, (err) => {
+          //   if (err.status == 402) {
+          //     this.bookingUtils.redirectToCCAvenuePayment(err, this.commonService, this.bookingService, this.paymentGateway ,this.swimmimgPoolBookingForm, this.router);
+          //     return;
+          //   } else if (err.error[0].code == this.bookingConstants.INVALID_BOOKING_STATUS) {
+          //     this.commonService.openAlert("Invalid Booking Status", err.error[0].message, "warning", "", cb => {
+          //       this.router.navigate([this.bookingConstants.MY_BOOKINGS_URL]);
+          //     })
+          //   } else {
+          //     this.commonService.openAlertFormSaveValidation('Warning!', err.error, 'warning');
+          //   }
+          // })
+          this.toastr.success('Application Saved Successfully.')
         },
         err => {
           this.commonService.openAlertFormSaveValidation('Warning!', err.error, 'warning');
