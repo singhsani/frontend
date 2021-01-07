@@ -15,4 +15,9 @@ export class AppSwimmingPoolService {
         const requestURL = `api/booking/swimming/submit?resourceCode=${resourceCode}`;
         return this.http.post(requestURL, formInfo);
     }
+
+    printAcknowledgeReceipt(refNumber) {
+        const reqURL = `api/booking/swimming/print/acknowledgement/${refNumber}`;
+        return this.http.get(reqURL, 'printReceipt');
+    }
 }

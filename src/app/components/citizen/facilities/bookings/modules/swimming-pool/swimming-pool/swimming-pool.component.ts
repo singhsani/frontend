@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CommonService } from 'src/app/shared/services/common.service';
 import { ToastrService } from 'ngx-toastr';
 import { ValidationService } from 'src/app/shared/services/validation.service';
@@ -85,7 +85,8 @@ export class SwimmingPoolComponent implements OnInit {
     private toastr: ToastrService,
     public translateService: TranslateService,
     private router: Router,
-    private swimmingPoolService: AppSwimmingPoolService
+    private swimmingPoolService: AppSwimmingPoolService,
+    private route: ActivatedRoute
   ) { 
     this.bookingUtils = new BookingUtils(formService, toastr);
     this.bookingService.resourceType = 'swimming'; }
@@ -415,6 +416,14 @@ export class SwimmingPoolComponent implements OnInit {
       // save call
       this.swimmingPoolService.submitData(this.swimmimgPoolBookingForm.value, this.swimmimgPoolBookingForm.get('swimmingPoolName').get('code').value).subscribe(
         res => {
+          this.swimmingPoolService.printAcknowledgeReceipt(res.refNumber).subscribe(data => {
+            let sectionToPrint: any = document.getElementById('sectionToPrint');
+            sectionToPrint.innerHTML = data;
+            setTimeout(() => {
+              window.print();
+              this.router.navigate(['../../my-bookings'], {relativeTo: this.route});
+            });
+          });
           // this.swimmimgPoolBookingForm.get('refNumber').setValue(res.refNumber);
           // this.swimmimgPoolBookingForm.patchValue(res);
           // // payment call
