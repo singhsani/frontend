@@ -29,6 +29,7 @@ export class BookPlanetariumComponent implements OnInit {
   isLoadingResults: boolean = false;
   isVisibleIdNumber = false;
   isPanCardVisibleIdNumber = false;
+  showType : any;
 
   minDate = moment(new Date()).add(0, 'day').toISOString();
   maxDate = moment(new Date()).add(30, 'day').toISOString();
@@ -81,6 +82,7 @@ export class BookPlanetariumComponent implements OnInit {
     this.getLookUps();
     this.getListData();
     this.profileData();
+    this.ticketBookingForm.get('visitingDate').setValue('');
   }
   /**
 	* Get all booking category list from api.
@@ -366,6 +368,7 @@ export class BookPlanetariumComponent implements OnInit {
    */
   setValidationForSpecialShow(event) {
     this.ticketBookingForm.reset();
+     this.showType = event;
     // set default value
     this.ticketBookingForm.get('resourceCodeLK').get('code').setValue('SARDAR_PATEL_PLANETARIUM');
     this.ticketBookingForm.get('resourceCode').setValue('SARDAR_PATEL_PLANETARIUM');
@@ -408,6 +411,7 @@ export class BookPlanetariumComponent implements OnInit {
     else {
       this.ticketBookingForm.reset();
     }
+    this.ticketBookingForm.get('visitingDate').setValue('');
     /* After perform set or remove validator action this will update value and validity */
     this.ticketBookingForm.get('firstName').updateValueAndValidity();
     this.ticketBookingForm.get('lastName').updateValueAndValidity();
@@ -430,8 +434,12 @@ export class BookPlanetariumComponent implements OnInit {
     //visitor rate chart
     this.ticketingService.getZooVisitingRates().subscribe((respRates) => {
       this.planetariumVisitingRates = respRates.data;
-      // this.ticketBookingForm.get('rate').setValue(this.planetariumVisitingRates.visitorCharge);
-      this.ticketBookingForm.get('rate').setValue(this.planetariumVisitingRates.specialShowVisitorCharge);
+      if(this.showType=='PLANETARIUM_SPECIAL_SHOW'){
+        this.ticketBookingForm.get('rate').setValue(this.planetariumVisitingRates.specialShowVisitorCharge);
+      }else{
+        this.ticketBookingForm.get('rate').setValue(this.planetariumVisitingRates.visitorCharge);
+      }
+      // this.ticketBookingForm.get('rate').setValue(this.planetariumVisitingRates.specialShowVisitorCharge);
       this.totalVisitorLimit = this.planetariumVisitingRates.totalOccupancy;
     },
       err => {

@@ -257,7 +257,7 @@ export class ZooBookingComponent implements OnInit {
         code: [null, Validators.required]
       }),
       idNumber: [null, [Validators.required, Validators.maxLength(4), Validators.minLength(4)]],
-      visitingDate: [moment().format('YYYY-MM-DD'), Validators.required],
+      visitingDate: [, Validators.required],
       totalChild: [0, Validators.max(100)],
       totalAdult: [0, Validators.max(100)],
       totalCamera: [0, Validators.max(100)],
