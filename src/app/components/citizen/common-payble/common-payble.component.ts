@@ -40,12 +40,12 @@ export class CommonPaybleComponent implements OnInit {
   ];
   placeholder: string = 'Reference Number';
   responseData: any;
-  receiptEntry : any;
+  receiptEntry: any;
   feePaymentData: any;
   duesDetailsArr: any = [];
 
   inputData: any
-  selected : any ;
+  selected: any;
 
   constructor(
     private formService: FormsActionsService,
@@ -63,7 +63,7 @@ export class CommonPaybleComponent implements OnInit {
   }
 
   ngOnInit() {
-    
+
     this.route.queryParams.subscribe(d => {
       if (d.apiCode && d.id) {
         this.printReceipt(d.apiCode, '', d.id);
@@ -71,8 +71,8 @@ export class CommonPaybleComponent implements OnInit {
           this.location.go(this.router.url.split('?')[0]);
         }, 3000);
       }
-      if(d.code){
-        this.selected = d.code ;
+      if (d.code) {
+        this.selected = d.code;
       }
     })
 
@@ -110,7 +110,7 @@ export class CommonPaybleComponent implements OnInit {
       return;
     }
     this.formService.apiType = 'professional'
-   
+
     let serviceType = this.paymentsForm.get('payableServices').get('code').value;
 
     let filterObj = _.filter(this.PayableServices, { 'code': serviceType })[0];
@@ -203,7 +203,7 @@ export class CommonPaybleComponent implements OnInit {
    */
   showHideSearchable(paySerCode) {
     if (paySerCode === 'PAY_PROF_TAX')
-      this.placeholder = 'EC / RC Number';
+      this.placeholder = 'PEC Number';
     else
       this.placeholder = 'Reference Number';
 
@@ -370,9 +370,9 @@ export class CommonPaybleComponent implements OnInit {
     this.formService.getUserServices().subscribe(
       res => {
         this.userServicesList = res.modules;
-        if(this.selected=='PROFESSIONAL'){
+        if (this.selected == 'PROFESSIONAL') {
           this.paymentsForm.get('module').get('code').setValue(this.selected);
-          this.setPayableServices('PROFESSIONAL')  
+          this.setPayableServices('PROFESSIONAL')
           this.paymentsForm.get('payableServices').get('code').setValue('PAY_PROF_TAX');
           this.showHideSearchable('PAY_PROF_TAX');
         }
