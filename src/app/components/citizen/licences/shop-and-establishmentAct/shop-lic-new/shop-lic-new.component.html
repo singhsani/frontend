@@ -21,8 +21,11 @@
 	
 </div>
 
+<!-- <button (click)="patchValue2()">Patch</button> -->
+
 <mat-card class="formClass cardBorder" [hidden]="isGuideLineActive">
 	<form [formGroup]="shopLicNewForm">
+		
 		<mat-tab-group [(selectedIndex)]="licenseConfiguration.currentTabIndex" dynamicHeight="true" mat-stretch-tabs
 			class="stepperNav">
 
@@ -108,7 +111,7 @@
 							appAlphaNumeric
 							placeholder="PEC number"
 							formControlName="pecNumber"
-							(blur)="validatePecPrcNumber(shopLicNewForm.get('pecNumber'))"/>
+							(blur)="validatePECNumber(shopLicNewForm.get('pecNumber'))"/>
 							<control-messages [control]="shopLicNewForm.get('pecNumber')">
 						</control-messages>
 					</mat-form-field>
@@ -119,7 +122,7 @@
 							appAlphaNumeric
 							placeholder="PRC number"
 							formControlName="prcNumber"
-							(blur)="validatePecPrcNumber(shopLicNewForm.get('prcNumber'))"/>
+						 (blur)="validatePRCNumber(shopLicNewForm.get('prcNumber'))" /> 
 						<control-messages [control]="shopLicNewForm.get('prcNumber')"></control-messages>
 					</mat-form-field>
 
@@ -556,7 +559,7 @@
 										<div class="d-md-none">{{'total' | translate:translateKey}}</div>
 										<p *ngIf="!item.isEditMode">{{item.get('total').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
-											<input onlyNumber matInput formControlName="total">
+											<input onlyNumber matInput formControlName="total" readonly>
 											<control-messages *ngIf="item.isEditMode" [control]="item.get('total')">
 											</control-messages>
 										</mat-form-field>
