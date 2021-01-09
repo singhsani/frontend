@@ -388,6 +388,7 @@
 <!-- Booking slot start-->
 <div [hidden]="isBookingFormHidden">
     <mat-card class="formClass cardBorder">
+        <!-- <button (click)="patchValue2()" >Patch</button> -->
         <form [formGroup]="atithigruhForm" (ngSubmit)="submit()">
 
             <mat-tab-group mat-stretch-tabs dynamicHeight="true" [(selectedIndex)]="tabIndex" class="stepperNav">

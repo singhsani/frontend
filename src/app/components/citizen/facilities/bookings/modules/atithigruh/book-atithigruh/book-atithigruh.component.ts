@@ -523,4 +523,34 @@ export class BookAtithigruhComponent implements OnInit {
 		this.atithigruhForm.get('applicantMobileNo').setValue(this.profileObj.cellNo);
 	}
 
+	// patchValue2(){
+	// 	const data = {
+	// 	  "applicantName": "jkljkl",
+	// 	  "applicantMobileNo": "4151512121",
+	// 	  "confirmMobile": "4151512121",
+	// 	  "applicantEmailID": "fdgdfh@gmail.com",
+	// 	  "confirmEmailID": "fdgdfh@gmail.com",
+	// 	  "applicantAddress": {
+	// 		"buildingName": "1",
+	// 		"streetName": "ddfsdf",
+	// 		"landmark": "dfsdfsdf",
+	// 		"area": "dfsdf",
+	// 		"state": "GUJARAT",
+	// 		"city": "Vadodara",
+	// 		"country": "INDIA",
+	// 		"pincode": "151212"
+	// 	  },
+	// 	  "termsCondition": true,
+	// 	  "agree": true,
+	// 	  "remarks": null,
+	// 	  "bankName": {
+	// 		"code": "ALLAHABAD_BANK"
+	// 	  },
+	// 	  "accountHolderName": "dfsd",
+	// 	  "accountNo": "23423423423",
+	// 	  "ifscCode": "SBIN0000000"
+	// 	};
+	// 	this.atithigruhForm.patchValue(data);
+	//   }
+
 }
