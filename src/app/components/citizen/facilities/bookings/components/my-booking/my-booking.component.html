@@ -50,8 +50,8 @@
          matSortDirection="asc">
 
     <ng-container matColumnDef="id">
-      <mat-header-cell *matHeaderCellDef>{{'s_no' | translate:translateKey}}</mat-header-cell>
-      <mat-cell *matCellDef="let element;let indx=index;">
+      <mat-header-cell class="wMatCell80" *matHeaderCellDef>{{'s_no' | translate:translateKey}}</mat-header-cell>
+      <mat-cell class="wMatCell80" *matCellDef="let element;let indx=index;">
         <div class="mobile-label">{{'s_no' | translate:translateKey}}</div>
         <div class="mobile-label1">:</div>
         <div class="row-inside"> {{(paginator.pageIndex * paginator.pageSize) + (indx+1)}}</div>
@@ -69,8 +69,8 @@
     </ng-container>
 
     <ng-container matColumnDef="bookingDate">
-      <mat-header-cell *matHeaderCellDef> {{'date_of_booking' | translate:translateKey}}</mat-header-cell>
-      <mat-cell *matCellDef="let element;">
+      <mat-header-cell class="wMatCell150" *matHeaderCellDef> {{'date_of_booking' | translate:translateKey}}</mat-header-cell>
+      <mat-cell class="wMatCell150" *matCellDef="let element;">
         <div class="mobile-label">{{'date_of_booking' | translate:translateKey}}</div>
         <div class="mobile-label1">:</div>
         <div class="row-inside">
@@ -80,8 +80,8 @@
     </ng-container>
 
     <ng-container matColumnDef="status">
-      <mat-header-cell *matHeaderCellDef> {{'booking_status' | translate:translateKey}}</mat-header-cell>
-      <mat-cell *matCellDef="let element;">
+      <mat-header-cell class="wMatCell150" *matHeaderCellDef> {{'booking_status' | translate:translateKey}}</mat-header-cell>
+      <mat-cell class="wMatCell150" *matCellDef="let element;">
         <div class="mobile-label">{{'booking_status' | translate:translateKey}}</div>
         <div class="mobile-label1">:</div>
         <div class="row-inside">
@@ -91,8 +91,8 @@
     </ng-container>
 
     <ng-container matColumnDef="action">
-      <mat-header-cell *matHeaderCellDef> {{'actions' | translate:translateKey}}</mat-header-cell>
-      <mat-cell *matCellDef="let element;">
+      <mat-header-cell class="wMatCell120 cellLast" *matHeaderCellDef> {{'actions' | translate:translateKey}}</mat-header-cell>
+      <mat-cell class="wMatCell120 cellLast" *matCellDef="let element;">
         <div class="mobile-label">{{'actions' | translate:translateKey}}</div>
         <div class="mobile-label1">:</div>
         <button *ngIf="(element.status != bookingConstant.DRAFT) && (element.status != bookingConstant.EXPIRED)"

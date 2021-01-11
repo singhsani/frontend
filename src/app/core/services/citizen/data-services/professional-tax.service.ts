@@ -78,6 +78,9 @@ export class ProfessionalTaxService {
       return this.http.get(`api/professional/search/${num}`);
   }
 
+  getVerifyNumber(type,num){
+	  return this.http.get(`api/professional/verify/regNumber?type=${type}&regNo=${num}`);
+	}
 	/**
 	 * This method is use for get employee tax rate json
 	 */

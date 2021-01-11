@@ -1394,23 +1394,75 @@ export class ShopLicNewComponent implements OnInit {
 		}
 	}
 
-	validatePecPrcNumber(formControl : FormControl){
-		  console.log("Pec/Prc ", formControl);
+	// validatePecPrcNumber(formControl : FormControl){
+	// 	  console.log("Pec/Prc ", formControl);
 		  
-		  if(!formControl.value || formControl.value == ""){
-			  return true;
-		  } else {
-			  this.professionalTaxService.getSearchDetails(formControl.value,true).subscribe(res => {
-                  if(!res.data){
-					  formControl.setValue("");
-					  this.commonService.openAlert("Error", "Please enter valid EC/RC number", "error");
-				  }
-			  }, error => {
-				  formControl.setValue("");
-				  console.error("error",error);
-			  })
-		  }
+	// 	  if(!formControl.value || formControl.value == ""){
+	// 		  return true;
+	// 	  } else {
+	// 		  this.professionalTaxService.getSearchDetails(formControl.value,true).subscribe(res => {
+    //               if(!res.data){
+	// 				  formControl.setValue("");
+	// 				  this.commonService.openAlert("Error", "Please enter valid EC/RC number", "error");
+	// 			  }
+	// 		  }, error => {
+	// 			  formControl.setValue("");
+	// 			  console.error("error",error);
+	// 		  })
+	// 	  }
+	// }
+
+	validatePECNumber(formControl:FormControl){
+		
+		let numberValue = formControl.value.substring(0,3)
+		console.log(numberValue);
+		console.log("pec",formControl);
+		if(!formControl.value || formControl.value == ""){
+			return true;
+		}
+		else if("PEC"== numberValue){
+			this.professionalTaxService.getVerifyNumber(numberValue,formControl.value).subscribe(res => {
+				console.log(res);
+				console.log(res.data);
+						if(false == res.data.success){
+							formControl.setValue("");
+							this.commonService.openAlert("Error", "Please enter valid PEC number","error");
+						}
+					},error =>{
+						formControl.setValue("");
+						console.error("error",error);
+					})
+		}else{
+			formControl.setValue("");
+			this.commonService.openAlert("Error", "Please enter valid PEC and PRC number","error");
+		}
+		
 	}
+
+	validatePRCNumber(formControl:FormControl){
+		
+		let numberValue = formControl.value.substring(0,3)
+		console.log(numberValue);
+		console.log("pec",formControl);
+		if(!formControl.value || formControl.value == ""){
+			return true;
+		}else if("PRC" == numberValue){
+			this.professionalTaxService.getVerifyNumber(numberValue,formControl.value).subscribe(res => {
+				if(false == res.data){
+					formControl.setValue("");
+					this.commonService.openAlert("Error", "Please enter valid PRC number","error");
+				}
+			},error =>{
+				formControl.setValue("");
+				console.error("error",error);
+			})
+		}else{
+			formControl.setValue("");
+			this.commonService.openAlert("Error", "Please enter valid PEC and PRC number","error");
+		}
+	}
+
+	
 
 	validatePecPropertyNumber(formControl : FormControl){
 		
@@ -1452,4 +1504,110 @@ export class ShopLicNewComponent implements OnInit {
 	  this.formControlNameToTabIndex.set('agree',5)
 
   }
+
+//   patchValue2(){
+	 
+// 	const data = {
+ 
+// 		"contactNo": "9558295586",
+// 		"mobileNo": "9558295586",
+// 		"email": "barad@gmail.com",
+// 		"aadhaarNo": null,
+// 		"agree": false,
+// 		"paymentStatus": null,
+// 		"canEdit": true,
+// 		"canDelete": true,
+// 		"canSubmit": true,
+// 		"serviceCode": "SHOP-ESTAB-LIC-NEW",
+// 		"canReceiptPrint": false,
+// 		"fieldView": "ALL",
+// 		"fieldList": null,
+// 		"applicantName": null,
+// 		"applicantNameGuj": null,
+// 		"establishmentName": "fgfhgfh",
+// 		"postalAddress": {
+// 		  "buildingName": "1",
+// 		  "buildingNameGuj": "૧",
+// 		  "streetName": "gfhfghgf",
+// 		  "streetNameGuj": "ગ્ફ્હ્ફ્ઘ્ગ્ફ",
+// 		  "landmark": "gfhgfhfgh",
+// 		  "landmarkGuj": "ગ્ફ્હ્ગ્ફ્હ્ફ્ઘ",
+// 		  "area": "gfhgfh",
+// 		  "areaGuj": "ગ્ફ્હ્ગ્ફ્હ",
+// 		  "state": "GUJARAT",
+// 		  "stateGuj": "ગુજરાત",
+// 		  "district": null,
+// 		  "districtGuj": null,
+// 		  "city": "Vadodara",
+// 		  "cityGuj": "વડોદરા",
+// 		  "pincode": "454158",
+// 		  "country": "INDIA",
+// 		  "countryGuj": "ભારત"
+// 		},
+// 		"commencementOfBusinessDate": "2021-01-07",
+// 		"otherAddresses": "gfh  gfghfh",
+// 		"nameOfEmployer": "ghgfhf",
+	   
+// 		"residentialAddressOfEmployer": "ghfghgfh",
+// 		"employerDesignation": "ghgfhgf",
+// 		"employerMobileNumber": "4874584554",
+// 		"employerEmailId": null,
+		
+// 		"shopPersonList": [
+// 		  {
+			
+// 			"mobileNo": "5695266566",
+// 			"canReceiptPrint": false,
+// 			"fieldView": "ALL",
+// 			"name": "fghfgh",
+// 			"address": "gfhfghgf",
+// 			"gender": {
+// 			  "code": "MALE",
+// 			  "name": "Male",
+// 			  "gujName": "પુરૂષ"
+// 			},
+// 			"emailId": "ghfg@gmail.com",
+// 			"designation": "ghgfhgf",
+// 			"relationshipType": {
+// 			  "code": "FATHER",
+// 			  "name": "Father"
+// 			}
+// 		  }
+// 		],
+// 		"workerCounts": [
+// 		  {
+		   
+// 			"canReceiptPrint": false,
+// 			"fieldView": "ALL",
+// 			"noOfMen": 1,
+// 			"noOfWomen": 1,
+// 			"total": 2,
+// 			"workersType": "WORKERS"
+// 		  }
+// 		],
+// 		"previousRegistrationNo": null,
+// 		"serviceForm": null,
+// 		"waterDrainageZoneId": 1,
+// 		"waterDrainageZoneName": "East",
+// 		"waterDrainageWardId": 5,
+// 		"waterDrainageWardName": "Ward 1",
+// 		"waterDrainageBlockId": 17,
+// 		"waterDrainageBlockName": "Block 01",
+// 		"shopPartnerList": [],
+// 		"ownershipType": "OWN",
+		
+// 		"alternateMobileNumber": null,
+// 		"landlineNumber": null,
+// 		"prcNumber": null,
+// 		"pecNumber": null,
+// 		"censusOrPropertyNumber": null,
+// 		"remarks": null,
+// 		"oldRegistrationNumber": null,
+// 		"oldRegistrationDate": null,
+// 		"intimation": null,
+// 		"certification": null,
+// 		"transferCertificateNumber": null
+// 	  }
+// 		this.shopLicNewForm.patchValue(data);
+// 	}
 }
