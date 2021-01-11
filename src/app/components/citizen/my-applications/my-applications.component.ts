@@ -474,12 +474,16 @@ export class MyApplicationsComponent implements OnInit,OnChanges {
 			err => {
 				let retUrl: string = '/citizen/my-applications?apiCode='+ apiCode + '&id=' + id  ;
 				let retAfterPayment: string = environment.returnUrl;
+
+				
 			    if(this.fromOtherModule){
 					retUrl = '/citizen/payable-services?apiCode='+ apiCode + '&id=' + id;
 				}
 
 				if (err.status === 402) {
+					
 					let payData = this.commonService.storePaymentInfo(err.error.data, retUrl, retAfterPayment);
+					let words = this.commonService.getToWords(payData.amount)
 					let html =
 						`
 					<div class="text-center">
@@ -487,7 +491,8 @@ export class MyApplicationsComponent implements OnInit,OnChanges {
 						<div class="payAmount">
 							<i class="fa fa-inr" aria-hidden="true">` + payData.amount + `</i>
 						</div>
-						<p>Rupees in words</p>
+						<p>Rupees in words</p>`
+						+ words + `
 					</div>
 					`
 					if (this.commonService.fromAdmin()) {
