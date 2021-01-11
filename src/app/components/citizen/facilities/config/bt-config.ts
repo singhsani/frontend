@@ -12,7 +12,7 @@ import { ToastrService } from "ngx-toastr";
 
 
 // const toWords = new ToWords();
-let toWords = require('to-words');
+ let toWords = require('to-words');
 
 //let toWords ;
 
@@ -59,7 +59,8 @@ export class BTConfig extends CitizenConfig {
     session: SessionStorageService = new SessionStorageService();
 
     constructor(public formService?: FormsActionsService,
-        public toastr?: ToastrService
+        public toastr?: ToastrService,
+        public commonService?: CommonService
     ) {
         super();
     }
@@ -73,18 +74,13 @@ export class BTConfig extends CitizenConfig {
      * @param router router instance
      */
     redirectToPayment(err: any, commonService: CommonService, btService: BookingService | TicketingsService, form?: FormGroup, router?: Router, applicationrouter?: any) {
-
+       
         let redirectURLAfterPayment = (btService instanceof TicketingsService) ? BTConstants.MY_TICKETINGS_URL : BTConstants.MY_BOOKINGS_URL
 
         let payData = this.storePaymentInfo(err.error.data, redirectURLAfterPayment, btService.resourceType);
        
-        let words = " "
-        if(payData.amount>0){
-             words = toWords(payData.amount);
-        }else{
-             words = " "
-        }
-        //toWords.convert(payData.amount);
+        
+        let words = this.commonService.getToWords(payData.amount);
         let html =
             `
                 <div class="text-center">
@@ -92,8 +88,7 @@ export class BTConfig extends CitizenConfig {
                     <div class="payAmount">
                         <i class="fa fa-inr" aria-hidden="true">` + payData.amount + `</i>
                     </div>
-                    <p>Rupees in words</p>
-                    <i class="fa fa-inr" aria-hidden="true">` + words + `</i>
+                    <p>Rupees in words</p>` + words + `
                 </div>
                 `
         commonService.commonAlert('Payment Details', '', 'info', 'Make Payment!', false, html, cb => {
@@ -133,19 +128,14 @@ export class BTConfig extends CitizenConfig {
     }
 
     redirectToCCAvenuePayment(err: any, commonService: CommonService, btService: BookingService | TicketingsService, paymentGateway, form?: FormGroup, router?: Router, applicationrouter?: any) {
-
+        
         let redirectURLAfterPayment = (btService instanceof TicketingsService) ? BTConstants.MY_TICKETINGS_URL : BTConstants.MY_BOOKINGS_URL
 
         let payData = this.storePaymentInfo(err.error.data, redirectURLAfterPayment, btService.resourceType);
 
-        let words = '';
-        //toWords.convert(payData.amount);
-        if(payData.amount>0){
-             words = toWords(payData.amount);
-        }else{
-            words =  " "
-        }
-
+       
+        
+        let words = commonService.getToWords(payData.amount);
         let html =
             `
                 <div class="text-center">

@@ -235,7 +235,8 @@ export class ActionBarComponent implements OnInit, OnChanges {
 										if (this.commonService.fromAdmin()) {
 											this.openOfflinePaymentComponent(payData,retUrl,data.serviceCode,data.serviceFormId);
 										} else {
-
+											
+											let words = this.commonService.getToWords(payData.amount);
 											let html =
 												`
 										<div class="text-center">
@@ -243,7 +244,8 @@ export class ActionBarComponent implements OnInit, OnChanges {
 											<div class="payAmount">
 												<i class="fa fa-inr" aria-hidden="true">` + payData.amount + `</i>
 											</div>
-											<p>Rupees in words</p>
+											<p>Rupees in words</p>`
+												+ words + `
 										</div>
 										`
 

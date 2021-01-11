@@ -323,7 +323,8 @@ export class ShopLicNewComponent implements OnInit {
 			employerMobileNumber: [null, [ValidationService.mobileNumberValidation]],
 			alternateMobileNumber:[null, [ValidationService.mobileNumberValidation]],
 			landlineNumber:null,
-			employerEmailId: null,
+			 employerEmailId: [null,ValidationService.emailValidator],
+			
 			residentialAddressOfEmployer: [null, [Validators.required, Validators.maxLength(500)]],
 
 			//nameOfManager: [null, [Validators.required, Validators.maxLength(60)]],
@@ -585,10 +586,10 @@ export class ShopLicNewComponent implements OnInit {
 		let isEditAnotherRow = this.isTableInEditMode(persontype);
 		if (!isEditAnotherRow) {
 
-			if (persontype === "PATNERS" && this.getArrayByType(persontype).controls.length >= 2) {
-				this.toastrService.warning("Occuping Person not allowed more than 2");
-				return false;
-			}
+			// if (persontype === "PATNERS" && this.getArrayByType(persontype).controls.length >= 2) {
+			// 	this.toastrService.warning("Occuping Person not allowed more than 2");
+			// 	return false;
+			// }
 
 			if (persontype === "PATNERS") {
 				this.getArrayByType(persontype).push(this.createArrayPatner({
