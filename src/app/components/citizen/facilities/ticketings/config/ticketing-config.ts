@@ -15,6 +15,8 @@ export class TicketingConstants extends BTConstants {
   static NOT_AVAILABLE = 'Seats are not available';
   static ALL_FEILD_REQUIRED_MESSAGE = "Select required feild";
   static PAYMENT_REQUIRED = "PAYMENT_REQUIRED";
+  static REJECTED = "REJECTED";
+
   // static MY_TICKETINGS_URL = 'ticketings/dashboard'
 
 }

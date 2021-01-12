@@ -112,9 +112,7 @@
 							Certificate
 						</button>
 
-
-
-						<button *ngIf="element.status != ticketingConstants.PAYMENT_REQUIRED && element.status != ticketingConstants.SCRUTINY" mat-menu-item color="primary" (click)="printReceipt(element, element.payableServiceType)">
+						<button *ngIf="showRecieptReprint(element)" mat-menu-item color="primary" (click)="printReceipt(element, element.payableServiceType)">
 							<mat-icon title="Print Receipt" color="primary">print</mat-icon>
 							{{'receipt_reprint' | translate:translateKey}}
 						</button>
