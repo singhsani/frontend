@@ -453,4 +453,18 @@ export class MyTicketingsComponent implements OnInit {
 		this.router.navigate(['/citizen/loi-payments-booking', row.refNumber, row.resourceType, row.resourceCode]);
   }
   
+  // this method is used to show receipt button
+  showRecieptReprint(element){
+    if(element.status=== this.ticketingConstants.PAYMENT_REQUIRED||
+      element.status=== this.ticketingConstants.REJECTED||
+      element.status=== this.ticketingConstants.SCRUTINY)
+      {    
+      return false;
+    }else{
+      return true;
+    }
+
+  }
+
+
 }
