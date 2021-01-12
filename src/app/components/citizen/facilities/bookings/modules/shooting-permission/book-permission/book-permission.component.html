@@ -321,6 +321,8 @@
               <control-messages [control]="bookPermissionApplicationForm.get('emailId')"></control-messages>
             </mat-form-field>
 
+
+
             <div class="col-md-4">
               <mat-form-field>
                 <input matInput type="email" formControlName="confirmEmailId"
@@ -330,6 +332,7 @@
               <!-- <mat-error *ngIf="!emailMatcher() && bookPermissionApplicationForm.get('emailId').touched && bookPermissionApplicationForm.get('confirmEmailId').touched">
                 {{bookingConstants.EMAIL_MIS_MATCH_MESSAGE}}
               </mat-error> -->
+
               <mat-error
                 *ngIf="!bookingUtils.matcher(bookPermissionApplicationForm, 'emailId', 'confirmEmailId') && bookPermissionApplicationForm.get('emailId').touched && bookPermissionApplicationForm.get('confirmEmailId').touched">
                 {{bookingConstants.EMAIL_MIS_MATCH_MESSAGE}}
