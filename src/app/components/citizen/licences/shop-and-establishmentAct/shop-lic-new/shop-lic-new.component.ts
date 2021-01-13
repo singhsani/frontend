@@ -1523,109 +1523,109 @@ export class ShopLicNewComponent implements OnInit {
 
   }
 
-  patchValue2(){
+//   patchValue2(){
 	 
-	const data = {
+// 	const data = {
  
-		"contactNo": "9558295586",
-		"mobileNo": "9558295586",
-		"email": "barad@gmail.com",
-		"aadhaarNo": null,
-		"agree": false,
-		"paymentStatus": null,
-		"canEdit": true,
-		"canDelete": true,
-		"canSubmit": true,
-		"serviceCode": "SHOP-ESTAB-LIC-NEW",
-		"canReceiptPrint": false,
-		"fieldView": "ALL",
-		"fieldList": null,
-		"applicantName": null,
-		"applicantNameGuj": null,
-		"establishmentName": "fgfhgfh",
-		"postalAddress": {
-		  "buildingName": "1",
-		  "buildingNameGuj": "૧",
-		  "streetName": "gfhfghgf",
-		  "streetNameGuj": "ગ્ફ્હ્ફ્ઘ્ગ્ફ",
-		  "landmark": "gfhgfhfgh",
-		  "landmarkGuj": "ગ્ફ્હ્ગ્ફ્હ્ફ્ઘ",
-		  "area": "gfhgfh",
-		  "areaGuj": "ગ્ફ્હ્ગ્ફ્હ",
-		  "state": "GUJARAT",
-		  "stateGuj": "ગુજરાત",
-		  "district": null,
-		  "districtGuj": null,
-		  "city": "Vadodara",
-		  "cityGuj": "વડોદરા",
-		  "pincode": "454158",
-		  "country": "INDIA",
-		  "countryGuj": "ભારત"
-		},
-		"commencementOfBusinessDate": "2021-01-07",
-		"otherAddresses": "gfh  gfghfh",
-		"nameOfEmployer": "ghgfhf",
+// 		"contactNo": "9558295586",
+// 		"mobileNo": "9558295586",
+// 		"email": "barad@gmail.com",
+// 		"aadhaarNo": null,
+// 		"agree": false,
+// 		"paymentStatus": null,
+// 		"canEdit": true,
+// 		"canDelete": true,
+// 		"canSubmit": true,
+// 		"serviceCode": "SHOP-ESTAB-LIC-NEW",
+// 		"canReceiptPrint": false,
+// 		"fieldView": "ALL",
+// 		"fieldList": null,
+// 		"applicantName": null,
+// 		"applicantNameGuj": null,
+// 		"establishmentName": "fgfhgfh",
+// 		"postalAddress": {
+// 		  "buildingName": "1",
+// 		  "buildingNameGuj": "૧",
+// 		  "streetName": "gfhfghgf",
+// 		  "streetNameGuj": "ગ્ફ્હ્ફ્ઘ્ગ્ફ",
+// 		  "landmark": "gfhgfhfgh",
+// 		  "landmarkGuj": "ગ્ફ્હ્ગ્ફ્હ્ફ્ઘ",
+// 		  "area": "gfhgfh",
+// 		  "areaGuj": "ગ્ફ્હ્ગ્ફ્હ",
+// 		  "state": "GUJARAT",
+// 		  "stateGuj": "ગુજરાત",
+// 		  "district": null,
+// 		  "districtGuj": null,
+// 		  "city": "Vadodara",
+// 		  "cityGuj": "વડોદરા",
+// 		  "pincode": "454158",
+// 		  "country": "INDIA",
+// 		  "countryGuj": "ભારત"
+// 		},
+// 		"commencementOfBusinessDate": "2021-01-07",
+// 		"otherAddresses": "gfh  gfghfh",
+// 		"nameOfEmployer": "ghgfhf",
 	   
-		"residentialAddressOfEmployer": "ghfghgfh",
-		"employerDesignation": "ghgfhgf",
-		"employerMobileNumber": "4874584554",
-		"employerEmailId": null,
+// 		"residentialAddressOfEmployer": "ghfghgfh",
+// 		"employerDesignation": "ghgfhgf",
+// 		"employerMobileNumber": "4874584554",
+// 		"employerEmailId": null,
 		
-		"shopPersonList": [
-		  {
+// 		"shopPersonList": [
+// 		  {
 			
-			"mobileNo": "5695266566",
-			"canReceiptPrint": false,
-			"fieldView": "ALL",
-			"name": "fghfgh",
-			"address": "gfhfghgf",
-			"gender": {
-			  "code": "MALE",
-			  "name": "Male",
-			  "gujName": "પુરૂષ"
-			},
-			"emailId": "ghfg@gmail.com",
-			"designation": "ghgfhgf",
-			"relationshipType": {
-			  "code": "FATHER",
-			  "name": "Father"
-			}
-		  }
-		],
-		"workerCounts": [
-		  {
+// 			"mobileNo": "5695266566",
+// 			"canReceiptPrint": false,
+// 			"fieldView": "ALL",
+// 			"name": "fghfgh",
+// 			"address": "gfhfghgf",
+// 			"gender": {
+// 			  "code": "MALE",
+// 			  "name": "Male",
+// 			  "gujName": "પુરૂષ"
+// 			},
+// 			"emailId": "ghfg@gmail.com",
+// 			"designation": "ghgfhgf",
+// 			"relationshipType": {
+// 			  "code": "FATHER",
+// 			  "name": "Father"
+// 			}
+// 		  }
+// 		],
+// 		"workerCounts": [
+// 		  {
 		   
-			"canReceiptPrint": false,
-			"fieldView": "ALL",
-			"noOfMen": 1,
-			"noOfWomen": 1,
-			"total": 2,
-			"workersType": "WORKERS"
-		  }
-		],
-		"previousRegistrationNo": null,
-		"serviceForm": null,
-		"waterDrainageZoneId": 1,
-		"waterDrainageZoneName": "East",
-		"waterDrainageWardId": 5,
-		"waterDrainageWardName": "Ward 1",
-		"waterDrainageBlockId": 17,
-		"waterDrainageBlockName": "Block 01",
-		"shopPartnerList": [],
-		"ownershipType": "OWN",
+// 			"canReceiptPrint": false,
+// 			"fieldView": "ALL",
+// 			"noOfMen": 1,
+// 			"noOfWomen": 1,
+// 			"total": 2,
+// 			"workersType": "WORKERS"
+// 		  }
+// 		],
+// 		"previousRegistrationNo": null,
+// 		"serviceForm": null,
+// 		"waterDrainageZoneId": 1,
+// 		"waterDrainageZoneName": "East",
+// 		"waterDrainageWardId": 5,
+// 		"waterDrainageWardName": "Ward 1",
+// 		"waterDrainageBlockId": 17,
+// 		"waterDrainageBlockName": "Block 01",
+// 		"shopPartnerList": [],
+// 		"ownershipType": "OWN",
 		
-		"alternateMobileNumber": null,
-		"landlineNumber": null,
-		"prcNumber": null,
-		"pecNumber": null,
-		"censusOrPropertyNumber": null,
-		"remarks": null,
-		"oldRegistrationNumber": null,
-		"oldRegistrationDate": null,
-		"intimation": null,
-		"certification": null,
-		"transferCertificateNumber": null
-	  }
-		this.shopLicNewForm.patchValue(data);
-	}
+// 		"alternateMobileNumber": null,
+// 		"landlineNumber": null,
+// 		"prcNumber": null,
+// 		"pecNumber": null,
+// 		"censusOrPropertyNumber": null,
+// 		"remarks": null,
+// 		"oldRegistrationNumber": null,
+// 		"oldRegistrationDate": null,
+// 		"intimation": null,
+// 		"certification": null,
+// 		"transferCertificateNumber": null
+// 	  }
+// 		this.shopLicNewForm.patchValue(data);
+// 	}
 }
