@@ -221,12 +221,15 @@ export class ShopLicNewComponent implements OnInit {
 				});
 				this.requiredDocumentList();
 
-				if (this.shopLicNewForm.get('ownershipType').value) {
-					this.updateServiceUploadDocument(this.shopLicNewForm.get('ownershipType').value)
-				}
+				// if (this.shopLicNewForm.get('ownershipType').value) {
+				// 	this.updateServiceUploadDocument(this.shopLicNewForm.get('ownershipType').value)
+				// }
 				// if(res.serviceDetail)
 				// //this.isGuideLineActive = false;
 
+				if (this.shopLicNewForm.get('ownershipType').value,this.shopLicNewForm.get('organizationType').get('code').value) {
+					this.updateServiceUploadDocument(this.shopLicNewForm.get('ownershipType').value,this.shopLicNewForm.get('organizationType').get('code').value);
+				}
 				if(this.shopLicNewForm.get('waterDrainageZoneId')){
 					this.shopLicNewForm.get('zone').setValue(res.waterDrainageZoneName);
 				}
@@ -876,6 +879,9 @@ export class ShopLicNewComponent implements OnInit {
 	*/
 	onChangeTypeOfOrganization(event) {
 
+		this.shopLicNewForm.get('organizationType').get('code').setValue(event);
+	 	this.updateServiceUploadDocument(this.shopLicNewForm.get('ownershipType').value,event);
+
 		try {
 			// this.updateServiceUploadDocument(event);
 			this.isPatners = false;
@@ -1199,7 +1205,7 @@ export class ShopLicNewComponent implements OnInit {
 
 
 
-	updateServiceUploadDocument(ownershipType) {
+	updateServiceUploadDocument(ownershipType,organizationCode) {
 		let array = (<FormArray>this.shopLicNewForm.get('serviceDetail').get('serviceUploadDocuments'));
 		for (let i = array.length - 1; i >= 0; i--) {
 			array.removeAt(i)
@@ -1207,7 +1213,7 @@ export class ShopLicNewComponent implements OnInit {
 
 
 
-		const documentCodeList = this.filterDocumentList(ownershipType);
+		const documentCodeList = this.filterDocumentList(ownershipType,organizationCode);
 
 		const localUploadArray = [...this.serverUploadFilesArray];
 
@@ -1278,26 +1284,24 @@ export class ShopLicNewComponent implements OnInit {
 
 	ownershipChange(ownershipType) {
 		this.shopLicNewForm.get('ownershipType').setValue(ownershipType);
-		this.updateServiceUploadDocument(ownershipType)
+		this.updateServiceUploadDocument(ownershipType,this.shopLicNewForm.get('organizationType').get('code').value)
 	}
 
 	/**
 	 * This method return upload document list based on registration type and ownership type.
 	 * @param ownershipType 
 	 */
-	filterDocumentList(ownershipType) {
+	filterDocumentList(ownershipType, organizationCode) {
 		
+
+		const isPartnerShipSelected =  (organizationCode == 'PARTNERSHIP') ? true : false;
+
+
 		if (this.isIntimation) {
-
-			return this.commonUploadDocument();
-
-
+			return isPartnerShipSelected ? this.commonUploadDocumentForPartnerShip() : this.commonUploadDocument();
 		} else {
 			// Certificate type
-
 			if (ownershipType == "OWN") {
-
-
 				let docArray = [
 					{
 						documentIdentifier: 'LICENSE_COPY',
@@ -1308,11 +1312,8 @@ export class ShopLicNewComponent implements OnInit {
 						mandatory: true
 					}
 				];
-
-				return docArray.concat(this.commonUploadDocument());
-
+				return docArray.concat(isPartnerShipSelected ? this.commonUploadDocumentForPartnerShip() : this.commonUploadDocument());
 			} else if (ownershipType == "RENTED") {
-
 				let docArray = [
 					{
 						documentIdentifier: 'LICENSE_COPY',
@@ -1331,15 +1332,31 @@ export class ShopLicNewComponent implements OnInit {
 						mandatory: false
 					}
 				];
-
-				return docArray.concat(this.commonUploadDocument());
-
-
+				return docArray.concat(isPartnerShipSelected ? this.commonUploadDocumentForPartnerShip() : this.commonUploadDocument());
 			} else {
 				return [];
 			}
-
 		}
+
+
+	}
+
+
+	commonUploadDocumentForPartnerShip(){
+
+		const docs = this.commonUploadDocument();
+		docs.push({
+			documentIdentifier: 'PARTNERSHIP_DEED',
+			mandatory: true
+		})
+
+		docs.forEach(element => {
+			if(element.documentIdentifier == 'SHOP_PAN_CARD') {
+				element.mandatory = true;
+			}
+		});
+
+		return docs;
 
 	}
 
@@ -1506,109 +1523,109 @@ export class ShopLicNewComponent implements OnInit {
 
   }
 
-//   patchValue2(){
+  patchValue2(){
 	 
-// 	const data = {
+	const data = {
  
-// 		"contactNo": "9558295586",
-// 		"mobileNo": "9558295586",
-// 		"email": "barad@gmail.com",
-// 		"aadhaarNo": null,
-// 		"agree": false,
-// 		"paymentStatus": null,
-// 		"canEdit": true,
-// 		"canDelete": true,
-// 		"canSubmit": true,
-// 		"serviceCode": "SHOP-ESTAB-LIC-NEW",
-// 		"canReceiptPrint": false,
-// 		"fieldView": "ALL",
-// 		"fieldList": null,
-// 		"applicantName": null,
-// 		"applicantNameGuj": null,
-// 		"establishmentName": "fgfhgfh",
-// 		"postalAddress": {
-// 		  "buildingName": "1",
-// 		  "buildingNameGuj": "૧",
-// 		  "streetName": "gfhfghgf",
-// 		  "streetNameGuj": "ગ્ફ્હ્ફ્ઘ્ગ્ફ",
-// 		  "landmark": "gfhgfhfgh",
-// 		  "landmarkGuj": "ગ્ફ્હ્ગ્ફ્હ્ફ્ઘ",
-// 		  "area": "gfhgfh",
-// 		  "areaGuj": "ગ્ફ્હ્ગ્ફ્હ",
-// 		  "state": "GUJARAT",
-// 		  "stateGuj": "ગુજરાત",
-// 		  "district": null,
-// 		  "districtGuj": null,
-// 		  "city": "Vadodara",
-// 		  "cityGuj": "વડોદરા",
-// 		  "pincode": "454158",
-// 		  "country": "INDIA",
-// 		  "countryGuj": "ભારત"
-// 		},
-// 		"commencementOfBusinessDate": "2021-01-07",
-// 		"otherAddresses": "gfh  gfghfh",
-// 		"nameOfEmployer": "ghgfhf",
+		"contactNo": "9558295586",
+		"mobileNo": "9558295586",
+		"email": "barad@gmail.com",
+		"aadhaarNo": null,
+		"agree": false,
+		"paymentStatus": null,
+		"canEdit": true,
+		"canDelete": true,
+		"canSubmit": true,
+		"serviceCode": "SHOP-ESTAB-LIC-NEW",
+		"canReceiptPrint": false,
+		"fieldView": "ALL",
+		"fieldList": null,
+		"applicantName": null,
+		"applicantNameGuj": null,
+		"establishmentName": "fgfhgfh",
+		"postalAddress": {
+		  "buildingName": "1",
+		  "buildingNameGuj": "૧",
+		  "streetName": "gfhfghgf",
+		  "streetNameGuj": "ગ્ફ્હ્ફ્ઘ્ગ્ફ",
+		  "landmark": "gfhgfhfgh",
+		  "landmarkGuj": "ગ્ફ્હ્ગ્ફ્હ્ફ્ઘ",
+		  "area": "gfhgfh",
+		  "areaGuj": "ગ્ફ્હ્ગ્ફ્હ",
+		  "state": "GUJARAT",
+		  "stateGuj": "ગુજરાત",
+		  "district": null,
+		  "districtGuj": null,
+		  "city": "Vadodara",
+		  "cityGuj": "વડોદરા",
+		  "pincode": "454158",
+		  "country": "INDIA",
+		  "countryGuj": "ભારત"
+		},
+		"commencementOfBusinessDate": "2021-01-07",
+		"otherAddresses": "gfh  gfghfh",
+		"nameOfEmployer": "ghgfhf",
 	   
-// 		"residentialAddressOfEmployer": "ghfghgfh",
-// 		"employerDesignation": "ghgfhgf",
-// 		"employerMobileNumber": "4874584554",
-// 		"employerEmailId": null,
+		"residentialAddressOfEmployer": "ghfghgfh",
+		"employerDesignation": "ghgfhgf",
+		"employerMobileNumber": "4874584554",
+		"employerEmailId": null,
 		
-// 		"shopPersonList": [
-// 		  {
+		"shopPersonList": [
+		  {
 			
-// 			"mobileNo": "5695266566",
-// 			"canReceiptPrint": false,
-// 			"fieldView": "ALL",
-// 			"name": "fghfgh",
-// 			"address": "gfhfghgf",
-// 			"gender": {
-// 			  "code": "MALE",
-// 			  "name": "Male",
-// 			  "gujName": "પુરૂષ"
-// 			},
-// 			"emailId": "ghfg@gmail.com",
-// 			"designation": "ghgfhgf",
-// 			"relationshipType": {
-// 			  "code": "FATHER",
-// 			  "name": "Father"
-// 			}
-// 		  }
-// 		],
-// 		"workerCounts": [
-// 		  {
+			"mobileNo": "5695266566",
+			"canReceiptPrint": false,
+			"fieldView": "ALL",
+			"name": "fghfgh",
+			"address": "gfhfghgf",
+			"gender": {
+			  "code": "MALE",
+			  "name": "Male",
+			  "gujName": "પુરૂષ"
+			},
+			"emailId": "ghfg@gmail.com",
+			"designation": "ghgfhgf",
+			"relationshipType": {
+			  "code": "FATHER",
+			  "name": "Father"
+			}
+		  }
+		],
+		"workerCounts": [
+		  {
 		   
-// 			"canReceiptPrint": false,
-// 			"fieldView": "ALL",
-// 			"noOfMen": 1,
-// 			"noOfWomen": 1,
-// 			"total": 2,
-// 			"workersType": "WORKERS"
-// 		  }
-// 		],
-// 		"previousRegistrationNo": null,
-// 		"serviceForm": null,
-// 		"waterDrainageZoneId": 1,
-// 		"waterDrainageZoneName": "East",
-// 		"waterDrainageWardId": 5,
-// 		"waterDrainageWardName": "Ward 1",
-// 		"waterDrainageBlockId": 17,
-// 		"waterDrainageBlockName": "Block 01",
-// 		"shopPartnerList": [],
-// 		"ownershipType": "OWN",
+			"canReceiptPrint": false,
+			"fieldView": "ALL",
+			"noOfMen": 1,
+			"noOfWomen": 1,
+			"total": 2,
+			"workersType": "WORKERS"
+		  }
+		],
+		"previousRegistrationNo": null,
+		"serviceForm": null,
+		"waterDrainageZoneId": 1,
+		"waterDrainageZoneName": "East",
+		"waterDrainageWardId": 5,
+		"waterDrainageWardName": "Ward 1",
+		"waterDrainageBlockId": 17,
+		"waterDrainageBlockName": "Block 01",
+		"shopPartnerList": [],
+		"ownershipType": "OWN",
 		
-// 		"alternateMobileNumber": null,
-// 		"landlineNumber": null,
-// 		"prcNumber": null,
-// 		"pecNumber": null,
-// 		"censusOrPropertyNumber": null,
-// 		"remarks": null,
-// 		"oldRegistrationNumber": null,
-// 		"oldRegistrationDate": null,
-// 		"intimation": null,
-// 		"certification": null,
-// 		"transferCertificateNumber": null
-// 	  }
-// 		this.shopLicNewForm.patchValue(data);
-// 	}
+		"alternateMobileNumber": null,
+		"landlineNumber": null,
+		"prcNumber": null,
+		"pecNumber": null,
+		"censusOrPropertyNumber": null,
+		"remarks": null,
+		"oldRegistrationNumber": null,
+		"oldRegistrationDate": null,
+		"intimation": null,
+		"certification": null,
+		"transferCertificateNumber": null
+	  }
+		this.shopLicNewForm.patchValue(data);
+	}
 }
