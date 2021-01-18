@@ -157,6 +157,7 @@ export class NewRegistrationComponent implements OnInit {
       vehicleApplicableRate: [{ value: 0, disabled: true }],
       totalPayable: [{ value: 0, disabled: true }],
       attachments: [],
+      serviceFormId : null,
       formStatus: null,
       dealerEmail: ['', [ValidationService.emailValidator]],
 			dealerMobileNo: [null, Validators.required],
