@@ -221,12 +221,15 @@ export class ShopLicNewComponent implements OnInit {
 				});
 				this.requiredDocumentList();
 
-				if (this.shopLicNewForm.get('ownershipType').value) {
-					this.updateServiceUploadDocument(this.shopLicNewForm.get('ownershipType').value)
-				}
+				// if (this.shopLicNewForm.get('ownershipType').value) {
+				// 	this.updateServiceUploadDocument(this.shopLicNewForm.get('ownershipType').value)
+				// }
 				// if(res.serviceDetail)
 				// //this.isGuideLineActive = false;
 
+				if (this.shopLicNewForm.get('ownershipType').value,this.shopLicNewForm.get('organizationType').get('code').value) {
+					this.updateServiceUploadDocument(this.shopLicNewForm.get('ownershipType').value,this.shopLicNewForm.get('organizationType').get('code').value);
+				}
 				if(this.shopLicNewForm.get('waterDrainageZoneId')){
 					this.shopLicNewForm.get('zone').setValue(res.waterDrainageZoneName);
 				}
@@ -876,6 +879,9 @@ export class ShopLicNewComponent implements OnInit {
 	*/
 	onChangeTypeOfOrganization(event) {
 
+		this.shopLicNewForm.get('organizationType').get('code').setValue(event);
+	 	this.updateServiceUploadDocument(this.shopLicNewForm.get('ownershipType').value,event);
+
 		try {
 			// this.updateServiceUploadDocument(event);
 			this.isPatners = false;
@@ -1199,7 +1205,7 @@ export class ShopLicNewComponent implements OnInit {
 
 
 
-	updateServiceUploadDocument(ownershipType) {
+	updateServiceUploadDocument(ownershipType,organizationCode) {
 		let array = (<FormArray>this.shopLicNewForm.get('serviceDetail').get('serviceUploadDocuments'));
 		for (let i = array.length - 1; i >= 0; i--) {
 			array.removeAt(i)
@@ -1207,7 +1213,7 @@ export class ShopLicNewComponent implements OnInit {
 
 
 
-		const documentCodeList = this.filterDocumentList(ownershipType);
+		const documentCodeList = this.filterDocumentList(ownershipType,organizationCode);
 
 		const localUploadArray = [...this.serverUploadFilesArray];
 
@@ -1278,26 +1284,24 @@ export class ShopLicNewComponent implements OnInit {
 
 	ownershipChange(ownershipType) {
 		this.shopLicNewForm.get('ownershipType').setValue(ownershipType);
-		this.updateServiceUploadDocument(ownershipType)
+		this.updateServiceUploadDocument(ownershipType,this.shopLicNewForm.get('organizationType').get('code').value)
 	}
 
 	/**
 	 * This method return upload document list based on registration type and ownership type.
 	 * @param ownershipType 
 	 */
-	filterDocumentList(ownershipType) {
+	filterDocumentList(ownershipType, organizationCode) {
 		
+
+		const isPartnerShipSelected =  (organizationCode == 'PARTNERSHIP') ? true : false;
+
+
 		if (this.isIntimation) {
-
-			return this.commonUploadDocument();
-
-
+			return isPartnerShipSelected ? this.commonUploadDocumentForPartnerShip() : this.commonUploadDocument();
 		} else {
 			// Certificate type
-
 			if (ownershipType == "OWN") {
-
-
 				let docArray = [
 					{
 						documentIdentifier: 'LICENSE_COPY',
@@ -1308,11 +1312,8 @@ export class ShopLicNewComponent implements OnInit {
 						mandatory: true
 					}
 				];
-
-				return docArray.concat(this.commonUploadDocument());
-
+				return docArray.concat(isPartnerShipSelected ? this.commonUploadDocumentForPartnerShip() : this.commonUploadDocument());
 			} else if (ownershipType == "RENTED") {
-
 				let docArray = [
 					{
 						documentIdentifier: 'LICENSE_COPY',
@@ -1331,15 +1332,31 @@ export class ShopLicNewComponent implements OnInit {
 						mandatory: false
 					}
 				];
-
-				return docArray.concat(this.commonUploadDocument());
-
-
+				return docArray.concat(isPartnerShipSelected ? this.commonUploadDocumentForPartnerShip() : this.commonUploadDocument());
 			} else {
 				return [];
 			}
-
 		}
+
+
+	}
+
+
+	commonUploadDocumentForPartnerShip(){
+
+		const docs = this.commonUploadDocument();
+		docs.push({
+			documentIdentifier: 'PARTNERSHIP_DEED',
+			mandatory: true
+		})
+
+		docs.forEach(element => {
+			if(element.documentIdentifier == 'SHOP_PAN_CARD') {
+				element.mandatory = true;
+			}
+		});
+
+		return docs;
 
 	}
 
