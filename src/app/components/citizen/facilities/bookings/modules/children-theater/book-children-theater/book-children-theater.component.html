@@ -266,7 +266,7 @@
                         </mat-form-field>
 
                         <mat-form-field class="col-md-6">
-                            <input matInput OnlyNumber minlength="10" maxlength="11" formControlName="orgTelephoneNo" placeholder="{{'org_telephone_no' | translate: translateKey}}"
+                            <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="orgTelephoneNo" placeholder="{{'org_telephone_no' | translate: translateKey}}"
                                 required>
                             <control-messages [control]="childrenTheaterApplicationForm.get('orgTelephoneNo')"></control-messages>
                         </mat-form-field>
@@ -380,7 +380,7 @@
                         <div class="col-md-6">
                             <label labelPosition="after">{{'school_or_institute_letter' | translate:translateKey}}
                                 <span class="mandatory">*</span></label>
-                            <booking-file-upload (uploaded)="isFileUploaded = $event" [form]="childrenTheaterApplicationForm" [uploadModel]="{dmsUpload:true,fieldIdentifier:'1', labelName:'school_or_institute_letter', formPart:'1.1', refNumber:
+                            <booking-file-upload (uploaded)="isFileUploaded = $event" [form]="childrenTheaterApplicationForm" [uploadModel]="{dmsUpload:true,fieldIdentifier:'1', labelName:'school or institute letter', formPart:'1.1', refNumber:
                                                                          childrenTheaterApplicationForm.get('refNumber').value, bookingFormId : childrenTheaterApplicationForm.get('bookingFormId').value, variableName: 'school_letter'}">
                             </booking-file-upload>
                         </div>
