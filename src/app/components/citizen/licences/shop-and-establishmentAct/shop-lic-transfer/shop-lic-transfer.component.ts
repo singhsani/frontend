@@ -317,8 +317,11 @@ export class ShopLicTransferComponent implements OnInit {
 				});
 				this.requiredDocumentList();
 
-				if (this.shopLicTransferForm.get('ownershipType').value) {
-					this.updateServiceUploadDocument(this.shopLicTransferForm.get('ownershipType').value)
+				// if (this.shopLicTransferForm.get('ownershipType').value) {
+				// 	this.updateServiceUploadDocument(this.shopLicTransferForm.get('ownershipType').value)
+				// }
+				if (this.shopLicTransferForm.get('ownershipType').value,this.shopLicTransferForm.get('organizationType').get('code').value) {
+					this.updateServiceUploadDocument(this.shopLicTransferForm.get('ownershipType').value,this.shopLicTransferForm.get('organizationType').get('code').value);
 				}
 				// if(res.serviceDetail)
 				// //this.isGuideLineActive = false;
@@ -958,6 +961,9 @@ export class ShopLicTransferComponent implements OnInit {
 	*/
 	onChangeTypeOfOrganization(event) {
 
+		this.shopLicTransferForm.get('organizationType').get('code').setValue(event);
+	 	this.updateServiceUploadDocument(this.shopLicTransferForm.get('ownershipType').value,event);
+
 		try {
 			// this.updateServiceUploadDocument(event);
 			this.isPatners = false;
@@ -1277,7 +1283,7 @@ export class ShopLicTransferComponent implements OnInit {
 
 
 
-	updateServiceUploadDocument(ownershipType) {
+	updateServiceUploadDocument(ownershipType,organizationCode) {
 		let array = (<FormArray>this.shopLicTransferForm.get('serviceDetail').get('serviceUploadDocuments'));
 		for (let i = array.length - 1; i >= 0; i--) {
 			array.removeAt(i)
@@ -1285,7 +1291,7 @@ export class ShopLicTransferComponent implements OnInit {
 
 
 
-		const documentCodeList = this.filterDocumentList(ownershipType);
+		const documentCodeList = this.filterDocumentList(ownershipType,organizationCode);
 
 		const localUploadArray = [...this.serverUploadFilesArray];
 
@@ -1356,20 +1362,20 @@ export class ShopLicTransferComponent implements OnInit {
 
 	ownershipChange(ownershipType) {
 		this.shopLicTransferForm.get('ownershipType').setValue(ownershipType);
-		this.updateServiceUploadDocument(ownershipType)
+		this.updateServiceUploadDocument(ownershipType,this.shopLicTransferForm.get('organizationType').get('code').value);
 	}
 
 	/**
 	 * This method return upload document list based on registration type and ownership type.
 	 * @param ownershipType 
 	 */
-	filterDocumentList(ownershipType) {
+	filterDocumentList(ownershipType,organizationCode) {
 		
+		const isPartnerShipSelected =  (organizationCode == 'PARTNERSHIP') ? true : false;
+
 		if (this.isIntimation) {
-
-			return this.commonUploadDocument();
-
-
+			return isPartnerShipSelected ? this.commonUploadDocumentForPartnerShip() : this.commonUploadDocument();
+			//return this.commonUploadDocument();
 		} else {
 			// Certificate type
 
@@ -1386,8 +1392,8 @@ export class ShopLicTransferComponent implements OnInit {
 						mandatory: true
 					}
 				];
-
-				return docArray.concat(this.commonUploadDocument());
+				return docArray.concat(isPartnerShipSelected ? this.commonUploadDocumentForPartnerShip() : this.commonUploadDocument());
+				// return docArray.concat(this.commonUploadDocument());
 
 			} else if (ownershipType == "RENTED") {
 
@@ -1409,8 +1415,8 @@ export class ShopLicTransferComponent implements OnInit {
 						mandatory: false
 					}
 				];
-
-				return docArray.concat(this.commonUploadDocument());
+				return docArray.concat(isPartnerShipSelected ? this.commonUploadDocumentForPartnerShip() : this.commonUploadDocument());
+				//return docArray.concat(this.commonUploadDocument());
 
 
 			} else {
@@ -1420,7 +1426,8 @@ export class ShopLicTransferComponent implements OnInit {
 		}
 
 	}
-
+	
+	
 
 	commonUploadDocument(){
 		return [
@@ -1471,6 +1478,24 @@ export class ShopLicTransferComponent implements OnInit {
 		} catch (error) {
 
 		}
+	}
+
+	commonUploadDocumentForPartnerShip(){
+
+		const docs = this.commonUploadDocument();
+		docs.push({
+			documentIdentifier: 'PARTNERSHIP_DEED',
+			mandatory: true
+		})
+
+		docs.forEach(element => {
+			if(element.documentIdentifier == 'SHOP_PAN_CARD') {
+				element.mandatory = true;
+			}
+		});
+
+		return docs;
+
 	}
 
 	validatePecPrcNumber(formControl : FormControl){
