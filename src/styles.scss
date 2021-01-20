@@ -735,6 +735,8 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
 .wMatCell150 {max-width: 150px;}
 .cellLast {padding-right: 0 !important;}
 
+.borderInputNone .mat-form-field-underline { background-color: transparent;}
+
 // Responsive CSS Part 1 ------------------------------------------------
 @media (max-width: 991px) {
     .container {margin-top: 65px;}
