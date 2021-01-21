@@ -147,6 +147,7 @@ export class WaterTankerAppComponent implements OnInit {
 	 * @param dependedKey 
 	 */
 	dependentAttachment(dependedKey: string) {
+		// debugger 
 		var control = (<FormArray>this.waterTankerAppForm.get('serviceDetail').get('serviceUploadDocuments')).controls
 		var fields = control.find((data) => data.get('documentIdentifier').value === dependedKey);
 
@@ -161,11 +162,12 @@ export class WaterTankerAppComponent implements OnInit {
 			}
 		} else {
 
-			fields.get('mandatory').setValue(false);
-			var indewx = this.uploadFilesArray.findIndex((data) => data.documentIdentifier === dependedKey)
-			if (indewx != -1) {
-				this.uploadFilesArray.splice(indewx, 1);
-			}
+			this.uploadFilesArray = []; 
+			// fields.get('mandatory').setValue(false); 
+			// var indewx = this.uploadFilesArray.findIndex((data) => data.documentIdentifier === dependedKey) 
+			// if (indewx != -1) { 
+			// 	this.uploadFilesArray.splice(indewx, 1); 
+			// } 
 
 		}
 
@@ -256,6 +258,7 @@ export class WaterTankerAppComponent implements OnInit {
 			this.waterTankerAppForm.get('whoSuggested').clearValidators();
 			this.waterTankerAppForm.get('whoSuggested').reset();
 			this.waterTankerAppForm.get('attachments').reset();
+			this.dependentAttachment('');
 		}
 		this.waterTankerAppForm.get('whoSuggested').updateValueAndValidity();
 
