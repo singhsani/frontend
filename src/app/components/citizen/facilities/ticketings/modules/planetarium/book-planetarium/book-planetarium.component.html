@@ -75,7 +75,7 @@
                         [hidden]="ticketBookingForm.get('showCategory').get('code').value != 'PLANETARIUM_SPECIAL_SHOW'"
                         class="col-md-4 ngSelect">
                         <ng-select placeholder="{{'planetarium_shows_language'| translate: translateKey}} *"
-                            formControlName="code" (change)="setShiftType();getPlanetariumShowAvailability()">
+                            formControlName="code" (change)="setShiftType()">
                             <ng-option *ngFor="let cat of PLANETARIUM_SPECIAL_SHOWS_LAG" [value]="cat.code">
                                 {{ cat.name }}
                             </ng-option>
