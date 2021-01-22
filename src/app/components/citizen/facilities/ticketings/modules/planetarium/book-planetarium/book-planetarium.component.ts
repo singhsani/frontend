@@ -537,12 +537,14 @@ export class BookPlanetariumComponent implements OnInit {
    * redirect to Payment 
    */
   redirecToPayment() {
-    if (this.ticketBookingForm.get('visitors').get('code').value == null
-      && this.ticketBookingForm.get('idType').get('code').value == null
-      && this.ticketBookingForm.get('idNumber').value == null
-      && this.ticketBookingForm.get('firstName').value == null
-      && this.ticketBookingForm.get('lastName').value == null
-      && this.ticketBookingForm.get('planetariumShowTiming').get('code').value == null) {
+    if (!this.ticketBookingForm.get('visitors').get('code').value 
+      || !this.ticketBookingForm.get('idType').get('code').value
+      || !this.ticketBookingForm.get('idNumber').value
+      || !this.ticketBookingForm.get('firstName').value 
+      || !this.ticketBookingForm.get('lastName').value
+      || !this.ticketBookingForm.get('planetariumShowTiming').get('code').value 
+      || !this.ticketBookingForm.get('visitingDate').value
+      ) {
       this.commonService.openAlert("Feild Error", this.ticketingConstants.ALL_FEILD_REQUIRED_MESSAGE, 'warning');
       this.markFormGroupTouched(this.ticketBookingForm);
     }
