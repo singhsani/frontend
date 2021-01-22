@@ -35,14 +35,14 @@
 						<control-messages [control]="muttonFishNewForm.get('personType').get('code')">
 						</control-messages>
 					</div>
-					<mat-form-field class="col-md-2">
+					<mat-form-field class="col-md-3">
 						<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithOutSpace'
 							required maxlength="30" placeholder="{{'holder_firstname' | translate:translateKey}}"
 							formControlName="holderFirstName" appGujInputSource targetElement="holderFirstNameGuj"
 							[form]="muttonFishNewForm">
 						<control-messages [control]="muttonFishNewForm.get('holderFirstName')"></control-messages>
 					</mat-form-field>
-					<mat-form-field class="col-md-4">
+					<mat-form-field class="col-md-3">
 						<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithOutSpace'
 							required maxlength="30" placeholder="{{'holder_middlename' | translate:translateKey}}"
 							formControlName="holderMiddleName" appGujInputSource targetElement="holderMiddleNameGuj"
@@ -65,7 +65,7 @@
 							placeholder="{{'person_type' | translate: translateKey:'gu' }}" maxlength="180" required>
 					</mat-form-field>
 
-					<mat-form-field class="col-md-2">
+					<mat-form-field class="col-md-3">
 						<input matInput type="text" maxlength="90" required formControlName="holderFirstNameGuj"
 							appGujInputTarget [form]="muttonFishNewForm"
 							placeholder="{{ 'holder_firstname' | translate:translateKey:'gu' }}">
@@ -75,7 +75,7 @@
 						<!--placeholder="{{ 'holder_firstname' | translate:translateKey:'gu' }}">-->
 						<control-messages [control]="muttonFishNewForm.get('holderFirstNameGuj')"></control-messages>
 					</mat-form-field>
-					<mat-form-field class="col-md-4">
+					<mat-form-field class="col-md-3">
 						<input matInput type="text" required maxlength="90"
 							placeholder="{{'holder_middlename' | translate:translateKey:'gu'}}"
 							formControlName="holderMiddleNameGuj" appGujInputTarget [form]="muttonFishNewForm">
