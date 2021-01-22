@@ -31,12 +31,15 @@ export class OfflinePaymentComponent implements OnInit, OnChanges {
 
 	paymentModeSelect : String = "CASH";
 
+	wordAmount: any;
+
 	constructor(
 		private session: SessionStorageService,
 		private offlinePaymentService: OfflinePaymentService,
 		private fb: FormBuilder,
 		@Inject(MAT_DIALOG_DATA) data,
-		private dialogRef: MatDialogRef<OfflinePaymentComponent>) {
+		private dialogRef: MatDialogRef<OfflinePaymentComponent>,
+		private commonService : CommonService) {
 		this.payData = data.payData;
 		
 	}
@@ -45,7 +48,16 @@ export class OfflinePaymentComponent implements OnInit, OnChanges {
 	 * Method initialize other opertaions.
 	 */
 	ngOnInit() {
-
+		this.wordAmount =  this.commonService.getToWords(this.payData.amount);
+		if(this.payData.payableServiceType == "SHOP-ESTAB-LIC-NEW"){
+			this.offlinePaymentService.getShopLookups().subscribe(lookupsData => {
+				if(lookupsData){
+					this.payModes = lookupsData.PAY_MODE;
+					this.bankList = lookupsData.BANK_NAME_LIST;
+				}
+			})
+		}
+		else{
 		this.offlinePaymentService.getLookups().subscribe(lookpsData => {
 			if (lookpsData) {
 				this.payModes = lookpsData.PAY_MODE;
@@ -53,7 +65,7 @@ export class OfflinePaymentComponent implements OnInit, OnChanges {
 
 			}
 		});
-
+	}
 		this.paymentsForm = this.fb.group({
 			amount: [null, [Validators.required]],
 			paymentMode: [null, [Validators.required]],

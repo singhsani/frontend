@@ -15,5 +15,8 @@ export class OfflinePaymentService {
         return this.httpService.get("api/offline/payment/lookups");
     }
 
+    getShopLookups(){
+        return this.httpService.get("api/offline/payment/withoutChequelookups");
+    }
 
 }
