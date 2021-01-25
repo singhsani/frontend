@@ -132,6 +132,13 @@
             </button>
             </div>
 
+            <div *ngIf="element.resourceType == 'SWIMMING_POOL'">
+              <button *ngIf="element.resourceType == 'SWIMMING_POOL' && element.status == bookingConstant.PAYMENT_REQUIRED"
+              mat-menu-item color="primary" (click)="printReceiptSwimming(element)">
+              <mat-icon title="Print Receipt" color="primary">print</mat-icon>Download LOI
+            </button>
+            </div>
+
               <!-- Recepit Re-print For Atithi Deposit -->
             <!-- TODO Merge Townhall and Atithi deposit code and make it common-->
 
