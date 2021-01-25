@@ -372,4 +372,10 @@ export class BookingService {
 
     }
 
+    // this method is uded to print swimming LOI receipt
+  printReceiptSwimming(refNumber: any) {
+    this.requestURL = `api/booking/swimming/printReceiptLOI?refNumber=${refNumber}`;
+    return this.http.get(this.requestURL, 'printReceipt')
+	}
+
 }
