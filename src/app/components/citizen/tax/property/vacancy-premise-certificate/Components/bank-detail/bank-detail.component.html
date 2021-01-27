@@ -112,7 +112,7 @@
               <mat-form-field class="full-width-input">
                 <input trim="blur" matInput [required]="isBankDetailRequired" placeholder="Account Name" maxlength="50"
                   name="refundAccountName" [(ngModel)]="model.refundAccountName" #RefundAccountName="ngModel" 
-                  letter-digits-only pattern="[a-zA-Z0-9]*">
+                  letter-digits-only pattern="^[a-zA-Z_]*$" (keydown.space)="$event.preventDefault()">
                 <mat-error *ngIf="RefundAccountName.invalid">*Account Name is required.</mat-error>
               </mat-form-field>
             </div>
@@ -120,7 +120,7 @@
               <mat-form-field class="full-width-input">
                 <input matInput [required]="isBankDetailRequired" placeholder="Account Number" maxlength="30"
                   name="refundAccountNumber" [(ngModel)]="model.refundAccountNumber" #RefundAccountNumber="ngModel"
-                  digits-only pattern="[0-9]*">
+                  digits-only pattern="[0-9_]*" (keydown.space)="$event.preventDefault()">
                 <mat-error *ngIf="RefundAccountNumber.invalid">*Account Number is required.</mat-error>
               </mat-form-field>
             </div>
