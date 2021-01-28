@@ -215,7 +215,7 @@
         <th scope="col" class="text-center">
           {{'actions' | translate:translateKey}}
           <mat-checkbox labelPosition="after"
-                        [disabled]="getAllDisabled() || bookingService.resourceType == 'childrenTheater'||isAmphiCancellation"
+                        [disabled]="getAllDisabled() ||isAmphiCancellation"
                         [checked]="getAllSelected()"
                         (change)="chooseAllForCancel($event.checked)">
             {{'select_all' | translate:translateKey}}
@@ -240,7 +240,7 @@
         <td>{{bookingUtils.getProperErrorMessage(shifts.status)}}</td>
         <td>
           <mat-checkbox
-            [disabled]="(shifts.status == bookingConstant.CANCELLATION_REQUEST || shifts.status == bookingConstant.CANCELLATION_APPROVED || bookingService.resourceType == 'childrenTheater'||isAmphiCancellation)"
+            [disabled]="(shifts.status == bookingConstant.CANCELLATION_REQUEST || shifts.status == bookingConstant.CANCELLATION_APPROVED ||isAmphiCancellation)"
             [checked]="getSelected(shifts.bookingNo) || (shifts.status == bookingConstant.CANCELLATION_REQUEST || shifts.status == bookingConstant.CANCELLATION_APPROVED)"
             (change)="chooseForCancel(shifts, $event.checked)">
           </mat-checkbox>
