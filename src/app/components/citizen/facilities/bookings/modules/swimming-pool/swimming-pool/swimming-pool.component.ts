@@ -396,9 +396,7 @@ export class SwimmingPoolComponent implements OnInit {
    * Submit form data
    */
   submitApplication(): void {
-    let refNumber = this.swimmimgPoolBookingForm.get("refNumber").value;
-    this.sendSms(refNumber,"SUBMIT");
-    this.sendMail(refNumber,"SUBMIT");
+    
     let errCount = this.bookingUtils.getAllErrors(this.swimmimgPoolBookingForm);
     if (this.swimmimgPoolBookingForm.invalid) {
       this.handleErrorsOnSubmit(errCount);
@@ -418,6 +416,9 @@ export class SwimmingPoolComponent implements OnInit {
       // save call
       this.swimmingPoolService.submitData(this.swimmimgPoolBookingForm.value, this.swimmimgPoolBookingForm.get('swimmingPoolName').get('code').value).subscribe(
         res => {
+          let refNumber = this.swimmimgPoolBookingForm.get("refNumber").value;
+          this.sendSms(refNumber, "SUBMIT");
+          this.sendMail(refNumber, "SUBMIT");
           this.swimmingPoolService.printAcknowledgeReceipt(res.refNumber).subscribe(data => {
             let sectionToPrint: any = document.getElementById('sectionToPrint');
             sectionToPrint.innerHTML = data;
