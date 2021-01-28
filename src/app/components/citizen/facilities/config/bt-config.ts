@@ -88,7 +88,7 @@ export class BTConfig extends CitizenConfig {
                     <div class="payAmount">
                         <i class="fa fa-inr" aria-hidden="true">` + payData.amount + `</i>
                     </div>
-                    <p>Rupees in words</p>` + words + `
+                    <p>Rupees in words</p>` + words + ` Rupees Only
                 </div>
                 `
         commonService.commonAlert('Payment Details', '', 'info', 'Make Payment!', false, html, cb => {
@@ -144,7 +144,7 @@ export class BTConfig extends CitizenConfig {
                         <i class="fa fa-inr" aria-hidden="true">` + payData.amount + `</i>
                     </div>
                     <p>Rupees in words</p>
-                    ` + words + `
+                    ` + words + ` Rupees Only
                 </div>
                 `
         commonService.commonAlert('Payment Details', '', 'info', 'Make Payment!', false, html, cb => {

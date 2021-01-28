@@ -372,4 +372,29 @@ export class BookingService {
 
     }
 
+    // this method is uded to print swimming LOI receipt
+  printReceiptSwimming(refNumber: any) {
+    this.requestURL = `api/booking/swimming/printReceiptLOI?refNumber=${refNumber}`;
+    return this.http.get(this.requestURL, 'printReceipt')
+   }
+  /**
+     * This method is used to send sms on submit
+     * @param refNumber 
+     * @param eventType 
+     */
+  sendSmsForSwimming(refNumber:any,eventType:any){
+    this.requestURL = `api/booking/${this.resourceType}/sendSms?refNumber=${refNumber}&eventType=${eventType}`;
+    return this.http.get(this.requestURL);
+  }
+
+  /**
+     * This method is used to send Mail on submit
+     * @param refNumber 
+     * @param eventType 
+     */
+    sendMailForSwimming(refNumber: any,eventType: any){
+      this.requestURL = `api/booking/${this.resourceType}/sendMail?refNumber=${refNumber}&eventType=${eventType}`;
+      return this.http.get(this.requestURL);
+
+    }
 }

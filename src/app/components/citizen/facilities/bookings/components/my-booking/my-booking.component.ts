@@ -34,8 +34,8 @@ export class MyBookingComponent implements OnInit {
 	searchBookingsForm: FormGroup;
 	bookingList = new MatTableDataSource();
 	refundBankDetailsForm: FormGroup;
-	isAmphiCancellation : boolean = false;
-	element : any;
+	isAmphiCancellation: boolean = false;
+	element: any;
 	isBookingNoSlotNo = false;
 
 	/**
@@ -70,11 +70,11 @@ export class MyBookingComponent implements OnInit {
 
 	refNumber: string = null;
 	cancellationType: string = null;
-  ifscCode: string = null;
+	ifscCode: string = null;
 	bankLists: Array<any> = [];
-	accountNo : string = null;
-	accountHolderName : string = null;
-	bankName : string = null;
+	accountNo: string = null;
+	accountHolderName: string = null;
+	bankName: string = null;
 	slotBookingList = [];
 
 	/**
@@ -133,9 +133,9 @@ export class MyBookingComponent implements OnInit {
 		})
 	}
 
-	loiPayments(row){
+	loiPayments(row) {
 		this.router.navigate(['/citizen/loi-payments-booking', row.refNumber, row.resourceType, row.resourceCode]);
-  }
+	}
 
 	getAllLookUP() {
 		this.bookingService.getDataFromLookups().subscribe(lookUpResp => {
@@ -146,13 +146,13 @@ export class MyBookingComponent implements OnInit {
 	/**
 	 * This method is use for open modal.
 	 */
-	openModal(template: TemplateRef<any>, scheduleList, refNumber,element) {
-	  // We have changed AS PER REQUIREMENT ONLY FOR AMPHITHEATER FROM BA TEAM(Prashant).
-    if(this.bookingService.resourceType =='amphiTheater'){
-        this.isBookingNoSlotNo = true;
-    }else{
-        this.isBookingNoSlotNo = false;
-    }
+	openModal(template: TemplateRef<any>, scheduleList, refNumber, element) {
+		// We have changed AS PER REQUIREMENT ONLY FOR AMPHITHEATER FROM BA TEAM(Prashant).
+		if (this.bookingService.resourceType == 'amphiTheater') {
+			this.isBookingNoSlotNo = true;
+		} else {
+			this.isBookingNoSlotNo = false;
+		}
 		this.CancelRequestList = [];
 		this.refNumber = refNumber;
 		this.cancellationType = null;
@@ -165,7 +165,7 @@ export class MyBookingComponent implements OnInit {
 			}
 		});
 		this.modalReqRef = this.modalService.show(template, Object.assign({ ignoreBackdropClick: true }, { class: 'gray modal-lg customWidth' }));
-		if (element.resourceType == "AMPHI_THEATER"|| element.resourceType == "TOWNHALL") {
+		if (element.resourceType == "AMPHI_THEATER" || element.resourceType == "TOWNHALL") {
 			this.allCancelForAmphi();
 			this.isAmphiCancellation = true;
 		}
@@ -209,19 +209,19 @@ export class MyBookingComponent implements OnInit {
 	getAllSelected(): boolean {
 
 		if (this.CancelRequestList.length == 0) {
-            return false;
-        }else{
+			return false;
+		} else {
 
-             // If all shift are in Cancellation process. (So the shift status is either
-            // CANCELLATION_APPROVED or CANCELLATION_REQUEST)
+			// If all shift are in Cancellation process. (So the shift status is either
+			// CANCELLATION_APPROVED or CANCELLATION_REQUEST)
 
-            if (this.isAllSlotInCancellation(this.CancelSlotList)) {
-                return true;
-            } else if (this.isAllSlotsAreSlectedByUser(this.CancelRequestList)){
-                return true;
-            } else {
-                return false;
-            }
+			if (this.isAllSlotInCancellation(this.CancelSlotList)) {
+				return true;
+			} else if (this.isAllSlotsAreSlectedByUser(this.CancelRequestList)) {
+				return true;
+			} else {
+				return false;
+			}
 
 
 
@@ -238,19 +238,19 @@ export class MyBookingComponent implements OnInit {
 
 
 
-	isAllSlotsAreSlectedByUser(cancelRequestList):boolean{
-        return cancelRequestList.length ==
-                this.CancelSlotList.filter(shift => shift.status == this.bookingConstant.DEPOSIT_REQUIRED ||
-                    shift.status == this.bookingConstant.BOOKED ||
-                    shift.status == this.bookingConstant.PPL_REQUIRED).length;
-    }
+	isAllSlotsAreSlectedByUser(cancelRequestList): boolean {
+		return cancelRequestList.length ==
+			this.CancelSlotList.filter(shift => shift.status == this.bookingConstant.DEPOSIT_REQUIRED ||
+				shift.status == this.bookingConstant.BOOKED ||
+				shift.status == this.bookingConstant.PPL_REQUIRED).length;
+	}
 
 
-    isAllSlotInCancellation(cancellationList): boolean {
-        return (cancellationList.filter(shift => shift.status == this.bookingConstant.CANCELLATION_REQUEST ||
-            shift.status == this.bookingConstant.CANCELLATION_APPROVED).length == this.CancelSlotList.length)
+	isAllSlotInCancellation(cancellationList): boolean {
+		return (cancellationList.filter(shift => shift.status == this.bookingConstant.CANCELLATION_REQUEST ||
+			shift.status == this.bookingConstant.CANCELLATION_APPROVED).length == this.CancelSlotList.length)
 
-    }
+	}
 
 	/**
 	 * Method is used to get all disabled shifts.
@@ -399,8 +399,8 @@ export class MyBookingComponent implements OnInit {
 			if (err.status == 402) {
 				this.isLoadingResults = false;
 				// if (err.status == 402) {
-					// this.bookingUtils.redirectToPayment(err, this.commonService, this.bookingService);
-					this.bookingUtils.redirectToCCAvenuePayment(err, this.commonService, this.bookingService, this.paymentGateway);
+				// this.bookingUtils.redirectToPayment(err, this.commonService, this.bookingService);
+				this.bookingUtils.redirectToCCAvenuePayment(err, this.commonService, this.bookingService, this.paymentGateway);
 				// }
 			} else if (err.error[0].code == this.bookingConstant.INVALID_BOOKING_STATUS) {
 				this.commonService.openAlert("Invalid Booking Status", err.error[0].message, "warning", "")
@@ -442,97 +442,97 @@ export class MyBookingComponent implements OnInit {
 	/*
 	 * This method is used for SHOW Refund Bank Details.
 	 */
-	refundBankDetails(template: TemplateRef<any>, refNumber: string){
-	  this.refNumber = refNumber;
-	  this.setPropertyValues();
-	  this.bookingLookups();
-	  this.modalResRef = this.modalService.show(template);
+	refundBankDetails(template: TemplateRef<any>, refNumber: string) {
+		this.refNumber = refNumber;
+		this.setPropertyValues();
+		this.bookingLookups();
+		this.modalResRef = this.modalService.show(template);
 	}
 	/*
 	 * For update Townhall Refund with cancel status
 	 */
-	submitRefundBankDetails(){
-	if(this.refundBankDetailsForm.valid){
-	  let object = {
-            refNumber: this.refNumber,
-            appointments: this.CancelRequestList,
-            cancellationType: this.bookingConstant.BY_CITIZEN,
-            ifscCode : this.refundBankDetailsForm.value.ifscCode,
-            accountNo : this.refundBankDetailsForm.value.accountNumber,
-            accountHolderName : this.refundBankDetailsForm.value.accountHolderName,
-            bankCode : this.refundBankDetailsForm.value.bank.code
-        }
-        console.log(object);
-        this.bookingService.cancelTownHall(object).subscribe(res => {
-          this.CancelResponseList = res.data.detail;
-          this.getAllBooking();
-          //this.modalResRef = this.modalService.show(this.templateResponseModel, Object.assign({ ignoreBackdropClick: true }, { class: 'gray modal-lg customWidth' }))
-          this.modalResRef.hide();
-		  this.commonService.successAlert("Success", "SuccessFully Cancel", "success");
+	submitRefundBankDetails() {
+		if (this.refundBankDetailsForm.valid) {
+			let object = {
+				refNumber: this.refNumber,
+				appointments: this.CancelRequestList,
+				cancellationType: this.bookingConstant.BY_CITIZEN,
+				ifscCode: this.refundBankDetailsForm.value.ifscCode,
+				accountNo: this.refundBankDetailsForm.value.accountNumber,
+				accountHolderName: this.refundBankDetailsForm.value.accountHolderName,
+				bankCode: this.refundBankDetailsForm.value.bank.code
+			}
+			console.log(object);
+			this.bookingService.cancelTownHall(object).subscribe(res => {
+				this.CancelResponseList = res.data.detail;
+				this.getAllBooking();
+				//this.modalResRef = this.modalService.show(this.templateResponseModel, Object.assign({ ignoreBackdropClick: true }, { class: 'gray modal-lg customWidth' }))
+				this.modalResRef.hide();
+				this.commonService.successAlert("Success", "SuccessFully Cancel", "success");
 
-          if(this.bookingService.resourceType =='amphiTheater'){
-           //This method is used to send SMS during cancellation request of booking
-		  this.sendSms(this.refNumber,this.bookingConstant.CANCEL);
-		  
-		  //This method is used to send Email during cancellation request of booking
-		  this.sendMail(this.refNumber,this.bookingConstant.CANCEL);
-		  }
-		 
-        }, err => {
-          this.toster.error(err.error.message);
-        });
-	}else{
-	  this.commonService.openAlert('Field Error', this.bookingConstant.ALL_FEILD_REQUIRED_MESSAGE, 'warning');
-	}
-	}
+				if (this.bookingService.resourceType == 'amphiTheater') {
+					//This method is used to send SMS during cancellation request of booking
+					this.sendSms(this.refNumber, this.bookingConstant.CANCEL);
 
-  /*
-   * form controller for refund detail bank.
-   */
-	refundBankDetailsFormController(){
-	  this.refundBankDetailsForm = this.fb.group({
-                refNumber: [{ value: '', disabled: true }, Validators.required],
-                ifscCode: ['', [Validators.required, ValidationService.ifscCodeValidator]],
-                accountNumber : ['', Validators.required],
-                accountHolderName : ['', Validators.required],
-                bank :this.fb.group({
-									code: [null],
-									name: [null]
-								}),
-								slotBookingNo : ['']
-            });
-	}
-  /*
-   * set value in form for Townhall Refund
-   */
-	setPropertyValues(){
-	    this.refundBankDetailsForm.get('refNumber').setValue(this.refNumber);
-      this.bookingService.searchByRefNumber(this.refNumber).subscribe(resp => {
-        this.refundBankDetailsForm.get('ifscCode').setValue(resp['data']['ifscCode']);
-        this.refundBankDetailsForm.get('accountNumber').setValue(resp['data']['accountNo']);
-        this.refundBankDetailsForm.get('accountHolderName').setValue(resp['data']['accountHolderName']);
-				this.refundBankDetailsForm.get('bank').get('code').setValue(resp['data']['bankName']['code']);
-				var arrData = resp['data']['scheduleList'];
-				arrData.forEach(arrData =>{
-				  this.slotBookingList.push(arrData.bookingNo);
-				});
-				this.refundBankDetailsForm.get('slotBookingNo').setValue(this.slotBookingList.toString());
-			})
-    }
+					//This method is used to send Email during cancellation request of booking
+					this.sendMail(this.refNumber, this.bookingConstant.CANCEL);
+				}
 
-    /* This Method for Bank List. */
-    	bookingLookups() {
-    		this.bookingService.getBankNames().subscribe(resp => {
-                    this.bankLists = resp.data;
-        });
+			}, err => {
+				this.toster.error(err.error.message);
+			});
+		} else {
+			this.commonService.openAlert('Field Error', this.bookingConstant.ALL_FEILD_REQUIRED_MESSAGE, 'warning');
 		}
+	}
 
-	showRecieptReprint(element){
-		if(element.status === this.bookingConstant.PAYMENT_REQUIRED
+	/*
+	 * form controller for refund detail bank.
+	 */
+	refundBankDetailsFormController() {
+		this.refundBankDetailsForm = this.fb.group({
+			refNumber: [{ value: '', disabled: true }, Validators.required],
+			ifscCode: ['', [Validators.required, ValidationService.ifscCodeValidator]],
+			accountNumber: ['', Validators.required],
+			accountHolderName: ['', Validators.required],
+			bank: this.fb.group({
+				code: [null],
+				name: [null]
+			}),
+			slotBookingNo: ['']
+		});
+	}
+	/*
+	 * set value in form for Townhall Refund
+	 */
+	setPropertyValues() {
+		this.refundBankDetailsForm.get('refNumber').setValue(this.refNumber);
+		this.bookingService.searchByRefNumber(this.refNumber).subscribe(resp => {
+			this.refundBankDetailsForm.get('ifscCode').setValue(resp['data']['ifscCode']);
+			this.refundBankDetailsForm.get('accountNumber').setValue(resp['data']['accountNo']);
+			this.refundBankDetailsForm.get('accountHolderName').setValue(resp['data']['accountHolderName']);
+			this.refundBankDetailsForm.get('bank').get('code').setValue(resp['data']['bankName']['code']);
+			var arrData = resp['data']['scheduleList'];
+			arrData.forEach(arrData => {
+				this.slotBookingList.push(arrData.bookingNo);
+			});
+			this.refundBankDetailsForm.get('slotBookingNo').setValue(this.slotBookingList.toString());
+		})
+	}
+
+	/* This Method for Bank List. */
+	bookingLookups() {
+		this.bookingService.getBankNames().subscribe(resp => {
+			this.bankLists = resp.data;
+		});
+	}
+
+	showRecieptReprint(element) {
+		if (element.status === this.bookingConstant.PAYMENT_REQUIRED
 			|| element.status === this.bookingConstant.CANCELLED
 			|| element.status === this.bookingConstant.WAITINGLIST
 			|| element.status === this.bookingConstant.SCRUTINY
-			|| element.status === this.bookingConstant.REJECTED){
+			|| element.status === this.bookingConstant.REJECTED) {
 			return false;
 		}
 
@@ -540,25 +540,25 @@ export class MyBookingComponent implements OnInit {
 
 	}
 
-	showCancelBtn(element){
-	    this.slotBookingList.pop();
-        // element.status != bookingConstant.PAYMENT_REQUIRED && element.status != bookingConstant.CANCELLATION_REQUEST
-        if(element.status === this.bookingConstant.PAYMENT_REQUIRED
+	showCancelBtn(element) {
+		this.slotBookingList.pop();
+		// element.status != bookingConstant.PAYMENT_REQUIRED && element.status != bookingConstant.CANCELLATION_REQUEST
+		if (element.status === this.bookingConstant.PAYMENT_REQUIRED
 			|| element.status === this.bookingConstant.CANCELLED
-            || element.status === this.bookingConstant.WAITINGLIST
+			|| element.status === this.bookingConstant.WAITINGLIST
 			|| element.status === this.bookingConstant.CANCELLATION_REQUEST
 			|| element.resourceType === this.bookingConstant.SHOOTING_PERMISSION
-			|| element.status === this.bookingConstant.REJECTED){
+			|| element.status === this.bookingConstant.REJECTED) {
 			return false;
-        }
+		}
 
-        return true;
+		return true;
 	}
 
-	showCancelAdvanceBooking(element){
-		if(element.resourceType === 'ATITHIGRUH'
-		&& element.bookingType === 'Advance booking'
-		&& element.status === this.bookingConstant.PAYMENT_REQUIRED){
+	showCancelAdvanceBooking(element) {
+		if (element.resourceType === 'ATITHIGRUH'
+			&& element.bookingType === 'Advance booking'
+			&& element.status === this.bookingConstant.PAYMENT_REQUIRED) {
 			return true;
 
 		}
@@ -572,30 +572,29 @@ export class MyBookingComponent implements OnInit {
 		this.commonService.submitAlert('Are you sure?', "You won't be able to revert this!", 'warning', '', performDelete => {
 			this.bookingService.cancelAdvanceBookingIfPymentNotDone(element.refNumber).subscribe(
 				res => {
-				  this.toster.success('Booking has been Cancelled');
-				  this.getAllBooking();
+					this.toster.success('Booking has been Cancelled');
+					this.getAllBooking();
 				},
 				err => {
-				  this.commonService.successAlert('Error!', err.error[0].message, 'error');
+					this.commonService.successAlert('Error!', err.error[0].message, 'error');
 				}
-			  );
+			);
 		});
 	}
 
-	showAtithiDepositReceiptBtn(element){
-        if(element.resourceType == 'ATITHIGRUH'
-        && element.status == this.bookingConstant.BOOKED)
-         {
-             return true;
-         }else{
-             return false;
-         }
+	showAtithiDepositReceiptBtn(element) {
+		if (element.resourceType == 'ATITHIGRUH'
+			&& element.status == this.bookingConstant.BOOKED) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
-// This method  select all for cancle from AmphiTheater
-	allCancelForAmphi(){
+	// This method  select all for cancle from AmphiTheater
+	allCancelForAmphi() {
 		this.chooseAllForCancel(true);
-   }
+	}
 
 	/**
 		* Method is used to send sms on submit
@@ -627,8 +626,18 @@ export class MyBookingComponent implements OnInit {
 		} else {
 			this.toster.error("Invalid request");
 		}
-}
+	}
 
-
+	printReceiptSwimming(element) {
+		this.bookingService.printReceiptSwimming(element.refNumber).subscribe(response => {
+			let sectionToPrint: any = document.getElementById('sectionToPrint');
+			sectionToPrint.innerHTML = response;
+			setTimeout(() => {
+				window.print();
+			});
+		}, err => {
+			this.commonService.openAlert('Error', err.message, 'warning');
+		});
+	}
 
 }

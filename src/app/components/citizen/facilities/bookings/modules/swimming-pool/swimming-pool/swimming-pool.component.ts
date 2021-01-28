@@ -396,7 +396,7 @@ export class SwimmingPoolComponent implements OnInit {
    * Submit form data
    */
   submitApplication(): void {
-
+    
     let errCount = this.bookingUtils.getAllErrors(this.swimmimgPoolBookingForm);
     if (this.swimmimgPoolBookingForm.invalid) {
       this.handleErrorsOnSubmit(errCount);
@@ -416,6 +416,9 @@ export class SwimmingPoolComponent implements OnInit {
       // save call
       this.swimmingPoolService.submitData(this.swimmimgPoolBookingForm.value, this.swimmimgPoolBookingForm.get('swimmingPoolName').get('code').value).subscribe(
         res => {
+          let refNumber = this.swimmimgPoolBookingForm.get("refNumber").value;
+          this.sendSms(refNumber, "SUBMIT");
+          this.sendMail(refNumber, "SUBMIT");
           this.swimmingPoolService.printAcknowledgeReceipt(res.refNumber).subscribe(data => {
             let sectionToPrint: any = document.getElementById('sectionToPrint');
             sectionToPrint.innerHTML = data;
@@ -477,4 +480,36 @@ export class SwimmingPoolComponent implements OnInit {
 
   }
 
+  /** this method is used for send msn on submit
+   * @param refNumber
+   * @param eventType
+   */
+    sendSms(refNumber:any,eventType:any){
+
+      if(refNumber){
+          this.bookingService.sendSmsForSwimming(refNumber,eventType).subscribe(resp=>{
+          },err => {
+              this.toastr.error("Something went wrong");            })
+      }else{
+          this.toastr.error("Invalid request");
+      }
+  }
+
+  /**
+          * Method is used to send mail on submit
+          * @param refNumber 
+          * @param eventType 
+          * 
+          */
+  sendMail(refNumber: any, eventType: any) {
+    if (refNumber) {
+      this.bookingService.sendMailForSwimming(refNumber, eventType).subscribe(resp => {
+      }, err => {
+        this.toastr.error("Something went wrong");
+      })
+    } else {
+      this.toastr.error("Invalid request");
+    }
+  }
+    
 }
