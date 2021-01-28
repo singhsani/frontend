@@ -275,6 +275,7 @@ export class BookPlanetariumComponent implements OnInit {
       bookingDate: [moment(new Date()).format('YYYY-MM-DD')],
       status: null,
       refNumber: null,
+      bookingFormId : null,
       resourceType: null,
       payableServiceType: null,
       resourceCode: 'SARDAR_PATEL_PLANETARIUM',
@@ -458,6 +459,7 @@ export class BookPlanetariumComponent implements OnInit {
       this.ticketingService.saveDraftTickets(this.ticketBookingForm.getRawValue(), this.ticketBookingForm.get('resourceCodeLK').get('code').value).subscribe(
         resp => {
           this.ticketBookingForm.get('refNumber').setValue(resp.refNumber);
+          this.ticketBookingForm.get('bookingFormId').setValue(resp.bookingFormId);
         },
         err => {
           this.commonService.openAlertFormSaveValidation('Warning!', err.error, 'warning');

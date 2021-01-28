@@ -229,8 +229,8 @@
                     <div class="col-md-6">
                         <label labelPosition="after">{{'permission_orders_if_applicable' | translate:translateKey}} *</label>
                         <ticketing-file-upload (uploaded)="isFileUploaded = $event" [form]="ticketBookingForm"
-                            [uploadModel]="{fieldIdentifier:'1', labelName:'previous_permission_orders_if_applicable', formPart:'1.1', refNumber:
-                            ticketBookingForm.get('refNumber').value, variableName: 'permission_orders'}">
+                            [uploadModel]="{dmsUpload:true, fieldIdentifier:'1', labelName:'Previous Permission Orders if Applicable', formPart:'1.1', refNumber:
+                            ticketBookingForm.get('refNumber').value, bookingFormId : ticketBookingForm.get('bookingFormId').value, variableName: 'permission_orders'}">
                         </ticketing-file-upload>
                     </div>
 
