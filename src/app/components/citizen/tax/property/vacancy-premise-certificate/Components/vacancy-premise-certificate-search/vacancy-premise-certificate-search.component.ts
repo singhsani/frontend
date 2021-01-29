@@ -133,6 +133,9 @@ export class VacancyPremiseCertificateSearchComponent implements OnInit {
 }
   clear() {
     this.propertyNo=null;
+    this.wardZoneLevel2List = [];
+    this.wardZoneLevel3List = [];
+    this.wardZoneLevel4List = [];
     this.searchModel = new SearchModel();
     this.vacancyPremiseCertificateDataSharingService.updatedIsShowTable(false);
     this.vacancyPremiseCertificateDataSharingService.updatedIsClear(true);

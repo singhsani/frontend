@@ -137,6 +137,9 @@ export class PropertyOccupierSearchComponent implements OnInit {
   }
   clear() {
     this.propertyNo = null;
+    this.wardZoneLevel2List = [];
+    this.wardZoneLevel3List = [];
+    this.wardZoneLevel4List = [];
     this.searchModel = {};
     this.propertyOccupierSearchSharingService.setPropertyModel(null);
     this.isShowTable=false;

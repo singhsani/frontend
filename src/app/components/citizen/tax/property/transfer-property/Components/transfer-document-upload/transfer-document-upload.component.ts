@@ -4,6 +4,7 @@ import { TransferPropertyDataSharingService } from '../../Services/transfer-prop
 import { TransferPropertyService } from '../../Services/transfer-property.service';
 import { AlertService } from 'src/app/vmcshared/Services/alert.service';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-transfer-document-upload',
@@ -18,6 +19,7 @@ export class TransferDocumentUploadComponent implements OnInit {
   
   constructor(private transferPropertyDataSharingService: TransferPropertyDataSharingService,
     private transferPropertyService: TransferPropertyService,
+    private router: Router,
     private alertService: AlertService) {
   }
 
@@ -38,6 +40,7 @@ export class TransferDocumentUploadComponent implements OnInit {
         (data) => {
           this.alertService.success(data.body.message);
           this.transferPropertyDataSharingService.updateDataSourceMoveStepper(4);
+          this.router.navigate(['/citizen/dashboard']);
         },
         (error) => {
           if (error.status === 400) {
