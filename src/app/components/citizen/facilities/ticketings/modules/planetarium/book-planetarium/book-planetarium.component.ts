@@ -460,6 +460,7 @@ export class BookPlanetariumComponent implements OnInit {
         resp => {
           this.ticketBookingForm.get('refNumber').setValue(resp.refNumber);
           this.ticketBookingForm.get('bookingFormId').setValue(resp.bookingFormId);
+          this.ticketBookingForm.get('id').setValue(resp.id);
         },
         err => {
           this.commonService.openAlertFormSaveValidation('Warning!', err.error, 'warning');
