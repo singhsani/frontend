@@ -55,7 +55,7 @@ export class FinalFireNocComponent implements OnInit {
 		this.FireFacilitiesService.searchByProvisionalNumber(this.serachLicenceObj.searchLicenceNumber).subscribe(
 			(res: any) => {
 				
-				if (res.success && res.list) {
+				if (res.success && res.displayForm) {
 					this.serachLicenceObj.isDisplayRenewLicenceForm = true;
 					this.createRecordPatchSerachData(res.data);
 				} else {
