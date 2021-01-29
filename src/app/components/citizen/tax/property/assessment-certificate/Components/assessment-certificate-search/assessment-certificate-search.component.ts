@@ -133,6 +133,9 @@ export class AssessmentCertificateSearchComponent implements OnInit {
   }
   clear() {
     this.propertyNo = null;
+    this.wardZoneLevel2List = [];
+    this.wardZoneLevel3List = [];
+    this.wardZoneLevel4List = [];
     this.searchModel = new SearchModel();
     this.assessmentCertificateDataSharingService.updatedIsShowTable(false);
     this.assessmentCertificateDataSharingService.updatedIsClear(true);

@@ -134,6 +134,9 @@ export class NoDueCertificateSearchComponent implements OnInit {
   }
   clear() {
     this.propertyNo = null;
+    this.wardZoneLevel2List = [];
+    this.wardZoneLevel3List = [];
+    this.wardZoneLevel4List = [];
     this.searchModel = new SearchModel();
     this.noDueCertificateDataSharingService.updatedIsShowTable(false);
     this.noDueCertificateDataSharingService.updatedIsClear(true);

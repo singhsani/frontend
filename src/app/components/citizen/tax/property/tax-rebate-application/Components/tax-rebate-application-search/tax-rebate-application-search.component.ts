@@ -133,6 +133,9 @@ export class TaxRebateApplicationSearchComponent implements OnInit {
 }
   clear() {
     this.propertyNo=null;
+    this.wardZoneLevel2List = [];
+    this.wardZoneLevel3List = [];
+    this.wardZoneLevel4List = [];
     this.searchModel = new SearchModel();
     this.taxRebateApplicationDataSharingService.updatedIsShowTable(false);
     this.taxRebateApplicationDataSharingService.updatedIsClear(true);

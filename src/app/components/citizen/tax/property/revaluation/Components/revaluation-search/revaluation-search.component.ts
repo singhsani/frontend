@@ -134,6 +134,9 @@ export class RevaluationSearchComponent implements OnInit {
   }
   clear() {
     this.propertyNo = null;
+    this.wardZoneLevel2List = [];
+    this.wardZoneLevel3List = [];
+    this.wardZoneLevel4List = [];
     this.searchModel = new SearchModel();
     this.revaluationDataSharingService.updatedIsShowTable(false);
     this.revaluationDataSharingService.updatedIsClear(true);

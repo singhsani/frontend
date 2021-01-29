@@ -136,6 +136,9 @@ export class TransferPropertySearchComponent implements OnInit {
   }
   clear() {
     this.propertyNo = null;
+    this.wardZoneLevel2List=[]
+    this.wardZoneLevel3List=[]
+    this.wardZoneLevel4List=[]
     this.searchModel = new SearchModel();
     this.transferPropertyDataSharingService.updatedIsShowTable(false);
     this.transferPropertyDataSharingService.updatedIsClear(true);
