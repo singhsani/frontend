@@ -547,7 +547,7 @@ export class MyBookingComponent implements OnInit {
 			|| element.status === this.bookingConstant.CANCELLED
 			|| element.status === this.bookingConstant.WAITINGLIST
 			|| element.status === this.bookingConstant.CANCELLATION_REQUEST
-			|| element.resourceType === this.bookingConstant.SHOOTING_PERMISSION
+			//|| element.resourceType === this.bookingConstant.SHOOTING_PERMISSION
 			|| element.status === this.bookingConstant.REJECTED) {
 			return false;
 		}
@@ -614,8 +614,8 @@ export class MyBookingComponent implements OnInit {
 
 	/**
 	   * Method is used to send mail on submit
-	   * @param refNumber 
-	   * @param eventType 
+	   * @param refNumber
+	   * @param eventType
 	   */
 	sendMail(refNumber: any, eventType: any) {
 		if (refNumber) {
