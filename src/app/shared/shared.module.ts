@@ -62,6 +62,7 @@ import { OfflinePaymentComponent } from './components/offline-payment/offline-pa
 import { OfflinePaymentService } from './services/offlinePayment.service';
 import { PaymentNewService } from './services/paymentNew.service';
 import { BankDetailsBookingComponent } from './components/bank-details-booking/bank-details-booking.component'
+import { AppMonthPicker } from './components/month-picker/month-picker.component';
 /* import pipes end*/
 
 const COMPONENTS = [
@@ -99,7 +100,8 @@ const COMPONENTS = [
 	MaskPropertyNumberDirective,
 	ApplicantDetailsComponent,
 	OfflinePaymentComponent,
-	BankDetailsBookingComponent
+	BankDetailsBookingComponent,
+	AppMonthPicker
 	
 ]
 

@@ -243,6 +243,16 @@
 								[control]="swimmimgPoolBookingForm.get('applicantBloodGroup').get('code')">
 							</control-messages>
 						</div>
+
+						<div class="col-md-4">
+							<month-picker formControlName="applicantBirthDate" (change)="chosenMonthHandler($event)"></month-picker>
+							<div align="end" class="default-show-hint mat-hint mat-right">
+								{{config.DATE_HINT_MSG}}</div>
+							<control-messages [control]="swimmimgPoolBookingForm.get('applicantBirthDate')">
+							</control-messages>
+						</div>
+
+
 					</div>
 
 					<h2>
