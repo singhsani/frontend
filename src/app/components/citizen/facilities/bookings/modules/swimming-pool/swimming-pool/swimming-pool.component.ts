@@ -300,6 +300,7 @@ export class SwimmingPoolComponent implements OnInit {
       applicantMobileNumber: [null, Validators.required],
       applicantEmergencyNumber: null,
       applicantBirthDate: [null, Validators.required],
+      applicantJoiningMonth: [null, Validators.required],
       applicantAge: null,
       applicantIDProof: this.fb.group({
         code: null,
@@ -514,7 +515,7 @@ export class SwimmingPoolComponent implements OnInit {
 
   chosenMonthHandler(event) {
     console.log(event);
-    this.dateFormat(event,'applicantBirthDate');
+    this.dateFormat(event,'applicantJoiningMonth');
   }
     
 }
