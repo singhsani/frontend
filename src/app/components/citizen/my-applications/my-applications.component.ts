@@ -234,7 +234,6 @@ export class MyApplicationsComponent implements OnInit,OnChanges {
 	 * @param id citizen id
 	 */
 	printReceipt(apiCode: string, apiName: string, id: number) {
-
 		this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);
 		this.formService.printReceipt(id).subscribe(
 			receiptResponse => {
@@ -271,7 +270,6 @@ export class MyApplicationsComponent implements OnInit,OnChanges {
      * @param id citizen id
      */
 	printView(apiCode: string, apiName: string, id: number) {
-
 		this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);
 		this.formService.printView(id).subscribe(
 			htmlResponse => {
@@ -452,6 +450,13 @@ export class MyApplicationsComponent implements OnInit,OnChanges {
 			return false;
 	}
 
+	isPrintReceiptPayment(row){
+		if(row.fileStatus =='PAYMENT')
+			return true;
+		else
+			return false;
+	}
+
 	getInnerHTML() {
 		return `<b>Remarks :</b> ${this.rejectRemarks} <br> <b>Reason :</b> ${this.reason}`;
 	}
@@ -627,6 +632,23 @@ export class MyApplicationsComponent implements OnInit,OnChanges {
 		}else{
 			this.commonService.openAlert("Error", "Something went wrong","warning");
 		}
+	}
+
+	
+	printPaymentReceipt(apiCode: string,id:number){
+		this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);
+		this.formService.printPaymentReceipt(id).subscribe(
+			receiptResponse => {
+				let sectionToPrintReceipt : any = document.getElementById('sectionToPrint');
+				sectionToPrintReceipt.innerHTML = receiptResponse;
+				setTimeout(() =>{
+					window.print();
+				},300);
+			},
+			err => {
+				this.commonService.openAlert('Error!',err.error[0].message,'error');
+			}
+		)
 	}
 
 }
