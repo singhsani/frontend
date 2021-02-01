@@ -13,6 +13,7 @@ import { BookingConstants, BookingUtils } from '../../../config/booking-config';
 import { ComponentConfig } from 'src/app/components/component-config';
 import { AppSwimmingPoolService } from '../swimming-pool.service';
 
+
 @Component({
   selector: 'app-swimming-pool',
   templateUrl: './swimming-pool.component.html',
@@ -330,7 +331,6 @@ export class SwimmingPoolComponent implements OnInit {
       family: false,
       staffMember: false
     });
-
   }
 
   /**
@@ -510,6 +510,11 @@ export class SwimmingPoolComponent implements OnInit {
     } else {
       this.toastr.error("Invalid request");
     }
+  }
+
+  chosenMonthHandler(event) {
+    console.log(event);
+    this.dateFormat(event,'applicantBirthDate');
   }
     
 }
