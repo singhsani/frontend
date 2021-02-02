@@ -165,7 +165,7 @@
 					<h2>{{'situation_label'| translate:translateKey}}</h2>
 
 					<mat-form-field class="col-md-8">
-						<textarea matInput type="text" required maxlength="100" formControlName="otherAddresses"
+						<textarea matInput type="text" maxlength="100" formControlName="otherAddresses"
 							placeholder="{{'situation_of_establishment' | translate:translateKey}}"></textarea>
 						<control-messages [control]="shopLicNewForm.get('otherAddresses')"></control-messages>
 					</mat-form-field>
