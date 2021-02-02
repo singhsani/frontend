@@ -160,6 +160,11 @@ export class MuttonFishNewComponent implements OnInit {
 		this.WARD = [];
 		if (event && this.LOOKUP && this.LOOKUP.hasOwnProperty(event)) {
 			this.WARD = this.LOOKUP[event];
+			this.WARD = this.WARD.sort((a, b) => {			
+			var itemA = a.name.split("-");
+			var itemB = b.name.split("-");
+				return itemA[1] - itemB[1];
+			  });
 		}
 	}
 
