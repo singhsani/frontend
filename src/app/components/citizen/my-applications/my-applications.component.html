@@ -25,7 +25,7 @@
             <mat-cell *matCellDef="let row" class="fullWidth">
                 <div class="mobile-label">{{'applicant_name' | translate:translateKey}}</div>
                 <div class="mobile-label1">:</div>
-                <div class="row-inside"> {{ row.applicantName }}</div>
+                <div class="row-inside"> {{ applicantName(row) }}</div>
             </mat-cell>
         </ng-container>
 
