@@ -651,4 +651,12 @@ export class MyApplicationsComponent implements OnInit,OnChanges {
 		)
 	}
 
+	applicantName(row){
+		if(row.fileStatusName=="Draft"){
+			return "N/A";
+		}else{
+			return row.applicantName;
+		}
+	}
+
 }
