@@ -268,7 +268,7 @@
 						</div>
 
 						<div class="col-md-4">
-							<month-picker formControlName="applicantJoiningMonth" (change)="chosenMonthHandler($event)"></month-picker>
+							<month-picker formControlName="applicantJoiningMonth" [min]="startMinMonth()" (change)="chosenMonthHandler($event)"></month-picker>
 							<div align="end" class="default-show-hint mat-hint mat-right">
 								{{config.DATE_HINT_MSG}}</div>
 							<control-messages [control]="swimmimgPoolBookingForm.get('applicantJoiningMonth')">

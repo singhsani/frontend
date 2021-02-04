@@ -3,7 +3,7 @@
         <input matInput  autocomplete="off" appDate [matDatepicker]="datepicker1"
             formControlName="dateControl"
             placeholder="Swimming Pool Joining Month"
-            disabled
+            disabled [min]="min" [max]="max"
             >
         <mat-datepicker-toggle matSuffix [for]="datepicker1"></mat-datepicker-toggle>
         <mat-datepicker #datepicker1 startView="year" touchUi="true"
