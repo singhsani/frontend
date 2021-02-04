@@ -33,6 +33,9 @@ export class SwimmingPoolComponent implements OnInit {
 
   isVisibleIdNumber = false;
   isPanCardVisibleIdNumber = false;
+  isLicenseVisibleIdNumber = false;
+  isElectionCardIdNumber = false;
+  isPassportIdNumber = false;
 
   formId: number;
   apiCode: string;
@@ -308,7 +311,7 @@ export class SwimmingPoolComponent implements OnInit {
         gujName: null
       }),
       applicantIDProofNumber: null,
-      applicantEmail: null,
+      applicantEmail: [null, ValidationService.emailValidator],
       applicantBloodGroup: this.fb.group({
         code: null,
         name: null,
@@ -463,17 +466,55 @@ export class SwimmingPoolComponent implements OnInit {
     if(idCode === 'AADHAAR_CARD'){
       this.isVisibleIdNumber = true;
       this.isPanCardVisibleIdNumber = false;
+      this.isLicenseVisibleIdNumber = false;
+      this.isElectionCardIdNumber = false;
+      this.isPassportIdNumber = false;
       this.swimmimgPoolBookingForm.controls['applicantIDProofNumber'].setValue('');
-      this.swimmimgPoolBookingForm.controls['applicantIDProofNumber'].setValidators([Validators.required]);
+      this.swimmimgPoolBookingForm.controls['applicantIDProofNumber'].setValidators([Validators.required, ValidationService.aadharValidation]);
       this.swimmimgPoolBookingForm.controls['applicantIDProofNumber'].updateValueAndValidity();
-    }else if(idCode === 'PAN_CARD'){
+    }
+    else if(idCode === 'PAN_CARD'){
       this.isPanCardVisibleIdNumber = true;
       this.isVisibleIdNumber = false;
+      this.isLicenseVisibleIdNumber = false;
+      this.isPassportIdNumber = false;
+      this.isElectionCardIdNumber = false;
       this.swimmimgPoolBookingForm.controls['applicantIDProofNumber'].setValidators([Validators.required, ValidationService.panValidator]);
       this.swimmimgPoolBookingForm.controls['applicantIDProofNumber'].updateValueAndValidity();
-    }else {
+    }
+    else if(idCode === 'DRIVING_LICENSE'){
       this.isVisibleIdNumber = false;
       this.isPanCardVisibleIdNumber = false;
+      this.isElectionCardIdNumber = false;
+      this.isPassportIdNumber = false;
+      this.isLicenseVisibleIdNumber = true;
+      this.swimmimgPoolBookingForm.controls['applicantIDProofNumber'].setValidators([Validators.required, ValidationService.drivingLicenseValidator])
+      this.swimmimgPoolBookingForm.controls['applicantIDProofNumber'].updateValueAndValidity();
+    } 
+    else if(idCode === 'ELECTION_CARD'){
+      this.isVisibleIdNumber = false;
+      this.isPanCardVisibleIdNumber = false;
+      this.isLicenseVisibleIdNumber = false;
+      this.isPassportIdNumber = false;
+      this.isElectionCardIdNumber = true;
+      this.swimmimgPoolBookingForm.controls['applicantIDProofNumber'].setValidators([Validators.required, ValidationService.electionCardValidator])
+      this.swimmimgPoolBookingForm.controls['applicantIDProofNumber'].updateValueAndValidity();
+    }
+    else if(idCode === 'PASSPORT'){
+      this.isVisibleIdNumber = false;
+      this.isPanCardVisibleIdNumber = false;
+      this.isLicenseVisibleIdNumber = false;
+      this.isElectionCardIdNumber = false;
+      this.isPassportIdNumber = true;
+      this.swimmimgPoolBookingForm.controls['applicantIDProofNumber'].setValidators([Validators.required, ValidationService.passportValidator])
+      this.swimmimgPoolBookingForm.controls['applicantIDProofNumber'].updateValueAndValidity();
+    }
+    else {
+      this.isVisibleIdNumber = false;
+      this.isPanCardVisibleIdNumber = false;
+      this.isLicenseVisibleIdNumber = false;
+      this.isElectionCardIdNumber = false;
+      this.isPassportIdNumber = false;
       this.swimmimgPoolBookingForm.controls['applicantIDProofNumber'].setValue('');
       this.swimmimgPoolBookingForm.controls['applicantIDProofNumber'].setValidators([Validators.required]);
       this.swimmimgPoolBookingForm.controls['applicantIDProofNumber'].updateValueAndValidity();

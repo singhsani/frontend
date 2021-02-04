@@ -150,7 +150,8 @@
 					<div class="row">
 
 						<mat-form-field class="col-md-4">
-							<input matInput type="text" formControlName="applicantName"
+							<input matInput type="text" formControlName="applicantName" appValidationFields
+							[validationFieldsType]="'onlyNameWithOutSpace'"
 								placeholder="{{'applicant_name' | translate: translateKey }}" maxlength="300">
 							<control-messages [control]="swimmimgPoolBookingForm.get('applicantName')">
 							</control-messages>
@@ -218,16 +219,38 @@
 						</mat-form-field>
 
 
-            <mat-form-field class="col-md-4" *ngIf="isPanCardVisibleIdNumber">
+            			<mat-form-field class="col-md-4" *ngIf="isPanCardVisibleIdNumber">
 							<input matInput maxlength="12" class="pancard" formControlName="applicantIDProofNumber"
-                     placeholder="{{'id_proof_no' | translate: translateKey}}" required >
+                     			placeholder="{{'id_proof_no' | translate: translateKey}}" required >
 							<control-messages [control]="swimmimgPoolBookingForm.get('applicantIDProofNumber')">
 							</control-messages>
 						</mat-form-field>
 
-            	<mat-form-field class="col-md-4" *ngIf="!isVisibleIdNumber && !isPanCardVisibleIdNumber">
-							<input matInput maxlength="12" class="others" formControlName="applicantIDProofNumber"
-                     placeholder="{{'id_proof_no' | translate: translateKey}}" required appAlphaNumeric>
+						<mat-form-field class="col-md-4" *ngIf="isLicenseVisibleIdNumber">
+							<input matInput maxlength="15" class="drivinglicense" formControlName="applicantIDProofNumber"
+                     			placeholder="{{'id_proof_no' | translate: translateKey}}" required >
+							<control-messages [control]="swimmimgPoolBookingForm.get('applicantIDProofNumber')">
+							</control-messages>
+						</mat-form-field>
+
+						<mat-form-field class="col-md-4" *ngIf="isElectionCardIdNumber">
+							<input matInput maxlength="10" class="electioncard" formControlName="applicantIDProofNumber"
+                     			placeholder="{{'id_proof_no' | translate: translateKey}}" required >
+							<control-messages [control]="swimmimgPoolBookingForm.get('applicantIDProofNumber')">
+							</control-messages>
+						</mat-form-field>
+
+						<mat-form-field class="col-md-4" *ngIf="isPassportIdNumber">
+							<input matInput maxlength="10" class="passport" formControlName="applicantIDProofNumber"
+                     			placeholder="{{'id_proof_no' | translate: translateKey}}" required >
+							<control-messages [control]="swimmimgPoolBookingForm.get('applicantIDProofNumber')">
+							</control-messages>
+						</mat-form-field>
+
+						<mat-form-field class="col-md-4" *ngIf="!isVisibleIdNumber && !isPanCardVisibleIdNumber && 
+								!isLicenseVisibleIdNumber && !isElectionCardIdNumber && !isPassportIdNumber">
+							<input matInput maxlength="10" class="others" formControlName="applicantIDProofNumber"
+                     			placeholder="{{'id_proof_no' | translate: translateKey}}" required appAlphaNumeric>
 							<control-messages [control]="swimmimgPoolBookingForm.get('applicantIDProofNumber')">
 							</control-messages>
 						</mat-form-field>
