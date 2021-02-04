@@ -999,54 +999,76 @@ textarea.gujInputCls {margin-bottom: 0;}
 // Start Icons ----------------------------------
 .moduleList .moduleIcon { background-repeat: no-repeat !important; background-position: center !important; border: 1px solid #673ab7;}
 .moduleListcancellationAlertFormcancellationAlertForm .mat-tab-label-active .moduleIcon.ng-star-inserted {background-repeat: no-repeat !important; background-position: center !important; border-color:#fff;}
+
 .BOOKINGMODULE  {background:url('assets/icons/booking-facilities.svg') !important;}
-.moduleList .mat-tab-label-active .BOOKINGMODULE  {background:url('assets/icons/booking-facilities-h.svg') !important;}
+.moduleList .mat-tab-label-active .BOOKINGMODULE,
+.moduleList .mat-tab-label:not(.mat-tab-disabled):focus .BOOKINGMODULE {background:url('assets/icons/booking-facilities-h.svg') !important;}
 
 .TICKETINGSMODULE  {background:url('assets/icons/ticketing-facilities.svg') !important;}
-.moduleList .mat-tab-label-active .TICKETINGSMODULE {background:url('assets/icons/ticketing-facilities-h.svg') !important;}
+.moduleList .mat-tab-label-active .TICKETINGSMODULE,
+.moduleList .mat-tab-label:not(.mat-tab-disabled):focus .TICKETINGSMODULE {background:url('assets/icons/ticketing-facilities-h.svg') !important;}
 
 
 
 .SHOP-ESTAB  {background:url('assets/icons/shop-and-establishment-license.svg') !important;}
-.moduleList .mat-tab-label-active .SHOP-ESTAB {background:url('assets/icons/shop-and-establishment-license-h.svg') !important;}
+.moduleList .mat-tab-label-active .SHOP-ESTAB,
+.moduleList .mat-tab-label:not(.mat-tab-disabled):focus .SHOP-ESTAB {background:url('assets/icons/shop-and-establishment-license-h.svg') !important;}
 
 .WATER-TAX  {background:url('assets/icons/water-tax.svg') !important;}
-.moduleList .mat-tab-label-active .WATER-TAX {background:url('assets/icons/water-tax-h.svg') !important;}
+.moduleList .mat-tab-label-active .WATER-TAX,
+.moduleList .mat-tab-label:not(.mat-tab-disabled):focus .WATER-TAX {background:url('assets/icons/water-tax-h.svg') !important;}
 
 .AFFORD-HOUSE{background:url('assets/icons/affordable-housing.svg') !important;}
-.moduleList .mat-tab-label-active .AFFORD-HOUSE {background:url('assets/icons/affordable-housing-h.svg') !important;}
+.moduleList .mat-tab-label-active .AFFORD-HOUSE,
+.moduleList .mat-tab-label:not(.mat-tab-disabled):focus .AFFORD-HOUSE {background:url('assets/icons/affordable-housing-h.svg') !important;}
 
 
 .FIRE {background:url('assets/icons/fire-services.svg') !important;}
-.moduleList .mat-tab-label-active .FIRE {background:url('assets/icons/fire-services-h.svg') !important;}
+.moduleList .mat-tab-label-active .FIRE,
+.moduleList .mat-tab-label:not(.mat-tab-disabled):focus .FIRE {background:url('assets/icons/fire-services-h.svg') !important;}
 
 .FOOD-LIC  {background:url('assets/icons/food-licensing-registration.png') !important;}
-.moduleList .mat-tab-label-active .FOOD-LIC {background:url('assets/icons/food-licensing-registration-h.png') !important;}
+.moduleList .mat-tab-label-active .FOOD-LIC,
+.moduleList .mat-tab-label:not(.mat-tab-disabled):focus .FOOD-LIC {background:url('assets/icons/food-licensing-registration-h.png') !important;
+    background-repeat: no-repeat !important;  background-position: center center !important;}
 
 .ANIMAL-POND  {background:url('assets/icons/animal-pond-license.svg') !important;}
-.moduleList .mat-tab-label-active .ANIMAL-POND {background:url('assets/icons/animal-pond-license-h.svg') !important;}
+.moduleList .mat-tab-label-active .ANIMAL-POND,
+.moduleList .mat-tab-label:not(.mat-tab-disabled):focus .ANIMAL-POND {background:url('assets/icons/animal-pond-license-h.svg') !important;}
 
 .PROFESSIONAL  {background:url('assets/icons/professional-tax.svg') !important;}
-.moduleList .mat-tab-label-active .PROFESSIONAL {background:url('assets/icons/professional-tax-h.svg') !important;}
+.moduleList .mat-tab-label-active .PROFESSIONAL,
+.moduleList .mat-tab-label:not(.mat-tab-disabled):focus .PROFESSIONAL{background:url('assets/icons/professional-tax-h.svg') !important;}
 
 
 .MARRIAGE {background:url('assets/icons/marriage-registration.svg') !important;}
-.moduleList .mat-tab-label-active .MARRIAGE {background:url('assets/icons/marriage-registration-h.svg') !important;}
+.moduleList .mat-tab-label-active .MARRIAGE,
+.moduleList .mat-tab-label:not(.mat-tab-disabled):focus .MARRIAGE {background:url('assets/icons/marriage-registration-h.svg') !important;}
 
 .VEHICLE   {background:url('assets/icons/vehicle-tax.png') !important;}
-.moduleList .mat-tab-label-active .VEHICLE  {background:url('assets/icons/vehicle-tax-h.png') !important;}
+.moduleList .mat-tab-label-active .VEHICLE,
+.moduleList .mat-tab-label:not(.mat-tab-disabled):focus .VEHICLE {background:url('assets/icons/vehicle-tax-h.png') !important;
+    background-repeat: no-repeat !important;  background-position: center center !important;}
 
 .PROPERTY-TAX  {background:url('assets/icons/property-tax.svg') !important;}
-.moduleList .mat-tab-label-active .PROPERTY-TAX {background:url('assets/icons/property-tax-h.svg') !important;}
+.moduleList .mat-tab-label-active .PROPERTY-TAX,
+.moduleList .mat-tab-label:not(.mat-tab-disabled):focus .PROPERTY-TAX {background:url('assets/icons/property-tax-h.svg') !important;}
 
 .MUTTON-FISH  {background:url('assets/icons/meat-and-fish-license.svg') !important;}
-.moduleList .mat-tab-label-active .MUTTON-FISH {background:url('assets/icons/meat-and-fish-license-h.svg') !important;}
+.moduleList .mat-tab-label-active .MUTTON-FISH, 
+.moduleList .mat-tab-label:not(.mat-tab-disabled):focus .MUTTON-FISH {background:url('assets/icons/meat-and-fish-license-h.svg') !important;}
 
 .BIRTH-DEATH  {background:url('assets/icons/birth-and-death.png') !important;}
-.moduleList .mat-tab-label-active .BIRTH-DEATH {background:url('assets/icons/birth-and-death-h.png') !important;}
+.moduleList .mat-tab-label-active .BIRTH-DEATH, 
+.moduleList .mat-tab-label:not(.mat-tab-disabled):focus .BIRTH-DEATH {background:url('assets/icons/birth-and-death-h.png') !important;
+    background-repeat: no-repeat !important; background-position: center center !important;}
 
 .affordableHousing  {background:url('assets/icons/affordable-housing.svg') !important;}
-.moduleList .mat-tab-label-active .affordableHousing {background:url('assets/icons/affordable-housing-h.svg') !important;}
+.moduleList .mat-tab-label-active .affordableHousing, 
+.moduleList .mat-tab-label:not(.mat-tab-disabled):focus .affordableHousing {background:url('assets/icons/affordable-housing-h.svg') !important;}
+
+.moduleList .mat-tab-label:not(.mat-tab-disabled):focus .moduleName {color: #fff;}
+
 // End Icons ----------------------------------
 
 .capitalCase {
@@ -1158,7 +1180,7 @@ textarea.gujInputCls {margin-bottom: 0;}
 
 
 .SHOP-ESTAB-NEW {background:url('assets/icons/shop-and-establishment-license.svg') !important;}
-.moduleList .mat-tab-label-active .SHOP-ESTAB-NEW {background:url('assets/icons/shop-and-establishment-license-h.svg') !important;}
+.moduleList .mat-tab-label-active .SHOP-ESTAB-NEW, .moduleList .mat-tab-label:not(.mat-tab-disabled):focus .SHOP-ESTAB-NEW {background:url('assets/icons/shop-and-establishment-license-h.svg') !important;}
 
 .selectCategoryDropdown  .ng-option {
     line-height: normal !important;
