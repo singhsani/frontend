@@ -48,6 +48,9 @@ export class ValidationService {
             invalidGstNo:'Please enter a valid GSTIN e.g. 29ABCDE1234F2Z5',
             invalidAccountNo:'Invalid Account No',
             invalidAcHolderName: 'Invalid Name',
+            invalidDrivingLicense: 'Enter valid License number e.g. GJ0620210012122',
+            invalidElectionCard: 'Enter valid Election Card Number e.g. ABC1234567',
+            invalidPassport: 'Enter valid Passport number e,g, A1234567 or AB1234567'
         }
 
         return config[validatorName];
@@ -288,7 +291,34 @@ export class ValidationService {
     }
   }
 
+  static drivingLicenseValidator(control: FormControl){
+    if(control.value){
+        const matches = control.value.match(/^[A-Z]{2}[0-9]{13}/);
+        return matches ? null : { 'invalidDrivingLicense' : true};
+    }
+    else{
+        return null;
+    }
+}
 
+static electionCardValidator(control: FormControl){
+    if(control.value){
+        const matches = control.value.match(/^[A-Z]{3}[0-9]{7}/);
+        return matches ? null : { 'invalidElectionCard' : true};
+    }
+    else{
+        return null;
+    }
+}
 
+static passportValidator(control: FormControl){
+    if(control.value){
+        const matches = control.value.match(/[A-Z]{1}[0-9]{7}/ || /[A-Z]{2}[0-9]{7}/);
+        return matches ? null : { 'invalidPassport' : true};
+    }
+    else{
+        return null;
+    }
+}
 }
 
