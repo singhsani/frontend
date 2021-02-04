@@ -95,6 +95,14 @@ export class SwimmingPoolComponent implements OnInit {
     this.bookingUtils = new BookingUtils(formService, toastr);
     this.bookingService.resourceType = 'swimming'; }
 
+    /**
+	 * Min month should be current month.
+	 */ 
+  startMinMonth: Date = new Date(this.disableDate.getFullYear(), this.disableDate.getMonth(), 1);
+  // moment(new Date(this.disableDate.getFullYear(), this.disableDate.getMonth(), )).subtract(1, 'month').toDate();
+  maxEndMonth:any;
+  
+
 	/**
 	 * This method call initially required methods.
 	 */

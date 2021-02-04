@@ -40,6 +40,9 @@ export class AppMonthPicker implements ControlValueAccessor, OnChanges{
     @Output()
     change = new EventEmitter();
 
+    @Input("min") min : any;
+    @Input("max") max : any;
+
     constructor(
         private fb: FormBuilder
     ) {
