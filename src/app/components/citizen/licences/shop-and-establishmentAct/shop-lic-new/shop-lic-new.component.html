@@ -109,6 +109,7 @@
 						<input matInput type="text"
 							maxlength="12"
 							appAlphaNumeric
+							required
 							placeholder="PEC number"
 							formControlName="pecNumber"
 							(blur)="validatePECNumber(shopLicNewForm.get('pecNumber'))"/>
@@ -120,6 +121,7 @@
 						<input matInput type="text"
 							maxlength="12"
 							appAlphaNumeric
+							required
 							placeholder="PRC number"
 							formControlName="prcNumber"
 						 (blur)="validatePRCNumber(shopLicNewForm.get('prcNumber'))" /> 
@@ -129,9 +131,10 @@
 					<mat-form-field class="col-md-4">
 						<input matInput type="text"
 							maxlength="16"
+							required
 							placeholder="Census Number/Property Number"
-							formControlName="censusOrPropertyNumber"
-							(blur)="validatePecPropertyNumber(shopLicNewForm.get('censusOrPropertyNumber'))"/>
+							formControlName="censusOrPropertyNumber"/>
+							<!-- (blur)="validatePecPropertyNumber(shopLicNewForm.get('censusOrPropertyNumber'))" -->
 						<control-messages [control]="shopLicNewForm.get('censusOrPropertyNumber')"></control-messages>
 					</mat-form-field>
 

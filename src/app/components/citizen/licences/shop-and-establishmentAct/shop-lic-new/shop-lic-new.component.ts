@@ -310,9 +310,9 @@ export class ShopLicNewComponent implements OnInit {
 			waterDrainageBlockId: [null,Validators.required],
 			ownershipType: [null, [Validators.required]],
 
-			pecNumber:null,
-			prcNumber:null,
-			censusOrPropertyNumber:null,
+			pecNumber:[null,Validators.required],
+			prcNumber:[null,Validators.required],
+			censusOrPropertyNumber:[null,Validators.required],
 			oldRegistrationNumber: null,
 			oldRegistrationDate: null,
 			number: null,
@@ -1433,23 +1433,29 @@ export class ShopLicNewComponent implements OnInit {
 	validatePECNumber(formControl:FormControl){
 		
 		let numberValue = formControl.value.substring(0,3)
-		console.log(numberValue);
-		console.log("pec",formControl);
 		if(!formControl.value || formControl.value == ""){
 			return true;
 		}
 		else if("PEC"== numberValue){
-			this.professionalTaxService.getVerifyNumber(numberValue,formControl.value).subscribe(res => {
-				console.log(res);
-				console.log(res.data);
-						if(false == res.data.success){
-							formControl.setValue("");
-							this.commonService.openAlert("Error", "Please enter valid PEC number","error");
-						}
-					},error =>{
-						formControl.setValue("");
-						console.error("error",error);
-					})
+			if(false == numberValue){
+				formControl.setValue("");
+			 	this.commonService.openAlert("Error", "Please enter valid PEC number","error");
+			}error=>{
+				formControl.setValue("");
+				console.error("error",error);
+			}
+			
+			// this.professionalTaxService.getVerifyNumber(numberValue,formControl.value).subscribe(res => {
+			// 	console.log(res);
+			// 	console.log(res.data);
+			// 			if(false == res.data.success){
+			// 				formControl.setValue("");
+			// 				this.commonService.openAlert("Error", "Please enter valid PEC number","error");
+			// 			}
+			// 		},error =>{
+			// 			formControl.setValue("");
+			// 			console.error("error",error);
+			// 		})
 		}else{
 			formControl.setValue("");
 			this.commonService.openAlert("Error", "Please enter valid PEC and PRC number","error");
@@ -1465,15 +1471,22 @@ export class ShopLicNewComponent implements OnInit {
 		if(!formControl.value || formControl.value == ""){
 			return true;
 		}else if("PRC" == numberValue){
-			this.professionalTaxService.getVerifyNumber(numberValue,formControl.value).subscribe(res => {
-				if(false == res.data){
-					formControl.setValue("");
-					this.commonService.openAlert("Error", "Please enter valid PRC number","error");
-				}
-			},error =>{
+			if(false == numberValue){
+				formControl.setValue("");
+			 	this.commonService.openAlert("Error", "Please enter valid PEC number","error");
+			}error=>{
 				formControl.setValue("");
 				console.error("error",error);
-			})
+			}
+			// this.professionalTaxService.getVerifyNumber(numberValue,formControl.value).subscribe(res => {
+			// 	if(false == res.data){
+			// 		formControl.setValue("");
+			// 		this.commonService.openAlert("Error", "Please enter valid PRC number","error");
+			// 	}
+			// },error =>{
+			// 	formControl.setValue("");+
+			// 	console.error("error",error);
+			// })
 		}else{
 			formControl.setValue("");
 			this.commonService.openAlert("Error", "Please enter valid PEC and PRC number","error");

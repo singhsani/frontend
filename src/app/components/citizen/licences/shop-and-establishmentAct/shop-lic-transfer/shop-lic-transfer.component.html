@@ -117,9 +117,10 @@
 						<input matInput type="text"
 							maxlength="12"
 							appAlphaNumeric
+							required
 							placeholder="PEC number"
 							formControlName="pecNumber"
-							(blur)="validatePecPrcNumber(shopLicTransferForm.get('pecNumber'))"/>
+							(blur)="validatePecNumber(shopLicTransferForm.get('pecNumber'))"/>
 							<control-messages [control]="shopLicTransferForm.get('pecNumber')">
 						</control-messages>
 					</mat-form-field>
@@ -127,19 +128,21 @@
 					<mat-form-field class="col-md-4">
 						<input matInput type="text"
 							maxlength="12"
+							required
 							appAlphaNumeric
 							placeholder="PRC number"
 							formControlName="prcNumber"
-							(blur)="validatePecPrcNumber(shopLicTransferForm.get('prcNumber'))"/>
+							(blur)="validatePRCNumber(shopLicTransferForm.get('prcNumber'))"/>
 						<control-messages [control]="shopLicTransferForm.get('prcNumber')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<input matInput type="text"
 							maxlength="16"
+							required
 							placeholder="Census Number/Property Number"
-							formControlName="censusOrPropertyNumber"
-							(blur)="validatePecPropertyNumber(shopLicTransferForm.get('censusOrPropertyNumber'))"/>
+							formControlName="censusOrPropertyNumber"/>
+							<!-- (blur)="validatePecPropertyNumber(shopLicTransferForm.get('censusOrPropertyNumber'))" -->
 						<control-messages [control]="shopLicTransferForm.get('censusOrPropertyNumber')"></control-messages>
 					</mat-form-field>
 				</div>

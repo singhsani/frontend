@@ -401,9 +401,9 @@ export class ShopLicTransferComponent implements OnInit {
 			waterDrainageBlockId: [null,Validators.required],
 			ownershipType: [null, [Validators.required]],
 
-			pecNumber:null,
-			prcNumber:null,
-			censusOrPropertyNumber:null,
+			pecNumber:[null,Validators.required],
+			prcNumber:[null,Validators.required],
+			censusOrPropertyNumber:[null,Validators.required],
 			number: null,
 			otherAddresses: [null, [Validators.required, Validators.maxLength(100)]],
 			/* Step 1 controls end */
@@ -1498,22 +1498,58 @@ export class ShopLicTransferComponent implements OnInit {
 
 	}
 
-	validatePecPrcNumber(formControl : FormControl){
+	validatePecNumber(formControl : FormControl){
+		let numberValue = formControl.value.substring(0,3)
 		  console.log("Pec/Prc ", formControl);
 		  
 		  if(!formControl.value || formControl.value == ""){
 			  return true;
-		  } else {
-			  this.professionalTaxService.getSearchDetails(formControl.value,true).subscribe(res => {
-                  if(!res.data){
-					  formControl.setValue("");
-					  this.commonService.openAlert("Error", "Please enter valid EC/RC number", "error");
-				  }
-			  }, error => {
-				  formControl.setValue("");
-				  console.error("error",error);
-			  })
-		  }
+		  } else if("PRC" == numberValue){
+			if(false == numberValue){
+				formControl.setValue("");
+			 	this.commonService.openAlert("Error", "Please enter valid PEC number","error");
+			}error=>{
+				formControl.setValue("");
+				console.error("error",error);
+			}
+			}	
+			else{
+				formControl.setValue("");
+				this.commonService.openAlert("Error", "Please enter valid PEC and PRC number","error");
+			}
+		//    {
+		// 	  this.professionalTaxService.getSearchDetails(formControl.value,true).subscribe(res => {
+        //           if(!res.data){
+		// 			  formControl.setValue("");
+		// 			  this.commonService.openAlert("Error", "Please enter valid EC/RC number", "error");
+		// 		  }
+		// 	  }, error => {
+		// 		  formControl.setValue("");
+		// 		  console.error("error",error);
+		// 	  })
+		//   }
+	}
+
+	validatePRCNumber(formControl:FormControl){
+		
+		let numberValue = formControl.value.substring(0,3)
+		console.log(numberValue);
+		console.log("pec",formControl);
+		if(!formControl.value || formControl.value == ""){
+			return true;
+		}else if("PRC" == numberValue){
+			if(false == numberValue){
+				formControl.setValue("");
+			 	this.commonService.openAlert("Error", "Please enter valid PEC number","error");
+			}error=>{
+				formControl.setValue("");
+				console.error("error",error);
+			}
+			
+		}else{
+			formControl.setValue("");
+			this.commonService.openAlert("Error", "Please enter valid PEC and PRC number","error");
+		}
 	}
 
 	validatePecPropertyNumber(formControl : FormControl){
