@@ -119,8 +119,8 @@
 							appAlphaNumeric
 							required
 							placeholder="PEC number"
-							formControlName="pecNumber"/>
-							<!-- (blur)="validatePecNumber(shopLicTransferForm.get('pecNumber'))" -->
+							formControlName="pecNumber"
+							(blur)="validatePecNumber(shopLicTransferForm.get('pecNumber'))"/>
 							<control-messages [control]="shopLicTransferForm.get('pecNumber')">
 						</control-messages>
 					</mat-form-field>
@@ -131,8 +131,8 @@
 							required
 							appAlphaNumeric
 							placeholder="PRC number"
-							formControlName="prcNumber"/>
-							<!-- (blur)="validatePRCNumber(shopLicTransferForm.get('prcNumber'))" -->
+							formControlName="prcNumber"
+							(blur)="validatePRCNumber(shopLicTransferForm.get('prcNumber'))"/>
 						<control-messages [control]="shopLicTransferForm.get('prcNumber')"></control-messages>
 					</mat-form-field>
 

@@ -1466,8 +1466,6 @@ export class ShopLicNewComponent implements OnInit {
 	validatePRCNumber(formControl:FormControl){
 		
 		let numberValue = formControl.value.substring(0,3)
-		console.log(numberValue);
-		console.log("pec",formControl);
 		if(!formControl.value || formControl.value == ""){
 			return true;
 		}else if("PRC" == numberValue){

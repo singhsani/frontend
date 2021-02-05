@@ -1504,7 +1504,7 @@ export class ShopLicTransferComponent implements OnInit {
 		  
 		  if(!formControl.value || formControl.value == ""){
 			  return true;
-		  } else if("PRC" == numberValue){
+		  } else if("PEC" == numberValue){
 			if(false == numberValue){
 				formControl.setValue("");
 			 	this.commonService.openAlert("Error", "Please enter valid PEC number","error");
@@ -1533,8 +1533,6 @@ export class ShopLicTransferComponent implements OnInit {
 	validatePRCNumber(formControl:FormControl){
 		
 		let numberValue = formControl.value.substring(0,3)
-		console.log(numberValue);
-		console.log("pec",formControl);
 		if(!formControl.value || formControl.value == ""){
 			return true;
 		}else if("PRC" == numberValue){
