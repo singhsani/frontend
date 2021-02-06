@@ -270,6 +270,8 @@ export class BookStadiumComponent implements OnInit {
                         this.bookingService.printAcknowledgementReceipt(resp.data.refNumber).subscribe(acknowledgementHTML => {
                             let sectionToPrint: any = document.getElementById('sectionToPrint');
                             sectionToPrint.innerHTML = acknowledgementHTML;
+                            let refNumber = this.stadiumApplicationForm.get('refNumber').value;
+                            this.sendSms(refNumber, "SUBMIT");
                             setTimeout(() => {
                                 window.print();
                                 this.router.navigate([this.bookingConstants.MY_BOOKINGS_URL]);
@@ -358,6 +360,16 @@ export class BookStadiumComponent implements OnInit {
         } else if (count < step3) {
             this.tabIndex = 2;
             return false;
+        }
+    }
+
+    sendSms(refNumber:any, eventType:any){
+        if(refNumber){
+            this.bookingService.sendSms(refNumber, eventType).subscribe(res =>{    
+            },err => {
+                this.toastr.error("Something went wrong"); })
+        }else{
+            this.toastr.error("Invalid request");
         }
     }
 }
