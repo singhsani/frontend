@@ -532,7 +532,8 @@ export class MyBookingComponent implements OnInit {
 			|| element.status === this.bookingConstant.CANCELLED
 			|| element.status === this.bookingConstant.WAITINGLIST
 			|| element.status === this.bookingConstant.SCRUTINY
-			|| element.status === this.bookingConstant.REJECTED) {
+			|| element.status === this.bookingConstant.REJECTED
+			|| (element.resourceType === 'SWIMMING_POOL' && element.status === this.bookingConstant.APPROVED)) {
 			return false;
 		}
 
@@ -548,7 +549,9 @@ export class MyBookingComponent implements OnInit {
 			|| element.status === this.bookingConstant.WAITINGLIST
 			|| element.status === this.bookingConstant.CANCELLATION_REQUEST
 			|| element.resourceType === this.bookingConstant.SHOOTING_PERMISSION
-			|| element.status === this.bookingConstant.REJECTED) {
+			|| element.status === this.bookingConstant.REJECTED
+			|| (element.resourceType === 'SWIMMING_POOL' && element.status === this.bookingConstant.APPROVED)
+			) {
 			return false;
 		}
 
