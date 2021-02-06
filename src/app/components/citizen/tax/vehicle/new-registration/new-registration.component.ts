@@ -110,7 +110,7 @@ export class NewRegistrationComponent implements OnInit {
       code: null,
       fieldView: null,
       fieldList: null,
-      vehicleNo: [null, Validators.required],
+      vehicleNo: [null],
       vehicleType: this.fb.group({
         code: [null, Validators.required],
         name: null
@@ -135,7 +135,7 @@ export class NewRegistrationComponent implements OnInit {
       applicantAadhaarNo: null,
       mobileNo: null,
       aadhaarNo: null,
-      email: ['', [ValidationService.emailValidator]],
+      email: ['', [ValidationService.emailValidator]],  
       address: this.fb.group(this.addrComponent.addressControls()),
       // city: "Vadodra",
       billingPeriod: this.fb.group({
