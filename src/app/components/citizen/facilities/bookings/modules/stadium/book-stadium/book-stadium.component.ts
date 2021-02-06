@@ -266,12 +266,12 @@ export class BookStadiumComponent implements OnInit {
         } else {
             this.bookingService.commonBookSlot(this.stadiumApplicationForm.value).subscribe(resp => {
                 if (resp.data.status == this.bookingConstants.SUBMITTED) {
-                    let refNumber = this.stadiumApplicationForm.get('refNumber').value;
-                    this.sendSms(refNumber, "SUBMIT");
                     this.commonService.commonAlert("Stadium Booking", "Stadium Booked Successfully", "success", "Print Acknowledgement Receipt", false, '', pA => {
                         this.bookingService.printAcknowledgementReceipt(resp.data.refNumber).subscribe(acknowledgementHTML => {
                             let sectionToPrint: any = document.getElementById('sectionToPrint');
                             sectionToPrint.innerHTML = acknowledgementHTML;
+                            let refNumber = this.stadiumApplicationForm.get('refNumber').value;
+                            this.sendSms(refNumber, "SUBMIT");
                             setTimeout(() => {
                                 window.print();
                                 this.router.navigate([this.bookingConstants.MY_BOOKINGS_URL]);
