@@ -266,6 +266,8 @@ export class BookStadiumComponent implements OnInit {
         } else {
             this.bookingService.commonBookSlot(this.stadiumApplicationForm.value).subscribe(resp => {
                 if (resp.data.status == this.bookingConstants.SUBMITTED) {
+                    let refNumber = this.stadiumApplicationForm.get('refNumber').value;
+                    this.sendSms(refNumber, "SUBMIT");
                     this.commonService.commonAlert("Stadium Booking", "Stadium Booked Successfully", "success", "Print Acknowledgement Receipt", false, '', pA => {
                         this.bookingService.printAcknowledgementReceipt(resp.data.refNumber).subscribe(acknowledgementHTML => {
                             let sectionToPrint: any = document.getElementById('sectionToPrint');
@@ -358,6 +360,16 @@ export class BookStadiumComponent implements OnInit {
         } else if (count < step3) {
             this.tabIndex = 2;
             return false;
+        }
+    }
+
+    sendSms(refNumber:any, eventType:any){
+        if(refNumber){
+            this.bookingService.sendSms(refNumber, eventType).subscribe(res =>{    
+            },err => {
+                this.toastr.error("Something went wrong"); })
+        }else{
+            this.toastr.error("Invalid request");
         }
     }
 }
