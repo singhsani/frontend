@@ -442,4 +442,89 @@ export class NewAffordableHousingComponent implements OnInit {
 		}
 
 	}
+
+	// patchValue(){
+	// 	debugger
+	// 	const data	= {
+	// 		"applicantName": "trtyfryt",
+	// 		"applicantFatherName": "hghhghg",
+	// 		"dateOfBirth": "2021-02-05",
+	// 		"telephoneNumber": null,
+	// 		"mobileNumber": "4555555555",
+	// 		"email": null,
+	// 		"correspondanceAddress": {
+			
+	// 			"addressType": "CORRESPONDANCE_ADDRESS",
+	// 			"buildingName": "1",
+	// 			"streetName": null,
+	// 			"landmark": null,
+	// 			"area": "jkhkhg",
+	// 			"state": "Anhui Province",
+	// 			"district": null,
+	// 			"city": "Anqing",
+	// 			"country": "CHINA",
+	// 			"pincode": "111111",
+	// 			"buildingNameGuj": "૧",
+	// 			},
+	// 	"occupation": "jhkhjkhj",
+	// 	"organizationName": "khjkhj",
+	// 	"occupationDesignation": "jkhjk",
+	// 	"drivingLicenseNumber": null,
+	// 	"voterIdNumber": null,
+	// 	"aadharCardNumber": "122222222222",
+	// 	"panCardNumber": "2222222222",
+	// 	"rationCardNumber": null,
+	// 	"occupationAddress": {
+		
+	// 		"addressType": "OCCUPATION_ADDRESS",
+	// 		"buildingName": "1",
+	// 		"streetName": null,
+	// 		"landmark": null,
+	// 		"area": "dfdasgfsdf@gmail.com",
+	// 		"state": "Anhui Province",
+	// 		"district": null,
+	// 		"city": "Anqing",
+	// 		"country": "CHINA",
+	// 		"pincode": "222222",
+		
+	// 	},
+	// 	"bankAccountNumber": "54444444444444",
+	// 	"bank": {
+	// 		"code": "BANK_OF_BARODA",
+	// 		"name": null
+	// 	},
+	// 	"bankBranch": "uiiiiiiiiiii",
+	// 	"bankIFSC": "LKLK0000000",
+	// 	"bankMicrCode": "154444444",
+	// 	"aggregateAnnualIncomeAmount": 1000,
+	// 	"aggregateAnnualIncomeAmountInWords": "One thousand",
+	// 	"canEdit": true,
+	// 	"ownHouseDetail": [],
+	// 	"ownLandPlotDetail": [],
+	// 	"nomineeName": "dffffffff",
+	// 	"nomineeApplicantRelationShip": "dffffffffff",
+	// 	"nomineeAddress": {
+			
+	// 		"addressType": "NOMINEE",
+	// 		"buildingName": "1",
+	// 		"streetName": null,
+	// 		"landmark": null,
+	// 		"area": "dfs",
+	// 		"state": "GUJARAT",
+	// 		"district": null,
+	// 		"city": "Ahmedabad",
+	// 		"country": "INDIA",
+	// 		"pincode": "111111",
+	// 		"buildingNameGuj": "૧",
+	// 		"streetNameGuj": null,
+	// 		"landmarkGuj": null,
+	// 		"areaGuj": "દ્ફ્સ",
+	// 		"stateGuj": null,
+	// 		"districtGuj": null,
+	// 		"cityGuj": null,
+	// 		"countryGuj": null
+	// 		}
+	// 	}
+	// 	this.affordableHousingForm.patchValue(data);
+	// }
 }
