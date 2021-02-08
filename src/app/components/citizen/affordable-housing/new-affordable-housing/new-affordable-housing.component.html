@@ -1,6 +1,8 @@
 <app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
 
+<!-- <button (click)="patchValue()">patch</button> -->
 <mat-card class="formClass cardBorder">
+	
 		<form [formGroup]="affordableHousingForm">
 				<mat-tab-group [(selectedIndex)]="tabIndex" dynamicHeight="true" mat-stretch-tabs class="stepperNav">
 	
@@ -266,8 +268,8 @@
 						<div class="row" formArrayName="placeOfChoice">
 							<mat-form-field class="col-md-4" *ngFor="let item of affordableHousingForm.get('placeOfChoice')['controls']; let i = index;"
 							 [formGroupName]="i">
-								<input matInput autocomplete="off" maxlength="200" formControlName="name" placeholder="{{'place_of_choice' | translate: translateKey}}"
-								 required>
+								<input matInput autocomplete="off" maxlength="200" formControlName="name" placeholder="{{'place_of_choice' | translate: translateKey}}" 
+								required>
 								<button *ngIf="affordableHousingForm.get('placeOfChoice')['controls'].length > 1" title="remove_place_of_choice"
 								 class="deleteBtn pull-right text-right" type="button" mat-icon-button color="warn" (click)="deleteFormArrayRecord('placeOfChoice',i)">
 									<i class="fa fa-times"></i>
@@ -419,7 +421,7 @@
 												{{indx+1}}
 											</td>
 	
-											<td>
+											<td class="matErrorTwoLine">
 												<div class="d-md-none">{{'name' | translate:translateKey}}</div>
 												<p *ngIf="!item.isEditMode">{{item.get('name').value}}</p>
 												<mat-form-field *ngIf="item.isEditMode">
@@ -428,7 +430,7 @@
 												</mat-form-field>
 											</td>
 	
-											<td>
+											<td class="matErrorTwoLine">
 												<div class="d-md-none">{{'flat_no' | translate:translateKey}}</div>
 												<p *ngIf="!item.isEditMode">{{item.get('flatNo').value}}</p>
 												<mat-form-field *ngIf="item.isEditMode">
@@ -437,7 +439,7 @@
 												</mat-form-field>
 											</td>
 	
-											<td>
+											<td class="matErrorTwoLine">
 												<div class="d-md-none">{{'street' | translate:translateKey}}</div>
 												<p *ngIf="!item.isEditMode">{{item.get('street').value}}</p>
 												<mat-form-field *ngIf="item.isEditMode">
@@ -446,7 +448,7 @@
 												</mat-form-field>
 											</td>
 	
-											<td>
+											<td class="matErrorTwoLine">
 												<div class="d-md-none">{{'city' | translate:translateKey}}</div>
 												<p *ngIf="!item.isEditMode">{{item.get('city').value}}</p>
 												<mat-form-field *ngIf="item.isEditMode">
@@ -455,7 +457,7 @@
 												</mat-form-field>
 											</td>
 	
-											<td>
+											<td class="matErrorTwoLine">
 													<div class="d-md-none">{{'district' | translate:translateKey}}</div>
 													<p *ngIf="!item.isEditMode">{{item.get('district').value}}</p>
 													<mat-form-field *ngIf="item.isEditMode">
@@ -463,7 +465,7 @@
 														<control-messages [control]="item.get('district')"></control-messages>
 													</mat-form-field>
 												</td>
-												<td>
+												<td class="matErrorTwoLine">
 														<div class="d-md-none">{{'pincode' | translate:translateKey}}</div>
 														<p *ngIf="!item.isEditMode">{{item.get('pincode').value}}</p>
 														<mat-form-field *ngIf="item.isEditMode">
@@ -549,7 +551,7 @@
 												{{indx+1}}
 											</td>
 	
-											<td>
+											<td class="matErrorTwoLine">
 												<div class="d-md-none">{{'name' | translate:translateKey}}</div>
 												<p *ngIf="!item.isEditMode">{{item.get('name').value}}</p>
 												<mat-form-field *ngIf="item.isEditMode">
@@ -558,7 +560,7 @@
 												</mat-form-field>
 											</td>
 	
-											<td>
+											<td class="matErrorTwoLine">
 												<div class="d-md-none">{{'flat_no' | translate:translateKey}}</div>
 												<p *ngIf="!item.isEditMode">{{item.get('flatNo').value}}</p>
 												<mat-form-field *ngIf="item.isEditMode">
@@ -567,7 +569,7 @@
 												</mat-form-field>
 											</td>
 	
-											<td>
+											<td class="matErrorTwoLine">
 												<div class="d-md-none">{{'street' | translate:translateKey}}</div>
 												<p *ngIf="!item.isEditMode">{{item.get('street').value}}</p>
 												<mat-form-field *ngIf="item.isEditMode">
@@ -576,7 +578,7 @@
 												</mat-form-field>
 											</td>
 	
-											<td>
+											<td class="matErrorTwoLine">
 												<div class="d-md-none">{{'city' | translate:translateKey}}</div>
 												<p *ngIf="!item.isEditMode">{{item.get('city').value}}</p>
 												<mat-form-field *ngIf="item.isEditMode">
@@ -585,7 +587,7 @@
 												</mat-form-field>
 											</td>
 	
-											<td>
+											<td class="matErrorTwoLine">
 												<div class="d-md-none">{{'district' | translate:translateKey}}</div>
 												<p *ngIf="!item.isEditMode">{{item.get('district').value}}</p>
 												<mat-form-field *ngIf="item.isEditMode">
@@ -593,7 +595,7 @@
 													<control-messages [control]="item.get('district')"></control-messages>
 												</mat-form-field>
 											</td>
-											<td>
+											<td class="matErrorTwoLine">
 													<div class="d-md-none">{{'pincode' | translate:translateKey}}</div>
 													<p *ngIf="!item.isEditMode">{{item.get('pincode').value}}</p>
 													<mat-form-field *ngIf="item.isEditMode">

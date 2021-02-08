@@ -12,9 +12,9 @@
 			<mat-icon>edit</mat-icon>{{'edit' | translate:actionBarKey}}
 		</button>
 	</form> -->
-	<button class="pull-right" mat-stroked-button type="button" (click)="patchValue()">
+	<!-- <button class="pull-right" mat-stroked-button type="button" (click)="patchValue()">
 		Patch Value
-	</button>
+	</button> -->
 </app-title-bar>
 
 <mat-card class="formClass cardBorder">
@@ -62,13 +62,13 @@
 
 					<mat-form-field class="col-md-4">
 						<input matInput autocomplete="off" type="text" maxlength="50" formControlName="vehicleNo"
-							placeholder="{{'vehicle_no' | translate: translateKey}}" required>
+							placeholder="{{'vehicle_no' | translate: translateKey}}">
 						<control-messages [control]="vehicleRegistrationForm.get('vehicleNo')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<input matInput autocomplete="off" type="text" maxlength="50" formControlName="registrationNo"
-							placeholder="{{'registration_no' | translate: translateKey}}" required>
+							placeholder="{{'registration_no' | translate: translateKey}}" >
 						<control-messages [control]="vehicleRegistrationForm.get('registrationNo')"></control-messages>
 					</mat-form-field>
 
