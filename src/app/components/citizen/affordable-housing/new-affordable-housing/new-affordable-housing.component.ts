@@ -152,11 +152,16 @@ export class NewAffordableHousingComponent implements OnInit {
 				name: null,
 			}),
 			applicantName: [null, [Validators.required, Validators.maxLength(100)]],
+			applicantMiddleName:[null,[Validators.required,Validators.maxLength(100)]],
+			applicantLastName:[null,[Validators.required,Validators.maxLength(100)]],
 			applicantFatherName: [null, [Validators.required, Validators.maxLength(100)]],
 			dateOfBirth: [null, [Validators.required]],
 			telephoneNumber: [null, [Validators.maxLength(15)]],
 			mobileNumber: [null, [Validators.required, Validators.maxLength(10)]],
 			email: [null, [ValidationService.emailValidator, Validators.maxLength(50)]],
+			applicantHusbandWifeFirstName:[null,Validators.required,Validators.maxLength(100)],
+			applicantHusbandWifeMiddleName:[null,Validators.required,Validators.maxLength(100)],
+			applicantHusbandWifeLastName:[null,Validators.required,Validators.maxLength(100)],
 			correspondanceAddress: this.fb.group(this.applicantCorrespondenceAddrComponent.addressControls()),
 			/* Step 1 controls end */
 

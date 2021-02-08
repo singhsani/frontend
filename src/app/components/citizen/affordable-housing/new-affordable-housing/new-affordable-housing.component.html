@@ -41,20 +41,30 @@
 								<control-messages [control]="affordableHousingForm.get('category').get('code')">
 								</control-messages>
 							</div>
-		
 							
+							<div class="col-md-12">
+								<h2>{{'Name Applicant' | translate:translateKey}}</h2>
+							</div>
+
 							<mat-form-field class="col-md-4">
 								<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace'
-									required maxlength="100" placeholder="{{'applicant_Name' | translate:translateKey}}"
+									required maxlength="100" placeholder="{{'First Name' | translate:translateKey}}"
 									formControlName="applicantName">
 								<control-messages [control]="affordableHousingForm.get('applicantName')"></control-messages>
 							</mat-form-field>
-		
+
 							<mat-form-field class="col-md-4">
 								<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace'
-									required maxlength="100" placeholder="{{'father_Name' | translate:translateKey}}"
-									formControlName="applicantFatherName">
-								<control-messages [control]="affordableHousingForm.get('applicantFatherName')"></control-messages>
+									required maxlength="100" placeholder="{{'Middle Name' | translate:translateKey}}"
+									formControlName="applicantMiddleName">
+								<control-messages [control]="affordableHousingForm.get('applicantMiddleName')"></control-messages>
+							</mat-form-field>
+
+							<mat-form-field class="col-md-4">
+								<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace'
+									required maxlength="100" placeholder="{{'Last Name' | translate:translateKey}}"
+									formControlName="applicantLastName">
+								<control-messages [control]="affordableHousingForm.get('applicantLastName')"></control-messages>
 							</mat-form-field>
 		
 							<mat-form-field class="col-md-4">
@@ -87,7 +97,32 @@
 									placeholder="{{'email' | translate:translateKey}}" type="email" formControlName="email">
 								<control-messages [control]="affordableHousingForm.get('email')"></control-messages>
 							</mat-form-field>
-		
+						</div>
+						
+							<div>
+								<h2>{{'Husband/Wife’s Name' | translate: translateKey}}</h2>
+							</div>	
+						<div class="row">	
+							<mat-form-field class="col-md-4">
+								<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace'
+									required maxlength="100" placeholder="{{'First Name' | translate:translateKey}}"
+									formControlName="applicantHusbandWifeFirstName">
+								<control-messages [control]="affordableHousingForm.get('applicantHusbandWifeFirstName')"></control-messages>
+							</mat-form-field>
+
+							<mat-form-field class="col-md-4">
+								<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace'
+									required maxlength="100" placeholder="{{'Middle Name' | translate:translateKey}}"
+									formControlName="applicantHusbandWifeMiddleName">
+								<control-messages [control]="affordableHousingForm.get('applicantHusbandWifeMiddleName')"></control-messages>
+							</mat-form-field>
+
+							<mat-form-field class="col-md-4">
+								<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace'
+									required maxlength="100" placeholder="{{'Last Name' | translate:translateKey}}"
+									formControlName="applicantHusbandWifeLastName">
+								<control-messages [control]="affordableHousingForm.get('applicantHusbandWifeLastName')"></control-messages>
+							</mat-form-field>
 						</div>
 	
 	
