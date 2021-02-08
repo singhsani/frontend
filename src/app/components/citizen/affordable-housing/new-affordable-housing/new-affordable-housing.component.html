@@ -1,6 +1,8 @@
 <app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
 
+<!-- <button (click)="patchValue()">patch</button> -->
 <mat-card class="formClass cardBorder">
+	
 		<form [formGroup]="affordableHousingForm">
 				<mat-tab-group [(selectedIndex)]="tabIndex" dynamicHeight="true" mat-stretch-tabs class="stepperNav">
 	
@@ -266,8 +268,8 @@
 						<div class="row" formArrayName="placeOfChoice">
 							<mat-form-field class="col-md-4" *ngFor="let item of affordableHousingForm.get('placeOfChoice')['controls']; let i = index;"
 							 [formGroupName]="i">
-								<input matInput autocomplete="off" maxlength="200" formControlName="name" placeholder="{{'place_of_choice' | translate: translateKey}}"
-								 required>
+								<input matInput autocomplete="off" maxlength="200" formControlName="name" placeholder="{{'place_of_choice' | translate: translateKey}}" 
+								required>
 								<button *ngIf="affordableHousingForm.get('placeOfChoice')['controls'].length > 1" title="remove_place_of_choice"
 								 class="deleteBtn pull-right text-right" type="button" mat-icon-button color="warn" (click)="deleteFormArrayRecord('placeOfChoice',i)">
 									<i class="fa fa-times"></i>

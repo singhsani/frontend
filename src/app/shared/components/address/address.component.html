@@ -58,12 +58,12 @@
 		</mat-form-field>
 
 		<div class="col-md-4 ngSelect">
-			<ng-select (change)="getGujNameFromLookup($event,'cityGuj',cityListArray)"
-				placeholder="{{'city' | translate: translateKey }} / {{'district' | translate: translateKey }} {{requiredFeilds?'*':''}}"
-				formControlName="city" [required]="requiredFeilds">
-				<ng-option *ngFor="let city of cityListArray" [value]="city.name">{{city.name}}</ng-option>
+			<ng-select placeholder="{{'country' | translate: translateKey }} {{requiredFeilds?'*':''}}"
+				formControlName="country" required
+				(change)="onCountryChange($event);getGujNameFromLookup($event,'countryGuj',countryListArray)">
+				<ng-option *ngFor="let country of countryListArray" [value]="country.name">{{country.name}}</ng-option>
 			</ng-select>
-			<control-messages [control]="addressFormGroup.get('city')"></control-messages>
+			<control-messages [control]="addressFormGroup.get('country')"></control-messages>
 		</div>
 
 		<div class="col-md-4 ngSelect">
@@ -74,6 +74,23 @@
 			</ng-select>
 			<control-messages [control]="addressFormGroup.get('state')"></control-messages>
 		</div>
+		
+		<div class="col-md-6 ngSelect">
+			<ng-select (change)="getGujNameFromLookup($event,'cityGuj',cityListArray)"
+				placeholder="{{'city' | translate: translateKey }} / {{'district' | translate: translateKey }} {{requiredFeilds?'*':''}}"
+				formControlName="city" [required]="requiredFeilds">
+				<ng-option *ngFor="let city of cityListArray" [value]="city.name">{{city.name}}</ng-option>
+			</ng-select>
+			<control-messages [control]="addressFormGroup.get('city')"></control-messages>
+		</div>
+
+		<mat-form-field class="col-md-6">
+			<input matInput type="tel" OnlyNumber formControlName="pincode"
+				placeholder="{{'pincode' | translate: translateKey }}" minlength="6" maxlength="6"
+				[required]="requiredFeilds">
+			<control-messages [control]="addressFormGroup.get('pincode')"></control-messages>
+		</mat-form-field>	
+		
 	</div>
 
 	<!-- gujrati fields -->
@@ -101,24 +118,7 @@
 
 	</div>
 
-	<div class="row">
-		<div class="col-md-6 ngSelect">
-			<ng-select placeholder="{{'country' | translate: translateKey }} {{requiredFeilds?'*':''}}"
-				formControlName="country" required
-				(change)="onCountryChange($event);getGujNameFromLookup($event,'countryGuj',countryListArray)">
-				<ng-option *ngFor="let country of countryListArray" [value]="country.name">{{country.name}}</ng-option>
-			</ng-select>
-			<control-messages [control]="addressFormGroup.get('country')"></control-messages>
-		</div>
-
-		<mat-form-field class="col-md-6">
-			<input matInput type="tel" OnlyNumber formControlName="pincode"
-				placeholder="{{'pincode' | translate: translateKey }}" minlength="6" maxlength="6"
-				[required]="requiredFeilds">
-			<control-messages [control]="addressFormGroup.get('pincode')"></control-messages>
-		</mat-form-field>
-
-	</div>
+	
 	<!-- gujrati fields -->
 <!--	<mat-form-field class="col-md-6">-->
 <!--		<input [readonly]="true" matInput type="text" formControlName="countryGuj"-->
