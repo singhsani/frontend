@@ -643,4 +643,14 @@ export class MyBookingComponent implements OnInit {
 		});
 	}
 
+	checkingBookingDateWithCurrentDate(element){
+    if(element.status==='COMPLETED'){
+      return true;
+    }
+    return false;
+	}
+
+// 	depositRefundRequest(element){
+// 	}
+
 }
