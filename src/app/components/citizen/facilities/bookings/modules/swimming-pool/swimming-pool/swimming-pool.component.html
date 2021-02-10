@@ -151,8 +151,8 @@
 
 						<mat-form-field class="col-md-4">
 							<input matInput type="text" formControlName="applicantName" appValidationFields
-							[validationFieldsType]="'onlyNameWithOutSpace'"
-								placeholder="{{'applicant_name' | translate: translateKey }}" maxlength="300">
+							[validationFieldsType]="'onlyNameWithSpace'"
+								placeholder="{{'applicant_name' | translate: translateKey }}" maxlength="50">
 							<control-messages [control]="swimmimgPoolBookingForm.get('applicantName')">
 							</control-messages>
 						</mat-form-field>
