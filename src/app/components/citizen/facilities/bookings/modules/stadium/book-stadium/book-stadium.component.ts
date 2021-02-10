@@ -157,6 +157,8 @@ export class BookStadiumComponent implements OnInit {
             confirmMobile: null,
             applicantName: null,
             attachment: null,
+            panCard:[null, ValidationService.panValidator],
+            gstNo:[null, ValidationService.gstNoValidator],
             // bankName: this._fb.group({
             //     code: [null, [Validators.required]],
             //     name: null

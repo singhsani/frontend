@@ -297,6 +297,19 @@
                             </mat-error>
                         </div>
 
+                        <div class="col-md-4">
+                            <mat-form-field>
+                                <input matInput type="text" formControlName="panCard" placeholder="{{'pancard' | translate : translateKey}}" required>
+                                <control-messages [control]="stadiumApplicationForm.get('panCard')"></control-messages>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-md-4">
+                            <mat-form-field>
+                                <input matInput type="text" formControlName="gstNo" placeholder="{{'gstno' | translate : translateKey}}">
+                                <control-messages [control]="stadiumApplicationForm.get('gstNo')"></control-messages>
+                            </mat-form-field>
+                        </div>
 
                     </div>
 
