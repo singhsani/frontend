@@ -209,8 +209,16 @@ export class NewRegistrationComponent implements OnInit {
       _.forEach(this.vehicleTypeArray, (key) => {
 				key.name = _.replace(key.name, /&/g, "and");
 			});
+      this.setBillingPeriod( this.billingPeriodArray);
     });
+   
   }
+
+  // this method will set billing period in column
+setBillingPeriod(billingPeriodArray:any){
+    this.vehicleRegistrationForm.get('billingPeriod').patchValue(billingPeriodArray[billingPeriodArray.length - 1]);
+    this.vehicleRegistrationForm.get('billingPeriod').disable();
+}
 
 	/**
 	 * This method is used to get vehicle information
@@ -266,6 +274,7 @@ export class NewRegistrationComponent implements OnInit {
     this.vehicleServise.getBillingPeriodLookups().subscribe(res => {
       this.billingPeriodArray = res.data;
     });
+  
   }
 
 	/**
