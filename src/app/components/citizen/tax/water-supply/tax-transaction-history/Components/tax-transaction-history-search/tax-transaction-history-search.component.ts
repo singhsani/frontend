@@ -60,4 +60,16 @@ export class TaxTransactionHistorySearchComponent implements OnInit, OnDestroy {
       }
     }
   }
+  clear() {
+   // this.propertyNo=null;
+   
+     this.searchModel = new SearchModel();
+     this.searchModel.propertyNo=null;
+     this.searchModel.transactionTypeId=null;
+     this.viewModel.censusNo =null;
+     this.viewModel.taxPayerName=null;
+     this.viewModel.address=null;
+    // this.taxTransactionHistoryDataSharingService.(false);
+    // this.taxTransactionHistoryDataSharingService.updatedIsClear(true);
+  }
 }

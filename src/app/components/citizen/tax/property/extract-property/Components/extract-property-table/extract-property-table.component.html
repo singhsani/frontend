@@ -53,11 +53,12 @@
         </mat-form-field>
       </div>
       <div class="col-md-2">
-        <button class="ml-3" mat-raised-button color="accent" type="button" (click)="onOutstandingDetailCLick()">
+        <button class="ml-3" mat-raised-button color="accent" type="button" style="padding-left: 0px !important;
+        width: 90% !important"(click)="onOutstandingDetailCLick()">
           <mat-icon>details</mat-icon> {{detailOutstandingButtonText}}
         </button>
       </div>
-      <div class="col-md-1">
+      <div class="col-md-2">
           <mat-form-field class="full-width-input">
             <input matInput number-only name="noofCopies" placeholder="No of Copies" (blur)="onBlurNoofCopies($event)"
               [(ngModel)]="serviceCharge.noofCopies" maxlength="5">
@@ -72,7 +73,7 @@
             <mat-error *ngIf="AD.invalid">*As on Date is required.</mat-error>
           </mat-form-field>
         </div>
-        <div class="col-md-1">
+        <div class="col-md-2">
           <mat-form-field class="full-width-input">
             <input matInput disabled name="totalAmount" placeholder="Fees Applicable" [(ngModel)]="serviceCharge.totalAmount">
           </mat-form-field>
@@ -82,15 +83,16 @@
             <!-- <mat-icon>details</mat-icon>  -->
             {{detailButtonText}}
           </button>
-        </div>
-        <div class="col-md-2 text-right">
-          <button class="ml-3" mat-raised-button color="primary" type="submit">
-            <mat-icon>payment</mat-icon> Pay Now
-          </button>
-        </div>
-        <select-payment-gateway-property #paymentGateway></select-payment-gateway-property>
+        </div>       
     </div>
-
+<div class="row">
+  <div class="col-md-12 text-right">
+    <button class="ml-3" mat-raised-button color="primary" type="submit">
+      fff<mat-icon>payment</mat-icon> Pay Now
+    </button>
+    <select-payment-gateway-property #paymentGateway></select-payment-gateway-property>
+  </div>
+</div>
   </form>
   <mat-card *ngIf="isShowDetail">
     <div class="row">
