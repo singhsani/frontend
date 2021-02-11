@@ -45,13 +45,16 @@ export class BTConstants {
     static MY_BOOKINGS_URL = 'citizen/bookings/my-bookings';
     static MY_TICKETINGS_URL = 'citizen/ticketings/my-ticketings';
     static INVALID_BOOKING_STATUS = 'INVALID_BOOKING_STATUS';
-    static WAITINGLIST = 'WAITINGLIST';   
+    static WAITINGLIST = 'WAITINGLIST';
     static RESERVED = 'RESERVED';
     static HOLIDAY = 'HOLIDAY';
     static FESTIVAL = 'FESTIVAL';
-    static ATITHIGURH_DEPOSIT = 'ATITHIGURH_DEPOSIT';  
-    static SCRUTINY = 'SCRUTINY'; 
+    static ATITHIGURH_DEPOSIT = 'ATITHIGURH_DEPOSIT';
+    static SCRUTINY = 'SCRUTINY';
     static SHOOTING_PERMISSION = 'SHOOTING_PERMISSION';
+    static REFUND_REQUEST = 'REFUND_REQUEST';
+    static REFUND_APPROVED = 'REFUND_APPROVED';
+    static COMPLETED = 'COMPLETED';
 }
 
 export class BTConfig extends CitizenConfig {
@@ -74,12 +77,12 @@ export class BTConfig extends CitizenConfig {
      * @param router router instance
      */
     redirectToPayment(err: any, commonService: CommonService, btService: BookingService | TicketingsService, form?: FormGroup, router?: Router, applicationrouter?: any) {
-       
+
         let redirectURLAfterPayment = (btService instanceof TicketingsService) ? BTConstants.MY_TICKETINGS_URL : BTConstants.MY_BOOKINGS_URL
 
         let payData = this.storePaymentInfo(err.error.data, redirectURLAfterPayment, btService.resourceType);
-       
-        
+
+
         let words = this.commonService.getToWords(payData.amount);
         let html =
             `
@@ -128,13 +131,13 @@ export class BTConfig extends CitizenConfig {
     }
 
     redirectToCCAvenuePayment(err: any, commonService: CommonService, btService: BookingService | TicketingsService, paymentGateway, form?: FormGroup, router?: Router, applicationrouter?: any) {
-        
+
         let redirectURLAfterPayment = (btService instanceof TicketingsService) ? BTConstants.MY_TICKETINGS_URL : BTConstants.MY_BOOKINGS_URL
 
         let payData = this.storePaymentInfo(err.error.data, redirectURLAfterPayment, btService.resourceType);
 
-       
-        
+
+
         let words = commonService.getToWords(payData.amount);
         let html =
             `
