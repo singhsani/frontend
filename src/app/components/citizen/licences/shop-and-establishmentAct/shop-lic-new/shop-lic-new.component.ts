@@ -519,15 +519,15 @@ export class ShopLicNewComponent implements OnInit {
 			this.wardZoneLevel3List = [];
 			this.wardZoneLevel4List = [];
 			this.shopLicNewForm.patchValue({
-				ward: null,
-				block: null
+			waterDrainageWardId: null,
+			waterDrainageBlockId: null
 			 });
 		}
 		else if (level == 3) {
 			this.wardZoneLevel3List = [];
 			this.wardZoneLevel4List = [];
 			this.shopLicNewForm.patchValue({
-				block: null
+				waterDrainageBlockId: null
 			 });
 		}
 		else if (level == 4) {
