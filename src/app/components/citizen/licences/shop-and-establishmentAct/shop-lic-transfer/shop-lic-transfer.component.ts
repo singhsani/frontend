@@ -1508,6 +1508,7 @@ export class ShopLicTransferComponent implements OnInit {
 			if(false == numberValue){
 				formControl.setValue("");
 			 	this.commonService.openAlert("Error", "Please enter valid PEC number","error");
+				 
 			}error=>{
 				formControl.setValue("");
 				console.error("error",error);
