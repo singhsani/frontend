@@ -644,16 +644,16 @@
 				<div *ngIf="isPatners">
 				<div *ngIf="shopLicNewForm.get('shopPartnerList')['controls'].length">
 					<div>
-						<table class="table table-striped responsiveTableRow">
+						<table class="table table-striped responsiveTableRow tableLayout">
 							<thead>
 								<tr class="mo-d-none">
 									
-									<th>{{'Name' | translate:translateKey}}</th>
-									<th>{{'Address' | translate:translateKey}}</th>
-									<th>{{'Designation / Status' | translate:translateKey}}</th>
-									<th >{{'mobileNo' | translate:translateKey}}</th>
-									<th >{{'emailId' | translate:translateKey}}</th>
-									<th *ngIf="shopLicNewForm.get('canEdit').value"></th>
+									<th width="150">{{'Name' | translate:translateKey}}</th>
+									<th width="150">{{'Address' | translate:translateKey}}</th>
+									<th width="140">{{'Designation / Status' | translate:translateKey}}</th>
+									<th width="110">{{'mobileNo' | translate:translateKey}}</th>
+									<th width="150">{{'emailId' | translate:translateKey}}</th>
+									<th width="60" *ngIf="shopLicNewForm.get('canEdit').value"></th>
 								</tr>
 							</thead>
 							<tbody formArrayName="shopPartnerList">
@@ -694,18 +694,18 @@
 									<td>
 										<div class="d-md-none">{{'mobileNo' | translate:translateKey}}</div>
 										<div class="mobileCon adjustError">
-											<p class="width50" *ngIf="!item.isEditMode">{{item.get('mobileNo').value}}</p>
+											<p *ngIf="!item.isEditMode">{{item.get('mobileNo').value}}</p>
 											<mat-form-field *ngIf="item.isEditMode">
 												<input matInput minlength="10" maxlength="10" OnlyNumber formControlName="mobileNo" required>
-												<control-messages [control]="item.get('mobileNo')"></control-messages>
+												<control-messages class="matErrorTwoLine" [control]="item.get('mobileNo')"></control-messages>
 											</mat-form-field>
 										</div>
 									</td>
 
 									<td>
 										<div class="d-md-none">{{'emailId' | translate:translateKey}}</div>
-										<div class="mobileCon adjustError">
-											<p class="width50" *ngIf="!item.isEditMode">{{item.get('emailId').value}}</p>
+										<div class="mobileCon">
+											<p  *ngIf="!item.isEditMode">{{item.get('emailId').value}}</p>
 											<mat-form-field *ngIf="item.isEditMode">
 												<input matInput maxlength="50"  formControlName="emailId" required>
 												<control-messages [control]="item.get('emailId')"></control-messages>
