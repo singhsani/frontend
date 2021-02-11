@@ -297,13 +297,13 @@
 						<ng-container>
 
 							<h2>
-								{{'attchaments' | translate:translateKey}}
+								{{'Attachments' | translate:translateKey}}
 							</h2>
 							<div class="col-md-4">
 								<label labelPosition="after">{{'photo' | translate:translateKey}} *
 								</label>
 								<booking-file-upload (uploaded)="isFileUploaded1 = $event"
-									[form]="swimmimgPoolBookingForm" [uploadModel]="{fieldIdentifier:'1', labelName:'photo', formPart:'1.4', refNumber:
+									[form]="swimmimgPoolBookingForm" [uploadModel]="{fieldIdentifier:'1', labelName:'Photo', formPart:'1.4', refNumber:
 								swimmimgPoolBookingForm.get('refNumber').value, variableName: 'photo'}">
 								</booking-file-upload>
 							</div>
@@ -311,7 +311,7 @@
 								<label labelPosition="after">{{'gazettate_officer_letter' | translate:translateKey}} *
 								</label>
 								<booking-file-upload (uploaded)="isFileUploaded2 = $event"
-									[form]="swimmimgPoolBookingForm" [uploadModel]="{fieldIdentifier:'2', labelName:'gazettate_officer_letter', formPart:'1.1', refNumber:
+									[form]="swimmimgPoolBookingForm" [uploadModel]="{fieldIdentifier:'2', labelName:'Gazettate Officer Letter', formPart:'1.1', refNumber:
 								swimmimgPoolBookingForm.get('refNumber').value, variableName: 'gazettate_officer_letter'}">
 								</booking-file-upload>
 
@@ -321,7 +321,7 @@
 									labelPosition="after">{{'parents_or_gauardians_permission_letter' | translate:translateKey}} *
 								</label>
 								<booking-file-upload (uploaded)="isFileUploaded3 = $event"
-									[form]="swimmimgPoolBookingForm" [uploadModel]="{fieldIdentifier:'3', labelName:'gauardians_permission_letter', formPart:'1.2', refNumber:
+									[form]="swimmimgPoolBookingForm" [uploadModel]="{fieldIdentifier:'3', labelName:'Parents or Guardians Permission Letter', formPart:'1.2', refNumber:
 								swimmimgPoolBookingForm.get('refNumber').value, variableName: 'gauardians_permission_letter'}">
 								</booking-file-upload>
 							</div>
@@ -331,7 +331,7 @@
 									labelPosition="after">{{'certified_doctors_certificate' | translate:translateKey}} *
 								</label>
 								<booking-file-upload (uploaded)="isFileUploaded4 = $event"
-									[form]="swimmimgPoolBookingForm" [uploadModel]="{fieldIdentifier:'4', labelName:'certified_doctors_certificate', formPart:'1.3', refNumber:
+									[form]="swimmimgPoolBookingForm" [uploadModel]="{fieldIdentifier:'4', labelName:'Certified Doctors Certificate', formPart:'1.3', refNumber:
 								swimmimgPoolBookingForm.get('refNumber').value, variableName: 'certified_doctors_certificate'}">
 								</booking-file-upload>
 							</div>
