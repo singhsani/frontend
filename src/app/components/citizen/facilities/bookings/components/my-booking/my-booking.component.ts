@@ -551,6 +551,9 @@ export class MyBookingComponent implements OnInit {
 			|| element.resourceType === this.bookingConstant.SHOOTING_PERMISSION
 			|| element.status === this.bookingConstant.REJECTED
 			|| (element.resourceType === 'SWIMMING_POOL' && element.status === this.bookingConstant.APPROVED)
+			|| element.status === this.bookingConstant.REFUND_REQUEST
+			|| element.status === this.bookingConstant.REFUND_APPROVED
+			|| element.status === this.bookingConstant.COMPLETED
 			) {
 			return false;
 		}
@@ -650,7 +653,12 @@ export class MyBookingComponent implements OnInit {
     return false;
 	}
 
-// 	depositRefundRequest(element){
-// 	}
+ 	depositRefundRequest(element){
+ 	  this.bookingService.depositRefundRequest(element.refNumber).subscribe(response=>{
+ 	    console.log(response);
+ 	  }, err => {
+    			this.commonService.openAlert('Error', err.message, 'warning');
+    });
+ 	}
 
 }

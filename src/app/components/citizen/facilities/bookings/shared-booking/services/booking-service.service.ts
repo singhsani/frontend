@@ -353,8 +353,8 @@ export class BookingService {
 
   /**
      * This method is used to send sms after completion of  payment
-     * @param refNumber 
-     * @param eventType 
+     * @param refNumber
+     * @param eventType
      */
     sendSms(refNumber:any,eventType:any){
       this.requestURL = `api/booking/${this.resourceType}/sendSms?refNumber=${refNumber}&eventType=${eventType}`;
@@ -363,8 +363,8 @@ export class BookingService {
 
 /**
      * This method is used to send Mail after completion of payment to user
-     * @param refNumber 
-     * @param eventType 
+     * @param refNumber
+     * @param eventType
      */
     sendMail(refNumber: any,eventType: any){
       this.requestURL = `api/booking/${this.resourceType}/sendMail?refNumber=${refNumber}&eventType=${eventType}`;
@@ -379,8 +379,8 @@ export class BookingService {
    }
   /**
      * This method is used to send sms on submit
-     * @param refNumber 
-     * @param eventType 
+     * @param refNumber
+     * @param eventType
      */
   sendSmsForSwimming(refNumber:any,eventType:any){
     this.requestURL = `api/booking/${this.resourceType}/sendSms?refNumber=${refNumber}&eventType=${eventType}`;
@@ -389,12 +389,18 @@ export class BookingService {
 
   /**
      * This method is used to send Mail on submit
-     * @param refNumber 
-     * @param eventType 
+     * @param refNumber
+     * @param eventType
      */
     sendMailForSwimming(refNumber: any,eventType: any){
       this.requestURL = `api/booking/${this.resourceType}/sendMail?refNumber=${refNumber}&eventType=${eventType}`;
       return this.http.get(this.requestURL);
 
+    }
+
+    /* This is used for deposit Refund Request */
+    depositRefundRequest(refNumber: any){
+      this.requestURL = `api/booking/${this.resourceType}/depositRefundRequest?refNumber=${refNumber}`;
+      return this.http.post(this.requestURL,'');
     }
 }
