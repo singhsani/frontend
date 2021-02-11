@@ -403,13 +403,16 @@ export class MyApplicationsComponent implements OnInit,OnChanges {
 	 * This method is use for print view option
 	 * @param row - Table row oject
 	 */
-	isPrintViewDisplay(row) {  
-		if (row.serviceType === 'PEC_REG' || row.serviceType === 'PRC_REG' || row.serviceType === 
+	isPrintViewDisplay(row) {
+		if (row.serviceType === 'PEC_REG' || row.serviceType === 'PRC_REG' || row.serviceType ===
 		'NO_DUE_CERTIFICATE' || row.serviceType === 'ASSESSMENT_CERTIFICATE' || row.serviceType == 'VEHICLE')
+		return false;
+		else if (row.serviceType === 'SHOP_ESTAB_APPLICATION' &&  !(this.commonService.fromAdmin())) {
 			return false;
+		}
 		else if (row.fileStatus != 'DRAFT')
-			return true;
-	}
+		return true;
+		}
 
 	isPrintReceipt(row){
 		if(row.fileStatus=='SUBMITTED' && row.serviceType=='SHOP_ESTAB_APPLICATION')
