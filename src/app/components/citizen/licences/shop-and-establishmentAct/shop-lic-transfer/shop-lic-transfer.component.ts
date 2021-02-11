@@ -1507,8 +1507,7 @@ export class ShopLicTransferComponent implements OnInit {
 		  } else if("PEC" == numberValue){
 			if(false == numberValue){
 				formControl.setValue("");
-			 	this.commonService.openAlert("Error", "Please enter valid PEC number","error");
-				 
+			 	this.commonService.openAlert("Error", "Please enter valid PEC Number","error");	 
 			}error=>{
 				formControl.setValue("");
 				console.error("error",error);
@@ -1516,7 +1515,7 @@ export class ShopLicTransferComponent implements OnInit {
 			}	
 			else{
 				formControl.setValue("");
-				this.commonService.openAlert("Error", "Please enter valid PEC and PRC number","error");
+				this.commonService.openAlert("Error", "Please enter valid PEC number","error");
 			}
 		//    {
 		// 	  this.professionalTaxService.getSearchDetails(formControl.value,true).subscribe(res => {
@@ -1539,7 +1538,7 @@ export class ShopLicTransferComponent implements OnInit {
 		}else if("PRC" == numberValue){
 			if(false == numberValue){
 				formControl.setValue("");
-			 	this.commonService.openAlert("Error", "Please enter valid PEC number","error");
+			 	this.commonService.openAlert("Error", "Please enter valid PRC number","error");
 			}error=>{
 				formControl.setValue("");
 				console.error("error",error);
@@ -1547,7 +1546,7 @@ export class ShopLicTransferComponent implements OnInit {
 			
 		}else{
 			formControl.setValue("");
-			this.commonService.openAlert("Error", "Please enter valid PEC and PRC number","error");
+			this.commonService.openAlert("Error", "Please enter valid PRC number","error");
 		}
 	}
 
