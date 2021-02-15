@@ -659,7 +659,7 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
     &>.mat-tab-header {border: 0;
         .mat-tab-label-container {background: #f1f1f1;}
     }
-    .mat-tab-label {font-size: 15px; color: #666; opacity: 1; font-weight: normal;}
+    .mat-tab-label {font-size: 14px; color: #666; opacity: 1; font-weight: normal;}
     // .mat-icon {font-size: 22px; float: left; margin-right: 13px;}
     .mat-tab-label-active {color:$colorBlue; font-weight: 500;}
    // .mat-tab-label-content {white-space: normal; padding: 0 10px;}
@@ -1182,7 +1182,8 @@ textarea.gujInputCls {margin-bottom: 0;}
 .SHOP-ESTAB-NEW {background:url('assets/icons/shop-and-establishment-license.svg') !important;}
 .moduleList .mat-tab-label-active .SHOP-ESTAB-NEW, .moduleList .mat-tab-label:not(.mat-tab-disabled):focus .SHOP-ESTAB-NEW {background:url('assets/icons/shop-and-establishment-license-h.svg') !important;}
 
-.selectCategoryDropdown  .ng-option {
+// selectTwoLine
+.selectCategoryDropdown  .ng-option, .selectTwoLine  .ng-option {
     line-height: normal !important;
     min-height: auto !important;
      padding: 8px 16px !important;
