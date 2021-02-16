@@ -49,6 +49,11 @@
           <textarea disabled matInput placeholder="Address" name="address" [(ngModel)]="viewModel.address"></textarea>
         </mat-form-field>
       </div>
+      <div class="col-md-12 text-right mt-4">
+        <button mat-raised-button class=" ml-3" type="button" color="warn" (click)="clear()">
+          <mat-icon>clear_all</mat-icon> Clear
+        </button>
+      </div>
     </div>
   </form>
 </mat-card>

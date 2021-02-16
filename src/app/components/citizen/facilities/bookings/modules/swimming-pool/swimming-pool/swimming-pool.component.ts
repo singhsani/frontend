@@ -184,12 +184,12 @@ export class SwimmingPoolComponent implements OnInit {
    * Method for hide duration field
    */
   changeBatchDuration(event){
-    // if(event == 'LEARNER'){
-    //   this.swimmimgPoolBookingForm.get('batchDuration').get('code').setValue('MONTHLY');
-    //   this.durationisReadOnly = true;
-    // }else{
-    //   this.durationisReadOnly = false;
-    // }
+    if(event == 'LEARNER'){
+      this.swimmimgPoolBookingForm.get('batchDuration').get('code').setValue('MONTHLY');
+      this.durationisReadOnly = true;
+    }else{
+      this.durationisReadOnly = false;
+    }
 
   }
 
