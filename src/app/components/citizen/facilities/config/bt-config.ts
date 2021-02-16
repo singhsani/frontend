@@ -55,6 +55,7 @@ export class BTConstants {
     static REFUND_REQUEST = 'REFUND_REQUEST';
     static REFUND_APPROVED = 'REFUND_APPROVED';
     static COMPLETED = 'COMPLETED';
+    static CHILDREN_THEATER = 'CHILDREN_THEATER'
 }
 
 export class BTConfig extends CitizenConfig {

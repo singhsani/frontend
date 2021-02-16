@@ -554,6 +554,7 @@ export class MyBookingComponent implements OnInit {
 			|| element.status === this.bookingConstant.REFUND_REQUEST
 			|| element.status === this.bookingConstant.REFUND_APPROVED
 			|| element.status === this.bookingConstant.COMPLETED
+			|| (element.resourceType ===this.bookingConstant.CHILDREN_THEATER)
 			) {
 			return false;
 		}
