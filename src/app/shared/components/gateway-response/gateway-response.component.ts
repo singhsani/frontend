@@ -151,8 +151,8 @@ export class GatewayResponseComponent implements OnInit {
 		}
 
 		if (payGateway == 'BILLDESK') {
-			payData.refNumber = data.txnReferenceNo;
-			payData.transactionId = data.txnReferenceNo;
+			//payData.refNumber = data.txnReferenceNo;
+			//payData.transactionId = data.txnReferenceNo;
 			payData.payableServiceType = data.additionalInfo2;
 			payData.amount = data.txnAmount;
 		}
