@@ -341,6 +341,12 @@
                     </h2>
 
                     <bank-details [form]="stadiumApplicationForm"></bank-details>
+                    <div class="row">
+                        <mat-form-field class="col-md-12">
+                            <input matInput maxlength="250" type="text" formControlName="eventDetails"
+                            placeholder="{{'event_details' | translate : translateKey}}" required>
+                        </mat-form-field>
+                    </div>
 
                     <div class="row">
                         <h2>
