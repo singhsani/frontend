@@ -165,6 +165,7 @@ export class BookStadiumComponent implements OnInit {
             // }),
             bookingDate: null,
             bookingFrom: null,
+            eventDetails: [null, Validators.required],
             bookingPurposeMaster: this._fb.group({
                 code: [null, [Validators.required]],
                 name: null
