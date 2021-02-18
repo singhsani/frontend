@@ -13,6 +13,7 @@ import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ManageRoutes } from 'src/app/config/routes-conf';
 import { ProfessionalTaxService } from 'src/app/core/services/citizen/data-services/professional-tax.service';
+import { CollectionService } from '../tax/water-supply/tax-transaction-history/Services/collection.service';
 declare var $: any;
 
 @Component({
@@ -31,6 +32,8 @@ export class CommonPaybleComponent implements OnInit {
   currPaySerData: any;
   isRecordExists: boolean = false;
   isECRCSearch: boolean = false;
+
+  ispropertyTax :  boolean = false;
   userServicesList = [];
   applicationrouter: any;
   redirectURLAfterPayment: any;
@@ -47,9 +50,12 @@ export class CommonPaybleComponent implements OnInit {
   inputData: any
   selected: any;
 
+  collectionModel : any;
+
   constructor(
     private formService: FormsActionsService,
     private fb: FormBuilder,
+    private collectionService: CollectionService,
     private toaster: ToastrService,
     private commonService: CommonService,
     private profeService: ProfessionalTaxService,
@@ -202,11 +208,14 @@ export class CommonPaybleComponent implements OnInit {
    * @param searchable - boolean (true/false)
    */
   showHideSearchable(paySerCode) {
-    if (paySerCode === 'PAY_PROF_TAX')
+    if (paySerCode === 'PAY_PROF_TAX'){
       this.placeholder = 'PEC Number';
-    else
+    }else if(paySerCode === 'PRO-ASS'){
+      this.placeholder = 'Property Number';
+    }else{
       this.placeholder = 'Reference Number';
-
+    }
+      
     this.isRecordExists = false;
     this.responseData = undefined;
     this.paymentsForm.get('amount').setValue(null);
@@ -214,6 +223,39 @@ export class CommonPaybleComponent implements OnInit {
     this.currPaySerData = _.filter(this.PayableServices, { 'code': paySerCode })[0];
   }
 
+  getServices(){
+    
+    let serviceType = this.paymentsForm.get('payableServices').get('code').value;
+    if(serviceType === 'PRO-ASS'){
+      this.getAmountDataProperty();
+    }else if (serviceType === 'PAY_PROF_TAX'){
+      this.ispropertyTax = false;
+      this.getAmountData();
+    }else{
+      this.ispropertyTax = false;
+      this.getCitizenForm();
+    }
+    
+  }
+  getAmountDataProperty(){
+    
+    this.ispropertyTax = true;
+
+    this.collectionService.getoccupierOutstandingAmount({ propertyNo: this.paymentsForm.get('refNumber').value }).subscribe(
+      (data) => {
+        if (data.status === 200) {
+         
+          this.collectionModel = data.body;
+          
+        }
+      },
+      (error) => {
+        
+       
+      });
+  
+
+  }
   /**
    * - This method is used to get the type of tax and referance number and get the amount from the API
    */
@@ -319,6 +361,7 @@ export class CommonPaybleComponent implements OnInit {
   }
 
   getCitizenForm() {
+    
     if (this.paymentsForm.invalid) {
       this.markFormGroupTouched(this.paymentsForm);
       this.commonService.openAlert("Warning", "Enter all the required information", "warning");

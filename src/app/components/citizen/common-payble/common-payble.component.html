@@ -36,19 +36,15 @@
       </mat-form-field>
 
       <div class="col-md-4 pt-2">
-        <button mat-raised-button color="accent" *ngIf="f.payableServices.get('code').value !== 'PAY_PROF_TAX'"
-          (click)="getCitizenForm()">
-          <mat-icon>search</mat-icon>
-          Search
-        </button>
-        <button mat-raised-button color="accent" *ngIf="f.payableServices.get('code').value === 'PAY_PROF_TAX'"
-          (click)="getAmountData()">
+        <button mat-raised-button color="accent" 
+          (click)="getServices()">
           <mat-icon>search</mat-icon>
           Search
         </button>
       </div>
     </div>
 
+    <div>
     <div class="row" style="margin-left: -30px;" *ngIf="isRecordExists && responseData">
       <div class="col-md-12">
         <label class="col-md-2 font16 font-weight-bold">Name :</label>
@@ -167,6 +163,101 @@
       </div>
 
     </div>
+
+  </div>
+
+  <div *ngIf="ispropertyTax">
+
+    <div class="row" style="margin-left: -30px;">
+    
+      <div class="col-md-12">
+        <label class="col-md-2 font16 font-weight-bold">Property No :</label>
+        <span class="font16">{{collectionModel?.propertyNo}}</span>
+      </div>
+
+      <div class="col-md-12">
+        <label class="col-md-2 font16 font-weight-bold">Censuse No :</label>
+        <span class="font16">{{collectionModel?.censuseNo}}</span>
+      </div>
+
+      <div class="col-md-12">
+        <label class="col-md-2 font16 font-weight-bold">Owner Name :</label>
+        <span class="font16">{{collectionModel?.ownerName}}</span>
+      </div>
+      <div class="col-md-12">
+        <label class="col-md-2 font16 font-weight-bold">Occupier Name :</label>
+        <span class="font16">{{collectionModel?.occupierName}}</span>
+      </div>
+      <div class="col-md-6">
+        <label class="col-md-6 font16 font-weight-bold">Postal address :</label>
+        <span class="font16">{{collectionModel?.address}}</span>
+      </div>
+    </div>
+
+    <div class="row mt-4" >
+      <ng-container >
+        <div class="table-responsive">
+          <table class="table" style="border: 1px solid #dee2e6;">
+            <thead>
+              <tr>
+                <th class="pl-4">S.No.</th>
+                <th>Financial Year</th>
+                <th>Bill No</th>
+                <th>Bill Date </th>
+                <th>Due Amount</th>
+                <th>Rebate</th>
+                <th>Interest/Penalty Amount	</th>
+                <th>Payable Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngIf="collectionModel?.billWiseDetails?.length == 0">
+                <td colspan="12" class="noRecord">
+                  <h5 class="text-center">No record found !</h5>
+                </td>
+              </tr>
+              <ng-container *ngFor="let dues of collectionModel?.billWiseDetails;let i=index">
+                <tr>
+                  <td width="50" [class.pl-4]="!dues.children">
+                    <mat-icon class="pull-left arrowCls" (click)="toggleRow(dues)" *ngIf="dues.children && dues.children.length > 0">
+                      <span *ngIf="!dues.hidden">chevron_right</span>
+                      <span *ngIf="dues.hidden">expand_more</span>
+                    </mat-icon>{{i+1}}
+                  </td>
+                  <td>{{dues?.financialYear}}</td>
+                  <td>{{dues?.billNo}}</td>
+                  <td>{{dues?.billDate}}</td>
+                  <td>{{collectionModel?.dueAmount}}</td>
+                  <td>{{dues.rebate}}</td>
+                  <td>{{dues.intrestOrPenaltyAmount}}</td>
+                  <td>{{dues.totalTaxWiseBillAmount}}</td>
+                </tr>
+                
+              </ng-container>
+            </tbody>
+          </table>
+        </div>
+      </ng-container>
+
+      <div class="row mt-4">
+        <div class="col-md-12">
+          <label class="col-md-8 font16 font-weight-bold">Amount Payable :</label>
+          <span class="font16" style="color: #ff0000;">{{collectionModel?.payableAmount}}</span>
+        </div>
+
+       
+
+      </div>
+
+      <div class="col-md-6 pt-3 mt-4" style="margin-left: 92px;">
+        <button mat-raised-button class="paymentButton" color="primary" type="submit" (click)="makePayment(paymentsForm.value)">
+          Proceed for Payment
+        </button>
+      </div>
+
+    </div>
+
+  </div>
 
   </form>
   <select-payment-gateway #paymentGateway></select-payment-gateway>

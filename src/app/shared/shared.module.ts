@@ -63,6 +63,7 @@ import { OfflinePaymentService } from './services/offlinePayment.service';
 import { PaymentNewService } from './services/paymentNew.service';
 import { BankDetailsBookingComponent } from './components/bank-details-booking/bank-details-booking.component'
 import { AppMonthPicker } from './components/month-picker/month-picker.component';
+import { CollectionService } from '../components/citizen/tax/water-supply/tax-transaction-history/Services/collection.service';
 /* import pipes end*/
 
 const COMPONENTS = [
@@ -146,7 +147,8 @@ const COMPONENTS = [
 		HosHttpService,
 		CountryService,
 		OfflinePaymentService,
-		PaymentNewService
+		PaymentNewService,
+		CollectionService
 	],
 	entryComponents: [DialogContentComponent,ApplicantDetailsComponent, OfflinePaymentComponent],
 
