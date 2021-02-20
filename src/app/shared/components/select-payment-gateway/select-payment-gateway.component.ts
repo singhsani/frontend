@@ -120,7 +120,7 @@ export class SelectPaymentGatewayComponent implements OnInit {
     let obj = {
       frontRedirectURL: this.payData.returnUrl,
       customerID: this.payData.refNumber,
-      txtadditionalInfo2: this.payData.payableServiceType,
+      txtadditionalInfo2: this.payData.gatewayAccountKey,
       txtAmount: this.payData.amount,
     };
 

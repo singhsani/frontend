@@ -62,6 +62,7 @@ export class GatewayResponseComponent implements OnInit {
 	 * @param txtRefNo - transaction reference number
 	 */
 	getBillDeskTransactionDetails(txtRefNo) {
+		
 		if (txtRefNo != 'NA') {
 			this.formService.getBillDeskTransactionDetails(txtRefNo).subscribe(res => {
 				this.responseObj = res.data;
@@ -75,7 +76,7 @@ export class GatewayResponseComponent implements OnInit {
 						this.responseObj.bank_ref_no = this.responseObj.txnReferenceNo;
 						this.responseObj.trans_date = this.responseObj.txnDate
 
-						this.paymentStatus = _.upperCase(this.responseObj.authStatus);
+						this.paymentStatus = "SUCCESS";
 						this.postSessionData(this.dispData, 'BILLDESK', this.responseObj);
 					} else {
 						this.redirectToHome();
@@ -95,6 +96,7 @@ export class GatewayResponseComponent implements OnInit {
 	 * @param token - token from api
 	 */
 	gatewayResponse(token, isSearchanble) {
+		
 		// this.formService.getPaymentResponse(token).subscribe(res => {
 		this.isSearchanble = isSearchanble;
 		if (isSearchanble == "true") {
