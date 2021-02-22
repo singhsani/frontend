@@ -158,7 +158,7 @@
 
                     <mat-form-field class="col-md-4">
                         <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="applicantMobile"
-                            placeholder="{{'mobile_number' | translate: translateKey}} *" required>
+                            placeholder="{{'mobile_number' | translate: translateKey}} *">
                         <control-messages [control]="ticketBookingForm.get('applicantMobile')"></control-messages>
                     </mat-form-field>
 
@@ -207,7 +207,7 @@
                     <mat-form-field class="col-md-4">
                         <input matInput maxlength="25" appValidationFields [validationFieldsType]="'onlyNameWithSpace'"
                             type="text" formControlName="schoolName"
-                            placeholder="{{'school_name' | translate: translateKey}} *">
+                            placeholder="{{'school_name' | translate: translateKey}} *" required>
                         <control-messages [control]="ticketBookingForm.get('schoolName')"></control-messages>
                     </mat-form-field>
 
