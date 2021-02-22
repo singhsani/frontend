@@ -487,13 +487,14 @@ export class BookPlanetariumComponent implements OnInit {
    * This method submit for varify application at department
    */
   submitForVarification() {
-
-    if (this.ticketBookingForm.get('specialShowLanguage').get('code').value == null
+   
+  
+     if (this.ticketBookingForm.get('specialShowLanguage').get('code').value == null
       && this.ticketBookingForm.get('schoolName').value == null
       && this.ticketBookingForm.get('schoolEmailId').value == null
       && this.ticketBookingForm.get('totalVisitor').value == null) {
 
-      this.commonService.openAlert("Feild Error", this.ticketingConstants.ALL_FEILD_REQUIRED_MESSAGE, 'warning');
+      this.commonService.openAlert("Field Error", this.ticketingConstants.ALL_FEILD_REQUIRED_MESSAGE, 'warning');
       this.markFormGroupTouched(this.ticketBookingForm);
     }
     else if (this.ticketBookingForm.get('termsCondition').value) {
@@ -531,7 +532,7 @@ export class BookPlanetariumComponent implements OnInit {
 
     }
     else {
-      this.commonService.openAlert('Feild Error', this.ticketingConstants.TERMS_AND_CONDITION_MESSAGE, 'warning');
+      this.commonService.openAlert('Field Error', this.ticketingConstants.TERMS_AND_CONDITION_MESSAGE, 'warning');
       this.markFormGroupTouched(this.ticketBookingForm);
     }
   }
@@ -548,12 +549,12 @@ export class BookPlanetariumComponent implements OnInit {
       || !this.ticketBookingForm.get('planetariumShowTiming').get('code').value 
       || !this.ticketBookingForm.get('visitingDate').value
       ) {
-      this.commonService.openAlert("Feild Error", this.ticketingConstants.ALL_FEILD_REQUIRED_MESSAGE, 'warning');
+      this.commonService.openAlert("Field Error", this.ticketingConstants.ALL_FEILD_REQUIRED_MESSAGE, 'warning');
       this.markFormGroupTouched(this.ticketBookingForm);
     }
     else if (!this.ticketBookingForm.get('termsCondition').value) {//for general show
       this.isLoadingResults = false;
-      this.commonService.openAlert('Feild Error', this.ticketingConstants.TERMS_AND_CONDITION_MESSAGE, 'warning');
+      this.commonService.openAlert('Field Error', this.ticketingConstants.TERMS_AND_CONDITION_MESSAGE, 'warning');
       this.markFormGroupTouched(this.ticketBookingForm);
     }
     else {
