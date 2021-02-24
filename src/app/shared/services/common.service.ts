@@ -236,6 +236,7 @@ export class CommonService {
 	}
 
 	storePaymentInfo(paymentData: any, myApplicationUrl: any, retAfterPayment: any): any {
+	
 		let payData = {
 			id: null,
 			uniqueId: null,
@@ -252,7 +253,8 @@ export class CommonService {
 			amount: paymentData.amount,
 			paymentMode: "NETBANKING",
 			returnUrl: retAfterPayment,
-			myApplicationUrl: myApplicationUrl
+			myApplicationUrl: myApplicationUrl,
+			gatewayAccountKey : paymentData.gatewayAccountKey
 
 		}
 		this.session.set('paymentData', JSON.stringify(payData));

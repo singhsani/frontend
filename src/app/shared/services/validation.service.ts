@@ -99,7 +99,8 @@ export class ValidationService {
     static emailValidator(control: FormControl) {
         if (control.value) {
         //    const matches = control.value.match(/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/);
-            const matches = control.value.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
+            // const matches = control.value.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
+            const matches = control.value.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,3}$/);
             return matches ? null : { 'invalidEmail': true };
         } else {
             return null;
