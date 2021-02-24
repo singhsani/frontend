@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { UpdateEmailMobileComponent } from './update-email-mobile/update-email-mobile.component';
 
 const routes: Routes = [
 
@@ -14,7 +15,7 @@ const routes: Routes = [
 	{ path: 'refundAgainstVacancy', loadChildren: './refund-application/refund-application.module#RefundApplicationModule' },
 	{ path: 'propertyAssessment', loadChildren: './new-property-entry-add/new-property-entry-add.module#NewPropertyEntryAddModule' },
 	{ path: 'revaluation', loadChildren: './revaluation/revaluation.module#RevaluationModule' },
-
+	{ path: 'update-email-mobile', component:UpdateEmailMobileComponent},
 ];
 
 @NgModule({
