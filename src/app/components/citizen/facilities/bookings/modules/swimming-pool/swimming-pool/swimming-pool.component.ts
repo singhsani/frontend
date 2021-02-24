@@ -113,6 +113,8 @@ export class SwimmingPoolComponent implements OnInit {
     // this.getCountryLists();
     this.getUserProfile();
     this.defaultAsperPool();
+
+    this.chosenMonthHandler(this.startMinMonth.setMonth(this.startMinMonth.getMonth() + 1));
   }
 
 	/**
@@ -220,6 +222,12 @@ export class SwimmingPoolComponent implements OnInit {
     this.swimmimgPoolBookingForm.get('applicantAddress').get('country').setValue('INDIA');
     this.swimmimgPoolBookingForm.get('applicantAddress').get('state').setValue('GUJARAT');
     this.swimmimgPoolBookingForm.get('applicantAddress').get('city').setValue('Vadodara');
+    this.swimmimgPoolBookingForm.get('applicantAddress').get('country').disable();
+    this.swimmimgPoolBookingForm.get('applicantAddress').get('state').disable();
+    this.swimmimgPoolBookingForm.get('applicantAddress').get('city').disable();
+    this.swimmimgPoolBookingForm.get('applicantJoiningMonth').disable();
+
+
   }
 
   /**
