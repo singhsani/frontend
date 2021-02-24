@@ -121,7 +121,7 @@ export class ProfessionalTaxService {
 	 * This method use for get all ward numbers
 	 */
   getAllWardNos() {
-    return this.http.get('api/pecForm/data');
+    return this.http.get('api/pecForm/wardList');
   }
 
 	/**

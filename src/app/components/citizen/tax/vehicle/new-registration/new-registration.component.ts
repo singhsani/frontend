@@ -35,7 +35,12 @@ export class NewRegistrationComponent implements OnInit {
   stepLable4: string = "cheque_return_details";
 
   maxDate: Date = new Date();
-  minDate: any = moment().subtract(6, 'months').format('YYYY-MM-DD');
+  //minDate: any = moment().subtract(6, 'months').format('YYYY-MM-DD');
+  minDate: Date = new Date(
+		new Date().getFullYear(),
+		new Date().getMonth() - 1, 
+		new Date().getDate()
+	);
   vehicleRegistrationForm: FormGroup;
   paymentForm: FormGroup;
   // purchasingTypeArray: any = [{ code: 'OLD_RATE', name: 'Old Rate' }, { code: 'NEW_RATE', name: 'New Rate' }];
@@ -143,10 +148,10 @@ export class NewRegistrationComponent implements OnInit {
         name: null
       }),
       // billingPeriod: "2016-17",
-      ward: this.fb.group({
-        code: [null, Validators.required],
-        name: null
-      }),
+      wardZoneMst: this.fb.group({
+				wardzoneId:null,
+				wardzoneName: null
+			}),
       paid: false,
       vehicleReceipts: [],
       canEdit: true,
@@ -282,7 +287,7 @@ setBillingPeriod(billingPeriodArray:any){
 	 */
   getWardLookups() {
     this.vehicleServise.getWardLookup().subscribe(res => {
-      this.wardNoArray = res.WARD;
+      this.wardNoArray = res;
     });
   }
 
