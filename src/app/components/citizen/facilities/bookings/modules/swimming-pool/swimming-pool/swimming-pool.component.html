@@ -1,5 +1,21 @@
+<!-- *ngIf="searchObj.isDisplayRenewLicenceForm" -->
+<div *ngIf="searchObj.isDisplayRenewLicenceForm">
 <app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
-<mat-card class="formClass cardBorder" [hidden]="showDowlLoadFileTab">
+
+<mat-card class="mt-4 formClass">
+  <mat-form-field class="col-md-10">
+    <input matInput required placeholder="{{'search_by_membership_no' | translate:translateKey}}"
+      [(ngModel)]="searchObj.searchLicenceNumber">
+  </mat-form-field>
+  <button class="col-md-2" [disabled]="!searchObj.searchLicenceNumber" mat-raised-button color="primary"
+    (click)="getSwimmingPoolData()">{{'search'
+		| translate:translateKey}}</button>
+</mat-card>
+</div> 
+
+
+<app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
+<mat-card class="formClass cardBorder" [hidden]="showDowlLoadFileTab" *ngIf="!searchObj.isDisplayRenewLicenceForm">
 
 	<mat-card-header class="p-4">
 		<mat-card-title>
@@ -335,7 +351,7 @@
 							<div class="col-md-4">
 								<label labelPosition="after">{{'photo' | translate:translateKey}} *
 								</label>
-								<booking-file-upload (uploaded)="isFileUploaded1 = $event"
+								<booking-file-upload (uploaded)="isFileUploaded1 = $event" [attachments]="attachments" [deleteButtonIsDisabled]="isRenewalForm"
 									[form]="swimmimgPoolBookingForm" [uploadModel]="{fieldIdentifier:'1', labelName:'Photo', formPart:'1.4', refNumber:
 								swimmimgPoolBookingForm.get('refNumber').value, variableName: 'photo'}">
 								</booking-file-upload>
@@ -343,7 +359,7 @@
 							<div class="col-md-4">
 								<label labelPosition="after">{{'gazettate_officer_letter' | translate:translateKey}} *
 								</label>
-								<booking-file-upload (uploaded)="isFileUploaded2 = $event"
+								<booking-file-upload (uploaded)="isFileUploaded2 = $event" [attachments]="attachments" [deleteButtonIsDisabled]="isRenewalForm"
 									[form]="swimmimgPoolBookingForm" [uploadModel]="{fieldIdentifier:'2', labelName:'Gazettate Officer Letter', formPart:'1.1', refNumber:
 								swimmimgPoolBookingForm.get('refNumber').value, variableName: 'gazettate_officer_letter'}">
 								</booking-file-upload>
@@ -353,7 +369,7 @@
 								<label
 									labelPosition="after">{{'parents_or_gauardians_permission_letter' | translate:translateKey}} *
 								</label>
-								<booking-file-upload (uploaded)="isFileUploaded3 = $event"
+								<booking-file-upload (uploaded)="isFileUploaded3 = $event" [attachments]="attachments" [deleteButtonIsDisabled]="isRenewalForm"
 									[form]="swimmimgPoolBookingForm" [uploadModel]="{fieldIdentifier:'3', labelName:'Parents or Guardians Permission Letter', formPart:'1.2', refNumber:
 								swimmimgPoolBookingForm.get('refNumber').value, variableName: 'gauardians_permission_letter'}">
 								</booking-file-upload>
@@ -363,7 +379,7 @@
 								<label
 									labelPosition="after">{{'certified_doctors_certificate' | translate:translateKey}} *
 								</label>
-								<booking-file-upload (uploaded)="isFileUploaded4 = $event"
+								<booking-file-upload (uploaded)="isFileUploaded4 = $event" [attachments]="attachments" [deleteButtonIsDisabled]="isRenewalForm"
 									[form]="swimmimgPoolBookingForm" [uploadModel]="{fieldIdentifier:'4', labelName:'Certified Doctors Certificate', formPart:'1.3', refNumber:
 								swimmimgPoolBookingForm.get('refNumber').value, variableName: 'certified_doctors_certificate'}">
 								</booking-file-upload>

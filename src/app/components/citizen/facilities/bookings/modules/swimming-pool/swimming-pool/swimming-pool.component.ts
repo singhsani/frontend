@@ -51,6 +51,7 @@ export class SwimmingPoolComponent implements OnInit {
   stateListArray: any = [];
   cityListArray: any = [];
   isBuildinAreaReq: boolean = false;
+  attachments = [];
   /**
   * Loading Booking Configuration
   */
@@ -72,6 +73,7 @@ export class SwimmingPoolComponent implements OnInit {
   // BANK: Array<any> = [];
   session: any;
   durationisReadOnly:boolean= false;
+  swimmingPoolRenewal:boolean = false;
   /**
    * @param fb - Declare FormBuilder property.
    * @param validationError - Declare validation service property
@@ -80,6 +82,13 @@ export class SwimmingPoolComponent implements OnInit {
    * @param commonService - Declare sweet alert.
    * @param toastrService - Show massage with timer.
    */
+
+  searchObj = {
+    isDisplayRenewLicenceForm: <boolean>false,
+    searchLicenceNumber:""
+  }
+  isRenewalForm = false;
+
   constructor(
     private fb: FormBuilder,
     public validationError: ValidationService,
@@ -113,9 +122,14 @@ export class SwimmingPoolComponent implements OnInit {
     // this.getCountryLists();
     this.getUserProfile();
     this.defaultAsperPool();
-  }
 
-	/**
+    console.log(this.router.url);
+    if(this.router.url.indexOf('swimmingPoolRenewal') > -1){ 
+      this.searchObj.isDisplayRenewLicenceForm = true;
+      // this.swimmingPoolRenewal = true;
+    }
+  }
+  /**
 	* Method is used to get lookup data
 	*/
   getLookupData() {
@@ -566,5 +580,23 @@ export class SwimmingPoolComponent implements OnInit {
     console.log(event);
     this.dateFormat(event,'applicantJoiningMonth');
   }
-    
+
+  getSwimmingPoolData() {
+    this.bookingService.searchRenewSwimmingPool(this.searchObj.searchLicenceNumber).subscribe(
+      (res: any) => {
+      res = res.data;
+      if (res && res.bookingFormId) 
+      this.swimmimgPoolBookingForm.patchValue({'serviceFormId': res.bookingFormId});
+      this.attachments = res.attachments;
+      this.swimmimgPoolBookingForm.patchValue(res);
+      // this.attachments = res.data;
+      this.swimmimgPoolBookingForm.disable();
+      this.searchObj.isDisplayRenewLicenceForm = false;
+      this.showDowlLoadFileTab = false;
+      this.showSwimmingPoolForm = true;
+      this.isRenewalForm = true;
+      // this.swimmimgPoolBookingForm.get('remarks').enable();
+      // this.filterAsperBatchName(this.swimmimgPoolBookingForm.get('category').get('code').value);
+    })
+  }  
 }
