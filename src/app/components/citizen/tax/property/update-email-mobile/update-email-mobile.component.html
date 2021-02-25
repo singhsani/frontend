@@ -1,0 +1,128 @@
+<!-- *ngIf="showSearchForm"   -->
+<div class=''>
+    <mat-card class="formClass cardBorder">
+        <div class="pageTitle">Update Email and Mobile</div>
+        <div class="p-15">
+            <form [formGroup]="updateEmailMobileForm" autocomplete="off" ngNativeValidate>
+                <div class="row">
+                    <div class="col-md-4">
+                        <mat-form-field>
+                            <input matInput maxlength="16" type="text" appValidationFields formControlName="propertyNo"
+                                placeholder="Property number" required>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-md-2">
+                        <button [disabled]="" class="ml-3" mat-raised-button color="primary" type="button"
+                            (click)="searchByPropertyNo()">
+                            Search
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+            <div *ngIf="showEditBtn">
+                <div class="row">
+                    <div class="col-md-2">
+                        <button class="ml-3" mat-raised-button color="primary" type="button"
+                            (click)="showForEditEmail()">
+                            Update Email
+                        </button>
+                    </div>
+
+                    <div class="col-md-2">
+                        <button class="ml-3" mat-raised-button color="primary" type="button"
+                            (click)="showForEditMobile()">
+                            Update Mobile
+                        </button>
+                    </div>
+
+                    <div class="col-md-2">
+                        <button class="ml-3" mat-raised-button color="primary" type="button" (click)="showBoth()">
+                            Update Both
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+
+            <div *ngIf="showEdit">
+                <form [formGroup]="saveEmailMobileForm" autocomplete="off" ngNativeValidate>
+
+                    <div *ngIf="showEditEmail">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <mat-form-field>
+                                    <input matInput maxlength="30" type="text" appValidationFields
+                                        formControlName="email" placeholder="Email" required>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-2">
+                                <button class="ml-3" mat-raised-button color="primary" type="button"
+                                    (click)="sendOnEmail()">
+                                    Send OTP
+                                </button>
+                            </div>
+
+                            <div *ngIf="showEmail">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <mat-form-field>
+                                            <input matInput maxlength="5" type="text" appValidationFields
+                                                formControlName="optVerifyEmail" placeholder="OTP" required>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button class="ml-3" mat-raised-button color="primary" type="button"
+                                            (click)="verifyEmail()">
+                                            Verify and save
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div *ngIf="showEditMobile">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <mat-form-field>
+                                    <input matInput maxlength="10" type="text" appValidationFields
+                                        formControlName="mobile" placeholder="Mobile" required>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="col-md-2">
+                                <button class="ml-3" mat-raised-button color="primary" type="button"
+                                    (click)="sendOnMobile()">
+                                    Send OTP
+                                </button>
+                            </div>
+
+                            <div *ngIf="showMobile">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <mat-form-field>
+                                            <input matInput maxlength="5" type="text" appValidationFields
+                                                formControlName="optVerifyMobile" placeholder="OTP" required>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button class="ml-3" mat-raised-button color="primary" type="button"
+                                            (click)="verifyMobile()">
+                                            Verify and save
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </mat-card>
+</div>

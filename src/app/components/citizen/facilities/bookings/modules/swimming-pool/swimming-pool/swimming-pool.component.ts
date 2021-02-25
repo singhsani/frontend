@@ -128,6 +128,7 @@ export class SwimmingPoolComponent implements OnInit {
       this.searchObj.isDisplayRenewLicenceForm = true;
       // this.swimmingPoolRenewal = true;
     }
+    this.chosenMonthHandler(this.startMinMonth.setMonth(this.startMinMonth.getMonth() + 1));
   }
   /**
 	* Method is used to get lookup data
@@ -234,6 +235,12 @@ export class SwimmingPoolComponent implements OnInit {
     this.swimmimgPoolBookingForm.get('applicantAddress').get('country').setValue('INDIA');
     this.swimmimgPoolBookingForm.get('applicantAddress').get('state').setValue('GUJARAT');
     this.swimmimgPoolBookingForm.get('applicantAddress').get('city').setValue('Vadodara');
+    this.swimmimgPoolBookingForm.get('applicantAddress').get('country').disable();
+    this.swimmimgPoolBookingForm.get('applicantAddress').get('state').disable();
+    this.swimmimgPoolBookingForm.get('applicantAddress').get('city').disable();
+    this.swimmimgPoolBookingForm.get('applicantJoiningMonth').disable();
+
+
   }
 
   /**
@@ -407,7 +414,7 @@ export class SwimmingPoolComponent implements OnInit {
   saveFormData() {
     // if (this.swimmimgPoolBookingForm.get('swimmingPoolName').get('code').value) {
     // this.swimmimgPoolBookingForm.get('swimmingPoolName').setValue(this.swimmimgPoolBookingForm.get('resourceCodeLK').get('code').value);
-    this.bookingService.saveDraftform(this.swimmimgPoolBookingForm.value, this.swimmimgPoolBookingForm.get('swimmingPoolName').get('code').value).subscribe(
+    this.bookingService.saveDraftform(this.swimmimgPoolBookingForm.getRawValue(), this.swimmimgPoolBookingForm.get('swimmingPoolName').get('code').value).subscribe(
       res => {
         this.swimmimgPoolBookingForm.get('refNumber').setValue(res.refNumber);
         this.swimmimgPoolBookingForm.patchValue(res);

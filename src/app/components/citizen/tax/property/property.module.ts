@@ -6,6 +6,7 @@ import { SharedModule } from '../../../../shared/shared.module';
 import { CoreModule } from '../../../../core/core.module';
 
 import { PropertyRoutingModule } from './property-routing.module';
+import { UpdateEmailMobileComponent } from './update-email-mobile/update-email-mobile.component';
 
 @NgModule({
 	imports: [
@@ -16,6 +17,6 @@ import { PropertyRoutingModule } from './property-routing.module';
 		CoreModule,
 		PropertyRoutingModule
 	],
-	declarations: [ ]
+	declarations: [ UpdateEmailMobileComponent]
 })
 export class PropertyModule { }

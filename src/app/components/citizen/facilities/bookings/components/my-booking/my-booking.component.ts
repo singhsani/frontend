@@ -544,6 +544,9 @@ export class MyBookingComponent implements OnInit {
 	showCancelBtn(element) {
 		this.slotBookingList.pop();
 		// element.status != bookingConstant.PAYMENT_REQUIRED && element.status != bookingConstant.CANCELLATION_REQUEST
+		if(element.resourceType === 'CHILDREN_THEATER' && element.status === this.bookingConstant.BOOKED) {
+			return true
+		}
 		if (element.status === this.bookingConstant.PAYMENT_REQUIRED
 			|| element.status === this.bookingConstant.CANCELLED
 			|| element.status === this.bookingConstant.WAITINGLIST

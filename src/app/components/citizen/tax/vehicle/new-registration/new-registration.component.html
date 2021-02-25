@@ -68,7 +68,7 @@
 
 					<mat-form-field class="col-md-4">
 						<input matInput autocomplete="off" type="text" maxlength="50" formControlName="registrationNo"
-							placeholder="{{'registration_no' | translate: translateKey}}" >
+							placeholder="{{'registration_no' | translate: translateKey}}">
 						<control-messages [control]="vehicleRegistrationForm.get('registrationNo')"></control-messages>
 					</mat-form-field>
 
@@ -89,7 +89,7 @@
 					<mat-form-field class="col-md-4">
 						<input matInput autocomplete="off" maxlength="200" type="text" formControlName="dealerName"
 							placeholder="{{'dealer_name' | translate: translateKey}}" required>
-							<control-messages [control]="vehicleRegistrationForm.get('dealerName')"></control-messages>
+						<control-messages [control]="vehicleRegistrationForm.get('dealerName')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
@@ -101,14 +101,15 @@
 
 					<mat-form-field class="col-md-4 noDigit">
 						<span matPrefix>+91 &nbsp;</span>
-						<input required matInput autocomplete="off" type="tel" OnlyNumber formControlName="dealerMobileNo"
-							minlength="10" maxlength="10" placeholder="{{'dealer_mobile_no' | translate: translateKey}}">
-							<control-messages [control]="vehicleRegistrationForm.get('dealerMobileNo')"></control-messages>
+						<input required matInput autocomplete="off" type="tel" OnlyNumber
+							formControlName="dealerMobileNo" minlength="10" maxlength="10"
+							placeholder="{{'dealer_mobile_no' | translate: translateKey}}">
+						<control-messages [control]="vehicleRegistrationForm.get('dealerMobileNo')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput autocomplete="off" appDate [matDatepicker]="picker"
-							[max]="maxDate" formControlName="purchaseDate" (dateChange)="onDateChange($event.value)"
+						<input matInput autocomplete="off" appDate [matDatepicker]="picker" [max]="maxDate"
+							[min]="minDate" formControlName="purchaseDate" (dateChange)="onDateChange($event.value)"
 							placeholder="{{'purchase_date' | translate: translateKey}} (DD/MM/YYYY)" required>
 						<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
 						<mat-datepicker touchUi="true" #picker></mat-datepicker>
@@ -128,7 +129,8 @@
 
 				<div class="fotButtonBar clearfix">
 					<div class="col-sm-12 col-md-12">
-						<button class="pull-right" mat-raised-button color="primary" (click)="tabIndex = 1">{{'save_and_next' | translate:
+						<button class="pull-right" mat-raised-button color="primary"
+							(click)="tabIndex = 1">{{'save_and_next' | translate:
 							actionBarKey}}</button>
 						<!-- <button type="button" mat-raised-button color="warn" (click)="resetForm()">{{'clear' | translate: actionBarKey}}</button> -->
 					</div>
@@ -190,9 +192,11 @@
 
 				<div class="fotButtonBar clearfix">
 					<div class="col-sm-12 col-md-12">
-						<button type="button" class="pull-left" color="primary" mat-raised-button (click)="tabIndex = 0">{{'back' |
+						<button type="button" class="pull-left" color="primary" mat-raised-button
+							(click)="tabIndex = 0">{{'back' |
 							translate: actionBarKey}}</button>
-						<button mat-raised-button class="pull-right" color="primary" (click)="tabIndex = 2">{{'save_and_next' | translate:
+						<button mat-raised-button class="pull-right" color="primary"
+							(click)="tabIndex = 2">{{'save_and_next' | translate:
 							actionBarKey}}</button>
 						<!-- <button type="button" mat-raised-button color="warn" (click)="resetForm()">{{'clear' | translate: actionBarKey}}</button> -->
 					</div>
@@ -216,12 +220,13 @@
 						</control-messages>
 					</div>
 
-					<div class="col-md-4 ngSelect" formGroupName="ward">
-						<ng-select placeholder="{{'ward_no' | translate: translateKey}} *" formControlName="code">
-							<ng-option *ngFor="let wardNo of wardNoArray" [value]="wardNo.code">{{wardNo.name}}
+					<div class="col-md-4 ngSelect" formGroupName="wardZoneMst">
+						<ng-select placeholder="{{'ward_no' | translate: translateKey}} *" formControlName="wardzoneId">
+							<ng-option *ngFor="let wardNo of wardNoArray" [value]="wardNo.wardzoneId">
+								{{wardNo.wardzoneName}}
 							</ng-option>
 						</ng-select>
-						<control-messages [control]="vehicleRegistrationForm.get('ward').get('code')">
+						<control-messages [control]="vehicleRegistrationForm.get('wardZoneMst').get('wardzoneId')">
 						</control-messages>
 					</div>
 
@@ -274,10 +279,12 @@
 
 				<div class="fotButtonBar clearfix">
 					<div class="col-sm-12 col-md-12">
-						<button type="button" class="pull-left" mat-raised-button color="primary" (click)="tabIndex = 1">{{'back' |
+						<button type="button" class="pull-left" mat-raised-button color="primary"
+							(click)="tabIndex = 1">{{'back' |
 							translate: actionBarKey}}</button>
-						<button mat-raised-button class="pull-right" color="primary" (click)="tabIndex = 3">{{'save_and_next' | translate:
-								actionBarKey}}</button>
+						<button mat-raised-button class="pull-right" color="primary"
+							(click)="tabIndex = 3">{{'save_and_next' | translate:
+							actionBarKey}}</button>
 						<!-- <button [disabled]="!isSubmitBtnVisible" mat-raised-button class="pull-right" color="success" (click)="onSubmit()">{{'submit'
 							| translate:
 							actionBarKey}}</button> -->
@@ -310,8 +317,9 @@
 						<button class="pull-left" color="primary" type="button" mat-raised-button
 							(click)="tabIndex = 2">{{'back' | translate:actionBarKey}}</button>
 						<!-- <button *ngIf="isDeleteBtnShow" class="pull-right" mat-raised-button color="success" (click)="onSubmit()">{{'submit' | translate:actionBarKey}}</button> -->
-						<button [disabled]="vehicleRegistrationForm.get('canSubmit').value == false"  mat-raised-button class="pull-right" color="success"
-							(click)="onSubmit()">{{'submit' | translate: actionBarKey}}</button>
+						<button [disabled]="vehicleRegistrationForm.get('canSubmit').value == false" mat-raised-button
+							class="pull-right" color="success" (click)="onSubmit()">{{'submit' | translate:
+							actionBarKey}}</button>
 					</div>
 				</div>
 

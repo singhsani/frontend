@@ -518,6 +518,10 @@ const ROUTEMAIN = {
         'main': 'tax-transaction',
         'type': 'tax-transaction'
     },
+    'PROPERTY_UPDATE_EMAIL_AND_MOBILE': {
+        'main': 'update-email-mobile',
+        'type': 'update-email-mobile'
+    },
 
 }
 
@@ -603,7 +607,9 @@ const ROUTEPREFIX = {
     /** end - citizen tax module */
 
     /** end - citizen module routes configuretion */
-    'HOSPITALMODULE': 'hospital'
+    'HOSPITALMODULE': 'hospital',
+
+    'PROPERTY': 'property'
 }
 
 const ROUTESLIST = {
@@ -1035,6 +1041,9 @@ const ROUTESLIST = {
     },
     'PRO-TAX-TRAS-HISTORY' : {
         'full' : ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TAXMODULE + '/' + ROUTEMAIN["PRO-TAX-TRAS-HISTORY"].main
+    },
+    'PROPERTY_UPDATE_EMAIL_AND_MOBILE' : {
+        'full' : ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TAXMODULE + '/'+ROUTEPREFIX.PROPERTY +'/'+ ROUTEMAIN["PROPERTY_UPDATE_EMAIL_AND_MOBILE"].main
     }
 }
 
