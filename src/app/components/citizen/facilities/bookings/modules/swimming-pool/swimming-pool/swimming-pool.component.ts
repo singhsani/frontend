@@ -362,7 +362,8 @@ export class SwimmingPoolComponent implements OnInit {
       pid: null,
       remarks: null,
       family: false,
-      staffMember: false
+      staffMember: false,
+      isRenewalForm: false
     });
   }
 
@@ -457,7 +458,8 @@ export class SwimmingPoolComponent implements OnInit {
             sectionToPrint.innerHTML = data;
             setTimeout(() => {
               window.print();
-              this.router.navigate(['../../my-bookings'], {relativeTo: this.route});
+              this.paymentRequest(res);
+              // this.router.navigate(['../../my-bookings'], {relativeTo: this.route});
             });
           });
           // this.swimmimgPoolBookingForm.get('refNumber').setValue(res.refNumber);
@@ -487,6 +489,23 @@ export class SwimmingPoolComponent implements OnInit {
     }
 
   }
+
+  paymentRequest(element) {
+		this.bookingService.getTransactionDetails(element.refNumber).subscribe(transactionData => {
+		}, err => {
+			if (err.status == 402) {
+							// if (err.status == 402) {
+				// this.bookingUtils.redirectToPayment(err, this.commonService, this.bookingService);
+        this.bookingUtils.redirectToCCAvenuePayment(err, this.commonService, this.bookingService, this.paymentGateway);
+        this.router.navigate(['../../my-bookings'], {relativeTo: this.route});
+				// }
+			} else if (err.error[0].code == this.bookingConstants.INVALID_BOOKING_STATUS) {
+				this.commonService.openAlert("Invalid Booking Status", err.error[0].message, "warning", "")
+			} else {
+				this.commonService.openAlertFormSaveValidation('Warning!', err.error, 'warning');
+			}
+		})
+	}
 
   CheckType(idCode){
 
