@@ -303,7 +303,7 @@ export class BookingService {
 
   searchRenewSwimmingPool(poolNumber:any){
     // {{HOST}}/api/booking/swimmingrenewal/searchBySwimmnerNumber/{{REF_NUM}}
-    this.requestURL = `api/${this.moduleName}/swimmingrenewal/searchBySwimmnerNumber/${poolNumber}`;
+    this.requestURL = `api/${this.moduleName}/swimming/searchBySwimmnerNumber/${poolNumber}`;
     return this.http.get(this.requestURL);
 
   }
