@@ -36,6 +36,7 @@ export class TempStructureNocComponent implements OnInit {
 	FS_WIRING_TYPE: Array<any> = [];
 
 	fromDate = moment(new Date()).format('YYYY-MM-DD');
+	
 
 	  maxDate = new Date();
 
@@ -206,7 +207,7 @@ export class TempStructureNocComponent implements OnInit {
 			policeCommisionerLetterDate: [null],
 			policeCommisionerLetterNo: [null, [Validators.required, Validators.maxLength(50)]],
 			landOwnerConsentIncluded: [false, [Validators.required]],//true/false
-			landOwnerConsentDescription: [null, [Validators.required, Validators.maxLength(200)]],
+			landOwnerConsentDescription: [null, [Validators.required, Validators.maxLength(255)]],
 			organizeName: [null, [Validators.required, Validators.maxLength(150)]],
 			organizeNameGuj: [null, [Validators.required, Validators.maxLength(300)]],
 			organizerAddress: [null, [Validators.required, Validators.maxLength(200)]],
@@ -275,6 +276,12 @@ export class TempStructureNocComponent implements OnInit {
 			this.commonService.openAlert("Warning","Please fill the field Email Id","warning");
 		}
 	}
+
+	getMaxToDate(fromDate: string) {
+		return moment(fromDate).add(28, 'days').format('YYYY-MM-DD');
+	}
+
+
 	/**
 	 * This method required for final form submition.
 	 * @param flag - flag of invalid control.
@@ -379,6 +386,7 @@ export class TempStructureNocComponent implements OnInit {
 		"hazardousPerformanceDetail": "sdfsdfsdfsdfsd",
 		"shamiyanaLength": "24",
 		"shamiyanaWidth": "43",
+		"shamiyanaHeight": "40",
 		"archGateHeight": "34",
 		"archGateWidth": "34",
 		"approachedWayToVenue": "fsdgfgdfg",
@@ -387,6 +395,7 @@ export class TempStructureNocComponent implements OnInit {
 		"refillingCertificateAttached": true,
 		"stageHeight": "234",
 		"stageWidth": "234",
+		"stageLength": "150",
 		"usageOfInflammable": "fsdgffg",
 		"securityArrangement": true,
 		"parkingArrangement": true,
@@ -422,6 +431,5 @@ export class TempStructureNocComponent implements OnInit {
 		  "appointmentRequired": false
 		}
 	  };
-
 }
 

@@ -102,7 +102,7 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-6">
-						<input appDate matInput [matDatepicker]="picker2" [min]="tempStructureNocForm.get('fromDate').value" formControlName="toDate"
+						<input appDate matInput [matDatepicker]="picker2" [min]="tempStructureNocForm.get('fromDate').value" [max]="getMaxToDate(tempStructureNocForm.get('fromDate').value)" formControlName="toDate"
 						 placeholder="{{'to_date' | translate:translateKey }}" required (dateChange)="dateFormate($event.value,'toDate')">
 						<mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
 						<mat-datepicker #picker2 touchUi="true"></mat-datepicker>
@@ -182,7 +182,7 @@
 					</div>
 
 					<mat-form-field class="col-md-12" *ngIf="tempStructureNocForm.get('landOwnerConsentIncluded').value">
-						<textarea matInput rows="1" cols="50" required maxlength="200" placeholder="{{'land_owner_consent_description' | translate:translateKey}}"
+						<textarea matInput rows="1" cols="50" required maxlength="255" placeholder="{{'land_owner_consent_description' | translate:translateKey}}"
 						 formControlName="landOwnerConsentDescription"></textarea>
 						<control-messages [control]="tempStructureNocForm.get('landOwnerConsentDescription')"></control-messages>
 					</mat-form-field>
@@ -381,7 +381,7 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput required OnlyNumber type="tel" formControlName="stageLength" placeholder="{{'stage_Length' | translate: translateKey }} "
+						<input matInput required OnlyNumber type="tel" formControlName="stageLength" placeholder="{{'stage_length' | translate: translateKey }} "
 						 maxlength="5">
 						<control-messages [control]="tempStructureNocForm.get('stageLength')"></control-messages>
 					</mat-form-field>
