@@ -441,7 +441,7 @@ export class SwimmingPoolComponent implements OnInit {
     //   this.commonService.openAlert("Field Error", !this.bookingUtils.matcher(this.swimmimgPoolBookingForm, 'emailId', 'confirmEmailId') ? this.bookingConstants.EMAIL_MIS_MATCH_MESSAGE : this.bookingConstants.MOB_NO_MIS_MATCH_MESSAGE, 'warning');
     //   this.handleErrorsOnSubmit(7);
     //   return;}
-    else if (!this.isFileUploaded1 || !this.isFileUploaded2 || !this.isFileUploaded3 || !this.isFileUploaded4) {
+    else if (!this.isRenewalForm && (!this.isFileUploaded1 || !this.isFileUploaded2 || !this.isFileUploaded3 || !this.isFileUploaded4)) {
       this.handleErrorsOnSubmit(33);
       this.commonService.openAlert(this.bookingConstants.FEILD_ERROR_TITLE, 'Attachment Required!', 'warning')
       return;
@@ -458,8 +458,11 @@ export class SwimmingPoolComponent implements OnInit {
             sectionToPrint.innerHTML = data;
             setTimeout(() => {
               window.print();
+              if(!this.isRenewalForm){
               this.paymentRequest(res);
-              // this.router.navigate(['../../my-bookings'], {relativeTo: this.route});
+              }else{
+                   this.router.navigate(['../../my-bookings'], {relativeTo: this.route});
+              }
             });
           });
           // this.swimmimgPoolBookingForm.get('refNumber').setValue(res.refNumber);
@@ -621,6 +624,7 @@ export class SwimmingPoolComponent implements OnInit {
       this.showDowlLoadFileTab = false;
       this.showSwimmingPoolForm = true;
       this.isRenewalForm = true;
+      this.swimmimgPoolBookingForm.get('isRenewalForm').setValue(true);
       // this.swimmimgPoolBookingForm.get('remarks').enable();
       // this.filterAsperBatchName(this.swimmimgPoolBookingForm.get('category').get('code').value);
     })
