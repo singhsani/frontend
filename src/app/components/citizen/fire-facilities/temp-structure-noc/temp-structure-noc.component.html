@@ -43,14 +43,14 @@
 						<control-messages [control]="tempStructureNocForm.get('applicantNameGuj')"></control-messages>
 					</mat-form-field>
 
-					<mat-form-field class="col-md-4">
+					<mat-form-field class="col-md-6">
 						<!-- <span matPrefix>+91 &nbsp;</span> -->
 						<input matInput OnlyNumber placeholder="{{'mobile_no' | translate:translateKey}}" type="tel" [maxlength]="fireFacilityConfig.mobileNumber_maxLength"
 						(change)="onMobileChange($event,'mobileNo')"  [minlength]="fireFacilityConfig.mobileNumber_minLength" formControlName="mobileNo" required>
 						<control-messages [control]="tempStructureNocForm.get('mobileNo')"></control-messages>
 					</mat-form-field>
 
-					<mat-form-field class="col-md-8">
+					<mat-form-field class="col-md-6">
 						<input matInput appPreventSpace placeholder="{{'email_id' | translate:translateKey}}" type="email"
 						(change)="onEmailChange($event,'email')" formControlName="email" required maxlength="50">
 						<control-messages [control]="tempStructureNocForm.get('email')"></control-messages>
@@ -61,7 +61,7 @@
 					<mat-form-field class="col-md-4">
 						<!-- <span matPrefix>+91 &nbsp;</span> -->
 						<input matInput OnlyNumber placeholder="{{'office_contact_no' | translate:translateKey}}" type="tel" [maxlength]="fireFacilityConfig.mobileNumber_maxLength"
-						 formControlName="officeContactNo" required>
+						 formControlName="officeContactNo" >
 						<control-messages [control]="tempStructureNocForm.get('officeContactNo')"></control-messages>
 					</mat-form-field>
 
@@ -76,7 +76,7 @@
 
 					<mat-form-field class="col-md-4">
 						<input matInput appPreventSpace placeholder="{{'office_email_id' | translate:translateKey}}" type="email"
-						 formControlName="officeEmailId" required maxlength="50">
+						 formControlName="officeEmailId"  maxlength="50">
 						<control-messages [control]="tempStructureNocForm.get('officeEmailId')"></control-messages>
 					</mat-form-field>
 
@@ -102,7 +102,7 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-6">
-						<input appDate matInput [matDatepicker]="picker2" [min]="tempStructureNocForm.get('fromDate').value" formControlName="toDate"
+						<input appDate matInput [matDatepicker]="picker2" [min]="tempStructureNocForm.get('fromDate').value" [max]="getMaxToDate(tempStructureNocForm.get('fromDate').value)" formControlName="toDate"
 						 placeholder="{{'to_date' | translate:translateKey }}" required (dateChange)="dateFormate($event.value,'toDate')">
 						<mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
 						<mat-datepicker #picker2 touchUi="true"></mat-datepicker>
@@ -149,18 +149,13 @@
 						<control-messages [control]="tempStructureNocForm.get('forProgramGuj')"></control-messages>
 					</mat-form-field>
 
-					<mat-form-field class="col-md-4">
-						<input matInput placeholder="{{'venue' | translate:translateKey}}" formControlName="venue" maxlength="150">
-						<control-messages [control]="tempStructureNocForm.get('venue')"></control-messages>
-					</mat-form-field>
-
-					<mat-form-field class="col-md-4">
-						<input matInput type="text" appAlphaNumeric formControlName="policeCommisionerLetterNo" placeholder="{{'police_commisioner_letter_no' | translate: translateKey }} *"
-						 maxlength="10">
+					<mat-form-field class="col-md-6">
+						<input matInput type="text" formControlName="policeCommisionerLetterNo" placeholder="{{'police_commisioner_letter_no' | translate: translateKey }} *"
+						 maxlength="50">
 						<control-messages [control]="tempStructureNocForm.get('policeCommisionerLetterNo')"></control-messages>
 					</mat-form-field>
 
-					<mat-form-field class="col-md-4">
+					<mat-form-field class="col-md-6">
 						<input matInput [matDatepicker]="picker3" [max]="maxDate" formControlName="policeCommisionerLetterDate" placeholder="{{'police_commisioner_letter_date' | translate:translateKey }}"
 						 required (dateChange)="dateFormate($event.value,'policeCommisionerLetterDate')">
 						<mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
@@ -169,7 +164,7 @@
 						<control-messages [control]="tempStructureNocForm.get('policeCommisionerLetterDate')"></control-messages>
 					</mat-form-field>
 
-					<div class="col-md-4">
+					<div class="col-md-6">
 						<div class="row">
 							<div class="radioBtnError">
 								<mat-label>{{'land_owner_consent_included' | translate:translateKey }} *</mat-label>
@@ -186,8 +181,8 @@
 						</div>
 					</div>
 
-					<mat-form-field class="col-md-8" *ngIf="tempStructureNocForm.get('landOwnerConsentIncluded').value">
-						<textarea matInput rows="1" cols="50" required maxlength="200" placeholder="{{'land_owner_consent_description' | translate:translateKey}}"
+					<mat-form-field class="col-md-12" *ngIf="tempStructureNocForm.get('landOwnerConsentIncluded').value">
+						<textarea matInput rows="1" cols="50" required maxlength="255" placeholder="{{'land_owner_consent_description' | translate:translateKey}}"
 						 formControlName="landOwnerConsentDescription"></textarea>
 						<control-messages [control]="tempStructureNocForm.get('landOwnerConsentDescription')"></control-messages>
 					</mat-form-field>
@@ -232,14 +227,6 @@
 						<control-messages [control]="tempStructureNocForm.get('temporaryStructureAddressGuj')"></control-messages>
 					</mat-form-field>
 
-          <mat-form-field class="col-md-6">
-            <!-- <span matPrefix>+91 &nbsp;</span> -->
-            <input matInput OnlyNumber placeholder="{{'organizer_contact_no' | translate:translateKey}}" type="tel"
-                   [maxlength]="fireFacilityConfig.contactNumberLength" formControlName="organizerContactNo">
-            <control-messages [control]="tempStructureNocForm.get('organizerContactNo')"></control-messages>
-          </mat-form-field>
-
-
         </div>
 				<app-action-bar [form]="tempStructureNocForm" (tabIndex)="fireFacilityConfig.onFormTabChange($event)"
 				 (handleOnSaveAndNext)="handleOnSaveAndNext($event)" [stepInfo]="{step: 'step2', next: 2, back: 0}"></app-action-bar>
@@ -254,41 +241,37 @@
 
 				<div class="row">
 					<mat-form-field class="col-md-4">
-						<input matInput maxlength="8" required placeholder="{{'final_plot_no' | translate:translateKey}}" formControlName="fpNo">
+						<input matInput maxlength="8" placeholder="{{'final_plot_no' | translate:translateKey}}" formControlName="fpNo">
 						<control-messages [control]="tempStructureNocForm.get('fpNo')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput maxlength="8" required placeholder="{{'revenue_survey_no' | translate:translateKey}}"
+						<input matInput maxlength="8"  placeholder="{{'revenue_survey_no' | translate:translateKey}}"
 						 formControlName="rsNo">
 						<control-messages [control]="tempStructureNocForm.get('rsNo')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput maxlength="8" required placeholder="{{'tika_no' | translate:translateKey}}" formControlName="tikaNo">
+						<input matInput maxlength="8" placeholder="{{'tika_no' | translate:translateKey}}" formControlName="tikaNo">
 						<control-messages [control]="tempStructureNocForm.get('tikaNo')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput maxlength="50" required placeholder="{{'building_location' | translate:translateKey}}"
+						<input matInput maxlength="50" placeholder="{{'building_location' | translate:translateKey}}"
 						 formControlName="buildingLocation">
 						<control-messages [control]="tempStructureNocForm.get('buildingLocation')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput maxlength="8" required placeholder="{{'town_planning_no' | translate:translateKey}}"
+						<input matInput maxlength="8" placeholder="{{'town_planning_no' | translate:translateKey}}"
 						 formControlName="tpNo">
 						<control-messages [control]="tempStructureNocForm.get('tpNo')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput maxlength="8" required placeholder="{{'block_no' | translate:translateKey}}" formControlName="blockNo">
+						<input matInput maxlength="8" placeholder="{{'block_no' | translate:translateKey}}" formControlName="blockNo">
 						<control-messages [control]="tempStructureNocForm.get('blockNo')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput maxlength="5" required placeholder="{{'o_p_no' | translate:translateKey}}" formControlName="opNo">
+						<input matInput maxlength="5" placeholder="{{'o_p_no' | translate:translateKey}}" formControlName="opNo">
 						<control-messages [control]="tempStructureNocForm.get('opNo')"></control-messages>
 					</mat-form-field>
-					<mat-form-field class="col-md-4">
-						<input matInput placeholder="{{'structure_purpose' | translate:translateKey}}" formControlName="structurePurpose"
-						 maxlength="200">
-						<control-messages [control]="tempStructureNocForm.get('structurePurpose')"></control-messages>
-					</mat-form-field>
+					
 					<mat-form-field class="col-md-4">
 						<input matInput required OnlyNumber maxlength="10" type="tel" formControlName="noOfGatheringPersons" placeholder="{{'no_of_gathering_persons' | translate:translateKey }}">
 						<control-messages [control]="tempStructureNocForm.get('noOfGatheringPersons')"></control-messages>
@@ -311,11 +294,6 @@
 						</mat-radio-group>
 						<control-messages [control]="tempStructureNocForm.get('layoutPlanIncluded')"></control-messages>
 					</div>
-					<mat-form-field class="col-md-4">
-						<input matInput type="text" maxlength="10" required placeholder="{{'required_noc_for_area' | translate:translateKey}}"
-						 formControlName="requiredNOCForArea">
-						<control-messages [control]="tempStructureNocForm.get('requiredNOCForArea')"></control-messages>
-					</mat-form-field>
 				</div>
 
 				<app-action-bar [form]="tempStructureNocForm" (tabIndex)="fireFacilityConfig.onFormTabChange($event)"
@@ -345,6 +323,13 @@
 						 maxlength="5">
 						<control-messages [control]="tempStructureNocForm.get('shamiyanaWidth')"></control-messages>
 					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<input matInput required OnlyNumber type="tel" formControlName="shamiyanaHeight" placeholder="{{'shamiyana_height' | translate: translateKey }} "
+						 maxlength="5">
+						<control-messages [control]="tempStructureNocForm.get('shamiyanaHeight')"></control-messages>
+					</mat-form-field>
+
 					<mat-form-field class="col-md-4">
 						<input matInput required OnlyNumber type="tel" formControlName="archGateHeight" placeholder="{{'arch_gate_height' | translate: translateKey }} "
 						 maxlength="5">
@@ -393,6 +378,12 @@
 						<input matInput required OnlyNumber type="tel" formControlName="stageWidth" placeholder="{{'stage_width' | translate: translateKey }} "
 						 maxlength="5">
 						<control-messages [control]="tempStructureNocForm.get('stageWidth')"></control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-4">
+						<input matInput required OnlyNumber type="tel" formControlName="stageLength" placeholder="{{'stage_length' | translate: translateKey }} "
+						 maxlength="5">
+						<control-messages [control]="tempStructureNocForm.get('stageLength')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-8">
 						<input matInput required maxlength="500" placeholder="{{'usage_of_in_flammable' | translate:translateKey}}"
@@ -472,7 +463,7 @@
 					</div>
 
 					<div class="col-md-4 ngSelect" formGroupName="sittingArrangement">
-						<ng-select placeholder="{{'sitting_arrangement' | translate:translateKey}} *" formControlName="code">
+						<ng-select placeholder="{{'sitting_arrangement' | translate:translateKey}}" formControlName="code">
 							<ng-option *ngFor="let type of FS_SITTING_ARRANGEMENT" [value]="type.code">{{type.name}}</ng-option>
 						</ng-select>
 						<control-messages [control]="tempStructureNocForm.get('sittingArrangement').get('code')"></control-messages>
@@ -491,6 +482,10 @@
 						</ng-select>
 						<control-messages [control]="tempStructureNocForm.get('communicationArrangementType').get('code')"></control-messages>
 					</div>
+
+					
+
+
 
 				</div>
 				<app-action-bar [form]="tempStructureNocForm" (tabIndex)="fireFacilityConfig.onFormTabChange($event)"

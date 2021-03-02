@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { UploadFileService } from 'src/app/shared/upload-file.service';
 import { CommonService } from 'src/app/shared/services/common.service';
 import { ToastrService } from 'ngx-toastr';
@@ -9,7 +9,7 @@ import { BookingConstants } from '../../../config/booking-config';
     templateUrl: './booking-file-upload.component.html',
     styleUrls: ['./booking-file-upload.component.scss']
 })
-export class BookingFileUploadComponent implements OnInit {
+export class BookingFileUploadComponent implements OnInit, OnChanges {
     @ViewChild('fileInput') fileInput: any;
     @Input() uploadModel: any;
     @Input() form: any;
@@ -32,7 +32,8 @@ export class BookingFileUploadComponent implements OnInit {
     fileName: string = '';
     fromAdmin: boolean = false;
     getFile: any = null
-    attachments: any[];
+    @Input() attachments: any[];
+    @Input() deleteButtonIsDisabled : boolean = false;
     bookingConstants = BookingConstants;
 
 	/**
@@ -53,6 +54,18 @@ export class BookingFileUploadComponent implements OnInit {
 	 */
     ngOnInit() { }
 
+    ngOnChanges(changes: SimpleChanges){
+        if(changes && changes.attachments){
+            if(this.attachments && this.attachments.length){
+                for(const attachment of this.attachments){
+                    this.getFile = attachment;
+                    this.canUpload = true;
+                    this.id = attachment.id;
+                    this.type = attachment.mimeType;
+                }
+            }
+        }
+    }
 	/**
 	 * This method is use for select the file 
 	 * @param event - get selected file event

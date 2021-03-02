@@ -51,6 +51,7 @@ export class SwimmingPoolComponent implements OnInit {
   stateListArray: any = [];
   cityListArray: any = [];
   isBuildinAreaReq: boolean = false;
+  attachments = [];
   /**
   * Loading Booking Configuration
   */
@@ -72,6 +73,7 @@ export class SwimmingPoolComponent implements OnInit {
   // BANK: Array<any> = [];
   session: any;
   durationisReadOnly:boolean= false;
+  swimmingPoolRenewal:boolean = false;
   /**
    * @param fb - Declare FormBuilder property.
    * @param validationError - Declare validation service property
@@ -80,6 +82,13 @@ export class SwimmingPoolComponent implements OnInit {
    * @param commonService - Declare sweet alert.
    * @param toastrService - Show massage with timer.
    */
+
+  searchObj = {
+    isDisplayRenewLicenceForm: <boolean>false,
+    searchLicenceNumber:""
+  }
+  isRenewalForm = false;
+
   constructor(
     private fb: FormBuilder,
     public validationError: ValidationService,
@@ -114,10 +123,14 @@ export class SwimmingPoolComponent implements OnInit {
     this.getUserProfile();
     this.defaultAsperPool();
 
+    console.log(this.router.url);
+    if(this.router.url.indexOf('swimmingPoolRenewal') > -1){ 
+      this.searchObj.isDisplayRenewLicenceForm = true;
+      // this.swimmingPoolRenewal = true;
+    }
     this.chosenMonthHandler(this.startMinMonth.setMonth(this.startMinMonth.getMonth() + 1));
   }
-
-	/**
+  /**
 	* Method is used to get lookup data
 	*/
   getLookupData() {
@@ -349,7 +362,8 @@ export class SwimmingPoolComponent implements OnInit {
       pid: null,
       remarks: null,
       family: false,
-      staffMember: false
+      staffMember: false,
+      isRenewalForm: false
     });
   }
 
@@ -444,7 +458,8 @@ export class SwimmingPoolComponent implements OnInit {
             sectionToPrint.innerHTML = data;
             setTimeout(() => {
               window.print();
-              this.router.navigate(['../../my-bookings'], {relativeTo: this.route});
+              this.paymentRequest(res);
+              // this.router.navigate(['../../my-bookings'], {relativeTo: this.route});
             });
           });
           // this.swimmimgPoolBookingForm.get('refNumber').setValue(res.refNumber);
@@ -474,6 +489,23 @@ export class SwimmingPoolComponent implements OnInit {
     }
 
   }
+
+  paymentRequest(element) {
+		this.bookingService.getTransactionDetails(element.refNumber).subscribe(transactionData => {
+		}, err => {
+			if (err.status == 402) {
+							// if (err.status == 402) {
+				// this.bookingUtils.redirectToPayment(err, this.commonService, this.bookingService);
+        this.bookingUtils.redirectToCCAvenuePayment(err, this.commonService, this.bookingService, this.paymentGateway);
+        this.router.navigate(['../../my-bookings'], {relativeTo: this.route});
+				// }
+			} else if (err.error[0].code == this.bookingConstants.INVALID_BOOKING_STATUS) {
+				this.commonService.openAlert("Invalid Booking Status", err.error[0].message, "warning", "")
+			} else {
+				this.commonService.openAlertFormSaveValidation('Warning!', err.error, 'warning');
+			}
+		})
+	}
 
   CheckType(idCode){
 
@@ -574,5 +606,23 @@ export class SwimmingPoolComponent implements OnInit {
     console.log(event);
     this.dateFormat(event,'applicantJoiningMonth');
   }
-    
+
+  getSwimmingPoolData() {
+    this.bookingService.searchRenewSwimmingPool(this.searchObj.searchLicenceNumber).subscribe(
+      (res: any) => {
+      res = res.data;
+      if (res && res.bookingFormId) 
+      this.swimmimgPoolBookingForm.patchValue({'serviceFormId': res.bookingFormId});
+      this.attachments = res.attachments;
+      this.swimmimgPoolBookingForm.patchValue(res);
+      // this.attachments = res.data;
+      this.swimmimgPoolBookingForm.disable();
+      this.searchObj.isDisplayRenewLicenceForm = false;
+      this.showDowlLoadFileTab = false;
+      this.showSwimmingPoolForm = true;
+      this.isRenewalForm = true;
+      // this.swimmimgPoolBookingForm.get('remarks').enable();
+      // this.filterAsperBatchName(this.swimmimgPoolBookingForm.get('category').get('code').value);
+    })
+  }  
 }
