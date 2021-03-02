@@ -41,6 +41,7 @@ export class BookPlanetariumComponent implements OnInit {
   totalVisitorLimit: number = 5;
   seatAvailable: boolean = true;
   isFileUploaded: boolean = false;
+  remainSeats:number;
   /**
    * Lookups & Data
    */
@@ -230,6 +231,38 @@ export class BookPlanetariumComponent implements OnInit {
 
   }
 
+  getPlanetariumGeneralShowAvailability() {
+    if (this.ticketBookingForm.get('planetariumShowTiming').get('code').value &&
+      this.ticketBookingForm.get('visitors').get('code').value) {
+      this.ticketingService.getPlanetariumShowAvailability(
+        this.ticketBookingForm.get('resourceCodeLK').get('code').value,
+        this.ticketBookingForm.get('planetariumShowTiming').get('code').value,
+        this.ticketBookingForm.get('visitingDate').value,
+        this.ticketBookingForm.get('visitors').get('code').value).subscribe(
+          (respData) => {
+            this.seatAvailable = respData.data.seatAvailable;
+            this.remainSeats = respData.data.availableSeats;
+            this.ticketBookingForm.get('remainSeats').setValue(this.remainSeats);
+            this.commonService.successAlert('success', 'Available', 'success');
+            if (this.seatAvailable) {
+              this.toster.success(this.ticketBookingForm.get('visitors').get('code').value + ' ' + this.ticketingConstants.AVAILABLE_SEATS);
+            }
+            else {
+              this.toster.error(this.ticketBookingForm.get('visitors').get('code').value + ' ' + this.ticketingConstants.NOT_AVAILABLE);
+            }
+          },
+          err => {
+            this.commonService.openAlert("Error", err.error[0].message, "warning");
+          });
+    }
+    else {
+      // this.ticketBookingForm.controls['totalVisitor'].markAsTouched();
+      // this.markFormGroupTouched(this.ticketBookingForm);
+      // this.toster.error(this.ticketingConstants.ALL_FEILD_REQUIRED_MESSAGE);
+    }
+  }
+
+
   /**
    *  Will Compute total amount 
    */
@@ -276,6 +309,7 @@ export class BookPlanetariumComponent implements OnInit {
       status: null,
       refNumber: null,
       bookingFormId : null,
+      remainSeats:[{value: null, disabled: true}],
       resourceType: null,
       payableServiceType: null,
       resourceCode: 'SARDAR_PATEL_PLANETARIUM',
