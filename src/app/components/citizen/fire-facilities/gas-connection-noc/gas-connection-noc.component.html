@@ -124,7 +124,7 @@
 					</div>
 
 					<div class="col-md-4 ngSelect" formGroupName="subject">
-						<ng-select required placeholder="{{'subject' | translate:translateKey}} *" formControlName="code">
+						<ng-select required placeholder="{{'subject' | translate:translateKey}} *" formControlName="code" (change) = "documentManage()">
 							<ng-option *ngFor="let fire_sub of FS_SUBJECT" [value]="fire_sub.code">{{fire_sub.name}}</ng-option>
 						</ng-select>
 						<control-messages [control]="gasConnectionForm.get('subject').get('code')"></control-messages>
@@ -186,7 +186,7 @@
 
 					<mat-form-field class="col-md-4">
 						<input matInput OnlyNumber placeholder="{{'fire_Loss_Amount' | translate:translateKey}}" type="tel" maxlength="10"
-						 formControlName="fireLossAmount" required>
+						 formControlName="fireLossAmount">
 						<control-messages [control]="gasConnectionForm.get('fireLossAmount')"></control-messages>
 					</mat-form-field>
 
