@@ -93,7 +93,7 @@
                             <div formGroupName="visitors" class="col-md-4 ngSelect"
                                 *ngIf="ticketBookingForm.get('showCategory').get('code').value != 'PLANETARIUM_SPECIAL_SHOW'">
                                 <ng-select OnlyNumber placeholder="{{'visitors'| translate: translateKey}} *" formControlName="code"
-                                    (change)="setVisitors();computeTotalAndVisitors()">
+                                    (change)="setVisitors();computeTotalAndVisitors(); getPlanetariumGeneralShowAvailability()">
                                     <ng-option *ngFor="let num of PLANETARIUM_VISITOR" [value]="num.code">
                                         {{ num.name }}
                                     </ng-option>
@@ -119,6 +119,11 @@
                             <mat-form-field class="col-md-4">
                                 <input matInput OnlyNumber
                                     placeholder="{{ 'total_amount'| translate:translateKey}}" formControlName="amount">
+                            </mat-form-field>
+
+                            <mat-form-field class="col-md-4">
+                                <input matInput OnlyNumber 
+                                    placeholder="{{ 'remain_seats'| translate:translateKey}}" formControlName="remainSeats">
                             </mat-form-field>
 
                         </div>
