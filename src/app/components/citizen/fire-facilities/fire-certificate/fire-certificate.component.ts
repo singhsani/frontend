@@ -73,7 +73,8 @@ export class FireCertificateComponent implements OnInit {
       res.serviceDetail.serviceUploadDocuments.forEach(app => {
         (<FormArray>this.fireCertificateForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.fireFacilityConfig.createDocumentsGrp(app));
       });
-      this.requiredDocumentList();
+     
+      this.documentManage();
 
       // } catch (error) {
       //   console.log(error.message)
@@ -111,11 +112,13 @@ export class FireCertificateComponent implements OnInit {
       oldReferenceNumber: [null, [Validators.maxLength(10)]],
       incidentDate: [null, [Validators.required, Validators.maxLength(50)]],
       incidentTime: [null, [Validators.required, Validators.maxLength(50)]],
+      whetherTheFireplaceInVMCAreaOrNot: [false, [Validators.required]],//true/false
       firePlaceAddress: [null, [Validators.required, Validators.maxLength(300)]],
       firePlaceAddressGuj: [null, [Validators.required, Validators.maxLength(900)]],
       connectionHolderAddress: [null, [Validators.required, Validators.maxLength(500)]],
       connectionHolderAddressGuj: [null, [Validators.required, Validators.maxLength(1500)]],
       propertyNo: [null, [Validators.required, Validators.maxLength(15)]],
+      fireplaceNameOrVehicleNumber: [null, [Validators.required, Validators.maxLength(50)]],
       firePlaceType: this.fb.group({
         code: [null, [Validators.required]]
       }),
@@ -135,6 +138,36 @@ export class FireCertificateComponent implements OnInit {
       this.FS_FIRE_PLACE_TYPE = res.FS_FIRE_PLACE_TYPE;
     });
   }
+
+  documentManage(){
+    const firePlaceType = this.fireCertificateForm.get('firePlaceType').value;
+
+    let licenseCopyMandotary = false;
+    let rcBookMandotary = false;
+    if(firePlaceType && firePlaceType.code && (firePlaceType.code == 'COMMERCIAL' || firePlaceType.code == 'INDUSTRIAL')){
+			licenseCopyMandotary = true;
+		}
+
+    if(firePlaceType && firePlaceType.code && firePlaceType.code == 'VEHICLE'){
+			rcBookMandotary = true;
+		} 
+
+    const documents = this.fireCertificateForm.get('serviceDetail').get('serviceUploadDocuments').value;
+
+
+    for(const document of documents){
+			if(document.documentIdentifier == 'LICENSE_COPY')
+				document.mandatory = licenseCopyMandotary;
+
+        if(document.documentIdentifier == 'RC_BOOK')
+				document.mandatory = rcBookMandotary;
+		}
+
+    this.fireCertificateForm.get('serviceDetail').patchValue({'serviceUploadDocuments': documents});
+
+		this.requiredDocumentList();
+  }
+
 
 	/**
 	 * This method is change date format.

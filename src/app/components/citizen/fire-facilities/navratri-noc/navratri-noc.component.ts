@@ -281,6 +281,8 @@ export class NavratriNocComponent implements OnInit {
 			garbaPlaceAddressGuj: [null, [Validators.required, Validators.maxLength(300)]],
 			fromDate: [null, [Validators.required]],
 			toDate: [null, [Validators.required]],
+			tpNo: [null, [Validators.required, Validators.maxLength(8)]],
+			fpNo: [null, [Validators.required, Validators.maxLength(8)]],
 			landOwnerConsentIncluded: [null, [Validators.maxLength(10)]],
 			garbaInVMCRange: [null, [Validators.required, Validators.maxLength(10)]],
 			landOwnerIsVMC: [null, [Validators.required, Validators.maxLength(10)]],
@@ -365,7 +367,7 @@ export class NavratriNocComponent implements OnInit {
 	dummyJSON:any={
 
 		"applicationThroughPolice": true,
-		"policeCommisionerLetterNo": "42342342342342342343",
+		"policeCommisionerLetterNo": "એફ/પરફ/વશી/૧૦૦/૨૦૨૧",
 		"policeCommisionerLetterDate": moment(new Date()).format("YYYY-MM-DD"),
 		"organizeName": "gdfgfdgfdgdf",
 		"organizeNameGuj": "ગ્દ્ફ્ગ્ફ્દ્ગ્ફ્દ્ગ્દ્ફ",
@@ -377,6 +379,8 @@ export class NavratriNocComponent implements OnInit {
 		"garbaPlaceAddressGuj": "સ્દ્ફ્સ્દ્ફ્સ્દ્ફ્ફ્સ્દ્સ્દ્ફ્સ્દ્ફ",
 		"fromDate": moment(new Date()).format("YYYY-MM-DD"),
 		"toDate": moment(new Date()).format("YYYY-MM-DD"),
+		"tpNo" : "5656hfgj",
+		"fpNo" : "1212jsjs",
 		"landOwnerConsentIncluded": true,
 		"garbaInVMCRange": true,
 		"landOwnerIsVMC": true,

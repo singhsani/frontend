@@ -85,7 +85,7 @@
 					</div>
 
 					<mat-form-field class="col-md-4" *ngIf="navaratriNocForm.get('applicationThroughPolice').value">
-						<input matInput type="text"   appValidationFields [validationFieldsType]="'alphanumericWithSpace'" formControlName="policeCommisionerLetterNo" placeholder="{{'police_commisioner_letter_no' | translate: translateKey }} *"
+						<input matInput type="text"   appValidationFields formControlName="policeCommisionerLetterNo" placeholder="{{'police_commisioner_letter_no' | translate: translateKey }} *"
 						 maxlength="20">
 						<control-messages [control]="navaratriNocForm.get('policeCommisionerLetterNo')"></control-messages>
 					</mat-form-field>
@@ -200,6 +200,17 @@
 						</mat-radio-group>
 						<control-messages [control]="navaratriNocForm.get('garbaInVMCRange')"></control-messages>
 					</div>
+
+					<mat-form-field class="col-md-6">
+						<input matInput maxlength="8" required placeholder="{{'town_planning_no' | translate:translateKey}}"
+						 formControlName="tpNo">
+						<control-messages [control]="navaratriNocForm.get('tpNo')"></control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-6">
+						<input matInput maxlength="8" required placeholder="{{'final_plot_no' | translate:translateKey}}" formControlName="fpNo">
+						<control-messages [control]="navaratriNocForm.get('fpNo')"></control-messages>
+					</mat-form-field>
 
 				</div>
 				<div class="row">
