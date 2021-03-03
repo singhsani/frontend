@@ -145,5 +145,22 @@ export class BookingUtils extends BTConfig {
         }
         return selectedShift;
     }
+
+    /**
+     * Get invalid form control key
+     * @param form - form group
+     */
+    getInvalidFormControlKey(form) {
+        this.markAsTouched(form);
+        for (const key in form.controls) {
+            if (form.get(key).invalid) {
+                console.log("Invalid from control key",key);
+                return key;
+            }
+        }
+    }
+       
+
+
 }
 
