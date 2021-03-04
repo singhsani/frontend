@@ -112,7 +112,7 @@
 					</mat-form-field>
 
 					<div class="col-md-6 ngSelect" formGroupName="firePlaceType">
-						<ng-select placeholder="{{'fire_certificate_form' | translate:translateKey}} *" formControlName="code" (change) = "documentManage()">
+						<ng-select placeholder="{{'fire_certificate_form' | translate:translateKey}} *" formControlName="code" (change) = "documentsManage()">
 							<ng-option *ngFor="let type of FS_FIRE_PLACE_TYPE" [value]="type.code">{{type.name}}</ng-option>
 						</ng-select>
 						<control-messages [control]="fireCertificateForm.get('firePlaceType').get('code')"></control-messages>
@@ -132,14 +132,13 @@
 					<mat-form-field class="col-md-4">
 						
 						<input matInput OnlyNumber placeholder="Contact No" 
-						 formControlName="contactNo" required maxlength="10" minlength="10" style="padding-bottom:10px;">
+						 formControlName="contactNo" required maxlength="10" minlength="10">
 						<control-messages [control]="fireCertificateForm.get('contactNo')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						
 						<input matInput OnlyNumber placeholder="Mobile No" 
-						 formControlName="mobileNo" required maxlength="10" minlength="10" style="padding-bottom:10px;">
+						 formControlName="mobileNo" required maxlength="10" minlength="10">
 						<control-messages [control]="fireCertificateForm.get('mobileNo')"></control-messages>
 					</mat-form-field>
 
