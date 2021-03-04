@@ -38,6 +38,7 @@ export class TempFireworksNocComponent implements OnInit {
 //	startMinDate = moment(new Date()).format('YYYY-MM-DD');
 	endMinDate = moment(new Date()).format('YYYY-MM-DD');
 	fromDate = moment(new Date()).format('YYYY-MM-DD');
+	
 	/**
      * @param fb - Declare FormBuilder property.
      * @param validationError - Declare validation service property
@@ -228,6 +229,9 @@ export class TempFireworksNocComponent implements OnInit {
 		});
 	}
 
+
+	
+
 	/**
 	* Method is used to get lookup data
 	*/
@@ -250,12 +254,16 @@ export class TempFireworksNocComponent implements OnInit {
 			applicantNameGuj: [null, [Validators.required, Validators.maxLength(300)]],
 			mobileNo: [null, [Validators.required, Validators.maxLength(this.fireFacilityConfig.mobileNumber_maxLength), Validators.minLength(this.fireFacilityConfig.mobileNumber_minLength)]],
 			email: [null, [Validators.email, Validators.required, Validators.maxLength(50)]],
+			applicantAddress: [null, [Validators.required, Validators.maxLength(300)]],
+			applicantAddressGuj: [null, [Validators.required, Validators.maxLength(900)]],
 			oldReferenceNumber: [null, [Validators.maxLength(10)]],//not now
 			applicationDate: [{ value: null, disabled: true }],
 			// applicationDate: [null, [Validators.required]],//not now
 
 			/* Step 2 controls start */
 			applicationThroughPolice: [false, [Validators.required]],//true/false
+			policeCommissionerLetterNo: [null, [Validators.required, Validators.maxLength(50)]],
+			policeCommissionerLetterDate: [null, [Validators.required, Validators.maxLength(10)]],
 			temporaryShopAddress: [null, [Validators.required, Validators.maxLength(200)]],
 			fromDate: [null, [Validators.required, Validators.maxLength(10)]],
 			toDate: [null, [Validators.required, Validators.maxLength(10)]],
@@ -266,7 +274,7 @@ export class TempFireworksNocComponent implements OnInit {
 			ownerIsVMC: [false, [Validators.required]],//true/false
 			ownerConsentLetterIncluded: [false, [Validators.required]],//true/false
 			consentLetterDate: [null, [Validators.maxLength(100)]],//date
-			propertyNo: [null, [Validators.required, Validators.maxLength(15)]],
+			propertyNo: [null, [Validators.maxLength(15)]],
 			layoutPlanIncluded: [null, [Validators.required]],//true/false
 			weatherExitShownInMap: [null, [Validators.required]],//true/false
 			noOfExits: [null, [Validators.required, Validators.maxLength(3)]],
@@ -278,7 +286,8 @@ export class TempFireworksNocComponent implements OnInit {
 			exitNoSmokingSignboardProvision: [null, [Validators.required]],//true/false
 			standbyFireEngineDemanded: [null, [Validators.required]],//true/false
 			lastYearLicenceReceived: [null, [Validators.required]],//true/false
-			vmcFeeReceiptNo: [null, [Validators.required, Validators.maxLength(12)]],
+			whetherFirePreventionSystemInstalled: [null, [Validators.required]],//true/false
+			vmcFeeReceiptNo: [null, [Validators.maxLength(12)]],
 			wiringType: this.fb.group({
 				code: [null, Validators.required]
 			}),
@@ -407,7 +416,11 @@ export class TempFireworksNocComponent implements OnInit {
 
 	dummyJSON:any = {
 		"oldReferenceNumber": null,
+		"applicantAddress" : "Vadodara",
+		"applicantAddressGuj" : "વડોદરા",
 		"applicationThroughPolice": true,
+		"policeCommissionerLetterNo" : "Fgdg565",
+		"policeCommissionerLetterDate" : moment(new Date()).format("YYYY-MM-DD"),
 		"temporaryShopAddress": "aaaaaaaaaaaaaaa",
 		"fromDate": moment(new Date()).format("YYYY-MM-DD"),
 		"toDate": moment(new Date()).format("YYYY-MM-DD"),
@@ -417,7 +430,6 @@ export class TempFireworksNocComponent implements OnInit {
 		"ownerIsVMC": true,
 		"ownerConsentLetterIncluded": true,
 		"consentLetterDate": moment(new Date()).format("YYYY-MM-DD"),
-		"propertyNo": "sdfsdfsdf",
 		"layoutPlanIncluded": true,
 		"weatherExitShownInMap": true,
 		"noOfExits": "3",
@@ -427,10 +439,10 @@ export class TempFireworksNocComponent implements OnInit {
 		"exitNoSmokingSignboardProvision": true,
 		"standbyFireEngineDemanded": true,
 		"lastYearLicenceReceived": true,
-		"vmcFeeReceiptNo": "dfsdfsdfsdfs",
 		"wiringType": {
 		  "code": "OPEN"
 		},
+		"whetherFirePreventionSystemInstalled" : true,
 		"fileStatus": "DRAFT",
 		"serviceName": null,
 		"fileNumber": null,

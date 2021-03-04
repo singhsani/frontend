@@ -73,8 +73,8 @@ export class FireCertificateComponent implements OnInit {
       res.serviceDetail.serviceUploadDocuments.forEach(app => {
         (<FormArray>this.fireCertificateForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.fireFacilityConfig.createDocumentsGrp(app));
       });
+     
       this.requiredDocumentList();
-
       // } catch (error) {
       //   console.log(error.message)
       // }
@@ -111,11 +111,13 @@ export class FireCertificateComponent implements OnInit {
       oldReferenceNumber: [null, [Validators.maxLength(10)]],
       incidentDate: [null, [Validators.required, Validators.maxLength(50)]],
       incidentTime: [null, [Validators.required, Validators.maxLength(50)]],
+      whetherTheFireplaceInVMCAreaOrNot: [false, [Validators.required]],//true/false
       firePlaceAddress: [null, [Validators.required, Validators.maxLength(300)]],
       firePlaceAddressGuj: [null, [Validators.required, Validators.maxLength(900)]],
       connectionHolderAddress: [null, [Validators.required, Validators.maxLength(500)]],
       connectionHolderAddressGuj: [null, [Validators.required, Validators.maxLength(1500)]],
       propertyNo: [null, [Validators.required, Validators.maxLength(15)]],
+      fireplaceNameOrVehicleNumber: [null, [Validators.required, Validators.maxLength(50)]],
       firePlaceType: this.fb.group({
         code: [null, [Validators.required]]
       }),

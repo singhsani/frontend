@@ -60,6 +60,28 @@
 							<mat-icon matTooltip="Select Time" color="primary">alarm</mat-icon>
 						</button>
 					</div>
+
+
+
+					<div class="col-md-4">
+						<div class="row">
+							<div class="radioBtnError">
+								<mat-label>{{'fire_place_in_vmc_area_or_not' | translate:translateKey }} *</mat-label>
+								<mat-radio-group formControlName="whetherTheFireplaceInVMCAreaOrNot" required>
+									<mat-radio-button [value]="true">
+										Yes
+									</mat-radio-button>
+									<mat-radio-button [value]="false">
+										{{'No' | translate:translateKey }}
+									</mat-radio-button>
+								</mat-radio-group>
+								<control-messages [control]="fireCertificateForm.get('whetherTheFireplaceInVMCAreaOrNot')"></control-messages>
+							</div>
+						</div>
+					</div>
+
+
+
 					<mat-form-field class="col-md-6">
 						<textarea matInput rows="2" cols="50" required maxlength="200" placeholder="{{'fire_place_address' | translate:translateKey}}"
 						 formControlName="firePlaceAddress" appGujInputSource targetElement="firePlaceAddressGuj" [form]="fireCertificateForm"></textarea>
@@ -84,19 +106,25 @@
 						<control-messages [control]="fireCertificateForm.get('connectionHolderAddressGuj')"></control-messages>
 					</mat-form-field>
 					<!--/ gujarati -->
-					<mat-form-field class="col-md-4">
+					<mat-form-field class="col-md-6">
 						<input matInput type="text" appAlphaNumeric maxlength="15" required formControlName="propertyNo" placeholder="{{ 'property_no' | translate:translateKey }}">
 						<control-messages [control]="fireCertificateForm.get('propertyNo')"></control-messages>
 					</mat-form-field>
 
-					<div class="col-md-4 ngSelect" formGroupName="firePlaceType">
-						<ng-select placeholder="{{'fire_certificate_form' | translate:translateKey}} *" formControlName="code">
+					<div class="col-md-6 ngSelect" formGroupName="firePlaceType">
+						<ng-select placeholder="{{'fire_certificate_form' | translate:translateKey}} *" formControlName="code" (change) = "documentManage()">
 							<ng-option *ngFor="let type of FS_FIRE_PLACE_TYPE" [value]="type.code">{{type.name}}</ng-option>
 						</ng-select>
 						<control-messages [control]="fireCertificateForm.get('firePlaceType').get('code')"></control-messages>
 					</div>
 
-					<mat-form-field class="col-md-4">
+					<mat-form-field class="col-md-6">
+						<input matInput type="text" formControlName="fireplaceNameOrVehicleNumber" placeholder="{{'fire_place_name_vehicle_no' | translate: translateKey }} *"
+						 maxlength="50">
+						<control-messages [control]="fireCertificateForm.get('fireplaceNameOrVehicleNumber')"></control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-6">
 						<input matInput type="text" maxlength="50" required formControlName="fireLossAmount" placeholder="{{ 'fire_loss_amount' | translate:translateKey }}">
 						<control-messages [control]="fireCertificateForm.get('fireLossAmount')"></control-messages>
 					</mat-form-field>

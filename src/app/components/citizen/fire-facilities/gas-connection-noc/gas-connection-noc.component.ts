@@ -76,7 +76,8 @@ export class GasConnectionNocComponent implements OnInit {
 			res.serviceDetail.serviceUploadDocuments.forEach(app => {
 				(<FormArray>this.gasConnectionForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.fireFacilityConfig.createDocumentsGrp(app));
 			});
-			this.requiredDocumentList();
+			
+			this.documentManage();
 		});
 	}
 
@@ -131,7 +132,7 @@ export class GasConnectionNocComponent implements OnInit {
 			}),
 			firePlaceAddress: [null, [Validators.required, Validators.maxLength(300)]],
 			firePlaceAddressGuj: [null, [Validators.required, Validators.maxLength(900)]],
-			fireLossAmount: [null, [Validators.required, Validators.maxLength(10)]],
+			fireLossAmount: [null, [Validators.maxLength(10)]],
 			highRiseFireNOCTaken: [null],
 
 			/* Step 3 controls start */
@@ -189,6 +190,25 @@ export class GasConnectionNocComponent implements OnInit {
 			}
 		})
 	}
+
+
+	documentManage(){
+		const subject = this.gasConnectionForm.get('subject').value;
+		let mandatory = false;
+		if(subject && subject.code && subject.code == 'BUILDING_COLLAPSE'){
+			mandatory = true;
+		}
+
+		const documents = this.gasConnectionForm.get('serviceDetail').get('serviceUploadDocuments').value;
+
+		for(const document of documents){
+			if(document.documentIdentifier == 'BUILDING_NIRBHAYATA_CERTIFICATE')
+			document.mandatory = mandatory;
+		}
+		this.gasConnectionForm.get('serviceDetail').patchValue({'serviceUploadDocuments': documents});
+		this.requiredDocumentList();
+	}
+
 
 	onChangeConnectionPurpose(event) {
 		
@@ -255,7 +275,6 @@ export class GasConnectionNocComponent implements OnInit {
 		"subject": "dfsd",
 		"firePlaceAddress": "fsdgdfgdfgdfgfdg",
 		"firePlaceAddressGuj": "ફ્સ્દ્ગ્દ્ફ્ગ્દ્ફ્ગ્દ્ફ્ગ્ફ્દ્ગ",
-		"fireLossAmount": 24343434,
 		"highRiseFireNOCTaken": true,
 		"fileStatus": "DRAFT",
 		"serviceName": null,
