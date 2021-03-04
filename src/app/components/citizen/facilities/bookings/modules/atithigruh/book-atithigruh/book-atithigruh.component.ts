@@ -290,7 +290,7 @@ export class BookAtithigruhComponent implements OnInit {
 	 * This method is use for search atithigruh availability
 	 */
 	searchBooking() {
-		
+		this.selectedShift = []
 		if(this.BookingTypeForm.get('bookingFrom').value == null){
 			this.toaster.warning(this.bookingUtils.ALL_FEILD_REQUIRED_MESSAGE);
 			return;
