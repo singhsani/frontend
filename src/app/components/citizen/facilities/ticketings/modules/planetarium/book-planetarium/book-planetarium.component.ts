@@ -174,6 +174,10 @@ export class BookPlanetariumComponent implements OnInit {
    */
   changeDateFormat(e) {
     this.ticketBookingForm.get('visitingDate').setValue(moment(e.value).format('YYYY-MM-DD'));
+    this.ticketBookingForm.get('planetariumShowTiming').get('code').reset();
+    this.ticketBookingForm.get('totalVisitor').reset();
+    this.ticketBookingForm.get('specialShowLanguage').get('code').reset();
+    this.ticketBookingForm.get('visitors').reset();
   }
 
   /**
