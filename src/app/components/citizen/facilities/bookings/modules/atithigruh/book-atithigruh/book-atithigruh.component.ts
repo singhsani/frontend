@@ -72,6 +72,7 @@ export class BookAtithigruhComponent implements OnInit {
 	confirmRef: BsModalRef;
 	displayedColumns: Array<string> = ['id', 'shiftType', 'bookingDate', 'startTime', 'endTime', 'rent', 'electricCharges', 'administrationCharges', 'showTax', 'subTotal', 'gstAmount', 'total'];
 	profileObj : any;
+	public formControlNameToTabIndex = new Map();
 
 	constructor(
 		private fb: FormBuilder,
@@ -98,6 +99,7 @@ export class BookAtithigruhComponent implements OnInit {
 		this.bookingLookups();
 		this.getAtithigruhLists();
 		this.getUserProfile();
+		this.setFormControlToTabIndexMap();
 
 		this.BookingTypeForm.controls.bookingFrom.valueChanges.subscribe(data => {
 			this.BookingTypeForm.controls.bookingTo.reset();
@@ -426,7 +428,7 @@ export class BookAtithigruhComponent implements OnInit {
 		
 		let errCount = this.bookingUtils.getAllErrors(this.atithigruhForm);
 		if (this.atithigruhForm.invalid) {
-			this.handleErrorsOnSubmit(errCount);
+			this.handleErrorsOnSubmit();
 			this.commonService.openAlert("Field Error", this.bookingConstants.ALL_FEILD_REQUIRED_MESSAGE, 'warning')
 			return;
 		}
@@ -488,25 +490,34 @@ export class BookAtithigruhComponent implements OnInit {
 		this.tabIndex = evt;
 	}
 
+	handleErrorsOnSubmit() {
+		const key = this.bookingUtils.getInvalidFormControlKey(this.atithigruhForm);
+		const index = this.formControlNameToTabIndex.get(key) ? this.formControlNameToTabIndex.get(key) : 1;
+		if (index) {
+			this.tabIndex = index - 1;
+			return false;
+		}
+	}
+
 	/**
 	 * Method is used to handle error/validation on submit
 	 * @param count - count of invalid control.
 	 */
-	handleErrorsOnSubmit(count) {
-		let step1 = 4;
-		let step2 = 11;
-		let step3 = 17;
-		if (count < step1) {
-			this.tabIndex = 0;
-			return false;
-		} else if (count < step2) {
-			this.tabIndex = 1;
-			return false;
-		} else if (count < step3) {
-			this.tabIndex = 2;
-			return false;
-		}
-	}
+	// handleErrorsOnSubmit(count) {
+	// 	let step1 = 4;
+	// 	let step2 = 11;
+	// 	let step3 = 17;
+	// 	if (count < step1) {
+	// 		this.tabIndex = 0;
+	// 		return false;
+	// 	} else if (count < step2) {
+	// 		this.tabIndex = 1;
+	// 		return false;
+	// 	} else if (count < step3) {
+	// 		this.tabIndex = 2;
+	// 		return false;
+	// 	}
+	// }
 
 	/**
 	 * This method use to get the profile data using api
@@ -523,34 +534,48 @@ export class BookAtithigruhComponent implements OnInit {
 		this.atithigruhForm.get('applicantMobileNo').setValue(this.profileObj.cellNo);
 	}
 
-	// patchValue2(){
-	// 	const data = {
-	// 	  "applicantName": "jkljkl",
-	// 	  "applicantMobileNo": "4151512121",
-	// 	  "confirmMobile": "4151512121",
-	// 	  "applicantEmailID": "fdgdfh@gmail.com",
-	// 	  "confirmEmailID": "fdgdfh@gmail.com",
-	// 	  "applicantAddress": {
-	// 		"buildingName": "1",
-	// 		"streetName": "ddfsdf",
-	// 		"landmark": "dfsdfsdf",
-	// 		"area": "dfsdf",
-	// 		"state": "GUJARAT",
-	// 		"city": "Vadodara",
-	// 		"country": "INDIA",
-	// 		"pincode": "151212"
-	// 	  },
-	// 	  "termsCondition": true,
-	// 	  "agree": true,
-	// 	  "remarks": null,
-	// 	  "bankName": {
-	// 		"code": "ALLAHABAD_BANK"
-	// 	  },
-	// 	  "accountHolderName": "dfsd",
-	// 	  "accountNo": "23423423423",
-	// 	  "ifscCode": "SBIN0000000"
-	// 	};
-	// 	this.atithigruhForm.patchValue(data);
-	//   }
+	patchValue2(){
+		const data = {
+		  "applicantName": "jkljkl",
+		  "applicantMobileNo": "4151512121",
+		  "confirmMobile": "4151512121",
+		  "applicantEmailID": "fdgdfh@gmail.com",
+		  "confirmEmailID": "fdgdfh@gmail.com",
+		  "applicantAddress": {
+			"buildingName": "1",
+			"streetName": "ddfsdf",
+			"landmark": "dfsdfsdf",
+			"area": "dfsdf",
+			"state": "GUJARAT",
+			"city": "Vadodara",
+			"country": "INDIA",
+			"pincode": "151212"
+		  },
+		  "termsCondition": true,
+		  "agree": true,
+		  "remarks": null,
+		  "bankName": {
+			"code": "ALLAHABAD_BANK"
+		  },
+		  "accountHolderName": "dfsd",
+		  "accountNo": "23423423423",
+		  "ifscCode": "SBIN0000000"
+		};
+		this.atithigruhForm.patchValue(data);
+	}
+
+	setFormControlToTabIndexMap() {
+		// First tab
+		this.formControlNameToTabIndex.set('applicantName', 1)
+		this.formControlNameToTabIndex.set('applicantMobileNo', 1)
+		this.formControlNameToTabIndex.set('applicantEmailID', 1)
+		this.formControlNameToTabIndex.set('applicantAddress', 1)
+		// second tab
+		
+		this.formControlNameToTabIndex.set('bankName', 2)
+		this.formControlNameToTabIndex.set('accountHolderName', 2)
+		this.formControlNameToTabIndex.set('accountNo', 2)
+		this.formControlNameToTabIndex.set('ifscCode', 2)
+	  }
 
 }
