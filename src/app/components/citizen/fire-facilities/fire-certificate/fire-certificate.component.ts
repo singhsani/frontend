@@ -73,8 +73,7 @@ export class FireCertificateComponent implements OnInit {
       res.serviceDetail.serviceUploadDocuments.forEach(app => {
         (<FormArray>this.fireCertificateForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.fireFacilityConfig.createDocumentsGrp(app));
       });
-     
-      this.requiredDocumentList();
+      this.documentsManage();
       // } catch (error) {
       //   console.log(error.message)
       // }
@@ -161,6 +160,35 @@ export class FireCertificateComponent implements OnInit {
         this.fireCertificateForm.get(controlName).setValue(time + ":00");
       }
     });
+  }
+
+  documentsManage(){
+    const firePlaceType = this.fireCertificateForm.get('firePlaceType').value;
+
+    let licenseCopyMandotary = false;
+    let rcBookMandotary = false;
+    if(firePlaceType && firePlaceType.code && (firePlaceType.code == 'COMMERCIAL' || firePlaceType.code == 'INDUSTRIAL')){
+			licenseCopyMandotary = true;
+		}
+
+    if(firePlaceType && firePlaceType.code && firePlaceType.code == 'VEHICLE'){
+			rcBookMandotary = true;
+		} 
+
+    const documents = this.fireCertificateForm.get('serviceDetail').get('serviceUploadDocuments').value;
+
+
+    for(const document of documents){
+			if(document.documentIdentifier == 'LICENSE_COPY')
+				document.mandatory = licenseCopyMandotary;
+
+        if(document.documentIdentifier == 'RC_BOOK')
+				document.mandatory = rcBookMandotary;
+		}
+
+    this.fireCertificateForm.get('serviceDetail').patchValue({'serviceUploadDocuments': documents});
+
+		this.requiredDocumentList();
   }
 
 	/**
