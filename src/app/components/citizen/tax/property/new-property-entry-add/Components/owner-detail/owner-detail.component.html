@@ -9,7 +9,7 @@
     </div>
     <form #formOwner="ngForm" (ngSubmit)="saveOwner(formOwner)">
         <div class="row">
-            <div class="col-md-1">
+            <div class="col-md-3">
                 <div class="ngSelect" style="min-width: 100%;">
                     <ng-select required placeholder="Title *" [items]="titleList" bindValue="itemId"
                         bindLabel="itemName" name="titleId" [(ngModel)]="ownerModel.titleId" #TitleId="ngModel"
@@ -20,14 +20,14 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-3">
                 <mat-form-field class="full-width-input">
                     <input trim="blur" matInput required maxlength="50" placeholder="First Name" name="firstName"
                         #FirstName="ngModel" [(ngModel)]="ownerModel.firstName">
                     <mat-error *ngIf="FirstName.invalid">*First Name is required.</mat-error>
                 </mat-form-field>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-3">
                 <mat-form-field class="full-width-input">
                     <input trim="blur" matInput maxlength="50" placeholder="Middle Name" name="middleName"
                         [(ngModel)]="ownerModel.middleName">
@@ -40,14 +40,16 @@
                     <mat-error *ngIf="LastName.invalid">*Last Name is required.</mat-error>
                 </mat-form-field>
             </div>
-            <div class="col-md-2">
+        </div>
+        <div class="row">
+            <div class="col-md-3">
                 <mat-form-field class="full-width-input">
                     <input matInput number-only maxlength="12" minlength="12" placeholder="Aadhaar No" name="aadharNo"
                         #AadhaarNo="ngModel" [(ngModel)]="ownerModel.aadharNo">
                     <mat-error *ngIf="AadhaarNo.invalid">*Aadhaar No is invalid.</mat-error>
                 </mat-form-field>
             </div>
-            <div class="col-md-1">
+            <div class="col-md-3">
                 <mat-form-field class="full-width-input">
                     <input matInput number-only maxlength="10" minlength="10" placeholder="Mobile No" name="mobileNo"
                         #MobileNo="ngModel" [(ngModel)]="ownerModel.mobileNo">
@@ -55,12 +57,21 @@
                 </mat-form-field>
 
             </div>
-            <div class="col-md-1">
+            <div class="col-md-3">
                 <mat-form-field class="full-width-input">
                     <input matInput email placeholder="Email" name="emailAddress" maxlength="255"
                     #EmailAddress="ngModel"   [(ngModel)]="ownerModel.emailAddress">
                      <mat-error *ngIf="EmailAddress.invalid && EmailAddress.errors.email">*Email is not valid.</mat-error>
                 </mat-form-field>
+            </div>
+            <div class="col-md-2">
+                <div class="ngSelect">
+                    <ng-select [(ngModel)]="ownerModel.isPrimaryOwner" name="isPrimaryOwner" required
+                        placeholder="Is Primary Owner">
+                        <ng-option [value]="true">Yes</ng-option>
+                        <ng-option [value]="false">No</ng-option>
+                    </ng-select>
+                </div>
             </div>
             <div class="col-md-1">
                 <button mat-mini-fab type="submit" color="primary" title="Save">
