@@ -127,20 +127,20 @@
 
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" appAlphaNumeric formControlName="propertyNo" placeholder="{{'property_no' | translate: translateKey }}"
-						 maxlength="15" required (change)="getPropertyStatus($event.target.value)">
+						 maxlength="15" (change)="getPropertyStatus($event.target.value)">
 						<control-messages [control]="electricConnectionForm.get('propertyNo')"></control-messages>
 						<mat-error *ngIf="electricConnectionForm.get('propertyNo').hasError('outstandingRemainingProperty')">{{propertyStatusOutstanding?.message}}</mat-error>
 					</mat-form-field>
 
 					<div class="col-md-4 ngSelect" formGroupName="firePlaceType">
-						<ng-select required placeholder="{{'fire_place_type' | translate:translateKey}} *" formControlName="code">
+						<ng-select required placeholder="{{'fire_place_type' | translate:translateKey}} *" formControlName="code" (change)="documentManage()">
 							<ng-option *ngFor="let fire_place of FS_FIRE_PLACE_TYPE" [value]="fire_place.code">{{fire_place.name}}</ng-option>
 						</ng-select>
 						<control-messages [control]="electricConnectionForm.get('firePlaceType').get('code')"></control-messages>
 					</div>
 
 					<div class="col-md-4 ngSelect" formGroupName="subject">
-						<ng-select required placeholder="{{'subject' | translate:translateKey}} *" formControlName="code">
+						<ng-select required placeholder="{{'subject' | translate:translateKey}} *" formControlName="code" (change)="documentManage()">
 							<ng-option *ngFor="let fire_sub of FS_SUBJECT" [value]="fire_sub.code">{{fire_sub.name}}</ng-option>
 						</ng-select>
 						<control-messages [control]="electricConnectionForm.get('subject').get('code')"></control-messages>
@@ -155,7 +155,7 @@
 
 					<mat-form-field class="col-md-4">
 						<input matInput OnlyNumber placeholder="{{'fire_loss_amount' | translate:translateKey}}" type="tel" maxlength="10"
-						 formControlName="fireLossAmount" required>
+						 formControlName="fireLossAmount">
 						<control-messages [control]="electricConnectionForm.get('fireLossAmount')"></control-messages>
 					</mat-form-field>
 

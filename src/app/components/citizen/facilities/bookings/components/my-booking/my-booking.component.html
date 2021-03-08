@@ -140,13 +140,13 @@
             </div>
 
               <!-- Recepit Re-print For Atithi Deposit -->
-            <!-- TODO Merge Townhall and Atithi deposit code and make it common-->
+            <!-- Hide deposit receipt for Atithigruh as there is no separate payment for Atithigruh deposit payment in citizen -->
 
-            <button *ngIf="showAtithiDepositReceiptBtn(element)" mat-menu-item color="primary"
+            <!-- <button *ngIf="showAtithiDepositReceiptBtn(element)" mat-menu-item color="primary"
               (click)="printReceipt(element, bookingConstant.ATITHIGURH_DEPOSIT)">
               <mat-icon title="Print Receipt" color="primary">print</mat-icon>
               {{'deposit_receipt' | translate:translateKey}}
-            </button>
+            </button> -->
 
             <button
               *ngIf="element.status == bookingConstant.PPL_REQUIRED && element.status != bookingConstant.CANCELLATION_REQUEST && element.status != bookingConstant.PAYMENT_REQUIRED"
