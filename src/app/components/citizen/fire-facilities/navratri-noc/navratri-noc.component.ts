@@ -274,7 +274,7 @@ export class NavratriNocComponent implements OnInit {
 			organizerAddress: [null, [Validators.required, Validators.maxLength(200)]],
 			organizerAddressGuj: [null, [Validators.required, Validators.maxLength(600)]],
 			organizerMobileNo: [null, [Validators.required, Validators.maxLength(this.fireFacilityConfig.mobileNumber_maxLength), Validators.minLength(this.fireFacilityConfig.mobileNumber_minLength)]],
-			responsiblePersonName: [null, [Validators.required, Validators.maxLength(100)]],
+			responsiblePersonMobileName: [null, [Validators.required, Validators.maxLength(100)]],
 			responsiblePersonMobileNo: [null, [Validators.required, Validators.maxLength(this.fireFacilityConfig.mobileNumber_maxLength), Validators.minLength(this.fireFacilityConfig.mobileNumber_minLength)]],
 
 			/* Step 3 controls start */
@@ -376,7 +376,7 @@ export class NavratriNocComponent implements OnInit {
 		"organizerAddress": "gfdgfdfdggfdgfdg",
 		"organizerAddressGuj": "ગ્ફ્દ્ગ્ફ્દ્ફ્દ્ગ્ગ્ફ્દ્ગ્ફ્દ્ગ",
 		"organizerMobileNo": "2435435435",
-		"responsiblePersonName": "Test",
+		"responsiblePersonMobileName": "Test",
 		"responsiblePersonMobileNo": "4354354354",
 		"garbaPlaceAddress": "sdfsdfsdffsdsdfsdf",
 		"garbaPlaceAddressGuj": "સ્દ્ફ્સ્દ્ફ્સ્દ્ફ્ફ્સ્દ્સ્દ્ફ્સ્દ્ફ",
