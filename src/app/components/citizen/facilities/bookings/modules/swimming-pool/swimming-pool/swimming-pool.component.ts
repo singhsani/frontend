@@ -499,7 +499,7 @@ export class SwimmingPoolComponent implements OnInit {
 			if (err.status == 402) {
 							// if (err.status == 402) {
 				// this.bookingUtils.redirectToPayment(err, this.commonService, this.bookingService);
-        this.bookingUtils.redirectToCCAvenuePayment(err, this.commonService, this.bookingService, this.paymentGateway);
+        this.bookingUtils.redirectToCCAvenuePayment(err, this.commonService, this.bookingService, this.paymentGateway, null, null, null, {gatewayCustomerId: err.error.data.id, txtadditionalInfo1: element.resourceType});
         this.router.navigate(['../../my-bookings'], {relativeTo: this.route});
 				// }
 			} else if (err.error[0].code == this.bookingConstants.INVALID_BOOKING_STATUS) {
