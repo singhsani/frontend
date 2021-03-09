@@ -117,6 +117,10 @@ export class SelectPaymentGatewayComponent implements OnInit {
 
   getBillDeskPage() {
 
+    /**
+     * This condition is added as there are two transactions in swimming pool and each time bill desk needs different customerId so
+     * instead of reference number of Gateway transaction Id is passed.
+     */
     let obj = {
       frontRedirectURL: this.payData.returnUrl,
       customerID: this.payData.gatewayCustomerId ? this.payData.gatewayCustomerId : this.payData.refNumber,
