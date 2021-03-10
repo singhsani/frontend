@@ -482,6 +482,8 @@
 							(click)="addMorePersonwork('OCCUPANCY')">{{'add' | translate: translateKey}}</button>
 							<!-- [disabled]="!(shopLicNewForm.get('workerCounts')['controls'].length < 2)" -->
 					</div>
+
+					
 				</div>
 
 				<div *ngIf="shopLicNewForm.get('workerCounts')['controls'].length">
@@ -547,7 +549,7 @@
 											{{getSelectedDataFromLookUps(workerTypeList,item.get('workersType').value)?.name}} 
 									   	</p> 
 											<div col-md-6 class="ngSelect" *ngIf="item.isEditMode" >
-												<ng-select *ngIf="item.isEditMode" formControlName="workersType">
+												<ng-select *ngIf="item.isEditMode" formControlName="workersType" required>
 													<ng-option *ngFor="let gender of workerTypeList" [value]="gender.code">
 													{{gender.name}}</ng-option>
 												</ng-select>
