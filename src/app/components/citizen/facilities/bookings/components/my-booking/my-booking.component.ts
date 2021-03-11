@@ -557,7 +557,8 @@ export class MyBookingComponent implements OnInit {
 			|| element.status === this.bookingConstant.REFUND_REQUEST
 			|| element.status === this.bookingConstant.REFUND_APPROVED
 			|| element.status === this.bookingConstant.COMPLETED
-			|| (element.resourceType ===this.bookingConstant.CHILDREN_THEATER)
+			|| element.resourceType ===this.bookingConstant.CHILDREN_THEATER
+			|| element.status === this.bookingConstant.SCRUTINY
 			) {
 			return false;
 		}
@@ -659,7 +660,10 @@ export class MyBookingComponent implements OnInit {
 
  	depositRefundRequest(element){
  	  this.bookingService.depositRefundRequest(element.refNumber).subscribe(response=>{
- 	    console.log(response);
+ 	    if(response.success){
+          this.toster.success("Refund Request Generated");
+      }
+      this.getAllBooking();
  	  }, err => {
     			this.commonService.openAlert('Error', err.message, 'warning');
     });
