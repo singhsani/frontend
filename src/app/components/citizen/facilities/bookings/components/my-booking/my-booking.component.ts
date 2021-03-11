@@ -400,7 +400,11 @@ export class MyBookingComponent implements OnInit {
 				this.isLoadingResults = false;
 				// if (err.status == 402) {
 				// this.bookingUtils.redirectToPayment(err, this.commonService, this.bookingService);
-				this.bookingUtils.redirectToCCAvenuePayment(err, this.commonService, this.bookingService, this.paymentGateway);
+				if (element.resourceType == 'SWIMMING_POOL') {
+					this.bookingUtils.redirectToCCAvenuePayment(err, this.commonService, this.bookingService, this.paymentGateway, null, null, null, {gatewayCustomerId: err.error.data.id, txtadditionalInfo1: element.resourceType});
+				} else {
+					this.bookingUtils.redirectToCCAvenuePayment(err, this.commonService, this.bookingService, this.paymentGateway);
+				}
 				// }
 			} else if (err.error[0].code == this.bookingConstant.INVALID_BOOKING_STATUS) {
 				this.commonService.openAlert("Invalid Booking Status", err.error[0].message, "warning", "")

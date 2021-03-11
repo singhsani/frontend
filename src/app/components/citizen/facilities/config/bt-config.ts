@@ -131,11 +131,11 @@ export class BTConfig extends CitizenConfig {
         });
     }
 
-    redirectToCCAvenuePayment(err: any, commonService: CommonService, btService: BookingService | TicketingsService, paymentGateway, form?: FormGroup, router?: Router, applicationrouter?: any) {
+    redirectToCCAvenuePayment(err: any, commonService: CommonService, btService: BookingService | TicketingsService, paymentGateway, form?: FormGroup, router?: Router, applicationrouter?: any, extraParams?: any) {
 
         let redirectURLAfterPayment = (btService instanceof TicketingsService) ? BTConstants.MY_TICKETINGS_URL : BTConstants.MY_BOOKINGS_URL
 
-        let payData = this.storePaymentInfo(err.error.data, redirectURLAfterPayment, btService.resourceType);
+        let payData = this.storePaymentInfo(err.error.data, redirectURLAfterPayment, btService.resourceType, extraParams);
 
 
 
@@ -198,7 +198,7 @@ export class BTConfig extends CitizenConfig {
      * Method is used to perform payment and after storing data to localhost redirects to payment gateway.
      * @param data - Object Data
      */
-    storePaymentInfo(data: any, redirectionURL: string, resourceType?: string): any {
+    storePaymentInfo(data: any, redirectionURL: string, resourceType?: string, extraParams?: any): any {
         let payData = {
             id: null,
             uniqueId: null,
@@ -221,6 +221,8 @@ export class BTConfig extends CitizenConfig {
             amount: data.amount
 
         };
+
+        payData = {...payData, ...extraParams};
 
 		/**
 		 * Storing Data to session.
