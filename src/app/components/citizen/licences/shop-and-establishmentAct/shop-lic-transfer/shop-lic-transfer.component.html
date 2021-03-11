@@ -493,7 +493,7 @@
 										<p *ngIf="!item.isEditMode">{{item.get('noOfMen').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
 											<input  matInput min=0 (change)="calculateWorkers(indx);"
-												 formControlName="noOfMen" type="number">
+												 formControlName="noOfMen" type="number"  required>
 											<control-messages [control]="item.get('noOfMen')"></control-messages>
 										</mat-form-field>
 									</td>
@@ -503,7 +503,7 @@
 										<p *ngIf="!item.isEditMode">{{item.get('noOfWomen').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
 											<input type="number" matInput min=0 (change)="calculateWorkers(indx);"
-											formControlName="noOfWomen">
+											formControlName="noOfWomen" required>
 											<control-messages *ngIf="item.isEditMode" [control]="item.get('noOfWomen')">
 											</control-messages>
 										</mat-form-field>
