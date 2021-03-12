@@ -165,8 +165,8 @@ export class MyBookingComponent implements OnInit {
 			}
 		});
 		this.modalReqRef = this.modalService.show(template, Object.assign({ ignoreBackdropClick: true }, { class: 'gray modal-lg customWidth' }));
-		if (element.resourceType == "AMPHI_THEATER" || element.resourceType == "TOWNHALL") {
-			this.allCancelForAmphi();
+		if (element.resourceType == "AMPHI_THEATER" || element.resourceType == "TOWNHALL" || element.resourceType == "STADIUM") {
+			this.allSlotDefualtSelected();
 			this.isAmphiCancellation = true;
 		}
 	}
@@ -607,7 +607,7 @@ export class MyBookingComponent implements OnInit {
 	}
 
 	// This method  select all for cancle from AmphiTheater
-	allCancelForAmphi() {
+	allSlotDefualtSelected() {
 		this.chooseAllForCancel(true);
 	}
 
