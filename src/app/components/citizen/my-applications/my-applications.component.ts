@@ -424,6 +424,16 @@ export class MyApplicationsComponent implements OnInit,OnChanges {
 		{
 			return true;
 		}
+
+		if(row.fileStatus=='SUBMITTED' && row.serviceType=='FS_WATER_TANKER')
+		{
+			return true;
+		}
+
+		if(row.fileStatus=='PAYMENT_RECEIVED' || row.fileStatus=='SUBMITTED')
+		{
+			return true;
+		}
 		
 	}
 
