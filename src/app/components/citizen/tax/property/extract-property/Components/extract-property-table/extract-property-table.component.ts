@@ -118,6 +118,7 @@ export class ExtractPropertyTableComponent implements OnInit {
       },
       (error) => {
         this.commonService.callErrorResponse(error);
+       this.serviceCharge = new ServiceCharge();
       });
   }
 
