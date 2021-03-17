@@ -82,7 +82,9 @@ export class SelectPaymentGatewayComponent implements OnInit {
     this.confirmRef.hide();
     if (this.applicationType == 'HOSPITAL') {
       this.router.navigate(['hospital/my-applications']);
-    } else {
+    }else if(this.applicationType == 'FACILITYBOOKING'){
+      this.router.navigate(['citizen/bookings/my-bookings']);
+    }else {
       this.router.navigate(['citizen/my-applications']);
     }
   }
@@ -143,8 +145,8 @@ export class SelectPaymentGatewayComponent implements OnInit {
   }
 
   /**
-   * This method is used to get the cc avenue page url and redirect to there page 
-   * @param data 
+   * This method is used to get the cc avenue page url and redirect to there page
+   * @param data
    */
   getTransactionDetail(data) {
 
