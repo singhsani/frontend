@@ -39,11 +39,6 @@ export class SelectPaymentGatewayComponent implements OnInit {
     private router: Router, private hosFormActionsService: HosFormActionsService) {
 
   }
-//   ngOnChanges(){
-//
-//   console.log('aasdas',this.applicationType);
-//
-//   }
 
   ngOnInit() {
     /**
