@@ -101,7 +101,8 @@
 
 						<div class="col-md-4 ngSelect" formGroupName="category">
 							<ng-select placeholder="{{'category' | translate:translateKey}} *" formControlName="code"
-								required (change)="swimmimgPoolBookingForm.get('batchFor').reset();changeBatchDuration($event)">
+								required (change)="filterAsperCategory($event);swimmimgPoolBookingForm.get('batchFor').reset();
+								swimmimgPoolBookingForm.get('batchDuration').reset()">
 								<ng-option *ngFor="let cat of CATEGORY" [value]="cat.code">{{cat.name}}</ng-option>
 							</ng-select>
 							<control-messages [control]="swimmimgPoolBookingForm.get('category').get('code')">
