@@ -9,6 +9,8 @@ import * as _ from 'lodash';
 import { AlertService } from 'src/app/vmcshared/Services/alert.service';
 import { Router } from '@angular/router';
 import { ManageRoutes } from 'src/app/config/routes-conf';
+import { resolve } from 'url';
+import { CommonService } from 'src/app/shared/services/common.service';
 
 @Component({
   selector: 'app-document-upload',
@@ -20,11 +22,13 @@ export class DocumentUploadComponent implements OnInit {
   subscription: Subscription;
   subscriptionDoc: Subscription;
   connectionDtlId: number;
+  serviceFormId : String;
 
   newNewWaterConnectionDocs : Array<any> = [];
   
   constructor(private newNewWaterConnectionEntryDataSharingService: NewWaterConnectionEntryDataSharingService,private alertService: AlertService,private router: Router,
     private newNewWaterConnectionEntryService: NewWaterConnectionEntryService,
+    private commonService: CommonService,
     private fb: FormBuilder) { }
 
   ngOnInit() {
@@ -44,6 +48,9 @@ export class DocumentUploadComponent implements OnInit {
       this.newNewWaterConnectionDocs = [];
       this.newNewWaterConnectionEntryService.getNewWaterConnectionUpload(id).subscribe(
         (data) => {
+          if(data && data.length > 0) {
+            this.serviceFormId = data[0].id;
+          }
           data.forEach(app => {
             this.newNewWaterConnectionDocs.push(app);
           });
@@ -55,33 +62,64 @@ export class DocumentUploadComponent implements OnInit {
     } 
     
     finalSubmit() {
-      this.newNewWaterConnectionEntryService.submit(this.connectionDtlId).subscribe(
-        (data) => {
-          if (data.status === 200) {
-            this.alertService.success(data.body.message);
-            this.newNewWaterConnectionEntryDataSharingService.updateDataSourceIsShowDocument(true);
-            //this.newNewWaterConnectionEntryDataSharingService.updateDataSourceMoveStepper(2);
-            this.router.navigateByUrl(ManageRoutes.getFullRoute('CITIZENDASHBOARD'));
-          }
-        },
-        (error) => {
-          if (error.status === 400) {
-            var errorMessage = '';
-            error.error[0].propertyList.forEach(element => {
-              errorMessage = errorMessage + element + "</br>";
-            });
-            this.alertService.error(errorMessage);
-          }
-          else {
-            this.alertService.error(error.error.message);
-          }
-        });
-  
+      this.mandatoryFileCheck().then( data => {
+
+
+      if(data.status) {
+        this.newNewWaterConnectionEntryService.submit(this.connectionDtlId).subscribe(
+          (data) => {
+            if (data.status === 200) {
+              this.alertService.success(data.body.message);
+              this.newNewWaterConnectionEntryDataSharingService.updateDataSourceIsShowDocument(true);
+              //this.newNewWaterConnectionEntryDataSharingService.updateDataSourceMoveStepper(2);
+              this.router.navigateByUrl(ManageRoutes.getFullRoute('CITIZENDASHBOARD'));
+            }
+          },
+          (error) => {
+            if (error.status === 400) {
+              var errorMessage = '';
+              error.error[0].propertyList.forEach(element => {
+                errorMessage = errorMessage + element + "</br>";
+              });
+              this.alertService.error(errorMessage);
+            }
+            else {
+              this.alertService.error(error.error.message);
+            }
+          });
+        } else {
+          this.commonService.openAlert("File Upload", `Please upload file for "${data.fileName}"`, "warning");
+				  return
+        }
+
+    
+      })
+     
     }
 
     onBackClick(){
       this.newNewWaterConnectionEntryDataSharingService.updateDataSourceMoveStepper(0);
     }
 
+  mandatoryFileCheck() {
+    return new Promise<any>((resolve, reject) => {
+      this.newNewWaterConnectionEntryService.getAttachmentList(this.serviceFormId).subscribe(uploadedDocs => {
+        if (uploadedDocs) {
+          let tempArray = [];
+          uploadedDocs.forEach(element => {
+            tempArray.push(element['fieldIdentifier']);
+          });
+          this.newNewWaterConnectionDocs.forEach(doc => {
+            if (doc.mandatory && tempArray.indexOf(doc.fieldIdentifier) === -1) {
+              resolve({ fileName: doc.documentLabelEn, status: false })
+            }
+          });
+          resolve({ fileName: "", status: true });
+        } else {
+          resolve({ fileName: "", status: true })
+        }
+      })
+    })
+  }
 }
 
