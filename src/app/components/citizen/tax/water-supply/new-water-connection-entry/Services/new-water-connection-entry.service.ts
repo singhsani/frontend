@@ -125,4 +125,8 @@ export class NewWaterConnectionEntryService {
       { observe: 'response' })
       .pipe(map((response: any) => response))
   }
+
+  getAttachmentList(serviceFormId) {
+    return this.http.get<Array<Object>>(`${Constants.baseApiWaterUrl}connection/attachments?serviceFormId=${serviceFormId}`);
+  }
 }

@@ -1,6 +1,6 @@
 <!-- Stadium Booking Title Bar -->
 <app-title-bar [title]="'screen_title' | translate: translateKey"></app-title-bar>
- 
+
 <!-- HTML for Stadium booking Guideline-->
 <div *ngIf="guideLineFlag">
     <mat-card class="cardBox">
@@ -110,12 +110,12 @@
                             {{month.monthName}}
                         </mat-panel-title>
                     </mat-expansion-panel-header>
-                    <div>
-                        <mat-checkbox [checked]="!bookingUtils.checkedAllinMonth(month, Dates)" [disabled]="bookingUtils.checkAllDisabledInmonth(month,Dates)"
-                            labelPosition="after" (change)="selectedShift = bookingUtils.selectAllShiftsInMonth($event.checked, month, Dates, selectedShift, i)">
-                            {{'select_all_shift_in'| translate: translateKey}} {{month.monthName}}
-                        </mat-checkbox>
-                    </div>
+<!--                    <div>-->
+<!--                        <mat-checkbox [checked]="!bookingUtils.checkedAllinMonth(month, Dates)" [disabled]="bookingUtils.checkAllDisabledInmonth(month,Dates)"-->
+<!--                            labelPosition="after" (change)="selectedShift = bookingUtils.selectAllShiftsInMonth($event.checked, month, Dates, selectedShift, i)">-->
+<!--                            {{'select_all_shift_in'| translate: translateKey}} {{month.monthName}}-->
+<!--                        </mat-checkbox>-->
+<!--                    </div>-->
 
                     <div class="row">
                         <div *ngFor="let date of bookingUtils.filterAcc(month.id, Dates)" class="col-6 col-md-3 col-lg-2 mb-1 p-1">
@@ -215,6 +215,8 @@
                 <thead>
                     <tr>
                         <th scope="col">{{'booking_date'| translate: translateKey}}</th>
+                        <th scope="col">{{'event_date_from'| translate: translateKey}}</th>
+                        <th scope="col">{{'event_date_to'| translate: translateKey}}</th>
                         <th scope="col">{{'rent_amount'| translate: translateKey}}</th>
                         <th scope="col">{{'deposit_amount'| translate: translateKey}}</th>
                         <th scope="col">{{'GST'| translate: translateKey}}</th>
@@ -223,6 +225,8 @@
                 <tbody>
                     <tr>
                         <td scope="col">{{bookingUtils.returnProperDate(paymentObject.BOOKING_DATE)}}</td>
+                        <td scope="col">{{paymentObject.EVENT_DATE_FROM}}</td>
+                        <td scope="col">{{paymentObject.EVENT_DATE_TO}}</td>
                         <td scope="col">{{paymentObject.RENT_FEES}}</td>
                         <td scope="col">{{paymentObject.DEPOSIT_FEES}}</td>
                         <td scope="col">{{paymentObject.GST}}</td>

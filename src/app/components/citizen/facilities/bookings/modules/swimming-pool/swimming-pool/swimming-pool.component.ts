@@ -159,6 +159,24 @@ export class SwimmingPoolComponent implements OnInit {
         this.toastr.error("Server Error");
       })
   }
+
+  /**
+  * Filter details as per category selection
+  */
+  filterAsperCategory(event: any) {
+    let poolName = this.swimmimgPoolBookingForm.get('swimmingPoolName').get('code').value;
+    if (event) {
+      this.bookingService.filterBatchDuration(event, poolName).subscribe(rep => {
+        this.BATCH_DURATION = rep;
+      },
+        err => {
+          this.toastr.error("Server Error");
+        })
+    }
+    else {
+      this.toastr.error("Server Error");
+    }
+  }
   defaultAsperPool() {
     this.bookingService.filterPoolCode(this.swimmimgPoolBookingForm.get('swimmingPoolName').get('code').value).subscribe(rep => {
       this.BATCH_FOR = rep;
@@ -172,6 +190,7 @@ export class SwimmingPoolComponent implements OnInit {
    * Filter details as per pool name selection
    */
   filterAsperBatchName(event: any) {
+    debugger
     let poolName = this.swimmimgPoolBookingForm.get('swimmingPoolName').get('code').value;
     if (event == 'REGULAR') {
       this.bookingService.filterBatchCode(this.swimmimgPoolBookingForm.get('category').get('code').value, poolName).subscribe(rep => {

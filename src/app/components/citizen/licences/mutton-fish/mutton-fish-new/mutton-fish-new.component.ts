@@ -169,6 +169,7 @@ export class MuttonFishNewComponent implements OnInit {
 	}
 
 	onChangeStatusOfBusiness(event) {
+		
 		// let array = (<FormArray>this.muttonFishNewForm.get('serviceDetail').get('serviceUploadDocuments'));
 		const localUploadArray = this.commonService.clone((<FormArray>this.muttonFishNewForm.get('serviceDetail').get('serviceUploadDocuments')).value);
 		// let array = (<FormArray>this.muttonFishNewForm.get('serviceDetail').get('serviceUploadDocuments'));
@@ -214,6 +215,7 @@ export class MuttonFishNewComponent implements OnInit {
 		} else {
 			return this.uploadFileArray;
 		}
+		this.muttonFishNewForm.get('businessAddress').reset();
 	}
 
 	/**
@@ -249,10 +251,10 @@ export class MuttonFishNewComponent implements OnInit {
 			}),
 			personTypeGuj: [null, [Validators.required]],
 			holderFirstName: [null, [Validators.required, Validators.maxLength(30), ValidationService.nameValidator]],
-			holderMiddleName: [null, [Validators.required, Validators.maxLength(30), ValidationService.nameValidator]],
+			holderMiddleName: [null, [Validators.maxLength(30), ValidationService.nameValidator]],
 			holderLastName: [null, [Validators.required, Validators.maxLength(30), ValidationService.nameValidator]],
 			holderFirstNameGuj: [null, [Validators.required, Validators.maxLength(90)]],
-			holderMiddleNameGuj: [null, [Validators.required, Validators.maxLength(90)]],
+			holderMiddleNameGuj: [null, [Validators.maxLength(90)]],
 			holderLastNameGuj: [null, [Validators.required, Validators.maxLength(90)]],
 
 			permanantAddress: this.fb.group(this.permanantAddressEstablishment.addressControls()),
@@ -363,26 +365,7 @@ export class MuttonFishNewComponent implements OnInit {
 		}
 	}
 
-	/**
-	 * Method is use for reset relationship 
-	 */
-	onChangeRelationWithOrg() {
-		try {
-			(<FormArray>this.muttonFishNewForm.get('relationshipList')).controls = [];
-			this.muttonFishNewForm.get('relationshipList').setValue([]);
-
-			if ((<FormArray>this.muttonFishNewForm.get('relationshipList')).length == 0) {
-				this.addItem().push(this.createArray());
-				let newlyadded = this.addItem().controls;
-				if (newlyadded.length) {
-					this.editRecord((newlyadded[newlyadded.length - 1]));
-					(newlyadded[newlyadded.length - 1]).newRecordAdded = true;
-				}
-			}
-		} catch (error) {
-			console.log(error.message);
-		}
-	}
+	
 
 	/**
 	 * Method is use for change dynamic file attachment 
