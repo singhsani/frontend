@@ -101,6 +101,8 @@ export class MuttonFishNewComponent implements OnInit {
 					this.onChangeStatusOfBusiness(this.muttonFishNewForm.get('statusOfBusinessId').value.code)
 				} else {
 					this.uploadFileArray = res.serviceDetail.serviceUploadDocuments;
+					this.uploadFileArray.sort((a, b) => 
+							a.orderSequence - b.orderSequence);
 				}
 				// deflate add one array in relationship grid
 				if ((<FormArray>res.relationshipList).length == 0) {
@@ -176,6 +178,8 @@ export class MuttonFishNewComponent implements OnInit {
 		this.uploadFileArray = [];
 		this.mandatoryUploadFileArray = [];
 
+		
+
 		if (event == 'PROPRIETORSHIPFIRM') {
 			for (let file of localUploadArray) {
 				if ((file['documentIdentifier'] == 'PARTNERSHIP_DEED') || (file['documentIdentifier'] == 'POLICE_VERIFICATION')) {
@@ -190,7 +194,7 @@ export class MuttonFishNewComponent implements OnInit {
 			}
 		} else if (event == 'PARTNERSHIPFIRM') {
 			for (let file of localUploadArray) {
-				if ((file['documentIdentifier'] == 'POLICE_VERIFICATION')) {
+				if ((file['documentIdentifier'] == 'POLICE_VERIFICATION') || (file['documentIdentifier'] == 'LAND_TERMS_CONDITION')) {
 					file['mandatory'] = false;
 				}
 
@@ -202,7 +206,7 @@ export class MuttonFishNewComponent implements OnInit {
 			}
 		} else if (event == 'TENANT') {
 			for (let file of localUploadArray) {
-				if ((file['documentIdentifier'] == 'PARTNERSHIP_DEED')) {
+				if ((file['documentIdentifier'] == 'PARTNERSHIP_DEED') ||  (file['documentIdentifier'] == 'LAND_TERMS_CONDITION')) {
 					file['mandatory'] = false;
 				}
 
