@@ -44,7 +44,7 @@
 					</mat-form-field>
 					<mat-form-field class="col-md-3">
 						<input matInput type="text" appValidationFields
-							 maxlength="30" placeholder="{{'holder_middlename' | translate:translateKey}}"
+						 maxlength="30" validationFieldsType='onlyNameWithOutSpace' required placeholder="{{'holder_middlename' | translate:translateKey}}"
 							formControlName="holderMiddleName" appGujInputSource targetElement="holderMiddleNameGuj"
 							[form]="muttonFishNewForm">
 						<control-messages [control]="muttonFishNewForm.get('holderMiddleName')"></control-messages>
@@ -205,7 +205,15 @@
 						<control-messages [control]="muttonFishNewForm.get('extraDetailsOfBusiness')">
 						</control-messages>
 					</mat-form-field> -->
-					
+					<div class="col-md-6 ngSelect" formGroupName="relationshipId">
+						<ng-select placeholder="{{'relationship_id' | translate:translateKey}} *" formControlName="code"
+							(change)="onChangeRelationWithOrg()">
+							<ng-option *ngFor="let id of MF_RELATIONSHIP_OF_APPLICANT" [value]="id.code">{{id.name}}
+							</ng-option>
+						</ng-select>
+						<control-messages [control]="muttonFishNewForm.get('relationshipId').get('code')">
+						</control-messages>
+					</div>
 
 					<!-- <div class="col-md-6 ngSelect" formGroupName="statusOfBusinessId">
 						<ng-select (change)="onChangeStatusOfBusiness()"
