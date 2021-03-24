@@ -43,13 +43,14 @@ export class LoiPaymentComponentBooking implements OnInit {
 	sum = 0;
 	loiRecords: any = [];
 	returnUrl : String = '';
+	facilityBooking: String = 'FACILITYBOOKING';
 
 	bookingUtils: TicketingUtils = new TicketingUtils();
 
 	ticketingConstants = TicketingConstants;
 
 	bookingConstant = BookingConstants;
-	
+
 
 	constructor(
 		private formService: FormsActionsService,
@@ -115,7 +116,7 @@ export class LoiPaymentComponentBooking implements OnInit {
 
 	}
 	makePayment(loiNumber: any) {
-		
+
 		if(this.resourceTypes=='CHILDREN_THEATER'){
 			this.bookingService.resourceType = 'childrenTheater';
 			this.paymentRequestBooking(this.uniqueId);
@@ -131,14 +132,14 @@ export class LoiPaymentComponentBooking implements OnInit {
 			this.ticketingService.resourceType = 'planetarium';
 			this.paymentRequest(this.uniqueId);
 		}
-		
+
 	}
 
 	paymentRequestBooking(element) {
 		this.bookingService.getTransactionDetails(element).subscribe(transactionData => {
 		}, err => {
 			if (err.status == 402) {
-				
+
 				// if (err.status == 402) {
 					// this.bookingUtils.redirectToPayment(err, this.commonService, this.bookingService);
 					this.bookingUtils.redirectToCCAvenuePayment(err, this.commonService, this.bookingService, this.paymentGateway);
@@ -159,7 +160,7 @@ export class LoiPaymentComponentBooking implements OnInit {
 			if (err.status == 402) {
 			  // this.ticketingUtils.redirectToPayment(err, this.commonService, this.ticketingService);
 			  this.bookingUtils.redirectToCCAvenuePayment(err, this.commonService, this.ticketingService, this.paymentGateway);
-		   
+
 			}
 		  } else if (err.error[0].code === this.ticketingConstants.INVALID_BOOKING_STATUS) {
 			this.commonService.openAlert("Invalid Booking Status", err.error[0].message, "warning", "")
@@ -203,12 +204,12 @@ export class LoiPaymentComponentBooking implements OnInit {
 						this.commonService.commonAlert('Payment Details', '', 'info', 'Make Payment!', false, html, cb => {
 							this.paymentGateway.setPaymentDetailsFromActionBar(payData);
 							this.paymentGateway.openModel();
-	
+
 						}, rj => {
 						});
 						return;
 					}
-					
+
 				} else {
 					this.commonService.openAlert("Error", "Error Occured for final submit : " + err.error[0].message, "warning")
 				}
@@ -244,7 +245,7 @@ export class LoiPaymentComponentBooking implements OnInit {
 								this.router.navigate([ retUrl.split('?')[0] ], { queryParams: { apiCode: apiCode, id: id } });
 							}
 						});
-						
+
 					}
 				}, error => {
 					this.openErrorAlert(error);

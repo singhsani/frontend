@@ -267,6 +267,11 @@ export class BookingService {
     this.requestURL = `api/${this.moduleName}/${this.resourceType}/filter/batchName/${batchCode}/${poolName}`;
     return this.http.get(this.requestURL);
   }
+
+  filterBatchDuration(categotyCode: any,poolName:any) {
+    this.requestURL = `api/${this.moduleName}/${this.resourceType}/filter/batchDuration/${categotyCode}/${poolName}`;
+    return this.http.get(this.requestURL);
+  }
   // api/booking/swimming/submit
 
   /**
