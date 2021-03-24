@@ -76,11 +76,7 @@
 						<control-messages [control]="muttonFishNewForm.get('holderFirstNameGuj')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-3">
-<<<<<<< HEAD
-						<input matInput type="text" maxlength="90"
-=======
 						<input matInput type="text"  maxlength="90"
->>>>>>> meat and fish feedback
 							placeholder="{{'holder_middlename' | translate:translateKey:'gu'}}"
 							formControlName="holderMiddleNameGuj" appGujInputTarget [form]="muttonFishNewForm">
 						<!--<input matInput type="text" required maxlength="90"-->
@@ -234,7 +230,7 @@
 				<div class="row">
 					<div class="col-md-10">
 						
-							<h2 *ngIf="muttonFishNewForm.get('statusOfBusinessId').value.code == 'PROPRIETORSHIPFIRM'">
+						<h2 *ngIf="muttonFishNewForm.get('statusOfBusinessId').value.code == 'PROPRIETORSHIPFIRM'">
 								{{ 'if_shop_is_in_properitership' | translate:translateKey}}</h2>
 						
 							<h2 *ngIf="muttonFishNewForm.get('statusOfBusinessId').value.code == 'PARTNERSHIPFIRM'">	
