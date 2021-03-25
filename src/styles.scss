@@ -317,6 +317,9 @@ mat-footer-row, mat-header-row, mat-row, td.mat-cell, td.mat-footer-cell, th.mat
 ::-webkit-scrollbar-thumb {background: #7E57C2; border-radius:5px;}
 ::-webkit-scrollbar-thumb:hover {background: #5E35B1;}
 
+
+* { scrollbar-color: #7E57C2 #D1C4E9 !important; scrollbar-width: thin !important;}
+
 .ng-select {padding-bottom: 3px; margin-bottom: 1.25em;
     .ng-select-container {min-height: 43px;}
     .ng-value-label.ng-star-inserted {font-size: 14px;}
