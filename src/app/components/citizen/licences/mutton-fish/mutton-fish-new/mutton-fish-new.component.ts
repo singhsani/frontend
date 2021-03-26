@@ -19,7 +19,7 @@ import { LicenseConfiguration } from '../../license-configuration';
 export class MuttonFishNewComponent implements OnInit {
 
 	@ViewChild('permanantAddressEstablishment') permanantAddressEstablishment: any;
-
+	
 	muttonFishNewForm: FormGroup;
 	translateKey: string = 'muttonFishNewScreen';
 	licenseConfiguration: LicenseConfiguration = new LicenseConfiguration();
@@ -221,6 +221,7 @@ export class MuttonFishNewComponent implements OnInit {
 			return this.uploadFileArray;
 		}
 		this.muttonFishNewForm.get('businessAddress').reset();
+		this.muttonFishNewForm.controls['relationshipList'] = this.fb.array([]);
 	}
 
 	/**
@@ -341,7 +342,6 @@ export class MuttonFishNewComponent implements OnInit {
 	 * Method is used when user click for add person
 	 */
 	addMorePerson() {
-		
 		// let relationshipIdValue = this.muttonFishNewForm.get('relationshipId').value.code;
 		let relationshipIdValue = this.muttonFishNewForm.get('statusOfBusinessId').value.code;
 
