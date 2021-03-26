@@ -405,7 +405,7 @@ export class ShopLicTransferComponent implements OnInit {
 			prcNumber:[null,Validators.required],
 			censusOrPropertyNumber:[null,Validators.required],
 			number: null,
-			otherAddresses: [null, [Validators.required, Validators.maxLength(100)]],
+			otherAddresses: [null, [Validators.maxLength(100)]],
 			/* Step 1 controls end */
 
 			/* Step 2 controls start */

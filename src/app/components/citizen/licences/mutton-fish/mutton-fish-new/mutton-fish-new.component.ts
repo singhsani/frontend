@@ -19,7 +19,7 @@ import { LicenseConfiguration } from '../../license-configuration';
 export class MuttonFishNewComponent implements OnInit {
 
 	@ViewChild('permanantAddressEstablishment') permanantAddressEstablishment: any;
-
+	
 	muttonFishNewForm: FormGroup;
 	translateKey: string = 'muttonFishNewScreen';
 	licenseConfiguration: LicenseConfiguration = new LicenseConfiguration();
@@ -101,6 +101,9 @@ export class MuttonFishNewComponent implements OnInit {
 					this.onChangeStatusOfBusiness(this.muttonFishNewForm.get('statusOfBusinessId').value.code)
 				} else {
 					this.uploadFileArray = res.serviceDetail.serviceUploadDocuments;
+					this.uploadFileArray.sort((a, b) => 
+							a.orderSequence - b.orderSequence);
+					
 				}
 				// deflate add one array in relationship grid
 				if ((<FormArray>res.relationshipList).length == 0) {
@@ -176,6 +179,8 @@ export class MuttonFishNewComponent implements OnInit {
 		this.uploadFileArray = [];
 		this.mandatoryUploadFileArray = [];
 
+		
+
 		if (event == 'PROPRIETORSHIPFIRM') {
 			for (let file of localUploadArray) {
 				if ((file['documentIdentifier'] == 'PARTNERSHIP_DEED') || (file['documentIdentifier'] == 'POLICE_VERIFICATION')) {
@@ -190,7 +195,7 @@ export class MuttonFishNewComponent implements OnInit {
 			}
 		} else if (event == 'PARTNERSHIPFIRM') {
 			for (let file of localUploadArray) {
-				if ((file['documentIdentifier'] == 'POLICE_VERIFICATION')) {
+				if ((file['documentIdentifier'] == 'POLICE_VERIFICATION') || (file['documentIdentifier'] == 'LAND_TERMS_CONDITION')) {
 					file['mandatory'] = false;
 				}
 
@@ -202,7 +207,7 @@ export class MuttonFishNewComponent implements OnInit {
 			}
 		} else if (event == 'TENANT') {
 			for (let file of localUploadArray) {
-				if ((file['documentIdentifier'] == 'PARTNERSHIP_DEED')) {
+				if ((file['documentIdentifier'] == 'PARTNERSHIP_DEED') ||  (file['documentIdentifier'] == 'LAND_TERMS_CONDITION')) {
 					file['mandatory'] = false;
 				}
 
@@ -216,6 +221,7 @@ export class MuttonFishNewComponent implements OnInit {
 			return this.uploadFileArray;
 		}
 		this.muttonFishNewForm.get('businessAddress').reset();
+		this.muttonFishNewForm.controls['relationshipList'] = this.fb.array([]);
 	}
 
 	/**
@@ -251,10 +257,12 @@ export class MuttonFishNewComponent implements OnInit {
 			}),
 			personTypeGuj: [null, [Validators.required]],
 			holderFirstName: [null, [Validators.required, Validators.maxLength(30), ValidationService.nameValidator]],
-			holderMiddleName: [null, [Validators.maxLength(30), ValidationService.nameValidator]],
+
+			holderMiddleName: [null, [ Validators.maxLength(30), ValidationService.nameValidator]],
 			holderLastName: [null, [Validators.required, Validators.maxLength(30), ValidationService.nameValidator]],
 			holderFirstNameGuj: [null, [Validators.required, Validators.maxLength(90)]],
 			holderMiddleNameGuj: [null, [Validators.maxLength(90)]],
+
 			holderLastNameGuj: [null, [Validators.required, Validators.maxLength(90)]],
 
 			permanantAddress: this.fb.group(this.permanantAddressEstablishment.addressControls()),
@@ -273,9 +281,9 @@ export class MuttonFishNewComponent implements OnInit {
 			//businessAddressType: this.fb.group({ code: [null, Validators.required] }),
 			businessAddress: this.fb.group(this.permanantAddressEstablishment.addressControls()),
 			// extraDetailsOfBusiness: [null, [Validators.maxLength(500)]],
-			relationshipId: this.fb.group({
-				code: [null, Validators.required]
-			}),
+			// relationshipId: this.fb.group({
+			// 	code: [null, Validators.required]
+			// }),
 			statusOfBusinessId: this.fb.group({
 				code: [null, Validators.required]
 			}),
@@ -334,7 +342,8 @@ export class MuttonFishNewComponent implements OnInit {
 	 * Method is used when user click for add person
 	 */
 	addMorePerson() {
-		let relationshipIdValue = this.muttonFishNewForm.get('relationshipId').value.code;
+		// let relationshipIdValue = this.muttonFishNewForm.get('relationshipId').value.code;
+		let relationshipIdValue = this.muttonFishNewForm.get('statusOfBusinessId').value.code;
 
 		if (!relationshipIdValue) {
 			this.toastrService.warning("Please select relationship of applicant first.");
@@ -362,6 +371,27 @@ export class MuttonFishNewComponent implements OnInit {
 		}
 		else {
 			this.commonService.openAlert("Warning", "You can add new row after save existing row.", "warning");
+		}
+	}
+
+	/**
+	 * Method is use for reset relationship 
+	 */
+	 onChangeRelationWithOrg() {
+		try {
+			(<FormArray>this.muttonFishNewForm.get('relationshipList')).controls = [];
+			this.muttonFishNewForm.get('relationshipList').setValue([]);
+
+			if ((<FormArray>this.muttonFishNewForm.get('relationshipList')).length == 0) {
+				this.addItem().push(this.createArray());
+				let newlyadded = this.addItem().controls;
+				if (newlyadded.length) {
+					this.editRecord((newlyadded[newlyadded.length - 1]));
+					(newlyadded[newlyadded.length - 1]).newRecordAdded = true;
+				}
+			}
+		} catch (error) {
+			console.log(error.message);
 		}
 	}
 

@@ -7,6 +7,8 @@ import { NgForm } from '@angular/forms';
 import { ApplicationDisconnectionDataSharingService } from '../../Services/application-disconnection-data-sharing.service';
 import { AlertService } from 'src/app/vmcshared/Services/alert.service';
 import { MatStepper } from '@angular/material';
+import { NewWaterConnectionEntryDataSharingService } from '../../../new-water-connection-entry/Services/new-water-connection-entry-data-sharing.service';
+import { NewWaterConnectionEntryService } from '../../../new-water-connection-entry/Services/new-water-connection-entry.service';
 
 @Component({
     selector: 'app-application-disconnection-form',
@@ -25,11 +27,14 @@ export class ApplicationDisconnectionFormComponent implements OnInit {
     isShowSaveButton: boolean = false;
     outstandingDetail: any = {};
     disconncetionId : any ;
+    serviceFormId : String;
 
     constructor(private commonService: CommonService,
         private alertService: AlertService,
         private applicationDisconnectionService: ApplicationDisconnectionService,
-        private applicationDisconnectionDataSharingService: ApplicationDisconnectionDataSharingService) { }
+        private applicationDisconnectionDataSharingService: ApplicationDisconnectionDataSharingService,
+        private newWaterConnectionEntryService : NewWaterConnectionEntryService
+    ) { }
 
     ngOnInit() {
         this.dataModel = new DataModel();
@@ -102,7 +107,10 @@ export class ApplicationDisconnectionFormComponent implements OnInit {
         this.applictionDisconnectionDocumentUploadDocs = [];
         this.applicationDisconnectionService.getDisconnectionDocUpload(id).subscribe(
           (data) => {
+            
             data.forEach(app => {
+                // app id  (serviceFormId)
+                this.serviceFormId = app.id;
               this.applictionDisconnectionDocumentUploadDocs.push(app);
             });
             
@@ -112,20 +120,36 @@ export class ApplicationDisconnectionFormComponent implements OnInit {
           });
       }
 
-onSubmitApproved(){
-         
-    this.applicationDisconnectionService.submitNewgen(this.disconncetionId).subscribe(
-        (data) => {
-          
-            this.alertService.success(data.message);
-            this.applicationDisconnectionDataSharingService.setIsShowApproval(true);
-          
-        },
-        (error) => {
-          this.alertService.error(error.error.message);
+    onSubmitApproved() {
+
+        this.mandatoryFileCheck().then( data => {
+
+            if(data.status) { 
+
+                this.applicationDisconnectionService.submitNewgen(this.disconncetionId).subscribe(
+                    (data) => {
+        
+                        this.alertService.success(data.message);
+                        this.applicationDisconnectionDataSharingService.setIsShowApproval(true);
+        
+                    },
+                    (error) => {
+                        this.alertService.error(error.error.message);
+                    });
+        
+    
+
+            } else {
+                this.alertService.warning("", `Please upload file for "${data.fileName}"`);
+				  return
+            }
+
+
+            
         });
-     
-      }  
+
+        
+    }  
     save(formDetail: NgForm) {
         if (formDetail.form.valid) {
             this.dataModel.applicationNumber = this.applicationModel.applicationNumber;
@@ -175,4 +199,25 @@ onSubmitApproved(){
         this.applicationDisconnectionDataSharingService.setPropertyDetail(this.outstandingDetail.propertyOutstandings);
         this.applicationDisconnectionDataSharingService.setIsShowPropertyDetail(true);
     }
+
+    mandatoryFileCheck() {
+        return new Promise<any>((resolve, reject) => {
+          this.newWaterConnectionEntryService.getAttachmentList(this.serviceFormId).subscribe(uploadedDocs => {
+            if (uploadedDocs) {
+              let tempArray = [];
+              uploadedDocs.forEach(element => {
+                tempArray.push(element['fieldIdentifier']);
+              });
+              this.applictionDisconnectionDocumentUploadDocs.forEach(doc => {
+                if (doc.mandatory && tempArray.indexOf(doc.fieldIdentifier) === -1) {
+                  resolve({ fileName: doc.documentLabelEn, status: false })
+                }
+              });
+              resolve({ fileName: "", status: true });
+            } else {
+              resolve({ fileName: "", status: true })
+            }
+          })
+        })
+      }
 }

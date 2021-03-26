@@ -182,9 +182,9 @@ export class MuttonFishRenewalComponent implements OnInit {
 			/* searchData.employeeList.forEach(app => {
 				(<FormArray>this.muttonFishRenewalForm.get('employeeList')).push(this.createArray(app));
 			}); */
-			if (this.muttonFishRenewalForm.get('relationshipId').value.code == 'PROPRIETOR') {
-				this.muttonFishRenewalForm.get('relationshipList').disable();
-			}
+			// if (this.muttonFishRenewalForm.get('relationshipId').value.code == 'PROPRIETOR') {
+			// 	this.muttonFishRenewalForm.get('relationshipList').disable();
+			// }
 			this.muttonFishRenewalForm.disable();
 			this.enableFielList();
 			let currentUrl = this.location.path().replace('false', this.formId.toString());
@@ -215,6 +215,9 @@ export class MuttonFishRenewalComponent implements OnInit {
 					this.onChangeStatusOfBusiness(this.muttonFishRenewalForm.get('statusOfBusinessId').value.code)
 				} else {
 					this.uploadFileArray = res.serviceDetail.serviceUploadDocuments;
+					this.uploadFileArray.sort((a, b) => 
+					a.orderSequence - b.orderSequence);
+				
 				}
 				// deflate add one array in relationship grid
 				if ((<FormArray>res.relationshipList).length == 0) {
@@ -302,7 +305,7 @@ export class MuttonFishRenewalComponent implements OnInit {
 			}
 		} else if (event == 'PARTNERSHIPFIRM') {
 			for (let file of localUploadArray) {
-				if ((file['documentIdentifier'] == 'POLICE_VERIFICATION')) {
+				if ((file['documentIdentifier'] == 'POLICE_VERIFICATION' || (file['documentIdentifier'] == 'LAND_TERMS_CONDITION'))) {
 					file['mandatory'] = false;
 				}
 				if (file['mandatory'] == true) {
@@ -312,7 +315,7 @@ export class MuttonFishRenewalComponent implements OnInit {
 			}
 		} else if (event == 'TENANT') {
 			for (let file of localUploadArray) {
-				if ((file['documentIdentifier'] == 'PARTNERSHIP_DEED')) {
+				if ((file['documentIdentifier'] == 'PARTNERSHIP_DEED' || (file['documentIdentifier'] == 'LAND_TERMS_CONDITION'))) {
 					file['mandatory'] = false;
 				}
 				if (file['mandatory'] == true) {
@@ -342,10 +345,10 @@ export class MuttonFishRenewalComponent implements OnInit {
 				code: [null, [Validators.required]]
 			}),
 			holderFirstName: [null, [Validators.required, Validators.maxLength(30)]],
-			holderMiddleName: [null, [Validators.required, Validators.maxLength(30)]],
+			holderMiddleName: [null, [ Validators.maxLength(30)]],
 			holderLastName: [null, [Validators.required, Validators.maxLength(30)]],
 			holderFirstNameGuj: [null, [Validators.required, Validators.maxLength(90)]],
-			holderMiddleNameGuj: [null, [Validators.required, Validators.maxLength(90)]],
+			holderMiddleNameGuj: [null, [ Validators.maxLength(90)]],
 			holderLastNameGuj: [null, [Validators.required, Validators.maxLength(90)]],
 
 			permanantAddress: this.fb.group(this.permanantAddressEstablishment.addressControls()),
@@ -364,9 +367,9 @@ export class MuttonFishRenewalComponent implements OnInit {
 			//blockNo: this.fb.group({ code: [null, Validators.required] }),
 			businessAddress: this.fb.group(this.permanantAddressEstablishment.addressControls()),
 			//extraDetailsOfBusiness: [null, [Validators.maxLength(500)]],
-			relationshipId: this.fb.group({
-				code: [null, Validators.required]
-			}),
+			// relationshipId: this.fb.group({
+			// 	code: [null, Validators.required]
+			// }),
 			statusOfBusinessId: this.fb.group({
 				code: [null, Validators.required]
 			}),
@@ -417,8 +420,8 @@ export class MuttonFishRenewalComponent implements OnInit {
 	 * Method is used when user click for add person
 	 */
 	addMorePerson() {
-		let relationshipIdValue = this.muttonFishRenewalForm.get('relationshipId').value.code;
-
+		// let relationshipIdValue = this.muttonFishRenewalForm.get('relationshipId').value.code;
+		let relationshipIdValue = this.muttonFishRenewalForm.get('statusOfBusinessId').value.code;
 		if (!relationshipIdValue) {
 			this.toastrService.warning("Please select relationship of applicant first.");
 			return false;
