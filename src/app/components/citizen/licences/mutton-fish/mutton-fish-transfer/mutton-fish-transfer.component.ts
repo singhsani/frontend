@@ -302,6 +302,8 @@ export class MuttonFishTransferComponent implements OnInit {
 		} else {
 			return this.uploadFileArray;
 		}
+		this.muttonFishTransferForm.get('businessAddress').reset();
+		this.muttonFishTransferForm.controls['relationshipList'] = this.fb.array([]);
 	}
 
 	/**
