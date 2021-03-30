@@ -192,6 +192,7 @@ export class MuttonFishNewComponent implements OnInit {
 				}
 
 				this.uploadFileArray.push(file);
+				
 			}
 		} else if (event == 'PARTNERSHIPFIRM') {
 			for (let file of localUploadArray) {
@@ -220,8 +221,7 @@ export class MuttonFishNewComponent implements OnInit {
 		} else {
 			return this.uploadFileArray;
 		}
-		this.muttonFishNewForm.get('businessAddress').reset();
-		this.muttonFishNewForm.controls['relationshipList'] = this.fb.array([]);
+			this.removeAddressDetail();
 	}
 
 	/**
@@ -524,6 +524,29 @@ export class MuttonFishNewComponent implements OnInit {
 		if (event.target.value === "" || this.muttonFishNewForm.get(cardName).invalid) {
 			this.muttonFishNewForm.get(cardName).setValue(null);
 		}
+	}
+
+	removeAddressDetail(){
+		this.muttonFishNewForm.get('businessAddress').patchValue({
+			"buildingName": null,
+			"buildingNameGuj": null,
+			"streetName": null,
+			"streetNameGuj": null,
+			"landmark": null,
+			"landmarkGuj": null,
+			"area": null,
+			"areaGuj": null,
+			"state": "GUJARAT",
+			"stateGuj": "ગુજરાત",
+			"district": null,
+			"districtGuj": null,
+			"city": "Vadodara",
+			"cityGuj": "વડોદરા",
+			"pincode": null,
+			"country": "INDIA",
+			"countryGuj": "ભારત"
+		  });
+		this.muttonFishNewForm.controls['relationshipList'] = this.fb.array([]);
 	}
 
 	patchValue() {
