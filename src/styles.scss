@@ -1192,3 +1192,11 @@ textarea.gujInputCls {margin-bottom: 0;}
      padding: 8px 16px !important;
     white-space: normal !important;
 }
+
+
+// Start material selection dropdown
+.cdk-overlay-pane { -webkit-transform: translateX(0) translateY(21px) !important; 
+    transform: translateX(0) translateY(21px) !important;
+.ng-trigger-transformPanel {min-width: 100% !important;}
+}
+// End material selection dropdown
