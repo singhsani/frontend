@@ -1,4 +1,5 @@
-<mat-card class="mt-4">
+<mat-card class="cardBox">
+<mat-card>
   <form #formDetail="ngForm" (ngSubmit)="search(formDetail)">
     <div class="row">
       <div class="col-md-6">
@@ -17,8 +18,7 @@
           </ng-select>
         </div>
       </div>
-    </div>
-    <div class="row">
+   
       <div class="col-md-6">
         <div class="ngSelect" *ngIf="wardZoneLevel.length>=3">
           <ng-select [placeholder]="!wardZoneLevel[2]?'': wardZoneLevel[2].levelName" [items]="wardZoneLevel3List"
@@ -34,8 +34,7 @@
           </ng-select>
         </div>
       </div>
-    </div>
-    <div class="row">
+ 
       <div class="col-md-6">
         <mat-form-field class="full-width-input">
           <input matInput number-only maxlength="10" name="mobileNo" placeholder="Mobile No"
@@ -47,8 +46,7 @@
           <input trim="blur" mask-census-no maxlength="17" matInput name="censusNo" placeholder="Census No" [(ngModel)]="searchModel.censusNo">
         </mat-form-field>
       </div>
-    </div>
-    <div class="row">
+ 
       <div class="col-md-6">
         <mat-form-field class="full-width-input">
           <input trim="blur" matInput name="ownerName" placeholder="Owner Name" [(ngModel)]="searchModel.ownerName">
@@ -61,17 +59,14 @@
         </mat-form-field>
       </div>
 
-    </div>
-    <div class="row">
+
       <div class="col-md-6">
         <mat-form-field class="full-width-input">
           <input trim="blur" matInput name="address" placeholder="Address" [(ngModel)]="searchModel.address">
         </mat-form-field>
       </div>
-      <div class="col-md-6">
-      </div>
-    </div>
-    <div class="row">
+     
+   
       <div class="col-md-4">
         <mat-form-field class="full-width-input">
           <input trim="blur" mask-property-no-with-occuiper-code maxlength="16" matInput name="propertyNo" placeholder="Property No" [(ngModel)]="propertyNo">
@@ -82,14 +77,19 @@
           Go
         </button>
       </div>
-      <div class="col-md-6 text-right mt-4">
-        <button mat-raised-button class="gray-btn ml-3" type="submit">
-          <mat-icon>search</mat-icon> Search
-        </button>
-        <button mat-raised-button class=" ml-3" type="button" color="warn" (click)="clear()">
-          <mat-icon>clear_all</mat-icon> Clear
-        </button>
-      </div>
     </div>
+
+    <div class="fotButtonBar clearfix mt-0">
+        <div class="col-sm-12 col-md-12 text-right">
+            <button mat-raised-button class="gray-btn ml-3" type="submit">
+                <mat-icon>search</mat-icon> Search
+              </button>
+              <button mat-raised-button class=" ml-3" type="button" color="warn" (click)="clear()">
+                <mat-icon>clear_all</mat-icon> Clear
+              </button>
+        </div>
+    </div>
+
   </form>
+</mat-card>
 </mat-card>
