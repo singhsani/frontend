@@ -14,6 +14,8 @@ import { PropertyBillDetailComponent } from './Components/property-bill-detail/p
 import { PropertyDetailComponent } from './Components/property-detail/property-detail.component';
 import { ApplicationDisconnectionFormComponent } from './Components/application-disconnection-form/application-disconnection-form.component';
 import { ApprovalComponent } from './Components/approval/approval.component';
+import { NewWaterConnectionEntryDataSharingService } from '../new-water-connection-entry/Services/new-water-connection-entry-data-sharing.service';
+import { NewWaterConnectionEntryService } from '../new-water-connection-entry/Services/new-water-connection-entry.service';
 
 
 const routes: Routes = [
@@ -41,7 +43,8 @@ const routes: Routes = [
   ],
   providers: [
     ApplicationDisconnectionService,
-    ApplicationDisconnectionDataSharingService
+    ApplicationDisconnectionDataSharingService,
+    NewWaterConnectionEntryService
   ]
 })
 export class ApplicationDisconnectionModule { }

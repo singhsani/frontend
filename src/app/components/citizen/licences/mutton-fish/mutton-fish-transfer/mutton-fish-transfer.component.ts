@@ -38,7 +38,7 @@ export class MuttonFishTransferComponent implements OnInit {
 	WARD: Array<any> = [];
 	//BLOCK: Array<any> = [];
 	LOOKUP: any;
-
+	
 	// required attachment array
 	public uploadFileArray: Array<any> = [];
 	public mandatoryUploadFileArray: Array<any> = [];
@@ -172,7 +172,7 @@ export class MuttonFishTransferComponent implements OnInit {
 			res.serviceDetail.serviceUploadDocuments.forEach(app => {
 				(<FormArray>this.muttonFishTransferForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.licenseConfiguration.createDocumentsGrp(app));
 			});
-			this.onChangeStatusOfBusiness(searchData.statusOfBusinessId.code)
+			this.onChangeStatusOfBusiness(searchData.statusOfBusinessId.code,false)
 			//this.uploadFileArray = res.serviceDetail.serviceUploadDocuments;
 			//this.uploadFileArray = this.licenseConfiguration.requiredDocumentListMeetFish(this.muttonFishTransferForm);
 
@@ -193,7 +193,7 @@ export class MuttonFishTransferComponent implements OnInit {
 				this.onChangeZone(this.muttonFishTransferForm.get('zoneNo').value.code);
 			//	this.onChangeWard(this.muttonFishTransferForm.get('wardNo').value.code);
 			if (this.muttonFishTransferForm.get('statusOfBusinessId').value.code) {
-				this.onChangeStatusOfBusiness(this.muttonFishTransferForm.get('statusOfBusinessId').value.code)
+				this.onChangeStatusOfBusiness(this.muttonFishTransferForm.get('statusOfBusinessId').value.code,false)
 			} else {
 				this.uploadFileArray = res.serviceDetail.serviceUploadDocuments;
 				this.uploadFileArray.sort((a, b) => 
@@ -262,13 +262,14 @@ export class MuttonFishTransferComponent implements OnInit {
 	// 	}
 	// }
 	
-	onChangeStatusOfBusiness(event) {
+	onChangeStatusOfBusiness(event,notFromInint?) {
 		// let array = (<FormArray>this.muttonFishNewForm.get('serviceDetail').get('serviceUploadDocuments'));
 		const localUploadArray = this.commonService.clone((<FormArray>this.muttonFishTransferForm.get('serviceDetail').get('serviceUploadDocuments')).value);
 		// let array = (<FormArray>this.muttonFishNewForm.get('serviceDetail').get('serviceUploadDocuments'));
 		this.uploadFileArray = [];
 		this.mandatoryUploadFileArray = [];
 
+		
 		if (event == 'PROPRIETORSHIPFIRM') {
 			for (let file of localUploadArray) {
 				if ((file['documentIdentifier'] == 'PARTNERSHIP_DEED') || (file['documentIdentifier'] == 'POLICE_VERIFICATION')) {
@@ -299,8 +300,11 @@ export class MuttonFishTransferComponent implements OnInit {
 				}
 				this.uploadFileArray.push(file);
 			}
-		} else {
+		}else {
 			return this.uploadFileArray;
+		}
+		if(notFromInint){
+			this.removeAddressDetail();
 		}
 	}
 
@@ -321,10 +325,10 @@ export class MuttonFishTransferComponent implements OnInit {
 				code: [null, [Validators.required]]
 			}),
 			holderFirstName: [null, [Validators.required, Validators.maxLength(30)]],
-			holderMiddleName: [null, [Validators.required, Validators.maxLength(30)]],
+			holderMiddleName: [null, [ Validators.maxLength(30)]],
 			holderLastName: [null, [Validators.required, Validators.maxLength(30)]],
 			holderFirstNameGuj: [null, [Validators.required, Validators.maxLength(90)]],
-			holderMiddleNameGuj: [null, [Validators.required, Validators.maxLength(90)]],
+			holderMiddleNameGuj: [null, [Validators.maxLength(90)]],
 			holderLastNameGuj: [null, [Validators.required, Validators.maxLength(90)]],
 
 			permanantAddress: this.fb.group(this.permanantAddressEstablishment.addressControls()),
@@ -343,9 +347,9 @@ export class MuttonFishTransferComponent implements OnInit {
 		//	blockNo: this.fb.group({ code: [null, Validators.required] }),
 			businessAddress: this.fb.group(this.permanantAddressEstablishment.addressControls()),
 		//	extraDetailsOfBusiness: [null, [Validators.maxLength(500)]],
-			relationshipId: this.fb.group({
-				code: [null, Validators.required]
-			}),
+			// relationshipId: this.fb.group({
+			// 	code: [null, Validators.required]
+			// }),
 			statusOfBusinessId: this.fb.group({
 				code: [null, Validators.required]
 			}),
@@ -396,7 +400,8 @@ export class MuttonFishTransferComponent implements OnInit {
 	 * Method is used when user click for add person
 	 */
 	addMorePerson() {
-		let relationshipIdValue = this.muttonFishTransferForm.get('relationshipId').value.code;
+		// let relationshipIdValue = this.muttonFishTransferForm.get('relationshipId').value.code;
+		let relationshipIdValue = this.muttonFishTransferForm.get('statusOfBusinessId').value.code;
 
 		if (!relationshipIdValue) {
 			this.toastrService.warning("Please select relationship of applicant first.");
@@ -551,4 +556,27 @@ export class MuttonFishTransferComponent implements OnInit {
   dateFormat(date, controlType: string) {
     this.muttonFishTransferForm.get(controlType).setValue(moment(date).format("YYYY-MM-DD"));
   }
+
+  removeAddressDetail(){
+		this.muttonFishTransferForm.get('businessAddress').patchValue({
+			"buildingName": null,
+			"buildingNameGuj": null,
+			"streetName": null,
+			"streetNameGuj": null,
+			"landmark": null,
+			"landmarkGuj": null,
+			"area": null,
+			"areaGuj": null,
+			"state": "GUJARAT",
+			"stateGuj": "ગુજરાત",
+			"district": null,
+			"districtGuj": null,
+			"city": "Vadodara",
+			"cityGuj": "વડોદરા",
+			"pincode": null,
+			"country": "INDIA",
+			"countryGuj": "ભારત"
+		  });
+		this.muttonFishTransferForm.controls['relationshipList'] = this.fb.array([]);
+	}
 }

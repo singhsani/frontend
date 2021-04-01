@@ -19,7 +19,7 @@ import { LicenseConfiguration } from '../../license-configuration';
 export class MuttonFishNewComponent implements OnInit {
 
 	@ViewChild('permanantAddressEstablishment') permanantAddressEstablishment: any;
-
+	
 	muttonFishNewForm: FormGroup;
 	translateKey: string = 'muttonFishNewScreen';
 	licenseConfiguration: LicenseConfiguration = new LicenseConfiguration();
@@ -103,6 +103,7 @@ export class MuttonFishNewComponent implements OnInit {
 					this.uploadFileArray = res.serviceDetail.serviceUploadDocuments;
 					this.uploadFileArray.sort((a, b) => 
 							a.orderSequence - b.orderSequence);
+					
 				}
 				// deflate add one array in relationship grid
 				if ((<FormArray>res.relationshipList).length == 0) {
@@ -191,6 +192,7 @@ export class MuttonFishNewComponent implements OnInit {
 				}
 
 				this.uploadFileArray.push(file);
+				
 			}
 		} else if (event == 'PARTNERSHIPFIRM') {
 			for (let file of localUploadArray) {
@@ -219,7 +221,7 @@ export class MuttonFishNewComponent implements OnInit {
 		} else {
 			return this.uploadFileArray;
 		}
-		this.muttonFishNewForm.get('businessAddress').reset();
+			this.removeAddressDetail();
 	}
 
 	/**
@@ -255,10 +257,12 @@ export class MuttonFishNewComponent implements OnInit {
 			}),
 			personTypeGuj: [null, [Validators.required]],
 			holderFirstName: [null, [Validators.required, Validators.maxLength(30), ValidationService.nameValidator]],
-			holderMiddleName: [null, [Validators.maxLength(30), Validators.required,ValidationService.nameValidator]],
+
+			holderMiddleName: [null, [ Validators.maxLength(30), ValidationService.nameValidator]],
 			holderLastName: [null, [Validators.required, Validators.maxLength(30), ValidationService.nameValidator]],
 			holderFirstNameGuj: [null, [Validators.required, Validators.maxLength(90)]],
-			holderMiddleNameGuj: [null, [Validators.required,Validators.maxLength(90)]],
+			holderMiddleNameGuj: [null, [Validators.maxLength(90)]],
+
 			holderLastNameGuj: [null, [Validators.required, Validators.maxLength(90)]],
 
 			permanantAddress: this.fb.group(this.permanantAddressEstablishment.addressControls()),
@@ -277,9 +281,9 @@ export class MuttonFishNewComponent implements OnInit {
 			//businessAddressType: this.fb.group({ code: [null, Validators.required] }),
 			businessAddress: this.fb.group(this.permanantAddressEstablishment.addressControls()),
 			// extraDetailsOfBusiness: [null, [Validators.maxLength(500)]],
-			relationshipId: this.fb.group({
-				code: [null, Validators.required]
-			}),
+			// relationshipId: this.fb.group({
+			// 	code: [null, Validators.required]
+			// }),
 			statusOfBusinessId: this.fb.group({
 				code: [null, Validators.required]
 			}),
@@ -338,7 +342,8 @@ export class MuttonFishNewComponent implements OnInit {
 	 * Method is used when user click for add person
 	 */
 	addMorePerson() {
-		let relationshipIdValue = this.muttonFishNewForm.get('relationshipId').value.code;
+		// let relationshipIdValue = this.muttonFishNewForm.get('relationshipId').value.code;
+		let relationshipIdValue = this.muttonFishNewForm.get('statusOfBusinessId').value.code;
 
 		if (!relationshipIdValue) {
 			this.toastrService.warning("Please select relationship of applicant first.");
@@ -519,6 +524,29 @@ export class MuttonFishNewComponent implements OnInit {
 		if (event.target.value === "" || this.muttonFishNewForm.get(cardName).invalid) {
 			this.muttonFishNewForm.get(cardName).setValue(null);
 		}
+	}
+
+	removeAddressDetail(){
+		this.muttonFishNewForm.get('businessAddress').patchValue({
+			"buildingName": null,
+			"buildingNameGuj": null,
+			"streetName": null,
+			"streetNameGuj": null,
+			"landmark": null,
+			"landmarkGuj": null,
+			"area": null,
+			"areaGuj": null,
+			"state": "GUJARAT",
+			"stateGuj": "ગુજરાત",
+			"district": null,
+			"districtGuj": null,
+			"city": "Vadodara",
+			"cityGuj": "વડોદરા",
+			"pincode": null,
+			"country": "INDIA",
+			"countryGuj": "ભારત"
+		  });
+		this.muttonFishNewForm.controls['relationshipList'] = this.fb.array([]);
 	}
 
 	patchValue() {

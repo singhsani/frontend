@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, TemplateRef, Input, OnChanges } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, RouterLinkWithHref } from '@angular/router';
 
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
@@ -19,18 +19,18 @@ import { environment } from '../../../../environments/environment';
 import { OfflinePaymentComponent } from 'src/app/shared/components/offline-payment/offline-payment.component';
 import { Location } from '@angular/common';
 import { downloadFile } from 'src/app/vmcshared/downloadFile';
-import { PaymentService} from 'src/app/vmcshared/component/payment/payment.service'
+import { PaymentService } from 'src/app/vmcshared/component/payment/payment.service'
 import { PaymentNewService } from 'src/app/shared/services/paymentNew.service';
 @Component({
 	selector: 'app-my-applications',
 	templateUrl: './my-applications.component.html',
 	styleUrls: ['./my-applications.component.scss']
 })
-export class MyApplicationsComponent implements OnInit,OnChanges {
+export class MyApplicationsComponent implements OnInit, OnChanges {
 
 	@ViewChild("paymentGateway") paymentGateway: any;
 
-	@Input() inputData : any;
+	@Input() inputData: any;
 	@Input() fromOtherModule = false;
 
 	/**
@@ -82,8 +82,8 @@ export class MyApplicationsComponent implements OnInit,OnChanges {
 		private dialog: MatDialog,
 		private route: ActivatedRoute,
 		private location: Location,
-		private paymentService : PaymentService
-	) { 
+		private paymentService: PaymentService
+	) {
 
 
 
@@ -96,8 +96,8 @@ export class MyApplicationsComponent implements OnInit,OnChanges {
 		this.getAllData();
 
 		/**
-        * Used to initiate print hook after successfull payment
-        */
+		* Used to initiate print hook after successfull payment
+		*/
 		this.route.queryParams.subscribe(d => {
 			if (d.apiCode && d.id) {
 				this.printReceipt(d.apiCode, '', d.id);
@@ -108,7 +108,7 @@ export class MyApplicationsComponent implements OnInit,OnChanges {
 		})
 	}
 
-	ngOnChanges(){
+	ngOnChanges() {
 		this.getAllData();
 	}
 
@@ -118,14 +118,14 @@ export class MyApplicationsComponent implements OnInit,OnChanges {
 	getAllData() {
 		if (this.fromOtherModule) {
 			this.dataSource.data = [];
-			if(this.inputData){
+			if (this.inputData) {
 				this.paginator.pageSize = 1;
 				this.paginator.pageIndex = 0;
 				this.dataSource.data = this.inputData;
-				this.resultsLength = this.inputData.length ;
+				this.resultsLength = this.inputData.length;
 				this.isLoadingResults = false;
 			}
-			
+
 		} else {
 			this.paginator.pageSize = 5;
 			this.paginator.pageIndex = 0;
@@ -155,7 +155,7 @@ export class MyApplicationsComponent implements OnInit,OnChanges {
 				}
 				);
 		}
-		
+
 	}
 
 	/**
@@ -164,7 +164,7 @@ export class MyApplicationsComponent implements OnInit,OnChanges {
 	 * @param id - citizen id
 	 */
 	redirectToEdit(apiCode: string, id: number) {
-		
+
 		if (apiCode == 'HEL-DR') {
 			this.router.navigate(['citizen/certificates/birth-death/deathReg', id, apiCode]);
 
@@ -241,7 +241,7 @@ export class MyApplicationsComponent implements OnInit,OnChanges {
 				sectionToPrintReceipt.innerHTML = receiptResponse;
 				setTimeout(() => {
 					window.print();
-				},300);
+				}, 300);
 			},
 			err => {
 				this.commonService.openAlert('Error!', err.error[0].message, 'error');
@@ -264,11 +264,11 @@ export class MyApplicationsComponent implements OnInit,OnChanges {
 
 
 	/**
-     * This method use to application print view.
-     * @param id citizen api code
-     * @param id citizen api name
-     * @param id citizen id
-     */
+	 * This method use to application print view.
+	 * @param id citizen api code
+	 * @param id citizen api name
+	 * @param id citizen id
+	 */
 	printView(apiCode: string, apiName: string, id: number) {
 		this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);
 		this.formService.printView(id).subscribe(
@@ -371,8 +371,8 @@ export class MyApplicationsComponent implements OnInit,OnChanges {
 	 * @param row - Table row oject
 	 */
 	isEditOptDisplay(row) {
-		if (row.serviceType === 'PEC_REG' && row.serviceType === 'PRC_REG' || row.serviceType === 
-		'NO_DUE_CERTIFICATE' || row.serviceType === 'ASSESSMENT_CERTIFICATE')
+		if (row.serviceType === 'PEC_REG' && row.serviceType === 'PRC_REG' || row.serviceType ===
+			'NO_DUE_CERTIFICATE' || row.serviceType === 'ASSESSMENT_CERTIFICATE')
 			return false;
 		else if (row.canEdit || row.fileStatus === 'QUERIED' || row.fileStatus === 'QUERY_RAISED')
 			return true;
@@ -392,8 +392,8 @@ export class MyApplicationsComponent implements OnInit,OnChanges {
 	 * @param row - Table row oject
 	 */
 	isPreviewOptDisplay(row) {
-		if (row.serviceType === 'PEC_REG' || row.serviceType === 'PRC_REG'  || row.serviceType === 
-		'NO_DUE_CERTIFICATE' || row.serviceType === 'ASSESSMENT_CERTIFICATE' || row.fileStatus == 'APPROVED')
+		if (row.serviceType === 'PEC_REG' || row.serviceType === 'PRC_REG' || row.serviceType ===
+			'NO_DUE_CERTIFICATE' || row.serviceType === 'ASSESSMENT_CERTIFICATE' || row.fileStatus == 'APPROVED')
 			return false;
 		else if (!row.canEdit)
 			return true;
@@ -405,41 +405,62 @@ export class MyApplicationsComponent implements OnInit,OnChanges {
 	 */
 	isPrintViewDisplay(row) {
 		if (row.serviceType === 'PEC_REG' || row.serviceType === 'PRC_REG' || row.serviceType ===
-		'NO_DUE_CERTIFICATE' || row.serviceType === 'ASSESSMENT_CERTIFICATE' || row.serviceType == 'VEHICLE')
-		return false;
-		else if (row.serviceType === 'SHOP_ESTAB_APPLICATION' &&  !(this.commonService.fromAdmin())) {
+			'NO_DUE_CERTIFICATE' || row.serviceType === 'ASSESSMENT_CERTIFICATE' || row.serviceType == 'VEHICLE')
+			return false;
+		else if (row.serviceType === 'SHOP_ESTAB_APPLICATION' && !(this.commonService.fromAdmin())) {
 			return false;
 		}
 		else if (row.fileStatus != 'DRAFT')
-		return true;
-		}
-
-	isPrintReceipt(row){
-		if(row.fileStatus=='SUBMITTED' && row.serviceType=='SHOP_ESTAB_APPLICATION')
-		{
 			return true;
-		}
-		
-		if(row.fileStatus=='PAYMENT_RECEIVED' || row.fileStatus=='APPROVED')
-		{
-			return true;
-		}
-
-		if(row.fileStatus=='SUBMITTED' && row.serviceType=='FS_WATER_TANKER')
-		{
-			return true;
-		}
-
-		if(row.fileStatus=='PAYMENT_RECEIVED' || row.fileStatus=='SUBMITTED')
-		{
-			return true;
-		}
-		
 	}
 
-	isDownloadDisplay(row){
-		if(row.fileStatus =='SCRUTINY')
-		return true;
+
+	isPrintReceipt(row) {
+
+
+		const printReceiptServiceTypeArr = ['FS_FINAL_FIRE_NOC', 'FS_REVISED_FIRE_NOC', 'FS_RENEWAL_NOC', 'FS_TEMP_STRUCT_NOC', 'FS_TEMP_FIREWORKSHOP_NOC',
+			'FS_FIRE_CERTIFICATE', 'FS_FINAL_HOSPITAL_NOC', 'FS_ELECTRIC_CONNECTION_NOC', 'FS_NAVARATRI_NOC', 'FS_GAS_CONNECTION_NOC']
+		
+		if (row.fileStatus == 'SUBMITTED' && printReceiptServiceTypeArr.indexOf(row.serviceType) > 0) {
+			return false
+		}
+
+
+		if (row.fileStatus == 'SUBMITTED' && row.serviceType == 'FS_WATER_TANKER') {
+			return true;
+		}
+
+		if ((row.fileStatus == 'SUBMITTED' || row.fileStatus == 'APPROVED' || row.fileStatus == 'REJECTED') && row.serviceType == 'FS_PROVISIONAL_HOSPITAL_NOC') {
+			return false;
+		}
+
+		if ((row.fileStatus == 'SUBMITTED' || row.fileStatus == 'APPROVED' || row.fileStatus == 'REJECTED') && row.serviceType == 'FS_PROVISIONAL_NOC') {
+			return false;
+		}
+
+		if (row.fileStatus == 'SUBMITTED' && row.serviceType == 'SHOP_ESTAB_APPLICATION') {
+			return true;
+		}
+
+		if (row.fileStatus == 'SUBMITTED' && row.serviceType == 'FS_TEMP_STRUCT_NOC') {
+			return false;
+		}
+
+		if (row.fileStatus == 'PAYMENT_RECEIVED' || row.fileStatus == 'APPROVED') {
+			return true;
+		}
+
+		if (row.fileStatus == 'PAYMENT_RECEIVED' || row.fileStatus == 'SUBMITTED') {
+			return true;
+		}
+
+
+
+	}
+
+	isDownloadDisplay(row) {
+		if (row.fileStatus == 'SCRUTINY')
+			return true;
 	}
 	/**
 	 * This method is use for application json option
@@ -463,8 +484,8 @@ export class MyApplicationsComponent implements OnInit,OnChanges {
 			return false;
 	}
 
-	isPrintReceiptPayment(row){
-		if(row.fileStatus =='PAYMENT')
+	isPrintReceiptPayment(row) {
+		if (row.fileStatus == 'PAYMENT')
 			return true;
 		else
 			return false;
@@ -490,16 +511,16 @@ export class MyApplicationsComponent implements OnInit,OnChanges {
 				this.router.navigateByUrl(ManageRoutes.getFullRoute("CITIZENMYAPPS"));
 			},
 			err => {
-				let retUrl: string = '/citizen/my-applications?apiCode='+ apiCode + '&id=' + id  ;
+				let retUrl: string = '/citizen/my-applications?apiCode=' + apiCode + '&id=' + id;
 				let retAfterPayment: string = environment.returnUrl;
 
-				
-			    if(this.fromOtherModule){
-					retUrl = '/citizen/payable-services?apiCode='+ apiCode + '&id=' + id;
+
+				if (this.fromOtherModule) {
+					retUrl = '/citizen/payable-services?apiCode=' + apiCode + '&id=' + id;
 				}
 
 				if (err.status === 402) {
-					
+
 					let payData = this.commonService.storePaymentInfo(err.error.data, retUrl, retAfterPayment);
 					let words = this.commonService.getToWords(payData.amount)
 					let html =
@@ -514,7 +535,7 @@ export class MyApplicationsComponent implements OnInit,OnChanges {
 					</div>
 					`
 					if (this.commonService.fromAdmin()) {
-						this.openOfflinePaymentComponent(payData,retUrl,apiCode,id);
+						this.openOfflinePaymentComponent(payData, retUrl, apiCode, id);
 					} else {
 						this.commonService.commonAlert('Payment Details', '', 'info', 'Make Payment!', false, html, cb => {
 							// this.formService.createTokenforServicePayment(payData).subscribe(resp => {
@@ -524,7 +545,7 @@ export class MyApplicationsComponent implements OnInit,OnChanges {
 							// })
 							this.paymentGateway.setPaymentDetailsFromActionBar(payData);
 							this.paymentGateway.openModel();
-	
+
 						}, rj => {
 							// let errHtml = `
 							// 	<div class="alert alert-danger">
@@ -536,16 +557,16 @@ export class MyApplicationsComponent implements OnInit,OnChanges {
 							// 	}, err => {
 							// 		this.toastr.error(err.error.message);
 							// 	})
-	
+
 							// }, arj => {
-	
+
 							// })
 							// return;
 						});
 						return;
 					}
 
-					
+
 				} else {
 					this.commonService.openAlert("Error", "Error Occured for final submit : " + err.error[0].message, "warning")
 				}
@@ -572,12 +593,12 @@ export class MyApplicationsComponent implements OnInit,OnChanges {
 	}
 
 	isQueryRaiseDisplay(row) {
-		if(row.fileStatus === 'QUERY_RAISED'){
+		if (row.fileStatus === 'QUERY_RAISED') {
 			return true;
-		}else{
+		} else {
 			return false;
 		}
-		
+
 	}
 
 	isDownloadLOI(row) {
@@ -590,11 +611,11 @@ export class MyApplicationsComponent implements OnInit,OnChanges {
 	getLoi(row) {
 		console.log("Download LOI", row);
 	}
-	loiPayments(row){
+	loiPayments(row) {
 		this.router.navigate(['/citizen/loi-payments', row.uniqueId, row.id, row.serviceDetail.code]);
 	}
 
-	openOfflinePaymentComponent(payData,retUrl,apiCode,id) {
+	openOfflinePaymentComponent(payData, retUrl, apiCode, id) {
 		const dialogConfig = new MatDialogConfig();
 		const data = { payData: payData }
 		dialogConfig.disableClose = true;
@@ -609,21 +630,21 @@ export class MyApplicationsComponent implements OnInit,OnChanges {
 				offlinePayData.refNumber = payData.refNumber;
 				offlinePayData.response = payData.response;
 				offlinePayData.paymentStatus = "SUCCESS",
-				offlinePayData.transactionId =  payData.transactionId,
-				offlinePayData.payableServiceType = payData.serviceCode,
-				offlinePayData.amount = payData.amount;
+					offlinePayData.transactionId = payData.transactionId,
+					offlinePayData.payableServiceType = payData.serviceCode,
+					offlinePayData.amount = payData.amount;
 				offlinePayData.payGateway = "OFFLINE"
 
 
 				this.formService.createPayment(offlinePayData).subscribe(resData => {
 					const payRespData = resData.data.responseData;
-					if(resData.paymentStatus = "Paid"){
+					if (resData.paymentStatus = "Paid") {
 						this.formService.submitFormData(payRespData.serviceFormId).subscribe(res => {
 							if (res) {
-								this.router.navigate([ retUrl.split('?')[0] ], { queryParams: { apiCode: apiCode, id: id } });
+								this.router.navigate([retUrl.split('?')[0]], { queryParams: { apiCode: apiCode, id: id } });
 							}
 						});
-						
+
 					}
 					this.getAllData()
 				}, error => {
@@ -638,36 +659,36 @@ export class MyApplicationsComponent implements OnInit,OnChanges {
 
 	}
 
-	openErrorAlert(error){
-		if(error & error.error[0]){
+	openErrorAlert(error) {
+		if (error & error.error[0]) {
 			this.commonService.openAlert("Error", "Error Occured for final submit : "
-					 + error.error[0].message, "warning");
-		}else{
-			this.commonService.openAlert("Error", "Something went wrong","warning");
+				+ error.error[0].message, "warning");
+		} else {
+			this.commonService.openAlert("Error", "Something went wrong", "warning");
 		}
 	}
 
-	
-	printPaymentReceipt(apiCode: string,id:number){
+
+	printPaymentReceipt(apiCode: string, id: number) {
 		this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);
 		this.formService.printPaymentReceipt(id).subscribe(
 			receiptResponse => {
-				let sectionToPrintReceipt : any = document.getElementById('sectionToPrint');
+				let sectionToPrintReceipt: any = document.getElementById('sectionToPrint');
 				sectionToPrintReceipt.innerHTML = receiptResponse;
-				setTimeout(() =>{
+				setTimeout(() => {
 					window.print();
-				},300);
+				}, 300);
 			},
 			err => {
-				this.commonService.openAlert('Error!',err.error[0].message,'error');
+				this.commonService.openAlert('Error!', err.error[0].message, 'error');
 			}
 		)
 	}
 
-	applicantName(row){
-		if(row.fileStatusName=="Draft"){
+	applicantName(row) {
+		if (row.fileStatusName == "Draft") {
 			return "N/A";
-		}else{
+		} else {
 			return row.applicantName;
 		}
 	}

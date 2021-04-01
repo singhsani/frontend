@@ -57,8 +57,8 @@
 
 					<mat-form-field class="col-md-4">
 						<!-- <span matPrefix>+91 &nbsp;</span> -->
-						<input matInput OnlyNumber placeholder="{{'office_contact_no' | translate:translateKey}}" type="tel" [maxlength]="fireFacilityConfig.contactNumberLength"
-						 formControlName="officeContactNo" required>
+						<input matInput OnlyNumber placeholder="{{'office_contact_no' | translate:translateKey}}"
+						 formControlName="officeContactNo" type="tel" required maxlength="10" minlength="10">
 						<control-messages [control]="provisionalNocForm.get('officeContactNo')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
@@ -203,8 +203,8 @@
 				<div class="row">
 
 					<mat-form-field class="col-md-4">
-						<input matInput required OnlyNumber [maxlength]="fireFacilityConfig.contactNumberLength" type="tel"
-						 formControlName="architectContactNo" placeholder="{{'architect_contact_number' | translate:translateKey }}">
+						<input matInput required OnlyNumber type="tel"
+						 formControlName="architectContactNo" placeholder="{{'architect_contact_number' | translate:translateKey }}" maxlength="10" minlength="10">
 						<control-messages [control]="provisionalNocForm.get('architectContactNo')"></control-messages>
 					</mat-form-field>
 
