@@ -1498,7 +1498,7 @@ export class ShopLicTransferComponent implements OnInit {
 
 	}
 
-	validatePecNumber(formControl : FormControl){
+	validatePecNumber(formControl : any){
 		let numberValue = formControl.value.substring(0,3)
 		  console.log("Pec/Prc ", formControl);
 		  
@@ -1530,7 +1530,7 @@ export class ShopLicTransferComponent implements OnInit {
 		//   }
 	}
 
-	validatePRCNumber(formControl:FormControl){
+	validatePRCNumber(formControl:any){
 		
 		let numberValue = formControl.value.substring(0,3)
 		if(!formControl.value || formControl.value == ""){

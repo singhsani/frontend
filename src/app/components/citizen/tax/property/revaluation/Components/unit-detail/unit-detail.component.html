@@ -223,7 +223,7 @@
                         <div class="col-md-6">
                             <mat-form-field class="full-width-input">
                                 <input matInput [matDatepicker]="TikaDate" [max]="unitDetailModel.effectiveFromDate"
-                                    (dateChange)="onDateChange(ETD)" #TD="ngModel"
+                                     #TD="ngModel"
                                     [(ngModel)]="unitDetailModel.tikaDate" placeholder="Tika Date" name="tikaDate" length="10" mask-date>
                                 <mat-datepicker-toggle matSuffix [for]="TikaDate"></mat-datepicker-toggle>
                                 <mat-datepicker #TikaDate disabled="false"></mat-datepicker>
@@ -246,7 +246,7 @@
                         <div class="col-md-6">
                             <mat-form-field class="full-width-input">
                                 <input matInput [max]="unitDetailModel.effectiveFromDate"
-                                    [matDatepicker]="BuildingPermissionDate" (dateChange)="onDateChange(ETD)"
+                                    [matDatepicker]="BuildingPermissionDate" 
                                     #BPD="ngModel" [(ngModel)]="unitDetailModel.buildingPermissionDate"
                                     placeholder="Building Permission Date" name="buildingPermissionDate" length="10" mask-date> 
                                 <mat-datepicker-toggle matSuffix [for]="BuildingPermissionDate"></mat-datepicker-toggle>
@@ -268,7 +268,7 @@
                         <div class="col-md-6">
                             <mat-form-field class="full-width-input">
                                 <input matInput [max]="unitDetailModel.effectiveFromDate"
-                                    [matDatepicker]="OccupancyCertificateDate" (dateChange)="onDateChange(ETD)"
+                                    [matDatepicker]="OccupancyCertificateDate" 
                                     #OCD="ngModel" [(ngModel)]="unitDetailModel.occupancyCertificateDate"
                                     placeholder="Occupancy Certificate Date" name="occupancyCertificateDate" length="10" mask-date>
                                 <mat-datepicker-toggle matSuffix [for]="OccupancyCertificateDate">
@@ -293,7 +293,7 @@
                             <mat-form-field class="full-width-input">
                                 <input matInput 
                                     [matDatepicker]="CompletionDate"
-                                    #CompDate="ngModel" [(ngModel)]="unitDetailModel.completionDate" (dateChange)="onDateChange(ETD)"
+                                    #CompDate="ngModel" [(ngModel)]="unitDetailModel.completionDate" 
                                     placeholder="Completion Date" name="completionDate" length="10" mask-date>
                                 <mat-datepicker-toggle matSuffix [for]="CompletionDate"></mat-datepicker-toggle>
                                 <mat-datepicker #CompletionDate disabled="false"></mat-datepicker>

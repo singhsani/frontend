@@ -194,7 +194,7 @@
 
 							<mat-form-field class="col-md-4">
 									<input matInput upperCase appAlphaNumeric maxlength="10" required formControlName="panCardNumber"
-										placeholder="{{'panNo' | translate:translateKey}}"  (change)="onCardChange($event,'panCardNumber')">
+										placeholder="{{'panNo' | translate:translateKey}}" >
 									<control-messages [control]="affordableHousingForm.get('panCardNumber')"></control-messages>
 								</mat-form-field>
 
@@ -749,7 +749,7 @@
 						</div>
 					
 						<app-action-bar  [form]="affordableHousingForm" (tabIndex)="onTabChange($event)"
-				 (handleOnSaveAndNext)="handleOnSaveAndNext($event)" (handleErrors)="handleErrorsOnSubmit($event)" [stepInfo]="{step: 'final', next:7, back:6} "></app-action-bar>
+				   [stepInfo]="{step: 'final', next:7, back:6} "></app-action-bar>
 					
 					</mat-tab> 
 	
