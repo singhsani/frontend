@@ -38,6 +38,8 @@ export class CommonPaybleComponent implements OnInit {
   applicationrouter: any;
   redirectURLAfterPayment: any;
 
+  model : any;
+
   payModeArr: Array<any> = [
     { name: 'Net Banking', code: 'NETBANKING' }, { name: 'Debit / Credit Card banking', code: 'CARDBANKING' }
   ];
@@ -246,6 +248,7 @@ export class CommonPaybleComponent implements OnInit {
         if (data.status === 200) {
          
           this.collectionModel = data.body;
+          this.model = this.collectionModel.payableAmount;
           
         }
       },
