@@ -1,15 +1,10 @@
-<mat-card class="cardH1 mat-card">
-  <div class="row ">
-    <div class="col-md-6 ">
-      <h1 class="">Property Search</h1>
-    </div>
-    <div class="col-md-6 text-right">
-      <button mat-raised-button color="primary" type="button" (click)="onBackFromSearch()">
-        <mat-icon>skip_previous</mat-icon>Back
-      </button>
-    </div>
-  </div>
-</mat-card>
+<mat-card class="cardBox">
+  <div class="pageTitle d-flex justify-content-between"><span>Property Search</span>
+    <button mat-raised-button color="primary" class="mb-0" type="button" (click)="onBackFromSearch()">
+    <mat-icon>skip_previous</mat-icon>Back
+  </button>
+</div>
+
 
 <mat-card class="mt-4">
   <form #formDetail="ngForm" (ngSubmit)="search(formDetail)">
@@ -30,15 +25,13 @@
           </mat-select>
         </mat-form-field>
       </div>
-    </div>
-    <div class="row">
+   
       <div class="col-md-6">
         <mat-form-field class="full-width-input" *ngIf="wardZoneLevel.length>=3">
           <mat-select name="level3Id" (ngModelChange)="onChangedWardZone($event,4)" [(ngModel)]="searchModel.level3Id"
             #Level3Id="ngModel" [placeholder]="!wardZoneLevel[2]?'': wardZoneLevel[2].levelName">
             <mat-option *ngFor="let item of wardZoneLevel3List" [value]="item.wardzoneId">{{item.wardzoneName}}</mat-option>
           </mat-select>
-
         </mat-form-field>
       </div>
       <div class="col-md-6">
@@ -48,8 +41,7 @@
           </mat-select>
         </mat-form-field>
       </div>
-    </div>
-    <div class="row">
+  
       <div class="col-md-6">
         <mat-form-field class="full-width-input">
           <input matInput number-only maxlength="10" name="mobileNo" placeholder="Mobile No" [(ngModel)]="searchModel.mobileNo">
@@ -60,8 +52,7 @@
           <input matInput mask-census-no maxlength="17" name="censusNo" placeholder="Census No" [(ngModel)]="searchModel.censusNo">
         </mat-form-field>
       </div>
-    </div>
-    <div class="row">
+
       <div class="col-md-6">
         <mat-form-field class="full-width-input">
           <input matInput name="ownerName" placeholder="Owner Name" [(ngModel)]="searchModel.ownerName">
@@ -73,17 +64,14 @@
         </mat-form-field>
       </div>
 
-    </div>
-    <div class="row">
+  
       <div class="col-md-6">
         <mat-form-field class="full-width-input">
           <input matInput name="address" placeholder="Address" [(ngModel)]="searchModel.address">
         </mat-form-field>
       </div>
-      <div class="col-md-6">
-      </div>
-    </div>
-    <div class="row">
+     
+  
       <div class="col-md-4">
         <mat-form-field class="full-width-input">
           <input matInput mask-property-no maxlength="12" name="propertyNo" placeholder="Property No" [(ngModel)]="propertyNo">
@@ -94,15 +82,20 @@
           Go
         </button>
       </div>
-      <div class="col-md-6 text-right mt-4">
-        <button mat-raised-button class="gray-btn ml-3" type="submit">
-          <mat-icon>search</mat-icon> Search
-        </button>
-        <button mat-raised-button class=" ml-3" type="button" color="warn" (click)="clear()">
-          <mat-icon>clear_all</mat-icon> Clear
-        </button>
-      </div>
+
     </div>
+
+    <div class="fotButtonBar clearfix mt-0">
+        <div class="col-sm-12 col-md-12 text-right">
+            <button mat-raised-button class="gray-btn ml-3" type="submit">
+                <mat-icon>search</mat-icon> Search
+              </button>
+              <button mat-raised-button class=" ml-3" type="button" color="warn" (click)="clear()">
+                <mat-icon>clear_all</mat-icon> Clear
+              </button>
+        </div>
+    </div>
+
   </form>
 </mat-card>
 
@@ -139,3 +132,5 @@
     </table>
   </div>
 </div>
+
+</mat-card>
