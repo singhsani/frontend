@@ -193,9 +193,9 @@ export class TempStructureNocComponent implements OnInit {
 			email: [null, [Validators.required, Validators.email, Validators.maxLength(50)]],
 			oldReferenceNumber: [{ value: null, disabled: true }],
 			applicationDate: [{ value: null, disabled: true }],//not now
-			officeContactNo: [null, [Validators.maxLength(this.fireFacilityConfig.mobileNumber_maxLength)]],
+			officeContactNo: [null, [Validators.maxLength(this.fireFacilityConfig.mobileNumber_maxLength),Validators.minLength(this.fireFacilityConfig.mobileNumber_minLength)]],
 			onsitePersonMobileNo: [null, [Validators.required, Validators.maxLength(this.fireFacilityConfig.mobileNumber_maxLength), Validators.minLength(this.fireFacilityConfig.mobileNumber_minLength)]],
-			officeEmailId: [null, [Validators.email, Validators.maxLength(50)]],
+			officeEmailId: [null, [ValidationService.emailValidator, Validators.maxLength(50)]],
 
 			/* Step 2 controls start */
 			fromDate: [null, [Validators.required, Validators.maxLength(10)]],
@@ -252,7 +252,7 @@ export class TempStructureNocComponent implements OnInit {
 				code: [null]
 			}),
 			wiringType: this.fb.group({
-				code: [null]
+				code: [null, Validators.required]
 			}),
 			communicationArrangementType: this.fb.group({
 				code: [null, Validators.required]
