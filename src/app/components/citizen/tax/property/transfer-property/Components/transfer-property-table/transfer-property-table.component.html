@@ -1,4 +1,5 @@
-<div class="mt-4">
+<mat-card class="cardBorder mt-2">
+
   <div class="example-container mat-elevation-z8">
     <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8 width100">
       <ng-container matColumnDef="select">
@@ -30,12 +31,13 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
   </div>
-</div>
+
 <div class="row margin-top-20">
   <div class="col-md-2">
-    <mat-card>Total Count : <b>{{totalCount}}</b></mat-card>
+    Total Count : <b>{{totalCount}}</b>
   </div>
 </div>
+</mat-card>
 
 <mat-card class="col-md-12 mt-3" *ngIf="isShowDetail">
     <form #formDetail="ngForm" (ngSubmit)="onEnterClick(formDetail)">
@@ -64,15 +66,15 @@
   </div>
 </form>
   <mat-card *ngIf="isShowOutstandingDetail">
-    <div class="row">
-      <div class="col-md-12">
+
+
         <div class="section-title">
           <h4>Outstanding Detail</h4>
           <mat-divider></mat-divider>
         </div>
-      </div>
-      <div class="col-md-12" *ngFor="let outstandingDetail of outstandingDetailModel.occupierOutstandingDetails">
-        <ul class="outstandig-detail">
+      
+      <div *ngFor="let outstandingDetail of outstandingDetailModel.occupierOutstandingDetails">
+        <ul class="outstandig-detail p-0">
           <li>
             <h4>{{selectedItem.propertyNo}}-{{outstandingDetail.occupierCode}}-{{outstandingDetail.occupierName}}-{{outstandingDetail.outstandingAmount}}</h4>
             <table class="custome-table">
@@ -92,6 +94,6 @@
           </li>
         </ul>
       </div>
-    </div>
+
   </mat-card>
 </mat-card>
