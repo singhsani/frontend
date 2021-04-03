@@ -130,6 +130,15 @@ export class TempStructureNocComponent implements OnInit {
 
 	}
 
+	updateRequiredField(isRequired) {
+		if(isRequired)
+			this.tempStructureNocForm.get('landOwnerConsentDescription').setValidators(Validators.required);
+		else 
+			this.tempStructureNocForm.get('landOwnerConsentDescription').setValidators(null);
+
+			this.tempStructureNocForm.get('landOwnerConsentDescription').updateValueAndValidity();
+	}
+
 
     /**
      * This method is change date formate.
