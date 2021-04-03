@@ -168,7 +168,7 @@
 						<div class="row">
 							<div class="radioBtnError">
 								<mat-label>{{'land_owner_consent_included' | translate:translateKey }} *</mat-label>
-								<mat-radio-group formControlName="landOwnerConsentIncluded" required (change)="dependentAttachment($event.value,'LAND_OWNER_CONCERN_LETTER')">
+								<mat-radio-group formControlName="landOwnerConsentIncluded" required (change)="dependentAttachment($event.value,'LAND_OWNER_CONCERN_LETTER');updateRequiredField($event.value)">
 									<mat-radio-button [value]="true">
 										Yes
 									</mat-radio-button>
