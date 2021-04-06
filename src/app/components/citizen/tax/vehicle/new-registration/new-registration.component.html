@@ -103,7 +103,7 @@
 						<control-messages [control]="vehicleRegistrationForm.get('dealerEmail')"></control-messages>
 					</mat-form-field>
 
-					<mat-form-field class="col-md-4 noDigit">
+					<mat-form-field class="col-md-4">
 						<span matPrefix>+91 &nbsp;</span>
 						<input required matInput autocomplete="off" type="tel" OnlyNumber
 							formControlName="dealerMobileNo" minlength="10" maxlength="10"
@@ -174,9 +174,9 @@
 						<control-messages [control]="vehicleRegistrationForm.get('aadhaarNo')"></control-messages>
 					</mat-form-field>
 
-					<mat-form-field class="col-md-4 noDigit">
+					<mat-form-field class="col-md-4">
 						<span matPrefix>+91 &nbsp;</span>
-						<input matInput autocomplete="off" type="tel" OnlyNumber formControlName="mobileNo"
+						<input matInput type="tel" autocomplete="off" OnlyNumber formControlName="mobileNo"
 							minlength="10" maxlength="10" placeholder="{{'mobile_no' | translate: translateKey}}"
 							required>
 						<control-messages [control]="vehicleRegistrationForm.get('mobileNo')"></control-messages>
