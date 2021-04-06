@@ -1,4 +1,4 @@
-<mat-card class="mt-4">
+<mat-card class="cardBorder">
     <form #formDetail="ngForm" (ngSubmit)="search(formDetail)">
         <div class="row">
             <div class="col-md-6">
@@ -84,7 +84,10 @@
             Go
           </button>
         </div>
-        <div class="col-md-6 text-right mt-4">
+      </div>
+
+      <div class="fotButtonBar clearfix mt-0">
+        <div class="col-sm-12 col-md-12 text-right">
           <button mat-raised-button class="gray-btn ml-3" type="submit">
             <mat-icon>search</mat-icon> Search
           </button>
@@ -92,6 +95,7 @@
             <mat-icon>clear_all</mat-icon> Clear
           </button>
         </div>
-      </div>
+    </div>
+
     </form>
   </mat-card>
