@@ -404,13 +404,13 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 	 * @param row - Table row oject
 	 */
 	isPrintViewDisplay(row) {
-			const printViewServiceTypeArr = ['FS_FINAL_FIRE_NOC','FS_PROVISIONAL_NOC', 'FS_REVISED_FIRE_NOC', 'FS_RENEWAL_NOC', 'FS_TEMP_STRUCT_NOC', 'FS_TEMP_FIREWORKSHOP_NOC',
-			'FS_FIRE_CERTIFICATE','FS_WATER_TANKER', 'FS_FINAL_HOSPITAL_NOC', 'FS_ELECTRIC_CONNECTION_NOC', 'FS_NAVARATRI_NOC', 'FS_GAS_CONNECTION_NOC']
-		
+		const printViewServiceTypeArr = ['FS_FINAL_FIRE_NOC', 'FS_PROVISIONAL_NOC', 'FS_REVISED_FIRE_NOC', 'FS_RENEWAL_NOC', 'FS_TEMP_STRUCT_NOC', 'FS_TEMP_FIREWORKSHOP_NOC',
+			'FS_FIRE_CERTIFICATE', 'FS_WATER_TANKER', 'FS_FINAL_HOSPITAL_NOC', 'FS_ELECTRIC_CONNECTION_NOC', 'FS_NAVARATRI_NOC', 'FS_GAS_CONNECTION_NOC']
+
 		if ((row.fileStatus == 'SUBMITTED' || row.fileStatus == 'APPROVED' || row.fileStatus == 'PAYMENT_RECEIVED') && printViewServiceTypeArr.indexOf(row.serviceType) > 0) {
 			return false
 		}
-	
+
 		if (row.serviceType === 'PEC_REG' || row.serviceType === 'PRC_REG' || row.serviceType ===
 			'NO_DUE_CERTIFICATE' || row.serviceType === 'ASSESSMENT_CERTIFICATE' || row.serviceType == 'VEHICLE')
 			return false;
@@ -427,7 +427,7 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 
 		const printReceiptServiceTypeArr = ['FS_FINAL_FIRE_NOC', 'FS_REVISED_FIRE_NOC', 'FS_RENEWAL_NOC', 'FS_TEMP_STRUCT_NOC', 'FS_TEMP_FIREWORKSHOP_NOC',
 			'FS_FIRE_CERTIFICATE', 'FS_FINAL_HOSPITAL_NOC', 'FS_ELECTRIC_CONNECTION_NOC', 'FS_NAVARATRI_NOC', 'FS_GAS_CONNECTION_NOC']
-		
+
 		if (row.fileStatus == 'SUBMITTED' && printReceiptServiceTypeArr.indexOf(row.serviceType) > 0) {
 			return false
 		}
@@ -456,12 +456,6 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		if (row.fileStatus == 'PAYMENT_RECEIVED' || row.fileStatus == 'APPROVED') {
 			return true;
 		}
-
-		if (row.fileStatus == 'PAYMENT_RECEIVED' || row.fileStatus == 'SUBMITTED') {
-			return true;
-		}
-
-
 
 	}
 
