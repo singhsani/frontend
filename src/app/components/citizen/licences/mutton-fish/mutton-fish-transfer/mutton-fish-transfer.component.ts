@@ -263,6 +263,7 @@ export class MuttonFishTransferComponent implements OnInit {
 	// }
 	
 	onChangeStatusOfBusiness(event,notFromInint?) {
+		debugger
 		// let array = (<FormArray>this.muttonFishNewForm.get('serviceDetail').get('serviceUploadDocuments'));
 		const localUploadArray = this.commonService.clone((<FormArray>this.muttonFishTransferForm.get('serviceDetail').get('serviceUploadDocuments')).value);
 		// let array = (<FormArray>this.muttonFishNewForm.get('serviceDetail').get('serviceUploadDocuments'));
@@ -274,31 +275,37 @@ export class MuttonFishTransferComponent implements OnInit {
 			for (let file of localUploadArray) {
 				if ((file['documentIdentifier'] == 'PARTNERSHIP_DEED') || (file['documentIdentifier'] == 'POLICE_VERIFICATION')) {
 					file['mandatory'] = false;
+				}else{
+					this.uploadFileArray.push(file);
 				}
 				if (file['mandatory'] == true) {
 					this.mandatoryUploadFileArray.push(file);
 				}
-				this.uploadFileArray.push(file);
+				
 			}
 		} else if (event == 'PARTNERSHIPFIRM') {
 			for (let file of localUploadArray) {
 				if ((file['documentIdentifier'] == 'POLICE_VERIFICATION') || (file['documentIdentifier'] == 'LAND_TERMS_CONDITION')) {
 					file['mandatory'] = false;
+				}else{
+					this.uploadFileArray.push(file);
 				}
 				if (file['mandatory'] == true) {
 					this.mandatoryUploadFileArray.push(file);
 				}
-				this.uploadFileArray.push(file);
+				
 			}
 		} else if (event == 'TENANT') {
 			for (let file of localUploadArray) {
 				if ((file['documentIdentifier'] == 'PARTNERSHIP_DEED') || (file['documentIdentifier'] == 'LAND_TERMS_CONDITION')) {
 					file['mandatory'] = false;
+				}else{
+					this.uploadFileArray.push(file);
 				}
 				if (file['mandatory'] == true) {
 					this.mandatoryUploadFileArray.push(file);
 				}
-				this.uploadFileArray.push(file);
+				
 			}
 		}else {
 			return this.uploadFileArray;
