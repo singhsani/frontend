@@ -132,11 +132,16 @@
 				</div>
 
 				<div class="fotButtonBar clearfix">
-					<div class="col-sm-12 col-md-12">
-						<button class="pull-right" mat-raised-button color="primary"
-							(click)="tabIndex = 1">{{'save_and_next' | translate:
+					<div class="col-sm-12 col-md-12" *ngIf="vehicleRegistrationForm.get('canEdit').value">
+						<button class=" pull-right" mat-raised-button color="primary"
+							(click)="tabIndex = 1">{{'save_and_next' |
+							translate:
 							actionBarKey}}</button>
 						<!-- <button type="button" mat-raised-button color="warn" (click)="resetForm()">{{'clear' | translate: actionBarKey}}</button> -->
+					</div>
+					<div class="col-sm-12 col-md-12" *ngIf="!vehicleRegistrationForm.get('canEdit').value">
+						<button class=" pull-right" mat-raised-button color="primary" (click)="tabIndex = 1">{{'Next' |
+							translate:actionBarKey}}</button>
 					</div>
 				</div>
 
@@ -212,8 +217,13 @@
 							(click)="tabIndex = 0">{{'back' |
 							translate: actionBarKey}}</button>
 						<button mat-raised-button class="pull-right" color="primary"
+							*ngIf="vehicleRegistrationForm.get('canEdit').value"
 							(click)="tabIndex = 2">{{'save_and_next' | translate:
 							actionBarKey}}</button>
+						<button class="pull-right" mat-raised-button color="primary"
+							*ngIf="!vehicleRegistrationForm.get('canEdit').value" (click)="tabIndex = 2">{{'Next' |
+							translate:actionBarKey}}</button>
+
 						<!-- <button type="button" mat-raised-button color="warn" (click)="resetForm()">{{'clear' | translate: actionBarKey}}</button> -->
 					</div>
 				</div>
@@ -289,8 +299,12 @@
 							(click)="tabIndex = 1">{{'back' |
 							translate: actionBarKey}}</button>
 						<button mat-raised-button class="pull-right" color="primary"
+							*ngIf="vehicleRegistrationForm.get('canEdit').value"
 							(click)="tabIndex = 3">{{'save_and_next' | translate:
 							actionBarKey}}</button>
+						<button class="pull-right" mat-raised-button color="primary"
+							*ngIf="!vehicleRegistrationForm.get('canEdit').value" (click)="tabIndex = 3">{{'Next' |
+							translate:actionBarKey}}</button>
 						<!-- <button [disabled]="!isSubmitBtnVisible" mat-raised-button class="pull-right" color="success" (click)="onSubmit()">{{'submit'
 							| translate:
 							actionBarKey}}</button> -->
