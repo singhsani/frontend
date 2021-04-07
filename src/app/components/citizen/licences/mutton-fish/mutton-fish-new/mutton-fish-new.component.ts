@@ -178,51 +178,56 @@ export class MuttonFishNewComponent implements OnInit {
 		// let array = (<FormArray>this.muttonFishNewForm.get('serviceDetail').get('serviceUploadDocuments'));
 		this.uploadFileArray = [];
 		this.mandatoryUploadFileArray = [];
-
+		
 		
 
 		if (event == 'PROPRIETORSHIPFIRM') {
 			for (let file of localUploadArray) {
 				if ((file['documentIdentifier'] == 'PARTNERSHIP_DEED') || (file['documentIdentifier'] == 'POLICE_VERIFICATION')) {
-					file['mandatory'] = false;
+						file['mandatory'] = false;
+				}else{
+					this.uploadFileArray.push(file);
 				}
 
 				if (file['mandatory'] == true) {
 					this.mandatoryUploadFileArray.push(file);
 				}
+				
 
-				this.uploadFileArray.push(file);
+				
 				
 			}
 		} else if (event == 'PARTNERSHIPFIRM') {
 			for (let file of localUploadArray) {
 				if ((file['documentIdentifier'] == 'POLICE_VERIFICATION') || (file['documentIdentifier'] == 'LAND_TERMS_CONDITION')) {
-					file['mandatory'] = false;
+						file['mandatory'] = false;
+				}else{
+					this.uploadFileArray.push(file);
 				}
 
 				if (file['mandatory'] == true) {
 					this.mandatoryUploadFileArray.push(file);
 				}
-
-				this.uploadFileArray.push(file);
 			}
 		} else if (event == 'TENANT') {
 			for (let file of localUploadArray) {
 				if ((file['documentIdentifier'] == 'PARTNERSHIP_DEED') ||  (file['documentIdentifier'] == 'LAND_TERMS_CONDITION')) {
 					file['mandatory'] = false;
+				}else{
+					this.uploadFileArray.push(file);
 				}
 
 				if (file['mandatory'] == true) {
 					this.mandatoryUploadFileArray.push(file);
 				}
-
-				this.uploadFileArray.push(file);
-			}
+		}
 		} else {
 			return this.uploadFileArray;
 		}
 			this.removeAddressDetail();
 	}
+
+	
 
 	/**
 	 * Method is used for get block as per zone selection
