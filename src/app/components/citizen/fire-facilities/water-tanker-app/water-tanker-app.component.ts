@@ -248,6 +248,7 @@ export class WaterTankerAppComponent implements OnInit {
 	 * This method for reset dependent field.
 	 */
 	resetsuggestedfields() {
+		this.waterTankerAppForm.get('applicationDate').disable();
 
 		if (this.waterTankerAppForm.get('purpose').get('code').value == 'FS_SUGGESTED') {
 			this.waterTankerAppForm.controls.whoSuggested.setValidators([Validators.required]);

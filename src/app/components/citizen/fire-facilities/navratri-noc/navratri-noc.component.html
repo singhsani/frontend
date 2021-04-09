@@ -181,7 +181,7 @@
 					
 					<mat-form-field class="col-md-4">
 						<input appDate matInput [matDatepicker]="picker1" formControlName="fromDate" placeholder="{{'from_date' | translate:translateKey }}"
-						 required (dateChange)="dateFormate($event.value,'fromDate')">
+						 required [min]="endMinDate" (dateChange)="dateFormate($event.value,'fromDate')">
 						<mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
 						<mat-datepicker #picker1 touchUi="true"></mat-datepicker>
 						<div align="end" class="default-show-hint mat-hint mat-right">{{fireFacilityConfig.DATE_HINT_MSG}}</div>
