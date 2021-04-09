@@ -5,7 +5,7 @@
 <div *ngIf="isGuideLineActive">
 	<div class="row">
 		<div class="col-md-4 ngSelect">
-			<ng-select placeholder="Working in organization Number of humans*" (change)="onChangeNoOfHumanWorking($event)"
+			<ng-select placeholder="working_in_organization_number_of_humans*" (change)="onChangeNoOfHumanWorking($event)"
 				[(ngModel)]="registrationType">
 				<ng-option *ngFor="let yes_no of regiTyep" [value]="yes_no.code">{{yes_no.name}}</ng-option>
 			</ng-select>

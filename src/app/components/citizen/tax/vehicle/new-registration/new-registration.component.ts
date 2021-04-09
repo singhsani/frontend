@@ -37,10 +37,10 @@ export class NewRegistrationComponent implements OnInit {
   maxDate: Date = new Date();
   //minDate: any = moment().subtract(6, 'months').format('YYYY-MM-DD');
   minDate: Date = new Date(
-		new Date().getFullYear(),
-		new Date().getMonth() - 1, 
-		new Date().getDate()
-	);
+    new Date().getFullYear(),
+    new Date().getMonth() - 1,
+    new Date().getDate()
+  );
   vehicleRegistrationForm: FormGroup;
   paymentForm: FormGroup;
   // purchasingTypeArray: any = [{ code: 'OLD_RATE', name: 'Old Rate' }, { code: 'NEW_RATE', name: 'New Rate' }];
@@ -93,18 +93,18 @@ export class NewRegistrationComponent implements OnInit {
     // this.getBillingPeriodLookups();
     this.getWardLookups();
 
-		/**
-		 * call the get method for edit vehicle information if vehicle id is present
-		 */
+    /**
+     * call the get method for edit vehicle information if vehicle id is present
+     */
     if (this.vehicleId) {
       this.getVehicleData(this.vehicleId);
       this.getAllDocumentLists(this.vehicleId);
     }
   }
 
-	/**
-	 * this method is used to initialize the form control for vehicle registration
-	 */
+  /**
+   * this method is used to initialize the form control for vehicle registration
+   */
   vehicleRegistrationFormControls() {
 
     this.vehicleRegistrationForm = this.fb.group({
@@ -120,8 +120,8 @@ export class NewRegistrationComponent implements OnInit {
         code: [null, Validators.required],
         name: null
       }),
-      engineNo: null,
-      chasisNo: null,
+      engineNo: [null, [Validators.required, ValidationService.alphaNumericValidation]],
+      chasisNo: [null, [Validators.required, ValidationService.alphaNumericValidation]],
       registrationNo: "GJ-06-",
       vehicleBasicValue: null,
       makeModel: null,
@@ -140,7 +140,7 @@ export class NewRegistrationComponent implements OnInit {
       applicantAadhaarNo: null,
       mobileNo: null,
       aadhaarNo: null,
-      email: ['', [ValidationService.emailValidator]],  
+      email: ['', [ValidationService.emailValidator]],
       address: this.fb.group(this.addrComponent.addressControls()),
       // city: "Vadodra",
       billingPeriod: this.fb.group({
@@ -149,9 +149,9 @@ export class NewRegistrationComponent implements OnInit {
       }),
       // billingPeriod: "2016-17",
       wardZoneMst: this.fb.group({
-				wardzoneId:null,
-				wardzoneName: null
-			}),
+        wardzoneId: null,
+        wardzoneName: null
+      }),
       paid: false,
       vehicleReceipts: [],
       canEdit: true,
@@ -162,11 +162,11 @@ export class NewRegistrationComponent implements OnInit {
       vehicleApplicableRate: [{ value: 0, disabled: true }],
       totalPayable: [{ value: 0, disabled: true }],
       attachments: [],
-      serviceFormId : null,
+      serviceFormId: null,
       formStatus: null,
       dealerEmail: ['', [ValidationService.emailValidator]],
-			dealerMobileNo: [null, Validators.required],
-			vehicleTax: [{ value: 0, disabled: true }],
+      dealerMobileNo: [null, Validators.required],
+      vehicleTax: [{ value: 0, disabled: true }],
     });
 
     this.vehicleRegistrationForm.patchValue({
@@ -212,23 +212,24 @@ export class NewRegistrationComponent implements OnInit {
       this.billingPeriodArray = res.BILLING_PERIOD;
       // this.wardNoArray = res.WARD_NO;
       _.forEach(this.vehicleTypeArray, (key) => {
-				key.name = _.replace(key.name, /&/g, "and");
-			});
-      this.setBillingPeriod( this.billingPeriodArray);
+        key.name = _.replace(key.name, /&/g, "and");
+      });
+      //   this.setBillingPeriod( this.billingPeriodArray);
+      this.vehicleRegistrationForm.get('billingPeriod').disable();
     });
-   
+
   }
 
   // this method will set billing period in column
-setBillingPeriod(billingPeriodArray:any){
-    this.vehicleRegistrationForm.get('billingPeriod').patchValue(billingPeriodArray[billingPeriodArray.length - 1]);
-    this.vehicleRegistrationForm.get('billingPeriod').disable();
-}
+  // setBillingPeriod(billingPeriodArray:any){
+  //     this.vehicleRegistrationForm.get('billingPeriod').patchValue(billingPeriodArray[billingPeriodArray.length - 1]);
+  //     this.vehicleRegistrationForm.get('billingPeriod').disable();
+  // }
 
-	/**
-	 * This method is used to get vehicle information
-	 * @param id - vehicle id
-	 */
+  /**
+   * This method is used to get vehicle information
+   * @param id - vehicle id
+   */
   getVehicleData(id: number) {
     this.formService.getFormData(id).subscribe(res => {
       this.formService.getFormData(id).subscribe(res => {
@@ -250,17 +251,42 @@ setBillingPeriod(billingPeriodArray:any){
     });
   }
 
-	/**
-	 * 
-	 * @param date get the selected vehicle purchasing date
-	 */
+  getFinancialYear() {
+    var fiscalyear = "";
+    var today = this.vehicleRegistrationForm.get('purchaseDate').value;
+    console.log(today);
+    if ((today.getMonth() + 1) <= 3) {
+      fiscalyear = "" + (today.getFullYear() - 1)
+    } else {
+      fiscalyear = "" + (today.getFullYear())
+    }
+    console.log(fiscalyear);
+    return fiscalyear
+  }
+  /**
+   * 
+   * @param date get the selected vehicle purchasing date
+   */
   onDateChange(date) {
+    this.vehicleRegistrationForm.get('purchaseDate').value.toISOString().split('T')[0];
+    // this.vehicleRegistrationForm.get('purchaseDate').setValue(moment(date).format("YYYY-MM-DD"));
+    var billingPeriod = this.getFinancialYear();
     this.vehicleRegistrationForm.get('purchaseDate').setValue(moment(date).format("YYYY-MM-DD"));
+    console.log(billingPeriod);
+    this.billingPeriodArray.forEach(element => {
+
+      if (billingPeriod == element.code.substr(0, 4)) {
+        console.log(element);
+        console.log(element.code);
+        this.vehicleRegistrationForm.get('billingPeriod').patchValue(element);
+      }
+    });
+
   }
 
-	/**
-	 * This method is use for get Vehicle Type dropdown data from API
-	 */
+  /**
+   * This method is use for get Vehicle Type dropdown data from API
+   */
   getVehicleTypeData() {
     this.vehicleServise.getVehicletaxLookups().subscribe(res => {
       // _.forEach(res.VEHICLE_TYPE, (key) => {
@@ -272,29 +298,29 @@ setBillingPeriod(billingPeriodArray:any){
     });
   }
 
-	/**
-	 * This method is used to get billing period dropdown data from API
-	 */
+  /**
+   * This method is used to get billing period dropdown data from API
+   */
   getBillingPeriodLookups() {
     this.vehicleServise.getBillingPeriodLookups().subscribe(res => {
       this.billingPeriodArray = res.data;
     });
-  
+
   }
 
-	/**
-	 * This method is used to get ward dropdown data from API
-	 */
+  /**
+   * This method is used to get ward dropdown data from API
+   */
   getWardLookups() {
     this.vehicleServise.getWardLookup().subscribe(res => {
       this.wardNoArray = res;
     });
   }
 
-	/**
-	 * This method is used to get form data by using engine no if exist
-	 * @param engineNo - vehicle engine no.
-	 */
+  /**
+   * This method is used to get form data by using engine no if exist
+   * @param engineNo - vehicle engine no.
+   */
   checkDataFromEngineNo(engineNo) {
     if (engineNo != "" && engineNo.trim() != "") {
       this.vehicleServise.getDataFromEngineNo(engineNo).subscribe(res => {
@@ -306,30 +332,30 @@ setBillingPeriod(billingPeriodArray:any){
     }
   }
 
-	/**
-	 * This method is used to submit the Vehicle registration data
-	 */
+  /**
+   * This method is used to submit the Vehicle registration data
+   */
   onSubmit() {
 
     if (this.vehicleRegistrationForm.invalid) {
       let count = this.config.getAllErrors(this.vehicleRegistrationForm);
-			this.commonService.openAlert("Warning", this.config.ALL_FEILD_REQUIRED_MESSAGE, "warning", "", cb => {
+      this.commonService.openAlert("Warning", this.config.ALL_FEILD_REQUIRED_MESSAGE, "warning", "", cb => {
 
-				switch (true) {
-					case (count <= 12):
-						this.tabIndex = 0;
-						break;
-					case (count <= 26):
-						this.tabIndex = 1;
-						break;
-					case (count <= 33):
-						this.tabIndex = 2;
-						break;
-					default:
-						this.tabIndex = 0;
-				}
-			});
-			return;
+        switch (true) {
+          case (count <= 12):
+            this.tabIndex = 0;
+            break;
+          case (count <= 26):
+            this.tabIndex = 1;
+            break;
+          case (count <= 33):
+            this.tabIndex = 2;
+            break;
+          default:
+            this.tabIndex = 0;
+        }
+      });
+      return;
       // this.markFormGroupTouched(this.vehicleRegistrationForm);
       // this.commonService.openAlert("Warning", "Enter all the required information", "warning");
       // return;
@@ -380,9 +406,9 @@ setBillingPeriod(billingPeriodArray:any){
     })
   }
 
-	/**
-	 * This method is used to submit vehicle tax form
-	 */
+  /**
+   * This method is used to submit vehicle tax form
+   */
   onVehicleTaxSubmit() {
     if (this.paymentForm.invalid) {
       this.markFormGroupTouched(this.paymentForm);
@@ -391,11 +417,11 @@ setBillingPeriod(billingPeriodArray:any){
     }
     this.isSubmitBtnVisible = false;
 
-      // this.paymentForm.get('bankName').setValue(this.paymentForm.get('bank').get('code').value);
-      // this.paymentForm.get('accountNo').setValue(this.paymentForm.get('bankAccountNo').value);
-      // this.paymentForm.get('amountPaid').setValue(this.totalVehicleTaxAmt);
-      // this.paymentForm.get('instrumentDate').setValue(this.paymentForm.get('chequeDate').value);
-      // this.paymentForm.get('instrumentNumber').setValue(this.paymentForm.get('chequeNo').value);
+    // this.paymentForm.get('bankName').setValue(this.paymentForm.get('bank').get('code').value);
+    // this.paymentForm.get('accountNo').setValue(this.paymentForm.get('bankAccountNo').value);
+    // this.paymentForm.get('amountPaid').setValue(this.totalVehicleTaxAmt);
+    // this.paymentForm.get('instrumentDate').setValue(this.paymentForm.get('chequeDate').value);
+    // this.paymentForm.get('instrumentNumber').setValue(this.paymentForm.get('chequeNo').value);
 
     this.vehicleServise.saveVehicleTaxFormData(this.paymentForm.value).subscribe(res => {
       this.printReceipt(res);
@@ -407,10 +433,10 @@ setBillingPeriod(billingPeriodArray:any){
     });
   }
 
-	/**
-	 * This method is used to get the vehicle tax details
-	 * @param vehicleId - vehicle id
-	 */
+  /**
+   * This method is used to get the vehicle tax details
+   * @param vehicleId - vehicle id
+   */
   getVehicleTaxForPayment(vehicleId) {
     this.totalVehicleTaxAmt = 0;
     this.vehicleServise.getVehicleTaxForPayment(vehicleId).subscribe(res => {
@@ -423,10 +449,10 @@ setBillingPeriod(billingPeriodArray:any){
     });
   }
 
-	/**
-	 * This method is used to edit the vehicle tax form
-	 * Edit button Click handler
-	 */
+  /**
+   * This method is used to edit the vehicle tax form
+   * Edit button Click handler
+   */
   editVehicleTaxForm() {
     this.vehicleRegistrationForm.enable();
     this.isSubmitBtnVisible = true;
@@ -443,9 +469,9 @@ setBillingPeriod(billingPeriodArray:any){
     }
   }
 
-	/**
-	 * This method is used to open payment dialog and process for the payment
-	 */
+  /**
+   * This method is used to open payment dialog and process for the payment
+   */
   processPayment(saveRes) {
 
     // this.formService.paymentDetails(this.makePaymentObj.id).subscribe(res => {
@@ -496,28 +522,28 @@ setBillingPeriod(billingPeriodArray:any){
   }
 
 
-	/**
-	 * This method is used for printing the receipt 
-	 * @param id - vehicle id
-	 */
+  /**
+   * This method is used for printing the receipt 
+   * @param id - vehicle id
+   */
   printReceipt(id: number) {
     this.vehicleServise.printReceipt(id).subscribe(res => {
-        let sectionToPrint: any = document.getElementById('sectionToPrint');
-        sectionToPrint.innerHTML = res;
-        setTimeout(() => {
-          window.print();
-          this.router.navigate(['/citizen/my-applications']);
-        }, 300);
-      },
+      let sectionToPrint: any = document.getElementById('sectionToPrint');
+      sectionToPrint.innerHTML = res;
+      setTimeout(() => {
+        window.print();
+        this.router.navigate(['/citizen/my-applications']);
+      }, 300);
+    },
       err => {
         this.toastr.error(err.error[0].message);
       });
   }
 
-	/**
-	 * call calculateTax() method if step changes from 2 to 3
-	 * @param event - get the previous step index
-	 */
+  /**
+   * call calculateTax() method if step changes from 2 to 3
+   * @param event - get the previous step index
+   */
   calculateTax(event: any) {
 
     if (event.index === 2 && (this.vehicleRegistrationForm.get('purchaseDate').value == null || this.vehicleRegistrationForm.get('vehicleBasicValue').value == null || this.vehicleRegistrationForm.get('vehicleType').get('code').value == null)) {
@@ -529,16 +555,16 @@ setBillingPeriod(billingPeriodArray:any){
 
         this.vehicleRegistrationForm.patchValue({
           tokenFess: res.amountFields.vehicleTokenFee,
-					dishonorCharges: res.amountFields.dishonorCharges ? res.amountFields.dishonorCharges : 0,
-					vehicleApplicableRate: res.amountFields.vehicleBasicValue,
-					// totalPayable: res.amountFields.vehicleBasicValue,
-					vehicleTax: res.vehicleApplicableRate
-				});
+          dishonorCharges: res.amountFields.dishonorCharges ? res.amountFields.dishonorCharges : 0,
+          vehicleApplicableRate: res.amountFields.vehicleBasicValue,
+          // totalPayable: res.amountFields.vehicleBasicValue,
+          vehicleTax: res.vehicleApplicableRate
+        });
 
-				let totalPayable = res.amountFields.adminFee + res.amountFields.interest +
-				res.amountFields.penalty + res.amountFields.vehicleBasicValue + res.amountFields.vehicleTokenFee;
-				
-				this.vehicleRegistrationForm.get('totalPayable').setValue(totalPayable);
+        let totalPayable = res.amountFields.adminFee + res.amountFields.interest +
+          res.amountFields.penalty + res.amountFields.vehicleBasicValue + res.amountFields.vehicleTokenFee;
+
+        this.vehicleRegistrationForm.get('totalPayable').setValue(totalPayable);
       });
     }
   }
@@ -554,17 +580,17 @@ setBillingPeriod(billingPeriodArray:any){
     );
   }
 
-	/**
-	 * This method is use for resetting the form
-	 */
+  /**
+   * This method is use for resetting the form
+   */
   resetForm() {
     this.vehicleRegistrationForm.reset();
   }
 
-	/**
-	 * Marks all controls in a form group as touched
-	 * @param formGroup - The group to caress
-	*/
+  /**
+   * Marks all controls in a form group as touched
+   * @param formGroup - The group to caress
+  */
   markFormGroupTouched(formGroup: FormGroup) {
     if (Reflect.getOwnPropertyDescriptor(formGroup, 'controls')) {
       (<any>Object).values(formGroup.controls).forEach(control => {
