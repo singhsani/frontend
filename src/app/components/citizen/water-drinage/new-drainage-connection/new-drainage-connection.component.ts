@@ -319,6 +319,7 @@ export class NewDrainageConnectionComponent implements OnInit {
       postalAddressDiff: [null],
       correspondenceAddress: [null],
       waterDrainageConnPropertyDetailsDTOList: this.fb.array([]),
+      attachments: [''],
     }, {});
   }
 
