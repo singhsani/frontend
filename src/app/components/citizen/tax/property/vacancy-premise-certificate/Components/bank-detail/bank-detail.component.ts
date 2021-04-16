@@ -32,6 +32,8 @@ export class BankDetailComponent implements OnInit, OnDestroy {
   vacancyToMinDate: Date = new Date();
   isBankDetailRequired: boolean = false;
   modelSubscription: Subscription;
+  count : number  = 0;
+  submitBtn:boolean = true;
   constructor(
     private vacancyPremiseCertificateDataSharingService: VacancyPremiseCertificateDataSharingService,
     private paymentDataSharingService: PaymentDataSharingService,
@@ -152,6 +154,8 @@ export class BankDetailComponent implements OnInit, OnDestroy {
       (data) => {
         data.forEach(app => {
           this.vacancyPremiseCertficateDocumentUploadDocs.push(app);
+          console.log(this.vacancyPremiseCertficateDocumentUploadDocs.length);
+          console.log('HELLOW ');
         });
         
       },
@@ -209,6 +213,13 @@ export class BankDetailComponent implements OnInit, OnDestroy {
   onClear() {
     this.model = this.modelForCliear;
     this.model.vacancyFrom = new Date();
+  }
+
+  onUploadDoc(event:number){
+    this.count = this.count + Number(event);
+    if(this.vacancyPremiseCertficateDocumentUploadDocs.length ==  this.count){
+    this.submitBtn = false; //  Disabled will false by this condition
+    }
   }
 
 }
