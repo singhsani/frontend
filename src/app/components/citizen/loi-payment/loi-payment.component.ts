@@ -117,6 +117,7 @@ export class LoiPaymentComponent implements OnInit {
 
 				if (err.status === 402) {
 					let payData = this.commonService.storePaymentInfo(err.error.data, retUrl, retAfterPayment);
+					let words = this.commonService.getToWords(payData.amount);
 					payData.loiNumber = loiNumber;
 					this.session.set('lioNumber', loiNumber);
 					let html =
@@ -126,7 +127,7 @@ export class LoiPaymentComponent implements OnInit {
 						<div class="payAmount">
 							<i class="fa fa-inr" aria-hidden="true">` + payData.amount + `</i>
 						</div>
-						<p>Rupees in words</p>
+						<p>Rupees in words</p>` + words + ` Rupees Only
 					</div>
 					`
 					if (this.commonService.fromAdmin()) {
