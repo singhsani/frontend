@@ -172,7 +172,7 @@
 
 
 					<div class="col-md-4">{{'highRise_Fire_NOC_Taken' | translate:translateKey }} *
-						<mat-radio-group formControlName="highRiseFireNOCTaken" required>
+						<mat-radio-group formControlName="highRiseFireNOCTaken" required (change)="documentManage()">
 							<mat-radio-button [value]="true">
 								{{'Yes_txt' | translate:translateKey }}
 							</mat-radio-button>
