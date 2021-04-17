@@ -46,25 +46,25 @@
 
     <div>
     <div class="row" style="margin-left: -30px;" *ngIf="isRecordExists && responseData">
-      <div class="col-md-12">
+      <div class="col-md-12 mb-sm-0 mb-4">
         <label class="col-md-2 font16 font-weight-bold">Name :</label>
-        <span class="font16">{{responseData?.applicantFullName}}</span>
+        <span class="font16 col">{{responseData?.applicantFullName}}</span>
       </div>
-      <div class="col-md-12">
+      <div class="col-md-12 mb-sm-0 mb-4">
         <label class="col-md-2 font16 font-weight-bold">Commencement Date :</label>
-        <span class="font16">{{responseData?.commencementDate | date: 'dd/MM/yyyy'}}</span>
+        <span class="font16 col">{{responseData?.commencementDate | date: 'dd/MM/yyyy'}}</span>
       </div>
-      <div class="col-md-12">
+      <div class="col-md-12 mb-sm-0 mb-4">
         <label class="col-md-2 font16 font-weight-bold">Establishment Name :</label>
-        <span class="font16">{{responseData?.establishmentName}}</span>
+        <span class="font16 col">{{responseData?.establishmentName}}</span>
       </div>
-      <div class="col-md-12">
+      <div class="col-md-12 mb-sm-0 mb-4">
         <label class="col-md-2 font16 font-weight-bold">Contact No :</label>
-        <span class="font16">{{responseData?.contactNo}}</span>
+        <span class="font16 col">{{responseData?.contactNo}}</span>
       </div>
-      <div class="col-md-12">
+      <div class="col-md-12 mb-sm-0 mb-4">
         <label class="col-md-2 font16 font-weight-bold">Address :</label>
-        <span class="font16">{{responseData?.officeAddress?.buildingName}}, {{responseData?.officeAddress?.area}},
+        <span class="font16 col d-sm-inline d-inline-block">{{responseData?.officeAddress?.buildingName}}, {{responseData?.officeAddress?.area}},
           {{responseData?.officeAddress?.city}},
           {{responseData?.officeAddress?.state | titlecase}}, {{responseData?.officeAddress?.country | titlecase}},
           {{responseData?.officeAddress?.pincode}}</span>
