@@ -457,6 +457,10 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 			return true;
 		}
 
+		if (row.fileStatus == 'SUBMITTED' && row.serviceType == 'WATER_NEW_DRAINAGE_CONNECTION') {
+			return true;
+		}
+
 	}
 
 	isDownloadDisplay(row) {
