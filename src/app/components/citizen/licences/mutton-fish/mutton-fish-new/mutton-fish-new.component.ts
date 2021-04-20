@@ -90,7 +90,6 @@ export class MuttonFishNewComponent implements OnInit {
 	 */
 
 	getMuttonFishLicNewData() {
-		debugger
 		this.formService.getFormData(this.formId).subscribe(res => {
 			try {
 				this.muttonFishNewForm.patchValue(res);
