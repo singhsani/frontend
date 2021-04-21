@@ -96,7 +96,7 @@
 							</control-messages>
 						</mat-form-field>
 						<mat-form-field class="col-md-6">
-							<input matInput type="text" required maxlength="300"
+							<input matInput type="text" required maxlength="300" appValidationFields [validationFieldsType]="'onlyNameWithSpace'"
 								placeholder="{{'connection_owner_name' | translate:translateKey}}"
 								formControlName="ownerName">
 							<control-messages [control]="newDrainageConnectionForm.get('ownerName')">
@@ -106,14 +106,16 @@
 
 					<div class="row">
 						<mat-form-field class="col-md-6">
-							<input matInput OnlyNumber required maxlength="10" formControlName="ownerMobileNo"
+							<input matInput OnlyNumber required maxlength="10" minlength="10" formControlName="ownerMobileNo"
 								placeholder="{{'mobile_no' | translate:translateKey}}">
 							<control-messages [control]="newDrainageConnectionForm.get('ownerMobileNo')">
 							</control-messages>
 						</mat-form-field>
 						<mat-form-field class="col-md-6">
-							<input matInput appPreventSpace placeholder="{{'email_id' | translate:translateKey}}"
-								type="email" formControlName="ownerEmailId">
+							<input matInput appPreventSpace maxlength="50" placeholder="{{'email_id' | translate:translateKey}}"
+								type="text" formControlName="ownerEmailId">
+								<control-messages [control]="newDrainageConnectionForm.get('ownerEmailId')">
+								</control-messages>
 						</mat-form-field>
 					</div>
 

@@ -116,11 +116,11 @@ export class ApplicationTransferOwnershipFormComponent implements OnInit {
                         this.stepper.selectedIndex = 1;
                         this.getFormDataDocuments(this.dataModel.transferOfOwnershipId);
                         this.applicationTransferOwnershipDataSharingService.setApprovalModel(this.dataModel);
-                        this.dataModel = new DataModel();
-                        this.connectionsModel = new ConnectionsModel();
-                        this.connectionsModel.connectionDetail = new ConnectionDetail();
-                        this.connectioNo = null;
-                        this.isShowSaveButton = false;
+                        // this.dataModel = new DataModel();
+                        // this.connectionsModel = new ConnectionsModel();
+                        // this.connectionsModel.connectionDetail = new ConnectionDetail();
+                        // this.connectioNo = null;
+                        // this.isShowSaveButton = false;
                         //this.applicationTransferOwnershipDataSharingService.setIsShowApproval(true);
                     }
                 },

@@ -265,13 +265,13 @@
 
 
 					<mat-form-field class="col-md-4">
-						<input matInput required maxlength="10" formControlName="workExecutionFromAmount"
+						<input matInput OnlyNumber required maxlength="10" formControlName="workExecutionFromAmount"
 							placeholder="{{'work-execution-from-amount' | translate:translateKey}}">
 						<control-messages [control]="waterPipeliConnectionForm.get('workExecutionFromAmount')">
 						</control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput required maxlength="10" formControlName="workExecutionToAmount"
+						<input matInput OnlyNumber required maxlength="10" formControlName="workExecutionToAmount"
 							placeholder="{{'work-execution-to-amount' | translate:translateKey}}">
 						<mat-error *ngIf="waterPipeliConnectionForm.get('workExecutionToAmount').touched && waterPipeliConnectionForm.errors && waterPipeliConnectionForm.errors['range']">Please enter Work Execution To Amount Greater than Work Execution From Amount</mat-error>
 						<control-messages [control]="waterPipeliConnectionForm.get('workExecutionToAmount')">
@@ -279,7 +279,8 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput appDate [max]="disablefutureDate" [matDatepicker]="picker4"
+						<!-- [max]="disablefutureDate" -->
+						<input matInput appDate  [matDatepicker]="picker4"
 							formControlName="registrationValidity"
 							(dateChange)="dateFormate($event.value,'registrationValidity');"
 							placeholder="{{ 'registration-validity' | translate:translateKey }}  ">
