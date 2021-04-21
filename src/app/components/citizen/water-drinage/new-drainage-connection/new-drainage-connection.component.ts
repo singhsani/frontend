@@ -284,10 +284,10 @@ export class NewDrainageConnectionComponent implements OnInit {
       /* Step 1 controls start */
       drainageConnectionNo: [null],
       oldDrainageConnectionNo: [null],
-      aadharNo: [null, [Validators.maxLength(12)]],
+      aadharNo: [null, ValidationService.aadharValidation],
       ownerName: [null, [Validators.required]],
       ownerMobileNo: [null, [Validators.maxLength(10)]],
-      ownerEmailId: [null],
+      ownerEmailId: [null, ValidationService.emailValidator],
   
       limit: [null],
       waterDrainageZoneId: [null, [Validators.required]],
