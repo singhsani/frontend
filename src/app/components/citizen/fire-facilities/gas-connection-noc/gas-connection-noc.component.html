@@ -199,7 +199,7 @@
 					</div>
 
 				</div>
-				<app-action-bar [form]="gasConnectionForm" (tabIndex)="fireFacilityConfig.onFormTabChange($event)" [stepInfo]="{step: 'step2', next: 2, back: 0}"></app-action-bar>
+				<app-action-bar [form]="gasConnectionForm" (handleOnSaveAndNext)="documentManage()" (tabIndex)="fireFacilityConfig.onFormTabChange($event)" [stepInfo]="{step: 'step2', next: 2, back: 0}"></app-action-bar>
 
 			</mat-tab>
 			<!-- step 2 Ends -->
