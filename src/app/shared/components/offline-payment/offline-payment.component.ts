@@ -307,6 +307,11 @@ export class OfflinePaymentComponent implements OnInit, OnChanges {
 	}
 
 	save() {
+
+		if(this.paymentModeSelect == 'CASH'){
+			this.dialogRef.close(this.paymentsForm.value);
+		}
+		
 		if (this.paymentsForm.get('chequeDate').value) {
 			this.paymentsForm.get('chequeDate').setValue(moment(this.paymentsForm.get('chequeDate').value).format("YYYY-MM-DD"));
 			this.dialogRef.close(this.paymentsForm.value);
