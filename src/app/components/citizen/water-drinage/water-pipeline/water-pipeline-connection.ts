@@ -246,7 +246,7 @@ export class WaterPipelineConnection implements OnInit {
       developerMobileNo: [null, [Validators.maxLength(10)]],
       developerEmailId: [null,[ValidationService.emailValidator]],
       reraRegNo: [null, [Validators.required]],
-      contractorFullName: [null, [Validators.required, Validators.maxLength(250)]],
+       contractorFullName: [null, [Validators.required, Validators.maxLength(250)]],
       contractorMobileNo: [null, [Validators.maxLength(10)]],
       contractorEmailId: [null,[ValidationService.emailValidator]],
       registrationNumber: [null, [Validators.required]],
