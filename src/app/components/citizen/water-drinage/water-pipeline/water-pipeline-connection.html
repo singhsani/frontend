@@ -76,7 +76,7 @@
 
 				<div class="row">
 					<mat-form-field class="col-md-4">
-						<input matInput OnlyNumber formControlName="pinCode"
+						<input matInput required OnlyNumber formControlName="pinCode"
 						placeholder="{{'pin-code' | translate:translateKey}}" minlength="6" maxlength="6">
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
@@ -159,7 +159,7 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput OnlyNumber required maxlength="10" formControlName="developerMobileNo"
+						<input matInput OnlyNumber required maxlength="10" minlength="10" formControlName="developerMobileNo"
 							placeholder="{{'developer-mobile-no' | translate:translateKey}}">
 						<control-messages [control]="waterPipeliConnectionForm.get('developerMobileNo')">
 						</control-messages>
@@ -168,8 +168,8 @@
 						<input matInput  appPreventSpace
 							placeholder="{{'developer-email-id' | translate:translateKey}}" type="email"
 							formControlName="developerEmailId" >
-						<!-- <control-messages [control]="waterPipeliConnectionForm.get('developerEmailId')">
-						</control-messages> -->
+						<control-messages [control]="waterPipeliConnectionForm.get('developerEmailId')">
+						</control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
 						<input matInput required maxlength="10" formControlName="reraRegNo"
@@ -223,7 +223,7 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput OnlyNumber required maxlength="10" formControlName="contractorMobileNo"
+						<input matInput OnlyNumber required maxlength="10" minlength="10" formControlName="contractorMobileNo"
 							placeholder="{{'contractor-mobile-no' | translate:translateKey}}">
 						<control-messages [control]="waterPipeliConnectionForm.get('contractorMobileNo')">
 						</control-messages>
@@ -232,8 +232,8 @@
 						<input matInput  appPreventSpace
 							placeholder="{{'contractor-email-id' | translate:translateKey}}" type="email"
 							formControlName="contractorEmailId" >
-						<!-- <control-messages [control]="waterPipeliConnectionForm.get('contractorEmailId')">
-						</control-messages> -->
+						<control-messages [control]="waterPipeliConnectionForm.get('contractorEmailId')">
+						</control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
 						<input matInput required maxlength="10" formControlName="registrationNumber"

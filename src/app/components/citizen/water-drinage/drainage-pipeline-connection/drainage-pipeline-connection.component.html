@@ -80,7 +80,7 @@
 
 				<div class="row">
 					<mat-form-field class="col-md-4">
-						<input matInput OnlyNumber formControlName="pinCode"
+						<input required matInput OnlyNumber formControlName="pinCode"
 						placeholder="{{'pin-code' | translate:translateKey}}" minlength="6" maxlength="6">
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
@@ -122,7 +122,8 @@
 					</mat-form-field> -->
 
 					<mat-form-field class="col-md-4">
-						<input  matInput appDate [max]="disablefutureDate" [matDatepicker]="picker1"
+						<!-- [max]="disablefutureDate" -->
+						<input  matInput appDate  [matDatepicker]="picker1"
 							formControlName="buildingPermissionDate"
 							(dateChange)="dateFormate($event.value,'buildingPermissionDate');"
 							placeholder="{{ 'building-permission-date' | translate:translateKey }}  ">
@@ -163,7 +164,7 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput OnlyNumber required maxlength="10" formControlName="developerMobileNo"
+						<input matInput OnlyNumber required maxlength="10" minlength="10" formControlName="developerMobileNo"
 							placeholder="{{'developer-mobile-no' | translate:translateKey}}">
 						<control-messages [control]="drainagePipeliConnectionForm.get('developerMobileNo')">
 						</control-messages>
@@ -172,8 +173,8 @@
 						<input matInput  appPreventSpace
 							placeholder="{{'developer-email-id' | translate:translateKey}}" type="email"
 							formControlName="developerEmailId" >
-						<!-- <control-messages [control]="drainagePipeliConnectionForm.get('developerEmailId')">
-						</control-messages> -->
+						<control-messages [control]="drainagePipeliConnectionForm.get('developerEmailId')">
+						</control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
 						<input matInput required maxlength="10" formControlName="reraRegNo"
@@ -227,7 +228,7 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput OnlyNumber required maxlength="10" formControlName="contractorMobileNo"
+						<input matInput OnlyNumber required maxlength="10" minlength="10" formControlName="contractorMobileNo"
 							placeholder="{{'contractor-mobile-no' | translate:translateKey}}">
 						<control-messages [control]="drainagePipeliConnectionForm.get('contractorMobileNo')">
 						</control-messages>
@@ -236,8 +237,8 @@
 						<input matInput  appPreventSpace
 							placeholder="{{'contractor-email-id' | translate:translateKey}}" type="email"
 							formControlName="contractorEmailId" >
-						<!-- <control-messages [control]="drainagePipeliConnectionForm.get('contractorEmailId')">
-						</control-messages> -->
+						<control-messages [control]="drainagePipeliConnectionForm.get('contractorEmailId')">
+						</control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
 						<input matInput required maxlength="10" formControlName="registrationNumber"
@@ -269,13 +270,13 @@
 
 
 					<mat-form-field class="col-md-4">
-						<input matInput required maxlength="10" formControlName="workExecutionFromAmount"
+						<input matInput OnlyNumber required maxlength="10" formControlName="workExecutionFromAmount"
 							placeholder="{{'work-execution-from-amount' | translate:translateKey}}">
 						<control-messages [control]="drainagePipeliConnectionForm.get('workExecutionFromAmount')">
 						</control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput required maxlength="10" formControlName="workExecutionToAmount"
+						<input matInput OnlyNumber required maxlength="10" formControlName="workExecutionToAmount"
 							placeholder="{{'work-execution-to-amount' | translate:translateKey}}">
 						<mat-error *ngIf="drainagePipeliConnectionForm.get('workExecutionToAmount').touched && drainagePipeliConnectionForm.errors && drainagePipeliConnectionForm.errors['range']">Please enter Work Execution To Amount Greater than Work Execution From Amount</mat-error>
 						<control-messages [control]="drainagePipeliConnectionForm.get('workExecutionToAmount')">
