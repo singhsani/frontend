@@ -226,10 +226,12 @@ export class EleConnectionNocComponent implements OnInit {
 		let samatiLetterMandatory = false;
 		if(subject && subject.code && subject.code == 'BUILDING_COLLAPSE'){
 			buildingCollapseMandatory = true;
+			samatiLetterMandatory = false;
 		}
 
 		if(firePlaceType && firePlaceType.code && firePlaceType.code == 'COMMERCIAL'){
 			samatiLetterMandatory = true;
+			buildingCollapseMandatory = false;
 		} 
 
 		const documents = this.electricConnectionForm.get('serviceDetail').get('serviceUploadDocuments').value;
@@ -241,11 +243,10 @@ export class EleConnectionNocComponent implements OnInit {
 			if (document.documentIdentifier == 'FIRE_NOC_OR_SAMATI_LETTER') 
 				document.mandatory = samatiLetterMandatory;
 		}
-		this.electricConnectionForm.get('serviceDetail').patchValue({'serviceUploadDocuments': documents});
-
-		this.requiredDocumentList();
+				this.electricConnectionForm.get('serviceDetail').patchValue({'serviceUploadDocuments': documents});
+						this.requiredDocumentList();
 	}
-
+	
 	patchValue(){
 		this.electricConnectionForm.patchValue(this.dummyJSON);
 	}

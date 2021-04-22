@@ -522,6 +522,10 @@ const ROUTEMAIN = {
         'main': 'update-email-mobile',
         'type': 'update-email-mobile'
     },
+    'HEL-WTR-DRA-CON' : {
+        'main': 'newDrainageConnection',
+        'type': 'newDrainageConnection' 
+    },
 
 }
 
@@ -1044,7 +1048,10 @@ const ROUTESLIST = {
     },
     'PROPERTY_UPDATE_EMAIL_AND_MOBILE' : {
         'full' : ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TAXMODULE + '/'+ROUTEPREFIX.PROPERTY +'/'+ ROUTEMAIN["PROPERTY_UPDATE_EMAIL_AND_MOBILE"].main
-    }
+    },
+    'HEL-WTR-DRA-CON': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TAXMODULE + '/' + ROUTEPREFIX.WATERDRINAGE + '/' + ROUTEMAIN["HEL-WTR-DRAINAGE-CONNECTION"].main
+    },
 }
 
 

@@ -45,8 +45,8 @@ export class ValidationService {
             invalidpetaKendraNumber: 'Should contains only alpha-numeric and numeric value',
             invalidAmount: 'Amount should be in digit and Only two digit allowed after decimal',
             motherMarriageTimeAge: 'Mothers age at marriage time should not be less then 12 Years',
-            invalidGstNo:'Please enter a valid GSTIN e.g. 29ABCDE1234F2Z5',
-            invalidAccountNo:'Invalid Account No',
+            invalidGstNo: 'Please enter a valid GSTIN e.g. 29ABCDE1234F2Z5',
+            invalidAccountNo: 'Invalid Account No',
             invalidAcHolderName: 'Invalid Name',
             invalidDrivingLicense: 'Enter valid License number e.g. GJ0620210012122',
             invalidElectionCard: 'Enter valid Election Card Number e.g. ABC1234567',
@@ -94,11 +94,11 @@ export class ValidationService {
             return null;
         }
     }
-//
+    //
     // Email validation
     static emailValidator(control: FormControl) {
         if (control.value) {
-        //    const matches = control.value.match(/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/);
+            //    const matches = control.value.match(/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/);
             // const matches = control.value.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
             const matches = control.value.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,3}$/);
             return matches ? null : { 'invalidEmail': true };
@@ -112,7 +112,7 @@ export class ValidationService {
     static gstNoValidator(control: FormControl) {
         if (control.value) {
             const matches = control.value.match(/^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/);
-            return matches ? null : { 'invalidGstNo' : true };
+            return matches ? null : { 'invalidGstNo': true };
         } else {
             return null;
         }
@@ -254,73 +254,82 @@ export class ValidationService {
     }
 
     // gst number validation 
-	static gstinValidator(control: FormControl) {
-		if (control.value) {
-			const matches = control.value.match(/\d{2}[A-Z]{5}\d{4}[A-Z]{1}[A-Z\d]{1}[Z]{1}[A-Z\d]{1}/g);
-			return matches ? null : { 'invalidGstin': true };
-		} else {
-			return null;
-		}
-	}
+    static gstinValidator(control: FormControl) {
+        if (control.value) {
+            const matches = control.value.match(/\d{2}[A-Z]{5}\d{4}[A-Z]{1}[A-Z\d]{1}[Z]{1}[A-Z\d]{1}/g);
+            return matches ? null : { 'invalidGstin': true };
+        } else {
+            return null;
+        }
+    }
 
-  // Last 4 Digit pan number validation
-  static panValidatorforlastfour(control: FormControl) {
-    if (control.value) {
-      const matches = control.value.match(/^[0-9]{3}[a-zA-Z]{1}/);
-      return matches ? null : { 'invalidPanLastFour': true };
-    } else {
-      return null;
+    // Last 4 Digit pan number validation
+    static panValidatorforlastfour(control: FormControl) {
+        if (control.value) {
+            const matches = control.value.match(/^[0-9]{3}[a-zA-Z]{1}/);
+            return matches ? null : { 'invalidPanLastFour': true };
+        } else {
+            return null;
+        }
     }
-  }
 
-  static accountNoValidation(control: FormControl) {
-    if (control.value) {
-      const matches = control.value.match(/^-?(0|[1-9]\d*)?$/);
-      return matches ? null : { 'invalidAccountNo': true };
-    } else {
-      return null;
+    static accountNoValidation(control: FormControl) {
+        if (control.value) {
+            const matches = control.value.match(/^-?(0|[1-9]\d*)?$/);
+            return matches ? null : { 'invalidAccountNo': true };
+        } else {
+            return null;
+        }
     }
-  }
 
 
 
-  static accountNolderNameValidation(control: FormControl) {
-    if (control.value) {
-      const matches = control.value.match(/^\\p{L}+[\\p{L}\\p{Z}\\p{P}]{0,}/);
-      return matches ? null : { 'invalidAcHolderName': true };
-    } else {
-      return null;
+    static accountNolderNameValidation(control: FormControl) {
+        if (control.value) {
+            const matches = control.value.match(/^\\p{L}+[\\p{L}\\p{Z}\\p{P}]{0,}/);
+            return matches ? null : { 'invalidAcHolderName': true };
+        } else {
+            return null;
+        }
     }
-  }
 
-  static drivingLicenseValidator(control: FormControl){
-    if(control.value){
-        const matches = control.value.match(/^[A-Z]{2}[0-9]{13}/);
-        return matches ? null : { 'invalidDrivingLicense' : true};
+    static drivingLicenseValidator(control: FormControl) {
+        if (control.value) {
+            const matches = control.value.match(/^[A-Z]{2}[0-9]{13}/);
+            return matches ? null : { 'invalidDrivingLicense': true };
+        }
+        else {
+            return null;
+        }
     }
-    else{
-        return null;
-    }
-}
 
-static electionCardValidator(control: FormControl){
-    if(control.value){
-        const matches = control.value.match(/^[A-Z]{3}[0-9]{7}/);
-        return matches ? null : { 'invalidElectionCard' : true};
+    static electionCardValidator(control: FormControl) {
+        if (control.value) {
+            const matches = control.value.match(/^[A-Z]{3}[0-9]{7}/);
+            return matches ? null : { 'invalidElectionCard': true };
+        }
+        else {
+            return null;
+        }
     }
-    else{
-        return null;
-    }
-}
 
-static passportValidator(control: FormControl){
-    if(control.value){
-        const matches = control.value.match(/[A-Z]{1}[0-9]{7}/ || /[A-Z]{2}[0-9]{7}/);
-        return matches ? null : { 'invalidPassport' : true};
+    static passportValidator(control: FormControl) {
+        if (control.value) {
+            const matches = control.value.match(/[A-Z]{1}[0-9]{7}/ || /[A-Z]{2}[0-9]{7}/);
+            return matches ? null : { 'invalidPassport': true };
+        }
+        else {
+            return null;
+        }
     }
-    else{
-        return null;
+
+    static alphaNumericValidation(control: FormControl) {
+        if (control.value) {
+            const matches = control.value.match(/^[a-zA-Z0-9,-]*$/);
+            return matches ? null : { 'invalidName': true };
+        } else {
+            return null;
+        }
     }
-}
 }
 

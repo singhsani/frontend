@@ -30,8 +30,9 @@
 				<div class="row stepperMinHeight">
 
 					<mat-form-field class="col-md-4">
-						<input matInput autocomplete="off" appAlphaNumeric type="text" maxlength="20"
-							formControlName="engineNo" placeholder="{{'engine_no' | translate: translateKey}}" required>
+						<input matInput autocomplete="off" #engineNo [value]="engineNo.value.toUpperCase()"
+							appAlphaNumeric type="text" maxlength="20" formControlName="engineNo"
+							placeholder="{{'engine_no' | translate: translateKey}}" required>
 						<control-messages [control]="vehicleRegistrationForm.get('engineNo')"></control-messages>
 					</mat-form-field>
 
@@ -55,7 +56,8 @@
 					</div>
 
 					<mat-form-field class="col-md-4 ">
-						<input matInput autocomplete="off" maxlength="20" type="text" formControlName="chasisNo"
+						<input matInput autocomplete="off" #chasisNo [value]="chasisNo.value.toUpperCase()"
+							maxlength="20" type="text" formControlName="chasisNo"
 							placeholder="{{'chasis_no' | translate: translateKey}}" required>
 						<control-messages [control]="vehicleRegistrationForm.get('chasisNo')"></control-messages>
 					</mat-form-field>
@@ -81,13 +83,15 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput autocomplete="off" type="text" maxlength="100" formControlName="makeModel"
+						<input matInput autocomplete="off" #makeModel [value]="makeModel.value.toUpperCase()"
+							type="text" maxlength="100" formControlName="makeModel"
 							placeholder="{{'make_model' | translate: translateKey}}" required>
 						<control-messages [control]="vehicleRegistrationForm.get('makeModel')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput autocomplete="off" maxlength="200" type="text" formControlName="dealerName"
+						<input matInput autocomplete="off" maxlength="200" appValidationFields
+							[validationFieldsType]="'onlyNameWithSpace'" type="text" formControlName="dealerName"
 							placeholder="{{'dealer_name' | translate: translateKey}}" required>
 						<control-messages [control]="vehicleRegistrationForm.get('dealerName')"></control-messages>
 					</mat-form-field>
@@ -99,7 +103,7 @@
 						<control-messages [control]="vehicleRegistrationForm.get('dealerEmail')"></control-messages>
 					</mat-form-field>
 
-					<mat-form-field class="col-md-4 noDigit">
+					<mat-form-field class="col-md-4">
 						<span matPrefix>+91 &nbsp;</span>
 						<input required matInput autocomplete="off" type="tel" OnlyNumber
 							formControlName="dealerMobileNo" minlength="10" maxlength="10"
@@ -128,11 +132,16 @@
 				</div>
 
 				<div class="fotButtonBar clearfix">
-					<div class="col-sm-12 col-md-12">
-						<button class="pull-right" mat-raised-button color="primary"
-							(click)="tabIndex = 1">{{'save_and_next' | translate:
+					<div class="col-sm-12 col-md-12" *ngIf="vehicleRegistrationForm.get('canEdit').value">
+						<button class=" pull-right" mat-raised-button color="primary"
+							(click)="tabIndex = 1">{{'save_and_next' |
+							translate:
 							actionBarKey}}</button>
 						<!-- <button type="button" mat-raised-button color="warn" (click)="resetForm()">{{'clear' | translate: actionBarKey}}</button> -->
+					</div>
+					<div class="col-sm-12 col-md-12" *ngIf="!vehicleRegistrationForm.get('canEdit').value">
+						<button class=" pull-right" mat-raised-button color="primary" (click)="tabIndex = 1">{{'Next' |
+							translate:actionBarKey}}</button>
 					</div>
 				</div>
 
@@ -170,9 +179,9 @@
 						<control-messages [control]="vehicleRegistrationForm.get('aadhaarNo')"></control-messages>
 					</mat-form-field>
 
-					<mat-form-field class="col-md-4 noDigit">
+					<mat-form-field class="col-md-4">
 						<span matPrefix>+91 &nbsp;</span>
-						<input matInput autocomplete="off" type="tel" OnlyNumber formControlName="mobileNo"
+						<input matInput type="tel" autocomplete="off" OnlyNumber formControlName="mobileNo"
 							minlength="10" maxlength="10" placeholder="{{'mobile_no' | translate: translateKey}}"
 							required>
 						<control-messages [control]="vehicleRegistrationForm.get('mobileNo')"></control-messages>
@@ -183,6 +192,18 @@
 							placeholder="{{'email' | translate:translateKey}}" type="email" formControlName="email">
 						<control-messages [control]="vehicleRegistrationForm.get('email')"></control-messages>
 					</mat-form-field>
+
+					<div class="col-md-4 ngSelect" formGroupName="wardZoneMst">
+						<ng-select placeholder="{{'ward_no' | translate: translateKey}} *" formControlName="wardzoneId">
+							<ng-option *ngFor="let wardNo of wardNoArray" [value]="wardNo.wardzoneId">
+								{{wardNo.wardzoneName}}
+							</ng-option>
+						</ng-select>
+						<control-messages [control]="vehicleRegistrationForm.get('wardZoneMst').get('wardzoneId')">
+						</control-messages>
+					</div>
+
+
 
 					<h2>{{'office_address' | translate: translateKey}}</h2>
 					<app-address #address [requiredFeilds]="true"
@@ -196,8 +217,13 @@
 							(click)="tabIndex = 0">{{'back' |
 							translate: actionBarKey}}</button>
 						<button mat-raised-button class="pull-right" color="primary"
+							*ngIf="vehicleRegistrationForm.get('canEdit').value"
 							(click)="tabIndex = 2">{{'save_and_next' | translate:
 							actionBarKey}}</button>
+						<button class="pull-right" mat-raised-button color="primary"
+							*ngIf="!vehicleRegistrationForm.get('canEdit').value" (click)="tabIndex = 2">{{'Next' |
+							translate:actionBarKey}}</button>
+
 						<!-- <button type="button" mat-raised-button color="warn" (click)="resetForm()">{{'clear' | translate: actionBarKey}}</button> -->
 					</div>
 				</div>
@@ -217,16 +243,6 @@
 								{{billingPeriod.name}}</ng-option>
 						</ng-select>
 						<control-messages [control]="vehicleRegistrationForm.get('billingPeriod').get('code')">
-						</control-messages>
-					</div>
-
-					<div class="col-md-4 ngSelect" formGroupName="wardZoneMst">
-						<ng-select placeholder="{{'ward_no' | translate: translateKey}} *" formControlName="wardzoneId">
-							<ng-option *ngFor="let wardNo of wardNoArray" [value]="wardNo.wardzoneId">
-								{{wardNo.wardzoneName}}
-							</ng-option>
-						</ng-select>
-						<control-messages [control]="vehicleRegistrationForm.get('wardZoneMst').get('wardzoneId')">
 						</control-messages>
 					</div>
 
@@ -283,8 +299,12 @@
 							(click)="tabIndex = 1">{{'back' |
 							translate: actionBarKey}}</button>
 						<button mat-raised-button class="pull-right" color="primary"
+							*ngIf="vehicleRegistrationForm.get('canEdit').value"
 							(click)="tabIndex = 3">{{'save_and_next' | translate:
 							actionBarKey}}</button>
+						<button class="pull-right" mat-raised-button color="primary"
+							*ngIf="!vehicleRegistrationForm.get('canEdit').value" (click)="tabIndex = 3">{{'Next' |
+							translate:actionBarKey}}</button>
 						<!-- <button [disabled]="!isSubmitBtnVisible" mat-raised-button class="pull-right" color="success" (click)="onSubmit()">{{'submit'
 							| translate:
 							actionBarKey}}</button> -->

@@ -7,6 +7,7 @@ import { NgForm } from '@angular/forms';
 import { ApplicationTransferOwnershipDataSharingService } from '../../Services/application-transfer-ownership-data-sharing.service';
 import { AlertService } from 'src/app/vmcshared/Services/alert.service';
 import { MatStepper } from '@angular/material';
+import { CommonService as SharedCommonService } from 'src/app/shared/services/common.service';
 
 @Component({
     selector: 'app-application-transfer-ownership-form',
@@ -27,10 +28,13 @@ export class ApplicationTransferOwnershipFormComponent implements OnInit {
 
     outstandingDetail: any = {};
 
+    serviceFormId : any;
+
     constructor(private commonService: CommonService,
         private alertService: AlertService,
         private applicationTransferOwnershipService: ApplicationTransferOwnershipService,
-        private applicationTransferOwnershipDataSharingService: ApplicationTransferOwnershipDataSharingService) { }
+        private applicationTransferOwnershipDataSharingService: ApplicationTransferOwnershipDataSharingService,
+        private sharedCommonService : SharedCommonService) { }
 
 
     ngOnInit() {
@@ -112,11 +116,11 @@ export class ApplicationTransferOwnershipFormComponent implements OnInit {
                         this.stepper.selectedIndex = 1;
                         this.getFormDataDocuments(this.dataModel.transferOfOwnershipId);
                         this.applicationTransferOwnershipDataSharingService.setApprovalModel(this.dataModel);
-                        this.dataModel = new DataModel();
-                        this.connectionsModel = new ConnectionsModel();
-                        this.connectionsModel.connectionDetail = new ConnectionDetail();
-                        this.connectioNo = null;
-                        this.isShowSaveButton = false;
+                        // this.dataModel = new DataModel();
+                        // this.connectionsModel = new ConnectionsModel();
+                        // this.connectionsModel.connectionDetail = new ConnectionDetail();
+                        // this.connectioNo = null;
+                        // this.isShowSaveButton = false;
                         //this.applicationTransferOwnershipDataSharingService.setIsShowApproval(true);
                     }
                 },
@@ -136,22 +140,33 @@ export class ApplicationTransferOwnershipFormComponent implements OnInit {
     }
     onSubmitApproved() {
 
-        this.applicationTransferOwnershipService.submitNewgen(this.transferOfOwnershipId).subscribe(
-            (data) => {
+        this.mandatoryFileCheck().then(data => {
 
-                this.alertService.success(data.message);
-                this.applicationTransferOwnershipDataSharingService.setIsShowApproval(true);
 
-            },
-            (error) => {
-                this.alertService.error(error.error.message);
-            });
+            if (data.status) {
+
+                this.applicationTransferOwnershipService.submitNewgen(this.transferOfOwnershipId).subscribe(
+                    (data) => {
+
+                        this.alertService.success(data.message);
+                        this.applicationTransferOwnershipDataSharingService.setIsShowApproval(true);
+
+                    },
+                    (error) => {
+                        this.alertService.error(error.error.message);
+                    });
+            } else {
+                this.sharedCommonService.openAlert("File Upload", `Please upload file for "${data.fileName}"`, "warning");
+                return
+            }
+        })
 
     }
     getFormDataDocuments(id: any) {
         this.applictionTrasferOwnDocumentUploadDocs = [];
         this.applicationTransferOwnershipService.getTransferDocUpload(id).subscribe(
             (data) => {
+                this.serviceFormId = data[0].id;
                 data.forEach(app => {
                     this.applictionTrasferOwnDocumentUploadDocs.push(app);
                 });
@@ -171,6 +186,28 @@ export class ApplicationTransferOwnershipFormComponent implements OnInit {
     onPropertyDetailClick() {
         this.applicationTransferOwnershipDataSharingService.setPropertyDetail(this.outstandingDetail.propertyOutstandings);
         this.applicationTransferOwnershipDataSharingService.setIsShowPropertyDetail(true);
+    }
+
+    mandatoryFileCheck() {
+        return new Promise<any>((resolve, reject) => {
+            this.applicationTransferOwnershipService.getAttachmentList(this.serviceFormId).subscribe(uploadedDocs => {
+                console.log("Upload docs", uploadedDocs);
+                if (uploadedDocs) {
+                    let tempArray = [];
+                    uploadedDocs.forEach(element => {
+                        tempArray.push(element['fieldIdentifier']);
+                    });
+                    this.applictionTrasferOwnDocumentUploadDocs.forEach(doc => {
+                        if (doc.mandatory && tempArray.indexOf(doc.fieldIdentifier) === -1) {
+                            resolve({ fileName: doc.documentLabelEn, status: false })
+                        }
+                    });
+                    resolve({ fileName: "", status: true });
+                } else {
+                    resolve({ fileName: "", status: true })
+                }
+            })
+        })
     }
 }
 

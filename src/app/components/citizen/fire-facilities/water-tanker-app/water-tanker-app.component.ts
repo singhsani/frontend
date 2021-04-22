@@ -248,6 +248,7 @@ export class WaterTankerAppComponent implements OnInit {
 	 * This method for reset dependent field.
 	 */
 	resetsuggestedfields() {
+		this.waterTankerAppForm.get('applicationDate').disable();
 
 		if (this.waterTankerAppForm.get('purpose').get('code').value == 'FS_SUGGESTED') {
 			this.waterTankerAppForm.controls.whoSuggested.setValidators([Validators.required]);
@@ -275,7 +276,7 @@ export class WaterTankerAppComponent implements OnInit {
 						let maxTank = 9;
 						let tempTank = maxTank - res.totalTanks;
 						if(tempTank < Number(this.waterTankerAppForm.get('totalTankRequired').value)){
-							this.toaster.warning('Water Tanker limit is fixed for 9. No booking is Aceptable');
+							this.toaster.warning('Water Tanker limit is fixed for 9. No booking is Acceptable');
 							this.waterTankerAppForm.get('totalTankRequired').reset();
 						}else{
 							this.waterTankerAppForm.patchValue(res);

@@ -194,16 +194,20 @@ export class GasConnectionNocComponent implements OnInit {
 
 	documentManage(){
 		const subject = this.gasConnectionForm.get('subject').value;
-		let mandatory = false;
+		const highRiseFireNOCTaken = this.gasConnectionForm.get('highRiseFireNOCTaken').value;
+		let buildingCollapseMandatory = false;
+		let highriseFireNocwMandatory = highRiseFireNOCTaken;
 		if(subject && subject.code && subject.code == 'BUILDING_COLLAPSE'){
-			mandatory = true;
+			buildingCollapseMandatory = true;
 		}
 
 		const documents = this.gasConnectionForm.get('serviceDetail').get('serviceUploadDocuments').value;
 
 		for(const document of documents){
 			if(document.documentIdentifier == 'BUILDING_NIRBHAYATA_CERTIFICATE')
-			document.mandatory = mandatory;
+			document.mandatory = buildingCollapseMandatory;
+			else if (document.documentIdentifier == 'FIRE_NOC_XEROX_COPY')
+			document.mandatory = highriseFireNocwMandatory;
 		}
 		this.gasConnectionForm.get('serviceDetail').patchValue({'serviceUploadDocuments': documents});
 		this.requiredDocumentList();
