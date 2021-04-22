@@ -557,7 +557,8 @@ export class WaterPipelineConnection implements OnInit {
     this.formControlNameToTabIndex.set('propertyAddress', 1)
     this.formControlNameToTabIndex.set('waterPipelineZoneId', 1)
     this.formControlNameToTabIndex.set('waterPipelineWardId', 1)
-
+    this.formControlNameToTabIndex.set('pinCode', 1)
+    
     // tab 2
     this.formControlNameToTabIndex.set('developerFullName', 2)
     this.formControlNameToTabIndex.set('developerAddress', 2)
