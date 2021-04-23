@@ -112,6 +112,9 @@ export class TransferPropertySearchComponent implements OnInit {
       this.transferPropertyDataSharingService.updatedSearchModel(this.searchModel);
       this.transferPropertyDataSharingService.updatedIsShowForm(false);
       this.transferPropertyDataSharingService.updatedIsShowTable(true);
+    } else {  
+      formDetails.form.get('level1Id').markAsTouched();
+      formDetails.form.get('Level2Id').markAsTouched();
     }
   }
 
