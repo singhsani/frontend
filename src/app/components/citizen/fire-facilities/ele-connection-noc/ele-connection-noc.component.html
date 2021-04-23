@@ -160,7 +160,7 @@
 					</mat-form-field>
 
 				</div>
-				<app-action-bar [form]="electricConnectionForm" (tabIndex)="fireFacilityConfig.onFormTabChange($event)" [stepInfo]="{step: 'step2', next: 2, back: 0}"></app-action-bar>
+				<app-action-bar [form]="electricConnectionForm" (handleOnSaveAndNext)="documentManage()" (tabIndex)="fireFacilityConfig.onFormTabChange($event)" [stepInfo]="{step: 'step2', next: 2, back: 0}"></app-action-bar>
 
 			</mat-tab>
 			<!-- step 2 Ends -->
