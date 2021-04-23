@@ -185,7 +185,7 @@ export class ProHospitalNocComponent implements OnInit {
 			serviceCode: 'FS-PROVI-HOSPITAL',
 			/* Step 1 controls start */
 			provisionalNocNumber: [null],
-			applicationDate: [null, [Validators.required]],
+			applicationDate: [{ value: null, disabled: true }],
 			oldReferenceNumber: [null],
 			applicantName: [null, [Validators.required, Validators.maxLength(100)]],
 			applicantNameGuj: [null, [Validators.required, Validators.maxLength(300)]],
