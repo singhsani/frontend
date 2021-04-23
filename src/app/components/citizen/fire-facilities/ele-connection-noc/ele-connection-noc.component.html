@@ -103,14 +103,14 @@
 					</mat-form-field>
 					<!-- gujarati -->
 
-					<mat-form-field class="col-md-4">
-						<textarea matInput rows="3" cols="50" required maxlength="500" placeholder="{{'connection_holder_address' | translate:translateKey}}"
+					<mat-form-field class="col-md-6">
+						<textarea matInput rows="2" cols="50" required maxlength="500" placeholder="{{'connection_holder_address' | translate:translateKey}}"
 						 formControlName="connectionHolderAddress" appGujInputSource targetElement="connectionHolderAddressGuj" [form]="electricConnectionForm"></textarea>
 						<control-messages [control]="electricConnectionForm.get('connectionHolderAddress')"></control-messages>
 					</mat-form-field>
 					<!-- gujarati -->
-					<mat-form-field class="col-md-4">
-						<textarea matInput rows="3" cols="50" maxlength="1500" required formControlName="connectionHolderAddressGuj"
+					<mat-form-field class="col-md-6">
+						<textarea matInput rows="2" class="lineHeight20" cols="50" maxlength="1500" required formControlName="connectionHolderAddressGuj"
 						 appGujInputTarget [form]="electricConnectionForm" placeholder="{{ 'connection_holder_address' | translate:translateKey:'gu' }}"></textarea>
 						<control-messages [control]="electricConnectionForm.get('connectionHolderAddressGuj')"></control-messages>
 					</mat-form-field>
@@ -147,16 +147,15 @@
 					</div>
 
 					<mat-form-field class="col-md-4">
-						<textarea matInput rows="3" cols="50" required maxlength="300" placeholder="{{'fire_place_address' | translate:translateKey}}"
-						 formControlName="firePlaceAddress"></textarea>
-						<control-messages [control]="electricConnectionForm.get('firePlaceAddress')"></control-messages>
-					</mat-form-field>
-
-
-					<mat-form-field class="col-md-4">
 						<input matInput OnlyNumber placeholder="{{'fire_loss_amount' | translate:translateKey}}" type="tel" maxlength="10"
 						 formControlName="fireLossAmount">
 						<control-messages [control]="electricConnectionForm.get('fireLossAmount')"></control-messages>
+					</mat-form-field>
+
+					<mat-form-field class="col-md-8">
+						<textarea matInput rows="2" cols="50" required maxlength="300" placeholder="{{'fire_place_address' | translate:translateKey}}"
+						 formControlName="firePlaceAddress"></textarea>
+						<control-messages [control]="electricConnectionForm.get('firePlaceAddress')"></control-messages>
 					</mat-form-field>
 
 				</div>
