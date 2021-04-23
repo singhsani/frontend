@@ -122,7 +122,7 @@ export class DrainagePipelineConnectionComponent implements OnInit {
       citySurveyNo: [null,Validators.maxLength(50)],
       buildingPermissionNo: [null,Validators.maxLength(50)],
       buildingPermissionDate: [null],
-      developerFullName: [null, [Validators.required, Validators.maxLength(200)]],
+      developerFullName: [null, [Validators.required, Validators.maxLength(250)]],
       developerAddress: [null, [Validators.required, Validators.maxLength(200)]],
       developerMobileNo: [null, [Validators.maxLength(10)]],
       developerEmailId: [null,ValidationService.emailValidator],
