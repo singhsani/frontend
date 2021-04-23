@@ -14,17 +14,16 @@
 				<ng-template mat-tab-label>
 					<div>{{'application-details' | translate:translateKey}}</div>
 				</ng-template>
-
 				<div class="row">
 					<mat-form-field class="col-md-6">
-						<input matInput type="text" required maxlength="300" appValidationFields
+						<input matInput type="text" required maxlength="250" appValidationFields
 							validationFieldsType='onlyNameWithSpace'
 							placeholder="{{'scheme-name' | translate:translateKey}}" formControlName="schemeName">
 						<control-messages [control]="waterPipeliConnectionForm.get('schemeName')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-6">
-						<input matInput type="text" required maxlength="150"
+						<input matInput type="text" required maxlength="250"
 							placeholder="{{'society-name' | translate:translateKey}}" formControlName="societyName">
 						<control-messages [control]="waterPipeliConnectionForm.get('societyName')"></control-messages>
 					</mat-form-field>
@@ -56,13 +55,13 @@
 
 				<div class="row">
 					<mat-form-field class="col-md-6">
-						<textarea matInput rows="3" cols="50" maxlength="500" formControlName="landmark"
+						<textarea matInput rows="3" cols="50" maxlength="250" formControlName="landmark"
 							placeholder="{{ 'landmark' | translate:translateKey }}" > </textarea>
 						<!-- <control-messages [control]="waterPipeliConnectionForm.get('landmark')"></control-messages> -->
 					</mat-form-field>
 
 					<mat-form-field class="col-md-6">
-						<textarea matInput rows="3" cols="50" maxlength="200" formControlName="propertyAddress"
+						<textarea matInput rows="3" cols="50" maxlength="250" formControlName="propertyAddress"
 							placeholder="{{ 'property-address' | translate:translateKey }}" required> </textarea>
 						<control-messages [control]="waterPipeliConnectionForm.get('propertyAddress')"></control-messages>
 					</mat-form-field>
@@ -96,14 +95,14 @@
 						</control-messages> -->
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput  appPreventSpace
+						<input matInput  appPreventSpace  maxlength="40"
 							placeholder="{{'city-survey-no' | translate:translateKey}}" type="text"
 							formControlName="citySurveyNo" >
 						<!-- <control-messages [control]="waterPipeliConnectionForm.get('citySurveyNo')"></control-messages> -->
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput  appPreventSpace
+						<input matInput  appPreventSpace maxlength="40"
 							placeholder="{{'building-permission-no' | translate:translateKey}}" type="text"
 							formControlName="buildingPermissionNo">
 						<!-- <control-messages [control]="waterPipeliConnectionForm.get('buildingPermissionNo')">
@@ -143,7 +142,7 @@
 
 				<div class="row">
 					<mat-form-field class="col-md-6">
-						<input matInput type="text" required maxlength="300" appValidationFields
+						<input matInput type="text" required maxlength="250" appValidationFields
 							validationFieldsType='onlyNameWithSpace'
 							placeholder="{{'developer-full-name' | translate:translateKey}}"
 							formControlName="developerFullName">
@@ -166,7 +165,7 @@
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
 						<input matInput  appPreventSpace
-							placeholder="{{'developer-email-id' | translate:translateKey}}" type="email"
+							placeholder="{{'developer-email-id' | translate:translateKey}}" type="text"
 							formControlName="developerEmailId" >
 						<control-messages [control]="waterPipeliConnectionForm.get('developerEmailId')">
 						</control-messages>
@@ -207,7 +206,7 @@
 
 				<div class="row">
 					<mat-form-field class="col-md-6">
-						<input matInput type="text" required maxlength="300" appValidationFields
+						<input matInput type="text" required maxlength="250" appValidationFields
 							validationFieldsType='onlyNameWithSpace'
 							placeholder="{{'contractor-full-name' | translate:translateKey}}"
 							formControlName="contractorFullName">
@@ -230,7 +229,7 @@
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
 						<input matInput  appPreventSpace
-							placeholder="{{'contractor-email-id' | translate:translateKey}}" type="email"
+							placeholder="{{'contractor-email-id' | translate:translateKey}}" type="text"
 							formControlName="contractorEmailId" >
 						<control-messages [control]="waterPipeliConnectionForm.get('contractorEmailId')">
 						</control-messages>
@@ -265,13 +264,14 @@
 
 
 					<mat-form-field class="col-md-4">
-						<input matInput OnlyNumber required maxlength="10" formControlName="workExecutionFromAmount"
+						<input matInput required OnlyNumber maxlength="10" formControlName="workExecutionFromAmount"
 							placeholder="{{'work-execution-from-amount' | translate:translateKey}}">
 						<control-messages [control]="waterPipeliConnectionForm.get('workExecutionFromAmount')">
 						</control-messages>
 					</mat-form-field>
+					
 					<mat-form-field class="col-md-4">
-						<input matInput OnlyNumber required maxlength="10" formControlName="workExecutionToAmount"
+						<input OnlyNumber matInput required maxlength="10" formControlName="workExecutionToAmount"
 							placeholder="{{'work-execution-to-amount' | translate:translateKey}}">
 						<mat-error *ngIf="waterPipeliConnectionForm.get('workExecutionToAmount').touched && waterPipeliConnectionForm.errors && waterPipeliConnectionForm.errors['range']">Please enter Work Execution To Amount Greater than Work Execution From Amount</mat-error>
 						<control-messages [control]="waterPipeliConnectionForm.get('workExecutionToAmount')">
