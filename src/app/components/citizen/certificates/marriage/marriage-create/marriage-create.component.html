@@ -459,7 +459,8 @@
 						<div class="radioBtnError">
 							<mat-label>{{'marital_status' | translate:translateKey }}*</mat-label>
 							<mat-radio-group formControlName="code" required
-								(change)="onChange($event.value,maritalStatusArray,'maritalstatusGujbride')">
+								(change)="onChange($event.value,maritalStatusArray,'maritalstatusGujbride')"
+								(change)="changeDocument($event.value)">
 								<span *ngFor="let status of maritalStatusArray">
 									<mat-radio-button *ngIf="status.code != 'MARRIED' && status.code != 'WIDOWER'"
 										[value]="status.code">
@@ -1620,6 +1621,7 @@
 						<div class="col-md-4" *ngIf="doc.requiredOnCitizenPortal && doc.isActive && showButtons">
 							<label>{{translateService.getCurrentLanguage()=='en'? doc.documentLabelEn : doc.documentLabelGuj }}
 								<span *ngIf="doc.mandatory">*</span>
+
 								<!-- <span
 									*ngIf="doc.mandatory && (doc.dependentFieldName == 'HINDU') && (marriageFormGroup.get('groomReligion').get('code').value != 'HINDU') && (marriageFormGroup.get('brideReligion').get('code').value != 'HINDU') && (marriageFormGroup.get('groomReligion').get('code').value != null)">*
 								</span> -->

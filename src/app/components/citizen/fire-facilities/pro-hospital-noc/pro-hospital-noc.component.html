@@ -571,7 +571,7 @@
 					<mat-form-field class="col-md-4">
 						<!-- <span matPrefix>+91 &nbsp;</span> -->
 						<input matInput OnlyNumber placeholder="{{'architect_contact_no' | translate:translateKey}}" type="tel"
-						 [maxlength]="fireFacilityConfig.contactNumberLength" [minlength]="fireFacilityConfig.mobileNumber_minLength" formControlName="architectContactNo" required>
+						 [maxlength]="10" [minlength]="fireFacilityConfig.mobileNumber_minLength" formControlName="architectContactNo" required>
 						<control-messages [control]="provisionalHospitalNocForm.get('architectContactNo')"></control-messages>
 					</mat-form-field>
 

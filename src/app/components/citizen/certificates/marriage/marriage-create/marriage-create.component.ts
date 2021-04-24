@@ -12,6 +12,7 @@ import { ManageRoutes } from '../../../../../config/routes-conf';
 import { CertificateConfig } from '../../certificate-config';
 import { TranslateService } from '../../../../../shared/modules/translate/translate.service';
 
+
 @Component({
     selector: 'app-marriage-create',
     templateUrl: './marriage-create.component.html',
@@ -23,7 +24,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
 
     //Mandatory attachments Array
     public uploadFilesArray: Array<any> = [];
-
+    public accordingStatusUploadFileArray: Array<any> = [];
     isGuideLineActive: boolean = false;
 
     public dummyJSON = {
@@ -1216,10 +1217,30 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
      * @param varName : Static Variable.
      */
     onChange(event: string, lookupArray: Array<any>, varName: string) {
+
         if (!_.isUndefined(this.getGujValue(lookupArray, event))) {
             this[varName] = this.getGujValue(lookupArray, event);
         } else {
             this[varName] = null;
+        }
+         
+        
+        
+    }
+
+    changeDocument(event: string) {
+        let brideGromDetailStatus = this.marriageFormGroup.get('marriageTimeGroomStatus').get('code').value;
+        let marriageTimeBrideStatus = event;
+        if (brideGromDetailStatus == "DIVORCED" || marriageTimeBrideStatus == "DIVORCED") {
+
+            for (let file of this.accordingStatusUploadFileArray) {
+                if (file['dependentFieldName'] == null) {
+                    if (file['documentIdentifier'] == "VALID_DIVORCE_PAPER" || file['documentIdentifier'] == "DEATH_CERTIFICATE") {
+                        file['mandatory'] = true;
+                    }
+                    this.uploadFilesArray.push(file);
+                }
+            }
         }
     }
 
@@ -1283,10 +1304,12 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
                 }
 
             }
+            this.accordingStatusUploadFileArray.push(value);
 
         });
 
-        
+        //jil console.log("uploadFileArray" +JSON.stringify(this.uploadFilesArray));
+
         // let groomreligionChange = this.marriageFormGroup.controls.groomReligion.get("code").value;
         // let bridereligionChange = this.marriageFormGroup.controls.brideReligion.get("code").value;
 
@@ -1597,5 +1620,6 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
     //     this.marriageFormGroup.get('secondWitnessAddress').get('addressType').setValue('SECOND_WITNESS_ADDRESS');
     // }
 
+    
 
 }
