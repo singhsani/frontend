@@ -112,6 +112,9 @@ export class DuplicateBillSearchComponent implements OnInit {
       this.duplicateBillDataSharingService.updatedSearchModel(this.searchModel);
       this.duplicateBillDataSharingService.updatedIsShowForm(false);
       this.duplicateBillDataSharingService.updatedIsShowTable(true);
+    } else {  
+      formDetails.form.get('level1Id').markAsTouched();
+      formDetails.form.get('Level2Id').markAsTouched();
     }
   }
 
