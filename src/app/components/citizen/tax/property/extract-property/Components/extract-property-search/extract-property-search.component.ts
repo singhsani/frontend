@@ -110,6 +110,9 @@ export class ExtractPropertySearchComponent implements OnInit {
       this.extractPropertyDataSharingService.updatedSearchModel(this.searchModel);
       this.extractPropertyDataSharingService.updatedIsShowForm(false);
       this.extractPropertyDataSharingService.updatedIsShowTable(true);
+    } else {
+      formDetails.form.get('level1Id').markAsTouched();
+      formDetails.form.get('Level2Id').markAsTouched();
     }
   }
 
