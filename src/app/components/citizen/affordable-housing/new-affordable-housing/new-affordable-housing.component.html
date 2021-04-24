@@ -14,10 +14,13 @@
 	
 						<div class="row">
 	
-							<div class="col-md-4 ngSelect" >
-								<ng-select placeholder="{{'appliedFor' | translate: translateKey}} *" formControlName="schemeId" (change)="schemeChange($event)">
-									<ng-option *ngFor="let appliedFor of appliedForData" [value]="appliedFor.id">
-										{{appliedFor.name}}</ng-option>
+							<div class="col-md-4 ngSelect">
+								<ng-select placeholder="{{'appliedFor' | translate: translateKey}} *"
+									formControlName="schemeId" (change)="schemeChange($event)">
+									<ng-container *ngFor="let applied of appliedForData">
+										<ng-option *ngIf="applied.isAppliedFor == 'ACTIVE'" [value]="applied.id">
+											{{applied.schemeName}}</ng-option>
+									</ng-container>
 								</ng-select>
 								<control-messages [control]="affordableHousingForm.get('schemeId')">
 								</control-messages>
