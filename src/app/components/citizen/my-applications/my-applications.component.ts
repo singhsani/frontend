@@ -99,7 +99,12 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		* Used to initiate print hook after successfull payment
 		*/
 		this.route.queryParams.subscribe(d => {
-			if (d.apiCode && d.id) {
+            if(d.printPaymentReceipt && d.apiCode && d.id) {
+                this.printPaymentReceipt(d.apiCode,d.id);
+				setTimeout(() => {
+					this.router.navigateByUrl(this.router.url.split('?')[0]);
+				}, 3000);
+			} else if (d.apiCode && d.id) {
 				this.printReceipt(d.apiCode, '', d.id);
 				setTimeout(() => {
 					this.location.go(this.router.url.split('?')[0]);
@@ -111,6 +116,7 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 	ngOnChanges() {
 		this.getAllData();
 	}
+	
 
 	/**
 	 * This method use to get all the citizen data with pagination.

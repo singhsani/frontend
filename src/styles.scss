@@ -1101,10 +1101,17 @@ textarea.gujInputCls {margin-bottom: 0;}
 }
 @media print {
     .zooServicesList{ display: none;}
+
+    .no-print, .no-print *
+    {
+        display: none !important;
+    }
    }
 
  .createMarriageReg .mat-tab-label{
     width: 200px;
+
+    
 }
 
 @-moz-document url-prefix() {
