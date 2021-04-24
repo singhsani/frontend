@@ -37,7 +37,7 @@ export class NewAffordableHousingComponent implements OnInit {
 	formId: number;
 	appId: number;
 	apiCode: string;
-	maxDate: Date = new Date();
+	maxDate =moment(new Date()).subtract("18", "years").format("YYYY-MM-DD");
 
 	public affordableHousingConfiguration: CitizenConfig = new CitizenConfig();
 	MF_CATEGORY_TYPE: Array<any> = [];
