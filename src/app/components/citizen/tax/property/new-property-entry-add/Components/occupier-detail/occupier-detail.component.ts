@@ -41,6 +41,7 @@ export class OccupierDetailComponent implements OnInit {
 
   }
 
+  show:Number = 0;
 
 
   ngOnInit() {
@@ -114,6 +115,7 @@ export class OccupierDetailComponent implements OnInit {
   }
 
   saveOccupier(formDetail: NgForm) {
+    
     if (formDetail.form.valid && this.isDuplicateCode == false) {
       this.model.propertyBasicVersionId = this.modelProperty.propertyBasicId
       this.newNewPropertyEntryAddService.saveOccupier(this.model).subscribe(
@@ -265,5 +267,9 @@ export class OccupierDetailComponent implements OnInit {
 
   onBackClick() {
     this.newNewPropertyEntryAddDataSharingService.updateDataSourceMoveStepper(1);
+  }
+
+  onEnter(value: string){
+     console.log('value at 276->',value);
   }
 }
