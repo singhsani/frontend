@@ -233,7 +233,20 @@ export class ActionBarComponent implements OnInit, OnChanges {
 										let payData = this.commonService.storePaymentInfo(err.error.data, retUrl, retAfterPayment);
                                         
 										if (this.commonService.fromAdmin()) {
-											this.openOfflinePaymentComponent(payData,retUrl,data.serviceCode,data.serviceFormId);
+											if(data.isPaymentReceipt) {
+												const url = '/citizen/my-applications' + 
+												'?printPaymentReceipt=' + data.isPaymentReceipt + 
+												'&apiCode=' + data.serviceCode +
+												'&id=' + data.serviceFormId;
+
+												this.router.navigateByUrl(url);
+										 
+												// this.router.navigate([ '/citizen/my-applications' ], 
+												// { queryParams: { printPaymentReceipt : true,apiCode: data.serviceCode, id: data.serviceFormId } });
+												
+											} else {
+												this.openOfflinePaymentComponent(payData,retUrl,data.serviceCode,data.serviceFormId);
+											}
 										} else {
 											
 											let words = this.commonService.getToWords(payData.amount);

@@ -39,7 +39,7 @@
     <!-- <nav mat-tab-nav-bar>
         <a mat-tab-link *ngFor="let link of links" routerLink="/{{manageRoutes.getFullRoute(link.linkCode)}}" (click)="activeLink = link.linkName" [active]="activeLink == link.linkName"> {{link.linkName}} </a>
     </nav> -->
-    <div class="clearfix" *ngIf="showMenu">
+    <div class="clearfix no-print" *ngIf="showMenu">
 
         <mat-tab-group (focusChange)="navigateToRoute($event)" mat-stretch-tabs [selectedIndex]="tabIndex" [ngClass]="{'iframeMainMenu': fromAdmin,
         'mainMenu': !fromAdmin }">

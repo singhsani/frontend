@@ -209,7 +209,8 @@ export class HomeLayoutComponent implements OnInit {
 	 */
 	activateTab(){
 		_.forEach(this.links, (link, id) => {
-			if('/'+ManageRoutes.getFullRoute(link.linkCode) == this.router.url){
+			const menuUrl = this.router.url.split('?')[0];
+			if('/'+ManageRoutes.getFullRoute(link.linkCode) == menuUrl){
 				this.tabIndex = id;
 				this.showMenu = true;
 				return false;
