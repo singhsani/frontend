@@ -142,7 +142,8 @@ export class ProvisionalNocComponent implements OnInit {
 				res.serviceDetail.serviceUploadDocuments.forEach(app => {
 					(<FormArray>this.provisionalNocForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.fireFacilityConfig.createDocumentsGrp(app));
 				});
-				this.requiredDocumentList();
+				// this.requiredDocumentList();
+				this.documentManage();
 
 			} catch (error) {
 				console.log(error.message)
@@ -323,7 +324,8 @@ export class ProvisionalNocComponent implements OnInit {
 	 * @param res - form response after save event
 	 */
 	handleOnSaveAndNext(res) {
-		this.requiredDocumentList();
+		// this.requiredDocumentList();
+		this.documentManage();
 	}
 
 	/**
@@ -346,6 +348,24 @@ export class ProvisionalNocComponent implements OnInit {
 		} catch (e) {
 
 		}
+	}
+
+	documentManage(){
+		const usageType = this.provisionalNocForm.get('usageTypeId').value;
+		let explosiveLicenseMandatory = false;
+		if(usageType && usageType.code && usageType.code == 'FS_COMMERCIAL'){
+			explosiveLicenseMandatory = true;
+		}
+
+		const documents = this.provisionalNocForm.get('serviceDetail').get('serviceUploadDocuments').value;
+
+		for(const document of documents){
+			if(document.documentIdentifier == 'EXPLOSIVE_LICENSE')
+				document.mandatory = explosiveLicenseMandatory;
+		}
+
+		this.provisionalNocForm.get('serviceDetail').patchValue({'serviceUploadDocuments': documents});
+						this.requiredDocumentList();
 	}
 
 	patchValue(){
