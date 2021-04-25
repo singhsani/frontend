@@ -213,8 +213,7 @@
 
 					<mat-form-field class="col-md-4">
 						<input matInput upperCase appAlphaNumeric maxlength="10" required
-							formControlName="panCardNumber" placeholder="{{'panNo' | translate:translateKey}}"
-							(change)="onCardChange($event,'panCardNumber')">
+							formControlName="panCardNumber" placeholder="{{'panNo' | translate:translateKey}}">
 						<control-messages [control]="affordableHousingForm.get('panCardNumber')"></control-messages>
 					</mat-form-field>
 
