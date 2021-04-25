@@ -312,13 +312,7 @@ mat-footer-row, mat-header-row, mat-row, td.mat-cell, td.mat-footer-cell, th.mat
     }
 }
 
-::-webkit-scrollbar {width: 10px; height: 10px;}
-::-webkit-scrollbar-track {background: #D1C4E9; border-radius:5px;}
-::-webkit-scrollbar-thumb {background: #7E57C2; border-radius:5px;}
-::-webkit-scrollbar-thumb:hover {background: #5E35B1;}
 
-
-* { scrollbar-color: #7E57C2 #D1C4E9 !important; scrollbar-width: thin !important;}
 
 .ng-select {padding-bottom: 3px; margin-bottom: 1.25em;
     .ng-select-container {min-height: 43px;}
@@ -742,6 +736,18 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
 
 .borderInputNone .mat-form-field-underline { background-color: transparent;}
 
+::-webkit-scrollbar {width: 5px; height: 5px;}
+::-webkit-scrollbar-track {background: #D1C4E9; border-radius:3px;}
+::-webkit-scrollbar-thumb {background: #7E57C2; border-radius:3px;}
+::-webkit-scrollbar-thumb:hover {background: #5E35B1;}
+body, .moduleList .mat-tab-label-container {-webkit-overflow-scrolling: touch; -webkit-font-smoothing: antialiased;  -moz-osx-font-smoothing: grayscale; -webkit-tap-highlight-color: transparent; -webkit-touch-callout: none;}
+* { scrollbar-color: #7E57C2 #D1C4E9 !important; scrollbar-width: thin !important;}
+
+@media (min-width: 992px) {
+::-webkit-scrollbar {width: 10px; height: 10px;}
+::-webkit-scrollbar-track {background: #D1C4E9; border-radius:5px;}
+::-webkit-scrollbar-thumb {background: #7E57C2; border-radius:5px;}
+}
 // Responsive CSS Part 1 ------------------------------------------------
 @media (max-width: 991px) {
     .container {margin-top: 65px;}
