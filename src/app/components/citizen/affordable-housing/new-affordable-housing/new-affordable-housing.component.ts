@@ -470,7 +470,7 @@ export class NewAffordableHousingComponent implements OnInit {
 	onSubmit(dateChanged?: boolean) {
 
 		if (this.affordableHousingForm.invalid) {
-			this.commonService.prrintInvalidForm(this.affordableHousingForm);
+			//this.commonService.prrintInvalidForm(this.affordableHousingForm);
 			let count = this.affordableHousingConfiguration.getAllErrors(this.affordableHousingForm);
 			debugger;
 			this.commonService.openAlert("Warning", this.affordableHousingConfiguration.ALL_FEILD_REQUIRED_MESSAGE, "warning", "", cb => {
