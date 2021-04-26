@@ -147,7 +147,7 @@ export class WaterTankerAppComponent implements OnInit {
 	 * @param dependedKey 
 	 */
 	dependentAttachment(dependedKey: string) {
-		// debugger  
+		 
 		var control = (<FormArray>this.waterTankerAppForm.get('serviceDetail').get('serviceUploadDocuments')).controls
 		var fields = control.find((data) => data.get('documentIdentifier').value === dependedKey);
 
