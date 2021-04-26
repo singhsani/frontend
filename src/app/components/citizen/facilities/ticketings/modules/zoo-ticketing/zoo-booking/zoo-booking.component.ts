@@ -303,10 +303,10 @@ export class ZooBookingComponent implements OnInit {
     this.ticketingService.bookZooTickets(this.ticketBookingForm.value).subscribe(res => {
       console.log(res);
       if (!this.ticketBookingForm.get('agree').value) {
-        this.commonService.openAlert('Feild Error', this.ticketingConstants.AGREE_MESSAGE, 'warning');
+        this.commonService.openAlert('Field Error', this.ticketingConstants.AGREE_MESSAGE, 'warning');
         return;
       } else if (!this.ticketBookingForm.get('termsCondition').value) {
-        this.commonService.openAlert('Feild Error', this.ticketingConstants.TERMS_AND_CONDITION_MESSAGE, 'warning');
+        this.commonService.openAlert('Field Error', this.ticketingConstants.TERMS_AND_CONDITION_MESSAGE, 'warning');
         return;
       }
     },
