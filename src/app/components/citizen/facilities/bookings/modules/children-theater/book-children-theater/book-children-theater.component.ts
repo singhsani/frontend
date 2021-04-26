@@ -168,6 +168,8 @@ export class BookChildrenTheaterComponent implements OnInit {
             emailId: [null, [Validators.required, ValidationService.emailValidator , Validators.maxLength(50)]],
             confirmEmailId: [null, [Validators.required, ValidationService.emailValidator , Validators.maxLength(50)]],
             relationshipWithOrg: [null, [Validators.required, Validators.maxLength(20)]],
+            panCard:[null, ValidationService.panValidator],
+            gstNo:[null, ValidationService.gstNoValidator],
 
             //step 3
             // accountHolderName: [null, [Validators.required, Validators.maxLength(50)]],
