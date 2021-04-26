@@ -106,7 +106,7 @@ export class FireCertificateComponent implements OnInit {
       serviceCode: 'FS_FIRE_CERTIFICATE',
       applicantName: [null, [Validators.required, Validators.maxLength(100)]],
       applicantNameGuj: [null, [Validators.required, Validators.maxLength(300)]],
-      applicationDate: [null, [Validators.required, Validators.maxLength(50)]],
+      applicationDate: [{ value: null, disabled: true }],
       oldReferenceNumber: [null, [Validators.maxLength(10)]],
       incidentDate: [null, [Validators.required, Validators.maxLength(50)]],
       incidentTime: [null, [Validators.required, Validators.maxLength(50)]],

@@ -14,13 +14,13 @@ import { ManageRoutes } from 'src/app/config/routes-conf';
 export class PropertyDocumentUploadAddComponent implements OnInit {
 
   subscription: Subscription;
-  PropertyDocumentUploadDocs : Array<any> = [];
+  PropertyDocumentUploadDocs: Array<any> = [];
   modelProperty: any = {};
 
   constructor(private newNewPropertyEntryAddDataSharingService: NewPropertyEntryAddDataSharingService,
     private newNewPropertyEntryAddService: NewPropertyEntryAddService,
     private router: Router,
-    private alertService: AlertService) { 
+    private alertService: AlertService) {
     this.modelProperty = {};
   }
 
@@ -37,42 +37,45 @@ export class PropertyDocumentUploadAddComponent implements OnInit {
     this.subscription.unsubscribe();
   }
 
-  getFormDataDocuments(id : any) {
+  getFormDataDocuments(id: any) {
     this.PropertyDocumentUploadDocs = [];
     this.newNewPropertyEntryAddService.getPropertyAddUpload(id).subscribe(
       (data) => {
         data.forEach(app => {
           this.PropertyDocumentUploadDocs.push(app);
         });
-        
+
       },
       (error) => {
-        
+
       });
   }
 
   onSubmit() {
-        this.newNewPropertyEntryAddService.submit(this.modelProperty.propertyBasicId).subscribe(
-          (data) => {
-            if (data.status === 200) {
-              this.alertService.success(data.body.message);
-              //this.newNewPropertyEntryAddDataSharingService.updateDataSourceMoveStepper(4);
-              this.router.navigateByUrl(ManageRoutes.getFullRoute('CITIZENDASHBOARD'));
-            }
-          },
-          (error) => {
-            if (error.status === 400) {
-              var errorMessage = '';
-              error.error[0].propertyList.forEach(element => {
-                errorMessage = errorMessage + element + "</br>";
-              });
-              this.alertService.error(errorMessage);
-            }
-            else {
-              this.alertService.error(error.error.message);
-            }
-          })
-     
-    }
+    this.newNewPropertyEntryAddService.submit(this.modelProperty.propertyBasicId).subscribe(
+      (data) => {
+        if (data.status === 200) {
+          this.alertService.success(data.body.message);
+          //this.newNewPropertyEntryAddDataSharingService.updateDataSourceMoveStepper(4);
+          this.router.navigateByUrl(ManageRoutes.getFullRoute('CITIZENDASHBOARD'));
+        }
+      },
+      (error) => {
+        if (error.status === 400) {
+          var errorMessage = '';
+          error.error[0].propertyList.forEach(element => {
+            errorMessage = errorMessage + element + "</br>";
+          });
+          this.alertService.error(errorMessage);
+        }
+        else {
+          this.alertService.error(error.error.message);
+        }
+      })
 
+  }
+
+  onBackClick() {
+    this.newNewPropertyEntryAddDataSharingService.updateDataSourceMoveStepper(2);
+  }
 }

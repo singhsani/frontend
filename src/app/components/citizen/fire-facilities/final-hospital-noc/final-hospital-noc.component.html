@@ -55,7 +55,7 @@
 
 					<mat-form-field class="col-md-4">
 						<!-- <span matPrefix>+91 &nbsp;</span> -->
-						<input matInput OnlyNumber placeholder="{{'office_contact_no' | translate:translateKey}}" type="tel" [maxlength]="fireFacilityConfig.contactNumberLength"
+						<input matInput OnlyNumber placeholder="{{'office_contact_no' | translate:translateKey}}" type="tel" [maxlength]="10"
 						 formControlName="officeContactNo" required>
 						<control-messages [control]="finalHospitalNocForm.get('officeContactNo')"></control-messages>
 					</mat-form-field>
@@ -102,78 +102,89 @@
 						<input matInput required maxlength="10" type="tel" formControlName="medicalRegistrationNumber" placeholder="{{'medical_registration_number' | translate:translateKey }}">
 						<control-messages [control]="finalHospitalNocForm.get('medicalRegistrationNumber')"></control-messages>
 					</mat-form-field>
-					<mat-form-field class="col-md-4">
+					<mat-form-field class="col-md-6">
 						<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace' required maxlength="100"
 						 placeholder="{{'doctor_name' | translate:translateKey}}" formControlName="doctorName" appGujInputSource
 						 targetElement="doctorNameGuj" [form]="finalHospitalNocForm">
 						<control-messages [control]="finalHospitalNocForm.get('doctorName')"></control-messages>
 					</mat-form-field>
 
-					<mat-form-field class="col-md-4">
+					<!-- gujarati -->
+					<mat-form-field class="col-md-6">
+						<input matInput type="text" maxlength="300" required formControlName="doctorNameGuj" appGujInputTarget [form]="finalHospitalNocForm"
+						 placeholder="{{ 'doctor_name' | translate:translateKey:'gu' }}">
+						<control-messages [control]="finalHospitalNocForm.get('doctorNameGuj')"></control-messages>
+					</mat-form-field>
+					<!-- /gujarati -->
+
+					<mat-form-field class="col-md-6">
 						<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace' required maxlength="50"
 						 placeholder="{{'hospital_name' | translate:translateKey}}" formControlName="hospitalName" appGujInputSource
 						 targetElement="hospitalNameGuj" [form]="finalHospitalNocForm">
 						<control-messages [control]="finalHospitalNocForm.get('hospitalName')"></control-messages>
 					</mat-form-field>
 
-					<mat-form-field class="col-md-4">
-						<textarea matInput rows="3" cols="50" required maxlength="300" placeholder="{{'hospital_address' | translate:translateKey}}"
-						 formControlName="hospitalAddress" appGujInputSource targetElement="hospitalAddressGuj" [form]="finalHospitalNocForm"></textarea>
-						<control-messages [control]="finalHospitalNocForm.get('hospitalAddress')"></control-messages>
-					</mat-form-field>
-
 					<!-- gujarati -->
-					<mat-form-field class="col-md-4">
-						<input matInput type="text" maxlength="300" required formControlName="doctorNameGuj" appGujInputTarget [form]="finalHospitalNocForm"
-						 placeholder="{{ 'doctor_name' | translate:translateKey:'gu' }}">
-						<control-messages [control]="finalHospitalNocForm.get('doctorNameGuj')"></control-messages>
-					</mat-form-field>
-
-					<mat-form-field class="col-md-4">
+					<mat-form-field class="col-md-6">
 						<input matInput type="text" maxlength="150" required formControlName="hospitalNameGuj" appGujInputTarget [form]="finalHospitalNocForm"
 						 placeholder="{{ 'hospital_name' | translate:translateKey:'gu' }}">
 						<control-messages [control]="finalHospitalNocForm.get('hospitalNameGuj')"></control-messages>
 					</mat-form-field>
+					<!-- /gujarati -->
 
-					<mat-form-field class="col-md-4">
-						<textarea matInput rows="3" cols="50" maxlength="900" type="text" required formControlName="hospitalAddressGuj"
+					<mat-form-field class="col-md-6">
+						<textarea matInput rows="2" cols="50" required maxlength="300" placeholder="{{'hospital_address' | translate:translateKey}}"
+						 formControlName="hospitalAddress" appGujInputSource targetElement="hospitalAddressGuj" [form]="finalHospitalNocForm"></textarea>
+						<control-messages [control]="finalHospitalNocForm.get('hospitalAddress')"></control-messages>
+					</mat-form-field>					
+
+					<!-- gujarati -->
+					<mat-form-field class="col-md-6">
+						<textarea matInput rows="2" cols="50" class="lineHeight20" maxlength="900" type="text" required formControlName="hospitalAddressGuj"
 						 appGujInputTarget [form]="finalHospitalNocForm" placeholder="{{ 'hospital_address' | translate:translateKey:'gu' }}"></textarea>
 						<control-messages [control]="finalHospitalNocForm.get('hospitalAddressGuj')"></control-messages>
 					</mat-form-field>
 					<!-- /gujarati -->
 
-					<mat-form-field class="col-md-4">
+					<mat-form-field class="col-md-6">
 						<input matInput type="text" appValidationFields validationFieldsType='onlyNameWithSpace' required maxlength="100"
 						 placeholder="{{'owner_name' | translate:translateKey}}" formControlName="ownerName" appGujInputSource
 						 targetElement="ownerNameGuj" [form]="finalHospitalNocForm">
 						<control-messages [control]="finalHospitalNocForm.get('ownerName')"></control-messages>
 					</mat-form-field>
 
-					<mat-form-field class="col-md-4">
-						<textarea matInput rows="3" cols="50" required maxlength="300" placeholder="{{'owner_address' | translate:translateKey}}"
+					<!-- gujarati -->
+					<mat-form-field class="col-md-6">
+						<input matInput type="text" maxlength="300" required formControlName="ownerNameGuj" appGujInputTarget [form]="finalHospitalNocForm"
+						 placeholder="{{ 'owner_name' | translate:translateKey:'gu' }}">
+						<control-messages [control]="finalHospitalNocForm.get('ownerNameGuj')"></control-messages>
+					</mat-form-field>
+					<!-- /gujarati -->
+
+					<mat-form-field class="col-md-6">
+						<textarea matInput rows="2" cols="50" required maxlength="300" placeholder="{{'owner_address' | translate:translateKey}}"
 						 formControlName="ownerAddress" appGujInputSource targetElement="ownerAddressGuj" [form]="finalHospitalNocForm"></textarea>
 						<control-messages [control]="finalHospitalNocForm.get('ownerAddress')"></control-messages>
 					</mat-form-field>
 
-					<mat-form-field class="col-md-4">
+					<!-- gujarati -->
+					<mat-form-field class="col-md-6">
+						<textarea matInput rows="2" cols="50" class="lineHeight20" required maxlength="900" type="text" required formControlName="ownerAddressGuj"
+						 appGujInputTarget [form]="finalHospitalNocForm" placeholder="{{ 'owner_address' | translate:translateKey:'gu' }}"></textarea>
+						<control-messages [control]="finalHospitalNocForm.get('ownerAddressGuj')"></control-messages>
+					</mat-form-field>
+					<!-- /gujrati  -->
+
+					<mat-form-field class="col-md-6">
 						<!-- <span matPrefix>+91 &nbsp;</span> -->
 						<input matInput OnlyNumber placeholder="{{'owner_mobile_no' | translate:translateKey}}" type="tel" [maxlength]="fireFacilityConfig.mobileNumber_maxLength"
 						 [minlength]="fireFacilityConfig.mobileNumber_minLength" formControlName="ownerMobileNo" required>
 						<control-messages [control]="finalHospitalNocForm.get('ownerMobileNo')"></control-messages>
 					</mat-form-field>
-					<!-- gujrati  -->
-					<mat-form-field class="col-md-4">
-						<input matInput type="text" maxlength="300" required formControlName="ownerNameGuj" appGujInputTarget [form]="finalHospitalNocForm"
-						 placeholder="{{ 'owner_name' | translate:translateKey:'gu' }}">
-						<control-messages [control]="finalHospitalNocForm.get('ownerNameGuj')"></control-messages>
-					</mat-form-field>
+				
+					
 
-					<mat-form-field class="col-md-4">
-						<textarea matInput rows="3" cols="50" required maxlength="900" type="text" required formControlName="ownerAddressGuj"
-						 appGujInputTarget [form]="finalHospitalNocForm" placeholder="{{ 'owner_address' | translate:translateKey:'gu' }}"></textarea>
-						<control-messages [control]="finalHospitalNocForm.get('ownerAddressGuj')"></control-messages>
-					</mat-form-field>
-					<!--/ gujrati  -->
+					
 
 				</div>
 

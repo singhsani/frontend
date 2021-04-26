@@ -312,13 +312,7 @@ mat-footer-row, mat-header-row, mat-row, td.mat-cell, td.mat-footer-cell, th.mat
     }
 }
 
-::-webkit-scrollbar {width: 10px; height: 10px;}
-::-webkit-scrollbar-track {background: #D1C4E9; border-radius:5px;}
-::-webkit-scrollbar-thumb {background: #7E57C2; border-radius:5px;}
-::-webkit-scrollbar-thumb:hover {background: #5E35B1;}
 
-
-* { scrollbar-color: #7E57C2 #D1C4E9 !important; scrollbar-width: thin !important;}
 
 .ng-select {padding-bottom: 3px; margin-bottom: 1.25em;
     .ng-select-container {min-height: 43px;}
@@ -742,6 +736,18 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
 
 .borderInputNone .mat-form-field-underline { background-color: transparent;}
 
+::-webkit-scrollbar {width: 5px; height: 5px;}
+::-webkit-scrollbar-track {background: #D1C4E9; border-radius:3px;}
+::-webkit-scrollbar-thumb {background: #7E57C2; border-radius:3px;}
+::-webkit-scrollbar-thumb:hover {background: #5E35B1;}
+body, .moduleList .mat-tab-label-container {-webkit-overflow-scrolling: touch; -webkit-font-smoothing: antialiased;  -moz-osx-font-smoothing: grayscale; -webkit-tap-highlight-color: transparent; -webkit-touch-callout: none;}
+* { scrollbar-color: #7E57C2 #D1C4E9 !important; scrollbar-width: thin !important;}
+
+@media (min-width: 992px) {
+::-webkit-scrollbar {width: 10px; height: 10px;}
+::-webkit-scrollbar-track {background: #D1C4E9; border-radius:5px;}
+::-webkit-scrollbar-thumb {background: #7E57C2; border-radius:5px;}
+}
 // Responsive CSS Part 1 ------------------------------------------------
 @media (max-width: 991px) {
     .container {margin-top: 65px;}
@@ -792,7 +798,7 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
 
     .profilePage .updateProfileBtn {position: static; width: 100%;}
     .stepperNav .mat-raised-button {padding: 0 20px !important; min-width: initial; line-height: 30px !important;}
-
+    .stepperNav .mat-tab-label .mat-tab-label-content {line-height: 1.15; font-size: 90%;}
     .mainMenu {
         .linkName {display: none;}
         .mat-icon {
@@ -1101,10 +1107,17 @@ textarea.gujInputCls {margin-bottom: 0;}
 }
 @media print {
     .zooServicesList{ display: none;}
+
+    .no-print, .no-print *
+    {
+        display: none !important;
+    }
    }
 
  .createMarriageReg .mat-tab-label{
     width: 200px;
+
+    
 }
 
 @-moz-document url-prefix() {

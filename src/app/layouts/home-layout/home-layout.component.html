@@ -29,7 +29,7 @@
                 </button>
                 <mat-menu [overlapTrigger]="false" #menu="matMenu">
                     <button mat-menu-item routerLink="/citizen/my-profile">Profile</button>
-                    <button mat-menu-item (click)="onLogout()">Logout</button>
+                    <button mat-menu-item (click)="onLogout()" id="logoutBtn">Logout</button>
                 </mat-menu>
             </div>
         </mat-toolbar-row>
@@ -39,7 +39,7 @@
     <!-- <nav mat-tab-nav-bar>
         <a mat-tab-link *ngFor="let link of links" routerLink="/{{manageRoutes.getFullRoute(link.linkCode)}}" (click)="activeLink = link.linkName" [active]="activeLink == link.linkName"> {{link.linkName}} </a>
     </nav> -->
-    <div class="clearfix" *ngIf="showMenu">
+    <div class="clearfix no-print" *ngIf="showMenu">
 
         <mat-tab-group (focusChange)="navigateToRoute($event)" mat-stretch-tabs [selectedIndex]="tabIndex" [ngClass]="{'iframeMainMenu': fromAdmin,
         'mainMenu': !fromAdmin }">

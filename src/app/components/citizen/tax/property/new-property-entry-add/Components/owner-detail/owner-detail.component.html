@@ -60,22 +60,27 @@
             <div class="col-md-3">
                 <mat-form-field class="full-width-input">
                     <input matInput email placeholder="Email" name="emailAddress" maxlength="255"
-                    #EmailAddress="ngModel"   [(ngModel)]="ownerModel.emailAddress">
-                     <mat-error *ngIf="EmailAddress.invalid && EmailAddress.errors.email">*Email is not valid.</mat-error>
+                        #EmailAddress="ngModel" [(ngModel)]="ownerModel.emailAddress">
+                    <mat-error *ngIf="EmailAddress.invalid && EmailAddress.errors.email">*Email is not valid.
+                    </mat-error>
                 </mat-form-field>
             </div>
             <div class="col-md-2">
                 <div class="ngSelect">
                     <ng-select [(ngModel)]="ownerModel.isPrimaryOwner" name="isPrimaryOwner" required
-                        placeholder="Is Primary Owner">
+                        placeholder="Is Primary Owner *" #PrimaryOwner="ngModel">
                         <ng-option [value]="true">Yes</ng-option>
                         <ng-option [value]="false">No</ng-option>
                     </ng-select>
+                    <div
+                        *ngIf="(formOwner.submitted && PrimaryOwner.invalid)  || (PrimaryOwner.invalid && PrimaryOwner.touched)">
+                        <mat-error *ngIf="PrimaryOwner.invalid">*Selcet owner type.</mat-error>
+                    </div>
                 </div>
             </div>
             <div class="col-md-1">
-                <button mat-mini-fab type="submit" color="primary" title="Save">
-                    <mat-icon>save</mat-icon>
+                <button mat-mini-fab type="submit" color="primary" title="Add">
+                    <mat-icon>add</mat-icon>
                 </button>
             </div>
         </div>
@@ -209,19 +214,20 @@
                 <div class="row">
                     <div class="col-md-10">
                         <div class="ngSelect mat-horizontal-content-container">
-                            <ng-select required placeholder="Class of Location *" [items]="landClassList" bindValue="locationFactorId"
-                                bindLabel="locationName" name="locationFactorMstId"
+                            <ng-select required placeholder="Class of Location *" [items]="landClassList"
+                                bindValue="locationFactorId" bindLabel="locationName" name="locationFactorMstId"
                                 [(ngModel)]="propertyModel.locationFactorMstId" #LandClass="ngModel"
                                 [ngClass]="{'ng-invalid ng-touched':  form.submitted && LandClass.invalid}">
                             </ng-select>
-                            <div *ngIf="(form.submitted && LandClass.invalid)  || (LandClass.invalid && LandClass.touched)">
+                            <div
+                                *ngIf="(form.submitted && LandClass.invalid)  || (LandClass.invalid && LandClass.touched)">
                                 <mat-error *ngIf="LandClass.errors.required">*Class of Location is required.</mat-error>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-2" style="padding-top: 15px;">
                         <a title="help" href="assets/files/Wardwise_Area_Details.pdf" target="_blank">
-                                <i class="material-icons">help</i>
+                            <i class="material-icons">help</i>
                         </a>
                     </div>
                 </div>

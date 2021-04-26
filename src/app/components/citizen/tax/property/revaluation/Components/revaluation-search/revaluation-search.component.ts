@@ -111,6 +111,9 @@ export class RevaluationSearchComponent implements OnInit {
       this.revaluationDataSharingService.updatedSearchModel(this.searchModel);
       this.revaluationDataSharingService.updatedIsShowForm(false);
       this.revaluationDataSharingService.updatedIsShowTable(true);
+    } else {
+      formDetails.form.get('level1Id').markAsTouched();
+      formDetails.form.get('level2Id').markAsTouched();
     }
   }
 

@@ -110,6 +110,9 @@ export class AssessmentCertificateSearchComponent implements OnInit {
       this.assessmentCertificateDataSharingService.updatedSearchModel(this.searchModel);
       this.assessmentCertificateDataSharingService.updatedIsShowForm(false);
       this.assessmentCertificateDataSharingService.updatedIsShowTable(true);
+    } else {
+      formDetails.form.get('level1Id').markAsTouched();
+      formDetails.form.get('Level2Id').markAsTouched();
     }
   }
 
