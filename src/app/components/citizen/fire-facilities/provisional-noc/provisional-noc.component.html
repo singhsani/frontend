@@ -311,7 +311,7 @@
 						<control-messages [control]="provisionalNocForm.get('buildingHeight')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput maxlength="5" required appAlphaNumeric placeholder="{{'total_building_floor' | translate:translateKey}}"
+						<input matInput maxlength="5" required OnlyNumber type="tel" placeholder="{{'total_building_floor' | translate:translateKey}}"
 						 formControlName="totalBuildingFloor">
 						<control-messages [control]="provisionalNocForm.get('totalBuildingFloor')"></control-messages>
 					</mat-form-field>

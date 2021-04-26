@@ -15,9 +15,12 @@
                 <li>
                     Production of all necessary permission is mandatory for applicant before commencement of programe.
                 </li>
-                <!-- <li>
-                    Deduction as per the rules will be made in the event of cancellation.
-                </li> -->
+              <li>
+                Sitting capacity :200
+              </li>
+              <li>
+                Theater will be available between 8:00 AM to 10:00 PM
+              </li>
             </ol>
         </mat-card-content>
     </mat-card>
@@ -125,7 +128,7 @@
                                 </strong>
                                 <div class="dateCon">
                                     <mat-checkbox (change)="selectedShift = bookingUtils.selectShift(shift, $event.checked, selectedShift)" *ngFor="let shift of date.slotList; let i = index"
-                                        [disabled]="shift.slotStatus == bookingConstants.BOOKED || shift.slotStatus == bookingConstants.TEMPORARY_BLOCKED"
+                                        [disabled]="shift.slotStatus == bookingConstants.BOOKED || shift.slotStatus == bookingConstants.TEMPORARY_BLOCKED || shift.slotStatus == bookingConstants.RESERVED"
                                         [checked]="shift.slotStatus != bookingConstants.AVAILABLE">
                                         &nbsp;{{shift.slotStatus == bookingConstants.CHECKED ? bookingConstants.AVAILABLE : shift.slotStatus }}
                                     </mat-checkbox>
@@ -216,6 +219,8 @@
                     <tr>
                         <th scope="col">{{'booking_date'| translate: translateKey}}</th>
                         <th scope="col">{{'rent_amount'| translate: translateKey}}</th>
+                      <th scope="col">{{'event_date_from'| translate: translateKey}}</th>
+                      <th scope="col">{{'event_date_to'| translate: translateKey}}</th>
 <!--                        <th scope="col">{{'deposit_amount'| translate: translateKey}}</th>-->
                         <th scope="col">{{'GST'| translate: translateKey}}</th>
                     </tr>
@@ -224,6 +229,8 @@
                     <tr>
                         <td scope="col">{{bookingUtils.returnProperDate(paymentObject.BOOKING_DATE)}}</td>
                         <td scope="col">{{paymentObject.RENT_FEES}}</td>
+                      <td scope="col">{{paymentObject.EVENT_DATE_FROM}}</td>
+                      <td scope="col">{{paymentObject.EVENT_DATE_TO}}</td>
 <!--                        <td scope="col">{{paymentObject.DEPOSIT_FEES?paymentObject.DEPOSIT_FEES : 0.00}}</td>-->
                         <td scope="col">{{paymentObject.GST}}</td>
                     </tr>
@@ -342,6 +349,20 @@
                                 {{bookingConstants.EMAIL_MIS_MATCH_MESSAGE}}
                             </mat-error>
                         </div>
+
+                      <div class="col-md-4">
+                        <mat-form-field>
+                          <input matInput type="text" formControlName="panCard" placeholder="{{'pancard' | translate : translateKey}}" required>
+                          <control-messages [control]="childrenTheaterApplicationForm.get('panCard')"></control-messages>
+                        </mat-form-field>
+                      </div>
+
+                      <div class="col-md-4">
+                        <mat-form-field>
+                          <input matInput type="text" formControlName="gstNo" placeholder="{{'gstNo' | translate : translateKey}}">
+                          <control-messages [control]="childrenTheaterApplicationForm.get('gstNo')"></control-messages>
+                        </mat-form-field>
+                      </div>
 
                         <mat-form-field class="col-md-4">
                             <input matInput type="text" maxlength="20" appValidationFields [validationFieldsType]="'onlyNameWithSpace'" formControlName="relationshipWithOrg"
