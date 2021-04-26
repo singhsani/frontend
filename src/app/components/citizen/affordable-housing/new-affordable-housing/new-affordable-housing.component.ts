@@ -18,13 +18,22 @@ import * as _ from 'lodash';
 })
 export class NewAffordableHousingComponent implements OnInit {
 
-	@ViewChild('applicantCorrespondenceAddr') applicantCorrespondenceAddrComponent: any;
-	@ViewChild('occupationAddr') occupationAddrComponent: any;
+	@ViewChild('firstAppCorrespondenceAddress') firstAppCorrespondenceAddressComponent: any;
+	@ViewChild('firstAppOccupationAddress') firstAppOccupationAddressComponent: any;
+
+	@ViewChild('secondAppCorrespondenceAddress') secondAppCorrespondenceAddressComponent: any;
+	@ViewChild('secondAppOccupationAddress') secondAppOccupationAddressComponent: any;
+
+	// @ViewChild('applicantCorrespondenceAddr') applicantCorrespondenceAddrComponent: any;
+	// @ViewChild('occupationAddr') occupationAddrComponent: any;
 	@ViewChild('nomineeAddr') nomineeAddrComponent: any;
 	affordableHousingForm: FormGroup;
 	translateKey: string = 'affordableHousingScreen';
 	actionBarKey: string = 'adminActionBar';
 	tabIndex: number = 0;
+
+	dobMaxDate = moment(new Date()).subtract("18", "years").format("YYYY-MM-DD");
+	minDate = moment().subtract(2, 'months').format('YYYY-MM-DD');
 
 	attachmentList: any = [];
 	appliedForData = [];
@@ -40,10 +49,16 @@ export class NewAffordableHousingComponent implements OnInit {
 	formId: number;
 	appId: number;
 	apiCode: string;
-	maxDate = moment(new Date()).subtract("18", "years").format("YYYY-MM-DD");
+	maxDate: Date = new Date();
+	//maxDate = moment(new Date()).subtract("18", "years").format("YYYY-MM-DD");
+
+	public serverUploadFilesArray: Array<any> = [];
+	sortedList: Array<any> = [];
 
 	public affordableHousingConfiguration: CitizenConfig = new CitizenConfig();
 	MF_CATEGORY_TYPE: Array<any> = [];
+
+	relationArray: Array<any> = ["Father", "Mother", "Husband", "Wife", "Brother", "Son ", "Sister", "Daughter"];
 
 	LOOKUP: any;
 
@@ -55,14 +70,20 @@ export class NewAffordableHousingComponent implements OnInit {
 		private router: Router,
 		private commonService: CommonService,
 		private toster: ToastrService,
-		private affodableService: AffodableService) { }
+		private affodableService: AffodableService) { 
+		this.formService.apiType = "afhForm";
+		}
 
 	ngOnInit() {
 
 		this.route.paramMap.subscribe(param => {
 			this.formId = Number(param.get('id'));
 			this.apiCode = param.get('apiCode');
+		
 			this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
+			// if (this.formId) {
+			// 	this.getAffordableHousingData(this.formId);
+			// }
 		},
 			err => {
 				this.toster.error(err.error.error_description);
@@ -78,7 +99,7 @@ export class NewAffordableHousingComponent implements OnInit {
 			this.getMuttonFishLicNewData();
 			this.affordableHousingFormControls();
 			// create default one place of choice
-			this.addRecordFormArray('placeOfChoice')
+			//this.addRecordFormArray('placeOfChoice')
 
 		}
 
@@ -87,7 +108,7 @@ export class NewAffordableHousingComponent implements OnInit {
 	/**
 	 * This method is use for create draft form
 	 */
-	 createFormData() {
+	createFormData() {
 		this.formService.createFormData().subscribe(res => {
 			this.affordableHousingForm.patchValue(res);
 			setTimeout(() => {
@@ -96,6 +117,26 @@ export class NewAffordableHousingComponent implements OnInit {
 		});
 	}
 
+	getAffordableHousingData(id: number) {
+		this.formService.getFormData(id).subscribe(res => {
+			console.log("tresr", res)
+			this.affordableHousingForm.patchValue(res);
+			this.showButtons = true;
+			this.affordableHousingForm.disable();
+			this.setServiceDetailsOnInit(res);
+		//	this.sortedList.push(res);
+		});
+	}
+
+	setServiceDetailsOnInit(res) {
+		this.serverUploadFilesArray = res.serviceDetail.serviceUploadDocuments;
+		const localUploadArray = [...this.serverUploadFilesArray];
+
+		for (let file of localUploadArray) {
+			console.log("file" + JSON.stringify(file));
+			this.attachmentList.push(file);
+		}
+	}	
 	/**
 	 * Method is used to get form data
 	 */
@@ -152,14 +193,14 @@ export class NewAffordableHousingComponent implements OnInit {
 	}
 
 	/**
-	 * define all gas connection form controls
-	 */
+		 * define all gas connection form controls
+		 */
 	affordableHousingFormControls() {
 		this.affordableHousingForm = this.fb.group({
-			apiType: ManageRoutes.getApiTypeFromApiCode(this.apiCode),
+			apiType: 'afhForm',
 			serviceCode: 'AFFORD-HOUSE',
 			serviceFormId: null,
-
+			refNumber: null,
 			/* Step 1 controls start */
 			schemeId: [null, [Validators.required, Validators.maxLength(100)]],
 			projectId: [null, [Validators.required, Validators.maxLength(100)]],
@@ -167,66 +208,129 @@ export class NewAffordableHousingComponent implements OnInit {
 				code: [null, [Validators.required]],
 				name: null,
 			}),
-			applicantName: [null, [Validators.required, Validators.maxLength(100)]],
-			applicantMiddleName: [null, [Validators.required, Validators.maxLength(100)]],
-			applicantLastName: [null, [Validators.required, Validators.maxLength(100)]],
-			applicantFatherName: [null, [Validators.required, Validators.maxLength(100)]],
-			dateOfBirth: [null, [Validators.required]],
-			telephoneNumber: [null, [Validators.maxLength(15)]],
-			mobileNumber: [null, [Validators.required, Validators.maxLength(10)]],
-			email: [null, [ValidationService.emailValidator, Validators.maxLength(50)]],
-			applicantHusbandWifeFirstName: [null, Validators.required, Validators.maxLength(100)],
-			applicantHusbandWifeMiddleName: [null, Validators.required, Validators.maxLength(100)],
-			applicantHusbandWifeLastName: [null, Validators.required, Validators.maxLength(100)],
-			correspondanceAddress: this.fb.group(this.applicantCorrespondenceAddrComponent.addressControls()),
-			/* Step 1 controls end */
 
-			/* Step 2 controls start */
-			occupation: [null, [Validators.required, Validators.maxLength(100)]],
-			organizationName: [null, [Validators.required, Validators.maxLength(100)]],
-			occupationDesignation: [null, [Validators.required, Validators.maxLength(100)]],
-			drivingLicenseNumber: [null, [Validators.maxLength(50)]],
-			voterIdNumber: [null, [Validators.maxLength(25)]],
-			aadharCardNumber: [null, [Validators.required, Validators.maxLength(12), Validators.minLength(12)]],
-			panCardNumber: [null, [Validators.required, ValidationService.panValidator, Validators.maxLength(10)]],
-			rationCardNumber: [null, [Validators.maxLength(50)]],
-			occupationAddress: this.fb.group(this.occupationAddrComponent.addressControls()),
-			// /* Step 2 controls end */
+			// /* First Beneficiary controls Start *//
+			firstApplicantFirstName: [null, [Validators.required, Validators.maxLength(100)]],
+			firstApplicantMiddleName: [null, [Validators.maxLength(100)]],
+			firstApplicantLastName: [null, [Validators.required, Validators.maxLength(100)]],
+			firstAppHusWifeFirstName: [null, [Validators.required, Validators.maxLength(100)]],
+			firstAppHusWifeMiddleName: [null, [Validators.maxLength(100)]],
+			firstAppHusWifeLastName: [null, [Validators.required, Validators.maxLength(100)]],
+			firstAppDateOfBirth: [null, [Validators.required]],
+			firstAppTelephoneNumber: [null, [Validators.maxLength(15)]],
+			firstAppMobileNumOne: [null, [Validators.required, Validators.maxLength(10)]],
+			firstAppMobileNumTwo: [null, [Validators.maxLength(10)]],
+			firstAppEmail: [null, [ValidationService.emailValidator, Validators.maxLength(50)]],
+			firstAppOccupation: [null, [Validators.required, Validators.maxLength(100)]],
+			firstAppOrganizationName: [null, [Validators.required, Validators.maxLength(100)]],
+			firstAppOccupationDesignation: [null, [Validators.required, Validators.maxLength(100)]],
+			firstAppDrivingLicenseNumber: [null, [ValidationService.drivingLicenseValidator]],
+			firstAppVoterIdNumber: [null, [ValidationService.electionCardValidator]],
+			firstAppAadharCardNumber: [null, [Validators.required, Validators.maxLength(12)]],
+			firstAppPanCardNumber: [null, [Validators.required, ValidationService.panValidator]],
+			firstAppRationCardNumber: [null, [Validators.maxLength(50)]],
 
-			// /* Step 3 controls start */
-			bankAccountNumber: [null, [Validators.required, Validators.minLength(9), Validators.maxLength(18)]],
+			firstAppCorrespondenceAddress: this.fb.group(this.firstAppCorrespondenceAddressComponent.addressControls()),
+			firstAppOccupationAddress: this.fb.group(this.firstAppOccupationAddressComponent.addressControls()),
+			// /* First Beneficiary controls End *//
+
+			// /* Second Beneficiary controls Start *//
+			secondApplicantFirstName: [null, [Validators.required, Validators.maxLength(100)]],
+			secondApplicantMiddleName: [null, [Validators.maxLength(100)]],
+			secondApplicantLastName: [null, [Validators.required, Validators.maxLength(100)]],
+			secondAppHusWifeFirstName: [null, [Validators.required, Validators.maxLength(100)]],
+			secondAppHusWifeMiddleName: [null, [Validators.maxLength(100)]],
+			secondAppHusWifeLastName: [null, [Validators.required, Validators.maxLength(100)]],
+			secondAppDateOfBirth: [null, [Validators.required]],
+			secondAppTelephoneNumber: [null, [Validators.maxLength(15)]],
+			secondAppMobileNumOne: [null, [Validators.required, Validators.maxLength(10)]],
+			secondAppMobileNumTwo: [null, [Validators.maxLength(10)]],
+			secondAppEmail: [null, [ValidationService.emailValidator, Validators.maxLength(50)]],
+			secondAppOrganizationName: [null, [Validators.required, Validators.maxLength(100)]],
+			secondAppOccupation: [null, [Validators.required, Validators.maxLength(100)]],
+			secondAppOccupationDesignation: [null, [Validators.required, Validators.maxLength(100)]],
+			secondAppDrivingLicenseNumber: [null, [ValidationService.drivingLicenseValidator]],
+			secondAppVoterIdNumber: [null, [ValidationService.electionCardValidator]],
+			secondAppAadharCardNumber: [null, [Validators.required, Validators.maxLength(12)]],
+			secondAppPanCardNumber: [null, [Validators.required, ValidationService.panValidator]],
+			secondAppRationCardNumber: [null, [Validators.maxLength(50)]],
+
+			secondAppCorrespondenceAddress: this.fb.group(this.secondAppCorrespondenceAddressComponent.addressControls()),
+			secondAppOccupationAddress: this.fb.group(this.secondAppOccupationAddressComponent.addressControls()),
+			// /* Second Beneficiary controls End *//
+
+			// /* Bank Details controls Start *//
+			bankAccountNumber: [null, [Validators.required, Validators.maxLength(16)]],
 			bank: this.fb.group({
 				code: [null, [Validators.required]],
 				name: null,
 			}),
-			bankBranch: [null, [Validators.required, Validators.maxLength(100)]],
-			bankIFSC: [null, [Validators.required, ValidationService.ifscCodeValidator, Validators.maxLength(11)]],
-			bankMicrCode: [null, [Validators.required, Validators.maxLength(9)]],
-			// /* Step 3 controls end */
+			bankBranch: [null, [Validators.required, Validators.maxLength(200)]],
+			bankIFSC: [null, [Validators.required, ValidationService.ifscCodeValidator]],
+			bankMicrCode: [null, [Validators.maxLength(25)]],
+			ddBank: this.fb.group({
+				code: [null, [Validators.required]],
+				name: null,
+			}),
+			ddBankBranch: [null, [Validators.required, Validators.maxLength(200)]],
+			ddNumber: [null, [Validators.required]],
+			ddAmount: [null, [Validators.required, Validators.maxLength(7)]],
+			ddIssuingDate: [null, [Validators.required]],
 
-			// /* Step 4 controls start */
-			aggregateAnnualIncomeAmount: [null, [Validators.required, Validators.maxLength(10)]],
+			// /* Bank Details controls End *//
+
+			// /* Annual Income controls Start *//
+			aggregateAnnualIncomeAmount: [null, [Validators.required, Validators.maxLength(7)]],
 			aggregateAnnualIncomeAmountInWords: [null, [Validators.required, Validators.maxLength(200)]],
 			familyMembers: this.fb.array([]),
-			placeOfChoice: this.fb.array([]),
+			//placeOfChoice: this.fb.array([]),
 			canEdit: [true],
-			// /* Step 4 controls end */
+			// /* Annual Income controls End *//
 
-			// /* Step 5 controls start */
+			// /* Own House Detail controls Start *//
 			ownHouseDetail: this.fb.array([]),
-			// /* Step 5 controls end */
+			// /* Own House Detail controls End *//
 
-			// /* Step 5 controls start */
+			// /* Own plot Detail controls Start *//
 			ownLandPlotDetail: this.fb.array([]),
-			// /* Step 5 controls end */
+			// /* Own plot Detail controls End *//
 
-			// /* Step 6 controls start */
+			// /* Nominee controls Start *//
 			nomineeName: [null, [Validators.required, Validators.maxLength(100)]],
 			nomineeApplicantRelationShip: [null, [Validators.required, Validators.maxLength(100)]],
 			nomineeAddress: this.fb.group(this.nomineeAddrComponent.addressControls()),
+			// /* Nominee controls End *//
+
+			// Attachment //
+			attachments: [''],
 			licenseAgreed: [true],
-			/* Step 6 controls end */
+
+			// // applicantCorrespondenceAddress: this.fb.group(this.applicantCorrespondenceAddrComponent.addressControls()),
+			// correspondanceAddress: this.fb.group(this.applicantCorrespondenceAddrComponent.addressControls()),
+			// occupationAddress: this.fb.group(this.occupationAddrComponent.addressControls()),
+
 		});
+	}
+
+	getWordAmount(value) {
+		let words = this.getToWords(value);
+		let statusword = words + " Rs. Only"
+		this.affordableHousingForm.get('aggregateAnnualIncomeAmountInWords').setValue(statusword);
+	}
+
+
+
+	getToWords(amount) {
+		let toWords = require('to-words');
+
+		let words = '';
+		//toWords.convert(payData.amount);
+		if (amount > 0) {
+			words = toWords(amount);
+		} else {
+			words = " "
+		}
+		return words;
 	}
 
 	/**
@@ -335,11 +439,11 @@ export class NewAffordableHousingComponent implements OnInit {
 					memberAge: [data.memberAge ? data.memberAge : null, [Validators.required]]
 				})
 				break;
-			case 'placeOfChoice':
-				formGroupData = this.fb.group({
-					name: [null, [Validators.required, Validators.maxLength(200)]]
-				})
-				break;
+			// case 'placeOfChoice':
+			// 	formGroupData = this.fb.group({
+			// 		name: [null, [Validators.required, Validators.maxLength(200)]]
+			// 	})
+			// 	break;
 			case 'ownHouseDetail':
 			case 'ownLandPlotDetail':
 				formGroupData = this.fb.group({
@@ -377,9 +481,9 @@ export class NewAffordableHousingComponent implements OnInit {
 			case 'familyMembers':
 				formArrayData = this.affordableHousingForm.get('familyMembers') as FormArray;
 				break;
-			case 'placeOfChoice':
-				formArrayData = this.affordableHousingForm.get('placeOfChoice') as FormArray;
-				break;
+			// case 'placeOfChoice':
+			// 	formArrayData = this.affordableHousingForm.get('placeOfChoice') as FormArray;
+			// 	break;
 			case 'ownHouseDetail':
 				formArrayData = this.affordableHousingForm.get('ownHouseDetail') as FormArray;
 				break;
@@ -467,12 +571,12 @@ export class NewAffordableHousingComponent implements OnInit {
 	/**
 	 * This method is used to submit the PEC registration data
 	 */
-	onSubmit(dateChanged?: boolean) {
+	onSubmit() {
 
 		if (this.affordableHousingForm.invalid) {
-			//this.commonService.prrintInvalidForm(this.affordableHousingForm);
+			this.commonService.prrintInvalidForm(this.affordableHousingForm);
 			let count = this.affordableHousingConfiguration.getAllErrors(this.affordableHousingForm);
-			debugger;
+			
 			this.commonService.openAlert("Warning", this.affordableHousingConfiguration.ALL_FEILD_REQUIRED_MESSAGE, "warning", "", cb => {
 				switch (true) {
 					case (count <= 27):
@@ -516,14 +620,14 @@ export class NewAffordableHousingComponent implements OnInit {
 			return;
 		}
 		/* Normal submit*/
-		this.onSubmitUsingAPI(dateChanged);
+		this.onSubmitUsingAPI();
 
 	}
 
 	/**
 	 * This method is use for submit info using API
 	 */
-	onSubmitUsingAPI(dateChanged?: boolean) {
+	onSubmitUsingAPI() {
 		//this.affordableHousingForm.get('formStatus').setValue('APPROVED');
 		this.mandatoryFileCheck(this.affordableHousingForm.get('serviceFormId').value, this.attachmentList).then(data => {
 			if (data.status) {
@@ -533,8 +637,8 @@ export class NewAffordableHousingComponent implements OnInit {
 						this.formService.submitFormData(this.affordableHousingForm.get('serviceFormId').value).subscribe(res => {
 							this.commonService.openAlert(" Successful", "", "success", `</b>`);
 							this.resetForm();
-							},(err)=> {
-								this.commonService.openAlertFormSaveValidation('Warning!', err.error, 'warning');
+						}, (err) => {
+							this.commonService.openAlertFormSaveValidation('Warning!', err.error, 'warning');
 						});
 						return;
 					}
@@ -563,7 +667,7 @@ export class NewAffordableHousingComponent implements OnInit {
 		//this.showButtons = false;
 		this.affordableHousingForm.enable();
 		//this.createFormData();
-			// let pecNoTextBox = <HTMLInputElement>document.getElementById('pecNoTextBox');
+		// let pecNoTextBox = <HTMLInputElement>document.getElementById('pecNoTextBox');
 		// pecNoTextBox.value = null;
 	}
 	/**
@@ -591,87 +695,111 @@ export class NewAffordableHousingComponent implements OnInit {
 		})
 	}
 
+	
 	patchValue() {
-		const data = {
-			"applicantName": "Raju Bhai Patel",
-			"applicantFatherName": "Ghanshyam Patel",
-			"dateOfBirth": "2021-02-05",
-			"telephoneNumber": null,
-			"mobileNumber": "4555555555",
-			"email": null,
-			"correspondanceAddress": {
-
-				"addressType": "CORRESPONDANCE_ADDRESS",
-				"buildingName": "1",
-				"streetName": null,
-				"landmark": null,
-				"area": "jkhkhg",
-				"state": "Anhui Province",
-				"district": null,
-				"city": "Anqing",
-				"country": "CHINA",
-				"pincode": "111111",
-				"buildingNameGuj": "૧",
-			},
-			"occupation": "jhkhjkhj",
-			"organizationName": "khjkhj",
-			"occupationDesignation": "jkhjk",
-			"drivingLicenseNumber": null,
-			"voterIdNumber": null,
-			"aadharCardNumber": "122222222222",
-			"panCardNumber": "ABCDE1235A",
-			"rationCardNumber": null,
-			"occupationAddress": {
-
-				"addressType": "OCCUPATION_ADDRESS",
-				"buildingName": "1",
-				"streetName": null,
-				"landmark": null,
-				"area": "dfdasgfsdf@gmail.com",
-				"state": "Anhui Province",
-				"district": null,
-				"city": "Anqing",
-				"country": "CHINA",
-				"pincode": "222222",
-
-			},
-			"bankAccountNumber": "54444444444444",
-			"bank": {
-				"code": "BANK_OF_BARODA",
+		const obj = {
+			"schemeId": 1,
+			"projectId": 2,
+			"category": {
+				"code": "SC",
 				"name": null
 			},
-			"bankBranch": "uiiiiiiiiiii",
-			"bankIFSC": "LKLK0000000",
-			"bankMicrCode": "154444444",
-			"aggregateAnnualIncomeAmount": 1000,
-			"aggregateAnnualIncomeAmountInWords": "One thousand",
-			"canEdit": true,
-			"ownHouseDetail": [],
-			"ownLandPlotDetail": [],
-			"nomineeName": "dffffffff",
-			"nomineeApplicantRelationShip": "dffffffffff",
-			"nomineeAddress": {
-
-				"addressType": "NOMINEE",
-				"buildingName": "1",
-				"streetName": null,
-				"landmark": null,
-				"area": "dfs",
+			"firstApplicantFirstName": "Raju",
+			"firstApplicantMiddleName": "bhai",
+			"firstApplicantLastName": "Patel",
+			"firstAppHusWifeFirstName": "Shyam",
+			"firstAppHusWifeMiddleName": "bhai",
+			"firstAppHusWifeLastName": "Patel",
+			"firstAppDateOfBirth": "2002-01-27",
+			"firstAppMobileNumOne": "2323232323",
+			"firstAppCorrespondenceAddress": {
+				"buildingName": "12",
+				"streetName": "kishan",
+				"landmark": "sfasdfa",
+				"area": "dsf",
 				"state": "GUJARAT",
 				"district": null,
-				"city": "Ahmedabad",
+				"city": "Vadodara",
 				"country": "INDIA",
-				"pincode": "111111",
-				"buildingNameGuj": "૧",
-				"streetNameGuj": null,
-				"landmarkGuj": null,
-				"areaGuj": "દ્ફ્સ",
-				"stateGuj": null,
-				"districtGuj": null,
-				"cityGuj": null,
-				"countryGuj": null
-			}
+				"pincode": "232333"
+			},
+			"firstAppOccupationAddress": {
+				"buildingName": "12",
+				"streetName": "kishan",
+				"landmark": "sfasdfa",
+				"area": "dsf",
+				"state": "GUJARAT",
+				"district": null,
+				"city": "Vadodara",
+				"country": "INDIA",
+				"pincode": "232333"
+			},
+			"firstAppOccupation": "sdfsf",
+			"firstAppOrganizationName": "sdaf",
+			"firstAppOccupationDesignation": "safd",
+			"firstAppAadharCardNumber": "123456789123",
+			"firstAppPanCardNumber": "GMDSD3443S",
+
+			"secondApplicantFirstName": "Laxman",
+			"secondApplicantMiddleName": "Singh",
+			"secondApplicantLastName": "rathore",
+			"secondAppHusWifeFirstName": "Sita",
+			"secondAppHusWifeMiddleName": "Ram",
+			"secondAppHusWifeLastName": "Kumar",
+			"secondAppDateOfBirth": "2002-01-27",
+			"secondAppMobileNumOne": "2323232323",
+			"secondAppCorrespondenceAddress": {
+				"buildingName": "12",
+				"streetName": "kishan",
+				"landmark": "sfasdfa",
+				"area": "dsf",
+				"state": "GUJARAT",
+				"district": null,
+				"city": "Vadodara",
+				"country": "INDIA",
+				"pincode": "232333"
+			},
+
+			"secondAppOccupation": "ASE",
+			"secondAppOrganizationName": "NASCENT",
+			"secondAppOccupationDesignation": "CCC",
+			"secondAppAadharCardNumber": "123456789123",
+			"secondAppPanCardNumber": "GMDSD3443S",
+
+			"secondAppOccupationAddress": {
+				"buildingName": "12",
+				"streetName": "kishan",
+				"landmark": "sfasdfa",
+				"area": "dsf",
+				"state": "GUJARAT",
+				"district": null,
+				"city": "Vadodara",
+				"country": "INDIA",
+				"pincode": "232333"
+			},
+			"bankAccountNumber": "4565465454631313",
+			"bankBranch": "safd",
+			"bankIFSC": "ASDC0000000",
+			"bankMicrCode": "dsaf",
+			"aggregateAnnualIncomeAmount": "",
+			"aggregateAnnualIncomeAmountInWords": "",
+
+			"nomineeName": "adfa",
+			"nomineeApplicantRelationShip": "dsf",
+			"nomineeAddress": {
+				"buildingName": "dsf",
+				"streetName": "dfs",
+				"landmark": "dsf",
+				"area": "dsff",
+				"state": "GUJARAT",
+				"district": null,
+				"city": "Vadodara",
+				"country": "INDIA",
+				"pincode": "234343"
+			},
+			"licenseAgreed": true
 		}
-		this.affordableHousingForm.patchValue(data);
+
+		this.affordableHousingForm.patchValue(obj);
 	}
 }
