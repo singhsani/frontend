@@ -10,6 +10,7 @@ import swal from 'sweetalert2';
 import * as _ from 'lodash';
 import * as moment from 'moment';
 import { MatDialogConfig } from '@angular/material';
+import { FormGroup } from '@angular/forms';
 
 
 @Injectable({
@@ -348,5 +349,14 @@ export class CommonService {
 							words =  " "
 						}
 					return words;
+	}
+
+	prrintInvalidForm(form : FormGroup){
+		for (const field in form.controls) { // 'field' is a string
+				if (!form.get(field).valid) {
+					console.log(field);
+				}; // 'control' is a FormControl  
+
+			}
 	}
 }
