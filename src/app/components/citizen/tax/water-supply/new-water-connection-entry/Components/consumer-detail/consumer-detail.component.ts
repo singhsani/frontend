@@ -266,4 +266,15 @@ export class ConsumerDetailComponent implements OnInit {
   onChangePlumber(value) {
     this.plumberId = value;
   }
+
+  keyPressAlphaNumeric(event) {
+
+    var alphaNumeric = String.fromCharCode(event.keyCode);
+    if (/[a-zA-Z0-9]/.test(alphaNumeric)) {
+      return true;
+    } else {
+      event.preventDefault();
+      return false;
+    }
+  }
 }
