@@ -376,7 +376,7 @@ export class NewAffordableHousingComponent implements OnInit {
 
 	/**
 	 * Method is used edit editable data view.
-	 * @param row table row 
+	 * @param row table row
 	 */
 	editRecord(row: any) {
 		row.isEditMode = true;
@@ -399,9 +399,9 @@ export class NewAffordableHousingComponent implements OnInit {
 
 	/**
 	 * Method is used cancel editable dataview.
-	 * @param key  - 
-	 * @param row 
-	 * @param index 
+	 * @param key  -
+	 * @param row
+	 * @param index
 	 */
 	cancelRecord(key: string, row: any, index: number) {
 		try {
@@ -431,7 +431,7 @@ export class NewAffordableHousingComponent implements OnInit {
 	/**
 	 * this methode is used for create form group
 	 * @param key - identify for create group for which array
-	 * @param data - data is used for when get form 
+	 * @param data - data is used for when get form
 	 */
 	createFormGroup(key: string, data: any): FormGroup {
 
@@ -590,7 +590,7 @@ export class NewAffordableHousingComponent implements OnInit {
 	onSubmit() {
 
 		if (this.affordableHousingForm.invalid) {
-			this.commonService.prrintInvalidForm(this.affordableHousingForm);
+			//this.commonService.prrintInvalidForm(this.affordableHousingForm);
 			let count = this.affordableHousingConfiguration.getAllErrors(this.affordableHousingForm);
 
 			this.commonService.openAlert("Warning", this.affordableHousingConfiguration.ALL_FEILD_REQUIRED_MESSAGE, "warning", "", cb => {
