@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl, FormArray } from '@angular/forms';
 import * as moment from 'moment';
 import { CitizenConfig } from '../../citizen-config';
@@ -10,6 +10,7 @@ import { ManageRoutes } from 'src/app/config/routes-conf';
 import { ToastrService } from 'ngx-toastr';
 import { AffodableService } from '../services/AffordableService';
 import * as _ from 'lodash';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 
 @Component({
 	selector: 'app-new-affordable-housing',
@@ -36,6 +37,8 @@ export class NewAffordableHousingComponent implements OnInit {
 	minDate = moment().subtract(2, 'months').format('YYYY-MM-DD');
 
 	attachmentList: any = [];
+	modalJsonRef: BsModalRef;
+	
 	appliedForData = [];
 	projectData = [];
 
@@ -70,6 +73,7 @@ export class NewAffordableHousingComponent implements OnInit {
 		private router: Router,
 		private commonService: CommonService,
 		private toster: ToastrService,
+		private modalService: BsModalService,
 		private affodableService: AffodableService) { 
 		this.formService.apiType = "afhForm";
 		}
@@ -469,6 +473,16 @@ export class NewAffordableHousingComponent implements OnInit {
 				break;
 		}
 		return formGroupData;
+	}
+
+	/**
+   * This method is use for open modal.
+   */
+	 openTermModel(template: TemplateRef<any>) {
+		this.modalJsonRef = this.modalService.show(template);
+	}
+	hideModel() {
+		this.modalJsonRef.hide();
 	}
 
 	/**
