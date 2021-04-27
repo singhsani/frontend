@@ -11,6 +11,7 @@ import * as moment from 'moment';
 import { ManageRoutes } from '../../../../../config/routes-conf';
 import { CertificateConfig } from '../../certificate-config';
 import { TranslateService } from '../../../../../shared/modules/translate/translate.service';
+import { Console } from 'console';
 
 
 @Component({
@@ -1229,19 +1230,58 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
     }
 
     changeDocument(event: string) {
+        
         let brideGromDetailStatus = this.marriageFormGroup.get('marriageTimeGroomStatus').get('code').value;
         let marriageTimeBrideStatus = event;
-        if (brideGromDetailStatus == "DIVORCED" || marriageTimeBrideStatus == "DIVORCED") {
-
-            for (let file of this.accordingStatusUploadFileArray) {
-                if (file['dependentFieldName'] == null) {
-                    if (file['documentIdentifier'] == "VALID_DIVORCE_PAPER" || file['documentIdentifier'] == "DEATH_CERTIFICATE") {
-                        file['mandatory'] = true;
+        _.forEach(this.marriageFormGroup.get('serviceDetail').get('serviceUploadDocuments').value, (value) => {
+            if (brideGromDetailStatus == "DIVORCED") {
+                if (marriageTimeBrideStatus == "DIVORCED") {
+                    //  devorce certi true
+                    if (value['documentIdentifier'] === 'VALID_DIVORCE_PAPER') {
+                        value['mandatory'] = true;
+                        this.uploadFilesArray.push({
+                            'labelName': value.documentLabelEn,
+                            'fieldIdentifier': value.fieldIdentifier,
+                            'documentIdentifier': value.documentIdentifier
+                        });
                     }
-                    this.uploadFilesArray.push(file);
+            } else if (marriageTimeBrideStatus == "WIDOW") {
+                    // both true
+                    if ((value['documentIdentifier'] === 'VALID_DIVORCE_PAPER') || (value['documentIdentifier'] == "DEATH_CERTIFICATE")) {
+                        value['mandatory'] = true;
+                        this.uploadFilesArray.push({
+                            'labelName': value.documentLabelEn,
+                            'fieldIdentifier': value.fieldIdentifier,
+                            'documentIdentifier': value.documentIdentifier
+                        });
+                    }
+
                 }
             }
-        }
+            if (brideGromDetailStatus == "WIDOWER") {
+                if (marriageTimeBrideStatus == "DIVORCED") {
+                    //  both certi true
+                    if ((value['documentIdentifier'] === 'VALID_DIVORCE_PAPER') || (value['documentIdentifier'] == "DEATH_CERTIFICATE")) {
+                        value['mandatory'] = true;
+                        this.uploadFilesArray.push({
+                            'labelName': value.documentLabelEn,
+                            'fieldIdentifier': value.fieldIdentifier,
+                            'documentIdentifier': value.documentIdentifier
+                        });
+                    }
+                } else if (marriageTimeBrideStatus == "WIDOW") {
+                    // death true
+                    if (value['documentIdentifier'] === 'DEATH_CERTIFICATE') {
+                        value['mandatory'] = true;
+                        this.uploadFilesArray.push({
+                            'labelName': value.documentLabelEn,
+                            'fieldIdentifier': value.fieldIdentifier,
+                            'documentIdentifier': value.documentIdentifier
+                        });
+                    }
+                }
+            }
+        });
     }
 
     /**
@@ -1257,8 +1297,6 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
 	 * Method is create required document array
 	 */
     requiredDocumentList() {
-        
-
         this.uploadFilesArray = [];
 
         let organizationCategory = this.marriageFormGroup.get('groomReligion').value.code;
@@ -1268,8 +1306,9 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
         this.listOfDependentAtt.push(organizationCategory);
         this.listOfDependentAtt.push(groomVisa);
         this.listOfDependentAtt.push(brideVisa);
-        _.forEach(this.marriageFormGroup.get('serviceDetail').get('serviceUploadDocuments').value, (value) => {
 
+        _.forEach(this.marriageFormGroup.get('serviceDetail').get('serviceUploadDocuments').value, (value) => {
+        
             if (value.dependentFieldName == null && value.mandatory && value.isActive && value.requiredOnCitizenPortal) {
                 this.uploadFilesArray.push({
                     'labelName': value.documentLabelEn,
@@ -1304,14 +1343,11 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
                 }
 
             }
-            this.accordingStatusUploadFileArray.push(value);
 
         });
 
-        //jil console.log("uploadFileArray" +JSON.stringify(this.uploadFilesArray));
-
         // let groomreligionChange = this.marriageFormGroup.controls.groomReligion.get("code").value;
-        // let bridereligionChange = this.marriageFormGroup.controls.brideReligion.get("code").value;
+                // let bridereligionChange = this.marriageFormGroup.controls.brideReligion.get("code").value;
 
         // let groomVisa = this.marriageFormGroup.get("isGroomVisa").value;
         // if (groomVisa == null) {
