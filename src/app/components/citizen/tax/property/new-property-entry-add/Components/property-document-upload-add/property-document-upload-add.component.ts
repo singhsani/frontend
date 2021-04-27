@@ -5,6 +5,7 @@ import { NewPropertyEntryAddService } from '../../Services/new-property-entry-ad
 import { Router } from '@angular/router';
 import { AlertService } from 'src/app/vmcshared/Services/alert.service';
 import { ManageRoutes } from 'src/app/config/routes-conf';
+import { CommonService } from 'src/app/shared/services/common.service';
 
 @Component({
   selector: 'app-property-document-upload-add',
@@ -16,11 +17,13 @@ export class PropertyDocumentUploadAddComponent implements OnInit {
   subscription: Subscription;
   PropertyDocumentUploadDocs: Array<any> = [];
   modelProperty: any = {};
+  serviceFormId : String;
 
   constructor(private newNewPropertyEntryAddDataSharingService: NewPropertyEntryAddDataSharingService,
     private newNewPropertyEntryAddService: NewPropertyEntryAddService,
     private router: Router,
-    private alertService: AlertService) {
+    private alertService: AlertService,
+    private commonService: CommonService) {
     this.modelProperty = {};
   }
 
@@ -41,6 +44,9 @@ export class PropertyDocumentUploadAddComponent implements OnInit {
     this.PropertyDocumentUploadDocs = [];
     this.newNewPropertyEntryAddService.getPropertyAddUpload(id).subscribe(
       (data) => {
+        if(data && data.length > 0) {
+          this.serviceFormId = data[0].id;
+        }
         data.forEach(app => {
           this.PropertyDocumentUploadDocs.push(app);
         });
@@ -52,6 +58,9 @@ export class PropertyDocumentUploadAddComponent implements OnInit {
   }
 
   onSubmit() {
+    this.mandatoryFileCheck().then( data => {
+
+    if(data.status) {
     this.newNewPropertyEntryAddService.submit(this.modelProperty.propertyBasicId).subscribe(
       (data) => {
         if (data.status === 200) {
@@ -71,11 +80,38 @@ export class PropertyDocumentUploadAddComponent implements OnInit {
         else {
           this.alertService.error(error.error.message);
         }
-      })
+      });
+    }  else {
+      this.commonService.openAlert("File Upload", `Please upload file for "${data.fileName}"`, "warning");
+      return
+    }
+    })
 
   }
 
   onBackClick() {
     this.newNewPropertyEntryAddDataSharingService.updateDataSourceMoveStepper(2);
   }
+
+  mandatoryFileCheck() {
+    return new Promise<any>((resolve, reject) => {
+      this.newNewPropertyEntryAddService.getAttachmentList(this.serviceFormId).subscribe(uploadedDocs => {
+        if (uploadedDocs) {
+          let tempArray = [];
+          uploadedDocs.forEach(element => {
+            tempArray.push(element['fieldIdentifier']);
+          });
+          this.PropertyDocumentUploadDocs.forEach(doc => {
+            if (doc.mandatory && tempArray.indexOf(doc.fieldIdentifier) === -1) {
+              resolve({ fileName: doc.documentLabelEn, status: false })
+            }
+          });
+          resolve({ fileName: "", status: true });
+        } else {
+          resolve({ fileName: "", status: true })
+        }
+      })
+    })
+  }
+
 }
