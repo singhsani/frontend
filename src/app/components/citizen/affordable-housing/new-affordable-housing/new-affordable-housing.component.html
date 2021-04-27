@@ -114,7 +114,7 @@
 					<mat-form-field class="col-md-4">
 						<span matPrefix>+91 &nbsp;</span>
 						<input matInput OnlyNumber placeholder="{{'contact_no' | translate:translateKey}}" type="tel"
-							maxlength="15" formControlName="firstAppTelephoneNumber">
+							maxlength="10" minlength="10" formControlName="firstAppTelephoneNumber">
 						<control-messages [control]="affordableHousingForm.get('firstAppTelephoneNumber')">
 						</control-messages>
 					</mat-form-field>
@@ -122,14 +122,14 @@
 
 					<mat-form-field class="col-md-4">
 						<input matInput OnlyNumber placeholder="{{'Mobile No 1' | translate:translateKey}}" type="tel"
-							maxlength="10" formControlName="firstAppMobileNumOne" required>
+							maxlength="10" minlength="10" formControlName="firstAppMobileNumOne" required>
 						<control-messages [control]="affordableHousingForm.get('firstAppMobileNumOne')">
 						</control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<input matInput OnlyNumber placeholder="{{'Mobile No 2' | translate:translateKey}}" type="tel"
-							formControlName="firstAppMobileNumTwo" maxlength="10">
+							formControlName="firstAppMobileNumTwo" minlength="10" maxlength="10">
 						<control-messages [control]="affordableHousingForm.get('firstAppMobileNumTwo')">
 						</control-messages>
 					</mat-form-field>
@@ -315,7 +315,7 @@
 					<mat-form-field class="col-md-4">
 						<span matPrefix>+91 &nbsp;</span>
 						<input matInput OnlyNumber placeholder="{{'contact_no' | translate:translateKey}}" type="tel"
-							maxlength="15" formControlName="secondAppTelephoneNumber">
+							maxlength="10" minlength="10" formControlName="secondAppTelephoneNumber">
 						<control-messages [control]="affordableHousingForm.get('secondAppTelephoneNumber')">
 						</control-messages>
 					</mat-form-field>
@@ -323,14 +323,14 @@
 
 					<mat-form-field class="col-md-4">
 						<input matInput OnlyNumber placeholder="{{'Mobile No 1' | translate:translateKey}}" type="tel"
-							maxlength="10" formControlName="secondAppMobileNumOne" required>
+							maxlength="10" minlength="10" formControlName="secondAppMobileNumOne" required>
 						<control-messages [control]="affordableHousingForm.get('secondAppMobileNumOne')">
 						</control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<input matInput OnlyNumber placeholder="{{'Mobile No 2' | translate:translateKey}}" type="tel"
-							formControlName="secondAppMobileNumTwo" maxlength="10">
+							formControlName="secondAppMobileNumTwo" minlength="10" maxlength="10">
 						<control-messages [control]="affordableHousingForm.get('secondAppMobileNumTwo')">
 						</control-messages>
 					</mat-form-field>
@@ -1059,6 +1059,15 @@
 					</div>
 				</div>
 
+				<div class="row">
+					<div>
+						<mat-checkbox class="col accept-terms" required formControlName="licenseAgreed">
+
+						</mat-checkbox>
+					</div>
+					<a (click)="openTermModel(termCondition);" style="margin-top: 5px; margin-left: -25px"> I have
+						read and agree with <u style="color: rebeccapurple;">Terms and conditions</u> </a>
+				</div>
 
 				<app-action-bar [uploadFiles]="serverUploadFilesArray" [form]="affordableHousingForm"
 					(tabIndex)="onTabChange($event)" [paymentGateway]="paymentGateway"
@@ -1071,3 +1080,20 @@
 		</mat-tab-group>
 	</form>
 </mat-card>
+
+<ng-template #termCondition>
+
+	<div class="modal-body scrollModel">
+
+		• અરજી ફોર્મની રકમ રૂ.૧૦૦/- (રૂપિયા સો પુરા) રોકડેથી ભરવાના રહેશે, જે નોન-રીફંડેબલ રહેશે.<br>
+		૧.	અરજી સાથે ભરવાની ડિપોઝીટની રકમ રૂ.૨૦,૦૦૦/- (રૂપિયા વીસ હજાર પુરા) અરજી ફોર્મ સાથે ભરવાની રકમનો વડોદરામાં ચુકવણું થઇ શકે તેવા ડી.ડી./પે ઓર્ડર “મ્‍યુનિસિપલ કમિશ્‍નર, વડોદરા” ના નામનો આપવાનો રહેશે અથવા POS થી ચુકવણુ કરી શકાશે.
+		<br>૨.	મકાનની કુલ કિંમતની ઓછામાં ઓછી ૨૦% રકમ ડ્રો માં સફળ થયા બાદ વડોદરા મ્‍યુનિસિપલ કોર્પોરેશનમાં અરજદારે ત્રણ માસમાં ભરવાની રહેશે. ત્‍યારબાદ બાકી રહેતી ૮૦% રકમના એક સરખા દસ (૧૦) હપ્તા કરી પઝેશન સુધીના સમયગાળામાં સરખા માસિક અંતરે જમા કરાવવાની રહેશે તે ઉપરાંત છેલ્લા હપ્તા સાથે મેન્‍ટેનન્‍સ ડીપોઝીટ તરીકે ૫૦,૦૦૦ તથા અન્‍ય લગત, જો હોય તો, ચાર્જીસ પણ ભરપાઇ કરવાના રહેશે. સમયસર નાણાં જમા નહીં કરાવવામાં આવે તો મકાન નોટીસ આપ્યા વગર રદ કરવામાં આવશે ઉપરાંત ડિપોઝીટની રકમ સિવાયની રકમ જ પરત કરવામાં આવશે તેમજ આ રકમ પર કોઈ વ્યાજ આપવામાં આવશે નહી. 
+		<br>૩.	આવાસ યોજનાનું બાંધકામ પૂર્ણ થયા બાદ મકાનોની ફાળવણી થાય ત્યાં સુધી અરજદારે મકાનની નક્કી થયેલ પૂરેપૂરી કિંમત ભરપાઇ કરવાની રહેશે. ત્‍યારબાદ જ અરજદારને ફાળવવામાં આવેલા મકાનનો કબજો સોંપવામાં આવશે.
+
+	</div>
+	<div class="modal-footer customthead">
+		<button color="white" mat-stroked-button (click)="hideModel()">
+			{{'Ok' | translate: translateKey}}
+		</button>
+	</div>
+</ng-template>
