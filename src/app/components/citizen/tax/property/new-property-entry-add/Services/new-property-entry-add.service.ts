@@ -190,4 +190,8 @@ export class NewPropertyEntryAddService {
       .pipe(map((response: any) => response))
   }
 
+  getAttachmentList(serviceFormId) {
+    return this.http.get<Array<Object>>(`${Constants.assessmentModuleApiUrl}basic/attachments?serviceFormId=${serviceFormId}`);
+  }
+
 }
