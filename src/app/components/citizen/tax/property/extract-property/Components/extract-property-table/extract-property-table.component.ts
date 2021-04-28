@@ -175,6 +175,7 @@ export class ExtractPropertyTableComponent implements OnInit {
             let retAfterPayment: string = environment.returnUrl;
             if (err.status === 402) {
               let payData = this.commonNascentService.storePaymentInfo(err.error.data, retUrl, retAfterPayment);
+              let words = this.commonService.getToWords(payData.amount);
               let html =
                 `
               <div class="text-center">
@@ -182,7 +183,7 @@ export class ExtractPropertyTableComponent implements OnInit {
                 <div class="payAmount">
                   <i class="fa fa-inr" aria-hidden="true">` + payData.amount + `</i>
                 </div>
-                <p>Rupees in words</p>
+                <p>Rupees in words</p>` + words + ` Rupees Only
               </div>
               `
               this.commonNascentService.commonAlert('Payment Details', '', 'info', 'Make Payment!', false, html, cb => {
