@@ -15,21 +15,21 @@
             <div class="col-md-3">
                 <mat-form-field class="full-width-input">
                     <input trim="blur" matInput required maxlength="50" placeholder="First Name" name="firstName"
-                        #FirstName="ngModel" [(ngModel)]="model.firstName">
+                        #FirstName="ngModel" [(ngModel)]="model.firstName" (keypress)="keyPressAlphabetOnly($event)">
                     <mat-error *ngIf="FirstName.invalid">*First Name is required.</mat-error>
                 </mat-form-field>
             </div>
             <div class="col-md-3">
                 <mat-form-field class="full-width-input">
                     <input trim="blur" matInput maxlength="50" placeholder="Middle Name" name="middleName"
-                        #MiddleName="ngModel" [(ngModel)]="model.middleName">
+                        #MiddleName="ngModel" [(ngModel)]="model.middleName" (keypress)="keyPressAlphabetOnly($event)">
                 </mat-form-field>
             </div>
 
             <div class="col-md-3">
                 <mat-form-field class="full-width-input">
                     <input trim="blur" matInput required maxlength="50" placeholder="Last Name" name="lastName"
-                        #LastName="ngModel" [(ngModel)]="model.lastName">
+                        #LastName="ngModel" [(ngModel)]="model.lastName" (keypress)="keyPressAlphabetOnly($event)">
                     <mat-error *ngIf="LastName.invalid">*Last Name is required.</mat-error>
                 </mat-form-field>
             </div>
@@ -41,7 +41,7 @@
                     <input matInput [disabled]="model.propertyOccupierId>0" required number-only minlength="3"
                         maxlength="3" (input)="checkDuplicateCode($event);" placeholder="OccupierCode"
                         name="OccupierCode" #OccupierCode="ngModel" [(ngModel)]="model.occupierCode"
-                        (mouseenter)="show=1" (mouseleave)="show=0" #box (keyup.enter)="onEnter(box.value)">
+                        (mouseenter)="show=1" (mouseleave)="show=0" >
                     <mat-error *ngIf="OccupierCode.invalid && !(model.occupierCode)">*Code is required.</mat-error>
                     <mat-error *ngIf="OccupierCode.invalid && (model.occupierCode)">*Code is invalid.</mat-error>
                 </mat-form-field>

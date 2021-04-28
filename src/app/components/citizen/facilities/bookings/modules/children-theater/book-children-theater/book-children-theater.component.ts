@@ -125,7 +125,7 @@ export class BookChildrenTheaterComponent implements OnInit {
 	 * @param date get the selected date value
 	 */
 	onDateChange(date) {
-        let futureMonth = moment(date).add(36, 'month');
+        let futureMonth = moment(date).add(36, 'day');
         this.endMaxDate = moment(futureMonth).format("YYYY-MM-DD");
 	}
 

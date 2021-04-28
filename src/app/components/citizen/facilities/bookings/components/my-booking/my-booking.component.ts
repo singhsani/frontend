@@ -147,28 +147,43 @@ export class MyBookingComponent implements OnInit {
 	 * This method is use for open modal.
 	 */
 	openModal(template: TemplateRef<any>, scheduleList, refNumber, element) {
-		// We have changed AS PER REQUIREMENT ONLY FOR AMPHITHEATER FROM BA TEAM(Prashant).
-		if (this.bookingService.resourceType == 'amphiTheater') {
-			this.isBookingNoSlotNo = true;
-		} else {
-			this.isBookingNoSlotNo = false;
-		}
-		this.CancelRequestList = [];
-		this.refNumber = refNumber;
-		this.cancellationType = null;
-		this.element = element;
-		this.CancelSlotList = scheduleList.sort((a, b) => {
-			if ((new Date(a.bookingDate).getTime()) <= (new Date(b.bookingDate).getTime())) {
-				return 1;
-			} else {
-				return -1;
-			}
-		});
-		this.modalReqRef = this.modalService.show(template, Object.assign({ ignoreBackdropClick: true }, { class: 'gray modal-lg customWidth' }));
-		if (element.resourceType == "AMPHI_THEATER" || element.resourceType == "TOWNHALL" || element.resourceType == "STADIUM") {
-			this.allSlotDefualtSelected();
-			this.isAmphiCancellation = true;
-		}
+	  if(element.status === this.bookingConstant.SCRUTINY){
+	    this.commonService.confirmAlert('Are you sure to cancel?', "You won't be able to revert this!", 'warning', '', performDelete => {
+                     let object = {
+                       refNumber: element.refNumber,
+                       cancellationType: "BY_FORCE"
+                     }
+                     this.bookingService.cancelTownHall(object).subscribe(res => {
+                      if(res.success){
+                          this.toster.success('Successfully Cancelled');
+                      }
+                      this.getAllBooking();
+                     });
+              });
+	  }else{
+	    // We have changed AS PER REQUIREMENT ONLY FOR AMPHITHEATER FROM BA TEAM(Prashant).
+      		if (this.bookingService.resourceType == 'amphiTheater') {
+      			this.isBookingNoSlotNo = true;
+      		} else {
+      			this.isBookingNoSlotNo = false;
+      		}
+      		this.CancelRequestList = [];
+      		this.refNumber = refNumber;
+      		this.cancellationType = null;
+      		this.element = element;
+      		this.CancelSlotList = scheduleList.sort((a, b) => {
+      			if ((new Date(a.bookingDate).getTime()) <= (new Date(b.bookingDate).getTime())) {
+      				return 1;
+      			} else {
+      				return -1;
+      			}
+      		});
+      		this.modalReqRef = this.modalService.show(template, Object.assign({ ignoreBackdropClick: true }, { class: 'gray modal-lg customWidth' }));
+      		if (element.resourceType == "AMPHI_THEATER" || element.resourceType == "TOWNHALL" || element.resourceType == "STADIUM" || element.resourceType =="CHILDREN_THEATER") {
+      			this.allSlotDefualtSelected();
+      			this.isAmphiCancellation = true;
+      		}
+	  }
 	}
 
 	/**
@@ -548,9 +563,9 @@ export class MyBookingComponent implements OnInit {
 	showCancelBtn(element) {
 		this.slotBookingList.pop();
 		// element.status != bookingConstant.PAYMENT_REQUIRED && element.status != bookingConstant.CANCELLATION_REQUEST
-		if(element.resourceType === 'CHILDREN_THEATER' && element.status === this.bookingConstant.BOOKED) {
-			return true
-		}
+// 		if(element.resourceType === 'CHILDREN_THEATER' && element.status === this.bookingConstant.BOOKED) {
+// 			return true
+// 		}
 		if (element.status === this.bookingConstant.PAYMENT_REQUIRED
 			|| element.status === this.bookingConstant.CANCELLED
 			|| element.status === this.bookingConstant.WAITINGLIST
@@ -561,11 +576,15 @@ export class MyBookingComponent implements OnInit {
 			|| element.status === this.bookingConstant.REFUND_REQUEST
 			|| element.status === this.bookingConstant.REFUND_APPROVED
 			|| element.status === this.bookingConstant.COMPLETED
-			|| element.resourceType ===this.bookingConstant.CHILDREN_THEATER
-			|| element.status === this.bookingConstant.SCRUTINY
 			) {
 			return false;
-		}
+		}else if(element.status === this.bookingConstant.SCRUTINY){
+         if(element.resourceType === "STADIUM" || element.resourceType === "CHILDREN_THEATER"){
+             return true;
+         }else{
+             return false;
+         }
+     }
 
 		return true;
 	}

@@ -14,9 +14,9 @@ import { Router } from '@angular/router';
 export class TransferDocumentUploadComponent implements OnInit {
 
   subscription: Subscription;
-  transferDocumentUploadDocs : Array<any> = [];
+  transferDocumentUploadDocs: Array<any> = [];
   propertyDetailModel: any = {};
-  
+
   constructor(private transferPropertyDataSharingService: TransferPropertyDataSharingService,
     private transferPropertyService: TransferPropertyService,
     private router: Router,
@@ -27,7 +27,7 @@ export class TransferDocumentUploadComponent implements OnInit {
     this.subscription = this.transferPropertyDataSharingService.observablePropertyDetailModel.subscribe((data) => {
       if (data) {
         this.propertyDetailModel = data;
-        if(this.propertyDetailModel.propertyTransferId){
+        if (this.propertyDetailModel.propertyTransferId) {
           this.getFormDataDocuments(this.propertyDetailModel.propertyTransferId);
         }
       }
@@ -58,24 +58,24 @@ export class TransferDocumentUploadComponent implements OnInit {
   }
 
   onBack() {
-    this.transferPropertyDataSharingService.updateDataSourceMoveStepper(2);
+    this.transferPropertyDataSharingService.updateDataSourceMoveStepper(1);
   }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
 
-  getFormDataDocuments(id : any) {
+  getFormDataDocuments(id: any) {
     this.transferDocumentUploadDocs = [];
     this.transferPropertyService.gettranferPropertyUpload(id).subscribe(
       (data) => {
         data.forEach(app => {
           this.transferDocumentUploadDocs.push(app);
         });
-        
+
       },
       (error) => {
-        
+
       });
   }
 
