@@ -174,6 +174,8 @@ export class ExtractPropertyTableComponent implements OnInit {
             let retUrl: string = '/citizen/my-applications';
             let retAfterPayment: string = environment.returnUrl;
             if (err.status === 402) {
+              const errData = err.error.data;
+              retUrl = retUrl + '?apiCode='+ errData.serviceCode + '&id=' + errData.serviceFormId;
               let payData = this.commonNascentService.storePaymentInfo(err.error.data, retUrl, retAfterPayment);
               let html =
                 `
