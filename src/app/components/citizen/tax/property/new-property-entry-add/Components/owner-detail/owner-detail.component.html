@@ -23,20 +23,20 @@
             <div class="col-md-3">
                 <mat-form-field class="full-width-input">
                     <input trim="blur" matInput required maxlength="50" placeholder="First Name" name="firstName"
-                        #FirstName="ngModel" [(ngModel)]="ownerModel.firstName">
+                        #FirstName="ngModel" [(ngModel)]="ownerModel.firstName" (keypress)="keyPressAlphabetOnly($event)">
                     <mat-error *ngIf="FirstName.invalid">*First Name is required.</mat-error>
                 </mat-form-field>
             </div>
             <div class="col-md-3">
                 <mat-form-field class="full-width-input">
                     <input trim="blur" matInput maxlength="50" placeholder="Middle Name" name="middleName"
-                        [(ngModel)]="ownerModel.middleName">
+                        [(ngModel)]="ownerModel.middleName" (keypress)="keyPressAlphabetOnly($event)">
                 </mat-form-field>
             </div>
             <div class="col-md-2">
                 <mat-form-field class="full-width-input">
                     <input trim="blur" matInput required maxlength="50" placeholder="Last Name" name="lastName"
-                        #LastName="ngModel" [(ngModel)]="ownerModel.lastName">
+                        #LastName="ngModel" [(ngModel)]="ownerModel.lastName" (keypress)="keyPressAlphabetOnly($event)">
                     <mat-error *ngIf="LastName.invalid">*Last Name is required.</mat-error>
                 </mat-form-field>
             </div>
