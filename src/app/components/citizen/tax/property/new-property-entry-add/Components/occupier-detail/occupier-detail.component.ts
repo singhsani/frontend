@@ -24,7 +24,7 @@ export class OccupierDetailComponent implements OnInit {
   titleList = [];
   model: OccupierModel;
   subscription: Subscription;
-    isOccupierExist: boolean = true;
+  isOccupierExist: boolean = true;
   isShowTable: boolean = false;
   isDuplicateCode: boolean = false;
   @ViewChild(MatSort) sort: MatSort;
@@ -34,14 +34,14 @@ export class OccupierDetailComponent implements OnInit {
   constructor(private newNewPropertyEntryAddDataSharingService: NewPropertyEntryAddDataSharingService,
     private commonService: CommonService,
     private newNewPropertyEntryAddService: NewPropertyEntryAddService,
-    private alertService: AlertService,private router: Router) {
+    private alertService: AlertService, private router: Router) {
     this.modelProperty = {}
     this.isOccupierExist = true;
     this.isShowTable = false;
 
   }
 
-  show:Number = 0;
+  show: Number = 0;
 
 
   ngOnInit() {
@@ -115,7 +115,7 @@ export class OccupierDetailComponent implements OnInit {
   }
 
   saveOccupier(formDetail: NgForm) {
-    
+
     if (formDetail.form.valid && this.isDuplicateCode == false) {
       this.model.propertyBasicVersionId = this.modelProperty.propertyBasicId
       this.newNewPropertyEntryAddService.saveOccupier(this.model).subscribe(
@@ -154,10 +154,10 @@ export class OccupierDetailComponent implements OnInit {
 
   moveToDocumentsTab() {
     this.checkOccupierExist();
-      if (this.isOccupierExist && this.isUnitDetailEntered) {
-        this.newNewPropertyEntryAddDataSharingService.updateDataSourceMoveStepper(4);
-      }
+    if (this.isOccupierExist && this.isUnitDetailEntered) {
+      this.newNewPropertyEntryAddDataSharingService.updateDataSourceMoveStepper(4);
     }
+  }
 
   delete(item) {
     this.alertService.confirm();
@@ -239,8 +239,8 @@ export class OccupierDetailComponent implements OnInit {
   }
 
   onSubmit() {
-  //  this.checkUnitDetailIsExist();
-  this.checkOccupierExist();
+    //  this.checkUnitDetailIsExist();
+    this.checkOccupierExist();
     if (this.isOccupierExist && this.isUnitDetailEntered) {
       this.newNewPropertyEntryAddService.submit(this.modelProperty.propertyBasicId).subscribe(
         (data) => {
@@ -269,7 +269,20 @@ export class OccupierDetailComponent implements OnInit {
     this.newNewPropertyEntryAddDataSharingService.updateDataSourceMoveStepper(1);
   }
 
-  onEnter(value: string){
-     console.log('value at 276->',value);
+  onEnter(value: string) {
+    console.log('value at 276->', value);
   }
+
+  keyPressAlphabetOnly(event) {
+
+    var inp = String.fromCharCode(event.keyCode);
+
+    if (/[a-zA-Z]/.test(inp)) {
+      return true;
+    } else {
+      event.preventDefault();
+      return false;
+    }
+  }
+
 }
