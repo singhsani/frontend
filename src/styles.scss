@@ -736,15 +736,16 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
 
 .borderInputNone .mat-form-field-underline { background-color: transparent;}
 
-
-body {-webkit-overflow-scrolling: touch; -webkit-font-smoothing: antialiased;  -moz-osx-font-smoothing: grayscale; -webkit-tap-highlight-color: transparent; -webkit-touch-callout: none;}
+::-webkit-scrollbar {width: 5px; height: 5px;}
+::-webkit-scrollbar-track {background: #D1C4E9; border-radius:3px;}
+::-webkit-scrollbar-thumb {background: #7E57C2; border-radius:3px;}
+::-webkit-scrollbar-thumb:hover {background: #5E35B1;}
 * { scrollbar-color: #7E57C2 #D1C4E9 !important; scrollbar-width: thin !important;}
 
 @media (min-width: 992px) {
 ::-webkit-scrollbar {width: 10px; height: 10px;}
 ::-webkit-scrollbar-track {background: #D1C4E9; border-radius:5px;}
 ::-webkit-scrollbar-thumb {background: #7E57C2; border-radius:5px;}
-::-webkit-scrollbar-thumb:hover {background: #5E35B1;}
 }
 // Responsive CSS Part 1 ------------------------------------------------
 @media (max-width: 991px) {
@@ -796,7 +797,9 @@ body {-webkit-overflow-scrolling: touch; -webkit-font-smoothing: antialiased;  -
 
     .profilePage .updateProfileBtn {position: static; width: 100%;}
     .stepperNav .mat-raised-button {padding: 0 20px !important; min-width: initial; line-height: 30px !important;}
-    .stepperNav .mat-tab-label .mat-tab-label-content {line-height: 1.15; font-size: 90%;}
+    .stepperNav .mat-tab-label .mat-tab-label-content {line-height: 1.15; font-size: 80%;
+        .ng-star-inserted {padding-top: 5px;}
+    }
     .mainMenu {
         .linkName {display: none;}
         .mat-icon {
