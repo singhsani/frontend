@@ -205,4 +205,16 @@ export class CommonService {
         subConfirm.unsubscribe();
         });
     }
+
+    getToWords(amount){
+		let toWords = require('to-words');
+					let words = '';
+						//toWords.convert(payData.amount);
+						if(amount>0){
+							words = toWords(amount);
+						}else{
+							words =  " "
+						}
+					return words;
+	}
 }
