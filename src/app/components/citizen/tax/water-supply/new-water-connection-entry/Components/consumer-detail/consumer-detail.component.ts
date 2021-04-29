@@ -268,7 +268,7 @@ export class ConsumerDetailComponent implements OnInit {
   }
 
   keyPressAlphaNumeric(event) {
-
+    
     var alphaNumeric = String.fromCharCode(event.keyCode);
     if (/[a-zA-Z0-9]/.test(alphaNumeric)) {
       return true;
@@ -277,4 +277,5 @@ export class ConsumerDetailComponent implements OnInit {
       return false;
     }
   }
+
 }
