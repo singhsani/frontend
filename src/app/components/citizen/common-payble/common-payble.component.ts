@@ -33,12 +33,12 @@ export class CommonPaybleComponent implements OnInit {
   isRecordExists: boolean = false;
   isECRCSearch: boolean = false;
 
-  ispropertyTax: boolean = false;
+  ispropertyTax :  boolean = false;
   userServicesList = [];
   applicationrouter: any;
   redirectURLAfterPayment: any;
 
-  model: any;
+  model : any;
 
   payModeArr: Array<any> = [
     { name: 'Net Banking', code: 'NETBANKING' }, { name: 'Debit / Credit Card banking', code: 'CARDBANKING' }
@@ -52,7 +52,7 @@ export class CommonPaybleComponent implements OnInit {
   inputData: any
   selected: any;
 
-  collectionModel: any;
+  collectionModel : any;
 
   constructor(
     private formService: FormsActionsService,
@@ -113,7 +113,6 @@ export class CommonPaybleComponent implements OnInit {
    * @param payData - json data as payment data.
    */
   makePayment(payData) {
-   
     if (this.paymentsForm.get('amount').value < 0 || !this.paymentsForm.get('amount').value) {
       this.commonService.openAlert("Warning", "Insufficient amount", "warning");
       return;
@@ -211,14 +210,14 @@ export class CommonPaybleComponent implements OnInit {
    * @param searchable - boolean (true/false)
    */
   showHideSearchable(paySerCode) {
-    if (paySerCode === 'PAY_PROF_TAX') {
+    if (paySerCode === 'PAY_PROF_TAX'){
       this.placeholder = 'PEC Number';
-    } else if (paySerCode === 'PRO-ASS') {
+    }else if(paySerCode === 'PRO-ASS'){
       this.placeholder = 'Property Number';
-    } else {
+    }else{
       this.placeholder = 'Reference Number';
     }
-
+      
     this.isRecordExists = false;
     this.responseData = undefined;
     this.paymentsForm.get('amount').setValue(null);
@@ -226,38 +225,38 @@ export class CommonPaybleComponent implements OnInit {
     this.currPaySerData = _.filter(this.PayableServices, { 'code': paySerCode })[0];
   }
 
-  getServices() {
-
+  getServices(){
+    
     let serviceType = this.paymentsForm.get('payableServices').get('code').value;
-    if (serviceType === 'PRO-ASS') {
+    if(serviceType === 'PRO-ASS'){
       this.getAmountDataProperty();
-    } else if (serviceType === 'PAY_PROF_TAX') {
+    }else if (serviceType === 'PAY_PROF_TAX'){
       this.ispropertyTax = false;
       this.getAmountData();
-    } else {
+    }else{
       this.ispropertyTax = false;
       this.getCitizenForm();
     }
-
+    
   }
-  getAmountDataProperty() {
-
+  getAmountDataProperty(){
+    
     this.ispropertyTax = true;
 
     this.collectionService.getoccupierOutstandingAmount({ propertyNo: this.paymentsForm.get('refNumber').value }).subscribe(
       (data) => {
         if (data.status === 200) {
-
+         
           this.collectionModel = data.body;
           this.model = this.collectionModel.payableAmount;
-
+          
         }
       },
       (error) => {
-
-
+        
+       
       });
-
+  
 
   }
   /**
@@ -365,7 +364,7 @@ export class CommonPaybleComponent implements OnInit {
   }
 
   getCitizenForm() {
-
+    
     if (this.paymentsForm.invalid) {
       this.markFormGroupTouched(this.paymentsForm);
       this.commonService.openAlert("Warning", "Enter all the required information", "warning");
@@ -405,7 +404,7 @@ export class CommonPaybleComponent implements OnInit {
         sectionToPrintReceipt.innerHTML = receiptResponse;
         setTimeout(() => {
           window.print();
-        }, 2000);
+        }, 400);
       },
       err => {
         this.commonService.openAlert('Error!', err.error[0].message, 'error');

@@ -33,7 +33,7 @@
 					<mat-form-field class="col-md-4">
 						<input matInput  disabled readonly autocomplete="off" appDate
 							[matDatepicker]="DateOflicenseIssueDate" formControlName="licenseIssueDate"
-							(dateChange)="dateFormat($event.value,'licenseIssueDate')"
+							
 							placeholder="{{ 'issue_date' | translate:translateKey }}">
 						<mat-datepicker-toggle matSuffix [for]="DateOflicenseIssueDate"></mat-datepicker-toggle>
 						<mat-datepicker touchUi="true" #DateOflicenseIssueDate></mat-datepicker>

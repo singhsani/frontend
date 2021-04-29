@@ -929,7 +929,7 @@ export class ShopLicNewComponent implements OnInit {
 		
 		if(index == 5) {
 			this.licenseConfiguration.currentTabIndex = 5;
-				this.commonService.openAlert('Field Error', 'Should be agree with given details', 'warning');
+				this.commonService.openAlert('Feild Error', 'Should be agree with given details', 'warning');
 				this.checkDynamicTableValidate();
 				return;
 		} else if (index) {
@@ -1430,7 +1430,7 @@ export class ShopLicNewComponent implements OnInit {
 	// 	  }
 	// }
 
-	validatePECNumber(formControl:FormControl){
+	validatePECNumber(formControl:any){
 		
 		let numberValue = formControl.value.substring(0,3)
 		if(!formControl.value || formControl.value == ""){
@@ -1463,7 +1463,7 @@ export class ShopLicNewComponent implements OnInit {
 		
 	}
 
-	validatePRCNumber(formControl:FormControl){
+	validatePRCNumber(formControl:any){
 		
 		let numberValue = formControl.value.substring(0,3)
 		if(!formControl.value || formControl.value == ""){

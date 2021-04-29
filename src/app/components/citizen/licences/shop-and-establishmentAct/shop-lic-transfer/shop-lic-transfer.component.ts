@@ -1007,7 +1007,7 @@ export class ShopLicTransferComponent implements OnInit {
 		
 		if(index == 5) {
 			this.licenseConfiguration.currentTabIndex = 5;
-				this.commonService.openAlert('Field Error', 'Should be agree with given details', 'warning');
+				this.commonService.openAlert('Feild Error', 'Should be agree with given details', 'warning');
 				this.checkDynamicTableValidate();
 				return;
 		} else if (index) {
@@ -1498,7 +1498,7 @@ export class ShopLicTransferComponent implements OnInit {
 
 	}
 
-	validatePecNumber(formControl : FormControl){
+	validatePecNumber(formControl : any){
 		let numberValue = formControl.value.substring(0,3)
 		  console.log("Pec/Prc ", formControl);
 		  
@@ -1530,7 +1530,7 @@ export class ShopLicTransferComponent implements OnInit {
 		//   }
 	}
 
-	validatePRCNumber(formControl:FormControl){
+	validatePRCNumber(formControl:any){
 		
 		let numberValue = formControl.value.substring(0,3)
 		if(!formControl.value || formControl.value == ""){

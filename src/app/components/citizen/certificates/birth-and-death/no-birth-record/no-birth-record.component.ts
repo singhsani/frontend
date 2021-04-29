@@ -244,6 +244,7 @@ export class NoBirthRecordComponent implements OnInit {
 	 */
 
 	// getFileObjectContained(fieldIdentifier: string) {
+	// 	debugger;
 	// 	let found: boolean = false;
 	// 	for (let i = 0; i < this.uploadFileArray.length; i++) {
 	// 		if (this.uploadFileArray[i].fieldIdentifier == fieldIdentifier) {

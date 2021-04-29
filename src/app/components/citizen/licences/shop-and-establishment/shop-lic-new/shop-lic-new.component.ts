@@ -688,7 +688,7 @@ export class ShopLicNewComponent implements OnInit {
 				break;
 				case flag <= 63:
 				this.licenseConfiguration.currentTabIndex = 7;
-				this.commonService.openAlert('Field Error', 'Should be agree with given details', 'warning');
+				this.commonService.openAlert('Feild Error', 'Should be agree with given details', 'warning');
 				break;
 			default:
 				this.licenseConfiguration.currentTabIndex = 0;

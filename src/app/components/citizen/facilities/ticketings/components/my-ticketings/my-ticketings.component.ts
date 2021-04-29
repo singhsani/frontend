@@ -356,7 +356,7 @@ export class MyTicketingsComponent implements OnInit {
         });
     } else {
       this.bookingUtils.getAllErrors(this.searchTicketingsForm);
-      this.commonService.openAlert('Field Error', this.ticketingConstants.ALL_FEILD_REQUIRED_MESSAGE, 'warning');
+      this.commonService.openAlert('Feild Error', this.ticketingConstants.ALL_FEILD_REQUIRED_MESSAGE, 'warning');
     }
   }
 
