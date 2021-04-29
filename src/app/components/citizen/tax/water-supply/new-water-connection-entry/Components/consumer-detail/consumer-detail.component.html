@@ -268,15 +268,16 @@
         <div class="row">
             <div class="col-md-6">
                 <mat-form-field class="full-width-input">
-                    <input trim="blur"  matInput (keypress)="keyPressAlphaNumeric($event)" maxlength="20"
-                     matInput name="completionCertificateNo" [(ngModel)]="model.completionCertificateNo"
+                    <input trim="blur" matInput (keypress)="keyPressAlphaNumeric($event)" maxlength="20"
+                    name="completionCertificateNo" [(ngModel)]="model.completionCertificateNo"
                         #CompletionCertificateNo="ngModel" placeholder="Completion Certificate No">
                     <mat-error *ngIf="CompletionCertificateNo.invalid">*Completion Certificate No is required.</mat-error>
                 </mat-form-field>
             </div>
             <div class="col-md-6">
                 <mat-form-field class="full-width-input">
-                    <input trim="blur" (keypress)="keyPressAlphaNumeric($event)" maxlength="20" matInput name="occupancyCertificateNo" [(ngModel)]="model.occupancyCertificateNo"
+                    <input trim="blur"  matInput  (keypress)="keyPressAlphaNumeric($event)" maxlength="20"
+                    name="occupancyCertificateNo" [(ngModel)]="model.occupancyCertificateNo"
                         #OccupancyCertificateNo="ngModel" placeholder="Occupancy Certificate No">
                     <mat-error *ngIf="OccupancyCertificateNo.invalid">*Occupancy Certificate No is required.</mat-error>
                 </mat-form-field>

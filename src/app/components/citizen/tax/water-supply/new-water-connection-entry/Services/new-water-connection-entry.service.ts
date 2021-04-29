@@ -129,4 +129,5 @@ export class NewWaterConnectionEntryService {
   getAttachmentList(serviceFormId) {
     return this.http.get<Array<Object>>(`${Constants.baseApiWaterUrl}connection/attachments?serviceFormId=${serviceFormId}`);
   }
+  
 }
