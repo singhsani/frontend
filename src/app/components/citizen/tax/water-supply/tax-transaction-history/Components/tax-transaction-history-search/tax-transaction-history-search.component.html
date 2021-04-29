@@ -13,11 +13,12 @@
             <mat-error *ngIf="TransactionTypeId.errors.required">*Transaction Type is required.</mat-error>
           </div>
         </div>
-      </div>  
+      </div>
       <div class="col-md-5">
         <mat-form-field class="full-width-input">
           <input required trim="blur" matInput name="propertyNo" placeholder="Property No"
-            [(ngModel)]="searchModel.propertyNo" maxlength="30" #PropertyNo="ngModel">
+            [(ngModel)]="searchModel.propertyNo" mask-property-no-with-occuiper-code maxlength="16" minlength="16"
+            matInput name="propertyNo" #PropertyNo="ngModel">
           <mat-error *ngIf="PropertyNo.invalid">*Property No is required.</mat-error>
         </mat-form-field>
       </div>
