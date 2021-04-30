@@ -202,7 +202,7 @@
 				<div class="row">
 
 					<mat-form-field class="col-md-4">
-						<input matInput required OnlyNumber [maxlength]="fireFacilityConfig.contactNumberLength" type="tel"
+						<input matInput required OnlyNumber [maxlength]="fireFacilityConfig.contactNumberLength" type="tel" maxlength="10" minlength="10"
 						 formControlName="architectContactNo" placeholder="{{'architect_contact_number' | translate:translateKey }}">
 						<control-messages [control]="finalFireNocForm.get('architectContactNo')"></control-messages>
 					</mat-form-field>
@@ -310,7 +310,7 @@
 						<control-messages [control]="finalFireNocForm.get('buildingHeight')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput maxlength="5" required appAlphaNumeric placeholder="{{'total_building_floor' | translate:translateKey}}"
+						<input matInput maxlength="5" required OnlyNumber placeholder="{{'total_building_floor' | translate:translateKey}}"
 						 formControlName="totalBuildingFloor">
 						<control-messages [control]="finalFireNocForm.get('totalBuildingFloor')"></control-messages>
 					</mat-form-field>

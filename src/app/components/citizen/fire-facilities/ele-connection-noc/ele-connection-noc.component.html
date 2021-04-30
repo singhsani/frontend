@@ -180,7 +180,7 @@
 					</ng-container>
 				</div>
 
-				<app-action-bar [paymentGateway]="paymentGateway" [uploadFiles]="uploadFilesArray" [form]="electricConnectionForm" (tabIndex)="fireFacilityConfig.onFormTabChange($event) "
+				<app-action-bar [paymentGateway]="paymentGateway" (handleOnSaveAndNext)="documentManage()" [uploadFiles]="uploadFilesArray" [form]="electricConnectionForm" (tabIndex)="fireFacilityConfig.onFormTabChange($event) "
 				 (handleErrors)="handleErrorsOnSubmit($event)" [stepInfo]="{step: 'final', next: 3, back: 1}"></app-action-bar>
 
 			</mat-tab>

@@ -301,7 +301,7 @@ export class FinalFireNocComponent implements OnInit {
 			architectPermanentAddress: [null, [Validators.required, Validators.maxLength(300)]],
 			architectPermanentAddressGuj: [null, [Validators.required, Validators.maxLength(900)]],
 
-			architectContactNo: [null, [Validators.required, Validators.maxLength(this.fireFacilityConfig.contactNumberLength)]],
+			architectContactNo: [null, [Validators.required, Validators.maxLength(10)]],
 			siteAddress: [null, [Validators.required, Validators.maxLength(300)]],
 			siteAddressGuj: [null, [Validators.required, Validators.maxLength(900)]],
 			fireVendorType: this.fb.group({
