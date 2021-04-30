@@ -306,7 +306,7 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput maxlength="5" required appNumeric placeholder="{{'building_height' | translate:translateKey}}"
+						<input matInput maxlength="5" required type="number" appNumeric placeholder="{{'building_height' | translate:translateKey}}"
 						 formControlName="buildingHeight">
 						<control-messages [control]="provisionalNocForm.get('buildingHeight')"></control-messages>
 					</mat-form-field>
