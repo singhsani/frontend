@@ -240,7 +240,8 @@
             </div>
             <div class="col-md-6">
                 <mat-form-field class="full-width-input">
-                    <input trim="blur" matInput name="gasConnectionNo" [(ngModel)]="model.gasConnectionNo"
+                    <input trim="blur" matInput (keypress)="keyPressAlphaNumeric($event)" maxlength="20"
+                     name="gasConnectionNo" [(ngModel)]="model.gasConnectionNo"
                         #GasConnectionNo="ngModel" placeholder="Gas Connection No">
                     <mat-error *ngIf="GasConnectionNo.invalid">*Gas Connection No is required.</mat-error>
                 </mat-form-field>
@@ -249,14 +250,16 @@
         <div class="row">
             <div class="col-md-6">
                 <mat-form-field class="full-width-input">
-                    <input trim="blur" matInput name="electricityConnectionNo" [(ngModel)]="model.electricityConnectionNo"
+                    <input trim="blur" matInput (keypress)="keyPressAlphaNumeric($event)" maxlength="20" 
+                    name="electricityConnectionNo" [(ngModel)]="model.electricityConnectionNo"
                         #ElectricityConnectionNo="ngModel" placeholder="Electricity Connection No">
                     <mat-error *ngIf="ElectricityConnectionNo.invalid">*Electricity Connection No is required.</mat-error>
                 </mat-form-field>
             </div>
             <div class="col-md-6">
                 <mat-form-field class="full-width-input">
-                    <input trim="blur" matInput name="buildingPermissionNo" [(ngModel)]="model.buildingPermissionNo"
+                    <input trim="blur" matInput (keypress)="keyPressAlphaNumeric($event)" maxlength="20"
+                     name="buildingPermissionNo" [(ngModel)]="model.buildingPermissionNo"
                         #BuildingPermissionNo="ngModel" placeholder="Building Permission No">
                     <mat-error *ngIf="BuildingPermissionNo.invalid">*Building Permission No is required.</mat-error>
                 </mat-form-field>
