@@ -21,7 +21,7 @@
 	
 </div>
 
-<!--<button (click)="patchValue2()">Patch</button>-->
+<button (click)="patchValue2()">Patch</button>
 
 <mat-card class="formClass cardBorder" [hidden]="isGuideLineActive">
 	<form [formGroup]="shopLicNewForm">
@@ -783,7 +783,7 @@
 				<app-action-bar [uploadFiles]="uploadFilesArray" [paymentGateway]="paymentGateway"
 					[form]="shopLicNewForm" (handleErrors)="handleErrorsOnSubmit($event) "
 					(tabIndex)="licenseConfiguration.onFormTabChange($event) "
-					[stepInfo]="{step: 'final', next:7, back: 5} "></app-action-bar>
+					[stepInfo]="{step: 'final', next:7, back: 4} "></app-action-bar>
 
 			</mat-tab>
 			<!-- step Attachment Ends -->
