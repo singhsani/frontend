@@ -37,6 +37,18 @@
         <div class="row">
 
             <div class="col-md-2">
+                <div class="ngSelect" style="min-width: 100%;">
+                    <ng-select required [disabled]="model.propertyOccupierId>0" placeholder="OccupierCode *" [items]="occupierList" bindValue="itemCode"
+                        bindLabel="itemName" name="occupierCode" [(ngModel)]="model.occupierCode" #occupierCode="ngModel"
+                        [ngClass]="{'ng-invalid ng-touched':  form.submitted && occupierCode.invalid}"
+                        (mouseenter)="show=1" (mouseleave)="show=0">
+                        <mat-error *ngIf="occupierCode.invalid && !(model.occupierCode)">*Code is required.</mat-error>
+                    <mat-error *ngIf="occupierCode.invalid && (model.occupierCode)">*Code is invalid.</mat-error>
+                    </ng-select>                 
+                </div>
+            </div>
+
+            <!-- <div class="col-md-2">
                 <mat-form-field class="full-width-input">
                     <input matInput [disabled]="model.propertyOccupierId>0" required number-only minlength="3"
                         maxlength="3" (input)="checkDuplicateCode($event);" placeholder="OccupierCode"
@@ -46,7 +58,7 @@
                     <mat-error *ngIf="OccupierCode.invalid && (model.occupierCode)">*Code is invalid.</mat-error>
                 </mat-form-field>
                 <mat-error *ngIf="isDuplicateCode">*Code is already exist.</mat-error>
-            </div>
+            </div> -->
 
             <div class="col-md-3">
                 <mat-form-field class="full-width-input">
