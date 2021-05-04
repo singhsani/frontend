@@ -85,7 +85,7 @@
 					<div class="col-md-4 ngSelect">
 						<div *ngIf="wardZoneLevel.length>=3">
 							<ng-select 
-								placeholder="Block*"
+								placeholder="Block"
 								formControlName="waterDrainageBlockId" (change)="onChangedWardZone($event,4)">
 								<ng-option *ngFor="let block of wardZoneLevel3List" [value]="block.wardzoneId">
 									{{block.wardzoneName}}</ng-option>
