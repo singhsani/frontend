@@ -6,14 +6,15 @@ import { ManageRoutes } from '../../../../config/routes-conf';
 import { CommonService } from '../../../../shared/services/common.service';
 import { FormsActionsService } from '../../../../core/services/citizen/data-services/forms-actions.service';
 import { FireFacilitiesService } from '../common/services/fire-facilities.service';
-import { Location } from '@angular/common';
+import { DatePipe, Location } from '@angular/common';
 import * as _ from 'lodash';
 import { TranslateService } from '../../../../shared/modules/translate/translate.service';
 
 @Component({
 	selector: 'app-revised-fire-noc',
 	templateUrl: './revised-fire-noc.component.html',
-	styleUrls: ['./revised-fire-noc.component.scss']
+	styleUrls: ['./revised-fire-noc.component.scss'],
+	providers: [DatePipe]
 })
 export class RevisedFireNOCComponent implements OnInit {
 
@@ -81,6 +82,7 @@ export class RevisedFireNOCComponent implements OnInit {
 		private commonService: CommonService,
 		private FireFacilitiesService: FireFacilitiesService,
 		private location: Location,
+		private datePipe: DatePipe,
 		public TranslateService: TranslateService
 	) { }
 
@@ -155,6 +157,12 @@ export class RevisedFireNOCComponent implements OnInit {
 
 	}
 
+	transformDate(){
+		const applicationDate = this.revisedFireNocForm.get('applicationDate').value;
+		const applicationDateTransform = this.datePipe.transform(applicationDate, 'dd/MM/yyyy');
+		this.revisedFireNocForm.get('applicationDate').setValue(applicationDateTransform);
+	}
+
 	/**
 	 * Method is used to get form data
 	 */
@@ -163,6 +171,8 @@ export class RevisedFireNOCComponent implements OnInit {
 			try {
 				this.revisedFireNocForm.patchValue(res);
 				this.fireFacilityConfig.isAttachmentButtonsVisible = true;
+
+				this.transformDate();
 
 				res.serviceDetail.serviceUploadDocuments.forEach(app => {
 					(<FormArray>this.revisedFireNocForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.fireFacilityConfig.createDocumentsGrp(app));
@@ -236,11 +246,13 @@ export class RevisedFireNOCComponent implements OnInit {
 			});
 
 			this.fireFacilityConfig.isAttachmentButtonsVisible = true;
+			
 
 			res.serviceDetail.serviceUploadDocuments.forEach(app => {
 				app.id = null;
 				(<FormArray>this.revisedFireNocForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.fireFacilityConfig.createDocumentsGrp(app));
 			});
+			this.transformDate();
 			this.requiredDocumentList();
 
 			let currentUrl = this.location.path().replace('false', this.formId.toString());
