@@ -93,7 +93,7 @@
 					<div class="col-md-4 ngSelect">
 						<div *ngIf="wardZoneLevel.length>=3">
 							<ng-select 
-								placeholder="Block*"
+								placeholder="Block"
 								formControlName="waterDrainageBlockId" (change)="onChangedWardZone($event,4)">
 								<ng-option *ngFor="let block of wardZoneLevel3List" [value]="block.wardzoneId">
 									{{block.wardzoneName}}</ng-option>
@@ -616,7 +616,7 @@
 
 				<div *ngIf="isPatners" class="row  pb-3">
 					<div class="col-md-10">
-						<h2 class="pl-0">Name of member of patner's employed in Establisment.</h2>
+						<h2 class="pl-0">Name of member of partner's employed in Establisment.</h2>
 					</div>
 					<div class="col-md-2 pt-3" style="text-align: right;">
 						<button type="button"
@@ -635,8 +635,8 @@
 									<th>{{'Name' | translate:translateKey}}</th>
 									<th>{{'Address' | translate:translateKey}}</th>
 									<th>{{'Designation / Status' | translate:translateKey}}</th>
-									<th >{{'mobileNo' | translate:translateKey}}</th>
-									<th >{{'emailId' | translate:translateKey}}</th>
+									<th >{{'MobileNo' | translate:translateKey}}</th>
+									<th >{{'EmailId' | translate:translateKey}}</th>
 									<th *ngIf="shopLicTransferForm.get('canEdit').value"></th>
 								</tr>
 							</thead>
@@ -686,10 +686,10 @@
 										</div>
 									</td>
 
-									<td>
+									<td >
 										<div class="d-md-none">{{'emailId' | translate:translateKey}}</div>
-										<div class="mobileCon adjustError">
-											<p class="width50" *ngIf="!item.isEditMode">{{item.get('emailId').value}}</p>
+										<div class="mobileCon  adjustError">
+											<p  *ngIf="!item.isEditMode">{{item.get('emailId').value}}</p>
 											<mat-form-field *ngIf="item.isEditMode">
 												<input matInput maxlength="50"  formControlName="emailId" required>
 												<control-messages [control]="item.get('emailId')"></control-messages>
@@ -738,7 +738,7 @@
 			<!-- step Attachment Starts -->
 			<mat-tab>
 				<ng-template mat-tab-label>
-					<div>{{'attachment' | translate: translateKey}}</div>
+					<div>{{'Attachment' | translate: translateKey}}</div>
 				</ng-template>
 
 				<div class="row">
