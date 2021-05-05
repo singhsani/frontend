@@ -47,7 +47,7 @@
 
                     <mat-form-field class="col-md-4">
                         <mat-label>{{'visiting_date'| translate: translateKey}}</mat-label>
-                        <input matInput [max]="maxDate" required [min]="minDate" [matDatepicker]="datePicker" [matDatepickerFilter]="disableThursday"
+                        <input matInput [max]="maxDate" required [min]="minDate" [matDatepicker]="datePicker" [matDatepickerFilter]="disableDates"
                             formControlName="visitingDate" placeholder="DD/MM/YYYY"
                             (dateChange)="changeDateFormat($event);getPlanetariumShowTimeSlot($event);savePlanetariumTickets()">
                         <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
@@ -122,7 +122,7 @@
                             </mat-form-field>
 
                             <!-- <mat-form-field class="col-md-4">
-                                <input matInput OnlyNumber 
+                                <input matInput OnlyNumber
                                     placeholder="{{ 'remain_seats'| translate:translateKey}}" formControlName="remainSeats">
                             </mat-form-field> -->
 
@@ -254,11 +254,11 @@
                         </mat-checkbox> -->
 
                         <mat-checkbox class="d-block" labelPosition="after" required formControlName="termsCondition">
-                            {{'i_have_read_and_agree_with_terms_and_conditions' | translate:translateKey}} 
+                            {{'i_have_read_and_agree_with_terms_and_conditions' | translate:translateKey}}
                             <a  class="stretchedLink" >
-                               
+
                             </a>
-                        </mat-checkbox> 
+                        </mat-checkbox>
                     </div>
                 </div>
 
@@ -270,7 +270,7 @@
                             <!-- <mat-icon>payment</mat-icon> -->
                             {{'pay_and_print_ticket'| translate: translateKey}}
                         </button>
-                        
+
                         <button mat-raised-button color="primary" type="submit"  (click)="submitForVarification()"
                             *ngIf="ticketBookingForm.get('showCategory').get('code').value == 'PLANETARIUM_SPECIAL_SHOW' && seatAvailable == true">
                             <!-- <mat-icon>check_circle</mat-icon> -->

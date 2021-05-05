@@ -32,7 +32,7 @@ export class BookPlanetariumComponent implements OnInit {
   showType : any;
 
   minDate = moment(new Date()).add(0, 'day').toISOString();
-  maxDate = moment(new Date()).add(30, 'day').toISOString();
+  maxDate = moment(new Date()).add(6, 'day').toISOString();
 
   // Loading Ticketing Configurations
   ticketingConstants = TicketingConstants;
@@ -112,6 +112,24 @@ export class BookPlanetariumComponent implements OnInit {
     }
   }
 
+  /* Jan = 0 & Dec = 11 */
+    disableDates(d: Date) {
+        if(d.getMonth() == 2 && d.getFullYear() == new Date().getFullYear()){
+            return [29].indexOf(+d.getDate()) == -1 && d.getDay() != 4;
+        }else if(d.getMonth() == 6 && d.getFullYear() == new Date().getFullYear()){
+            return [21].indexOf(+d.getDate()) == -1 && d.getDay() != 4;
+        }else if(d.getMonth() == 7 && d.getFullYear() == new Date().getFullYear()){
+            return [22].indexOf(+d.getDate()) == -1 && d.getDay() != 4;
+        }else if(d.getMonth() == 9 && d.getFullYear() == new Date().getFullYear()){
+            return [25].indexOf(+d.getDate()) == -1 && d.getDay() != 4;
+        }else if(d.getMonth() == 10 && d.getFullYear() == new Date().getFullYear()){
+            return [5, 19, 26].indexOf(+d.getDate()) == -1 && d.getDay() != 4;
+        }
+        else{
+            return d.getDay() != 4;
+        }
+      }
+
   CheckType(idCode){
     this.isVisibleIdNumber = false;
     this.isPanCardVisibleIdNumber = false;
@@ -169,7 +187,7 @@ export class BookPlanetariumComponent implements OnInit {
       });
   }
 
-  /** 
+  /**
    * Change Date format
    */
   changeDateFormat(e) {
@@ -201,7 +219,7 @@ export class BookPlanetariumComponent implements OnInit {
     }
   }
   /**
-   * this method for check seats availability 
+   * this method for check seats availability
    */
   getPlanetariumShowAvailability() {
 
@@ -247,7 +265,7 @@ export class BookPlanetariumComponent implements OnInit {
             this.seatAvailable = respData.data.seatAvailable;
             this.remainSeats = respData.data.availableSeats;
             this.ticketBookingForm.get('remainSeats').setValue(this.remainSeats);
-            this.commonService.successAlert('success', 'Available', 'success');
+            //this.commonService.successAlert('success', 'Available', 'success');
             if (this.seatAvailable) {
               this.toster.success(this.ticketBookingForm.get('visitors').get('code').value + ' ' + this.ticketingConstants.AVAILABLE_SEATS);
             }
@@ -268,7 +286,7 @@ export class BookPlanetariumComponent implements OnInit {
 
 
   /**
-   *  Will Compute total amount 
+   *  Will Compute total amount
    */
   computeTotalAndVisitors() {
 
@@ -403,7 +421,7 @@ export class BookPlanetariumComponent implements OnInit {
 
   /**
    * This method for set and remove validation as per show selection
-   * @param event 
+   * @param event
    */
   setValidationForSpecialShow(event) {
     this.ticketBookingForm.reset();
@@ -416,6 +434,7 @@ export class BookPlanetariumComponent implements OnInit {
 
     this.ticketBookingForm.get('showCategory').get('code').setValue(event);
     if (event == 'PLANETARIUM_SPECIAL_SHOW') {
+    this.maxDate = moment(new Date()).add(14, 'day').toISOString();
       this.ticketBookingForm.get('schoolName').setValidators([Validators.required]);
       this.ticketBookingForm.get('schoolEmailId').setValidators([Validators.required, ValidationService.emailValidator]);
       this.ticketBookingForm.get('specialShowLanguage.code').setValidators(Validators.required);
@@ -433,6 +452,7 @@ export class BookPlanetariumComponent implements OnInit {
 
     }
     else if (event == 'PLANETARIUM_GENERAL_SHOW') {
+    this.maxDate = moment(new Date()).add(6, 'day').toISOString();
       this.ticketBookingForm.get('firstName').setValidators([Validators.required]);
       this.ticketBookingForm.get('lastName').setValidators([Validators.required]);
       this.ticketBookingForm.get('visitors.code').setValidators([Validators.required]);
@@ -525,8 +545,8 @@ export class BookPlanetariumComponent implements OnInit {
    * This method submit for varify application at department
    */
   submitForVarification() {
-   
-  
+
+
      if (this.ticketBookingForm.get('specialShowLanguage').get('code').value == null
       && this.ticketBookingForm.get('schoolName').value == null
       && this.ticketBookingForm.get('schoolEmailId').value == null
@@ -576,15 +596,15 @@ export class BookPlanetariumComponent implements OnInit {
   }
 
   /**
-   * redirect to Payment 
+   * redirect to Payment
    */
   redirecToPayment() {
-    if (!this.ticketBookingForm.get('visitors').get('code').value 
+    if (!this.ticketBookingForm.get('visitors').get('code').value
       || !this.ticketBookingForm.get('idType').get('code').value
       || !this.ticketBookingForm.get('idNumber').value
-      || !this.ticketBookingForm.get('firstName').value 
+      || !this.ticketBookingForm.get('firstName').value
       || !this.ticketBookingForm.get('lastName').value
-      || !this.ticketBookingForm.get('planetariumShowTiming').get('code').value 
+      || !this.ticketBookingForm.get('planetariumShowTiming').get('code').value
       || !this.ticketBookingForm.get('visitingDate').value
       ) {
       this.commonService.openAlert("Field Error", this.ticketingConstants.ALL_FEILD_REQUIRED_MESSAGE, 'warning');
@@ -599,7 +619,14 @@ export class BookPlanetariumComponent implements OnInit {
       this.isLoadingResults = true;
       this.ticketingService.bookPlanetariumTickets(this.ticketBookingForm.getRawValue(), this.ticketBookingForm.get('resourceCodeLK').get('code').value).subscribe(
         respData => {
-          // if (resp.data.status == this.bookingConstants.SUBMITTED) {
+        /* Applicant can not booking after 2 P.M. */
+          if(respData.statusCode == '401'){
+            this.toster.error(respData.message);
+            setTimeout(() => {
+                this.router.navigate(['/dashboard']);
+            },6000);
+            return;
+          }
           this.commonService.commonAlert("Booking", "Planetarium Booked Successfully", "success", "Print Acknowledgement Receipt", false, '', pA => {
             this.ticketingService.printAcknowledgementReceipt(respData.data.refNumber).subscribe(
               acknowledgement => {

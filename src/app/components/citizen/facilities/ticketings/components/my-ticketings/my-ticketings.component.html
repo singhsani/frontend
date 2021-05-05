@@ -88,10 +88,10 @@
 				<div class="mobile-label">{{'actions' | translate:translateKey}}</div>
 				<div class="mobile-label1">:</div>
 
-				
-				
-				
-				<button *ngIf="(element.status != ticketingConstants.DRAFT) && (element.status != ticketingConstants.EXPIRED)"
+
+
+
+				<button *ngIf="(element.status != ticketingConstants.DRAFT) && (element.status != ticketingConstants.EXPIRED) && (element.status != ticketingConstants.REJECTED)"
 				 mat-button [matMenuTriggerFor]="menu">
 					<mat-icon>more_vert</mat-icon>
 				</button>
@@ -123,10 +123,10 @@
 							{{'make_payment' | translate:translateKey}}
                     	</button>
 
-						<button *ngIf="element.status == ticketingConstants.REJECTED" mat-menu-item data-toggle="modal" color="primary" (click)="openModal(templateRequestModel, element, element.refNumber);">
-							<mat-icon title="View Booking Details" color="primary">details</mat-icon>
-							{{'details' | translate:translateKey}}
-						</button>
+<!--						<button *ngIf="element.status == ticketingConstants.REJECTED" mat-menu-item data-toggle="modal" color="primary" (click)="openModal(templateRequestModel, element, element.refNumber);">-->
+<!--							<mat-icon title="View Booking Details" color="primary">details</mat-icon>-->
+<!--							{{'details' | translate:translateKey}}-->
+<!--						</button>-->
 					</div>
 
 					<!-- <button mat-menu-item color="primary" (click)="openJSONModal(template);jsonDisplay(element)">
@@ -162,12 +162,12 @@
 	</div>
 
 	<div class="modal-body scrollModel">
- 
+
 		 {{rejectedMessage}}
-		
+
 	</div>
 
-	
+
 
 </ng-template>
 
