@@ -171,7 +171,7 @@
                     </button>
 
                     <!-- Note : 'PAYMENT' fileStatus means payment is pandding -->
-                    <button mat-menu-item *ngIf="(row.fileStatus === 'PAYMENT')" color="primary"
+                    <button mat-menu-item *ngIf="(row.fileStatus === 'PAYMENT' && isShopHideButton(row))" color="primary"
                         (click)="redirectToPayment(row.serviceDetail.code, row.serviceFormId)">
                         <!-- <mat-icon class="m-1" title="{{'attach_money' | translate:translateKey}}">&#8377;</mat-icon> -->
                         <i class="fa fa-inr m-1" title="{{'attach_money' | translate:translateKey}}"

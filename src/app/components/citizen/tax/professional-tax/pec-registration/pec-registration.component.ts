@@ -374,23 +374,7 @@ export class PecRegistrationComponent implements OnInit {
 	 * This method use for set applicant details on submit
 	 */
 	getUserDetailsAndSubmit() {
-		if (this.pecRegForm.valid) {
-			const dialogConfig = this.commonService.getApplicantDialogConfig();
-			const dialogRef = this.dialog.open(ApplicantDetailsComponent, dialogConfig);
-			dialogRef.afterClosed().subscribe(details => {
-				if (details) {
-					// this.pecRegForm.addControl('applicantName', new FormControl('', Validators.required));
-					this.pecRegForm.get('applicantFullName').setValue(details.applicantName);
-					this.pecRegForm.get('contactNo').setValue(details.cellNo);
-					this.pecRegForm.get('email').setValue(details.email)
-					this.onSubmit()
-				}
-
-			})
-
-		} else {
-			this.onSubmit();
-		}
+		this.onSubmit();
 	}
 
 	/**

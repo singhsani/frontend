@@ -85,7 +85,7 @@
 					<div class="col-md-4 ngSelect">
 						<div *ngIf="wardZoneLevel.length>=3">
 							<ng-select 
-								placeholder="Block*"
+								placeholder="Block"
 								formControlName="waterDrainageBlockId" (change)="onChangedWardZone($event,4)">
 								<ng-option *ngFor="let block of wardZoneLevel3List" [value]="block.wardzoneId">
 									{{block.wardzoneName}}</ng-option>
@@ -634,7 +634,7 @@
 
 				<div *ngIf="isPatners" class="row  pb-3">
 					<div class="col-md-10">
-						<h2 class="pl-0">Name of member of patner's employed in Establisment.</h2>
+						<h2 class="pl-0">Name of member of partner's employed in Establisment.</h2>
 					</div>
 					<div class="col-md-2 pt-3" style="text-align: right;">
 						<button type="button"
@@ -783,7 +783,7 @@
 				<app-action-bar [uploadFiles]="uploadFilesArray" [paymentGateway]="paymentGateway"
 					[form]="shopLicNewForm" (handleErrors)="handleErrorsOnSubmit($event) "
 					(tabIndex)="licenseConfiguration.onFormTabChange($event) "
-					[stepInfo]="{step: 'final', next:7, back: 5} "></app-action-bar>
+					[stepInfo]="{step: 'final', next:7, back: 4} "></app-action-bar>
 
 			</mat-tab>
 			<!-- step Attachment Ends -->

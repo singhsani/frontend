@@ -704,4 +704,13 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		}
 	}
 
+	isShopHideButton(row){
+		console.log(row);
+		if((this.commonService.fromAdmin() && row.serviceDetail.code == 'SHOP-ESTAB-LIC-NEW') || (this.commonService.fromAdmin() && row.serviceDetail.code == 'SHOP-ESTAB-TRANSFER')){
+			return false;
+		}else{
+			return true;
+		}
+	}
+
 }

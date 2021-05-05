@@ -22,6 +22,7 @@ export class OccupierDetailComponent implements OnInit {
   columns: string[] = ['occupierCode', 'titleName', 'firstName', 'middleName', 'lastName', 'aadharNo', 'mobileNo', 'emailAddress', 'action'];
   dataSource: any = [];
   titleList = [];
+  occupierList = [];
   model: OccupierModel;
   subscription: Subscription;
   isOccupierExist: boolean = true;
@@ -66,9 +67,10 @@ export class OccupierDetailComponent implements OnInit {
   }
 
   getLookups() {
-    let lookupcode = `lookup_codes=${Constants.LookupCodes.Title}`;
+    let lookupcode = `lookup_codes=${Constants.LookupCodes.Title}&lookup_codes=${Constants.LookupCodes.OCCUPIER_CODE}`;
     this.commonService.getLookupValuesAccordingToScreen(lookupcode).subscribe(data => {
       this.titleList = Object.assign([], data).filter(f => f.lookupCode.includes(Constants.LookupCodes.Title))[0].items;
+      this.occupierList = Object.assign([], data).filter(f => f.lookupCode.includes(Constants.LookupCodes.OCCUPIER_CODE))[0].items;
 
     });
   }
