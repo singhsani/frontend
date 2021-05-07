@@ -78,8 +78,8 @@
                     </mat-form-field>
 
                     <div class="col-md-4 ngSelect" formGroupName="ward">
-                        <ng-select placeholder="{{'ward_no' | translate: pecTranslateKey}}" formControlName="code">
-                            <ng-option *ngFor="let ward of wardNoArray" [value]="ward.code">{{ward.name}}</ng-option>
+                        <ng-select placeholder="{{'ward_no' | translate: pecTranslateKey}}" formControlName="wardzoneId">
+                            <ng-option *ngFor="let ward of wardNoArray" [value]="ward.wardzoneId">{{ward.wardzoneName}}</ng-option>
                         </ng-select>
                     </div>
 

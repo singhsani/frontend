@@ -144,7 +144,8 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 			email: ['', ValidationService.emailValidator],
 			rcDate: null,
 			ward: this.fb.group({
-				code: null, name: null,
+				wardzoneId: null,
+				wardzoneName: null
 			}),
 			commencementDate: null,
 			vatNo: null,
@@ -749,7 +750,7 @@ export class PrcRegistrationComponent implements OnInit, OnDestroy {
 	*/
 	getAllWardNos() {
 		this.profeService.getAllWardNos().subscribe(res => {
-			this.wardNoArray = res.WARD;
+			this.wardNoArray = res;
 		});
 	}
 
