@@ -200,6 +200,7 @@ export class AssessmentCertificateTableComponent implements OnInit {
             } else {
               this.commonNascentService.openAlert("Error", "Error Occured for final submit : " + err.error[0].message, "warning")
             }
+            
           });
         }, error => {
           this.alertService.error(error);
