@@ -430,7 +430,7 @@ export class PecRegistrationComponent implements OnInit {
 						// 		this.router.navigateByUrl(ManageRoutes.getFullRoute('CITIZENMYAPPS'));
 						// 	});
 						// } else {
-						this.commonService.openAlert("PEC Registration Successful", "", "success", `Your Application Number is<br> <b>${res.uniqueId}</b> <br> Visit the department with original document`, cb => {
+						this.commonService.openAlert("PEC Registration Successful", "", "success", `Your Application Number is<br> <b>${res.uniqueId}</b> <br> Your Application is valid for 3 working days only. Kindly visit respective ward office with all the valid documents for approval`, cb => {
 							this.router.navigateByUrl(ManageRoutes.getFullRoute('CITIZENMYAPPS'));
 						});
 						// }
