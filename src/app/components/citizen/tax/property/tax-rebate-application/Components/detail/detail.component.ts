@@ -5,6 +5,7 @@ import { TaxRebateApplicationService } from '../../Services/tax-rebate-applicati
 import { AlertService } from 'src/app/vmcshared/Services/alert.service';
 import { downloadFile } from 'src/app/vmcshared/downloadFile';
 import { MatStepper } from '@angular/material';
+import { CommonService } from 'src/app/shared/services/common.service';
 
 @Component({
   selector: 'app-detail',
@@ -25,7 +26,8 @@ export class DetailComponent implements OnInit {
   constructor(
     private taxRebateApplicationDataSharingService: TaxRebateApplicationDataSharingService,
     private taxRebateApplicationService: TaxRebateApplicationService,
-    private alertService: AlertService) {
+    private alertService: AlertService,
+    private commonService: CommonService) {
 
   }
 
@@ -112,6 +114,9 @@ export class DetailComponent implements OnInit {
   }
 
   onSubmitApproved() {
+    if(this.model.invalid){
+      this.commonService.openAlert("Field Error", "Please fill all the required fields", 'warning')
+    }
     this.taxRebateApplicationService.approveDept({ taxRebateApplicationId: this.model.taxRebateApplicationId }).subscribe(
       (data) => {
         this.alertService.success(data.body.message);
