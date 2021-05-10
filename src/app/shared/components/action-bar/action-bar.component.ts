@@ -562,4 +562,31 @@ export class ActionBarComponent implements OnInit, OnChanges {
 		}
 	}
 
+
+	printView(apiCode: string, apiName: string, id: number) {
+		
+		if(apiCode == 'SHOP-ESTAB-TRANSFER'){
+			this.formService.apiType = 'shop';
+	 	}else{
+		this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);
+		 }
+	
+		this.formService.printView(id).subscribe(
+			htmlResponse => {
+				
+				let printWindow: any = window.open();
+				setTimeout(() => {
+					printWindow.document.body.innerHTML = htmlResponse;
+					printWindow.print();
+					printWindow.close();
+				}, 100);
+			},
+			err => {
+				//this.commonService.successAlert('Error!', err.error[0].message, 'error');
+			}
+		);
+	}
+
+
+
 }

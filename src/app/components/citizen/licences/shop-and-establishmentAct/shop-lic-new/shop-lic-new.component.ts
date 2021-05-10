@@ -17,6 +17,7 @@ import { Constants } from 'src/app/vmcshared/Constants';
 import { AlertService } from 'src/app/vmcshared/Services/alert.service';
 import { ProfessionalTaxService } from 'src/app/core/services/citizen/data-services/professional-tax.service';
 
+
 @Component({
 	selector: 'app-shop-lic-new',
 	templateUrl: './shop-lic-new.component.html',
@@ -929,7 +930,7 @@ export class ShopLicNewComponent implements OnInit {
 		
 		if(index == 5) {
 			this.licenseConfiguration.currentTabIndex = 5;
-				this.commonService.openAlert('Feild Error', 'Should be agree with given details', 'warning');
+				this.commonService.openAlert('Field Error', 'Should be agree with given details', 'warning');
 				this.checkDynamicTableValidate();
 				return;
 		} else if (index) {
@@ -1211,14 +1212,9 @@ export class ShopLicNewComponent implements OnInit {
 			array.removeAt(i)
 		}
 
-
-
 		const documentCodeList = this.filterDocumentList(ownershipType,organizationCode);
-
 		const localUploadArray = [...this.serverUploadFilesArray];
-
 		this.displayDocs = [];
-
 		this.uploadFilesArray = [];
 
 		for (let file of localUploadArray) {
@@ -1240,6 +1236,7 @@ export class ShopLicNewComponent implements OnInit {
 			}
 		}
 
+	
 		// switch (event) {
 		// 	case 'SHOP_LIC_COMPANY':
 		// 	case 'SHOP_LIC_TRUST':
@@ -1269,6 +1266,7 @@ export class ShopLicNewComponent implements OnInit {
 
    
 	checkFileNeedToAddInDocumentList(file,documentCodeList){
+	
       if(documentCodeList.filter( obj => obj.documentIdentifier == file.documentIdentifier).length > 0){
 		  return true;
 	  } else {
@@ -1312,7 +1310,8 @@ export class ShopLicNewComponent implements OnInit {
 						mandatory: true
 					}
 				];
-				return docArray.concat(isPartnerShipSelected ? this.commonUploadDocumentForPartnerShip() : this.commonUploadDocument());
+			return docArray.concat(isPartnerShipSelected ? this.commonUploadDocumentForPartnerShip() : this.commonUploadDocument());
+	
 			} else if (ownershipType == "RENTED") {
 				let docArray = [
 					{
@@ -1343,7 +1342,7 @@ export class ShopLicNewComponent implements OnInit {
 
 
 	commonUploadDocumentForPartnerShip(){
-
+		
 		const docs = this.commonUploadDocument();
 		docs.push({
 			documentIdentifier: 'PARTNERSHIP_DEED',
@@ -1362,7 +1361,9 @@ export class ShopLicNewComponent implements OnInit {
 
 
 	commonUploadDocument(){
-		return [
+		
+		
+	 	const comonDocument = [
 			{
 				documentIdentifier: 'EMPLOYER_ID_PROOF',
 				mandatory: true
@@ -1387,7 +1388,19 @@ export class ShopLicNewComponent implements OnInit {
 				documentIdentifier: 'OTHER_DOC',
 				mandatory: false
 			}
+		
 		];
+		
+		if(this.commonService.fromAdmin()){
+				
+			comonDocument.push({
+					documentIdentifier: 'REVIEW_APPLICATION',
+					mandatory: true
+				})
+			}
+
+		
+		return comonDocument;
 	}
 
 	/**

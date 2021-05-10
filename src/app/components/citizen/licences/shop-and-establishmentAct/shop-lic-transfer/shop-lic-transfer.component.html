@@ -221,7 +221,7 @@
 					</mat-form-field> 
 
 					<mat-form-field class="col-md-6">
-						<input matInput OnlyNumber type="text" maxlength="15"
+						<input matInput OnlyNumber type="text" maxlength="15" minlength="10"
 						placeholder="Landline number"
 						formControlName="landlineNumber" />
 						<control-messages [control]="shopLicTransferForm.get('landlineNumber')">

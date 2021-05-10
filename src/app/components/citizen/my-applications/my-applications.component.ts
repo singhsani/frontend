@@ -276,7 +276,11 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 	 * @param id citizen id
 	 */
 	printView(apiCode: string, apiName: string, id: number) {
+		if(apiCode == 'SHOP-ESTAB-TRANSFER'){
+			this.formService.apiType = 'shop';
+	 	}else{
 		this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);
+		 }
 		this.formService.printView(id).subscribe(
 			htmlResponse => {
 				// let sectionToPrint: any = document.getElementById('sectionToPrint');
