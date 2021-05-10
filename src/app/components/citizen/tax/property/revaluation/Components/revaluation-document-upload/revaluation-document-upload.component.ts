@@ -39,39 +39,8 @@ export class RevaluationDocumentUploadComponent implements OnInit {
     this.subscription.unsubscribe();
   }
 
-  // onSubmit() {
-
-  //   this.mandatoryFileCheck().then( data => {
-
-  //     if(data.status) {
-  //     this.revaluationService.submit(this.selectedDataModel.revaluationId).subscribe(
-  //       (data) => {
-  //         if (data.status === 200) {
-  //           this.alertService.success(data.body.message);
-  //           //this.revaluationDataSharingService.updateDataSourceMoveStepper(3);
-  //           this.router.navigateByUrl(ManageRoutes.getFullRoute('CITIZENDASHBOARD'));
-  //         }
-  //       },
-  //       (error) => {
-  //         if (error.status === 400) {
-  //           var errorMessage = '';
-  //           error.error[0].propertyList.forEach(element => {
-  //             errorMessage = errorMessage + element + "</br>";
-  //           });
-  //           this.alertService.error(errorMessage);
-  //         }
-  //         else {
-  //           this.alertService.error(error.error.message);
-  //         }
-  //       });
-  //     }else {
-  //       this.commonService.openAlert("File Upload", `Please upload file for "${data.fileName}"`, "warning");
-  //       return
-  //     }
-  // }}
   onSubmit() {
     this.mandatoryFileCheck().then( data => {
-
 
     if(data.status) {
       this.revaluationService.submit(this.selectedDataModel.revaluationId).subscribe(
@@ -98,11 +67,9 @@ export class RevaluationDocumentUploadComponent implements OnInit {
         this.commonService.openAlert("File Upload", `Please upload file for "${data.fileName}"`, "warning");
         return
       }
-
-  
     })
-   
   }
+  
   getFormDataDocuments(id : any) {
     this.revaluationDocumentUploadDocs = [];
     this.revaluationService.getrevaluationDocUpload(id).subscribe(
