@@ -116,7 +116,7 @@ export class DetailComponent implements OnInit {
   onSubmitApproved() {
     if(this.model.invalid){
       this.commonService.openAlert("Field Error", "Please fill all the required fields", 'warning')
-    }
+    }else{
     this.taxRebateApplicationService.approveDept({ taxRebateApplicationId: this.model.taxRebateApplicationId }).subscribe(
       (data) => {
         this.alertService.success(data.body.message);
@@ -133,6 +133,7 @@ export class DetailComponent implements OnInit {
           this.alertService.error(error.error.message);
         }
       })
+    }
   }
 
   onDecline() {
