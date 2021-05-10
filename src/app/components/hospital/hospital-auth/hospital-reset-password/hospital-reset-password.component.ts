@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/fo
 import { SessionStorageService } from 'angular-web-storage';
 
 import { AppService } from '../../../../core/services/citizen/app-services/app.service';
+import { CommonService } from 'src/app/shared/services/common.service';
 
 @Component({
   selector: 'app-hospital-reset-password',
@@ -26,7 +27,9 @@ export class HospitalResetPasswordComponent implements OnInit {
 		private fb: FormBuilder,
 		private route: ActivatedRoute,
 		private router: Router,
-		private session: SessionStorageService) {
+		private session: SessionStorageService,
+		private commonService: CommonService,
+		) {
 
 	}
 
@@ -36,7 +39,7 @@ export class HospitalResetPasswordComponent implements OnInit {
 	ngOnInit() {
 
 		this.resetPassForm = this.fb.group({
-			code: ['', Validators.required],
+			code: ['', Validators.required, Validators.maxLength(5)],
 			password: [null, Validators.required],
 			confirmPassword: [null, Validators.required],
 			uniqueId: ''
@@ -93,6 +96,8 @@ export class HospitalResetPasswordComponent implements OnInit {
 		this.appService.resetPassword(formVals.getRawValue()).subscribe(
 			res => {
 				this.router.navigate(['/hospital/auth/login']);
+				this.commonService.successAlert("Success", "Password reset successful,Please use new password for login", "success");
+
 		});
 	}
 

@@ -16,7 +16,7 @@ import { ToastrService } from 'ngx-toastr';
 export class ResetPasswordComponent implements OnInit {
 
 	resetPassForm: FormGroup;
-	emailobj : any;
+	emailobj: any;
 	userType = 'CITIZEN';
 
 	loading: boolean = false;
@@ -35,7 +35,9 @@ export class ResetPasswordComponent implements OnInit {
 		private router: Router,
 		private commonService: CommonService,
 		private toaster: ToastrService,
-		private session: SessionStorageService) {
+		private session: SessionStorageService,
+		private toster: ToastrService
+	) {
 
 	}
 
@@ -45,7 +47,7 @@ export class ResetPasswordComponent implements OnInit {
 	ngOnInit() {
 
 		this.resetPassForm = this.fb.group({
-			code: ['', Validators.required],
+			code: ['', Validators.required, Validators.maxLength(5)],
 			password: [null, Validators.required],
 			confirmPassword: [null, Validators.required],
 			uniqueId: ''
@@ -56,7 +58,7 @@ export class ResetPasswordComponent implements OnInit {
 
 			this.resetPassForm.get('uniqueId').setValue(params['uniqueId'] === null ? (this.session.get('user_info') && this.session.get('user_info').uniqueId) : params['uniqueId']);
 			this.emailobj = params.email;
-			
+
 			// if code value is exist then disabled field otherwise allow user to enter manually
 			if (params['code'] != null && params['code'] != "" && params['code'] != undefined && params['code'] != 'undefined' && params['code'] != 'null') {
 				//this.resetPassForm.get('code').setValue(params['code']);
@@ -72,8 +74,9 @@ export class ResetPasswordComponent implements OnInit {
 
 	onForgotPassword() {
 		this.loading = true;
-		let obj = {'email':this.emailobj,
-					'userType' : this.userType
+		let obj = {
+			'email': this.emailobj,
+			'userType': this.userType
 		}
 
 		this.appService.forgotPassword(obj).subscribe(
@@ -83,7 +86,7 @@ export class ResetPasswordComponent implements OnInit {
 				 * Redirect to reset password
 				 */
 				this.commonService.successAlert("Success", "For OTP and reset link update you can check your registered mail ID and Mobile number. Thank you.", "success");
-				
+
 			}, err => {
 				this.loading = false;
 				this.toaster.error(err.error[0].code);
@@ -119,10 +122,17 @@ export class ResetPasswordComponent implements OnInit {
 	 * @param formVals - login form values property.
 	 */
 	onResetPassword(formVals: FormGroup) {
+		if (this.resetPassForm.valid) {
+			this.appService.resetPassword(formVals.getRawValue()).subscribe(
+				res => {
+					this.router.navigate([ManageRoutes.getFullRoute('CITIZENAUTHLOGIN')]);
+					this.commonService.successAlert("Success", "Password reset successful,Please use new password for login", "success");
 
-		this.appService.resetPassword(formVals.getRawValue()).subscribe(
-			res => {
-				this.router.navigate([ManageRoutes.getFullRoute('CITIZENAUTHLOGIN')]);
-		});
+				},
+				err => {
+					this.toster.error("Please Enter valid OTP for Reset Password");
+				}
+			);
+		}
 	}
 }
