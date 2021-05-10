@@ -114,26 +114,27 @@ export class DetailComponent implements OnInit {
   }
 
   onSubmitApproved() {
-    if(this.model.invalid){
-      this.commonService.openAlert("Field Error", "Please fill all the required fields", 'warning')
+    if(this.model.valid){
+      this.taxRebateApplicationService.approveDept({ taxRebateApplicationId: this.model.taxRebateApplicationId }).subscribe(
+        (data) => {
+          this.alertService.success(data.body.message);
+        },
+        (error) => {
+          if (error.status === 400) {
+            var errorMessage = '';
+            error.error[0].propertyList.forEach(element => {
+              errorMessage = errorMessage + element + "</br>";
+            });
+            this.alertService.error(errorMessage);
+          }
+          else {
+            this.alertService.error(error.error.message);
+          }
+        })
     }else{
-    this.taxRebateApplicationService.approveDept({ taxRebateApplicationId: this.model.taxRebateApplicationId }).subscribe(
-      (data) => {
-        this.alertService.success(data.body.message);
-      },
-      (error) => {
-        if (error.status === 400) {
-          var errorMessage = '';
-          error.error[0].propertyList.forEach(element => {
-            errorMessage = errorMessage + element + "</br>";
-          });
-          this.alertService.error(errorMessage);
-        }
-        else {
-          this.alertService.error(error.error.message);
-        }
-      })
+      this.commonService.openAlert("Field Error", "Please fill all the required fields", 'warning');
     }
+    
   }
 
   onDecline() {
