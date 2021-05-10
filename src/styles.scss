@@ -778,6 +778,8 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
         }
     }
 
+    .mat-error {letter-spacing: -1px;}
+
 }
 
 // *********  shop-lic-new  **********
@@ -910,7 +912,7 @@ textarea.gujInputCls {margin-bottom: 0;}
        .fa-times:before { content: "×" !important; }
   }
 
-  .searchBox {position: absolute; top: -5px; right: 50px;
+  .searchBox {position: static; top: -5px; right: 50px;
     .mat-form-field  {width: 200px;}
     .mat-form-field-suffix .mat-icon-button {font-size: 18px !important; width: 2em; height: 2em;}
     .ng-select {margin-bottom: 8px; width: 200px;}
