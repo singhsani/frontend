@@ -45,8 +45,9 @@ export class TransferDocumentUploadComponent implements OnInit {
           this.transferPropertyService.submitProperty(this.propertyDetailModel.propertyTransferId).subscribe(
             (data) => {
               this.alertService.success(data.body.message);
-              this.transferPropertyDataSharingService.updateDataSourceMoveStepper(4);
-              this.router.navigate(['/citizen/dashboard']);
+              this.transferPropertyDataSharingService.updateDataSourceMoveStepper(0);
+              // this.router.navigate(['/citizen/dashboard']);
+              this.router.navigateByUrl('/citizen/my-applications');
             },
             (error) => {
               if (error.status === 400) {
