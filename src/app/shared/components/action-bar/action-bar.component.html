@@ -9,9 +9,11 @@
 
 		<div class="pull-right">
 
-			<button *ngIf="((form.get('serviceDetail').get('code').value) == 'SHOP-ESTAB-LIC-NEW'  && stepInfo.step == 'final') || ((form.get('serviceDetail').get('code').value) == 'SHOP-ESTAB-TRANSFER'  && stepInfo.step == 'final')" 
+			<button *ngIf="(commonService.fromAdmin() && (form.get('serviceDetail').get('code').value) == 'SHOP-ESTAB-LIC-NEW'  && stepInfo.step == 'final') 
+				|| (commonService.fromAdmin() && (form.get('serviceDetail').get('code').value) == 'SHOP-ESTAB-TRANSFER'  && stepInfo.step == 'final')" 
 			type="button" mat-raised-button color="primary" [disabled]="isSubmitBtnDisabled"
-			(click)="printView(form.get('serviceDetail').get('code').value, form.get('serviceDetail').get('name').value, form.get('serviceFormId').value)">{{'print_view' | translate:translateKey}}</button>
+			(click)="printView(form.get('serviceDetail').get('code').value, form.get('serviceDetail').get('name').value, form.get('serviceFormId').value)">
+				{{'print_preview' | translate:translateKey}}</button>
 
 
 			<button type="button" mat-raised-button color="primary" [disabled]="isSubmitBtnDisabled" *ngIf="form.get('canEdit').value"
