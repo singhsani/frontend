@@ -7,7 +7,7 @@
 
 					<div class="row">
 					<mat-form-field class="col-md-9">
-						<input matInput type="text" OnlyNumber maxlength="5" placeholder="Enter OTP" formControlName="code"
+						<input matInput type="text" OnlyNumber maxlength="5" minlength="5" placeholder="Enter OTP" formControlName="code"
 						 required>
 					</mat-form-field>
 					<span class="col-md-3" *ngIf="!loading" style="margin-top: 25px; color: blue; cursor: pointer;" (click)="onForgotPassword();">Resend</span>
