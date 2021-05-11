@@ -11,6 +11,7 @@ import * as moment from 'moment';
 import { PaymentDataSharingService } from 'src/app/vmcshared/component/payment/payment-data-sharing.service';
 import { MatStepper } from '@angular/material';
 import { Router } from '@angular/router';
+import { CommonService as CommonService2 } from 'src/app/shared/services/common.service';
 
 @Component({
   selector: 'app-bank-detail',
@@ -34,10 +35,12 @@ export class BankDetailComponent implements OnInit, OnDestroy {
   modelSubscription: Subscription;
   count : number  = 0;
   submitBtn:boolean = true;
+  serviceFormId: String;
   constructor(
     private vacancyPremiseCertificateDataSharingService: VacancyPremiseCertificateDataSharingService,
     private paymentDataSharingService: PaymentDataSharingService,
     private commonService: CommonService,
+    private commonservice2 :CommonService2,
     private router: Router,
     private vacancyPremiseCertificateService: VacancyPremiseCertificateService,
     private alertService: AlertService) {
@@ -152,6 +155,9 @@ export class BankDetailComponent implements OnInit, OnDestroy {
     this.vacancyPremiseCertficateDocumentUploadDocs = [];
     this.vacancyPremiseCertificateService.getvacancyPremiseDocUpload(id).subscribe(
       (data) => {
+        if (data && data.length > 0) {
+          this.serviceFormId = data[0].id;
+        }
         data.forEach(app => {
           this.vacancyPremiseCertficateDocumentUploadDocs.push(app);
           console.log(this.vacancyPremiseCertficateDocumentUploadDocs.length);
@@ -181,6 +187,9 @@ export class BankDetailComponent implements OnInit, OnDestroy {
   
 
   onSubmitApproved() {
+
+    this.mandatoryFileCheck().then(data => {
+      if (data.status) {
     this.vacancyPremiseCertificateService.approveDept(this.model.vacancyPremiseCertficateId).subscribe(
       (data) => {
         this.isApprovedorDecline = true;
@@ -193,6 +202,14 @@ export class BankDetailComponent implements OnInit, OnDestroy {
       (error) => {
         this.commonService.callErrorResponse(error);
       });
+
+    } else {
+      this.commonservice2.openAlert("File Upload", `Please upload file for "${data.fileName}"`, "warning");
+      return
+    }
+
+  })
+
   }
   
   
@@ -221,5 +238,30 @@ export class BankDetailComponent implements OnInit, OnDestroy {
     this.submitBtn = false; //  Disabled will false by this condition
     }
   }
+
+
+  mandatoryFileCheck() {
+    return new Promise<any>((resolve, reject) => {
+      this.vacancyPremiseCertificateService.getAttachmentList(this.serviceFormId).subscribe(uploadedDocs => {
+        if (uploadedDocs) {
+          let tempArray = [];
+          uploadedDocs.forEach(element => {
+            tempArray.push(element['fieldIdentifier']);
+          });
+          this.vacancyPremiseCertficateDocumentUploadDocs.forEach(doc => {
+            if (doc.mandatory && tempArray.indexOf(doc.fieldIdentifier) === -1) {
+              resolve({ fileName: doc.documentLabelEn, status: false })
+            }
+          });
+          resolve({ fileName: "", status: true });
+        } else {
+          resolve({ fileName: "", status: true })
+        }
+      })
+    })
+  }
+
+
+
 
 }

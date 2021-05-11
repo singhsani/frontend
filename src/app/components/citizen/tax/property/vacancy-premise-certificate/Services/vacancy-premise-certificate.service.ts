@@ -81,4 +81,8 @@ export class VacancyPremiseCertificateService {
       .pipe(map((response: any) => response))
   }
  
+  getAttachmentList(serviceFormId) {
+    return this.http.get<Array<Object>>(`${Constants.serverApiIp}/property/vacancypremisecertificate/attachments?serviceFormId=${serviceFormId}`);
+  }
+
 }
