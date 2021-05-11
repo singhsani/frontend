@@ -39,7 +39,7 @@ export class HospitalResetPasswordComponent implements OnInit {
 	ngOnInit() {
 
 		this.resetPassForm = this.fb.group({
-			code: ['', Validators.required, Validators.maxLength(5)],
+			code: [null, Validators.maxLength(5)],
 			password: [null, Validators.required],
 			confirmPassword: [null, Validators.required],
 			uniqueId: ''
