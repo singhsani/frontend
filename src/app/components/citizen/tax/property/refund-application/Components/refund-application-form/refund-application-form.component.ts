@@ -9,6 +9,7 @@ import { CommonService } from 'src/app/vmcshared/Services/common-service';
 import { MatStepper } from '@angular/material';
 import { ManageRoutes } from 'src/app/config/routes-conf';
 import { Router } from '@angular/router';
+import { CommonService as Commonservice2} from 'src/app/shared/services/common.service';
 
 @Component({
     selector: 'app-refund-application-form',
@@ -29,12 +30,16 @@ export class RefundApplicationFormComponent implements OnInit {
     // totalOutstanding: number;
     vacancyPremiseCertficateModel:VacancyPremiseCertficateModel;
     applicationNo: string;
+    serviceFormId : String;
+    submitBtn: boolean = true;
+
 
     constructor(private refundApplicationService: RefundApplicationService,
         private alertService: AlertService,
         private commonService : CommonService,
         private router: Router,
-        private refundApplicationDataSharingService: RefundApplicationDataSharingService) { }
+        private refundApplicationDataSharingService: RefundApplicationDataSharingService,
+        private commoservice2 : Commonservice2) { }
 
     ngOnInit() {
         this.vacancyPremiseCertficateModel = new VacancyPremiseCertficateModel();
@@ -108,6 +113,7 @@ export class RefundApplicationFormComponent implements OnInit {
                        // this.refundApplicationDataSharingService.setIsShowApproval(true);
                         this.stepper.selectedIndex = 1;
                         this.getFormDataDocuments(dataToPost.refundAgainstVacancyId);
+                        this.submitBtn = false;
                     }
                 },
                 (error) => {
@@ -119,6 +125,10 @@ export class RefundApplicationFormComponent implements OnInit {
         this.refundApplicationDocumentUploadDocs = [];
         this.refundApplicationService.gettaxrabitDocUpload(id).subscribe(
           (data) => {
+            if(data && data.length > 0) {
+                this.serviceFormId = data[0].id;
+              }
+
             data.forEach(app => {
               this.refundApplicationDocumentUploadDocs.push(app);
             });
@@ -130,9 +140,14 @@ export class RefundApplicationFormComponent implements OnInit {
       }
     
       onSubmitApproved() {
+
+        this.mandatoryFileCheck().then( data => {
+        if(data.status) {
         this.refundApplicationService.approveDept(this.refundAgainstVacancyId).subscribe(
           (data) => {
             this.alertService.success(data.message);
+            // this btn is used to enable or disable to submit btn of document screen 
+            this.submitBtn = true;
             this.router.navigateByUrl('/citizen/my-applications');
            // this.refundApplicationDataSharingService.setIsShowForm(false);
            // this.refundApplicationDataSharingService.setIsShowApproval(true);
@@ -149,6 +164,15 @@ export class RefundApplicationFormComponent implements OnInit {
               this.alertService.error(error.error.message);
             }
           })
+        } else {
+            this.commoservice2.openAlert("File Upload", `Please upload file for "${data.fileName}"`, "warning");
+                    return
+           }
+  
+      
+        })
+
+
       }
     generateRefundReceipt(url) {
         this.refundApplicationService.downloadFile(url).subscribe(
@@ -172,4 +196,27 @@ export class RefundApplicationFormComponent implements OnInit {
         this.occupierModel.propertyAddress = new PropertyAddress();
         this.applicationNo = null;
     }
+
+
+    mandatoryFileCheck() {
+        return new Promise<any>((resolve, reject) => {
+          this.refundApplicationService.getAttachmentList(this.serviceFormId).subscribe(uploadedDocs => {
+            if (uploadedDocs) {
+              let tempArray = [];
+              uploadedDocs.forEach(element => {
+                tempArray.push(element['fieldIdentifier']);
+              });
+              this.refundApplicationDocumentUploadDocs.forEach(doc => {
+                if (doc.mandatory && tempArray.indexOf(doc.fieldIdentifier) === -1) {
+                  resolve({ fileName: doc.documentLabelEn, status: false })
+                }
+              });
+              resolve({ fileName: "", status: true });
+            } else {
+              resolve({ fileName: "", status: true })
+            }
+          })
+        })
+      }
+
 }

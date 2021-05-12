@@ -63,4 +63,9 @@ export class RefundApplicationService {
       { responseType: "arraybuffer" })
       .pipe(map((response: any) => response))
   }
+ 
+  getAttachmentList(serviceFormId) {
+    return this.http.get<Array<Object>>(`${Constants.serverApiIp}/property/refundagainstvacancy/attachments?serviceFormId=${serviceFormId}`);
+  }
+  
 }
