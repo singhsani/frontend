@@ -139,11 +139,20 @@
         </div>
       </ng-container>
 
-      <div class="row mt-4">
+      
+        <div class="col-md-3 mt-4 mb-2 font16 font-weight-bold">Amount Payable : <span style="color: #ff0000;">{{paymentsForm.get('amount').value}}</span></div>
+        <div class="col mt-3 mb-3">
+          <button mat-raised-button class="paymentButton" color="primary" type="submit" (click)="makePayment(paymentsForm.value)">
+          Proceed for Payment
+        </button></div>
+   
+
+
+      <!-- <div class="row mt-4">
         <div class="col-md-12">
           <label class="col-md-6 font16 font-weight-bold">Amount Payable :</label>
           <span class="font16" style="color: #ff0000;">{{paymentsForm.get('amount').value}}</span>
-        </div>
+        </div> -->
 
         <!-- <div class="col-md-12" formGroupName="payMode">
           <label class="col-md-3 font16 font-weight-bold">Payment Mode :</label>
@@ -154,13 +163,13 @@
           </span>
         </div> -->
 
-      </div>
+      <!-- </div>
 
       <div class="col-md-6 pt-3 mt-4" style="margin-left: 92px;">
         <button mat-raised-button class="paymentButton" color="primary" type="submit" (click)="makePayment(paymentsForm.value)">
           Proceed for Payment
         </button>
-      </div>
+      </div> -->
 
     </div>
 
