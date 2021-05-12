@@ -197,10 +197,13 @@ export class CommonService {
       }
     
     dueToOutstandingMessage(pNo) {
-        this.alertService.warning('Due to outstanding application can not proceed. Click ok button to make payment.',' ');
+        // this.alertService.warning('Due to outstanding application can not proceed. Click ok button to make payment.',' ');
+        this.alertService.warning('Due to outstanding application can not proceed. Please first make outstanding payment.',' ');
         var subConfirm = this.alertService.getConfirm().subscribe(isConfirm => {
         if (isConfirm) {
-            this.router.navigateByUrl('/property/transaction/collection?pNo='+pNo);
+            // this path is present in admin side so it can't reach there. 
+            // As disscuss with BA now we have commented this because payment flow is not define from citizen side.
+            //this.router.navigateByUrl('/property/transaction/collection?pNo='+pNo);
         }
         subConfirm.unsubscribe();
         });

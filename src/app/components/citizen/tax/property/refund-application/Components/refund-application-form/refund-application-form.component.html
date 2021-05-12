@@ -99,7 +99,7 @@
       
         
         <div class="button-row text-right mt-3">
-            <button mat-raised-button class="ml-3" color="primary" (click)="onSubmitApproved()" type="button">
+            <button mat-raised-button class="ml-3" color="primary" (click)="onSubmitApproved()" type="button" [disabled]="submitBtn">
                 <mat-icon>save</mat-icon>Submit
             </button>
         </div>
