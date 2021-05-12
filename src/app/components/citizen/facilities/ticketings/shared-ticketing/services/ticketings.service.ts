@@ -76,8 +76,8 @@ export class TicketingsService {
   /**
     * This method is used to check seats
     */
-   getPlanetariumShowAvailability(resourceCode:any,showLangulage:any,visitingDate:any,totalVisitor:any) {
-    this.requestURL = `api/${this.moduleName}/${this.resourceType}/checkAvailableSeats?resourceCode=${resourceCode}&showLangulage=${showLangulage}&visitingDate=${visitingDate}&totalVisitor=${totalVisitor}`;
+   getPlanetariumShowAvailability(resourceCode:any,showLangulage:any,visitingDate:any,totalVisitor:any, showCategory : any) {
+    this.requestURL = `api/${this.moduleName}/${this.resourceType}/checkAvailableSeats?resourceCode=${resourceCode}&showLangulage=${showLangulage}&visitingDate=${visitingDate}&totalVisitor=${totalVisitor}&showCategory=${showCategory}`;
     return this.http.get(this.requestURL);
   }
   // api/${this.moduleName}/planetarium/checkAvailableSeats-
