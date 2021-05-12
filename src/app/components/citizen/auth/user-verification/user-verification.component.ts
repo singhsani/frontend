@@ -70,12 +70,16 @@ export class UserVerificationComponent implements OnInit {
 	 */
 	verifyUser(formVals: FormGroup) {
 
-
+if(this.verifyForm.valid){
 			this.appService.verifyUser(formVals.getRawValue()).subscribe(
 				res => {
 					this.toster.success("Successfully Authenticated");
 					this.router.navigate([ManageRoutes.getFullRoute('CITIZENAUTHLOGIN')]);
+				},
+				err => {
+					this.toster.error("Please enter valid OTP to signup OR use latest OTP received in Email/SMS to signup");
 				});
+			}
 		
 	}
 
