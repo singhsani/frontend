@@ -572,7 +572,13 @@ export class BookPlanetariumComponent implements OnInit {
         this.isLoadingResults = true;
         this.ticketingService.specialShowTicketsBooking(this.ticketBookingForm.getRawValue(), this.ticketBookingForm.get('resourceCodeLK').get('code').value).subscribe(
           resData => {
-            // if (resData.data.status == this.bookingConstants.SUBMITTED) {
+            if(resData.statusCode == '401'){
+              this.toster.error(resData.message);
+              setTimeout(() => {
+                  this.router.navigate(['/citizen/ticketings/planetarium/book']);
+              },6000);
+              return;
+            }
             this.commonService.commonAlert("Booking", "Planetarium Booking Request", "success", "Print Acknowledgement Receipt", false, '', pA => {
               this.ticketingService.printAcknowledgementReceipt(resData.data.refNumber).subscribe(acknowledgementHTML => {
                 let sectionToPrint: any = document.getElementById('sectionToPrint');
@@ -631,7 +637,7 @@ export class BookPlanetariumComponent implements OnInit {
           if(respData.statusCode == '401'){
             this.toster.error(respData.message);
             setTimeout(() => {
-                this.router.navigate(['/dashboard']);
+                this.router.navigate(['/citizen/dashboard']);
             },6000);
             return;
           }
