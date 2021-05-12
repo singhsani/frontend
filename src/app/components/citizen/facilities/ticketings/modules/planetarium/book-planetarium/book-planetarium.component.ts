@@ -55,8 +55,7 @@ export class BookPlanetariumComponent implements OnInit {
   PURPOSE: Array<any> = [];
   resourceName: Array<any> = [];
   DateFormate: string = 'Hint: DD/MM/YYYY';
-  // generalShow:boolean = true;
-  // specialShow:boolean = true;
+  showFotButtonBar = false;
 
   /**
    * @param fb - Declare FormBuilder property.
@@ -224,13 +223,17 @@ export class BookPlanetariumComponent implements OnInit {
   getPlanetariumShowAvailability() {
 
     if (this.ticketBookingForm.get('totalVisitor').value && this.ticketBookingForm.get('specialShowLanguage').get('code').value) {
-
       this.ticketingService.getPlanetariumShowAvailability(
         this.ticketBookingForm.get('resourceCodeLK').get('code').value,
         this.ticketBookingForm.get('specialShowLanguage').get('code').value,
         this.ticketBookingForm.get('visitingDate').value,
-        this.ticketBookingForm.get('totalVisitor').value).subscribe(
+        this.ticketBookingForm.get('totalVisitor').value,
+         this.ticketBookingForm.get('showCategory').get('code').value).subscribe(
           (respSwiftData) => {
+            if(respSwiftData.statusCode == '401' ){
+              this.toster.error(respSwiftData.message);
+              return;
+            }
             this.seatAvailable = respSwiftData.data.seatAvailable;
             // this.commonService.successAlert('success', 'Available', 'success');
             if (this.seatAvailable) {
@@ -260,8 +263,13 @@ export class BookPlanetariumComponent implements OnInit {
         this.ticketBookingForm.get('resourceCodeLK').get('code').value,
         this.ticketBookingForm.get('planetariumShowTiming').get('code').value,
         this.ticketBookingForm.get('visitingDate').value,
-        this.ticketBookingForm.get('visitors').get('code').value).subscribe(
+        this.ticketBookingForm.get('visitors').get('code').value,
+        this.ticketBookingForm.get('showCategory').get('code').value).subscribe(
           (respData) => {
+            if(respData.statusCode == '401' ){
+              this.toster.error(respData.message);
+              return;
+            }
             this.seatAvailable = respData.data.seatAvailable;
             this.remainSeats = respData.data.availableSeats;
             this.ticketBookingForm.get('remainSeats').setValue(this.remainSeats);
@@ -659,5 +667,14 @@ export class BookPlanetariumComponent implements OnInit {
     }
 
   }
+
+  checkingSelectOrNot(){
+    if(!this.ticketBookingForm.get('termsCondition').value){
+        this.showFotButtonBar = true;
+    }else{
+      this.showFotButtonBar = false;
+    }
+  }
+
 
 }
