@@ -91,7 +91,7 @@
 
 
 
-				<button *ngIf="(element.status != ticketingConstants.DRAFT) && (element.status != ticketingConstants.EXPIRED) && (element.status != ticketingConstants.REJECTED)"
+				<button *ngIf="(element.status != ticketingConstants.DRAFT) && (element.status != ticketingConstants.EXPIRED) && (element.status != ticketingConstants.REJECTED) && ((element.status != bookingConstant.SUBMITTED))"
 				 mat-button [matMenuTriggerFor]="menu">
 					<mat-icon>more_vert</mat-icon>
 				</button>
