@@ -130,7 +130,7 @@ export class ResetPasswordComponent implements OnInit {
 
 				},
 				err => {
-					this.toster.error("Please Enter valid OTP for Reset Password");
+					this.toster.error("Please Enter valid OTP for Reset Password OR use latest OTP received in Email/SMS for Reset Password");
 				}
 			);
 		}

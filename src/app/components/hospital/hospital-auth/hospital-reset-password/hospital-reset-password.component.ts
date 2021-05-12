@@ -5,6 +5,7 @@ import { SessionStorageService } from 'angular-web-storage';
 
 import { AppService } from '../../../../core/services/citizen/app-services/app.service';
 import { CommonService } from 'src/app/shared/services/common.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-hospital-reset-password',
@@ -14,6 +15,10 @@ import { CommonService } from 'src/app/shared/services/common.service';
 export class HospitalResetPasswordComponent implements OnInit {
 
   resetPassForm: FormGroup;
+  emailobj: any;    
+  userType = 'HOSPITAL';
+
+  loading: boolean = false;
 
 	/**
 	 * Constructor to declare defualt propeties of class.
@@ -29,6 +34,8 @@ export class HospitalResetPasswordComponent implements OnInit {
 		private router: Router,
 		private session: SessionStorageService,
 		private commonService: CommonService,
+		private toster:ToastrService,
+		private toaster:ToastrService
 		) {
 
 	}
@@ -49,7 +56,7 @@ export class HospitalResetPasswordComponent implements OnInit {
 		this.route.queryParams.subscribe(params => {
 
 			this.resetPassForm.get('uniqueId').setValue(params['uniqueId'] === null ? (this.session.get('user_info') && this.session.get('user_info').uniqueId) : params['uniqueId']);
-
+			this.emailobj=params.email;
 			// if code value is exist then disabled field otherwise allow user to enter manually
 			if (params['code'] != null && params['code'] != "" && params['code'] != undefined && params['code'] != 'undefined' && params['code'] != 'null') {
 				//this.resetPassForm.get('code').setValue(params['code']);
@@ -62,7 +69,23 @@ export class HospitalResetPasswordComponent implements OnInit {
 		});
 
 	}
-
+	onForgotPassword(){
+		this.loading = true;
+		let obj={
+			'email':this.emailobj,
+			'userType':this.userType
+		}
+		this.appService.forgotPassword(obj).subscribe(
+			res=>{
+				this.loading=false;
+				this.commonService.successAlert("Success", "For OTP and reset link update you can check your registered mail ID and Mobile number. Thank you.", "success");
+			},
+			err => {
+				this.loading = false;
+				this.toaster.error(err.error[0].code);
+			}
+		);
+	}
 	/**
 	 * This method used to compare passwords
 	 * @param passwordKey - Password
@@ -92,13 +115,17 @@ export class HospitalResetPasswordComponent implements OnInit {
 	 * @param formVals - login form values property.
 	 */
 	onResetPassword(formVals: FormGroup) {
-
+		if (this.resetPassForm.valid) {
 		this.appService.resetPassword(formVals.getRawValue()).subscribe(
 			res => {
 				this.router.navigate(['/hospital/auth/login']);
 				this.commonService.successAlert("Success", "Password reset successful,Please use new password for login", "success");
 
+		},
+		err => {
+			this.toster.error("Please Enter valid OTP for Reset Password OR use latest OTP received in Email/SMS for Reset Password");
 		});
 	}
+}
 
 }
