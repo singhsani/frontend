@@ -232,16 +232,18 @@ export class BookPlanetariumComponent implements OnInit {
           (respSwiftData) => {
             if(respSwiftData.statusCode == '401' ){
               this.toster.error(respSwiftData.message);
+              this.ticketBookingForm.get('totalVisitor').setValue(15);
+              this.computeTotalAndVisitors();
               return;
             }
             this.seatAvailable = respSwiftData.data.seatAvailable;
             // this.commonService.successAlert('success', 'Available', 'success');
-            if (this.seatAvailable) {
-              this.toster.success(this.ticketBookingForm.get('totalVisitor').value + ' ' + this.ticketingConstants.AVAILABLE_SEATS);
-            }
-            else {
-              this.toster.error(this.ticketBookingForm.get('totalVisitor').value + ' ' + this.ticketingConstants.NOT_AVAILABLE);
-            }
+//             if (this.seatAvailable) {
+//               this.toster.success(this.ticketBookingForm.get('totalVisitor').value + ' ' + this.ticketingConstants.AVAILABLE_SEATS);
+//             }
+//             else {
+//               this.toster.error(this.ticketBookingForm.get('totalVisitor').value + ' ' + this.ticketingConstants.NOT_AVAILABLE);
+//             }
 
           },
           err => {

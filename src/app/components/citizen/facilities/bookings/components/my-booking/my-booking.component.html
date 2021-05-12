@@ -95,7 +95,7 @@
       <mat-cell class="wMatCell120 cellLast" *matCellDef="let element;">
         <div class="mobile-label">{{'actions' | translate:translateKey}}</div>
         <div class="mobile-label1">:</div>
-        <button *ngIf="(element.status != bookingConstant.DRAFT) && (element.status != bookingConstant.EXPIRED)"
+        <button *ngIf="(element.status != bookingConstant.DRAFT) && (element.status != bookingConstant.EXPIRED) && (element.status != bookingConstant.SUBMITTED)"
                 mat-button [matMenuTriggerFor]="menu">
           <mat-icon>more_vert</mat-icon>
         </button>
