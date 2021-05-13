@@ -119,6 +119,10 @@ h1 { font-size: 30px; margin-bottom: 10px; }
 
 }
 
+.userName {border-radius: 0 !important; 
+    img {border-radius: 50% !important; position: relative; top: -3px; object-fit: cover;} 
+}
+
 // Footer
 .footer {text-align: center; color: $colorWhite; font-size: 11px; padding-top: 15px;}
 
@@ -329,6 +333,7 @@ mat-footer-row, mat-header-row, mat-row, td.mat-cell, td.mat-footer-cell, th.mat
 // .ng-select .ng-input, .ng-select .ng-clear-wrapper {display: none;}
 
 .ng-select .ng-select-container .ng-value-container .ng-input {bottom: 1px;}
+.ng-select .ng-select-container .ng-value-container .ng-input>input {padding-left: 0;}
 
 // Custom Button
 .width150 {width: 150px;}
@@ -610,7 +615,7 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
     //     .mat-form-field-wrapper {margin-left: 30px; left: 0 !important;}
     //     }
 
-    .updateProfileBtn {position: absolute; top: 20px; right: 30px;}
+    .updateProfileBtn {position: absolute; top: 20px; right: 30px; background: #673ab7; color: #fff !important;}
     h2 {margin:20px 0 8px;}
     }
 
