@@ -169,10 +169,7 @@ export class ShopLicNewComponent implements OnInit {
 		let woman = Number(this.shopLicNewForm.get('workerCounts')['controls'][indx].get('noOfWomen').value);
 		let total = men + woman;
 		this.shopLicNewForm.get('workerCounts')['controls'][indx].get('total').setValue(total);
-		// if(this.shopLicNewForm.get('noOfMen').value && this.shopLicNewForm.get('noOfWomen').value){
-		// this.grandTotal = this.grandTotal + total;
-		// }
-		// console.log("grandTotal" +this.grandTotal);
+		
 	}
 
 		menWomenMaxValid(): number{
