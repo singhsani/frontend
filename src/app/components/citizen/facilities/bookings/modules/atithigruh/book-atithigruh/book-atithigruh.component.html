@@ -246,7 +246,10 @@
                     <div class="row">
                         <div *ngFor="let date of bookingUtils.filterAcc(month.id, Dates)"
                             class="col-6 col-md-3 col-lg-2 mb-1 p-1">
-                            <div class="dateBox rounded border availableDate">
+                            <div class="dateBox rounded border availableDate" *ngFor="let shift of date.slotList; let i = index" 
+                            [ngClass]="{'bookDate': shift.slotStatus == bookingConstants.BOOKED || shift.slotStatus == bookingConstants.RESERVED || shift.slotStatus == bookingConstants.TEMPORARY_BLOCKED, 
+                                        'checkDate': shift.slotStatus != bookingConstants.AVAILABLE && shift.slotStatus != bookingConstants.HOLIDAY && shift.slotStatus != bookingConstants.FESTIVAL,
+                                        'blockDate': shift.slotStatus == 'TEMPORARY_BLOCKED'}">
                                 <strong>
                                     {{bookingUtils.returnProperDate(date.key)}}
                                 </strong>
