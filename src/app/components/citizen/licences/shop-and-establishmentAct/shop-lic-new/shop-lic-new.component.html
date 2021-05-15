@@ -213,7 +213,7 @@
 					
 
 					<mat-form-field class="col-md-6">
-						<input matInput OnlyNumber type="text" required maxlength="10" minlength="10"
+						<input matInput OnlyNumber type="text" maxlength="10" minlength="10"
 							placeholder="Employer Mobile Number"
 							formControlName="employerMobileNumber" >
 						<control-messages [control]="shopLicNewForm.get('employerMobileNumber')">
@@ -511,7 +511,7 @@
 										<p *ngIf="!item.isEditMode">{{item.get('noOfMen').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
 											<input  matInput min=0 (change)="calculateWorkers(indx);"
-												 formControlName="noOfMen" type="number" required>
+												 formControlName="noOfMen" type="number" required >
 											<control-messages [control]="item.get('noOfMen')"></control-messages>
 										</mat-form-field>
 									</td>
@@ -564,7 +564,7 @@
 										<div class="d-md-none">{{'total' | translate:translateKey}}</div>
 										<p *ngIf="!item.isEditMode">{{item.get('total').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
-											<input onlyNumber matInput formControlName="total" readonly>
+											<input onlyNumber matInput formControlName="total" readonly >
 											<control-messages *ngIf="item.isEditMode" [control]="item.get('total')">
 											</control-messages>
 										</mat-form-field>

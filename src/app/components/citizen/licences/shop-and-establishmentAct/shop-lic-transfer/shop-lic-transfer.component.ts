@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl, FormArray, AbstractControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ManageRoutes } from './../../../../../config/routes-conf';
 import { CommonService } from '../../../../../shared/services/common.service';
@@ -521,11 +521,17 @@ export class ShopLicTransferComponent implements OnInit {
 	createArrayWorkOut(data?: any): FormGroup {
 		return this.fb.group({
 			id: data.id ? data.id : null,
-			noOfMen: [data.noOfMen ? data.noOfMen : null, [Validators.required]],
-			noOfWomen: [data.noOfWomen ? data.noOfWomen : null, [Validators.required]],
+			// noOfMen: [data.noOfMen ? data.noOfMen : null, [Validators.required]],
+			// noOfWomen: [data.noOfWomen ? data.noOfWomen : null, [Validators.required]],
+			noOfMen: [data.noOfMen ? data.noOfMen : null,{validators:[Validators.required,Validators.min(0) ,
+				(control : AbstractControl) => Validators.max(this.menWomenMaxValid())(control)], updateOn: 'change'}],
+			noOfWomen: [data.noOfWomen ? data.noOfWomen : null,{validators:[Validators.required,Validators.min(0) ,
+				(control : AbstractControl) => Validators.max(this.menWomenMaxValid())(control)], updateOn: 'change'}],
+		
 			//workerType: [data.workerType ? data.workerType : null, [Validators.required]],
 			workersType: [data.workersType, [Validators.required]],
-			total: [data.total ? data.total : null, [Validators.required]],
+			total: [data.total ? data.total : null,{validators:[Validators.required,Validators.min(0) ,
+				(control : AbstractControl) => Validators.max(this.grandTotal())(control)],updateOn: 'change'}]
 		})
 
 	}
@@ -1600,4 +1606,43 @@ export class ShopLicTransferComponent implements OnInit {
 	this.formControlNameToTabIndex.set('agree',5)
 
 }
+
+menWomenMaxValid(): number{
+		
+	let control = this.shopLicTransferForm.get('workerCounts')['controls'];
+	let grandtotal = 0;
+	
+		for(let i = 0; i < control.length; i++) {
+			grandtotal += control[i].get('total').value;
+		}
+
+	if(this.registrationType === this.regiTyep[0].code) {
+		
+		let max = 10 - grandtotal;
+		return (max < 0) ? 0 : max;
+	}		
+	
+}
+
+
+grandTotal(): number{
+	
+	let control = this.shopLicTransferForm.get('workerCounts')['controls'];
+	let grandtotal = 0;
+	
+		for(let i = 0; i < control.length; i++) {
+			grandtotal += control[i].get('total').value;
+		}
+
+	if(this.registrationType === this.regiTyep[0].code) {
+		
+		let max = 10 - grandtotal;
+		if(max < 0){
+		return max;
+	 }
+	}		
+	
+}
+
+
 }

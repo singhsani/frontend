@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl, FormArray, AbstractControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ManageRoutes } from './../../../../../config/routes-conf';
 import { CommonService } from '../../../../../shared/services/common.service';
@@ -32,7 +32,7 @@ export class ShopLicNewComponent implements OnInit {
 
 	formId: number;
 	apiCode: string;
-
+	TotalNoOfPerson: number = 0;
 	wardZoneLevel = [];
 	wardZoneLevel1List = [];
 	wardZoneLevel2List = [];
@@ -164,16 +164,57 @@ export class ShopLicNewComponent implements OnInit {
 	}
 
 	calculateWorkers(indx) {
+	
 		let men = Number(this.shopLicNewForm.get('workerCounts')['controls'][indx].get('noOfMen').value);
 		let woman = Number(this.shopLicNewForm.get('workerCounts')['controls'][indx].get('noOfWomen').value);
 		let total = men + woman;
 		this.shopLicNewForm.get('workerCounts')['controls'][indx].get('total').setValue(total);
+		
+	}
+
+		menWomenMaxValid(): number{
+		
+		let control = this.shopLicNewForm.get('workerCounts')['controls'];
+		let grandtotal = 0;
+		
+			for(let i = 0; i < control.length; i++) {
+				grandtotal += control[i].get('total').value;
+			}
+	
+		if(this.registrationType === this.regiTyep[0].code) {
+			
+			let max = 10 - grandtotal;
+			return (max < 0) ? 0 : max;
+		}		
+		
+	}
+
+
+	grandTotal(): number{
+		
+		let control = this.shopLicNewForm.get('workerCounts')['controls'];
+		let grandtotal = 0;
+		
+			for(let i = 0; i < control.length; i++) {
+				grandtotal += control[i].get('total').value;
+			}
+	
+		if(this.registrationType === this.regiTyep[0].code) {
+			
+			let max = 10 - grandtotal;
+			
+		 if(max < 0){
+			return max;
+		 }
+		}		
+		
 	}
 
 	hideGuideLine(flag: boolean) {
 		if(this.registrationType == "INTIMATION"){
 			if (this.shopLicNewForm.get('organizationType').value != null) {
 				this.isGuideLineActive = flag;
+				
 			}else{
 				this.alertService.error("Error in fetching data")
 			}
@@ -430,17 +471,20 @@ export class ShopLicNewComponent implements OnInit {
 
 
 	createArrayWorkOut(data?: any): FormGroup {
+		
 		return this.fb.group({
 			id: data.id ? data.id : null,
-			noOfMen: [data.noOfMen ? data.noOfMen : null,[Validators.required]],
-			noOfWomen: [data.noOfWomen ? data.noOfWomen : null,[Validators.required]],
-			//workerType: [data.workerType ? data.workerType : null, [Validators.required]],
+			noOfMen: [data.noOfMen ? data.noOfMen : null,{validators:[Validators.required,Validators.min(0) ,
+				(control : AbstractControl) => Validators.max(this.menWomenMaxValid())(control)], updateOn: 'change'}],
+			noOfWomen: [data.noOfWomen ? data.noOfWomen : null,{validators:[Validators.required,Validators.min(0) ,
+				(control : AbstractControl) => Validators.max(this.menWomenMaxValid())(control)], updateOn: 'change'}],
+			// //workerType: [data.workerType ? data.workerType : null, [Validators.required]],
 			workersType: [data.workersType,[Validators.required]],
-			total: [data.total ? data.total : null],
+			total: [data.total ? data.total : null,{validators:[Validators.required,Validators.min(0) ,
+				(control : AbstractControl) => Validators.max(this.grandTotal())(control)],updateOn: 'change'}],
 		})
 
 	}
-
 	/**
 	 * Method is used to return array
 	 * @param data : person data array 
@@ -790,6 +834,7 @@ export class ShopLicNewComponent implements OnInit {
 	* @param row: table row id
 	*/
 	saveRecord(row: any) {
+		
 		if (row.valid) {
 			row.isEditMode = false;
 			row.newRecordAdded = false;

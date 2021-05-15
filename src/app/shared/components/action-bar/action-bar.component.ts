@@ -132,16 +132,31 @@ export class ActionBarComponent implements OnInit, OnChanges {
 
 	getUserDetailsAndSubmit() {
 		if (this.form.valid && this.commonService.isGuestUser()) {
-			this.openDialogBox().subscribe(details => {
-				if (details) {
-					this.setUserData(details)
-					this.onSubmit()
+			this.mandatoryFileCheck().then(data  =>  {
+
+				if(data.status){
+					this.openDialogBox().subscribe(details => {
+						if (details) {
+							this.setUserData(details)
+							this.onSubmit()
+						}
+		
+					})
+		
+				}
+				else if(data.status == false){
+					this.commonService.openAlert("File Upload", "Please Upload Mandatory File ".concat(data.fileName), "warning");
+					this.isSubmitBtnDisabled = false;
+					return
 				}
 
-			})
-
+		 })
+		
+			
 		} else {
 			this.onSubmit();
+			
+
 		}
 	}
 
