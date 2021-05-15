@@ -187,7 +187,6 @@ export class ShopLicNewComponent implements OnInit {
 		if(this.registrationType === this.regiTyep[0].code) {
 			
 			let max = 10 - grandtotal;
-			console.log("max value is 10", max)
 			return (max < 0) ? 0 : max;
 		}		
 		
@@ -206,7 +205,7 @@ export class ShopLicNewComponent implements OnInit {
 		if(this.registrationType === this.regiTyep[0].code) {
 			
 			let max = 10 - grandtotal;
-			console.log("max value is 10", max)
+			
 		 if(max < 0){
 			return max;
 		 }
