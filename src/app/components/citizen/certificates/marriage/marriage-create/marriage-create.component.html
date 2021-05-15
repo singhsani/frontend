@@ -1207,8 +1207,8 @@
 				<!-- /gujarati -->
 
 				<div class="row">
-					<mat-form-field class="col-md-4">
-						<textarea matInput rows="3" cols="50" maxlength="500"
+					<mat-form-field class="col-md-6">
+						<textarea matInput rows="2" cols="50" maxlength="500"
 							formControlName="groomNriFirstWitnessAddress"
 							placeholder="{{ 'address' | translate:translateKey }} *" appGujInputSource
 							targetElement="groomNriFirstWitnessAddressGuj" [form]="marriageFormGroup"> </textarea>
@@ -1216,14 +1216,14 @@
 						</control-messages>
 					</mat-form-field>
 
-					<mat-form-field class="col-md-4">
-						<textarea matInput rows="2" cols="50" maxlength="500"
+					<mat-form-field class="col-md-6">
+						<textarea matInput rows="2" cols="50" maxlength="500" class="lineHeight20"
 							formControlName="groomNriFirstWitnessAddressGuj" appGujInputTarget
 							[form]="marriageFormGroup"
 							placeholder="{{ 'address' | translate:translateKey:'gu' }}"></textarea>
 					</mat-form-field>
 
-					<mat-form-field class="col-md-4">
+					<mat-form-field class="col-md-6">
 						<input matInput [max]="adultPerson" appDate [matDatepicker]="pickerNIRGroomWitness"
 							formControlName="groomNriFirstWitnessBirthDate"
 							(dateChange)="dateFormate($event.value,'groomNriFirstWitnessBirthDate')"
@@ -1296,8 +1296,8 @@
 
 				<div class="row">
 
-					<mat-form-field class="col-md-4">
-						<textarea matInput rows="3" cols="50" maxlength="500"
+					<mat-form-field class="col-md-6">
+						<textarea matInput rows="2" cols="50" maxlength="500"
 							formControlName="groomNriSecondWitnessAddress"
 							placeholder="{{ 'address' | translate:translateKey }} *" appGujInputSource
 							targetElement="groomNriSecondWitnessAddressGuj" [form]="marriageFormGroup"> </textarea>
@@ -1305,14 +1305,14 @@
 						</control-messages>
 					</mat-form-field>
 
-					<mat-form-field class="col-md-4">
-						<textarea matInput rows="3" cols="50" maxlength="1500"
+					<mat-form-field class="col-md-6">
+						<textarea matInput rows="2" cols="50" maxlength="1500" class="lineHeight20"
 							formControlName="groomNriSecondWitnessAddressGuj" appGujInputTarget
 							[form]="marriageFormGroup"
 							placeholder="{{ 'address' | translate:translateKey:'gu' }}"></textarea>
 					</mat-form-field>
 
-					<mat-form-field class="col-md-4">
+					<mat-form-field class="col-md-6">
 						<input matInput [max]="adultPerson" appDate [matDatepicker]="pickerNIRGroomWitness2"
 							formControlName="groomNriSecondWitnessBirthDate"
 							(dateChange)="dateFormate($event.value,'groomNriSecondWitnessBirthDate')"
@@ -1396,8 +1396,8 @@
 
 				<div class="row">
 
-					<mat-form-field class="col-md-4">
-						<textarea matInput rows="3" cols="50" maxlength="500"
+					<mat-form-field class="col-md-6">
+						<textarea matInput rows="2" cols="50" maxlength="500"
 							formControlName="brideNriFirstWitnessAddress"
 							placeholder="{{ 'address' | translate:translateKey }} *" appGujInputSource
 							targetElement="brideNriFirstWitnessAddressGuj" [form]="marriageFormGroup"> </textarea>
@@ -1405,14 +1405,14 @@
 						</control-messages>
 					</mat-form-field>
 
-					<mat-form-field class="col-md-4">
-						<textarea matInput rows="3" cols="50" maxlength="1500"
+					<mat-form-field class="col-md-6">
+						<textarea matInput rows="2" cols="50" maxlength="1500" class="lineHeight20"
 							formControlName="brideNriFirstWitnessAddressGuj" appGujInputTarget
 							[form]="marriageFormGroup"
 							placeholder="{{ 'address' | translate:translateKey:'gu' }}"></textarea>
 					</mat-form-field>
 
-					<mat-form-field class="col-md-4">
+					<mat-form-field class="col-md-6">
 						<input matInput [max]="adultPerson" appDate [matDatepicker]="pickerNIRBrideWitness"
 							formControlName="brideNriFirstWitnessBirthDate"
 							(dateChange)="dateFormate($event.value,'brideNriFirstWitnessBirthDate')"
@@ -1484,8 +1484,8 @@
 
 				<div class="row">
 
-					<mat-form-field class="col-md-4">
-						<textarea matInput rows="3" cols="50" maxlength="500"
+					<mat-form-field class="col-md-6">
+						<textarea matInput rows="2" cols="50" maxlength="500"
 							formControlName="brideNriSecondWitnessAddress"
 							placeholder="{{ 'address' | translate:translateKey }} *" appGujInputSource
 							targetElement="brideNriSecondWitnessAddressGuj" [form]="marriageFormGroup"> </textarea>
@@ -1493,14 +1493,14 @@
 						</control-messages>
 					</mat-form-field>
 
-					<mat-form-field class="col-md-4">
-						<textarea matInput rows="3" cols="50" maxlength="1500"
+					<mat-form-field class="col-md-6">
+						<textarea matInput rows="2" cols="50" maxlength="1500" class="lineHeight20"
 							formControlName="brideNriSecondWitnessAddressGuj" appGujInputTarget
 							[form]="marriageFormGroup"
 							placeholder="{{ 'address' | translate:translateKey:'gu' }}"></textarea>
 					</mat-form-field>
 
-					<mat-form-field class="col-md-4">
+					<mat-form-field class="col-md-6">
 						<input matInput [max]="adultPerson" appDate [matDatepicker]="pickerNIRBrideWitness2"
 							formControlName="brideNriSecondWitnessBirthDate"
 							(dateChange)="dateFormate($event.value,'brideNriSecondWitnessBirthDate')"
