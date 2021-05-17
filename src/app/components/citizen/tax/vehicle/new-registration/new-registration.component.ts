@@ -122,7 +122,7 @@ export class NewRegistrationComponent implements OnInit {
       }),
       engineNo: [null, [Validators.required, ValidationService.alphaNumericValidation]],
       chasisNo: [null, [Validators.required, ValidationService.alphaNumericValidation]],
-      registrationNo: "GJ-06-",
+      registrationNo: ["GJ-06-", ValidationService.alphaNumericValidation],
       vehicleBasicValue: null,
       makeModel: null,
       dealerName: [null, Validators.required],
