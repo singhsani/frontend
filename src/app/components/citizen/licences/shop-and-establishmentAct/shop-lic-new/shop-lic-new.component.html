@@ -477,12 +477,12 @@
 						<h2 class="pl-0">{{'occupying_position_of_management_table_label' | translate: translateKey }}</h2>
 					</div>
 					<div class="col-md-2 pt-3" style="text-align: right;">
-						<button type="button" *ngIf="shopLicNewForm.get('canEdit').value"
+						<button type="button" *ngIf="shopLicNewForm.get('canEdit').value"  
 							matTooltip="Add More Person Occuping" mat-raised-button color="primary"
 							(click)="addMorePersonwork('OCCUPANCY')">{{'add' | translate: translateKey}}</button>
 							<!-- [disabled]="!(shopLicNewForm.get('workerCounts')['controls'].length < 2)" -->
 					</div>
-
+					
 					
 				</div>
 
@@ -510,7 +510,7 @@
 										<div class="d-md-none">{{'noOfMen' | translate:translateKey}}</div>
 										<p *ngIf="!item.isEditMode">{{item.get('noOfMen').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
-											<input  matInput min=0 (change)="calculateWorkers(indx);"
+											<input  matInput min=0 (input)="calculateWorkers(indx);"
 												 formControlName="noOfMen" type="number" required >
 											<control-messages [control]="item.get('noOfMen')"></control-messages>
 										</mat-form-field>
@@ -520,9 +520,9 @@
 										<div class="d-md-none">{{'noOfWomen' | translate:translateKey}}</div>
 										<p *ngIf="!item.isEditMode">{{item.get('noOfWomen').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
-											<input type="number" min=0 matInput (change)="calculateWorkers(indx);"
+											<input type="number" min=0 matInput (input)="calculateWorkers(indx);"
 											formControlName="noOfWomen" required>
-											<control-messages *ngIf="item.isEditMode" [control]="item.get('noOfWomen')">
+										<control-messages *ngIf="item.isEditMode" [control]="item.get('noOfWomen')">
 											</control-messages>
 										</mat-form-field>
 									</td>
@@ -577,7 +577,8 @@
 												<mat-icon title="Edit">edit</mat-icon>
 											</button>
 											<button type="submit" [disabled]="item.invalid" mat-icon-button
-												color="primary" *ngIf="item.isEditMode" (click)="saveRecord(item)">
+												color="primary" *ngIf="item.isEditMode" (click)="savePersonOccupyingRecord(item)" [disabled]="hideAdd">
+												<!-- (click)="saveRecord(item)" -->
 												<mat-icon title="save">save</mat-icon>
 											</button>
 										</span>

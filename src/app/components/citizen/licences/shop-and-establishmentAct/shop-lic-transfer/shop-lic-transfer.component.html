@@ -559,7 +559,7 @@
 												<mat-icon title="Edit">edit</mat-icon>
 											</button>
 											<button type="submit" [disabled]="item.invalid" mat-icon-button
-												color="primary" *ngIf="item.isEditMode" (click)="saveRecord(item)">
+												color="primary" *ngIf="item.isEditMode" (click)="savePersonOccupyingRecord(item)" [disabled]="hideAdd">
 												<mat-icon title="save">save</mat-icon>
 											</button>
 										</span>
