@@ -64,7 +64,7 @@ export class ShopLicTransferComponent implements OnInit {
 
 	//Lookup Array
 	gender: Array<any> = [];
-
+	hideAdd: boolean = false;
 	workerType: Array<any> = [{
 		code: 'WORKERS',
 		name: 'Workers',
@@ -521,17 +521,13 @@ export class ShopLicTransferComponent implements OnInit {
 	createArrayWorkOut(data?: any): FormGroup {
 		return this.fb.group({
 			id: data.id ? data.id : null,
-			// noOfMen: [data.noOfMen ? data.noOfMen : null, [Validators.required]],
-			// noOfWomen: [data.noOfWomen ? data.noOfWomen : null, [Validators.required]],
-			noOfMen: [data.noOfMen ? data.noOfMen : null,{validators:[Validators.required,Validators.min(0) ,
-				(control : AbstractControl) => Validators.max(this.menWomenMaxValid())(control)], updateOn: 'change'}],
-			noOfWomen: [data.noOfWomen ? data.noOfWomen : null,{validators:[Validators.required,Validators.min(0) ,
-				(control : AbstractControl) => Validators.max(this.menWomenMaxValid())(control)], updateOn: 'change'}],
-		
+					noOfMen: [data.noOfMen ? data.noOfMen : null,{validators:[Validators.required,Validators.min(0) ,
+			]}],
+		noOfWomen: [data.noOfWomen ? data.noOfWomen : null,{validators:[Validators.required,Validators.min(0) ,
+			]}],
 			//workerType: [data.workerType ? data.workerType : null, [Validators.required]],
 			workersType: [data.workersType, [Validators.required]],
-			total: [data.total ? data.total : null,{validators:[Validators.required,Validators.min(0) ,
-				(control : AbstractControl) => Validators.max(this.grandTotal())(control)],updateOn: 'change'}]
+			total: [data.total ? data.total : null,{validators:[Validators.required,Validators.min(0)]}]
 		})
 
 	}
@@ -1463,15 +1459,6 @@ export class ShopLicTransferComponent implements OnInit {
 			}
 		];
 
-		if(this.commonService.fromAdmin()){
-				
-			comonDocument.push({
-					documentIdentifier: 'REVIEW_APPLICATION',
-					mandatory: true
-				})
-			}
-
-		
 		return comonDocument;
 	}
 
@@ -1606,43 +1593,29 @@ export class ShopLicTransferComponent implements OnInit {
 	this.formControlNameToTabIndex.set('agree',5)
 
 }
+	savePersonOccupyingRecord(row: any) {
+		debugger
+		let grandTotal = 0;
+		if (this.registrationType === this.regiTyep[0].code) {
+			let control = this.shopLicTransferForm.get('workerCounts')['controls'];
+			for (let i = 0; i < control.length; i++) {
+				grandTotal += control[i].get('total').value;
+			}
+			let max = grandTotal - 10;
+			if (max > 0) {
+				this.hideAdd = true;
+				this.commonService.openAlert("Person Occupying", "Maximum 10 person are allowed ", "warning");
 
-menWomenMaxValid(): number{
-		
-	let control = this.shopLicTransferForm.get('workerCounts')['controls'];
-	let grandtotal = 0;
-	
-		for(let i = 0; i < control.length; i++) {
-			grandtotal += control[i].get('total').value;
+			}
+
+			else {
+				row.isEditMode = false;
+				row.newRecordAdded = false;
+			}
 		}
+		else {
+			this.saveRecord(row);
 
-	if(this.registrationType === this.regiTyep[0].code) {
-		
-		let max = 10 - grandtotal;
-		return (max < 0) ? 0 : max;
-	}		
-	
-}
-
-
-grandTotal(): number{
-	
-	let control = this.shopLicTransferForm.get('workerCounts')['controls'];
-	let grandtotal = 0;
-	
-		for(let i = 0; i < control.length; i++) {
-			grandtotal += control[i].get('total').value;
 		}
-
-	if(this.registrationType === this.regiTyep[0].code) {
-		
-		let max = 10 - grandtotal;
-		if(max < 0){
-		return max;
-	 }
-	}		
-	
-}
-
-
+	}
 }

@@ -33,6 +33,8 @@ export class ShopLicNewComponent implements OnInit {
 	formId: number;
 	apiCode: string;
 	TotalNoOfPerson: number = 0;
+	hideAdd: boolean = false;
+	
 	wardZoneLevel = [];
 	wardZoneLevel1List = [];
 	wardZoneLevel2List = [];
@@ -161,55 +163,18 @@ export class ShopLicNewComponent implements OnInit {
 
 
 		}
+
 	}
 
 	calculateWorkers(indx) {
-	
+		
 		let men = Number(this.shopLicNewForm.get('workerCounts')['controls'][indx].get('noOfMen').value);
 		let woman = Number(this.shopLicNewForm.get('workerCounts')['controls'][indx].get('noOfWomen').value);
 		let total = men + woman;
 		this.shopLicNewForm.get('workerCounts')['controls'][indx].get('total').setValue(total);
-		
-	}
 
-		menWomenMaxValid(): number{
-		
-		let control = this.shopLicNewForm.get('workerCounts')['controls'];
-		let grandtotal = 0;
-		
-			for(let i = 0; i < control.length; i++) {
-				grandtotal += control[i].get('total').value;
-			}
+	}
 	
-		if(this.registrationType === this.regiTyep[0].code) {
-			
-			let max = 10 - grandtotal;
-			return (max < 0) ? 0 : max;
-		}		
-		
-	}
-
-
-	grandTotal(): number{
-		
-		let control = this.shopLicNewForm.get('workerCounts')['controls'];
-		let grandtotal = 0;
-		
-			for(let i = 0; i < control.length; i++) {
-				grandtotal += control[i].get('total').value;
-			}
-	
-		if(this.registrationType === this.regiTyep[0].code) {
-			
-			let max = 10 - grandtotal;
-			
-		 if(max < 0){
-			return max;
-		 }
-		}		
-		
-	}
-
 	hideGuideLine(flag: boolean) {
 		if(this.registrationType == "INTIMATION"){
 			if (this.shopLicNewForm.get('organizationType').value != null) {
@@ -473,15 +438,14 @@ export class ShopLicNewComponent implements OnInit {
 	createArrayWorkOut(data?: any): FormGroup {
 		
 		return this.fb.group({
+			noOfMenOldValue: null,
+			noOfWomenldValue:null,
 			id: data.id ? data.id : null,
-			noOfMen: [data.noOfMen ? data.noOfMen : null,{validators:[Validators.required,Validators.min(0) ,
-				(control : AbstractControl) => Validators.max(this.menWomenMaxValid())(control)], updateOn: 'change'}],
-			noOfWomen: [data.noOfWomen ? data.noOfWomen : null,{validators:[Validators.required,Validators.min(0) ,
-				(control : AbstractControl) => Validators.max(this.menWomenMaxValid())(control)], updateOn: 'change'}],
+			noOfMen: [data.noOfMen ? data.noOfMen : null,[Validators.required,Validators.max(10),Validators.min(0)]],
+			noOfWomen: [data.noOfWomen ? data.noOfWomen : null,[Validators.required,Validators.max(10),Validators.min(0)]],
 			// //workerType: [data.workerType ? data.workerType : null, [Validators.required]],
 			workersType: [data.workersType,[Validators.required]],
-			total: [data.total ? data.total : null,{validators:[Validators.required,Validators.min(0) ,
-				(control : AbstractControl) => Validators.max(this.grandTotal())(control)],updateOn: 'change'}],
+			total: [data.total ? data.total : null,{validators:[Validators.required,Validators.min(0) ]}]
 		})
 
 	}
@@ -836,57 +800,84 @@ export class ShopLicNewComponent implements OnInit {
 	saveRecord(row: any) {
 		
 		if (row.valid) {
+				
 			row.isEditMode = false;
 			row.newRecordAdded = false;
 		}
 	}
 
-	/**
-	*  Method is used cancel editable dataview.
-	* @param row: table row id
-	*/
-	cancelRecord(row: any, index: number) {
-		
-		try {
-			if (row.newRecordAdded) {
-				this.getArrayByType(row.get('personType').value).removeAt(index);
-			} else {
-				if (row.deepCopyInEditMode) {
-					row.patchValue(row.deepCopyInEditMode);
-				}
+
+		savePersonOccupyingRecord(row: any){
+			
+			let grandTotal = 0;
+			if(this.registrationType === this.regiTyep[0].code){
+			let control = this.shopLicNewForm.get('workerCounts')['controls'];
+			for(let i = 0; i < control.length; i++) {
+				grandTotal += control[i].get('total').value;
+			}
+			let max = grandTotal - 10;
+			if(max > 0){
+				this.hideAdd = true;
+				this.commonService.openAlert("Person Occupying", "Maximum 10 person are allowed ", "warning");
+				
+			}
+			// console.log("grandTotal" +grandTotal);
+			// if(row.valid) {
+			else{
 				row.isEditMode = false;
 				row.newRecordAdded = false;
 			}
-		} catch (error) {
-
 		}
-	}
+		else{
+			this.saveRecord(row);
+			}
+		}
+		/**
+		*  Method is used cancel editable dataview.
+		* @param row: table row id
+		*/
+		cancelRecord(row: any, index: number) {
+			
+			try {
+				if (row.newRecordAdded) {
+					this.getArrayByType(row.get('personType').value).removeAt(index);
+				} else {
+					if (row.deepCopyInEditMode) {
+						row.patchValue(row.deepCopyInEditMode);
+					}
+					row.isEditMode = false;
+					row.newRecordAdded = false;
+				}
+			} catch (error) {
 
-	/**
-	*  Method is used get selected data from lookup when change.
-	* @param lookups : Array
-	* @param code : String
-	* return object
-	*/
-	getSelectedDataFromLookUps(lookups: Array<any>, code: string) {
-		return lookups.find((obj: any) => obj.code === code);
-	}
+			}
+		}
+
+		/**
+		*  Method is used get selected data from lookup when change.
+		* @param lookups : Array
+		* @param code : String
+		* return object
+		*/
+		getSelectedDataFromLookUps(lookups: Array<any>, code: string) {
+			return lookups.find((obj: any) => obj.code === code);
+		}
 
 
-	/**
-	* Method is used when get business sub category dropdown data
-	* @event is value fro category dropdown
-	*/
-	getSubCategoryDropdownData(event) {
-		this.shopAndEstablishmentService.getSubCategory(event).subscribe(res => {
-			this.businessSubCategoryList = res;
-		})
-	}
+		/**
+		* Method is used when get business sub category dropdown data
+		* @event is value fro category dropdown
+		*/
+		getSubCategoryDropdownData(event) {
+			this.shopAndEstablishmentService.getSubCategory(event).subscribe(res => {
+				this.businessSubCategoryList = res;
+			})
+		}
 
-	/**
-	* Method is used when change data of NoOfHumanWorking dropdown
-	* @event is value of NoOfHumanWorking dropdown
-	*/
+		/**
+		* Method is used when change data of NoOfHumanWorking dropdown
+		* @event is value of NoOfHumanWorking dropdown
+		*/
 	onChangeNoOfHumanWorking(event) {
 		// 
 		if (event)
