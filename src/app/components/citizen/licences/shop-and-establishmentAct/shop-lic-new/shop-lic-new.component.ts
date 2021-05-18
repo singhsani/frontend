@@ -808,7 +808,6 @@ export class ShopLicNewComponent implements OnInit {
 
 
 		savePersonOccupyingRecord(row: any){
-			debugger
 			let grandTotal = 0;
 			if(this.registrationType === this.regiTyep[0].code){
 			let control = this.shopLicNewForm.get('workerCounts')['controls'];
