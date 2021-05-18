@@ -429,8 +429,8 @@ mat-footer-row, mat-header-row, mat-row, td.mat-cell, td.mat-footer-cell, th.mat
         .deleteIcon {width: 70px;}
         .swal2-title {font-size: 26px; color: #000; font-weight: 400; margin:0 0 0.2em;}
         .swal2-content {font-size: 17px; color: #333; font-weight: 300; padding: 0 15px;}
-        .swal2-actions {border-top:1px solid #ccc; margin: 0;padding: 13px 15px; display: block !important; margin-top: 25px; text-align: right;
-            button {background: $colorBlue; box-shadow: none; font-weight: 400;
+         .swal2-actions {border-top:1px solid #ccc; margin: 0;padding: 10px 15px; display: block !important; margin-top: 25px; text-align: center;
+            button {background: $colorBlue; box-shadow: none; font-weight: 400; margin: 10px 5px; 
                 &:hover { box-shadow: $buttonShadowHover !important;}
             }
         }
