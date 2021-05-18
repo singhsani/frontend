@@ -444,7 +444,8 @@ export class BookPlanetariumComponent implements OnInit {
 
     this.ticketBookingForm.get('showCategory').get('code').setValue(event);
     if (event == 'PLANETARIUM_SPECIAL_SHOW') {
-    this.maxDate = moment(new Date()).add(14, 'day').toISOString();
+    this.minDate = moment(new Date()).add(2, 'day').toISOString();
+    this.maxDate = moment(new Date()).add(16, 'day').toISOString();
       this.ticketBookingForm.get('schoolName').setValidators([Validators.required]);
       this.ticketBookingForm.get('schoolEmailId').setValidators([Validators.required, ValidationService.emailValidator]);
       this.ticketBookingForm.get('specialShowLanguage.code').setValidators(Validators.required);
@@ -462,6 +463,7 @@ export class BookPlanetariumComponent implements OnInit {
 
     }
     else if (event == 'PLANETARIUM_GENERAL_SHOW') {
+    this.minDate = moment(new Date()).add(0, 'day').toISOString();
     this.maxDate = moment(new Date()).add(6, 'day').toISOString();
       this.ticketBookingForm.get('firstName').setValidators([Validators.required]);
       this.ticketBookingForm.get('lastName').setValidators([Validators.required]);
