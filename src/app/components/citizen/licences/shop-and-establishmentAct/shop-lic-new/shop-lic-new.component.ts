@@ -441,8 +441,8 @@ export class ShopLicNewComponent implements OnInit {
 			noOfMenOldValue: null,
 			noOfWomenldValue:null,
 			id: data.id ? data.id : null,
-			noOfMen: [data.noOfMen ? data.noOfMen : null,[Validators.required,Validators.max(10),Validators.min(0)]],
-			noOfWomen: [data.noOfWomen ? data.noOfWomen : null,[Validators.required,Validators.max(10),Validators.min(0)]],
+			noOfMen: [data.noOfMen ? data.noOfMen : null,[Validators.required,Validators.min(0)]],
+			noOfWomen: [data.noOfWomen ? data.noOfWomen : null,[Validators.required,Validators.min(0)]],
 			// //workerType: [data.workerType ? data.workerType : null, [Validators.required]],
 			workersType: [data.workersType,[Validators.required]],
 			total: [data.total ? data.total : null,{validators:[Validators.required,Validators.min(0) ]}]
@@ -808,7 +808,6 @@ export class ShopLicNewComponent implements OnInit {
 
 
 		savePersonOccupyingRecord(row: any){
-			
 			let grandTotal = 0;
 			if(this.registrationType === this.regiTyep[0].code){
 			let control = this.shopLicNewForm.get('workerCounts')['controls'];

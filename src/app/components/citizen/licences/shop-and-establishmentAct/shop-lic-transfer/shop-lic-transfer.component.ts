@@ -1594,7 +1594,6 @@ export class ShopLicTransferComponent implements OnInit {
 
 }
 	savePersonOccupyingRecord(row: any) {
-		debugger
 		let grandTotal = 0;
 		if (this.registrationType === this.regiTyep[0].code) {
 			let control = this.shopLicTransferForm.get('workerCounts')['controls'];
