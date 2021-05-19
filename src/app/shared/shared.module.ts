@@ -64,6 +64,7 @@ import { PaymentNewService } from './services/paymentNew.service';
 import { BankDetailsBookingComponent } from './components/bank-details-booking/bank-details-booking.component'
 import { AppMonthPicker } from './components/month-picker/month-picker.component';
 import { CollectionService } from '../components/citizen/tax/water-supply/tax-transaction-history/Services/collection.service';
+import { MaskRegistrationNumVtDirective } from './directives/mask-registration-num-vt.directive';
 /* import pipes end*/
 
 const COMPONENTS = [
@@ -102,14 +103,16 @@ const COMPONENTS = [
 	ApplicantDetailsComponent,
 	OfflinePaymentComponent,
 	BankDetailsBookingComponent,
-	AppMonthPicker
+	AppMonthPicker,
+	MaskRegistrationNumVtDirective
 	
 ]
 
 @NgModule({
 	declarations: [
 		...COMPONENTS,
-		BankDetailsBookingComponent
+		BankDetailsBookingComponent,
+		MaskRegistrationNumVtDirective
 	],
 	imports: [
 		CommonModule,

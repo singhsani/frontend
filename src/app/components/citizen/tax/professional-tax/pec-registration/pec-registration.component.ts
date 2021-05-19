@@ -195,7 +195,7 @@ export class PecRegistrationComponent implements OnInit {
 				code: [null, Validators.required], name: null,
 			}),
 			applicableRate: [{ value: 0, disabled: true }],
-			otherProfession: null,
+			otherProfession: [null, ValidationService.alphaNumericValidation],
 			attachments: [],
 			formStatus: null,
 			officeResidentialAddressSame: null

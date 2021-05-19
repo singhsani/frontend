@@ -90,7 +90,8 @@
 					</mat-form-field>
 
 					<div class="col-md-4 ngSelect" formGroupName="ward">
-						<ng-select placeholder="{{'ward_no' | translate: translateKey}} *" required formControlName="wardzoneId">
+						<ng-select placeholder="{{'ward_no' | translate: translateKey}} *" required
+							formControlName="wardzoneId">
 							<ng-option *ngFor="let ward of wardNoArray" [value]="ward.wardzoneId">{{ward.wardzoneName}}
 							</ng-option>
 						</ng-select>
@@ -334,6 +335,7 @@
 					<mat-form-field class="col-md-4"
 						*ngIf="pecRegForm.get('professionConstitution.code').value == 'OTHER'">
 						<input matInput autocomplete="off" maxlength="100" formControlName="otherProfession" type="text"
+							appValidationFields validationFieldsType="appAlphanumericNumber"
 							placeholder="{{'other_profession' | translate: translateKey}}" required>
 						<control-messages [control]="pecRegForm.get('otherProfession')"></control-messages>
 					</mat-form-field>
