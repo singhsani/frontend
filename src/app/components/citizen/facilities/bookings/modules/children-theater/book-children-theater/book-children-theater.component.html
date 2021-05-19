@@ -335,13 +335,13 @@
                         </div>
 
                         <mat-form-field class="col-md-4">
-                            <input matInput type="email"  formControlName="emailId" placeholder="{{'applicant_email' | translate: translateKey}}" required>
+                            <input matInput type="email" appPreventSpace maxlength="50" formControlName="emailId" placeholder="{{'applicant_email' | translate: translateKey}}" required>
                             <control-messages [control]="childrenTheaterApplicationForm.get('emailId')"></control-messages>
                         </mat-form-field>
 
                         <div class="col-md-4">
                             <mat-form-field>
-                                <input matInput type="email" maxlength="50" formControlName="confirmEmailId" placeholder="{{'confirm_email' | translate: translateKey}}"
+                                <input matInput type="email" appPreventSpace maxlength="50" formControlName="confirmEmailId" placeholder="{{'confirm_email' | translate: translateKey}}"
                                     required>
                                 <control-messages [control]="childrenTheaterApplicationForm.get('confirmEmailId')"></control-messages>
                             </mat-form-field>
