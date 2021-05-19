@@ -1,71 +1,90 @@
 <mat-card class="cardBox mt-2">
-<div class="mt-4">
-  <div class="example-container mat-elevation-z8">
-    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8 width100">
-      <ng-container matColumnDef="select">
-        <th mat-header-cell *matHeaderCellDef>Select </th>
-        <td mat-cell *matCellDef="let element">
-          <mat-radio-group [(ngModel)]="selectedItem" (change)="onChangeSelect($event)">
-            <mat-radio-button [value]="element"></mat-radio-button>
-          </mat-radio-group>
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="propertyNo">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Property No </th>
-        <td mat-cell *matCellDef="let element"> {{element.propertyNo}} </td>
-      </ng-container>
-      <ng-container matColumnDef="propertyAddress">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Address </th>
-        <td mat-cell *matCellDef="let element"> {{element.propertyAddress.propertyAddress}} </td>
-      </ng-container>
-      <ng-container matColumnDef="ownerName">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Owner Name </th>
-        <td mat-cell *matCellDef="let element"> {{element.ownerName}} </td>
-      </ng-container>
-      <ng-container matColumnDef="occupierName">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Occupier Name </th>
-        <td mat-cell *matCellDef="let element"> {{element.occupierName}} </td>
-      </ng-container>
+  <div class="mt-4">
+    <div class="example-container mat-elevation-z8">
+      <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8 width100">
+        <ng-container matColumnDef="select">
+          <th mat-header-cell *matHeaderCellDef>Select </th>
+          <td mat-cell *matCellDef="let element">
+            <mat-radio-group [(ngModel)]="selectedItem" (change)="onChangeSelect($event)">
+              <mat-radio-button [value]="element"></mat-radio-button>
+            </mat-radio-group>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="propertyNo">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Property No </th>
+          <td mat-cell *matCellDef="let element"> {{element.propertyNo}} </td>
+        </ng-container>
+        <ng-container matColumnDef="propertyAddress">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Address </th>
+          <td mat-cell *matCellDef="let element"> {{element.propertyAddress.propertyAddress}} </td>
+        </ng-container>
+        <ng-container matColumnDef="ownerName">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Owner Name </th>
+          <td mat-cell *matCellDef="let element"> {{element.ownerName}} </td>
+        </ng-container>
+        <ng-container matColumnDef="occupierName">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Occupier Name </th>
+          <td mat-cell *matCellDef="let element"> {{element.occupierName}} </td>
+        </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
-  </div>
-</div>
-<div class="row margin-top-20">
-  <div class="col-md-2">
-    <mat-card>Total Count : <b>{{totalCount}}</b></mat-card>
-  </div>
-</div>
-<mat-card class="col-md-12 mt-3" *ngIf="isShowPayMode">
-  <form #formDetail="ngForm" (ngSubmit)="onEnterClick(formDetail)">
-    <div class="row margin-top-20">
-      <div class="col-md-2">
-        <mat-form-field class="full-width-input" hidden>
-          <input matInput trim="blur" placeholder="Application No" maxlength="20" #ApplicationNo="ngModel" name="applicationNo" [(ngModel)]="serviceCharge.applicationNo">
-          <mat-error *ngIf="ApplicationNo.invalid">*Application No is required.</mat-error>
-        </mat-form-field>
-      </div>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
     </div>
-    <div class="row">
-      <div class="col-md-2">
-        <mat-form-field class="full-width-input">
-          <input matInput disabled placeholder="Outstanding Tax Amount" name="outstandingAmount" [(ngModel)]="serviceCharge.outstandingAmount">
-        </mat-form-field>
+  </div>
+  <div class="row margin-top-20">
+    <div class="col-md-2">
+      <mat-card>Total Count : <b>{{totalCount}}</b></mat-card>
+    </div>
+  </div>
+  <mat-card class="col-md-12 mt-3" *ngIf="isShowPayMode">
+    <form #formDetail="ngForm" (ngSubmit)="onEnterClick(formDetail)">
+      <div class="row margin-top-20">
+        <div class="col-md-2">
+          <mat-form-field class="full-width-input" hidden>
+            <input matInput trim="blur" placeholder="Application No" maxlength="20" #ApplicationNo="ngModel"
+              name="applicationNo" [(ngModel)]="serviceCharge.applicationNo">
+            <mat-error *ngIf="ApplicationNo.invalid">*Application No is required.</mat-error>
+          </mat-form-field>
+        </div>
       </div>
-      <div class="col-md-2">
-        <button class="ml-3" mat-raised-button color="accent" type="button" style="padding-left: 0px !important;
-        width: 90% !important"(click)="onOutstandingDetailCLick()">
-          <mat-icon>details</mat-icon> {{detailOutstandingButtonText}}
-        </button>
-      </div>
-      <div class="col-md-2">
+      <div class="row">
+        <div class="col-md-3">
+          <mat-form-field class="full-width-input">
+            <input matInput disabled placeholder="Outstanding Tax Amount" name="outstandingAmount"
+              [(ngModel)]="serviceCharge.outstandingAmount">
+          </mat-form-field>
+        </div>
+        <div class="col-md-3">
+          <button class="ml-3" mat-raised-button color="accent" type="button" style="padding-left: 0px !important;
+        width: 90% !important" (click)="onOutstandingDetailCLick()">
+            <mat-icon>details</mat-icon> {{detailOutstandingButtonText}}
+          </button>
+        </div>
+        <div class="col-md-3">
           <mat-form-field class="full-width-input">
             <input matInput number-only name="noofCopies" placeholder="No of Copies" (blur)="onBlurNoofCopies($event)"
               [(ngModel)]="serviceCharge.noofCopies" maxlength="5">
           </mat-form-field>
         </div>
-        <div class="col-md-2">
+      </div>
+      <div class="row">
+
+        <div class="col-md-3">
+          <mat-form-field class="full-width-input">
+            <input matInput disabled name="totalAmount" placeholder="Fees Applicable"
+              [(ngModel)]="serviceCharge.totalAmount">
+          </mat-form-field>
+        </div>
+        <div class="col-md-3">
+          <button class="ml-3" mat-raised-button color="accent" type="button" type="button" style="padding-left: 0px !important;
+          width: 90% !important" (click)="onDetailCLick()">
+            <mat-icon>details</mat-icon>
+            {{detailButtonText}}
+          </button>
+        </div>
+
+        <div class="col-md-3">
           <mat-form-field class="full-width-input">
             <input matInput required #AD="ngModel" [matDatepicker]="AsonDate" placeholder="As on Date" name="asonDate"
               [(ngModel)]="serviceCharge.asonDate" mask-date>
@@ -74,54 +93,44 @@
             <mat-error *ngIf="AD.invalid">*As on Date is required.</mat-error>
           </mat-form-field>
         </div>
-        <div class="col-md-2">
-          <mat-form-field class="full-width-input">
-            <input matInput disabled name="totalAmount" placeholder="Fees Applicable" [(ngModel)]="serviceCharge.totalAmount">
-          </mat-form-field>
-        </div>
-        <div class="col-md-2">
-          <button class="ml-3" mat-raised-button color="accent" type="button" (click)="onDetailCLick()">
-            <!-- <mat-icon>details</mat-icon>  -->
-            {{detailButtonText}}
+
+      </div>
+      <div class="row">
+        <div class="col-md-12 text-right">
+          <button class="ml-3" mat-raised-button color="primary" type="submit">
+            <mat-icon>payment</mat-icon> Pay Now
           </button>
-        </div>       
-    </div>
-<div class="row">
-  <div class="col-md-12 text-right">
-    <button class="ml-3" mat-raised-button color="primary" type="submit">
-      <mat-icon>payment</mat-icon> Pay Now
-    </button>
-    <select-payment-gateway-property #paymentGateway></select-payment-gateway-property>
-  </div>
-</div>
-  </form>
-  <mat-card *ngIf="isShowDetail">
-    <div class="row">
-      <div class="col-md-12">
-        <div class="section-title">
-          <h4>Fees Detail</h4>
-          <mat-divider></mat-divider>
+          <select-payment-gateway-property #paymentGateway></select-payment-gateway-property>
         </div>
       </div>
-      <div class="col-md-12">
-        <table class="custome-table width100">
-          <thead>
-            <tr>
-              <th>Charge Name</th>
-              <th>Charge Amount</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let item of serviceCharge.serviceChargeDetail">
-              <td>{{item.chargeName}}</td>
-              <td>{{item.chargeAmount}}</td>
-            </tr>
-          </tbody>
-        </table>
+    </form>
+    <mat-card *ngIf="isShowDetail">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="section-title">
+            <h4>Fees Detail</h4>
+            <mat-divider></mat-divider>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <table class="custome-table width100">
+            <thead>
+              <tr>
+                <th>Charge Name</th>
+                <th>Charge Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of serviceCharge.serviceChargeDetail">
+                <td>{{item.chargeName}}</td>
+                <td>{{item.chargeAmount}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
-    </div>
-  </mat-card>
-  <mat-card *ngIf="isShowOutstandingDetail">
+    </mat-card>
+    <mat-card *ngIf="isShowOutstandingDetail">
       <div class="row">
         <div class="col-md-12">
           <div class="section-title">
@@ -147,5 +156,5 @@
         </div>
       </div>
     </mat-card>
-</mat-card>
+  </mat-card>
 </mat-card>
