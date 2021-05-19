@@ -462,7 +462,6 @@
 					</div>
 					<div class="col-md-2 pt-3" style="text-align: right;">
 						<button type="button" *ngIf="shopLicTransferForm.get('canEdit').value"
-							[disabled]="!(shopLicTransferForm.get('workerCounts')['controls'].length < 2)"
 							matTooltip="Add More Person Occuping" mat-raised-button color="primary"
 							(click)="addMorePersonwork('OCCUPANCY')">{{'add' | translate: translateKey}}</button>
 					</div>
