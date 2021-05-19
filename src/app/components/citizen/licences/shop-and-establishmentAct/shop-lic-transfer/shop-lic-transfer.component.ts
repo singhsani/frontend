@@ -707,12 +707,6 @@ export class ShopLicTransferComponent implements OnInit {
 		let isEditAnotherRow = this.isTableInEditMode(persontype);
 		if (!isEditAnotherRow) {
 
-			// if (persontype === "OCCUPANCY" && this.getArrayByType(persontype).controls.length >= 2) {
-			// 	this.toastrService.warning("Occuping Person not allowed more than 2");
-			// 	return false;
-			// }
-
-
 			if (persontype === "OCCUPANCY") {
 				this.getArrayByType(persontype).push(this.createArrayWorkOut({
 					personType: persontype
