@@ -226,6 +226,10 @@ export class ActionBarComponent implements OnInit, OnChanges {
 									this.form.disable();
 									if (this.commonService.isGuestUser()) {
 										this.router.navigateByUrl(ManageRoutes.getFullRoute("CITIZENDASHBOARD"));
+									}else if(this.form.getRawValue().serviceDetail.code == "SHOP-ESTAB-LIC-NEW"  || this.form.getRawValue().serviceDetail.code == "SHOP-ESTAB-TRANSFER"){
+										const url = '/citizen/my-applications' +'?id=' +this.form.getRawValue().serviceFormId + '&apiCode=' + 
+											this.form.getRawValue().serviceCode
+													this.router.navigateByUrl(url);
 									} else {
 										this.router.navigateByUrl(ManageRoutes.getFullRoute("CITIZENMYAPPS"));
 									}
