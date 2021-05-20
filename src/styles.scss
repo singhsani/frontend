@@ -842,6 +842,7 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
     .pageTitle {font-size: 17px; padding: 7px 20px;}
     .olList {padding-left: 15px;}
 
+    .cdk-overlay-pane.mat-datepicker-dialog {max-width: 90vw !important;}
 }
 
 /*** for reduce the width and height of datepicker ***/
