@@ -248,8 +248,7 @@
 									mat-icon-button color="warn" (click)="removeCensus(i)">
 									<i class="fa fa-times"></i>
 								</button>
-								<control-messages [control]="pecRegForm.get('censusNo')['controls'][i].get('census')">
-								</control-messages>
+								<mat-error *ngIf="placeHolderMessage !== null">{{placeHolderMessage}}</mat-error>
 							</mat-form-field>
 							<mat-form-field class="col-md-3" *ngIf="!isCensusNo">
 								<input style="margin-top: 15px !important;" matInput autocomplete="off"
@@ -260,8 +259,7 @@
 									mat-icon-button color="warn" (click)="removeCensus(i)">
 									<i class="fa fa-times"></i>
 								</button>
-								<control-messages [control]="pecRegForm.get('censusNo')['controls'][i].get('census')">
-								</control-messages>
+								<mat-error *ngIf="placeHolderMessage !== null">{{placeHolderMessage}}</mat-error>
 							</mat-form-field>
 						</div>
 
