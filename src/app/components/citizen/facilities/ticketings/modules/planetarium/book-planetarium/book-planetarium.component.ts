@@ -51,6 +51,7 @@ export class BookPlanetariumComponent implements OnInit {
   PLANETARIUM_SHOWS_TIMING: Array<any> = [];
   PLANETARIUM_SPECIAL_SHOWS_LAG: Array<any> = [];
   PLANETARIUM_SHOW_CATEGORY: Array<any> = [];
+  FINAL_PLANETARIUM_SHOW_CATEGORY: Array<any> = [];
   PLANETARIUM_VISITOR: Array<any> = [];
   PURPOSE: Array<any> = [];
   resourceName: Array<any> = [];
@@ -82,7 +83,7 @@ export class BookPlanetariumComponent implements OnInit {
     this.getLookUps();
     this.getListData();
     this.profileData();
-    this.ticketBookingForm.get('visitingDate').setValue('');
+    //this.ticketBookingForm.get('visitingDate').setValue('');
   }
   /**
 	* Get all booking category list from api.
@@ -95,6 +96,8 @@ export class BookPlanetariumComponent implements OnInit {
       this.PLANETARIUM_SHOWS_TIMING = respLookUp.PLANETARIUM_SHOWS_TIMING;
       this.PLANETARIUM_SPECIAL_SHOWS_LAG = respLookUp.PLANETARIUM_SPECIAL_SHOWS_LANGUAGE;
       this.PLANETARIUM_SHOW_CATEGORY = respLookUp.PLANETARIUM_SHOW_CATEGORY;
+      this.FINAL_PLANETARIUM_SHOW_CATEGORY.push(this.PLANETARIUM_SHOW_CATEGORY[0]);
+      this.FINAL_PLANETARIUM_SHOW_CATEGORY.push(this.PLANETARIUM_SHOW_CATEGORY[1]);
       this.PLANETARIUM_VISITOR = respLookUp.PLANETARIUM_VISITOR;
       this.PURPOSE = respLookUp.PURPOSE;
     }, err => {
@@ -441,11 +444,10 @@ export class BookPlanetariumComponent implements OnInit {
     this.ticketBookingForm.get('resourceCode').setValue('SARDAR_PATEL_PLANETARIUM');
     this.ticketBookingForm.get('visitingDate').setValue(moment().format('YYYY-MM-DD'));
     this.ticketBookingForm.get('bookingDate').setValue(moment(new Date()).format('YYYY-MM-DD'));
-
     this.ticketBookingForm.get('showCategory').get('code').setValue(event);
     if (event == 'PLANETARIUM_SPECIAL_SHOW') {
-    this.minDate = moment(new Date()).add(2, 'day').toISOString();
-    this.maxDate = moment(new Date()).add(16, 'day').toISOString();
+      this.minDate = moment(new Date()).add(2, 'day').toISOString();
+      this.maxDate = moment(new Date()).add(16, 'day').toISOString();
       this.ticketBookingForm.get('schoolName').setValidators([Validators.required]);
       this.ticketBookingForm.get('schoolEmailId').setValidators([Validators.required, ValidationService.emailValidator]);
       this.ticketBookingForm.get('specialShowLanguage.code').setValidators(Validators.required);
@@ -482,7 +484,7 @@ export class BookPlanetariumComponent implements OnInit {
     else {
       this.ticketBookingForm.reset();
     }
-    this.ticketBookingForm.get('visitingDate').setValue('');
+    //this.ticketBookingForm.get('visitingDate').setValue('');
     /* After perform set or remove validator action this will update value and validity */
     this.ticketBookingForm.get('firstName').updateValueAndValidity();
     this.ticketBookingForm.get('lastName').updateValueAndValidity();
@@ -623,7 +625,7 @@ export class BookPlanetariumComponent implements OnInit {
       || !this.ticketBookingForm.get('firstName').value
       || !this.ticketBookingForm.get('lastName').value
       || !this.ticketBookingForm.get('planetariumShowTiming').get('code').value
-      || !this.ticketBookingForm.get('visitingDate').value
+      //|| !this.ticketBookingForm.get('visitingDate').value
       ) {
       this.commonService.openAlert("Field Error", this.ticketingConstants.ALL_FEILD_REQUIRED_MESSAGE, 'warning');
       this.markFormGroupTouched(this.ticketBookingForm);

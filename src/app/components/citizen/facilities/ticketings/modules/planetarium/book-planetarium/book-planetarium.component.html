@@ -26,7 +26,7 @@
                         <ng-select placeholder="{{'show_category'| translate: translateKey}} *"
                             (change)="setValidationForSpecialShow($event);savePlanetariumTickets()"
                             formControlName="code">
-                            <ng-option *ngFor="let cat of PLANETARIUM_SHOW_CATEGORY" [value]="cat.code">
+                            <ng-option *ngFor="let cat of FINAL_PLANETARIUM_SHOW_CATEGORY" [value]="cat.code">
                                 {{ cat.name }}
                             </ng-option>
                         </ng-select>
