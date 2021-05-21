@@ -60,6 +60,8 @@ export class PecRegistrationComponent implements OnInit {
 
 	isCensusNo: boolean = true;
 	selectedCensusNo: any = "CensusNo";
+	isCensusSelected: boolean = true;
+	placeHolderMessage = null;
 
 	constructor(
 		private fb: FormBuilder,
@@ -256,8 +258,10 @@ export class PecRegistrationComponent implements OnInit {
 	selectCensusOrPropertyNo(value) {
 		if (value.value == 'CensusNo') {
 			this.isCensusNo = true;
+			this.isCensusSelected = true;
 		} else {
 			this.isCensusNo = false;
+			this.isCensusSelected = false;
 		}
 	}
 
@@ -308,6 +312,11 @@ export class PecRegistrationComponent implements OnInit {
 		for (let i = 0; i < this.pecRegForm.get('censusNo')['controls'].length; i++) {
 			if (this.pecRegForm.get('censusNo')['controls'][i].invalid) {
 				isValid = false;
+				if(this.isCensusSelected){
+					this.placeHolderMessage = "Census No is Required";
+				}else{
+					this.placeHolderMessage = "Property No is Required";
+				}
 				this.config.getAllErrors(this.pecRegForm.get('censusNo')['controls'][i]);
 				break;
 			}
