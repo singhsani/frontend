@@ -747,6 +747,10 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
     label.mat-form-field-label {width: 100% !important; overflow: visible !important;  white-space: normal !important; text-overflow: initial !important;}
 }
 
+.minWidth1000px {min-width: 1000px;}
+
+.marBot100 {margin-bottom: 100px !important;}
+
 ::-webkit-scrollbar {width: 5px; height: 5px;}
 ::-webkit-scrollbar-track {background: #D1C4E9; border-radius:3px;}
 ::-webkit-scrollbar-thumb {background: #7E57C2; border-radius:3px;}
@@ -794,6 +798,8 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
     .labelLonger .mat-form-field-label-wrapper {
         label.mat-form-field-label {top: 0 !important;}
     }
+
+    .mat-step-label {white-space: normal !important; overflow: visible !important; text-overflow: inherit !important; font-size: 11px; word-break: break-word;}
 
 }
 
