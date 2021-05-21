@@ -62,7 +62,7 @@ export class GatewayResponseComponent implements OnInit {
 	 * @param txtRefNo - transaction reference number
 	 */
 	getBillDeskTransactionDetails(txtRefNo) {
-		
+
 		if (txtRefNo != 'NA') {
 			this.formService.getBillDeskTransactionDetails(txtRefNo).subscribe(res => {
 				this.responseObj = res.data;
@@ -96,7 +96,7 @@ export class GatewayResponseComponent implements OnInit {
 	 * @param token - token from api
 	 */
 	gatewayResponse(token, isSearchanble) {
-		
+
 		// this.formService.getPaymentResponse(token).subscribe(res => {
 		this.isSearchanble = isSearchanble;
 		if (isSearchanble == "true") {
@@ -162,20 +162,17 @@ export class GatewayResponseComponent implements OnInit {
 		if (data.payableServiceType == "PROFESSIONAL_TAX") {
 			this.formService.saveTaxPaymentDetails(payData).subscribe(res => {
 				if (res && res.data) {
-					this.formService.printProfReceipt(res.data.responseData.refNumber).subscribe(data => {
 
-						let sectionToPrint: any = document.getElementById('sectionToPrint');
-						sectionToPrint.innerHTML = data;
+					setTimeout(() => {
+						this.router.navigateByUrl(ManageRoutes.getFullRoute('CITIZENMYTRANSACTIONS') + '?refNumber=' + res.data.responseData.refNumber);
+						//this.redirectToMyApplication(ManageRoutes.getFullRoute('CITIZENMYTRANSACTIONS'),res.data.responseData.refNumber );
+					}, 10000);
 
-						setTimeout(() => {
-							var onPrintFinished = (printed) => {	
-							}
-							onPrintFinished(window.print()); //NOSONAR
-						}, 3000);
+					this.interVal();
 
-					});
-					this.redirectToHome();
+
 				}
+				//this.redirectToHome();
 			});
 		} else {
 			if (this.isSearchanble == "true") {
