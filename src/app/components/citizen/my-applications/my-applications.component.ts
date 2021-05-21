@@ -99,8 +99,8 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		* Used to initiate print hook after successfull payment
 		*/
 		this.route.queryParams.subscribe(d => {
-            if(d.printPaymentReceipt && d.apiCode && d.id) {
-                this.printPaymentReceipt(d.apiCode,d.id);
+			if (d.printPaymentReceipt && d.apiCode && d.id) {
+				this.printPaymentReceipt(d.apiCode, d.id);
 				setTimeout(() => {
 					this.router.navigateByUrl(this.router.url.split('?')[0]);
 				}, 3000);
@@ -116,7 +116,7 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 	ngOnChanges() {
 		this.getAllData();
 	}
-	
+
 
 	/**
 	 * This method use to get all the citizen data with pagination.
@@ -240,6 +240,7 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 	 * @param id citizen id
 	 */
 	printReceipt(apiCode: string, apiName: string, id: number) {
+		debugger
 		this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);
 		this.formService.printReceipt(id).subscribe(
 			receiptResponse => {
@@ -276,11 +277,11 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 	 * @param id citizen id
 	 */
 	printView(apiCode: string, apiName: string, id: number) {
-		if(apiCode == 'SHOP-ESTAB-TRANSFER'){
+		if (apiCode == 'SHOP-ESTAB-TRANSFER') {
 			this.formService.apiType = 'shop';
-	 	}else{
-		this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);
-		 }
+		} else {
+			this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);
+		}
 		this.formService.printView(id).subscribe(
 			htmlResponse => {
 				// let sectionToPrint: any = document.getElementById('sectionToPrint');
@@ -370,10 +371,11 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 	 * @param row - Table row oject
 	 */
 	isMoreBtnVisible(row) {
-		if (!row.remarks && (row.serviceType === 'PEC_REG' || row.serviceType === 'PRC_REG'))
-			return false;
-		else
+		if (row.remarks || 
+			((row.serviceType === 'PEC_REG' || row.serviceType === 'PRC_REG') && row.fileStatus != 'REJECTED'))
 			return true;
+		else
+			return false;
 	}
 
 	/**
@@ -463,8 +465,12 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 			return false;
 		}
 
-		if (row.fileStatus == 'PAYMENT_RECEIVED' || row.fileStatus == 'APPROVED') {
+		if (row.fileStatus == 'PAYMENT_RECEIVED') {
 			return true;
+		}
+
+		if (row.fileStatus == 'APPROVED' && (row.serviceType != 'PEC_REG' || row.serviceType != 'PRC_REG')) {
+			return false;
 		}
 
 		if (row.fileStatus == 'SUBMITTED' && row.serviceType == 'WATER_NEW_DRAINAGE_CONNECTION') {
@@ -708,11 +714,11 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		}
 	}
 
-	isShopHideButton(row){
+	isShopHideButton(row) {
 		console.log(row);
-		if((this.commonService.fromAdmin() && row.serviceDetail.code == 'SHOP-ESTAB-LIC-NEW') || (this.commonService.fromAdmin() && row.serviceDetail.code == 'SHOP-ESTAB-TRANSFER')){
+		if ((this.commonService.fromAdmin() && row.serviceDetail.code == 'SHOP-ESTAB-LIC-NEW') || (this.commonService.fromAdmin() && row.serviceDetail.code == 'SHOP-ESTAB-TRANSFER')) {
 			return false;
-		}else{
+		} else {
 			return true;
 		}
 	}
