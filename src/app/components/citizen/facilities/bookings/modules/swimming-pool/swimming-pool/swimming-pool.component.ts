@@ -208,9 +208,9 @@ export class SwimmingPoolComponent implements OnInit {
           this.toastr.error("Server Error");
         })
     }
-    else {
-      this.toastr.error("Server Error");
-    }
+    // else {
+    //   this.toastr.error("Server Error");
+    // }
 
   }
 
