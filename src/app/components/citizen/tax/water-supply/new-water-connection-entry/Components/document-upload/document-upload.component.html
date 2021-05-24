@@ -1,20 +1,23 @@
 <mat-card class="mt-4">
-<div class="row">
-<ng-container *ngFor="let doc of newNewWaterConnectionDocs">
-<div class="col-md-4">
-	<label>{{doc.documentLabelEn}}<span *ngIf="doc.mandatory">*</span>							</label>
-	<file-upload-water-tax [form]="newNewWaterConnectionDocs" [uploadModel]="doc"></file-upload-water-tax>
-</div>
-</ng-container>
-</div>
-
-
-<div class="fotButtonBar clearfix mt-0">
-        <div class="col-sm-12 col-md-12">
-				<button mat-raised-button class="ml-3 pull-right" color="primary" type="button" (click)="finalSubmit()">
-						<mat-icon>save</mat-icon>Save & Submit
-					</button>
-        </div>
+	<div class="row">
+		<ng-container *ngFor="let doc of newNewWaterConnectionDocs">
+			<div class="col-md-4">
+				<label>{{doc.documentLabelEn}}<span *ngIf="doc.mandatory">*</span> </label>
+				<file-upload-water-tax [form]="newNewWaterConnectionDocs" [uploadModel]="doc"></file-upload-water-tax>
+			</div>
+		</ng-container>
 	</div>
-	
+
+
+	<div class="fotButtonBar clearfix mt-0">
+		<div class="col-sm-12 col-md-12">
+			<button mat-raised-button class="ml-3 pull-left" color="primary" type="button" (click)="onBackClick()">
+				<mat-icon>skip_previous</mat-icon>Back
+			</button>
+			<button mat-raised-button class="ml-3 pull-right" color="primary" type="button" (click)="finalSubmit()">
+				<mat-icon>save</mat-icon>Save & Submit
+			</button>
+		</div>
+	</div>
+
 </mat-card>

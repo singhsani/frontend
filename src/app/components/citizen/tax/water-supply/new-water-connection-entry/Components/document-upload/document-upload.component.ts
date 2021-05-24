@@ -98,7 +98,7 @@ export class DocumentUploadComponent implements OnInit {
     }
 
     onBackClick(){
-      this.newNewWaterConnectionEntryDataSharingService.updateDataSourceMoveStepper(0);
+      this.newNewWaterConnectionEntryDataSharingService.updateDataSourceMoveStepper(1);
     }
 
   mandatoryFileCheck() {
