@@ -5,6 +5,7 @@
         <h4>Existing Owner</h4>
         <mat-divider></mat-divider>
       </div>
+      <div class="table-responsive">
       <table mat-table [dataSource]="dataSourceExistingOwner" matSort class="width100 table-width">
         <ng-container matColumnDef="titleName">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Title</th>
@@ -37,6 +38,7 @@
         <tr mat-header-row *matHeaderRowDef="columnsExistingOwner"></tr>
         <tr mat-row *matRowDef="let row; columns: columnsExistingOwner;"></tr>
       </table>
+      </div>
     </div>
   </div>
 </mat-card>
