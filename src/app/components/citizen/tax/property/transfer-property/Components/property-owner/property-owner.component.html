@@ -50,6 +50,8 @@
         <h4>New Owner</h4>
         <mat-divider></mat-divider>
       </div>
+    
+      
       <form #formDetail="ngForm" (ngSubmit)="save(formDetail)">
         <div class="row">
           <div class="col-md-1">
@@ -113,6 +115,7 @@
         </div>
       </form>
       <div *ngIf="isNewOwnerExist">
+        <div class="table-responsive">
         <table mat-table [dataSource]="dataSourceNewOwner" matSort class="width100 table-width">
           <ng-container matColumnDef="titleName">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Title</th>
@@ -154,6 +157,9 @@
           <tr mat-row *matRowDef="let row; columns: columnsNewOwner;"></tr>
         </table>
       </div>
+      </div>
+    
+
     </div>
   </div>
 </mat-card>
