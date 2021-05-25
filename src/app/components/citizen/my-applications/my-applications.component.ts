@@ -240,7 +240,7 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 	 * @param id citizen id
 	 */
 	printReceipt(apiCode: string, apiName: string, id: number) {
-		debugger
+
 		this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);
 		this.formService.printReceipt(id).subscribe(
 			receiptResponse => {
