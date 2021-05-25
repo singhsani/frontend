@@ -371,8 +371,7 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 	 * @param row - Table row oject
 	 */
 	isMoreBtnVisible(row) {
-		if (row.remarks ||
-			((row.serviceType === 'PEC_REG' || row.serviceType === 'PRC_REG') && row.fileStatus != 'REJECTED'))
+		if (!row.remarks)
 			return true;
 		else
 			return false;
