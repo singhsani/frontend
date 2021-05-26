@@ -1,13 +1,10 @@
 import { Component, OnInit, ViewChild, TemplateRef, Input, OnChanges } from '@angular/core';
 import { Router, ActivatedRoute, RouterLinkWithHref } from '@angular/router';
-
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
-
 import { MatPaginator, MatSort, MatTableDataSource, MatDialogConfig, MatDialog } from '@angular/material';
 import { Observable, merge, of as observableOf, from } from 'rxjs';
 import { catchError, map, startWith, switchMap } from 'rxjs/operators';
-
 import { PaginationService } from '../../../core/services/citizen/data-services/pagination.service';
 import { FormsActionsService } from '../../../core/services/citizen/data-services/forms-actions.service';
 import { CommonService } from '../../../shared/services/common.service';
@@ -27,12 +24,9 @@ import { PaymentNewService } from 'src/app/shared/services/paymentNew.service';
 	styleUrls: ['./my-applications.component.scss']
 })
 export class MyApplicationsComponent implements OnInit, OnChanges {
-
 	@ViewChild("paymentGateway") paymentGateway: any;
-
 	@Input() inputData: any;
 	@Input() fromOtherModule = false;
-
 	/**
 	 * displayColumns are used for display the columns in material table.
 	 */
@@ -46,7 +40,6 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		'fileStatus',
 		'action'
 	];
-
 	/**
 	 * Used for material table data population and pagination.
 	 */
@@ -55,23 +48,16 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 	pageSize: number = 5;
 	isLoadingResults: boolean = true;
 	translateKey: string = "myApplicationScreen";
-
 	appType: string = 'myApps';
-
 	modalRef: BsModalRef;
 	JSONdata: any;
 	rejectRemarks: string = '';
 	reason: string = '';
-
 	queryrraiseRemarks: string = '';
 	queryrraisereason: string = '';
-
-
 	config: CitizenConfig = new CitizenConfig();
-
 	@ViewChild(MatPaginator) paginator: MatPaginator;
 	@ViewChild(MatSort) sort: MatSort;
-
 	constructor(
 		private formService: FormsActionsService,
 		private paginationService: PaginationService,
@@ -84,23 +70,17 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		private location: Location,
 		private paymentService: PaymentService
 	) {
-
-
-
 	}
-
 	ngOnInit() {
 		// If the user changes the sort order, reset back to the first page.
 		this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
-
 		this.getAllData();
-
 		/**
 		* Used to initiate print hook after successfull payment
 		*/
 		this.route.queryParams.subscribe(d => {
-			if (d.printPaymentReceipt && d.apiCode && d.id) {
-				this.printPaymentReceipt(d.apiCode, d.id);
+            if(d.printPaymentReceipt && d.apiCode && d.id) {
+                this.printPaymentReceipt(d.apiCode,d.id);
 				setTimeout(() => {
 					this.router.navigateByUrl(this.router.url.split('?')[0]);
 				}, 3000);
@@ -112,12 +92,10 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 			}
 		})
 	}
-
 	ngOnChanges() {
 		this.getAllData();
 	}
-
-
+	
 	/**
 	 * This method use to get all the citizen data with pagination.
 	 */
@@ -131,11 +109,9 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 				this.resultsLength = this.inputData.length;
 				this.isLoadingResults = false;
 			}
-
 		} else {
 			this.paginator.pageSize = 5;
 			this.paginator.pageIndex = 0;
-
 			merge(this.sort.sortChange, this.paginator.page)
 				.pipe(
 					startWith({}),
@@ -161,32 +137,26 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 				}
 				);
 		}
-
 	}
-
 	/**
 	 * This method is used to redirect on citizen form.
 	 * @param id citizen api code
 	 * @param id - citizen id
 	 */
 	redirectToEdit(apiCode: string, id: number) {
-
 		if (apiCode == 'HEL-DR') {
 			this.router.navigate(['citizen/certificates/birth-death/deathReg', id, apiCode]);
-
 		} else {
 			let redirectUrl = ManageRoutes.getFullRoute(apiCode);
 			this.router.navigate([redirectUrl, id, apiCode]);
 		}
 	}
-
 	/**
 	 * This method use to delete citizen record.
 	 * @param id citizen api code
 	 * @param id citizen id
 	 */
 	deleteRecord(apiCode: string, id: number) {
-
 		this.commonService.deleteAlert('Are you sure?', "You won't be able to revert this!", 'warning', '', performDelete => {
 			this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);
 			this.formService.deleteFormData(id).subscribe(
@@ -199,9 +169,7 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 				}
 			);
 		});
-
 	}
-
 	/**
 	* This method is used to redirect on appointment form.
 	*/
@@ -209,7 +177,6 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		let redirectUrl = ManageRoutes.getFullRoute('SLOTBOOKING');
 		this.router.navigate([redirectUrl, id, apiCode]);
 	}
-
 	/**
 	 * This method use to delete citizen record.
 	 * @param id citizen api code
@@ -217,7 +184,6 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 	 * @param id citizen id
 	 */
 	submitRecord(apiCode: string, apiName: string, id: number) {
-
 		this.commonService.submitAlert('Are you sure?', "You won't be able to revert this!", 'warning', '', performDelete => {
 			this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);
 			this.formService.submitFormData(id).subscribe(
@@ -230,9 +196,7 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 				}
 			);
 		});
-
 	}
-
 	/**
 	 * This method use to application print receipt.
 	 * @param id citizen api code
@@ -240,7 +204,6 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 	 * @param id citizen id
 	 */
 	printReceipt(apiCode: string, apiName: string, id: number) {
-
 		this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);
 		this.formService.printReceipt(id).subscribe(
 			receiptResponse => {
@@ -255,10 +218,8 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 			}
 		);
 	}
-
 	printCertificate(applicationNum) {
 		const url = "/property/noduecertificate/printNodueCertificate?applicationNo=" + applicationNum;
-
 		this.paymentService.downloadFile(url).subscribe(
 			(data) => {
 				downloadFile(data, "certificate" + "-" + Date.now() + ".pdf", 'application/pdf');
@@ -266,10 +227,7 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 			(error) => {
 				console.error(error.error.message);
 			})
-
 	}
-
-
 	/**
 	 * This method use to application print view.
 	 * @param id citizen api code
@@ -277,11 +235,11 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 	 * @param id citizen id
 	 */
 	printView(apiCode: string, apiName: string, id: number) {
-		if (apiCode == 'SHOP-ESTAB-TRANSFER') {
+		if(apiCode == 'SHOP-ESTAB-TRANSFER'){
 			this.formService.apiType = 'shop';
-		} else {
-			this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);
-		}
+	 	}else{
+		this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);
+		 }
 		this.formService.printView(id).subscribe(
 			htmlResponse => {
 				// let sectionToPrint: any = document.getElementById('sectionToPrint');
@@ -301,8 +259,6 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 			}
 		);
 	}
-
-
 	/**
 	 * This method is use to show JOSN format.
 	 */
@@ -316,9 +272,7 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 				this.commonService.successAlert('Error!', err.error[0].message, 'error');
 			}
 		);
-
 	}
-
 	/**
 	 * This method is use to show reject remarks.
 	 */
@@ -326,7 +280,6 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 	// 	this.rejectRemarks = data.remarks;
 	// 	this.reason = data.reason;
 	// }
-
 	/**
 	 * This method is use for copy text.
 	 */
@@ -334,7 +287,6 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		copytext.select();
 		document.execCommand('copy');
 	}
-
 	/**
 	 * This method is use to get respective class name based on application status.
 	 * @param filestatus - Application Status
@@ -353,30 +305,26 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 				return 'badge file text-label'
 		}
 	}
-
 	/**
 	 * This method is use for open modal.
 	 */
 	openModal(template: TemplateRef<any>) {
 		this.modalRef = this.modalService.show(template);
 	}
-
 	getProperDate(date: string): string {
 		if (date) return moment(date).format("DD/MM/YYYY");
 		return null;
 	}
-
 	/**
 	 * This method is use for display more button
 	 * @param row - Table row oject
 	 */
 	isMoreBtnVisible(row) {
-		if (!row.remarks)
-			return true;
-		else
+		if (!row.remarks && (row.serviceType === 'PEC_REG' || row.serviceType === 'PRC_REG'))
 			return false;
+		else
+			return true;
 	}
-
 	/**
 	 * This method is use for edit option
 	 * @param row - Table row oject
@@ -388,7 +336,6 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		else if (row.canEdit || row.fileStatus === 'QUERIED' || row.fileStatus === 'QUERY_RAISED')
 			return true;
 	}
-
 	/**
 	 * This method is use for delete option
 	 * @param row - Table row oject
@@ -397,7 +344,6 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		if (row.canDelete)
 			return true;
 	}
-
 	/**
 	 * This method is use for preview option
 	 * @param row - Table row oject
@@ -409,7 +355,6 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		else if (!row.canEdit)
 			return true;
 	}
-
 	/**
 	 * This method is use for print view option
 	 * @param row - Table row oject
@@ -417,11 +362,9 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 	isPrintViewDisplay(row) {
 		const printViewServiceTypeArr = ['FS_FINAL_FIRE_NOC', 'FS_PROVISIONAL_NOC', 'FS_REVISED_FIRE_NOC', 'FS_RENEWAL_NOC', 'FS_TEMP_STRUCT_NOC', 'FS_TEMP_FIREWORKSHOP_NOC',
 			'FS_FIRE_CERTIFICATE', 'FS_WATER_TANKER', 'FS_FINAL_HOSPITAL_NOC', 'FS_ELECTRIC_CONNECTION_NOC', 'FS_NAVARATRI_NOC', 'FS_GAS_CONNECTION_NOC']
-
 		if ((row.fileStatus == 'SUBMITTED' || row.fileStatus == 'APPROVED' || row.fileStatus == 'PAYMENT_RECEIVED') && printViewServiceTypeArr.indexOf(row.serviceType) > 0) {
 			return false
 		}
-
 		if (row.serviceType === 'PEC_REG' || row.serviceType === 'PRC_REG' || row.serviceType ===
 			'NO_DUE_CERTIFICATE' || row.serviceType === 'ASSESSMENT_CERTIFICATE' || row.serviceType == 'VEHICLE')
 			return false;
@@ -431,53 +374,34 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		else if (row.fileStatus != 'DRAFT')
 			return true;
 	}
-
-
 	isPrintReceipt(row) {
-
-
 		const printReceiptServiceTypeArr = ['FS_FINAL_FIRE_NOC', 'FS_REVISED_FIRE_NOC', 'FS_RENEWAL_NOC', 'FS_TEMP_STRUCT_NOC', 'FS_TEMP_FIREWORKSHOP_NOC',
 			'FS_FIRE_CERTIFICATE', 'FS_FINAL_HOSPITAL_NOC', 'FS_ELECTRIC_CONNECTION_NOC', 'FS_NAVARATRI_NOC', 'FS_GAS_CONNECTION_NOC']
-
 		if (row.fileStatus == 'SUBMITTED' && printReceiptServiceTypeArr.indexOf(row.serviceType) > 0) {
 			return false
 		}
-
-
 		if (row.fileStatus == 'SUBMITTED' && row.serviceType == 'FS_WATER_TANKER') {
 			return true;
 		}
-
 		if ((row.fileStatus == 'SUBMITTED' || row.fileStatus == 'APPROVED' || row.fileStatus == 'REJECTED') && row.serviceType == 'FS_PROVISIONAL_HOSPITAL_NOC') {
 			return false;
 		}
-
 		if ((row.fileStatus == 'SUBMITTED' || row.fileStatus == 'APPROVED' || row.fileStatus == 'REJECTED') && row.serviceType == 'FS_PROVISIONAL_NOC') {
 			return false;
 		}
-
 		if (row.fileStatus == 'SUBMITTED' && row.serviceType == 'SHOP_ESTAB_APPLICATION') {
 			return true;
 		}
-
 		if (row.fileStatus == 'SUBMITTED' && row.serviceType == 'FS_TEMP_STRUCT_NOC') {
 			return false;
 		}
-
-		if (row.fileStatus == 'PAYMENT_RECEIVED') {
+		if (row.fileStatus == 'PAYMENT_RECEIVED' || row.fileStatus == 'APPROVED') {
 			return true;
 		}
-
-		if (row.fileStatus == 'APPROVED' && (row.serviceType != 'PEC_REG' || row.serviceType != 'PRC_REG')) {
-			return false;
-		}
-
 		if (row.fileStatus == 'SUBMITTED' && row.serviceType == 'WATER_NEW_DRAINAGE_CONNECTION') {
 			return true;
 		}
-
 	}
-
 	isDownloadDisplay(row) {
 		if (row.fileStatus == 'SCRUTINY')
 			return true;
@@ -492,7 +416,6 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		else
 			return true;
 	}
-
 	/**
 	 * This method is use for application json option
 	 * @param row - Table row oject
@@ -503,18 +426,15 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		else
 			return false;
 	}
-
 	isPrintReceiptPayment(row) {
 		if (row.fileStatus == 'PAYMENT')
 			return true;
 		else
 			return false;
 	}
-
 	getInnerHTML() {
 		return `<b>Remarks :</b> ${this.rejectRemarks} <br> <b>Reason :</b> ${this.reason}`;
 	}
-
 	/**
 	 * This method is used to redirect on payment.
 	 * @param id citizen api code
@@ -523,7 +443,6 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 	redirectToPayment(apiCode: string, id: number) {
 		// let redirectUrl = ManageRoutes.getFullRoute(apiCode);
 		// this.router.navigate([redirectUrl, id, apiCode]);
-
 		this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);
 		this.formService.submitFormData(id).subscribe(
 			res => {
@@ -533,14 +452,10 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 			err => {
 				let retUrl: string = '/citizen/my-applications?apiCode=' + apiCode + '&id=' + id;
 				let retAfterPayment: string = environment.returnUrl;
-
-
 				if (this.fromOtherModule) {
 					retUrl = '/citizen/payable-services?apiCode=' + apiCode + '&id=' + id;
 				}
-
 				if (err.status === 402) {
-
 					let payData = this.commonService.storePaymentInfo(err.error.data, retUrl, retAfterPayment);
 					let words = this.commonService.getToWords(payData.amount)
 					let html =
@@ -565,7 +480,6 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 							// })
 							this.paymentGateway.setPaymentDetailsFromActionBar(payData);
 							this.paymentGateway.openModel();
-
 						}, rj => {
 							// let errHtml = `
 							// 	<div class="alert alert-danger">
@@ -577,25 +491,17 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 							// 	}, err => {
 							// 		this.toastr.error(err.error.message);
 							// 	})
-
 							// }, arj => {
-
 							// })
 							// return;
 						});
 						return;
 					}
-
-
 				} else {
 					this.commonService.openAlert("Error", "Error Occured for final submit : " + err.error[0].message, "warning")
 				}
 			});
-
 	}
-
-
-
 	/**
 	 * This method is use to show For Query Raise remarks.
 	 */
@@ -605,36 +511,28 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		// this.queryrraisereason = data.reason;
 		//this.queryrraisereason = 'Remark reason here';
 	}
-
-
-
 	getInnerHTMLForRemark() {
 		return `<b>Remarks :</b> ${this.queryrraiseRemarks}`;
 	}
-
 	isQueryRaiseDisplay(row) {
 		if (row.fileStatus === 'QUERY_RAISED') {
 			return true;
 		} else {
 			return false;
 		}
-
 	}
-
 	isDownloadLOI(row) {
 		// if (row.fileStatus != 'DRAFT') {
 		// 	return true;
 		// }
 		return true;
 	}
-
 	getLoi(row) {
 		console.log("Download LOI", row);
 	}
 	loiPayments(row) {
 		this.router.navigate(['/citizen/loi-payments', row.uniqueId, row.id, row.serviceDetail.code]);
 	}
-
 	openOfflinePaymentComponent(payData, retUrl, apiCode, id) {
 		const dialogConfig = new MatDialogConfig();
 		const data = { payData: payData }
@@ -643,8 +541,6 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		dialogConfig.data = data;
 		dialogConfig.width = "60%"
 		const dialogRef = this.dialog.open(OfflinePaymentComponent, dialogConfig);
-
-
 		dialogRef.afterClosed().subscribe(offlinePayData => {
 			if (offlinePayData) {
 				offlinePayData.refNumber = payData.refNumber;
@@ -654,8 +550,6 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 					offlinePayData.payableServiceType = payData.serviceCode,
 					offlinePayData.amount = payData.amount;
 				offlinePayData.payGateway = "OFFLINE"
-
-
 				this.formService.createPayment(offlinePayData).subscribe(resData => {
 					const payRespData = resData.data.responseData;
 					if (resData.paymentStatus = "Paid") {
@@ -664,7 +558,6 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 								this.router.navigate([retUrl.split('?')[0]], { queryParams: { apiCode: apiCode, id: id } });
 							}
 						});
-
 					}
 					this.getAllData()
 				}, error => {
@@ -674,11 +567,7 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		}, error => {
 			this.openErrorAlert(error);
 		})
-
-
-
 	}
-
 	openErrorAlert(error) {
 		if (error & error.error[0]) {
 			this.commonService.openAlert("Error", "Error Occured for final submit : "
@@ -687,8 +576,6 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 			this.commonService.openAlert("Error", "Something went wrong", "warning");
 		}
 	}
-
-
 	printPaymentReceipt(apiCode: string, id: number) {
 		this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);
 		this.formService.printPaymentReceipt(id).subscribe(
@@ -704,7 +591,6 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 			}
 		)
 	}
-
 	applicantName(row) {
 		if (row.fileStatusName == "Draft") {
 			return "N/A";
@@ -712,14 +598,12 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 			return row.applicantName;
 		}
 	}
-
-	isShopHideButton(row) {
+	isShopHideButton(row){
 		console.log(row);
-		if ((this.commonService.fromAdmin() && row.serviceDetail.code == 'SHOP-ESTAB-LIC-NEW') || (this.commonService.fromAdmin() && row.serviceDetail.code == 'SHOP-ESTAB-TRANSFER')) {
+		if((this.commonService.fromAdmin() && row.serviceDetail.code == 'SHOP-ESTAB-LIC-NEW') || (this.commonService.fromAdmin() && row.serviceDetail.code == 'SHOP-ESTAB-TRANSFER')){
 			return false;
-		} else {
+		}else{
 			return true;
 		}
 	}
-
 }
