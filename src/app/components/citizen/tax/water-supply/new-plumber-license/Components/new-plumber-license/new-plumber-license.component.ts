@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewChild } from '@angular/core';
 import { NewPlumberLicenseDataSharingService } from '../../Services/new-plumber-license-data-sharing.service';
+import { MatStepper } from '@angular/material';
+import { Subscription } from 'rxjs';
 
 
 
@@ -9,6 +11,9 @@ import { NewPlumberLicenseDataSharingService } from '../../Services/new-plumber-
 })
 
 export class NewPlumberLicenseComponent implements OnInit {
+    @ViewChild('stepper') stepper: MatStepper;
+    subscription: Subscription;
+    currentIndex: number = 0;
 
     isShowForm: boolean = true;
     isShowApproval: boolean = false;
@@ -23,5 +28,33 @@ export class NewPlumberLicenseComponent implements OnInit {
             this.isShowApproval = data;
         });
         this.newPlumberLicenseDataSharingService.setIsShowForm(true);
+
+        this.subscription = this.newPlumberLicenseDataSharingService.dataSourceMoveStepper.subscribe((data) => {
+            if (data != null) {
+              this.currentIndex = data;
+              this.moveStepper(data);
+            }
+          })
     }
+
+
+
+  ngOnDestroy() {
+        this.subscription.unsubscribe();
+      }
+
+  moveStepper(index: number) {
+    this.stepper.selectedIndex = index;
+  }
+  
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.moveStepper(0);
+    });
+  }
+
+  stepChanged(event, stepper){
+    stepper.selected.interacted = false;
+  }
+
 }
