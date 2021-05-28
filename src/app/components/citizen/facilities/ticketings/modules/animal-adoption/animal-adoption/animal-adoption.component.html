@@ -199,7 +199,7 @@
           <control-messages [control]="animalAdoptionForm.get('totalAdoptionCost')"></control-messages>
         </mat-form-field>
 
-        <mat-form-field class="col-md-12">
+        <mat-form-field class="col-md-12 labelLonger">
           <textarea matInput type="text" formControlName="message"
             placeholder="{{'adoption_msg' | translate: translateKey}}"
             required></textarea>
@@ -208,7 +208,7 @@
 
         <div class="pl-3">
           
-             <mat-checkbox class="d-block" labelPosition="after" required formControlName="termsCondition">
+             <mat-checkbox class="d-block checkBoxLabel" labelPosition="after" required formControlName="termsCondition">
               {{'i_have_read_and_agree_with_terms_and_conditions' | translate:translateKey}} 
               <a  class="stretchedLink" >
                  
