@@ -70,7 +70,7 @@
   <div class="row mt-4" *ngIf="isShowTable">
     <div class="col-md-12">
       <div class="table-responsive">
-      <table mat-table [dataSource]="dataSource" matSort class="width100 w-100">
+      <table mat-table [dataSource]="dataSource" matSort class="w-100">
         <ng-container matColumnDef="occupierCode">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Code</th>
           <td mat-cell *matCellDef="let element"> {{element.occupierCode}} </td>
