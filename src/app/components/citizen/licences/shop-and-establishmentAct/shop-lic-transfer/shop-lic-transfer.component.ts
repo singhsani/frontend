@@ -231,6 +231,7 @@ export class ShopLicTransferComponent implements OnInit {
 			commencementOfBusinessDate : res.commencementOfBusinessDate,
 			contactNo : res.contactNo,
 			email : res.email,
+			landlineNumber : res.landlineNumber,
 			employerDesignation : res.employerDesignation,
 			employerMobileNumber : res.employerMobileNumber,
 			employerEmailId : res.employerEmailId,
@@ -255,7 +256,8 @@ export class ShopLicTransferComponent implements OnInit {
 			waterDrainageWardName : res.waterDrainageWardName,
 			waterDrainageZoneId : res.waterDrainageZoneId,
 			waterDrainageZoneName : res.waterDrainageZoneName,
-			
+			oldRegistrationNumber : res.oldRegistrationNumber,
+			oldRegistrationDate : res.oldRegistrationDate
 			// workerCounts : res.workerCounts
 
 		 });
@@ -391,7 +393,8 @@ export class ShopLicTransferComponent implements OnInit {
 			//previousRegistrationNo :  [null, [Validators.maxLength(150)]],//count=4
 			establishmentName: [null, [Validators.required, Validators.maxLength(150)]],//count=4
 			postalAddress: this.fb.group(this.postalAddressEstablishment.addressControls()),
-			
+			oldRegistrationNumber: null,
+			oldRegistrationDate: null,
 			zone: [null],
       		ward: [null],
 			block: [null],
