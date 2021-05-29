@@ -84,6 +84,8 @@ export class SelectPaymentGatewayComponent implements OnInit {
       this.router.navigate(['hospital/my-applications']);
     }else if(this.applicationType == 'FACILITYBOOKING'){
       this.router.navigate(['citizen/bookings/my-bookings']);
+    }else if(this.applicationType == 'ticketing'){
+      this.router.navigate(['citizen/ticketings/my-ticketings']);
     }else {
       this.router.navigate(['citizen/my-applications']);
     }
