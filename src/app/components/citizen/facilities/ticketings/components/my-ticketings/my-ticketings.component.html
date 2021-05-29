@@ -249,6 +249,6 @@
 		<!-- <pre class="text-left" #copytext style="color: #9cdcfe;background: #212529;overflow: hidden">{{JSONdata}}</pre> -->
 	</div>
 </ng-template>
-<select-payment-gateway #paymentGateway></select-payment-gateway>
+<select-payment-gateway #paymentGateway [applicationType]="'ticketing'"></select-payment-gateway>
 <!-- this div is used for printing the receipt -->
 <div id="sectionToPrint"></div>
