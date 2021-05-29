@@ -754,6 +754,10 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
 
 .checkBoxLabel .mat-checkbox-label {white-space: normal; line-height: normal !important;}
 
+.paddLeftRight5 .mat-table .mat-cell, 
+.paddLeftRight5 td.mat-cell, td.mat-footer-cell, .paddLeftRight5 th.mat-header-cell {padding: 0 6px;}
+
+
 ::-webkit-scrollbar {width: 5px; height: 5px;}
 ::-webkit-scrollbar-track {background: #D1C4E9; border-radius:3px;}
 ::-webkit-scrollbar-thumb {background: #7E57C2; border-radius:3px;}
@@ -803,7 +807,7 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
     }
 
     .mat-step-label {white-space: normal !important; overflow: visible !important; text-overflow: inherit !important; font-size: 11px; word-break: break-word;}
-
+    
 }
 
 // *********  shop-lic-new  **********
