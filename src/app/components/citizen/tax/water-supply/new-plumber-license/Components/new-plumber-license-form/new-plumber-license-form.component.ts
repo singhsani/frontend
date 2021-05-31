@@ -144,7 +144,7 @@ export class NewPlumberLicenseFormComponent implements OnInit {
                         this.stepper.selectedIndex = 1;
                         this.getFormDataDocuments(this.model.plumberLicenseId);
                         this.newPlumberLicenseDataSharingService.setApprovalModel(this.model);
-                        this.model = new PlumberLicenseModel();
+                        // this.model = new PlumberLicenseModel();
                         //this.newPlumberLicenseDataSharingService.setIsShowForm(false);
                         //this.newPlumberLicenseDataSharingService.setIsShowApproval(true);
                     }
@@ -207,8 +207,7 @@ export class NewPlumberLicenseFormComponent implements OnInit {
     }
 
     onBackClick(){
-        console.log("back");
-        this.newPlumberLicenseDataSharingService.updateDataSourceMoveStepper(0);
+        this.stepper.selectedIndex = 0;
       }
     
       mandatoryFileCheck() {
