@@ -273,7 +273,7 @@ export class NavratriNocComponent implements OnInit {
 			organizeNameGuj: [null, [Validators.required, Validators.maxLength(300)]],
 			organizerAddress: [null, [Validators.required, Validators.maxLength(200)]],
 			organizerAddressGuj: [null, [Validators.required, Validators.maxLength(600)]],
-			organizerMobileNo: [null, [Validators.required, Validators.maxLength(this.fireFacilityConfig.mobileNumber_maxLength), Validators.minLength(this.fireFacilityConfig.mobileNumber_minLength)]],
+			organizerMobileNo: [null, [Validators.maxLength(this.fireFacilityConfig.mobileNumber_maxLength), Validators.minLength(this.fireFacilityConfig.mobileNumber_minLength)]],
 			responsiblePersonMobileName: [null, [Validators.required, Validators.maxLength(100)]],
 			responsiblePersonMobileNo: [null, [Validators.required, Validators.maxLength(this.fireFacilityConfig.mobileNumber_maxLength), Validators.minLength(this.fireFacilityConfig.mobileNumber_minLength)]],
 
