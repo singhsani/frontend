@@ -231,7 +231,7 @@ export class EleConnectionNocComponent implements OnInit {
 
 		if(firePlaceType && firePlaceType.code && firePlaceType.code == 'COMMERCIAL'){
 			samatiLetterMandatory = true;
-			buildingCollapseMandatory = false;
+			// buildingCollapseMandatory = false;
 		} 
 
 		const documents = this.electricConnectionForm.get('serviceDetail').get('serviceUploadDocuments').value;
