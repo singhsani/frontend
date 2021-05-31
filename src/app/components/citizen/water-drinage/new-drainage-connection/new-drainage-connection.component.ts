@@ -184,7 +184,7 @@ export class NewDrainageConnectionComponent implements OnInit {
 
   }
   getPropertyAddressDetail() {
-    if(this.newDrainageConnectionForm.get('primaryProperty').value)
+    if(this.newDrainageConnectionForm.get('primaryProperty').value && this.newDrainageConnectionForm.get('propertyNo').value)
     this.newWaterConnectionEntryService.getPropertyAddress(this.newDrainageConnectionForm.get('propertyNo').value).subscribe(
       (data) => {
         if (data.status === 200) {
@@ -304,7 +304,7 @@ export class NewDrainageConnectionComponent implements OnInit {
       connectionUsage: [null, [Validators.required]],
       connectionSubUsage: [null, [Validators.required]],
       plumberId: [null, [Validators.required]],
-      propertyNo: [null],
+      propertyNo: [null,[ValidationService.propertyNoValidator]],
       primaryProperty: [null],
       fpNo: [null ],
       plotPartNo: [null ],
