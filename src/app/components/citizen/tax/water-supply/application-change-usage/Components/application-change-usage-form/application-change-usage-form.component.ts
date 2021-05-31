@@ -141,11 +141,11 @@ export class ApplicationChangeUsageFormComponent implements OnInit {
                         this.getFormDataDocuments(this.dataModel.changeOfUsageId);
                         this.applicationChangeUsageDataSharingService.setApprovalModel(this.dataModel);
 
-                        this.dataModel = new DataModel();
-                        this.connectionsModel = new ConnectionsModel();
-                        this.connectionsModel.connectionDetail = new ConnectionDetail();
-                        this.connectioNo = null;
-                        this.isShowSaveButton = false;
+                        // this.dataModel = new DataModel();
+                        // this.connectionsModel = new ConnectionsModel();
+                        // this.connectionsModel.connectionDetail = new ConnectionDetail();
+                        // this.connectioNo = null;
+                        // this.isShowSaveButton = false;
                         //this.applicationChangeUsageDataSharingService.setIsShowApproval(true);
                     }
                 },
@@ -199,6 +199,14 @@ export class ApplicationChangeUsageFormComponent implements OnInit {
     onPropertyDetailClick() {
         this.applicationChangeUsageDataSharingService.setPropertyDetail(this.outstandingDetail.propertyOutstandings);
         this.applicationChangeUsageDataSharingService.setIsShowPropertyDetail(true);
+    }
+
+    onBackClick(){
+        this.stepper.selectedIndex = 0;
+    }
+
+    stepChanged(event, stepper){
+        stepper.selected.interacted = false;
     }
 }
 
