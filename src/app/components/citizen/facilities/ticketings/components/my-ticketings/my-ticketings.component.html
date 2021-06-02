@@ -45,7 +45,8 @@
 		<mat-spinner *ngIf="isLoadingResults"></mat-spinner>
 	</div> -->
 
-	<table mat-table [dataSource]="ticketingList" matSort matSortActive="created" matSortDisableClear matSortDirection="asc">
+	<div class="table-responsive paddLeftRight5">
+	<table mat-table [dataSource]="ticketingList" matSort matSortActive="created" matSortDisableClear matSortDirection="asc" class="minWidth1000px">
 
 		<ng-container matColumnDef="id">
 			<mat-header-cell *matHeaderCellDef >{{'s_no' | translate:translateKey}}</mat-header-cell>
@@ -141,7 +142,7 @@
 		<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
 		<mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
 	</table>
-
+	</div>
 
 	<mat-paginator showFirstLastButtons [hidden]="resultsLength==0" [pageSizeOptions]="[5, 10, 25, 100]" [length]="resultsLength">
 	</mat-paginator>
