@@ -216,9 +216,11 @@
 				<div class="row">
 					<div class="col-md-4">
 						<mat-form-field>
-							<input matInput appPreventSpace appMaskPropertNumber
+							<input matInput appPreventSpace appMaskPropertNumber minlength="16" maxlength="16"
 								placeholder="{{'property_Number_on_which_connection_required' | translate:translateKey}}"
 								type="text" formControlName="propertyNo">
+								<control-messages [control]="newDrainageConnectionForm.get('propertyNo')">
+								</control-messages>
 						</mat-form-field>
 					</div>
 					<div class="col-md-4 ngSelect">

@@ -1,4 +1,4 @@
-<mat-horizontal-stepper #stepper class="stepperToTab">
+<mat-horizontal-stepper #stepper (selectionChange)="stepChanged($event, stepper);" class="stepperToTab">
     <mat-step>
       <ng-template matStepLabel>Detail</ng-template>
 <mat-card>
@@ -175,6 +175,9 @@
     
       
       <div class="button-row text-right mt-3">
+        <button mat-raised-button class="ml-3" color="primary" (click)="onBackClick()" type="button">
+            <mat-icon>skip_previous</mat-icon>Back
+        </button>
           <button mat-raised-button class="ml-3" color="primary" (click)="onSubmitApproved()" type="button">
               <mat-icon>save</mat-icon>Submit
           </button>

@@ -10,7 +10,8 @@
 <mat-card class="margin-top-20" *ngIf="isShowUnitable">
     <div class="row">
         <div class="col-md-12" style="overflow:auto;">
-            <table mat-table [dataSource]="dataSource" matSort class="width100">
+            <div class="table-responsive paddLeftRight5">
+                <table mat-table [dataSource]="dataSource" matSort class="width100 w-100 minWidth1000px ">
                 <ng-container matColumnDef="unitNo">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Unit No</th>
                     <td mat-cell *matCellDef="let element"> {{element.unitNo}} </td>
@@ -44,7 +45,7 @@
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="action">
-                    <th mat-header-cell *matHeaderCellDef>Action</th>
+                    <th mat-header-cell *matHeaderCellDef class="text-center">Action</th>
                     <td mat-cell *matCellDef="let element">
                         <button mat-button title="Edit" class="btn-width-auto" color="primary"
                             (click)="editUnit(element)">
@@ -52,7 +53,7 @@
                         </button>
                         <button mat-button title="Copy" class="btn-width-auto" color="accent"
                             (click)="copyUnit(element)">
-                            <mat-icon>file_copy</mat-icon>
+                            <mat-icon>content_copy</mat-icon>
                         </button>
                         <button mat-button title="Delete" class="btn-width-auto" color="warn"
                             (click)="deleteUnit(element)">
@@ -63,7 +64,8 @@
                 <tr mat-header-row *matHeaderRowDef="columns"></tr>
                 <tr mat-row *matRowDef="let row; columns: columns;"
                     [ngClass]="{'highlight': selectedRowIndex == row.propertyUnitId}" (click)="highlight(row)"></tr>
-            </table>
+                </table>
+            </div>
         </div>
     </div>
 </mat-card>

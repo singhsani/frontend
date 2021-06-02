@@ -209,6 +209,14 @@ export class ApplicationTransferOwnershipFormComponent implements OnInit {
             })
         })
     }
+
+    onBackClick(){
+        this.stepper.selectedIndex = 0;
+    }
+
+    stepChanged(event, stepper){
+        stepper.selected.interacted = false;
+    }
 }
 
 
