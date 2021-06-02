@@ -50,7 +50,8 @@ export class ValidationService {
             invalidAcHolderName: 'Invalid Name',
             invalidDrivingLicense: 'Enter valid License number e.g. GJ0620210012122',
             invalidElectionCard: 'Enter valid Election Card Number e.g. ABC1234567',
-            invalidPassport: 'Enter valid Passport number e,g, A1234567 or AB1234567'
+            invalidPassport: 'Enter valid Passport number e,g, A1234567 or AB1234567',
+            invalidPropertyNo:'Please enter valid property no. with occupier code'
         }
 
         return config[validatorName];
@@ -331,5 +332,17 @@ export class ValidationService {
             return null;
         }
     }
+
+     // Email validation
+     static propertyNoValidator(control: FormControl) {
+        if (control.value) {
+            const matches = control.value.match(/^\d{2}-\d{2}-\d{6}-\d{3}$/);
+            return matches ? null : { 'invalidPropertyNo': true };
+        } else {
+            return null;
+        }
+    }
+
+
 }
 

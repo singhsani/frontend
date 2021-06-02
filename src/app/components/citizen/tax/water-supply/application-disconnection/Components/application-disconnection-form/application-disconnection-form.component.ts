@@ -166,12 +166,12 @@ export class ApplicationDisconnectionFormComponent implements OnInit {
                         this.disconncetionId = data.body.data;
                         this.getFormDataDocuments(this.dataModel.disconncetionId);
                         this.applicationDisconnectionDataSharingService.setApprovalModel(this.dataModel);
-                        this.dataModel = new DataModel();
-                        this.connectionsModel = new ConnectionsModel();
-                        this.connectionsModel.connectionDetail = new ConnectionDetail();
-                        this.connectionsModel.meterDetail = new MeterDetail();
-                        this.connectioNo = null;
-                        this.isShowSaveButton = false;
+                        // this.dataModel = new DataModel();
+                        // this.connectionsModel = new ConnectionsModel();
+                        // this.connectionsModel.connectionDetail = new ConnectionDetail();
+                        // this.connectionsModel.meterDetail = new MeterDetail();
+                        // this.connectioNo = null;
+                        // this.isShowSaveButton = false;
                         //this.applicationDisconnectionDataSharingService.setIsShowApproval(true);
                     }
                 },
@@ -220,4 +220,12 @@ export class ApplicationDisconnectionFormComponent implements OnInit {
           })
         })
       }
+
+    onBackClick(){
+        this.stepper.selectedIndex = 0;
+    }
+
+    stepChanged(event, stepper){
+        stepper.selected.interacted = false;
+    }
 }
