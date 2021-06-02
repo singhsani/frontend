@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { SessionStorageService } from 'angular-web-storage';
 import { HttpEventType } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
+import { CommonService } from 'src/app/shared/services/common.service';
 
 @Injectable()
 export class FormsActionsService {
@@ -19,7 +20,8 @@ export class FormsActionsService {
 	 * Constructor to declare defualt propeties of class.
 	 * @param http - Declare Http Service property.
 	 */
-	constructor(private http: HttpService) {
+	constructor(private http: HttpService,
+		private commonService: CommonService) {
 
 	}
 
@@ -27,8 +29,12 @@ export class FormsActionsService {
 	 * This method is use to create new citizen app
 	 */
 	createFormData() {
-
+       
 		this.requestURL = `api/form/${this.apiType}/create`;
+		if (this.commonService.fromAdmin()) {
+			this.requestURL = `api/form/${this.apiType}/admin-create?fromAdmin=${this.commonService.fromAdmin()}`;
+		}
+
 
 		return this.http.get(this.requestURL);
 	}
