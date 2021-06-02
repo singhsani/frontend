@@ -12,7 +12,8 @@ import { NewWaterConnectionEntryService } from '../../../new-water-connection-en
 
 @Component({
     selector: 'app-application-disconnection-form',
-    templateUrl: './application-disconnection-form.component.html'
+    templateUrl: './application-disconnection-form.component.html',
+    styleUrls: ['./application-disconnection-form.component.scss']
 })
 
 export class ApplicationDisconnectionFormComponent implements OnInit {
@@ -223,9 +224,5 @@ export class ApplicationDisconnectionFormComponent implements OnInit {
 
     onBackClick(){
         this.stepper.selectedIndex = 0;
-    }
-
-    stepChanged(event, stepper){
-        stepper.selected.interacted = false;
     }
 }
