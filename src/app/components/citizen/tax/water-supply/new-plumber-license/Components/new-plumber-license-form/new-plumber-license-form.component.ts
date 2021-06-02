@@ -13,7 +13,8 @@ import { CommonService as CommonService2} from 'src/app/shared/services/common.s
 
 @Component({
     selector: 'app-new-plumber-license-form',
-    templateUrl: './new-plumber-license-form.component.html'
+    templateUrl: './new-plumber-license-form.component.html',
+    styleUrls: ['./new-plumber-license-form.component.scss']
 })
 
 export class NewPlumberLicenseFormComponent implements OnInit {

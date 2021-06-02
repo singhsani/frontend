@@ -8,7 +8,8 @@ import { MatStepper } from '@angular/material';
 
 @Component({
     selector: 'app-application-reconnection-form',
-    templateUrl: './application-reconnection-form.component.html'
+    templateUrl: './application-reconnection-form.component.html',
+    styleUrls: ['./application-reconnection-form.component.scss']
 })
 
 export class ApplicationReconnectionFormComponent implements OnInit {
@@ -155,6 +156,10 @@ export class ApplicationReconnectionFormComponent implements OnInit {
     onPropertyDetailClick() {
         this.applicationReconnectionDataSharingService.setPropertyDetail(this.outstandingDetail.propertyOutstandings);
         this.applicationReconnectionDataSharingService.setIsShowPropertyDetail(true);
+    }
+
+    onBackClick(){
+        this.stepper.selectedIndex = 0;
     }
 }
 
