@@ -380,7 +380,7 @@ export class ShopLicNewComponent implements OnInit {
 
 			/*  */
 			attachments: [''],
-			agree: [false,Validators.requiredTrue],
+			agree: [false,null],
 			/*  */
 		});
 		//this.addMorePerson('EMPLOYER_FAMILY');

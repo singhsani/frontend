@@ -462,7 +462,7 @@ export class ShopLicTransferComponent implements OnInit {
 
 			/*  */
 			attachments: [''],
-			agree: [false,Validators.requiredTrue],
+			agree: [false, null],
 			/*  */
 			transferCertificateNumber : [null,Validators.required],
 		});
