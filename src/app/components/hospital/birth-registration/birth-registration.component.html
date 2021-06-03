@@ -507,7 +507,7 @@
                     </div>
 
                     <mat-form-field class="col-md-4">
-                        <input matInput maxlength="2" (change)="onChangeNameValidation($event,'pregnancyDuration')" OnlyNumber placeholder="{{'pregnancy_duration' | translate:translateKey}}" formControlName="pregnancyDuration"
+                        <input matInput maxlength="2" OnlyNumber placeholder="{{'pregnancy_duration' | translate:translateKey}}" formControlName="pregnancyDuration"
                             required>
                         <control-messages [control]="birthCertificateForm.get('pregnancyDuration')"></control-messages>
                     </mat-form-field>
