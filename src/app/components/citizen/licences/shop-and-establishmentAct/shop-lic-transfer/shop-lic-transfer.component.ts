@@ -1617,24 +1617,16 @@ export class ShopLicTransferComponent implements OnInit {
 		}
 		
 	}
-	sameValueNotallow(workerType){
-		
+	sameValueNotallow(workerType,index){
 		let control = this.shopLicTransferForm.get('workerCounts')['controls'];
 		this.workerTypes = [];
+		this.hidesave = false;
 		for(let i = 0; i < control.length; i++) {
-				if(i< control.length - 1 ){
-					this.hidesave = false;
+				if(i != index){
 					this.workerTypes.push( this.shopLicTransferForm.get('workerCounts')['controls'][i].get('workersType').value)
 				}
-				else if(workerType != this.workerTypes){
-					this.worker(workerType);
-				}
-				else{
-					this.hidesave = true;
-					this.commonService.openAlert("Error", "Please enter different worker type","error");
-				}
-				
-		}
+			}
+		this.worker(workerType);	
 	}
 
 	worker(worker: any){
