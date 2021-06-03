@@ -16,7 +16,7 @@ export class OnlyNumberDirective {
 			27 - for escape
 			46 - for delete
 		*/
-		this.el.nativeElement.setAttribute("type", "number");
+		// this.el.nativeElement.setAttribute("type", "number");
 	
 		if ([8, 9, 13, 27, 46].indexOf(e.keyCode) !== -1 ||
 			// Allow: Ctrl+A
