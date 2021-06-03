@@ -15,6 +15,9 @@ export class HospitalConfig extends ComponentConfig {
     public Child_Weight_Error: string;
     public MIN_CHILD_WEIGHT: string;
     public ONLY_ONE_CHILD_REG_WITH_DELAYED : string;
+    public AGE_ERROR : string;
+    public ERROR: string;
+    public PRAGENCY_DURATION: string; 
 
     constructor(private certType?: string) {
         super();
@@ -38,6 +41,9 @@ export class HospitalConfig extends ComponentConfig {
             this.Child_Weight_Error = "Child Weight Error";
             this.MIN_CHILD_WEIGHT = "Child weight should be in between 0.300 to 10 kg";
             this.ONLY_ONE_CHILD_REG_WITH_DELAYED = "At a time you can register only one child as delayed registration. (For more than 30 days delaye)"
+            this.AGE_ERROR = "Mother's delivery age should be greater than Mother's merriage age.";
+            this.ERROR = "Error";
+            this.PRAGENCY_DURATION = "Pragency duration is between 25 to 40"
 
         }
     }
