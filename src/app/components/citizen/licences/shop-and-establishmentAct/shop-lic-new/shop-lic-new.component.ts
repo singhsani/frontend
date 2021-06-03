@@ -1691,29 +1691,9 @@ export class ShopLicNewComponent implements OnInit {
 		this.shopLicNewForm.patchValue(data);
 	}
 
-	sameValueNotallow(workerType,indx){
-		
+	duplicateValueNotallow(workerType,index){
 		let control = this.shopLicNewForm.get('workerCounts')['controls'];
-		this.workerTypes = [];
-		this.hidesave = false;
-		
-		for(let i = 0; i < control.length; i++) {
-			if(i != indx) {
-				this.workerTypes.push( this.shopLicNewForm.get('workerCounts')['controls'][i].get('workersType').value)				
-			}
-			
-		}
-		this.worker(workerType);
+		this.shopAndEstablishmentService.duplicateWorkerTypeNotallow(workerType,index,control)
 	}
-
-	worker(worker: any){
-		for(let i=0; i <= this.workerTypes.length; i++){
-			if(worker == this.workerTypes[i]){
-				this.hidesave = true;
-				this.commonService.openAlert("Error", "Please enter different worker type","error");
-			}
-		}
-	}
-
 
 }

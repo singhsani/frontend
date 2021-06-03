@@ -46,8 +46,8 @@ export class ShopLicTransferComponent implements OnInit {
 	isIntimation: boolean = false;
 
 	isDisabledBtn: boolean = true;
-	hidesave:boolean = false;
-	workerTypes :Array<any> = [];
+	// hidesave:boolean = false;
+	// workerTypes :Array<any> = [];
 
 	//regiTyep: string[] = ['CERTIFICATION', 'INTIMATION'];
 	regiTyep: Array<any> = [{
@@ -1617,25 +1617,10 @@ export class ShopLicTransferComponent implements OnInit {
 		}
 		
 	}
-	sameValueNotallow(workerType,index){
+	
+	duplicateValueNotallow(workerType,index){
 		let control = this.shopLicTransferForm.get('workerCounts')['controls'];
-		this.workerTypes = [];
-		this.hidesave = false;
-		for(let i = 0; i < control.length; i++) {
-				if(i != index){
-					this.workerTypes.push( this.shopLicTransferForm.get('workerCounts')['controls'][i].get('workersType').value)
-				}
-			}
-		this.worker(workerType);	
+		this.shopAndEstablishmentService.duplicateWorkerTypeNotallow(workerType,index,control)
 	}
-
-	worker(worker: any){
-		for(let i=0; i <= this.workerTypes.length; i++){
-			if(worker == this.workerTypes[i]){
-				this.hidesave = true;
-				this.commonService.openAlert("Error", "Please enter different worker type","error");
-			}
-		}
-	}
-
+	
 }
