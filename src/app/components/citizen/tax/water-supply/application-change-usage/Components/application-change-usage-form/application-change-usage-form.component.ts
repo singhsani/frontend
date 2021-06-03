@@ -10,7 +10,8 @@ import { MatStepper } from '@angular/material';
 
 @Component({
     selector: 'app-application-change-usage-form',
-    templateUrl: './application-change-usage-form.component.html'
+    templateUrl: './application-change-usage-form.component.html',
+    styleUrls: ['./application-change-usage-form.component.scss']
 })
 
 export class ApplicationChangeUsageFormComponent implements OnInit {

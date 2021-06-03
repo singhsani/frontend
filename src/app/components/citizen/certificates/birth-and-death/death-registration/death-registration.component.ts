@@ -38,6 +38,7 @@ export class DeathRegistrationComponent implements OnInit {
 	addressTranslateKey = "addressScreen";
 	basicTranslateKey = "basicDetailsScreen";
 	uploadFileArray: Array<any> = [];
+	mandatoryFileArray: Array<any> = [];
 	//form related data.
 	appId: number;
 	apiCode: string;
@@ -369,6 +370,10 @@ export class DeathRegistrationComponent implements OnInit {
 	}
 
 	mandatoryAttachment(arr: Array<any>) {
+		this.mandatoryFileArray = [];
+        for (let docIdentifier of arr) {
+            this.mandatoryFileArray.push(this.uploadFileArray.find(d => d.documentIdentifier == docIdentifier));
+        }
 		arr.forEach(f => {
 			this.uploadFileArray.find(d => d.documentIdentifier == f).mandatory = true;
 		});

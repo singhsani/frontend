@@ -11,7 +11,8 @@ import { CommonService as SharedCommonService } from 'src/app/shared/services/co
 
 @Component({
     selector: 'app-application-transfer-ownership-form',
-    templateUrl: './application-transfer-ownership-form.component.html'
+    templateUrl: './application-transfer-ownership-form.component.html',
+    styleUrls: ['./application-transfer-ownership-form.component.scss']
 })
 
 export class ApplicationTransferOwnershipFormComponent implements OnInit {
@@ -212,10 +213,6 @@ export class ApplicationTransferOwnershipFormComponent implements OnInit {
 
     onBackClick(){
         this.stepper.selectedIndex = 0;
-    }
-
-    stepChanged(event, stepper){
-        stepper.selected.interacted = false;
     }
 }
 

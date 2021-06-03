@@ -103,7 +103,7 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput  [form]="deathCertificateForm" appGujInputSource targetElement="deathDateGuj"   appDate [max]="maxDeathDate"
+						<input matInput [required]="requiredFeild"  [form]="deathCertificateForm" appGujInputSource targetElement="deathDateGuj"   appDate [max]="maxDeathDate"
 							[min]="deathCertificateForm.get('birthDate').value" [matDatepicker]="pickerBirth"
 							(dateChange)="deathFormatChanger($event);delayCalculator($event)"
 							placeholder="{{'date_of_death' | translate:translateKey}}" formControlName="deathDate">
@@ -769,7 +769,7 @@
 
 				<app-action-bar [paymentGateway]="paymentGateway" [stepInfo]="{step: 'final', next: 5, back: 3}"
 					(saveEvent)="isFormSaved = $event?.isSaved" (tabIndex)="onTabChange($event)"
-					[uploadFiles]="uploadFileArray" [form]="deathCertificateForm" [step]="'final'"
+					[uploadFiles]="mandatoryFileArray" [form]="deathCertificateForm" [step]="'final'"
 					(handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar>
 				<select-payment-gateway [applicationType]="'HOSPITAL'" #paymentGateway></select-payment-gateway>
 			</mat-tab>

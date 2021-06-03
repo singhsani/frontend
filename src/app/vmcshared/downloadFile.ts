@@ -12,6 +12,33 @@ export function downloadFile(data, filename, mime) {
    
     const blobURL = window.URL.createObjectURL(blob);
     window.open(blobURL,'_blank')
+
+    // check iOS or android native app
+  if (((window as any).appInterface) || ((window as any).webkit && (window as any).webkit.messageHandlers)) {
+    var reader = new FileReader();
+    reader.readAsDataURL(blob);
+    reader.onloadend = function () {
+      var base64data = reader.result;
+      console.log(base64data);
+      let reportData = {
+        pdfData: base64data,
+        type: "pdf",
+      };
+
+      // for android
+      if ((window as any).appInterface) {
+        console.log("Success");
+        (window as any).appInterface.mobileNativeDownloadReport(base64data, "pdf");
+      }
+
+      // for ios
+      if ((window as any).webkit && (window as any).webkit.messageHandlers) {
+        console.log("Success");
+        (window as any).webkit.messageHandlers.mobileNativeDownloadReport.postMessage(reportData);
+      }
+    }
+
+  }
     
   }
 

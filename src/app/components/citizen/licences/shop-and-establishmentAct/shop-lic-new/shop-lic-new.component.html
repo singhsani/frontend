@@ -549,8 +549,8 @@
 											{{getSelectedDataFromLookUps(workerTypeList,item.get('workersType').value)?.name}} 
 									   	</p> 
 											<div col-md-6 class="ngSelect" *ngIf="item.isEditMode" >
-												<ng-select *ngIf="item.isEditMode" formControlName="workersType" required>
-													<ng-option *ngFor="let gender of workerTypeList" [value]="gender.code">
+												<ng-select *ngIf="item.isEditMode" formControlName="workersType" required   (change)="duplicateValueNotallow(item.get('workersType').value,indx)">
+													<ng-option *ngFor="let gender of workerTypeList" [value]="gender.code" >
 													{{gender.name}}</ng-option>
 												</ng-select>
 												<control-messages [control]="item.get('workersType')">
@@ -576,8 +576,10 @@
 												(click)="editRecord(item)">
 												<mat-icon title="Edit">edit</mat-icon>
 											</button>
-											<button type="submit" [disabled]="item.invalid" mat-icon-button
-												color="primary" *ngIf="item.isEditMode" (click)="savePersonOccupyingRecord(item)" [disabled]="hideAdd">
+
+											<button type="submit" [disabled]="item.invalid || hidesave" mat-icon-button
+												color="primary" *ngIf="item.isEditMode" (click)="savePersonOccupyingRecord(item)" 
+												>
 												<!-- (click)="saveRecord(item)" -->
 												<mat-icon title="save">save</mat-icon>
 											</button>

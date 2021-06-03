@@ -46,6 +46,8 @@ export class ShopLicTransferComponent implements OnInit {
 	isIntimation: boolean = false;
 
 	isDisabledBtn: boolean = true;
+	// hidesave:boolean = false;
+	// workerTypes :Array<any> = [];
 
 	//regiTyep: string[] = ['CERTIFICATION', 'INTIMATION'];
 	regiTyep: Array<any> = [{
@@ -1613,5 +1615,12 @@ export class ShopLicTransferComponent implements OnInit {
 			this.saveRecord(row);
 
 		}
+		
 	}
+	
+	duplicateValueNotallow(workerType,index){
+		let control = this.shopLicTransferForm.get('workerCounts')['controls'];
+		this.shopAndEstablishmentService.duplicateWorkerTypeNotallow(workerType,index,control)
+	}
+	
 }
