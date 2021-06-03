@@ -185,8 +185,8 @@ export class ActionBarComponent implements OnInit, OnChanges {
 		}
 
 		for (const field in this.form.controls) { // 'field' is a string
-		if (!this.form.get(field).valid) {
-			console.log(field);
+			if (!this.form.get(field).valid) {
+				console.log(field);
 			}; // 'control' is a FormControl  
 
 		}
@@ -200,136 +200,16 @@ export class ActionBarComponent implements OnInit, OnChanges {
 			// }
 
 			
+			
 
 			this.mandatoryFileCheck().then(data => {
 				if (data.status) {
 
-					// call save api before submit 
-					this.formService.saveFormData(this.form.getRawValue()).subscribe(
-						res => {
-							this.form.patchValue(res);
-							this.isSaveBtnDisabled = false;
-							if (this.isstepper) {
-								this.tabIndex.emit(this.stepInfo.next);
-							}
-							this.handleOnSaveAndNext.emit(res);
+					if(this.checkForIAgress()) {
+						this.saveForm()
+					} 
 
-							// call submit Api
-							this.formService.submitFormData(this.form.get('serviceFormId').value).subscribe(
-								res => {
-									if (res.success) {
-										this.form.get('canEdit').setValue(false);
-									}
-									this.toastr.success(`${this.form.getRawValue().serviceDetail.name} information successfully submit`);
-									this.isSubmitBtnDisabled = false;
-									this.isBtnsDisabled = false;
-									this.form.disable();
-									if (this.commonService.isGuestUser()) {
-										this.router.navigateByUrl(ManageRoutes.getFullRoute("CITIZENDASHBOARD"));
-									}else if(this.form.getRawValue().serviceDetail.code == "SHOP-ESTAB-LIC-NEW"  || this.form.getRawValue().serviceDetail.code == "SHOP-ESTAB-TRANSFER"){
-										const url = '/citizen/my-applications' +'?id=' +this.form.getRawValue().serviceFormId + '&apiCode=' +this.form.getRawValue().serviceCode
-										this.router.navigateByUrl(url);
-									} else {
-										this.router.navigateByUrl(ManageRoutes.getFullRoute("CITIZENMYAPPS"));
-									}
-
-								},
-								err => {
-									this.isSubmitBtnDisabled = false;
-									let retUrl: string = '/citizen/my-applications';
-									let retAfterPayment: string = environment.returnUrl;
-
-									if (err.status === 402) {
-										let moduleWithAppointment = this.form.getRawValue().serviceDetail.appointmentRequired;
-										const data = err.error.data;
-										if (moduleWithAppointment) {
-											retUrl = `/citizen/appointmant/schedule-appointment/slot-booking/` + this.form.getRawValue().serviceFormId + `/` + this.form.getRawValue().serviceDetail.code + '?apiCode='+ data.serviceCode + '&id=' + data.serviceFormId;
-										} else {
-											retUrl = retUrl + '?apiCode='+ data.serviceCode + '&id=' + data.serviceFormId;
-										}
-
-										let payData = this.commonService.storePaymentInfo(err.error.data, retUrl, retAfterPayment);
-                                        
-										if (this.commonService.fromAdmin()) {
-											if(data.isPaymentReceipt) {
-												const url = '/citizen/my-applications' + 
-												'?printPaymentReceipt=' + data.isPaymentReceipt + 
-												'&apiCode=' + data.serviceCode +
-												'&id=' + data.serviceFormId;
-
-												this.router.navigateByUrl(url);
-										 
-												// this.router.navigate([ '/citizen/my-applications' ], 
-												// { queryParams: { printPaymentReceipt : true,apiCode: data.serviceCode, id: data.serviceFormId } });
-												
-											} else {
-												this.openOfflinePaymentComponent(payData,retUrl,data.serviceCode,data.serviceFormId);
-											}
-										} else {
-											
-											let words = this.commonService.getToWords(payData.amount);
-											let html =
-												`
-										<div class="text-center">
-											<h2>Total Fee Pay</h2>
-											<div class="payAmount">
-												<i class="fa fa-inr" aria-hidden="true">` + payData.amount + `</i>
-											</div>
-											<p>Rupees in words</p>`
-												+ words + `
-										</div>
-										`
-
-											this.commonService.commonAlert('Payment Details', '', 'info', 'Make Payment!', false, html, cb => {
-												this.paymentGateway.setPaymentDetailsFromActionBar(payData);
-												this.paymentGateway.openModel();
-												// this.formService.createTokenforServicePayment(payData).subscribe(resp => {
-												// 	window.open(resp.data, "_self");
-												// }, err => {
-												// 	this.toastr.error(err.error.message);
-												// })
-
-											}, rj => {
-												this.form.get('canEdit').setValue(false);
-												this.isSubmitBtnDisabled = false;
-												this.isBtnsDisabled = false;
-												this.form.disable();
-												return;
-
-												// let errHtml = `			
-												// 	<div class="alert alert-danger">
-												// 		Please Complete Payment, Otherwise the application will be considered as in-complete
-												// 	</div>`
-												// this.commonService.commonAlert("Application Incomplete", "", 'warning', 'Make Payment!', false, errHtml, ccb => {
-												// 	this.formService.createTokenforServicePayment(payData).subscribe(resp => {
-												// 		window.open(resp.data, "_self");
-												// 	}, err => {
-												// 		this.toastr.error(err.error.message);
-												// 	})
-
-												// }, arj => {
-												// 	this.form.get('canEdit').setValue(false);
-												// 	this.isSubmitBtnDisabled = false;
-												// 	this.isBtnsDisabled = false;
-												// 	this.form.disable();
-												// })
-												// return;
-											});
-											return;
-
-										}
-
-									} else {
-										this.commonService.openAlert("Error", "Error Occured for final submit : " + err.error[0].message, "warning")
-									}
-								}
-							);
-						},
-						err => {
-							this.isSubmitBtnDisabled = false;
-							this.onSaveError(err);
-						}
-					);
+					
 				} else {
 					this.commonService.openAlert("File Upload", "Please Upload Mandatory File ".concat(data.fileName), "warning");
 					this.isSubmitBtnDisabled = false;
@@ -366,6 +246,136 @@ export class ActionBarComponent implements OnInit, OnChanges {
 				count++;
 			}
 		}
+	}
+
+
+	saveForm() {
+		// call save api before submit 
+		this.formService.saveFormData(this.form.getRawValue()).subscribe(
+			res => {
+				this.form.patchValue(res);
+				this.isSaveBtnDisabled = false;
+				if (this.isstepper) {
+					this.tabIndex.emit(this.stepInfo.next);
+				}
+				this.handleOnSaveAndNext.emit(res);
+
+				// call submit Api
+				this.formService.submitFormData(this.form.get('serviceFormId').value).subscribe(
+					res => {
+						if (res.success) {
+							this.form.get('canEdit').setValue(false);
+						}
+						this.toastr.success(`${this.form.getRawValue().serviceDetail.name} information successfully submit`);
+						this.isSubmitBtnDisabled = false;
+						this.isBtnsDisabled = false;
+						this.form.disable();
+						if (this.commonService.isGuestUser()) {
+							this.router.navigateByUrl(ManageRoutes.getFullRoute("CITIZENDASHBOARD"));
+						}else if(this.form.getRawValue().serviceDetail.code == "SHOP-ESTAB-LIC-NEW"  || this.form.getRawValue().serviceDetail.code == "SHOP-ESTAB-TRANSFER"){
+							const url = '/citizen/my-applications' +'?id=' +this.form.getRawValue().serviceFormId + '&apiCode=' +this.form.getRawValue().serviceCode
+							this.router.navigateByUrl(url);
+						} else {
+							this.router.navigateByUrl(ManageRoutes.getFullRoute("CITIZENMYAPPS"));
+						}
+
+					},
+					err => {
+						this.isSubmitBtnDisabled = false;
+						let retUrl: string = '/citizen/my-applications';
+						let retAfterPayment: string = environment.returnUrl;
+
+						if (err.status === 402) {
+							let moduleWithAppointment = this.form.getRawValue().serviceDetail.appointmentRequired;
+							const data = err.error.data;
+							if (moduleWithAppointment) {
+								retUrl = `/citizen/appointmant/schedule-appointment/slot-booking/` + this.form.getRawValue().serviceFormId + `/` + this.form.getRawValue().serviceDetail.code + '?apiCode='+ data.serviceCode + '&id=' + data.serviceFormId;
+							} else {
+								retUrl = retUrl + '?apiCode='+ data.serviceCode + '&id=' + data.serviceFormId;
+							}
+
+							let payData = this.commonService.storePaymentInfo(err.error.data, retUrl, retAfterPayment);
+							
+							if (this.commonService.fromAdmin()) {
+								if(data.isPaymentReceipt) {
+									const url = '/citizen/my-applications' + 
+									'?printPaymentReceipt=' + data.isPaymentReceipt + 
+									'&apiCode=' + data.serviceCode +
+									'&id=' + data.serviceFormId;
+
+									this.router.navigateByUrl(url);
+							 
+									// this.router.navigate([ '/citizen/my-applications' ], 
+									// { queryParams: { printPaymentReceipt : true,apiCode: data.serviceCode, id: data.serviceFormId } });
+									
+								} else {
+									this.openOfflinePaymentComponent(payData,retUrl,data.serviceCode,data.serviceFormId);
+								}
+							} else {
+								
+								let words = this.commonService.getToWords(payData.amount);
+								let html =
+									`
+							<div class="text-center">
+								<h2>Total Fee Pay</h2>
+								<div class="payAmount">
+									<i class="fa fa-inr" aria-hidden="true">` + payData.amount + `</i>
+								</div>
+								<p>Rupees in words</p>`
+									+ words + `
+							</div>
+							`
+
+								this.commonService.commonAlert('Payment Details', '', 'info', 'Make Payment!', false, html, cb => {
+									this.paymentGateway.setPaymentDetailsFromActionBar(payData);
+									this.paymentGateway.openModel();
+									// this.formService.createTokenforServicePayment(payData).subscribe(resp => {
+									// 	window.open(resp.data, "_self");
+									// }, err => {
+									// 	this.toastr.error(err.error.message);
+									// })
+
+								}, rj => {
+									this.form.get('canEdit').setValue(false);
+									this.isSubmitBtnDisabled = false;
+									this.isBtnsDisabled = false;
+									this.form.disable();
+									return;
+
+									// let errHtml = `			
+									// 	<div class="alert alert-danger">
+									// 		Please Complete Payment, Otherwise the application will be considered as in-complete
+									// 	</div>`
+									// this.commonService.commonAlert("Application Incomplete", "", 'warning', 'Make Payment!', false, errHtml, ccb => {
+									// 	this.formService.createTokenforServicePayment(payData).subscribe(resp => {
+									// 		window.open(resp.data, "_self");
+									// 	}, err => {
+									// 		this.toastr.error(err.error.message);
+									// 	})
+
+									// }, arj => {
+									// 	this.form.get('canEdit').setValue(false);
+									// 	this.isSubmitBtnDisabled = false;
+									// 	this.isBtnsDisabled = false;
+									// 	this.form.disable();
+									// })
+									// return;
+								});
+								return;
+
+							}
+
+						} else {
+							this.commonService.openAlert("Error", "Error Occured for final submit : " + err.error[0].message, "warning")
+						}
+					}
+				);
+			},
+			err => {
+				this.isSubmitBtnDisabled = false;
+				this.onSaveError(err);
+			}
+		);
 	}
 
 	/**
@@ -603,6 +613,16 @@ export class ActionBarComponent implements OnInit, OnChanges {
 				//this.commonService.successAlert('Error!', err.error[0].message, 'error');
 			}
 		);
+	}
+
+	// Bug #14031 check I agree after the document upload
+	checkForIAgress() {
+		if ((this.form.get('apiType').value == "shop" || this.form.get('apiType').value == "shop-transfer") && !this.form.get('agree').value) {
+			this.commonService.openAlert("Field Error", "Should be agree with given details", 'warning');
+			this.isSubmitBtnDisabled = false;
+			return false;
+		}
+		return true;
 	}
 
 
