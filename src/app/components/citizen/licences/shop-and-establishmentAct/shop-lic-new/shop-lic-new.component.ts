@@ -15,6 +15,7 @@ import { TaxRebateApplicationService } from '../../../tax/property/tax-rebate-ap
 import { Constants } from 'src/app/vmcshared/Constants';
 import { AlertService } from 'src/app/vmcshared/Services/alert.service';
 import { ProfessionalTaxService } from 'src/app/core/services/citizen/data-services/professional-tax.service';
+import { ItemsList } from '@ng-select/ng-select/ng-select/items-list';
 
 
 @Component({
@@ -33,13 +34,16 @@ export class ShopLicNewComponent implements OnInit {
 	formId: number;
 	apiCode: string;
 	TotalNoOfPerson: number = 0;
-	hideAdd: boolean = false;
+
+	hidesave:boolean = false;
 	
 	wardZoneLevel = [];
 	wardZoneLevel1List = [];
 	wardZoneLevel2List = [];
 	wardZoneLevel3List = [];
 	wardZoneLevel4List = [];
+
+	workerTypes :Array<any> = [];
 
 	isGuideLineActive: boolean = false;
 
@@ -807,30 +811,29 @@ export class ShopLicNewComponent implements OnInit {
 	}
 
 
-		savePersonOccupyingRecord(row: any){
-			let grandTotal = 0;
-			if(this.registrationType === this.regiTyep[0].code){
+	savePersonOccupyingRecord(row: any) {
+		let grandTotal = 0;
+		if (this.registrationType === this.regiTyep[0].code) {
 			let control = this.shopLicNewForm.get('workerCounts')['controls'];
-			for(let i = 0; i < control.length; i++) {
+			for (let i = 0; i < control.length; i++) {
 				grandTotal += control[i].get('total').value;
 			}
+
 			let max = grandTotal - 10;
-			if(max > 0){
-				this.hideAdd = true;
+			if (max > 0) {
 				this.commonService.openAlert("Person Occupying", "Maximum 10 person are allowed ", "warning");
-				
 			}
 			// console.log("grandTotal" +grandTotal);
 			// if(row.valid) {
-			else{
+			else {
 				row.isEditMode = false;
 				row.newRecordAdded = false;
 			}
 		}
-		else{
+		else {
 			this.saveRecord(row);
-			}
 		}
+	}
 		/**
 		*  Method is used cancel editable dataview.
 		* @param row: table row id
@@ -1539,6 +1542,7 @@ export class ShopLicNewComponent implements OnInit {
 	}
 
 	
+	
 
 	validatePecPropertyNumber(formControl : FormControl){
 		
@@ -1686,4 +1690,30 @@ export class ShopLicNewComponent implements OnInit {
 	  }
 		this.shopLicNewForm.patchValue(data);
 	}
+
+	sameValueNotallow(workerType,indx){
+		
+		let control = this.shopLicNewForm.get('workerCounts')['controls'];
+		this.workerTypes = [];
+		this.hidesave = false;
+		
+		for(let i = 0; i < control.length; i++) {
+			if(i != indx) {
+				this.workerTypes.push( this.shopLicNewForm.get('workerCounts')['controls'][i].get('workersType').value)				
+			}
+			
+		}
+		this.worker(workerType);
+	}
+
+	worker(worker: any){
+		for(let i=0; i <= this.workerTypes.length; i++){
+			if(worker == this.workerTypes[i]){
+				this.hidesave = true;
+				this.commonService.openAlert("Error", "Please enter different worker type","error");
+			}
+		}
+	}
+
+
 }
