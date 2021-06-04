@@ -184,7 +184,7 @@
                     <mat-hint class="mt-3 font-weight-bold fsLarge">
                       ({{'last_4_digit_of_ID'| translate: translateKey}})</mat-hint>
                   </mat-form-field>
-                  
+
                   <mat-form-field class="col-md-4 mb-5" *ngIf="!isVisibleIdNumber">
                         <input matInput minlength="4" appAlphaNumeric maxlength="4" formControlName="idNumber"
                             placeholder="{{'id_number' | translate: translateKey}} *">
@@ -277,7 +277,7 @@
                 </div>
             </form>
         </div>
-        <select-payment-gateway #paymentGateway></select-payment-gateway>
+        <select-payment-gateway #paymentGateway [applicationType]="'ticketing'"></select-payment-gateway>
     </mat-card>
 </div>
 
