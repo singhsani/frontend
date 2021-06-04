@@ -1694,6 +1694,7 @@ export class ShopLicNewComponent implements OnInit {
 	duplicateValueNotallow(workerType,index){
 		let control = this.shopLicNewForm.get('workerCounts')['controls'];
 		this.shopAndEstablishmentService.duplicateWorkerTypeNotallow(workerType,index,control)
+		this.hidesave = this.shopAndEstablishmentService.hidesave;
 	}
 
 }
