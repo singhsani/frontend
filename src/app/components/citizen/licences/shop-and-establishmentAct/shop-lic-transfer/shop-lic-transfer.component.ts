@@ -46,7 +46,7 @@ export class ShopLicTransferComponent implements OnInit {
 	isIntimation: boolean = false;
 
 	isDisabledBtn: boolean = true;
-	// hidesave:boolean = false;
+	hidesave:boolean = false;
 	// workerTypes :Array<any> = [];
 
 	//regiTyep: string[] = ['CERTIFICATION', 'INTIMATION'];
@@ -1620,7 +1620,8 @@ export class ShopLicTransferComponent implements OnInit {
 	
 	duplicateValueNotallow(workerType,index){
 		let control = this.shopLicTransferForm.get('workerCounts')['controls'];
-		this.shopAndEstablishmentService.duplicateWorkerTypeNotallow(workerType,index,control)
+		this.shopAndEstablishmentService.duplicateWorkerTypeNotallow(workerType,index,control);
+		this.hidesave = this.shopAndEstablishmentService.hidesave;
 	}
 	
 }
