@@ -60,12 +60,12 @@ table { width: 100%; }
     &.border {border-color: #cbc6f5  !important;}
 }
 
-.bookDate {background-color: #fceff0; color: #721c24;
+.bookDate, .blockDate {background-color: #fceff0; color: #721c24;
     & > strong {color: #721c24; background-color: #f5c6cb;}
     &.border {border-color: #f5c6cb !important;}
 }
 
-.blockDate {background-color: #fffbee; color: #856404;
+.holiyDay {background-color: #fffbee; color: #856404;
     & > strong {color: #856404; background-color: #ffeeba;}
     &.border {border-color: #ffeeba !important;}
 }
