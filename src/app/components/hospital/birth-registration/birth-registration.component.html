@@ -428,7 +428,7 @@
                     </div>
 
                     <div formGroupName="motherDeliveryAge" class="col-md-4 ngSelect">
-                        <ng-select OnlyNumber (change)="onChangedeliveryAge($event)" placeholder="{{'mother_age_at_time_of_said_delivery' | translate:translateKey}} *" formControlName="code">
+                        <ng-select OnlyNumber (change)="onChangeDeliveryAge($event)" placeholder="{{'mother_age_at_time_of_said_delivery' | translate:translateKey}} *" formControlName="code">
                             <ng-option matTooltip="{{maasd.name}}" *ngFor="let maasd of MOTHER_DELIVERY_AGE" [value]="maasd.code">
                                 {{maasd.name}}
                             </ng-option>

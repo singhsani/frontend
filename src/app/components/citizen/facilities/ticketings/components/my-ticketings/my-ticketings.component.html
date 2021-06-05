@@ -45,7 +45,7 @@
 		<mat-spinner *ngIf="isLoadingResults"></mat-spinner>
 	</div> -->
 
-	<div class="table-responsive paddLeftRight5">
+	<div class="table-responsive">
 	<table mat-table [dataSource]="ticketingList" matSort matSortActive="created" matSortDisableClear matSortDirection="asc" class="minWidth1000px">
 
 		<ng-container matColumnDef="id">
@@ -93,7 +93,7 @@
 
 
 				<button *ngIf="(element.status != ticketingConstants.DRAFT) && (element.status != ticketingConstants.EXPIRED) && (element.status != ticketingConstants.REJECTED) && ((element.status != bookingConstant.SUBMITTED))"
-				 mat-button [matMenuTriggerFor]="menu">
+				 mat-button [matMenuTriggerFor]="menu" class="p-0" style="min-width: 50px;">
 					<mat-icon>more_vert</mat-icon>
 				</button>
 				<mat-menu #menu="matMenu">

@@ -1056,7 +1056,7 @@ export class BirthRegistrationComponent implements OnInit {
 		this.birthCertificateForm.get('motherDeliveryAge').get('code').reset();
 	}
 
-	onChangedeliveryAge(event){
+	onChangeDeliveryAge(event){
 		let merriageAge = this.birthCertificateForm.get('motherMarriageAge').get('code').value;
 		if(event < merriageAge){
 			this.commonService.openAlert(this.config.ERROR, "", "warning", this.config.AGE_ERROR);
