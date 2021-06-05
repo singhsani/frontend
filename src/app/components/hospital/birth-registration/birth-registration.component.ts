@@ -1051,7 +1051,17 @@ export class BirthRegistrationComponent implements OnInit {
 		   this.totalChildCalculate();
 		});
 	}
-	
+
+	onChangeMerriageAge(){
+		this.birthCertificateForm.get('motherDeliveryAge').get('code').reset();
+	}
+
+	onChangeDeliveryAge(event){
+		let merriageAge = this.birthCertificateForm.get('motherMarriageAge').get('code').value;
+		if(event < merriageAge){
+			this.commonService.openAlert(this.config.ERROR, "", "warning", this.config.AGE_ERROR);
+		}
+	}
 
 	dummyJSON:any = {
 		"birthPlace": {
