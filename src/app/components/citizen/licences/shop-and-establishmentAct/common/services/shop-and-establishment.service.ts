@@ -61,7 +61,8 @@ export class ShopAndEstablishmentService {
 				this.hidesave = true;
 				this.commonService.openAlert("Error", "Please enter different worker type","error");
 			}
-			return this.hidesave;
+			
 		}
+		return this.hidesave;
 	}
 }
