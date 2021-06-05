@@ -757,6 +757,7 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
 .paddLeftRight5 .mat-table .mat-cell, 
 .paddLeftRight5 td.mat-cell, td.mat-footer-cell, .paddLeftRight5 th.mat-header-cell {padding: 0 6px;}
 
+.ng-select.ng-select-multiple .ng-select-container.ng-has-value .ng-value-container {padding-top: 4px;}
 
 ::-webkit-scrollbar {width: 5px; height: 5px;}
 ::-webkit-scrollbar-track {background: #D1C4E9; border-radius:3px;}
@@ -1233,6 +1234,7 @@ textarea.gujInputCls {margin-bottom: 0;}
 
 
 .timeBut {position: absolute !important;  top: 15px;  right: 25px; background: #fff; width: 30px !important; height: 30px !important; line-height: 30px !important;}
+.pr-0.mr-0 .timeBut {right: 10px;}
 
 .lineHeight20 {line-height: 18px !important; margin-top: 2px !important; line-height: 18px !important; margin-top: 0px !important;  padding-top: 3px !important;}
 
