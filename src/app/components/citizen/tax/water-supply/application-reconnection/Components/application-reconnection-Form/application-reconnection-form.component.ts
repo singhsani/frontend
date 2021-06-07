@@ -84,6 +84,7 @@ export class ApplicationReconnectionFormComponent implements OnInit {
         }
     }
     getFormDataDocuments(id : any) {
+        if(this.reconnectionDocumentUploadDocs.length == 0){
         this.reconnectionDocumentUploadDocs = [];
         this.applicationReconnectionService.getreconnectionDocUpload(id).subscribe(
           (data) => {
@@ -95,6 +96,7 @@ export class ApplicationReconnectionFormComponent implements OnInit {
           (error) => {
             
           });
+      }
       }
       onSubmitApproved() {
 

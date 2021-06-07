@@ -35,6 +35,7 @@ export class HosAppService {
 	 * @param loginData - User Information Data
 	 */
 	obtainAccessToken(loginData) {
+		debugger;
 
 		let params = new URLSearchParams();
 		params.append('username', loginData.username + ':HOSPITAL');

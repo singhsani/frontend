@@ -165,6 +165,7 @@ export class NewPlumberLicenseFormComponent implements OnInit {
         }
     }
     getFormDataDocuments(id : any) {
+        if(this.plumberLicenseDocumentUploadDocs.length == 0){
         this.plumberLicenseDocumentUploadDocs = [];
         this.newPlumberLicenseService.plumberLicenseDocUpload(id).subscribe(
           (data) => {
@@ -180,6 +181,7 @@ export class NewPlumberLicenseFormComponent implements OnInit {
           (error) => {
             
           });
+      }
       }
     onSubmitApproved() {
 

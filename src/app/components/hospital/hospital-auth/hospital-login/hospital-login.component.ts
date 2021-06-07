@@ -65,8 +65,10 @@ export class HospitalLoginComponent implements OnInit {
 		this.isValidFlag = false;
 
 		if (this.loginForm.valid) {
+			debugger
 			this.appService.obtainAccessToken(formVals).subscribe(
 				res => {
+					debugger;
 					this.saveToken(res);
 				}
 				// err => {
