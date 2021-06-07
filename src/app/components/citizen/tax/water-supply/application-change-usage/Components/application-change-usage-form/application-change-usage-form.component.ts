@@ -179,6 +179,7 @@ export class ApplicationChangeUsageFormComponent implements OnInit {
 
     }
     getFormDataDocuments(id : any) {
+        if(this.changeOfUsageDocumentUploadDocs.length == 0){
         this.changeOfUsageDocumentUploadDocs = [];
         this.applicationChangeUsageService.getchangeOfUsageIdDocUpload(id).subscribe(
           (data) => {
@@ -190,6 +191,7 @@ export class ApplicationChangeUsageFormComponent implements OnInit {
           (error) => {
             
           });
+      }
       }
 
     onWaterDetailClick() {

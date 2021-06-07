@@ -164,6 +164,7 @@ export class ApplicationTransferOwnershipFormComponent implements OnInit {
 
     }
     getFormDataDocuments(id: any) {
+        if(this.applictionTrasferOwnDocumentUploadDocs.length == 0){
         this.applictionTrasferOwnDocumentUploadDocs = [];
         this.applicationTransferOwnershipService.getTransferDocUpload(id).subscribe(
             (data) => {
@@ -176,6 +177,7 @@ export class ApplicationTransferOwnershipFormComponent implements OnInit {
             (error) => {
 
             });
+    }
     }
 
 

@@ -105,6 +105,7 @@ export class ApplicationDisconnectionFormComponent implements OnInit {
     }
 
     getFormDataDocuments(id : any) {
+        if(this.applictionDisconnectionDocumentUploadDocs.length == 0){
         this.applictionDisconnectionDocumentUploadDocs = [];
         this.applicationDisconnectionService.getDisconnectionDocUpload(id).subscribe(
           (data) => {
@@ -119,6 +120,7 @@ export class ApplicationDisconnectionFormComponent implements OnInit {
           (error) => {
             
           });
+      }
       }
 
     onSubmitApproved() {
