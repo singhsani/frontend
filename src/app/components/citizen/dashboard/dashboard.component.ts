@@ -123,6 +123,14 @@ export class DashboardComponent implements OnInit {
 					"appointmentRequired": false,
 					"active": true
 				},
+				{
+					"code": "BAND",
+					"fieldView": "ALL",
+					"name": "Band",
+					"gujName": "બેન્ડ",
+					"appointmentRequired": false,
+					"active": true
+				},
 			]
 		},
 		{
