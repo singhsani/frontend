@@ -44,6 +44,7 @@ export class CommonPaybleComponent implements OnInit {
     { name: 'Net Banking', code: 'NETBANKING' }, { name: 'Debit / Credit Card banking', code: 'CARDBANKING' }
   ];
   placeholder: string = 'Reference Number';
+  placeHolderMessage: string;
   responseData: any;
   receiptEntry: any;
   feePaymentData: any;
@@ -234,6 +235,7 @@ export class CommonPaybleComponent implements OnInit {
   showHideSearchable(paySerCode) {
     if (paySerCode === 'PAY_PROF_TAX') {
       this.placeholder = 'PEC Number';
+      this.placeHolderMessage = 'PEC Number is Required';
     } else if (paySerCode === 'PRO-ASS') {
       this.placeholder = 'Property Number';
     } else {
