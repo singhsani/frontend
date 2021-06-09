@@ -83,6 +83,30 @@
             <mat-header-cell *matHeaderCellDef>{{'action' | translate:translateKey}}</mat-header-cell>
             <mat-cell *matCellDef="let row">
                 <div class="mobile-label">{{'action' | translate:translateKey}}</div>
+                <div *ngIf="row.serviceType == 'VEHICLE' || row.serviceType == 'PEC_REG' || row.serviceType == 'PRC_REG' || row.serviceType == 'PAY_PROF_TAX' ;else other_application">
+                    <div class="mobile-label1" >:</div>
+                    <button class="actionBtn" mat-button [matMenuTriggerFor]="menuTax">
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
+                    <mat-menu #menuTax="matMenu">
+                    
+                    <button mat-menu-item *ngIf="row.fileStatus == 'SUBMITTED'" color="primary"
+                        (click)="redirectToEdit(row.serviceDetail.code, row.serviceFormId)">
+                        <mat-icon class="m-1" title="{{'preview_application' | translate:translateKey}}">remove_red_eye
+                        </mat-icon>
+                        {{'preview_application' | translate:translateKey}}
+                    </button>
+                    
+                    <button mat-menu-item *ngIf="row.fileStatus == 'PAYMENT_RECEIVED'" color="primary" (click)="printReceipt(row.serviceDetail.code, row.serviceDetail.name, row.serviceFormId)">
+                        <mat-icon class="m-1" title="{{'print_receipt' | translate:translateKey}}">print</mat-icon>
+                        {{'print_receipt' | translate:translateKey}}
+                    </button>
+                    
+                    </mat-menu>
+                </div>
+                <ng-template #other_application>
+                 <div>
+
                 <div class="mobile-label1" *ngIf="isMoreBtnVisible(row)">:</div>
                 <button *ngIf="isMoreBtnVisible(row)" class="actionBtn" mat-button [matMenuTriggerFor]="menu">
                     <mat-icon>more_vert</mat-icon>
@@ -194,6 +218,10 @@
                     </button>
 
                 </mat-menu>
+           
+            
+            </div>
+        </ng-template>
             </mat-cell>
         </ng-container>
 
