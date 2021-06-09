@@ -439,7 +439,7 @@ export class PecRegistrationComponent implements OnInit {
 						// 		this.router.navigateByUrl(ManageRoutes.getFullRoute('CITIZENMYAPPS'));
 						// 	});
 						// } else {
-						this.commonService.openAlert("PEC Registration Successful", "", "success", `Your Application Number is<br> <b>${res.uniqueId}</b> <br> Your Application is valid for 3 working days only. Kindly visit respective ward office with all the valid documents for approval`, cb => {
+						this.commonService.openAlert("PEC Registration Successful", "", "success", `Your Application Number is<br> <b>${res.uniqueId}</b> <br> Your Application is valid for 3 working days only. Kindly visit respective ward office with all the valid documents for approval.`, cb => {
 							this.router.navigateByUrl(ManageRoutes.getFullRoute('CITIZENMYAPPS'));
 						});
 						// }
@@ -750,29 +750,29 @@ export class PecRegistrationComponent implements OnInit {
 		"prcNo": null,
 		"registrationDate": "2019-12-09",
 		"applicantFullNameGuj": null,
-		"applicantFullName": "ggfgdfgdfgfdgfdg",
+		"applicantFullName": "Ram Bhai",
 		"gender": {
 			"code": "MALE",
 			"name": null
 		},
-		"establishmentName": "fdgfdgdfg",
-		"contactNo": "4353543543",
-		"email": null,
+		"establishmentName": "Tea Stall",
+		"contactNo": "8962749074",
+		"email": "chetan.porwal@nascentinfo.com",
 		"ward": {
 			"code": "WARD_1",
 			"name": null
 		},
 		"applicantDob": "1970-01-01",
 		"rcDate": null,
-		"commencementDate": "2019-12-01",
+		"commencementDate": "2019-04-01",
 		"vatNo": null,
 		"aadharNo": null,
 		"officeAddress": {
 			"addressType": "PF_PEC_OFFICE_ADDRESS",
-			"buildingName": "dfgdfgfdg",
+			"buildingName": "44",
 			"streetName": null,
 			"landmark": null,
-			"area": "fdgdfgfdg",
+			"area": "Akota",
 			"state": "GUJARAT",
 			"district": null,
 			"city": "Vadodara",
@@ -789,10 +789,10 @@ export class PecRegistrationComponent implements OnInit {
 		},
 		"residentialAddress": {
 			"addressType": "PF_PEC_RESIDENTIAL_ADDRESS",
-			"buildingName": "dfgdfgfdg",
+			"buildingName": "44",
 			"streetName": null,
 			"landmark": null,
-			"area": "fdgdfgfdg",
+			"area": "Akota",
 			"state": "GUJARAT",
 			"district": null,
 			"city": "Vadodara",
@@ -807,12 +807,12 @@ export class PecRegistrationComponent implements OnInit {
 			"cityGuj": null,
 			"countryGuj": null
 		},
-		"bankAccountNo": "44353454354353454354",
+		"bankAccountNo": "443534543543534",
 		"bank": {
 			"code": "ALLAHABAD_BANK",
 			"name": null
 		},
-		"branchName": "dfgfgfdgfdgfdgdg",
+		"branchName": "Teen Darwaza",
 		"pancardNo": "ABCDE1234F",
 		"centralSalesTax": null,
 		"shopAndLicenseNo": "sdfsdfsdfsdf",

@@ -49,7 +49,7 @@ export class CommonPaybleComponent implements OnInit {
   receiptEntry: any;
   feePaymentData: any;
   duesDetailsArr: any = [];
-
+  isProfessionalTax: boolean = false;
   inputData: any
   selected: any;
 
@@ -221,7 +221,6 @@ export class CommonPaybleComponent implements OnInit {
     this.formService.apiType = 'payableServices';
     this.formService.paymentServiceGet().subscribe(respData => {
       this.PayableServices = respData.list;
-
       if (this.paymentsForm.get('payableServices').get('code')) {
         this.showHideSearchable(this.paymentsForm.get('payableServices').get('code').value);
       }
@@ -233,7 +232,8 @@ export class CommonPaybleComponent implements OnInit {
    * @param searchable - boolean (true/false)
    */
   showHideSearchable(paySerCode) {
-    if (paySerCode === 'PAY_PROF_TAX') {
+    if (paySerCode === 'PAY_PROF_TAX' || paySerCode === 'PEC_REG' || paySerCode === 'PRC_REG') {
+      this.isProfessionalTax = true;
       this.placeholder = 'PEC Number';
       this.placeHolderMessage = 'PEC Number is Required';
     } else if (paySerCode === 'PRO-ASS') {
