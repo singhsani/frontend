@@ -561,11 +561,11 @@ export class MyBookingComponent implements OnInit {
 	}
 
 	showCancelBtn(element) {
+    var eventDate = element.scheduleList[0].bookingDate
+	  var minDate= moment(eventDate).subtract(10, 'days').format('YYYY-MM-DD');
+	  var currentDate = moment(new Date()).format('YYYY-MM-DD');
 		this.slotBookingList.pop();
-		// element.status != bookingConstant.PAYMENT_REQUIRED && element.status != bookingConstant.CANCELLATION_REQUEST
-// 		if(element.resourceType === 'CHILDREN_THEATER' && element.status === this.bookingConstant.BOOKED) {
-// 			return true
-// 		}
+
 		if (element.status === this.bookingConstant.PAYMENT_REQUIRED
 			|| element.status === this.bookingConstant.CANCELLED
 			|| element.status === this.bookingConstant.WAITINGLIST
@@ -578,13 +578,15 @@ export class MyBookingComponent implements OnInit {
 			|| element.status === this.bookingConstant.COMPLETED
 			) {
 			return false;
+		}else if(currentDate >= minDate){
+		  return false;
 		}else if(element.status === this.bookingConstant.SCRUTINY){
          if(element.resourceType === "STADIUM" || element.resourceType === "CHILDREN_THEATER"){
              return true;
          }else{
              return false;
          }
-     }
+    }
 
 		return true;
 	}
