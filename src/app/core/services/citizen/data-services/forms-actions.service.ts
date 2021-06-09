@@ -366,7 +366,7 @@ export class FormsActionsService {
 	}
 
 	getDueDetails(num) {
-		return this.http.get(`api/professional/receipt/search/${num}`);
+		return this.http.get(`api/professional/receipt/citizen/search/${num}`);
 	}
 
 	saveTaxPaymentDetails(data) {

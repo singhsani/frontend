@@ -23,13 +23,13 @@
       </div>
 
       <!-- This is input for other services search-->
-      <mat-form-field class="col-md-4" *ngIf="f.payableServices.get('code').value !== 'PAY_PROF_TAX'">
+      <mat-form-field class="col-md-4" *ngIf = "!isProfessionalTax">
         <input matInput placeholder="{{placeholder}}" formControlName="refNumber" required>
         <control-messages [control]="paymentsForm.get('refNumber')"></control-messages>
       </mat-form-field>
 
       <!-- This is input for professional tax search-->
-      <mat-form-field class="col-md-4" *ngIf="f.payableServices.get('code').value === 'PAY_PROF_TAX'">
+      <mat-form-field class="col-md-4" *ngIf="isProfessionalTax">
         <input matInput appAlphaNumeric maxlength="12" placeholder="{{placeholder}}" formControlName="refNumber"
           required>
           <mat-error *ngIf="placeHolderMessage !== null">{{placeHolderMessage}}</mat-error>
