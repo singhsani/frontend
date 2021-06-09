@@ -578,7 +578,7 @@ export class MyBookingComponent implements OnInit {
 			|| element.status === this.bookingConstant.COMPLETED
 			) {
 			return false;
-		}else if(currentDate >= minDate){
+		}else if(element.resourceType === "CHILDREN_THEATER" && currentDate >= minDate){
 		  return false;
 		}else if(element.status === this.bookingConstant.SCRUTINY){
          if(element.resourceType === "STADIUM" || element.resourceType === "CHILDREN_THEATER"){
