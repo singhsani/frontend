@@ -7,7 +7,7 @@ import * as textMask from 'vanilla-text-mask/dist/vanillaTextMask.js';
 export class MaskRegistrationNumVtDirective {
 
   // mask = [/\d/, /\d/, '-', /\d/, /\d/, '-', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/];
-  mask = [/[a-zA-Z]/, /[a-zA-Z]/,'-', /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
+  mask = [/[a-zA-Z]/, /[a-zA-Z]/,'-', /\d/, /\d/, '-',/[a-zA-Z]/, /[a-zA-Z]/,'-',/\d/, /\d/, /\d/, /\d/];
   maskedInputController;
 
   private specialKeys: Array<string> = ['Backspace', 'Tab', 'End', 'Home'];

@@ -60,6 +60,8 @@ export class NewRegistrationComponent implements OnInit {
   totalVehicleTaxAmt: number = 0;
   attachmentList: any = [];
   showButton: boolean = false;
+  placeHolderMessage = 'Please enter valid Registration no. e.g. GJ-06-AB-1234';
+
   public config: PftConfig;
 
   constructor(
@@ -619,26 +621,26 @@ export class NewRegistrationComponent implements OnInit {
     },
     "engineNo": new Date().getTime(),
     "chasisNo": new Date().getTime(),
-    "registrationNo": "GJ-01-1234",
+    "registrationNo": "GJ-06-1234",
     "vehicleBasicValue": "423543",
     "makeModel": "sdfsdf",
     "dealerName": "sdfsdfsdf",
-    "purchaseDate": "2019-12-01",
+    "purchaseDate": "2021-06-01",
     "purchasingType": "NEW_RATE",
     "tokenNo": null,
-    "firstName": "sdfsdfsdf",
+    "firstName": "Ram Bhai",
     "middleName": null,
-    "lastName": "sdfsdfsdf",
+    "lastName": "Patel",
     "applicantAadhaarNo": null,
-    "mobileNo": "2342342342",
+    "mobileNo": "8962749074",
     "aadhaarNo": "111111111111",
-    "email": "a@a.com",
+    "email": "chetan.porwal@nascentinfo.com",
     "address": {
       "addressType": "VEHICLE_ADDRESS",
-      "buildingName": "sdfsdf",
-      "streetName": "dsfsdfsdf",
-      "landmark": "sdfsdf",
-      "area": "sdfsdf",
+      "buildingName": "44",
+      "streetName": "",
+      "landmark": "",
+      "area": "Akota",
       "state": "GUJARAT",
       "district": null,
       "city": "Vadodara",
@@ -654,7 +656,7 @@ export class NewRegistrationComponent implements OnInit {
       "countryGuj": "ભારત"
     },
     "billingPeriod": {
-      "code": "2018_19",
+      "code": "2021_22",
       "name": null
     },
     "ward": {

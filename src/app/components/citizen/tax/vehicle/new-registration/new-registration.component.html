@@ -195,7 +195,7 @@
 					</mat-form-field>
 
 					<div class="col-md-4 ngSelect" formGroupName="wardZoneMst">
-						<ng-select placeholder="{{'ward_no' | translate: translateKey}} *" formControlName="wardzoneId">
+						<ng-select placeholder="{{'ward_no' | translate: translateKey}} *" required formControlName="wardzoneId">
 							<ng-option *ngFor="let wardNo of wardNoArray" [value]="wardNo.wardzoneId">
 								{{wardNo.wardzoneName}}
 							</ng-option>
