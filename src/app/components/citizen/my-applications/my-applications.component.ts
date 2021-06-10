@@ -100,6 +100,8 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 	 * This method use to get all the citizen data with pagination.
 	 */
 	getAllData() {
+		debugger
+		console.log("from other Module" +this.fromOtherModule);
 		if (this.fromOtherModule) {
 			this.dataSource.data = [];
 			if (this.inputData) {
@@ -349,9 +351,15 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 	 * @param row - Table row oject
 	 */
 	isPreviewOptDisplay(row) {
-		if (row.serviceType === 'PEC_REG' || row.serviceType === 'PRC_REG' || row.serviceType ===
-			'NO_DUE_CERTIFICATE' || row.serviceType === 'ASSESSMENT_CERTIFICATE' || row.fileStatus == 'APPROVED')
+		debugger
+		if((row.serviceType === 'SHOP_ESTAB_APPLICATION' && row.fileStatus === 'APPROVED') || (row.serviceType === 'SHOP_ESTAB_APPLICATION' && row.fileStatus === 'REJECTED')
+			|| (row.serviceType === 'SHOP_ESTAB_TRANSFER' && row.fileStatus === 'APPROVED') || (row.serviceType === 'SHOP_ESTAB_TRANSFER' && row.fileStatus === 'REJECTED')){
+			return true;
+		}
+		else if (row.serviceType === 'PEC_REG' || row.serviceType === 'PRC_REG' || row.serviceType ===
+			'NO_DUE_CERTIFICATE' || row.serviceType === 'ASSESSMENT_CERTIFICATE' || row.fileStatus == 'APPROVED' ){
 			return false;
+		}
 		else if (!row.canEdit)
 			return true;
 	}
