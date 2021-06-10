@@ -131,7 +131,7 @@
 								<mat-option *ngFor="let religion of religionArray" [value]="religion.code">{{religion.name}}</mat-option>
 							</mat-select>
 						</mat-form-field> -->
-					<div class="col-md-4" formGroupName="groomReligion">
+					<div class="col-md-4 ngSelect" formGroupName="groomReligion">
 						<ng-select formControlName="code" placeholder="{{ 'religion' | translate:translateKey }}*"
 							(change)="onChange($event,religionArray,'religionGujgroom');checkReligion();changeReset('marriageTimeGroomStatus');changeReset('aliveWives');removeGuj('maritalstatusGujgroom')">
 							<ng-option *ngFor="let religion of religionArray" [value]="religion.code">{{religion.name}}
@@ -446,7 +446,7 @@
 								<mat-option *ngFor="let religion of religionArray" [value]="religion.code">{{religion.name}}</mat-option>
 							</mat-select>
 						</mat-form-field> -->
-					<div class="col-md-4" formGroupName="brideReligion">
+					<div class="col-md-4 ngSelect" formGroupName="brideReligion">
 						<ng-select formControlName="code" placeholder="{{ 'religion' | translate:translateKey }}*"
 							(change)="onChange($event,religionArray,'religionGujbride');checkReligion();changeReset('marriageTimeBrideStatus');removeGuj('maritalstatusGujbride')">
 							<ng-option *ngFor="let religion of religionArray" [value]="religion.code">{{religion.name}}
