@@ -279,13 +279,13 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput maxlength="3" required OnlyNumber placeholder="{{'number_of_bed' | translate:translateKey}}"
+						<input matInput maxlength="3" type="tel" required OnlyNumber placeholder="{{'number_of_bed' | translate:translateKey}}"
 						 formControlName="numberOfBed">
 						<control-messages [control]="provisionalHospitalNocForm.get('numberOfBed')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput maxlength="3" required readonly OnlyNumber placeholder="{{'number_of_ot' | translate:translateKey}}"
+						<input matInput maxlength="3" type="tel" required readonly OnlyNumber placeholder="{{'number_of_ot' | translate:translateKey}}"
 						 formControlName="numberOfOT" [value]="provisionalHospitalNocForm.get('hospitalOTDetails')['controls'].length">
 						<control-messages [control]="provisionalHospitalNocForm.get('numberOfOT')"></control-messages>
 					</mat-form-field>
@@ -351,13 +351,13 @@
 
 					<mat-form-field class="col-md-4">
 						<input matInput OnlyNumber required formControlName="exerciseSection" placeholder="{{'exercise_section' | translate: translateKey }} "
-						 maxlength="3">
+						 maxlength="3" type="tel">
 						<control-messages [control]="provisionalHospitalNocForm.get('exerciseSection')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<input matInput OnlyNumber required formControlName="xraySection" placeholder="{{'xray_section' | translate: translateKey }} "
-						 maxlength="3">
+						 maxlength="3" type="tel">
 						<control-messages [control]="provisionalHospitalNocForm.get('xraySection')"></control-messages>
 					</mat-form-field>
 
@@ -426,13 +426,13 @@
 
 					<mat-form-field class="col-md-4">
 						<input matInput maxlength="50" required OnlyNumber placeholder="{{'building_height' | translate:translateKey}}"
-						 formControlName="buildingHeight">
+						 formControlName="buildingHeight" type="tel">
 						<control-messages [control]="provisionalHospitalNocForm.get('buildingHeight')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<input matInput maxlength="3" required OnlyNumber placeholder="{{'floor_area' | translate:translateKey}}"
-						 formControlName="floorArea">
+						 formControlName="floorArea" type="tel">
 						<control-messages [control]="provisionalHospitalNocForm.get('floorArea')"></control-messages>
 					</mat-form-field>
 
@@ -468,7 +468,7 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput maxlength="3" required appAlphaNumeric placeholder="{{'total_building_floor' | translate:translateKey}}"
+						<input matInput OnlyNumber maxlength="3" type="tel" required appAlphaNumeric placeholder="{{'total_building_floor' | translate:translateKey}}"
 						 formControlName="totalBuildingFloor">
 						<control-messages [control]="provisionalHospitalNocForm.get('totalBuildingFloor')"></control-messages>
 					</mat-form-field>

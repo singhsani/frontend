@@ -9,15 +9,15 @@
       <control-messages [control]="form.get('otFacilities')"></control-messages>
     </mat-form-field>
     <mat-form-field class="col-md-4">
-      <input matInput placeholder="{{'area_in_square_meter_length'| translate: translateKey}}" maxlength="5" OnlyNumber  type="number" formControlName="areaInSquareMeterLength" required>
+      <input matInput placeholder="{{'area_in_square_meter_length'| translate: translateKey}}" maxlength="5" OnlyNumber  type="tel" formControlName="areaInSquareMeterLength" required>
       <control-messages [control]="form.get('areaInSquareMeterLength')"></control-messages>
     </mat-form-field>
     <mat-form-field class="col-md-4">
-      <input matInput placeholder="{{'area_in_square_meter_breadth'| translate: translateKey}}" maxlength="5"  type="number" OnlyNumber formControlName="areaInSquareMeterBreadth" required>
+      <input matInput placeholder="{{'area_in_square_meter_breadth'| translate: translateKey}}" maxlength="5"  type="tel" OnlyNumber formControlName="areaInSquareMeterBreadth" required>
       <control-messages [control]="form.get('areaInSquareMeterBreadth')"></control-messages>
     </mat-form-field>
     <mat-form-field class="col-md-4">
-      <input matInput placeholder="{{'area_in_square_meter'| translate: translateKey}}" OnlyNumber maxlength="5"  type="number" formControlName="areaInSquareMeter" required>
+      <input matInput placeholder="{{'area_in_square_meter'| translate: translateKey}}" OnlyNumber maxlength="5"  type="tel" formControlName="areaInSquareMeter" required>
       <control-messages [control]="form.get('areaInSquareMeter')"></control-messages>
     </mat-form-field>
   </div>
