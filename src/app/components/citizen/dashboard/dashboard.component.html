@@ -85,7 +85,7 @@
         <div>{{ application.applicantName?application.applicantName:'N/A' }}</div>
         <div class="recenText">{{ application.serviceDetail.name }} | Application / Registration Number : {{
             application.fileNumber ? application.fileNumber : application.uniqueId }}</div>
-        <span class="badge draft">{{ application.fileStatus }}</span>
+        <span class="badge draft">{{ application.fileStatusName }}</span>
     </li>
 </ul>
 
