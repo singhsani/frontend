@@ -100,8 +100,6 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 	 * This method use to get all the citizen data with pagination.
 	 */
 	getAllData() {
-		debugger
-		console.log("from other Module" +this.fromOtherModule);
 		if (this.fromOtherModule) {
 			this.dataSource.data = [];
 			if (this.inputData) {
@@ -351,7 +349,7 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 	 * @param row - Table row oject
 	 */
 	isPreviewOptDisplay(row) {
-		debugger
+	
 		if((row.serviceType === 'SHOP_ESTAB_APPLICATION' && row.fileStatus === 'APPROVED') || (row.serviceType === 'SHOP_ESTAB_APPLICATION' && row.fileStatus === 'REJECTED')
 			|| (row.serviceType === 'SHOP_ESTAB_TRANSFER' && row.fileStatus === 'APPROVED') || (row.serviceType === 'SHOP_ESTAB_TRANSFER' && row.fileStatus === 'REJECTED')){
 			return true;
@@ -607,7 +605,7 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		}
 	}
 	isShopHideButton(row){
-		console.log(row);
+		
 		if((this.commonService.fromAdmin() && row.serviceDetail.code == 'SHOP-ESTAB-LIC-NEW') || (this.commonService.fromAdmin() && row.serviceDetail.code == 'SHOP-ESTAB-TRANSFER')){
 			return false;
 		}else{
