@@ -17,8 +17,8 @@ export class OnlyNumberDirective {
 			46 - for delete
 		*/
 		// this.el.nativeElement.setAttribute("type", "number");
-		 this.el.nativeElement.setAttribute("inputmode", "numeric");
-		 this.el.nativeElement.setAttribute("pattern", "[0-9]*");
+		//  this.el.nativeElement.setAttribute("inputmode", "numeric");
+		//  this.el.nativeElement.setAttribute("pattern", "[0-9]*");
 	
 		if ([8, 9, 13, 27, 46].indexOf(e.keyCode) !== -1 ||
 			// Allow: Ctrl+A

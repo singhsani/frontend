@@ -48,14 +48,14 @@
 						<control-messages [control]="fireCertificateForm.get('incidentDate')"></control-messages>
 					</mat-form-field>
 
-					<div class="col-md-4 pl-0 ml-0">
-						<mat-form-field class="col-md-10">
+					<div class="col-md-4 pl-0 pr-0 ml-0 mr-0">
+						<mat-form-field class="col-md-12">
 							<mat-label>{{'incident_time' | translate:translateKey}}</mat-label>
 							<input (blur)="changeTimeFormat($event.target.value, 'incidentTime')" placeholder="HH:MM" matInput type="time"
 							 atp-time-picker theme="dark" formControlName="incidentTime" required />
 							<control-messages [control]="fireCertificateForm.get('incidentTime')"></control-messages>
 						</mat-form-field>
-						<button class="ml-0 pl-0" [disabled]="!fireCertificateForm?.controls?.canEdit?.value" mat-icon-button type="button"
+						<button class="ml-0 pl-0 timeBut" [disabled]="!fireCertificateForm?.controls?.canEdit?.value" mat-icon-button type="button"
 						 (click)="openTimePicker('incidentTime')">
 							<mat-icon matTooltip="Select Time" color="primary">alarm</mat-icon>
 						</button>
@@ -125,20 +125,20 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-6">
-						<input matInput OnlyNumber maxlength="50" required formControlName="fireLossAmount" placeholder="{{ 'fire_loss_amount' | translate:translateKey }}">
+						<input matInput OnlyNumber maxlength="50" required formControlName="fireLossAmount" placeholder="{{ 'fire_loss_amount' | translate:translateKey }}" type="tel">
 						<control-messages [control]="fireCertificateForm.get('fireLossAmount')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						
 						<input matInput OnlyNumber placeholder="Contact No" 
-						 formControlName="contactNo" required maxlength="10" minlength="10">
+						 formControlName="contactNo" required maxlength="10" minlength="10" type="tel">
 						<control-messages [control]="fireCertificateForm.get('contactNo')"></control-messages>
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
 						<input matInput OnlyNumber placeholder="Mobile No" 
-						 formControlName="mobileNo" required maxlength="10" minlength="10">
+						 formControlName="mobileNo" required maxlength="10" minlength="10" type="tel">
 						<control-messages [control]="fireCertificateForm.get('mobileNo')"></control-messages>
 					</mat-form-field>
 

@@ -748,6 +748,7 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
     label.mat-form-field-label {width: 100% !important; overflow: visible !important;  white-space: normal !important; text-overflow: initial !important;}
 }
 
+
 .minWidth1000px {min-width: 1000px;}
 
 .marBot100 {margin-bottom: 100px !important;}
@@ -769,6 +770,10 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
 ::-webkit-scrollbar {width: 10px; height: 10px;}
 ::-webkit-scrollbar-track {background: #D1C4E9; border-radius:5px;}
 ::-webkit-scrollbar-thumb {background: #7E57C2; border-radius:5px;}
+.twoLineDes .mat-form-field-label-wrapper {
+    label.mat-form-field-label {top: 5px !important;}
+}
+
 }
 // Responsive CSS Part 1 ------------------------------------------------
 @media (max-width: 991px) {
