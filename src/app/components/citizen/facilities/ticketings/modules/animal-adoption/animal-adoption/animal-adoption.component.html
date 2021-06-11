@@ -154,7 +154,7 @@
         </mat-form-field>
 
         <mat-form-field class="col-md-6">
-          <input matInput type="text" formControlName="adoptersAddress"
+          <input matInput type="text" formControlName="adoptersAddress" maxlength="100"
             placeholder="{{'adopter_organisation_address' | translate: translateKey}}" required>
           <control-messages [control]="animalAdoptionForm.get('adoptersAddress')"></control-messages>
         </mat-form-field>
