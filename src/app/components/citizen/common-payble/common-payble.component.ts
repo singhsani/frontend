@@ -457,7 +457,11 @@ export class CommonPaybleComponent implements OnInit {
   setPayableServices(code) {
     const filteredModules = this.userServicesList.filter(module => module.code === code);
     if (filteredModules.length > 0) {
-      this.PayableServices = filteredModules[0].services;
+      if(filteredModules[0].code == 'PROFESSIONAL'){
+        this.PayableServices = filteredModules[0].services.filter(services => services.code == 'PAY_PROF_TAX');
+      }else{
+        this.PayableServices = filteredModules[0].services;
+      }
       this.paymentsForm.get('payableServices').get('code').setValue(null);
     }
   }
