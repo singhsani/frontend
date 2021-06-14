@@ -48,8 +48,8 @@
 
 					<mat-form-field class="col-md-4">
 						<!-- <span matPrefix>+91 &nbsp;</span> -->
-						<input matInput OnlyNumber placeholder="{{'contact_no' | translate:translateKey}}" type="tel" [maxlength]="fireFacilityConfig.contactNumberLength"
-						 formControlName="contactNo" required>
+						<input matInput OnlyNumber placeholder="{{'contact_no' | translate:translateKey}}" type="tel" [maxlength]="fireFacilityConfig.mobileNumber_maxLength"
+						[minlength]="fireFacilityConfig.mobileNumber_minLength" formControlName="contactNo" required>
 						<control-messages [control]="electricConnectionForm.get('contactNo')"></control-messages>
 					</mat-form-field>
 
@@ -118,7 +118,7 @@
 
 					<mat-form-field class="col-md-4">
 						<input matInput [max]="disablefutureDate" [matDatepicker]="DateOfincidentDate" formControlName="incidentDate"
-						 (dateChange)="dateFormat($event.value,'incidentDate')" placeholder="{{ 'incident_date' | translate:translateKey }}">
+						 (dateChange)="dateFormat($event.value,'incidentDate')" placeholder="{{ 'incident_date' | translate:translateKey }}" required>
 						<mat-datepicker-toggle matSuffix [for]="DateOfincidentDate"></mat-datepicker-toggle>
 						<mat-datepicker touchUi="true" #DateOfincidentDate></mat-datepicker>
 						<div align="end" class="default-show-hint mat-hint mat-right">{{fireFacilityConfig.DATE_HINT_MSG}}</div>
