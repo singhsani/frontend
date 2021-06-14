@@ -1,36 +1,35 @@
 <ng-template #confirmationModel>
-  <div class="modal-header customthead">
-      <h4 class="modal-title" id="exampleModalLabel">
-          Select your payment gateway
-      </h4>
-      <button title="Close" data-dismiss="modal" class="mat-icon-button" aria-label="Close"
-          (click)="onCancel()">
-          <mat-icon>close</mat-icon>
-      </button>
-  </div>
-  <div class="modal-body scrollModel">
-      <form [formGroup]="paymentGatewayForm">
+    <div class="modal-header customthead">
+        <h4 class="modal-title" id="exampleModalLabel">
+            Select your payment gateway
+        </h4>
+        <button title="Close" data-dismiss="modal" class="mat-icon-button" aria-label="Close" (click)="onCancel()">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+    <div class="modal-body scrollModel">
+        <form [formGroup]="paymentGatewayForm">
 
-        <mat-label>Select one of the payment gateway</mat-label>
-        <mat-radio-group formControlName="paymentGateway">
-            <mat-radio-button *ngFor="let obj of paymentGatewayArr" [value]="obj.code">
-                {{obj.name}}
-            </mat-radio-button>
-            <control-messages [control]="paymentGatewayForm.get('paymentGateway')"></control-messages>
-        </mat-radio-group>
+            <mat-label>Select one of the payment gateway</mat-label>
+            <mat-radio-group formControlName="paymentGateway">
+                <mat-radio-button *ngFor="let obj of paymentGatewayArr" [value]="obj.code">
+                    {{obj.name}}
+                </mat-radio-button>
+                <control-messages [control]="paymentGatewayForm.get('paymentGateway')"></control-messages>
+            </mat-radio-group>
 
-      </form>
-  </div>
+        </form>
+    </div>
 
-  <div class="modal-footer">
-      <button type="button" mat-raised-button color="warn" data-dismiss="modal" (click)="onCancel()">
-          <mat-icon>cancel</mat-icon>
-          Cancel
-      </button>
-      <button type="button" mat-raised-button color="primary" data-dismiss="modal" (click)="makePayment()">
-          <mat-icon>check_circle_outline</mat-icon>
-          Continue
-      </button>
-  </div>
+    <div class="modal-footer">
+        <button type="button" mat-raised-button color="warn" data-dismiss="modal" (click)="onCancel()">
+            <mat-icon>cancel</mat-icon>
+            Cancel
+        </button>
+        <button type="button" mat-raised-button color="primary" data-dismiss="modal" (click)="makePayment()">
+            <mat-icon>check_circle_outline</mat-icon>
+            Continue
+        </button>
+    </div>
 
 </ng-template>
