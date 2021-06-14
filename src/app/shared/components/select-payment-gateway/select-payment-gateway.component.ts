@@ -79,14 +79,17 @@ export class SelectPaymentGatewayComponent implements OnInit {
    * This method is used to hide the modal and redirect to my application page
    */
   onCancel() {
+
     this.confirmRef.hide();
     if (this.applicationType == 'HOSPITAL') {
       this.router.navigate(['hospital/my-applications']);
-    }else if(this.applicationType == 'FACILITYBOOKING'){
+    } else if (this.applicationType == 'FACILITYBOOKING') {
       this.router.navigate(['citizen/bookings/my-bookings']);
-    }else if(this.applicationType == 'ticketing'){
+    } else if (this.applicationType == 'ticketing') {
       this.router.navigate(['citizen/ticketings/my-ticketings']);
-    }else {
+    } else if (this.applicationType == 'Zooticketing') {
+      this.confirmRef.hide();
+    } else {
       this.router.navigate(['citizen/my-applications']);
     }
   }
