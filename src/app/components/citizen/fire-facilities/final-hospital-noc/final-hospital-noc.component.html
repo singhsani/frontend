@@ -403,7 +403,7 @@
 					</div>
 
 					<mat-form-field class="col-md-4">
-						<input matInput maxlength="50" required placeholder="{{'building_height' | translate:translateKey}}"
+						<input matInput maxlength="50" type="tel" OnlyNumber required placeholder="{{'building_height' | translate:translateKey}}"
 						 formControlName="buildingHeight">
 						<control-messages [control]="finalHospitalNocForm.get('buildingHeight')"></control-messages>
 					</mat-form-field>
@@ -808,7 +808,7 @@
 						<control-messages [control]="finalHospitalNocForm.get('nabhOwnership')"></control-messages>
 					</mat-form-field>
 
-					<mat-form-field class="col-md-4">
+					<mat-form-field class="col-md-6 labelLonger">
 						<input matInput type="text" required formControlName="lastThreeYearFireIncidents" placeholder="{{'last_three_year_fire_incidents' | translate: translateKey }} "
 						 maxlength="50">
 						<control-messages [control]="finalHospitalNocForm.get('lastThreeYearFireIncidents')"></control-messages>
