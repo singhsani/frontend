@@ -760,6 +760,8 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
 
 .ng-select.ng-select-multiple .ng-select-container.ng-has-value .ng-value-container {padding-top: 4px;}
 
+.mat-menu-panel {max-width: 300px !important;}
+
 ::-webkit-scrollbar {width: 5px; height: 5px;}
 ::-webkit-scrollbar-track {background: #D1C4E9; border-radius:3px;}
 ::-webkit-scrollbar-thumb {background: #7E57C2; border-radius:3px;}
