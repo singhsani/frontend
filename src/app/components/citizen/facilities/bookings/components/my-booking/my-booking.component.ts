@@ -576,6 +576,7 @@ export class MyBookingComponent implements OnInit {
 			|| element.status === this.bookingConstant.REFUND_REQUEST
 			|| element.status === this.bookingConstant.REFUND_APPROVED
 			|| element.status === this.bookingConstant.COMPLETED
+			|| (element.resourceType === 'ATITHIGRUH' && element.status === this.bookingConstant.CANCELLATION_APPROVED)
 			) {
 			return false;
 		}else if(element.resourceType === "CHILDREN_THEATER" && currentDate >= minDate){
