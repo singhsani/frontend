@@ -163,9 +163,6 @@ export class ShopLicNewComponent implements OnInit {
 			this.shopLicNewFormControls();
 
 			this.getWardZoneLevel();
-			
-
-
 		}
 
 	}
@@ -256,8 +253,14 @@ export class ShopLicNewComponent implements OnInit {
 					this.shopLicNewForm.get('workerType').setValue(res.workerType);
 				}
 
+
+				if(res.waterDrainageZoneId) {
+					this.getWardZone(res.waterDrainageZoneId,2);
+				}
+
 				if (res.waterDrainageWardId) {
 					this.getWardZone(res.waterDrainageZoneId, 2);
+					this.getWardZone(res.waterDrainageWardId,3);
 				}
 				if (res.waterDrainageBlockId) {
 					this.getWardZone(res.waterDrainageWardId, 3);
@@ -509,6 +512,7 @@ export class ShopLicNewComponent implements OnInit {
 				console.log('error', error);
 			}
 		)
+
 	}
 
 	getWardZoneFirstLevel() {
@@ -524,22 +528,45 @@ export class ShopLicNewComponent implements OnInit {
 			})
 	}
 
+	getListByWardZoneLevel(value, level) {
+		if(value) {
+			this.getWardZone(value, level)
+		}
+		
+	}
+
 	onChangedWardZone(value, level) {
 		if (level == 2) {
 			//this.waterPipeliConnectionForm.controls.waterPipelineWard.setValue();
 			this.wardZoneLevel2List = [];
 			this.wardZoneLevel3List = [];
 			this.wardZoneLevel4List = [];
+			if (!value) {
+				this.shopLicNewForm.patchValue({
+					waterDrainageZoneId: null,
+					// zone: null,
+					waterDrainageZoneName : null
+				});
+			}
 			this.shopLicNewForm.patchValue({
-			waterDrainageWardId: null,
-			waterDrainageBlockId: null
-			 });
+				waterDrainageWardId: null,
+				waterDrainageBlockId: null,
+				waterDrainageWardName: null,
+				waterDrainageBlockName: null
+			});
 		}
 		else if (level == 3) {
 			this.wardZoneLevel3List = [];
 			this.wardZoneLevel4List = [];
+			if (!value) {
+				this.shopLicNewForm.patchValue({
+					waterDrainageWardId: null,
+					waterDrainageWardName: null
+				});
+			}
 			this.shopLicNewForm.patchValue({
-				waterDrainageBlockId: null
+				waterDrainageBlockId: null,
+				waterDrainageBlockName : null
 			 });
 		}
 		else if (level == 4) {
