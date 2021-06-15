@@ -131,17 +131,22 @@ export class ActionBarComponent implements OnInit, OnChanges {
 	}
 
 	getUserDetailsAndSubmit() {
-		if (this.form.valid && this.commonService.isGuestUser()) {
+		
+		if (this.form.valid && (this.commonService.isGuestUser() || this.commonService.fromAdmin())) {
 			this.mandatoryFileCheck().then(data  =>  {
 
 				if(data.status){
-					this.openDialogBox().subscribe(details => {
-						if (details) {
-							this.setUserData(details)
-							this.onSubmit()
-						}
-		
-					})
+
+					if(this.checkForIAgress()) {
+						this.openDialogBox().subscribe(details => {
+							if (details) {
+								this.setUserData(details)
+								this.onSubmit()
+							}
+			
+						})
+					}
+					
 		
 				}
 				else if(data.status == false){
@@ -526,18 +531,21 @@ export class ActionBarComponent implements OnInit, OnChanges {
 
 	getUserDetailsAndPayAndScheduleMeeting() {
 		console.log("Action Bar Component")
-		if (this.form.valid && this.commonService.isGuestUser()) {
-			this.openDialogBox().subscribe(details => {
-				if (details) {
-					this.setUserData(details);
-					this.payAndScheduleAppointment();
-				}
+		if (this.checkForIAgress()) {
+			if (this.form.valid && (this.commonService.isGuestUser() || this.commonService.fromAdmin())) {
+				this.openDialogBox().subscribe(details => {
+					if (details) {
+						this.setUserData(details);
+						this.payAndScheduleAppointment();
+					}
 
-			})
+				})
 
-		} else {
-			this.payAndScheduleAppointment();
+			} else {
+				this.payAndScheduleAppointment();
+			}
 		}
+
 	}
 
 
