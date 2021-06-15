@@ -290,6 +290,10 @@ export class ShopLicTransferComponent implements OnInit {
 			try {
 				this.shopLicTransferForm.patchValue(res);
 				this.setDropdownAndListDataFromRes(res);
+				if(res.transferCertificateNumber) {
+					this.shopLicTransferForm.get('transferCertificateNumber').disable();
+					this.isGuideLineActive = false;
+				}
 
 				
 			} catch (error) {
@@ -346,8 +350,13 @@ export class ShopLicTransferComponent implements OnInit {
 					this.shopLicTransferForm.get('workerType').setValue(res.workerType);
 				}
 
+				if(res.waterDrainageZoneId) {
+					this.getWardZone(res.waterDrainageZoneId,2);
+				}
+
 				if (res.waterDrainageWardId) {
 					this.getWardZone(res.waterDrainageZoneId, 2);
+					this.getWardZone(res.waterDrainageWardId,3);
 				}
 				if (res.waterDrainageBlockId) {
 					this.getWardZone(res.waterDrainageWardId, 3);
@@ -614,17 +623,33 @@ export class ShopLicTransferComponent implements OnInit {
 			this.wardZoneLevel2List = [];
 			this.wardZoneLevel3List = [];
 			this.wardZoneLevel4List = [];
+			if (!value) {
+				this.shopLicTransferForm.patchValue({
+					waterDrainageZoneId: null,
+					// zone: null,
+					waterDrainageZoneName : null
+				});
+			}
 			this.shopLicTransferForm.patchValue({
-				ward: null,
-				block: null
-			 });
+				waterDrainageWardId: null,
+				waterDrainageBlockId: null,
+				waterDrainageWardName: null,
+				waterDrainageBlockName: null
+			});
 		}
 		else if (level == 3) {
 			this.wardZoneLevel3List = [];
 			this.wardZoneLevel4List = [];
+			if (!value) {
+				this.shopLicTransferForm.patchValue({
+					waterDrainageWardId: null,
+					waterDrainageWardName: null
+				});
+			}
 			this.shopLicTransferForm.patchValue({
-				block: null
-			 });
+				waterDrainageBlockId: null,
+				waterDrainageBlockName: null
+			});
 		}
 		else if (level == 4) {
 			this.wardZoneLevel4List = [];
