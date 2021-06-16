@@ -85,7 +85,8 @@
 
 					<mat-form-field class="col-md-4">
 						<input matInput autocomplete="off" #makeModel [value]="makeModel.value.toUpperCase()"
-							type="text" maxlength="100" formControlName="makeModel"
+							appValidationFields [validationFieldsType]="'appAlphanumericNumber'" type="text"
+							maxlength="100" formControlName="makeModel"
 							placeholder="{{'make_model' | translate: translateKey}}" required>
 						<control-messages [control]="vehicleRegistrationForm.get('makeModel')"></control-messages>
 					</mat-form-field>
@@ -195,7 +196,8 @@
 					</mat-form-field>
 
 					<div class="col-md-4 ngSelect" formGroupName="wardZoneMst">
-						<ng-select placeholder="{{'ward_no' | translate: translateKey}} *" required formControlName="wardzoneId">
+						<ng-select placeholder="{{'ward_no' | translate: translateKey}} *" required
+							formControlName="wardzoneId">
 							<ng-option *ngFor="let wardNo of wardNoArray" [value]="wardNo.wardzoneId">
 								{{wardNo.wardzoneName}}
 							</ng-option>
