@@ -468,5 +468,10 @@ export class FormsActionsService {
 
 	}
 
+	cancelReceiptForShop(fileNumber) {
+		this.requestURL = `api/form/shop/resonForCancel?fileNumebr=${fileNumber}`;
+		return this.http.get(this.requestURL, 'printReceipt');
+	}
+
 
 }
