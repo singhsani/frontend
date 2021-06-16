@@ -271,7 +271,7 @@
 						</control-messages>
 					</div>
 
-					<div class="col-md-6 ngSelect" formGroupName="businessSubCategory">
+					<div class="col-md-6 ngSelect selectCategoryDropdown" formGroupName="businessSubCategory">
 						<ng-select placeholder="{{'sub_category_of_business' | translate:translateKey}} *"
 							formControlName="code">
 							<ng-option *ngFor="let sub_category of businessSubCategoryList" [value]="sub_category.code">
