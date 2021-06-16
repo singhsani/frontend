@@ -84,6 +84,7 @@ export class NewRegistrationComponent implements OnInit {
 
     this.route.paramMap.subscribe(param => {
       if (param) {
+        
         this.vehicleId = Number(param.get('id'));
         // this.apiCode = Number(param.get('apiCode'));
       }
@@ -98,6 +99,7 @@ export class NewRegistrationComponent implements OnInit {
     /**
      * call the get method for edit vehicle information if vehicle id is present
      */
+     
     if (this.vehicleId) {
       this.getVehicleData(this.vehicleId);
       this.getAllDocumentLists(this.vehicleId);
@@ -242,6 +244,7 @@ export class NewRegistrationComponent implements OnInit {
         if (!this.vehicleRegistrationForm.get('canEdit').value) {
           this.vehicleRegistrationForm.disable();
         }
+        
 
         // if vehicle receipt present then format the receipt date
         if (res.vehicleReceipts && res.vehicleReceipts.length > 0) {
@@ -249,6 +252,10 @@ export class NewRegistrationComponent implements OnInit {
             value.receiptDate = moment(value.receiptDate).format("DD/MM/YYYY")
           });
         }
+        if(this.vehicleRegistrationForm.get('formStatus').value == "DRAFT"){
+          this.vehicleRegistrationForm.get('attachments').setValue([]);
+        }
+        
       });
     });
   }
