@@ -218,6 +218,22 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 			}
 		);
 	}
+
+	cancelReasonReceipt(row){
+			this.formService.cancelReceiptForShop(row.fileNumber).subscribe(
+			receiptResponse => {
+				let sectionToPrintReceipt: any = document.getElementById('sectionToPrint');
+				sectionToPrintReceipt.innerHTML = receiptResponse;
+				setTimeout(() => {
+					window.print();
+				}, 300);
+			},
+			err => {
+				this.commonService.openAlert('Error!', err.error[0].message, 'error');
+			}
+		);
+	}
+
 	printCertificate(applicationNum) {
 		const url = "/property/noduecertificate/printNodueCertificate?applicationNo=" + applicationNum;
 		this.paymentService.downloadFile(url).subscribe(
@@ -395,7 +411,9 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		if ((row.fileStatus == 'SUBMITTED' || row.fileStatus == 'APPROVED' || row.fileStatus == 'REJECTED') && row.serviceType == 'FS_PROVISIONAL_NOC') {
 			return false;
 		}
-		if (row.fileStatus == 'SUBMITTED' && row.serviceType == 'SHOP_ESTAB_APPLICATION') {
+		if ((row.fileStatus == 'SUBMITTED' && row.serviceType == 'SHOP_ESTAB_APPLICATION') 
+		|| ((row.fileStatus == 'SUBMITTED' && row.serviceType == 'SHOP_ESTAB_TRANSFER'))
+		|| (row.fileStatus == 'CANCELLED' && row.serviceType == 'SHOP_ESTAB_APPLICATION')) {
 			return true;
 		}
 		if (row.fileStatus == 'SUBMITTED' && row.serviceType == 'FS_TEMP_STRUCT_NOC') {

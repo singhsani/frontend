@@ -225,6 +225,7 @@ export class ShopLicTransferComponent implements OnInit {
 	}
 
 	setFormDataFromLatestApplication(res){
+		
         this.shopLicTransferForm.patchValue({
 			aadhaarNo: res.aadhaarNo,
 			alternateMobileNumber : res.alternateMobileNumber,
@@ -295,7 +296,7 @@ export class ShopLicTransferComponent implements OnInit {
 					this.isGuideLineActive = false;
 				}
 
-				
+				this.certificateNumber = res.transferCertificateNumber;
 			} catch (error) {
 				console.log(error.message)
 			}

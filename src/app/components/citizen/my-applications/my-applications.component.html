@@ -161,6 +161,16 @@
                         <mat-icon class="m-1" title="{{'print_receipt' | translate:translateKey}}">print</mat-icon>
                         {{'print_receipt' | translate:translateKey}}
                     </button>
+                    
+                    <button mat-menu-item
+                    *ngIf="(row.fileStatus == 'CANCELLED' && row.serviceType == 'SHOP_ESTAB_APPLICATION') ||
+                        (row.fileStatus == 'CANCELLED' && row.serviceType == 'SHOP_ESTAB_TRANSFER')"
+                    color="primary"
+                    (click)="cancelReasonReceipt(row)">
+                    <mat-icon class="m-1" title="{{'cancelReson_receipt' | translate:translateKey}}">print</mat-icon>
+                    {{'cancelReson_receipt' | translate:translateKey}}
+                </button>
+                    
 
                     <button mat-menu-item *ngIf="(isPrintReceiptPayment(row))" color="primary" 
                         (click)="printPaymentReceipt(row.serviceDetail.code,row.serviceFormId)"> 
