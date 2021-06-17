@@ -411,7 +411,9 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		if ((row.fileStatus == 'SUBMITTED' || row.fileStatus == 'APPROVED' || row.fileStatus == 'REJECTED') && row.serviceType == 'FS_PROVISIONAL_NOC') {
 			return false;
 		}
-		if ((row.fileStatus == 'SUBMITTED') || (row.fileStatus == 'CANCELLED' && row.serviceType == 'SHOP_ESTAB_APPLICATION')) {
+		if ((row.fileStatus == 'SUBMITTED' && row.serviceType == 'SHOP_ESTAB_APPLICATION') 
+		|| ((row.fileStatus == 'SUBMITTED' && row.serviceType == 'SHOP_ESTAB_TRANSFER'))
+		|| (row.fileStatus == 'CANCELLED' && row.serviceType == 'SHOP_ESTAB_APPLICATION')) {
 			return true;
 		}
 		if (row.fileStatus == 'SUBMITTED' && row.serviceType == 'FS_TEMP_STRUCT_NOC') {
