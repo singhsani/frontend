@@ -351,23 +351,20 @@ export class NewRegistrationComponent implements OnInit {
       this.commonService.openAlert("Warning", this.config.ALL_FEILD_REQUIRED_MESSAGE, "warning", "", cb => {
 
         switch (true) {
-          case (count <= 12):
-            this.tabIndex = 0;
-            break;
-          case (count <= 26):
-            this.tabIndex = 1;
-            break;
-          case (count <= 33):
-            this.tabIndex = 2;
-            break;
-          default:
-            this.tabIndex = 0;
-        }
-      });
-      return;
-      // this.markFormGroupTouched(this.vehicleRegistrationForm);
-      // this.commonService.openAlert("Warning", "Enter all the required information", "warning");
-      // return;
+					case (count <= 16):
+						this.tabIndex = 0;
+						break;
+					case (count <= 27):
+						this.tabIndex = 1;
+						break;
+					case (count <= 33):
+						this.tabIndex = 2;
+						break;
+					default:
+						this.tabIndex = 0;
+				}
+			});
+			return;
     }
 
     this.vehicleRegistrationForm.get('formStatus').setValue('SUBMITTED');
