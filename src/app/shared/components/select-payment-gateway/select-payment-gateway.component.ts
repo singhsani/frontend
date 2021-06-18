@@ -27,6 +27,8 @@ export class SelectPaymentGatewayComponent implements OnInit {
 
   paymentGatewayForm: FormGroup;
 
+  isLoading : boolean = false;
+
   paymentGatewayArr: any = [
     { name: 'CC Avenue', code: 'CC_AVENUE' },
     { name: 'BillDesk', code: 'BILLDESK' },
@@ -53,6 +55,7 @@ export class SelectPaymentGatewayComponent implements OnInit {
    * This method is used to open model from different different modules
    */
   openModel() {
+    this.isLoading = false;
     this.confirmRef = this.modalService.show(this.confirmationModel, Object.assign({ keyboard: false }, { backdrop: 'static' }, { ignoreBackdropClick: false }, { class: 'gray .modal-md' }));
   }
 
@@ -79,7 +82,7 @@ export class SelectPaymentGatewayComponent implements OnInit {
    * This method is used to hide the modal and redirect to my application page
    */
   onCancel() {
-
+    this.isLoading = false;
     this.confirmRef.hide();
     if (this.applicationType == 'HOSPITAL') {
       this.router.navigate(['hospital/my-applications']);
@@ -98,6 +101,8 @@ export class SelectPaymentGatewayComponent implements OnInit {
    * This method is used to make payment according to user payment gateway selection
    */
   makePayment() {
+    this.isLoading = true;
+    debugger;
     let option = this.paymentGatewayForm.get('paymentGateway').value;
     if (option == 'CC_AVENUE') {
       this.ccAvenueMakePayment();
