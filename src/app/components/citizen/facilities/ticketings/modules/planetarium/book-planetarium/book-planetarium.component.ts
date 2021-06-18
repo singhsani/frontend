@@ -83,7 +83,7 @@ export class BookPlanetariumComponent implements OnInit {
     this.getLookUps();
     this.getListData();
     this.profileData();
-    //this.ticketBookingForm.get('visitingDate').setValue('');
+    this.changeDateAndSetDate();
   }
   /**
 	* Get all booking category list from api.
@@ -114,23 +114,52 @@ export class BookPlanetariumComponent implements OnInit {
     }
   }
 
+  changeDateAndSetDate(){
+        let dd = new Date();
+        if(dd.getDay()==4){
+           let plusDay = moment(new Date()).add(1, 'day').format("YYYY-MM-DD");
+           this.ticketBookingForm.get('visitingDate').setValue(plusDay);
+        }
+  }
+
   /* Jan = 0 & Dec = 11 */
-    disableDates(d: Date) {
-        if(d.getMonth() == 2 && d.getFullYear() == new Date().getFullYear()){
-            return [29].indexOf(+d.getDate()) == -1 && d.getDay() != 4;
-        }else if(d.getMonth() == 6 && d.getFullYear() == new Date().getFullYear()){
-            return [21].indexOf(+d.getDate()) == -1 && d.getDay() != 4;
-        }else if(d.getMonth() == 7 && d.getFullYear() == new Date().getFullYear()){
-            return [22].indexOf(+d.getDate()) == -1 && d.getDay() != 4;
-        }else if(d.getMonth() == 9 && d.getFullYear() == new Date().getFullYear()){
-            return [25].indexOf(+d.getDate()) == -1 && d.getDay() != 4;
-        }else if(d.getMonth() == 10 && d.getFullYear() == new Date().getFullYear()){
-            return [5, 19, 26].indexOf(+d.getDate()) == -1 && d.getDay() != 4;
-        }
-        else{
-            return d.getDay() != 4;
-        }
+  disableDates(d: Date) {
+      if (d.getMonth() == 2 && d.getFullYear() == new Date().getFullYear()) {
+          if(d.getDay()==4){
+              return [29].indexOf(+d.getDate()) == -1 && d.getDay() == 4;
+          }else{
+              return [29].indexOf(+d.getDate()) == -1 && d.getDay() != 4;
+          }
+      } else if (d.getMonth() == 6 && d.getFullYear() == new Date().getFullYear()) {
+          if(d.getDay()==4){
+              return [21].indexOf(+d.getDate()) == -1 && d.getDay() == 4;
+          }else{
+              return [21].indexOf(+d.getDate()) == -1 && d.getDay() != 4;
+          }
+      } else if (d.getMonth() == 7 && d.getFullYear() == new Date().getFullYear()) {
+          if(d.getDay()==4){
+              return [22].indexOf(+d.getDate()) == -1 && d.getDay() == 4;
+          }else{
+              return [22].indexOf(+d.getDate()) == -1 && d.getDay() != 4;
+          }
+      } else if (d.getMonth() == 9 && d.getFullYear() == new Date().getFullYear()) {
+          if(d.getDay()==4){
+              return [25].indexOf(+d.getDate()) == -1 && d.getDay() == 4;
+          }else{
+              return [25].indexOf(+d.getDate()) == -1 && d.getDay() != 4;
+          }
+
+      } else if (d.getMonth() == 10 && d.getFullYear() == new Date().getFullYear()) {
+          if(d.getDay()==4){
+              return [5, 19, 26].indexOf(+d.getDate()) == -1 && d.getDay() != 4;
+          }else{
+              return [5, 19, 26].indexOf(+d.getDate()) == -1 && d.getDay() != 4;
+          }
       }
+      else {
+        return d.getDay() != 4;
+      }
+    }
 
   CheckType(idCode){
     this.isVisibleIdNumber = false;
@@ -204,8 +233,9 @@ export class BookPlanetariumComponent implements OnInit {
    * set ShiftType as per planetarium_shows_timing
    */
   setShiftType() {
+    this.ticketBookingForm.get('visitors').reset();
+    this.ticketBookingForm.get('totalVisitor').reset();
     if (this.ticketBookingForm.get('showCategory').get('code').value != 'PLANETARIUM_SPECIAL_SHOW') {
-
       let type = this.ticketBookingForm.get('planetariumShowTiming').get('code').value;
       this.ticketBookingForm.get('shiftType').setValue(type);
     }
@@ -233,21 +263,29 @@ export class BookPlanetariumComponent implements OnInit {
         this.ticketBookingForm.get('totalVisitor').value,
          this.ticketBookingForm.get('showCategory').get('code').value).subscribe(
           (respSwiftData) => {
-            if(respSwiftData.statusCode == '401' ){
+//             if(respSwiftData.statusCode == '401' ){
+//               //this.toster.error(respSwiftData.message);
+//               this.ticketBookingForm.get('totalVisitor').setValue(15);
+//               this.computeTotalAndVisitors();
+//               return;
+//             }
+            if(respSwiftData.success){
+               if (!respSwiftData.data.seatAvailable) {
+                  this.toster.success('Total '+ respSwiftData.data.availableSeats + ' seats are available');
+               }
+            }else{
               this.toster.error(respSwiftData.message);
-              this.ticketBookingForm.get('totalVisitor').setValue(15);
-              this.computeTotalAndVisitors();
-              return;
+              this.ticketBookingForm.get('totalVisitor').reset();
             }
             this.seatAvailable = respSwiftData.data.seatAvailable;
             // this.commonService.successAlert('success', 'Available', 'success');
-//             if (this.seatAvailable) {
-//               this.toster.success(this.ticketBookingForm.get('totalVisitor').value + ' ' + this.ticketingConstants.AVAILABLE_SEATS);
-//             }
-//             else {
-//               this.toster.error(this.ticketBookingForm.get('totalVisitor').value + ' ' + this.ticketingConstants.NOT_AVAILABLE);
-//             }
-
+            if (this.seatAvailable) {
+              this.toster.success(this.ticketBookingForm.get('totalVisitor').value + ' ' + this.ticketingConstants.AVAILABLE_SEATS);
+            }
+            else {
+              this.toster.error(this.ticketBookingForm.get('totalVisitor').value + ' ' + this.ticketingConstants.NOT_AVAILABLE);
+              this.ticketBookingForm.get('totalVisitor').reset();
+            }
           },
           err => {
             this.commonService.openAlert("Error", err.error[0].message, "warning");
