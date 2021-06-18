@@ -172,9 +172,11 @@
         </mat-form-field>
 
         <div class="col-md-6 ngSelect">
-          <ng-select [items]="animalAdoptionPricing"
+          <ng-select [items]="animalAdoptionPricing" [multiple]="true" 
+            (clear)="resetCalculations($event);" 
+            (change)="getValues($event)"
             placeholder="{{'animal_or_bird_preferred_for_adoption'| translate: translateKey}}"
-            (add)="selectAnimal($event)" bindLabel="animalBirdName">
+             bindLabel="animalBirdName">
           </ng-select>
           <control-messages [control]="animalAdoptionForm.get('animalName')">
           </control-messages>
