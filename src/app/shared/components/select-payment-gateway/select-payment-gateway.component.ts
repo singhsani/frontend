@@ -102,7 +102,7 @@ export class SelectPaymentGatewayComponent implements OnInit {
    */
   makePayment() {
     this.isLoading = true;
-    debugger;
+    
     let option = this.paymentGatewayForm.get('paymentGateway').value;
     if (option == 'CC_AVENUE') {
       this.ccAvenueMakePayment();
