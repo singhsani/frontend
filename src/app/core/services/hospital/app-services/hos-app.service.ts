@@ -43,7 +43,8 @@ export class HosAppService {
 
 		let headers = {
 			'Content-type': 'application/x-www-form-urlencoded',
-			'Authorization': 'Basic dmlzaGFsOnNlY3JldA=='
+			'Authorization': 'Basic dmlzaGFsOnNlY3JldA==',
+			'X-Skip-Interceptor' : '',
 		};
 
 		return this.http.post('authorize', params.toString(), headers);
