@@ -68,10 +68,10 @@ export class HospitalLoginComponent implements OnInit {
 			this.appService.obtainAccessToken(formVals).subscribe(
 				res => {
 					this.saveToken(res);
+				},
+				err => {
+					this.toster.error(err.error.error_description);
 				}
-				// err => {
-				// 	this.toster.error(err.error.error_description);
-				// }
 			);
 		} else {
 			this.isValidFlag = true;
