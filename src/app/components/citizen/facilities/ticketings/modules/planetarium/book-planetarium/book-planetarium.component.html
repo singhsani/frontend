@@ -24,7 +24,7 @@
 
                     <div formGroupName="showCategory" class="col-md-4 ngSelect">
                         <ng-select placeholder="{{'show_category'| translate: translateKey}} *"
-                            (change)="setValidationForSpecialShow($event);savePlanetariumTickets()"
+                            (change)="setValidationForSpecialShow($event);savePlanetariumTickets();changeDateAndSetDate();"
                             formControlName="code">
                             <ng-option *ngFor="let cat of FINAL_PLANETARIUM_SHOW_CATEGORY" [value]="cat.code">
                                 {{ cat.name }}
@@ -104,7 +104,8 @@
 
                             <mat-form-field class="col-md-4"
                                 *ngIf="ticketBookingForm.get('showCategory').get('code').value == 'PLANETARIUM_SPECIAL_SHOW'">
-                                <input matInput OnlyNumber formControlName="totalVisitor" maxlength="3" [max]="totalVisitorLimit"
+
+                              <input matInput OnlyNumber formControlName="totalVisitor" maxlength="3" [max]="totalVisitorLimit"
                                     placeholder="{{'selected_seats' | translate: translateKey}}"
                                     (change)="computeTotalAndVisitors()" required>
                                 <control-messages [control]="ticketBookingForm.get('totalVisitor')">

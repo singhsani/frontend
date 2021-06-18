@@ -43,7 +43,7 @@ export class LoiPaymentComponentBooking implements OnInit {
 	sum = 0;
 	loiRecords: any = [];
 	returnUrl : String = '';
-	facilityBooking: String = 'FACILITYBOOKING';
+	facilityBooking: String = '';
 
 	bookingUtils: TicketingUtils = new TicketingUtils();
 
@@ -65,6 +65,7 @@ export class LoiPaymentComponentBooking implements OnInit {
 	) {
 
 		this.route.paramMap.subscribe(param => {
+
 			this.uniqueId = param.get('uniqueId');
 			this.id = Number(param.get('id'));
 			this.code = param.get('code');
@@ -98,6 +99,7 @@ export class LoiPaymentComponentBooking implements OnInit {
 				this.commonService.openAlert("Warning", "Something Went Wrong", "warning");
 			}
 		);
+		this.setBookingType();
 	}
 
 	onItemChange(event) {
@@ -266,5 +268,23 @@ export class LoiPaymentComponentBooking implements OnInit {
 		}else{
 			this.commonService.openAlert("Error", "Something went wrong","warning");
 		}
+	}
+
+	setBookingType(){
+// 	  if((this.resourceTypes == "TOWNHALL") || (this.resourceTypes = "AMPHI_THEATER")
+// 	  || (this.resourceTypes == "STADIUM") || (this.resourceTypes == "ATITHIGRUH") || (this.resourceTypes = "CHILDREN_THEATER")
+// 	  || (this.resourceTypes == "BAND_SERVICE") || (this.resourceTypes == "SWIMMING_POOL") || (this.resourceTypes == "SHOOTING_PERMISSION")){
+//     	    this.facilityBooking = 'FACILITYBOOKING';
+//     }else if( (this.resourceTypes == "PLANETARIUM_TICKETING") || (this.resourceTypes == "ZOO_ANIMAL_ADOPTION") ){
+//         this.facilityBooking = 'ticketing';
+//     }
+    if(this.resourceTypes == 'TOWNHALL' || this.resourceTypes == 'AMPHI_THEATER'
+    || this.resourceTypes == 'STADIUM' || this.resourceTypes == 'ATITHIGRUH'
+    || this.resourceTypes == 'CHILDREN_THEATER' || this.resourceTypes == 'BAND_SERVICE'
+    || this.resourceTypes == "SWIMMING_POOL" || this.resourceTypes == "SHOOTING_PERMISSION"){
+      this.facilityBooking = 'FACILITYBOOKING';
+    }else if(this.resourceTypes == "PLANETARIUM_TICKETING" || this.resourceTypes == "ZOO_ANIMAL_ADOPTION"){
+      this.facilityBooking = 'ticketing';
+    }
 	}
 }
