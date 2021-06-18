@@ -25,15 +25,15 @@ export class AnimalAdoptionComponent implements OnInit {
 
   // animpal adoption pricing
   animalAdoptionPricing: any[];
-  selectedAnimalAnnualBoardingExpenses: number;
-  selectedAnimalAnnualMaintainanceExpenses: number;
+  selectedAnimalAnnualBoardingExpenses: number = 0;
+  selectedAnimalAnnualMaintainanceExpenses: number = 0;
 
 
   animalAdoptionForm: FormGroup;
 
   /**
-	  * displayColumns are used for display the columns in material table.
-	*/
+    * displayColumns are used for display the columns in material table.
+  */
   displayColumnsForAnimalAdoptionPricingTable: string[] = [
     'id',
     'animalBirdName',
@@ -46,6 +46,13 @@ export class AnimalAdoptionComponent implements OnInit {
    * Used for material table data population and pagination.
   */
   dataSourceForPricing = new MatTableDataSource();
+
+  mySelectModel: any;
+
+  animalName: any = [];
+  animalAdopationFromArray = [];
+  totalExpenses: any = 0;
+  annualMaintainanceExpenses: Number = 0;
 
   /**
    * language translate key.
@@ -66,24 +73,24 @@ export class AnimalAdoptionComponent implements OnInit {
     this.generateAnimalAdoptionForm();
     this.getZooVisitingRates();
 
-    this.animalAdoptionForm.valueChanges.subscribe( v => {
+    this.animalAdoptionForm.valueChanges.subscribe(v => {
       // console.log(this.animalAdoptionForm);
     });
-   //this.profileData();
+    //this.profileData();
   }
 
   /**
    * get login user data
    */
-  profileData(){
-    this.ticketingService.getUserProfile().subscribe(res=>{
+  profileData() {
+    this.ticketingService.getUserProfile().subscribe(res => {
       this.animalAdoptionForm.get('adopterEmailId').setValue(res.data.email);
       this.animalAdoptionForm.get('adopterContactNumber').setValue(res.data.cellNo);
       this.animalAdoptionForm.get('adoptingPersonOrganizationName').setValue(res.data.firstName + ' ' + res.data.lastName);
     },
-    err =>{
-      this.toster.error("Server Error");
-    })
+      err => {
+        this.toster.error("Server Error");
+      })
   }
 
   /**
@@ -118,7 +125,7 @@ export class AnimalAdoptionComponent implements OnInit {
       scheduleList: null,
       attachments: null,
       adoptionRequestDate: moment().format('YYYY-MM-DD'),
-
+      animalNameList : null,
       adoptingPersonOrganizationName: [null, Validators.required],
       adoptersAddress: [null, Validators.required],
       adopterContactNumber: [null, Validators.required],
@@ -131,14 +138,53 @@ export class AnimalAdoptionComponent implements OnInit {
     });
   }
 
-  selectAnimal(animal) {
-    this.animalAdoptionForm.get('animalName').setValue(animal.animalBirdName);
-    this.animalAdoptionForm.get('totalAdoptionCost').setValue(animal.totalExpenses);
-    this.selectedAnimalAnnualMaintainanceExpenses = animal.annualMaintainanceExpenses;
-    this.selectedAnimalAnnualBoardingExpenses = animal.annualBoardingExpenses;
+  getValues(animal){
+    this.resetCalculations(animal);
+    this.animalName = animal;
+    animal.forEach((value) => {
+      this.totalExpenses = this.totalExpenses + value.totalExpenses;
+      this.animalAdoptionForm.get('animalName').setValue(value.animalBirdName);
+      this.animalAdoptionForm.get('totalAdoptionCost').setValue(this.totalExpenses);
+      this.selectedAnimalAnnualMaintainanceExpenses = this.selectedAnimalAnnualMaintainanceExpenses + value.annualMaintainanceExpenses;
+      this.selectedAnimalAnnualBoardingExpenses = this.selectedAnimalAnnualBoardingExpenses + value.annualBoardingExpenses;
+    });
   }
 
+  resetCalculations(animal){
+    this.animalName = [];
+    this.totalExpenses = 0;
+    this.animalAdoptionForm.get('animalName').setValue(0);
+    this.animalAdoptionForm.get('totalAdoptionCost').setValue(0);
+    this.selectedAnimalAnnualMaintainanceExpenses = 0;
+    this.selectedAnimalAnnualBoardingExpenses = 0;
+  }
+  // selectAnimal(animal) {
+
+  //   let obj = {
+  //     'animalName': animal.animalBirdName,
+  //     'totalAdoptionCost': animal.totalExpenses
+  //   };
+  //   this.animalName.push(obj);
+  //   this.totalExpenses = this.totalExpenses + animal.totalExpenses;
+
+  //   this.animalAdoptionForm.get('animalName').setValue(animal.animalBirdName);
+  //   this.animalAdoptionForm.get('totalAdoptionCost').setValue(this.totalExpenses);
+  //   this.selectedAnimalAnnualMaintainanceExpenses = this.selectedAnimalAnnualMaintainanceExpenses + animal.annualMaintainanceExpenses;
+  //   this.selectedAnimalAnnualBoardingExpenses = this.selectedAnimalAnnualBoardingExpenses + animal.annualBoardingExpenses;
+
+
+  // }
+
   submitAnimalAdoptionRequest() {
+
+    //this.animalName.forEach((value) => {
+      //this.animalAdoptionForm.get('animalName').setValue(value.animalName);
+      //this.animalAdoptionForm.get('totalAdoptionCost').setValue(value.totalAdoptionCost);
+      //this.animalAdopationFromArray.push(this.animalAdoptionForm.value);
+    //});
+
+    this.animalAdoptionForm.get('animalNameList').setValue(this.animalName);
+
     this.ticketingService.animalAdoptionRequest(this.animalAdoptionForm.value).subscribe(resp => {
       this.ticketingService.printAcknowledgementReceipt(resp.data.refNumber).subscribe(acknowledgementHTML => {
         let sectionToPrint: any = document.getElementById('sectionToPrint');
@@ -166,7 +212,7 @@ export class AnimalAdoptionComponent implements OnInit {
   //   });
 
   //   const dialogRef = this.dialog.open(GuidelinePopupComponent, sectionToPrint);
-    
+
   //   dialogRef.afterClosed().subscribe(result => {
   //     // console.log(`Dialog result: ${result}`);
   //   });
