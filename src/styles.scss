@@ -571,7 +571,7 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
     // .row {}
     // .col-md-3, .col-sm-4 {padding-bottom: 18px;}
     .colBtn {padding:9px 15px;} /* width: 25%; float: left;*/
-    .mat-primary {color: #423c51; font-size: 15px; font-weight: 400; border-radius: 3px; border:1px solid #b2b2b2; display: block; width: 100%; text-overflow: ellipsis;
+    .mat-primary {color: #423c51; font-size: 15px; font-weight: 400; border-radius: 3px; border:1px solid #b2b2b2; display: block; width: 100%; text-overflow: ellipsis; text-decoration: none; white-space: normal; line-height: 1.4; padding:6px 8px; height: 100%;
         overflow: hidden;
         &:hover {background: $colorBlue; border-color: $colorBlue; color: #fff;}
     }
