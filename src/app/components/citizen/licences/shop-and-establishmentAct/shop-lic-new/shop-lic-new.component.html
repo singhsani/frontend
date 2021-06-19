@@ -21,7 +21,7 @@
 	
 </div>
 
-<!--<button (click)="patchValue2()">Patch</button>-->
+<!-- <button (click)="patchValue2()">Patch</button> -->
 
 <mat-card class="formClass cardBorder" [hidden]="isGuideLineActive">
 	<form [formGroup]="shopLicNewForm">
@@ -640,7 +640,7 @@
 						<h2 class="pl-0">Name of member of partner's employed in Establishment.</h2>
 					</div>
 					<div class="col-md-2 pt-3" style="text-align: right;">
-						<button type="button"
+						<button type="button" *ngIf="shopLicNewForm.get('canEdit').value"
 							[disabled]="!(shopLicNewForm.get('shopPartnerList')['controls'].length < 5)"
 							matTooltip="{{'add_more' | translate:translateKey}}" mat-raised-button color="primary"
 							(click)="addMorePersonPataner('PATNERS')">{{'add'| translate:translateKey}}</button>
