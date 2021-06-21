@@ -209,10 +209,12 @@ export class FireCertificateComponent implements OnInit {
      * @param flag - flag of invalid control.
      */
   handleErrorsOnSubmit(flag) {
-
-    let step0 = 16;
+    let step0 = 17;
 
     if (flag != null) {
+      // if(flag<step0){
+      //   this.tab
+      // }
       //Check validation for step by step
       let count = flag;
       // console.log(flag);
