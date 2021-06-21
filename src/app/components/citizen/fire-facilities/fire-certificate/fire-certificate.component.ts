@@ -212,9 +212,6 @@ export class FireCertificateComponent implements OnInit {
     let step0 = 17;
 
     if (flag != null) {
-      // if(flag<step0){
-      //   this.tab
-      // }
       //Check validation for step by step
       let count = flag;
       // console.log(flag);
