@@ -561,7 +561,7 @@ export class MyBookingComponent implements OnInit {
 	}
 
 	showCancelBtn(element) {
-    var eventDate = element.scheduleList[0].bookingDate
+    var eventDate = element.scheduleList ? element.scheduleList[0].bookingDate: new Date();
 	  var minDate= moment(eventDate).subtract(10, 'days').format('YYYY-MM-DD');
 	  var currentDate = moment(new Date()).format('YYYY-MM-DD');
 		this.slotBookingList.pop();
