@@ -382,7 +382,8 @@ export class SwimmingPoolComponent implements OnInit {
       remarks: null,
       family: false,
       staffMember: false,
-      isRenewalForm: false
+      isRenewalForm: false,
+      memberNumber: null
     });
   }
 
