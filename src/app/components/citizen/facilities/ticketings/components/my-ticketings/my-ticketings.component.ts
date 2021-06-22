@@ -121,7 +121,7 @@ export class MyTicketingsComponent implements OnInit {
     this.route.queryParams.subscribe(d => {
       if (d.refNumber && d.resourceType && d.serviceType) {
         this.ticketingService.resourceType = d.resourceType;
-        this.printReceipt({ refNumber: d.refNumber }, d.serviceType,d.blob,d.filename,d.mime);
+        this.printReceipt({ refNumber: d.refNumber }, d.serviceType);
         setTimeout(() => {
           this.location.go(this.router.url.split('?')[0]);
         }, 3000);
@@ -360,48 +360,13 @@ export class MyTicketingsComponent implements OnInit {
 	 * Method is used to print Receipt.
 	 * @param element - json object for receipt.
 	 */
-  printReceipt(element, serviceType: string,data,mime,filename) {
+  printReceipt(element, serviceType: string) {
     this.ticketingService.printTicketingReceipt(element.refNumber, serviceType).subscribe(response => {
       let sectionToPrint: any = document.getElementById('sectionToPrint');
       sectionToPrint.innerHTML = response;
       setTimeout(() => {
         window.print();
-        const blob = new Blob([data], {type: mime || 'application/octet-stream'});
-    if (typeof window.navigator.msSaveBlob !== 'undefined') {
-      window.navigator.msSaveBlob(blob, filename);
-      return;
-    }
-   
-    const blobURL = window.URL.createObjectURL(blob);
-    window.open(blobURL,'_blank')
-        if (((window as any).appInterface) || ((window as any).webkit && (window as any).webkit.messageHandlers)) {
-          var reader = new FileReader();
-          reader.readAsDataURL(blob);
-          reader.onloadend = function () {
-          var base64data = reader.result;
-          console.log(base64data);
-          let reportData = {
-          pdfData: base64data,
-          type: "pdf",
-          };
-          
-          // for android
-          if ((window as any).appInterface) {
-          console.log("Success");
-          (window as any).appInterface.mobileNativeDownloadReport(base64data, "pdf");
-          }
-          
-          // for ios
-          if ((window as any).webkit && (window as any).webkit.messageHandlers) {
-          console.log("Success");
-          (window as any).webkit.messageHandlers.mobileNativeDownloadReport.postMessage(reportData);
-          }
-          }
-          
-          }
-          
       });
-
     }, err => {
       this.commonService.openAlert('Error', err.message, 'warning');
     });
