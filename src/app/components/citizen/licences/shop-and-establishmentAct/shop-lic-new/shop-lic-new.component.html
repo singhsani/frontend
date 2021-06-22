@@ -510,8 +510,8 @@
 										<div class="d-md-none">{{'noOfMen' | translate:translateKey}}</div>
 										<p *ngIf="!item.isEditMode">{{item.get('noOfMen').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
-											<input  matInput min=0 (input)="calculateWorkers(indx);"
-												 formControlName="noOfMen" type="number" required >
+											<input  OnlyNumber matInput min=0 (input)="calculateWorkers(indx);" maxlength="6"
+												 formControlName="noOfMen"  required  >
 											<control-messages [control]="item.get('noOfMen')"></control-messages>
 										</mat-form-field>
 									</td>
@@ -520,7 +520,7 @@
 										<div class="d-md-none">{{'noOfWomen' | translate:translateKey}}</div>
 										<p *ngIf="!item.isEditMode">{{item.get('noOfWomen').value}}</p>
 										<mat-form-field *ngIf="item.isEditMode">
-											<input type="number" min=0 matInput (input)="calculateWorkers(indx);"
+											<input  OnlyNumber min=0 matInput (input)="calculateWorkers(indx);" maxlength="6"
 											formControlName="noOfWomen" required>
 										<control-messages *ngIf="item.isEditMode" [control]="item.get('noOfWomen')">
 											</control-messages>
