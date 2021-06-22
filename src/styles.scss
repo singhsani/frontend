@@ -762,6 +762,8 @@ h2 {color: #333; font-size:18px; margin-bottom: 18px;
 
 .mat-menu-panel {max-width: 300px !important;}
 
+.example-container.borderOne {max-height: inherit;}
+
 ::-webkit-scrollbar {width: 5px; height: 5px;}
 ::-webkit-scrollbar-track {background: #D1C4E9; border-radius:3px;}
 ::-webkit-scrollbar-thumb {background: #7E57C2; border-radius:3px;}
@@ -1264,3 +1266,5 @@ textarea.gujInputCls {margin-bottom: 0;}
 .ng-trigger-transformPanel {min-width: 100% !important;}
 }
 // End material selection dropdown
+
+.mb140 {margin-bottom: 140px;}
