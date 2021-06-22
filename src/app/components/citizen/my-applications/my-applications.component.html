@@ -6,7 +6,7 @@
         routerLink="../dashboard">{{'create_application' | translate:translateKey}}</a>
 </div>
 <!-- <app-title-bar [title]="'screen_title' | translate:'MyApplicationScreen'"></app-title-bar> -->
-<div class="example-container mat-elevation-z8 borderOne" [hidden]="resultsLength==0">
+<div class="example-container mat-elevation-z8 borderOne mb140" [hidden]="resultsLength==0">
 
     <table mat-table [dataSource]="dataSource" class="myApplication" matSort matSortActive="created" matSortDisableClear
         matSortDirection="asc">
