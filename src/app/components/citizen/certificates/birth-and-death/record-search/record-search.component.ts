@@ -105,7 +105,8 @@ export class RecordSearchComponent implements OnInit {
 		{ id: "2017", code: 2017, name: "2017" },
 		{ id: "2018", code: 2018, name: "2018" },
 		{ id: "2019", code: 2019, name: "2019" },
-		{ id: "2020", code: 2020, name: "2020" }
+		{ id: "2020", code: 2020, name: "2020" },
+		{ id: "2021", code: 2021, name: "2021" }
 	];
 
 	/**
