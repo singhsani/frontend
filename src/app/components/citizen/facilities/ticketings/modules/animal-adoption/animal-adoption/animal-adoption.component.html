@@ -167,7 +167,7 @@
 
         <mat-form-field class="col-md-6">
           <input matInput type="email" formControlName="adopterEmailId"
-            placeholder="{{'applicant_email' | translate: translateKey}}">
+            placeholder="{{'applicant_email' | translate: translateKey}}" maxlength="50">
           <control-messages [control]="animalAdoptionForm.get('adopterEmailId')"></control-messages>
         </mat-form-field>
 

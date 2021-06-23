@@ -443,7 +443,6 @@ export class ShopLicNewComponent implements OnInit {
 
 
 	createArrayWorkOut(data?: any): FormGroup {
-		
 		return this.fb.group({
 			noOfMenOldValue: null,
 			noOfWomenldValue:null,
@@ -846,9 +845,10 @@ export class ShopLicNewComponent implements OnInit {
 				grandTotal += control[i].get('total').value;
 			}
 
-			let max = grandTotal - 10;
+			let max = grandTotal - 9;
 			if (max > 0) {
-				this.commonService.openAlert("Person Occupying", "Maximum 10 person are allowed ", "warning");
+			
+				this.commonService.openAlert("Person Occupying", "Maximum 9 person are allowed ", "warning");
 			}
 			// console.log("grandTotal" +grandTotal);
 			// if(row.valid) {
@@ -1723,5 +1723,4 @@ export class ShopLicNewComponent implements OnInit {
 		this.shopAndEstablishmentService.duplicateWorkerTypeNotallow(workerType,index,control)
 		this.hidesave = this.shopAndEstablishmentService.hidesave;
 	}
-
 }

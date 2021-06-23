@@ -7,6 +7,7 @@ import { CommonService } from 'src/app/shared/services/common.service';
 import { Router } from '@angular/router';
 import { TicketingConstants } from '../../../config/ticketing-config';
 import { ToastrService } from 'ngx-toastr';
+import { ValidationService } from 'src/app/shared/services/validation.service';
 
 @Component({
   selector: 'app-animal-adoption',
@@ -129,7 +130,7 @@ export class AnimalAdoptionComponent implements OnInit {
       adoptingPersonOrganizationName: [null, Validators.required],
       adoptersAddress: [null, Validators.required],
       adopterContactNumber: [null, Validators.required],
-      adopterEmailId: [null, [Validators.email]],
+      adopterEmailId: [null, [Validators.required, ValidationService.emailValidator]],
       animalName: [null, Validators.required],
       totalAdoptionCost: [null, Validators.required],
       message: [null, Validators.required],
