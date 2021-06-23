@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { FormArray } from '@angular/forms';
 import { CommonService } from 'src/app/shared/services/common.service';
 import { HttpService } from '../../../../../../shared/services/http.service';
 
@@ -44,25 +45,18 @@ export class ShopAndEstablishmentService {
     	return this.http.post(`api/form/shopLicense/searchFromNewgen`,licenceNumber);
 	}
 
-	duplicateWorkerTypeNotallow(workerType,index,control){
-		this.workerTypes = [];
-		this.hidesave = false;
-		for(let i = 0; i < control.length; i++) {
-				if(i != index){
-					this.workerTypes.push(control[i].controls.workersType.value)
-				}
-			}
-		this.worker(workerType);	
-	}
+	getSelectedWorkerType(workerTypeList:Array<any>,workerGrid:FormArray) {
+		let workerData = workerTypeList.map((mapDataObj: any) => {
+			mapDataObj.selected = false;
+			return mapDataObj
+		});
 
-	worker(worker: any){
-		for(let i=0; i <= this.workerTypes.length; i++){
-			if(worker == this.workerTypes[i]){
-				this.hidesave = true;
-				this.commonService.openAlert("Error", "Please enter different worker type","error");
+		workerGrid.controls.forEach(element => {
+			let findRecord = workerData.find((obj: any) => obj.code == element.get('workersType').value)
+			if (findRecord) {
+				findRecord.selected = true;
 			}
-			
-		}
-		return this.hidesave;
+		});
+		return workerData;
 	}
 }
