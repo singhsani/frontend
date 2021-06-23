@@ -213,7 +213,7 @@
                     <mat-form-field class="col-md-4">
                         <input matInput maxlength="25" appValidationFields [validationFieldsType]="'onlyNameWithSpace'"
                             type="text" formControlName="schoolName"
-                            placeholder="{{'school_name' | translate: translateKey}} *" required>
+                            placeholder="{{'school_name' | translate: translateKey}}" required>
                         <control-messages [control]="ticketBookingForm.get('schoolName')"></control-messages>
                     </mat-form-field>
 
