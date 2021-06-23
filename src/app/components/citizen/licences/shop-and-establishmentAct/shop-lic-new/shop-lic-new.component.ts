@@ -1718,9 +1718,9 @@ export class ShopLicNewComponent implements OnInit {
 		this.shopLicNewForm.patchValue(data);
 	}
 
-	duplicateValueNotallow(workerType,index){
-		let control = this.shopLicNewForm.get('workerCounts')['controls'];
-		this.shopAndEstablishmentService.duplicateWorkerTypeNotallow(workerType,index,control)
-		this.hidesave = this.shopAndEstablishmentService.hidesave;
+	getCommonWorkerType(){
+		let workerGrid = <FormArray>this.shopLicNewForm.get('workerCounts');
+		this.shopAndEstablishmentService.getSelectedWorkerType(this.workerTypeList,workerGrid)
 	}
+
 }
