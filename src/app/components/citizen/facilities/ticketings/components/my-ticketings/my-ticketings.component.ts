@@ -132,19 +132,9 @@ export class MyTicketingsComponent implements OnInit {
 	/**
 	 * This method is use for open modal.
 	 */
-  openModal(template: TemplateRef<any>, scheduleList, refNumber) {
-    this.CancelRequestList = [];
-    this.refNumber = refNumber;
-    this.cancellationType = null;
-    // this.CancelSlotList = scheduleList.sort((a, b) => {
-    //   if ((new Date(a.bookingDate).getTime()) <= (new Date(b.bookingDate).getTime())) {
-    //     return 1;
-    //   } else {
-    //     return -1;
-    //   }
-    // });
-    this.rejectedMessage = scheduleList.rejectMessage;
-    this.modalReqRef = this.modalService.show(template, Object.assign({ ignoreBackdropClick: true }, { class: 'gray modal-lg customWidth' }));
+  openModal(template: TemplateRef<any>, responseData, refNumber) {
+    this.rejectedMessage = responseData.newgenRemarks;
+    this.modalReqRef = this.modalService.show(template, Object.assign({ ignoreBackdropClick: true }, { class: 'gray modal-mg' }));
   }
 
 	/**
