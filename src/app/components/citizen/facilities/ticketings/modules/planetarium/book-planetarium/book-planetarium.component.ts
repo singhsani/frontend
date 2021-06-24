@@ -117,7 +117,7 @@ export class BookPlanetariumComponent implements OnInit {
   changeDateAndSetDate(){
         let dd = new Date();
         if(dd.getDay()==4){
-           let plusDay = moment(new Date()).add(1, 'day').format("YYYY-MM-DD");
+           let plusDay = moment().add(2, 'day').format("YYYY-MM-DD");
            this.ticketBookingForm.get('visitingDate').setValue(plusDay);
         }
   }
