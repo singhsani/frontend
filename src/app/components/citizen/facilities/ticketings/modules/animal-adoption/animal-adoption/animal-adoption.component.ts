@@ -130,7 +130,7 @@ export class AnimalAdoptionComponent implements OnInit {
       adoptingPersonOrganizationName: [null, Validators.required],
       adoptersAddress: [null, Validators.required],
       adopterContactNumber: [null, Validators.required],
-      adopterEmailId: [null, [Validators.required, ValidationService.emailValidator]],
+      adopterEmailId: [null, [ValidationService.emailValidator]],
       animalName: [null, Validators.required],
       totalAdoptionCost: [null, Validators.required],
       message: [null, Validators.required],

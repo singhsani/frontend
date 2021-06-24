@@ -559,9 +559,12 @@
 											{{getSelectedDataFromLookUps(workerTypeList,item.get('workersType').value)?.name}} 
 									   	</p> 
 											<div col-md-6 class="ngSelect" *ngIf="item.isEditMode" >
-												<ng-select *ngIf="item.isEditMode" formControlName="workersType" required (change)="duplicateValueNotallow(item.get('workersType').value,indx)">
-													<ng-option *ngFor="let gender of workerTypeList" [value]="gender.code">
-													{{gender.name}}</ng-option>
+												<ng-select *ngIf="item.isEditMode" formControlName="workersType" required (ngModelChange)="getCommonWorkerType()">
+													<ng-container *ngFor="let gender of workerTypeList">
+														<ng-option *ngIf="!gender.selected" [value]="gender.code">
+															{{gender.name}}
+														</ng-option>
+													</ng-container>
 												</ng-select>
 												<control-messages [control]="item.get('workersType')">
 												</control-messages>

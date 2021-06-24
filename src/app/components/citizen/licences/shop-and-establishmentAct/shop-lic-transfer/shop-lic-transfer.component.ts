@@ -1644,10 +1644,9 @@ export class ShopLicTransferComponent implements OnInit {
 		
 	}
 	
-	duplicateValueNotallow(workerType,index){
-		let control = this.shopLicTransferForm.get('workerCounts')['controls'];
-		this.shopAndEstablishmentService.duplicateWorkerTypeNotallow(workerType,index,control);
-		this.hidesave = this.shopAndEstablishmentService.hidesave;
-	}
 	
+	getCommonWorkerType(){
+		let workerGrid = <FormArray>this.shopLicTransferForm.get('workerCounts');
+		this.shopAndEstablishmentService.getSelectedWorkerType(this.workerTypeList,workerGrid)
+	}
 }
