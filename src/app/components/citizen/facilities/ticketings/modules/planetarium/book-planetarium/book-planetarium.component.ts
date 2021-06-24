@@ -614,8 +614,6 @@ export class BookPlanetariumComponent implements OnInit {
       }
       else {
         this.isLoadingResults = true;
-        console.log(this.ticketBookingForm.get('visitingDate').value);
-        debugger;
         this.ticketingService.specialShowTicketsBooking(this.ticketBookingForm.getRawValue(), this.ticketBookingForm.get('resourceCodeLK').get('code').value).subscribe(
           resData => {
             if(resData.statusCode == '401'){
