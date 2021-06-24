@@ -70,7 +70,7 @@
 			<mat-tab-group [(selectedIndex)]="tabIndex" dynamicHeight="true" mat-stretch-tabs class="stepperNav">
 
 				<!-- Tab 1 Starts -->
-				<mat-tab>
+				<mat-tab #tab1 [disabled]='!tab1.isActive'>
 					<ng-template mat-tab-label>
 						<div>{{'general_details' | translate:translateKey}}</div>
 					</ng-template>
@@ -159,7 +159,7 @@
 				<!-- Tab 1 Ends -->
 
 				<!-- Tab 2 for applicant details -->
-				<mat-tab>
+				<mat-tab #tab2 [disabled]='!tab2.isActive'>
 
 					<ng-template mat-tab-label>
 						<div>{{'applicant_details' | translate:translateKey}}</div>
@@ -320,7 +320,7 @@
 
 
 				<!-- step Attachment Starts -->
-				<mat-tab>
+				<mat-tab #tab3 [disabled]='!tab3.isActive'>
 					<ng-template mat-tab-label>
 						<div>{{'attachment' | translate: translateKey}}</div>
 					</ng-template>

@@ -35,6 +35,7 @@ export class AnimalPondNewComponent implements OnInit {
 
 	//Lookups Array
 	MF_RELATIONSHIP_OF_APPLICANT: Array<any> = [];
+	ANIMAL_POND_STATUS_OF_BUSINESS: Array<any> = [];
 	MF_STATUS_OF_BUSINESS: Array<any> = [];
 	PERSON_TYPE: Array<any> = [];
 	FIRM_ZONE: Array<any> = [];
@@ -202,6 +203,7 @@ export class AnimalPondNewComponent implements OnInit {
 	getLookupData() {
 		this.formService.getDataFromLookups().subscribe(res => {
 			this.LOOKUP = res;
+			this.ANIMAL_POND_STATUS_OF_BUSINESS = res.ANIMAL_POND_STATUS_OF_BUSINESS
 			this.MF_RELATIONSHIP_OF_APPLICANT = res.MF_RELATIONSHIP_OF_APPLICANT;
 			this.MF_STATUS_OF_BUSINESS = res.MF_STATUS_OF_BUSINESS;
 			this.PERSON_TYPE = res.PERSON_TYPE;
@@ -309,6 +311,9 @@ export class AnimalPondNewComponent implements OnInit {
 			serviceCode: 'APL-LIC',
 			/* Step 1 controls start */
 			personType: this.fb.group({
+				code: [null, Validators.required]
+			}),
+			businessType:this.fb.group({
 				code: [null, Validators.required]
 			}),
 			personTypeGuj : [null, [Validators.required]],
