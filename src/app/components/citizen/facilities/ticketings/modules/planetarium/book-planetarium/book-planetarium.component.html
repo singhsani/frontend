@@ -24,7 +24,7 @@
 
                     <div formGroupName="showCategory" class="col-md-4 ngSelect">
                         <ng-select placeholder="{{'show_category'| translate: translateKey}} *"
-                            (change)="setValidationForSpecialShow($event);savePlanetariumTickets();changeDateAndSetDate();"
+                            (change)="setValidationForSpecialShow($event);savePlanetariumTickets();"
                             formControlName="code">
                             <ng-option *ngFor="let cat of FINAL_PLANETARIUM_SHOW_CATEGORY" [value]="cat.code">
                                 {{ cat.name }}

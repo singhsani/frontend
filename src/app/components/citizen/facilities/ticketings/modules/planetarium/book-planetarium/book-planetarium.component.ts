@@ -83,7 +83,18 @@ export class BookPlanetariumComponent implements OnInit {
     this.getLookUps();
     this.getListData();
     this.profileData();
-    this.changeDateAndSetDate();
+    this.setDefaultDate();
+  }
+
+  setDefaultDate(){
+    if (this.ticketBookingForm.get('showCategory').get('code').value == 'PLANETARIUM_GENERAL_SHOW') {
+        let dd = new Date();
+        if(dd.getDay()==4){
+           let plusDay = moment().add(1, 'day').format("YYYY-MM-DD");
+           this.ticketBookingForm.get('visitingDate').setValue(plusDay);
+           this.maxDate = moment(new Date()).add(7, 'day').toISOString();
+        }
+    }
   }
   /**
 	* Get all booking category list from api.
@@ -116,9 +127,13 @@ export class BookPlanetariumComponent implements OnInit {
 
   changeDateAndSetDate(){
         let dd = new Date();
-        if(dd.getDay()==4){
-           let plusDay = moment().add(2, 'day').format("YYYY-MM-DD");
+        if(dd.getDay()==2){
+           let plusDay = moment().add(3, 'day').format("YYYY-MM-DD");
            this.ticketBookingForm.get('visitingDate').setValue(plusDay);
+           this.maxDate = moment(new Date()).add(17, 'day').toISOString();
+        }else{
+          let plusDay = moment().add(2, 'day').format("YYYY-MM-DD");
+          this.ticketBookingForm.get('visitingDate').setValue(plusDay);
         }
   }
 
@@ -486,6 +501,7 @@ export class BookPlanetariumComponent implements OnInit {
     if (event == 'PLANETARIUM_SPECIAL_SHOW') {
       this.minDate = moment(new Date()).add(2, 'day').toISOString();
       this.maxDate = moment(new Date()).add(16, 'day').toISOString();
+      this.changeDateAndSetDate();
       this.ticketBookingForm.get('schoolName').setValidators([Validators.required]);
       this.ticketBookingForm.get('schoolEmailId').setValidators([Validators.required, ValidationService.emailValidator]);
       this.ticketBookingForm.get('specialShowLanguage.code').setValidators(Validators.required);
@@ -503,8 +519,15 @@ export class BookPlanetariumComponent implements OnInit {
 
     }
     else if (event == 'PLANETARIUM_GENERAL_SHOW') {
-    this.minDate = moment(new Date()).add(0, 'day').toISOString();
-    this.maxDate = moment(new Date()).add(6, 'day').toISOString();
+      this.ticketBookingForm.get('visitingDate').setValue(moment().format('YYYY-MM-DD'));
+      this.minDate = moment(new Date()).add(0, 'day').toISOString();
+      this.maxDate = moment(new Date()).add(6, 'day').toISOString();
+      let dd = new Date();
+      if(dd.getDay()==4){
+         let plusDay = moment().add(1, 'day').format("YYYY-MM-DD");
+         this.ticketBookingForm.get('visitingDate').setValue(plusDay);
+         this.maxDate = moment(new Date()).add(7, 'day').toISOString();
+      }
       this.ticketBookingForm.get('firstName').setValidators([Validators.required]);
       this.ticketBookingForm.get('lastName').setValidators([Validators.required]);
       this.ticketBookingForm.get('visitors.code').setValidators([Validators.required]);
