@@ -70,12 +70,10 @@ export class GatewayResponseComponent implements OnInit {
 				if (res.success) {
 
 					if (this.responseObj.authStatus == '0300') {
-
-						this.responseObj.mer_amount = this.responseObj.txnAmount;
+						this.responseObj.mer_amount = Number(this.responseObj.txnAmount);
 						this.responseObj.order_id = this.responseObj.customerID;
 						this.responseObj.bank_ref_no = this.responseObj.txnReferenceNo;
 						this.responseObj.trans_date = this.responseObj.txnDate
-
 						this.paymentStatus = "SUCCESS";
 						this.postSessionData(this.dispData, 'BILLDESK', this.responseObj);
 					} else {
@@ -156,7 +154,7 @@ export class GatewayResponseComponent implements OnInit {
 			//payData.refNumber = data.txnReferenceNo;
 			//payData.transactionId = data.txnReferenceNo;
 			payData.payableServiceType = data.additionalInfo2;
-			payData.amount = data.txnAmount;
+			payData.amount = Number(data.txnAmount);
 		}
 
 		if (data.payableServiceType == "PROFESSIONAL_TAX") {
