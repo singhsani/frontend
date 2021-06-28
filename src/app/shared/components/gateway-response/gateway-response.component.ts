@@ -158,6 +158,7 @@ export class GatewayResponseComponent implements OnInit {
 		}
 
 		if (data.payableServiceType == "PROFESSIONAL_TAX") {
+			payData.amount = Number(data.amount);
 			this.formService.saveTaxPaymentDetails(payData).subscribe(res => {
 				if (res && res.data) {
 
