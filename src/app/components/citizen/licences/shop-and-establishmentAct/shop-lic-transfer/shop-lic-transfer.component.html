@@ -76,7 +76,7 @@
 					<div class="col-md-4 ngSelect">
 						<div *ngIf="wardZoneLevel.length>=1">
 							<ng-select 
-								placeholder="Zone*"
+								placeholder="Zone No.*"
 								formControlName="waterDrainageZoneId" (change)="onChangedWardZone($event,2)">
 								<ng-option *ngFor="let zone of wardZoneLevel1List" [value]="zone.parentWardzoneId">
 									{{zone.wardzoneName}}</ng-option>
@@ -88,7 +88,7 @@
 					<div class="col-md-4 ngSelect">
 						<div *ngIf="wardZoneLevel.length>=2" class="selectSort">
 							<ng-select 
-								placeholder="Ward*"
+								placeholder="Ward No.*"
 								formControlName="waterDrainageWardId" (change)="onChangedWardZone($event,3)">
 								<ng-option *ngFor="let ward of wardZoneLevel2List" [value]="ward.wardzoneId">
 									{{ward.wardzoneName}}</ng-option>
@@ -100,7 +100,7 @@
 					<div class="col-md-4 ngSelect">
 						<div *ngIf="wardZoneLevel.length>=3">
 							<ng-select 
-								placeholder="Block"
+								placeholder="Block No."
 								formControlName="waterDrainageBlockId" (change)="onChangedWardZone($event,4)">
 								<ng-option *ngFor="let block of wardZoneLevel3List" [value]="block.wardzoneId">
 									{{block.wardzoneName}}</ng-option>
@@ -125,7 +125,7 @@
 							maxlength="12"
 							appAlphaNumeric
 							required
-							placeholder="PEC number"
+							placeholder="PEC Number"
 							formControlName="pecNumber"
 							(blur)="validatePecNumber(shopLicTransferForm.get('pecNumber'))"/>
 							<control-messages [control]="shopLicTransferForm.get('pecNumber')">
@@ -137,7 +137,7 @@
 							maxlength="12"
 							required
 							appAlphaNumeric
-							placeholder="PRC number"
+							placeholder="PRC Number"
 							formControlName="prcNumber"
 							(blur)="validatePRCNumber(shopLicTransferForm.get('prcNumber'))"/>
 						<control-messages [control]="shopLicTransferForm.get('prcNumber')"></control-messages>
@@ -147,7 +147,7 @@
 						<input matInput type="text"
 							maxlength="16"
 							required
-							placeholder="Census Number/Property Number"
+							placeholder="Census/Property Number"
 							formControlName="censusOrPropertyNumber"/>
 							<!-- (blur)="validatePecPropertyNumber(shopLicTransferForm.get('censusOrPropertyNumber'))" -->
 						<control-messages [control]="shopLicTransferForm.get('censusOrPropertyNumber')"></control-messages>
@@ -236,14 +236,14 @@
 
 					<mat-form-field class="col-md-6">
 						<input matInput type="text" 
-							placeholder="Employer Email-Id"
+							placeholder="Employer Email ID"
 							formControlName="employerEmailId"  appValidationFields >
 						<control-messages [control]="shopLicTransferForm.get('employerEmailId')"></control-messages>
 					</mat-form-field>
 					
 					<mat-form-field class="col-md-6">
 						 <input matInput OnlyNumber type="text" maxlength="10" minlength="10"
-							placeholder="Alternate mobile number"
+							placeholder="Alternate Mobile Number"
 							formControlName="alternateMobileNumber" />
 						<control-messages [control]="shopLicTransferForm.get('alternateMobileNumber')">
 						</control-messages>	 
@@ -251,7 +251,7 @@
 
 					<mat-form-field class="col-md-6">
 						<input matInput OnlyNumber type="text" maxlength="11" minlength="11"
-						placeholder="Landline number"
+						placeholder="Landline Number"
 						formControlName="landlineNumber" />
 						<control-messages [control]="shopLicTransferForm.get('landlineNumber')">
 						</control-messages>
