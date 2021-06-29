@@ -55,10 +55,10 @@ export class TransferDocumentUploadComponent implements OnInit {
                 error.error[0].propertyList.forEach(element => {
                   errorMessage = errorMessage + element + "</br>";
                 });
-                this.alertService.error(errorMessage);
+                this.alertService.info(errorMessage);
               }
               else {
-                this.alertService.error(error.error.message);
+                this.alertService.info(error.error.message);
               }
             })
         }

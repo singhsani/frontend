@@ -121,7 +121,8 @@ export class AssessmentCertificateTableComponent implements OnInit {
         }
       },
       (error) => {
-       this.commonService.callErrorResponse(error);
+      //  this.commonService.callErrorResponse(error);
+          this.commonService.callInfoResponse(error);
       });
   }
 
