@@ -149,9 +149,8 @@
                         <div class="col-md-6">
                             <mat-form-field class="full-width-input">
                                 <input matInput [min]="effectiveToDateMinDate" [matDatepicker]="EffectiveToDate"
-                                    #ETD="ngModel"
-                                    [(ngModel)]="unitDetailModel.effectiveToDate" placeholder="Effective to Date"
-                                    name="effectiveToDate" length="10" mask-date>
+                                    #ETD="ngModel" [(ngModel)]="unitDetailModel.effectiveToDate"
+                                    placeholder="Effective to Date" name="effectiveToDate" length="10" mask-date>
                                 <mat-datepicker-toggle matSuffix [for]="EffectiveToDate"></mat-datepicker-toggle>
                                 <mat-datepicker #EffectiveToDate disabled="false"></mat-datepicker>
                                 <mat-error *ngIf="ETD.invalid">*Effective to Date must be
@@ -215,7 +214,7 @@
                         <div class="col-md-6">
                             <mat-form-field class="full-width-input">
                                 <input trim="blur" matInput name="tikaNo" [(ngModel)]="unitDetailModel.tikaNo"
-                                    placeholder='Tikka No'>
+                                    placeholder='Tikka No' maxlength="50">
 
                             </mat-form-field>
 
@@ -223,8 +222,8 @@
                         <div class="col-md-6">
                             <mat-form-field class="full-width-input">
                                 <input matInput [matDatepicker]="TikaDate" [max]="unitDetailModel.effectiveFromDate"
-                                     #TD="ngModel"
-                                    [(ngModel)]="unitDetailModel.tikaDate" placeholder="Tika Date" name="tikaDate" length="10" mask-date>
+                                    #TD="ngModel" [(ngModel)]="unitDetailModel.tikaDate" placeholder="Tika Date"
+                                    name="tikaDate" length="10" mask-date>
                                 <mat-datepicker-toggle matSuffix [for]="TikaDate"></mat-datepicker-toggle>
                                 <mat-datepicker #TikaDate disabled="false"></mat-datepicker>
                                 <mat-error *ngIf="TD.invalid">*Tika Date must be less than or equal to effective from
@@ -238,7 +237,7 @@
                             <mat-form-field class="full-width-input">
                                 <input trim="blur" matInput name="buildingPermissionNo"
                                     [(ngModel)]="unitDetailModel.buildingPermissionNo"
-                                    placeholder='Building Permission No'>
+                                    placeholder='Building Permission No' maxlength="50">
 
                             </mat-form-field>
                         </div>
@@ -246,9 +245,10 @@
                         <div class="col-md-6">
                             <mat-form-field class="full-width-input">
                                 <input matInput [max]="unitDetailModel.effectiveFromDate"
-                                    [matDatepicker]="BuildingPermissionDate" 
-                                    #BPD="ngModel" [(ngModel)]="unitDetailModel.buildingPermissionDate"
-                                    placeholder="Building Permission Date" name="buildingPermissionDate" length="10" mask-date> 
+                                    [matDatepicker]="BuildingPermissionDate" #BPD="ngModel"
+                                    [(ngModel)]="unitDetailModel.buildingPermissionDate"
+                                    placeholder="Building Permission Date" name="buildingPermissionDate" length="10"
+                                    mask-date>
                                 <mat-datepicker-toggle matSuffix [for]="BuildingPermissionDate"></mat-datepicker-toggle>
                                 <mat-datepicker #BuildingPermissionDate disabled="false"></mat-datepicker>
                                 <mat-error *ngIf="BPD.invalid">*Permission Date must be less than or equal to effective
@@ -261,16 +261,17 @@
                             <mat-form-field class="full-width-input">
                                 <input trim="blur" matInput name="occupancyCertificateNo"
                                     [(ngModel)]="unitDetailModel.occupancyCertificateNo"
-                                    placeholder='Occupancy Certificate No'>
+                                    placeholder='Occupancy Certificate No' maxlength="50">
 
                             </mat-form-field>
                         </div>
                         <div class="col-md-6">
                             <mat-form-field class="full-width-input">
                                 <input matInput [max]="unitDetailModel.effectiveFromDate"
-                                    [matDatepicker]="OccupancyCertificateDate" 
-                                    #OCD="ngModel" [(ngModel)]="unitDetailModel.occupancyCertificateDate"
-                                    placeholder="Occupancy Certificate Date" name="occupancyCertificateDate" length="10" mask-date>
+                                    [matDatepicker]="OccupancyCertificateDate" #OCD="ngModel"
+                                    [(ngModel)]="unitDetailModel.occupancyCertificateDate"
+                                    placeholder="Occupancy Certificate Date" name="occupancyCertificateDate" length="10"
+                                    mask-date>
                                 <mat-datepicker-toggle matSuffix [for]="OccupancyCertificateDate">
                                 </mat-datepicker-toggle>
                                 <mat-datepicker #OccupancyCertificateDate disabled="false"></mat-datepicker>
@@ -279,22 +280,20 @@
                             </mat-form-field>
                         </div>
                     </div>
-                    
+
                     <div class="row">
                         <div class="col-md-6">
                             <mat-form-field class="full-width-input">
                                 <input trim="blur" matInput name="completionNo"
-                                    [(ngModel)]="unitDetailModel.completionNo"
-                                    placeholder='Completion No'>
+                                    [(ngModel)]="unitDetailModel.completionNo" placeholder='Completion No'>
 
                             </mat-form-field>
                         </div>
                         <div class="col-md-6">
                             <mat-form-field class="full-width-input">
-                                <input matInput 
-                                    [matDatepicker]="CompletionDate"
-                                    #CompDate="ngModel" [(ngModel)]="unitDetailModel.completionDate" 
-                                    placeholder="Completion Date" name="completionDate" length="10" mask-date>
+                                <input matInput [matDatepicker]="CompletionDate" #CompDate="ngModel"
+                                    [(ngModel)]="unitDetailModel.completionDate" placeholder="Completion Date"
+                                    name="completionDate" length="10" mask-date>
                                 <mat-datepicker-toggle matSuffix [for]="CompletionDate"></mat-datepicker-toggle>
                                 <mat-datepicker #CompletionDate disabled="false"></mat-datepicker>
                             </mat-form-field>
@@ -430,7 +429,7 @@
                             <div class="col-md-12">
                                 <button mat-raised-button class="ml-3" color="primary" type="submit">
                                     <mat-icon>save</mat-icon> {{measurementModel.propertyMeasurementId>0?'Update
-                                            Measurement':'Save Measurement'}}
+                                    Measurement':'Save Measurement'}}
                                 </button>
                                 <button mat-raised-button class="ml-3" type="button" color="warn"
                                     (click)="clearMeasurement()">
