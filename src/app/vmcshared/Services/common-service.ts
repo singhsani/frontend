@@ -220,4 +220,24 @@ export class CommonService {
 						}
 					return words;
 	}
+
+
+    // handle error response globally 
+    callInfoResponse(error) {
+        if (error.status === 400) {
+            var errorMessage = '';
+            error.error[0].propertyList.forEach(element => {
+              errorMessage = errorMessage + element + "</br>";
+            });
+            this.alertService.info(errorMessage);
+          }
+          else {
+            if(error.error instanceof ArrayBuffer) {
+                let responseData = this.convertArrayBufferToNumber(error.error);
+                this.alertService.info(responseData.message);
+            } else {
+              this.alertService.info(error.error.message);
+            }
+          }
+    }
 }
