@@ -236,7 +236,7 @@ export class CommonPaybleComponent implements OnInit {
       this.isProfessionalTax = true;
       this.placeholder = 'PEC Number';
       this.placeHolderMessage = 'PEC Number is Required';
-    } else if (paySerCode === 'PRO-ASS' || paySerCode === 'PAY-PRO-TAX') {
+    } else if (paySerCode === 'PAY-PRO-TAX') {
       this.placeholder = 'Property Number';
     } else {
       this.placeholder = 'Reference Number';
@@ -252,7 +252,7 @@ export class CommonPaybleComponent implements OnInit {
   getServices() {
 
     let serviceType = this.paymentsForm.get('payableServices').get('code').value;
-    if (serviceType === 'PRO-ASS' || serviceType === 'PAY-PRO-TAX') {
+    if (serviceType === 'PAY-PRO-TAX') {
       this.getAmountDataProperty();
     } else if (serviceType === 'PAY_PROF_TAX') {
       this.ispropertyTax = false;
