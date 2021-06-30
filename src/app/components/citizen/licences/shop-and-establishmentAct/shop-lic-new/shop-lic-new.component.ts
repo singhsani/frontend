@@ -56,11 +56,11 @@ export class ShopLicNewComponent implements OnInit {
 	//regiTyep: string[] = ['CERTIFICATION', 'INTIMATION'];
 	regiTyep: Array<any> = [{
 		code: 'INTIMATION',
-		name: 'Intimation (Less than 10 employees)',
+		name: 'Intimation (Less than 10 Employees)',
 	},
 	{
 		code: 'CERTIFICATION',
-		name: 'Registration (10 or More than 10 employees)',
+		name: 'Registration (10 or more than 10 Employees)',
 	},
 
 	];

@@ -158,7 +158,7 @@
 			<mat-tab [label]="stepLable2 | translate: translateKey">
 				<div class="row stepperMinHeight">
 					<mat-form-field class="col-md-4">
-						<input matInput autocomplete="off" maxlength="18" OnlyNumber formControlName="bankAccountNo"
+						<input matInput autocomplete="off" minlength="9" maxlength="18" OnlyNumber formControlName="bankAccountNo"
 							type="tel" placeholder="{{'bank_account_no' | translate: translateKey}}" required>
 						<control-messages [control]="pecRegForm.get('bankAccountNo')"></control-messages>
 					</mat-form-field>
