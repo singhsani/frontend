@@ -162,6 +162,7 @@ export class NewRegistrationComponent implements OnInit {
       canDelete: null,
       canSubmit: true,
       tokenFees: [{ value: 100, disabled: true }],
+      adminFees: [{ value: 0, disabled: true }],
       dishonorCharges: [{ value: 0, disabled: true }],
       vehicleApplicableRate: [{ value: 0, disabled: true }],
       totalPayable: [{ value: 0, disabled: true }],
@@ -464,6 +465,7 @@ export class NewRegistrationComponent implements OnInit {
     this.isSubmitBtnVisible = true;
 
     this.vehicleRegistrationForm.get('tokenFees').disable();
+    this.vehicleRegistrationForm.get('adminFees').disable();
     this.vehicleRegistrationForm.get('dishonorCharges').disable();
     this.vehicleRegistrationForm.get('vehicleApplicableRate').disable();
     this.vehicleRegistrationForm.get('totalPayable').disable();
@@ -560,6 +562,7 @@ export class NewRegistrationComponent implements OnInit {
       this.vehicleServise.calculateTax(this.vehicleRegistrationForm.getRawValue()).subscribe(res => {
 
         this.vehicleRegistrationForm.patchValue({
+          adminFees : res.amountFields.adminFee,
           tokenFess: res.amountFields.vehicleTokenFee,
           dishonorCharges: res.amountFields.dishonorCharges ? res.amountFields.dishonorCharges : 0,
           vehicleApplicableRate: res.amountFields.vehicleBasicValue,
