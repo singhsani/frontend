@@ -815,7 +815,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
                 // for address
                 if (res.isGroomParResAddressSame.code == "YES") {
                     this.addObject['checkedPar1'] = true;
-                    this.changeDisable('groomParentsAddressResidence');
+                    //this.changeDisable('groomParentsAddressResidence');
                 }
                 else {
                     this.addObject['checkedPar1'] = false;
@@ -823,7 +823,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
                 }
                 if (res.isBrideParResAddressSame.code == "YES") {
                     this.addObject['checkedPar2'] = true;
-                    this.changeDisable('brideParentsAddressResidence');
+                    //this.changeDisable('brideParentsAddressResidence');
                 }
                 else {
                     this.addObject['checkedPar2'] = false;
@@ -831,7 +831,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
                 }
                 if (res.isPriestParResAddressSame.code == "YES") {
                     this.addObject['checkedPar3'] = true;
-                    this.changeDisable('priestAddressResidence');
+                    //this.changeDisable('priestAddressResidence');
                 }
                 else {
                     this.addObject['checkedPar3'] = false;

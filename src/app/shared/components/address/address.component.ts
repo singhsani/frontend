@@ -59,14 +59,14 @@ export class AddressComponent implements OnInit, OnChanges {
 			this.addressFormGroup.get('city').setValidators([Validators.required]);
 			this.addressFormGroup.get('country').setValidators([Validators.required]);
 			this.addressFormGroup.get('pincode').setValidators([Validators.required, Validators.minLength(6), Validators.maxLength(6)]);
-		} else {
+		} else if(!this.requiredFeilds){
 			this.addressFormGroup.get('state').clearValidators();
 			this.addressFormGroup.get('city').clearValidators();
 			this.addressFormGroup.get('country').clearValidators();
 			this.addressFormGroup.get('pincode').clearValidators();
 		}
 
-		if (this.requiredNotPincode) {
+		else if (this.requiredNotPincode) {
 			this.isBuildinAreaReq = true;
 			this.addressFormGroup.get('state').setValidators([Validators.required]);
 			this.addressFormGroup.get('area').setValidators([Validators.required]);
@@ -74,7 +74,7 @@ export class AddressComponent implements OnInit, OnChanges {
 			this.addressFormGroup.get('city').setValidators([Validators.required]);
 			this.addressFormGroup.get('country').setValidators([Validators.required]);
 			this.addressFormGroup.get('pincode').clearValidators;
-		} else {
+		} else if(!this.requiredNotPincode) {
 			this.isBuildinAreaReq = true;
 			this.addressFormGroup.get('state').setValidators([Validators.required]);
 			this.addressFormGroup.get('area').setValidators([Validators.required]);

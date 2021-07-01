@@ -189,12 +189,16 @@ export class ActionBarComponent implements OnInit, OnChanges {
 			}
 		}
 
-		for (const field in this.form.controls) { // 'field' is a string
-			if (!this.form.get(field).valid) {
-				console.log(field);
-			}; // 'control' is a FormControl  
+		this.printFormInvalidControl(this.form, "");
+		
+		// for (const field in this.form.controls) { // 'field' is a string
+		// 	if (!this.form.get(field).valid) {
+		// 		console.log(field);
+		// 	}; // 'control' is a FormControl  
 
-		}
+		// }
+
+		
 		
 		if (this.form.valid) {
 
@@ -253,6 +257,19 @@ export class ActionBarComponent implements OnInit, OnChanges {
 		}
 	}
 
+	printFormInvalidControl(form,indent) {
+		for (const field in form.controls) { // 'field' is a string
+			if (!form.get(field).valid) {
+				console.log(indent + field);
+				const innerForm =form.get(field) as FormGroup;
+				if(innerForm && innerForm.controls ) {
+					this.printFormInvalidControl(innerForm, indent + " ");	
+				} 	
+				
+			}; // 'control' is a FormControl  
+
+		}
+	}
 
 	saveForm() {
 		// call save api before submit 
