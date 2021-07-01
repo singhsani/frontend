@@ -24,6 +24,7 @@ import { PropertyOccupierSearchComponent } from './component/property-occupier-s
 import { VmcTitleBarComponent } from './component/title-bar/title-bar.component';
 import { FileUploadComponentWaterTax } from './component/file-upload/file-upload.component';
 import { SelectPaymentGatewayPropertyComponent } from './component/select-payment-gateway-property/select-payment-gateway-property.component';
+import { TranslateModule } from '../shared/modules/translate/translate.module';
 
 
 
@@ -34,7 +35,8 @@ import { SelectPaymentGatewayPropertyComponent } from './component/select-paymen
     MaterialsComponentModule,
     NgSelectModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TranslateModule
   ],
   declarations: [
     MaskDateDirective,
@@ -75,7 +77,8 @@ import { SelectPaymentGatewayPropertyComponent } from './component/select-paymen
     MaskDateDirective,
     MaskCensusNoDirective,
     MaskPropertyNoDirective,
-    MaskPropertyNoWithOccuiperCodeDirective
+    MaskPropertyNoWithOccuiperCodeDirective,
+    TranslateModule
   ],
   providers: [
    // { provide: MAT_DATE_LOCALE, useValue: 'en' }, //you can change useValue

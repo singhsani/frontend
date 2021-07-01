@@ -19,6 +19,7 @@ import { Router } from '@angular/router';
 
 export class OccupierDetailComponent implements OnInit {
 
+  translateKey: string = 'newPropertyTaxScreen';
   columns: string[] = ['occupierCode', 'titleName', 'firstName', 'middleName', 'lastName', 'aadharNo', 'mobileNo', 'emailAddress', 'action'];
   dataSource: any = [];
   titleList = [];

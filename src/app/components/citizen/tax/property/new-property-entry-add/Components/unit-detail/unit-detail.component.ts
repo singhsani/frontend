@@ -18,6 +18,7 @@ import * as moment from 'moment';
 
 export class UnitDetailComponent implements OnInit {
 
+  translateKey: string = 'newPropertyTaxScreen';
   subscription: Subscription;
   modelOccupier: any = {};
   selectedRowIndex: number = -1;

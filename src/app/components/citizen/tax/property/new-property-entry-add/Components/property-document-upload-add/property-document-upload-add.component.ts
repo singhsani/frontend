@@ -14,6 +14,7 @@ import { CommonService } from 'src/app/shared/services/common.service';
 })
 export class PropertyDocumentUploadAddComponent implements OnInit {
 
+  translateKey: string = 'newPropertyTaxScreen';
   subscription: Subscription;
   PropertyDocumentUploadDocs: Array<any> = [];
   modelProperty: any = {};

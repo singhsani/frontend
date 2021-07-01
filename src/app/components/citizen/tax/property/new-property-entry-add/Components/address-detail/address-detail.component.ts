@@ -17,6 +17,7 @@ import { CommonService } from 'src/app/vmcshared/Services/common-service';
 
 export class AddressDetailComponent implements OnInit, OnDestroy {
 
+  translateKey: string = 'newPropertyTaxScreen';
   addressModel: AddressModel;
   subReasonPropertyCreationList = [];
   wardZoneLevel = [];

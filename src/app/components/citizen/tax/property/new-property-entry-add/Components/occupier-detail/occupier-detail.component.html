@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-md-2">
                 <div class="ngSelect" style="min-width: 100%;">
-                    <ng-select required placeholder="Title *" [items]="titleList" bindValue="itemId"
+                    <ng-select required placeholder="{{'title' | translate:translateKey }} *" [items]="titleList" bindValue="itemId"
                         bindLabel="itemName" name="titleId" [(ngModel)]="model.titleId" #TitleId="ngModel"
                         [ngClass]="{'ng-invalid ng-touched':  form.submitted && TitleId.invalid}">
                     </ng-select>
@@ -14,21 +14,21 @@
             </div>
             <div class="col-md-3">
                 <mat-form-field class="full-width-input">
-                    <input trim="blur" matInput required maxlength="50" placeholder="First Name" name="firstName"
+                    <input trim="blur" matInput required maxlength="50" placeholder="{{'first_name' | translate:translateKey }}" name="firstName"
                         #FirstName="ngModel" [(ngModel)]="model.firstName" (keypress)="keyPressAlphabetOnly($event)">
                     <mat-error *ngIf="FirstName.invalid">*First Name is required.</mat-error>
                 </mat-form-field>
             </div>
             <div class="col-md-3">
                 <mat-form-field class="full-width-input">
-                    <input trim="blur" matInput maxlength="50" placeholder="Middle Name" name="middleName"
+                    <input trim="blur" matInput maxlength="50" placeholder="{{'middle_name' | translate:translateKey }}" name="middleName"
                         #MiddleName="ngModel" [(ngModel)]="model.middleName" (keypress)="keyPressAlphabetOnly($event)">
                 </mat-form-field>
             </div>
 
             <div class="col-md-3">
                 <mat-form-field class="full-width-input">
-                    <input trim="blur" matInput required maxlength="50" placeholder="Last Name" name="lastName"
+                    <input trim="blur" matInput required maxlength="50" placeholder="{{'last_name' | translate:translateKey }}" name="lastName"
                         #LastName="ngModel" [(ngModel)]="model.lastName" (keypress)="keyPressAlphabetOnly($event)">
                     <mat-error *ngIf="LastName.invalid">*Last Name is required.</mat-error>
                 </mat-form-field>
@@ -38,7 +38,7 @@
 
             <div class="col-md-2">
                 <div class="ngSelect" style="min-width: 100%;">
-                    <ng-select required [disabled]="model.propertyOccupierId>0" placeholder="OccupierCode *" [items]="occupierList" bindValue="itemCode"
+                    <ng-select required [disabled]="model.propertyOccupierId>0" placeholder="{{'occupier_code' | translate:translateKey }} *" [items]="occupierList" bindValue="itemCode"
                         bindLabel="itemName" name="occupierCode" [(ngModel)]="model.occupierCode" #occupierCode="ngModel"
                         [ngClass]="{'ng-invalid ng-touched':  form.submitted && occupierCode.invalid}"
                         (mouseenter)="show=1" (mouseleave)="show=0">
@@ -62,14 +62,14 @@
 
             <div class="col-md-3">
                 <mat-form-field class="full-width-input">
-                    <input matInput number-only maxlength="12" minlength="12" placeholder="Aadhaar No" name="aadharNo"
+                    <input matInput number-only maxlength="12" minlength="12" placeholder="{{'aadhar_no' | translate:translateKey }}" name="aadharNo"
                         #AadhaarNo="ngModel" [(ngModel)]="model.aadharNo">
                     <mat-error *ngIf="AadhaarNo.invalid">*Aadhaar No is invalid.</mat-error>
                 </mat-form-field>
             </div>
             <div class="col-md-3">
                 <mat-form-field class="full-width-input">
-                    <input matInput number-only maxlength="10" minlength="10" placeholder="Mobile No" name="mobileNo"
+                    <input matInput number-only maxlength="10" minlength="10" placeholder="{{'mobile_no' | translate:translateKey }}" name="mobileNo"
                         #MobileNo="ngModel" [(ngModel)]="model.mobileNo">
                     <mat-error *ngIf="MobileNo.invalid">*Mobile No is invalid.</mat-error>
                 </mat-form-field>
@@ -77,7 +77,7 @@
             </div>
             <div class="col-md-3">
                 <mat-form-field class="full-width-input">
-                    <input matInput email placeholder="Email" name="emailAddress" maxlength="255"
+                    <input matInput email placeholder="{{'email' | translate:translateKey }}" name="emailAddress" maxlength="255"
                         #EmailAddress="ngModel" [(ngModel)]="model.emailAddress">
                     <mat-error *ngIf="EmailAddress.invalid && EmailAddress.errors.email">*Email is not valid.
                     </mat-error>
@@ -159,13 +159,13 @@
 <div class="row text-right mt-3">
     <div class="col-md-12">
         <button mat-raised-button class="ml-3" color="primary" type="button" (click)="onBackClick()">
-            <mat-icon>skip_previous</mat-icon>Back
+            <mat-icon>skip_previous</mat-icon>{{'back' | translate:translateKey }}
         </button>
         <!-- <button mat-raised-button class="ml-3" color="primary" type="submit" (click)="onSubmit()">
             <mat-icon>save</mat-icon>Submit
         </button> -->
         <button mat-raised-button class="ml-3" color="primary" type="submit" (click)="moveToDocumentsTab()">
-            <mat-icon>save</mat-icon>Next
+            <mat-icon>save</mat-icon>{{'next' | translate:translateKey }}
         </button>
     </div>
 </div>
