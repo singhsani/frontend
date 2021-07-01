@@ -59,7 +59,7 @@
 
 		<div class="col-md-4 ngSelect">
 			<ng-select placeholder="{{'country' | translate: translateKey }} {{requiredFeilds?'*':''}}"
-				formControlName="country" required
+				formControlName="country" [required]="requiredFeilds"
 				(change)="onCountryChange($event);getGujNameFromLookup($event,'countryGuj',countryListArray)">
 				<ng-option *ngFor="let country of countryListArray" [value]="country.name">{{country.name}}</ng-option>
 			</ng-select>
@@ -68,7 +68,7 @@
 
 		<div class="col-md-4 ngSelect">
 			<ng-select placeholder="{{'state' | translate: translateKey }} {{requiredFeilds?'*':''}}"
-				formControlName="state" required
+				formControlName="state" [required]="requiredFeilds"
 				(change)="onStateChange($event);getGujNameFromLookup($event,'stateGuj',stateListArray)">
 				<ng-option *ngFor="let state of stateListArray" [value]="state.name">{{state.name}}</ng-option>
 			</ng-select>

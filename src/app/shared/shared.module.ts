@@ -26,6 +26,7 @@ import { GujInputSourceDirective } from './directives/guj-input-source.directive
 import { GujInputTargetDirective } from './directives/guj-input-target.directive';
 import { InputTrimDirective } from './directives/input-trim.directive';
 import { AlphaNumericDirective } from './directives/alpha-numeric.directive';
+import { BlockCopyPasteDirective } from './directives/block-copy-paste.directive';
 import { ReloadDirective } from './directives/reload.directive';
 import { NgxUpperCaseDirectiveModule } from 'ngx-upper-case-directive';
 
@@ -87,6 +88,7 @@ const COMPONENTS = [
 	GujInputSourceDirective,
 	GujInputTargetDirective,
 	AlphaNumericDirective,
+	BlockCopyPasteDirective,
 	ReloadDirective,
 	HosPaymentResponsePageComponent,
 	GatewayResponseComponent,
