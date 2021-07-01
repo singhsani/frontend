@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="section-title">
-                    <h2>Detail</h2>
+                    <h2>Detail {{'detail' | translate:translateKey }} </h2>
                     <!-- <mat-divider></mat-divider> -->
                 </div>
             </div>
@@ -21,7 +21,7 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="ngSelect">
-                    <ng-select required placeholder="Reason for Property Creation *" [items]="subReasonPropertyCreationList" 
+                    <ng-select required placeholder="{{ 'reason_for_property_creation' | translate:translateKey }} *" [items]="subReasonPropertyCreationList" 
                         bindValue="itemId" bindLabel="itemName" name="subReasonForCreationItemId"
                         [(ngModel)]="addressModel.subReasonForCreationItemId" #SubReasonForCreationItem="ngModel"
                         [ngClass]="{'ng-invalid ng-touched':  form.submitted && SubReasonForCreationItem.invalid}">
@@ -35,16 +35,14 @@
         <div class="row">
             <div class="col-md-6">
                 <mat-form-field class="full-width-input">
-                    <mat-label>Property No</mat-label>
-                    <input trim="blur" matInput name="propertyNo" [(ngModel)]="addressModel.propertyNo" disabled>
+                <input trim="blur" matInput name="propertyNo" placeholder="{{'property_no' | translate:translateKey }} " [(ngModel)]="addressModel.propertyNo" disabled>
                 </mat-form-field>
             </div>
         </div>
         <div class="row">
             <div class="col-md-6">
                 <mat-form-field class="full-width-input">
-                    <mat-label>Reference Property No</mat-label>
-                    <input trim="blur" matInput name="referencePropertyNo"
+                <input trim="blur" matInput placeholder="{{'reference_property_no' | translate:translateKey }} " name="referencePropertyNo"
                         minlength="12" #ReferencePropertyNo="ngModel"
                         [(ngModel)]="addressModel.referencePropertyNo" maxlength="255" mask-property-no>
                     <mat-error *ngIf="ReferencePropertyNo.invalid">*Invalid Reference Property No.</mat-error>
@@ -52,15 +50,14 @@
             </div>
             <div class="col-md-4">
                 <mat-form-field class="full-width-input">
-                    <mat-label>Serial No</mat-label>
-                    <input trim="blur" matInput number-only name="serialNo" [(ngModel)]="addressModel.serialNo"
+                <input trim="blur" matInput number-only placeholder="{{'serial_no' | translate:translateKey }} " name="serialNo" [(ngModel)]="addressModel.serialNo"
                         #SerialNo="ngModel" maxlength="255">
                 </mat-form-field>
             </div>
             <div class="col-md-2">
                 <div class="button-row text-right">
                     <button mat-raised-button type="button" class="pl-15 pr-15" color="primary" (click)="onSearchSRNo()">
-                        <mat-icon>search</mat-icon> Search SR No
+                        <mat-icon>search</mat-icon>{{'search_sr_no' | translate:translateKey }} 
                     </button>
                 </div>
             </div>
@@ -118,8 +115,7 @@
             </div>
             <div class="col-md-6">
                 <mat-form-field class="full-width-input">
-                    <mat-label>GIS Reference No</mat-label>
-                    <input trim="blur" matInput number-only name="gisRefNo" [(ngModel)]="addressModel.gisRefNo"
+                    <input trim="blur" matInput number-only placeholder="{{'gis_reference_no' | translate:translateKey }} " name="gisRefNo" [(ngModel)]="addressModel.gisRefNo"
                         maxlength="255">
                 </mat-form-field>
             </div>
@@ -129,7 +125,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="section-title">
-                    <h2>Property Address</h2>
+                    <h2>{{'property_address' | translate:translateKey }}</h2>
                     <!-- <mat-divider></mat-divider> -->
                 </div>
             </div>
@@ -143,15 +139,13 @@
         <div class="row">
             <div class="col-md-6">
                 <mat-form-field class="full-width-input">
-                    <mat-label>FP No</mat-label>
-                    <input trim="blur" trim="blur" matInput (input)="onChangeAddress()" name="fpNo"
+                    <input trim="blur" trim="blur" matInput placeholder="{{'fp_no' | translate:translateKey }} " (input)="onChangeAddress()" name="fpNo"
                         [(ngModel)]="addressModel.propertyAddressDTO.fpNo" maxlength="10">
                 </mat-form-field>
             </div>
             <div class="col-md-6">
                 <mat-form-field class="full-width-input">
-                    <mat-label>Plot Part No</mat-label>
-                    <input trim="blur" trim="blur" matInput (input)="onChangeAddress()" name="plotPartNo"
+                    <input trim="blur" trim="blur" matInput placeholder="{{'plot_part_no' | translate:translateKey }} " (input)="onChangeAddress()" name="plotPartNo"
                         [(ngModel)]="addressModel.propertyAddressDTO.plotPartNo" maxlength="10">
                 </mat-form-field>
             </div>
@@ -160,8 +154,7 @@
         <div class="row">
             <div class="col-md-6">
                 <mat-form-field class="full-width-input">
-                    <mat-label>TP No</mat-label>
-                    <input trim="blur" matInput (input)="onChangeAddress()" name="tpNo"
+                    <input trim="blur" matInput placeholder="{{'tp_no' | translate:translateKey }} " (input)="onChangeAddress()" name="tpNo"
                         [(ngModel)]="addressModel.propertyAddressDTO.tpNo" maxlength="10">
                 </mat-form-field>
             </div>
@@ -169,15 +162,13 @@
         <div class="row">
             <div class="col-md-6">
                 <mat-form-field class="full-width-input">
-                    <mat-label>Revenue Survey No</mat-label>
-                    <input trim="blur" matInput (input)="onChangeAddress()" name="serveyNo"
+                    <input trim="blur" matInput  placeholder="{{'revenue_survey_no' | translate:translateKey }} " (input)="onChangeAddress()" name="serveyNo"
                         [(ngModel)]="addressModel.propertyAddressDTO.serveyNo" maxlength="10">
                 </mat-form-field>
             </div>
             <div class="col-md-6">
                 <mat-form-field class="full-width-input">
-                    <mat-label>City Census number</mat-label>
-                    <input trim="blur" matInput (input)="onChangeAddress()" name="cityCensusNo"
+                    <input trim="blur" matInput placeholder="{{'census_no' | translate:translateKey }} " (input)="onChangeAddress()" name="cityCensusNo"
                         [(ngModel)]="addressModel.propertyAddressDTO.cityCensusNo" maxlength="10">
                 </mat-form-field>
             </div>
@@ -187,14 +178,14 @@
             <div class="col-md-6">
                 <mat-form-field class="full-width-input">
                     <input trim="blur" matInput (input)="onChangeAddress()" name="houseNo"
-                        [(ngModel)]="addressModel.propertyAddressDTO.houseNo" placeholder="House / Flat No"
+                        [(ngModel)]="addressModel.propertyAddressDTO.houseNo" placeholder="{{'house_flat_no' | translate:translateKey }} " placeholder="House / Flat No"
                         maxlength="10">
                 </mat-form-field>
             </div>
             <div class="col-md-6">
                 <mat-form-field class="full-width-input">
                     <input trim="blur" matInput (input)="onChangeAddress()" name="buildingName"
-                        [(ngModel)]="addressModel.propertyAddressDTO.buildingName" placeholder="Building Name"
+                        [(ngModel)]="addressModel.propertyAddressDTO.buildingName" placeholder="{{'building_name' | translate:translateKey }} "
                         maxlength="50">
                 </mat-form-field>
             </div>
@@ -204,14 +195,14 @@
             <div class="col-md-6">
                 <mat-form-field class="full-width-input">
                     <input trim="blur" matInput (input)="onChangeAddress()" name="societyName"
-                        [(ngModel)]="addressModel.propertyAddressDTO.societyName" placeholder="Society Name"
+                        [(ngModel)]="addressModel.propertyAddressDTO.societyName" placeholder="{{'society_name' | translate:translateKey }} "
                         maxlength="50">
                 </mat-form-field>
             </div>
             <div class="col-md-6">
                 <mat-form-field class="full-width-input">
                     <input trim="blur" matInput (input)="onChangeAddress()" name="streetName"
-                        [(ngModel)]="addressModel.propertyAddressDTO.streetName" placeholder="Name of Street / Road"
+                        [(ngModel)]="addressModel.propertyAddressDTO.streetName"placeholder="{{'name_of_street_road' | translate:translateKey }} " placeholder="Name of Street / Road"
                         maxlength="50">
                 </mat-form-field>
             </div>
@@ -220,12 +211,12 @@
             <div class="col-md-6">
                 <mat-form-field class="full-width-input">
                     <input trim="blur" matInput (input)="onChangeAddress()" name="landMark"
-                        [(ngModel)]="addressModel.propertyAddressDTO.landMark" placeholder="Land Mark" maxlength="50">
+                        [(ngModel)]="addressModel.propertyAddressDTO.landMark" placeholder="{{'landmark' | translate:translateKey }} " maxlength="50">
                 </mat-form-field>
             </div>
             <div class="col-md-6">
                 <mat-form-field class="full-width-input">
-                    <input trim="blur" matInput (input)="onChangeAddress()" name="areaName" placeholder="Area Name"
+                    <input trim="blur" matInput (input)="onChangeAddress()" name="areaName" placeholder="{{'area_name' | translate:translateKey }} "
                         [(ngModel)]="addressModel.propertyAddressDTO.areaName" maxlength="50">
                 </mat-form-field>
             </div>
@@ -233,14 +224,14 @@
         <div class="row">
             <div class="col-md-6">
                 <mat-form-field class="full-width-input">
-                    <mat-label>State</mat-label>
-                    <input matInput name="state" [(ngModel)]="addressModel.propertyAddressDTO.state" disabled>
+                    <!-- <mat-label>State</mat-label> -->
+                    <input matInput name="state" placeholder="{{'state' | translate:translateKey }} " [(ngModel)]="addressModel.propertyAddressDTO.state" disabled>
                 </mat-form-field>
             </div>
             <div class="col-md-6">
                 <mat-form-field class="full-width-input">
-                    <mat-label>District</mat-label>
-                    <input matInput name="district" [(ngModel)]="addressModel.propertyAddressDTO.district" disabled>
+                    <!-- <mat-label>District</mat-label> -->
+                    <input matInput name="district" placeholder="{{'district' | translate:translateKey }} " [(ngModel)]="addressModel.propertyAddressDTO.district" disabled>
                 </mat-form-field>
             </div>
         </div>
@@ -248,15 +239,14 @@
         <div class="row">
             <div class="col-md-6">
                 <mat-form-field class="full-width-input">
-                    <mat-label>City</mat-label>
-                    <input matInput name="city" [(ngModel)]="addressModel.propertyAddressDTO.city" disabled>
+                    <input matInput name="city" placeholder="{{'city' | translate:translateKey }} " [(ngModel)]="addressModel.propertyAddressDTO.city" disabled>
                 </mat-form-field>
             </div>
             <div class="col-md-6">
                 <mat-form-field class="full-width-input">
                     <input type="text" trim="blur" matInput number-only [allowDecimals]="false" [onlyTwoDecimal]="false"
                         (input)="onChangeAddress()" name="pincode" [(ngModel)]="addressModel.propertyAddressDTO.pincode"
-                        placeholder="Pin Code" #Pincode="ngModel" maxlength="6" minlength="6">
+                        placeholder="{{'pincode' | translate:translateKey }} " #Pincode="ngModel" maxlength="6" minlength="6">
                 </mat-form-field>
                 <mat-error *ngIf="Pincode.invalid">*Pin Code is invalid.</mat-error>
             </div>
@@ -265,15 +255,15 @@
             <div class="col-md-12">
                 <div class="full-width-input">
                     <mat-checkbox name="postalAddressCheckBox"
-                        [(ngModel)]="addressModel.propertyAddressDTO.isPostalAddressDiff" (change)="changePostalAddressCheckBox()">Postal
-                        Address is different than Property Address</mat-checkbox>
+                        [(ngModel)]="addressModel.propertyAddressDTO.isPostalAddressDiff" (change)="changePostalAddressCheckBox()">
+                        {{'postal_address_different_than_property_address' | translate:translateKey }}</mat-checkbox>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-md-6">
                 <mat-form-field class="full-width-input">
-                    <textarea matInput name="propertyAddress" #PropertyAddress="ngModel" placeholder="Property Address"
+                    <textarea matInput name="propertyAddress" #PropertyAddress="ngModel" placeholder="{{'property_address' | translate:translateKey }} "
                         [(ngModel)]="addressModel.propertyAddressDTO.propertyAddress" maxlength="500" readonly
                         rows="5"></textarea>
                     <mat-error
@@ -283,7 +273,7 @@
             </div>
             <div class="col-md-6">
                 <mat-form-field class="full-width-input">
-                    <textarea matInput name="postalAddress" #PostalAddressDiff="ngModel" placeholder="Postal Address"
+                    <textarea matInput name="postalAddress" #PostalAddressDiff="ngModel" placeholder="{{'postal_address' | translate:translateKey }} "
                         [(ngModel)]="addressModel.propertyAddressDTO.postalAddress"
                         [required]="addressModel.propertyAddressDTO.isPostalAddressDiff"
                         [readonly]="!addressModel.propertyAddressDTO.isPostalAddressDiff" rows="5" maxlength="500"
@@ -300,7 +290,7 @@
     <div class="fotButtonBar clearfix mt-0">
         <div class="col-sm-12 col-md-12">
             <button mat-raised-button color="primary" class="pull-right" type="submit">
-                Next<mat-icon>skip_next</mat-icon>
+                {{'next' | translate:translateKey }}<mat-icon>skip_next</mat-icon>
             </button>
         </div>
     </div>

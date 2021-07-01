@@ -17,6 +17,7 @@ import { AlertService } from 'src/app/vmcshared/Services/alert.service';
 
 export class OwnerDetailComponent implements OnInit {
 
+  translateKey: string = 'newPropertyTaxScreen';
   subscription: Subscription;
   modelProperty: any = {};
   titleList = [];
