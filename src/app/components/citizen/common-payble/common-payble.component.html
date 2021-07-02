@@ -23,13 +23,13 @@
       </div>
 
       <!-- This is input for other services search-->
-      <mat-form-field class="col-md-4" *ngIf = "!isProfessionalTax && !ispropertyTax">
+      <mat-form-field class="col-md-4" *ngIf = "!isProfessionalTax && !isPropertyTax">
         <input matInput placeholder="{{placeholder}}" formControlName="refNumber" required>
         <control-messages [control]="paymentsForm.get('refNumber')"></control-messages>
       </mat-form-field>
 
       <!-- This is input for professional tax search-->
-      <mat-form-field class="col-md-4" *ngIf="isProfessionalTax || ispropertyTax">
+      <mat-form-field class="col-md-4" *ngIf="isProfessionalTax || isPropertyTax">
         <input matInput appAlphaNumeric maxlength="12" placeholder="{{placeholder}}" formControlName="refNumber"
           required>
           <mat-error *ngIf="placeHolderMessage !== null">{{placeHolderMessage}}</mat-error>
@@ -176,7 +176,7 @@
 
   </div>
 
-  <div *ngIf="ispropertyTax">
+  <div *ngIf="isPropertyTax">
 
     <div class="row" style="margin-left: -30px;">
     

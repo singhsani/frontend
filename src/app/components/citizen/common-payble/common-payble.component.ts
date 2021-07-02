@@ -33,7 +33,7 @@ export class CommonPaybleComponent implements OnInit {
   isRecordExists: boolean = false;
   isECRCSearch: boolean = false;
 
-  ispropertyTax: boolean = false;
+  isPropertyTax: boolean = false;
   userServicesList = [];
   applicationrouter: any;
   redirectURLAfterPayment: any;
@@ -255,17 +255,17 @@ export class CommonPaybleComponent implements OnInit {
     if (serviceType === 'PAY-PRO-TAX') {
       this.getAmountDataProperty();
     } else if (serviceType === 'PAY_PROF_TAX') {
-      this.ispropertyTax = false;
+      this.isPropertyTax = false;
       this.getAmountData();
     } else {
-      this.ispropertyTax = false;
+      this.isPropertyTax = false;
       this.getCitizenForm();
     }
 
   }
   getAmountDataProperty() {
 
-    this.ispropertyTax = true;
+    this.isPropertyTax = true;
 
     this.collectionService.getoccupierOutstandingAmount({ propertyNo: this.paymentsForm.get('refNumber').value }).subscribe(
       (data) => {
