@@ -447,6 +447,12 @@ export class CommonPaybleComponent implements OnInit {
           this.paymentsForm.get('payableServices').get('code').setValue('PAY_PROF_TAX');
           this.showHideSearchable('PAY_PROF_TAX');
         }
+        else if(this.selected == 'PROPERTY-TAX'){
+          this.paymentsForm.get('module').get('code').setValue(this.selected);
+          this.setPayableServices('PROPERTY-TAX');
+          this.paymentsForm.get('payableServices').get('code').setValue('PAY-PRO-TAX');
+          this.showHideSearchable('PAY-PRO-TAX');
+        }
       },
       err => {
 
