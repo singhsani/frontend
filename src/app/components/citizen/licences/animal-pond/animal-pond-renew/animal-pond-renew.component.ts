@@ -35,6 +35,7 @@ export class AnimalPondRenewComponent implements OnInit {
 	public showButtons: boolean = false;
 
 	//Lookups Array
+	ANIMAL_POND_STATUS_OF_BUSINESS: Array<any> = [];
 	MF_RELATIONSHIP_OF_APPLICANT: Array<any> = [];
 	MF_STATUS_OF_BUSINESS: Array<any> = [];
 	PERSON_TYPE: Array<any> = [];
@@ -306,6 +307,7 @@ export class AnimalPondRenewComponent implements OnInit {
 	getLookupData() {
 		this.formService.getDataFromLookups().subscribe(res => {
 			this.LOOKUP = res;
+			this.ANIMAL_POND_STATUS_OF_BUSINESS = res.ANIMAL_POND_STATUS_OF_BUSINESS
 			this.MF_RELATIONSHIP_OF_APPLICANT = res.MF_RELATIONSHIP_OF_APPLICANT;
 			this.MF_STATUS_OF_BUSINESS = res.MF_STATUS_OF_BUSINESS;
 			this.PERSON_TYPE = res.PERSON_TYPE;
@@ -405,8 +407,11 @@ export class AnimalPondRenewComponent implements OnInit {
 			loinumber: [null],
 
 			/* Step 4 controls start*/
-			attachments: []
+			attachments: [],
 			/* Step 4 controls end */
+			// businessType:this.fb.group({
+			// 	code: [null, Validators.required]
+			// }),
 		});
 	}
 

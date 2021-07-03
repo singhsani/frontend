@@ -10,6 +10,7 @@ import { ToastrService } from 'ngx-toastr';
 import * as _ from 'lodash';
 import { TranslateService } from '../../../../../shared/modules/translate/translate.service';
 import { LicenseConfiguration } from '../../license-configuration';
+import { FileDetector } from 'selenium-webdriver';
 
 @Component({
 	selector: 'app-animal-pond-new',
@@ -145,7 +146,9 @@ export class AnimalPondNewComponent implements OnInit {
 	 * Method is used to get form data
 	 */
 	getAnimalPondLicNewData() {
+	
 		this.formService.getFormData(this.formId).subscribe(res => {
+
 			try {
 				this.animalPondNewForm.patchValue(res);
 				this.showButtons = true;
@@ -698,6 +701,39 @@ export class AnimalPondNewComponent implements OnInit {
 			this.animalPondNewForm.get(cardName).setValue(null);
 		}
 	}
+
+	onChangeStatusOfBusiness(){
+		debugger
+		const subject = this.animalPondNewForm.get('businessType').get('code').value
+		let buildingCollapseMandatory = false;
+		
+		if (subject && subject.code && subject.code == 'BUILDING_COLLAPSE') {
+			buildingCollapseMandatory = true;
+		}
+
+		const documents = this.animalPondNewForm.get('serviceDetail').get('serviceUploadDocuments').value;
+
+		for (const document of documents) {
+			if(subject == 'TENANT'){
+			if (document.documentIdentifier == 'POLICE_VERIFICATION')
+				document.mandatory = true;
+			else if (document.documentIdentifier == 'RENT_AGREEMENT')
+				document.mandatory = true;
+			}else if(subject == 'PROPRIETORSHIPFIRM'){
+				if (document.documentIdentifier == 'POLICE_VERIFICATION')
+				document.mandatory = false;
+			else if (document.documentIdentifier == 'RENT_AGREEMENT')
+				document.mandatory = false;
+			}
+		}
+		this.animalPondNewForm.get('serviceDetail').patchValue({ 'serviceUploadDocuments': documents });
+		this.requiredDocumentList();
+
+
+	}
+
+
+
 
 	dummyJSON:any= {
 

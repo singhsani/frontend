@@ -225,6 +225,7 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 				}, 300);
 			},
 			err => {
+				debugger
 				this.commonService.openAlert('Error!', err.error[0].message, 'error');
 			}
 		);
@@ -416,6 +417,10 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		else if (row.serviceType === 'SHOP_ESTAB_APPLICATION' && !(this.commonService.fromAdmin())) {
 			return false;
 		}
+		
+		else if(row.serviceType == 'APL_LICENCE'){
+			return false;
+		}
 		else if (row.fileStatus != 'DRAFT'){
 			return true;
 		}
@@ -450,6 +455,10 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 			return true;
 		}
 		if (row.fileStatus == 'SUBMITTED' && row.serviceType == 'WATER_NEW_DRAINAGE_CONNECTION') {
+			return true;
+		}
+
+		if(row.fileStatus == 'SUBMITTED' && row.serviceType == 'APL_LICENCE'){
 			return true;
 		}
 	}
