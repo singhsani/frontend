@@ -290,7 +290,7 @@ export class BirthRegistrationComponent implements OnInit {
 
 			motherAadharNumber: [null, [Validators.minLength(12), Validators.maxLength(12), ValidationService.aadharValidation]],
 			motherPrevRegNumber: [null, [Validators.maxLength(20)]],
-			mamtaRegNumber: [null, [Validators.maxLength(10)]],
+			mamtaRegNumber: [null, [Validators.maxLength(4)]],
 			petaKendraNumber: this.fb.group({
 				id: null,
 				code: null,
