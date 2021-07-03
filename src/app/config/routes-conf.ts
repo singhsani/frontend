@@ -780,6 +780,9 @@ const ROUTESLIST = {
     'PRO-REVALUATION': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TAXMODULE + '/' + ROUTEPREFIX.PROPERTYMODULE + '/' + ROUTEMAIN["PRO-REVALUATION"].main
     },
+    'PAY-PRO-TAX':{
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEMAIN.CITIZENPAYABLESERVICES.main
+    },
     /*Property routes end */
 
     /*Affordable Housing routes Start */

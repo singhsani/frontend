@@ -33,7 +33,7 @@ export class CommonPaybleComponent implements OnInit {
   isRecordExists: boolean = false;
   isECRCSearch: boolean = false;
 
-  ispropertyTax: boolean = false;
+  isPropertyTax: boolean = false;
   userServicesList = [];
   applicationrouter: any;
   redirectURLAfterPayment: any;
@@ -255,17 +255,17 @@ export class CommonPaybleComponent implements OnInit {
     if (serviceType === 'PAY-PRO-TAX') {
       this.getAmountDataProperty();
     } else if (serviceType === 'PAY_PROF_TAX') {
-      this.ispropertyTax = false;
+      this.isPropertyTax = false;
       this.getAmountData();
     } else {
-      this.ispropertyTax = false;
+      this.isPropertyTax = false;
       this.getCitizenForm();
     }
 
   }
   getAmountDataProperty() {
 
-    this.ispropertyTax = true;
+    this.isPropertyTax = true;
 
     this.collectionService.getoccupierOutstandingAmount({ propertyNo: this.paymentsForm.get('refNumber').value }).subscribe(
       (data) => {
@@ -446,6 +446,12 @@ export class CommonPaybleComponent implements OnInit {
           this.setPayableServices('PROFESSIONAL')
           this.paymentsForm.get('payableServices').get('code').setValue('PAY_PROF_TAX');
           this.showHideSearchable('PAY_PROF_TAX');
+        }
+        else if(this.selected == 'PROPERTY-TAX'){
+          this.paymentsForm.get('module').get('code').setValue(this.selected);
+          this.setPayableServices('PROPERTY-TAX');
+          this.paymentsForm.get('payableServices').get('code').setValue('PAY-PRO-TAX');
+          this.showHideSearchable('PAY-PRO-TAX');
         }
       },
       err => {
