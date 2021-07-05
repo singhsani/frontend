@@ -95,6 +95,17 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 	ngOnChanges() {
 		this.getAllData();
 	}
+
+	swichCaseCondition(row){
+		if (row.serviceType == 'VEHICLE' || row.serviceType == 'PEC_REG' ||
+		row.serviceType == 'PRC_REG' || row.serviceType == 'PAY_PROF_TAX') {
+			return `case1`;
+		  } else if (row.departmentName == 'Property Tax' || row.departmentName == 'WATER-SUPPLY') {
+			return `case2`;
+		  } else {
+			return `case3`;
+		  }
+	}
 	
 	/**
 	 * This method use to get all the citizen data with pagination.
@@ -341,6 +352,8 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		else
 			return true;
 	}
+
+
 	/**
 	 * This method is use for edit option
 	 * @param row - Table row oject
@@ -365,7 +378,7 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 	 * @param row - Table row oject
 	 */
 	isPreviewOptDisplay(row) {
-	
+ 
 		if((row.serviceType === 'SHOP_ESTAB_APPLICATION' && row.fileStatus === 'APPROVED') || (row.serviceType === 'SHOP_ESTAB_APPLICATION' && row.fileStatus === 'REJECTED')
 			|| (row.serviceType === 'SHOP_ESTAB_TRANSFER' && row.fileStatus === 'APPROVED') || (row.serviceType === 'SHOP_ESTAB_TRANSFER' && row.fileStatus === 'REJECTED')){
 			return true;
