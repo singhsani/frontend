@@ -483,6 +483,10 @@ export class MyBookingComponent implements OnInit {
 			}
 			console.log(object);
 			this.bookingService.cancelTownHall(object).subscribe(res => {
+				if(res.success == false && res.statusCode == "401"){
+           this.toster.error(res.message);
+           return;
+        }
 				this.CancelResponseList = res.data.detail;
 				this.getAllBooking();
 				//this.modalResRef = this.modalService.show(this.templateResponseModel, Object.assign({ ignoreBackdropClick: true }, { class: 'gray modal-lg customWidth' }))
@@ -561,15 +565,17 @@ export class MyBookingComponent implements OnInit {
 	}
 
 	showCancelBtn(element) {
-    var eventDate = element.scheduleList ? element.scheduleList[0].bookingDate: new Date();
-	  var minDate= moment(eventDate).subtract(10, 'days').format('YYYY-MM-DD');
-	  var currentDate = moment(new Date()).format('YYYY-MM-DD');
+	  if(element.resourceType === "CHILDREN_THEATER"){
+      var eventDate = element.scheduleList[0].bookingDate
+      var minDate= moment(eventDate).subtract(10, 'days').format('YYYY-MM-DD');
+      var currentDate = moment(new Date()).format('YYYY-MM-DD');
+	  }
 		this.slotBookingList.pop();
-
 		if (element.status === this.bookingConstant.PAYMENT_REQUIRED
 			|| element.status === this.bookingConstant.CANCELLED
 			|| element.status === this.bookingConstant.WAITINGLIST
 			|| element.status === this.bookingConstant.CANCELLATION_REQUEST
+			|| element.status === this.bookingConstant.CANCELLATION_APPROVED
 			|| element.resourceType === this.bookingConstant.SHOOTING_PERMISSION
 			|| element.status === this.bookingConstant.REJECTED
 			|| (element.resourceType === 'SWIMMING_POOL' && element.status === this.bookingConstant.APPROVED)

@@ -35,7 +35,7 @@
 						<control-messages [control]="animalPondNewForm.get('holderFirstName')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" required maxlength="30" appValidationFields
+						<input matInput type="text"  maxlength="30" appValidationFields
 							validationFieldsType='onlyNameWithOutSpace'
 							placeholder="{{'holder_middlename' | translate:translateKey}}"
 							formControlName="holderMiddleName" appGujInputSource targetElement="holderMiddleNameGuj"
@@ -61,7 +61,7 @@
 						<control-messages [control]="animalPondNewForm.get('holderFirstNameGuj')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" required maxlength="90"
+						<input matInput type="text" maxlength="90"
 							placeholder="{{'holder_middlename' | translate:translateKey:'gu'}}"
 							formControlName="holderMiddleNameGuj" appGujInputTarget [form]="animalPondNewForm">
 						<control-messages [control]="animalPondNewForm.get('holderMiddleNameGuj')"></control-messages>
@@ -97,7 +97,7 @@
 				</div>
 
 				<mat-form-field class="col-md-4">
-					<input matInput OnlyNumber maxlength="10" formControlName="holderTelephoneNo"
+					<input matInput OnlyNumber maxlength="11" minlength="11" formControlName="holderTelephoneNo"
 						placeholder="{{'holder_telephone_no' | translate:translateKey}}">
 					<control-messages [control]="animalPondNewForm.get('holderTelephoneNo')"></control-messages>
 				</mat-form-field>
@@ -427,7 +427,8 @@
 						*ngFor="let doc of animalPondNewForm.get('serviceDetail').get('serviceUploadDocuments').value">
 						<div *ngIf="doc.requiredOnCitizenPortal && doc.isActive && showButtons">
 							<label>{{TranslateService.getCurrentLanguage()=='en'? doc.documentLabelEn : doc.documentLabelGuj }}
-								<span *ngIf="doc.mandatory">*</span></label>
+								<span *ngIf="doc.mandatory" class="mandatory
+								">*</span></label>
 							<file-upload [form]="animalPondNewForm" [uploadModel]="doc"></file-upload>
 						</div>
 					</div>

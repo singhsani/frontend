@@ -786,8 +786,8 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
             brideNriSecondWitnessAddress: [null, Validators.maxLength(500)],
             brideNriSecondWitnessAddressGuj: [null, Validators.maxLength(1500)],
             brideNriSecondWitnessBirthDate: [null],
-            groomDays : [null, Validators.max(120)],
-            brideDays : [null, Validators.max(120)]
+            groomDays : [null, Validators.max(365)],
+            brideDays : [null, Validators.max(365)]
 
         });
 
@@ -951,7 +951,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
 
                 //display days and years
                 let mday = moment(this.marriageFormGroup.get("marriageDate").value, "YYYY-MM-DD");
-
+                
                 if (this.marriageFormGroup.get("groomBirthDate").value) {
                     let bday = moment(this.marriageFormGroup.get("groomBirthDate").value, "YYYY-MM-DD");
                     this.groomage = mday.diff(bday, 'years', false);
@@ -1077,6 +1077,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
     changeReflection(person: string) {
 
         this.marriageFormGroup.get(`${person}PassportNumber`).reset();
+        this.marriageFormGroup.get(`${person}NriStatus`).reset();
         this.marriageFormGroup.get(`${person}CountryName`).reset();
         this.marriageFormGroup.get(`${person}VisaNumber`).reset();
         this.marriageFormGroup.get(`${person}VisaFrom`).reset();
@@ -1098,6 +1099,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
         if (this.marriageFormGroup.get(`is${getName}Visa`).value) {
 
             this.marriageFormGroup.get(`${person}PassportNumber`).setValidators([Validators.required, Validators.maxLength(9)]);
+            this.marriageFormGroup.get(`${person}NriStatus`).setValidators([Validators.required, Validators.maxLength(50)]);
             this.marriageFormGroup.get(`${person}CountryName`).setValidators(Validators.required);
             this.marriageFormGroup.get(`${person}VisaNumber`).setValidators([Validators.required, Validators.maxLength(9)]);
             this.marriageFormGroup.get(`${person}VisaFrom`).setValidators(Validators.required);
@@ -1117,6 +1119,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
         else {
 
             this.marriageFormGroup.get(`${person}PassportNumber`).clearValidators();
+            this.marriageFormGroup.get(`${person}NriStatus`).clearValidators();
             this.marriageFormGroup.get(`${person}CountryName`).clearValidators();
             this.marriageFormGroup.get(`${person}VisaNumber`).clearValidators();
             this.marriageFormGroup.get(`${person}VisaFrom`).clearValidators();

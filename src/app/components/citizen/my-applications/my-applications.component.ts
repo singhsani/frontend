@@ -378,7 +378,10 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 	 * @param row - Table row oject
 	 */
 	isPreviewOptDisplay(row) {
- 
+
+		const preViewDisplayServiceTypeArr = ['FS_REVISED_FIRE_NOC', 'FS_RENEWAL_NOC', 'FS_TEMP_STRUCT_NOC', 'FS_TEMP_FIREWORKSHOP_NOC', 'FS_FINAL_FIRE_NOC','FS_PROVISIONAL_HOSPITAL_NOC','FS_PROVISIONAL_NOC',
+			'FS_FIRE_CERTIFICATE', 'FS_WATER_TANKER', 'FS_FINAL_HOSPITAL_NOC', 'FS_ELECTRIC_CONNECTION_NOC', 'FS_NAVARATRI_NOC', 'FS_GAS_CONNECTION_NOC', 'CREMATION_REGISTRATION']
+	
 		if((row.serviceType === 'SHOP_ESTAB_APPLICATION' && row.fileStatus === 'APPROVED') || (row.serviceType === 'SHOP_ESTAB_APPLICATION' && row.fileStatus === 'REJECTED')
 			|| (row.serviceType === 'SHOP_ESTAB_TRANSFER' && row.fileStatus === 'APPROVED') || (row.serviceType === 'SHOP_ESTAB_TRANSFER' && row.fileStatus === 'REJECTED')){
 			return true;
@@ -387,28 +390,37 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 			'NO_DUE_CERTIFICATE' || row.serviceType === 'ASSESSMENT_CERTIFICATE' || row.fileStatus == 'APPROVED' ){
 			return false;
 		}
-		else if (!row.canEdit)
+		else if (!row.canEdit){
 			return true;
+		}
+		else if((row.fileStatus == 'SUBMITTED' || row.fileStatus == 'APPROVED' || row.fileStatus == 'PAYMENT_RECEIVED' || row.fileStatus == 'PAYMENT' || row.fileStatus == 'SCRUTINY' ) 
+		&& preViewDisplayServiceTypeArr.indexOf(row.serviceType) > -1){
+			return true
+		}
 	}
 	/**
 	 * This method is use for print view option
 	 * @param row - Table row oject
 	 */
 	isPrintViewDisplay(row) {
+		
 		const printViewServiceTypeArr = ['FS_FINAL_FIRE_NOC', 'FS_PROVISIONAL_NOC', 'FS_REVISED_FIRE_NOC', 'FS_RENEWAL_NOC', 'FS_TEMP_STRUCT_NOC', 'FS_TEMP_FIREWORKSHOP_NOC',
 			'FS_FIRE_CERTIFICATE', 'FS_WATER_TANKER', 'FS_FINAL_HOSPITAL_NOC', 'FS_ELECTRIC_CONNECTION_NOC', 'FS_NAVARATRI_NOC', 'FS_GAS_CONNECTION_NOC', 'CREMATION_REGISTRATION']
-		if ((row.fileStatus == 'SUBMITTED' || row.fileStatus == 'APPROVED' || row.fileStatus == 'PAYMENT_RECEIVED') && printViewServiceTypeArr.indexOf(row.serviceType) > 0) {
+		if ((row.fileStatus == 'SUBMITTED' || row.fileStatus == 'APPROVED' || row.fileStatus == 'PAYMENT_RECEIVED') || row.fileStatus == 'PAYMENT' || row.fileStatus == 'SCRUTINY' && printViewServiceTypeArr.indexOf(row.serviceType) > -1) {
 			return false
 		}
-		if (row.serviceType === 'PEC_REG' || row.serviceType === 'PRC_REG' || row.serviceType ===
-			'NO_DUE_CERTIFICATE' || row.serviceType === 'ASSESSMENT_CERTIFICATE' || row.serviceType == 'VEHICLE')
+		else if (row.serviceType === 'PEC_REG' || row.serviceType === 'PRC_REG' || row.serviceType ===
+			'NO_DUE_CERTIFICATE' || row.serviceType === 'ASSESSMENT_CERTIFICATE' || row.serviceType == 'VEHICLE'){
 			return false;
+		}	
 		else if (row.serviceType === 'SHOP_ESTAB_APPLICATION' && !(this.commonService.fromAdmin())) {
 			return false;
 		}
-		else if (row.fileStatus != 'DRAFT')
+		else if (row.fileStatus != 'DRAFT'){
 			return true;
+		}
 	}
+
 	isPrintReceipt(row) {
 		const printReceiptServiceTypeArr = ['FS_FINAL_FIRE_NOC', 'FS_REVISED_FIRE_NOC', 'FS_RENEWAL_NOC', 'FS_TEMP_STRUCT_NOC', 'FS_TEMP_FIREWORKSHOP_NOC',
 			'FS_FIRE_CERTIFICATE', 'FS_FINAL_HOSPITAL_NOC', 'FS_ELECTRIC_CONNECTION_NOC', 'FS_NAVARATRI_NOC', 'FS_GAS_CONNECTION_NOC']
@@ -442,8 +454,18 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		}
 	}
 	isDownloadDisplay(row) {
-		if (row.fileStatus == 'SCRUTINY')
+		
+		const hideDownloadBtnServiceTypeArr = ['FS_FINAL_FIRE_NOC', 'FS_REVISED_FIRE_NOC', 'FS_RENEWAL_NOC', 'FS_TEMP_STRUCT_NOC', 'FS_TEMP_FIREWORKSHOP_NOC',
+		'FS_FIRE_CERTIFICATE', 'FS_FINAL_HOSPITAL_NOC', 'FS_ELECTRIC_CONNECTION_NOC', 'FS_NAVARATRI_NOC', 'FS_GAS_CONNECTION_NOC']
+		
+		if (row.fileStatus == 'SCRUTINY' && hideDownloadBtnServiceTypeArr.indexOf(row.serviceType) > 0){
+			return false;
+		}
+
+		else if (row.fileStatus == 'SCRUTINY'){
 			return true;
+		}
+			
 	}
 	/**
 	 * This method is use for application json option
@@ -554,7 +576,7 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		return `<b>Remarks :</b> ${this.queryrraiseRemarks}`;
 	}
 	isQueryRaiseDisplay(row) {
-		if (row.fileStatus === 'QUERY_RAISED') {
+		if (row.fileStatus === 'QUERY_RAISED' || row.fileStatus === 'REJECTED') {
 			return true;
 		} else {
 			return false;
