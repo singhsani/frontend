@@ -34,6 +34,7 @@ export class CommonPaybleComponent implements OnInit {
   isECRCSearch: boolean = false;
 
   isPropertyTax: boolean = false;
+  isWaterTax: boolean = false
   userServicesList = [];
   applicationrouter: any;
   redirectURLAfterPayment: any;
@@ -54,6 +55,7 @@ export class CommonPaybleComponent implements OnInit {
   selected: any;
 
   collectionModel: any;
+  collectionWaterModel: any;
 
   constructor(
     private formService: FormsActionsService,
@@ -130,7 +132,7 @@ export class CommonPaybleComponent implements OnInit {
     let retUrl: string = environment.returnUrl;
 
     let obj = {
-      payableServiceType: "PROFESSIONAL_TAX",
+      payableServiceType: payData.module.code != 'PROPERTY-TAX' ? payData.module.code : payData.payableServices.code  ,
       refNumber: payData.refNumber,
       amount: payData.amount,
       paymentMode: "NETBANKING",
@@ -138,6 +140,9 @@ export class CommonPaybleComponent implements OnInit {
       searchable: false
     }
 
+    if(payData.payableServices.code == 'PAY-PRO-TAX' ) {
+          obj['txtadditionalInfo1'] = 'PAY-PRO-TAX';
+    }
 
     let words = this.commonService.getToWords(payData.amount)
     let html =
@@ -238,8 +243,14 @@ export class CommonPaybleComponent implements OnInit {
       this.placeHolderMessage = 'PEC Number is Required';
     } else if (paySerCode === 'PAY-PRO-TAX') {
       this.placeholder = 'Property Number';
-    } else {
+      this.placeHolderMessage = 'Property Number is Required';
+    } else if(paySerCode === 'PAY-WTR-TAX'){
+      this.placeholder = 'Connection Number';
+      this.placeHolderMessage = 'Connection Number is Required';
+    }
+    else {
       this.placeholder = 'Reference Number';
+      this.placeHolderMessage = 'Reference Number is Required';
     }
 
     this.isRecordExists = false;
@@ -256,8 +267,12 @@ export class CommonPaybleComponent implements OnInit {
       this.getAmountDataProperty();
     } else if (serviceType === 'PAY_PROF_TAX') {
       this.isPropertyTax = false;
+      this.isWaterTax = false;
       this.getAmountData();
-    } else {
+    } else if(serviceType === 'PAY-WTR-TAX'){
+      this.getAmountDataWater();
+    }
+    else {
       this.isPropertyTax = false;
       this.getCitizenForm();
     }
@@ -284,6 +299,19 @@ export class CommonPaybleComponent implements OnInit {
 
 
   }
+
+  getAmountDataWater(){
+    this.isWaterTax = true;
+    this.collectionService.getWaterOccupierOutstandingAmount(this.paymentsForm.get('refNumber').value).subscribe(
+      (data) => {
+        this.collectionWaterModel = data.body;
+        this.model = data.body.payableAmount;
+        this.paymentsForm.get('amount').setValue(this.model);
+      },
+      (error) => {
+      });  
+  }
+
   /**
    * - This method is used to get the type of tax and referance number and get the amount from the API
    */
@@ -452,6 +480,12 @@ export class CommonPaybleComponent implements OnInit {
           this.setPayableServices('PROPERTY-TAX');
           this.paymentsForm.get('payableServices').get('code').setValue('PAY-PRO-TAX');
           this.showHideSearchable('PAY-PRO-TAX');
+        }
+        else if(this.selected == 'WATER-TAX'){
+          this.paymentsForm.get('module').get('code').setValue(this.selected);
+          this.setPayableServices('WATER-TAX');
+          this.paymentsForm.get('payableServices').get('code').setValue('PAY-WTR-TAX');
+          this.showHideSearchable('PAY-WTR-TAX');
         }
       },
       err => {
