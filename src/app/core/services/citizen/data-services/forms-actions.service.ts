@@ -373,6 +373,12 @@ export class FormsActionsService {
 				return this.http.post(`api/professional/taxPayment`, data);
 	}
 
+	savePropertyTaxPaymentDetails(data) {
+		return this.http.post(`property/collection/citizen-payment`, data);
+    }
+
+	
+
 	printProfReceipt(refNumber) {
 		this.requestURL = `api/professional/receipt/printReceipt/${refNumber}`;
 		return this.http.get(this.requestURL, 'printReceipt');

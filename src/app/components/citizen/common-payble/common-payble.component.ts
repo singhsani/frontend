@@ -132,7 +132,7 @@ export class CommonPaybleComponent implements OnInit {
     let retUrl: string = environment.returnUrl;
 
     let obj = {
-      payableServiceType: payData.module.code,
+      payableServiceType: payData.module.code != 'PROPERTY-TAX' ? payData.module.code : payData.payableServices.code  ,
       refNumber: payData.refNumber,
       amount: payData.amount,
       paymentMode: "NETBANKING",
@@ -140,6 +140,9 @@ export class CommonPaybleComponent implements OnInit {
       searchable: false
     }
 
+    if(payData.payableServices.code == 'PAY-PRO-TAX' ) {
+          obj['txtadditionalInfo1'] = 'PAY-PRO-TAX';
+    }
 
     let words = this.commonService.getToWords(payData.amount)
     let html =
