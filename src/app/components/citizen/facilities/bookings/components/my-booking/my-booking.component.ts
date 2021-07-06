@@ -701,4 +701,19 @@ export class MyBookingComponent implements OnInit {
     });
  	}
 
+ 	/*use cancellation Approve Report in VM file amphitheater*/
+  cancellationApproveReport(refNumber: any){
+    this.bookingService.cancellationApproveReport(refNumber).subscribe(resp => {
+      this.print(resp);
+    });
+  }
+
+  print(response) {
+      let sectionToPrint: any = document.getElementById('sectionToPrint');
+      sectionToPrint.innerHTML = response;
+      setTimeout(() => {
+          window.print();
+      });
+  }
+
 }

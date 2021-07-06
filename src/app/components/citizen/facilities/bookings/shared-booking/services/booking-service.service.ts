@@ -408,4 +408,9 @@ export class BookingService {
       this.requestURL = `api/booking/${this.resourceType}/depositRefundRequest?refNumber=${refNumber}`;
       return this.http.post(this.requestURL,'');
     }
+
+    cancellationApproveReport(refNumber: any) {
+      this.requestURL = `api/booking/${this.resourceType}/cancellationApproveReport?refNumber=${refNumber}`;
+      return this.http.get(this.requestURL,'printReceipt');
+    }
 }
