@@ -173,6 +173,11 @@
               {{'refund_request' | translate:translateKey}}
             </button>
 
+            <button mat-menu-item *ngIf="element.status == bookingConstant.CANCELLATION_APPROVED" data-toggle="modal" color="primary" (click)="cancellationApproveReport(element.refNumber)">
+              <mat-icon title="Print Receipt" color="primary">print</mat-icon>
+              {{'approved_receipt_reprint' | translate:translateKey}}
+            </button>
+
           </div>
 
           <!-- <button mat-menu-item color="primary" (click)="openJSONModal(template);jsonDisplay(element)">
@@ -383,7 +388,7 @@
       </div>
       <div class="row">
         <div class="col-md-12 ngSelect" formGroupName="bank">
-          <ng-select placeholder="{{'bank_name' | translate: translateKey}}" formControlName="code">
+          <ng-select placeholder="{{'bank_name' | translate: translateKey}}" required formControlName="code">
               <ng-option *ngFor="let bank of bankLists" [value]="bank.code">{{ bank.name }}</ng-option>
               <control-messages [control]="refundBankDetailsForm.get('bank')"></control-messages>
           </ng-select>
