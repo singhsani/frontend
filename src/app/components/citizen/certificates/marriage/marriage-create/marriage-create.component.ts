@@ -1493,7 +1493,18 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
      * This method is use reset value. 
      */
     changeReset(controlName: string) {
+       
         this.marriageFormGroup.get(controlName).reset();
+       
+        if(this.marriageFormGroup.get('applicantRelation').get('code').valid){
+            if(this.marriageFormGroup.get('applicantRelation').get('code').value == 'MR_OTHER_APPLICANT_RELATION'){
+                this.marriageFormGroup.get('applicantRelationOther').setValidators([Validators.required]);
+            }else{
+                this.marriageFormGroup.get('applicantRelationOther').clearValidators();
+            }
+            this.marriageFormGroup.get('applicantRelationOther').updateValueAndValidity();
+            this.CD.detectChanges();
+        }
     }
 
     /**
