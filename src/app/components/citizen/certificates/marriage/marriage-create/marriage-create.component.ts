@@ -619,6 +619,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
             groomParentsMiddleName: ['', [ValidationService.nameValidator, Validators.maxLength(50)]],
             groomParentsLastName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
             groomParentsBirthDate: [null, Validators.required],
+            groomParentsAge : [null],
             groomParentsAadharNumber: ['', Validators.maxLength(12)],
             groomParentsAddress: this.fb.group(this.addrComponent.addressControls()),
             groomParentsAddressResidence: this.fb.group(this.addrComponent.addressControls()),
@@ -631,6 +632,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
             brideParentsMiddleName: ['', [ValidationService.nameValidator, Validators.maxLength(50)]],
             brideParentsLastName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
             brideParentsBirthDate: [null, Validators.required],
+            brideParentsAge : [null],
             brideParentsAadharNumber: ['', Validators.maxLength(12)],
             brideParentsAddress: this.fb.group(this.addrComponent.addressControls()),
             brideParentsAddressResidence: this.fb.group(this.addrComponent.addressControls()),
@@ -643,6 +645,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
             priestMiddleName: ['', [ValidationService.nameValidator, Validators.maxLength(50)]],
             priestLastName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
             priestBirthDate: [null, Validators.required],
+            priestAge : [null],
             priestAadharNumber: ['', Validators.maxLength(12)],
             priestAddress: this.fb.group(this.addrComponent.addressControls()),
             priestAddressResidence: this.fb.group(this.addrComponent.addressControls()),
@@ -655,6 +658,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
             firstWitnessMiddleName: ['', [ValidationService.nameValidator, Validators.maxLength(50)]],
             firstWitnessLastName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
             firstWitnessBirthDate: [null, Validators.required],
+            firstWitnessAge : [null],
             firstWitnessAadharNumber: ['', Validators.maxLength(12)],
             firstWitnessAddress: this.fb.group(this.addrComponent.addressControls()),
 
@@ -663,6 +667,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
             secondWitnessMiddleName: ['', [ValidationService.nameValidator, Validators.maxLength(50)]],
             secondWitnessLastName: ['', [Validators.required, ValidationService.nameValidator, Validators.maxLength(50)]],
             secondWitnessBirthDate: [null, Validators.required],
+            secondWitnessAge : [null],
             secondWitnessAadharNumber: ['', Validators.maxLength(12)],
             secondWitnessAddress: this.fb.group(this.addrComponent.addressControls()),
 
@@ -756,6 +761,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
             groomNriFirstWitnessAddress: [null, Validators.maxLength(500)],
             groomNriFirstWitnessAddressGuj: [null, Validators.maxLength(1500)],
             groomNriFirstWitnessBirthDate: [null],
+            groomNriFirstWitnessAge : [null],
 
             groomNriSecondWitnessFirstName: [null, Validators.maxLength(50)],
             groomNriSecondWitnessMiddlName: [null, Validators.maxLength(50)],
@@ -766,6 +772,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
             groomNriSecondWitnessAddress: [null, Validators.maxLength(500)],
             groomNriSecondWitnessAddressGuj: [null, Validators.maxLength(1500)],
             groomNriSecondWitnessBirthDate: [null],
+            groomNriSecondWitnessAge : [null],
 
             brideNriFirstWitnessFirstName: [null, Validators.maxLength(50)],
             brideNriFirstWitnessMiddlName: [null, Validators.maxLength(50)],
@@ -776,6 +783,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
             brideNriFirstWitnessAddress: [null, Validators.maxLength(500)],
             brideNriFirstWitnessAddressGuj: [null, Validators.maxLength(1500)],
             brideNriFirstWitnessBirthDate: [null],
+            brideNriFirstWitnessAge:[null],
 
             brideNriSecondWitnessFirstName: [null, Validators.maxLength(50)],
             brideNriSecondWitnessMiddlName: [null, Validators.maxLength(50)],
@@ -786,6 +794,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
             brideNriSecondWitnessAddress: [null, Validators.maxLength(500)],
             brideNriSecondWitnessAddressGuj: [null, Validators.maxLength(1500)],
             brideNriSecondWitnessBirthDate: [null],
+            brideNriSecondWitnessAge : [null],
             groomDays : [null, Validators.max(365)],
             brideDays : [null, Validators.max(365)]
 
@@ -1021,19 +1030,38 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
             return obj.code === resCode;
         }), 'gujName');
     }
-
-    /**
-     * This method is calculate age.
-     * @param date : parents birth date
-     */
-    parentAge(date: string) {
+    
+    parentAgeBride(date: string,filed : string) {
         let days = 0;
         let year = 0;
         if (this.marriageFormGroup.get(date).value != null) {
             let bday = moment(this.marriageFormGroup.get(date).value, "YYYY-MM-DD");
             year = moment().diff(bday, 'years', false);
             days = moment().diff(bday.add(year, 'years'), 'days', false);
+            if(filed != ''){
+                this.marriageFormGroup.get(filed).setValue(year + " Year " + days + " Days");
+            }
+            return [year + " Year " + days + " Days"]
+        }
+        else {
+            return null
+        }
 
+    }
+    /**
+     * This method is calculate age.
+     * @param date : parents birth date
+     */
+    parentAge(date: string,filed : string) {
+        let days = 0;
+        let year = 0;
+        if (this.marriageFormGroup.get(date).value != null) {
+            let bday = moment(this.marriageFormGroup.get(date).value, "YYYY-MM-DD");
+            year = moment().diff(bday, 'years', false);
+            days = moment().diff(bday.add(year, 'years'), 'days', false);
+            if(filed != ''){
+                this.marriageFormGroup.get(filed).setValue(year + " Year " + days + " Days");
+            }
             return [year + " Year " + days + " Days"]
         }
         else {

@@ -708,7 +708,7 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput placeholder="Age:" [value]="parentAge('groomParentsBirthDate')" readonly />
+						<input matInput placeholder="Age:" formControlName="groomParentsAge" [value]="parentAge('groomParentsBirthDate','groomParentsAge')" readonly />
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
@@ -821,7 +821,7 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput placeholder="Age:" [value]="parentAge('brideParentsBirthDate')" readonly />
+						<input matInput placeholder="Age:" formControlName="brideParentsAge" [value]="parentAge('brideParentsBirthDate','brideParentsAge')" readonly />
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
@@ -931,7 +931,7 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput placeholder="Age:" [value]="parentAge('priestBirthDate')" readonly />
+						<input matInput placeholder="Age:" formControlName="priestAge" [value]="parentAge('priestBirthDate' , 'priestAge')" readonly />
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
@@ -1034,7 +1034,7 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput placeholder="Age:" [value]="parentAge('firstWitnessBirthDate')" readonly />
+						<input matInput placeholder="Age:" [value]="parentAge('firstWitnessBirthDate','firstWitnessAge')" readonly />
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
@@ -1126,7 +1126,7 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput placeholder="Age:" [value]="parentAge('secondWitnessBirthDate')" readonly />
+						<input matInput placeholder="Age:" [value]="parentAge('secondWitnessBirthDate','secondWitnessAge')" readonly />
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
@@ -1236,7 +1236,7 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput placeholder="Age:" [value]="parentAge('groomNriFirstWitnessBirthDate')"
+						<input matInput placeholder="Age:" [value]="parentAge('groomNriFirstWitnessBirthDate','groomNriFirstWitnessAge')"
 							readonly />
 					</mat-form-field>
 				</div>
@@ -1325,7 +1325,7 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput placeholder="Age:" [value]="parentAge('groomNriSecondWitnessBirthDate')"
+						<input matInput placeholder="Age:" [value]="parentAge('groomNriSecondWitnessBirthDate','groomNriSecondWitnessAge')"
 							readonly />
 					</mat-form-field>
 				</div>
@@ -1425,7 +1425,7 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput placeholder="Age:" [value]="parentAge('brideNriFirstWitnessBirthDate')"
+						<input matInput placeholder="Age:" [value]="parentAge('brideNriFirstWitnessBirthDate','brideNriFirstWitnessAge')"
 							readonly />
 					</mat-form-field>
 				</div>
@@ -1513,7 +1513,7 @@
 					</mat-form-field>
 
 					<mat-form-field class="col-md-4">
-						<input matInput placeholder="Age:" [value]="parentAge('brideNriSecondWitnessBirthDate')"
+						<input matInput placeholder="Age:" [value]="parentAge('brideNriSecondWitnessBirthDate','brideNriSecondWitnessAge')"
 							readonly />
 					</mat-form-field>
 				</div>
