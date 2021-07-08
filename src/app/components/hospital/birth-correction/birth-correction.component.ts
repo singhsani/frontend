@@ -211,7 +211,7 @@ export class BirthCorrectionComponent implements OnInit {
 		 */
 		createBirthCorrectionData(data) {
 			this.formService.createFormData().subscribe(res => {
-	
+				
 				this.birthCorrectionForm.patchValue(res);
 	
 				// this.config.documentList(res, this.uploadFileArray);
@@ -283,7 +283,9 @@ export class BirthCorrectionComponent implements OnInit {
 		getRegistrationNumberStatus() {
 	
 			this.formService.getRegistrationStatusFromNewgen(this.regStatusForm.value).subscribe(resp => {
+				
 				if (resp.success) {
+					
 					this.createBirthCorrectionData(resp.data);
 				}
 			}, err => {
@@ -352,11 +354,12 @@ export class BirthCorrectionComponent implements OnInit {
 			* This method for convert newgn response date to yyyy-mm-dd formate
 			*/
 		newgnDateconvert(controlName: any, date) {
+			
 			let dateString = date;
-			let dateParts = dateString.split("-");
+			let dateParts = dateString.split(" ");
 			let dateObject = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
 	
-			this.birthCorrectionForm.get(controlName).setValue(moment(dateObject).format("YYYY-MM-DD"));
+			this.birthCorrectionForm.get(controlName).setValue(moment(dateParts[0]).format("YYYY-MM-DD"));
 		}
 	
 		/**
