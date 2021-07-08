@@ -12,6 +12,8 @@ import { PaymentDataSharingService } from 'src/app/vmcshared/component/payment/p
 import { MatStepper } from '@angular/material';
 import { Router } from '@angular/router';
 import { CommonService as CommonService2 } from 'src/app/shared/services/common.service';
+import { FormsActionsService} from 'src/app/core/services/citizen/data-services/forms-actions.service';
+
 
 @Component({
   selector: 'app-bank-detail',
@@ -43,7 +45,8 @@ export class BankDetailComponent implements OnInit, OnDestroy {
     private commonservice2 :CommonService2,
     private router: Router,
     private vacancyPremiseCertificateService: VacancyPremiseCertificateService,
-    private alertService: AlertService) {
+    private alertService: AlertService,
+    private fromActionsService: FormsActionsService) {
 
   }
 
@@ -141,6 +144,7 @@ export class BankDetailComponent implements OnInit, OnDestroy {
           this.isShaved = true;
           this.model.vacancyPremiseCertficateId =  data.body.data.vacancyPremiseCertficateId;
           this.stepper.selectedIndex = 1;
+          this.vacancyPremiseCertificateDataSharingService.applicationNumber = data.body.data.applicationNo ;
           //this.alertService.success(data.body.message);
           this.getFormDataDocuments(this.model.vacancyPremiseCertficateId);
           //this.paymentDataSharingService.updatedDataModelFileDownload(data.body.data.responseDTOList);
@@ -190,25 +194,37 @@ export class BankDetailComponent implements OnInit, OnDestroy {
 
     this.mandatoryFileCheck().then(data => {
       if (data.status) {
-    this.vacancyPremiseCertificateService.approveDept(this.model.vacancyPremiseCertficateId).subscribe(
-      (data) => {
-        this.isApprovedorDecline = true;
-        // this.onClear();
-       //downloadFile(data, "approve-" + Date.now() + ".pdf", 'application/pdf');
-       this.alertService.success(data.message);
-       this.router.navigateByUrl('/citizen/my-applications');
-       this.paymentDataSharingService.updatedDataModelFileDownload(data.body.data);
-      },
-      (error) => {
-        this.commonService.callErrorResponse(error);
-      });
+        this.commonservice2.openDetailDialogBox().subscribe(details => {
+          if (details) {
+            var applicationNumber = this.vacancyPremiseCertificateDataSharingService.applicationNumber;
+            this.fromActionsService.setUserData(details, applicationNumber).subscribe(
+              (data) => {
+                if (data) {
+                  this.submit();
+                }
+              },
+              (error) => {
+                if (error.status === 400) {
+                  var errorMessage = '';
+                  error.error[0].propertyList.forEach(element => {
+                    errorMessage = errorMessage + element + "</br>";
+                  });
+                  this.alertService.error(errorMessage);
+                }
+                else {
+                  this.alertService.error(error.error.message);
+                }
+              });
+          }
 
-    } else {
-      this.commonservice2.openAlert("File Upload", `Please upload file for "${data.fileName}"`, "warning");
-      return
-    }
+        })
 
-  })
+      } else {
+        this.commonservice2.openAlert("File Upload", `Please upload file for "${data.fileName}"`, "warning");
+        return
+      }
+
+    })
 
   }
   
@@ -262,6 +278,20 @@ export class BankDetailComponent implements OnInit, OnDestroy {
   }
 
 
+submit(){
 
+  this.vacancyPremiseCertificateService.approveDept(this.model.vacancyPremiseCertficateId).subscribe(
+    (data) => {
+      this.isApprovedorDecline = true;
+      // this.onClear();
+     //downloadFile(data, "approve-" + Date.now() + ".pdf", 'application/pdf');
+     this.alertService.success(data.message);
+     this.router.navigateByUrl('/citizen/my-applications');
+     this.paymentDataSharingService.updatedDataModelFileDownload(data.body.data);
+    },
+    (error) => {
+      this.commonService.callErrorResponse(error);
+    });
+}
 
 }

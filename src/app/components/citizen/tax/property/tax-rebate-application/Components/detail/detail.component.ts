@@ -6,6 +6,7 @@ import { AlertService } from 'src/app/vmcshared/Services/alert.service';
 import { downloadFile } from 'src/app/vmcshared/downloadFile';
 import { MatStepper } from '@angular/material';
 import { CommonService } from 'src/app/shared/services/common.service';
+import { FormsActionsService} from 'src/app/core/services/citizen/data-services/forms-actions.service';
 
 @Component({
   selector: 'app-detail',
@@ -20,6 +21,7 @@ export class DetailComponent implements OnInit {
   financialYear = [];
   isShaved: boolean = false;
   isApprovedorDecline: boolean = false;
+  serviceFormId: String;
 
   taxrebateDocumentUploadDocs : Array<any> = [];
 
@@ -27,7 +29,8 @@ export class DetailComponent implements OnInit {
     private taxRebateApplicationDataSharingService: TaxRebateApplicationDataSharingService,
     private taxRebateApplicationService: TaxRebateApplicationService,
     private alertService: AlertService,
-    private commonService: CommonService) {
+    private commonService: CommonService,
+    private fromActionsService: FormsActionsService) {
 
   }
 
@@ -79,7 +82,8 @@ export class DetailComponent implements OnInit {
       this.taxRebateApplicationService.save(this.model).subscribe(
         (data) => {
           this.isShaved = true;
-          this.model.taxRebateApplicationId = data.body.data;
+          this.model.taxRebateApplicationId = data.body.data[0];
+          this.taxRebateApplicationDataSharingService.applicationNumber = data.body.data[1];
           //this.alertService.success(data.body.message);
           this.stepper.selectedIndex = 1;
           this.getFormDataDocuments(this.model.taxRebateApplicationId);
@@ -103,6 +107,9 @@ export class DetailComponent implements OnInit {
     this.taxrebateDocumentUploadDocs = [];
     this.taxRebateApplicationService.gettaxrabitDocUpload(id).subscribe(
       (data) => {
+        if (data && data.length > 0) {
+          this.serviceFormId = data[0].id;
+        }
         data.forEach(app => {
           this.taxrebateDocumentUploadDocs.push(app);
         });
@@ -114,27 +121,39 @@ export class DetailComponent implements OnInit {
   }
 
   onSubmitApproved() {
-    if(this.model.valid){
-      this.taxRebateApplicationService.approveDept({ taxRebateApplicationId: this.model.taxRebateApplicationId }).subscribe(
-        (data) => {
-          this.alertService.success(data.body.message);
-        },
-        (error) => {
-          if (error.status === 400) {
-            var errorMessage = '';
-            error.error[0].propertyList.forEach(element => {
-              errorMessage = errorMessage + element + "</br>";
-            });
-            this.alertService.error(errorMessage);
+    this.mandatoryFileCheck().then(data => {
+      if (data.status) {
+        this.commonService.openDetailDialogBox().subscribe(details => {
+          if (details) {
+            var applicationNumber = this.taxRebateApplicationDataSharingService.applicationNumber
+            this.fromActionsService.setUserData(details, applicationNumber).subscribe(
+              (data) => {
+                if (data) {
+                  this.submit();
+                }
+              },
+              (error) => {
+                if (error.status === 400) {
+                  var errorMessage = '';
+                  error.error[0].propertyList.forEach(element => {
+                    errorMessage = errorMessage + element + "</br>";
+                  });
+                  this.alertService.error(errorMessage);
+                }
+                else {
+                  this.alertService.error(error.error.message);
+                }
+              });
           }
-          else {
-            this.alertService.error(error.error.message);
-          }
+
         })
-    }else{
-      this.commonService.openAlert("Field Error", "Please fill all the required fields", 'warning');
-    }
-    
+
+      } else {
+        this.commonService.openAlert("File Upload", `Please upload file for "${data.fileName}"`, "warning");
+      }
+
+    })
+
   }
 
   onDecline() {
@@ -177,5 +196,49 @@ export class DetailComponent implements OnInit {
         }
       })
   }
+
+  mandatoryFileCheck() {
+    return new Promise<any>((resolve, reject) => {
+      this.taxRebateApplicationService.getAttachmentList(this.serviceFormId).subscribe(uploadedDocs => {
+        if (uploadedDocs) {
+          let tempArray = [];
+          uploadedDocs.forEach(element => {
+            tempArray.push(element['fieldIdentifier']);
+          });
+          this.taxrebateDocumentUploadDocs.forEach(doc => {
+            if (doc.mandatory && tempArray.indexOf(doc.fieldIdentifier) === -1) {
+              resolve({ fileName: doc.documentLabelEn, status: false })
+            }
+          });
+          resolve({ fileName: "", status: true });
+        } else {
+          resolve({ fileName: "", status: true })
+        }
+      })
+    })
+  }
+
+  submit() {
+
+    this.taxRebateApplicationService.approveDept({ taxRebateApplicationId: this.model.taxRebateApplicationId }).subscribe(
+      (data) => {
+        this.alertService.success(data.body.message);
+      },
+      (error) => {
+        if (error.status === 400) {
+          var errorMessage = '';
+          error.error[0].propertyList.forEach(element => {
+            errorMessage = errorMessage + element + "</br>";
+          });
+          this.alertService.error(errorMessage);
+        }
+        else {
+          this.alertService.error(error.error.message);
+        }
+      })
+
+  }
+
+
 
 }

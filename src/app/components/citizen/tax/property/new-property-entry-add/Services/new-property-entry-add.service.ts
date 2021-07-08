@@ -194,4 +194,10 @@ export class NewPropertyEntryAddService {
     return this.http.get<Array<Object>>(`${Constants.assessmentModuleApiUrl}basic/attachments?serviceFormId=${serviceFormId}`);
   }
 
+  saveApplicantDetails(data:any){
+    return this.http.post(`${Constants.commonApiUrl}api/form/propertyAssessment/saveApplicantDetails`,data,
+    { observe: 'response' })
+    .pipe(map((response: any) => response)) 
+  }
+
 }

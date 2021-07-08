@@ -77,4 +77,8 @@ export class TaxRebateApplicationService {
       .pipe(map((response: any) => response))
   }
 
+  getAttachmentList(serviceFormId) {
+    return this.http.get<Array<Object>>(`${Constants.serverApiIp}/property/taxrebate/application/attachments?serviceFormId=${serviceFormId}`);
+  }
+
 }

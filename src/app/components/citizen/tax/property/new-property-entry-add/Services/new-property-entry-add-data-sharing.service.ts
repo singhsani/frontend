@@ -6,6 +6,8 @@ import { BehaviorSubject, Observable } from 'rxjs';
 @Injectable()
 export class NewPropertyEntryAddDataSharingService {
 
+  applicationNo :string ;
+
   modelMoveStepper: any = null;
   dataSourceMoveStepper = new BehaviorSubject(this.modelMoveStepper);
   observableMoveStepper = this.dataSourceMoveStepper.asObservable();

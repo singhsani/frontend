@@ -6,6 +6,7 @@ import { AlertService } from 'src/app/vmcshared/Services/alert.service';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CommonService } from 'src/app/shared/services/common.service';
+import { FormsActionsService} from 'src/app/core/services/citizen/data-services/forms-actions.service';
 
 @Component({
   selector: 'app-transfer-document-upload',
@@ -23,7 +24,8 @@ export class TransferDocumentUploadComponent implements OnInit {
     private transferPropertyService: TransferPropertyService,
     private router: Router,
     private commonService: CommonService,
-    private alertService: AlertService) {
+    private alertService: AlertService,
+    private fromActionsService: FormsActionsService) {
   }
 
   ngOnInit() {
@@ -41,27 +43,32 @@ export class TransferDocumentUploadComponent implements OnInit {
 
     this.mandatoryFileCheck().then(data => {
       if (data.status) {
-        if (formDetail.form.valid) {
-          this.transferPropertyService.submitProperty(this.propertyDetailModel.propertyTransferId).subscribe(
-            (data) => {
-              this.alertService.success(data.body.message);
-              this.transferPropertyDataSharingService.updateDataSourceMoveStepper(0);
-              // this.router.navigate(['/citizen/dashboard']);
-              this.router.navigateByUrl('/citizen/my-applications');
-            },
-            (error) => {
-              if (error.status === 400) {
-                var errorMessage = '';
-                error.error[0].propertyList.forEach(element => {
-                  errorMessage = errorMessage + element + "</br>";
-                });
-                this.alertService.info(errorMessage);
-              }
-              else {
-                this.alertService.info(error.error.message);
-              }
-            })
-        }
+
+        this.commonService.openDetailDialogBox().subscribe(details => {
+          if (details) {
+            var applicationNumber = this.transferPropertyDataSharingService.applicationNo;
+            this.fromActionsService.setUserData(details, applicationNumber).subscribe(
+              (data) => {
+                if (data) {
+                  this.submit(formDetail);
+                }
+              },
+              (error) => {
+                if (error.status === 400) {
+                  var errorMessage = '';
+                  error.error[0].propertyList.forEach(element => {
+                    errorMessage = errorMessage + element + "</br>";
+                  });
+                  this.alertService.error(errorMessage);
+                }
+                else {
+                  this.alertService.error(error.error.message);
+                }
+              });
+          }
+
+        })
+
 
       } else {
         this.commonService.openAlert("File Upload", `Please upload file for "${data.fileName}"`, "warning");
@@ -119,5 +126,31 @@ export class TransferDocumentUploadComponent implements OnInit {
     })
   }
 
+
+  submit(formDetail){
+
+    if (formDetail.form.valid) {
+      this.transferPropertyService.submitProperty(this.propertyDetailModel.propertyTransferId).subscribe(
+        (data) => {
+          this.alertService.success(data.body.message);
+          this.transferPropertyDataSharingService.updateDataSourceMoveStepper(0);
+          // this.router.navigate(['/citizen/dashboard']);
+          this.router.navigateByUrl('/citizen/my-applications');
+        },
+        (error) => {
+          if (error.status === 400) {
+            var errorMessage = '';
+            error.error[0].propertyList.forEach(element => {
+              errorMessage = errorMessage + element + "</br>";
+            });
+            this.alertService.info(errorMessage);
+          }
+          else {
+            this.alertService.info(error.error.message);
+          }
+        })
+    }
+
+  }
 
 }

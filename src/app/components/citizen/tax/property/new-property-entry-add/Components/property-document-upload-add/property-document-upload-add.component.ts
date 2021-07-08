@@ -6,7 +6,9 @@ import { Router } from '@angular/router';
 import { AlertService } from 'src/app/vmcshared/Services/alert.service';
 import { ManageRoutes } from 'src/app/config/routes-conf';
 import { CommonService } from 'src/app/shared/services/common.service';
-
+import { MatDialog, MatDialogConfig } from '@angular/material';
+import { ApplicantDetailsComponent } from 'src/app/shared/components/applicant-details/applicant-details.component';
+import { FormsActionsService} from 'src/app/core/services/citizen/data-services/forms-actions.service';
 @Component({
   selector: 'app-property-document-upload-add',
   templateUrl: './property-document-upload-add.component.html',
@@ -24,7 +26,9 @@ export class PropertyDocumentUploadAddComponent implements OnInit {
     private newNewPropertyEntryAddService: NewPropertyEntryAddService,
     private router: Router,
     private alertService: AlertService,
-    private commonService: CommonService) {
+    private commonService: CommonService,
+    private dialog: MatDialog,
+    private fromActionsService: FormsActionsService) {
     this.modelProperty = {};
   }
 
@@ -59,33 +63,39 @@ export class PropertyDocumentUploadAddComponent implements OnInit {
   }
 
   onSubmit() {
-    this.mandatoryFileCheck().then( data => {
+    this.mandatoryFileCheck().then(data => {
 
-    if(data.status) {
-    this.newNewPropertyEntryAddService.submit(this.modelProperty.propertyBasicId).subscribe(
-      (data) => {
-        if (data.status === 200) {
-          this.alertService.success(data.body.message);
-          //this.newNewPropertyEntryAddDataSharingService.updateDataSourceMoveStepper(4);
-          this.router.navigateByUrl(ManageRoutes.getFullRoute('CITIZENDASHBOARD'));
-        }
-      },
-      (error) => {
-        if (error.status === 400) {
-          var errorMessage = '';
-          error.error[0].propertyList.forEach(element => {
-            errorMessage = errorMessage + element + "</br>";
-          });
-          this.alertService.error(errorMessage);
-        }
-        else {
-          this.alertService.error(error.error.message);
-        }
-      });
-    }  else {
-      this.commonService.openAlert("File Upload", `Please upload file for "${data.fileName}"`, "warning");
-      return
-    }
+      if (data.status) {
+
+        this.commonService.openDetailDialogBox().subscribe(details => {
+          if (details) {
+            var applicationNumber = this.newNewPropertyEntryAddDataSharingService.applicationNo;
+            this.fromActionsService.setUserData(details, applicationNumber).subscribe(
+              (data) => {
+                if (data) {
+                  this.submit();
+                }
+              },
+              (error) => {
+                if (error.status === 400) {
+                  var errorMessage = '';
+                  error.error[0].propertyList.forEach(element => {
+                    errorMessage = errorMessage + element + "</br>";
+                  });
+                  this.alertService.error(errorMessage);
+                }
+                else {
+                  this.alertService.error(error.error.message);
+                }
+              });
+          }
+
+        })
+
+      } else {
+        this.commonService.openAlert("File Upload", `Please upload file for "${data.fileName}"`, "warning");
+        return
+      }
     })
 
   }
@@ -113,6 +123,32 @@ export class PropertyDocumentUploadAddComponent implements OnInit {
         }
       })
     })
+  }
+
+  submit() {
+
+    this.newNewPropertyEntryAddService.submit(this.modelProperty.propertyBasicId).subscribe(
+      (data) => {
+        if (data.status === 200) {
+          this.alertService.success(data.body.message);
+          //this.newNewPropertyEntryAddDataSharingService.updateDataSourceMoveStepper(4);
+          this.router.navigateByUrl(ManageRoutes.getFullRoute('CITIZENDASHBOARD'));
+        }
+      },
+      (error) => {
+        if (error.status === 400) {
+          var errorMessage = '';
+          error.error[0].propertyList.forEach(element => {
+            errorMessage = errorMessage + element + "</br>";
+          });
+          this.alertService.error(errorMessage);
+        }
+        else {
+          this.alertService.error(error.error.message);
+        }
+      });
+
+    
   }
 
 }

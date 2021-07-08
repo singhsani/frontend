@@ -6,6 +6,7 @@ import { BehaviorSubject } from 'rxjs';
 @Injectable()
 export class VacancyPremiseCertificateDataSharingService {
   
+  applicationNumber :any;
   isShowForm: boolean = false;
   dataSourceIsShowForm = new BehaviorSubject<boolean>(this.isShowForm);
   observableIsShowForm = this.dataSourceIsShowForm.asObservable();

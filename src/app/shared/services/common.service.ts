@@ -2,15 +2,17 @@ import { BehaviorSubject } from 'rxjs/Rx';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 import { environment } from '../../../environments/environment';
-
+import { AlertService } from 'src/app/vmcshared/Services/alert.service';
+import { ApplicantDetailsComponent } from 'src/app/shared/components/applicant-details/applicant-details.component';
+import { FormsActionsService} from 'src/app/core/services/citizen/data-services/forms-actions.service';
 
 import { SessionStorageService } from 'angular-web-storage';
 
 import swal from 'sweetalert2';
 import * as _ from 'lodash';
 import * as moment from 'moment';
-import { MatDialogConfig } from '@angular/material';
-
+import { MatDialog,MatDialogConfig } from '@angular/material';
+import { Router } from '@angular/router';
 
 @Injectable({
 	providedIn: 'root'
@@ -28,7 +30,10 @@ export class CommonService {
 	public isLoading = new BehaviorSubject(false);
 
 
-	constructor(private session: SessionStorageService) { }
+	constructor(private session: SessionStorageService,
+		private dialog: MatDialog,
+		private alertService: AlertService,
+		) { }
 
 	/**
 	 * This method is use for return image URL
@@ -349,4 +354,22 @@ export class CommonService {
 						}
 					return words;
 	}
+
+	openDetailDialogBox(){
+		return this.openDialogBox()
+	}
+
+	openDialogBox() {
+		const dialogConfig = new MatDialogConfig();
+	
+		dialogConfig.disableClose = true;
+		dialogConfig.autoFocus = true;
+		dialogConfig.data = {};
+	
+		const dialogRef = this.dialog.open(ApplicantDetailsComponent, dialogConfig);
+	    return dialogRef.afterClosed()
+	
+	  }
+
+
 }

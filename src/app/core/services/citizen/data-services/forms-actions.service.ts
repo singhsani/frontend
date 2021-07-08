@@ -473,5 +473,22 @@ export class FormsActionsService {
 		return this.http.get(this.requestURL, 'printReceipt');
 	}
 
+	setUserData(details, applicationNumber: any) {
+
+		var applicantDetalis = {
+
+			applicantName: details.applicantName,
+			emailId: details.email,
+			mobileNo: details.cellNo,
+			applicationNo: applicationNumber
+		}
+		return this.saveApplicantDetails(applicantDetalis);
+
+	}
+
+	saveApplicantDetails(data:any){
+		this.requestURL = `api/form/propertyAssessment/saveApplicantDetails`;
+		return this.http.post(this.requestURL, data);
+	  }
 
 }
