@@ -129,12 +129,19 @@ export class CommonPaybleComponent implements OnInit {
 
     this.paymentsForm.get('payableServices').get('code').setValue('PROFESSIONAL_TAX');
 
+    let updateAmount = '';
+    if(payData.module.code == 'PROPERTY-TAX'){
+      updateAmount = this.model
+    }else{
+      updateAmount = payData.amount;
+    }
+
     let retUrl: string = environment.returnUrl;
 
     let obj = {
       payableServiceType: payData.module.code != 'PROPERTY-TAX' ? payData.module.code : payData.payableServices.code  ,
       refNumber: payData.refNumber,
-      amount: payData.amount,
+      amount: updateAmount,
       paymentMode: "NETBANKING",
       returnUrl: retUrl,
       searchable: false
@@ -144,13 +151,13 @@ export class CommonPaybleComponent implements OnInit {
           obj['txtadditionalInfo1'] = 'PAY-PRO-TAX';
     }
 
-    let words = this.commonService.getToWords(payData.amount)
+    let words = this.commonService.getToWords(updateAmount)
     let html =
       `
 					<div class="text-center">
 						<h2>Total Fee Pay</h2>
 						<div class="payAmount">
-							<i class="fa fa-inr" aria-hidden="true">` + payData.amount + `</i>
+							<i class="fa fa-inr" aria-hidden="true">` + updateAmount + `</i>
 						</div>
 						<p>Rupees in words</p>`
       + words + `
@@ -261,7 +268,6 @@ export class CommonPaybleComponent implements OnInit {
   }
 
   getServices() {
-
     let serviceType = this.paymentsForm.get('payableServices').get('code').value;
     if (serviceType === 'PAY-PRO-TAX') {
       this.getAmountDataProperty();
@@ -279,7 +285,6 @@ export class CommonPaybleComponent implements OnInit {
 
   }
   getAmountDataProperty() {
-
     this.isPropertyTax = true;
 
     this.collectionService.getoccupierOutstandingAmount({ propertyNo: this.paymentsForm.get('refNumber').value }).subscribe(
@@ -289,7 +294,7 @@ export class CommonPaybleComponent implements OnInit {
           this.collectionModel = data.body;
           this.model = this.collectionModel.payableAmount;
           this.paymentsForm.get('amount').setValue(this.model);
-
+          console.log("model: "+this.model)
         }
       },
       (error) => {

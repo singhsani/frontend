@@ -241,7 +241,8 @@
                   <td>{{collectionModel?.dueAmount}}</td>
                   <td>{{collectionModel?.rebateAmount}}</td>
                   <td>{{dues.intrestOrPenaltyAmount}}</td>
-                  <td OnlyNumber [textContent]="model" (input)="model=$event.target.textContent" contentEditable>{{collectionModel?.payableAmount}}</td> 
+                  <!-- <td OnlyNumber [textContent]="model" (input)="model=$event.target.textContent" contentEditable>{{collectionModel?.payableAmount}}</td>  -->
+                  <td>{{collectionModel?.payableAmount}}</td>
                 </tr>
                 
               </ng-container>
