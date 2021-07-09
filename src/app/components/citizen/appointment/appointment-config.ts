@@ -11,6 +11,7 @@ export class AppointmentConfig extends CitizenConfig {
     public  APPOINTMENT_SCHEDULE_ERROR = "Appointmet Schedule Error"
     public  ONLY_ONE_APPOINTMENT_ALLOWED_CODE = "ONLY_ONE_APPOINTMENT_ALLOWED"
     public  ONLY_ONE_APPOINTMENT_ALLOWED_ERROR = "You can schedule only one appointment for application"
+    public  ONLY_ONE_APPOINTMENT_ALLOWED_ERROR_MESSAGE = "Please delete the existing booked appointment inorder to reschedule new appointment"
 
     constructor() {
         super();

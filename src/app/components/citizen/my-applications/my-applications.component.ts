@@ -456,6 +456,10 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		if (row.fileStatus == 'SUBMITTED' && row.serviceType == 'WATER_NEW_DRAINAGE_CONNECTION') {
 			return true;
 		}
+		if (row.fileStatus == 'SUBMITTED' && row.serviceType == 'MARRIAGE_REGISTRATION') {
+			return true;
+		}
+
 	}
 
 	isDownloadDisplay(row) {
@@ -493,7 +497,10 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 			return false;
 	}
 	isPrintReceiptPayment(row) {
-		if (row.fileStatus == 'PAYMENT')
+		if(row.fileStatus == 'PAYMENT' && row.serviceType == 'MARRIAGE_REGISTRATION'){
+			return false;
+		}
+		else if (row.fileStatus == 'PAYMENT')
 			return true;
 		else
 			return false;
