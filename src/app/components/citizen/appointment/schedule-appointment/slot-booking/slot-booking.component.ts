@@ -155,6 +155,12 @@ export class SlotBookingComponent implements OnInit {
 		})
 	}
 
+	disableSunday(d: Date) {
+		if(d.getDay() != 0) {
+		  return d;
+		}
+	  }
+
 	/**
 	* This method use for get available slot 
 	*/
@@ -252,7 +258,7 @@ export class SlotBookingComponent implements OnInit {
 			}, err => {
 				if (err.error[0]) {
 					if (err.error[0].code == this.config.ONLY_ONE_APPOINTMENT_ALLOWED_CODE) {
-						this.commonService.openAlert(this.config.APPOINTMENT_SCHEDULE_ERROR, this.config.ONLY_ONE_APPOINTMENT_ALLOWED_ERROR, "error");
+						this.commonService.openAlert(this.config.APPOINTMENT_SCHEDULE_ERROR, this.config.ONLY_ONE_APPOINTMENT_ALLOWED_ERROR_MESSAGE, "error");
 					}
 				}
 			})
@@ -268,7 +274,7 @@ export class SlotBookingComponent implements OnInit {
 	redirectToCancel(uniqueId) {
 		this.commonService.deleteAlert('Are you sure?', "", 'warning', '', performDelete => {
 			this.appointmentService.cancelSlot(this.formId, uniqueId).subscribe(res => {
-				this.commonService.successAlert('Canceled!', '', 'success');
+				this.commonService.successAlert('Cancelled!', '', 'success');
 				this.modalRef.hide();
 				//this.getSlot();
 				this.appointmentList();
