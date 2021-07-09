@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import * as moment from 'moment';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 // import { BookingService } from '../../../../../core/services/citizen/data-services/booking.service';
 import { ValidationService } from 'src/app/shared/services/validation.service';
 import { CommonService } from 'src/app/shared/services/common.service';
@@ -106,7 +106,9 @@ export class BookTheaterComponent implements OnInit {
         private commonService: CommonService,
         private modalService: BsModalService,
         protected formService: FormsActionsService,
-        private router: Router) {
+        private router: Router,
+        private route: ActivatedRoute
+        ) {
         this.bookingUtils = new BookingUtils(formService, toster);
         this.bookingService.resourceType = 'amphiTheater';
     }
@@ -348,6 +350,7 @@ export class BookTheaterComponent implements OnInit {
                 if (err.status == 402) {
                     // this.bookingUtils.redirectToPayment(err, this.commonService, this.bookingService, this.theaterBookingForm, this.router);
                     this.bookingUtils.redirectToCCAvenuePayment(err, this.commonService, this.bookingService, this.paymentGateway ,this.theaterBookingForm, this.router);
+                    this.router.navigate(['../../my-bookings'], {relativeTo: this.route});
                     return;
                 } else if (err.error[0].code == this.bookingConstants.INVALID_BOOKING_STATUS) {
                     this.commonService.openAlert("Invalid Booking Status", err.error[0].message, "warning", "", cb => {
