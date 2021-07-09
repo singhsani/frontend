@@ -214,12 +214,20 @@ export class GatewayResponseComponent implements OnInit {
 						this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(payRespData.serviceDetail.code);
 						this.formService.submitFormData(payRespData.serviceFormId).subscribe(res => {
 							if (res) {
+									if(this.formService.apiType == 'APLicense'){
+										setTimeout(() => {
+											const url = '/citizen/my-applications' +'?id=' +payRespData.serviceFormId+ '&apiCode=' +payRespData.serviceDetail.code
+											this.router.navigateByUrl(url);
+										}, 10000);
+		
+										this.interVal();
+									}else{
+										setTimeout(() => {
+											this.redirectToMyApplication(data.myApplicationUrl, payRespData.refNumber, payData.resourceType, payRespData.payableServiceType);
+										}, 10000);
 
-								setTimeout(() => {
-									this.redirectToMyApplication(data.myApplicationUrl, payRespData.refNumber, payData.resourceType, payRespData.payableServiceType);
-								}, 10000);
-
-								this.interVal();
+										this.interVal();
+									}
 							}
 						});
 					}

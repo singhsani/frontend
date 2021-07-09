@@ -416,6 +416,10 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		else if (row.serviceType === 'SHOP_ESTAB_APPLICATION' && !(this.commonService.fromAdmin())) {
 			return false;
 		}
+		
+		else if(row.serviceType == 'APL_LICENCE'){
+			return false;
+		}
 		else if (row.fileStatus != 'DRAFT'){
 			return true;
 		}
@@ -453,6 +457,7 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 			return true;
 		}
 	}
+
 	isDownloadDisplay(row) {
 		
 		const hideDownloadBtnServiceTypeArr = ['FS_FINAL_FIRE_NOC', 'FS_REVISED_FIRE_NOC', 'FS_RENEWAL_NOC', 'FS_TEMP_STRUCT_NOC', 'FS_TEMP_FIREWORKSHOP_NOC',
