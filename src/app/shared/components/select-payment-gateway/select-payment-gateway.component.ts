@@ -88,7 +88,9 @@ export class SelectPaymentGatewayComponent implements OnInit {
       this.router.navigate(['hospital/my-applications']);
     } else if (this.applicationType == 'FACILITYBOOKING') {
       this.router.navigate(['citizen/bookings/my-bookings']);
-    } else if (this.applicationType == 'ticketing') {
+    }else if (this.applicationType == 'booking') {
+      this.router.navigate(['citizen/bookings/my-bookings']);
+    }else if (this.applicationType == 'ticketing') {
       this.router.navigate(['citizen/ticketings/my-ticketings']);
     } else if (this.applicationType == 'Zooticketing') {
       this.confirmRef.hide();
