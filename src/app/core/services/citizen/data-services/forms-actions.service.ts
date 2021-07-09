@@ -2,9 +2,11 @@ import { Injectable } from '@angular/core';
 import { HttpService } from '../../../../shared/services/http.service';
 import { Observable } from 'rxjs/Observable';
 import { SessionStorageService } from 'angular-web-storage';
-import { HttpEventType } from '@angular/common/http';
+import { HttpClient, HttpEventType } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 import { CommonService } from 'src/app/shared/services/common.service';
+import { map } from 'rxjs/operators';
+import { Constants } from 'src/app/vmcshared/Constants';
 
 @Injectable()
 export class FormsActionsService {
@@ -21,7 +23,8 @@ export class FormsActionsService {
 	 * @param http - Declare Http Service property.
 	 */
 	constructor(private http: HttpService,
-		private commonService: CommonService) {
+		private commonService: CommonService,
+		private httpClient: HttpClient,) {
 
 	}
 
@@ -372,6 +375,14 @@ export class FormsActionsService {
 	saveTaxPaymentDetails(data) {
 				return this.http.post(`api/professional/taxPayment`, data);
 	}
+
+
+
+	savePropertyTaxPaymentDetails(data: any) {
+		return this.httpClient.post(`${Constants.assessmentModuleApiUrl}collection/citizen-payment`, data,
+		  { responseType: 'arraybuffer' })
+		  .pipe(map((response: any) => response))
+	  }
 
 	printProfReceipt(refNumber) {
 		this.requestURL = `api/professional/receipt/printReceipt/${refNumber}`;

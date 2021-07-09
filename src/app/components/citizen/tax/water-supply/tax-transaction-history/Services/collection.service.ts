@@ -14,6 +14,12 @@ export class CollectionService {
       .pipe(map((response: any) => response))
   }
 
+  getWaterOccupierOutstandingAmount(connectionNo: string) {
+    return this.http.get(`${Constants.baseApiWaterUrl}connection/active/outsatndingDetails?connectionNo=${connectionNo}`,
+      { observe: 'response' })
+      .pipe(map((response: any) => response))
+  }
+
   generate(data: any) {
     return this.http.post(`${Constants.assessmentModuleApiUrl}collection/generate`, data,
       { responseType: 'arraybuffer' })

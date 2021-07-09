@@ -179,7 +179,7 @@ export class MyBookingComponent implements OnInit {
       			}
       		});
       		this.modalReqRef = this.modalService.show(template, Object.assign({ ignoreBackdropClick: true }, { class: 'gray modal-lg customWidth' }));
-      		if (element.resourceType == "AMPHI_THEATER" || element.resourceType == "TOWNHALL" || element.resourceType == "STADIUM" || element.resourceType =="CHILDREN_THEATER") {
+      		if (element.resourceType == "AMPHI_THEATER" || element.resourceType == "TOWNHALL" || element.resourceType == "STADIUM" || element.resourceType =="CHILDREN_THEATER" || element.resourceType == "ATITHIGRUH") {
       			this.allSlotDefualtSelected();
       			this.isAmphiCancellation = true;
       		}
@@ -700,5 +700,20 @@ export class MyBookingComponent implements OnInit {
     			this.commonService.openAlert('Error', err.message, 'warning');
     });
  	}
+
+ 	/*use cancellation Approve Report in VM file amphitheater*/
+  cancellationApproveReport(refNumber: any){
+    this.bookingService.cancellationApproveReport(refNumber).subscribe(resp => {
+      this.print(resp);
+    });
+  }
+
+  print(response) {
+      let sectionToPrint: any = document.getElementById('sectionToPrint');
+      sectionToPrint.innerHTML = response;
+      setTimeout(() => {
+          window.print();
+      });
+  }
 
 }

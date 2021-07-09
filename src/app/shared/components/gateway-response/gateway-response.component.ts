@@ -7,6 +7,7 @@ import { ManageRoutes } from './../../../config/routes-conf';
 import { FormsActionsService } from './../../../core/services/citizen/data-services/forms-actions.service';
 import { SessionStorageService } from 'angular-web-storage';
 import { BookingConstants, BookingUtils } from 'src/app/components/citizen/facilities/bookings/config/booking-config';
+import { downloadFile } from 'src/app/vmcshared/downloadFile';
 
 
 @Component({
@@ -173,7 +174,24 @@ export class GatewayResponseComponent implements OnInit {
 				}
 				//this.redirectToHome();
 			});
-		} else {
+		} else if (data.payableServiceType == 'PAY-PRO-TAX') {
+			payData.amount = Number(data.amount);
+			this.formService.savePropertyTaxPaymentDetails(payData).subscribe(res => {
+				if (res) {
+
+					downloadFile(res, "collection-" + Date.now() + ".pdf", 'application/pdf');
+					setTimeout(() => {
+						this.router.navigateByUrl(ManageRoutes.getFullRoute('CITIZENMYTRANSACTIONS'));
+						//this.redirectToMyApplication(ManageRoutes.getFullRoute('CITIZENMYTRANSACTIONS'),res.data.responseData.refNumber );
+					}, 10000);
+					this.interVal();
+
+
+				}
+				//this.redirectToHome();
+			});
+
+		}else {
 			if (this.isSearchanble == "true") {
 				setTimeout(() => {
 					this.redirectToMyApplication('/citizen/my-applications', this.dispData.refNumber, payData.resourceType, this.dispData.payableServiceType);

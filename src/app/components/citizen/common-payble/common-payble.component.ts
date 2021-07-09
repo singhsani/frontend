@@ -34,6 +34,7 @@ export class CommonPaybleComponent implements OnInit {
   isECRCSearch: boolean = false;
 
   isPropertyTax: boolean = false;
+  isWaterTax: boolean = false
   userServicesList = [];
   applicationrouter: any;
   redirectURLAfterPayment: any;
@@ -54,6 +55,7 @@ export class CommonPaybleComponent implements OnInit {
   selected: any;
 
   collectionModel: any;
+  collectionWaterModel: any;
 
   constructor(
     private formService: FormsActionsService,
@@ -127,25 +129,35 @@ export class CommonPaybleComponent implements OnInit {
 
     this.paymentsForm.get('payableServices').get('code').setValue('PROFESSIONAL_TAX');
 
+    let updateAmount = '';
+    if(payData.module.code == 'PROPERTY-TAX'){
+      updateAmount = this.model
+    }else{
+      updateAmount = payData.amount;
+    }
+
     let retUrl: string = environment.returnUrl;
 
     let obj = {
-      payableServiceType: "PROFESSIONAL_TAX",
+      payableServiceType: payData.module.code != 'PROPERTY-TAX' ? payData.module.code : payData.payableServices.code  ,
       refNumber: payData.refNumber,
-      amount: payData.amount,
+      amount: updateAmount,
       paymentMode: "NETBANKING",
       returnUrl: retUrl,
       searchable: false
     }
 
+    if(payData.payableServices.code == 'PAY-PRO-TAX' ) {
+          obj['txtadditionalInfo1'] = 'PAY-PRO-TAX';
+    }
 
-    let words = this.commonService.getToWords(payData.amount)
+    let words = this.commonService.getToWords(updateAmount)
     let html =
       `
 					<div class="text-center">
 						<h2>Total Fee Pay</h2>
 						<div class="payAmount">
-							<i class="fa fa-inr" aria-hidden="true">` + payData.amount + `</i>
+							<i class="fa fa-inr" aria-hidden="true">` + updateAmount + `</i>
 						</div>
 						<p>Rupees in words</p>`
       + words + `
@@ -238,8 +250,14 @@ export class CommonPaybleComponent implements OnInit {
       this.placeHolderMessage = 'PEC Number is Required';
     } else if (paySerCode === 'PAY-PRO-TAX') {
       this.placeholder = 'Property Number';
-    } else {
+      this.placeHolderMessage = 'Property Number is Required';
+    } else if(paySerCode === 'PAY-WTR-TAX'){
+      this.placeholder = 'Connection Number';
+      this.placeHolderMessage = 'Connection Number is Required';
+    }
+    else {
       this.placeholder = 'Reference Number';
+      this.placeHolderMessage = 'Reference Number is Required';
     }
 
     this.isRecordExists = false;
@@ -250,21 +268,23 @@ export class CommonPaybleComponent implements OnInit {
   }
 
   getServices() {
-
     let serviceType = this.paymentsForm.get('payableServices').get('code').value;
     if (serviceType === 'PAY-PRO-TAX') {
       this.getAmountDataProperty();
     } else if (serviceType === 'PAY_PROF_TAX') {
       this.isPropertyTax = false;
+      this.isWaterTax = false;
       this.getAmountData();
-    } else {
+    } else if(serviceType === 'PAY-WTR-TAX'){
+      this.getAmountDataWater();
+    }
+    else {
       this.isPropertyTax = false;
       this.getCitizenForm();
     }
 
   }
   getAmountDataProperty() {
-
     this.isPropertyTax = true;
 
     this.collectionService.getoccupierOutstandingAmount({ propertyNo: this.paymentsForm.get('refNumber').value }).subscribe(
@@ -274,7 +294,7 @@ export class CommonPaybleComponent implements OnInit {
           this.collectionModel = data.body;
           this.model = this.collectionModel.payableAmount;
           this.paymentsForm.get('amount').setValue(this.model);
-
+          console.log("model: "+this.model)
         }
       },
       (error) => {
@@ -284,6 +304,19 @@ export class CommonPaybleComponent implements OnInit {
 
 
   }
+
+  getAmountDataWater(){
+    this.isWaterTax = true;
+    this.collectionService.getWaterOccupierOutstandingAmount(this.paymentsForm.get('refNumber').value).subscribe(
+      (data) => {
+        this.collectionWaterModel = data.body;
+        this.model = data.body.payableAmount;
+        this.paymentsForm.get('amount').setValue(this.model);
+      },
+      (error) => {
+      });  
+  }
+
   /**
    * - This method is used to get the type of tax and referance number and get the amount from the API
    */
@@ -452,6 +485,12 @@ export class CommonPaybleComponent implements OnInit {
           this.setPayableServices('PROPERTY-TAX');
           this.paymentsForm.get('payableServices').get('code').setValue('PAY-PRO-TAX');
           this.showHideSearchable('PAY-PRO-TAX');
+        }
+        else if(this.selected == 'WATER-TAX'){
+          this.paymentsForm.get('module').get('code').setValue(this.selected);
+          this.setPayableServices('WATER-TAX');
+          this.paymentsForm.get('payableServices').get('code').setValue('PAY-WTR-TAX');
+          this.showHideSearchable('PAY-WTR-TAX');
         }
       },
       err => {

@@ -25,7 +25,8 @@
       <!-- This is input for other services search-->
       <mat-form-field class="col-md-4" *ngIf = "!isProfessionalTax">
         <input matInput placeholder="{{placeholder}}" formControlName="refNumber" required>
-        <control-messages [control]="paymentsForm.get('refNumber')"></control-messages>
+        <mat-error *ngIf="placeHolderMessage !== null">{{placeHolderMessage}}</mat-error>
+        <!-- <control-messages [control]="paymentsForm.get('refNumber')"></control-messages> -->
       </mat-form-field>
 
       <!-- This is input for professional tax search-->
@@ -240,7 +241,8 @@
                   <td>{{collectionModel?.dueAmount}}</td>
                   <td>{{collectionModel?.rebateAmount}}</td>
                   <td>{{dues.intrestOrPenaltyAmount}}</td>
-                  <td OnlyNumber [textContent]="model" (input)="model=$event.target.textContent" contentEditable>{{collectionModel?.payableAmount}}</td> 
+                  <!-- <td OnlyNumber [textContent]="model" (input)="model=$event.target.textContent" contentEditable>{{collectionModel?.payableAmount}}</td>  -->
+                  <td>{{collectionModel?.payableAmount}}</td>
                 </tr>
                 
               </ng-container>
@@ -263,6 +265,72 @@
       
       </div>
 
+  </div>
+
+  <div *ngIf="isWaterTax">
+    <div class="row" style="margin-left: -30px;">
+    
+      <div class="col-md-12">
+        <label class="col-md-2 font16 font-weight-bold">Connection No :</label>
+        <span class="font16">{{collectionWaterModel?.connectionNo}}</span>
+      </div>
+
+      <div class="col-md-12">
+        <label class="col-md-2 font16 font-weight-bold">Owner Name :</label>
+        <span class="font16">{{collectionWaterModel?.ownerName}}</span>
+      </div>
+
+      <div class="col-md-12">
+        <label class="col-md-2 font16 font-weight-bold">Address :</label>
+        <span class="font16">{{collectionWaterModel?.address}}</span>
+      </div>
+
+    </div>
+
+    <!-- <div class="row mt-4" >
+      <ng-container >
+        <div class="table-responsive">
+          <table class="table" style="border: 1px solid #dee2e6;">
+            <thead>
+              <tr>
+                <th class="pl-4">S.No.</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngIf="collectionWaterModel?.billWiseDetails?.length == 0">
+                <td colspan="12" class="noRecord">
+                  <h5 class="text-center">No record found !</h5>
+                </td>
+              </tr>
+              <ng-container *ngFor="let dues of collectionWaterModel?.billWiseDetails;let i=index">
+                <tr>
+                  <td width="50" [class.pl-4]="!dues.children">
+                    <mat-icon class="pull-left arrowCls" (click)="toggleRow(dues)" *ngIf="dues.children && dues.children.length > 0">
+                      <span *ngIf="!dues.hidden">chevron_right</span>
+                      <span *ngIf="dues.hidden">expand_more</span>
+                    </mat-icon>{{i+1}}
+                  </td>  
+                </tr>
+                
+              </ng-container>
+            </tbody>
+          </table>
+        </div>
+      </ng-container>
+
+      <div class="row m-0">
+        <div class="col-mg-4">
+          <strong class="font20"> Amount Payable :</strong> <span class="redBox">{{model}}</span> <strong class="font20"> Rs. Only</strong>
+        </div>
+        <div class="col-md-4">
+          <button mat-raised-button class="paymentButton" color="primary" type="submit"
+            (click)="makePayment(paymentsForm.value)">
+            Proceed for Payment
+          </button>
+        </div>
+      </div>
+      
+      </div> -->
   </div>
 
   </form>

@@ -1,13 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { TicketingsService } from '../../../shared-ticketing/services/ticketings.service';
 import { MatTableDataSource } from '@angular/material';
 import * as moment from 'moment';
 import { CommonService } from 'src/app/shared/services/common.service';
 import { Router } from '@angular/router';
-import { TicketingConstants } from '../../../config/ticketing-config';
+import { TicketingConstants, TicketingUtils } from '../../../config/ticketing-config';
 import { ToastrService } from 'ngx-toastr';
 import { ValidationService } from 'src/app/shared/services/validation.service';
+import { FormsActionsService } from 'src/app/core/services/citizen/data-services/forms-actions.service';
 
 @Component({
   selector: 'app-animal-adoption',
@@ -31,6 +32,8 @@ export class AnimalAdoptionComponent implements OnInit {
 
 
   animalAdoptionForm: FormGroup;
+
+ 
 
   /**
     * displayColumns are used for display the columns in material table.
@@ -60,14 +63,21 @@ export class AnimalAdoptionComponent implements OnInit {
   */
   translateKey = 'animalAodptionScreen';
 
+  @ViewChild("paymentGateway") paymentGateway: TemplateRef<any>;
+  // Loading Ticketing Configurations
+  
+  ticketingUtils: TicketingUtils;
+
   constructor(
     private fb: FormBuilder,
     private ticketingService: TicketingsService,
     private commonService: CommonService,
     private router: Router,
-    private toster: ToastrService
+    private toster: ToastrService,
+    protected formService: FormsActionsService
   ) {
     this.ticketingService.resourceType = 'zooanimaladoption';
+    this.ticketingUtils = new TicketingUtils(formService,toster);
   }
 
   ngOnInit() {
@@ -187,18 +197,19 @@ export class AnimalAdoptionComponent implements OnInit {
     this.animalAdoptionForm.get('animalNameList').setValue(this.animalName);
 
     this.ticketingService.animalAdoptionRequest(this.animalAdoptionForm.value).subscribe(resp => {
-      this.ticketingService.printAcknowledgementReceipt(resp.data.refNumber).subscribe(acknowledgementHTML => {
-        let sectionToPrint: any = document.getElementById('sectionToPrint');
-        sectionToPrint.innerHTML = acknowledgementHTML;
-        setTimeout(() => {
-          window.print();
-          this.router.navigate([this.ticketingConstants.MY_TICKETINGS_URL]);
-        });
-      }, err => {
-        this.commonService.openAlert("Error", err.error[0].message, "warning")
+     
+    },
+      err => {
+        if (err.status === 402) {
+          this.animalAdoptionForm.get('refNumber').setValue(err.error.data.refNumber);
+          
+             this.ticketingUtils.redirectToCCAvenuePayment(err, this.commonService, this.ticketingService, this.paymentGateway ,this.animalAdoptionForm, this.router);
+             
+         
+        }
       });
-    });
-  }
+    
+    }
 
 
   /**
@@ -219,3 +230,4 @@ export class AnimalAdoptionComponent implements OnInit {
   //   });
   // }
 }
+
