@@ -82,11 +82,11 @@ export class DetailComponent implements OnInit {
       this.taxRebateApplicationService.save(this.model).subscribe(
         (data) => {
           this.isShaved = true;
-          this.model.taxRebateApplicationId = data.body.data[0];
-          this.taxRebateApplicationDataSharingService.applicationNumber = data.body.data[1];
+          this.model.taxRebateApplicationId = data.body.data;
           //this.alertService.success(data.body.message);
           this.stepper.selectedIndex = 1;
           this.getFormDataDocuments(this.model.taxRebateApplicationId);
+          this.getApplicationNo(this.model.taxRebateApplicationId );
         },
         (error) => {
           if (error.status === 400) {
@@ -240,5 +240,25 @@ export class DetailComponent implements OnInit {
   }
 
 
+  getApplicationNo(taxRebateApplicationId:String){
+
+    this.taxRebateApplicationService.getApplicationNo(taxRebateApplicationId).subscribe(
+      (data) => {
+       this.taxRebateApplicationDataSharingService.applicationNumber = data;    
+      },
+      (error) => {
+        if (error.status === 400) {
+          var errorMessage = '';
+          error.error[0].propertyList.forEach(element => {
+            errorMessage = errorMessage + element + "</br>";
+          });
+          this.alertService.error(errorMessage);
+        }
+        else {
+          this.alertService.error(error.error.message);
+        }
+      })
+
+  }
 
 }

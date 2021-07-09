@@ -81,4 +81,8 @@ export class TaxRebateApplicationService {
     return this.http.get<Array<Object>>(`${Constants.serverApiIp}/property/taxrebate/application/attachments?serviceFormId=${serviceFormId}`);
   }
 
+  getApplicationNo(taxRebateApplicationId) {
+      return this.http.get(`${Constants.serverApiIp}/property/taxrebate/application/getApplicationNo?taxRebateApplicationId=${taxRebateApplicationId}`);
+  }
+
 }
