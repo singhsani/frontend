@@ -703,7 +703,6 @@ export class AnimalPondNewComponent implements OnInit {
 	}
 
 	onChangeStatusOfBusiness(){
-		debugger
 		const subject = this.animalPondNewForm.get('businessType').get('code').value
 		let buildingCollapseMandatory = false;
 		
