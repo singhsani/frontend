@@ -225,7 +225,6 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 				}, 300);
 			},
 			err => {
-				debugger
 				this.commonService.openAlert('Error!', err.error[0].message, 'error');
 			}
 		);
@@ -457,11 +456,8 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		if (row.fileStatus == 'SUBMITTED' && row.serviceType == 'WATER_NEW_DRAINAGE_CONNECTION') {
 			return true;
 		}
-
-		if(row.fileStatus == 'SUBMITTED' && row.serviceType == 'APL_LICENCE'){
-			return true;
-		}
 	}
+
 	isDownloadDisplay(row) {
 		
 		const hideDownloadBtnServiceTypeArr = ['FS_FINAL_FIRE_NOC', 'FS_REVISED_FIRE_NOC', 'FS_RENEWAL_NOC', 'FS_TEMP_STRUCT_NOC', 'FS_TEMP_FIREWORKSHOP_NOC',
