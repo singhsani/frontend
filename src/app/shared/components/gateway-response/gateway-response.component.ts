@@ -66,8 +66,9 @@ export class GatewayResponseComponent implements OnInit {
 
 		if (txtRefNo != 'NA') {
 			this.formService.getBillDeskTransactionDetails(txtRefNo).subscribe(res => {
+				console.log(res);
 				this.responseObj = res.data;
-
+				 this.responseObj['getway']= "BILLDESK";
 				if (res.success) {
 
 					if (this.responseObj.authStatus == '0300') {
@@ -106,9 +107,12 @@ export class GatewayResponseComponent implements OnInit {
 		}
 
 		this.formService.getCCAvenuePaymentResponse(token).subscribe(res => {
-			this.responseObj = res.data;
+			this.responseObj = res.data[0];
+			this.responseObj['getway']= "CCAVENUE";
+			debugger;
+			console.log(res);
 			if (res.success) {
-				this.responseObj = this.responseObj[this.responseObj.length - 1];
+				//this.responseObj = this.responseObj[this.responseObj.length - 1];
 				if (this.responseObj.order_status == 'Success') {
 					this.paymentStatus = _.upperCase(this.responseObj.order_status);
 					this.postSessionData(this.dispData, 'CCAVENUE', this.responseObj);
