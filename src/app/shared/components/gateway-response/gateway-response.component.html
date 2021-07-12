@@ -140,9 +140,10 @@
 
 	</div>
 	<ng-template #elseCondition>
+		<div *ngIf="responseObj.order_status != 'Success'">
 		<div class="conatiner text-center">
 			
-		<mat-icon class="failedIcon" style="color: orangered !important;">error</mat-icon>
+		<mat-icon class="failedIcon">error</mat-icon>
 		<h1 class="errorMessage">Your payment failed</h1>
 		<h4>Please try after some time</h4>
 	
@@ -170,7 +171,7 @@
 						Reason : {{responseObj.failure_message}}
 					</div>
 				</div>
-			</mat-card>
+			</mat-card>	
 		</div>
 		<div class="mt-4">
 			<p style="font-size: 14px;">You will be automatically redirect to home page after
@@ -182,6 +183,7 @@
 		</div>
 
 	</div>
+</div>
 	</ng-template>
 	</div>
 <div id="sectionToPrint"></div>
