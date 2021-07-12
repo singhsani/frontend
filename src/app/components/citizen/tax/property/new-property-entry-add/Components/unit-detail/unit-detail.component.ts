@@ -501,7 +501,7 @@ export class UnitDetailComponent implements OnInit {
           this.measurementModel.propertyMeasurementId = data.body.data;
           this.getUnitListByOccupierId();
           this.viewMeasurement();
-        }
+          }
       },
       (error) => {
         this.commonService.callErrorResponse(error);

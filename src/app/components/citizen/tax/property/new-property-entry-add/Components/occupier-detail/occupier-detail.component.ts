@@ -205,6 +205,7 @@ export class OccupierDetailComponent implements OnInit {
       this.newNewPropertyEntryAddService.viewBasic(this.modelProperty.propertyBasicId).subscribe(
         (data) => {
           if (data.status === 200) {
+            this.newNewPropertyEntryAddDataSharingService.applicationNo = data.body.propertyBasic.applicationNumber;
             this.isUnitDetailEntered = true;
             this.unitDetailErrorMessage = '';
             data.body.propertyOccupiers.forEach(element => {
