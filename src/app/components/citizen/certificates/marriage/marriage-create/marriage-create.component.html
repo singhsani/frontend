@@ -58,7 +58,7 @@
 				<div class="row">
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" maxlength="50" formControlName="groomFirstName" appValidationFields
-							[validationFieldsType]="'onlyNameWithSpace'"
+							[validationFieldsType]="'onlyNameWithOutSpace'"
 							placeholder="{{ 'first_name' | translate:translateKey }}" required appGujInputSource
 							targetElement="groomFirstNameGuj" [form]="marriageFormGroup">
 						<control-messages [control]="marriageFormGroup.get('groomFirstName')"></control-messages>
@@ -66,7 +66,7 @@
 
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" maxlength="50" formControlName="groomMiddleName" appValidationFields
-							[validationFieldsType]="'onlyNameWithSpace'"
+							[validationFieldsType]="'onlyNameWithOutSpace'"
 							placeholder="{{ 'middlename_name' | translate:translateKey }}" appGujInputSource
 							targetElement="groomMiddleNameGuj" [form]="marriageFormGroup">
 						<control-messages [control]="marriageFormGroup.get('groomMiddleName')"></control-messages>
@@ -74,7 +74,7 @@
 
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" maxlength="50" formControlName="groomLastName" appValidationFields
-							[validationFieldsType]="'onlyNameWithSpace'"
+							[validationFieldsType]="'onlyNameWithOutSpace'"
 							placeholder="{{ 'last_name' | translate:translateKey }}" required appGujInputSource
 							targetElement="groomLastNameGuj" [form]="marriageFormGroup">
 						<control-messages [control]="marriageFormGroup.get('groomLastName')"></control-messages>
@@ -374,7 +374,7 @@
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" maxlength="50" formControlName="brideFirstName"
 							placeholder="{{'first_name' | translate:translateKey }}" appValidationFields
-							[validationFieldsType]="'onlyNameWithSpace'" required appGujInputSource
+							[validationFieldsType]="'onlyNameWithOutSpace'" required appGujInputSource
 							targetElement="brideFirstNameGuj" [form]="marriageFormGroup">
 						<control-messages [control]="marriageFormGroup.get('brideFirstName')"></control-messages>
 					</mat-form-field>
@@ -382,7 +382,7 @@
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" maxlength="50" formControlName="brideMiddleName"
 							placeholder="{{'middlename_name' | translate:translateKey }}" appValidationFields
-							[validationFieldsType]="'onlyNameWithSpace'" appGujInputSource
+							[validationFieldsType]="'onlyNameWithOutSpace'" appGujInputSource
 							targetElement="brideMiddleNameGuj" [form]="marriageFormGroup">
 						<control-messages [control]="marriageFormGroup.get('brideMiddleName')"></control-messages>
 					</mat-form-field>
@@ -390,7 +390,7 @@
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" maxlength="50" formControlName="brideLastName"
 							placeholder="{{'last_name' | translate:translateKey }}" appValidationFields
-							[validationFieldsType]="'onlyNameWithSpace'" required appGujInputSource
+							[validationFieldsType]="'onlyNameWithOutSpace'" required appGujInputSource
 							targetElement="brideLastNameGuj" [form]="marriageFormGroup">
 						<control-messages [control]="marriageFormGroup.get('brideLastName')"></control-messages>
 					</mat-form-field>
@@ -651,7 +651,7 @@
 						<input matInput type="text" maxlength="50" formControlName="groomParentsFirstName"
 							placeholder="{{'first_name' | translate:translateKey }}" required appGujInputSource
 							targetElement="groomParentsFirstNameGuj" [form]="marriageFormGroup" appValidationFields
-							[validationFieldsType]="'onlyNameWithSpace'">
+							[validationFieldsType]="'onlyNameWithOutSpace'">
 						<control-messages [control]="marriageFormGroup.get('groomParentsFirstName')"></control-messages>
 					</mat-form-field>
 
@@ -659,7 +659,7 @@
 						<input matInput type="text" maxlength="50" formControlName="groomParentsMiddleName"
 							placeholder="{{'middlename_name' | translate:translateKey }}" appGujInputSource
 							targetElement="groomParentsMiddleNameGuj" [form]="marriageFormGroup" appValidationFields
-							[validationFieldsType]="'onlyNameWithSpace'">
+							[validationFieldsType]="'onlyNameWithOutSpace'">
 						<control-messages [control]="marriageFormGroup.get('groomParentsMiddleName')">
 						</control-messages>
 					</mat-form-field>
@@ -668,7 +668,7 @@
 						<input matInput type="text" maxlength="50" formControlName="groomParentsLastName"
 							placeholder="{{'last_name' | translate:translateKey }}" required appGujInputSource
 							targetElement="groomParentsLastNameGuj" [form]="marriageFormGroup" appValidationFields
-							[validationFieldsType]="'onlyNameWithSpace'">
+							[validationFieldsType]="'onlyNameWithOutSpace'">
 						<control-messages [control]="marriageFormGroup.get('groomParentsLastName')"></control-messages>
 					</mat-form-field>
 				</div>
@@ -764,7 +764,7 @@
 						<input matInput type="text" maxlength="50" formControlName="brideParentsFirstName"
 							placeholder="{{'first_name' | translate:translateKey }}" required appGujInputSource
 							targetElement="brideParentsFirstNameGuj" [form]="marriageFormGroup" appValidationFields
-							[validationFieldsType]="'onlyNameWithSpace'">
+							[validationFieldsType]="'onlyNameWithOutSpace'">
 						<control-messages [control]="marriageFormGroup.get('brideParentsFirstName')"></control-messages>
 					</mat-form-field>
 
@@ -772,7 +772,7 @@
 						<input matInput type="text" maxlength="50" formControlName="brideParentsMiddleName"
 							placeholder="{{'middlename_name' | translate:translateKey }}" appGujInputSource
 							targetElement="brideParentsMiddleNameGuj" [form]="marriageFormGroup" appValidationFields
-							[validationFieldsType]="'onlyNameWithSpace'">
+							[validationFieldsType]="'onlyNameWithOutSpace'">
 						<control-messages [control]="marriageFormGroup.get('brideParentsMiddleName')">
 						</control-messages>
 					</mat-form-field>
@@ -781,7 +781,7 @@
 						<input matInput type="text" maxlength="50" formControlName="brideParentsLastName"
 							placeholder="{{'last_name' | translate:translateKey }}" required appGujInputSource
 							targetElement="brideParentsLastNameGuj" [form]="marriageFormGroup" appValidationFields
-							[validationFieldsType]="'onlyNameWithSpace'">
+							[validationFieldsType]="'onlyNameWithOutSpace'">
 						<control-messages [control]="marriageFormGroup.get('brideParentsLastName')"></control-messages>
 					</mat-form-field>
 				</div>
@@ -876,7 +876,7 @@
 						<input matInput type="text" maxlength="50" formControlName="priestFirstName"
 							placeholder="{{'first_name' | translate:translateKey }}" required appGujInputSource
 							targetElement="priestFirstNameGuj" [form]="marriageFormGroup" appValidationFields
-							[validationFieldsType]="'onlyNameWithSpace'">
+							[validationFieldsType]="'onlyNameWithOutSpace'">
 						<control-messages [control]="marriageFormGroup.get('priestFirstName')"></control-messages>
 					</mat-form-field>
 
@@ -884,7 +884,7 @@
 						<input matInput type="text" maxlength="50" formControlName="priestMiddleName"
 							placeholder="{{'middlename_name' | translate:translateKey }}" appGujInputSource
 							targetElement="priestMiddleNameGuj" [form]="marriageFormGroup" appValidationFields
-							[validationFieldsType]="'onlyNameWithSpace'">
+							[validationFieldsType]="'onlyNameWithOutSpace'">
 						<control-messages [control]="marriageFormGroup.get('priestMiddleName')"></control-messages>
 					</mat-form-field>
 
@@ -892,7 +892,7 @@
 						<input matInput type="text" maxlength="50" formControlName="priestLastName"
 							placeholder="{{'last_name' | translate:translateKey }}" required appGujInputSource
 							targetElement="priestLastNameGuj" [form]="marriageFormGroup" appValidationFields
-							[validationFieldsType]="'onlyNameWithSpace'">
+							[validationFieldsType]="'onlyNameWithOutSpace'">
 						<control-messages [control]="marriageFormGroup.get('priestLastName')"></control-messages>
 					</mat-form-field>
 				</div>
@@ -975,7 +975,7 @@
 						<input matInput type="text" maxlength="50" formControlName="firstWitnessFirstName"
 							placeholder="{{'first_name' | translate:translateKey }}" 
 							(change)="onChangeWitnessNameValidation($event,'firstWitnessFirstName')" required appValidationFields
-							[validationFieldsType]="'onlyNameWithSpace'" appGujInputSource
+							[validationFieldsType]="'onlyNameWithOutSpace'" appGujInputSource
 							targetElement="firstWitnessFirstNameGuj" [form]="marriageFormGroup">
 						<control-messages [control]="marriageFormGroup.get('firstWitnessFirstName')"></control-messages>
 					</mat-form-field>
@@ -983,7 +983,7 @@
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" maxlength="50" formControlName="firstWitnessMiddleName"
 							placeholder="{{'middlename_name' | translate:translateKey }}" appValidationFields
-							[validationFieldsType]="'onlyNameWithSpace'" appGujInputSource
+							[validationFieldsType]="'onlyNameWithOutSpace'" appGujInputSource
 							targetElement="firstWitnessMiddleNameGuj" [form]="marriageFormGroup">
 						<control-messages [control]="marriageFormGroup.get('firstWitnessMiddleName')">
 						</control-messages>
@@ -993,7 +993,7 @@
 						<input matInput type="text" maxlength="50" formControlName="firstWitnessLastName"
 							placeholder="{{'last_name' | translate:translateKey }}" 
 							(change)="onChangeWitnessNameValidation($event,'firstWitnessLastName')" required appValidationFields
-							[validationFieldsType]="'onlyNameWithSpace'" appGujInputSource
+							[validationFieldsType]="'onlyNameWithOutSpace'" appGujInputSource
 							targetElement="firstWitnessLastNameGuj" [form]="marriageFormGroup">
 						<control-messages [control]="marriageFormGroup.get('firstWitnessLastName')"></control-messages>
 					</mat-form-field>
@@ -1066,7 +1066,7 @@
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" maxlength="50" formControlName="secondWitnessFirstName"
 							placeholder="{{'first_name' | translate:translateKey }}" required appValidationFields
-							[validationFieldsType]="'onlyNameWithSpace'" appGujInputSource
+							[validationFieldsType]="'onlyNameWithOutSpace'" appGujInputSource
 							targetElement="secondWitnessFirstNameGuj" [form]="marriageFormGroup">
 						<control-messages [control]="marriageFormGroup.get('secondWitnessFirstName')">
 						</control-messages>
@@ -1075,7 +1075,7 @@
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" maxlength="50" formControlName="secondWitnessMiddleName"
 							placeholder="{{'middlename_name' | translate:translateKey }}" appValidationFields
-							[validationFieldsType]="'onlyNameWithSpace'" appGujInputSource
+							[validationFieldsType]="'onlyNameWithOutSpace'" appGujInputSource
 							targetElement="secondWitnessMiddleNameGuj" [form]="marriageFormGroup">
 						<control-messages [control]="marriageFormGroup.get('secondWitnessMiddleName')">
 						</control-messages>
@@ -1084,7 +1084,7 @@
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" maxlength="50" formControlName="secondWitnessLastName"
 							placeholder="{{'last_name' | translate:translateKey }}" required appValidationFields
-							[validationFieldsType]="'onlyNameWithSpace'" appGujInputSource
+							[validationFieldsType]="'onlyNameWithOutSpace'" appGujInputSource
 							targetElement="secondWitnessLastNameGuj" [form]="marriageFormGroup">
 						<control-messages [control]="marriageFormGroup.get('secondWitnessLastName')"></control-messages>
 					</mat-form-field>
@@ -1158,7 +1158,7 @@
 				<div class="row">
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" maxlength="50" formControlName="groomNriFirstWitnessFirstName"
-							appValidationFields [validationFieldsType]="'onlyNameWithSpace'"
+							appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'"
 							placeholder="{{ 'first_name' | translate:translateKey }} *" appGujInputSource
 							targetElement="groomNriFirstWitnessFirstNameGuj" [form]="marriageFormGroup">
 						<control-messages [control]="marriageFormGroup.get('groomNriFirstWitnessFirstName')">
@@ -1167,7 +1167,7 @@
 
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" maxlength="50" formControlName="groomNriFirstWitnessMiddlName"
-							appValidationFields [validationFieldsType]="'onlyNameWithSpace'"
+							appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'"
 							placeholder="{{ 'middlename_name' | translate:translateKey }}" appGujInputSource
 							targetElement="groomNriFirstWitnessMiddlNameGuj" [form]="marriageFormGroup">
 						<control-messages [control]="marriageFormGroup.get('groomNriFirstWitnessMiddlName')">
@@ -1176,7 +1176,7 @@
 
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" maxlength="50" formControlName="groomNriFirstWitnessLastName"
-							appValidationFields [validationFieldsType]="'onlyNameWithSpace'"
+							appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'"
 							placeholder="{{ 'last_name' | translate:translateKey }} *" appGujInputSource
 							targetElement="groomNriFirstWitnessLastNameGuj" [form]="marriageFormGroup">
 						<control-messages [control]="marriageFormGroup.get('groomNriFirstWitnessLastName')">
@@ -1346,7 +1346,7 @@
 				<div class="row">
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" maxlength="50" formControlName="brideNriFirstWitnessFirstName"
-							appValidationFields [validationFieldsType]="'onlyNameWithSpace'"
+							appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'"
 							placeholder="{{ 'first_name' | translate:translateKey }} *" appGujInputSource
 							targetElement="brideNriFirstWitnessFirstNameGuj" [form]="marriageFormGroup">
 						<control-messages [control]="marriageFormGroup.get('brideNriFirstWitnessFirstName')">
@@ -1355,7 +1355,7 @@
 
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" maxlength="50" formControlName="brideNriFirstWitnessMiddlName"
-							appValidationFields [validationFieldsType]="'onlyNameWithSpace'"
+							appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'"
 							placeholder="{{ 'middlename_name' | translate:translateKey }}" appGujInputSource
 							targetElement="brideNriFirstWitnessMiddlNameGuj" [form]="marriageFormGroup">
 						<control-messages [control]="marriageFormGroup.get('brideNriFirstWitnessMiddlName')">
@@ -1364,7 +1364,7 @@
 
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" maxlength="50" formControlName="brideNriFirstWitnessLastName"
-							appValidationFields [validationFieldsType]="'onlyNameWithSpace'"
+							appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'"
 							placeholder="{{ 'last_name' | translate:translateKey }} *" appGujInputSource
 							targetElement="brideNriFirstWitnessLastNameGuj" [form]="marriageFormGroup">
 						<control-messages [control]="marriageFormGroup.get('brideNriFirstWitnessLastName')">
@@ -1434,7 +1434,7 @@
 				<div class="row">
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" maxlength="50" formControlName="brideNriSecondWitnessFirstName"
-							appValidationFields [validationFieldsType]="'onlyNameWithSpace'"
+							appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'"
 							placeholder="{{ 'first_name' | translate:translateKey }} *" appGujInputSource
 							targetElement="brideNriSecondWitnessFirstNameGuj" [form]="marriageFormGroup">
 						<control-messages [control]="marriageFormGroup.get('brideNriSecondWitnessFirstName')">
@@ -1443,7 +1443,7 @@
 
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" maxlength="50" formControlName="brideNriSecondWitnessMiddlName"
-							appValidationFields [validationFieldsType]="'onlyNameWithSpace'"
+							appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'"
 							placeholder="{{ 'middlename_name' | translate:translateKey }}" appGujInputSource
 							targetElement="brideNriSecondWitnessMiddlNameGuj" [form]="marriageFormGroup">
 						<control-messages [control]="marriageFormGroup.get('brideNriSecondWitnessMiddlName')">
@@ -1452,7 +1452,7 @@
 
 					<mat-form-field class="col-md-4">
 						<input matInput type="text" maxlength="50" formControlName="brideNriSecondWitnessLastName"
-							appValidationFields [validationFieldsType]="'onlyNameWithSpace'"
+							appValidationFields [validationFieldsType]="'onlyNameWithOutSpace'"
 							placeholder="{{ 'last_name' | translate:translateKey }} *" appGujInputSource
 							targetElement="brideNriSecondWitnessLastNameGuj" [form]="marriageFormGroup">
 						<control-messages [control]="marriageFormGroup.get('brideNriSecondWitnessLastName')">
