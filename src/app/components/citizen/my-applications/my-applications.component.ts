@@ -54,6 +54,7 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 	rejectRemarks: string = '';
 	reason: string = '';
 	queryrraiseRemarks: string = '';
+	statusHeader : string = '';
 	queryrraisereason: string = '';
 	config: CitizenConfig = new CitizenConfig();
 	@ViewChild(MatPaginator) paginator: MatPaginator;
@@ -579,7 +580,9 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 	 * This method is use to show For Query Raise remarks.
 	 */
 	remarksDisplayForQueryRaise(data) {
+		
 		this.queryrraiseRemarks = data.remarks;
+		this.statusHeader = data.fileStatusName;
 		//this.queryrraiseRemarks = 'Remark here';
 		// this.queryrraisereason = data.reason;
 		//this.queryrraisereason = 'Remark reason here';
