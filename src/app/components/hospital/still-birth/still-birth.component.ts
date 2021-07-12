@@ -271,10 +271,10 @@ export class StillBirthComponent implements OnInit {
 			}),
 			motherAadharNumber: [null, [Validators.minLength(12), Validators.maxLength(12), ValidationService.aadharValidation]],
 			motherPrevRegNumber: [null, [Validators.maxLength(20)]],
-			mamtaRegNumber: [null, [Validators.required,Validators.maxLength(4)]],
+			mamtaRegNumber: [null, [Validators.maxLength(4)]],
 			petaKendraNumber: this.fb.group({
 				id: null,
-				code: [null, [Validators.required]],
+				code: [null],
 				name: null,
 				gujName: null
 			}),
@@ -362,6 +362,16 @@ export class StillBirthComponent implements OnInit {
 		}
 	}
 
+	validationWord(ev: any) {
+		if (ev.value == 'YES') {
+			this.stillBirthCertificateForm.get('wardNo').get('code').setValidators([Validators.required])
+			this.stillBirthCertificateForm.get('wardNo').get('code').updateValueAndValidity()
+		} else {
+			this.stillBirthCertificateForm.get('wardNo').get('code').reset()
+			this.stillBirthCertificateForm.get('wardNo').get('code').clearValidators()
+			this.stillBirthCertificateForm.get('wardNo').get('code').updateValueAndValidity()
+		}
+	}
 	/**
 	 * Used to capture change in birth time for perticular child.
 	 * @param time - event
@@ -698,6 +708,9 @@ export class StillBirthComponent implements OnInit {
 			return false;
 		} else if (count >= 59 && count <= 65) {
 			this.tabIndex = 3;
+		} else if (count == 38){
+			this.tabIndex = 3;
+			return false;
 		}
 	}
 
