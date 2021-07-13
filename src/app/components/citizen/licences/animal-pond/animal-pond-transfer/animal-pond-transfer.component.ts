@@ -717,6 +717,7 @@ export class AnimalPondTransferComponent implements OnInit {
 		this.tabIndex = evt;
 	}
 
+	//TODO: remaining common method for attachment
 	onChangeStatusOfBusiness(){
 		const subject = this.animalPondTransferForm.get('businessType').get('code').value
 		let buildingCollapseMandatory = false;

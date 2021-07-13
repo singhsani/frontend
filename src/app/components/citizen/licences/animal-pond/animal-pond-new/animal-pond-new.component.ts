@@ -704,6 +704,8 @@ export class AnimalPondNewComponent implements OnInit {
 		}
 	}
 
+	//TODO: remaining common method for Animal Pond 
+
 	onChangeStatusOfBusiness(){
 		const subject = this.animalPondNewForm.get('businessType').get('code').value
 		let buildingCollapseMandatory = false;
