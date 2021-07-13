@@ -123,7 +123,8 @@ export class AnimalPondNewComponent implements OnInit {
 			maxFileSizeInMB: [data.maxFileSizeInMB ? data.maxFileSizeInMB : 5],
 			requiredOnAdminPortal: [data.requiredOnAdminPortal],
 			requiredOnCitizenPortal: [data.requiredOnCitizenPortal],
-			dmsEnabled:[data.dmsEnabled]
+			dmsEnabled:[data.dmsEnabled],
+			orderSequence:[data.orderSequence ? data.orderSequence : null]
 			// version: [data.version ? data.version : null]
 		});
 	}
@@ -146,7 +147,6 @@ export class AnimalPondNewComponent implements OnInit {
 	 * Method is used to get form data
 	 */
 	getAnimalPondLicNewData() {
-	
 		this.formService.getFormData(this.formId).subscribe(res => {
 
 			try {
@@ -184,6 +184,8 @@ export class AnimalPondNewComponent implements OnInit {
 				res.serviceDetail.serviceUploadDocuments.forEach(app => {
 					(<FormArray>this.animalPondNewForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.createDocumentsGrp(app));
 				});
+				this.animalPondNewForm.get('serviceDetail').get('serviceUploadDocuments').value.sort(
+					(a,b) => a.orderSequence - b.orderSequence);
 				this.requiredDocumentList();
 				// selected animal filter
 				this.getSelectedAnimal();

@@ -45,6 +45,8 @@ export class AnimalPondCancellationComponent implements OnInit {
 		searchLicenceNumber:""
 	}
 
+	ANIMAL_POND_STATUS_OF_BUSINESS: Array<any> = [];
+
 	/**
 	 * This method for serach licence using licence number.
 	 */
@@ -193,6 +195,7 @@ export class AnimalPondCancellationComponent implements OnInit {
 	getLookupData() {
 		this.formService.getDataFromLookups().subscribe(res => {
 			this.PERSON_TYPE = res.PERSON_TYPE;
+			this.ANIMAL_POND_STATUS_OF_BUSINESS = res.ANIMAL_POND_STATUS_OF_BUSINESS;
 		});
 	}
 
@@ -234,8 +237,11 @@ export class AnimalPondCancellationComponent implements OnInit {
 
 			cancellationReason:[null,Validators.maxLength(200)],
 			/* Step 4 controls start*/
-			attachments: []
+			attachments: [],
 			/* Step 4 controls end */
+			businessType:this.fb.group({
+				code: [null, Validators.required]
+			})
 		});
 	}
 

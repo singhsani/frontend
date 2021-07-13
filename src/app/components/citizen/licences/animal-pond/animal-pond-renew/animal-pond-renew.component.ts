@@ -118,8 +118,9 @@ export class AnimalPondRenewComponent implements OnInit {
 			this.getLookupData();
 			this.getAnimalPondLicNewData();
 
-			this.animalPondRenewForm.disable();
+			// this.animalPondRenewForm.disable();
 			this.enableFielList();
+		
 		}
 	}
 	/**
@@ -156,7 +157,8 @@ export class AnimalPondRenewComponent implements OnInit {
 			maxFileSizeInMB: [data.maxFileSizeInMB ? data.maxFileSizeInMB : 5],
 			requiredOnAdminPortal: [data.requiredOnAdminPortal],
 			requiredOnCitizenPortal: [data.requiredOnCitizenPortal],
-			dmsEnabled:[data.dmsEnabled]
+			dmsEnabled:[data.dmsEnabled],
+			orderSequence:[data.orderSequence ? data.orderSequence : null]
 			// version: [data.version ? data.version : null]
 		});
 	}
@@ -201,7 +203,7 @@ export class AnimalPondRenewComponent implements OnInit {
 				pid: res.pid,
 				outwardNo: res.outwardNo,
 				agree: res.agree,
-
+	
 				paymentStatus: res.paymentStatus,
 				canEdit: res.canEdit,
 				canDelete: res.canDelete,
@@ -236,7 +238,7 @@ export class AnimalPondRenewComponent implements OnInit {
 				app.serviceFormId = null;
 				(<FormArray>this.animalPondRenewForm.get('animalDetails')).push(this.createAnimalArray(app));
 			});
-			this.animalPondRenewForm.disable();
+			// this.animalPondRenewForm.disable();
 			this.enableFielList();
 
 			let currentUrl = this.location.path().replace('false', this.formId.toString());
@@ -244,7 +246,10 @@ export class AnimalPondRenewComponent implements OnInit {
 			res.serviceDetail.serviceUploadDocuments.forEach(app => {
 				(<FormArray>this.animalPondRenewForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.createDocumentsGrp(app));
 			});
-			this.requiredDocumentList();
+			this.animalPondRenewForm.get('serviceDetail').get('serviceUploadDocuments').value.sort(
+				(a,b) => a.orderSequence - b.orderSequence);
+			// this.requiredDocumentList();
+			this.onChangeStatusOfBusiness();
 		});
 
 	}
@@ -255,8 +260,10 @@ export class AnimalPondRenewComponent implements OnInit {
 	 */
 	getAnimalPondLicNewData() {
 		this.formService.getFormData(this.formId).subscribe(res => {
+			console.log(res);
 			try {
 				this.animalPondRenewForm.patchValue(res);
+				
 				this.showButtons = true;
 				this.onChangeZone(this.animalPondRenewForm.get('zoneNo').value.code);
 				this.onChangeWard(this.animalPondRenewForm.get('wardNo').value.code);
@@ -273,8 +280,8 @@ export class AnimalPondRenewComponent implements OnInit {
 				res.relationshipList.forEach(app => {
 					(<FormArray>this.animalPondRenewForm.get('relationshipList')).push(this.createArray(app));
 				});
-
-				// deflate add one array in animal grid
+				
+				// deflate add none array in animal grid
 				if ((<FormArray>res.animalDetails).length == 0) {
 					this.addItem('animalDetails').push(this.createAnimalArray());
 					let newlyadded = this.addItem('animalDetails').controls;
@@ -409,9 +416,10 @@ export class AnimalPondRenewComponent implements OnInit {
 			/* Step 4 controls start*/
 			attachments: [],
 			/* Step 4 controls end */
-			// businessType:this.fb.group({
-			// 	code: [null, Validators.required]
-			// }),
+			businessType:this.fb.group({
+				code: [null, Validators.required],
+				
+			}),
 		});
 	}
 
@@ -711,5 +719,36 @@ export class AnimalPondRenewComponent implements OnInit {
 	onTabChange(evt) {
 		this.tabIndex = evt;
 	}
+
+	onChangeStatusOfBusiness(){
+		const subject = this.animalPondRenewForm.get('businessType').get('code').value
+		console.log(subject);
+		let buildingCollapseMandatory = false;
+		
+		if (subject && subject.code && subject.code == 'BUILDING_COLLAPSE') {
+			buildingCollapseMandatory = true;
+		}
+
+		const documents = this.animalPondRenewForm.get('serviceDetail').get('serviceUploadDocuments').value;
+
+		for (const document of documents) {
+			if(subject == 'TENANT'){
+			if (document.documentIdentifier == 'POLICE_VERIFICATION')
+				document.mandatory = true;
+			else if (document.documentIdentifier == 'RENT_AGREEMENT')
+				document.mandatory = true;
+			}else if(subject == 'PROPRIETORSHIPFIRM'){
+				if (document.documentIdentifier == 'POLICE_VERIFICATION')
+				document.mandatory = false;
+			else if (document.documentIdentifier == 'RENT_AGREEMENT')
+				document.mandatory = false;
+			}
+		}
+		this.animalPondRenewForm.get('serviceDetail').patchValue({ 'serviceUploadDocuments': documents });
+		this.requiredDocumentList();
+
+
+	}
+
 
 }

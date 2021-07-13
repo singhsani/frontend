@@ -34,6 +34,7 @@ export class AnimalPondTransferComponent implements OnInit {
 	public showButtons: boolean = false;
 
 	//Lookups Array
+	ANIMAL_POND_STATUS_OF_BUSINESS: Array<any> = [];
 	MF_RELATIONSHIP_OF_APPLICANT: Array<any> = [];
 	MF_STATUS_OF_BUSINESS: Array<any> = [];
 	PERSON_TYPE: Array<any> = [];
@@ -118,7 +119,7 @@ export class AnimalPondTransferComponent implements OnInit {
 			this.getLookupData();
 			this.getAnimalPondLicNewData();
 
-			this.animalPondTransferForm.disable();
+			// this.animalPondTransferForm.disable();
 			this.enableFielList();
 		}
 	}
@@ -157,7 +158,8 @@ export class AnimalPondTransferComponent implements OnInit {
 			maxFileSizeInMB: [data.maxFileSizeInMB ? data.maxFileSizeInMB : 5],
 			requiredOnAdminPortal: [data.requiredOnAdminPortal],
 			requiredOnCitizenPortal: [data.requiredOnCitizenPortal],
-			dmsEnabled:[data.dmsEnabled]
+			dmsEnabled:[data.dmsEnabled],
+			orderSequence:[data.orderSequence ? data.orderSequence : null]
 			// version: [data.version ? data.version : null]
 		});
 	}
@@ -233,7 +235,7 @@ export class AnimalPondTransferComponent implements OnInit {
 				app.serviceFormId = null;
 				(<FormArray>this.animalPondTransferForm.get('animalDetails')).push(this.createAnimalArray(app));
 			});
-			this.animalPondTransferForm.disable();
+			// this.animalPondTransferForm.disable();
 			this.enableFielList();
 
 			let currentUrl = this.location.path().replace('false', this.formId.toString());
@@ -242,6 +244,8 @@ export class AnimalPondTransferComponent implements OnInit {
 			res.serviceDetail.serviceUploadDocuments.forEach(app => {
 				(<FormArray>this.animalPondTransferForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.createDocumentsGrp(app));
 			});
+			this.animalPondTransferForm.get('serviceDetail').get('serviceUploadDocuments').value.sort(
+				(a,b) => a.orderSequence - b.orderSequence);
 			this.requiredDocumentList();
 		});
 
@@ -308,6 +312,7 @@ export class AnimalPondTransferComponent implements OnInit {
 			this.PERSON_TYPE = res.PERSON_TYPE;
 			this.FIRM_ZONE = res.FIRM_ZONE;
 			this.ANIMAL_TYPE = res.ANIMAL_TYPE;
+			this.ANIMAL_POND_STATUS_OF_BUSINESS = res.ANIMAL_POND_STATUS_OF_BUSINESS
 			// selected animal filter
 			this.getSelectedAnimal();
 			this.onChangeZone(this.animalPondTransferForm.get('zoneNo').value.code);
@@ -402,8 +407,12 @@ export class AnimalPondTransferComponent implements OnInit {
 			loinumber: [null],
 
 			/* Step 4 controls start*/
-			attachments: []
+			attachments: [],
 			/* Step 4 controls end */
+
+			businessType:this.fb.group({
+				code: [null, Validators.required],
+			}),
 		});
 	}
 
@@ -708,4 +717,30 @@ export class AnimalPondTransferComponent implements OnInit {
 		this.tabIndex = evt;
 	}
 
+	onChangeStatusOfBusiness(){
+		const subject = this.animalPondTransferForm.get('businessType').get('code').value
+		let buildingCollapseMandatory = false;
+		
+		if (subject && subject.code && subject.code == 'BUILDING_COLLAPSE') {
+			buildingCollapseMandatory = true;
+		}
+
+		const documents = this.animalPondTransferForm.get('serviceDetail').get('serviceUploadDocuments').value;
+
+		for (const document of documents) {
+			if(subject == 'TENANT'){
+			if (document.documentIdentifier == 'POLICE_VERIFICATION')
+				document.mandatory = true;
+			else if (document.documentIdentifier == 'RENT_AGREEMENT')
+				document.mandatory = true;
+			}else if(subject == 'PROPRIETORSHIPFIRM'){
+				if (document.documentIdentifier == 'POLICE_VERIFICATION')
+				document.mandatory = false;
+			else if (document.documentIdentifier == 'RENT_AGREEMENT')
+				document.mandatory = false;
+			}
+		}
+		this.animalPondTransferForm.get('serviceDetail').patchValue({ 'serviceUploadDocuments': documents });
+		this.requiredDocumentList();
+	}
 }

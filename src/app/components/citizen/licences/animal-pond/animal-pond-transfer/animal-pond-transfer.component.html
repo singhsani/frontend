@@ -101,6 +101,13 @@
 						<control-messages [control]="animalPondTransferForm.get('holderLastNameGuj')">
 						</control-messages>
 					</mat-form-field>
+
+					<div class="col-md-4 ngSelect" formGroupName="businessType">
+						<ng-select placeholder="{{'business_type' | translate:translateKey}} *" formControlName="code" (change)="onChangeStatusOfBusiness()">
+							<ng-option *ngFor="let type of ANIMAL_POND_STATUS_OF_BUSINESS" [value]="type.code">{{type.name}}</ng-option>
+						</ng-select>
+						 <control-messages [control]="animalPondTransferForm.get('businessType').get('code')"></control-messages> 
+					</div>
 				</div>
 				<!-- /gujarati -->
 
@@ -136,7 +143,7 @@
 						placeholder="{{'holder_pan_no' | translate:translateKey}}">
 				</mat-form-field>
 
-				<app-action-bar [form]="animalPondTransferForm" (tabIndex)="onTabChange($event)"
+				<app-action-bar [form]="animalPondTransferForm" (tabIndex)="onTabChange($event)" (handleOnSaveAndNext)="onChangeStatusOfBusiness()"
 					[stepInfo]="{step: 'step1', next: 1, back: 0}"></app-action-bar>
 			</mat-tab>
 			<!-- step 1 Ends -->
@@ -308,7 +315,7 @@
 					</div>
 				</div>
 				<!-- end table -->
-				<app-action-bar [form]="animalPondTransferForm" (tabIndex)="onTabChange($event)"
+				<app-action-bar [form]="animalPondTransferForm" (tabIndex)="onTabChange($event)" (handleOnSaveAndNext)="onChangeStatusOfBusiness()"
 					[stepInfo]="{step: 'step2', next: 2, back: 0}"></app-action-bar>
 			</mat-tab>
 			<!-- step 2 Ends -->
@@ -419,7 +426,7 @@
 	</div> -->
 				<!-- end table -->
 
-				<app-action-bar [form]="animalPondTransferForm" (tabIndex)="onTabChange($event)"
+				<app-action-bar [form]="animalPondTransferForm" (tabIndex)="onTabChange($event)" (handleOnSaveAndNext)="onChangeStatusOfBusiness()"
 					[stepInfo]="{step: 'step3', next: 3, back: 1}"></app-action-bar>
 			</mat-tab>
 			<!-- step 3 end -->
