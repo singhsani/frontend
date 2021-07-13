@@ -292,7 +292,7 @@
 					</div>
 				</div>
 				<!-- end table -->
-				<app-action-bar [form]="animalPondNewForm" (tabIndex)="onTabChange($event)"
+				<app-action-bar [form]="animalPondNewForm" (tabIndex)="onTabChange($event)" (handleOnSaveAndNext)="onChangeStatusOfBusiness()"
 					[stepInfo]="{step: 'step2', next: 2, back: 0}"></app-action-bar>
 			</mat-tab>
 			<!-- step 2 Ends -->
@@ -412,7 +412,7 @@
 						</div>
 					</div> -->
 				<!-- end table -->
-				<app-action-bar [form]="animalPondNewForm" (tabIndex)="onTabChange($event)"
+				<app-action-bar [form]="animalPondNewForm" (tabIndex)="onTabChange($event)"  (handleOnSaveAndNext)="onChangeStatusOfBusiness()"
 					[stepInfo]="{step: 'step3', next: 3, back: 1}"></app-action-bar>
 			</mat-tab>
 			<!-- step 3 end -->
