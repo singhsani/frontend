@@ -877,8 +877,8 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
                     this.onChange(res.marriageTimeGroomStatus.code, this.maritalStatusArray, 'maritalstatusGujgroom')
                 }
 
-                if (!_.isUndefined(res.marriageTimeGroomStatus.code)) {
-                    this.onChange(res.marriageTimeGroomStatus.code, this.maritalStatusArray, 'maritalstatusGujbride')
+                if (!_.isUndefined(res.marriageTimeBrideStatus.code)) {
+                    this.onChange(res.marriageTimeBrideStatus.code, this.maritalStatusArray, 'maritalstatusGujbride')
                 }
 
                 if (!_.isUndefined(res.applicantRelation.code)) {
@@ -899,6 +899,8 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
 
                 this.changeDocument();
 
+                this.disableAddress();
+
             },
             err => {
                 this.toster.error(err.error.error_description);
@@ -908,6 +910,17 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
 
 
     }
+
+    disableAddress(){
+       
+        this.marriageFormGroup.get('marriagePlace').get('country').setValue('INDIA');
+        this.marriageFormGroup.get('marriagePlace').get('state').setValue('GUJARAT');
+        this.marriageFormGroup.get('marriagePlace').get('city').setValue('Vadodara');
+        this.marriageFormGroup.get('marriagePlace').get('country').disable();
+        this.marriageFormGroup.get('marriagePlace').get('state').disable();
+        this.marriageFormGroup.get('marriagePlace').get('city').disable();
+    }
+    
 
     ngOnChanges() {
         this.CD.detectChanges();
@@ -1256,7 +1269,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
      * @param varName : Static Variable.
      */
     onChange(event: string, lookupArray: Array<any>, varName: string) {
-
+debugger;
         if (!_.isUndefined(this.getGujValue(lookupArray, event))) {
             this[varName] = this.getGujValue(lookupArray, event);
         } else {
