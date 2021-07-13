@@ -109,7 +109,6 @@ export class GatewayResponseComponent implements OnInit {
 		this.formService.getCCAvenuePaymentResponse(token).subscribe(res => {
 			this.responseObj = res.data[0];
 			this.responseObj['getway']= "CCAVENUE";
-			debugger;
 			console.log(res);
 			if (res.success) {
 				//this.responseObj = this.responseObj[this.responseObj.length - 1];
