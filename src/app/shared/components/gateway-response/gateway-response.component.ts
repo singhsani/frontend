@@ -72,7 +72,7 @@ export class GatewayResponseComponent implements OnInit {
 				if (res.success) {
 
 					if (this.responseObj.authStatus == '0300') {
-						this.responseObj.mer_amount = Number(this.responseObj.txnAmount);
+						this.responseObj.mer_amount = this.responseObj.txnAmount;
 						this.responseObj.order_id = this.responseObj.customerID;
 						this.responseObj.bank_ref_no = this.responseObj.txnReferenceNo;
 						this.responseObj.trans_date = this.responseObj.txnDate
@@ -130,7 +130,7 @@ export class GatewayResponseComponent implements OnInit {
 	}
 
 	/**
-	 * Post data for post payment 
+	 * Post data for post payment
 	 * @param data : json
 	 * @param payGateway: selected payment gateway
 	 * @param responseObj: transaction details
@@ -159,7 +159,7 @@ export class GatewayResponseComponent implements OnInit {
 			//payData.refNumber = data.txnReferenceNo;
 			//payData.transactionId = data.txnReferenceNo;
 			payData.payableServiceType = data.additionalInfo2;
-			payData.amount = Number(data.txnAmount);
+			payData.amount = data.txnAmount;
 		}
 
 		if (data.payableServiceType == "PROFESSIONAL_TAX") {
@@ -223,7 +223,7 @@ export class GatewayResponseComponent implements OnInit {
 											const url = '/citizen/my-applications' +'?id=' +payRespData.serviceFormId+ '&apiCode=' +payRespData.serviceDetail.code
 											this.router.navigateByUrl(url);
 										}, 10000);
-		
+
 										this.interVal();
 									}else{
 										setTimeout(() => {
@@ -309,7 +309,7 @@ export class GatewayResponseComponent implements OnInit {
 	}
 	/**
 	 * This method is used to send  sms after completion of booking payment
-	 * @param refNumber 
+	 * @param refNumber
 	 */
 	sendSms(refNumber: any, eventType: any) {
 		if (refNumber) {
@@ -324,7 +324,7 @@ export class GatewayResponseComponent implements OnInit {
 
 	/**
 		   * Method is used to send mail on submit
-		   * @param refNumber 
+		   * @param refNumber
 		   */
 	sendMail(refNumber: any, eventType: any) {
 		if (refNumber) {
