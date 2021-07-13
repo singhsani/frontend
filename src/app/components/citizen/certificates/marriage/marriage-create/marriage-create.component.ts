@@ -1269,7 +1269,7 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
      * @param varName : Static Variable.
      */
     onChange(event: string, lookupArray: Array<any>, varName: string) {
-debugger;
+
         if (!_.isUndefined(this.getGujValue(lookupArray, event))) {
             this[varName] = this.getGujValue(lookupArray, event);
         } else {
