@@ -22,6 +22,7 @@ import { CommonPaybleComponent } from './common-payble/common-payble.component';
 import { LoiPaymentComponent } from './loi-payment/loi-payment.component';
 import { LoiPaymentComponentBooking } from './loi-payment-booking/loi-payment.component-booking';
 import { SharedTicketingModule } from './facilities/ticketings/shared-ticketing/shared-ticketing.module';
+import { PropertyTaxDetailComponent } from './common-payble/property-tax-detail/property-tax-detail.component';
 
 /* Import citizen components end */
 
@@ -52,7 +53,8 @@ import { SharedTicketingModule } from './facilities/ticketings/shared-ticketing/
 		PayableServicesComponent,
 		CommonPaybleComponent,
 		LoiPaymentComponent,
-		LoiPaymentComponentBooking
+		LoiPaymentComponentBooking,
+		PropertyTaxDetailComponent
 		
 	]
 })
