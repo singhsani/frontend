@@ -132,6 +132,7 @@ export class TransactionsComponent implements OnInit {
  */
 @Component({
 	template: `
+	<div *ngIf="tData.serviceType !== 'PROPERTY_TAX'">
   <ol>
   <li>
     Id: {{tData.id}}
@@ -149,7 +150,26 @@ export class TransactionsComponent implements OnInit {
     Status: {{tData.paymentStatus}}
   </li>
 </ol>
-
+</div>
+<div *ngIf="tData.serviceType === 'PROPERTY_TAX'">
+<ol>
+  <li>
+    Property No.: {{tData.refNumber}}
+  </li>
+  <li>
+    Receipt No.: {{tData.recepitNo}}
+  </li>
+  <li>
+    Amount: {{tData?.amount}}
+  </li>
+  <li>
+    Owner Name: {{tData?.ownerName}}
+  </li>
+  <li>
+    Owner Address: {{tData?.ownerAddress}}
+  </li>
+</ol>
+</div>
 	<div mat-dialog-actions align="center">
 		<button mat-raised-button color="primary" (click)="onNoClick()" cdkFocusInitial>Ok</button>
 	</div>

@@ -1,4 +1,4 @@
-<mat-card class="mb-4">
+<mat-card class="mb-4" *ngIf="isShowPayableScreen">
 
   <form [formGroup]="paymentsForm" autocomplete="off" ngNativeValidate novalidate>
     <div class="row">
@@ -176,7 +176,7 @@
     </div>
 
   </div>
-
+<div *ngIf="isPropertyRecordExists">
   <div *ngIf="isPropertyTax">
 
     <div class="row" style="margin-left: -30px;">
@@ -187,7 +187,7 @@
       </div>
 
       <div class="col-md-12">
-        <label class="col-md-2 font16 font-weight-bold">Censuse No :</label>
+        <label class="col-md-2 font16 font-weight-bold">Census No :</label>
         <span class="font16">{{collectionModel?.censuseNo}}</span>
       </div>
 
@@ -199,8 +199,8 @@
         <label class="col-md-2 font16 font-weight-bold">Occupier Name :</label>
         <span class="font16">{{collectionModel?.occupierName}}</span>
       </div>
-      <div class="col-md-6">
-        <label class="col-md-6 font16 font-weight-bold">Postal address :</label>
+      <div class="col-md-12">
+        <label class="col-md-2 font16 font-weight-bold">Postal address :</label>
         <span class="font16">{{collectionModel?.address}}</span>
       </div>
     </div>
@@ -219,6 +219,7 @@
                 <th>Rebate</th>
                 <th>Interest/Penalty Amount	</th>
                 <th>Payable Amount</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>
@@ -243,6 +244,11 @@
                   <td>{{dues.intrestOrPenaltyAmount}}</td>
                   <!-- <td OnlyNumber [textContent]="model" (input)="model=$event.target.textContent" contentEditable>{{collectionModel?.payableAmount}}</td>  -->
                   <td>{{collectionModel?.payableAmount}}</td>
+                  <td>
+                    <button mat-button title="Detail" class="btn-width-auto" color="accent" type="button" (click)="onDetailClick(dues)">
+                      <mat-icon>details</mat-icon>
+                    </button>
+                  </td>
                 </tr>
                 
               </ng-container>
@@ -266,6 +272,7 @@
       </div>
 
   </div>
+</div>
 
   <div *ngIf="isWaterTax">
     <div class="row" style="margin-left: -30px;">
@@ -338,3 +345,5 @@
 </mat-card>
 
 <app-my-applications [inputData]="inputData" [fromOtherModule]=true></app-my-applications>
+
+<app-property-tax-detail *ngIf = "isShowTaxDetailTable" [taxDetailData]="propertyTaxDetailData" (showPayable)=showHidePaybleScreen($event) (showTaxDetail)=showHideTaxDetailScreen($event)></app-property-tax-detail>

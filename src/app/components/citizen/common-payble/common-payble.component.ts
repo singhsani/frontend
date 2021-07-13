@@ -14,6 +14,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ManageRoutes } from 'src/app/config/routes-conf';
 import { ProfessionalTaxService } from 'src/app/core/services/citizen/data-services/professional-tax.service';
 import { CollectionService } from '../tax/water-supply/tax-transaction-history/Services/collection.service';
+import { AlertService } from 'src/app/vmcshared/Services/alert.service';
+
 declare var $: any;
 
 @Component({
@@ -31,6 +33,7 @@ export class CommonPaybleComponent implements OnInit {
   PayableServices: Object[];
   currPaySerData: any;
   isRecordExists: boolean = false;
+  isPropertyRecordExists: boolean = true;
   isECRCSearch: boolean = false;
 
   isPropertyTax: boolean = false;
@@ -56,6 +59,9 @@ export class CommonPaybleComponent implements OnInit {
 
   collectionModel: any;
   collectionWaterModel: any;
+  isShowTaxDetailTable: boolean = false;
+  isShowPayableScreen: boolean = true;
+  propertyTaxDetailData = [];
 
   constructor(
     private formService: FormsActionsService,
@@ -67,7 +73,8 @@ export class CommonPaybleComponent implements OnInit {
     private session: SessionStorageService,
     private route: ActivatedRoute,
     private location: Location,
-    private router: Router
+    private router: Router,
+    private alertService:AlertService
   ) {
     this.getPayableServicesList();
     this.createPayementControls();
@@ -89,6 +96,14 @@ export class CommonPaybleComponent implements OnInit {
 
     this.getAllServices();
 
+  }
+
+  showHidePaybleScreen(event: boolean){
+    this.isShowPayableScreen = event;
+  }
+
+  showHideTaxDetailScreen(event: boolean){
+    this.isShowTaxDetailTable = event;
   }
 
   /**
@@ -244,8 +259,9 @@ export class CommonPaybleComponent implements OnInit {
    * @param searchable - boolean (true/false)
    */
   showHideSearchable(paySerCode) {
+    this.updateIsProfessionalTax(paySerCode);
     if (paySerCode === 'PAY_PROF_TAX' || paySerCode === 'PEC_REG' || paySerCode === 'PRC_REG') {
-      this.isProfessionalTax = true;
+      // this.isProfessionalTax = true;
       this.placeholder = 'PEC Number';
       this.placeHolderMessage = 'PEC Number is Required';
     } else if (paySerCode === 'PAY-PRO-TAX') {
@@ -267,6 +283,15 @@ export class CommonPaybleComponent implements OnInit {
     this.currPaySerData = _.filter(this.PayableServices, { 'code': paySerCode })[0];
   }
 
+  updateIsProfessionalTax(paySerCode) {
+    if (paySerCode === 'PAY_PROF_TAX' || paySerCode === 'PEC_REG' || paySerCode === 'PRC_REG') {
+      this.isProfessionalTax = true;
+    } else {
+      this.isProfessionalTax = false;
+      this.paymentsForm.get('refNumber').setValidators(null);
+    }
+  }
+
   getServices() {
     let serviceType = this.paymentsForm.get('payableServices').get('code').value;
     if (serviceType === 'PAY-PRO-TAX') {
@@ -286,11 +311,16 @@ export class CommonPaybleComponent implements OnInit {
   }
   getAmountDataProperty() {
     this.isPropertyTax = true;
-
+    if (this.paymentsForm.invalid) {
+      this.markFormGroupTouched(this.paymentsForm);
+      this.commonService.openAlert("Warning", "Enter all the required information", "warning");
+      return;
+    }
+  else{
     this.collectionService.getoccupierOutstandingAmount({ propertyNo: this.paymentsForm.get('refNumber').value }).subscribe(
       (data) => {
         if (data.status === 200) {
-
+          this.isPropertyRecordExists = true;
           this.collectionModel = data.body;
           this.model = this.collectionModel.payableAmount;
           this.paymentsForm.get('amount').setValue(this.model);
@@ -298,10 +328,11 @@ export class CommonPaybleComponent implements OnInit {
         }
       },
       (error) => {
-
-
+        this.commonService.openAlert("Warning", "Enter Valid Property Number", "warning");
+        this.paymentsForm.get('refNumber').setValue(null);
+        this.isPropertyRecordExists = false
       });
-
+}
 
   }
 
@@ -339,6 +370,7 @@ export class CommonPaybleComponent implements OnInit {
     }
 
     this.isRecordExists = false;
+    this.isPropertyRecordExists = false;
     this.isECRCSearch = false;
 
     this.paymentsForm.get('amount').setValue(null);
@@ -512,5 +544,16 @@ export class CommonPaybleComponent implements OnInit {
     }
   }
 
+  onDetailClick(item) {
+    debugger
+    if (item.taxWiseOutstandings && item.taxWiseOutstandings.length > 0) {
+      this.propertyTaxDetailData = item.taxWiseOutstandings;
+      this.isShowPayableScreen = false
+      this.isShowTaxDetailTable = true;
+    }
+    else {
+      this.alertService.info('No detail found!');
+    }
+  }
 
 }
