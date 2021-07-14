@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 import { ToastrService } from 'ngx-toastr';
@@ -10,6 +10,7 @@ import * as _ from 'lodash';
 import { ActivatedRoute } from '@angular/router';
 import * as moment from 'moment';
 import { FormsActionsService } from 'src/app/core/services/citizen/data-services/forms-actions.service';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 
 @Component({
   selector: 'app-vendor-registration',
@@ -39,6 +40,8 @@ export class VendorRegistrationComponent implements OnInit {
   attachmentList: any = [];
   bankNameArray: any = [];
 
+  modalJsonRef: BsModalRef;
+
   formId: number;
   showButtons: boolean = false;
 
@@ -49,6 +52,7 @@ export class VendorRegistrationComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private alertService: AlertService,
     private formService: FormsActionsService,
+    private modalService: BsModalService,
     private engineer: EngineeringService
   ) {
     this.engineer.apiType = "vendor";
@@ -174,8 +178,10 @@ export class VendorRegistrationComponent implements OnInit {
       personnelDetailUnSkilled: [null],
       personnelDetailOther: [null],
 
-      officeResidentialAddressSame: null
+      officeResidentialAddressSame: null,
 
+      attachments: [''],
+      acceptAndCondition: [true],
     });
     this.academicQualificationAndExperience.push(this.createEducationQualification());
   }
@@ -276,6 +282,13 @@ export class VendorRegistrationComponent implements OnInit {
         }
       })
     })
+  }
+
+  openTermModel(template: TemplateRef<any>) {
+    this.modalJsonRef = this.modalService.show(template);
+  }
+  hideModel() {
+    this.modalJsonRef.hide();
   }
 
 

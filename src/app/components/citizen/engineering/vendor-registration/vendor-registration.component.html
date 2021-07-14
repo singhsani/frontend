@@ -921,13 +921,23 @@
             </div>
           </div>
 
+          <div class="row">
+            <div>
+              <mat-checkbox class="col accept-terms" required formControlName="acceptAndCondition">
+
+              </mat-checkbox>
+            </div>
+            <a (click)="openTermModel(termCondition);" style="margin-top: 10px; margin-left: -25px"> I have
+              read and agree with <u style="color: rebeccapurple;">Terms and conditions</u> </a>
+          </div>
+
           <div class="fotButtonBar clearfix">
             <div class="col-sm-12 col-md-12">
               <span class="pull-left">
                 <button class="liteBorder" type="button" mat-raised-button (click)="tabIndex = 3">{{'back'}}</button>
               </span>
-              <button class="pull-right" type="button" mat-raised-button color="primary"
-                (click)="onSubmit();">{{'Review & Submit'}}</button>
+              <button class="pull-right" type="button" mat-raised-button color="primary" (click)="onSubmit();">{{'Review
+                & Submit'}}</button>
             </div>
           </div>
 
@@ -939,3 +949,16 @@
     </form>
   </mat-card>
 </div>
+
+<ng-template #termCondition>
+
+  <div class="modal-body scrollModel">
+    <br> Terms and Condition
+
+  </div>
+  <div class="modal-footer customthead">
+    <button color="white" mat-stroked-button (click)="hideModel()">
+      {{'Ok' | translate: translateKey}}
+    </button>
+  </div>
+</ng-template>
