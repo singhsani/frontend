@@ -22,7 +22,7 @@ export class DashboardComponent implements OnInit {
 	isRecentApp: boolean = false;
 	recentApp: any;
 	// bookingsAndTicketings = [];
-	 bookingsAndTicketings: any = [
+	bookingsAndTicketings: any = [
 		{
 			"id": 1,
 			"uniqueId": null,
@@ -202,7 +202,7 @@ export class DashboardComponent implements OnInit {
 		private formService: FormsActionsService,
 		private toastr: ToastrService,
 		private paginationService: PaginationService,
-		public commonService : CommonService
+		public commonService: CommonService
 	) {
 		this.getAllServices();
 	}
@@ -268,19 +268,19 @@ export class DashboardComponent implements OnInit {
 				break;
 			case 'HEL-WTRPIP-WRK-COMPL':
 			case 'HEL-DRNGPIP-WRK-COMPL':
-			// case 'HEL-WTR-DRAINAGE-DISCONNECTION':
-			//case 'HEL-WTR-DRAINAGE-RECONNECTION':
-			//case 'HEL-WTR-DRAINAGE-TRANS-CONNECTION':
+				// case 'HEL-WTR-DRAINAGE-DISCONNECTION':
+				//case 'HEL-WTR-DRAINAGE-RECONNECTION':
+				//case 'HEL-WTR-DRAINAGE-TRANS-CONNECTION':
 				this.router.navigate([ManageRoutes.getFullRoute(apiCode), apiCode]);
 				break;
 			case 'PAY_PROF_TAX':
-				this.router.navigate([ManageRoutes.getFullRoute(apiCode)],{ queryParams: { code: 'PROFESSIONAL' }});
+				this.router.navigate([ManageRoutes.getFullRoute(apiCode)], { queryParams: { code: 'PROFESSIONAL' } });
 				break;
 			case 'PAY-PRO-TAX':
-				this.router.navigate([ManageRoutes.getFullRoute(apiCode)],{ queryParams: { code: 'PROPERTY-TAX' }});
+				this.router.navigate([ManageRoutes.getFullRoute(apiCode)], { queryParams: { code: 'PROPERTY-TAX' } });
 				break;
 			case 'PAY-WTR-TAX':
-				this.router.navigate([ManageRoutes.getFullRoute(apiCode)],{ queryParams: { code: 'WATER-TAX' }});
+				this.router.navigate([ManageRoutes.getFullRoute(apiCode)], { queryParams: { code: 'WATER-TAX' } });
 				break;
 			case 'PRC_REG':
 			case 'PRO-ASS':
@@ -316,6 +316,7 @@ export class DashboardComponent implements OnInit {
 					this.toastr.error("Invalid API Code");
 				}
 				break;
+
 		}
 
 	}
@@ -325,7 +326,7 @@ export class DashboardComponent implements OnInit {
 			res => {
 				console.log("res", res);
 				this.userServicesList = res.modules;
-				
+
 				_.forEach(res.modules, (value, key) => {
 					_.forEach(value.services, (value1, key1) => {
 						this.services.push(value1);
