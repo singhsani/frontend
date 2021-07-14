@@ -91,18 +91,18 @@
                     (stepReset)="stepReset()" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar> -->
             </mat-tab>
 
-            <mat-tab [label]="'family_details' | translate: translateKey">
+            <!-- <mat-tab [label]="'family_details' | translate: translateKey">
 
                 <div class="row">
                     <mat-form-field class="col-md-6">
-                        <input required matInput appValidationFields [form]="deathCorrectionForm" appGujInputSource
+                        <input  matInput appValidationFields [form]="deathCorrectionForm" appGujInputSource
                         targetElement="motherNameGuj" [validationFieldsType]="'onlyNameWithSpace'"
                             maxlength="20" placeholder="{{'mother_name' | translate:translateKey}}" name="motherName"
                             formControlName="motherName">
                         <control-messages [control]="deathCorrectionForm.get('motherName')"></control-messages>
                     </mat-form-field>
                     <mat-form-field class="col-md-6">
-                        <input required matInput appGujInputTarget [form]="deathCorrectionForm"
+                        <input  matInput appGujInputTarget [form]="deathCorrectionForm"
                             maxlength="40" placeholder="{{'mother_name' | translate:translateKey:'gu'}}"
                             formControlName="motherNameGuj">
                         <control-messages [control]="deathCorrectionForm.get('motherNameGuj')"></control-messages>
@@ -111,9 +111,9 @@
                 <app-action-bar [uploadFiles]="uploadFileArray" [form]="deathCorrectionForm"
                     [stepInfo]="{step: 'step1', next: 2, back: 0}" (handleErrors)="handleErrorsOnSubmit($event)"
                     (tabIndex)="onTabChange($event)"></app-action-bar>
-                <!-- <app-action-bar [uploadFiles]="uploadFileArray" [form]="deathCorrectionForm" [step]="'step2'"
-                     (stepReset)="stepReset()" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar> -->
-            </mat-tab>
+                 <app-action-bar [uploadFiles]="uploadFileArray" [form]="deathCorrectionForm" [step]="'step2'"
+                     (stepReset)="stepReset()" (handleErrors)="handleErrorsOnSubmit($event)"></app-action-bar> 
+            </mat-tab> -->
 
             <mat-tab [label]="'upload_documents' | translate: translateKey">
 
