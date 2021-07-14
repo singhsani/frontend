@@ -351,9 +351,9 @@ export class BirthCorrectionComponent implements OnInit {
 	newgnDateconvert(controlName: any, date) {
 	 if(date) {
 		let dateString = date;
-		let dateParts = dateString.split("-");
+		let dateParts = dateString.split(" ");
 		let dateObject = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
-		this.birthCorrectionForm.get(controlName).setValue(moment(dateObject).format("YYYY-MM-DD"));
+		this.birthCorrectionForm.get(controlName).setValue(moment(dateParts[0]).format("YYYY-MM-DD"));
 	 } else {
 		 console.log('control name is undefined', controlName)
 	 }
