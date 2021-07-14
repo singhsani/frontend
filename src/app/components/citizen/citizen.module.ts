@@ -55,7 +55,6 @@ import { PropertyTaxDetailComponent } from './common-payble/property-tax-detail/
 		LoiPaymentComponent,
 		LoiPaymentComponentBooking,
 		PropertyTaxDetailComponent
-		
 	]
 })
 export class CitizenModule { }

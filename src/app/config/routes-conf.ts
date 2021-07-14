@@ -233,12 +233,12 @@ const ROUTEMAIN = {
         'main': 'drngPipeConnWorkCompletion',
         'type': 'drngPipeConnWorkCompletion'
     },
-    'HEL-WTR-DRAINAGE-CONNECTION' : {
+    'HEL-WTR-DRAINAGE-CONNECTION': {
         'main': 'newDrainageConnection',
-        'type': 'newDrainageConnection' 
+        'type': 'newDrainageConnection'
     },
 
-    
+
     'HEL-WTR-DRAINAGE-DISCONNECTION': {
         'main': 'drainageDisconnection',
         'type': 'drainageDisconnection'
@@ -247,9 +247,9 @@ const ROUTEMAIN = {
         'main': 'drainageReconnection',
         'type': 'drainageReconnection'
     },
-    'HEL-WTR-DRAINAGE-TRANS-CONNECTION' : {
+    'HEL-WTR-DRAINAGE-TRANS-CONNECTION': {
         'main': 'drainageTransferConnection',
-        'type': 'drainageTransferConnection' 
+        'type': 'drainageTransferConnection'
     },
 
 
@@ -387,7 +387,7 @@ const ROUTEMAIN = {
         'main': 'bookPermission',
         'type': ''
     },
-    
+
     'SWIMMINGPOOL': {
         'main': 'swimmingPool',
         'type': ''
@@ -478,7 +478,7 @@ const ROUTEMAIN = {
         'main': 'book',
         'type': 'planetrium'
     },
-    
+
 
     /* hospital routing configuration start*/
     'HOSPITALDASHBOARD': {
@@ -522,10 +522,20 @@ const ROUTEMAIN = {
         'main': 'update-email-mobile',
         'type': 'update-email-mobile'
     },
-    'HEL-WTR-DRA-CON' : {
+    'HEL-WTR-DRA-CON': {
         'main': 'newDrainageConnection',
-        'type': 'newDrainageConnection' 
+        'type': 'newDrainageConnection'
     },
+
+    'VENDOR_REG': {
+        'main': 'vendor',
+        'type': 'vendor'
+    }
+
+    // 'CONTRACTOR_REG': {
+    //     'main': 'contractor',
+    //     'type': 'contractor'
+    // },
 
 }
 
@@ -573,9 +583,9 @@ const ROUTEPREFIX = {
 
     'CERTIFICATESMODULE': 'certificates',
 
-    'AFFORDABLEMODULE':'affordable-housing',
+    'AFFORDABLEMODULE': 'affordable-housing',
 
-    
+
 
     /** start - citizen innner-booking modules routes configuretion */
     'BIRTHANDDEATHMODULE': 'birth-death',
@@ -613,7 +623,13 @@ const ROUTEPREFIX = {
     /** end - citizen module routes configuretion */
     'HOSPITALMODULE': 'hospital',
 
-    'PROPERTY': 'property'
+    'PROPERTY': 'property',
+
+    'VENDORMODULE': 'vendor-registration',
+    'ENGINEERINGMODULE': 'engineering',
+
+    //  'CONTRACTORMODULE': 'contractor-regsitration'
+
 }
 
 const ROUTESLIST = {
@@ -780,7 +796,7 @@ const ROUTESLIST = {
     'PRO-REVALUATION': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TAXMODULE + '/' + ROUTEPREFIX.PROPERTYMODULE + '/' + ROUTEMAIN["PRO-REVALUATION"].main
     },
-    'PAY-PRO-TAX':{
+    'PAY-PRO-TAX': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEMAIN.CITIZENPAYABLESERVICES.main
     },
     /*Property routes end */
@@ -792,7 +808,7 @@ const ROUTESLIST = {
     },
     /*Affordable Housing routes end */
 
-    
+
 
     /*Water routes starts */
     'WTR-NEW': {
@@ -840,7 +856,7 @@ const ROUTESLIST = {
     'WTR-RNW-PLUMB-LIC': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TAXMODULE + '/' + ROUTEPREFIX.WATERMODULE + '/' + ROUTEMAIN["WTR-RNW-PLUMB-LIC"].main
     },
-    'PAY-WTR-TAX':{
+    'PAY-WTR-TAX': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEMAIN.CITIZENPAYABLESERVICES.main
     },
     /*Water routes end */
@@ -956,8 +972,8 @@ const ROUTESLIST = {
     },
     //SWIMMING POOL
     'SWIMMINGPOOLDASHBOARD': {
-    'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.BOOKINGMODULE + '/' + ROUTEPREFIX.SWIMMINGPOOLDASHBOARD 
-},
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.BOOKINGMODULE + '/' + ROUTEPREFIX.SWIMMINGPOOLDASHBOARD
+    },
 
     /**
      * Ticketing Routing Start
@@ -1026,7 +1042,7 @@ const ROUTESLIST = {
     'PRC_REG': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TAXMODULE + '/' + ROUTEPREFIX.PROFESSIONALMODULE + '/' + ROUTEMAIN["PRC_REG"].main
     },
-    'PAY_PROF_TAX':{
+    'PAY_PROF_TAX': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEMAIN.CITIZENPAYABLESERVICES.main
     },
     'VEHICLE': {
@@ -1052,15 +1068,27 @@ const ROUTESLIST = {
     'HOSPITALMYAPPS': {
         'full': ROUTEPREFIX.HOSPITALMODULE + '/' + ROUTEMAIN.HOSPITALMYAPPS.main
     },
-    'PRO-TAX-TRAS-HISTORY' : {
-        'full' : ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TAXMODULE + '/' + ROUTEMAIN["PRO-TAX-TRAS-HISTORY"].main
+    'PRO-TAX-TRAS-HISTORY': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TAXMODULE + '/' + ROUTEMAIN["PRO-TAX-TRAS-HISTORY"].main
     },
-    'PROPERTY_UPDATE_EMAIL_AND_MOBILE' : {
-        'full' : ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TAXMODULE + '/'+ROUTEPREFIX.PROPERTY +'/'+ ROUTEMAIN["PROPERTY_UPDATE_EMAIL_AND_MOBILE"].main
+    'PROPERTY_UPDATE_EMAIL_AND_MOBILE': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TAXMODULE + '/' + ROUTEPREFIX.PROPERTY + '/' + ROUTEMAIN["PROPERTY_UPDATE_EMAIL_AND_MOBILE"].main
     },
     'HEL-WTR-DRA-CON': {
         'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.TAXMODULE + '/' + ROUTEPREFIX.WATERDRINAGE + '/' + ROUTEMAIN["HEL-WTR-DRAINAGE-CONNECTION"].main
     },
+
+    /*Engineering routes Start */
+
+    'VENDOR_REG': {
+        'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.ENGINEERINGMODULE + '/' + ROUTEPREFIX.VENDORMODULE + '/' + ROUTEMAIN["VENDOR_REG"].main
+    },
+
+    // 'CONTRACTOR-REG': {
+    //     'full': ROUTEPREFIX.CITIZENMODULE + '/' + ROUTEPREFIX.CONTRACTORMODULE + '/' + ROUTEMAIN["CONTRACTOR-REG"].main
+    // },
+    /*Engineering routes end */
+
 }
 
 
