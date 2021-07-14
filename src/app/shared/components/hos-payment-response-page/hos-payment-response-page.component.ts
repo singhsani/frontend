@@ -69,7 +69,7 @@ export class HosPaymentResponsePageComponent implements OnInit {
 		if (txtRefNo != 'NA') {
 			this.formActionsService.getBillDeskTransactionDetails(txtRefNo).subscribe(res => {
 				this.responseObj = res.data;
-
+				this.responseObj['getway']= "BILLDESK";
 				if (res.success) {
 
 					if (this.responseObj.authStatus == '0300') {
@@ -79,7 +79,8 @@ export class HosPaymentResponsePageComponent implements OnInit {
 						this.responseObj.bank_ref_no = this.responseObj.txnReferenceNo;
 						this.responseObj.trans_date = this.responseObj.txnDate
 
-						this.paymentStatus = _.upperCase(this.responseObj.authStatus);
+						//this.paymentStatus = _.upperCase(this.responseObj.authStatus);
+						this.paymentStatus = "SUCCESS";
 						this.postSessionData(this.dispData, 'BILLDESK', this.responseObj);
 					} else {
 						this.redirectToHome();
@@ -115,10 +116,11 @@ export class HosPaymentResponsePageComponent implements OnInit {
 		// });
 
 		this.formActionsService.getCCAvenuePaymentResponse(token).subscribe(res => {
-			this.responseObj = res.data;
-
+			//this.responseObj = res.data;
+			this.responseObj = res.data[0];
+			this.responseObj['getway']= "CCAVENUE";
 			if (res.success) {
-				this.responseObj = this.responseObj[this.responseObj.length - 1];
+				//this.responseObj = this.responseObj[this.responseObj.length - 1];
 				if (this.responseObj.order_status == 'Success') {
 					this.paymentStatus = _.upperCase(this.responseObj.order_status);
 					this.postSessionData(this.dispData, 'CCAVENUE', this.responseObj);
