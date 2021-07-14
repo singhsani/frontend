@@ -9,6 +9,7 @@ import { EngineeringService } from '../engineering.service';
 import * as _ from 'lodash';
 import { ActivatedRoute } from '@angular/router';
 import * as moment from 'moment';
+import { FormsActionsService } from 'src/app/core/services/citizen/data-services/forms-actions.service';
 
 @Component({
   selector: 'app-vendor-registration',
@@ -26,9 +27,10 @@ export class VendorRegistrationComponent implements OnInit {
   vendorNameArray: FormArray;
   vendorRegistrationForm: FormGroup;
   implYesNorray: Array<any> = [{ name: 'YES', code: true }, { name: 'NO', code: false }];
-  locations: Array<any> = [{ name: 'With in Gujarat', code: 'WITH_IN_GUJARAT' },
-  { name: 'Outside Of Gujarat', code: 'OUTSIDE_GUJARAT' },
-  { name: 'Outside Of India', code: 'OUTSIDE_INDIA' }];
+  locations: any = [];
+  //Array<any> = [{ name: 'With in Gujarat', code: 'WITH_IN_GUJARAT' },
+  // { name: 'Outside Of Gujarat', code: 'OUTSIDE_GUJARAT' },
+  // { name: 'Outside Of India', code: 'OUTSIDE_INDIA' }];
 
   tabIndex: number = 0;
   isFromOnlineApp: boolean = false;
@@ -45,9 +47,12 @@ export class VendorRegistrationComponent implements OnInit {
     private toastr: ToastrService,
     private commonService: CommonService,
     private activatedRoute: ActivatedRoute,
+    private alertService: AlertService,
+    private formService: FormsActionsService,
     private engineer: EngineeringService
   ) {
     this.engineer.apiType = "vendor";
+    this.formService.apiType = "vendor";
     this.listOfItemMaterialSupplier = this.fb.array([]);
     this.academicQualificationAndExperience = this.fb.array([]);
     this.vendorNameArray = this.fb.array([]);
@@ -65,6 +70,7 @@ export class VendorRegistrationComponent implements OnInit {
 
     this.getBankNames();
     this.getAllDocumentLists();
+    this.getAllLocationDetail();
 
     if (!this.formId) {
       this.createFormData();
@@ -90,7 +96,7 @@ export class VendorRegistrationComponent implements OnInit {
 
       apiType: null,
       serviceCode: null,
-      serviceFormId: null,
+      serviceFormId: this.formId,
 
       id: null,
       nameOfTheFirm: null,
@@ -184,6 +190,19 @@ export class VendorRegistrationComponent implements OnInit {
     });
   }
 
+  getAllLocationDetail() {
+    this.engineer.getAllLocationDetail().subscribe(res => {
+      this.locations = _.cloneDeep(res);
+    });
+  }
+
+  locationChange(code) {
+    this.engineer.getFeeFromLocation(code).subscribe(res => {
+      this.vendorRegistrationForm.get('registrationAmount').setValue(res.fee);
+    })
+
+  }
+
   addRow() {
     this.listOfItemMaterialSupplier.push(this.createItemMaterialSupplier());
   }
@@ -237,12 +256,72 @@ export class VendorRegistrationComponent implements OnInit {
     });
   }
 
+  mandatoryFileCheck(serviceFormId, attachmentList) {
+    return new Promise<any>((resolve, reject) => {
+      this.formService.getFormData(serviceFormId).subscribe(respData => {
+        if (respData.attachments) {
+          let tempArray = [];
+          respData.attachments.forEach(element => {
+            tempArray.push(element.fieldIdentifier);
+          });
+          attachmentList.forEach(el => {
+            if (tempArray.indexOf(el.fieldIdentifier) === -1 && el.mandatory) {
+              resolve({ fileName: el.documentLabelEn, status: false });
+              return;
+            }
+          });
+          resolve({ fileName: "", status: true });
+        } else {
+          resolve({ fileName: "", status: true })
+        }
+      })
+    })
+  }
+
 
   onSubmit() {
 
-    this.engineer.vendorSaveFormData(this.vendorRegistrationForm.getRawValue()).subscribe(res => {
-      this.commonService.openAlert(" Successful", "", "success", `</b>`);
-    })
-  }
-}
+    // this.engineer.vendorSaveFormData(this.vendorRegistrationForm.getRawValue()).subscribe(res => {
+    //   this.commonService.openAlert(" Successful", "", "success", `</b>`);
+    // })
 
+    this.vendorRegistrationForm.get('serviceFormId').setValue(this.formId);
+
+    this.mandatoryFileCheck(this.vendorRegistrationForm.get('serviceFormId').value, this.attachmentList).then(data => {
+      if (data.status) {
+        this.engineer.vendorSaveFormData(this.vendorRegistrationForm.getRawValue()).subscribe(res => {
+          if (Object.keys(res).length) {
+            console.log("tet", this.vendorRegistrationForm.get('serviceFormId').value)
+            this.commonService.openAlert(" Successful", "", "success", `</b>`);
+            this.resetForm();
+          } else {
+            this.commonService.openAlert("File Upload", `Please upload file for "${data.fileName}"`, "warning");
+            return
+          }
+        }, (err) => {
+          this.commonService.openAlertFormSaveValidation('Warning!', err.error, 'warning');
+        });
+        return;
+
+      }
+    });
+  }
+
+  resetForm(isBtnClicked?: boolean) {
+    if (isBtnClicked) {
+      this.commonService.confirmAlert('Are you sure?', 'question', 'Reset', cb => {
+        this.conditionallyResetFields();
+      });
+    } else {
+      this.conditionallyResetFields();
+    }
+  }
+
+
+  conditionallyResetFields() {
+
+    this.vendorRegistrationForm.enable();
+
+  }
+
+}

@@ -10,7 +10,7 @@
         <!-- Tab 1 Starts -->
         <mat-tab>
           <ng-template mat-tab-label>
-            <div>{{'First Page'}}</div>
+            <div>{{'Firm Detail'}}</div>
           </ng-template>
 
           <div class="row">
@@ -51,13 +51,14 @@
           <div class="row">
             <h2><b>{{'Address of the factory/works from where material will be supplied'}}</b></h2>
 
-            <div class="col-md-4 ngSelect">
-              <ng-select formControlName="locationOfFactoryWorks" placeholder="{{'Location'}}">
-                <ng-option *ngFor="let impl of locations" [value]="impl.code">{{impl.name}}
+            <div class="col-md-4 ngSelect" formGroupName="locationOfFactoryWorks">
+              <ng-select placeholder="{{'Locations *'}}" formControlName="code" (change)="locationChange($event)">
+                <ng-option *ngFor="let impl of locations" [value]="impl.code">{{ impl.name
+                  }}
                 </ng-option>
+                <control-messages [control]="vendorRegistrationForm.get('locationOfFactoryWorks').get('code')">
+                </control-messages>
               </ng-select>
-              <control-messages [control]="vendorRegistrationForm.get('locationOfFactoryWorks')">
-              </control-messages>
             </div>
 
             <app-address #officeAddr [requiredFeilds]="true"
@@ -122,7 +123,7 @@
         <!-- Tab 2 start -->
         <mat-tab>
           <ng-template mat-tab-label>
-            <div>{{'Second Page'}}</div>
+            <div>{{'Registration Detail'}}</div>
           </ng-template>
 
           <div class="row">
@@ -277,7 +278,7 @@
             </div>
 
             <mat-form-field class="col-md-4">
-              <input matInput OnlyNumber maxlength="6" formControlName="registrationAmount"
+              <input matInput OnlyNumber maxlength="6" formControlName="registrationAmount" readonly
                 placeholder="{{'DD Amount'}}">
               <control-messages [control]="vendorRegistrationForm.get('registrationAmount')"></control-messages>
             </mat-form-field>
@@ -375,7 +376,7 @@
 
         <mat-tab>
           <ng-template mat-tab-label>
-            <div>{{'Third Page'}}</div>
+            <div>{{'Factory & Employee Detail'}}</div>
           </ng-template>
 
           <div class="row">
@@ -677,7 +678,7 @@
         <!--Tab 4 Start-->
         <mat-tab>
           <ng-template mat-tab-label>
-            <div>{{'Fourth Page'}}</div>
+            <div>{{'Product & Supplier Detail'}}</div>
           </ng-template>
 
           <div class="row">
@@ -783,12 +784,11 @@
                           {{2}}
                         </td>
                         <td class="text-center">
-                          {{'Order no. and Date'}}
+                          {{'Order no.'}}
                         </td>
                         <td class="text-center">
                           <mat-form-field>
-                            <input matInput type="text" appValidationFields maxlength="100"
-                              formControlName="orderNo">
+                            <input matInput type="text" appValidationFields maxlength="100" formControlName="orderNo">
                             <control-messages [control]="vendorRegistrationForm.get('orderNo')">
                             </control-messages>
                           </mat-form-field>
@@ -805,8 +805,7 @@
                         </td>
                         <td class="text-center">
                           <mat-form-field>
-                            <input matInput type="text" appValidationFields maxlength="100"
-                              formControlName="orderDate">
+                            <input matInput type="text" appValidationFields maxlength="100" formControlName="orderDate">
                             <control-messages [control]="vendorRegistrationForm.get('orderDate')">
                             </control-messages>
                           </mat-form-field>
@@ -907,7 +906,7 @@
 
         <mat-tab>
           <ng-template mat-tab-label>
-            <div>{{'Document'}}</div>
+            <div>{{'Refrence Document'}}</div>
           </ng-template>
 
 
@@ -928,7 +927,7 @@
                 <button class="liteBorder" type="button" mat-raised-button (click)="tabIndex = 3">{{'back'}}</button>
               </span>
               <button class="pull-right" type="button" mat-raised-button color="primary"
-                (click)="onSubmit();">{{'save'}}</button>
+                (click)="onSubmit();">{{'Review & Submit'}}</button>
             </div>
           </div>
 

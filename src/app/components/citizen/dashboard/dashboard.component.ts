@@ -305,11 +305,9 @@ export class DashboardComponent implements OnInit {
 				this.router.navigate([ManageRoutes.getFullRoute(apiCode)]);
 				break;
 			default:
-				debugger;
 				if (ManageRoutes.getApiTypeFromApiCode(apiCode)) {
 					this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(apiCode);
 					this.formService.createFormData().subscribe(res => {
-						debugger;
 						let redirectUrl = ManageRoutes.getFullRoute(apiCode);
 						this.router.navigate([redirectUrl, res.serviceFormId, apiCode]);
 					});

@@ -32,4 +32,12 @@ export class EngineeringService {
     return this.http.get('api/bankMaster/get/active/all');
   }
 
+  getAllLocationDetail() {
+    return this.http.get('api/vendor/location/detail');
+  }
+
+  getFeeFromLocation(code) {
+    return this.http.get(`api/vendor/location/feeAmount/` + code);
+  }
+
 }

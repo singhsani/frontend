@@ -8,6 +8,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
+  { path: '', redirectTo: 'vendor', pathMatch: 'full' },
   { path: 'vendor-registration/:id/:apiCode', component: VendorRegistrationComponent },
   { path: 'contractor-registration/:id/:apiCode', component: ContractorRegsitrationComponent }
 ];

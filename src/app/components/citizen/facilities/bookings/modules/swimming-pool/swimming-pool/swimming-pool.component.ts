@@ -190,7 +190,6 @@ export class SwimmingPoolComponent implements OnInit {
    * Filter details as per pool name selection
    */
   filterAsperBatchName(event: any) {
-    debugger
     let poolName = this.swimmimgPoolBookingForm.get('swimmingPoolName').get('code').value;
     if (event == 'REGULAR') {
       this.bookingService.filterBatchCode(this.swimmimgPoolBookingForm.get('category').get('code').value, poolName).subscribe(rep => {
