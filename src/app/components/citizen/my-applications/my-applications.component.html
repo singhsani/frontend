@@ -292,13 +292,16 @@
                         <!-- case2 property/water tax -->
                         <ng-container *ngSwitchCase="'case2'">
                             <div class="mobile-label1">:</div>
-                            <button class="actionBtn" *ngIf="!(row.fileStatus === 'SUBMITTED' || row.fileStatus === 'DRAFT')" mat-button [matMenuTriggerFor]="menuTax">
+                            <button class="actionBtn" *ngIf="((row.serviceType === 'NO_DUE_CERTIFICATE' || row.serviceType === 'EXTRACT_OF_PROPERTY') && row.fileStatus === 'SUBMITTED') || 
+                            row.fileStatus === 'PAYMENT_RECEIVED' || row.fileStatus === 'APPROVED' ||
+                            row.fileStatus === 'PAYMENT' || row.fileStatus === 'SCRUTINY'" mat-button [matMenuTriggerFor]="menuTax">
                                 <!-- *ngIf="isMoreBtnVisibleProperty(row)" -->
                                 <mat-icon >more_vert</mat-icon>
                             </button>
 
                             <mat-menu #menuTax="matMenu">
-                                <button mat-menu-item *ngIf="row.fileStatus === 'PAYMENT_RECEIVED' || row.fileStatus === 'APPROVED'" color="primary"
+                                <button mat-menu-item *ngIf="row.fileStatus === 'PAYMENT_RECEIVED' || row.fileStatus === 'APPROVED' ||
+                                ((row.serviceType === 'NO_DUE_CERTIFICATE' || row.serviceType === 'EXTRACT_OF_PROPERTY') && row.fileStatus === 'SUBMITTED') " color="primary"
                                     (click)="printReceipt(row.serviceDetail.code, row.serviceDetail.name, row.serviceFormId)">
                                     <mat-icon class="m-1" title="{{'print_receipt' | translate:translateKey}}">print</mat-icon>
                                     {{'print_receipt' | translate:translateKey}}
@@ -309,6 +312,18 @@
                                     <i class="fa fa-inr m-1" title="{{'attach_money' | translate:translateKey}}" aria-hidden="true"></i>
                                     {{'payment' | translate:translateKey}}
                                 </button>
+                                <div *ngIf="(row.serviceType === 'NO_DUE_CERTIFICATE' || row.serviceType === 'EXTRACT_OF_PROPERTY') && row.fileStatus === 'SUBMITTED'">
+                                <button mat-menu-item  color="primary"
+                                    (click)="printPropertyACKReceipt(row.fileNumber)">
+                                    <mat-icon class="m-1" title="{{'Doenload_acknolowdgement' | translate:translateKey}}">arrow_downward</mat-icon>
+                                    {{'Doenload_acknolowdgement' | translate:translateKey}}
+                                </button>
+                                <button mat-menu-item color="primary"
+                                    (click)="printCertificate(row)">
+                                    <mat-icon class="m-1" title="{{'print_certificate' | translate:translateKey}}">arrow_downward</mat-icon>
+                                    {{'download_certificate' | translate:translateKey}}
+                                </button>
+                            </div>
                             </mat-menu>
 
                         </ng-container>
