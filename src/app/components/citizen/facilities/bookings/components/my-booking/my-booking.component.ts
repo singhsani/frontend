@@ -594,7 +594,11 @@ export class MyBookingComponent implements OnInit {
              return false;
          }
     }
-
+	// -------------hide cancel button for swimming pool----------
+	if(element.resourceType==="SWIMMING_POOL"){
+		return false;
+	}
+	// ----------------------------------------------------------
 		return true;
 	}
 
@@ -715,5 +719,14 @@ export class MyBookingComponent implements OnInit {
           window.print();
       });
   }
+
+
+  enableMoreAction(element){
+    if(element.status == this.bookingConstant.DRAFT || element.status == this.bookingConstant.EXPIRED
+    || (element.status == this.bookingConstant.SUBMITTED) || (element.resourceType == 'SWIMMING_POOL' && element.status == this.bookingConstant.APPROVED)){
+        return false;
+    }
+        return true;
+    }
 
 }
