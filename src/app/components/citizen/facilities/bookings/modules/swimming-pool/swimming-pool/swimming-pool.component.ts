@@ -12,6 +12,7 @@ import { BookingService } from '../../../shared-booking/services/booking-service
 import { BookingConstants, BookingUtils } from '../../../config/booking-config';
 import { ComponentConfig } from 'src/app/components/component-config';
 import { AppSwimmingPoolService } from '../swimming-pool.service';
+import { count } from 'rxjs-compat/operator/count';
 
 
 @Component({
@@ -411,23 +412,21 @@ export class SwimmingPoolComponent implements OnInit {
    * This method required for final form submition.
    * @param count - flag of invalid control.
    */
-  handleErrorsOnSubmit(count) {
+  handleErrorsonSubmit(count) {
     let step1 = 15;
-    let step2 = 26;
-    let step3 = 27;
+    let step2 = 27;
+    let step3 = 40;
     if (count <= step1) {
-      this.tabIndex = 0;
-      return false;
+        this.tabIndex = 0;
+        return false;
     } else if (count <= step2) {
-      this.tabIndex = 1;
-      return false;
+        this.tabIndex = 1;
+        return false;
     } else if (count <= step3) {
-      this.tabIndex = 2;
-      return false;
+        this.tabIndex = 2;
+        return false;
     }
-  }
-
-
+}
   /**
    * Save form data
    */
@@ -449,23 +448,18 @@ export class SwimmingPoolComponent implements OnInit {
    * Submit form data
    */
   submitApplication(): void {
-    
     let errCount = this.bookingUtils.getAllErrors(this.swimmimgPoolBookingForm);
-    if (this.swimmimgPoolBookingForm.invalid) {
-      this.handleErrorsOnSubmit(errCount);
-      this.commonService.openAlert("Field Error", this.bookingConstants.ALL_FEILD_REQUIRED_MESSAGE, 'warning')
-      return;
-    }
-    // else if (!this.bookingUtils.matcher(this.swimmimgPoolBookingForm, 'emailId', 'confirmEmailId') || !this.bookingUtils.matcher(this.swimmimgPoolBookingForm, 'applicantMobile', 'confirmMobile')) {
-    //   this.commonService.openAlert("Field Error", !this.bookingUtils.matcher(this.swimmimgPoolBookingForm, 'emailId', 'confirmEmailId') ? this.bookingConstants.EMAIL_MIS_MATCH_MESSAGE : this.bookingConstants.MOB_NO_MIS_MATCH_MESSAGE, 'warning');
-    //   this.handleErrorsOnSubmit(7);
-    //   return;}
-    else if (!this.isRenewalForm && (!this.isFileUploaded1 || !this.isFileUploaded2 || !this.isFileUploaded3 || !this.isFileUploaded4)) {
-      this.handleErrorsOnSubmit(33);
-      this.commonService.openAlert(this.bookingConstants.FEILD_ERROR_TITLE, 'Attachment Required!', 'warning')
-      return;
-    }
-    else {
+          if (this.swimmimgPoolBookingForm.invalid) {
+              this.handleErrorsonSubmit(errCount);
+              this.commonService.openAlert(this.bookingConstants.FEILD_ERROR_TITLE, this.bookingConstants.ALL_FEILD_REQUIRED_MESSAGE, 'warning')
+              return;
+          }
+          else if (!this.isRenewalForm && (!this.isFileUploaded1 || !this.isFileUploaded2 || !this.isFileUploaded3 || !this.isFileUploaded4)) {
+              this.handleErrorsonSubmit(errCount);
+              this.commonService.openAlert(this.bookingConstants.FEILD_ERROR_TITLE, 'Attachment Required!', 'warning')
+              return;
+          }
+          else {
       // save call
       this.swimmingPoolService.submitData(this.swimmimgPoolBookingForm.getRawValue(), this.swimmimgPoolBookingForm.get('swimmingPoolName').get('code').value).subscribe(
         res => {
