@@ -175,9 +175,25 @@ export class ExtractPropertyTableComponent implements OnInit {
             let retUrl: string = '/citizen/my-applications';
             let retAfterPayment: string = environment.returnUrl;
             if (err.status === 402) {
+              const resData = err.error.data;
+              let payData = this.commonNascentService.storePaymentInfo(err.error.data, retUrl, retAfterPayment);
+              
+                if (this.commonNascentService.fromAdmin()) {
+							 	if(resData.isPaymentReceipt) {
+									const url = '/citizen/my-applications' + 
+									'?printPaymentReceipt=' + resData.isPaymentReceipt + 
+									'&apiCode=' + resData.serviceCode +
+									'&id=' + resData.serviceFormId;
+
+									this.router.navigateByUrl(url);
+								} else {		
+                //  this.openOfflinePaymentComponent(payData,retUrl,data.serviceCode,data.serviceFormId);
+                }
+							 }else{
+
               const errData = err.error.data;
               retUrl = retUrl + '?apiCode='+ errData.serviceCode + '&id=' + errData.serviceFormId;
-              let payData = this.commonNascentService.storePaymentInfo(err.error.data, retUrl, retAfterPayment);
+              // let payData = this.commonNascentService.storePaymentInfo(err.error.data, retUrl, retAfterPayment);
               let words = this.commonService.getToWords(payData.amount);
               let html =
                 `
@@ -189,12 +205,14 @@ export class ExtractPropertyTableComponent implements OnInit {
                 <p>Rupees in words</p>` + words + ` Rupees Only
               </div>
               `
-              this.commonNascentService.commonAlert('Payment Details', '', 'info', 'Make Payment!', false, html, cb => {
-                this.paymentGateway.setPaymentDetailsFromActionBar(payData);
-                this.paymentGateway.openModel();
-              }, rj => {
-                return;
-              });
+                this.commonNascentService.commonAlert('Payment Details', '', 'info', 'Make Payment!', false, html, cb => {
+                  this.paymentGateway.setPaymentDetailsFromActionBar(payData);
+                  this.paymentGateway.openModel();
+                }, rj => {
+                  return;
+                });
+
+              }
             } else {
               this.commonNascentService.openAlert("Error", "Error Occured for final submit : " + err.error[0].message, "warning")
             }
