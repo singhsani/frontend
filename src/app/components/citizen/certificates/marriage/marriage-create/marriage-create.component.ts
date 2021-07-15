@@ -1314,8 +1314,8 @@ export class MarriageCreateComponent implements OnInit, OnChanges {
 
                 }
 
-                this.marriageFormGroup.get('serviceDetail').patchValue({'serviceUploadDocuments': this.uploadFilesArray});
-						this.requiredDocumentList();
+                //this.marriageFormGroup.get('serviceDetail').patchValue({'serviceUploadDocuments': this.uploadFilesArray});
+						//this.requiredDocumentList();
            
         });
     }
