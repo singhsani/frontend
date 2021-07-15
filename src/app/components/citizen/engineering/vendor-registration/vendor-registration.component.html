@@ -68,20 +68,20 @@
 
           <mat-form-field class="col-md-4">
             <input matInput type="text" onlyNumber required maxlength="10" placeholder="{{'Telephone Number'}}"
-              formControlName="contactNumber">
-            <control-messages [control]="vendorRegistrationForm.get('contactNumber')">
+              formControlName="officeContactNumber">
+            <control-messages [control]="vendorRegistrationForm.get('officeContactNumber')">
             </control-messages>
           </mat-form-field>
 
           <mat-form-field class="col-md-4">
-            <input matInput type="text" required placeholder="{{'Fax Number'}}" formControlName="faxNumber">
-            <control-messages [control]="vendorRegistrationForm.get('faxNumber')">
+            <input matInput type="text" required placeholder="{{'Fax Number'}}" formControlName="officeFaxNumber">
+            <control-messages [control]="vendorRegistrationForm.get('officeFaxNumber')">
             </control-messages>
           </mat-form-field>
 
           <mat-form-field class="col-md-4">
-            <input matInput type="text" required placeholder="{{'Email Id'}}" formControlName="emailId">
-            <control-messages [control]="vendorRegistrationForm.get('emailId')">
+            <input matInput type="text" required placeholder="{{'Email Id'}}" formControlName="officeEmailId">
+            <control-messages [control]="vendorRegistrationForm.get('officeEmailId')">
             </control-messages>
           </mat-form-field>
 
@@ -94,20 +94,20 @@
 
           <mat-form-field class="col-md-4">
             <input matInput type="text" onlyNumber required maxlength="10" placeholder="{{'Telephone Number'}}"
-              formControlName="contactNumber">
-            <control-messages [control]="vendorRegistrationForm.get('contactNumber')">
+              formControlName="resContactNumber">
+            <control-messages [control]="vendorRegistrationForm.get('resContactNumber')">
             </control-messages>
           </mat-form-field>
 
           <mat-form-field class="col-md-4">
-            <input matInput type="text" required placeholder="{{'Fax Number'}}" formControlName="faxNumber">
-            <control-messages [control]="vendorRegistrationForm.get('faxNumber')">
+            <input matInput type="text" required placeholder="{{'Fax Number'}}" formControlName="resFaxNumber">
+            <control-messages [control]="vendorRegistrationForm.get('resFaxNumber')">
             </control-messages>
           </mat-form-field>
 
           <mat-form-field class="col-md-4">
-            <input matInput type="text" required placeholder="{{'Email Id'}}" formControlName="emailId">
-            <control-messages [control]="vendorRegistrationForm.get('emailId')">
+            <input matInput type="text" required placeholder="{{'Email Id'}}" formControlName="resEmailId">
+            <control-messages [control]="vendorRegistrationForm.get('resEmailId')">
             </control-messages>
           </mat-form-field>
 
@@ -954,6 +954,7 @@
 
   <div class="modal-body scrollModel">
     <br> Terms and Condition
+    <br> * If, Registration is not recommended / rejected, registration fee paid is not Refundable.
 
   </div>
   <div class="modal-footer customthead">
