@@ -179,7 +179,6 @@ export class AnimalPondTransferComponent implements OnInit {
 	 * @param searchData: exciting licence number data
 	 */
 	createRecordPatchSerachData(searchData: any) {
-		debugger
 		this.getLookupData();
 		this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
 		this.formService.createFormData().subscribe(res => {
@@ -258,7 +257,6 @@ export class AnimalPondTransferComponent implements OnInit {
 	 * Method is used to get form data
 	 */
 	getAnimalPondLicNewData() {
-		debugger
 		this.formService.getFormData(this.formId).subscribe(res => {
 			try {
 				this.animalPondTransferForm.patchValue(res);
