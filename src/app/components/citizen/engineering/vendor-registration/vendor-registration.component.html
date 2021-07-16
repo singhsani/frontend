@@ -1,6 +1,10 @@
 <div class="container">
   <app-title-bar [title]="'Vendor Registration'">
+    <!-- <button class="pull-right" mat-stroked-button type="button" (click)="patchValue()">
+      Patch Value
+    </button> -->
   </app-title-bar>
+
 
   <mat-card class="formClass cardBorder">
 
@@ -42,10 +46,18 @@
             </mat-form-field>
             <mat-form-field class="col-md-4">
               <input matInput type="text" appValidationFields validationFieldsType='appAlphanumericNumber' required
-                maxlength="100" placeholder="{{'PAN / TAN No. (Attach certified copy)'}}" formControlName="panTanNo">
-              <control-messages [control]="vendorRegistrationForm.get('panTanNo')">
+                maxlength="10" placeholder="{{'PAN No. (Attach certified copy)'}}" formControlName="panNo">
+              <control-messages [control]="vendorRegistrationForm.get('panNo')">
               </control-messages>
             </mat-form-field>
+
+            <mat-form-field class="col-md-4">
+              <input matInput type="text" appValidationFields validationFieldsType='appAlphanumericNumber' required
+                maxlength="10" placeholder="{{'TAN No. (Attach certified copy)'}}" formControlName="tanNo">
+              <control-messages [control]="vendorRegistrationForm.get('tanNo')">
+              </control-messages>
+            </mat-form-field>
+
           </div>
 
           <div class="row">
@@ -114,7 +126,7 @@
 
           <div class="fotButtonBar clearfix">
             <div class="col-sm-12 col-md-12">
-              <button class="pull-right" mat-raised-button color="primary" (click)="tabIndex = 1">{{'next'}}</button>
+              <button class="pull-right" mat-raised-button color="primary" (click)="tabIndex = 1">{{'Next'}}</button>
             </div>
           </div>
         </mat-tab>
@@ -361,10 +373,10 @@
           <div class="fotButtonBar clearfix">
             <div class="col-sm-12 col-md-12">
               <span class="pull-left">
-                <button class="liteBorder" type="button" mat-raised-button (click)="tabIndex = 0">{{'back'}}</button>
+                <button class="liteBorder" type="button" mat-raised-button (click)="tabIndex = 0">{{'Back'}}</button>
 
               </span>
-              <button class="pull-right" type="button" mat-raised-button color="primary" (click)="tabIndex = 2">{{'next'
+              <button class="pull-right" type="button" mat-raised-button color="primary" (click)="tabIndex = 2">{{'Next'
                 }}</button>
             </div>
           </div>
@@ -664,10 +676,10 @@
           <div class="fotButtonBar clearfix">
             <div class="col-sm-12 col-md-12">
               <span class="pull-left">
-                <button class="liteBorder" type="button" mat-raised-button (click)="tabIndex = 1">{{'back'}}</button>
+                <button class="liteBorder" type="button" mat-raised-button (click)="tabIndex = 1">{{'Back'}}</button>
 
               </span>
-              <button class="pull-right" type="button" mat-raised-button color="primary" (click)="tabIndex = 3">{{'next'
+              <button class="pull-right" type="button" mat-raised-button color="primary" (click)="tabIndex = 3">{{'Next'
                 }}</button>
             </div>
           </div>
@@ -891,10 +903,10 @@
           <div class="fotButtonBar clearfix">
             <div class="col-sm-12 col-md-12">
               <span class="pull-left">
-                <button class="liteBorder" type="button" mat-raised-button (click)="tabIndex = 2">{{'back'}}</button>
+                <button class="liteBorder" type="button" mat-raised-button (click)="tabIndex = 2">{{'Back'}}</button>
 
               </span>
-              <button class="pull-right" type="button" mat-raised-button color="primary" (click)="tabIndex = 4">{{'next'
+              <button class="pull-right" type="button" mat-raised-button color="primary" (click)="tabIndex = 4">{{'Next'
                 }}</button>
             </div>
           </div>
@@ -934,7 +946,7 @@
           <div class="fotButtonBar clearfix">
             <div class="col-sm-12 col-md-12">
               <span class="pull-left">
-                <button class="liteBorder" type="button" mat-raised-button (click)="tabIndex = 3">{{'back'}}</button>
+                <button class="liteBorder" type="button" mat-raised-button (click)="tabIndex = 3">{{'Back'}}</button>
               </span>
               <button class="pull-right" type="button" mat-raised-button color="primary" (click)="onSubmit();">{{'Review
                 & Submit'}}</button>
