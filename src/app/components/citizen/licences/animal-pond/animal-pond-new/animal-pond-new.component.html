@@ -123,7 +123,7 @@
 					<control-messages [control]="animalPondNewForm.get('holderPanNo')"></control-messages>
 				</mat-form-field>
 
-				<app-action-bar [form]="animalPondNewForm" (tabIndex)="onTabChange($event)" (handleOnSaveAndNext)="onChangeStatusOfBusiness()"
+				<app-action-bar [form]="animalPondNewForm" (tabIndex)="onTabChange($event)" (handleOnSaveAndNext)="handleOnSaveAndNext($event)"
 					[stepInfo]="{step: 'step1', next: 1, back: 0}"></app-action-bar>
 			</mat-tab>
 			<!-- step 1 Ends -->
@@ -195,14 +195,15 @@
 				<!-- table -->
 				<div class="row">
 					<div class="col-md-10">
-						<h2 *ngIf="animalPondNewForm.get('relationshipId').value.code != 'PROPRIETOR'">{{ 'if_apl_is_in_properitership'|
+						<h2 *ngIf="animalPondNewForm.get('relationshipId').value.code === 'PROPRIETOR'">{{ 'if_apl_is_in_properitership'|
 							translate:translateKey}}</h2>
-						<h2 *ngIf="animalPondNewForm.get('relationshipId').value.code === 'PROPRIETOR'">{{ 'if_apl_is_in_partnership' |
+						<h2 *ngIf="animalPondNewForm.get('relationshipId').value.code === 'PARTNER'">{{ 'if_apl_is_in_partnership' |
 							translate:translateKey}}</h2>
 					</div>
 					<div class="col-md-2 pt-3 text-right">
 						<button type="button"
-							[disabled]="animalPondNewForm.get('relationshipId').value.code ? animalPondNewForm.get('relationshipId').value.code=='PROPRIETOR' ? !(animalPondNewForm.get('relationshipList')['controls'].length < 1) : !(animalPondNewForm.get('relationshipList')['controls'].length < 10) : true"
+							[hidden] ="animalPondNewForm.get('relationshipId').value.code === 'DIRECTOR' || animalPondNewForm.get('relationshipId').value.code === 'AUTHORIZEDSIGNATORY'"
+							[disabled]="(animalPondNewForm.get('relationshipId').value.code ? animalPondNewForm.get('relationshipId').value.code=='PROPRIETOR' ? !(animalPondNewForm.get('relationshipList')['controls'].length < 1) : !(animalPondNewForm.get('relationshipList')['controls'].length < 10) : true)"
 							matTooltip="{{'add_more' | translate:translateKey}}" mat-raised-button color="primary"
 							(click)="addMorePerson('APL_PERSON')">{{'add'|
 							translate:translateKey}}</button>
@@ -211,7 +212,8 @@
 
 				<div *ngIf="animalPondNewForm.get('relationshipList')['controls'].length">
 					<div>
-						<table class="table table-striped mb-0 responsiveTableRow">
+						<table class="table table-striped mb-0 responsiveTableRow" 
+							[hidden]="animalPondNewForm.get('relationshipId').value.code === 'DIRECTOR' || animalPondNewForm.get('relationshipId').value.code === 'AUTHORIZEDSIGNATORY'">
 							<thead>
 								<tr class="mo-d-none">
 									<th *ngIf="animalPondNewForm.get('canEdit').value">SR No.</th>
@@ -292,7 +294,7 @@
 					</div>
 				</div>
 				<!-- end table -->
-				<app-action-bar [form]="animalPondNewForm" (tabIndex)="onTabChange($event)" (handleOnSaveAndNext)="onChangeStatusOfBusiness()"
+				<app-action-bar [form]="animalPondNewForm" (tabIndex)="onTabChange($event)" (handleOnSaveAndNext)="handleOnSaveAndNext($event)"
 					[stepInfo]="{step: 'step2', next: 2, back: 0}"></app-action-bar>
 			</mat-tab>
 			<!-- step 2 Ends -->
@@ -412,7 +414,7 @@
 						</div>
 					</div> -->
 				<!-- end table -->
-				<app-action-bar [form]="animalPondNewForm" (tabIndex)="onTabChange($event)"  (handleOnSaveAndNext)="onChangeStatusOfBusiness()"
+				<app-action-bar [form]="animalPondNewForm" (tabIndex)="onTabChange($event)"  (handleOnSaveAndNext)="handleOnSaveAndNext($event)"
 					[stepInfo]="{step: 'step3', next: 3, back: 1}"></app-action-bar>
 			</mat-tab>
 			<!-- step 3 end -->
@@ -435,7 +437,7 @@
 					</div>
 				</div>
 
-				<app-action-bar [paymentGateway]="paymentGateway" [uploadFiles]="uploadFilesArray"
+				<app-action-bar [paymentGateway]="paymentGateway" [uploadFiles]="uploadFilesArray" (handleOnSaveAndNext)="handleOnSaveAndNext($event)"
 					[form]="animalPondNewForm" (handleErrors)="handleErrorsOnSubmit($event)"
 					(tabIndex)="onTabChange($event) " [stepInfo]="{step: 'final', next:4, back:2} "></app-action-bar>
 

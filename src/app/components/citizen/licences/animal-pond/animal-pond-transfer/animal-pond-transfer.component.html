@@ -220,12 +220,13 @@
 					<div class="col-md-10">
 						<h2 *ngIf="animalPondTransferForm.get('relationshipId').value.code == 'PROPRIETOR'">{{ 'if_apl_is_in_properitership'|
 							translate:translateKey}}</h2>
-						<h2 *ngIf="animalPondTransferForm.get('relationshipId').value.code != 'PROPRIETOR'">{{ 'if_apl_is_in_partnership' |
+						<h2 *ngIf="animalPondTransferForm.get('relationshipId').value.code == 'PARTNER'">{{ 'if_apl_is_in_partnership' |
 							translate:translateKey}}</h2>
 					</div>
 					<div class="col-md-2 pt-3 text-right">
 						<button type="button"
 							[disabled]="animalPondTransferForm.get('relationshipId').value.code ? animalPondTransferForm.get('relationshipId').value.code=='PROPRIETOR' ? !(animalPondTransferForm.get('relationshipList')['controls'].length < 1) : !(animalPondTransferForm.get('relationshipList')['controls'].length < 10) : true"
+							[hidden] ="animalPondTransferForm.get('relationshipId').value.code === 'DIRECTOR' || animalPondTransferForm.get('relationshipId').value.code === 'AUTHORIZEDSIGNATORY'"
 							matTooltip="{{'add_more' | translate:translateKey}}" mat-raised-button color="primary"
 							(click)="addMorePerson('APL_PERSON')">{{'add'|
 							translate:translateKey}}</button>
@@ -234,7 +235,8 @@
 
 				<div *ngIf="animalPondTransferForm.get('relationshipList')['controls'].length">
 					<div>
-						<table class="table table-striped mb-0 responsiveTableRow">
+						<table class="table table-striped mb-0 responsiveTableRow"
+							[hidden] ="animalPondTransferForm.get('relationshipId').value.code === 'DIRECTOR' || animalPondTransferForm.get('relationshipId').value.code === 'AUTHORIZEDSIGNATORY'">
 							<thead>
 								<tr class="mo-d-none">
 									<th *ngIf="animalPondTransferForm.get('canEdit').value">#</th>
@@ -448,7 +450,7 @@
 					</div>
 				</div>
 
-				<app-action-bar [paymentGateway]="paymentGateway" [uploadFiles]="uploadFilesArray" [form]="animalPondTransferForm"
+				<app-action-bar [paymentGateway]="paymentGateway" [uploadFiles]="uploadFilesArray" [form]="animalPondTransferForm" (handleOnSaveAndNext)="onChangeStatusOfBusiness()"
 					(handleErrors)="handleErrorsOnSubmit($event)" (tabIndex)="onTabChange($event) "
 					[stepInfo]="{step: 'final', next:4, back:2} "></app-action-bar>
 

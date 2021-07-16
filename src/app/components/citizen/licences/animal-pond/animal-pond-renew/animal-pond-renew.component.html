@@ -116,6 +116,7 @@
 						[requiredFeilds]="true"
 						[addressFormGroup]="animalPondRenewForm.get('permanantAddress')"></app-address>
 				</div>
+
 				<div class="row">
 					<h2>{{'temp_address' | translate:translateKey}}</h2>
 					<app-address [isDisplayGujFields]="true" #permanantAddressEstablishment
@@ -222,14 +223,15 @@
 				<!-- table -->
 				<div class="row">
 					<div class="col-md-10">
-						<h2 *ngIf="animalPondRenewForm.get('relationshipId').value.code != 'PROPRIETOR'">{{ 'if_apl_is_in_properitership'|
+						<h2 *ngIf="animalPondRenewForm.get('relationshipId').value.code === 'PROPRIETOR'">{{ 'if_apl_is_in_properitership'|
 							translate:translateKey}}</h2>
-						<h2 *ngIf="animalPondRenewForm.get('relationshipId').value.code === 'PROPRIETOR'">{{ 'if_apl_is_in_partnership' |
+						<h2 *ngIf="animalPondRenewForm.get('relationshipId').value.code === 'PARTNER'">{{ 'if_apl_is_in_partnership' |
 							translate:translateKey}}</h2>
 					</div>
 					<div class="col-md-2 pt-3 text-right">
 						<button type="button"
 							[disabled]="animalPondRenewForm.get('relationshipId').value.code ? animalPondRenewForm.get('relationshipId').value.code=='PROPRIETOR' ? !(animalPondRenewForm.get('relationshipList')['controls'].length < 1) : !(animalPondRenewForm.get('relationshipList')['controls'].length < 10) : true"
+							[hidden] ="animalPondRenewForm.get('relationshipId').value.code === 'DIRECTOR' || animalPondRenewForm.get('relationshipId').value.code === 'AUTHORIZEDSIGNATORY'"
 							matTooltip="{{'add_more' | translate:translateKey}}" mat-raised-button color="primary"
 							(click)="addMorePerson('APL_PERSON')">{{'add'|
 							translate:translateKey}}</button>
@@ -238,7 +240,8 @@
 
 				<div *ngIf="animalPondRenewForm.get('relationshipList')['controls'].length">
 					<div>
-						<table class="table table-striped mb-0 responsiveTableRow">
+						<table class="table table-striped mb-0 responsiveTableRow"
+						[hidden] ="animalPondRenewForm.get('relationshipId').value.code === 'DIRECTOR' || animalPondRenewForm.get('relationshipId').value.code === 'AUTHORIZEDSIGNATORY'">
 							<thead>
 								<tr class="mo-d-none">
 									<th *ngIf="animalPondRenewForm.get('canEdit').value">SR No.</th>
@@ -449,7 +452,7 @@
 					</div>
 				</div>
 
-				<app-action-bar [paymentGateway]="paymentGateway" [uploadFiles]="uploadFilesArray" [form]="animalPondRenewForm"
+				<app-action-bar [paymentGateway]="paymentGateway" [uploadFiles]="uploadFilesArray" [form]="animalPondRenewForm" (handleOnSaveAndNext)="onChangeStatusOfBusiness()"
 					(handleErrors)="handleErrorsOnSubmit($event)" (tabIndex)="onTabChange($event) "
 					[stepInfo]="{step: 'final', next:4, back:2} "></app-action-bar>
 

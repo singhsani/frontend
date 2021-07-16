@@ -128,6 +128,7 @@ export class AnimalPondTransferComponent implements OnInit {
     * Method is add required document  
     */
 	requiredDocumentList() {
+		this.uploadFilesArray = [];
 		_.forEach(this.animalPondTransferForm.get('serviceDetail').get('serviceUploadDocuments').value, (value) => {
 			if (value.mandatory && value.isActive && value.requiredOnCitizenPortal) {
 				this.uploadFilesArray.push({
@@ -171,7 +172,6 @@ export class AnimalPondTransferComponent implements OnInit {
 		this.animalPondTransferForm.get('animalDetails').enable();
 		this.animalPondTransferForm.get('totalAnimal').enable();
 		this.animalPondTransferForm.get('temporaryAddress').enable();
-
 	}
 
 	/**
@@ -179,6 +179,7 @@ export class AnimalPondTransferComponent implements OnInit {
 	 * @param searchData: exciting licence number data
 	 */
 	createRecordPatchSerachData(searchData: any) {
+		debugger
 		this.getLookupData();
 		this.formService.apiType = ManageRoutes.getApiTypeFromApiCode(this.apiCode);
 		this.formService.createFormData().subscribe(res => {
@@ -246,7 +247,8 @@ export class AnimalPondTransferComponent implements OnInit {
 			});
 			this.animalPondTransferForm.get('serviceDetail').get('serviceUploadDocuments').value.sort(
 				(a,b) => a.orderSequence - b.orderSequence);
-			this.requiredDocumentList();
+			// this.requiredDocumentList();
+			this.onChangeStatusOfBusiness();
 		});
 
 	}
@@ -256,6 +258,7 @@ export class AnimalPondTransferComponent implements OnInit {
 	 * Method is used to get form data
 	 */
 	getAnimalPondLicNewData() {
+		debugger
 		this.formService.getFormData(this.formId).subscribe(res => {
 			try {
 				this.animalPondTransferForm.patchValue(res);
@@ -291,8 +294,8 @@ export class AnimalPondTransferComponent implements OnInit {
 				res.serviceDetail.serviceUploadDocuments.forEach(app => {
 					(<FormArray>this.animalPondTransferForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.createDocumentsGrp(app));
 				});
-				this.requiredDocumentList();
-
+				// this.requiredDocumentList();
+				this.onChangeStatusOfBusiness();
 				// selected animal filter
 				this.getSelectedAnimal();
 			} catch (error) {
@@ -518,8 +521,8 @@ export class AnimalPondTransferComponent implements OnInit {
 	 */
 	onChangeRelationWithOrg() {
 		try {
-			// (<FormArray>this.animalPondRenewForm.get('relationshipList')).controls = [];
-			// this.animalPondRenewForm.get('relationshipList').setValue([]);
+			(<FormArray>this.animalPondTransferForm.get('relationshipList')).controls = [];
+			this.animalPondTransferForm.get('relationshipList').setValue([]);
 			let relationshipId = this.animalPondTransferForm.get('relationshipId').value.code;
 			if (relationshipId == 'PROPRIETOR') {
 				(<FormArray>this.animalPondTransferForm.get('relationshipList')).controls = [];
@@ -717,31 +720,11 @@ export class AnimalPondTransferComponent implements OnInit {
 		this.tabIndex = evt;
 	}
 
-	//TODO: remaining common method for attachment
 	onChangeStatusOfBusiness(){
 		const subject = this.animalPondTransferForm.get('businessType').get('code').value
-		let buildingCollapseMandatory = false;
-		
-		if (subject && subject.code && subject.code == 'BUILDING_COLLAPSE') {
-			buildingCollapseMandatory = true;
-		}
-
 		const documents = this.animalPondTransferForm.get('serviceDetail').get('serviceUploadDocuments').value;
-
-		for (const document of documents) {
-			if(subject == 'TENANT'){
-			if (document.documentIdentifier == 'POLICE_VERIFICATION')
-				document.mandatory = true;
-			else if (document.documentIdentifier == 'RENT_AGREEMENT')
-				document.mandatory = true;
-			}else if(subject == 'PROPRIETORSHIPFIRM'){
-				if (document.documentIdentifier == 'POLICE_VERIFICATION')
-				document.mandatory = false;
-			else if (document.documentIdentifier == 'RENT_AGREEMENT')
-				document.mandatory = false;
-			}
-		}
-		this.animalPondTransferForm.get('serviceDetail').patchValue({ 'serviceUploadDocuments': documents });
+		const transferFormValue =  this.animalPondTransferForm;
+		this.animalPondService.changeStatusOfBusinessAccordingAtatchment(subject,documents,transferFormValue);
 		this.requiredDocumentList();
 	}
 }
