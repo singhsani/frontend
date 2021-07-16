@@ -335,10 +335,9 @@ export class VendorRegistrationComponent implements OnInit {
       if (data.status) {
         this.engineer.vendorSaveFormData(this.vendorRegistrationForm.getRawValue()).subscribe(res => {
           if (Object.keys(res).length) {
+            this.router.navigateByUrl(ManageRoutes.getFullRoute('CITIZENDASHBOARD'));
             this.commonService.openAlert(" Successful", "", "success", `</b>`);
             this.resetForm();
-            this.router.navigateByUrl(ManageRoutes.getFullRoute('CITIZENDASHBOARD'));
-
           } else {
             this.commonService.openAlert("File Upload", `Please upload file for "${data.fileName}"`, "warning");
             return
