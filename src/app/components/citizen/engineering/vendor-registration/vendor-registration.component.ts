@@ -7,10 +7,11 @@ import { ValidationService } from 'src/app/shared/services/validation.service';
 import { AlertService } from 'src/app/vmcshared/Services/alert.service';
 import { EngineeringService } from '../engineering.service';
 import * as _ from 'lodash';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import * as moment from 'moment';
 import { FormsActionsService } from 'src/app/core/services/citizen/data-services/forms-actions.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap';
+import { ManageRoutes } from 'src/app/config/routes-conf';
 
 @Component({
   selector: 'app-vendor-registration',
@@ -39,7 +40,7 @@ export class VendorRegistrationComponent implements OnInit {
   minDate = moment().subtract(2, 'months').format('YYYY-MM-DD');
   attachmentList: any = [];
   bankNameArray: any = [];
-
+  public serverUploadFilesArray: Array<any> = [];
   modalJsonRef: BsModalRef;
 
   formId: number;
@@ -51,6 +52,7 @@ export class VendorRegistrationComponent implements OnInit {
     private commonService: CommonService,
     private activatedRoute: ActivatedRoute,
     private alertService: AlertService,
+    private router: Router,
     private formService: FormsActionsService,
     private modalService: BsModalService,
     private engineer: EngineeringService
@@ -70,6 +72,7 @@ export class VendorRegistrationComponent implements OnInit {
 
     this.activatedRoute.paramMap.subscribe(param => {
       this.formId = Number(param.get('id'));
+      this.getVendorData(this.formId);
     })
 
     this.getBankNames();
@@ -94,6 +97,28 @@ export class VendorRegistrationComponent implements OnInit {
     });
   }
 
+  getVendorData(id: number) {
+    this.formService.getFormData(id).subscribe(res => {
+      console.log("tresr", res)
+      this.vendorRegistrationForm.patchValue(res);
+      this.showButtons = true;
+      this.vendorRegistrationForm.disable();
+      this.setServiceDetailsOnInit(res);
+      //	this.sortedList.push(res);
+    });
+  }
+
+  setServiceDetailsOnInit(res) {
+    this.serverUploadFilesArray = res.serviceDetail.serviceUploadDocuments;
+    const localUploadArray = [...this.serverUploadFilesArray];
+
+    for (let file of localUploadArray) {
+      console.log("file" + JSON.stringify(file));
+      this.attachmentList.push(file);
+    }
+  }
+
+
   vendorRegistrationControl() {
 
     this.vendorRegistrationForm = this.fb.group({
@@ -107,9 +132,13 @@ export class VendorRegistrationComponent implements OnInit {
       commencementDate: null,
       yearOfEstablishment: null,
       panTanNo: [null, Validators.required, ValidationService.panValidator],
-      contactNumber: [null, Validators.required, ValidationService.mobileNumberValidation],
-      faxNumber: [null, Validators.required, ValidationService.mobileNumberValidation],
-      emailId: [null, Validators.required, ValidationService.emailValidator],
+      officeContactNumber: [null, Validators.required, ValidationService.mobileNumberValidation],
+      officeFaxNumber: [null, Validators.required, ValidationService.mobileNumberValidation],
+      officeEmailId: [null, Validators.required, ValidationService.emailValidator],
+
+      resContactNumber: [null, Validators.required, ValidationService.mobileNumberValidation],
+      resFaxNumber: [null, Validators.required, ValidationService.mobileNumberValidation],
+      resEmailId: [null, Validators.required, ValidationService.emailValidator],
 
       factoryAddress: this.fb.group(this.officeAddrComponent.addressControls()),
       registeredAddress: this.fb.group(this.resAddrComponent.addressControls()),
@@ -182,6 +211,7 @@ export class VendorRegistrationComponent implements OnInit {
 
       attachments: [''],
       acceptAndCondition: [true],
+      createdByCitizen: [true],
     });
     this.academicQualificationAndExperience.push(this.createEducationQualification());
   }
@@ -304,9 +334,10 @@ export class VendorRegistrationComponent implements OnInit {
       if (data.status) {
         this.engineer.vendorSaveFormData(this.vendorRegistrationForm.getRawValue()).subscribe(res => {
           if (Object.keys(res).length) {
-            console.log("tet", this.vendorRegistrationForm.get('serviceFormId').value)
             this.commonService.openAlert(" Successful", "", "success", `</b>`);
             this.resetForm();
+            this.router.navigateByUrl(ManageRoutes.getFullRoute('CITIZENDASHBOARD'));
+
           } else {
             this.commonService.openAlert("File Upload", `Please upload file for "${data.fileName}"`, "warning");
             return

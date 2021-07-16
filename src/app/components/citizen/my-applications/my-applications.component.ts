@@ -246,8 +246,27 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		);
 	}
 
-	printCertificate(applicationNum) {
-		const url = "/property/noduecertificate/printNodueCertificate?applicationNo=" + applicationNum;
+	// printCertificate(applicationNum) {
+
+	// 	const url = "/property/noduecertificate/printNodueCertificate?applicationNo=" + applicationNum;
+	// 	this.paymentService.downloadFile(url).subscribe(
+	// 		(data) => {
+	// 			downloadFile(data, "certificate" + "-" + Date.now() + ".pdf", 'application/pdf');
+	// 		},
+	// 		(error) => {
+	// 			console.error(error.error.message);
+	// 		})
+	// }
+
+	printCertificate(row) {
+		debugger
+		let url = "";
+		if(row.serviceType === 'NO_DUE_CERTIFICATE'){
+			url = "/property/noduecertificate/printNodueCertificate?applicationNo=" + row.fileNumber;
+		}else if(row.serviceType === 'EXTRACT_OF_PROPERTY'){
+			let reporttype = 'propertyExtractCertificate';
+			url = "/property/extract/print?reporttype="+reporttype+"&applicationNo=" + row.fileNumber;
+		}
 		this.paymentService.downloadFile(url).subscribe(
 			(data) => {
 				downloadFile(data, "certificate" + "-" + Date.now() + ".pdf", 'application/pdf');
@@ -681,5 +700,16 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		}else{
 			return true;
 		}
+	}
+
+	printPropertyACKReceipt(applicationNum){
+		const url = "/property/ack?applicationNo=" + applicationNum;
+		this.paymentService.downloadFile(url).subscribe(
+			(data) => {
+				downloadFile(data, "certificate" + "-" + Date.now() + ".pdf", 'application/pdf');
+			},
+			(error) => {
+				console.error(error.error.message);
+		})
 	}
 }
