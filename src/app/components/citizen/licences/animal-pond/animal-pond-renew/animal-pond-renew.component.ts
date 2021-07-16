@@ -127,6 +127,7 @@ export class AnimalPondRenewComponent implements OnInit {
  * Method is add required document  
  */
 	requiredDocumentList() {
+		this.uploadFilesArray = [];
 		_.forEach(this.animalPondRenewForm.get('serviceDetail').get('serviceUploadDocuments').value, (value) => {
 			if (value.mandatory && value.isActive && value.requiredOnCitizenPortal) {
 				this.uploadFilesArray.push({
@@ -170,7 +171,6 @@ export class AnimalPondRenewComponent implements OnInit {
 		this.animalPondRenewForm.get('animalDetails').enable();
 		this.animalPondRenewForm.get('totalAnimal').enable();
 		this.animalPondRenewForm.get('temporaryAddress').enable();
-
 	}
 
 	/**
@@ -297,8 +297,8 @@ export class AnimalPondRenewComponent implements OnInit {
 				res.serviceDetail.serviceUploadDocuments.forEach(app => {
 					(<FormArray>this.animalPondRenewForm.get('serviceDetail').get('serviceUploadDocuments')).push(this.createDocumentsGrp(app));
 				});
-				this.requiredDocumentList();
-
+				// this.requiredDocumentList();
+				this.onChangeStatusOfBusiness();
 				// selected animal filter
 				this.getSelectedAnimal();
 
@@ -524,8 +524,8 @@ export class AnimalPondRenewComponent implements OnInit {
 	 */
 	onChangeRelationWithOrg() {
 		try {
-			// (<FormArray>this.animalPondRenewForm.get('relationshipList')).controls = [];
-			// this.animalPondRenewForm.get('relationshipList').setValue([]);
+			(<FormArray>this.animalPondRenewForm.get('relationshipList')).controls = [];
+			this.animalPondRenewForm.get('relationshipList').setValue([]);
 			let relationshipId = this.animalPondRenewForm.get('relationshipId').value.code;
 			if (relationshipId == 'PROPRIETOR') {
 				(<FormArray>this.animalPondRenewForm.get('relationshipList')).controls = [];
@@ -720,36 +720,13 @@ export class AnimalPondRenewComponent implements OnInit {
 		this.tabIndex = evt;
 	}
 
-	//TODO: remaining Common Method For Animal Pond Attachment 
 	onChangeStatusOfBusiness(){
 		const subject = this.animalPondRenewForm.get('businessType').get('code').value
-		console.log(subject);
-		let buildingCollapseMandatory = false;
-		
-		if (subject && subject.code && subject.code == 'BUILDING_COLLAPSE') {
-			buildingCollapseMandatory = true;
-		}
-
 		const documents = this.animalPondRenewForm.get('serviceDetail').get('serviceUploadDocuments').value;
-
-		for (const document of documents) {
-			if(subject == 'TENANT'){
-			if (document.documentIdentifier == 'POLICE_VERIFICATION')
-				document.mandatory = true;
-			else if (document.documentIdentifier == 'RENT_AGREEMENT')
-				document.mandatory = true;
-			}else if(subject == 'PROPRIETORSHIPFIRM'){
-				if (document.documentIdentifier == 'POLICE_VERIFICATION')
-				document.mandatory = false;
-			else if (document.documentIdentifier == 'RENT_AGREEMENT')
-				document.mandatory = false;
-			}
-		}
-		this.animalPondRenewForm.get('serviceDetail').patchValue({ 'serviceUploadDocuments': documents });
+		const renewalFormName =  this.animalPondRenewForm;
+		this.animalPondService.changeStatusOfBusinessAccordingAtatchment(subject,documents,renewalFormName);
 		this.requiredDocumentList();
 
 
 	}
-
-
 }

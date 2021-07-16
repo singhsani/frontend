@@ -11,6 +11,7 @@ import * as _ from 'lodash';
 import { TranslateService } from '../../../../../shared/modules/translate/translate.service';
 import { LicenseConfiguration } from '../../license-configuration';
 import { FileDetector } from 'selenium-webdriver';
+import { AnimalPondService } from '../common/services/animal-pond.service';
 
 @Component({
 	selector: 'app-animal-pond-new',
@@ -66,7 +67,8 @@ export class AnimalPondNewComponent implements OnInit {
 		private formService: FormsActionsService,
 		private commonService: CommonService,
 		private toastrService: ToastrService,
-		public TranslateService: TranslateService
+		public TranslateService: TranslateService,
+		public animalPondService: AnimalPondService
 	) { }
 
 	/**
@@ -93,6 +95,7 @@ export class AnimalPondNewComponent implements OnInit {
     * Method is add required document  
     */
 	requiredDocumentList() {
+		this.uploadFilesArray = [];
 		_.forEach(this.animalPondNewForm.get('serviceDetail').get('serviceUploadDocuments').value, (value) => {
 			if (value.mandatory && value.isActive && value.requiredOnCitizenPortal) {
 				this.uploadFilesArray.push({
@@ -136,7 +139,9 @@ export class AnimalPondNewComponent implements OnInit {
 			this.animalPondNewForm.get('temporaryAddress').patchValue(this.animalPondNewForm.get('permanantAddress').value);
 			this.animalPondNewForm.get('temporaryAddress.addressType').setValue('APL_TEMPORARY_ADDRESS');
 			this.animalPondNewForm.get('isSameAsPermanantAddress').get('code').setValue("YES");
+			this.animalPondNewForm.get('temporaryAddress').disable();
 		} else {
+			this.animalPondNewForm.get('temporaryAddress').enable();
 			this.animalPondNewForm.get('temporaryAddress').reset();
 			this.animalPondNewForm.get('isSameAsPermanantAddress').get('code').setValue("NO");
 		}
@@ -186,8 +191,9 @@ export class AnimalPondNewComponent implements OnInit {
 				});
 				this.animalPondNewForm.get('serviceDetail').get('serviceUploadDocuments').value.sort(
 					(a,b) => a.orderSequence - b.orderSequence);
-				this.requiredDocumentList();
+				// this.requiredDocumentList();
 				// selected animal filter
+				this.onChangeStatusOfBusiness();
 				this.getSelectedAnimal();
 				
 				this.animalPondNewForm.get('personTypeGuj').setValue(res.personType.gujName);
@@ -485,11 +491,10 @@ export class AnimalPondNewComponent implements OnInit {
 	 */
 	onChangeRelationWithOrg() {
 		try {
+			(<FormArray>this.animalPondNewForm.get('relationshipList')).controls = [];
+				this.animalPondNewForm.get('relationshipList').setValue([]);
 			let relationshipId = this.animalPondNewForm.get('relationshipId').value.code;
 			if (relationshipId == 'PROPRIETOR') {
-				(<FormArray>this.animalPondNewForm.get('relationshipList')).controls = [];
-				this.animalPondNewForm.get('relationshipList').setValue([]);
-
 				if ((<FormArray>this.animalPondNewForm.get('relationshipList')).length == 0) {
 					this.addItem('relationshipList').push(this.createArray());
 					let newlyadded = this.addItem('relationshipList').controls;
@@ -704,37 +709,17 @@ export class AnimalPondNewComponent implements OnInit {
 		}
 	}
 
-	//TODO: remaining common method for Animal Pond 
-
 	onChangeStatusOfBusiness(){
 		const subject = this.animalPondNewForm.get('businessType').get('code').value
-		let buildingCollapseMandatory = false;
-		
-		if (subject && subject.code && subject.code == 'BUILDING_COLLAPSE') {
-			buildingCollapseMandatory = true;
-		}
-
 		const documents = this.animalPondNewForm.get('serviceDetail').get('serviceUploadDocuments').value;
-
-		for (const document of documents) {
-			if(subject == 'TENANT'){
-			if (document.documentIdentifier == 'POLICE_VERIFICATION')
-				document.mandatory = true;
-			else if (document.documentIdentifier == 'RENT_AGREEMENT')
-				document.mandatory = true;
-			}else if(subject == 'PROPRIETORSHIPFIRM'){
-				if (document.documentIdentifier == 'POLICE_VERIFICATION')
-				document.mandatory = false;
-			else if (document.documentIdentifier == 'RENT_AGREEMENT')
-				document.mandatory = false;
-			}
-		}
-		this.animalPondNewForm.get('serviceDetail').patchValue({ 'serviceUploadDocuments': documents });
+		const formName =  this.animalPondNewForm;
+		this.animalPondService.changeStatusOfBusinessAccordingAtatchment(subject,documents,formName);
 		this.requiredDocumentList();
-
-
 	}
 
+	handleOnSaveAndNext(res) {
+        this.onChangeStatusOfBusiness();
+	}
 
 
 

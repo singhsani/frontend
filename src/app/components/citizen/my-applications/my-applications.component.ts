@@ -470,12 +470,18 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		if (row.fileStatus == 'SUBMITTED' && row.serviceType == 'FS_TEMP_STRUCT_NOC') {
 			return false;
 		}
+
+		if (row.fileStatus == 'APPROVED' && row.serviceType == 'POND_CANCELLATION') {
+			return false;
+		}
+		
 		if (row.fileStatus == 'PAYMENT_RECEIVED' || row.fileStatus == 'APPROVED') {
 			return true;
 		}
 		if (row.fileStatus == 'SUBMITTED' && row.serviceType == 'WATER_NEW_DRAINAGE_CONNECTION') {
 			return true;
 		}
+
 		if (row.fileStatus == 'SUBMITTED' && row.serviceType == 'MARRIAGE_REGISTRATION') {
 			return true;
 		}
