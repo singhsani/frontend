@@ -25,7 +25,7 @@ export class VendorRegistrationComponent implements OnInit {
 
   actionBarKey: string = 'adminActionBar';
   listOfItemMaterialSupplier: FormArray;
-  academicQualificationAndExperience: FormArray;
+  academicQualifications: FormArray;
   vendorNameArray: FormArray;
   vendorRegistrationForm: FormGroup;
   implYesNorray: Array<any> = [{ name: 'YES', code: true }, { name: 'NO', code: false }];
@@ -60,14 +60,14 @@ export class VendorRegistrationComponent implements OnInit {
     this.engineer.apiType = "vendor";
     this.formService.apiType = "vendor";
     this.listOfItemMaterialSupplier = this.fb.array([]);
-    this.academicQualificationAndExperience = this.fb.array([]);
+    this.academicQualifications = this.fb.array([]);
     this.vendorNameArray = this.fb.array([]);
   }
 
   ngOnInit() {
     this.vendorRegistrationControl();
     this.vendorRegistrationForm.addControl('listOfItemMaterialSupplier', this.listOfItemMaterialSupplier);
-    this.vendorRegistrationForm.addControl('academicQualificationAndExperience', this.academicQualificationAndExperience);
+    this.vendorRegistrationForm.addControl('academicQualifications', this.academicQualifications);
     this.vendorRegistrationForm.addControl('vendorNameArray', this.vendorNameArray);
 
     this.activatedRoute.paramMap.subscribe(param => {
@@ -126,6 +126,7 @@ export class VendorRegistrationComponent implements OnInit {
       apiType: null,
       serviceCode: null,
       serviceFormId: this.formId,
+      applicationNumber: null,
 
       id: null,
       nameOfTheFirm: null,
@@ -149,20 +150,20 @@ export class VendorRegistrationComponent implements OnInit {
       manufacturingOwnedDetails: null,
 
       listOfItemMaterialDetail: this.fb.array([]),
-      academicQualificationAndExperienceDetail: this.fb.array([]),
+      academicQualificationsDetail: this.fb.array([]),
       vendorNameDetail: this.fb.array([]),
 
       registrationBank: this.fb.group({
-        code: [null],
-        name: [null]
+        code: null,
+        name: null
       }),
-      registrationDDNumber: [null],
+      registrationDDNumber: null,
       registrationAmount: [null, [Validators.maxLength(7)]],
-      registrationDDIssuingDate: [null],
+      registrationDDIssuingDate: null,
 
       locationOfFactoryWorks: this.fb.group({
-        code: [null],
-        name: [null]
+        code: null,
+        name: null
       }),
 
       isIncomeTaxDetails: [null, [Validators.required]],
@@ -213,7 +214,7 @@ export class VendorRegistrationComponent implements OnInit {
       acceptAndCondition: [true],
       createdByCitizen: [true],
     });
-    this.academicQualificationAndExperience.push(this.createEducationQualification());
+    this.academicQualifications.push(this.createEducationQualification());
   }
 
   onTabChange(evt) {
@@ -385,11 +386,11 @@ export class VendorRegistrationComponent implements OnInit {
 
       "officeContactNumber": "8962749074",
       "officeFaxNumber": "74148529633",
-      "officeEmailId": "chetan.porwal@nascntinfo.com",
+      "officeEmailId": "A@nascntinfo.com",
 
       "resContactNumber": "8962749074",
       "resFaxNumber": "74148529633",
-      "resEmailId": "chetan.porwal@nascntinfo.com",
+      "resEmailId": "A@nascntinfo.com",
 
       "manufacturingOwnedDetails": "true",
 
@@ -397,7 +398,9 @@ export class VendorRegistrationComponent implements OnInit {
 
       "registrationDDIssuingDate": "2021-07-15",
 
-      "locationOfFactoryWorks": "WITH_IN_GUJARAT",
+      "locationOfFactoryWorks": {
+        "code": "WITH_IN_GUJARAT",
+      },
 
       "isIncomeTaxDetails": "true",
       "isManufacturingOwnedDetails": "true",
@@ -436,6 +439,36 @@ export class VendorRegistrationComponent implements OnInit {
         "country": "INDIA",
         "pincode": "748596"
       },
+
+      "totalTurnoverLastThreeYears": "Fifteen Lakhs",
+      "loanCapitalWithBankLimit": "500000",
+      "productManufacturedDescription": "Nascent Info Technologies",
+      "areaOfLandFactory": 1500,
+      "builtAreaFactory": 15000,
+      "noOfWorkingShifts": 15,
+      "factoryLicenceNumber": "147852963",
+      "sscNSICCertificateNumber": "1488529636",
+      "valueOfPlantAndMachinery": "Nascent Info Technologies",
+      "detailsEquipmentCapacity": "Nascent Info Technologies",
+      "detailsMachineryCapacity": "Nascent Info Technologies",
+      "testStandardGovtLabApproved": "Nascent Info Technologies",
+      "adoptedForQualityControl": "Nascent Info Technologies",
+      "methodEmployeeIdentify": "Nascent Info Technologies",
+      "sourceOfRawMaterialAddress": "Nascent Info Technologies",
+      "productionCapacityPerAnnum": 25000,
+      "maximumProductionPerAnnum": 2500,
+
+      "purchaserName": "Nascent Info Technologies",
+      "orderNo": 14785,
+      "orderDate": "15-07-2021",
+      "quantitySuppliedCompletionDate": "15-07-2021",
+
+      "estimationOfStocks": "Nascent Info Technologies",
+      "numberOfItemsHoldingISOCertificate": "Nascent Info Technologies",
+
+      "personnelDetailSkilled": "Nascent Info Technologies",
+      "personnelDetailUnSkilled": "Nascent Info Technologies",
+      "personnelDetailOther": "Nascent Info Technologies",
     }
 
     this.vendorRegistrationForm.patchValue(obj);
