@@ -259,14 +259,15 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 	// }
 
 	printCertificate(row) {
-		debugger
 		let url = "";
 		if(row.serviceType === 'NO_DUE_CERTIFICATE'){
 			url = "/property/noduecertificate/printNodueCertificate?applicationNo=" + row.fileNumber;
 		}else if(row.serviceType === 'EXTRACT_OF_PROPERTY'){
 			let reporttype = 'propertyExtractCertificate';
 			url = "/property/extract/print?reporttype="+reporttype+"&applicationNo=" + row.fileNumber;
-		}
+		}else if(row.serviceType === 'ASSESSMENT_CERTIFICATE'){
+			url = "/property/assessmentcertificate/print?applicationNo=" + row.fileNumber;
+	    }
 		this.paymentService.downloadFile(url).subscribe(
 			(data) => {
 				downloadFile(data, "certificate" + "-" + Date.now() + ".pdf", 'application/pdf');
