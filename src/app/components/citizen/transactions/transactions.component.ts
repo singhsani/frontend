@@ -157,16 +157,7 @@ export class TransactionsComponent implements OnInit {
     Property No.: {{tData.refNumber}}
   </li>
   <li>
-    Receipt No.: {{tData.recepitNo}}
-  </li>
-  <li>
-    Amount: {{tData?.amount}}
-  </li>
-  <li>
-    Owner Name: {{tData?.ownerName}}
-  </li>
-  <li>
-    Owner Address: {{tData?.ownerAddress}}
+    Amount: {{tData.amount}}
   </li>
 </ol>
 </div>
