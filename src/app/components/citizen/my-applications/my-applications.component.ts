@@ -268,6 +268,9 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 		}else if(row.serviceType === 'ASSESSMENT_CERTIFICATE'){
 			url = "/property/assessmentcertificate/print?applicationNo=" + row.fileNumber;
 	    }
+		else if(row.serviceType === 'DUPLICATE_BILL'){
+			url = "/api/form/duplicateBill/printBill?serviceFormId=" + row.serviceFormId;
+		}
 		this.paymentService.downloadFile(url).subscribe(
 			(data) => {
 				downloadFile(data, "certificate" + "-" + Date.now() + ".pdf", 'application/pdf');
