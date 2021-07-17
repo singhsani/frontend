@@ -131,7 +131,9 @@ export class VendorRegistrationComponent implements OnInit {
       nameOfTheFirm: null,
       commencementDate: null,
       yearOfEstablishment: null,
-      panTanNo: [null, Validators.required, ValidationService.panValidator],
+
+      panNo: [null, Validators.required, ValidationService.panValidator],
+      tanNo: [null, Validators.required, ValidationService.panValidator],
       officeContactNumber: [null, Validators.required, ValidationService.mobileNumberValidation],
       officeFaxNumber: [null, Validators.required, ValidationService.mobileNumberValidation],
       officeEmailId: [null, Validators.required, ValidationService.emailValidator],
@@ -327,17 +329,15 @@ export class VendorRegistrationComponent implements OnInit {
     // this.engineer.vendorSaveFormData(this.vendorRegistrationForm.getRawValue()).subscribe(res => {
     //   this.commonService.openAlert(" Successful", "", "success", `</b>`);
     // })
-
     this.vendorRegistrationForm.get('serviceFormId').setValue(this.formId);
 
     this.mandatoryFileCheck(this.vendorRegistrationForm.get('serviceFormId').value, this.attachmentList).then(data => {
       if (data.status) {
         this.engineer.vendorSaveFormData(this.vendorRegistrationForm.getRawValue()).subscribe(res => {
           if (Object.keys(res).length) {
+            this.router.navigateByUrl(ManageRoutes.getFullRoute('CITIZENDASHBOARD'));
             this.commonService.openAlert(" Successful", "", "success", `</b>`);
             this.resetForm();
-            this.router.navigateByUrl(ManageRoutes.getFullRoute('CITIZENDASHBOARD'));
-
           } else {
             this.commonService.openAlert("File Upload", `Please upload file for "${data.fileName}"`, "warning");
             return
@@ -366,6 +366,73 @@ export class VendorRegistrationComponent implements OnInit {
 
     this.vendorRegistrationForm.enable();
 
+  }
+
+  patchValue() {
+    const obj = {
+
+      "nameOfTheFirm": "Rudra Enterprises",
+      "commencementDate": "2021-07-15",
+      "yearOfEstablishment": "2021",
+      "panNo": "ABCDE1223F",
+      "tanNo": "ABCDE1223F",
+
+      "officeContactNumber": "8962749074",
+      "officeFaxNumber": "74148529633",
+      "officeEmailId": "chetan.porwal@nascntinfo.com",
+
+      "resContactNumber": "8962749074",
+      "resFaxNumber": "74148529633",
+      "resEmailId": "chetan.porwal@nascntinfo.com",
+
+      "manufacturingOwnedDetails": "true",
+
+      "registrationDDNumber": "741852",
+
+      "registrationDDIssuingDate": "2021-07-15",
+
+      "locationOfFactoryWorks": "WITH_IN_GUJARAT",
+
+      "isIncomeTaxDetails": "true",
+      "isManufacturingOwnedDetails": "true",
+      "isTotalInvestmentDetail": "true",
+      "isLastThreeYearsCopies": "true",
+      "isCopyOfITCClearanceCertificate": "true",
+      "isRegistrationOfficeACT": "true",
+      "isISIProductManufactured": "true",
+      "isRegisteredByGovt": "true",
+      "isTestingRecordMaintanedDetail": "true",
+      "isPersonInChargeProductionControl": "true",
+      "isFirmUnderDealBlacklisted": "true",
+      "isResultSampleTesting": "true",
+
+      "remarks": "Vendor Registration Form Submitted",
+
+      "factoryAddress": {
+        "buildingName": "12",
+        "streetName": "Akota",
+        "landmark": "sfasdfa",
+        "area": "dsf",
+        "state": "GUJARAT",
+        "district": null,
+        "city": "Vadodara",
+        "country": "INDIA",
+        "pincode": "748596"
+      },
+      "registeredAddress": {
+        "buildingName": "12",
+        "streetName": "Akota",
+        "landmark": "sfasdfa",
+        "area": "dsf",
+        "state": "GUJARAT",
+        "district": null,
+        "city": "Vadodara",
+        "country": "INDIA",
+        "pincode": "748596"
+      },
+    }
+
+    this.vendorRegistrationForm.patchValue(obj);
   }
 
 }
