@@ -109,7 +109,7 @@ export class VendorRegistrationComponent implements OnInit {
   }
 
   setServiceDetailsOnInit(res) {
-    this.serverUploadFilesArray = res.serviceDetail.serviceUploadDocuments;
+    this.serverUploadFilesArray = res.attachments;
     const localUploadArray = [...this.serverUploadFilesArray];
 
     for (let file of localUploadArray) {
@@ -132,15 +132,15 @@ export class VendorRegistrationComponent implements OnInit {
       commencementDate: null,
       yearOfEstablishment: null,
 
-      panNo: [null, Validators.required, ValidationService.panValidator],
-      tanNo: [null, Validators.required, ValidationService.panValidator],
-      officeContactNumber: [null, Validators.required, ValidationService.mobileNumberValidation],
-      officeFaxNumber: [null, Validators.required, ValidationService.mobileNumberValidation],
-      officeEmailId: [null, Validators.required, ValidationService.emailValidator],
+      panNo: [null, [Validators.required, ValidationService.panValidator]],
+      tanNo: [null, [Validators.required, ValidationService.panValidator]],
+      officeContactNumber: [null, [Validators.required, ValidationService.mobileNumberValidation]],
+      officeFaxNumber: [null, [Validators.required, ValidationService.mobileNumberValidation]],
+      officeEmailId: [null, [Validators.required, ValidationService.emailValidator]],
 
-      resContactNumber: [null, Validators.required, ValidationService.mobileNumberValidation],
-      resFaxNumber: [null, Validators.required, ValidationService.mobileNumberValidation],
-      resEmailId: [null, Validators.required, ValidationService.emailValidator],
+      resContactNumber: [null, [Validators.required, ValidationService.mobileNumberValidation]],
+      resFaxNumber: [null, [Validators.required, ValidationService.mobileNumberValidation]],
+      resEmailId: [null, [Validators.required, ValidationService.emailValidator]],
 
       factoryAddress: this.fb.group(this.officeAddrComponent.addressControls()),
       registeredAddress: this.fb.group(this.resAddrComponent.addressControls()),
@@ -178,40 +178,38 @@ export class VendorRegistrationComponent implements OnInit {
       isFirmUnderDealBlacklisted: [null, [Validators.required]],
       isResultSampleTesting: [null, [Validators.required]],
 
-      totalTurnoverLastThreeYears: [null],
-      loanCapitalWithBankLimit: [null],
-      productManufacturedDescription: [null],
-      areaOfLandFactory: [null],
-      builtAreaFactory: [null],
-      noOfWorkingShifts: [null],
-      factoryLicenceNumber: [null],
-      sscNSICCertificateNumber: [null],
-      valueOfPlantAndMachinery: [null],
-      detailsEquipmentCapacity: [null],
-      detailsMachineryCapacity: [null],
-      testStandardGovtLabApproved: [null],
-      adoptedForQualityControl: [null],
-      methodEmployeeIdentify: [null],
-      sourceOfRawMaterialAddress: [null],
-      productionCapacityPerAnnum: [null],
-      maximumProductionPerAnnum: [null],
+      totalTurnoverLastThreeYears: null,
+      loanCapitalWithBankLimit: null,
+      productManufacturedDescription: null,
+      areaOfLandFactory: null,
+      builtAreaFactory: null,
+      noOfWorkingShifts: null,
+      factoryLicenceNumber: null,
+      sscNSICCertificateNumber: null,
+      valueOfPlantAndMachinery: null,
+      detailsEquipmentCapacity: null,
+      detailsMachineryCapacity: null,
+      testStandardGovtLabApproved: null,
+      adoptedForQualityControl: null,
+      methodEmployeeIdentify: null,
+      sourceOfRawMaterialAddress: null,
+      productionCapacityPerAnnum: null,
+      maximumProductionPerAnnum: null,
 
-      purchaserName: [null],
-      orderNo: [null],
-      orderDate: [null],
-      quantitySuppliedCompletionDate: [null],
+      purchaserName: null,
+      orderNo: null,
+      orderDate: null,
+      quantitySuppliedCompletionDate: null,
 
-      estimationOfStocks: [null],
-      numberOfItemsHoldingISOCertificate: [null],
-      remarks: [null],
+      estimationOfStocks: null,
+      numberOfItemsHoldingISOCertificate: null,
+      remarks: null,
 
-      personnelDetailSkilled: [null],
-      personnelDetailUnSkilled: [null],
-      personnelDetailOther: [null],
+      personnelDetailSkilled: null,
+      personnelDetailUnSkilled: null,
+      personnelDetailOther: null,
 
-      officeResidentialAddressSame: null,
-
-      attachments: [''],
+      attachments: [],
       acceptAndCondition: [true],
       createdByCitizen: [true],
     });
@@ -225,7 +223,15 @@ export class VendorRegistrationComponent implements OnInit {
   getAllDocumentLists() {
     this.engineer.getAllDocuments().subscribe(res => {
       this.attachmentList = _.cloneDeep(res);
+
+      for (let file of this.attachmentList) {
+        file['mandatory'] = false;
+      }
     });
+  }
+
+  onDateChange(fieldName, date) {
+    this.vendorRegistrationForm.get(fieldName).setValue(moment(date).format("YYYY-MM-DD"));
   }
 
   getAllLocationDetail() {

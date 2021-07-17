@@ -259,7 +259,6 @@ export class MyApplicationsComponent implements OnInit, OnChanges {
 	// }
 
 	printCertificate(row) {
-		debugger
 		let url = "";
 		if(row.serviceType === 'NO_DUE_CERTIFICATE'){
 			url = "/property/noduecertificate/printNodueCertificate?applicationNo=" + row.fileNumber;

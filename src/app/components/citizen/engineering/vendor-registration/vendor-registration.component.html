@@ -34,16 +34,17 @@
               <control-messages [control]="vendorRegistrationForm.get('yearOfEstablishment')">
               </control-messages>
             </mat-form-field>
+           
             <mat-form-field class="col-md-4">
               <input matInput autocomplete="off" appDate formControlName="commencementDate" [max]="maxDate"
-                [matDatepicker]="commencementDatePicker" [matDatepicker]="commencementDatePicker"
+                [matDatepicker]="docpicker" (dateChange)="onDateChange('commencementDate', $event.value)"
                 placeholder="{{'The date of Commencement of commercial production'}}" required>
-              <mat-datepicker-toggle matSuffix [for]="commencementDatePicker"></mat-datepicker-toggle>
-              <mat-datepicker touchUi="true" #commencementDatePicker></mat-datepicker>
+              <mat-datepicker-toggle matSuffix [for]="docpicker"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #docpicker></mat-datepicker>
               <div align="end" class="default-show-hint mat-hint mat-right"></div>
-              <control-messages [control]="vendorRegistrationForm.get('commencementDate')">
-              </control-messages>
+              <control-messages [control]="vendorRegistrationForm.get('commencementDate')"></control-messages>
             </mat-form-field>
+
             <mat-form-field class="col-md-4">
               <input matInput type="text" appValidationFields validationFieldsType='appAlphanumericNumber' required
                 maxlength="10" placeholder="{{'PAN No. (Attach certified copy)'}}" formControlName="panNo">
@@ -86,13 +87,15 @@
           </mat-form-field>
 
           <mat-form-field class="col-md-4">
-            <input matInput type="text" required placeholder="{{'Fax Number'}}" formControlName="officeFaxNumber">
+            <input matInput type="text" required placeholder="{{'Fax Number'}}" maxlength="15"
+              formControlName="officeFaxNumber">
             <control-messages [control]="vendorRegistrationForm.get('officeFaxNumber')">
             </control-messages>
           </mat-form-field>
 
           <mat-form-field class="col-md-4">
-            <input matInput type="text" required placeholder="{{'Email Id'}}" formControlName="officeEmailId">
+            <input matInput type="text" required placeholder="{{'Email Id'}}" maxlength="20"
+              formControlName="officeEmailId">
             <control-messages [control]="vendorRegistrationForm.get('officeEmailId')">
             </control-messages>
           </mat-form-field>
@@ -112,13 +115,15 @@
           </mat-form-field>
 
           <mat-form-field class="col-md-4">
-            <input matInput type="text" required placeholder="{{'Fax Number'}}" formControlName="resFaxNumber">
+            <input matInput type="text" required placeholder="{{'Fax Number'}}" maxlength="15"
+              formControlName="resFaxNumber">
             <control-messages [control]="vendorRegistrationForm.get('resFaxNumber')">
             </control-messages>
           </mat-form-field>
 
           <mat-form-field class="col-md-4">
-            <input matInput type="text" required placeholder="{{'Email Id'}}" formControlName="resEmailId">
+            <input matInput type="text" required placeholder="{{'Email Id'}}" maxlength="20"
+              formControlName="resEmailId">
             <control-messages [control]="vendorRegistrationForm.get('resEmailId')">
             </control-messages>
           </mat-form-field>

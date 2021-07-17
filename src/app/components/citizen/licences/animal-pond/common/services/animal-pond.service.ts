@@ -18,7 +18,6 @@ export class AnimalPondService {
 	}
 
 	changeStatusOfBusinessAccordingAtatchment(subject:String,documents:any,formName : FormGroup){
-		debugger
 		for (const document of documents) {
 		
 			if(subject == 'TENANT'){

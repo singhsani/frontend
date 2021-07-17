@@ -545,7 +545,6 @@ export class CommonPaybleComponent implements OnInit {
   }
 
   onDetailClick(item) {
-    debugger
     if (item.taxWiseOutstandings && item.taxWiseOutstandings.length > 0) {
       this.propertyTaxDetailData = item.taxWiseOutstandings;
       this.isShowPayableScreen = false
