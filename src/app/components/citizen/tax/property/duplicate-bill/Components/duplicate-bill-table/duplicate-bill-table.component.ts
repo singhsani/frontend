@@ -9,6 +9,13 @@ import { PaymentDataSharingService } from 'src/app/vmcshared/component/payment/p
 import { MatSort, MatTableDataSource } from '@angular/material';
 import { Constants } from 'src/app/vmcshared/Constants';
 import { CommonService } from 'src/app/vmcshared/Services/common-service';
+import { CommonService as CommonServiceTwo} from 'src/app/shared/services/common.service';
+import { FormsActionsService } from 'src/app/core/services/citizen/data-services/forms-actions.service';
+import { PaymentNewService } from 'src/app/shared/services/paymentNew.service';
+import { Router } from '@angular/router';
+import { ManageRoutes } from 'src/app/config/routes-conf';
+import { environment } from 'src/environments/environment';
+import { SelectPaymentGatewayPropertyComponent } from 'src/app/vmcshared/component/select-payment-gateway-property/select-payment-gateway-property.component';
 
 
 @Component({
@@ -33,16 +40,22 @@ export class DuplicateBillTableComponent implements OnInit {
   billTypeList = [];
   @ViewChild(MatSort) sort: MatSort;
   totalCount: any = 0;
+  @ViewChild('paymentGateway') public paymentGateway: SelectPaymentGatewayPropertyComponent;
 
   constructor(
     private duplicateBillDataSharingService: DuplicateBillDataSharingService,
     private duplicateBillService: DuplicateBillService,
     private paymentDataSharingService: PaymentDataSharingService,
     private commonService: CommonService,
-    private alertService: AlertService) {
+    private alertService: AlertService,
+    private cService: CommonServiceTwo,
+    private formService: FormsActionsService,
+    private paymentService : PaymentNewService,
+    private router: Router) {
   }
 
   ngOnInit() {
+    this.formService.apiType = 'duplicateBill';
     this.getLookups();
     this.duplicateBillDataSharingService.observableIsSearchByPropertyNo.subscribe((data) => {
       this.isSearchByPropertyNo = data;
@@ -162,7 +175,56 @@ export class DuplicateBillTableComponent implements OnInit {
       if (this.serviceCharge.noofCopies > 0) {
         this.paymentDataSharingService.updatedPamentFromOption(Constants.Payment_From_Option.Duplicate_Bill);
         this.paymentDataSharingService.updatedDataModel(this.serviceCharge);
-        this.duplicateBillDataSharingService.updatedIsShowForm(true);
+        if(this.cService.fromAdmin()){
+          this.duplicateBillDataSharingService.updatedIsShowForm(true);
+        }else{
+          var data = {
+            occupierId: this.serviceCharge.occupierId, 
+            propertyBasicId: this.serviceCharge.propertyBasicId,  
+            noofCopies: this.serviceCharge.noofCopies
+          }
+          this.formService.saveDuplicateBill('saveDuplicate', data).subscribe
+          (res=> {
+            console.log(data);
+            this.formService.submitFormData(res.serviceFormId).subscribe(res => {
+              if(this.paymentService.isGuestUser()){
+                this.router.navigateByUrl(ManageRoutes.getFullRoute("CITIZENDASHBOARD"));
+              }else{
+                this.router.navigateByUrl(ManageRoutes.getFullRoute("CITIZENMYAPPS"));
+              }
+            }, err => {
+              let retUrl: string = '/citizen/my-applications';
+              let retAfterPayment: string = environment.returnUrl;
+              if(err.status === 402){
+                const errData = err.error.data;
+                retUrl = retUrl + '?apiCode='+ errData.serviceCode +'?id='+ errData.serviceFormId;
+                let payData = this.cService.storePaymentInfo(errData, retUrl, retAfterPayment);
+                let words = this.commonService.getToWords(payData.amount);
+                let html = 
+                `
+                <div class="text-center">
+                <h2>Total Fee Pay</h2>
+                <div class="payAmount">
+                  <i class="fa fa-inr" aria-hidden="true">` + payData.amount + `</i>
+                </div>
+                <p>Rupees in words</p>` + words + ` Rupees Only
+              </div>
+                `
+
+                this.cService.commonAlert('Payment Details', '', 'info', 'Make Payment!', false, html, cb => {
+                  this.paymentGateway.setPaymentDetailsFromActionBar(payData);
+                  this.paymentGateway.openModel();
+                }, rj => {
+                  return;
+                });
+              } else{
+                this.cService.openAlert("Error", "Error Occured for final submit : " + err.error[0].message, "warning");
+              }
+            });
+          }, error => {
+            this.alertService.error(error);
+          }
+        )};
       }
       else {
         this.alertService.error('No. of Copies should be greater than zero');
