@@ -536,8 +536,7 @@
                         <th class="text-center">Qualification</th>
                         <th class="text-center">Experience (In Years)</th>
                       </tr>
-                      <tr
-                        *ngFor="let row of vendorRegistrationForm.get('academicQualificationAndExperience')?.controls;">
+                      <tr *ngFor="let row of vendorRegistrationForm.get('academicQualifications')?.controls;">
 
                         <td class="text-center">
                           {{1}}
@@ -573,8 +572,7 @@
                         </td>
                       </tr>
 
-                      <tr
-                        *ngFor="let row of vendorRegistrationForm.get('academicQualificationAndExperience')?.controls;">
+                      <tr *ngFor="let row of vendorRegistrationForm.get('academicQualifications')?.controls;">
 
                         <td class="text-center">
                           {{2}}
@@ -610,8 +608,7 @@
                         </td>
                       </tr>
 
-                      <tr
-                        *ngFor="let row of vendorRegistrationForm.get('academicQualificationAndExperience')?.controls;">
+                      <tr *ngFor="let row of vendorRegistrationForm.get('academicQualifications')?.controls;">
 
                         <td class="text-center">
                           {{3}}
@@ -1001,129 +998,114 @@
       <div class="p-15">
         <form [hidden]="result==0" [formGroup]="vendorRegistrationForm" autocomplete="off">
           <div class="row">
-            <mat-form-field class="col-md-12">
+            <mat-form-field class="col-md-4">
               <input matInput maxlength="50" type="text" placeholder="{{'Name of The Owner'}}" required readonly
                 trim="blur" formControlName="nameOfTheFirm">
               <control-messages [control]="vendorRegistrationForm.get('nameOfTheFirm')"></control-messages>
-
             </mat-form-field>
-          </div>
-          <div class="row">
-            <mat-form-field class="col-md-12">
+
+            <mat-form-field class="col-md-4">
               <input matInput type="text" placeholder="{{'Year Of Establishment'}}" required readonly
                 formControlName="yearOfEstablishment">
               <control-messages [control]="vendorRegistrationForm.get('yearOfEstablishment')"></control-messages>
             </mat-form-field>
-          </div>
-          <div class="row">
-            <mat-form-field class="col-md-12">
+
+            <mat-form-field class="col-md-4">
               <input matInput type="text" placeholder="{{'The date of Commencement of commercial production'}}" required
                 readonly formControlName="commencementDate">
               <control-messages [control]="vendorRegistrationForm.get('commencementDate')"></control-messages>
             </mat-form-field>
           </div>
           <div class="row">
-            <mat-form-field class="col-md-12">
+            <mat-form-field class="col-md-4">
               <input matInput type="text" placeholder="{{'PAN Number'}}" required readonly formControlName="panNo">
               <control-messages [control]="vendorRegistrationForm.get('panNo')"></control-messages>
             </mat-form-field>
-          </div>
-          <div class="row">
-            <mat-form-field class="col-md-12">
+
+            <mat-form-field class="col-md-4">
               <input matInput type="text" placeholder="{{'TAN Number'}}" required readonly formControlName="tanNo">
               <control-messages [control]="vendorRegistrationForm.get('tanNo')"></control-messages>
             </mat-form-field>
-          </div>
-          <div class="row">
-            <mat-form-field class="col-md-12" formGroupName="locationOfFactoryWorks">
+
+            <mat-form-field class="col-md-4" formGroupName="locationOfFactoryWorks">
               <input matInput type="text" placeholder="{{'Locations'}}" required readonly formControlName="code">
               <control-messages [control]="vendorRegistrationForm.get('locationOfFactoryWorks').get('code')">
               </control-messages>
             </mat-form-field>
           </div>
           <div class="row">
-            <mat-form-field class="col-md-12" formGroupName="registrationBank">
+            <mat-form-field class="col-md-4" formGroupName="registrationBank">
               <input matInput type="text" placeholder="{{'Bank'}}" required readonly formControlName="code">
               <control-messages [control]="vendorRegistrationForm.get('locationOfFactoryWorks').get('code')">
               </control-messages>
             </mat-form-field>
-          </div>
-          <div class="row">
-            <mat-form-field class="col-md-12">
+
+            <mat-form-field class="col-md-4">
               <input matInput type="text" placeholder="{{'DD Number'}}" required readonly
                 formControlName="registrationDDNumber">
               <control-messages [control]="vendorRegistrationForm.get('registrationDDNumber')"></control-messages>
             </mat-form-field>
-          </div>
-          <div class="row">
-            <mat-form-field class="col-md-12">
+
+            <mat-form-field class="col-md-4">
               <input matInput type="text" placeholder="{{'DD Amount'}}" required readonly
                 formControlName="registrationAmount">
               <control-messages [control]="vendorRegistrationForm.get('registrationAmount')"></control-messages>
             </mat-form-field>
           </div>
           <div class="row">
-            <mat-form-field class="col-md-12">
+            <mat-form-field class="col-md-4">
               <input matInput type="text" placeholder="{{'DD Issuing Date'}}" required readonly
                 formControlName="registrationDDIssuingDate">
               <control-messages [control]="vendorRegistrationForm.get('registrationDDIssuingDate')"></control-messages>
             </mat-form-field>
-          </div>
-          <div class="row">
-            <mat-form-field class="col-md-12">
+
+            <mat-form-field class="col-md-4">
               <input matInput type="text" placeholder="{{'Factory Mobile Number'}}" required readonly
                 formControlName="officeContactNumber">
               <control-messages [control]="vendorRegistrationForm.get('officeContactNumber')"></control-messages>
             </mat-form-field>
-          </div>
-          <div class="row">
-            <mat-form-field class="col-md-12">
+
+            <mat-form-field class="col-md-4">
               <input matInput type="text" placeholder="{{'Factory Fax Number'}}" required readonly
                 formControlName="officeFaxNumber">
               <control-messages [control]="vendorRegistrationForm.get('officeFaxNumber')"></control-messages>
             </mat-form-field>
           </div>
           <div class="row">
-            <mat-form-field class="col-md-12">
+            <mat-form-field class="col-md-4">
               <input matInput type="text" placeholder="{{'Factory email Id'}}" required readonly
                 formControlName="officeEmailId">
               <control-messages [control]="vendorRegistrationForm.get('officeEmailId')"></control-messages>
             </mat-form-field>
-          </div>
-          <div class="row">
-            <mat-form-field class="col-md-12">
+
+            <mat-form-field class="col-md-4">
               <input matInput type="text" placeholder="{{'Reg Office Mobile Number'}}" required readonly
                 formControlName="resContactNumber">
               <control-messages [control]="vendorRegistrationForm.get('resContactNumber')"></control-messages>
             </mat-form-field>
-          </div>
-          <div class="row">
-            <mat-form-field class="col-md-12">
+
+            <mat-form-field class="col-md-4">
               <input matInput type="text" placeholder="{{'Reg Office Fax Number'}}" required readonly
                 formControlName="resFaxNumber">
               <control-messages [control]="vendorRegistrationForm.get('resFaxNumber')"></control-messages>
             </mat-form-field>
           </div>
           <div class="row">
-            <mat-form-field class="col-md-12">
+            <mat-form-field class="col-md-4">
               <input matInput type="text" placeholder="{{'Reg Office email Id'}}" required readonly
                 formControlName="resEmailId">
               <control-messages [control]="vendorRegistrationForm.get('resEmailId')"></control-messages>
             </mat-form-field>
-          </div>
 
-          <div class="row">
-            <mat-form-field class="col-md-12">
+            <mat-form-field class="col-md-4">
               <input matInput type="text" required readonly
                 placeholder="{{'Total turnover for the last three years of regd. charted accountant'}}"
                 formControlName="totalTurnoverLastThreeYears">
               <control-messages [control]="vendorRegistrationForm.get('totalTurnoverLastThreeYears')">
               </control-messages>
             </mat-form-field>
-          </div>
 
-          <div class="row">
-            <mat-form-field class="col-md-12">
+            <mat-form-field class="col-md-4">
               <input matInput type="text" required readonly placeholder="{{'Loan Capital with Bank Limit.'}}"
                 formControlName="loanCapitalWithBankLimit">
               <control-messages [control]="vendorRegistrationForm.get('loanCapitalWithBankLimit')"></control-messages>
@@ -1131,26 +1113,22 @@
           </div>
 
           <div class="row">
-            <mat-form-field class="col-md-12">
+            <mat-form-field class="col-md-4">
               <input matInput type="text" required readonly
                 placeholder="{{'Product Manufactured with complete description'}}"
                 formControlName="productManufacturedDescription">
               <control-messages [control]="vendorRegistrationForm.get('productManufacturedDescription')">
               </control-messages>
             </mat-form-field>
-          </div>
 
-          <div class="row">
-            <mat-form-field class="col-md-12">
+            <mat-form-field class="col-md-4">
               <input matInput type="text" required readonly placeholder="{{'Area of land occupied by the factory'}}"
                 formControlName="areaOfLandFactory">
               <control-messages [control]="vendorRegistrationForm.get('areaOfLandFactory')">
               </control-messages>
             </mat-form-field>
-          </div>
 
-          <div class="row">
-            <mat-form-field class="col-md-12">
+            <mat-form-field class="col-md-4">
               <input matInput type="text" required readonly placeholder="{{'Built up area of the factory.'}}"
                 formControlName="builtAreaFactory">
               <control-messages [control]="vendorRegistrationForm.get('builtAreaFactory')">
@@ -1159,25 +1137,21 @@
           </div>
 
           <div class="row">
-            <mat-form-field class="col-md-12">
+            <mat-form-field class="col-md-4">
               <input matInput type="text" required readonly placeholder="{{'No. of working shifts in the factory.'}}"
                 formControlName="noOfWorkingShifts">
               <control-messages [control]="vendorRegistrationForm.get('noOfWorkingShifts')">
               </control-messages>
             </mat-form-field>
-          </div>
 
-          <div class="row">
-            <mat-form-field class="col-md-12">
+            <mat-form-field class="col-md-4">
               <input matInput type="text" required readonly placeholder="{{'Factory licence No.'}}"
                 formControlName="factoryLicenceNumber">
               <control-messages [control]="vendorRegistrationForm.get('factoryLicenceNumber')">
               </control-messages>
             </mat-form-field>
-          </div>
 
-          <div class="row">
-            <mat-form-field class="col-md-12">
+            <mat-form-field class="col-md-4">
               <input matInput type="text" required readonly
                 placeholder="{{'Small Scale Industries / NSIC Certificate No.'}}"
                 formControlName="sscNSICCertificateNumber">
@@ -1188,27 +1162,23 @@
 
 
           <div class="row">
-            <mat-form-field class="col-md-12">
+            <mat-form-field class="col-md-4">
               <input matInput type="text" required readonly
                 placeholder="{{'Value of plant and Machinery certified by SSI in case of SSI units, alongwith the date of assessment of said value.'}}"
                 formControlName="valueOfPlantAndMachinery">
               <control-messages [control]="vendorRegistrationForm.get('valueOfPlantAndMachinery')">
               </control-messages>
             </mat-form-field>
-          </div>
 
-          <div class="row">
-            <mat-form-field class="col-md-12">
+            <mat-form-field class="col-md-4">
               <input matInput type="text" required readonly
                 placeholder="{{'Deatils of testing equipment with their capacities and details of calibration.'}}"
                 formControlName="detailsEquipmentCapacity">
               <control-messages [control]="vendorRegistrationForm.get('detailsEquipmentCapacity')">
               </control-messages>
             </mat-form-field>
-          </div>
 
-          <div class="row">
-            <mat-form-field class="col-md-12">
+            <mat-form-field class="col-md-4">
               <input matInput type="text" required readonly
                 placeholder="{{'Deatils of Machinery installed with their capacities.'}}"
                 formControlName="detailsMachineryCapacity">
@@ -1218,26 +1188,22 @@
           </div>
 
           <div class="row">
-            <mat-form-field class="col-md-12">
+            <mat-form-field class="col-md-4">
               <input matInput type="text" required readonly
                 placeholder="{{'Type of tests as per Standards (This is must for registration) MTC as well as govt. Lab or Approved govt.Lab.'}}"
                 formControlName="testStandardGovtLabApproved">
               <control-messages [control]="vendorRegistrationForm.get('testStandardGovtLabApproved')">
               </control-messages>
             </mat-form-field>
-          </div>
 
-          <div class="row">
-            <mat-form-field class="col-md-12">
+            <mat-form-field class="col-md-4">
               <input matInput type="text" required readonly placeholder="{{'Method adopted for Quality Control'}}"
                 formControlName="adoptedForQualityControl">
               <control-messages [control]="vendorRegistrationForm.get('adoptedForQualityControl')">
               </control-messages>
             </mat-form-field>
-          </div>
 
-          <div class="row">
-            <mat-form-field class="col-md-12">
+            <mat-form-field class="col-md-4">
               <input matInput type="text" required readonly
                 placeholder="{{'Distinguised marks or method employed to identify, materials, if any.'}}"
                 formControlName="methodEmployeeIdentify">
@@ -1247,27 +1213,23 @@
           </div>
 
           <div class="row">
-            <mat-form-field class="col-md-12">
+            <mat-form-field class="col-md-4">
               <input matInput type="text" required readonly
                 placeholder="{{'Source of supply of Raw materials (with address).'}}"
                 formControlName="sourceOfRawMaterialAddress">
               <control-messages [control]="vendorRegistrationForm.get('sourceOfRawMaterialAddress')">
               </control-messages>
             </mat-form-field>
-          </div>
 
-          <div class="row">
-            <mat-form-field class="col-md-12">
+            <mat-form-field class="col-md-4">
               <input matInput type="text" required readonly
                 placeholder="{{'Production capacity per annum (quantity).'}}"
                 formControlName="productionCapacityPerAnnum">
               <control-messages [control]="vendorRegistrationForm.get('productionCapacityPerAnnum')">
               </control-messages>
             </mat-form-field>
-          </div>
 
-          <div class="row">
-            <mat-form-field class="col-md-12">
+            <mat-form-field class="col-md-4">
               <input matInput type="text" required readonly
                 placeholder="{{'Maximum production per annum (in city. as well as value) acheived so far.'}}"
                 formControlName="maximumProductionPerAnnum">
@@ -1283,7 +1245,10 @@
               </control-messages>
             </mat-form-field>
           </div>
-
+          <div class="row">
+            <button class="col-md-12 pull-right" type="button" mat-raised-button color="primary"
+              (click)="hideModel();">{{'Ok'}}</button>
+          </div>
         </form>
       </div>
     </mat-card>
