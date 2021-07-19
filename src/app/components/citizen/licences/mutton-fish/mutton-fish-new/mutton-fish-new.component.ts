@@ -172,8 +172,11 @@ export class MuttonFishNewComponent implements OnInit {
 	}
 
 	onChangeStatusOfBusiness(event) {
+		debugger
 		// let array = (<FormArray>this.muttonFishNewForm.get('serviceDetail').get('serviceUploadDocuments'));
+		// console.log("array" +JSON.stringify(array));
 		const localUploadArray = this.commonService.clone((<FormArray>this.muttonFishNewForm.get('serviceDetail').get('serviceUploadDocuments')).value);
+		console.log("localUploadArray" +JSON.stringify(localUploadArray));
 		// let array = (<FormArray>this.muttonFishNewForm.get('serviceDetail').get('serviceUploadDocuments'));
 		this.uploadFileArray = [];
 		this.mandatoryUploadFileArray = [];
@@ -206,7 +209,11 @@ export class MuttonFishNewComponent implements OnInit {
 			for (let file of localUploadArray) {
 				if ((file['documentIdentifier'] == 'PARTNERSHIP_DEED') ||  (file['documentIdentifier'] == 'LAND_TERMS_CONDITION')) {
 					file['mandatory'] = false;
-				}else{
+				}else if(file['documentIdentifier'] == 'RENT_AGREEMENT'){
+					file['mandatory'] = true;
+					this.uploadFileArray.push(file);
+				}
+				else{
 					this.uploadFileArray.push(file);
 				}
 
