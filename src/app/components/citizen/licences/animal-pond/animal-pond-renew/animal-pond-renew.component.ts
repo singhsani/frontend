@@ -729,4 +729,15 @@ export class AnimalPondRenewComponent implements OnInit {
 
 
 	}
+
+	onSameAddressChange(event){
+		if(event.checked){
+			this.animalPondRenewForm.get('temporaryAddress').patchValue(this.animalPondRenewForm.get('permanantAddress').value);
+			// this.animalPondRenewForm.get('temporaryAddress.addressType').setValue('APL_TEMPORARY_ADDRESS');
+			this.animalPondRenewForm.get('temporaryAddress').disable();
+		}else{
+			this.animalPondRenewForm.get('temporaryAddress').enable();
+			this.animalPondRenewForm.get('temporaryAddress').reset();
+		}
+	}
 }
