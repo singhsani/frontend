@@ -172,11 +172,8 @@ export class MuttonFishNewComponent implements OnInit {
 	}
 
 	onChangeStatusOfBusiness(event) {
-		debugger
 		// let array = (<FormArray>this.muttonFishNewForm.get('serviceDetail').get('serviceUploadDocuments'));
-		// console.log("array" +JSON.stringify(array));
 		const localUploadArray = this.commonService.clone((<FormArray>this.muttonFishNewForm.get('serviceDetail').get('serviceUploadDocuments')).value);
-		console.log("localUploadArray" +JSON.stringify(localUploadArray));
 		// let array = (<FormArray>this.muttonFishNewForm.get('serviceDetail').get('serviceUploadDocuments'));
 		this.uploadFileArray = [];
 		this.mandatoryUploadFileArray = [];
