@@ -25,7 +25,7 @@ export class VendorRegistrationComponent implements OnInit {
 
   actionBarKey: string = 'adminActionBar';
   listOfItemMaterialSupplier: FormArray;
-  academicQualificationAndExperience: FormArray;
+  academicQualifications: FormArray;
   vendorNameArray: FormArray;
   vendorRegistrationForm: FormGroup;
   implYesNorray: Array<any> = [{ name: 'YES', code: true }, { name: 'NO', code: false }];
@@ -60,14 +60,14 @@ export class VendorRegistrationComponent implements OnInit {
     this.engineer.apiType = "vendor";
     this.formService.apiType = "vendor";
     this.listOfItemMaterialSupplier = this.fb.array([]);
-    this.academicQualificationAndExperience = this.fb.array([]);
+    this.academicQualifications = this.fb.array([]);
     this.vendorNameArray = this.fb.array([]);
   }
 
   ngOnInit() {
     this.vendorRegistrationControl();
     this.vendorRegistrationForm.addControl('listOfItemMaterialSupplier', this.listOfItemMaterialSupplier);
-    this.vendorRegistrationForm.addControl('academicQualificationAndExperience', this.academicQualificationAndExperience);
+    this.vendorRegistrationForm.addControl('academicQualifications', this.academicQualifications);
     this.vendorRegistrationForm.addControl('vendorNameArray', this.vendorNameArray);
 
     this.activatedRoute.paramMap.subscribe(param => {
@@ -109,7 +109,7 @@ export class VendorRegistrationComponent implements OnInit {
   }
 
   setServiceDetailsOnInit(res) {
-    this.serverUploadFilesArray = res.serviceDetail.serviceUploadDocuments;
+    this.serverUploadFilesArray = res.attachments;
     const localUploadArray = [...this.serverUploadFilesArray];
 
     for (let file of localUploadArray) {
@@ -126,21 +126,22 @@ export class VendorRegistrationComponent implements OnInit {
       apiType: null,
       serviceCode: null,
       serviceFormId: this.formId,
+      applicationNumber: null,
 
       id: null,
       nameOfTheFirm: null,
       commencementDate: null,
       yearOfEstablishment: null,
 
-      panNo: [null, Validators.required, ValidationService.panValidator],
-      tanNo: [null, Validators.required, ValidationService.panValidator],
-      officeContactNumber: [null, Validators.required, ValidationService.mobileNumberValidation],
-      officeFaxNumber: [null, Validators.required, ValidationService.mobileNumberValidation],
-      officeEmailId: [null, Validators.required, ValidationService.emailValidator],
+      panNo: [null, [Validators.required, ValidationService.panValidator]],
+      tanNo: [null, [Validators.required, ValidationService.panValidator]],
+      officeContactNumber: [null, [Validators.required, ValidationService.mobileNumberValidation]],
+      officeFaxNumber: [null, [Validators.required, ValidationService.mobileNumberValidation]],
+      officeEmailId: [null, [Validators.required, ValidationService.emailValidator]],
 
-      resContactNumber: [null, Validators.required, ValidationService.mobileNumberValidation],
-      resFaxNumber: [null, Validators.required, ValidationService.mobileNumberValidation],
-      resEmailId: [null, Validators.required, ValidationService.emailValidator],
+      resContactNumber: [null, [Validators.required, ValidationService.mobileNumberValidation]],
+      resFaxNumber: [null, [Validators.required, ValidationService.mobileNumberValidation]],
+      resEmailId: [null, [Validators.required, ValidationService.emailValidator]],
 
       factoryAddress: this.fb.group(this.officeAddrComponent.addressControls()),
       registeredAddress: this.fb.group(this.resAddrComponent.addressControls()),
@@ -149,20 +150,20 @@ export class VendorRegistrationComponent implements OnInit {
       manufacturingOwnedDetails: null,
 
       listOfItemMaterialDetail: this.fb.array([]),
-      academicQualificationAndExperienceDetail: this.fb.array([]),
+      academicQualificationsDetail: this.fb.array([]),
       vendorNameDetail: this.fb.array([]),
 
       registrationBank: this.fb.group({
-        code: [null],
-        name: [null]
+        code: null,
+        name: null
       }),
-      registrationDDNumber: [null],
+      registrationDDNumber: null,
       registrationAmount: [null, [Validators.maxLength(7)]],
-      registrationDDIssuingDate: [null],
+      registrationDDIssuingDate: null,
 
       locationOfFactoryWorks: this.fb.group({
-        code: [null],
-        name: [null]
+        code: null,
+        name: null
       }),
 
       isIncomeTaxDetails: [null, [Validators.required]],
@@ -178,44 +179,42 @@ export class VendorRegistrationComponent implements OnInit {
       isFirmUnderDealBlacklisted: [null, [Validators.required]],
       isResultSampleTesting: [null, [Validators.required]],
 
-      totalTurnoverLastThreeYears: [null],
-      loanCapitalWithBankLimit: [null],
-      productManufacturedDescription: [null],
-      areaOfLandFactory: [null],
-      builtAreaFactory: [null],
-      noOfWorkingShifts: [null],
-      factoryLicenceNumber: [null],
-      sscNSICCertificateNumber: [null],
-      valueOfPlantAndMachinery: [null],
-      detailsEquipmentCapacity: [null],
-      detailsMachineryCapacity: [null],
-      testStandardGovtLabApproved: [null],
-      adoptedForQualityControl: [null],
-      methodEmployeeIdentify: [null],
-      sourceOfRawMaterialAddress: [null],
-      productionCapacityPerAnnum: [null],
-      maximumProductionPerAnnum: [null],
+      totalTurnoverLastThreeYears: null,
+      loanCapitalWithBankLimit: null,
+      productManufacturedDescription: null,
+      areaOfLandFactory: null,
+      builtAreaFactory: null,
+      noOfWorkingShifts: null,
+      factoryLicenceNumber: null,
+      sscNSICCertificateNumber: null,
+      valueOfPlantAndMachinery: null,
+      detailsEquipmentCapacity: null,
+      detailsMachineryCapacity: null,
+      testStandardGovtLabApproved: null,
+      adoptedForQualityControl: null,
+      methodEmployeeIdentify: null,
+      sourceOfRawMaterialAddress: null,
+      productionCapacityPerAnnum: null,
+      maximumProductionPerAnnum: null,
 
-      purchaserName: [null],
-      orderNo: [null],
-      orderDate: [null],
-      quantitySuppliedCompletionDate: [null],
+      purchaserName: null,
+      orderNo: null,
+      orderDate: null,
+      quantitySuppliedCompletionDate: null,
 
-      estimationOfStocks: [null],
-      numberOfItemsHoldingISOCertificate: [null],
-      remarks: [null],
+      estimationOfStocks: null,
+      numberOfItemsHoldingISOCertificate: null,
+      remarks: null,
 
-      personnelDetailSkilled: [null],
-      personnelDetailUnSkilled: [null],
-      personnelDetailOther: [null],
+      personnelDetailSkilled: null,
+      personnelDetailUnSkilled: null,
+      personnelDetailOther: null,
 
-      officeResidentialAddressSame: null,
-
-      attachments: [''],
+      attachments: [],
       acceptAndCondition: [true],
       createdByCitizen: [true],
     });
-    this.academicQualificationAndExperience.push(this.createEducationQualification());
+    this.academicQualifications.push(this.createEducationQualification());
   }
 
   onTabChange(evt) {
@@ -225,7 +224,15 @@ export class VendorRegistrationComponent implements OnInit {
   getAllDocumentLists() {
     this.engineer.getAllDocuments().subscribe(res => {
       this.attachmentList = _.cloneDeep(res);
+
+      for (let file of this.attachmentList) {
+        file['mandatory'] = false;
+      }
     });
+  }
+
+  onDateChange(fieldName, date) {
+    this.vendorRegistrationForm.get(fieldName).setValue(moment(date).format("YYYY-MM-DD"));
   }
 
   getAllLocationDetail() {
@@ -379,11 +386,11 @@ export class VendorRegistrationComponent implements OnInit {
 
       "officeContactNumber": "8962749074",
       "officeFaxNumber": "74148529633",
-      "officeEmailId": "chetan.porwal@nascntinfo.com",
+      "officeEmailId": "A@nascntinfo.com",
 
       "resContactNumber": "8962749074",
       "resFaxNumber": "74148529633",
-      "resEmailId": "chetan.porwal@nascntinfo.com",
+      "resEmailId": "A@nascntinfo.com",
 
       "manufacturingOwnedDetails": "true",
 
@@ -391,7 +398,9 @@ export class VendorRegistrationComponent implements OnInit {
 
       "registrationDDIssuingDate": "2021-07-15",
 
-      "locationOfFactoryWorks": "WITH_IN_GUJARAT",
+      "locationOfFactoryWorks": {
+        "code": "WITH_IN_GUJARAT",
+      },
 
       "isIncomeTaxDetails": "true",
       "isManufacturingOwnedDetails": "true",
@@ -430,6 +439,36 @@ export class VendorRegistrationComponent implements OnInit {
         "country": "INDIA",
         "pincode": "748596"
       },
+
+      "totalTurnoverLastThreeYears": "Fifteen Lakhs",
+      "loanCapitalWithBankLimit": "500000",
+      "productManufacturedDescription": "Nascent Info Technologies",
+      "areaOfLandFactory": 1500,
+      "builtAreaFactory": 15000,
+      "noOfWorkingShifts": 15,
+      "factoryLicenceNumber": "147852963",
+      "sscNSICCertificateNumber": "1488529636",
+      "valueOfPlantAndMachinery": "Nascent Info Technologies",
+      "detailsEquipmentCapacity": "Nascent Info Technologies",
+      "detailsMachineryCapacity": "Nascent Info Technologies",
+      "testStandardGovtLabApproved": "Nascent Info Technologies",
+      "adoptedForQualityControl": "Nascent Info Technologies",
+      "methodEmployeeIdentify": "Nascent Info Technologies",
+      "sourceOfRawMaterialAddress": "Nascent Info Technologies",
+      "productionCapacityPerAnnum": 25000,
+      "maximumProductionPerAnnum": 2500,
+
+      "purchaserName": "Nascent Info Technologies",
+      "orderNo": 14785,
+      "orderDate": "15-07-2021",
+      "quantitySuppliedCompletionDate": "15-07-2021",
+
+      "estimationOfStocks": "Nascent Info Technologies",
+      "numberOfItemsHoldingISOCertificate": "Nascent Info Technologies",
+
+      "personnelDetailSkilled": "Nascent Info Technologies",
+      "personnelDetailUnSkilled": "Nascent Info Technologies",
+      "personnelDetailOther": "Nascent Info Technologies",
     }
 
     this.vendorRegistrationForm.patchValue(obj);

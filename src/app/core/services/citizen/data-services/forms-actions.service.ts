@@ -502,4 +502,9 @@ export class FormsActionsService {
 		return this.http.post(this.requestURL, data);
 	  }
 
+	saveDuplicateBill(apiName: any, data: any) {
+		this.requestURL = `api/form/${this.apiType}/${apiName}`;
+		return this.http.post(this.requestURL, data);
+
+	}
 }

@@ -352,7 +352,7 @@
 
                       <div class="col-md-4">
                         <mat-form-field>
-                          <input matInput type="text" formControlName="panCard" placeholder="{{'pancard' | translate : translateKey}}" required>
+                          <input matInput type="text" formControlName="panCard" autocomplete="off" class="capitalCase" maxlength="10" placeholder="{{'pancard' | translate : translateKey}}" required>
                           <control-messages [control]="childrenTheaterApplicationForm.get('panCard')"></control-messages>
                         </mat-form-field>
                       </div>
