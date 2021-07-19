@@ -536,8 +536,7 @@
                         <th class="text-center">Qualification</th>
                         <th class="text-center">Experience (In Years)</th>
                       </tr>
-                      <tr *ngFor="let row of vendorRegistrationForm.get('academicQualifications')?.controls;">
-
+                      <tr>
                         <td class="text-center">
                           {{1}}
                         </td>
@@ -547,8 +546,8 @@
                         <td class="text-center">
                           <mat-form-field>
                             <input matInput type="text" appValidationFields maxlength="100"
-                              [formControl]="row.get('managerialFullName')">
-                            <control-messages [control]="row.get('managerialFullName')">
+                              formControlName="managerialFullName">
+                            <control-messages [control]="vendorRegistrationForm.get('managerialFullName')">
                             </control-messages>
                           </mat-form-field>
                         </td>
@@ -556,8 +555,8 @@
                         <td class="text-center">
                           <mat-form-field>
                             <input matInput type="text" appValidationFields maxlength="100"
-                              [formControl]="row.get('managerialQualification')">
-                            <control-messages [control]="row.get('managerialQualification')">
+                              formControlName="managerialQualification">
+                            <control-messages [control]="vendorRegistrationForm.get('managerialQualification')">
                             </control-messages>
                           </mat-form-field>
                         </td>
@@ -565,14 +564,14 @@
                         <td class="text-center">
                           <mat-form-field>
                             <input matInput type="text" appValidationFields maxlength="100"
-                              [formControl]="row.get('managerialExperienceInYears')">
-                            <control-messages [control]="row.get('managerialExperienceInYears')">
+                              formControlName="managerialExperienceInYears">
+                            <control-messages [control]="vendorRegistrationForm.get('managerialExperienceInYears')">
                             </control-messages>
                           </mat-form-field>
                         </td>
                       </tr>
 
-                      <tr *ngFor="let row of vendorRegistrationForm.get('academicQualifications')?.controls;">
+                      <tr>
 
                         <td class="text-center">
                           {{2}}
@@ -583,8 +582,8 @@
                         <td class="text-center">
                           <mat-form-field>
                             <input matInput type="text" appValidationFields maxlength="100"
-                              [formControl]="row.get('productionStaffFullName')">
-                            <control-messages [control]="row.get('productionStaffFullName')">
+                              formControlName="productionStaffFullName">
+                            <control-messages [control]="vendorRegistrationForm.get('productionStaffFullName')">
                             </control-messages>
                           </mat-form-field>
                         </td>
@@ -592,8 +591,8 @@
                         <td class="text-center">
                           <mat-form-field>
                             <input matInput type="text" appValidationFields maxlength="100"
-                              [formControl]="row.get('productionStaffQualification')">
-                            <control-messages [control]="row.get('productionStaffQualification')">
+                              formControlName="productionStaffQualification">
+                            <control-messages [control]="vendorRegistrationForm.get('productionStaffQualification')">
                             </control-messages>
                           </mat-form-field>
                         </td>
@@ -601,14 +600,15 @@
                         <td class="text-center">
                           <mat-form-field>
                             <input matInput type="text" appValidationFields maxlength="100"
-                              [formControl]="row.get('productionStaffExperienceInYears')">
-                            <control-messages [control]="row.get('productionStaffExperienceInYears')">
+                              formControlName="productionStaffExperienceInYears">
+                            <control-messages
+                              [control]="vendorRegistrationForm.get('productionStaffExperienceInYears')">
                             </control-messages>
                           </mat-form-field>
                         </td>
                       </tr>
 
-                      <tr *ngFor="let row of vendorRegistrationForm.get('academicQualifications')?.controls;">
+                      <tr>
 
                         <td class="text-center">
                           {{3}}
@@ -619,8 +619,8 @@
                         <td class="text-center">
                           <mat-form-field>
                             <input matInput type="text" appValidationFields maxlength="100"
-                              [formControl]="row.get('qualityControlStaffFullName')">
-                            <control-messages [control]="row.get('qualityControlStaffFullName')">
+                              formControlName="qualityControlStaffFullName">
+                            <control-messages [control]="vendorRegistrationForm.get('qualityControlStaffFullName')">
                             </control-messages>
                           </mat-form-field>
                         </td>
@@ -628,8 +628,9 @@
                         <td class="text-center">
                           <mat-form-field>
                             <input matInput type="text" appValidationFields maxlength="100"
-                              [formControl]="row.get('qualityControlStaffQualification')">
-                            <control-messages [control]="row.get('qualityControlStaffQualification')">
+                              formControlName="qualityControlStaffQualification">
+                            <control-messages
+                              [control]="vendorRegistrationForm.get('qualityControlStaffQualification')">
                             </control-messages>
                           </mat-form-field>
                         </td>
@@ -637,8 +638,9 @@
                         <td class="text-center">
                           <mat-form-field>
                             <input matInput type="text" appValidationFields maxlength="100"
-                              [formControl]="row.get('qualityControlStaffExperienceInYears')">
-                            <control-messages [control]="row.get('qualityControlStaffExperienceInYears')">
+                              formControlName="qualityControlStaffExperienceInYears">
+                            <control-messages
+                              [control]="vendorRegistrationForm.get('qualityControlStaffExperienceInYears')">
                             </control-messages>
                           </mat-form-field>
                         </td>
@@ -805,8 +807,9 @@
                         </td>
                         <td class="text-center">
                           <mat-form-field>
-                            <input matInput type="text" appValidationFields maxlength="100" formControlName="orderNo">
-                            <control-messages [control]="vendorRegistrationForm.get('orderNo')">
+                            <input matInput type="text" appValidationFields maxlength="100"
+                              formControlName="orderNumber">
+                            <control-messages [control]="vendorRegistrationForm.get('orderNumber')">
                             </control-messages>
                           </mat-form-field>
                         </td>
