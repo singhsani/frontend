@@ -180,7 +180,11 @@
                       <th class="text-center">Owner Name</th>
                       <th class="text-center">Action</th>
                     </tr>
-                    <tr *ngFor="let row of vendorRegistrationForm.get('vendorNameDetail')?.controls;let index = index;">
+                    <tr *ngFor="let row of vendorRegistrationForm.get('vendorNameArray')?.controls;let index = index;">
+
+                      <td>
+                        {{index+1}}
+                      </td>
 
                       <td>
                         <mat-form-field>
@@ -232,12 +236,13 @@
                   <tbody>
                     <tr>
                       <th class="text-center">Items / Materials</th>
-                      <th class="text-center">Rating / Description</th>
+                      <th class="text-center">Rating</th>
+                      <th class="text-center">Description</th>
                       <th class="text-center">IS Number</th>
                       <th class="text-center">Action</th>
                     </tr>
                     <tr
-                      *ngFor="let row of vendorRegistrationForm.get('listOfItemMaterialDetail')?.controls;let index = index;">
+                      *ngFor="let row of vendorRegistrationForm.get('listOfItemMaterialSupplier')?.controls;let index = index;">
 
                       <td>
                         <mat-form-field>
@@ -250,9 +255,18 @@
 
                       <td>
                         <mat-form-field>
+                          <input matInput type="text" appValidationFields OnlyNumber maxlength="10"
+                            [formControl]="row.get('rating')">
+                          <control-messages [control]="row.get('rating')">
+                          </control-messages>
+                        </mat-form-field>
+                      </td>
+
+                      <td>
+                        <mat-form-field>
                           <input matInput type="text" appValidationFields maxlength="100"
-                            [formControl]="row.get('ratingDescription')">
-                          <control-messages [control]="row.get('ratingDescription')">
+                            [formControl]="row.get('description')">
+                          <control-messages [control]="row.get('description')">
                           </control-messages>
                         </mat-form-field>
                       </td>
@@ -260,8 +274,8 @@
                       <td>
                         <mat-form-field>
                           <input matInput type="text" appValidationFields OnlyNumber maxlength="100"
-                            [formControl]="row.get('ISNumber')">
-                          <control-messages [control]="row.get('ISNumber')">
+                            [formControl]="row.get('isNumber')">
+                          <control-messages [control]="row.get('isNumber')">
                           </control-messages>
                         </mat-form-field>
                       </td>
@@ -892,7 +906,7 @@
             </div>
 
             <mat-form-field class="col-md-4">
-              <input matInput type="text" maxlength="10" onlyNumber
+              <input matInput type="text" maxlength="250" onlyNumber
                 placeholder="{{'List of Items holding ISO 9001 Certificate.'}}"
                 formControlName="numberOfItemsHoldingISOCertificate">
               <control-messages [control]="vendorRegistrationForm.get('numberOfItemsHoldingISOCertificate')">

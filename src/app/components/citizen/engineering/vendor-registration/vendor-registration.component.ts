@@ -67,7 +67,6 @@ export class VendorRegistrationComponent implements OnInit {
   ngOnInit() {
     this.vendorRegistrationControl();
     this.vendorRegistrationForm.addControl('listOfItemMaterialSupplier', this.listOfItemMaterialSupplier);
-    this.vendorRegistrationForm.addControl('academicQualifications', this.academicQualifications);
     this.vendorRegistrationForm.addControl('vendorNameArray', this.vendorNameArray);
 
     this.activatedRoute.paramMap.subscribe(param => {
@@ -149,9 +148,9 @@ export class VendorRegistrationComponent implements OnInit {
       namesOfTheOwner: null,
       manufacturingOwnedDetails: null,
 
-      listOfItemMaterialDetail: this.fb.array([]),
+      listOfItemMaterial: this.listOfItemMaterialSupplier,
       academicQualificationsDetail: this.fb.array([]),
-      vendorNameDetail: this.fb.array([]),
+      vendorNameDetails: this.vendorNameArray,
 
       registrationBank: this.fb.group({
         code: null,
@@ -224,6 +223,7 @@ export class VendorRegistrationComponent implements OnInit {
     });
     this.academicQualifications.push(this.createEducationQualification());
     this.vendorNameArray.push(this.createVendorNameArray());
+    this.listOfItemMaterialSupplier.push(this.createItemMaterialSupplier());
   }
 
   onTabChange(evt) {
@@ -264,8 +264,9 @@ export class VendorRegistrationComponent implements OnInit {
   createItemMaterialSupplier(): FormGroup {
     return this.fb.group({
       itemsMaterial: null,
-      ratingDescription: null,
-      ISNumber: null,
+      rating: null,
+      description: null,
+      isNumber: null,
     });
   }
 
@@ -291,6 +292,10 @@ export class VendorRegistrationComponent implements OnInit {
 
   addRowVendorName() {
     this.vendorNameArray.push(this.createVendorNameArray());
+  }
+
+  onRemoveRowVendorName(rowIndex: number) {
+    this.vendorNameArray.removeAt(rowIndex);
   }
 
   createVendorNameArray(): FormGroup {
