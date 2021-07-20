@@ -185,7 +185,7 @@ export class MuttonFishRenewalComponent implements OnInit {
 			// if (this.muttonFishRenewalForm.get('relationshipId').value.code == 'PROPRIETOR') {
 			// 	this.muttonFishRenewalForm.get('relationshipList').disable();
 			// }
-			this.muttonFishRenewalForm.disable();
+			// this.muttonFishRenewalForm.disable();
 			this.enableFielList();
 			let currentUrl = this.location.path().replace('false', this.formId.toString());
 			this.location.go(currentUrl);
@@ -232,7 +232,7 @@ export class MuttonFishRenewalComponent implements OnInit {
 				res.relationshipList.forEach(app => {
 					(<FormArray>this.muttonFishRenewalForm.get('relationshipList')).push(this.createArray(app));
 				});
-				this.muttonFishRenewalForm.disable();
+				// this.muttonFishRenewalForm.disable();
 				this.enableFielList();
 
 				res.serviceDetail.serviceUploadDocuments.forEach(app => {
