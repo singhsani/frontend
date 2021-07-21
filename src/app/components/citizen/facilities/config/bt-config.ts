@@ -132,7 +132,7 @@ export class BTConfig extends CitizenConfig {
     }
 
     redirectToCCAvenuePayment(err: any, commonService: CommonService, btService: BookingService | TicketingsService, paymentGateway, form?: FormGroup, router?: Router, applicationrouter?: any, extraParams?: any) {
-
+       
         let redirectURLAfterPayment = (btService instanceof TicketingsService) ? BTConstants.MY_TICKETINGS_URL : BTConstants.MY_BOOKINGS_URL
 
         let payData = this.storePaymentInfo(err.error.data, redirectURLAfterPayment, btService.resourceType, extraParams);
@@ -166,6 +166,11 @@ export class BTConfig extends CitizenConfig {
             // })
 
         }, rj => {
+            
+            
+            if(payData.resourceType == "townhall"){
+                router.navigate([redirectURLAfterPayment]);
+            }
             // let errHtml = `
 			// 			<div class="alert alert-danger">
 			// 				Please Complete Payment, Otherwise the application will be considered as in-complete
