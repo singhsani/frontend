@@ -1,4 +1,4 @@
-<div class="container">
+<div class="pb-3">
   <app-title-bar [title]="'Vendor Registration'">
     <!-- <button class="pull-right" mat-stroked-button type="button" (click)="patchValue()">
       Patch Value
@@ -955,15 +955,15 @@
             </div>
           </div>
 
-          <div class="row">
-            <div>
+        
+          <div class="checkboxHref">
               <mat-checkbox class="col accept-terms" required formControlName="acceptAndCondition">
 
               </mat-checkbox>
-            </div>
-            <a (click)="openTermModel(termCondition);" style="margin-top: 10px; margin-left: -25px"> I have
+            
+            <a (click)="openTermModel(termCondition);"> I have
               read and agree with <u style="color: rebeccapurple;">Terms and conditions</u> </a>
-          </div>
+            </div>
 
           <div class="fotButtonBar clearfix">
             <div class="col-sm-12 col-md-12">
@@ -971,10 +971,10 @@
                 <button class="liteBorder" type="button" mat-raised-button (click)="tabIndex = 3">{{'Back'}}</button>
               </span>
               <button class="pull-right" type="button" mat-raised-button color="primary"
-                (click)="openTermModel(templateViewDetails);">{{'Review
-                '}}</button>
-              <button class="pull-right" type="button" mat-raised-button color="primary"
                 (click)="onSubmit();">{{'Submit'}}</button>
+                <button class="pull-right" type="button" mat-raised-button color="primary"
+                (click)="openTermModel(templateViewDetails);">{{'Review
+                '}}</button> 
             </div>
           </div>
 
@@ -989,11 +989,12 @@
 
 <ng-template #termCondition>
 
-  <div class="modal-body scrollModel">
-    <br> Terms and Condition
-    <br> * If, Registration is not recommended / rejected, registration fee paid is not Refundable.
-
+  <div class="modal-body">
+    <p>Terms and Condition <br>
+    * If, Registration is not recommended / rejected, registration fee paid is not Refundable.
+    </p>
   </div>
+  
   <div class="modal-footer customthead">
     <button color="white" mat-stroked-button (click)="hideModel()">
       {{'Ok' | translate: translateKey}}
@@ -1005,12 +1006,12 @@
 <ng-template #templateViewDetails>
   <div class="modal-header">
     <h4 class="modal-title pull-left">View Details</h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modalResRef.hide()">
+    <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close" (click)="hideModel()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
 
-  <div class="modal-body">
+  <div class="modal-body fillLabel">
     <mat-card class="formClass formBorder">
       <div class="p-15">
         <form [hidden]="result==0" [formGroup]="vendorRegistrationForm" autocomplete="off">
@@ -1263,8 +1264,10 @@
             </mat-form-field>
           </div>
           <div class="row">
-            <button class="col-md-12 pull-right" type="button" mat-raised-button color="primary"
+            <div class="col-md-12">
+            <button class="pull-right" type="button" mat-raised-button color="primary"
               (click)="hideModel();">{{'Ok'}}</button>
+            </div>     
           </div>
         </form>
       </div>
