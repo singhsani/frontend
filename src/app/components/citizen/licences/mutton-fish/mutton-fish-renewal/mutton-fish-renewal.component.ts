@@ -364,8 +364,8 @@ export class MuttonFishRenewalComponent implements OnInit {
 			permanantAddress: this.fb.group(this.permanantAddressEstablishment.addressControls()),
 			temporaryAddress: this.fb.group(this.permanantAddressEstablishment.addressControls()),
 
-			holderTelephoneNo: [null, [Validators.maxLength(12), Validators.minLength(10)]],
-			holderMobileNo: [null, [Validators.required, Validators.maxLength(11), Validators.minLength(10)]],
+			holderTelephoneNo: [null, [Validators.maxLength(11), Validators.minLength(11)]],
+			holderMobileNo: [null, [Validators.required, Validators.maxLength(10), Validators.minLength(10)]],
 			holderFaxNo: [null, [Validators.maxLength(12)]],
 			holderAadharNo: [null, [Validators.required, Validators.maxLength(12)]],
 			holderPanNo: [null, [Validators.required, Validators.maxLength(10)]],
@@ -576,5 +576,15 @@ export class MuttonFishRenewalComponent implements OnInit {
 	 */
 	dateFormat(date, controlType: string) {
 		this.muttonFishRenewalForm.get(controlType).setValue(moment(date).format("YYYY-MM-DD"));
+	}
+
+	onSameAddressChange(event){
+		if(event.checked){
+			this.muttonFishRenewalForm.get('temporaryAddress').patchValue(this.muttonFishRenewalForm.get('permanantAddress').value);
+			this.muttonFishRenewalForm.get('temporaryAddress').disable();
+		}else{
+			this.muttonFishRenewalForm.get('temporaryAddress').enable();
+			this.muttonFishRenewalForm.get('temporaryAddress').reset();
+		}
 	}
 }
