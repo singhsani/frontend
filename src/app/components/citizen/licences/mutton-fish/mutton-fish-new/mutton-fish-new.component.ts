@@ -206,7 +206,11 @@ export class MuttonFishNewComponent implements OnInit {
 			for (let file of localUploadArray) {
 				if ((file['documentIdentifier'] == 'PARTNERSHIP_DEED') ||  (file['documentIdentifier'] == 'LAND_TERMS_CONDITION')) {
 					file['mandatory'] = false;
-				}else{
+				}else if(file['documentIdentifier'] == 'RENT_AGREEMENT'){
+					file['mandatory'] = true;
+					this.uploadFileArray.push(file);
+				}
+				else{
 					this.uploadFileArray.push(file);
 				}
 
@@ -266,7 +270,7 @@ export class MuttonFishNewComponent implements OnInit {
 			permanantAddress: this.fb.group(this.permanantAddressEstablishment.addressControls()),
 			temporaryAddress: this.fb.group(this.permanantAddressEstablishment.addressControls()),
 
-			holderTelephoneNo: [null, [Validators.maxLength(12), Validators.minLength(10)]],
+			holderTelephoneNo: [null, [Validators.maxLength(11), Validators.minLength(11)]],
 			holderMobileNo: [null, [Validators.required, Validators.maxLength(10), Validators.minLength(10)]],
 			holderFaxNo: [null, [Validators.maxLength(12)]],
 			holderAadharNo: [null, [Validators.required, ValidationService.aadharValidation, Validators.maxLength(12)]],
@@ -328,7 +332,9 @@ export class MuttonFishNewComponent implements OnInit {
 			this.muttonFishNewForm.get('temporaryAddress').patchValue(this.muttonFishNewForm.get('permanantAddress').value);
 			this.muttonFishNewForm.get('temporaryAddress.addressType').setValue('MF_TEMPORARY_ADDRESS');
 			this.muttonFishNewForm.get('isSameAsPermanantAddress').get('code').setValue("YES");
+			this.muttonFishNewForm.get('temporaryAddress').disable();
 		} else {
+			this.muttonFishNewForm.get('temporaryAddress').enable();
 			this.muttonFishNewForm.get('temporaryAddress').reset();
 			this.muttonFishNewForm.get('isSameAsPermanantAddress').get('code').setValue("NO");
 		}

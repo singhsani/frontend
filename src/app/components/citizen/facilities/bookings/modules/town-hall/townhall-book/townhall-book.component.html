@@ -452,7 +452,7 @@
                         </mat-form-field>
 
                         <mat-form-field class="col-md-4">
-                            <input matInput OnlyNumber minlength="10" maxlength="11" formControlName="orgTelephoneNo" placeholder="{{'orgTelephone_no' | translate: translateKey}}"
+                            <input matInput OnlyNumber minlength="11" maxlength="11" formControlName="orgTelephoneNo" placeholder="{{'orgTelephone_no' | translate: translateKey}}"
                                 required>
                             <control-messages [control]="townHallApplicationForm.get('orgTelephoneNo')"></control-messages>
                         </mat-form-field>
@@ -511,14 +511,14 @@
                         </mat-form-field>
 
                         <mat-form-field class="col-md-4">
-                            <input matInput OnlyNumber minlength="10" maxlength="11" formControlName="applicantMobile" placeholder="{{'applicant_mobile' | translate: translateKey}}"
+                            <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="applicantMobile" placeholder="{{'applicant_mobile' | translate: translateKey}}"
                                 required>
                             <control-messages [control]="townHallApplicationForm.get('applicantMobile')"></control-messages>
                         </mat-form-field>
 
                         <div class="col-md-4">
                             <mat-form-field>
-                                <input matInput OnlyNumber minlength="10" maxlength="11" formControlName="confirmMobile" placeholder="{{'confirm_mobile' | translate: translateKey}}"
+                                <input matInput OnlyNumber minlength="10" maxlength="10" formControlName="confirmMobile" placeholder="{{'confirm_mobile' | translate: translateKey}}"
                                     required>
                                 <control-messages [control]="townHallApplicationForm.get('confirmMobile')"></control-messages>
                             </mat-form-field>
@@ -632,4 +632,4 @@
         </form>
     </mat-card>
 </div>
-<select-payment-gateway #paymentGateway></select-payment-gateway>
+<select-payment-gateway [applicationType]="'booking'" #paymentGateway></select-payment-gateway>

@@ -74,7 +74,7 @@
 						<control-messages [control]="muttonFishRenewalForm.get('holderFirstName')"></control-messages>
 					</mat-form-field>
 					<mat-form-field class="col-md-4">
-						<input matInput type="text" required maxlength="30" appValidationFields
+						<input matInput type="text"  maxlength="30" appValidationFields
 							placeholder="{{'holder_middlename' | translate:translateKey}}"
 							formControlName="holderMiddleName" appGujInputSource targetElement="holderMiddleNameGuj"
 							[form]="muttonFishRenewalForm">
@@ -123,6 +123,11 @@
 					<app-address #permanantAddressEstablishment [requiredNotPincode]="true"
 						[addressFormGroup]="muttonFishRenewalForm.get('permanantAddress')"></app-address>
 				</div>
+
+				<div class="col-md-4" >
+					<mat-checkbox class="col-md-12 mt-2" (change)="onSameAddressChange($event)">{{'Temporary Address is same as Permanent Address?' | translate: translateKey}}</mat-checkbox>
+				</div>
+
 				<div class="row">
 					<h2>{{'temp_address' | translate:translateKey}}</h2>
 					<app-address #temporaryAddressEstablishment [requiredNotPincode]="true"
@@ -130,11 +135,11 @@
 				</div>
 
 				<mat-form-field class="col-md-4">
-					<input matInput OnlyNumber maxlength="12" formControlName="holderTelephoneNo"
+					<input matInput OnlyNumber maxlength="11" minlength="11" formControlName="holderTelephoneNo"
 						placeholder="{{'holder_telephone_no' | translate:translateKey}}">
 				</mat-form-field>
 				<mat-form-field class="col-md-4">
-					<input matInput OnlyNumber maxlength="11" required formControlName="holderMobileNo"
+					<input matInput OnlyNumber maxlength="10" minlength="10" required formControlName="holderMobileNo"
 						placeholder="{{'holder_mobile_no' | translate:translateKey}}">
 				</mat-form-field>
 				<mat-form-field class="col-md-4">

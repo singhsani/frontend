@@ -307,7 +307,13 @@
                                     {{'print_receipt' | translate:translateKey}}
                                 </button>
 
-                                <button mat-menu-item *ngIf="row.fileStatus === 'PAYMENT' || row.fileStatus === 'SCRUTINY' " color="primary"
+                                <button mat-menu-item *ngIf="(row.fileStatus === 'SCRUTINY')" color="primary" (click)="loiPayments(row)">
+                                    <i class="fa fa-inr m-1" title="{{'attach_money' | translate:translateKey}}" aria-hidden="true"></i>
+                                    {{'payment' | translate:translateKey}}
+                                </button>
+    
+
+                                <button mat-menu-item *ngIf="row.fileStatus === 'PAYMENT'" color="primary"
                                     (click)="redirectToPayment(row.serviceDetail.code, row.serviceFormId)">
                                     <!-- <mat-icon class="m-1" title="{{'attach_money' | translate:translateKey}}">&#8377;</mat-icon> -->
                                     <i class="fa fa-inr m-1" title="{{'attach_money' | translate:translateKey}}" aria-hidden="true"></i>
@@ -318,7 +324,7 @@
                                 <button mat-menu-item  color="primary"
                                     (click)="printPropertyACKReceipt(row.fileNumber)">
                                     <mat-icon class="m-1" title="{{'Doenload_acknolowdgement' | translate:translateKey}}">arrow_downward</mat-icon>
-                                    {{'Doenload_acknolowdgement' | translate:translateKey}}
+                                    {{'download_acknowledgement' | translate:translateKey}}
                                 </button>
 
                                 <button mat-menu-item color="primary"

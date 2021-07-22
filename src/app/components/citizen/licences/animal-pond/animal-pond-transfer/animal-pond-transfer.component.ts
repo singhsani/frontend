@@ -725,4 +725,15 @@ export class AnimalPondTransferComponent implements OnInit {
 		this.animalPondService.changeStatusOfBusinessAccordingAtatchment(subject,documents,transferFormValue);
 		this.requiredDocumentList();
 	}
+
+	onSameAddressChange(event){
+		if(event.checked){
+			this.animalPondTransferForm.get('temporaryAddress').patchValue(this.animalPondTransferForm.get('permanantAddress').value);
+			// this.animalPondRenewForm.get('temporaryAddress.addressType').setValue('APL_TEMPORARY_ADDRESS');
+			this.animalPondTransferForm.get('temporaryAddress').disable();
+		}else{
+			this.animalPondTransferForm.get('temporaryAddress').enable();
+			this.animalPondTransferForm.get('temporaryAddress').reset();
+		}
+	}
 }

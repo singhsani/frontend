@@ -136,11 +136,11 @@
 				</div>
 
 				<mat-form-field class="col-md-4">
-					<input matInput OnlyNumber maxlength="12" formControlName="holderTelephoneNo"
+					<input matInput OnlyNumber maxlength="11" minlength="11" formControlName="holderTelephoneNo"
 						placeholder="{{'holder_telephone_no' | translate:translateKey}}">
 				</mat-form-field>
 				<mat-form-field class="col-md-4">
-					<input matInput OnlyNumber maxlength="11" required formControlName="holderMobileNo"
+					<input matInput OnlyNumber maxlength="10" minlength="10" formControlName="holderMobileNo"
 						placeholder="{{'holder_mobile_no' | translate:translateKey}}">
 				</mat-form-field>
 				<mat-form-field class="col-md-4">
@@ -163,7 +163,7 @@
 				<app-action-bar  [paymentGateway]="paymentGateway" [uploadFiles]="uploadFileArray" [form]="muttonFishDuplicateForm"
 					(handleErrors)="handleErrorsOnSubmit($event)"
 					(tabIndex)="licenseConfiguration.onFormTabChange($event) "
-					[stepInfo]="{step: 'step1', next:0, back:0} "></app-action-bar>
+					[stepInfo]="{step: 'final', next:0, back:0} "></app-action-bar>
 
 					
 			</mat-tab>

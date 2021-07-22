@@ -185,7 +185,7 @@ export class MuttonFishRenewalComponent implements OnInit {
 			// if (this.muttonFishRenewalForm.get('relationshipId').value.code == 'PROPRIETOR') {
 			// 	this.muttonFishRenewalForm.get('relationshipList').disable();
 			// }
-			this.muttonFishRenewalForm.disable();
+			// this.muttonFishRenewalForm.disable();
 			this.enableFielList();
 			let currentUrl = this.location.path().replace('false', this.formId.toString());
 			this.location.go(currentUrl);
@@ -232,7 +232,7 @@ export class MuttonFishRenewalComponent implements OnInit {
 				res.relationshipList.forEach(app => {
 					(<FormArray>this.muttonFishRenewalForm.get('relationshipList')).push(this.createArray(app));
 				});
-				this.muttonFishRenewalForm.disable();
+				// this.muttonFishRenewalForm.disable();
 				this.enableFielList();
 
 				res.serviceDetail.serviceUploadDocuments.forEach(app => {
@@ -321,7 +321,11 @@ export class MuttonFishRenewalComponent implements OnInit {
 			for (let file of localUploadArray) {
 				if ((file['documentIdentifier'] == 'PARTNERSHIP_DEED' || (file['documentIdentifier'] == 'LAND_TERMS_CONDITION'))) {
 					file['mandatory'] = false;
-				}else{
+				}else if(file['documentIdentifier'] == 'RENT_AGREEMENT'){
+					file['mandatory'] = true;
+					this.uploadFileArray.push(file);
+				}
+				else{
 					this.uploadFileArray.push(file);
 				}
 				if (file['mandatory'] == true) {
@@ -360,8 +364,8 @@ export class MuttonFishRenewalComponent implements OnInit {
 			permanantAddress: this.fb.group(this.permanantAddressEstablishment.addressControls()),
 			temporaryAddress: this.fb.group(this.permanantAddressEstablishment.addressControls()),
 
-			holderTelephoneNo: [null, [Validators.maxLength(12), Validators.minLength(10)]],
-			holderMobileNo: [null, [Validators.required, Validators.maxLength(11), Validators.minLength(10)]],
+			holderTelephoneNo: [null, [Validators.maxLength(11), Validators.minLength(11)]],
+			holderMobileNo: [null, [Validators.required, Validators.maxLength(10), Validators.minLength(10)]],
 			holderFaxNo: [null, [Validators.maxLength(12)]],
 			holderAadharNo: [null, [Validators.required, Validators.maxLength(12)]],
 			holderPanNo: [null, [Validators.required, Validators.maxLength(10)]],
@@ -572,5 +576,15 @@ export class MuttonFishRenewalComponent implements OnInit {
 	 */
 	dateFormat(date, controlType: string) {
 		this.muttonFishRenewalForm.get(controlType).setValue(moment(date).format("YYYY-MM-DD"));
+	}
+
+	onSameAddressChange(event){
+		if(event.checked){
+			this.muttonFishRenewalForm.get('temporaryAddress').patchValue(this.muttonFishRenewalForm.get('permanantAddress').value);
+			this.muttonFishRenewalForm.get('temporaryAddress').disable();
+		}else{
+			this.muttonFishRenewalForm.get('temporaryAddress').enable();
+			this.muttonFishRenewalForm.get('temporaryAddress').reset();
+		}
 	}
 }

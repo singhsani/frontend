@@ -109,7 +109,7 @@
 					<mat-checkbox class="col-md-12 mt-2"
 						[checked]="muttonFishNewForm.get('isSameAsPermanantAddress').get('code').value == 'YES'? true : false"
 						(change)="onSameAddressChange($event)">
-						{{'Temporary Address Is Same As Permanant Address ?' | translate: translateKey}}</mat-checkbox>
+						{{'Temporary Address Is Same As Permanent Address ?' | translate: translateKey}}</mat-checkbox>
 				</div>
 				<div class="row">
 					<h2>{{'temp_address' | translate:translateKey}}</h2>
@@ -118,11 +118,11 @@
 				</div>
 
 				<mat-form-field class="col-md-4">
-					<input matInput OnlyNumber maxlength="12" formControlName="holderTelephoneNo"
+					<input matInput OnlyNumber maxlength="11" minlength="11" formControlName="holderTelephoneNo"
 						placeholder="{{'holder_telephone_no' | translate:translateKey}}">
 				</mat-form-field>
 				<mat-form-field class="col-md-4">
-					<input matInput OnlyNumber maxlength="10" required formControlName="holderMobileNo"
+					<input matInput OnlyNumber maxlength="10" minlength="10" required formControlName="holderMobileNo"
 						placeholder="{{'holder_mobile_no' | translate:translateKey}}">
 				</mat-form-field>
 				<mat-form-field class="col-md-4">

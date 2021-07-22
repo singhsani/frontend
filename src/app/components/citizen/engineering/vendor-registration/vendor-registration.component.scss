@@ -1,0 +1,21 @@
+ ::ng-deep .modal-dialog {max-width: 1100px !important;}
+
+ ::ng-deep .fillLabel {
+     form .row {margin-left: -10px; margin-right: -10px;
+        .col-md-4 {padding-left: 10px; padding-right: 10px; margin-top: 10px; margin-bottom: 10px;}
+    }
+    .p-15 {padding: 0 10px;}
+ .mat-form-field-label-wrapper {overflow: visible !important; top: auto !important; bottom: 0 !important; margin: 0 !important; padding: 0 !important; display: flex; height: 74px;
+    label.mat-form-field-label {width: 100% !important; overflow: visible !important;  white-space: normal !important; text-overflow: initial !important; position: static;align-self: flex-end; margin-bottom: 10px;}
+}
+
+@media (max-width: 767px) {
+     .p-15 {padding: 0;}
+}
+ }
+
+ .checkboxHref {
+    .mat-checkbox {float: left; margin-right: 0; width: auto;}
+    a {cursor: pointer;}
+ }
+

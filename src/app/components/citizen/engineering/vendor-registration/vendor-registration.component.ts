@@ -67,7 +67,6 @@ export class VendorRegistrationComponent implements OnInit {
   ngOnInit() {
     this.vendorRegistrationControl();
     this.vendorRegistrationForm.addControl('listOfItemMaterialSupplier', this.listOfItemMaterialSupplier);
-    this.vendorRegistrationForm.addControl('academicQualifications', this.academicQualifications);
     this.vendorRegistrationForm.addControl('vendorNameArray', this.vendorNameArray);
 
     this.activatedRoute.paramMap.subscribe(param => {
@@ -149,9 +148,9 @@ export class VendorRegistrationComponent implements OnInit {
       namesOfTheOwner: null,
       manufacturingOwnedDetails: null,
 
-      listOfItemMaterialDetail: this.fb.array([]),
+      listOfItemMaterial: this.listOfItemMaterialSupplier,
       academicQualificationsDetail: this.fb.array([]),
-      vendorNameDetail: this.fb.array([]),
+      vendorNameDetails: this.vendorNameArray,
 
       registrationBank: this.fb.group({
         code: null,
@@ -196,16 +195,24 @@ export class VendorRegistrationComponent implements OnInit {
       sourceOfRawMaterialAddress: null,
       productionCapacityPerAnnum: null,
       maximumProductionPerAnnum: null,
-
-      purchaserName: null,
-      orderNo: null,
-      orderDate: null,
-      quantitySuppliedCompletionDate: null,
-
       estimationOfStocks: null,
       numberOfItemsHoldingISOCertificate: null,
       remarks: null,
 
+      purchaserName: null,
+      orderNumber: null,
+      orderDate: null,
+      quantitySuppliedCompletionDate: null,
+
+      managerialFullName: null,
+      managerialQualification: null,
+      managerialExperienceInYears: null,
+      productionStaffFullName: null,
+      productionStaffQualification: null,
+      productionStaffExperienceInYears: null,
+      qualityControlStaffFullName: null,
+      qualityControlStaffQualification: null,
+      qualityControlStaffExperienceInYears: null,
       personnelDetailSkilled: null,
       personnelDetailUnSkilled: null,
       personnelDetailOther: null,
@@ -215,6 +222,8 @@ export class VendorRegistrationComponent implements OnInit {
       createdByCitizen: [true],
     });
     this.academicQualifications.push(this.createEducationQualification());
+    this.vendorNameArray.push(this.createVendorNameArray());
+    this.listOfItemMaterialSupplier.push(this.createItemMaterialSupplier());
   }
 
   onTabChange(evt) {
@@ -255,8 +264,9 @@ export class VendorRegistrationComponent implements OnInit {
   createItemMaterialSupplier(): FormGroup {
     return this.fb.group({
       itemsMaterial: null,
-      ratingDescription: null,
-      ISNumber: null,
+      rating: null,
+      description: null,
+      isNumber: null,
     });
   }
 
@@ -281,7 +291,11 @@ export class VendorRegistrationComponent implements OnInit {
   }
 
   addRowVendorName() {
-    this.vendorNameArray.push(this.createItemMaterialSupplier());
+    this.vendorNameArray.push(this.createVendorNameArray());
+  }
+
+  onRemoveRowVendorName(rowIndex: number) {
+    this.vendorNameArray.removeAt(rowIndex);
   }
 
   createVendorNameArray(): FormGroup {
@@ -459,12 +473,22 @@ export class VendorRegistrationComponent implements OnInit {
       "maximumProductionPerAnnum": 2500,
 
       "purchaserName": "Nascent Info Technologies",
-      "orderNo": 14785,
+      "orderNumber": 14785,
       "orderDate": "15-07-2021",
       "quantitySuppliedCompletionDate": "15-07-2021",
 
       "estimationOfStocks": "Nascent Info Technologies",
       "numberOfItemsHoldingISOCertificate": "Nascent Info Technologies",
+
+      "managerialFullName": "Nascent Info Technologies",
+      "managerialQualification": "Nascent Info Technologies",
+      "managerialExperienceInYears": "Nascent Info Technologies",
+      "productionStaffFullName": "Nascent Info Technologies",
+      "productionStaffQualification": "Nascent Info Technologies",
+      "productionStaffExperienceInYears": "Nascent Info Technologies",
+      "qualityControlStaffFullName": "Nascent Info Technologies",
+      "qualityControlStaffQualification": "Nascent Info Technologies",
+      "qualityControlStaffExperienceInYears": "Nascent Info Technologies",
 
       "personnelDetailSkilled": "Nascent Info Technologies",
       "personnelDetailUnSkilled": "Nascent Info Technologies",
