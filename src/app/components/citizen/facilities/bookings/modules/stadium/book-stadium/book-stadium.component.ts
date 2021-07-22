@@ -111,7 +111,7 @@ export class BookStadiumComponent implements OnInit {
              * Static headlines
              */
         this.head_lines = `Online Stadium Booking facility is the convenient and
-		easy way to book the Stadium of Vadodara Municpal Corporation. You can
+		easy way to book the Stadium of Vadodara Municipal Corporation. You can
     view the availiblity details of the stadium and select booking date.
     The booking is confirmed on the successfull online payment of the rent amount
     for selected date`;
