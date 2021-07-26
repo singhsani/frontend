@@ -177,8 +177,12 @@
               <mat-icon title="Print Receipt" color="primary">print</mat-icon>
               {{'approved_receipt_reprint' | translate:translateKey}}
             </button>
-
           </div>
+
+          <button *ngIf="(element.resourceType == 'STADIUM' || element.resourceType == 'CHILDREN_THEATER' && element.status == bookingConstant.SUBMITTED)" mat-menu-item color="primary" (click)="printAcknowledge(element.refNumber)">
+            <mat-icon title="Print Receipt" color="primary">print</mat-icon>
+            {{'acknowledgement_reprint' | translate:translateKey}}
+          </button>
 
           <!-- <button mat-menu-item color="primary" (click)="openJSONModal(template);jsonDisplay(element)">
             <mat-icon class="m-1" title="{{'application_json' | translate:translateKey}}">center_focus_weak</mat-icon>

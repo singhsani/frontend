@@ -113,7 +113,7 @@ export class BookStadiumComponent implements OnInit {
         this.head_lines = `Online Stadium Booking facility is the convenient and
 		easy way to book the Stadium of Vadodara Municipal Corporation. You can
     view the availiblity details of the stadium and select booking date.
-    The booking is confirmed on the successfull online payment of the rent amount
+    The booking is confirmed on the successfull online payment of the rent, administration charges, gst and deposit amount
     for selected date`;
 
         this.createStadiumAvailiblityForm();
