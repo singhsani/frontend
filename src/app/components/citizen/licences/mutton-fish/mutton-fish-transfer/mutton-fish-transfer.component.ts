@@ -589,4 +589,15 @@ export class MuttonFishTransferComponent implements OnInit {
 		  });
 		this.muttonFishTransferForm.controls['relationshipList'] = this.fb.array([]);
 	}
+
+	onSameAddressChange(event){
+		if(event.checked){
+		
+			this.muttonFishTransferForm.get('temporaryAddress').patchValue(this.muttonFishTransferForm.get('permanantAddress').value);
+			this.muttonFishTransferForm.get('temporaryAddress').disable();
+		}else{
+			this.muttonFishTransferForm.get('temporaryAddress').enable();
+			this.muttonFishTransferForm.get('temporaryAddress').reset();
+		}
+	}
 }
