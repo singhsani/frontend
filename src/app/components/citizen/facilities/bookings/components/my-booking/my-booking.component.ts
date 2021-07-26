@@ -722,11 +722,23 @@ export class MyBookingComponent implements OnInit {
 
 
   enableMoreAction(element){
-    if(element.status == this.bookingConstant.DRAFT || element.status == this.bookingConstant.EXPIRED
-    || (element.status == this.bookingConstant.SUBMITTED) || (element.resourceType == 'SWIMMING_POOL' && element.status == this.bookingConstant.APPROVED)){
+    if(element.status == this.bookingConstant.DRAFT || element.status == this.bookingConstant.EXPIRED || (element.resourceType == 'SWIMMING_POOL' && element.status == this.bookingConstant.APPROVED)){
         return false;
     }
         return true;
     }
+
+    printAcknowledge(refNumber:string){
+        this.bookingService.printAcknowledgementReceipt(refNumber).subscribe(response => {
+          let sectionToPrint: any = document.getElementById('sectionToPrint');
+          sectionToPrint.innerHTML = response;
+          setTimeout(() => {
+            window.print();
+          });
+
+        }, err => {
+          this.commonService.openAlert('Error', err.message, 'warning');
+        });
+      }
 
 }
