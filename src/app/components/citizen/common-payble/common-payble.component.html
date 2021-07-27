@@ -242,8 +242,8 @@
                   <td>{{collectionModel?.dueAmount}}</td>
                   <td>{{collectionModel?.rebateAmount}}</td>
                   <td>{{dues.intrestOrPenaltyAmount}}</td>
-                  <td OnlyNumber [textContent]="model" (input)="model=$event.target.textContent" contentEditable>{{collectionModel?.payableAmount}}</td> 
-                  <!-- <td>{{collectionModel?.payableAmount}}</td> -->
+                  <!-- <td OnlyNumber [textContent]="model" (input)="model=$event.target.textContent" contentEditable>{{collectionModel?.payableAmount}}</td>  -->
+                  <td>{{collectionModel?.payableAmount}}</td>
                   <td>
                     <button mat-button title="Detail" class="btn-width-auto" color="accent" type="button" (click)="onDetailClick(dues)">
                       <mat-icon>details</mat-icon>
@@ -329,8 +329,8 @@
                   <td>{{dues.billDate}}</td>
                   <td>{{dues.billPaidAmount}}</td>
                   <td>{{dues.intrestOrPenaltyAmount}}</td>
-                  <!-- <td>{{collectionWaterModel.outstandingAmount}}</td> -->
-                  <td OnlyNumber [textContent]="model" (input)="model=$event.target.textContent" contentEditable>{{collectionWaterModel?.outstandingAmount}}</td> 
+                  <td>{{collectionWaterModel.outstandingAmount}}</td>
+                  <!-- <td OnlyNumber [textContent]="model" (input)="model=$event.target.textContent" contentEditable>{{collectionWaterModel?.outstandingAmount}}</td>  -->
 
                   <td>
                     <button mat-button title="Detail" class="btn-width-auto" color="accent" type="button" (click)="onDetailClick(dues)">
