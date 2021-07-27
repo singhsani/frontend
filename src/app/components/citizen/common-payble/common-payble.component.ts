@@ -33,7 +33,8 @@ export class CommonPaybleComponent implements OnInit {
   PayableServices: Object[];
   currPaySerData: any;
   isRecordExists: boolean = false;
-  isPropertyRecordExists: boolean = true;
+  isPropertyRecordExists: boolean = false;
+  isWaterRecordExists: boolean = false;
   isECRCSearch: boolean = false;
 
   isPropertyTax: boolean = false;
@@ -62,6 +63,9 @@ export class CommonPaybleComponent implements OnInit {
   isShowTaxDetailTable: boolean = false;
   isShowPayableScreen: boolean = true;
   propertyTaxDetailData = [];
+
+  isShowWaterTaxDetailTable: boolean = false;
+  waterTaxDetailData = [];
 
   constructor(
     private formService: FormsActionsService,
@@ -106,6 +110,10 @@ export class CommonPaybleComponent implements OnInit {
     this.isShowTaxDetailTable = event;
   }
 
+  showHideWaterTaxDetailScreen(event: boolean){
+    this.isShowWaterTaxDetailTable = event;
+  }
+
   /**
    * This method is used to initialize controls for payement form
    */
@@ -145,16 +153,19 @@ export class CommonPaybleComponent implements OnInit {
     this.paymentsForm.get('payableServices').get('code').setValue('PROFESSIONAL_TAX');
 
     let updateAmount = '';
-    if(payData.module.code == 'PROPERTY-TAX'){
-      updateAmount = this.model
+    let updatePayableServiceType = ''
+    if(payData.module.code == 'PROPERTY-TAX' || payData.module.code == 'WATER-TAX'){
+      updateAmount = this.model;
+      updatePayableServiceType = payData.payableServices.code;
     }else{
       updateAmount = payData.amount;
+      updatePayableServiceType = payData.module.code
     }
 
     let retUrl: string = environment.returnUrl;
 
     let obj = {
-      payableServiceType: payData.module.code != 'PROPERTY-TAX' ? payData.module.code : payData.payableServices.code  ,
+      payableServiceType: updatePayableServiceType,
       refNumber: payData.refNumber,
       amount: updateAmount,
       paymentMode: "NETBANKING",
@@ -164,6 +175,8 @@ export class CommonPaybleComponent implements OnInit {
 
     if(payData.payableServices.code == 'PAY-PRO-TAX' ) {
           obj['txtadditionalInfo1'] = 'PAY-PRO-TAX';
+    }else if(payData.payableServices.code == 'PAY-WTR-TAX'){
+      obj['txtadditionalInfo1'] = 'PAY-WTR-TAX';
     }
 
     let words = this.commonService.getToWords(updateAmount)
@@ -336,18 +349,29 @@ export class CommonPaybleComponent implements OnInit {
 
   }
 
-  getAmountDataWater(){
+  getAmountDataWater() {
     this.isWaterTax = true;
-    this.collectionService.getWaterOccupierOutstandingAmount(this.paymentsForm.get('refNumber').value).subscribe(
-      (data) => {
-        this.collectionWaterModel = data.body;
-        this.model = data.body.payableAmount;
-        this.paymentsForm.get('amount').setValue(this.model);
-      },
-      (error) => {
-      });  
+    if (this.paymentsForm.invalid) {
+      this.markFormGroupTouched(this.paymentsForm);
+      this.commonService.openAlert("Warning", "Enter all the required information", "warning");
+      return;
+    } else {
+    this.collectionService.getWaterOccupierOutstandingAmount(this.paymentsForm.get('refNumber').value).subscribe(     (data) => {
+          if (data.status === 200) {
+            this.isWaterRecordExists = true;
+            this.collectionWaterModel = data.body;
+            this.collectionWaterModel.collectedAmount = data.body.outstandingAmount;
+            this.model = this.collectionWaterModel.collectedAmount;
+            this.paymentsForm.get('amount').setValue(this.model);
+          }
+        },
+        (error) => {
+          this.commonService.openAlert("Warning", "Enter Valid Connection Number", "warning");
+          this.paymentsForm.get('refNumber').setValue(null);
+          this.isWaterRecordExists = false;
+      });
+   }
   }
-
   /**
    * - This method is used to get the type of tax and referance number and get the amount from the API
    */
@@ -531,7 +555,6 @@ export class CommonPaybleComponent implements OnInit {
     );
   }
 
-
   setPayableServices(code) {
     const filteredModules = this.userServicesList.filter(module => module.code === code);
     if (filteredModules.length > 0) {
@@ -541,6 +564,8 @@ export class CommonPaybleComponent implements OnInit {
         this.PayableServices = filteredModules[0].services;
       }
       this.paymentsForm.get('payableServices').get('code').setValue(null);
+      this.isWaterRecordExists = false;
+      this.isPropertyRecordExists = false;
     }
   }
 
@@ -551,6 +576,17 @@ export class CommonPaybleComponent implements OnInit {
       this.isShowTaxDetailTable = true;
     }
     else {
+      this.alertService.info('No detail found!');
+    }
+  }
+
+  onWaterDetailClick(item){
+    debugger
+    if (item.taxWiseOutstandings && item.taxWiseOutstandings.length > 0){
+      this.waterTaxDetailData = item.taxWiseOutstandings;
+      this.isShowPayableScreen = false;
+      this.isShowWaterTaxDetailTable = true;
+    }else {
       this.alertService.info('No detail found!');
     }
   }

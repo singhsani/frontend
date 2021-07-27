@@ -380,9 +380,15 @@ export class FormsActionsService {
 
 	savePropertyTaxPaymentDetails(data: any) {
 		return this.httpClient.post(`${Constants.assessmentModuleApiUrl}collection/citizen-payment`, data,
-		  { responseType: 'arraybuffer' })
-		  .pipe(map((response: any) => response))
-	  }
+			{ responseType: 'arraybuffer' })
+			.pipe(map((response: any) => response))
+	}
+
+	saveWaterTaxPaymentDetails(data: any) {
+		return this.httpClient.post(`${Constants.baseApiWaterUrl}collection/citizen-payment`, data,
+			{ responseType: 'arraybuffer' })
+			.pipe(map((response: any) => response))
+	}
 
 	printProfReceipt(refNumber) {
 		this.requestURL = `api/professional/receipt/printReceipt/${refNumber}`;
