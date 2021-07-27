@@ -231,25 +231,44 @@ export class NoDueCertificateTableComponent implements OnInit {
             let retAfterPayment: string = environment.returnUrl;
             if (err.status === 402) {
               const errData = err.error.data;
-              retUrl = retUrl + '?apiCode='+ errData.serviceCode + '&id=' + errData.serviceFormId;
+              const resData = err.error.data;
               let payData = this.commonNascentService.storePaymentInfo(errData, retUrl, retAfterPayment);
-              let words = this.commonService.getToWords(payData.amount);
-              let html =
-                `
-              <div class="text-center">
+
+              if (this.commonNascentService.fromAdmin()) {
+                  if (resData.isPaymentReceipt) {
+                  const url = '/citizen/my-applications' +
+                    '?printPaymentReceipt=' + resData.isPaymentReceipt +
+                    '&apiCode=' + resData.serviceCode +
+                    '&id=' + resData.serviceFormId;
+
+                  this.router.navigateByUrl(url);
+                } else {
+                  //  this.openOfflinePaymentComponent(payData,retUrl,data.serviceCode,data.serviceFormId);
+                }
+              } else {
+
+                retUrl = retUrl + '?apiCode=' + errData.serviceCode + '&id=' + errData.serviceFormId;
+                //let payData = this.commonNascentService.storePaymentInfo(errData, retUrl, retAfterPayment);
+                let words = this.commonService.getToWords(payData.amount);
+                let html =
+                  `
+                <div class="text-center">
                 <h2>Total Fee Pay</h2>
                 <div class="payAmount">
                   <i class="fa fa-inr" aria-hidden="true">` + payData.amount + `</i>
                 </div>
                 <p>Rupees in words</p>` + words + ` Rupees Only
-              </div>
-              `
-              this.commonNascentService.commonAlert('Payment Details', '', 'info', 'Make Payment!', false, html, cb => {
-                this.paymentGateway.setPaymentDetailsFromActionBar(payData);
-                this.paymentGateway.openModel();
-              }, rj => {
-                return;
-              });
+                </div>
+                   `
+                this.commonNascentService.commonAlert('Payment Details', '', 'info', 'Make Payment!', false, html, cb => {
+                  this.paymentGateway.setPaymentDetailsFromActionBar(payData);
+                  this.paymentGateway.openModel();
+                }, rj => {
+                  return;
+                });
+
+              }
+
             } else {
               this.commonNascentService.openAlert("Error", "Error Occured for final submit : " + err.error[0].message, "warning")
             }
